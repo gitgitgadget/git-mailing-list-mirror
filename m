@@ -2,139 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFBF9C00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 16:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D31E5C00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 16:58:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238068AbiG2QpE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 12:45:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34826 "EHLO
+        id S238035AbiG2Q6R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 12:58:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238026AbiG2QpB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 12:45:01 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D32F921251
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 09:45:00 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 191A813A5E4;
-        Fri, 29 Jul 2022 12:45:00 -0400 (EDT)
+        with ESMTP id S232321AbiG2Q6Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 12:58:16 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1180289A56
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 09:58:16 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A1EC91A41B9;
+        Fri, 29 Jul 2022 12:58:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VRyJXaiMt/UgcyLcsUKD9cjKxh39nDA4EtwsGG
-        xFnFs=; b=adIrz6U5yk91HwjAb7cCZyIB19O73Ul4E9UOC3x7EwHqO59TwETw2R
-        j5B+pQ7ms9sBMIDd7qKcG2vd6DrCGYvY3qGMCb+VX6kkTacrmH/ieiC9M2pnJo1/
-        93QO7peezInbLsUKA5/jg45rKA/dtkDrzAFQd065Q4IqmUFqWSbJE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0F40D13A5E2;
-        Fri, 29 Jul 2022 12:45:00 -0400 (EDT)
+        :content-type; s=sasl; bh=n83w4EWvP6PVSqmHb7xJDCwbdRByln8l8lqGna
+        J8FeM=; b=AAXnKsADmbuPJPbYBcgm7nC4sqoHXQgzjME85BIibEMJvdYqUuV26B
+        bfNAOcp+n4pRcJNMX6Ck2QAi8nmSOVnTShs9jnBsqUu+hDste8/dFjAqR+p/NQrA
+        qO9azmNTYlr31kQpIybojlBrP/yO2MHoZ4V0KkZ18pOl5PeKxImPo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9B4AF1A41B8;
+        Fri, 29 Jul 2022 12:58:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.105.40.190])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6B6DD13A5E1;
-        Fri, 29 Jul 2022 12:44:59 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4EB811A41B4;
+        Fri, 29 Jul 2022 12:58:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] tests: replace mingw_test_cmp with a helper in C
-References: <pull.1309.git.1659106382128.gitgitgadget@gmail.com>
-Date:   Fri, 29 Jul 2022 09:44:58 -0700
-In-Reply-To: <pull.1309.git.1659106382128.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Fri, 29 Jul 2022 14:53:01
-        +0000")
-Message-ID: <xmqqwnbv7trp.fsf@gitster.g>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] mingw: include the Python parts in the build
+References: <pull.1306.git.1659016906707.gitgitgadget@gmail.com>
+        <pull.1306.v2.git.1659109272.gitgitgadget@gmail.com>
+        <rq6919s9-qspp-rn6o-n704-r0400q10747r@tzk.qr>
+Date:   Fri, 29 Jul 2022 09:58:11 -0700
+In-Reply-To: <rq6919s9-qspp-rn6o-n704-r0400q10747r@tzk.qr> (Johannes
+        Schindelin's message of "Fri, 29 Jul 2022 17:56:18 +0200 (CEST)")
+Message-ID: <xmqqsfmj7t5o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C8DBE2B8-0F5D-11ED-A8FC-CB998F0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: A173ACCC-0F5F-11ED-BDDE-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> +	const char *argv[] = {
-> +		"diff", "--no-index", NULL, NULL, NULL
-> +	};
-
-Don't we want to have "--" before the two paths?
-
-> +	if (!(f0 = !strcmp(argv[1], "-") ? stdin : fopen(argv[1], "r")))
-> +		return error_errno("could not open '%s'", argv[1]);
-> +	if (!(f1 = !strcmp(argv[2], "-") ? stdin : fopen(argv[2], "r"))) {
-> +		fclose(f0);
-> +		return error_errno("could not open '%s'", argv[2]);
-> +	}
-
-It is tricky that you need to take "-" and treat it as the standard
-input stream in either argv[1] or argv[2] (but not both).  If would
-be a different story in an end-user facing program, but because this
-is a test helper, feeding wrong input is developer's fault, and I do
-not mind lack of attention to detail of error checking to make sure
-we avoid comparing alternating lines of the standard input.
-
-> +	for (;;) {
-> +		int r0 = strbuf_getline(&b0, f0);
-> +		int r1 = strbuf_getline(&b1, f1);
-> +
-> +		if (r0 == EOF) {
-> +			fclose(f0);
-> +			fclose(f1);
-> +			strbuf_release(&b0);
-> +			strbuf_release(&b1);
-> +			if (r1 == EOF)
-> +				return 0;
-
-If both hit the EOF at the same time, we know they are the same, OK.
-
-> +cmp_failed:
-> +			if (!run_diff(argv[1], argv[2]))
-
-If one of argv[] was "-", then this wouldn't work correctly, as the
-other file is read from the beginning but the "-" side have consumed
-the initial part of the input and we cannot unseek it.  This bug
-needs to be fixed only if we expect a useful and reliable output
-from the helper.
-
-But otherwise the idea is sound.  We compare them line by line,
-using strbuf_getline() to ignore differences in CRLF and LF that
-originates at 4d715ac0 (Windows: a test_cmp that is agnostic to
-random LF <> CRLF conversions, 2013-10-26).  Only when we find the
-input different, we use "git diff --no-index" to make the difference
-(and unfortunately more, as it does not ignore CRLF <> LF
-differences) visible.
-
-> +				die("Huh? 'diff --no-index %s %s' succeeded",
-> +				    argv[1], argv[2]);
-
-Nice attention to (possibly irrelevant) detail here.  I would have
-ignored the return value and reported "they are different" at this
-point, though.  The line-by-line comparison we did was the
-authoritative one, and "git diff --no-index" is merely used for
-human readable output.
-
-In any case, "test-tool mingwcmp" would be a better name that
-highlights the spirit of 4d715ac0 to ignore CRLF <> LF issues.  IOW,
-it does a lot more than "cmp" replacement, and we shouldn't mislead
-users/developers into thinking it is a plain "cmp" replacement.
-
-Thanks.
-
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 7726d1da88a..220c259e796 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1546,7 +1546,7 @@ case $uname_s in
->  	test_set_prereq SED_STRIPS_CR
->  	test_set_prereq GREP_STRIPS_CR
->  	test_set_prereq WINDOWS
-> -	GIT_TEST_CMP=mingw_test_cmp
-> +	GIT_TEST_CMP="test-tool cmp"
->  	;;
->  *CYGWIN*)
->  	test_set_prereq POSIXPERM
+> On Fri, 29 Jul 2022, Johannes Schindelin via GitGitGadget wrote:
 >
-> base-commit: 23b219f8e3f2adfb0441e135f0a880e6124f766c
+>> Range-diff vs v1:
+>>
+>>  -:  ----------- > 1:  5d9b087625a windows: include the Python bits when building Git for Windows
+>>  -:  ----------- > 2:  019fb837d68 mingw: remove unneeded `NO_GETTEXT` directive
+>>  1:  a5739b9cce8 ! 3:  7dc0a1a9aa8 mingw: include the Python parts in the build
+> ...
+> Oh, that's funny. This is actually the first time I personally see
+> `range-diff` matching up a wrong patch pair (because it really looks for
+> the minimal diff between the diffs). It is of course nonsense to match up
+> the original patch with the `NO_CURL` patch.
+
+It would depend on the creation-factor number, I suspect.  To me, it
+does not seem to match anything at all, but with an unreasonably
+high number like 9999, I see 1 corresponds to the old one, with the
+other two follow-up patch as new.
+
+As the maintainer, I mostly use range-diff to compare two iterations
+of a single topic, and not "compare 'seen' from 24 hours ago with
+'seen' I just rebuilt, so that I can match up everything in an
+uncontrolled mess", so the optimum factor number would be different
+for my usecase from the one used for general use (which is
+documented to be 60).
+
+The "maintainer" use case compares two iterations that are known and
+expected to have corresponding patches (and no corresponding one
+means either dropped or added), and come to think of it, the use
+case for submitter to run "format-patch --range-diff" shares exactly
+the same expectation.  It is very different from "pick corresponding
+patches from two piles of many unrelated topics" use case, in which
+"range-diff" proper can be used.
+
+Perhaps the default used for "format-patch" should become different
+and set a lot higher than the default for "range-diff" proper?
+
