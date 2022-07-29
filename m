@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5B60C19F2A
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 19:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63994C00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 19:30:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238824AbiG2T3z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 15:29:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44858 "EHLO
+        id S238852AbiG2TaC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 15:30:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238715AbiG2T3t (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S238751AbiG2T3t (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 29 Jul 2022 15:29:49 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ADE25FACB
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 12:29:47 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id x23-20020a05600c179700b003a30e3e7989so2933678wmo.0
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 12:29:47 -0700 (PDT)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 529B562A65
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 12:29:48 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id v3so6199551wrp.0
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 12:29:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SaPL8Oci9QgOPfLUSeQl8NMVH0gyPAwGHimYdcNV2Ng=;
-        b=aD9LksJUOGbi3XqKnr3A0qzvk3klCs4J8gZbnsJ2+BijWOgiWrvNRv9avWMnYsX0kI
-         NydG1HKDAvZfytH2E1nFOHFE2Xx5RvU48WMy09Qm/k0W+81LdoFsxiOpt573FxhSKIxx
-         4hNcfijqic2mSzjoyLzAZptW8pomm5USXj3IzJephx0CWJab+xmNJNOd1A9VcjFFlzZ1
-         0x1E+SfaLvNflqG8GHVDzwpkR4GQcUkC/2D3MWtxAHVnqpEyKcTFdOvyeiYNIxHQvppb
-         Ztl67PBrJdMUN9bhqhd+CJWULfZjPGsQQ2qtIkLmX5ycZq5stWsgMEsvrLg7oi0Vbp++
-         tGng==
+        bh=mnPtNgySTa7llJBb+s/lASeY/w+3Iuv0kFohfWZv/IA=;
+        b=lW+FWjxtqOUV3eKFb9mBRH6Tg+tOxdOaq/bJqdGCd0QuGCOJCeJrHsutGJhdWjcyIp
+         TVxP3l1oA+yIBiQ1cKhaFllCIm1XvSmdoCf7tb24anU/IbNDm0eO5iyls+mQNCJWfFpW
+         3RZTJg6/AjifX12WqoyOpJ1/eEEWL2GDKqgrQUt3s1+cgE++VG90z7Q6sielM1Vj/m41
+         LIP53xN8YDgm5bk2APjTXtcW8MyYzvQESp7HNSpp+AAyhoDHbgnUiSTk1glCCzFxPAGP
+         YKxtbSY0zxsWbGnu3/rnFRzzCox2VmMeXATWceVKhS/3fAbIhTvVuFIV/RNfli8OSdMr
+         9r5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SaPL8Oci9QgOPfLUSeQl8NMVH0gyPAwGHimYdcNV2Ng=;
-        b=2Gu8L8zjFTP8u3AJSprzVxCi6LB94Kfcw/igbOvdyU7Q4IGoystLf+Zmw6sdUmmc0U
-         sPDsJlSO8s02bO5L7qoXSn4dMRmG1/ezerdXbDHtAgqgbugwO0SDg0eKQBCevqyDtr6y
-         OkU3UzTAxbwjzxN9V8keFfqKX6fwP70BwBiPuXV8D7XxiyX6QgL8CpKVxd6V4VW2MCki
-         IRdTL5wpVgIyWe+I1y61vjd3UtttQVJ4bePAoAG6YbrNwJ9DNMIGTYXu7ZSGuY8rRn5J
-         tRArpKhCRY5Xh+xlijRTqML0IIB0uyV4nn8mv5BqVDgzlDEW51Pc00qjZVISw9EkfWNC
-         VcHQ==
-X-Gm-Message-State: AJIora9C6ikEZ73CgtfgZZFwZa6QFOrM6MlzmMdT63h+FahB7oDW7GHK
-        M9DRt6CyML440B1k6zWgGxTvdgx6z14=
-X-Google-Smtp-Source: AGRyM1suE94Caj5Nh77h9CKYc1Cav8w2yxFn1pPNZiFeiihyRCjXzQr6nk09zY+jGKUco3qcS7o/1A==
-X-Received: by 2002:a05:600c:358d:b0:3a3:3819:c07 with SMTP id p13-20020a05600c358d00b003a338190c07mr4010425wmq.76.1659122985334;
-        Fri, 29 Jul 2022 12:29:45 -0700 (PDT)
+        bh=mnPtNgySTa7llJBb+s/lASeY/w+3Iuv0kFohfWZv/IA=;
+        b=U1HKKPGhroWF5RvcMrlhxPb0xSmieNn3dhKZKMvtfatW33j7LFg0x/4sb81rpSw0gE
+         yQMtrCUz60vYSPcGrd6dpXdjuqlMlaKJyteT5KKmH7OEJyjRL2wjjIFmMAGRSvXSZYuD
+         yS2qlxiFH33jiC1iv7FPnZrk20EWWg5jWv912MzTqt2vXM16q1/VpuR8gA5jopFW+Y6K
+         EeR2fgSQhq3QAzjfn4oi26oST/4VLxoR4rHmUewvQDB82AycaJbBYj45jrt2AAWGXC5C
+         6Z/20CixtY7178D4nr4KTHvOknuemKiV+8ASOeUTN0UB1juLiyxVHmULTacI5xD2ZSU9
+         BHmQ==
+X-Gm-Message-State: ACgBeo0mg3GYltfwFTsMLOHMIcyUAPfT7eNfOUMPANX6rutjV1Faj9nu
+        9bAtqT7v9MFW13t1t1tek+WWwO643Co=
+X-Google-Smtp-Source: AA6agR7xOk1U57661RxVkATfpzvbZarTrHXHBxQT/3kId1MmkjNpheMK4wiuQn534ked32z2roPorg==
+X-Received: by 2002:a5d:5c0c:0:b0:21e:7098:1903 with SMTP id cc12-20020a5d5c0c000000b0021e70981903mr3229391wrb.623.1659122986415;
+        Fri, 29 Jul 2022 12:29:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g9-20020a05600c4ec900b003a3199c243bsm12331942wmq.0.2022.07.29.12.29.44
+        by smtp.gmail.com with ESMTPSA id a5-20020adffb85000000b0021e5cc26dd0sm4399161wrr.62.2022.07.29.12.29.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jul 2022 12:29:44 -0700 (PDT)
-Message-Id: <8da0b0a31810c8221ad3ab13b8c41cf1a266c2c0.1659122979.git.gitgitgadget@gmail.com>
+        Fri, 29 Jul 2022 12:29:45 -0700 (PDT)
+Message-Id: <53b15a0b7932f892505d07a509909b62c473037e.1659122979.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
 References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
         <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 29 Jul 2022 19:29:33 +0000
-Subject: [PATCH v2 04/10] refs: use ref_namespaces for replace refs base
+Date:   Fri, 29 Jul 2022 19:29:34 +0000
+Subject: [PATCH v2 05/10] log-tree: use ref_namespaces instead of if/else-if
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,116 +70,65 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The git_replace_ref_base global is used to store the value of the
-GIT_REPLACE_REF_BASE environment variable or the default of
-"refs/replace/". This is initialized within setup_git_env().
+The add_ref_decoration() method uses an if/else-if chain to determine if
+a ref matches a known ref namespace that has a special decoration
+category. That decoration type is later used to assign a color when
+writing to stdout.
 
-The ref_namespaces array is a new centralized location for information
-such as the ref namespace used for replace refs. Instead of having this
-namespace stored in two places, use the ref_namespaces array instead.
-
-For simplicity, create a local git_replace_ref_base variable wherever
-the global was previously used.
+The newly-added ref_namespaces array contains all namespaces, along
+with information about their decoration type. Check this array instead
+of this if/else-if chain. This reduces our dependency on string literals
+being embedded in the decoration logic.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/replace.c | 3 +++
- cache.h           | 1 -
- environment.c     | 3 +--
- log-tree.c        | 2 ++
- refs.c            | 1 +
- 5 files changed, 7 insertions(+), 3 deletions(-)
+ log-tree.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 583702a0980..6b97ef2348b 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -106,6 +106,7 @@ static int for_each_replace_name(const char **argv, each_replace_name_fn fn)
- 	size_t base_len;
- 	int had_error = 0;
- 	struct object_id oid;
-+	const char *git_replace_ref_base = ref_namespaces[NAMESPACE_REPLACE].ref;
- 
- 	strbuf_addstr(&ref, git_replace_ref_base);
- 	base_len = ref.len;
-@@ -147,6 +148,8 @@ static int check_ref_valid(struct object_id *object,
- 			    struct strbuf *ref,
- 			    int force)
- {
-+	const char *git_replace_ref_base = ref_namespaces[NAMESPACE_REPLACE].ref;
-+
- 	strbuf_reset(ref);
- 	strbuf_addf(ref, "%s%s", git_replace_ref_base, oid_to_hex(object));
- 	if (check_refname_format(ref->buf, 0))
-diff --git a/cache.h b/cache.h
-index ac5ab4ef9d3..631a4f388d6 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1008,7 +1008,6 @@ void reset_shared_repository(void);
-  * commands that do not want replace references to be active.
-  */
- extern int read_replace_refs;
--extern char *git_replace_ref_base;
- 
- /*
-  * These values are used to help identify parts of a repository to fsync.
-diff --git a/environment.c b/environment.c
-index 9eb22f975c7..b2004437dce 100644
---- a/environment.c
-+++ b/environment.c
-@@ -56,7 +56,6 @@ const char *askpass_program;
- const char *excludes_file;
- enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
- int read_replace_refs = 1;
--char *git_replace_ref_base;
- enum eol core_eol = EOL_UNSET;
- int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
- char *check_roundtrip_encoding = "SHIFT-JIS";
-@@ -162,6 +161,7 @@ const char *getenv_safe(struct strvec *argv, const char *name)
- 
- void setup_git_env(const char *git_dir)
- {
-+	char *git_replace_ref_base;
- 	const char *shallow_file;
- 	const char *replace_ref_base;
- 	struct set_gitdir_args args = { NULL };
-@@ -182,7 +182,6 @@ void setup_git_env(const char *git_dir)
- 	if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
- 		read_replace_refs = 0;
- 	replace_ref_base = getenv(GIT_REPLACE_REF_BASE_ENVIRONMENT);
--	free(git_replace_ref_base);
- 	git_replace_ref_base = xstrdup(replace_ref_base ? replace_ref_base
- 							  : "refs/replace/");
- 	update_ref_namespace(NAMESPACE_REPLACE, git_replace_ref_base);
 diff --git a/log-tree.c b/log-tree.c
-index d0ac0a6327a..bb80f1a94d2 100644
+index bb80f1a94d2..6075bdd334e 100644
 --- a/log-tree.c
 +++ b/log-tree.c
-@@ -141,10 +141,12 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
+@@ -137,6 +137,7 @@ static int ref_filter_match(const char *refname,
+ static int add_ref_decoration(const char *refname, const struct object_id *oid,
+ 			      int flags, void *cb_data)
+ {
++	int i;
+ 	struct object *obj;
  	enum object_type objtype;
  	enum decoration_type deco_type = DECORATION_NONE;
- 	struct decoration_filter *filter = (struct decoration_filter *)cb_data;
-+	const char *git_replace_ref_base;
- 
- 	if (filter && !ref_filter_match(refname, filter))
+@@ -167,16 +168,21 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
  		return 0;
+ 	obj = lookup_object_by_type(the_repository, oid, objtype);
  
-+	git_replace_ref_base = ref_namespaces[NAMESPACE_REPLACE].ref;
- 	if (starts_with(refname, git_replace_ref_base)) {
- 		struct object_id original_oid;
- 		if (!read_replace_refs)
-diff --git a/refs.c b/refs.c
-index 8e87cc7efb0..0da089d760b 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1607,6 +1607,7 @@ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
+-	if (starts_with(refname, "refs/heads/"))
+-		deco_type = DECORATION_REF_LOCAL;
+-	else if (starts_with(refname, "refs/remotes/"))
+-		deco_type = DECORATION_REF_REMOTE;
+-	else if (starts_with(refname, "refs/tags/"))
+-		deco_type = DECORATION_REF_TAG;
+-	else if (!strcmp(refname, "refs/stash"))
+-		deco_type = DECORATION_REF_STASH;
+-	else if (!strcmp(refname, "HEAD"))
+-		deco_type = DECORATION_REF_HEAD;
++	for (i = 0; i < NAMESPACE__COUNT; i++) {
++		struct ref_namespace_info *info = &ref_namespaces[i];
++
++		if (!info->decoration)
++			continue;
++		if (info->exact) {
++			if (!strcmp(refname, info->ref)) {
++				deco_type = info->decoration;
++				break;
++			}
++		} else if (starts_with(refname, info->ref)) {
++			deco_type = info->decoration;
++			break;
++		}
++	}
  
- int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_data)
- {
-+	const char *git_replace_ref_base = ref_namespaces[NAMESPACE_REPLACE].ref;
- 	return do_for_each_repo_ref(r, git_replace_ref_base, fn,
- 				    strlen(git_replace_ref_base),
- 				    DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+ 	add_name_decoration(deco_type, refname, obj);
+ 	while (obj->type == OBJ_TAG) {
 -- 
 gitgitgadget
 
