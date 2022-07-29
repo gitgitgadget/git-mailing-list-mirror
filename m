@@ -2,104 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF0FBC00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 17:12:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C467C00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 17:51:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237610AbiG2RMS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 13:12:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58778 "EHLO
+        id S238393AbiG2RvQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 13:51:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235560AbiG2RMO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 13:12:14 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C108D6C13B
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 10:12:13 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id c22so2864403wmr.2
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 10:12:13 -0700 (PDT)
+        with ESMTP id S238420AbiG2RvN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 13:51:13 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FF9B491D7
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 10:51:12 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id v16-20020a17090abb9000b001f25244c65dso9066570pjr.2
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 10:51:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Zwo/8FRaAsRfmRY6byv+l42XZPVwXQJhp9yYbuihb90=;
-        b=jA48QyIOuaVa59HEXNBJhAA6NLsGjz8KCVhy7+s3F2N5VB0X6nlAp4+YJ29OPpWdYF
-         /D0UiYWM0adLsp0Yej/6EDIWbzlZTUqWesR7QTzS1bxHzJsBcmYs1zS/4+HFbFEWBgVP
-         Chy2arCY+R4KvBGxDuJeyC4elvrJuVx0Rm3qNfCrFaSBNRS0wVAiXUlNszVE6No0++AS
-         ZzSuH6ShF1Ms1CEmUazX0L1QFK1XjU1S7AufirGyw3NSP5rGsz9OsAu7g+uFa2bxfqmJ
-         knuve9qON924e4eLGTiCRkZR7e6EMS1alktfhk4fLmMqRnL6ZS3EsA46UFXIGUI5XWP/
-         vAIw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Ekzf2Qx0wuosEmmLhPytpXhP4QJxxB3ecRZmrsxQSw8=;
+        b=EtwIdi4t2w9ENcTXBjSaHMRWl/XrDEc5HmvMjkIA9ifIma0BvkFdxYJ8pbh2lzHHB1
+         Q8cdIy4pEgcB37Usl3A3lxFKR1AVtymhikLlWbyolCFrKTswOvevnYLD9t9y/LnXR7nP
+         m+zqT2GT8gE1dbX/QK+YIObSg/Vb9AcOzcWhentbwlr0ou+WH0lHV76JbYlVStrh0yIt
+         YjlcUZs8uL/1sQZzZ9y4yOCag+lOhLfiDDb2V8aF+J6u7s5PPHboQd/Y331IWIXkQ+Is
+         cG6ZuaNpC7Jb5vQLYSKHbpVPBR8fVeIpwgUIiWXIOk+j20JkhQcIjf4g3auQhhHEyq91
+         VuXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Zwo/8FRaAsRfmRY6byv+l42XZPVwXQJhp9yYbuihb90=;
-        b=Ce1i57TMCCOYfN+d4ScXLmtG7S7JLezG73FfkM5+SAOuGySN62j/dItvywYDCrRtAE
-         krExXGAifivPxvlMiX27v1AUEL/Dj0Y0Kz29+iOhcIAsHvP4xoWndQHKZbH3sDYBlvi5
-         kyuHjBPDQFmVlzIR5ZwHBDWZEKZHmuCDR1DXcyhd9Diu4vbjw1sGDIml3pWH2lsy+AAV
-         re8ccqsDl+SEvWSkGkUrkYFHq/pFb0CCyv6RPXz7sPkUfhU4Fehtnpe69kypUPkQs6kH
-         4BeZbKzj6XhRE64qpAoj5eEn5wcgXPkAuyCCiBXfrtNu83fYmNkW7RGLhtq9qJh1ihpq
-         lImw==
-X-Gm-Message-State: AJIora/bU4cH0kUS8nZjbyURdD0stvB07/V/xyFtZ5Jp5mNl3WtPzTdl
-        I5eQ9PvG9odGNOOuAormaHu9lTa1YXE=
-X-Google-Smtp-Source: AGRyM1t5sSIffYXGk+J40JJy8ipmQtt3qtCZ+MSbnu4Z63RaP3KCjr7IUm8e1Rk9zzEkZzFb0cdmQg==
-X-Received: by 2002:a05:600c:4e94:b0:3a3:4448:62cc with SMTP id f20-20020a05600c4e9400b003a3444862ccmr3167925wmq.108.1659114731337;
-        Fri, 29 Jul 2022 10:12:11 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b2-20020a5d45c2000000b0021e9d98bec4sm4143855wrs.88.2022.07.29.10.12.10
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Ekzf2Qx0wuosEmmLhPytpXhP4QJxxB3ecRZmrsxQSw8=;
+        b=TYcllvHjqtyKTbHg2kTpW+c5IN932FSxY66GerFSJ0kMUwnmRH6fXZcCAHQCJIYNCh
+         UAnFhKPfovTYhG9uebbvK2dKNuH8gglLckwpCVif0wFODGpzj/LzSNxOcfkAaDK1QMuT
+         /pS6cHPWhtjmHUXJV2pGQZBmlq968FgnKsJQsV2WioGSv8KN2E/pxrikVaaUMsu7ZDOn
+         zDoXWPv9/ezhKs7wxa0BJNj1x8g5C52mG+dtqWZpgFJhKRP2NMj/X/Q+T1dlcwjRvT1J
+         Hja4KzLC+PrRVLzrz/HDmbsZKcfeURcyV3IsoYUq9oREH63tcOwx2qMJ2HaFOY8lq22g
+         b1wQ==
+X-Gm-Message-State: ACgBeo000E4YxIqdU3bluord4JYBKbV8LybWZ3EWvIGKNlupRIcPrl6D
+        RSUN2ZCfvs7mGb9yZP1wTqJbMzbIKNk=
+X-Google-Smtp-Source: AA6agR6ERw83JHlj0Vi0UcG79YvcgJinRpH7f/JWBmWhY8XJBDDC/saUMopVwpUHS9/6k+jbYu7nvA==
+X-Received: by 2002:a17:90b:1d91:b0:1f0:7824:1297 with SMTP id pf17-20020a17090b1d9100b001f078241297mr5893862pjb.126.1659117071721;
+        Fri, 29 Jul 2022 10:51:11 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local (192-184-217-7.fiber.dynamic.sonic.net. [192.184.217.7])
+        by smtp.gmail.com with ESMTPSA id z11-20020a17090a468b00b001f339f9cc57sm1574046pjf.54.2022.07.29.10.51.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jul 2022 10:12:10 -0700 (PDT)
-Message-Id: <d2e1af0f922ea5316074dd0867c66650161b0ab5.1659114727.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1307.v2.git.1659114727.gitgitgadget@gmail.com>
-References: <pull.1307.git.1659084748350.gitgitgadget@gmail.com>
-        <pull.1307.v2.git.1659114727.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 29 Jul 2022 17:12:07 +0000
-Subject: [PATCH v2 2/2] merge-ort: do leave Trace2 region even if checkout
- fails
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Fri, 29 Jul 2022 10:51:10 -0700 (PDT)
+Date:   Fri, 29 Jul 2022 10:51:08 -0700
+From:   Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] ci: fix the FreeBSD build
+Message-ID: <20220729175108.zk63qonchmrvprsl@Carlos-MacBook-Pro-2.local>
+References: <pull.1308.git.1659097724.gitgitgadget@gmail.com>
+ <985e4bb8-0cb1-3980-aaf7-bd3c793f7627@github.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <985e4bb8-0cb1-3980-aaf7-bd3c793f7627@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Fri, Jul 29, 2022 at 08:58:46AM -0400, Derrick Stolee wrote:
+> On 7/29/2022 8:28 AM, Johannes Schindelin via GitGitGadget wrote:
+> > Since 3a251bac0d1a (trace2: only include "fsync" events if we git_fsync(),
+> > 2022-07-18), the FreeBSD builds are failing in t5351.6. See
+> > https://cirrus-ci.com/task/4577761405698048 for an example. The run at
+> > https://cirrus-ci.com/task/6004115347079168 shows that this patch fixes the
+> > bug.
+> 
+> Thanks for noticing and fixing this bug. The FreeBSD build is slow
 
-In 557ac0350d9 (merge-ort: begin performance work; instrument with
-trace2_region_* calls, 2021-01-23), we added Trace2 instrumentation, but
-in the error path that returns early, we forgot to tell Trace2 that
-we're leaving the region. Let's fix that.
+It usually takes a little more than 7 minutes for a full run, which is IMHO
+less (at least wall time) than the whole CI does; could you elaborate on
+why being "slow" would warrant ignoring its failures?
 
-Pointed-out-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- merge-ort.c | 3 +++
- 1 file changed, 3 insertions(+)
+> and flaky enough that I sometimes ignore its output before submitting
+> a series. Good that it will be green again.
 
-diff --git a/merge-ort.c b/merge-ort.c
-index e820e45a8e8..eb0296902ad 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -3158,6 +3158,7 @@ void merge_switch_to_result(struct merge_options *opt,
- 			/* failure to function */
- 			result->clean = -1;
- 			merge_finalize(opt, result);
-+			trace2_region_leave("merge", "checkout", opt->repo);
- 			return;
- 		}
- 		trace2_region_leave("merge", "checkout", opt->repo);
-@@ -3169,6 +3170,8 @@ void merge_switch_to_result(struct merge_options *opt,
- 			/* failure to function */
- 			result->clean = -1;
- 			merge_finalize(opt, result);
-+			trace2_region_leave("merge", "record_conflicted",
-+					    opt->repo);
- 			return;
- 		}
- 		trace2_region_leave("merge", "record_conflicted", opt->repo);
--- 
-gitgitgadget
+I'd noticed that because it runs outside GitHub actions it sometimes has
+synchronization(ex [1]) issues, but that might be some bug on the integration
+with Cirrus which is easily avoided by looking instead directly to their
+status page:
+
+  https://cirrus-ci.com/github/git/git
+
+Carlo
