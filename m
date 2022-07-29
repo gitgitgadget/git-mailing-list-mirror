@@ -2,117 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4035C04A68
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 18:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B799C00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 18:06:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238528AbiG2SDV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 14:03:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41478 "EHLO
+        id S237397AbiG2SGV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 14:06:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238452AbiG2SDT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 14:03:19 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44CDD89AAB
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 11:03:18 -0700 (PDT)
-Received: (qmail 22021 invoked by uid 109); 29 Jul 2022 18:03:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 29 Jul 2022 18:03:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27406 invoked by uid 111); 29 Jul 2022 18:03:17 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 29 Jul 2022 14:03:17 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 29 Jul 2022 14:03:16 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] revisions API: don't leak memory on argv elements
- that need free()-ing
-Message-ID: <YuQg5M/cSLtqOgdw@coredump.intra.peff.net>
-References: <cover-0.6-00000000000-20220713T130511Z-avarab@gmail.com>
- <patch-6.6-4a581a4a6ce-20220713T130511Z-avarab@gmail.com>
- <YtV4KmrTBkmcx6m3@coredump.intra.peff.net>
- <220718.86zgh6wiwa.gmgdl@evledraar.gmail.com>
- <YtWAMP0ROFseFs6B@coredump.intra.peff.net>
- <220729.86pmhoidsc.gmgdl@evledraar.gmail.com>
+        with ESMTP id S237042AbiG2SGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 14:06:19 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D2F389675
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 11:06:18 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B96211363C8;
+        Fri, 29 Jul 2022 14:06:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8IZf2E50/QF7KlkxwaYkvMbE/oBJ1LHtXFH5SE
+        vqvog=; b=JgxMT32fCm6Q4XpYgwaIL+CV7ubBzPab8jLjHr+JLkxa0A71TuQegQ
+        TtQz/ZAWuJLDX07b8lXVtcBLNCnf5jaCcf1NjM29wug4kkgVR7L3gHSmC3DZAD9w
+        IEJQl7JYLUbX1fmcH0MAbmDoYKAesoi5k1NtaJhxF6X2VkTgGgnQM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B11601363C7;
+        Fri, 29 Jul 2022 14:06:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 24D381363C6;
+        Fri, 29 Jul 2022 14:06:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com,
+        philipoakley@iee.email, johncai86@gmail.com
+Subject: Re: [PATCH v5 5/6] transport: add client support for object-info
+References: <20220502170904.2770649-1-calvinwan@google.com>
+        <20220728230210.2952731-6-calvinwan@google.com>
+Date:   Fri, 29 Jul 2022 11:06:16 -0700
+In-Reply-To: <20220728230210.2952731-6-calvinwan@google.com> (Calvin Wan's
+        message of "Thu, 28 Jul 2022 23:02:09 +0000")
+Message-ID: <xmqqbkt77q07.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <220729.86pmhoidsc.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24336392-0F69-11ED-AED5-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 29, 2022 at 09:07:40AM +0200, Ævar Arnfjörð Bjarmason wrote:
+Calvin Wan <calvinwan@google.com> writes:
 
-> > In that case, we could replace your patch 5 in favor of just calling
-> > strvec_clear() at the end of bisect_rev_setup().
-> 
-> 5/6 is doing that, or rather at the end of check_ancestors() and
-> bisect_next_all(), but those call bisect_rev_setup() and pass it the
-> strvec, so in terms of memory management it amounts to the same thing.
+> +void send_object_info_request(int fd_out, struct object_info_args *args)
+> +{
+> +	struct strbuf req_buf = STRBUF_INIT;
+> +	size_t i;
+> +
+> +	write_command_and_capabilities(&req_buf, args->server_options, "object-info");
+> +
+> +	if (unsorted_string_list_has_string(args->object_info_options, "size"))
+> +		packet_buf_write(&req_buf, "size");
+> +
+> +	if (unsorted_string_list_has_string(args->object_info_options, "type"))
+> +		packet_buf_write(&req_buf, "type");
+> +
+> +	if (args->oids) {
+> +		for (i = 0; i < args->oids->nr; i++)
+> +			packet_buf_write(&req_buf, "oid %s", oid_to_hex(&args->oids->oid[i]));
+> +	}
 
-Right, but my point is that we do not need to complicate the interface
-and ownership rules for bisect_rev_setup() by passing around the extra
-variable.
+If !args->oids then we say "we want to request object-info to learn
+size and type for the following objects: oh, there are no objects we
+are interested in".  I wonder if an early return
 
-> > It's possible there's a
-> > case I'm missing that makes this generally not-safe, but in the case of
-> > bisect_rev_setup() there's a very limited set of items in our argv in
-> > the first place. Doing so also passes the test suite with
-> > SANITIZE=address, though again, this is just exercising the very limited
-> > bisect options here.
-> 
-> I think what you're missing is that this code is basically doing this,
-> which is a common pattern in various parts of our codebase:
-> 
-> 	struct strvec sv = STRVEC_INIT;
-> 	strvec_push(&sv, "foo"); // sv.v[0] 
-> 	strvec_push(&sv, "bar"); // sv.v[1] 
-> 	sv.v[1] = NULL; // the code in revisions.c
-> 	strvec_clear(&sv);
-> 
-> I.e. you can't fix this by simply having revision.c having its own
-> strvec, because it would just .. proceed to do the same thing.
+	if (!args->oids)
+		return;
 
-Right, none of what I was suggesting above gets rid of the flag to tell
-revisions.c that it should free elements it removes from argv. We still
-have to do that. My point was just that if we can assume that
-setup_revisions() does not need for the passed-in argv to exist after it
-exits (which _used_ to not be true, but I think is these days), then
-that can simplify a few of the callers.
+at the beginning of the function that turns it into a benign no-op,
+may make more sense?  Calling "send_X()" helper and seeing nothing
+come out on the wire might make it look awkward, though.
 
-> Of course we could alter its argv-iterating state machine to not clobber
-> that "argv" element to NULL, and have other subsequent code know that it
-> should stop at a new lower "argc" etc. etc., but that's getting at the
-> much more invasive API changes 6/6 notes as the path not taken.
+> @@ -363,10 +437,12 @@ static int fetch_refs_via_pack(struct transport *transport,
+>  			       int nr_heads, struct ref **to_fetch)
+>  {
+>  	int ret = 0;
+> +	size_t i;
+>  	struct git_transport_data *data = transport->data;
+>  	struct ref *refs = NULL;
+>  	struct fetch_pack_args args;
+>  	struct ref *refs_tmp = NULL;
+> +	struct ref *object_info_refs = xcalloc(1, sizeof (struct ref));
 
-Yeah, I don't think that's at all worth it. If anything, it could
-perhaps hold on to the "removed" pointer and restore it at the end, but
-I wouldn't be surprised if that gets ugly, too.
-
-> And, in the general case for things that do this to the strvec what
-> we're explicitly doing is having the caller then operate on that munged
-> argv, i.e. it's important that we change *its* argv. That's not going on
-> here, but e.g. various parse_options() callers rely on that.
-
-Right, agreed.
-
-> IIRC this fails SANITIZE=address or was otherwise broken, I didn't test
-> it now, but that's not the point...
-> 
-> ... I'm just including it by way of explanation. I.e. for at least
-> *some* callers (IIRC the below mostly works, and I can't remember where
-> it's broken) it would suffice to just keep around a list of "here's
-> stuff we should free later".
-> 
-> In case below I opted to do that with a string_list, but it could be
-> another strvec or whatever.
-
-FWIW, I don't really like this direction. It feels like a huge band-aid,
-and the right solution is either having functions _not_ munge strvecs
-too much, or be told that they can take ownership of removed elements
-and free them (i.e., your current patch 6).
-
--Peff
+Style: no SP between "sizeof" and "(".
