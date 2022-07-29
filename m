@@ -2,85 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE33FC00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 21:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45B98C19F2C
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 21:25:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239238AbiG2VXs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 17:23:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40764 "EHLO
+        id S239291AbiG2VZB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 17:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238328AbiG2VXq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 17:23:46 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4261988CCF
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 14:23:46 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CB8CE1A41CE;
-        Fri, 29 Jul 2022 17:23:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ohCG0w838ly9EF1PwcL0S8Wi6UybQYS6LFmbDL
-        xUaTQ=; b=B9bZ9shmfxlvVtfk8jjW/ru9W7YtTxdr5DJUzcwKeLriOXBmp0pECH
-        qRP6rRttSLPkZv9tgIuqZ1vIBGPgrcJDx9sdp29T5g1Gu4BRGHTvYwMAJgrAs8Qv
-        JjHwYeFPTCmsmaCmnNXpXHyetAKSIfSJO2pig3SUdxYpLYw0azOLo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C4AED1A41CD;
-        Fri, 29 Jul 2022 17:23:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.40.190])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S231563AbiG2VY6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 17:24:58 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2F4D8BA8B
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 14:24:56 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5DF8F1A41CB;
-        Fri, 29 Jul 2022 17:23:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqn?= =?utf-8?B?biBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Git List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH] merge-file: fix build warning with gcc 4.8.5
-References: <365e01e93dce582e9d926e83bdc6891310d22699.1659084832.git.congdanhqx@gmail.com>
-        <xmqqbkt7api9.fsf@gitster.g>
-        <YuQ60ZUPBHAVETD7@coredump.intra.peff.net>
-        <CAPig+cSiAEgopj1zwR4kUG=ZLJQrNAVj0P5g4veWYD-ERr=irw@mail.gmail.com>
-        <YuRKe/LdNs0u7G2w@coredump.intra.peff.net>
-Date:   Fri, 29 Jul 2022 14:23:41 -0700
-In-Reply-To: <YuRKe/LdNs0u7G2w@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 29 Jul 2022 17:00:43 -0400")
-Message-ID: <xmqqzggr4nqa.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id AB6685A1A8;
+        Fri, 29 Jul 2022 21:24:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1659129895;
+        bh=rvmh1ziylhkgzmeMvW0x1aMSCs1OIOpjmPj7MsYlp+k=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=hTpTlK94yQLv4coNOkyvl0QRU5veAg+E9WnVtIOE2e4DLH/aDqcfHxB1SrTpyEHHm
+         RjN42GcnvTV9uWvSPlqFC2e/3/2PugWd7dPTIVwFoUY/seMUiVUZRABgfyntNBaCT2
+         sTEhVkFjDjU5Dgp9IE6je98POxWbppXte/ysQm7qpMOZOlwBd+/LLL6pAoPsi767ls
+         b2UYz1Hg9vfINP6HCxWZ/Y66h85CSVe3K1TYFLQsVPYJU8T5ye5Y6Tk61Ebk5/qCd2
+         Kb2PISxg/Yj3PGE5aQYocJvUlcljK36oPzK+nJAo2MOXFzKApFM1Wv8Ocrjwx9boFy
+         gnJ8ep7LMucxWwLNVEyYhwZyGCzYCnOWo5PQCkA0kuKAVQGQOtqWqf58UFrhvuNua7
+         8xnaCdDK69F8xdL07dnk0ls6jXVQf+W6Q/xbcOrNa+NNemAsJLR5eU+qClxTng9hbB
+         b+fCuq43cHpiJempE+mTpjKYoS3XRw5HVAmSsAHqifRZgS5cId8
+Date:   Fri, 29 Jul 2022 21:24:53 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Neeraj Singh <neerajsi@microsoft.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] t5351: avoid relying on `core.fsyncMethod = batch`
+ to be supported
+Message-ID: <YuRQJTzA1EtDUFSv@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Neeraj Singh <neerajsi@microsoft.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1308.git.1659097724.gitgitgadget@gmail.com>
+ <501a89aa0b2de396b0c7b82b2e24046b9c98c382.1659097724.git.gitgitgadget@gmail.com>
+ <xmqq1qu3aoml.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B88270F4-0F84-11ED-AE35-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="4XwuWTwAPe9LKrPv"
+Content-Disposition: inline
+In-Reply-To: <xmqq1qu3aoml.fsf@gitster.g>
+User-Agent: Mutt/2.2.6 (2022-06-05)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> On Fri, Jul 29, 2022 at 04:48:55PM -0400, Eric Sunshine wrote:
->
->> Leaving aside for the moment the problem with Apple's oddball invented
->> version numbers for `clang`, should this patch also take older `clang`
->> versions into consideration rather than focusing only on `gcc`? (Of
->> course, `clang` could be dealt with in a separate patch if you'd
->> rather not worry about it here.)
->
-> I was just fixing the reported gcc issue, and forgot totally that clang
-> had been mentioned in previous rounds. I'd be happy to just see a clang
-> patch on top of this once somebody figures out the right versions (but
-> it may be impossible without figuring out the oddball Apple thing).
+--4XwuWTwAPe9LKrPv
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I am willing to say that we do not care about "oddball Apple thing"
-and have developers on that platform to propose how to handle their
-compiler.
+On 2022-07-29 at 16:07:46, Junio C Hamano wrote:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>=20
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > On FreeBSD, this mode is not supported. But since 3a251bac0d1a (trace2:
+> > only include "fsync" events if we git_fsync(), 2022-07-18) t5351 will
+> > fail if this mode is unsupported.
+> >
+> > Let's address this in the minimal fashion, by detecting that that mode
+> > is unsupported and expecting a different count of hardware flushes in
+> > that case.
+> >
+> > This fixes the CI/PR builds on FreeBSD again.
+> >
+> > Note: A better way would be to test only what is relevant in t5351.6
+> > "unpack big object in stream (core.fsyncmethod=3Dbatch)" again instead =
+of
+> > blindly comparing the output against some exact text. But that would
+> > pretty much revert the idea of above-mentioned commit, and that commit
+> > was _just_ accepted into Git's main branch so one must assume that it
+> > was intentional.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  bulk-checkin.c                  |  2 ++
+> >  t/t5351-unpack-large-objects.sh | 10 ++++++++--
+> >  2 files changed, 10 insertions(+), 2 deletions(-)
+>=20
+> I am inclined to take this as-is for now.
 
-In any case, https://gcc.gnu.org/bugzilla/show_bug.cgi?id=53119
-seems to indicate that given enough time this problem will
-disappear, so I'd refrain from suggesting to use -Wno-missing-braces
-everywhere.
+I think this patch is a strict improvement over the status quo, despite
+what I'm going to mention below.
 
-Thanks.
+> But it inherits from 3a251bac0d1a the general "we should be able to
+> count the value" expectation, which may not be the best approach to
+> run this test; asking Acks from those originally involved in this
+> area and possibly ideas to test this in a more robust way.
+
+While it may not matter in this test, I noticed that the metrics we use
+need not be accurate in multi-threaded programs.  We use integers of
+static intmax_t which isn't necessarily atomic across threads.  Even if
+we assumed word-sized increments were atomic[0], this type might be 64
+bits on a 32-bit system.
+
+I am aware that we don't use threads in many places, but in general we
+should be safely able to assume that we can perform an fsync on any
+thread without thread safety problems because that's the assumption a
+reasonable Unix programmer would make.  Even if it's not a problem now,
+it could well be in the future, and we should either fix this (say, with
+C11 atomic integers[1]) or put a note on the metrics functions that they
+may be wrong and stop using them in tests.
+
+I would, in general, prefer that if we add wrappers that wrap common
+Unix functions we ensure that they provide the same guarantees as the
+common Unix functions we're wrapping.  I realize I may sound fussy, but
+I've been fixing giant thread-safety problems recently and it's not fun.
+
+[0] This is not, in general, a safe assumption to make, since most RISC
+architectures are load-store.
+[1] This would necessitate moving to C11, which is fine with me (and
+already required on Windows), but others may have objections to.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--4XwuWTwAPe9LKrPv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.35 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYuRQJAAKCRB8DEliiIei
+gWx4AP48ZO86HNSqu8TON/NiDLKHk2L07cswuYoCq/Gl1H3cMAEA/wd35XNCRAGB
+4AZb9VJKOQJw0yB3fasg//BpfiA2Bg4=
+=tLgN
+-----END PGP SIGNATURE-----
+
+--4XwuWTwAPe9LKrPv--
