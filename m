@@ -2,86 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BCC1C00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 15:22:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C782BC00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 15:31:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237566AbiG2PWU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 11:22:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50656 "EHLO
+        id S237443AbiG2Pbt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 11:31:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237567AbiG2PWB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 11:22:01 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6F09252B6
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 08:21:31 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id p21so5504252ljh.12
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 08:21:31 -0700 (PDT)
+        with ESMTP id S229979AbiG2Pbs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 11:31:48 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AB7C6FA0C
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 08:31:47 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id m7so3851746qkk.6
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 08:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=2MDO4LBKU7sLNHpbAT5WPnt7PDpbKEzcDAYZeEXB5Ac=;
-        b=XVugzOKN9iLCoeae5CAbYcHWoep5iD6wWFbPkmyTjY4tp9anbw+EqQN2p4bJ8JB6Jq
-         He/EAIcG29KaCOflKaAekT6twRCxUs9NM6tq87XQPtzReY3sZR3JkVxcf+Z/PfeWeZ8r
-         zV4vebUieUhajy/npOEUsrPy4fUruo+NYtBVktZOq9RMJLRYGhqzH6ogOaJblTkBlG2S
-         A/OScE0UR7P52Cgdr77mJkNJ/Rnn5r0utoFGipmvCWSDvB5S3QPF+vKxH2MB8AV9HH6n
-         tBZBB4iAPz8OMIiZhRTW6raK41ZMz+SXAZTY7qUd5mxtzds/KzPjqRXU2jLL+thBhdc2
-         dnPA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=c2fORxL4ZCNTh6MfRZhiFiz9RQ5w1opeMATzsspFcx0=;
+        b=FNMDDMCHHlircqF1sSDVZEwWUcHhYz7agtdKTlE0wP6GLNWAe/6HOVsyezvFRboPEN
+         DzzqL69uLh8QVtLVi9g5QrJ4fC5n/Me6W8wUwx0kmDF4dDNy40H3ANdyBMGsUKWdeVIB
+         jOc3R/IijqZkhWWAecosm+XNqtSd4nLSFByHEn8pCIW4fIs3TxuL3+Hv9qPAin8weVqS
+         sdyb0LYw/RWES6ooidbJrtha2yYvzOw98R3azpgVtmaix5kTWsC8YYjr9Xn/HPP2iZ6g
+         GOnPJCsw9SYqe1bIgkAL/ghF+EdfIGyzr2+GoQs9CISfmTjIcKFiZAve/A2dULr+l77K
+         aRFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=2MDO4LBKU7sLNHpbAT5WPnt7PDpbKEzcDAYZeEXB5Ac=;
-        b=U+rUa0DKZpkl1GbAC3Ep09Kg1J5fjsEK5GnsKx+M3ve6Qu9ls9k+x0EE0nagSnqljs
-         +fmvEp9llfMgAb4sjlksZGJ3/N9RgzQhTRQHd68w2HkD2AlBoKsyWz0SZ7r53YDD+4p9
-         t79Ff5D62j/6rX9yZ5MSI6Lt8dDh98owNVObbVfxfSJ4L/puwFbq4QjaFpI2z1qKr+zY
-         smQ0jJROB8065t9Mfb7PmXBVZOQTrNQdYueQ3WNTXqAzBEO+oWPINp8CYvYbnbi6iSZu
-         tVzyKQQCwpSvoCjq0bCVj1MKceoGRBnj6Rl7CbXIz4jt/2GswlpQYZFg670IaHiKWjxu
-         AVdQ==
-X-Gm-Message-State: AJIora9OBvBDwSC6twIMh+9irwFGIY/hs1RzwW1yhZqGdnUQMdIsxUMD
-        1Htwfm3WY+pzNtfzVDViNN4nvMFthyG/+o6zJD4x/lqgVySdeA==
-X-Google-Smtp-Source: AGRyM1uAwsl4NHygv5ICLoHllmUqB4PscWybOxmlL+jwArRbTV6qrDfHOz9hNqzDPWihXrVVchV6nK32OWEuecN0L8k=
-X-Received: by 2002:a2e:bc09:0:b0:25d:ffe9:aa45 with SMTP id
- b9-20020a2ebc09000000b0025dffe9aa45mr1344234ljf.118.1659108089331; Fri, 29
- Jul 2022 08:21:29 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=c2fORxL4ZCNTh6MfRZhiFiz9RQ5w1opeMATzsspFcx0=;
+        b=pmLt2s59VB+BYju/DPMCrroidW1y97PtUk0Fb2blQfHLIISiHLsehvmqcNCQ/0XhAL
+         N9crnKN88xMInFxu3dJY5mzLnQ6A6OGpAL07tzWyeAD0Poj3gdof1PZ/Abx8KtZUA3Mn
+         /3ULuo3dJ4S8rrlrvnftP4l/bgqbNOBxrOGet6njKu46ITzRaYPZngpfhs1wzM6A7f1Y
+         5pBSZEABkgFxxN33pv2uTy6IW8xAu8eS/nAJJSfOH6i1YP8C9HGu/p4RVIetuz+qCCTZ
+         2Q7JwPvz9y/nrufWS2pshqSPZd/5wuHWJFAgMYyIzAOIcp8CpyfhiUhAjOpJLAGcaGme
+         HYuQ==
+X-Gm-Message-State: AJIora+mr5iNcxomZEavoge39iIb++HXm0m/03imUZPKmDN4DqI1X/oh
+        YguyFMwYfMscpz0S6jqD6sgf2EuWpAIB9jF+3aaR/2oYSUE=
+X-Google-Smtp-Source: AGRyM1vZb5LBPXPvZjWa0+36oB1oiK+E0+FUQBA+ewBJnagk1+CDyTz73C6h+ngDH3hCkuZCMKtq2zhXndN6Ikqv7bs=
+X-Received: by 2002:a05:620a:754:b0:6b5:eb92:42e5 with SMTP id
+ i20-20020a05620a075400b006b5eb9242e5mr3109712qki.183.1659108706343; Fri, 29
+ Jul 2022 08:31:46 -0700 (PDT)
 MIME-Version: 1.0
-From:   Jesse Rittner <rittneje@gmail.com>
-Date:   Fri, 29 Jul 2022 11:20:53 -0400
-Message-ID: <CA+SRSSGkgLrmy0ATj+1OOL6=jR6J0SE+0Orbwh+=C5KcVp82kA@mail.gmail.com>
-Subject: Bug in git submodule update --depth
-To:     git@vger.kernel.org
+References: <pull.1307.git.1659084748350.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1307.git.1659084748350.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 29 Jul 2022 08:31:30 -0700
+Message-ID: <CABPp-BEBVO+O8bJaQRwVpt1VC0dC+sMJduAtmHpYev9uhnF-Rw@mail.gmail.com>
+Subject: Re: [PATCH] merge-ort: clean up after failed merge
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have a repository with a submodule. The submodule is on some fairly
-old commit. Under git 2.27.0, the following worked without issue
+On Fri, Jul 29, 2022 at 1:52 AM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> In 9fefce68dc8 (merge-ort: basic outline for merge_switch_to_result(),
+> 2020-12-13), we added functionality to lay down the result of a merge on
+> disk. But we forgot to release the data structures in case
+> `unpack_trees()` failed to run properly.
+>
+> This was pointed out by the `linux-leaks` job in our CI runs.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>     merge-ort: clean up after failed merge
+>
+>     I was investigating why seen's CI runs fail, and came up with this fix.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1307%2Fdscho%2Fmerge-ort-impl-leakfix-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1307/dscho/merge-ort-impl-leakfix-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1307
+>
+>  merge-ort.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/merge-ort.c b/merge-ort.c
+> index ee7fbe71404..61b9e90018b 100644
+> --- a/merge-ort.c
+> +++ b/merge-ort.c
+> @@ -1002,6 +1002,7 @@ void merge_switch_to_result(struct merge_options *opt,
+>                 if (checkout(opt, head, result->tree)) {
+>                         /* failure to function */
+>                         result->clean = -1;
+> +                       merge_finalize(opt, result);
+>                         return;
+>                 }
+>
+> @@ -1010,6 +1011,7 @@ void merge_switch_to_result(struct merge_options *opt,
+>                                                     &opti->conflicted)) {
+>                         /* failure to function */
+>                         result->clean = -1;
+> +                       merge_finalize(opt, result);
+>                         return;
+>                 }
+>         }
+>
+> base-commit: 9fefce68dc85d96781090f86c067d83f7c50b617
+> --
+> gitgitgadget
 
-`git submodule update --init --recursive --depth=3D1 [path]`
-
-(This did a shallow clone of the specific submodule commit.)
-
-However, in git 2.31.1, it fails. The same failure is observed in git
-2.37.1. I am unsure when the bug was introduced.
-
-git submodule update --init --recursive --depth=3D1 [submodule]
-Submodule '[submodule]' (ssh://git@[redacted].git) registered for path
-'[submodule]=E2=80=99
-Cloning into '[repository]/[submodule]'...
-remote: Total 0 (delta 0), reused 0 (delta 0)
-remote: Total 0 (delta 0), reused 0 (delta 0)
-fatal: bad object e6f1975700c8d6fec2c3812277e3260194cb5379
-error: remote did not send all necessary objects
-fatal: Fetched in submodule path '[submodule]', but it did not contain
-e6f1975700c8d6fec2c3812277e3260194cb5379. Direct fetching of that
-commit failed.
-
-From testing, it seems that git is incorrectly doing a shallow clone
-of the branch instead of the submodule commit.
-
-Your assistance in this matter is greatly appreciated.
-
-Thanks,
-Jesse Rittner
+Good catch.  Can you rebase on to a slightly newer commit?  I think we
+also need a trace2_region_leave() call in each block as well, which is
+only clear if you look at newer versions.
