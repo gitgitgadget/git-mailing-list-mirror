@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C486DC00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 19:29:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F20D5C00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 19:29:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238750AbiG2T3t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 15:29:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44798 "EHLO
+        id S238812AbiG2T3v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 15:29:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238636AbiG2T3p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 15:29:45 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD17D606BE
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 12:29:44 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id i10-20020a1c3b0a000000b003a2fa488efdso2364186wma.4
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 12:29:44 -0700 (PDT)
+        with ESMTP id S238602AbiG2T3r (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 15:29:47 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1464A5F11C
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 12:29:46 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id m13so3183448wrq.6
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 12:29:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Evi/S2XBMDmcNt2aElcJYPive8tSadhed7YNYWDiBDQ=;
-        b=ojOWk9OAS0Vv2/dDndpyY/zi7bnnTb9NSqyRfmf6ReEFKxMMT6iIz7OIUy03hKCYvV
-         lujO2uPWKp+Jild7ISqu8j/6f+CPgn9d15f/1IBgAvSnwJdGR7WQUVilD8LyhkJNx1G0
-         P8yLWiVEVn1mSrkRjrqXZHtSKq4SajR4uGvbF2DU0BX9if97vtSajMCKYTqFxLkTf4b5
-         oclEx8yKZFphc3St0KIhm7lfuyKWoMSHiA9g4sKFV0Djey7BRpbWMJi/WusVuqgzxrXF
-         IE7BfY/z9YthtGGGmG/jxmRMQ+xPHQtzu1Euc2QWS0z0Zc8nymV6wrCWEJoqMxjGFlgT
-         OW8w==
+        bh=Oa8F6UISOftTCgWXDlHBf7u9PgQ9MG6BPAoOJ3khpvw=;
+        b=PCQzi4McDKcrS0MIdpLkencxUsj1ILOwW70hxqWQxFbw6xwU0bp69FkMGp+3hI6uJc
+         +BxF5Lh2ubrksy3RbupiSb7CR9xhm+8yeHpBn8BZeBGnr1eKngXkTSlGLTkkHyFU05IO
+         954gwpPJTFF0DCD0xhUbjfqkzEVPfpRo5vLb8aVV/AZAcMzV8KrLoN4cc5gDIKflpOSJ
+         WRawO+rUaPgCrcsBvbVyiA2F53/W5GGT7l5DB+MOZlNA2dAZc6DebGdhQBHq+qvu8Brg
+         dojfnKMQiP66uZUH2U3DwW6hjqf06WMaQ9vPOfrGJAbNqg3bbAIYkbypdGnn4HIfEqpZ
+         Nzmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Evi/S2XBMDmcNt2aElcJYPive8tSadhed7YNYWDiBDQ=;
-        b=AtoxMgjR7fkTGDvn7EKIt8xWho4A97CubpYN4ryZ/CsPeIMxrQXWVXcM0l6PP+J+6S
-         pqo3EabbYl1wuw8A/4HZNMF3I6qql3wg6kjB/caITr7J8eQ3K9ZljqbnCGww25SvXz+Z
-         CbIl8RnvlV08QtkhaQ55UScHZP/mmOPkqgUriLpqphcT10fMnQaBatZkNKJLiTC37Yuw
-         Goa/ZlH5KB3WkvhImBH3p03xiFChzaIdBk0g2Dw2jXu5BAUk3YvDBfBxYGXKX5oDslwY
-         PELMD8o3dBqNwsIMN3wC2s9JIKEdihuCmwOTfEaWr8268+0qSudEJ3H+Jsfdon2ZWV/R
-         EzbA==
-X-Gm-Message-State: AJIora+JWBsngH7Z306G0zSmr0D2Hiuj4lmNiFHvR5Oncc86J2O8Hd/o
-        sAcznnIh7B2B5qlaX30ZkJQRMVcEp/c=
-X-Google-Smtp-Source: AGRyM1v40juCDYWt631TReB3ZNhVz0CmSQj3+5Lib0smWV42whaK7IwUJo4QD7Gv+IgScJ8GfDi6eg==
-X-Received: by 2002:a05:600c:19d2:b0:3a3:3aca:a83d with SMTP id u18-20020a05600c19d200b003a33acaa83dmr3622805wmq.88.1659122982796;
-        Fri, 29 Jul 2022 12:29:42 -0700 (PDT)
+        bh=Oa8F6UISOftTCgWXDlHBf7u9PgQ9MG6BPAoOJ3khpvw=;
+        b=s97IHnPorj3j5pcuvFhD9Vte4wC6kZNUlfYy8Z1wih1hcstNXmPJVDduXrYxQg1vYr
+         qxXZCEWMGNxomJSDllksklY5tU02hndivRp1ZhDU/X6PbsPjrvaMuh6nC0bfkPNmZbuI
+         dpJAdPE8QrAjXMH24UUu1xDjlc6Gd9W7w5ymzJcpv3uPm1GqmiwacLvinS+xP58IrDy6
+         /oqAoejVA7j0X5DfQ8fIYntQkwIVNC48PR7rS/TKJ2I1Linwg/daivlPuz9N8BB2VU5Q
+         WTc7pzalC96UeEkbCTELa71Lyu+lXghEzU0YaGVIhF0uEXfJcNo2vHft/CaYvkdHs+jq
+         FvMw==
+X-Gm-Message-State: ACgBeo3CLvX3DRbaSQcGGkVkNc0TIDjXEkLph/uGMmhTKug6axrO2bMW
+        I9WN/7TIzya8F/e0NNVTLUbmDx8JddQ=
+X-Google-Smtp-Source: AA6agR60za6uZfYboRFSchEV+QofxRIFqKb2jk9IXWdpkrMZMu/7obKI32iwyX0e2dkCsXwVETKEng==
+X-Received: by 2002:a05:6000:692:b0:21f:d91:f154 with SMTP id bo18-20020a056000069200b0021f0d91f154mr3146585wrb.668.1659122984120;
+        Fri, 29 Jul 2022 12:29:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 18-20020a05600c029200b003a2fdde48d1sm4993786wmk.25.2022.07.29.12.29.41
+        by smtp.gmail.com with ESMTPSA id q186-20020a1c43c3000000b003a302fb9df7sm9753513wma.21.2022.07.29.12.29.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jul 2022 12:29:42 -0700 (PDT)
-Message-Id: <b5eb110958baa80b72a345b3c850f1dfceabf076.1659122979.git.gitgitgadget@gmail.com>
+        Fri, 29 Jul 2022 12:29:43 -0700 (PDT)
+Message-Id: <d7486390d57849971ee6a4ac27a0a784c41623ee.1659122979.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
 References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
         <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 29 Jul 2022 19:29:31 +0000
-Subject: [PATCH v2 02/10] t4207: test coloring of grafted decorations
+Date:   Fri, 29 Jul 2022 19:29:32 +0000
+Subject: [PATCH v2 03/10] refs: add array of ref namespaces
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,107 +70,214 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The color.decorate.<slot> config option added the 'grafted' slot in
-09c4ba410b0f (log-tree: allow to customize 'grafted' color, 2018-05-26)
-but included no tests for this behavior. When modifying some logic
-around decorations, this ref namespace was ignored and could have been
-lost as a default namespace for 'git log' decorations by default.
+Git interprets different meanings to different refs based on their
+names. Some meanings are cosmetic, like how refs in  'refs/remotes/*'
+are colored differently from refs in 'refs/heads/*'. Others are more
+critical, such as how replace refs are interpreted.
 
-Add two tests to t4207 that check that the replaced objects are
-correctly decorated. Use "black" as the color since it is distinct from
-the other colors already in the test. The first test uses regular
-replace-objects while the second creates a commit graft.
+Before making behavior changes based on ref namespaces, collect all
+known ref namespaces into a array of ref_namespace_info structs. This
+array is indexed by the new ref_namespace enum for quick access.
 
-Be sure to test both modes with GIT_REPLACE_REF_BASE unset and set to an
-alternative base.
+As of this change, this array is purely documentation. Future changes
+will add dependencies on this array.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- t/t4207-log-decoration-colors.sh | 59 ++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ environment.c |  2 ++
+ notes.c       |  1 +
+ refs.c        | 83 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ refs.h        | 46 ++++++++++++++++++++++++++++
+ 4 files changed, 132 insertions(+)
 
-diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
-index 36ac6aff1e4..69f8ac602d6 100755
---- a/t/t4207-log-decoration-colors.sh
-+++ b/t/t4207-log-decoration-colors.sh
-@@ -18,6 +18,7 @@ test_expect_success setup '
- 	git config color.decorate.tag "reverse bold yellow" &&
- 	git config color.decorate.stash magenta &&
- 	git config color.decorate.HEAD cyan &&
-+	git config color.decorate.grafted black &&
+diff --git a/environment.c b/environment.c
+index b3296ce7d15..9eb22f975c7 100644
+--- a/environment.c
++++ b/environment.c
+@@ -185,6 +185,8 @@ void setup_git_env(const char *git_dir)
+ 	free(git_replace_ref_base);
+ 	git_replace_ref_base = xstrdup(replace_ref_base ? replace_ref_base
+ 							  : "refs/replace/");
++	update_ref_namespace(NAMESPACE_REPLACE, git_replace_ref_base);
++
+ 	free(git_namespace);
+ 	git_namespace = expand_namespace(getenv(GIT_NAMESPACE_ENVIRONMENT));
+ 	shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
+diff --git a/notes.c b/notes.c
+index 7452e71cc8d..7bade6d8f69 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1005,6 +1005,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
  
- 	c_reset="<RESET>" &&
+ 	if (!notes_ref)
+ 		notes_ref = default_notes_ref();
++	update_ref_namespace(NAMESPACE_NOTES, xstrdup(notes_ref));
  
-@@ -27,6 +28,7 @@ test_expect_success setup '
- 	c_tag="<BOLD;REVERSE;YELLOW>" &&
- 	c_stash="<MAGENTA>" &&
- 	c_HEAD="<CYAN>" &&
-+	c_grafted="<BLACK>" &&
+ 	if (!combine_notes)
+ 		combine_notes = combine_notes_concatenate;
+diff --git a/refs.c b/refs.c
+index ec3134e4842..8e87cc7efb0 100644
+--- a/refs.c
++++ b/refs.c
+@@ -20,6 +20,7 @@
+ #include "repository.h"
+ #include "sigchain.h"
+ #include "date.h"
++#include "commit.h"
  
- 	test_commit A &&
- 	git clone . other &&
-@@ -63,4 +65,61 @@ test_expect_success 'Commit Decorations Colored Correctly' '
- 	test_cmp expected out
- '
+ /*
+  * List of all available backends
+@@ -56,6 +57,88 @@ static unsigned char refname_disposition[256] = {
+ 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
+ };
  
-+cat >expected <<EOF
-+${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD ->\
-+ ${c_reset}${c_branch}main${c_reset}${c_commit},\
-+ ${c_reset}${c_tag}tag: D${c_reset}${c_commit})${c_reset} D
-+${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: C${c_reset}${c_commit},\
-+ ${c_reset}${c_grafted}replaced${c_reset}${c_commit})${c_reset} B
-+${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
-+EOF
++struct ref_namespace_info ref_namespaces[] = {
++	[NAMESPACE_HEAD] = {
++		.ref = "HEAD",
++		.decoration = DECORATION_REF_HEAD,
++		.exact = 1,
++	},
++	[NAMESPACE_BRANCHES] = {
++		.ref = "refs/heads/",
++		.decoration = DECORATION_REF_LOCAL,
++	},
++	[NAMESPACE_TAGS] = {
++		.ref = "refs/tags/",
++		.decoration = DECORATION_REF_TAG,
++	},
++	[NAMESPACE_REMOTE_REFS] = {
++		/*
++		 * The default refspec for new remotes copies refs from
++		 * refs/heads/ on the remote into refs/remotes/<remote>/.
++		 * As such, "refs/remotes/" has special handling.
++		 */
++		.ref = "refs/remotes/",
++		.decoration = DECORATION_REF_REMOTE,
++	},
++	[NAMESPACE_STASH] = {
++		/*
++		 * The single ref "refs/stash" stores the latest stash.
++		 * Older stashes can be found in the reflog.
++		 */
++		.ref = "refs/stash",
++		.exact = 1,
++		.decoration = DECORATION_REF_STASH,
++	},
++	[NAMESPACE_REPLACE] = {
++		/*
++		 * This namespace allows Git to act as if one object ID
++		 * points to the content of another. Unlike the other
++		 * ref namespaces, this one can be changed by the
++		 * GIT_REPLACE_REF_BASE environment variable. This
++		 * .namespace value will be overwritten in setup_git_env().
++		 */
++		.ref = "refs/replace/",
++		.decoration = DECORATION_GRAFTED,
++	},
++	[NAMESPACE_NOTES] = {
++		/*
++		 * The refs/notes/commit ref points to the tip of a
++		 * parallel commit history that adds metadata to commits
++		 * in the normal history. This branch can be overwritten
++		 * by the core.notesRef config variable or the
++		 * GIT_NOTES_REFS environment variable.
++		 */
++		.ref = "refs/notes/commit",
++		.exact = 1,
++	},
++	[NAMESPACE_PREFETCH] = {
++		/*
++		 * Prefetch refs are written by the background 'fetch'
++		 * maintenance task. It allows faster foreground fetches
++		 * by advertising these previously-downloaded tips without
++		 * updating refs/remotes/ without user intervention.
++		 */
++		.ref = "refs/prefetch/",
++	},
++	[NAMESPACE_REWRITTEN] = {
++		/*
++		 * Rewritten refs are used by the 'label' command in the
++		 * sequencer. These are particularly useful during an
++		 * interactive rebase that uses the 'merge' command.
++		 */
++		.ref = "refs/rewritten/",
++	},
++};
 +
-+test_expect_success 'test coloring with replace-objects' '
-+	test_when_finished rm -rf .git/refs/replace* &&
-+	test_commit C &&
-+	test_commit D &&
++void update_ref_namespace(enum ref_namespace namespace, char *ref)
++{
++	struct ref_namespace_info *info = &ref_namespaces[namespace];
++	if (info->ref_updated)
++		free(info->ref);
++	info->ref = ref;
++	info->ref_updated = 1;
++}
 +
-+	git replace HEAD~1 HEAD~2 &&
-+	git log --first-parent --abbrev=10 --decorate --oneline --color=always HEAD |
-+	sed "s/[0-9a-f]\{10,10\}/COMMIT_ID/" |
-+	test_decode_color >out &&
-+	test_cmp expected out &&
-+	git replace -d HEAD~1 &&
+ /*
+  * Try to read one refname component from the front of refname.
+  * Return the length of the component found, or -1 if the component is
+diff --git a/refs.h b/refs.h
+index 47cb9edbaa8..94e8dedf939 100644
+--- a/refs.h
++++ b/refs.h
+@@ -2,6 +2,7 @@
+ #define REFS_H
+ 
+ #include "cache.h"
++#include "commit.h"
+ 
+ struct object_id;
+ struct ref_store;
+@@ -930,4 +931,49 @@ struct ref_store *get_main_ref_store(struct repository *r);
+ struct ref_store *get_submodule_ref_store(const char *submodule);
+ struct ref_store *get_worktree_ref_store(const struct worktree *wt);
+ 
++/*
++ * Some of the names specified by refs have special meaning to Git.
++ * Organize these namespaces in a comon 'ref_namespaces' array for
++ * reference from multiple places in the codebase.
++ */
 +
-+	GIT_REPLACE_REF_BASE=refs/replace2/ git replace HEAD~1 HEAD~2 &&
-+	GIT_REPLACE_REF_BASE=refs/replace2/ git log --first-parent --abbrev=10 \
-+		--decorate --oneline --color=always HEAD |
-+	sed "s/[0-9a-f]\{10,10\}/COMMIT_ID/" |
-+	test_decode_color >out &&
-+	test_cmp expected out
-+'
++struct ref_namespace_info {
++	char *ref;
++	enum decoration_type decoration;
 +
-+cat >expected <<EOF
-+${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD ->\
-+ ${c_reset}${c_branch}main${c_reset}${c_commit},\
-+ ${c_reset}${c_tag}tag: D${c_reset}${c_commit},\
-+ ${c_reset}${c_grafted}replaced${c_reset}${c_commit})${c_reset} D
-+${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: v1.0${c_reset}${c_commit},\
-+ ${c_reset}${c_tag}tag: B${c_reset}${c_commit})${c_reset} B
-+${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
-+EOF
++	/*
++	 * If 'exact' is true, then we must match the 'ref' exactly.
++	 * Otherwise, use a prefix match.
++	 *
++	 * 'orig_ref' is for internal use. It represents whether the
++	 * 'ref' value was replaced from its original literal version.
++	 */
++	unsigned exact:1,
++		 ref_updated:1;
++};
 +
-+test_expect_success 'test coloring with grafted commit' '
-+	test_when_finished rm -rf .git/refs/replace* &&
++enum ref_namespace {
++	NAMESPACE_HEAD,
++	NAMESPACE_BRANCHES,
++	NAMESPACE_TAGS,
++	NAMESPACE_REMOTE_REFS,
++	NAMESPACE_STASH,
++	NAMESPACE_REPLACE,
++	NAMESPACE_NOTES,
++	NAMESPACE_PREFETCH,
++	NAMESPACE_REWRITTEN,
 +
-+	git replace --graft HEAD HEAD~2 &&
-+	git log --first-parent --abbrev=10 --decorate --oneline --color=always HEAD |
-+	sed "s/[0-9a-f]\{10,10\}/COMMIT_ID/" |
-+	test_decode_color >out &&
-+	test_cmp expected out &&
-+	git replace -d HEAD &&
++	/* Must be last */
++	NAMESPACE__COUNT
++};
 +
-+	GIT_REPLACE_REF_BASE=refs/replace2/ git replace --graft HEAD HEAD~2 &&
-+	GIT_REPLACE_REF_BASE=refs/replace2/ git log --first-parent --abbrev=10 \
-+		--decorate --oneline --color=always HEAD |
-+	sed "s/[0-9a-f]\{10,10\}/COMMIT_ID/" |
-+	test_decode_color >out &&
-+	test_cmp expected out
-+'
++/* See refs.c for the contents of this array. */
++extern struct ref_namespace_info ref_namespaces[];
 +
- test_done
++/*
++ * Some ref namespaces can be modified by config values or environment
++ * variables. Modify a namespace as specified by its ref_namespace key.
++ */
++void update_ref_namespace(enum ref_namespace namespace, char *ref);
++
+ #endif /* REFS_H */
 -- 
 gitgitgadget
 
