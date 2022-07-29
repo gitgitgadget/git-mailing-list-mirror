@@ -2,213 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B15AC00144
-	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 13:15:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80068C00144
+	for <git@archiver.kernel.org>; Fri, 29 Jul 2022 13:16:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236317AbiG2NPW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 09:15:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39072 "EHLO
+        id S236212AbiG2NQb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 09:16:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236187AbiG2NPT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 09:15:19 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48698DA9
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 06:15:17 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id e69so3584222iof.5
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 06:15:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dr4wBvXns5VPkgHlWW411kQ53m7LfNqDVfRvms+nxO8=;
-        b=ESn35rEJZ5KyGZ2mqDJyt8buJBIQd1k20zKG8dzQ+RbOTCztBCI0LpvoCJpZxXeEth
-         Z+VM7N4AHtDdGCWxPXmswwQBeUxVIX0L27RQ6HMYf7Fby5cUmGCXvCyQkjILo1rAlmfW
-         O0kzG81GGWfZdrOn8fATqcdFQXgQ8s2lnbuEs1nXSAlEkVFfC5lhT3EkTGwVWcKpEBl/
-         Yz0fEpEQ4jSImTC9XFZYwoGNHL5XzhJNiQH++JxGFxFrepkJPnVWs8ZIwpv+lCXERSau
-         bENW1kkmrr7rJHFUECGqgp82sAnoT2N1Is2u1jLV0/Xqn4uTm6WFg9udz47ElPcMGS6t
-         onTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dr4wBvXns5VPkgHlWW411kQ53m7LfNqDVfRvms+nxO8=;
-        b=xmypr4vJbfALkOqCjfGpZ1pu9RPEy++pGdq9v05ilQfcHy1Wpv+12ylrfdemBOEMp1
-         /6XxCO8abdk13Lb1ILzquJotWDsDmvi/AfGIcEtW18KHOpwZSBBzz3zGHSYvR4GbYmYH
-         bzLV+TiWxaqu8Eabu+dszMS25rVPcDpClkV4MJTBBbphws2fp3zi4Uvz7lOugTMQ1CgK
-         vnFqCfM8+N1tlDcYHU9ANsC7iDtmSEtFXvmuhYPGFLCXjvjfuI89z4nHSKDckL7g/kI5
-         kH03ivh4Qp1044fQHuAGMHmKOzMWZhf7HelLh/cbVHq74F2DqnQZjJ0pcspVtGP5vCw0
-         gsAw==
-X-Gm-Message-State: AJIora8rw7IGypc0Y+V+vel0N0Wt9dVftX96K9/XNnYsQZlmQ2JC03cT
-        ezaqqxsettdpKEuAWUyXK2I5BFvmSVAA/xjF4Yg=
-X-Google-Smtp-Source: AGRyM1tHg5dCef8WwHtPk7tHgUDpyJKZn5K6x7vbRGyNJA+pV+LDLqiM2HjIyicUvyqfR51BvSKwM1gnwLXc25p/zng=
-X-Received: by 2002:a05:6638:339b:b0:33f:5a4c:4d8e with SMTP id
- h27-20020a056638339b00b0033f5a4c4d8emr1344667jav.93.1659100516146; Fri, 29
- Jul 2022 06:15:16 -0700 (PDT)
+        with ESMTP id S233652AbiG2NQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 09:16:28 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F09A654667
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 06:16:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1659100574;
+        bh=dl44D2MphYUPPYnLZ91my8sY0tHe3WAgoagueA/JRwg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=N7FkbGMeVg8apCOP6rERwhQNqX/tKvsdiw9t1s14BErO2sZNXqnmwk2ejE8+FadxD
+         m08OiTdeP8n5tLagnWnyugAC3v3ioH/1g8umAqJ48xTI3jq38od8oeJsVK0895906Y
+         Nb1WzHDuTULKYOmVzlDMBwSuMuKnCRJnfysaraGo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.244.62] ([89.1.214.237]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mnpns-1nfLD53nXG-00pNEa; Fri, 29
+ Jul 2022 15:16:13 +0200
+Date:   Fri, 29 Jul 2022 15:16:12 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Eugen Konkov <kes-kes@yandex.ru>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Re* --creation-factor=100 does not show code
+In-Reply-To: <xmqqo7x9ch7n.fsf_-_@gitster.g>
+Message-ID: <85snn12q-po05-osqs-n1o0-n6040392q01q@tzk.qr>
+References: <1196830250.20220726145447@yandex.ru>        <7229p500-p2r4-on87-6802-8o90s36rr3s4@tzk.qr> <xmqqo7x9ch7n.fsf_-_@gitster.g>
 MIME-Version: 1.0
-References: <CAOLTT8QusNzdO1mHqQFPz84pznYSpFWJunroRGXQ7qk6sJjeYg@mail.gmail.com>
- <220727.86mtculxnz.gmgdl@evledraar.gmail.com> <CAOLTT8QpYzoKDq6Pf8+YegCWngogy=3hUf-SyV180kntgucMpQ@mail.gmail.com>
- <220728.861qu5kz2c.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220728.861qu5kz2c.gmgdl@evledraar.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Fri, 29 Jul 2022 21:15:05 +0800
-Message-ID: <CAOLTT8SQsxW4WqwVcE951sW7vqP+YUPauLpMhz8jpRYsmv0bzA@mail.gmail.com>
-Subject: Re: Question: What's the best way to implement directory permission
- control in git?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:9PV0Wo1J40WtdLmkdVhqYx8jasBoPozSggSoEZfKxD+opEq040o
+ gmo/yYyKuM9/jeb/kB5lsW1NkaifJ0vJCULqCJ8NLiYU3BQBo5CzaiW9xB0N3XGXoBnkh7v
+ 3mU7Sx2AeupeSi1w2ejwrDJ+aEm6aJOwATzDiisAD38kNLaluCJZkGvO45eyv2o1sWO93Dq
+ Okzn+hZkZXH0KxFcbMGlw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2jga0anvtKM=:DpWQy/kF9hB6rmJHaCwBW4
+ gb30lrfUmm4F+FqJNa65sS+LixeXwaBuIvQTKz4dhXO93ldwi8lygj3bdcJh8DzbVPpdHX2zw
+ fP+EEFx2fdVoIVrB7b1VrY3Tv9sx/n4wkhGVG1nTsyNmrFPKOQG8HfZTsgJy8PjexVBxcdoOk
+ RqX3/rD1hseN5+AGw/FZ+YY577lk60zbiaFYlVNh3s3CH8oF0h0RM6ajYMvtr/bQ+Lbt0yLhq
+ 4XgN2feA85gJwP6a6l6P6l/NKT5V9sp34jpbvQkCIX2FcvqVlAYSZ4SblsOLgZbT/5pUCzZlI
+ eZMO5nB2gVFICyAVJRndxrniWrsp2HE/BjzUboE8fbMFbGhoNW/Q4nlFFfGGSLyZa7KFCEyLN
+ xXy05DEpndpJyzaH73AVjunATaJvmlZARSUjVtU9v/XwmWhTSHv8/D1M/9kTsFuPA2CbiVGHj
+ mAMdlcx8iEgMEawLlkLJ6PYN9VzecfoG1m9R+3b8eW3BgZGGuhI7jlOZIBvIOuHQbralM7uos
+ CGz2D6h7shbiV1Oy/j399zSPxncvIyq11Gh81AewTWAQMcAbSFS4pbI3uErTbYJw8Ama1Vq51
+ PEsaiBKlemWEhKIxZDrQ+A8l3ocOv9LDKCr2NaLc5IoqY9ow/V2/Jwumrxtn5JCUV3/Mw2AZ3
+ qcnmj2oIShvhm+JDFzNjC0pk0W8JGnMXu9jkgZdaaVnxlvBbfLRy8GSWBUlApDi1olRWYZreW
+ WApxJTYGPnlxRCnAcMHPd8U2D+EnYXo3PaB9mejkX9sg9OybY3ryed+vllKIVw1izIPEJU5m+
+ Pnj4JIvKRVTkBT8Kb0RyYudd7soCk6n9owrEFFJwTs7OWe7Y1GZcrA4UrX9VwOgO/BR+xzvKm
+ VhKhtWsKo9U01pxhmPqacla9DKs2tdVl6xSkWt03Vxxx10ulGqVcpwIfduucWUS6W13O1m1QN
+ 4ZN0mqsgD6SAoheBDBvWoLkKwB+u0nNyqPlk5xXCfKC7+VN0yKdjInrKfpTqlv0JiQlK5IRu1
+ OIH/nNU3keIwHu4NlDC1IrqgRojt2yPbYPNgf5syex635Wcb9HI6xEc+VIxL0wytCV/zpvNWU
+ O3oGtsROc2d3g1m/HWii/qyTU6rjYCDsdnwqwh/MxTQhrvdfNwQ6Kd35Q==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2022=E5=
-=B9=B47=E6=9C=8828=E6=97=A5=E5=91=A8=E5=9B=9B 23:59=E5=86=99=E9=81=93=EF=BC=
-=9A
+Hi Junio,
+
+On Thu, 28 Jul 2022, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
->
-> On Thu, Jul 28 2022, ZheNing Hu wrote:
->
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2022=
-=E5=B9=B47=E6=9C=8827=E6=97=A5=E5=91=A8=E4=B8=89 17:20=E5=86=99=E9=81=93=EF=
-=BC=9A
-> >>
-> >>
-> >> On Wed, Jul 27 2022, ZheNing Hu wrote:
-> >>
-> >> > if there is a monorepo such as
-> >> > git@github.com:derrickstolee/sparse-checkout-example.git
-> >> >
-> >> > There are many files and directories:
-> >> >
-> >> > client/
-> >> >     android/
-> >> >     electron/
-> >> >     iOS/
-> >> > service/
-> >> >     common/
-> >> >     identity/
-> >> >     list/
-> >> >     photos/
-> >> > web/
-> >> >     browser/
-> >> >     editor/
-> >> >     friends/
-> >> > boostrap.sh
-> >> > LICENSE.md
-> >> > README.md
-> >> >
-> >> > Now we can use partial-clone + sparse-checkout to reduce
-> >> > the network overhead, and reduce disk storage space size, that's goo=
-d.
-> >> >
-> >> > But I also need a ACL to control what directory or file people can f=
-etch/push.
-> >> > e.g. I don't want a client fetch the code in "service" or "web".
-> >> >
-> >> > Now if the user client use "git log -p" or "git sparse-checkout add =
-service"...
-> >> > or other git command, git which will  download them by
-> >> > "git fetch --filter=3Dblob:none --stdin <oid>" automatically.
-> >> >
-> >> > This means that the git client and server interact with git objects
-> >> > (and don't care about path) we cannot simply ban someone download
-> >> > a "path" on the server side.
-> >> >
-> >> > What should I do? You may recommend me to use submodule,
-> >> > but due to its complexity, I don't really want to use it :-(
-> >>
-> >> There isn't a way to do this in git.
-> >>
-> >> It's theoretically possible, i.e. a client could be told that the SHA-=
-1
-> >> of a directory is XYZ, and construct a commit object with a reference =
-to
-> >> it.
-> >>
+> > On Tue, 26 Jul 2022, Eugen Konkov wrote:
 > >
-> > I guess you mean use a special reference to hold the restricted path wh=
-ich
-> > the client can access, and pre-receive-hook can ban the client from dow=
-nloading
-> > other references. But this method is a little weird... How can this ref=
-erence
-> > sync with main branches? If we have changed client permission to access
-> > server directory, how to get the "history" of the server directory?
-> >
-> > I believe this approach is not very appropriate and is not maintainable=
-.
->
-> It's not maintainable at all, and I don't believe any current git client
-> supports this.
->
-> But due to git's commits referring to a Merkle tree I can tell you that
-> a subdirectory "secret" has a current tree SHA-1 of XYZ, without giving
-> you any of that content.
->
-> You *could* then manually construct a commit like:
->
->         tree <NEW_TREE>
->         ...
->
-> Where the "<NEW_TREE>" would be a tree like:
->
->         100644 blob <NEW-BLOB-SHA1>     UPDATED.md
->         040000 tree <XYZ>       secret-stuff
->
-> And send you a PACK with my new two three new objects (commit, blob &
-> new top-level NEW_TREE). To the remote end & protocol it wouldn't be
-> distinguishable from a "normal" push.
->
-> But nothing supports this already, as a practical matter most of git
-> either hard dies if content is missing, or has other odd edge-case
-> semantics (and I'm not up-to-date on the state of the art).
->
-> Anyway, just saying that for the longer term I'm not aware of an
-> *intrinsic* reason for why we couldn't support this sort of thing, in
-> case anyone's interested in putting in a *lot* of leg work to make it
-> happen.
->
-
-As Newren said, this is just like what sparse-index does. I use
-partial clone + sparse-checkout + sparse-index to do git add/git commit,
-git can add and commit correctly without fetching any excess objects.
-But we can't prevent users from downloading other directories or files.
-
-> >> But currently a *lot* of things in the client code assume that these
-> >> things will be available in one way or another.
+> >> $ git range-diff --creation-factor=3D100 branch...origin/branch
+> >> 1:  a87daecd47 < -:  ---------- Add mocked exchanges for ...::AutoRen=
+ew::General test
+> >> -:  ---------- > 1:  36eaeb56a9 Add mocked exchanges for ...::AutoRen=
+ew::General test
+> >> 2:  9594ccf145 =3D 2:  70681dd13b Remove a call to DB::state
+> >> 3:  740903e01c =3D 3:  5745ae5702 Run cpanm without tests
+> >> 4:  e8e6cac09c < -:  ---------- Do not use 'require'
 > >>
-> >> The state-of-the-art in the "sparse" code may differ from the above, I
-> >> don't know.
+> >> --creation-factor=3D101 does =3D)
 > >>
-> >> Also note that there's a well-known edge case in the git protocol wher=
-e
-> >> it's really incompatible with the notion of "secret" data, i.e. even i=
-f
-> >> you hide a ref you'll be able to "guess" it by seeing what delta(s) th=
-e
-> >> server will produce or accept etc.
+> >> but maximum value for percentage is 100. So expected behaviour is to =
+display range-diff when value 100 was provided
 > >
-> > Yeah, there are data security issues... Unless we need to isolate objec=
-ts
-> > between directories. Or in this case we disable the delta object.....
-> > Okay, this seems a little strange.
+> > Please see https://git-scm.com/docs/git-range-diff#_algorithm for an
+> > explanation what the meaning of the factor is, and why 100 is not the
+> > maximal sensible value.
 >
-> You can't really just "disable the delta(s)". Well, you can in
-> principle, but like what I outlined above it's one of those things
-> that's a far way off, and it's one thing to e.g. have a client that's
-> able to craft a commit referring to data it doesn't have.
+> When I had to give a huge value to the option the last time, I think
+> I used --creation-factor=3D999 or something.  The thing that bugged me
+> in the output of "git range-diff --help" is that SYNOPSIS section
+> has "--creation-factor=3D<factor>" but the OPTIONS heading says
+> "--creation-factor=3D<percent>" and the word is used in description as
+> well.
 >
-> It's quite another to secure a server in such a way that it can serve up
-> secret data from the repo to some clients, but not to others.
+> ----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+> Subject: range-diff: clarify --creation-factor=3D<factor>
 >
+> The value is not a per-cent that ranges from 0 to 100.
 
-All right... I might have to think of something else.
+This sentence is a bit misleading because the factor _is_ measured in
+terms of percent (not "per-cent", nor "per cent", see
+https://writingexplained.org/per-cent-or-percent-difference).
 
-> I can imagine some hacks to make that happen, but I won't go into that
-> here...
+The fact that we multiply by the number and divide by 100 makes it a
+percentage, see e.g.
+https://github.com/git/git/blob/v2.37.1/range-diff.c#L331:
 
-ZheNing Hu
+		c =3D a_util->matching < 0 ?
+			a_util->diffsize * creation_factor / 100 : COST_MAX;
+
+The reason why I chose to write `<percent>` in the original patch
+(https://github.com/git/git/commit/ba931edd284f) is to avoid confusion:
+0.6 would be a factor, equivalent to 60%. But I had carefully decided not
+to extend the `parse_options()` machinery to allow for floating point
+numbers, hence I chose to allow specifying the factor in terms of a
+percentage, which could be specified as an integer value. I _just_ noticed
+a minute ago, though, that the synopsis makes the mistake of describing
+the value as a `<factor>`, that's on me.
+
+As to the original claim that percentages only go from 0-100, that is
+easily refuted. If you wanted to pay $12 for something but ended up having
+to pay $30, you'll end up having paid 150% more than planned. There you
+are. A percentage that is greater than 100.
+
+In this context, the explanation in
+https://git-scm.com/docs/git-range-diff#_algorithm reveals how this
+percentage is used: to determine the cost of _not_ pairing a patch on one
+side of the range-diff with a patch on the other side, in terms that are
+relative to the line count of the diff of said patch. The cost of pairing
+two patches is the line count of the _diff between their diffs_.
+
+This also explains why the default value of the creation factor is not
+100% (as the original poster might have come to expect) but instead 60%, a
+value that was at first picked out of thin air, but that turned out to be
+reasonable: https://github.com/trast/tbdiff/commit/92ed41c84a89c.
+
+Side note: One of my math teachers insisted on _not_ calling percent a
+unit, as it is by definition unit-less: a percentage leaves the unit of
+the value it modifies unchanged. Which is absolutely true. So I think we
+should heed that advice here and avoid calling `%` a unit.
+
+Ciao,
+Dscho
+
+> The SYNOPSIS section gets it right, but the body of the documentation
+> said "percent" which confused readers.
+>
+> While we are at it, rephrase "smaller one" that corresponds to
+> "larger value" earlier in the sentence to "smaller value" to be more
+> explicit, to avoid misleading eyes of the readers to an unrelated "a
+> large change" nearby.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/git-range-diff.txt | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git c/Documentation/git-range-diff.txt w/Documentation/git-range-=
+diff.txt
+> index fe350d7f40..e49630e8ad 100644
+> --- c/Documentation/git-range-diff.txt
+> +++ w/Documentation/git-range-diff.txt
+> @@ -61,11 +61,11 @@ This is known to `range-diff` as "dual coloring". Us=
+e `--no-dual-color`
+>  to revert to color all lines according to the outer diff markers
+>  (and completely ignore the inner diff when it comes to color).
+>
+> ---creation-factor=3D<percent>::
+> -	Set the creation/deletion cost fudge factor to `<percent>`.
+> +--creation-factor=3D<factor>::
+> +	Set the creation/deletion cost fudge factor to `<factor>`.
+>  	Defaults to 60. Try a larger value if `git range-diff` erroneously
+>  	considers a large change a total rewrite (deletion of one commit
+> -	and addition of another), and a smaller one in the reverse case.
+> +	and addition of another), and a smaller value in the reverse case.
+>  	See the ``Algorithm`` section below for an explanation why this is
+>  	needed.
+>
+>
+>
+>
