@@ -2,125 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1159AC00144
-	for <git@archiver.kernel.org>; Sat, 30 Jul 2022 00:18:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A94DAC00144
+	for <git@archiver.kernel.org>; Sat, 30 Jul 2022 00:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239433AbiG3AR6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 20:17:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36880 "EHLO
+        id S239198AbiG3ATz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 20:19:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbiG3AR5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 20:17:57 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26B6767C80
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:17:55 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6D9B91A5FDB;
-        Fri, 29 Jul 2022 20:17:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=/VTz3Q/l8z6B
-        uvoMcXZK4swBvmbPpgR0WqbXJlxXvCs=; b=sfXkfOQ7CHSMTbbT2+mbCxrKd8z1
-        gxtCGg0C0f82bTaZPwEbkgM7fzFFUAaqDg0Z0rHzZWvxFJ6+th5AlwyYRRVXcxmE
-        WXhfPydWTRtcJhol4uUyJz/R1OUJtTxBlYcD5DkhmBuMI0rWA/ZxJABxzD71aAFH
-        UDpCISOlcvVLzDk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 656541A5FD9;
-        Fri, 29 Jul 2022 20:17:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.105.40.190])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EEE861A5FD8;
-        Fri, 29 Jul 2022 20:17:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Teng Long <dyroneteng@gmail.com>
-Subject: Re: [PATCH v6 1/9] help.c: BUG() out if "help --guides" can't
- remove "git" prefixes
-References: <cover-v5-0.9-00000000000-20220721T160721Z-avarab@gmail.com>
-        <cover-v6-0.9-00000000000-20220728T164243Z-avarab@gmail.com>
-        <patch-v6-1.9-f3588319057-20220728T164243Z-avarab@gmail.com>
-Date:   Fri, 29 Jul 2022 17:17:50 -0700
-In-Reply-To: <patch-v6-1.9-f3588319057-20220728T164243Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 28 Jul
- 2022 18:46:40
-        +0200")
-Message-ID: <xmqq35ej313l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229686AbiG3ATy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 20:19:54 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84D7C67C80
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:19:53 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id b9so5898677pfp.10
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:19:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=IVE6ESUaVt14TG8qFw/UpRetyKQEedhfJDzODPoM7ao=;
+        b=DioaCobxBoWuEn/iPh5beqXanmNkW75MMXPQtuII/GuecEbVF8z/ADKkzgA4kiUvH7
+         9isi7gk5L5s8AGwDlZqk+f4YsUBlhr7FzY/Si4Mno+D0U31L4QqqlmqoG8PUAS9i3BRD
+         tpvPd1SjaVgJgboPAF9vKs9epaIiJDeJpab7wloKx+B3QKl7JwSJshKbBnx51gUuSSx2
+         8xjjOzKV5pzqslZhVyDpw4DpYprQNyaSCVptjuiWY/H/gOTkC2BxuV5YLrZ+BF/OsJaX
+         +04f4VXzegtgoR3IAS3NSwR24P0TSfXWGVAAmGvMipRQT2oTOAUISK01S1uhIbQgrXpA
+         grog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=IVE6ESUaVt14TG8qFw/UpRetyKQEedhfJDzODPoM7ao=;
+        b=S/nASeFQZhgf17N46eECBRyFhpPMth7pB2Er23oREpdB4e5eU7BZnlJZt7H8ZZPzHj
+         IuhoKMAvLc0o0RQN61eFVGHoS3TcZy3iGP0gdN+gHFO6LrOalwGMtTMbn4KWg49d69n4
+         zNwe1H6Z4bDeBKIrfZaX+nd4PZckTqm+GXHetbrd7/R/BsQQQ/yBOiMdZvs9nqyV9u1F
+         c833u/SywhCYMc2zL+dtNH0Y7PO+N5BsczAHXoyF/DGce4APT8YeL6qoLH+Y39S1FDHu
+         GnlzmjPwN/6rE+jVBMJ4uX5ymr+4yEXiGwk/UCpau1K0xASvscCtGbThN1SwBPlLHbHj
+         JRXw==
+X-Gm-Message-State: AJIora/lzVFeqzXGPV5F4gIQrWj81XTDCxrEqFkZ+AS/skX/wYgogAMu
+        Zjm/ijKuEvpTjQMPtJ3aHbo=
+X-Google-Smtp-Source: AGRyM1tN91FL2lCWOgfuy5e3KEb4xWTXgfgJUfiLVLqKAiWpDR3FMm4SLSchpJMoXqsUWtu7JlrE+w==
+X-Received: by 2002:a63:8449:0:b0:41b:4a5b:c5ca with SMTP id k70-20020a638449000000b0041b4a5bc5camr4814677pgd.6.1659140392823;
+        Fri, 29 Jul 2022 17:19:52 -0700 (PDT)
+Received: from localhost ([113.173.163.90])
+        by smtp.gmail.com with ESMTPSA id z12-20020a170903018c00b0016dd0242e04sm435758plg.276.2022.07.29.17.19.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Jul 2022 17:19:52 -0700 (PDT)
+Date:   Sat, 30 Jul 2022 07:19:49 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] merge-file: fix build warning with gcc 4.8.5
+Message-ID: <YuR5Jado2LrtZUjP@danh.dev>
+References: <365e01e93dce582e9d926e83bdc6891310d22699.1659084832.git.congdanhqx@gmail.com>
+ <xmqqbkt7api9.fsf@gitster.g>
+ <YuQ60ZUPBHAVETD7@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0CF3D7AA-0F9D-11ED-A27C-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YuQ60ZUPBHAVETD7@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
-
-> Adjust code added in 929d9192828 (git docs: split "User-facing file
-> formats" off from "Guides", 2021-06-04) to be more strict about the
-> prefix trimming of the "guides" category.
->
-> There are no guides in the command-list.txt that don't start with
-> "git", and we're unlikely to ever add any, if we do we can remove this
-> BUG() invocation, but in the meantime this makes the intent more
-> clear.
-
-I am not sure what this buys us.  After dealing with pages that
-begin with "git-", if the set of documentation we have happen to all
-share "git" as their prefix, then this new BUG() does not do
-anything to them, and when we ever add say "scalar-guide.txt", the
-new BUG() would only force people to rewrite this part of the code.
-
-Instead we could be more forward looking and do something like
-"Yield a name without 'git' prefix if it begins with it, or the
-original name", and then new guides that are outside "git" namespace
-can be added without touching this part of the code again.
-
-IOW, it is not entirely clear to me what we are adding this extra
-roadblock for.
-
-
-> While we're at it remove a stray newline that had been added after the
-> "return name;" statement.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
+On 2022-07-29 15:53:53-0400, Jeff King <peff@peff.net> wrote:
+> On Fri, Jul 29, 2022 at 08:48:46AM -0700, Junio C Hamano wrote:
+> 
+> > I think the concensus was that we should squelch the false warning
+> > on older compilers with -Wno-missing-braces, but then the discussion
+> > has stalled by a suggestion to introduce a way to detect older
+> > compilers that is different from how we do so at the same time, and
+> > went nowhere.
+> > 
+> > Hopefully we can add a simple -Wno-* without waiting for whole
+> > config.mak thing getting revamped this time?
+> 
+> Perhaps this?
+> 
+> -- >8 --
+> Subject: [PATCH] config.mak.dev: squelch -Wno-missing-braces for older gcc
+> 
+> Versions of gcc prior to 4.9 complain about an initialization like:
+> 
+>   struct inner { int x; };
+>   struct outer { struct inner; };
+>   struct outer foo = { 0 };
+> 
+> and insist on:
+> 
+>   struct outer foo = { { 0 } };
+> 
+> Newer compilers handle this just fine. And ignoring the window even on
+> older compilers is fine; the resulting code is correct, but we just get
+> caught by -Werror.
+> 
+> Let's relax this for older compilers to make developer lives easier (we
+> don't care much about non-developers on old compilers; they may see a
+> warning, but it won't stop compilation).
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  help.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/help.c b/help.c
-> index 41c41c2aa11..80d516abb0b 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -44,13 +44,19 @@ static struct category_description main_categories[=
-] =3D {
->  static const char *drop_prefix(const char *name, uint32_t category)
->  {
->  	const char *new_name;
-> +	const char *prefix;
-> =20
->  	if (skip_prefix(name, "git-", &new_name))
->  		return new_name;
-> -	if (category =3D=3D CAT_guide && skip_prefix(name, "git", &new_name))
-> +	switch (category) {
-> +	case CAT_guide:
-> +		prefix =3D "git";
-> +		if (!skip_prefix(name, prefix, &new_name))
-> +			BUG("'%s' in category #%d should have '%s' prefix",
-> +			    name, category, prefix);
->  		return new_name;
-> +	}
->  	return name;
-> -
->  }
-> =20
->  static void extract_cmds(struct cmdname_help **p_cmds, uint32_t mask)
+> Tested on a debian jessie chroot using gcc-4.8 and 4.9. Though note that
+> you also need to manually specify -std=gnu99 to get it to work at all
+> with those compilers these days! So I kind of wonder if it's even worth
+> catering to their warnings automatically.
+
+Well, config.mak.uname automatically adds -std=c99 for RHEL 7 and
+CentOS7. Can we add the same things for Debian? Or should we just
+remove both?
+
+
+-- 
+Danh
