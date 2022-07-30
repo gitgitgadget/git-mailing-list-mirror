@@ -2,117 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A94DAC00144
-	for <git@archiver.kernel.org>; Sat, 30 Jul 2022 00:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7363C00144
+	for <git@archiver.kernel.org>; Sat, 30 Jul 2022 00:25:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239198AbiG3ATz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 20:19:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37450 "EHLO
+        id S233392AbiG3AZp convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 29 Jul 2022 20:25:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbiG3ATy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 20:19:54 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84D7C67C80
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:19:53 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id b9so5898677pfp.10
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:19:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=IVE6ESUaVt14TG8qFw/UpRetyKQEedhfJDzODPoM7ao=;
-        b=DioaCobxBoWuEn/iPh5beqXanmNkW75MMXPQtuII/GuecEbVF8z/ADKkzgA4kiUvH7
-         9isi7gk5L5s8AGwDlZqk+f4YsUBlhr7FzY/Si4Mno+D0U31L4QqqlmqoG8PUAS9i3BRD
-         tpvPd1SjaVgJgboPAF9vKs9epaIiJDeJpab7wloKx+B3QKl7JwSJshKbBnx51gUuSSx2
-         8xjjOzKV5pzqslZhVyDpw4DpYprQNyaSCVptjuiWY/H/gOTkC2BxuV5YLrZ+BF/OsJaX
-         +04f4VXzegtgoR3IAS3NSwR24P0TSfXWGVAAmGvMipRQT2oTOAUISK01S1uhIbQgrXpA
-         grog==
+        with ESMTP id S229686AbiG3AZk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 20:25:40 -0400
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A1F71D0E6
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:25:38 -0700 (PDT)
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-31f443e276fso65658877b3.1
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:25:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=IVE6ESUaVt14TG8qFw/UpRetyKQEedhfJDzODPoM7ao=;
-        b=S/nASeFQZhgf17N46eECBRyFhpPMth7pB2Er23oREpdB4e5eU7BZnlJZt7H8ZZPzHj
-         IuhoKMAvLc0o0RQN61eFVGHoS3TcZy3iGP0gdN+gHFO6LrOalwGMtTMbn4KWg49d69n4
-         zNwe1H6Z4bDeBKIrfZaX+nd4PZckTqm+GXHetbrd7/R/BsQQQ/yBOiMdZvs9nqyV9u1F
-         c833u/SywhCYMc2zL+dtNH0Y7PO+N5BsczAHXoyF/DGce4APT8YeL6qoLH+Y39S1FDHu
-         GnlzmjPwN/6rE+jVBMJ4uX5ymr+4yEXiGwk/UCpau1K0xASvscCtGbThN1SwBPlLHbHj
-         JRXw==
-X-Gm-Message-State: AJIora/lzVFeqzXGPV5F4gIQrWj81XTDCxrEqFkZ+AS/skX/wYgogAMu
-        Zjm/ijKuEvpTjQMPtJ3aHbo=
-X-Google-Smtp-Source: AGRyM1tN91FL2lCWOgfuy5e3KEb4xWTXgfgJUfiLVLqKAiWpDR3FMm4SLSchpJMoXqsUWtu7JlrE+w==
-X-Received: by 2002:a63:8449:0:b0:41b:4a5b:c5ca with SMTP id k70-20020a638449000000b0041b4a5bc5camr4814677pgd.6.1659140392823;
-        Fri, 29 Jul 2022 17:19:52 -0700 (PDT)
-Received: from localhost ([113.173.163.90])
-        by smtp.gmail.com with ESMTPSA id z12-20020a170903018c00b0016dd0242e04sm435758plg.276.2022.07.29.17.19.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jul 2022 17:19:52 -0700 (PDT)
-Date:   Sat, 30 Jul 2022 07:19:49 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] merge-file: fix build warning with gcc 4.8.5
-Message-ID: <YuR5Jado2LrtZUjP@danh.dev>
-References: <365e01e93dce582e9d926e83bdc6891310d22699.1659084832.git.congdanhqx@gmail.com>
- <xmqqbkt7api9.fsf@gitster.g>
- <YuQ60ZUPBHAVETD7@coredump.intra.peff.net>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
+        bh=2EDG+eWaxp6SgqvOfdXaFC+FBoA7Gzr4iBxLS6aFmMM=;
+        b=G6UGu+Uw6Mg8dW9RzRxWowiPB4g2cRRoRbNRmcEuRqtvwXIoZPvoOO5I8tGLnxQLAm
+         UZ6WmMaflL9Yl0wj08J4/3UtPYnVGGqKw0w5maoAyPlBJ4O5wE+giqRtJB6wP2/IYq4r
+         +7ovBqbuNbR4XiqfY1ChSdLbWvM/+THPr7lu8mAB2K8uhU649ZZUe3e6tcFDgy3KQvL4
+         VMUOIMLkxYagg7SRGXMPr0CgGEgSFYURfFb3ajzU3kdxY0aYleR30OZVwiMfFqt5E5WX
+         r0J1g/eKoQoCnX694ZVxCd+z9hnR2llyUf0u45TIhfZJpu91dIXhjR+i6CuAeWdci+BG
+         E/ww==
+X-Gm-Message-State: ACgBeo2aI7OzKWhuBs9vFQgE5+ZjycS9DGGQMN5EY983sBYJwXXYqWTn
+        /l4Y2ix7Hy7vp+A8tPk74xANN+7bTqZm0SAE+/s=
+X-Google-Smtp-Source: AA6agR4Ep7wuaMIBjWuYz3PKxZmclT2prFutHpNFPSXtviEJkANqJMGkJG5ooCUk9DWw6rAtdeeqvwzampkpLYWh0nI=
+X-Received: by 2002:a81:b717:0:b0:322:9a3a:4d53 with SMTP id
+ v23-20020a81b717000000b003229a3a4d53mr5030321ywh.427.1659140737526; Fri, 29
+ Jul 2022 17:25:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YuQ60ZUPBHAVETD7@coredump.intra.peff.net>
+References: <xmqqo7x9ch7n.fsf_-_@gitster.g> <20220728174953.66964-1-sunshine@sunshineco.com>
+ <220728.867d3xj6s0.gmgdl@evledraar.gmail.com> <xmqqv8rh9co5.fsf@gitster.g> <CAPig+cTxM2vr11XRU-zrNAJRwveP0W9d0x8Euvr6HKmQicKgPQ@mail.gmail.com>
+In-Reply-To: <CAPig+cTxM2vr11XRU-zrNAJRwveP0W9d0x8Euvr6HKmQicKgPQ@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 29 Jul 2022 20:25:26 -0400
+Message-ID: <CAPig+cQ94oC-6wftkP_=RSEsOVPKeuBWuMshDkwV+Xu_FjrKeg@mail.gmail.com>
+Subject: Re: [PATCH] format-patch: clarify --creation-factor=<factor>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eugen Konkov <kes-kes@yandex.ru>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-07-29 15:53:53-0400, Jeff King <peff@peff.net> wrote:
-> On Fri, Jul 29, 2022 at 08:48:46AM -0700, Junio C Hamano wrote:
-> 
-> > I think the concensus was that we should squelch the false warning
-> > on older compilers with -Wno-missing-braces, but then the discussion
-> > has stalled by a suggestion to introduce a way to detect older
-> > compilers that is different from how we do so at the same time, and
-> > went nowhere.
-> > 
-> > Hopefully we can add a simple -Wno-* without waiting for whole
-> > config.mak thing getting revamped this time?
-> 
-> Perhaps this?
-> 
-> -- >8 --
-> Subject: [PATCH] config.mak.dev: squelch -Wno-missing-braces for older gcc
-> 
-> Versions of gcc prior to 4.9 complain about an initialization like:
-> 
->   struct inner { int x; };
->   struct outer { struct inner; };
->   struct outer foo = { 0 };
-> 
-> and insist on:
-> 
->   struct outer foo = { { 0 } };
-> 
-> Newer compilers handle this just fine. And ignoring the window even on
-> older compilers is fine; the resulting code is correct, but we just get
-> caught by -Werror.
-> 
-> Let's relax this for older compilers to make developer lives easier (we
-> don't care much about non-developers on old compilers; they may see a
-> warning, but it won't stop compilation).
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Tested on a debian jessie chroot using gcc-4.8 and 4.9. Though note that
-> you also need to manually specify -std=gnu99 to get it to work at all
-> with those compilers these days! So I kind of wonder if it's even worth
-> catering to their warnings automatically.
+On Thu, Jul 28, 2022 at 5:09 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Thu, Jul 28, 2022 at 4:59 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > >> -               [--range-diff=<previous> [--creation-factor=<percent>]]
+> > >> +               [--range-diff=<previous> [--creation-factor=<factor>]]
+> >
+> > Eric, I am not sure if the other patch for the range-diff command as
+> > a standalone patch is worth it.  Perhaps you can help me by
+> > submitting a single combined patch to cover the above as well as
+> > what we wrote in the two patches, with you marked as the primary
+> > author and with Helped-by: that credits Ævar?
+>
+> Will do.
 
-Well, config.mak.uname automatically adds -std=c99 for RHEL 7 and
-CentOS7. Can we add the same things for Debian? Or should we just
-remove both?
+Given Dscho's response in [1] which states that "percent" is more
+accurate than "factor", perhaps these two patches are unwanted after
+all, and instead the documentation of "creation factor" in
+Documentation/git-range-diff.txt ought to be expanded with a better
+explanation, as hinted in [2].
 
-
--- 
-Danh
+[1]: https://lore.kernel.org/git/85snn12q-po05-osqs-n1o0-n6040392q01q@tzk.qr/
+[2]: https://lore.kernel.org/git/xmqq5yjf4l60.fsf@gitster.g/
