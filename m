@@ -2,74 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7363C00144
-	for <git@archiver.kernel.org>; Sat, 30 Jul 2022 00:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E47E5C00144
+	for <git@archiver.kernel.org>; Sat, 30 Jul 2022 00:50:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233392AbiG3AZp convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 29 Jul 2022 20:25:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41128 "EHLO
+        id S231356AbiG3Auo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 20:50:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbiG3AZk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 20:25:40 -0400
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A1F71D0E6
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:25:38 -0700 (PDT)
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-31f443e276fso65658877b3.1
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:25:38 -0700 (PDT)
+        with ESMTP id S229599AbiG3Aun (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 20:50:43 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D190E71BF4
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:50:41 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id v28so4781455qkg.13
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:50:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+9Q298738EvtMyG/xg5XNOYUUe1w8ij+KuzwBSPcrEg=;
+        b=o7zF6a2xlDNO5gA849CshgjGMtcOIlEM1aC3A/Q7iA5ZGY2JP/dxdanBWgGNZFGyTc
+         7LNcfskIEX8adeqQCy5aPXU1C2BpZLAIiiQPsS2mlWEcxHuKAgaKg9XXf2o9KmndFvDQ
+         2Jbnw9+3toEcg69vtRKuWQXrEUmSrOTIDTDt5tRhWp8d3sou34XKETZZU9rGjZOZwHIL
+         VcQzOOrsFSBtUNgXtdAYdYVs/eCd+tHFUc9vMsAQWE53I5PYjVWynOLv1ICGFy/FtCD/
+         YhacX9x+4x0FgNbOMtevXXNK7YVpjUE9/XycnNAfySHwFFlAn6ie23X/RX437+PWMKis
+         jHDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
-        bh=2EDG+eWaxp6SgqvOfdXaFC+FBoA7Gzr4iBxLS6aFmMM=;
-        b=G6UGu+Uw6Mg8dW9RzRxWowiPB4g2cRRoRbNRmcEuRqtvwXIoZPvoOO5I8tGLnxQLAm
-         UZ6WmMaflL9Yl0wj08J4/3UtPYnVGGqKw0w5maoAyPlBJ4O5wE+giqRtJB6wP2/IYq4r
-         +7ovBqbuNbR4XiqfY1ChSdLbWvM/+THPr7lu8mAB2K8uhU649ZZUe3e6tcFDgy3KQvL4
-         VMUOIMLkxYagg7SRGXMPr0CgGEgSFYURfFb3ajzU3kdxY0aYleR30OZVwiMfFqt5E5WX
-         r0J1g/eKoQoCnX694ZVxCd+z9hnR2llyUf0u45TIhfZJpu91dIXhjR+i6CuAeWdci+BG
-         E/ww==
-X-Gm-Message-State: ACgBeo2aI7OzKWhuBs9vFQgE5+ZjycS9DGGQMN5EY983sBYJwXXYqWTn
-        /l4Y2ix7Hy7vp+A8tPk74xANN+7bTqZm0SAE+/s=
-X-Google-Smtp-Source: AA6agR4Ep7wuaMIBjWuYz3PKxZmclT2prFutHpNFPSXtviEJkANqJMGkJG5ooCUk9DWw6rAtdeeqvwzampkpLYWh0nI=
-X-Received: by 2002:a81:b717:0:b0:322:9a3a:4d53 with SMTP id
- v23-20020a81b717000000b003229a3a4d53mr5030321ywh.427.1659140737526; Fri, 29
- Jul 2022 17:25:37 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+9Q298738EvtMyG/xg5XNOYUUe1w8ij+KuzwBSPcrEg=;
+        b=VbF8q1QOhUX2IYHEOyDBOJFWSsHMT5DXeNHiRd8gsO85R/CXnwR8CHAcHqRZ7p7SSW
+         NiEvJM3yqP9fNMySxmG8bY+u2U284VSaAtFVicP5RX9coRy0k5wE1BB2UusXNMxRX3ir
+         /RSzx/xqngc8gqPm3Rxzg/CEsgo2DLrfvvHApXtUuSmzCUimFl7pSEsnqsMmeCiFL7ui
+         xXq0JwKJkZZDwlJ59cZCmJr/qihTAMRssmmzrsNTEAx/c/g5o+fAMAfIsahLdcKDGoCZ
+         ZkxgyROzRh0FH9z6XoHWwpNzC/kOspaFsP4UrreswQAPPU07YSIFxM2zQSLhhhSOVbJr
+         w4nw==
+X-Gm-Message-State: AJIora+2LR6Sr+bG3aIYbjhF7v6A7bY86GlCfUCIbDQjYGg5VvXZSJx1
+        LE8x1T6klMf3Bx7CbfLyCMaZ88c7j4rtCxb9Hcg=
+X-Google-Smtp-Source: AGRyM1taAmepryPyXM7aTp7G3FaJ40INC+5WqagbJIzwBcKNf89NOXm5S6BVq0ynUHGzvti5JILzVD2HNvs/rd34whk=
+X-Received: by 2002:a37:6855:0:b0:6b8:803d:a306 with SMTP id
+ d82-20020a376855000000b006b8803da306mr1447856qkc.183.1659142240964; Fri, 29
+ Jul 2022 17:50:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqqo7x9ch7n.fsf_-_@gitster.g> <20220728174953.66964-1-sunshine@sunshineco.com>
- <220728.867d3xj6s0.gmgdl@evledraar.gmail.com> <xmqqv8rh9co5.fsf@gitster.g> <CAPig+cTxM2vr11XRU-zrNAJRwveP0W9d0x8Euvr6HKmQicKgPQ@mail.gmail.com>
-In-Reply-To: <CAPig+cTxM2vr11XRU-zrNAJRwveP0W9d0x8Euvr6HKmQicKgPQ@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 29 Jul 2022 20:25:26 -0400
-Message-ID: <CAPig+cQ94oC-6wftkP_=RSEsOVPKeuBWuMshDkwV+Xu_FjrKeg@mail.gmail.com>
-Subject: Re: [PATCH] format-patch: clarify --creation-factor=<factor>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eugen Konkov <kes-kes@yandex.ru>
+References: <pull.1307.git.1659084748350.gitgitgadget@gmail.com> <pull.1307.v2.git.1659114727.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1307.v2.git.1659114727.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 29 Jul 2022 17:50:30 -0700
+Message-ID: <CABPp-BGKUkVKJK87jZn-7A3AuxDjKwttVpez9UVZrTJZyCFodw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] merge-ort: clean up after failed merge
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 28, 2022 at 5:09 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Thu, Jul 28, 2022 at 4:59 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > >> -               [--range-diff=<previous> [--creation-factor=<percent>]]
-> > >> +               [--range-diff=<previous> [--creation-factor=<factor>]]
-> >
-> > Eric, I am not sure if the other patch for the range-diff command as
-> > a standalone patch is worth it.  Perhaps you can help me by
-> > submitting a single combined patch to cover the above as well as
-> > what we wrote in the two patches, with you marked as the primary
-> > author and with Helped-by: that credits Ævar?
+On Fri, Jul 29, 2022 at 10:12 AM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Will do.
+> I was investigating why seen's CI runs fail, and came up with this fix.
+>
+> Changes since v1:
+>
+>  * Rebased onto en/merge-ort-perf.
+>  * Now we're not only cleaning up the merge data structure, but also leaving
+>    the Trace2 region when returning early from merge_switch_to_result().
+>
+> Johannes Schindelin (2):
+>   merge-ort: clean up after failed merge
+>   merge-ort: do leave Trace2 region even if checkout fails
+>
+>  merge-ort.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 
-Given Dscho's response in [1] which states that "percent" is more
-accurate than "factor", perhaps these two patches are unwanted after
-all, and instead the documentation of "creation factor" in
-Documentation/git-range-diff.txt ought to be expanded with a better
-explanation, as hinted in [2].
+Thanks, series looks good to me:
 
-[1]: https://lore.kernel.org/git/85snn12q-po05-osqs-n1o0-n6040392q01q@tzk.qr/
-[2]: https://lore.kernel.org/git/xmqq5yjf4l60.fsf@gitster.g/
+Reviewed-by: Elijah Newren <newren@gmail.com>
