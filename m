@@ -2,81 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E47E5C00144
-	for <git@archiver.kernel.org>; Sat, 30 Jul 2022 00:50:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C38A5C19F2B
+	for <git@archiver.kernel.org>; Sat, 30 Jul 2022 01:41:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231356AbiG3Auo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jul 2022 20:50:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52490 "EHLO
+        id S239615AbiG3Bkg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jul 2022 21:40:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbiG3Aun (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jul 2022 20:50:43 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D190E71BF4
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:50:41 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id v28so4781455qkg.13
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 17:50:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+9Q298738EvtMyG/xg5XNOYUUe1w8ij+KuzwBSPcrEg=;
-        b=o7zF6a2xlDNO5gA849CshgjGMtcOIlEM1aC3A/Q7iA5ZGY2JP/dxdanBWgGNZFGyTc
-         7LNcfskIEX8adeqQCy5aPXU1C2BpZLAIiiQPsS2mlWEcxHuKAgaKg9XXf2o9KmndFvDQ
-         2Jbnw9+3toEcg69vtRKuWQXrEUmSrOTIDTDt5tRhWp8d3sou34XKETZZU9rGjZOZwHIL
-         VcQzOOrsFSBtUNgXtdAYdYVs/eCd+tHFUc9vMsAQWE53I5PYjVWynOLv1ICGFy/FtCD/
-         YhacX9x+4x0FgNbOMtevXXNK7YVpjUE9/XycnNAfySHwFFlAn6ie23X/RX437+PWMKis
-         jHDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+9Q298738EvtMyG/xg5XNOYUUe1w8ij+KuzwBSPcrEg=;
-        b=VbF8q1QOhUX2IYHEOyDBOJFWSsHMT5DXeNHiRd8gsO85R/CXnwR8CHAcHqRZ7p7SSW
-         NiEvJM3yqP9fNMySxmG8bY+u2U284VSaAtFVicP5RX9coRy0k5wE1BB2UusXNMxRX3ir
-         /RSzx/xqngc8gqPm3Rxzg/CEsgo2DLrfvvHApXtUuSmzCUimFl7pSEsnqsMmeCiFL7ui
-         xXq0JwKJkZZDwlJ59cZCmJr/qihTAMRssmmzrsNTEAx/c/g5o+fAMAfIsahLdcKDGoCZ
-         ZkxgyROzRh0FH9z6XoHWwpNzC/kOspaFsP4UrreswQAPPU07YSIFxM2zQSLhhhSOVbJr
-         w4nw==
-X-Gm-Message-State: AJIora+2LR6Sr+bG3aIYbjhF7v6A7bY86GlCfUCIbDQjYGg5VvXZSJx1
-        LE8x1T6klMf3Bx7CbfLyCMaZ88c7j4rtCxb9Hcg=
-X-Google-Smtp-Source: AGRyM1taAmepryPyXM7aTp7G3FaJ40INC+5WqagbJIzwBcKNf89NOXm5S6BVq0ynUHGzvti5JILzVD2HNvs/rd34whk=
-X-Received: by 2002:a37:6855:0:b0:6b8:803d:a306 with SMTP id
- d82-20020a376855000000b006b8803da306mr1447856qkc.183.1659142240964; Fri, 29
- Jul 2022 17:50:40 -0700 (PDT)
+        with ESMTP id S229599AbiG3Bkf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jul 2022 21:40:35 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0142511A03
+        for <git@vger.kernel.org>; Fri, 29 Jul 2022 18:40:33 -0700 (PDT)
+Received: (qmail 23244 invoked by uid 109); 30 Jul 2022 01:40:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 30 Jul 2022 01:40:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31824 invoked by uid 111); 30 Jul 2022 01:40:33 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 29 Jul 2022 21:40:33 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 29 Jul 2022 21:40:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] merge-file: fix build warning with gcc 4.8.5
+Message-ID: <YuSL/2N29cCy9Dzd@coredump.intra.peff.net>
+References: <365e01e93dce582e9d926e83bdc6891310d22699.1659084832.git.congdanhqx@gmail.com>
+ <xmqqbkt7api9.fsf@gitster.g>
+ <YuQ60ZUPBHAVETD7@coredump.intra.peff.net>
+ <YuR5Jado2LrtZUjP@danh.dev>
 MIME-Version: 1.0
-References: <pull.1307.git.1659084748350.gitgitgadget@gmail.com> <pull.1307.v2.git.1659114727.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1307.v2.git.1659114727.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 29 Jul 2022 17:50:30 -0700
-Message-ID: <CABPp-BGKUkVKJK87jZn-7A3AuxDjKwttVpez9UVZrTJZyCFodw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] merge-ort: clean up after failed merge
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YuR5Jado2LrtZUjP@danh.dev>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 29, 2022 at 10:12 AM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> I was investigating why seen's CI runs fail, and came up with this fix.
->
-> Changes since v1:
->
->  * Rebased onto en/merge-ort-perf.
->  * Now we're not only cleaning up the merge data structure, but also leaving
->    the Trace2 region when returning early from merge_switch_to_result().
->
-> Johannes Schindelin (2):
->   merge-ort: clean up after failed merge
->   merge-ort: do leave Trace2 region even if checkout fails
->
->  merge-ort.c | 5 +++++
->  1 file changed, 5 insertions(+)
+On Sat, Jul 30, 2022 at 07:19:49AM +0700, Đoàn Trần Công Danh wrote:
 
-Thanks, series looks good to me:
+> > Tested on a debian jessie chroot using gcc-4.8 and 4.9. Though note that
+> > you also need to manually specify -std=gnu99 to get it to work at all
+> > with those compilers these days! So I kind of wonder if it's even worth
+> > catering to their warnings automatically.
+> 
+> Well, config.mak.uname automatically adds -std=c99 for RHEL 7 and
+> CentOS7. Can we add the same things for Debian? Or should we just
+> remove both?
 
-Reviewed-by: Elijah Newren <newren@gmail.com>
+Ah, I didn't know about that. No, I don't think there's any reason to
+remove them. If people are able to compile out of the box there, then my
+patch to config.mak.dev may be worth doing.
+
+As far as adding a similar config.mak.uname thing for Debian, I don't
+have a strong opinion. Jessie is far beyond being supported, so I'd
+probably wait to see if somebody who actually cares proposes a patch.
+
+-Peff
