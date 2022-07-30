@@ -2,230 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1324AC04A68
-	for <git@archiver.kernel.org>; Sat, 30 Jul 2022 06:44:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41C28C04A68
+	for <git@archiver.kernel.org>; Sat, 30 Jul 2022 07:52:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230306AbiG3Goo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jul 2022 02:44:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50596 "EHLO
+        id S229836AbiG3Hu7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jul 2022 03:50:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbiG3Gom (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jul 2022 02:44:42 -0400
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90B924D83E
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 23:44:41 -0700 (PDT)
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-31e7ca45091so69226767b3.3
-        for <git@vger.kernel.org>; Fri, 29 Jul 2022 23:44:41 -0700 (PDT)
+        with ESMTP id S229571AbiG3Hu6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jul 2022 03:50:58 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B68917E3F
+        for <git@vger.kernel.org>; Sat, 30 Jul 2022 00:50:57 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id d65-20020a17090a6f4700b001f303a97b14so7218812pjk.1
+        for <git@vger.kernel.org>; Sat, 30 Jul 2022 00:50:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ossmVyBaj5B/B8v/EwJMggdo7f7Z1hzUSUn8fQGe9lo=;
+        b=dNy/lS/sF4+RMkEGNq+OVBGFm2du8UZqvipZxOIlkE+vV39Pvm2iY5vhSOVVTlseoF
+         EsCRg6aygqJhao/N9ZdPipuACWca9vWcvuhdROXD+lwmVodqGw2RECYRlT7De7MO4Euv
+         y9yeb2nfEdp1sFhfsVnBrCRZiqKUuovRCbmfRnSvM/h8OBUCLxNST7WIhUy92WGDFKQO
+         p5rSdWsc7iL7C0ZXPtMiMqC4kQ/rMVLHYncbvrrP0bH4FevvVTwLIF8Qa6TdLCJg0rsr
+         ZC2Uiep3u4SmOT4MQAx9qMO7PZ8sbFgKQemkF/vbMneleY+wSumbV2RSoTTjsf6EiWoL
+         5JTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=3Sa02xck8QsvQ/W7PrEk/D+NyURVdVSmjcdMb1Et1x4=;
-        b=c5KdNu5luzbFDIMmN8jyWE1q26SaNcY4GKvUj0L0WClClbEGfL3p2bgafYqr+ev2jk
-         Puvjef3fs6w/2D6c6V4Vrev6ikZjxOEa/ayjzw2q/N9YBwF3nxFGcjV/e0DMvo96Nvak
-         MEImZZZRpgzQcodI5+3TwiiUcbACqArRhgD84uJNgALjfhDrc+VhKVJD0SLXf/sQ4lnY
-         cYZkKVJQ49suFRUXAwJGHL0r4NGLCK+HMSO0DAm6DuygPbQBfzIYXLloKMSpYeeNsyxg
-         aeu2AoECi1akHn0fZWTsIksDCAZywnePZ2LSrErtCVu8Dk1toLn3kC4u5I0ssTOST0dx
-         HXFg==
-X-Gm-Message-State: ACgBeo2Qgm8HSG7WguwTydagBehOXPJlrC8qOwSDoDlP1tiVBCJJwCnr
-        w6L8xnJiWZDkol1coLqpBAtzY4RHDwdqAUbXB83ml0rT5hsRHBTV
-X-Google-Smtp-Source: AA6agR5cJOAMo7qShkXEeax6OirOt+7s8LHpiia9TSCs1YhHJloHe0gJg7MviAxS6BreGrPknIGmmix1s6VsY62Bw4U=
-X-Received: by 2002:a81:e82:0:b0:31f:435e:b432 with SMTP id
- 124-20020a810e82000000b0031f435eb432mr5763080ywo.13.1659163480580; Fri, 29
- Jul 2022 23:44:40 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ossmVyBaj5B/B8v/EwJMggdo7f7Z1hzUSUn8fQGe9lo=;
+        b=BJcCYJBtpByynf6/Fhfr1hk9ZxyU5CQ9dVScsgENnUUdmtT/H+XzqEyEWntaptQdc4
+         xrPK/tLewPkrUS/DDNJQoJFIbFKNtuwVji2OjWf0PzrXXey5Kpnc9KeLBMs7tUCg+26P
+         7/YBxRob2ZBg7jplRnBFibIzc0ywrTFbfWBcDOiFrH0JJ1rYGXP1rrvKS40IZh/hfIf5
+         BNFgljFYOtHn4p80l+3dbFCzUjNl8PM+Ij+sUpk3UA6gE1FMHrFdM6ZpxjtOmYnEltSF
+         uzXDOMI8wPtRscfMsnqoaHg0+E7yPUto1okRZ/Kko8NnmZoOR8h28z1xlCfl74LdHZXZ
+         E+lQ==
+X-Gm-Message-State: ACgBeo3ioxq5+GNdIOHGnx34evbrvqEFYtRGOIzFmMsbsLdu77O0ax/b
+        GDIcX4207hUy95y7XEpCjp8=
+X-Google-Smtp-Source: AA6agR6Vc+m2FdzPGVSPWnoDT+oMENLyuL2Ikgn8+Yipfv2KsihHQDkaQRgXGn33TZVyYmdVL++GLw==
+X-Received: by 2002:a17:90b:1bce:b0:1f0:505c:74f7 with SMTP id oa14-20020a17090b1bce00b001f0505c74f7mr7840634pjb.87.1659167456721;
+        Sat, 30 Jul 2022 00:50:56 -0700 (PDT)
+Received: from [192.168.1.4] ([223.235.77.46])
+        by smtp.gmail.com with ESMTPSA id s63-20020a625e42000000b00518a473265csm4092280pfb.217.2022.07.30.00.50.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 Jul 2022 00:50:55 -0700 (PDT)
+Message-ID: <1396d611-970f-d11a-ac35-3bf7d03469d8@gmail.com>
+Date:   Sat, 30 Jul 2022 13:20:49 +0530
 MIME-Version: 1.0
-References: <20220729101245.6469-1-worldhello.net@gmail.com> <20220729101245.6469-2-worldhello.net@gmail.com>
-In-Reply-To: <20220729101245.6469-2-worldhello.net@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 30 Jul 2022 02:44:29 -0400
-Message-ID: <CAPig+cQyW4Bz1kL5MriXeU6Zd93oYQU8ZuA-1gaEmAERpbTaDA@mail.gmail.com>
-Subject: Re: [PATCH 1/9] t1416: more testcases for reference-transaction hook
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-        Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v6 0/4] Add support for mailmap in cat-file
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        John Cai <johncai86@gmail.com>
+References: <20220716074055.1786231-1-siddharthasthana31@gmail.com>
+ <20220718195102.66321-1-siddharthasthana31@gmail.com>
+ <xmqqpmht3tq1.fsf@gitster.g>
+ <CAP8UFD0U8hQ+gyN1=7M4oYEhX6=z_1LS4JaLjqdPG52BELRqtg@mail.gmail.com>
+ <xmqqh731av9f.fsf@gitster.g>
+From:   Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <xmqqh731av9f.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 29, 2022 at 6:21 AM Jiang Xin <worldhello.net@gmail.com> wrote:
-> Append more testcases in t1416 for various git commands that may trigger
-> the "reference-transaction" hook.
-> [...]
-> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> ---
-> diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
-> @@ -133,4 +133,1072 @@ test_expect_success 'interleaving hook calls succeed' '
-> +# Create commits in <repo> and assign each commit's oid to shell variables
-> +# given in the arguments (A, B, and C). E.g.:
-> +#
-> +#     create_commits_in <repo> A B C
-> +#
-> +# NOTE: Never calling this function from a subshell since variable
-> +# assignments will disappear when subshell exits.
-> +create_commits_in () {
-> +       repo="$1" && test -d "$repo" ||
-> +       error "Repository $repo does not exist."
-> +       shift &&
-> +       while test $# -gt 0
-> +       do
-> +               name=$1 &&
-> +               shift &&
-> +               test_commit -C "$repo" --no-tag "$name" &&
-> +               eval $name=$(git -C "$repo" rev-parse HEAD)
-> +       done
-> +}
 
-Since tests call this function within an &&-chain, we should make sure
-that &&-chain inside the function itself does the right thing. There
-are a couple important and one (somewhat optional) minor fix needed
-for this function. First, the function should manually break from the
-loop and indicate failure (using `|| return 1`) if any command inside
-the loop fails. Second, the `eval` is always going to return success
-even if the embedded `git rev-parse` command fails. Finally, the minor
-fix is that the `test ... || error ...` could be difficult for an
-&&-chain linter to grok if we ever start linting function bodies. To
-fix all these problems, you could perhaps write the function like
-this:
 
-    create_commits_in () {
-        local repo="$1" &&
-        if ! test -d "$repo"
-        then
-            error "Repository $repo does not exist."
-        fi &&
-        shift &&
-        while test $# -gt 0
-        do
-            local name=$1 &&
-            shift &&
-            test_commit -C "$repo" --no-tag "$name" &&
-            local rev=$(git -C "$repo" rev-parse HEAD) &&
-            eval "$name=$rev" || return 1
-        done
-    }
-
-Now that the function breaks out of the loop properly with `|| return
-1` upon failure, it's no longer necessary to perform the directory
-check at the top of the function since the call to test_commit() will
-correctly fail if the directory does not exist. So, the function can
-be shortened to:
-
-    create_commits_in () {
-        local repo="$1" &&
-        shift &&
-        while test $# -gt 0
-        do
-            local name=$1 &&
-            shift &&
-            test_commit -C "$repo" --no-tag "$name" &&
-            local rev=$(git -C "$repo" rev-parse HEAD) &&
-            eval $name=$rev || return 1
-        done
-    }
-
-Having said all that, it almost seems overkill to build the loop into
-this function considering that it sets only four shell variables in
-the entire test script, so it might be simpler to drop the loop
-altogether:
-
-    create_commits_in () {
-        local repo="$1" name="$2" &&
-        test_commit -C "$repo" --no-tag "$name" &&
-        local rev=$(git -C "$repo" rev-parse HEAD) &&
-        echo $rev
-    }
-
-and change the callers to invoke it individually for each variable:
-
-    A=$(create_commits_in base A) &&
-    B=$(create_commits_in base B) &&
-    C=$(create_commits_in base C) &&
-
-or even drop the function entirely:
-
-    test_commit -C base --no-tag A &&
-    A=$(git -C base rev-parse HEAD) &&
-    test_commit -C base --no-tag B &&
-    B=$(git -C base rev-parse HEAD) &&
-    test_commit -C base --no-tag C &&
-    C=$(git -C base rev-parse HEAD) &&
-
-though, it's a matter of taste whether that's better.
-
-> +test_cmp_heads_and_tags () {
-> +       indir= &&
-> +       while test $# != 0
-> +       do
-> +               case "$1" in
-> +               -C)
-> +                       indir="$2"
-> +                       shift
-> +                       ;;
-
-It wouldn't hurt to keep the &&-chain intact here in case the &&-chain
-linter is some day updated to check function bodies, so:
-
-    indir="$2" &&
-    shift
-
-> +               *)
-> +                       break
-> +                       ;;
-> +               esac
-> +               shift
-
-Same here:
-
-    esac &&
-    shift
-
-> +       done &&
-> +       expect=${1:-expect} &&
-> +       actual=${2:-actual-heads-and-tags} &&
-> +       indir=${indir:+"$indir"/} &&
-> +       test_path_is_file "$expect" &&
-> +       test_when_finished "rm -f \"$actual\"" &&
-> +       git ${indir:+ -C "$indir"} show-ref --heads --tags | \
-> +               make_user_friendly_and_stable_output >"$actual" &&
-
-The exit code from `git show-ref` is being lost down the pipe. You
-also don't need the `\` after `|`.
-
-> +       test_cmp "$expect" "$actual"
-> +}
-> +
-> +test_expect_success 'setup git config and common reference-transaction hook' '
-> +       git config --global \
-> +               core.hooksPath "$HOME/test-hooks" &&
-
-Nit: This would fit nicely on a single line; no need for the line splicing.
-
-> +       git config --global core.abbrev 7 &&
-> +       mkdir "test-hooks" &&
-> +       write_script "test-hooks/reference-transaction" <<-EOF
-> +               exec >>"$HOME/$HOOK_OUTPUT"
-> +               printf "## Call hook: reference-transaction %9s ##\n" "\$@"
-> +               while read -r line
-> +               do
-> +                   printf "%s\n" "\$line"
-
-Nit This is the same as:
-
-    echo "\$line"
-
-> +               done
-> +       EOF
-> +'
-> +
-> +test_expect_success "update-ref: create new refs" '
-> +       test_when_finished "rm -f $HOOK_OUTPUT" &&
-> +
-> +       cat >expect <<-EOF &&
-> +               ## Call hook: reference-transaction  prepared ##
-
-This and a bunch of other here-doc tags in subsequent tests are
-missing the backslash:
-
-    cat >expect <<-\EOF &&
+On 29/07/22 01:02, Junio C Hamano wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+> 
+>> On Mon, Jul 25, 2022 at 8:58 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+>>>
+>>>> Changes in v6:
+>>>> - The function rewrite_ident_line() returns the difference between the
+>>>>    new and the old length of the ident line. We were not using this
+>>>>    information and instead parsing the buffer again to look for the line
+>>>>    ending. This patch set starts using that information to update the
+>>>>    buf_offset value in commit_rewrite_person().
+>>>> - This patch set also tweaks the commit_rewrite_person() so that it is
+>>>>    easier to understand and avoids unnecessary parsing of the buffer
+>>>>    wherever possible.
+>>>>
+>>>> Siddharth Asthana (4):
+>>>>    revision: improve commit_rewrite_person()
+>>>>    ident: move commit_rewrite_person() to ident.c
+>>>>    ident: rename commit_rewrite_person() to apply_mailmap_to_header()
+>>>>    cat-file: add mailmap support
+>>>>
+>>>>   Documentation/git-cat-file.txt |  6 +++
+>>>>   builtin/cat-file.c             | 43 +++++++++++++++++++-
+>>>>   cache.h                        |  6 +++
+>>>>   ident.c                        | 74 ++++++++++++++++++++++++++++++++++
+>>>>   revision.c                     | 50 ++---------------------
+>>>>   t/t4203-mailmap.sh             | 59 +++++++++++++++++++++++++++
+>>>>   6 files changed, 190 insertions(+), 48 deletions(-)
+>>>
+>>> I haven't seen any comments or objections to this round.  Are people
+>>> happy about it going forward?  I am planning to merge it to 'next'
+>>> and down to 'master' soonish.
+>>
+>> I am biased, but I am happy with the current state of this patch
+>> series. During the last versions of this patch series there were only
+>> comments related to the first patch in the series (revision: improve
+>> commit_rewrite_person()). It seems to me that they were all properly
+>> taken into account, and that the code in that patch is now correct and
+>> relatively simple to understand.
+> 
+> Thanks, let's move it forward.
+Thanks a lot Junio, Phillip, Đoàn, Ævar, Johannes, Christian and John 
+for helping me with the reviews and making this patch better. Thanks a 
+lot for accepting it :)
