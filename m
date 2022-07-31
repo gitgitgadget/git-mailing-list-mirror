@@ -2,307 +2,424 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D684C19F28
-	for <git@archiver.kernel.org>; Sun, 31 Jul 2022 01:46:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F19DC19F28
+	for <git@archiver.kernel.org>; Sun, 31 Jul 2022 03:04:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229845AbiGaBqN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jul 2022 21:46:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44262 "EHLO
+        id S231145AbiGaCwf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jul 2022 22:52:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229807AbiGaBqM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jul 2022 21:46:12 -0400
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64E43E0BD
-        for <git@vger.kernel.org>; Sat, 30 Jul 2022 18:46:10 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id o1so6217839qkg.9
-        for <git@vger.kernel.org>; Sat, 30 Jul 2022 18:46:10 -0700 (PDT)
+        with ESMTP id S229876AbiGaCwe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jul 2022 22:52:34 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52B6610576
+        for <git@vger.kernel.org>; Sat, 30 Jul 2022 19:52:29 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id w15so12471826lft.11
+        for <git@vger.kernel.org>; Sat, 30 Jul 2022 19:52:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7GkaFAFhLBK7H9Qu7yCYvaSTrTJgQVDxyo/RKa+OffY=;
-        b=m3KahSqr1zyVm3fCyv011nx3uC4N3QTuv2ZbbaEkTEYTpLYkG7HDkH6vC20HLmK0Xs
-         D5EDIsINzrGd7Lo9Pw5+aI+6xr+MkT/17q+EkdqOOkyQzdjVCY7ID11kvFrkoGm+IGuj
-         knQuzHeGkwgeUrRMpdSI17KIvaoGcoR70sysdmA3R/AAzvIuckfbdPYLLHIGK1yB7fgC
-         p4N+gD5OOCjEmDpjXG7O0re+NQL7qsRiSHXPH8r7lz44w3D35P/oVtLERsztk4AxTyC4
-         2NvYHm1BiaGdt6E8VJ67QGxcLnaFXRQPs7QzAlRbPSIUNletJCgNxjSvT2jbRWoKkbRr
-         l7dg==
+        d=usp.br; s=usp-google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=w/gAu25J2m4fLjgAFS0/Cv0/QziHXXgt2LkI5KzT0Bs=;
+        b=ZFcqX+U6N13k12GA/Jyc/90VKg/WgQ5/zsjtS2slbuiu9gmK4z27w5JQDWgBy+LrL3
+         lIOhHorrXaBhEmQciJLYgdAErwoi0kXgiy2ufbdAdnscv6YQCcz/PRep30wq/mUzNRnY
+         lrfZJj6lGJyVRq1I8DiznOCCXE+XmZddCE0OGaX51vbYQyTTDvSvvbmlfCY8rVYyz4EO
+         YGurwCYrCV0gzmMaLhQdFZ2+WBqMVs0tSqfiReDyL3D+PEt332BFp0DWSdLLZWIhwgZU
+         IqsI0wpr9Su95o3RI1hARMRqzPDk2KiElk/Xt/X0vr3rYQuPFqN6331Wq5UEAbwExUXj
+         y9Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7GkaFAFhLBK7H9Qu7yCYvaSTrTJgQVDxyo/RKa+OffY=;
-        b=l0HJK2VwuhHlqorvRAuCT+AC5G06T2tJb1nX1mOqDnQEBeu0+3iriUCDqbSaYJnVYc
-         /mkBgiPJg05IWO3g3448SOXRV27MPxYScWLg29FClbkd7Dv4KqEMVkZ+G501F62aiK4y
-         vW4b2RUCmlpfGDauTDOxvDLk+8wCOtIccXcGSFlRGskreFYB/Z4Ux7coXQvvmizj1h7X
-         YGLvfAvf1Ii/HkmStgnnLbZC143u+JSB+A9DcRUziW+0Ilo/Mg7OYMhCOewfUU6mQblL
-         XqJpHN1O64b4+AWUtYM6zqR6SI1+zoWKIGQz36okvdGJGSJVxIfngd6PtUVWOHPrS5nJ
-         /AHQ==
-X-Gm-Message-State: AJIora8cM21BtpuAs6jC5YAYoDpkXDQU8Gz7HovqtwNg5rDYVfOrGvIT
-        47Bwv1TkBdcL+vbHb+w2tB0xuJ2jfX+jss9lVmBrpITulHjlzg==
-X-Google-Smtp-Source: AGRyM1t86AsuPjGkIHkU1mBJcDLzfdfrdSkzw8M5CxdoG5h79IRltZQSu+orsTM96SdUE4gGoosL+QRpYXwVKzBjtOU=
-X-Received: by 2002:a05:620a:741:b0:6b5:ee4f:35e8 with SMTP id
- i1-20020a05620a074100b006b5ee4f35e8mr7586661qki.131.1659231969382; Sat, 30
- Jul 2022 18:46:09 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=w/gAu25J2m4fLjgAFS0/Cv0/QziHXXgt2LkI5KzT0Bs=;
+        b=U1GSjZ8+XiHmwTLePy8oeWK5uekKRzkN8UB3AFuEHAvgJQwi1ruXwko9SU9gnuRx0N
+         EVPvmlGIsyhBSJ0LLE50LSgcOwnUmgVa0cVV80zb5eCXpWHoTnIAHdcnSInfHfErQdO1
+         vBwb50J2UPoQdp666GUw88cbM3OjB3F/uDT6GWr4HzbeXZvTwzem9YgJfNmeAnwCdhdA
+         Zzr0UcHHA6QycF6ta2lIYC/UhsPY6FEJwMeCchyfXt4esX9Ayur6zp7ypTpmhDNS2/e/
+         Cz5JhV1GPlPBujp4Jxbj7GQg07rskGPATfzPzHMWMVmOgmwkcJuFi9KvMHog8P8DmETS
+         OYMQ==
+X-Gm-Message-State: AJIora9OO0hVv1Nyez3MEUUMhs9TRjqDVwqUh0JGIOFnE51XMtYAt4ZK
+        jmLWV8oRzjYOGz1mxy+V/9tweHFYa+Uk0TUbzCV3og==
+X-Google-Smtp-Source: AGRyM1uzYIX3cHk0HGGz0eGJ7InasdDwNJVVdWVQwRh81C6QHcyyJ2ToMvn8YgX66EDlIIPdRKJtvkMLtsUzwMlw6IQ=
+X-Received: by 2002:a05:6512:3f13:b0:48a:a89e:3ccb with SMTP id
+ y19-20020a0565123f1300b0048aa89e3ccbmr3328345lfa.245.1659235947446; Sat, 30
+ Jul 2022 19:52:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <HE1PR0501MB24096E2FBDB66318A2FDADAAF8969@HE1PR0501MB2409.eurprd05.prod.outlook.com>
- <220728.865yjhl8wk.gmgdl@evledraar.gmail.com> <xmqqilnhcgd7.fsf@gitster.g>
- <701c318c-1a1b-1793-90e8-807cf97dc948@web.de> <CABPp-BE4saKAboS=SPQmQe6n2=Fnhv7pL4_JfF2Zwg5Zhp7Vjw@mail.gmail.com>
- <d461718f-cc72-96e2-4de6-4cc67e3b95a5@web.de>
-In-Reply-To: <d461718f-cc72-96e2-4de6-4cc67e3b95a5@web.de>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 30 Jul 2022 18:45:57 -0700
-Message-ID: <CABPp-BF5S6QT6Hn-1wf6w67-ayWfX5WZLZqueNMMeqp1jtXirg@mail.gmail.com>
-Subject: Re: Lost file after git merge
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?B?TGHEj2EgVGVzYcWZw61r?= <lada.tesarik@olc.cz>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <cover.1658518769.git.matheus.bernardino@usp.br>
+ <f38f722de7c3323207eda5ea632b5acd3765c285.1658675222.git.matheus.bernardino@usp.br>
+ <4n20476q-6ssr-osp8-q5o3-p8ns726q4pn3@tzk.qr>
+In-Reply-To: <4n20476q-6ssr-osp8-q5o3-p8ns726q4pn3@tzk.qr>
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+Date:   Sat, 30 Jul 2022 23:52:16 -0300
+Message-ID: <CAHd-oW6LZay=MX2FdFjgTh1pjE=g-XTm63mGWuMhHd=-N=tXRA@mail.gmail.com>
+Subject: Re: [PATCH v2] t/t0021: convert the rot13-filter.pl script to C
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
+        christian.couder@gmail.com, avarab@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Okay, you nerd-sniped me into responding why I'm super skeptical of this pa=
-th...
+Hi, Dscho
 
-On Sat, Jul 30, 2022 at 7:44 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+On Thu, Jul 28, 2022 at 1:58 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> Am 30.07.22 um 04:16 schrieb Elijah Newren:
-> > On Fri, Jul 29, 2022 at 1:34 PM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> >>
-> >> Am 28.07.22 um 19:11 schrieb Junio C Hamano:
-> >>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-> >>>
-> >>>> On Thu, Jul 28 2022, La=C4=8Fa Tesa=C5=99=C3=ADk wrote:
-> >>>>
-> >>>>> 1. I added a file called 'new_file' to a master branch.
-> >>>>> 2. Then I created branch feature/2 and deleted the file in master
-> >>>>> 3. Then I deleted the file in branch feature/2 as well.
-> >>>>> 4. I created 'new_file' on branch feature/2 again.
-> >>>
-> >>> It heavily depends on how this creation is done, i.e. what went into
-> >>> the created file.  Imagine that a file existed with content A at
-> >>> commit 0, both commits 1 and 2 removed it on their forked history,
-> >>> and then commit 3 added exactly the same content A to the same path:
-> >>>
-> >>>           1---3
-> >>>          /     \
-> >>>     ----0---2---4---->
-> >>>
-> >>> When you are about to merge 2 and 3 to create 4, what would a
-> >>> three-way merge see?
-> >>>
-> >>>     0 had content A at path P
-> >>>     2 said "no we do not want content A at path P"
-> >>>     3 said "we are happy with content A at path P"
-> >>>
-> >>> So the net result is that 0-->3 "one side did not touch A at P" and
-> >>> 0-->2 "one side removed A at P".
-> >>>
-> >>> Three-way merge between X and Y is all about taking what X did if Y
-> >>> didn't have any opinion on what X touched.  This is exactly that
-> >>> case.  The history 0--->3 didn't have any opinion on what should be
-> >>> in P or whether P should exist, and that is why there is no change
-> >>> between these two endpoints.
-> >>
-> >> The last sentence is not necessarily true.  You could also say that
-> >> 0--->3 cared so much about path P having content A that it brought it
-> >> back from the void.  Determining whether a de-facto revert
-> >> - intended to return to an uncaring state of "take whatever main has" =
-or
-> >> - meant to choose *that* specific content which incidentally is on mai=
-n
-> >> is not possible from the snapshots at the merge point alone, I think.
-> >>
-> >> Checking if 0...3 touched P and leaving that path unmerged out of
-> >> caution shouldn't be terribly expensive.
+> > On Sun, 24 Jul 2022, Matheus Tavares wrote:
 > >
-> > I think it might be terribly expensive.
-> >
-> > Walking history can easily be the slow part of such an operation, e.g.
-> > can_fast_forward() taking roughly 100 times as long as doing the
-> > merge_incore_recursive() portion that creates the new merged toplevel
-> > tree[1].  (And can_fast_forward() is a form of history walk that
-> > doesn't involve traversing into any trees, so I suspect it's a cheaper
-> > history traversal than what is being suggested).
-> >
-> > Focusing on the tree traversal side, this suggested change would
-> > essentially disable the trivial directory resolution optimizations in
-> > merge-ort[2].  (Note that the trivial directory resolution sped up a
-> > rebase that didn't involve very many renames by a factor of 25).  The
-> > whole point of that optimization was to avoid walking into trees that
-> > were only changed on one side, where possible.  Your proposed change
-> > would be saying we always have to walk into trees that either side
-> > modified...and do so for every intermediate commit as well so that we
-> > can fully enumerate all (temporarily) changed files.
+> > diff --git a/t/helper/test-rot13-filter.c b/t/helper/test-rot13-filter.c
+> > +static char *rot13(char *str)
+> > +{
+> > +     char *c;
+> > +     for (c = str; *c; c++) {
+> > +             if (*c >= 'a' && *c <= 'z')
+> > +                     *c = 'a' + (*c - 'a' + 13) % 26;
+> > +             else if (*c >= 'A' && *c <= 'Z')
+> > +                     *c = 'A' + (*c - 'A' + 13) % 26;
 >
-> True: Compared to just checking if a path was touched by 3, a history
-> traversal can take arbitrarily long.  At least it's bounded by the merge
-> base and a specific path.
+> That's quite verbose, but it _is_ correct (if a bit harder than necessary
+> to validate, I admit that I had to look up whether `%`'s precedence is higher
+> than `+` in https://en.cppreference.com/w/c/language/operator_precedence).
+>
+> A conciser way (also easier to reason about):
+>
+>         for (c = str; *c; c++)
+>                 if (isalpha(*c))
+>                         *c += tolower(*c) < 'n' ? 13 : -13;
 
-How is it bounded by a specific path?  How do you know which path to
-check?  Can't this affect many paths?  I think to fix this issue, you
-either have to walk all paths for all intermediate commits, OR:
-  * get the list of paths modified between the merge base and one side
-of history (just an endpoint diff, not a view of history along the
-way)
-  * get the list of paths modified between the merge base and the
-other side of history (again, just an endpoint diff)
-  * take the symmetric difference of those two lists above (let's name
-the resulting set SD so we can refer to it later).
-  * Walk all intermediate commits between the merge base and the two
-endpoints being merged, and for each one investigate every path in it
-corresponding to one of the paths in SD.
-  * As we do the above walk into trees of all intermediate commits,
-look for a sequence of commits that does some change and then later
-reverts it
+Nice :) Thanks.
 
-Also, I think using the phrase "the merge base" points out some
-ill-posedness in this problem.  For actual merges, I think it's well
-posed.  But...
+> > [...]
+> > +static void packet_read_capabilities(struct string_list *caps)
+> > +{
+> > +     while (1) {
+> > +             int size;
+> > +             char *buf = packet_read_line(0, &size);
+> > +             if (!buf)
+> > +                     break;
+> > +             string_list_append_nodup(caps,
+> > +                                      skip_key_dup(buf, size, "capability"));
+>
+> It is tempting to use unsorted string lists for everything because Perl
+> makes that relatively easy.
+>
+> However, in this instance I would strongly recommend using something more
+> akin to Perl's "hash" data structure, in this instance a `strset`.
 
-What about cherry-picks, rebases, and reverts?  Those pass a funny
-merge-base to the merge machinery.  Using that merge-base does allow
-us to construct a valid commit range, but in that context, is that
-range still correct to use with your rule?  Perhaps it does make sense
-to use that range and apply your same rule, but...
+Ok, will do.
 
-What if we instead cherry-pick a different way -- using format-patch
-and `git am -3`?  At the time git-am runs, it only has one commit
-available to it.  It cannot determine any merge-base.  So what range
-of commits should it walk to see if the upstream side has both made a
-change to some file and then undone that change?  Do we walk all of
-history?  Do we attempt to find some point in history that appears to
-have the same versions of the files in the "from" versions of the
-patch being applied?  What if such a commit does not exist?  What if
-many such commits exist?  If many such commits exist, what if using
-one of those commits would give us a different answer than using
-another commit (meaning, what if we do see a change-and-then-unchange
-if one of them is used as the merge-base, but do not see such a
-sequence if the other one is)?  I'm certain I could construct examples
-of each of those "What if" scenarios for git-am.
+> > +
+> > +/*
+> > + * Check our capabilities we want to advertise against the remote ones
+> > + * and then advertise our capabilities
+> > + */
+> > +static void packet_check_and_write_capabilities(struct string_list *remote_caps,
+> > +                                             struct string_list *our_caps)
+>
+> The list of "our caps" comes from the command-line. In C, this means we
+> get a `const char **argv` and an `int argc`. So:
+>
+> static void check_and_write_capabilities(struct strset *remote_caps,
+>                                          const char **caps, int caps_count)
+> {
+>         int i;
+>
+>         for (i = 0; i < caps_count; i++) {
+>                 if (!strset_contains(remote_caps, caps[i]))
+>                         die("our capability '%s' is not available from remote",
+>                             caps[i]);
+>
+>                 packet_write_fmt(1, "capability=%s\n", caps[i]);
+>         }
+>         packet_flush(1);
+> }
 
->  And renames complicate the picture, but only
-> full renames (same blob or tree ID) need to be considered.  That feels
-> doable in a reasonable amount of time, but it's not as cheap as ignoring
-> the history.
+Makes sense. We also use the list elsewhere (has_capability()), but we
+can easily replace that with two global flags to indicate if we have
+the "clean" and "smudge" caps.
 
-Making things 25x slower and calling it "not as cheap"?  That's some
-literary jiu-jitsu there.
+> And then we would call it via
+>
+>         check_and_write_capabilities(remote_caps, argv + 1, argc - 1);
+>
+> [...]
+> > +static void command_loop(void)
+> > +{
+> > +     while (1) {
+> > +             char *command = packet_key_val_read("command");
+> > +             if (!command) {
+> > +                     fprintf(logfile, "STOP\n");
+> > +                     break;
+> > +             }
+> > +             fprintf(logfile, "IN: %s", command);
+>
+> We will also need to `fflush(logfile)` here, to imitate the Perl script's
+> behavior more precisely.
 
-Also, I think the 25x figure may well undercount the expense, perhaps
-even dramatically, since I'm not sure things can be limited in the
-form you envision...
+I was somewhat intrigued as to why the flushes were needed in the Perl
+script. But reading [1] and [2], now, it seems to have been an
+oversight.
 
-> Assuming that one side doesn't care about a path because it has the same
-> content as the merge base is tempting.  And reverts that break this
-> assumption are probably quite rare.  Still it led to an unintended
-> outcome here.  Reminds me of a recent chess robot incident [3].  Speed
-> is nice and safety has a cost, but do we already make the best possible
-> tradeoff here?
+That is, Eric suggested splictily flushing stdout because it is a
+pipe, but the author ended up erroneously disabling autoflush for
+stdout too, so that's why we needed the flushes there. They later
+acknowledged that and said that they would re-enabled it (see [2]),
+but it seems to have been forgotten. So I think we can safely drop the
+flush calls.
 
-I mean, if you want to make an alternative merge strategy that isn't
-based on a three-way merge, by all means go ahead.  We have pluggable
-backends, after all.
+[1]: http://public-inbox.org/git/20160723072721.GA20875%40starla/
+[2]: https://lore.kernel.org/git/7F1F1A0E-8FC3-4FBD-81AA-37786DE0EF50@gmail.com/
 
-It's not clear to me that your suggestion actually leads to a
-situation with fewer unintended outcomes, though it is clear that
-performance could be dramatically worse.  Let's explore this for a bit
-(more than I already have above)...
+> > +
+> > +             if (!strcmp(command, "list_available_blobs")) {
+> > +                     struct hashmap_iter iter;
+> > +                     struct strmap_entry *ent;
+> > +                     struct string_list_item *str_item;
+> > +                     struct string_list paths = STRING_LIST_INIT_NODUP;
+> > +
+> > +                     /* flush */
+> > +                     if (packet_read_line(0, NULL))
+> > +                             die("bad list_available_blobs end");
+> > +
+> > +                     strmap_for_each_entry(&delay, &iter, ent) {
+> > +                             struct delay_entry *delay_entry = ent->value;
+> > +                             if (!delay_entry->requested)
+> > +                                     continue;
+> > +                             delay_entry->count--;
+> > +                             if (!strcmp(ent->key, "invalid-delay.a")) {
+> > +                                     /* Send Git a pathname that was not delayed earlier */
+> > +                                     packet_write_fmt(1, "pathname=unfiltered");
+> > +                             }
+> > +                             if (!strcmp(ent->key, "missing-delay.a")) {
+> > +                                     /* Do not signal Git that this file is available */
+> > +                             } else if (!delay_entry->count) {
+> > +                                     string_list_insert(&paths, ent->key);
+> > +                                     packet_write_fmt(1, "pathname=%s", ent->key);
+> > +                             }
+> > +                     }
+> > +
+> > +                     /* Print paths in sorted order. */
+>
+> The Perl script does not order them specifically. Do we really have to do
+> that here?
 
-Let's say you aim to fix this "unintended outcome" via paying
-attention to the changes from individual commits along the way.  This
-isn't the only such issue users report that is intrinsic to how
-three-way content merges work.  Do you decide to also address the
-others?  From the top of my head, others include:
+It actually prints them in sorted order:
 
-A) generalize your logic here -- apply it to individual hunks rather
-than only to whole files.  Using your exact same rationale would
-suggest that if someone modifies a hunk on one side of history and
-undid it later, then that region of code should not cleanly resolve to
-what the other side of history has but should instead be marked as
-conflicted.
-B) handle commits cherry-picked to both sides "better".  If someone
-applies the same cherry-pick to both sides, and they then further
-modify the same lines on one side, there should be no "useless"
-conflict, because both sides "built on top of" the same cherry-picked
-state.
-C) make rename detection match files based on changes in individual
-commits rather than on the overall diff since the merge base
+        foreach my $pathname ( sort keys %DELAY )
 
-It turns out that others have explored part of this space before, e.g.
-Bram Cohen's "Precise Codeville Merge"[4], which had names for
-behaviors (A) and (B) (see [5] and [6], respectively; also note that
-it points out that requirements (A) and (B) can come into conflict).
-Perhaps if you are interested, you can port his code over and use his
-algorithm?  However, it might be worth noting that he later gave up on
-it and recommended that people use three-way merges instead[7].
+That is required because some test cases will compare the output using
+this order.
 
-Since Git seems to be the only system that does rename detection, (C)
-is new territory.  But it's also relevant in that a user requested
-that the merge algorithm incorporate information from changes in
-individual commits along the history in order to solve a "bug" they
-ran into[8].
+> In any case, it is more performant to append the paths in an unsorted way
+> and then sort them once in the end (that's O(N log(N)) instead of O(N^2)).
 
-Also, besides implementing Bram's "Precise Codeville Merge" in Git,
-there may be another pre-existing solution available: using Michael
-Haggerty's git-imerge[9] and making sure it fully fills out its matrix
-of merges instead of opportunistically attempting to skip some.  That
-would certainly make sure that changes from each individual commit was
-considered.
+OK, will do.
 
-But let's say you don't want to use either Precise Codeville Merge or
-git-imerge, and want to make a copy of our default strategy
-(merge-ort) and modify it.  Once you implement your new strategy, I'm
-sure the other cases in (A), (B), and (C) will be brought up by people
-and it's hard to see based on your rationale so far why your new
-algorithm shouldn't attempt to solve those issues as well.  If you do,
-your performance will really tank.  Not only did you kill the trivial
-directory resolution optimization, you also kill the irrelevant
-renames optimization (which, IMO, was the crowning jewel of the ort
-optimizations).  But it's also worse than that because (A) and likely
-(B) force you to compute pairwise diffs of every sequence of commits
-since the merge base, and (C) forces those all to include rename
-detection (both for full and partial renames).  But it gets worse.
-Some of those commits in the history back to the merge base will be
-merge commits, for which we have to be careful with the diff
-computation.  We can't just ignore merge commits, because
-change-and-then-unchanged code might have been done in merge commits
-as part of an attempt to fix semantic conflicts.  So, to address merge
-commits, we have to see the changes made by users in those merges
-relative to the auto-merge state.  If we do that, the upshot is that
-handling (A)-(C) implies that to merge two branches, we have to look
-at all merge commits in the history of the two branches back to the
-merge base, and remerge every one of them.
+> > +                     for_each_string_list_item(str_item, &paths)
+> > +                             fprintf(logfile, " %s", str_item->string);
+> > +                     string_list_clear(&paths, 0);
+> > +
+> > +                     packet_flush(1);
+> > +
+> > +                     fprintf(logfile, " [OK]\n");
+> > +                     packet_write_fmt(1, "status=success");
+> > +                     packet_flush(1);
+>
+> I know the Perl script uses an else here, but I'd much rather insert a
+> `continue` at the end of the `list_available_blobs` clause and de-indent
+> the remainder of the loop body.
 
-Maybe you're okay with all of the above, even with others giving up on
-merge strategies other than three-way merge.  Maybe individually
-merging all commits since the merge base doesn't phase you.  Maybe you
-can make some kind of distinction where some of (A)-(C) don't matter.
-Maybe you just capitulate and say you only care about the problem that
-started this thread and ignore all three of those requests.  Maybe you
-don't care about git-am and exclude it, overlooking the extra
-difference we've added between it and the other commands (a bit sad
-since merge-ort had removed one of those differences and I like
-commands being more consistent).  Maybe the resulting "mere" 25x
-slowdown is good enough for you for your repository sizes.  Or maybe
-you'd be hiding this behind some non-default option that people could
-select, allowing them to make the tradeoff.  Whether any or all of
-that is true, I just don't see how to maintain it with the rationale
-and description given, so I'm not comfortable with it affecting the
-code I have to maintain.
+Sure! I think we can take a step further and extract the if logic to a
+separate function.
 
-So, I'm skeptical.  But feel free to create a new merge strategy and
-prove me wrong.
+> > +             } else {
+> > +                     char *buf, *output;
+> > +                     int size;
+> > +                     char *pathname;
+> > +                     struct delay_entry *entry;
+> > +                     struct strbuf input = STRBUF_INIT;
+> > +
+> > +                     pathname = packet_key_val_read("pathname");
+> > +                     if (!pathname)
+> > +                             die("unexpected EOF while expecting pathname");
+> > +                     fprintf(logfile, " %s", pathname);
+>
+> Again, let's `fflush(logfile)` here.
+>
+> > +
+> > +                     /* Read until flush */
+> > +                     buf = packet_read_line(0, &size);
+> > +                     while (buf) {
+>
+> Let's write this in more idiomatic C:
+>
+>                         while ((buf = packet_read_line(0, &size))) {
+>
+> > +                             if (!strcmp(buf, "can-delay=1")) {
+> > +                                     entry = strmap_get(&delay, pathname);
+> > +                                     if (entry && !entry->requested) {
+> > +                                             entry->requested = 1;
+> > +                                     } else if (!entry && always_delay) {
+> > +                                             entry = xcalloc(1, sizeof(*entry));
+> > +                                             entry->requested = 1;
+> > +                                             entry->count = 1;
+> > +                                             strmap_put(&delay, pathname, entry);
+>
+> I guess here is our chance to extend the signature of `add_delay_entry()`
+> to accept a `requested` parameter, and to call that here.
+>
+> > +                                     }
+> > +                             } else if (starts_with(buf, "ref=") ||
+> > +                                        starts_with(buf, "treeish=") ||
+> > +                                        starts_with(buf, "blob=")) {
+> > +                                     fprintf(logfile, " %s", buf);
+> > +                             } else {
+> > +                                     /*
+> > +                                      * In general, filters need to be graceful about
+> > +                                      * new metadata, since it's documented that we
+> > +                                      * can pass any key-value pairs, but for tests,
+> > +                                      * let's be a little stricter.
+> > +                                      */
+> > +                                     die("Unknown message '%s'", buf);
+> > +                             }
+> > +                             buf = packet_read_line(0, &size);
+> > +                     }
+> > +
+> > +
+> > +                     read_packetized_to_strbuf(0, &input, 0);
+> > +                     fprintf(logfile, " %"PRIuMAX" [OK] -- ", (uintmax_t)input.len);
+>
+> This reads _so much nicer_ than the Perl version!
+>
+> > +
+> > +                     entry = strmap_get(&delay, pathname);
+> > +                     if (entry && entry->output) {
+> > +                             output = entry->output;
+> > +                     } else if (!strcmp(pathname, "error.r") || !strcmp(pathname, "abort.r")) {
+> > +                             output = "";
+> > +                     } else if (!strcmp(command, "clean") && has_capability("clean")) {
+> > +                             output = rot13(input.buf);
+> > +                     } else if (!strcmp(command, "smudge") && has_capability("smudge")) {
+> > +                             output = rot13(input.buf);
+> > +                     } else {
+> > +                             die("bad command '%s'", command);
+> > +                     }
+> > +
+> > +                     if (!strcmp(pathname, "error.r")) {
+> > +                             fprintf(logfile, "[ERROR]\n");
+> > +                             packet_write_fmt(1, "status=error");
+> > +                             packet_flush(1);
+> > +                     } else if (!strcmp(pathname, "abort.r")) {
+> > +                             fprintf(logfile, "[ABORT]\n");
+> > +                             packet_write_fmt(1, "status=abort");
+> > +                             packet_flush(1);
+> > +                     } else if (!strcmp(command, "smudge") &&
+> > +                                (entry = strmap_get(&delay, pathname)) &&
+> > +                                entry->requested == 1) {
+> > +                             fprintf(logfile, "[DELAYED]\n");
+> > +                             packet_write_fmt(1, "status=delayed");
+> > +                             packet_flush(1);
+> > +                             entry->requested = 2;
+> > +                             entry->output = xstrdup(output);
+>
+> We need to call `free(entry->output)` before that lest we leak memory, but
+> only if `output` is not identical anyway:
+>
+>                                 if (entry->output != output) {
+>                                         free(entry->output);
+>                                         entry->output = xstrdup(output);
+>                                 }
 
+I think, entry->output will always be NULL here, since we only get
+inside this if block after entry->requested has been set to 1 at the
+top of the function; and, at that point, we haven't run ro13 yet.
+Nevertheless, it doesn't hurt to add the free call anyway :)
 
-[4] https://tonyg.github.io/revctrl.org/PreciseCodevilleMerge.html
-[5] https://tonyg.github.io/revctrl.org/ImplicitUndo.html
-[6] https://tonyg.github.io/revctrl.org/Convergence.html
-[7] https://bramcohen.livejournal.com/52148.html
-[8] https://lore.kernel.org/git/CABPp-BHF5j9XTrJOreHMaQ+TrZB1VgZvs-Bq2vFD1y=
-hLBdkV3A@mail.gmail.com/
-[9] https://github.com/mhagger/git-imerge
+>
+> > +                     } else {
+> > +                             int i, nr_packets;
+> > +                             size_t output_len;
+> > +                             struct strbuf sb = STRBUF_INIT;
+> > +                             packet_write_fmt(1, "status=success");
+> > +                             packet_flush(1);
+> > +
+> > +                             strbuf_addf(&sb, "%s-write-fail.r", command);
+> > +                             if (!strcmp(pathname, sb.buf)) {
+>
+> We can easily avoid allocating the string just for comparing it:
+>
+>                                 const char *p;
+>
+>                                 if (skip_prefix(pathname, command, &p) &&
+>                                     !strcmp(p, "-write-fail.r")) {
+>
+> > +                                     fprintf(logfile, "[WRITE FAIL]\n");
+>
+>                                         fflush(logfile) ;-)
+>
+> > +                                     die("%s write error", command);
+> > +                             }
+> > +
+> > +                             output_len = strlen(output);
+> > +                             fprintf(logfile, "OUT: %"PRIuMAX" ", (uintmax_t)output_len);
+> > +
+> > +                             if (write_packetized_from_buf_no_flush_count(output,
+> > +                                     output_len, 1, &nr_packets))
+> > +                                     die("failed to write buffer to stdout");
+> > +                             packet_flush(1);
+> > +
+> > +                             for (i = 0; i < nr_packets; i++)
+> > +                                     fprintf(logfile, ".");
+>
+> That's not quite the same as the Perl script does: it prints a '.'
+> (without flushing, though) _every_ time it wrote a packet.
+>
+> If you want to emulate that, you will have to copy/edit that loop (and in
+> that case, the insanely long-named function
+> `write_packetized_from_buf_no_flush_count()` is unnecessary, too).
+
+Hmm, I'm not sure we need to emulate that. I do dislike the huge
+function name as well, but I also don't quite like to repeat code
+copying that loop here...
+
+> > +                             fprintf(logfile, " [OK]\n");
+> > +
+> > +                             packet_flush(1);
+> > +                             strbuf_release(&sb);
+> > +                     }
+> > +                     free(pathname);
+> > +                     strbuf_release(&input);
+> > +             }
+> > +             free(command);
+> > +     }
+> > +}
+> > [...]
+> > +static void packet_initialize(const char *name, int version)
+> > +{
+> > +     struct strbuf sb = STRBUF_INIT;
+> > +     int size;
+> > +     char *pkt_buf = packet_read_line(0, &size);
+> > +
+> > +     strbuf_addf(&sb, "%s-client", name);
+> > +     if (!pkt_buf || strncmp(pkt_buf, sb.buf, size))
+>
+> We do not need the flexibility of the Perl package, where `name` is a
+> parameter. We can hard-code `git-filter-client` here. I.e. something like
+> this:
+>
+>         if (!pkt_buf || size != 17 ||
+>             strncmp(pkt_buf, "git-filter-client", 17))
+
+Good idea! Thanks. Perhaps, can't we do:
+
+        if (!pkt_buf || strncmp(pkt_buf, "git-filter-client", size))
+
+to avoid the hard-coded and possibly error-prone 17?
+
+> > +             die("bad initialize: '%s'", xstrndup(pkt_buf, size));
+> > +
+> > +     strbuf_reset(&sb);
+> > +     strbuf_addf(&sb, "version=%d", version);
+
+Thanks for a very detailed review and great suggestions!
