@@ -2,145 +2,197 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBA13C00144
-	for <git@archiver.kernel.org>; Mon,  1 Aug 2022 12:43:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E55BC00144
+	for <git@archiver.kernel.org>; Mon,  1 Aug 2022 13:30:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234895AbiHAMnb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Aug 2022 08:43:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44140 "EHLO
+        id S231417AbiHANaI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Aug 2022 09:30:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234870AbiHAMnC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Aug 2022 08:43:02 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AA9960EF
-        for <git@vger.kernel.org>; Mon,  1 Aug 2022 05:25:22 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id f11so9524508pgj.7
-        for <git@vger.kernel.org>; Mon, 01 Aug 2022 05:25:22 -0700 (PDT)
+        with ESMTP id S230521AbiHANaH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Aug 2022 09:30:07 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEEAB3C8D7
+        for <git@vger.kernel.org>; Mon,  1 Aug 2022 06:30:05 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id v131-20020a1cac89000000b003a4bb3f786bso1700391wme.0
+        for <git@vger.kernel.org>; Mon, 01 Aug 2022 06:30:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=p0sOLOkvPrWs45BrUIOMpIuP9zbhlJfoW+kvma/dl7k=;
-        b=SXc0FksM/O0wVkesCMEDP9d+8iO8ylV8uxDuobttnJdfeq6kwEhSsF4a1S9lfIIpt7
-         qYm1GuMJG7ZI/fOb9i5LxLF7OuJPGZdqJ3/X9dfrxqMvVektriDw/8u72OcsjfNDTKdH
-         5mY1VsKZA41/GyEy7TRhQzKyGO093qOfe21llfBvfabkxIE+5WcuJiVL5WHBFrXxA6Ps
-         uDVfhJ+d7eqcPBpraE0JgiWsf6VGAlxv1zGnMkyD34GviIiQDs7ritcx0MHhTT1c1jFG
-         rUfXE1CWw/SfiJoHBIPlPxQYY8+KfI804CUYatp6B7jhb8qDWakua2JV8s84cSbWslKc
-         JT9A==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=jl2m/UGCFPeZGImdIQyWiXlLs094UK7XRJ1LJcMlHQU=;
+        b=J8syuLf5GLVQulgtu9YegcjCVwQR0E9oJp3lOahz7G+tI4FIz+3vIyKs6+DstWpADu
+         tGNgbeiNZBX0ecZO/mL4FJIExYf94t9ga3EiighN7z7/dry4UHaDegRfkdKR7nSP1rpo
+         On18fRuXzcSp2YboB3coY90kFPJEyTzesimU7ZTbhK+YYY0/7ecf5O2ojstoByIn2RkX
+         iNZh6ckSWBTRNnaAaM1YBrTvUK1h+jzKfuSY6NkdXFc0LYxZULT4L4XUhIfq4uMCGCoJ
+         iyZFvo8BO/RsX5+ceNvKb8x6mHD9GSYR3GZJT5XgqmZeODHZRPmKXbM5qO/ZhcaeFRGJ
+         SGBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=p0sOLOkvPrWs45BrUIOMpIuP9zbhlJfoW+kvma/dl7k=;
-        b=0TbSNP9LXEVLu3RAmYwg6i5g33pz1LM70nGG2/Qkwk8hiWlrrmA7mF5Sx8PyvklerG
-         CbeLwLuSgX6hM+HZKR7K/pFtz2vek/iik1YsxvVLVGLW1Ccu1FCHgoEKkCA8yf4Bnrgo
-         IGlzQmiSthxC+hdl4v3H0VAHpQfwHtnE7Z2Rm0BQXt9gJup2eDk9eXaHsDLaOuB8J+Rv
-         p3Ot7wvf18XcUI66YipkbvEDkCtapOBMNJsRLLL0HenwGyqtVgHoxzDR/8b6WH6DAnrm
-         3qSQvvuWZnEXiU6E6KMaGStXpX95TEdomsoOVn7cb+9Q4XimaWk38eDtbePULnUy7NqU
-         Upjg==
-X-Gm-Message-State: ACgBeo0s3BqC6BIqaKfQRp/Nd+T+PhSBXdfUDW/xkBDwxvrlB/rnbRpl
-        fxnTv/i7gJIRE8/StbS3dQ0=
-X-Google-Smtp-Source: AA6agR5qI520XW9mYVnanZ3enwb3Mo1rJdOzVJYK+gTEoDmdF9B8i62EjQnE/aO4Q/Artcm0rnmJ4w==
-X-Received: by 2002:a63:8849:0:b0:41c:4216:10a7 with SMTP id l70-20020a638849000000b0041c421610a7mr1104780pgd.549.1659356721413;
-        Mon, 01 Aug 2022 05:25:21 -0700 (PDT)
-Received: from localhost.localdomain ([205.204.117.103])
-        by smtp.gmail.com with ESMTPSA id k34-20020a635a62000000b00419ffb6445dsm7365733pgm.9.2022.08.01.05.25.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Aug 2022 05:25:21 -0700 (PDT)
-From:   "tenglong.tl" <dyroneteng@gmail.com>
-X-Google-Original-From: "tenglong.tl" <tenglong.tl@alibaba-inc.com>
-To:     avarab@gmail.com
-Cc:     dyroneteng@gmail.com, git@jeffhostetler.com, git@vger.kernel.org,
-        gitster@pobox.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v1 1/2] api-trace2.txt: print config key-value pair
-Date:   Mon,  1 Aug 2022 20:25:15 +0800
-Message-Id: <20220801122515.23146-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.37.1.1.g8cbb44ffc4.dirty
-In-Reply-To: <220722.86fsits91m.gmgdl@evledraar.gmail.com>
-References: <220722.86fsits91m.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=jl2m/UGCFPeZGImdIQyWiXlLs094UK7XRJ1LJcMlHQU=;
+        b=DxhEzufV4hoIl51EqRvOV8se3MRbBa++l3NynN8mW89MDAOR6J5jEH5ODHMi3ZADri
+         5QE9qDZstFMOmI/QhZC5n3+zXTCPPTNVb40zcTQkaNYVFulpK5audCNyA/QzBdcfVe1u
+         Vq0T0wigeT37Pt2yeMSzsSYe/y/HvYOFOoCZzp9BBTp5JdiWT2X9gczjfmZwdDk4KN8I
+         0oXX+Y2141Xa8VM+wFzkJ/Gl7j1F6wXkcAXTalp0VND38iifJV2HB3PpOBFd1E992X8m
+         8vlM3oJyejjI5IlRPtd2v9UltviQQqg0vE2/QXWzX+f/XJsz6n7u01Att7e/Gd3k+xGx
+         jzLg==
+X-Gm-Message-State: AJIora/r2JmePeK9ZIZDHtNI4kHtnhtmMYBBg1tg+gzavFBReVQKXUAu
+        fvMVYvMBaxgV0izYwOTk/DM=
+X-Google-Smtp-Source: AGRyM1vJ30yJ23yaWyB0ur0BT0H96laDS3z62TxZhHU34MdBRdj2AfXqa0jHsx+MXQ+CB8lM0dPB8w==
+X-Received: by 2002:a05:600c:190b:b0:3a3:45c5:9f43 with SMTP id j11-20020a05600c190b00b003a345c59f43mr10885219wmq.130.1659360604329;
+        Mon, 01 Aug 2022 06:30:04 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id j6-20020adff006000000b0022063e5228bsm2689968wro.93.2022.08.01.06.30.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Aug 2022 06:30:03 -0700 (PDT)
+Message-ID: <b33ec478-8858-faa7-2678-f02559426539@gmail.com>
+Date:   Mon, 1 Aug 2022 14:30:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 5/6] transport: add client support for object-info
+Content-Language: en-GB-large
+To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, jonathantanmy@google.com,
+        philipoakley@iee.email, johncai86@gmail.com
+References: <20220502170904.2770649-1-calvinwan@google.com>
+ <20220728230210.2952731-6-calvinwan@google.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20220728230210.2952731-6-calvinwan@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Hi Calvin
 
-> I didn't notice this before, but this is an addition to a long section
-> where the examples are ------- delimited, starting with "in this
-> example.." usually.
+On 29/07/2022 00:02, Calvin Wan wrote:
+> Sometimes it is useful to get information about an object without having
+> to download it completely. The server logic has already been implemented
+> as “a2ba162cda (object-info: support for retrieving object info,
+> 2021-04-20)”. This patch adds client functions to communicate with the
+> server.
+> 
+> The client currently supports requesting a list of object ids with
+> features 'size' and 'type' from a v2 server. If a server does not
+> advertise either of the requested features, then the client falls back
+> to making the request through 'fetch'.
 
-A little puzzled. About "------- delimited", do you mean the "block" syntax?
+I'm confused by the 'type' support, I might have missed something as I'm 
+not familiar with this code but I couldn't see where we parse the type 
+returned by the server.
 
-> So this "print configs" seems like on odd continuation. Shouldn't this
-> copy the template of "Thread Events::" above. I.e. something like (I
-> have not tried to asciidoc render this):
+> +	for (i = 0; i < args.object_info_options->nr; i++) {
+> +		if (packet_reader_read(&reader) != PACKET_READ_NORMAL) {
+> +			check_stateless_delimiter(transport->stateless_rpc, &reader, "stateless delimiter expected");
 
-I think "Events" in "Thread Events" means the thread start and end events,
-maybe not a template here. So I think it might be better to keep this namingi
-if I'm right, but I will use this candidate naming to show diff in the end.
+This is one of a number of lines in this series that are way over the 80 
+column limit.
 
-I'm not good at naming so I'm glad to accept the suggestion about it.
+> +			return -1;
+> +		}
+> +		if (unsorted_string_list_has_string(args.object_info_options, reader.line)) {
+> +			if (!strcmp(reader.line, "size"))
+> +				size_index = i;
 
->	Config (def param) Events::
->		We can optionally emit configuration events, see
->		`trace2.configParams` in linkgit:git-config[1] for how to enable
->		it.
->	+
->	< your example below would follow this>
+Should we be checking for "type" as well? Also does protocol-v2.txt need 
+updating as it only mentions "size" as an attribute.
 
-I refer to the previous sections, it's like the template is :
+> +			continue;
+> +		}
+> +		return -1;
+> +	}
+> +
+> +	i = 0;
+> +	while (packet_reader_read(&reader) == PACKET_READ_NORMAL && i < args.oids->nr) {
+> +		struct string_list object_info_values = STRING_LIST_INIT_DUP;
+> +
+> +		string_list_split(&object_info_values, reader.line, ' ', -1);
+> +		if (0 <= size_index) {
 
-<title>
+To avoid a possible out-of-bounds access we need to check that 
+size_index + 1 < object_info_value.nr in case the server response is 
+malformed
 
-        <brief one-line description>
+> +			if (!strcmp(object_info_values.items[1 + size_index].string, ""))
+> +				die("object-info: not our ref %s",
 
-<detailed multi-lines description>
+I'm a bit confused by this message is it trying to say "object %s is 
+missing on the server"?
 
-So, how about this like:
+> +					object_info_values.items[0].string);
+> +			*(*object_info_data)[i].sizep = strtoul(object_info_values.items[1 + size_index].string, NULL, 10);
 
-diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index 77a150b30e..38d0878d85 100644
---- a/Documentation/technical/api-trace2.txt
-+++ b/Documentation/technical/api-trace2.txt
-@@ -1207,6 +1207,37 @@ at offset 508.
- This example also shows that thread names are assigned in a racy manner
- as each thread starts and allocates TLS storage.
+As Junio pointed out in his comments in v4 there is no error checking 
+here - we should check the server has actually returned a number. Note 
+that strtoul() will happily parse negative numbers so we probably want 
+to do something like
 
-+Config (def param) Events::
-+
-+         Dump "interesting" config values to trace2 log.
-++
-+We can optionally emit configuration events, see
-+`trace2.configparams` in linkgit:git-config[1] for how to enable
-+it.
-++
-+----------------
-+$ git config color.ui auto
-+----------------
-++
-+Then, mark the config `color.ui` as "interesting" config with
-+`GIT_TRACE2_CONFIG_PARAMS`:
-++
-+----------------
-+$ export GIT_TRACE2_PERF_BRIEF=1
-+$ export GIT_TRACE2_PERF=~/log.perf
-+$ export GIT_TRACE2_CONFIG_PARAMS=color.ui
-+$ git version
-+...
-+$ cat ~/log.perf
-+d0 | main                     | version      |     |           |           |              | ...
-+d0 | main                     | start        |     |  0.001642 |           |              | /usr/local/bin/git version
-+d0 | main                     | cmd_name     |     |           |           |              | version (version)
-+d0 | main                     | def_param    |     |           |           |              | color.ui:auto
-+d0 | main                     | data         | r0  |  0.002100 |  0.002100 | fsync        | fsync/writeout-only:0
-+d0 | main                     | data         | r0  |  0.002126 |  0.002126 | fsync        | fsync/hardware-flush:0
-+d0 | main                     | exit         |     |  0.002142 |           |              | code:0
-+d0 | main                     | atexit       |     |  0.002161 |           |              | code:0
-+----------------
- == Future Work
+const char *endp
+errno = 0
+if (!isdigit(*object_info_values.items[1 + size_index].string))
+   die("...")
+*(*object_info_data)[i].sizep = strtoul(object_info_values.items[1 + 
+size_index].string, &endp, 10);
+if (errno || *endp)
+   die("...")
 
- === Relationship to the Existing Trace Api (api-trace.txt)
+Should be we checking the object id matches what we asked for? (I'm not 
+sure if protocol-v2.txt mentions the order in which the objects are 
+returned)
 
-Thanks.
+Should we be parsing the object type here as well?
+
+> @@ -392,8 +468,25 @@ static int fetch_refs_via_pack(struct transport *transport,
+>   	args.server_options = transport->server_options;
+>   	args.negotiation_tips = data->options.negotiation_tips;
+>   	args.reject_shallow_remote = transport->smart_options->reject_shallow;
+> -
+> -	if (!data->got_remote_heads) {
+> +	args.object_info = transport->smart_options->object_info;
+> +
+> +	if (transport->smart_options && transport->smart_options->object_info) {
+> +		struct ref *ref = object_info_refs;
+> +
+> +		if (!fetch_object_info(transport, data->options.object_info_data))
+> +			goto cleanup;
+> +		args.object_info_data = data->options.object_info_data;
+> +		args.quiet = 1;
+> +		args.no_progress = 1;
+> +		for (i = 0; i < transport->smart_options->object_info_oids->nr; i++) {
+> +			struct ref *temp_ref = xcalloc(1, sizeof (struct ref));
+
+Using CALLOC_ARRAY() or p = xcalloc(1, sizeof(*p)) would be safer here 
+(and everywhere else where you have used xcalloc()) as it ensures we 
+allocate the correct size.
+
+> diff --git a/transport.h b/transport.h
+> index b5bf7b3e70..5512fdb140 100644
+> --- a/transport.h
+> +++ b/transport.h
+> @@ -31,6 +32,12 @@ struct git_transport_options {
+>   	 */
+>   	unsigned connectivity_checked:1;
+>   
+> +	/*
+> +	 * Transport will attempt to pull only object-info. Fallbacks
+> +	 * to pulling entire object if object-info is not supported
+> +	 */
+
+Is it definitely true that we fallback to pulling the entire object? - 
+there is at least one place above where we do
+
+ > +	if (transport->smart_options->object_info) {
+ > +		die(_("--object-info requires protocol v2"));
+ > +	}
+ >
+
+Best Wishes
+
+Phillip
