@@ -2,129 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D258C19F2C
-	for <git@archiver.kernel.org>; Mon,  1 Aug 2022 21:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA832C00144
+	for <git@archiver.kernel.org>; Mon,  1 Aug 2022 21:15:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234597AbiHAVEu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Aug 2022 17:04:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36390 "EHLO
+        id S233693AbiHAVPD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Aug 2022 17:15:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231263AbiHAVEt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Aug 2022 17:04:49 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDC8537FAA
-        for <git@vger.kernel.org>; Mon,  1 Aug 2022 14:04:48 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id j1so7199467wrw.1
-        for <git@vger.kernel.org>; Mon, 01 Aug 2022 14:04:48 -0700 (PDT)
+        with ESMTP id S231190AbiHAVPC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Aug 2022 17:15:02 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87C8917E09
+        for <git@vger.kernel.org>; Mon,  1 Aug 2022 14:15:01 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id h205-20020a1c21d6000000b003a34ac64bdfso4910411wmh.1
+        for <git@vger.kernel.org>; Mon, 01 Aug 2022 14:15:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=VAR9UTHwFlEDWsA+8b607AMTcpq+aL4eWw4TCj4lINA=;
-        b=Eo5MJ5ZK4X21Cszbbr148w3K42cRrNu8jSC0olHN920Kb4lG2OAnnu9/5okdlCEsYL
-         9JEX5t5qARPA48XWp8C8rUwlyABDGdxT10HB9tSRf35IiAOb7C6nYgY5G+ZEriGfLKht
-         RNTMMEZvjI0SKpOcSVZ6YKq2Z4FTofFxcLJBFJp/mV/JerRiAom4DSHNRfjjJw60t8dx
-         SqgfUf6NVh1yoJtLR3EQMadU+5FDy//sa5uUwmX63bROc+67nk+ljbHj43KCO0VtDRf+
-         XUbVDBOiw86K1mnJzUBY43HAjqYJR+XH9VkQun4DZTgaJ+Ry/oxQWAJg1A4dLb/SUC20
-         gkBA==
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=y0ikwqI4+bZ5vxzFdi1ve/0YattRRjl9I9Sy/ybdMwY=;
+        b=PijoQjSH1CFDHQwoS6oWQ5Zxyi7fskc8O61zKL6/UBeMhyuP188ny3dRd6xanc8xVY
+         iGB/DQVFLxBXY03q8wbrOux5B/k5FPb5J71oz2st7cUmrZGSrJdgcNe+0lpaBaHXAY8u
+         +MuYqTUqTCuKW+M+lrHvkd9DPpo7zPrzL6z81CYUudpFdtMoNaVU7LjgIC04QwmeCkZL
+         SaCtryEMQlmvmxnOQF1xP416A2IniZX+5ywu8xfVXNjzAeOKzNL6UpOr8YFd6EIoZadL
+         eghegONciH2bUUutfOKc9N6QZe3V1wwD/oSkFuPUE9PHbihhTA1fMJiRRirY5p/YmZAc
+         3OOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VAR9UTHwFlEDWsA+8b607AMTcpq+aL4eWw4TCj4lINA=;
-        b=00bAibGcAt0Eu5/zcFB8mo9pVNwT6bwsKNSxPwRKUo0k1HPqiVKmzd8GxTCmW+u5Kx
-         LxTnmc7I0oa2EZmmFTYWwh3bZdPLZMPc84jNT3ThAGxnBDKevCgp5lAUiTSHbjTdxs5m
-         faIrgyNjw2qLsOUfndn3uC/86QgpGkp/YnHz6L+MJPJeaH8di/x5vvGxKtXWNe8KXTsw
-         y9+Ft+INBtN3delKwBlIah6Vc2yRAHKAH4YFifiLjZcTwQT9Gn/W6DC7648oyxPlan/7
-         kXD/YrdIZOg+OLZdMc7K+zandp8tc3aCOBPlLJKZBl/4HubAauotvF6b0BLBo3uYxe0J
-         gkzg==
-X-Gm-Message-State: ACgBeo2zdAAUo7SlYvOUt3euwyyw3553uR568NuUcgH8HFKpFLE/xC+V
-        U+j+j9kp6bwNcf5ZQS9Rm/tzKODz8sc=
-X-Google-Smtp-Source: AA6agR5GSccZ345yu1tqGFnhYxvyaddAmSGWEvXRx5QUzlfx3tHVae6+fRqHPh2G3pxs74mDlUaB5A==
-X-Received: by 2002:a5d:49cd:0:b0:21e:f8f6:5405 with SMTP id t13-20020a5d49cd000000b0021ef8f65405mr11211725wrs.451.1659387886984;
-        Mon, 01 Aug 2022 14:04:46 -0700 (PDT)
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=y0ikwqI4+bZ5vxzFdi1ve/0YattRRjl9I9Sy/ybdMwY=;
+        b=NemgjL0b/IU3tU2L4wlKClVQUdwjH70VOcN1txX0uFLiQApN0kjgSNSlIwMJ5wcNoa
+         m6u4Ogfuqf/AuKnqPYvprLeXHladxf+y10fkMFteL35n5RrL1elfdfPIstN1aRMF12B9
+         BdI9/AQZv1JypWJpk0M/fsJLEWMynM0kiSFN5LcZ/AUxB2AiHMJFgCPPpVB0YfL0a7M5
+         VK0OYl+WwPnootakRwZWU7bw2UvF5np/AaXayrrWsXfB3fUovLZuPUc86udUWszcBPDk
+         KiK2HSKsTP/D9LHfLhyyHKHMwLrIAGqnhvnl7dsVAgwMODbThT6XSIv2NGSIgNMZZ3Wf
+         DXqQ==
+X-Gm-Message-State: AJIora9/XeDY5lX6qYu5JPnQXk8z3YMmA20YUWWO1fJxk9/GVKeIunxq
+        L9rIII/NrN1fQilAmjAYRkzkuKHtMxc=
+X-Google-Smtp-Source: AGRyM1tGC0iboN6ndIZucECdAJqBwi+wQ8PZI7zosAUKD0IC2IszPr7ibtlizqJo1vuDTxfjnql0Tw==
+X-Received: by 2002:a7b:c7d2:0:b0:3a3:209d:cdc6 with SMTP id z18-20020a7bc7d2000000b003a3209dcdc6mr12686972wmk.55.1659388499834;
+        Mon, 01 Aug 2022 14:14:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d14-20020adfef8e000000b0021d6dad334bsm13069369wro.4.2022.08.01.14.04.46
+        by smtp.gmail.com with ESMTPSA id t4-20020adfeb84000000b0021e45afa7b0sm12885378wrn.109.2022.08.01.14.14.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Aug 2022 14:04:46 -0700 (PDT)
-Message-Id: <pull.1304.git.git.1659387885711.gitgitgadget@gmail.com>
-From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 01 Aug 2022 21:04:45 +0000
-Subject: [PATCH] Documentation/git-reflog: remove unneeded \ from \{
-Fcc:    Sent
+        Mon, 01 Aug 2022 14:14:59 -0700 (PDT)
+Message-Id: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
+From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 01 Aug 2022 21:14:51 +0000
+Subject: [PATCH 0/7] Generalize 'scalar diagnose' into 'git bugreport --diagnose'
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Glen Choo <chooglen@google.com>,
-        Glen Choo <chooglen@google.com>
+Cc:     derrickstolee@github.com, johannes.schindelin@gmx.de,
+        Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Glen Choo <chooglen@google.com>
+As part of the preparation for moving Scalar out of 'contrib/' and into Git,
+this series moves the functionality of 'scalar diagnose' into a new option
+('--diagnose') for 'git bugreport'. This change further aligns Scalar with
+the objective [1] of having it only contain functionality and settings that
+benefit large Git repositories, but not all repositories. The diagnostics
+reported by 'scalar diagnose' relevant for investigating issues in any Git
+repository, so generating them should be part of a "normal" Git builtin.
 
-There are some inconsistencies with how different asciidoc environments
-handle different combinations of "\{<>}", e.g. these results were
-observed with asciidoc on two different environments:
+An alternative implementation considered was creating a new 'git diagnose'
+builtin, but the new command would end up duplicating much of
+'builtin/bugreport.c'. Although that issue could be overcome with
+refactoring, I didn't see a major UX benefit of 'git diagnose' vs 'git
+bugreport --diagnose', so I went with the latter, simpler approach.
 
-  | Input     | Output (env A) | Output (env B)   | same/different |
-  |-----------+----------------+------------------+----------------|
-  | \{<foo>\} | {&lt;foo&gt;}  | \{&lt;foo&gt;}^M | different      |
-  | {<foo>}   | {&lt;foo&gt;}  | {&lt;foo&gt;}    | same           |
-  | \{<foo>}  | {&lt;foo&gt;}  | \{&lt;foo&gt;}^M | different      |
-  | \{foo\}   | {foo}          | {foo}            | same           |
-  | \{\}      | {}             | \{}^M            | different      |
-  | \{}       | {}             | {}               | same           |
-  | {\}       | {}             | {}               | same           |
+Finally, despite 'scalar diagnose' now being nothing more than a wrapper for
+'git bugreport --diagnose', it is not being deprecated in this series.
+Although deprecation -> removal could be a future cleanup effort, 'scalar
+diagnose' is kept around for now as an alias for users already accustomed to
+using it in 'scalar'.
 
-The only instance of this biting us is "@\{<specifier>\}" in
-Documentation/git-reflog.txt; all other combinations of "\{<>}" (e.g. in
-Documentation/revisions.txt) seem to render consistently.
+Thanks!
 
-Fix this inconsistent rendering by removing the unnecessary "\" in
-Documentation/git-reflog.txt.
+ * Victoria
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
-    Documentation/git-reflog: remove unneeded \ from {
-    
-    I noticed this inconsistency as I was trying to build Git docs with
-    Google's internal build system. This string seems particularly
-    problematic e.g. you can see unnecessary "\" on
-    https://git-scm.com/docs/git-reflog#_description.
-    
-    I'm not proficient in asciidoc at all, but I suspect that this isn't
-    tied to the asciidoc version; I initially observed these differences in
-    environments with different versions of asciidoc (9.0.0 and 10.2.0) but
-    I can't reproduce this at all on my Mac using different versions of
-    asciidoc and asciidoctor from Homebrew. Perhaps the issue is in some
-    underlying library?
+[1]
+https://lore.kernel.org/git/pull.1275.v2.git.1657584367.gitgitgadget@gmail.com/
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1304%2Fchooglen%2Fdocumentation%2Fbackslash-brace-asciidoc-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1304/chooglen/documentation/backslash-brace-asciidoc-v1
-Pull-Request: https://github.com/git/git/pull/1304
+Victoria Dye (7):
+  scalar: use "$GIT_UNZIP" in 'scalar diagnose' test
+  builtin/bugreport.c: create '--diagnose' option
+  builtin/bugreport.c: avoid size_t overflow
+  builtin/bugreport.c: add directory to archiver more gently
+  builtin/bugreport.c: add '--no-report' option
+  scalar: use 'git bugreport --diagnose' in 'scalar diagnose'
+  scalar: update technical doc roadmap
 
- Documentation/git-reflog.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/git-bugreport.txt    |  17 +-
+ Documentation/technical/scalar.txt |   9 +-
+ builtin/bugreport.c                | 302 ++++++++++++++++++++++++++++-
+ contrib/scalar/scalar.c            | 271 +-------------------------
+ contrib/scalar/t/t9099-scalar.sh   |   8 +-
+ t/t0091-bugreport.sh               |  29 +++
+ 6 files changed, 358 insertions(+), 278 deletions(-)
 
-diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
-index 5ced7ad4f8b..db9d46edfa9 100644
---- a/Documentation/git-reflog.txt
-+++ b/Documentation/git-reflog.txt
-@@ -22,7 +22,7 @@ depending on the subcommand:
- 	[--rewrite] [--updateref] [--stale-fix]
- 	[--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]
- 'git reflog delete' [--rewrite] [--updateref]
--	[--dry-run | -n] [--verbose] <ref>@\{<specifier>\}...
-+	[--dry-run | -n] [--verbose] <ref>@{<specifier>}...
- 'git reflog exists' <ref>
- 
- Reference logs, or "reflogs", record when the tips of branches and
 
 base-commit: 23b219f8e3f2adfb0441e135f0a880e6124f766c
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1310%2Fvdye%2Fscalar%2Fgeneralize-diagnose-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1310/vdye/scalar/generalize-diagnose-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1310
 -- 
 gitgitgadget
