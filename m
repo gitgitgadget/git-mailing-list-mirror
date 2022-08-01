@@ -2,58 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8578C00144
-	for <git@archiver.kernel.org>; Mon,  1 Aug 2022 21:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CF1EC19F2C
+	for <git@archiver.kernel.org>; Mon,  1 Aug 2022 21:15:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234093AbiHAVPM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Aug 2022 17:15:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41960 "EHLO
+        id S234231AbiHAVPO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Aug 2022 17:15:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233925AbiHAVPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Aug 2022 17:15:07 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F27A4402D9
-        for <git@vger.kernel.org>; Mon,  1 Aug 2022 14:15:05 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id u14-20020a05600c00ce00b003a323062569so6121013wmm.4
-        for <git@vger.kernel.org>; Mon, 01 Aug 2022 14:15:05 -0700 (PDT)
+        with ESMTP id S234415AbiHAVPI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Aug 2022 17:15:08 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0841C419A1
+        for <git@vger.kernel.org>; Mon,  1 Aug 2022 14:15:07 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id z16so15535604wrh.12
+        for <git@vger.kernel.org>; Mon, 01 Aug 2022 14:15:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=y51TaP+IJMtsFUvRMGdpsaRCdcGTfrxNBDRErSskFqQ=;
-        b=eARG2ILz0+0z3oE1ZHSlBYRFRNqkDKv4jZ3Xolj8BqpfBbJbPE/kAxfyf4xjz+n2BY
-         +IVE+tscjavnbbrEviirWBi4AvaqeWVZPf6hn5xvfudsnF9ee5q3cit0yLHKYhBCA0oC
-         hLguQ59DsLu301qCougB+WjysswMRyxt38uGCKGMrd2EL+x0/vvW9M9phxJ5qDoN+hif
-         HTt3cKj9ZGipOnmf/yLUfsShfSOXRbpArxidxw3q/Pbh7w/UKWnxSoT53CPIrrc0aOJa
-         rNBfXDFLl6ToukiCyBjgZcBqGp4M8sfhhr7J6ctH6NzCM1LeHzeTYngpgS+e6cQdonAT
-         0czA==
+        bh=oErV39Ln4p2mM+CNPmuoTUqIvjmR9dGkcIkYXHeUTtA=;
+        b=k6niEOm6JAFIH6wrz+j8NHS1FjFYKiXDLO0KTpwb/5uaV01qgvWFiig+82FYTSjf01
+         q9lJQSt2MeQTvGw9rmawqO821kXb7dWk0xZZ1mFs4t8maqvUIzp6NW6i3TLp+cB8TOag
+         O/iVijnP+OH98E6zfiv4LNBldaVktDoU0Fm/GEMg5kNUr5l/ReGcyJdmZ1ol/zvfoetu
+         s8fJVYZW5YENRA0HwZ/b34wwpb+ZCQ5jhviG0XSaKtfzad909up1P75HgDFO2nWnng0T
+         rV7riWbEnYFLYJzejrdezcdGioAvsAD5Wb7VPMGzqdmxMixtHt+pZB92jYlMmKSRDbsm
+         9KgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=y51TaP+IJMtsFUvRMGdpsaRCdcGTfrxNBDRErSskFqQ=;
-        b=ar4r3FSjMni5av9hvZPO3uwthb/5nZtTcNxfvH/S9vOSjQSMEuQNKXJJawHZm5v4ON
-         ESFShftFipG9BJTuX5TcAU8lLrDNN/CuKVg3xvmmzxQgxTQea6czFnIgJ5EjSxczcz6d
-         taW3zNMlbs+PsvjTJRkSaBmKaSqh2jS9D8P5sUMbgLaZiOjjuLs22c3+S6h0PmYdyE2W
-         xSBoiIdWlayP/WMukZSr5yy6unaSBws3LC3rIYZyv1iJrwtzu/7DscXf0HG5/ceTkGfD
-         LXzHTHlz+I61c6jKOdMrahqpIhhD8jSI+asgjo4hgxBZYmDOvyqLmM+zwRk8g4jauKf3
-         bw7g==
-X-Gm-Message-State: AJIora+I6xUogqkLE+txrmKghraWGSV262XJZkJ+HHgjrEl7VJCA1bIP
-        bsFkWLVBJuTtiY5g0d7GOBxRPyaUt7o=
-X-Google-Smtp-Source: AGRyM1vicj8YTEta+VtvSG8pdpRfKuI5bxiofvqN7OCEhB+fmsyrJRpZRqC1qSEOoC2olfwsGvstQg==
-X-Received: by 2002:a05:600c:22da:b0:3a3:3139:d8ff with SMTP id 26-20020a05600c22da00b003a33139d8ffmr12350853wmg.178.1659388504072;
-        Mon, 01 Aug 2022 14:15:04 -0700 (PDT)
+        bh=oErV39Ln4p2mM+CNPmuoTUqIvjmR9dGkcIkYXHeUTtA=;
+        b=PqLraDa2Oz9cUGETYwiHyTqtUNFDcYS6066C4LFiJ3XBS3xNCa+qLKUF42U1Oln8Jm
+         q44zXjP/emLrFOlC3bKdPgHTlT48feRvxeSUG8B/Cg7Xfhwwur2fd68450IVJQYlmeX0
+         g7SuMpjjutNljbGoY5RJq6zws1I/iDfx39OHHpNq5GEHjjDfoLLK2TeFZDezoX4xt6j8
+         Noap9TKL5WGWVUgHL9lnpcVX17hhgB4/a3cTcCs6fwPxW5VRkkmXtbM0qVaiig7mHj9Q
+         FHzWd62oFJBWx0Tg/ZsASUERBYli8PFOxXo7qM8AWKffppMJCh9UTJrpJDVg6ypUhNEm
+         P4OA==
+X-Gm-Message-State: ACgBeo0hMHfHMagdYoWjeEzeoutPpbHKlFxxnH0bJfYEtZfC2Xib70Ed
+        kTWVij7QB8kIVOb5arxS+7WoCT0OE/8=
+X-Google-Smtp-Source: AA6agR469iakm8zY0uRcPy9knV6dVlAbSdChGffLPCrPK5ZIccAbwLnbTPobD+QCk391wHSeLpDABw==
+X-Received: by 2002:adf:f94b:0:b0:21e:46fe:bcdb with SMTP id q11-20020adff94b000000b0021e46febcdbmr10885214wrr.143.1659388505057;
+        Mon, 01 Aug 2022 14:15:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b5-20020adff905000000b0021b970a68f9sm12908835wrr.26.2022.08.01.14.15.03
+        by smtp.gmail.com with ESMTPSA id j20-20020a5d6e54000000b0021e5e5cd3a8sm12832663wrz.87.2022.08.01.14.15.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Aug 2022 14:15:03 -0700 (PDT)
-Message-Id: <4bc290fbf43e0193aae288b79249014d899ea34a.1659388498.git.gitgitgadget@gmail.com>
+        Mon, 01 Aug 2022 14:15:04 -0700 (PDT)
+Message-Id: <d6527049a4f62f3b1f008706443a11a0e0816074.1659388498.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
 References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 01 Aug 2022 21:14:55 +0000
-Subject: [PATCH 4/7] builtin/bugreport.c: add directory to archiver more
- gently
+Date:   Mon, 01 Aug 2022 21:14:56 +0000
+Subject: [PATCH 5/7] builtin/bugreport.c: add '--no-report' option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,73 +66,86 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-If a directory added to the '--diagnose' archiver does not exist, warn and
-return 0 from 'add_directory_to_archiver()' rather than failing with a fatal
-error. This handles a failure edge case where the '.git/logs' has not yet
-been created when running 'git bugreport --diagnose', but extends to any
-situation where a directory may be missing in the '.git' dir.
+Add a '--no-report' option to 'git bugreport' to avoid writing the
+'git-bugreport-<suffix>.txt' file. This gives users the option of creating
+only the diagnostic archive with '--diagnose' and mirroring the behavior of
+the original 'scalar diagnose' as closely as possible.
 
-Now, when a directory is missing a warning is captured in the diagnostic
-logs. This provides a user with more complete information than if 'git
-bugreport' simply failed with an error.
+If a user specifies '--no-report' *without* also specifying '--diagnose',
+the 'git bugreport' operation is a no-op; a warning message is printed and
+the command returns with a non-error exit code.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/bugreport.c  |  8 +++++++-
- t/t0091-bugreport.sh | 11 ++++++++++-
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ Documentation/git-bugreport.txt |  6 ++++++
+ builtin/bugreport.c             | 16 +++++++++++++++-
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
+index b55658bc287..5eae7a4f950 100644
+--- a/Documentation/git-bugreport.txt
++++ b/Documentation/git-bugreport.txt
+@@ -58,6 +58,12 @@ OPTIONS
+ 	archive is written to the same output directory as the bug report and is
+ 	named 'git-diagnostics-<formatted suffix>'.
+ 
++--no-report::
++	Do not write out a 'git-bugreport-<suffix>.txt' file. This option is
++	intended for use with `--diagnose` when only the diagnostic archive is
++	needed. If `--no-report` is used without `--diagnose`, `git bugreport`
++	is a no-op.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index 720889a37ad..dea11f91386 100644
+index dea11f91386..5ecff70276a 100644
 --- a/builtin/bugreport.c
 +++ b/builtin/bugreport.c
-@@ -176,12 +176,18 @@ static int add_directory_to_archiver(struct strvec *archiver_args,
- 				     const char *path, int recurse)
- {
- 	int at_root = !*path;
--	DIR *dir = opendir(at_root ? "." : path);
-+	DIR *dir;
- 	struct dirent *e;
- 	struct strbuf buf = STRBUF_INIT;
- 	size_t len;
- 	int res = 0;
+@@ -361,7 +361,7 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 	int report = -1;
+ 	time_t now = time(NULL);
+ 	struct tm tm;
+-	int diagnose = 0;
++	int diagnose = 0, skip_summary = 0;
+ 	char *option_output = NULL;
+ 	char *option_suffix = "%Y-%m-%d-%H%M";
+ 	const char *user_relative_path = NULL;
+@@ -371,6 +371,8 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 	const struct option bugreport_options[] = {
+ 		OPT_BOOL(0, "diagnose", &diagnose,
+ 			 N_("generate a diagnostics zip archive")),
++		OPT_BOOL(0, "no-report", &skip_summary,
++			 N_("do not create a summary report")),
+ 		OPT_STRING('o', "output-directory", &option_output, N_("path"),
+ 			   N_("specify a destination for the bugreport file(s)")),
+ 		OPT_STRING('s', "suffix", &option_suffix, N_("format"),
+@@ -381,6 +383,11 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, bugreport_options,
+ 			     bugreport_usage, 0);
  
-+	if (!file_exists(at_root ? "." : path)) {
-+		warning(_("directory '%s' does not exist, will not be archived"), path);
++	if (skip_summary && !diagnose) {
++		warning(_("Nothing to do!"));
 +		return 0;
 +	}
 +
-+	dir = opendir(at_root ? "." : path);
- 	if (!dir)
- 		return error_errno(_("could not open directory '%s'"), path);
+ 	/* Prepare the path to put the result */
+ 	prefixed_filename = prefix_filename(prefix,
+ 					    option_output ? option_output : "");
+@@ -415,6 +422,13 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 		strbuf_release(&zip_path);
+ 	}
  
-diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-index 3cf983aa67f..e9db89ef2c8 100755
---- a/t/t0091-bugreport.sh
-+++ b/t/t0091-bugreport.sh
-@@ -78,7 +78,7 @@ test_expect_success 'indicates populated hooks' '
- 	test_cmp expect actual
- '
- 
--test_expect_failure UNZIP '--diagnose creates diagnostics zip archive' '
-+test_expect_success UNZIP '--diagnose creates diagnostics zip archive' '
- 	test_when_finished rm -rf report &&
- 
- 	git bugreport --diagnose -o report -s test >out &&
-@@ -98,4 +98,13 @@ test_expect_failure UNZIP '--diagnose creates diagnostics zip archive' '
- 	grep "^Total: [0-9][0-9]*" out
- '
- 
-+test_expect_success '--diagnose warns when archived dir does not exist' '
-+	test_when_finished rm -rf report &&
++	if (skip_summary) {
++		free(prefixed_filename);
++		strbuf_release(&buffer);
++		strbuf_release(&report_path);
++		return 0;
++	}
 +
-+	# Remove logs - not guaranteed to exist
-+	rm -rf .git/logs &&
-+	git bugreport --diagnose -o report -s test 2>err &&
-+	grep "directory .\.git/logs. does not exist, will not be archived" err
-+'
-+
- test_done
+ 	/* Prepare the report contents */
+ 	get_bug_template(&buffer);
+ 
 -- 
 gitgitgadget
 
