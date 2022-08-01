@@ -2,142 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E3E5C00144
-	for <git@archiver.kernel.org>; Mon,  1 Aug 2022 15:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1498BC19F2C
+	for <git@archiver.kernel.org>; Mon,  1 Aug 2022 16:34:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232251AbiHAPH6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Aug 2022 11:07:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45298 "EHLO
+        id S232898AbiHAQew (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Aug 2022 12:34:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229943AbiHAPH5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Aug 2022 11:07:57 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A099B222AF
-        for <git@vger.kernel.org>; Mon,  1 Aug 2022 08:07:55 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id i13so14107571edj.11
-        for <git@vger.kernel.org>; Mon, 01 Aug 2022 08:07:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc;
-        bh=wnDa6j6U6Ft2pw7RzBTNVrcLjD1nDgKZ4W9PlnxWS8g=;
-        b=ORH0M1hk8K7IPDu/iFGjAqC21BMidRMwlYR/cg4ycP/o0xxnvc/SU0jYozq6sduBcj
-         1Yp72JzS5RzZuDVMkeTB2/ca5bulF7VvxmTw4mTQmTaEJQvw1MwAjsmbFsChKfvuonYT
-         W3hIghyz0Zdgasi/4sQc6h0I8BeP+ukP8QPkTMKvhTnoaMoarsTz4D2XF/mK8SA7y1sm
-         tz4cXS8n0j/kz8J+nN0oIl268i8Rft+PFukK7Wo2xfvTbPfD8vnOmEmEI3g+FSW6HZSZ
-         xp2jjdNwa/RVAaJmhIVjVQ7Pv7PMHBpIczBIojXT4UPdhiMzTpCtX+q2JaJK+g7kPSeY
-         V2xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc;
-        bh=wnDa6j6U6Ft2pw7RzBTNVrcLjD1nDgKZ4W9PlnxWS8g=;
-        b=0P9STKrLLCw422HwnvYa2ISV0XoK5SjVO48HNuVwQiVNmtejdq52TX2laQNVxEWjLT
-         aOnuyXLqiJtPVsT94F8G2UHNnwslQVbR+XFeOTncBpCF6XUpIGK3zMRlGflG7C82ghTU
-         M0AVDHbfv3L+7d3PiFzOwZl4RbahPAGtV1lujAyXbIyBQYe7EdFgJaQCX3Qd8oVpTVK9
-         PwJ0OIeu7KCo1HwEVR/sKvb6G7Jv4u/18eZbFmy87MTIYQCQIO79IIuKlBKMeAtWVuC9
-         hkKQno1yjPD1v+pcb6Iw+nLQrMTYvhSG+zG8hE1Nrhti1kRDtBvikVRbziFnXgHKXpb6
-         eTfQ==
-X-Gm-Message-State: AJIora/qoDmZ0Ay1DoMrN+A5J35xifhZfWvgbIQd3fsqjWLiXIznMt2U
-        ojnbfbktqHif4jcs5gGIx7Q=
-X-Google-Smtp-Source: AGRyM1txWFi/xIsDGE8xJzEUk6SYdy0ef0u+VPuiMNSp2E9oQkZ0XdMQPB5YGqoSU8j9Y/JjdmYSkQ==
-X-Received: by 2002:a05:6402:5244:b0:43a:77b8:6bdf with SMTP id t4-20020a056402524400b0043a77b86bdfmr15961079edd.153.1659366474100;
-        Mon, 01 Aug 2022 08:07:54 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id k8-20020a17090627c800b0072af0b036f3sm4673857ejc.41.2022.08.01.08.07.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Aug 2022 08:07:53 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oIX1M-008yRe-2J;
-        Mon, 01 Aug 2022 17:07:52 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: Re: [PATCH 14/20] submodule--helper: pass a "const struct
- module_clone_data" to clone_submodule()
-Date:   Mon, 01 Aug 2022 17:05:49 +0200
-References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com>
- <patch-14.20-b364f3200d8-20220728T161116Z-avarab@gmail.com>
- <kl6lmtcrr2ov.fsf@chooglen-macbookpro.roam.corp.google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <kl6lmtcrr2ov.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-ID: <220801.86v8rcgfxz.gmgdl@evledraar.gmail.com>
+        with ESMTP id S232607AbiHAQeu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Aug 2022 12:34:50 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF35A3AB19
+        for <git@vger.kernel.org>; Mon,  1 Aug 2022 09:34:48 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DE13B138F02;
+        Mon,  1 Aug 2022 12:34:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=meEtoxh7+lK8
+        AeYJBWLxayJ9s5FXUVf3rN+aZbl/N2w=; b=gshqLWCrzpHV9rM8JUkbOO70jt0x
+        5mhzrrqPBojRxq1kXLHpPLax7sbCPP2yLkC+/1ayy2ymelxCaCbL91K9Uxp4iHpL
+        SFmp4cdbyFRtvYe08jOtOWdE9l74ipjWslk8PKbmZx3vjlZVNDqlNl0HXev+Xg5M
+        h6Z2y/UhseXbqm4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D42B2138F00;
+        Mon,  1 Aug 2022 12:34:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.105.40.190])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 37D02138EFF;
+        Mon,  1 Aug 2022 12:34:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ignat Insarov <kindaro@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Reveal by history that several commits are independent from
+ each other?
+References: <CAB-2Q0_WmRue1gtaJGDGFoPwKdyyHf7dpuLoyZMDCXouxyP+BA@mail.gmail.com>
+Date:   Mon, 01 Aug 2022 09:34:45 -0700
+In-Reply-To: <CAB-2Q0_WmRue1gtaJGDGFoPwKdyyHf7dpuLoyZMDCXouxyP+BA@mail.gmail.com>
+        (Ignat Insarov's message of "Mon, 1 Aug 2022 17:03:58 +0300")
+Message-ID: <xmqqh72vzzve.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: DA982D20-11B7-11ED-83A4-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ignat Insarov <kindaro@gmail.com> writes:
 
-On Fri, Jul 29 2022, Glen Choo wrote:
+> Is this a reasonable practice?=E2=80=82Is there any prior art?=E2=80=82=
+What are the troubles to
+> look forward to?
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> Add "const" to the "struct module_clone_data" that we pass to
->> clone_submodule(), which makes the ownership clear, and stops us from
->> clobbering the "clone_data->path".
->>
->> We still need to add to the "reference" member, which is a "struct
->> string_list". Let's do this by having clone_submodule() create its
->> own, and copy the contents over, allowing us to pass it as a
->> separate parameter.
->
-> I can't help but think that this would be easier to review as part of
-> the leaks series since:
->
-> - Outside of leaks, I don't think we really care about ownership (though
->   please please correct me if I'm off base).
->
-> - The ownership of "reference" is still quite messy (downstream code
->   might append to it, but its members are sometimes free()-able and
->   sometimes not), so it's hard to visualize what we're getting out of
->   this change without seeing the corresponding leak fix.
+You can maintain such a history structure if you really wanted to,
+and rebase with "git rebase --rebase-merges" while keeping the merge
+structure, but I am not sure if this is worth the effort.
 
-I'll amend the commit message. I'll leave this in this series, as
-starting to split "is this really just for the leak fix?" out of this
-will generally lead to the slippery slope of bundling most of this up
-again.
+For example, you mentioned "rebase", but consider the reason why why
+are you rebasing in the first place.
 
-I think the addition of "const" helps things along independently of
-that.
+You made a diamond structure because 3 depends on both 1 and 2,
+*AND* both 1 and 2 needed whatever was in their ancestor.
 
->> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->> index 6cedcc5b239..e235acce985 100644
->> --- a/builtin/submodule--helper.c
->> +++ b/builtin/submodule--helper.c
->> @@ -1569,18 +1567,20 @@ static char *clone_submodule_sm_gitdir(const cha=
-r *name)
->>  	return sm_gitdir;
->>  }
->>=20=20
->> -static int clone_submodule(struct module_clone_data *clone_data)
->> +static int clone_submodule(const struct module_clone_data *clone_data,
->> +			   struct string_list *reference)
->>  {
->>  	char *p;
->>  	char *sm_gitdir =3D clone_submodule_sm_gitdir(clone_data->name);
->>  	char *sm_alternate =3D NULL, *error_strategy =3D NULL;
->>  	struct child_process cp =3D CHILD_PROCESS_INIT;
->> +	const char *clone_data_path;
->>=20=20
->>  	if (!is_absolute_path(clone_data->path))
->> -		clone_data->path =3D xstrfmt("%s/%s", get_git_work_tree(),
->> -					   clone_data->path);
->> +		clone_data_path =3D xstrfmt("%s/%s", get_git_work_tree(),
->> +					  clone_data->path);
->
-> - (this is pretty minor) It feels weird to see that we're intentionally
->   leaking clone_data_path at its inception. We aren't introducing any
->   new leaks, but moving this to the leaks series makes it clearer that
->   we eventually do the right thing.
+	      1---3
+             /   /
+	----O---2
 
-Here we're just preserving the status quo, memory leaks aren't really
-tied to variable scope (except as a reporting convenience in some
-tools). We're leaking in the same way before & after this. I think it's
-better to fix the leak in the follow-up series to separate the concerns
-here.
+Now do 1 and 2 need a lot more than their original ancestor offers
+(hence you are rebasing forward), or do they depend on less (hence
+you are rebasing backward, porting the change to older codebase)?
+
+It is likely that you are rebasing not for these reasons.  You are
+"rebasing to a newer upstream", aren't you?  But why?  You developed
+these three commits on O and whatever the others did in the upstream
+you weren't even aware of, hence there is no way your work depend on
+them.  Even then, perhaps for some other reasons, you are somehow
+expected to rebase on a newer upstream.
+
+What does that mean in the overall picture?  The diamond structure
+you created does capture some local inter-commit dependency, but in
+the larger history, there are ancestry relationships that have
+nothing to do with such dependency (e.g. where in the global picture
+your diamond sits on by rebasing).  It is unclear how you tell which
+parent-child relationship encodes the dependency and which ones are
+just "this commit happened to have seen by whoever maintains the
+primary history before the other ones".  And unless you can maintain
+the entire history and enforce the property that you can pick any
+random parent-child pair and they are always "child depends on what
+the parent has", it is dubious how much value you can extract from
+the history by only doing so very locally.
+
+And that is where my "I am not sure if this is worth" comes from.
+
+Another non-essential detail is that Git and other tools tend to
+give special meaning to the first parent chain.  In your diamond
+structure, parents 1 and 2 of commit 3 have equal standing and it is
+not like one is more important than the other.  So things like "git
+log --first-parent" and GUI tools written around the idea that
+first-parent chain is more special may not work very well for some
+parts of your history (i.e. the part that employs your "topology
+shows the minimum dependency" convention).
+
+Just my random thoughts.
