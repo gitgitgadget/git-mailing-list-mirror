@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 590FEC19F28
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7893EC00140
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237491AbiHBPzJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 11:55:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58932 "EHLO
+        id S237492AbiHBPzK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 11:55:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237269AbiHBPyz (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233839AbiHBPyz (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 2 Aug 2022 11:54:55 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F23FF19C28
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:54:53 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id bv3so4528260wrb.5
-        for <git@vger.kernel.org>; Tue, 02 Aug 2022 08:54:53 -0700 (PDT)
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E15E11EADB
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:54:54 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id j7so18432307wrh.3
+        for <git@vger.kernel.org>; Tue, 02 Aug 2022 08:54:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=xL9jLTby/Z54BDd5pyHMDutjBk8wq5//YIfyDaZwy/I=;
-        b=SbKFgrV0guB3aYfL8XlCi8yohMHhQLe6gbak4Fiqr3zny1OEXVz8kObe3BJHjEMx7d
-         DGjOPqDsbbKs1Dxd6GkgHWbbEXLgQutXAqxDV0p71ozybCL7kKON8p/OMTRPB28pbmBT
-         fQziw+bX+mgVoEhoBEfUUM2nBIV/WkYl3UDB9TC97iF6rVZaJ86WEpyO1a53wLxOy+8d
-         4wNa2chjuqpORakvtDfO7jajqO9+wzKOGTpHMq22WcP/HyvIxadVFpnWryUPlJifbuV1
-         sNUsU3PpiTTRACXQHO7bc8bcwqIGNwm8Kg2dZBwbqYSFJYuNKWk4r0ZjTD/Kt2EfxlKF
-         6SPA==
+        bh=Ch9/wwLaJMTj0eNlDfPLGGpbcP3wq5k0UVNuxPGkCNU=;
+        b=gLk9wVeSGGZKgCjjD/UVokw03X/lnRTuJH7ebrWY96vvIA8CvsZacw2dE9+uDOeStK
+         Q8tDcAjP7+rZmP5pCbOM/7kgoj2wQYQP6jR+rwjm7cL/68GzlTqG/2zOOPDDaOHE+v9C
+         /aPysvJSKhEJt9+FNEmWR3YcKUZRDhyYjMYx5Xs4m8au4QQON3X6bzQUZBeVAM26HqSR
+         zR1x86PyR3pCSuwmStGW9YLpZruRzHTFFP7yyX384yKwL6Jj6pdmZBaSsR0YJI44yhb5
+         BElcJC0L3p5ZHDoUKKGWVeybLan/Xp6l/lXZVbsru+/q7+v/dC5Cp6dk7/2wt3r7ulMP
+         U+iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=xL9jLTby/Z54BDd5pyHMDutjBk8wq5//YIfyDaZwy/I=;
-        b=HxMGvBw7Qcytz6KgpHjUmfxNSQyJY17A1Hp+9FjP0RvQmWy2/02MN80u5iTwcFolem
-         +DZrrOpio1piovGuz2i/bwx1bcLvKyMVUk8hMzO76hrI/wHv4h9jpkoIfXJlvWtQUw30
-         lLTcTqiLUTTGNCkBU+MkL3E9ojGL3T/JXr7ktqLYrnajBKaBOmCUSs7gljgkVYCPa2H9
-         yACbqSHzKbj3FULvQS4karBnZUZ0x0Pn2CHTetydSOdQmVQorKDnlYyHaeMLF4SB6SbR
-         tZKmyOa4B1QqjJcQWjyBwHrznof+30OGGqoRsa27q/QQ2O1BMMktRlysFfZ6jFiMGZ1L
-         Jiog==
-X-Gm-Message-State: ACgBeo1J3aWm+IW1uKP/0hbRmUzFy5hYQlDyoDfD/qYFfCpz6QvrmrGK
-        VQfIPmS6DU1FPAmvzx92EET29tL7smZ7Hg==
-X-Google-Smtp-Source: AA6agR6KOAyfztB3/VhsVCf+1yCeaDQrM/CE03/8YvgUsMGdsdRLfQYyqg4HqcITqhFzkZhpMRczbA==
-X-Received: by 2002:a5d:59aa:0:b0:21f:57a:77cc with SMTP id p10-20020a5d59aa000000b0021f057a77ccmr13356016wrr.384.1659455692267;
-        Tue, 02 Aug 2022 08:54:52 -0700 (PDT)
+        bh=Ch9/wwLaJMTj0eNlDfPLGGpbcP3wq5k0UVNuxPGkCNU=;
+        b=Sq84QydO52vz78hEZV31bU+UCVvBPguVLWgY+0d4tL8i3FnTA7I/uyauuwx7p0TsFn
+         xD0cnodGNzb10BKG6J7++pNkFLmZ3tnaCNB3yj6qVVsXFZMjSLfYovqec89nySqtNGnm
+         VpspirpJ38FUjatmHIuKc94EQyxSZFoUrpQ8HIlmBbZFJ3X9aBff89bc9auAyHLOlWoA
+         bNnsfpzBwRGMKiOcpL6FS/2p7xyLQ3P8It40Vhp3l4vWQdp9sFmxu+ey1C5tbEybVG5D
+         iXBAWEZIP0CaGH4Th12mm7k4UciAbpCrhntTO/KHgwdDjdgl8geiKpoFNSOYk4w7X//i
+         alyQ==
+X-Gm-Message-State: ACgBeo0NNMc3x/KgmUkVv26HJL2V2lOd3ZDit26MJhdEXvgHYdSulpjB
+        FJ1qq6IJO7U9wRLSO2WH+z+KK5oskjeuFw==
+X-Google-Smtp-Source: AA6agR7J/d/hBC/8Nv4ZAu+ioKfKEgsYhFrK7rxTbH+gbywxnuU2QhIdPQ//L3M803K/CBLlPDKKhA==
+X-Received: by 2002:adf:ebc5:0:b0:21d:640e:dc2f with SMTP id v5-20020adfebc5000000b0021d640edc2fmr13546893wrn.227.1659455693178;
+        Tue, 02 Aug 2022 08:54:53 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id bg3-20020a05600c3c8300b003a327b98c0asm23562286wmb.22.2022.08.02.08.54.51
+        by smtp.gmail.com with ESMTPSA id bg3-20020a05600c3c8300b003a327b98c0asm23562286wmb.22.2022.08.02.08.54.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Aug 2022 08:54:51 -0700 (PDT)
+        Tue, 02 Aug 2022 08:54:52 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 07/17] submodule--helper: fix "errmsg_str" memory leak
-Date:   Tue,  2 Aug 2022 17:54:31 +0200
-Message-Id: <patch-v5-07.17-1a85057cd0c-20220802T155002Z-avarab@gmail.com>
+Subject: [PATCH v5 08/17] submodule--helper: fix "sm_path" and other "module_cb_list" leaks
+Date:   Tue,  2 Aug 2022 17:54:32 +0200
+Message-Id: <patch-v5-08.17-3c4f734e958-20220802T155002Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1233.ge8b09efaedc
 In-Reply-To: <cover-v5-00.17-00000000000-20220802T155002Z-avarab@gmail.com>
 References: <cover-v4-00.17-00000000000-20220728T162442Z-avarab@gmail.com> <cover-v5-00.17-00000000000-20220802T155002Z-avarab@gmail.com>
@@ -69,27 +69,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak introduced in e83e3333b57 (submodule: port submodule
-subcommand 'summary' from shell to C, 2020-08-13), we sometimes append
-to the "errmsg", and need to free the "struct strbuf".
+Fix leaks in "struct module_cb_list" and the "struct module_cb" which
+it contains, these fixes leaks in e83e3333b57 (submodule: port
+submodule subcommand 'summary' from shell to C, 2020-08-13).
+
+The "sm_path" should always have been a "char *", not a "const
+char *", we always create it with xstrdup().
+
+We can't mark any tests passing passing with SANITIZE=leak using
+"TEST_PASSES_SANITIZE_LEAK=true" as a result of this change, but
+"t7401-submodule-summary.sh" gets closer to passing as a result of
+this change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/submodule--helper.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 8e9ef58f8be..68bf0f9178f 100644
+index 68bf0f9178f..f332627d19e 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -980,6 +980,7 @@ static void generate_submodule_summary(struct summary_cb *info,
- 	free(displaypath);
- 	free(src_abbrev);
- 	free(dst_abbrev);
-+	strbuf_release(&errmsg);
+@@ -755,16 +755,34 @@ struct module_cb {
+ 	struct object_id oid_src;
+ 	struct object_id oid_dst;
+ 	char status;
+-	const char *sm_path;
++	char *sm_path;
+ };
+ #define MODULE_CB_INIT { 0 }
+ 
++static void module_cb_release(struct module_cb *mcb)
++{
++	free(mcb->sm_path);
++}
++
+ struct module_cb_list {
+ 	struct module_cb **entries;
+ 	int alloc, nr;
+ };
+ #define MODULE_CB_LIST_INIT { 0 }
+ 
++static void module_cb_list_release(struct module_cb_list *mcbl)
++{
++	int i;
++
++	for (i = 0; i < mcbl->nr; i++) {
++		struct module_cb *mcb = mcbl->entries[i];
++
++		module_cb_release(mcb);
++		free(mcb);
++	}
++	free(mcbl->entries);
++}
++
+ struct summary_cb {
+ 	int argc;
+ 	const char **argv;
+@@ -1108,6 +1126,7 @@ static int compute_summary_module_list(struct object_id *head_oid,
+ cleanup:
+ 	strvec_clear(&diff_args);
+ 	release_revisions(&rev);
++	module_cb_list_release(&list);
+ 	return ret;
  }
  
- static void prepare_submodule_summary(struct summary_cb *info,
 -- 
 2.37.1.1233.ge8b09efaedc
 
