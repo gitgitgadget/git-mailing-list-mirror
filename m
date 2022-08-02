@@ -2,141 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18B6DC19F2C
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E692C3F6B0
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:46:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231786AbiHBPnR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 11:43:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45678 "EHLO
+        id S232483AbiHBPqX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 11:46:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbiHBPnP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Aug 2022 11:43:15 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D2EB79
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:43:13 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id m2so7044831pls.4
-        for <git@vger.kernel.org>; Tue, 02 Aug 2022 08:43:13 -0700 (PDT)
+        with ESMTP id S231177AbiHBPqV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Aug 2022 11:46:21 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFDD61573B
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:46:20 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id bk11so8549761wrb.10
+        for <git@vger.kernel.org>; Tue, 02 Aug 2022 08:46:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=bQwyXsGt7ARGRfjilxBbdAwv0Q+TtVpknlhH6W7yVus=;
-        b=X9/yh2WafcxPbfPQsE6Ncyip+IytzmisKXDAQy8c7doASqMObLFUK8LZVC3mXwlYAe
-         bO6w/Ulr29R+LGqke5EucQq8CeOMRtehsXbgAwu3KL7L/TVX0COr6TLenArVosUtXzpE
-         F8dAnoRuRJHqF1VIURJ0k5+xuYZpvyv39Qj/mlP8+k3ANEfNEo0YVHLuRkslKr/JQr8G
-         uDDCr8Br476HysXuC7nLzA7sMVL5sLwgDliXcY7eyZz7VTIvbUtBd8j1gyJSn/UmfRn9
-         nl3f6qP7+gl+WZ9KmK9ZmXEr7P4WA6mIx6HYv1uSu4+zKauR1K4S7d/Nx3igXmYSxA7s
-         gmEw==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc;
+        bh=chxJsskFM4pw3Zk2pCY3J60HA6hMmmfw2Qk963gExso=;
+        b=Jbe2zkqQsFRW5d2hAT5C2YoOl+2qTTpRVws0NxwNThgQ9KqKmdv5qUutHj/OyP2urC
+         Rt26W5gNGGZ9/Kkyo1NPwubi/otcK5uGynCmjWmGDWz+sIWXnpV84IExNsAkYojQRWE1
+         80vpt8O7QgnbR7Ebq/Ki/oDwYIvMtx03pzVXSTPFSvDPxPW4P46FPW5dyDBNgmZZ3h1r
+         J37DYOQnm+RYk9wXpG9XX1ove4hoy5+Of6ehu026Hwc/QAmddQQvUCh08iosXRDeix4A
+         i2koYByDeOjxSzsSKW06xikBdgdXH2tnirNkZ39TB12E9wDLXOxqVC7tn5sJEgJxT3sQ
+         wQYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=bQwyXsGt7ARGRfjilxBbdAwv0Q+TtVpknlhH6W7yVus=;
-        b=qihbzuFW7SBjsjbojeIIzlqhDesBrHG9O34LXx5qYiDmwhjOn7s8jAs2hC/g0hJoHq
-         ZWfmuaG7cTXcWXvlylXLnrpdKafg4f0j9DEclFmfaqcvPfiMiJTBbk/jrrJQ0QpwhT1a
-         i04lJ4nqxXdxwGBQgyaXZ/7MjXMc49Cx9pCiYHP6lq6g+EvpkZ0zy9H2aU2ynXo6psi6
-         yWXTM2403cv/r6e46rQtHDWzi24pLuvg6FSz6c4oGDXZlZMm//dgdkt+Y6FW+CNRtTpV
-         UE0SzOqF/AkN/Ug/gnuUzpwvP/WaOSL2kywDZBCvEOruJNppQWBCmeLLtzYgmqZ0gBN7
-         fiRA==
-X-Gm-Message-State: ACgBeo0gqS91/QZiUeWhDPh6OGB37KokOND2kVnaKA2nNA+b2mO/q9w3
-        /o1Zo48BHPkX8htr83T0xVGq
-X-Google-Smtp-Source: AA6agR5J7ys2bHzGzYjp7irO7yMYm7mdaZi1L2SlVbrWQxmSn0vwl1/0//qzyXT8UXW6ALAovD+Ltg==
-X-Received: by 2002:a17:90a:62ca:b0:1f2:ef43:72a1 with SMTP id k10-20020a17090a62ca00b001f2ef4372a1mr51103pjs.217.1659454992936;
-        Tue, 02 Aug 2022 08:43:12 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id m13-20020a65530d000000b0041a67913d5bsm9392762pgq.71.2022.08.02.08.43.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Aug 2022 08:43:12 -0700 (PDT)
-Message-ID: <760ebe95-552f-c0d7-18c3-f19671fdd192@github.com>
-Date:   Tue, 2 Aug 2022 08:43:11 -0700
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=chxJsskFM4pw3Zk2pCY3J60HA6hMmmfw2Qk963gExso=;
+        b=H7RQ2cAxvvVl1Y8HIM3mC7gqb9st2oyL9NTJhn2vbj/Xb+NNMWlMtluc9gIdZReG6F
+         c8QK6NMmljyYon6UdSZjsYMm9E+qCDRB0ICnaSuKDhIOkDG/+/Gjfk9Qiw939uW3jgh4
+         rnRuYKoQ45pHuiBDWZQUTVTphCcxk7hmaXSHIdx08irwvSvIZl6Xupn5IQV2OC5qxkvC
+         50QoNBMoLnMtRbVfU5TZv9zjOLtNzSW8A2dkS7LIMuhJ0UbCHJOe9CVsv52axmQQ3o2E
+         LEDt9kCRJR2sfNIyrcwW0bHhDrDSuPtSiQGC+3bQEMLEpzsa7UFpR7GKFZdFTHk+fPSX
+         NyGw==
+X-Gm-Message-State: ACgBeo3GdYP7YcpEep6Tq8QO/9GzbHpYA4oFxJMOr9rY/JANxlC5b1N+
+        yFAyIASPNlySBLfa/CyIDNSsc5tAHOq8lw==
+X-Google-Smtp-Source: AA6agR6ME8azWTRI/rYlDHjkCHcpGfKG6rm+F6O6m9Ojmd2nvs2v3j9d1tuAwlAINkeFvyVNeOkpFQ==
+X-Received: by 2002:a5d:5223:0:b0:21e:fc10:b818 with SMTP id i3-20020a5d5223000000b0021efc10b818mr13766017wra.676.1659455178903;
+        Tue, 02 Aug 2022 08:46:18 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id i18-20020a1c5412000000b003a4c6e67f01sm10599260wmb.6.2022.08.02.08.46.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Aug 2022 08:46:18 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 02/28] submodule tests: test for "add <repository> <abs-path>"
+Date:   Tue,  2 Aug 2022 17:45:46 +0200
+Message-Id: <patch-v2-02.28-9d920326df3-20220802T154036Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.37.1.1233.ge8b09efaedc
+In-Reply-To: <cover-v2-00.28-00000000000-20220802T154036Z-avarab@gmail.com>
+References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com> <cover-v2-00.28-00000000000-20220802T154036Z-avarab@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.12.0
-Subject: Re: [PATCH 4/7] builtin/bugreport.c: add directory to archiver more
- gently
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com,
-        johannes.schindelin@gmx.de
-References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
- <4bc290fbf43e0193aae288b79249014d899ea34a.1659388498.git.gitgitgadget@gmail.com>
- <xmqqles7mwnc.fsf@gitster.g>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <xmqqles7mwnc.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->>  	int at_root = !*path;
->> -	DIR *dir = opendir(at_root ? "." : path);
->> +	DIR *dir;
->>  	struct dirent *e;
->>  	struct strbuf buf = STRBUF_INIT;
->>  	size_t len;
->>  	int res = 0;
->>  
->> +	if (!file_exists(at_root ? "." : path)) {
->> +		warning(_("directory '%s' does not exist, will not be archived"), path);
->> +		return 0;
->> +	}
->> +
->> +	dir = opendir(at_root ? "." : path);
->>  	if (!dir)
->>  		return error_errno(_("could not open directory '%s'"), path);
-> 
-> I am not sure if TOCTTOU is how we want to be more gentle.  Do we
-> rather want to do something like this
-> 
-> 	dir = opendir(...);
-> 	if (!dir) {
-> 		if (errno == ENOENT) {
-> 			warning(_("not archiving missing directory '%s'", path);
-> 		        return 0;
-> 		}
->                 return error_errno(_("cannot open directory '%s'"), path);
-> 	}
-> 
-> or am I missing something subtle?
-> 
+Add a missing test for ""add <repository> <path>" where "<path>" is an
+absolute path. This tests code added in [1] and later turned into an
+"else" branch in clone_submodule() in [2] that's never been tested.
 
-The "gentleness" was meant to be a reference only to the error -> warning
-change, the TOCTTOU change was just a miss by me. I'll fix it in the next
-version, thanks!
+This needs to be skipped on WINDOWS because all of $PWD, $(pwd) and
+the "$(pwd -P)" we get via "$submodurl" would fail in CI with e.g.:
 
-> Thanks.
-> 
->> diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
->> index 3cf983aa67f..e9db89ef2c8 100755
->> --- a/t/t0091-bugreport.sh
->> +++ b/t/t0091-bugreport.sh
->> @@ -78,7 +78,7 @@ test_expect_success 'indicates populated hooks' '
->>  	test_cmp expect actual
->>  '
->>  
->> -test_expect_failure UNZIP '--diagnose creates diagnostics zip archive' '
->> +test_expect_success UNZIP '--diagnose creates diagnostics zip archive' '
->>  	test_when_finished rm -rf report &&
->>  
->>  	git bugreport --diagnose -o report -s test >out &&
->> @@ -98,4 +98,13 @@ test_expect_failure UNZIP '--diagnose creates diagnostics zip archive' '
->>  	grep "^Total: [0-9][0-9]*" out
->>  '
->>  
->> +test_expect_success '--diagnose warns when archived dir does not exist' '
->> +	test_when_finished rm -rf report &&
->> +
->> +	# Remove logs - not guaranteed to exist
->> +	rm -rf .git/logs &&
->> +	git bugreport --diagnose -o report -s test 2>err &&
->> +	grep "directory .\.git/logs. does not exist, will not be archived" err
->> +'
->> +
->>  test_done
+	fatal: could not create directory 'D:/a/git/git/t/trash
+	directory.t7400-submodule-basic/.git/modules/D:/a/git/git/t/trash
+	directory.t7400-submodule-basic/add-abs'
+
+I.e. we can't handle these sorts of paths in this context on that
+platform.
+
+I'm not sure where we run into the edges of "$PWD" behavior on
+Windows (see [1] for a previous loose end on the topic), but for the
+purposes of this test it's sufficient that we test this on other
+platforms.
+
+1. ee8838d1577 (submodule: rewrite `module_clone` shell function in C,
+   2015-09-08)
+2. f8eaa0ba98b (submodule--helper, module_clone: always operate on
+   absolute paths, 2016-03-31)
+
+1. https://lore.kernel.org/git/220630.86edz6c75c.gmgdl@evledraar.gmail.com/
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t7400-submodule-basic.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index b858871a953..6a77d817a82 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -178,6 +178,11 @@ test_expect_success 'submodule add' '
+ 	test_must_be_empty untracked
+ '
+ 
++test_expect_success !WINDOWS 'submodule add (absolute path)' '
++	test_when_finished "git reset --hard" &&
++	git submodule add "$submodurl" "$submodurl/add-abs"
++'
++
+ test_expect_success 'setup parent and one repository' '
+ 	test_create_repo parent &&
+ 	test_commit -C parent one
+-- 
+2.37.1.1233.ge8b09efaedc
 
