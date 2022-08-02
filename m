@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49C46C19F28
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B14BC00140
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:47:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237359AbiHBPrd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 11:47:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49258 "EHLO
+        id S237363AbiHBPrf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 11:47:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236119AbiHBPq5 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236133AbiHBPq5 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 2 Aug 2022 11:46:57 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D49A823BF5
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:46:35 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id b21-20020a05600c4e1500b003a32bc8612fso7142461wmq.3
-        for <git@vger.kernel.org>; Tue, 02 Aug 2022 08:46:35 -0700 (PDT)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 977342409A
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:46:36 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id v5so7419370wmj.0
+        for <git@vger.kernel.org>; Tue, 02 Aug 2022 08:46:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=yhZ9Lh9Fgv7nM+ZluUnhHI8lw2CMsdcCtaqEQ7/3mzA=;
-        b=qiN6d97I+xicyevL7vWE32jiZxS7WbPsZJCsmrSH8g68vUEAzKx5wNJTmCQp4p8mJH
-         ES2Fi2HM1vZXj7S/Vs+VZFqXJ5MUUMpQBqb8Dp0O7nwNfYpY0uC3/nIBTlwg7F7Hu4Iw
-         nciX6dax+27/Gfn+WeRQ4P53KCKGdOR95ozYrygRAnvUEvinxSkGjdHejCntefSJXwCJ
-         DTNpnrZfqOsawrPs+qVv4ucBiy2dmHcIciFh7US0Lmer9MokyYqCBYCqNPZZTZAGg6T7
-         frTePv5rGPJ1H938oUq8pYph5WTqmWYiuIVoY8xCsUt8QyVLfHMJNzpDWh/JRfFU6ENw
-         gx8w==
+        bh=ce+LJROouwkf2KY92Re5adtsYmwqJXTyEVtA+mPalT0=;
+        b=jLTAvrlYeubHhVzbkWNyamn7QeTr4v8dNqazrztsQnfulMO0bbLjkQR/q5p9yfaFxb
+         y7EKW7UkukjRQezmGhPwduaaLo5MmEuLJa5LkccNF/tohaFDlr5o5dFjvsxZpiAYtYK3
+         yjBmk0z5BZEFDCTn43GdKW4rxMlMJumpw76eCHMXmcqHEZ2vuhQecVI/dUK/0no4a97Z
+         XVb+caK4uxIAZLWzPh30GA0Ef+MmiJihJe6F0emVkBHOTEhvMZHU+k63F5yPk7FuJ9Af
+         a5AW8wObQLpxamzB4BQeOrQMLRZ2NAbeHy81h+DRs+En/kGTVyPts7G9dK6orbTtO8xj
+         mwMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=yhZ9Lh9Fgv7nM+ZluUnhHI8lw2CMsdcCtaqEQ7/3mzA=;
-        b=7NY5QmIkSCvAWJvZZu/BzWw2lQ4QnpbJjqlnt4pJPQLC+DEKSpjDBBsyL3HMWLGDw+
-         p7/Rp6jJMt637/sCfKxF1L4N8R5LOwPDSWGXrd48ECwNIIdqzjJendSXs4I+sd9o4h9K
-         bBlA7EJAqNQLQ0mYCreywMrZ0f0TBD9sy1E7cxKSN6B0aYbvyrT/6H1j7VJrgdrIajRG
-         aycElDHCIYtb7d1TAi0qhX2SfqYBvemCcj+lxh5VMZSqzVL46neKeEgmacXKRACC9hDE
-         f5r2n9gyFrkpqIsnahBAWP4VILEsOuduircT1GvKbuY5GSCOBsuIgk01west6QfMYO7t
-         +smg==
-X-Gm-Message-State: ACgBeo2iuy3mHWGmfNUr2jrE/W+/ZMujYS1pt6K/mqIc/11YNZMuBYXK
-        41CGwT62mOIc2uGc5XD6RV/1gCNczxhRBw==
-X-Google-Smtp-Source: AA6agR6DVnNyoZX2SVuk2LJYmobP87OgnuIKbBOAnHM356txB3cskKYoy6ZqVXy5DUE3icYEk2BioA==
-X-Received: by 2002:a05:600c:4fcf:b0:3a3:40f6:4c4d with SMTP id o15-20020a05600c4fcf00b003a340f64c4dmr75082wmq.60.1659455194956;
-        Tue, 02 Aug 2022 08:46:34 -0700 (PDT)
+        bh=ce+LJROouwkf2KY92Re5adtsYmwqJXTyEVtA+mPalT0=;
+        b=24v6Ti6Wx2k++P6uNjEj91kDcscErC0efhJYENVsx2GaGjKlHIcn10nFQKY/JysQJc
+         jINvl9Dm+7Q0o8Ma65jBeyTw/g/rhcwHipOV0qVfKSbWltaUq+3x116joAy22hXTRztS
+         hSTi57fpilI2fyfif4KTSf48hJGJFEdD7M7v8r107vanHmMgrK6RNrB3jlz6Z64S/Rxj
+         uga/dmmLuZazhVq9C1/+0DI64DoL12LzTkoJ+1DKyMMpFImHjs52mg4bQuDR/63s52fK
+         Zukvs009QirDi7b2dehjJ4anCidYCV12PAis9PQvvkbtD/Wf63y8haP+K5ilK2RKsNEu
+         SxiA==
+X-Gm-Message-State: ACgBeo0WyhfsVd4FvZH11/xtNRJDOFY/zkPf4n/JBF7sTrLK0dg5TWJP
+        VObS5MziAoFUgJBGQK2DUEdto3WCWtWYIw==
+X-Google-Smtp-Source: AA6agR7/r6biLsrm/fX544C8kXTVA2/6oLq083AVDYUJoCw1gTLHDn1qpY7l039r9vXogwL6ZMNIpQ==
+X-Received: by 2002:a05:600c:41c6:b0:3a3:4cab:74c1 with SMTP id t6-20020a05600c41c600b003a34cab74c1mr40356wmh.175.1659455195814;
+        Tue, 02 Aug 2022 08:46:35 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i18-20020a1c5412000000b003a4c6e67f01sm10599260wmb.6.2022.08.02.08.46.33
+        by smtp.gmail.com with ESMTPSA id i18-20020a1c5412000000b003a4c6e67f01sm10599260wmb.6.2022.08.02.08.46.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Aug 2022 08:46:34 -0700 (PDT)
+        Tue, 02 Aug 2022 08:46:35 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 18/28] submodule--helper: rename "int res" to "int ret"
-Date:   Tue,  2 Aug 2022 17:46:02 +0200
-Message-Id: <patch-v2-18.28-78f74df6d5e-20220802T154036Z-avarab@gmail.com>
+Subject: [PATCH v2 19/28] submodule--helper: return "ret", not "1" from update_submodule()
+Date:   Tue,  2 Aug 2022 17:46:03 +0200
+Message-Id: <patch-v2-19.28-f0258e37ebe-20220802T154036Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1233.ge8b09efaedc
 In-Reply-To: <cover-v2-00.28-00000000000-20220802T154036Z-avarab@gmail.com>
 References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com> <cover-v2-00.28-00000000000-20220802T154036Z-avarab@gmail.com>
@@ -69,85 +69,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rename the "res" variable added in b3c5f5cb048 (submodule: move core
-cmd_update() logic to C, 2022-03-15) to "ret", which is the convention
-in the rest of this file.
+Amend the update_submodule() function to return the failing "ret" on
+error, instead of overriding it with "1".
 
-Eventual follow-up commits will change the code in update_submodule()
-to a "goto cleanup" pattern, let's have the post image look consistent
-with the rest. For update_submodules() let's also use a "ret" for
-consistency, that use was also added in b3c5f5cb048. We'll be
-modifying that codepath in subsequent commits.
+This code was added in b3c5f5cb048 (submodule: move core cmd_update()
+logic to C, 2022-03-15), and this change ends up not making a
+difference as this function is only called in update_submodules(). If
+we return non-zero here we'll always in turn return "1" in
+module_update().
+
+But if we didn't do that and returned any other non-zero exit code in
+update_submodules() we'd fail the test that's being amended
+here. We're still testing the status quo here.
+
+This change makes subsequent refactoring of update_submodule() easier,
+as we'll no longer need to worry about clobbering the "ret" we get
+from the run_command().
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ builtin/submodule--helper.c | 2 +-
+ t/t7406-submodule-update.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 1a19723f596..29f3e1dd8c8 100644
+index 29f3e1dd8c8..0fb780a724c 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2424,7 +2424,7 @@ static int update_submodule(struct update_data *update_data)
- 	if (update_data->recursive) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
- 		struct update_data next = *update_data;
--		int res;
-+		int ret;
- 
- 		next.prefix = NULL;
- 		oidcpy(&next.oid, null_oid());
-@@ -2436,13 +2436,13 @@ static int update_submodule(struct update_data *update_data)
- 		update_data_to_args(&next, &cp.args);
- 
- 		/* die() if child process die()'d */
--		res = run_command(&cp);
--		if (!res)
-+		ret = run_command(&cp);
-+		if (!ret)
- 			return 0;
- 		die_message(_("Failed to recurse into submodule path '%s'"),
+@@ -2443,7 +2443,7 @@ static int update_submodule(struct update_data *update_data)
  			    update_data->displaypath);
--		if (res == 128)
--			exit(res);
-+		if (ret == 128)
-+			exit(ret);
- 		return 1;
+ 		if (ret == 128)
+ 			exit(ret);
+-		return 1;
++		return ret;
  	}
  
-@@ -2451,7 +2451,7 @@ static int update_submodule(struct update_data *update_data)
- 
- static int update_submodules(struct update_data *update_data)
- {
--	int i, res = 0;
-+	int i, ret = 0;
- 	struct submodule_update_clone suc = SUBMODULE_UPDATE_CLONE_INIT;
- 
- 	suc.update_data = update_data;
-@@ -2469,7 +2469,7 @@ static int update_submodules(struct update_data *update_data)
- 	 * - the listener can avoid doing any work if fetching failed.
- 	 */
- 	if (suc.quickstop) {
--		res = 1;
-+		ret = 1;
- 		goto cleanup;
- 	}
- 
-@@ -2481,12 +2481,12 @@ static int update_submodules(struct update_data *update_data)
- 		update_data->sm_path = ucd.sub->path;
- 
- 		if (update_submodule(update_data))
--			res = 1;
-+			ret = 1;
- 	}
- 
- cleanup:
- 	string_list_clear(&update_data->references, 0);
--	return res;
-+	return ret;
- }
- 
- static int module_update(int argc, const char **argv, const char *prefix)
+ 	return 0;
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 6cc07460dd2..c5f5dbe55e0 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -769,7 +769,7 @@ test_expect_success 'submodule update continues after recursive checkout error'
+ 	   echo "" > file
+ 	  )
+ 	 ) &&
+-	 test_must_fail git submodule update --recursive &&
++	 test_expect_code 1 git submodule update --recursive &&
+ 	 (cd submodule2 &&
+ 	  git rev-parse --verify HEAD >../actual
+ 	 ) &&
 -- 
 2.37.1.1233.ge8b09efaedc
 
