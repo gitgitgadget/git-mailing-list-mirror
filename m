@@ -2,108 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B85CC00140
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 14:35:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 545B1C00140
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:04:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236823AbiHBOfJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 10:35:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54806 "EHLO
+        id S236056AbiHBPEp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 11:04:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235370AbiHBOfI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Aug 2022 10:35:08 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C93C5140F0
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 07:35:07 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id m2so6853289pls.4
-        for <git@vger.kernel.org>; Tue, 02 Aug 2022 07:35:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:subject:to:references:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=NqBAwfdybk2v+XAyCUloMyrWYtrPziiMmOJo6Uibe3w=;
-        b=Fvxv13y/1YqcRFmxGUiCWYHl0QizMkOMtcsjvwv9Mykr/ZtGiiL0ldR0fgugqlfJzN
-         mm43ldK7fMdDDOHxjTl+CYtUmcQ/gNS9bqLYgN865Oo8CYGlPGqtvAUYREs8nTV0rdd7
-         6amxXcl8VT7ZjVOy4AbacyrwGW1eQhlPtMHNA7/QdCi3+pTE4GExoHFiCeZwe3Sylt/3
-         EaevGrT7mD6SarJW+E3NOYKzfwqH9l9qhK6pa/+uvk5Y4Pw8Gj1PBy9zPC9JlxPfOVPx
-         oVC5nz92YTUPWpZuWBOmDQjqAbWFehUtPYnEZkxs0pfbTtY4cTAKoAVh7w3ZJ2vmT4uu
-         UHGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:subject:to:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=NqBAwfdybk2v+XAyCUloMyrWYtrPziiMmOJo6Uibe3w=;
-        b=VdjMNTC+r0HsZq0PZF9E4tG/fZivajoct4LSGs6y/x/+NAk9ooPJ2q6X9nySEAmPSv
-         dYh4XZXOd8cD5i1QhKlfEM5EEj3s9VYJafAqWS86E9JsOsxxM228ZmGjksY7xy8U7cFM
-         L8rsZRTResdtx6Bpz6zR1AHoJsUMKi7aw3FEKkvg+EA8Vr/Y+KH79gCTgxddfuB3Toav
-         T3ZpIMdGIfCrJX73LIjJMvhaH+3V83W+W9vqy0QvP60LwluR7BzUDVkmiIThNkHuWOpL
-         CLoSsPnOHogdMxc87+roP9zXj1KZgaPBTnlCz3wSnLoN8cv61gwToIv5fh4J3W6gGAUm
-         mD7Q==
-X-Gm-Message-State: ACgBeo0YuD+1SXnd2wxjtDULCGoUag/0C1WPTsIFXmOWqyHy/16ozxLI
-        VT3+YIdWJl9KuiAcWIZ/V9xUToO38bbRoflj
-X-Google-Smtp-Source: AA6agR7AVVJl2B4Gj9+2GOke50FjjjNN0e1xLGLc0vKXngOCbGlfRRSBsrQ59GjYmgSpXYrn4vx/ZQ==
-X-Received: by 2002:a17:902:ea0b:b0:16d:d268:e4c5 with SMTP id s11-20020a170902ea0b00b0016dd268e4c5mr20593781plg.152.1659450906793;
-        Tue, 02 Aug 2022 07:35:06 -0700 (PDT)
-Received: from cosmos.melik.windwireless.net (melik.windwireless.net. [206.63.237.146])
-        by smtp.gmail.com with ESMTPSA id y129-20020a633287000000b0040c52ff0ba9sm9401831pgy.37.2022.08.02.07.35.05
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Aug 2022 07:35:06 -0700 (PDT)
-From:   David Chmelik <davidnchmelik@gmail.com>
-Subject: Re: 'git clone,' build makes user non-writable files (should be
- option keep user-writable)
-To:     git-l <git@vger.kernel.org>
-References: <822787da-bc26-0d72-a5c4-808a3d10126e@gmail.com>
- <YtPtQ6qsIviyTBF2@zbox.drbeat.li>
- <158251f2-9fa4-45b7-4c24-907c94602b6e@gmail.com>
- <CAPx1Gvc6ci1CjhL-zjwqkR=4o2yQTrT0V_Hb9bUBNuaBn47M8A@mail.gmail.com>
- <ccbc1e81-b406-9e73-7aa5-956ffae7074b@gmail.com>
- <CAPx1GvceFLRL_O5zYW98tPdNV9S_Y=fChJafsq+HGkEYixKsZA@mail.gmail.com>
-Message-ID: <c0bc2741-092b-273c-ddf4-a2c9d90da6bf@gmail.com>
-Date:   Tue, 2 Aug 2022 07:34:55 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.1
+        with ESMTP id S233060AbiHBPEo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Aug 2022 11:04:44 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D9C923145
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:04:43 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C1E212936C;
+        Tue,  2 Aug 2022 11:04:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=z/wOnjZhrKphVZV4PAYcck8Y/vy9wnEXC+e6Ix
+        lkqWI=; b=vPEuj7KAKbYdpUGcNbQVRUO0SlVTjszX8OyVuPtQxq5EIC+2O3R1UZ
+        qFmuCPl2rxliu0p1vhxz/rQDaGf8qs/K1xeM/MwGgzD7mzSM43qFOudzg8fV0/gu
+        +4ViQY3XcUTgksO/TJNVO8jY4Po6W2N43RQnkGnSdB/1dlOYwHZ7I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 240A812936B;
+        Tue,  2 Aug 2022 11:04:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4EA4C12936A;
+        Tue,  2 Aug 2022 11:04:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] pipe_command(): mark stdin descriptor as non-blocking
+References: <YuikU//9OrdpKQcE@coredump.intra.peff.net>
+Date:   Tue, 02 Aug 2022 08:04:39 -0700
+In-Reply-To: <YuikU//9OrdpKQcE@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 2 Aug 2022 00:13:07 -0400")
+Message-ID: <xmqqbkt2k7p4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAPx1GvceFLRL_O5zYW98tPdNV9S_Y=fChJafsq+HGkEYixKsZA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6ED5CCCE-1274-11ED-9335-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/22/22 8:54 PM, Chris Torek wrote:
-> On Fri, Jul 22, 2022 at 5:29 PM David Chmelik<davidnchmelik@gmail.com>  wrote:
->> On 7/22/22 10:40 AM, Chris Torek wrote:
->>> All true.  But Git has no control over, or affect on these: Git does
->>> not attempt to affect ownership or permission of any build products
->>> at all.  Git only attempts to affect the execute permission of
->>> specific files as directed by the committed file mode (and provided
->>> `core.filemode` is enabled).
->> Not even projects' .git* subdirectories?  They typically are/become
->> user-non-writable though deletable with several/many confirmations so I
->> usually sudo (recommended against).
-> Ah, I thought you were (and I definitely was) talking only about the
-> *build products*. The stuff inside `.git` itself: some of that, Git does set
-> to non-writable.
-Initially wasn't; don't know why took three replies to clear up 
-(initially clearly specified non-root usage which others ignored and 
-mentioned/focused unrelated root topic).
+Jeff King <peff@peff.net> writes:
 
-> There is no need to use `sudo` though: a simple
-> "rm -rf .git" will blow away the Git repository itself.  However:
-Still fewer confirmations with sudo (one rather than every single 
-user-non-writable file).
+> Our pipe_command() helper lets you both write to and read from a child
+> process on its stdin/stdout. It's supposed to work without deadlocks
+> because we use poll() to check when descriptors are ready for reading or
+> writing. But there's a bug: if both the data to be written and the data
+> to be read back exceed the pipe buffer, we'll deadlock.
+> ...
+> If you set add.interactive.useBuiltin to false, the problem goes away,
+> because now we're not using pipe_command() anymore (instead, that part
+> happens in perl). But this isn't a bug in the interactive code at all.
+> It's the underlying pipe_command() code which is broken, and has been
+> all along.
+> ...
+> The obvious fix is to put the descriptor into non-blocking mode, and
+> indeed, that makes the problem go away. Callers shouldn't need to
+> care, because they never see the descriptor (they hand us a buffer to
+> feed into it).
 
->> I'd rather opt-out of .git* subdirectories for every clone.
-> In that case, *don't run `git clone in the first place*. The purpose of
-> `git clone` is to get you the entire repository. If you want a single working
-> tree, use `git archive` to make an archive from the commit you want,
-> and extract that archive to get the tree you want, without getting all
-> the *other* revisions.
-Seems much more complicated (and less-documented) and most popular git 
-sites (though the #1 isn't Free/Libre/Opensource Software (FLS, OSS, 
-FOSS, FLOSS) so is condemned) allow clone but not archive.  I know you 
-can't control their mistakes and they should be irrelevant 
-(unfortunately most projects use most popular/broken sites) but couldn't 
-there be more (detailed and/or easier) syntax?
+Thanks for a very well reasoned and explained patch.
+
+>   - more importantly, I'm not sure of the portability implications of
+>     the fix. This is our first use of O_NONBLOCK outside of the
+>     compat/simple-ipc unix-socket code. Do we need to abstract this
+>     behind a compat/ layer for Windows?
+
+Yup.  A very good question to ask for the platform maintainer.
+
+>  run-command.c | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+>
+> diff --git a/run-command.c b/run-command.c
+> index 14f17830f5..45bffb4b11 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -1418,6 +1418,14 @@ static int pump_io(struct io_pump *slots, int nr)
+>  	return 0;
+>  }
+>  
+> +static int make_nonblock(int fd)
+> +{
+> +	int flags = fcntl(fd, F_GETFL);
+> +	if (flags < 0)
+> +		return -1;
+> +	flags |= O_NONBLOCK;
+> +	return fcntl(fd, F_SETFL, flags);
+> +}
+>  
+>  int pipe_command(struct child_process *cmd,
+>  		 const char *in, size_t in_len,
+> @@ -1438,6 +1446,15 @@ int pipe_command(struct child_process *cmd,
+>  		return -1;
+>  
+>  	if (in) {
+> +		if (make_nonblock(cmd->in) < 0) {
+> +			error_errno("unable to make pipe non-blocking");
+> +			close(cmd->in);
+> +			if (out)
+> +				close(cmd->out);
+> +			if (err)
+> +				close(cmd->err);
+> +			return -1;
+> +		}
+>  		io[nr].fd = cmd->in;
+>  		io[nr].type = POLLOUT;
+>  		io[nr].u.out.buf = in;
