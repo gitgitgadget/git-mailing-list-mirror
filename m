@@ -2,97 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C63DC00144
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 00:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D265C19F2C
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 02:12:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234389AbiHBA5k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Aug 2022 20:57:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37456 "EHLO
+        id S235496AbiHBCMR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Aug 2022 22:12:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbiHBA5i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Aug 2022 20:57:38 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6EA745041
-        for <git@vger.kernel.org>; Mon,  1 Aug 2022 17:57:35 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 620721957C0;
-        Mon,  1 Aug 2022 20:57:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=E4hms5VZIRLWGz4KFHnLL2XZJJhXUtT/7zumJp
-        MwD3Q=; b=krGwsisvMX3a78tNah9QjuyBXccu8Qm9Lb/VTs0aIwdGMu+LZY3kVe
-        5rEvAM2vx4ad90rwkxv0a3wuwHQTgTV7SNtzkF/Qw24w1GHMaPxyg+Go/65gsIYz
-        hjcVdoOykT7BeH8NR/g2TLjTnc3xeo1vuX4PwG5N81gmHeQGe6ORo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 595E51957BE;
-        Mon,  1 Aug 2022 20:57:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EC2FA1957BD;
-        Mon,  1 Aug 2022 20:57:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git List Mailing <git@vger.kernel.org>
-Subject: Re: "git symbolic-ref" doesn't do a very good job
-References: <CAHk-=wh9f0EmsNFgoxUa8BzVej06+7MbLr-MLBjDjtj_=Pf90A@mail.gmail.com>
-        <CAHk-=wg9LaHeg0UmZ90gLOaBpO-5fhoaH22iNNm=1eror95pFg@mail.gmail.com>
-        <YuXKaLXhnR3mVlWk@coredump.intra.peff.net>
-        <YuXLtIBXYG+JBKdV@coredump.intra.peff.net>
-        <CAHk-=wi5pfUcuaAUz=rifon9d51mshE7k6bkpMXddog0On9jow@mail.gmail.com>
-        <YugQqp4oN26OFOpt@coredump.intra.peff.net>
-        <YugYNzQYWqDCmOqN@coredump.intra.peff.net>
-        <xmqqfsifyetv.fsf@gitster.g>
-        <Yuhz0VAX77qv4P5Z@coredump.intra.peff.net>
-Date:   Mon, 01 Aug 2022 17:57:30 -0700
-In-Reply-To: <Yuhz0VAX77qv4P5Z@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 1 Aug 2022 20:46:09 -0400")
-Message-ID: <xmqqilnbjwcl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S232439AbiHBCMP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Aug 2022 22:12:15 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53CB83C150
+        for <git@vger.kernel.org>; Mon,  1 Aug 2022 19:12:14 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id kb8so8970589ejc.4
+        for <git@vger.kernel.org>; Mon, 01 Aug 2022 19:12:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc;
+        bh=udk+MPmnsy6HC6/ZgeMhCOIVD75MI4EW5lonFYCy9W0=;
+        b=B3UDTxAQReejYFMIdYxZVrdUL1zDuxWmQYaXPOJ3zswsUzpDfN+iG857HwKdUGbB8m
+         GfiZ1rpJnzhomHIrlX8i2EhAa1cb+1BNxX5CD5O5MmPF5cZmEmr6gO/Alua0DvZO47Y1
+         aZdS5jylgre18Xp0f9LS6ohRhCutc68W8JAbD10VZPb+EdRcuA20ihg6nXE9F53DJWl0
+         /gII39X1ZH0Xu8bijw3mPWPh5s+tSKafor0eUrg/OR2OQZnOmSOKjgtdM/k1N942OPzS
+         Ze5SZ3OrLy+AwfGJJi/Rui061MQPz5gAfI7/7WlIyJis1FJcoG2VPOCPJhkLOTFSwch+
+         okkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=udk+MPmnsy6HC6/ZgeMhCOIVD75MI4EW5lonFYCy9W0=;
+        b=TLj3vwnw9CfeF/7QXxg3VRvbMO0AbeQ+7zQ+F6JMfQUMu5n0R5TPFniDMepYTcHKE/
+         rl6RwjuuxOvwzw/NLwUNr6qDy66deABM8jHehxk9dyEFhnHyfT6V4NuW6FEBa2CiUrGP
+         PE+EBiS46t8r6GqVnQI74ohtTr4/2WM+45Oa7IV8HHtdzLaNYCBFE47N3HN4wliwfeP7
+         Xoy0O66dSeEYb+yGVGXR/kDvTUTPW72Fk1Op7kgSJQ+yyqsU/8BZvBp/iNwIUA9GLW7Y
+         qdArJHGASqAJa1gCsv8amvgQygeMRdLC5t1MGpxDo6KLYNUK4Thw/JRemnK+r8Yn+Xg7
+         vhBg==
+X-Gm-Message-State: AJIora/uCuUEvNBKVhfXYhxX7s4pqABIpXuYGpAWmjR5Y0OLRUUdd0KT
+        PNM7CHFdGtrEgCPhEpUJsX+r4aRo+OY=
+X-Google-Smtp-Source: AGRyM1uyq5cH7uEuB6vybTi+whicq/mOPif/9v0A/pIG5+2rGcptvCGQkieCl7CR44+AhacwHjjcvQ==
+X-Received: by 2002:a17:907:1c8f:b0:6e8:f898:63bb with SMTP id nb15-20020a1709071c8f00b006e8f89863bbmr14704761ejc.721.1659406332725;
+        Mon, 01 Aug 2022 19:12:12 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id ie9-20020a170906df0900b007306d478c62sm2396467ejc.62.2022.08.01.19.12.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Aug 2022 19:12:12 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oIhOF-009AMO-17;
+        Tue, 02 Aug 2022 04:12:11 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com,
+        johannes.schindelin@gmx.de, Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH 3/7] builtin/bugreport.c: avoid size_t overflow
+Date:   Tue, 02 Aug 2022 04:03:55 +0200
+References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
+ <e8abfdfa892f5670ed411ed6daef26a4ffa1bfe6.1659388498.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <e8abfdfa892f5670ed411ed6daef26a4ffa1bfe6.1659388498.git.gitgitgadget@gmail.com>
+Message-ID: <220802.86ilnbgzr8.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 16C69714-11FE-11ED-9ACE-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> On Mon, Aug 01, 2022 at 11:54:36AM -0700, Junio C Hamano wrote:
+On Mon, Aug 01 2022, Victoria Dye via GitGitGadget wrote:
+
+> From: Victoria Dye <vdye@github.com>
 >
->> > +test_expect_success 'symbolic-ref allows top-level target for non-HEAD' '
->> > +	git symbolic-ref refs/heads/top-level FETCH_HEAD &&
->> > +	git update-ref FETCH_HEAD HEAD &&
->> > +	test_cmp_rev top-level HEAD
->> > +'
->> >  test_done
->> 
->> Strange, but OK.
+> Avoid size_t overflow when reporting the available disk space in
+> 'get_disk_info' by casting the block size and available block count to
+> 'uint64_t' before multiplying them. Without this change, 'st_mult' would
+> (correctly) report size_t overflow on 32-bit systems at or exceeding 2^32
+> bytes of available space.
 >
-> I'd be OK to drop this if you hate it too much, btw. Mostly I wanted to
-> make sure that the various iterations behaved as I expected. But there
-> is a test in t3200 (the one Linus found earlier) that incidentally does
-> check that something like this works.
+> Signed-off-by: Victoria Dye <vdye@github.com>
+> ---
+>  builtin/bugreport.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+> index 35b1fc48bf1..720889a37ad 100644
+> --- a/builtin/bugreport.c
+> +++ b/builtin/bugreport.c
+> @@ -258,7 +258,7 @@ static int get_disk_info(struct strbuf *out)
+>  	}
+>  
+>  	strbuf_addf(out, "Available space on '%s': ", buf.buf);
+> -	strbuf_humanise_bytes(out, st_mult(stat.f_bsize, stat.f_bavail));
+> +	strbuf_humanise_bytes(out, (uint64_t)stat.f_bsize * (uint64_t)stat.f_bavail);
 
-Oh, no, I do not hate it (or like it) at all.
+Doesn't this remove the overflow guard on 64 bit systems to support
+those 32 bit systems?
 
-The "strange" was mostly referring to the order of the symbolic
-thing that refers to another thing that is being pointed at, which
-looked backwards, i.e. "git symbolic-ref HEAD refs/heads/main" is
-what we usually expect (i.e. "we use this short name HEAD to refer
-to the longer refs/heads/main ref"), but after staring the one in
-the test "git symbolic-ref refs/heads/top-level FETCH_HEAD" too
-long, your eyes trick your brain into thinking we use the short name
-FETCH_HEAD to refer to the top-level branch, which is the other way
-around.
+I also don't tthink it's correct that this would "correctly
+report...". Before this we were simply assuming that "size_t" and
+"unsigned long" & "fsblkcnt_t" would all yield the same thing.
 
-We've been allowing the one-level thing and I think the discussion
-has established that we need to keep it supported.  There is nothing
-to hate or like about it X-<.
+But I don't think per [1] and [2] that POSIX is giving us any guarantees
+in that regard, even on 32 bit systems, but perhaps it's a reasonable
+assumption in practice.
 
-Thanks.
-
+1. https://pubs.opengroup.org/onlinepubs/009695399/basedefs/sys/statvfs.h.html
+2. https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/sys_types.h.html
