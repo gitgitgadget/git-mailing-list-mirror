@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E3D0C00140
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4D2AC19F28
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:47:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236451AbiHBPrF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 11:47:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48570 "EHLO
+        id S237109AbiHBPrG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 11:47:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236476AbiHBPqu (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236599AbiHBPqu (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 2 Aug 2022 11:46:50 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA8A218364
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:46:30 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id q30so13989062wra.11
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BB0617045
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:46:31 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id v3so17488127wrp.0
         for <git@vger.kernel.org>; Tue, 02 Aug 2022 08:46:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=ePft4F1GYizENYuUn+2LUiiIQoRJcMjj3TGiEojPj8Q=;
-        b=RIibjcIgaNROaSY8NjieziCIEYSPsaIf5Q9u0sLC+SKgNo0fBbpFTPtFhhOzeCY63x
-         Av9uftTbm4nSW/awOpWLxW4dtYpTpUnN3bMDxehEyK63OfXWFJFKKR2DZg31A2zLzJen
-         6zc23UX4g5f+lphFqqMe8LOAq0jYUJpNY3cZZxw3utc3YVl1VuWWzb7TmClnYlZ7IRkV
-         v31MeyM1RdZw1JitIB15BfqwQC/g1Ft3VsZNfu7NooBrr9UcmEgIfzUnN4tHjOF98Xsj
-         V7N8vu+Y1Qt6u3NLUFjr1k/TqNjVFIY5Xihf8z0nElpDNd9jTD3uLWUu48KZF1+MLZJG
-         4TRg==
+        bh=RyRyFnQK0UAb4/oaWKsyQAK+QbbZ/o2Q8pSMw6T4E/c=;
+        b=lVIiDpcF6AaHIhmk5rpvwiLSUYRbkfuZta2yWUr1X+tJdqjJfB300cApLcmihtPsV6
+         dxfNkGqBVOaAxD27R2u7xh1KCW21G4kZWzv/gjpas8EHfvbxogSY+0Ty1J4F3XCzUXsy
+         f7BxLgSgpJKjH+uPADKx5MOT4pmwde8rbTAotRV9f3hcoeudpZRhkg4APPA3WlQ1KL5c
+         wGmPgpLe5M24t2EqwWbV84HdrTxKKwgT9O8efVfgamHXuiafIYrCXed2LIaBnW1AP90U
+         KNLtOiOVrdAhhnjljgPVTQQBZG2KyZra2Degd/yX3znfTMjPOXfyDPUkMaRbTK1a09bX
+         i8Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=ePft4F1GYizENYuUn+2LUiiIQoRJcMjj3TGiEojPj8Q=;
-        b=DFN7cNBhm257gRvhOghZRCFo7YOp6LqOHr1P65Umxd/5WkJp/VrFUg8hYrrKPJ6iel
-         Ewo+VZPgi/Rwk1wkJiU55qaDJphSCEYgTHoFP7WxNdWVPyi2XDjCikVIE24iMNVjwTDr
-         ybgco7MzlO47dcGKA8Gu0QqIWDgeDbf/Tv/3f2w2O8eO9Y2A5MooSwvjmva69BwucPfK
-         H9XXa1xQVEKxW+sOztCwV1OUNfNJW7Zz7aHKSM61hN372kIuKtxwj8BXb5cuIFvDLJcQ
-         yncQVXnfjgUTPrf2OnljBguJdcOwpxGlihfj7zIB/4j1mCt9WXZqOqifiXM+0IXuVr9n
-         oVgQ==
-X-Gm-Message-State: ACgBeo2YzHXnrNQ/lNCOVwfoZeZu8K8NTgWPgmQo7RIPN7O/00m/Lx1o
-        KvlWKgcTxw5C5UgoYJpN3pxsAfu1TXex+Q==
-X-Google-Smtp-Source: AA6agR40HCD+XuHaLKlzLipMgYX9I4GZeIkg9uHjEH3fCnK8e/863Fa9rtXG3Wpf9hueScwbzYN4Sg==
-X-Received: by 2002:adf:fd0d:0:b0:21e:f27b:10dd with SMTP id e13-20020adffd0d000000b0021ef27b10ddmr14015072wrr.295.1659455189935;
+        bh=RyRyFnQK0UAb4/oaWKsyQAK+QbbZ/o2Q8pSMw6T4E/c=;
+        b=YPUnofg/R3tps7n7VPpp0o+O8aWXCJ+AjNdpioNMyxul22uJbPUf+dfIJhp49su82n
+         mU9xpR9RTOT2k8D7Fd/7pix9ixC71rv8V66e0uQmpW5MuH5fcwWU1pRHYe/ee7ujW97I
+         p3JBC0LCGPAKTNfhHzKRuNbgY2PC0G1vBJP6aHDnFKHGDlzgzOUzh8EEiPfkA3AA/OE8
+         RaNFCuaw9xTLEdcvMlMWRFOP+WbQtv2uaP/q7OR+U+DizoM3+IzFy1//9O8+N9w+/UYA
+         VRWdz1Gdg+48RLbAV5DWEEAxmF//uIk7MhNmnP6zkl8pMQ7E8cYUffyb8wRwf8lYfQPK
+         bKWg==
+X-Gm-Message-State: ACgBeo0u1kHr3Mn0Ha71joMQmhQ7POMLkFiUoXjVp7OM39CLZX+mDBrU
+        bqzPwAPGBw1UxG45Rqd948FDgyoV95Nh8g==
+X-Google-Smtp-Source: AA6agR6CQq4doWm5mIUZLbDA4DX0/kiRRk1Pgi2PobKKGsA3X1K4rewlBWM+htEKcwLo/DTTDY4qmw==
+X-Received: by 2002:a5d:514f:0:b0:220:6b4d:f806 with SMTP id u15-20020a5d514f000000b002206b4df806mr4439167wrt.137.1659455189089;
         Tue, 02 Aug 2022 08:46:29 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i18-20020a1c5412000000b003a4c6e67f01sm10599260wmb.6.2022.08.02.08.46.29
+        by smtp.gmail.com with ESMTPSA id i18-20020a1c5412000000b003a4c6e67f01sm10599260wmb.6.2022.08.02.08.46.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Aug 2022 08:46:29 -0700 (PDT)
+        Tue, 02 Aug 2022 08:46:28 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 13/28] submodule--helper: move "sb" in clone_submodule() to its own scope
-Date:   Tue,  2 Aug 2022 17:45:57 +0200
-Message-Id: <patch-v2-13.28-91558745e2e-20220802T154036Z-avarab@gmail.com>
+Subject: [PATCH v2 12/28] submodule--helper: use xstrfmt() in clone_submodule()
+Date:   Tue,  2 Aug 2022 17:45:56 +0200
+Message-Id: <patch-v2-12.28-e5e267dccd5-20220802T154036Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1233.ge8b09efaedc
 In-Reply-To: <cover-v2-00.28-00000000000-20220802T154036Z-avarab@gmail.com>
 References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com> <cover-v2-00.28-00000000000-20220802T154036Z-avarab@gmail.com>
@@ -69,58 +69,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the only remaining use of a "struct strbuf sb" in
-clone_submodule() to live in its own scope. This makes the code
-clearer by limiting its lifetime.
+Use xstrfmt() in clone_submodule() instead of a "struct strbuf" in two
+cases where we weren't getting anything out of using the "struct
+strbuf".
+
+This changes code that was was added along with other uses of "struct
+strbuf" in this function in ee8838d1577 (submodule: rewrite
+`module_clone` shell function in C, 2015-09-08).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ builtin/submodule--helper.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 63008970f1c..fe32abd45e6 100644
+index 60165a848a2..63008970f1c 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -1557,16 +1557,24 @@ static void prepare_possible_alternates(const char *sm_name,
- 	free(error_strategy);
- }
- 
--static int clone_submodule(struct module_clone_data *clone_data)
-+static char *clone_submodule_sm_gitdir(const char *name)
- {
--	char *p, *sm_gitdir;
--	char *sm_alternate = NULL, *error_strategy = NULL;
- 	struct strbuf sb = STRBUF_INIT;
--	struct child_process cp = CHILD_PROCESS_INIT;
-+	char *sm_gitdir;
- 
--	submodule_name_to_gitdir(&sb, the_repository, clone_data->name);
-+	submodule_name_to_gitdir(&sb, the_repository, name);
+@@ -1568,12 +1568,11 @@ static int clone_submodule(struct module_clone_data *clone_data)
  	sm_gitdir = absolute_pathdup(sb.buf);
--	strbuf_reset(&sb);
-+	strbuf_release(&sb);
-+
-+	return sm_gitdir;
-+}
-+
-+static int clone_submodule(struct module_clone_data *clone_data)
-+{
-+	char *p;
-+	char *sm_gitdir = clone_submodule_sm_gitdir(clone_data->name);
-+	char *sm_alternate = NULL, *error_strategy = NULL;
-+	struct child_process cp = CHILD_PROCESS_INIT;
+ 	strbuf_reset(&sb);
  
- 	if (!is_absolute_path(clone_data->path))
- 		clone_data->path = xstrfmt("%s/%s", get_git_work_tree(),
-@@ -1655,7 +1663,6 @@ static int clone_submodule(struct module_clone_data *clone_data)
- 	free(sm_alternate);
- 	free(error_strategy);
+-	if (!is_absolute_path(clone_data->path)) {
+-		strbuf_addf(&sb, "%s/%s", get_git_work_tree(), clone_data->path);
+-		clone_data->path = strbuf_detach(&sb, NULL);
+-	} else {
++	if (!is_absolute_path(clone_data->path))
++		clone_data->path = xstrfmt("%s/%s", get_git_work_tree(),
++					   clone_data->path);
++	else
+ 		clone_data->path = xstrdup(clone_data->path);
+-	}
  
--	strbuf_release(&sb);
- 	free(sm_gitdir);
- 	free(p);
- 	return 0;
+ 	if (validate_submodule_git_dir(sm_gitdir, clone_data->name) < 0)
+ 		die(_("refusing to create/use '%s' in another submodule's "
+@@ -1625,14 +1624,16 @@ static int clone_submodule(struct module_clone_data *clone_data)
+ 			die(_("clone of '%s' into submodule path '%s' failed"),
+ 			    clone_data->url, clone_data->path);
+ 	} else {
++		char *path;
++
+ 		if (clone_data->require_init && !access(clone_data->path, X_OK) &&
+ 		    !is_empty_dir(clone_data->path))
+ 			die(_("directory not empty: '%s'"), clone_data->path);
+ 		if (safe_create_leading_directories_const(clone_data->path) < 0)
+ 			die(_("could not create directory '%s'"), clone_data->path);
+-		strbuf_addf(&sb, "%s/index", sm_gitdir);
+-		unlink_or_warn(sb.buf);
+-		strbuf_reset(&sb);
++		path = xstrfmt("%s/index", sm_gitdir);
++		unlink_or_warn(path);
++		free(path);
+ 	}
+ 
+ 	connect_work_tree_and_git_dir(clone_data->path, sm_gitdir, 0);
 -- 
 2.37.1.1233.ge8b09efaedc
 
