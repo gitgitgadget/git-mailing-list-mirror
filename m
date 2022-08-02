@@ -2,119 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 545B1C00140
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA5C5C00140
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:23:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236056AbiHBPEp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 11:04:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46790 "EHLO
+        id S234847AbiHBPXR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 11:23:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233060AbiHBPEo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Aug 2022 11:04:44 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D9C923145
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:04:43 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C1E212936C;
-        Tue,  2 Aug 2022 11:04:42 -0400 (EDT)
+        with ESMTP id S229460AbiHBPXP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Aug 2022 11:23:15 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5378413DF0
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:23:14 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 86931142098;
+        Tue,  2 Aug 2022 11:23:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=z/wOnjZhrKphVZV4PAYcck8Y/vy9wnEXC+e6Ix
-        lkqWI=; b=vPEuj7KAKbYdpUGcNbQVRUO0SlVTjszX8OyVuPtQxq5EIC+2O3R1UZ
-        qFmuCPl2rxliu0p1vhxz/rQDaGf8qs/K1xeM/MwGgzD7mzSM43qFOudzg8fV0/gu
-        +4ViQY3XcUTgksO/TJNVO8jY4Po6W2N43RQnkGnSdB/1dlOYwHZ7I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 240A812936B;
-        Tue,  2 Aug 2022 11:04:42 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=JQcrUubAlS+w20lES+nBGbxJk
+        E5W3o/pWb7bkL8jw3Y=; b=gLZjmbtTkgvxtlnNfpKEVPWQrqAWsuAzo1zJcwQMC
+        lPPhSGEUa5scn5olyI1i+Bu07I+nM/bSwyw8+U1oBwXfE9fI02kn7dX0dOkbZgxO
+        B3rYAza3VMWlvBFk+LNUlSWXnByWfFCawnWHJU01YhNifp1KLPLvdYH/+g6Ijip+
+        hA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7F7EA142097;
+        Tue,  2 Aug 2022 11:23:13 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.145.39.32])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4EA4C12936A;
-        Tue,  2 Aug 2022 11:04:40 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E67E2142093;
+        Tue,  2 Aug 2022 11:23:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
+To:     =?utf-8?Q?Th=C3=A9o_MAILLART_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH] pipe_command(): mark stdin descriptor as non-blocking
-References: <YuikU//9OrdpKQcE@coredump.intra.peff.net>
-Date:   Tue, 02 Aug 2022 08:04:39 -0700
-In-Reply-To: <YuikU//9OrdpKQcE@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 2 Aug 2022 00:13:07 -0400")
-Message-ID: <xmqqbkt2k7p4.fsf@gitster.g>
+        =?utf-8?Q?Th=C3=A9o?= MAILLART <tmaillart@gmail.com>
+Subject: Re: [PATCH] rebase: introduce allow-inline-reword option
+References: <pull.1228.git.git.1659422389830.gitgitgadget@gmail.com>
+Date:   Tue, 02 Aug 2022 08:23:11 -0700
+Message-ID: <xmqqles6is9s.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6ED5CCCE-1274-11ED-9335-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 060294A4-1277-11ED-B75C-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"Th=C3=A9o MAILLART via GitGitGadget"  <gitgitgadget@gmail.com> writes:
 
-> Our pipe_command() helper lets you both write to and read from a child
-> process on its stdin/stdout. It's supposed to work without deadlocks
-> because we use poll() to check when descriptors are ready for reading or
-> writing. But there's a bug: if both the data to be written and the data
-> to be read back exceed the pipe buffer, we'll deadlock.
-> ...
-> If you set add.interactive.useBuiltin to false, the problem goes away,
-> because now we're not using pipe_command() anymore (instead, that part
-> happens in perl). But this isn't a bug in the interactive code at all.
-> It's the underlying pipe_command() code which is broken, and has been
-> all along.
-> ...
-> The obvious fix is to put the descriptor into non-blocking mode, and
-> indeed, that makes the problem go away. Callers shouldn't need to
-> care, because they never see the descriptor (they hand us a buffer to
-> feed into it).
-
-Thanks for a very well reasoned and explained patch.
-
->   - more importantly, I'm not sure of the portability implications of
->     the fix. This is our first use of O_NONBLOCK outside of the
->     compat/simple-ipc unix-socket code. Do we need to abstract this
->     behind a compat/ layer for Windows?
-
-Yup.  A very good question to ask for the platform maintainer.
-
->  run-command.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
+> This new option (false by default) for interactive rebase allows users
+> to modify the subject of a commit directly in the todo list, when they
+> select the "reword" action.
+> If the option is enabled, "reword" is selected and the subject has not
+> changed, then the default behaviour is used.
+> It also introduces a test for this specific option, and a related
+> function (set_inline_reword_editor) in the lib-rebase.sh to use a
+> simpler custom fake editor to be able to modify the message part of the
+> lines in a todo list (in the most simple cases).
 >
-> diff --git a/run-command.c b/run-command.c
-> index 14f17830f5..45bffb4b11 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -1418,6 +1418,14 @@ static int pump_io(struct io_pump *slots, int nr)
->  	return 0;
->  }
->  
-> +static int make_nonblock(int fd)
-> +{
-> +	int flags = fcntl(fd, F_GETFL);
-> +	if (flags < 0)
-> +		return -1;
-> +	flags |= O_NONBLOCK;
-> +	return fcntl(fd, F_SETFL, flags);
-> +}
->  
->  int pipe_command(struct child_process *cmd,
->  		 const char *in, size_t in_len,
-> @@ -1438,6 +1446,15 @@ int pipe_command(struct child_process *cmd,
->  		return -1;
->  
->  	if (in) {
-> +		if (make_nonblock(cmd->in) < 0) {
-> +			error_errno("unable to make pipe non-blocking");
-> +			close(cmd->in);
-> +			if (out)
-> +				close(cmd->out);
-> +			if (err)
-> +				close(cmd->err);
-> +			return -1;
-> +		}
->  		io[nr].fd = cmd->in;
->  		io[nr].type = POLLOUT;
->  		io[nr].u.out.buf = in;
+> Signed-off-by: Th=C3=A9o Maillart <tmaillart@gmail.com>
+> ---
+>     [RFC] rebase: reword: new feature change the subject in the todo li=
+st
+
+It is not clear if you meant this as a final submission or an RFC
+but I'll take it as an RFC for now.
+
+A handful of things come to my mind.
+
+ * Would this want to be a new variant of "reword" that you would
+   write into the todo list file, instead of a command line option
+   that says "every 'reword' I write in the todo list file means
+   something different now"?
+
+ * Is there a plausible UI that allows inline editing of a commit
+   log message that is more than one line long?  Should there be?
+
+ * Under "inline" mode, when a "reword" is requested for a commit
+   that has more than one line of log message, what should happen?
+   Should the updated title become the ONLY content of the log of
+   the updated commit?  Should it be an error, because it is clearly
+   an information-losing operation?  Would it make sense to turn the
+   "inline" reword into normal reword automatically for a commit
+   with more than one line of log message?
+
+ * If we choose to special case a commit with more than one line of
+   message in order to prevent the 'inline' mode from losing
+   valuable information in the original commits, what role should
+   trailer lines play when we decide if a commit has only one line
+   of message?  For example, if a lazy "title only" commit has no
+   body message but a sign-off and other trailers like helped-by,
+   would it make sense to keep the trailers intact and only replace
+   the title, still in inline mode?
+
+Here is an alternative design that may be conceptually cleaner.
+
+ * We do not introduce a new option at all.  "reword" means "open
+   the editor and you can edit the whole thing" as always.
+
+ * We introduce "retitle" that can be used instead of "reword".
+
+   The line for a commit originally shows "pick" followed by an
+   abbreviated commit object name followed by its title, and the
+   body of the message and the trailer is hidden.  If you change
+   "pick" to "retitle" and edit the shown title, then the original
+   log message from the commit is read as a whole, its title line is
+   replaced with what "retitle" line has, and the result is used as
+   the updated log message.
+
+That way, those who write more than one line of commit log message
+can still use the feature without having to worry about losing
+information when the only thing they want to fix is a typo in the
+title, and those who write only one line of commit log message do
+not have to pass the new "--inline" option at all.  They can use
+'retitle' instead of 'reword'.
+
+Hmm?
