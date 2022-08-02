@@ -2,207 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 557C0C00140
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 14:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B85CC00140
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 14:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237219AbiHBOIJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 10:08:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37546 "EHLO
+        id S236823AbiHBOfJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 10:35:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237172AbiHBOIG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Aug 2022 10:08:06 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34BED28E38
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 07:08:05 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id d65-20020a17090a6f4700b001f303a97b14so15453917pjk.1
-        for <git@vger.kernel.org>; Tue, 02 Aug 2022 07:08:05 -0700 (PDT)
+        with ESMTP id S235370AbiHBOfI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Aug 2022 10:35:08 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C93C5140F0
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 07:35:07 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id m2so6853289pls.4
+        for <git@vger.kernel.org>; Tue, 02 Aug 2022 07:35:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=cqhpm3VKE0vaOQkxouKt6UYlE9Ah9tmUZvCFwhH/Zx8=;
-        b=XdouRBaLGNbXkFGxQ1kkBZjPVuLa0qMdFPLHHyT4jR2SH/ERtg5fepzB3YXSIoobxW
-         2kLdMOTM8OhJmRcDFyNG46m9q+h11CaGYGJiyCeuGvAFjJjMCb+33woCoHNc9jAOlnHI
-         3yMao3h2Pkv7RsX5PsbAW9jtKpuBWn3+R/WnasPOAXy2HTIwJ7NlteQRQcpr5zb3v64w
-         9wi67GyxOECecYOHOE69WIGCXUX+MYEbbr+wR7j3z+Wz1DpcoNy5rm1Px7SD6p02eflP
-         +9V1/Vu3NnTUtMZMLMagv0uUB+HcLwWLEQC30kLRi89OfnAh2PKM1mjgCasWYRS3Mydr
-         64vw==
+        h=from:subject:to:references:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=NqBAwfdybk2v+XAyCUloMyrWYtrPziiMmOJo6Uibe3w=;
+        b=Fvxv13y/1YqcRFmxGUiCWYHl0QizMkOMtcsjvwv9Mykr/ZtGiiL0ldR0fgugqlfJzN
+         mm43ldK7fMdDDOHxjTl+CYtUmcQ/gNS9bqLYgN865Oo8CYGlPGqtvAUYREs8nTV0rdd7
+         6amxXcl8VT7ZjVOy4AbacyrwGW1eQhlPtMHNA7/QdCi3+pTE4GExoHFiCeZwe3Sylt/3
+         EaevGrT7mD6SarJW+E3NOYKzfwqH9l9qhK6pa/+uvk5Y4Pw8Gj1PBy9zPC9JlxPfOVPx
+         oVC5nz92YTUPWpZuWBOmDQjqAbWFehUtPYnEZkxs0pfbTtY4cTAKoAVh7w3ZJ2vmT4uu
+         UHGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=cqhpm3VKE0vaOQkxouKt6UYlE9Ah9tmUZvCFwhH/Zx8=;
-        b=k0Kr92zEyMT599D+D2fZJjcN9NPKkzgarnEOjcJYhQuGlzWjhSUMVpzNrkUdyHh2dy
-         TVx2dq8Y9Ze7sMyuFRFE8OLPYOd2G4Ox5BGEAJ/BwaDktyxvX0jn+MreOw4qstutICTE
-         nn6sNllbl3G5xKjUvHJPFN1eiFUGt4ebWZDdFu3QcV4PEHnY7f4yCdd4qfQ9H5iy0BPA
-         dnISSlKvzcE7RIY1o8d8xmtEVcFv+Wk97saEsb9hVhjd9f1H7nxw+J+KxUL9HyVY/GHz
-         q3tiPxGlnmaTw2j8CJ/43ou/qycQFO/QDiJK+/fTNYVjer2DSkc4J5LgGBUFJl8TMBw3
-         3Hxw==
-X-Gm-Message-State: ACgBeo2NXF9EDikKtBycKy70goo1jWbkvhzaQjZcWQJ8U0x3Xv0Yi3it
-        i1H3ewirQfdmGPynS+uQxY249iUr7xb55Q==
-X-Google-Smtp-Source: AA6agR5I5vjBfVvjEYfGDiZu0x/SgXizbJANH6PSnz1LmgjmFLtnmamhUAHhsPektT63WQiVEo43CA==
-X-Received: by 2002:a17:90b:3b48:b0:1f5:330a:3a0f with SMTP id ot8-20020a17090b3b4800b001f5330a3a0fmr1897882pjb.93.1659449284053;
-        Tue, 02 Aug 2022 07:08:04 -0700 (PDT)
-Received: from localhost.localdomain ([202.142.80.59])
-        by smtp.gmail.com with ESMTPSA id d12-20020a170902e14c00b0016be368fb30sm11639658pla.212.2022.08.02.07.08.01
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 02 Aug 2022 07:08:03 -0700 (PDT)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Git <git@vger.kernel.org>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: [GSoC] Abhradeep's GSoC blogs (2 Aug, 2022 IST)
-Date:   Tue,  2 Aug 2022 19:37:45 +0530
-Message-Id: <20220802140745.44594-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        h=x-gm-message-state:from:subject:to:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=NqBAwfdybk2v+XAyCUloMyrWYtrPziiMmOJo6Uibe3w=;
+        b=VdjMNTC+r0HsZq0PZF9E4tG/fZivajoct4LSGs6y/x/+NAk9ooPJ2q6X9nySEAmPSv
+         dYh4XZXOd8cD5i1QhKlfEM5EEj3s9VYJafAqWS86E9JsOsxxM228ZmGjksY7xy8U7cFM
+         L8rsZRTResdtx6Bpz6zR1AHoJsUMKi7aw3FEKkvg+EA8Vr/Y+KH79gCTgxddfuB3Toav
+         T3ZpIMdGIfCrJX73LIjJMvhaH+3V83W+W9vqy0QvP60LwluR7BzUDVkmiIThNkHuWOpL
+         CLoSsPnOHogdMxc87+roP9zXj1KZgaPBTnlCz3wSnLoN8cv61gwToIv5fh4J3W6gGAUm
+         mD7Q==
+X-Gm-Message-State: ACgBeo0YuD+1SXnd2wxjtDULCGoUag/0C1WPTsIFXmOWqyHy/16ozxLI
+        VT3+YIdWJl9KuiAcWIZ/V9xUToO38bbRoflj
+X-Google-Smtp-Source: AA6agR7AVVJl2B4Gj9+2GOke50FjjjNN0e1xLGLc0vKXngOCbGlfRRSBsrQ59GjYmgSpXYrn4vx/ZQ==
+X-Received: by 2002:a17:902:ea0b:b0:16d:d268:e4c5 with SMTP id s11-20020a170902ea0b00b0016dd268e4c5mr20593781plg.152.1659450906793;
+        Tue, 02 Aug 2022 07:35:06 -0700 (PDT)
+Received: from cosmos.melik.windwireless.net (melik.windwireless.net. [206.63.237.146])
+        by smtp.gmail.com with ESMTPSA id y129-20020a633287000000b0040c52ff0ba9sm9401831pgy.37.2022.08.02.07.35.05
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Aug 2022 07:35:06 -0700 (PDT)
+From:   David Chmelik <davidnchmelik@gmail.com>
+Subject: Re: 'git clone,' build makes user non-writable files (should be
+ option keep user-writable)
+To:     git-l <git@vger.kernel.org>
+References: <822787da-bc26-0d72-a5c4-808a3d10126e@gmail.com>
+ <YtPtQ6qsIviyTBF2@zbox.drbeat.li>
+ <158251f2-9fa4-45b7-4c24-907c94602b6e@gmail.com>
+ <CAPx1Gvc6ci1CjhL-zjwqkR=4o2yQTrT0V_Hb9bUBNuaBn47M8A@mail.gmail.com>
+ <ccbc1e81-b406-9e73-7aa5-956ffae7074b@gmail.com>
+ <CAPx1GvceFLRL_O5zYW98tPdNV9S_Y=fChJafsq+HGkEYixKsZA@mail.gmail.com>
+Message-ID: <c0bc2741-092b-273c-ddf4-a2c9d90da6bf@gmail.com>
+Date:   Tue, 2 Aug 2022 07:34:55 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CAPx1GvceFLRL_O5zYW98tPdNV9S_Y=fChJafsq+HGkEYixKsZA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello developers, this is the thread where you can know about
-my weekly GSoC blog links.
+On 7/22/22 8:54 PM, Chris Torek wrote:
+> On Fri, Jul 22, 2022 at 5:29 PM David Chmelik<davidnchmelik@gmail.com>  wrote:
+>> On 7/22/22 10:40 AM, Chris Torek wrote:
+>>> All true.  But Git has no control over, or affect on these: Git does
+>>> not attempt to affect ownership or permission of any build products
+>>> at all.  Git only attempts to affect the execute permission of
+>>> specific files as directed by the committed file mode (and provided
+>>> `core.filemode` is enabled).
+>> Not even projects' .git* subdirectories?  They typically are/become
+>> user-non-writable though deletable with several/many confirmations so I
+>> usually sudo (recommended against).
+> Ah, I thought you were (and I definitely was) talking only about the
+> *build products*. The stuff inside `.git` itself: some of that, Git does set
+> to non-writable.
+Initially wasn't; don't know why took three replies to clear up 
+(initially clearly specified non-root usage which others ignored and 
+mentioned/focused unrelated root topic).
 
-My Project - Reachability bitmap improvements
+> There is no need to use `sudo` though: a simple
+> "rm -rf .git" will blow away the Git repository itself.  However:
+Still fewer confirmations with sudo (one rather than every single 
+user-non-writable file).
 
-Blog update
-------------
-
-Title - GSoC Week 7: improving Performance tests
-Blog link - https://medium.com/@abhra303/gsoc-week-7-improving-performance-tests-ea9bfa180775
-
-Summary - 
-
-In this week I work further on Git specific CRoaring fixtures.
-Besides, there were another round of review on my bitmap-lookup-table
-patch series.
-
-For now I wrote all Git specific functions in roaring.c functions.
-As Taylor told me — we first need to check whether roaring bitmaps
-really create an impact in performance. With these functions roaring
-bitmaps can now be stored in network byte order which means it can
-work in big-endian systems also.
-
-Performance tests that I wrote previously were not accurate. Because
-the second call to test_bitmap is always working on the previously
-repacked repo, causing the the performance of the second call much
-faster than the previous one. My solution is to create a new file for
-each cases (i.e. with lookup table enabled and with lookup table disabled).
-
-There is another problem which is mysterious in nature. A test case under
-`t5327-multi-pack-bitmaps.sh` (and under `t5327-multi-pack-bitmaps-rev.sh`
-is failing when `GIT_TEST_DEFAULT_HASH=sha256`. It is passing in every other
-scenario. I found that this issue is related to the test script itself (and
-not related to the implementation code). I didn't get enough time to look
-into it though. I hope that I will be able to figure out the problem soon.
-
-
-Previous blogs 
----------------
-
--------------------------------------------------------
-
-Title - GSoC Week 6: using CRoaring library
-Blog link - https://medium.com/@abhra303/gsoc-week-6-using-croaring-library-be309cfa89f5
-
-Summary -
-
-I missed the week 5 blog update. So this blog covers both
-week 5 and week 6 work updates. I submitted my latest version
-Of `lookup-table-extension` patch series. There are some issues
-with CRoaring e.g. it do not store in network byte order (which I
-confirmed in Roaringbitmap's google group[1]). So, I need to make
-some changes to fix it. I have already finished implementing
-`roaring_portable_network_serialize` and `..._deserialize`. My
-next step is to use its functions in Git's codebase. I will
-submit the patch series soon.
-
--------------------------------------------------------
-
-Title - GSoC Week 4: diving into roaring bitmaps
-Blog link - https://medium.com/@abhra303/gsoc-week-4-diving-into-roaring-bitmaps-f028f931d873
-
-Summary -
-
-I am thinking of submitting a patch to explain the workings
-of bitmaps. I will be creating a new file 'technical/reachability-
-bitmaps.txt` for that. This week I spent my time on diving more into
-Croaring[1]. I tried to understand how they work internally, the
-available functions they offer, their serializing format etc.
-The serialisation format[2] seems fine to me but still I want to
-know Kaartic and Taylor’s opinions. Another thing I noticed here is
-that each roaring bitmaps are designed to store sets of 32-bit
-(unsigned) integers. Thus a Roaring bitmap can contain up to 4294967296
-integers. I am not sure if this is sufficient for us.
-My next step is to make the new bitmap format version 2(with roaring
-bitmaps) and modify rest of the code so that those code can accept
-the new bitmap format version.
-
--------------------------------------------------------
-Title - GSoC Week 3: working on further improvements
-Blog link - https://medium.com/@abhra303/gsoc-week-3-working-on-further-improvements-13a27db64cd5
-
-Summary -
-
-In this week, I continued to work on further improvements of 
-The bitmap-lookup-table patch series. Some of the requested
-changes are (1) Improve the documentation and fix typos (2) add
-comments (3) Disable `pack.writeBitmapLookupTable` by default
-(4) Fix alignment issues (5) Make a `bitmap_lookup_table_triple`
-struct (6) Subtract the table_size from index_end irrespective of
-the value of GIT_TEST_READ_COMMIT_TABLE.
-
-After implementing all the requested changes, I started working
-on the idea I mentioned in my previous blog as my next step. The
-idea is to stop the xor stack filling loop if the current xor
-bitmap is already stored and assign `xor_bitmap` to it. As this
-bitmap is already stored, we don't need to iterate further as we
-know all the other bitmaps that are needed to parse this bitmap
-has already been stored.
-
-My next step is to roughly implement roaring run bitmaps and
-run performance tests to check if it's really worth it.
-
--------------------------------------------------------
-Title - GSoC Week 2: redesign the table format
-Blog link - https://medium.com/@abhra303/gsoc-week-2-redesign-the-table-format-829dae755a5
-
-Summary - 
-
-In the last week, I worked on the reviews. Some major requested
-changes are (1) Use commit positions instead of commit oids in
-the table. (2) Use 8 byte offset positions instead of 4 bytes
-(3) use iterative approach for parsing xor bitmaps (4) Use
-`<commit_pos, offset, xor_pos>` triplets.
-
-While implementing these changes, I discovered some bugs in the
-previous version. I faced errors during this time. But finally
-managed to fixed those errors. Taylor helped me to get rid of
-some errors.
-
-I think that we can optimise the parsing of xor bitmaps further
-by stopping stack filling loop when we get an already parsed
-bitmap since we know that bitmaps having xor relations with it
-has already been stored/parsed.
-
-------------------------------------------------------- 
-Title - GSoC Week 1: Let's Get started
-Blog link - https://medium.com/@abhra303/gsoc-week-1-lets-get-started-fad78ec34dcf
-
-Summary -
-
-This is the first blog that I wrote for GSoC. Taylor
-suggested that I should work on "integrating a lookup table
-extension" first as it is smaller compared to other sub-projects.
-
-The idea is to have a table at the end of .bitmap file which
-will contain the offsets (and xor-offsets) of the bitmaps of
-selected commits. Whenever git try to get the bitmap of a
-particular commit, instead of loading each bitmaps one by one,
-git will parse only the desired bitmap by using the offset and
-xor-offset of the table. This will reduce the overhead of
-loading each and every bitmap.
--------------------------------------------------------
+>> I'd rather opt-out of .git* subdirectories for every clone.
+> In that case, *don't run `git clone in the first place*. The purpose of
+> `git clone` is to get you the entire repository. If you want a single working
+> tree, use `git archive` to make an archive from the commit you want,
+> and extract that archive to get the tree you want, without getting all
+> the *other* revisions.
+Seems much more complicated (and less-documented) and most popular git 
+sites (though the #1 isn't Free/Libre/Opensource Software (FLS, OSS, 
+FOSS, FLOSS) so is condemned) allow clone but not archive.  I know you 
+can't control their mistakes and they should be irrelevant 
+(unfortunately most projects use most popular/broken sites) but couldn't 
+there be more (detailed and/or easier) syntax?
