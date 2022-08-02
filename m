@@ -2,136 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35D85C00140
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 08:35:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AACE0C00140
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 09:35:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236028AbiHBIft (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 04:35:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38910 "EHLO
+        id S236289AbiHBJfj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 05:35:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236162AbiHBIfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Aug 2022 04:35:46 -0400
-X-Greylist: delayed 64 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 02 Aug 2022 01:35:44 PDT
-Received: from mo3.myeers.net (mo3.myeers.net [87.190.7.238])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98BF16570
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 01:35:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=airbus.com; i=@airbus.com; l=1454; q=dns/txt;
-  s=eers-ng2048; t=1659429345; x=1690965345;
-  h=mime-version:from:date:message-id:subject:to:
-   content-transfer-encoding;
-  bh=0qOEmkKbUyXMzIRcXDrMiuECq7ioaKoOo5r/1q982Uk=;
-  b=nNp1PVBiUPEKH0HjBpIa1CaHSwOzCKcwlV/5Z/oR/x1f0jLKwj0+ETRy
-   sxs2k4VY8SRAoHrvODn+p2Ymy/7Op6N0LTprqTSaGsI1rE+dAy2C1Zjg3
-   lDBCZ+Rv0VqLHljz4Jzadm87gLDaa36HBz2gUS+1AiNovsQrL1qoylkA1
-   tjtfsPDfaAgsRrjmVq3EUCcpjzgMQb1RbdDSrlRaym8c25lGQLYKCkBnf
-   ss49ihcBxat8QKWtRKUIlmGDoPwgMjlPRoYsYt4rm11kRpAdEJWhh2GxA
-   QczLrIk+o01MGlvAATfx9D1jtGd3pG3vG2zO7+rJy/xrigyNpFGLt0hBI
-   A==;
-Received-SPF: Fail (MX: domain of
-  nicolas.maffre.external@airbus.com does not designate
-  209.85.208.197 as permitted sender) identity=mailfrom;
-  client-ip=209.85.208.197; receiver=MX;
-  envelope-from="nicolas.maffre.external@airbus.com";
-  x-sender="nicolas.maffre.external@airbus.com";
-  x-conformance=spf_only; x-record-type="v=spf1";
-  x-record-text="v=spf1 ip4:87.190.7.224/28
-  ip4:80.242.167.16/28 ip4:83.125.118.202 ip4:83.125.118.114
-  ip4:217.239.138.48/28 ip4:62.217.58.112/28
-  include:group1._spf.airbus.com include:group2._spf.airbus.com
-  include:group3._spf.airbus.com include:group4._spf.airbus.com
-  -all"
-Received-SPF: None (MX: no sender authenticity information
-  available from domain of postmaster@mail-lj1-f197.google.com)
-  identity=helo; client-ip=209.85.208.197; receiver=MX;
-  envelope-from="nicolas.maffre.external@airbus.com";
-  x-sender="postmaster@mail-lj1-f197.google.com";
-  x-conformance=spf_only
-Authentication-Results: MX; spf=Fail smtp.mailfrom=nicolas.maffre.external@airbus.com; spf=None smtp.helo=postmaster@mail-lj1-f197.google.com; dkim=pass (signature verified) header.i=@airbus.com
-X-Ironport-Dmarc-Check-Result: validskip
-IronPort-SDR: KPm39OVUESs9XdiuSSJJsiJQJUhqOTbg4vSjYrqfE5rV1d6/PW7fp328gqThVAvr5xLpow0P1y
- C2uLXfSXxc7Q==
-IronPort-Data: A9a23:8Nx02K5GgwCqdYAzHXcztAxRtFLGchMFZxGqfqrLsTDasY5as4F+v
- mcZWm+FM/qPNGShKI1zYdi09U4E6JbUxoBgHVZsrXhhQiMRo6IpJzg4wmQcnc+2BpeeJK5fA
- kl3huDodKjYdFeFzvuWGuWn/CIUOZ2gHOKmUraUYnopHGeIdQ964f5ds79g6mJXqYjha++9k
- YuaT/z3YDdJ6RYtWo4nw/7rRCdUgRjHkGhwUmrSxRx8lAS2e3E9VPrzLEwqRpfyatE88uWSH
- 44vwFwll49wEspENz+rrlr7WhVirr/6OAGPjj9SWfHnjEET+Wo91aE0MPdaYkBS49mLt4opm
- ZMd6NrqEVdvZ/yT8Agee0Aw/yVWO6xN/7vOOj66uMKd1UCAfmvwzu9oBUUeNIwC8PtsR2pJ8
- JT0LRhWME/Y2bLvnOjTpu5E35x/dqEHJrg3tXB85S/WAOxgQp3ZRajOo9hC018NampmCa6LP
- IxEfWM6NFKYd0caYhFMVMlhiLz93j+iZ2INgUyzjq8RyHT14AxV8bHLCtrxQMesf9txol6+m
- njgwWXcFkhCYYTbkS7tHmmEg+bOmWb/WttXGuTpqbhlh1qcwmFVAxoTPWZXaMKR0yaWc9teM
- UYJ4Wwlqq1ayaBhZoWgN/FkiBZofyLwWua818U/4QCJj67WukOXXzlbCDFGb9MiuYk9QjlCO
- pplWT/2LWQHjVFXYSr1GnSoQfeaMCkPJ3IZIyQDSGPpJvH99ZorgEunoslLTMaIszEtJQzN/
- g==
-IronPort-HdrOrdr: A9a23:7D0bW6xFrnlYKffGuBtWKrPwHb1zdoMgy1knxilNoHtuA7Wlfq
- GV7ZImPHrP4gr5N0tQ++xoVJPwIk80lqQU3WByB8bGYOCOggLBR72KhrGSpwEIdReOkdJ15O
- NNVZVfYeeAdWSSTvyX3OB7KbsdKRW8npxATN2wrktQcQ==
-X-IronPort-AV: E=Sophos;i="5.93,210,1654552800"; 
-   d="scan'208";a="367368142"
-Received: from mail-lj1-f197.google.com ([209.85.208.197])
-  by mo3.myeers.net with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Aug 2022 10:34:24 +0200
-Received: by mail-lj1-f197.google.com with SMTP id h18-20020a2e9012000000b0025e4f48d24dso1133642ljg.10
-        for <git@vger.kernel.org>; Tue, 02 Aug 2022 01:34:24 -0700 (PDT)
+        with ESMTP id S236054AbiHBJfe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Aug 2022 05:35:34 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8782230F55
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 02:35:33 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id r4so9152485edi.8
+        for <git@vger.kernel.org>; Tue, 02 Aug 2022 02:35:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=airbus.com; s=google;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=4KTHYaKHAYgqcKWwu2HksQWWoNwtdDwurCa/Os/CSw0=;
-        b=VQTaMr7T6Qho7gtuz/KI5UlvZX0Zbr6Pf9bijmjZBRDRVwqrffPVu6YQZAmPak3r8T
-         lnY12h5X+f7YBQNmBn22ojr/gdh8Focw1RiDllbcFyjB2eRfvoruKjMshzetW3Zmw5OC
-         e6r5G/4zZb/vh1YASinkipNeKA5dywBto13Cz5YwVtiCvRXHMhextFjO8dtB/onyZ0Fq
-         Yj9b6wi6Zc0CQ9ZsDmT1pCBBhpzcQyUf4Kmee04VRMAyj2hxoIUc26rS9I5p8ih0UHqH
-         qAC7JvD3zjKUb0eipax6Gh5PvSZ3RfbZKeLJbGwNBEsFoL213StypIMCR7vd6Fq6hprE
-         BydA==
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc;
+        bh=z/Cva2XcWh4sws/NseaJKYFNCORHDiq4Jlhee9cjhtc=;
+        b=nUXdEfyvVx0pLXTeJzv3V/5OtGcN7LRoDgT6XdH4AEuoNwZS3WD926Vy9LRl8bao79
+         EMs+hW/1OICtcqOAEKki+VJe2UWb0vt84DjskD+Gut5c60ihCQIsPJWPhqoK0ORXw1OU
+         lLc6Uttzc5jcgASdvbdYhoVC2yUhDT7DYbs1O4+LiOEDneIJt11+0byy2aJ95zMqWWoH
+         j2qpN0fmAULLiVbPmETCR59A/cwpzrmi2q5LR5wPTN++DuuifW+2nlZjq7yKJGG4dz5U
+         7iy2ldSMbL8rgycvV4dpWMyUL9jjmxZ8l2uKLw0iSkOkkHlwpTq9oluQlFjDvNvJCHVG
+         ihmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=4KTHYaKHAYgqcKWwu2HksQWWoNwtdDwurCa/Os/CSw0=;
-        b=YAEqWD3JGoZMWHUdnoQRtX34urGXLnCXLVkYqZ3k8GVkbqeexq9ovAaAEYyOL3AoB7
-         exLZKhCVCirIZHKMJxwfNn8MuMDZ6Rq5t1HG5Yu5sAuLvKdwEEchfkj9jXlCTZCJOOza
-         LMBW0HYngEc10AXuKLdOj4byanmU5+m1Jw/3UBbsOa+F+H/VodLbBaPqI7wTBn5vL1Sj
-         SrITVSFVQ+nASmDIY1GanMCtplWaypcePmKn/ptx/P4992nJNG6UzipY/rcnurCgSgoH
-         AZO0ye73t84LC/LR8FNe4DDMJPOi7d/rJzTAd8HMLLxoLoOr3rgwUz6c95Q0nmFdSxtC
-         WHvg==
-X-Gm-Message-State: AJIora8DTmsU/fxDrNWnUgmngSLcnGNtp8jIh4X8BDofNorelodpbBph
-        c3vXX/bbCO3Bdyh38JbQcNNvFlJEZ0u5VPx/NrfTJOlMz6ZLfsXkiqjjKNmelgZVdbzfP6FoLDu
-        bTLJn3J8UPQGYk5LvXvth61Y2moQD
-X-Received: by 2002:a05:651c:997:b0:25d:f3a7:871c with SMTP id b23-20020a05651c099700b0025df3a7871cmr6709636ljq.511.1659429264099;
-        Tue, 02 Aug 2022 01:34:24 -0700 (PDT)
-X-Google-Smtp-Source: AGRyM1v3QC22wsSPmIimqHO+PTxjR4rDaORH9KyPlY/Qnq1ugShOLGGFZFumgFNkSalHuRR3IcWXoKhzATeAIuG7nOE=
-X-Received: by 2002:a05:651c:997:b0:25d:f3a7:871c with SMTP id
- b23-20020a05651c099700b0025df3a7871cmr6709632ljq.511.1659429263880; Tue, 02
- Aug 2022 01:34:23 -0700 (PDT)
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=z/Cva2XcWh4sws/NseaJKYFNCORHDiq4Jlhee9cjhtc=;
+        b=2doMLe/yDa/uPcOQ+WaJOBdB73vwUOlyPnd90ycsZHmQiUqE59kk/LAwm9inW8lN5b
+         Z5oZdzXdHoPzd4t9xfF7c8x+Oh8ENzkacpsjlxRY9zSIujCQLI9wsNHHBqhhhB+Zsx6N
+         eOvywdQ5zqN0B8lUXL4nYo/d6NL5AG0PksXglYjQ3Dnn3UXhe0Ry+ZgTbWPCrUd6kTS5
+         3q2lzeL5WEYtHls0Ssy2b85gBcCXDaJp0MVXj2PMSvoJrDgPjTka8Sn3wR6ir3622MOx
+         wEXh0vFMasyRiZSs9iXbJsb7G/CZ+RBFo8GqK6X/Mkxp2mvi1lY/Wgf4XgsoWQDF76PM
+         iZ3A==
+X-Gm-Message-State: AJIora/uaPoVMmj5ctS/7oy4aWLV5XXKNEgkbl0GxpQN0hOYT+vB6Zr5
+        SpTiqPtYZq4SNabJRPEmB30M/0O3aBI=
+X-Google-Smtp-Source: AGRyM1vIW71Lfwnrw4Sblah9B2v0iwR11ZD2O7FHmh+lQthBt6gjk74Di+x2kO07zWhfYN80r4CJSQ==
+X-Received: by 2002:a05:6402:54:b0:43b:5cbd:d5db with SMTP id f20-20020a056402005400b0043b5cbdd5dbmr20362625edu.264.1659432931856;
+        Tue, 02 Aug 2022 02:35:31 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id a22-20020aa7d756000000b0043df042bfc6sm771974eds.47.2022.08.02.02.35.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Aug 2022 02:35:31 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oIoJG-009Em3-1t;
+        Tue, 02 Aug 2022 11:35:30 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Nicolas MAFFRE <nicolas.maffre.external@airbus.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Git v2.20.1 EOS date
+Date:   Tue, 02 Aug 2022 11:26:52 +0200
+References: <CAHWqpUPVAvw5bsvS1DgAQDwxhzYmh6_V=r+TfPxekdy-oMZWmg@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <CAHWqpUPVAvw5bsvS1DgAQDwxhzYmh6_V=r+TfPxekdy-oMZWmg@mail.gmail.com>
+Message-ID: <220802.8635efgf8d.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   Nicolas MAFFRE <nicolas.maffre.external@airbus.com>
-Date:   Tue, 2 Aug 2022 10:34:13 +0200
-Message-ID: <CAHWqpUPVAvw5bsvS1DgAQDwxhzYmh6_V=r+TfPxekdy-oMZWmg@mail.gmail.com>
-Subject: Git v2.20.1 EOS date
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGVsbG8sCgpJJ20gd29ya2luZyBvbiBhIHByb2plY3QgdGhhdCB1c2VzIEdpdCB2Mi4yMC4xIGFu
-ZCBJIG5lZWQgdG8ga25vdwppZiB0aGVyZSBpcyBhbiAiRW5kIG9mIHN1cHBvcnQiIGRhdGUgZm9y
-IHRoaXMgdmVyc2lvbiBvZiB0aGUgc29mdHdhcmUgR2l0ID8KClRoYW5rIHlvdSBpbiBhZHZhbmNl
-LAoKQmVzdCByZWdhcmRzCgpOaWNvbGFzIE1BRkZSRQoKLS0gClNPTk9WSVNJT04gLSBUT1VMT1VT
-RQpHcm91cGUgT3J0ZWMKClTDqWwuICsgMzMgKDApNSA2MiA3NCAzMCA3NQoKNCBpbXBhc3NlIEFs
-aWNlIEd1eQoKMzEzMDAgVE9VTE9VU0UKVGhlIGluZm9ybWF0aW9uIGluIHRoaXMgZS1tYWlsIGlz
-IGNvbmZpZGVudGlhbC4gVGhlIGNvbnRlbnRzIG1heSBub3QgYmUgZGlzY2xvc2VkIG9yIHVzZWQg
-YnkgYW55b25lIG90aGVyIHRoYW4gdGhlIGFkZHJlc3NlZS4gQWNjZXNzIHRvIHRoaXMgZS1tYWls
-IGJ5IGFueW9uZSBlbHNlIGlzIHVuYXV0aG9yaXNlZC4KSWYgeW91IGFyZSBub3QgdGhlIGludGVu
-ZGVkIHJlY2lwaWVudCwgcGxlYXNlIG5vdGlmeSBBaXJidXMgaW1tZWRpYXRlbHkgYW5kIGRlbGV0
-ZSB0aGlzIGUtbWFpbC4KQWlyYnVzIGNhbm5vdCBhY2NlcHQgYW55IHJlc3BvbnNpYmlsaXR5IGZv
-ciB0aGUgYWNjdXJhY3kgb3IgY29tcGxldGVuZXNzIG9mIHRoaXMgZS1tYWlsIGFzIGl0IGhhcyBi
-ZWVuIHNlbnQgb3ZlciBwdWJsaWMgbmV0d29ya3MuIElmIHlvdSBoYXZlIGFueSBjb25jZXJucyBv
-dmVyIHRoZSBjb250ZW50IG9mIHRoaXMgbWVzc2FnZSBvciBpdHMgQWNjdXJhY3kgb3IgSW50ZWdy
-aXR5LCBwbGVhc2UgY29udGFjdCBBaXJidXMgaW1tZWRpYXRlbHkuCkFsbCBvdXRnb2luZyBlLW1h
-aWxzIGZyb20gQWlyYnVzIGFyZSBjaGVja2VkIHVzaW5nIHJlZ3VsYXJseSB1cGRhdGVkIHZpcnVz
-IHNjYW5uaW5nIHNvZnR3YXJlIGJ1dCB5b3Ugc2hvdWxkIHRha2Ugd2hhdGV2ZXIgbWVhc3VyZXMg
-eW91IGRlZW0gdG8gYmUgYXBwcm9wcmlhdGUgdG8gZW5zdXJlIHRoYXQgdGhpcyBtZXNzYWdlIGFu
-ZCBhbnkgYXR0YWNobWVudHMgYXJlIHZpcnVzIGZyZWUuCg==
 
+On Tue, Aug 02 2022, Nicolas MAFFRE wrote:
+
+> Hello,
+>
+> I'm working on a project that uses Git v2.20.1 and I need to know
+> if there is an "End of support" date for this version of the software Git ?
+
+Yes and no, for v2.20.* it was probably sometime around 2 years ago (see
+below).
+
+The Git project doesn't really do LTS or active support for anything
+except the current or recent release(s), if there are issues discovered
+in older releases they're fixed in newer ones, not in older "maintenance
+tracks".
+
+For bugs discovered in older releases they'll almost always only be
+fixed in the code that'll become the next release.
+
+For security fixes we do change some older releases, but usually only
+the ones from the last 1-2 years. E.g. there was a security release
+recently which included point-releases for versions as old as 2.30.*:
+https://lore.kernel.org/git/xmqqv8s2fefi.fsf@gitster.g/; So that "2
+years" above is just an inference of mine, judging from the last
+security release.
+
+How long that Window is is up to Junio's discretion, you can find some
+others past such releases at:
+https://lore.kernel.org/git/?q=s%3AANNOUNCE+s%3A%22and+others%22+f%3Agitster%40pobox.com
+
+Note that this only goes for the git project. If you're e.g. using some
+well-known vendors of LTS software they may themselves commit to
+backporting patches to git and other software within their LTS window
+(with mixed results).
+
+I hope that helps!
