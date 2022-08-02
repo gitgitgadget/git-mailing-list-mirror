@@ -2,95 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A665FC19F2C
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 206A1C00140
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:41:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236210AbiHBPk6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 11:40:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43212 "EHLO
+        id S231286AbiHBPlC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 11:41:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236378AbiHBPkn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Aug 2022 11:40:43 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 554C712AAB
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:40:22 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 395241299FA;
-        Tue,  2 Aug 2022 11:40:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ImM3lDjUOWZW/eAMUsBftpQ+DQAIW1At8o7EUt
-        GDjRg=; b=FGzK7A99Ju27vO3utFglPbVl+1340x0uqVQLsZzXef55AiDFlmk/ES
-        +Y46KlcPoxIjbJ/cse7c6F+avV56jtzybEEcRZl4+/2CSHaIHjwjliAjtEag3c/I
-        gque9S7WcZ5OoMpWos3KK98QNO+HCsP6izR3tu3NIq+sU9AUuwgDI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 307A51299F7;
-        Tue,  2 Aug 2022 11:40:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 994A81299F5;
-        Tue,  2 Aug 2022 11:40:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Vegard Nossum <vegard.nossum@oracle.com>
-Cc:     git@vger.kernel.org, Johan Herland <johan@herland.net>,
-        "Jason A . Donenfeld" <Jason@zx2c4.com>,
-        Christian Hesse <mail@eworm.de>
-Subject: Re: [RFC PATCH 1/2] notes: support fetching notes from an external
- repo
-References: <20220802075401.2393-1-vegard.nossum@oracle.com>
-Date:   Tue, 02 Aug 2022 08:40:19 -0700
-In-Reply-To: <20220802075401.2393-1-vegard.nossum@oracle.com> (Vegard Nossum's
-        message of "Tue, 2 Aug 2022 09:54:00 +0200")
-Message-ID: <xmqqczdiirh8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S232000AbiHBPkt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Aug 2022 11:40:49 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4857E1403F
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:40:24 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id f192so4459148pfa.9
+        for <git@vger.kernel.org>; Tue, 02 Aug 2022 08:40:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=nLWBIcSR3982Lk2QeGA1662JxZgj3TeESxRCOIY5UXs=;
+        b=GsfB8re+PIp9L9BwY0Ho+PToXT1M4ld3oyUxkx6VouCuZ8tB0n3I0mvOZXU5andcij
+         jUvHTUQyWHoFuPZnvpXP/cO90aCkitQ6SQNPNn75nZVPYqmdYHXVLWAtYhD0p0DiwZuV
+         QbyxLdbH630oeHcelh1J42nLu1+XBIwVLNDCtsiVhCazGUa6MCTxAjvuGHYlocDwetE1
+         lUrliFDA6eTCD0LDLPZwhWmzIfrTZ6bq5iIXUl4nNdnGMrgs2lTAVt0aaCu2SFPdu//T
+         gGrO0vZVMDY55w1faf4uZ4Zfl0MICD6YNREClCVUMI7+1DYSB+iTAqN+6+Utwp65OiJ0
+         azeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=nLWBIcSR3982Lk2QeGA1662JxZgj3TeESxRCOIY5UXs=;
+        b=dkylvPOKdq3yBXwyNeNTKvQNDDmKoNWyDfmK5HUMN0+urxaZZ0Fvj9BW0jQBjjTqG/
+         MFFPFBugOx+lLgIYTHhR8Dh/U4LpQ3nktjaP2chh+QIWOC+Nzv7IgLSMB729OPSlg9WV
+         iG/qHjZntx8fKIZRVwqCrVyJk0v0Zi/PLKz7dAh/cw7sboH7Jzd2Rx/8t+gqOeNRg52d
+         GSMCw0GvNz5QWa27UfdQ+5LTbcFBPCj0L0fvt7tt7tpbbCSs/KtmcsIqaO3AjX0RvG0Z
+         Y8ecvKPPMgKBjsj40eRDk6ZzOhcCG5XLemQpA6wpSmV3CCDRjBjqeJvGrnRrrUoS83s8
+         rg0Q==
+X-Gm-Message-State: AJIora8nvHAumTWBOLIpQ0Gc6lelRT7jaxNJWi7hHLoxHvCJcQZ+Jr/H
+        N45eIpDXTMGVq2zHdoWWNNPj71EGgq4Y
+X-Google-Smtp-Source: AGRyM1st2F/YiFm7Ot539rIAhkL8hzL9EK4mJiOwJ1hcirSEpa9HXBLDFeONe7regOG2Dh23xeq6Ng==
+X-Received: by 2002:a05:6a00:1797:b0:52a:f2e9:ddd2 with SMTP id s23-20020a056a00179700b0052af2e9ddd2mr20857387pfg.12.1659454823308;
+        Tue, 02 Aug 2022 08:40:23 -0700 (PDT)
+Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id q43-20020a17090a17ae00b001f2e6388fe6sm14041528pja.6.2022.08.02.08.40.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Aug 2022 08:40:23 -0700 (PDT)
+Message-ID: <0f175c9c-726b-4f73-ecd9-ed7df9dee865@github.com>
+Date:   Tue, 2 Aug 2022 08:40:21 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6A8EEA38-1279-11ED-AD3F-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.12.0
+Subject: Re: [PATCH 2/7] builtin/bugreport.c: create '--diagnose' option
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com,
+        johannes.schindelin@gmx.de
+References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
+ <932dc8cddacf1841996cd3e0d512b95828213015.1659388498.git.gitgitgadget@gmail.com>
+ <xmqqtu6vmwxb.fsf@gitster.g>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <xmqqtu6vmwxb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Vegard Nossum <vegard.nossum@oracle.com> writes:
+Junio C Hamano wrote:
+> "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Victoria Dye <vdye@github.com>
+>>
+>> Create a '--diagnose' option for 'git bugreport' to collect additional
+>> information about the repository and write it to a zipped archive.
+>>
+>> The "diagnose" functionality was originally implemented for Scalar in
+>> aa5c79a331 (scalar: implement `scalar diagnose`, 2022-05-28). However, the
+>> diagnostics gathered are not specific to Scalar-cloned repositories and
+>> could be useful when diagnosing issues in any Git repository.
+>>
+>> Note that, while this patch appears large, it is mostly copied directly out
+>> of 'scalar.c'. Specifically, the functions
+>>
+>> - dir_file_stats_objects()
+>> - dir_file_stats()
+>> - count_files()
+>> - loose_objs_stats()
+>> - add_directory_to_archiver()
+>> - get_disk_info()
+> 
+> Yup.  As this does not "move" code across from older place to the
+> new home, it takes a bit of processing to verify the above claim,
+> but
+> 
+>  $ git blame -C -C -C -s -b master.. -- builtin/bugreport.c
+> 
+> shows that these are largely verbatim copies.
+> 
+>> +#ifndef WIN32
+>> +#include <sys/statvfs.h>
+>> +#endif
+>> +
+>> +static int get_disk_info(struct strbuf *out)
+>> +{
+>> +#ifdef WIN32
+>> +	struct strbuf buf = STRBUF_INIT;
+>> +...
+>> +	strbuf_addf(out, "Available space on '%s': ", buf.buf);
+>> +	strbuf_humanise_bytes(out, avail2caller.QuadPart);
+>> +...
+>> +#else
+>> +...
+>> +	strbuf_addf(out, "Available space on '%s': ", buf.buf);
+>> +	strbuf_humanise_bytes(out, st_mult(stat.f_bsize, stat.f_bavail));
+>> +...
+>> +#endif
+>> +	return 0;
+>> +}
+> 
+> As a proper part of Git, this part should probably be factored out
+> so that a platform specific helper function, implemented in compat/
+> layer, grabs "available disk space" number in off_t and the caller
+> of the above function becomes
+> 
+> 	strbuf_realpath(&dir, ".", 1);
+> 	strbuf_addf(out, "Available space on '%s:' ", dir.buf);
+> 	strbuf_humanise_bytes(out, get_disk_size(dir.buf));
+> 
+> or something, without having to have #ifdef droppings.
+> 
 
-> Notes are currently always fetched from the current repo. However, in
-> certain situations you may want to keep notes in a separate repository
-> altogether.
->
-> In my specific case, I am using cgit to display notes for repositories
-> that are owned by others but hosted on a shared machine, so I cannot
-> really add the notes directly to their repositories.
+This makes sense, I'll probably follow an approach similar to what was done
+with 'compat/compiler.h' in [1] (unless adding to 'git-compat-util.h' would
+be more appropriate?).
 
-My gut reaction is that I am not interested at all in the above
-approach, even though the problem you are trying to solve is
-interesting.  Mostly because notes are not the only decorations your
-users may want.  What if you want to "log --decorate" their
-repository contents with your own tags that annotate their commits?
-A notes-only approach to mix repositories is way too narrow.
+[1] https://lore.kernel.org/git/20200416211807.60811-6-emilyshaffer@google.com/
 
-A usable alternative _might_ be to introduce a way to "borrow" refs
-and objects from a different repository as if you cloned from and
-continuously fetching from them.  We already have a mechanism to
-borrow objects from another repository in the form of "alternate
-object database" that lets us pretend objects in their repository
-are locally available.  We can invent a similar mechanism that lets
-any of their ref as if it were our local ref, e.g. their "main"
-branch at their refs/heads/main might appear to exist at our
-refs/borrowed/X/heads/main.  
+>> +static int create_diagnostics_archive(struct strbuf *zip_path)
+>> +{
+> 
+> Large part of this function is also lifted from scalar, and it looks
+> OK.  One thing I noticed is that "res" is explicitly initialized to
+> 0, but given that the way the code is structured to use the "we
+> process sequencially in successful case, and branch out by 'goto'
+> immediately when we see a breakage" pattern, it may be better to
+> initialize it to -1 (i.e. assume error), or even better, leave it
+> uninitialized (i.e. let the compiler notice if a jump to cleanup is
+> made without setting res appropriately).
+> 
 
-Once the mechanism for doing so is in place, setting up such a
-parasite repository might be
+I'll go with the "uninitialized" approach in the re-roll; I like the
+simplicity of relying on the compiler to determine if it's unassigned.
 
-    $ git clone --local-parasite=X /path/to/theirs mine
+>> +diagnose_cleanup:
+>> +	if (archiver_fd >= 0) {
+>> +		close(1);
+>> +		dup2(stdout_fd, 1);
+>> +	}
+>> +	free(argv_copy);
+>> +	strvec_clear(&archiver_args);
+>> +	strbuf_release(&buf);
+> 
+> Hmph, stdout_fd is a copy of the file descriptor 1 that was saved
+> away at the beginning.  Then archiver_fd was created to write into
+> the zip archive, and during the bulk of the function it was dup2'ed
+> to the file descriptor 1, to make anything written to the latter
+> appear in the zip output.
+> 
+> When we successfully opened archive_fd but failed to dup2(), we may
+> close a wrong file desciptor 1 here, but we recover from that by
+> using the saved-away stdout_fd, so we'd be OK.  If we did dup2(),
+> then we would be OK, too.
+> 
+> I am wondering if archiver_fd itself is leaking here, though.
+> 
+> Also, if we failed to open archiver_fd, then we have stdout_fd
+> leaking here, I suspect.
+> 
 
-which would create an empty repository 'mine' that uses
-/path/to/theirs/.git/objects as one of its alternate object store,
-and their refs are borrowed under our refs/borrowed/X/.
+If I'm not mistaken, both 'archiver_fd' and 'stdout_fd' are always leaked if
+they're successfully created (they're never 'close()'d). There's also an
+unnecessary check for 'archiver_fd < 0', since 'xopen()' will die if it
+can't open the file. And, as you mentioned, the wrong file descriptor 1 is
+closed if the 'dup2()' of 'archiver_fd' fails.
 
-Then you can tell your cgit to show refs/borrowed/X/{heads,tags}
-hierarchies as if they are the branches and tags, and use your own
-refs/notes/ hiearchy to store whatever notes they do not let you
-store in theirs.
+I'll clean this up for V2, thanks.
+
+>> +	return res;
+>> +}
+> 
+> Other than that, looks good to me.
+
