@@ -2,63 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64D62C00140
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A665FC19F2C
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 15:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229670AbiHBPkB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 11:40:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41388 "EHLO
+        id S236210AbiHBPk6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 11:40:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbiHBPkA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Aug 2022 11:40:00 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B71821276B
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:39:59 -0700 (PDT)
-Received: (qmail 3936 invoked by uid 109); 2 Aug 2022 15:39:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 Aug 2022 15:39:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32686 invoked by uid 111); 2 Aug 2022 15:39:58 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Aug 2022 11:39:58 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 2 Aug 2022 11:39:57 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH] pipe_command(): mark stdin descriptor as non-blocking
-Message-ID: <YulFTSTbVaTwuQtt@coredump.intra.peff.net>
-References: <YuikU//9OrdpKQcE@coredump.intra.peff.net>
+        with ESMTP id S236378AbiHBPkn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Aug 2022 11:40:43 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 554C712AAB
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 08:40:22 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 395241299FA;
+        Tue,  2 Aug 2022 11:40:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ImM3lDjUOWZW/eAMUsBftpQ+DQAIW1At8o7EUt
+        GDjRg=; b=FGzK7A99Ju27vO3utFglPbVl+1340x0uqVQLsZzXef55AiDFlmk/ES
+        +Y46KlcPoxIjbJ/cse7c6F+avV56jtzybEEcRZl4+/2CSHaIHjwjliAjtEag3c/I
+        gque9S7WcZ5OoMpWos3KK98QNO+HCsP6izR3tu3NIq+sU9AUuwgDI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 307A51299F7;
+        Tue,  2 Aug 2022 11:40:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 994A81299F5;
+        Tue,  2 Aug 2022 11:40:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Vegard Nossum <vegard.nossum@oracle.com>
+Cc:     git@vger.kernel.org, Johan Herland <johan@herland.net>,
+        "Jason A . Donenfeld" <Jason@zx2c4.com>,
+        Christian Hesse <mail@eworm.de>
+Subject: Re: [RFC PATCH 1/2] notes: support fetching notes from an external
+ repo
+References: <20220802075401.2393-1-vegard.nossum@oracle.com>
+Date:   Tue, 02 Aug 2022 08:40:19 -0700
+In-Reply-To: <20220802075401.2393-1-vegard.nossum@oracle.com> (Vegard Nossum's
+        message of "Tue, 2 Aug 2022 09:54:00 +0200")
+Message-ID: <xmqqczdiirh8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YuikU//9OrdpKQcE@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6A8EEA38-1279-11ED-AD3F-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 02, 2022 at 12:13:07AM -0400, Jeff King wrote:
+Vegard Nossum <vegard.nossum@oracle.com> writes:
 
->   - more importantly, I'm not sure of the portability implications of
->     the fix. This is our first use of O_NONBLOCK outside of the
->     compat/simple-ipc unix-socket code. Do we need to abstract this
->     behind a compat/ layer for Windows?
+> Notes are currently always fetched from the current repo. However, in
+> certain situations you may want to keep notes in a separate repository
+> altogether.
+>
+> In my specific case, I am using cgit to display notes for repositories
+> that are owned by others but hosted on a shared machine, so I cannot
+> really add the notes directly to their repositories.
 
-So I think the answer is pretty clearly "yes", from the Windows CI
-results:
+My gut reaction is that I am not interested at all in the above
+approach, even though the problem you are trying to solve is
+interesting.  Mostly because notes are not the only decorations your
+users may want.  What if you want to "log --decorate" their
+repository contents with your own tags that annotate their commits?
+A notes-only approach to mix repositories is way too narrow.
 
-  run-command.c:1429:18: 'O_NONBLOCK' undeclared (first use in this function)
-         flags |= O_NONBLOCK;
-                  ^~~~~~~~~~
+A usable alternative _might_ be to introduce a way to "borrow" refs
+and objects from a different repository as if you cloned from and
+continuously fetching from them.  We already have a mechanism to
+borrow objects from another repository in the form of "alternate
+object database" that lets us pretend objects in their repository
+are locally available.  We can invent a similar mechanism that lets
+any of their ref as if it were our local ref, e.g. their "main"
+branch at their refs/heads/main might appear to exist at our
+refs/borrowed/X/heads/main.  
 
-It looks like we'd have the option of either adding F_GETFL/F_SETFL
-support to compat/mingw.c's fake fcntl() function, or adding a
-compat/nonblock.c that abstracts the whole thing. I'd prefer the latter,
-as it makes the interface a bit narrower.
+Once the mechanism for doing so is in place, setting up such a
+parasite repository might be
 
-But I'm not sure what should go on the Windows side of that #ifdef.
-Unlike some other spots, I don't think we can just make it a noop, or
-Windows will be subject to the same deadlock (unless for some reason its
-write() does behave differently?).
+    $ git clone --local-parasite=X /path/to/theirs mine
 
--Peff
+which would create an empty repository 'mine' that uses
+/path/to/theirs/.git/objects as one of its alternate object store,
+and their refs are borrowed under our refs/borrowed/X/.
+
+Then you can tell your cgit to show refs/borrowed/X/{heads,tags}
+hierarchies as if they are the branches and tags, and use your own
+refs/notes/ hiearchy to store whatever notes they do not let you
+store in theirs.
