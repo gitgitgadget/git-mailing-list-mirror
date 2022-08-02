@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44107C00140
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 12:29:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13E84C00140
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 12:30:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237088AbiHBM3z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 08:29:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49264 "EHLO
+        id S237117AbiHBMaB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 08:30:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237069AbiHBM3v (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Aug 2022 08:29:51 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0734251409
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 05:29:50 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id z12so7594931wrs.9
-        for <git@vger.kernel.org>; Tue, 02 Aug 2022 05:29:49 -0700 (PDT)
+        with ESMTP id S237078AbiHBM3w (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Aug 2022 08:29:52 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 414E15073D
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 05:29:51 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id j7so17705337wrh.3
+        for <git@vger.kernel.org>; Tue, 02 Aug 2022 05:29:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=hjSXw2K7hcxJrsGK0XrsEAkQYSIrIWRaUdxf9463oJI=;
-        b=dOZRV4Q/kERCyAst7pzoPEihmgOJgaidr3iZvsmT5jPpM6pvZ1aqX06LCtzTzYyAe9
-         v/RPPd2owpUd/3CMYgOwP2apMqmX485QRRODyyjathhHLKRN9Q6HQLAxW2qS+GW66Kd9
-         Pkd1wBGTk4TTdl34cEImvtqKgX3kXzrdboewjhDp9o21wvOVq+YtgUAbCBAmtGvVM/ot
-         zw5sCma6DCl64y4fkhtl8usyeDy1f3wiiURYO1XMt2prn4hdncOzM+OfmVmsUj4uVuvP
-         FLMfcQbPu/U40L0SiHjCdqKkTaPA+cfpHlc4BobqvkJvIUTuA8IDF86rW9PgjHPuQZg7
-         WctA==
+        bh=F5mnbe6cQVKNs5hDJq87ao07TTZJ+9EzkJCzIacIGYQ=;
+        b=FBOlM3EpLu3pF0nPa8gWJ1BVKs+TdcLsX9XxaDfM3jpf97i208FEbkqe4W/OeRSVJX
+         R9kDuKHSOkO0s/1HKn8l3R4No9dykC1v4oGTbDWYtEnPei1hbYhf9Sni/HukRZug+jE6
+         N1uhp+xQ6MeoksMZCYgnw46JFVYtDk8wr0CmRj74iNwVuoy5SXDXdpaq/vmSJ1L2K3Ep
+         fXqh3DoMJLV1szDx2gR9v4sKaIBeHDKjrhjbn4ejWYgJ5OOqiyJIbFyB4nPpf/GC6h04
+         LCmqJhyEiwvX5CHsyw2ulwxFoJVcmcaO4wYHsRe4CR1ziNZJVTv8V7tCM5Qkbp20pa/1
+         4Bhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hjSXw2K7hcxJrsGK0XrsEAkQYSIrIWRaUdxf9463oJI=;
-        b=MITjEIIyw9cc7IyjMJwMajUyIxF1dEUvNyhT0PthsLmsJ3BJwHz+m4EMswdz+ize6E
-         8R//LGGWSkemB71/XlicMDiM4MtJJCww13lHOmtalXnS9nnEk7w0UWWvWecTpXuh8bKU
-         yjtA7eAqi65yH8DXTn8Att1iAH/7Qc15fvQ9edyS1T4/abC0vSnL/0hm8WrvhA6t18qj
-         keS4nQKx2bj720fWvFxZ608JWiMH7IJs3pKPM03JGEnAhDHOqwBjIuyMHUzqMrcG7T8t
-         6Zpq5K3zqFa007gD7BAk3R1MVK3rIJqDbSroKILzJFX/0TFyFu7lrVxY83qH3WfX6a48
-         A9ig==
-X-Gm-Message-State: ACgBeo0LM4GygBBS34X2ocqKG3hzSWqLNllWfQyGuedAZeAZ9Y2dhn6y
-        6ORSeqOVtAESgKWF5jrD4BhlReka/w4=
-X-Google-Smtp-Source: AA6agR5hR7ug5gYNU9ustu7Hgi9QC2sOgEzcOQh/4Ue2Dn+6uPSZFB4IuuWLM262MFrF4SnogDXv6g==
-X-Received: by 2002:a05:6000:1a89:b0:21d:ab1a:b177 with SMTP id f9-20020a0560001a8900b0021dab1ab177mr13048745wry.594.1659443388240;
-        Tue, 02 Aug 2022 05:29:48 -0700 (PDT)
+        bh=F5mnbe6cQVKNs5hDJq87ao07TTZJ+9EzkJCzIacIGYQ=;
+        b=yY2nThbAm4+71C28CuaBwGekeaJBMmo5uYVv5gti2Qep5tgxKO8SxskDjMeWOttw63
+         CDWTwQDfsl2h/N5QvbFIXGR3TeFehLMLgz0oxyvvGJZgpPBUbRfnLmMkd+FFkUaU7ltQ
+         WwD3j6Av/JvWGoNrx9V1C0zqt7b5ljohLXn5lLmpil1AwcTEs09jvkufGZ4f/I+h2l2k
+         af47tcZp/GrgRS3JUFgYL6ixnKIl7nAgVpXyVcfmL5A4yRww8JF81q4ejsl9Kksa9l04
+         uJPKKH6ksKntt3uGpQky7g7qPLP39V9rDMVHT7EYmzT0PaRWJzOUSfAf2iqs8UqOCNCb
+         VHpw==
+X-Gm-Message-State: ACgBeo13aY5A+5KbGlt12IkbNXr+0x6FTIcN4bQsleXYqwzrtzTufrXz
+        OiNBRPVoJHJ48uKTSfCiePyMnBBg9Xo=
+X-Google-Smtp-Source: AA6agR73pSlWUXGTuOQAJhKo6P8a+QJIuJ6/gaTOBIwHp0MA4B2vdNcVfUljcziBh0I6YiUZ6PeqRg==
+X-Received: by 2002:a05:6000:508:b0:21d:4105:caf9 with SMTP id a8-20020a056000050800b0021d4105caf9mr13175372wrf.699.1659443389373;
+        Tue, 02 Aug 2022 05:29:49 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 7-20020a05600c22c700b003a03e63e428sm27333450wmg.36.2022.08.02.05.29.47
+        by smtp.gmail.com with ESMTPSA id c5-20020a05600c0a4500b003a3442f1229sm28763343wmq.29.2022.08.02.05.29.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Aug 2022 05:29:47 -0700 (PDT)
-Message-Id: <6a6f1a04889ac475dd9c07e98f2ffc4b677e8e40.1659443384.git.gitgitgadget@gmail.com>
+        Tue, 02 Aug 2022 05:29:48 -0700 (PDT)
+Message-Id: <00debaf6e77852efe1dcad4bfda5ebd5bf590ac4.1659443384.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1300.v2.git.1659443384.gitgitgadget@gmail.com>
 References: <pull.1300.git.1658781277.gitgitgadget@gmail.com>
         <pull.1300.v2.git.1659443384.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 02 Aug 2022 12:29:41 +0000
-Subject: [PATCH v2 2/5] bundle-uri: create basic file-copy logic
+Date:   Tue, 02 Aug 2022 12:29:42 +0000
+Subject: [PATCH v2 3/5] clone: add --bundle-uri option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,191 +70,133 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Before implementing a way to fetch bundles into a repository, create the
-basic logic. Assume that the URI is actually a file path. Future logic
-will make this more careful to other protocols.
+Cloning a remote repository is one of the most expensive operations in
+Git. The server can spend a lot of CPU time generating a pack-file for
+the client's request. The amount of data can clog the network for a long
+time, and the Git protocol is not resumable. For users with poor network
+connections or are located far away from the origin server, this can be
+especially painful.
 
-For now, we also only succeed if the content at the URI is a bundle
-file, not a bundle list. Bundle lists will be implemented in a future
-change.
-
-Note that the discovery of a temporary filename is slightly racy because
-the odb_mkstemp() relies on the temporary file not existing. With the
-current implementation being limited to file copies, we could replace
-the copy_file() with copy_fd(). The tricky part comes in future changes
-that send the filename to 'git remote-https' and its 'get' capability.
-At that point, we need the file descriptor closed _and_ the file
-unlinked. If we were to keep the file descriptor open for the sake of
-normal file copies, then we would pollute the rest of the code for
-little benefit. This is especially the case because we expect that most
-bundle URI use will be based on HTTPS instead of file copies.
+Add a new '--bundle-uri' option to 'git clone' to bootstrap a clone from
+a bundle. If the user is aware of a bundle server, then they can tell
+Git to bootstrap the new repository with these bundles before fetching
+the remaining objects from the origin server.
 
 Reviewed-by: Josh Steadmon <steadmon@google.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Makefile            |   1 +
- bundle-uri.c        | 104 ++++++++++++++++++++++++++++++++++++++++++++
- bundle-uri.h        |  14 ++++++
- t/t5557-http-get.sh |   2 +
- 4 files changed, 121 insertions(+)
- create mode 100644 bundle-uri.c
- create mode 100644 bundle-uri.h
+ Documentation/git-clone.txt |  6 ++++++
+ builtin/clone.c             | 15 +++++++++++++++
+ t/t5558-clone-bundle-uri.sh | 36 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 57 insertions(+)
+ create mode 100755 t/t5558-clone-bundle-uri.sh
 
-diff --git a/Makefile b/Makefile
-index 1624471badc..7d5f48069ea 100644
---- a/Makefile
-+++ b/Makefile
-@@ -906,6 +906,7 @@ LIB_OBJS += blob.o
- LIB_OBJS += bloom.o
- LIB_OBJS += branch.o
- LIB_OBJS += bulk-checkin.o
-+LIB_OBJS += bundle-uri.o
- LIB_OBJS += bundle.o
- LIB_OBJS += cache-tree.o
- LIB_OBJS += cbtree.o
-diff --git a/bundle-uri.c b/bundle-uri.c
-new file mode 100644
-index 00000000000..b35babc36aa
---- /dev/null
-+++ b/bundle-uri.c
-@@ -0,0 +1,104 @@
-+#include "cache.h"
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 632bd1348ea..60fedf7eb5e 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -323,6 +323,12 @@ or `--mirror` is given)
+ 	for `host.xz:foo/.git`).  Cloning into an existing directory
+ 	is only allowed if the directory is empty.
+ 
++--bundle-uri=<uri>::
++	Before fetching from the remote, fetch a bundle from the given
++	`<uri>` and unbundle the data into the local repository. The refs
++	in the bundle will be stored under the hidden `refs/bundle/*`
++	namespace.
++
+ :git-clone: 1
+ include::urls.txt[]
+ 
+diff --git a/builtin/clone.c b/builtin/clone.c
+index c4ff4643ecd..4224d562758 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -34,6 +34,7 @@
+ #include "list-objects-filter-options.h"
+ #include "hook.h"
+ #include "bundle.h"
 +#include "bundle-uri.h"
-+#include "bundle.h"
-+#include "object-store.h"
-+#include "refs.h"
-+#include "run-command.h"
-+
-+static int find_temp_filename(struct strbuf *name)
-+{
-+	int fd;
+ 
+ /*
+  * Overall FIXMEs:
+@@ -77,6 +78,7 @@ static int option_filter_submodules = -1;    /* unspecified */
+ static int config_filter_submodules = -1;    /* unspecified */
+ static struct string_list server_options = STRING_LIST_INIT_NODUP;
+ static int option_remote_submodules;
++static const char *bundle_uri;
+ 
+ static int recurse_submodules_cb(const struct option *opt,
+ 				 const char *arg, int unset)
+@@ -160,6 +162,8 @@ static struct option builtin_clone_options[] = {
+ 		    N_("any cloned submodules will use their remote-tracking branch")),
+ 	OPT_BOOL(0, "sparse", &option_sparse_checkout,
+ 		    N_("initialize sparse-checkout file to include only files at root")),
++	OPT_STRING(0, "bundle-uri", &bundle_uri,
++		   N_("uri"), N_("a URI for downloading bundles before fetching from origin remote")),
+ 	OPT_END()
+ };
+ 
+@@ -1232,6 +1236,17 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	if (transport->smart_options && !deepen && !filter_options.choice)
+ 		transport->smart_options->check_self_contained_and_connected = 1;
+ 
 +	/*
-+	 * Find a temporary filename that is available. This is briefly
-+	 * racy, but unlikely to collide.
++	 * Before fetching from the remote, download and install bundle
++	 * data from the --bundle-uri option.
 +	 */
-+	fd = odb_mkstemp(name, "bundles/tmp_uri_XXXXXX");
-+	if (fd < 0) {
-+		warning(_("failed to create temporary file"));
-+		return -1;
++	if (bundle_uri) {
++		/* At this point, we need the_repository to match the cloned repo. */
++		repo_init(the_repository, git_dir, work_tree);
++		if (fetch_bundle_uri(the_repository, bundle_uri))
++			warning(_("failed to fetch objects from bundle URI '%s'"),
++				bundle_uri);
 +	}
-+
-+	close(fd);
-+	unlink(name->buf);
-+	return 0;
-+}
-+
-+static int copy_uri_to_file(const char *file, const char *uri)
-+{
-+	/* File-based URIs only for now. */
-+	return copy_file(file, uri, 0);
-+}
-+
-+static int unbundle_from_file(struct repository *r, const char *file)
-+{
-+	int result = 0;
-+	int bundle_fd;
-+	struct bundle_header header = BUNDLE_HEADER_INIT;
-+	struct string_list_item *refname;
-+	struct strbuf bundle_ref = STRBUF_INIT;
-+	size_t bundle_prefix_len;
-+
-+	if ((bundle_fd = read_bundle_header(file, &header)) < 0)
-+		return 1;
-+
-+	if ((result = unbundle(r, &header, bundle_fd, NULL)))
-+		return 1;
-+
-+	/*
-+	 * Convert all refs/heads/ from the bundle into refs/bundles/
-+	 * in the local repository.
-+	 */
-+	strbuf_addstr(&bundle_ref, "refs/bundles/");
-+	bundle_prefix_len = bundle_ref.len;
-+
-+	for_each_string_list_item(refname, &header.references) {
-+		struct object_id *oid = refname->util;
-+		struct object_id old_oid;
-+		const char *branch_name;
-+		int has_old;
-+
-+		if (!skip_prefix(refname->string, "refs/heads/", &branch_name))
-+			continue;
-+
-+		strbuf_setlen(&bundle_ref, bundle_prefix_len);
-+		strbuf_addstr(&bundle_ref, branch_name);
-+
-+		has_old = !read_ref(bundle_ref.buf, &old_oid);
-+		update_ref("fetched bundle", bundle_ref.buf, oid,
-+			   has_old ? &old_oid : NULL,
-+			   REF_SKIP_OID_VERIFICATION,
-+			   UPDATE_REFS_MSG_ON_ERR);
-+	}
-+
-+	bundle_header_release(&header);
-+	return result;
-+}
-+
-+int fetch_bundle_uri(struct repository *r, const char *uri)
-+{
-+	int result = 0;
-+	struct strbuf filename = STRBUF_INIT;
-+
-+	if ((result = find_temp_filename(&filename)))
-+		goto cleanup;
-+
-+	if ((result = copy_uri_to_file(filename.buf, uri))) {
-+		warning(_("failed to download bundle from URI '%s'"), uri);
-+		goto cleanup;
-+	}
-+
-+	if ((result = !is_bundle(filename.buf, 0))) {
-+		warning(_("file at URI '%s' is not a bundle"), uri);
-+		goto cleanup;
-+	}
-+
-+	if ((result = unbundle_from_file(r, filename.buf))) {
-+		warning(_("failed to unbundle bundle from URI '%s'"), uri);
-+		goto cleanup;
-+	}
-+
-+cleanup:
-+	unlink(filename.buf);
-+	strbuf_release(&filename);
-+	return result;
-+}
-diff --git a/bundle-uri.h b/bundle-uri.h
-new file mode 100644
-index 00000000000..8a152f1ef14
+ 
+ 	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
+ 	refspec_ref_prefixes(&remote->fetch,
+diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
+new file mode 100755
+index 00000000000..f709bcb729c
 --- /dev/null
-+++ b/bundle-uri.h
-@@ -0,0 +1,14 @@
-+#ifndef BUNDLE_URI_H
-+#define BUNDLE_URI_H
++++ b/t/t5558-clone-bundle-uri.sh
+@@ -0,0 +1,36 @@
++#!/bin/sh
 +
-+struct repository;
++test_description='test fetching bundles with --bundle-uri'
 +
-+/**
-+ * Fetch data from the given 'uri' and unbundle the bundle data found
-+ * based on that information.
-+ *
-+ * Returns non-zero if no bundle information is found at the given 'uri'.
-+ */
-+int fetch_bundle_uri(struct repository *r, const char *uri);
++. ./test-lib.sh
 +
-+#endif
-diff --git a/t/t5557-http-get.sh b/t/t5557-http-get.sh
-index 09fb0bd9a8a..76a4bbd16af 100755
---- a/t/t5557-http-get.sh
-+++ b/t/t5557-http-get.sh
-@@ -2,6 +2,8 @@
- 
- test_description='test downloading a file by URL'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
++test_expect_success 'fail to clone from non-existent file' '
++	test_when_finished rm -rf test &&
++	git clone --bundle-uri="$(pwd)/does-not-exist" . test 2>err &&
++	grep "failed to download bundle from URI" err
++'
 +
- . ./test-lib.sh
- 
- . "$TEST_DIRECTORY"/lib-httpd.sh
++test_expect_success 'fail to clone from non-bundle file' '
++	test_when_finished rm -rf test &&
++	echo bogus >bogus &&
++	git clone --bundle-uri="$(pwd)/bogus" . test 2>err &&
++	grep "is not a bundle" err
++'
++
++test_expect_success 'create bundle' '
++	git init clone-from &&
++	git -C clone-from checkout -b topic &&
++	test_commit -C clone-from A &&
++	test_commit -C clone-from B &&
++	git -C clone-from bundle create B.bundle topic
++'
++
++test_expect_success 'clone with path bundle' '
++	git clone --bundle-uri="clone-from/B.bundle" \
++		clone-from clone-path &&
++	git -C clone-path rev-parse refs/bundles/topic >actual &&
++	git -C clone-from rev-parse topic >expect &&
++	test_cmp expect actual
++'
++
++test_done
 -- 
 gitgitgadget
 
