@@ -2,113 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98B40C00140
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 21:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B439CC00140
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 21:11:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231808AbiHBVDV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 17:03:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53716 "EHLO
+        id S233085AbiHBVLo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 17:11:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbiHBVDT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Aug 2022 17:03:19 -0400
-Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00B8745046
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 14:03:18 -0700 (PDT)
-Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-10d845dcf92so18580318fac.12
-        for <git@vger.kernel.org>; Tue, 02 Aug 2022 14:03:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=PoIRxaZLXJhUMKHTnDgzu7vEEfVyoGWqHAmnLIGbGNQ=;
-        b=R07oOCI9b/KX83D/Wea9YyRe5RyO92bnM6nInEOJeBUP+FsTT2pGSvB00sinK084Kd
-         +AlrIqdYqqh1PbiaAsclZ75ZlPRrGyANUCyBWcFswj2Dvfatk//zr5AunqwlZbNTIleT
-         Fb9gsrEI9tL0a3imDdh85CoymMq8Z44bcRAS37fHm1II+zX4go+GyyAgUImYj8Oi5TB9
-         GZ7K5mQ2G5r7V5RRj3c0PpL+MWUy4HMrADwHnBGSgYzYyogkpENBb/pnVRHdEE2odqb+
-         H4D1fYTIIUYVXg+ZWDvt7ND3ZCmTyQUUVd7Ozl5Od083zsi7OGPlDmcqFb8HxpCWXvC8
-         hccg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=PoIRxaZLXJhUMKHTnDgzu7vEEfVyoGWqHAmnLIGbGNQ=;
-        b=xecmi7CU9usToGWnhgBfxb58OMFVNy1VAZGVdnTiM8X/Ep0NxJfeKJYwndl2BfJ6go
-         l6OwaJjwIYaZ72W5cpYOPjTXi6Z117szWLykVHGTtUII7KuHxvtYoyf8ESB4phVOiaBn
-         wHRug7Um0dnnMLJ/ubUCITRso3fcui5Wqp4lcBVHcrX9ZBFJ+rWoyGG/if5MoTGu2xrK
-         8MjiLZa2dn2qwYrdAzgwGsyIJdiBJeqWe04+L9/jK0aIsxoMRPrqSQtvk4QnfiDrlnxc
-         lJbuIZG+u8QBKeDJoS0lwaV6MObpjQTkIwM1ePU+6xvAVVmU5Bl1JuGWvpM92JOyz6IF
-         X+Uw==
-X-Gm-Message-State: ACgBeo1mjK6DX40ygaIfpT6KJePgzFmBjQlSJCSuI+Nmkqd+MC5hJU2C
-        qIXdlnm8I+nHBAETx8iNboh+EgUQRz1q3wXoG0BZwQ==
-X-Google-Smtp-Source: AA6agR6cNnSbjojFhavUHIa4qSvyAyu2Vx7UB1LI3FbcGl29oVNOgg229g7Bv9uIoGW23Y2SVcUoxe4Aqg+QXp14xDg=
-X-Received: by 2002:a05:6870:8328:b0:10c:fdf5:3be2 with SMTP id
- p40-20020a056870832800b0010cfdf53be2mr573122oae.4.1659474198235; Tue, 02 Aug
- 2022 14:03:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220726210020.3397249-1-calvinwan@google.com>
- <20220728211221.2913928-1-calvinwan@google.com> <xmqqpmhjjwo9.fsf@gitster.g>
-In-Reply-To: <xmqqpmhjjwo9.fsf@gitster.g>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Tue, 2 Aug 2022 14:03:07 -0700
-Message-ID: <CAFySSZCEWX22h1FBX65=eofNm+WU97DtL7P+11WFie72DQLDkg@mail.gmail.com>
-Subject: Re: [PATCH v7] submodule merge: update conflict error message
-To:     Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S232882AbiHBVLm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Aug 2022 17:11:42 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9C7B46D95
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 14:11:41 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 10BE112DDAC;
+        Tue,  2 Aug 2022 17:11:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HeGYMXeDZdTkBbZpAqKK6TL0vh71xLx0c41pBl
+        OdTaI=; b=uJ06z1bSiNjPBBIRSGSVp7xXD02BZlw73wzsgtUTeJY9LjJZUxew0X
+        i5HH53e+xWzp305ZJdhvjDSkKHUqGBm+79aRY5WIQG/mh1Mt0K4LKNauPAo/yPbS
+        L94abbNBFqDk8lrnRIVEvmq7tWcJf/t3ZozcLTbYz/dmLVgPy21fw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 07A6012DDAB;
+        Tue,  2 Aug 2022 17:11:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6E6E712DDAA;
+        Tue,  2 Aug 2022 17:11:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
 Cc:     git@vger.kernel.org, newren@gmail.com, Johannes.Schindelin@gmx.de,
         avarab@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v7] submodule merge: update conflict error message
+References: <20220726210020.3397249-1-calvinwan@google.com>
+        <20220728211221.2913928-1-calvinwan@google.com>
+        <xmqqpmhjjwo9.fsf@gitster.g>
+        <CAFySSZCEWX22h1FBX65=eofNm+WU97DtL7P+11WFie72DQLDkg@mail.gmail.com>
+Date:   Tue, 02 Aug 2022 14:11:38 -0700
+In-Reply-To: <CAFySSZCEWX22h1FBX65=eofNm+WU97DtL7P+11WFie72DQLDkg@mail.gmail.com>
+        (Calvin Wan's message of "Tue, 2 Aug 2022 14:03:07 -0700")
+Message-ID: <xmqqo7x2fj05.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: B3DB2084-12A7-11ED-B321-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > @@ -570,6 +574,8 @@ static const char *type_short_descriptions[] = {
-> >               "CONFLICT (submodule history not available)",
-> >       [CONFLICT_SUBMODULE_MAY_HAVE_REWINDS] =
-> >               "CONFLICT (submodule may have rewinds)",
+Calvin Wan <calvinwan@google.com> writes:
+
+> I'm thinking something like this:
 >
-> The other ones are semi sentences ...
->
-> > +     [CONFLICT_SUBMODULE_NULL_MERGE_BASE] =
-> > +             "CONFLICT (submodule no merge base)"
->
-> ... and this wants to become one, too, e.g. "submodule lacks merge
-> base", perhaps?
+> "go to submodule ('sub' : 'a'), and either merge commit 'b'\n"
+> "go to submodule ('sub', 'a'), and either merge commit 'b'\n"
+> "go to submodule 'sub', commit 'a', and either merge commit 'b'\n"
 
-lacks/missing both SGTM
+In the first two, I suspect that it may not be quite clear what 'a'
+means to the user.  In the third one, the first "commit" might be
+mistaken as a verb.  I am tempted to say
+
+    cd to <sub>, run "checkout --detach <a>" then "merge <b>"
+
+but that may be a bit too prescriptive.  I dunno.
 
 
->         if (is_null_oid(a) || is_null_oid(b))
->                 BUG(...);
->
-> may be easier to read, perhaps?
 
-ack
-
-> I wonder where this overly deep indentation come from?  Can the
-> .editorconfig file we ship with the project help?
-
-It comes from me not properly indenting the line. I'll take a look at
-the .editorconfig file.
-
-> When we say "either merge commit %s" (where %s is 'b'---what they
-> have as we saw earlier), do we need to mention what the value of 'a'
-> is to the user, or is it redundant because we are absolutely sure
-> that 'a' is what is checked out in the submodule?
-
-We are absolutely sure that 'a' is the GITLINK to the submodule, but
-if the user changes their local submodule without updating the reference,
-it can result in errors like "not checked out" and "commits not present"
-during the merge.
-
-> > +                     strbuf_addf(&tmp, _("or update to an existing commit which has merged those changes"));
->
-> "those changes" means "a..b"?  Again, I just want to make sure that
-> the user in this situation knows "the other end" of the range when
-> they are told only about 'b'.
-
-Correct. Based on what I said above, it might be worthwhile to mention
-'a' as well since that information could also help the user in those cases.
-I'm thinking something like this:
-
-"go to submodule ('sub' : 'a'), and either merge commit 'b'\n"
-"go to submodule ('sub', 'a'), and either merge commit 'b'\n"
-"go to submodule 'sub', commit 'a', and either merge commit 'b'\n"
