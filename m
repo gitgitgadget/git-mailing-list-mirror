@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52392C00140
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 12:58:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4BEFC00140
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 12:58:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236629AbiHBM6e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 08:58:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41872 "EHLO
+        id S237100AbiHBM6g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 08:58:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236965AbiHBM6K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Aug 2022 08:58:10 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2481015FDD
+        with ESMTP id S232503AbiHBM6L (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Aug 2022 08:58:11 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C10F5167C9
         for <git@vger.kernel.org>; Tue,  2 Aug 2022 05:58:09 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id j7so17795434wrh.3
+Received: by mail-wr1-x436.google.com with SMTP id p10so13600002wru.8
         for <git@vger.kernel.org>; Tue, 02 Aug 2022 05:58:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=jCsyOOHrYnEKxSChNErtZWAAF/kehc5nyFHToXCb/bA=;
-        b=E008ZRcMd9wrrJsTDLcfmZvezCU+BnhC3Z83KluvXR3B+0sGmrN9pXdNU6mjrHtbZc
-         vyVIZfF6ptdVBsHUvaFTng6legCtBup6odhxBPTIetNdXDM3hC+SO4Xeb5fUzUblswP7
-         aFhI/zJ82IZKRXTDLYTOYUDQAAzKZKEY8EU25nPwAe01TInapdlCnsHhxyk+5iUwmr8o
-         Ii+a7ikg5qe0v/JNz9GziToOMNJ6jv1zcxjr86nmLhb+G89VJeCL9969jdDw/0tYNErg
-         kOmkC7Bgd3yBRvX0BLpABiubu9R9rx6jg1eoGLuakv9HB9syU5XcRvBzub2DPbJd+Pej
-         rh5g==
+        bh=qAE3GgdgSVK/h0NHYhjwyohvZj6J+6zw80ONnQeKIeY=;
+        b=RP5d8ZU1zAyyF02sv4qvwQXgGNVqyPmUYj8GnLfjI2Sg5QyNicDsDe6hX1Czgm+IcQ
+         UG1zJr5WlLqv3v0V8f/eowQ8jiA4KK2RDTxQTN3EoqB6nwX3svp2usNEFZrakhxXmoB7
+         Lo612vv+chN0dJFfvyhROUkt0Imo8ZCgeKQhtJg50GWfQ7kARyKVx9Z38zOUBCQIMgH7
+         4rHYQWswGtfOqa4ZPLq4AUBtqvh2G7gPGzltIZRlDzOeJ3X9WnAjcSxQXVg8hFuMeVeu
+         Ht8DYHEeEmdLFWdxBmbUiubnM96KqZ/vDUQ9G2G7n4yrs2USK4fsmUR5UZ6qxhzoOPCI
+         dm8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=jCsyOOHrYnEKxSChNErtZWAAF/kehc5nyFHToXCb/bA=;
-        b=pAGXar9Arj4wjFbIhsS2qfo35CYKR2ddHlJIzhKZ/YJf6uQ2HR77VRkqilZmEvzCCV
-         1rGaRH0eEAuWUOV4VlVP+YPjE0VzH+A99bP/2YqZSEfuivi0e2aW0qK81UkNYPFb+oN+
-         l0cTSJqxgqlHNVV6LPnP5Jf2bNu2xYa3xCAp/0VFm+zHhCQeSm2M+gBGdY8dtKOVgKAX
-         6xdJAM/AK5k4gzMOZiZqv/B4RJBq6JrVBNDgt2/fpuKTKbcqtJgtJCgSAH/OhtgC0aoO
-         jfM3mmH/QaXrCcVIlwLau/nnjRIKgkKE4+hcBf/p2D2RtX+y6w+jrSdpISkXboPLnnDL
-         6R1A==
-X-Gm-Message-State: ACgBeo1mfMyCbycr/W24BtoA5o9JtlcVLcgpT6TiRMIsLz9t24RcFDqf
-        /U8TM4tGZegYm1kkUvWe5xVi2lMwMDxu0g==
-X-Google-Smtp-Source: AA6agR6SxnvPmhhQcwOSSrQ2+mcUN9BB8wCCdFfYdScHEok3TZq8jlV1xzjgkjGsYXcAsq57Cy0OfA==
-X-Received: by 2002:a5d:5a99:0:b0:220:68c4:d7cb with SMTP id bp25-20020a5d5a99000000b0022068c4d7cbmr4443509wrb.565.1659445088340;
-        Tue, 02 Aug 2022 05:58:08 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id t4-20020adfeb84000000b0021e45afa7b0sm15056145wrn.109.2022.08.02.05.58.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=qAE3GgdgSVK/h0NHYhjwyohvZj6J+6zw80ONnQeKIeY=;
+        b=C+b2MHAm0Hok8S1i1uRqwKe3MH7q4VsaRIb7CA1j0yscrD30xKBdzi1ZhhmZxtAK1b
+         1FZ0DkGV0ApL8PAbxdVAk8Lzf9QOC1GeqkeJCEM5vHbIZ2kwU1MJKK+jiaJbjsnbJUUu
+         TlJ7IAWwFWCT8YjwcmOzN00Aiyczrid5eXsjjggZOg8cBCDoljixkuNRUJeZdwrQjkLu
+         5p7FHIS0VIxUs4fhE+/RGW9Gl1bKMij4X/zs8aNB57d7Qkgs2ROpEFuxsdbIlVx6znc8
+         nz3h7Y3npFSdOVPcXvru48mmj8SeDrCWUAmON/NsrK28/lsYhHRj8pmWW7onuZIqDzce
+         vbrQ==
+X-Gm-Message-State: ACgBeo3hVcVI+lWVoNU/tQjd8wtWqzHp4yWuEyWt0KvrUZ/Aguu34jbx
+        CbHHWanPVKcWZYCVAmJkf+x6GTP1AdZ1Iw==
+X-Google-Smtp-Source: AA6agR6X2S6iQav/LQiFy6uJuZPhjZUdjVJ9LWoY+sTP7QGYm3hG34JX7Fvjz+mEgDaBTamXUk0bwg==
+X-Received: by 2002:a05:6000:cf:b0:21e:f6e2:e90e with SMTP id q15-20020a05600000cf00b0021ef6e2e90emr13356780wrx.404.1659445087490;
         Tue, 02 Aug 2022 05:58:07 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id t4-20020adfeb84000000b0021e45afa7b0sm15056145wrn.109.2022.08.02.05.58.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Aug 2022 05:58:06 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Teng Long <dyroneteng@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v7 09/10] docs: move http-protocol docs to man section 5
-Date:   Tue,  2 Aug 2022 14:56:58 +0200
-Message-Id: <patch-v7-09.10-c4a7fe9d439-20220802T125258Z-avarab@gmail.com>
+Subject: [PATCH v7 08/10] docs: move pack format docs to man section 5
+Date:   Tue,  2 Aug 2022 14:56:57 +0200
+Message-Id: <patch-v7-08.10-3505fa86039-20220802T125258Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1232.gc0cde427aa7
 In-Reply-To: <cover-v7-00.10-00000000000-20220802T125258Z-avarab@gmail.com>
 References: <cover-v6-0.9-00000000000-20220728T164243Z-avarab@gmail.com> <cover-v7-00.10-00000000000-20220802T125258Z-avarab@gmail.com>
@@ -73,155 +73,465 @@ X-Mailing-List: git@vger.kernel.org
 
 Continue the move of existing Documentation/technical/* protocol and
 file-format documentation into our main documentation space by moving
-the http-protocol.txt documentation over. I'm renaming it to
-"protocol-http" to be consistent with other things in the new
-gitformat-protocol-* namespace.
+the various documentation pertaining to the *.pack format and related
+files, and updating things that refer to it to link to the new
+location.
+
+By moving these we can properly link from the newly created
+gitformat-commit-graph do to a gitformat-chunk-format manpage we build
+by default.
+
+Creating a "gitformat-pack-bitmap" from
+"Documentation/technical/bitmap-format" might logically be part of
+this change, but it's left out for now due to a conflict with the
+in-flight ac/bitmap-lookup-table series.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/Makefile                        |  2 +-
- Documentation/git-upload-pack.txt             |  6 ++--
- ...http-protocol.txt => gitprotocol-http.txt} | 29 ++++++++++++++++---
+ Documentation/Makefile                        |  9 ++---
+ Documentation/config/pack.txt                 |  2 +-
+ Documentation/git-bundle.txt                  |  3 +-
+ Documentation/git-multi-pack-index.txt        |  4 +--
+ .../chunk-format.txt => gitformat-chunk.txt}  | 25 +++++++++++---
+ Documentation/gitformat-commit-graph.txt      |  2 +-
+ .../index-format.txt => gitformat-index.txt}  | 22 ++++++++++--
+ ...uft-packs.txt => gitformat-pack-cruft.txt} | 22 ++++++++++--
+ .../pack-format.txt => gitformat-pack.txt}    | 34 +++++++++++++++++--
+ ...ure-format.txt => gitformat-signature.txt} | 21 ++++++++++--
  Documentation/gitprotocol-pack.txt            |  2 +-
- Documentation/gitprotocol-v2.txt              |  4 +--
- command-list.txt                              |  1 +
- 6 files changed, 33 insertions(+), 11 deletions(-)
- rename Documentation/{technical/http-protocol.txt => gitprotocol-http.txt} (98%)
+ .../howto/recover-corrupted-object-harder.txt |  2 +-
+ .../technical/hash-function-transition.txt    |  2 +-
+ Documentation/user-manual.txt                 |  2 +-
+ cache.h                                       |  3 +-
+ command-list.txt                              |  5 +++
+ pack-revindex.h                               |  2 +-
+ 17 files changed, 131 insertions(+), 31 deletions(-)
+ rename Documentation/{technical/chunk-format.txt => gitformat-chunk.txt} (91%)
+ rename Documentation/{technical/index-format.txt => gitformat-index.txt} (98%)
+ rename Documentation/{technical/cruft-packs.txt => gitformat-pack-cruft.txt} (96%)
+ rename Documentation/{technical/pack-format.txt => gitformat-pack.txt} (95%)
+ rename Documentation/{technical/signature-format.txt => gitformat-signature.txt} (96%)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index cd09ccd8c13..6efac142e3e 100644
+index b53f3c12843..cd09ccd8c13 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -37,6 +37,7 @@ MAN5_TXT += gitmailmap.txt
- MAN5_TXT += gitmodules.txt
- MAN5_TXT += gitprotocol-capabilities.txt
- MAN5_TXT += gitprotocol-common.txt
-+MAN5_TXT += gitprotocol-http.txt
- MAN5_TXT += gitprotocol-pack.txt
- MAN5_TXT += gitprotocol-v2.txt
- MAN5_TXT += gitrepository-layout.txt
-@@ -107,7 +108,6 @@ TECH_DOCS += SubmittingPatches
+@@ -25,7 +25,12 @@ MAN1_TXT += gitweb.txt
+ # man5 / man7 guides (note: new guides should also be added to command-list.txt)
+ MAN5_TXT += gitattributes.txt
+ MAN5_TXT += gitformat-bundle.txt
++MAN5_TXT += gitformat-chunk.txt
+ MAN5_TXT += gitformat-commit-graph.txt
++MAN5_TXT += gitformat-index.txt
++MAN5_TXT += gitformat-pack-cruft.txt
++MAN5_TXT += gitformat-pack.txt
++MAN5_TXT += gitformat-signature.txt
+ MAN5_TXT += githooks.txt
+ MAN5_TXT += gitignore.txt
+ MAN5_TXT += gitmailmap.txt
+@@ -101,13 +106,10 @@ TECH_DOCS += MyFirstObjectWalk
+ TECH_DOCS += SubmittingPatches
  TECH_DOCS += ToolsForGit
  TECH_DOCS += technical/bitmap-format
+-TECH_DOCS += technical/cruft-packs
  TECH_DOCS += technical/hash-function-transition
--TECH_DOCS += technical/http-protocol
+ TECH_DOCS += technical/http-protocol
+-TECH_DOCS += technical/index-format
  TECH_DOCS += technical/long-running-process-protocol
  TECH_DOCS += technical/multi-pack-index
+-TECH_DOCS += technical/pack-format
  TECH_DOCS += technical/pack-heuristics
-diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-upload-pack.txt
-index 3409e0d36d1..3f89d640772 100644
---- a/Documentation/git-upload-pack.txt
-+++ b/Documentation/git-upload-pack.txt
-@@ -39,9 +39,9 @@ OPTIONS
- --http-backend-info-refs::
- 	Used by linkgit:git-http-backend[1] to serve up
- 	`$GIT_URL/info/refs?service=git-upload-pack` requests. See
--	"Smart Clients" in link:technical/http-protocol.html[the HTTP
--	transfer protocols] documentation and "HTTP Transport" in the
--	linkgit:gitprotocol-v2[5] documentation. Also understood by
-+	"Smart Clients" in linkgit:gitprotocol-http[5] and "HTTP
-+	Transport" in in the linkgit:gitprotocol-v2[5]
-+	documentation. Also understood by
- 	linkgit:git-receive-pack[1].
+ TECH_DOCS += technical/parallel-checkout
+ TECH_DOCS += technical/partial-clone
+@@ -115,7 +117,6 @@ TECH_DOCS += technical/racy-git
+ TECH_DOCS += technical/reftable
+ TECH_DOCS += technical/send-pack-pipeline
+ TECH_DOCS += technical/shallow
+-TECH_DOCS += technical/signature-format
+ TECH_DOCS += technical/trivial-merge
+ SP_ARTICLES += $(TECH_DOCS)
+ SP_ARTICLES += technical/api-index
+diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
+index ad7f73a1ead..3e581eab84a 100644
+--- a/Documentation/config/pack.txt
++++ b/Documentation/config/pack.txt
+@@ -166,7 +166,7 @@ permuted into their appropriate location when writing a new bitmap.
  
- <directory>::
-diff --git a/Documentation/technical/http-protocol.txt b/Documentation/gitprotocol-http.txt
-similarity index 98%
-rename from Documentation/technical/http-protocol.txt
-rename to Documentation/gitprotocol-http.txt
-index 8bd672d55bb..ccc13f0a407 100644
---- a/Documentation/technical/http-protocol.txt
-+++ b/Documentation/gitprotocol-http.txt
-@@ -1,5 +1,19 @@
--HTTP transfer protocols
--=======================
-+gitprotocol-http(5)
-+===================
+ pack.writeReverseIndex::
+ 	When true, git will write a corresponding .rev file (see:
+-	link:../technical/pack-format.html[Documentation/technical/pack-format.txt])
++	linkgit:gitformat-pack[5])
+ 	for each new packfile that it writes in all places except for
+ 	linkgit:git-fast-import[1] and in the bulk checkin mechanism.
+ 	Defaults to false.
+diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
+index f0b1282b918..6da61722431 100644
+--- a/Documentation/git-bundle.txt
++++ b/Documentation/git-bundle.txt
+@@ -57,8 +57,7 @@ size. That they're "thin" under the hood is merely noted here as a
+ curiosity, and as a reference to other documentation.
+ 
+ See linkgit:gitformat-bundle[5] for more details and the discussion of
+-"thin pack" in link:technical/pack-format.html[the pack format
+-documentation] for further details.
++"thin pack" in linkgit:gitformat-pack[5] for further details.
+ 
+ OPTIONS
+ -------
+diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
+index c588fb91af1..a48c3d5ea63 100644
+--- a/Documentation/git-multi-pack-index.txt
++++ b/Documentation/git-multi-pack-index.txt
+@@ -128,8 +128,8 @@ $ git multi-pack-index verify
+ SEE ALSO
+ --------
+ See link:technical/multi-pack-index.html[The Multi-Pack-Index Design
+-Document] and link:technical/pack-format.html[The Multi-Pack-Index
+-Format] for more information on the multi-pack-index feature.
++Document] and linkgit:gitformat-pack[5] for more information on the
++multi-pack-index feature and its file format.
+ 
+ 
+ GIT
+diff --git a/Documentation/technical/chunk-format.txt b/Documentation/gitformat-chunk.txt
+similarity index 91%
+rename from Documentation/technical/chunk-format.txt
+rename to Documentation/gitformat-chunk.txt
+index f36ce42f37c..57202ede273 100644
+--- a/Documentation/technical/chunk-format.txt
++++ b/Documentation/gitformat-chunk.txt
+@@ -1,11 +1,24 @@
+-Chunk-based file formats
+-========================
++gitformat-chunk(5)
++==================
 +
 +NAME
 +----
-+gitprotocol-http - Git HTTP-based protocols
++gitformat-chunk - Chunk-based file formats
++
++SYNOPSIS
++--------
++
++Used by linkgit:gitformat-commit-graph[5] and the "MIDX" format (see
++the pack format documentation in linkgit:gitformat-pack[5]).
++
++DESCRIPTION
++-----------
+ 
+ Some file formats in Git use a common concept of "chunks" to describe
+ sections of the file. This allows structured access to a large file by
+ scanning a small "table of contents" for the remaining data. This common
+ format is used by the `commit-graph` and `multi-pack-index` files. See
+-link:technical/pack-format.html[the `multi-pack-index` format] and
++the `multi-pack-index` format in linkgit:gitformat-pack[5] and
+ the `commit-graph` format in linkgit:gitformat-commit-graph[5] for
+ how they use the chunks to describe structured data.
+ 
+@@ -113,4 +126,8 @@ for future formats:
+ * *multi-pack-index:* see `write_midx_internal()` and `load_multi_pack_index()`
+   in `midx.c` for how the chunk-format API is used to write and
+   parse the multi-pack-index file format documented in
+-  link:technical/pack-format.html[the multi-pack-index file format].
++  the multi-pack-index file format section of linkgit:gitformat-pack[5].
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/gitformat-commit-graph.txt b/Documentation/gitformat-commit-graph.txt
+index 108dc2295c0..7324665716d 100644
+--- a/Documentation/gitformat-commit-graph.txt
++++ b/Documentation/gitformat-commit-graph.txt
+@@ -75,7 +75,7 @@ All multi-byte numbers are in network byte order.
+       ID appears at most once.
+ 
+   The CHUNK LOOKUP matches the table of contents from
+-  link:technical/chunk-format.html[the chunk-based file format].
++  the chunk-based file format, see linkgit:gitformat-chunk[5]
+ 
+   The remaining data in the body is described one chunk at a time, and
+   these chunks may be given in any order. Chunks are required unless
+diff --git a/Documentation/technical/index-format.txt b/Documentation/gitformat-index.txt
+similarity index 98%
+rename from Documentation/technical/index-format.txt
+rename to Documentation/gitformat-index.txt
+index f691c20ab0a..015cb21bdc0 100644
+--- a/Documentation/technical/index-format.txt
++++ b/Documentation/gitformat-index.txt
+@@ -1,5 +1,19 @@
++gitformat-index(5)
++==================
++
++NAME
++----
++gitformat-index - Git index format
++
++SYNOPSIS
++--------
++[verse]
++$GIT_DIR/index
++
++DESCRIPTION
++-----------
++
+ Git index format
+-================
+ 
+ == The Git index file has the following format
+ 
+@@ -125,7 +139,7 @@ Git index format
+     entry is encoded as if the path name for the previous entry is an
+     empty string).  At the beginning of an entry, an integer N in the
+     variable width encoding (the same encoding as the offset is encoded
+-    for OFS_DELTA pack entries; see pack-format.txt) is stored, followed
++    for OFS_DELTA pack entries; see linkgit:gitformat-pack[5]) is stored, followed
+     by a NUL-terminated string S.  Removing N bytes from the end of the
+     path name for the previous entry, and replacing it with the string S
+     yields the path name for this entry.
+@@ -402,3 +416,7 @@ The remaining data of each directory block is grouped by type:
+   with signature { 's', 'd', 'i', 'r' }. Like the split-index extension,
+   tools should avoid interacting with a sparse index unless they understand
+   this extension.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/technical/cruft-packs.txt b/Documentation/gitformat-pack-cruft.txt
+similarity index 96%
+rename from Documentation/technical/cruft-packs.txt
+rename to Documentation/gitformat-pack-cruft.txt
+index d81f3a8982f..908f752bd84 100644
+--- a/Documentation/technical/cruft-packs.txt
++++ b/Documentation/gitformat-pack-cruft.txt
+@@ -1,4 +1,17 @@
+-= Cruft packs
++gitformat-pack-cruft(5)
++=======================
++
++NAME
++----
++gitformat-pack-cruft - The cruft pack file format
++
++SYNOPSIS
++--------
++[verse]
++$GIT_DIR/objects/pack/pack-*.mtimes
++
++DESCRIPTION
++-----------
+ 
+ The cruft packs feature offer an alternative to Git's traditional mechanism of
+ removing unreachable objects. This document provides an overview of Git's
+@@ -10,10 +23,11 @@ same.
+ To remove unreachable objects from your repository, Git offers `git repack -Ad`
+ (see linkgit:git-repack[1]). Quoting from the documentation:
+ 
+-[quote]
++----
+ [...] unreachable objects in a previous pack become loose, unpacked objects,
+ instead of being left in the old pack. [...] loose unreachable objects will be
+ pruned according to normal expiry rules with the next 'git gc' invocation.
++----
+ 
+ Unreachable objects aren't removed immediately, since doing so could race with
+ an incoming push which may reference an object which is about to be deleted.
+@@ -121,3 +135,7 @@ which aren't already stored in an earlier cruft pack) is significantly more
+ complicated to construct, and so aren't pursued here. The obvious drawback to
+ the current implementation is that the entire cruft pack must be re-written from
+ scratch.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/gitformat-pack.txt
+similarity index 95%
+rename from Documentation/technical/pack-format.txt
+rename to Documentation/gitformat-pack.txt
+index b520aa9c45b..546c99f8871 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/gitformat-pack.txt
+@@ -1,5 +1,29 @@
+-Git pack format
+-===============
++gitformat-pack(5)
++=================
++
++NAME
++----
++gitformat-pack - Git pack format
 +
 +
 +SYNOPSIS
 +--------
 +[verse]
-+<over-the-wire-protocol>
++$GIT_DIR/objects/pack/pack-*.{pack,idx}
++$GIT_DIR/objects/pack/pack-*.rev
++$GIT_DIR/objects/pack/multi-pack-index
 +
++DESCRIPTION
++-----------
++
++The Git pack format is now Git stores most of its primary repository
++data. Over the lietime af a repository loose objects (if any) and
++smaller packs are consolidated into larger pack(s). See
++linkgit:git-gc[1] and linkgit:git-pack-objects[1].
++
++The pack format is also used over-the-wire, see
++e.g. linkgit:gitprotocol-v2[5], as well as being a part of
++other container formats in the case of linkgit:gitformat-bundle[5].
+ 
+ == Checksums and object IDs
+ 
+@@ -356,7 +380,7 @@ CHUNK LOOKUP:
+ 	    using the next chunk position if necessary.)
+ 
+ 	The CHUNK LOOKUP matches the table of contents from
+-	link:technical/chunk-format.html[the chunk-based file format].
++	the chunk-based file format, see linkgit:gitformat-chunk[5].
+ 
+ 	The remaining data in the body is described one chunk at a time, and
+ 	these chunks may be given in any order. Chunks are required unless
+@@ -482,3 +506,7 @@ packs arranged in MIDX order (with the preferred pack coming first).
+ 
+ The MIDX's reverse index is stored in the optional 'RIDX' chunk within
+ the MIDX itself.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/technical/signature-format.txt b/Documentation/gitformat-signature.txt
+similarity index 96%
+rename from Documentation/technical/signature-format.txt
+rename to Documentation/gitformat-signature.txt
+index 166721be6f6..a249869fafa 100644
+--- a/Documentation/technical/signature-format.txt
++++ b/Documentation/gitformat-signature.txt
+@@ -1,7 +1,18 @@
+-Git signature format
+-====================
++gitformat-signature(5)
++======================
+ 
+-== Overview
++NAME
++----
++gitformat-signature - Git cryptographic signature formats
++
++SYNOPSIS
++--------
++[verse]
++<[tag|commit] object header(s)>
++<over-the-wire protocol>
 +
 +DESCRIPTION
 +-----------
  
- Git supports two HTTP based transfer protocols.  A "dumb" protocol
- which requires only a standard HTTP server on the server end of the
-@@ -512,11 +526,18 @@ the id obtained through ref discovery as old_id.
- 
- TODO: Document this further.
- 
--
--References
-+REFERENCES
- ----------
- 
- http://www.ietf.org/rfc/rfc1738.txt[RFC 1738: Uniform Resource Locators (URL)]
- http://www.ietf.org/rfc/rfc2616.txt[RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1]
-+
-+SEE ALSO
-+--------
-+
- linkgit:gitprotocol-pack[5]
- linkgit:gitprotocol-capabilities[5]
+ Git uses cryptographic signatures in various places, currently objects (tags,
+ commits, mergetags) and transactions (pushes). In every case, the command which
+@@ -200,3 +211,7 @@ Date:   Wed Jun 15 09:13:29 2016 +0000
+     # gpg:          There is no indication that the signature belongs to the owner.
+     # Primary key fingerprint: D4BE 2231 1AD3 131E 5EDA  29A4 6109 2E85 B722 7189
+ ----
 +
 +GIT
 +---
 +Part of the linkgit:git[1] suite
 diff --git a/Documentation/gitprotocol-pack.txt b/Documentation/gitprotocol-pack.txt
-index 93b30b88450..dd4108b7a3b 100644
+index 8a4de6decd0..93b30b88450 100644
 --- a/Documentation/gitprotocol-pack.txt
 +++ b/Documentation/gitprotocol-pack.txt
-@@ -17,7 +17,7 @@ Git supports transferring data in packfiles over the ssh://, git://, http:// and
- file:// transports.  There exist two sets of protocols, one for pushing
- data from a client to a server and another for fetching data from a
- server to a client.  The three transports (ssh, git, file) use the same
--protocol to transfer data. http is documented in http-protocol.txt.
-+protocol to transfer data. http is documented in linkgit:gitprotocol-http[5].
+@@ -467,7 +467,7 @@ Now that the client and server have finished negotiation about what
+ the minimal amount of data that needs to be sent to the client is, the server
+ will construct and send the required data in packfile format.
  
- The processes invoked in the canonical Git implementation are 'upload-pack'
- on the server side and 'fetch-pack' on the client side for fetching data;
-diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotocol-v2.txt
-index d6105e07408..c9c0f9160b2 100644
---- a/Documentation/gitprotocol-v2.txt
-+++ b/Documentation/gitprotocol-v2.txt
-@@ -53,7 +53,7 @@ Initial Client Request
- In general a client can request to speak protocol v2 by sending
- `version=2` through the respective side-channel for the transport being
- used which inevitably sets `GIT_PROTOCOL`.  More information can be
--found in linkgit:gitprotocol-pack[5] and `http-protocol.txt`, as well as the
-+found in linkgit:gitprotocol-pack[5] and linkgit:gitprotocol-http[5], as well as the
- `GIT_PROTOCOL` definition in `git.txt`. In all cases the
- response from the server is the capability advertisement.
+-See pack-format.txt for what the packfile itself actually looks like.
++See linkgit:gitformat-pack[5] for what the packfile itself actually looks like.
  
-@@ -77,7 +77,7 @@ HTTP Transport
+ If 'side-band' or 'side-band-64k' capabilities have been specified by
+ the client, the server will send the packfile data multiplexed.
+diff --git a/Documentation/howto/recover-corrupted-object-harder.txt b/Documentation/howto/recover-corrupted-object-harder.txt
+index 8994e2559ea..5efb4fe81ff 100644
+--- a/Documentation/howto/recover-corrupted-object-harder.txt
++++ b/Documentation/howto/recover-corrupted-object-harder.txt
+@@ -68,7 +68,7 @@ Note that the "object" file isn't fit for feeding straight to zlib; it
+ has the git packed object header, which is variable-length. We want to
+ strip that off so we can start playing with the zlib data directly. You
+ can either work your way through it manually (the format is described in
+-link:../technical/pack-format.html[Documentation/technical/pack-format.txt]),
++linkgit:gitformat-pack[5]),
+ or you can walk through it in a debugger. I did the latter, creating a
+ valid pack like:
+ 
+diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
+index 260224b0331..e2ac36dd210 100644
+--- a/Documentation/technical/hash-function-transition.txt
++++ b/Documentation/technical/hash-function-transition.txt
+@@ -205,7 +205,7 @@ SHA-1 content.
+ Object storage
  ~~~~~~~~~~~~~~
+ Loose objects use zlib compression and packed objects use the packed
+-format described in Documentation/technical/pack-format.txt, just like
++format described in linkgit:gitformat-pack[5], just like
+ today. The content that is compressed and stored uses SHA-256 content
+ instead of SHA-1 content.
  
- When using the http:// or https:// transport a client makes a "smart"
--info/refs request as described in `http-protocol.txt` and requests that
-+info/refs request as described in linkgit:gitprotocol-http[5] and requests that
- v2 be used by supplying "version=2" in the `Git-Protocol` header.
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 865074bed4e..ca9decdd952 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -3133,7 +3133,7 @@ those "loose" objects.
+ You can save space and make Git faster by moving these loose objects in
+ to a "pack file", which stores a group of objects in an efficient
+ compressed format; the details of how pack files are formatted can be
+-found in link:technical/pack-format.html[pack format].
++found in link:gitformat-pack[5].
  
-    C: GET $GIT_URL/info/refs?service=git-upload-pack HTTP/1.0
+ To put the loose objects into a pack, just run git repack:
+ 
+diff --git a/cache.h b/cache.h
+index ac5ab4ef9d3..82755c7c0aa 100644
+--- a/cache.h
++++ b/cache.h
+@@ -475,8 +475,7 @@ extern struct index_state the_index;
+ 
+ /*
+  * Values in this enum (except those outside the 3 bit range) are part
+- * of pack file format. See Documentation/technical/pack-format.txt
+- * for more information.
++ * of pack file format. See gitformat-pack(5) for more information.
+  */
+ enum object_type {
+ 	OBJ_BAD = -1,
 diff --git a/command-list.txt b/command-list.txt
-index 4f30a6c30c8..2d5d6d17fb1 100644
+index ed859fdd798..4f30a6c30c8 100644
 --- a/command-list.txt
 +++ b/command-list.txt
-@@ -225,6 +225,7 @@ gitmodules                              userinterfaces
- gitnamespaces                           guide
- gitprotocol-capabilities                developerinterfaces
- gitprotocol-common                      developerinterfaces
-+gitprotocol-http                        developerinterfaces
- gitprotocol-pack                        developerinterfaces
- gitprotocol-v2                          developerinterfaces
- gitremote-helpers                       guide
+@@ -210,7 +210,12 @@ gitdiffcore                             guide
+ giteveryday                             guide
+ gitfaq                                  guide
+ gitformat-bundle                        developerinterfaces
++gitformat-chunk                         developerinterfaces
+ gitformat-commit-graph                  developerinterfaces
++gitformat-index                         developerinterfaces
++gitformat-pack                          developerinterfaces
++gitformat-pack-cruft                    developerinterfaces
++gitformat-signature                     developerinterfaces
+ gitglossary                             guide
+ githooks                                userinterfaces
+ gitignore                               userinterfaces
+diff --git a/pack-revindex.h b/pack-revindex.h
+index 74f4eae668d..4974e75eb4d 100644
+--- a/pack-revindex.h
++++ b/pack-revindex.h
+@@ -22,7 +22,7 @@
+  *
+  *   - pack position refers to an object's position within a non-existent pack
+  *     described by the MIDX. The pack structure is described in
+- *     Documentation/technical/pack-format.txt.
++ *     gitformat-pack(5).
+  *
+  *     It is effectively a concatanation of all packs in the MIDX (ordered by
+  *     their numeric ID within the MIDX) in their original order within each
 -- 
 2.37.1.1232.gc0cde427aa7
 
