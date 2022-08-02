@@ -2,131 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA716C00144
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 03:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB08EC00140
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 04:13:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232299AbiHBDID (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Aug 2022 23:08:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56002 "EHLO
+        id S235156AbiHBENM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 00:13:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235526AbiHBDH1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Aug 2022 23:07:27 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF70E1EAC6
-        for <git@vger.kernel.org>; Mon,  1 Aug 2022 20:06:35 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id tk8so23662920ejc.7
-        for <git@vger.kernel.org>; Mon, 01 Aug 2022 20:06:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc;
-        bh=R0GWGPPAVbgKLBZi1VXLOgZCAg+J4KyKmsltWNXbBYM=;
-        b=oewbvEJ7pBeLTBuaQh5G5RPR2aq1E+QDKW1yr0KEeyRPcdPv97yjQlZbVZTDfyt4DO
-         EaMIk/56vfJuz6969NxZ0OcILx1QJE7vonetUA/PEwvZx8Q9AyZMT33s1ZQtNt2t6OqE
-         9gZzpzT+JbEHiwkmHLRsKG9RL49N0orLmvGc8+cgcquM7Ew5E1OXR81ciyeLmWjIG5yq
-         p4V958i7PASa9Ezc0jsuyPjh404a0MOAU4zF3DSkoijXP5NzXVDeuMZprPOX6fDkULm7
-         1kzQ2IbAxFE8iQJXQ99GTty0O3HBPWqdu0ajH8vD8eUOcsAP78FoO5fbyf2WsbqPTnBb
-         lcYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=R0GWGPPAVbgKLBZi1VXLOgZCAg+J4KyKmsltWNXbBYM=;
-        b=3ok5w79z/kqnD2MdSkRwbjA8lgl2gTEBBwIC1j8W1iFyYbLPK6VBKZ6NSbImXbs2BO
-         CjODU2O7CNznHjMKlSlTLx9UG0B0LyBeDPJtly0nOFa8mrcjJEphZz5Uf5tnLtJLwy47
-         ESNisd/It2rDuJjXHp4Zm0a84O3hQDBqKbprufYhRreT1CUujfCQinWoFY2nbDvmhM4O
-         oK4KMKC7r5sCdEvuSBOlBL7EI+a9SsHk02lxXVKFC8m08ibyOuxN2joDxXZqhu0C7ikc
-         rxFPKlL7kEwE6A3FUff5c+IXuEKoYubQaSUveKZI2XdhLk8IXzLSrSl4Cd050vIUtwtS
-         CNVQ==
-X-Gm-Message-State: ACgBeo3Ka5SwDXsp7cuU6GcvjS2yAgi+44JklD0KcmfNoamv53obE1DU
-        MUzbOUwRaJF+XUOnOp/ngkc=
-X-Google-Smtp-Source: AA6agR7910jJYlqe3TZfvHUVZgv+fmphnIYN1AodjvnttqwzLvit7aA1J2x+cYHcPm8RpZXqvfdl2w==
-X-Received: by 2002:a17:907:6daa:b0:730:8ef6:9c6b with SMTP id sb42-20020a1709076daa00b007308ef69c6bmr4581492ejc.6.1659409594229;
-        Mon, 01 Aug 2022 20:06:34 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id v22-20020aa7dbd6000000b0043d06d80d27sm6955545edt.86.2022.08.01.20.06.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Aug 2022 20:06:33 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oIiEq-009Bs6-2p;
-        Tue, 02 Aug 2022 05:06:32 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com,
-        johannes.schindelin@gmx.de, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH 0/7] Generalize 'scalar diagnose' into 'git bugreport
- --diagnose'
-Date:   Tue, 02 Aug 2022 04:49:15 +0200
-References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
-Message-ID: <220802.867d3rgx8n.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229455AbiHBENK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Aug 2022 00:13:10 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AE8D18B16
+        for <git@vger.kernel.org>; Mon,  1 Aug 2022 21:13:09 -0700 (PDT)
+Received: (qmail 1813 invoked by uid 109); 2 Aug 2022 04:13:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 Aug 2022 04:13:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28101 invoked by uid 111); 2 Aug 2022 04:13:09 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Aug 2022 00:13:09 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 2 Aug 2022 00:13:07 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [RFC/PATCH] pipe_command(): mark stdin descriptor as non-blocking
+Message-ID: <YuikU//9OrdpKQcE@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Our pipe_command() helper lets you both write to and read from a child
+process on its stdin/stdout. It's supposed to work without deadlocks
+because we use poll() to check when descriptors are ready for reading or
+writing. But there's a bug: if both the data to be written and the data
+to be read back exceed the pipe buffer, we'll deadlock.
 
-On Mon, Aug 01 2022, Victoria Dye via GitGitGadget wrote:
+The issue is that the code assumes that if you have, say, a 2MB buffer
+to write and poll() tells you that the pipe descriptor is ready for
+writing, that calling:
 
-> [...] I didn't see a major UX benefit of 'git diagnose' vs 'git
-> bugreport --diagnose', so I went with the latter, simpler approach.
+  write(cmd->in, buf, 2*1024*1024);
 
-I really wanted to like this, but I find the end result here really
-confusing from a UX perspective.
+will do a partial write, filling the pipe buffer and then returning what
+it did write. And that is what it would do on a socket, but not for a
+pipe. When writing to a pipe, at least on Linux, it will block waiting
+for the child process to read() more. And now we have a potential
+deadlock, because the child may be writing back to us, waiting for us to
+read() ourselves.
 
-You can now run "git bugreport --diagnose", which creates a giant *.zip
-file to go along with your *.txt, but your *.txt makes no reference to
-it.
+An easy way to trigger this is:
 
-Should you ... attach it to your bug report to this mailing list, do
-something else?
+  git -c add.interactive.useBuiltin=true \
+      -c interactive.diffFilter=cat \
+      checkout -p HEAD~200
 
-The documentation doesn't offer much in the way of hints, other than
-suggesting (with --no-report) that this --diagnose is for something
-entirely different (and that's how "scalar" uses it).
+The diff against HEAD~200 will be big, and the filter wants to write all
+of it back to us (obviously this is a dummy filter, but in the real
+world something like diff-highlight would similarly stream back a big
+output).
 
-I know what it's really for after reading this series, but for "git
-bugreport" in particular we should be really careful about not making
-the UX confusing.
+If you set add.interactive.useBuiltin to false, the problem goes away,
+because now we're not using pipe_command() anymore (instead, that part
+happens in perl). But this isn't a bug in the interactive code at all.
+It's the underlying pipe_command() code which is broken, and has been
+all along.
 
-The generated *.zip contains some really deep info about your repo (and
-not just metadata, e.g. copies of the index, various logs etc.), someone
-e.g. in a proprietary setting really doesn't want to be sharing that
-info.
+We presumably didn't notice because most calls only do input _or_
+output, not both. And the few that do both, like gpg calls, may have
+large inputs or outputs, but never both at the same time (e.g., consider
+signing, which has a large payload but a small signature comes back).
 
-So I would like to see real integration into "git bugreport", i.e. for
-us to smartly report more repository metrics, e.g. approx number of
-loose objects, the sort of state "__git_ps1" might report, etc.
+The obvious fix is to put the descriptor into non-blocking mode, and
+indeed, that makes the problem go away. Callers shouldn't need to
+care, because they never see the descriptor (they hand us a buffer to
+feed into it).
 
-But I think the end-state here makes things much more confusing for
-users.
+Signed-off-by: Jeff King <peff@peff.net>
+---
++cc Dscho for two reasons:
 
-> An alternative implementation considered was creating a new 'git diagnose'
-> builtin, but the new command would end up duplicating much of
-> 'builtin/bugreport.c'.
+  - this is a fallout of the builtin add-interactive, though I again
+    emphasize that it's just triggering a lurking bug (which is mine, no
+    less!). But I thought you'd want to know.
 
-It seems we always "return" from cmd_bugreport() quite quickly, and we
-basically only share the code to create the output directory. Just
-duplicating or sharing that seems like a much better approach for now
-than creating the above UX confusion.
+  - more importantly, I'm not sure of the portability implications of
+    the fix. This is our first use of O_NONBLOCK outside of the
+    compat/simple-ipc unix-socket code. Do we need to abstract this
+    behind a compat/ layer for Windows?
 
-Note that you can also share code between multiple built-ins, even in
-the same file (see e.g. builtin/{checkout,log}.c). So we could even
-share something like the safe_create_leading_directories() calling code
-in bugreport.c without libifying it.
+ run-command.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-> Finally, despite 'scalar diagnose' now being nothing more than a wrapper for
-> 'git bugreport --diagnose', it is not being deprecated in this series.
-> Although deprecation -> removal could be a future cleanup effort, 'scalar
-> diagnose' is kept around for now as an alias for users already accustomed to
-> using it in 'scalar'.
-
-We don't have a "make install" to get a "scalar" onto user's systems
-yet, do we really need to worry about those users?
-
-Or is this a reference to the out-of-tree version of "scalar", not
-git.git's?
+diff --git a/run-command.c b/run-command.c
+index 14f17830f5..45bffb4b11 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1418,6 +1418,14 @@ static int pump_io(struct io_pump *slots, int nr)
+ 	return 0;
+ }
+ 
++static int make_nonblock(int fd)
++{
++	int flags = fcntl(fd, F_GETFL);
++	if (flags < 0)
++		return -1;
++	flags |= O_NONBLOCK;
++	return fcntl(fd, F_SETFL, flags);
++}
+ 
+ int pipe_command(struct child_process *cmd,
+ 		 const char *in, size_t in_len,
+@@ -1438,6 +1446,15 @@ int pipe_command(struct child_process *cmd,
+ 		return -1;
+ 
+ 	if (in) {
++		if (make_nonblock(cmd->in) < 0) {
++			error_errno("unable to make pipe non-blocking");
++			close(cmd->in);
++			if (out)
++				close(cmd->out);
++			if (err)
++				close(cmd->err);
++			return -1;
++		}
+ 		io[nr].fd = cmd->in;
+ 		io[nr].type = POLLOUT;
+ 		io[nr].u.out.buf = in;
+-- 
+2.37.1.804.g1775fa20e0
 
