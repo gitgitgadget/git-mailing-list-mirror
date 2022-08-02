@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AED05C00140
-	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 12:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DD8DC19F28
+	for <git@archiver.kernel.org>; Tue,  2 Aug 2022 12:58:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237072AbiHBM60 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 08:58:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41834 "EHLO
+        id S236922AbiHBM62 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Aug 2022 08:58:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236922AbiHBM6G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Aug 2022 08:58:06 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80B4713F7E
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 05:58:04 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id v131-20020a1cac89000000b003a4bb3f786bso3093906wme.0
-        for <git@vger.kernel.org>; Tue, 02 Aug 2022 05:58:04 -0700 (PDT)
+        with ESMTP id S236925AbiHBM6H (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Aug 2022 08:58:07 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EB4D1580D
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 05:58:05 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id c187-20020a1c35c4000000b003a30d88fe8eso8826661wma.2
+        for <git@vger.kernel.org>; Tue, 02 Aug 2022 05:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=pn4Kkw/YXRvm5telW43jXewUlFnRC0QP86Q/TkA6zhY=;
-        b=FqvBkBfL+LXkDyn9yHaSfR/OkFvFvXpF6ye8c5LlwZKFTdYxAkC1FqJlfLdPSwLux3
-         JPDpL/bHKeAACid2sqTQbqo8T3VdShFS6Rq52iwHHGSPiR0U60ubvoF3HhYjKBclJgGP
-         G/qN2yd2+8mOMxFesTb0ancBcI1tPBpTP9FhQ91VlJtMxwc7UsLPXiDK55C7MIiS5F3t
-         xZwL4o4lScfs19d6z91Lsl/I5CbAmCb45/lHJ2hgd9lVgKNOjqD7GqzEu/u6LDWgUbol
-         MIVI1ZZ3lK+T7zMsBbQjJ+HZb/EZS+eq1FYj7SI7Mn7RJO1OnS48o2dkqKqea6+9uLTj
-         KUrQ==
+        bh=3dW+1xKlLvLlxKzgr/tHaHDb5MZPl4oe9nowe2+kGoc=;
+        b=UmwjWo0l5HOxI6oUmckeDW8b2cys/LNSeA+U/7B0ayxFGhZyspJ76mahviuFC7FD5l
+         Dhg4w3+HAejRMpqjYhq65djMNHAZBuh9yoK29W94cPbM8aFNjCpoAQruZlvZdtvDmele
+         r9b3ThLXQbQf9vZRBukDDmKrVyWyK374L9rB8iw1WRLGgS3HgzjaVFD68uvyTZsWXbc2
+         n8Z4B+Yr14WOTfITwZ1Njox9PXiems5CCkuHLBkQ2xmtokeLt27UIfHi2HP+4bKAni/L
+         i2bAXQR4bsWLzl+XSJhWvJAKNZK1iBofBggWmlXdzrh2sG2kSr8/swbgNB1ETDJrWd4I
+         TSig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=pn4Kkw/YXRvm5telW43jXewUlFnRC0QP86Q/TkA6zhY=;
-        b=jNpgw0Po+eNjgwVF9FdPB1cch/M+u5f+2imCpI5mZvoH7gluLfWizKVYGfqpE1deTh
-         K1D7PLVqM26Mt6OnhBPM0MWnEmIOMSsY1ksQbPvUhZE4eoq0CoVosZ43FrZyM31gSWut
-         k01xwB9XWD5LtFf8Cw/N4ZEJy9NGBFCH2hNf37ehgls4mZ43x99FmZLMO+42TOjdMOXV
-         UjhbrQNL4OQD6bdJu5g4EtqoK7bIH3mnbCgbUD7e+PA4rxFA8B+ze0l9ZXzmszNDbHfP
-         rivZX/ThWGrV9TKHzpZN8KoXmkLch6Jvf6mCtI4On6cgpGCxnOOkRqIjJDvS+0aBZ5/l
-         /NwA==
-X-Gm-Message-State: AJIora/wqvFxB1NGTc2mcnrNHcxCv9TS/h8rwctqk9T4xfNTkCcF/pl1
-        kk7mD3SQJcSh9jgH+JdB0x4x1/Xf/lzc5w==
-X-Google-Smtp-Source: AGRyM1stIV/Tg5ZkcHtLA4wrK56o5C2fDlDtEvBA8d/x4MRpppTuGdjfhT0H9nYb0buATehBqJq7Kg==
-X-Received: by 2002:a05:600c:1987:b0:3a3:2db1:d35b with SMTP id t7-20020a05600c198700b003a32db1d35bmr13271445wmq.14.1659445082711;
-        Tue, 02 Aug 2022 05:58:02 -0700 (PDT)
+        bh=3dW+1xKlLvLlxKzgr/tHaHDb5MZPl4oe9nowe2+kGoc=;
+        b=AGBN4aYZa/BDPeahdXwjMxIBoDPScvNiWTY1PLxWdeoYSaZLc/nr0AzVybbklMbxbf
+         u/FGwjE3c5jQdlXDK6U17G8UJwRs8MHCW7Jtw3soQrLcaW3FpW50VjHEvCn6jfNPiL+3
+         cNAXFA4qujI+dEzG5YX8YFofUcoGB/GVhO/Hbcx4SjAHt+r/5CHnzS9F4c15ykMYUiQb
+         D6Sdo99xu2SH71C5w8wmpDLeceFa06tTvwq/yNuni10YiJNvxg9691xek3pP+MombuJQ
+         vHuNPDk85l0EsFEb21Jd3aSC/WBPxkvsE9Ol52rDRr50vPGXzZtDxyiE9VOA92HBtInl
+         qYWQ==
+X-Gm-Message-State: AJIora/JBYO5zVFi0GKohaJ9JORIdlijODLKkzN2SqWPgqYq5IJX9lLY
+        uw3060J+NxFvHIuXOpzsB3yZzbaCkgaDyQ==
+X-Google-Smtp-Source: AGRyM1tac7lc7LcbA+WfS00QJzKPjl6gojTAHr48bK0NT8rhoJZIblZSY2PNglmB48MrrKKEHQNL0w==
+X-Received: by 2002:a05:600c:5114:b0:3a3:3f7f:27ec with SMTP id o20-20020a05600c511400b003a33f7f27ecmr13701354wms.93.1659445083762;
+        Tue, 02 Aug 2022 05:58:03 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id t4-20020adfeb84000000b0021e45afa7b0sm15056145wrn.109.2022.08.02.05.58.01
+        by smtp.gmail.com with ESMTPSA id t4-20020adfeb84000000b0021e45afa7b0sm15056145wrn.109.2022.08.02.05.58.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Aug 2022 05:58:02 -0700 (PDT)
+        Tue, 02 Aug 2022 05:58:03 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Teng Long <dyroneteng@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v7 04/10] git docs: add a category for user-facing file, repo and command UX
-Date:   Tue,  2 Aug 2022 14:56:53 +0200
-Message-Id: <patch-v7-04.10-8e9384a92f2-20220802T125258Z-avarab@gmail.com>
+Subject: [PATCH v7 05/10] git docs: add a category for file formats, protocols and interfaces
+Date:   Tue,  2 Aug 2022 14:56:54 +0200
+Message-Id: <patch-v7-05.10-4367c1e7f50-20220802T125258Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1232.gc0cde427aa7
 In-Reply-To: <cover-v7-00.10-00000000000-20220802T125258Z-avarab@gmail.com>
 References: <cover-v6-0.9-00000000000-20220728T164243Z-avarab@gmail.com> <cover-v7-00.10-00000000000-20220802T125258Z-avarab@gmail.com>
@@ -71,238 +71,343 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a new "Repository, command and file interfaces" section in the
-main "git help git" manual page. Move things that belong under this
-new criteria from the generic "Guides" section.
+Create a new "File formats, protocols and other developer interfaces"
+section in the main "git help git" manual page and start moving the
+documentation that now lives in "Documentation/technical/*.git" over
+to it. This complements the newly added and adjacent "Repository,
+command and file interfaces" section.
 
-The "Guides" section was added in f442f28a81b (git.txt: add list of
-guides, 2020-08-05). It makes sense to have e.g. "giteveryday(7)" and
-"gitfaq(7)" listed under "Guides".
+This makes the technical documentation more accessible and
+discoverable. Before this we wouldn't install it by default, and had
+no ability to build man page versions of them. The links to them from
+our existing documentation link to the generated HTML version of these
+docs.
 
-But placing e.g. "gitignore(5)" in it is stretching the meaning of
-what a "guide" is, ideally that section should list things similar to
-"giteveryday(7)" and "gitcore-tutorial(7)".
+So let's start moving those over, starting with just the
+"bundle-format.txt" documentation added in 7378ec90e1c (doc: describe
+Git bundle format, 2020-02-07). We'll now have a new
+gitformat-bundle(5) man page. Subsequent commits will move more git
+internal format documentation over.
 
-An alternate name that was considered for this new section was "User
-formats", for consistency with the nomenclature used for man section 5
-in general. My man(1) lists it as "File formats and conventions,
-e.g. /etc/passwd".
-
-So calling this "git help --formats" or "git help --user-formats"
-would make sense for e.g. gitignore(5), but would be stretching it
-somewhat for githooks(5), and would seem really suspect for the likes
-of gitcli(7).
-
-Let's instead pick a name that's closer to the generic term "User
-interface", which is really what this documentation discusses: General
-user-interface documentation that doesn't obviously belong elsewhere.
+Unfortunately the syntax of the current Documentation/technical/*.txt
+is not the same (when it comes to section headings etc.) as our
+Documentation/*.txt documentation, so change the relevant bits of
+syntax as we're moving this over.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/Makefile     |  1 +
- Documentation/git-help.txt | 14 ++++++++++++++
- Documentation/git.txt      |  8 ++++++++
- Makefile                   |  1 +
- builtin/help.c             |  9 +++++++++
- command-list.txt           | 21 +++++++++++++--------
- help.c                     | 12 ++++++++++++
- help.h                     |  1 +
- t/t0012-help.sh            | 12 +++++++++++-
- 9 files changed, 70 insertions(+), 9 deletions(-)
+ Documentation/Makefile                        |  3 +-
+ Documentation/git-bundle.txt                  | 14 +++---
+ Documentation/git-help.txt                    |  5 +++
+ Documentation/git.txt                         |  9 ++++
+ ...bundle-format.txt => gitformat-bundle.txt} | 44 ++++++++++++++++---
+ Documentation/lint-man-section-order.perl     |  3 ++
+ builtin/help.c                                |  9 ++++
+ command-list.txt                              |  5 +++
+ help.c                                        | 12 +++++
+ help.h                                        |  1 +
+ t/t0012-help.sh                               |  2 +
+ 11 files changed, 94 insertions(+), 13 deletions(-)
+ rename Documentation/{technical/bundle-format.txt => gitformat-bundle.txt} (79%)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 4f801f4e4c9..28eb940a9b8 100644
+index 28eb940a9b8..1a4a545f44a 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
+@@ -24,6 +24,7 @@ MAN1_TXT += gitweb.txt
+ 
+ # man5 / man7 guides (note: new guides should also be added to command-list.txt)
+ MAN5_TXT += gitattributes.txt
++MAN5_TXT += gitformat-bundle.txt
+ MAN5_TXT += githooks.txt
+ MAN5_TXT += gitignore.txt
+ MAN5_TXT += gitmailmap.txt
+@@ -95,7 +96,6 @@ TECH_DOCS += MyFirstObjectWalk
+ TECH_DOCS += SubmittingPatches
+ TECH_DOCS += ToolsForGit
+ TECH_DOCS += technical/bitmap-format
+-TECH_DOCS += technical/bundle-format
+ TECH_DOCS += technical/cruft-packs
+ TECH_DOCS += technical/hash-function-transition
+ TECH_DOCS += technical/http-protocol
 @@ -290,6 +290,7 @@ cmds_txt = cmds-ancillaryinterrogators.txt \
  	cmds-synchingrepositories.txt \
  	cmds-synchelpers.txt \
  	cmds-guide.txt \
-+	cmds-userinterfaces.txt \
++	cmds-developerinterfaces.txt \
+ 	cmds-userinterfaces.txt \
  	cmds-purehelpers.txt \
  	cmds-foreignscminterface.txt
+diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
+index 7685b570455..f0b1282b918 100644
+--- a/Documentation/git-bundle.txt
++++ b/Documentation/git-bundle.txt
+@@ -56,10 +56,9 @@ using "thin packs", bundles created using exclusions are smaller in
+ size. That they're "thin" under the hood is merely noted here as a
+ curiosity, and as a reference to other documentation.
  
+-See link:technical/bundle-format.html[the `bundle-format`
+-documentation] for more details and the discussion of "thin pack" in
+-link:technical/pack-format.html[the pack format documentation] for
+-further details.
++See linkgit:gitformat-bundle[5] for more details and the discussion of
++"thin pack" in link:technical/pack-format.html[the pack format
++documentation] for further details.
+ 
+ OPTIONS
+ -------
+@@ -77,7 +76,7 @@ verify <file>::
+ 	commits exist and are fully linked in the current repository.
+ 	Then, 'git bundle' prints a list of missing commits, if any.
+ 	Finally, information about additional capabilities, such as "object
+-	filter", is printed. See "Capabilities" in link:technical/bundle-format.html
++	filter", is printed. See "Capabilities" in linkgit:gitformat-bundle[5]
+ 	for more information. The exit code is zero for success, but will
+ 	be nonzero if the bundle file is invalid.
+ 
+@@ -337,6 +336,11 @@ You can also see what references it offers:
+ $ git ls-remote mybundle
+ ----------------
+ 
++FILE FORMAT
++-----------
++
++See linkgit:gitformat-bundle[5].
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index bead763fd29..4eb03bd6c38 100644
+index 4eb03bd6c38..2b0b5e390dc 100644
 --- a/Documentation/git-help.txt
 +++ b/Documentation/git-help.txt
-@@ -12,6 +12,7 @@ SYNOPSIS
- 'git help' [[-i|--info] [-m|--man] [-w|--web]] [<command>|<doc>]
+@@ -13,6 +13,7 @@ SYNOPSIS
  'git help' [-g|--guides]
  'git help' [-c|--config]
-+'git help' [--user-interfaces]
+ 'git help' [--user-interfaces]
++'git help' [--developer-interfaces]
  
  DESCRIPTION
  -----------
-@@ -69,6 +70,19 @@ OPTIONS
- --guides::
- 	Prints a list of the Git concept guides on the standard output.
+@@ -83,6 +84,10 @@ user-interface conventions (e.g. linkgit:gitcli[7]), and
+ pseudo-configuration such as the file-based `.git/hooks/*` interface
+ described in linkgit:githooks[5].
  
-+--user-interfaces::
-+	Prints a list of the repository, command and file interfaces
-+	documentation on the standard output.
-++
-+In-repository file interfaces such as `.git/info/exclude` are
-+documented here (see linkgit:gitrepository-layout[5]), as well as
-+in-tree configuration such as `.mailmap` (see linkgit:gitmailmap[5]).
-++
-+This section of the documentation also covers general or widespread
-+user-interface conventions (e.g. linkgit:gitcli[7]), and
-+pseudo-configuration such as the file-based `.git/hooks/*` interface
-+described in linkgit:githooks[5].
++--developer-interfaces::
++	Print list of file formats, protocols and other developer
++	interfaces documentation on the standard output.
 +
  -i::
  --info::
  	Display manual page for the command in the 'info' format. The
 diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 47a6095ff40..945a1ebd3b1 100644
+index 945a1ebd3b1..0ef7f5e4ece 100644
 --- a/Documentation/git.txt
 +++ b/Documentation/git.txt
-@@ -339,6 +339,14 @@ The following documentation pages are guides about Git concepts.
+@@ -348,6 +348,15 @@ linkgit:git-help[1] for more details on the critera.
  
- include::cmds-guide.txt[]
+ include::cmds-userinterfaces.txt[]
  
-+Repository, command and file interfaces
-+---------------------------------------
++File formats, protocols and other developer interfaces
++------------------------------------------------------
 +
-+This documentation discusses repository and command interfaces which
-+users are expected to interact with directly. See `--user-formats` in
-+linkgit:git-help[1] for more details on the critera.
++This documentation discusses file formats, over-the-wire protocols and
++other git developer interfaces. See `--developer-interfaces` in
++linkgit:git-help[1].
 +
-+include::cmds-userinterfaces.txt[]
- 
++include::cmds-developerinterfaces.txt[]
++
  Configuration Mechanism
  -----------------------
-diff --git a/Makefile b/Makefile
-index 1624471badc..ea0ef7df734 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3532,6 +3532,7 @@ check-docs::
- 		sed -e '1,/^### command list/d' \
- 		    -e '/^#/d' \
- 		    -e '/guide$$/d' \
-+		    -e '/interfaces$$/d' \
- 		    -e 's/[ 	].*//' \
- 		    -e 's/^/listed /' command-list.txt; \
- 		$(MAKE) -C Documentation print-man1 | \
+ 
+diff --git a/Documentation/technical/bundle-format.txt b/Documentation/gitformat-bundle.txt
+similarity index 79%
+rename from Documentation/technical/bundle-format.txt
+rename to Documentation/gitformat-bundle.txt
+index b9be8644cf5..6a9d9e5bf6f 100644
+--- a/Documentation/technical/bundle-format.txt
++++ b/Documentation/gitformat-bundle.txt
+@@ -1,11 +1,33 @@
+-= Git bundle v2 format
++gitformat-bundle(5)
++===================
+ 
+-The Git bundle format is a format that represents both refs and Git objects.
++NAME
++----
++gitformat-bundle - The bundle file format
++
++
++SYNOPSIS
++--------
++[verse]
++*.bundle
++*.bdl
++
++DESCRIPTION
++-----------
++
++The Git bundle format is a format that represents both refs and Git
++objects. A bundle is a header in a format similar to
++linkgit:git-show-ref[1] followed by a pack in *.pack format.
+ 
+-== Format
++The format is created and read by the linkgit:git-bundle[1] command,
++and supported by e.g. linkgit:git-fetch[1] and linkgit:git-clone[1].
++
++
++FORMAT
++------
+ 
+ We will use ABNF notation to define the Git bundle format. See
+-protocol-common.txt for the details.
++link:technical/protocol-common.html for the details.
+ 
+ A v2 bundle looks like this:
+ 
+@@ -36,7 +58,9 @@ value        = *(%01-09 / %0b-FF)
+ pack         = ... ; packfile
+ ----
+ 
+-== Semantics
++
++SEMANTICS
++---------
+ 
+ A Git bundle consists of several parts.
+ 
+@@ -62,13 +86,15 @@ In the bundle format, there can be a comment following a prerequisite obj-id.
+ This is a comment and it has no specific meaning. The writer of the bundle MAY
+ put any string here. The reader of the bundle MUST ignore the comment.
+ 
+-=== Note on the shallow clone and a Git bundle
++Note on the shallow clone and a Git bundle
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ Note that the prerequisites does not represent a shallow-clone boundary. The
+ semantics of the prerequisites and the shallow-clone boundaries are different,
+ and the Git bundle v2 format cannot represent a shallow clone repository.
+ 
+-== Capabilities
++CAPABILITIES
++------------
+ 
+ Because there is no opportunity for negotiation, unknown capabilities cause 'git
+ bundle' to abort.
+@@ -79,3 +105,7 @@ bundle' to abort.
+ * `filter` specifies an object filter as in the `--filter` option in
+   linkgit:git-rev-list[1]. The resulting pack-file must be marked as a
+   `.promisor` pack-file after it is unbundled.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/lint-man-section-order.perl b/Documentation/lint-man-section-order.perl
+index 425377dfeb7..02408a0062f 100755
+--- a/Documentation/lint-man-section-order.perl
++++ b/Documentation/lint-man-section-order.perl
+@@ -32,6 +32,9 @@
+ 		'SEE ALSO' => {
+ 			order => $order++,
+ 		},
++		'FILE FORMAT' => {
++			order => $order++,
++		},
+ 		'GIT' => {
+ 			required => 1,
+ 			order => $order++,
 diff --git a/builtin/help.c b/builtin/help.c
-index dec82d1be27..1ab1c8a0dd7 100644
+index 1ab1c8a0dd7..09ac4289f13 100644
 --- a/builtin/help.c
 +++ b/builtin/help.c
-@@ -43,6 +43,7 @@ static enum help_action {
- 	HELP_ACTION_ALL = 1,
+@@ -44,6 +44,7 @@ static enum help_action {
  	HELP_ACTION_GUIDES,
  	HELP_ACTION_CONFIG,
-+	HELP_ACTION_USER_INTERFACES,
+ 	HELP_ACTION_USER_INTERFACES,
++	HELP_ACTION_DEVELOPER_INTERFACES,
  	HELP_ACTION_CONFIG_FOR_COMPLETION,
  	HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION,
  } cmd_mode;
-@@ -69,6 +70,9 @@ static struct option builtin_help_options[] = {
- 
- 	OPT_CMDMODE('g', "guides", &cmd_mode, N_("print list of useful guides"),
- 		    HELP_ACTION_GUIDES),
-+	OPT_CMDMODE(0, "user-interfaces", &cmd_mode,
-+		    N_("print list of user-facing repository, command and file interfaces"),
-+		    HELP_ACTION_USER_INTERFACES),
+@@ -73,6 +74,9 @@ static struct option builtin_help_options[] = {
+ 	OPT_CMDMODE(0, "user-interfaces", &cmd_mode,
+ 		    N_("print list of user-facing repository, command and file interfaces"),
+ 		    HELP_ACTION_USER_INTERFACES),
++	OPT_CMDMODE(0, "developer-interfaces", &cmd_mode,
++		    N_("print list of file formats, protocols and other developer interfaces"),
++		    HELP_ACTION_DEVELOPER_INTERFACES),
  	OPT_CMDMODE('c', "config", &cmd_mode, N_("print all configuration variable names"),
  		    HELP_ACTION_CONFIG),
  	OPT_CMDMODE_F(0, "config-for-completion", &cmd_mode, "",
-@@ -84,6 +88,7 @@ static const char * const builtin_help_usage[] = {
- 	N_("git help [[-i|--info] [-m|--man] [-w|--web]] [<command>|<doc>]"),
+@@ -89,6 +93,7 @@ static const char * const builtin_help_usage[] = {
  	"git help [-g|--guides]",
  	"git help [-c|--config]",
-+	"git help [--user-interfaces]",
+ 	"git help [--user-interfaces]",
++	"git help [--developer-interfaces]",
  	NULL
  };
  
-@@ -654,6 +659,10 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 		opt_mode_usage(argc, "--config-for-completion", help_format);
- 		list_config_help(SHOW_CONFIG_VARS);
+@@ -663,6 +668,10 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 		opt_mode_usage(argc, "--user-interfaces", help_format);
+ 		list_user_interfaces_help();
  		return 0;
-+	case HELP_ACTION_USER_INTERFACES:
-+		opt_mode_usage(argc, "--user-interfaces", help_format);
-+		list_user_interfaces_help();
++	case HELP_ACTION_DEVELOPER_INTERFACES:
++		opt_mode_usage(argc, "--developer-interfaces", help_format);
++		list_developer_interfaces_help();
 +		return 0;
  	case HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION:
  		opt_mode_usage(argc, "--config-sections-for-completion",
  			       help_format);
 diff --git a/command-list.txt b/command-list.txt
-index 9bd6f3c48f4..1d45303e14c 100644
+index 1d45303e14c..1950c4ccd9c 100644
 --- a/command-list.txt
 +++ b/command-list.txt
-@@ -43,6 +43,11 @@
- # specified here, which can only have "guide" attribute and nothing
- # else.
+@@ -48,6 +48,10 @@
+ # sections 5 and 7. These entries can only have the "userinterfaces"
+ # attribute and nothing else.
  #
-+# User-facing repository, command and file interfaces such as
-+# documentation for the .gitmodules, .mailmap etc. files lives in man
-+# sections 5 and 7. These entries can only have the "userinterfaces"
-+# attribute and nothing else.
++# Git's file formats and protocols, such as documentation for the
++# *.bundle format lives in man section 5. These entries can only have
++# the "developerinterfaces" attribute and nothing else.
 +#
  ### command list (do not change this line)
  # command name                          category [category] [category]
  git-add                                 mainporcelain           worktree
-@@ -192,8 +197,8 @@ git-verify-tag                          ancillaryinterrogators
- git-whatchanged                         ancillaryinterrogators          complete
- git-worktree                            mainporcelain
- git-write-tree                          plumbingmanipulators
--gitattributes                           guide
--gitcli                                  guide
-+gitattributes                           userinterfaces
-+gitcli                                  userinterfaces
- gitcore-tutorial                        guide
- gitcredentials                          guide
- gitcvs-migration                        guide
-@@ -201,15 +206,15 @@ gitdiffcore                             guide
+@@ -205,6 +209,7 @@ gitcvs-migration                        guide
+ gitdiffcore                             guide
  giteveryday                             guide
  gitfaq                                  guide
++gitformat-bundle                        developerinterfaces
  gitglossary                             guide
--githooks                                guide
--gitignore                               guide
-+githooks                                userinterfaces
-+gitignore                               userinterfaces
- gitk                                    mainporcelain
--gitmailmap                              guide
--gitmodules                              guide
-+gitmailmap                              userinterfaces
-+gitmodules                              userinterfaces
- gitnamespaces                           guide
- gitremote-helpers                       guide
--gitrepository-layout                    guide
--gitrevisions                            guide
-+gitrepository-layout                    userinterfaces
-+gitrevisions                            userinterfaces
- gitsubmodules                           guide
- gittutorial                             guide
- gittutorial-2                           guide
+ githooks                                userinterfaces
+ gitignore                               userinterfaces
 diff --git a/help.c b/help.c
-index 8a09f18a3d9..3e2a78863b7 100644
+index 3e2a78863b7..991e33f8a6e 100644
 --- a/help.c
 +++ b/help.c
-@@ -38,6 +38,7 @@ static struct category_description main_categories[] = {
- 	{ CAT_plumbinginterrogators, N_("Low-level Commands / Interrogators") },
+@@ -39,6 +39,7 @@ static struct category_description main_categories[] = {
  	{ CAT_synchingrepositories, N_("Low-level Commands / Syncing Repositories") },
  	{ CAT_purehelpers, N_("Low-level Commands / Internal Helpers") },
-+	{ CAT_userinterfaces, N_("User-facing repository, command and file interfaces") },
+ 	{ CAT_userinterfaces, N_("User-facing repository, command and file interfaces") },
++	{ CAT_developerinterfaces, N_("Developer-facing file file formats, protocols and interfaces") },
  	{ 0, NULL }
  };
  
-@@ -48,6 +49,7 @@ static const char *drop_prefix(const char *name, uint32_t category)
- 
+@@ -50,6 +51,7 @@ static const char *drop_prefix(const char *name, uint32_t category)
  	switch (category) {
  	case CAT_guide:
-+	case CAT_userinterfaces:
+ 	case CAT_userinterfaces:
++	case CAT_developerinterfaces:
  		prefix = "git";
  		break;
  	default:
-@@ -433,6 +435,16 @@ void list_guides_help(void)
+@@ -445,6 +447,16 @@ void list_user_interfaces_help(void)
  	putchar('\n');
  }
  
-+void list_user_interfaces_help(void)
++void list_developer_interfaces_help(void)
 +{
 +	struct category_description catdesc[] = {
-+		{ CAT_userinterfaces, N_("User-facing repository, command and file interfaces:") },
++		{ CAT_developerinterfaces, N_("File formats, protocols and other developer interfaces:") },
 +		{ 0, NULL }
 +	};
 +	print_cmd_by_category(catdesc, NULL);
@@ -313,60 +418,27 @@ index 8a09f18a3d9..3e2a78863b7 100644
  {
  	struct string_list *list = data;
 diff --git a/help.h b/help.h
-index 971a3ad855a..243104c27a7 100644
+index 243104c27a7..af073a7a026 100644
 --- a/help.h
 +++ b/help.h
-@@ -22,6 +22,7 @@ static inline void mput_char(char c, unsigned int num)
- void list_common_cmds_help(void);
+@@ -23,6 +23,7 @@ void list_common_cmds_help(void);
  void list_all_cmds_help(int show_external_commands, int show_aliases);
  void list_guides_help(void);
-+void list_user_interfaces_help(void);
+ void list_user_interfaces_help(void);
++void list_developer_interfaces_help(void);
  
  void list_all_main_cmds(struct string_list *list);
  void list_all_other_cmds(struct string_list *list);
 diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index 6c33a436901..bee5ed12203 100755
+index bee5ed12203..4ed2f242eb2 100755
 --- a/t/t0012-help.sh
 +++ b/t/t0012-help.sh
-@@ -44,6 +44,8 @@ test_expect_success 'invalid usage' '
- 	test_expect_code 129 git help -g add &&
- 	test_expect_code 129 git help -a -g &&
- 
-+	test_expect_code 129 git help --user-interfaces add &&
-+
- 	test_expect_code 129 git help -g -c &&
- 	test_expect_code 129 git help --config-for-completion add &&
- 	test_expect_code 129 git help --config-sections-for-completion add
-@@ -104,9 +106,9 @@ test_expect_success 'git help' '
- 	test_i18ngrep "^   commit " help.output &&
- 	test_i18ngrep "^   fetch  " help.output
- '
-+
- test_expect_success 'git help -g' '
- 	git help -g >help.output &&
--	test_i18ngrep "^   attributes " help.output &&
- 	test_i18ngrep "^   everyday   " help.output &&
- 	test_i18ngrep "^   tutorial   " help.output
- '
-@@ -127,6 +129,12 @@ test_expect_success 'git help succeeds without git.html' '
- 	test_cmp expect test-browser.log
- '
- 
-+test_expect_success 'git help --user-interfaces' '
-+	git help --user-interfaces >help.output &&
-+	grep "^   attributes   " help.output &&
-+	grep "^   mailmap   " help.output
-+'
-+
- test_expect_success 'git help -c' '
- 	git help -c >help.output &&
- 	cat >expect <<-\EOF &&
-@@ -220,6 +228,8 @@ test_expect_success "'git help -a' section spacing" '
- 	Low-level Commands / Syncing Repositories
- 
+@@ -230,6 +230,8 @@ test_expect_success "'git help -a' section spacing" '
  	Low-level Commands / Internal Helpers
+ 
+ 	User-facing repository, command and file interfaces
 +
-+	User-facing repository, command and file interfaces
++	Developer-facing file file formats, protocols and interfaces
  	EOF
  	test_cmp expect actual
  '
