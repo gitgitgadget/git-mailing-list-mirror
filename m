@@ -2,103 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 527F5C19F29
-	for <git@archiver.kernel.org>; Wed,  3 Aug 2022 15:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95AE5C19F2C
+	for <git@archiver.kernel.org>; Wed,  3 Aug 2022 16:17:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236604AbiHCPzq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Aug 2022 11:55:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50072 "EHLO
+        id S236494AbiHCQRn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Aug 2022 12:17:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238176AbiHCPzT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Aug 2022 11:55:19 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1ABF56B8B
-        for <git@vger.kernel.org>; Wed,  3 Aug 2022 08:53:38 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 316D71A869C;
-        Wed,  3 Aug 2022 11:53:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=hNKrO+BEoku3
-        LQPBLUvK57UloRh1CsaH87yF67Sueo8=; b=qdzAieEGkxQ0atrFkjL80tAjLY2Z
-        MOmZdQVWMf9IUDBldc3MW0YKG333XN9FJXyRNSXLZrRafNRD/bm3kFjlnfFaVmg4
-        1G3oj3AAtIXCKM3NbnTEhj9Otd154cZ+YvwYk9CN5fpU7osHy5BCak0qhwfESLqt
-        vvGw9uAjZKIsaV4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 16D5C1A869B;
-        Wed,  3 Aug 2022 11:53:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 965351A869A;
-        Wed,  3 Aug 2022 11:53:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Teng Long <dyroneteng@gmail.com>
-Subject: Re: [PATCH v7 07/10] docs: move protocol-related docs to man section 5
-References: <cover-v6-0.9-00000000000-20220728T164243Z-avarab@gmail.com>
-        <cover-v7-00.10-00000000000-20220802T125258Z-avarab@gmail.com>
-        <patch-v7-07.10-cfd1b0afb53-20220802T125258Z-avarab@gmail.com>
-Date:   Wed, 03 Aug 2022 08:53:33 -0700
-In-Reply-To: <patch-v7-07.10-cfd1b0afb53-20220802T125258Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 2 Aug
- 2022 14:56:56
-        +0200")
-Message-ID: <xmqqbkt1cohu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S235741AbiHCQRl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Aug 2022 12:17:41 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D3720F61
+        for <git@vger.kernel.org>; Wed,  3 Aug 2022 09:17:40 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id j7so22153133wrh.3
+        for <git@vger.kernel.org>; Wed, 03 Aug 2022 09:17:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=F0ioeswXfO4vLCXjYT8JM39cNwkf+wbKNJBs1Afj5xw=;
+        b=UYuv8UzzlbrMRPr9WLWw4aDGJZvhRYQ5NAPEMaOAusCWQCrBMbga3+szU3xG4ru9iQ
+         La6mVV77YZiEi+nPuQotfWrsVnVFPlM+47RKW6x0dtv2/pgdFhS1SQ3uDDfl400FfbM0
+         gmgIzSJuZmUX6ZGK2SxDk4ebON3dUmQJT2a6WJD4/1SPEqfB4ip0moS3j4EZrIDj23QN
+         2twpna+GZqPqKr7FJTCt0pPncb38lKv96l4O9Zuov6ttC6+15+U+rTaTZNX11y1+3xS9
+         3+ry3/3gLn1ZtBc8/Lqch0nu9lAJpdIP1Tv+F2w/Ks9+ZJLbA070AyGHBuxqBVRb2Y0L
+         tDug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=F0ioeswXfO4vLCXjYT8JM39cNwkf+wbKNJBs1Afj5xw=;
+        b=21JUr8EhEMmSJ/ZI2s4kp/16Iytt+27T8EWjdXZIEsLJaNiVDS5qBaUW0+d55B++wI
+         gxJ6iZQdUqPJbPUvmBWMPo1RCIZgMFPhspgyQ6ppMhhWrF33omXLAE9kxlxbnCFEK8aC
+         L//CGmVivNUO+P0Fa+mtA9pO9bQrghfuYVGPmBT3kYdQjFs9+wXZvritEJ++BbR3Z4XN
+         2qzAmrWAOxT+ssJjfsrz0iQp2gS3ok2VCIlAXMEWvrvDvLy9ilhs2oQM7GWJDuHHMTII
+         PSct/jzkZ0WyJkiZPKBR69+tV27n5tCZnmeeW0UScSs2LNlNcsSwbK3MqgjUfd9SlGUM
+         WeYg==
+X-Gm-Message-State: ACgBeo0WroqWxMhYe5IrPbfmWjRFHVU9/JaxNv28oFRfQCNfSsPxt/6r
+        R5LN4wElhnY8nFotNlCXadOE9PUvG8I=
+X-Google-Smtp-Source: AA6agR6Ynoz9Ho+0zxMR45Yo0si/j3YBVu3CLtQOqRNjS9mZqzQL1nYwRjTzJQxELcJ7q5oNAZIN6Q==
+X-Received: by 2002:a05:6000:18c:b0:21f:170d:446e with SMTP id p12-20020a056000018c00b0021f170d446emr14011165wrx.304.1659543458909;
+        Wed, 03 Aug 2022 09:17:38 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l7-20020a05600c088700b003a35ec4bf4fsm2782973wmp.20.2022.08.03.09.17.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Aug 2022 09:17:38 -0700 (PDT)
+Message-Id: <pull.1301.git.git.1659543457.gitgitgadget@gmail.com>
+From:   "Sun Chao via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 03 Aug 2022 16:17:34 +0000
+Subject: [PATCH 0/3] refs-advertise: add hook to filter advertised refs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6E39D99C-1344-11ED-A448-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Sun Chao <16657101987@163.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Gerrit is implemented by JGit and is known as a centralized workflow system
+which supports reference-level access control for repository. If we choose
+to work in centralized workflow like what Gerrit provided, reference-level
+access control is needed and is possible if we add a reference advertise
+filter hook just like what Gerrit did.
 
-> Continue the move of existing Documentation/technical/* protocol and
-> file-format documentation into our main documentation space. By moving
-> the things that discuss the protocol we can properly link from
-> e.g. lsrefs.unborn and protocol.version documentation to a manpage we
-> build by default.
->
-> So far we have been using the "gitformat-" prefix for the
-> documentation we've been moving over from Documentation/technical/*,
-> but for protocol documentation let's use "gitprotocol-*".
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  Documentation/Makefile                        |  8 +++---
->  Documentation/config/lsrefs.txt               |  2 +-
->  Documentation/config/protocol.txt             |  2 +-
->  Documentation/git-upload-pack.txt             |  5 ++--
->  Documentation/gitformat-bundle.txt            |  2 +-
->  ...ities.txt =3D> gitprotocol-capabilities.txt} | 28 +++++++++++++++--=
---
->  ...ocol-common.txt =3D> gitprotocol-common.txt} | 23 +++++++++++++--
->  ...pack-protocol.txt =3D> gitprotocol-pack.txt} | 24 +++++++++++++---
->  .../protocol-v2.txt =3D> gitprotocol-v2.txt}    | 25 +++++++++++++----
->  Documentation/technical/api-simple-ipc.txt    |  2 +-
->  Documentation/technical/http-protocol.txt     |  6 ++--
->  .../long-running-process-protocol.txt         |  2 +-
->  Documentation/technical/packfile-uri.txt      |  2 +-
->  Documentation/technical/partial-clone.txt     |  2 +-
->  command-list.txt                              |  5 +++-
->  refspec.h                                     |  2 +-
->  t/t5551-http-fetch-smart.sh                   |  4 +--
->  17 files changed, 106 insertions(+), 38 deletions(-)
+This hook would be invoked by 'git-receive-pack' and 'git-upload-pack'
+during the reference discovery phase and the commit fetching phase, each
+reference and will be filtered by this hook. Git server can put
+reference-level control process to this hook and the git client does not
+need to change or known about that.
 
-OK, I see nothing unexpected.
+And there is also a partial clone issue says 'Dynamic object fetching'
+causes the server send a full set of info/refs when the connection is
+established, and if there are large number of refs, will incur significant
+overhead, and if we put such kind of hook maybe it will help.
 
-There is a silent "oops that is a screw-up in the previous step that
-can be buried in this patch that renames 4 files and hopefully nobody
-would notice" included, which should be removed by fixing the original
-screw-up in the previous step, though.
+In Huawei company, we are trying to copy the reference-level control feature
+from Gerrit to CGit (which is used by our git server), and we think maybe
+this hook is a good idea and wish for your replies, thanks!
+
+Sun Chao (3):
+  refs-advertise: add hook to filter advertised refs
+  t1419: add test cases for refs-advertise hook
+  doc: add documentation for the refs-advertise hook
+
+ Documentation/githooks.txt                    |  70 +++++
+ Makefile                                      |   2 +
+ builtin/receive-pack.c                        |  12 +
+ ls-refs.c                                     |  30 ++-
+ refs/refs-advertise.c                         | 246 +++++++++++++++++
+ refs/refs-advertise.h                         |  11 +
+ t/helper/test-refs-advertise.c                | 202 ++++++++++++++
+ t/helper/test-tool.c                          |   1 +
+ t/helper/test-tool.h                          |   1 +
+ t/t1419-refs-advertise-hooks.sh               | 138 ++++++++++
+ t/t1419/common-functions.sh                   |  80 ++++++
+ .../once-0000-abnormal-refs-advertise-hook.sh | 199 ++++++++++++++
+ t/t1419/test-0000-standard-git-clone.sh       |  56 ++++
+ t/t1419/test-0001-standard-git-push.sh        |  34 +++
+ ...0002-ls-remote-with-refs-advertise-hook.sh |  95 +++++++
+ ...03-upload-pack-with-refs-advertise-hook.sh | 127 +++++++++
+ ...4-receive-pack-with-refs-advertise-hook.sh | 251 ++++++++++++++++++
+ upload-pack.c                                 |  42 ++-
+ 18 files changed, 1588 insertions(+), 9 deletions(-)
+ create mode 100644 refs/refs-advertise.c
+ create mode 100644 refs/refs-advertise.h
+ create mode 100644 t/helper/test-refs-advertise.c
+ create mode 100755 t/t1419-refs-advertise-hooks.sh
+ create mode 100644 t/t1419/common-functions.sh
+ create mode 100644 t/t1419/once-0000-abnormal-refs-advertise-hook.sh
+ create mode 100644 t/t1419/test-0000-standard-git-clone.sh
+ create mode 100644 t/t1419/test-0001-standard-git-push.sh
+ create mode 100644 t/t1419/test-0002-ls-remote-with-refs-advertise-hook.sh
+ create mode 100644 t/t1419/test-0003-upload-pack-with-refs-advertise-hook.sh
+ create mode 100644 t/t1419/test-0004-receive-pack-with-refs-advertise-hook.sh
+
+
+base-commit: 350dc9f0e8974b6fcbdeb3808186c5a79c3e7386
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1301%2Fsunchao9%2Frefs_advertise-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1301/sunchao9/refs_advertise-v1
+Pull-Request: https://github.com/git/git/pull/1301
+-- 
+gitgitgadget
