@@ -2,246 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE832C19F28
-	for <git@archiver.kernel.org>; Wed,  3 Aug 2022 03:53:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 973E2C19F28
+	for <git@archiver.kernel.org>; Wed,  3 Aug 2022 04:32:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234626AbiHCDxF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Aug 2022 23:53:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35584 "EHLO
+        id S235593AbiHCEcc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Aug 2022 00:32:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231321AbiHCDxD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Aug 2022 23:53:03 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B27F1E3F7
-        for <git@vger.kernel.org>; Tue,  2 Aug 2022 20:53:02 -0700 (PDT)
-Received: (qmail 6518 invoked by uid 109); 3 Aug 2022 03:53:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 03 Aug 2022 03:53:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8583 invoked by uid 111); 3 Aug 2022 03:53:01 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Aug 2022 23:53:01 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 2 Aug 2022 23:53:00 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] pipe_command(): mark stdin descriptor as non-blocking
-Message-ID: <YunxHOa2sJeEpJxd@coredump.intra.peff.net>
-References: <YuikU//9OrdpKQcE@coredump.intra.peff.net>
- <YulFTSTbVaTwuQtt@coredump.intra.peff.net>
- <xmqq5yjahb8u.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq5yjahb8u.fsf@gitster.g>
+        with ESMTP id S229457AbiHCEca (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Aug 2022 00:32:30 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EC7656BB6
+        for <git@vger.kernel.org>; Tue,  2 Aug 2022 21:32:30 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id c11-20020a170902d48b00b0016f093907e0so1667831plg.20
+        for <git@vger.kernel.org>; Tue, 02 Aug 2022 21:32:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:references
+         :mime-version:message-id:in-reply-to:date:from:to:cc;
+        bh=eG11+M5Hg/EaLmueaI5L7dezT38Pcn6AAl1d5MvCRNY=;
+        b=nfysAsIAfWd0OvqDjIUdbm/Rb6QxfiANeijCbo/M++knBIHSfYwTMvUyzDMFz1NiNF
+         JZ2hcfLSA3gJqLJGSvpp5CeEd1xpOQOJDrpY9ChazMMdTpXWFrSsDKkX02PJ7SHnVz8H
+         e6JbJasIk5tFkwnKDX217/uiTGwKwuwQjxHkkX6DLwIUdqPQpJQqovG6xlIB0CaMFWzY
+         rFKGvQiY+xfnEQqoGM+t65I+siqyXwwRP7qhAbmjlhR4LEM3EYK8eK87nhv19lDFYrB8
+         X14bN3kmogXGojOBxaFb7vNwZsmj6giJgXaS9VnUWfCp46CvM+P0OUjUT+WXi1xl3CyW
+         ar6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:references
+         :mime-version:message-id:in-reply-to:date:x-gm-message-state:from:to
+         :cc;
+        bh=eG11+M5Hg/EaLmueaI5L7dezT38Pcn6AAl1d5MvCRNY=;
+        b=nR5iV02mu3+HAE0h+/bWjPN4c3Y9M0Gy8T7FCudkfaN38bHxNJAjk/hxygZwaWDgBY
+         7NuVG1+L3vWvJGiLp2MdU4DrIeOI048z9auwcPzymQzXbahYPuurudpvp+Voe7LJwWD/
+         diXNSusjwTY0/Rw4/n2ajigIUK7XeMA/2yLygw7p+3S8rjs9xbgBlUimnAdRNKl+lxFj
+         90+js2LxM1BZ12CA0htVfcXHMj2+q7u6rlquH/ec9rf10L511eYddx+j/9Wu7qmOGKq6
+         UcY7Wiyajoz50AcYTApCx/p4YhCEtBZv5luj+eL/o6a7s94//WRsBMXVy/bBpW4tygHP
+         2UMw==
+X-Gm-Message-State: ACgBeo3CdUH5dB+WSk3kymBWqqbjP6qPlMo0r26jO/S1n1+tnVjhSH/I
+        wVt8fb1g9s01ZX9/wS4jkyLLdu69l3OkIw==
+X-Google-Smtp-Source: AA6agR5AtuUvwrImDE0K8Rsgj0TwYv5CJPxDXPlX2vFFphbQCpjqaCHesyTOsgtguv+7Ikbt9cLUSA2Zj5PSrQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:e353:b0:16d:c10a:651a with SMTP
+ id p19-20020a170902e35300b0016dc10a651amr24497560plc.146.1659501149578; Tue,
+ 02 Aug 2022 21:32:29 -0700 (PDT)
+Date:   Tue, 02 Aug 2022 21:32:21 -0700
+In-Reply-To: <patch-v2-27.28-93cd1ccde54-20220802T154036Z-avarab@gmail.com>
+Message-Id: <kl6lilnat0a2.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com>
+ <cover-v2-00.28-00000000000-20220802T154036Z-avarab@gmail.com> <patch-v2-27.28-93cd1ccde54-20220802T154036Z-avarab@gmail.com>
+Subject: Re: [PATCH v2 27/28] submodule--helper: libify "must_die_on_failure"
+ code paths (for die)
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 02, 2022 at 09:16:17AM -0700, Junio C Hamano wrote:
 
-> > But I'm not sure what should go on the Windows side of that #ifdef.
-> > Unlike some other spots, I don't think we can just make it a noop, or
-> > Windows will be subject to the same deadlock (unless for some reason its
-> > write() does behave differently?).
-> 
-> Let them deadlock so that they can fix it, and until then leave it a
-> noop?  That may break the CI tests for them so we could hide the
-> known-to-be-broken test behind prerequisite to buy them time,
-> perhaps?
+Patches 19-20 and 22-27 are pretty much "show your work" for the same
+libification, so I'll comment on them together.
 
-I was skeptical of including a test, but I was able to come up with a
-reproduction that triggers for me on Linux, but isn't too expensive to
-keep around.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Much to my surprise (and delight), it passes on the Windows CI with the
-noop! So I guess their pipes behave in the way we want by default.
+> Continue the libification of codepaths that previously relied on
+> "must_die_on_failure". In these cases we've always been early aborting
+> by calling die(), but as we know that these codpaths will properly
+> handle return codes of 128 to mean an early abort let's have them use
+> die_message() instead.
+>
+> This still isn't a complete migration away from die() for these
+> codepaths, in particular this code in update_submodule() will still call =
+die() in some cases:
+>
+> 	char *remote_name =3D get_default_remote_submodule(update_data->sm_path)=
+;
+> 	const char *branch =3D remote_submodule_branch(update_data->sm_path);
+>
+> But as that code is used by other callers than the "update" code let's
+> leave converting it for now.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/submodule--helper.c | 33 ++++++++++++++++++---------------
+>  1 file changed, 18 insertions(+), 15 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 79a11992d1c..4f7ece6fb05 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2263,9 +2263,9 @@ static int run_update_procedure(struct update_data =
+*ud)
+>  		 */
+>  		if (!is_tip_reachable(ud->sm_path, &ud->oid) &&
+>  		    fetch_in_submodule(ud->sm_path, ud->depth, ud->quiet, &ud->oid))
+> -			die(_("Fetched in submodule path '%s', but it did not "
+> -			      "contain %s. Direct fetching of that commit failed."),
+> -			    ud->displaypath, oid_to_hex(&ud->oid));
+> +			return die_message(_("Fetched in submodule path '%s', but it did not =
+"
+> +					     "contain %s. Direct fetching of that commit failed."),
+> +					   ud->displaypath, oid_to_hex(&ud->oid));
 
-It does feel like a bit of a landmine to have an enable_nonblock()
-function which might do nothing. I'm not sure if other descriptor types
-might behave differently on Windows. But hopefully the comment above the
-function is sufficient to make people think twice.
+Two things I really like about these changes:
 
--- >8 --
-Subject: [PATCH] pipe_command(): mark stdin descriptor as non-blocking
+- The intermediate return values are opaque, and we always return on
+  error. As a result, the code looks quite uniform (instead of e.g.
+  mixing return and exit()).
+- The "return die_message()" pattern is pretty elegant and it's used
+  often enough that there's no doubt that it's pretty clear that
+  intermediate functions can and will return 128 to signify that we want
+  the process to die.
 
-Our pipe_command() helper lets you both write to and read from a child
-process on its stdin/stdout. It's supposed to work without deadlocks
-because we use poll() to check when descriptors are ready for reading or
-writing. But there's a bug: if both the data to be written and the data
-to be read back exceed the pipe buffer, we'll deadlock.
+So these look great to me :)
 
-The issue is that the code assumes that if you have, say, a 2MB buffer
-to write and poll() tells you that the pipe descriptor is ready for
-writing, that calling:
-
-  write(cmd->in, buf, 2*1024*1024);
-
-will do a partial write, filling the pipe buffer and then returning what
-it did write. And that is what it would do on a socket, but not for a
-pipe. When writing to a pipe, at least on Linux, it will block waiting
-for the child process to read() more. And now we have a potential
-deadlock, because the child may be writing back to us, waiting for us to
-read() ourselves.
-
-An easy way to trigger this is:
-
-  git -c add.interactive.useBuiltin=true \
-      -c interactive.diffFilter=cat \
-      checkout -p HEAD~200
-
-The diff against HEAD~200 will be big, and the filter wants to write all
-of it back to us (obviously this is a dummy filter, but in the real
-world something like diff-highlight would similarly stream back a big
-output).
-
-If you set add.interactive.useBuiltin to false, the problem goes away,
-because now we're not using pipe_command() anymore (instead, that part
-happens in perl). But this isn't a bug in the interactive code at all.
-It's the underlying pipe_command() code which is broken, and has been
-all along.
-
-We presumably didn't notice because most calls only do input _or_
-output, not both. And the few that do both, like gpg calls, may have
-large inputs or outputs, but never both at the same time (e.g., consider
-signing, which has a large payload but a small signature comes back).
-
-The obvious fix is to put the descriptor into non-blocking mode, and
-indeed, that makes the problem go away. Callers shouldn't need to
-care, because they never see the descriptor (they hand us a buffer to
-feed into it).
-
-Unfortunately O_NONBLOCK isn't available everywhere, especially on
-Windows. However, the included test seems to work fine there, which
-implies that pipes there do not behave in the same way (they will do the
-partial write by default, which is what we want). This is true even if I
-size up the diff for a larger pipe buffer (the value chosen here
-triggers the deadlock on Linux, but isn't too expensive to keep as a
-regression test).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Makefile                   |  1 +
- compat/nonblock.c          | 22 ++++++++++++++++++++++
- compat/nonblock.h          | 10 ++++++++++
- run-command.c              | 10 ++++++++++
- t/t3701-add-interactive.sh | 14 ++++++++++++++
- 5 files changed, 57 insertions(+)
- create mode 100644 compat/nonblock.c
- create mode 100644 compat/nonblock.h
-
-diff --git a/Makefile b/Makefile
-index 1624471bad..78bedf26e0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -918,6 +918,7 @@ LIB_OBJS += combine-diff.o
- LIB_OBJS += commit-graph.o
- LIB_OBJS += commit-reach.o
- LIB_OBJS += commit.o
-+LIB_OBJS += compat/nonblock.o
- LIB_OBJS += compat/obstack.o
- LIB_OBJS += compat/terminal.o
- LIB_OBJS += compat/zlib-uncompress2.o
-diff --git a/compat/nonblock.c b/compat/nonblock.c
-new file mode 100644
-index 0000000000..897c099010
---- /dev/null
-+++ b/compat/nonblock.c
-@@ -0,0 +1,22 @@
-+#include "git-compat-util.h"
-+#include "nonblock.h"
-+
-+#ifdef O_NONBLOCK
-+
-+int enable_nonblock(int fd)
-+{
-+	int flags = fcntl(fd, F_GETFL);
-+	if (flags < 0)
-+		return -1;
-+	flags |= O_NONBLOCK;
-+	return fcntl(fd, F_SETFL, flags);
-+}
-+
-+#else
-+
-+int enable_nonblock(int fd)
-+{
-+	return 0;
-+}
-+
-+#endif
-diff --git a/compat/nonblock.h b/compat/nonblock.h
-new file mode 100644
-index 0000000000..2721f72187
---- /dev/null
-+++ b/compat/nonblock.h
-@@ -0,0 +1,10 @@
-+#ifndef COMPAT_NONBLOCK_H
-+#define COMPAT_NONBLOCK_H
-+
-+/*
-+ * Enable non-blocking I/O for the passed-in descriptor. Note that this is a
-+ * noop on systems without O_NONBLOCK, like Windows! Use with caution.
-+ */
-+int enable_nonblock(int fd);
-+
-+#endif
-diff --git a/run-command.c b/run-command.c
-index 14f17830f5..ed99503b22 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -10,6 +10,7 @@
- #include "config.h"
- #include "packfile.h"
- #include "hook.h"
-+#include "compat/nonblock.h"
- 
- void child_process_init(struct child_process *child)
- {
-@@ -1438,6 +1439,15 @@ int pipe_command(struct child_process *cmd,
- 		return -1;
- 
- 	if (in) {
-+		if (enable_nonblock(cmd->in) < 0) {
-+			error_errno("unable to make pipe non-blocking");
-+			close(cmd->in);
-+			if (out)
-+				close(cmd->out);
-+			if (err)
-+				close(cmd->err);
-+			return -1;
-+		}
- 		io[nr].fd = cmd->in;
- 		io[nr].type = POLLOUT;
- 		io[nr].u.out.buf = in;
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index b354fb39de..01d6ce9c83 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -766,6 +766,20 @@ test_expect_success 'detect bogus diffFilter output' '
- 	force_color test_must_fail git add -p <y
- '
- 
-+test_expect_success 'handle very large filtered diff' '
-+	git reset --hard &&
-+	# The specific number here is not important, but it must
-+	# be large enough that the output of "git diff --color"
-+	# fills up the pipe buffer. 10,000 results in ~200k of
-+	# colored output.
-+	test_seq 10000 >test &&
-+	false &&
-+	test_config interactive.diffFilter cat &&
-+	printf y >y &&
-+	force_color git add -p >output 2>&1 <y &&
-+	git diff-files --exit-code -- test
-+'
-+
- test_expect_success 'diff.algorithm is passed to `git diff-files`' '
- 	git reset --hard &&
- 
--- 
-2.37.1.810.g8c5f98b46b
-
-
+>  	}
+> =20
+>  	return run_update_command(ud, subforce);
+> @@ -2309,13 +2309,14 @@ static const char *remote_submodule_branch(const =
+char *path)
+>  	return branch;
+>  }
+> =20
+> -static void ensure_core_worktree(const char *path)
+> +static int ensure_core_worktree(const char *path)
+>  {
+>  	const char *cw;
+>  	struct repository subrepo;
+> =20
+>  	if (repo_submodule_init(&subrepo, the_repository, path, null_oid()))
+> -		die(_("could not get a repository handle for submodule '%s'"), path);
+> +		return die_message(_("could not get a repository handle for submodule =
+'%s'"),
+> +				   path);
+> =20
+>  	if (!repo_config_get_string_tmp(&subrepo, "core.worktree", &cw)) {
+>  		char *cfg_file, *abs_path;
+> @@ -2333,6 +2334,8 @@ static void ensure_core_worktree(const char *path)
+>  		free(abs_path);
+>  		strbuf_release(&sb);
+>  	}
+> +
+> +	return 0;
+>  }
+> =20
+>  static const char *submodule_update_type_to_label(enum submodule_update_=
+type type)
+> @@ -2408,7 +2411,9 @@ static int update_submodule(struct update_data *upd=
+ate_data)
+>  {
+>  	int ret;
+> =20
+> -	ensure_core_worktree(update_data->sm_path);
+> +	ret =3D ensure_core_worktree(update_data->sm_path);
+> +	if (ret)
+> +		return ret;
+> =20
+>  	update_data->displaypath =3D get_submodule_displaypath(
+>  		update_data->sm_path, update_data->prefix);
+> @@ -2418,16 +2423,14 @@ static int update_submodule(struct update_data *u=
+pdate_data)
+>  						  update_data->sm_path,
+>  						  update_data->update_default,
+>  						  &update_data->update_strategy);
+> -	if (ret) {
+> -		*must_die_on_failure =3D 1;
+> +	if (ret)
+>  		return ret;
+> -	}
+> =20
+>  	if (update_data->just_cloned)
+>  		oidcpy(&update_data->suboid, null_oid());
+>  	else if (resolve_gitlink_ref(update_data->sm_path, "HEAD", &update_data=
+->suboid))
+> -		die(_("Unable to find current revision in submodule path '%s'"),
+> -			update_data->displaypath);
+> +		return die_message(_("Unable to find current revision in submodule pat=
+h '%s'"),
+> +				   update_data->displaypath);
+> =20
+>  	if (update_data->remote) {
+>  		char *remote_name =3D get_default_remote_submodule(update_data->sm_pat=
+h);
+> @@ -2437,13 +2440,13 @@ static int update_submodule(struct update_data *u=
+pdate_data)
+>  		if (!update_data->nofetch) {
+>  			if (fetch_in_submodule(update_data->sm_path, update_data->depth,
+>  					      0, NULL))
+> -				die(_("Unable to fetch in submodule path '%s'"),
+> -				    update_data->sm_path);
+> +				return die_message(_("Unable to fetch in submodule path '%s'"),
+> +						   update_data->sm_path);
+>  		}
+> =20
+>  		if (resolve_gitlink_ref(update_data->sm_path, remote_ref, &update_data=
+->oid))
+> -			die(_("Unable to find %s revision in submodule path '%s'"),
+> -			    remote_ref, update_data->sm_path);
+> +			return die_message(_("Unable to find %s revision in submodule path '%=
+s'"),
+> +					   remote_ref, update_data->sm_path);
+> =20
+>  		free(remote_ref);
+>  	}
+> --=20
+> 2.37.1.1233.ge8b09efaedc
