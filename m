@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C69EC19F28
-	for <git@archiver.kernel.org>; Wed,  3 Aug 2022 17:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1B90C19F28
+	for <git@archiver.kernel.org>; Wed,  3 Aug 2022 18:30:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236847AbiHCR75 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Aug 2022 13:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35794 "EHLO
+        id S237795AbiHCSaf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Aug 2022 14:30:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236097AbiHCR74 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Aug 2022 13:59:56 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 347BCBE28
-        for <git@vger.kernel.org>; Wed,  3 Aug 2022 10:59:55 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5AC1714BF71;
-        Wed,  3 Aug 2022 13:59:54 -0400 (EDT)
+        with ESMTP id S231998AbiHCSae (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Aug 2022 14:30:34 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D48345989
+        for <git@vger.kernel.org>; Wed,  3 Aug 2022 11:30:33 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 067C0135ADE;
+        Wed,  3 Aug 2022 14:30:32 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=vVGUZr78V1z1
-        MrAfEizmSkXYEiylnkzY0lC6iFS/jUE=; b=IQvb/cb1s30UpQp0yjFFjSwOOi+m
-        0gl3cWR5AL0AsaeISVaT1TMrjnnLvAhGp304djqj5hrbGxlM6RuFDyVqp8covHqL
-        J/TcDpwYJpIoNcnjTrEr2oPfg3lC3CeM3WgvnAme5f8bE4DD1RrLY/dpyr84fPn3
-        C4y/U+k+FJV27Xc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 515D514BF70;
-        Wed,  3 Aug 2022 13:59:54 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=wU9cG8e2GxyU
+        UxrhWnFL8IDWHLVaziLeSMpIER+pmAc=; b=WszpefFJOLW5/jx9G/tNg5T9UwSr
+        SgESLZSjWVXLhypiFNDlIIT5PG3dWqxH8+VG+SgRz2TxfC7I8TMga8oOBniohn14
+        LXwmLCfn71n9mJPGzro0FTGgVKlZrzcAyL5ZsSI2IcB9bcetj//uDBVokRrNX5lv
+        5+7Lzmpp3lh3hqc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E9A64135ADD;
+        Wed,  3 Aug 2022 14:30:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.145.39.32])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AEFAE14BF6F;
-        Wed,  3 Aug 2022 13:59:53 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 483C0135ADC;
+        Wed,  3 Aug 2022 14:30:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 4/6] log: refactor "rev.pending" code in cmd_show()
+Subject: Re: [PATCH v3 6/6] revisions API: don't leak memory on argv
+ elements that need free()-ing
 References: <cover-v2-0.6-00000000000-20220729T082919Z-avarab@gmail.com>
         <cover-v3-0.6-00000000000-20220802T152925Z-avarab@gmail.com>
-        <patch-v3-4.6-fd474666e7c-20220802T152925Z-avarab@gmail.com>
-Date:   Wed, 03 Aug 2022 10:59:52 -0700
-In-Reply-To: <patch-v3-4.6-fd474666e7c-20220802T152925Z-avarab@gmail.com>
+        <patch-v3-6.6-5e637f55ff1-20220802T152925Z-avarab@gmail.com>
+Date:   Wed, 03 Aug 2022 11:30:30 -0700
+In-Reply-To: <patch-v3-6.6-5e637f55ff1-20220802T152925Z-avarab@gmail.com>
         (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 2 Aug
- 2022 17:33:14
+ 2022 17:33:16
         +0200")
-Message-ID: <xmqqo7x19pif.fsf@gitster.g>
+Message-ID: <xmqq8ro59o3d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 13B8EE1A-1356-11ED-AE3A-CB998F0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 5B010DB2-135A-11ED-B993-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,45 +61,34 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Refactor the juggling of "rev.pending" and our replacement for it
-> amended in the preceding commit so that:
-> ...
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> Helped-by: Jeff King <peff@peff.net>
+> @@ -2784,6 +2784,8 @@ int setup_revisions(int argc, const char **argv, =
+struct rev_info *revs, struct s
+>  			const char *arg =3D argv[i];
+>  			if (strcmp(arg, "--"))
+>  				continue;
+> +			if (opt && opt->free_removed_argv_elements)
+> +				free((char *)argv[i]);
 
-List trailer lines chronologically, please.
+We have "arg", let's free that instead.
 
-This does not look wrong per-se, but given that we might want to
-rethink the way the original rev_info is reused inside the loop,
-as I mentioned in my review of the previous step, this change may be
-irrelevant in the longer term.
+>  			argv[i] =3D NULL;
+>  			argc =3D i;
 
-I may have said this earlier, but once we start using the "prepare a
-blank one, copy it to clear another" pattern, we should stop using
-memcpy() and use structure assignment, especially if we are trying to
-make our intent clear.
+>  	unsigned int	assume_dashdash:1,
+> -			allow_exclude_promisor_objects:1;
+> +			allow_exclude_promisor_objects:1,
+> +			free_removed_argv_elements:1;
 
-> @@ -745,12 +743,19 @@ int cmd_show(int argc, const char **argv, const c=
-har *prefix)
->  		case OBJ_COMMIT:
->  		{
->  			struct object_array old;
-> +			struct object_array blank =3D OBJECT_ARRAY_INIT;
-> =20
->  			memcpy(&old, &rev.pending, sizeof(old));
-> -			rev.pending.nr =3D rev.pending.alloc =3D 0;
-> -			rev.pending.objects =3D NULL;
-> +			memcpy(&rev.pending, &blank, sizeof(rev.pending));
-> +
->  			add_object_array(o, name, &rev.pending);
->  			ret =3D cmd_log_walk_no_free(&rev);
-> +
-> +			/*
-> +			 * No need for
-> +			 * object_array_clear(&pending). It was
-> +			 * cleared already in prepare_revision_walk()
-> +			 */
->  			memcpy(&rev.pending, &old, sizeof(rev.pending));
->  			break;
->  		}
+It would be nicer to pick a name that explains why we want to "free
+removed argv[] elements" than "if you remove argv[] elements, then
+please free them", because the explanation on the reason why we
+request the API to free would help future developers to decide if
+they need to free in some situations where they do not "remove" but
+do something else in their updates to the revisions API.
+
+If we cannot come up with a better name, at least we should add a
+comment that says that the caller owns the **argv strings, and it
+asks the API to free those if reference to them are lost in any way.
+
+Thanks.  Overall the series was a pleasant read.
+
