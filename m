@@ -2,71 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEA45C19F28
-	for <git@archiver.kernel.org>; Wed,  3 Aug 2022 13:08:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0055BC19F28
+	for <git@archiver.kernel.org>; Wed,  3 Aug 2022 13:19:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237673AbiHCNIZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Aug 2022 09:08:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34072 "EHLO
+        id S235937AbiHCNTT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Aug 2022 09:19:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233605AbiHCNIX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Aug 2022 09:08:23 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DC12DEDC
-        for <git@vger.kernel.org>; Wed,  3 Aug 2022 06:08:19 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a7so18418210ejp.2
-        for <git@vger.kernel.org>; Wed, 03 Aug 2022 06:08:19 -0700 (PDT)
+        with ESMTP id S233101AbiHCNTP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Aug 2022 09:19:15 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12E54186E1
+        for <git@vger.kernel.org>; Wed,  3 Aug 2022 06:19:14 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id gk3so19257555ejb.8
+        for <git@vger.kernel.org>; Wed, 03 Aug 2022 06:19:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc;
-        bh=0nyC1Ds00wj88sRHcKJXlJbNG3222Q3xu7TdwSxuEg8=;
-        b=E4dQV5e/2pVSqF0fk1gomJV/XVREy3aj06x4BAE/8uTe7lJma2ktkE85S1i9b4nxmw
-         v/sAVvTn8muIVsmGHcaqYte10NcrizQ8AUPBSTBKiv/ZZLqakcHrdDbdJEvLYo3SDBBl
-         JvUdqlFjXf9Pzrj8sMftTKK+KejyznpVZT3wSU74wgEv9Nr5YWukazZKDoIP5f8xI3qW
-         aKMV3nR/BdynAVp/8DN/kt4pOGdE3qp27Xqcm3F7dfMKkR5BahWCKdiHSOzwn1XMHI63
-         uuuI0QTMmcs/w5oL0TBqwca9VHMo4IPPDV50Pgc31yshyrNsxNIEnxyHcGkF9UTi3T/q
-         WwJg==
+        bh=txexGK6+OamhUet1aWq5UzMN5EiLCHqo603uoGFCpZE=;
+        b=LPkY3UXPpjqaxD5rajVeXO9q4g2Rt760nggmmwEAnl4kEWoYnsGklYujk0+0NuzLQP
+         VtBYUWPYFveo7NnGEs4hAXVTYC0Wb4lJrg0cX5Pl8EkEGTqQY/KHVraMNvX83gRFoaOQ
+         80Ro5LBoyJsa640r+J3FMqIPTk2hSgCoX+Jh5SDuqg+c2NP3eygcI2yJhj1z7fL91bUh
+         TaA53bOglHVn8G2ZZhA0ZUmjPxUdxQj24a4D19seGj9PpF13mu4oZIdk1lNwMSQT0Fl2
+         ay+/RGBM9LTpZ62X1b732AORMFUMGzAOVCsB21vyjNqp8j8tFgtzMN9gTvJbJo6m0uIJ
+         0STQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc;
-        bh=0nyC1Ds00wj88sRHcKJXlJbNG3222Q3xu7TdwSxuEg8=;
-        b=Wp6dvlwAx72hkOynfr5rgFjw4THg1rFBmehx2/HXBZGxWZf/Jhihrq4m4E2prdRg30
-         0Pt70XenomAIysKipZDRnVw2MWZhM693WhvYTSvEgl2EpsnyVe0FvXy3gI6xCcwAAZTV
-         ioXgiKcoHtS9s1j8RhOx/R06pUFs5DehVBpyFGk+S4QJ8XKJf8y700kosKcNabKlbN/2
-         oB4pBWMBihkgeMKDTFD+7zR+jZKyvAWrR8pun3F5HTQueJJb+WRT+3NDw6Io0j8+xCEf
-         3X/SvOKY+WvFssBov1Nnd/IXikhJcPMahzGsTp4iPAY6r6Vkv8UwEu7QMdajpatuNTts
-         mwhg==
-X-Gm-Message-State: AJIora9t1nQ8OwgOgMpK6iuiH8LeLR4z+dF43grQQJ/mYZ4/557nb92T
-        cU4utPgFD4mXl0cKDHL6fGw=
-X-Google-Smtp-Source: AGRyM1tgJHsJqFsPXywvuGdak+MajEZPqU5KcJr2GzvOfXMpBLdmnhn6IKrd0O1+NfFYcKgnyMZU2g==
-X-Received: by 2002:a17:907:a40f:b0:72b:64ee:5b2f with SMTP id sg15-20020a170907a40f00b0072b64ee5b2fmr21061832ejc.268.1659532097907;
-        Wed, 03 Aug 2022 06:08:17 -0700 (PDT)
+        bh=txexGK6+OamhUet1aWq5UzMN5EiLCHqo603uoGFCpZE=;
+        b=HFsybHa//Yaj4G/4mJ1T24vMGfM0l7T6vODn+xa5p+Fz5u9dWRcrp7gVstknd6hQBf
+         Ko9Y+znezmgpYrdThS96BSljxiCPunU6fI/HA9mDVzXAdYSmllIf+If6490LH3e2GTAh
+         +GlLb81eZd1Klhjm0esEnfpHxt5A2oljcflX3mq/9obQUBPw/VWSlz07E7uAaomdQBYi
+         wMnDmsiKU7TKzHzt02fSLdbFJQ+zaUnMXTMxziwmjdaKqXx2D1QXzILVZ3n7VJafzNa6
+         KvivCPNZV3L0OFnlT24bONqvNiKrz9Xi8eeASdDImuxWAZipDWEejGGPjA+sKtjLZ6Yy
+         jG0w==
+X-Gm-Message-State: ACgBeo3CHbGu4XQLJPrmBs5pIcceXveWwDi7DympOAJgxI5XeDcB5DyE
+        Q1DO2PPNBNUUXucNN5wFvvQbnX4gXrdo0A==
+X-Google-Smtp-Source: AA6agR4mWgpASdARA43jIy60Q2ph5mikjyoiR2jbZ0gqOcGs+pLmNDggDB8CQHqpCTjwcMQQl+Z3zg==
+X-Received: by 2002:a17:907:2cf8:b0:730:6854:1c26 with SMTP id hz24-20020a1709072cf800b0073068541c26mr13167120ejc.766.1659532752542;
+        Wed, 03 Aug 2022 06:19:12 -0700 (PDT)
 Received: from gmgdl ([2a02:a213:23c2:bf80:c530:8f19:38e6:f393])
-        by smtp.gmail.com with ESMTPSA id ku19-20020a170907789300b007309d640484sm2000545ejc.91.2022.08.03.06.07.04
+        by smtp.gmail.com with ESMTPSA id x13-20020aa7dacd000000b0043cab10f702sm9608535eds.90.2022.08.03.06.19.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Aug 2022 06:07:20 -0700 (PDT)
+        Wed, 03 Aug 2022 06:19:11 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1oJE5T-009TC0-1s;
-        Wed, 03 Aug 2022 15:06:59 +0200
+        id 1oJEHH-009TeJ-0x;
+        Wed, 03 Aug 2022 15:19:11 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: Re: [PATCH v2 22/28] submodule--helper: move
- submodule_strategy_to_string() to only user
-Date:   Wed, 03 Aug 2022 15:06:01 +0200
-References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com>
- <cover-v2-00.28-00000000000-20220802T154036Z-avarab@gmail.com>
- <patch-v2-22.28-98c3e562c82-20220802T154036Z-avarab@gmail.com>
- <kl6lles6te9q.fsf@chooglen-macbookpro.roam.corp.google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 01/20] git.c: update NO_PARSEOPT markings
+Date:   Wed, 03 Aug 2022 15:11:13 +0200
+References: <20220725123857.2773963-1-szeder.dev@gmail.com>
+ <20220725123857.2773963-2-szeder.dev@gmail.com>
+ <220725.86mtcxp8ib.gmgdl@evledraar.gmail.com>
+ <20220802173754.GA10040@szeder.dev> <xmqqsfmefjja.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <kl6lles6te9q.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-ID: <220803.86h72tfpcc.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqsfmefjja.fsf@gitster.g>
+Message-ID: <220803.86czdhfos0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -75,83 +73,34 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Aug 02 2022, Glen Choo wrote:
+On Tue, Aug 02 2022, Junio C Hamano wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 >
->> Move the submodule_strategy_to_string() function added in
->> 3604242f080 (submodule: port init from shell to C, 2016-04-15) to its
->> only user.
->>
->> This function would return NULL on SM_UPDATE_UNSPECIFIED, so it wasn't
->> safe to xstrdup() its return value in the general case, or to use it
->> in a sprintf() format as the code removed in the preceding commit did.
->>
->> But its callers would never call it with either SM_UPDATE_UNSPECIFIED
->> or SM_UPDATE_COMMAND. Let's move it to a "static" helper, and have its
->> functionality reflect how it's used, and BUG() out on the rest.
->>
->> By doing this we can also stop needlessly xstrdup()-ing and free()-ing
->> the memory for the config we're setting. We can instead always use
->> constant strings. We can also use the *_tmp() variant of
->> git_config_get_string().
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  builtin/submodule--helper.c | 29 ++++++++++++++++++++++++-----
->>  submodule.c                 | 21 ---------------------
->>  submodule.h                 |  1 -
->>  3 files changed, 24 insertions(+), 27 deletions(-)
->>
->> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->> index b49528e1ba9..d787c0fead4 100644
->> --- a/builtin/submodule--helper.c
->> +++ b/builtin/submodule--helper.c
->> @@ -413,12 +413,32 @@ struct init_cb {
->>  };
->>  #define INIT_CB_INIT { 0 }
->>=20=20
->> +static const char *submodule_strategy_to_string(enum submodule_update_t=
-ype type)
->> +{
->> +	switch (type) {
->> +	case SM_UPDATE_CHECKOUT:
->> +		return "checkout";
->> +	case SM_UPDATE_MERGE:
->> +		return "merge";
->> +	case SM_UPDATE_REBASE:
->> +		return "rebase";
->> +	case SM_UPDATE_NONE:
->> +		return "none";
->> +	case SM_UPDATE_UNSPECIFIED:
->> +	case SM_UPDATE_COMMAND:
->> +		BUG("init_submodule() should handle type %d", type);
->> +	default:
->> +		BUG("unexpected update strategy type: %d", type);
->> +	}
->> +}
->> +
+>> Dunno.  I don't like this NO_PARSEOPT thing, and instead of testing it
+>> I'm thinking about removing it altogether.
 >
-> This function is meant to convert from an update strategy back to the
-> string that the user actually provided in their gitconfig.
+> Sorry if this is obvious to the others, but I am confused here.
 >
-> The change in behavior makes this function BUG() out on types that
-> aren't "magic" tokens, i.e. "UNSPECIFIED" (which is obviously not
-> expressible) and "COMMAND" (which allows users to specify an arbitrary
-> command using "!", like "!cat"). It shouldn't be difficult to teach
-> callers to handle "COMMAND", so this seems like an ok change, though I
-> think we should probably amend the function name to
-> submodule_update_type_to_string() and change the UNSPECIFIED and COMMAND
-> arms to something like BUG("type %d has no corresponding string").
+> Lack of NO_PARSEOPT bit is used as a mark to say "this subcommand
+> takes '--git-completion-helper' option to help listing the options,
+> so include it in the 'git --list-cmds=3Dparseopt' output", right?  I
+> do not mind removing an unused or unnecessary bit at all, but what
+> is your plan of getting rid of the bit?  Will we make sure everybody
+> supports the "--git-completion-helper" option?
 
-Makes sense, will rename it.
+We could:
 
-> I'm not so convinced that this function should be static, though. I
-> think it's more natural for submodule_update_type_to_string() to have
-> the same visibility as enum submodule_update_type. Today, we only have
-> one other caller who uses this enum, and it doesn't even need this
-> _to_string() fn (fsck.c calls parse_submodule_update_type() and doesn't
-> need _to_string() because it has the raw config values). But it feels a
-> bit inevitable that this will get moved back to submodule.h.
+ * Handle it in git-completion.bash itself, e.g. send-email supports
+   --git-completion-helper but isn't a built-in, the git-completion.bash
+   itself knows it can be invoked with it.
 
-I'll re-roll & leave it in submodule.[ch].
+ * We could just try to run the command with --git-comletion-helper, and
+   fall back if it returns 128 or 129. AFAICT the only ones we'd need to
+   handle specially would be rev-list (returns 0) and fast-import (will
+   hang, expecting stdin input).
+
+The non-parse_options() supporting ones are rare enough these days (and
+we've been ~quickly converting them) that perhaps an on-the-fly check
+would be fine (and we cache the result, as with most/all other such
+checks in git-completion.bsah).
