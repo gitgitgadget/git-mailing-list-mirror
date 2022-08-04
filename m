@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D498C19F2D
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 16:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FE5CC19F2A
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 16:29:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239199AbiHDQ3b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 12:29:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44474 "EHLO
+        id S237095AbiHDQ3c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 12:29:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237680AbiHDQ3T (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237280AbiHDQ3T (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 4 Aug 2022 12:29:19 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 030B167CBC
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7984167CBB
         for <git@vger.kernel.org>; Thu,  4 Aug 2022 09:29:04 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id h34-20020a05600c49a200b003a5165eae0fso118614wmp.4
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 09:29:03 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id z12so293460wrs.9
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 09:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=g2jvcRB+75XlnTeEuY0rS8adDkZUA06GD9b+6U0gEqY=;
-        b=ZKPHkU2fVjEjU6FyHgtf8W7PlZXG2wi+m7njY6uCvnDm1q+5eWlxkF8MBQoN2lLGe2
-         49oCJ2NYTOJA3pXg592zJFTNXlpWCZzeUnDytHoHltlE/ooQLmdGViMixtv4v6txrgSr
-         PnCUQLjrcfEH8GI+ijFuk50CMlOnbI7HsXe1xUpvXyZPIyBVkJG0DKXcciYNYOLZjAxf
-         RiKQ5mxflkyOUw0YVG5+AGzOT0DxRb05/OVW9296kz1hYHjF9gtCvrEB/Rk/5pxpZljk
-         +eKGmVdFdbJQ1/IOu4Co4sJy5lqKh5GyEQN1yvA0Cp8WrsLTZjnHRPEDzPeucENvHGXM
-         jj1A==
+        bh=tEicZq8/Amgu9PAiY24y7otqGgy2m+FchdZbVepeos4=;
+        b=RoP1F8bFCZGZ4bqtWQRIQPwit35n16/5d0G/4H9fM+QAL2Yu+S+DERxtBFQJkKu/4Q
+         jvdKjOOlhiF6/wFlocDh5Cv0nKALG5bPW23WpLrzS1wM/JPdzQV7jBhuuriTfDA6IVRZ
+         B+vNk06MVMgw6g8+t05yXR1/DZRD6x8rpkT0TVAL4XXl2Iko4IvXjaj6VfAQl34ZNO8j
+         42W8R2pzOdiEd7z/lQoLMqiDrl6OChLIhdWLSAnjnOBNATsqoZ2nMFWlsTV2JcEjKPvn
+         /H0xegiMy01j7ZWMXuOd27DT2/S9Oe2hsQf9zTuKz354sI4N0fNLOThtRaZM6M1ZuvT8
+         4FhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=g2jvcRB+75XlnTeEuY0rS8adDkZUA06GD9b+6U0gEqY=;
-        b=yQ13g7vREiTjc/T5UhtrV0WtI1q1bWKB93hehmEbj6UwJwCamTPTSL/fxvHqfKJ6hl
-         b/T+fb4qLcZsvHNB6fqjXZMK0OlGWvAZ0uvrWZPiYr2M6twPQBkbKvf610U3Bq8Zred0
-         AemIWm1gzGri/kJtsJOErI8WA9DNSAdzlWbZnDtdzuTt9CfxACaJJtrOx3592AUH1Gjv
-         8n6GoY7lx569J6WgPnBm2tO6SynrnB1WH2RszyOs/Fp8P39ZxBbcC7iLxSAglR6hAf00
-         2j3YOYGPgQG4wtzRX8llcKBWX/fbsY+kvDDMPRxzPPcCOsYg4rRaRre4OaiIkqijLSwm
-         utIA==
-X-Gm-Message-State: ACgBeo2WRIGFOfX0AHf67/HUbxUpnr1AovBQ2n0P2tLoZKWf2Rcrg0Rz
-        c7WYYmqnwDxuQXz6hkyx0DF8Ghgk6ikQ2g==
-X-Google-Smtp-Source: AA6agR49PK0+2gaq35OacZlprYwjFF1nGMy7/shYUxkK3jX0Takggpm8FrdOYyfuZnL2zptDSm5UkA==
-X-Received: by 2002:a05:600c:2244:b0:3a5:1207:a1aa with SMTP id a4-20020a05600c224400b003a51207a1aamr2076133wmm.176.1659630542812;
-        Thu, 04 Aug 2022 09:29:02 -0700 (PDT)
+        bh=tEicZq8/Amgu9PAiY24y7otqGgy2m+FchdZbVepeos4=;
+        b=knCDBa5/KeZn0QuBJypoHiEqViktw7NOOaOohzDFZHwAEVf4SrhsI1OROnNouQEyUU
+         9j0YBmU0uNGagx8BPTQ73peQ62VMP2maXT1qoGjE/eMh5OlKjdqKYAVDr9jx1CDKLY4o
+         bOGklprMtv/UXskN7Epagy2QR550KnGpqT4JTM3YDaTfv6JQ/qhaOo6oIq864XUno/jt
+         k6dMXXVRYDHVLo0x+l71lBlqAysQ+5qsrR8f/bXkOHdz2cwkFgEIHfQx96Fb6xp28A8h
+         Gn8pjbg6xFFR65nPgUQZpNzIQX/vwMJExiFt9kqJC5cawKIW4nkqN9KLcE1OLC+buBUy
+         27Rg==
+X-Gm-Message-State: ACgBeo3mGvBuAtHGPS+jY4XvEZqYwOKP8oL/rnqLWIQ2or+Aua0RP42O
+        nPEqRKqz2d0+oqNMWcTsrYxlBPJt51NVjA==
+X-Google-Smtp-Source: AA6agR7XMl0YqEY33IBGwFP0eTES8ZGTqQ1GRWg51Nzf/7TqDHF+vfbBx9hhZcah4AjN7wvNzWDWzA==
+X-Received: by 2002:a5d:6c6b:0:b0:1ea:77ea:dde8 with SMTP id r11-20020a5d6c6b000000b001ea77eadde8mr1966147wrz.690.1659630543560;
+        Thu, 04 Aug 2022 09:29:03 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n66-20020a1ca445000000b003a513ee7830sm1868063wme.27.2022.08.04.09.29.01
+        by smtp.gmail.com with ESMTPSA id n66-20020a1ca445000000b003a513ee7830sm1868063wme.27.2022.08.04.09.29.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Aug 2022 09:29:02 -0700 (PDT)
+        Thu, 04 Aug 2022 09:29:03 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Teng Long <dyroneteng@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v8 10/12] docs: move pack format docs to man section 5
-Date:   Thu,  4 Aug 2022 18:28:39 +0200
-Message-Id: <patch-v8-10.12-576c1fef4b3-20220804T162138Z-avarab@gmail.com>
+Subject: [PATCH v8 11/12] docs: move cruft pack docs to gitformat-pack
+Date:   Thu,  4 Aug 2022 18:28:40 +0200
+Message-Id: <patch-v8-11.12-b9dde9788d4-20220804T162138Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1233.g61622908797
 In-Reply-To: <cover-v8-00.12-00000000000-20220804T162138Z-avarab@gmail.com>
 References: <cover-v7-00.10-00000000000-20220802T125258Z-avarab@gmail.com> <cover-v8-00.12-00000000000-20220804T162138Z-avarab@gmail.com>
@@ -71,329 +71,315 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Continue the move of existing Documentation/technical/* protocol and
-file-format documentation into our main documentation space by moving
-the various documentation pertaining to the *.pack format and related
-files, and updating things that refer to it to link to the new
-location.
+Integrate the cruft packs documentation initially added in
+3d89a8c1180 (Documentation/technical: add cruft-packs.txt, 2022-05-20)
+to the newly created "gitformat-pack" documentation.
 
-By moving these we can properly link from the newly created
-gitformat-commit-graph to a gitformat-chunk-format page.
+Like the "bitmap-format" added before it in
+0d4455a3ab0 (documentation: add documentation for the bitmap format,
+2013-11-14) the "cruft-packs" were documented in their own file.
 
-Integrating "Documentation/technical/bitmap-format.txt" and
-"Documentation/technical/cruft-packs.txt" might logically be part of
-this change, but as those cover parts of the wider "pack
-format" (including associated files) that's documented outside of
-"Documentation/technical/pack-format.txt" let's leave those for now,
-subsequent commit(s) will address those.
+As the diff move detection will show there is no change to
+"Documentation/technical/cruft-packs.txt" here except to move it, and
+to "indent" the existing sections by adding an extra "=" to them.
+
+We could similarly convert the "bitmap-format.txt", but let's leave it
+for now due to a conflict with the in-flight ac/bitmap-lookup-table
+series.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/Makefile                        |  3 +-
- Documentation/config/pack.txt                 |  2 +-
- Documentation/git-bundle.txt                  |  3 +-
- Documentation/git-multi-pack-index.txt        |  4 +--
- .../chunk-format.txt => gitformat-chunk.txt}  | 25 +++++++++++---
- Documentation/gitformat-commit-graph.txt      |  2 +-
- Documentation/gitformat-index.txt             |  2 +-
- .../pack-format.txt => gitformat-pack.txt}    | 34 +++++++++++++++++--
- Documentation/gitprotocol-pack.txt            |  2 +-
- .../howto/recover-corrupted-object-harder.txt |  2 +-
- .../technical/hash-function-transition.txt    |  2 +-
- Documentation/user-manual.txt                 |  2 +-
- cache.h                                       |  3 +-
- command-list.txt                              |  2 ++
- pack-revindex.h                               |  2 +-
- 15 files changed, 68 insertions(+), 22 deletions(-)
- rename Documentation/{technical/chunk-format.txt => gitformat-chunk.txt} (91%)
- rename Documentation/{technical/pack-format.txt => gitformat-pack.txt} (95%)
+ Documentation/Makefile                  |   1 -
+ Documentation/gitformat-pack.txt        | 126 ++++++++++++++++++++++++
+ Documentation/technical/cruft-packs.txt | 123 -----------------------
+ 3 files changed, 126 insertions(+), 124 deletions(-)
+ delete mode 100644 Documentation/technical/cruft-packs.txt
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index d122d1751d8..d4a4a8c8b7d 100644
+index d4a4a8c8b7d..41a070ab593 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -25,8 +25,10 @@ MAN1_TXT += gitweb.txt
- # man5 / man7 guides (note: new guides should also be added to command-list.txt)
- MAN5_TXT += gitattributes.txt
- MAN5_TXT += gitformat-bundle.txt
-+MAN5_TXT += gitformat-chunk.txt
- MAN5_TXT += gitformat-commit-graph.txt
- MAN5_TXT += gitformat-index.txt
-+MAN5_TXT += gitformat-pack.txt
- MAN5_TXT += gitformat-signature.txt
- MAN5_TXT += githooks.txt
- MAN5_TXT += gitignore.txt
-@@ -108,7 +110,6 @@ TECH_DOCS += technical/hash-function-transition
+@@ -105,7 +105,6 @@ TECH_DOCS += MyFirstObjectWalk
+ TECH_DOCS += SubmittingPatches
+ TECH_DOCS += ToolsForGit
+ TECH_DOCS += technical/bitmap-format
+-TECH_DOCS += technical/cruft-packs
+ TECH_DOCS += technical/hash-function-transition
  TECH_DOCS += technical/http-protocol
  TECH_DOCS += technical/long-running-process-protocol
- TECH_DOCS += technical/multi-pack-index
--TECH_DOCS += technical/pack-format
- TECH_DOCS += technical/pack-heuristics
- TECH_DOCS += technical/parallel-checkout
- TECH_DOCS += technical/partial-clone
-diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
-index ad7f73a1ead..3e581eab84a 100644
---- a/Documentation/config/pack.txt
-+++ b/Documentation/config/pack.txt
-@@ -166,7 +166,7 @@ permuted into their appropriate location when writing a new bitmap.
- 
- pack.writeReverseIndex::
- 	When true, git will write a corresponding .rev file (see:
--	link:../technical/pack-format.html[Documentation/technical/pack-format.txt])
-+	linkgit:gitformat-pack[5])
- 	for each new packfile that it writes in all places except for
- 	linkgit:git-fast-import[1] and in the bulk checkin mechanism.
- 	Defaults to false.
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index f0b1282b918..6da61722431 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -57,8 +57,7 @@ size. That they're "thin" under the hood is merely noted here as a
- curiosity, and as a reference to other documentation.
- 
- See linkgit:gitformat-bundle[5] for more details and the discussion of
--"thin pack" in link:technical/pack-format.html[the pack format
--documentation] for further details.
-+"thin pack" in linkgit:gitformat-pack[5] for further details.
- 
- OPTIONS
- -------
-diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index c588fb91af1..a48c3d5ea63 100644
---- a/Documentation/git-multi-pack-index.txt
-+++ b/Documentation/git-multi-pack-index.txt
-@@ -128,8 +128,8 @@ $ git multi-pack-index verify
- SEE ALSO
- --------
- See link:technical/multi-pack-index.html[The Multi-Pack-Index Design
--Document] and link:technical/pack-format.html[The Multi-Pack-Index
--Format] for more information on the multi-pack-index feature.
-+Document] and linkgit:gitformat-pack[5] for more information on the
-+multi-pack-index feature and its file format.
- 
- 
- GIT
-diff --git a/Documentation/technical/chunk-format.txt b/Documentation/gitformat-chunk.txt
-similarity index 91%
-rename from Documentation/technical/chunk-format.txt
-rename to Documentation/gitformat-chunk.txt
-index f36ce42f37c..57202ede273 100644
---- a/Documentation/technical/chunk-format.txt
-+++ b/Documentation/gitformat-chunk.txt
-@@ -1,11 +1,24 @@
--Chunk-based file formats
--========================
-+gitformat-chunk(5)
-+==================
-+
-+NAME
-+----
-+gitformat-chunk - Chunk-based file formats
-+
-+SYNOPSIS
-+--------
-+
-+Used by linkgit:gitformat-commit-graph[5] and the "MIDX" format (see
-+the pack format documentation in linkgit:gitformat-pack[5]).
-+
-+DESCRIPTION
-+-----------
- 
- Some file formats in Git use a common concept of "chunks" to describe
- sections of the file. This allows structured access to a large file by
- scanning a small "table of contents" for the remaining data. This common
- format is used by the `commit-graph` and `multi-pack-index` files. See
--link:technical/pack-format.html[the `multi-pack-index` format] and
-+the `multi-pack-index` format in linkgit:gitformat-pack[5] and
- the `commit-graph` format in linkgit:gitformat-commit-graph[5] for
- how they use the chunks to describe structured data.
- 
-@@ -113,4 +126,8 @@ for future formats:
- * *multi-pack-index:* see `write_midx_internal()` and `load_multi_pack_index()`
-   in `midx.c` for how the chunk-format API is used to write and
-   parse the multi-pack-index file format documented in
--  link:technical/pack-format.html[the multi-pack-index file format].
-+  the multi-pack-index file format section of linkgit:gitformat-pack[5].
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/gitformat-commit-graph.txt b/Documentation/gitformat-commit-graph.txt
-index 108dc2295c0..7324665716d 100644
---- a/Documentation/gitformat-commit-graph.txt
-+++ b/Documentation/gitformat-commit-graph.txt
-@@ -75,7 +75,7 @@ All multi-byte numbers are in network byte order.
-       ID appears at most once.
- 
-   The CHUNK LOOKUP matches the table of contents from
--  link:technical/chunk-format.html[the chunk-based file format].
-+  the chunk-based file format, see linkgit:gitformat-chunk[5]
- 
-   The remaining data in the body is described one chunk at a time, and
-   these chunks may be given in any order. Chunks are required unless
-diff --git a/Documentation/gitformat-index.txt b/Documentation/gitformat-index.txt
-index 9c3844298b8..015cb21bdc0 100644
---- a/Documentation/gitformat-index.txt
-+++ b/Documentation/gitformat-index.txt
-@@ -139,7 +139,7 @@ Git index format
-     entry is encoded as if the path name for the previous entry is an
-     empty string).  At the beginning of an entry, an integer N in the
-     variable width encoding (the same encoding as the offset is encoded
--    for OFS_DELTA pack entries; see pack-format.txt) is stored, followed
-+    for OFS_DELTA pack entries; see linkgit:gitformat-pack[5]) is stored, followed
-     by a NUL-terminated string S.  Removing N bytes from the end of the
-     path name for the previous entry, and replacing it with the string S
-     yields the path name for this entry.
-diff --git a/Documentation/technical/pack-format.txt b/Documentation/gitformat-pack.txt
-similarity index 95%
-rename from Documentation/technical/pack-format.txt
-rename to Documentation/gitformat-pack.txt
-index b520aa9c45b..546c99f8871 100644
---- a/Documentation/technical/pack-format.txt
+diff --git a/Documentation/gitformat-pack.txt b/Documentation/gitformat-pack.txt
+index 546c99f8871..e06af02f211 100644
+--- a/Documentation/gitformat-pack.txt
 +++ b/Documentation/gitformat-pack.txt
-@@ -1,5 +1,29 @@
--Git pack format
--===============
-+gitformat-pack(5)
-+=================
-+
-+NAME
-+----
-+gitformat-pack - Git pack format
-+
-+
-+SYNOPSIS
-+--------
-+[verse]
-+$GIT_DIR/objects/pack/pack-*.{pack,idx}
-+$GIT_DIR/objects/pack/pack-*.rev
-+$GIT_DIR/objects/pack/multi-pack-index
-+
-+DESCRIPTION
-+-----------
-+
-+The Git pack format is now Git stores most of its primary repository
-+data. Over the lietime af a repository loose objects (if any) and
-+smaller packs are consolidated into larger pack(s). See
-+linkgit:git-gc[1] and linkgit:git-pack-objects[1].
-+
-+The pack format is also used over-the-wire, see
-+e.g. linkgit:gitprotocol-v2[5], as well as being a part of
-+other container formats in the case of linkgit:gitformat-bundle[5].
+@@ -11,6 +11,7 @@ SYNOPSIS
+ [verse]
+ $GIT_DIR/objects/pack/pack-*.{pack,idx}
+ $GIT_DIR/objects/pack/pack-*.rev
++$GIT_DIR/objects/pack/pack-*.mtimes
+ $GIT_DIR/objects/pack/multi-pack-index
  
- == Checksums and object IDs
- 
-@@ -356,7 +380,7 @@ CHUNK LOOKUP:
- 	    using the next chunk position if necessary.)
- 
- 	The CHUNK LOOKUP matches the table of contents from
--	link:technical/chunk-format.html[the chunk-based file format].
-+	the chunk-based file format, see linkgit:gitformat-chunk[5].
- 
- 	The remaining data in the body is described one chunk at a time, and
- 	these chunks may be given in any order. Chunks are required unless
-@@ -482,3 +506,7 @@ packs arranged in MIDX order (with the preferred pack coming first).
- 
+ DESCRIPTION
+@@ -507,6 +508,131 @@ packs arranged in MIDX order (with the preferred pack coming first).
  The MIDX's reverse index is stored in the optional 'RIDX' chunk within
  the MIDX itself.
+ 
++== cruft packs
 +
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/gitprotocol-pack.txt b/Documentation/gitprotocol-pack.txt
-index 8a4de6decd0..93b30b88450 100644
---- a/Documentation/gitprotocol-pack.txt
-+++ b/Documentation/gitprotocol-pack.txt
-@@ -467,7 +467,7 @@ Now that the client and server have finished negotiation about what
- the minimal amount of data that needs to be sent to the client is, the server
- will construct and send the required data in packfile format.
- 
--See pack-format.txt for what the packfile itself actually looks like.
-+See linkgit:gitformat-pack[5] for what the packfile itself actually looks like.
- 
- If 'side-band' or 'side-band-64k' capabilities have been specified by
- the client, the server will send the packfile data multiplexed.
-diff --git a/Documentation/howto/recover-corrupted-object-harder.txt b/Documentation/howto/recover-corrupted-object-harder.txt
-index 8994e2559ea..5efb4fe81ff 100644
---- a/Documentation/howto/recover-corrupted-object-harder.txt
-+++ b/Documentation/howto/recover-corrupted-object-harder.txt
-@@ -68,7 +68,7 @@ Note that the "object" file isn't fit for feeding straight to zlib; it
- has the git packed object header, which is variable-length. We want to
- strip that off so we can start playing with the zlib data directly. You
- can either work your way through it manually (the format is described in
--link:../technical/pack-format.html[Documentation/technical/pack-format.txt]),
-+linkgit:gitformat-pack[5]),
- or you can walk through it in a debugger. I did the latter, creating a
- valid pack like:
- 
-diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
-index 260224b0331..e2ac36dd210 100644
---- a/Documentation/technical/hash-function-transition.txt
-+++ b/Documentation/technical/hash-function-transition.txt
-@@ -205,7 +205,7 @@ SHA-1 content.
- Object storage
- ~~~~~~~~~~~~~~
- Loose objects use zlib compression and packed objects use the packed
--format described in Documentation/technical/pack-format.txt, just like
-+format described in linkgit:gitformat-pack[5], just like
- today. The content that is compressed and stored uses SHA-256 content
- instead of SHA-1 content.
- 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 865074bed4e..ca9decdd952 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -3133,7 +3133,7 @@ those "loose" objects.
- You can save space and make Git faster by moving these loose objects in
- to a "pack file", which stores a group of objects in an efficient
- compressed format; the details of how pack files are formatted can be
--found in link:technical/pack-format.html[pack format].
-+found in link:gitformat-pack[5].
- 
- To put the loose objects into a pack, just run git repack:
- 
-diff --git a/cache.h b/cache.h
-index 4aa1bd079d5..302810b353a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -475,8 +475,7 @@ extern struct index_state the_index;
- 
- /*
-  * Values in this enum (except those outside the 3 bit range) are part
-- * of pack file format. See Documentation/technical/pack-format.txt
-- * for more information.
-+ * of pack file format. See gitformat-pack(5) for more information.
-  */
- enum object_type {
- 	OBJ_BAD = -1,
-diff --git a/command-list.txt b/command-list.txt
-index 68212e3c1bd..5394eefb6ee 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -210,8 +210,10 @@ gitdiffcore                             guide
- giteveryday                             guide
- gitfaq                                  guide
- gitformat-bundle                        developerinterfaces
-+gitformat-chunk                         developerinterfaces
- gitformat-commit-graph                  developerinterfaces
- gitformat-index                         developerinterfaces
-+gitformat-pack                          developerinterfaces
- gitformat-signature                     developerinterfaces
- gitglossary                             guide
- githooks                                userinterfaces
-diff --git a/pack-revindex.h b/pack-revindex.h
-index 74f4eae668d..4974e75eb4d 100644
---- a/pack-revindex.h
-+++ b/pack-revindex.h
-@@ -22,7 +22,7 @@
-  *
-  *   - pack position refers to an object's position within a non-existent pack
-  *     described by the MIDX. The pack structure is described in
-- *     Documentation/technical/pack-format.txt.
-+ *     gitformat-pack(5).
-  *
-  *     It is effectively a concatanation of all packs in the MIDX (ordered by
-  *     their numeric ID within the MIDX) in their original order within each
++The cruft packs feature offer an alternative to Git's traditional mechanism of
++removing unreachable objects. This document provides an overview of Git's
++pruning mechanism, and how a cruft pack can be used instead to accomplish the
++same.
++
++=== Background
++
++To remove unreachable objects from your repository, Git offers `git repack -Ad`
++(see linkgit:git-repack[1]). Quoting from the documentation:
++
++----
++[...] unreachable objects in a previous pack become loose, unpacked objects,
++instead of being left in the old pack. [...] loose unreachable objects will be
++pruned according to normal expiry rules with the next 'git gc' invocation.
++----
++
++Unreachable objects aren't removed immediately, since doing so could race with
++an incoming push which may reference an object which is about to be deleted.
++Instead, those unreachable objects are stored as loose objects and stay that way
++until they are older than the expiration window, at which point they are removed
++by linkgit:git-prune[1].
++
++Git must store these unreachable objects loose in order to keep track of their
++per-object mtimes. If these unreachable objects were written into one big pack,
++then either freshening that pack (because an object contained within it was
++re-written) or creating a new pack of unreachable objects would cause the pack's
++mtime to get updated, and the objects within it would never leave the expiration
++window. Instead, objects are stored loose in order to keep track of the
++individual object mtimes and avoid a situation where all cruft objects are
++freshened at once.
++
++This can lead to undesirable situations when a repository contains many
++unreachable objects which have not yet left the grace period. Having large
++directories in the shards of `.git/objects` can lead to decreased performance in
++the repository. But given enough unreachable objects, this can lead to inode
++starvation and degrade the performance of the whole system. Since we
++can never pack those objects, these repositories often take up a large amount of
++disk space, since we can only zlib compress them, but not store them in delta
++chains.
++
++=== Cruft packs
++
++A cruft pack eliminates the need for storing unreachable objects in a loose
++state by including the per-object mtimes in a separate file alongside a single
++pack containing all loose objects.
++
++A cruft pack is written by `git repack --cruft` when generating a new pack.
++linkgit:git-pack-objects[1]'s `--cruft` option. Note that `git repack --cruft`
++is a classic all-into-one repack, meaning that everything in the resulting pack is
++reachable, and everything else is unreachable. Once written, the `--cruft`
++option instructs `git repack` to generate another pack containing only objects
++not packed in the previous step (which equates to packing all unreachable
++objects together). This progresses as follows:
++
++  1. Enumerate every object, marking any object which is (a) not contained in a
++     kept-pack, and (b) whose mtime is within the grace period as a traversal
++     tip.
++
++  2. Perform a reachability traversal based on the tips gathered in the previous
++     step, adding every object along the way to the pack.
++
++  3. Write the pack out, along with a `.mtimes` file that records the per-object
++     timestamps.
++
++This mode is invoked internally by linkgit:git-repack[1] when instructed to
++write a cruft pack. Crucially, the set of in-core kept packs is exactly the set
++of packs which will not be deleted by the repack; in other words, they contain
++all of the repository's reachable objects.
++
++When a repository already has a cruft pack, `git repack --cruft` typically only
++adds objects to it. An exception to this is when `git repack` is given the
++`--cruft-expiration` option, which allows the generated cruft pack to omit
++expired objects instead of waiting for linkgit:git-gc[1] to expire those objects
++later on.
++
++It is linkgit:git-gc[1] that is typically responsible for removing expired
++unreachable objects.
++
++=== Caution for mixed-version environments
++
++Repositories that have cruft packs in them will continue to work with any older
++version of Git. Note, however, that previous versions of Git which do not
++understand the `.mtimes` file will use the cruft pack's mtime as the mtime for
++all of the objects in it. In other words, do not expect older (pre-cruft pack)
++versions of Git to interpret or even read the contents of the `.mtimes` file.
++
++Note that having mixed versions of Git GC-ing the same repository can lead to
++unreachable objects never being completely pruned. This can happen under the
++following circumstances:
++
++  - An older version of Git running GC explodes the contents of an existing
++    cruft pack loose, using the cruft pack's mtime.
++  - A newer version running GC collects those loose objects into a cruft pack,
++    where the .mtime file reflects the loose object's actual mtimes, but the
++    cruft pack mtime is "now".
++
++Repeating this process will lead to unreachable objects not getting pruned as a
++result of repeatedly resetting the objects' mtimes to the present time.
++
++If you are GC-ing repositories in a mixed version environment, consider omitting
++the `--cruft` option when using linkgit:git-repack[1] and linkgit:git-gc[1], and
++leaving the `gc.cruftPacks` configuration unset until all writers understand
++cruft packs.
++
++=== Alternatives
++
++Notable alternatives to this design include:
++
++  - The location of the per-object mtime data, and
++  - Storing unreachable objects in multiple cruft packs.
++
++On the location of mtime data, a new auxiliary file tied to the pack was chosen
++to avoid complicating the `.idx` format. If the `.idx` format were ever to gain
++support for optional chunks of data, it may make sense to consolidate the
++`.mtimes` format into the `.idx` itself.
++
++Storing unreachable objects among multiple cruft packs (e.g., creating a new
++cruft pack during each repacking operation including only unreachable objects
++which aren't already stored in an earlier cruft pack) is significantly more
++complicated to construct, and so aren't pursued here. The obvious drawback to
++the current implementation is that the entire cruft pack must be re-written from
++scratch.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/technical/cruft-packs.txt b/Documentation/technical/cruft-packs.txt
+deleted file mode 100644
+index d81f3a8982f..00000000000
+--- a/Documentation/technical/cruft-packs.txt
++++ /dev/null
+@@ -1,123 +0,0 @@
+-= Cruft packs
+-
+-The cruft packs feature offer an alternative to Git's traditional mechanism of
+-removing unreachable objects. This document provides an overview of Git's
+-pruning mechanism, and how a cruft pack can be used instead to accomplish the
+-same.
+-
+-== Background
+-
+-To remove unreachable objects from your repository, Git offers `git repack -Ad`
+-(see linkgit:git-repack[1]). Quoting from the documentation:
+-
+-[quote]
+-[...] unreachable objects in a previous pack become loose, unpacked objects,
+-instead of being left in the old pack. [...] loose unreachable objects will be
+-pruned according to normal expiry rules with the next 'git gc' invocation.
+-
+-Unreachable objects aren't removed immediately, since doing so could race with
+-an incoming push which may reference an object which is about to be deleted.
+-Instead, those unreachable objects are stored as loose objects and stay that way
+-until they are older than the expiration window, at which point they are removed
+-by linkgit:git-prune[1].
+-
+-Git must store these unreachable objects loose in order to keep track of their
+-per-object mtimes. If these unreachable objects were written into one big pack,
+-then either freshening that pack (because an object contained within it was
+-re-written) or creating a new pack of unreachable objects would cause the pack's
+-mtime to get updated, and the objects within it would never leave the expiration
+-window. Instead, objects are stored loose in order to keep track of the
+-individual object mtimes and avoid a situation where all cruft objects are
+-freshened at once.
+-
+-This can lead to undesirable situations when a repository contains many
+-unreachable objects which have not yet left the grace period. Having large
+-directories in the shards of `.git/objects` can lead to decreased performance in
+-the repository. But given enough unreachable objects, this can lead to inode
+-starvation and degrade the performance of the whole system. Since we
+-can never pack those objects, these repositories often take up a large amount of
+-disk space, since we can only zlib compress them, but not store them in delta
+-chains.
+-
+-== Cruft packs
+-
+-A cruft pack eliminates the need for storing unreachable objects in a loose
+-state by including the per-object mtimes in a separate file alongside a single
+-pack containing all loose objects.
+-
+-A cruft pack is written by `git repack --cruft` when generating a new pack.
+-linkgit:git-pack-objects[1]'s `--cruft` option. Note that `git repack --cruft`
+-is a classic all-into-one repack, meaning that everything in the resulting pack is
+-reachable, and everything else is unreachable. Once written, the `--cruft`
+-option instructs `git repack` to generate another pack containing only objects
+-not packed in the previous step (which equates to packing all unreachable
+-objects together). This progresses as follows:
+-
+-  1. Enumerate every object, marking any object which is (a) not contained in a
+-     kept-pack, and (b) whose mtime is within the grace period as a traversal
+-     tip.
+-
+-  2. Perform a reachability traversal based on the tips gathered in the previous
+-     step, adding every object along the way to the pack.
+-
+-  3. Write the pack out, along with a `.mtimes` file that records the per-object
+-     timestamps.
+-
+-This mode is invoked internally by linkgit:git-repack[1] when instructed to
+-write a cruft pack. Crucially, the set of in-core kept packs is exactly the set
+-of packs which will not be deleted by the repack; in other words, they contain
+-all of the repository's reachable objects.
+-
+-When a repository already has a cruft pack, `git repack --cruft` typically only
+-adds objects to it. An exception to this is when `git repack` is given the
+-`--cruft-expiration` option, which allows the generated cruft pack to omit
+-expired objects instead of waiting for linkgit:git-gc[1] to expire those objects
+-later on.
+-
+-It is linkgit:git-gc[1] that is typically responsible for removing expired
+-unreachable objects.
+-
+-== Caution for mixed-version environments
+-
+-Repositories that have cruft packs in them will continue to work with any older
+-version of Git. Note, however, that previous versions of Git which do not
+-understand the `.mtimes` file will use the cruft pack's mtime as the mtime for
+-all of the objects in it. In other words, do not expect older (pre-cruft pack)
+-versions of Git to interpret or even read the contents of the `.mtimes` file.
+-
+-Note that having mixed versions of Git GC-ing the same repository can lead to
+-unreachable objects never being completely pruned. This can happen under the
+-following circumstances:
+-
+-  - An older version of Git running GC explodes the contents of an existing
+-    cruft pack loose, using the cruft pack's mtime.
+-  - A newer version running GC collects those loose objects into a cruft pack,
+-    where the .mtime file reflects the loose object's actual mtimes, but the
+-    cruft pack mtime is "now".
+-
+-Repeating this process will lead to unreachable objects not getting pruned as a
+-result of repeatedly resetting the objects' mtimes to the present time.
+-
+-If you are GC-ing repositories in a mixed version environment, consider omitting
+-the `--cruft` option when using linkgit:git-repack[1] and linkgit:git-gc[1], and
+-leaving the `gc.cruftPacks` configuration unset until all writers understand
+-cruft packs.
+-
+-== Alternatives
+-
+-Notable alternatives to this design include:
+-
+-  - The location of the per-object mtime data, and
+-  - Storing unreachable objects in multiple cruft packs.
+-
+-On the location of mtime data, a new auxiliary file tied to the pack was chosen
+-to avoid complicating the `.idx` format. If the `.idx` format were ever to gain
+-support for optional chunks of data, it may make sense to consolidate the
+-`.mtimes` format into the `.idx` itself.
+-
+-Storing unreachable objects among multiple cruft packs (e.g., creating a new
+-cruft pack during each repacking operation including only unreachable objects
+-which aren't already stored in an earlier cruft pack) is significantly more
+-complicated to construct, and so aren't pursued here. The obvious drawback to
+-the current implementation is that the entire cruft pack must be re-written from
+-scratch.
 -- 
 2.37.1.1233.g61622908797
 
