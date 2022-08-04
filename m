@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19C83C19F29
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 01:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 929EEC19F29
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 01:46:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238944AbiHDBqV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Aug 2022 21:46:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57546 "EHLO
+        id S238989AbiHDBqo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Aug 2022 21:46:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239005AbiHDBqH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Aug 2022 21:46:07 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D5D35F137
-        for <git@vger.kernel.org>; Wed,  3 Aug 2022 18:46:02 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 8-20020a05600c024800b003a2fe343db1so1662409wmj.1
-        for <git@vger.kernel.org>; Wed, 03 Aug 2022 18:46:01 -0700 (PDT)
+        with ESMTP id S238079AbiHDBqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Aug 2022 21:46:09 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 147C55F9AB
+        for <git@vger.kernel.org>; Wed,  3 Aug 2022 18:46:05 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id c187-20020a1c35c4000000b003a30d88fe8eso1781525wma.2
+        for <git@vger.kernel.org>; Wed, 03 Aug 2022 18:46:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=F+lS+Pmk1OaU9Cd2V+JhyD1ZsWXZ6h5pLvh6eyu9lYM=;
-        b=mgZpzcRPYbPfm8Er0vB08bPCb/89cC1XQ/JZxZc8ZPTxOR9UO0fDQg91bburor0BS2
-         RlN4xivOw6kmbGpo1mAmc/ruKKHO/cPKcXt4j4paNRAQPdBBbIK75eCz7VbDP1Woa22I
-         Qp9OL7AM6t224GMN0m2329xKUrxlp8qhUPOKbCVUHdiZrdyT7uBvt41BPz3Iihr0ZjrA
-         qcQHXcRlTwo3M8JCLJy+itpTSgGcVLm2CXEvyS8ydM8xD81WlBKKbjWW69Wky095P3lZ
-         iG9brFd5FdgtR+3kVZFMgFwmbWZfHcOWgoERzwzSiJe8Q/pVtIVjGdEDaGVeQiLWRnPT
-         u/MA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=RhPe/2YGJzGbswB35npBDWGmS6OQlK0k/r1JD67kQvU=;
+        b=Le2d42CAF/+OkhWoIcw6QibQvTRAobxM+f3XphRZIjulMSDNMxPgWaoQs0Gn1Bm3uw
+         KirJeev7tzQOxTeXZx3ZNFCP+zzejb4nkRN6W5sP87Tm7qqfWgKXIK8AXbyhXoTrFY6S
+         vtp+UzWMXxLTxcXRGagioXSAUpKgBAagYLoxkg2QG1eTcYftYzst7TGl6oKTp2f22JwA
+         8UAg1RSHTM1x4fkNBtlMrBjmSXcvqYfaFKs8f8EsEWnI9DS5awX5fsG35T+42gb7tqvn
+         Ds/Z/k4/Jq063wmqTkcNIhAj0PrUcw/YUqLY6FQ5m31V5t5qStglWacicsEYD8iS9Xqw
+         AssA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=F+lS+Pmk1OaU9Cd2V+JhyD1ZsWXZ6h5pLvh6eyu9lYM=;
-        b=JwVf2bFiKz024CoHQvu5mbVt3y5Ygy4p5V6dm7yGmTSFZUvAgcsEZ34b/iVgk48TKF
-         IZBnBEg1U3IUfC/J949Ifhi0wa/bCQCSK1gn9oWHAwlwkt4VXCHQl3kSsZyKHuCv0qL/
-         sgL2DNnAh8ExDtcEP8nQHv/pFcvjdB4HgPkB9xQ504oKlPWS8nuDnT18EfyNYw+MB2qS
-         tTsFTQwmOvQItepWO4UMvHGWGUWet9LU5CH6Uw7dh7EkYzG741F3Dljhku6HltiS4aAg
-         fgi0gD1DkfiGuCCgEwPOjsFVNKCz2ySydX20KJMebgksMsVU0vckMg5OHBU0HDRyBjHo
-         Kasg==
-X-Gm-Message-State: ACgBeo3LWW3EvccB+EMyte1Qp48m8DactOhRK0Pa6TYB663zXVRiASzq
-        AbaIzmtmHA/ONcRPCXAUGOAQLZGV66g=
-X-Google-Smtp-Source: AA6agR54eh1IzA/EwiKZ44jFSMGKpeRw4wSreZmGxghRC0d2TxH5Wrj1L7BZYgauGtNhCbhhCDcKcw==
-X-Received: by 2002:a1c:3846:0:b0:3a4:f574:aa36 with SMTP id f67-20020a1c3846000000b003a4f574aa36mr3805918wma.21.1659577560243;
-        Wed, 03 Aug 2022 18:46:00 -0700 (PDT)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=RhPe/2YGJzGbswB35npBDWGmS6OQlK0k/r1JD67kQvU=;
+        b=b2zFY8KAzr3Okgn8V++3vILLLtfDwtPn3RLPaIkoIZagwlNgItzvRD7uAmI2/tsKVr
+         6KfQuz1wm0nZxJtdCcmy5G6dt1J1IXwXVLVQ+8Zot9/gbdzGZQPWxSlZMgPeT9iq8UmL
+         G1qE7ct7j/hrk9QUI5Q9ZQ+J2Up9L2OII5SjDXFO4GVlsh34eRv08UqqGugYxZDvV4dg
+         AGYtgh9zoIM9gyD1eSlkdKlF7xz7b7kFfrpp8lxtnaBPbEE8CroIHSyNyAqlu6fH54Hv
+         itOOagwoe4gfhIZ4rvG3Zu4TX24Dnm8daRv7Qoiz9aADclorrYKR/ISNkTtJ5DL/QAdo
+         dv1g==
+X-Gm-Message-State: ACgBeo0Ulvh59Hu7OtkCNd7hEAtl+nmobXXe+uXURY6RQ9oUMjp2IFim
+        5+LaCx+Rsb9yS69+SYeyWad2AlWfk9w=
+X-Google-Smtp-Source: AA6agR70vwt7+Zl+JK9+UoNJ6fpONp38nUvrIEoHn9qbdzZuPb0937eIp3d75M3wNV3unuv73hOtCQ==
+X-Received: by 2002:a05:600c:1f16:b0:3a3:214c:a85e with SMTP id bd22-20020a05600c1f1600b003a3214ca85emr4464472wmb.95.1659577563358;
+        Wed, 03 Aug 2022 18:46:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bd14-20020a05600c1f0e00b003a4eea0aa48sm4453538wmb.0.2022.08.03.18.45.59
+        by smtp.gmail.com with ESMTPSA id r8-20020a05600c320800b003a2d6f26babsm4105465wmp.3.2022.08.03.18.46.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Aug 2022 18:45:59 -0700 (PDT)
-Message-Id: <d81e7c10997e9e8dc211d241019fbafa6b25fb04.1659577543.git.gitgitgadget@gmail.com>
+        Wed, 03 Aug 2022 18:46:02 -0700 (PDT)
+Message-Id: <14925c3feede27315a22645fc97e4546c1e6094e.1659577543.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
 References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
         <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 04 Aug 2022 01:45:41 +0000
-Subject: [PATCH v2 08/10] builtin/bugreport.c: create '--diagnose' option
-MIME-Version: 1.0
+Date:   Thu, 04 Aug 2022 01:45:43 +0000
+Subject: [PATCH v2 10/10] scalar: update technical doc roadmap
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     derrickstolee@github.com, johannes.schindelin@gmx.de,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
@@ -69,221 +69,40 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Create a '--diagnose' option for 'git bugreport' to collect additional
-information about the repository and write it to a zipped archive.
+Update the Scalar roadmap to reflect the completion of generalizing 'scalar
+diagnose' into 'git diagnose' and 'git bugreport --diagnose'.
 
-The '--diagnose' option behaves effectively as an alias for simultaneously
-running 'git bugreport' and 'git diagnose'. In the documentation, users are
-explicitly recommended to attach the diagnostics alongside a bug report to
-provide additional context to readers, ideally reducing some back-and-forth
-between reporters and those debugging the issue.
-
-Note that '--diagnose' may take an optional string arg (either 'basic' or
-'all'). If specified without the arg or with 'basic', the behavior
-corresponds to running 'git diagnose' without '--all'; this default is meant
-to help reduce unintentional leaking of sensitive information). However, a
-user can still manually specify '--diagnose=all' to generate the equivalent
-archive to one created with 'git diagnose --all'.
-
-Suggested-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- Documentation/git-bugreport.txt | 18 +++++++++++++
- builtin/bugreport.c             | 47 +++++++++++++++++++++++++++++++--
- t/t0091-bugreport.sh            | 44 ++++++++++++++++++++++++++++++
- 3 files changed, 107 insertions(+), 2 deletions(-)
+ Documentation/technical/scalar.txt | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
-index d8817bf3cec..a4d984a77be 100644
---- a/Documentation/git-bugreport.txt
-+++ b/Documentation/git-bugreport.txt
-@@ -9,6 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git bugreport' [(-o | --output-directory) <path>] [(-s | --suffix) <format>]
-+		[--diagnose[=(basic|all)]]
+diff --git a/Documentation/technical/scalar.txt b/Documentation/technical/scalar.txt
+index 08bc09c225a..f6353375f08 100644
+--- a/Documentation/technical/scalar.txt
++++ b/Documentation/technical/scalar.txt
+@@ -84,6 +84,9 @@ series have been accepted:
  
- DESCRIPTION
- -----------
-@@ -31,6 +32,10 @@ The following information is captured automatically:
-  - A list of enabled hooks
-  - $SHELL
+ - `scalar-diagnose`: The `scalar` command is taught the `diagnose` subcommand.
  
-+Additional information may be gathered into a separate zip archive using the
-+`--diagnose` option, and can be attached alongside the bugreport document to
-+provide additional context to readers.
++- `scalar-generalize-diagnose`: Move the functionality of `scalar diagnose`
++  into `git diagnose` and `git bugreport --diagnose`.
 +
- This tool is invoked via the typical Git setup process, which means that in some
- cases, it might not be able to launch - for example, if a relevant config file
- is unreadable. In this kind of scenario, it may be helpful to manually gather
-@@ -49,6 +54,19 @@ OPTIONS
- 	named 'git-bugreport-<formatted suffix>'. This should take the form of a
- 	strftime(3) format string; the current local time will be used.
+ Roughly speaking (and subject to change), the following series are needed to
+ "finish" this initial version of Scalar:
  
-+--diagnose[=(basic|all)]::
-+	Create a zip archive of information about the repository including logs
-+	and certain statistics describing the data shape of the repository. The
-+	archive is written to the same output directory as the bug report and is
-+	named 'git-diagnostics-<formatted suffix>'.
-++
-+By default, `--diagnose` (equivalent to `--diagnose=basic`) will collect only
-+statistics and summarized data about the repository and filesystem. Specifying
-+`--diagnose=all` will create an archive with the same contents generated by `git
-+diagnose --all`; this archive will be much larger, and will contain potentially
-+sensitive information about the repository. See linkgit:git-diagnose[1] for more
-+details on the contents of the diagnostic archive.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index 9de32bc96e7..1907258d61d 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -5,7 +5,13 @@
- #include "compat/compiler.h"
- #include "hook.h"
- #include "hook-list.h"
-+#include "diagnose.h"
+@@ -91,12 +94,6 @@ Roughly speaking (and subject to change), the following series are needed to
+   and implement `scalar help`. At the end of this series, Scalar should be
+   feature-complete from the perspective of a user.
  
-+enum diagnose_mode {
-+	DIAGNOSE_NONE,
-+	DIAGNOSE_BASIC,
-+	DIAGNOSE_ALL
-+};
- 
- static void get_system_info(struct strbuf *sys_info)
- {
-@@ -91,6 +97,23 @@ static void get_header(struct strbuf *buf, const char *title)
- 	strbuf_addf(buf, "\n\n[%s]\n", title);
- }
- 
-+static int option_parse_diagnose(const struct option *opt,
-+				 const char *arg, int unset)
-+{
-+	enum diagnose_mode *diagnose = opt->value;
-+
-+	BUG_ON_OPT_NEG(unset);
-+
-+	if (!arg || !strcmp(arg, "basic"))
-+		*diagnose = DIAGNOSE_BASIC;
-+	else if (!strcmp(arg, "all"))
-+		*diagnose = DIAGNOSE_ALL;
-+	else
-+		die(_("diagnose mode must be either 'basic' or 'all'"));
-+
-+	return 0;
-+}
-+
- int cmd_bugreport(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf buffer = STRBUF_INIT;
-@@ -98,16 +121,21 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
- 	int report = -1;
- 	time_t now = time(NULL);
- 	struct tm tm;
-+	enum diagnose_mode diagnose = DIAGNOSE_NONE;
- 	char *option_output = NULL;
- 	char *option_suffix = "%Y-%m-%d-%H%M";
- 	const char *user_relative_path = NULL;
- 	char *prefixed_filename;
-+	size_t output_path_len;
- 
- 	const struct option bugreport_options[] = {
-+		OPT_CALLBACK_F(0, "diagnose", &diagnose, N_("(basic|all)"),
-+			       N_("create an additional zip archive of detailed diagnostics"),
-+			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG, option_parse_diagnose),
- 		OPT_STRING('o', "output-directory", &option_output, N_("path"),
--			   N_("specify a destination for the bugreport file")),
-+			   N_("specify a destination for the bugreport file(s)")),
- 		OPT_STRING('s', "suffix", &option_suffix, N_("format"),
--			   N_("specify a strftime format suffix for the filename")),
-+			   N_("specify a strftime format suffix for the filename(s)")),
- 		OPT_END()
- 	};
- 
-@@ -119,6 +147,7 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
- 					    option_output ? option_output : "");
- 	strbuf_addstr(&report_path, prefixed_filename);
- 	strbuf_complete(&report_path, '/');
-+	output_path_len = report_path.len;
- 
- 	strbuf_addstr(&report_path, "git-bugreport-");
- 	strbuf_addftime(&report_path, option_suffix, localtime_r(&now, &tm), 0, 0);
-@@ -133,6 +162,20 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
- 		    report_path.buf);
- 	}
- 
-+	/* Prepare diagnostics, if requested */
-+	if (diagnose != DIAGNOSE_NONE) {
-+		struct strbuf zip_path = STRBUF_INIT;
-+		strbuf_add(&zip_path, report_path.buf, output_path_len);
-+		strbuf_addstr(&zip_path, "git-diagnostics-");
-+		strbuf_addftime(&zip_path, option_suffix, localtime_r(&now, &tm), 0, 0);
-+		strbuf_addstr(&zip_path, ".zip");
-+
-+		if (create_diagnostics_archive(&zip_path, diagnose == DIAGNOSE_ALL))
-+			die_errno(_("unable to create diagnostics archive %s"), zip_path.buf);
-+
-+		strbuf_release(&zip_path);
-+	}
-+
- 	/* Prepare the report contents */
- 	get_bug_template(&buffer);
- 
-diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-index 08f5fe9caef..1a63b3803f3 100755
---- a/t/t0091-bugreport.sh
-+++ b/t/t0091-bugreport.sh
-@@ -78,4 +78,48 @@ test_expect_success 'indicates populated hooks' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success UNZIP '--diagnose creates diagnostics zip archive' '
-+	test_when_finished rm -rf report &&
-+
-+	git bugreport --diagnose -o report -s test >out &&
-+
-+	zip_path=report/git-diagnostics-test.zip &&
-+	grep "Available space" out &&
-+	test_path_is_file "$zip_path" &&
-+
-+	# Check zipped archive content
-+	"$GIT_UNZIP" -p "$zip_path" diagnostics.log >out &&
-+	test_file_not_empty out &&
-+
-+	"$GIT_UNZIP" -p "$zip_path" packs-local.txt >out &&
-+	grep ".git/objects" out &&
-+
-+	"$GIT_UNZIP" -p "$zip_path" objects-local.txt >out &&
-+	grep "^Total: [0-9][0-9]*" out &&
-+
-+	# Should not include .git directory contents by default
-+	! "$GIT_UNZIP" -l "$zip_path" | grep ".git/"
-+'
-+
-+test_expect_success UNZIP '--diagnose=basic excludes .git dir contents' '
-+	test_when_finished rm -rf report &&
-+
-+	git bugreport --diagnose=basic -o report -s test >out &&
-+
-+	# Should not include .git directory contents
-+	! "$GIT_UNZIP" -l "$zip_path" | grep ".git/"
-+'
-+
-+test_expect_success UNZIP '--diagnose=all includes .git dir contents' '
-+	test_when_finished rm -rf report &&
-+
-+	git bugreport --diagnose=all -o report -s test >out &&
-+
-+	# Should include .git directory contents
-+	"$GIT_UNZIP" -l "$zip_path" | grep ".git/" &&
-+
-+	"$GIT_UNZIP" -p "$zip_path" .git/HEAD >out &&
-+	test_file_not_empty out
-+'
-+
- test_done
+-- Generalize features not specific to Scalar: In the spirit of making Scalar
+-  configure only what is needed for large repo performance, move common
+-  utilities into other parts of Git. Some of this will be internal-only, but one
+-  major change will be generalizing `scalar diagnose` for use with any Git
+-  repository.
+-
+ - Move Scalar to toplevel: Move Scalar out of `contrib/` and into the root of
+   `git`, including updates to build and install it with the rest of Git. This
+   change will incorporate Scalar into the Git CI and test framework, as well as
 -- 
 gitgitgadget
-
