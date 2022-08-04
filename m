@@ -2,99 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78934C19F2A
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 13:38:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D276AC19F2D
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 13:38:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239784AbiHDNiQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 09:38:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42380 "EHLO
+        id S239908AbiHDNib (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 09:38:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234642AbiHDNiO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 09:38:14 -0400
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 582783FA0F
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 06:38:13 -0700 (PDT)
-Received: by mail-il1-x12a.google.com with SMTP id s16so6315289ilp.3
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 06:38:13 -0700 (PDT)
+        with ESMTP id S239898AbiHDNia (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 09:38:30 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03DB7422C8
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 06:38:28 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id bk11so15448000wrb.10
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 06:38:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=d0fjeNZatIoCCpL3MOs80eHz5w9CPucy8HxuIFBlhY0=;
-        b=caFr9B1PRjTxRzis96P/QPWygVGHIj22bDLJbGRKIp5hFQnbCDDzrTWV+MlLPHe1BA
-         fPAoR66g0K9miUzX1pGYAhaih4rVnMkjV1g3tIXo0HlRf4SfuxWHwNB7RdN29oisPqhT
-         nYgiwREYTFRtSMNXC1fndqRnCzAULHAcp6s9AaSYeb/gTuzFC31pFOCM3FKiCKIuO5SW
-         4RRmLrppOHpPnlS9YQlm5GRyEcEUM+4a9F6rzUzzfPln4SC2jAjjbIVABxSXpqvvlPCV
-         jXafGsNorngrwfGK+4Rg6qP5IMzmx99uniuiPJFJ3bJRNP5T8s1eDvYGl3wUrZMZHIY7
-         z5bg==
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=mc5ijKfyCeq4CNziKSaYEYldV36XG+ORC9pN1i744eE=;
+        b=hUKvWLnTcivMFAG2lutGHdr4QZYf9slil9G5z7J3+utC0g+ZUnuIDkqgECuEZDL91A
+         cG8SQeNtW6f4WP8Gxr7/+oZFJfOKe3xYcgHcJCbbHwRZr/OdGmxYC+d0uKpgqSAwfVJf
+         Xt7eIYEzmOMEMfB1Vq6qG+lwUMLHhXeX0OEoLwyS9+3FrtRuXelOyGNxPiLK6OuSaXw2
+         HVYutcE/xUea7BuqqsEap1AIKNK/6TnSrbISuJJEqEsZEI/bpNSD8WzD4w+Na+1WnXbu
+         A2fJx2xe7kYNEH0Wbv3VH+CapBmupXBZIZqNM4reetcgsbTIPXQ9Cigcuy6Wh6h2YuNf
+         TlQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=d0fjeNZatIoCCpL3MOs80eHz5w9CPucy8HxuIFBlhY0=;
-        b=YKmwtTdTnDW7l1VnVCmb9KBCxDEaRvOgYAm9lXJlD7jyGnnShC6aWzfn6TxYV4bKAj
-         nX+kdSMjBe7MvGZ5KWumzfFMSz40OrQfopn2vZF07k3wKZoTpVAx4YeF8BLNN8M1InNl
-         LRRZ60bBwMo+jx+TJo092/Ar1V8wl2r2GXJM0JTvsx5PkuO3Vw2jCYlfA3d3STx+cCPk
-         FiHFrNR8AIHrugYV4L6Irg2AfZ8m+XXmc9+tA/vkj9mTdRJZC5mKe6ZzLv0a638CgmsQ
-         FDJBi69kgzX5LOSGGYhJU7r4R29QKWKmOAyYPS2vJjScafPftfLS2fseStpm9GPr+zu+
-         /9mA==
-X-Gm-Message-State: ACgBeo0maWBPBhCVYBAg9CSRDBOqZl/S03LSfkP7sdHSFbf6NTBswHmW
-        rM1AEXDs4yYVAxl9NuaYPZiO
-X-Google-Smtp-Source: AA6agR7mqz8884y2Q5qrR9xe4NmpvYUMQHMyIAnChVTHZEbWtgeZLJVcS76oJqZ9Ido0XISQEzOExA==
-X-Received: by 2002:a05:6e02:17c6:b0:2dd:d9dc:6387 with SMTP id z6-20020a056e0217c600b002ddd9dc6387mr872371ilu.321.1659620292771;
-        Thu, 04 Aug 2022 06:38:12 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:8b6:bc6e:e88:13d9? ([2600:1700:e72:80a0:8b6:bc6e:e88:13d9])
-        by smtp.gmail.com with ESMTPSA id d17-20020a056602185100b0067c553c7f61sm474421ioi.16.2022.08.04.06.38.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Aug 2022 06:38:12 -0700 (PDT)
-Message-ID: <bf77e4cb-6205-36d3-d7e9-e2ea989ea637@github.com>
-Date:   Thu, 4 Aug 2022 09:38:11 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 08/10] log: create log.decorateFilter=all
-Content-Language: en-US
-To:     Josh Steadmon <steadmon@google.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        vdye@github.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
- <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
- <8142b32f023685c78936a618d7b93aaf86ba77fb.1659122979.git.gitgitgadget@gmail.com>
- <Yur5wXXiBtKRO/Y5@google.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <Yur5wXXiBtKRO/Y5@google.com>
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=mc5ijKfyCeq4CNziKSaYEYldV36XG+ORC9pN1i744eE=;
+        b=tqLorPoE8oxr+l1Z4qTjDsNVxrUL5TlcQbPQ+V4CAn1qMDcXqFOcqQvsk1l9Dii5x+
+         TjXGFAQJ1+HxR4XdV2T0jA3ExJPBBcIyQSgFwJ8pjaLo3MmalxOJb+RGHdXYFGBbbws4
+         a3s+v2eszzxZx0KAYjCBmR4Y7dlXswDMNuwxjmp74NDQ74ULfDv6hhSCCcUYxyYR48t8
+         /6IgTQDBgr8OmukxBm86YLegok58q1Hha2HRBncch4LLn7Y0pBr9lL7L/dl+dm5EbzW2
+         Rl9aIPhJmFOjSeqTPfelbcSpzbSYqcmdHNa75/CVY2okeiZDs83zl2q61JgMtrLH424I
+         8ODA==
+X-Gm-Message-State: ACgBeo0z9D1GX5/6F/sHgbehIX9OftLpwzuSoCUTL8G8XyRgRLIrp0zl
+        e9yA9KBMgMr06wdzhkl8SLBzym+QB5s=
+X-Google-Smtp-Source: AA6agR45uYcEQrPxgwWAOPb4TUOzNNMlY/vf9DxWVoUPI/NpNI5wh7EjKMjwMk0VuBq+g4MlhTbdtA==
+X-Received: by 2002:a5d:5a0f:0:b0:220:5930:dc65 with SMTP id bq15-20020a5d5a0f000000b002205930dc65mr1434192wrb.229.1659620306919;
+        Thu, 04 Aug 2022 06:38:26 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i29-20020a1c541d000000b003a5125049c9sm1557419wmb.9.2022.08.04.06.38.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Aug 2022 06:38:26 -0700 (PDT)
+Message-Id: <pull.1311.git.1659620305757.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 04 Aug 2022 13:38:25 +0000
+Subject: [PATCH] tests: cache glibc version check
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Elia Pinto <gitter.spiros@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/3/2022 6:42 PM, Josh Steadmon wrote:
-> On 2022.07.29 19:29, Derrick Stolee via GitGitGadget wrote:
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
->> +log.decorateFilter::
->> +	By default, `git log` only shows decorations for certain known ref
->> +	namespaces. If 'all' is specified, then show all possible ref
->> +	decorations. Default value is 'default'.
->> +
-> 
-> Could we make it more clear here that "all" is the only supported value?
-> IIUC any other value will just get the default behavior. Just reading
-> the doc as-is, I worry that users might expect that they can add
-> specific refs / ref-patterns that would be added to the filter.
+131b94a10a ("test-lib.sh: Use GLIBC_TUNABLES instead of MALLOC_CHECK_
+on glibc >= 2.34", 2022-03-04) introduced a check for the version of
+glibc that is in use. This check is performed as part of
+setup_malloc_check() which is called at least once for each test. As
+the test involves forking `getconf` and `expr` cache the result and
+use that within setup_malloc_check() to avoid forking these extra
+processes for each test.
 
-Perhaps that's a sign that the config key is poorly named. I had
-considered other options:
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+    tests: cache glibc version check
+    
+    A recent discussion on the list[1] reminded me that this patch was
+    waiting to be sent.
 
-* log.decorateFilterMode (seemed too long)
-* log.decorateMode (hard to distinguish from log.decorate)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1311%2Fphillipwood%2Fwip%2Ftest-cache-glibc-tunables-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1311/phillipwood/wip/test-cache-glibc-tunables-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1311
 
-Perhaps we could leave this as a boolean config with the name
-'log.decorateHiddenRefs' with default being 'false'? I'd love to
-explore other options.
+ t/test-lib.sh | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-Thanks,
--Stolee
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 7726d1da88a..ad81c78fce7 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -557,14 +557,19 @@ then
+ 		: nothing
+ 	}
+ else
++	_USE_GLIBC_TUNABLES=
++	if _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
++	   _GLIBC_VERSION=${_GLIBC_VERSION#"glibc "} &&
++	   expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null
++	then
++		_USE_GLIBC_TUNABLES=YesPlease
++	fi
+ 	setup_malloc_check () {
+ 		local g
+ 		local t
+ 		MALLOC_CHECK_=3	MALLOC_PERTURB_=165
+ 		export MALLOC_CHECK_ MALLOC_PERTURB_
+-		if _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
+-		   _GLIBC_VERSION=${_GLIBC_VERSION#"glibc "} &&
+-		   expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null
++		if test -n "$_USE_GLIBC_TUNABLES"
+ 		then
+ 			g=
+ 			LD_PRELOAD="libc_malloc_debug.so.0"
+
+base-commit: 23b219f8e3f2adfb0441e135f0a880e6124f766c
+-- 
+gitgitgadget
