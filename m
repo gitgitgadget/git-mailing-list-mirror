@@ -2,83 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18D1FC19F2B
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 08:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A288DC19F2A
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 13:05:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229499AbiHDIkY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 04:40:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45688 "EHLO
+        id S239644AbiHDNFs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 09:05:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229823AbiHDIkV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 04:40:21 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 143597652
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 01:40:20 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id f28so10504509pfk.1
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 01:40:20 -0700 (PDT)
+        with ESMTP id S239634AbiHDNFr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 09:05:47 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D948EA1B2
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 06:05:45 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id p82so934048iod.2
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 06:05:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=/1Hv9Xyoj1YpMhezxDfHks6up+vbrfaKW/eXmYkI6oo=;
-        b=JmOoP/7KBk6vLNuJpOr2098un2DEp7nwv9qJS/0Sb4IwSYYDBSN2ByCYY6M/jHA05l
-         THDtk/a2pNQT57Owdct9vpizwUx8jANV/aBDnthCbI+ueqw0VqZlGUE7TIZoNuJPydRm
-         j3u9/g3oXLPTrfAodxls06MOqZmAKIG7zkFY7igAuzLq6j3rB2pk2tR8mECbNebNaYZG
-         rOAsqQetp2zSX16YG9D/6QBkYyPfBvAAbZXsEHUc/poDJHk0Chx34CJ7zLlz3IfmPl/K
-         vY7b/cF3iKZqy23osPHuUpj6p/IYfgZ496INyNwhe8+plSqYh3fscRPBn8TTb2TbWcS5
-         hKzg==
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=fxO0DmQD3hVofYKG0YDeHOH5lFt7n+Te+Bk0OBBmnHw=;
+        b=SHC3QR+fyYQBNCviSovawooLk5Zx6Q1Vd9ne5CacxvEQI+/q3yWRX0q/4YvplE/K+q
+         y7jo2GSMgnLO4HjE8NYAWbIWeH4dnLohyz/GzJkvwJ7KtNJF41fV9aJREmNDlIAl6xUb
+         TfVhJaFMOsLIfYr41sr+bys3fTxvadyfDvnDMtXcw/frPX3DlZvAbKbBClm5PknMPhQj
+         CDMyfUY7AnVzAQMQnjHwmwgRtW+HIAutci7+rFDO7dXM0aBY1BFcfhZKvj4UPPlmswE5
+         H6FApAfJMWJOc4Rzi09fbQIsCYYZ3lbelLn3gHTG3+hjOdJkc9encCdjaiVh/BiL2Ppz
+         IFpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+         :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=/1Hv9Xyoj1YpMhezxDfHks6up+vbrfaKW/eXmYkI6oo=;
-        b=UeTY94ZuUJtzKHZw19myxj6Y7qXVtFQt3crqEHpEUj+FqvZIfR+hJEnUz+iRFesq+5
-         vARMz3H+hAQy4vhl8VjVGmwheGHlqriQspvSAd3guVqfWD+UZx3sqIkw2QnIxxqQfHe8
-         AvAtwSObdjn7UhCJkd1fNCuMFDUWuLcLozhghp8YSv/aal6EfRi1bTHx2oRO7lxmN51K
-         +HTIrYfszVlQ1BfgkKtgsEcMVqvSB7ga1wfHDyBX3J6BXySKnp1M8LgravoG6eeTYz2U
-         n0uGgWp1jkyr+Tm1Wvxjcg5dNU2JcADChnAgnbrvQlrwXf/HhhrA7thl44q+rtE4hkJO
-         1t3A==
-X-Gm-Message-State: ACgBeo3C3MjM6joNi9x0tbXXdkKSo1Lp2sZir9evcmhF+1bLvRbijYJz
-        vH1pj9EWg5qp5AfIwMFstJwnR14ZDyI=
-X-Google-Smtp-Source: AA6agR6UDJfRV6/PhbiA+YjbrEvO/NscALa8Tc+OvECF3GTwmYv8aPT4lMA2v9TSzOcz3eOqAUQ9oA==
-X-Received: by 2002:a65:6cc8:0:b0:3fe:2b89:cc00 with SMTP id g8-20020a656cc8000000b003fe2b89cc00mr783386pgw.599.1659602419111;
-        Thu, 04 Aug 2022 01:40:19 -0700 (PDT)
-Received: from [127.0.0.1] ([45.138.210.17])
-        by smtp.gmail.com with ESMTPSA id u11-20020a17090341cb00b0016be14a776asm236653ple.286.2022.08.04.01.40.16
+        bh=fxO0DmQD3hVofYKG0YDeHOH5lFt7n+Te+Bk0OBBmnHw=;
+        b=4nYDO+ecKXkr3U0AfDltzYRfihm2dtrgXpItiOWQRthezzYKYMUozUQ+pD+pUN+a+s
+         0kYfHol98gbL9bgsxm+aFs7y1bIMgUsj2ucFyVBVv/kV+4H1lJ08t47fMJqrWnQU4f5Q
+         IJ4wbWfMVu4+Omplm6FiPaD8bZcfx9vaLXwBuL4RhnKJjwqT0PiX82C2QJ6LtngRLSrD
+         roxSc2wdoWEe+XXfxu61LsVzwr5HP1cQ5dvVBWWyw7WvdjG4oSUSOyayry5bBl5CyJCr
+         DknB4N8ass/21ZpjRQu5li7HqU+zeF2193Nx4aF9g21JCuk/DkLsXnRn0jXnw2OqU7Ek
+         z/Pw==
+X-Gm-Message-State: ACgBeo1naq7RrX6vNQN7UB1yTotymRHZM9XCBh3fZYxdKJaDqc74sNBW
+        /QcvstllCgFdMkp8jMYQq4pz
+X-Google-Smtp-Source: AA6agR7oWBQy8+XvoGcWgLx3I8iJRkwUN2jBC9RXkvp3Y4HxC/KDqjaSPFNiQWyW2lsdfvszRWiPiQ==
+X-Received: by 2002:a5e:8216:0:b0:681:4dea:6f2a with SMTP id l22-20020a5e8216000000b006814dea6f2amr736651iom.206.1659618345248;
+        Thu, 04 Aug 2022 06:05:45 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:8b6:bc6e:e88:13d9? ([2600:1700:e72:80a0:8b6:bc6e:e88:13d9])
+        by smtp.gmail.com with ESMTPSA id bg12-20020a0566383c4c00b0033f4b1c2151sm412634jab.154.2022.08.04.06.05.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Aug 2022 01:40:18 -0700 (PDT)
-Message-ID: <1fb0b736-280f-01bf-bb7c-48e8c9b060cb@gmail.com>
-Date:   Thu, 4 Aug 2022 16:40:13 +0800
+        Thu, 04 Aug 2022 06:05:44 -0700 (PDT)
+Message-ID: <6803b725-526e-a1c8-f15c-a9ed4a144d4c@github.com>
+Date:   Thu, 4 Aug 2022 09:05:43 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v1 6/7] mv: from in-cone to out-of-cone
+Subject: Re: [PATCH 2/2] config: let feature.experimental imply
+ gc.cruftPacks=true
 Content-Language: en-US
-To:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
-Cc:     vdye@github.com, gitster@pobox.com
-References: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
- <20220719132809.409247-7-shaoxuan.yuan02@gmail.com>
- <d30a358e-c9f0-55fa-8c8b-37f0cb0d7eb3@github.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-In-Reply-To: <d30a358e-c9f0-55fa-8c8b-37f0cb0d7eb3@github.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+References: <20220803205721.3686361-1-emilyshaffer@google.com>
+ <20220803205721.3686361-3-emilyshaffer@google.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <20220803205721.3686361-3-emilyshaffer@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/20/2022 2:14 AM, Derrick Stolee wrote:
- >> +                if ((mode & INDEX) && is_empty_dir(src_dir))
- >> +                    rmdir_or_warn(src_dir);
- >
- > This is an interesting cleanup of the first-level directory. Should it be
- > recursive and clean up an entire chain of paths?
+On 8/3/2022 4:57 PM, Emily Shaffer wrote:
 
-Indeed. I'm planning to use an array to record the possible `src_dir`,
-i.e. WORKING_DIRECTORYs in `git-mv`, and use a loop to cleanup the
-empty directories recursively.
+> +	/* feature.experimental implies gc.cruftPacks=true */
+> +	git_config_get_bool("feature.experimental", &experimental);
+> +	if (experimental)
+> +		cruft_packs = 1;
+> +
 
---
+This should be grouped into prepare_repo_settings() in repo-settings.c
+so we have a single place to see what is updated by feature.experimental.
+
 Thanks,
-Shaoxuan
+-Stolee
