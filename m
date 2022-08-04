@@ -2,166 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4C4FC25B08
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 22:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 897B3C25B06
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 22:33:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239895AbiHDWWd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 18:22:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47088 "EHLO
+        id S235848AbiHDWc7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 18:32:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239667AbiHDWWS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 18:22:18 -0400
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE89D71BDF
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 15:21:02 -0700 (PDT)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-10ec41637b3so1109489fac.4
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 15:21:02 -0700 (PDT)
+        with ESMTP id S230510AbiHDWc6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 18:32:58 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70EBB33421
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 15:32:57 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id m8so1343863edd.9
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 15:32:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=MVLzxqfk7YnFDRAOqdt/1ZY1eZVoz/AcfA3PE6HMF0E=;
-        b=U4Qh6vlpd1/lUyVCQoEtYfxD0Fbf2ypglsKEe/cK/h4VTH9uzNwXOVFtoXKJn4k/xD
-         5d9ubRc73Qq234vxKwPZuUKM9ZTlu8thpoovN1eqLpKSUKNHjHDp9IezY+5qbZTcP8hM
-         6i0wJTvK3rpjrJ1Hbk+ecP97wi845LDTguCkrDvUZrZuD8WK3kCuTXHUCAYR75SGGXPf
-         A85LHcNx74b6flbSHPXhaTtSgrCqZUtYY0YSUXclewyrMSNbx+YvwY3rfzmQ7Svg3HOR
-         dEmVMnYSz0zHLxfQV0yhZJ2A7/CtbuRITUYkdAbh/lU2ZylCFMV7vLTznJwt+YNik9t0
-         3cjA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc;
+        bh=dlV26dHszscC+rSiayam83gtO2W1LICsftQdqIxkCFo=;
+        b=qPoQ/pCxOsSBocx3dyYkgVpt7FTc/GMcDR7UZ53Mx+BUXAPZeQGpZBXsDICf/ZUoYY
+         +mhapmBT521L1lQQJdn10pPY+mtxOoGRtkca31DPVdOBgY1X39aU6/EMZjY79qKsohOC
+         NvrG7drMJK7AXT4RYa5FswAFTIXcpFmHj0Zen6lpouHrG/rGe6XjZc9cDHlMogxx/IqJ
+         K1SaLO2dg4qkrrSRQRTvt63IQlTUxKlEf647V2htPc+jr/e3rtl8g1UO7jROT/59tyzh
+         UkZd6nOSA/kVSGO9cZAAicSJraUgSFiVy40Gi/5nMquyAncCai1zCNnqxK+ty41hHPOY
+         wW/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=MVLzxqfk7YnFDRAOqdt/1ZY1eZVoz/AcfA3PE6HMF0E=;
-        b=EKNrb3UWx8cEznMdvQmTgyrrj3x+8U4cZ+gcEzi/oQlUGdlzu7cjDv4jD+RmHRzAgc
-         AX1xgfkYqHPjrtbNzI0Ok58Qjz5my8hH+rmj5AX6hj+gsBGS3cDbsbXwDLxb+bU+Ph4r
-         Hufr++d8jVWDIwTCekRzKGq0LEqDBQLI/xu9SQTBo6UB7xKkMSUHxCmDGIhAmoDj9fP4
-         7brn6BcMcIcZ2GIId9MUXmIbyZWMPoEl5I/HLjWiMhTELEVBYg/AzhadEqgwHM/thCNL
-         NSn3ipFkBc1b/j4lOU0oOPxBxc50I5Bjep1MTz8GSgm/UFH5swHRFVPkZ7tebdFHkaCS
-         OGEQ==
-X-Gm-Message-State: ACgBeo3Ur3beJTxOE8glda63z2shcxIrIU6cQrrS6L/EiXhK7CdIy1qp
-        5PCo6XLItCDlGBuiBM19K4p+sxtrAAs9AiXB5q+vbQ==
-X-Google-Smtp-Source: AA6agR5I819DOcti6UUs7D2piJRtPoYlXdPJhlLONTMfSOfUV1sORJrfsWKCBrMCrk2B8w/IARy43DnRo1Txqs/F2K8=
-X-Received: by 2002:a05:6870:2191:b0:10e:75b6:fc3a with SMTP id
- l17-20020a056870219100b0010e75b6fc3amr1844609oae.236.1659651661991; Thu, 04
- Aug 2022 15:21:01 -0700 (PDT)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
+        bh=dlV26dHszscC+rSiayam83gtO2W1LICsftQdqIxkCFo=;
+        b=MFE5pd5GtwMWM6LU9dHdd5eE+dbi25iy/XFpTscFCd8hd1niPkQkLXOic7UcfbgcA5
+         WJkklMEb2x9MEkiPq1FthF8wjXqgWuFEO05GMWUttxiQVIEuE+Iig8prZAakPpTBmLbh
+         nUCZOy82uvThWJWVK8yQovO38MU2695tKSGp6IvYabuU/xxtfi339vTLEL9+xmL/FmQ9
+         Ah2T1xG+ZMghZCDgZ9u1fuSziYBvZFKdGOnln0QKh8HK8SSfP8XztrTs4o2j0ZmuBqWC
+         gX4m8WgpVb3F5m0HwkjiaZZGc9zBitQ7rI+njnaD0D74TflImRYBRi2W8FiLFJlcmiBP
+         SrFg==
+X-Gm-Message-State: ACgBeo2nZxWU3yUUWQ/A/DgY/iDLf+hqzLbMRs3DOSab+rurFTAZkSBG
+        yN0rb6uSwgz3I3yt8GHLFKm0JaqAelqBNnOkB8I=
+X-Google-Smtp-Source: AA6agR5fSubSn/8cENq+CwUMK9SLXB361Su9hzwy+1xplgfex77X1phJyqr9Xn8Qd/uo+vjc/nqgeildvt04H19dGSo=
+X-Received: by 2002:a05:6402:3485:b0:43d:7fe0:74d1 with SMTP id
+ v5-20020a056402348500b0043d7fe074d1mr4023695edc.413.1659652375985; Thu, 04
+ Aug 2022 15:32:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220502170904.2770649-1-calvinwan@google.com>
- <20220728230210.2952731-6-calvinwan@google.com> <b33ec478-8858-faa7-2678-f02559426539@gmail.com>
-In-Reply-To: <b33ec478-8858-faa7-2678-f02559426539@gmail.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Thu, 4 Aug 2022 15:20:50 -0700
-Message-ID: <CAFySSZDvgwbbHCHfyuaqX3tKsr-GjJ9iihygg6rNNe46Ys7_EA@mail.gmail.com>
-Subject: Re: [PATCH v5 5/6] transport: add client support for object-info
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
-        philipoakley@iee.email, johncai86@gmail.com
+References: <977a6e0e-251c-4fa5-8b3b-fa3e2a761926@www.fastmail.com>
+ <YtCMklbIoTAN/WRs@coredump.intra.peff.net> <ecb6fa27-b918-4234-8e44-13c2a3e76e07@gmail.com>
+ <87d46db2-8e09-e5a7-b6bb-e94bf05df305@github.com> <220804.86tu6rso6n.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220804.86tu6rso6n.gmgdl@evledraar.gmail.com>
+From:   Emily Noneman <emily.noneman@gmail.com>
+Date:   Thu, 4 Aug 2022 18:32:44 -0400
+Message-ID: <CAKvVO18RVye=PkBRv=trj2GHh8ccGKL5j0mMq2eHQ1SX=wsr8A@mail.gmail.com>
+Subject: Re: Bugreport: pack-objects died of signal 11
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>, Paul Horn <git@knutwalker.engineer>,
+        git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > The client currently supports requesting a list of object ids with
-> > features 'size' and 'type' from a v2 server. If a server does not
-> > advertise either of the requested features, then the client falls back
-> > to making the request through 'fetch'.
+I have an updated backtrace with optimizations turned off:
+Thread 2 received signal SIGSEGV, Segmentation fault.
+0x000000010016f770 in git_config_check_init (repo=3D0x0) at config.c:2538
+2538 if (repo->config && repo->config->hash_initialized)
+(gdb) bt
+#0  0x000000010016f770 in git_config_check_init (repo=3D0x0) at config.c:25=
+38
+#1  0x000000010016f94d in repo_config_get_string (repo=3D0x0,
+key=3D0x10036e541 "status.showuntrackedfiles", dest=3D0x7ff7bfefc6d0) at
+config.c:2574
+#2  0x00000001001b4dbf in new_untracked_cache_flags
+(istate=3D0x7ff7bfefc858) at dir.c:2781
+#3  0x00000001001b0027 in new_untracked_cache (istate=3D0x7ff7bfefc858,
+flags=3D-1) at dir.c:2797
+#4  0x00000001001aff6c in add_untracked_cache (istate=3D0x7ff7bfefc858)
+at dir.c:2806
+#5  0x0000000100276126 in tweak_untracked_cache
+(istate=3D0x7ff7bfefc858) at read-cache.c:1996
+#6  0x000000010027352e in post_read_index_from (istate=3D0x7ff7bfefc858)
+at read-cache.c:2028
+#7  0x0000000100273228 in read_index_from (istate=3D0x7ff7bfefc858,
+path=3D0x600002c0ac00
+"/Users/emily.noneman/workspace/webdev/.NetLedger_LocalBranchData.git/index=
+",
+    gitdir=3D0x600002c04080
+"/Users/emily.noneman/workspace/webdev/.NetLedger_LocalBranchData.git")
+at read-cache.c:2457
+#8  0x00000001002a98c1 in add_index_objects_to_pending
+(revs=3D0x7ff7bfefcfe8, flags=3D0) at revision.c:1783
+#9  0x00000001002adb4b in handle_revision_pseudo_opt
+(revs=3D0x7ff7bfefcfe8, argv=3D0x600003704020, flags=3D0x7ff7bfefcaf8) at
+revision.c:2717
+#10 0x00000001002acd2c in setup_revisions (argc=3D6,
+argv=3D0x600003704000, revs=3D0x7ff7bfefcfe8, opt=3D0x7ff7bfefcb78) at
+revision.c:2806
+#11 0x00000001000a747e in get_object_list (revs=3D0x7ff7bfefcfe8, ac=3D6,
+av=3D0x600003704000) at builtin/pack-objects.c:3993
+#12 0x00000001000a5f30 in cmd_pack_objects (argc=3D0,
+argv=3D0x7ff7bfeff968, prefix=3D0x0) at builtin/pack-objects.c:4472
+#13 0x0000000100002a03 in run_builtin (p=3D0x1003d0fb8 <commands+1992>,
+argc=3D11, argv=3D0x7ff7bfeff968) at git.c:466
+#14 0x0000000100001528 in handle_builtin (argc=3D11,
+argv=3D0x7ff7bfeff968) at git.c:720
+#15 0x0000000100002406 in run_argv (argcp=3D0x7ff7bfeff7dc,
+argv=3D0x7ff7bfeff7d0) at git.c:787
+#16 0x00000001000012f9 in cmd_main (argc=3D11, argv=3D0x7ff7bfeff968) at gi=
+t.c:920
+#17 0x00000001001155c6 in main (argc=3D12, argv=3D0x7ff7bfeff960) at
+common-main.c:56
+
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason, your patch fixed the issue for me! =
+Thank you!
+
+
+On Thu, Aug 4, 2022 at 5:18 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
 >
-> I'm confused by the 'type' support, I might have missed something as I'm
-> not familiar with this code but I couldn't see where we parse the type
-> returned by the server.
-
-I should clarify that the server does not support 'type', only the client.
-Since the client falls back to 'fetch' to grab the object info if the server
-doesn't support a requested option (e.g. type), I have 'type' included
-as part of the supported client options.
-
-> > +     for (i = 0; i < args.object_info_options->nr; i++) {
-> > +             if (packet_reader_read(&reader) != PACKET_READ_NORMAL) {
-> > +                     check_stateless_delimiter(transport->stateless_rpc, &reader, "stateless delimiter expected");
 >
-> This is one of a number of lines in this series that are way over the 80
-> column limit.
-
-ack
-
-> > +             if (unsorted_string_list_has_string(args.object_info_options, reader.line)) {
-> > +                     if (!strcmp(reader.line, "size"))
-> > +                             size_index = i;
+> On Thu, Aug 04 2022, Derrick Stolee wrote:
 >
-> Should we be checking for "type" as well? Also does protocol-v2.txt need
-> updating as it only mentions "size" as an attribute.
-
-I gave context above -- the server does not accept 'type' so protocol-v2.txt
-does not need to be updated.
-
-> To avoid a possible out-of-bounds access we need to check that
-> size_index + 1 < object_info_value.nr in case the server response is
-> malformed
-
-ack
-
-> > +                     if (!strcmp(object_info_values.items[1 + size_index].string, ""))
-> > +                             die("object-info: not our ref %s",
+> > On 8/4/2022 2:21 PM, Emily Noneman wrote:
+> >> The stack trace:
+> >> Thread 2 received signal SIGSEGV, Segmentation fault.
+> >> git_config_check_init (repo=3D0x0) at config.c:2538
+> >> 2538        if (repo->config && repo->config->hash_initialized)
+> >> (gdb) bt
+> >> #0  git_config_check_init (repo=3D0x0) at config.c:2538
+> >> #1  0x00000001001197a8 in repo_config_get_string (repo=3D0x0, key=3D0x=
+1002a3c49 "status.showuntrackedfiles", dest=3D0x0, dest@entry=3D0x7ff7bfefc=
+1f0) at config.c:2574
+> >> #2  0x000000010014a85b in new_untracked_cache_flags (istate=3D0x0) at =
+dir.c:2781
+> >> #3  new_untracked_cache (istate=3D0x0, flags=3D-1) at dir.c:2797
+> >> #4  0x00000001001d68f1 in tweak_untracked_cache (istate=3D0x7ff7bfefc7=
+e0) at read-cache.c:1996
+> >
+> > Here is where things are confusing:
+> >
+> > * tweak_untracked_cache() takes an 'istate' that is non-NULL here.
+> >
+> > * The next spot in the stack is new_untracked_cache() with a NULL 'ista=
+te'.
+> >
+> > The only way these are connected is by a missing stack frame (probably
+> > optimized out) calling add_untracked_cache(). Still, it should be
+> > passing 'istate' throughout this process.
+> >
+> > The repo_config_get_string() call must also be coming from
+> > new_untracked_cache_flags() which is again a missing stack frame,
+> > but is called from new_untracked_cache(). Strangely, it's using
+> > a NULL 'repo' here which should have come from 'istate->repo', so
+> > we should have had a segfault earlier.
+> >
+> > Sorry for the drive-by commentary without any solution. This is
+> > just genuinely puzzling to me.
 >
-> I'm a bit confused by this message is it trying to say "object %s is
-> missing on the server"?
-
-Correct. You'll find the same error message in upload-pack.c
-
-> > +                                     object_info_values.items[0].string);
-> > +                     *(*object_info_data)[i].sizep = strtoul(object_info_values.items[1 + size_index].string, NULL, 10);
+> I think this segfault might be fixed by this patch of mine, which I
+> wrote for something unrelated back in April (but it was never sent to
+> the list).
 >
-> As Junio pointed out in his comments in v4 there is no error checking
-> here - we should check the server has actually returned a number. Note
-> that strtoul() will happily parse negative numbers so we probably want
-> to do something like
+>         https://github.com/avar/git/commit/d83bfa866ba
 >
-> const char *endp
-> errno = 0
-> if (!isdigit(*object_info_values.items[1 + size_index].string))
->    die("...")
-> *(*object_info_data)[i].sizep = strtoul(object_info_values.items[1 +
-> size_index].string, &endp, 10);
-> if (errno || *endp)
->    die("...")
-
-
-
-> Should be we checking the object id matches what we asked for? (I'm not
-> sure if protocol-v2.txt mentions the order in which the objects are
-> returned)
-
-Hmmmm I think I either check for an object id match or update
-protocol-v2.txt to mention order is consistent.
-
-> Should we be parsing the object type here as well?
-
-When the server starts supporting it.
-
-> > +             for (i = 0; i < transport->smart_options->object_info_oids->nr; i++) {
-> > +                     struct ref *temp_ref = xcalloc(1, sizeof (struct ref));
+> Emily and/or Paul: Are you able to test the patch to see if it would
+> work, diff here: https://github.com/avar/git/commit/d83bfa866ba.patch
 >
-> Using CALLOC_ARRAY() or p = xcalloc(1, sizeof(*p)) would be safer here
-> (and everywhere else where you have used xcalloc()) as it ensures we
-> allocate the correct size.
-
-ack
-
-> > +     /*
-> > +      * Transport will attempt to pull only object-info. Fallbacks
-> > +      * to pulling entire object if object-info is not supported
-> > +      */
+> It's exactly on the codepath in this stacktrace,
+> i.e. add_index_objects_to_pending() in revision.c will do before/after:
 >
-> Is it definitely true that we fallback to pulling the entire object? -
-> there is at least one place above where we do
-
-Yes, fetch_refs_via_pack() is where fetch_object_info() is called,
-making it easy to fallback if fetch_object_info() fails.
-
->> +     while (packet_reader_read(&reader) == PACKET_READ_NORMAL && i < args.oids->nr) {
->> +             struct string_list object_info_values = STRING_LIST_INIT_DUP;
+>         - struct index_state istate =3D { NULL };
+>         + struct index_state istate =3D { .repo =3D revs->repo };
 >
-> I forget to say earlier that this is leaked
-
-ack
-
-Thank you for the review!
+> Then when we're all the way down in new_untracked_cache_flags() we do:
+>
+>         struct repository *repo =3D istate->repo;
+>
+> Which then calls (indirectly) git_config_check_init(), and we segfault
+> not because istate is NULL, but because the "repo" it's carrying is
+> NULL.
+>
+> But maybe I'm wrong, I haven't been able to reproduce this.
+>
+> The reason I wrote that patch (as can be seen if you peek at the WIP
+> branch it's at) is because I ran into a similar dependency between
+> the_index and the_repo & an istate variable being passed around with
+> fsmonitor-settings.c.
