@@ -2,68 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B065DC00144
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 06:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E189C00144
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 06:59:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238874AbiHDGuB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 02:50:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53148 "EHLO
+        id S232615AbiHDG7V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 02:59:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238870AbiHDGuA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 02:50:00 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF29D45F5F
-        for <git@vger.kernel.org>; Wed,  3 Aug 2022 23:49:58 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id uj29so22040483ejc.0
-        for <git@vger.kernel.org>; Wed, 03 Aug 2022 23:49:58 -0700 (PDT)
+        with ESMTP id S229906AbiHDG7U (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 02:59:20 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDB8D5A16B
+        for <git@vger.kernel.org>; Wed,  3 Aug 2022 23:59:18 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id z22so24129020edd.6
+        for <git@vger.kernel.org>; Wed, 03 Aug 2022 23:59:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc;
-        bh=ZAt+k4qeukc5BhI1U4tmndrKu7MlvR+fkJ525kSplaw=;
-        b=qlDj3jHCvoqXBPrt4iNTVfowJ610fdzqv7G2h7on9AukneOngZ/WWYITO54Ay8D9yf
-         GjN7AklLr/znVNBpgFYCQlM6t75ncl333ExGAyZsYIyGlKAUlT6rVzsVQOKdqTRB6BI9
-         GNBAqK566nrZV5wMiiIN7VkGqbnohsIRqngMmCJm4A+xZ5D/A1CAOETC62B+PxZI6nbe
-         LtF4TW6VP+MroafA98ogaeGqF/2sHys94FeDrk0mFNzRDFVNLdrnCkHl9GIh8HlqcmR+
-         UVV02Q9WXqF/bFJGeeud69gzxA5CZBc4rPazpuEsywdsFYFGNFo7O7LGUnEuOOMELtFm
-         oNLA==
+        bh=pOACiyMjecjp7ny/p6m4XXeMhf30U9eesAcRAp0yIc0=;
+        b=CujfGs791davmS7MIq0jHi3dpCQQ5sKBU5aQgjvrqkHbKObAa+ZIPwy1gzB5I+Hhj8
+         Evd4N2V8fBOswLEMSsg8yvG3ZlQznyi/jquUS5ZEjLez3EE4wY8ja407OYqsmMaejsAf
+         CbxmXN5Owivqqyx0d2iXaUM9+TV3i1gQ6CJ9/yC8KcT3z4ABxu6UQRPeLJjYSFwHtuVU
+         tf67MlrjT02PFMIif4i2Chgm6i3SsxYbPXb/7SNhc2BNpV14cEeFAEICh/tpvmdDR2Tu
+         N48A23gi2QQ8qEpY8pqb0YKGFk85MD26egAwhy9/+67253/dTBuqe1IciCz5DwAxVdmy
+         69uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=ZAt+k4qeukc5BhI1U4tmndrKu7MlvR+fkJ525kSplaw=;
-        b=tnQio1vJHqRXbENSaiCy3kVpqfCBLED0y7D7ThHdfy4f+uB1mDPWXTdl7wAK+HEYkw
-         zJCmpt4Z5kqf0GOmpI/liqYcgWxs7t7LRl4GAtOv8qavUef8JvA2gSnceyqu79Gvjpt6
-         0FNOoZ4xETlGxWUN7m9dSoB9e+n7ZpMEH1PPLWGFYmdyk2D4KCwoOZmhFn02ue46zdAY
-         ogTzvDnia8YqjndtvdRrNxU1pB6s7DxIeat/RBOhcq9k4XAhqULGASE2ZlfaU7s20E8c
-         YHpkXA8PAqZIukQL0j2D9tcG0oUMMzwfzy9+f//xk5rirC7iGAudwfywQpPJr4wq3luk
-         6QHw==
-X-Gm-Message-State: ACgBeo30QimqtGLFS01V50IaxhsFOjZmUci5u1vXEe79s54TpTvyq+YR
-        K/+xOV2ohCblFGfwbLzCZ7A=
-X-Google-Smtp-Source: AA6agR5ZbIxo4hCoiwC0CqqEeGaGAlCjZV9NqXi1Ov7WoTYqolzHRw0fse/YIwKZj3rO7e1a+Amczw==
-X-Received: by 2002:a17:907:9612:b0:72e:56bd:2b9a with SMTP id gb18-20020a170907961200b0072e56bd2b9amr353900ejc.526.1659595797287;
-        Wed, 03 Aug 2022 23:49:57 -0700 (PDT)
+        bh=pOACiyMjecjp7ny/p6m4XXeMhf30U9eesAcRAp0yIc0=;
+        b=WMuD544qp/gPCI4wD8iSY/SfR7twoALySKsbthuLrH5SuCHSv3JsY+Cb5gMnKd4H+r
+         kJVCarB/tu5re5e4O/tL2C0LyPZvRiVGiE1bJMauSTxSzVXg8Y/0AaZhd7ouNMcDdI2T
+         tEDU44ebz4oS+MfcruvClGnZ7QbUe9lrmyCQCnbb2fQk0BKh0hATF/kfWpETFIpXY2kU
+         HR3DlytwKgffLc4cDeKYyuaInF5pFM8b9g1XFfIgLA4vS77m3Uk01XeDpW3hY6OGo5Mj
+         aF19qzzcc1rO4fNjCc/q4w22mN3jW/kC+co9rAkge35KkMN/l8UVVkTLjC0gvtmVoJRS
+         1dbg==
+X-Gm-Message-State: ACgBeo38Nvc6cWLV85jFSZszqz9pw32UMA/LLtgHJZPLUtu8b0+vLFDt
+        LIvus4gBs8MZ7/Gsnnag1qw=
+X-Google-Smtp-Source: AA6agR69GUvSPYW+5b5yHNX3bnGRtN5l9UCs7mgZZAXIBSrVrHpahqn1+xjSBrNc09vERLxqsEsAlQ==
+X-Received: by 2002:a05:6402:278d:b0:43d:cf90:c91a with SMTP id b13-20020a056402278d00b0043dcf90c91amr591735ede.186.1659596357197;
+        Wed, 03 Aug 2022 23:59:17 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id v7-20020a1709062f0700b00730165d7f41sm25534eji.13.2022.08.03.23.49.56
+        by smtp.gmail.com with ESMTPSA id p3-20020a17090653c300b00730223dc5c0sm7546291ejo.206.2022.08.03.23.59.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Aug 2022 23:49:56 -0700 (PDT)
+        Wed, 03 Aug 2022 23:59:16 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1oJUg7-009eGj-2x;
-        Thu, 04 Aug 2022 08:49:55 +0200
+        id 1oJUp9-009eZ4-1y;
+        Thu, 04 Aug 2022 08:59:15 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, derrickstolee@github.com,
         johannes.schindelin@gmx.de, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v2 07/10] builtin/diagnose.c: gate certain data behind
- '--all'
-Date:   Thu, 04 Aug 2022 08:39:47 +0200
+Subject: Re: [PATCH v2 09/10] scalar-diagnose: use 'git diagnose --all'
+Date:   Thu, 04 Aug 2022 08:54:01 +0200
 References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
  <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
- <a3e62a4a0418abbff5015302f0102ffacccf0ca4.1659577543.git.gitgitgadget@gmail.com>
+ <6834bdcaea838cc49f209efd785bf2bdf09e9c08.1659577543.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <a3e62a4a0418abbff5015302f0102ffacccf0ca4.1659577543.git.gitgitgadget@gmail.com>
-Message-ID: <220804.86v8r8ec4s.gmgdl@evledraar.gmail.com>
+In-reply-to: <6834bdcaea838cc49f209efd785bf2bdf09e9c08.1659577543.git.gitgitgadget@gmail.com>
+Message-ID: <220804.86r11webp8.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,83 +73,103 @@ X-Mailing-List: git@vger.kernel.org
 On Thu, Aug 04 2022, Victoria Dye via GitGitGadget wrote:
 
 > From: Victoria Dye <vdye@github.com>
-> [...]
->  --------
->  [verse]
->  'git diagnose' [(-o | --output-directory) <path>] [(-s | --suffix) <format>]
-> +	       [-a | --all]
-
-I have some local patches that...
-
->  static const char * const diagnose_usage[] = {
-> -	N_("git diagnose [-o|--output-directory <file>] [-s|--suffix <format>]"),
-> +	N_("git diagnose [-o|--output-directory <file>] [-s|--suffix <format>] [-a|--all]"),
->  	NULL
->  };
-
-...spot when we have SYNOPSIS & -h discrepancies. In this case we break
-with a \n after <format> in the SYNOPSIS, but you don't add a "\n" and
-indentation here in the -h output. The two should be the same.
-
-> @@ -13,6 +13,7 @@ int cmd_diagnose(int argc, const char **argv, const char *prefix)
->  	struct strbuf zip_path = STRBUF_INIT;
->  	time_t now = time(NULL);
->  	struct tm tm;
-> +	int include_everything = 0;
->  	char *option_output = NULL;
->  	char *option_suffix = "%Y-%m-%d-%H%M";
->  	char *prefixed_filename;
-> @@ -22,6 +23,9 @@ int cmd_diagnose(int argc, const char **argv, const char *prefix)
->  			   N_("specify a destination for the diagnostics archive")),
->  		OPT_STRING('s', "suffix", &option_suffix, N_("format"),
->  			   N_("specify a strftime format suffix for the filename")),
-> +		OPT_BOOL_F('a', "all", &include_everything,
-> +			   N_("collect complete diagnostic information"),
-> +			   PARSE_OPT_NONEG),
-
-Nice to have a "stats only" by default and some way to add the whole
-shebang optionally...
-
-> +int create_diagnostics_archive(struct strbuf *zip_path, int include_everything)
-
-...but maybe...
->  {
->  	struct strvec archiver_args = STRVEC_INIT;
->  	char **argv_copy = NULL;
-> @@ -176,11 +176,13 @@ int create_diagnostics_archive(struct strbuf *zip_path)
->  	loose_objs_stats(&buf, ".git/objects");
->  	strvec_push(&archiver_args, buf.buf);
+>
+> Replace implementation of 'scalar diagnose' with an internal invocation of
+> 'git diagnose --all'. This simplifies the implementation of 'cmd_diagnose'
+> by making it a direct alias of 'git diagnose' and removes some code in
+> 'scalar.c' that is duplicated in 'builtin/diagnose.c'. The simplicity of the
+> alias also sets up a clean deprecation path for 'scalar diagnose' (in favor
+> of 'git diagnose'), if that is desired in the future.
+>
+> This introduces one minor change to the output of 'scalar diagnose', which
+> is that the prefix of the created zip archive is changed from 'scalar_' to
+> 'git-diagnostics-'.
+>
+> Signed-off-by: Victoria Dye <vdye@github.com>
+> ---
+>  contrib/scalar/scalar.c | 29 +++++++----------------------
+>  1 file changed, 7 insertions(+), 22 deletions(-)
+>
+> diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+> index b10955531ce..fe2a0e9decb 100644
+> --- a/contrib/scalar/scalar.c
+> +++ b/contrib/scalar/scalar.c
+> @@ -11,7 +11,6 @@
+>  #include "dir.h"
+>  #include "packfile.h"
+>  #include "help.h"
+> -#include "diagnose.h"
 >  
-> -	if ((res = add_directory_to_archiver(&archiver_args, ".git", 0)) ||
-> -	    (res = add_directory_to_archiver(&archiver_args, ".git/hooks", 0)) ||
-> -	    (res = add_directory_to_archiver(&archiver_args, ".git/info", 0)) ||
-> -	    (res = add_directory_to_archiver(&archiver_args, ".git/logs", 1)) ||
-> -	    (res = add_directory_to_archiver(&archiver_args, ".git/objects/info", 0)))
-> +	/* Only include this if explicitly requested */
-> +	if (include_everything &&
-> +	    ((res = add_directory_to_archiver(&archiver_args, ".git", 0)) ||
-> +	     (res = add_directory_to_archiver(&archiver_args, ".git/hooks", 0)) ||
-> +	     (res = add_directory_to_archiver(&archiver_args, ".git/info", 0)) ||
-> +	     (res = add_directory_to_archiver(&archiver_args, ".git/logs", 1)) ||
-> +	     (res = add_directory_to_archiver(&archiver_args, ".git/objects/info", 0))))
->  		goto diagnose_cleanup;
+>  /*
+>   * Remove the deepest subdirectory in the provided path string. Path must not
+> @@ -510,34 +509,20 @@ static int cmd_diagnose(int argc, const char **argv)
+>  		N_("scalar diagnose [<enlistment>]"),
+>  		NULL
+>  	};
+> -	struct strbuf zip_path = STRBUF_INIT;
+> -	time_t now = time(NULL);
+> -	struct tm tm;
+> +	struct strbuf diagnostics_root = STRBUF_INIT;
+>  	int res = 0;
+>  
+>  	argc = parse_options(argc, argv, NULL, options,
+>  			     usage, 0);
+>  
+> -	setup_enlistment_directory(argc, argv, usage, options, &zip_path);
+> -
+> -	strbuf_addstr(&zip_path, "/.scalarDiagnostics/scalar_");
+> -	strbuf_addftime(&zip_path,
+> -			"%Y%m%d_%H%M%S", localtime_r(&now, &tm), 0, 0);
+> -	strbuf_addstr(&zip_path, ".zip");
+> -	switch (safe_create_leading_directories(zip_path.buf)) {
+> -	case SCLD_EXISTS:
+> -	case SCLD_OK:
+> -		break;
+> -	default:
+> -		error_errno(_("could not create directory for '%s'"),
+> -			    zip_path.buf);
+> -		goto diagnose_cleanup;
 
-...this should be --include-gitdir-extract or something, instead of
-"--all" and "--include-everything".
+Just spotting this now, but we had ad error, but we "goto
+diagnose_cleanup", but that will use our "res = 0" above.
 
-I'd think that "all" would be a thing that would actually tar up my
-entire .git directory as-is (in a way that would pass git fsck on the
-other end (unless that's the bug being reported...)).
+Is this untested already or in this series (didn't go back to look). But
+maybe a moot point, the post-image replacement uses die()..
 
-Aside: Since we are getting the churn of adding this, then re-indenting
- it maybe a prep step of adding a add_directories_to_archiver() would be
- useful, which would just have a data-driven:
+> -	}
+> +	setup_enlistment_directory(argc, argv, usage, options, &diagnostics_root);
+> +	strbuf_addstr(&diagnostics_root, "/.scalarDiagnostics");
+>  
+> -	res = create_diagnostics_archive(&zip_path, 1);
+> +	if (run_git("diagnose", "--all", "-s", "%Y%m%d_%H%M%S",
+> +		    "-o", diagnostics_root.buf, NULL) < 0)
+> +		res = -1;
 
-	{
-		{ ".git" },
-		[...],
-		{ ".git/logs, 1 },
-		NULL
-	},
+The code handling here seems really odd, issues:
 
-Then loop over that, making it easy to add/declare new subdirs to add.
+ * This *can* return -1, if start_command() fails, but that's by far the
+   rarer case, usually it would be 0 or >0 (only <0 if we can't start
+   the command at all).
+
+ * You should not be returning -1 from cmd_*() in general (we have
+   outstanding issues with it, but those should be fixed). It will yield
+   an exit code of 255 (but it's not portable)).
+
+ * If you're going to return -1 at all, why override <0 with -1, just
+   "res = run_git(...)" instead?
+
+I think all-in-all this should be:
+
+	res = run_git(...);
+
+Then:
+
+>  
+> -diagnose_cleanup:
+> -	strbuf_release(&zip_path);
+> +	strbuf_release(&diagnostics_root);
+>  	return res;
+
+	return res < 0 ? -res : res;
+
+Or whatever.
