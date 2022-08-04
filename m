@@ -2,108 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 516E1C19F21
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 19:16:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A33A1C19F2A
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 19:30:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233651AbiHDTQT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 15:16:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59164 "EHLO
+        id S240184AbiHDTaf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 15:30:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229968AbiHDTQS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 15:16:18 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50EBB6BD56
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 12:16:16 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id v3so928569wrp.0
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 12:16:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc;
-        bh=hM5OL4392s2w0eiUYX58LekOmIloHrtH1aYaIEDynRU=;
-        b=mFP/xE1zW9usoxi23SFhG0OPM87EnAFfkdF0Eu4VsKt5sGmzYI20ViG01UwTRsp7Ym
-         ffjjQDppAecsG2dCvzQnGR9iPZVI2YymhvGS6Z2y3o06b/XCnEwyUZcwEkthaYeLncdr
-         +GYliLDZcxjT3KGDZJ2i7U040nERodTW2dUiv/QCVoInhiJGOUo67QUC/UZYm/VUGuiy
-         ryuv5b7oZSEK4y91nPiP0mfdJ3YiqbPeeftZXcIRZephktYCJ66vBMF4WuHSuucJTyJM
-         yCnrmCPyolhLeNlBfTY9JiHrOrDqWAjMAjMUF517fUt+PgXYQhh7tHOV079VAiDv/925
-         4A3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc;
-        bh=hM5OL4392s2w0eiUYX58LekOmIloHrtH1aYaIEDynRU=;
-        b=hcAhPeLNik3OY9iWx2lFhBxNGnaCHmaGzzR4NRirkzOaYCqaLplA5nI1FfRDa5cdPn
-         KC08mPTu8KluwyH8zJLpLbJqMTz48BTbspKvuezyQrRdkIlCORE8MdZDZAppO7f8lkUP
-         znKtKRr8/csTstSTqmRYktp/1KayyI/r5riCiM9T2oIFarPcAz9yxYDLUr0+3qZ6xznu
-         CaDNXhS8XEsruwsG7yBi8JQhBPyNs9xBsrhBNhW5FpERkFHlgunWzOPjiT+yuypmcu0a
-         TFSe+wHVnbh2MC6EU1pV7pLkC3IUOnwqxZkNPPwjy3aN38kW5fJjVXhas2louNtxO+hC
-         Q9Ug==
-X-Gm-Message-State: ACgBeo0htL0FRX+PNNbnfs99OOnHN/VQJ7D5BpqPFIO1xmFkiQbyhyn1
-        2FGthE9yOJuzh+dtyyhZ148=
-X-Google-Smtp-Source: AA6agR79Ng6/Zhp2epv4in/wPly0uvl2ownSrUwYNGx5j2ddiccxfRiQYBljJbitK3bQZDLbZCOycw==
-X-Received: by 2002:adf:f646:0:b0:220:7d75:be7 with SMTP id x6-20020adff646000000b002207d750be7mr2357227wrp.256.1659640574801;
-        Thu, 04 Aug 2022 12:16:14 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id b18-20020a5d4b92000000b0021d6924b777sm1778341wrt.115.2022.08.04.12.16.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Aug 2022 12:16:14 -0700 (PDT)
-Message-ID: <53cffc06-ebb1-ac97-ceb4-4c242a82c68a@gmail.com>
-Date:   Thu, 4 Aug 2022 20:16:12 +0100
+        with ESMTP id S239940AbiHDTad (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 15:30:33 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CC7E13E0C
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 12:30:31 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 672BB1541B8;
+        Thu,  4 Aug 2022 15:30:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Z5lVTr+pSMHX
+        VAvhfHM8KIQk4QG9qa9FwdFS4pv8xxE=; b=YYUXGGB8pra6kmsz4EDc+rlcfIRF
+        n6X7r/l6rKDzQo8kcZ+UzT7/dQjXOUPh1MdVPsrsFANBpE8tuiSCtDDdqPeSC9v/
+        u3ptWHaDOz6iileH0YZf4CuRz5f9fpgh+o2aK5SuPdv1pKpFfrdgdfZ2m2ggONER
+        l4/JDkvJGNXiRA0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D3001541B7;
+        Thu,  4 Aug 2022 15:30:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AF8081541B6;
+        Thu,  4 Aug 2022 15:30:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Teng Long <dyroneteng@gmail.com>
+Subject: Re: [PATCH v7 07/10] docs: move protocol-related docs to man section 5
+References: <cover-v6-0.9-00000000000-20220728T164243Z-avarab@gmail.com>
+        <cover-v7-00.10-00000000000-20220802T125258Z-avarab@gmail.com>
+        <patch-v7-07.10-cfd1b0afb53-20220802T125258Z-avarab@gmail.com>
+        <xmqqbkt1cohu.fsf@gitster.g>
+        <220804.867d3ot1gt.gmgdl@evledraar.gmail.com>
+Date:   Thu, 04 Aug 2022 12:30:28 -0700
+In-Reply-To: <220804.867d3ot1gt.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 04 Aug 2022 18:29:39 +0200")
+Message-ID: <xmqqles34xij.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] tests: cache glibc version check
-Content-Language: en-GB-large
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elia Pinto <gitter.spiros@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1311.git.1659620305757.gitgitgadget@gmail.com>
- <xmqq4jyr6fuz.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqq4jyr6fuz.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E63EEE68-142B-11ED-8F86-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On 04/08/2022 19:08, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
- >
-> Between USE_LIBC_MALLOC_DEBUG, which is the name Peff originally
-> gave this intermediate variable, and the one you use here, I am
-> undecided.  If the only thing the GLIBC_TUNABLES mechanism can do
-> were to tweak the malloc checking, then both names are good, but
-> that is not the case.  We are only seeing if we are going to use the
-> malloc check feature given by glibc here, so the original name feels
-> more to the point, and use of GLIBC_TUNABLE mechanism to trigger
-> that malloc check feature is a mere implementation detail.
-> 
-> But that is minor.  Let's queue the patch to help me not to forget
-> about it, and we'll amend it if necessary, as we'd probably need a
-> helped-by or signed-off-by from Peff anyway before this hits 'next'.
+> I tried to address all your other concerns in the just-sent v8, but I
+> don't think there's any rename fix-up here, but maybe I'm missing
+> something. These files are all being moved to their new
+> gitprotocol-*.txt homes (and weren't moved in preceding commits).
 
-Oh, sorry I'd missed that message where Peff posted essentially the same 
-patch. I wrote this at the same time as 067109a5e7 ("tests: make 
-SANITIZE=address imply TEST_NO_MALLOC_CHECK", 2022-04-09) but did not 
-post in then as we were in a rc period and then forgot about it. Having 
-just read Peff's message this does not make much difference to the test 
-timings and if I'd seen that before I wouldn't have posted this.
+Sorry, I thought it was rather obvious from what I wrote in my
+review for the step before this one.
 
-As for the variable name I don't mind particularly either way, I chose 
-this name as the variable is checking whether we should use the glibc 
-tunables mechanism or not.
+This is an "oops" fix-up buried in other changes in 07/10 that fixes
+the duplicated entry made in the previous step.
 
-Best Wishes
-
-Phillip
-
-> Thanks.
+> diff --git a/command-list.txt b/command-list.txt
+> index 44e244a76f6..ed859fdd798 100644
+> --- a/command-list.txt
+> +++ b/command-list.txt
+> @@ -210,7 +210,6 @@ gitdiffcore                             guide
+>  giteveryday                             guide
+>  gitfaq                                  guide
+>  gitformat-bundle                        developerinterfaces
+> -gitformat-bundle                        developerinterfaces
+>  gitformat-commit-graph                  developerinterfaces
+>  gitglossary                             guide
+>  githooks                                userinterfaces
