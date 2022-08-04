@@ -2,123 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91C1EC19F2A
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 16:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0923AC19F2D
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 16:57:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236637AbiHDQbU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 12:31:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46856 "EHLO
+        id S236777AbiHDQ5p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 12:57:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231712AbiHDQbT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 12:31:19 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E3A2222B7
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 09:31:17 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id dc19so197324ejb.12
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 09:31:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc;
-        bh=z8ka0QzNO+iRTyveOE35aYKEnyBcjonGpt+lM+40ygA=;
-        b=Ve48L/uaLnUzVhT8Tf5+RK9wCl/J26ACpIhcX2RifmKuSNIG+MzOszBXCA0DYKF9kh
-         P0dOrxz3Mj7Fm9XPCze/iQ0daJOUQNNPzR3d2CFwTlmthmQxsz5YXPjtq3+ONAHRKy5H
-         Ag5RRjey1VnA0BjjVaN95XHSIsDq/7tzW0edps8eh7RWTKicOdMPgOmnN1SY65jUKZNT
-         FMVXneEV3m1MWjEOJ/24rkDodsd6LGleqpFqMc4/ElBUYmUvFHqdMEuAABcv24UiRsbU
-         nakGXaYJIjphW5R96dmifCcdyO+edZ3q5+zO/rkrepGUo5euJtLA5iJwMAX9txALyLkF
-         VPKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc;
-        bh=z8ka0QzNO+iRTyveOE35aYKEnyBcjonGpt+lM+40ygA=;
-        b=aojKR/u1h2h/F5F34wniATF4qVzhT2sepqrgoOeEOYTRUFhi9O1dvT1LSfCkFV11VU
-         El8kjxL/Gh/HTqsWVzLkrQ6giPLEh31qYuzPpt/cmDqvpA9LoFT4C+dZqVh3Nm2alIkm
-         gyiv4E7GSSK+P8y7RqDzL+PPTyDJNPkESK8vSoGhJeexeUAe4ELJgyumHWS1Hd/tRveF
-         BzW5LA5AgxUgzdsdt9l8eNQix8dw1S0pjO/nlTF60ONqWBD9WqosuysYB4xkXotnuwqL
-         6KqmnTp1LNIiooc3NpOo7u/AXuVo+4yHoUIQgsX1pNF3TvUF9xaJpo+BVaQSuydrNCwP
-         qDHw==
-X-Gm-Message-State: ACgBeo2I+2gCPbmxzWzg84LONIrGH/qqz6+HB6alKxCkojgOMXuy/RAm
-        ChcKIw0OVN66aX42PUycgXE=
-X-Google-Smtp-Source: AA6agR6Fmz1sf4q7wsTdp6s9RD3d0KCXsZzcW4QyM1EIazLrEq2qgtd563kCpQHClFpk0AnzXf/KyA==
-X-Received: by 2002:a17:906:1dd2:b0:730:9a59:3894 with SMTP id v18-20020a1709061dd200b007309a593894mr2015495ejh.485.1659630675801;
-        Thu, 04 Aug 2022 09:31:15 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id v13-20020aa7d9cd000000b0043d06d80d27sm896835eds.86.2022.08.04.09.31.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Aug 2022 09:31:15 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oJdkg-0003AP-1K;
-        Thu, 04 Aug 2022 18:31:14 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Teng Long <dyroneteng@gmail.com>
-Subject: Re: [PATCH v7 07/10] docs: move protocol-related docs to man section 5
-Date:   Thu, 04 Aug 2022 18:29:39 +0200
-References: <cover-v6-0.9-00000000000-20220728T164243Z-avarab@gmail.com>
- <cover-v7-00.10-00000000000-20220802T125258Z-avarab@gmail.com>
- <patch-v7-07.10-cfd1b0afb53-20220802T125258Z-avarab@gmail.com>
- <xmqqbkt1cohu.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqbkt1cohu.fsf@gitster.g>
-Message-ID: <220804.867d3ot1gt.gmgdl@evledraar.gmail.com>
+        with ESMTP id S230177AbiHDQ5n (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 12:57:43 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C4F326119
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 09:57:41 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F01F113DF0D;
+        Thu,  4 Aug 2022 12:57:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Qi34AqjkwghyTuviIs9xxdOOrFQQezvJRU2PyQ
+        QLsUw=; b=xEL60QLrlwU2UApB20ZGC3hWiLdaLa8IFd0dDNVbrruNLwRI8sh5Ky
+        6BSUihlXczivQRdlKt8/2G8v2W37ww+UWDMoQPf7icEBozRa9OH1o0a34JSV3nLE
+        Ofjb1/umMc+y8MrFQdXgXY2XPhc4agW387Ub2UTQtqJEnzlCE5w+k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E56C213DF0C;
+        Thu,  4 Aug 2022 12:57:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4B8A113DF0B;
+        Thu,  4 Aug 2022 12:57:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
+        steadmon@google.com,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 07/10] log: add --decorate-all option
+References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
+        <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
+        <64ee889369dd4044a4acd967876476ea6cfff1c3.1659122979.git.gitgitgadget@gmail.com>
+Date:   Thu, 04 Aug 2022 09:57:37 -0700
+In-Reply-To: <64ee889369dd4044a4acd967876476ea6cfff1c3.1659122979.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Fri, 29 Jul 2022
+        19:29:36 +0000")
+Message-ID: <xmqqczdg6j5q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8BA93900-1416-11ED-A7EB-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Wed, Aug 03 2022, Junio C Hamano wrote:
+> +static int decorate_all;
+> +static struct string_list decorate_refs_exclude = STRING_LIST_INIT_NODUP;
+> +static struct string_list decorate_refs_exclude_config = STRING_LIST_INIT_NODUP;
+> +static struct string_list decorate_refs_include = STRING_LIST_INIT_NODUP;
+> +
+> +static int decorate_all_callback(const struct option *opt,
+> +				 const char *arg, int unset)
+> +{
+> +	if (unset) {
+> +		decorate_all = 0;
+> +		return 0;
+> +	}
+> +
+> +	string_list_clear(&decorate_refs_include, 0);
+> +	string_list_clear(&decorate_refs_exclude, 0);
+> +	decorate_all = 1;
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> Continue the move of existing Documentation/technical/* protocol and
->> file-format documentation into our main documentation space. By moving
->> the things that discuss the protocol we can properly link from
->> e.g. lsrefs.unborn and protocol.version documentation to a manpage we
->> build by default.
->>
->> So far we have been using the "gitformat-" prefix for the
->> documentation we've been moving over from Documentation/technical/*,
->> but for protocol documentation let's use "gitprotocol-*".
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  Documentation/Makefile                        |  8 +++---
->>  Documentation/config/lsrefs.txt               |  2 +-
->>  Documentation/config/protocol.txt             |  2 +-
->>  Documentation/git-upload-pack.txt             |  5 ++--
->>  Documentation/gitformat-bundle.txt            |  2 +-
->>  ...ities.txt =3D> gitprotocol-capabilities.txt} | 28 +++++++++++++++----
->>  ...ocol-common.txt =3D> gitprotocol-common.txt} | 23 +++++++++++++--
->>  ...pack-protocol.txt =3D> gitprotocol-pack.txt} | 24 +++++++++++++---
->>  .../protocol-v2.txt =3D> gitprotocol-v2.txt}    | 25 +++++++++++++----
->>  Documentation/technical/api-simple-ipc.txt    |  2 +-
->>  Documentation/technical/http-protocol.txt     |  6 ++--
->>  .../long-running-process-protocol.txt         |  2 +-
->>  Documentation/technical/packfile-uri.txt      |  2 +-
->>  Documentation/technical/partial-clone.txt     |  2 +-
->>  command-list.txt                              |  5 +++-
->>  refspec.h                                     |  2 +-
->>  t/t5551-http-fetch-smart.sh                   |  4 +--
->>  17 files changed, 106 insertions(+), 38 deletions(-)
->
-> OK, I see nothing unexpected.
->
-> There is a silent "oops that is a screw-up in the previous step that
-> can be buried in this patch that renames 4 files and hopefully nobody
-> would notice" included, which should be removed by fixing the original
-> screw-up in the previous step, though.
+Here, we clear include and exclude list, and set the flag.
 
-I tried to address all your other concerns in the just-sent v8, but I
-don't think there's any rename fix-up here, but maybe I'm missing
-something. These files are all being moved to their new
-gitprotocol-*.txt homes (and weren't moved in preceding commits).
+> +	return 0;
+> +}
+> +
+>  static int decorate_callback(const struct option *opt, const char *arg, int unset)
+>  {
+>  	if (unset)
+> @@ -176,7 +195,8 @@ static void set_default_d
+>  					   item->string);
+>  	}
+>  
+> -	if (decoration_filter->exclude_ref_pattern->nr ||
+> +	if (decorate_all ||
+> +	    decoration_filter->exclude_ref_pattern->nr ||
+>  	    decoration_filter->include_ref_pattern->nr ||
+>  	    decoration_filter->exclude_ref_config_pattern->nr)
+>  		return;
+
+In the pre-context of this hunk, we still pay attention to the
+configuration variable log.excludedDecoration and stuff them in
+exclude_ref_config_pattern.  Presense of decorate_all option makes
+us leave early from this function, skipping the addition of
+hardcoded default patterns from the ref_namespace[] array.
+
+Most notably, clearing of exclude_ref_pattern and
+include_ref_pattern is done when "--decorate-all" was parsed, and
+not here.  So we may have patterns there if 
+
+	git log --decorate-all \
+		--decorate-refs=<pattern> \
+		--decorate-refs-exclude=<pattern>
+
+Later, log-tree.c::load_ref_decoration() uses these patterns to
+decide what to exclude and to include.
+
+So to me, this command option does not look like "all" at all.  It
+is more like "clear", with a side effect visible and noticeable only
+to implementors.
+
+If we explain the decoration feature to end users in such a way to
+form this mental model, then this option becomes truly "clear the
+inclusion and exclusion patterns for ref decoration".
+
+    "log --decorate" uses lists of include and exclude patterns to
+    decide which refs are used for decoration.  Before the user
+    gives any patterns, the system adds the default include and
+    exclude patterns in the list.  The user can use --decorate-refs
+    and --decorate-refs-exclude options to add more of them to the
+    lists.
+
+Then this option can be explained to "clear what has been
+accumulated in the lists of include and exclude patterns" and that
+also gets rid of what the system adds by default.
+
+I am not sure what to call and how to explain the corresponding
+configuration variable introduced in the next step, though.
+
+Thanks.
