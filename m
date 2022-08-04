@@ -2,133 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92ABBC19F2A
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 15:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31872C19F2A
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 15:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234802AbiHDPel (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 11:34:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38828 "EHLO
+        id S234035AbiHDP55 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 11:57:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234494AbiHDPek (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 11:34:40 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39C71FD11
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 08:34:39 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id w29so49388qtv.9
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 08:34:39 -0700 (PDT)
+        with ESMTP id S231289AbiHDP5z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 11:57:55 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40E995A154
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 08:57:53 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id kb8so100614ejc.4
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 08:57:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=f+peXnX2FS53X9FIPQzcEHopepREmUSHxsUwbqP4sXE=;
-        b=jKz6YeiXfvD4u0S4a0iJdfMZowgHPPvG+vpORdwl1S97m8HuTZfCKhZ8Adj5Ja7m5i
-         WIDrwhizWvQt2IItfEabsFWBY/G8f1FY3BVJha6Vm9RasPWHw66EOZfdAcUSieiA6jKd
-         PrrDfk420FDT2VtGDRV999CVzbGmSjprFhkQq+TGHCpn/HsFm/0ICNHg14OKccwov3ZE
-         3skUePvVrWar1p8Bv2LUgUascxzuG0/A6kAGdCt5U7T+ErjvkLVnW+OKOy2ghcOHvvEa
-         CevRZgstR++0DQzZrmdND2F/6ap7SBnad6u5NLMPSEN+GkM0qppPj2ZEaPTvlLRNEfkc
-         6ruQ==
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc;
+        bh=tDqKLNqh792b0XkijLkMYPoCiChWRA1XtXGLhoSBqPY=;
+        b=pEItcDB6UpBbfzCqEYPbq/jLnN2FmbDWpfM05wNkHXYLxx9ZEaAyoZPEm+8vP0ySZd
+         NzZJNGZnUet3bBtVPztGbuXG03AH8YelbY8P+0E8V0N+nHYFNWKD7KFd63rAHzp12q92
+         8nukIrue6e9JpXvhHHfvzCPSr0L2MHBc+oGOIRajM+U214snQdGLrz3Wpg+dKCwU+JGC
+         iJ+KEQ/g/BJWmpxVck45rVeEqHSDg8MLKVNRI8y6LHYuuN7hXj4hcN48yrW82RmoUFgv
+         Mz+ltFZ3V/KYEUFUesT8DhOlU+IcZPJ5ij44vATb8z7+PShxL/OebIKpoxa2hC19e8o0
+         GTWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=f+peXnX2FS53X9FIPQzcEHopepREmUSHxsUwbqP4sXE=;
-        b=2WBkmGcSSK6GMxNp8GS05Vq1NT/HXS2q6sK0dr6IYRW/P1qrmGgu8Q4RP5lDg6jyRG
-         67jm4H7ViUm6dQDMoYt3pAJvx2c4fEflrmn7+kqyzYRRYYZjpVtekagj6GxlWVYs8F18
-         Fuv+az29g9Q+A8pYGuFgxhJgzgrMj1KJYRtdyzAuDWKNZGgJX1G/ozyQYAtFEhkkib3d
-         D+9SL2kVC0kMxnYC/9llIqwrKiijLj37zb2wAKcu8vK7b0lhjlHnKYLtGVAbLQ1TPrRl
-         PksgTnEZG1qVRdI6CYG2mZIaY7CbNY4D6Jb30TWtrukfxkTtLWA+vSnph/67EwQip+hR
-         WWKw==
-X-Gm-Message-State: ACgBeo2YLSjV7/NssH2OxNaXD31XNYKBbiYh+Nk9Bf+kR2YsL9LMCXn5
-        GnizMEYm7US07ikhgdPtCrtA
-X-Google-Smtp-Source: AA6agR7DHm389QOsikaC1geyN6tkdwhnwRhKjJLOzlCW+z8lZ5XpUhPmPnwSjxnbMG9O0urec3elhQ==
-X-Received: by 2002:a05:622a:1d1:b0:33b:71bc:a081 with SMTP id t17-20020a05622a01d100b0033b71bca081mr2009302qtw.325.1659627278327;
-        Thu, 04 Aug 2022 08:34:38 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:8b6:bc6e:e88:13d9? ([2600:1700:e72:80a0:8b6:bc6e:e88:13d9])
-        by smtp.gmail.com with ESMTPSA id k22-20020ac86056000000b002f936bae288sm817592qtm.87.2022.08.04.08.34.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Aug 2022 08:34:37 -0700 (PDT)
-Message-ID: <9afd5eb2-44a0-6342-6006-5dbdefba9947@github.com>
-Date:   Thu, 4 Aug 2022 11:34:36 -0400
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc;
+        bh=tDqKLNqh792b0XkijLkMYPoCiChWRA1XtXGLhoSBqPY=;
+        b=NDYGf7BgC0xISP4/ZTJV69aXDo6Tk1bRCWNA5Pwpdm4zeTdkOn+en2qsB45vdlp/x3
+         jwRZi/+vCGogP/2JQohoM2Nck0Hx+kxZz3MJB1w7kKlT6ceVHllei+UWM5v+k/Oi7qDi
+         nwdMrMxfzuVgboZn/T60eahFSisqe3rWyfgf9Ya5ZUpfDMEJtyQ6LRKXUkHyrfbRN8Cd
+         qRbhTP0GmCPZAcBNUoa8RNG3W7gNJ8I4defeme0MYFwxmS2936VrdZaJqamIq8+ZFVPa
+         G4zkdEmgilvLUal/ZgSooSN8VWe4K6NCd249T3tJy93CEXyzhoHCiBOjnscLzL5/1wP2
+         LrvQ==
+X-Gm-Message-State: ACgBeo0U2yNcpdTwit7k5IbXTmp1WHelGzHkIy6IZLO1WRBZEKsJSovk
+        l7G6zGV2KvjLostxaLW+cSX4zrPWjPOhiip5+LOAIyWQ
+X-Google-Smtp-Source: AA6agR6E6b5hvLH/NMrcIYH3KLgeVkpMm68sdCxja3aDt/q6/Jqe5VOAvSqOiIDBEQn2h09DUCUvN4MZf+6guWPmT2s=
+X-Received: by 2002:a17:907:1629:b0:730:7ad7:24f2 with SMTP id
+ hb41-20020a170907162900b007307ad724f2mr1958005ejc.261.1659628671211; Thu, 04
+ Aug 2022 08:57:51 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 4/5] bundle-uri: add support for http(s):// and file://
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
-        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de,
-        szeder.dev@gmail.com, mjcheetham@outlook.com, steadmon@google.com
-References: <pull.1300.git.1658781277.gitgitgadget@gmail.com>
- <pull.1300.v2.git.1659443384.gitgitgadget@gmail.com>
- <e4f2dcc7a45388663aeac786e5abdcf2164cfe62.1659443384.git.gitgitgadget@gmail.com>
- <xmqq8ro6fi1j.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqq8ro6fi1j.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From:   Eric D <eric.decosta@gmail.com>
+Date:   Thu, 4 Aug 2022 11:57:40 -0400
+Message-ID: <CAMxJVdH6_CAhe1ToJnFB55dQAJd81HD0vUDgZ_1Ub=9QKJbHjg@mail.gmail.com>
+Subject: mail from mathworks.com domain is rejected
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/2/2022 5:32 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> +static int copy_uri_to_file(const char *filename, const char *uri)
->> +{
->> +	const char *out;
->> +
->> +	if (istarts_with(uri, "https:") ||
->> +	    istarts_with(uri, "http:"))
-> 
-> Let's be a bit more strict to avoid mistakes and make the code
-> immediately obvious, e.g.
-> 
-> 	if (istarts_with(uri, "https://") ||
-> 	    istarts_with(uri, "http://"))
-> 
->> +		return download_https_uri_to_file(filename, uri);
->> +
->> +	if (!skip_prefix(uri, "file://", &out))
->> +		out = uri;
-> 
-> If we are using istarts_with because URI scheme name is case
-> insensitive, shouldn't we do the same for "file://" URL, not
-> just for "http(s)://" URL?  IOW
-> 
-> 	if (!skip_iprefix(uri, "file://", &out))
+I and a colleague of mine have been unable to send email to this list
+from our work accounts; the mail server always responds with the
+following:
 
-Good ideas. Of course, we don't have a skip_iprefix(), but
-I can use "istarts_with()" and then manually add the length.
-If we see more need for that in the future, we can consider
-adding it.
+git@vger.kernel.org
+23.128.96.18
+Remote Server returned '554 5.7.1 <23.128.96.18 #5.7.1 smtp; 553 5.7.1
+Hello [23.128.96.19], for your MAIL FROM address
+<edecosta@mathworks.com> policy analysis reported: Your address is not
+liked source for email>'
 
-(It's interesting that these uses in bundle-uri.c are the
-only uses of istarts_with() that I see in the codebase.)
+Can this be corrected? Is there any additional information that I can provide?
 
->> +static int download_https_uri_to_file(const char *file, const char *uri)
->>  {
->> +	int result = 0;
->> +	struct child_process cp = CHILD_PROCESS_INIT;
->> +	FILE *child_in = NULL, *child_out = NULL;
->> +	struct strbuf line = STRBUF_INIT;
->> +	int found_get = 0;
->> +
->> +	strvec_pushl(&cp.args, "git-remote-https", "origin", uri, NULL);
-> 
-> Does "git-remote-https" talk to a "http://" URL just fine when uri
-> parameter starts with "http://"?  Would it be the same if the uri
-> parameter begins with say "Http://"?
-
-I did a quick check of our HTTPS tests modifying the HTTPD_PROTO
-variable in lib-httpd.sh to "HtTP" and we get this fun error:
-
-+ git clone --filter=blob:limit=0 HtTP://127.0.0.1:5601/smart/server client
-Cloning into 'client'...
-git: 'remote-HtTP' is not a git command. See 'git --help'.
-
-So I guess I can keep case-sensitive comparisons here.
-
-Thanks,
--Stolee
+-Eric
