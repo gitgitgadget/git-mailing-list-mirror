@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CD97C25B06
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 20:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F1BBC25B08
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 20:46:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236308AbiHDUqQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 16:46:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55762 "EHLO
+        id S238488AbiHDUqS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 16:46:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235244AbiHDUqO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 16:46:14 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EC6D6D578
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 13:46:12 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id a11so490532wmq.3
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 13:46:11 -0700 (PDT)
+        with ESMTP id S235298AbiHDUqP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 16:46:15 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C54D6D9F2
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 13:46:14 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id v131-20020a1cac89000000b003a4bb3f786bso3076297wme.0
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 13:46:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=KmzkJanP+r7zmAbvFVV+dBLWZoBVdjJr9uFqVzfdDDA=;
-        b=GR61bBZxxcDXu4PVRd4S4KNTRKhNl8XxzQbyWL4GgD8Y98DKR3ZemVLmdpfQErqJZb
-         YjgSCMZF+yG5OAQWH/ZwwItddAUzklA5mAcBjWvGmtfZvflMyKPA/CHwG9axAUrRG2MX
-         jU4Kd7uakZb58NwSArOnat49ZViJJYVzAJYPw4hAdtgdgaAAt3t4HGZtaLVZCBpuww7F
-         V751iy2o0Z5vFAM+P5DgR/uCW8T5pc9JoeOlXhOlOHV9NxpJBaplJA8LMQIEiBZ6qSI+
-         7eQDKoRh2klfiQ97ymSy9EqGee7qhAlEyj6lLLwrROQ9rC2FBbMdq/nULgg2bruX5Kxb
-         Lt2A==
+        bh=jJaSEVKwQhml2+4LWjNX91pEEGO/vyJ/R3TEpmXMzGg=;
+        b=a+tcdQu+zt/+T0U+ik6hWr8HDBHCgOaKltuadKNzuMs2c43MFxuxLg7WUaSuNs7HP4
+         Evh2JBy8yzP6ubSETM5d6+5e/TbK2ka6Vkxt+sZBqrsN+Py2dbq0mzInzHMR1/jR3+Uh
+         CN49FfDfOD+VZ2MkpHoMUYpHNRvs59LLsMPIYaiYy/RhpS3ug6RZ4naP3pdgDXVe848E
+         D8XqND6R9SYFIueophCggx6s//Wty7sCtoIEsqWFH2pVx6j5YlmCq9RC1pFIWIBNp55C
+         FhpZB4TWUEURgMCPGdMtaxGARwnRFxqFzulA25fdzgWzy+vLUVZh8qoChO0qQaF/q1BU
+         5iXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=KmzkJanP+r7zmAbvFVV+dBLWZoBVdjJr9uFqVzfdDDA=;
-        b=fMMmAIGjqRTN+Ma3dR6R1KGhwjU5JnRvYYgi5RTU5qC45iGrF5gg9EGK5wEXqtdBr7
-         gp13GE813gisPGBnutl57xCP1RkkbzQlal5ZBhKCQ5fXE7vWf+5POsZE/LuB8tfPb2Ga
-         8AIXDUYMH8SENVBYE2ja+K8tQyUVa5naZCPaR+F0LDXyD4NYMYWLBtNGWJnlrnTA5cMw
-         BsKVfanNBO9iHf6bQFAizH4fmTGwCJJMf1Awv2faS+UiqbOvOYHR66TlwWCbyQ4QKEAZ
-         fo0bl6tTXxPeHmtSY7R1f6nlw7S6FHNPssWzvmcx6jAB2JH0og1gwszu7+oa9YNIX6FO
-         biNg==
-X-Gm-Message-State: ACgBeo0Mjaki9RTaiLWTxu+37h+MCLE281aMV+iKTh90tGGyQOzGN/pg
-        0+YEP3NLDmyKGjPBukYjGnl8PHS//as=
-X-Google-Smtp-Source: AA6agR5H/Hb3b1xWu+5vDmFcSVDkjhnSG0KojErXfmBRYq745AVvZ0PsyU6TILFmsP7cikYXbj6UWQ==
-X-Received: by 2002:a05:600c:3b29:b0:3a3:1fa6:768 with SMTP id m41-20020a05600c3b2900b003a31fa60768mr2522421wms.193.1659645970332;
-        Thu, 04 Aug 2022 13:46:10 -0700 (PDT)
+        bh=jJaSEVKwQhml2+4LWjNX91pEEGO/vyJ/R3TEpmXMzGg=;
+        b=SRkaUCtCIouYrkxpluMOoKvT4pcAeHG0PRjcQHqwxYN/Oo5tI9Gx+ziJ8Zr8eNE1I2
+         fRC0BKB014hbr0Bz3TFuX1kTUkn0XJrZoS6+zUs01DQQnhQ2OM6dn04tGH3ALKdEizWy
+         /SlyRPmdGq8eSC4H4IC1nk+LzsvsHbu65MeRYnKKveYOJtqVcGlZd8we6Nbk3ec56w/v
+         LpZE0i6/SMFQojrzJ5XQUfQX8i7eHsy+wsh/+p8sJ8MYnjPo9WxWTz8MiJx5DZ0C/6Qx
+         wigAomTHlmPGGW9XMZUCAR5UdH/wA4EeLZim4SMvrmQiUGy6kg/4UKasVdQmoubeGPpt
+         LADw==
+X-Gm-Message-State: ACgBeo0rmpOhL+Xg5WvkajKHQi315/UGhzu2Uzxu6GYjc2NQr7Yyev/R
+        1J5AU4m31RhwOgQB2DG2UDTDGgQPtqE=
+X-Google-Smtp-Source: AA6agR66rmubaE9hObYbarq+LU7kIhsynTmVFhJ6+pcLtvroDiazyOx6899AqRbLxkP5WiHNSOAyMA==
+X-Received: by 2002:a1c:7503:0:b0:3a3:2db1:d37e with SMTP id o3-20020a1c7503000000b003a32db1d37emr2517181wmc.47.1659645972235;
+        Thu, 04 Aug 2022 13:46:12 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s15-20020a05600c384f00b003a320e6f011sm2352381wmr.1.2022.08.04.13.46.09
+        by smtp.gmail.com with ESMTPSA id u18-20020a5d4352000000b0021d69860b66sm2635249wrr.9.2022.08.04.13.46.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Aug 2022 13:46:09 -0700 (PDT)
-Message-Id: <255318f4dc61daef3e892a4dd5c571463985f340.1659645967.git.gitgitgadget@gmail.com>
+        Thu, 04 Aug 2022 13:46:11 -0700 (PDT)
+Message-Id: <f7978d223fe86b6d0d43e905ee3abdc02fef8b7d.1659645967.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1312.git.1659645967.gitgitgadget@gmail.com>
 References: <pull.1312.git.1659645967.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 04 Aug 2022 20:46:04 +0000
-Subject: [PATCH 1/4] checkout: fix nested sparse directory diff in sparse
- index
+Date:   Thu, 04 Aug 2022 20:46:06 +0000
+Subject: [PATCH 3/4] cache.h: replace 'index_entry_exists()' with
+ 'index_name_pos_sparse()'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,52 +68,81 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Add the 'recursive' diff flag to the local changes reporting done by 'git
-checkout' in 'show_local_changes()'. Without the flag enabled, unexpanded
-sparse directories will not be recursed into to report the diff of each
-file's contents, resulting in the reported local changes including
-"modified" sparse directories.
+Replace 'index_entry_exists()' (which returns a binary '1' or '0' depending
+on whether a specified entry exists in the index) with
+'index_name_pos_sparse()' (which behaves the same as 'index_name_pos()',
+except that it does not expand a sparse index to search for an entry inside
+a sparse directory).
 
-The same issue was found and fixed for 'git status' in 2c521b0e49 (status:
-fix nested sparse directory diff in sparse index, 2022-03-01)
+'index_entry_exists()' was original implemented in 20ec2d034c (reset: make
+sparse-aware (except --mixed), 2021-11-29) to allow callers to search for an
+index entry without expanding a sparse index. That particular case only
+required knowing whether the requested entry existed. This patch expands the
+amount of information returned by indicating both 1) whether the entry
+exists, and 2) its position (or potential position) in the index.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/checkout.c                       | 1 +
- t/t1092-sparse-checkout-compatibility.sh | 8 ++++++++
- 2 files changed, 9 insertions(+)
+ cache-tree.c |  2 +-
+ cache.h      | 15 +++++++--------
+ read-cache.c |  4 ++--
+ 3 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 29c74f898bf..f9d63d80b92 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -626,6 +626,7 @@ static void show_local_changes(struct object *head,
- 	repo_init_revisions(the_repository, &rev, NULL);
- 	rev.diffopt.flags = opts->flags;
- 	rev.diffopt.output_format |= DIFF_FORMAT_NAME_STATUS;
-+	rev.diffopt.flags.recursive = 1;
- 	diff_setup_done(&rev.diffopt);
- 	add_pending_object(&rev, head, NULL);
- 	run_diff_index(&rev, 0);
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 763c6cc6846..99a1425a929 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -372,6 +372,14 @@ test_expect_success 'deep changes during checkout' '
- 	test_all_match git checkout base
- '
+diff --git a/cache-tree.c b/cache-tree.c
+index 56db0b5026b..ff0c1733356 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -798,7 +798,7 @@ static void prime_cache_tree_rec(struct repository *r,
+ 			 * as normal.
+ 			 */
+ 			if (r->index->sparse_index &&
+-			    index_entry_exists(r->index, tree_path->buf, tree_path->len))
++			    index_name_pos_sparse(r->index, tree_path->buf, tree_path->len) >= 0)
+ 				prime_cache_tree_sparse_dir(sub->cache_tree, subtree);
+ 			else
+ 				prime_cache_tree_rec(r, sub->cache_tree, subtree, tree_path);
+diff --git a/cache.h b/cache.h
+index 4aa1bd079d5..6bfd1d80b24 100644
+--- a/cache.h
++++ b/cache.h
+@@ -831,14 +831,13 @@ struct cache_entry *index_file_exists(struct index_state *istate, const char *na
+ int index_name_pos(struct index_state *, const char *name, int namelen);
  
-+test_expect_success 'checkout with modified sparse directory' '
-+	init_repos &&
-+
-+	test_all_match git checkout rename-in-to-out -- . &&
-+	test_sparse_match git sparse-checkout reapply &&
-+	test_all_match git checkout base
-+'
-+
- test_expect_success 'add outside sparse cone' '
- 	init_repos &&
+ /*
+- * Determines whether an entry with the given name exists within the
+- * given index. The return value is 1 if an exact match is found, otherwise
+- * it is 0. Note that, unlike index_name_pos, this function does not expand
+- * the index if it is sparse. If an item exists within the full index but it
+- * is contained within a sparse directory (and not in the sparse index), 0 is
+- * returned.
+- */
+-int index_entry_exists(struct index_state *, const char *name, int namelen);
++ * Like index_name_pos, returns the position of an entry of the given name in
++ * the index if one exists, otherwise returns a negative value where the negated
++ * value minus 1 is the position where the index entry would be inserted. Unlike
++ * index_name_pos, however, a sparse index is not expanded to find an entry
++ * inside a sparse directory.
++ */
++int index_name_pos_sparse(struct index_state *, const char *name, int namelen);
  
+ /*
+  * Some functions return the negative complement of an insert position when a
+diff --git a/read-cache.c b/read-cache.c
+index 4de207752dc..a85b922a3bc 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -620,9 +620,9 @@ int index_name_pos(struct index_state *istate, const char *name, int namelen)
+ 	return index_name_stage_pos(istate, name, namelen, 0, EXPAND_SPARSE);
+ }
+ 
+-int index_entry_exists(struct index_state *istate, const char *name, int namelen)
++int index_name_pos_sparse(struct index_state *istate, const char *name, int namelen)
+ {
+-	return index_name_stage_pos(istate, name, namelen, 0, NO_EXPAND_SPARSE) >= 0;
++	return index_name_stage_pos(istate, name, namelen, 0, NO_EXPAND_SPARSE);
+ }
+ 
+ int remove_index_entry_at(struct index_state *istate, int pos)
 -- 
 gitgitgadget
 
