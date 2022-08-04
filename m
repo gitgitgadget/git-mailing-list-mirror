@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CC7AC19F2A
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 16:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D498C19F2D
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 16:29:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236503AbiHDQ32 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 12:29:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44462 "EHLO
+        id S239199AbiHDQ3b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 12:29:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237530AbiHDQ3S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 12:29:18 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69A4B67CA9
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 09:29:02 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id c22so154542wmr.2
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 09:29:02 -0700 (PDT)
+        with ESMTP id S237680AbiHDQ3T (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 12:29:19 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 030B167CBC
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 09:29:04 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id h34-20020a05600c49a200b003a5165eae0fso118614wmp.4
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 09:29:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=LPKbPu3Gi9zGgnAumY9lyMXF/oH03v1UtG6mONfVg+Q=;
-        b=GDBv8PCXcRc0dJuXWHZKNBllp/nw7yfHbvmZVsEsi97FkcRuf1ajwKu3t52N0WkFIQ
-         Lrb096YmeYzLmwJqrNesD+gIXGcuQQwjeJEw89/dJZq5zwUMdTggRh7kdTNDQxk3K/AV
-         DaUFFvlkQLZqeKPgjTVwndRQcgHG5h+8mvxmonoWqFwFF5Sns36HsVzvt9p2I1Pvl1o2
-         W3wYhZw85no5AAZRAien1prF6zK4NKjiesSMTrnc9S2Eky42tnwu4Jh6VHxxHmXSHE6c
-         KKkfLvduVtIpZi/gEyTa2GEzWZTCjQYrW9Q6TW5QwlW0CgBNq46sbCyw8jWCRqtWl4mQ
-         8vgA==
+        bh=g2jvcRB+75XlnTeEuY0rS8adDkZUA06GD9b+6U0gEqY=;
+        b=ZKPHkU2fVjEjU6FyHgtf8W7PlZXG2wi+m7njY6uCvnDm1q+5eWlxkF8MBQoN2lLGe2
+         49oCJ2NYTOJA3pXg592zJFTNXlpWCZzeUnDytHoHltlE/ooQLmdGViMixtv4v6txrgSr
+         PnCUQLjrcfEH8GI+ijFuk50CMlOnbI7HsXe1xUpvXyZPIyBVkJG0DKXcciYNYOLZjAxf
+         RiKQ5mxflkyOUw0YVG5+AGzOT0DxRb05/OVW9296kz1hYHjF9gtCvrEB/Rk/5pxpZljk
+         +eKGmVdFdbJQ1/IOu4Co4sJy5lqKh5GyEQN1yvA0Cp8WrsLTZjnHRPEDzPeucENvHGXM
+         jj1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=LPKbPu3Gi9zGgnAumY9lyMXF/oH03v1UtG6mONfVg+Q=;
-        b=0tL8//4fVxO8YHUgjVPO3/N93Dhr/qLC5lISy17iJlF7vHUi3MLWCLQ8rBSRxebVKL
-         QkN42bOwxhDI0pmTqwZZmBqlkoJzfbiOEMjykv+vY5RsjLpF/P32JraFnQf/4LLKJlba
-         x9PZLPbm+//30uHbRbN/sNVSxvJkRbsyl8tRgDAOfNJuqpGZ3Fpme9wmbdlENvTRMYzv
-         kLbUbFh7cYwMN2r37hrqnXjppbScnbdX3H+s29Bg7Fy3iPsJILyd60EYtxB4XbEej7SK
-         9C2WPbwsj1LDGZ+yuB9IM6dRsPZrfA9txVAoY+RlQeBC02L7ESNu1ZQl87X49OoS5yzo
-         z4Hg==
-X-Gm-Message-State: ACgBeo1YRT6u0/2R91NVXIrSAT+ZLh4f7VLBAP+W1Yq4vCu6oVxl1yjA
-        YBSkyTxOLb3CWLMMw7BBu6c8dd5dyug7Pw==
-X-Google-Smtp-Source: AA6agR4gNtgl5wnxZFSnb4Kj2B7RQCK8OeH/k5WTY3g9ZT246/X/AUVpQ/K0hIM8D53SUug4h9/kgg==
-X-Received: by 2002:a05:600c:2053:b0:3a3:1dd7:956a with SMTP id p19-20020a05600c205300b003a31dd7956amr6718753wmg.66.1659630540093;
-        Thu, 04 Aug 2022 09:29:00 -0700 (PDT)
+        bh=g2jvcRB+75XlnTeEuY0rS8adDkZUA06GD9b+6U0gEqY=;
+        b=yQ13g7vREiTjc/T5UhtrV0WtI1q1bWKB93hehmEbj6UwJwCamTPTSL/fxvHqfKJ6hl
+         b/T+fb4qLcZsvHNB6fqjXZMK0OlGWvAZ0uvrWZPiYr2M6twPQBkbKvf610U3Bq8Zred0
+         AemIWm1gzGri/kJtsJOErI8WA9DNSAdzlWbZnDtdzuTt9CfxACaJJtrOx3592AUH1Gjv
+         8n6GoY7lx569J6WgPnBm2tO6SynrnB1WH2RszyOs/Fp8P39ZxBbcC7iLxSAglR6hAf00
+         2j3YOYGPgQG4wtzRX8llcKBWX/fbsY+kvDDMPRxzPPcCOsYg4rRaRre4OaiIkqijLSwm
+         utIA==
+X-Gm-Message-State: ACgBeo2WRIGFOfX0AHf67/HUbxUpnr1AovBQ2n0P2tLoZKWf2Rcrg0Rz
+        c7WYYmqnwDxuQXz6hkyx0DF8Ghgk6ikQ2g==
+X-Google-Smtp-Source: AA6agR49PK0+2gaq35OacZlprYwjFF1nGMy7/shYUxkK3jX0Takggpm8FrdOYyfuZnL2zptDSm5UkA==
+X-Received: by 2002:a05:600c:2244:b0:3a5:1207:a1aa with SMTP id a4-20020a05600c224400b003a51207a1aamr2076133wmm.176.1659630542812;
+        Thu, 04 Aug 2022 09:29:02 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n66-20020a1ca445000000b003a513ee7830sm1868063wme.27.2022.08.04.09.28.59
+        by smtp.gmail.com with ESMTPSA id n66-20020a1ca445000000b003a513ee7830sm1868063wme.27.2022.08.04.09.29.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Aug 2022 09:28:59 -0700 (PDT)
+        Thu, 04 Aug 2022 09:29:02 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Teng Long <dyroneteng@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v8 07/12] docs: move protocol-related docs to man section 5
-Date:   Thu,  4 Aug 2022 18:28:36 +0200
-Message-Id: <patch-v8-07.12-daafbf9ae90-20220804T162138Z-avarab@gmail.com>
+Subject: [PATCH v8 10/12] docs: move pack format docs to man section 5
+Date:   Thu,  4 Aug 2022 18:28:39 +0200
+Message-Id: <patch-v8-10.12-576c1fef4b3-20220804T162138Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.1.1233.g61622908797
 In-Reply-To: <cover-v8-00.12-00000000000-20220804T162138Z-avarab@gmail.com>
 References: <cover-v7-00.10-00000000000-20220802T125258Z-avarab@gmail.com> <cover-v8-00.12-00000000000-20220804T162138Z-avarab@gmail.com>
@@ -72,449 +72,328 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Continue the move of existing Documentation/technical/* protocol and
-file-format documentation into our main documentation space. By moving
-the things that discuss the protocol we can properly link from
-e.g. lsrefs.unborn and protocol.version documentation to a manpage we
-build by default.
+file-format documentation into our main documentation space by moving
+the various documentation pertaining to the *.pack format and related
+files, and updating things that refer to it to link to the new
+location.
 
-So far we have been using the "gitformat-" prefix for the
-documentation we've been moving over from Documentation/technical/*,
-but for protocol documentation let's use "gitprotocol-*".
+By moving these we can properly link from the newly created
+gitformat-commit-graph to a gitformat-chunk-format page.
+
+Integrating "Documentation/technical/bitmap-format.txt" and
+"Documentation/technical/cruft-packs.txt" might logically be part of
+this change, but as those cover parts of the wider "pack
+format" (including associated files) that's documented outside of
+"Documentation/technical/pack-format.txt" let's leave those for now,
+subsequent commit(s) will address those.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/Makefile                        |  8 +++---
- Documentation/config/lsrefs.txt               |  2 +-
- Documentation/config/protocol.txt             |  2 +-
- Documentation/git-upload-pack.txt             |  5 ++--
- Documentation/gitformat-bundle.txt            |  2 +-
- ...ities.txt => gitprotocol-capabilities.txt} | 28 +++++++++++++++----
- ...ocol-common.txt => gitprotocol-common.txt} | 23 +++++++++++++--
- ...pack-protocol.txt => gitprotocol-pack.txt} | 24 +++++++++++++---
- .../protocol-v2.txt => gitprotocol-v2.txt}    | 25 +++++++++++++----
- Documentation/technical/api-simple-ipc.txt    |  2 +-
- Documentation/technical/http-protocol.txt     |  6 ++--
- .../long-running-process-protocol.txt         |  2 +-
- Documentation/technical/packfile-uri.txt      |  2 +-
- Documentation/technical/partial-clone.txt     |  2 +-
- command-list.txt                              |  4 +++
- refspec.h                                     |  2 +-
- t/t5551-http-fetch-smart.sh                   |  4 +--
- 17 files changed, 106 insertions(+), 37 deletions(-)
- rename Documentation/{technical/protocol-capabilities.txt => gitprotocol-capabilities.txt} (96%)
- rename Documentation/{technical/protocol-common.txt => gitprotocol-common.txt} (89%)
- rename Documentation/{technical/pack-protocol.txt => gitprotocol-pack.txt} (98%)
- rename Documentation/{technical/protocol-v2.txt => gitprotocol-v2.txt} (98%)
+ Documentation/Makefile                        |  3 +-
+ Documentation/config/pack.txt                 |  2 +-
+ Documentation/git-bundle.txt                  |  3 +-
+ Documentation/git-multi-pack-index.txt        |  4 +--
+ .../chunk-format.txt => gitformat-chunk.txt}  | 25 +++++++++++---
+ Documentation/gitformat-commit-graph.txt      |  2 +-
+ Documentation/gitformat-index.txt             |  2 +-
+ .../pack-format.txt => gitformat-pack.txt}    | 34 +++++++++++++++++--
+ Documentation/gitprotocol-pack.txt            |  2 +-
+ .../howto/recover-corrupted-object-harder.txt |  2 +-
+ .../technical/hash-function-transition.txt    |  2 +-
+ Documentation/user-manual.txt                 |  2 +-
+ cache.h                                       |  3 +-
+ command-list.txt                              |  2 ++
+ pack-revindex.h                               |  2 +-
+ 15 files changed, 68 insertions(+), 22 deletions(-)
+ rename Documentation/{technical/chunk-format.txt => gitformat-chunk.txt} (91%)
+ rename Documentation/{technical/pack-format.txt => gitformat-pack.txt} (95%)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index e7bd72bb84e..b53f3c12843 100644
+index d122d1751d8..d4a4a8c8b7d 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -30,6 +30,10 @@ MAN5_TXT += githooks.txt
+@@ -25,8 +25,10 @@ MAN1_TXT += gitweb.txt
+ # man5 / man7 guides (note: new guides should also be added to command-list.txt)
+ MAN5_TXT += gitattributes.txt
+ MAN5_TXT += gitformat-bundle.txt
++MAN5_TXT += gitformat-chunk.txt
+ MAN5_TXT += gitformat-commit-graph.txt
+ MAN5_TXT += gitformat-index.txt
++MAN5_TXT += gitformat-pack.txt
+ MAN5_TXT += gitformat-signature.txt
+ MAN5_TXT += githooks.txt
  MAN5_TXT += gitignore.txt
- MAN5_TXT += gitmailmap.txt
- MAN5_TXT += gitmodules.txt
-+MAN5_TXT += gitprotocol-capabilities.txt
-+MAN5_TXT += gitprotocol-common.txt
-+MAN5_TXT += gitprotocol-pack.txt
-+MAN5_TXT += gitprotocol-v2.txt
- MAN5_TXT += gitrepository-layout.txt
- MAN5_TXT += gitweb.conf.txt
- 
-@@ -105,12 +109,8 @@ TECH_DOCS += technical/long-running-process-protocol
+@@ -108,7 +110,6 @@ TECH_DOCS += technical/hash-function-transition
+ TECH_DOCS += technical/http-protocol
+ TECH_DOCS += technical/long-running-process-protocol
  TECH_DOCS += technical/multi-pack-index
- TECH_DOCS += technical/pack-format
+-TECH_DOCS += technical/pack-format
  TECH_DOCS += technical/pack-heuristics
--TECH_DOCS += technical/pack-protocol
  TECH_DOCS += technical/parallel-checkout
  TECH_DOCS += technical/partial-clone
--TECH_DOCS += technical/protocol-capabilities
--TECH_DOCS += technical/protocol-common
--TECH_DOCS += technical/protocol-v2
- TECH_DOCS += technical/racy-git
- TECH_DOCS += technical/reftable
- TECH_DOCS += technical/send-pack-pipeline
-diff --git a/Documentation/config/lsrefs.txt b/Documentation/config/lsrefs.txt
-index adeda0f24d3..3d88fb0badb 100644
---- a/Documentation/config/lsrefs.txt
-+++ b/Documentation/config/lsrefs.txt
-@@ -1,7 +1,7 @@
- lsrefs.unborn::
- 	May be "advertise" (the default), "allow", or "ignore". If "advertise",
- 	the server will respond to the client sending "unborn" (as described in
--	protocol-v2.txt) and will advertise support for this feature during the
-+	linkgit:gitprotocol-v2[5]) and will advertise support for this feature during the
- 	protocol v2 capability advertisement. "allow" is the same as
- 	"advertise" except that the server will not advertise support for this
- 	feature; this is useful for load-balanced servers that cannot be
-diff --git a/Documentation/config/protocol.txt b/Documentation/config/protocol.txt
-index 756591d77b0..57603818514 100644
---- a/Documentation/config/protocol.txt
-+++ b/Documentation/config/protocol.txt
-@@ -58,6 +58,6 @@ protocol.version::
- * `1` - the original wire protocol with the addition of a version string
-   in the initial response from the server.
+diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
+index ad7f73a1ead..3e581eab84a 100644
+--- a/Documentation/config/pack.txt
++++ b/Documentation/config/pack.txt
+@@ -166,7 +166,7 @@ permuted into their appropriate location when writing a new bitmap.
  
--* `2` - link:technical/protocol-v2.html[wire protocol version 2].
-+* `2` - Wire protocol version 2, see linkgit:gitprotocol-v2[5].
+ pack.writeReverseIndex::
+ 	When true, git will write a corresponding .rev file (see:
+-	link:../technical/pack-format.html[Documentation/technical/pack-format.txt])
++	linkgit:gitformat-pack[5])
+ 	for each new packfile that it writes in all places except for
+ 	linkgit:git-fast-import[1] and in the bulk checkin mechanism.
+ 	Defaults to false.
+diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
+index f0b1282b918..6da61722431 100644
+--- a/Documentation/git-bundle.txt
++++ b/Documentation/git-bundle.txt
+@@ -57,8 +57,7 @@ size. That they're "thin" under the hood is merely noted here as a
+ curiosity, and as a reference to other documentation.
  
- --
-diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-upload-pack.txt
-index 8f87b23ea86..3409e0d36d1 100644
---- a/Documentation/git-upload-pack.txt
-+++ b/Documentation/git-upload-pack.txt
-@@ -40,9 +40,8 @@ OPTIONS
- 	Used by linkgit:git-http-backend[1] to serve up
- 	`$GIT_URL/info/refs?service=git-upload-pack` requests. See
- 	"Smart Clients" in link:technical/http-protocol.html[the HTTP
--	transfer protocols] documentation and "HTTP Transport" in
--	link:technical/protocol-v2.html[the Git Wire Protocol, Version
--	2] documentation. Also understood by
-+	transfer protocols] documentation and "HTTP Transport" in the
-+	linkgit:gitprotocol-v2[5] documentation. Also understood by
- 	linkgit:git-receive-pack[1].
+ See linkgit:gitformat-bundle[5] for more details and the discussion of
+-"thin pack" in link:technical/pack-format.html[the pack format
+-documentation] for further details.
++"thin pack" in linkgit:gitformat-pack[5] for further details.
  
- <directory>::
-diff --git a/Documentation/gitformat-bundle.txt b/Documentation/gitformat-bundle.txt
-index 6a9d9e5bf6f..00e0a20e657 100644
---- a/Documentation/gitformat-bundle.txt
-+++ b/Documentation/gitformat-bundle.txt
-@@ -27,7 +27,7 @@ FORMAT
- ------
+ OPTIONS
+ -------
+diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
+index c588fb91af1..a48c3d5ea63 100644
+--- a/Documentation/git-multi-pack-index.txt
++++ b/Documentation/git-multi-pack-index.txt
+@@ -128,8 +128,8 @@ $ git multi-pack-index verify
+ SEE ALSO
+ --------
+ See link:technical/multi-pack-index.html[The Multi-Pack-Index Design
+-Document] and link:technical/pack-format.html[The Multi-Pack-Index
+-Format] for more information on the multi-pack-index feature.
++Document] and linkgit:gitformat-pack[5] for more information on the
++multi-pack-index feature and its file format.
  
- We will use ABNF notation to define the Git bundle format. See
--link:technical/protocol-common.html for the details.
-+linkgit:gitprotocol-common[5] for the details.
  
- A v2 bundle looks like this:
- 
-diff --git a/Documentation/technical/protocol-capabilities.txt b/Documentation/gitprotocol-capabilities.txt
-similarity index 96%
-rename from Documentation/technical/protocol-capabilities.txt
-rename to Documentation/gitprotocol-capabilities.txt
-index 9dfade930da..c6dcc7d565d 100644
---- a/Documentation/technical/protocol-capabilities.txt
-+++ b/Documentation/gitprotocol-capabilities.txt
-@@ -1,8 +1,20 @@
--Git Protocol Capabilities
--=========================
-+gitprotocol-capabilities(5)
-+===========================
+ GIT
+diff --git a/Documentation/technical/chunk-format.txt b/Documentation/gitformat-chunk.txt
+similarity index 91%
+rename from Documentation/technical/chunk-format.txt
+rename to Documentation/gitformat-chunk.txt
+index f36ce42f37c..57202ede273 100644
+--- a/Documentation/technical/chunk-format.txt
++++ b/Documentation/gitformat-chunk.txt
+@@ -1,11 +1,24 @@
+-Chunk-based file formats
+-========================
++gitformat-chunk(5)
++==================
 +
 +NAME
 +----
-+gitprotocol-capabilities - Protocol v0 and v1 capabilities
++gitformat-chunk - Chunk-based file formats
 +
 +SYNOPSIS
 +--------
-+[verse]
-+<over-the-wire-protocol>
++
++Used by linkgit:gitformat-commit-graph[5] and the "MIDX" format (see
++the pack format documentation in linkgit:gitformat-pack[5]).
 +
 +DESCRIPTION
 +-----------
  
- NOTE: this document describes capabilities for versions 0 and 1 of the pack
--protocol. For version 2, please refer to the link:protocol-v2.html[protocol-v2]
-+protocol. For version 2, please refer to the linkgit:gitprotocol-v2[5]
- doc.
+ Some file formats in Git use a common concept of "chunks" to describe
+ sections of the file. This allows structured access to a large file by
+ scanning a small "table of contents" for the remaining data. This common
+ format is used by the `commit-graph` and `multi-pack-index` files. See
+-link:technical/pack-format.html[the `multi-pack-index` format] and
++the `multi-pack-index` format in linkgit:gitformat-pack[5] and
+ the `commit-graph` format in linkgit:gitformat-commit-graph[5] for
+ how they use the chunks to describe structured data.
  
- Servers SHOULD support all capabilities defined in this document.
-@@ -77,7 +89,7 @@ interleaved with S-R-Q.
- multi_ack_detailed
- ------------------
- This is an extension of multi_ack that permits client to better
--understand the server's in-memory state. See pack-protocol.txt,
-+understand the server's in-memory state. See linkgit:gitprotocol-pack[5],
- section "Packfile Negotiation" for more information.
- 
- no-done
-@@ -281,7 +293,7 @@ a packfile upload and reference update.  If the pushing client requests
- this capability, after unpacking and updating references the server
- will respond with whether the packfile unpacked successfully and if
- each reference was updated successfully.  If any of those were not
--successful, it will send back an error message.  See pack-protocol.txt
-+successful, it will send back an error message.  See linkgit:gitprotocol-pack[5]
- for example messages.
- 
- report-status-v2
-@@ -292,7 +304,7 @@ adding new "option" directives in order to support reference rewritten by
- the "proc-receive" hook.  The "proc-receive" hook may handle a command
- for a pseudo-reference which may create or update a reference with
- different name, new-oid, and old-oid.  While the capability
--'report-status' cannot report for such case.  See pack-protocol.txt
-+'report-status' cannot report for such case.  See linkgit:gitprotocol-pack[5]
- for details.
- 
- delete-refs
-@@ -378,3 +390,7 @@ packet-line, and must not contain non-printable or whitespace characters. The
- current implementation uses trace2 session IDs (see
- link:api-trace2.html[api-trace2] for details), but this may change and users of
- the session ID should not rely on this fact.
+@@ -113,4 +126,8 @@ for future formats:
+ * *multi-pack-index:* see `write_midx_internal()` and `load_multi_pack_index()`
+   in `midx.c` for how the chunk-format API is used to write and
+   parse the multi-pack-index file format documented in
+-  link:technical/pack-format.html[the multi-pack-index file format].
++  the multi-pack-index file format section of linkgit:gitformat-pack[5].
 +
 +GIT
 +---
 +Part of the linkgit:git[1] suite
-diff --git a/Documentation/technical/protocol-common.txt b/Documentation/gitprotocol-common.txt
-similarity index 89%
-rename from Documentation/technical/protocol-common.txt
-rename to Documentation/gitprotocol-common.txt
-index ecedb34bba5..1486651bd10 100644
---- a/Documentation/technical/protocol-common.txt
-+++ b/Documentation/gitprotocol-common.txt
-@@ -1,5 +1,20 @@
--Documentation Common to Pack and Http Protocols
--===============================================
-+gitprotocol-common(5)
-+=====================
-+
-+NAME
-+----
-+gitprotocol-common - Things common to various protocols
-+
-+SYNOPSIS
-+--------
-+[verse]
-+<over-the-wire-protocol>
-+
-+DESCRIPTION
-+-----------
-+
-+This document sets defines things common to various over-the-wire
-+protocols and file formats used in Git.
+diff --git a/Documentation/gitformat-commit-graph.txt b/Documentation/gitformat-commit-graph.txt
+index 108dc2295c0..7324665716d 100644
+--- a/Documentation/gitformat-commit-graph.txt
++++ b/Documentation/gitformat-commit-graph.txt
+@@ -75,7 +75,7 @@ All multi-byte numbers are in network byte order.
+       ID appears at most once.
  
- ABNF Notation
- -------------
-@@ -97,3 +112,7 @@ Examples (as C-style strings):
-   "000bfoobar\n"    "foobar\n"
-   "0004"            ""
- ----
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/gitprotocol-pack.txt
-similarity index 98%
-rename from Documentation/technical/pack-protocol.txt
-rename to Documentation/gitprotocol-pack.txt
-index e13a2c064d1..8a4de6decd0 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/gitprotocol-pack.txt
-@@ -1,5 +1,17 @@
--Packfile transfer protocols
--===========================
-+gitprotocol-pack(5)
-+===================
-+
-+NAME
-+----
-+gitprotocol-pack - How packs are transferred over-the-wire
-+
-+SYNOPSIS
-+--------
-+[verse]
-+<over-the-wire-protocol>
-+
-+DESCRIPTION
-+-----------
+   The CHUNK LOOKUP matches the table of contents from
+-  link:technical/chunk-format.html[the chunk-based file format].
++  the chunk-based file format, see linkgit:gitformat-chunk[5]
  
- Git supports transferring data in packfiles over the ssh://, git://, http:// and
- file:// transports.  There exist two sets of protocols, one for pushing
-@@ -18,7 +30,7 @@ pkt-line Format
- ---------------
- 
- The descriptions below build on the pkt-line format described in
--protocol-common.txt. When the grammar indicate `PKT-LINE(...)`, unless
-+linkgit:gitprotocol-common[5]. When the grammar indicate `PKT-LINE(...)`, unless
- otherwise noted the usual pkt-line LF rules apply: the sender SHOULD
- include a LF, but the receiver MUST NOT complain if it is not present.
- 
-@@ -60,7 +72,7 @@ Each Extra Parameter takes the form of `<key>=<value>` or `<key>`.
- 
- Servers that receive any such Extra Parameters MUST ignore all
- unrecognized keys. Currently, the only Extra Parameter recognized is
--"version" with a value of '1' or '2'.  See protocol-v2.txt for more
-+"version" with a value of '1' or '2'.  See linkgit:gitprotocol-v2[5] for more
- information on protocol version 2.
- 
- Git Transport
-@@ -707,3 +719,7 @@ An example client/server communication might look like this:
-    S: 0018ok refs/heads/debug\n
-    S: 002ang refs/heads/master non-fast-forward\n
- ----
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/gitprotocol-v2.txt
-similarity index 98%
-rename from Documentation/technical/protocol-v2.txt
-rename to Documentation/gitprotocol-v2.txt
-index 8a877d27e23..d6105e07408 100644
---- a/Documentation/technical/protocol-v2.txt
-+++ b/Documentation/gitprotocol-v2.txt
-@@ -1,5 +1,17 @@
--Git Wire Protocol, Version 2
--============================
-+gitprotocol-v2(5)
+   The remaining data in the body is described one chunk at a time, and
+   these chunks may be given in any order. Chunks are required unless
+diff --git a/Documentation/gitformat-index.txt b/Documentation/gitformat-index.txt
+index 9c3844298b8..015cb21bdc0 100644
+--- a/Documentation/gitformat-index.txt
++++ b/Documentation/gitformat-index.txt
+@@ -139,7 +139,7 @@ Git index format
+     entry is encoded as if the path name for the previous entry is an
+     empty string).  At the beginning of an entry, an integer N in the
+     variable width encoding (the same encoding as the offset is encoded
+-    for OFS_DELTA pack entries; see pack-format.txt) is stored, followed
++    for OFS_DELTA pack entries; see linkgit:gitformat-pack[5]) is stored, followed
+     by a NUL-terminated string S.  Removing N bytes from the end of the
+     path name for the previous entry, and replacing it with the string S
+     yields the path name for this entry.
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/gitformat-pack.txt
+similarity index 95%
+rename from Documentation/technical/pack-format.txt
+rename to Documentation/gitformat-pack.txt
+index b520aa9c45b..546c99f8871 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/gitformat-pack.txt
+@@ -1,5 +1,29 @@
+-Git pack format
+-===============
++gitformat-pack(5)
 +=================
 +
 +NAME
 +----
-+gitprotocol-v2 - Git Wire Protocol, Version 2
++gitformat-pack - Git pack format
++
 +
 +SYNOPSIS
 +--------
 +[verse]
-+<over-the-wire-protocol>
++$GIT_DIR/objects/pack/pack-*.{pack,idx}
++$GIT_DIR/objects/pack/pack-*.rev
++$GIT_DIR/objects/pack/multi-pack-index
 +
 +DESCRIPTION
 +-----------
++
++The Git pack format is now Git stores most of its primary repository
++data. Over the lietime af a repository loose objects (if any) and
++smaller packs are consolidated into larger pack(s). See
++linkgit:git-gc[1] and linkgit:git-pack-objects[1].
++
++The pack format is also used over-the-wire, see
++e.g. linkgit:gitprotocol-v2[5], as well as being a part of
++other container formats in the case of linkgit:gitformat-bundle[5].
  
- This document presents a specification for a version 2 of Git's wire
- protocol.  Protocol v2 will improve upon v1 in the following ways:
-@@ -26,8 +38,7 @@ Packet-Line Framing
- -------------------
+ == Checksums and object IDs
  
- All communication is done using packet-line framing, just as in v1.  See
--`Documentation/technical/pack-protocol.txt` and
--`Documentation/technical/protocol-common.txt` for more information.
-+linkgit:gitprotocol-pack[5] and linkgit:gitprotocol-common[5] for more information.
+@@ -356,7 +380,7 @@ CHUNK LOOKUP:
+ 	    using the next chunk position if necessary.)
  
- In protocol v2 these special packets will have the following semantics:
+ 	The CHUNK LOOKUP matches the table of contents from
+-	link:technical/chunk-format.html[the chunk-based file format].
++	the chunk-based file format, see linkgit:gitformat-chunk[5].
  
-@@ -42,7 +53,7 @@ Initial Client Request
- In general a client can request to speak protocol v2 by sending
- `version=2` through the respective side-channel for the transport being
- used which inevitably sets `GIT_PROTOCOL`.  More information can be
--found in `pack-protocol.txt` and `http-protocol.txt`, as well as the
-+found in linkgit:gitprotocol-pack[5] and `http-protocol.txt`, as well as the
- `GIT_PROTOCOL` definition in `git.txt`. In all cases the
- response from the server is the capability advertisement.
+ 	The remaining data in the body is described one chunk at a time, and
+ 	these chunks may be given in any order. Chunks are required unless
+@@ -482,3 +506,7 @@ packs arranged in MIDX order (with the preferred pack coming first).
  
-@@ -566,3 +577,7 @@ and associated requested information, each separated by a single space.
- 	attr = "size"
- 
- 	obj-info = obj-id SP obj-size
+ The MIDX's reverse index is stored in the optional 'RIDX' chunk within
+ the MIDX itself.
 +
 +GIT
 +---
 +Part of the linkgit:git[1] suite
-diff --git a/Documentation/technical/api-simple-ipc.txt b/Documentation/technical/api-simple-ipc.txt
-index d79ad323e67..d44ada98e7d 100644
---- a/Documentation/technical/api-simple-ipc.txt
-+++ b/Documentation/technical/api-simple-ipc.txt
-@@ -78,7 +78,7 @@ client and an optional response message from the server.  Both the
- client and server messages are unlimited in length and are terminated
- with a flush packet.
+diff --git a/Documentation/gitprotocol-pack.txt b/Documentation/gitprotocol-pack.txt
+index 8a4de6decd0..93b30b88450 100644
+--- a/Documentation/gitprotocol-pack.txt
++++ b/Documentation/gitprotocol-pack.txt
+@@ -467,7 +467,7 @@ Now that the client and server have finished negotiation about what
+ the minimal amount of data that needs to be sent to the client is, the server
+ will construct and send the required data in packfile format.
  
--The pkt-line routines (Documentation/technical/protocol-common.txt)
-+The pkt-line routines (linkgit:gitprotocol-common[5])
- are used to simplify buffer management during message generation,
- transmission, and reception.  A flush packet is used to mark the end
- of the message.  This allows the sender to incrementally generate and
-diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
-index cc5126cfeda..8bd672d55bb 100644
---- a/Documentation/technical/http-protocol.txt
-+++ b/Documentation/technical/http-protocol.txt
-@@ -222,7 +222,7 @@ smart server reply:
-    S: 0000
+-See pack-format.txt for what the packfile itself actually looks like.
++See linkgit:gitformat-pack[5] for what the packfile itself actually looks like.
  
- The client may send Extra Parameters (see
--Documentation/technical/pack-protocol.txt) as a colon-separated string
-+linkgit:gitprotocol-pack[5]) as a colon-separated string
- in the Git-Protocol HTTP header.
+ If 'side-band' or 'side-band-64k' capabilities have been specified by
+ the client, the server will send the packfile data multiplexed.
+diff --git a/Documentation/howto/recover-corrupted-object-harder.txt b/Documentation/howto/recover-corrupted-object-harder.txt
+index 8994e2559ea..5efb4fe81ff 100644
+--- a/Documentation/howto/recover-corrupted-object-harder.txt
++++ b/Documentation/howto/recover-corrupted-object-harder.txt
+@@ -68,7 +68,7 @@ Note that the "object" file isn't fit for feeding straight to zlib; it
+ has the git packed object header, which is variable-length. We want to
+ strip that off so we can start playing with the zlib data directly. You
+ can either work your way through it manually (the format is described in
+-link:../technical/pack-format.html[Documentation/technical/pack-format.txt]),
++linkgit:gitformat-pack[5]),
+ or you can walk through it in a debugger. I did the latter, creating a
+ valid pack like:
  
- Uses the `--http-backend-info-refs` option to
-@@ -518,5 +518,5 @@ References
+diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
+index 260224b0331..e2ac36dd210 100644
+--- a/Documentation/technical/hash-function-transition.txt
++++ b/Documentation/technical/hash-function-transition.txt
+@@ -205,7 +205,7 @@ SHA-1 content.
+ Object storage
+ ~~~~~~~~~~~~~~
+ Loose objects use zlib compression and packed objects use the packed
+-format described in Documentation/technical/pack-format.txt, just like
++format described in linkgit:gitformat-pack[5], just like
+ today. The content that is compressed and stored uses SHA-256 content
+ instead of SHA-1 content.
  
- http://www.ietf.org/rfc/rfc1738.txt[RFC 1738: Uniform Resource Locators (URL)]
- http://www.ietf.org/rfc/rfc2616.txt[RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1]
--link:technical/pack-protocol.html
--link:technical/protocol-capabilities.html
-+linkgit:gitprotocol-pack[5]
-+linkgit:gitprotocol-capabilities[5]
-diff --git a/Documentation/technical/long-running-process-protocol.txt b/Documentation/technical/long-running-process-protocol.txt
-index aa0aa9af1c2..6f33654b428 100644
---- a/Documentation/technical/long-running-process-protocol.txt
-+++ b/Documentation/technical/long-running-process-protocol.txt
-@@ -3,7 +3,7 @@ Long-running process protocol
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 865074bed4e..ca9decdd952 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -3133,7 +3133,7 @@ those "loose" objects.
+ You can save space and make Git faster by moving these loose objects in
+ to a "pack file", which stores a group of objects in an efficient
+ compressed format; the details of how pack files are formatted can be
+-found in link:technical/pack-format.html[pack format].
++found in link:gitformat-pack[5].
  
- This protocol is used when Git needs to communicate with an external
- process throughout the entire life of a single Git command. All
--communication is in pkt-line format (see technical/protocol-common.txt)
-+communication is in pkt-line format (see linkgit:gitprotocol-common[5])
- over standard input and standard output.
+ To put the loose objects into a pack, just run git repack:
  
- Handshake
-diff --git a/Documentation/technical/packfile-uri.txt b/Documentation/technical/packfile-uri.txt
-index 1eb525fe760..9d453d47651 100644
---- a/Documentation/technical/packfile-uri.txt
-+++ b/Documentation/technical/packfile-uri.txt
-@@ -18,7 +18,7 @@ a `packfile-uris` argument, the server MAY send a `packfile-uris` section
- directly before the `packfile` section (right after `wanted-refs` if it is
- sent) containing URIs of any of the given protocols. The URIs point to
- packfiles that use only features that the client has declared that it supports
--(e.g. ofs-delta and thin-pack). See protocol-v2.txt for the documentation of
-+(e.g. ofs-delta and thin-pack). See linkgit:gitprotocol-v2[5] for the documentation of
- this section.
+diff --git a/cache.h b/cache.h
+index 4aa1bd079d5..302810b353a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -475,8 +475,7 @@ extern struct index_state the_index;
  
- Clients should then download and index all the given URIs (in addition to
-diff --git a/Documentation/technical/partial-clone.txt b/Documentation/technical/partial-clone.txt
-index 99f0eb30406..92fcee2bfff 100644
---- a/Documentation/technical/partial-clone.txt
-+++ b/Documentation/technical/partial-clone.txt
-@@ -79,7 +79,7 @@ Design Details
-   upload-pack negotiation.
- +
- This uses the existing capability discovery mechanism.
--See "filter" in Documentation/technical/pack-protocol.txt.
-+See "filter" in linkgit:gitprotocol-pack[5].
- 
- - Clients pass a "filter-spec" to clone and fetch which is passed to the
-   server to request filtering during packfile construction.
+ /*
+  * Values in this enum (except those outside the 3 bit range) are part
+- * of pack file format. See Documentation/technical/pack-format.txt
+- * for more information.
++ * of pack file format. See gitformat-pack(5) for more information.
+  */
+ enum object_type {
+ 	OBJ_BAD = -1,
 diff --git a/command-list.txt b/command-list.txt
-index 3afcfcd35f0..ed859fdd798 100644
+index 68212e3c1bd..5394eefb6ee 100644
 --- a/command-list.txt
 +++ b/command-list.txt
-@@ -218,6 +218,10 @@ gitk                                    mainporcelain
- gitmailmap                              userinterfaces
- gitmodules                              userinterfaces
- gitnamespaces                           guide
-+gitprotocol-capabilities                developerinterfaces
-+gitprotocol-common                      developerinterfaces
-+gitprotocol-pack                        developerinterfaces
-+gitprotocol-v2                          developerinterfaces
- gitremote-helpers                       guide
- gitrepository-layout                    userinterfaces
- gitrevisions                            userinterfaces
-diff --git a/refspec.h b/refspec.h
-index 8b79891d321..8c0c4469933 100644
---- a/refspec.h
-+++ b/refspec.h
-@@ -69,7 +69,7 @@ int valid_remote_name(const char *name);
- struct strvec;
- /*
-  * Determine what <prefix> values to pass to the peer in ref-prefix lines
-- * (see Documentation/technical/protocol-v2.txt).
-+ * (see linkgit:gitprotocol-v2[5]).
-  */
- void refspec_ref_prefixes(const struct refspec *rs,
- 			  struct strvec *ref_prefixes);
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 245532df881..6a38294a476 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -181,8 +181,8 @@ test_expect_success 'no-op half-auth fetch does not require a password' '
- 	# This is not possible with protocol v2, since both objects and refs
- 	# are obtained from the "git-upload-pack" path. A solution to this is
- 	# to teach the server and client to be able to inline ls-refs requests
--	# as an Extra Parameter (see pack-protocol.txt), so that "info/refs"
--	# can serve refs, just like it does in protocol v0.
-+	# as an Extra Parameter (see "git help gitformat-pack-protocol"), so that
-+	# "info/refs" can serve refs, just like it does in protocol v0.
- 	GIT_TEST_PROTOCOL_VERSION=0 git --git-dir=half-auth fetch &&
- 	expect_askpass none
- '
+@@ -210,8 +210,10 @@ gitdiffcore                             guide
+ giteveryday                             guide
+ gitfaq                                  guide
+ gitformat-bundle                        developerinterfaces
++gitformat-chunk                         developerinterfaces
+ gitformat-commit-graph                  developerinterfaces
+ gitformat-index                         developerinterfaces
++gitformat-pack                          developerinterfaces
+ gitformat-signature                     developerinterfaces
+ gitglossary                             guide
+ githooks                                userinterfaces
+diff --git a/pack-revindex.h b/pack-revindex.h
+index 74f4eae668d..4974e75eb4d 100644
+--- a/pack-revindex.h
++++ b/pack-revindex.h
+@@ -22,7 +22,7 @@
+  *
+  *   - pack position refers to an object's position within a non-existent pack
+  *     described by the MIDX. The pack structure is described in
+- *     Documentation/technical/pack-format.txt.
++ *     gitformat-pack(5).
+  *
+  *     It is effectively a concatanation of all packs in the MIDX (ordered by
+  *     their numeric ID within the MIDX) in their original order within each
 -- 
 2.37.1.1233.g61622908797
 
