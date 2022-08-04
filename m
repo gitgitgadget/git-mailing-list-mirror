@@ -2,128 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28F5DC19F2A
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 14:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D690FC19F2A
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 14:34:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238009AbiHDO1C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 10:27:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42918 "EHLO
+        id S239727AbiHDOel (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 10:34:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229988AbiHDO1A (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 10:27:00 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3BA65E4
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 07:26:59 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id l4so25483455wrm.13
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 07:26:59 -0700 (PDT)
+        with ESMTP id S234188AbiHDOej (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 10:34:39 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 556F72613B
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 07:34:38 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id p82so1119766iod.2
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 07:34:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=aq1ZlsP1P/+BGRfhbiyMiAW3tsKIAOOduiDahjbOlTE=;
-        b=V6fvaoKzyQBlJNXjQKYtAPxbBwuSFkOjZDByxm84Lzt44zsAh+bVThPfQ1gKiqmrB9
-         oO/xm8vRqIzUVmJXG6PpQ+V8SQkVe3Fz/Kra2EHJS2+tHRDkU03XcX5PF9Jg6pHxZwGM
-         cpg0YQYYGGt9wIdIoDg/wIPSYshIYE6vEfFrVfkh11IzWc8wTnIc0DKp2ZDWcBsqnUIM
-         gJgKOjIXI0tyZfioU+YcyVG7A0h5bF0zvz2wVbxDhHmS1Xp95e/T0EBsppRkdBGN7DRf
-         WuiFAcwWa7e3rnv3vrlznWduPC2+8nGEthTjJn9sAvxIm1Qv4bGZeNaz2VqzOLTPPvA7
-         X7ZQ==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:cc:references:in-reply-to:content-transfer-encoding;
+        bh=OACPYGheDKWZ2+FNrHIgR0fSVqJ1nmeHL59BWeTgzVI=;
+        b=Vpgmxnt6OKqge2m4SKucLCIRbSrd5hSZqW+fhhSp5UnbfwXGuEpsnR2CVUAlC/dyzD
+         pnpMjjWLq47X4YLEfZiLW6gByr4euaTidhKwh380/IwmavN6cTiwuwQYcJpy0JWvhMLI
+         IwdLui08elaZvgzpdm4qKEIHrkCEEDOaMMnFgC22XrKUJZjpdY1w302XDPMTje9AzhZf
+         rdTnLn5PrKR3mboCDfsjeeFTdA6GWoJiaaKkk0r09WxryznG2gflzfZnD+KYJqwWy4jR
+         C8gLCJUYnImMXFhFdmNzXGsJEMdjW7elljXKgm4dlfSWqvQ+D/lId3y1CwC/sBq+WkbC
+         9hGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:from:to:cc:references:in-reply-to
          :content-transfer-encoding;
-        bh=aq1ZlsP1P/+BGRfhbiyMiAW3tsKIAOOduiDahjbOlTE=;
-        b=WUqVFEm+w9zWOuZj6mAqUWBExF6IGl56j+P0siScU2sizPBo199qb3SBYipuR5G/10
-         gB4r37Y4ZQeX/xz10Skqgvx5kPkh28IGjjmTzrb9M/wsLSWEHBRzDZ7TYA1iPPLhQH3V
-         v/9t5WziJTRgXK+r8FAZbLXvTIkCnQgc6DA26A+OCGJwsk8XnmZJ54Fp/C1uXi6aCYRy
-         fdSwNdezwMoogTFmp1tVQpGz4DkvMJMzCcsbKqZFu/Ie0c/ROHnAs0xQzduu8KqMl6Tk
-         Qz2frdzdGktpAjMOd4mG8fHHEdkzLz5/8FQHOu+QtMZ5nR9EN2d9n/Xfm3QXSS+UnKou
-         1CWw==
-X-Gm-Message-State: ACgBeo1VoRLjs1g5K0zb0vvxsrbs1Z6T0gwice+fbNYX4JUXDwJ47q8m
-        fEkWmN7Y/7PMX0U6ILd46S91WpsZV5A=
-X-Google-Smtp-Source: AA6agR75MDYpbMQZbxgphi3kILyhi+Jx5hxzRPCq1ahtNia+I6rdvyXCCRO/VURzFy6KRaQErLwZpQ==
-X-Received: by 2002:a5d:4852:0:b0:21f:17e:bffd with SMTP id n18-20020a5d4852000000b0021f017ebffdmr1602036wrs.542.1659623218230;
-        Thu, 04 Aug 2022 07:26:58 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id c10-20020adffb4a000000b0021f1ec8776fsm1252279wrs.61.2022.08.04.07.26.57
+        bh=OACPYGheDKWZ2+FNrHIgR0fSVqJ1nmeHL59BWeTgzVI=;
+        b=ivUWwyz/L/ilmMEJYQzJtmIilYl+aASXRQhfoVZ6FHK4dSZeHEkwnCujsmS6grm1zn
+         Lho57hA5BVqHC0xpeJf1Zei0RhWxPqsc32GiLJzq4lmqJid9bSM94IXGQv8EEWS6PKW4
+         N0sORXPj0Kb8oWB8yg+jnV8tlbpyBJwHC2T71zJQ6UCfODC5CbRTcjStOfWNUdyhyRte
+         P0R0VbkQmiAMifU8nGVhxwZnbCLDBOLiKvQs259K7DhPqCwOlGVeST2OWtsjR/OQJEeG
+         wTiWBl/sbsDPaQpol0Mb2CKjQ2VBOHxL6frqJG6EwYfgxUW+ZqrS8jj5ROoRbUVD8IxY
+         n8JA==
+X-Gm-Message-State: ACgBeo0OhWP04lnsvt16oeYsVa5wKS/PEQzksKuTQVoCn4BbNV7s+mni
+        4tJxQSmhKg3y2qxxMB/ff92D
+X-Google-Smtp-Source: AA6agR7mZUSs9mBr2GyXPHLFlGH8jIfI7h3ROpnVZ0xAl4pNDf/FOp6D8Frb834wR6YSjtIVb69rig==
+X-Received: by 2002:a6b:3f83:0:b0:680:5bfb:8936 with SMTP id m125-20020a6b3f83000000b006805bfb8936mr895800ioa.46.1659623677701;
+        Thu, 04 Aug 2022 07:34:37 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:8b6:bc6e:e88:13d9? ([2600:1700:e72:80a0:8b6:bc6e:e88:13d9])
+        by smtp.gmail.com with ESMTPSA id g95-20020a028568000000b0033f4bd1342esm516721jai.104.2022.08.04.07.34.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Aug 2022 07:26:57 -0700 (PDT)
-Message-ID: <fd0dcbcd-87dd-57e8-f7ec-418d2b726309@gmail.com>
-Date:   Thu, 4 Aug 2022 15:26:44 +0100
+        Thu, 04 Aug 2022 07:34:37 -0700 (PDT)
+Message-ID: <2d24b539-a5b8-ed7d-2320-97588854eb5b@github.com>
+Date:   Thu, 4 Aug 2022 10:34:36 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] tests: cache glibc version check
-Content-Language: en-GB-large
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elia Pinto <gitter.spiros@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1311.git.1659620305757.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.1311.git.1659620305757.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 05/10] log-tree: use ref_namespaces instead of
+ if/else-if
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
+        steadmon@google.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
+ <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
+ <53b15a0b7932f892505d07a509909b62c473037e.1659122979.git.gitgitgadget@gmail.com>
+ <xmqqv8r9dei7.fsf@gitster.g>
+ <b4f07dd1-b59d-864b-f881-110c9bf87202@github.com>
+In-Reply-To: <b4f07dd1-b59d-864b-f881-110c9bf87202@github.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/08/2022 14:38, Phillip Wood via GitGitGadget wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 8/4/2022 9:31 AM, Derrick Stolee wrote:
+> On 8/3/2022 2:31 AM, Junio C Hamano wrote:
+>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>>> From: Derrick Stolee <derrickstolee@github.com>
+>>> +	for (i = 0; i < NAMESPACE__COUNT; i++) {
+>>> +		struct ref_namespace_info *info = &ref_namespaces[i];
+>>> +
+>>> +		if (!info->decoration)
+>>> +			continue;
+>>> +		if (info->exact) {
+>>> +			if (!strcmp(refname, info->ref)) {
+>>> +				deco_type = info->decoration;
+>>> +				break;
+>>> +			}
+>>> +		} else if (starts_with(refname, info->ref)) {
+>>> +			deco_type = info->decoration;
+>>> +			break;
+>>> +		}
+>>> +	}
+>>
+>> Very nice.  The double-dash in the NAMESPACE__COUNT constant somehow
+>> looks strange.  As we scan through ref_namespace[] array densely,
+>>
+>> 	for (i = 0; i < ARRAY_SIZE(ref_namespace); i++)
+>> 		...
+>>
+>> without having to use the constant would probably be more in line
+>> with the way how the rest of the codebase works.
 > 
-> 131b94a10a ("test-lib.sh: Use GLIBC_TUNABLES instead of MALLOC_CHECK_
-> on glibc >= 2.34", 2022-03-04) introduced a check for the version of
-> glibc that is in use. This check is performed as part of
-> setup_malloc_check() which is called at least once for each test. As
-> the test involves forking `getconf` and `expr` cache the result and
-> use that within setup_malloc_check() to avoid forking these extra
-> processes for each test.
-> 
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->      tests: cache glibc version check
->      
->      A recent discussion on the list[1] reminded me that this patch was
->      waiting to be sent
-[1] https://lore.kernel.org/git/YuL7EotrIpnOn5BT@coredump.intra.peff.net/
+> Ah, I did not know about that trick. Thanks!
 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1311%2Fphillipwood%2Fwip%2Ftest-cache-glibc-tunables-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1311/phillipwood/wip/test-cache-glibc-tunables-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1311
-> 
->   t/test-lib.sh | 11 ++++++++---
->   1 file changed, 8 insertions(+), 3 deletions(-)
-> 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 7726d1da88a..ad81c78fce7 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -557,14 +557,19 @@ then
->   		: nothing
->   	}
->   else
-> +	_USE_GLIBC_TUNABLES=
-> +	if _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
-> +	   _GLIBC_VERSION=${_GLIBC_VERSION#"glibc "} &&
-> +	   expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null
-> +	then
-> +		_USE_GLIBC_TUNABLES=YesPlease
-> +	fi
->   	setup_malloc_check () {
->   		local g
->   		local t
->   		MALLOC_CHECK_=3	MALLOC_PERTURB_=165
->   		export MALLOC_CHECK_ MALLOC_PERTURB_
-> -		if _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
-> -		   _GLIBC_VERSION=${_GLIBC_VERSION#"glibc "} &&
-> -		   expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null
-> +		if test -n "$_USE_GLIBC_TUNABLES"
->   		then
->   			g=
->   			LD_PRELOAD="libc_malloc_debug.so.0"
-> 
-> base-commit: 23b219f8e3f2adfb0441e135f0a880e6124f766c
+...except that it doesn't work because the array is declared as
+'extern' so we don't know its size outside of refs.c.
+
+This motivates the use of NAMESPACE__COUNT (and the double
+underscores differentiates the "COUNT" from other namespaces, so
+there is no confusion about "COUNT" being a namespace). If there
+is another way around this, then I would love to hear it!
+
+Thanks,
+-Stolee
