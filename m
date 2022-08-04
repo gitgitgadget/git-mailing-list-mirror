@@ -2,128 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A694AC19F2A
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 14:51:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92ABBC19F2A
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 15:34:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240039AbiHDOvB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 10:51:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33444 "EHLO
+        id S234802AbiHDPel (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 11:34:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240008AbiHDOvA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 10:51:00 -0400
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B75D62613B
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 07:50:59 -0700 (PDT)
-Received: by mail-io1-xd2a.google.com with SMTP id d139so1553719iof.4
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 07:50:59 -0700 (PDT)
+        with ESMTP id S234494AbiHDPek (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 11:34:40 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39C71FD11
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 08:34:39 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id w29so49388qtv.9
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 08:34:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=qgbDhdYRVLZ1vncGxF+6y9p+ikaWTZ7nlahfJAmScUg=;
-        b=HNRZGKcvvQwYBU7PiuPnUJpTJyG+/JeQRKP/+CgHq2kT9T38ZeeAVc6CGl24obr+tY
-         cAZHi8+8moS3uh4IbRnUoiZ2wpocNh9hjzLzpQRMOelqZ+2h1asm/bDGTA0LoQWSrUuB
-         hRsnZhxGdvjoECVrRo2vcIWtGPa/9mnDwLzCmrVqjMawzoeLyJLvzeGEVwjU5CE9Qq1l
-         fv9ErIbeXBrVQ+gckxD2YCrepRujUC1NmnT7yKR6lWSKmpnFHnzrsm7Q2KCsLHTo3Nek
-         qEoqrJ3p8aQPbotIvdPn8ZT4frnbw6IzF47iHqM/aczKFKfnfCRFsR+r1wNAU48AUaZm
-         RshQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=f+peXnX2FS53X9FIPQzcEHopepREmUSHxsUwbqP4sXE=;
+        b=jKz6YeiXfvD4u0S4a0iJdfMZowgHPPvG+vpORdwl1S97m8HuTZfCKhZ8Adj5Ja7m5i
+         WIDrwhizWvQt2IItfEabsFWBY/G8f1FY3BVJha6Vm9RasPWHw66EOZfdAcUSieiA6jKd
+         PrrDfk420FDT2VtGDRV999CVzbGmSjprFhkQq+TGHCpn/HsFm/0ICNHg14OKccwov3ZE
+         3skUePvVrWar1p8Bv2LUgUascxzuG0/A6kAGdCt5U7T+ErjvkLVnW+OKOy2ghcOHvvEa
+         CevRZgstR++0DQzZrmdND2F/6ap7SBnad6u5NLMPSEN+GkM0qppPj2ZEaPTvlLRNEfkc
+         6ruQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=qgbDhdYRVLZ1vncGxF+6y9p+ikaWTZ7nlahfJAmScUg=;
-        b=kQKmkB8oOGQ/5VeC/iAHy1gCssMMuHfHZDhakyenc7HiLMJ8xVdo7TG3S9PWCToRB7
-         lY0VAEbC5BwSKDXAjm8Wniki3q7Pfqko7IjjMTfuT2yIZAnv6noJ4F7SYtB5IKE88h5k
-         cwm1Yoa5DPbbtzlFyMTa7Ww2HF0fON3XaSRvPISZqsO7rrnqrR+SD6YJIaSXF8yGG7wE
-         Nzkzx9uik9wjnZPNeZVyLu9KXGpxzr7B8TGgKFVk04ZCZiJ9qnWah1iIWD+09/UD40ci
-         o/lnHc95AO8B7RuqgTAHQ6yYl8j/XXTosTJYVjP+nZwPj2J6VO01HbLLDtbslzGK+mly
-         m7yg==
-X-Gm-Message-State: ACgBeo3Zh/vv/YY43hbrKf7L8qkHYl7ShDvjMySoCbNrsf/ny4vRo7en
-        u5WJ5jowqO7QYBRqztjdKZCy
-X-Google-Smtp-Source: AA6agR7g8dc8Idpdl/kuV5r/piyTLj0Uo8j8HYRzcpKQ0R4PVDf00z32SDm3D41XykiL1oMpImUVAA==
-X-Received: by 2002:a05:6638:1342:b0:342:7280:d5c3 with SMTP id u2-20020a056638134200b003427280d5c3mr1012421jad.156.1659624659094;
-        Thu, 04 Aug 2022 07:50:59 -0700 (PDT)
+        bh=f+peXnX2FS53X9FIPQzcEHopepREmUSHxsUwbqP4sXE=;
+        b=2WBkmGcSSK6GMxNp8GS05Vq1NT/HXS2q6sK0dr6IYRW/P1qrmGgu8Q4RP5lDg6jyRG
+         67jm4H7ViUm6dQDMoYt3pAJvx2c4fEflrmn7+kqyzYRRYYZjpVtekagj6GxlWVYs8F18
+         Fuv+az29g9Q+A8pYGuFgxhJgzgrMj1KJYRtdyzAuDWKNZGgJX1G/ozyQYAtFEhkkib3d
+         D+9SL2kVC0kMxnYC/9llIqwrKiijLj37zb2wAKcu8vK7b0lhjlHnKYLtGVAbLQ1TPrRl
+         PksgTnEZG1qVRdI6CYG2mZIaY7CbNY4D6Jb30TWtrukfxkTtLWA+vSnph/67EwQip+hR
+         WWKw==
+X-Gm-Message-State: ACgBeo2YLSjV7/NssH2OxNaXD31XNYKBbiYh+Nk9Bf+kR2YsL9LMCXn5
+        GnizMEYm7US07ikhgdPtCrtA
+X-Google-Smtp-Source: AA6agR7DHm389QOsikaC1geyN6tkdwhnwRhKjJLOzlCW+z8lZ5XpUhPmPnwSjxnbMG9O0urec3elhQ==
+X-Received: by 2002:a05:622a:1d1:b0:33b:71bc:a081 with SMTP id t17-20020a05622a01d100b0033b71bca081mr2009302qtw.325.1659627278327;
+        Thu, 04 Aug 2022 08:34:38 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:8b6:bc6e:e88:13d9? ([2600:1700:e72:80a0:8b6:bc6e:e88:13d9])
-        by smtp.gmail.com with ESMTPSA id x10-20020a92de0a000000b002de30ec2084sm489767ilm.75.2022.08.04.07.50.58
+        by smtp.gmail.com with ESMTPSA id k22-20020ac86056000000b002f936bae288sm817592qtm.87.2022.08.04.08.34.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Aug 2022 07:50:58 -0700 (PDT)
-Message-ID: <96cf691b-5190-5ba7-d612-e8473055c45c@github.com>
-Date:   Thu, 4 Aug 2022 10:50:57 -0400
+        Thu, 04 Aug 2022 08:34:37 -0700 (PDT)
+Message-ID: <9afd5eb2-44a0-6342-6006-5dbdefba9947@github.com>
+Date:   Thu, 4 Aug 2022 11:34:36 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH v2 05/10] log-tree: use ref_namespaces instead of
- if/else-if
+Subject: Re: [PATCH v2 4/5] bundle-uri: add support for http(s):// and file://
 Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
 To:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
-        steadmon@google.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
- <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
- <53b15a0b7932f892505d07a509909b62c473037e.1659122979.git.gitgitgadget@gmail.com>
- <xmqqv8r9dei7.fsf@gitster.g>
- <b4f07dd1-b59d-864b-f881-110c9bf87202@github.com>
- <2d24b539-a5b8-ed7d-2320-97588854eb5b@github.com>
-In-Reply-To: <2d24b539-a5b8-ed7d-2320-97588854eb5b@github.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de,
+        szeder.dev@gmail.com, mjcheetham@outlook.com, steadmon@google.com
+References: <pull.1300.git.1658781277.gitgitgadget@gmail.com>
+ <pull.1300.v2.git.1659443384.gitgitgadget@gmail.com>
+ <e4f2dcc7a45388663aeac786e5abdcf2164cfe62.1659443384.git.gitgitgadget@gmail.com>
+ <xmqq8ro6fi1j.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqq8ro6fi1j.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/4/2022 10:34 AM, Derrick Stolee wrote:
-> On 8/4/2022 9:31 AM, Derrick Stolee wrote:
->> On 8/3/2022 2:31 AM, Junio C Hamano wrote:
-
->>> Very nice.  The double-dash in the NAMESPACE__COUNT constant somehow
->>> looks strange.  As we scan through ref_namespace[] array densely,
->>>
->>> 	for (i = 0; i < ARRAY_SIZE(ref_namespace); i++)
->>> 		...
->>>
->>> without having to use the constant would probably be more in line
->>> with the way how the rest of the codebase works.
->>
->> Ah, I did not know about that trick. Thanks!
+On 8/2/2022 5:32 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
-> ...except that it doesn't work because the array is declared as
-> 'extern' so we don't know its size outside of refs.c.
+>> +static int copy_uri_to_file(const char *filename, const char *uri)
+>> +{
+>> +	const char *out;
+>> +
+>> +	if (istarts_with(uri, "https:") ||
+>> +	    istarts_with(uri, "http:"))
 > 
-> This motivates the use of NAMESPACE__COUNT (and the double
-> underscores differentiates the "COUNT" from other namespaces, so
-> there is no confusion about "COUNT" being a namespace). If there
-> is another way around this, then I would love to hear it!
+> Let's be a bit more strict to avoid mistakes and make the code
+> immediately obvious, e.g.
+> 
+> 	if (istarts_with(uri, "https://") ||
+> 	    istarts_with(uri, "http://"))
+> 
+>> +		return download_https_uri_to_file(filename, uri);
+>> +
+>> +	if (!skip_prefix(uri, "file://", &out))
+>> +		out = uri;
+> 
+> If we are using istarts_with because URI scheme name is case
+> insensitive, shouldn't we do the same for "file://" URL, not
+> just for "http(s)://" URL?  IOW
+> 
+> 	if (!skip_iprefix(uri, "file://", &out))
 
-My current workaround is to define the size of the array in the
-header file:
+Good ideas. Of course, we don't have a skip_iprefix(), but
+I can use "istarts_with()" and then manually add the length.
+If we see more need for that in the future, we can consider
+adding it.
 
----
+(It's interesting that these uses in bundle-uri.c are the
+only uses of istarts_with() that I see in the codebase.)
 
-enum ref_namespace {
-	NAMESPACE_HEAD,
-	NAMESPACE_BRANCHES,
-	NAMESPACE_TAGS,
-	NAMESPACE_REMOTE_REFS,
-	NAMESPACE_STASH,
-	NAMESPACE_REPLACE,
-	NAMESPACE_NOTES,
-	NAMESPACE_PREFETCH,
-	NAMESPACE_REWRITTEN,
+>> +static int download_https_uri_to_file(const char *file, const char *uri)
+>>  {
+>> +	int result = 0;
+>> +	struct child_process cp = CHILD_PROCESS_INIT;
+>> +	FILE *child_in = NULL, *child_out = NULL;
+>> +	struct strbuf line = STRBUF_INIT;
+>> +	int found_get = 0;
+>> +
+>> +	strvec_pushl(&cp.args, "git-remote-https", "origin", uri, NULL);
+> 
+> Does "git-remote-https" talk to a "http://" URL just fine when uri
+> parameter starts with "http://"?  Would it be the same if the uri
+> parameter begins with say "Http://"?
 
-	/* Must be last */
-	NAMESPACE__COUNT
-};
+I did a quick check of our HTTPS tests modifying the HTTPD_PROTO
+variable in lib-httpd.sh to "HtTP" and we get this fun error:
 
-/* See refs.c for the contents of this array. */
-extern struct ref_namespace_info ref_namespaces[NAMESPACE__COUNT];
++ git clone --filter=blob:limit=0 HtTP://127.0.0.1:5601/smart/server client
+Cloning into 'client'...
+git: 'remote-HtTP' is not a git command. See 'git --help'.
 
----
-
-Then ARRAY_SIZE(ref_namespaces) works properly.
+So I guess I can keep case-sensitive comparisons here.
 
 Thanks,
 -Stolee
