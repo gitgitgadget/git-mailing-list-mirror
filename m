@@ -2,133 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BDDBC00144
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 07:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26313C19F2C
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 07:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238969AbiHDHHH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 03:07:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36764 "EHLO
+        id S239199AbiHDHrI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 03:47:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239078AbiHDHHF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 03:07:05 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 360AD61D4D
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 00:07:04 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id s11so12736677edd.13
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 00:07:04 -0700 (PDT)
+        with ESMTP id S229884AbiHDHrH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 03:47:07 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 025D333A03
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 00:47:06 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id dc19so12667534ejb.12
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 00:47:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc;
-        bh=Q7FNj2LyfSsgx2egDtLhuMJDKmYEQmp+IGTLTVUZEhI=;
-        b=YgrhXRb67dIEAq8kXQZC1y5s4/fY5qG6GtGAVfeXyT0qTfn5Tfv5rGC5PT5ToQsno1
-         bpktbQfK00EF3efaeP7UUchFfyp2kmKeSXcjdn5myLjoSJxu/Vp9vGP91M5AE7HGTMSD
-         94qDSgoWK3cmATVk+g9uVtl+S1eNN+qRQxbRYeN/oW63bheM5szldDxKFAoat60r7nG/
-         0JwyNmdG4Zu1QFHtlVPP1bN5bkxVQRocByboWBLhK/0fjmkpzWRp+JXcwtNJf2SdICEi
-         dnT2fICr4aqbpLoIVnvWRJ/IBMudyXaOORa92ij1NXdEdUd0kczwGkQHuv9xN6+eTP6Y
-         bvmw==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc;
+        bh=5GdI898DNOs2MPlSDx7btf627IJG7aiakaUf9I6DObs=;
+        b=QlUhsRsVDtW0M7+uebX2JYHajumALtNGlA0+/0RKifh9GQ5QAWwAYX1x0HcSgdR5lK
+         oT6lA6GCkTHOwN5q6CKdmk0Nm9N90QIKTHiAbDXESrkecxe6m3+YR2WemklxeI5yu0za
+         haMRoTekotcQa+KMg6IyRn3tgbOYbN5qC6h6qvL4+agX+UCtCgr7MI7ZerFr3/Y1l0hN
+         BawaAB0kJyXBU4Bp6HgrQSSgROug//YFVDqo/9ZYYVjIPTwQmEjL3XK3zKgcqBJOj4FS
+         7lay6jSDlcJgEp/ceRjZsU/rMFsKxTn7G0S9RMhvNUXRTH47SSxmG+XTM9IEGss19CXY
+         oFmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc;
-        bh=Q7FNj2LyfSsgx2egDtLhuMJDKmYEQmp+IGTLTVUZEhI=;
-        b=AfuVVrLihMPwrGj0S5nN4qxkl7RF4AyD+Nc4jstNJqvPmTgFkWLCwwkRTV1d8o2jQX
-         WNIEsYdGXnMGk5kTkVvOE/zb7MRxhv/MUEI7AqGtom1XOVxpP17sjnG+rDNLnPjPJhMY
-         Al7BU0k4Szj4XPWODraD1p5rsjnBlYjDfJE/JNrAmd+3WGHWMVt7PY9NSe4RS5OjRJlH
-         0cCnBOr4bL3kyS5rhQGRgna8VuD1HThXRLxWao9znTPlAtF9xW8aTpAYSnnG5qMQxZNg
-         mRHOfpRr+BnaddK9vfKPUwsDiVuBSMD5DBv4kBmI4KnZHyNrWN5dRXIJlPWF6Clgd4iY
-         mx+w==
-X-Gm-Message-State: ACgBeo1xJoa1hUlA2qie32cFn91wwmM8MfTY4WxCLCTIYBvPxi2YqYcm
-        TGqTGlFzt2GjruEanZzDQRY2fAyhcUQ=
-X-Google-Smtp-Source: AA6agR7uLu0TzIliYJpgeGLW0dbph1ckQCW84yNxPyayjvZfH1gl1KkLJFVHKpAG30VZz0941y3/AQ==
-X-Received: by 2002:a05:6402:4303:b0:43d:94f5:8081 with SMTP id m3-20020a056402430300b0043d94f58081mr601121edc.288.1659596822629;
-        Thu, 04 Aug 2022 00:07:02 -0700 (PDT)
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=5GdI898DNOs2MPlSDx7btf627IJG7aiakaUf9I6DObs=;
+        b=DhBp1SeSH+X7akhIHxtNQm0Lq2HzE6oyTQ5DkSbCd6qFrtPpN/1HUUdIkxvvvccXpd
+         Jvb/E4ur2+WWLW1nQATL2bFGGFZ6SJtowa788D3AChYRAsA/nV6UP4msxs2jx775+geK
+         Yjb+ePW34iM5eNyzri0+sS6Wa9pXqUpyUCeIiwwWKSG8XpODI6I1CFLffryffFbj/wH3
+         XaJ1AEpYeZheZsrle6O9J0D75GoGjaGR6fElojgARm4MskE0/BRLmsmdUkjXA5xp2/4n
+         rQKmEv/+7zkGfEusoFJahoReSYQUUMju5mod9YzkgkiTEaU7mzkEdrpG+S7IiTVkDD0w
+         Rcvw==
+X-Gm-Message-State: ACgBeo0M3467HyhUxreCfPYtccNJb7UHVgsK+ZgVzfZSsQavEbtO2KTj
+        9HLmErzvR0GVMdzQ/qMtoIg=
+X-Google-Smtp-Source: AA6agR6FsNA2F/Hd9mgvQBdWyiJgGjM4aHPFLJkFYH4xfZwrTN6GTO5K2LSUM9Emu795qUtQiN6eMw==
+X-Received: by 2002:a17:907:761c:b0:730:babc:11ad with SMTP id jx28-20020a170907761c00b00730babc11admr504302ejc.98.1659599224490;
+        Thu, 04 Aug 2022 00:47:04 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id ca11-20020a170906a3cb00b007308812ce89sm3280ejb.168.2022.08.04.00.07.02
+        by smtp.gmail.com with ESMTPSA id z7-20020a50cd07000000b0043bea0a48d0sm269435edi.22.2022.08.04.00.47.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Aug 2022 00:07:02 -0700 (PDT)
+        Thu, 04 Aug 2022 00:47:03 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1oJUwf-009enW-0j;
-        Thu, 04 Aug 2022 09:07:01 +0200
+        id 1oJVZO-009fqH-2T;
+        Thu, 04 Aug 2022 09:47:02 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>
-Subject: Re: [PATCH v5 03/17] submodule--helper: fix most "struct pathspec"
- memory leaks
-Date:   Thu, 04 Aug 2022 09:04:02 +0200
-References: <cover-v4-00.17-00000000000-20220728T162442Z-avarab@gmail.com>
- <cover-v5-00.17-00000000000-20220802T155002Z-avarab@gmail.com>
- <patch-v5-03.17-1f90348d61f-20220802T155002Z-avarab@gmail.com>
- <kl6lbkt1szlk.fsf@chooglen-macbookpro.roam.corp.google.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        vdye@github.com, steadmon@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 06/10] log: add default decoration filter
+Date:   Thu, 04 Aug 2022 09:08:04 +0200
+References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
+        <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
+        <bec532fb8c63b3ae784d442f438687a4f0bbad37.1659122979.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <kl6lbkt1szlk.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-ID: <220804.86mtckebca.gmgdl@evledraar.gmail.com>
+In-reply-to: <bec532fb8c63b3ae784d442f438687a4f0bbad37.1659122979.git.gitgitgadget@gmail.com>
+Message-ID: <220804.86iln8e9hl.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Aug 03 2022, Glen Choo wrote:
+On Fri, Jul 29 2022, Derrick Stolee via GitGitGadget wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> From: Derrick Stolee <derrickstolee@github.com>
+
+Thanks for the re-roll in general, there's a lot of good stuff here & I
+hope I find more time to comment on it in more detail, but just focusing
+on things that would be hard to back out of once changed:
+
+> [...]
+> Another alternative would be to exclude the known namespaces that are
+> not intended to be shown. This would reduce the visible effect of the
+> change for expert users who use their own custom ref namespaces. The
+> implementation change would be very simple to swap due to our use of
+> ref_namespaces:
 >
->> Call clear_pathspec() at the end of various functions that work with
->> and allocate a "struct pathspec".
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  builtin/submodule--helper.c | 74 +++++++++++++++++++++++++------------
->>  1 file changed, 51 insertions(+), 23 deletions(-)
->>
->> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->> index d958da7dddc..92d32f2877f 100644
->> --- a/builtin/submodule--helper.c
->> +++ b/builtin/submodule--helper.c
->> @@ -367,7 +367,7 @@ static void runcommand_in_submodule_cb(const struct =
-cache_entry *list_item,
->>  static int module_foreach(int argc, const char **argv, const char *pref=
-ix)
->>  {
->>  	struct foreach_cb info =3D FOREACH_CB_INIT;
->> -	struct pathspec pathspec;
->> +	struct pathspec pathspec =3D { 0 };
+> 	int i;
+> 	struct string_list *exclude = decoration_filter->exclude_ref_pattern;
 >
-> Out of curiousity, does this zero-initialization do anything for us
-> leaks-wise?
+> 	/*
+> 	 * No command-line or config options were given, so
+> 	 * populate with sensible defaults.
+> 	 */
+> 	for (i = 0; i < NAMESPACE__COUNT; i++) {
+> 		if (ref_namespaces[i].decoration)
+> 			continue;
+>
+> 		string_list_append(exclude, ref_namespaces[i].ref);
+> 	}
+>
+> The main downside of this approach is that we expect to add new hidden
+> namespaces in the future, and that means that Git versions will be less
+> stable in how they behave as those namespaces are added.
 
-No, because if we leak module_list_compute() must have filled the
-pathspec with something it allocated, but...
+I see that as a feature, and not a downside. If we simply explain this
+in the documentation as e.g.:
 
->>  	struct module_list list =3D MODULE_LIST_INIT;
->>  	struct option module_foreach_options[] =3D {
->>  		OPT__QUIET(&info.quiet, N_("suppress output of entering each submodul=
-e command")),
->> @@ -379,12 +379,13 @@ static int module_foreach(int argc, const char **a=
-rgv, const char *prefix)
->>  		N_("git submodule foreach [--quiet] [--recursive] [--] <command>"),
->>  		NULL
->>  	};
->> +	int ret =3D 1;
->>=20=20
->>  	argc =3D parse_options(argc, argv, prefix, module_foreach_options,
->>  			     git_submodule_helper_usage, 0);
->>=20=20
->>  	if (module_list_compute(0, NULL, prefix, &pathspec, &list) < 0)
->> -		return 1;
->> +		goto cleanup;
+	When adding decorations git will by default exclude certain
+	"internal" ref namespaces that it treats specially, such as
+	refs/magical-1/*, refs/magical-2/* (or whatever). Other such
+	special namespaces may be reserved in the future.
 
-...if we don't initialize it then we can't "goto cleanup".
+There's no lack of "stability", because the ref hiding only act on
+what's known to be something we can ignore, because our git version
+knows about it.
 
-Now, right now this is redundant, we could just "return 1", as we don't
-have a pathspec yet.
+If git v2.40 knows about refs/magical-1/* but not refs/magical-2/*, but
+git v2.50 knows about both it's not a lack of stability that v2.40 shows
+one decorated by default, but v2.50 shows neither.
 
-But it's generally worth just using the same "cleanup" pattern
-everywhere, and not worrying about in your cleanunp code that you only
-init'd N/TOTAL variables already.
+To v2.40 one of them isn't a magical "I know what this is, it's internal
+& I can hide it" ref.
+
+I'm aware that we disagree, and some of this was discussed in v1. I'm
+not intending to just repeat what I said before.
+
+But it's not just that I disagree, I genuinely don't get your POV
+here. We:
+
+ * Know that we have (admittedly probably rare) in-the-wild use of
+   non-standard and custom namespaces, and that this series would change
+   long-standing log output.
+
+   If I could see a good reason to change the existing "log" behavior
+   here I'd probably be sold on it. We try not to change existing output
+   in general, but this part isn't "plumbing", and arguably not a very
+   "stable" part of the log output either (decorations being optional
+   etc).
+
+   But it does rub me the wrong way to sell a change in the name of
+   "stability" when it's from the outset doing the exact opposite,
+   to....
+
+ * ... are willing to make that one-time change so that we can have
+   stability for users that are relying on "decorate" working
+   consistently across versions once we're in the new world order,
+   because we *might* add new magical refs.
+
+Since the latter group of users don't exist today by definition (this
+having not been integrated) why isn't it a better win-win solution to
+give those users some --decorate-only-known-refs option/config?
+
+They'd get their "stability" going forward, and without the needless
+breaking of existing behavior, no?
+
+> +test_expect_success 'log --decorate does not include things outside filter' '
+> +	reflist="refs/prefetch refs/rebase-merge refs/bundle" &&
+> +
+> +	for ref in $reflist
+> +	do
+> +		git update-ref $ref/fake HEAD || return 1
+> +	done &&
+> +
+> +	git log --decorate=full --oneline >actual &&
+> +
+> +	for ref in $reflist
+> +	do
+> +		! grep $ref/fake actual || return 1
+> +	done
+
+I haven't tested, but isn't that last for-loop replacable with:
+
+	! grep /fake actual
+
+?
+
+Or do we have other "/fake" refs we want to include?
