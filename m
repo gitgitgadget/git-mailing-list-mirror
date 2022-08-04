@@ -2,174 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E189C00144
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 06:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BDDBC00144
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 07:07:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232615AbiHDG7V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 02:59:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58792 "EHLO
+        id S238969AbiHDHHH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 03:07:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229906AbiHDG7U (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 02:59:20 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDB8D5A16B
-        for <git@vger.kernel.org>; Wed,  3 Aug 2022 23:59:18 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id z22so24129020edd.6
-        for <git@vger.kernel.org>; Wed, 03 Aug 2022 23:59:18 -0700 (PDT)
+        with ESMTP id S239078AbiHDHHF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 03:07:05 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 360AD61D4D
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 00:07:04 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id s11so12736677edd.13
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 00:07:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc;
-        bh=pOACiyMjecjp7ny/p6m4XXeMhf30U9eesAcRAp0yIc0=;
-        b=CujfGs791davmS7MIq0jHi3dpCQQ5sKBU5aQgjvrqkHbKObAa+ZIPwy1gzB5I+Hhj8
-         Evd4N2V8fBOswLEMSsg8yvG3ZlQznyi/jquUS5ZEjLez3EE4wY8ja407OYqsmMaejsAf
-         CbxmXN5Owivqqyx0d2iXaUM9+TV3i1gQ6CJ9/yC8KcT3z4ABxu6UQRPeLJjYSFwHtuVU
-         tf67MlrjT02PFMIif4i2Chgm6i3SsxYbPXb/7SNhc2BNpV14cEeFAEICh/tpvmdDR2Tu
-         N48A23gi2QQ8qEpY8pqb0YKGFk85MD26egAwhy9/+67253/dTBuqe1IciCz5DwAxVdmy
-         69uA==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc;
+        bh=Q7FNj2LyfSsgx2egDtLhuMJDKmYEQmp+IGTLTVUZEhI=;
+        b=YgrhXRb67dIEAq8kXQZC1y5s4/fY5qG6GtGAVfeXyT0qTfn5Tfv5rGC5PT5ToQsno1
+         bpktbQfK00EF3efaeP7UUchFfyp2kmKeSXcjdn5myLjoSJxu/Vp9vGP91M5AE7HGTMSD
+         94qDSgoWK3cmATVk+g9uVtl+S1eNN+qRQxbRYeN/oW63bheM5szldDxKFAoat60r7nG/
+         0JwyNmdG4Zu1QFHtlVPP1bN5bkxVQRocByboWBLhK/0fjmkpzWRp+JXcwtNJf2SdICEi
+         dnT2fICr4aqbpLoIVnvWRJ/IBMudyXaOORa92ij1NXdEdUd0kczwGkQHuv9xN6+eTP6Y
+         bvmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=pOACiyMjecjp7ny/p6m4XXeMhf30U9eesAcRAp0yIc0=;
-        b=WMuD544qp/gPCI4wD8iSY/SfR7twoALySKsbthuLrH5SuCHSv3JsY+Cb5gMnKd4H+r
-         kJVCarB/tu5re5e4O/tL2C0LyPZvRiVGiE1bJMauSTxSzVXg8Y/0AaZhd7ouNMcDdI2T
-         tEDU44ebz4oS+MfcruvClGnZ7QbUe9lrmyCQCnbb2fQk0BKh0hATF/kfWpETFIpXY2kU
-         HR3DlytwKgffLc4cDeKYyuaInF5pFM8b9g1XFfIgLA4vS77m3Uk01XeDpW3hY6OGo5Mj
-         aF19qzzcc1rO4fNjCc/q4w22mN3jW/kC+co9rAkge35KkMN/l8UVVkTLjC0gvtmVoJRS
-         1dbg==
-X-Gm-Message-State: ACgBeo38Nvc6cWLV85jFSZszqz9pw32UMA/LLtgHJZPLUtu8b0+vLFDt
-        LIvus4gBs8MZ7/Gsnnag1qw=
-X-Google-Smtp-Source: AA6agR69GUvSPYW+5b5yHNX3bnGRtN5l9UCs7mgZZAXIBSrVrHpahqn1+xjSBrNc09vERLxqsEsAlQ==
-X-Received: by 2002:a05:6402:278d:b0:43d:cf90:c91a with SMTP id b13-20020a056402278d00b0043dcf90c91amr591735ede.186.1659596357197;
-        Wed, 03 Aug 2022 23:59:17 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc;
+        bh=Q7FNj2LyfSsgx2egDtLhuMJDKmYEQmp+IGTLTVUZEhI=;
+        b=AfuVVrLihMPwrGj0S5nN4qxkl7RF4AyD+Nc4jstNJqvPmTgFkWLCwwkRTV1d8o2jQX
+         WNIEsYdGXnMGk5kTkVvOE/zb7MRxhv/MUEI7AqGtom1XOVxpP17sjnG+rDNLnPjPJhMY
+         Al7BU0k4Szj4XPWODraD1p5rsjnBlYjDfJE/JNrAmd+3WGHWMVt7PY9NSe4RS5OjRJlH
+         0cCnBOr4bL3kyS5rhQGRgna8VuD1HThXRLxWao9znTPlAtF9xW8aTpAYSnnG5qMQxZNg
+         mRHOfpRr+BnaddK9vfKPUwsDiVuBSMD5DBv4kBmI4KnZHyNrWN5dRXIJlPWF6Clgd4iY
+         mx+w==
+X-Gm-Message-State: ACgBeo1xJoa1hUlA2qie32cFn91wwmM8MfTY4WxCLCTIYBvPxi2YqYcm
+        TGqTGlFzt2GjruEanZzDQRY2fAyhcUQ=
+X-Google-Smtp-Source: AA6agR7uLu0TzIliYJpgeGLW0dbph1ckQCW84yNxPyayjvZfH1gl1KkLJFVHKpAG30VZz0941y3/AQ==
+X-Received: by 2002:a05:6402:4303:b0:43d:94f5:8081 with SMTP id m3-20020a056402430300b0043d94f58081mr601121edc.288.1659596822629;
+        Thu, 04 Aug 2022 00:07:02 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id p3-20020a17090653c300b00730223dc5c0sm7546291ejo.206.2022.08.03.23.59.16
+        by smtp.gmail.com with ESMTPSA id ca11-20020a170906a3cb00b007308812ce89sm3280ejb.168.2022.08.04.00.07.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Aug 2022 23:59:16 -0700 (PDT)
+        Thu, 04 Aug 2022 00:07:02 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1oJUp9-009eZ4-1y;
-        Thu, 04 Aug 2022 08:59:15 +0200
+        id 1oJUwf-009enW-0j;
+        Thu, 04 Aug 2022 09:07:01 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com,
-        johannes.schindelin@gmx.de, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v2 09/10] scalar-diagnose: use 'git diagnose --all'
-Date:   Thu, 04 Aug 2022 08:54:01 +0200
-References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
- <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
- <6834bdcaea838cc49f209efd785bf2bdf09e9c08.1659577543.git.gitgitgadget@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: Re: [PATCH v5 03/17] submodule--helper: fix most "struct pathspec"
+ memory leaks
+Date:   Thu, 04 Aug 2022 09:04:02 +0200
+References: <cover-v4-00.17-00000000000-20220728T162442Z-avarab@gmail.com>
+ <cover-v5-00.17-00000000000-20220802T155002Z-avarab@gmail.com>
+ <patch-v5-03.17-1f90348d61f-20220802T155002Z-avarab@gmail.com>
+ <kl6lbkt1szlk.fsf@chooglen-macbookpro.roam.corp.google.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <6834bdcaea838cc49f209efd785bf2bdf09e9c08.1659577543.git.gitgitgadget@gmail.com>
-Message-ID: <220804.86r11webp8.gmgdl@evledraar.gmail.com>
+In-reply-to: <kl6lbkt1szlk.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <220804.86mtckebca.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Aug 04 2022, Victoria Dye via GitGitGadget wrote:
+On Wed, Aug 03 2022, Glen Choo wrote:
 
-> From: Victoria Dye <vdye@github.com>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> Replace implementation of 'scalar diagnose' with an internal invocation of
-> 'git diagnose --all'. This simplifies the implementation of 'cmd_diagnose'
-> by making it a direct alias of 'git diagnose' and removes some code in
-> 'scalar.c' that is duplicated in 'builtin/diagnose.c'. The simplicity of the
-> alias also sets up a clean deprecation path for 'scalar diagnose' (in favor
-> of 'git diagnose'), if that is desired in the future.
+>> Call clear_pathspec() at the end of various functions that work with
+>> and allocate a "struct pathspec".
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  builtin/submodule--helper.c | 74 +++++++++++++++++++++++++------------
+>>  1 file changed, 51 insertions(+), 23 deletions(-)
+>>
+>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+>> index d958da7dddc..92d32f2877f 100644
+>> --- a/builtin/submodule--helper.c
+>> +++ b/builtin/submodule--helper.c
+>> @@ -367,7 +367,7 @@ static void runcommand_in_submodule_cb(const struct =
+cache_entry *list_item,
+>>  static int module_foreach(int argc, const char **argv, const char *pref=
+ix)
+>>  {
+>>  	struct foreach_cb info =3D FOREACH_CB_INIT;
+>> -	struct pathspec pathspec;
+>> +	struct pathspec pathspec =3D { 0 };
 >
-> This introduces one minor change to the output of 'scalar diagnose', which
-> is that the prefix of the created zip archive is changed from 'scalar_' to
-> 'git-diagnostics-'.
->
-> Signed-off-by: Victoria Dye <vdye@github.com>
-> ---
->  contrib/scalar/scalar.c | 29 +++++++----------------------
->  1 file changed, 7 insertions(+), 22 deletions(-)
->
-> diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-> index b10955531ce..fe2a0e9decb 100644
-> --- a/contrib/scalar/scalar.c
-> +++ b/contrib/scalar/scalar.c
-> @@ -11,7 +11,6 @@
->  #include "dir.h"
->  #include "packfile.h"
->  #include "help.h"
-> -#include "diagnose.h"
->  
->  /*
->   * Remove the deepest subdirectory in the provided path string. Path must not
-> @@ -510,34 +509,20 @@ static int cmd_diagnose(int argc, const char **argv)
->  		N_("scalar diagnose [<enlistment>]"),
->  		NULL
->  	};
-> -	struct strbuf zip_path = STRBUF_INIT;
-> -	time_t now = time(NULL);
-> -	struct tm tm;
-> +	struct strbuf diagnostics_root = STRBUF_INIT;
->  	int res = 0;
->  
->  	argc = parse_options(argc, argv, NULL, options,
->  			     usage, 0);
->  
-> -	setup_enlistment_directory(argc, argv, usage, options, &zip_path);
-> -
-> -	strbuf_addstr(&zip_path, "/.scalarDiagnostics/scalar_");
-> -	strbuf_addftime(&zip_path,
-> -			"%Y%m%d_%H%M%S", localtime_r(&now, &tm), 0, 0);
-> -	strbuf_addstr(&zip_path, ".zip");
-> -	switch (safe_create_leading_directories(zip_path.buf)) {
-> -	case SCLD_EXISTS:
-> -	case SCLD_OK:
-> -		break;
-> -	default:
-> -		error_errno(_("could not create directory for '%s'"),
-> -			    zip_path.buf);
-> -		goto diagnose_cleanup;
+> Out of curiousity, does this zero-initialization do anything for us
+> leaks-wise?
 
-Just spotting this now, but we had ad error, but we "goto
-diagnose_cleanup", but that will use our "res = 0" above.
+No, because if we leak module_list_compute() must have filled the
+pathspec with something it allocated, but...
 
-Is this untested already or in this series (didn't go back to look). But
-maybe a moot point, the post-image replacement uses die()..
+>>  	struct module_list list =3D MODULE_LIST_INIT;
+>>  	struct option module_foreach_options[] =3D {
+>>  		OPT__QUIET(&info.quiet, N_("suppress output of entering each submodul=
+e command")),
+>> @@ -379,12 +379,13 @@ static int module_foreach(int argc, const char **a=
+rgv, const char *prefix)
+>>  		N_("git submodule foreach [--quiet] [--recursive] [--] <command>"),
+>>  		NULL
+>>  	};
+>> +	int ret =3D 1;
+>>=20=20
+>>  	argc =3D parse_options(argc, argv, prefix, module_foreach_options,
+>>  			     git_submodule_helper_usage, 0);
+>>=20=20
+>>  	if (module_list_compute(0, NULL, prefix, &pathspec, &list) < 0)
+>> -		return 1;
+>> +		goto cleanup;
 
-> -	}
-> +	setup_enlistment_directory(argc, argv, usage, options, &diagnostics_root);
-> +	strbuf_addstr(&diagnostics_root, "/.scalarDiagnostics");
->  
-> -	res = create_diagnostics_archive(&zip_path, 1);
-> +	if (run_git("diagnose", "--all", "-s", "%Y%m%d_%H%M%S",
-> +		    "-o", diagnostics_root.buf, NULL) < 0)
-> +		res = -1;
+...if we don't initialize it then we can't "goto cleanup".
 
-The code handling here seems really odd, issues:
+Now, right now this is redundant, we could just "return 1", as we don't
+have a pathspec yet.
 
- * This *can* return -1, if start_command() fails, but that's by far the
-   rarer case, usually it would be 0 or >0 (only <0 if we can't start
-   the command at all).
-
- * You should not be returning -1 from cmd_*() in general (we have
-   outstanding issues with it, but those should be fixed). It will yield
-   an exit code of 255 (but it's not portable)).
-
- * If you're going to return -1 at all, why override <0 with -1, just
-   "res = run_git(...)" instead?
-
-I think all-in-all this should be:
-
-	res = run_git(...);
-
-Then:
-
->  
-> -diagnose_cleanup:
-> -	strbuf_release(&zip_path);
-> +	strbuf_release(&diagnostics_root);
->  	return res;
-
-	return res < 0 ? -res : res;
-
-Or whatever.
+But it's generally worth just using the same "cleanup" pattern
+everywhere, and not worrying about in your cleanunp code that you only
+init'd N/TOTAL variables already.
