@@ -2,77 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 110C5C25B06
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 22:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0524C25B07
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 23:00:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240113AbiHDW75 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 18:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52846 "EHLO
+        id S239745AbiHDXAV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 19:00:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237584AbiHDW7l (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 18:59:41 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 577784D807
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 15:57:26 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id c185so993485oia.7
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 15:57:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=wa88Xlv/ZljV/nrpdDrslMKY2CyRU/NmH55aQGJwfUo=;
-        b=ZL7oPdYe4hflernt1wkObAavLfNrb3DPEHunxhwsbuIUlpv1HzYBOfYF4lnUgEBLsV
-         skkiiWevDjOSGiy/n+Gjgqrpf7jDevtFMEeabd/rH20MWL3QTJZkBVs7Iq0VxH90LEPh
-         IMEsqdX7l5S3FToZ8TB65yED7oI8bbqbr0r82/S+HS+JAQ5WeBFwJFzJ9Tvz1cq07MDT
-         blSusj9EqOvl5RvrcBHASfKYT8Nv6iADgygc65Uj/CF4rn4977tH8lRRyXOiq2LZRNSf
-         TCOqsgIyz3WkMBhgD4Cxo9YLjh+PMPYk2wi7h1fP2X1YCEmCWXWYbDlyZUrvqZhPD+RQ
-         0CPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=wa88Xlv/ZljV/nrpdDrslMKY2CyRU/NmH55aQGJwfUo=;
-        b=b7CT9PibjQg9AoxbTboWPOCCTrvoh/lpg8aq9xJrzkbPUUvpLXBdwOG43WwRzJ1DLQ
-         pBStwc8lUEQJqNzW9cBbuAUBijY8pTMX1dr0hoFEOZ/JeAmgvnLeZyXBl2/eRf7XXXxw
-         zW6Tn1H1zYndVPGY5O5ZhrEjHRWi7geIOg6VdWsAzGiFRQ2aVR7rNzoOGy83MHMtwwQm
-         yq1muuT+hXp0RY0xz0oFwmTjlOGB4G4PII2CMs2Zdi6sG4UTz+nEX1wlQiGPXKV90wdE
-         +egDnE74jU9dUGIGYR/RlrV3vVZAfu2QghkH7+SeiAor61SfErYF/UpDr0zGiyUnTBDa
-         SMuQ==
-X-Gm-Message-State: ACgBeo2bBym5U3Mn0qpnJqJC7j6qGLQnz/q+DEVO3NgcuFlSjaijrnMw
-        X3vBCKqtqUmWfjKqPrtZD2ZbNQmUnClGuukOsfYORw==
-X-Google-Smtp-Source: AA6agR6UyV8j3pMYAwuC/6kDW3PWRyf96iSfgAiHd3kCy43P+x93+o+nVZD022fYGnOQvR2eZp8uhcp3RR2pYlKnroY=
-X-Received: by 2002:a05:6808:10d4:b0:33a:baf0:338c with SMTP id
- s20-20020a05680810d400b0033abaf0338cmr1821795ois.4.1659653845498; Thu, 04 Aug
- 2022 15:57:25 -0700 (PDT)
+        with ESMTP id S233923AbiHDW75 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 18:59:57 -0400
+Received: from smtp.onerussian.com (washoe.dartmouth.edu [129.170.30.229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E04020A
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 15:59:03 -0700 (PDT)
+Received: from c-76-24-253-1.hsd1.nh.comcast.net ([76.24.253.1] helo=localhost)
+        by smtp.onerussian.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.89)
+        (envelope-from <yoh@onerussian.com>)
+        id 1oJjnx-0001IV-0Q
+        for git@vger.kernel.org; Thu, 04 Aug 2022 18:59:01 -0400
+Date:   Thu, 4 Aug 2022 18:59:00 -0400
+From:   Yaroslav Halchenko <yoh@onerussian.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <YuxPNFtTBmkZkiCW@lena.dartmouth.edu>
 MIME-Version: 1.0
-References: <20220502170904.2770649-1-calvinwan@google.com>
- <20220728230210.2952731-1-calvinwan@google.com> <8a1ff659-2086-f3cf-469a-76f5e2bc60e3@gmail.com>
-In-Reply-To: <8a1ff659-2086-f3cf-469a-76f5e2bc60e3@gmail.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Thu, 4 Aug 2022 15:57:14 -0700
-Message-ID: <CAFySSZDNFAn6jZuby8Xj4EGUq0f7BJHv1gZwBNU0h+5D4+ny1A@mail.gmail.com>
-Subject: Re: [PATCH v5 0/6] cat-file: add --batch-command remote-object-info command
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
-        philipoakley@iee.email, johncai86@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-SA-Exim-Connect-IP: 76.24.253.1
+X-SA-Exim-Rcpt-To: git@vger.kernel.org
+X-SA-Exim-Mail-From: yoh@onerussian.com
+Subject: --batch or some --paths-file  for very long lists of paths
+X-SA-Exim-Version: 4.2.1 (built Tue, 02 Aug 2016 21:08:31 +0000)
+X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> This might be a daft question but could we teach cat-file to check if an
-> object is available locally and if it is not retrieve just the metadata
-> from the remote rather than adding a new command to --batch-command?
-> That way it would be transparent to the user and they would not have to
-> worry about whether they might be querying a remote object or not.
+Dear Git Gurus,
 
-Definitely a good question! If we did this over a large amount of objects and
-we didn't have those objects locally, then we would have to query for each
-of them, resulting in a lot of transport overhead. Therefore, I needed to use
---batch-command to allow me to query all at once. This also begs the
-question of why I don't check for the objects locally before querying the
-server. The intention of my patch assumes that the user querying for
-object-info knows they don't have the object locally and would therefore
-like to see the size of an object they could potentially fetch. This could
-definitely be potential future work (which I should mention in my commit
-message!)
+In DataLad (https://datalad.org) we are doing "our own" analysis of what
+specific files (not entire directories) should git and git-annex operate
+on.  Obviously, in large repositories (and we have with >100k files)
+that might require invoking  git add  or  git diff  etc with a long list
+of paths specified in the command line.  For that we often split
+invocation into multiple and even resort to   git commit --amend  to
+combine multiple commits then into a single one.
+
+But I wondered if may be there is already some trick to make such
+commands as   status, diff, add, commit   to operate on arbitrarily long
+list of paths passed to that git command somehow.
+
+Note that gitglossary (at least in 2.35.1 git on debian) says that 
+
+	Pathspecs are used on the command line of "git ls-files", "git
+    ls-tree", "git add", "git grep", "git diff", "git checkout", and many other
+    commands ...
+
+but 
+
+	$> git ls-tree -h | head -n1
+	usage: git ls-tree [<options>] <tree-ish> [<path>...]
+
+so it is <path> not the <pathspec> like (why in stderr this time?)
+
+	$> git commit -h 2>&1 | head -n1
+	usage: git commit [<options>] [--] <pathspec>...
+
+So if in both cases it is pathspec, may be pathspec could support some
+other magical keyword like :(filelist)/tmp/mylonglistofpaths ?
+
+Thanks in advance for your time and thoughts,
+-- 
+Yaroslav O. Halchenko
+Center for Open Neuroscience     http://centerforopenneuroscience.org
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+WWW:   http://www.linkedin.com/in/yarik        
+
