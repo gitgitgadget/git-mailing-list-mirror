@@ -2,268 +2,230 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F5F9C25B06
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 20:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1039C25B06
+	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 21:00:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239894AbiHDUq3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 16:46:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55934 "EHLO
+        id S231211AbiHDVAk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 17:00:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235298AbiHDUqT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 16:46:19 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59B7F6D55B
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 13:46:15 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id m41-20020a05600c3b2900b003a4e094256eso444566wms.0
-        for <git@vger.kernel.org>; Thu, 04 Aug 2022 13:46:15 -0700 (PDT)
+        with ESMTP id S239784AbiHDVAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 17:00:38 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8900329CA6
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 14:00:36 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id kb8so1484960ejc.4
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 14:00:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc;
-        bh=QaEQ55YjDSDMpXjNbl4+7WBqnp7hKCe7lLnFy8v2vag=;
-        b=JFHsoOdqHYredF+xI2NrLoRkecm+h0WCHK6aeomLGOnX3m8p2LyRR+dEtSB2MIMh87
-         Z3BoLoO6m4xGE5usccFdaVkFsaFrLbnSnaqz6x9hKFFpaDhlyZ8nh9XGTgACS7vyxY6n
-         5HWWV/b8hvMz6UN+HY545htiQfyp9CHDZwh8H8u9Xe1Vz166mgHP5EtPkCZr2/UYbyu7
-         ftQnMLSIP2TxjCGH9VI7MRPhi8U7u876NfDVMGNezv1NLIPwZKj1F8wbP+oL7muOIGiN
-         KVMw9tVMZCV/Xe3+ujQ1BqQFK9c/kIi/HkTaP8f5PLdKzEXeVzUWHZbH6kOTo9g9Mcn5
-         PdJg==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc;
+        bh=raL6byptCtB6Q15qVbiQEMSw1n91FAOA6euNYBcnZqs=;
+        b=oOsyqwlS9t6twVzsd0NyLPhLLzmVcBOfiS+abHHCMItAKD//AO1kbmMOKenqWvnrbm
+         60l3L5OxrJwVixdobbizf+KM8w4fO5Yz5zr0benAY/n58u5cCm1uOsQDshFRWkEn4FFs
+         08JvgkXcwTbNxK+mNDhe4tvj5IODwKsOJh+rEf6yjpks9T7QzbnRb1+8SnD0M8JBDIYT
+         2mJkYzKh+obL6KIVSIlQUNy61bMKIULgfr/E2WsfdowhQLG6eVNPkAv0bGRvIWYQz1zS
+         sO6kufUPda4FKffsjPGifOETpGOR4ijhtuI27k5PYe6lvAv2PRocEVP0Xevk6ohij6J1
+         yimw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=QaEQ55YjDSDMpXjNbl4+7WBqnp7hKCe7lLnFy8v2vag=;
-        b=4l19qmtT+SmKCxcqzfC/R4jzBRcOVUhDBfVxO5XqOJ8N4KCzjAeno/3e4Ghk3C90N6
-         4+2QaJ38FAMl3+S3bNIt0oajJw0DqZ6eDLfK7BEOIsqdbbFEInlGxDuhBgC1YUscNgxu
-         CwmGbmlNYozWs4nr9kxot7HVNuopP43LXjsAfzAhshuiu8ZNuJ+22BBsJlMXKjVO1zDX
-         glnMny92WYi1m1Ha8335n+uWSiVjhSQIMUUNTjzkzqf2Y2Xgk0T2CaW3AkoqKrE+lKKl
-         p1gtQLutEpv5rRSlaVYkQXlCKy7ybWSxlBHWPTCPzFDNXjV6T+gELLRvzpkgBtW91qT7
-         W3AQ==
-X-Gm-Message-State: ACgBeo31cJ1AiQfy9UewGcrUmW7qPAscGZ7Lzap+u0Hrbd+YxGLXYjfB
-        AvSrSBPsFp9GMFyTI+9NUyTmLpVLGHk=
-X-Google-Smtp-Source: AA6agR7oZ6XSaXeKYR3fOkqs+wUGQshYl+Yv/3EjrKXQEXiPHZIYI3EdQKmgJMxqVYLv4vJF0/50Uw==
-X-Received: by 2002:a05:600c:1515:b0:3a5:1690:557b with SMTP id b21-20020a05600c151500b003a51690557bmr1237185wmg.147.1659645973346;
-        Thu, 04 Aug 2022 13:46:13 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h2-20020a5d4fc2000000b0021e8d205705sm2196772wrw.51.2022.08.04.13.46.12
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=raL6byptCtB6Q15qVbiQEMSw1n91FAOA6euNYBcnZqs=;
+        b=yC23oKzxmPXc3DjVdQ7Y5w5cIfnp11ytHcM/tRv+u+2nlsMl5P16wrF+G2eDLC4C8c
+         PKHz2LDhccgnAwULPOaUY0C7AWmpD2UQCx4BVGjBqLx4cjtec/SHDoMKUve1OZ4mfLTf
+         ocZhnady+f4XlKisyKO8fDOwAIumfhF6VcUKhuJcM0p4emhCr7F3wqQfcvoEMj5OfZhf
+         Xud+BnhFSelKO/jGrQqcJxSAEn8FKwhXSNttleBFGANovi8zDcIPTvDQVWopi31e6kDB
+         UJtGOAZAXWNGfiF/YLHRPG4QgVl+YOw78n7AnsWUI4tdoVWjE7CTthamwRJFoWbGKxfS
+         0xCg==
+X-Gm-Message-State: ACgBeo3G73QoBlGxnYq76Thu7/eyrnYLLt1IIbf2CL3hv7e2GM6R4ex8
+        vrhaz2Kx0OTE3LcibQdPmAs=
+X-Google-Smtp-Source: AA6agR4eM5Ocu2YT8bffx1G+a9bmgD1kouvGS38AziVJHHnNXNWFqP+JiGOC5ZoC3BC3xHXzvz/Eig==
+X-Received: by 2002:a17:907:7b89:b0:730:8649:983c with SMTP id ne9-20020a1709077b8900b007308649983cmr2607555ejc.542.1659646834834;
+        Thu, 04 Aug 2022 14:00:34 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id f4-20020a17090631c400b00730661374ffsm711842ejf.134.2022.08.04.14.00.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Aug 2022 13:46:12 -0700 (PDT)
-Message-Id: <016971a67112efe2d15fe7908e86c5d2631f8e66.1659645967.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1312.git.1659645967.gitgitgadget@gmail.com>
-References: <pull.1312.git.1659645967.gitgitgadget@gmail.com>
-From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 04 Aug 2022 20:46:07 +0000
-Subject: [PATCH 4/4] unpack-trees: handle missing sparse directories
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 04 Aug 2022 14:00:34 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oJhxJ-0005mu-10;
+        Thu, 04 Aug 2022 23:00:33 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Matthew John Cheetham <mjcheetham@outlook.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
+        dyroneteng@gmail.com, Johannes.Schindelin@gmx.de,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] bundle-uri: add example bundle organization
+Date:   Thu, 04 Aug 2022 22:29:26 +0200
+References: <pull.1248.v2.git.1656535245.gitgitgadget@gmail.com>
+ <pull.1248.v3.git.1658757188.gitgitgadget@gmail.com>
+ <a933471c3afdd2c95d4115719c24d79e5e430b4d.1658757188.git.gitgitgadget@gmail.com>
+ <AS8PR03MB86898A2F7156918A390296CAC09F9@AS8PR03MB8689.eurprd03.prod.outlook.com>
+ <9b1cf24c-dfa9-0a5b-06f7-8942a8ba72ec@github.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <9b1cf24c-dfa9-0a5b-06f7-8942a8ba72ec@github.com>
+Message-ID: <220804.86y1w3sozy.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     derrickstolee@github.com, shaoxuan.yuan02@gmail.com,
-        newren@gmail.com, gitster@pobox.com,
-        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Victoria Dye <vdye@github.com>
 
-If a sparse directory does not exist in the index, unpack it at the
-directory level rather than recursing into it an unpacking its contents
-file-by-file. This helps keep the sparse index as collapsed as possible in
-cases such as 'git reset --hard' restoring a sparse directory.
+On Thu, Aug 04 2022, Derrick Stolee wrote:
 
-A directory is determined to be truly non-existent in the index (rather than
-the parent of existing index entries), if 1) its path is outside the sparse
-cone and 2) there are no children of the directory in the index. This check
-is performed by 'missing_dir_is_sparse()' in 'unpack_single_entry()'. If the
-directory is a missing sparse dir, 'unpack_single_entry()'  will proceed
-with unpacking it. This determination is also propagated back up to
-'unpack_callback()' via 'is_missing_sparse_dir' to prevent further tree
-traversal into the unpacked directory.
+> On 8/4/2022 12:09 PM, Matthew John Cheetham wrote:
+>> On 2022-07-25 14:53, Derrick Stolee via GitGitGadget wrote:
+>>> From: Derrick Stolee <derrickstolee@github.com>
+>>>
+>>> The previous change introduced the bundle URI design document. It
+>>> creates a flexible set of options that allow bundle providers many ways
+>>> to organize Git object data and speed up clones and fetches. It is
+>>> particularly important that we have flexibility so we can apply future
+>>> advancements as new ideas for efficiently organizing Git data are
+>>> discovered.
+>>>
+>>> However, the design document does not provide even an example of how
+>>> bundles could be organized, and that makes it difficult to envision how
+>>> the feature should work at the end of the implementation plan.
+>>>
+>>> Add a section that details how a bundle provider could work, including
+>>> using the Git server advertisement for multiple geo-distributed servers.
+>>> This organization is based on the GVFS Cache Servers which have
+>>> successfully used similar ideas to provide fast object access and
+>>> reduced server load for very large repositories.
+>> Thanks! This patch is helpful guidance for bundle server implementors.
+>>> +This example organization is a simplified model of what is used by the
+>>> +GVFS Cache Servers (see section near the end of this document) which have
+>>> +been beneficial in speeding up clones and fetches for very large
+>>> +repositories, although using extra software outside of Git.
+>> 
+>> Nit: might be a good idea to use "VFS for Git" rather than the old name
+>> "GVFS" [1].
+>
+> The rename from "GVFS" to "VFS for Git" is made even more confusing
+> because "the GVFS Protocol" keeps the name since it is independent of
+> the virtual filesystem part (and has "gvfs" in the API routes). In
+> particular, "the GVFS Cache Servers" provide a repository mirror using
+> the GVFS protocol and can be used by things like Scalar (when using
+> the microsoft/git fork).
+>  
+>>> +The bundle provider deploys servers across multiple geographies. Each
+>>> +server manages its own bundle set. The server can track a number of Git
+>>> +repositories, but provides a bundle list for each based on a pattern. For
+>>> +example, when mirroring a repository at `https://<domain>/<org>/<repo>`
+>>> +the bundle server could have its bundle list available at
+>>> +`https://<server-url>/<domain>/<org>/<repo>`. The origin Git server can
+>>> +list all of these servers under the "any" mode:
+>>> +
+>>> +	[bundle]
+>>> +		version = 1
+>>> +		mode = any
+>>> +		
+>>> +	[bundle "eastus"]
+>>> +		uri = https://eastus.example.com/<domain>/<org>/<repo>
+>>> +		
+>>> +	[bundle "europe"]
+>>> +		uri = https://europe.example.com/<domain>/<org>/<repo>
+>>> +		
+>>> +	[bundle "apac"]
+>>> +		uri = https://apac.example.com/<domain>/<org>/<repo>
+>>> +
+>>> +This "list of lists" is static and only changes if a bundle server is
+>>> +added or removed.
+>>> +
+>>> +Each bundle server manages its own set of bundles. The initial bundle list
+>>> +contains only a single bundle, containing all of the objects received from
+>>> +cloning the repository from the origin server. The list uses the
+>>> +`creationToken` heuristic and a `creationToken` is made for the bundle
+>>> +based on the server's timestamp.
+>> 
+>> Just to confirm, in this example the origin server advertises a single
+>> URL (over v2 protocol) that points to this example "list of lists"?
+>
+> No, here the origin server provides the list of lists using the 'bundle-uri'
+> protocol v2 command. Using the config file format was an unfortunate choice
+> on my part because that actually uses "key=value" lines.
+>
+> This could be more clear by using that format:
+>
+>   bundle.version=1
+>   bundle.mode=any
+>   bundle.eastus.uri=https://eastus.example.com/<domain>/<org>/<repo>
+>   bundle.europe.uri=https://europe.example.com/<domain>/<org>/<repo>
+>   bundle.apac.uri=https://apac.example.com/<domain>/<org>/<repo>
 
-Reported-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Signed-off-by: Victoria Dye <vdye@github.com>
----
- t/t1092-sparse-checkout-compatibility.sh | 17 +++++
- unpack-trees.c                           | 88 +++++++++++++++++++++---
- 2 files changed, 95 insertions(+), 10 deletions(-)
+[I've tried to stay away from the bundle-uri topic for a while, to give
+others some space to comment]
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 99a1425a929..eb5edebfa5d 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -695,6 +695,23 @@ test_expect_success 'reset with wildcard pathspec' '
- 	test_all_match git ls-files -s -- folder1
- '
- 
-+test_expect_success 'reset hard with removed sparse dir' '
-+	init_repos &&
-+
-+	test_all_match git rm -r --sparse folder1 &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	test_all_match git reset --hard &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	cat >expect <<-\EOF &&
-+	folder1/
-+	EOF
-+
-+	git -C sparse-index ls-files --sparse folder1 >out &&
-+	test_cmp expect out
-+'
-+
- test_expect_success 'update-index modify outside sparse definition' '
- 	init_repos &&
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 8a454e03bff..aa62cef20fe 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1069,6 +1069,53 @@ static struct cache_entry *create_ce_entry(const struct traverse_info *info,
- 	return ce;
- }
- 
-+/*
-+ * Determine whether the path specified corresponds to a sparse directory
-+ * completely missing from the index. This function is assumed to only be
-+ * called when the named path isn't already in the index.
-+ */
-+static int missing_dir_is_sparse(const struct traverse_info *info,
-+				 const struct name_entry *p)
-+{
-+	int res, pos;
-+	struct strbuf dirpath = STRBUF_INIT;
-+	struct unpack_trees_options *o = info->data;
-+
-+	/*
-+	 * First, check whether the path is in the sparse cone. If it is,
-+	 * then this directory shouldn't be sparse.
-+	 */
-+	strbuf_add(&dirpath, info->traverse_path, info->pathlen);
-+	strbuf_add(&dirpath, p->path, p->pathlen);
-+	strbuf_addch(&dirpath, '/');
-+	if (path_in_cone_mode_sparse_checkout(dirpath.buf, o->src_index)) {
-+		res = 0;
-+		goto cleanup;
-+	}
-+
-+	/*
-+	 * Given that the directory is not inside the sparse cone, it could be
-+	 * (partially) expanded in the index. If child entries exist, the path
-+	 * is not a missing sparse directory.
-+	 */
-+	pos = index_name_pos_sparse(o->src_index, dirpath.buf, dirpath.len);
-+	if (pos >= 0)
-+		BUG("cache entry '%s%s' shouldn't exist in the index",
-+		    info->traverse_path, p->path);
-+
-+	pos = -pos - 1;
-+	if (pos >= o->src_index->cache_nr) {
-+		res = 1;
-+		goto cleanup;
-+	}
-+
-+	res = strncmp(o->src_index->cache[pos]->name, dirpath.buf, dirpath.len);
-+
-+cleanup:
-+	strbuf_release(&dirpath);
-+	return res;
-+}
-+
- /*
-  * Note that traverse_by_cache_tree() duplicates some logic in this function
-  * without actually calling it. If you change the logic here you may need to
-@@ -1078,21 +1125,40 @@ static int unpack_single_entry(int n, unsigned long mask,
- 			       unsigned long dirmask,
- 			       struct cache_entry **src,
- 			       const struct name_entry *names,
--			       const struct traverse_info *info)
-+			       const struct traverse_info *info,
-+			       int *is_missing_sparse_dir)
- {
- 	int i;
- 	struct unpack_trees_options *o = info->data;
- 	unsigned long conflicts = info->df_conflicts | dirmask;
-+	const struct name_entry *p = names;
- 
--	if (mask == dirmask && !src[0])
--		return 0;
-+	*is_missing_sparse_dir = 0;
-+	if (mask == dirmask && !src[0]) {
-+		/*
-+		 * If the directory is completely missing from the index but
-+		 * would otherwise be a sparse directory, we should unpack it.
-+		 * If not, we'll return and continue recursively traversing the
-+		 * tree.
-+		 */
-+		if (!o->src_index->sparse_index)
-+			return 0;
-+
-+		/* Find first entry with a real name (we could use "mask" too) */
-+		while (!p->mode)
-+			p++;
-+
-+		*is_missing_sparse_dir = missing_dir_is_sparse(info, p);
-+		if (!*is_missing_sparse_dir)
-+			return 0;
-+	}
- 
- 	/*
--	 * When we have a sparse directory entry for src[0],
--	 * then this isn't necessarily a directory-file conflict.
-+	 * When we are unpacking a sparse directory, then this isn't necessarily
-+	 * a directory-file conflict.
- 	 */
--	if (mask == dirmask && src[0] &&
--	    S_ISSPARSEDIR(src[0]->ce_mode))
-+	if (mask == dirmask &&
-+	    (*is_missing_sparse_dir || (src[0] && S_ISSPARSEDIR(src[0]->ce_mode))))
- 		conflicts = 0;
- 
- 	/*
-@@ -1352,7 +1418,7 @@ static int unpack_sparse_callback(int n, unsigned long mask, unsigned long dirma
- {
- 	struct cache_entry *src[MAX_UNPACK_TREES + 1] = { NULL, };
- 	struct unpack_trees_options *o = info->data;
--	int ret;
-+	int ret, is_missing_sparse_dir;
- 
- 	assert(o->merge);
- 
-@@ -1376,7 +1442,7 @@ static int unpack_sparse_callback(int n, unsigned long mask, unsigned long dirma
- 	 * "index" tree (i.e., names[0]) and adjust 'names', 'n', 'mask', and
- 	 * 'dirmask' accordingly.
- 	 */
--	ret = unpack_single_entry(n - 1, mask >> 1, dirmask >> 1, src, names + 1, info);
-+	ret = unpack_single_entry(n - 1, mask >> 1, dirmask >> 1, src, names + 1, info, &is_missing_sparse_dir);
- 
- 	if (src[0])
- 		discard_cache_entry(src[0]);
-@@ -1394,6 +1460,7 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
- 	struct cache_entry *src[MAX_UNPACK_TREES + 1] = { NULL, };
- 	struct unpack_trees_options *o = info->data;
- 	const struct name_entry *p = names;
-+	int is_missing_sparse_dir;
- 
- 	/* Find first entry with a real name (we could use "mask" too) */
- 	while (!p->mode)
-@@ -1440,7 +1507,7 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
- 		}
- 	}
- 
--	if (unpack_single_entry(n, mask, dirmask, src, names, info) < 0)
-+	if (unpack_single_entry(n, mask, dirmask, src, names, info, &is_missing_sparse_dir))
- 		return -1;
- 
- 	if (o->merge && src[0]) {
-@@ -1478,6 +1545,7 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
- 		}
- 
- 		if (!is_sparse_directory_entry(src[0], names, info) &&
-+		    !is_missing_sparse_dir &&
- 		    traverse_trees_recursive(n, dirmask, mask & ~dirmask,
- 						    names, info) < 0) {
- 			return -1;
--- 
-gitgitgadget
+On it generally: Your CL goes into some of the saga of it, but briefly
+the design I put forward initially assumed that these sort of things
+would be offloaded to other protocols.
+
+So, just to take an example of a prominent URL from your "From"
+address. AFAICT there isn't a eastus.api.github.com, or
+europe.api.github.com, instead it just uses DNS load-balancing for
+api.github.com.
+
+See the different IPs you'll get e.g. at
+https://www.whatsmydns.net/#A/api.github.com (or from many other such
+geoloc-inspecting DNS lookup tools). You can also do the same with
+multicast etc.
+
+ We've had some back & fourths on that before. You clearly think this
+sort of thing is needed in (some version of) a bundle-uri. I don't
+really see why. This sort of load spreading by different DNS naming
+hasn't been common in serious production use for a decade or two.
+
+But let's leave that aside, and other things I think we've had diverging
+ideas about before (e.g. your spec's explicit cache management, which I
+imagined offloading to standard HTTP features).
+
+I do think that:
+
+1) This proposed version would be much stronger if it generally tried to
+   justify the features it's putting forward. E.g. just in this case
+   (but it applies more generally) it seems to be taken as a given that
+   {eastus,europe,apac}.<domain> etc. is the natural way to do that sort
+   of load-balancing.
+
+   But the spec doesn't really go into it. Why would someone use that
+   instead of setting up GeoDNS (or similar), why does it need to be in
+   git's protocol, and not in DNS?
+
+2) I'd really like it clarified in the doc whether it considers itself a
+   "living document" amenable to change, or a "spec" that we have to
+   stick to.
+
+   I'd like it to be the former, and I think it should be prominently
+   noted there (e.g. that it's "EXPERIMENTAL" or whatever).
+
+   I don't think it's a good time investment to argue over every little
+   detail of how and why some aspects of bundle-uri should look before
+   any of it is in-tree, we can just start with some base functionality,
+   and tweak it.
+
+   So if e.g. we find (from real-world benchmarking etc.) that some
+   feature of the current spec isn't required (such as this
+   GeoDNS-alike) we should be able to remove it, and not say "we can't,
+   that's part of 'the spec'".
+
+   Or maybe we keep that (and change something else). The point is that
+   I don't think we have the full overview *right now*, and it would be
+   regrettable if we prematurely decreed certain things "stable" or
+   "specc'd".
+
+I suspect we agree on #2, since your CL mentions a PR that integrates
+basically the docs had as part of [1]. So presumably you're aiming for
+getting to the end of those PRs, followed by some phase where we attempt
+to unify the two, which might mean stripping out some feature(s) from
+one or both, and adding others.
+
+Thanks again for pushing this forward!
+
+1. https://lore.kernel.org/git/RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com/
+
