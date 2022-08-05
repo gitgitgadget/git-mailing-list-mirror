@@ -2,137 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7101C00140
-	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 19:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31FC2C00140
+	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 19:25:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241330AbiHETLS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Aug 2022 15:11:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33202 "EHLO
+        id S241462AbiHETZw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Aug 2022 15:25:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237004AbiHETLR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Aug 2022 15:11:17 -0400
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD3D1D10F
-        for <git@vger.kernel.org>; Fri,  5 Aug 2022 12:11:15 -0700 (PDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id l18so2361859qvt.13
-        for <git@vger.kernel.org>; Fri, 05 Aug 2022 12:11:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=uTON9pmZqujaWsUEJMhNYmZQNNFD8PlTXz4VUHhfka8=;
-        b=Os8j9Uskwp/dX9ISz/RF5C0i22zFWud5aNzVqdkJ68SQeyNMmSkb2yVTzQYdlFySVi
-         FRbSc5q1ev7/zWXqmRWx5llziXxb9Wafd0+On0GwdPM+7rIF1Q6L16dObYdIHkvcNnuh
-         2/ibtVXWPC64P5k+gfrOO+koxoRqofgxjUDaeMU+iuQf73EUNw9+hkDJA37DOTg9sn1R
-         4lcFteTSUFSqshokJ8pDCOazyeAV2PXTKqUI2w0Le7uA+TUz8UMhxZjChzoSfpdzn67Y
-         Hs0fviTfDovktn7ki7gwyTiML+TlWSJu3lWHSTU6n4/gIConfTXouekG1H3KXP52P4Mv
-         ZXsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=uTON9pmZqujaWsUEJMhNYmZQNNFD8PlTXz4VUHhfka8=;
-        b=4yoZLW5f6p/LrPy0w0CG8S3ljBBDUWdxSvHkDeE1Eob01RixfsmeuFkviNo35+/kD1
-         +zsPkfGwY4MZW/bQDxCrucaX9k2Luxx5KZ//0NYmnonH2z1KtUT8t8JPPiV9hncZ/bC2
-         LBIXt3j2DyOdRrmNzYjjS1y4DPUUsAkdJtAlSse8bienRR0BBnGXBl4cmlJSW5LsTPTN
-         d8adLSdDqL+7q2eC+m/J4PYv7QG3rU9JACoEx3TsT1558ccrycYfVHDmnKiLWZSgadMg
-         rhxDNStLkBGA9YqrCiOfq81Moe286PlprM7iOCoavuh+w+0QT7CZ+GbiT1cyIXUSoxXH
-         OBog==
-X-Gm-Message-State: ACgBeo1CZw+o7o2seH3q8hIPMJg13W457v1WcuDSrCaJk+hGtDqVFO0O
-        f2RCHQykbXP8FoGDMr5I7Oct
-X-Google-Smtp-Source: AA6agR74lgn4gDHJ0EH0IrTV3PT4+yF/z0GCCQwPf65hPpn3aWVL8XTglLKvgQHAorAlhsMHEvCZdQ==
-X-Received: by 2002:a0c:9bda:0:b0:474:73b0:b3ec with SMTP id g26-20020a0c9bda000000b0047473b0b3ecmr7057207qvf.84.1659726674806;
-        Fri, 05 Aug 2022 12:11:14 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:3928:8f07:23c6:89bf? ([2600:1700:e72:80a0:3928:8f07:23c6:89bf])
-        by smtp.gmail.com with ESMTPSA id i5-20020a05620a248500b006b5fc79427fsm3777612qkn.77.2022.08.05.12.11.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Aug 2022 12:11:14 -0700 (PDT)
-Message-ID: <7cd85665-3827-4f83-4e39-564e161fdea7@github.com>
-Date:   Fri, 5 Aug 2022 15:11:12 -0400
+        with ESMTP id S241513AbiHETZc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Aug 2022 15:25:32 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E42BC7C19F
+        for <git@vger.kernel.org>; Fri,  5 Aug 2022 12:24:59 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1199F1B6A4D;
+        Fri,  5 Aug 2022 15:24:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=VjtuX1GbZTZfq+I0R/OZEEfE/VR6BgGlHfqBFo
+        hro4w=; b=A6YdgrZAHA5FVq0aPKOuBzztxhUGOJrCQLaBeL/17YMjOs3uCVlH7R
+        cWdIPElM3l7lhVol6l/Jaa+5sPdx3LAHIYKe1FigqB4ViCmyuZ2Xp2aLMuy0eciL
+        E/qmGTvP91GYmjHLchUXKSUsw4m9aY1UXOeVSwHnv4QnGiqXc+jsA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0A25F1B6A4C;
+        Fri,  5 Aug 2022 15:24:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 535AA1B6A4B;
+        Fri,  5 Aug 2022 15:24:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Victoria Dye <vdye@github.com>
+Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, derrickstolee@github.com,
+        shaoxuan.yuan02@gmail.com, newren@gmail.com
+Subject: Re: [PATCH 4/4] unpack-trees: handle missing sparse directories
+References: <pull.1312.git.1659645967.gitgitgadget@gmail.com>
+        <016971a67112efe2d15fe7908e86c5d2631f8e66.1659645967.git.gitgitgadget@gmail.com>
+        <xmqqa68j1tlr.fsf@gitster.g>
+        <3825ef9a-4c71-21ed-6452-bbd322ca839c@github.com>
+Date:   Fri, 05 Aug 2022 12:24:51 -0700
+In-Reply-To: <3825ef9a-4c71-21ed-6452-bbd322ca839c@github.com> (Victoria Dye's
+        message of "Fri, 5 Aug 2022 09:36:47 -0700")
+Message-ID: <xmqqiln6ze64.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 06/10] builtin/diagnose.c: create 'git diagnose'
- builtin
-Content-Language: en-US
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>, Victoria Dye <vdye@github.com>
-References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
- <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
- <73e139ee377f9c50e671b0d94a28b93c1db28a69.1659577543.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <73e139ee377f9c50e671b0d94a28b93c1db28a69.1659577543.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 47905882-14F4-11ED-AC3E-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/3/2022 9:45 PM, Victoria Dye via GitGitGadget wrote:
-> From: Victoria Dye <vdye@github.com>
-> 
-> Create a 'git diagnose' builtin to generate a standalone zip archive of
-> repository diagnostics.
+Victoria Dye <vdye@github.com> writes:
 
-> +  * The contents of the `.git`, `.git/hooks`, `.git/info`, `.git/logs`, and
-> +    `.git/objects/info` directories
+> If I'm reading this correctly, it's not quite what I meant - the situation
+> this patch addresses is when _nothing_ in the tree rooted at 'A/' (files,
+> subdirectories) exists in the index, but 'unpack_trees()' is merging tree(s)
+> where 'A/' *does* exist.
 
-You remove these lines in the next patch, which is called "gate certain data
-behind '--all'" but maybe we shouldn't have this functionality now and
-instead add it in the future.
+OK, that is very different from my flawed readign.
 
-The biggest reason for the --all option is that these contents will likely
-include private IP (path names and branch names, but not file contents) that
-the user would probably not want to share with the public mailing list, but
-might want to share with a trusted Git expert in order to resolve a problem.
-You mention earlier that
+> Maybe it would be clearer to describe it with a different perspective: "If
+> 'unpack_callback()' is merging a new tree into a sparse index, merge the
+> tree as a sparse directory rather than traversing its contents" or something
+> like that? I'll try to come up with a better way of explaining this and
+> update in V2. 
 
-  The generated archive can then, for example, be shared with the
-  Git mailing list to help debug an issue or serve as a reference for
-  independent debugging.
+Yeah, that explains a typical scenario where you want to do this
+kind of thing better.  Right now, do we just merge in the contents
+of that whole tree whether the root of that new tree is or is not in
+the sparse cone(s)?  Noticing that the new tree is outside the cones
+of our interest and populating the index minimally, just enough to
+be able to write the resulting index as a tree, does make sense.
 
-So, if you're sending a v3, then moving this out of this patch and into the
-next one would be a good way to be sure that this possibly-private data is
-not mentioned as something to share super publicly.
+> I wrote 'missing_dir_is_sparse()' in an attempt keep some complex logic out
+> of the already-complicated 'unpack_single_entry()', but as part of that it
+> relies on information already established by its caller.
+>
+> We know 'p' is a directory because 'missing_dir_is_sparse()' is called
+> inside a 'mask == dirmask' condition.
 
-(Of course, this requires making the change to create_diagnostics_archive()
-in advance of creating the builtin, so maybe this reorganization isn't
-worth it.)
+Ahh, thanks---that is exactly what I missed, and led to my questions.
 
-> @@ -0,0 +1,58 @@
-> +#include "builtin.h"
-> +#include "parse-options.h"
-> +#include "diagnose.h"
-> +
-> +
+> 'mask' is a representation of which
+> trees being traversed have an entry with the given name and 'dirmask' is a
+> representation of which of those entries are directories, so the only way
+> 'mask == dirmask' and 'p' is *not* a directory is if the currently-traversed
+> entries in all of the trees do not exist. *That* won't happen because
+> 'unpack_callback()' won't be invoked at all by 'traverse_trees()' if 'mask'
+> is 0.
+>
+> Given that it requires jumping through multiple function invocations and
+> callbacks to figure that out, I can add some assertions or 'return 0'
+> conditions at the beginning of 'missing_dir_is_sparse()' to codify its
+> assumptions. Even if the assertions are slightly redundant now, they'll make
+> the code clearer and make the function safer for reuse.
 
-nit: double empty line
+Sounds good.
 
-> +++ b/t/t0092-diagnose.sh
-> @@ -0,0 +1,28 @@
-> +#!/bin/sh
-> +
-> +test_description='git diagnose'
-> +
-> +TEST_PASSES_SANITIZE_LEAK=true
-> +. ./test-lib.sh
-> +
-> +test_expect_success UNZIP 'creates diagnostics zip archive' '
-> +	test_when_finished rm -rf report &&
-> +
-> +	git diagnose -o report -s test >out &&
-> +
-> +	zip_path=report/git-diagnostics-test.zip &&
-> +	grep "Available space" out &&
-> +	test_path_is_file "$zip_path" &&
-
-nit: 'grep' the output immediately after the 'git diagnose' command and
-keep the zip_path use immediately after its definition.
-
-Thanks,
--Stolee
+Thanks.
