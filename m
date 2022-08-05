@@ -2,125 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AAC6C00140
-	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 19:38:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BB57C00140
+	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 21:09:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237858AbiHETiZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Aug 2022 15:38:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48940 "EHLO
+        id S240183AbiHEVJS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Aug 2022 17:09:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230437AbiHETiX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Aug 2022 15:38:23 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 906E72DAB4
-        for <git@vger.kernel.org>; Fri,  5 Aug 2022 12:38:22 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-10d845dcf92so3949556fac.12
-        for <git@vger.kernel.org>; Fri, 05 Aug 2022 12:38:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=m2J7wTtVwYPR+LbO7pk/mGFbdIFDwqtYhU0XC34gWPg=;
-        b=ZgDgk+IuHFw1VyAC9YVS1gHJWrj3NwDwRJL3Tfb1XTLASSVmN6Q7PzWmRamkMI23lh
-         PYO2Laxz/O5g4vGeiX3hK5UwdMfllQvcLLT4gCLowa7b1xOlv87fR6JDzYrToCnUfuEp
-         WnKrbhYGN8BXyoNthNpA1ZhuDCaNXQxRZsjK1nERQPMXuh3WyOgJAkfwXmmb53AiRLDT
-         yOBPRp7qCgajFjKARkSymFLtHYtdMtWYTj0uqHv5XRKwGC9g+l2d1DZUge6Pdj4E+G6C
-         eVR2Zf3al+qETK/8oRX8TTpTn3boxphNSYMxVnvsAjSH8g1ke06BXtlK/cn9m+T6M7TL
-         Kbog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=m2J7wTtVwYPR+LbO7pk/mGFbdIFDwqtYhU0XC34gWPg=;
-        b=QTVD+6U3rYisxUetPJxZUHCte4qQfx7wxw4L/dNb6q2auKyln2a4oqZ6kB4ournH6i
-         YD6OljFWLW2GnCkQrFjUmqBvEzFA4SAxNEECdDi+HimMb2liCQ38hLzwuhfroGyys9gR
-         0aP63o1WgtOk8zhMpgEds6t4ldLDHcgDS0EfswcggCteKWCsqN9eV0paTax2OjJd9i5W
-         pGkO5NXlk2D8X962dhkszpN1aDSRaM1APpA0ODL80uJoTiwZrfYXboW77T53v6EaX6yR
-         i/g2L3UDNDHBYFOcPcuKsh8NenDHToP8JHdJpGcrXpjNTSwMQzSrqM9RizTR9ayZrMdQ
-         n6dg==
-X-Gm-Message-State: ACgBeo1hhpPM1f6AsiSVSk+yVTo38v3lgKQkBzNK88oVUWSATa92KjCk
-        +mvcAfUQ5VcJkAdSnydbUfESEC/q6vPI
-X-Google-Smtp-Source: AA6agR6H6/Ga3XCimwuYV3VEaCZHJmCQjWdg/d3ambiyscqwQGY4jruume7Yv8SinskjxTWdrL/JyA==
-X-Received: by 2002:a05:6870:5aa:b0:10d:7d87:25b5 with SMTP id m42-20020a05687005aa00b0010d7d8725b5mr3938274oap.268.1659728301813;
-        Fri, 05 Aug 2022 12:38:21 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:3928:8f07:23c6:89bf? ([2600:1700:e72:80a0:3928:8f07:23c6:89bf])
-        by smtp.gmail.com with ESMTPSA id 66-20020a4a1545000000b0042313f42b26sm847383oon.39.2022.08.05.12.38.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Aug 2022 12:38:21 -0700 (PDT)
-Message-ID: <41f85d57-596a-5e42-756c-93fe0f45185f@github.com>
-Date:   Fri, 5 Aug 2022 15:38:19 -0400
+        with ESMTP id S233668AbiHEVJR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Aug 2022 17:09:17 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 257C71DA4E
+        for <git@vger.kernel.org>; Fri,  5 Aug 2022 14:09:14 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BAA51149A9A;
+        Fri,  5 Aug 2022 17:09:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=VpnQ4Qzx0HpZ
+        jtG4aacSRp1YEiEw3Q3MbD9i7Lda6+4=; b=emW8JD/7BVN9K7zKdmXbfzYZNyqR
+        R1ycKwTLk8LraVeFvO2Yr/RSyIzI61adiFh6F0k+I/aQanc6+ztHsOucCx6aCHRp
+        dnlriu60flMEkfJOeszNUcHXjIpKlQTJAAbEMRF5dHSVJBruJtb8wVVXXBrppjxm
+        bFPV1KcI7N/JW6U=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B1D5D149A98;
+        Fri,  5 Aug 2022 17:09:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1250C149A97;
+        Fri,  5 Aug 2022 17:09:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Ilya K <me@0upti.me>,
+        =?utf-8?B?xJBvw6BuIFRy?= =?utf-8?B?4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Subject: Re: [PATCH] hook API: don't segfault on strbuf_addf() to NULL "out"
+References: <0015309-00f1-9b44-023c-001ee3f242e4@0upti.me>
+        <patch-1.1-2450e3e65cf-20220805T141402Z-avarab@gmail.com>
+Date:   Fri, 05 Aug 2022 14:09:08 -0700
+In-Reply-To: <patch-1.1-2450e3e65cf-20220805T141402Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 5 Aug
+ 2022 16:15:33 +0200")
+Message-ID: <xmqqedxuz9cb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 06/10] builtin/diagnose.c: create 'git diagnose'
- builtin
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de,
-        Victoria Dye <vdye@github.com>
-References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
- <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
- <73e139ee377f9c50e671b0d94a28b93c1db28a69.1659577543.git.gitgitgadget@gmail.com>
- <220804.86zggkecmk.gmgdl@evledraar.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <220804.86zggkecmk.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D976BBA2-1502-11ED-9066-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/4/2022 2:27 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Aug 04 2022, Victoria Dye via GitGitGadget wrote:
-> 
->> From: Victoria Dye <vdye@github.com>
->>
->> Create a 'git diagnose' builtin to generate a standalone zip archive of
->> repository diagnostics.
-> 
-> It's good to have this as a built-in separate from "git bugreport",
-> but...
-> 
->> +git-diagnose - Generate a zip archive of diagnostic information
-> 
-> ...I'd really prefer for this not to squat on such a common name we
-> might regret having reserved later for such very specific
-> functionality. I'd think e.g. these would be better:
-> 
-> 	git mk-diagnostics-zip
-> 
-> Or maybe:
-> 
-> 	git archive-interesting-for-report
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-These are not realistic replacements.
+> Fix a logic error in a082345372e (hook API: fix v2.36.0 regression:
+> hooks should be connected to a TTY, 2022-06-07). When it started using
+> the "ungroup" API added in fd3aaf53f71 (run-command: add an "ungroup"
+> option to run_process_parallel(), 2022-06-07) it should have made the
+> same sort of change that fd3aaf53f71 itself made in
+> "t/helper/test-run-command.c".
+>
+> The correct way to emit this "Couldn't start" output with "ungroup"
+> would be:
+>
+> 	fprintf(stderr, _("Couldn't start hook '%s'\n"), hook_path);
+>
+> But we should instead remove the emitting of this output. As the added
+> test shows we already emit output when we can't run the child. The
+> "cannot run" output here is emitted by run-command.c's
+> child_err_spew().
+>
+> So the addition of the "Couldn't start hook" output here in
+> 96e7225b310 (hook: add 'run' subcommand, 2021-12-22) was always
+> redundant. For the pre-commit hook we'll now emit exactly the same
+> output as we did before f443246b9f2 (commit: convert
+> {pre-commit,prepare-commit-msg} hook to hook.h, 2021-12-22) (and
+> likewise for others).
+>
+> We could at this point add this to the pick_next_hook() callbacks in
+> hook.c:
+>
+> 	assert(!out);
+> 	assert(!*pp_task_cb);
+>
+> And this to notify_start_failure() and notify_hook_finished() (in the
+> latter case the parameter is called "pp_task_cp"):
+>
+> 	assert(!out);
+> 	assert(!pp_task_cb);
+>
+> But let's leave any such instrumentation for some eventual cleanup of
+> the "ungroup" API.
+>
+> Reported-by: Ilya K <me@0upti.me>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>
+> As suspected I needed to bounce this off the CI once to due to the
+> OS-specific messaging around failed hooks, it passes now:
+> https://github.com/avar/git/actions/runs/2802782493
 
-> If I had to guess what a "git diagnose" did, I'd probably think:
-> 
->  * It analyzes your config, and suggests redundancies/alternatives
->  * It does some perf tests / heuritics, and e.g. suggests you turn on
->    the commit-graph writing.
+Emily, other than the added code to deal with the difference in
+expected error message between Windows and other platforms, and the
+name of the temporary file used by the test to capture the raw error
+output, both in the t1800, everything is the same as the one you
+gave your Reviewed-by earlier, which I'll transplant while queuing
+this round.
 
-These sound like great options to add in the future, such as:
+=C3=86var, thanks for a quick fix.  This will have to go on top of
+ab/hooks-regresion-fix topic and downmerged to 2.36 maintenance
+track.
 
-   --perf-test: Run performance tests on your repository using different
-   Git config options and recommend certain settings.
+Thanks, all.
 
-(This --perf-test option would be a great way to get wider adoption
-of parallel checkout, since its optimal settings are so machine
-dependent.)
-
-The thing is, even if we did these other things, it would result in
-some kind of document that summarizes the repository shape and features.
-That kind of data is exactly what this version of 'git diagnose' does.
-
-For now, it leaves the human reader responsible for making decisions
-based on those documents, but they have been incredibly helpful when we
-are _diagnosing_ issues users are having with their repositories.
-
-Thanks,
--Stolee
+>  hook.c          |  7 -------
+>  t/t1800-hook.sh | 26 ++++++++++++++++++++++++++
+>  2 files changed, 26 insertions(+), 7 deletions(-)
+>
+> diff --git a/hook.c b/hook.c
+> index d113ee7faae..a493939a4fc 100644
+> --- a/hook.c
+> +++ b/hook.c
+> @@ -62,9 +62,6 @@ static int pick_next_hook(struct child_process *cp,
+>  	strvec_push(&cp->args, hook_path);
+>  	strvec_pushv(&cp->args, hook_cb->options->args.v);
+> =20
+> -	/* Provide context for errors if necessary */
+> -	*pp_task_cb =3D (char *)hook_path;
+> -
+>  	/*
+>  	 * This pick_next_hook() will be called again, we're only
+>  	 * running one hook, so indicate that no more work will be
+> @@ -80,13 +77,9 @@ static int notify_start_failure(struct strbuf *out,
+>  				void *pp_task_cp)
+>  {
+>  	struct hook_cb_data *hook_cb =3D pp_cb;
+> -	const char *hook_path =3D pp_task_cp;
+> =20
+>  	hook_cb->rc |=3D 1;
+> =20
+> -	strbuf_addf(out, _("Couldn't start hook '%s'\n"),
+> -		    hook_path);
+> -
+>  	return 1;
+>  }
+> =20
+> diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+> index 210f4298872..64096adac7e 100755
+> --- a/t/t1800-hook.sh
+> +++ b/t/t1800-hook.sh
+> @@ -151,4 +151,30 @@ test_expect_success TTY 'git commit: stdout and st=
+derr are connected to a TTY' '
+>  	test_hook_tty commit -m"B.new"
+>  '
+> =20
+> +test_expect_success 'git hook run a hook with a bad shebang' '
+> +	test_when_finished "rm -rf bad-hooks" &&
+> +	mkdir bad-hooks &&
+> +	write_script bad-hooks/test-hook "/bad/path/no/spaces" </dev/null &&
+> +
+> +	# TODO: We should emit the same (or at least a more similar)
+> +	# error on Windows and !Windows. See the OS-specific code in
+> +	# start_command()
+> +	if test_have_prereq !WINDOWS
+> +	then
+> +		cat >expect <<-\EOF
+> +		fatal: cannot run bad-hooks/test-hook: ...
+> +		EOF
+> +	else
+> +		cat >expect <<-\EOF
+> +		error: cannot spawn bad-hooks/test-hook: ...
+> +		EOF
+> +	fi &&
+> +	test_expect_code 1 git \
+> +		-c core.hooksPath=3Dbad-hooks \
+> +		hook run test-hook >out 2>err &&
+> +	test_must_be_empty out &&
+> +	sed -e "s/test-hook: .*/test-hook: .../" <err >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
