@@ -2,130 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C44C4C00140
-	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 16:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B4EDC25B08
+	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 17:59:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238648AbiHEQmZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Aug 2022 12:42:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42672 "EHLO
+        id S241337AbiHER7B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Aug 2022 13:59:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234311AbiHEQmD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Aug 2022 12:42:03 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17ACE1581C
-        for <git@vger.kernel.org>; Fri,  5 Aug 2022 09:42:02 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9094B12CBCC;
-        Fri,  5 Aug 2022 12:41:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=t8eyCRqxOdRRLnSpdiwErertmd9tZaiQX2ShTp
-        aeOwI=; b=Lt43GLB5sdp6RqGScLbkhL1fRVLhInn1ITDXuSgMUAvhUNKEAs9n3h
-        pB44kJR7Kz2VdrAb5Pr9BEhFKFF/vO4o5ykPc+KjWcL0k1NECQk+1oO4grDCCS3H
-        tNdjwzIctg6Tj90bEwzBu43XXkxpV03qbvnDXGufhF4GfQsN6Alf4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8879412CBCB;
-        Fri,  5 Aug 2022 12:41:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D621812CBCA;
-        Fri,  5 Aug 2022 12:41:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>, git@vger.kernel.org,
-        Emily Noneman <emily.noneman@gmail.com>,
-        Paul Horn <git@knutwalker.engineer>
-Subject: Re: [PATCH] revision.c: set-up "index_state.repo", don't segfault
- in pack-objects
-References: <CAKvVO18RVye=PkBRv=trj2GHh8ccGKL5j0mMq2eHQ1SX=wsr8A@mail.gmail.com>
-        <patch-1.1-3ff17707481-20220805T141816Z-avarab@gmail.com>
-        <b6299f8a-f75a-0e96-a6a6-55a7280584bf@github.com>
-        <Yu02dOo4G8sy8tI6@coredump.intra.peff.net>
-Date:   Fri, 05 Aug 2022 09:41:57 -0700
-In-Reply-To: <Yu02dOo4G8sy8tI6@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 5 Aug 2022 11:25:40 -0400")
-Message-ID: <xmqqo7wyzlpm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S241346AbiHER6w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Aug 2022 13:58:52 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7AFD5B042
+        for <git@vger.kernel.org>; Fri,  5 Aug 2022 10:58:51 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id z17so4056158wrq.4
+        for <git@vger.kernel.org>; Fri, 05 Aug 2022 10:58:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=vFumYQ/yr4+j+ikOYObOI/Rr2Og35Us5Vt8w/I/+8f4=;
+        b=LDtbRcq3sUQoaavru4m/KOCMKlWN9kOQrbA3YS+kLnyHx2Ye2+sJeqfMAaXK6GkyQI
+         ZSAYAK4upXMx67oIG+rWYrVa57t5jTKkhDGqQPKjXCArk2U3Jp86GsK0jooOypAAwfo0
+         bnDJg3CV3A8jdoDH7jHtI5rFLchKjTx/fN+mxFYrrYdcnohfiNdIRQIcRACJWklAanXM
+         DGLL3avfTWtbwUlB4j5U6MwI+yJFojl2yudCYYjoQOxAzGwiJrb1HJr0THDCKUl1PoH6
+         6h3RMfT4MLdFPrlA3hBQ1k+6nm+Gx52NuAH4ldfidXL1GAoCkE8JxP2zYJavpu+X/LM4
+         Q4kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=vFumYQ/yr4+j+ikOYObOI/Rr2Og35Us5Vt8w/I/+8f4=;
+        b=Qrr+DwCg/RJaZ4OurY2qJlnnjoOvbylIaWUv7GsWRVQoCvmdFT6IJOUOSc8PRtOZEQ
+         s8KSpkkXYJtq8vt6HGeJod3EqR407NkeY9W9xRioO90163LIEox+kTfrRn9eXcAOuje9
+         n/m9wax4ogG47zRUUcGEFuwVvZre149YjqO2dje4aqgLQQ9Slkbe6S5zkYYBxQIQMJal
+         9kVFmVHSNsfCzS1zpI7m10Q1vdRlFdFggFQIW9ywFZxl08YETRL8MDhZhUgg/EjiFfvx
+         tqGwwAuSagHIv5ccUd00o/rfh2nJrcvXGX91801UDNswoI6Wn3mT28nZdE/SD2JkeaaA
+         EhKQ==
+X-Gm-Message-State: ACgBeo2raFP3akJ30EVuW+J5cAQ7N089uicefbJUhvtLOnwspqE1x2yc
+        HEoaPlo/tJO17uhPy0c7M0AHTPLLZqk=
+X-Google-Smtp-Source: AA6agR6XudlW7ncJAyhr4S40fBEi16g0DRihIR09ug4mMqbTXfvXe0ybNoQKvZ/z2d8gIRlEt+5bYw==
+X-Received: by 2002:a5d:4e8a:0:b0:21f:610:6866 with SMTP id e10-20020a5d4e8a000000b0021f06106866mr4738865wru.606.1659722329926;
+        Fri, 05 Aug 2022 10:58:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n18-20020a05600c4f9200b003a504f9fcefsm5198962wmq.11.2022.08.05.10.58.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Aug 2022 10:58:49 -0700 (PDT)
+Message-Id: <1522889352ff5cb823132052d9ab62b5f2d7b8b0.1659722324.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1301.v3.git.1659722323.gitgitgadget@gmail.com>
+References: <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
+        <pull.1301.v3.git.1659722323.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 05 Aug 2022 17:58:33 +0000
+Subject: [PATCH v3 01/11] refs: allow "HEAD" as decoration filter
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8620CD3C-14DD-11ED-B026-CB998F0A682E-77302942!pb-smtp2.pobox.com
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, vdye@github.com,
+        steadmon@google.com,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+From: Derrick Stolee <derrickstolee@github.com>
 
-> Of the two patches, I think 4447d4129d is the better approach. The
-> assumption in the code seems to be that do_read_index() (and thus
-> read_index_from(), etc) will set up istate->repo. That patch fixes a
-> corner case where we failed to do so. And with that fix, there's no need
-> for the callers to set things up ahead of time. So it covers all of
-> those initializers you mentioned.
+The normalize_glob_ref() method was introduced in 65516f586b693 (log:
+add option to choose which refs to decorate, 2017-11-21) to help with
+decoration filters such as --decorate-refs=<filter> and
+--decorate-refs-exclude=<filter>. The method has not been used anywhere
+else.
 
-Yeah, I tend to agree that Martin's fix, which is a more focused
-one, is the better approach between the two.  It was merged to
-the 'master' track only a few days ago.
+At the moment, it is impossible to specify HEAD as a decoration filter
+since normalize_glob_ref() prepends "refs/" to the filter if it isn't
+already there.
 
-We are at the end of the week #4 of this 12-week cycle, and we've
-accumulated about two dozens of topics already on 'maint' since the
-first maintenance release v2.37.1 was done, so we may have a chance
-to merge Martin's fix down to 'maint' before tagging the v2.37.2
-release.
+Allow adding HEAD as a decoration filter by allowing the exact string
+"HEAD" to not be prepended with "refs/". Add a test in t4202-log.sh that
+would previously fail since the HEAD decoration would exist in the
+output.
 
-One thing that may help is to add a test similar to the situation
-Emily & Paul had to t7063 on top of 4447d4129d before merging it
-down, perhaps?
+It is sufficient to only cover "HEAD" here and not include other special
+refs like REBASE_HEAD. This is because HEAD is the only ref outside of
+refs/* that is added to the list of decorations. However, we may want to
+special-case these other refs in normalize_glob_ref() in the future.
+Leave a NEEDSWORK comment for now.
 
-In your reproduction, the "rm .git/index" step makes the worktree's
-branch "not checked out" (the commit is empty so "worktree add" may
-check out no files, and removing the index will make it as if you
-did "clone --no-checkout") ...
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ refs.c         | 11 ++++++++---
+ t/t4202-log.sh |  6 ++++++
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
-  git init repo
-  cd repo
-  git commit --allow-empty -m base
+diff --git a/refs.c b/refs.c
+index 90bcb271687..3fdfa86a5b9 100644
+--- a/refs.c
++++ b/refs.c
+@@ -455,11 +455,16 @@ void normalize_glob_ref(struct string_list_item *item, const char *prefix,
+ 	if (*pattern == '/')
+ 		BUG("pattern must not start with '/'");
+ 
+-	if (prefix) {
++	if (prefix)
+ 		strbuf_addstr(&normalized_pattern, prefix);
+-	}
+-	else if (!starts_with(pattern, "refs/"))
++	else if (!starts_with(pattern, "refs/") &&
++		   strcmp(pattern, "HEAD"))
+ 		strbuf_addstr(&normalized_pattern, "refs/");
++	/*
++	 * NEEDSWORK: Special case other symrefs such as REBASE_HEAD,
++	 * MERGE_HEAD, etc.
++	 */
++
+ 	strbuf_addstr(&normalized_pattern, pattern);
+ 	strbuf_strip_suffix(&normalized_pattern, "/");
+ 
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 6e663525582..6b7d8e269f7 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -1025,6 +1025,12 @@ test_expect_success 'decorate-refs and simplify-by-decoration without output' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'decorate-refs-exclude HEAD' '
++	git log --decorate=full --oneline \
++		--decorate-refs-exclude="HEAD" >actual &&
++	! grep HEAD actual
++'
++
+ test_expect_success 'log.decorate config parsing' '
+ 	git log --oneline --decorate=full >expect.full &&
+ 	git log --oneline --decorate=short >expect.short &&
+-- 
+gitgitgadget
 
-  git config core.untrackedCache true
-  git worktree add at
-  rm .git/worktrees/wt/index
-
-  git gc
-
-...  but it is not something an end user is likely to do, so I am
-still curious how this was triggered in real life.
-
-Ah, OK, I think the steps can be tweaked to
-
-      git config core.untrackedCache true
-    - git worktree add at
-    - rm .git/worktrees/wt/index
-    + git worktree add --no-checkout wt
-
-      git gc
-
-i.e. (1) With "worktree add --no-checkout", there is no need to
-manually remove the index file, and (2) "at" is an obvious typo of
-"wt".  This does not require the history to be a singleton empty
-tree, either.
-
-And that is a less implausible thing for users to be doing, but may
-still not be very common.  Perhaps the --no-checkout is a prelude to
-set up a custom sparse checkout pattern, to avoid a wasteful full
-tree checkout before doing so, or something?  If that is the case,
-then the above sequence becomes a very plausible thing for users to
-be doing.
-
-> Emily, Paul: I'm 99% sure this will be the case given my reproduction
-> above, but if you could try reproducing the problem with the current tip
-> of "master" from git.git, that would confirm the findings.
-
-Yes, indded.  That would be very helpful.
-
-Thanks, all, for discussing the problem and its solution(s), and
-thanks in advance for further testing to help the fix forward.
