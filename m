@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D9CC00140
-	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 17:59:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4950CC00140
+	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 18:00:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241570AbiHER7j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Aug 2022 13:59:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40758 "EHLO
+        id S238385AbiHESAE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Aug 2022 14:00:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241589AbiHER7U (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Aug 2022 13:59:20 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FFC5785B7
-        for <git@vger.kernel.org>; Fri,  5 Aug 2022 10:59:05 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id h13so4050677wrf.6
-        for <git@vger.kernel.org>; Fri, 05 Aug 2022 10:59:05 -0700 (PDT)
+        with ESMTP id S241341AbiHER7V (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Aug 2022 13:59:21 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A48279EEF
+        for <git@vger.kernel.org>; Fri,  5 Aug 2022 10:59:08 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id h34-20020a05600c49a200b003a5165eae0fso1586132wmp.4
+        for <git@vger.kernel.org>; Fri, 05 Aug 2022 10:59:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=va2tEnY9O2zddWmKDi88vbP6X5+TL1vAPX6Jetcp6hQ=;
-        b=TrYsbBTpFFHzsLIcoqY8E1IFXeNeUaurSITA8LBrYbnIK5bQNHFmQku9wH1AOlK2Q0
-         mqqwbud45Z8WpYVlYMY94tnarnxaZ644THT9PLqwCMEuZWZeG6YJetPToj5v3F0UyilA
-         eJPhqVbWeUOoV960eKsExNa96WoFa7KKRokZqUTvlOm4Xm1uM0aYcSThtiAsTZRf49vM
-         HqMwcwH8dWoS9VjNHqeOQDiBsE6Ztk5OqKwB0cbFxyBO/QK5lTalb4YJlBDs3nOgN+Qp
-         JPKJwmLN9CNdE9cGSKPTlTHXKZgxxJt/3bAhih8lp9cHPNRMGN3Q9OhQakF5+c4IdERW
-         MCcw==
+        bh=QawMDnDz7mSZjuQbXSqEXdLQCY4h/yBU8Xk/FincMPQ=;
+        b=I0f9geOHc37/zd7jGxON79ZRgRoS96T86SZ/ZlGo93jEzXoLShC5GKnT//wzTVPqz2
+         ImoIyAd8S6dNYX4DRzZzxUo9IMGUaebi2t+9JNy93AatBuSGfihmEi9ELgcjC/3iXRlf
+         E5qF8uRqWeipEYBoNMKlkx4XMJshgBBc992NUXj+1kPKFb4KMF5hcqp7LfSDc7Ohwfao
+         Q0O4vqASEG4z3L+6ZC07W0BgXwU/Pd3ScSWnDpBh14wcJXshg7YzLrGbaSAppdVgvWOn
+         MSMb0nqn2I22SZ8qSQrSjFXyxr0MsgUjk9ZUZ4TDJARzyYzLbH6DCVnMuzn+3wrK3IZe
+         yYbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=va2tEnY9O2zddWmKDi88vbP6X5+TL1vAPX6Jetcp6hQ=;
-        b=opU+EGZGWh4ZI7FOD4/djOPvVTQzdq2g6ha3PfANXEKT/1KsZ8iRaf6rxH9mTRWFT5
-         Bcgv1aPdYYAJo2O5u89TFZhYOqOs3YbKbgcpuzvFOOm/G2NXZIPzw1uq3W4gTLzw4HxV
-         BwWHGAOGHas99M7HDkK8k1RpFYOdTRVGMMhRbvhDLr0IqJQPNF+59Jp62fsgBLgpxB1+
-         ZuRE4ViJb19HJpY4JrdcyagaTtFHoUc5uRlfkpqo2jE2+Gs5YtKCqSEjT09S14+LbB9t
-         c5TvLtwVIV5AQocQJdDErgmSMqk0u2lRm3ZQBp8eLOvLfnKnhG2hVl4SuR4ygp5BF/2M
-         5lrg==
-X-Gm-Message-State: ACgBeo3u+JyGEeszsc30lia1TAi/2xW7+hbrd3SL2GVSbO3uaLb/HL31
-        tNoHkdsdHkIU6nDW1Dd2mHiTm6AYvnE=
-X-Google-Smtp-Source: AA6agR7U4LldLWGOfR/6S21BVGdTe0TBOZcq/5yqhcETQMj77cuz1DEZsA3knra6BhBAfECUauxziw==
-X-Received: by 2002:a5d:6241:0:b0:21e:f97f:d0cb with SMTP id m1-20020a5d6241000000b0021ef97fd0cbmr5071194wrv.37.1659722343548;
-        Fri, 05 Aug 2022 10:59:03 -0700 (PDT)
+        bh=QawMDnDz7mSZjuQbXSqEXdLQCY4h/yBU8Xk/FincMPQ=;
+        b=CBpNKWF+E4cppibD5s1614zFYq05vUbc8nljpXGvhrCSJVCXQEV7lYR35i6KFZ9+ho
+         PFfzbT9xtTQpwBkEEn7P1NCREiUR2ebItWbWNecENF8HaIwiGPInyy6hM0WEzfLwCBqj
+         FMFcSL4JnkiwD5yHs3s2Jnq+YCqg/4KQ7SmxlfBYe4tg34uxD30BQEnzkn/l2i6jKyvS
+         21zrG+SBQJJOY5dvap5WWNKi1Z+ePsAdewlSAb3EeyqpkntI59mFZ4SsH3VS8Jn7yzg0
+         ir8uTbNU2Yck4zZe7uyr8ECh0FY4FlCnoalCRH/EEMTbfz+rN+5qbEwKmR64Am9ZnDk7
+         cpxQ==
+X-Gm-Message-State: ACgBeo1UknqdvtpLcz76qI8ykkjFEh7+8Ns8Zexkb2zP9oW6J8RrGv8x
+        /KOFIUYnfcUSz1/QK3t1lA0OTQ9k5zk=
+X-Google-Smtp-Source: AA6agR4kE53X5qY2w5/PNrifuNtquznCyZlJjaSNJFdVweYNUsUAhHoKOpt9Gb/cENRHaMpW8Pt32w==
+X-Received: by 2002:a05:600c:1c0f:b0:3a5:2113:ebda with SMTP id j15-20020a05600c1c0f00b003a52113ebdamr2239797wms.203.1659722347091;
+        Fri, 05 Aug 2022 10:59:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u19-20020a05600c00d300b003a2fde6ef62sm5317188wmm.7.2022.08.05.10.59.02
+        by smtp.gmail.com with ESMTPSA id ba5-20020a0560001c0500b0021efc75914esm4847377wrb.79.2022.08.05.10.59.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Aug 2022 10:59:02 -0700 (PDT)
-Message-Id: <7ec2578b90a4e9f0e698bd29d7413e11df819253.1659722324.git.gitgitgadget@gmail.com>
+        Fri, 05 Aug 2022 10:59:05 -0700 (PDT)
+Message-Id: <bd2ffac88acd4ac4c408e362b86dada330656cc4.1659722324.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1301.v3.git.1659722323.gitgitgadget@gmail.com>
 References: <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
         <pull.1301.v3.git.1659722323.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 05 Aug 2022 17:58:41 +0000
-Subject: [PATCH v3 09/11] log: create log.initialDecorationSet=all
+Date:   Fri, 05 Aug 2022 17:58:43 +0000
+Subject: [PATCH v3 11/11] fetch: use ref_namespaces during prefetch
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,96 +72,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The previous change introduced the --clear-decorations option for users
-who do not want their decorations limited to a narrow set of ref
-namespaces.
+The "refs/prefetch/" namespace is used by 'git fetch --prefetch' as a
+replacement of the destination of the refpsec for a remote. Git also
+removes refspecs that include tags.
 
-Add a config option that is equivalent to specifying --clear-decorations
-by default.
+Instead of using string literals for the 'refs/tags/ and
+'refs/prefetch/' namespaces, use the entries in the ref_namespaces
+array.
+
+This kind of change could be done in many places around the codebase,
+but we are isolating only to this change because of the way the
+refs/prefetch/ namespace somewhat motivated the creation of the
+ref_namespaces array.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/config/log.txt |  5 +++++
- Documentation/git-log.txt    |  4 +++-
- builtin/log.c                | 12 ++++++++++++
- t/t4202-log.sh               |  3 +++
- 4 files changed, 23 insertions(+), 1 deletion(-)
+ builtin/fetch.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config/log.txt b/Documentation/config/log.txt
-index 456eb07800c..5250ba45fb4 100644
---- a/Documentation/config/log.txt
-+++ b/Documentation/config/log.txt
-@@ -18,6 +18,11 @@ log.decorate::
- 	names are shown. This is the same as the `--decorate` option
- 	of the `git log`.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index fc5cecb4835..368a0f5329c 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -490,7 +490,9 @@ static void filter_prefetch_refspec(struct refspec *rs)
+ 			continue;
+ 		if (!rs->items[i].dst ||
+ 		    (rs->items[i].src &&
+-		     !strncmp(rs->items[i].src, "refs/tags/", 10))) {
++		     !strncmp(rs->items[i].src,
++			      ref_namespace[NAMESPACE_TAGS].ref,
++			      strlen(ref_namespace[NAMESPACE_TAGS].ref)))) {
+ 			int j;
  
-+log.initialDecorationSet::
-+	By default, `git log` only shows decorations for certain known ref
-+	namespaces. If 'all' is specified, then show all refs as
-+	decorations.
-+
- log.excludeDecoration::
- 	Exclude the specified patterns from the log decorations. This is
- 	similar to the `--decorate-refs-exclude` command-line option, but
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index f2ce16fba71..b1285aee3c2 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -59,7 +59,9 @@ used as decoration if they match `HEAD`, `refs/heads/`, `refs/remotes/`,
- --clear-decorations::
- 	When specified, this option clears all previous `--decorate-refs`
- 	or `--decorate-refs-exclude` options and relaxes the default
--	decoration filter to include all references.
-+	decoration filter to include all references. This option is
-+	assumed if the config value `log.initialDecorationSet` is set to
-+	`all`.
+ 			free(rs->items[i].src);
+@@ -506,7 +508,7 @@ static void filter_prefetch_refspec(struct refspec *rs)
+ 		}
  
- --source::
- 	Print out the ref name given on the command line by which each
-diff --git a/builtin/log.c b/builtin/log.c
-index 7d35d1ecab1..2e2136020e5 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -179,6 +179,7 @@ static void cmd_log_init_defaults(struct rev_info *rev)
- static void set_default_decoration_filter(struct decoration_filter *decoration_filter)
- {
- 	int i;
-+	char *value = NULL;
- 	struct string_list *include = decoration_filter->include_ref_pattern;
- 	const struct string_list *config_exclude =
- 			git_config_get_value_multi("log.excludeDecoration");
-@@ -190,6 +191,17 @@ static void set_default_decoration_filter(struct decoration_filter *decoration_f
- 					   item->string);
- 	}
+ 		old_dst = rs->items[i].dst;
+-		strbuf_addstr(&new_dst, "refs/prefetch/");
++		strbuf_addstr(&new_dst, ref_namespace[NAMESPACE_PREFETCH].ref);
  
-+	/*
-+	 * By default, decorate_all is disabled. Enable it if
-+	 * log.initialDecorationSet=all. Don't ever disable it by config,
-+	 * since the command-line takes precedent.
-+	 */
-+	if (use_default_decoration_filter &&
-+	    !git_config_get_string("log.initialdecorationset", &value) &&
-+	    !strcmp("all", value))
-+		use_default_decoration_filter = 0;
-+	free(value);
-+
- 	if (!use_default_decoration_filter ||
- 	    decoration_filter->exclude_ref_pattern->nr ||
- 	    decoration_filter->include_ref_pattern->nr ||
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 90800feb0f1..4b2d642d34c 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1090,6 +1090,9 @@ test_expect_success '--clear-decorations overrides defaults' '
- 	EOF
- 	git log --decorate=full --pretty="tformat:%f%d" \
- 		--clear-decorations >actual &&
-+	test_cmp expect.all actual &&
-+	git -c log.initialDecorationSet=all log \
-+		--decorate=full --pretty="tformat:%f%d" >actual &&
- 	test_cmp expect.all actual
- '
- 
+ 		/*
+ 		 * If old_dst starts with "refs/", then place
 -- 
 gitgitgadget
-
