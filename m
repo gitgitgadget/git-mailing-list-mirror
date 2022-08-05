@@ -2,233 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92E2BC25B06
-	for <git@archiver.kernel.org>; Thu,  4 Aug 2022 23:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8D2DC19F2D
+	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 01:41:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237142AbiHDXXT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Aug 2022 19:23:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39356 "EHLO
+        id S240175AbiHEBl4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Aug 2022 21:41:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234184AbiHDXXT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Aug 2022 19:23:19 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DCF14B48B
-        for <git@vger.kernel.org>; Thu,  4 Aug 2022 16:23:17 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D94321BFEF4;
-        Thu,  4 Aug 2022 19:23:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cQ53B9g1Oax8ilx977HCqumrZ2uZ78Zhc5D6+2
-        +q9og=; b=aR/GvmFCXNUZGpamUxk6tprjbn6Pi4lX1IXTKqWbsJsJ1KVVlAyadJ
-        QOZLsOMkx0sEaeCjgVinCT3wpmiF0xXZtobkWSTKtOK7mlAs7b9NDz27BKFe+46e
-        Nm4pwgFqcLFnXGamp91IIPyodOpgw935tcNvcph3nEOVgUa66iHqM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D15021BFEF3;
-        Thu,  4 Aug 2022 19:23:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 835FE1BFEF2;
-        Thu,  4 Aug 2022 19:23:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com,
-        shaoxuan.yuan02@gmail.com, newren@gmail.com,
-        Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH 4/4] unpack-trees: handle missing sparse directories
-References: <pull.1312.git.1659645967.gitgitgadget@gmail.com>
-        <016971a67112efe2d15fe7908e86c5d2631f8e66.1659645967.git.gitgitgadget@gmail.com>
-Date:   Thu, 04 Aug 2022 16:23:12 -0700
-In-Reply-To: <016971a67112efe2d15fe7908e86c5d2631f8e66.1659645967.git.gitgitgadget@gmail.com>
-        (Victoria Dye via GitGitGadget's message of "Thu, 04 Aug 2022 20:46:07
-        +0000")
-Message-ID: <xmqqa68j1tlr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S236237AbiHEBly (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Aug 2022 21:41:54 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 404BFBC03
+        for <git@vger.kernel.org>; Thu,  4 Aug 2022 18:41:54 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id s27-20020a0568301e1b00b00636a832c3a1so1050172otr.12
+        for <git@vger.kernel.org>; Thu, 04 Aug 2022 18:41:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=d0AeIUcyeKynbs3A17CYR+4I8SwxMwaCWlPt4m3+eCQ=;
+        b=CuX2wk7VocsDs0xKTQPZpXhUQKCOMgjB8J9piVJ5cCp+kRdfDRBDZ3q1yCFO1hY2+f
+         ZUiF84bM/71u+DVENOSKhTQPSlC/nEwUkGrdy8oNR/UF+gDHqgZta73cwbSzuwDkXvr3
+         4zI2ifDry3P/I7m8dyx7LnN5NHcw4fRc7JmSfuMEDUIirgOdM+pvLg/VrX1aCnjc7/mt
+         6jifZ8aVp8XsMIoNYNdGPOLCUuF3tFnDTbVK8UtfnXHOggwC3g7Mm5yOvLbHRsqdmQG+
+         qN4jJqV7JlQ8rSiwexAnb9FP+BemrQaeyN2aGBkJsGDjJ5bsKznNwQCfE1IybL7XyQ2b
+         i7EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=d0AeIUcyeKynbs3A17CYR+4I8SwxMwaCWlPt4m3+eCQ=;
+        b=xapMLpednVCmoIaM0nYS2L7pbDADKVD1Rtt347VngtnglcuJoMgEvGzRl+Z4/Av65u
+         tZjT590BSHyr6rkn5uevVLD1HoclJ3L4bn3nRiiFb6dA56CPFo2gEW0WFL1UyxEcywSr
+         uQ+UKpTi6K/lzIKXweK6eFWuRRkyMHBlp6H1rSbHO8LPUo6M5EAs1zq70gbFVoqD3lU3
+         9dmOeoDN0qf5d8it6Dk78nQxncuE4f7rKllr4KoNnwfk6/SOs9Droxl3yeXvrwKSO91c
+         WP5tL3rBdWTUcNXeaRQng3L/q7ACqTyFxVZqe1crCcokK8f46VbUNjah4+flVBAbW9/P
+         c5uw==
+X-Gm-Message-State: ACgBeo1cvBI7yzotUSr2XeZwY+Ry5GJk7YfUEUaVS8b6D+hfSC4VJsZw
+        ZZa6e/33/AtB/Iqsx1lXfeW6wus00S3IkrtBLQs=
+X-Google-Smtp-Source: AA6agR4p0NtMa5DUPkkiiP+IXNGZzHlvc+UA7ANMMuklUQoPlIlfzgc6R77Y4Bj9yBmyWz3zsXfjNr+tMz97vTbhP2s=
+X-Received: by 2002:a05:6830:2b1e:b0:61c:b444:f1a8 with SMTP id
+ l30-20020a0568302b1e00b0061cb444f1a8mr1715694otv.31.1659663713589; Thu, 04
+ Aug 2022 18:41:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 69542640-144C-11ED-B709-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <20220729101245.6469-1-worldhello.net@gmail.com>
+ <20220729101245.6469-6-worldhello.net@gmail.com> <CAJDSCnOFSnhOU06UHF6T9RT31Gq56BhJn5fQ4_ys2ERrN1stSw@mail.gmail.com>
+In-Reply-To: <CAJDSCnOFSnhOU06UHF6T9RT31Gq56BhJn5fQ4_ys2ERrN1stSw@mail.gmail.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Fri, 5 Aug 2022 09:41:42 +0800
+Message-ID: <CANYiYbFw71bX827akAG87RSKOozPk313Hoe573O9dQ65_U6sLQ@mail.gmail.com>
+Subject: Re: [PATCH 5/9] refs: avoid duplicate running of the
+ reference-transaction hook
+To:     Michael Heemskerk <mheemskerk@atlassian.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+        Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Victoria Dye <vdye@github.com>
+On Tue, Aug 2, 2022 at 8:18 PM Michael Heemskerk
+<mheemskerk@atlassian.com> wrote:
 >
-> If a sparse directory does not exist in the index, unpack it at the
-> directory level rather than recursing into it an unpacking its contents
-> file-by-file. This helps keep the sparse index as collapsed as possible in
-> cases such as 'git reset --hard' restoring a sparse directory.
+> On Fri, Jul 29, 2022 at 12:20 PM Jiang Xin <worldhello.net@gmail.com> wrote:
+> >
+> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> >
+> > If there are references to be deleted in a transaction, we should remove
+> > each reference from both loose references and the "packed-refs" file.
+> > The "reference-transaction" hook will run twice, once for the primary
+> > ref-store (loose references), and another for the second ref-store (i.e.
+> > packed ref-store).
+> >
+> > To avoid duplicate running of the "reference-trancaction" hook, we pass
+> > a special "hook-flags" parameter to initialize the second ref-store.
+> > The "REF_TRANSACTION_RUN_PREPARED_HOOK" bit is preserved for the
+> > transaction of the second ref-store because we may still want to call
+> > command "reference-trancaction prepared" for some pre-checks, such as
+> > terminate unwanted transaction for the "packed-refs" file.
+>
+> Can you elaborate on the rationale for continuing to invoke the "prepared"
+> reference-transaction hook for the "packed-refs" file? Did you have a specific
+> type of check in mind?
 
-My reading hiccuped at "does not exist in".  After reading the above
-twice, I think the situation is that there is a directory A/B in
-which a file C sits, and A/ is marked as sparse and the paragraph is
-talking about directory A/B.  Because the index has A/ as a tree in
-index, A/B does not exist in the index.
+Use "reference-transaction prepared" hook command, we can implement
+write lock for repositories. We can create a lock file (e.g. "site.lock") inside
+a repository or in a parent directory to disable write operations for one
+repository, a group of repositories or all repositories. The magic is in the
+"reference-transaction prepared" hook command. As a transaction may
+be triggered twice, one for packed-refs, and one for loose-refs, we should
+make sure the "reference-transaction prepared" command must run for
+both transactions on different ref-stores.
 
-When we _somehow_ need to ensure that A/B exists in the index for
-_unknown_ reason, we could flatten the index fully and have A/B/C as
-a blob (without A or A/B in the index proper, even though they may
-appear in cache-tree), but if we stop at removing A and adding A/B
-still as a tree without showing A/B/C in the index, we may gain
-efficiency, under the assumption that we do not have to access A/B/C
-and its siblings.
+BTW, I'm on vacation for the next few days and I will pick up this
+topic next week.
 
-Did I read the intention correctly?  I suspect future readers of the
-commit that would result from this patch would also wonder what the
-"somehow" and "unknown" above are.
-
-> A directory is determined to be truly non-existent in the index (rather than
-> the parent of existing index entries), if 1) its path is outside the sparse
-> cone and 2) there are no children of the directory in the index. This check
-> is performed by 'missing_dir_is_sparse()' in 'unpack_single_entry()'. If the
-> directory is a missing sparse dir, 'unpack_single_entry()'  will proceed
-> with unpacking it. This determination is also propagated back up to
-> 'unpack_callback()' via 'is_missing_sparse_dir' to prevent further tree
-> traversal into the unpacked directory.
-
-Makes sense.
-
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 8a454e03bff..aa62cef20fe 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1069,6 +1069,53 @@ static struct cache_entry *create_ce_entry(const struct traverse_info *info,
->  	return ce;
->  }
->  
-> +/*
-> + * Determine whether the path specified corresponds to a sparse directory
-> + * completely missing from the index. This function is assumed to only be
-> + * called when the named path isn't already in the index.
-> + */
-> +static int missing_dir_is_sparse(const struct traverse_info *info,
-> +				 const struct name_entry *p)
-> +{
-> +	int res, pos;
-> +	struct strbuf dirpath = STRBUF_INIT;
-> +	struct unpack_trees_options *o = info->data;
-> +
-> +	/*
-> +	 * First, check whether the path is in the sparse cone. If it is,
-> +	 * then this directory shouldn't be sparse.
-> +	 */
-> +	strbuf_add(&dirpath, info->traverse_path, info->pathlen);
-> +	strbuf_add(&dirpath, p->path, p->pathlen);
-> +	strbuf_addch(&dirpath, '/');
-> +	if (path_in_cone_mode_sparse_checkout(dirpath.buf, o->src_index)) {
-> +		res = 0;
-> +		goto cleanup;
-> +	}
-
-OK.
-
-> +	/*
-> +	 * Given that the directory is not inside the sparse cone, it could be
-> +	 * (partially) expanded in the index. If child entries exist, the path
-> +	 * is not a missing sparse directory.
-> +	 */
-> +	pos = index_name_pos_sparse(o->src_index, dirpath.buf, dirpath.len);
-> +	if (pos >= 0)
-> +		BUG("cache entry '%s%s' shouldn't exist in the index",
-> +		    info->traverse_path, p->path);
-
-So, we fed 'p' to this function, and we didn't expect it to exist in
-the index if it is outside the sparse cone.
-
-> +	pos = -pos - 1;
-
-This is the location that a cache entry for the dirpath.buf would
-sit in the index if it were a sparse entry.
-
-> +	if (pos >= o->src_index->cache_nr) {
-> +		res = 1;
-> +		goto cleanup;
-> +	}
-> +	res = strncmp(o->src_index->cache[pos]->name, dirpath.buf, dirpath.len);
-
-So, we found where dirpath.buf would be inserted.  If we (can) look
-at the cache entry that is currently sitting at that position, and
-find that it is a path inside it, then res becomes zero.  IOW, we
-found that the sparse directory is missing in the index, but there
-is a path that is in the directory recorded in the index.
-
-The current entry, on the other hand, is outside the dirpath.buf,
-then res becomes non-zero.  We are asked to yield true (i.e.
-nonzero) if and only if the given directory and all paths in that
-directory are missing from the index, so that is what happens here.
-Sounds OK.
-
-And the "out of bounds" check just means that the entries that sit
-near the end of the index sort strictly before our dirpath.buf, so
-they cannot be inside our directory, which is also the case where we
-are expected to yield "true".
-
-OK.
-
-> +
-> +cleanup:
-> +	strbuf_release(&dirpath);
-> +	return res;
-> +}
-> +
->  /*
->   * Note that traverse_by_cache_tree() duplicates some logic in this function
->   * without actually calling it. If you change the logic here you may need to
-> @@ -1078,21 +1125,40 @@ static int unpack_single_entry(int n, unsigned long mask,
->  			       unsigned long dirmask,
->  			       struct cache_entry **src,
->  			       const struct name_entry *names,
-> -			       const struct traverse_info *info)
-> +			       const struct traverse_info *info,
-> +			       int *is_missing_sparse_dir)
->  {
->  	int i;
->  	struct unpack_trees_options *o = info->data;
->  	unsigned long conflicts = info->df_conflicts | dirmask;
-> +	const struct name_entry *p = names;
->  
-> -	if (mask == dirmask && !src[0])
-> -		return 0;
-> +	*is_missing_sparse_dir = 0;
-> +	if (mask == dirmask && !src[0]) {
-> +		/*
-> +		 * If the directory is completely missing from the index but
-> +		 * would otherwise be a sparse directory, we should unpack it.
-> +		 * If not, we'll return and continue recursively traversing the
-> +		 * tree.
-> +		 */
-> +		if (!o->src_index->sparse_index)
-> +			return 0;
-> +
-> +		/* Find first entry with a real name (we could use "mask" too) */
-> +		while (!p->mode)
-> +			p++;
-> +
-> +		*is_missing_sparse_dir = missing_dir_is_sparse(info, p);
-> +		if (!*is_missing_sparse_dir)
-> +			return 0;
-
-Interesting.  Nobody checked if the name in 'p' is a directory up to
-this point, but missing_dir_is_sparse() does not care?  The only
-thing we know is that !src[0], so the name represented by 'p' does
-not exist in the index.  IIRC, the function only checked if p names
-a path inside or outside the sparse cone and if there are or are not
-paths that would be inside the path if p _were_ a directory but I
-didn't read it carefully what it did when the caller fed a path to a
-non-directory to the function.  As long as it will say "no" to such
-a situation, I won't complain, but I have to wonder how the logic
-around here tells apart a case where a sparse directory is
-completely hidden (which missing_dir_is_sparse() gives us) from a
-case where there is absolutely nothing, not a directory and not a
-blob, at the path in the index.  Or perhaps it works correctly
-without having to tell them apart?  I dunno.
-
-By the way, there is a comment before the function that reminds us
-that traverse_by_cache_tree() may need a matching change whenever a
-change is made to this function.  Does this require such a matching
-change?
+--
+Jiang Xin
