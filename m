@@ -2,181 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A151C00140
-	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 19:35:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AAC6C00140
+	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 19:38:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237587AbiHETfa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Aug 2022 15:35:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47810 "EHLO
+        id S237858AbiHETiZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Aug 2022 15:38:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230437AbiHETf2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Aug 2022 15:35:28 -0400
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16BBB9FEA
-        for <git@vger.kernel.org>; Fri,  5 Aug 2022 12:35:27 -0700 (PDT)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-10ea30a098bso3968425fac.8
-        for <git@vger.kernel.org>; Fri, 05 Aug 2022 12:35:27 -0700 (PDT)
+        with ESMTP id S230437AbiHETiX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Aug 2022 15:38:23 -0400
+Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 906E72DAB4
+        for <git@vger.kernel.org>; Fri,  5 Aug 2022 12:38:22 -0700 (PDT)
+Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-10d845dcf92so3949556fac.12
+        for <git@vger.kernel.org>; Fri, 05 Aug 2022 12:38:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=JvZO9F1YzcudAKeVzzHms628hwmsCYkyI7A2a0Ze744=;
-        b=Ph6EGQ5+ePTPFgnQUQ/Ptwc9udizPzefTavkuhoepMkSWqUspHyU/klbXK68f0xEEF
-         FpJWLDhZVd5yT09cE/Dd3BaSgtC1LRq59Hp7Cxw1nMLOXOaeYJ+ncW2YAJ/RvJbANmUy
-         dRQtkfroQJ+5bNWIbYvkxBD2fHDfgEnWE/+fm7zetAHj8NtV/VNv47YgN7inudiuu/h0
-         CIEsUI64ISjQqbfLI/tQHOhRLt5APYOb+iIkZiViv1mHp1UL4Vkf/JK7aDBzlOdcteq4
-         tjkRqr+qUvkPUIcXQ1EqVlyw4hi4fn8zLGeNZ37UyyLC8HhLACKTXAmaVPxg+AuoqMfY
-         2SYQ==
+        bh=m2J7wTtVwYPR+LbO7pk/mGFbdIFDwqtYhU0XC34gWPg=;
+        b=ZgDgk+IuHFw1VyAC9YVS1gHJWrj3NwDwRJL3Tfb1XTLASSVmN6Q7PzWmRamkMI23lh
+         PYO2Laxz/O5g4vGeiX3hK5UwdMfllQvcLLT4gCLowa7b1xOlv87fR6JDzYrToCnUfuEp
+         WnKrbhYGN8BXyoNthNpA1ZhuDCaNXQxRZsjK1nERQPMXuh3WyOgJAkfwXmmb53AiRLDT
+         yOBPRp7qCgajFjKARkSymFLtHYtdMtWYTj0uqHv5XRKwGC9g+l2d1DZUge6Pdj4E+G6C
+         eVR2Zf3al+qETK/8oRX8TTpTn3boxphNSYMxVnvsAjSH8g1ke06BXtlK/cn9m+T6M7TL
+         Kbog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=JvZO9F1YzcudAKeVzzHms628hwmsCYkyI7A2a0Ze744=;
-        b=xWtpjfJH+8ITRQl+PxlUDvjY2oVci80PDzo57GFmmOEqoXb0dAKJf9Xm1b45TKqiA2
-         5hLokYNzyR6mVTHkMN6EbHbPjyoiiIAFXDgHhnQaH5YROMkY8hy/NZ/C6feIOU120Vsa
-         OpXJ05t2mdkqViApMKG/ZUGP8Oqcum2yLTyIYnkpomed4E2NX06M8k9uEd9Z817mT697
-         tsJthYdec4DIlpKwuCNEwHEyqFC8Lp+zqsugFjt4kmo2vN68uAgv29RjCUab/Mkiydw9
-         j/WPr9H15O101Q6ESolNxlIgxV3mDC0s3XIxwu2wLAaIGuxHTtHOnQLaCEVYZBBGiRZi
-         rHcw==
-X-Gm-Message-State: ACgBeo22FsFN+73aYtu7bxSSVUfOotgvqNoIKE7wPkeshX+UYO/1HjC8
-        VWJ9pnk9hn/ssaNVpl7OJxPi
-X-Google-Smtp-Source: AA6agR6476Bpfege2YZkeOYF6nG+80ldKkB7Hd2i+ev/aEvkkIcKP6eIzWqjoMIim5LJDUB9bkTiBA==
-X-Received: by 2002:a05:6870:c6a4:b0:10e:585c:ba1a with SMTP id cv36-20020a056870c6a400b0010e585cba1amr3783561oab.41.1659728126411;
-        Fri, 05 Aug 2022 12:35:26 -0700 (PDT)
+        bh=m2J7wTtVwYPR+LbO7pk/mGFbdIFDwqtYhU0XC34gWPg=;
+        b=QTVD+6U3rYisxUetPJxZUHCte4qQfx7wxw4L/dNb6q2auKyln2a4oqZ6kB4ournH6i
+         YD6OljFWLW2GnCkQrFjUmqBvEzFA4SAxNEECdDi+HimMb2liCQ38hLzwuhfroGyys9gR
+         0aP63o1WgtOk8zhMpgEds6t4ldLDHcgDS0EfswcggCteKWCsqN9eV0paTax2OjJd9i5W
+         pGkO5NXlk2D8X962dhkszpN1aDSRaM1APpA0ODL80uJoTiwZrfYXboW77T53v6EaX6yR
+         i/g2L3UDNDHBYFOcPcuKsh8NenDHToP8JHdJpGcrXpjNTSwMQzSrqM9RizTR9ayZrMdQ
+         n6dg==
+X-Gm-Message-State: ACgBeo1hhpPM1f6AsiSVSk+yVTo38v3lgKQkBzNK88oVUWSATa92KjCk
+        +mvcAfUQ5VcJkAdSnydbUfESEC/q6vPI
+X-Google-Smtp-Source: AA6agR6H6/Ga3XCimwuYV3VEaCZHJmCQjWdg/d3ambiyscqwQGY4jruume7Yv8SinskjxTWdrL/JyA==
+X-Received: by 2002:a05:6870:5aa:b0:10d:7d87:25b5 with SMTP id m42-20020a05687005aa00b0010d7d8725b5mr3938274oap.268.1659728301813;
+        Fri, 05 Aug 2022 12:38:21 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:3928:8f07:23c6:89bf? ([2600:1700:e72:80a0:3928:8f07:23c6:89bf])
-        by smtp.gmail.com with ESMTPSA id v21-20020a0568301bd500b0061c7e5d270bsm870059ota.48.2022.08.05.12.35.25
+        by smtp.gmail.com with ESMTPSA id 66-20020a4a1545000000b0042313f42b26sm847383oon.39.2022.08.05.12.38.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Aug 2022 12:35:26 -0700 (PDT)
-Message-ID: <3dc402e1-1f27-8a24-544d-d90d403a7da0@github.com>
-Date:   Fri, 5 Aug 2022 15:35:24 -0400
+        Fri, 05 Aug 2022 12:38:21 -0700 (PDT)
+Message-ID: <41f85d57-596a-5e42-756c-93fe0f45185f@github.com>
+Date:   Fri, 5 Aug 2022 15:38:19 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
-Subject: Re: [PATCH v2 08/10] builtin/bugreport.c: create '--diagnose' option
+Subject: Re: [PATCH v2 06/10] builtin/diagnose.c: create 'git diagnose'
+ builtin
 Content-Language: en-US
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>, Victoria Dye <vdye@github.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de,
+        Victoria Dye <vdye@github.com>
 References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
  <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
- <d81e7c10997e9e8dc211d241019fbafa6b25fb04.1659577543.git.gitgitgadget@gmail.com>
+ <73e139ee377f9c50e671b0d94a28b93c1db28a69.1659577543.git.gitgitgadget@gmail.com>
+ <220804.86zggkecmk.gmgdl@evledraar.gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <d81e7c10997e9e8dc211d241019fbafa6b25fb04.1659577543.git.gitgitgadget@gmail.com>
+In-Reply-To: <220804.86zggkecmk.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/3/2022 9:45 PM, Victoria Dye via GitGitGadget wrote:
-> From: Victoria Dye <vdye@github.com>
+On 8/4/2022 2:27 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Aug 04 2022, Victoria Dye via GitGitGadget wrote:
+> 
+>> From: Victoria Dye <vdye@github.com>
+>>
+>> Create a 'git diagnose' builtin to generate a standalone zip archive of
+>> repository diagnostics.
+> 
+> It's good to have this as a built-in separate from "git bugreport",
+> but...
+> 
+>> +git-diagnose - Generate a zip archive of diagnostic information
+> 
+> ...I'd really prefer for this not to squat on such a common name we
+> might regret having reserved later for such very specific
+> functionality. I'd think e.g. these would be better:
+> 
+> 	git mk-diagnostics-zip
+> 
+> Or maybe:
+> 
+> 	git archive-interesting-for-report
 
-> +--diagnose[=(basic|all)]::
-> +	Create a zip archive of information about the repository including logs
+These are not realistic replacements.
 
-logs? I think the reflogs are not included unless "all" is specified. Perhaps
-we can unify this description with the beginning of git-diagnose.txt:
+> If I had to guess what a "git diagnose" did, I'd probably think:
+> 
+>  * It analyzes your config, and suggests redundancies/alternatives
+>  * It does some perf tests / heuritics, and e.g. suggests you turn on
+>    the commit-graph writing.
 
-  Collects detailed information about the user's machine, Git client, and
-  repository state and packages that information into a zip archive.
+These sound like great options to add in the future, such as:
 
-resulting in
+   --perf-test: Run performance tests on your repository using different
+   Git config options and recommend certain settings.
 
-	Create a zip archive containing information about the user's machine,
-	Git client, and repository state.
+(This --perf-test option would be a great way to get wider adoption
+of parallel checkout, since its optimal settings are so machine
+dependent.)
 
-> +	and certain statistics describing the data shape of the repository. The
-> +	archive is written to the same output directory as the bug report and is
-> +	named 'git-diagnostics-<formatted suffix>'.
-> ++
-> +By default, `--diagnose` (equivalent to `--diagnose=basic`) will collect only
-> +statistics and summarized data about the repository and filesystem. Specifying
-> +`--diagnose=all` will create an archive with the same contents generated by `git
-> +diagnose --all`; this archive will be much larger, and will contain potentially
-> +sensitive information about the repository. See linkgit:git-diagnose[1] for more
-> +details on the contents of the diagnostic archive.
+The thing is, even if we did these other things, it would result in
+some kind of document that summarizes the repository shape and features.
+That kind of data is exactly what this version of 'git diagnose' does.
 
-Perhaps here (and git-diagnose.txt) should be really explicit about sharing the
-"all" mode output only with trusted parties. Let the user decide what level of
-trust is necessary depending on their situation (we don't need to say "open source
-repos are fine to share" or something).
-
-> +enum diagnose_mode {
-> +	DIAGNOSE_NONE,
-> +	DIAGNOSE_BASIC,
-> +	DIAGNOSE_ALL
-> +};
-
-This enum makes me think that it might be nice to use this in diagnose.h
-along with an array that pairs strings with the enum. We could unify the
-options by having 'git diagnose --mode=(basic|all)' which could be
-extended in the future with another mode that might be in between the two.
-
-It may also be a waste of time to set up that infrastructure without it
-actually mattering in the future, but I thought I'd mention it as an
-alternative, in case that inspires you.
-
->  static void get_system_info(struct strbuf *sys_info)
->  {
-> @@ -91,6 +97,23 @@ static void get_header(struct strbuf *buf, const char *title)
->  	strbuf_addf(buf, "\n\n[%s]\n", title);
->  }
->  
-> +static int option_parse_diagnose(const struct option *opt,
-> +				 const char *arg, int unset)
-> +{
-> +	enum diagnose_mode *diagnose = opt->value;
-> +
-> +	BUG_ON_OPT_NEG(unset);
-> +
-> +	if (!arg || !strcmp(arg, "basic"))
-> +		*diagnose = DIAGNOSE_BASIC;
-> +	else if (!strcmp(arg, "all"))
-> +		*diagnose = DIAGNOSE_ALL;
-
-Should we allow "none" to reset the value to DIAGNOSE_NONE?
-
-> +	else
-> +		die(_("diagnose mode must be either 'basic' or 'all'"));
-
-I wondered initially if this should be a usage() call instead. But we have
-plenty of examples of using die() to report an issue with a single option
-or a combination of options.
-
->  	const struct option bugreport_options[] = {
-> +		OPT_CALLBACK_F(0, "diagnose", &diagnose, N_("(basic|all)"),
-> +			       N_("create an additional zip archive of detailed diagnostics"),
-> +			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG, option_parse_diagnose),
-
-The biggest reason for this to be an OPT_CALLBACK_F is because of the
-'--diagnose' option (without '='), so an OPT_STRING would not be
-appropriate here.
-
-> @@ -119,6 +147,7 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
->  					    option_output ? option_output : "");
->  	strbuf_addstr(&report_path, prefixed_filename);
->  	strbuf_complete(&report_path, '/');
-> +	output_path_len = report_path.len;
-
-Perhaps this should be renamed to output_dir_len, since we know this is
-a directory that will contain all of the output files.
-
-> +	/* Prepare diagnostics, if requested */
-> +	if (diagnose != DIAGNOSE_NONE) {
-> +		struct strbuf zip_path = STRBUF_INIT;
-> +		strbuf_add(&zip_path, report_path.buf, output_path_len);
-> +		strbuf_addstr(&zip_path, "git-diagnostics-");
-> +		strbuf_addftime(&zip_path, option_suffix, localtime_r(&now, &tm), 0, 0);
-> +		strbuf_addstr(&zip_path, ".zip");
-> +
-> +		if (create_diagnostics_archive(&zip_path, diagnose == DIAGNOSE_ALL))
-
-(Just pausing to say this could be create_diagnostics_archive(&zip_path, diagnose)
-if we use the enum inside diagnose.c.
+For now, it leaves the human reader responsible for making decisions
+based on those documents, but they have been incredibly helpful when we
+are _diagnosing_ issues users are having with their repositories.
 
 Thanks,
 -Stolee
