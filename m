@@ -2,119 +2,186 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C867C00140
-	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 11:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3E5BC00140
+	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 14:15:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229946AbiHELBc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Aug 2022 07:01:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35370 "EHLO
+        id S240906AbiHEOPl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Aug 2022 10:15:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbiHELBb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Aug 2022 07:01:31 -0400
-Received: from out28-75.mail.aliyun.com (out28-75.mail.aliyun.com [115.124.28.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A02401D300
-        for <git@vger.kernel.org>; Fri,  5 Aug 2022 04:01:29 -0700 (PDT)
-X-Alimail-AntiSpam: AC=CONTINUE;BC=0.07282975|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_system_inform|0.0040353-0.000316229-0.995648;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047202;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=4;RT=4;SR=0;TI=SMTPD_---.Omnox2J_1659697283;
-Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.Omnox2J_1659697283)
-          by smtp.aliyun-inc.com;
-          Fri, 05 Aug 2022 19:01:24 +0800
-Date:   Fri, 5 Aug 2022 19:01:24 +0800
-From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, "Jeff King" <peff@peff.net>
-Subject: Re: Re: [PATCH] rev-list: support `--human-readable` option when applied `disk-usage`
-References: <pull.1313.git.1659686097163.gitgitgadget@gmail.com>, 
-        <220805.864jyrro9k.gmgdl@evledraar.gmail.com>
-X-Priority: 3
-X-GUID: C8BC33CC-8773-47BD-B210-E1299978CC3C
-X-Has-Attach: no
-X-Mailer: Foxmail 7.2.19.158[cn]
-Mime-Version: 1.0
-Message-ID: <2022080519002378872119@oschina.cn>
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: base64
+        with ESMTP id S240904AbiHEOPj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Aug 2022 10:15:39 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 152AA634F
+        for <git@vger.kernel.org>; Fri,  5 Aug 2022 07:15:38 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id h34-20020a05600c49a200b003a5165eae0fso1344391wmp.4
+        for <git@vger.kernel.org>; Fri, 05 Aug 2022 07:15:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc;
+        bh=QaKqPvh3DiwPfU8t101EsAp25N70ze7Xxf4NXdw94Gk=;
+        b=KGZiu8ED9nevmrmBHXrq+0wrPNFi/71IQ9KGCK6Qa9bgTDQk8SfU7RUklGthY55NNN
+         7GC9yrj1fRP9tuQnLIwC4kRKs2gDZsVrxx8SjsmdBEiuKWF+eF0R8ZkqsaQezLNsDGA2
+         1rYi4JRQXJ4I+bSMComAWIn0v7JRQpCMjdoeyDqSdIcT6tw3hTTTp04RZyFVoBrmxa8b
+         ptU/hTg+MIL02w/AwPU7qC1YyeZ/jZEt72XbMLWhCSiNFPMnjLSW5Ewp5dIfE14lkv4+
+         cgxHDxZHwbadxLjonuyL9VQfW5K3mD0i7xJwGNp14vyVmxYe0LxU1v0PKkGCznDll8HY
+         Rrfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=QaKqPvh3DiwPfU8t101EsAp25N70ze7Xxf4NXdw94Gk=;
+        b=Z7sRMliI+I6QhldNl4EO3m+JdxE1oHM/xySxnAKtiyBrLxK+hKFE/H3DJiN049ZFmU
+         rctExrX4saamzHPgX0JmBjZ+tGrQe6b1LXgfIEp0EYG84D6ZFvLk58tChSVHf24MbDWM
+         4IUPyT+Kj7GB4qnAxgXYafOWhLx56srsluOat9NUSvDF2CXdS7sZjU46NkM+AZPfDr9s
+         kgdsPNJbRtXYqotJhQVaCeoKx9fQxDbd8WAYukRYo22gV8wKB+l1+HWO/Km4K3bNcQdt
+         XIwS5HCKmVJBX168GbSoN3Er8fkFesr8IdrUjldSghhpvF17Oc5QAox9tQChaiM/b5/6
+         LPMg==
+X-Gm-Message-State: ACgBeo1B7LVCYjseqXuZqLer+p6tDGVpku2W4rJgouUG5oLGjz7OF2aj
+        ggRfGS0QxfHCQ8xR9dtRsaHzL1Pfl+/iRA==
+X-Google-Smtp-Source: AA6agR6O7+ypaB3T67I7WmgOj/uPM8WXy8Cfbmflr48VOzYqaYYM8aUivSkRqqMlWEX5Mj2QG9jA1Q==
+X-Received: by 2002:a05:600c:34c6:b0:3a3:2549:1905 with SMTP id d6-20020a05600c34c600b003a325491905mr4722574wmq.204.1659708936242;
+        Fri, 05 Aug 2022 07:15:36 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id r13-20020a5d52cd000000b0021d7fa77710sm3904865wrv.92.2022.08.05.07.15.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Aug 2022 07:15:35 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Ilya K <me@0upti.me>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] hook API: don't segfault on strbuf_addf() to NULL "out"
+Date:   Fri,  5 Aug 2022 16:15:33 +0200
+Message-Id: <patch-1.1-2450e3e65cf-20220805T141402Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.37.1.1283.g2c56c4202c5
+In-Reply-To: <0015309-00f1-9b44-023c-001ee3f242e4@0upti.me>
+References: <0015309-00f1-9b44-023c-001ee3f242e4@0upti.me>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pgo+T24gRnJpLCBBdWcgMDUgMjAyMiwgTGkgTGluY2hhbyB2aWEgR2l0R2l0R2FkZ2V0IHdyb3Rl
-Ogo+Cj4+IEZyb206IExpIExpbmNoYW8gPGxpbGluY2hhb0Bvc2NoaW5hLmNuPgo+Pgo+PiBUaGUg
-Jy0tZGlzay11c2FnZScgb3B0aW9uIGZvciBnaXQtcmV2LWxpc3Qgd2FzIGludHJvZHVjZWQgaW4g
-MTY5NTBmODM4NAo+PiAocmV2LWxpc3Q6IGFkZCAtLWRpc2stdXNhZ2Ugb3B0aW9uIGZvciBjYWxj
-dWxhdGluZyBkaXNrIHVzYWdlLCAyMDIxLTAyLTA5KS4KPj4gVGhpcyBpcyB2ZXJ5IHVzZWZ1bCBm
-b3IgcGVvcGxlIGluc3BlY3QgdGhlaXIgZ2l0IHJlcG8ncyBvYmplY3RzIHVzYWdlCj4+IGluZm9t
-YXRpb24sIGJ1dCB0aGUgcmVzdWx0IG51bWJlciBpcyBxdWl0IGhhcmQgZm9yIGh1bWFuIHRvIHJl
-YWQuCj4KPnMvdGhlIHJlc3VsdCBudW1iZXIvdGhlIHJlc3VsdGluZyBudW1iZXIvCj5zL2ZvciBo
-dW1hbi9mb3IgYSBodW1hbi8KPgo+Pgo+PiBUZWFjaCBnaXQgcmV2LWxpc3QgdG8gb3V0cHV0IG1v
-cmUgaHVtYW4gcmVhZGFibGUgcmVzdWx0IHdoZW4gdXNpbmcKPgo+cy90byBvdXRwdXQgbW9yZSBo
-dW1hbi90byBvdXRwdXQgYSBodW1hbi8KPgo+PiAnLS1kaXNrLXVzYWdlJyB0byBjYWxjdWxhdGUg
-b2JqZWN0cyBkaXNrIHVzYWdlLgo+Cj5Gb3IgdGhpcyBJJ2QganVzdCBzLyB0byBjYWxjdWxhdGUg
-b2JqZWN0cyBkaXNrIHVzYWdlLy8uIEkuZS4gd2UgYWxyZWFkeQo+ZGlzY3Vzc2VkIHdoYXQgLS1k
-aXNrLXVzYWdlIGRvZXMuLi4gCk9LCj4KPj4gKwo+PiArLUg6Ogo+PiArLS1odW1hbi1yZWFkYWJs
-ZTo6Cj4+ICsJUHJpbnQgb24tZGlzayBvYmplY3RzIHNpemUgaW4gaHVtYW4gcmVhZGFibGUgZm9y
-bWF0LiBUaGlzIG9wdGlvbgo+PiArCW11c3QgYmUgY29tYmluZWQgd2l0aCBgLS1kaXNrLXVzYWdl
-YCB0b2dldGhlci4KPj7CoCBlbmRpZjo6Z2l0LXJldi1saXN0W10KPgo+SSdkIHJlYWxseSBwcmVm
-ZXIgaWYgd2UgZGlkbid0IHNxdWF0IG9uIC1ILCByZXYtbGlzdCBpcyBvdmVycmlkZGVuCj5lbm91
-Z2gsIGJ1dCBob3cgYWJvdXQ6Cj4KPgktLWRpc2stdXNhZ2UKPgktLWRpc2stdXNhZ2U9aHVtYW4K
-Pgo+UmF0aGVyIHRoYW4gaW50cm9kdWNpbmcgYSBuZXcgb3B0aW9uPyAKWWVzLCB0aGlzIG1ha2Vz
-IHNlbnNlLgo+Cj4+wqAgc3RydWN0IGJpdG1hcF9pbmRleCAqYml0bWFwX2dpdDsKPj4gKwlzdHJ1
-Y3Qgc3RyYnVmIGJpdG1hcF9zaXplX2J1ZiA9IFNUUkJVRl9JTklUOwo+PiArCW9mZl90IHNpemVf
-ZnJvbV9iaXRtYXA7Cj4+wqAKPj7CoCBpZiAoIXNob3dfZGlza191c2FnZSkKPj7CoCByZXR1cm4g
-LTE7Cj4+IEBAIC00ODEsOCArNDg0LDEzIEBAIHN0YXRpYyBpbnQgdHJ5X2JpdG1hcF9kaXNrX3Vz
-YWdlKHN0cnVjdCByZXZfaW5mbyAqcmV2cywKPj7CoCBpZiAoIWJpdG1hcF9naXQpCj4+wqAgcmV0
-dXJuIC0xOwo+PsKgCj4+IC0JcHJpbnRmKCIlIlBSSXVNQVgiXG4iLAo+PiAtCcKgwqDCoMKgwqDC
-oCAodWludG1heF90KWdldF9kaXNrX3VzYWdlX2Zyb21fYml0bWFwKGJpdG1hcF9naXQsIHJldnMp
-KTsKPj4gKwlzaXplX2Zyb21fYml0bWFwID0gZ2V0X2Rpc2tfdXNhZ2VfZnJvbV9iaXRtYXAoYml0
-bWFwX2dpdCwgcmV2cyk7Cj4+ICsJaWYgKGh1bWFuX3JlYWRhYmxlKSB7Cj4+ICsJc3RyYnVmX2h1
-bWFuaXNlX2J5dGVzKCZiaXRtYXBfc2l6ZV9idWYsIHNpemVfZnJvbV9iaXRtYXApOwo+PiArCXBy
-aW50ZigiJXNcbiIsIGJpdG1hcF9zaXplX2J1Zi5idWYpOwo+PiArCX0gZWxzZQo+PiArCXByaW50
-ZigiJSJQUkl1TUFYIlxuIiwgKHVpbnRtYXhfdClzaXplX2Zyb21fYml0bWFwKTsKPj4gKwlzdHJi
-dWZfcmVsZWFzZSgmYml0bWFwX3NpemVfYnVmKTsKPgo+SSB0aGluayB0aGlzIHdvdWxkIGJlIGJl
-dHRlciBpZiB3ZSBqdXN0IHVzZSB0aGUgc3RyYnVmIHVuY29uZGl0aW9uYWxseQo+KGFuZCBhIHNo
-b3J0ICZzYiBpcyBjb252ZW50aW9uYWwgaW4gc3VjaCBhIHNob3J0IG9uZS11c2UgZnVuY3Rpb24p
-LiBTbyBqdXN0Ogo+Cj4JaWYgKGh1bWFuX3JlYWRhYmxlKQo+wqDCoMKgwqDCoMKgwqAgc3RyYnVm
-X2h1bWFuaXNlX2J5dGVzKCZzYiwgc2l6ZV9mcm9tX2JpdG1hcCk7Cj4JZWxzZQo+CXN0cmJ1Zl9h
-ZGRmKCZzYiwgIiUiUFJJdU1BWCIsICh1aW50bWF4X3Qpc2l6ZV9mcm9tX2JpdG1hcCk7Cj4JcHV0
-cyhzYi5idWYpOwo+Cj5JdCBnZXRzIHlvdSByaWQgb2YgdGhlIG5lZWQgZm9yIHt9IGJyYWNlcywg
-YW5kIEkgdGhpbmsgbWFrZXMgZm9yIGEgbmljZXIKPnJlYWQuIApBZ3JlZQo+Cj4+IC0JaWYgKHNo
-b3dfZGlza191c2FnZSkKPj4gLQlwcmludGYoIiUiUFJJdU1BWCJcbiIsICh1aW50bWF4X3QpdG90
-YWxfZGlza191c2FnZSk7Cj4+ICsJaWYgKHNob3dfZGlza191c2FnZSkgewo+PiArCWlmIChodW1h
-bl9yZWFkYWJsZSkgewo+PiArCXN0cmJ1Zl9odW1hbmlzZV9ieXRlcygmZGlza19idWYsIHRvdGFs
-X2Rpc2tfdXNhZ2UpOwo+PiArCXByaW50ZigiJXNcbiIsIGRpc2tfYnVmLmJ1Zik7Cj4+ICsJfSBl
-bHNlCj4+ICsJcHJpbnRmKCIlIlBSSXVNQVgiXG4iLCAodWludG1heF90KXRvdGFsX2Rpc2tfdXNh
-Z2UpOwo+PiArCX0KPgo+RGl0dG8sIGFuZCB3ZSBjb3VsZCBtYWtlIHRoZSAmc2Igc2NvcGVkIHRv
-IHRoYXQgImlmIChzaG93X2Rpc2tfdXNhZ2UpIi4KPgo+PiArdGVzdF9leHBlY3Rfc3VjY2VzcyAn
-cmV2LWxpc3QgLS1kaXNrLXVzYWdlIHdpdGggLS1odW1hbi1yZWFkYWJsZScgJwo+PiArCWdpdCBy
-ZXYtbGlzdCAtLW9iamVjdHMgSEVBRCAtLWRpc2stdXNhZ2UgLS1odW1hbi1yZWFkYWJsZSA+YWN0
-dWFsICYmCj4+ICsJdGVzdF9pMThuZ3JlcCAtZSAiNDQ2IGJ5dGVzIiBhY3R1YWwKPgo+dXNlIGdy
-ZXAsIG5vdCB0ZXN0X2kxOG5ncmVwICh0aGUgbGF0dGVyIHNob3VsZCBiZSBnb2luZyBhd2F5IGVu
-dGlyZWx5KS4gCk9LCj4KPkJ1dCBhY3R1YWxseSB3ZSBzaG91bGQgdXNlIHRlc3RfY21wIGhlcmUs
-IGlzbid0IHRoYXQgdGhlICplbnRpcmUqCj5vdXRwdXQ/IEkuZS4gd29uJ3QgdGhpcyBwYXNzPwo+
-Cj4JZWNobyA0NDYgYnl0ZXMgPmV4cGVjdCAmJgo+CS4uLiA+ZXhwZWN0ICYmCj4JdGVzdF9jbXAg
-ZXhwZWN0IGFjdHVhbAo+Cj5JZiBzbyBsZXQncyB0ZXN0IHdoYXQgd2UgcmVhbGx5IG1lYW4sIGku
-ZS4gd2Ugd2FudCAqdGhpcyogdG8gYmUgdGhlCj5vdXRwdXQsIG5vdCB0byBoYXZlIG91dHB1dCB0
-aGF0IGhhcyB0aGF0IHN1Yi1zdHJpbmcgb24gYW55IGFyYml0cmFyeQo+YW1vdW50IG9mIGxpbmVz
-IHNvbWV3aGVyZS4uLgo+Cj5JbiB0aGlzIGNhc2UgaXQncyB1bmxpa2VseSB0byBkbyB0aGUgd3Jv
-bmcgdGhpbmcsIGJ1dCBpdCdzIGEgZ29vZCBoYWJpdAo+dG8gZ2V0IGludG8uLi4KPgo+PiArdGVz
-dF9leHBlY3Rfc3VjY2VzcyAncmV2LWxpc3QgLS1kaXNrLXVzYWdlIHdpdGggYml0bWFwIGFuZCAt
-LWh1bWFuLXJlYWRhYmxlJyAnCj4+ICsJZ2l0IHJldi1saXN0IC0tb2JqZWN0cyBIRUFEIC0tdXNl
-LWJpdG1hcC1pbmRleCAtLWRpc2stdXNhZ2UgLUggPmFjdHVhbCAmJgo+PiArCXRlc3RfaTE4bmdy
-ZXAgLWUgIjQ0NiBieXRlcyIgYWN0dWFsCj4KPmRpdHRvLiAKVGhlIG91dHB1dCBoZXJlIGlzIGp1
-c3QgIjQ0NiDCoGJ5dGVzIiBpZiB3ZSB1c2UgJy0tZGlzay11c2FnZScgb3B0aW9uIGluIHRoaXMg
-cmVzdCByZXBvLgpCdXQgR2l0aHViIENJL2xpbnV4LXNoYTI1NiByZW1pbmRlZCBtZSB0aGF0IEkg
-bWFkZSBhIG1pc3Rha2UgdGhhdApJIHNob3VsZCBhdm9pZCB0byBoYXJkY29yZSBhY3R1YWwgc2l6
-ZSBoZXJlLgo+Cj4KPj4gKycKPj4gKwo+PiArdGVzdF9leHBlY3Rfc3VjY2VzcyAncmV2LWxpc3Qg
-dXNlIC0taHVtYW4tcmVhZGFibGUgd2l0aG91dCAtLWRpc2stdXNhZ2UnICcKPj4gKwl0ZXN0X211
-c3RfZmFpbCBnaXQgcmV2LWxpc3QgLS1vYmplY3RzIEhFQUQgLS1odW1hbi1yZWFkYWJsZSAyPiBl
-cnIgJiYKPj4gKwllY2hvICJmYXRhbDogb3B0aW9uICdcJyctLWh1bWFuLXJlYWRhYmxlLy1IJ1wn
-JyBzaG91bGQgYmUgdXNlZCB3aXRoIiBcCj4+ICsJIidcJyctLWRpc2stdXNhZ2UnXCcnIHRvZ2V0
-aGVyIiA+ZXhwZWN0ICYmCj4KPllvdSBjYW4gbWFrZSB0aGlzIGEgYml0IG5pY2VyIGJ5IG5vdCB1
-c2luZyBlY2hvLCB1c2UgYSBoZXJlLWRvYyBpbnN0ZWFkOgo+Cj4JY2F0ID5leHBlY3QgPDwtXEVP
-Rgo+wqDCoMKgwqDCoMKgwqAgZmF0YWw6IC4uLgo+CUVPRgo+Cj5CdXQgeW91J2xsIHN0aWxsIG5l
-ZWQgdGhlICdcJycgcXVvdGluZywgYnV0IEkgdGhpbmcgaXQnbGwgYmUgYmV0dGVyLCBhbmQKPmF2
-b2lkcyB0aGUgbGluZS13cmFwcGluZyAod2hpY2ggd2UgdHJ5IHRvIGF2b2lkIGZvciB0aGlzIHNv
-cnQgb2YgdGhpbmcpLiAKT0suCgpNYW55IHRoYW5rcyBmb3IgYWxsIHlvdXIgcmV2aWV3IGNvbW1l
-bnRzIDop
+Fix a logic error in a082345372e (hook API: fix v2.36.0 regression:
+hooks should be connected to a TTY, 2022-06-07). When it started using
+the "ungroup" API added in fd3aaf53f71 (run-command: add an "ungroup"
+option to run_process_parallel(), 2022-06-07) it should have made the
+same sort of change that fd3aaf53f71 itself made in
+"t/helper/test-run-command.c".
+
+The correct way to emit this "Couldn't start" output with "ungroup"
+would be:
+
+	fprintf(stderr, _("Couldn't start hook '%s'\n"), hook_path);
+
+But we should instead remove the emitting of this output. As the added
+test shows we already emit output when we can't run the child. The
+"cannot run" output here is emitted by run-command.c's
+child_err_spew().
+
+So the addition of the "Couldn't start hook" output here in
+96e7225b310 (hook: add 'run' subcommand, 2021-12-22) was always
+redundant. For the pre-commit hook we'll now emit exactly the same
+output as we did before f443246b9f2 (commit: convert
+{pre-commit,prepare-commit-msg} hook to hook.h, 2021-12-22) (and
+likewise for others).
+
+We could at this point add this to the pick_next_hook() callbacks in
+hook.c:
+
+	assert(!out);
+	assert(!*pp_task_cb);
+
+And this to notify_start_failure() and notify_hook_finished() (in the
+latter case the parameter is called "pp_task_cp"):
+
+	assert(!out);
+	assert(!pp_task_cb);
+
+But let's leave any such instrumentation for some eventual cleanup of
+the "ungroup" API.
+
+Reported-by: Ilya K <me@0upti.me>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+As suspected I needed to bounce this off the CI once to due to the
+OS-specific messaging around failed hooks, it passes now:
+https://github.com/avar/git/actions/runs/2802782493
+
+ hook.c          |  7 -------
+ t/t1800-hook.sh | 26 ++++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 7 deletions(-)
+
+diff --git a/hook.c b/hook.c
+index d113ee7faae..a493939a4fc 100644
+--- a/hook.c
++++ b/hook.c
+@@ -62,9 +62,6 @@ static int pick_next_hook(struct child_process *cp,
+ 	strvec_push(&cp->args, hook_path);
+ 	strvec_pushv(&cp->args, hook_cb->options->args.v);
+ 
+-	/* Provide context for errors if necessary */
+-	*pp_task_cb = (char *)hook_path;
+-
+ 	/*
+ 	 * This pick_next_hook() will be called again, we're only
+ 	 * running one hook, so indicate that no more work will be
+@@ -80,13 +77,9 @@ static int notify_start_failure(struct strbuf *out,
+ 				void *pp_task_cp)
+ {
+ 	struct hook_cb_data *hook_cb = pp_cb;
+-	const char *hook_path = pp_task_cp;
+ 
+ 	hook_cb->rc |= 1;
+ 
+-	strbuf_addf(out, _("Couldn't start hook '%s'\n"),
+-		    hook_path);
+-
+ 	return 1;
+ }
+ 
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+index 210f4298872..64096adac7e 100755
+--- a/t/t1800-hook.sh
++++ b/t/t1800-hook.sh
+@@ -151,4 +151,30 @@ test_expect_success TTY 'git commit: stdout and stderr are connected to a TTY' '
+ 	test_hook_tty commit -m"B.new"
+ '
+ 
++test_expect_success 'git hook run a hook with a bad shebang' '
++	test_when_finished "rm -rf bad-hooks" &&
++	mkdir bad-hooks &&
++	write_script bad-hooks/test-hook "/bad/path/no/spaces" </dev/null &&
++
++	# TODO: We should emit the same (or at least a more similar)
++	# error on Windows and !Windows. See the OS-specific code in
++	# start_command()
++	if test_have_prereq !WINDOWS
++	then
++		cat >expect <<-\EOF
++		fatal: cannot run bad-hooks/test-hook: ...
++		EOF
++	else
++		cat >expect <<-\EOF
++		error: cannot spawn bad-hooks/test-hook: ...
++		EOF
++	fi &&
++	test_expect_code 1 git \
++		-c core.hooksPath=bad-hooks \
++		hook run test-hook >out 2>err &&
++	test_must_be_empty out &&
++	sed -e "s/test-hook: .*/test-hook: .../" <err >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.37.1.1283.g2c56c4202c5
 
