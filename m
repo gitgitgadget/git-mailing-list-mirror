@@ -2,199 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61AB6C25B0C
-	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 15:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A215AC00140
+	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 15:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241410AbiHEPxD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Aug 2022 11:53:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56008 "EHLO
+        id S241494AbiHEP4H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Aug 2022 11:56:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241286AbiHEPv3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Aug 2022 11:51:29 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C10FE2199
-        for <git@vger.kernel.org>; Fri,  5 Aug 2022 08:50:12 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id c19-20020a17090ae11300b001f2f94ed5c6so7741957pjz.1
-        for <git@vger.kernel.org>; Fri, 05 Aug 2022 08:50:12 -0700 (PDT)
+        with ESMTP id S241416AbiHEPzW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Aug 2022 11:55:22 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A006770E56
+        for <git@vger.kernel.org>; Fri,  5 Aug 2022 08:54:11 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id gb36so5707084ejc.10
+        for <git@vger.kernel.org>; Fri, 05 Aug 2022 08:54:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc;
-        bh=/FVzx5x6QFL5FwBcdH9c6Jx48g3cmfL206XuMkA6Nc4=;
-        b=KBWKMLZVZyO7IZ8J2qceU02/ko5GMl9SjaLQr97iXUf3/66i16sFv1QOmT1hxZHNJx
-         LMOSFhZrEYAeRsphQI7vH3tzmWjR2rJIakRQKY12L7eODZKFX+avR8Kz2D22xueNUugz
-         swQWn+aBhdFfKBkam8WY8L9XIeV2FxDXEqBfJ8vYU1HkrRre5II/KUHtnzvHIkPkx78f
-         Av+JIax+oGoi1Smebo/S6zDA9gJ0b3zDdpENLta3PCM7biBXsksLA9GcbZGGmp9S7nwT
-         oJUglSKfM3r7CfZZnedg33MEAQW/m2G7apb757b9MGWYVShXti3wDUt+Ct146b84BpWv
-         uekQ==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc;
+        bh=uyCaHziHZqb+meWhll9Uk6q12lVuVeAsPSMOyJwpWJU=;
+        b=PJV6aHQuZGchkj7P8BSodIZymQlKsd0y17CClKjHs6cuwjRURvg8quIk8CTFatIdkF
+         sXjJdrg1GHjQtjG7dajGtkmKhbEbwuvc1xYRu+25tuK/wN2aBT6aiT4Rfcp5n2K25gGs
+         hH+RNr6MpP4Y9vJUocJg6taVCspq39QLoTZXfHZi1ZAhiqz3aQYOGVgiF8LHBZhIK2TJ
+         vMzJSLxa6iCZSjodm6yHIqc2h5B07V69Ch85xvsT9KRnkfXD+pKX/Hda4AcOvnxlbV+g
+         IRgNfmWhcWH6KcRFiJjAtHmUz9mfeGT4jcS60kaiul+oxSlPCkoNBMP+tFfEFkpKNNBF
+         Fvrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc;
-        bh=/FVzx5x6QFL5FwBcdH9c6Jx48g3cmfL206XuMkA6Nc4=;
-        b=TBo1v/JaNz95H0elAmXHECkCpBL6mA+5pmasOd2NvmS66IW+uhoBL2mud6qmgDjIQx
-         D9mBS4qLu10/JJOrNcIZRnIDviUqrpFdBIJ0N7e3I9qKat9ueFnN0lvlk25OFQXi0nKp
-         bEpEjsqFg4J7OrS/j/+NMG4QlIghMYQ6jkpw+NIlqCj9RLoJn0SCNzbKqfGTmFU/Ng2l
-         lZkXzs4p6UwGptbpAscRJE+iJIyz5Nx3iEzQa9PltyRP7dM3iqqlYfF/QgyyFuVvz7/Z
-         HoBv7InhtL+pwCdTrbJMK2LIzOpltX/j8t60oehqQWIbh5fyOFRId5pYea1Ol3xiMd/S
-         I/cw==
-X-Gm-Message-State: ACgBeo3+JoAWzPRc6hi8vNsMDJ6BmzSdsQS/KVGcPr8fySgdHnZXvalo
-        Es4UKqu5hPM/bYpof6Tf07o=
-X-Google-Smtp-Source: AA6agR6fBThN1xd7+KyDKz735jrWoWdgP9fqaa6a0z+yGDgFYWloBPLZkbi3dpirMZjd5dwMk4hTcQ==
-X-Received: by 2002:a17:902:6b47:b0:16c:e5cc:f006 with SMTP id g7-20020a1709026b4700b0016ce5ccf006mr7349569plt.105.1659714612168;
-        Fri, 05 Aug 2022 08:50:12 -0700 (PDT)
-Received: from localhost ([113.172.46.62])
-        by smtp.gmail.com with ESMTPSA id 20-20020a621414000000b0052e57ed8cdasm3152211pfu.55.2022.08.05.08.50.10
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc;
+        bh=uyCaHziHZqb+meWhll9Uk6q12lVuVeAsPSMOyJwpWJU=;
+        b=gmb131TslG67jT0ucgt7mLyVokDVVPoOc7FMnletAc6d6BzGpmJ2xCaBsHjDJTrykX
+         50BjdtmC+0EPCXV+FfDwe96plMxXAOmQ2x+MaGfLgZxp7yUho2lS7DgNtewnipbJcQZn
+         swM34tXWrRCJQ5FGvAThSmMn4a3HPr5hc3A9eo469cK9EazQ7L49W6LMiQeJDqaEj90c
+         5n1NDVs8JyzjEJLZnRwPFEjkQxOsI9vZO4e2q4sH0tBOmupA2jTwNzhuswXNlker5kyf
+         j6FGk0VI+TMWdI5fpCMnBxn6tCFrcNL17LJdGkSTUXDexC0GXoNjIAJwBLRezc19dUmS
+         cJvA==
+X-Gm-Message-State: ACgBeo2omYA/BysJUE1IHBV769TAlLtcfiH/zbe0Se+8znQVBcGJ39mW
+        MiHbhU55lJAQQKAeWfup0C/MApDc1c3rCA==
+X-Google-Smtp-Source: AA6agR58wHe1sVkQkpBCKdGpG9k0waAlxMbCGfYLKwEmHxYcHTyYIFaJPOEY/YqzZonxnJ9yMec4UA==
+X-Received: by 2002:a17:907:7637:b0:730:6a9b:148f with SMTP id jy23-20020a170907763700b007306a9b148fmr5948530ejc.273.1659714850196;
+        Fri, 05 Aug 2022 08:54:10 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id g20-20020aa7d1d4000000b0043e8334f762sm63898edp.65.2022.08.05.08.54.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Aug 2022 08:50:11 -0700 (PDT)
-Date:   Fri, 5 Aug 2022 22:50:08 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        Fri, 05 Aug 2022 08:54:09 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oJzeK-000gv1-2H;
+        Fri, 05 Aug 2022 17:54:08 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
         <congdanhqx@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Ilya K <me@0upti.me>
 Subject: Re: [PATCH] hook API: don't segfault on strbuf_addf() to NULL "out"
-Message-ID: <Yu08MCCoGwTxeM+g@danh.dev>
+Date:   Fri, 05 Aug 2022 17:51:17 +0200
 References: <0015309-00f1-9b44-023c-001ee3f242e4@0upti.me>
  <patch-1.1-2450e3e65cf-20220805T141402Z-avarab@gmail.com>
+ <Yu08MCCoGwTxeM+g@danh.dev>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <Yu08MCCoGwTxeM+g@danh.dev>
+Message-ID: <220805.86v8r6r8in.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-1.1-2450e3e65cf-20220805T141402Z-avarab@gmail.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-08-05 16:15:33+0200, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> Fix a logic error in a082345372e (hook API: fix v2.36.0 regression:
-> hooks should be connected to a TTY, 2022-06-07). When it started using
-> the "ungroup" API added in fd3aaf53f71 (run-command: add an "ungroup"
-> option to run_process_parallel(), 2022-06-07) it should have made the
-> same sort of change that fd3aaf53f71 itself made in
-> "t/helper/test-run-command.c".
-> 
-> The correct way to emit this "Couldn't start" output with "ungroup"
-> would be:
-> 
-> 	fprintf(stderr, _("Couldn't start hook '%s'\n"), hook_path);
-> 
-> But we should instead remove the emitting of this output. As the added
-> test shows we already emit output when we can't run the child. The
-> "cannot run" output here is emitted by run-command.c's
-> child_err_spew().
-> 
-> So the addition of the "Couldn't start hook" output here in
-> 96e7225b310 (hook: add 'run' subcommand, 2021-12-22) was always
-> redundant. For the pre-commit hook we'll now emit exactly the same
-> output as we did before f443246b9f2 (commit: convert
-> {pre-commit,prepare-commit-msg} hook to hook.h, 2021-12-22) (and
-> likewise for others).
-> 
-> We could at this point add this to the pick_next_hook() callbacks in
-> hook.c:
-> 
-> 	assert(!out);
-> 	assert(!*pp_task_cb);
-> 
-> And this to notify_start_failure() and notify_hook_finished() (in the
-> latter case the parameter is called "pp_task_cp"):
-> 
-> 	assert(!out);
-> 	assert(!pp_task_cb);
-> 
-> But let's leave any such instrumentation for some eventual cleanup of
-> the "ungroup" API.
-> 
-> Reported-by: Ilya K <me@0upti.me>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
-> 
-> As suspected I needed to bounce this off the CI once to due to the
-> OS-specific messaging around failed hooks, it passes now:
-> https://github.com/avar/git/actions/runs/2802782493
-> 
->  hook.c          |  7 -------
->  t/t1800-hook.sh | 26 ++++++++++++++++++++++++++
->  2 files changed, 26 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hook.c b/hook.c
-> index d113ee7faae..a493939a4fc 100644
-> --- a/hook.c
-> +++ b/hook.c
-> @@ -62,9 +62,6 @@ static int pick_next_hook(struct child_process *cp,
->  	strvec_push(&cp->args, hook_path);
->  	strvec_pushv(&cp->args, hook_cb->options->args.v);
->  
-> -	/* Provide context for errors if necessary */
-> -	*pp_task_cb = (char *)hook_path;
-> -
->  	/*
->  	 * This pick_next_hook() will be called again, we're only
->  	 * running one hook, so indicate that no more work will be
-> @@ -80,13 +77,9 @@ static int notify_start_failure(struct strbuf *out,
->  				void *pp_task_cp)
->  {
->  	struct hook_cb_data *hook_cb = pp_cb;
-> -	const char *hook_path = pp_task_cp;
->  
->  	hook_cb->rc |= 1;
->  
-> -	strbuf_addf(out, _("Couldn't start hook '%s'\n"),
-> -		    hook_path);
-> -
->  	return 1;
->  }
->  
-> diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-> index 210f4298872..64096adac7e 100755
-> --- a/t/t1800-hook.sh
-> +++ b/t/t1800-hook.sh
-> @@ -151,4 +151,30 @@ test_expect_success TTY 'git commit: stdout and stderr are connected to a TTY' '
->  	test_hook_tty commit -m"B.new"
->  '
->  
-> +test_expect_success 'git hook run a hook with a bad shebang' '
-> +	test_when_finished "rm -rf bad-hooks" &&
-> +	mkdir bad-hooks &&
-> +	write_script bad-hooks/test-hook "/bad/path/no/spaces" </dev/null &&
-> +
-> +	# TODO: We should emit the same (or at least a more similar)
-> +	# error on Windows and !Windows. See the OS-specific code in
-> +	# start_command()
-> +	if test_have_prereq !WINDOWS
-> +	then
-> +		cat >expect <<-\EOF
-> +		fatal: cannot run bad-hooks/test-hook: ...
-> +		EOF
-> +	else
-> +		cat >expect <<-\EOF
-> +		error: cannot spawn bad-hooks/test-hook: ...
-> +		EOF
-> +	fi &&
-> +	test_expect_code 1 git \
-> +		-c core.hooksPath=bad-hooks \
-> +		hook run test-hook >out 2>err &&
-> +	test_must_be_empty out &&
-> +	sed -e "s/test-hook: .*/test-hook: .../" <err >actual &&
 
-If we're using "sed" here, can we also s/cannot run/cannot spawn/
-in order to have the same expectation?
+On Fri, Aug 05 2022, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
 
-Otherwise, the fix looks sane to me (obviously, since I also suggest
-removing the line entirely).
+> On 2022-08-05 16:15:33+0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+> [...]
+>> +test_expect_success 'git hook run a hook with a bad shebang' '
+>> +	test_when_finished "rm -rf bad-hooks" &&
+>> +	mkdir bad-hooks &&
+>> +	write_script bad-hooks/test-hook "/bad/path/no/spaces" </dev/null &&
+>> +
+>> +	# TODO: We should emit the same (or at least a more similar)
+>> +	# error on Windows and !Windows. See the OS-specific code in
+>> +	# start_command()
+>> +	if test_have_prereq !WINDOWS
+>> +	then
+>> +		cat >expect <<-\EOF
+>> +		fatal: cannot run bad-hooks/test-hook: ...
+>> +		EOF
+>> +	else
+>> +		cat >expect <<-\EOF
+>> +		error: cannot spawn bad-hooks/test-hook: ...
+>> +		EOF
+>> +	fi &&
+>> +	test_expect_code 1 git \
+>> +		-c core.hooksPath=3Dbad-hooks \
+>> +		hook run test-hook >out 2>err &&
+>> +	test_must_be_empty out &&
+>> +	sed -e "s/test-hook: .*/test-hook: .../" <err >actual &&
+>
+> If we're using "sed" here, can we also s/cannot run/cannot spawn/
+> in order to have the same expectation?
+>
+> Otherwise, the fix looks sane to me (obviously, since I also suggest
+> removing the line entirely).
 
-Reviewed-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+We could, but then we'd miss some weird regression where we changed the
+non-Windows message to "fatal: cannot spawn", which neither emit now.
 
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
-> -- 
-> 2.37.1.1283.g2c56c4202c5
-> 
+We could of course do the "sed"-ing in an identical "test_have_prereq"
+block, but I think we'd just be back to square one then, and it would be
+more readable to just "cat" what we expect to happen there.
 
--- 
-Danh
+So I think I'd prefer to keep it as-is, it also makes a subsequent
+change where we unify these error messages more obvious, i.e. we'd keep
+the !WINDOWS branch of that if/else in thath case.
+
+> Reviewed-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@gmail=
+.com>
+
+Thanks!
