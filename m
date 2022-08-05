@@ -2,115 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30B46C00140
-	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 15:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3B45C00140
+	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 15:37:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236963AbiHEPZq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Aug 2022 11:25:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35500 "EHLO
+        id S238054AbiHEPhC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Aug 2022 11:37:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235203AbiHEPZp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Aug 2022 11:25:45 -0400
+        with ESMTP id S232065AbiHEPhA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Aug 2022 11:37:00 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB6BC65DF
-        for <git@vger.kernel.org>; Fri,  5 Aug 2022 08:25:41 -0700 (PDT)
-Received: (qmail 15135 invoked by uid 109); 5 Aug 2022 15:25:41 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99D81260A
+        for <git@vger.kernel.org>; Fri,  5 Aug 2022 08:36:59 -0700 (PDT)
+Received: (qmail 15169 invoked by uid 109); 5 Aug 2022 15:36:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Aug 2022 15:25:41 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Aug 2022 15:36:59 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32252 invoked by uid 111); 5 Aug 2022 15:25:40 -0000
+Received: (qmail 32365 invoked by uid 111); 5 Aug 2022 15:36:58 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Aug 2022 11:25:40 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Aug 2022 11:36:58 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 5 Aug 2022 11:25:40 -0400
+Date:   Fri, 5 Aug 2022 11:36:58 -0400
 From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Emily Noneman <emily.noneman@gmail.com>,
-        Paul Horn <git@knutwalker.engineer>
-Subject: Re: [PATCH] revision.c: set-up "index_state.repo", don't segfault in
- pack-objects
-Message-ID: <Yu02dOo4G8sy8tI6@coredump.intra.peff.net>
-References: <CAKvVO18RVye=PkBRv=trj2GHh8ccGKL5j0mMq2eHQ1SX=wsr8A@mail.gmail.com>
- <patch-1.1-3ff17707481-20220805T141816Z-avarab@gmail.com>
- <b6299f8a-f75a-0e96-a6a6-55a7280584bf@github.com>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] pipe_command(): mark stdin descriptor as non-blocking
+Message-ID: <Yu05GjncDaGRTgce@coredump.intra.peff.net>
+References: <YuikU//9OrdpKQcE@coredump.intra.peff.net>
+ <YulFTSTbVaTwuQtt@coredump.intra.peff.net>
+ <xmqq5yjahb8u.fsf@gitster.g>
+ <YunxHOa2sJeEpJxd@coredump.intra.peff.net>
+ <a9953278-b15f-fd76-17b0-e949c7937992@web.de>
+ <YuquVEqEl6wxCLM7@coredump.intra.peff.net>
+ <41477326-5493-4d3c-246d-8a28969fa73e@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b6299f8a-f75a-0e96-a6a6-55a7280584bf@github.com>
+In-Reply-To: <41477326-5493-4d3c-246d-8a28969fa73e@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 05, 2022 at 10:48:43AM -0400, Derrick Stolee wrote:
+On Wed, Aug 03, 2022 at 11:56:13PM +0200, René Scharfe wrote:
 
-> On 8/5/2022 10:24 AM, Ævar Arnfjörð Bjarmason wrote:
-> > Narrowly fix a segfault that's been reported against pack-objects at
-> > [1] and [2].
-> > 
-> > This fixes a segfault in "git pack-objects", see a reports at [1] and
-> > [2]. In that case we'd go through the add_index_objects_to_pending()
-> > codepath being modified here, and eventually call into
-> > new_untracked_cache().
-> > 
-> > We'd then segfault in new_untracked_cache_flags() as we tried to use a
-> > NULL "repo" extracted from the "struct index_state".
+> Without that line the added test hangs for me on the Git for Windows
+> SDK on Windows 11.
+
+Hmph. Interesting that it passes in CI, but not on your local setup.
+I wonder why pipes would behave differently. Or perhaps there is even
+some configuration different that means we are still running the perl
+add--interactive there, though I kind of doubt it (and couldn't find
+anything pointing there).
+
+Still, if it fails in at least one spot, it's something we need to deal
+with. On the plus side, once we figure out how to fix it, the
+hand-grenade of "enable_nonblock() does nothing on Windows" will not be
+present anymore. ;)
+
+> With the patch below it fails and reports basically nothing:
+> [...]
+>    not ok 57 - handle very large filtered diff
+>    #
+>    #               git reset --hard &&
+>    #               # The specific number here is not important, but it must
+>    #               # be large enough that the output of "git diff --color"
+>    #               # fills up the pipe buffer. 10,000 results in ~200k of
+>    #               # colored output.
+>    #               test_seq 10000 >test &&
+>    #               test_config interactive.diffFilter cat &&
+>    #               printf y >y &&
+>    #               force_color git add -p >output 2>&1 <y &&
+>    #               git diff-files --exit-code -- test
+>    #
+>    1..57
 > 
-> >  		struct worktree *wt = *p;
-> > -		struct index_state istate = { NULL };
-> > +		struct index_state istate = { .repo = revs->repo };
->   
-> Thanks for the fix. It is definitely narrow to this particular
-> stack trace.
-> 
-> It is rare that we create an index that is not 'the_index' in
-> this way. However, there are similar { NULL } initializers that
-> could be cleaned up in these files:
-> 
->  * apply.c
->  * merge-recursive.c
->  * builtin/stash.c
->  * builtin/worktree.c
-> 
-> Of course, delay these for a follow-up since these uses are
-> not causing segfaults in the wild.
+> The file "output" contains "error: failed to run 'cat'".  This is
+> add-patch.c::parse_diff() reporting that pipe_command() failed.  So
+> that's not it, yet.  (I don't actually know what I'm doing here.)
 
-We did have another similar segfault recently:
+That implies that your call to enable_nonblock() succeeded, or
+pipe_command() itself would have complained, too. Maybe instrument
+it like this:
 
-  https://lore.kernel.org/git/YtrdPguYs3a3xekv@kitenet.net/
+diff --git a/run-command.c b/run-command.c
+index 8ea609d4ae..27e79c928a 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1473,11 +1473,17 @@ int pipe_command(struct child_process *cmd,
+ 	}
+ 
+ 	if (pump_io(io, nr) < 0) {
++		error_errno("pumping io failed");
+ 		finish_command(cmd); /* throw away exit code */
+ 		return -1;
+ 	}
+ 
+-	return finish_command(cmd);
++	{
++		int ret = finish_command(cmd);
++		if (ret)
++			error("child returned failure %d", ret);
++		return ret;
++	}
+ }
+ 
+ enum child_state {
 
-It's not quite the same case, but I think there's some overlap, and the
-reason Ævar couldn't reproduce is that Martin's patch in that thread has
-already fixed this case, too.
+Normally we stay pretty quiet there and let the caller report any
+problems, but it lacks enough context to make a more specific error
+report.
 
-Using git v2.37.1, I can get a segfault with a backtrace similar to
-Emily's by running:
+>  int enable_nonblock(int fd)
+>  {
+> +	DWORD mode;
+> +	HANDLE handle = winansi_get_osfhandle(fd);
+> +	if (!handle)
+> +		return -1;
+> +	if (!GetNamedPipeHandleState(handle, &mode, NULL, NULL, NULL, NULL, 0))
+> +		return -1;
+> +	if (mode & PIPE_NOWAIT)
+> +		return 0;
+> +	mode |= PIPE_NOWAIT;
+> +	if (!SetNamedPipeHandleState(handle, &mode, NULL, NULL))
+> +		return -1;
+>  	return 0;
+>  }
 
-  git init repo
-  cd repo
-  git commit --allow-empty -m base
+This looks plausibly correct to me. ;) We might want to change the name
+of the compat layer to enable_pipe_nonblock(), since one assumes from
+the function names this only works for pipes.
 
-  git config core.untrackedCache true
-  git worktree add at
-  rm .git/worktrees/wt/index
-
-  git gc
-
-And applying the patch from this thread does make it go away. But
-likewise for cherry-picking 4447d4129d (read-cache: make `do_read_index()`
-always set up `istate->repo`, 2022-07-22), which is already in "master".
-
-Of the two patches, I think 4447d4129d is the better approach. The
-assumption in the code seems to be that do_read_index() (and thus
-read_index_from(), etc) will set up istate->repo. That patch fixes a
-corner case where we failed to do so. And with that fix, there's no need
-for the callers to set things up ahead of time. So it covers all of
-those initializers you mentioned.
-
-Emily, Paul: I'm 99% sure this will be the case given my reproduction
-above, but if you could try reproducing the problem with the current tip
-of "master" from git.git, that would confirm the findings.
+Thanks for poking at this.
 
 -Peff
