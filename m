@@ -2,193 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00DD8C00140
-	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 10:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C867C00140
+	for <git@archiver.kernel.org>; Fri,  5 Aug 2022 11:01:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239980AbiHEKOF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Aug 2022 06:14:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34792 "EHLO
+        id S229946AbiHELBc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Aug 2022 07:01:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235713AbiHEKOD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Aug 2022 06:14:03 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9082918E02
-        for <git@vger.kernel.org>; Fri,  5 Aug 2022 03:14:02 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id z20so881906edb.9
-        for <git@vger.kernel.org>; Fri, 05 Aug 2022 03:14:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc;
-        bh=kZFGxKqHyr58lg0oTzJ2t5bGPxCZF3inSTvHw/5nd4Q=;
-        b=puOTf7EQXo39W051kXX7woG3HMBrcbtUxo/Z9iPf0O2SRQdi/70rDs2uJCc9g9wttW
-         QPBmzcAerjoKcGcly418v4QmBa8hhBj4fndnEIt26QtPR7tulfBN19ZQDpXtVcY39UIE
-         oQ5nX93uPSYhBAnF1sBzysAZrdIVayTI5YKgkG6nJ0cT3cO0QLSfTVLQdMDIx9xUwnXq
-         LZQ/N1wzc16mi8ZUTM/JDvvg2QjAAM0kRQY1C2D9AvksWSjfs4UmnWrLDCU21t8TvJ8E
-         8hgatm06aGiBiiBOoX6DsfwMx4RWgRT3odVqSe91ARiXI0l+nVcyKkBV6FwGGlMcAhZd
-         nEmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=kZFGxKqHyr58lg0oTzJ2t5bGPxCZF3inSTvHw/5nd4Q=;
-        b=qWmV9XbJQ5pLEhJB9cUs0sNL0iz95aMbJ9u8GcPKBGbsRvyMwpO6EiHP6z4E/o4sKS
-         5cK/ELBorgbeOSyRsomBm2tGvMK5F4YABHB9Li1BmJJi01RsCfGHVYNOkcqKYx2ZtuLJ
-         FtF+v1GWqrdibEp3r3CU8u2ok3kXQWonaLWactzbGXeRyTZb+B1Xbtpe9frsPFSz82SY
-         4RXQF5qRTNUdpx3lnPwgIqMRjB6d1Ia+32G3ea1gOBpAri+BsKuk28CgkNuuxSY8E8mi
-         16Oy2KOZooyLGAamyzAXW2Df9AHpRHaawVZq/8due8SnzgfWvWLt7LW6cRT43ci+oZa5
-         PL/g==
-X-Gm-Message-State: ACgBeo2tELV1x8DfYP+t8k1NMvjRiFt3Z9CSewaxVNBacKtD7TPDSVQw
-        o1GNNRunwmMs+y3jSgY9Lw1iwypxhF7Zog==
-X-Google-Smtp-Source: AA6agR7j9yt3yNTchYB8M99Ye3HChqmp0qVwIRhHO0OKwHFYrOLn90hRcpzIAzL6pAvNv96MDkhGGw==
-X-Received: by 2002:a05:6402:22bc:b0:43d:73a7:370a with SMTP id cx28-20020a05640222bc00b0043d73a7370amr5967506edb.120.1659694441005;
-        Fri, 05 Aug 2022 03:14:01 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id a21-20020a1709063e9500b00730a73cbe08sm1369416ejj.169.2022.08.05.03.13.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Aug 2022 03:14:00 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oJuL9-000VG4-1F;
-        Fri, 05 Aug 2022 12:13:59 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Li Linchao via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Li Linchao <lilinchao@oschina.cn>
-Subject: Re: [PATCH] rev-list: support `--human-readable` option when
- applied `disk-usage`
-Date:   Fri, 05 Aug 2022 12:03:29 +0200
-References: <pull.1313.git.1659686097163.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <pull.1313.git.1659686097163.gitgitgadget@gmail.com>
-Message-ID: <220805.864jyrro9k.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        with ESMTP id S229484AbiHELBb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Aug 2022 07:01:31 -0400
+Received: from out28-75.mail.aliyun.com (out28-75.mail.aliyun.com [115.124.28.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A02401D300
+        for <git@vger.kernel.org>; Fri,  5 Aug 2022 04:01:29 -0700 (PDT)
+X-Alimail-AntiSpam: AC=CONTINUE;BC=0.07282975|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_system_inform|0.0040353-0.000316229-0.995648;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047202;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=4;RT=4;SR=0;TI=SMTPD_---.Omnox2J_1659697283;
+Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.Omnox2J_1659697283)
+          by smtp.aliyun-inc.com;
+          Fri, 05 Aug 2022 19:01:24 +0800
+Date:   Fri, 5 Aug 2022 19:01:24 +0800
+From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>, "Jeff King" <peff@peff.net>
+Subject: Re: Re: [PATCH] rev-list: support `--human-readable` option when applied `disk-usage`
+References: <pull.1313.git.1659686097163.gitgitgadget@gmail.com>, 
+        <220805.864jyrro9k.gmgdl@evledraar.gmail.com>
+X-Priority: 3
+X-GUID: C8BC33CC-8773-47BD-B210-E1299978CC3C
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.19.158[cn]
+Mime-Version: 1.0
+Message-ID: <2022080519002378872119@oschina.cn>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Pgo+T24gRnJpLCBBdWcgMDUgMjAyMiwgTGkgTGluY2hhbyB2aWEgR2l0R2l0R2FkZ2V0IHdyb3Rl
+Ogo+Cj4+IEZyb206IExpIExpbmNoYW8gPGxpbGluY2hhb0Bvc2NoaW5hLmNuPgo+Pgo+PiBUaGUg
+Jy0tZGlzay11c2FnZScgb3B0aW9uIGZvciBnaXQtcmV2LWxpc3Qgd2FzIGludHJvZHVjZWQgaW4g
+MTY5NTBmODM4NAo+PiAocmV2LWxpc3Q6IGFkZCAtLWRpc2stdXNhZ2Ugb3B0aW9uIGZvciBjYWxj
+dWxhdGluZyBkaXNrIHVzYWdlLCAyMDIxLTAyLTA5KS4KPj4gVGhpcyBpcyB2ZXJ5IHVzZWZ1bCBm
+b3IgcGVvcGxlIGluc3BlY3QgdGhlaXIgZ2l0IHJlcG8ncyBvYmplY3RzIHVzYWdlCj4+IGluZm9t
+YXRpb24sIGJ1dCB0aGUgcmVzdWx0IG51bWJlciBpcyBxdWl0IGhhcmQgZm9yIGh1bWFuIHRvIHJl
+YWQuCj4KPnMvdGhlIHJlc3VsdCBudW1iZXIvdGhlIHJlc3VsdGluZyBudW1iZXIvCj5zL2ZvciBo
+dW1hbi9mb3IgYSBodW1hbi8KPgo+Pgo+PiBUZWFjaCBnaXQgcmV2LWxpc3QgdG8gb3V0cHV0IG1v
+cmUgaHVtYW4gcmVhZGFibGUgcmVzdWx0IHdoZW4gdXNpbmcKPgo+cy90byBvdXRwdXQgbW9yZSBo
+dW1hbi90byBvdXRwdXQgYSBodW1hbi8KPgo+PiAnLS1kaXNrLXVzYWdlJyB0byBjYWxjdWxhdGUg
+b2JqZWN0cyBkaXNrIHVzYWdlLgo+Cj5Gb3IgdGhpcyBJJ2QganVzdCBzLyB0byBjYWxjdWxhdGUg
+b2JqZWN0cyBkaXNrIHVzYWdlLy8uIEkuZS4gd2UgYWxyZWFkeQo+ZGlzY3Vzc2VkIHdoYXQgLS1k
+aXNrLXVzYWdlIGRvZXMuLi4gCk9LCj4KPj4gKwo+PiArLUg6Ogo+PiArLS1odW1hbi1yZWFkYWJs
+ZTo6Cj4+ICsJUHJpbnQgb24tZGlzayBvYmplY3RzIHNpemUgaW4gaHVtYW4gcmVhZGFibGUgZm9y
+bWF0LiBUaGlzIG9wdGlvbgo+PiArCW11c3QgYmUgY29tYmluZWQgd2l0aCBgLS1kaXNrLXVzYWdl
+YCB0b2dldGhlci4KPj7CoCBlbmRpZjo6Z2l0LXJldi1saXN0W10KPgo+SSdkIHJlYWxseSBwcmVm
+ZXIgaWYgd2UgZGlkbid0IHNxdWF0IG9uIC1ILCByZXYtbGlzdCBpcyBvdmVycmlkZGVuCj5lbm91
+Z2gsIGJ1dCBob3cgYWJvdXQ6Cj4KPgktLWRpc2stdXNhZ2UKPgktLWRpc2stdXNhZ2U9aHVtYW4K
+Pgo+UmF0aGVyIHRoYW4gaW50cm9kdWNpbmcgYSBuZXcgb3B0aW9uPyAKWWVzLCB0aGlzIG1ha2Vz
+IHNlbnNlLgo+Cj4+wqAgc3RydWN0IGJpdG1hcF9pbmRleCAqYml0bWFwX2dpdDsKPj4gKwlzdHJ1
+Y3Qgc3RyYnVmIGJpdG1hcF9zaXplX2J1ZiA9IFNUUkJVRl9JTklUOwo+PiArCW9mZl90IHNpemVf
+ZnJvbV9iaXRtYXA7Cj4+wqAKPj7CoCBpZiAoIXNob3dfZGlza191c2FnZSkKPj7CoCByZXR1cm4g
+LTE7Cj4+IEBAIC00ODEsOCArNDg0LDEzIEBAIHN0YXRpYyBpbnQgdHJ5X2JpdG1hcF9kaXNrX3Vz
+YWdlKHN0cnVjdCByZXZfaW5mbyAqcmV2cywKPj7CoCBpZiAoIWJpdG1hcF9naXQpCj4+wqAgcmV0
+dXJuIC0xOwo+PsKgCj4+IC0JcHJpbnRmKCIlIlBSSXVNQVgiXG4iLAo+PiAtCcKgwqDCoMKgwqDC
+oCAodWludG1heF90KWdldF9kaXNrX3VzYWdlX2Zyb21fYml0bWFwKGJpdG1hcF9naXQsIHJldnMp
+KTsKPj4gKwlzaXplX2Zyb21fYml0bWFwID0gZ2V0X2Rpc2tfdXNhZ2VfZnJvbV9iaXRtYXAoYml0
+bWFwX2dpdCwgcmV2cyk7Cj4+ICsJaWYgKGh1bWFuX3JlYWRhYmxlKSB7Cj4+ICsJc3RyYnVmX2h1
+bWFuaXNlX2J5dGVzKCZiaXRtYXBfc2l6ZV9idWYsIHNpemVfZnJvbV9iaXRtYXApOwo+PiArCXBy
+aW50ZigiJXNcbiIsIGJpdG1hcF9zaXplX2J1Zi5idWYpOwo+PiArCX0gZWxzZQo+PiArCXByaW50
+ZigiJSJQUkl1TUFYIlxuIiwgKHVpbnRtYXhfdClzaXplX2Zyb21fYml0bWFwKTsKPj4gKwlzdHJi
+dWZfcmVsZWFzZSgmYml0bWFwX3NpemVfYnVmKTsKPgo+SSB0aGluayB0aGlzIHdvdWxkIGJlIGJl
+dHRlciBpZiB3ZSBqdXN0IHVzZSB0aGUgc3RyYnVmIHVuY29uZGl0aW9uYWxseQo+KGFuZCBhIHNo
+b3J0ICZzYiBpcyBjb252ZW50aW9uYWwgaW4gc3VjaCBhIHNob3J0IG9uZS11c2UgZnVuY3Rpb24p
+LiBTbyBqdXN0Ogo+Cj4JaWYgKGh1bWFuX3JlYWRhYmxlKQo+wqDCoMKgwqDCoMKgwqAgc3RyYnVm
+X2h1bWFuaXNlX2J5dGVzKCZzYiwgc2l6ZV9mcm9tX2JpdG1hcCk7Cj4JZWxzZQo+CXN0cmJ1Zl9h
+ZGRmKCZzYiwgIiUiUFJJdU1BWCIsICh1aW50bWF4X3Qpc2l6ZV9mcm9tX2JpdG1hcCk7Cj4JcHV0
+cyhzYi5idWYpOwo+Cj5JdCBnZXRzIHlvdSByaWQgb2YgdGhlIG5lZWQgZm9yIHt9IGJyYWNlcywg
+YW5kIEkgdGhpbmsgbWFrZXMgZm9yIGEgbmljZXIKPnJlYWQuIApBZ3JlZQo+Cj4+IC0JaWYgKHNo
+b3dfZGlza191c2FnZSkKPj4gLQlwcmludGYoIiUiUFJJdU1BWCJcbiIsICh1aW50bWF4X3QpdG90
+YWxfZGlza191c2FnZSk7Cj4+ICsJaWYgKHNob3dfZGlza191c2FnZSkgewo+PiArCWlmIChodW1h
+bl9yZWFkYWJsZSkgewo+PiArCXN0cmJ1Zl9odW1hbmlzZV9ieXRlcygmZGlza19idWYsIHRvdGFs
+X2Rpc2tfdXNhZ2UpOwo+PiArCXByaW50ZigiJXNcbiIsIGRpc2tfYnVmLmJ1Zik7Cj4+ICsJfSBl
+bHNlCj4+ICsJcHJpbnRmKCIlIlBSSXVNQVgiXG4iLCAodWludG1heF90KXRvdGFsX2Rpc2tfdXNh
+Z2UpOwo+PiArCX0KPgo+RGl0dG8sIGFuZCB3ZSBjb3VsZCBtYWtlIHRoZSAmc2Igc2NvcGVkIHRv
+IHRoYXQgImlmIChzaG93X2Rpc2tfdXNhZ2UpIi4KPgo+PiArdGVzdF9leHBlY3Rfc3VjY2VzcyAn
+cmV2LWxpc3QgLS1kaXNrLXVzYWdlIHdpdGggLS1odW1hbi1yZWFkYWJsZScgJwo+PiArCWdpdCBy
+ZXYtbGlzdCAtLW9iamVjdHMgSEVBRCAtLWRpc2stdXNhZ2UgLS1odW1hbi1yZWFkYWJsZSA+YWN0
+dWFsICYmCj4+ICsJdGVzdF9pMThuZ3JlcCAtZSAiNDQ2IGJ5dGVzIiBhY3R1YWwKPgo+dXNlIGdy
+ZXAsIG5vdCB0ZXN0X2kxOG5ncmVwICh0aGUgbGF0dGVyIHNob3VsZCBiZSBnb2luZyBhd2F5IGVu
+dGlyZWx5KS4gCk9LCj4KPkJ1dCBhY3R1YWxseSB3ZSBzaG91bGQgdXNlIHRlc3RfY21wIGhlcmUs
+IGlzbid0IHRoYXQgdGhlICplbnRpcmUqCj5vdXRwdXQ/IEkuZS4gd29uJ3QgdGhpcyBwYXNzPwo+
+Cj4JZWNobyA0NDYgYnl0ZXMgPmV4cGVjdCAmJgo+CS4uLiA+ZXhwZWN0ICYmCj4JdGVzdF9jbXAg
+ZXhwZWN0IGFjdHVhbAo+Cj5JZiBzbyBsZXQncyB0ZXN0IHdoYXQgd2UgcmVhbGx5IG1lYW4sIGku
+ZS4gd2Ugd2FudCAqdGhpcyogdG8gYmUgdGhlCj5vdXRwdXQsIG5vdCB0byBoYXZlIG91dHB1dCB0
+aGF0IGhhcyB0aGF0IHN1Yi1zdHJpbmcgb24gYW55IGFyYml0cmFyeQo+YW1vdW50IG9mIGxpbmVz
+IHNvbWV3aGVyZS4uLgo+Cj5JbiB0aGlzIGNhc2UgaXQncyB1bmxpa2VseSB0byBkbyB0aGUgd3Jv
+bmcgdGhpbmcsIGJ1dCBpdCdzIGEgZ29vZCBoYWJpdAo+dG8gZ2V0IGludG8uLi4KPgo+PiArdGVz
+dF9leHBlY3Rfc3VjY2VzcyAncmV2LWxpc3QgLS1kaXNrLXVzYWdlIHdpdGggYml0bWFwIGFuZCAt
+LWh1bWFuLXJlYWRhYmxlJyAnCj4+ICsJZ2l0IHJldi1saXN0IC0tb2JqZWN0cyBIRUFEIC0tdXNl
+LWJpdG1hcC1pbmRleCAtLWRpc2stdXNhZ2UgLUggPmFjdHVhbCAmJgo+PiArCXRlc3RfaTE4bmdy
+ZXAgLWUgIjQ0NiBieXRlcyIgYWN0dWFsCj4KPmRpdHRvLiAKVGhlIG91dHB1dCBoZXJlIGlzIGp1
+c3QgIjQ0NiDCoGJ5dGVzIiBpZiB3ZSB1c2UgJy0tZGlzay11c2FnZScgb3B0aW9uIGluIHRoaXMg
+cmVzdCByZXBvLgpCdXQgR2l0aHViIENJL2xpbnV4LXNoYTI1NiByZW1pbmRlZCBtZSB0aGF0IEkg
+bWFkZSBhIG1pc3Rha2UgdGhhdApJIHNob3VsZCBhdm9pZCB0byBoYXJkY29yZSBhY3R1YWwgc2l6
+ZSBoZXJlLgo+Cj4KPj4gKycKPj4gKwo+PiArdGVzdF9leHBlY3Rfc3VjY2VzcyAncmV2LWxpc3Qg
+dXNlIC0taHVtYW4tcmVhZGFibGUgd2l0aG91dCAtLWRpc2stdXNhZ2UnICcKPj4gKwl0ZXN0X211
+c3RfZmFpbCBnaXQgcmV2LWxpc3QgLS1vYmplY3RzIEhFQUQgLS1odW1hbi1yZWFkYWJsZSAyPiBl
+cnIgJiYKPj4gKwllY2hvICJmYXRhbDogb3B0aW9uICdcJyctLWh1bWFuLXJlYWRhYmxlLy1IJ1wn
+JyBzaG91bGQgYmUgdXNlZCB3aXRoIiBcCj4+ICsJIidcJyctLWRpc2stdXNhZ2UnXCcnIHRvZ2V0
+aGVyIiA+ZXhwZWN0ICYmCj4KPllvdSBjYW4gbWFrZSB0aGlzIGEgYml0IG5pY2VyIGJ5IG5vdCB1
+c2luZyBlY2hvLCB1c2UgYSBoZXJlLWRvYyBpbnN0ZWFkOgo+Cj4JY2F0ID5leHBlY3QgPDwtXEVP
+Rgo+wqDCoMKgwqDCoMKgwqAgZmF0YWw6IC4uLgo+CUVPRgo+Cj5CdXQgeW91J2xsIHN0aWxsIG5l
+ZWQgdGhlICdcJycgcXVvdGluZywgYnV0IEkgdGhpbmcgaXQnbGwgYmUgYmV0dGVyLCBhbmQKPmF2
+b2lkcyB0aGUgbGluZS13cmFwcGluZyAod2hpY2ggd2UgdHJ5IHRvIGF2b2lkIGZvciB0aGlzIHNv
+cnQgb2YgdGhpbmcpLiAKT0suCgpNYW55IHRoYW5rcyBmb3IgYWxsIHlvdXIgcmV2aWV3IGNvbW1l
+bnRzIDop
 
-On Fri, Aug 05 2022, Li Linchao via GitGitGadget wrote:
-
-> From: Li Linchao <lilinchao@oschina.cn>
->
-> The '--disk-usage' option for git-rev-list was introduced in 16950f8384
-> (rev-list: add --disk-usage option for calculating disk usage, 2021-02-09).
-> This is very useful for people inspect their git repo's objects usage
-> infomation, but the result number is quit hard for human to read.
-
-s/the result number/the resulting number/
-s/for human/for a human/
-
->
-> Teach git rev-list to output more human readable result when using
-
-s/to output more human/to output a human/
-
-> '--disk-usage' to calculate objects disk usage.
-
-For this I'd just s/ to calculate objects disk usage//. I.e. we already
-discussed what --disk-usage does...
-
-> +
-> +-H::
-> +--human-readable::
-> +	Print on-disk objects size in human readable format. This option
-> +	must be combined with `--disk-usage` together.
->  endif::git-rev-list[]
-
-I'd really prefer if we didn't squat on -H, rev-list is overridden
-enough, but how about:
-
-	--disk-usage
-	--disk-usage=human
-
-Rather than introducing a new option?
-
->  	struct bitmap_index *bitmap_git;
-> +	struct strbuf bitmap_size_buf = STRBUF_INIT;
-> +	off_t size_from_bitmap;
->  
->  	if (!show_disk_usage)
->  		return -1;
-> @@ -481,8 +484,13 @@ static int try_bitmap_disk_usage(struct rev_info *revs,
->  	if (!bitmap_git)
->  		return -1;
->  
-> -	printf("%"PRIuMAX"\n",
-> -	       (uintmax_t)get_disk_usage_from_bitmap(bitmap_git, revs));
-> +	size_from_bitmap = get_disk_usage_from_bitmap(bitmap_git, revs);
-> +	if (human_readable) {
-> +		strbuf_humanise_bytes(&bitmap_size_buf, size_from_bitmap);
-> +		printf("%s\n", bitmap_size_buf.buf);
-> +	} else
-> +		printf("%"PRIuMAX"\n", (uintmax_t)size_from_bitmap);
-> +	strbuf_release(&bitmap_size_buf);
-
-I think this would be better if we just use the strbuf unconditionally
-(and a short &sb is conventional in such a short one-use function). So just:
-
-	if (human_readable)
-        	strbuf_humanise_bytes(&sb, size_from_bitmap);
-	else
-		strbuf_addf(&sb, "%"PRIuMAX", (uintmax_t)size_from_bitmap);
-	puts(sb.buf);
-
-It gets you rid of the need for {} braces, and I think makes for a nicer
-read.
-
-> -	if (show_disk_usage)
-> -		printf("%"PRIuMAX"\n", (uintmax_t)total_disk_usage);
-> +	if (show_disk_usage) {
-> +		if (human_readable) {
-> +			strbuf_humanise_bytes(&disk_buf, total_disk_usage);
-> +			printf("%s\n", disk_buf.buf);
-> +		} else
-> +			printf("%"PRIuMAX"\n", (uintmax_t)total_disk_usage);
-> +	}
-
-Ditto, and we could make the &sb scoped to that "if (show_disk_usage)".
-
-> +test_expect_success 'rev-list --disk-usage with --human-readable' '
-> +	git rev-list --objects HEAD --disk-usage --human-readable >actual &&
-> +	test_i18ngrep -e "446 bytes" actual
-
-use grep, not test_i18ngrep (the latter should be going away entirely).
-
-But actually we should use test_cmp here, isn't that the *entire*
-output? I.e. won't this pass?
-
-	echo 446 bytes >expect &&
-	... >expect &&
-	test_cmp expect actual
-
-If so let's test what we really mean, i.e. we want *this* to be the
-output, not to have output that has that sub-string on any arbitrary
-amount of lines somewhere...
-
-In this case it's unlikely to do the wrong thing, but it's a good habit
-to get into...
-
-> +test_expect_success 'rev-list --disk-usage with bitmap and --human-readable' '
-> +	git rev-list --objects HEAD --use-bitmap-index --disk-usage -H >actual &&
-> +	test_i18ngrep -e "446 bytes" actual
-
-ditto.
-
-
-> +'
-> +
-> +test_expect_success 'rev-list use --human-readable without --disk-usage' '
-> +	test_must_fail git rev-list --objects HEAD --human-readable 2> err &&
-> +	echo "fatal: option '\''--human-readable/-H'\'' should be used with" \
-> +	"'\''--disk-usage'\'' together" >expect &&
-
-You can make this a bit nicer by not using echo, use a here-doc instead:
-
-	cat >expect <<-\EOF
-        fatal: ...
-	EOF
-
-But you'll still need the '\'' quoting, but I thing it'll be better, and
-avoids the line-wrapping (which we try to avoid for this sort of thing).
