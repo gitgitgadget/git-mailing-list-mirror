@@ -2,148 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1F47C3F6B0
-	for <git@archiver.kernel.org>; Sat,  6 Aug 2022 19:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 174C9C19F2D
+	for <git@archiver.kernel.org>; Sat,  6 Aug 2022 19:22:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231854AbiHFTRv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Aug 2022 15:17:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47882 "EHLO
+        id S232650AbiHFTWo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Aug 2022 15:22:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230079AbiHFTRt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Aug 2022 15:17:49 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A070ED130
-        for <git@vger.kernel.org>; Sat,  6 Aug 2022 12:17:48 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id gb36so10140899ejc.10
-        for <git@vger.kernel.org>; Sat, 06 Aug 2022 12:17:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=BRRloT7h2h1aYxTZdIPA8UOu2MFYaDRRf/b7PCUoGMY=;
-        b=hW0tpbNwDO3gOsFIfIgYlXuPGyO/oVW11LJSzMqtNnpm/zoMdAeR0sg2l+MuhXF6CF
-         TWUBOycAm8MeXrROZlsGFuEyI+s0SgADj2+PK5E9iG3YdyqgwMJ22LyyFzbCgQ9H4FAZ
-         73nrQefd0XnWkf8UjGHCFN/Uh9+5RWzH2WfQv3AJWg9ykuCez7E3oq6iYjlBRjC3ENo8
-         XiVLLVVDWmq2Ovou68i0cxbtDHc9HXUw2M+gwYiFII8YRoIbvToJGXQ3Bu2LjHCRFP0Y
-         Kd0SXtFPgiw8RAFHLbMqRYwPShMMp5QceK3JUtQIuDbSsiwl2zD1rW0/5sXp1J+eRu4U
-         akCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=BRRloT7h2h1aYxTZdIPA8UOu2MFYaDRRf/b7PCUoGMY=;
-        b=qCeRlDQBYn9xk9O1Dcsgi3ZbbaMTQFVGg0Q3GOUp42yOWrnHMASnX/V3ChyN3/h1dQ
-         8dGlGLRrPqEtzZuUd4CPFIZlXlWzWTcs6GbAlnrMMTTp4LoZSZhUkhPY/slqxKtRBX5t
-         0t3iVQ4yXcEMPhPlux8Bu561dKDy8n6v2qVrwc/KyioDn91fz6+9BoC3RODSS+lrOFG3
-         CQ78N9KyTMKU3EJ0Ta1tMNLDb6ZYJRcYa9KkH/7PkeaXE1mTatwGN37r60MobywkUYHD
-         ZmZ3YP3pLUYqUw58aDnzKQJ9m5xWJodX9bQnGkfwQHnibv3IYFFM/qbhcwFpF6SKYTXS
-         idSg==
-X-Gm-Message-State: ACgBeo2ZtZwTJX18OOBoT6HQ9MLMOqW5KXMXCEgtiHZnR/7rt39Dd63E
-        WUiOp0AqXPkhY/XSavTeLJPHFoTffGkeBkbfQctI00wpRLU=
-X-Google-Smtp-Source: AA6agR7oQu9TZ55dE2BUWMZSx4pFW8Fq7C/P0LR5Tzx++cY4maCwOcuSzFA3tMeHayAGO6zcw86Xhe0Uh7XF4G53EQA=
-X-Received: by 2002:a17:907:2c62:b0:730:d9b9:aabb with SMTP id
- ib2-20020a1709072c6200b00730d9b9aabbmr8269851ejc.84.1659813467167; Sat, 06
- Aug 2022 12:17:47 -0700 (PDT)
+        with ESMTP id S232532AbiHFTWl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Aug 2022 15:22:41 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74472DFB2
+        for <git@vger.kernel.org>; Sat,  6 Aug 2022 12:22:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1659813748;
+        bh=WPjmx8tXMVMZONANG7ngSz7rJhVRWlaR6P5YeeclKMs=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=jRIJ9YRIM/REw+NDFqn52LOeKddvJZuqvwIblHcGI5Y9jCQKPlw+M4hfgZbP0uB2i
+         3NuMMzxphSfvVmchyZGqJtBqyT7LwaNvbpnGPrVMO0jnsDzNdKPlHKxe4b99XU9u6y
+         2qhnlng8gOiIIjkkQ4FlC+D1dWDR5hBFDThIWphA=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1My6pf-1nUKp23Zh1-00zBNi; Sat, 06
+ Aug 2022 21:22:27 +0200
+Date:   Sat, 6 Aug 2022 21:22:25 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 4/4] doc add: renormalize is not idempotent for CRCRLF
+Message-ID: <20220806192225.gu7o2avekbtcg6py@tb-raspi4>
+References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
+ <d3b8ed97a105ea1d7e656c964b7eee378e11ede6.1657385781.git.gitgitgadget@gmail.com>
+ <20220710074848.ku2zobuck6vyim5d@tb-raspi4>
+ <1b90edd0-3d9d-a741-8865-3968826da315@iee.email>
+ <xmqq5yj6z5rx.fsf@gitster.g>
 MIME-Version: 1.0
-References: <20220802214134.681300-1-felipe.contreras@gmail.com>
- <Yu6V4cIajhoMhB3t@zacax395.localdomain> <CAMP44s1uPFGYVJ7dzf1pFXENnUjTTwxHye2iT_HPNiMcmPjD9A@mail.gmail.com>
- <Yu6zEiknXKFMJUVn@zacax395.localdomain>
-In-Reply-To: <Yu6zEiknXKFMJUVn@zacax395.localdomain>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sat, 6 Aug 2022 14:17:36 -0500
-Message-ID: <CAMP44s3-RG5k4ZkhAFG_9JtbxcyDhkUmeBh0jCH9+Xwyumyu9w@mail.gmail.com>
-Subject: Re: [PATCH 0/2] mergetools: vimdiff3: fix regression
-To:     Fernando Ramos <greenfoo@u92.eu>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5yj6z5rx.fsf@gitster.g>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:XW1sqnGZENI7QzU6TfmaziIOa98kbE3Hf6BR6ibhjM1+6Riu9WJ
+ lsRYh4yBv93bPNWd8NWgzKnWcNOlO3F2um03sPIS7bqQs/5DnlfsnZAZqSd42FYvVpV9lX4
+ Id0ZZZQ6AqIXFss6WV9LgJrYRhUkn3zBTv281kATaE0TL5LrcOlgvRQgI1TxnJjPqqw/q+r
+ YY270wtpBRvYGoIVkYpgg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:CgtU+hpGI8A=:DENJFK83UJwVwTyaL8nrI5
+ YGEzOYllAcnaJXRxQYidLaj9Q44fTv3pTciPmPTv/tFlUc4HaxpfFUdelTPvBU4q83R43kgaC
+ eTLwFxmw88pMJ1Fnkzx34xg2xkupuUMrgGH71DGo2hbpTSaia+8yAB2hRRHZOdwzw3JsUM00f
+ xesR/SaS9AuOHxuvZ25PZeIDQ6itBQML5Y3G0hrUjhYBcNVkv8M8gjw6I3QVhlEXXOw7vPSU2
+ e9OHK0XLRMxqbZq9uVPJpG4/BL6TEp/bXaxc1WJ3++lc1XRA5/SLOsZAmIyEzO8KCOjm08G8h
+ kmZB08Ph+48oGRedQtUdmDxeajzcZuyZQhsiW89KYaeuJO7JAvzDeI9PlKx6EdsTwT/DtAfyj
+ 0RuRaNom2Sgo3dv1ql99dAfJHVASmDSoQ4ZV/9z2kJjp2d5+q9z0tnHjsFWTANAGLGE9ARTfE
+ aHyOGGOtX1soElZMHrk8XSHGBERtOBJv7PxFgq4yS8kLyrDKERP+aYinLEmMrWI4oxioMmrKW
+ Ne/L7n1mHRP1+Bp3wYYxLq1KK/ax/YYrNmYh03n0ZNCPHqmUE7vldR8WoTzm3Lw79IfmNXjIL
+ 7mQcOiqvNxzn0GmQHailq4WDRoPbCW6AgWHYPXKZUlheq4klPu6ou/Wt6u+BhsIRnmT0bt2LA
+ crNHHtEplM0VPpRzpSVvxS3M2r+GybCSTg+jFRF8rvHkrE1WmEgpUrN1obU6okrzo/P6sgUWm
+ 7zlhxvI84z7Qt3x0LYy2VN3v/19S1xB8lPtbnN36ENUFpOM1DM8LHnwRx/rn1MoleDDp5lWR4
+ tqtHb/Tbttw/+IKYpl1myqhxpAP91CNbcR9VuoZwzVOBuwyKpaRJH3nyG3nJnIpGigWVN9sSI
+ pKXYK4yYNcwn+Q/1J9Lq329nTiyPK2FRJqalhzeo4xDRdg6j+LtHC2RJ1veFXkMFJrM0X3V76
+ 93YM+bSRUoVprlZEpFcGNz5E/YI+EtLlARjfTK/pZXBS3OjSJjPs1TcM0d2kjLCRFNy91dy8d
+ xBj1OuSnwitb4TXPE1ULodz1CV7/I+w/KLN2HZqQo+VYN+nq0ZAUdfJsyQmsBgpj5x+pOel8u
+ eqWJmie6hAegW2ZOljScSBUyquVl8YBhKCJGiHxpP62LshUR8g05GNOQA==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 6, 2022 at 1:29 PM Fernando Ramos <greenfoo@u92.eu> wrote:
+On Fri, Aug 05, 2022 at 03:26:10PM -0700, Junio C Hamano wrote:
+> Philip Oakley <philipoakley@iee.email> writes:
 >
-> On 22/08/06 12:53PM, Felipe Contreras wrote:
-> > Two observations though.
+> >> How about this:
+> >>
+> >> This option implies `-u`. Lone CR characters are untouched. CRCRLF cl=
+eans to CRLF.
+> > That is probably sufficient. It drops the awkward 'idempotent'. And
+> > indicates this edge case, though doesn't highlight that the resultant
+> > CRLF still leaves the file only partially renormalised.
 > >
-> > 1. The "silent 4b" is ignored, since bufdo makes the last buffer the
-> > current buffer, so if you want a different buffer you have to make the
-> > switch *after* bufdo.
-> >
+> > I'll reword.
 >
-> Yes, you are right. For the particular case where there are no windows (only
-> hidden buffers) it does not have any effect. It's presence there comes from
-> the fact that the command generation function works in the most "generic" way
-> (ie. producing output that works for all cases: windows, tabs and buffers).
+> It's been a few weeks since the last activity on this topic.
+> Anything you guys need unblocked to move forward?
 >
-> In order not to have another special case in the generation logic I left it
-> there, but you are right in that it is not needed (fortunately it also doesn't
-> make any harm :)
-
-That's not my point. vimdiff3 is essentially the same as vimdiff with:
-
-    git config --global mergetool.vimdiff.layout MERGED
-
-But the code is written in such a way as to allow:
-
-    git config --global mergetool.vimdiff.layout LOCAL
-
-I don't know why anyone would want to do that, but the code interprets
-that as the user wanting '1b', which is completely ignored.
-
-If we are not going to care about these cases, we can just remove all this code:
-
---- a/mergetools/vimdiff
-+++ b/mergetools/vimdiff
-@@ -254,30 +254,7 @@ gen_cmd_aux () {
-
-        # Step 4:
-        #
--       # If we reach this point, it means there are no separators and we just
--       # need to print the command to display the specified buffer
--
--       target=$(substring "$LAYOUT" "$start" "$(( end - start ))" |
-sed 's:[ @();|-]::g')
--
--       if test "$target" = "LOCAL"
--       then
--               CMD="$CMD | 1b"
--
--       elif test "$target" = "BASE"
--       then
--               CMD="$CMD | 2b"
--
--       elif test "$target" = "REMOTE"
--       then
--               CMD="$CMD | 3b"
--
--       elif test "$target" = "MERGED"
--       then
--               CMD="$CMD | 4b"
--
--       else
--               CMD="$CMD | ERROR: >$target<"
--       fi
-+       # If we reach this point, it means there are no separators.
-
-        echo "$CMD"
-        return
-
-> > I don't see the need for all this complexity for this simple mode, but
-> > anything that actually works is fine by me.
+> Thanks.
 >
-> ...in fact, back in May I just wanted to add a new "vimdiff4" mode and what
-> originally was a 5 lines patch became the current 1000+ lines patch monster
-> after all the (very welcomed, I'm not complaining!) suggestions :)
 
-I understand the need if you want a complex layout, like
-"MERGED+LOCAL,BASE,REMOTE", that's very nice, but if you just want
-"MERGED", most of the code does nothing, the extra -c "tabfirst" isn't
-needed either.
+Not from my point of view. My understanding is, that the short version is =
+OK for
+everybody:
 
-Either way, adding the silent stuff and "set hidden" make vimdiff3
-work, which is all I care about.
+This option implies `-u`. Lone CR characters are untouched. CRCRLF cleans =
+to CRLF.
 
-Cheers.
-
--- 
-Felipe Contreras
+Is it OK to ask you for a local ammend to push this further ?
