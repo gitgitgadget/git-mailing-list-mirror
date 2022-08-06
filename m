@@ -2,81 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FAF0C19F2D
-	for <git@archiver.kernel.org>; Sat,  6 Aug 2022 19:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEBDEC25B0D
+	for <git@archiver.kernel.org>; Sat,  6 Aug 2022 21:23:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232888AbiHFTjw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Aug 2022 15:39:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58838 "EHLO
+        id S233807AbiHFVXd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Aug 2022 17:23:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229764AbiHFTju (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Aug 2022 15:39:50 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E431610C8
-        for <git@vger.kernel.org>; Sat,  6 Aug 2022 12:39:49 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id gb36so10188903ejc.10
-        for <git@vger.kernel.org>; Sat, 06 Aug 2022 12:39:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=lyAwb1kbuj2KZ/gUFOPYM4L+JnuTv9WhGwLcih7q/VE=;
-        b=ZSCKt2pslCp4flszUm2jee5g+9hyAMh+r44PAvGZuAVFCPL0X4XujZIOFVDTMzJkbj
-         qELK8JNS68FeeDHb3epIEsT+xW57hz9OH5yJHxSZ5fiuuoBGwsTdAClIpq+dDqMvWxAp
-         eQVViFqdNJg+5jmXB3nQyEbuD2r6K4S96lA13IiSKCBsipgGtXhmvedNnHhihbe9D5RH
-         CbToCF86G2VktxHHTqTxLIdiShPp2NteckESjo/1JjLcLHfDYw6vUxuvMN0jkbQ+Mho9
-         tN1KMrfyCfXIIexHy0zlzTIBf+TumvstjOyu1OadcOO66IB/lJMhUP2e1Pvyp2xaBW1q
-         Uppg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=lyAwb1kbuj2KZ/gUFOPYM4L+JnuTv9WhGwLcih7q/VE=;
-        b=6ij4dQktzzsKptXFy8yOJW2JgB93etUV91TKAJo/ddl2W8qM2rO/JtFFHwhry+55I+
-         SZIW63TrF4E4YalmLSftXpnsyApqj8Mkgr8XcBuEvXY9cwfaw9vJUCQT0xyoTqPxNTBv
-         m4/juwbqQ+X6AoMjGJd3oMGMGteY20Aik8rUSH/LQ/nSKrhR3gfKQCF2kokVsD17v5iL
-         tgRPjOO8O8FSrtNiJ+FToUDaXDWN48cBe1amNbmpx17EJeOE/3baIyzlOTxH7z8QPGOV
-         4hql0OmCrJdZyE24hcMYmsDvpareN//voiYLTgdyFNPYAjSeOtLSx9ucAD/GcBUBVqDw
-         W7UA==
-X-Gm-Message-State: ACgBeo1zUmnHyaNoBghEeAUWmG299uZCGxvUZjCuNgU/plbKD/xwKrAZ
-        peiZZiADuBWxhiWYipKjCVKll6uY28IYeIV2BFUHfLah
-X-Google-Smtp-Source: AA6agR6wd84nVy+ppY61OUVAurZOGDo0U4rMghItrKSPbpuwPXyIpxuH/yKI8eVQ/e149N2OnmoOXC8DxpUONwFzoZ0=
-X-Received: by 2002:a17:906:93e8:b0:730:9e5c:b45a with SMTP id
- yl8-20020a17090693e800b007309e5cb45amr8763480ejb.530.1659814788423; Sat, 06
- Aug 2022 12:39:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <Yu6zEiknXKFMJUVn@zacax395.localdomain> <20220806183757.72168-1-greenfoo@u92.eu>
-In-Reply-To: <20220806183757.72168-1-greenfoo@u92.eu>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sat, 6 Aug 2022 14:39:37 -0500
-Message-ID: <CAMP44s1YegUqFzw8L==q2QOmh-6WCJdXYSXUvz8GPCrXuYRVPQ@mail.gmail.com>
-Subject: Re: [PATCH] vimdiff: fix 'vimdiff3' behavior (colors + no extra key press)
-To:     Fernando Ramos <greenfoo@u92.eu>
+        with ESMTP id S233713AbiHFVXc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Aug 2022 17:23:32 -0400
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 671EFF5A4
+        for <git@vger.kernel.org>; Sat,  6 Aug 2022 14:23:28 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id E6B2032004AE;
+        Sat,  6 Aug 2022 17:23:25 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Sat, 06 Aug 2022 17:23:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm2; t=1659821005; x=1659907405; bh=k2KRVBqzzb
+        xW7BDjMBbN1X57uiFsyJS4husg5lmqNuQ=; b=MZpM0+9q96s/9EALrUch/uPJxY
+        s+GGvucXVWmYa8K8Tsi/jbJAaugbu6YWD91CCR2zyJzC/r4e8UKLycpbP32P1R5s
+        cIpcevXgSC6UdiYwg/G9jfJR/2ggJkF4ks7SGDZBJ778vkYPOuQtoNsPwtRl70E3
+        kTMgT1Wrl6ftVFX+7tSPIHJXDpmF4qRqxJs4zBrjE1wkldpbmbEnpZk7EGG7Ax4I
+        nogEwfX3anj6QojELmQh/JqYZ/hM1OgNCuQ2OpPfPmJWVtINaK6LO8brhlnn3yVS
+        PFFmJtMcQL/pp5qvvvF+1hQ/xYcNfB7fIj2LKooPgJil08hs308p0x5ciBqw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm1; t=1659821005; x=1659907405; bh=k2KRVBqzzbxW7BDjMBbN1X57uiFs
+        yJS4husg5lmqNuQ=; b=wQHjYiRi6jZ04qv53HNVfIkI6M1GhN3b0RqOmrtV0jhk
+        hQWUeraY9N18Kn6ZvpYPFeDhzQGbHwbfcCZpl1w9nipiWJCCCYUW3T8PQjBRg/LQ
+        2uF3emCQwf2ji8C1a5K948p90q0V1HFdoCqJTWZca1RLKSsuIqpsQEdvB+XGCk0l
+        0d+Yvfgwvn1RQSepDsgXvT476dCeSJW2jRkM9QPx/9/6FY3CbOZMQXr8Uh/N0sty
+        LfoKo2EoLUpYFR8xESJmWZ4b+ZHV8AtlN4yDA1XrkSqR/FB31QmdlG4xON9ZHpZa
+        YT9IdAbPWY58fhJOftRxiQVIMjTJubZpVVGvkxW+dg==
+X-ME-Sender: <xms:zdvuYuYGmsfJqsV7PbY4fUON0LFrlYZNQIfe95sr0VJQzRstvFuYFQ>
+    <xme:zdvuYhawxXY7exvXZh9AVcLloxKCejumBPPyYlhLEx-Ylm0dco7W81Sg3mJ7EKxus
+    yKszc-iJ8dXnIwhIA>
+X-ME-Received: <xmr:zdvuYo8VCI5D60_KniyAXye9B73hR3PJfMXCNR3RYUgrbJiVObtGYqJP33O1Y0GD64gkEMD75o0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdeffedgudeifecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttdejnecuhfhrohhmpefhvghr
+    nhgrnhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohesuhelvddrvghuqeenucggtffrrg
+    htthgvrhhnpeffheevteefjeevieekheeujeeivefguedvieefleeuiefgtddtleelheev
+    ledvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgrhgvvghnfhhoohesuhelvddrvghu
+X-ME-Proxy: <xmx:zdvuYgoUh-OPoO8ofp_EC7bQf6SY0JT8R4t98JcDUBSdIbt5MFSKjA>
+    <xmx:zdvuYppIAJ7QMsU4M5y8pyeVfvaPHfxcva6wTGpL8f5DFMXCFA49OQ>
+    <xmx:zdvuYuThN4IqWuIOP7fPPLUNoGwGxVGLDl4rVIICSEJPSvch9yyc6A>
+    <xmx:zdvuYoS1ZmuSY8MIOtUusfBvFnylysYxF8Wq3mq2wSNJ-uyf3MMDyA>
+Feedback-ID: i96f14706:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 6 Aug 2022 17:23:23 -0400 (EDT)
+Date:   Sat, 6 Aug 2022 23:23:21 +0200
+From:   Fernando Ramos <greenfoo@u92.eu>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 0/2] mergetools: vimdiff3: fix regression
+Message-ID: <Yu7byRmn4VtSpyWd@zacax395.localdomain>
+References: <20220802214134.681300-1-felipe.contreras@gmail.com>
+ <Yu6V4cIajhoMhB3t@zacax395.localdomain>
+ <CAMP44s1uPFGYVJ7dzf1pFXENnUjTTwxHye2iT_HPNiMcmPjD9A@mail.gmail.com>
+ <Yu6zEiknXKFMJUVn@zacax395.localdomain>
+ <CAMP44s3-RG5k4ZkhAFG_9JtbxcyDhkUmeBh0jCH9+Xwyumyu9w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAMP44s3-RG5k4ZkhAFG_9JtbxcyDhkUmeBh0jCH9+Xwyumyu9w@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 6, 2022 at 1:38 PM Fernando Ramos <greenfoo@u92.eu> wrote:
->
-> vimdiff3 was introduced in 7c147b77d3 (mergetools: add vimdiff3 mode,
-> 2014-04-20) and then partially broken in 0041797449 (vimdiff: new
-> implementation with layout support, 2022-03-30) in two ways:
->
->   - It does not show colors unless the user has "set hidden" in his
->     .vimrc file
->
->   - It prompts the user to "Press ENTER" every time it runs.
->
-> This patch fixes both issues by adding "set hidden" and "silent" to the
-> generated command string that is used to run vim.
+On 22/08/06 02:17PM, Felipe Contreras wrote:
+> 
+> I don't know why anyone would want to do that, but the code interprets
+> that as the user wanting '1b', which is completely ignored.
+> 
+> If we are not going to care about these cases, we can just remove all this code:
+> 
+> ...
+> 
 
-Although I don't see the point of the extra complexity in the case of
-a single window, especially since it doesn't really work for anything
-other than "MERGED", this does make vimdiff3 work again for me.
+Ah! I see now. You are completely right: it wouldn't make sense for anyone to
+specify "layout=LOCAL" (or REMOTE or BASE), but if he did *it wouldn't work*
+(only works with "layout=MERGED").
 
-Tested-by: Felipe Contreras <felipe.contreras@gmail.com>
+That should be fixed. I'll update the patch with a new version to generate this
+command string:
 
--- 
-Felipe Contreras
+     echo | silent 4b | set hidden | let tmp=bufnr('%') | silent bufdo diffthis | exe 'buffer '.tmp
+                                     ^^^^^^^^^^^^^^^^^^                           ^^^^^^^^^^^^^^^^^
+                                     NEW                                          NEW
+
+Notes:
+
+  - This is "easier" than moving "silent 4b" to the end, due to the way the
+    code is structured.
+
+  - I agree that this is absurdly complex for what we want to achieve with
+    "vimdiff3" but let's put it this way: now everything can be achieved with
+    the "layout" configuration option, even "useless" things such as setting it
+    to "LOCAL".
+
+
+> I understand the need if you want a complex layout, like
+> "MERGED+LOCAL,BASE,REMOTE", that's very nice, but if you just want
+> "MERGED", most of the code does nothing, 
+
+With the fix above that shouldn't be a problem anymore: even if someone
+specifies "LOCAL" it will work, in an absurd way, but it will work :)
+
+
+> the extra -c "tabfirst" isn't needed either.
+
+Good catch. I'm also removing it.
+
+
