@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E8EAC25B06
-	for <git@archiver.kernel.org>; Sun,  7 Aug 2022 04:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88651C19F2A
+	for <git@archiver.kernel.org>; Sun,  7 Aug 2022 04:14:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231888AbiHGEON (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Aug 2022 00:14:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45830 "EHLO
+        id S232129AbiHGEOO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Aug 2022 00:14:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231944AbiHGEOA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Aug 2022 00:14:00 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC4C310FCB
-        for <git@vger.kernel.org>; Sat,  6 Aug 2022 21:13:59 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id iw1so5893243plb.6
-        for <git@vger.kernel.org>; Sat, 06 Aug 2022 21:13:59 -0700 (PDT)
+        with ESMTP id S232010AbiHGEOJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Aug 2022 00:14:09 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F77D10FC1
+        for <git@vger.kernel.org>; Sat,  6 Aug 2022 21:14:01 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id f192so5519441pfa.9
+        for <git@vger.kernel.org>; Sat, 06 Aug 2022 21:14:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=w14YtX5hbdcv5nO+DH51KgoD08YYAKivWfr4n0Nepjk=;
-        b=gKButyYxX07QfbvAADKmsSh8wjmd/sgNWtmgo2HB3vYfYb6T0srScKc/dMWTIFY/5e
-         Tk3MMDRSKNX0P64IkBU533RXjKcUNWZXOqjQCecBGKzc4jy9CYfrwA7dBd95jd1db14e
-         Fn+XpFBvrLKpuCssdH2JVDds+FAA1fRouIeQJ4mIiO8YlEVnCbxRuUFPB8bREsegWe6N
-         3/VV6lkPb0h9qoqEKDuVWFn7nr/YxUGCpzqn9MCMq4YRTzfJGHau6GFngMsMTFqmOA9C
-         9pFtITKdmSUTJU4gI7kzuGfbtEnsdqiyCpciPsW/yOEqBJKgC5eR7lkyvNU/kg0DLwpC
-         k3PA==
+        bh=QwQSIqSJQY91YX7HKnfyjKUWJ4xfGmIOD5cfPv6OaBU=;
+        b=TK9h8Y5ZI+zTznl/mTDDgLCTcNpaE1fz28mkABzLyP0Tdzcf7lAyTK5eIrS/YKFLq8
+         cTiDSTR9qrSpgknh6QlPzHr9CBMW+negkQNw+p9HcDD1urzwAj9vg6ryMR7OVZgZmnza
+         ipeVw37eri494Ps93oyNHdCBe28CdGpK3D/1ggp2ijQ0c2tejxoyqNVK26k9dIfVmCa8
+         1sKhJx3S7kSyf0bR/dtQR/kEhylfiGm/etzEmg8wyu8scOmqd1Yu1NXYps44HvqkqqvA
+         QQKTd+EHof41R3tCPVOvRXphZl8rdnTcbk9W823L3VLpSgH9sYkhN8DQTNcelyLXDtmE
+         3Y4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=w14YtX5hbdcv5nO+DH51KgoD08YYAKivWfr4n0Nepjk=;
-        b=QhZYypwpDIhB12DE24KbDGbdtXmV0/+wAfABZNj6yDJV+M8XjQprSTGuGGq0WShNhb
-         97MRqn8AhQfR0Xds96C9m5LLn6MpOGhw5KbbJYtgIKaSpjwwGmGPyaYLwEcTXkV/pB3k
-         OfdrEshlZ0faSZgCzbRMMSIAPgP9CeKCzaAodEo/6ZfscCZN1aX1+zql69sFmbeXDQxK
-         5NvVEvCxxLmC0OF3/LaSYzrGbv8jn78/aFMr2jzYX4KFT8CbTwIN//EP9xc9UFvKzXhq
-         zsdDXXAlPkId2c2UMw29CYvJJwtItomswL7qDmGPFRazD7Ub5ueOOP/OKUB+knyaSsHT
-         Otgg==
-X-Gm-Message-State: ACgBeo01fmzlc5A6t6MTVQtZ9zsfD2bXRo6P1WSEaEWWbei1jgE8jwvK
-        K6mBbOBWBbc43uYtNVT+Z9O6PnlzEUtPvA==
-X-Google-Smtp-Source: AA6agR61Bkhl0jpO/aCgWe4tGmTZoAB6YFkQHoCcDgAeQpVFu8l7nEtNOaxjPtr+Be+NDIVNQf9L6A==
-X-Received: by 2002:a17:90b:1c0d:b0:1f5:4ddf:1607 with SMTP id oc13-20020a17090b1c0d00b001f54ddf1607mr20879735pjb.90.1659845639120;
-        Sat, 06 Aug 2022 21:13:59 -0700 (PDT)
+        bh=QwQSIqSJQY91YX7HKnfyjKUWJ4xfGmIOD5cfPv6OaBU=;
+        b=iBwgc/Y2+pBJX7VV2/aZb5Acg7A+v2H1C1PVc9e9ro1tMkjCkl5Fx72GPtKOE0AyQI
+         X3E7oIKJlvEByFaRoFncACjVVcT44P3+9VubA2u2TYhQLPAl3gjtwCkyW7Bm3m5Ipq2T
+         juAS4ej1Qp5cxUlFws5P5NxAG+M3CLr/wMHsJNiD7UZWS49uabUs9yvexDzOMmTib5mk
+         czzVqCQWc7xkXq+v+gtcMoW66w7AQoXZmBdcrXktNFGRvB1TqQpk5aNGG3VMdiB3cfJW
+         Z5nq5eDb5xchs2QfQtGU3MF9kCt7qxZQOXx9/1gwB0pJLC261DrKNMEsXG9xgWpsbPRf
+         Uugg==
+X-Gm-Message-State: ACgBeo1AzNpjgXG5B1MhUhcveTKRQtnicZrb53ELvOd4XYJN258kNhT9
+        L61tbWOml6AsezttjKsP7aNOzznZa/Aihg==
+X-Google-Smtp-Source: AA6agR66dyxuxiOgzSDKMLzhRbQ6zXEgspsAIcUL/c+DICvO4X+4wyTqbDgoOK9qpJnietMrlF91eQ==
+X-Received: by 2002:a05:6a00:1d9e:b0:52d:aa13:67fc with SMTP id z30-20020a056a001d9e00b0052daa1367fcmr13374786pfw.73.1659845640789;
+        Sat, 06 Aug 2022 21:14:00 -0700 (PDT)
 Received: from ffyuanda.localdomain ([113.65.209.111])
-        by smtp.gmail.com with ESMTPSA id v22-20020a17090a0e1600b001f333fab3d6sm8057027pje.18.2022.08.06.21.13.57
+        by smtp.gmail.com with ESMTPSA id v22-20020a17090a0e1600b001f333fab3d6sm8057027pje.18.2022.08.06.21.13.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Aug 2022 21:13:58 -0700 (PDT)
+        Sat, 06 Aug 2022 21:14:00 -0700 (PDT)
 From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 To:     git@vger.kernel.org
 Cc:     vdye@github.com, derrickstolee@github.com,
         Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Subject: [PATCH v2 3/4] rm: expand the index only when necessary
-Date:   Sun,  7 Aug 2022 12:13:34 +0800
-Message-Id: <20220807041335.1790658-4-shaoxuan.yuan02@gmail.com>
+Subject: [PATCH v2 4/4] rm: integrate with sparse-index
+Date:   Sun,  7 Aug 2022 12:13:35 +0800
+Message-Id: <20220807041335.1790658-5-shaoxuan.yuan02@gmail.com>
 X-Mailer: git-send-email 2.37.0
 In-Reply-To: <20220807041335.1790658-1-shaoxuan.yuan02@gmail.com>
 References: <20220803045118.1243087-1-shaoxuan.yuan02@gmail.com>
@@ -64,94 +64,127 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the `ensure_full_index()` method so `git-rm` does not always
-expand the index when the expansion is unnecessary, i.e. when
-<pathspec> does not have any possibilities to match anything outside
-of sparse-checkout definition.
+Enable the sparse index within the `git-rm` command.
 
-Expand the index when the <pathspec> needs an expanded index, i.e. the
-<pathspec> contains wildcard that may need a full-index or the
-<pathspec> is simply outside of sparse-checkout definition.
+The `p2000` tests demonstrate a ~92% execution time reduction for
+'git rm' using a sparse index.
 
-Notice that the test 'rm pathspec expands index when necessary' in
-t1092 *is* testing this code change behavior, though it will be marked
-as 'test_expect_success' only in the next patch, where we officially
-mark `command_requires_full_index = 0`, so the index does not expand
-unless we tell it to do so.
+Test                              HEAD~1            HEAD
+--------------------------------------------------------------------------
+2000.74: git rm ... (full-v3)     0.41(0.37+0.05)   0.43(0.36+0.07) +4.9%
+2000.75: git rm ... (full-v4)     0.38(0.34+0.05)   0.39(0.35+0.05) +2.6%
+2000.76: git rm ... (sparse-v3)   0.57(0.56+0.01)   0.05(0.05+0.00) -91.2%
+2000.77: git rm ... (sparse-v4)   0.57(0.55+0.02)   0.03(0.03+0.00) -94.7%
 
-Notice that because we also want `ensure_full_index` to record the
-stdout and stderr from Git command, a corresponding modification
-is also included in this patch. The reason we want the "sparse-index-out"
-and "sparse-index-err", is that we need to make sure there is no error
-from Git command itself, so we can rely on the `test_region` result
-and determine if the index is expanded or not.
+----
+Also, normalize a behavioral difference of `git-rm` under sparse-index.
+See related discussion [1].
+
+`git-rm` a sparse-directory entry within a sparse-index enabled repo
+behaves differently from a sparse directory within a sparse-checkout
+enabled repo.
+
+For example, in a sparse-index repo, where 'folder1' is a
+sparse-directory entry, `git rm -r --sparse folder1` provides this:
+
+        rm 'folder1/'
+
+Whereas in a sparse-checkout repo *without* sparse-index, doing so
+provides this:
+
+        rm 'folder1/0/0/0'
+        rm 'folder1/0/1'
+        rm 'folder1/a'
+
+Because `git rm` a sparse-directory entry does not need to expand the
+index, therefore we should accept the current behavior, which is faster
+than "expand the sparse-directory entry to match the sparse-checkout
+situation".
+
+Modify a previous test so such difference is not considered as an error.
+
+[1] https://github.com/ffyuanda/git/pull/6#discussion_r934861398
 
 Helped-by: Victoria Dye <vdye@github.com>
 Helped-by: Derrick Stolee <derrickstolee@github.com>
 Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 ---
- builtin/rm.c                             |  5 +++--
- t/t1092-sparse-checkout-compatibility.sh | 27 ++++++++++++++++++++++--
- 2 files changed, 28 insertions(+), 4 deletions(-)
+ builtin/rm.c                             |  2 ++
+ t/perf/p2000-sparse-operations.sh        |  1 +
+ t/t1092-sparse-checkout-compatibility.sh | 20 +++++++++++++++++---
+ 3 files changed, 20 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/rm.c b/builtin/rm.c
-index 84a935a16e..58ed924f0d 100644
+index 58ed924f0d..b6ba859fe4 100644
 --- a/builtin/rm.c
 +++ b/builtin/rm.c
-@@ -296,8 +296,9 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+@@ -287,6 +287,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 	if (!index_only)
+ 		setup_work_tree();
  
- 	seen = xcalloc(pathspec.nr, 1);
++	prepare_repo_settings(the_repository);
++	the_repository->settings.command_requires_full_index = 0;
+ 	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
  
--	/* TODO: audit for interaction with sparse-index. */
--	ensure_full_index(&the_index);
-+	if (pathspec_needs_expanded_index(&the_index, &pathspec))
-+		ensure_full_index(&the_index);
-+
- 	for (i = 0; i < active_nr; i++) {
- 		const struct cache_entry *ce = active_cache[i];
+ 	if (read_cache() < 0)
+diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+index c181110a43..fce8151d41 100755
+--- a/t/perf/p2000-sparse-operations.sh
++++ b/t/perf/p2000-sparse-operations.sh
+@@ -123,5 +123,6 @@ test_perf_on_all git blame $SPARSE_CONE/f3/a
+ test_perf_on_all git read-tree -mu HEAD
+ test_perf_on_all git checkout-index -f --all
+ test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
++test_perf_on_all "git rm -f $SPARSE_CONE/a && git checkout HEAD -- $SPARSE_CONE/a"
  
+ test_done
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index c9300b77dd..94464cf911 100755
+index 94464cf911..68ded9063b 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -1340,10 +1340,14 @@ ensure_not_expanded () {
- 		shift &&
- 		test_must_fail env \
- 			GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
--			git -C sparse-index "$@" || return 1
-+			git -C sparse-index "$@" \
-+			>sparse-index-out \
-+			2>sparse-index-error || return 1
- 	else
- 		GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
--			git -C sparse-index "$@" || return 1
-+			git -C sparse-index "$@" \
-+			>sparse-index-out \
-+			2>sparse-index-error || return 1
- 	fi &&
- 	test_region ! index ensure_full_index trace2.txt
- }
-@@ -1910,4 +1914,23 @@ test_expect_failure 'rm pathspec outside sparse definition' '
+@@ -912,7 +912,7 @@ test_expect_success 'read-tree --prefix' '
+ 	test_all_match git read-tree --prefix=deep/deeper1/deepest -u deepest &&
+ 	test_all_match git status --porcelain=v2 &&
+ 
+-	test_all_match git rm -rf --sparse folder1/ &&
++	run_on_all git rm -rf --sparse folder1/ &&
+ 	test_all_match git read-tree --prefix=folder1/ -u update-folder1 &&
+ 	test_all_match git status --porcelain=v2 &&
+ 
+@@ -1874,7 +1874,7 @@ test_expect_success 'rm pathspec inside sparse definition' '
+ 	test_all_match git status --porcelain=v2
+ '
+ 
+-test_expect_failure 'rm pathspec outside sparse definition' '
++test_expect_success 'rm pathspec outside sparse definition' '
+ 	init_repos &&
+ 
+ 	for file in folder1/a folder1/0/1
+@@ -1914,7 +1914,7 @@ test_expect_failure 'rm pathspec outside sparse definition' '
  	test_sparse_match git status --porcelain=v2
  '
  
-+test_expect_failure 'rm pathspec expands index when necessary' '
+-test_expect_failure 'rm pathspec expands index when necessary' '
++test_expect_success 'rm pathspec expands index when necessary' '
+ 	init_repos &&
+ 
+ 	# in-cone pathspec (do not expand)
+@@ -1933,4 +1933,18 @@ test_expect_failure 'rm pathspec expands index when necessary' '
+ 	test_must_be_empty sparse-index-err
+ '
+ 
++test_expect_success 'sparse index is not expanded: rm' '
 +	init_repos &&
 +
-+	# in-cone pathspec (do not expand)
-+	ensure_not_expanded rm "deep/deep*" &&
-+	test_must_be_empty sparse-index-err &&
++	ensure_not_expanded rm deep/a &&
 +
-+	# out-of-cone pathspec (expand)
-+	! ensure_not_expanded rm --sparse "folder1/a*" &&
-+	test_must_be_empty sparse-index-err &&
++	# test in-cone wildcard
++	git -C sparse-index reset --hard &&
++	ensure_not_expanded rm deep/* &&
 +
-+	# pathspec that should expand index
-+	! ensure_not_expanded rm "*/a" &&
-+	test_must_be_empty sparse-index-err &&
-+
-+	! ensure_not_expanded rm "**a" &&
-+	test_must_be_empty sparse-index-err
++	# test recursive rm
++	git -C sparse-index reset --hard &&
++	ensure_not_expanded rm -r deep
 +'
 +
  test_done
