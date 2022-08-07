@@ -2,90 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51E35C25B0C
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38933C19F2D
 	for <git@archiver.kernel.org>; Sun,  7 Aug 2022 02:49:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230078AbiHGCts (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Aug 2022 22:49:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41128 "EHLO
+        id S230022AbiHGCtr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Aug 2022 22:49:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbiHGCtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Aug 2022 22:49:46 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13D14BF75
-        for <git@vger.kernel.org>; Sat,  6 Aug 2022 19:49:45 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-10ec41637b3so7082671fac.4
-        for <git@vger.kernel.org>; Sat, 06 Aug 2022 19:49:45 -0700 (PDT)
+        with ESMTP id S229436AbiHGCtp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Aug 2022 22:49:45 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A86A0BF59
+        for <git@vger.kernel.org>; Sat,  6 Aug 2022 19:49:43 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id s204so6913040oif.5
+        for <git@vger.kernel.org>; Sat, 06 Aug 2022 19:49:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=zZpqACFldo2pD9SlKaCMJ9v0K0tK2SODRtjZtRwDNoY=;
-        b=jk7/pRfhRD5N8lVW36b+JEBwUcGPWNa2Xk8kE6pFXJoYQDjNpGLSAnoR7Y9+uWXtSS
-         fH4ONL+NHlJQcjd3MZIAsXbiHKZMQQk2hoAlpgkEvdO9f+7+uV9UEsoQOZtr1Kt9vSqE
-         bHZ5R1RVm5NvbXo/Ztr19V5H/EVnS9eZaHc51kvqUIjD3LkhgiiUNnG0/lEaBvpq/vv/
-         T94O/tH1Ymb7EdbOu/Y2wCi3pfOWjr9tSUFnxYlOgAT9Iwe47csGjdYb4iv7H/6OWtj7
-         RxRDetklWzPGzWw+i763KWnUG9rWWRcB5aa3xAi34RhG53f2AN2JJBeBN8fkwG1ivU/O
-         LZDA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=GUcBvf90mC6vtbA5uV9F2ZkevFioYRtt1QfDpu6iuQY=;
+        b=dEHF99/TnixcSCJ9IDGA0/rM/F85oj/K6xbNsaOYqpu9nj7Uo2Xbn9FnnUz1BlV2H0
+         I5ffi8RTJVwVPNLmN8Fu5alWu4oimWjWzdkEO3y/fc5M0LDi9G+LlIg5+iWpmZb1EJT7
+         5UTkheDYNxn9hJbJuwVsjJ3hd1yqwwqBPdgdrUB3pBS9VYz2KiBJfJyiHH2WU4klnh/W
+         cts1JPYJyCIqUmS51sZRZ87GYUsTAMuZ7vDhMRZn4dr5BLJNx0uVa/msak2VQfq7RXMI
+         H3w+QzQ4k+HfVK6NQSeFtqu3iiJ7AMOmAKu0CY87vB5DGIZwecoruWMbSTtgx9BuKU4V
+         ANhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=zZpqACFldo2pD9SlKaCMJ9v0K0tK2SODRtjZtRwDNoY=;
-        b=qA6D8Vce3fx6OQPYjNsmLReh3h0Wp4QH7MOc++Xj2M9h9V4LcgPPyW8i+VnEpVTbKr
-         m/7RNr+pVb9+JXxYx1uaHyO326qQj+mxoaV4vYT94WNZThiVtOt18VbpsKVKgsg2RKTk
-         D4hZu31VquTr3fJwC8uN169MpR8xEI5AYum0hAYtV9tp0J9PEzxMX2sImr08bYOnkVHz
-         JzUu18JwUgeUPQ+dzrymwxXxCrh9LTKb9nAF2JZ9HfWivGHRoh8VRpmJvHJx8cJ673ri
-         4rSPbkTGBvfiDRJXw+2PciEP21kxHBOleQjcYXAdIyNfByXMEhxzgvoTwzlCfhNhZQ5/
-         IwQw==
-X-Gm-Message-State: ACgBeo3qG+sHUZ2lOa2Nusanl1N6ucTVe3zsi2LI2sBdy8COGmCO2f/s
-        pelahIpikGyImX/ReDR94lmwKnhCGzc=
-X-Google-Smtp-Source: AA6agR5gshB1M2vtrctAvL4CLvJV14ROinDQE/RJLybr4SU120lVKCHxSO1wUlt41nkSgpGdKAsfHw==
-X-Received: by 2002:a05:6870:4344:b0:10b:8499:395d with SMTP id x4-20020a056870434400b0010b8499395dmr9258395oah.214.1659840584166;
-        Sat, 06 Aug 2022 19:49:44 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=GUcBvf90mC6vtbA5uV9F2ZkevFioYRtt1QfDpu6iuQY=;
+        b=Wsf01fCkdRooWFB0cpiZiclOaAKDX3wHfBEFKgEmyztp4j5TIczGfGx+E8eThPzrK/
+         oUqjjlhrJOgAMo70FZ643KoIZvBjIKi00RANarbxmYjMoTzv1pThNm2FMKvpFuc0YemS
+         S+pY60zGcQxlCWIOhwyI/o4nIuKND2FiPzep1RSMSKn1wk4gdR/dmWBDxNM93JTBT3ww
+         jdJNJrYytrKYpUAiTSJGiMDtsibzqtg64jXAxF7mTGrqbD2m93I8oih1qGTiifRP7QZF
+         /yWxO7z3QZ+bGih3DQ31nfYizwu3RK81lddHiNgEIV9eUMzciobbFRDaDqxp8YCSkdXj
+         n/0w==
+X-Gm-Message-State: ACgBeo3kEgjTWpON/eni5KV14KaYXISsoZoCUaevn544qxJ93UzUszaq
+        vFM9l/Z0cbT/dG1ImUCqm3WTjL/v6dw=
+X-Google-Smtp-Source: AA6agR7yvpS3fiFmVaXc333ecsf1gp7++WvkDXDx9MsiaLeKPiwhQYpHI9V0wtNMbhX/NktG044ISA==
+X-Received: by 2002:a05:6808:1392:b0:33a:df9a:7e20 with SMTP id c18-20020a056808139200b0033adf9a7e20mr5321465oiw.283.1659840582726;
+        Sat, 06 Aug 2022 19:49:42 -0700 (PDT)
 Received: from localhost ([2806:2f0:4000:afaf:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id s4-20020a4ae544000000b0035eb4e5a6cesm1477972oot.36.2022.08.06.19.49.43
+        by smtp.gmail.com with ESMTPSA id q43-20020a056830442b00b0061c825bc627sm1515688otv.29.2022.08.06.19.49.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Aug 2022 19:49:43 -0700 (PDT)
+        Sat, 06 Aug 2022 19:49:42 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Fernando Ramos <greenfoo@u92.eu>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 1/9] mergetools: vimdiff: fix comment
-Date:   Sat,  6 Aug 2022 21:49:33 -0500
-Message-Id: <20220807024941.222018-2-felipe.contreras@gmail.com>
+Subject: [PATCH v2 0/9] mergetools: vimdiff: regression fix and reorg
+Date:   Sat,  6 Aug 2022 21:49:32 -0500
+Message-Id: <20220807024941.222018-1-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.37.1.378.g3f95da6bac
-In-Reply-To: <20220807024941.222018-1-felipe.contreras@gmail.com>
-References: <20220807024941.222018-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The name of the variable is wrong, and it can be set to anything, like
-1.
+Hello,
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- mergetools/vimdiff | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I wrote vimdiff3 to leverage both the power of git's diff3 and vim's
+diff mode, but commit 0041797449 broke that.
 
-diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-index f770b8fe24..ea416adcaa 100644
---- a/mergetools/vimdiff
-+++ b/mergetools/vimdiff
-@@ -29,8 +29,8 @@
- ################################################################################
- 
- debug_print () {
--	# Send message to stderr if global variable GIT_MERGETOOL_VIMDIFF is set
--	# to "true"
-+	# Send message to stderr if global variable GIT_MERGETOOL_VIMDIFF_DEBUG
-+	# is set.
- 
- 	if test -n "$GIT_MERGETOOL_VIMDIFF_DEBUG"
- 	then
+Here you can see how it used to work:
+
+https://i.snipboard.io/hSdfkj.jpg
+
+The added and changed lines are properly highlighted.
+
+After I fix the conflicts vim still properly highlights which lines were
+changed, and even what specific characters were modified:
+
+https://i.snipboard.io/HvpULI.jpg
+
+Now I get absolutely nothing:
+
+https://i.snipboard.io/HXMui4.jpg
+
+Additionally, every time I run the command I get an annoying message:
+
+  "./content_LOCAL_8975" 6L, 28B
+  "./content_BASE_8975" 6 lines, 29 bytes
+  "./content_REMOTE_8975" 6 lines, 29 bytes
+  "content" 16 lines, 115 bytes
+  Press ENTER or type command to continue
+
+Because that's what `bufdo` does.
+
+After discussing v1 with Fernando Ramos I came up with a different route
+to fix the issues by reorganizing the code first, and after the code is
+reorganized for the special case of single window mode, it should be
+clear that the switch to the old vimdiff mode for vimdiff3 is easy and
+trivial.
+
+Felipe Contreras (9):
+  mergetools: vimdiff: fix comment
+  mergetools: vimdiff: shuffle single window case
+  mergetools: vimdiff: add get_buf() helper
+  mergetools: vimdiff: make vimdiff3 actually work
+  mergetools: vimdiff: silence annoying messages
+  mergetools: vimdiff: fix for diffopt
+  mergetools: vimdiff: cleanup cruft
+  mergetools: vimdiff: fix single window mode
+  mergetools: vimdiff: use vimdiff for vimdiff3
+
+ mergetools/vimdiff | 74 ++++++++++++++++++++++++----------------------
+ 1 file changed, 38 insertions(+), 36 deletions(-)
+
+Range-diff against v1:
+ 1:  d0530af49c <  -:  ---------- mergetools: vimdiff3: make it work as intended
+ 2:  01a229ef5e <  -:  ---------- mergetools: vimdiff3: fix diffopt options
+ -:  ---------- >  1:  20c5abdbc8 mergetools: vimdiff: fix comment
+ -:  ---------- >  2:  e6c860d2be mergetools: vimdiff: shuffle single window case
+ -:  ---------- >  3:  bdf1e919a5 mergetools: vimdiff: add get_buf() helper
+ -:  ---------- >  4:  c5e21e3049 mergetools: vimdiff: make vimdiff3 actually work
+ -:  ---------- >  5:  2bf45c882d mergetools: vimdiff: silence annoying messages
+ -:  ---------- >  6:  77a67628e7 mergetools: vimdiff: fix for diffopt
+ -:  ---------- >  7:  adc9d18f2b mergetools: vimdiff: cleanup cruft
+ -:  ---------- >  8:  fe7fb1a018 mergetools: vimdiff: fix single window mode
+ -:  ---------- >  9:  15765aa9d2 mergetools: vimdiff: use vimdiff for vimdiff3
 -- 
 2.37.1.378.g3f95da6bac
 
