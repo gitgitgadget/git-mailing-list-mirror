@@ -2,131 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79876C19F2A
-	for <git@archiver.kernel.org>; Sun,  7 Aug 2022 18:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65D61C19F2A
+	for <git@archiver.kernel.org>; Sun,  7 Aug 2022 18:43:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234775AbiHGSjR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Aug 2022 14:39:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35714 "EHLO
+        id S234986AbiHGSnJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Aug 2022 14:43:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232582AbiHGSjP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Aug 2022 14:39:15 -0400
+        with ESMTP id S232582AbiHGSnI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Aug 2022 14:43:08 -0400
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D41DB5F9B
-        for <git@vger.kernel.org>; Sun,  7 Aug 2022 11:39:14 -0700 (PDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id A886E5C00D7;
-        Sun,  7 Aug 2022 14:39:10 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Sun, 07 Aug 2022 14:39:10 -0400
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CF3B272D
+        for <git@vger.kernel.org>; Sun,  7 Aug 2022 11:43:07 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 8FCD85C00A7;
+        Sun,  7 Aug 2022 14:43:06 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Sun, 07 Aug 2022 14:43:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm2; t=1659897550; x=1659983950; bh=2oDkrwCBcL
-        G6/a/W5l8GDZDfJ+8nrWHPN4xMnMIGZ8s=; b=QMaKZheWNVfJrFQyZREVbusYg8
-        z9EizulpuMFBRqcj+THyVuWJTmFcjbHueEJ1qjPwqSJPDomIQyJvoVxVDh+8qxCN
-        WgdaoHwccKxBTQI9RQxpcIK2Mb1U8AAsOGS4uZ5EAnHrSZwX+ysSOTCNIN7gjx1k
-        14C7TMY8GOlCZgUqp1gjQ5gyOiFaY7A7CICXT1d2tj101Z9EuqI2cvN7iIhvtMb0
-        eQRJGg8kTxBr7oMelImcKm1OUWqQifZqjW2kmG6x851Os+yjTzeu6ZdkGcaMmih6
-        mUo9kl/Ql2GBziFb366oti3lUOeOh8tKUifh5P8863/LsZnA98oq66XBErPw==
+        :content-transfer-encoding:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm2; t=1659897786; x=1659984186; bh=46
+        /EteGm6im/quohN5ASqqNdTABvvcsUf3bHdQJtMho=; b=cXe/a1+We2eKiXeF7e
+        mIGIYKNvNYMgsLI2JXY7oZLORZt0rLKjFec63MUU/oEFG1xI9UloX2aZOVGuA4JD
+        Q0qaOmrjrfLj3KyHR1GadgxB6RKY9cWutvdTdbvMICk87eQcWInoC7ioPqr6A3RB
+        kIBCokY2qv0M3zcapiEIH4h1ov2tRQXClQzG7+XDsZ/1xSOdKE2XERC+eS3IXQPZ
+        GnkkRmhPNUQtrpzg/Qirr30ogd9koYH20YDnXcP8ueeqPdRBkK1+DJgxlmzG7vAG
+        Jmt1hbW3TJz+F+KZ5px+6a7sqFbKlC3oR1Y5ROpWNpAX0gC0XIqk/6JrZQPhqa/C
+        34Xg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1659897550; x=1659983950; bh=2oDkrwCBcLG6/a/W5l8GDZDfJ+8n
-        rWHPN4xMnMIGZ8s=; b=Dpzu0XBx7mUdzlTUXVHpV1NeVVZa9tzUtJwj7fSnXwbn
-        8ULcAwzYZDmLTQna5hwScvI6lNcyydotM5YneP8Mjp0OlJJpgBZ3lMUd3CheGSC+
-        Pc+UGdhiRdu7js5bXUVYFkI384oogUPWWarb4jj9X7H+Q/S9P5TAhhk2gWnhSW02
-        04FzA9WpYGji+qsHR4HiudocqxoEh19w03KVw+vJU+ZMsONOqOF3ViGK78K5kJra
-        PlPrS+z7zJR1Jvd1iTT16WZ5knz3h0NJ7phU+5GttmcpcqgxZUZUaOCZVsmC69fe
-        LC8j6SFZYLuIa5xs1HwZIsjdU59ZaAkO9ykyAfXNMg==
-X-ME-Sender: <xms:zgbwYg4WQkKxusv1vgyLWMoEodu_NndpM0YBye98-DQ5BVl3KGnvrw>
-    <xme:zgbwYh4U0laFdsAIUQeMMCETob8fSCG0vblrzvi_PWz4gfsBxPKZZD8NnzfRJ46Oz
-    kjXo3D3D_NXBMOQhA>
-X-ME-Received: <xmr:zgbwYvfcjTwm8ufF23UxWRPhTVdj5Bg2bG1mVPWiED5EaeuVMHym2NkTxIaMaCTInmJNAsCtMpc>
+        messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; t=1659897786; x=1659984186; bh=46/EteGm6im/q
+        uohN5ASqqNdTABvvcsUf3bHdQJtMho=; b=bomsCYESxXXFqAYdJyiEOWt9Cxy+1
+        2cSdz/BipTf6Ux30i3etBzyj8vump2gdw/BaxhAwIOKLfqMYjOJuJwyxZz5T1t3z
+        40eadyuUUW1OH/ZRhMt3TPW2ppMp0Bh+/cCAWlsqW8BhPVDqdR8zsincv9NHwFtX
+        gx7fVCmVq8lrPHAY/zp5yFhZ1ARkipmlZX46nuTmuxrJVCyqBcEe3CFIzYwSREPF
+        O55iRvfDVSTEwligvGUSOpPSRL72eWcFkjHR3SL+cZ4uDXtBuaqyPkY1q7iwzEDT
+        rcqdxoRwhm4WCBJW5RZa8q9t/rYSyDOkox5vHoizicm2hqkQs6Hc7E4NA==
+X-ME-Sender: <xms:ugfwYujMnQXg3MJabfh2zfXsQgirIMu3QcT9GrfDP-OsV3wDBzTa3g>
+    <xme:ugfwYvDKHoh8HuZ5Q6nXH5rgRhln-3WKjPm9zDa1KRBk3b5oK0CsSPg0xZNoW_qne
+    VU4-YsuI1oSwT8LKg>
+X-ME-Received: <xmr:ugfwYmFgEMxlEJOPQ8GyxeKPETdTXxErMISEwQk88oU37nH6meGg-8UnxuuxS7pOvQyIhECm3dQm>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdefiedgudefudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttdejnecuhfhrohhmpefhvghr
-    nhgrnhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohesuhelvddrvghuqeenucggtffrrg
-    htthgvrhhnpeffheevteefjeevieekheeujeeivefguedvieefleeuiefgtddtleelheev
-    ledvjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgrhgvvghnfhhoohesuhelvddrvghu
-X-ME-Proxy: <xmx:zgbwYlJrhGf8Mgglvrp9SGpg6NOJovljngCAfjq-Ej9_hVGg8zdhpA>
-    <xmx:zgbwYkIiqVM8_8LB3hDk7V0rOBTA8vXzxpfnlS1k4U_GAgw1hCJE_Q>
-    <xmx:zgbwYmx-ieVO98fRqH8J8SrrWqhJJ6w7wsxtpBbFLSfOSpfn3epbMQ>
-    <xmx:zgbwYuwBh2u7o6fO_NIJvxJOQao0wCY4IWG6_ZH-E5k1dKunOVBKyw>
+    necuuegrihhlohhuthemuceftddtnecuogetfedtuddqtdduucdludehmdenucfjughrpe
+    fhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefhvghrnhgrnhguohcu
+    tfgrmhhoshcuoehgrhgvvghnfhhoohesuhelvddrvghuqeenucggtffrrghtthgvrhhnpe
+    elfeefvddvfeduueelteevledvveetteduvdekgfffjedvgfduudffgeefudeuffenucff
+    ohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhrvggvnhhfohhosehuledvrdgvuh
+X-ME-Proxy: <xmx:ugfwYnSb39XjsCT4SZ0DkZYfozs1C6JNqRicBRfvZ_Hay7sfa6Jk5Q>
+    <xmx:ugfwYrwsExnoNoaJ3Wd6zEt_q2dHC1t9jDTWLvs9MPRoFEXpjhFYMQ>
+    <xmx:ugfwYl6Qka0q3mT1UsC4JrBv-jQ66QENaFCKG9UUvnyllDc7-YrAbg>
+    <xmx:ugfwYkohexJGyeMaOTuYIoIbokAGNtDUKsoW4iW9ZUYJ9MqGbkby9w>
 Feedback-ID: i96f14706:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 7 Aug 2022 14:39:09 -0400 (EDT)
-Date:   Sun, 7 Aug 2022 20:39:05 +0200
+ 7 Aug 2022 14:43:05 -0400 (EDT)
 From:   Fernando Ramos <greenfoo@u92.eu>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 0/9] mergetools: vimdiff: regression fix and reorg
-Message-ID: <YvAGycJR8Yq3hxOh@zacax395.localdomain>
-References: <20220807024941.222018-1-felipe.contreras@gmail.com>
- <Yu9vvAKJzOpoQ5AS@zacax395.localdomain>
- <CAMP44s2s7QV9+Pgkchfk9=X-6Vwz_QZP0Vd145-euT-SR9Xw6Q@mail.gmail.com>
+To:     greenfoo@u92.eu
+Cc:     felipe.contreras@gmail.com, git@vger.kernel.org
+Subject: [PATCH 1/2] vimdiff: fix single tab mode, single window mode and colors
+Date:   Sun,  7 Aug 2022 20:43:00 +0200
+Message-Id: <20220807184301.174251-1-greenfoo@u92.eu>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <YvAGycJR8Yq3hxOh@zacax395.localdomain>
+References: <YvAGycJR8Yq3hxOh@zacax395.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAMP44s2s7QV9+Pgkchfk9=X-6Vwz_QZP0Vd145-euT-SR9Xw6Q@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/08/07 10:39AM, Felipe Contreras wrote:
->
-> That's because the diff mode only highlights differences between the
-> windows in the tab. If you do something like "BASE,MERGED" the diff
-> won't show colors for LOCAL or REMOTE.
+vimdiff3 was introduced in 7c147b77d3 (mergetools: add vimdiff3 mode,
+2014-04-20) and then partially broken in 0041797449 (vimdiff: new
+implementation with layout support, 2022-03-30) in two ways:
 
-That's right. I've been looking into this in detail today and I think I finally
-have a good solution which...
+    - It does not show colors unless the user has "set hidden" in his
+      .vimrc file
 
-    - Makes vimdiff3 work as any other layout (no special case, not even an
-      extra "if" to handle it)
+    - It prompts the user to "Press ENTER" every time it runs.
 
-    - Makes colors work *in all cases*: single tab with single window and also
-      multiple tabs where one or more of them contain one single window (in that
-      case the diff is made agains all buffers)
+This patch fixes both issues and, in adition:
 
-    - Works even with an empty .vimrc
+  - Unifies the previously "special" case where LAYOUT contained one single tab
+    with one single window.
 
-I'll post the patch as a reply to this message.
+  - Fixes colors in tabs with just one window.
 
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
+---
+ mergetools/vimdiff | 69 ++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 49 insertions(+), 20 deletions(-)
 
-> That's why I don't like any mode other than vimdiff3 (and occasionally
-> vimdiff): because I want to see the diff for all the files, even if I
-> don't see those files. If I open mergetool with vimdiff and I close
-> the BASE window I get something better than vimdiff2.
+diff --git a/mergetools/vimdiff b/mergetools/vimdiff
+index f770b8fe24..ee99a0b03e 100644
+--- a/mergetools/vimdiff
++++ b/mergetools/vimdiff
+@@ -55,12 +55,40 @@ substring () {
+ 	echo "$STRING" | cut -c$(( START + 1 ))-$(( START + $LEN ))
+ }
+ 
++enable_diff_mode () {
++	# Auxiliary function that appends extra vim commands at the end of each
++	# tab section to enable diff mode
++
++	NUMBER_OF_WINDOWS_IN_TAB=$1
++
++	if test "$NUMBER_OF_WINDOWS_IN_TAB" -eq 1
++	then
++		# Tabs that only contains one window will "diff"
++		# against all loaded/hidden buffers
++		
++		echo "let tmp=bufnr('%') | execute 'silent 1,4bufdo diffthis' | execute 'buffer '.tmp"
++	else
++		# Tabs that contain more than one window will
++		# only "diff" against those windows
++		
++		echo "execute 'windo diffthis'"
++	fi
++}
++
+ gen_cmd_aux () {
+ 	# Auxiliary function used from "gen_cmd()".
+ 	# Read that other function documentation for more details.
++	#
++	# This function returns two items
++	#    - STDOUT:  The vim command to use
++        #    - RETCODE: The number of windows opened in the current tab
+ 
+-	LAYOUT=$1
+-	CMD=$2  # This is a second (hidden) argument used for recursion
++	WINDOWS_NR=$1 # Number of windows opened in the current tab after
++	              # having parsed the provided "LAYOUT"
++                      # If applicable, this variable will be updated and
++                      # returned in RETCODE
++	LAYOUT=$2     # Substring (from the original LAYOUT) to process
++	CMD=$3        # This is a third (hidden) argument used for recursion
+ 
+ 	debug_print
+ 	debug_print "LAYOUT    : $LAYOUT"
+@@ -232,6 +260,7 @@ gen_cmd_aux () {
+ 		after="wincmd j"
+ 		index=$index_horizontal_split
+ 		terminate="true"
++		WINDOWS_NR=$(( WINDOWS_NR + 1 ))
+ 
+ 	elif ! test -z "$index_vertical_split"
+ 	then
+@@ -239,16 +268,27 @@ gen_cmd_aux () {
+ 		after="wincmd l"
+ 		index=$index_vertical_split
+ 		terminate="true"
++		WINDOWS_NR=$(( WINDOWS_NR + 1 ))
+ 	fi
+ 
+ 	if  test "$terminate" = "true"
+ 	then
+ 		CMD="$CMD | $before"
+-		CMD=$(gen_cmd_aux "$(substring "$LAYOUT" "$start" "$(( index - start ))")" "$CMD")
++		CMD=$(gen_cmd_aux $WINDOWS_NR "$(substring "$LAYOUT" "$start" "$(( index - start ))")" "$CMD")
++		WINDOWS_NR=$?
++
++		if ! test -z "$index_new_tab"
++		then
++			CMD="$CMD | $(enable_diff_mode $WINDOWS_NR)"
++			WINDOWS_NR=1
++		fi
++
+ 		CMD="$CMD | $after"
+-		CMD=$(gen_cmd_aux "$(substring "$LAYOUT" "$(( index + 1 ))" "$(( ${#LAYOUT} - index ))")" "$CMD")
++		CMD=$(gen_cmd_aux $WINDOWS_NR "$(substring "$LAYOUT" "$(( index + 1 ))" "$(( ${#LAYOUT} - index ))")" "$CMD")
++		WINDOWS_NR=$?
++
+ 		echo "$CMD"
+-		return
++		return $WINDOWS_NR
+ 	fi
+ 
+ 
+@@ -280,10 +320,9 @@ gen_cmd_aux () {
+ 	fi
+ 
+ 	echo "$CMD"
+-	return
++	return $WINDOWS_NR
+ }
+ 
+-
+ gen_cmd () {
+ 	# This function returns (in global variable FINAL_CMD) the string that
+ 	# you can use when invoking "vim" (as shown next) to obtain a given
+@@ -333,25 +372,15 @@ gen_cmd () {
+ 
+ 	# Obtain the first part of vim "-c" option to obtain the desired layout
+ 
+-	CMD=$(gen_cmd_aux "$LAYOUT")
+-
+-
+-	# Adjust the just obtained script depending on whether more than one
+-	# windows are visible or not
+-
+-	if echo "$LAYOUT" | grep ",\|/" >/dev/null
+-	then
+-		CMD="$CMD | tabdo windo diffthis"
+-	else
+-		CMD="$CMD | bufdo diffthis"
+-	fi
++	CMD=$(gen_cmd_aux 1 "$LAYOUT")
++	CMD="$CMD | $(enable_diff_mode $?)"
+ 
+ 
+ 	# Add an extra "-c" option to move to the first tab (notice that we
+ 	# can't simply append the command to the previous "-c" string as
+ 	# explained here: https://github.com/vim/vim/issues/9076
+ 
+-	FINAL_CMD="-c \"$CMD\" -c \"tabfirst\""
++	FINAL_CMD="-c \"set hidden diffopt-=hiddenoff diffopt-=closeoff\" -c \"$CMD\" -c \"tabfirst\""
+ }
+ 
+ 
+-- 
+2.37.1
 
-You can keep using vimdiff3 but now, also, after this fix, you can use any
-layout you want and append "+ MERGED" at the end (or beginning) and that
-particular tab (and only that) will behave the same as "vimdiff3" :)
-
-
-> To me if I configure "BASE,MERGED" and I close the first window, I
-> should end up with the same view as "MERGED", but I don't, which is
-> why I fundamentally don't like this layout approach.
-
-This won't work. Not even after the fix. If you want to modify the layout (ex:
-by closing a window) vim won't automatically update the list of buffers to
-consider for the diff.
-
-You can always manually update the list later *or* use "+ MERGED" as previously
-described.
-
-The root cause for this is that, when opening vim, we must decide what to diff
-on each tab, and the logic after my patch works like this:
-
-    - If there are more than 1 window, diff among opened windows.
-    - If there is only 1 window, diff among all buffers
-
-Seems to be the best of both worlds :)
-
-Let me know what you think.
-
-Thanks.
