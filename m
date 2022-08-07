@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA9B2C25B0C
-	for <git@archiver.kernel.org>; Sun,  7 Aug 2022 02:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BD36C19F2D
+	for <git@archiver.kernel.org>; Sun,  7 Aug 2022 02:50:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230292AbiHGCt4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Aug 2022 22:49:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41150 "EHLO
+        id S231645AbiHGCt5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Aug 2022 22:49:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbiHGCts (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Aug 2022 22:49:48 -0400
+        with ESMTP id S230174AbiHGCtu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Aug 2022 22:49:50 -0400
 Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E21B4BF59
-        for <git@vger.kernel.org>; Sat,  6 Aug 2022 19:49:47 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id f3-20020a9d0383000000b00636d99775a2so742604otf.2
-        for <git@vger.kernel.org>; Sat, 06 Aug 2022 19:49:47 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 580C3DFE8
+        for <git@vger.kernel.org>; Sat,  6 Aug 2022 19:49:49 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id j66-20020a9d17c8000000b00636b0377a8cso3445801otj.1
+        for <git@vger.kernel.org>; Sat, 06 Aug 2022 19:49:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=h6HbwcPKlPSeszIOkKVtGtkEZlCM4y93HzKT2xgCV/8=;
-        b=EDxn+vLeQy3qtwwACeMGsryYglhow9yG8YW1r2TcuO+rmjzrAYMfj7vu3lqaO8SFsO
-         kjw5xCHaFxV4TXzf+q+dP/O/0GsEL65TnDEfVdV95GiN2Kme/IAbpls9FonM3COgfEb3
-         uOB23wir7FriqBhxwi9IAJH3ly2K1bRT0nPZRHfO7Oj9pMRWgyMFHDXvoZqaIO31kEOJ
-         aUyXZIlPlmdUOITCGl8HfaiC2g7DuVS9kwxoFgF4iQrZo+yDf1r0LuojulpWtoDCHNil
-         8F/4n+y3ronDwc3CEw8LqgwadCR2JctEZapSJBWiOEzp0p5MBcPiQWI/KkIF9telv61B
-         MTHA==
+        bh=fCHO+YYKyK7p8kSg0ydH+bvhfPeKz0frpk01Zxo95+4=;
+        b=BL9uVntPq4dzwz8zTvWZ04zU+PynuMJIxe+JhUSIoMZE2YM+ssOZEoNpzec3YfQaS3
+         ibw7k1+uC2zXS1+M4Jq+ALRpgUNEQbLxOeOhLKqZ4P32w8y4tsqtYX34Ga8bUJGNpFAN
+         E0o5fV4T+qB/PN816cYbj0xG1dFNua2iexOSgqTCqJd+ZxzqFmbYPDQLfBE7s3gYnoYn
+         H5gBjGf5A8v1ds852IYU4hpgV5CnW6PkOVn9ZuBS3h3DbrfFoL6DNq3xaENZQnEEA5/r
+         bQnCvD/6YiUjuV3T36VXBE2asIvty6A7LC491z3HVIxcWyD9yYR+XUmwxwncV0h96j8I
+         Ck6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=h6HbwcPKlPSeszIOkKVtGtkEZlCM4y93HzKT2xgCV/8=;
-        b=MQkeBMcMv8R1LbMUCuzjLJUyIqq7uauOkwfzQHC629zD06nqrqeVUAyRxPmT2/3/mD
-         cBKALffi1iHZEqqHMG+mjXTYRdNLMl/2eg9rO6p5+uxzqnqB82M/GxnBofUHD/zsitCh
-         bJo6Q/ag55f++iU8BPwMyV/ymyLoRgNUUk1VCH4Y6rjVPRIJrTASEjtmHHQjLORgcoS3
-         Oa4qZDrkjWwREKbgJ/sZ9NGzbIbp50i4hhml6mGevHSuUxsF1aisjj89zsyts2JD1KHS
-         7XdBVLcvuy4K5xiCu3j2id4gu9HooyRBDuGWN/JT2InvPZ4M1dw7v/z/InbRxwbIP+m5
-         varw==
-X-Gm-Message-State: ACgBeo0VohJwMycbS4c2JgEckk8n6JiXPwKXLUczwKPzQGlIBapf8z6v
-        JNdsF4725aDhv8fQPtWyLe2ZWUHaor4=
-X-Google-Smtp-Source: AA6agR5VNMJTy47jdEc97OdOyhkAMlpXQiCgk5FzmGpgmHyf9udsaP7M3NxM/KAueNpd5JKXz46k3Q==
-X-Received: by 2002:a05:6830:12ca:b0:636:c552:46f2 with SMTP id a10-20020a05683012ca00b00636c55246f2mr1973805otq.362.1659840587069;
-        Sat, 06 Aug 2022 19:49:47 -0700 (PDT)
+        bh=fCHO+YYKyK7p8kSg0ydH+bvhfPeKz0frpk01Zxo95+4=;
+        b=uJii5YLv0GCI8H03bCs0g71aLsS9P7Y4Zqe5BrioP99LjGmIuTeWQVDWEZv56SnHL8
+         sQQQZrd9aUttRpxe8KZmswpfNNKKxOAtCRP4JQU8HksrD4vI6ygY1rrA3tc+xJl9oRsv
+         G5vJ+WLyAUNXc7rVbYC6yd5ET+qhEDY52swEGGhN175RVQ3NeZbenyAHjVEiVZnL/idk
+         HOnJvf55qGeTuQuaOxAhpK4G8LJ5Cuh2OoWTNMFR1IW/eGevMC5t5xv4oeekM+PI7Vi2
+         L5siG6H4oCYH0+CqslEquVnft/X6mmVr9gM5l9bb8fKV00grzc141EYGFRs/XMlKDG9B
+         zHrg==
+X-Gm-Message-State: ACgBeo17Wdg+NMq0m7SKcTEhi6Ap2iIjdfyDTIBZLKyx9DUehCl039+H
+        4El7inzjviqV/iuu3LkVKU6+Y1gFRWE=
+X-Google-Smtp-Source: AA6agR7bdZJRXNan+TwShmGgBTKD7HqI0hcfrF4jq0qvnHR93wQR3dy2qpKpl9AWXuN8gemGnTJD4Q==
+X-Received: by 2002:a9d:6e84:0:b0:61c:af4f:7fa2 with SMTP id a4-20020a9d6e84000000b0061caf4f7fa2mr5132481otr.314.1659840588448;
+        Sat, 06 Aug 2022 19:49:48 -0700 (PDT)
 Received: from localhost ([2806:2f0:4000:afaf:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id h12-20020a9d554c000000b006339b36127dsm1512768oti.3.2022.08.06.19.49.46
+        by smtp.gmail.com with ESMTPSA id 9-20020a9d0009000000b0061cd208fadesm1485306ota.71.2022.08.06.19.49.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Aug 2022 19:49:46 -0700 (PDT)
+        Sat, 06 Aug 2022 19:49:48 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Fernando Ramos <greenfoo@u92.eu>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 3/9] mergetools: vimdiff: add get_buf() helper
-Date:   Sat,  6 Aug 2022 21:49:35 -0500
-Message-Id: <20220807024941.222018-4-felipe.contreras@gmail.com>
+Subject: [PATCH v2 4/9] mergetools: vimdiff: make vimdiff3 actually work
+Date:   Sat,  6 Aug 2022 21:49:36 -0500
+Message-Id: <20220807024941.222018-5-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.37.1.378.g3f95da6bac
 In-Reply-To: <20220807024941.222018-1-felipe.contreras@gmail.com>
 References: <20220807024941.222018-1-felipe.contreras@gmail.com>
@@ -63,91 +63,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now the single window mode can avoid gen_cmd_aux() altogether.
+When vimdiff3 was added in 7c147b77d3 (mergetools: add vimdiff3 mode,
+2014-04-20), the description made clear the intention:
 
-No functional changes.
+    It's similar to the default, except that the other windows are
+    hidden.  This ensures that removed/added colors are still visible on
+    the main merge window, but the other windows not visible.
 
+However, in 0041797449 (vimdiff: new implementation with layout support,
+2022-03-30) this was broken by generating a command that never creates
+windows, and therefore vim never shows the diff.
+
+In order to show the diff, the windows need to be created first, and
+then when they are hidden the diff remains (if hidenoff isn't set).
+
+The layout support implementation broke the whole purpose of vimdiff3,
+and simply shows MERGED, which is no different from simply opening the
+file with vim.
+
+Setting the `hidden` option makes it work as intended.
+
+Suggested-by: Fernando Ramos <greenfoo@u92.eu>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- mergetools/vimdiff | 51 +++++++++++++++++++++++++---------------------
- 1 file changed, 28 insertions(+), 23 deletions(-)
+ mergetools/vimdiff | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-index 9805d139bc..103729b6a6 100644
+index 103729b6a6..20c61b040b 100644
 --- a/mergetools/vimdiff
 +++ b/mergetools/vimdiff
-@@ -55,6 +55,30 @@ substring () {
- 	echo "$STRING" | cut -c$(( START + 1 ))-$(( START + $LEN ))
- }
- 
-+get_buf () {
-+	target=$(echo "$1" | sed 's:[ @();|-]::g')
-+	buf="1"
-+
-+	if test "$target" = "LOCAL"
-+	then
-+		buf="1"
-+
-+	elif test "$target" = "BASE"
-+	then
-+		buf="2"
-+
-+	elif test "$target" = "REMOTE"
-+	then
-+		buf="3"
-+
-+	elif test "$target" = "MERGED"
-+	then
-+		buf="4"
-+	fi
-+
-+	echo "$buf"
-+}
-+
- gen_cmd_aux () {
- 	# Auxiliary function used from "gen_cmd()".
- 	# Read that other function documentation for more details.
-@@ -257,27 +281,8 @@ gen_cmd_aux () {
- 	# If we reach this point, it means there are no separators and we just
- 	# need to print the command to display the specified buffer
- 
--	target=$(substring "$LAYOUT" "$start" "$(( end - start ))" | sed 's:[ @();|-]::g')
--
--	if test "$target" = "LOCAL"
--	then
--		CMD="$CMD | 1b"
--
--	elif test "$target" = "BASE"
--	then
--		CMD="$CMD | 2b"
--
--	elif test "$target" = "REMOTE"
--	then
--		CMD="$CMD | 3b"
--
--	elif test "$target" = "MERGED"
--	then
--		CMD="$CMD | 4b"
--
--	else
--		CMD="$CMD | ERROR: >$target<"
--	fi
-+	buf=$(get_buf $(substring "$LAYOUT" "$start" "$(( end - start ))"))
-+	CMD="$CMD | ${buf}b"
- 
- 	echo "$CMD"
- 	return
-@@ -319,8 +324,8 @@ gen_cmd () {
- 
+@@ -325,7 +325,7 @@ gen_cmd () {
  	if ! echo "$LAYOUT" | grep ",\|/" >/dev/null
  	then
--		CMD=$(gen_cmd_aux "$LAYOUT")
--		FINAL_CMD="-c \"$CMD | bufdo diffthis\" -c \"tabfirst\""
-+		buf=$(get_buf "$LAYOUT")
-+		FINAL_CMD="-c \"echo | ${buf}b | bufdo diffthis\" -c \"tabfirst\""
+ 		buf=$(get_buf "$LAYOUT")
+-		FINAL_CMD="-c \"echo | ${buf}b | bufdo diffthis\" -c \"tabfirst\""
++		FINAL_CMD="-c \"echo | set hidden | ${buf}b | bufdo diffthis\" -c \"tabfirst\""
  		return
  	fi
  
+@@ -560,7 +560,7 @@ run_unit_tests () {
+ 	EXPECTED_CMD_01="-c \"echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis\" -c \"tabfirst\""
+ 	EXPECTED_CMD_02="-c \"echo | leftabove vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
+ 	EXPECTED_CMD_03="-c \"echo | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 4b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
+-	EXPECTED_CMD_04="-c \"echo | 4b | bufdo diffthis\" -c \"tabfirst\""
++	EXPECTED_CMD_04="-c \"echo | set hidden | 4b | bufdo diffthis\" -c \"tabfirst\""
+ 	EXPECTED_CMD_05="-c \"echo | leftabove split | 1b | wincmd j | leftabove split | 4b | wincmd j | 3b | tabdo windo diffthis\" -c \"tabfirst\""
+ 	EXPECTED_CMD_06="-c \"echo | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
+ 	EXPECTED_CMD_07="-c \"echo | leftabove vertical split | 4b | wincmd l | leftabove split | 1b | wincmd j | 3b | tabdo windo diffthis\" -c \"tabfirst\""
 -- 
 2.37.1.378.g3f95da6bac
 
