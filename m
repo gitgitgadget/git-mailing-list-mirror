@@ -2,88 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB125C19F2D
-	for <git@archiver.kernel.org>; Sun,  7 Aug 2022 00:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51E35C25B0C
+	for <git@archiver.kernel.org>; Sun,  7 Aug 2022 02:49:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234486AbiHGAzX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Aug 2022 20:55:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53882 "EHLO
+        id S230078AbiHGCts (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Aug 2022 22:49:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233955AbiHGAzU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Aug 2022 20:55:20 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81DE31028
-        for <git@vger.kernel.org>; Sat,  6 Aug 2022 17:55:19 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id y13so10831506ejp.13
-        for <git@vger.kernel.org>; Sat, 06 Aug 2022 17:55:19 -0700 (PDT)
+        with ESMTP id S229553AbiHGCtq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Aug 2022 22:49:46 -0400
+Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13D14BF75
+        for <git@vger.kernel.org>; Sat,  6 Aug 2022 19:49:45 -0700 (PDT)
+Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-10ec41637b3so7082671fac.4
+        for <git@vger.kernel.org>; Sat, 06 Aug 2022 19:49:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=yjf5f/HpD0XUFwqeyJy5cpF4WV7dRFjgA0pAx0qzNfc=;
-        b=JPX0zNtNfcgFZEM9BxPYsgt9pORcKVGV6x7C80Rhrr8dExenI40W7jV9EcsfGg7lB9
-         DnwzvJqNqQH3gWF2AInISb1iiuKSSpzzdctiNTmI6hmGZp1qulSz8OqSFNfVc8OXqpQO
-         Uh2HOy/FqVK0JvKAgsteb6JkTb/wPu7GHmUg1bbLvcBYPJGfwfQ9f8BFOuaH/aLm92zQ
-         M5c+CNnO66UR7rWtzZ5SXgfQnX5/NbHzjAH0TsxvVBtD67cv9oICLpliAopNJw5ZJSuQ
-         thhyE6NPFz2KlVrGSPiRbmcvYjj8bzCG81RdjlBpCdnFrWG0Ixx32eL0ZL3g5utbe8At
-         6JoA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc;
+        bh=zZpqACFldo2pD9SlKaCMJ9v0K0tK2SODRtjZtRwDNoY=;
+        b=jk7/pRfhRD5N8lVW36b+JEBwUcGPWNa2Xk8kE6pFXJoYQDjNpGLSAnoR7Y9+uWXtSS
+         fH4ONL+NHlJQcjd3MZIAsXbiHKZMQQk2hoAlpgkEvdO9f+7+uV9UEsoQOZtr1Kt9vSqE
+         bHZ5R1RVm5NvbXo/Ztr19V5H/EVnS9eZaHc51kvqUIjD3LkhgiiUNnG0/lEaBvpq/vv/
+         T94O/tH1Ymb7EdbOu/Y2wCi3pfOWjr9tSUFnxYlOgAT9Iwe47csGjdYb4iv7H/6OWtj7
+         RxRDetklWzPGzWw+i763KWnUG9rWWRcB5aa3xAi34RhG53f2AN2JJBeBN8fkwG1ivU/O
+         LZDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=yjf5f/HpD0XUFwqeyJy5cpF4WV7dRFjgA0pAx0qzNfc=;
-        b=1Vhrr3/NpQwVFnHMXkS/hXCPGoMwI5VLR5v+4yx54jL6CAaHW9GixE0dKKNBKBdD3U
-         3yBItLp/9jl9NIN+LH0uksO6kF+WAjBHGmou6yJz7UAtr9YKHk0PlU6a+qeO8izK0T/2
-         Rz90uPf7bqpYZNOzYsPnsdu6WN3t80yp4e5WP+306Yjla4uMf9EQOgY1VkAMf3H1O1BX
-         KSrIeCSi5UKOGQIRdYiU829ry1gACjLBbrQ/8gylb643VHyN27RSpWD21McRf0fJ37RA
-         cUwuR0LPeG/DNYvCUsjQfYQMItIT+3hdT3uvMQfH51gwcfq6djfqngGE5pgDqFosXtiq
-         0oyQ==
-X-Gm-Message-State: ACgBeo0nr/IpR5gSbKo6yC/GcjfIp6eDwJT5dE7mcDtvNBZ6l7jVJRhr
-        jMRPk7dN/2KoVbGtivmBlwy1kbheV+05wOTHPi9zFelC0Kg=
-X-Google-Smtp-Source: AA6agR67GdAe1txser50+EdAljRHC4YQMCV4C8gr6krBSijax6OemN/UB6RbO+6+5xq7co7Mjr/IxDYbA/UbxmjHIHY=
-X-Received: by 2002:a17:906:ef90:b0:730:9d18:17b3 with SMTP id
- ze16-20020a170906ef9000b007309d1817b3mr9669779ejb.141.1659833718087; Sat, 06
- Aug 2022 17:55:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <Yu7ccuxYATwsJ7CF@zacax395.localdomain> <20220806213005.92045-1-greenfoo@u92.eu>
-In-Reply-To: <20220806213005.92045-1-greenfoo@u92.eu>
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=zZpqACFldo2pD9SlKaCMJ9v0K0tK2SODRtjZtRwDNoY=;
+        b=qA6D8Vce3fx6OQPYjNsmLReh3h0Wp4QH7MOc++Xj2M9h9V4LcgPPyW8i+VnEpVTbKr
+         m/7RNr+pVb9+JXxYx1uaHyO326qQj+mxoaV4vYT94WNZThiVtOt18VbpsKVKgsg2RKTk
+         D4hZu31VquTr3fJwC8uN169MpR8xEI5AYum0hAYtV9tp0J9PEzxMX2sImr08bYOnkVHz
+         JzUu18JwUgeUPQ+dzrymwxXxCrh9LTKb9nAF2JZ9HfWivGHRoh8VRpmJvHJx8cJ673ri
+         4rSPbkTGBvfiDRJXw+2PciEP21kxHBOleQjcYXAdIyNfByXMEhxzgvoTwzlCfhNhZQ5/
+         IwQw==
+X-Gm-Message-State: ACgBeo3qG+sHUZ2lOa2Nusanl1N6ucTVe3zsi2LI2sBdy8COGmCO2f/s
+        pelahIpikGyImX/ReDR94lmwKnhCGzc=
+X-Google-Smtp-Source: AA6agR5gshB1M2vtrctAvL4CLvJV14ROinDQE/RJLybr4SU120lVKCHxSO1wUlt41nkSgpGdKAsfHw==
+X-Received: by 2002:a05:6870:4344:b0:10b:8499:395d with SMTP id x4-20020a056870434400b0010b8499395dmr9258395oah.214.1659840584166;
+        Sat, 06 Aug 2022 19:49:44 -0700 (PDT)
+Received: from localhost ([2806:2f0:4000:afaf:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id s4-20020a4ae544000000b0035eb4e5a6cesm1477972oot.36.2022.08.06.19.49.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 06 Aug 2022 19:49:43 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sat, 6 Aug 2022 19:55:07 -0500
-Message-ID: <CAMP44s0QjKzt7VNFPWAi9RKThP2H2VP=4hYiDP4X9-CzrmYrew@mail.gmail.com>
-Subject: Re: [PATCH] vimdiff: fix 'vimdiff3' behavior (colors + no extra key press)
-To:     Fernando Ramos <greenfoo@u92.eu>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Fernando Ramos <greenfoo@u92.eu>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 1/9] mergetools: vimdiff: fix comment
+Date:   Sat,  6 Aug 2022 21:49:33 -0500
+Message-Id: <20220807024941.222018-2-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.37.1.378.g3f95da6bac
+In-Reply-To: <20220807024941.222018-1-felipe.contreras@gmail.com>
+References: <20220807024941.222018-1-felipe.contreras@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 6, 2022 at 4:30 PM Fernando Ramos <greenfoo@u92.eu> wrote:
+The name of the variable is wrong, and it can be set to anything, like
+1.
 
->
-> +               # Add an extra "-c" option to move to the first tab (notice that we
-> +               # can't simply append the command to the previous "-c" string as
-> +               # explained here: https://github.com/vim/vim/issues/9076
->
-> -       # Add an extra "-c" option to move to the first tab (notice that we
-> -       # can't simply append the command to the previous "-c" string as
-> -       # explained here: https://github.com/vim/vim/issues/9076
-> +               FINAL_CMD="-c \"$CMD\" -c \"tabfirst\""
-> +       else
-> +               CMD="$CMD | set hidden | let tmp=bufnr('%') | silent bufdo diffthis | exe 'buffer '.tmp"
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ mergetools/vimdiff | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-NAK: This runs `exe 'buffer #'` in every buffer. While switching to
-the desired buffer 3 extra times isn't a problem, it's also not
-correct.
-
-You need something like:
-
-    silent exe 'bufdo diffthis' | exe 'buffer '.tmp"
-
-But at this point it seems like we are working around the current
-organization of the code, when we could simply reorganize it.
-
-Cheers.
-
+diff --git a/mergetools/vimdiff b/mergetools/vimdiff
+index f770b8fe24..ea416adcaa 100644
+--- a/mergetools/vimdiff
++++ b/mergetools/vimdiff
+@@ -29,8 +29,8 @@
+ ################################################################################
+ 
+ debug_print () {
+-	# Send message to stderr if global variable GIT_MERGETOOL_VIMDIFF is set
+-	# to "true"
++	# Send message to stderr if global variable GIT_MERGETOOL_VIMDIFF_DEBUG
++	# is set.
+ 
+ 	if test -n "$GIT_MERGETOOL_VIMDIFF_DEBUG"
+ 	then
 -- 
-Felipe Contreras
+2.37.1.378.g3f95da6bac
+
