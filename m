@@ -2,69 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73045C25B0C
-	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 16:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D533C00140
+	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 16:38:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243701AbiHHQV7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Aug 2022 12:21:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52144 "EHLO
+        id S244043AbiHHQiR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Aug 2022 12:38:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237483AbiHHQVy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Aug 2022 12:21:54 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D227BF59
-        for <git@vger.kernel.org>; Mon,  8 Aug 2022 09:21:53 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 528B913C943;
-        Mon,  8 Aug 2022 12:21:50 -0400 (EDT)
+        with ESMTP id S234128AbiHHQiQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Aug 2022 12:38:16 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A80B8B
+        for <git@vger.kernel.org>; Mon,  8 Aug 2022 09:38:15 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9BAE91B5EB4;
+        Mon,  8 Aug 2022 12:38:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=G5ssDma1SDrKQMUATk1zdUZoe0WU58GoxWjzcM
-        0Thos=; b=X/5YbKPkbbJvBq9aXsbO1DcKtGCtZy2wlpLv9K/FLejcefmdd/dzXB
-        zbEE1zHO9znivt9h8O7ewzOWl4TOZ5wwnrRmJtyOs44Cj79YEpZGfp8YCPUfeSfW
-        R0eb8Bo3K65DtwxpecQoARoSB3/AqGnZxmNjmRbprcmMFbzQ7bq+M=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 49F5B13C942;
-        Mon,  8 Aug 2022 12:21:50 -0400 (EDT)
+        :content-type; s=sasl; bh=kYzraSbmKuu8vGanYJHZbrpnvh0YkDwDzqkLux
+        B7oPg=; b=A8p7N2wqb5gdvpHpKmbkdVqcGWB9PJdsnXPM7GPmanTthqBP06tpoI
+        vNoru4ypHndHlaWnTgf31mo9bCC5wCjQzH7ZHI9DMOuGbChz3gadKHrU508miiji
+        9MIONXj1lqhu0p1QBlLCIoBG6B1Rwmd80z4xYf5KA7XGFCO0Hqgoo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 945171B5EB3;
+        Mon,  8 Aug 2022 12:38:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.145.39.32])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 77F2213C941;
-        Mon,  8 Aug 2022 12:21:49 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 42ACA1B5EB2;
+        Mon,  8 Aug 2022 12:38:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 4/4] doc add: renormalize is not idempotent for CRCRLF
-References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
-        <d3b8ed97a105ea1d7e656c964b7eee378e11ede6.1657385781.git.gitgitgadget@gmail.com>
-        <20220710074848.ku2zobuck6vyim5d@tb-raspi4>
-        <1b90edd0-3d9d-a741-8865-3968826da315@iee.email>
-        <xmqq5yj6z5rx.fsf@gitster.g>
-        <e454bf85-046d-6205-57e7-4c00b9faa589@iee.email>
-Date:   Mon, 08 Aug 2022 09:21:48 -0700
-In-Reply-To: <e454bf85-046d-6205-57e7-4c00b9faa589@iee.email> (Philip Oakley's
-        message of "Mon, 8 Aug 2022 15:32:35 +0100")
-Message-ID: <xmqq5yj2u2n7.fsf@gitster.g>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/5] Some improvements to safe.directory on Windows
+References: <pull.1286.git.1657700238.gitgitgadget@gmail.com>
+        <pull.1286.v2.git.1659965270.gitgitgadget@gmail.com>
+Date:   Mon, 08 Aug 2022 09:38:10 -0700
+In-Reply-To: <pull.1286.v2.git.1659965270.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Mon, 08 Aug 2022 13:27:45
+        +0000")
+Message-ID: <xmqqzggesnbh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 34840EE8-1736-11ED-AED4-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7DB2E290-1738-11ED-873A-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> I've unfortunately had some family issue which prevented me doing any work.
+> Due to the semantics being substantially different from Unix, the
+> safe.directory feature presents its own set of problems on Windows. One
+> particular issue would have prevented it from working in GitHub Actions'
+> build agents, which we definitely rely on in the Git project itself. This
+> was addressed via the fifth patch, which had made it (in a slightly
+> different form) already into Git for Windows v2.35.2, and they are ready to
+> be applied to core Git, too.
+>
+> The FAT32 patch came in later, and was released as part of Git for Windows
+> v2.37.0, so I also have confidence that it is stable and ready to be
+> integrated into core Git, too.
+>
+> Changes since v1:
+>
+>  * Restructured the patch series.
+>  * Instead of an environment variable to turn on debugging, we now always
+>    show the platform-dependent information together with the error message
+>    about the dubious ownership (iff it is shown, that is), based on an idea
+>    by Junio.
+>  * Rebased onto gc/bare-repo-discovery to avoid a merge conflict.
 
-I hope everything will be well on your side.
+I actually had to rebase it back so that we could merge it to
+'maint' for further 2.37.x releases.  I'll refer to the original
+patches in this thread when I merge the result to 'seen', of course,
+to make sure the results do match.  It would have been slightly less
+convenient if you did not do this rebase, but it would have allowed
+me to have much better confidence in the result that may eventually
+go to 'maint'.  After all, mistakes in resolving merge conflicts on
+'seen' can be corrected before the topic hits 'next'.
 
-> If I haven't managed anything by the end of the week. I'd be happy if
-> others took it forward.
+Thanks.  I do not know about the API calls mingw.c part of these
+patches make, but the overall structure looks sensible to me.
 
-Thanks for letting us know.
