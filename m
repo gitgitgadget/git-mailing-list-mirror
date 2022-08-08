@@ -2,73 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 360CCC00140
-	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 16:48:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E8D3C00140
+	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 16:48:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243745AbiHHQsJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Aug 2022 12:48:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42044 "EHLO
+        id S243793AbiHHQsu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Aug 2022 12:48:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244083AbiHHQru (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Aug 2022 12:47:50 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28175167CE
-        for <git@vger.kernel.org>; Mon,  8 Aug 2022 09:47:42 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C16D41B2CB5;
-        Mon,  8 Aug 2022 12:47:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3JiHyyXt02/L07Me0XRxPGXsByYntAeVMcOF1+
-        8QDug=; b=LN8e8qSsZb13L7FnUvyG8ffc9NCOLvMWQgIFoQBhoJNJNB+gnBqaVU
-        jLTQabnzWOiXrk1EFGAn4zbUyFwncpAzqnAcjd9+GqiELK9lRyt0cvUF6PIi0cC1
-        zQT3s11bRIJ9i3SFdqVRwY55Z5HQoFe75l7ja+TRgbP6/r3JWYXlg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BA1821B2CB3;
-        Mon,  8 Aug 2022 12:47:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6BD6E1B2CAE;
-        Mon,  8 Aug 2022 12:47:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] tests: fix incorrect --write-junit-xml code
-References: <pull.1288.git.1657789234416.gitgitgadget@gmail.com>
-        <xmqq35f38yeb.fsf@gitster.g>
-        <s4s2qr56-2948-p025-rrq7-qq56p9oo844r@tzk.qr>
-Date:   Mon, 08 Aug 2022 09:47:36 -0700
-In-Reply-To: <s4s2qr56-2948-p025-rrq7-qq56p9oo844r@tzk.qr> (Johannes
-        Schindelin's message of "Mon, 8 Aug 2022 15:40:09 +0200 (CEST)")
-Message-ID: <xmqqv8r2smvr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S243759AbiHHQss (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Aug 2022 12:48:48 -0400
+X-Greylist: delayed 527 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 08 Aug 2022 09:48:46 PDT
+Received: from algol.kleine-koenig.org (algol.kleine-koenig.org [IPv6:2a01:4f8:c010:8611::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C027414007
+        for <git@vger.kernel.org>; Mon,  8 Aug 2022 09:48:46 -0700 (PDT)
+Received: by algol.kleine-koenig.org (Postfix, from userid 1000)
+        id E7B9852203E; Mon,  8 Aug 2022 18:39:54 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kleine-koenig.org;
+        s=2022; t=1659976794;
+        bh=tS0V5ZoQKcqtrPZnRWwheMmR8KjGIF0x2uFcEAqmNkM=;
+        h=Date:From:To:Cc:Subject:From;
+        b=VLkiL/jfU9kiuWPEJS1lQZPm/rMmPPkPO1gF/8w9kFOkOVV2AHxVpe4f+PAG45xxh
+         rVE+lP9AOgDa+WS/v4Jq550PpsUiqf2sypahgvSngrvWcNEgst0RKpo/dKBs8rpkVk
+         mB0Cr5n0UeAl7dDvpSMXhIu7pwfFZxZnj4ezbcUhDD2TzcQZ+fo6SffrLl8b75XJg3
+         O3kYdT3O9mGmLUjlSzE9tcqCziZA/7VnuZMJ+fO9EcvhqE68BqzrbiA/uVTaUqcmg8
+         hzfyYliZ0+cKGPSrDiY79wNyD57dbG6QCDTAAlfldS8WFnTJ0v3S9NRGPahbgSpgeS
+         uCHFndk0WkZsw==
+Date:   Mon, 8 Aug 2022 18:39:54 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <uwe@kleine-koenig.org>
+To:     git@vger.kernel.org
+Cc:     Jakub Wilk <jwilk@debian.org>
+Subject: git add -N vs. git stash
+Message-ID: <20220808163954.tnozlrv7nyx63imu@pengutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CF29F022-1739-11ED-B258-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="vse4pel4ul4tf6bd"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I still think that we need to slow the heck down with refactoring for
-> refactoring's sake because it's not only the CI builds that are affected.
-> I pay a lot of time to accommodate for those refactorings, and so do
-> others, and the benefit of most of those refactorings escapes me.
+--vse4pel4ul4tf6bd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Absolutely.
+Hello,
 
-> You asked me in private to provide more reviews for those refactorings so
-> that they see some push-back, but I lack the bandwidth for that.
+somehow git stash doesn't understand the index after git add -N:
 
-I do remember telling you to push back what you do not want to see
-in 'seen' and advance to 'next'.  If everybody lacks the bandwidth
-for shooting down bad ideas and only has time to promote their own
-ideas, which are not guaranteed to be good ones, it does not lead
-to a good place X-<.
+	$ git version
+	git version 2.36.1
 
+	$ git init -q
+
+	$ echo foo > foo
+
+	$ git add foo
+
+	$ git commit -a -m .
+	[main (root-commit) 0e4b48cb4913] .
+	 1 file changed, 1 insertion(+)
+	 create mode 100644 foo
+
+	$ echo bar > bar
+
+	$ git add -N bar
+
+	$ git stash push
+	error: Entry 'bar' not uptodate. Cannot merge.
+	Cannot save the current worktree state
+
+I'd say that's not a feature, is it?
+
+I would have expected the last command to just remove bar from the
+index.
+
+Best regards
+Uwe
+
+--vse4pel4ul4tf6bd
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmLxPFcACgkQwfwUeK3K
+7Ama0ggAmMegdHz+tQEWGu/DQdm044zHXqC1XH9u22nFhS1zz5TflkIWteFA3tO4
+GXGGixGIX5Yj2f7FEDDxtBnGsG58m0Nsx6Q0JAgtLJdw/JvUpUlASsnn9WIhaQ6U
+ofb7JwMNEeAd4jrywnuLxfw3N1/24S/IavUSFsWbit/qmf/7BSNIFXL6mxH8SqVU
+YYBaJxojGXGd/+x8lq/T0Z/E0cHUlpG5VYfooh1Y3hOi8y+O9nWxyDJq5ezqHoYV
+rEH4leVK7RI+CITmVwlA3fMXRy50GjLudt0732U6JDSO/8lR6a60J6ZNEDXfQy2+
+G9hQWRVqtKNZ40mji6uh3CIbUUSOYg==
+=R2UJ
+-----END PGP SIGNATURE-----
+
+--vse4pel4ul4tf6bd--
