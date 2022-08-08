@@ -2,90 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61CDDC25B07
-	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 11:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 816D7C00140
+	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 12:55:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242602AbiHHLa4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Aug 2022 07:30:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39834 "EHLO
+        id S242305AbiHHMzu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Aug 2022 08:55:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233907AbiHHLam (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Aug 2022 07:30:42 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 913281113
-        for <git@vger.kernel.org>; Mon,  8 Aug 2022 04:30:41 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id w10so8314381plq.0
-        for <git@vger.kernel.org>; Mon, 08 Aug 2022 04:30:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:references:in-reply-to:content-transfer-encoding;
-        bh=Sy9ZxTerQ8MEJ6GeJkIZOzO4Z7HGFw+3kNKcZcKfsO4=;
-        b=Yy4M9jRenGie2EgcDoLss3g71uZpcDjachdvrSo6DR9HIP3VZ70RE/Wk8jgtpkAq4t
-         eszK8aAcRZyxTuvCxGqhxRnuU+wKfYF9Sgyojg46C9qRAMziNWoZ60oOXKdOhFWRqrDq
-         JDMsgckovHqobPACEpJZwZMOubGov4caSDo8YI6A5EBSPAnzhHmxQqnx2PmS506Lxi2M
-         6wnKoIMIFg56z65EBEtzkYKtPy2HSfp+yib9C+HF2qdWx+bcSOx7Y5LxxB8LhMleqG0V
-         ax+EXQu2IqhjLkcjzY8/asBuek5R/+lYCHZo6zXHD6JGUVd6LeiAR3CWG2x184uXsKr0
-         HQvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:references:in-reply-to
-         :content-transfer-encoding;
-        bh=Sy9ZxTerQ8MEJ6GeJkIZOzO4Z7HGFw+3kNKcZcKfsO4=;
-        b=JDXBMz92pSt8ERFVw0kHpXRRPUtoZVWyIPTEa3xeyfkJQl3uN6C9ORiAZbKvYwDrdJ
-         PNU1Xb9gD56KGfGaMKHozBkJhD55jsn+vnBYmmNV3admpVzPJSK09cIDf+av2sadaEkv
-         L/FjJiKSkHw2ZqayhbA7j5vcB8e3bfhwWHJHpMjbg3xY1b+Nx6L0s2qtTZmcvgwGNNcV
-         dj0EFAUoIAvHoRUaLmDiySOlMCGlU4sMwtu++lfCMIRPBWtk5+Vd307kimK3ILE1Qx24
-         VLeuqml5K6gpJve0DF8dhaeBXGR7xEojaqLh/Q1fP/vke4EQM6OEUhKvtQr4YRfRd2xn
-         2wlA==
-X-Gm-Message-State: ACgBeo2vpryHypbbUi5xGN+ZPpJ+3Ok9aUcveW4IJ1bh4jn47cAuqyBY
-        BL2FIhRR26F5rweQFoHrSc5Acdt9dnA=
-X-Google-Smtp-Source: AA6agR4/s2RuRQVQdFIq8hnEPyq9ZBCzrDtFQxuPEYEZRuCimgXMfWpbo1POj0hFTTTASJS9B1NWnA==
-X-Received: by 2002:a17:903:11c7:b0:170:a74e:3803 with SMTP id q7-20020a17090311c700b00170a74e3803mr4429764plh.156.1659958240850;
-        Mon, 08 Aug 2022 04:30:40 -0700 (PDT)
-Received: from [127.0.0.1] ([45.138.210.17])
-        by smtp.gmail.com with ESMTPSA id f14-20020a170902ce8e00b0016dc44459a8sm8707855plg.12.2022.08.08.04.30.37
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Aug 2022 04:30:40 -0700 (PDT)
-Message-ID: <f71b813e-10c4-b6b5-5b09-85fa7b50a360@gmail.com>
-Date:   Mon, 8 Aug 2022 19:30:34 +0800
+        with ESMTP id S243019AbiHHMzq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Aug 2022 08:55:46 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D02232708
+        for <git@vger.kernel.org>; Mon,  8 Aug 2022 05:55:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1659963327;
+        bh=DkbrqDwPk/0Mdrr3fPMFMUm/J4a8F6g2himPCrOioUE=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=MZCbrVbUthhZQsamqRo50zcag5TEciEoNFPGZxGVUruuCesBubGing2jO8dEgm+o3
+         2CT1C7ETAtOMybdUUr1SnRq7up/gNkFEfUj6dX5iPmoYPfTmp34ECY7oOfwHoDfX4j
+         8MuRadovU9kRManpCNivu+rs1Y0bLUbbd7TTN/m0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.21.182.192] ([89.1.214.151]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MI5UN-1o9Fu40PFn-00FBB9; Mon, 08
+ Aug 2022 14:55:27 +0200
+Date:   Mon, 8 Aug 2022 14:55:39 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2] pipe_command(): mark stdin descriptor as
+ non-blocking
+In-Reply-To: <362560ca-1e37-bab3-e508-4d5bf5429e66@web.de>
+Message-ID: <099911o8-43q1-o29s-5s36-34r5qn37nq8n@tzk.qr>
+References: <YuikU//9OrdpKQcE@coredump.intra.peff.net> <YulFTSTbVaTwuQtt@coredump.intra.peff.net> <xmqq5yjahb8u.fsf@gitster.g> <YunxHOa2sJeEpJxd@coredump.intra.peff.net> <a9953278-b15f-fd76-17b0-e949c7937992@web.de> <YuquVEqEl6wxCLM7@coredump.intra.peff.net>
+ <41477326-5493-4d3c-246d-8a28969fa73e@web.de> <Yu05GjncDaGRTgce@coredump.intra.peff.net> <362560ca-1e37-bab3-e508-4d5bf5429e66@web.de>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: [GSoC] Week 7 and week 8 status update
-Content-Language: en-US
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-To:     Git List <git@vger.kernel.org>
-References: <CAJyCBOSrhxbCcDX5oWBuNEWOxQu2Rmk+T+paORLzoLF=iaBH1Q@mail.gmail.com>
-In-Reply-To: <CAJyCBOSrhxbCcDX5oWBuNEWOxQu2Rmk+T+paORLzoLF=iaBH1Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-304667906-1659963341=:226"
+X-Provags-ID: V03:K1:25A9P3ax7gDivs0TYK2XvZIQTk1t/IEHd6TRZDj7xJ2Afd+Rzsi
+ 4RAwRthtE4PlOhzE5izh/tKGMUw8KwXky2dbxwAXEfNtrnl8vDnmuPhEnnh2CvmfFYYehDK
+ vOdjHpUFfqK+bAK2KSiGXiDbatQG3ef6pJETudGRdbw6X0n7qcvzagwZUZIF9KcyvGz/ZQd
+ laWe3TCKteBHVf1bPkt2w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Mesw3zO4PcY=:u3fWtFkcghWR6EwrN7IBJO
+ sX1jarpVH8HKJKfgLZj7vZdo5tCov1FrE7q5Vc2oZ/POZ7ARiFy6Of9azt1HQeNMbtahSHJvP
+ U++OBqLlyo9imnMhz1rfhWQXtF6zoOrcm2P3FAnLvPqpBIzuPli/CN05bQ5duNF23GaK9ekQq
+ I/Y3F6fAzCQ5SQkpXSE4Rep9SmYpNlCPQdXZQwbiaoLwjymiup5I8C4ZeHX+bNJdd6fdC+ahR
+ MrEV1gCf6RZzvyGxgiAvS2W9dqz+XhFZv/xUzMLjILwYQ8j5SCC8fVlnAqYBya0wytw4lb13G
+ 2MpLBjEo6zDZA+L8RinObHuf4iGk2DeZNOkMPZ2W3VeiNYKGFWyvap3dO9eXu9/deFz5g4NIP
+ pHkT1zugrYZMALSHQdFMdPG/ODiKvfvFbhATZfnl6t54lYfel0cu8Yfk9Lw/55hXjrzCcE7De
+ F2ZIFlcCnJA+czlqb+OUBvDf+VPZbpAVxQ/p7O1WaID0MbkIeBm1YIao8YJKgBnnB1iEuLl+N
+ z/3GoMGH9cpVCd/7Zxad9SgH02CrcUw/AJNjdAk08nqKUFTq7gxxLg2AX2E8LljGyvvzd7ifO
+ yND+hniDhUeSc3pXjdnKi1GQEdbB96rje6B2F+M9GlNkOKQjmw/ZUeGWle5xEGjRLRCbSUSmi
+ tB9a/YTOdfKzk1sWDFNbr9wXbj7H9x/Zf5PdhMzVq97DymRy+dU6nq5DRjWGjE03zoIcdC4W2
+ LSQ7f/eJq0HE0YlXfynFRHIsM3B8YkvN1jSPpmCb2zpuuPs2leEBN0zlrar+TiB1t1c9pjaV5
+ RCxLjw6UpcJKxMzPAYPRkkVJcd7+Qb0090q8i2GLO4/v42GAyCcwN/miKZNvgLgzZU+MoMV3I
+ KT1hsN1LboPZqvTBdF/IcjwyIPJ9SRncv6dVtEutxdnTf/vzq9FBlp19S1jzDfzZBT3yb+CFe
+ BLRksGHe4r9TYjDL5yooKpRX3kLs7YHHh7DLs/En8im8UgbaIc4zrXUp6BxijkOtEaX4cn4aZ
+ EqPEh4dPFvQpzJARbJdcHA4lugGn4T+2V1nwqX2U1oqRKtwWc+Hz04mP1ocHfVIAmsBFkR6eS
+ Rwegt81dL9sgsnfxwoX9ogCcRQMwk6ngE/QTp3Zh4PzWiZshF7s88Qocw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Git community,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Here is Shaoxuan Yuan.
+--8323328-304667906-1659963341=:226
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-I'm writing to share my latest progress [1] from GSoC week 7 and week 8.
+Hi Ren=C3=A9,
 
-You can read it when you are free, and generously give me some
-advice if possible!
+On Sun, 7 Aug 2022, Ren=C3=A9 Scharfe wrote:
 
----
-Summary
+> Am 05.08.2022 um 17:36 schrieb Jeff King:
+> > On Wed, Aug 03, 2022 at 11:56:13PM +0200, Ren=C3=A9 Scharfe wrote:
+> > >>  int enable_nonblock(int fd)
+> >>  {
+> >> +	DWORD mode;
+> >> +	HANDLE handle =3D winansi_get_osfhandle(fd);
+> >> +	if (!handle)
+> >> +		return -1;
+> >> +	if (!GetNamedPipeHandleState(handle, &mode, NULL, NULL, NULL, NULL,=
+ 0))
+> >> +		return -1;
+> >> +	if (mode & PIPE_NOWAIT)
+> >> +		return 0;
+> >> +	mode |=3D PIPE_NOWAIT;
+> >> +	if (!SetNamedPipeHandleState(handle, &mode, NULL, NULL))
+> >> +		return -1;
+> >>  	return 0;
+> >>  }
+> >
+> > This looks plausibly correct to me. ;) We might want to change the nam=
+e
+> > of the compat layer to enable_pipe_nonblock(), since one assumes from
+> > the function names this only works for pipes.
+>
+> Or how about this?  Squashable.  Needs testing.
+>
+> --- >8 ---
+> Subject: [PATCH] nonblock: support Windows
+>
+> Implement enable_nonblock() using the Windows API.  Supports only named
+> and anonymous pipes for now, which suffices for the current caller.
+>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+>  compat/nonblock.c | 31 +++++++++++++++++++++++++++++++
+>  1 file changed, 31 insertions(+)
+>
+> diff --git a/compat/nonblock.c b/compat/nonblock.c
+> index 897c099010..78923cd2c3 100644
+> --- a/compat/nonblock.c
+> +++ b/compat/nonblock.c
+> @@ -14,9 +14,40 @@ int enable_nonblock(int fd)
+>
+>  #else
+>
+> +#ifdef GIT_WINDOWS_NATIVE
 
-In the past two weeks, besides keeping the work on `git-mv`, I was
-also working on the sparse-index integration with `git-rm`. I shipped
-one iteration of `git-mv` series and two iterations of `git-rm`
-series. At the time of writing, `git-mv` is v2 and `git-rm` is also v2.
+Maybe use an `#elif defined(GIT_WINDOWS_NATIVE)` here? That would make the
+code structures clearer, methinks.
 
-[1] https://ffyuanda.github.io/blog/GSoC-week-7-8/
+> +
+> +#include "win32.h"
+> +
+> +int enable_nonblock(int fd)
+> +{
+> +	HANDLE h =3D (HANDLE)_get_osfhandle(fd);
+> +	DWORD mode;
+> +	DWORD type =3D GetFileType(h);
+> +	if (type =3D=3D FILE_TYPE_UNKNOWN && GetLastError() !=3D NO_ERROR) {
+> +		errno =3D EBADF;
+> +		return -1;
+> +	}
+> +	if (type !=3D FILE_TYPE_PIPE)
+> +		BUG("unsupported file type: %lu", type);
+> +	if (!GetNamedPipeHandleState(h, &mode, NULL, NULL, NULL, NULL, 0)) {
+> +		errno =3D err_win_to_posix(GetLastError());
+> +		return -1;
+> +	}
+> +	mode |=3D PIPE_NOWAIT;
+> +	if (!SetNamedPipeHandleState(h, &mode, NULL, NULL)) {
 
--- 
+Nice.
+
+FWIW the documentation of `PIPE_NOWAIT` says:
+
+	Note that nonblocking mode is supported for compatibility with
+	Microsoft LAN Manager version 2.0 and should not be used to
+	achieve asynchronous input and output (I/O) with named pipes.
+
+(see
+https://docs.microsoft.com/en-us/windows/win32/api/namedpipeapi/nf-namedpi=
+peapi-setnamedpipehandlestate
+for full details)
+
+There is little more information to be found on the interwebs, the closest
+to an in-depth explanation is here:
+https://devblogs.microsoft.com/oldnewthing/20110114-00/?p=3D11753
+
+Even if that comment suggests that this mode is deprecated, I think it is
+safe to rely on it in Git's source code.
+
 Thanks,
-Shaoxuan
+Dscho
 
+> +		errno =3D err_win_to_posix(GetLastError());
+> +		return -1;
+> +	}
+> +	return 0;
+> +}
+> +
+> +#else
+> +
+>  int enable_nonblock(int fd)
+>  {
+>  	return 0;
+>  }
+>
+>  #endif
+> +
+> +#endif
+> --
+> 2.37.1.windows.1
+>
+
+--8323328-304667906-1659963341=:226--
