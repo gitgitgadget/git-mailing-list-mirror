@@ -2,174 +2,274 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CDD8C00140
-	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 13:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2376BC00140
+	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 13:28:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243404AbiHHN0Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Aug 2022 09:26:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37436 "EHLO
+        id S243191AbiHHN16 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Aug 2022 09:27:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243346AbiHHN0O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Aug 2022 09:26:14 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D702AE56
-        for <git@vger.kernel.org>; Mon,  8 Aug 2022 06:26:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1659965167;
-        bh=S/nmrLb39eu32EKB8NfzAdbrmPru/VdX4pQKEoBeb+8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=djjVStViHszhN0wF6SRs+Lh1kUO5Xs1uYAEwc1iwSzA3f0C0jbIkQugB3s9avqt42
-         l2O81O/jP5kzFU95sN7+4vS5wPt/uCcbj5SGd187WN6JS97zJ+RMtnXiTovKTlZD5/
-         L50aL+Q3IC+PykDVjiQhvsCoR4r1wQHkokVqtLQQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.21.182.192] ([89.1.214.151]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MfpSb-1njWA33tJx-00gJjJ; Mon, 08
- Aug 2022 15:26:06 +0200
-Date:   Mon, 8 Aug 2022 15:26:19 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?Rub=C3=A9n_Justo_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
-        rjusto <rjusto@gmail.com>
-Subject: Re: [PATCH] branch: allow "-" as a short-hand for "previous
- branch"
-In-Reply-To: <pull.1315.git.1659910949556.gitgitgadget@gmail.com>
-Message-ID: <s7862q69-05o8-s5s8-n635-823s34q358q4@tzk.qr>
-References: <pull.1315.git.1659910949556.gitgitgadget@gmail.com>
+        with ESMTP id S243158AbiHHN1z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Aug 2022 09:27:55 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9E7F9FE5
+        for <git@vger.kernel.org>; Mon,  8 Aug 2022 06:27:53 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 186-20020a1c02c3000000b003a34ac64bdfso5161097wmc.1
+        for <git@vger.kernel.org>; Mon, 08 Aug 2022 06:27:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=tk099UvRKNEVcBOVTHd3KhiJ4Kzhm+f3HVLIs4IyNQ0=;
+        b=GajXdQ2+ZjLVD4JxWCpy5vjoi+xbKr0hyJhtfOqzwjwfiis6FC/VjCacIBNp4qUos6
+         /EL+TB1HdjExe3/RFqZ06G6D39DRjfpjffZYHHqyOtAD2mSQbA6Qqfm11Xn+A/pFJhIj
+         5HDdCa403AOIJXICn4u9d5th+PRpqBE4bul3q5vLB/9Rmjj71OM1mGUmz21ROB6rTiRA
+         ctjveKiTd/DcrUdp3wSpl/0E6NQfiQ3KBkwri4j8VSQ8iJ0zlcQX36WJcyUceYQbIw2P
+         kYod93SCSTli9Ij0CSDsnmKNHG6oP9lz9CUGag05insWhSQWaNKu0x0+ui3sXwhYizVo
+         QmQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=tk099UvRKNEVcBOVTHd3KhiJ4Kzhm+f3HVLIs4IyNQ0=;
+        b=dS70nFl/B59T5YaYk/fs6CESyVGuzxbeo/ITLRZ7Dlasm8t0MUmQi/RmteuEt2LKN6
+         wrHeu01FiyaWXhlP8zuRWA83aEdS1KenKH62z2EOUpwddSC2r6qHYTLzh6cj3pb6gRqP
+         aKZ5nJI8hcjeSlgdqo4d9lh/aeTCZiyEbSKZVTdlIXiT2lETWiSvxHTIDfa8b/uNG7Ld
+         bPKDemlM43KuXUuZF6Lej/UBLqxi/a3oVV8Eve9516XIm1a9ZjdBT5jEjvKMYptQXUGp
+         gIdkje087u4Eg7PnvMxAtFWvxdhfIXBxA2kUaTXs4fdi8JjgaD34P4Ow7NhD8CUEATF0
+         p81Q==
+X-Gm-Message-State: ACgBeo2XG6l5z0vj8FwGr1CIcLj9i3IMIjMsqMog9yhOSrKq9khA3AZE
+        hnIAwsa3e9vJ4WiYZdl4BfXD2w/vUGc=
+X-Google-Smtp-Source: AA6agR79eGRCwR42VVENJZNOfNRcyo8MIW1vjSwoQyaCNV9GbnCIa/Q/FmNNaa2bK7E/0A7UhEqk5Q==
+X-Received: by 2002:a05:600c:4fd5:b0:3a3:4664:6d55 with SMTP id o21-20020a05600c4fd500b003a346646d55mr17999638wmq.73.1659965271723;
+        Mon, 08 Aug 2022 06:27:51 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h19-20020a05600c351300b003a501ad8648sm14447177wmq.40.2022.08.08.06.27.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Aug 2022 06:27:51 -0700 (PDT)
+Message-Id: <pull.1286.v2.git.1659965270.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1286.git.1657700238.gitgitgadget@gmail.com>
+References: <pull.1286.git.1657700238.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 08 Aug 2022 13:27:45 +0000
+Subject: [PATCH v2 0/5] Some improvements to safe.directory on Windows
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1205832110-1659965181=:226"
-X-Provags-ID: V03:K1:GSv/2kH8sMZPIQ0LYjffZltOwaeTp6ynFcPaVg82o61Ogv9aLmF
- +ZL7MJVgnS2AZEnGQ+42/D60Izo3IY3FWAAq9KDjja6o329wglXkv0t5jADuVvw1Q0X+jKq
- 2nrxXqLhSYF/pL6KuIA2XESiD2IdHFTUi9aIkxhJYpwt58Etvxgajm6tlwNI0bTazBc3/Rz
- yjMpDba/RI9Etu+bS5XpA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:VC2RJRNJWlM=:4n67vnqNE8sR5149GeiVOj
- PnZuw6VQsgYz2j54rgnU8LScgKHZrIG9OqgDlRy4NFfYMhbQyJxpFc+cJ2LzJhHVePoYQHQV3
- YdeJVVeAog8rQDdzy+JCxROwVCs51UX/BVd7VwXhHQkcrngiQPbNRIfZPCRSFLopw/7skF1xQ
- HYuuru4qH0Wo3UxFJC0ZmxkE6cNTWxCZ0BNFjbCgVL2QEkxzXsGQUzbudVUEm1deauwXAKJqd
- vHVY3je5lGbDAJzIcGA6DaMVdB4JmTMMz5Ezm6lZhH/SadzUJdWrhu+Js8FQTnh0Ac2YnoUdT
- 9coyduNwmnfBDMAfKnPZiHyuqaHw62VmGclYT2fA72/0nF6szRWQ0tU+dzmL6DkmfiMmW0APw
- mqHJr3c02w2eljeYELQPc9dKB03iaV3nxiw58O1eZodOLygfWe/oeyOIDPw18wocLBf052zxl
- 7ISj2gYaL6p1770iZz86G5kiYY2vIz0u8kVRZaSbM1/ava6hqy/0nyCIkot5/9e78i4vREFbs
- 6vte1XXMB/WR/c9WgnI/K6S6D3//3XuKZ3mVW70A40HlKyWqaHn+VwQiB9ZRN87vU04/2W0qI
- ychiD54Ur2ljK02RjKcGA9WqQcoLdw0eN0vrdVa3FQ/vuM8oApfxdkcQbbJtPyKXwJKaHZXs9
- R2cZxUQlP67ZTVIWlJjVZW/4huzNwhHkm7x7C4YgUKOf2WdD3LetouNp0/LntUVGuYdVtm2S6
- 0Yqjbqc555kLRj/d9X1qMwMGOsLuwohT3CRAmAAutsCEXCV/twOn/RfqLp1FJuXSOSKZbfsYO
- w1/eh4M4VeDND6pIdHcctD2281oybG189VaFzh/0+Vj7UErK1sWBPrjfssHztO/YWvms+3SRS
- 5tYeO1srjgfjvZWedbiH3+gyZNeeW+ctFQJIKYi41v1523+BU+Rn4O9y2QIMySOUq09V+F4YT
- cEyWd74j8BkbgKFOap8Vv0C9ppJ3kx4KGFVVGMfErRVp9D0btPRv4/04mjGFdRAYDXQ5F3vFa
- fI20rDdEIbpjJENxjhFjfNJ9xWWUEzQDOsKqqXK0tCh6ecbYC9LVXL6HgSL2NAI2YARfjTgR3
- 39mnFLReGNcJHN972YCg2PqDEmo8YHKMKijHtsla9+T5Ib9r/eK/q9KhA==
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Due to the semantics being substantially different from Unix, the
+safe.directory feature presents its own set of problems on Windows. One
+particular issue would have prevented it from working in GitHub Actions'
+build agents, which we definitely rely on in the Git project itself. This
+was addressed via the fifth patch, which had made it (in a slightly
+different form) already into Git for Windows v2.35.2, and they are ready to
+be applied to core Git, too.
 
---8323328-1205832110-1659965181=:226
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+The FAT32 patch came in later, and was released as part of Git for Windows
+v2.37.0, so I also have confidence that it is stable and ready to be
+integrated into core Git, too.
 
-Hi Rub=C3=A9n,
+Changes since v1:
 
-On Sun, 7 Aug 2022, Rub=C3=A9n Justo via GitGitGadget wrote:
+ * Restructured the patch series.
+ * Instead of an environment variable to turn on debugging, we now always
+   show the platform-dependent information together with the error message
+   about the dubious ownership (iff it is shown, that is), based on an idea
+   by Junio.
+ * Rebased onto gc/bare-repo-discovery to avoid a merge conflict.
 
-> From: rjusto <rjusto@gmail.com>
->
-> Align "branch" with the intuitive use of "-" as a short-hand
-> for "@{-1}", like in "checkout" and "merge" commands.
->
-> $ git branch -d -      # short-hand for: "git branch -d @{-1}"
-> $ git branch -D -      # short-hand for: "git branch -D @{-1}"
+Johannes Schindelin (5):
+  setup: fix some formatting
+  Prepare for more detailed "dubious ownership" messages
+  mingw: provide details about unsafe directories' ownership
+  mingw: be more informative when ownership check fails on FAT32
+  mingw: handle a file owned by the Administrators group correctly
 
-A valuable goal!
+ compat/mingw.c    | 59 ++++++++++++++++++++++++++++++++++++++++++++++-
+ compat/mingw.h    |  2 +-
+ git-compat-util.h |  5 +++-
+ setup.c           | 30 ++++++++++++++----------
+ 4 files changed, 81 insertions(+), 15 deletions(-)
 
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 55cd9a6e998..59c19f38d2e 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -241,6 +241,10 @@ static int delete_branches(int argc, const char **a=
-rgv, int force, int kinds,
 
-Touching only the `delete_branches()` function suggests that other
-commands are left as before, e.g. `git branch --unset-upstream -` would
-probably fail.
+base-commit: 776f184893d2861a729aa4b91d69931036e03e4b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1286%2Fdscho%2Fsafe.directory-and-windows-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1286/dscho/safe.directory-and-windows-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1286
 
-That's fine, but the commit message claims that the `"-"` special-casing
-is introduced for the `git branch` command, not just for `git branch -d`.
+Range-diff vs v1:
 
->  			die(_("Couldn't look up commit object for HEAD"));
->  	}
+ -:  ----------- > 1:  301d94f18f5 setup: fix some formatting
+ -:  ----------- > 2:  8cc45e4922a Prepare for more detailed "dubious ownership" messages
+ 1:  3480381b8b9 ! 3:  63494818105 Allow debugging unsafe directories' ownership
+     @@ Metadata
+      Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+      
+       ## Commit message ##
+     -    Allow debugging unsafe directories' ownership
+     +    mingw: provide details about unsafe directories' ownership
+      
+          When Git refuses to use an existing repository because it is owned by
+          someone else than the current user, it can be a bit tricky on Windows to
+          figure out what is going on.
+      
+     -    Let's help with that by offering some more information via the
+     -    environment variable `GIT_TEST_DEBUG_UNSAFE_DIRECTORIES`.
+     +    Let's help with that by providing more detailed information.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+     - ## Documentation/config/safe.txt ##
+     -@@ Documentation/config/safe.txt: which id the original user has.
+     - If that is not what you would prefer and want git to only trust
+     - repositories that are owned by root instead, then you can remove
+     - the `SUDO_UID` variable from root's environment before invoking git.
+     -++
+     -+Due to the permission model on Windows where ACLs are used instead of
+     -+Unix' simpler permission model, it can be a bit tricky to figure out why
+     -+a directory is considered unsafe. To help with this, Git will provide
+     -+more detailed information when the environment variable
+     -+`GIT_TEST_DEBUG_UNSAFE_DIRECTORIES` is set to `true`.
+     -
+       ## compat/mingw.c ##
+      @@
+       #include "../git-compat-util.h"
+     @@ compat/mingw.c
+       #include <conio.h>
+       #include <wchar.h>
+       #include "../strbuf.h"
+     -@@ compat/mingw.c: int is_path_owned_by_current_sid(const char *path)
+     +@@ compat/mingw.c: int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
+       		    IsValidSid(current_user_sid) &&
+       		    EqualSid(sid, current_user_sid))
+       			result = 1;
+     -+		else if (git_env_bool("GIT_TEST_DEBUG_UNSAFE_DIRECTORIES", 0)) {
+     ++		else if (report) {
+      +			LPSTR str1, str2, to_free1 = NULL, to_free2 = NULL;
+      +
+      +			if (ConvertSidToStringSidA(sid, &str1))
+     @@ compat/mingw.c: int is_path_owned_by_current_sid(const char *path)
+      +				to_free2 = str2;
+      +			else
+      +				str2 = "(inconvertible)";
+     -+			warning("'%s' is owned by:\n\t'%s'\nbut the current user is:\n\t'%s'", path, str1, str2);
+     ++			strbuf_addf(report,
+     ++				    "'%s' is owned by:\n"
+     ++				    "\t'%s'\nbut the current user is:\n"
+     ++				    "\t'%s'\n", path, str1, str2);
+      +			LocalFree(to_free1);
+      +			LocalFree(to_free2);
+      +		}
+       	}
+       
+       	/*
+     -
+     - ## setup.c ##
+     -@@ setup.c: const char *setup_git_directory_gently(int *nongit_ok)
+     - 	case GIT_DIR_INVALID_OWNERSHIP:
+     - 		if (!nongit_ok) {
+     - 			struct strbuf quoted = STRBUF_INIT;
+     -+			struct strbuf hint = STRBUF_INIT;
+     -+
+     -+#ifdef __MINGW32__
+     -+			if (!git_env_bool("GIT_TEST_DEBUG_UNSAFE_DIRECTORIES", 0))
+     -+				strbuf_addstr(&hint,
+     -+					      _("\n\nSet the environment variable "
+     -+						"GIT_TEST_DEBUG_UNSAFE_DIRECTORIES=true "
+     -+						"and run\n"
+     -+						"again for more information."));
+     -+#endif
+     - 
+     - 			sq_quote_buf_pretty(&quoted, dir.buf);
+     - 			die(_("detected dubious ownership in repository at '%s'\n"
+     - 			      "To add an exception for this directory, call:\n"
+     - 			      "\n"
+     --			      "\tgit config --global --add safe.directory %s"),
+     --			    dir.buf, quoted.buf);
+     -+			      "\tgit config --global --add safe.directory %s%s"),
+     -+			    dir.buf, quoted.buf, hint.buf);
+     - 		}
+     - 		*nongit_ok = 1;
+     - 		break;
+ 3:  dae03f1b204 ! 4:  7aaa6248dfe mingw: be more informative when ownership check fails on FAT32
+     @@ Commit message
+          any ownership information anyway, and the `GetNamedSecurityInfoW()` call
+          pretends that everything is owned "by the world".
+      
+     -    Let's special-case that scenario and tell the user what's going on, at
+     -    least when they set `GIT_TEST_DEBUG_UNSAFE_DIRECTORIES`.
+     +    Let's special-case that scenario and tell the user what's going on.
+      
+          This addresses https://github.com/git-for-windows/git/issues/3886
+      
+     @@ compat/mingw.c: static PSID get_current_user_sid(void)
+      +	return 0;
+      +}
+      +
+     - int is_path_owned_by_current_sid(const char *path)
+     + int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
+       {
+       	WCHAR wpath[MAX_PATH];
+     -@@ compat/mingw.c: int is_path_owned_by_current_sid(const char *path)
+     - 			 * okay, too.
+     - 			 */
+     +@@ compat/mingw.c: int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
+     + 		    IsValidSid(current_user_sid) &&
+     + 		    EqualSid(sid, current_user_sid))
+       			result = 1;
+     --		else if (git_env_bool("GIT_TEST_DEBUG_UNSAFE_DIRECTORIES", 0)) {
+     -+		else if (IsWellKnownSid(sid, WinWorldSid) &&
+     -+			 git_env_bool("GIT_TEST_DEBUG_UNSAFE_DIRECTORIES", 0) &&
+     +-		else if (report) {
+     ++		else if (report &&
+     ++			 IsWellKnownSid(sid, WinWorldSid) &&
+      +			 !acls_supported(path)) {
+      +			/*
+      +			 * On FAT32 volumes, ownership is not actually recorded.
+      +			 */
+     -+			warning("'%s' is on a file system that does not record ownership", path);
+     -+		} else if (git_env_bool("GIT_TEST_DEBUG_UNSAFE_DIRECTORIES", 0)) {
+     ++			strbuf_addf(report, "'%s' is on a file system that does"
+     ++				    "not record ownership\n", path);
+     ++		} else if (report) {
+       			LPSTR str1, str2, to_free1 = NULL, to_free2 = NULL;
+       
+       			if (ConvertSidToStringSidA(sid, &str1))
+ 2:  be06d711a13 ! 5:  fbfaff2ec21 mingw: handle a file owned by the Administrators group correctly
+     @@ Commit message
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## compat/mingw.c ##
+     -@@ compat/mingw.c: int is_path_owned_by_current_sid(const char *path)
+     +@@ compat/mingw.c: int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
+       	else if (sid && IsValidSid(sid)) {
+       		/* Now, verify that the SID matches the current user's */
+       		static PSID current_user_sid;
+     @@ compat/mingw.c: int is_path_owned_by_current_sid(const char *path)
+       
+       		if (!current_user_sid)
+       			current_user_sid = get_current_user_sid();
+     -@@ compat/mingw.c: int is_path_owned_by_current_sid(const char *path)
+     +@@ compat/mingw.c: int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
+       		    IsValidSid(current_user_sid) &&
+       		    EqualSid(sid, current_user_sid))
+       			result = 1;
+     @@ compat/mingw.c: int is_path_owned_by_current_sid(const char *path)
+      +			 * okay, too.
+      +			 */
+      +			result = 1;
+     - 		else if (git_env_bool("GIT_TEST_DEBUG_UNSAFE_DIRECTORIES", 0)) {
+     - 			LPSTR str1, str2, to_free1 = NULL, to_free2 = NULL;
+     - 
+     + 		else if (report &&
+     + 			 IsWellKnownSid(sid, WinWorldSid) &&
+     + 			 !acls_supported(path)) {
 
-At this stage, we already handled the `--remotes` flag, therefore I think
-that this patch does not do the intended thing for this command-line:
-
-	git branch -d --remotes -
-
->
-> +	if ((argc =3D=3D 1) && !strcmp(argv[0], "-")) {
-> +		argv[0] =3D "@{-1}";
-> +	}
-
-This means that we only handle `git branch -d -`, but not `git branch -d
-some-branch - some-other-branch`.
-
-Could you fix that?
-
-My thinking is that this probably should be a sibling of the `@{-1}`
-handling, most likely somewhat like this (I only compile-tested this
-patch, please take it from here):
-
-=2D- snip --
-diff --git a/object-name.c b/object-name.c
-index 4d2746574cd..ae6c2ed7b83 100644
-=2D-- a/object-name.c
-+++ b/object-name.c
-@@ -1420,6 +1420,12 @@ static int interpret_nth_prior_checkout(struct repo=
-sitory *r,
- 	const char *brace;
- 	char *num_end;
-
-+	if (namelen =3D=3D 1 && *name =3D=3D '-') {
-+		brace =3D name;
-+		nth =3D 1;
-+		goto find_nth_checkout;
-+	}
-+
- 	if (namelen < 4)
- 		return -1;
- 	if (name[0] !=3D '@' || name[1] !=3D '{' || name[2] !=3D '-')
-@@ -1432,6 +1438,8 @@ static int interpret_nth_prior_checkout(struct repos=
-itory *r,
- 		return -1;
- 	if (nth <=3D 0)
- 		return -1;
-+
-+find_nth_checkout:
- 	cb.remaining =3D nth;
- 	cb.sb =3D buf;
-
-=2D- snap --
-
-Naturally, this has much bigger ramifications than just `git branch -d -`,
-and might even obsolete some `-` special-casing elsewhere; I have not
-looked to see if there is any such special-casing, and would like to ask
-you to see whether you can find those and remove them in separate commits
-after implementing (and testing) the above
-`interpret_nth_prior_checkout()` approach.
-
-Thanks,
-Johannes
-
-> +
->  	for (i =3D 0; i < argc; i++, strbuf_reset(&bname)) {
->  		char *target =3D NULL;
->  		int flags =3D 0;
->
-> base-commit: 679aad9e82d0dfd8ef3d1f98fa4629665496cec9
-> --
-> gitgitgadget
->
-
---8323328-1205832110-1659965181=:226--
+-- 
+gitgitgadget
