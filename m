@@ -2,142 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35AFFC00140
-	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 18:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5D7DC25B0C
+	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 18:37:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243342AbiHHSPh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Aug 2022 14:15:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47916 "EHLO
+        id S243697AbiHHShr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Aug 2022 14:37:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230062AbiHHSPg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Aug 2022 14:15:36 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB7D72B2
-        for <git@vger.kernel.org>; Mon,  8 Aug 2022 11:15:34 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id gb36so18017750ejc.10
-        for <git@vger.kernel.org>; Mon, 08 Aug 2022 11:15:34 -0700 (PDT)
+        with ESMTP id S233914AbiHHShq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Aug 2022 14:37:46 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1134DEE
+        for <git@vger.kernel.org>; Mon,  8 Aug 2022 11:37:45 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id p132so11297907oif.9
+        for <git@vger.kernel.org>; Mon, 08 Aug 2022 11:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=google.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc;
-        bh=7eU4s/yr0bIXvO6rfKAGpbQmgb3Ma3+HecEBShlcDDw=;
-        b=KnxhjrODVKjRxk9pa6ICNQs3/sDKJ2w8oS86ZjVYxgY3wjpYdWIOjni/eA5vow2HZb
-         EXeUg0GJ/695Jog3XGUdFw5uFXMypWscFhwj1O86zo5ptNCLJLxTcMZJLsHYQlgXcoRe
-         QkoiJf2Y/x0JeojsOlYx1iYndc/kYLxYnMK2UdI2Zo/iTKT4e4koWHk9oPrUHbYRbk56
-         u0wRB9Gv0VKLtSb68pvdj6NlN0c4vYsuBB9MOJxauhWSZTUqvj8dY9fpw729h0YtXsQm
-         nMyrcTpnFM9Uo6moVyHoW2OUhU6nhVMYiu/+/wq/hifcxKZUj8R4cwFjH0vNSApBDrb8
-         daog==
+        bh=AdebdzW6i1SyHqnrTYUwp25Zh7doQyfnmMxk0OFKsf0=;
+        b=RRp1fTN4a+swR2EUwGNTT6qu1iZ/1o6GFQB/EuzSGY2odxZi4oJWxTXUEF1Kq+sw0o
+         rB4haBt+6y6YqW5gXc6ec/+iDEZ3qD2PFrOqAdqmBs5+hsyk0gmHmHbpH5BDvyYkUmAB
+         NTSs0CR786wwKE4p6tlsHkA0UHiKk9xbiq8FaWWpIuAbPidxO+v2bv3Xx3fv6Cc8AoGF
+         Fwl5hP6rFD8ro1l/tKP67rKgFWA+tnObCnQPnZXkr91HiNJUPbrqO49+h2VCWq0KrgnG
+         eD3eKgoLKRjH/g+auAI6D/FvQvncd1r6QW6qmyi4q/2b2dc1bdZCC4OvO73Qb+LBbPl+
+         bFSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc;
-        bh=7eU4s/yr0bIXvO6rfKAGpbQmgb3Ma3+HecEBShlcDDw=;
-        b=gbEcpBhhjqATdHfVs5QIQqO4QN+fseImf4E54oOnYiwc8Od8b+qu/C4y+7f9cuNaPI
-         N27H89UrvP1dnQvgmjESw24WVFkxwJtwkFtZN7Cc32DAPN+fw+GC14n5dP5kao1KWy++
-         9YAb9TAkugs9XUvzNYZ19I0489j6MA91NPNl8mBNIv2OQOJMO1ZOvOQvnrU6U9AKNgl7
-         k6s/do5WDcYShXZYuLHo72s2vwo71WDPU2TRsbVfJrYJE8mUla/cyf8fPsc/F8IRTo0x
-         P+lOcypOyQ+FdrdbQPe+3hA1zgy/qI35ZZeVk1fotGqa2mdagv6KIqs1T7kQ+tc2O17M
-         fUXQ==
-X-Gm-Message-State: ACgBeo2H/qAXvyexeOzw03oOVR3RfpNXvJLkdS1itOJs1kfcFA1HybhK
-        VXcdR1sXnBNmUZI6jSt4zNnTQG0l8CaMDtZKSqt0QlczduC4dQ==
-X-Google-Smtp-Source: AA6agR72FtPVqVmwZEmbw0BafEBmh7snuD+FVrMU2EC2fmOKHGMpNdwn15XKISpxYhM3zY8lTRZuFPZyq6RUbzKUcVc=
-X-Received: by 2002:a17:906:6a2a:b0:730:a3f1:aee with SMTP id
- qw42-20020a1709066a2a00b00730a3f10aeemr15049316ejc.387.1659982533228; Mon, 08
- Aug 2022 11:15:33 -0700 (PDT)
+        bh=AdebdzW6i1SyHqnrTYUwp25Zh7doQyfnmMxk0OFKsf0=;
+        b=zHirqxI+tYlpgw7UWJar22a93O4vYK2TNCBb8IADDYfXpOj4q6F/0l26eSRbAMj16N
+         8IQbaaDjyxs+zmP1z2zebX4ht5tEtMW/a6KoyNR2QHlGUgQfRwdPN3iOJ4huetPkjnJA
+         lEw59Aisjwr1+I5xMA8HuW3ch6kf7QaAb3o7bGWXEMCZtfu79kxTgyV+XmERPy0Pjw+m
+         4LSJp2Ukcu5Z5QP9iRX5+a1hzPvgCzcvjJcHIzvELvzido05RDpiSSgpdohTUQmaAz+e
+         IvpGab4kuj0LCDfjLU4LDjbEow67aEl4CiBJyusAk+XorghAIwIOK7KvE3zIpt1P9IdP
+         KSpw==
+X-Gm-Message-State: ACgBeo1iLfM1AfKbiXU8jdmJfjahpDDfCtcoQYxZNc9jyiyp80ONsx0c
+        kom8TTesEnj7c73C1109tI8M+5UaD+YIlPnwp4ieMw==
+X-Google-Smtp-Source: AA6agR7RSSI/QjmJiJVrfrQb8e9Sz2FGmcIIbZ3Xlw03QXGVRy/fMcYszey52fhIWppngzrlFI+9wnnm0jj4TdkoRtI=
+X-Received: by 2002:a05:6808:10d4:b0:33a:baf0:338c with SMTP id
+ s20-20020a05680810d400b0033abaf0338cmr8413514ois.4.1659983865173; Mon, 08 Aug
+ 2022 11:37:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAKvVO18RVye=PkBRv=trj2GHh8ccGKL5j0mMq2eHQ1SX=wsr8A@mail.gmail.com>
- <patch-1.1-3ff17707481-20220805T141816Z-avarab@gmail.com> <b6299f8a-f75a-0e96-a6a6-55a7280584bf@github.com>
- <Yu02dOo4G8sy8tI6@coredump.intra.peff.net> <xmqqo7wyzlpm.fsf@gitster.g>
-In-Reply-To: <xmqqo7wyzlpm.fsf@gitster.g>
-From:   Emily Noneman <emily.noneman@gmail.com>
-Date:   Mon, 8 Aug 2022 14:15:21 -0400
-Message-ID: <CAKvVO18Du5M6broAJ6WqTAk6C4jxtqbXoS=9x03JgSdJAak80Q@mail.gmail.com>
-Subject: Re: [PATCH] revision.c: set-up "index_state.repo", don't segfault in pack-objects
+References: <20220502170904.2770649-1-calvinwan@google.com>
+ <20220728230210.2952731-7-calvinwan@google.com> <xmqq1qu37pbf.fsf@gitster.g>
+In-Reply-To: <xmqq1qu37pbf.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Mon, 8 Aug 2022 11:37:34 -0700
+Message-ID: <CAFySSZAKibH3dcHLFz=1csKwfa3-Ebkou_-soQS3h_+ewoZfUw@mail.gmail.com>
+Subject: Re: [PATCH v5 6/6] cat-file: add remote-object-info to batch-command
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Paul Horn <git@knutwalker.engineer>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com,
+        philipoakley@iee.email, johncai86@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The latest changes seem to have resolved the issue for me. My repo was
-a bit different than Pauls, it's a big corporate repo with a partial
-checkout and a worktree. What's confusing is that I do see an "index"
-file in worktrees/NetLedger_GitRepo , but git 2.37.1 exhibits the
-crash. 2.37.1.377.g679aad9e82 works just fine.
+> > While `info` takes object ids one at a time, this creates overhead when
+> > making requests to a server so `remote-object-info` instead can take
+> > multiple object ids at once.
+>
+> I am not sure if the above is desirable---doesn't it make the
+> protocol (i.e. the requests the invoker of "cat-file" needs to
+> prepare) unnecessarily complex?  If we have "buffered" mode, the
+> implementation can collect and batch requests and talk with the
+> other side in a single communication with the other end, no?
 
-On Fri, Aug 5, 2022 at 12:42 PM Junio C Hamano <gitster@pobox.com> wrote:
+I'm a little bit confused as to what you are suggesting here, in
+terms of how a user would want to call this command. Are you
+saying this functionality should only work in "buffered" mode?
+Or are you saying that `remote-object-info` should only take
+one object id at a time, and in buffer mode, those requests are
+batched together?
+
 >
-> Jeff King <peff@peff.net> writes:
+> > In --buffer mode, this changes to:
+> >
+> >  - Receive and parse input from user
+> >  - Store respective function attached to command in a queue
+> >  - After flush, loop through commands in queue
+> >     - Call respective function attached to command
+> >     - Set batch mode state, get object info, print object info
 >
-> > Of the two patches, I think 4447d4129d is the better approach. The
-> > assumption in the code seems to be that do_read_index() (and thus
-> > read_index_from(), etc) will set up istate->repo. That patch fixes a
-> > corner case where we failed to do so. And with that fix, there's no need
-> > for the callers to set things up ahead of time. So it covers all of
-> > those initializers you mentioned.
->
-> Yeah, I tend to agree that Martin's fix, which is a more focused
-> one, is the better approach between the two.  It was merged to
-> the 'master' track only a few days ago.
->
-> We are at the end of the week #4 of this 12-week cycle, and we've
-> accumulated about two dozens of topics already on 'maint' since the
-> first maintenance release v2.37.1 was done, so we may have a chance
-> to merge Martin's fix down to 'maint' before tagging the v2.37.2
-> release.
->
-> One thing that may help is to add a test similar to the situation
-> Emily & Paul had to t7063 on top of 4447d4129d before merging it
-> down, perhaps?
->
-> In your reproduction, the "rm .git/index" step makes the worktree's
-> branch "not checked out" (the commit is empty so "worktree add" may
-> check out no files, and removing the index will make it as if you
-> did "clone --no-checkout") ...
->
->   git init repo
->   cd repo
->   git commit --allow-empty -m base
->
->   git config core.untrackedCache true
->   git worktree add at
->   rm .git/worktrees/wt/index
->
->   git gc
->
-> ...  but it is not something an end user is likely to do, so I am
-> still curious how this was triggered in real life.
->
-> Ah, OK, I think the steps can be tweaked to
->
->       git config core.untrackedCache true
->     - git worktree add at
->     - rm .git/worktrees/wt/index
->     + git worktree add --no-checkout wt
->
->       git gc
->
-> i.e. (1) With "worktree add --no-checkout", there is no need to
-> manually remove the index file, and (2) "at" is an obvious typo of
-> "wt".  This does not require the history to be a singleton empty
-> tree, either.
->
-> And that is a less implausible thing for users to be doing, but may
-> still not be very common.  Perhaps the --no-checkout is a prelude to
-> set up a custom sparse checkout pattern, to avoid a wasteful full
-> tree checkout before doing so, or something?  If that is the case,
-> then the above sequence becomes a very plausible thing for users to
-> be doing.
->
-> > Emily, Paul: I'm 99% sure this will be the case given my reproduction
-> > above, but if you could try reproducing the problem with the current tip
-> > of "master" from git.git, that would confirm the findings.
->
-> Yes, indded.  That would be very helpful.
->
-> Thanks, all, for discussing the problem and its solution(s), and
-> thanks in advance for further testing to help the fix forward.
+> So, the existing buffered mode is poorly designed, in other words.
+> Isn't this something we can fix for performance without affecting
+> the existing callers?
+
+Much of the existing cat-file code seems to be designed around
+taking in one object/command at a time, and --buffer can be
+thought of as a wrapper around that preexisting code that simply
+stores a queue of commands rather than running them immediately.
+I think the existing buffered mode is well designed -- this part of the
+commit message is to explain why at some point I need to preprocess
+what is in the buffer
