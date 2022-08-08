@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62ED1C00140
-	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 13:28:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A286C25B0C
+	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 13:28:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243359AbiHHN2G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Aug 2022 09:28:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39174 "EHLO
+        id S243176AbiHHN2I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Aug 2022 09:28:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243339AbiHHN15 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S243340AbiHHN15 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 8 Aug 2022 09:27:57 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84828A464
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91528A472
         for <git@vger.kernel.org>; Mon,  8 Aug 2022 06:27:56 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id j7so10927007wrh.3
+Received: by mail-wm1-x336.google.com with SMTP id 186-20020a1c02c3000000b003a34ac64bdfso5161195wmc.1
         for <git@vger.kernel.org>; Mon, 08 Aug 2022 06:27:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=w1h9NraaToF+tuGu5gt0C56PoKkfBlb9sQmrKhyZZG8=;
-        b=lrpHPmIXNgxZwBkAIdkcbYMFrQIEQXb2VjGcr1wGJZxqmL5uO7WFr53SFIuARBJVSO
-         EX88z2lSgGINTfuE/7Cd21z6TDhbLuVEEm0pvLXkIbrYR6/ROgOQmmUb2K5VRRRFbZnn
-         MaBG/BcMn+YdPGzaT5GNlhYaBSv5Iv/+YNaY/3CnrXsueCI5lbV/Z5iTePEFnrGJ14tL
-         hi+ZH9OGRKPoZg+ZOWntIJfB1TCdwzndQIS+hIoBRPwi5CMjxOw0AlofEInZ3CZwE4Ay
-         EnV2tHgXnnGgBpQ3Q+YFcfiJNohl76u5xFB6oQm/JVNq1gY4gMwOT9D+HOe0W3LBGsxU
-         5j5g==
+        bh=v6BZradEP9tTafjbmqr4IwJDt5zRjEVeDjgv2G2Ibss=;
+        b=BZbX/7BFvH4L6ItMfTcfliRxJFoypGd8EY3gUQ4f6I2Yyw+KeFY2KmKarF8xbqYvYz
+         WqoQROjPyRuvGhEYl/Aiau0Knbh5Vdo0UdOoyXyFyyd8SZZIvyCRws+pSZIYbvTVkCUN
+         Dk97My/AvKD2iovXbNn5oUggLPWuqt4LghQTdr4FGXGp7dWj2NMIgjoHj0hSa5TjTPUL
+         D7bYwDWcEcswe1F5ZrTPtSEXSQBQYca4dsNe9G3Q+O9RvVSPoNQXyoSZ3d1ST3d0vLba
+         MzwR1j7ecTgJK7HUlLj0Q0isKrAzckQtmuo0tY3Fz7b3QLB9FEgIBtmtLU5ZvATiuPjE
+         KwXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=w1h9NraaToF+tuGu5gt0C56PoKkfBlb9sQmrKhyZZG8=;
-        b=kpIoheWg+HMHxi0yY6UJk3eVpamagE3lVgX2JDWOesxjHIuXCEctCc18McT4hs/sJf
-         YBQPBSP2+aAUWdAeKTWV0WNFOkqjzRWSzqtHXli7u8Q0HwgWyY2AXIc9c2LzFhbVYFSZ
-         GoW/ZibsBxoof6mGQGbkxeeIzk53OYEmnbTjnFpRr73C2WC+V/Zem9oxNfsqsmLrzZHy
-         ih/JhHNNH1GCZ4Ssoffp+s6eb2M/jg42ajQ+HwXwemR3VMf7HZFWtlEsaIpnm+QsHOg8
-         aQN7/aL5jMcZLcpM/eIijuaco8T/vHsLD5e2g3sFflLDqt30fc5kwzljPktEKZdO4FxT
-         MUMA==
-X-Gm-Message-State: ACgBeo2Fv8TFALZAPkEI4NOe6IAeEHc+0T5X5SnC3NxRl2QPuYPnyPvn
-        jianhqc2gsabm86HIbZtKb3BC544Drk=
-X-Google-Smtp-Source: AA6agR40OMitTlW8bhv8QqQJMiYd3SjDPD4D0MMmFkv8voKbAciSpm6LHtxJXCfXhht9eK3FstuJAw==
-X-Received: by 2002:a05:6000:10c3:b0:21f:15aa:1b68 with SMTP id b3-20020a05600010c300b0021f15aa1b68mr11785003wrx.693.1659965274723;
-        Mon, 08 Aug 2022 06:27:54 -0700 (PDT)
+        bh=v6BZradEP9tTafjbmqr4IwJDt5zRjEVeDjgv2G2Ibss=;
+        b=tNpm5HlWzM6kbGZsDsnUVJh7qf2pBBzeAA1dua6J014vUrNglS8KIqpvBGQvAf10K5
+         Ws9KX9DrmXMHZVIL0xYFAKV2IrFZEOaSGrK1ywamV2t1fIF3aVb6VW0+QZtS8+lOQC4F
+         8W/iOzCIdM64TVtGqyi72b1y2xWLv9sWVIyg7GXzQTqGrjyvnHRDROA/UXc8ynAOb8n/
+         KiY6q6glgGYkvqFnfWtd8aKhleLJ4ZUtgVnp2yKfCQ1jd5H3QNfgzh4HTISQqghC6HtK
+         WiXIfwPiTpVcAT8geJgkWtZXjtk84cvduCej7wqNVFDg/hDOVZNtFte4fkk+tDDKLlIx
+         521w==
+X-Gm-Message-State: ACgBeo0GTTPz0c3O42mvFFs4NQI6tJUGg/FSc/p7SRfDJnz7zRV4XT8R
+        9XvlNwhNk68GfbGT+nVPXUq3fwTsYcM=
+X-Google-Smtp-Source: AA6agR5dIdOsdWCUpWZNjaUVJk1ZMin4FGc+7CTmj5qzYxfZBDf3FEihnuccYvsnBiX+S9MOo2kQQA==
+X-Received: by 2002:a05:600c:348e:b0:3a3:5515:98b1 with SMTP id a14-20020a05600c348e00b003a3551598b1mr13019124wmq.110.1659965275817;
+        Mon, 08 Aug 2022 06:27:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z9-20020a5d4d09000000b0021dd08ad8d7sm11390233wrt.46.2022.08.08.06.27.53
+        by smtp.gmail.com with ESMTPSA id j6-20020a05600c190600b003a31b79dc0esm41242583wmq.1.2022.08.08.06.27.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Aug 2022 06:27:54 -0700 (PDT)
-Message-Id: <6349481810585d4dba2187266510d71fb2471cb7.1659965270.git.gitgitgadget@gmail.com>
+        Mon, 08 Aug 2022 06:27:55 -0700 (PDT)
+Message-Id: <7aaa6248dfef7fb8436b5fbccf4689d0be3226a5.1659965270.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1286.v2.git.1659965270.gitgitgadget@gmail.com>
 References: <pull.1286.git.1657700238.gitgitgadget@gmail.com>
         <pull.1286.v2.git.1659965270.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 08 Aug 2022 13:27:48 +0000
-Subject: [PATCH v2 3/5] mingw: provide details about unsafe directories'
- ownership
+Date:   Mon, 08 Aug 2022 13:27:49 +0000
+Subject: [PATCH v2 4/5] mingw: be more informative when ownership check fails
+ on FAT32
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,59 +68,62 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When Git refuses to use an existing repository because it is owned by
-someone else than the current user, it can be a bit tricky on Windows to
-figure out what is going on.
+The FAT file system has no concept of ACLs. Therefore, it cannot store
+any ownership information anyway, and the `GetNamedSecurityInfoW()` call
+pretends that everything is owned "by the world".
 
-Let's help with that by providing more detailed information.
+Let's special-case that scenario and tell the user what's going on.
+
+This addresses https://github.com/git-for-windows/git/issues/3886
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ compat/mingw.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index f12b7df16d9..2c09c5bffee 100644
+index 2c09c5bffee..22f960c7e34 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -1,6 +1,7 @@
- #include "../git-compat-util.h"
- #include "win32.h"
- #include <aclapi.h>
-+#include <sddl.h>
- #include <conio.h>
- #include <wchar.h>
- #include "../strbuf.h"
-@@ -2720,6 +2721,29 @@ int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
+@@ -2674,6 +2674,21 @@ static PSID get_current_user_sid(void)
+ 	return result;
+ }
+ 
++static int acls_supported(const char *path)
++{
++	size_t offset = offset_1st_component(path);
++	WCHAR wroot[MAX_PATH];
++	DWORD file_system_flags;
++
++	if (offset &&
++	    xutftowcsn(wroot, path, MAX_PATH, offset) > 0 &&
++	    GetVolumeInformationW(wroot, NULL, 0, NULL, NULL,
++				  &file_system_flags, NULL, 0))
++		return !!(file_system_flags & FILE_PERSISTENT_ACLS);
++
++	return 0;
++}
++
+ int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
+ {
+ 	WCHAR wpath[MAX_PATH];
+@@ -2721,7 +2736,15 @@ int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
  		    IsValidSid(current_user_sid) &&
  		    EqualSid(sid, current_user_sid))
  			result = 1;
-+		else if (report) {
-+			LPSTR str1, str2, to_free1 = NULL, to_free2 = NULL;
-+
-+			if (ConvertSidToStringSidA(sid, &str1))
-+				to_free1 = str1;
-+			else
-+				str1 = "(inconvertible)";
-+
-+			if (!current_user_sid)
-+				str2 = "(none)";
-+			else if (!IsValidSid(current_user_sid))
-+				str2 = "(invalid)";
-+			else if (ConvertSidToStringSidA(current_user_sid, &str2))
-+				to_free2 = str2;
-+			else
-+				str2 = "(inconvertible)";
-+			strbuf_addf(report,
-+				    "'%s' is owned by:\n"
-+				    "\t'%s'\nbut the current user is:\n"
-+				    "\t'%s'\n", path, str1, str2);
-+			LocalFree(to_free1);
-+			LocalFree(to_free2);
-+		}
- 	}
+-		else if (report) {
++		else if (report &&
++			 IsWellKnownSid(sid, WinWorldSid) &&
++			 !acls_supported(path)) {
++			/*
++			 * On FAT32 volumes, ownership is not actually recorded.
++			 */
++			strbuf_addf(report, "'%s' is on a file system that does"
++				    "not record ownership\n", path);
++		} else if (report) {
+ 			LPSTR str1, str2, to_free1 = NULL, to_free2 = NULL;
  
- 	/*
+ 			if (ConvertSidToStringSidA(sid, &str1))
 -- 
 gitgitgadget
 
