@@ -2,78 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1FFAC00140
-	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 06:16:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECDB2C00140
+	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 06:37:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235470AbiHHGQp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Aug 2022 02:16:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52614 "EHLO
+        id S235526AbiHHGh6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Aug 2022 02:37:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229891AbiHHGQn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Aug 2022 02:16:43 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C26826FF
-        for <git@vger.kernel.org>; Sun,  7 Aug 2022 23:16:43 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id p18so7656235plr.8
-        for <git@vger.kernel.org>; Sun, 07 Aug 2022 23:16:43 -0700 (PDT)
+        with ESMTP id S229688AbiHHGh5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Aug 2022 02:37:57 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F75B11A20
+        for <git@vger.kernel.org>; Sun,  7 Aug 2022 23:37:56 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id j8so14753285ejx.9
+        for <git@vger.kernel.org>; Sun, 07 Aug 2022 23:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=q7VfuL9NF7BDOwcVlnNQnl4pX/svesUrEldO/6Igfzo=;
-        b=Jt7NTUxsmdAYWxh6/MWTa72WItb5/JzyHrSfl+0ODUxOsFUFppjzcXzbHuhlt8PhXn
-         CEr8offGXREO6s3R03bdtJBZmT5NEY5PhUgFx91DhncfDdGz9V4gFmP6tetAD7c0kk/Q
-         4rPUocDEcubipNiMXtjoSQOiEsarIlS6LnivxRJnwGyLwqnQpKPRYCuFLHEnZTgkoeMp
-         QQE0v49peTNIGPOQVyIFvf2NkoXgGFEuJBj/UZasCl09QFbXYNYlYiKph9EziAhF0iq0
-         /uFSKX20mtFwF1JZKLN9Pqj1gu0BwatRMpMIjWVV8AIPZr6inHGBC8LA/ilf32xW3mmr
-         Q3Vw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=80yQ9efSBMzgu75kKdYHspEvSRr1sz2fAUlj9G8uLqA=;
+        b=EPcivhaVciypVMu/uDctAXn8CBT9aJKEs8kOQaFy5bMQG7aHu6PcMlccgvhM+DD+n8
+         S0CugmCTT64xuilmb+mO1QiBet58OGQeNJMbh35hRHIXaKNrce1Z1z+Tb/2wZlCGuzG5
+         hziKYk14gOvIWT0kJpQX3zSxFpwKQ88rkL687vUW7tOAsUQRP3XVwb2wzVpVpTm3WB+0
+         x/E7MkGjo7fw//dZcROd+nE/qUxnZ5BH9GbpZRJnauXxFwTOZzz4T/61CIn37KmllH4n
+         gUKiclkxkw/51eVikfO1l2zxbq/RsYZXi221t4mcuE574g2kqFtR9s5ObDEbqSW1ZFYD
+         7Vug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=q7VfuL9NF7BDOwcVlnNQnl4pX/svesUrEldO/6Igfzo=;
-        b=VtUjs5H83RPZKbFuS+hPb00gGwsDRpzZcdh+0h1mAsbMTF1pbBKuCgOdh/6im4WGjN
-         Lxmmc2QAQP/1RLo6WzwRPMMJx4EVsEFlMwi5T2PyoJGeHFqxe1FJG9JKu2yckNb/Z00z
-         fpogJWstFsIFWr6qcwfahbelHHMYlmGWCx/iVHVWaLnuksnpqE/7W29R1Es100GKNrnb
-         yf0Ng9Wg9Fz3lL4bOy3pP7JrEZgzc0UtZzGBNWAn/ycd95v4BmtjHNp2k9+XyymRfo6X
-         8g2SwJtKaNPPRH/A2xosAd/1oLkwntgMUicYT36xyT5CWHIbNEdlR34aIiYOq58I2QnU
-         AiuQ==
-X-Gm-Message-State: ACgBeo1BM1oGJUdLD1gTLAq7fORCdWDcZoy5OELydh2O/EUIYPfxLB57
-        5hnTzp40nw2LS08mE72POHo=
-X-Google-Smtp-Source: AA6agR5IlRXmCHurxl7WUrs99ctLxbkemc8xE4I0SAtbzvKEBENnOxqEdLgbvjvHXD7qvPJ6gXxfGA==
-X-Received: by 2002:a17:903:240e:b0:16d:cc17:8f16 with SMTP id e14-20020a170903240e00b0016dcc178f16mr17284389plo.100.1659939402564;
-        Sun, 07 Aug 2022 23:16:42 -0700 (PDT)
-Received: from localhost.localdomain ([205.204.117.101])
-        by smtp.gmail.com with ESMTPSA id p7-20020aa79e87000000b0052de09a38d0sm7764130pfq.2.2022.08.07.23.16.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 07 Aug 2022 23:16:42 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     gitster@pobox.com
-Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@jeffhostetler.com,
-        git@vger.kernel.org, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v1 1/2] api-trace2.txt: print config key-value pair
-Date:   Mon,  8 Aug 2022 14:16:36 +0800
-Message-Id: <20220808061636.88692-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.37.1.1.g8cbb44ffc4.dirty
-In-Reply-To: <xmqqa68iz5yx.fsf@gitster.g>
-References: <xmqqa68iz5yx.fsf@gitster.g>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=80yQ9efSBMzgu75kKdYHspEvSRr1sz2fAUlj9G8uLqA=;
+        b=vznLdmlPs7NI9ZZqAN8uVsoHP6aPPPjXksysw7Mmpl0/0XiCzPY+IwPiW0tYcf9oBj
+         3XzFsaOST/9HlJO5o0BkPHJLpzRYReX/jW4rV6Da6xvSf4PG+a6+dCeZmkbZiRxZpuxo
+         nWZiWvvrvsE82YKXdN4Q4X6nYH+ZPFjbFkuUCoMLOtxp7GKSosbN7DSwcTsbUhGUrLa4
+         5QoyeDXnIR0dmAaAXZZZg92tyD2o3f7YZyJu9qIPQ44LlG7wK6XSJOtL9SmE7OHXHlLS
+         cPdc0Q0ETyyLKKBp90bBoGaKunoRgEMHqNNxK57xcQ6Ad3YrE+fg/yUZNN8BPp/LjUxb
+         L5mw==
+X-Gm-Message-State: ACgBeo1/51bnQgxwYLZhBidCbTvXwF9XCgkais1feg+QIhVonAueIKeM
+        dG/1hGf5NuF08HPv3mDQBlAnQMUMqgww6niDLVIC1aUDleg=
+X-Google-Smtp-Source: AA6agR6Va1TVrJMHAcYtDiYAHlXicUFELj0rD+bEjWXmUZJQ9aNwq3TnIywZZ4S2P8LeYT6ovz2VpvKmj1xp7MvRY7Y=
+X-Received: by 2002:a17:907:28c8:b0:730:9ccc:331f with SMTP id
+ en8-20020a17090728c800b007309ccc331fmr12528264ejc.608.1659940674700; Sun, 07
+ Aug 2022 23:37:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20220807024941.222018-1-felipe.contreras@gmail.com>
+ <20220808053459.184367-1-greenfoo@u92.eu> <20220808053459.184367-3-greenfoo@u92.eu>
+In-Reply-To: <20220808053459.184367-3-greenfoo@u92.eu>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Mon, 8 Aug 2022 01:37:43 -0500
+Message-ID: <CAMP44s3v_4PdOfaviXCxik1LL5k_kkmZ2Yp=+Qfb8CqyNCdMUQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] mergetools: vimdiff: fix single tab mode, single
+ window mode and colors
+To:     Fernando Ramos <greenfoo@u92.eu>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Aug 8, 2022 at 12:35 AM Fernando Ramos <greenfoo@u92.eu> wrote:
+>
+> vimdiff3 was introduced in 7c147b77d3 (mergetools: add vimdiff3 mode,
+> 2014-04-20) and then partially broken in 0041797449 (vimdiff: new
+> implementation with layout support, 2022-03-30) in two ways:
+>
+>     - It does not show colors unless the user has "set hidden" in his
+>       .vimrc file
+>
+>     - It prompts the user to "Press ENTER" every time it runs.
 
-Junio C Hamano <gitster@pobox.com> writes:
+For the record, in my version these two issues are fixed in a much simpler way:
 
-> So, what is the outcome from this discussion?  It seems that this
-> subthread on [1/2] is blocking the two-patch series?
+--- a/mergetools/vimdiff
++++ b/mergetools/vimdiff
+@@ -325,7 +325,7 @@ gen_cmd () {
+        if ! echo "$LAYOUT" | grep ",\|/" >/dev/null
+        then
+                buf=$(get_buf "$LAYOUT")
+-               FINAL_CMD="-c \"echo | ${buf}b | bufdo diffthis\" -c
+\"tabfirst\""
++               FINAL_CMD="-c \"echo | set hidden | ${buf}b | silent
+bufdo diffthis\" -c \"tabfirst\""
+                return
+        fi
 
-I think it's blocking. I replied a comment to comfirm that I understand Ævar
-Arnfjörð Bjarmason's suggestion and also there is an improvement change in it:
+>         # Add an extra "-c" option to move to the first tab (notice that we
+>         # can't simply append the command to the previous "-c" string as
+>         # explained here: https://github.com/vim/vim/issues/9076
+>
+> -       FINAL_CMD="-c \"$CMD\" -c \"tabfirst\""
+> +       FINAL_CMD="-c \"set hidden diffopt-=hiddenoff diffopt-=closeoff\" -c \"$CMD\" -c \"tabfirst\""
+>  }
 
-  https://public-inbox.org/git/20220801122515.23146-1-tenglong.tl@alibaba-inc.com/
+These diffopt settings look awfully familiar.
 
-Thanks.
+https://lore.kernel.org/git/20220807024941.222018-7-felipe.contreras@gmail.com/
+
+-- 
+Felipe Contreras
