@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3DBEC00140
-	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 13:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11BF0C00140
+	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 13:40:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242958AbiHHN35 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Aug 2022 09:29:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40708 "EHLO
+        id S243354AbiHHNkJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Aug 2022 09:40:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238014AbiHHN3z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Aug 2022 09:29:55 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60AA49FE7
-        for <git@vger.kernel.org>; Mon,  8 Aug 2022 06:29:54 -0700 (PDT)
+        with ESMTP id S243341AbiHHNkH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Aug 2022 09:40:07 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A506BC98
+        for <git@vger.kernel.org>; Mon,  8 Aug 2022 06:40:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1659965387;
-        bh=s8hiqAbFsQ+R9H4LU8mLzTVFX3/1bhyusCg8vQedXF0=;
+        s=badeba3b8450; t=1659965997;
+        bh=wh8K2fDIiqefI2Pzyu172UnuNhnjq/vd4t7+KeZkWc0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=aEuVyZDPEf3gPtwHErzpwxe4/9sK9kY1l0ZHNAt896qDXyfEPFn0UIqP9cn/Nshdq
-         WK/mzjuL5wkjjN5Dj1GcOpDbDJqHXkobbzpfs5/1jku5fKyvE+sxD3RERdkzm9muA7
-         GtvPkuxLJ2mB/26soUxLn6xOkQdCqdVl8CBnJbrI=
+        b=aNK9VlXw8lJ1gFD9c/OvkQlEvFkjLm653bYmPumpNH6CTLmHajNHxnd2WSTHt9g1/
+         FbJMEJBgdZ9Zx3+kNn85BNQzuvWAwnBlAUycfT3f9nN9MFI4V1DV7DPXtH2lhry1Yk
+         +oYM4NFsTMhJPHqE0qByjL0C+mDKSPbenNQAB0MQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.21.182.192] ([89.1.214.151]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mo6ux-1nbIci0GhH-00pdKy; Mon, 08
- Aug 2022 15:29:47 +0200
-Date:   Mon, 8 Aug 2022 15:29:58 +0200 (CEST)
+Received: from [172.21.182.192] ([89.1.214.151]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQMuR-1nypJ745YX-00MMFY; Mon, 08
+ Aug 2022 15:39:57 +0200
+Date:   Mon, 8 Aug 2022 15:40:09 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 1/3] Allow debugging unsafe directories' ownership
-In-Reply-To: <8rqqnqp1-q613-ron6-6q8s-n7sq57o980q9@tzk.qr>
-Message-ID: <14q05972-5507-21n5-p61o-qq62366n6nsp@tzk.qr>
-References: <pull.1286.git.1657700238.gitgitgadget@gmail.com> <3480381b8b99142bcc0213957a43d68a962c52d9.1657700238.git.gitgitgadget@gmail.com> <xmqq5yk0dcvk.fsf@gitster.g> <xmqqy1wv2x1n.fsf@gitster.g> <8rqqnqp1-q613-ron6-6q8s-n7sq57o980q9@tzk.qr>
+Subject: Re: [PATCH] tests: fix incorrect --write-junit-xml code
+In-Reply-To: <xmqq35f38yeb.fsf@gitster.g>
+Message-ID: <s4s2qr56-2948-p025-rrq7-qq56p9oo844r@tzk.qr>
+References: <pull.1288.git.1657789234416.gitgitgadget@gmail.com> <xmqq35f38yeb.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:OlVZ2QhpzCW2WHS6l8gi+NVWqV2yfN2l40eQ2dWYHgKgGJkAeUN
- Z+L8ZabldYRbPndSfV8NEbjZwCs0TjYsztkmBgK3nr37g5eXxGp1iCm3Q/XIKe+oywxNHoi
- cJB+F1Q6vEDG4EnbdBBOoCDhXmFoEWthlTt2m3tF8O+ofA1utt8xFCa0oF4st1BTRsDwvi3
- jvkVBkFLG4H9x/0mYNZuw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3Mh1AiQS+X8=:5v9R2bnamldMAgFiGI+V19
- v5IdZDMjv0/GPx4VDGYjhWS5bmT7AQTzkcLGHEqJpFAL7V7dXal5azz62boLXUyNfNXQ3OtIW
- UR9YF7KwG0C6djjul/GSIUcG8EPw7mmhKuQEw5RsNDL1pqJ8ZfR/Z58o8g4U7LwrL2bjqBwmy
- yWYqDRmeVQ+FE5Rh9KYElfmIXkzvgkYfGpJPTL5sIogk7fU1LwXWYZTeurrvkOYYc/c5nXwDr
- /pd2+LY/v4HmAIIDnCfFgdxrvvQpmQB3lrdiz2079eqnDaABZHPMrYWeYDFoT4p39JY97SIny
- TfpIzwZaWRkMotRF/hVNvUdHF+j53n65oANXl2jnucmmmOS0vyxPZlTr9hAX4Ab0SYrhnHTKR
- 9L/Ni/C5PW8poalkgC1FwQF+nup5OmAIp2Xc5Pt/mwxe50ElV/NydsicpRwP1IiiBcNSyenAU
- OiC7oo3+zFqrnRwivmOjD3nUhOL5SruqTlvXVk95Kl47Awep7K79ChKDPHtbvIKQ+hbZWOPHL
- mytc+opjN6b1h5caJIzEIJYnCndiPHPjilVYkhRNGiEOiw3Fv/4XYbaA54kdAXVX+CzRXJ3ug
- sm4AhI6LNDrhePwqdBnm3VXalo1R8vSqu5lYGMS7dxZIphXkaBjRYyAtqu217paB6o+OpH3oU
- BiwnZ1m4veMqUMwH7wqgIV8PKeauEXmvDLFMFIJ0lhU+wQsidfjzto/ltwc9xPfWMdGHpzsOg
- DiilFSh/ahXCL3bsg/euPi3eMJ8AA4XpJAz55+Mj+w3qBlhwCkumgqJwFhXS2V5LocuAIct2Z
- Qw0Nx/HZFQKYzcFy4M4X/zEYBMg7tyWeW7fuLTqOaTYeNVAj7anzl9lHuQ68dC4uiUqoNhxwK
- /Sp6aLtqBhxXcRvgyngQgDx5jXrKw+qLFrSLZsobW63xxvV1NgD/uay4b83vZp1RsvHc7w6gA
- auF3sgh4aHJO6NOXwLoyyviqGpaDT9KeAbgeYrWfAST0WmFe0rmpzjo6BefEv+EjK2hwGgoRN
- GmRH2m8kC5U4CGMVNK/l6LQZVqXxkCop8VHWUcuFzoN7z0KORGlkldWzHJ3bI51GPjIMwSpQL
- YfXnigyBfbx6DAcFCwFnRzqZ7buiFerbm96QWtlCPhO27Ii6Sl7vKtXnw==
+X-Provags-ID: V03:K1:kUnuZeoROLr64MaclIw7HKGtOxgQDZVRu1ciW+ZzrUpWhdlOFIr
+ 2VBep1uiC75bhkJP5f8OBB1z/D+nmfTiph0hF3B3N0vifK1j1C5hGEatLNtMbFQ/Q+vWj+C
+ t/8CjEZTrPhfHDCFLsjIPjkw1UT5G3n4m0bbXYFZbkZWqZt97r5uoyjSjPylkEVfmZDHp+3
+ Yo8zsmNwSPkOTrizHZsUA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Yl1q1NHmKkI=:mgBnbXDUhqAF+0GrFV1Cum
+ cr7B0lwOIEi5utE8vWu0jXZOeVcr/2KnrTmCfqNHxu+47bU7jTFpfMXMbvBCxjNRaU4Y0G6C/
+ QiE2o9GQG04J/VZx4O/ojenbstjqHvBrk+Tc8BiDtEDY2DaeZpgw1rAEI2xI4n9D7JDOX98XN
+ IhBqNoT0IMtob1IBDLsrdK/mfwqzVZPWmeXTGGBI7Q06nYPMtbJLsxj6Ss/zNDUVlV+2Tx25H
+ ZAmPhbdtaEWcTrNaEtGdjQo8qwx8Xxg25FxHv9c1hB+aIpjmBZ3EIWMfpkH4R/V4/MTOo4gl4
+ 9Foh5ZX8/W087DCG1BNAph5RaHePHdpygl0xhFvQ7x8i5H0SmKaO9lANR1/XEfy3PYbjt9MQi
+ 9/tP72antVdGDS7gQkxZlSMWkZAKroRy/6NNheGbZiaLup0VLcD0DeSgEUE7FNmVfoRu/ajgk
+ ySZDJzcYL92vVYJGffzrqi7RJ1i7Y2nOj+CSkQnm/1moZo9BhkRfNFoJkSUDAcoi9SLhgzx46
+ 1xKn+wV76S1x3jCaQLN7jIXKR2p/REN79EnT3qsPenCWAwoPsVt0OdX22eKGYTPv9kPPdCWZW
+ 5UsqsFQiUOH7L2cshmxLFYZTZnv212jjUMIAK3/bfm0G6JOF3WhRkgaEHxR8sRI0mzhdFlD3a
+ Uzmql4+WMKDrKqrn5xNgIhTyiKed7lVnYyCT9FVmvDaIL4mHoBaOk0QcBFMAdElMHRCakVJAu
+ baO3ZtA74mUiQivvORP8XoED3MklS3UlibXxBGZfakeBDfz6QgLPfca9vYfLRyvdbi4nVaPEK
+ uKEyv1mJr6WezA3jHNbDLF57VCu41BDYfygh5mYUiqbP0A4FhBKNiBg1o7WPQlPM0RPraR2Qr
+ LEeWBdiDKnJ3IQ74bhttRpu9+ge5O0YaESneLTn2a2DEBwwu3uPrCDJCrm+baqaBBw8LBp+K2
+ DPAcAdcbnkJCkalUn7yO/eYymx8raVjMULsFTQjcolpgUA7n8PKrMhbfoRQoQ/lMKpYNRkEqB
+ UGNDvzKC9SEnIhIrCxdLiKf9f8XEU9jmzm6hPhEy4ls2GTJ/K0KJPuf4PjJuImhwWtxUFXA69
+ uKilrBsu0eylipRb1PI1+DdgZHv1p0PMavac4l7rV6c4gj8pcB8NJ8jHw==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,35 +64,96 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Junio,
 
-On Fri, 15 Jul 2022, Johannes Schindelin wrote:
+On Thu, 14 Jul 2022, Junio C Hamano wrote:
 
-> On Thu, 14 Jul 2022, Junio C Hamano wrote:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> > > ... I am not sure about this part.  Do we have any other codepath to
-> > > show "to debug, run the program with this" suggestion?  Adding it in
-> > > the documentation is probably good, but this is an extra message
-> > > that is much larger than the "owned by X but you are Y" message that
-> > > would be shown.  With or without the environment set, the output
-> > > will become noisier with this patch.  I wonder if we are better off
-> > > giving the information that is given in the warning (in compat/ part
-> > > of the patch) _unconditionally_ in the message, which would make it
-> > > less noisy overall.
-> >
-> > I am wondering if passing a struct to allow is_path_owned_by*()
-> > helper(s) to report the detail of the failures they discover a
-> > cleaner way to do this.  To illustrate what I meant, along the
-> > lines of the following patch, with any additional code to actually
-> > stuff messages in the strbuf report, in the is_path_owned_by*()
-> > implementation.
+> >     Unfortunately, I noticed this regression no earlier than when I ne=
+eded
+> >     to validate Git for Windows v2.37.1. Since v2.37.1 was an embargoe=
+d
+> >     release, I could not use GitHub Actions for the CI testing, so I h=
+ad to
+> >     reinstate Git's Azure Pipeline.
 >
-> I like it! Let me play with this, after this coming week (during which I
-> plan to be mostly offline).
+> I wonder if it would make your life easier
 
-I had to play with it for a while until I could make it work, but
-eventually I managed to do it. The second iteration was just sent, and
-implements this route.
+It would make my life easier if Chesterton's Fences were left alone ;-)
+
+> if the same GitHub Actions CI stuff were available for the Cabal
+> repository we use for embargoed work, by allowing you to use the same
+> validation for usual releases and the enbargoed ones?
+
+GitHub Actions are available in the Cabal repository. The problem is that
+due to the private nature of said repository, the number of included build
+minutes is limited.
+
+I did manage to get GitHub to sponsor the Git project specifically to
+increase said build minutes. But that only scratches the problem at the
+surface.
+
+I still think that we need to slow the heck down with refactoring for
+refactoring's sake because it's not only the CI builds that are affected.
+I pay a lot of time to accommodate for those refactorings, and so do
+others, and the benefit of most of those refactorings escapes me. My best
+guess is that they adapt Git's source code to individual tastes, which is
+of course a losing game because too many individuals with too many
+different tastes are involved in the Git project. Unless we start valuing
+particular individuals' tastes over others', which I believe we should not
+do.
+
+You asked me in private to provide more reviews for those refactorings so
+that they see some push-back, but I lack the bandwidth for that.
+
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> >  t/test-lib-junit.sh | 10 +++++-----
+> >  1 file changed, 5 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/t/test-lib-junit.sh b/t/test-lib-junit.sh
+> > index c959183c7e2..79c31c788b9 100644
+> > --- a/t/test-lib-junit.sh
+> > +++ b/t/test-lib-junit.sh
+> > @@ -46,7 +46,7 @@ finalize_test_case_output () {
+> >  	shift
+> >  	case "$test_case_result" in
+> >  	ok)
+> > -		set "$*"
+> > +		set -- "$*"
+> >  		;;
+> >  	failure)
+> >  		junit_insert=3D"<failure message=3D\"not ok $test_count -"
+> > @@ -65,17 +65,17 @@ finalize_test_case_output () {
+> >  			junit_insert=3D"$junit_insert<system-err>$(xml_attr_encode \
+> >  				"$(cat "$GIT_TEST_TEE_OUTPUT_FILE")")</system-err>"
+> >  		fi
+> > -		set "$1" "      $junit_insert"
+> > +		set -- "$1" "      $junit_insert"
+> >  		;;
+> >  	fixed)
+> > -		set "$* (breakage fixed)"
+> > +		set -- "$* (breakage fixed)"
+> >  		;;
+> >  	broken)
+> > -		set "$* (known breakage)"
+> > +		set -- "$* (known breakage)"
+> >  		;;
+> >  	skip)
+> >  		message=3D"$(xml_attr_encode --no-lf "$skipped_reason")"
+> > -		set "$1" "      <skipped message=3D\"$message\" />"
+> > +		set -- "$1" "      <skipped message=3D\"$message\" />"
+> >  		;;
+> >  	esac
+>
+> OK.  Ancient shells did not understand "--" and it was idiomatic to
+> say "set x ...; shift", but we already do assume "set --" is usable
+> everywhere we care about in many of our scripts and tests.
+>
+> Looks good to me.
+>
+> Thanks.  Will queue.
 
 Thank you,
 Dscho
