@@ -2,119 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A1FCC00140
-	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 13:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3DBEC00140
+	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 13:29:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243399AbiHHN2M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Aug 2022 09:28:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39190 "EHLO
+        id S242958AbiHHN35 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Aug 2022 09:29:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243352AbiHHN2A (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Aug 2022 09:28:00 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5A4B9FE7
-        for <git@vger.kernel.org>; Mon,  8 Aug 2022 06:27:58 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id z12so10883412wrs.9
-        for <git@vger.kernel.org>; Mon, 08 Aug 2022 06:27:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc;
-        bh=eLjEx9Bl9ywnepjxjVCPdZ6lH4L+q5Q+sk+026AsdWw=;
-        b=CGlkPgwbvvJqs/7qBj/fRl9xSvrOXyT98bRe5nu1GBfN+MXErMe57E+HRZrZQziPov
-         e2V+ecbqtireC5yF6LrDOkfAxX1/UBDeAJ/tbA1a7iArgw8P2xOognbIbu4VUMNJu1Qh
-         qz8daoLLI3pRADSP5RN6FWeJ0NTzPBcku8cHPXG2E0Njkfw9AT1rIFO5CcJJOmMjaJwG
-         teswRxVtumYO6sbzpmhNRONFIg6oiepQjoAmR8hvYNAIrtoD9u7hFcW1kmW95zraWJWC
-         T/Nl8jzgaaT/czbZCCzSntl7accTvxbA7J4qQnV0UU2hl3VxxcDVmp/Iof47SXi925Q1
-         N7gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=eLjEx9Bl9ywnepjxjVCPdZ6lH4L+q5Q+sk+026AsdWw=;
-        b=apm8KmcNo1Aj77omadsc7d3IwvAjDanexBWpuj1ay4I0bWJB6xrH9BccXrp8vEAXX0
-         BNykj1wdqQhdpKykUR3po/oyyDMnUMNR+38pk+no4U8QxYHV+PPG0zMKDKB1TUb9iCtc
-         kKcMcw9MBmrireyUw5kS1PTXKqmAYRYqxK6aKkDNH0NpRDNyyAni/dDffa1QL4vrxRi/
-         cNK9+SwGXQ6+Fx0yu7l9cvjBnmSH2grYYB49Wz2cWzOEPYBbOOzjPt1QQ3OA/vkCokRQ
-         BwWMblRZdnWMajx2GwMR+QYEQwVvxDsuPT9m9m4gkvsNtDxnEnRPPztrB3rQ5IrjGoPa
-         dI4Q==
-X-Gm-Message-State: ACgBeo0nfrr6dmaBYhmGOj09u/CIiZ0kN3c1Wg9eNzphzimbe6XYO2mO
-        Ubb0mUhDf0Ebuhk/UiMZevrvBN1Awjk=
-X-Google-Smtp-Source: AA6agR4CQFw4PBv6jD6zCpM88M+uUX6ZSTfCD1zmVHnYOUY1laDrkfWpwoe0//IHqgKZQbdT2iKbNQ==
-X-Received: by 2002:adf:efc3:0:b0:21f:15aa:1b40 with SMTP id i3-20020adfefc3000000b0021f15aa1b40mr11354920wrp.159.1659965276845;
-        Mon, 08 Aug 2022 06:27:56 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w15-20020adfec4f000000b0021e6b62fde2sm11193001wrn.59.2022.08.08.06.27.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Aug 2022 06:27:56 -0700 (PDT)
-Message-Id: <fbfaff2ec21d76229eb4d86f6bfe4eab4de20c96.1659965270.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1286.v2.git.1659965270.gitgitgadget@gmail.com>
-References: <pull.1286.git.1657700238.gitgitgadget@gmail.com>
-        <pull.1286.v2.git.1659965270.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 08 Aug 2022 13:27:50 +0000
-Subject: [PATCH v2 5/5] mingw: handle a file owned by the Administrators group
- correctly
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S238014AbiHHN3z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Aug 2022 09:29:55 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60AA49FE7
+        for <git@vger.kernel.org>; Mon,  8 Aug 2022 06:29:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1659965387;
+        bh=s8hiqAbFsQ+R9H4LU8mLzTVFX3/1bhyusCg8vQedXF0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=aEuVyZDPEf3gPtwHErzpwxe4/9sK9kY1l0ZHNAt896qDXyfEPFn0UIqP9cn/Nshdq
+         WK/mzjuL5wkjjN5Dj1GcOpDbDJqHXkobbzpfs5/1jku5fKyvE+sxD3RERdkzm9muA7
+         GtvPkuxLJ2mB/26soUxLn6xOkQdCqdVl8CBnJbrI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.21.182.192] ([89.1.214.151]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mo6ux-1nbIci0GhH-00pdKy; Mon, 08
+ Aug 2022 15:29:47 +0200
+Date:   Mon, 8 Aug 2022 15:29:58 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/3] Allow debugging unsafe directories' ownership
+In-Reply-To: <8rqqnqp1-q613-ron6-6q8s-n7sq57o980q9@tzk.qr>
+Message-ID: <14q05972-5507-21n5-p61o-qq62366n6nsp@tzk.qr>
+References: <pull.1286.git.1657700238.gitgitgadget@gmail.com> <3480381b8b99142bcc0213957a43d68a962c52d9.1657700238.git.gitgitgadget@gmail.com> <xmqq5yk0dcvk.fsf@gitster.g> <xmqqy1wv2x1n.fsf@gitster.g> <8rqqnqp1-q613-ron6-6q8s-n7sq57o980q9@tzk.qr>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:OlVZ2QhpzCW2WHS6l8gi+NVWqV2yfN2l40eQ2dWYHgKgGJkAeUN
+ Z+L8ZabldYRbPndSfV8NEbjZwCs0TjYsztkmBgK3nr37g5eXxGp1iCm3Q/XIKe+oywxNHoi
+ cJB+F1Q6vEDG4EnbdBBOoCDhXmFoEWthlTt2m3tF8O+ofA1utt8xFCa0oF4st1BTRsDwvi3
+ jvkVBkFLG4H9x/0mYNZuw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3Mh1AiQS+X8=:5v9R2bnamldMAgFiGI+V19
+ v5IdZDMjv0/GPx4VDGYjhWS5bmT7AQTzkcLGHEqJpFAL7V7dXal5azz62boLXUyNfNXQ3OtIW
+ UR9YF7KwG0C6djjul/GSIUcG8EPw7mmhKuQEw5RsNDL1pqJ8ZfR/Z58o8g4U7LwrL2bjqBwmy
+ yWYqDRmeVQ+FE5Rh9KYElfmIXkzvgkYfGpJPTL5sIogk7fU1LwXWYZTeurrvkOYYc/c5nXwDr
+ /pd2+LY/v4HmAIIDnCfFgdxrvvQpmQB3lrdiz2079eqnDaABZHPMrYWeYDFoT4p39JY97SIny
+ TfpIzwZaWRkMotRF/hVNvUdHF+j53n65oANXl2jnucmmmOS0vyxPZlTr9hAX4Ab0SYrhnHTKR
+ 9L/Ni/C5PW8poalkgC1FwQF+nup5OmAIp2Xc5Pt/mwxe50ElV/NydsicpRwP1IiiBcNSyenAU
+ OiC7oo3+zFqrnRwivmOjD3nUhOL5SruqTlvXVk95Kl47Awep7K79ChKDPHtbvIKQ+hbZWOPHL
+ mytc+opjN6b1h5caJIzEIJYnCndiPHPjilVYkhRNGiEOiw3Fv/4XYbaA54kdAXVX+CzRXJ3ug
+ sm4AhI6LNDrhePwqdBnm3VXalo1R8vSqu5lYGMS7dxZIphXkaBjRYyAtqu217paB6o+OpH3oU
+ BiwnZ1m4veMqUMwH7wqgIV8PKeauEXmvDLFMFIJ0lhU+wQsidfjzto/ltwc9xPfWMdGHpzsOg
+ DiilFSh/ahXCL3bsg/euPi3eMJ8AA4XpJAz55+Mj+w3qBlhwCkumgqJwFhXS2V5LocuAIct2Z
+ Qw0Nx/HZFQKYzcFy4M4X/zEYBMg7tyWeW7fuLTqOaTYeNVAj7anzl9lHuQ68dC4uiUqoNhxwK
+ /Sp6aLtqBhxXcRvgyngQgDx5jXrKw+qLFrSLZsobW63xxvV1NgD/uay4b83vZp1RsvHc7w6gA
+ auF3sgh4aHJO6NOXwLoyyviqGpaDT9KeAbgeYrWfAST0WmFe0rmpzjo6BefEv+EjK2hwGgoRN
+ GmRH2m8kC5U4CGMVNK/l6LQZVqXxkCop8VHWUcuFzoN7z0KORGlkldWzHJ3bI51GPjIMwSpQL
+ YfXnigyBfbx6DAcFCwFnRzqZ7buiFerbm96QWtlCPhO27Ii6Sl7vKtXnw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Junio,
 
-When an Administrator creates a file or directory, the created
-file/directory is owned not by the Administrator SID, but by the
-_Administrators Group_ SID. The reason is that users with administrator
-privileges usually run in unprivileged ("non-elevated") mode, and their
-user SID does not change when running in elevated mode.
+On Fri, 15 Jul 2022, Johannes Schindelin wrote:
 
-This is is relevant e.g. when running a GitHub workflow on a build
-agent, which runs in elevated mode: cloning a Git repository in a script
-step will cause the worktree to be owned by the Administrators Group
-SID, for example.
+> On Thu, 14 Jul 2022, Junio C Hamano wrote:
+>
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> > > ... I am not sure about this part.  Do we have any other codepath to
+> > > show "to debug, run the program with this" suggestion?  Adding it in
+> > > the documentation is probably good, but this is an extra message
+> > > that is much larger than the "owned by X but you are Y" message that
+> > > would be shown.  With or without the environment set, the output
+> > > will become noisier with this patch.  I wonder if we are better off
+> > > giving the information that is given in the warning (in compat/ part
+> > > of the patch) _unconditionally_ in the message, which would make it
+> > > less noisy overall.
+> >
+> > I am wondering if passing a struct to allow is_path_owned_by*()
+> > helper(s) to report the detail of the failures they discover a
+> > cleaner way to do this.  To illustrate what I meant, along the
+> > lines of the following patch, with any additional code to actually
+> > stuff messages in the strbuf report, in the is_path_owned_by*()
+> > implementation.
+>
+> I like it! Let me play with this, after this coming week (during which I
+> plan to be mostly offline).
 
-Let's handle this case as following: if the current user is an
-administrator, Git should consider a worktree owned by the
-Administrators Group as if it were owned by said user.
+I had to play with it for a while until I could make it work, but
+eventually I managed to do it. The second iteration was just sent, and
+implements this route.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- compat/mingw.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 22f960c7e34..7aa9318db72 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2728,6 +2728,7 @@ int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
- 	else if (sid && IsValidSid(sid)) {
- 		/* Now, verify that the SID matches the current user's */
- 		static PSID current_user_sid;
-+		BOOL is_member;
- 
- 		if (!current_user_sid)
- 			current_user_sid = get_current_user_sid();
-@@ -2736,6 +2737,15 @@ int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
- 		    IsValidSid(current_user_sid) &&
- 		    EqualSid(sid, current_user_sid))
- 			result = 1;
-+		else if (IsWellKnownSid(sid, WinBuiltinAdministratorsSid) &&
-+			 CheckTokenMembership(NULL, sid, &is_member) &&
-+			 is_member)
-+			/*
-+			 * If owned by the Administrators group, and the
-+			 * current user is an administrator, we consider that
-+			 * okay, too.
-+			 */
-+			result = 1;
- 		else if (report &&
- 			 IsWellKnownSid(sid, WinWorldSid) &&
- 			 !acls_supported(path)) {
--- 
-gitgitgadget
+Thank you,
+Dscho
