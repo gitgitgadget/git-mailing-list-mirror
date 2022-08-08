@@ -2,137 +2,756 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96E11C00140
-	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 23:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1FD1C25B0C
+	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 23:57:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244222AbiHHXyI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Aug 2022 19:54:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39364 "EHLO
+        id S244749AbiHHX5N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Aug 2022 19:57:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbiHHXx6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Aug 2022 19:53:58 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3139D1C138
-        for <git@vger.kernel.org>; Mon,  8 Aug 2022 16:53:57 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id h132so9956843pgc.10
-        for <git@vger.kernel.org>; Mon, 08 Aug 2022 16:53:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=DU19vWiUW9aqxYOFHE5YLVtskbrH003Wm2GWtUInbYY=;
-        b=JbserybrxjMzAteQUh1GpuAVisAHGI2ERq3V5j6SfU/RCK600yN/8UIUJkh2DX6qew
-         Tp/lQlU4jVqCxY5DSYtJjkTuMUI0wx4yuxy4btE5P4bXkWV92Nc0a2EI6NMfJTh2H0Qc
-         FRQukh6BZ+nNIcRiSy/R/56cBF3LBZ7QSIkQW4lvSDy96QGEYvkdvNjS0CNhITREMG/L
-         HpuxX4ftBgvn0xuw827aHfVqCei+lJtT5CpYo8WizQ0JK0DwntWaPXvrJkcrpxtayJ5E
-         6xxqpbBhBP6DjUh7sr8AhmGpu5DY+p34KBeOxjlJ5QQZUEuhIswbI8RfQ5ftqIgYjOsN
-         +xmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=DU19vWiUW9aqxYOFHE5YLVtskbrH003Wm2GWtUInbYY=;
-        b=qpZMeraMQUJ/cNbUB/wOcejHifRqe8Fpjx9xobp/LYWPK/mwMvryA5AwMxCw5HyxlA
-         X0XZiq7CeYj0zlH/K2wMW5lRofiJCrM7lUrA26vwfhQ4fBLS79XxzMi4nquEIM4g7FIR
-         u6bY/8D8D5tFWPPDwPfXxAxO0E9IsBN0GfGXT95L+/CmAs5F6CMxDOt3LUs6li3/ALh7
-         OKXlYYbXADj4NpveOKfHw7evIPsATZoGcZs3xRHwKNixaQsIvQXVeaZon+99pAt7+puc
-         dvAi0HaH9gnE61nym2blxoK+NouegX15J0+QG5gmroFE9Xrelrg18gUE5LeAgLHOy+p6
-         7xyQ==
-X-Gm-Message-State: ACgBeo0N3t/JL1FnepY8U30NT54j1+rv7ZUzMgRuuXQLoEK5TVT6FaIX
-        BdfoiGnCYQ8BThVEwzajFWdqNHYCKRze
-X-Google-Smtp-Source: AA6agR7tMgq2MydIuiLbFRALD7VglhSZQ49oBAFypwDzplY0X7b2ELaPYH2GyhoAA9lPc4bV4ZjhwA==
-X-Received: by 2002:a05:6a00:1252:b0:52e:b81f:f70c with SMTP id u18-20020a056a00125200b0052eb81ff70cmr17534701pfi.5.1660002836704;
-        Mon, 08 Aug 2022 16:53:56 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id er15-20020a17090af6cf00b001f303d149casm8654091pjb.50.2022.08.08.16.53.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Aug 2022 16:53:56 -0700 (PDT)
-Message-ID: <8b5801a3-fa3a-acf4-0c34-a753ab7770ac@github.com>
-Date:   Mon, 8 Aug 2022 16:53:54 -0700
+        with ESMTP id S244714AbiHHX4h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Aug 2022 19:56:37 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AAF61D304
+        for <git@vger.kernel.org>; Mon,  8 Aug 2022 16:55:34 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 84FB4138217;
+        Mon,  8 Aug 2022 19:55:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=+
+        WAn6F5LvgfKW84RRfdeKGISidC8NAPMkl1PVRuf7vk=; b=MpNUgJsF/o+wVVaKX
+        2CCbZNrVTx0L3WYKPauJJT4YdMB/1U2nyvrHTUcyMA06v8Zxb452MbnlnX2TwGCS
+        Aa1A0BxuBmSfTrj2E1/KAU3KYbfi2i5xk50yr7QqXQZwgRRgXTtNLMCpeK8UWQac
+        O33U7Zr9mqlZzOVnVAI/50ECEM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 698E1138215;
+        Mon,  8 Aug 2022 19:55:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 96A05138214;
+        Mon,  8 Aug 2022 19:55:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: What's cooking in git.git (Aug 2022, #03; Mon, 8)
+X-master-at: c50926e1f48891e2671e1830dbcd2912a4563450
+X-next-at: c1821dd516c3fe71ff8009bcb7fca5764e49a4b9
+Date:   Mon, 08 Aug 2022 16:55:31 -0700
+Message-ID: <xmqqv8r2qoi4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.12.0
-Subject: Re: [PATCH v2 9/9] mv: check overwrite for in-to-out move
-Content-Language: en-US
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
-Cc:     derrickstolee@github.com
-References: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
- <20220805030528.1535376-1-shaoxuan.yuan02@gmail.com>
- <20220805030528.1535376-10-shaoxuan.yuan02@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20220805030528.1535376-10-shaoxuan.yuan02@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 96C2F8B4-1775-11ED-87A0-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shaoxuan Yuan wrote:
-> Add checking logic for overwriting when moving from in-cone to
-> out-of-cone. It is the index version of the original overwrite logic.
-> 
-> Helped-by: Derrick Stolee <derrickstolee@github.com>
-> Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-> ---
->  builtin/mv.c                  | 12 ++++++++++++
->  t/t7002-mv-sparse-checkout.sh |  2 +-
->  2 files changed, 13 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index 765a1e8eb5..70996d582f 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -367,6 +367,18 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
->  			goto act_on_entry;
->  		}
->  
-> +		if (ignore_sparse &&
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen',
+and aren't considered "accepted" at all.
 
-If '--sparse' is specified...
+A handful of topics have graduated to the 'master' track, and half a
+dozen topics are now in 'next' to cook.  We are starting the week #5
+of a 12-week cycle (cf. https://tinyurl.com/gitCal).
 
-> +		    (dst_mode & SKIP_WORKTREE_DIR) &&
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-...and the destination's parent directory is outside the sparse cone...
+With maint, master, next, seen, todo:
 
-> +		    index_entry_exists(&the_index, dst, strlen(dst))) {
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-vcs/git/
 
-...and the destination file exists in the index, then we're going to be
-overwriting an existing index entry. 
+With all the integration branches and topics broken out:
 
-> +			bad = _("destination exists in the index");
-> +			if (force) {
-> +				if (verbose)
-> +					warning(_("overwriting '%s'"), dst);
-> +				bad = NULL;
-> +			} else {
-> +				goto act_on_entry;
-> +			}
-> +		}
+	https://github.com/gitster/git/
 
-The rest of this aligns with what's done for a normal (exists on-disk)
-overwrite. There's not much in the original overwrite-handling logic that
-can be reused here (it's checking for overwrite based on 'stat' rather than
-the contents of the index), so code structure-wise this makes sense as a
-standalone check.
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
-Looking good!
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
->  		/*
->  		 * We check if the paths are in the sparse-checkout
->  		 * definition as a very final check, since that
-> diff --git a/t/t7002-mv-sparse-checkout.sh b/t/t7002-mv-sparse-checkout.sh
-> index f0b32a2f70..50bcca583c 100755
-> --- a/t/t7002-mv-sparse-checkout.sh
-> +++ b/t/t7002-mv-sparse-checkout.sh
-> @@ -323,7 +323,7 @@ test_expect_success 'move clean path from in-cone to out-of-cone' '
->  	grep "S folder1/d" actual
->  '
->  
-> -test_expect_failure 'move clean path from in-cone to out-of-cone overwrite' '
-> +test_expect_success 'move clean path from in-cone to out-of-cone overwrite' '
->  	test_when_finished "cleanup_sparse_checkout" &&
->  	setup_sparse_checkout &&
->  	echo "sub/file1 overwrite" >sub/file1 &&
+Release tarballs are available at:
 
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[Graduated to 'master']
+
+* ca/unignore-local-installation-on-windows (2022-07-27) 1 commit
+  (merged to 'next' on 2022-08-01 at 1d4f4c32a6)
+ + cmake: support local installations of git
+
+ Fix build procedure for Windows that uses CMake so that it can pick
+ up the shell interpreter from local installation location.
+ source: <pull.1304.git.1658912756815.gitgitgadget@gmail.com>
+
+
+* jk/struct-zero-init-with-older-gcc (2022-07-31) 1 commit
+  (merged to 'next' on 2022-08-01 at cde4f95964)
+ + config.mak.dev: squelch -Wno-missing-braces for older gcc
+
+ Older gcc with -Wall complains about the universal zero initializer
+ "struct s = { 0 };" idiom, which makes developers' lives
+ inconvenient (as -Werror is enabled by DEVELOPER=YesPlease).  The
+ build procedure has been tweaked to help these compilers.
+ source: <YuQ60ZUPBHAVETD7@coredump.intra.peff.net>
+
+
+* js/lstat-mingw-enotdir-fix (2022-07-29) 1 commit
+  (merged to 'next' on 2022-08-01 at 10499943b7)
+ + lstat(mingw): correctly detect ENOTDIR scenarios
+
+ Fix to lstat() emulation on Windows.
+ source: <pull.1291.v3.git.1659089152877.gitgitgadget@gmail.com>
+
+
+* js/mingw-with-python (2022-07-29) 3 commits
+  (merged to 'next' on 2022-08-01 at 73b8f06182)
+ + mingw: remove unneeded `NO_CURL` directive
+ + mingw: remove unneeded `NO_GETTEXT` directive
+ + windows: include the Python bits when building Git for Windows
+
+ Conditionally allow building Python interpreter on Windows
+ source: <pull.1306.v2.git.1659109272.gitgitgadget@gmail.com>
+
+
+* js/ort-clean-up-after-failed-merge (2022-07-31) 2 commits
+  (merged to 'next' on 2022-08-01 at 0c9f02f3ec)
+ + merge-ort: do leave trace2 region even if checkout fails
+ + merge-ort: clean up after failed merge
+
+ Plug memory leaks in the failure code path in the "merge-ort" merge
+ strategy backend.
+ source: <pull.1307.v2.git.1659114727.gitgitgadget@gmail.com>
+
+
+* js/t5351-freebsd-fix (2022-07-29) 2 commits
+  (merged to 'next' on 2022-08-01 at b47609e891)
+ + t5351: avoid using `test_cmp` for binary data
+ + t5351: avoid relying on `core.fsyncMethod = batch` to be supported
+
+ Some tests assumed that core.fsyncMethod=batch is supported
+ everywhere, which broke FreeBSD.
+ source: <pull.1308.git.1659097724.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[New Topics]
+
+* sy/mv-into-cone (2022-08-05) 9 commits
+ - mv: check overwrite for in-to-out move
+ - advice.h: add advise_on_moving_dirty_path()
+ - mv: cleanup empty WORKING_DIRECTORY
+ - mv: from in-cone to out-of-cone
+ - mv: remove BOTH from enum update_mode
+ - mv: check if <destination> is a SKIP_WORKTREE_DIR
+ - mv: free the *with_slash in check_dir_in_index()
+ - mv: rename check_dir_in_index() to empty_dir_has_sparse_contents()
+ - t7002: add tests for moving from in-cone to out-of-cone
+
+ "git mv A B" in a sparsely populated working tree can be asked to
+ move a path from a directory that is "in cone" to another directory
+ that is "out of cone".  Handling of such a case has been improved.
+
+ Will merge to 'next'?
+ source: <20220805030528.1535376-1-shaoxuan.yuan02@gmail.com>
+
+
+* fr/vimdiff-layout-colors-fix (2022-08-07) 3 commits
+ - mergetools: vimdiff: update unit tests
+ - mergetools: vimdiff: fix single tab mode, single window mode and colors
+ - mergetools: vimdiff: fix comment
+
+ "vimdiff3" regression fix.
+
+ Will merge to 'next'?
+ source: <20220808053459.184367-1-greenfoo@u92.eu>
+
+
+* sy/sparse-rm (2022-08-08) 5 commits
+ - rm: integrate with sparse-index
+ - rm: expand the index only when necessary
+ - pathspec.h: move pathspec_needs_expanded_index() from reset.c to here
+ - t1092: add tests for `git-rm`
+ - Merge branch 'vd/sparse-reset-checkout-fixes' into sy/sparse-rm
+ (this branch uses vd/sparse-reset-checkout-fixes.)
+
+ "git rm" has become more aware of the sparse-index feature.
+
+ Will merge to 'next'?
+ source: <20220807041335.1790658-1-shaoxuan.yuan02@gmail.com>
+
+--------------------------------------------------
+[Stalled]
+
+* tk/apply-case-insensitive (2022-06-21) 3 commits
+ - apply: support case-only renames in case-insensitive filesystems
+ - reset: new failing test for reset of case-insensitive duplicate in index
+ - t4141: test "git apply" with core.ignorecase
+
+ "git apply" barfed on a patch that makes a case-only rename on a
+ case-insensitive filesystem.
+
+ Needs review.
+ source: <pull.1257.v2.git.1655655027.gitgitgadget@gmail.com>
+
+
+* bc/stash-export (2022-04-08) 4 commits
+ - builtin/stash: provide a way to import stashes from a ref
+ - builtin/stash: provide a way to export stashes to a ref
+ - builtin/stash: factor out revision parsing into a function
+ - object-name: make get_oid quietly return an error
+
+ A mechanism to export and import stash entries to and from a normal
+ commit to transfer it across repositories has been introduced.
+
+ Expecting a reroll.
+ cf. <YnL2d4Vr9Vr7W4Hj@camp.crustytoothpaste.net>
+ source: <20220407215352.3491567-1-sandals@crustytoothpaste.net>
+
+--------------------------------------------------
+[Cooking]
+
+* lt/symbolic-ref-sanity (2022-08-01) 1 commit
+  (merged to 'next' on 2022-08-03 at 443647b94a)
+ + symbolic-ref: refuse to set syntactically invalid target
+
+ "git symbolic-ref symref non..sen..se" is now diagnosed as an error.
+
+ Will merge to 'master'.
+ source: <YugYNzQYWqDCmOqN@coredump.intra.peff.net>
+
+
+* vd/scalar-generalize-diagnose (2022-08-03) 10 commits
+ - scalar: update technical doc roadmap
+ - scalar-diagnose: use 'git diagnose --all'
+ - builtin/bugreport.c: create '--diagnose' option
+ - builtin/diagnose.c: gate certain data behind '--all'
+ - builtin/diagnose.c: create 'git diagnose' builtin
+ - scalar-diagnose: move functionality to common location
+ - scalar-diagnose: move 'get_disk_info()' to 'compat/'
+ - scalar-diagnose: add directory to archiver more gently
+ - scalar-diagnose: avoid 32-bit overflow of size_t
+ - scalar-diagnose: use "$GIT_UNZIP" in test
+
+ The "diagnose" feature to create a zip archive for diagnostic
+ material has been lifted from "scalar" and made into a feature of
+ "git bugreport".
+
+ Expecting responses to reviews.
+ source: <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
+
+
+* gc/git-reflog-doc-markup (2022-08-01) 1 commit
+  (merged to 'next' on 2022-08-05 at f2d8721ab2)
+ + Documentation/git-reflog: remove unneeded \ from \{
+
+ Doc mark-up fix.
+
+ Will merge to 'master'.
+ source: <pull.1304.git.git.1659387885711.gitgitgadget@gmail.com>
+
+
+* jk/pipe-command-nonblock (2022-08-03) 1 commit
+ - pipe_command(): mark stdin descriptor as non-blocking
+
+ Fix deadlocks between main Git process and subprocess spawned via
+ the pipe_command() API, that can kill "git add -p" that was
+ reimplemented in C recently.
+
+ Needs waiting for corresponding change to Windows to put the pipe
+ into nonblock mode.
+ cf. <YulFTSTbVaTwuQtt@coredump.intra.peff.net>
+ source: <YunxHOa2sJeEpJxd@coredump.intra.peff.net>
+
+
+* ab/plug-revisions-leak (2022-08-03) 6 commits
+  (merged to 'next' on 2022-08-05 at d1ca88976f)
+ + revisions API: don't leak memory on argv elements that need free()-ing
+ + bisect.c: partially fix bisect_rev_setup() memory leak
+ + log: refactor "rev.pending" code in cmd_show()
+ + log: fix a memory leak in "git show <revision>..."
+ + test-fast-rebase helper: use release_revisions() (again)
+ + bisect.c: add missing "goto" for release_revisions()
+
+ Plug a bit more leaks in the revisions API.
+
+ Will merge to 'master'.
+ source: <cover-v3-0.6-00000000000-20220802T152925Z-avarab@gmail.com>
+
+
+* jc/rerere-autoupdate-doc (2022-08-03) 2 commits
+  (merged to 'next' on 2022-08-08 at 6407091d13)
+ + doc: clarify rerere-autoupdate
+ + doc: consolidate --rerere-autoupdate description
+
+ Update documentation on the "--[no-]rerere-autoupdate" option.
+
+ Will merge to 'master'.
+ source: <xmqq35f2ysd9.fsf@gitster.g>
+
+
+* es/mark-gc-cruft-as-experimental (2022-08-03) 2 commits
+ - config: let feature.experimental imply gc.cruftPacks=true
+ - gc: add tests for --cruft and friends
+
+ Enable gc.cruftpacks by default for those who opt into
+ feature.experimental setting.
+
+ Expecting a reroll.
+ cf. <220804.86a68ke9d5.gmgdl@evledraar.gmail.com>
+ cf. <6803b725-526e-a1c8-f15c-a9ed4a144d4c@github.com>
+ source: <20220803205721.3686361-1-emilyshaffer@google.com>
+
+
+* pw/use-glibc-tunable-for-malloc-optim (2022-08-04) 1 commit
+  (merged to 'next' on 2022-08-08 at 1300f84dc4)
+ + tests: cache glibc version check
+
+ Avoid repeatedly running getconf to ask libc version in the test
+ suite, and instead just as it once per script.
+
+ Will merge to 'master'.
+ source: <pull.1311.git.1659620305757.gitgitgadget@gmail.com>
+
+
+* vd/sparse-reset-checkout-fixes (2022-08-08) 4 commits
+ - unpack-trees: unpack new trees as sparse directories
+ - cache.h: create 'index_name_pos_sparse()'
+ - oneway_diff: handle removed sparse directories
+ - checkout: fix nested sparse directory diff in sparse index
+ (this branch is used by sy/sparse-rm.)
+
+ Fixes to sparse index compatibility work for "reset" and "checkout"
+ commands.
+
+ Will merge to 'next'?
+ source: <pull.1312.v3.git.1659985672.gitgitgadget@gmail.com>
+
+
+* ab/hooks-regression-fix (2022-08-05) 1 commit
+  (merged to 'next' on 2022-08-08 at f5a3f88983)
+ + hook API: don't segfault on strbuf_addf() to NULL "out"
+
+ A follow-up fix to a fix for a regression in 2.36.
+
+ Will merge to 'master' and then to 'maint'.
+ source: <patch-1.1-2450e3e65cf-20220805T141402Z-avarab@gmail.com>
+
+
+* ab/tech-docs-to-help (2022-08-04) 12 commits
+  (merged to 'next' on 2022-08-08 at 65c9ec7308)
+ + docs: move http-protocol docs to man section 5
+ + docs: move cruft pack docs to gitformat-pack
+ + docs: move pack format docs to man section 5
+ + docs: move signature docs to man section 5
+ + docs: move index format docs to man section 5
+ + docs: move protocol-related docs to man section 5
+ + docs: move commit-graph format docs to man section 5
+ + git docs: add a category for file formats, protocols and interfaces
+ + git docs: add a category for user-facing file, repo and command UX
+ + git help doc: use "<doc>" instead of "<guide>"
+ + help.c: remove common category behavior from drop_prefix() behavior
+ + help.c: refactor drop_prefix() to use a "switch" statement"
+
+ Expose a lot of "tech docs" via "git help" interface.
+
+ Will merge to 'master'.
+ source: <cover-v8-00.12-00000000000-20220804T162138Z-avarab@gmail.com>
+
+
+* sg/parse-options-subcommand (2022-07-25) 20 commits
+ - builtin/worktree.c: let parse-options parse subcommands
+ - builtin/stash.c: let parse-options parse subcommands
+ - builtin/sparse-checkout.c: let parse-options parse subcommands
+ - builtin/remote.c: let parse-options parse subcommands
+ - builtin/reflog.c: let parse-options parse subcommands
+ - builtin/notes.c: let parse-options parse subcommands
+ - builtin/multi-pack-index.c: let parse-options parse subcommands
+ - builtin/hook.c: let parse-option parse subcommands
+ - builtin/gc.c: let parse-options parse 'git maintenance's subcommands
+ - builtin/commit-graph.c: let parse-options parse subcommands
+ - builtin/bundle.c: let parse-options parse subcommands
+ - parse-options: add support for parsing subcommands
+ - parse-options: drop leading space from '--git-completion-helper' output
+ - parse-options: clarify the limitations of PARSE_OPT_NODASH
+ - parse-options: PARSE_OPT_KEEP_UNKNOWN only applies to --options
+ - api-parse-options.txt: fix description of OPT_CMDMODE
+ - t0040-parse-options: test parse_options() with various 'parse_opt_flags'
+ - t5505-remote.sh: check the behavior without a subcommand
+ - t3301-notes.sh: check that default operation mode doesn't take arguments
+ - git.c: update NO_PARSEOPT markings
+
+ Introduce the "subcommand" mode to parse-options API and update the
+ command line parser of Git commands with subcommands.
+
+ Will merge to 'next'?
+ There are some nits on how the changes are explained, but nothing major.
+ cf. <xmqqa68x5c1i.fsf@gitster.g>
+ source: <20220725123857.2773963-1-szeder.dev@gmail.com>
+
+
+* ds/bundle-uri-clone (2022-08-02) 5 commits
+ - clone: --bundle-uri cannot be combined with --depth
+ - bundle-uri: add support for http(s):// and file://
+ - clone: add --bundle-uri option
+ - bundle-uri: create basic file-copy logic
+ - remote-curl: add 'get' capability
+
+ Implement "git clone --bundle-uri".
+
+ Expecting a reroll.
+ cf. <9afd5eb2-44a0-6342-6006-5dbdefba9947@github.com>
+ source: <pull.1300.v2.git.1659443384.gitgitgadget@gmail.com>
+
+
+* ds/decorate-filter-tweak (2022-08-05) 11 commits
+ - fetch: use ref_namespaces during prefetch
+ - maintenance: stop writing log.excludeDecoration
+ - log: create log.initialDecorationSet=all
+ - log: add --clear-decorations option
+ - log: add default decoration filter
+ - log-tree: use ref_namespaces instead of if/else-if
+ - refs: use ref_namespaces for replace refs base
+ - refs: add array of ref namespaces
+ - t4207: test coloring of grafted decorations
+ - t4207: modernize test
+ - refs: allow "HEAD" as decoration filter
+
+ The namespaces used by "log --decorate" from "refs/" hierarchy by
+ default has been tightened.
+
+ Will merge to 'next'?
+ source: <pull.1301.v3.git.1659722323.gitgitgadget@gmail.com>
+
+
+* es/doc-creation-factor-fix (2022-07-28) 2 commits
+ - range-diff: clarify --creation-factor=<factor>
+ - format-patch: clarify --creation-factor=<factor>
+
+ Expecting a reroll.
+ source: <7229p500-p2r4-on87-6802-8o90s36rr3s4@tzk.qr>
+
+
+* ab/submodule-helper-prep (2022-08-03) 28 commits
+ - submodule--helper: fix bad config API usage
+ - submodule--helper: libify "must_die_on_failure" code paths (for die)
+ - submodule--helper: libify "must_die_on_failure" code paths
+ - submodule--helper: libify determine_submodule_update_strategy()
+ - submodule--helper: don't exit() on failure, return
+ - submodule--helper: use "code" in run_update_command()
+ - submodule--helper: move submodule_strategy_to_string() to only user
+ - submodule--helper: don't call submodule_strategy_to_string() in BUG()
+ - submodule--helper: add missing braces to "else" arm
+ - submodule--helper: return "ret", not "1" from update_submodule()
+ - submodule--helper: rename "int res" to "int ret"
+ - submodule--helper: don't redundantly check "else if (res)"
+ - submodule--helper: refactor "errmsg_str" to be a "struct strbuf"
+ - submodule--helper: add "const" to copy of "update_data"
+ - submodule--helper: pass a "const struct module_clone_data" to clone_submodule()
+ - submodule--helper: move "sb" in clone_submodule() to its own scope
+ - submodule--helper: use xstrfmt() in clone_submodule()
+ - submodule--helper: replace memset() with { 0 }-initialization
+ - submodule--helper style: add \n\n after variable declarations
+ - submodule--helper style: don't separate declared variables with \n\n
+ - submodule--helper: move "resolve-relative-url-test" to a test-tool
+ - submodule--helper: move "check-name" to a test-tool
+ - submodule--helper: move "is-active" to a test-tool
+ - test-tool submodule-config: remove unused "--url" handling
+ - submodule--helper: remove unused "list" helper
+ - submodule--helper: remove unused "name" helper
+ - submodule tests: test for "add <repository> <abs-path>"
+ - submodule tests: test usage behavior
+ (this branch is used by ab/submodule-helper-leakfix.)
+
+ Code clean-up of "git submodule--helper".
+
+ Expecting a (hopefully final?) reroll.
+ cf. <220803.86h72tfpcc.gmgdl@evledraar.gmail.com>
+ source: <cover-v2-00.28-00000000000-20220802T154036Z-avarab@gmail.com>
+
+
+* ab/dedup-config-and-command-docs (2022-07-29) 9 commits
+ - docs: add CONFIGURATION sections that fuzzy map to built-ins
+ - docs: add CONFIGURATION sections that map to a built-in
+ - log docs: de-duplicate configuration sections
+ - difftool docs: de-duplicate configuration sections
+ - notes docs: de-duplicate configuration sections
+ - apply docs: de-duplicate configuration sections
+ - send-email docs: de-duplicate configuration sections
+ - grep docs: de-duplicate configuration sections
+ - docs: add and use include template for config/* includes
+
+ Share the text used to explain configuration variables used by "git
+ <subcmd>" in "git help <subcmd>" with the text from "git help config".
+
+ Expecting a reroll.
+ cf. <CAHd-oW5mD-H1kvuF9VEVb8KjaSkUSUpBH-WAkpCn6_Ci8o888w@mail.gmail.com>
+ cf. <CAHd-oW7s6Hu24uTjCW9ROBbJkA5+7TCu32a4L_BXVLhcvw5kSw@mail.gmail.com>
+ cf. <xmqqlesb4lwh.fsf@gitster.g>
+ source: <cover-v2-0.9-00000000000-20220729T081959Z-avarab@gmail.com>
+
+
+* cw/remote-object-info (2022-07-28) 6 commits
+ - cat-file: add remote-object-info to batch-command
+ - transport: add client support for object-info
+ - serve: advertise object-info feature
+ - protocol-caps: initialization bug fix
+ - fetch-pack: move fetch initialization
+ - fetch-pack: refactor packet writing
+
+ A client component to talk with the object-info endpoint.
+
+ Expecting a reroll.
+ cf. <20220728230210.2952731-1-calvinwan@google.com>
+ cf. <CAFySSZDvgwbbHCHfyuaqX3tKsr-GjJ9iihygg6rNNe46Ys7_EA@mail.gmail.com>
+ source: <20220728230210.2952731-1-calvinwan@google.com>
+
+
+* ab/leak-check (2022-07-27) 15 commits
+  (merged to 'next' on 2022-08-05 at 2a6b9c8432)
+ + CI: use "GIT_TEST_SANITIZE_LEAK_LOG=true" in linux-leaks
+ + upload-pack: fix a memory leak in create_pack_file()
+ + leak tests: mark passing SANITIZE=leak tests as leak-free
+ + leak tests: don't skip some tests under SANITIZE=leak
+ + test-lib: have the "check" mode for SANITIZE=leak consider leak logs
+ + test-lib: add a GIT_TEST_PASSING_SANITIZE_LEAK=check mode
+ + test-lib: simplify by removing test_external
+ + tests: move copy/pasted PERL + Test::More checks to a lib-perl.sh
+ + t/Makefile: don't remove test-results in "clean-except-prove-cache"
+ + test-lib: add a SANITIZE=leak logging mode
+ + t/README: reword the "GIT_TEST_PASSING_SANITIZE_LEAK" description
+ + test-lib: add a --invert-exit-code switch
+ + test-lib: fix GIT_EXIT_OK logic errors, use BAIL_OUT
+ + test-lib: don't set GIT_EXIT_OK before calling test_atexit_handler
+ + test-lib: use $1, not $@ in test_known_broken_{ok,failure}_
+
+ Extend SANITIZE=leak checking and declare more tests "currently leak-free".
+
+ Will merge to 'master'.
+ source: <cover-v3-00.15-00000000000-20220727T230800Z-avarab@gmail.com>
+
+
+* mt/rot13-in-c (2022-07-31) 4 commits
+ - tests: use the new C rot13-filter helper to avoid PERL prereq
+ - t0021: implementation the rot13-filter.pl script in C
+ - t0021: avoid grepping for a Perl-specific string at filter output
+ - Merge branch 'mt/checkout-count-fix' into mt/rot13-in-c
+
+ Test portability improvements.
+
+ Expecting a reroll.
+ cf. <CAHd-oW6GLf=4VxAvMy6c9jrGx1zcSHbe_NKbAUg7wvNBPOmEXw@mail.gmail.com>
+ source: <cover.1659291025.git.matheus.bernardino@usp.br>
+
+
+* tl/trace2-config-scope (2022-07-22) 2 commits
+ - tr2: shows scope unconditionally in addition to key-value pair
+ - api-trace2.txt: print config key-value pair
+
+ Tweak trace2 output about configuration variables.
+
+ Needs reviewer response
+ cf. <20220801122515.23146-1-tenglong.tl@alibaba-inc.com>
+ source: <cover.1658472474.git.dyroneteng@gmail.com>
+
+
+* ab/submodule-helper-leakfix (2022-08-03) 18 commits
+ - submodule--helper: fix a configure_added_submodule() leak
+ - submodule--helper: free rest of "displaypath" in "struct update_data"
+ - submodule--helper: free some "displaypath" in "struct update_data"
+ - submodule--helper: fix a memory leak in print_status()
+ - submodule--helper: fix a leak in module_add()
+ - submodule--helper: fix obscure leak in module_add()
+ - submodule--helper: fix "reference" leak
+ - submodule--helper: fix a memory leak in get_default_remote_submodule()
+ - submodule--helper: fix a leak with repo_clear()
+ - submodule--helper: fix "sm_path" and other "module_cb_list" leaks
+ - submodule--helper: fix "errmsg_str" memory leak
+ - submodule--helper: add and use *_release() functions
+ - submodule--helper: don't leak {run,capture}_command() cp.dir argument
+ - submodule--helper: "struct pathspec" memory leak in module_update()
+ - submodule--helper: fix most "struct pathspec" memory leaks
+ - submodule--helper: fix trivial get_default_remote_submodule() leak
+ - submodule--helper: fix a leak in "clone_submodule"
+ - Merge branch 'ab/submodule-helper-prep' into ab/submodule-helper-leakfix
+ (this branch uses ab/submodule-helper-prep.)
+
+ Plugging leaks in submodule--helper.
+
+ Getting there.
+ source: <cover-v5-00.17-00000000000-20220802T155002Z-avarab@gmail.com>
+
+
+* cw/submodule-merge-messages (2022-08-04) 1 commit
+ - submodule merge: update conflict error message
+
+ Update the message given when "git merge" sees conflicts at a path
+ with a submodule while merging a superproject.
+
+ Will merge to 'next'?
+ source: <20220804195105.1303455-1-calvinwan@google.com>
+
+
+* js/safe-directory-plus (2022-08-08) 5 commits
+ - mingw: handle a file owned by the Administrators group correctly
+ - mingw: be more informative when ownership check fails on FAT32
+ - mingw: provide details about unsafe directories' ownership
+ - setup: prepare for more detailed "dubious ownership" messages
+ - setup: fix some formatting
+
+ Platform-specific code that determines if a directory is OK to use
+ as a repository has been taught to report more details, especially
+ on Windows.
+
+ Will merge to 'next'.
+ source: <pull.1286.v2.git.1659965270.gitgitgadget@gmail.com>
+
+
+* po/doc-add-renormalize (2022-07-09) 1 commit
+ - doc add: renormalize is not idempotent for CRCRLF
+
+ Documentation for "git add --renormalize" has been improved.
+
+ Expecting a reroll.
+ cf. <dfe0c1ab-33f8-f13e-71ce-1829bb0d2d7f@iee.email>
+ source: <d3b8ed97a105ea1d7e656c964b7eee378e11ede6.1657385781.git.gitgitgadget@gmail.com>
+
+
+* po/glossary-around-traversal (2022-07-09) 3 commits
+ - glossary: add reachability bitmap description
+ - glossary: add commit graph description
+ - glossary: add Object DataBase (ODB) abbreviation
+
+ The glossary entries for "commit-graph file" and "reachability
+ bitmap" have been added.
+
+ Expecting a reroll.
+ cf. <dfe0c1ab-33f8-f13e-71ce-1829bb0d2d7f@iee.email>
+ source: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
+
+
+* ac/bitmap-lookup-table (2022-07-20) 6 commits
+ - bitmap-lookup-table: add performance tests for lookup table
+ - p5310-pack-bitmaps.sh: enable `pack.writeReverseIndex`
+ - pack-bitmap: prepare to read lookup table extension
+ - pack-bitmap-write: learn pack.writeBitmapLookupTable and add tests
+ - pack-bitmap-write.c: write lookup table extension
+ - Documentation/technical: describe bitmap lookup table extension
+
+ The pack bitmap file gained a bitmap-lookup table to speed up
+ locating the necessary bitmap for a given commit.
+
+ Expecting a reroll.
+ Seems to be flaky-broken under SHA-256.
+ cf. <p3r70610-8n52-s8q0-n641-onp4ps01330n@tzk.qr>
+ source: <pull.1266.v5.git.1658342304.gitgitgadget@gmail.com>
+
+
+* jt/connected-show-missing-from-which-side (2022-06-10) 1 commit
+ - fetch,fetch-pack: clarify connectivity check error
+
+ We may find an object missing after a "git fetch" stores the
+ objects it obtained from the other side, but it is not necessarily
+ because the remote failed to send necessary objects.  Reword the
+ messages in an attempt to help users explore other possibilities
+ when they hit this error.
+
+ Expecting a reroll.
+ source: <20220610195247.1177549-1-jonathantanmy@google.com>
+
+
+* tb/show-ref-count (2022-06-06) 2 commits
+ - builtin/show-ref.c: limit output with `--count`
+ - builtin/show-ref.c: rename `found_match` to `matches_nr`
+
+ "git show-ref" learned to stop after emitting N refs with the new
+ "--count=N" option.
+
+ Expecting a reroll.
+ cf. <xmqqczfl4ce1.fsf@gitster.g>
+ source: <cover.1654552560.git.me@ttaylorr.com>
+
+
+* ds/bundle-uri-more (2022-07-25) 2 commits
+ - bundle-uri: add example bundle organization
+ - docs: document bundle URI standard
+
+ The "bundle URI" topic.
+
+ Needs review.
+ source: <pull.1248.v3.git.1658757188.gitgitgadget@gmail.com>
+
+
+* js/bisect-in-c (2022-06-27) 16 commits
+ - bisect: no longer try to clean up left-over `.git/head-name` files
+ - bisect: remove Cogito-related code
+ - Turn `git bisect` into a full built-in
+ - bisect: move even the command-line parsing to `bisect--helper`
+ - bisect: teach the `bisect--helper` command to show the correct usage strings
+ - bisect--helper: return only correct exit codes in `cmd_*()`
+ - bisect--helper: move the `BISECT_STATE` case to the end
+ - bisect--helper: make `--bisect-state` optional
+ - bisect--helper: align the sub-command order with git-bisect.sh
+ - bisect--helper: using `--bisect-state` without an argument is a bug
+ - bisect--helper: really retire `--bisect-autostart`
+ - bisect--helper: really retire --bisect-next-check
+ - bisect--helper: retire the --no-log option
+ - bisect: avoid double-quoting when printing the failed command
+ - bisect run: fix the error message
+ - bisect: verify that a bogus option won't try to start a bisection
+
+ Final bits of "git bisect.sh" have been rewritten in C.
+
+ Expecting a (hopefully final) reroll.
+ cf. <20627.86ilolhnnn.gmgdl@evledraar.gmail.com>
+ source: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[Discarded]
+
+* ar/send-email-confirm-by-default (2022-04-22) 1 commit
+ . send-email: always confirm by default
+
+ "git send-email" is changed so that by default it asks for
+ confirmation before sending each message out.
+
+ Discarded.
+ I wanted to like this, and had it in the version of Git I use
+ myself for daily work, but the prompting turned out to be somewhat
+ distracting.
+ source: <20220422083629.1404989-1-hi@alyssa.is>
+
+
+* mt/doc-config (2022-07-14) 3 commits
+ . doc: notes: unify configuration variables definitions
+ . doc: apply: unify configuration variables definitions
+ . doc: grep: unify configuration variables definitions
+
+ Unify description of configuration variables used by individual
+ commands in the documentation of the commands and the documentation
+ of the "git config".
+
+ Retracted.
+ cf. <20220723134834.9693-1-matheus.bernardino@usp.br>
+ source: <cover.1657819649.git.matheus.bernardino@usp.br>
+
+
+* mb/doc-rerere-autoupdate (2022-07-15) 1 commit
+ . cherry-pick doc: clarify no-rerere-autoupdate still allows rerere
+
+ Clarifies that the "--no-rerere-autoupdate" option does not disable
+ the "rerere" mechanism (nor does "--rerere-autoupdate" enable it).
+ source: <20220715092527.1567837-1-mail@beyermatthias.de>
