@@ -2,127 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 973C1C00140
-	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 13:13:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CDD8C00140
+	for <git@archiver.kernel.org>; Mon,  8 Aug 2022 13:26:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242800AbiHHNNG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Aug 2022 09:13:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55716 "EHLO
+        id S243404AbiHHN0Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Aug 2022 09:26:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243206AbiHHNNF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Aug 2022 09:13:05 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C03DD2EF
-        for <git@vger.kernel.org>; Mon,  8 Aug 2022 06:13:03 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 186-20020a1c02c3000000b003a34ac64bdfso5139450wmc.1
-        for <git@vger.kernel.org>; Mon, 08 Aug 2022 06:13:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc;
-        bh=Gr42mM1Ban94NMYX12/wIjocw6Ls7TeGq8uyl4Gh6v0=;
-        b=Qq0gnP8x7TrKvWyGfajDWgEhycACShrVLDAS8kGKpJcCg+fVhLVcGEiWw74EulVCBK
-         vYmhLeEZXuVB3JXaTxl08UUZwssR2XsBpgtITTFiXJWmh8r1Gipkm1PWi1D54rU6SbQ5
-         UDFmBDtOxQBUVwm6tTU1dgP6Tat9MOErIu/2CrUlb24gwWfKQSPmaP7EAZlSbvOl2QRo
-         znwRctrXXMJL+rtF/cyxsXVFp4jP/E4ENBMLjdKShKg8D8rq2niMZQgU6f0LmNQSY7bp
-         6ZMPTnTTGM+NXHF0lM9s9CxoUaeOYkFKR+HrkbhH8OyQf2liF9cnLsu1B8ewx90HAomA
-         nA4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc;
-        bh=Gr42mM1Ban94NMYX12/wIjocw6Ls7TeGq8uyl4Gh6v0=;
-        b=Un7nS6gJOMoS4lmULgt7YXuSNNo600b435hBTalpTnpOfOvsUC1s78zmqSyAknOF3+
-         l3Q2cgyoaYHK3S/tTAuRmZod8byNZ433JqCwt3mFJZPcwN2hagxmWun+WaQhkvKMejWf
-         Z4HnyTQzPa8d5a8VpuG6m0LsIGOGGgIiVpsUIIj4p9axvZt66lnmmpgrHL5t1c8+LEAB
-         IGodzv69026Vb9A+7vQJZhXbO5yaDamK0XBbS8mrqgRscpZTpG4SGJKhdA2wK60PDgn9
-         AWyeX5i7DzQxLP4onZ8TUHomwTWLt0oDsKCozspk1a0ncuzs7iwyYc/Ea/0LgdPiJsLQ
-         3oHQ==
-X-Gm-Message-State: ACgBeo3IiOz19CdJaKl1pBRoRZaSHCAK9BznnIasE5RAAzetLDCsLkHk
-        69zClCeA+QKCVOQPhuiGPd4wwxYPC10=
-X-Google-Smtp-Source: AA6agR5o83M6mSF9jEEABGeFBvmdPLr2w9Wc3Lcq8jwUslKijJW92aP/nv+8lSEDGWUL9J40E7q2RQ==
-X-Received: by 2002:a7b:c003:0:b0:39c:5642:e415 with SMTP id c3-20020a7bc003000000b0039c5642e415mr17029521wmb.111.1659964382205;
-        Mon, 08 Aug 2022 06:13:02 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id t25-20020a1c7719000000b003a2cf1ba9e2sm5372172wmi.6.2022.08.08.06.13.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Aug 2022 06:13:01 -0700 (PDT)
-Message-ID: <47bfbdb5-c907-6a35-6662-72a446869227@gmail.com>
-Date:   Mon, 8 Aug 2022 14:12:56 +0100
+        with ESMTP id S243346AbiHHN0O (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Aug 2022 09:26:14 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D702AE56
+        for <git@vger.kernel.org>; Mon,  8 Aug 2022 06:26:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1659965167;
+        bh=S/nmrLb39eu32EKB8NfzAdbrmPru/VdX4pQKEoBeb+8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=djjVStViHszhN0wF6SRs+Lh1kUO5Xs1uYAEwc1iwSzA3f0C0jbIkQugB3s9avqt42
+         l2O81O/jP5kzFU95sN7+4vS5wPt/uCcbj5SGd187WN6JS97zJ+RMtnXiTovKTlZD5/
+         L50aL+Q3IC+PykDVjiQhvsCoR4r1wQHkokVqtLQQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.21.182.192] ([89.1.214.151]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MfpSb-1njWA33tJx-00gJjJ; Mon, 08
+ Aug 2022 15:26:06 +0200
+Date:   Mon, 8 Aug 2022 15:26:19 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     =?UTF-8?Q?Rub=C3=A9n_Justo_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+        rjusto <rjusto@gmail.com>
+Subject: Re: [PATCH] branch: allow "-" as a short-hand for "previous
+ branch"
+In-Reply-To: <pull.1315.git.1659910949556.gitgitgadget@gmail.com>
+Message-ID: <s7862q69-05o8-s5s8-n635-823s34q358q4@tzk.qr>
+References: <pull.1315.git.1659910949556.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: --batch or some --paths-file for very long lists of paths
-Content-Language: en-GB-large
-To:     Yaroslav Halchenko <yoh@onerussian.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <YuxPNFtTBmkZkiCW@lena.dartmouth.edu>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <YuxPNFtTBmkZkiCW@lena.dartmouth.edu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-1205832110-1659965181=:226"
+X-Provags-ID: V03:K1:GSv/2kH8sMZPIQ0LYjffZltOwaeTp6ynFcPaVg82o61Ogv9aLmF
+ +ZL7MJVgnS2AZEnGQ+42/D60Izo3IY3FWAAq9KDjja6o329wglXkv0t5jADuVvw1Q0X+jKq
+ 2nrxXqLhSYF/pL6KuIA2XESiD2IdHFTUi9aIkxhJYpwt58Etvxgajm6tlwNI0bTazBc3/Rz
+ yjMpDba/RI9Etu+bS5XpA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:VC2RJRNJWlM=:4n67vnqNE8sR5149GeiVOj
+ PnZuw6VQsgYz2j54rgnU8LScgKHZrIG9OqgDlRy4NFfYMhbQyJxpFc+cJ2LzJhHVePoYQHQV3
+ YdeJVVeAog8rQDdzy+JCxROwVCs51UX/BVd7VwXhHQkcrngiQPbNRIfZPCRSFLopw/7skF1xQ
+ HYuuru4qH0Wo3UxFJC0ZmxkE6cNTWxCZ0BNFjbCgVL2QEkxzXsGQUzbudVUEm1deauwXAKJqd
+ vHVY3je5lGbDAJzIcGA6DaMVdB4JmTMMz5Ezm6lZhH/SadzUJdWrhu+Js8FQTnh0Ac2YnoUdT
+ 9coyduNwmnfBDMAfKnPZiHyuqaHw62VmGclYT2fA72/0nF6szRWQ0tU+dzmL6DkmfiMmW0APw
+ mqHJr3c02w2eljeYELQPc9dKB03iaV3nxiw58O1eZodOLygfWe/oeyOIDPw18wocLBf052zxl
+ 7ISj2gYaL6p1770iZz86G5kiYY2vIz0u8kVRZaSbM1/ava6hqy/0nyCIkot5/9e78i4vREFbs
+ 6vte1XXMB/WR/c9WgnI/K6S6D3//3XuKZ3mVW70A40HlKyWqaHn+VwQiB9ZRN87vU04/2W0qI
+ ychiD54Ur2ljK02RjKcGA9WqQcoLdw0eN0vrdVa3FQ/vuM8oApfxdkcQbbJtPyKXwJKaHZXs9
+ R2cZxUQlP67ZTVIWlJjVZW/4huzNwhHkm7x7C4YgUKOf2WdD3LetouNp0/LntUVGuYdVtm2S6
+ 0Yqjbqc555kLRj/d9X1qMwMGOsLuwohT3CRAmAAutsCEXCV/twOn/RfqLp1FJuXSOSKZbfsYO
+ w1/eh4M4VeDND6pIdHcctD2281oybG189VaFzh/0+Vj7UErK1sWBPrjfssHztO/YWvms+3SRS
+ 5tYeO1srjgfjvZWedbiH3+gyZNeeW+ctFQJIKYi41v1523+BU+Rn4O9y2QIMySOUq09V+F4YT
+ cEyWd74j8BkbgKFOap8Vv0C9ppJ3kx4KGFVVGMfErRVp9D0btPRv4/04mjGFdRAYDXQ5F3vFa
+ fI20rDdEIbpjJENxjhFjfNJ9xWWUEzQDOsKqqXK0tCh6ecbYC9LVXL6HgSL2NAI2YARfjTgR3
+ 39mnFLReGNcJHN972YCg2PqDEmo8YHKMKijHtsla9+T5Ib9r/eK/q9KhA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Yaroslav
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On 04/08/2022 23:59, Yaroslav Halchenko wrote:
-> Dear Git Gurus,
-> 
-> In DataLad (https://datalad.org) we are doing "our own" analysis of what
-> specific files (not entire directories) should git and git-annex operate
-> on.  Obviously, in large repositories (and we have with >100k files)
-> that might require invoking  git add  or  git diff  etc with a long list
-> of paths specified in the command line.  For that we often split
-> invocation into multiple and even resort to   git commit --amend  to
-> combine multiple commits then into a single one.
-> 
-> But I wondered if may be there is already some trick to make such
-> commands as   status, diff, add, commit   to operate on arbitrarily long
-> list of paths passed to that git command somehow.
+--8323328-1205832110-1659965181=:226
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-A number of porcelain commands have a --pathspec-from-file option that 
-takes a file with a list of pathspecs or reads them from stdin. When 
-combined with --pathspec-file-nul this handles paths containing newline 
-correctly or you can quote them without this option. You can pass 
---literal-pathspecs if you have a list of paths rather than pathspecs.
+Hi Rub=C3=A9n,
 
-At the plumbing level you can use "update-index" to add/delete/update 
-paths in the index which will read paths from stdin and "checkout-index" 
-will also read paths from stdin.
+On Sun, 7 Aug 2022, Rub=C3=A9n Justo via GitGitGadget wrote:
 
-The diff family do not have any support for --pathspec-from-file at the 
-moment but I'd be happy to see someone implement it (I think it would be 
-fairly straight forward).
+> From: rjusto <rjusto@gmail.com>
+>
+> Align "branch" with the intuitive use of "-" as a short-hand
+> for "@{-1}", like in "checkout" and "merge" commands.
+>
+> $ git branch -d -      # short-hand for: "git branch -d @{-1}"
+> $ git branch -D -      # short-hand for: "git branch -D @{-1}"
 
-> Note that gitglossary (at least in 2.35.1 git on debian) says that
-> 
-> 	Pathspecs are used on the command line of "git ls-files", "git
->      ls-tree", "git add", "git grep", "git diff", "git checkout", and many other
->      commands ...
-> 
-> but
-> 
-> 	$> git ls-tree -h | head -n1
-> 	usage: git ls-tree [<options>] <tree-ish> [<path>...]
-> 
-> so it is <path> not the <pathspec> like (why in stderr this time?)
-> 
-> 	$> git commit -h 2>&1 | head -n1
-> 	usage: git commit [<options>] [--] <pathspec>...
-> 
-> So if in both cases it is pathspec, may be pathspec could support some
-> other magical keyword like :(filelist)/tmp/mylonglistofpaths ?
+A valuable goal!
 
-I like that path magic idea, but as we already have --pathspec-from-file 
-I think we'd be better improving support for that.
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 55cd9a6e998..59c19f38d2e 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -241,6 +241,10 @@ static int delete_branches(int argc, const char **a=
+rgv, int force, int kinds,
 
-Best Wishes
+Touching only the `delete_branches()` function suggests that other
+commands are left as before, e.g. `git branch --unset-upstream -` would
+probably fail.
 
-Phillip
+That's fine, but the commit message claims that the `"-"` special-casing
+is introduced for the `git branch` command, not just for `git branch -d`.
 
-> Thanks in advance for your time and thoughts,
+>  			die(_("Couldn't look up commit object for HEAD"));
+>  	}
+
+At this stage, we already handled the `--remotes` flag, therefore I think
+that this patch does not do the intended thing for this command-line:
+
+	git branch -d --remotes -
+
+>
+> +	if ((argc =3D=3D 1) && !strcmp(argv[0], "-")) {
+> +		argv[0] =3D "@{-1}";
+> +	}
+
+This means that we only handle `git branch -d -`, but not `git branch -d
+some-branch - some-other-branch`.
+
+Could you fix that?
+
+My thinking is that this probably should be a sibling of the `@{-1}`
+handling, most likely somewhat like this (I only compile-tested this
+patch, please take it from here):
+
+=2D- snip --
+diff --git a/object-name.c b/object-name.c
+index 4d2746574cd..ae6c2ed7b83 100644
+=2D-- a/object-name.c
++++ b/object-name.c
+@@ -1420,6 +1420,12 @@ static int interpret_nth_prior_checkout(struct repo=
+sitory *r,
+ 	const char *brace;
+ 	char *num_end;
+
++	if (namelen =3D=3D 1 && *name =3D=3D '-') {
++		brace =3D name;
++		nth =3D 1;
++		goto find_nth_checkout;
++	}
++
+ 	if (namelen < 4)
+ 		return -1;
+ 	if (name[0] !=3D '@' || name[1] !=3D '{' || name[2] !=3D '-')
+@@ -1432,6 +1438,8 @@ static int interpret_nth_prior_checkout(struct repos=
+itory *r,
+ 		return -1;
+ 	if (nth <=3D 0)
+ 		return -1;
++
++find_nth_checkout:
+ 	cb.remaining =3D nth;
+ 	cb.sb =3D buf;
+
+=2D- snap --
+
+Naturally, this has much bigger ramifications than just `git branch -d -`,
+and might even obsolete some `-` special-casing elsewhere; I have not
+looked to see if there is any such special-casing, and would like to ask
+you to see whether you can find those and remove them in separate commits
+after implementing (and testing) the above
+`interpret_nth_prior_checkout()` approach.
+
+Thanks,
+Johannes
+
+> +
+>  	for (i =3D 0; i < argc; i++, strbuf_reset(&bname)) {
+>  		char *target =3D NULL;
+>  		int flags =3D 0;
+>
+> base-commit: 679aad9e82d0dfd8ef3d1f98fa4629665496cec9
+> --
+> gitgitgadget
+>
+
+--8323328-1205832110-1659965181=:226--
