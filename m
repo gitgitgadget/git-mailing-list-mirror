@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1E9DC19F2D
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 12:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00917C19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 12:10:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243109AbiHIMJ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 08:09:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50148 "EHLO
+        id S242878AbiHIMKN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 08:10:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241902AbiHIMJv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 08:09:51 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38E8C24977
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 05:09:45 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id y141so10592471pfb.7
-        for <git@vger.kernel.org>; Tue, 09 Aug 2022 05:09:45 -0700 (PDT)
+        with ESMTP id S239621AbiHIMJy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 08:09:54 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1136324BE7
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 05:09:47 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id p8so11113384plq.13
+        for <git@vger.kernel.org>; Tue, 09 Aug 2022 05:09:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6avJBto7zNLge1VSRuZ52yJVcL2eyC8pogf3vr8kk2Y=;
-        b=GHjrSuHMK7L++aqUCZ34gAG5kpJ3SOPQWi9Fl+2GaLdfSJ+vWFMy/ZOrlmGy3Bux8c
-         Qsf0+aBaTAIrhETLfqRUJ2jrUFMdjnMLc7yJ0rR6pTh3Y0NOABSf6POz94F+Z7S6Lj6f
-         lrzXkK+Z6NpxL+Tmbu1FcVFDkFkkzitmHDG+OZDZZgStCik93FivOSSIjXCtjJGe/C8f
-         cDhiSKBAm6erZo7U3Sj24RP/+VL4eF1Zsa4w/dWEuxvsgze9iXXJjqOSrIRJI3MmWHYR
-         2wj7PHsfQp9p2+pOeT2CLTtdH3A334d4r6FTJ1QyLNjLgrQJBO4CKwPQNRPO8FCP2zyF
-         GW7Q==
+        bh=V9fad2qurKeXw5sLEpwY3Y82BlmeQT41QuC73U++aYY=;
+        b=N505Yzun+2SR2GJXrcT9pXC5HWFrzpg+ysu5T33BMZnNucAD29AdIO28BR6SjYUBWK
+         voXBz+sfvtQYkxMbAi7o6jgZRI+JRbzJsKs7l8sc9Qj3HJ6qKA2ZfZeKd+zTlNU31P+j
+         2egcmt6Ts3mdhE8zCrULSYBtDA4zjaLe+W9g3SiAOV0tdNYYyRIK2ZGSCGsJ0Rz96yRL
+         AJFnxyHdyxupAWvUdYxml26n4jtTXbX17OIm+3Z1DRxBmYF7joiLRZzGxX24SryDijGG
+         KCd7f2MdYw3whwHJcoytcYr6fPzMFPmBI7ue/yEQllcrfveMt1HutXdN6YGN8QPLw9hb
+         QhSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6avJBto7zNLge1VSRuZ52yJVcL2eyC8pogf3vr8kk2Y=;
-        b=VSPHkpONUvr+tdgmIELwd1ceHn54YRJhIu3HGuIBNvZem8J9m16NGfUBnfkuI+7SRT
-         B4pqWv1VRgSe2rOMZgmG1vMplDJiRio8qMfG8DRIA4OhxPy1sncy6grNzPGv6MDqAkI/
-         wuKsyjXaxFLme9Bio4BMMtrHhuBHPuBfbO8i6LY6FnjEnozhBNhQsThFYiKP8MkpiWmP
-         Fh2pAF1ejx5JuIUuN0Y3Vk5Wz/8YqCPuGDoEaB0P3muqeQ9uRxDxCnN/1st+NPinsILV
-         WL/vrF3U5/31r+xnNcE4BEaRMeCDsMbEHS6lKo9Lz3b0K4mXrVaqDgnSOaxuz80C/dQy
-         GvgA==
-X-Gm-Message-State: ACgBeo1kZ5xystzb6yl7TLoLQ1AlQLjGPpe66jkLd0WtsyGx4ASv5WF0
-        4rmBfzVExHIJ9OrwyldZvt0ZS4jR6o6uyQ==
-X-Google-Smtp-Source: AA6agR7zqD8RGgmLo9yM8Hh3X2zSoQlJpUCtclq926WA107Dn/TyOTfsyoHIU+2Q5PWrDQLEorJGug==
-X-Received: by 2002:a63:560e:0:b0:41c:590a:62ed with SMTP id k14-20020a63560e000000b0041c590a62edmr19692270pgb.250.1660046984807;
-        Tue, 09 Aug 2022 05:09:44 -0700 (PDT)
+        bh=V9fad2qurKeXw5sLEpwY3Y82BlmeQT41QuC73U++aYY=;
+        b=vo8cZEdftKTDFWosmsAo12A0JeTWVm4Q9eSs6Li+CcHVdcBSFZ4Pu5kH0uU7ElVJrt
+         Sgyd1FX13SBU6ZuuZcTJMp5WpGa5yDQeYXpk+3prmdD+GsIvLfTNBZlvMAcN0z+We93W
+         hguNqbX8XV6D7RHf3p/7pprf1okHRzD767kV3w+Q9/J/vyEo5Mii3DUQHJ3E69nEKogo
+         JESj8zOgEir4U6HdrEvrG7hHgJpdv9m+2W+ZIoEJwdZdNXlTKHwlQOlAX78hXk+cphtu
+         Zu+yRdaK/+ucg69XPC21eI/BOd/KiGu8EugXAa3vZu9dFEy7t0YMvhe1xnhUrf/X8oeC
+         q/PQ==
+X-Gm-Message-State: ACgBeo1IXLgyBmfsXEXUsaL7yQ/enZHvTPcstdQdickU1sPWvljeAqrT
+        AsXzsSsf5Hu3Zwmrox/bGqTZMk/MnnEJCA==
+X-Google-Smtp-Source: AA6agR6LlpYMamQQ5qJfKxd4vEutIZKD5JzdqIAtGPn7GVHH6LlhvpkkXWYmrgqCYbeop8+6vhU6Tg==
+X-Received: by 2002:a17:90b:380d:b0:1f5:2c6d:7de8 with SMTP id mq13-20020a17090b380d00b001f52c6d7de8mr33866239pjb.18.1660046986365;
+        Tue, 09 Aug 2022 05:09:46 -0700 (PDT)
 Received: from ffyuanda.localdomain ([120.239.67.140])
-        by smtp.gmail.com with ESMTPSA id p3-20020a170902780300b0016d10267927sm10511485pll.203.2022.08.09.05.09.43
+        by smtp.gmail.com with ESMTPSA id p3-20020a170902780300b0016d10267927sm10511485pll.203.2022.08.09.05.09.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Aug 2022 05:09:44 -0700 (PDT)
+        Tue, 09 Aug 2022 05:09:46 -0700 (PDT)
 From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 To:     git@vger.kernel.org
 Cc:     vdye@github.com, derrickstolee@github.com, gitster@pobox.com,
         Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Subject: [PATCH v3 7/9] mv: cleanup empty WORKING_DIRECTORY
-Date:   Tue,  9 Aug 2022 20:09:08 +0800
-Message-Id: <20220809120910.2021413-8-shaoxuan.yuan02@gmail.com>
+Subject: [PATCH v3 8/9] advice.h: add advise_on_moving_dirty_path()
+Date:   Tue,  9 Aug 2022 20:09:09 +0800
+Message-Id: <20220809120910.2021413-9-shaoxuan.yuan02@gmail.com>
 X-Mailer: git-send-email 2.37.0
 In-Reply-To: <20220809120910.2021413-1-shaoxuan.yuan02@gmail.com>
 References: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
@@ -64,111 +64,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Originally, moving from-in-to-out may leave an empty <source>
-directory on-disk (this kind of directory is marked as
-WORKING_DIRECTORY).
+Add an advice.
 
-Cleanup such directories if they are empty (don't have any entries
-under them).
+When the user use `git mv --sparse <dirty-path> <destination>`, Git
+will warn the user to use `git add --sparse <paths>` then use
+`git sparse-checkout reapply` to apply the sparsity rules.
 
-Modify two tests that take <source> as WORKING_DIRECTORY to test
-this behavior.
+Add a few lines to previous "move dirty path" tests so we can test
+this new advice is working.
 
 Suggested-by: Derrick Stolee <derrickstolee@github.com>
 Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 ---
- builtin/mv.c                  | 27 +++++++++++++++++++++++++++
- t/t7002-mv-sparse-checkout.sh |  4 ++++
- 2 files changed, 31 insertions(+)
+ advice.c                      | 19 +++++++++++++++++++
+ advice.h                      |  1 +
+ builtin/mv.c                  |  3 +++
+ t/t7002-mv-sparse-checkout.sh | 24 +++++++++++++++++++++++-
+ 4 files changed, 46 insertions(+), 1 deletion(-)
 
+diff --git a/advice.c b/advice.c
+index 6fda9edbc2..fd18968943 100644
+--- a/advice.c
++++ b/advice.c
+@@ -261,3 +261,22 @@ void detach_advice(const char *new_name)
+ 
+ 	fprintf(stderr, fmt, new_name);
+ }
++
++void advise_on_moving_dirty_path(struct string_list *pathspec_list)
++{
++	struct string_list_item *item;
++
++	if (!pathspec_list->nr)
++		return;
++
++	fprintf(stderr, _("The following paths have been moved outside the\n"
++			  "sparse-checkout definition but are not sparse due to local\n"
++			  "modifications.\n"));
++	for_each_string_list_item(item, pathspec_list)
++		fprintf(stderr, "%s\n", item->string);
++
++	advise_if_enabled(ADVICE_UPDATE_SPARSE_PATH,
++			  _("To correct the sparsity of these paths, do the following:\n"
++			    "* Use \"git add --sparse <paths>\" to update the index\n"
++			    "* Use \"git sparse-checkout reapply\" to apply the sparsity rules"));
++}
+diff --git a/advice.h b/advice.h
+index 7ddc6cbc1a..07e0f76833 100644
+--- a/advice.h
++++ b/advice.h
+@@ -74,5 +74,6 @@ void NORETURN die_conclude_merge(void);
+ void NORETURN die_ff_impossible(void);
+ void advise_on_updating_sparse_paths(struct string_list *pathspec_list);
+ void detach_advice(const char *new_name);
++void advise_on_moving_dirty_path(struct string_list *pathspec_list);
+ 
+ #endif /* ADVICE_H */
 diff --git a/builtin/mv.c b/builtin/mv.c
-index 6a6420c984..32e7ac4896 100644
+index 32e7ac4896..a396a030c7 100644
 --- a/builtin/mv.c
 +++ b/builtin/mv.c
-@@ -171,6 +171,9 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	};
- 	const char **source, **destination, **dest_path, **submodule_gitfile;
- 	const char *dst_w_slash;
-+	const char **src_dir = NULL;
-+	int src_dir_nr = 0, src_dir_alloc = 0;
-+	struct strbuf a_src_dir = STRBUF_INIT;
- 	enum update_mode *modes, dst_mode = 0;
- 	struct stat st;
- 	struct string_list src_for_dst = STRING_LIST_INIT_NODUP;
-@@ -314,6 +317,10 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+@@ -530,6 +530,9 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&a_src_dir);
+ 	free(src_dir);
  
- 			/* last - first >= 1 */
- 			modes[i] |= WORKING_DIRECTORY;
-+
-+			ALLOC_GROW(src_dir, src_dir_nr + 1, src_dir_alloc);
-+			src_dir[src_dir_nr++] = src;
-+
- 			n = argc + last - first;
- 			REALLOC_ARRAY(source, n);
- 			REALLOC_ARRAY(destination, n);
-@@ -503,6 +510,26 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
-+	/*
-+	 * cleanup the empty src_dirs
-+	 */
-+	for (i = 0; i < src_dir_nr; i++) {
-+		int dummy;
-+		strbuf_addstr(&a_src_dir, src_dir[i]);
-+		/*
-+		 * if entries under a_src_dir are all moved away,
-+		 * recursively remove a_src_dir to cleanup
-+		 */
-+		if (index_range_of_same_dir(a_src_dir.buf, a_src_dir.len,
-+					    &dummy, &dummy) < 1) {
-+			remove_dir_recursively(&a_src_dir, 0);
-+		}
-+		strbuf_reset(&a_src_dir);
-+	}
-+
-+	strbuf_release(&a_src_dir);
-+	free(src_dir);
++	if (dirty_paths.nr)
++		advise_on_moving_dirty_path(&dirty_paths);
 +
  	if (gitmodules_modified)
  		stage_updated_gitmodules(&the_index);
  
 diff --git a/t/t7002-mv-sparse-checkout.sh b/t/t7002-mv-sparse-checkout.sh
-index d875f492dd..df8c0fa572 100755
+index df8c0fa572..5e5eb70e7a 100755
 --- a/t/t7002-mv-sparse-checkout.sh
 +++ b/t/t7002-mv-sparse-checkout.sh
-@@ -442,6 +442,7 @@ test_expect_success 'move dirty path from in-cone to out-of-cone' '
- test_expect_success 'move dir from in-cone to out-of-cone' '
- 	test_when_finished "cleanup_sparse_checkout" &&
- 	setup_sparse_checkout &&
-+	mkdir sub/dir/deep &&
+@@ -28,12 +28,25 @@ test_expect_success 'setup' "
+ 	updated in the index:
+ 	EOF
  
- 	test_must_fail git mv sub/dir folder1 2>stderr &&
- 	cat sparse_error_header >expect &&
-@@ -452,6 +453,7 @@ test_expect_success 'move dir from in-cone to out-of-cone' '
+-	cat >sparse_hint <<-EOF
++	cat >sparse_hint <<-EOF &&
+ 	hint: If you intend to update such entries, try one of the following:
+ 	hint: * Use the --sparse option.
+ 	hint: * Disable or modify the sparsity rules.
+ 	hint: Disable this message with \"git config advice.updateSparsePath false\"
+ 	EOF
++
++	cat >dirty_error_header <<-EOF &&
++	The following paths have been moved outside the
++	sparse-checkout definition but are not sparse due to local
++	modifications.
++	EOF
++
++	cat >dirty_hint <<-EOF
++	hint: To correct the sparsity of these paths, do the following:
++	hint: * Use \"git add --sparse <paths>\" to update the index
++	hint: * Use \"git sparse-checkout reapply\" to apply the sparsity rules
++	hint: Disable this message with \"git config advice.updateSparsePath false\"
++	EOF
+ "
+ 
+ test_expect_success 'mv refuses to move sparse-to-sparse' '
+@@ -431,6 +444,10 @@ test_expect_success 'move dirty path from in-cone to out-of-cone' '
+ 	test_cmp expect stderr &&
+ 
+ 	git mv --sparse sub/d folder1 2>stderr &&
++	cat dirty_error_header >expect &&
++	echo "folder1/d" >>expect &&
++	cat dirty_hint >>expect &&
++	test_cmp expect stderr &&
+ 
+ 	test_path_is_missing sub/d &&
+ 	test_path_is_file folder1/d &&
+@@ -478,6 +495,11 @@ test_expect_success 'move partially-dirty dir from in-cone to out-of-cone' '
+ 	test_cmp expect stderr &&
+ 
  	git mv --sparse sub/dir folder1 2>stderr &&
- 	test_must_be_empty stderr &&
++	cat dirty_error_header >expect &&
++	echo "folder1/dir/e2" >>expect &&
++	echo "folder1/dir/e3" >>expect &&
++	cat dirty_hint >>expect &&
++	test_cmp expect stderr &&
  
-+	test_path_is_missing sub/dir &&
- 	test_path_is_missing folder1 &&
- 	git ls-files -t >actual &&
- 	! grep "H sub/dir/e" actual &&
-@@ -461,6 +463,7 @@ test_expect_success 'move dir from in-cone to out-of-cone' '
- test_expect_success 'move partially-dirty dir from in-cone to out-of-cone' '
- 	test_when_finished "cleanup_sparse_checkout" &&
- 	setup_sparse_checkout &&
-+	mkdir sub/dir/deep &&
- 	touch sub/dir/e2 sub/dir/e3 &&
- 	git add sub/dir/e2 sub/dir/e3 &&
- 	echo "modified" >>sub/dir/e2 &&
-@@ -476,6 +479,7 @@ test_expect_success 'move partially-dirty dir from in-cone to out-of-cone' '
- 
- 	git mv --sparse sub/dir folder1 2>stderr &&
- 
-+	test_path_is_missing sub/dir &&
+ 	test_path_is_missing sub/dir &&
  	test_path_is_missing folder1/dir/e &&
- 	test_path_is_file folder1/dir/e2 &&
- 	test_path_is_file folder1/dir/e3 &&
 -- 
 2.37.0
 
