@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8813AC00140
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 00:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AFBBC25B0D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 00:46:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244765AbiHIAqN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Aug 2022 20:46:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42622 "EHLO
+        id S244767AbiHIAqO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Aug 2022 20:46:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242257AbiHIAqB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Aug 2022 20:46:01 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E8992719
-        for <git@vger.kernel.org>; Mon,  8 Aug 2022 17:45:59 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id m22-20020a0568301e7600b006369227f745so7572621otr.7
-        for <git@vger.kernel.org>; Mon, 08 Aug 2022 17:45:59 -0700 (PDT)
+        with ESMTP id S244457AbiHIAqH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Aug 2022 20:46:07 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D596559D
+        for <git@vger.kernel.org>; Mon,  8 Aug 2022 17:46:01 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id f3-20020a9d0383000000b00636d99775a2so3928531otf.2
+        for <git@vger.kernel.org>; Mon, 08 Aug 2022 17:46:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=DUbVheBx93ba2pkuSb1IWXwCzzBsdySkloHOONSgQ0k=;
-        b=Ah/6sk3Me9qP1rLgsCFFU8UoXUzBzff6zMdnBvQPjeNrXDHpguARseuaQdvblRtY54
-         IKns5T9Rrvz05pcKPu7VNlMg9yhNpBkvU6cG2Xfn4nc26sPPJgM7nYjyADNhDj6awe+M
-         uvCrD4QU7kGrrUPN7nMp9YccN+rvUT1EZa0SjhY+R7/RGaG4xfixIDfBesSjEhg51WWj
-         0Io1rozbNEfkfuPsEiRIFtDP+5Gzj/LTa/hUaxNAuTM+x5HvvvZTHX/WceB/GiJWXthQ
-         vW7j7SqcC/Id7nU0z5ggr1iepM7Ic3AXzNaQXXNXjbBZ5OCme/DBFUiPgRKwNRTYZQy1
-         jfOA==
+        bh=uxfny2JjPZ1nPpdt7ZaXR1QCkbXQh6hyg+Be/e7Ow1c=;
+        b=qxW7gW78k38qGxHJXHEjBlCVyJqllx/Ddt1Os6X7o1Vyq7PfvcKO9XpSKGJi/tpJY/
+         IHhPseOJPRfK/jr1fof+/e0bqj0TSqDIyGS97crtPFhTeBB3gw5Z5v89dBKZ9DVgseD2
+         oSXBxqfl6j7UzOeDLyLJyaRHBmhn6GsgACOPytB1VdmwihZh9O/6olvXo7RBCwF4o9L0
+         njr8Kak/YNCV7BuL/OntJnaTHnWENLtY6CNgVp3LSJmGn4gOc1pXUrA0gtp0qaLi+w91
+         HJxi3JDCuhb2OHdHZ9dNv+j5KO8F7wsrs5FJes7HY4umwUc2AIIHYg1bxsf51jOyyGEk
+         nkDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=DUbVheBx93ba2pkuSb1IWXwCzzBsdySkloHOONSgQ0k=;
-        b=ihF1/HA6lTe64EQADZXByFEu56XkqtIkC91hTl1OL+EJMqJbSIblHdzGoFgDCpp3C9
-         2a24DUUc/PP3Xfm9Ts3/90VHa0KyWKHvcQIZNVDFHhhIZOUFG43zs6e7mnzuFE4LWS0y
-         pW5wTRFgJN197+BXN/v3N4x/Qukv9tErYpZ7rVokZbiAfTwQOKpNMqUmWH4UhkqGVs8c
-         6/GAA8iBpg9ZY2GxBFwzaUl9IUnV53Ali3E8X0WLnopOrD6BlHA2PGB4Csv/50BPBFiO
-         9dwiwrdu1W3SbQf53xtCmDpGLXEQMJTUqybIU4ut/jviSdWxh40jUnIb796NEHyelC7E
-         kl0Q==
-X-Gm-Message-State: ACgBeo2rlBLPKenJHmNtE/MSUoYdlXHpEWgZUnhlS4VxrSRNpX2IIF9N
-        QDb3Wj+sk1oLPL0caWlWBmlrPC47g0M=
-X-Google-Smtp-Source: AA6agR5y+GzLXYz2lPDJFhwsgCc3rG3/hMYgByAeZ/zWeMP9RmSlVBoq80qWQM8lka5XPe3td+xiUg==
-X-Received: by 2002:a9d:6484:0:b0:60b:eb0b:4054 with SMTP id g4-20020a9d6484000000b0060beb0b4054mr8162695otl.159.1660005957621;
-        Mon, 08 Aug 2022 17:45:57 -0700 (PDT)
+        bh=uxfny2JjPZ1nPpdt7ZaXR1QCkbXQh6hyg+Be/e7Ow1c=;
+        b=fAvMI0WkPoFKGUgVEtMdSA5tzOxdhkWvpgm7RGnJ1rDdv/YpePoWyvweUyX0F3XaGh
+         2wQ9QuDbNp/HJV4NCH9A+zeREjpmj8VUSpngjC/8IIh77C8XNvQVAs3J1YJr4MohqHBl
+         Qz0NrU0rS7cvv/Tsav+ze6/sPZp91y0mfNR/uqwlAnTA6+68FgYUzMuEAhNnNJtpeH0X
+         OXUYEngzivdQij1nn/7KXWgEuJWEmQ0dCEJ82X4WuLSI2rE6hnljzUMP+b7on4LugDB3
+         UYhQyqGRkOA1vrYtH/iqJXgkbYN0oKC9Yb5W1CWtUaWTKP3SpQ41l8P0OFGSxMd17je7
+         gp8w==
+X-Gm-Message-State: ACgBeo1ztHXA1p7P0IT3/gMAnp4MJGDVudDGbDP/FAK7jG7SfkXHBcul
+        xOVFMsrs3BC4GMnsajLLRky3VjXrXt4=
+X-Google-Smtp-Source: AA6agR4NqUe6RGsNCkTQxN8pxUP90JAzbQ4ViKd7l/ClHSnsR6eBdmPImH8SS7RcmcA1EqW9yu3ziQ==
+X-Received: by 2002:a05:6830:310c:b0:61c:c2c2:f9c7 with SMTP id b12-20020a056830310c00b0061cc2c2f9c7mr7912948ots.61.1660005960584;
+        Mon, 08 Aug 2022 17:46:00 -0700 (PDT)
 Received: from localhost ([2806:2f0:4000:afaf:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id w204-20020acaadd5000000b00342fc99c5cbsm730836oie.54.2022.08.08.17.45.56
+        by smtp.gmail.com with ESMTPSA id h1-20020a056870c18100b0010e73e252b8sm2681772oad.6.2022.08.08.17.45.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Aug 2022 17:45:57 -0700 (PDT)
+        Mon, 08 Aug 2022 17:46:00 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Fernando Ramos <greenfoo@u92.eu>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 5/7] mergetools: vimdiff: fix single window layouts
-Date:   Mon,  8 Aug 2022 19:45:47 -0500
-Message-Id: <20220809004549.123020-6-felipe.contreras@gmail.com>
+Subject: [PATCH v3 7/7] mergetools: vimdiff: restore selective diff mode
+Date:   Mon,  8 Aug 2022 19:45:49 -0500
+Message-Id: <20220809004549.123020-8-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20220809004549.123020-1-felipe.contreras@gmail.com>
 References: <20220809004549.123020-1-felipe.contreras@gmail.com>
@@ -63,120 +63,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Layouts with a single window other than "MERGED" do not work (e.g.
-"LOCAL" or "MERGED+LOCAL").
+Apparently some people want the diff mode to show differences only on
+the visible windows, so turn this on only when the tab has more than one
+window.
 
-This is because as the documentation of bufdo says:
+This should probably be configurable.
 
-    The last buffer (or where an error occurred) becomes the current
-    buffer.
-
-And we do always do bufdo the end.
-
-Additionally, we do it only once, when it should be per tab.
-
-There's no need to enable the diff mode differently depending on the
-layout: we can enable it the same way for all cases by doing
-`bufdo diffthis` before doing anything else.
-
-If we do this on every tab, then all the windows in the tab will have
-diff mode enabled against all buffers, which is what we want, and in
-single window tabs, the desired buffer will remain.
-
-This way a multi-window layout like "MERGED,REMOTE" behaves the same way
-as "MERGED" after closing the "REMOTE" window. A consistent behavior is
-clearly what most users would want.
-
+Cc: Fernando Ramos <greenfoo@u92.eu>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- mergetools/vimdiff | 49 ++++++++++++++++++----------------------------
- 1 file changed, 19 insertions(+), 30 deletions(-)
+ mergetools/vimdiff | 50 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 19 deletions(-)
 
 diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-index 2ecac41231..64a8fe170d 100644
+index 8029be0975..17921b6ba9 100644
 --- a/mergetools/vimdiff
 +++ b/mergetools/vimdiff
 @@ -68,7 +68,7 @@ gen_cmd_aux () {
  
  	if test -z "$CMD"
  	then
--		CMD="echo" # vim "nop" operator
-+		CMD="silent execute 'bufdo diffthis'"
+-		CMD="silent execute 'bufdo diffthis'"
++		CMD="echo"
  	fi
  
  	start=0
-@@ -221,7 +221,7 @@ gen_cmd_aux () {
+@@ -323,8 +323,20 @@ gen_cmd () {
+ 	IFS=+
+ 	for tab in $LAYOUT
+ 	do
+-		test -n "$CMD" && CMD="$CMD | tabnew | silent execute 'bufdo diffthis'"
+-		CMD=$(gen_cmd_aux "$tab" "$CMD")
++		if echo "$tab" | grep ",\|/" >/dev/null
++		then
++			test -n "$CMD" && CMD="$CMD | tabnew"
++			CMD=$(gen_cmd_aux "$tab" "$CMD")
++			CMD="$CMD | execute 'windo diffthis'"
++		else
++			if test -z "$CMD"
++			then
++				CMD="silent execute 'bufdo diffthis'"
++			else
++				CMD="$CMD | tabnew | silent execute 'bufdo diffthis'"
++			fi
++			CMD=$(gen_cmd_aux "$tab" "$CMD")
++		fi
+ 	done
+ 	IFS=$oldIFS
  
- 	if ! test -z "$index_new_tab"
- 	then
--		before="-tabnew"
-+		before="-tabnew | silent execute 'bufdo diffthis'"
- 		after="tabnext"
- 		index=$index_new_tab
- 		terminate="true"
-@@ -336,17 +336,6 @@ gen_cmd () {
- 	CMD=$(gen_cmd_aux "$LAYOUT")
- 
- 
--	# Adjust the just obtained script depending on whether more than one
--	# windows are visible or not
--
--	if echo "$LAYOUT" | grep ",\|/" >/dev/null
--	then
--		CMD="$CMD | tabdo windo diffthis"
--	else
--		CMD="$CMD | silent bufdo diffthis"
--	fi
--
--
- 	# Add an extra "-c" option to move to the first tab (notice that we
- 	# can't simply append the command to the previous "-c" string as
- 	# explained here: https://github.com/vim/vim/issues/9076
-@@ -555,22 +544,22 @@ run_unit_tests () {
+@@ -537,22 +549,22 @@ run_unit_tests () {
  	TEST_CASE_15="  ((  (LOCAL , BASE , REMOTE) / MERGED))   +(BASE)   , LOCAL+ BASE , REMOTE+ (((LOCAL / BASE / REMOTE)) ,    MERGED   )  "
  	TEST_CASE_16="LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE + (LOCAL / BASE / REMOTE),MERGED"
  
--	EXPECTED_CMD_01="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_02="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_03="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 4b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_04="-c \"set hidden diffopt-=hiddenoff | echo | 4b | silent bufdo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_05="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | 1b | wincmd j | leftabove split | 4b | wincmd j | 3b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_06="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_07="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | 4b | wincmd l | leftabove split | 1b | wincmd j | 3b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_08="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_09="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | 4b | wincmd j | leftabove vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_10="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_11="-c \"set hidden diffopt-=hiddenoff | echo | -tabnew | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_12="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_13="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_14="-c \"set hidden diffopt-=hiddenoff | echo | -tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | 2b | wincmd l | 1b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_15="-c \"set hidden diffopt-=hiddenoff | echo | -tabnew | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_16="-c \"set hidden diffopt-=hiddenoff | echo | -tabnew | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_01="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b\" -c \"tabfirst\""
-+	EXPECTED_CMD_02="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | 1b | wincmd l | 3b\" -c \"tabfirst\""
-+	EXPECTED_CMD_03="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 4b | wincmd l | 3b\" -c \"tabfirst\""
-+	EXPECTED_CMD_04="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | 4b\" -c \"tabfirst\""
-+	EXPECTED_CMD_05="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | 1b | wincmd j | leftabove split | 4b | wincmd j | 3b\" -c \"tabfirst\""
-+	EXPECTED_CMD_06="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b\" -c \"tabfirst\""
-+	EXPECTED_CMD_07="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | 4b | wincmd l | leftabove split | 1b | wincmd j | 3b\" -c \"tabfirst\""
-+	EXPECTED_CMD_08="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 4b\" -c \"tabfirst\""
-+	EXPECTED_CMD_09="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | 4b | wincmd j | leftabove vertical split | 1b | wincmd l | 3b\" -c \"tabfirst\""
-+	EXPECTED_CMD_10="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b\" -c \"tabfirst\""
-+	EXPECTED_CMD_11="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | -tabnew | silent execute 'bufdo diffthis' | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b\" -c \"tabfirst\""
-+	EXPECTED_CMD_12="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | 4b\" -c \"tabfirst\""
-+	EXPECTED_CMD_13="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b\" -c \"tabfirst\""
-+	EXPECTED_CMD_14="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | -tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | 2b | wincmd l | 1b\" -c \"tabfirst\""
-+	EXPECTED_CMD_15="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | -tabnew | silent execute 'bufdo diffthis' | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b\" -c \"tabfirst\""
-+	EXPECTED_CMD_16="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | -tabnew | silent execute 'bufdo diffthis' | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b\" -c \"tabfirst\""
+-	EXPECTED_CMD_01="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b\" -c \"tabfirst\""
+-	EXPECTED_CMD_02="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | 1b | wincmd l | 3b\" -c \"tabfirst\""
+-	EXPECTED_CMD_03="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 4b | wincmd l | 3b\" -c \"tabfirst\""
++	EXPECTED_CMD_01="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_02="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | 1b | wincmd l | 3b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_03="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 4b | wincmd l | 3b | execute 'windo diffthis'\" -c \"tabfirst\""
+ 	EXPECTED_CMD_04="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | 4b\" -c \"tabfirst\""
+-	EXPECTED_CMD_05="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | 1b | wincmd j | leftabove split | 4b | wincmd j | 3b\" -c \"tabfirst\""
+-	EXPECTED_CMD_06="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b\" -c \"tabfirst\""
+-	EXPECTED_CMD_07="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | 4b | wincmd l | leftabove split | 1b | wincmd j | 3b\" -c \"tabfirst\""
+-	EXPECTED_CMD_08="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 4b\" -c \"tabfirst\""
+-	EXPECTED_CMD_09="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | 4b | wincmd j | leftabove vertical split | 1b | wincmd l | 3b\" -c \"tabfirst\""
+-	EXPECTED_CMD_10="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b\" -c \"tabfirst\""
+-	EXPECTED_CMD_11="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 1b | tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 3b | tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b\" -c \"tabfirst\""
+-	EXPECTED_CMD_12="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | 4b\" -c \"tabfirst\""
+-	EXPECTED_CMD_13="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b\" -c \"tabfirst\""
+-	EXPECTED_CMD_14="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 3b | tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 1b\" -c \"tabfirst\""
+-	EXPECTED_CMD_15="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 1b | tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 3b | tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b\" -c \"tabfirst\""
+-	EXPECTED_CMD_16="-c \"set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 1b | tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | 2b | wincmd l | 3b | tabnew | silent execute 'bufdo diffthis' | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b\" -c \"tabfirst\""
++	EXPECTED_CMD_05="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | 1b | wincmd j | leftabove split | 4b | wincmd j | 3b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_06="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_07="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | 4b | wincmd l | leftabove split | 1b | wincmd j | 3b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_08="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 4b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_09="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | 4b | wincmd j | leftabove vertical split | 1b | wincmd l | 3b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_10="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_11="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | execute 'windo diffthis' | tabnew | leftabove vertical split | 2b | wincmd l | 1b | execute 'windo diffthis' | tabnew | leftabove vertical split | 2b | wincmd l | 3b | execute 'windo diffthis' | tabnew | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_12="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | 4b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_13="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_14="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | 2b | wincmd l | 3b | execute 'windo diffthis' | tabnew | leftabove vertical split | 2b | wincmd l | 1b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_15="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | execute 'windo diffthis' | tabnew | leftabove vertical split | 2b | wincmd l | 1b | execute 'windo diffthis' | tabnew | leftabove vertical split | 2b | wincmd l | 3b | execute 'windo diffthis' | tabnew | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | execute 'windo diffthis'\" -c \"tabfirst\""
++	EXPECTED_CMD_16="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | execute 'windo diffthis' | tabnew | leftabove vertical split | 2b | wincmd l | 1b | execute 'windo diffthis' | tabnew | leftabove vertical split | 2b | wincmd l | 3b | execute 'windo diffthis' | tabnew | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | execute 'windo diffthis'\" -c \"tabfirst\""
  
  	EXPECTED_TARGET_01="MERGED"
  	EXPECTED_TARGET_02="LOCAL"
-@@ -635,7 +624,7 @@ run_unit_tests () {
+@@ -617,7 +629,7 @@ run_unit_tests () {
  	cat >expect <<-\EOF
  	-f
  	-c
--	set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | quit | wincmd l | 2b | wincmd j | 3b | tabdo windo diffthis
-+	set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | quit | wincmd l | 2b | wincmd j | 3b
+-	set hidden diffopt-=hiddenoff | silent execute 'bufdo diffthis' | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | quit | wincmd l | 2b | wincmd j | 3b
++	set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | quit | wincmd l | 2b | wincmd j | 3b | execute 'windo diffthis'
  	-c
  	tabfirst
  	lo cal
