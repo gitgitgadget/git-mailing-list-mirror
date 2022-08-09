@@ -2,120 +2,211 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC94DC19F2D
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 09:03:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11A95C19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 09:36:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237765AbiHIJDI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 05:03:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34626 "EHLO
+        id S235132AbiHIJgf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 05:36:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235330AbiHIJDH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 05:03:07 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 415802124E
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 02:03:06 -0700 (PDT)
+        with ESMTP id S235449AbiHIJgc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 05:36:32 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC45B22BE6
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 02:36:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660035783;
-        bh=ZvYNfMNjj6Xu3UGOXEIYOe6q3Hzm9tpGFp6YfSKwlm4=;
+        s=badeba3b8450; t=1660037778;
+        bh=f7kxjVjfkgBiZ+tokbDEQUZqsOW1cg6kfmnavgBNOJ0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=AF3QZa93RO+YiH53zpBuAZ/reMPaqHk8P7XOea1G6XErFaV+ogWtJ9PsNOLq+N75I
-         45gUyN2ZVpFi4j5y4QM/sRk964pTAPelG/v9JovhPROoXqUegbWTXUB5Rt23c97G09
-         ccS/id10+nWHMOhn8I5L4ZT6mZEr3O8RFWxBVogI=
+        b=RJQ9F0BPtpG7gD6UfnoYIVtuHIS/63mTzG496oDfLSH1Gp1umtQwOiyI+dSXG7LuN
+         tnana5Ehx42g9z/6il4vuv8Y1kEVioLDogWcD+iMLutyNhOdMUFNWVDv2bmgN6ZDmy
+         YzD/62hjLtq0Nrs5ET9jQ8uHS34jFV40CY7+Z18M=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.31.241.252] ([89.1.214.151]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M2wKq-1oOeWg3OaC-003Kui; Tue, 09
- Aug 2022 11:03:02 +0200
-Date:   Tue, 9 Aug 2022 11:03:02 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N95eJ-1nIMyb2Eml-0169Zx; Tue, 09
+ Aug 2022 11:36:18 +0200
+Date:   Tue, 9 Aug 2022 11:36:16 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v5 3/6] pack-bitmap-write: learn pack.writeBitmapLookupTable
- and add tests
-In-Reply-To: <CAPOJW5zYndyqwyN8xOcRQnwebqXciY-25hNL3fU=V5ac8fCpNA@mail.gmail.com>
-Message-ID: <s714sq49-o13q-5417-0o21-6397s3646q9o@tzk.qr>
-References: <pull.1266.v4.git.1658325913.gitgitgadget@gmail.com> <pull.1266.v5.git.1658342304.gitgitgadget@gmail.com> <59b465e5a7817c145172f25e73ad807c7ba67e84.1658342304.git.gitgitgadget@gmail.com> <p3r70610-8n52-s8q0-n641-onp4ps01330n@tzk.qr>
- <CAPOJW5xBUaAJtOvrefwbXv_WDTLa=6PTL5kEoOpRQfqqFAx3oA@mail.gmail.com> <6s4n3600-q5p7-92sr-4206-non3s8rr3n46@tzk.qr> <CAPOJW5yUi471cfAXuXaM4BCzVsfZ15J1Era4NuEpxEnmY6md9Q@mail.gmail.com> <p69r38sn-1ppn-q66q-9089-59394pq78772@tzk.qr>
- <CAPOJW5zYndyqwyN8xOcRQnwebqXciY-25hNL3fU=V5ac8fCpNA@mail.gmail.com>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+cc:     git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
+        christian.couder@gmail.com, avarab@gmail.com
+Subject: Re: [PATCH v2] t/t0021: convert the rot13-filter.pl script to C
+In-Reply-To: <CAHd-oW6LZay=MX2FdFjgTh1pjE=g-XTm63mGWuMhHd=-N=tXRA@mail.gmail.com>
+Message-ID: <q7o86qo0-9618-p26p-q6q1-8n461qsqpq75@tzk.qr>
+References: <cover.1658518769.git.matheus.bernardino@usp.br> <f38f722de7c3323207eda5ea632b5acd3765c285.1658675222.git.matheus.bernardino@usp.br> <4n20476q-6ssr-osp8-q5o3-p8ns726q4pn3@tzk.qr>
+ <CAHd-oW6LZay=MX2FdFjgTh1pjE=g-XTm63mGWuMhHd=-N=tXRA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:88EYWKZ4bS9hGSinzrgE6MN8KesVKQ6FIV/o91Vdo0Z6FbsK2jW
- 6uq5hATvwptM0ht5kI1cLVY1C/gpxa8nqhgb1iepndvPtYY/QndjwjYPPaxwWy8Enz9yhRG
- pNdYiyTgeSjpS5fcnTVA3Rkr/rN+PMNMkSV959VsTYtwv7bpI7YAy0+cIBusmnLCjsjZeF6
- vckTXN+DepwpLG6J6Y2+Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QStOT18/Qu4=:Q2Bv8ZjXWWtB6rOV7Z+HQB
- MGA3YngkPACqrxcvYB4AYfCb2oBG6n6MlSCyn+d+zuPpZDeyXt0DpwAXd7Gyni4q7Ma75YHAP
- 7YnY1XHTnFbMXwaMQinTTj54LcDxr80koG0YIBMJt0GlbVgEjnv5NwJN98UkajZuumcnysjhP
- YI9LU3oXFxsrjJxi3EDF9nsN9iDEO9U2FfZRsjlXQBaq9t9y+5ouhlhMPPHLxrcbyHYqvviIM
- X4IISyY1a88ffQgUF5RQYT81b1+kK3rxPBsGKEPIpSOVJG5kh4aXAGDHJpyIUDEBEYcYa/3jF
- piXTeEV8C1ktawZSyOovnOjFaYvKVzj973eITeAPj1EK2LFJenqKyxvDP1jOLUX9i6byCE1QB
- MUs8ahiVefLJ3e+a6V8CWtPQrJXob3425kTPTS5/jnGoOfFwNqspC6Ngg2dzOgJKH/lrKnFWB
- gA5poOR2OjixkkPpAbOS1xUTjWmNMZ4R1+R4Ri3/0VHZ04kbrJCNX/EqZqn3T3KfwJJG8iqSI
- v3Vdkchy8+TpI4Ejczg95L80n7f43jVcXj4kbcNVB3FUainLm1LN3DOxS+rf0KwiyulbdZnGY
- Z7j5U7JbfSie5SEDS92qAsCeHyf/Ws5EdrLMwwV3zzUiO2mBQeg++nTT3oDqRNqBsP9qRuCVe
- 4HmazX2blnZP6U4MpVbT3/kkQwIt50XQIgVZaaT3mt72DrWJEjZVHPkwpY0pVQCyUM47ZyggB
- Hs3DOl7kmUG2z/MIQJQ5peGDz/uIuu1D3DA0MMVscYubqnEoLrtifWH3Cuek21BT3Qd6eE8XF
- 4iOAjJG4LFltPs7GuRL1zWhne2f2ZBptw5qnFHifYBlPyC8a/H4j4U3Quvo1d1OB3rIut/exp
- i05lX7lRTy/lSnf95QKqS2E3Whzt/+GkhMALvTAsCx5/6iGyHNTUIzA1gGozImtjvrM4zy0dU
- eqTyjtF09cWw8OI+QG6uiEDH7Azv7YHnQDr0sxYEQwst6VggvnJfrFr5NfVx7bJuAqDuKLePg
- BuaCTdd93UZKS5a2RydX9dm5lwE4qVUlL5O4by0H+ZzwWXOJE48Ilmj082qpSPpq2O3nStwGz
- vZHQJmgkhHSsWEYmlKMLtrHKN+uhusfeQWbWEqX21ROvWsHOAJz/eSyfA==
+X-Provags-ID: V03:K1:3nEJh9v39wu+4GmmAYni35Jyjqr8SfJP3Vp+PL09ntwpQplPtte
+ e+iq53lHUh6IKMVGxsg5p5bbl1Q6/b3TQ0fdmg1IktUSJHtrI0ShV9Uix9xNMc7GwbVfI1E
+ 5fa6T8vVBfkGXraGNNbH6tBFsaj+wvDnd0F/gpizuKZkUMTtBpFqNH88EoQDaGnAogDMB7w
+ V9wpkECg6z/SD/N2XLhBA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:CX6/uO2cLmM=:BWKtQRoVTGY0e4y7ctl3R3
+ eMuX7/uzfrnXXSlkfmDxTSN4oFv1Pxg+hwcvLQ10Gd7bF4sunuJqk7t+T7p7cjYcvOEmbFBKV
+ f5Kl93M5u80FpClUkYqtqhEPZ07lYZfT8vg6PJ3t7qsE3R19/m4WPFZWpgB0M7X/WEarraAda
+ pZfxAPtQHPlZ9vWn7JT0JJ9sr3fNR25jNb0Bv1SDRxfggJ9WWI1SoTl65I7irWY5CEExiQaVH
+ uiTY90BzRkF0UdQeYBhQFjJ+EbeYFLujaLt5K+c8MRSDdkru9E+RlluDYI0GuVpyyAVZhNpDn
+ kyAws0Cc/Cgg+1QkXBmOaLudHQMnXyYgj6PLgTXE9IdYmL2yi/0z09iyiPaouX2g+5XGn6rwQ
+ AdOPCWCaee1ZgF1Agek5tGlEsANZROp7EWQkXBh5eN3uFRNyetL3l5bnOBd0oImkCQPnhuVsR
+ mn53Rsbww6AjNS7KcVXWN+l4+O6x+Z/6FM9r3R5bAhoQCgTxlDibeldbuqfxPhqcbYVFplmt3
+ PVM1BuH00s9Foqde/lCbeiASrkeBtxDgx2MFla2ocHiEvICeLYWrk8nEhnSp7tg+9mnPyfsiO
+ KBDgacHpsJjjE1kQSd7RRVlfgA5kAInchG3wpYLj8LxQ7V3XsbdgiV8tNKnL4zHRy+b6ywfFu
+ 1kBUxHoXsEeF+nPFo5Np9lprHuS/fRapAqQ5cc2R8+jblTo7xl+iLpU2J2ZK+SSvAjcwRGyRs
+ fNgapn6bMpGKZDGNywO2bh2bsocR04/92GDipZRRgZhp7H4s7EDXM29LmpYY2NbRHXm42Mezz
+ 84WnzxznbecczK8vtr2Sw9hr3iY7Z2MMSHK/k9xehyd0bLD9aQI/ZkQcuAW0B4DlI2pSgwQ2e
+ nxWHfALehFDrhy60R+VN1qqBjPkdm7bwtfFGSaxD49PV3UAttKaP/Ida0Oj/8rEX2/CIrT5ac
+ dL2karqvsjybKWouUJTYw681zV/XRhU9CtxlO49yRzU/KovJTnkWXs1r2dHoqOx4uLe6bEZgN
+ idzlzhN9WRAkvNHPbRiJObnMXxdMJ9kNmu3APnwCX3ERzb17nmtoPSvp8GP2r923immq4cqON
+ tjAJFnyKUSxeUlvpgS/qE7rZPl0TeyWbKLRKvzb4YfrBVZtAFegwpab3Q==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Abhradeep,
+Hi Matheus,
 
-On Mon, 8 Aug 2022, Abhradeep Chakraborty wrote:
+On Sat, 30 Jul 2022, Matheus Tavares wrote:
 
-> On Mon, Aug 8, 2022 at 6:36 PM Johannes Schindelin
+> On Thu, Jul 28, 2022 at 1:58 PM Johannes Schindelin
 > <Johannes.Schindelin@gmx.de> wrote:
 > >
-> > On Tue, 2 Aug 2022, Abhradeep Chakraborty wrote:
-> >
-> > > On Tue, Aug 2, 2022 at 9:05 PM Johannes Schindelin
-> > > <Johannes.Schindelin@gmx.de> wrote:
+> > > On Sun, 24 Jul 2022, Matheus Tavares wrote:
 > > >
-> > > > Since you are very familiar with the details of bitmaps now, I wou=
-ld
-> > > > like to encourage you to work on some kind of validator/inspector,
-> > > > e.g. something along the lines of a `test-tool midx-bitmap dump` (=
-and
-> > > > later `... verify`) that would help future you (and future me)
-> > > > investigate similar breakages. Ideally, that tool will not only pa=
-rse
-> > > > the `.bitmap` file but immediately print out everything in a
-> > > > human-readable form.
+> > > +static void command_loop(void)
+> > > +{
+> > > +     while (1) {
+> > > +             char *command =3D packet_key_val_read("command");
+> > > +             if (!command) {
+> > > +                     fprintf(logfile, "STOP\n");
+> > > +                     break;
+> > > +             }
+> > > +             fprintf(logfile, "IN: %s", command);
 > >
-> > Have you made progress on this? I am interested mostly because I am tr=
-ying
-> > very hard to maintain passing CI runs of Git for Windows' `shears/seen=
-`
-> > branch (which essentially tries to rebase all of Git for Windows' patc=
-hes
-> > on top of `seen`), and this failure is consistently causing said CI ru=
-ns
-> > to fail for a while already.
+> > We will also need to `fflush(logfile)` here, to imitate the Perl scrip=
+t's
+> > behavior more precisely.
 >
-> Hey Dscho, I am trying hard to solve the issue but unfortunately I
-> haven't found the key yet.
+> I was somewhat intrigued as to why the flushes were needed in the Perl
+> script. But reading [1] and [2], now, it seems to have been an
+> oversight.
+>
+> That is, Eric suggested splictily flushing stdout because it is a
+> pipe, but the author ended up erroneously disabling autoflush for
+> stdout too, so that's why we needed the flushes there. They later
+> acknowledged that and said that they would re-enabled it (see [2]),
+> but it seems to have been forgotten. So I think we can safely drop the
+> flush calls.
+>
+> [1]: http://public-inbox.org/git/20160723072721.GA20875%40starla/
+> [2]: https://lore.kernel.org/git/7F1F1A0E-8FC3-4FBD-81AA-37786DE0EF50@gm=
+ail.com/
 
-The tool I proposed could potentially help, in particular with
-distributing the burden of the investigation on more shoulders than just
-yours.
+I am somewhat weary of introducing a change of behavior while
+reimplementing a Perl script in C at the same time, but in this instance I
+think that the benefit of _not_ touching the `pkt-line.c` code is a
+convincing reason to do so.
 
-> I investigated the bitmap code-base and used debug lines but didn't
-> find a way to fix it.
+> > > +
+> > > +             if (!strcmp(command, "list_available_blobs")) {
+> > > +                     struct hashmap_iter iter;
+> > > +                     struct strmap_entry *ent;
+> > > +                     struct string_list_item *str_item;
+> > > +                     struct string_list paths =3D STRING_LIST_INIT_=
+NODUP;
+> > > +
+> > > +                     /* flush */
+> > > +                     if (packet_read_line(0, NULL))
+> > > +                             die("bad list_available_blobs end");
+> > > +
+> > > +                     strmap_for_each_entry(&delay, &iter, ent) {
+> > > +                             struct delay_entry *delay_entry =3D en=
+t->value;
+> > > +                             if (!delay_entry->requested)
+> > > +                                     continue;
+> > > +                             delay_entry->count--;
+> > > +                             if (!strcmp(ent->key, "invalid-delay.a=
+")) {
+> > > +                                     /* Send Git a pathname that wa=
+s not delayed earlier */
+> > > +                                     packet_write_fmt(1, "pathname=
+=3Dunfiltered");
+> > > +                             }
+> > > +                             if (!strcmp(ent->key, "missing-delay.a=
+")) {
+> > > +                                     /* Do not signal Git that this=
+ file is available */
+> > > +                             } else if (!delay_entry->count) {
+> > > +                                     string_list_insert(&paths, ent=
+->key);
+> > > +                                     packet_write_fmt(1, "pathname=
+=3D%s", ent->key);
+> > > +                             }
+> > > +                     }
+> > > +
+> > > +                     /* Print paths in sorted order. */
+> >
+> > The Perl script does not order them specifically. Do we really have to=
+ do
+> > that here?
+>
+> It actually prints them in sorted order:
+>
+>         foreach my $pathname ( sort keys %DELAY )
 
-Have you investigated whether the `.bitmap` file was produced for the
-latest set of pack files? It should be relatively quick to investigate
-that, and if it turns out not to be the case, the fix should be quick,
-too.
+Whoops, sorry for missing that!
 
-Thanks,
+> > > +                             fprintf(logfile, " [OK]\n");
+> > > +
+> > > +                             packet_flush(1);
+> > > +                             strbuf_release(&sb);
+> > > +                     }
+> > > +                     free(pathname);
+> > > +                     strbuf_release(&input);
+> > > +             }
+> > > +             free(command);
+> > > +     }
+> > > +}
+> > > [...]
+> > > +static void packet_initialize(const char *name, int version)
+> > > +{
+> > > +     struct strbuf sb =3D STRBUF_INIT;
+> > > +     int size;
+> > > +     char *pkt_buf =3D packet_read_line(0, &size);
+> > > +
+> > > +     strbuf_addf(&sb, "%s-client", name);
+> > > +     if (!pkt_buf || strncmp(pkt_buf, sb.buf, size))
+> >
+> > We do not need the flexibility of the Perl package, where `name` is a
+> > parameter. We can hard-code `git-filter-client` here. I.e. something l=
+ike
+> > this:
+> >
+> >         if (!pkt_buf || size !=3D 17 ||
+> >             strncmp(pkt_buf, "git-filter-client", 17))
+>
+> Good idea! Thanks. Perhaps, can't we do:
+>
+>         if (!pkt_buf || strncmp(pkt_buf, "git-filter-client", size))
+>
+> to avoid the hard-coded and possibly error-prone 17?
+
+I am afraid that this is not idempotent. If `pkt_buf` is "git" and `size`
+is 3, then the suggested `strncmp()` would return 0, but we would want it
+to be non-zero.
+
+The best way to avoid the hard-coded 17 would be to introduce a local
+constant and use `strlen()` on it (which modern compilers would evaluate
+already at compile time).
+
+> > > +             die("bad initialize: '%s'", xstrndup(pkt_buf, size));
+> > > +
+> > > +     strbuf_reset(&sb);
+> > > +     strbuf_addf(&sb, "version=3D%d", version);
+>
+> Thanks for a very detailed review and great suggestions!
+
+Thank you for your contribution that is very much relevant to my
+interests!
+
+Ciao,
 Dscho
