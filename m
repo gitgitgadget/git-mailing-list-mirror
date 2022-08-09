@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 308C7C25B07
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 12:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1E9DC19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 12:10:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243060AbiHIMJ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 08:09:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50142 "EHLO
+        id S243109AbiHIMJ7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 08:09:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241782AbiHIMJv (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S241902AbiHIMJv (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 9 Aug 2022 08:09:51 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA4BF24BF0
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 05:09:43 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id g13so4215193plo.6
-        for <git@vger.kernel.org>; Tue, 09 Aug 2022 05:09:43 -0700 (PDT)
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38E8C24977
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 05:09:45 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id y141so10592471pfb.7
+        for <git@vger.kernel.org>; Tue, 09 Aug 2022 05:09:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FkyLMkgFG7+YesADqT58437Z/k5esB11WQ4TQgdcZLI=;
-        b=F7MK1XMNkEpIvl5fVU6uYYMo95Vt2bUJQL8w3+jEn3URH+fJokjdcn/YpYoX7RYMyV
-         vkj93Y0+Xuluo2P7KUTcKA/2TW7l+7LMm6mpiJ+or3dg6CR5d4IbrDUo/xaIzLNoipqo
-         QfPjQSFvCVgs5ItMeYnGESc9VxQZokSONqNcZcPeEbcLnPjcGranrf7qYIdyp9VS5HRO
-         tJ3fj0PcJebCoJxLryme06f8a132DZnccUncCdVxOC/3c3KJA6hIjKgMrOwu3DcdPwUD
-         Vj+ahtuTwQopJeyOQXg4eHEU06LwFJQWdlOJQVk/NofNJbhY0tUEHrrblXrGHUqD42iz
-         C3gQ==
+        bh=6avJBto7zNLge1VSRuZ52yJVcL2eyC8pogf3vr8kk2Y=;
+        b=GHjrSuHMK7L++aqUCZ34gAG5kpJ3SOPQWi9Fl+2GaLdfSJ+vWFMy/ZOrlmGy3Bux8c
+         Qsf0+aBaTAIrhETLfqRUJ2jrUFMdjnMLc7yJ0rR6pTh3Y0NOABSf6POz94F+Z7S6Lj6f
+         lrzXkK+Z6NpxL+Tmbu1FcVFDkFkkzitmHDG+OZDZZgStCik93FivOSSIjXCtjJGe/C8f
+         cDhiSKBAm6erZo7U3Sj24RP/+VL4eF1Zsa4w/dWEuxvsgze9iXXJjqOSrIRJI3MmWHYR
+         2wj7PHsfQp9p2+pOeT2CLTtdH3A334d4r6FTJ1QyLNjLgrQJBO4CKwPQNRPO8FCP2zyF
+         GW7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FkyLMkgFG7+YesADqT58437Z/k5esB11WQ4TQgdcZLI=;
-        b=dACgLzw2992JAMMA9np1KoTly2J58UYlrbzbcYNQ1vzyiDM2D5oLZtju7pdYVuMgbD
-         CP1+2VDniF6Tf594NuTWoVYMv/5qWSkepWw/apTrwHpJn3lhpCKCo8OoZ5eBKEwiB1Uc
-         0wBpL5AH71bbUxsSZYxvGRwC1wVe7YmJEF7h4Gu+q7xOqmLR55smS5h6gep2Kbiyi5lT
-         uP09xQQyKb+XGyT6LQtS8KSR+5mp6F07WErC0Y69gxNZJ+uaFA4GhF0Gl5ycDVGpBvHS
-         BljhH3fl3PdOPQfXoIOD+U0ghunL2Q9JEYsFuq/5ddnWaAmZibAT6/X/bdjxtA7Jw1of
-         Y/dw==
-X-Gm-Message-State: ACgBeo2OFt04sPX/uz0K+olK0kZR7f1loMmCWWvQvvdO/nlW1xBFmoz4
-        JcRjaKUBzjgZY8eutI10ab0Ev1pAms6Q0Q==
-X-Google-Smtp-Source: AA6agR4o36tCal4L2fP4pTD+wtdUnweGTJ72WiccEECNUS30crbJYcOUIMYx1g/cq7kzQccy/4ocKw==
-X-Received: by 2002:a17:90b:4d12:b0:1f5:59e1:994f with SMTP id mw18-20020a17090b4d1200b001f559e1994fmr25637175pjb.217.1660046983148;
-        Tue, 09 Aug 2022 05:09:43 -0700 (PDT)
+        bh=6avJBto7zNLge1VSRuZ52yJVcL2eyC8pogf3vr8kk2Y=;
+        b=VSPHkpONUvr+tdgmIELwd1ceHn54YRJhIu3HGuIBNvZem8J9m16NGfUBnfkuI+7SRT
+         B4pqWv1VRgSe2rOMZgmG1vMplDJiRio8qMfG8DRIA4OhxPy1sncy6grNzPGv6MDqAkI/
+         wuKsyjXaxFLme9Bio4BMMtrHhuBHPuBfbO8i6LY6FnjEnozhBNhQsThFYiKP8MkpiWmP
+         Fh2pAF1ejx5JuIUuN0Y3Vk5Wz/8YqCPuGDoEaB0P3muqeQ9uRxDxCnN/1st+NPinsILV
+         WL/vrF3U5/31r+xnNcE4BEaRMeCDsMbEHS6lKo9Lz3b0K4mXrVaqDgnSOaxuz80C/dQy
+         GvgA==
+X-Gm-Message-State: ACgBeo1kZ5xystzb6yl7TLoLQ1AlQLjGPpe66jkLd0WtsyGx4ASv5WF0
+        4rmBfzVExHIJ9OrwyldZvt0ZS4jR6o6uyQ==
+X-Google-Smtp-Source: AA6agR7zqD8RGgmLo9yM8Hh3X2zSoQlJpUCtclq926WA107Dn/TyOTfsyoHIU+2Q5PWrDQLEorJGug==
+X-Received: by 2002:a63:560e:0:b0:41c:590a:62ed with SMTP id k14-20020a63560e000000b0041c590a62edmr19692270pgb.250.1660046984807;
+        Tue, 09 Aug 2022 05:09:44 -0700 (PDT)
 Received: from ffyuanda.localdomain ([120.239.67.140])
-        by smtp.gmail.com with ESMTPSA id p3-20020a170902780300b0016d10267927sm10511485pll.203.2022.08.09.05.09.41
+        by smtp.gmail.com with ESMTPSA id p3-20020a170902780300b0016d10267927sm10511485pll.203.2022.08.09.05.09.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Aug 2022 05:09:42 -0700 (PDT)
+        Tue, 09 Aug 2022 05:09:44 -0700 (PDT)
 From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 To:     git@vger.kernel.org
 Cc:     vdye@github.com, derrickstolee@github.com, gitster@pobox.com,
         Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Subject: [PATCH v3 6/9] mv: from in-cone to out-of-cone
-Date:   Tue,  9 Aug 2022 20:09:07 +0800
-Message-Id: <20220809120910.2021413-7-shaoxuan.yuan02@gmail.com>
+Subject: [PATCH v3 7/9] mv: cleanup empty WORKING_DIRECTORY
+Date:   Tue,  9 Aug 2022 20:09:08 +0800
+Message-Id: <20220809120910.2021413-8-shaoxuan.yuan02@gmail.com>
 X-Mailer: git-send-email 2.37.0
 In-Reply-To: <20220809120910.2021413-1-shaoxuan.yuan02@gmail.com>
 References: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
@@ -64,218 +64,111 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Originally, moving an in-cone <source> to an out-of-cone <destination>
-was not possible, mainly because such <destination> is a directory that
-is not present in the working tree.
+Originally, moving from-in-to-out may leave an empty <source>
+directory on-disk (this kind of directory is marked as
+WORKING_DIRECTORY).
 
-Change the behavior so that we can move an in-cone <source> to
-out-of-cone <destination> when --sparse is supplied.
+Cleanup such directories if they are empty (don't have any entries
+under them).
 
-Notice that <destination> can also be an out-of-cone file path, rather
-than a directory.
+Modify two tests that take <source> as WORKING_DIRECTORY to test
+this behavior.
 
-Such <source> can be either clean or dirty, and moving it results in
-different behaviors:
-
-A clean move should move <source> to <destination> in the index (do
-*not* create <destination> in the worktree), then delete <source> from
-the worktree.
-
-A dirty move should move the <source> to the <destination>, both in the
-working tree and the index, but should *not* remove the resulted path
-from the working tree and should *not* turn on its CE_SKIP_WORKTREE bit.
-
-Optional reading
-================
-
-We are strict about cone mode when <destination> is a file path.
-The reason is that some of the previous tests that use no-cone mode in
-t7002 are keep breaking, mainly because the `dst_mode = SPARSE;` line
-added in this patch.
-
-Most features developed in both "from-out-to-in" and "from-in-to-out"
-only care about cone mode situation, as no-cone mode is becoming
-irrelevant. And because assigning `SPARSE` to `dst_mode` when the
-repo is in no-cone mode causes miscellaneous bugs, we should just leave
-this new functionality to be exclusive cone mode and save some time.
-
-Helped-by: Derrick Stolee <derrickstolee@github.com>
-Helped-by: Victoria Dye <vdye@github.com>
+Suggested-by: Derrick Stolee <derrickstolee@github.com>
 Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 ---
- builtin/mv.c                  | 71 ++++++++++++++++++++++++++++++-----
- t/t7002-mv-sparse-checkout.sh |  8 ++--
- 2 files changed, 66 insertions(+), 13 deletions(-)
+ builtin/mv.c                  | 27 +++++++++++++++++++++++++++
+ t/t7002-mv-sparse-checkout.sh |  4 ++++
+ 2 files changed, 31 insertions(+)
 
 diff --git a/builtin/mv.c b/builtin/mv.c
-index 1dc55153ed..6a6420c984 100644
+index 6a6420c984..32e7ac4896 100644
 --- a/builtin/mv.c
 +++ b/builtin/mv.c
-@@ -171,12 +171,13 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+@@ -171,6 +171,9 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
  	};
  	const char **source, **destination, **dest_path, **submodule_gitfile;
  	const char *dst_w_slash;
--	enum update_mode *modes;
-+	enum update_mode *modes, dst_mode = 0;
++	const char **src_dir = NULL;
++	int src_dir_nr = 0, src_dir_alloc = 0;
++	struct strbuf a_src_dir = STRBUF_INIT;
+ 	enum update_mode *modes, dst_mode = 0;
  	struct stat st;
  	struct string_list src_for_dst = STRING_LIST_INIT_NODUP;
- 	struct lock_file lock_file = LOCK_INIT;
- 	struct cache_entry *ce;
- 	struct string_list only_match_skip_worktree = STRING_LIST_INIT_NODUP;
-+	struct string_list dirty_paths = STRING_LIST_INIT_NODUP;
+@@ -314,6 +317,10 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
  
- 	git_config(git_default_config, NULL);
- 
-@@ -214,10 +215,21 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		if (!path_in_sparse_checkout(dst_w_slash, &the_index) &&
- 		    empty_dir_has_sparse_contents(dst_w_slash)) {
- 			destination = internal_prefix_pathspec(dst_w_slash, argv, argc, DUP_BASENAME);
-+			dst_mode = SKIP_WORKTREE_DIR;
- 		} else if (argc != 1) {
- 			die(_("destination '%s' is not a directory"), dest_path[0]);
- 		} else {
- 			destination = dest_path;
-+			/*
-+			 * <destination> is a file outside of sparse-checkout
-+			 * cone. Insist on cone mode here for backward
-+			 * compatibility. We don't want dst_mode to be assigned
-+			 * for a file when the repo is using no-cone mode (which
-+			 * is deprecated at this point) sparse-checkout. As
-+			 * SPARSE here is only considering cone-mode situation.
-+			 */
-+			if (!path_in_cone_mode_sparse_checkout(destination[0], &the_index))
-+				dst_mode = SPARSE;
- 		}
- 	}
- 	if (dst_w_slash != dest_path[0]) {
-@@ -408,6 +420,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		const char *src = source[i], *dst = destination[i];
- 		enum update_mode mode = modes[i];
- 		int pos;
-+		int sparse_and_dirty = 0;
- 		struct checkout state = CHECKOUT_INIT;
- 		state.istate = &the_index;
- 
-@@ -418,6 +431,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		if (show_only)
- 			continue;
- 		if (!(mode & (INDEX | SPARSE | SKIP_WORKTREE_DIR)) &&
-+		    !(dst_mode & (SKIP_WORKTREE_DIR | SPARSE)) &&
- 		    rename(src, dst) < 0) {
- 			if (ignore_errors)
- 				continue;
-@@ -437,17 +451,55 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 
- 		pos = cache_name_pos(src, strlen(src));
- 		assert(pos >= 0);
-+		if (!(mode & SPARSE) && !lstat(src, &st))
-+			sparse_and_dirty = ce_modified(active_cache[pos], &st, 0);
- 		rename_cache_entry_at(pos, dst);
- 
--		if ((mode & SPARSE) &&
--		    (path_in_sparse_checkout(dst, &the_index))) {
--			int dst_pos;
-+		if (ignore_sparse &&
-+		    core_apply_sparse_checkout &&
-+		    core_sparse_checkout_cone) {
-+			/*
-+			 * NEEDSWORK: we are *not* paying attention to
-+			 * "out-to-out" move (<source> is out-of-cone and
-+			 * <destination> is out-of-cone) at this point. It
-+			 * should be added in a future patch.
-+			 */
-+			if ((mode & SPARSE) &&
-+			    path_in_sparse_checkout(dst, &the_index)) {
-+				/* from out-of-cone to in-cone */
-+				int dst_pos = cache_name_pos(dst, strlen(dst));
-+				struct cache_entry *dst_ce = active_cache[dst_pos];
+ 			/* last - first >= 1 */
+ 			modes[i] |= WORKING_DIRECTORY;
 +
-+				dst_ce->ce_flags &= ~CE_SKIP_WORKTREE;
++			ALLOC_GROW(src_dir, src_dir_nr + 1, src_dir_alloc);
++			src_dir[src_dir_nr++] = src;
 +
-+				if (checkout_entry(dst_ce, &state, NULL, NULL))
-+					die(_("cannot checkout %s"), dst_ce->name);
-+			} else if ((dst_mode & (SKIP_WORKTREE_DIR | SPARSE)) &&
-+				   !(mode & SPARSE) &&
-+				   !path_in_sparse_checkout(dst, &the_index)) {
-+				/* from in-cone to out-of-cone */
-+				int dst_pos = cache_name_pos(dst, strlen(dst));
-+				struct cache_entry *dst_ce = active_cache[dst_pos];
- 
--			dst_pos = cache_name_pos(dst, strlen(dst));
--			active_cache[dst_pos]->ce_flags &= ~CE_SKIP_WORKTREE;
--
--			if (checkout_entry(active_cache[dst_pos], &state, NULL, NULL))
--				die(_("cannot checkout %s"), active_cache[dst_pos]->name);
-+				/*
-+				 * if src is clean, it will suffice to remove it
-+				 */
-+				if (!sparse_and_dirty) {
-+					dst_ce->ce_flags |= CE_SKIP_WORKTREE;
-+					unlink_or_warn(src);
-+				} else {
-+					/*
-+					 * if src is dirty, move it to the
-+					 * destination and create leading
-+					 * dirs if necessary
-+					 */
-+					char *dst_dup = xstrdup(dst);
-+					string_list_append(&dirty_paths, dst);
-+					safe_create_leading_directories(dst_dup);
-+					FREE_AND_NULL(dst_dup);
-+					rename(src, dst);
-+				}
-+			}
+ 			n = argc + last - first;
+ 			REALLOC_ARRAY(source, n);
+ 			REALLOC_ARRAY(destination, n);
+@@ -503,6 +510,26 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
  		}
  	}
  
-@@ -459,6 +511,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		die(_("Unable to write new index file"));
++	/*
++	 * cleanup the empty src_dirs
++	 */
++	for (i = 0; i < src_dir_nr; i++) {
++		int dummy;
++		strbuf_addstr(&a_src_dir, src_dir[i]);
++		/*
++		 * if entries under a_src_dir are all moved away,
++		 * recursively remove a_src_dir to cleanup
++		 */
++		if (index_range_of_same_dir(a_src_dir.buf, a_src_dir.len,
++					    &dummy, &dummy) < 1) {
++			remove_dir_recursively(&a_src_dir, 0);
++		}
++		strbuf_reset(&a_src_dir);
++	}
++
++	strbuf_release(&a_src_dir);
++	free(src_dir);
++
+ 	if (gitmodules_modified)
+ 		stage_updated_gitmodules(&the_index);
  
- 	string_list_clear(&src_for_dst, 0);
-+	string_list_clear(&dirty_paths, 0);
- 	UNLEAK(source);
- 	UNLEAK(dest_path);
- 	free(submodule_gitfile);
 diff --git a/t/t7002-mv-sparse-checkout.sh b/t/t7002-mv-sparse-checkout.sh
-index 1ac78edde6..d875f492dd 100755
+index d875f492dd..df8c0fa572 100755
 --- a/t/t7002-mv-sparse-checkout.sh
 +++ b/t/t7002-mv-sparse-checkout.sh
-@@ -290,7 +290,7 @@ test_expect_success 'move sparse file to existing destination with --force and -
- 	test_cmp expect sub/file1
- '
- 
--test_expect_failure 'move clean path from in-cone to out-of-cone' '
-+test_expect_success 'move clean path from in-cone to out-of-cone' '
+@@ -442,6 +442,7 @@ test_expect_success 'move dirty path from in-cone to out-of-cone' '
+ test_expect_success 'move dir from in-cone to out-of-cone' '
  	test_when_finished "cleanup_sparse_checkout" &&
  	setup_sparse_checkout &&
++	mkdir sub/dir/deep &&
  
-@@ -419,7 +419,7 @@ test_expect_failure 'move directory with one of the files overwrite' '
- 	test_cmp expect actual
- '
+ 	test_must_fail git mv sub/dir folder1 2>stderr &&
+ 	cat sparse_error_header >expect &&
+@@ -452,6 +453,7 @@ test_expect_success 'move dir from in-cone to out-of-cone' '
+ 	git mv --sparse sub/dir folder1 2>stderr &&
+ 	test_must_be_empty stderr &&
  
--test_expect_failure 'move dirty path from in-cone to out-of-cone' '
-+test_expect_success 'move dirty path from in-cone to out-of-cone' '
++	test_path_is_missing sub/dir &&
+ 	test_path_is_missing folder1 &&
+ 	git ls-files -t >actual &&
+ 	! grep "H sub/dir/e" actual &&
+@@ -461,6 +463,7 @@ test_expect_success 'move dir from in-cone to out-of-cone' '
+ test_expect_success 'move partially-dirty dir from in-cone to out-of-cone' '
  	test_when_finished "cleanup_sparse_checkout" &&
  	setup_sparse_checkout &&
- 	echo "modified" >>sub/d &&
-@@ -439,7 +439,7 @@ test_expect_failure 'move dirty path from in-cone to out-of-cone' '
- 	grep "H folder1/d" actual
- '
- 
--test_expect_failure 'move dir from in-cone to out-of-cone' '
-+test_expect_success 'move dir from in-cone to out-of-cone' '
- 	test_when_finished "cleanup_sparse_checkout" &&
- 	setup_sparse_checkout &&
- 
-@@ -458,7 +458,7 @@ test_expect_failure 'move dir from in-cone to out-of-cone' '
- 	grep "S folder1/dir/e" actual
- '
- 
--test_expect_failure 'move partially-dirty dir from in-cone to out-of-cone' '
-+test_expect_success 'move partially-dirty dir from in-cone to out-of-cone' '
- 	test_when_finished "cleanup_sparse_checkout" &&
- 	setup_sparse_checkout &&
++	mkdir sub/dir/deep &&
  	touch sub/dir/e2 sub/dir/e3 &&
+ 	git add sub/dir/e2 sub/dir/e3 &&
+ 	echo "modified" >>sub/dir/e2 &&
+@@ -476,6 +479,7 @@ test_expect_success 'move partially-dirty dir from in-cone to out-of-cone' '
+ 
+ 	git mv --sparse sub/dir folder1 2>stderr &&
+ 
++	test_path_is_missing sub/dir &&
+ 	test_path_is_missing folder1/dir/e &&
+ 	test_path_is_file folder1/dir/e2 &&
+ 	test_path_is_file folder1/dir/e3 &&
 -- 
 2.37.0
 
