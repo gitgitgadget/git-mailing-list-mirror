@@ -2,143 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DEE9C25B0C
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 13:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEFA2C19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 13:12:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243520AbiHINMJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 09:12:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59816 "EHLO
+        id S243576AbiHINMZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 09:12:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243508AbiHINMG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 09:12:06 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0283C13CD2
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 06:11:56 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id h13so14286575wrf.6
-        for <git@vger.kernel.org>; Tue, 09 Aug 2022 06:11:55 -0700 (PDT)
+        with ESMTP id S243649AbiHINMT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 09:12:19 -0400
+Received: from mail-vk1-xa32.google.com (mail-vk1-xa32.google.com [IPv6:2607:f8b0:4864:20::a32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C83E819036
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 06:12:11 -0700 (PDT)
+Received: by mail-vk1-xa32.google.com with SMTP id m186so5811581vkb.2
+        for <git@vger.kernel.org>; Tue, 09 Aug 2022 06:12:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc;
-        bh=G8JreIyzcEq7/uAXxPzoccFoQb6CoOWKqrR+In2Ko/0=;
-        b=c/UZFyh4AOw3eGq8Z59r1L1jBar9TSaacp5llrd6LdsVGqzVfBpDo3kY1Ar0rUmRjs
-         9Xk4966c27aTtOavBsZk1L5djCc3AG+kxrRgDROviNy6132wgIHGWYZgKXMBafe9inKB
-         P42Yf4s9SGekfElgVCzibWog+8JE5Ld0Nrb9a8xnILMP/XuILHR7G8vTRkOGLilAuKYy
-         cnxLYLw4MwYJXqTbwmecmcKu5bVUVlgMjjzhzNFKAnuv09tkWQ4IQIRUqV+O8Cd79MZX
-         w2cJjVQG9VmMM4HNq+d3xcfy3rF90AaCkc40SB0xIugdwSJsesSDn54CpWZYy+Z7euPO
-         OPzg==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=Uoi/9SwPsGdQBLUrQ+mYBp7LdWy8qbkZWRjboHTBIvo=;
+        b=H9XZeHCtuNcBr5mfpK/pBhBmq7TkF9dAU4w5oXqoeaeRVINBOHh4cZRTeHL/K45SEk
+         jFNjRu67+LFfe8cEdx+Nkj2XR6MM62D2qewtqajdCrDZjCnrE7UxztJT2HimjMPCvrg0
+         OjgrbZB30ENDdsbrmeGTGzYBYB9OTpmu0dhPhi6O7DdTuyujqUUxR9BEHqdaaGre0pSB
+         JTX9Ef0uUlXqkMEHCqIW5QNLdEkfrr+4srDch6/wkWrmgvoTRWzsKGv0QV9aH+PuL++7
+         FNPMoelpli+LlO05dL95DY8qqIuyU/lm/nlULJQjNbDVzEtFZrGd6MEWB3HURC0a9+wJ
+         2Rhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=G8JreIyzcEq7/uAXxPzoccFoQb6CoOWKqrR+In2Ko/0=;
-        b=2TXyIUYE3nzzxNwtt8qEFY6KXt2bdZevq5kP4x3gD+CY1yQQJ2A66+7Z14RXaa2O80
-         GkZnQeselglfhLSIUBve8KhEUutvwIwRwQ/+R3FsGaGzkWeZiFPLUUAYCM6x5+17uNNl
-         C1r4sHqSZDPZs74b/rqZO7EHQGarfPPBKl93CJNoy+xftUQioWlFKDDnuWKfpggQIkIN
-         j9GamPjDhuQ/bzT535QjZKCrw3HxrCWw93E8pTtO0acaMFOXz2qAlBWStRuMOIZrJgUu
-         UOTd9p3oHj0EjfyMChitYlfsOj4HkjaEsWL1fslYsGaP0r5ktLsmFN3JIEb2h3bW5YFA
-         BQDQ==
-X-Gm-Message-State: ACgBeo1rcobpR75fTghjHMFlmidchbsja/9KGNlfsGzm74lleo7KKG1m
-        qtXl3KU13tO5nhDKNcYPgCZzJn+uqtw=
-X-Google-Smtp-Source: AA6agR4qZe9WOcbZzk1CXIGacg/td2Cm1WVFaBD+AB50tC/4FFJcI2zDIZGnmRwDbT0ij4bJDwYoZA==
-X-Received: by 2002:adf:ed41:0:b0:210:20a5:26c2 with SMTP id u1-20020adfed41000000b0021020a526c2mr14031029wro.603.1660050714042;
-        Tue, 09 Aug 2022 06:11:54 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a7-20020a056000100700b0021f0c0c62d1sm13458376wrx.13.2022.08.09.06.11.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Aug 2022 06:11:53 -0700 (PDT)
-Message-Id: <ed76d84c5a7def525ab39a8acecdac8bad12c54b.1660050704.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1300.v3.git.1660050703.gitgitgadget@gmail.com>
-References: <pull.1300.v2.git.1659443384.gitgitgadget@gmail.com>
-        <pull.1300.v3.git.1660050703.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 09 Aug 2022 13:11:43 +0000
-Subject: [PATCH v3 5/5] clone: --bundle-uri cannot be combined with --depth
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=Uoi/9SwPsGdQBLUrQ+mYBp7LdWy8qbkZWRjboHTBIvo=;
+        b=vlpIEx3GByJ9AZXmtHaBEJj4XfP58KILCgZUwYZHucVYcRkx6yIAH/J1EFjF18NpLc
+         +BeTPPK7l7mCwkA2Y8SEyGbNB0Af54WAglIdeY5T5xrcQ6AkMDyg5lTliQZSbQaVfI4M
+         QmSlSzt5DHg/u0M9chb7/R7jCgNEUBel/ikEcHUS1rHXYkNw3GgZz+cw4cQnnuoWWy0I
+         RaDDjErmkAJIzec8El5P/HWEb7FPlW2s0YCn8BwVptQNak+hSb7fZ0O5jT0bf508NUJr
+         H0boAxVH1suI6VPPQ6tBUAk9zAnW1uB9JxeZzcKxwV3W+0TSex19trc6MNtrQj0YAsUE
+         72XQ==
+X-Gm-Message-State: ACgBeo2No5L/1jYYAyODz/0KJa/lTFnRTHfO35cdEN5UNi0L3ieST+F+
+        zybgpKArj8V/RLqvIFa8h0cqtGNEqY0dE1R5kaS5EtL2RBIcww==
+X-Google-Smtp-Source: AA6agR7e7zarZCxRR5BbtAwphfW2rfR6pX8AZgKdg9WCd2cC3eV2FOu4iQFi2S+IDqL64z+SoYEYWubhJBwOoPeTgBQ=
+X-Received: by 2002:a1f:2b96:0:b0:379:2112:40d0 with SMTP id
+ r144-20020a1f2b96000000b00379211240d0mr2876490vkr.37.1660050730526; Tue, 09
+ Aug 2022 06:12:10 -0700 (PDT)
 MIME-Version: 1.0
+From:   Alexander Meshcheryakov <alexander.s.m@gmail.com>
+Date:   Tue, 9 Aug 2022 17:11:44 +0400
+Message-ID: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
+Subject: [BUG] Unicode filenames handling in `git log --stat`
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
-        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de,
-        szeder.dev@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-A previous change added the '--bundle-uri' option, but did not check
-if the --depth parameter was included. Since bundles are not compatible
-with shallow clones, provide an error message to the user who is
-attempting this combination.
+What did you do before the bug happened? (Steps to reproduce your issue)
+touch Kyiv.txt Odesa.txt
+git add -A
+git commit -m 'Proper column widths'
+touch =D0=9A=D0=B8=D1=97=D0=B2.txt =D0=9E=D0=B4=D0=B5=D1=81=D0=B0.txt
+git add -A
+git commit -m 'Improper unicode width'
+git log --stat
 
-I am leaving this as its own change, separate from the one that
-implements '--bundle-uri', because this is more of an advisory for the
-user. There is nothing wrong with bootstrapping with bundles and then
-fetching a shallow clone. However, that is likely going to involve too
-much work for the client _and_ the server. The client will download all
-of this bundle information containing the full history of the
-repository only to ignore most of it. The server will get a shallow
-fetch request, but with a list of haves that might cause a more painful
-computation of that shallow pack-file.
+What did you expect to happen? (Expected behavior)
+Stats column for added/removed lines should be properly aligned.
 
-Reviewed-by: Josh Steadmon <steadmon@google.com>
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- Documentation/git-clone.txt | 3 ++-
- builtin/clone.c             | 3 +++
- t/t5606-clone-options.sh    | 8 ++++++++
- 3 files changed, 13 insertions(+), 1 deletion(-)
+What happened instead? (Actual behavior)
+Only changes for ASCII filenames are properly aligned.
+Here is how stats look for ASCII filenames:
+Kyiv.txt  | 0
+Odesa.txt | 0
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 60fedf7eb5e..d032d971dd7 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -327,7 +327,8 @@ or `--mirror` is given)
- 	Before fetching from the remote, fetch a bundle from the given
- 	`<uri>` and unbundle the data into the local repository. The refs
- 	in the bundle will be stored under the hidden `refs/bundle/*`
--	namespace.
-+	namespace. This option is incompatible with `--depth`,
-+	`--shallow-since`, and `--shallow-exclude`.
- 
- :git-clone: 1
- include::urls.txt[]
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 4224d562758..4463789680b 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -937,6 +937,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		option_no_checkout = 1;
- 	}
- 
-+	if (bundle_uri && deepen)
-+		die(_("--bundle-uri is incompatible with --depth, --shallow-since, and --shallow-exclude"));
-+
- 	repo_name = argv[0];
- 
- 	path = get_repo_path(repo_name, &is_bundle);
-diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-index 8f676d6b0c0..f6bb02ab947 100755
---- a/t/t5606-clone-options.sh
-+++ b/t/t5606-clone-options.sh
-@@ -58,6 +58,14 @@ test_expect_success 'disallows --bare with --separate-git-dir' '
- 
- '
- 
-+test_expect_success 'disallows --bundle-uri with shallow options' '
-+	for option in --depth=1 --shallow-since=01-01-2000 --shallow-exclude=HEAD
-+	do
-+		test_must_fail git clone --bundle-uri=bundle $option from to 2>err &&
-+		grep "bundle-uri is incompatible" err || return 1
-+	done
-+'
-+
- test_expect_success 'reject cloning shallow repository' '
- 	test_when_finished "rm -rf repo" &&
- 	test_must_fail git clone --reject-shallow shallow-repo out 2>err &&
--- 
-gitgitgadget
+Compare with unicode filenames. I change actual letters to ASCII X to
+avoid the issue in letter formatting:
+XXXX.txt   | 0
+XXXXX.txt | 0
+
+What's different between what you expected and what actually happened?
+See above
+
+Anything else you want to add:
+Looks like width of unicode strings is incorrectly calculated when
+formatting log --stat output. It considers number of bytes as number
+of characters in the string, but this is not correct for unicode
+strings.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.34.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.15.0-40-generic #43-Ubuntu SMP Wed Jun 15 12:54:21 UTC
+2022 x86_64
+compiler info: gnuc: 11.2
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
