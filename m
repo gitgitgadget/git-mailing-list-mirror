@@ -2,457 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D065BC19F2D
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 11:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF158C19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 11:06:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240642AbiHILGB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 07:06:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39870 "EHLO
+        id S240823AbiHILGX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 07:06:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230178AbiHILGA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 07:06:00 -0400
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5079E11C18
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 04:05:58 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 232945C0059;
-        Tue,  9 Aug 2022 07:05:55 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 09 Aug 2022 07:05:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1660043155; x=1660129555; bh=lFDA0VBcQI
-        ISlHAXS2lRarN1tgAawmyl2TkkqDq5D2Q=; b=nn33BprumUWvMm9fJ4X9+Ctvqm
-        3qiuZ9e2kKmwQqF8b9s8ZeT5bphkz2DpIREaUwoemN/qqbPZ4iz29s0ig/b0ztO9
-        pidzPpo3Co6TiLeOsOt1XG3HAK0eKI78mqUel4aWeBdX5hvuNqX9zecV3hfwqOAV
-        +59H4CTYnmz7f508gClVv5VvkdLs6ZIM+lzm0ERnOqGb4KFCqwDEZafp/dXejeqH
-        QbL4KnoPT7pDcyWWuK9J23nDYxlF3WUurZexoZlJegVPFhQk2kWxcvN6fRTp6nYJ
-        ophPFi/KQWXw5psd5V1bN+gu3NP9Y/Z45CRnXs3hMoKJnZWf7THOCCxErFLQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1660043155; x=1660129555; bh=lFDA0VBcQIISlHAXS2lRarN1tgAa
-        wmyl2TkkqDq5D2Q=; b=JZfsLzjE7h0yorikr7N00o5B2jNHACRbp8yQbLIKNW4q
-        9YnmQHd2VCW+0nmu6rlc9eNA7Ri2YOFQMxcB9R7rKebGccNzP9dckW7gyOdliDhu
-        S5B6VnM7Oromf8AwbB+8wugb8Y6IX4Kd0DtsoFK/Qi67ec/7XMlPooG/Zs/H1Hw9
-        4VOowLV9AlnXPqVE9whZTv5L/oVPHDI7IgPxgviloGDcPpKvXJn4EARJYxvQsQWe
-        s/JHvygvzsOlml4IbbUYxq02pcwoZVAjTCnjejCvrDnVNDjHIG3jLTv1/omjH9jE
-        uSUDhws36jLrPL8g6Xph9grg6Xx+Ct/UBc05ZcFhmA==
-X-ME-Sender: <xms:kj_yYuUY__6Z-VIqrPUKEXV_TCJxPb2Tt_gLwTzDdSPh8NABFhffXQ>
-    <xme:kj_yYqlzDZTWpdrcpJG0B6H-Zhn0aGBnqiBNWZf8RKXus1yxZNInQSJuewnDl2_75
-    i7J3FnL4uKPQj-yXg>
-X-ME-Received: <xmr:kj_yYiZt0EQo0z0j9Ldo0Oxw1ZSGNvIh5xc1sls-48805ymKc4zz0BzD1ybl-0hfxTzGMy8L4aqdLzUANg7FnHgcnZF7-w502zuyyab73gveMyyacZwQtI-cqA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdegtddgfeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepieevkedtgffgleeugfdvledvfedthfegueegfeevjeelueefkeegfeffhefglefg
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:kj_yYlUJumaCWKjw9Tnc7yYaHSql58Dj89B2dN_REC65IVJqdMxnEw>
-    <xmx:kj_yYokbOG7MwvjrOcbXRZ9soaPQbvR1exgDOgN7aCPbnm8L9hInkg>
-    <xmx:kj_yYqdr0wcKmxac4ZR5W-B1HFiDevbk7QY7_4IveKqhOlIGq58jLQ>
-    <xmx:kz_yYij_6H8dYNLnfk7KXFVj1zRL4HSCeerFr8BwSAf9PAglvsi9JA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Aug 2022 07:05:53 -0400 (EDT)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 66b8c21e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 9 Aug 2022 11:05:48 +0000 (UTC)
-Date:   Tue, 9 Aug 2022 13:05:46 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Michael Heemskerk <mheemskerk@atlassian.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH 9/9] refs: reimplement refs_delete_refs() and run hook
- once
-Message-ID: <YvI/ipxGZ3rPZ/OQ@ncase>
-References: <20220729101245.6469-1-worldhello.net@gmail.com>
- <20220729101245.6469-10-worldhello.net@gmail.com>
- <CAJDSCnMHHdYGeyXKj=ztUKBv2vRTn5BEXUR_7fAfATJxn_uwww@mail.gmail.com>
+        with ESMTP id S240804AbiHILGQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 07:06:16 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28C6F20F5F
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 04:06:15 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id z19so11032351plb.1
+        for <git@vger.kernel.org>; Tue, 09 Aug 2022 04:06:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:subject:to:references:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=8MnY2vCC1+3F6tJ4iiAboyj7bvfn6EB6Bsgpl3RZ7iE=;
+        b=FC/VQcssrcyGeOARCvCwbPadMtydt5/e/LAM05Y8EOjvIJBpo5NwIPQH8E9roR12UD
+         I1kjOieWJfyLRqWHaACSCCb3UJ0go6IvseZ1i4PM0llSa6mDmG83wyiu3GrQwqtZv1/u
+         1Lm1HlYxIXMeyualRszX/pjvrTJ6UACk7SW+bObgLi71Yen4/Sr8muLOczXKXvN+EKlS
+         rt3L70AME3z3qtUdWyql0rrGiPkmpP7IrDGAld3sYk/++BraY8jExjkiU6N4VsiMDzc5
+         yAsABK+wc5zveO9iQNTyS3DHAzeqFJ0XJG3ZQ4YGEZrf7tRmoMGVH/G6bNcJjm6lEzbn
+         tgCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:subject:to:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=8MnY2vCC1+3F6tJ4iiAboyj7bvfn6EB6Bsgpl3RZ7iE=;
+        b=odiw7Z1FB6ffVM/UBCDOonQivHk4An3F3fRAogBHMw9PuLWdhZQaKwBHsww5NMirwZ
+         LEy7uvQrTZZldgIkY/mAZHNqk56f/SrpVaCUkVfQsh181T903JGw1ZKy7D/WQ0UJ80sD
+         Sv/cQriThjP0Aw6+sJK0MX7air/72W+DGC83EthhJoPkyXbuF11CMU7SC6MKENWI3k7B
+         jVlH/qlXccAkR27t3Hmvw1jPpg82HEMgIgbwz6aYhHVwV/zB4/+Rii1pRr9KVEQYDnAa
+         V9n7VVRqWUBQJJbFQDum04GsMGYMhNGuZK4U5xv2VzEyB5F3+U/p+I+AC1hjLfYOKiEc
+         Wq6A==
+X-Gm-Message-State: ACgBeo0KdVTs3JcwghwFFcUSzEgeg0o5g2wkiqMY5a7+YRigqvP/Mn+P
+        vqsepYCsfI2MN8Xfb0YNMCicnn68Ia/yIFNq
+X-Google-Smtp-Source: AA6agR4oVVBgZ5Cuzmw/0nr08pXTxXZ4ZpIQaeElIXzrYZEfE+D11+tZ3RM3aWriZvZHIfKONPt/RA==
+X-Received: by 2002:a17:90b:3a91:b0:1f5:2048:cb9f with SMTP id om17-20020a17090b3a9100b001f52048cb9fmr33415038pjb.174.1660043174008;
+        Tue, 09 Aug 2022 04:06:14 -0700 (PDT)
+Received: from cosmos.melik.windwireless.net (melik.windwireless.net. [206.63.237.146])
+        by smtp.gmail.com with ESMTPSA id cp2-20020a170902e78200b001690d398401sm10506369plb.88.2022.08.09.04.06.12
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Aug 2022 04:06:12 -0700 (PDT)
+From:   David Chmelik <davidnchmelik@gmail.com>
+Subject: Re: 'git clone,' build makes user non-writable files (should be
+ option keep user-writable)
+To:     git-l <git@vger.kernel.org>
+References: <822787da-bc26-0d72-a5c4-808a3d10126e@gmail.com>
+ <YtPtQ6qsIviyTBF2@zbox.drbeat.li>
+ <158251f2-9fa4-45b7-4c24-907c94602b6e@gmail.com>
+ <CAPx1Gvc6ci1CjhL-zjwqkR=4o2yQTrT0V_Hb9bUBNuaBn47M8A@mail.gmail.com>
+ <ccbc1e81-b406-9e73-7aa5-956ffae7074b@gmail.com>
+ <CAPx1GvceFLRL_O5zYW98tPdNV9S_Y=fChJafsq+HGkEYixKsZA@mail.gmail.com>
+Message-ID: <b47b88fb-89bd-732c-3aeb-75a474a7fdb5@gmail.com>
+Date:   Tue, 9 Aug 2022 04:05:46 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="clEVYY8y5gJnxVrD"
-Content-Disposition: inline
-In-Reply-To: <CAJDSCnMHHdYGeyXKj=ztUKBv2vRTn5BEXUR_7fAfATJxn_uwww@mail.gmail.com>
+In-Reply-To: <CAPx1GvceFLRL_O5zYW98tPdNV9S_Y=fChJafsq+HGkEYixKsZA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 7/22/22 8:54 PM, Chris Torek wrote:
+> On Fri, Jul 22, 2022 at 5:29 PM David Chmelik<davidnchmelik@gmail.com> 
+> wrote:
+>> On 7/22/22 10:40 AM, Chris Torek wrote:
+>>> All true. But Git has no control over, or affect on these: Git does
+>>> not attempt to affect ownership or permission of any build products
+>>> at all. Git only attempts to affect the execute permission of
+>>> specific files as directed by the committed file mode (and provided
+>>> `core.filemode` is enabled).
+>> Not even projects' .git* subdirectories? They typically are/become
+>> user-unwritable though deletable with several/many confirmations so I
+>> usually sudo (recommended against).
+> Ah, I thought you were (and I definitely was) talking only about the
+> *build products*. The stuff inside `.git` itself: some of that, Git 
+> does set
+> to unwritable.
+Initially wasn't; don't know why took three replies to clear up 
+(initially clearly specified non-root usage which others ignored and 
+mentioned/focused unrelated root topic).
 
---clEVYY8y5gJnxVrD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> There is no need to use `sudo` though: a simple
+> "rm -rf .git" will blow away the Git repository itself. However:
+Starts with 'rm -rf .' which is bad and worse is one key away from 'rm 
+-rf /': anyone who accidentally pressed <ENTER> after either what I put 
+in quotation marks (I did both as root on my personal files and entire 
+PC in 1990s... have you ever?  It was normal to use root account then 
+rather than non-UNIX-like OS that lock it) wants to never again so 
+typically uses alias which done with sudo (still considered worst last 
+resort) still has fewer confirmations (one rather than every single 
+user-unwritable file). I can't believe I'm asking to encourage avoid 'rm 
+-rf', on mailing list of a tool on UNIX/GNU/Linux (POSIX-based) 
+operating systems, original which people started avoiding 'rm -rf' in 
+1970s, but now people say just do it!
 
-On Tue, Aug 02, 2022 at 02:42:01PM +0200, Michael Heemskerk wrote:
-> Let me re-share some questions/suggestions/objections I got on a patch I
-> shared with similar changes:
-> https://lore.kernel.org/git/pull.1228.git.1651676435634.gitgitgadget@gmai=
-l.com/
->=20
-> There's a lot to like about the change; it fixes the incorrect invocation=
- of
-> the reference-transaction hooks when (bulk) deleting refs, but there is a
-> down-side that Patrick pointed out. We never got to a satisfactory soluti=
-on,
-> so let me reshare his feedback to pick up the discussion.
->=20
-> Patrick:
-> > I really like these changes given that they simplify things, but I
-> > wonder whether we can do them. In the preimage we're eagerly removing
-> > loose refs: any error encountered when deleting a reference is recorded,
-> > but we keep on trying to remove the other refs, as well. With the new
-> > behaviour we now create a single transaction for all refs and try to
-> > commit it. This also means that we'll abort the transaction when locking
-> > any of the refs fails, which is a change in behaviour.
-> >
-> > The current behaviour is explicitly documented in `refs.h:refs_delete_r=
-efs()`:
-> >
-> >     /*
-> >      * Delete the specified references. If there are any problems, emit
-> >      * errors but attempt to keep going (i.e., the deletes are not done=
- in
-> >      * an all-or-nothing transaction). msg and flags are passed through=
- to
-> >      * ref_transaction_delete().
-> >      */
-> >    int refs_delete_refs(struct ref_store *refs, const char *msg,
-> >                          struct string_list *refnames, unsigned int fla=
-gs);
-> >
-> > There are multiple callsites of this function via `delete_refs()`. Now
-> > honestly, most of these callsites look somewhat broken:
-> >
-> >     - `bisect.c` simply does its best to clean up bisect state. This
-> >       usecase looks fine to me.
-> >
-> >    - `builtin/branch.c` reports the branches as deleted even if
-> >       `delete_refs()` failed.
-> >
-> >     - `builtin/remote.c` also misreports the deleted branches for the
-> >       `prune` verb. The `rm` verb looks alright: if deletion of any
-> >       branch failed then it doesn't prune the remote's config in the end
-> >       and reports an error.
-> >
-> >     - `builtin/fetch.c` also misreports deleted branches with `--prune`.
-> >
-> > So most of these commands incorrectly handle the case where only a
-> > subset of branches has been deleted. This raises the question whether
-> > the interface provided by `refs_delete_refs()` is actually sensible if
-> > it's so easy to get wrong. It doesn't even report which branches could
-> > be removed and which couldn't. Furthermore, the question is whether new
-> > backends like the reftable backend which write all refs into a single
-> > slice would actually even be in a position to efficiently retain
-> > semantics of this function.
-> >
-> > I'm torn. There are valid usecases for eagerly deleting refs even if a
-> > subset of deletions failed, making this change a tough sell, but most of
-> > the callsites don't actually handle this correctly in the first place.
+>> I'd rather opt-out of .git* subdirectories for every clone.
+> In that case, *don't run `git clone in the first place*. The purpose of
+> `git clone` is to get you the entire repository. If you want a single 
+> working
+> tree, use `git archive` to make an archive from the commit you want,
+> and extract that archive to get the tree you want, without getting all
+> the *other* revisions.
+Seems much more complicated (and less-documented) and most popular git 
+sites (though #1 isn't Free/Libre/Opensource Software (FLS, OSS, FOSS, 
+FLOSS) so rightly condemned) disallow archive.  Though I my shell alias 
+rewrites 'git clone' to then 'chmod u+w .git*' or alternatively 'find . 
+-iname .git* -perm u-w -exec chmod u+w {} \+' and usually before 
+archiving, 'sudo rm -rf .git*', aliases are sometimes unavailable and 
+now a few projects won't compile without such directories.  I know you 
+can't control popular sites' mistakes (nor projects never doing 
+normally-numbered releases) and they should be irrelevant: unfortunately 
+most projects use most popular/broken sites, sadly including core 
+component projects for some/most/all POSIX-based OSs, so couldn't syntax 
+be easier/detailed so testers can opt-out user-unwritables (for 
+thousands/millions major cases archive disallowed)?
+         Apparently many/all version control systems (VCS) make such 
+(initially) user-unwritables so may consider this request odd but for 
+tester-only people, it's not odd to dislike such we don't use (unless 
+ever changes... I've used VCS last  11+ years (likely since late 1990s 
+or early '0s) and don't plan to use .git* & etc. decades into 
+foreseeable future but in very-slight chance I do presumably such 
+files/directories would be useful... for now I've spent hours/days over 
+decades in frustration: 11+ years ago when projects had a minor bug said 
+'try from VCS (nightly)' I was glad but led to nightly/critical bugs and 
+user-unwritables... VCS are a godsend for decreasing years update waits 
+but (as with most science/technology) have advantages & disadvantages...)
+--D
 
-Thanks a lot for revoicing my concerns here. I also agree that overall
-the changes are very much what I'd love to have as they simplify the
-implementation and fix the issues at the same time.
-
-> At the time, the only solution I could see was to switch to
-> transaction-per-ref semantics, but this results in bad performance when
-> deleting tens of thousands of refs.
->=20
-> One option might be to optimistically try to delete the refs in a single
-> transaction. If that fails for whatever reason and multiple ref deletions=
- are
-> requested, we could fall back to a transaction-per-ref approach. That'd k=
-eep
-> the common case fast, and still provide best effort deletes.
->=20
-> Thoughts?
-
-The biggest downside I can think of with this approach is that it's now
-undeterministic whether we run the hooks once for all references, or
-once for all references plus once for every single reference we're about
-to delete when there was e.g. a racy deletion. That makes it hard to use
-the hook e.g. in setups where we vote on reference updates as it can be
-that due to racy behaviour we now see different behaviour on different
-nodes.
-
-I'm still torn. Ideally, I'd just bite the bullet and say that
-`refs_delete_refs()` is atomic insofar that it will only ever delete all
-references or none, and not a best-effort implementation. But that is a
-change I'm still scared to make given that it sounds like an easy way to
-run into regressions.
-
-Unfortunately I still don't have an easy answer for how to properly fix
-this, sorry :/
-
-Patrick
-
-> Cheers,
-> Michael Heemskerk
->=20
-> On Fri, Jul 29, 2022 at 12:13 PM Jiang Xin <worldhello.net@gmail.com> wro=
-te:
-> >
-> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> >
-> > When delete references using "git branch -d" or "git tag -d", there will
-> > be duplicate call of "reference-transaction committed" for same refs.
-> > This is because "refs_delete_refs()" is called twice, once for
-> > files-backend and once for packed-backend, and we used to reinvented the
-> > wheel in "files_delete_refs()" and "packed_delete_refs()". By removing
-> > "packed_delete_refs()" and reimplement "files_delete_refs()", the
-> > "reference-transaction" hook will run only once for deleted branches and
-> > tags.
-> >
-> > The behavior of the following git commands and the last two testcases
-> > have been fixed in t1416:
-> >
-> >  * git branch -d <branch>
-> >  * git tag -d <tag>
-> >
-> > A testcase in t5510 is broken because we used to call the function
-> > "packed_refs_lock()", but it is not necessary if the deleted reference
-> > is not in the "packed-refs" file.
-> >
-> > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> > ---
-> >  refs/files-backend.c             | 21 ++++++-------
-> >  refs/packed-backend.c            | 51 +-------------------------------
-> >  t/t1416-ref-transaction-hooks.sh |  4 +--
-> >  t/t5510-fetch.sh                 | 17 +++++++++++
-> >  4 files changed, 29 insertions(+), 64 deletions(-)
-> >
-> > diff --git a/refs/files-backend.c b/refs/files-backend.c
-> > index 8baea66e58..21426efaae 100644
-> > --- a/refs/files-backend.c
-> > +++ b/refs/files-backend.c
-> > @@ -1268,31 +1268,27 @@ static int files_pack_refs(struct ref_store *re=
-f_store, unsigned int flags)
-> >  static int files_delete_refs(struct ref_store *ref_store, const char *=
-msg,
-> >                              struct string_list *refnames, unsigned int=
- flags)
-> >  {
-> > -       struct files_ref_store *refs =3D
-> > -               files_downcast(ref_store, REF_STORE_WRITE, "delete_refs=
-");
-> > +       struct ref_transaction *transaction;
-> >         struct strbuf err =3D STRBUF_INIT;
-> >         int i, result =3D 0;
-> >
-> >         if (!refnames->nr)
-> >                 return 0;
-> >
-> > -       if (packed_refs_lock(refs->packed_ref_store, 0, &err))
-> > -               goto error;
-> > -
-> > -       if (refs_delete_refs(refs->packed_ref_store, msg, refnames, fla=
-gs)) {
-> > -               packed_refs_unlock(refs->packed_ref_store);
-> > +       transaction =3D ref_store_transaction_begin(ref_store, &err);
-> > +       if (!transaction)
-> >                 goto error;
-> > -       }
-> > -
-> > -       packed_refs_unlock(refs->packed_ref_store);
-> >
-> >         for (i =3D 0; i < refnames->nr; i++) {
-> >                 const char *refname =3D refnames->items[i].string;
-> > -
-> > -               if (refs_delete_ref(&refs->base, msg, refname, NULL, fl=
-ags))
-> > +               if (ref_transaction_delete(transaction, refname, NULL,
-> > +                                          flags, msg, &err))
-> >                         result |=3D error(_("could not remove reference=
- %s"), refname);
-> >         }
-> > +       if (ref_transaction_commit(transaction, &err))
-> > +               goto error;
-> >
-> > +       ref_transaction_free(transaction);
-> >         strbuf_release(&err);
-> >         return result;
-> >
-> > @@ -1309,6 +1305,7 @@ static int files_delete_refs(struct ref_store *re=
-f_store, const char *msg,
-> >         else
-> >                 error(_("could not delete references: %s"), err.buf);
-> >
-> > +       ref_transaction_free(transaction);
-> >         strbuf_release(&err);
-> >         return -1;
-> >  }
-> > diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> > index 97b6837767..fdb7a0a52c 100644
-> > --- a/refs/packed-backend.c
-> > +++ b/refs/packed-backend.c
-> > @@ -1519,55 +1519,6 @@ static int packed_initial_transaction_commit(str=
-uct ref_store *ref_store,
-> >         return ref_transaction_commit(transaction, err);
-> >  }
-> >
-> > -static int packed_delete_refs(struct ref_store *ref_store, const char =
-*msg,
-> > -                            struct string_list *refnames, unsigned int=
- flags)
-> > -{
-> > -       struct packed_ref_store *refs =3D
-> > -               packed_downcast(ref_store, REF_STORE_WRITE, "delete_ref=
-s");
-> > -       struct strbuf err =3D STRBUF_INIT;
-> > -       struct ref_transaction *transaction;
-> > -       struct string_list_item *item;
-> > -       int ret;
-> > -
-> > -       (void)refs; /* We need the check above, but don't use the varia=
-ble */
-> > -
-> > -       if (!refnames->nr)
-> > -               return 0;
-> > -
-> > -       /*
-> > -        * Since we don't check the references' old_oids, the
-> > -        * individual updates can't fail, so we can pack all of the
-> > -        * updates into a single transaction.
-> > -        */
-> > -
-> > -       transaction =3D ref_store_transaction_begin(ref_store, &err);
-> > -       if (!transaction)
-> > -               return -1;
-> > -
-> > -       for_each_string_list_item(item, refnames) {
-> > -               if (ref_transaction_delete(transaction, item->string, N=
-ULL,
-> > -                                          flags, msg, &err)) {
-> > -                       warning(_("could not delete reference %s: %s"),
-> > -                               item->string, err.buf);
-> > -                       strbuf_reset(&err);
-> > -               }
-> > -       }
-> > -
-> > -       ret =3D ref_transaction_commit(transaction, &err);
-> > -
-> > -       if (ret) {
-> > -               if (refnames->nr =3D=3D 1)
-> > -                       error(_("could not delete reference %s: %s"),
-> > -                             refnames->items[0].string, err.buf);
-> > -               else
-> > -                       error(_("could not delete references: %s"), err=
-=2Ebuf);
-> > -       }
-> > -
-> > -       ref_transaction_free(transaction);
-> > -       strbuf_release(&err);
-> > -       return ret;
-> > -}
-> > -
-> >  static int packed_pack_refs(struct ref_store *ref_store, unsigned int =
-flags)
-> >  {
-> >         /*
-> > @@ -1595,7 +1546,7 @@ struct ref_storage_be refs_be_packed =3D {
-> >
-> >         .pack_refs =3D packed_pack_refs,
-> >         .create_symref =3D NULL,
-> > -       .delete_refs =3D packed_delete_refs,
-> > +       .delete_refs =3D NULL,
-> >         .rename_ref =3D NULL,
-> >         .copy_ref =3D NULL,
-> >
-> > diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction=
--hooks.sh
-> > index df75e5727c..f64166f9d7 100755
-> > --- a/t/t1416-ref-transaction-hooks.sh
-> > +++ b/t/t1416-ref-transaction-hooks.sh
-> > @@ -744,7 +744,7 @@ test_expect_success "branch: rename branches" '
-> >         test_cmp_heads_and_tags -C workdir expect
-> >  '
-> >
-> > -test_expect_failure "branch: remove branches" '
-> > +test_expect_success "branch: remove branches" '
-> >         test_when_finished "rm -f $HOOK_OUTPUT" &&
-> >
-> >         cat >expect <<-EOF &&
-> > @@ -873,7 +873,7 @@ test_expect_success "tag: update refs to create loo=
-se refs" '
-> >         test_cmp_heads_and_tags -C workdir expect
-> >  '
-> >
-> > -test_expect_failure "tag: remove tags with mixed ref_stores" '
-> > +test_expect_success "tag: remove tags with mixed ref_stores" '
-> >         test_when_finished "rm -f $HOOK_OUTPUT" &&
-> >
-> >         cat >expect <<-EOF &&
-> > diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> > index b45879a760..22de7ac9ec 100755
-> > --- a/t/t5510-fetch.sh
-> > +++ b/t/t5510-fetch.sh
-> > @@ -168,6 +168,8 @@ test_expect_success REFFILES 'fetch --prune fails t=
-o delete branches' '
-> >         cd "$D" &&
-> >         git clone . prune-fail &&
-> >         cd prune-fail &&
-> > +       git update-ref refs/remotes/origin/extrabranch main~ &&
-> > +       git pack-refs --all &&
-> >         git update-ref refs/remotes/origin/extrabranch main &&
-> >         : this will prevent --prune from locking packed-refs for deleti=
-ng refs, but adding loose refs still succeeds  &&
-> >         >.git/packed-refs.new &&
-> > @@ -175,6 +177,21 @@ test_expect_success REFFILES 'fetch --prune fails =
-to delete branches' '
-> >         test_must_fail git fetch --prune origin
-> >  '
-> >
-> > +test_expect_success REFFILES 'fetch --prune ok for loose refs not in l=
-ocked packed-refs' '
-> > +       test_when_finished "cd \"$D\"; rm -rf \"prune-ok-ref-not-packed=
-\"" &&
-> > +       cd "$D" &&
-> > +       git clone . prune-ok-ref-not-packed &&
-> > +       (
-> > +               cd prune-ok-ref-not-packed &&
-> > +               git update-ref refs/remotes/origin/extrabranch main &&
-> > +               : for loose refs not in packed-refs, we can delete them=
- even the packed-refs is locked &&
-> > +               :>.git/packed-refs.new &&
-> > +
-> > +               git fetch --prune origin &&
-> > +               test_must_fail git rev-parse refs/remotes/origin/extrab=
-ranch --
-> > +       )
-> > +'
-> > +
-> >  test_expect_success 'fetch --atomic works with a single branch' '
-> >         test_when_finished "rm -rf \"$D\"/atomic" &&
-> >
-> > --
-> > 2.36.1.25.gc87d5ad63a.dirty
-> >
-
---clEVYY8y5gJnxVrD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmLyP4kACgkQVbJhu7ck
-PpRRzw/8DuLjIuH5Yi3ULZS8DfS3TigH6QlR6feEYO3muHTOXL7ldd+VDDfLucoy
-nShfH7i3Lgb+t9tyCsF0G8CygDNvezZKRm5ej9V9hqu/oyjSiaawQ/HqSHPPSVJv
-w7mi/GUY44gGxPAwfL2KZ6w7SfLTLTZlXN/U+6xZjdS5q/UiPbbEVrJYsdoaHZBU
-nXYjvxbCokLoHjVV0wY1xPc32I833Jh+T90E0GmscZt+LOuYiNdTvlmre7XTGA7N
-xzkpuWSqezEK9KRPd4nan/djayXFt3e8TtLk+O2j5ndMW020vb0EReYl3kUfMzu2
-Qa4JwbmI8RoIMFoiJt55o/qGfhV5Ll80F7mZFWgNoT2D+O2JBoz8oQh9iFCh5/UI
-bW35V12r4JidUOsaTJOuT1Daiz41tKFTEQ/6YoLZycmNN1RAFdmUqgY7Any7RmX+
-qDCb9FoUkhYzPqe7OziVpTPo6gxDrAugdD2w+BI36aBIkiFC1RDrvCzRKlgp8de1
-DPA87fdTA4ASQPKBRm6tJ0lffMxYmfgt0tZL9eoFAd1M/3EBMvokR6CguHQu9O/C
-utFLfE0V6rNfqfeESVpXO+0p3JwmZarerTJDgVtZiLIxNwlMFouTiuBEQ5oJNmLC
-qKPh0MAEAwCWWP93Mb7sV5rZpJZdf2BI/uK1YqCiSfuYzyb1WmQ=
-=6q1I
------END PGP SIGNATURE-----
-
---clEVYY8y5gJnxVrD--
