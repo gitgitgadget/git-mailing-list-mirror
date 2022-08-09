@@ -2,140 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF158C19F2D
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 11:06:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E63A5C19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 11:24:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240823AbiHILGX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 07:06:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40078 "EHLO
+        id S235573AbiHILYt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 07:24:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240804AbiHILGQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 07:06:16 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28C6F20F5F
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 04:06:15 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id z19so11032351plb.1
-        for <git@vger.kernel.org>; Tue, 09 Aug 2022 04:06:15 -0700 (PDT)
+        with ESMTP id S231308AbiHILYr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 07:24:47 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F76A1EC65
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 04:24:46 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id b133so10506853pfb.6
+        for <git@vger.kernel.org>; Tue, 09 Aug 2022 04:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:subject:to:references:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=8MnY2vCC1+3F6tJ4iiAboyj7bvfn6EB6Bsgpl3RZ7iE=;
-        b=FC/VQcssrcyGeOARCvCwbPadMtydt5/e/LAM05Y8EOjvIJBpo5NwIPQH8E9roR12UD
-         I1kjOieWJfyLRqWHaACSCCb3UJ0go6IvseZ1i4PM0llSa6mDmG83wyiu3GrQwqtZv1/u
-         1Lm1HlYxIXMeyualRszX/pjvrTJ6UACk7SW+bObgLi71Yen4/Sr8muLOczXKXvN+EKlS
-         rt3L70AME3z3qtUdWyql0rrGiPkmpP7IrDGAld3sYk/++BraY8jExjkiU6N4VsiMDzc5
-         yAsABK+wc5zveO9iQNTyS3DHAzeqFJ0XJG3ZQ4YGEZrf7tRmoMGVH/G6bNcJjm6lEzbn
-         tgCA==
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:cc:references:in-reply-to:content-transfer-encoding;
+        bh=5dA7/a1VOSEEcqOFgc/fb7QYGLEt+qhD/57o1h2Jq40=;
+        b=i77x+QhE+5Bv3Qu3V7y5Tkdlm3NEbt5FEyAOaUXSQSrqktlwLkR1XD6g4TFASMM+D5
+         4iR81RUP0TTPG0Uh1DXCJrTJ5YrmAyagcUsGMybfInPXlNJnI/15INOwEL2d4sfRHYVV
+         pAc6J/rw3406KdXBZDjDr79LEXfg6XbgicF5EDjzi21UvfjxZqtDMizH0WRuzmoVvWju
+         CgEhhQRJuq0cLKHoa+k/HGkoVIVTrpcOuB8Ou1a76zhR51v4Z/8H/N3Ho+TDS12Z6GcL
+         Z21pKTa2O3s1gw/T/5XNOd7Ux68qXurfm0+o/znsK7uZtPJvLadRS2vjoktvWdfpGFVt
+         jcaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:subject:to:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=8MnY2vCC1+3F6tJ4iiAboyj7bvfn6EB6Bsgpl3RZ7iE=;
-        b=odiw7Z1FB6ffVM/UBCDOonQivHk4An3F3fRAogBHMw9PuLWdhZQaKwBHsww5NMirwZ
-         LEy7uvQrTZZldgIkY/mAZHNqk56f/SrpVaCUkVfQsh181T903JGw1ZKy7D/WQ0UJ80sD
-         Sv/cQriThjP0Aw6+sJK0MX7air/72W+DGC83EthhJoPkyXbuF11CMU7SC6MKENWI3k7B
-         jVlH/qlXccAkR27t3Hmvw1jPpg82HEMgIgbwz6aYhHVwV/zB4/+Rii1pRr9KVEQYDnAa
-         V9n7VVRqWUBQJJbFQDum04GsMGYMhNGuZK4U5xv2VzEyB5F3+U/p+I+AC1hjLfYOKiEc
-         Wq6A==
-X-Gm-Message-State: ACgBeo0KdVTs3JcwghwFFcUSzEgeg0o5g2wkiqMY5a7+YRigqvP/Mn+P
-        vqsepYCsfI2MN8Xfb0YNMCicnn68Ia/yIFNq
-X-Google-Smtp-Source: AA6agR4oVVBgZ5Cuzmw/0nr08pXTxXZ4ZpIQaeElIXzrYZEfE+D11+tZ3RM3aWriZvZHIfKONPt/RA==
-X-Received: by 2002:a17:90b:3a91:b0:1f5:2048:cb9f with SMTP id om17-20020a17090b3a9100b001f52048cb9fmr33415038pjb.174.1660043174008;
-        Tue, 09 Aug 2022 04:06:14 -0700 (PDT)
-Received: from cosmos.melik.windwireless.net (melik.windwireless.net. [206.63.237.146])
-        by smtp.gmail.com with ESMTPSA id cp2-20020a170902e78200b001690d398401sm10506369plb.88.2022.08.09.04.06.12
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:from:to:cc:references:in-reply-to
+         :content-transfer-encoding;
+        bh=5dA7/a1VOSEEcqOFgc/fb7QYGLEt+qhD/57o1h2Jq40=;
+        b=uLuG+Jtw8wniq3HejO/cQbGVPfXb8eCEINy00NHFwZZACJPZ3j8ANajrY9xbIwDT5D
+         t3RDvRxevkErlcALKAiSFS7ftRxS3r43z/Yju1gkdQ5v3vHh8O99n1d+gW5tsM9hi+80
+         KZMGhMOLKp37N3ar2skr2RFdAGGPgZfwvJ+s1t8UPyTd1odz4U2zlYOEtbQNMnuyGJli
+         CMfAhNH90/ZWVqtS32P526Qh34xGcNqC/lH2nde4zhTuyTtj7k0L1eKORdV7aUdVGC5r
+         qUecPe70WOoSGVOuLDXGLFQ4xKGJPt6AjyFbn2w1PQUbGYZ/Y9tvTlHfqGVIfkck6/0R
+         +1RA==
+X-Gm-Message-State: ACgBeo144QnOULgf+VFmQyT34ySabiOHK4T5m3h6ghJc7PKLg/mxqCZz
+        GQwHHe91KxpIyHPEQ1IuMQtCn1XRwoiO9Q==
+X-Google-Smtp-Source: AA6agR5XrkIwpI2EysadpIsE/fAku3twDwGdVHmzjdc1Wxs9uC4mJGoHIBnYjNjQvYVJoZ1a+V8RnQ==
+X-Received: by 2002:a63:907:0:b0:41c:cb97:6969 with SMTP id 7-20020a630907000000b0041ccb976969mr19216626pgj.194.1660044286175;
+        Tue, 09 Aug 2022 04:24:46 -0700 (PDT)
+Received: from [127.0.0.1] ([45.138.210.17])
+        by smtp.gmail.com with ESMTPSA id x10-20020a17090a6b4a00b001f6c86e6ff0sm6936287pjl.36.2022.08.09.04.24.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Aug 2022 04:06:12 -0700 (PDT)
-From:   David Chmelik <davidnchmelik@gmail.com>
-Subject: Re: 'git clone,' build makes user non-writable files (should be
- option keep user-writable)
-To:     git-l <git@vger.kernel.org>
-References: <822787da-bc26-0d72-a5c4-808a3d10126e@gmail.com>
- <YtPtQ6qsIviyTBF2@zbox.drbeat.li>
- <158251f2-9fa4-45b7-4c24-907c94602b6e@gmail.com>
- <CAPx1Gvc6ci1CjhL-zjwqkR=4o2yQTrT0V_Hb9bUBNuaBn47M8A@mail.gmail.com>
- <ccbc1e81-b406-9e73-7aa5-956ffae7074b@gmail.com>
- <CAPx1GvceFLRL_O5zYW98tPdNV9S_Y=fChJafsq+HGkEYixKsZA@mail.gmail.com>
-Message-ID: <b47b88fb-89bd-732c-3aeb-75a474a7fdb5@gmail.com>
-Date:   Tue, 9 Aug 2022 04:05:46 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.1
+        Tue, 09 Aug 2022 04:24:45 -0700 (PDT)
+Message-ID: <3c4ee06e-1145-8efc-ddb9-eeaed81079f5@gmail.com>
+Date:   Tue, 9 Aug 2022 19:24:40 +0800
 MIME-Version: 1.0
-In-Reply-To: <CAPx1GvceFLRL_O5zYW98tPdNV9S_Y=fChJafsq+HGkEYixKsZA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 1/9] t7002: add tests for moving from in-cone to
+ out-of-cone
+Content-Language: en-US
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+To:     Victoria Dye <vdye@github.com>, git@vger.kernel.org
+Cc:     derrickstolee@github.com
+References: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
+ <20220805030528.1535376-1-shaoxuan.yuan02@gmail.com>
+ <20220805030528.1535376-2-shaoxuan.yuan02@gmail.com>
+ <bd80881d-b2a3-c220-8f2d-a07a46e14207@github.com>
+ <651d89e2-5282-2cf8-ffc3-8650a023c80a@gmail.com>
+In-Reply-To: <651d89e2-5282-2cf8-ffc3-8650a023c80a@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/22/22 8:54 PM, Chris Torek wrote:
-> On Fri, Jul 22, 2022 at 5:29 PM David Chmelik<davidnchmelik@gmail.com> 
-> wrote:
->> On 7/22/22 10:40 AM, Chris Torek wrote:
->>> All true. But Git has no control over, or affect on these: Git does
->>> not attempt to affect ownership or permission of any build products
->>> at all. Git only attempts to affect the execute permission of
->>> specific files as directed by the committed file mode (and provided
->>> `core.filemode` is enabled).
->> Not even projects' .git* subdirectories? They typically are/become
->> user-unwritable though deletable with several/many confirmations so I
->> usually sudo (recommended against).
-> Ah, I thought you were (and I definitely was) talking only about the
-> *build products*. The stuff inside `.git` itself: some of that, Git 
-> does set
-> to unwritable.
-Initially wasn't; don't know why took three replies to clear up 
-(initially clearly specified non-root usage which others ignored and 
-mentioned/focused unrelated root topic).
+On 8/9/2022 10:55 AM, Shaoxuan Yuan wrote:
+ >> 2. Move a (clean or dirty) in-cone source directory to an out-of-cone
+ >>     destination where one or more files in <src> overwrite files in 
+<dst>.
+ >>     For example, something like:
+ >>
+ >>     echo test >sub/dir/file1 &&
+ >>     git add sub/dir/file1 &&
+ >>     git mv --sparse sub/dir folder1
+ >>
+ >>     I don't have a strong opinion on the behavior (does it fail the 
+whole
+ >>     'mv' operation? move everything except the files that overwrite
+ >>     something?), but it would help to have it documented via test here.
+ > OK. I think it will fail the whole `mv` operation. The program will 
+report unspecified
+ > overwrite during the early checking phase. The actual "moving" phase 
+won't be touched
+ > at all because Git complains early.
 
-> There is no need to use `sudo` though: a simple
-> "rm -rf .git" will blow away the Git repository itself. However:
-Starts with 'rm -rf .' which is bad and worse is one key away from 'rm 
--rf /': anyone who accidentally pressed <ENTER> after either what I put 
-in quotation marks (I did both as root on my personal files and entire 
-PC in 1990s... have you ever?  It was normal to use root account then 
-rather than non-UNIX-like OS that lock it) wants to never again so 
-typically uses alias which done with sudo (still considered worst last 
-resort) still has fewer confirmations (one rather than every single 
-user-unwritable file). I can't believe I'm asking to encourage avoid 'rm 
--rf', on mailing list of a tool on UNIX/GNU/Linux (POSIX-based) 
-operating systems, original which people started avoiding 'rm -rf' in 
-1970s, but now people say just do it!
+No, actually this example does not fail anything. Because
+"sub/dir/file1" after the move will be "folder1/dir/file1", and this
+move does not involve overwrite at all.
 
->> I'd rather opt-out of .git* subdirectories for every clone.
-> In that case, *don't run `git clone in the first place*. The purpose of
-> `git clone` is to get you the entire repository. If you want a single 
-> working
-> tree, use `git archive` to make an archive from the commit you want,
-> and extract that archive to get the tree you want, without getting all
-> the *other* revisions.
-Seems much more complicated (and less-documented) and most popular git 
-sites (though #1 isn't Free/Libre/Opensource Software (FLS, OSS, FOSS, 
-FLOSS) so rightly condemned) disallow archive.  Though I my shell alias 
-rewrites 'git clone' to then 'chmod u+w .git*' or alternatively 'find . 
--iname .git* -perm u-w -exec chmod u+w {} \+' and usually before 
-archiving, 'sudo rm -rf .git*', aliases are sometimes unavailable and 
-now a few projects won't compile without such directories.  I know you 
-can't control popular sites' mistakes (nor projects never doing 
-normally-numbered releases) and they should be irrelevant: unfortunately 
-most projects use most popular/broken sites, sadly including core 
-component projects for some/most/all POSIX-based OSs, so couldn't syntax 
-be easier/detailed so testers can opt-out user-unwritables (for 
-thousands/millions major cases archive disallowed)?
-         Apparently many/all version control systems (VCS) make such 
-(initially) user-unwritables so may consider this request odd but for 
-tester-only people, it's not odd to dislike such we don't use (unless 
-ever changes... I've used VCS last  11+ years (likely since late 1990s 
-or early '0s) and don't plan to use .git* & etc. decades into 
-foreseeable future but in very-slight chance I do presumably such 
-files/directories would be useful... for now I've spent hours/days over 
-decades in frustration: 11+ years ago when projects had a minor bug said 
-'try from VCS (nightly)' I was glad but led to nightly/critical bugs and 
-user-unwritables... VCS are a godsend for decreasing years update waits 
-but (as with most science/technology) have advantages & disadvantages...)
---D
+I'm still adding a test case that precisely reflects the main idea
+here, though. Thanks for the suggestion :)
+
+--
+Thanks,
+Shaoxuan
 
