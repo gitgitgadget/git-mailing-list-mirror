@@ -2,189 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52DD7C19F2D
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 16:54:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E36EAC19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 16:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244474AbiHIQy3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 12:54:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36052 "EHLO
+        id S245146AbiHIQzL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 12:55:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242649AbiHIQy2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 12:54:28 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 999DA2229C
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 09:54:27 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id 15-20020a17090a098f00b001f305b453feso18243553pjo.1
-        for <git@vger.kernel.org>; Tue, 09 Aug 2022 09:54:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=DtgVHt83hoeXeWfN/DpHfFtLIaP26/Ya/V4m3ZHE89k=;
-        b=F67fRxHcJeS6nuwbQPJIAayXmpwd4EERWgYZomV6T57WudyCbbKSSgfE9BGqdfFnD7
-         JGdquEggdYIeuU2l2SraNRDngdAk49QDo0ijIeAOOp/9X2u6qG3yi4IVLkKI/9lDOoV8
-         sNpdUnWHkUT1PmixLCxZN2kZDrbBz7HyG4JEomAkMWkFRsHUkSpvbLynfr5/vv20xoyI
-         nfYg/fgzawoy0O3dRnQZ9RumzE9aPSe91S5zqnzwtAg8eKJfNCQcNmgZb6eSKk/qRUCu
-         iiMtRKlhwFN4dfdqB+daa+UIZDDro+CgmgqZdfo2LFZRZpuAfpF61sRoNgSylOnTwJQ9
-         e50Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=DtgVHt83hoeXeWfN/DpHfFtLIaP26/Ya/V4m3ZHE89k=;
-        b=QU7mIEJmEOkxr/b7gMfc5oklFC83ksElJZZ3QxQ7MHkVBlOUuGjg2B8OPpspw++CdA
-         f3mVMZHbF9HiSFtLMIC9EDKaeZjhstTE2kuJmuFZSlUZOghcjX9hbOIKuVGNzQLeXBWL
-         wW/FtTB+JNHaxWw4S5MYeTftoSfIGFIX+2TY80B/API5LU69fqATlP0yTTkBu+WexXXG
-         gJKTij31EEvYIk7de42V8E/K/VmgH6YOGHrqwKVXrD4idndaUPZ8N6pZcCFylFxgNKOQ
-         h8wM92N2PxEvwzPv008mWD5X2MmGix/PsTXTMjHoC5PA7GvOhnUgVbiSMI8gCbKgrhzy
-         a6gA==
-X-Gm-Message-State: ACgBeo16GWHrv1cc++reHRqnCnCFk8WICbI1MEH5NGFuOOU7nErCiSqe
-        SDnH3gWDwzZsBX9jfh1ExigQ
-X-Google-Smtp-Source: AA6agR797JFpsDNmzb+4SeTyIpaa72zKXlxFLEbAcEI0ghq5sSaXWQPMu79utUAeGUfizDpn9Shp9g==
-X-Received: by 2002:a17:90a:9dc7:b0:1f3:1a8:41a1 with SMTP id x7-20020a17090a9dc700b001f301a841a1mr27373212pjv.23.1660064067110;
-        Tue, 09 Aug 2022 09:54:27 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id y7-20020aa79ae7000000b0052aaf7fe731sm141555pfp.45.2022.08.09.09.54.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Aug 2022 09:54:26 -0700 (PDT)
-Message-ID: <73f168c4-543c-9ff3-5bf2-9a4c789d7fad@github.com>
-Date:   Tue, 9 Aug 2022 09:54:24 -0700
+        with ESMTP id S245140AbiHIQzI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 12:55:08 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 043FC22B17
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 09:55:06 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2E6214701E;
+        Tue,  9 Aug 2022 12:55:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=daQauTlG5sIpDpguMbDbJYU3IxsXuKxtTC3Soq
+        pjbbU=; b=FmiwbylycPqHZXgwnsmya4ePYzHwe3/62ezrvHKjYFmV2EZL9dUkAc
+        aOmpL4/uERLLTmZcSYHEkc61i0hr4SGlcyuUo1VA4ofK3FU+ZkCJ52pboFFYSi1F
+        09hJhm1Jq5hJfRC2PRYhoO+VD9VbwbmYg+UCxGRrKRZBnSiSgNB60=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DB3614701C;
+        Tue,  9 Aug 2022 12:55:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8763514701A;
+        Tue,  9 Aug 2022 12:55:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Emily Noneman <emily.noneman@gmail.com>,
+        Paul Horn <git@knutwalker.engineer>
+Subject: Re: [PATCH] revision.c: set-up "index_state.repo", don't segfault
+ in pack-objects
+References: <CAKvVO18RVye=PkBRv=trj2GHh8ccGKL5j0mMq2eHQ1SX=wsr8A@mail.gmail.com>
+        <patch-1.1-3ff17707481-20220805T141816Z-avarab@gmail.com>
+        <b6299f8a-f75a-0e96-a6a6-55a7280584bf@github.com>
+        <Yu02dOo4G8sy8tI6@coredump.intra.peff.net>
+        <xmqqo7wyzlpm.fsf@gitster.g>
+        <YvJZCGyhd6KJCabi@coredump.intra.peff.net>
+Date:   Tue, 09 Aug 2022 09:55:03 -0700
+In-Reply-To: <YvJZCGyhd6KJCabi@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 9 Aug 2022 08:54:32 -0400")
+Message-ID: <xmqqedxpqrvc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.12.0
-Subject: Re: [PATCH v2 09/10] scalar-diagnose: use 'git diagnose --all'
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com,
-        johannes.schindelin@gmx.de
-References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
- <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
- <6834bdcaea838cc49f209efd785bf2bdf09e9c08.1659577543.git.gitgitgadget@gmail.com>
- <220804.86r11webp8.gmgdl@evledraar.gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <220804.86r11webp8.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0414B572-1804-11ED-93E9-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Aug 04 2022, Victoria Dye via GitGitGadget wrote:
-> 
->> From: Victoria Dye <vdye@github.com>
->>
->> Replace implementation of 'scalar diagnose' with an internal invocation of
->> 'git diagnose --all'. This simplifies the implementation of 'cmd_diagnose'
->> by making it a direct alias of 'git diagnose' and removes some code in
->> 'scalar.c' that is duplicated in 'builtin/diagnose.c'. The simplicity of the
->> alias also sets up a clean deprecation path for 'scalar diagnose' (in favor
->> of 'git diagnose'), if that is desired in the future.
->>
->> This introduces one minor change to the output of 'scalar diagnose', which
->> is that the prefix of the created zip archive is changed from 'scalar_' to
->> 'git-diagnostics-'.
->>
->> Signed-off-by: Victoria Dye <vdye@github.com>
->> ---
->>  contrib/scalar/scalar.c | 29 +++++++----------------------
->>  1 file changed, 7 insertions(+), 22 deletions(-)
->>
->> diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
->> index b10955531ce..fe2a0e9decb 100644
->> --- a/contrib/scalar/scalar.c
->> +++ b/contrib/scalar/scalar.c
->> @@ -11,7 +11,6 @@
->>  #include "dir.h"
->>  #include "packfile.h"
->>  #include "help.h"
->> -#include "diagnose.h"
->>  
->>  /*
->>   * Remove the deepest subdirectory in the provided path string. Path must not
->> @@ -510,34 +509,20 @@ static int cmd_diagnose(int argc, const char **argv)
->>  		N_("scalar diagnose [<enlistment>]"),
->>  		NULL
->>  	};
->> -	struct strbuf zip_path = STRBUF_INIT;
->> -	time_t now = time(NULL);
->> -	struct tm tm;
->> +	struct strbuf diagnostics_root = STRBUF_INIT;
->>  	int res = 0;
->>  
->>  	argc = parse_options(argc, argv, NULL, options,
->>  			     usage, 0);
->>  
->> -	setup_enlistment_directory(argc, argv, usage, options, &zip_path);
->> -
->> -	strbuf_addstr(&zip_path, "/.scalarDiagnostics/scalar_");
->> -	strbuf_addftime(&zip_path,
->> -			"%Y%m%d_%H%M%S", localtime_r(&now, &tm), 0, 0);
->> -	strbuf_addstr(&zip_path, ".zip");
->> -	switch (safe_create_leading_directories(zip_path.buf)) {
->> -	case SCLD_EXISTS:
->> -	case SCLD_OK:
->> -		break;
->> -	default:
->> -		error_errno(_("could not create directory for '%s'"),
->> -			    zip_path.buf);
->> -		goto diagnose_cleanup;
-> 
-> Just spotting this now, but we had ad error, but we "goto
-> diagnose_cleanup", but that will use our "res = 0" above.
-> 
-> Is this untested already or in this series (didn't go back to look). But
-> maybe a moot point, the post-image replacement uses die()..
+Jeff King <peff@peff.net> writes:
 
-Nice catch - this does appear to be a pre-existing bug in 'scalar diagnose'.
-Given that both 'git diagnose' and 'git bugreport --diagnose' handle this
-case more appropriately, though, I agree that it's a bit of a moot point and
-not worth the churn created by a bugfix patch.
+> Here's the test addition you mentioned, though I'm really not sure it's
+> adding much. The source lines for both the bug/fix and the spot where we
+> segfault should be identical between the two cases. It's really just
+> about how we ended up calling into the code.
 
-> 
->> -	}
->> +	setup_enlistment_directory(argc, argv, usage, options, &diagnostics_root);
->> +	strbuf_addstr(&diagnostics_root, "/.scalarDiagnostics");
->>  
->> -	res = create_diagnostics_archive(&zip_path, 1);
->> +	if (run_git("diagnose", "--all", "-s", "%Y%m%d_%H%M%S",
->> +		    "-o", diagnostics_root.buf, NULL) < 0)
->> +		res = -1;
-> 
-> The code handling here seems really odd, issues:
-> 
->  * This *can* return -1, if start_command() fails, but that's by far the
->    rarer case, usually it would be 0 or >0 (only <0 if we can't start
->    the command at all).
-> 
->  * You should not be returning -1 from cmd_*() in general (we have
->    outstanding issues with it, but those should be fixed). It will yield
->    an exit code of 255 (but it's not portable)).
-> 
->  * If you're going to return -1 at all, why override <0 with -1, just
->    "res = run_git(...)" instead?
+True, but the "non-existing index file" case is rare enough that it
+would be worth to document the new way to get into the state, I
+would think.
 
-Thanks for the info, I'll replace the hardcoded '-1' return value with
-something derived from 'res' in the next version.
+I am offline every other Tuesday and today is such a day,
+so please expect no changes to the public repositories.
 
-> 
-> I think all-in-all this should be:
-> 
-> 	res = run_git(...);
-> 
-> Then:
-> 
->>  
->> -diagnose_cleanup:
->> -	strbuf_release(&zip_path);
->> +	strbuf_release(&diagnostics_root);
->>  	return res;
-> 
-> 	return res < 0 ? -res : res;
-> 
-> Or whatever.
+Thanks.
 
+>  t/t7063-status-untracked-cache.sh | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+> index c1f0d95036..a0e8920ffa 100755
+> --- a/t/t7063-status-untracked-cache.sh
+> +++ b/t/t7063-status-untracked-cache.sh
+> @@ -990,4 +990,9 @@ test_expect_success 'empty repo (no index) and core.untrackedCache' '
+>  	git -C emptyrepo -c core.untrackedCache=true write-tree
+>  '
+>  
+> +test_expect_success 'empty worktree and core.untrackedCache' '
+> +	git worktree add --no-checkout empty-worktree &&
+> +	git -c core.untrackedCache=true gc
+> +'
+> +
+>  test_done
