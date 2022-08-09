@@ -2,211 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11A95C19F2D
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 09:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2E9CC19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 09:45:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235132AbiHIJgf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 05:36:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
+        id S238261AbiHIJpd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 05:45:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235449AbiHIJgc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 05:36:32 -0400
+        with ESMTP id S235758AbiHIJp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 05:45:26 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC45B22BE6
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 02:36:30 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78C5C264E
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 02:45:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660037778;
-        bh=f7kxjVjfkgBiZ+tokbDEQUZqsOW1cg6kfmnavgBNOJ0=;
+        s=badeba3b8450; t=1660038318;
+        bh=KH6UcrYIw3LsCH42/V23dtUb9yzoPxi79BdYuE2qh0M=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RJQ9F0BPtpG7gD6UfnoYIVtuHIS/63mTzG496oDfLSH1Gp1umtQwOiyI+dSXG7LuN
-         tnana5Ehx42g9z/6il4vuv8Y1kEVioLDogWcD+iMLutyNhOdMUFNWVDv2bmgN6ZDmy
-         YzD/62hjLtq0Nrs5ET9jQ8uHS34jFV40CY7+Z18M=
+        b=eHYnaAs9rKYtrBB0YSTEBs9RFunv8Q3tYsgT6bMhIgu4fkGwDn2PmN2g9SQKCWXUW
+         wVUNkRvAWs/q0KK5J61hT8y80bHqxlLmQMeGnADLM4KQD5OVk4WqrWv2K3o6rHr92f
+         viO1VJ5jwmEQWfRVrU78rU054o2UkN+arvTOAigo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.31.241.252] ([89.1.214.151]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N95eJ-1nIMyb2Eml-0169Zx; Tue, 09
- Aug 2022 11:36:18 +0200
-Date:   Tue, 9 Aug 2022 11:36:16 +0200 (CEST)
+Received: from [172.31.241.252] ([89.1.214.151]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3UV8-1oKnpk1Rly-000gMF; Tue, 09
+ Aug 2022 11:45:18 +0200
+Date:   Tue, 9 Aug 2022 11:45:16 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     Matheus Tavares <matheus.bernardino@usp.br>
-cc:     git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
-        christian.couder@gmail.com, avarab@gmail.com
-Subject: Re: [PATCH v2] t/t0021: convert the rot13-filter.pl script to C
-In-Reply-To: <CAHd-oW6LZay=MX2FdFjgTh1pjE=g-XTm63mGWuMhHd=-N=tXRA@mail.gmail.com>
-Message-ID: <q7o86qo0-9618-p26p-q6q1-8n461qsqpq75@tzk.qr>
-References: <cover.1658518769.git.matheus.bernardino@usp.br> <f38f722de7c3323207eda5ea632b5acd3765c285.1658675222.git.matheus.bernardino@usp.br> <4n20476q-6ssr-osp8-q5o3-p8ns726q4pn3@tzk.qr>
- <CAHd-oW6LZay=MX2FdFjgTh1pjE=g-XTm63mGWuMhHd=-N=tXRA@mail.gmail.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v3 2/3] t0021: implementation the rot13-filter.pl script
+ in C
+In-Reply-To: <CAHd-oW6GLf=4VxAvMy6c9jrGx1zcSHbe_NKbAUg7wvNBPOmEXw@mail.gmail.com>
+Message-ID: <psr5o1r8-ro70-24q1-7o01-8571n1802s18@tzk.qr>
+References: <cover.1659291025.git.matheus.bernardino@usp.br> <86e6baba460f4d0fce353d1fb6a0e18b57ecadaa.1659291025.git.matheus.bernardino@usp.br> <220801.86les8i495.gmgdl@evledraar.gmail.com>
+ <CAHd-oW6GLf=4VxAvMy6c9jrGx1zcSHbe_NKbAUg7wvNBPOmEXw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:3nEJh9v39wu+4GmmAYni35Jyjqr8SfJP3Vp+PL09ntwpQplPtte
- e+iq53lHUh6IKMVGxsg5p5bbl1Q6/b3TQ0fdmg1IktUSJHtrI0ShV9Uix9xNMc7GwbVfI1E
- 5fa6T8vVBfkGXraGNNbH6tBFsaj+wvDnd0F/gpizuKZkUMTtBpFqNH88EoQDaGnAogDMB7w
- V9wpkECg6z/SD/N2XLhBA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:CX6/uO2cLmM=:BWKtQRoVTGY0e4y7ctl3R3
- eMuX7/uzfrnXXSlkfmDxTSN4oFv1Pxg+hwcvLQ10Gd7bF4sunuJqk7t+T7p7cjYcvOEmbFBKV
- f5Kl93M5u80FpClUkYqtqhEPZ07lYZfT8vg6PJ3t7qsE3R19/m4WPFZWpgB0M7X/WEarraAda
- pZfxAPtQHPlZ9vWn7JT0JJ9sr3fNR25jNb0Bv1SDRxfggJ9WWI1SoTl65I7irWY5CEExiQaVH
- uiTY90BzRkF0UdQeYBhQFjJ+EbeYFLujaLt5K+c8MRSDdkru9E+RlluDYI0GuVpyyAVZhNpDn
- kyAws0Cc/Cgg+1QkXBmOaLudHQMnXyYgj6PLgTXE9IdYmL2yi/0z09iyiPaouX2g+5XGn6rwQ
- AdOPCWCaee1ZgF1Agek5tGlEsANZROp7EWQkXBh5eN3uFRNyetL3l5bnOBd0oImkCQPnhuVsR
- mn53Rsbww6AjNS7KcVXWN+l4+O6x+Z/6FM9r3R5bAhoQCgTxlDibeldbuqfxPhqcbYVFplmt3
- PVM1BuH00s9Foqde/lCbeiASrkeBtxDgx2MFla2ocHiEvICeLYWrk8nEhnSp7tg+9mnPyfsiO
- KBDgacHpsJjjE1kQSd7RRVlfgA5kAInchG3wpYLj8LxQ7V3XsbdgiV8tNKnL4zHRy+b6ywfFu
- 1kBUxHoXsEeF+nPFo5Np9lprHuS/fRapAqQ5cc2R8+jblTo7xl+iLpU2J2ZK+SSvAjcwRGyRs
- fNgapn6bMpGKZDGNywO2bh2bsocR04/92GDipZRRgZhp7H4s7EDXM29LmpYY2NbRHXm42Mezz
- 84WnzxznbecczK8vtr2Sw9hr3iY7Z2MMSHK/k9xehyd0bLD9aQI/ZkQcuAW0B4DlI2pSgwQ2e
- nxWHfALehFDrhy60R+VN1qqBjPkdm7bwtfFGSaxD49PV3UAttKaP/Ida0Oj/8rEX2/CIrT5ac
- dL2karqvsjybKWouUJTYw681zV/XRhU9CtxlO49yRzU/KovJTnkWXs1r2dHoqOx4uLe6bEZgN
- idzlzhN9WRAkvNHPbRiJObnMXxdMJ9kNmu3APnwCX3ERzb17nmtoPSvp8GP2r923immq4cqON
- tjAJFnyKUSxeUlvpgS/qE7rZPl0TeyWbKLRKvzb4YfrBVZtAFegwpab3Q==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; BOUNDARY="8323328-1179140416-1660038090=:206"
+Content-ID: <r57218or-o046-0p7s-2por-67172r8or8nn@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:FKbzlbcCu8HZasTgf9n64x4xpY6wLCrMMOT4oWH0WRvoLiR/FoZ
+ KUhzyH81YF++P7xAz+t5ZgkW17twoLQp5reC8QzBfdbXKqFTDhP1MMknJniqM1esIdo1ZDL
+ jwygdfS7+ilaxJ0Jj8X/aDzm8JVlKia0hJidEhOp86IjXQ9kwsTwISZQhk9d4lZ/lOpwcQE
+ 1wsjPyRaHxbmPIWVsSNdQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+ypcGbheKaM=:PHOYDze/PbvlvNxLocFb8R
+ xeyVVDt+rrkrYO6hyQqC/gpD9emvQXiKqwsxb0bMfZRRDaB2S6Ogua6cVb791oqx7VLQp0zBj
+ 7WkmvgwAb5/5Up0haJIj5AGbHPIy3RUZzDMJMwuyJVlw0XUzsx8u3B0ERlTELIrq7cGTvrRY7
+ jSG+0OGiBb2vgzksdKbFigD1QdHtzOUV7+wrBK5DcVtk91VF3th/YbqJIi79N4PGK/nRexavR
+ 0dTaZRB8vFoZVsAluoxDWOQ943HFdZAun5LAS7XdolfgUphKqBkWG/GWhwMsS7NrUSuxgsge2
+ cP7pGHjWX5lZ99RyO2m/08174QI9cx871Zluw39oMpACXbWxZNAjzzXSZIyDVx9nBdjr8bX7I
+ y3tOhW6EfUXPKs8B8H5H823GcHbEl9ksrW/4H57SjNpIg+mgRJLsF3FgJ9ZZLwG+AhR9rc5oC
+ xcL0hzLnSpt6q/R26VxQPvZ9PiN53DXNvL0qkEs2QCNYlcBgt7HVDtQbsWxaBheEwX5IvGY0x
+ zIuti9GelbUOnCnIGV4XKrxQYhWIzhQkYu5IORBcj+WIDplv8cIwmGEdIm0CfrdyZs/1tdfoF
+ r0NyYySuIWZotdL/WqRwU380waBEru/12c/xHEBbnTihFKg99Ba67hWzopG1WC0WLGHg4JMEV
+ JmIK/O53XaLpSTecCfbvRDYIWl7XsD+rJG615zbwhOMARC4N/V8XjWLz+02dZCXJqRF5uR7PP
+ b4JjYILm3EEgh8xFk63vUUO/wm1zeG239TOjmzsDeN3PMgyBpfbnw83TzVZw2SjVBZ1WpnGNt
+ 1PSEdTcxrCv7X7+I3JA6RWaRH+k8o9WALH8k1rbuK5ajrT+B2VgI90lgDgdDm64hqtd1tYZ9T
+ VLTgAFfZNyDmODqAtyFfRQnQHUpgkNBqNUPqJwQyCrwHijTFPmvgSF/53/kHCNldwZWs8QfiS
+ AK62muJaSFl/+YF4PaOkRBuhGPaZ5rSUYsnq1vUMD7Wvw1o/0c0Iz+9dgslaBffzJGLoY3NFv
+ FnioStbWzkUDkIeRuiRGKu+iPPDfa25gK6YO/N/OgaFulVB+j+pLKgK0vDKlC9I3baHISOQFd
+ g0fjn1sd/yTZ15LbPolxpFRZg2z8+2Bk5uUONAEIDm83/UPunu0giJiqA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1179140416-1660038090=:206
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: <8p6q1o2r-rr4n-4621-n486-9r42o0q1sn96@tvgsbejvaqbjf.bet>
+
 Hi Matheus,
 
-On Sat, 30 Jul 2022, Matheus Tavares wrote:
+On Mon, 1 Aug 2022, Matheus Tavares wrote:
 
-> On Thu, Jul 28, 2022 at 1:58 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+> On Mon, Aug 1, 2022 at 8:37 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
+varab@gmail.com> wrote:
 > >
-> > > On Sun, 24 Jul 2022, Matheus Tavares wrote:
+> > On Sun, Jul 31 2022, Matheus Tavares wrote:
 > > >
-> > > +static void command_loop(void)
-> > > +{
-> > > +     while (1) {
-> > > +             char *command =3D packet_key_val_read("command");
-> > > +             if (!command) {
-> > > +                     fprintf(logfile, "STOP\n");
-> > > +                     break;
-> > > +             }
-> > > +             fprintf(logfile, "IN: %s", command);
+> > > +
+> > > +     for (i =3D 0; i < cap_count; i++) {
+> > > +             if (!strcmp(caps[i], "clean"))
+> > > +                     has_clean_cap =3D 1;
+> > > +             else if (!strcmp(caps[i], "smudge"))
+> > > +                     has_smudge_cap =3D 1;
 > >
-> > We will also need to `fflush(logfile)` here, to imitate the Perl scrip=
-t's
-> > behavior more precisely.
+> > In any case, maybe BUG() in an "else" here with "unknown capability"?
 >
-> I was somewhat intrigued as to why the flushes were needed in the Perl
-> script. But reading [1] and [2], now, it seems to have been an
-> oversight.
->
-> That is, Eric suggested splictily flushing stdout because it is a
-> pipe, but the author ended up erroneously disabling autoflush for
-> stdout too, so that's why we needed the flushes there. They later
-> acknowledged that and said that they would re-enabled it (see [2]),
-> but it seems to have been forgotten. So I think we can safely drop the
-> flush calls.
->
-> [1]: http://public-inbox.org/git/20160723072721.GA20875%40starla/
-> [2]: https://lore.kernel.org/git/7F1F1A0E-8FC3-4FBD-81AA-37786DE0EF50@gm=
-ail.com/
+> Yup, will do.
 
-I am somewhat weary of introducing a change of behavior while
-reimplementing a Perl script in C at the same time, but in this instance I
-think that the benefit of _not_ touching the `pkt-line.c` code is a
-convincing reason to do so.
+Please don't, the suggestion is unsound.
 
-> > > +
-> > > +             if (!strcmp(command, "list_available_blobs")) {
-> > > +                     struct hashmap_iter iter;
-> > > +                     struct strmap_entry *ent;
-> > > +                     struct string_list_item *str_item;
-> > > +                     struct string_list paths =3D STRING_LIST_INIT_=
-NODUP;
-> > > +
-> > > +                     /* flush */
-> > > +                     if (packet_read_line(0, NULL))
-> > > +                             die("bad list_available_blobs end");
-> > > +
-> > > +                     strmap_for_each_entry(&delay, &iter, ent) {
-> > > +                             struct delay_entry *delay_entry =3D en=
-t->value;
-> > > +                             if (!delay_entry->requested)
-> > > +                                     continue;
-> > > +                             delay_entry->count--;
-> > > +                             if (!strcmp(ent->key, "invalid-delay.a=
-")) {
-> > > +                                     /* Send Git a pathname that wa=
-s not delayed earlier */
-> > > +                                     packet_write_fmt(1, "pathname=
-=3Dunfiltered");
-> > > +                             }
-> > > +                             if (!strcmp(ent->key, "missing-delay.a=
-")) {
-> > > +                                     /* Do not signal Git that this=
- file is available */
-> > > +                             } else if (!delay_entry->count) {
-> > > +                                     string_list_insert(&paths, ent=
-->key);
-> > > +                                     packet_write_fmt(1, "pathname=
-=3D%s", ent->key);
-> > > +                             }
-> > > +                     }
-> > > +
-> > > +                     /* Print paths in sorted order. */
-> >
-> > The Perl script does not order them specifically. Do we really have to=
- do
-> > that here?
->
-> It actually prints them in sorted order:
->
->         foreach my $pathname ( sort keys %DELAY )
+The idea here is to find out whether the command-line listed the "clean"
+and/or the "smudge" capabilities, ignoring all others for the moment.
 
-Whoops, sorry for missing that!
-
-> > > +                             fprintf(logfile, " [OK]\n");
-> > > +
-> > > +                             packet_flush(1);
-> > > +                             strbuf_release(&sb);
-> > > +                     }
-> > > +                     free(pathname);
-> > > +                     strbuf_release(&input);
-> > > +             }
-> > > +             free(command);
-> > > +     }
-> > > +}
-> > > [...]
-> > > +static void packet_initialize(const char *name, int version)
-> > > +{
-> > > +     struct strbuf sb =3D STRBUF_INIT;
-> > > +     int size;
-> > > +     char *pkt_buf =3D packet_read_line(0, &size);
-> > > +
-> > > +     strbuf_addf(&sb, "%s-client", name);
-> > > +     if (!pkt_buf || strncmp(pkt_buf, sb.buf, size))
-> >
-> > We do not need the flexibility of the Perl package, where `name` is a
-> > parameter. We can hard-code `git-filter-client` here. I.e. something l=
-ike
-> > this:
-> >
-> >         if (!pkt_buf || size !=3D 17 ||
-> >             strncmp(pkt_buf, "git-filter-client", 17))
->
-> Good idea! Thanks. Perhaps, can't we do:
->
->         if (!pkt_buf || strncmp(pkt_buf, "git-filter-client", size))
->
-> to avoid the hard-coded and possibly error-prone 17?
-
-I am afraid that this is not idempotent. If `pkt_buf` is "git" and `size`
-is 3, then the suggested `strncmp()` would return 0, but we would want it
-to be non-zero.
-
-The best way to avoid the hard-coded 17 would be to introduce a local
-constant and use `strlen()` on it (which modern compilers would evaluate
-already at compile time).
-
-> > > +             die("bad initialize: '%s'", xstrndup(pkt_buf, size));
-> > > +
-> > > +     strbuf_reset(&sb);
-> > > +     strbuf_addf(&sb, "version=3D%d", version);
->
-> Thanks for a very detailed review and great suggestions!
-
-Thank you for your contribution that is very much relevant to my
-interests!
+To error out here with a BUG() would most likely break the invocation
+in t0021 where we also pass the `delay` capability.
 
 Ciao,
 Dscho
+
+--8323328-1179140416-1660038090=:206--
