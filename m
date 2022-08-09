@@ -2,103 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E63A5C19F2D
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 11:24:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCC26C19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 12:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235573AbiHILYt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 07:24:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49460 "EHLO
+        id S235682AbiHIMEG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 08:04:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231308AbiHILYr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 07:24:47 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F76A1EC65
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 04:24:46 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id b133so10506853pfb.6
-        for <git@vger.kernel.org>; Tue, 09 Aug 2022 04:24:46 -0700 (PDT)
+        with ESMTP id S236564AbiHIMEE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 08:04:04 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52729248D7
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 05:04:03 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id k26so21820768ejx.5
+        for <git@vger.kernel.org>; Tue, 09 Aug 2022 05:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=5dA7/a1VOSEEcqOFgc/fb7QYGLEt+qhD/57o1h2Jq40=;
-        b=i77x+QhE+5Bv3Qu3V7y5Tkdlm3NEbt5FEyAOaUXSQSrqktlwLkR1XD6g4TFASMM+D5
-         4iR81RUP0TTPG0Uh1DXCJrTJ5YrmAyagcUsGMybfInPXlNJnI/15INOwEL2d4sfRHYVV
-         pAc6J/rw3406KdXBZDjDr79LEXfg6XbgicF5EDjzi21UvfjxZqtDMizH0WRuzmoVvWju
-         CgEhhQRJuq0cLKHoa+k/HGkoVIVTrpcOuB8Ou1a76zhR51v4Z/8H/N3Ho+TDS12Z6GcL
-         Z21pKTa2O3s1gw/T/5XNOd7Ux68qXurfm0+o/znsK7uZtPJvLadRS2vjoktvWdfpGFVt
-         jcaw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=zCrGxyBzBEUg9wWg0SnFa9WovpJA3yA1gacT/lDmHQ8=;
+        b=RHpMUqCrCjMmjJ+Osl3hIaniUTzVknsSU2XMC9iD6QiXKZ3gwYiKGJ9aWyiQlyTcKk
+         O1rIJSNg74Oj6hfFFSaiOsoB3szF1HjrWqnUuaeA/kE6AEco7dGPReiA1FJeePffAstS
+         iid3+WTCAi8I+EYBv09DVZwvx2SReuG/yGor4pQkjioP4Bb1OgniKu2LkYqTL2Z7x68T
+         0eubkQYcL1KnseNyhWUBJUKUTWigrxYrkeINjHQdRGU5n/EiPc3NniCexstDruB6W7wR
+         l+AE1o237gsXbuAF3rEIcx3/klIcE+2z2ooejGIUwp18iu2EB1qfnB65srmzjBmtTIj/
+         ccNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=5dA7/a1VOSEEcqOFgc/fb7QYGLEt+qhD/57o1h2Jq40=;
-        b=uLuG+Jtw8wniq3HejO/cQbGVPfXb8eCEINy00NHFwZZACJPZ3j8ANajrY9xbIwDT5D
-         t3RDvRxevkErlcALKAiSFS7ftRxS3r43z/Yju1gkdQ5v3vHh8O99n1d+gW5tsM9hi+80
-         KZMGhMOLKp37N3ar2skr2RFdAGGPgZfwvJ+s1t8UPyTd1odz4U2zlYOEtbQNMnuyGJli
-         CMfAhNH90/ZWVqtS32P526Qh34xGcNqC/lH2nde4zhTuyTtj7k0L1eKORdV7aUdVGC5r
-         qUecPe70WOoSGVOuLDXGLFQ4xKGJPt6AjyFbn2w1PQUbGYZ/Y9tvTlHfqGVIfkck6/0R
-         +1RA==
-X-Gm-Message-State: ACgBeo144QnOULgf+VFmQyT34ySabiOHK4T5m3h6ghJc7PKLg/mxqCZz
-        GQwHHe91KxpIyHPEQ1IuMQtCn1XRwoiO9Q==
-X-Google-Smtp-Source: AA6agR5XrkIwpI2EysadpIsE/fAku3twDwGdVHmzjdc1Wxs9uC4mJGoHIBnYjNjQvYVJoZ1a+V8RnQ==
-X-Received: by 2002:a63:907:0:b0:41c:cb97:6969 with SMTP id 7-20020a630907000000b0041ccb976969mr19216626pgj.194.1660044286175;
-        Tue, 09 Aug 2022 04:24:46 -0700 (PDT)
-Received: from [127.0.0.1] ([45.138.210.17])
-        by smtp.gmail.com with ESMTPSA id x10-20020a17090a6b4a00b001f6c86e6ff0sm6936287pjl.36.2022.08.09.04.24.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Aug 2022 04:24:45 -0700 (PDT)
-Message-ID: <3c4ee06e-1145-8efc-ddb9-eeaed81079f5@gmail.com>
-Date:   Tue, 9 Aug 2022 19:24:40 +0800
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=zCrGxyBzBEUg9wWg0SnFa9WovpJA3yA1gacT/lDmHQ8=;
+        b=J1y0tf7sZC7jSOvY3lEZhV6F9T0pRi6SmjGfMeNNNpRZiYjkI+X4Ew0mCduvR1GECX
+         JvB+qv0yMttMSEb02D5j7Cfy+FPdnRR7hOY8Egk3Fu016YvSzR6jg9Lg8Ma2uctJc5uA
+         bT4pIjdYpnIm7wkx7wySOFeZdx65qqKviPa6NjnF05aJAFREzRc2DC9AaUMmxo3CUSps
+         x2sVvwdOYcQ66lmGWw776D5eD2K0CUHsTvsr+uUG2j8By/6hppk/vllpp7WOzDfLHeuT
+         i8WGZVQHnGHZHfVkjFtzM7+ORnXrU59QFBCVy/xidXqS9mu1zYfCdcX+vZpXtjC7uOJq
+         JPbA==
+X-Gm-Message-State: ACgBeo13yq9opruExFFu3Yv4ASgCOb5hzXv9tBJYnyCSawDA+4wBG4jn
+        68it+9OzufGPLeJg37nm3HWkSHpLjpjT1z61N9s=
+X-Google-Smtp-Source: AA6agR5VqKMqsiDNwjIKkPwd3FRziBiNPnMcuWVcUG9VEY7IqgwV54BUPQFLV7yLxkPZb0fb2U3kBw4wXEgIIeSVQxo=
+X-Received: by 2002:a17:906:dc92:b0:731:5a2f:6542 with SMTP id
+ cs18-20020a170906dc9200b007315a2f6542mr7194170ejc.441.1660046641793; Tue, 09
+ Aug 2022 05:04:01 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 1/9] t7002: add tests for moving from in-cone to
- out-of-cone
-Content-Language: en-US
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-To:     Victoria Dye <vdye@github.com>, git@vger.kernel.org
-Cc:     derrickstolee@github.com
-References: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
- <20220805030528.1535376-1-shaoxuan.yuan02@gmail.com>
- <20220805030528.1535376-2-shaoxuan.yuan02@gmail.com>
- <bd80881d-b2a3-c220-8f2d-a07a46e14207@github.com>
- <651d89e2-5282-2cf8-ffc3-8650a023c80a@gmail.com>
-In-Reply-To: <651d89e2-5282-2cf8-ffc3-8650a023c80a@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <pull.1266.v4.git.1658325913.gitgitgadget@gmail.com>
+ <pull.1266.v5.git.1658342304.gitgitgadget@gmail.com> <59b465e5a7817c145172f25e73ad807c7ba67e84.1658342304.git.gitgitgadget@gmail.com>
+ <p3r70610-8n52-s8q0-n641-onp4ps01330n@tzk.qr> <CAPOJW5xBUaAJtOvrefwbXv_WDTLa=6PTL5kEoOpRQfqqFAx3oA@mail.gmail.com>
+ <6s4n3600-q5p7-92sr-4206-non3s8rr3n46@tzk.qr> <CAPOJW5yUi471cfAXuXaM4BCzVsfZ15J1Era4NuEpxEnmY6md9Q@mail.gmail.com>
+ <p69r38sn-1ppn-q66q-9089-59394pq78772@tzk.qr> <CAPOJW5zYndyqwyN8xOcRQnwebqXciY-25hNL3fU=V5ac8fCpNA@mail.gmail.com>
+ <s714sq49-o13q-5417-0o21-6397s3646q9o@tzk.qr>
+In-Reply-To: <s714sq49-o13q-5417-0o21-6397s3646q9o@tzk.qr>
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Date:   Tue, 9 Aug 2022 17:33:50 +0530
+Message-ID: <CAPOJW5yNQvO3quG91jjC9pT-+NNhJta+H_E2R9-1wUzR+rPXnw@mail.gmail.com>
+Subject: Re: [PATCH v5 3/6] pack-bitmap-write: learn pack.writeBitmapLookupTable
+ and add tests
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/9/2022 10:55 AM, Shaoxuan Yuan wrote:
- >> 2. Move a (clean or dirty) in-cone source directory to an out-of-cone
- >>     destination where one or more files in <src> overwrite files in 
-<dst>.
- >>     For example, something like:
- >>
- >>     echo test >sub/dir/file1 &&
- >>     git add sub/dir/file1 &&
- >>     git mv --sparse sub/dir folder1
- >>
- >>     I don't have a strong opinion on the behavior (does it fail the 
-whole
- >>     'mv' operation? move everything except the files that overwrite
- >>     something?), but it would help to have it documented via test here.
- > OK. I think it will fail the whole `mv` operation. The program will 
-report unspecified
- > overwrite during the early checking phase. The actual "moving" phase 
-won't be touched
- > at all because Git complains early.
+On Tue, Aug 9, 2022 at 2:33 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Abhradeep,
+>
+> On Mon, 8 Aug 2022, Abhradeep Chakraborty wrote:
+>
+> > On Mon, Aug 8, 2022 at 6:36 PM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > On Tue, 2 Aug 2022, Abhradeep Chakraborty wrote:
+> > >
+> > > > On Tue, Aug 2, 2022 at 9:05 PM Johannes Schindelin
+> > > > <Johannes.Schindelin@gmx.de> wrote:
+> > > >
+> > > > > Since you are very familiar with the details of bitmaps now, I would
+> > > > > like to encourage you to work on some kind of validator/inspector,
+> > > > > e.g. something along the lines of a `test-tool midx-bitmap dump` (and
+> > > > > later `... verify`) that would help future you (and future me)
+> > > > > investigate similar breakages. Ideally, that tool will not only parse
+> > > > > the `.bitmap` file but immediately print out everything in a
+> > > > > human-readable form.
+> > >
+> > > Have you made progress on this? I am interested mostly because I am trying
+> > > very hard to maintain passing CI runs of Git for Windows' `shears/seen`
+> > > branch (which essentially tries to rebase all of Git for Windows' patches
+> > > on top of `seen`), and this failure is consistently causing said CI runs
+> > > to fail for a while already.
+> >
+> > Hey Dscho, I am trying hard to solve the issue but unfortunately I
+> > haven't found the key yet.
+>
+> The tool I proposed could potentially help, in particular with
+> distributing the burden of the investigation on more shoulders than just
+> yours.
 
-No, actually this example does not fail anything. Because
-"sub/dir/file1" after the move will be "folder1/dir/file1", and this
-move does not involve overwrite at all.
+Yeah, it should. I thought that I would do that after fixing the bug.
+Now I think I was wrong.
 
-I'm still adding a test case that precisely reflects the main idea
-here, though. Thanks for the suggestion :)
+> > I investigated the bitmap code-base and used debug lines but didn't
+> > find a way to fix it.
+>
+> Have you investigated whether the `.bitmap` file was produced for the
+> latest set of pack files? It should be relatively quick to investigate
+> that, and if it turns out not to be the case, the fix should be quick,
+> too.
 
---
-Thanks,
-Shaoxuan
+Frankly speaking, I doubt that the generated multi-pack-index file is
+faulty. The first reason is the `.bitmap` filename. As you said before
+(and as I noticed here), `.bitmap` filenames in failing case and in
+passing case are different. As far as I know the hash value in the
+filename depends on the content of its respective midx file. So, if
+the midx contents were the same in both cases, `.bitmap` filename
+should not differ.
 
+I compared both the multi-pack-index files (i.e. passing case and
+failing case) using `cmp ./trash\
+directory.t5326-multi-pack-bitmaps/.git/objects/pack/multi-pack-index
+../tmp/trash\ directory.t5326-multi-pack-bitmaps/.git/objects/pack/multi-pack-index`
+and found that these both defers -
+
+    differ: char 3124, line 10
+
+I also checked whether the `packing_data->in_pack_by_idx` contained
+all the packs. For this I wrote a debug error message in
+`prepare_in_pack_by_idx()[1]` function and found that `packing_data`
+is using the latest packs.
+
+ I noticed in the 'setup partial bitmaps' test case that if we comment
+out the line `git repack &&` , it runs successfully.
+
+    test_expect_success 'setup partial bitmaps' '
+        test_commit packed &&
+        # git repack &&
+        test_commit loose &&
+        git multi-pack-index write --bitmap 2>err &&
+        ...
+    '
