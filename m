@@ -2,166 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77A89C25B08
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 22:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D12BDC19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 22:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229867AbiHIWCO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 18:02:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44240 "EHLO
+        id S229894AbiHIWNp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 18:13:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229525AbiHIWBk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 18:01:40 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EB282DE6
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 15:01:38 -0700 (PDT)
+        with ESMTP id S229947AbiHIWNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 18:13:16 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB76C41D1A
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 15:10:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660082490;
-        bh=qu/I8zrGjZDqHWsOHhW93OtVqPkY3pzpOKm8jqq2Jcs=;
+        s=badeba3b8450; t=1660083007;
+        bh=I68Xcv4cs8pCurdIUzuIMUXf7Mk2OK7pgLazYIQ087g=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ELwAgkOzOUJ9EJF49H4hDFGfTn09UOIFGqYKfhFm9LtpV8RFj3cskSmKg77bvds7E
-         Q+iaEZiUTZygXO/5LOZOGzNpPR7EskqyOQl3HP9LrF5i6rt9jOQUgPF9770Xaspnil
-         U8ANkleDIInY+n1AVXmnqWWVsBqz612GNMIc68LM=
+        b=XKvM59T/h8kl4fFIU5FePBRUwTPGW1tevm4pNh4W6mWmMbkCPp0QRQRN1x+3ghxwX
+         CyY04ky7CB7zgVM8DVWKSpTbdmhRdgMHZR+KaWuTQ+oQe0521DaFv4w8VMMo//3Bje
+         ieZ64wm4QetPA2xQxcu02yOWXUjHNdiWCzW3IYis=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.31.241.252] ([89.1.214.151]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MWAOQ-1nsKVk18xO-00XgSM; Wed, 10
- Aug 2022 00:01:30 +0200
-Date:   Wed, 10 Aug 2022 00:01:30 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZCfJ-1nqxjj3aKX-00V5R1; Wed, 10
+ Aug 2022 00:10:06 +0200
+Date:   Wed, 10 Aug 2022 00:10:07 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Alban Gruin <alban.gruin@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v8 07/14] merge-one-file: rewrite in C
-In-Reply-To: <20220809185429.20098-8-alban.gruin@gmail.com>
-Message-ID: <2r992r19-or36-733r-1139-4575n9o6o23s@tzk.qr>
-References: <20210317204939.17890-1-alban.gruin@gmail.com> <20220809185429.20098-1-alban.gruin@gmail.com> <20220809185429.20098-8-alban.gruin@gmail.com>
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] pipe_command(): mark stdin descriptor as
+ non-blocking
+In-Reply-To: <YvJbXJyaKz5QPYdz@coredump.intra.peff.net>
+Message-ID: <4o5p308o-9r66-2853-qon0-r1464p2o83qn@tzk.qr>
+References: <YuikU//9OrdpKQcE@coredump.intra.peff.net> <YulFTSTbVaTwuQtt@coredump.intra.peff.net> <xmqq5yjahb8u.fsf@gitster.g> <YunxHOa2sJeEpJxd@coredump.intra.peff.net> <q341oso8-1ps6-65n6-s394-n8q433q79nr2@tzk.qr>
+ <YvJbXJyaKz5QPYdz@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:SDrqZJa+hNdLFZsYLbrZsoeC/NdRdKncMt01kYQogfCYZjaYmRx
- WJyIFpXTfc+IXh0cma0LfUTyXYeXfrbMQiB+PXKCZpZ+sobhtTcOoPmkmMt6sv82EXPiitk
- vw1Pw5MTT0mc01x+pl83Ny93Ra7197ZfpqT36zcX7OtnrH+AmbuF89YXT7Qh1QtUislB0Rr
- q7w2acEueoIADa+gV9S3g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Mkz0KT3mgx0=:S3YxDtyzsB62VTV/Ml64pI
- jIUKG8VK8s4itV+8qkEbNifW1Som1e4B802i0IFpBCQIVVT2vARHb9hTxPEa3D3IZTwDCy1Qh
- ElYSUD+7+g6l8t9nv/yN2SaHwMSSoDWA+u3UZ+06FTw0Xs9HthJmAIOGsCi5LccOkEtkppmSp
- 0keS8EWZUXS7oU5FVJQqWBOj6SXeQH2re2SpRvOaJLAyQgfZK3flR5d9CW0VAlS0JlZaFd01z
- GpOVKIn538nj/0JO8Idj9vmorUYyycp7YaWOv6OGmsSzsPxTgApELRa5j0fT0cNCAw0BOGgxE
- 4WcI9q1Xx+kUCn41LwoToacchmIgXWG/7QL2QIX+3YwivQ+UEYg5fKhvRVR7RgtJ/y/+gDZdM
- yG74NoZVqHop2NtpCIi4kL5GKucY7xjJZrbvdoKlyaaFSNu81cyRjBfCECz1B4IcUeJprInFQ
- YMOfRYauEu+UvVsR1VtuSgzVqWnU4M5HB791mfNLBdo6BjQZvLEEWPNrKJLa+HQNwUjz4bbwn
- n4bT/Pv+l3AE8vnxy24svqz/PSdwPFSyK9z24Ti2mRZHcoHlIoz/nQ8pL79TBai2tp21870S+
- mUqBkgbjf642OVNcbz8vP2UxUGX3z2vULZKEvlc97Z3JiXl16tHMFum/Lf9gmUl3jBhlelJAV
- f/0Y7HpXEfdaa/wYDgaUCHCEShAJwMYcso/XXcC6bXDW0dUz9ydR9lXETdVbdJOdDyF/AarXd
- wPUx4GnZZRqROql46SHpH5qxMWg03krHINo6L0N3TBg8iscxvhbwOyeCAcq6BmRK6IAQsclHl
- xg+WVsiqYqqlry41+g+GlSHcUCVaJFE6LrIE/SFUvNlNpxkzwIecGG/4G0e6PLP5+s/DOiRPI
- wlYgLUvzxDGqaw55vp2LKVFlFHWjohxd+QO3dcuVCdNtMOi+1zmyVmoWKrCpJkZbWCKWhfgY7
- pQExgb0cy+3FQWrjtHcMi+f1KCl1lHOLBYlprY9QmN5UKwncgkV4QTLx+8I9afahVb2gwZ6Ki
- 0yhxRAY3xBKklkSSmCzZTPwGhX6pI3ctfk9Rqxx+KuFIiF0Z3uB2CcjNxMKp2sugfBcBaooOA
- C2F7KX/JweZEj/lWB3yeyu3is1QGyHhB68iGXP7YIGa5g+RJ/+BUnzsCw==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-990681964-1660083009=:206"
+X-Provags-ID: V03:K1:8OQSLgFx7RazHwmFQQ4k2QOjWEp9B0YA4mpyFhB4rDsuHqht3dC
+ Wk7nOT2YpmIStlwOFlUhBbqQkxMKYjIcEhf2+ySK7oB6d6eNNNziKJTq63Jwt1FnJFYIToq
+ 36SwpTy9FLLfYZF84D0FSKrFTXIfGNdiOWC68k0NOQQ/DKR6cvRuM5qXA/6LaOUdrpTf1km
+ UEd0AfCOST8cF03CoPNHw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:yl6fQ4xGELk=:NF+lqxPgmtFXAqy7ihh+OW
+ 2d93LKnAkdoGnugI9+K7MMbl1vEf9BZzXy0t8HSUkFewSss3CIFi1oBWBqdir4txt/njDLAxY
+ sivRiOrvCzUfM5fuAEkh4N3JXWInhVjSQ+rGiuPJRi3tlbMGTr8kV/PwFX9ITaAC0uqHEIQJe
+ VZBjdJgD1rH7dPc1Dq4q07zJrOROb2suvYKgO7InCFwc43dDjX+/WC5sXmefp7W7NdtDAoPO6
+ /bl/2BxjziKrW2uTif5EUpeo5ZhomUZwDmYmQ0mJD37kTe86qfk45e6bOsPah28BBDUx5QvVN
+ VXgchvh1HjPlnePezed9EaPH9FLbVlwHikbxPbkEupgmB8tFveZW6wvb3QggJ0y4taf09mWTh
+ LJCUN5yB6zbnZ3g2PLsnHIcMRUKNt2lQWUtcr1dKLTJUTmcV4o+ll4uiMuvDgmnrR2PDdR5Yl
+ evGaVSYSaJG6t/1t+QwROIKOTyg9aVGb74bYfemTxa/dtjWUJVEoxBCqtK5jUDw229tAzluRC
+ iUKnoT8IBGWbn038zamuidYKtCWz7AKL986FFn9vUgVVUzAxn7kgy+RztFQ283wKSXfG9DtE0
+ jSkccutKIrLJ/INUZbdTl+KYXHAB9O2ViuGdK7utfPXrTcH2no6RQCdhzbY9ztINTAegpAgcZ
+ S1aLwPq1WA1mJbqHK9Ix0jYbVnyMndvaV0yxmOMgO389jxPXCY7/hB5PAYZrmATutKuBNSFhv
+ SGzFH8IBXTf2e0Zvpz3lB2H6qxxC0asGFgvTBPNDO5ojqmPMN4dV03itOy/LD9c2eW1K6yuX+
+ sPzLKS46712a6aqoQsZxFcNfmFmA6+c+RnRsAq5lwdMeef3nYmlKrwoNZhDPY6zrJ5aqF7Gvw
+ 0DoM+N7fH+sWA+Mma9NoCFCXfxC+RYB+hrgs+q5hwZI298KwTwXBfzbfD0cz/uQGuKAspYm5v
+ 15A1zaunXwK46fmFF1A+TOt+DWz6UhjgXT0RdQQcEMyIyBcLwjfCOButlFqfWApNfGHWbGeXg
+ 7TmEfbi2NWN6XKX0A9LmYN3PIyk6tTeZSC7t6aQ0XQOgDmcf4YwhGDq7l2DFb7axTRR3N7F3b
+ lFYHU5FLX7UPVKycRG4yhj8TnalGUKb6wuML35wO8jcH6jHWKS2MHGC3w==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-what an incredible amount of careful work. Thank you for doing this.
+--8323328-990681964-1660083009=:206
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-A few minor comments:
+Hi Peff,
 
-On Tue, 9 Aug 2022, Alban Gruin wrote:
+On Tue, 9 Aug 2022, Jeff King wrote:
 
-> diff --git a/builtin/merge-one-file.c b/builtin/merge-one-file.c
-> new file mode 100644
-> index 0000000000..ec718cc1c9
-> --- /dev/null
-> +++ b/builtin/merge-one-file.c
-> @@ -0,0 +1,92 @@
-> +/*
-> + * Builtin "git merge-one-file"
-> + *
-> + * Copyright (c) 2020 Alban Gruin
-
-There have been claims that it is still March 2020 (see e.g.
-https://ismarchoveryet.com/), but I believe that those are jokes and that
-we're really in the year 2022 now. It should be safe to adjust the text
-accordingly.
-
-:-)
-
-> [...]
-> +int merge_three_way(struct index_state *istate,
-> +		    const struct object_id *orig_blob,
-> +		    const struct object_id *our_blob,
-> +		    const struct object_id *their_blob, const char *path,
-> +		    unsigned int orig_mode, unsigned int our_mode, unsigned int their=
-_mode)
-> +{
-> [...]
-> +}
-> +
-> +int merge_one_file_func(struct index_state *istate,
-> +			const struct object_id *orig_blob,
-> +			const struct object_id *our_blob,
-> +			const struct object_id *their_blob, const char *path,
-> +			unsigned int orig_mode, unsigned int our_mode, unsigned int their_mo=
-de,
-> +			void *data)
-> +{
-> +	return merge_three_way(istate,
-> +			       orig_blob, our_blob, their_blob, path,
-> +			       orig_mode, our_mode, their_mode);
-> +}
-
-I have only read the patch series until this point (and plan on continuing
-with the remaining patches tomorrow), so I might be wrong, but... is there
-any other user of `merge_three_way()` left? If not (and I suspect this is
-the case), then the `merge_three_way()` code could be moved into
-`merge_one_file_func()`.
-
-> [...]
-> diff --git a/t/t6060-merge-index.sh b/t/t6060-merge-index.sh
-> index 3845a9d3cc..9976996c80 100755
-> --- a/t/t6060-merge-index.sh
-> +++ b/t/t6060-merge-index.sh
-> @@ -70,7 +70,7 @@ test_expect_success 'merge-one-file fails without a wo=
-rk tree' '
->  	(cd bare.git &&
->  	 GIT_INDEX_FILE=3D$PWD/merge.index &&
->  	 export GIT_INDEX_FILE &&
-> -	 test_must_fail git merge-index git-merge-one-file -a
-> +	 test_must_fail git merge-index --use=3Dmerge-one-file -a
-
-This hunk probably wanted to live in [PATCH v8 05/14] merge-index: add a
-new way to invoke `git-merge-one-file', but as I pointed out in my reply
-to that patch: I do not think that we have to introduce that `--use=3D<...=
->`
-option at all.
-
->  	)
->  '
+> On Mon, Aug 08, 2022 at 02:59:49PM +0200, Johannes Schindelin wrote:
 >
-> diff --git a/t/t6415-merge-dir-to-symlink.sh b/t/t6415-merge-dir-to-syml=
-ink.sh
-> index 2655e295f5..10bc5eb8c4 100755
-> --- a/t/t6415-merge-dir-to-symlink.sh
-> +++ b/t/t6415-merge-dir-to-symlink.sh
-> @@ -99,7 +99,7 @@ test_expect_success SYMLINKS 'a/b was resolved as syml=
-ink' '
->  	test -h a/b
->  '
->
-> -test_expect_failure 'do not lose untracked in merge (resolve)' '
-> +test_expect_success 'do not lose untracked in merge (resolve)' '
+> > On Tue, 2 Aug 2022, Jeff King wrote:
+> >
+> > > diff --git a/run-command.c b/run-command.c
+> > > index 14f17830f5..ed99503b22 100644
+> > > --- a/run-command.c
+> > > +++ b/run-command.c
+> > > @@ -1438,6 +1439,15 @@ int pipe_command(struct child_process *cmd,
+> > >  		return -1;
+> > >
+> > >  	if (in) {
+> > > +		if (enable_nonblock(cmd->in) < 0) {
+> > > +			error_errno("unable to make pipe non-blocking");
+> >
+> > It might be a bit heavy-handed to error out in this case, as it usuall=
+y
+> > does not cause problems. At least that's what the fact suggests to me =
+that
+> > I personally never encountered the dead-lock myself, and neither do I
+> > recall anybody piping more than two megabytes through `git checkout -p=
+`.
 
-Very, very nice.
+Ugh, I think that my reasoning was flawed, as I somehow based it on the
+assumption that `enable_nonblock()` would return -1 on platforms without
+O_NONBLOCK. Even if I had read that you fall back to returning 0 on those
+platforms.
 
-Thank you!
+And only when reading your reply did it occur to me that this was a thinko
+on my part.
+
+So I would like to retract my assessment that it is heavy-handed to error
+out in this case. It would have been if we had errored out on platforms
+without O_NONBLOCK support, but we don't.
+
+Sorry for the noise,
 Dscho
 
->  	git reset --hard &&
->  	git checkout baseline^0 &&
->  	>a/b/c/e &&
-> --
-> 2.37.1.412.gcfdce49ffd
 >
+> That thought crossed my mind, as well, but I'm hesitant to leave a known
+> bug in place that can cause a deadlock. It would be one thing if we
+> could muddle through without nonblock in a slower way, but I don't think
+> we can easily detect this situation after the fact.
 >
+> So maybe some options are:
+>
+>   - don't bother with O_NONBLOCK unless the size of the input is over N
+>     bytes. The trouble there is that it's not clear what N should be.
+>     It's fcntl(F_GETPIPE_SZ) on Linux, but that's not portable. We could
+>     possibly come up with a conservative value if we had a ballpark for
+>     pipe size on Windows. It feels a bit hacky, though.
+>
+>   - we could actually guess at a deadlock by putting a timeout on the
+>     poll(). That would also catch hanging or slow filter processes. I
+>     really hate putting clock-based limits on things, though, as it
+>     means the tool behaves differently under load. And keep in mind this
+>     is deep in the pipe_command() code. It happens to only trigger for
+>     diff filters now, but it may be used in other spots (in fact it
+>     already is, and it's only the size of current gpg payloads/responses
+>     that means it doesn't happen to trigger).
+>
+> Stepping back, though, I think we should consider why we'd see an error
+> here. I wouldn't expect it to ever fail on a system where O_NONBLOCK was
+> supported. If we want to make it a silent noop on some platforms, then
+> we can stick that into the enable_nonblock() function (which is what I
+> did, but as Ren=C3=A9 showed, that is probably not a good enough solutio=
+n).
+>
+> -Peff
+>
+
+--8323328-990681964-1660083009=:206--
