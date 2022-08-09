@@ -2,88 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A96D0C19F2D
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 13:20:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2B07C19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 13:22:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239116AbiHINUY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 09:20:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37840 "EHLO
+        id S243509AbiHINWs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 09:22:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229653AbiHINUX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 09:20:23 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 717C6C25
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 06:20:22 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id d187so2763876iof.4
-        for <git@vger.kernel.org>; Tue, 09 Aug 2022 06:20:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=56iHPScA7d4QFUiF/1ug+Fb86mh++At8fs6u83HNICA=;
-        b=XLJy4XFD/Nz8lWUsiUEI3Gtr0+RCTHd8CrQEsCVxPIf4+czXFpWfY21NPnrB5n0fz/
-         r8bNt5GoYxBqQNnkaEcPrZmSe+FRTztnzmjEXTo3EmHKMhV1E5FpAFqitssDo4gflOIF
-         Q2nMLKwm9aLeehZeRObr8BJA1ItkmMaigDocNfP7FVuuJgmOGhvob9FVRIL28C5/JBaq
-         5aQQ2emDbfWDHevd8j29pinEOclU1hvU0kZwjL80kZXb7+vRvN/M6S9nC2R+4gMn9WIZ
-         gw21CVIrLUFHei0KeVDHo/7uhJXswy/W8ef509WBYuanU2Wx9C8mBlh0bZI6eVLznyP3
-         IbfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=56iHPScA7d4QFUiF/1ug+Fb86mh++At8fs6u83HNICA=;
-        b=NJY0SmAhnolWQmLiWRf95HBO+YLPIYS4ij3I/GU98GmXLennfItd5Z3xMkpSm4ytv+
-         QQPBvqpmK1k35GqIUk3XzX06vt+RxZdVLIhe48ANz8H5bS2/RMiKGD/ecYVWvj83mxxC
-         0505T0nJFz0M5lOIpZtXh5VvUhMFmNSai2pDOJFLJvZ4l6JWn0NdfJx/OEeA5pfTt09r
-         5JuxhE8aEui/z/PHcWvZ/eYyGIBuWWoF4439GhqeBzk41FiR8H3qiWSMM+0Xqrbxg+Nv
-         zZPG1UBh8lKS0HUOvtzmX6sjAkhErXUY+YOGKiD2+gb+CNTqywsxmCcSm7VAgJZB4YwM
-         tKGQ==
-X-Gm-Message-State: ACgBeo1B/CEuZxVhLrIJR/A7mujBGUcHeCj3vtWuSbaHJ3ETUaWfyLjl
-        9SVSdvb9U58JcIZix8WHsEGmYPslUMWo
-X-Google-Smtp-Source: AA6agR4MQ8yZnFS7Xznq9VxCEbL1PEF7/AuLdPguC2nTS7Hk5QFBXvwWJPrujXbf8sGIhjECxWpmLQ==
-X-Received: by 2002:a05:6602:1587:b0:67c:b28:6e90 with SMTP id e7-20020a056602158700b0067c0b286e90mr9453844iow.16.1660051221834;
-        Tue, 09 Aug 2022 06:20:21 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:14e1:3e6e:802:8594? ([2600:1700:e72:80a0:14e1:3e6e:802:8594])
-        by smtp.gmail.com with ESMTPSA id w19-20020a02b0d3000000b0033c98e45659sm6309876jah.119.2022.08.09.06.20.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Aug 2022 06:20:21 -0700 (PDT)
-Message-ID: <ca575fc0-f9ee-9b32-f12b-75c83dd3b031@github.com>
-Date:   Tue, 9 Aug 2022 09:20:19 -0400
+        with ESMTP id S243505AbiHINWq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 09:22:46 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBD911900D
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 06:22:45 -0700 (PDT)
+Received: (qmail 30814 invoked by uid 109); 9 Aug 2022 13:22:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 09 Aug 2022 13:22:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2202 invoked by uid 111); 9 Aug 2022 13:22:44 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 09 Aug 2022 09:22:44 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 9 Aug 2022 09:22:44 -0400
+From:   Jeff King <peff@peff.net>
+To:     Li Linchao via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Li Linchao <lilinchao@oschina.cn>
+Subject: Re: [PATCH v2] rev-list: support human-readable output for
+ `--disk-usage`
+Message-ID: <YvJfpNSKMIPqVQmD@coredump.intra.peff.net>
+References: <pull.1313.git.1659686097163.gitgitgadget@gmail.com>
+ <pull.1313.v2.git.1659947722132.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v3 0/4] reset/checkout: fix miscellaneous sparse index
- bugs
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, shaoxuan.yuan02@gmail.com, newren@gmail.com,
-        Victoria Dye <vdye@github.com>
-References: <pull.1312.v2.git.1659841030.gitgitgadget@gmail.com>
- <pull.1312.v3.git.1659985672.gitgitgadget@gmail.com>
- <xmqq1qtqsadz.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqq1qtqsadz.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <pull.1313.v2.git.1659947722132.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/8/2022 5:17 PM, Junio C Hamano wrote:
-> "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> Changes since V2
->> ================
->>
->>  * Adjusted 'reset hard with removed sparse dir' test in
->>    't1092-sparse-checkout-compatibility.sh' to avoid 'git rm' log message
->>    conflicts with [1]
-> 
-> The topic looks quite ready for 'next'.
+On Mon, Aug 08, 2022 at 08:35:21AM +0000, Li Linchao via GitGitGadget wrote:
 
-I agree. Thank you!
+> The '--disk-usage' option for git-rev-list was introduced in 16950f8384
+> (rev-list: add --disk-usage option for calculating disk usage, 2021-02-09).
+> This is very useful for people inspect their git repo's objects usage
+> infomation, but the resulting number is quit hard for a human to read.
+> 
+> Teach git rev-list to output a human readable result when using
+> '--disk-usage'.
 
--Stolee
+OK. When adding --disk-usage, I never really dreamed people would use it
+for human output, since "du .git" is usually a suitable approximation. :)
+But I don't have any real objection. I'm curious what your use case is
+like, if you don't mind sharing. We used it at GitHub for computing
+per-fork sizes for analysis, etc (so the result was always fed into
+another script).
+
+>  Documentation/rev-list-options.txt |  5 +++-
+>  builtin/rev-list.c                 | 42 ++++++++++++++++++++++++------
+>  t/t6115-rev-list-du.sh             | 22 ++++++++++++++++
+>  3 files changed, 60 insertions(+), 9 deletions(-)
+
+The patch itself looks pretty sensible (and thanks Ævar for the first
+round of review; the suggestions there all looked good). A few small
+comments:
+
+> @@ -481,8 +485,13 @@ static int try_bitmap_disk_usage(struct rev_info *revs,
+>  	if (!bitmap_git)
+>  		return -1;
+>  
+> -	printf("%"PRIuMAX"\n",
+> -	       (uintmax_t)get_disk_usage_from_bitmap(bitmap_git, revs));
+> +	size_from_bitmap = get_disk_usage_from_bitmap(bitmap_git, revs);
+> +	if (human_readable)
+> +		strbuf_humanise_bytes(&disk_buf, size_from_bitmap);
+> +	else
+> +		strbuf_addf(&disk_buf, "%"PRIuMAX"", (uintmax_t)size_from_bitmap);
+> +	puts(disk_buf.buf);
+> +	strbuf_release(&disk_buf);
+
+It's not a lot of duplicated lines, but since it is implementing policy
+logic, I think it would be nice to move the formatting decision into a
+function. Something like:
+
+  static void show_disk_usage(off_t size)
+  {
+	struct strbuf sb = STRBUF_INIT;
+	if (human_readable)
+		strbuf_humanise_bytes(&sb, size);
+	else
+		strbuf_addf(&sb, "%"PRIuMAX, (uintmax_t)size_from_bitmap);
+	puts(sb.buf);
+	strbuf_release(&sb);
+  }
+
+and then you can call it from here, and from the non-bitmap path below.
+
+(Also, while typing it out, I noticed that you don't need the extra ""
+after PRIuMAX; that just concatenates an empty string).
+
+> -		if (!strcmp(arg, "--disk-usage")) {
+> -			show_disk_usage = 1;
+> -			info.flags |= REV_LIST_QUIET;
+> -			continue;
+> +		if (skip_prefix(arg, "--disk-usage", &arg)) {
+> +			if (*arg == '=') {
+> +				if (!strcmp(++arg, "human")) {
+> +					human_readable = 1;
+> +					show_disk_usage = 1;
+> +					info.flags |= REV_LIST_QUIET;
+> +					continue;
+> +				} else
+> +					die(_("invalid value for '%s': '%s', try --disk-usage=human"), "--disk-usage", arg);
+> +			} else {
+> +				show_disk_usage = 1;
+> +				info.flags |= REV_LIST_QUIET;
+> +				continue;
+> +			}
+>  		}
+
+We can put the common parts of each side of the conditional into the
+outer block to avoid repeating ourselves. Also, your code matches
+--show-disk-usage-without-an-equals, since it nows uses skip_prefix().
+You could fix that by checking for '\0' in *arg. So together, something
+like:
+
+  if (skip_prefix(arg, "--disk-usage", &arg)) {
+	if (*arg == '=') {
+		if (!strcmp(++arg, "human"))
+			human_readable = 1;
+		else
+			die(...);
+	} else if (*arg) {
+		/*
+		 * Arguably should goto a label to continue chain of ifs?
+		 * Doesn't matter unless we try to add --disk-usage-foo
+		 * afterwards
+		 */
+		usage(rev_list_usage);
+	}
+	show_disk_usage = 1;
+	info.flags |= REV_LIST_QUIET;
+	continue;
+  }
+
+-Peff
