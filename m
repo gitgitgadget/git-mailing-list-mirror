@@ -2,96 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4540C19F2D
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 07:53:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5391DC25B07
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 08:42:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239722AbiHIHxz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 03:53:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40800 "EHLO
+        id S240982AbiHIImp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 04:42:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229654AbiHIHxw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 03:53:52 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8475D21250
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 00:53:51 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id e8-20020a17090a280800b001f2fef7886eso11429671pjd.3
-        for <git@vger.kernel.org>; Tue, 09 Aug 2022 00:53:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=WZ1RUsyzwgrfjwA+zjkW4KUgObaa8Vs7OvxkDNZZLzo=;
-        b=Mab8huQCLWEFEId7n3ZKkU+I0tYlr7Qg76HXl58q0KjfW9KmJPEd3dQU9xSOeKSnL5
-         +G+LX1SJGpFRdzpN0vNryPVSoEPZoxnylR51fZyysFfD6Bgh+qNCdQxdcJb6B+Q91Ut0
-         y1xhWAvCVtZNvdNOV8XE/APrSqn4zlMIZe1qoTnGzvF5zRrGUFWjaCGkaOHqxO5ZQINH
-         5OB3WWpZCi/8rZGGb0KeODAF9vtKSEgzQqZN5L7ufv0Rqn5OqmTUC7RKh+/6x4G4Kkkl
-         jLDr+OsJdxpBSegPyzgZT1+FFjzLi18rGq2+sJpVzImJ1v38wGkHE3T2J1ks2bxVNcRL
-         xEpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=WZ1RUsyzwgrfjwA+zjkW4KUgObaa8Vs7OvxkDNZZLzo=;
-        b=6e1pgePoKE16bhvEiQGnYMgG/VZmxX3ekl3UECHHOFxqirCv5oD+ljyFfbx3rNMNju
-         sb5FZghYCzvTfBtSb1UElhRsHsgf17UqHchhQZm6wD5W6e5oLDVFr7DcK+/CAV+iCw+Q
-         11B55KuMfTdr950WiNRcwIuAzHhHPh7vWq1FADEZ85N/TLT8iOPzywhEnlgAz6F9qXKd
-         tdsQsFV5IqIau24BCe/RyJCUn5Z0S86eooR9VbRvbeA6rcE0HIAHGGNEevv/7vHxrnLw
-         m8kN00vk5Jo2X8qJcudmCI7uqXAnfzEJ5xW6M2MQCGTePNpR98Ed+qBmKmnvy0MFFzKh
-         vg5A==
-X-Gm-Message-State: ACgBeo0pkvM4bxBTcuFQ8chQEyU8TnIZ/t9CoFLhdudgnHnmHZAaqVvl
-        Dxhgro7VHCOMoUg3keQZy6WZ6IaCTIF+yA==
-X-Google-Smtp-Source: AA6agR73Tjy9HLb86aLqUP6Ix1EA4LJdo+ND4zTMnL/NjOET89jcn3sL8zQz7LTiQYwRgE7y0kJSqw==
-X-Received: by 2002:a17:902:d487:b0:171:2818:6415 with SMTP id c7-20020a170902d48700b0017128186415mr926478plg.21.1660031630996;
-        Tue, 09 Aug 2022 00:53:50 -0700 (PDT)
-Received: from [127.0.0.1] ([45.138.210.17])
-        by smtp.gmail.com with ESMTPSA id a10-20020a1709027d8a00b00170a757a191sm4016117plm.9.2022.08.09.00.53.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Aug 2022 00:53:50 -0700 (PDT)
-Message-ID: <399f56dd-b3a7-9510-a45c-9b10a52dea09@gmail.com>
-Date:   Tue, 9 Aug 2022 15:53:45 +0800
+        with ESMTP id S230519AbiHIImo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 04:42:44 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8BD821E3B
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 01:42:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1660034556;
+        bh=ftokLaLvWJIKnDOm6B0rBev27O4QcBQui75UGkwp45A=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=TOae9fb2AkwnncjUM3wql3My0E56N2lktDjJqXgUoCXd5lgZJJxEJYYtLYIrYE49i
+         +3Tg3OlG9B4AyLG1S9T8UakjIXaSovpbhVU1eC38dcl0zsAe0NG65VZhQRO6a8/qKq
+         VYCr2z9Rlwp6pLwM3o0zCA/3gGQhUrazEoBVfcBQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.31.241.252] ([89.1.214.151]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MEUzA-1o9nPy2eF8-00G2SP; Tue, 09
+ Aug 2022 10:42:36 +0200
+Date:   Tue, 9 Aug 2022 10:42:35 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] tests: fix incorrect --write-junit-xml code
+In-Reply-To: <xmqqv8r2smvr.fsf@gitster.g>
+Message-ID: <3qn5r283-3232-4s58-8q9s-n67o407nr816@tzk.qr>
+References: <pull.1288.git.1657789234416.gitgitgadget@gmail.com> <xmqq35f38yeb.fsf@gitster.g> <s4s2qr56-2948-p025-rrq7-qq56p9oo844r@tzk.qr> <xmqqv8r2smvr.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v2 1/9] t7002: add tests for moving from in-cone to
- out-of-cone
-Content-Language: en-US
-To:     Victoria Dye <vdye@github.com>, git@vger.kernel.org
-Cc:     derrickstolee@github.com
-References: <20220719132809.409247-1-shaoxuan.yuan02@gmail.com>
- <20220805030528.1535376-1-shaoxuan.yuan02@gmail.com>
- <20220805030528.1535376-2-shaoxuan.yuan02@gmail.com>
- <bd80881d-b2a3-c220-8f2d-a07a46e14207@github.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-In-Reply-To: <bd80881d-b2a3-c220-8f2d-a07a46e14207@github.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:zjBKMtXIoBAklCrPDE5DiUzedO7malGnwzg2jrMQkjqfnWQ55OG
+ /iVMLtCb2DuXfyNL/s3p2vtFwmboASyyeqIvN/UkgMbcrVL7AL9WGyvNsK3wyIDPCWMlIZj
+ +tf3cjk7yZ8lhkeViuzUIdZjP7wWa0JfDlR7/9ZSZCk3Rqi/m6ZW58yEZMPKnAE2xwqkwXs
+ SRMvYP5p+OcLs9sEzFT0Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:izPkZsufocI=:k9Fkc5tVmTgoZvyOhCbKVW
+ JZATvdhKfztlCV1dq59kgLsZyQ2nQTgG//SKik77w56wjsRv8Ha0P1HK5It6gjtzPDNgDgR8i
+ MGYla9eveUHvvvOrHIJXAc1K6S5OVCm21gLDfSqH9+YDyCCHKWNkUJX8g1C7oFIxkz7cAiGcB
+ ANXfN/AIPxjUl4QEc3RWs7duI04QodqOewgVjxfb8dJN91tBm4iAouI2Tra6V7fKfJpBVT4DF
+ ejMt80MfSoSXY5Srs5sH5t/7p15UNS+Jxt59dRI9WDnweVuaqAICxwW7wN9WX5w12QRrSUTRa
+ OvKZFYiu/AbokkzWX4YaCob2y60AWwQS556FeUJpy/MOtrhTdQXaFH9ISV3oQWRp9beqt7OnZ
+ mB20ejRRJudWO6y05fzm7po0rc14Te9VsT1twytOFvG1VWYTbtsOVfveV3ye6GB8SykZjmU1f
+ 0SLSLkn5NIgvE03hu3eVN8XeQm90lKg1xqHsSxRW0PVQMwZ77561Qdbkj09ubI7kuM+7o933N
+ 2g724bN9iTUd1A5PZFZp3s2FwwmDVKJUyg2APIUFaG83Xg3Wc1gpmbUIVtICH3FZj23CWNMsZ
+ 5Ay73LIPtDdWZOPLiO00rmf1A+S4LZIRQC4UpDocg9lQQN3cYmvbuvVrAxjnSzIXyyuTjiCJX
+ pHhr4sQ+OL8JovC3JzO0WZeyDNSeYyo0dAZKvrdto+WgnsBblZ5oC7XGuJ5IeFQmJ812oaGsR
+ cxl17smnbHI56wJbt5++rI7HQ8J6EZgspyENXx6e6lYNCEcT5n4NytzV/ZCBjiaUQ4P3jak+C
+ b2zd+mF8DIL7l42GKsD91Cvg3TB0Fe64/IyGcLF0uWhYH9dJPZbibip4i0sF7CUeLouCwRn5j
+ TMBPa8TTvXTEIwVl1WHd3kJFKQr2jzK8TlFNQqSYIzfTKiQgdg7RrE/O0QA5imWVQyWAK5w9W
+ JHm18OAxkERauMurZ5NbIXa4dJxdwHVrhufWqsOqS/UOYRVycjFxbmygzN+D10xz1yzNGls/G
+ IujRRrLF9xS6W3e3aMIasZTBFE962UCKZGaFcoCkXoootVzCkfMoGe1jdUahyE7RPmaoBLOvD
+ g9xvmGNSzXaXcvPq/jng/1yy9+iu9fKYuyEk7pZssuEbGlJ8rxLpo1zZQ==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/9/2022 8:51 AM, Victoria Dye wrote:
- > There are two other test cases I'd be interested in seeing:
- >
- > 1. Move a (clean or dirty) in-cone source file to an out-of-cone 
-destination
- >    *file*. For example:
- >
- >     echo test >sub/dir/file1 &&
- >     git add sub/dir/file1 &&
- >     git mv --sparse sub/dir/file1 folder1/file1
- >
- >    I'm assuming this should behave the same way as show in 'move 
-clean path
- >    from in-cone to out-of-cone overwrite'.
+Hi Junio,
 
-It's interesting that this test covers an aspect that was not properly
-considered. When designing in-to-out, I only thought <destination> to
-be a sparse directory, rather than a possible sparse file, which is
-a totally valid argument. Hence, all the logics and mechanisms about
-in-to-out are skipped because Git is completely blind to this file
-<destination>.
+On Mon, 8 Aug 2022, Junio C Hamano wrote:
 
-It seems like an easy fix, but I was completely unaware.
-Thanks for catching this!
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > You asked me in private to provide more reviews for those refactorings=
+ so
+> > that they see some push-back, but I lack the bandwidth for that.
+>
+> I do remember telling you to push back what you do not want to see
+> in 'seen' and advance to 'next'.  If everybody lacks the bandwidth
+> for shooting down bad ideas and only has time to promote their own
+> ideas, which are not guaranteed to be good ones, it does not lead
+> to a good place X-<.
 
+The funny thing is that you're usually simply not picking up patches that
+do not get any reviews, but for these refactorings it is somehow
+different, and I do not understand why it needs to be different.
+
+I do not _want_ to spend time reviewing patch series of dubious benefit.
+And that would hold true even if I could justify spending that time, which
+I can't.
+
+There are so many more contributions that promise a much higher return of
+investment for reviewing them.
+
+Ciao,
+Dscho
