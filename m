@@ -2,105 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2E9CC19F2D
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 09:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2445C19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 10:00:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238261AbiHIJpd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 05:45:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38758 "EHLO
+        id S240297AbiHIKAT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 06:00:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235758AbiHIJp0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 05:45:26 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78C5C264E
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 02:45:25 -0700 (PDT)
+        with ESMTP id S237828AbiHIKAQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 06:00:16 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FFC110D0
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 03:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660038318;
-        bh=KH6UcrYIw3LsCH42/V23dtUb9yzoPxi79BdYuE2qh0M=;
+        s=badeba3b8450; t=1660039204;
+        bh=JRMFkanSBfcl6s+OQkGWIXy4o08lHLbnkSQlIFbHvhA=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=eHYnaAs9rKYtrBB0YSTEBs9RFunv8Q3tYsgT6bMhIgu4fkGwDn2PmN2g9SQKCWXUW
-         wVUNkRvAWs/q0KK5J61hT8y80bHqxlLmQMeGnADLM4KQD5OVk4WqrWv2K3o6rHr92f
-         viO1VJ5jwmEQWfRVrU78rU054o2UkN+arvTOAigo=
+        b=QsDQULWF+Hql9SGK527vGG3fU59QXX+1zeT7cdrLQMVSmIKbohsuxqP7xEQrH/vb1
+         eUR7sI4U0slTZmmWQSg7EakvQ8AxY+IdyVzF1wIGRK2e/Yye6yJ0r3nR2cvQNgBcuK
+         +6M7KLdV0opEKCXZXXl4owSSh46XGYmrm7FzTtyU=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.31.241.252] ([89.1.214.151]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3UV8-1oKnpk1Rly-000gMF; Tue, 09
- Aug 2022 11:45:18 +0200
-Date:   Tue, 9 Aug 2022 11:45:16 +0200 (CEST)
+Received: from [172.31.241.252] ([89.1.214.151]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mlf4c-1ncues34RW-00ihhm; Tue, 09
+ Aug 2022 12:00:04 +0200
+Date:   Tue, 9 Aug 2022 12:00:02 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org, gitster@pobox.com
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
+        avarab@gmail.com
 Subject: Re: [PATCH v3 2/3] t0021: implementation the rot13-filter.pl script
  in C
-In-Reply-To: <CAHd-oW6GLf=4VxAvMy6c9jrGx1zcSHbe_NKbAUg7wvNBPOmEXw@mail.gmail.com>
-Message-ID: <psr5o1r8-ro70-24q1-7o01-8571n1802s18@tzk.qr>
-References: <cover.1659291025.git.matheus.bernardino@usp.br> <86e6baba460f4d0fce353d1fb6a0e18b57ecadaa.1659291025.git.matheus.bernardino@usp.br> <220801.86les8i495.gmgdl@evledraar.gmail.com>
- <CAHd-oW6GLf=4VxAvMy6c9jrGx1zcSHbe_NKbAUg7wvNBPOmEXw@mail.gmail.com>
+In-Reply-To: <xmqqr11zoe6i.fsf@gitster.g>
+Message-ID: <439p713r-32o4-5187-n8nn-r81n3007s4pp@tzk.qr>
+References: <cover.1659291025.git.matheus.bernardino@usp.br> <86e6baba460f4d0fce353d1fb6a0e18b57ecadaa.1659291025.git.matheus.bernardino@usp.br> <xmqqr11zoe6i.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1179140416-1660038090=:206"
-Content-ID: <r57218or-o046-0p7s-2por-67172r8or8nn@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:FKbzlbcCu8HZasTgf9n64x4xpY6wLCrMMOT4oWH0WRvoLiR/FoZ
- KUhzyH81YF++P7xAz+t5ZgkW17twoLQp5reC8QzBfdbXKqFTDhP1MMknJniqM1esIdo1ZDL
- jwygdfS7+ilaxJ0Jj8X/aDzm8JVlKia0hJidEhOp86IjXQ9kwsTwISZQhk9d4lZ/lOpwcQE
- 1wsjPyRaHxbmPIWVsSNdQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:+ypcGbheKaM=:PHOYDze/PbvlvNxLocFb8R
- xeyVVDt+rrkrYO6hyQqC/gpD9emvQXiKqwsxb0bMfZRRDaB2S6Ogua6cVb791oqx7VLQp0zBj
- 7WkmvgwAb5/5Up0haJIj5AGbHPIy3RUZzDMJMwuyJVlw0XUzsx8u3B0ERlTELIrq7cGTvrRY7
- jSG+0OGiBb2vgzksdKbFigD1QdHtzOUV7+wrBK5DcVtk91VF3th/YbqJIi79N4PGK/nRexavR
- 0dTaZRB8vFoZVsAluoxDWOQ943HFdZAun5LAS7XdolfgUphKqBkWG/GWhwMsS7NrUSuxgsge2
- cP7pGHjWX5lZ99RyO2m/08174QI9cx871Zluw39oMpACXbWxZNAjzzXSZIyDVx9nBdjr8bX7I
- y3tOhW6EfUXPKs8B8H5H823GcHbEl9ksrW/4H57SjNpIg+mgRJLsF3FgJ9ZZLwG+AhR9rc5oC
- xcL0hzLnSpt6q/R26VxQPvZ9PiN53DXNvL0qkEs2QCNYlcBgt7HVDtQbsWxaBheEwX5IvGY0x
- zIuti9GelbUOnCnIGV4XKrxQYhWIzhQkYu5IORBcj+WIDplv8cIwmGEdIm0CfrdyZs/1tdfoF
- r0NyYySuIWZotdL/WqRwU380waBEru/12c/xHEBbnTihFKg99Ba67hWzopG1WC0WLGHg4JMEV
- JmIK/O53XaLpSTecCfbvRDYIWl7XsD+rJG615zbwhOMARC4N/V8XjWLz+02dZCXJqRF5uR7PP
- b4JjYILm3EEgh8xFk63vUUO/wm1zeG239TOjmzsDeN3PMgyBpfbnw83TzVZw2SjVBZ1WpnGNt
- 1PSEdTcxrCv7X7+I3JA6RWaRH+k8o9WALH8k1rbuK5ajrT+B2VgI90lgDgdDm64hqtd1tYZ9T
- VLTgAFfZNyDmODqAtyFfRQnQHUpgkNBqNUPqJwQyCrwHijTFPmvgSF/53/kHCNldwZWs8QfiS
- AK62muJaSFl/+YF4PaOkRBuhGPaZ5rSUYsnq1vUMD7Wvw1o/0c0Iz+9dgslaBffzJGLoY3NFv
- FnioStbWzkUDkIeRuiRGKu+iPPDfa25gK6YO/N/OgaFulVB+j+pLKgK0vDKlC9I3baHISOQFd
- g0fjn1sd/yTZ15LbPolxpFRZg2z8+2Bk5uUONAEIDm83/UPunu0giJiqA==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:TXb6HNlgGXleJlXm500uufUB1TEnKXLV6zAHf/3Bk65ERb6LUgN
+ ZaXsQJZBnIb/vlJWo21mebfk6zTrgxe8kHYgu57EYkqPHsGkFSLgtZs+7S+pQheCNTC8MHN
+ v05Lyu+FuJf6VkkEwJpU4pW8cM88p2ahpOtXVzX2iWaxaKN27DoZrenHx8+A0z1At67m4nA
+ F20eVpihji/rJsDFDNBEA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:BFwhB6ZHDUQ=:y2Q9dC8s/DK3Fimskxlkrz
+ 055L2+MPkqrz/6YBtDE8+CcbtjxMIZw7hdNCv/0vA6S6MEJfn4OZ+SreA5Z5VML1Yeu4KDkek
+ QPBCsvVwOUSK6SXXrSOufeTXkJ6HHvylJ8c+H7O+g3geouyMx3xumiC7zRiDOUrXwYBPfyC/5
+ XWASczPdQQbKMqDIb1K0FlegwFSuGBcnCJCzq3t6JsoDnnL6uMe7UY52VzTa0XpFhrrs38T90
+ SpJ44iGEbpnBXciSWSkIqZOtM/8l+SWcNUY+FV3HryDWPk1GFe5eXzrMck9YzxmvOV94LpRAE
+ 1LPEjEIYzo4w0DW9ujdcXzPd2PHgmUJDG89Jy//jnI7kfHT9YWv7iIYQegDhHB9ioQh5ochDA
+ +fvs8YdNeIrPYxFDJnU3rNNespg1swZnFDBtDnagXXwdo6XRptzlqW988V7jl7lWlqdK5Vs0I
+ AYVue2BUWLk8poX53jSPjXsR46ugc/sJfMwYxJF5mJ2f6Bb52/fiUNzQGVGTguxjj6ZcWi4TN
+ j+vx18HIInStRIhCerybn0b5K/hOQyaRu8EiKupF3lwRSBzFExwpvWJm/9jVlCUOXHhA9JHJd
+ n3t5dUt2lwesBpyHLwS/PoKYEKQCPDhcdpwUipt6mecNzV099D+Iy7mPt8tAX38iWvsI313xg
+ IPK0FDJhhjHG98Pi3RtbB6KGpRXK4TWsVqcc7dTnnQwICL4pR2XjmnSX/IiwZM1/mfxp5qgHy
+ 5ljMoo8zvOLTCIA/+EaDyzpu4UJfCcNgNgqMQ1+630OCQGA+btcRE0s2Y0JH0ksot6LKFn2I1
+ YkDa8QFo7/mXmcq0+oCBcQeWvnBbYst9io2S7Kybg0ytWDu1pi5ZzXpNLr+mGxrG7/k8gY2kv
+ ECtvAA5w0U3t1sT6YyLxV7uWVE+3XhIsBHwUXFmtj8qNveiLIJNSlpFXw5gDev81GCBy5Pty7
+ nQMIewWhhW/OKB9F/ER9+H0BUrIVb0VuiHYO9IgXfSof6JUTwTSwB/QAElPVoEAkgCmozP1u3
+ 4vJGZlqf6HoMVvrpePoTTmXT1ppHzd/3K5GZF0N15dvyGyqoIiBvBTW5uoi3bwvJeQgnV4kmz
+ UInKX/YVM9M+ykpA1ylXepdQzI9bRkPdIdUCRY4DcQK1X67TPQvuIa4rA==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-1179140416-1660038090=:206
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Content-ID: <8p6q1o2r-rr4n-4621-n486-9r42o0q1sn96@tvgsbejvaqbjf.bet>
+On Mon, 1 Aug 2022, Junio C Hamano wrote:
 
-Hi Matheus,
-
-On Mon, 1 Aug 2022, Matheus Tavares wrote:
-
-> On Mon, Aug 1, 2022 at 8:37 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
-varab@gmail.com> wrote:
-> >
-> > On Sun, Jul 31 2022, Matheus Tavares wrote:
-> > >
-> > > +
-> > > +     for (i =3D 0; i < cap_count; i++) {
-> > > +             if (!strcmp(caps[i], "clean"))
-> > > +                     has_clean_cap =3D 1;
-> > > +             else if (!strcmp(caps[i], "smudge"))
-> > > +                     has_smudge_cap =3D 1;
-> >
-> > In any case, maybe BUG() in an "else" here with "unknown capability"?
+> Matheus Tavares <matheus.bernardino@usp.br> writes:
 >
-> Yup, will do.
+> > +		/* Read until flush */
+> > +		while ((buf =3D packet_read_line(0, &size))) {
+> > +			if (!strcmp(buf, "can-delay=3D1")) {
+> > +				entry =3D strmap_get(&delay, pathname);
+> > +				if (entry && !entry->requested) {
+> > +					entry->requested =3D 1;
+> > +				} else if (!entry && always_delay) {
+> > +					add_delay_entry(pathname, 1, 1);
+> > +				}
+>
+> These are unnecessary {} around single statement blocks, but let's
+> let it pass in a test helper.
 
-Please don't, the suggestion is unsound.
+I would like to encourage you to think of ways how this project could
+avoid the cost (mental space, reviewer time, back and forth between
+contributor and reviewer) of such trivial code formatting issues.
 
-The idea here is to find out whether the command-line listed the "clean"
-and/or the "smudge" capabilities, ignoring all others for the moment.
+My favored solution would be to adjust the code formatting rules in Git to
+such an extent that it can be completely automated, whether via a
+`clang-format-diff` rule [*1*] or via an adapted `checkpatch` [*2*] or via
+something that is modeled after cURL's `checksrc` script [*3*].
 
-To error out here with a BUG() would most likely break the invocation
-in t0021 where we also pass the `delay` capability.
+It costs us too much time, and is too annoying all around, having to spend
+so many brain cycles on code style (which people like me find much less
+interesting than the actual, functional changes).
+
+I'd much rather focus on the implementation of the rot13 filter and
+potentially how this patch could give rise to even broader enhancements to
+Git's source code that eventually have a user-visible, positive impact.
 
 Ciao,
 Dscho
 
---8323328-1179140416-1660038090=:206--
+Footnote *1*: https://lore.kernel.org/git/YstJl+5BPyR5RWnR@tapette.crustyt=
+oothpaste.net/
+Footnote *2*: https://lore.kernel.org/git/xmqqbktvl0s4.fsf@gitster.g/
+Footnote *3*: https://github.com/curl/curl/blob/master/scripts/checksrc.pl
