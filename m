@@ -2,92 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2854FC25B06
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 19:10:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDEF8C25B06
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 19:12:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345411AbiHITKI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 15:10:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43438 "EHLO
+        id S1345893AbiHITMh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 15:12:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345340AbiHITJO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 15:09:14 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8C6D2C65E
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 11:55:37 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id k6-20020a05600c1c8600b003a54ecc62f6so2461780wms.5
-        for <git@vger.kernel.org>; Tue, 09 Aug 2022 11:55:37 -0700 (PDT)
+        with ESMTP id S1348449AbiHITLw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 15:11:52 -0400
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D94326ACF
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 12:03:45 -0700 (PDT)
+Received: by mail-vs1-xe2f.google.com with SMTP id 129so12876133vsq.8
+        for <git@vger.kernel.org>; Tue, 09 Aug 2022 12:03:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=zLEaoJFNZSQleFo9016QNQHr9BNunzTXAbdw7oqVu+o=;
-        b=pnMi4mDjxH+JbIrYQZOWUOrCd8lCBgTOjWVkBAc6J9WA7wTSj0HUEv8iNCIx29aPaL
-         VsB6yze6FPk+yrY1Ucnxwg7lAWpaM7gsaeBgm/HlHDANLjwLIJgL38d+T51vIajIEc2D
-         hTUo6zBiUlhu9BKvVtoTOUE2TvuAEj2GP3+cC8EZueaoB4bR867eZdEvGvTEAGsx7tXc
-         xDO4hJGGMlxo8gFmLyhNFphBNZcML+udkcMV3PLtUYNU8t2TuB3ncXehgzM4zsqNCd5e
-         d5bHOPn3p9Vx3s5VVMOgXBZ/LH0MteKSXx2lGhmmUV3Vo13gAAXoLv3e7NrUgAc74rWr
-         1M1g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=3bEC8PuuEGRLhLISJdkqkBDWsE998HQjuMInk6uMIm4=;
+        b=bsJCj4QXYLp+z7lmD1R/A33S1Sq+mYP5hhVXiNMZiCToz4kIcuwfse9WsPmJXAv/bB
+         7EH1H6iPFojMZKxBq/WupOs0119cpDS7txXMG9asHzBeChdQ/9++sAIU6k6qxB50J9sR
+         elyxuB8nCHNPxfY2kkGY+NL9AqMNXdr53AoV22Wx5ZQiURPONNWGz+Agm5OHTvMw5bez
+         hf7LfWPGToQ8g+d0mQU4QQJAnYY4XnWHHBqEih3qdQW3+pvpQnkxOg9fKODNeQvgd3c6
+         KK/Jeb+LNIuLvsZhXSaHDJa4olvQZH/Nh+c/UBUBq4OscdnZ1gj2oXXHclZrpDtI8l5W
+         zQkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=zLEaoJFNZSQleFo9016QNQHr9BNunzTXAbdw7oqVu+o=;
-        b=dic5GmwaXhlQvFUzb7nXvyK9TFoNYY/G6qpwRaLcszQbsPsRN4TKg0TxcILO+6FcRX
-         d2HzFvtRKA/EBxjHXxtw3+o0ljZc2uEVmVeF0qhSLxdCAC/IYbSDEeVBjicy81hYzlEl
-         DCi7BLYVAypA0t0m9g5BVshwLnqfdUmixgZmsF/3SV890VPiYcOUSr+Zus2Eh9wHFXoX
-         dyWzClnTRjI9SxJD1qJbST8n0PZJFvrd65FA/dtw4H7226n3t507CeC01o7tKbRUw9Sb
-         HmlG39NQVOHIGpw0gLAByCJPMNIRu9ceCgnJPs/t5JEo84aXMHXijnCC4eK2hHZTOW3T
-         5Idg==
-X-Gm-Message-State: ACgBeo2WURxRGdiJQuPKoItBlsqdbnHhh5dm4OysS6243jCglUPl5FTg
-        C6CbtG4KW/q3hRcKRGshgZIuTwmxNRM=
-X-Google-Smtp-Source: AA6agR4c4dxZTzr+svWwnGngp5M8env20h7XZKvnYbOFDS9S3WzPKFcUTaRHPKjAn8N8Oy7+9k3c5A==
-X-Received: by 2002:a7b:c5c8:0:b0:3a5:415d:20d3 with SMTP id n8-20020a7bc5c8000000b003a5415d20d3mr6641525wmk.97.1660071336298;
-        Tue, 09 Aug 2022 11:55:36 -0700 (PDT)
-Received: from ylate.lan (89-81-181-244.abo.bbox.fr. [89.81.181.244])
-        by smtp.googlemail.com with ESMTPSA id j9-20020a05600c1c0900b003a529b7bc27sm13237414wms.9.2022.08.09.11.55.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Aug 2022 11:55:35 -0700 (PDT)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v8 14/14] sequencer: use the "octopus" strategy without forking
-Date:   Tue,  9 Aug 2022 20:54:29 +0200
-Message-Id: <20220809185429.20098-15-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20220809185429.20098-1-alban.gruin@gmail.com>
-References: <20210317204939.17890-1-alban.gruin@gmail.com>
- <20220809185429.20098-1-alban.gruin@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3bEC8PuuEGRLhLISJdkqkBDWsE998HQjuMInk6uMIm4=;
+        b=nTDo/0hOMqgstLJLHl6Kyis/Daz5y9mclEaSr0zwyCIEcy4CQ5Mr2zHhCRFYBQ+Nvn
+         hlzP+upXGPoZ+FQHybhLMLJd5e/amo/jw0G/9N0zYiitjf2IHMx3xPb/a4DElKVgcBDS
+         FeHTavN5PpnqeFlOlIYcw0nTn7RTsDugwVWph0dDTUsh4B5nss1E99+hjaXQJrDKo9S3
+         pOiRUacHlVCKfuhTQwZSl0em2O0s7wWsmVEprUfMCaY2bNzebL0AEMzj0xYbdEmmS5Np
+         tHuIC6CrG8/bYMLUKbDx3aF2at603ZdxzrH3bguZ0w4qiMdD8F8NiWJIc6LblZK7wTxv
+         kNSQ==
+X-Gm-Message-State: ACgBeo0rPpvaP1CK22J66ATJQIgVG4zRJefO7B3TnCHvD6Jl0Rna7jQu
+        AP340AI3W4+v+y5p4feZN4PPaZgp2ycSkOEUbAtYglzr90Xnvg==
+X-Google-Smtp-Source: AA6agR5tlDS2AkFmpZRRQPRIl2475NEV64+MqYuGx5Ybla4gbf5Of+C5EG25wyDEAeJ4DMObdDO6vZ5Dc0i12HPJyYs=
+X-Received: by 2002:a67:ad09:0:b0:388:8e8c:55f8 with SMTP id
+ t9-20020a67ad09000000b003888e8c55f8mr7743740vsl.43.1660071824285; Tue, 09 Aug
+ 2022 12:03:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
+ <20220809182045.568598-1-calvinwan@google.com>
+In-Reply-To: <20220809182045.568598-1-calvinwan@google.com>
+From:   Alexander Meshcheryakov <alexander.s.m@gmail.com>
+Date:   Tue, 9 Aug 2022 23:03:17 +0400
+Message-ID: <CA+VDVVVQQ4=um_L_h=EQASPHD_oYjwZxecYewLrCAbQV_m4hwQ@mail.gmail.com>
+Subject: Re: [BUG] Unicode filenames handling in `git log --stat`
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This teaches the sequencer to invoke the "octopus" strategy with a
-function call instead of forking.
+Hi Calvin,
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
- sequencer.c | 3 +++
- 1 file changed, 3 insertions(+)
+Sure, let me demonstrate with clean git repo:
 
-diff --git a/sequencer.c b/sequencer.c
-index 0e5e6cbb24..00a3620584 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2319,6 +2319,9 @@ static int do_pick_commit(struct repository *r,
- 		if (!strcmp(opts->strategy, "resolve")) {
- 			repo_read_index(r);
- 			res |= merge_strategies_resolve(r, common, oid_to_hex(&head), remotes);
-+		} else if (!strcmp(opts->strategy, "octopus")) {
-+			repo_read_index(r);
-+			res |= merge_strategies_octopus(r, common, oid_to_hex(&head), remotes);
- 		} else {
- 			res |= try_merge_command(r, opts->strategy,
- 						 opts->xopts_nr, (const char **)opts->xopts,
--- 
-2.37.1.412.gcfdce49ffd
+mkdir git_test; cd git_test
+git init
+touch =D0=9A=D0=B8=D1=97=D0=B2.txt Kyiv.txt =D0=9C=D0=B0=D1=80=D1=96=D1=83=
+=D0=BF=D0=BE=D0=BB=D1=8C.txt Mariupol.txt
+git add -A
+git commit -m 'foobar'
 
+Now let's check with GNU awk `git log --stat` strings width in bytes:
+$ git log --stat | LC_ALL=3DC awk '/txt/{print length($0), $0}'
+27  Kyiv.txt               | 0
+27  Mariupol.txt           | 0
+27  =D0=9A=D0=B8=D1=97=D0=B2.txt           | 0
+27  =D0=9C=D0=B0=D1=80=D1=96=D1=83=D0=BF=D0=BE=D0=BB=D1=8C.txt | 0
+
+And strings width in unicode characters:
+$ git log --stat | LC_ALL=3Den_US.UTF-8 awk '/txt/{print length($0), $0}'
+27  Kyiv.txt               | 0
+27  Mariupol.txt           | 0
+23  =D0=9A=D0=B8=D1=97=D0=B2.txt           | 0
+18  =D0=9C=D0=B0=D1=80=D1=96=D1=83=D0=BF=D0=BE=D0=BB=D1=8C.txt | 0
+
+See, all lines are aligned to have length 27 bytes. But on the screen
+this looks distorted because length in characters differs.
+
+On Tue, 9 Aug 2022 at 22:20, Calvin Wan <calvinwan@google.com> wrote:
+>
+> Hi Alexander,
+>
+> Thank you for the report! I attempted to reproduce with the steps you
+> provided, but was unable to do so. What commands would I have to run
+> on a clean git repository to reproduce this?
+>
+> - Calvin
