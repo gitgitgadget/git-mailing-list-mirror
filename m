@@ -2,105 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C253C19F2D
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 16:17:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65752C19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 16:46:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244278AbiHIQRX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 12:17:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37994 "EHLO
+        id S243739AbiHIQqS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 12:46:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241540AbiHIQRW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 12:17:22 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CC181EC73
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 09:17:21 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id 12so11798146pga.1
-        for <git@vger.kernel.org>; Tue, 09 Aug 2022 09:17:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=xyEc+/wE3U4yRKPAAewxImnd3m+spmDFC1s0cknvKCE=;
-        b=Yd97hilnSIzgi7hfEKK3LzPE4PlTUwuWm4FTE3RhwvGncKQ3KY18CVmVRAMFEextqk
-         RlhcrQkqULGtn3QwBWLui0x3aXfDbpgfh0QirabXxxcgNXCBiEW58nnSBwHoWPJpJIHl
-         gFMUDBGKHxcMEc8152bYBdL+5kwutGrd1mOUQtZjdAjtqH7CgPNz+l9papjP/dlmYwQY
-         xhXkzwWCA41qQCjJj1zWOO/yEYYBNYXsvLfxJyYT6QES3mkLTK4yWhqY9rGeXE35c6pD
-         S9GZKqbZX5Hz5PXUP8fb5D8xV2MEa/wof4WxoQvYybbatSiHffHRF6Vw4yE8EN4wrhyQ
-         KsXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=xyEc+/wE3U4yRKPAAewxImnd3m+spmDFC1s0cknvKCE=;
-        b=qiS59jfu5YPF+0aGldrMjddBb15U7A7KbQuM+ernLgwkm9oUEatamr/WMbSPeO+Qmk
-         s4XYCt4gdjTl/xwp3VpCQZmq3kimLe31qCKbhopFIRpeYor8y3OVB3vi/RQYAYJ26Oo2
-         2LVgCn+mHXvI2QcToKEIz3MMbBa4OyIiYYyjNccBlRJlxQj2uo1f1Jt3a7hSlwd6NuUo
-         QW3FTwHE1IcKDuIyMHVwC4tFTgB2UaNg0UiMtQn+WX7n5p2x2ilWVq4KxKbCQwAcnaHo
-         3OPV/yKhRHayyYYUvyRlsDI33ss0VuO+NFR8yuG/W7TYEcTTHLWOCq7BvDc1IJJ5BrxP
-         nJLg==
-X-Gm-Message-State: ACgBeo3cSeia7F3pMjlSamIQ6UviAaujDbH/k3JscWMlYu3j2gqVg1Mo
-        W58wT5FhZA7fc8zt6BkHVlft
-X-Google-Smtp-Source: AA6agR4W9xbMvXY+PPuzPBoe+YNlFm5/m02rJJCjvI2rWIWkknSflhmTwAQRO4pGRSgTh0GT5Xos1A==
-X-Received: by 2002:a65:6cc8:0:b0:3fe:2b89:cc00 with SMTP id g8-20020a656cc8000000b003fe2b89cc00mr20264586pgw.599.1660061840992;
-        Tue, 09 Aug 2022 09:17:20 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id 142-20020a630294000000b003fdc16f5de2sm8172658pgc.15.2022.08.09.09.17.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Aug 2022 09:17:20 -0700 (PDT)
-Message-ID: <82af0381-ecdc-adf4-1339-ec35c18118a1@github.com>
-Date:   Tue, 9 Aug 2022 09:17:18 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.12.0
-Subject: Re: [PATCH v2 00/10] Generalize 'scalar diagnose' into 'git diagnose'
- and 'git bugreport --diagnose'
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com,
-        johannes.schindelin@gmx.de,
+        with ESMTP id S243719AbiHIQqQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 12:46:16 -0400
+Received: from out28-4.mail.aliyun.com (out28-4.mail.aliyun.com [115.124.28.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37964115D
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 09:46:05 -0700 (PDT)
+X-Alimail-AntiSpam: AC=CONTINUE;BC=0.07345476|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_system_inform|0.0257836-0.0010459-0.973171;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047205;MF=lilinchao@oschina.cn;NM=1;PH=DS;RN=4;RT=4;SR=0;TI=SMTPD_---.OpoBxKa_1660063561;
+Received: from Colin(mailfrom:lilinchao@oschina.cn fp:SMTPD_---.OpoBxKa_1660063561)
+          by smtp.aliyun-inc.com;
+          Wed, 10 Aug 2022 00:46:02 +0800
+Date:   Wed, 10 Aug 2022 00:46:02 +0800
+From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+To:     "Jeff King" <peff@peff.net>,
+        "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
- <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
- <xmqqwnbn6i0v.fsf@gitster.g>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <xmqqwnbn6i0v.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: Re: [PATCH v2] rev-list: support human-readable output for `--disk-usage`
+References: <pull.1313.git.1659686097163.gitgitgadget@gmail.com>, 
+        <pull.1313.v2.git.1659947722132.gitgitgadget@gmail.com>, 
+        <YvJfpNSKMIPqVQmD@coredump.intra.peff.net>
+X-Priority: 3
+X-GUID: 050A15DC-2DD6-46F8-A6AC-07B18F058CA8
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.19.158[cn]
+Mime-Version: 1.0
+Message-ID: <2022081000422739665018@oschina.cn>
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->>  * (Almost) entirely redesigned the UI for generating diagnostics. The new
->>    approach avoids cluttering 'git bugreport' with a mode that doesn't
->>    actually generate a report. Now, there are distinct options for different
->>    use cases: generating extra diagnostics with a bug report ('git bugreport
->>    --diagnose') and generating diagnostics for personal debugging/addition
->>    to an existing bug report ('git diagnose').
-> 
-> An additional command gives us far more design flexibility, and in
-> this case I think it may be worth it.  It has a risk of confusing
-> users between "git bugreport --diag" and "git diagnose --report" a
-> way to send a report with diagnostic information, though.
-
-This is an interesting point and something I think users could plausibly run
-into. I can think of a few of ways to address that:
-
-1. Do nothing, wait for feedback from users.
-2. Create hidden option(s) '--report' and/or '--bugreport' in 'git diagnose'
-   that trigger a warning (or advice?) along the lines of "did you mean 'git
-   bugreport --diagnose'?" and exit with 'usage()'.
-3. Create visible options '--report' and/or '--bugreport' in 'git diagnose'
-   that invoke 'git bugreport --diagnose'.
-
-I'm leaning towards option 2, but I'd also understand not wanting to clutter
-builtins with options it *doesn't* use for the sake of advising a user.
-
-> 
-> 
+Pk9uIE1vbiwgQXVnIDA4LCAyMDIyIGF0IDA4OjM1OjIxQU0gKzAwMDAsIExpIExpbmNoYW8gdmlh
+IEdpdEdpdEdhZGdldCB3cm90ZToKPgo+PiBUaGUgJy0tZGlzay11c2FnZScgb3B0aW9uIGZvciBn
+aXQtcmV2LWxpc3Qgd2FzIGludHJvZHVjZWQgaW4gMTY5NTBmODM4NAo+PiAocmV2LWxpc3Q6IGFk
+ZCAtLWRpc2stdXNhZ2Ugb3B0aW9uIGZvciBjYWxjdWxhdGluZyBkaXNrIHVzYWdlLCAyMDIxLTAy
+LTA5KS4KPj4gVGhpcyBpcyB2ZXJ5IHVzZWZ1bCBmb3IgcGVvcGxlIGluc3BlY3QgdGhlaXIgZ2l0
+IHJlcG8ncyBvYmplY3RzIHVzYWdlCj4+IGluZm9tYXRpb24sIGJ1dCB0aGUgcmVzdWx0aW5nIG51
+bWJlciBpcyBxdWl0IGhhcmQgZm9yIGEgaHVtYW4gdG8gcmVhZC4KPj4KPj4gVGVhY2ggZ2l0IHJl
+di1saXN0IHRvIG91dHB1dCBhIGh1bWFuIHJlYWRhYmxlIHJlc3VsdCB3aGVuIHVzaW5nCj4+ICct
+LWRpc2stdXNhZ2UnLgo+Cj5PSy4gV2hlbiBhZGRpbmcgLS1kaXNrLXVzYWdlLCBJIG5ldmVyIHJl
+YWxseSBkcmVhbWVkIHBlb3BsZSB3b3VsZCB1c2UgaXQKPmZvciBodW1hbiBvdXRwdXQsIHNpbmNl
+ICJkdSAuZ2l0IiBpcyB1c3VhbGx5IGEgc3VpdGFibGUgYXBwcm94aW1hdGlvbi4gOikKPkJ1dCBJ
+IGRvbid0IGhhdmUgYW55IHJlYWwgb2JqZWN0aW9uLiBJJ20gY3VyaW91cyB3aGF0IHlvdXIgdXNl
+IGNhc2UgaXMKPmxpa2UsIGlmIHlvdSBkb24ndCBtaW5kIHNoYXJpbmcuIFdlIHVzZWQgaXQgYXQg
+R2l0SHViIGZvciBjb21wdXRpbmcKPnBlci1mb3JrIHNpemVzIGZvciBhbmFseXNpcywgZXRjIChz
+byB0aGUgcmVzdWx0IHdhcyBhbHdheXMgZmVkIGludG8KPmFub3RoZXIgc2NyaXB0KS4KU29tZXRp
+bWVzLCBJIG5lZWQgb2JqZWN0cyBkaXNrIHNpemUgZm9ywqBhbmFseXNpcyB0b28sIGJ1dCBJIGRv
+IHRoaXMgYnkgaGFuZApub3TCoGJ5IHNjcmlwdC4gQW5kIEkgYWxzbyBub3RpY2VkIHRoYXQgZ2l0
+LWNvdW50LW9iamVjdHMgaGFzIGFuIG9wdGlvbiAnLUgnCmZvcsKgYmV0dGVyIG91dHB1dCwgc28g
+SSB0aGluayBpZiBpdCBjb3VsZCBiZSBhcHBsaWVkIHRvICJnaXQtcmV2LWxpc3QgLS1kaXNrLXVz
+YWdlIi4KPgo+PsKgIERvY3VtZW50YXRpb24vcmV2LWxpc3Qtb3B0aW9ucy50eHQgfMKgIDUgKysr
+LQo+PsKgIGJ1aWx0aW4vcmV2LWxpc3QuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IHwgNDIgKysrKysrKysrKysrKysrKysrKysrKysrLS0tLS0tCj4+wqAgdC90NjExNS1yZXYtbGlz
+dC1kdS5zaMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDIyICsrKysrKysrKysrKysrKysKPj7C
+oCAzIGZpbGVzIGNoYW5nZWQsIDYwIGluc2VydGlvbnMoKyksIDkgZGVsZXRpb25zKC0pCj4KPlRo
+ZSBwYXRjaCBpdHNlbGYgbG9va3MgcHJldHR5IHNlbnNpYmxlIChhbmQgdGhhbmtzIMOGdmFyIGZv
+ciB0aGUgZmlyc3QKPnJvdW5kIG9mIHJldmlldzsgdGhlIHN1Z2dlc3Rpb25zIHRoZXJlIGFsbCBs
+b29rZWQgZ29vZCkuIEEgZmV3IHNtYWxsCj5jb21tZW50czoKPgo+PiBAQCAtNDgxLDggKzQ4NSwx
+MyBAQCBzdGF0aWMgaW50IHRyeV9iaXRtYXBfZGlza191c2FnZShzdHJ1Y3QgcmV2X2luZm8gKnJl
+dnMsCj4+wqAgaWYgKCFiaXRtYXBfZ2l0KQo+PsKgIHJldHVybiAtMTsKPj7CoAo+PiAtCXByaW50
+ZigiJSJQUkl1TUFYIlxuIiwKPj4gLQnCoMKgwqDCoMKgwqAgKHVpbnRtYXhfdClnZXRfZGlza191
+c2FnZV9mcm9tX2JpdG1hcChiaXRtYXBfZ2l0LCByZXZzKSk7Cj4+ICsJc2l6ZV9mcm9tX2JpdG1h
+cCA9IGdldF9kaXNrX3VzYWdlX2Zyb21fYml0bWFwKGJpdG1hcF9naXQsIHJldnMpOwo+PiArCWlm
+IChodW1hbl9yZWFkYWJsZSkKPj4gKwlzdHJidWZfaHVtYW5pc2VfYnl0ZXMoJmRpc2tfYnVmLCBz
+aXplX2Zyb21fYml0bWFwKTsKPj4gKwllbHNlCj4+ICsJc3RyYnVmX2FkZGYoJmRpc2tfYnVmLCAi
+JSJQUkl1TUFYIiIsICh1aW50bWF4X3Qpc2l6ZV9mcm9tX2JpdG1hcCk7Cj4+ICsJcHV0cyhkaXNr
+X2J1Zi5idWYpOwo+PiArCXN0cmJ1Zl9yZWxlYXNlKCZkaXNrX2J1Zik7Cj4KPkl0J3Mgbm90IGEg
+bG90IG9mIGR1cGxpY2F0ZWQgbGluZXMsIGJ1dCBzaW5jZSBpdCBpcyBpbXBsZW1lbnRpbmcgcG9s
+aWN5Cj5sb2dpYywgSSB0aGluayBpdCB3b3VsZCBiZSBuaWNlIHRvIG1vdmUgdGhlIGZvcm1hdHRp
+bmcgZGVjaXNpb24gaW50byBhCj5mdW5jdGlvbi4gU29tZXRoaW5nIGxpa2U6Cj4KPsKgIHN0YXRp
+YyB2b2lkIHNob3dfZGlza191c2FnZShvZmZfdCBzaXplKQo+wqAgewo+CXN0cnVjdCBzdHJidWYg
+c2IgPSBTVFJCVUZfSU5JVDsKPglpZiAoaHVtYW5fcmVhZGFibGUpCj4Jc3RyYnVmX2h1bWFuaXNl
+X2J5dGVzKCZzYiwgc2l6ZSk7Cj4JZWxzZQo+CXN0cmJ1Zl9hZGRmKCZzYiwgIiUiUFJJdU1BWCwg
+KHVpbnRtYXhfdClzaXplX2Zyb21fYml0bWFwKTsKPglwdXRzKHNiLmJ1Zik7Cj4Jc3RyYnVmX3Jl
+bGVhc2UoJnNiKTsKPsKgIH0KPgo+YW5kIHRoZW4geW91IGNhbiBjYWxsIGl0IGZyb20gaGVyZSwg
+YW5kIGZyb20gdGhlIG5vbi1iaXRtYXAgcGF0aCBiZWxvdy4KT2gsIHRoaXMgaXMgcmVhbGx5IGdv
+b2QuCj4KPihBbHNvLCB3aGlsZSB0eXBpbmcgaXQgb3V0LCBJIG5vdGljZWQgdGhhdCB5b3UgZG9u
+J3QgbmVlZCB0aGUgZXh0cmEgIiIKPmFmdGVyIFBSSXVNQVg7IHRoYXQganVzdCBjb25jYXRlbmF0
+ZXMgYW4gZW1wdHkgc3RyaW5nKS4KPgo+PiAtCWlmICghc3RyY21wKGFyZywgIi0tZGlzay11c2Fn
+ZSIpKSB7Cj4+IC0Jc2hvd19kaXNrX3VzYWdlID0gMTsKPj4gLQlpbmZvLmZsYWdzIHw9IFJFVl9M
+SVNUX1FVSUVUOwo+PiAtCWNvbnRpbnVlOwo+PiArCWlmIChza2lwX3ByZWZpeChhcmcsICItLWRp
+c2stdXNhZ2UiLCAmYXJnKSkgewo+PiArCWlmICgqYXJnID09ICc9Jykgewo+PiArCWlmICghc3Ry
+Y21wKCsrYXJnLCAiaHVtYW4iKSkgewo+PiArCWh1bWFuX3JlYWRhYmxlID0gMTsKPj4gKwlzaG93
+X2Rpc2tfdXNhZ2UgPSAxOwo+PiArCWluZm8uZmxhZ3MgfD0gUkVWX0xJU1RfUVVJRVQ7Cj4+ICsJ
+Y29udGludWU7Cj4+ICsJfSBlbHNlCj4+ICsJZGllKF8oImludmFsaWQgdmFsdWUgZm9yICclcyc6
+ICclcycsIHRyeSAtLWRpc2stdXNhZ2U9aHVtYW4iKSwgIi0tZGlzay11c2FnZSIsIGFyZyk7Cj4+
+ICsJfSBlbHNlIHsKPj4gKwlzaG93X2Rpc2tfdXNhZ2UgPSAxOwo+PiArCWluZm8uZmxhZ3MgfD0g
+UkVWX0xJU1RfUVVJRVQ7Cj4+ICsJY29udGludWU7Cj4+ICsJfQo+PsKgIH0KPgo+V2UgY2FuIHB1
+dCB0aGUgY29tbW9uIHBhcnRzIG9mIGVhY2ggc2lkZSBvZiB0aGUgY29uZGl0aW9uYWwgaW50byB0
+aGUKPm91dGVyIGJsb2NrIHRvIGF2b2lkIHJlcGVhdGluZyBvdXJzZWx2ZXMuIEFsc28sIHlvdXIg
+Y29kZSBtYXRjaGVzCj4tLXNob3ctZGlzay11c2FnZS13aXRob3V0LWFuLWVxdWFscywgc2luY2Ug
+aXQgbm93cyB1c2VzIHNraXBfcHJlZml4KCkuCj5Zb3UgY291bGQgZml4IHRoYXQgYnkgY2hlY2tp
+bmcgZm9yICdcMCcgaW4gKmFyZy4gU28gdG9nZXRoZXIsIHNvbWV0aGluZwo+bGlrZToKPgo+wqAg
+aWYgKHNraXBfcHJlZml4KGFyZywgIi0tZGlzay11c2FnZSIsICZhcmcpKSB7Cj4JaWYgKCphcmcg
+PT0gJz0nKSB7Cj4JaWYgKCFzdHJjbXAoKythcmcsICJodW1hbiIpKQo+CWh1bWFuX3JlYWRhYmxl
+ID0gMTsKPgllbHNlCj4JZGllKC4uLik7Cj4JfSBlbHNlIGlmICgqYXJnKSB7Cj4JLyoKPgkqIEFy
+Z3VhYmx5IHNob3VsZCBnb3RvIGEgbGFiZWwgdG8gY29udGludWUgY2hhaW4gb2YgaWZzPwo+CSog
+RG9lc24ndCBtYXR0ZXIgdW5sZXNzIHdlIHRyeSB0byBhZGQgLS1kaXNrLXVzYWdlLWZvbwo+CSog
+YWZ0ZXJ3YXJkcwo+CSovCj4JdXNhZ2UocmV2X2xpc3RfdXNhZ2UpOwo+CX0KPglzaG93X2Rpc2tf
+dXNhZ2UgPSAxOwo+CWluZm8uZmxhZ3MgfD0gUkVWX0xJU1RfUVVJRVQ7Cj4JY29udGludWU7Cj7C
+oCB9ClRoYW5rIHlvdSBhIGxvdCBmb3IgeW91ciB2ZXJ5IG5pY2Ugc3VnZ2VzdGlvbnMuCgo+Cj4t
+UGVmZg==
 
