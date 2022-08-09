@@ -2,116 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F553C19F2D
-	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 10:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07776C19F2D
+	for <git@archiver.kernel.org>; Tue,  9 Aug 2022 10:47:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242484AbiHIKhQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 06:37:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49776 "EHLO
+        id S241310AbiHIKrP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 06:47:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237990AbiHIKhO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 06:37:14 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D31B1C130
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 03:37:12 -0700 (PDT)
+        with ESMTP id S231802AbiHIKrO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 06:47:14 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90886120A3
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 03:47:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660041422;
-        bh=l/iJyt+MFRRol7FrvDi1YiTDbdhLF5cc5ZQAJ6PwnW4=;
+        s=badeba3b8450; t=1660042024;
+        bh=gAIKPrIW9PT3TPFtlH5W/xTEqu0DD/ElOvPb6K6hwII=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=g2ze3HKqpeoFzHFZ/kbPStf1847BLbXIZgJeNTUeVHgCU2O3MPGXe+pQcHOmOJgja
-         auqKiXKSimrlOl/59fa/iDfnOEob0rlBgxr5pssxyA5AdFel+3WrqVH7SW2lm7A7Z+
-         X+HpIkeOHvX799FkTl+KwoMY1a1j0S4lORKWPveE=
+        b=TNOfBWsBpCx6Q4Pr7/whUcmCTLrChVLJ/5cA5ujD8wLv2a3+MHsJp6zWSZjN+rxEs
+         YOe5Vw9XTFEmHc11WRjHX4+lR98Ok9OM/6T6RRftcI5qY2lpAg3ELeaVg1lQHHnp/e
+         xUcTG5YfUVrCN1HAI3/b2uX6IRaeYROeWfd6GNSA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.31.241.252] ([89.1.214.151]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MA7KU-1oEAoG2Oio-00BZqU; Tue, 09
- Aug 2022 12:37:02 +0200
-Date:   Tue, 9 Aug 2022 12:37:01 +0200 (CEST)
+Received: from [172.31.241.252] ([89.1.214.151]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M4axg-1oLuzm0iM2-001lRy; Tue, 09
+ Aug 2022 12:47:04 +0200
+Date:   Tue, 9 Aug 2022 12:47:03 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
-        avarab@gmail.com
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
 Subject: Re: [PATCH v3 2/3] t0021: implementation the rot13-filter.pl script
  in C
-In-Reply-To: <xmqqr11zoe6i.fsf@gitster.g>
-Message-ID: <663onqs0-465s-023o-9s25-p2193ss5so59@tzk.qr>
-References: <cover.1659291025.git.matheus.bernardino@usp.br> <86e6baba460f4d0fce353d1fb6a0e18b57ecadaa.1659291025.git.matheus.bernardino@usp.br> <xmqqr11zoe6i.fsf@gitster.g>
+In-Reply-To: <86e6baba460f4d0fce353d1fb6a0e18b57ecadaa.1659291025.git.matheus.bernardino@usp.br>
+Message-ID: <9239s8np-69ss-n035-53s9-869s42p9srno@tzk.qr>
+References: <cover.1659291025.git.matheus.bernardino@usp.br> <86e6baba460f4d0fce353d1fb6a0e18b57ecadaa.1659291025.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:C63p9JtgRDjtFWIHt+NQmytaT8A0v3DbYMGGT3sNIAKkVi/3+rH
- XTask8EJvEqPBqDzrZqRU/Ty0xWfq3rtqSIHJaBOXMMjyLd1NHsruUehrqo83N2wgbBEFVL
- Uzo4pvZHdNglwxwbDKgkFRLFP1nSlPygIU4VeXNhQje4VgyXKPZjad9Hkn0N1TKr5GX9vkE
- WLvf82QcWWaS/fVkt6S+Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:VwY81EJ3zz4=:sluzmuP377N3AlDKcfUpCf
- ByYd6uM7HPSilFzhShGlSmJkcGeG3t7nkBeSYMB0Ypv9btyqW3gHYRC9JGco3arYbbgCNxOhP
- cIEsW8CcFwMgkTIiZbr40Z8vzySWUn0Ruc8XhSOlcD/RgdHqvsVksFEFtFkfeh+piq9CMycaQ
- 68kpJHnVtUTwB9P8uhKuI1zhxZaxh1f5N3imeI5QPCb0bTaubrfyKK9Yb3SNVtdNjojSRuVT3
- GbmAEIySc/Wc67suKeNM9YKPwpAsAo+MjRirOhoYvRSjhoQWQBtspc14KJyjJgInh8UcZU+BT
- YCdPvtHKrxgebfW6H1IW3ZsKFnavypY2uEGMgU5vsOS4OarAm7gWMcoaBXNkHdu5QiW+BfU6n
- +KEsEqfwfK9yq5Db9wwsZWvpwBz2r2lxKwkdkQsW68YKRYA2Iau2uP1EpTpeLCwIuFxTdJW+c
- a+WMWA7sryHz0uRv9yxnOhXvpIZ8czaMKi75ChD2KLWfr2eYI/dvhKkk7b3ggMAsxOM83WaQM
- T72Si1jBdyM4rVT7Bob2hFSk69lOAGqkbB185JLbBQKvzWX+X51QbiXhx6o1sc0bCPIeqZMHw
- K9d6bKAcHvLpsgC7VAmk2UWRmauqVCQTLFStZNYnaHgysp4WL01wAcqwQxo8B4spKbwai9v2+
- nvv03EwRy23/ZoJii2W6rrxphPnxpVtaMG6RSoczAuFsXQQ+dVztKEWz8/aesY4NyCixIJuLS
- veGHAq5ASVagvP0f/BWu32/1IPur/F0R8dXiCBCwHnnINdBQia9Ac1yk8rftRT6brFiQcaQeh
- hPUfHRULFItf3CnI4q6SYvD35YvzvpMlQRP3HtScTGRtY/WBru8wHiVJ402yvy7iQWwkH1Dub
- PusmUDeAXLCQ5jwISQM0EqD8TtedvvOcic0QszUvmlLw60M/Vmo3uITEFnr1uptLycwut3w6d
- I6cYFsEmtba0gPFCpnr4qhn/JUNB/N0QjkfeBG6iMiDtR30ro0OrJKmnIsqCGhTeKhhwI6j5L
- 0rYhxEHb0ZQhKw1ZmdrOEae1xaIaE9XqbzXPx/EWoNX0Dohk+oMBaAFAvEr89IOldjuhrRbuv
- +pdsEj1d0k8H7OVLpLlwg1/2j5VyJd4OZAV82oa7nCMO4kXvjVCUiLBBg==
+X-Provags-ID: V03:K1:Kb3AvPgUhSuUPWH0THtWphgdKVDr/Nz1asHXDqpaW9kYWmIFTTf
+ Jo1Ag/s6I9wUQBSacdHDKV8XuTNeyHjCTdiVJ9Zxjs0pJK1p3eSv7B1WVCuZ5V4dZ1xOl4c
+ NDxWuGodCfc/Lwt/vVgL64zzEUh7z5C7iUyLXyI2QRi7ZvrLbNWwaNw7ROoPQIDhuw8dvNY
+ nXEtZUjeoPt2MUXmsh6Tg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:N6LZiu+NkrM=:PD5AlL/rXXkBW+UWfqhnyo
+ bkEx5evQLGIWXnd7BSa/LS/GABuqld/0AdLapwu2vAeMLbV8/S7lMQG2XEwJwMhi8JtXx8Ekr
+ SRC7Gnoe8WMwDehheg+288aU/BsXMEUQhqQPbqTQ5l8Pjs1CZRFxExizyt5Fb0kLOWHwMJAur
+ 3SGiRt2OJ7qdAvpHUj97aiSR408zCo6uMmkEg7a6f11s6175HkLBMMQL/ny/xgO8Usu2R0P/n
+ 8NLRkMeYIIvr2Hfe6hdLwupwocNS7hb3U4lRr1YhhuPNhQ6C4ydFDrNHzsUa//OoX04As3Vh3
+ 4gPnIyIqSBopdNKViIG6QposXcIbkv4WvivgWenn3wWfS9wPdv6lyR+r2O8/4aYGTkoiqc3Qh
+ is3sB2Ck/f1EUxGekD/fBBgD4ddDr2KcCAdzH/6tOAyHArVJkGWm8zE5TSEaxfzH+qQJLwpgm
+ oEoi3WNkqXIfg6GSfcgBlgUIU5fVoj0rBHK35nZb/uxBlS7KR0ErpfLd2JnF9QeBW1a5j0TAM
+ Caz7i+zB1EI4VSqqw3T30fUGIo7/zn1EPrfM3aZLIo5z16/xWe+gWW9mD0HLg8QoqXlN/87Eh
+ Lk12N7EasamJDtpRDO52GVmN8yoTZjlV0BIqFSYXDP47zuksfgiTORclmz7Tuv/duU9liS+yl
+ JVNE/BKFzrpyQof6et07SkV6Iai5sewOITkxYrQ2pBBlTFzrgaYvhoUNRorq4hFqU+O6vsuyY
+ wiUNHSmPQipCvo5LfNiui8iDTANEeEWbvLCAVVzTTkMW2fQAUTfiyKk5OnIRj0aB0gRG3EXIN
+ uHeBCfYn8m0QZerSznVQZdgFuh/Dbbpswwfhz97dpSpig/lOiFDyREVuvx8j3zovBNF6cbuw+
+ 8rivtEbgxw2bBTV9jmUQKAZAY0sFLDZcT/yFIfF20NqI6QW22T+049JYnTOs5fjJIQlHu1Vqm
+ 96iBhVYWcdxOfqmo3k+c6qtV3mx8zwO7W856qmMK6Uf2iWgaFmvRllHhxdXEwErS0HnRV9mGO
+ aS1YTyPW1aP/NHEnxUAkIRlcq7D/a4rpdSSDlbcIDhSG0msb0pD5Vy3TKDzT2m7wpCGNmqNyM
+ n57R/iEIycGgMEYvX/L+1vgARSEi/4snH39GQPSfI71GqNeOH+fmmDcug==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Matheus,
 
-On Mon, 1 Aug 2022, Junio C Hamano wrote:
+On Sun, 31 Jul 2022, Matheus Tavares wrote:
 
->  * read_capabilities() feeds the buffer taken from
->    packet_read_line(), so buf[size] should be NUL terminated
->    already.
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 8e43c2def4..ce4e73b683 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -309,7 +309,8 @@ int write_packetized_from_fd_no_flush(int fd_in, int=
+ fd_out)
+>  	return err;
+>  }
+>
+> -int write_packetized_from_buf_no_flush(const char *src_in, size_t len, =
+int fd_out)
+> +int write_packetized_from_buf_no_flush_count(const char *src_in, size_t=
+ len,
+> +					     int fd_out, int *packet_counter)
+>  {
+>  	int err =3D 0;
+>  	size_t bytes_written =3D 0;
+> @@ -324,6 +325,8 @@ int write_packetized_from_buf_no_flush(const char *s=
+rc_in, size_t len, int fd_ou
+>  			break;
+>  		err =3D packet_write_gently(fd_out, src_in + bytes_written, bytes_to_=
+write);
+>  		bytes_written +=3D bytes_to_write;
+> +		if (packet_counter)
+> +			(*packet_counter)++;
 
-Could you help me agree?
+The only reason why we do this here is to try to imitate the Perl script
+that prints out a dot for every packet written, right?
 
-In `packet_read_line()`, we call `packet_read()` with the
-`PACKET_READ_CHOMP_NEWLINE` option, but we do not NUL-terminate the
-buffer.
+But the Perl script wrote out those dots immediately and individually, not
+in one go after writing all the packets.
 
-See https://github.com/git/git/blob/v2.37.1/pkt-line.c#L488-L494
+Unless the tests rely on the dots in the output, I would therefore
+recommend to simply scrap this functionality (and to write about it in the
+commit message, with the rationale that it does not fit into the current C
+code's paradigms and would require intrusive changes of questionable
+benefit) and avoid touching `pkt-line.[ch]` altogether.
 
-In `packet_read()`, we call `packet_read_with_status()`, but do not
-NUL-terminate the buffer.
+> [...]
+> diff --git a/pkt-line.h b/pkt-line.h
+> [...]
+> +static void packet_initialize(void)
+> +{
+> +	int size;
+> +	char *pkt_buf =3D packet_read_line(0, &size);
+> +
+> +	if (!pkt_buf || strncmp(pkt_buf, "git-filter-client", size))
+> +		die("bad initialize: '%s'", xstrndup(pkt_buf, size));
+> +
+> +	pkt_buf =3D packet_read_line(0, &size);
+> +	if (!pkt_buf || strncmp(pkt_buf, "version=3D2", size))
+> +		die("bad version: '%.*s'", (int)size, pkt_buf);
 
-See https://github.com/git/git/blob/v2.37.1/pkt-line.c#L478-L486
+This would mistake a packet `v` for being valid.
 
-In `packet_read_with_status()`, I see that we call `get_packet_data()`
-which does not NUL-terminate the buffer. Then we parse the length via
-`packet_length()` which does not NUL-terminate the buffer.
+Junio pointed out in his review that `packet_read_line()` already
+NUL-terminates the buffer (except when it returns `NULL`), therefore we
+can write this instead:
 
-Then, crucially, if the packet length is smaller than 3, we set the length
-that is returned to 0 and return early indicating the conditions
-`PACKET_READ_FLUSH`, `PACKET_READ_DELIM`, or `PACKET_READ_RESPONSE_END`,
-which are ignored by `packet_read()`.
+	if (!pkt_buf || strcmp(pkt_buf, "version=3D2"))
 
-In this instance, the buffer is not NUL-terminated, I think. But if you
-see that I missed something, I would like to know.
+Likewise with `"git-filter-client"`.
 
-See https://github.com/git/git/blob/v2.37.1/pkt-line.c#L399-L476
+> +
+> +	pkt_buf =3D packet_read_line(0, &size);
+> +	if (pkt_buf)
+> +		die("bad version end: '%.*s'", (int)size, pkt_buf);
+> +
+> +	packet_write_fmt(1, "git-filter-server");
+> +	packet_write_fmt(1, "version=3D2");
+> +	packet_flush(1);
+> +}
+> +
+> +static char *rot13_usage =3D "test-tool rot13-filter [--always-delay] <=
+log path> <capabilities>";
+> +
+> +int cmd__rot13_filter(int argc, const char **argv)
+> +{
+> +	const char **caps;
+> +	int cap_count, i =3D 1;
+> +	struct strset remote_caps =3D STRSET_INIT;
+> +
+> +	if (argc > 1 && !strcmp(argv[1], "--always-delay")) {
+> +		always_delay =3D 1;
+> +		i++;
+> +	}
 
-And yes, in the case that there is a regular payload,
-https://github.com/git/git/blob/v2.37.1/pkt-line.c#L456 NUL-terminates the
-buffer.
+This is so much simpler to read than if it used `parse_options()`,
+therefore I think that this is good as-is.
 
-And the proposed `get_value()` function would avoid returning a not
-NUL-terminated buffer by virtue of using the `skip_prefix_mem()` function
-with a non-empty prefix but a zero length buffer.
+It is probably obvious that I did not spend as much time on reviewing this
+round as I did the previous time (after all, if one spends three hours
+here and three hours there, pretty soon one ends up having missed lunch
+before knowing it). However, it is equally obvious that you did a great
+job addressing my review of the previous round.
 
-Therefore it is _still_ safe to skip the `buf[size] = '\0';` assignment
-despite what I wrote above, even if it adds yet another piece of code to
-Git's source code which is harder than necessary to reason about.
-
-After all, it took me half an hour to research and write up this mail,
-when reading `buf[size] = '\0';` would have taken all of two seconds to
-verify that the code is safe.
-
-Ciao,
+Thank you,
 Dscho
