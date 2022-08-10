@@ -2,133 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65D80C00140
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 12:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA899C00140
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 12:52:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232097AbiHJMrh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 08:47:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41608 "EHLO
+        id S231777AbiHJMwe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 08:52:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbiHJMrf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 08:47:35 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E34FC760E1
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 05:47:34 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id v23so484427qkv.3
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 05:47:34 -0700 (PDT)
+        with ESMTP id S232282AbiHJMw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 08:52:26 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34C747695B
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 05:52:25 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id i24so10954047qkg.13
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 05:52:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=1imRXOnzn0nMictMncuXczTI9HzyhJbL4KAu5gnnGN8=;
-        b=A1CJp2gy0mJAPyqduCRn6WrXPIT+gaj3rbuj8NzCFY/S6xwr1e3j/EDvkPbiXA6/T8
-         hs1PpCL2sLBw46L00AZMpXDZicp9stGS7nFjaAH2SNVUkG+Wd73qa8Bzci2Q1M7gpcIS
-         elc7D+kwtPm1tg9v+rI0Fh1/DyyHp2WditvkqtNrYwmTUORyYzTuINNFR4sfZpGdbjbm
-         jm5XtsV9/MncoW6r3C4Y4TOQgb/ahdPzv6GTMqtGAXbhKoYw/Wu+iqZQbeKUW7zFgYIm
-         9wKC/FC8olvhKRn1edNByq5DLNlhBjFqsaV7p/ONHrNfG5pmvNWTaLoy6WQfD4W4tRPk
-         jMQw==
+        bh=/tPLXh0uGa7Y6zM6BLedq+8tgOL/Z5qAmQdIDHWwgHc=;
+        b=i4VGWrJ5Lz66ZHyZ+AR+YTnNHAzwmEg6grP4cZhMfHt2wcQHKjk4NANGBEpZTwfmow
+         h9iuXCdTXUyLO8D913lRlBX8YlUIgnkOZU58UGUZWBjvL3cd40eB6PzY2tPwaUCbuOJx
+         dKrcAOA9S2c3FaC0y5IT+ZCAXgLOioVo/x6KJDZJ69xd5qXWQxpvaEFJ65FQnQ8BkdvT
+         So8oLIKFex8jyoFwm4yLznej2vSgYyEphGcyGbNJk4fXZudCWwHcu4SSDz1VrhSwmdWM
+         C9M0FwyGbWxnIhhFPSvRNvOkdxQd+fkrP5S0XM05ZGEp0TZN+4E3AT9m747+SItd/CZk
+         nKOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=1imRXOnzn0nMictMncuXczTI9HzyhJbL4KAu5gnnGN8=;
-        b=ixaaFwLLNj9qgzt0lT/inr0qiS7OOwuKadfXeQMMIQ3ha9QtykHmEVSjv+/6YFR6Tp
-         Wc9oQDNYYLuG4qRNaOoXOvZ6PbK7yvXS83tH+G7Bx5ydsHOtFcv39ZOk3l47A+Ey+39Z
-         qhMaUSHv/FoR0uWmKi6WbMN1H0/+K3MF/1OJl0jpHFCJ6yv3MvICj/Dmti7V8GR/xWoB
-         GCjzf+paFMZeUcg09RTfdoFOe0eW5pv311eYkx8HBC9m20/EpsLHK/An4Fzov01UGw6L
-         ZavnnT8dlI2NXStu5YEt0N4Ij83WR4vkwhK7rZd2h7wYC0IW1PxgyX6oNglBuW8eZE7c
-         uV8Q==
-X-Gm-Message-State: ACgBeo124RWb6qiqcetU49B/wyoPvwv1aYrU5IZag7U3KGquK7VktuAA
-        4aV+th5Xurhgb+ulDfLhgwwu
-X-Google-Smtp-Source: AA6agR7zM+WWROIaglIz839h9eYJssvuq9KA1rUrFuihZEvYHi/UQWlbsTPw7a6e92BnQAkhfOrxAQ==
-X-Received: by 2002:a05:620a:150d:b0:6b9:9104:2ec6 with SMTP id i13-20020a05620a150d00b006b991042ec6mr3992953qkk.452.1660135654047;
-        Wed, 10 Aug 2022 05:47:34 -0700 (PDT)
+        bh=/tPLXh0uGa7Y6zM6BLedq+8tgOL/Z5qAmQdIDHWwgHc=;
+        b=4l7FmA7p7D1cFQC1TJCY3Y3e+04+EMrfV3TLWJQqz4Yibs03qFK9vLnkYr8rAloTRw
+         0PFSg9rKBCoyK6sLD/5+FWTlCnRCBpTSjz8g+YujOFve59wP5gU9ZaKOXbvXxhWBv61S
+         bV+oJmmFAROwaHSmjTZ/ZH1X+QuHVLX+NcqPzNDeqTl/A/JkjK0hlvM714a8FP+BnqCa
+         SuvexDpDTig4dKngC7dZv5M/hdS4R5o9LskWSYYBub1CUuf61JuVurPsodlQ2NGWKrk4
+         5Qe4/wjOCEA/P6MNHpLu3rtT7OmcVN+5hhoS7jabJV/K+h4VafQ1YbSX59yb7dJEOMij
+         cWag==
+X-Gm-Message-State: ACgBeo2T2gCado/W/2eg39kiHh5YrBWRkkGeeVMFuk57mOQxgAnmHrgD
+        Rw+bvhnWMKZf2iQNWv7YMUp3
+X-Google-Smtp-Source: AA6agR6egbSk2G9ZLUluJQ36Nq1FIaEZqQPxkSxOWj3K7FcFQRNshJtK+iZwh9bIhJ47MCWXNi0E8Q==
+X-Received: by 2002:a05:620a:bcd:b0:6ab:84b8:25ee with SMTP id s13-20020a05620a0bcd00b006ab84b825eemr20550748qki.512.1660135944283;
+        Wed, 10 Aug 2022 05:52:24 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:91c5:d5d6:a070:72da? ([2600:1700:e72:80a0:91c5:d5d6:a070:72da])
-        by smtp.gmail.com with ESMTPSA id m16-20020a05620a24d000b006b8cff25187sm14478487qkn.42.2022.08.10.05.47.33
+        by smtp.gmail.com with ESMTPSA id s8-20020a05620a0bc800b006b5c061844fsm13471865qki.49.2022.08.10.05.52.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Aug 2022 05:47:33 -0700 (PDT)
-Message-ID: <afc04510-3c68-0226-b366-f541ca933a14@github.com>
-Date:   Wed, 10 Aug 2022 08:47:32 -0400
+        Wed, 10 Aug 2022 05:52:24 -0700 (PDT)
+Message-ID: <77f445f7-3934-c165-3160-e09d7b884774@github.com>
+Date:   Wed, 10 Aug 2022 08:52:23 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.11.0
-Subject: Re: [PATCH v2 1/4] t1092: add tests for `git-rm`
+Subject: Re: [PATCH v2 08/10] builtin/bugreport.c: create '--diagnose' option
 Content-Language: en-US
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
-Cc:     vdye@github.com
-References: <20220803045118.1243087-1-shaoxuan.yuan02@gmail.com>
- <20220807041335.1790658-1-shaoxuan.yuan02@gmail.com>
- <20220807041335.1790658-2-shaoxuan.yuan02@gmail.com>
+To:     Victoria Dye <vdye@github.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     johannes.schindelin@gmx.de,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>
+References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
+ <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
+ <d81e7c10997e9e8dc211d241019fbafa6b25fb04.1659577543.git.gitgitgadget@gmail.com>
+ <3dc402e1-1f27-8a24-544d-d90d403a7da0@github.com>
+ <a45f5693-7186-2953-6620-3f1359a12238@github.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20220807041335.1790658-2-shaoxuan.yuan02@gmail.com>
+In-Reply-To: <a45f5693-7186-2953-6620-3f1359a12238@github.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/7/22 12:13 AM, Shaoxuan Yuan wrote:
+On 8/9/22 7:53 PM, Victoria Dye wrote:
+> Derrick Stolee wrote:
+>> On 8/3/2022 9:45 PM, Victoria Dye via GitGitGadget wrote:
 
-> +test_expect_failure 'rm pathspec outside sparse definition' '
+>>> +static int option_parse_diagnose(const struct option *opt,
+>>> +				 const char *arg, int unset)
+>>> +{
+>>> +	enum diagnose_mode *diagnose = opt->value;
+>>> +
+>>> +	BUG_ON_OPT_NEG(unset);
+>>> +
+>>> +	if (!arg || !strcmp(arg, "basic"))
+>>> +		*diagnose = DIAGNOSE_BASIC;
+>>> +	else if (!strcmp(arg, "all"))
+>>> +		*diagnose = DIAGNOSE_ALL;
+>>
+>> Should we allow "none" to reset the value to DIAGNOSE_NONE?
+> 
+> As far as I can tell, while some builtins have options that  match the
+> default behavior of the command (e.g., '--no-autosquash' in 'git rebase'),
+> those options typically exist to override a config setting (e.g.,
+> 'rebase.autosquash'). No config exists for 'bugreport --diagnose' (and I
+> don't think it would make sense to add one), so '--diagnose=none' would only
+> be used to override another '--diagnose' specification in the same
+> command/alias (e.g., 'git bugreport --diagnose=basic --diagnose=none'). 
 
-My only concern with this version is a minor one, and I didn't
-notice it until this version: this test_expect_failure.
+Ah, so --diagnose=none isn't valuable because --no-diagnose would be
+the better way to write the same thing. You would need to remove the
+PARSE_OPT_NONEG from your OPT_CALLBACK_F() to allow that (and then do
+the appropriate logic with the "unset" parameter).
 
-test_expect_failure doesn't help too much except to say "something
-fails in this test". It could be the very first command, or it
-could be the last.
-
-> +	init_repos &&
-> +
-> +	for file in folder1/a folder1/0/1
-> +	do
-> +		test_sparse_match test_must_fail git rm $file &&
-> +		test_sparse_match test_must_fail git rm --cached $file &&
-> +		test_sparse_match git rm --sparse $file &&
-> +		test_sparse_match git status --porcelain=v2
-> +	done &&
-> +
-> +	cat >folder1-full <<-EOF &&
-> +	rm ${SQ}folder1/0/0/0${SQ}
-> +	rm ${SQ}folder1/0/1${SQ}
-> +	rm ${SQ}folder1/a${SQ}
-> +	EOF
-> +
-> +	cat >folder1-sparse <<-EOF &&
-> +	rm ${SQ}folder1/${SQ}
-> +	EOF
-
-The difference you are demonstrating is that this output is
-different. I think that at the point of this patch, they are
-the same. The goal of this patch is to establish a common
-point of reference for the full index and sparse index cases.
-
-If everything below was "test_sparse_match" in this patch,
-then I believe the test would pass.
-
-The behavior changes when we enable the sparse index in the
-'rm' builtin. Demonstrating the changes to the test at that
-time helps collect all of the different ways behavior changes
-with a sparse index, making it really easy to audit what
-exactly is different between the modes.
-
-Another approach would be to integrate the sparse index with
-the builtin early, but keep the ensure_full_index() calls in
-certain places (so we still expand to a full index) and slowly
-add modes that do not expand. This is even trickier to do than
-to delay the test changes to the end.
-
-That said, finding out how to organize these tests is very
-difficult because there is a bit of a chicken-or-egg problem:
-How can we test the custom integration logic without enabling
-the sparse index across the entire builtin? How can we enable
-the sparse index across the builtin without having all of the
-integration logic implemented?
-
-So please take my ramblings here as food for thought, but not
-any need to make changes to this series. v2 looks good to me.
+The reason to have these things is basically so users can create
+aliases (say 'git br' expands to 'git bugreport --diagnose=all', but
+they want to run 'git br --no-diagnose' to clear that --diagnose=all).
 
 Thanks,
 -Stolee
