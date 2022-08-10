@@ -2,77 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A90FC00140
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 21:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B775C25B07
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 21:20:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232102AbiHJVUc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 17:20:32 -0400
+        id S232695AbiHJVUd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 17:20:33 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbiHJVUa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 17:20:30 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96A74BB9
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 14:20:29 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A52C14CCC6;
-        Wed, 10 Aug 2022 17:20:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JjUSC9FmAZQBNunr8xDJyECV7fy6bl9ij7Q6Ty
-        nIRHY=; b=cixyzevpN1IB5K3EBkg+hmNR8dQPfOIqcMks/KzjQKjXEhxrxMX1fV
-        oXspvdJ3ng9tispOhuXqXIbrM6As9/YiIt3CkmLua4tS6yfq1YGL76hu27UFApRD
-        uocYBr/BEIbJw57o/2Gj569YIYgxEKCPRDSR2ClHzWC9BMTZnO4LE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2131C14CCC4;
-        Wed, 10 Aug 2022 17:20:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8B52C14CCC3;
-        Wed, 10 Aug 2022 17:20:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v8 08/14] merge-resolve: rewrite in C
-References: <20210317204939.17890-1-alban.gruin@gmail.com>
-        <20220809185429.20098-1-alban.gruin@gmail.com>
-        <20220809185429.20098-9-alban.gruin@gmail.com>
-        <08ea1eec-58fb-cbfa-d405-0d4159c99515@gmail.com>
-Date:   Wed, 10 Aug 2022 14:20:26 -0700
-In-Reply-To: <08ea1eec-58fb-cbfa-d405-0d4159c99515@gmail.com> (Phillip Wood's
-        message of "Wed, 10 Aug 2022 16:03:47 +0100")
-Message-ID: <xmqqilmzkd7p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229522AbiHJVUb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 17:20:31 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49C19BC3
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 14:20:30 -0700 (PDT)
+Received: (qmail 6915 invoked by uid 109); 10 Aug 2022 21:20:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Aug 2022 21:20:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15703 invoked by uid 111); 10 Aug 2022 21:20:29 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Aug 2022 17:20:29 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 10 Aug 2022 17:20:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Li Linchao via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>, Li Linchao <lilinchao@oschina.cn>
+Subject: Re: [PATCH v4] rev-list: support human-readable output for
+ `--disk-usage`
+Message-ID: <YvQhHOkjZatIqlFr@coredump.intra.peff.net>
+References: <pull.1313.v3.git.1660111276934.gitgitgadget@gmail.com>
+ <pull.1313.v4.git.1660130072657.gitgitgadget@gmail.com>
+ <xmqqlerwm28n.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 41594814-18F2-11ED-A897-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqlerwm28n.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On Wed, Aug 10, 2022 at 10:34:32AM -0700, Junio C Hamano wrote:
 
-> git-merge-resolve will happily merge three trees, unfortunately using
-> lists of commits will break that.
+> > +static void print_disk_usage(off_t size)
+> > +{
+> > +	struct strbuf sb = STRBUF_INIT;
+> > +	if (human_readable)
+> > +		strbuf_humanise_bytes(&sb, size);
+> > +	else
+> > +		strbuf_addf(&sb, "%"PRIuMAX, (uintmax_t)size);
+> > +	puts(sb.buf);
+> > +	strbuf_release(&sb);
+> > +}
+> 
+> Hmph, I am not sure if we want to make it a helper like this.  The
+> normal case does not need to prepare the string into a strbuf but
+> just can send the output to the standard output stream.
+> 
+> It is probably easy to fix, like so:
+> 
+> 	if (!human_readable) {
+> 		printf("%" PRIuMAX "\n", disk_usage);
+> 	} else {
+> 		strbuf sb = STRBUF_INIT;
+> 		strbuf_humanise_bytes(&sb, disk_usage);
+> 		puts(sb.buf);
+> 		strbuf_release(&sb);
+> 	}
 
-True.
+It was my suggestion to turn it into a helper, because the same code
+needs to be present in two distant spots (the bitmap and non-bitmap
+cases).
 
-While I agree that it would make sense to rewrite some strategies in
-C, I do not quite see the point of redoing this particular one.  Its
-simplicity is one of the only few remaining shining points in the
-"resolve" strategy, and it can serve as an easy-to-understand
-example to demonstrate what a merge-strategy implementation should
-look like.  I however doubt with improvements to the "recursive" and
-more recently the "ort" strategy, I do not know how much "real" use
-there is to it.  I even suspect that the users do not mind if a
-platform does not ship this strategy by default if it has so much
-problem running a shell script.
+I don't care much between "printf directly vs strbuf" for the non-human
+case, but it was an earlier review suggestion to connect them. I do
+think the result is a little easier to follow, but mostly I want to make
+it clear that the author is getting stuck between warring review
+comments here. ;)
 
-By rewriting it to C, we would lose an easy-to-understand example
-that the users can easily run to see how it works, but what we gain
-in exchange is not clear, at least to me.
+> > @@ -481,8 +495,8 @@ static int try_bitmap_disk_usage(struct rev_info *revs,
+> >  	if (!bitmap_git)
+> >  		return -1;
+> >  
+> > -	printf("%"PRIuMAX"\n",
+> > -	       (uintmax_t)get_disk_usage_from_bitmap(bitmap_git, revs));
+> > +	size_from_bitmap = get_disk_usage_from_bitmap(bitmap_git, revs);
+> > +	print_disk_usage(size_from_bitmap);
+> 
+> It makes sense to make the function declare how it gets disk usage
+> in its name, but once we call the function to get what we want,
+> there is no need to keep saying we got it from bitmap.  If we ever
+> gained another function that obtains the disk usage from other
+> means, then this part of the code would become
+
+Keep in mind that we are in try_bitmap_disk_usage() here. :) There is
+indeed similar code to use other means, but it's far away, and this code
+will always use bitmaps.
+
+That said, I'd have just written:
+
+  print_disk_usage(get_disk_usage_from_bitmap(bitmap_git, revs));
+
+since the variable is not otherwise used. But arguably that's harder to
+read.
+
+-Peff
