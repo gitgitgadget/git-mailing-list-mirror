@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41687C00140
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 15:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A97C2C00140
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 15:46:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231942AbiHJPqh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 11:46:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37396 "EHLO
+        id S231994AbiHJPqk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 11:46:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231707AbiHJPqb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 11:46:31 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3935166111
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 08:46:29 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id p132so18120337oif.9
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 08:46:29 -0700 (PDT)
+        with ESMTP id S231952AbiHJPqc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 11:46:32 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E989D6B166
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 08:46:30 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id y10-20020a9d634a000000b006167f7ce0c5so10892033otk.0
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 08:46:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=N6/+v7YsIIoNLmYY9A8UKjHmigNtTr/t21qDINvV20s=;
-        b=XKVKFoAI2A/We6A4VW4mYJbTkhAyVQa8dm9ClAsHzsm0AnsltCUUoPGYrZHKTHUfA2
-         gmp4DzpzETCKkSU31TK/xS1xsPfcowxw3KLWSAjHOEM95mgB/pCO5rJoTsj7BmaVNyYU
-         LM7u51ZTvkhPUOxQPXFN1sO51jtmedTG2UmYT8Kdz8t6ZUq4hppuhyhICFVYhNL8Rnlf
-         aU3NumPCZiBeDbsM2ODQqVEhMBQGDwoJwP/eMOTDnkiqJJExib5s1zsXWMNCJ8nd9fFE
-         TZ8bJppHXWFHw9dISfhN/+dyUZsBu3gze5weoRK5hMnevr5PorU7x2khxSIkSqTsMALs
-         sqxQ==
+        bh=lH/btJU9O5mJV54EpzR0UAG1AVpxRHSJPNS2CqMEN9k=;
+        b=PYQrl+3iAMiNgkjjMklo71PirN/mZmu9r30s83XzeS7vOsoV/7bqn/Y8SR7MbaDIfB
+         JDijxO6gyMWSgb5WjCiyNc6bQyTQo7hxkpKjovMAu5NF6e/b7UgnRdpcTjOAEpAW0WjH
+         03r0BxA9QZXq/O8tdF0Wt5dR6cMqcnTWcq0C3TdjQcYtenLZdJs97I9YnHrMEpJkC/Ym
+         6KDVyJrSSmqOr/uIwdfn8Pz4m/GXLlMTXmwqqAqOPYg1kLLyy3ENNo1d7cM7leOPDeA1
+         iUuu0HDp7JL310XT2WTblayw2Ivogjb0F/7W65tl6uV2mIQZdVmHfcR/x72+xv7IPXub
+         eRSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=N6/+v7YsIIoNLmYY9A8UKjHmigNtTr/t21qDINvV20s=;
-        b=Q7UwyCf8AUXDlKrZB0IyBDOaB7RApge7GtpUCClEIKPNeu5BrzqaRGZiFU4zM3NzCR
-         2y2S5NZQiH+wNecaAQ5LBmSiS7pMJf/uxZL0EB/fDBmCgT2WhfFcD1bgfbg9Q94XGH8A
-         4pTQXh0Mg/WI7F394FuB2OSnzayVWDt/XJR+coYoYTtolGeGZu0Sn3TNrkP8GYZ4xlRi
-         NdNO+6hRejJ9UiurVtehjD1GO5jlZtOjTM6cb6FFpKpgxnsXM6NMv+FadNyQ/yNG2KA1
-         +MpQ5cCtOiYXhF7kwCGQNJOUOJM4bVPjoSBe3bhEnnIk+/lB7UQxSuI4Nt2bmcOjXmia
-         NyZg==
-X-Gm-Message-State: ACgBeo2Qg+kIJ171OcAIV+p21yF/PD/QXzUqwKgwlO5qNz6rwzcExfIV
-        6kAll1HJDu2Pq4yBDPg5j91mZgEYMLQ=
-X-Google-Smtp-Source: AA6agR4Hr4UvdevJc47rXjoYNUVoekKAm/WpP0ncKq9OZg2NBsnWOClG31DYr0gebPVNJwciHgx3SQ==
-X-Received: by 2002:a54:4e8d:0:b0:325:988d:afaf with SMTP id c13-20020a544e8d000000b00325988dafafmr1589131oiy.135.1660146388141;
-        Wed, 10 Aug 2022 08:46:28 -0700 (PDT)
+        bh=lH/btJU9O5mJV54EpzR0UAG1AVpxRHSJPNS2CqMEN9k=;
+        b=Ewn+HH4AbTNCQ4nlhXfdlum+i2y/yZ3wPQqot/aUgbzxVfoqUFd+5TbCThpKUnwSWN
+         sGWw3XFZ22X/y3TLO4uxtHq86+a+CB7CDCx1DcMHz1l7R9jqO/slVvc387RQybuNsZ50
+         VHxamgRrDhNnjN57vwzr6aDMlmL/tDFZ43ftLwjcPRESfrvDYegFyjhu7MwUivdSAZb1
+         6KIQhd5gmlhjTFl6S3rVTcEwMrTZi7aDS32yRpaOCfOQx2ZC4YuRPLLit6FZayQtTKsZ
+         JSuLTbTb3ZDGWdGkzGMZ8l6Z4ql2zbWUwe0YR7CovSNBPluDPDpBg1WOQhx7JuL7HfN+
+         6+Cg==
+X-Gm-Message-State: ACgBeo3nA0psJrKJlZSHAYvE4i29R3m0EK7Hl7cf+1eBBWuitDgFN0Aa
+        GfGNQaMaeS5DZrAuW9rHu/PbMGn882Y=
+X-Google-Smtp-Source: AA6agR77be9Zms0287O5Any6Cz9u9Nzm/8LREcEo/HGHX1PtSggdo9DWZNPWsH7NOO+aQ/arSPCu1Q==
+X-Received: by 2002:a05:6830:8d:b0:637:1e6c:8975 with SMTP id a13-20020a056830008d00b006371e6c8975mr846633oto.135.1660146389708;
+        Wed, 10 Aug 2022 08:46:29 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id h12-20020a056870538c00b0010e00041996sm3862718oan.14.2022.08.10.08.46.27
+        by smtp.gmail.com with ESMTPSA id a10-20020aca1a0a000000b003430d6696e8sm688839oia.8.2022.08.10.08.46.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Aug 2022 08:46:27 -0700 (PDT)
+        Wed, 10 Aug 2022 08:46:29 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Fernando Ramos <greenfoo@u92.eu>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 5/7] mergetools: vimdiff: rework tab logic
-Date:   Wed, 10 Aug 2022 10:46:16 -0500
-Message-Id: <20220810154618.307275-6-felipe.contreras@gmail.com>
+Subject: [PATCH v4 6/7] mergetools: vimdiff: fix single window layouts
+Date:   Wed, 10 Aug 2022 10:46:17 -0500
+Message-Id: <20220810154618.307275-7-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20220810154618.307275-1-felipe.contreras@gmail.com>
 References: <20220810154618.307275-1-felipe.contreras@gmail.com>
@@ -63,115 +63,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If we treat tabs especially, the logic becomes much simpler.
+Layouts with a single window other than "MERGED" do not work (e.g.
+"LOCAL" or "MERGED+LOCAL").
+
+This is because as the documentation of bufdo says:
+
+    The last buffer (or where an error occurred) becomes the current
+    buffer.
+
+And we do always do bufdo the end.
+
+Additionally, we do it only once, when it should be per tab.
+
+Fix this by doing it once per tab right after it's created and before
+any buffer is switched.
 
 Cc: Fernando Ramos <greenfoo@u92.eu>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- mergetools/vimdiff | 50 ++++++++++++++++++++--------------------------
- 1 file changed, 22 insertions(+), 28 deletions(-)
+ mergetools/vimdiff | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
 diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-index 2ecac41231..8334871417 100644
+index 8334871417..e27734b6e7 100644
 --- a/mergetools/vimdiff
 +++ b/mergetools/vimdiff
-@@ -66,11 +66,6 @@ gen_cmd_aux () {
- 	debug_print "LAYOUT    : $LAYOUT"
- 	debug_print "CMD       : $CMD"
+@@ -325,21 +325,17 @@ gen_cmd () {
+ 			CMD="$CMD | tabnew"
+ 		fi
  
--	if test -z "$CMD"
--	then
--		CMD="echo" # vim "nop" operator
--	fi
--
- 	start=0
- 	end=${#LAYOUT}
- 
-@@ -144,11 +139,10 @@ gen_cmd_aux () {
- 
- 	# Step 2:
- 	#
--	# Search for all valid separators ("+", "/" or ",") which are *not*
-+	# Search for all valid separators ("/" or ",") which are *not*
- 	# inside parenthesis. Save the index at which each of them makes the
- 	# first appearance.
- 
--	index_new_tab=""
- 	index_horizontal_split=""
- 	index_vertical_split=""
- 
-@@ -182,14 +176,7 @@ gen_cmd_aux () {
- 		then
- 			current=$c
- 
--			if test "$current" = "+"
--			then
--				if test -z "$index_new_tab"
--				then
--					index_new_tab=$i
--				fi
--
--			elif test "$current" = "/"
-+			if test "$current" = "/"
- 			then
- 				if test -z "$index_horizontal_split"
- 				then
-@@ -219,14 +206,7 @@ gen_cmd_aux () {
- 
- 	terminate="false"
- 
--	if ! test -z "$index_new_tab"
--	then
--		before="-tabnew"
--		after="tabnext"
--		index=$index_new_tab
--		terminate="true"
--
--	elif ! test -z "$index_horizontal_split"
-+	if ! test -z "$index_horizontal_split"
- 	then
- 		before="leftabove split"
- 		after="wincmd j"
-@@ -333,7 +313,21 @@ gen_cmd () {
- 
- 	# Obtain the first part of vim "-c" option to obtain the desired layout
- 
--	CMD=$(gen_cmd_aux "$LAYOUT")
-+	CMD=
-+	oldIFS=$IFS
-+	IFS=+
-+	for tab in $LAYOUT
-+	do
-+		if test -z "$CMD"
++		# If this is a single window diff with all the buffers
++		if ! echo "$tab" | grep ",\|/" >/dev/null
 +		then
-+			CMD="echo" # vim "nop" operator
-+		else
-+			CMD="$CMD | tabnew"
++			CMD="$CMD | silent execute 'bufdo diffthis'"
 +		fi
 +
-+		CMD=$(gen_cmd_aux "$tab" "$CMD")
-+	done
-+	IFS=$oldIFS
+ 		CMD=$(gen_cmd_aux "$tab" "$CMD")
+ 	done
+ 	IFS=$oldIFS
  
+-
+-	# Adjust the just obtained script depending on whether more than one
+-	# windows are visible or not
+-
+-	if echo "$LAYOUT" | grep ",\|/" >/dev/null
+-	then
+-		CMD="$CMD | tabdo windo diffthis"
+-	else
+-		CMD="$CMD | silent bufdo diffthis"
+-	fi
+-
++	CMD="$CMD | tabdo windo diffthis"
  
- 	# Adjust the just obtained script depending on whether more than one
-@@ -565,12 +559,12 @@ run_unit_tests () {
- 	EXPECTED_CMD_08="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis\" -c \"tabfirst\""
- 	EXPECTED_CMD_09="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | 4b | wincmd j | leftabove vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
- 	EXPECTED_CMD_10="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_11="-c \"set hidden diffopt-=hiddenoff | echo | -tabnew | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_11="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnew | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
- 	EXPECTED_CMD_12="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
- 	EXPECTED_CMD_13="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | leftabove split | leftabove vertical split | 1b | wincmd l | 3b | wincmd j | 2b | wincmd l | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_14="-c \"set hidden diffopt-=hiddenoff | echo | -tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | 2b | wincmd l | 1b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_15="-c \"set hidden diffopt-=hiddenoff | echo | -tabnew | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
--	EXPECTED_CMD_16="-c \"set hidden diffopt-=hiddenoff | echo | -tabnew | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabnext | -tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnext | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_14="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | 2b | wincmd l | 3b | tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_15="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnew | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
-+	EXPECTED_CMD_16="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabnew | leftabove vertical split | 2b | wincmd l | 1b | tabnew | leftabove vertical split | 2b | wincmd l | 3b | tabnew | leftabove vertical split | leftabove split | 1b | wincmd j | leftabove split | 2b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
- 
- 	EXPECTED_TARGET_01="MERGED"
- 	EXPECTED_TARGET_02="LOCAL"
+ 	# Add an extra "-c" option to move to the first tab (notice that we
+ 	# can't simply append the command to the previous "-c" string as
+@@ -552,7 +548,7 @@ run_unit_tests () {
+ 	EXPECTED_CMD_01="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 2b | wincmd l | 3b | wincmd j | 4b | tabdo windo diffthis\" -c \"tabfirst\""
+ 	EXPECTED_CMD_02="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | 1b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
+ 	EXPECTED_CMD_03="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | 1b | wincmd l | leftabove vertical split | 4b | wincmd l | 3b | tabdo windo diffthis\" -c \"tabfirst\""
+-	EXPECTED_CMD_04="-c \"set hidden diffopt-=hiddenoff | echo | 4b | silent bufdo diffthis\" -c \"tabfirst\""
++	EXPECTED_CMD_04="-c \"set hidden diffopt-=hiddenoff | echo | silent execute 'bufdo diffthis' | 4b | tabdo windo diffthis\" -c \"tabfirst\""
+ 	EXPECTED_CMD_05="-c \"set hidden diffopt-=hiddenoff | echo | leftabove split | 1b | wincmd j | leftabove split | 4b | wincmd j | 3b | tabdo windo diffthis\" -c \"tabfirst\""
+ 	EXPECTED_CMD_06="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | leftabove split | 1b | wincmd j | 3b | wincmd l | 4b | tabdo windo diffthis\" -c \"tabfirst\""
+ 	EXPECTED_CMD_07="-c \"set hidden diffopt-=hiddenoff | echo | leftabove vertical split | 4b | wincmd l | leftabove split | 1b | wincmd j | 3b | tabdo windo diffthis\" -c \"tabfirst\""
 -- 
 2.37.1
 
