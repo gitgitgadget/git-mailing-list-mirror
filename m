@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29074C25B07
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 23:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA7E7C00140
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 23:34:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233263AbiHJXet (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 19:34:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56134 "EHLO
+        id S233506AbiHJXe4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 19:34:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233060AbiHJXem (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 19:34:42 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 792B08C031
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 16:34:39 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id c187-20020a1c35c4000000b003a30d88fe8eso1857846wma.2
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 16:34:39 -0700 (PDT)
+        with ESMTP id S232797AbiHJXeo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 19:34:44 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BD7B84EEA
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 16:34:40 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id p10so19463392wru.8
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 16:34:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=327gbsyYeccEL0tlq4IQ1Y7CXUns6oBUTnyfqIVz7cI=;
-        b=i6K21r6tAJXe+l0MG289DJinaeAstu3K4fhie2/6eq5BKVqwUBNnXCZw2wGybS3tn/
-         d3M+Dy7SmOIAZ4X+FCjXkmjy4TXHglgG1W//DMnrSSFtHVxACgVSLokh4D1uvEkbbCsn
-         KpnqHXkiE0UvXO73FzAAUEKV6sTEN+w5Eu/P3WZeejfhl8ZFcIBH4BzupZUMvDRbNPc2
-         CeSGaP+KqtbHaCVzwQhv6IOS8H+YxxyEQGSS/pMY+G0gn+xB6r7yph4SQJzrRokwsU6T
-         JdDOpKFDwL9vOVmF7vmeweS0rBFtbwBiVCbCnpaXOldamhyKO95Na1ojCiaUHIrYAxg9
-         DjIA==
+        bh=YKKdcJFhp+40tORJ9u012i+7uSC/4xTtFFym2CPkqAw=;
+        b=TaawuSvTQiidu0fmNLOVRtP/VeZad9E+FMjZQ08eOfj0Eo55ypWgaU1C+XaABpegX9
+         0D6QVNiOCRCRwkgche1UrI0plMWehGRUG0Odn7Jrw51rv0UgiajtXAn275b8F+3F/l5L
+         BqTKDe4zBCul3WGygeCQ6BR1VBk/5kEnORjdMt0AGQS5NBj/Ij4nDl0YlHc8XAo99TNI
+         tbXvDvWs1f3SOnQrVdh6hP8su/t9Gjgh9JuuGKuE2B6ggxy9f5tJli5x8rQbzlj7yQQ8
+         Ro5OE27164lkKMHzD873I4gmForuVokVKIJ5oLFSNqVFU2ObDxcgmg+qoN/JDvHSw45O
+         zDew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=327gbsyYeccEL0tlq4IQ1Y7CXUns6oBUTnyfqIVz7cI=;
-        b=8EDghuLaw4JJN5Cyq38yn8A8oTcX/xngyKC4cMxmk3PDcLduW9AC+qHOJMXMGCNh7o
-         0uu50oM5SbFtp/T06OBjdcE4U+HpOl0xczQE2IHNmKtCFyt3rYW41vpcgCD7j5kPcKC9
-         B8ajfQY45R7yy7LdnrLthvWTBuBsrgHBY1TaVTfkicAj/o+3sSDMIFJMKySblKKfbuED
-         uLcBF/D0XXsYu6MHh1NvPFLj06loziSmKcLS97ZfIcaLXfMX1wucKrJqj+kz9/sSLjuX
-         ytRQsEy7KJAKYHH9TH+jzoePDzSNxOB4EVnTqiM1mtzTddUQreRTMcMlaaD0CWE5JPJC
-         fzEA==
-X-Gm-Message-State: ACgBeo3S763dgWeon/UDy3kASHcXY1vz5llqUV+jpdl3M8D5SaN3Hw/i
-        PH7q4+MOXnECDRZMVD/Fq2oYQzjI30g=
-X-Google-Smtp-Source: AA6agR4jrG2Rsxb8bdytfbnJVpz9lhRLQkDq5odcW/dcibQZuGvFdSeJ+SutWRxv4BbT6ZGImm628Q==
-X-Received: by 2002:a05:600c:3782:b0:3a5:23f5:6bc9 with SMTP id o2-20020a05600c378200b003a523f56bc9mr3821997wmr.174.1660174477756;
-        Wed, 10 Aug 2022 16:34:37 -0700 (PDT)
+        bh=YKKdcJFhp+40tORJ9u012i+7uSC/4xTtFFym2CPkqAw=;
+        b=OZqNRuMa4iYRm9mBCDB+LGpTAOE62swYwfi3J2CMt96X7EbjsjWDy2mJTSPld63rQb
+         sRoKBVrHI7vKKxsju3nOk/crFhVyfQpEUX+m+HAjMkX+2chh1fafAlANUuMl8trjJNnE
+         8XVxhAGvKRbI7sU20ewjO02QHrn5/c5Dpb/sflIFU1CcUT8K5tK1kA+0ApVIwDFa2aMx
+         UMLklWP0shjwQ6/YUirK0bIT/6BKG0pgArE1jFza9foNaWVQbZu92w2rDk1/NM0NalQs
+         n8jLlzFZwf0odJ6oPE4GoLpc4cO22tqLymMNupE4jYK9JqnnZ/4nyT75nJM16HaRYFOw
+         8mmw==
+X-Gm-Message-State: ACgBeo0Wr/eK+0riAqTV1hFQuK4aCGCmnTxAUfOvSjM3tLvS18NhU21v
+        9wCo++h2zGTkcwaKAeixI/bKWnUpENA=
+X-Google-Smtp-Source: AA6agR7taCakcYh/wFuCtsBcogwKU4Pf1ws6EcJpsVo0JSsuzk9H+JM91HKspUCzd64XLvgM0J8cPw==
+X-Received: by 2002:adf:fecd:0:b0:21f:d78:743f with SMTP id q13-20020adffecd000000b0021f0d78743fmr18223077wrs.704.1660174478527;
+        Wed, 10 Aug 2022 16:34:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ay29-20020a05600c1e1d00b003a3170a7af9sm4123413wmb.4.2022.08.10.16.34.37
+        by smtp.gmail.com with ESMTPSA id n2-20020a5d6b82000000b0021e43b4edf0sm16928943wrx.20.2022.08.10.16.34.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Aug 2022 16:34:37 -0700 (PDT)
-Message-Id: <22ee8ea5a1e04a42ad359be4eb5ebc96bd5e5fa2.1660174473.git.gitgitgadget@gmail.com>
+        Wed, 10 Aug 2022 16:34:38 -0700 (PDT)
+Message-Id: <18f2ba4e0cdd9aea213dc7d0e908c6c0d8eccfd0.1660174473.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1310.v3.git.1660174473.gitgitgadget@gmail.com>
 References: <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
         <pull.1310.v3.git.1660174473.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 Aug 2022 23:34:25 +0000
-Subject: [PATCH v3 03/11] scalar-diagnose: add directory to archiver more
- gently
+Date:   Wed, 10 Aug 2022 23:34:26 +0000
+Subject: [PATCH v3 04/11] scalar-diagnose: move 'get_disk_info()' to 'compat/'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,49 +69,172 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-If a directory added to the 'scalar diagnose' archiver does not exist, warn
-and return 0 from 'add_directory_to_archiver()' rather than failing with a
-fatal error. This handles a failure edge case where the '.git/logs' has not
-yet been created when running 'scalar diagnose', but extends to any
-situation where a directory may be missing in the '.git' dir.
+Move 'get_disk_info()' function into 'compat/'. Although Scalar-specific
+code is generally not part of the main Git tree, 'get_disk_info()' will be
+used in subsequent patches by additional callers beyond 'scalar diagnose'.
+This patch prepares for that change, at which point this platform-specific
+code should be part of 'compat/' as a matter of convention.
 
-Now, when a directory is missing a warning is captured in the diagnostic
-logs. This provides a user with more complete information than if 'scalar
-diagnose' simply failed with an error.
+The function is copied *mostly* verbatim, with two exceptions:
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
+* '#ifdef WIN32' is replaced with '#ifdef GIT_WINDOWS_NATIVE' to allow
+  'statvfs' to be used with Cygwin.
+* the 'struct strbuf buf' and 'int res' (as well as their corresponding
+  cleanup & return) are moved outside of the '#ifdef' block.
+
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- contrib/scalar/scalar.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ compat/disk.h           | 56 +++++++++++++++++++++++++++++++++++++++++
+ contrib/scalar/scalar.c | 53 +-------------------------------------
+ git-compat-util.h       |  1 +
+ 3 files changed, 58 insertions(+), 52 deletions(-)
+ create mode 100644 compat/disk.h
 
+diff --git a/compat/disk.h b/compat/disk.h
+new file mode 100644
+index 00000000000..50a32e3d8a4
+--- /dev/null
++++ b/compat/disk.h
+@@ -0,0 +1,56 @@
++#ifndef COMPAT_DISK_H
++#define COMPAT_DISK_H
++
++#include "git-compat-util.h"
++
++static int get_disk_info(struct strbuf *out)
++{
++	struct strbuf buf = STRBUF_INIT;
++	int res = 0;
++
++#ifdef GIT_WINDOWS_NATIVE
++	char volume_name[MAX_PATH], fs_name[MAX_PATH];
++	DWORD serial_number, component_length, flags;
++	ULARGE_INTEGER avail2caller, total, avail;
++
++	strbuf_realpath(&buf, ".", 1);
++	if (!GetDiskFreeSpaceExA(buf.buf, &avail2caller, &total, &avail)) {
++		error(_("could not determine free disk size for '%s'"),
++		      buf.buf);
++		res = -1;
++		goto cleanup;
++	}
++
++	strbuf_setlen(&buf, offset_1st_component(buf.buf));
++	if (!GetVolumeInformationA(buf.buf, volume_name, sizeof(volume_name),
++				   &serial_number, &component_length, &flags,
++				   fs_name, sizeof(fs_name))) {
++		error(_("could not get info for '%s'"), buf.buf);
++		res = -1;
++		goto cleanup;
++	}
++	strbuf_addf(out, "Available space on '%s': ", buf.buf);
++	strbuf_humanise_bytes(out, avail2caller.QuadPart);
++	strbuf_addch(out, '\n');
++#else
++	struct statvfs stat;
++
++	strbuf_realpath(&buf, ".", 1);
++	if (statvfs(buf.buf, &stat) < 0) {
++		error_errno(_("could not determine free disk size for '%s'"),
++			    buf.buf);
++		res = -1;
++		goto cleanup;
++	}
++
++	strbuf_addf(out, "Available space on '%s': ", buf.buf);
++	strbuf_humanise_bytes(out, (off_t)stat.f_bsize * (off_t)stat.f_bavail);
++	strbuf_addf(out, " (mount flags 0x%lx)\n", stat.f_flag);
++#endif
++
++cleanup:
++	strbuf_release(&buf);
++	return res;
++}
++
++#endif /* COMPAT_DISK_H */
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 04046452284..b9092f0b612 100644
+index b9092f0b612..607fedefd82 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -266,14 +266,20 @@ static int add_directory_to_archiver(struct strvec *archiver_args,
- 					  const char *path, int recurse)
+@@ -13,6 +13,7 @@
+ #include "help.h"
+ #include "archive.h"
+ #include "object-store.h"
++#include "compat/disk.h"
+ 
+ /*
+  * Remove the deepest subdirectory in the provided path string. Path must not
+@@ -309,58 +310,6 @@ static int add_directory_to_archiver(struct strvec *archiver_args,
+ 	return res;
+ }
+ 
+-#ifndef WIN32
+-#include <sys/statvfs.h>
+-#endif
+-
+-static int get_disk_info(struct strbuf *out)
+-{
+-#ifdef WIN32
+-	struct strbuf buf = STRBUF_INIT;
+-	char volume_name[MAX_PATH], fs_name[MAX_PATH];
+-	DWORD serial_number, component_length, flags;
+-	ULARGE_INTEGER avail2caller, total, avail;
+-
+-	strbuf_realpath(&buf, ".", 1);
+-	if (!GetDiskFreeSpaceExA(buf.buf, &avail2caller, &total, &avail)) {
+-		error(_("could not determine free disk size for '%s'"),
+-		      buf.buf);
+-		strbuf_release(&buf);
+-		return -1;
+-	}
+-
+-	strbuf_setlen(&buf, offset_1st_component(buf.buf));
+-	if (!GetVolumeInformationA(buf.buf, volume_name, sizeof(volume_name),
+-				   &serial_number, &component_length, &flags,
+-				   fs_name, sizeof(fs_name))) {
+-		error(_("could not get info for '%s'"), buf.buf);
+-		strbuf_release(&buf);
+-		return -1;
+-	}
+-	strbuf_addf(out, "Available space on '%s': ", buf.buf);
+-	strbuf_humanise_bytes(out, avail2caller.QuadPart);
+-	strbuf_addch(out, '\n');
+-	strbuf_release(&buf);
+-#else
+-	struct strbuf buf = STRBUF_INIT;
+-	struct statvfs stat;
+-
+-	strbuf_realpath(&buf, ".", 1);
+-	if (statvfs(buf.buf, &stat) < 0) {
+-		error_errno(_("could not determine free disk size for '%s'"),
+-			    buf.buf);
+-		strbuf_release(&buf);
+-		return -1;
+-	}
+-
+-	strbuf_addf(out, "Available space on '%s': ", buf.buf);
+-	strbuf_humanise_bytes(out, (off_t)stat.f_bsize * (off_t)stat.f_bavail);
+-	strbuf_addf(out, " (mount flags 0x%lx)\n", stat.f_flag);
+-	strbuf_release(&buf);
+-#endif
+-	return 0;
+-}
+-
+ /* printf-style interface, expects `<key>=<value>` argument */
+ static int set_config(const char *fmt, ...)
  {
- 	int at_root = !*path;
--	DIR *dir = opendir(at_root ? "." : path);
-+	DIR *dir;
- 	struct dirent *e;
- 	struct strbuf buf = STRBUF_INIT;
- 	size_t len;
- 	int res = 0;
- 
--	if (!dir)
-+	dir = opendir(at_root ? "." : path);
-+	if (!dir) {
-+		if (errno == ENOENT) {
-+			warning(_("could not archive missing directory '%s'"), path);
-+			return 0;
-+		}
- 		return error_errno(_("could not open directory '%s'"), path);
-+	}
- 
- 	if (!at_root)
- 		strbuf_addf(&buf, "%s/", path);
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 58d7708296b..9a62e3a0d2d 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -258,6 +258,7 @@ static inline int is_xplatform_dir_sep(int c)
+ #include <sys/resource.h>
+ #include <sys/socket.h>
+ #include <sys/ioctl.h>
++#include <sys/statvfs.h>
+ #include <termios.h>
+ #ifndef NO_SYS_SELECT_H
+ #include <sys/select.h>
 -- 
 gitgitgadget
 
