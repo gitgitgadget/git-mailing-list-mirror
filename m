@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B596C00140
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 23:35:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47D82C25B06
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 23:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230514AbiHJXe7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 19:34:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56288 "EHLO
+        id S233340AbiHJXfC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 19:35:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233201AbiHJXes (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 19:34:48 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E2698D3F3
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 16:34:42 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id z12so19479206wrs.9
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 16:34:42 -0700 (PDT)
+        with ESMTP id S233160AbiHJXeq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 19:34:46 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C06E78C47A
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 16:34:41 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id l4so19449132wrm.13
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 16:34:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=3DtPvUJ+3SPdT6od1QbO+EADYby4QM2OS5TX2k4hwJY=;
-        b=keNW6JgQVme2ZYWBGt77Mc3R/+V1AiCiVloaEzTQmAcf8Uaqz2vDDJ3l9POetuOUCO
-         nxAMRbdaxmpReVgQtVsWzZ+Bt1UmkzfmJpLE2Lhy6r6queEZjgjIVAvQO3kZv+0+WYOB
-         IwKVVNER3a8C0gt05RVpNhiz3ABaH8UdEA0Srp+HsHlRHZuu7miMgvgKR/ehdSSvZct4
-         aStcRFf8tEkZBGNjDDZ8ysycZFCPyw27P0tSF2OMMIM0syQnth1isi2V3Ud88VycMc02
-         RUZhTgS+6ruJXVK/0QB8GKNgwecfX4F49d+ejN9mHuZmgox93APsORQK5OnplvDdrJgp
-         huBA==
+        bh=mmDpOspHbIoc2UzryC4S2CEZVo1GPtwQ9kMQcuDi3yg=;
+        b=ab0MC1yMWMNXYnrlL5Jm/vglqGQhHjU0pqpgTbJ/0R/g3S2k0piitr37tE/Pqt9FDx
+         BlCeqiIcnVtwHtok7F5FQAdqsJd05+vvMJJ3/fQRi09Tz0ze/DWXFCj1dikVHxc+Gh0I
+         pjd+nPxHaUeUesRbPKtflwk4xAVjUhTRzDadBUht3JvzS+HkkWuDBLUi8VToViqZFI98
+         qP4uj3Zgu/AhQSWDwUHfwt3H2hvJfdIGfQokKsWMLeR7l+iOGa245r7y1kyS3kqnMtHS
+         k6AL7potrG7U/WrNFHH2CD/MwqEm/yAfLR17adjFLFppRFW1Icfq8ppvwthR92tpH/31
+         AQkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=3DtPvUJ+3SPdT6od1QbO+EADYby4QM2OS5TX2k4hwJY=;
-        b=Mg8yIaNAJKmNgWOPoVPEhn8dMjw4FR4kK9WcM8V52r28y9WaNGyXKS5rFHYxg9MUkh
-         Y6WolpCj9JAVjeBo4gBiiVV9xjPg3wxe24khSw5Hxcxg+1j1OyD1az28/rV+T0sVYQE+
-         QvocExniomuqw6E5e0WycJPolL9hsANfPpdLtiMEcFeChWN4Sc6uKR7JLz+RaGW6B2GQ
-         JCZvZzPz88WCuXowHRZYGlaPzBCeCyEsmLHB2x1bPGKqI52WRVp0L70m4eyXwnDIcMBv
-         W/rPLg5wm46Zm79EPEO1zCRRpo76BmanX5z0UiXUv54kq6q/ZbOsHganRZ4ICe/DB6n3
-         Wm/Q==
-X-Gm-Message-State: ACgBeo3C9BEkYGrELj3pSYn5ZoARn0oA8NZ/DQfwoSZIxp1RQxEzvYPa
-        PoBit1EJFiz3ZEuwh/y+jtx7PQxqFNQ=
-X-Google-Smtp-Source: AA6agR5p1ZHAqtoH8BBGm+SgP/y5vZgPRj5cJ+/hwicQcu/TASelUnqxTISJg3eoSV76kXEiitksVw==
-X-Received: by 2002:a05:6000:184c:b0:223:2c8b:c43c with SMTP id c12-20020a056000184c00b002232c8bc43cmr8902700wri.16.1660174480806;
+        bh=mmDpOspHbIoc2UzryC4S2CEZVo1GPtwQ9kMQcuDi3yg=;
+        b=2UkjMVqcQApqhdBtb4VXaxmCSNX3EaQDqC5llWKaZWaQrhmsyK2jwANSjk1Mk0QL7Q
+         nd1Dsijo9lnTnF6F2SZlPFgTZ8Q3QaInuCUmf2S4EsP0KffKT+O0tF3oyWZYVYSbyp5E
+         bd81GDxZFSi/38q0ncIkQX/mcEb2+5jJEDUnpavMTHFqOYKeDOeWFwJZ0h8eUgdxVxb1
+         s4KMgfifVfzFO1oQOjib3KHySeU8+Y2WNRw5eXDxI/aN2z7cfGHJjIvGGdHTp0+09Jc7
+         ooIahWKIEZNV4BQ0x35GYZwBYOq8JPhcdQGcg4IlaQ80kw2c8wpeloJpTDSbii0eumgz
+         aFVg==
+X-Gm-Message-State: ACgBeo1u+6I0N8zOf8y8qz1NWva9fhzgtb6Aa2C98CWdfqalbkrxb/9Q
+        Jwi/aFVx/q7ZvEMjap/MFgJ3jqjN+J0=
+X-Google-Smtp-Source: AA6agR4nDJr1qAo/5b9u+cDfwzoxfj4FMNN8nnux6kEFoz281tmLDGrVVIaii8WSNYB76f+zmLMKvA==
+X-Received: by 2002:a05:6000:4084:b0:21e:c694:80db with SMTP id da4-20020a056000408400b0021ec69480dbmr17281811wrb.681.1660174480088;
         Wed, 10 Aug 2022 16:34:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s6-20020adff806000000b00222cf973e8csm8163406wrp.69.2022.08.10.16.34.40
+        by smtp.gmail.com with ESMTPSA id x3-20020a05600c420300b003a54fffa809sm3582371wmh.17.2022.08.10.16.34.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Aug 2022 16:34:40 -0700 (PDT)
-Message-Id: <bf3c073a985cc0cc6b26ae96a5a6287949d5315d.1660174473.git.gitgitgadget@gmail.com>
+        Wed, 10 Aug 2022 16:34:39 -0700 (PDT)
+Message-Id: <0a6c55696d88cde666c11cd6b5d723c9e75a3b76.1660174473.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1310.v3.git.1660174473.gitgitgadget@gmail.com>
 References: <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
         <pull.1310.v3.git.1660174473.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 Aug 2022 23:34:29 +0000
-Subject: [PATCH v3 07/11] builtin/diagnose.c: create 'git diagnose' builtin
-MIME-Version: 1.0
+Date:   Wed, 10 Aug 2022 23:34:28 +0000
+Subject: [PATCH v3 06/11] diagnose.c: add option to configure archive contents
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     derrickstolee@github.com, johannes.schindelin@gmx.de,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
@@ -69,235 +69,112 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Create a 'git diagnose' builtin to generate a standalone zip archive of
-repository diagnostics.
+Update 'create_diagnostics_archive()' to take an argument 'mode'. When
+archiving diagnostics for a repository, 'mode' is used to selectively
+include/exclude information based on its value. The initial options for
+'mode' are:
 
-The "diagnose" functionality was originally implemented for Scalar in
-aa5c79a331 (scalar: implement `scalar diagnose`, 2022-05-28). However, the
-diagnostics gathered are not specific to Scalar-cloned repositories and
-can be useful when diagnosing issues in any Git repository.
+* DIAGNOSE_NONE: do not collect any diagnostics or create an archive
+  (no-op).
+* DIAGNOSE_STATS: collect basic repository metadata (Git version, repo path,
+  filesystem available space) as well as sizing and count statistics for the
+  repository's objects and packfiles.
+* DIAGNOSE_ALL: collect basic repository metadata, sizing/count statistics,
+  and copies of the '.git', '.git/hooks', '.git/info', '.git/logs', and
+  '.git/objects/info' directories.
 
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+These modes are introduced to provide users the option to collect
+diagnostics without the sensitive information included in copies of '.git'
+dir contents. At the moment, only 'scalar diagnose' uses
+'create_diagnostics_archive()' (with a hardcoded 'DIAGNOSE_ALL' mode to
+match existing functionality), but more callers will be introduced in
+subsequent patches.
+
 Helped-by: Derrick Stolee <derrickstolee@github.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- .gitignore                     |  1 +
- Documentation/git-diagnose.txt | 50 +++++++++++++++++++++++++++++
- Makefile                       |  1 +
- builtin.h                      |  1 +
- builtin/diagnose.c             | 57 ++++++++++++++++++++++++++++++++++
- git.c                          |  1 +
- t/t0092-diagnose.sh            | 32 +++++++++++++++++++
- 7 files changed, 143 insertions(+)
- create mode 100644 Documentation/git-diagnose.txt
- create mode 100644 builtin/diagnose.c
- create mode 100755 t/t0092-diagnose.sh
+ contrib/scalar/scalar.c |  2 +-
+ diagnose.c              | 19 +++++++++++++------
+ diagnose.h              |  9 ++++++++-
+ 3 files changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 42fd7253b44..80b530bbed2 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -53,6 +53,7 @@
- /git-cvsimport
- /git-cvsserver
- /git-daemon
-+/git-diagnose
- /git-diff
- /git-diff-files
- /git-diff-index
-diff --git a/Documentation/git-diagnose.txt b/Documentation/git-diagnose.txt
-new file mode 100644
-index 00000000000..ce07dd0725d
---- /dev/null
-+++ b/Documentation/git-diagnose.txt
-@@ -0,0 +1,50 @@
-+git-diagnose(1)
-+================
-+
-+NAME
-+----
-+git-diagnose - Generate a zip archive of diagnostic information
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git diagnose' [(-o | --output-directory) <path>] [(-s | --suffix) <format>]
-+
-+DESCRIPTION
-+-----------
-+Collects detailed information about the user's machine, Git client, and
-+repository state and packages that information into a zip archive. The
-+generated archive can then, for example, be shared with the Git mailing list to
-+help debug an issue or serve as a reference for independent debugging.
-+
-+The following information is captured in the archive:
-+
-+  * 'git version --build-options'
-+  * The path to the repository root
-+  * The available disk space on the filesystem
-+  * The name and size of each packfile, including those in alternate object
-+    stores
-+  * The total count of loose objects, as well as counts broken down by
-+    `.git/objects` subdirectory
-+
-+This tool differs from linkgit:git-bugreport[1] in that it collects much more
-+detailed information with a greater focus on reporting the size and data shape
-+of repository contents.
-+
-+OPTIONS
-+-------
-+-o <path>::
-+--output-directory <path>::
-+	Place the resulting diagnostics archive in `<path>` instead of the
-+	current directory.
-+
-+-s <format>::
-+--suffix <format>::
-+	Specify an alternate suffix for the diagnostics archive name, to create
-+	a file named 'git-diagnostics-<formatted suffix>'. This should take the
-+	form of a strftime(3) format string; the current local time will be
-+	used.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index ed66cb70e5a..d34f680c065 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1153,6 +1153,7 @@ BUILTIN_OBJS += builtin/credential-cache.o
- BUILTIN_OBJS += builtin/credential-store.o
- BUILTIN_OBJS += builtin/credential.o
- BUILTIN_OBJS += builtin/describe.o
-+BUILTIN_OBJS += builtin/diagnose.o
- BUILTIN_OBJS += builtin/diff-files.o
- BUILTIN_OBJS += builtin/diff-index.o
- BUILTIN_OBJS += builtin/diff-tree.o
-diff --git a/builtin.h b/builtin.h
-index 40e9ecc8485..8901a34d6bf 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -144,6 +144,7 @@ int cmd_credential_cache(int argc, const char **argv, const char *prefix);
- int cmd_credential_cache_daemon(int argc, const char **argv, const char *prefix);
- int cmd_credential_store(int argc, const char **argv, const char *prefix);
- int cmd_describe(int argc, const char **argv, const char *prefix);
-+int cmd_diagnose(int argc, const char **argv, const char *prefix);
- int cmd_diff_files(int argc, const char **argv, const char *prefix);
- int cmd_diff_index(int argc, const char **argv, const char *prefix);
- int cmd_diff(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/diagnose.c b/builtin/diagnose.c
-new file mode 100644
-index 00000000000..832493bba65
---- /dev/null
-+++ b/builtin/diagnose.c
-@@ -0,0 +1,57 @@
-+#include "builtin.h"
-+#include "parse-options.h"
-+#include "diagnose.h"
-+
-+static const char * const diagnose_usage[] = {
-+	N_("git diagnose [-o|--output-directory <path>] [-s|--suffix <format>]"),
-+	NULL
-+};
-+
-+int cmd_diagnose(int argc, const char **argv, const char *prefix)
-+{
-+	struct strbuf zip_path = STRBUF_INIT;
-+	time_t now = time(NULL);
-+	struct tm tm;
-+	char *option_output = NULL;
-+	char *option_suffix = "%Y-%m-%d-%H%M";
-+	char *prefixed_filename;
-+
-+	const struct option diagnose_options[] = {
-+		OPT_STRING('o', "output-directory", &option_output, N_("path"),
-+			   N_("specify a destination for the diagnostics archive")),
-+		OPT_STRING('s', "suffix", &option_suffix, N_("format"),
-+			   N_("specify a strftime format suffix for the filename")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, diagnose_options,
-+			     diagnose_usage, 0);
-+
-+	/* Prepare the path to put the result */
-+	prefixed_filename = prefix_filename(prefix,
-+					    option_output ? option_output : "");
-+	strbuf_addstr(&zip_path, prefixed_filename);
-+	strbuf_complete(&zip_path, '/');
-+
-+	strbuf_addstr(&zip_path, "git-diagnostics-");
-+	strbuf_addftime(&zip_path, option_suffix, localtime_r(&now, &tm), 0, 0);
-+	strbuf_addstr(&zip_path, ".zip");
-+
-+	switch (safe_create_leading_directories(zip_path.buf)) {
-+	case SCLD_OK:
-+	case SCLD_EXISTS:
-+		break;
-+	default:
-+		die_errno(_("could not create leading directories for '%s'"),
-+			  zip_path.buf);
+diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+index 3983def760a..d538b8b8f14 100644
+--- a/contrib/scalar/scalar.c
++++ b/contrib/scalar/scalar.c
+@@ -534,7 +534,7 @@ static int cmd_diagnose(int argc, const char **argv)
+ 		goto diagnose_cleanup;
+ 	}
+ 
+-	res = create_diagnostics_archive(&zip_path);
++	res = create_diagnostics_archive(&zip_path, DIAGNOSE_ALL);
+ 
+ diagnose_cleanup:
+ 	strbuf_release(&zip_path);
+diff --git a/diagnose.c b/diagnose.c
+index 509d582f0ea..aadc3d4b21f 100644
+--- a/diagnose.c
++++ b/diagnose.c
+@@ -132,7 +132,7 @@ static int add_directory_to_archiver(struct strvec *archiver_args,
+ 	return res;
+ }
+ 
+-int create_diagnostics_archive(struct strbuf *zip_path)
++int create_diagnostics_archive(struct strbuf *zip_path, enum diagnose_mode mode)
+ {
+ 	struct strvec archiver_args = STRVEC_INIT;
+ 	char **argv_copy = NULL;
+@@ -140,6 +140,11 @@ int create_diagnostics_archive(struct strbuf *zip_path)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int res;
+ 
++	if (mode == DIAGNOSE_NONE) {
++		res = 0;
++		goto diagnose_cleanup;
 +	}
 +
-+	/* Prepare diagnostics */
-+	if (create_diagnostics_archive(&zip_path, DIAGNOSE_STATS))
-+		die_errno(_("unable to create diagnostics archive %s"),
-+			  zip_path.buf);
+ 	stdout_fd = dup(STDOUT_FILENO);
+ 	if (stdout_fd < 0) {
+ 		res = error_errno(_("could not duplicate stdout"));
+@@ -177,11 +182,13 @@ int create_diagnostics_archive(struct strbuf *zip_path)
+ 	loose_objs_stats(&buf, ".git/objects");
+ 	strvec_push(&archiver_args, buf.buf);
+ 
+-	if ((res = add_directory_to_archiver(&archiver_args, ".git", 0)) ||
+-	    (res = add_directory_to_archiver(&archiver_args, ".git/hooks", 0)) ||
+-	    (res = add_directory_to_archiver(&archiver_args, ".git/info", 0)) ||
+-	    (res = add_directory_to_archiver(&archiver_args, ".git/logs", 1)) ||
+-	    (res = add_directory_to_archiver(&archiver_args, ".git/objects/info", 0)))
++	/* Only include this if explicitly requested */
++	if (mode == DIAGNOSE_ALL &&
++	    ((res = add_directory_to_archiver(&archiver_args, ".git", 0)) ||
++	     (res = add_directory_to_archiver(&archiver_args, ".git/hooks", 0)) ||
++	     (res = add_directory_to_archiver(&archiver_args, ".git/info", 0)) ||
++	     (res = add_directory_to_archiver(&archiver_args, ".git/logs", 1)) ||
++	     (res = add_directory_to_archiver(&archiver_args, ".git/objects/info", 0))))
+ 		goto diagnose_cleanup;
+ 
+ 	strvec_pushl(&archiver_args, "--prefix=",
+diff --git a/diagnose.h b/diagnose.h
+index 06dca69bdac..9bb6049bf0c 100644
+--- a/diagnose.h
++++ b/diagnose.h
+@@ -2,7 +2,14 @@
+ #define DIAGNOSE_H
+ 
+ #include "strbuf.h"
++#include "parse-options.h"
+ 
+-int create_diagnostics_archive(struct strbuf *zip_path);
++enum diagnose_mode {
++	DIAGNOSE_NONE,
++	DIAGNOSE_STATS,
++	DIAGNOSE_ALL
++};
 +
-+	free(prefixed_filename);
-+	strbuf_release(&zip_path);
-+	return 0;
-+}
-diff --git a/git.c b/git.c
-index e5d62fa5a92..0b9d8ef7677 100644
---- a/git.c
-+++ b/git.c
-@@ -522,6 +522,7 @@ static struct cmd_struct commands[] = {
- 	{ "credential-cache--daemon", cmd_credential_cache_daemon },
- 	{ "credential-store", cmd_credential_store },
- 	{ "describe", cmd_describe, RUN_SETUP },
-+	{ "diagnose", cmd_diagnose, RUN_SETUP_GENTLY },
- 	{ "diff", cmd_diff, NO_PARSEOPT },
- 	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "diff-index", cmd_diff_index, RUN_SETUP | NO_PARSEOPT },
-diff --git a/t/t0092-diagnose.sh b/t/t0092-diagnose.sh
-new file mode 100755
-index 00000000000..b6923726fd7
---- /dev/null
-+++ b/t/t0092-diagnose.sh
-@@ -0,0 +1,32 @@
-+#!/bin/sh
-+
-+test_description='git diagnose'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success UNZIP 'creates diagnostics zip archive' '
-+	test_when_finished rm -rf report &&
-+
-+	git diagnose -o report -s test >out &&
-+	grep "Available space" out &&
-+
-+	zip_path=report/git-diagnostics-test.zip &&
-+	test_path_is_file "$zip_path" &&
-+
-+	# Check zipped archive content
-+	"$GIT_UNZIP" -p "$zip_path" diagnostics.log >out &&
-+	test_file_not_empty out &&
-+
-+	"$GIT_UNZIP" -p "$zip_path" packs-local.txt >out &&
-+	grep ".git/objects" out &&
-+
-+	"$GIT_UNZIP" -p "$zip_path" objects-local.txt >out &&
-+	grep "^Total: [0-9][0-9]*" out &&
-+
-+	# Should not include .git directory contents by default
-+	! "$GIT_UNZIP" -l "$zip_path" | grep ".git/"
-+	grep "^Total: [0-9][0-9]*" out
-+'
-+
-+test_done
++int create_diagnostics_archive(struct strbuf *zip_path, enum diagnose_mode mode);
+ 
+ #endif /* DIAGNOSE_H */
 -- 
 gitgitgadget
 
