@@ -2,114 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AF5CC00140
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 15:01:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BB61C00140
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 15:02:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232835AbiHJPBn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 11:01:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45286 "EHLO
+        id S232911AbiHJPCg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 11:02:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229928AbiHJPBm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 11:01:42 -0400
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47EF375FE3
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 08:01:40 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 1D42F5C0120;
-        Wed, 10 Aug 2022 11:01:37 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Wed, 10 Aug 2022 11:01:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=masklinn.net; h=
-        cc:cc:content-transfer-encoding:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm3; t=1660143697; x=
-        1660230097; bh=j2y5vIKi6nuq7nGzFUMuL6rXFpudURwfIst/yoNamF4=; b=W
-        lFi0trsIO4yZh8L9AWUlB/8KKlueU//xq3nNcRiXH062m2FKc0lujwE9CWxQ365O
-        Rwkout6V5/CJ5vJcnixqASVlnb4yBjG2GpeGYeGNwnn2YPRG+4H+0ADWCIegJzel
-        kIP7HxDtLMjSBMhxDYcrLBM0DDkSYOunewrH1zletsKqZHrhGCH9uy76BRbSxdMV
-        GduWq3MZgB5aO7Uqy8G7cd+x9oZ2AaOAVIpg0uzdCv8TE7bfaEdU/ZuDmIit1fHk
-        eUPgmRVRcdgINd/IK3o4o4Qgn2HaucEu58YDQ5LhHnyZSkJOiLMXHPH03vTwB/bB
-        4RymC4r/ziOZp2NBouqXg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:date:date:feedback-id:feedback-id:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1660143697; x=
-        1660230097; bh=j2y5vIKi6nuq7nGzFUMuL6rXFpudURwfIst/yoNamF4=; b=P
-        XYjrIriALrUL5cW7m5/HazN7iEkKFNK1peihDo6Pn+GDg2nR5yvaxCQIinBM8v1n
-        Fw1ztUJNTjIk/t1E2cfiLHRgAUWbpV47K5oRhGGUlZpb0SWPa6Bzt3B4a/CKw+s+
-        HpxHizlPYGvugk8wwHvkDXJ6Pi09rjLAUp+w6DsQpd3H5xZJvnGFQsycq8UK3wa3
-        kHJ1iEi5rzWSfFpL/mmFmnhEU6b0CHPDDpX+9eG8BJ9iKU/egqoE3de8m1A7gsw3
-        JEyLqSeLBIPXO8UvMkaBF9cncT9uohXMLQzVWisSivU+iGOp0YixKqJnk3TOnOAa
-        Ccry3tRZpLz9kwyyKKgag==
-X-ME-Sender: <xms:UMjzYrNdNU7-gKrnuXmSI5VBnlCqXGLS4NzGhTQb3igxVZkoSF_2pQ>
-    <xme:UMjzYl_T4SFugB7Wnr5xRpquxZt1NS1Vfc17fp41vT2LILi_RE-JT6CpuE8Kd_m3q
-    tYlmANxlDInZCzfZs8>
-X-ME-Received: <xmr:UMjzYqSxAoZ5ySu-y3C71qNopsa0mmKK34gvPZEkCjQIedurDy2Ctij9Xmr9p7DsNFD8rmKiosfHLOtkndIwWr0qSePZuc3i9GYVTiE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdegvddgkeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpegtggfuhfgjffevgffkfhfvofesth
-    hqmhdthhdtvdenucfhrhhomhepiggrvhhivghrucfoohhrvghluceogigrvhhivghrrdhm
-    ohhrvghlsehmrghskhhlihhnnhdrnhgvtheqnecuggftrfgrthhtvghrnheptdelteehhe
-    ekuefhtddvjedugfevfedvfeeigeetfeeuteffleeijeeltdekkeehnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgigrvhhivghrrdhmohhrvg
-    hlsehmrghskhhlihhnnhdrnhgvth
-X-ME-Proxy: <xmx:UMjzYvtm0rpzfNYt8R_t1twQJBKVNb1pK_698syckQiF_8cFPCN2ow>
-    <xmx:UMjzYjcfw2l88h2s2kP-Oi_Z0LMkxlUIVv3Sq45ABkvqBsWQaEqWkg>
-    <xmx:UMjzYr1Quk88Oxioa_JL24qW5ARcZsOyVsWUNZNzenO4IifL_4wMcA>
-    <xmx:UcjzYjnfrqNHvNKP-h6c28mTry8XqqvQOJ4qiXmRJKsZir6u3rXt1Q>
-Feedback-ID: i3619468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Aug 2022 11:01:36 -0400 (EDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
-Subject: Re: fsck: BAD_FILEMODE diagnostic broken / never triggers
-From:   Xavier Morel <xavier.morel@masklinn.net>
-In-Reply-To: <YvLttyyaZWm4pitu@coredump.intra.peff.net>
-Date:   Wed, 10 Aug 2022 17:01:34 +0200
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <6688857F-B899-4253-933B-0DFE25155D13@masklinn.net>
-References: <B3488A12-BCE3-48C8-915C-E2AC4E71ECD2@masklinn.net>
- <YvLkU3X9lBsG8wXp@coredump.intra.peff.net>
- <YvLttyyaZWm4pitu@coredump.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3696.80.82.1.1)
+        with ESMTP id S232348AbiHJPCe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 11:02:34 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9762875FF6
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 08:02:33 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id h204-20020a1c21d5000000b003a5b467c3abso593944wmh.5
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 08:02:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc;
+        bh=/iiPhiR4+oTGxeLdIqrz/zlgLUNM+ZoJAfLo5s+C7gw=;
+        b=GlKlIhOoVH2ccGOT9oUecZB5GnCAhB0pqKk0U7hukklSJNsiAWuf8IsrSwPSx4oy04
+         82vkmrrSyh3t7TlVcrsmTF4SI56gEjV47jWUIi0rCUiQZD/I5+M3/MQHZg5t4ucTFG5M
+         TDgKkROQNOn9xSlfKYb/tjEuk0TBOmEtXt3nvuVbkTC150xe/TwI+9UA5GRE9sEh6wzJ
+         WmChsTGvotJPvzyTfG75pIgl33jssT7CW/5pEHJz/L3CxNzm41U1igAJ8AnkrJswc8f0
+         wzeP6TAFpLbzY/RRMgeRvAF4e5MXA01kHzl38dSz1aTJUS37Z0wYRKoAoWutx59Gups6
+         KI4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc;
+        bh=/iiPhiR4+oTGxeLdIqrz/zlgLUNM+ZoJAfLo5s+C7gw=;
+        b=dHWiIt/yp4bbcnNLlP4NOmPlQ8PCSCzq+JUMK65eLzYj4UheOtRrigweX2U8w+TTrS
+         +pQX65kTSU86yZdfFZoD7gooS9h3P64YUx121+4DYpkTDW4U5AClfTQi5u420IktFOEv
+         ivfq85tEQfMI16mhZ1BWCgj03+2f72F2O1ziAb4kM0vvblPD/FKyVj8n5pnZcegb84Ol
+         CCbApQrjO+N9Htx50Ye+7n5eJda42P6TcDhZOwnfYbbgo+hqBW8qxy0C1/ap3BBqB7ra
+         wrPWEuGEZMztKArpkrmOEK1qlFAdocw8mo2PopaMWYORQBKvTKR6DsXeqmvYwNs7yR3p
+         f6Dw==
+X-Gm-Message-State: ACgBeo38j2SvAdAOxRubFcEObY+HzDfmOzKq25MDx9KYmHDUtEjTDVdT
+        WzyDr+/n+tWAyxwao5ihAWsnBnzfTV0=
+X-Google-Smtp-Source: AA6agR73p4o6SwxOPF3BmEzTJ9n6lMXG3yQF/hSz8G7ppcvXTltbK4IO5O0tqm3uT4rb63r+pkSq5g==
+X-Received: by 2002:a05:600c:35d6:b0:3a3:1c4f:6f46 with SMTP id r22-20020a05600c35d600b003a31c4f6f46mr2763482wmq.206.1660143751747;
+        Wed, 10 Aug 2022 08:02:31 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f19-20020a05600c4e9300b003a30fbde91dsm3170742wmq.20.2022.08.10.08.02.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Aug 2022 08:02:31 -0700 (PDT)
+Message-Id: <pull.1320.git.1660143750.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 10 Aug 2022 15:02:25 +0000
+Subject: [PATCH 0/5] Some fixes and an improvement for using CTest on Windows
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+As part of the CMake definition, Git enjoy support for running the test
+suite via CTest.
 
->> We probably need to provide version of decode_tree_entry() which =
-gives
->> the non-canonical mode, and to call it from fsck.
+In https://github.com/git-for-windows/git/issues/3966, it has been reported
+that this does not work out of the box, though, but causes a couple of test
+failures instead. These problems are not caught by Git's CI runs because the
+vs-tests jobs actually use prove to run the test suite, not CTest.
 
-That makes sense.
+In addition to fixing these problems, this patch series also addresses a
+long-standing gripe I have with the way Git's CMake definition supports
+CTest: It edits t/test-lib.sh, which leaves this file eternally modified
+(but these modification should never be committed, they refer to a
+local-only, configuration-dependent directory).
 
-> Perhaps something like the patch below.
+Johannes Schindelin (5):
+  cmake: align CTest definition with Git's CI runs
+  cmake: copy the merge tools for testing
+  tests: explicitly skip `chmod` calls on Windows
+  add -p: avoid ambiguous signed/unsigned comparison
+  cmake: avoid editing t/test-lib.sh
 
-I fear I'm really not able to judge so I'll let you fine folks decide on =
-what to do.
+ .gitignore                          |  1 +
+ Makefile                            |  1 +
+ add-patch.c                         |  2 +-
+ contrib/buildsystems/CMakeLists.txt | 12 ++++--------
+ t/test-lib-functions.sh             | 10 ++++++++--
+ t/test-lib.sh                       | 11 ++++++++++-
+ 6 files changed, 25 insertions(+), 12 deletions(-)
 
-> Note that these are treated with a severity of "warning", so fsck =
-won't
-> give a non-zero exit.
 
-Yeah from what I understand it is classified as a warning already
-(just not emitted), like the zero padded filemodes. And that can be
-upgraded to error using fsck.msgid=3Derror so shouldn't be an issue.
-
-> I think it still enough for transfer.fsckObjects
-> to mark them. I kind of wonder if fixing this at this point might =
-create
-> more problems than it solves though (e.g., if people have broken modes
-> in historical objects that servers may now reject).
-
-Maybe downgrade to info or ignore by default then? It might still be
-an issue for people who wilfully upgraded the diagnostic to error
-hoping to catch the, but hopefully if they did that they'd rather get
-the notice later than never?
-
-That's pretty much the `-Werror` problem (or one of them anyway)=
+base-commit: bbea4dcf42b28eb7ce64a6306cdde875ae5d09ca
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1320%2Fdscho%2Fctest-on-windows-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1320/dscho/ctest-on-windows-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1320
+-- 
+gitgitgadget
