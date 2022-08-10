@@ -2,113 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA899C00140
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 12:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AC20C25B08
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 13:06:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231777AbiHJMwe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 08:52:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45892 "EHLO
+        id S232242AbiHJNGp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 09:06:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232282AbiHJMw0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 08:52:26 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34C747695B
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 05:52:25 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id i24so10954047qkg.13
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 05:52:25 -0700 (PDT)
+        with ESMTP id S231646AbiHJNGo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 09:06:44 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02EED6DFA3
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 06:06:43 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id dc19so27537947ejb.12
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 06:06:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=/tPLXh0uGa7Y6zM6BLedq+8tgOL/Z5qAmQdIDHWwgHc=;
-        b=i4VGWrJ5Lz66ZHyZ+AR+YTnNHAzwmEg6grP4cZhMfHt2wcQHKjk4NANGBEpZTwfmow
-         h9iuXCdTXUyLO8D913lRlBX8YlUIgnkOZU58UGUZWBjvL3cd40eB6PzY2tPwaUCbuOJx
-         dKrcAOA9S2c3FaC0y5IT+ZCAXgLOioVo/x6KJDZJ69xd5qXWQxpvaEFJ65FQnQ8BkdvT
-         So8oLIKFex8jyoFwm4yLznej2vSgYyEphGcyGbNJk4fXZudCWwHcu4SSDz1VrhSwmdWM
-         C9M0FwyGbWxnIhhFPSvRNvOkdxQd+fkrP5S0XM05ZGEp0TZN+4E3AT9m747+SItd/CZk
-         nKOg==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=vHslwtu3OMnJglPK3f3sdDFzBQtx445TmX1Vlw3PHUo=;
+        b=I9WlbiJmM/Z2bWMGTK41cxjIXF3EtdFNVw5eFghH+zBSfRdxrtl1bnFiwimClaKNHt
+         RCyIzJXvBL8zRiXtQIADLlAfQyLAoGRi3FaTW/6h2LGUF9nbVubJaNlL/3SdWfGjxkd0
+         EsTEY0Fbiping8pf1qE1xEDu/v7ephGbecRaOUPfQOMiqwUI/G6bvso+8Mp+Wkg8BCg1
+         N0xKdP9AJtHMHvsIMoGalYhcY9yRgsKB6jdRivf4N6f+EcHDudc1ouh62P0loeHzNiB5
+         JQmuhPvHn1ch1xbHjP6iav/HOcoqvhmyeCv2NfaoBDXhJaF95iIBdm11Drw8Roa9DVY2
+         hPjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=/tPLXh0uGa7Y6zM6BLedq+8tgOL/Z5qAmQdIDHWwgHc=;
-        b=4l7FmA7p7D1cFQC1TJCY3Y3e+04+EMrfV3TLWJQqz4Yibs03qFK9vLnkYr8rAloTRw
-         0PFSg9rKBCoyK6sLD/5+FWTlCnRCBpTSjz8g+YujOFve59wP5gU9ZaKOXbvXxhWBv61S
-         bV+oJmmFAROwaHSmjTZ/ZH1X+QuHVLX+NcqPzNDeqTl/A/JkjK0hlvM714a8FP+BnqCa
-         SuvexDpDTig4dKngC7dZv5M/hdS4R5o9LskWSYYBub1CUuf61JuVurPsodlQ2NGWKrk4
-         5Qe4/wjOCEA/P6MNHpLu3rtT7OmcVN+5hhoS7jabJV/K+h4VafQ1YbSX59yb7dJEOMij
-         cWag==
-X-Gm-Message-State: ACgBeo2T2gCado/W/2eg39kiHh5YrBWRkkGeeVMFuk57mOQxgAnmHrgD
-        Rw+bvhnWMKZf2iQNWv7YMUp3
-X-Google-Smtp-Source: AA6agR6egbSk2G9ZLUluJQ36Nq1FIaEZqQPxkSxOWj3K7FcFQRNshJtK+iZwh9bIhJ47MCWXNi0E8Q==
-X-Received: by 2002:a05:620a:bcd:b0:6ab:84b8:25ee with SMTP id s13-20020a05620a0bcd00b006ab84b825eemr20550748qki.512.1660135944283;
-        Wed, 10 Aug 2022 05:52:24 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:91c5:d5d6:a070:72da? ([2600:1700:e72:80a0:91c5:d5d6:a070:72da])
-        by smtp.gmail.com with ESMTPSA id s8-20020a05620a0bc800b006b5c061844fsm13471865qki.49.2022.08.10.05.52.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Aug 2022 05:52:24 -0700 (PDT)
-Message-ID: <77f445f7-3934-c165-3160-e09d7b884774@github.com>
-Date:   Wed, 10 Aug 2022 08:52:23 -0400
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=vHslwtu3OMnJglPK3f3sdDFzBQtx445TmX1Vlw3PHUo=;
+        b=WWE9masEIcJJ3xaEHHX7tJz0Bthxik8frYg7ueqhDYjxpd9uhFROahzxbDNzGyScf9
+         LrIzdmBR4K86ldBEobFQ2lq/2nfLkhi9zmhw3wZZj/17bnYw5OZW24+FWduL/K3EksKv
+         wYXpPHIu8jhiy5VdNT9MZ1xVZqmVetrNDHztp8aLoZbtae4YmBzF+IOWKNTbhX/N3C5T
+         7wxtCzRXLNCKs6A0bRR4UCAX+eQPzuKi1h4Dmu4Tremic3OUOgNoCjxG0vqoj2OapfRL
+         zIEOAxfpJkz/vGO5CQLvLcr/GICO+zKvitSpu4HyM1mCxz1zqHNWVcDqcYy8r/Otwzq3
+         fG0g==
+X-Gm-Message-State: ACgBeo292X4IeGuR53xz67gdaL9iL4xbCNwA4KGGKhF0JpD9Oi8eom3A
+        evmSGp9a98Nrx32UK4NS38V3QUZWSJpZ+c8lr3w=
+X-Google-Smtp-Source: AA6agR4bckisZLzeKDSusmyPyBmvEGKw3Xy/7yS/t0e/me4NJLCjHq+E79NGrSRdQqz3PA4qSL77WU1h7yCZ8yTVF3k=
+X-Received: by 2002:a17:906:93e8:b0:730:9e5c:b45a with SMTP id
+ yl8-20020a17090693e800b007309e5cb45amr19377163ejb.530.1660136801568; Wed, 10
+ Aug 2022 06:06:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.11.0
-Subject: Re: [PATCH v2 08/10] builtin/bugreport.c: create '--diagnose' option
-Content-Language: en-US
-To:     Victoria Dye <vdye@github.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>
-References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
- <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
- <d81e7c10997e9e8dc211d241019fbafa6b25fb04.1659577543.git.gitgitgadget@gmail.com>
- <3dc402e1-1f27-8a24-544d-d90d403a7da0@github.com>
- <a45f5693-7186-2953-6620-3f1359a12238@github.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <a45f5693-7186-2953-6620-3f1359a12238@github.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <pull.1304.git.git.1659387885711.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1304.git.git.1659387885711.gitgitgadget@gmail.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Wed, 10 Aug 2022 08:06:30 -0500
+Message-ID: <CAMP44s2z1FC-3T0X39aT5WTq2aFGph_-iVz-yJtTN6VpG-qdzA@mail.gmail.com>
+Subject: Re: [PATCH] Documentation/git-reflog: remove unneeded \ from \{
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/9/22 7:53 PM, Victoria Dye wrote:
-> Derrick Stolee wrote:
->> On 8/3/2022 9:45 PM, Victoria Dye via GitGitGadget wrote:
+On Mon, Aug 1, 2022 at 4:04 PM Glen Choo via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Glen Choo <chooglen@google.com>
+>
+> There are some inconsistencies with how different asciidoc environments
+> handle different combinations of "\{<>}", e.g. these results were
+> observed with asciidoc on two different environments:
+>
+>   | Input     | Output (env A) | Output (env B)   | same/different |
+>   |-----------+----------------+------------------+----------------|
+>   | \{<foo>\} | {&lt;foo&gt;}  | \{&lt;foo&gt;}^M | different      |
+>   | {<foo>}   | {&lt;foo&gt;}  | {&lt;foo&gt;}    | same           |
+>   | \{<foo>}  | {&lt;foo&gt;}  | \{&lt;foo&gt;}^M | different      |
+>   | \{foo\}   | {foo}          | {foo}            | same           |
+>   | \{\}      | {}             | \{}^M            | different      |
+>   | \{}       | {}             | {}               | same           |
+>   | {\}       | {}             | {}               | same           |
+>
+> The only instance of this biting us is "@\{<specifier>\}" in
+> Documentation/git-reflog.txt; all other combinations of "\{<>}" (e.g. in
+> Documentation/revisions.txt) seem to render consistently.
 
->>> +static int option_parse_diagnose(const struct option *opt,
->>> +				 const char *arg, int unset)
->>> +{
->>> +	enum diagnose_mode *diagnose = opt->value;
->>> +
->>> +	BUG_ON_OPT_NEG(unset);
->>> +
->>> +	if (!arg || !strcmp(arg, "basic"))
->>> +		*diagnose = DIAGNOSE_BASIC;
->>> +	else if (!strcmp(arg, "all"))
->>> +		*diagnose = DIAGNOSE_ALL;
->>
->> Should we allow "none" to reset the value to DIAGNOSE_NONE?
-> 
-> As far as I can tell, while some builtins have options that  match the
-> default behavior of the command (e.g., '--no-autosquash' in 'git rebase'),
-> those options typically exist to override a config setting (e.g.,
-> 'rebase.autosquash'). No config exists for 'bugreport --diagnose' (and I
-> don't think it would make sense to add one), so '--diagnose=none' would only
-> be used to override another '--diagnose' specification in the same
-> command/alias (e.g., 'git bugreport --diagnose=basic --diagnose=none'). 
+So, I did some investigation. {} are used for attributes, if you do
+{manversion} that will be replaced by the manversion attribute (which
+we are setting), but if you do {foobar} (an attribute that doesn't
+exist) different implementations will do different things, what you
+should do is \{foobar} as that's how the documentation says you should
+escape attributes [1].
 
-Ah, so --diagnose=none isn't valuable because --no-diagnose would be
-the better way to write the same thing. You would need to remove the
-PARSE_OPT_NONEG from your OPT_CALLBACK_F() to allow that (and then do
-the appropriate logic with the "unset" parameter).
+In 552cecc214 (Teach "git reflog" a subcommand to delete single
+entries, 2007-10-17) it was {specifier} which could have been an
+attribute and thus should be quoted, but in 49cbad0edd (doc: express
+grammar placeholders between angle brackets, 2021-11-06) it was
+changed to {<specifier>} and that apparently cannot be an attribute,
+so it should not be quoted.
 
-The reason to have these things is basically so users can create
-aliases (say 'git br' expands to 'git bugreport --diagnose=all', but
-they want to run 'git br --no-diagnose' to clear that --diagnose=all).
+We shouldn't be using verses for this kind of stuff though, since we
+want the whole thing displayed as-is, it's better to use literal
+blocks [2], but that's a bigger change.
 
-Thanks,
--Stolee
+For now it should be:
+
+  @{<specifier>}
+
+So the patch is correct. ACK.
+
+Cheers.
+
+[1] https://docs.asciidoctor.org/asciidoc/latest/attributes/reference-attributes/
+[2] https://docs.asciidoctor.org/asciidoc/latest/verbatim/literal-blocks/
+
+-- 
+Felipe Contreras
