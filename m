@@ -2,110 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEFE2C19F2D
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 00:31:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AB6BC19F2D
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 01:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbiHJAbT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Aug 2022 20:31:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40974 "EHLO
+        id S229881AbiHJBGa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Aug 2022 21:06:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbiHJAbS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Aug 2022 20:31:18 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C2067170C
-        for <git@vger.kernel.org>; Tue,  9 Aug 2022 17:31:17 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id c19-20020a17090ae11300b001f2f94ed5c6so2207518pjz.1
-        for <git@vger.kernel.org>; Tue, 09 Aug 2022 17:31:17 -0700 (PDT)
+        with ESMTP id S229476AbiHJBG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Aug 2022 21:06:29 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F248552E45
+        for <git@vger.kernel.org>; Tue,  9 Aug 2022 18:06:26 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id a14-20020a0568300b8e00b0061c4e3eb52aso9645795otv.3
+        for <git@vger.kernel.org>; Tue, 09 Aug 2022 18:06:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=1cWbBMnYGvTu/poKXn8Ks0WaaikGVryt1dnpwH5crrA=;
-        b=DTSMBit3zVGa4QGpHaccYxJwgrEYjU0yITcrV2zUidFCMT5W5zX1pwe+/njCfr75AW
-         7L4pbc39HjkBML2ZCDcT79/B9XeLx2cae3ZfLWvau/+6mqeHmDCJqgYXrNP/jn3ktt6d
-         G1hlVFcXWyPiD9LQeAbfMl19yOX4ldLWqMp/bnBTf2+flJHdV2j8liz7saMJgI+0i5RK
-         p+tH2MZMmCWZWPAtonhBUNf0+SoBadXODYkI4S+ct+XdR+SWZabPdKP9RgkgHwUjVL69
-         2G826hVNc+9erX0J+9qWkJyNUOsjEoUh3bIoeI/N84f2zvsZ4Q5L7nE7SoL6Msv660PF
-         6IJA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=D4FlIkkXrCdtcdNqEwFDRzGtpFjLD3HtkJQ+kMg2fjA=;
+        b=VyHExGimGTv4YFxzNjHUPBzJMBsoCxwFtnEC/0XnvjRJYq/UZZLMuBQSPXT9ISvzYT
+         KHFiGnmes68JK7OuG3Wo/nsKSvAwJhVBapmtTVhuGhZF+qyDfO/WDPs8CZ3a/S8AdkIv
+         GtCVbPWjyu9i38kD9WQ5u+Xx2VXNNP/x+MSzVt+7Bq8acjaxyU5+/moraOJjNixFUw9+
+         xJjTvjAhyB37cmBQuepI+y83wV0JFIrXd4lsGKPGgfAQn8B+ctn1tNpUp+pQ6eu+XQRt
+         D2SaLFL0Al+BqJK3pxCNos9bfZa+ZANTiG6vy7Lb95XGRcPvOFegVEzhBuSV5Ib4Tr+A
+         9C4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=1cWbBMnYGvTu/poKXn8Ks0WaaikGVryt1dnpwH5crrA=;
-        b=6CExwXlfirvj/cm/GbAyzAVeM5yByZEt2wdEjL+Zp/4JR+a6LsoSsF2fJgRAWRehnY
-         XLcYI8+6oWKkhKtG7LsdwGNs/eWiqVs5N43jv5W52ycz1rUW92dcqgfxIJfCemVWuuZC
-         +F7LpQ63QVhxNlDqngtbMf7gx7QxIMkv+WJutZGFIGbjvcugOQQaG28MtTePDEDEeQyc
-         ygCVgUu7kJPtqW6ABG2juvkNs11oCeAnyc/MD1jgcTPjR26UME91VvyhUV7DVQqcDj0Z
-         xXtDO03Yk/IL+uqnn0mvQwZgkacvty0IeLQEYSbrZkPd4k9gp9NPQc3R5V1YHSHe4tMj
-         o/ug==
-X-Gm-Message-State: ACgBeo0O2liFYc5iY70kmEozVr986nl8Yb9T3NlBxC81okFfMOT6eQ5t
-        kSzI6j9Z31nvQXe4MWmMZKo=
-X-Google-Smtp-Source: AA6agR4FZXTtOwx+gJrQ+RX4xubnqPePNH2MjWRFeGoB2mm+R3nD51p8wdgRkFeUhmetZUUzMlc0Uw==
-X-Received: by 2002:a17:902:db0f:b0:16f:24e4:15ff with SMTP id m15-20020a170902db0f00b0016f24e415ffmr25677342plx.10.1660091476506;
-        Tue, 09 Aug 2022 17:31:16 -0700 (PDT)
-Received: from [127.0.0.1] ([45.138.210.17])
-        by smtp.gmail.com with ESMTPSA id k17-20020a634b51000000b0041dd4ea6242sm1257086pgl.63.2022.08.09.17.31.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Aug 2022 17:31:16 -0700 (PDT)
-Message-ID: <5b093198-8dc0-6dcc-8a3b-6762b6dc11bf@gmail.com>
-Date:   Wed, 10 Aug 2022 08:31:10 +0800
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=D4FlIkkXrCdtcdNqEwFDRzGtpFjLD3HtkJQ+kMg2fjA=;
+        b=uUzMx3YMhLR+FjLGmTkuoheRuskzrD4Y381vllRMyyni7aKJ7i9GvjskpDIKQRsyn1
+         IrRQ81cU642hKB+tIpWWtlfI2O6/8wE6Znfig/pmkQeyqX47y930ZMM5SpQej1hc8rbQ
+         WqMVt8ybr+SojFj+nTKRdisRCWQrDtlnCo47Gw7mGAChuFCxC1oDnCylL95eGKJyQFEq
+         hnfPj5V/Rx2TxJVDDLJY8RPlHV4CEMaxzMhplokYMFsI6Dc/eZ8YTOkTOzmQz6Kqsoti
+         ItwnRpqAhxSv4LKKqVfrIW+M5WOBK2CUfAidDRUsK/9YntlDqkuLC0W+xhemWc5b3Gna
+         BkYQ==
+X-Gm-Message-State: ACgBeo3gj4TVbv0o0W9Gb4+URawBHMBJ1G/fG5sgTgv5jrVn7h1pEggs
+        2K5+UOcm9z0u56qCrLPvhOelm2wJ3CNWGzKnE8s=
+X-Google-Smtp-Source: AA6agR7MVauPSibh8hms09y+KDBFgBCgb2caoZD5uUM1yr83FbqiOVOSP5viC83Kb0Fv7g1l5kjZpBa3IpnTptm0ls0=
+X-Received: by 2002:a05:6830:2b1e:b0:61c:b444:f1a8 with SMTP id
+ l30-20020a0568302b1e00b0061cb444f1a8mr9505175otv.31.1660093586326; Tue, 09
+ Aug 2022 18:06:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 0/4] rm: integrate with sparse-index
-Content-Language: en-US
-To:     Victoria Dye <vdye@github.com>, git@vger.kernel.org
-Cc:     derrickstolee@github.com
-References: <20220803045118.1243087-1-shaoxuan.yuan02@gmail.com>
- <20220807041335.1790658-1-shaoxuan.yuan02@gmail.com>
- <8a76428d-e236-88bc-ec67-356b4c6f67fa@github.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-In-Reply-To: <8a76428d-e236-88bc-ec67-356b4c6f67fa@github.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <pull.1301.git.git.1659543457.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1301.git.git.1659543457.gitgitgadget@gmail.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Wed, 10 Aug 2022 09:06:14 +0800
+Message-ID: <CANYiYbFc6xywoCPgge+RMb6Scr8JwS2f=n65XG2jupHS-w2jLw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] refs-advertise: add hook to filter advertised refs
+To:     Sun Chao via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Sun Chao <16657101987@163.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/10/2022 8:27 AM, Victoria Dye wrote:
- > Shaoxuan Yuan wrote:
- >> ## Changes since PATCH v1 ##
- >>
- >> 1. Move `ensure_not_expanded` test from the first patch to the last one.
- >>
- >> 2. Mention the parameter of `pathspec_needs_expanded_index()` is
- >>    changed to use `struct index_state`.
- >>
- >> 3. Modify `ensure_not_expanded` method to record Git commands' stderr
- >>    and stdout.
- >>
- >> 4. Add a test 'rm pathspec expands index when necessary' to test
- >>    the expected index expansion when different pathspec is supplied.
- >>
- >> 5. Modify p2000 test by resetting the index in each test loop, so the
- >>    index modification is properly tested. Update the perf stats using
- >>    the results from the modified test.
- >>
- >> ## PATCH v1 info ##
- >>
- >> Turn on sparse-index feature within `git-rm` command.
- >> Add necessary modifications and test them.
- >
- > Other than a completely optional recommendation on commit ordering 
-[1], I didn't have any comments on any individual patches. This series 
-looks good to me!
- >
- > [1] 
-https://lore.kernel.org/git/2c0cb658-cd5a-420a-d313-6839149b9b40@github.com/
+On Thu, Aug 4, 2022 at 12:31 AM Sun Chao via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> Gerrit is implemented by JGit and is known as a centralized workflow system
+> which supports reference-level access control for repository. If we choose
+> to work in centralized workflow like what Gerrit provided, reference-level
+> access control is needed and is possible if we add a reference advertise
+> filter hook just like what Gerrit did.
+>
+> This hook would be invoked by 'git-receive-pack' and 'git-upload-pack'
+> during the reference discovery phase and the commit fetching phase, each
+> reference and will be filtered by this hook. Git server can put
+> reference-level control process to this hook and the git client does not
+> need to change or known about that.
 
-Thanks for reviewing! :)
-I think I'll just leave the commit ordering as-is.
+From the document you provided in patch 3/3, the hook returns not only
+names of the references, but also OIDs. Since the oid of reference
+should be provided as-is during the advertising phase, it is
+sufficient for the hook to just return the visible reference names.
+
+How about:
+1. Implement a batch version of "ref_is_hidden()", such as
+    "refs_batch_hidden()", to turn on or turn off the hidden bit
+    for all references.
+
+2. If there is an external hook, such as "hide-refs", call it instead
+    of the config variables such as "transfer.hideRefs" to filter refs
+    based on ACL and operations (read and write).
 
 --
-Thanks,
-Shaoxuan
-
-
-
+Jiang Xin
