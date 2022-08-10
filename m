@@ -2,144 +2,226 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1505C00140
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 16:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47A03C00140
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 16:49:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232171AbiHJQrp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 12:47:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50014 "EHLO
+        id S231867AbiHJQtg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 12:49:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232763AbiHJQrk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 12:47:40 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A0BD2715C
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 09:47:33 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id i84so12607363ioa.6
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 09:47:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=ku9PPi1JzwafE/jDnCp8MvmVCOySxyO372iIMETsB6g=;
-        b=GOCayrDFW5z5XixBzcm3ept9q6w4aAWTMWQVxjrntGlYKkrVzIFw1Hu6Bf+TIvWqe3
-         1U5Biz1XcAHDTwoIQpkBCBLZRyaRRvs8LBj+BdAJlqaXUi2xqW14Fs/srBBOO66IzTZF
-         q43ChF+yf5EzBxyGRy4F3AJ3IFkc4KkUcn4Q8zn40c8yqTBnkXpRGMd581LCa3y5Mx0p
-         y2tEDrShE4AiDHlBPyzB3cQLaR/iuDl4MNN6PLZ6nB4R6hQA03ToSjxAWRaCfqQht/el
-         p2DSO1HTWnEzoZ0SAJPAUYwxOJ0ftPvf3fV8hMK3yLZqIZiREL9KeZ4z2mVXHKBmdv1t
-         4c+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=ku9PPi1JzwafE/jDnCp8MvmVCOySxyO372iIMETsB6g=;
-        b=4QkPGgkvX2XSfeTSLD14XRjlf0D2plyA2SatpBjL8pUCN+jIQA0VJJ1qHeq/dRXh6U
-         67PLjR6+BjHuSjd4N9U6TqZHB0rQqEQ5YXkb4ydJ9KfY6hFW58vWXh0ML+7HFeLPOxis
-         iX+Yy9rCwwoYfRATrTkiXdR+zADEypk/5YIgYFU8u880r1h2oTBYZK8k9txHcBE2oB7R
-         nnl1UnKWgbP7CzQxuxtjJkazfeUwmghhoeadu84vFO5Fqc9epgXqMl1RgVzzoQ0nTt1N
-         RKtxcqqC5kaloYqyLXS9NChxSciczuDPPDZmgQkpeVPlpXY6isPjXjrBeRsGqkCczAWl
-         H0AA==
-X-Gm-Message-State: ACgBeo30SJOK/6340V3lHyt5VRreghh+calcAPwh2MnYM4qK+Uzdwup0
-        7lDqdB5D01+X3GODkX+JiUZl
-X-Google-Smtp-Source: AA6agR48pjF8/7fyHQxerk+I+ZI4SwcIqkG6TjzX4ny0mJYBClMtqXsKxmbdH/uz3iMaEZKg5awcpw==
-X-Received: by 2002:a05:6602:14cb:b0:684:f359:41bb with SMTP id b11-20020a05660214cb00b00684f35941bbmr4823435iow.69.1660150052532;
-        Wed, 10 Aug 2022 09:47:32 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:51d1:38a9:eee4:f5d1? ([2600:1700:e72:80a0:51d1:38a9:eee4:f5d1])
-        by smtp.gmail.com with ESMTPSA id bg12-20020a0566383c4c00b0033f4b1c2151sm7578079jab.154.2022.08.10.09.47.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Aug 2022 09:47:32 -0700 (PDT)
-Message-ID: <87b19226-2542-2ea0-e16a-ce8e57d6b589@github.com>
-Date:   Wed, 10 Aug 2022 12:47:31 -0400
+        with ESMTP id S230366AbiHJQtf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 12:49:35 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A58F24BCA
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 09:49:34 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 44BC7131502;
+        Wed, 10 Aug 2022 12:49:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=m73QkxVCL4+yML4NwTG6PLxTb8y6dUkcmdsnmP
+        Xilkc=; b=jZGlm+40K+1VCL9rwbFinvITiWsN9tQjhj+jYNyVCrnqYEIwaUIvMQ
+        iIHUW9HDxN43YGfyMV+YCVAhrZVxh4dUpBwN5K5DI9fsw6d8QdDMHYFBDIywE6MG
+        YhXa8BKAhiGUgzXvWJX/5k1DCYohBy9282JzGmsgIpGXsAtNLixiY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B855131501;
+        Wed, 10 Aug 2022 12:49:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5067F131500;
+        Wed, 10 Aug 2022 12:49:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Cc:     git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH] fsmonitor: option to allow fsmonitor to run against
+ network-mounted repos
+References: <pull.1317.git.1660067049965.gitgitgadget@gmail.com>
+Date:   Wed, 10 Aug 2022 09:49:31 -0700
+In-Reply-To: <pull.1317.git.1660067049965.gitgitgadget@gmail.com> (Eric
+        DeCosta via GitGitGadget's message of "Tue, 09 Aug 2022 17:44:09
+        +0000")
+Message-ID: <xmqqmtccniw4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 08/10] builtin/bugreport.c: create '--diagnose' option
-Content-Language: en-US
-To:     Victoria Dye <vdye@github.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>
-References: <pull.1310.git.1659388498.gitgitgadget@gmail.com>
- <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
- <d81e7c10997e9e8dc211d241019fbafa6b25fb04.1659577543.git.gitgitgadget@gmail.com>
- <3dc402e1-1f27-8a24-544d-d90d403a7da0@github.com>
- <a45f5693-7186-2953-6620-3f1359a12238@github.com>
- <77f445f7-3934-c165-3160-e09d7b884774@github.com>
- <19fe9b29-a860-fb59-ecb4-0d72b61167fe@github.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <19fe9b29-a860-fb59-ecb4-0d72b61167fe@github.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6878DA20-18CC-11ED-B1C5-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/10/2022 12:13 PM, Victoria Dye wrote:
-> Derrick Stolee wrote:
->> On 8/9/22 7:53 PM, Victoria Dye wrote:
->>> Derrick Stolee wrote:
->>>> On 8/3/2022 9:45 PM, Victoria Dye via GitGitGadget wrote:
->>
->>>>> +static int option_parse_diagnose(const struct option *opt,
->>>>> +				 const char *arg, int unset)
->>>>> +{
->>>>> +	enum diagnose_mode *diagnose = opt->value;
->>>>> +
->>>>> +	BUG_ON_OPT_NEG(unset);
->>>>> +
->>>>> +	if (!arg || !strcmp(arg, "basic"))
->>>>> +		*diagnose = DIAGNOSE_BASIC;
->>>>> +	else if (!strcmp(arg, "all"))
->>>>> +		*diagnose = DIAGNOSE_ALL;
->>>>
->>>> Should we allow "none" to reset the value to DIAGNOSE_NONE?
->>>
->>> As far as I can tell, while some builtins have options that  match the
->>> default behavior of the command (e.g., '--no-autosquash' in 'git rebase'),
->>> those options typically exist to override a config setting (e.g.,
->>> 'rebase.autosquash'). No config exists for 'bugreport --diagnose' (and I
->>> don't think it would make sense to add one), so '--diagnose=none' would only
->>> be used to override another '--diagnose' specification in the same
->>> command/alias (e.g., 'git bugreport --diagnose=basic --diagnose=none'). 
->>
->> Ah, so --diagnose=none isn't valuable because --no-diagnose would be
->> the better way to write the same thing. You would need to remove the
->> PARSE_OPT_NONEG from your OPT_CALLBACK_F() to allow that (and then do
->> the appropriate logic with the "unset" parameter).
-> 
-> I'm not sure I follow. I wasn't suggesting a difference in value between
-> '--no-diagnose' and '--diagnose=none'. My point was that, when there's an
-> option variant that "resets" the value to the default (like
-> '--no-autosquash', '--no-recurse-submodules', etc.), it usually *also*
-> corresponds to an overridable config setting ('rebase.autosquash',
-> 'push.recurseSubmodules'). No such 'bugreport.diagnose' config exists (or,
-> IMO, should exist), so the need for a "reset to default" option seemed
-> weaker. 
+"Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-You're right that these make the most sense when there can be a
-non-CLI source of a setting to unset, which is a better reason than
-the alias reason I gave.
- 
-> I used boolean options as my examples, but they aren't intended to imply a
-> meaningful difference between '--no-diagnose' amd '--diagnose=none'.
-> 
->>
->> The reason to have these things is basically so users can create
->> aliases (say 'git br' expands to 'git bugreport --diagnose=all', but
->> they want to run 'git br --no-diagnose' to clear that --diagnose=all).
-> 
-> I considered that usage ("'--diagnose=none' would only be used to override
-> another '--diagnose' specification in the same command/alias"), but wasn't
-> sure how common it would be for this particular option. It sounds like you
-> can see it being useful, so I'll include '--diagnose=none' in the next
-> version.
+> Most modern Samba-based filers have the necessary support to enable
+> fsmonitor on network-mounted repos.
 
-This change would make it easier to add a config option in the future,
-though I doubt we will need it as 'git bugreport' should be used too
-infrequently to want to set up such config in advance.
+My impression from the earlier discussion [*] was that having the
+necessary support and the support working well are two different
+things, and the network mounted directory being served via SMB was
+not enough sign of the latter.
 
-Thanks,
--Stolee
+https://lore.kernel.org/git/16832f8a-c582-23bb-dda9-b7b2597a42eb@jeffhostetler.com/
+
+I do not do Windows, so I'll leave it up to the experts, but if
+everybody who talks SMB behaves well, then the updated code that
+enables fsmonitor for SMB talkers and disables it for all other
+remotely mounted directories, with a configuration override, does
+sound like a good way to go.  I think the new code in check_remote()
+is broken, though (see below).
+
+> +/*
+> + * Check if monitoring remote working directories is allowed.
+> + *
+> + * By default monitoring remote working directories is not allowed,
+> + * but users may override this behavior in enviroments where they
+> + * have proper support.
+> +*/
+
+All existing multi-line comments in this file (and properly
+formatted ones for this project) ends with "*/" where the asterisk
+aligns with the asterisk on the previous line.  
+
+The three-line design goal is well written, but as you are special
+casing SMB, perhaps
+
+	By default, monitoring remote working directories is
+	disabled unless on a network filesystem that is known to
+	behave well.  Users may override ...
+
+or something like that may be warranted.
+
+> +static enum fsmonitor_reason check_allow_remote(struct repository *r)
+> +{
+> +	int allow;
+> +
+> +	if (repo_config_get_bool(r, "fsmonitor.allowremote", &allow) || !allow)
+> +		return FSMONITOR_REASON_REMOTE;
+> +
+> +	return FSMONITOR_REASON_OK;
+> +}
+
+This is not wrong per se, but it probably is easier to follow if you
+write them the other way around.
+
+	if (!repo_config_get_bool(..., &allow) && allow)
+		return FSMONITOR_REASON_OK;
+
+	return FSMONITOR_REASON_REMOTE;
+
+After all, as the big comment before the function says, by default
+we deny and only on exceptions we allow.
+
+Actually, the above is not quite right.  You'd probably want a "not
+set" or "undecided" bit.  I.e. something like
+
+	if (!repo_config_get_bool(..., &allow))
+		return allow ? FSMONITOR_REASON_OK : FSMONITOR_REASON_REMOTE;
+
+	return FSMONITOR_REASON_UNDECIDED; /* invented... */
+
+> +/*
+> + * Check if the remote working directory is mounted via SMB
+> + *
+> + * For now, remote working directories are only supported via SMB mounts
+> +*/
+
+"*/" -> " */".
+
+> +static enum fsmonitor_reason check_smb(wchar_t *wpath)
+> +{
+> +	HANDLE h;
+> +	FILE_REMOTE_PROTOCOL_INFO proto_info;
+> +
+> +	h = CreateFileW(wpath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
+> +					FILE_FLAG_BACKUP_SEMANTICS, NULL);
+> +
+> +	if (h == INVALID_HANDLE_VALUE) {
+> +		error(_("[GLE %ld] unable to open for read '%ls'"),
+> +		      GetLastError(), wpath);
+> +		return FSMONITOR_REASON_ERROR;
+> +	}
+> +
+> +	if (!GetFileInformationByHandleEx(h, FileRemoteProtocolInfo,
+> +									&proto_info, sizeof(proto_info))) {
+
+Overly deep indentation that unnecessarily causes an overly long
+line. "&" in "&proto_info" should align with "h" in
+"...HandleEx(h,", we use fixed-width font, and our tab-width is 8.
+
+The second line of CreateFileW() call is also overly indented and
+may want to be fixed, but it does not overly extend to the right end
+of the display (we aim to fit in 80-columns, as CodingGuideline says)
+so it would be nice if it gets fixed, but it may be tolerated.  This
+one is not.
+
+> +		error(_("[GLE %ld] unable to get protocol information for '%ls'"),
+> +		      GetLastError(), wpath);
+
+This line gets it right ;-)
+
+> +		CloseHandle(h);
+> +		return FSMONITOR_REASON_ERROR;
+> +	}
+> +
+> +	CloseHandle(h);
+> +
+> +	if (proto_info.Protocol == WNNC_NET_SMB)
+> +		return FSMONITOR_REASON_OK;
+> +
+> +	return FSMONITOR_REASON_ERROR;
+
+Is it?  Shouldn't it be REASON_REMOTE, not ERROR?  Unlike the
+earlier case where you couldn't figure out the protocol information,
+at this point you know you learned what protocol is in use, and it
+is just that the protocol was not what you liked.
+
+> +}
+> +
+>  /*
+>   * Remote working directories are problematic for FSMonitor.
+>   *
+> @@ -76,6 +128,7 @@ static enum fsmonitor_reason check_vfs4git(struct repository *r)
+>   */
+>  static enum fsmonitor_reason check_remote(struct repository *r)
+>  {
+> +	enum fsmonitor_reason reason;
+>  	wchar_t wpath[MAX_PATH];
+>  	wchar_t wfullpath[MAX_PATH];
+>  	size_t wlen;
+> @@ -115,7 +168,11 @@ static enum fsmonitor_reason check_remote(struct repository *r)
+>  		trace_printf_key(&trace_fsmonitor,
+>  				 "check_remote('%s') true",
+>  				 r->worktree);
+> -		return FSMONITOR_REASON_REMOTE;
+> +
+> +		reason = check_smb(wfullpath);
+> +		if (reason != FSMONITOR_REASON_OK)
+> +			return reason;
+> +		return check_allow_remote(r);
+
+This does not fulfill the promise you made in front of
+check_allow_remote().  As we saw, check_smb() returns something
+other than REASON_OK when it is talking to a remote that is not SMB,
+and when that happens, you are not giving check_allow_remote() a
+chance to intervene and override.  It should be more like
+
+	reason = check_allow_remote(r);
+        if (reason == FSMONITOR_REASON_OK || reason == FSMONITOR_REASON_REMOTE)
+		return reason;
+	/*
+	 * check_allow_remote() did not decide, so use the default
+	 * based on the network filesystem.
+	 */
+	return check_smb(wfullpath);
+
+I would think.
+
+>  	}
+>  
+>  	return FSMONITOR_REASON_OK;
+>
+> base-commit: c50926e1f48891e2671e1830dbcd2912a4563450
