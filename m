@@ -2,92 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 509B8C00140
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 11:42:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65D80C00140
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 12:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231190AbiHJLmD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 07:42:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40508 "EHLO
+        id S232097AbiHJMrh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 08:47:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbiHJLmB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 07:42:01 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EF5D77574
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 04:41:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1660131713;
-        bh=UZSRk0GGYiXFAWUxNdfMYzasNp1/DySAW0pNgooa4Oo=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=oBuRNoKGY0mwN4xkrzS2k+cfYBwV7pqkVVVJGN/B4FbQbnotykZhTVjno3YN/rSpO
-         qep0Sv3Pk4/D8ksINBiWkxr9BRW1Cy0GDD4zLM0TgVZhwQhKE63N9p6OJMemhnEZPH
-         xuW7OktewtqgoXVR9XmwROF42Q/oK/sdKcZmoVXE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N3Xjb-1nLHv80G2d-010DQc; Wed, 10
- Aug 2022 13:41:53 +0200
-Date:   Wed, 10 Aug 2022 13:41:51 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Alexander Meshcheryakov <alexander.s.m@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
-Subject: Re: [BUG] Unicode filenames handling in `git log --stat`
-Message-ID: <20220810114151.uhaun5gbknd5btyz@tb-raspi4>
-References: <20220809182045.568598-1-calvinwan@google.com>
- <xmqqsfm4prqk.fsf@gitster.g>
- <20220810084017.gnnodcbt5lyibbf6@tb-raspi4>
- <CA+VDVVUKf48Q9A0hWPnBE+qG_7tBDuXKkdo+wWDU7iC3Wg=oEg@mail.gmail.com>
- <20220810095157.wo4jaumtu47qplsb@tb-raspi4>
+        with ESMTP id S229501AbiHJMrf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 08:47:35 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E34FC760E1
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 05:47:34 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id v23so484427qkv.3
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 05:47:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=1imRXOnzn0nMictMncuXczTI9HzyhJbL4KAu5gnnGN8=;
+        b=A1CJp2gy0mJAPyqduCRn6WrXPIT+gaj3rbuj8NzCFY/S6xwr1e3j/EDvkPbiXA6/T8
+         hs1PpCL2sLBw46L00AZMpXDZicp9stGS7nFjaAH2SNVUkG+Wd73qa8Bzci2Q1M7gpcIS
+         elc7D+kwtPm1tg9v+rI0Fh1/DyyHp2WditvkqtNrYwmTUORyYzTuINNFR4sfZpGdbjbm
+         jm5XtsV9/MncoW6r3C4Y4TOQgb/ahdPzv6GTMqtGAXbhKoYw/Wu+iqZQbeKUW7zFgYIm
+         9wKC/FC8olvhKRn1edNByq5DLNlhBjFqsaV7p/ONHrNfG5pmvNWTaLoy6WQfD4W4tRPk
+         jMQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=1imRXOnzn0nMictMncuXczTI9HzyhJbL4KAu5gnnGN8=;
+        b=ixaaFwLLNj9qgzt0lT/inr0qiS7OOwuKadfXeQMMIQ3ha9QtykHmEVSjv+/6YFR6Tp
+         Wc9oQDNYYLuG4qRNaOoXOvZ6PbK7yvXS83tH+G7Bx5ydsHOtFcv39ZOk3l47A+Ey+39Z
+         qhMaUSHv/FoR0uWmKi6WbMN1H0/+K3MF/1OJl0jpHFCJ6yv3MvICj/Dmti7V8GR/xWoB
+         GCjzf+paFMZeUcg09RTfdoFOe0eW5pv311eYkx8HBC9m20/EpsLHK/An4Fzov01UGw6L
+         ZavnnT8dlI2NXStu5YEt0N4Ij83WR4vkwhK7rZd2h7wYC0IW1PxgyX6oNglBuW8eZE7c
+         uV8Q==
+X-Gm-Message-State: ACgBeo124RWb6qiqcetU49B/wyoPvwv1aYrU5IZag7U3KGquK7VktuAA
+        4aV+th5Xurhgb+ulDfLhgwwu
+X-Google-Smtp-Source: AA6agR7zM+WWROIaglIz839h9eYJssvuq9KA1rUrFuihZEvYHi/UQWlbsTPw7a6e92BnQAkhfOrxAQ==
+X-Received: by 2002:a05:620a:150d:b0:6b9:9104:2ec6 with SMTP id i13-20020a05620a150d00b006b991042ec6mr3992953qkk.452.1660135654047;
+        Wed, 10 Aug 2022 05:47:34 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:91c5:d5d6:a070:72da? ([2600:1700:e72:80a0:91c5:d5d6:a070:72da])
+        by smtp.gmail.com with ESMTPSA id m16-20020a05620a24d000b006b8cff25187sm14478487qkn.42.2022.08.10.05.47.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Aug 2022 05:47:33 -0700 (PDT)
+Message-ID: <afc04510-3c68-0226-b366-f541ca933a14@github.com>
+Date:   Wed, 10 Aug 2022 08:47:32 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220810095157.wo4jaumtu47qplsb@tb-raspi4>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:2J+FiR8hdnmAnCwWjIIrIq4W+0nRQC4qK37kgrZSoXBceKYU+qp
- FzfVtFQzdsWIQTi8Cvy5Gx/Zy+PG+o1ybmkFderkt00cUwAznw/MjxHUIa1aqO/BcUsBF+R
- n7kfHpqMyFcNL9m4B80GB+Xs9DRypylBcKCqVeUoDkWeqOWuVYDsgtkMfszxAFIKlWex8So
- ocSdogGnQoNYrkR8DZ4PA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:DmT71jytZA8=:alKPV4rvMiHNXt2377Az81
- Cdkxxs0Sph8PsN+aEyP/xsftQyTuadPEStQMEy6NqUSMJOao7OfC1w4/iPu0OjDo6x7I4ObxA
- 2W69xr8+QU7vVVwGBQRfeNePLJUDVZ1z6qiixJuyXWCCJRvO2xJbE13pdSbu5wgjtRDbpQUq+
- KRckp4IOpdSpC//eC23MW3lB8uhJ6c0DFlElNfr/qVz3Rkq3nMmDeiRDxNd7C010sL+t6hpeH
- Bn1WKLB44VivTafnigqi+A6uHMEmxoiEjaZCq1k5rRW016xw64zALXiy7zm0ZOrFunDF2E0EE
- ahnDpFCrIJ/7HPDOSnKg1TQ8/XbYGPz013HcdGVei0FeGjC5dEPg/vtKEZnVRY0REy2H2k/0B
- 3twG7HnV31ZdkZahCSxrsnk7oPfCKBahoGO8EUpmpE+e7qIyHmBcZq01J4QjSiylJdeahcVr3
- iHazxKZhHy93cu7aMqmvtkeHa3X2iETA6fZshamU99z2frcgy2e2/rNFCHAiHYoVlvsak2xNC
- JIycETBViCMlWABKv+wxNkhHgPn1MhYrP4XiZXwGITyU/j5lw7QBWrwnjh5Rndxp+jpEVzIRI
- MEBBy46/U0epnkPICrin/eXRpdDOydMNteEnhGW188tgl9PgjeU5l3M7odaJMCcOfnqT9CARS
- 1sKlZOKuTZof6y8EJWEt+f0r8HTHyh98XftYkr9jsUE/2VkJmnea29GR4trxEYpPk2XkmH3D1
- 3RIziUJMrBOzp/rUzZIXmCHqKyG85xjiykJyQS62Fl2AOxVeBZUGC1d9uC1I+0eOTsO9RBCoY
- sRd4cf4ebQUMDbSjC7ANvvEa7FawJ8/p+NcpRhujXPjD5Zbnk42UDgq6EP/y1/7FtE4ClPJWD
- zLba7+NL2A953oUvo9Gpy19cLKuOBrilRUZkmZoGnJ07CYS5s5UEczT17xefXb3itORZD3IoS
- VBwv8dC866AyEt/MamGRFmtBuBoI+80j8NntK45aqN5wPvzRb4Gl/F8W2lmWuCbSda+EFnfAq
- 5Faumzc+HzQ6YsU47BILIQzQ/2hd4NBhrSVQYhs4L8+5yRjOa4DqBU0m2Lysw05/Deuf8rqyy
- iALJdd5TDn7Tqn7qd0YlR9q5g5Qo0lLB7fvEFwlVHdDqHkAKNxlCIfswg==
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.11.0
+Subject: Re: [PATCH v2 1/4] t1092: add tests for `git-rm`
+Content-Language: en-US
+To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
+Cc:     vdye@github.com
+References: <20220803045118.1243087-1-shaoxuan.yuan02@gmail.com>
+ <20220807041335.1790658-1-shaoxuan.yuan02@gmail.com>
+ <20220807041335.1790658-2-shaoxuan.yuan02@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <20220807041335.1790658-2-shaoxuan.yuan02@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 10, 2022 at 11:51:58AM +0200, Torsten B=F6gershausen wrote:
-> On Wed, Aug 10, 2022 at 12:56:11PM +0400, Alexander Meshcheryakov wrote:
->
-> Thanks for digging.
->
-> (And please, try to avoid top-posting here in this list)
->
-> > I believe I have found exact place where strlen is used incorrectly
-> > This is at diff.c:show_stats
-> >
-> > https://github.com/git/git/blob/c50926e1f48891e2671e1830dbcd2912a45634=
-50/diff.c#L2623
-> >
-> > It probably should be replaced with one of utf8_width, utf8_strnwidth
-> > or utf8_strwidth from utf8.c
->
+On 8/7/22 12:13 AM, Shaoxuan Yuan wrote:
 
-Please forget what I wrote earlier - I was running the wrong `git` binary =
-:-(
-Sorry for the noise.
+> +test_expect_failure 'rm pathspec outside sparse definition' '
 
-I can probably do more testing soonish.
+My only concern with this version is a minor one, and I didn't
+notice it until this version: this test_expect_failure.
 
+test_expect_failure doesn't help too much except to say "something
+fails in this test". It could be the very first command, or it
+could be the last.
+
+> +	init_repos &&
+> +
+> +	for file in folder1/a folder1/0/1
+> +	do
+> +		test_sparse_match test_must_fail git rm $file &&
+> +		test_sparse_match test_must_fail git rm --cached $file &&
+> +		test_sparse_match git rm --sparse $file &&
+> +		test_sparse_match git status --porcelain=v2
+> +	done &&
+> +
+> +	cat >folder1-full <<-EOF &&
+> +	rm ${SQ}folder1/0/0/0${SQ}
+> +	rm ${SQ}folder1/0/1${SQ}
+> +	rm ${SQ}folder1/a${SQ}
+> +	EOF
+> +
+> +	cat >folder1-sparse <<-EOF &&
+> +	rm ${SQ}folder1/${SQ}
+> +	EOF
+
+The difference you are demonstrating is that this output is
+different. I think that at the point of this patch, they are
+the same. The goal of this patch is to establish a common
+point of reference for the full index and sparse index cases.
+
+If everything below was "test_sparse_match" in this patch,
+then I believe the test would pass.
+
+The behavior changes when we enable the sparse index in the
+'rm' builtin. Demonstrating the changes to the test at that
+time helps collect all of the different ways behavior changes
+with a sparse index, making it really easy to audit what
+exactly is different between the modes.
+
+Another approach would be to integrate the sparse index with
+the builtin early, but keep the ensure_full_index() calls in
+certain places (so we still expand to a full index) and slowly
+add modes that do not expand. This is even trickier to do than
+to delay the test changes to the end.
+
+That said, finding out how to organize these tests is very
+difficult because there is a bit of a chicken-or-egg problem:
+How can we test the custom integration logic without enabling
+the sparse index across the entire builtin? How can we enable
+the sparse index across the builtin without having all of the
+integration logic implemented?
+
+So please take my ramblings here as food for thought, but not
+any need to make changes to this series. v2 looks good to me.
+
+Thanks,
+-Stolee
