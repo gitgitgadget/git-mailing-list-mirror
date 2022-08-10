@@ -2,101 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9480DC00140
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 19:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2843AC00140
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 19:53:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233111AbiHJTu2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 15:50:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47234 "EHLO
+        id S231499AbiHJTxs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 15:53:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229924AbiHJTu0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 15:50:26 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8083465808
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 12:50:25 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0AA6B19E522;
-        Wed, 10 Aug 2022 15:50:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RbQLl98ecWG3fR9MDgXySKhZb0p0UpQFasPiz4
-        c5ras=; b=acNjUAw2a6SiFVfZffIIMrMtxkWoz42PKgUn8btUmwoOBcx7yH+XcT
-        yr4ZpXTB6IGbJRpUODKqr1eNTptK+n7uiOQP+kFnQg/ZKuE87HwZvk8eOCLPTaHE
-        37soccFh1VRaSyelrPE8/W04f6YkD7g9kuNVD2JieRVYgNLsDyIao=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0291D19E521;
-        Wed, 10 Aug 2022 15:50:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5E05C19E520;
-        Wed, 10 Aug 2022 15:50:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric D <eric.decosta@gmail.com>
-Cc:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org,
-        Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH] fsmonitor: option to allow fsmonitor to run against
- network-mounted repos
-References: <pull.1317.git.1660067049965.gitgitgadget@gmail.com>
-        <xmqqmtccniw4.fsf@gitster.g>
-        <CAMxJVdH3B2An7La9knM=QJojQ334O+Z2-tqNvqRZz2Eu6CV+-w@mail.gmail.com>
-Date:   Wed, 10 Aug 2022 12:50:20 -0700
-In-Reply-To: <CAMxJVdH3B2An7La9knM=QJojQ334O+Z2-tqNvqRZz2Eu6CV+-w@mail.gmail.com>
-        (Eric D.'s message of "Wed, 10 Aug 2022 14:49:28 -0400")
-Message-ID: <xmqqbksrlvyb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S233258AbiHJTxX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 15:53:23 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65DA58C00E
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 12:53:22 -0700 (PDT)
+Received: (qmail 6726 invoked by uid 109); 10 Aug 2022 19:53:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Aug 2022 19:53:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15162 invoked by uid 111); 10 Aug 2022 19:53:21 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Aug 2022 15:53:21 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 10 Aug 2022 15:53:20 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] pipe_command(): mark stdin descriptor as non-blocking
+Message-ID: <YvQMsMv3EhiI/rTb@coredump.intra.peff.net>
+References: <xmqq5yjahb8u.fsf@gitster.g>
+ <YunxHOa2sJeEpJxd@coredump.intra.peff.net>
+ <a9953278-b15f-fd76-17b0-e949c7937992@web.de>
+ <YuquVEqEl6wxCLM7@coredump.intra.peff.net>
+ <41477326-5493-4d3c-246d-8a28969fa73e@web.de>
+ <Yu05GjncDaGRTgce@coredump.intra.peff.net>
+ <6854c54c-12ff-f613-4cdc-18b3b1a55ef1@web.de>
+ <b3310324-7969-f9fb-a2e0-46e881d37786@web.de>
+ <Yu/5LU+ZhbVRnSdM@coredump.intra.peff.net>
+ <0e1b8066-3f67-cec6-675a-05d2cf54c119@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AB0259DE-18E5-11ED-8A8B-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0e1b8066-3f67-cec6-675a-05d2cf54c119@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric D <eric.decosta@gmail.com> writes:
+On Wed, Aug 10, 2022 at 07:39:34AM +0200, René Scharfe wrote:
 
-> Makes sense. How about FSMONITOR_OVERRIDE_REQUIRED ? The error message
-> could then indicate that remote repos are normally unsupported but
-> that setting the fsmonitor.allowRemote flag overrides this behavior.
+> > So it's weird that you'd see EAGAIN in this instance. Either the
+> > underlying write() is refusing to do a partial write (and just returning
+> > an error with EAGAIN in the first place), or the poll emulation is wrong
+> > (telling us the descriptor is ready for writing when it isn't).
+> 
+> You're right, Windows' write needs two corrections.  The helper below
+> reports what happens when we feed a pipe with writes of different sizes.
+> On Debian on WSL 2 (Windows Subsystem for Linux) it says:
+> [...]
 
-I actually think check_allow_remote() should be renamed to have
-"config" somewhere in its name, and return -1, 0 or 1 and not "enum
-fsmonitor_reason".
+Thanks for digging into this further. What you found makes sense to me
+and explains what we're seeing.
 
-	static int check_config_allowremote(...)
-	{
-		int allow;
+> The two corrections mentioned above together with the enable_nonblock()
+> implementation for Windows (and the removal of "false") suffice to let
+> t3701 pass when started directly, but it still hangs when running the
+> whole test suite using prove.
 
-		if (repor_config_get_bool(..., &allow))
-			return allow;
-		return -1; /* undecided */
-	}
+Interesting. I wish there was an easy way for me to poke at this, too. I
+tried installing the Git for Windows SDK under wine, but unsurprisingly
+it did not get very far.
 
-then caller can do
+Possibly I could try connecting to a running CI instance, but the test
+did not seem to fail there! (Plus I'd have to figure out how to do
+that... ;) ).
 
-	switch (check_config_allowremote(...)) {
-	case 0: /* config overrides and disables */
-		return FSMONITOR_REASON_REMOTE;
-	case 1: /* config overrides and enables */
-		return FSMONITOR_REASON_OK;
-	default:
-		break; /* config has no opinion */
-	}
-        return check_smb(...);
+> I don't have time to investigate right now, but I still don't
+> understand how xwrite() can possibly work against a non-blocking pipe.
+> It loops on EAGAIN, which is bad if the only way forward is to read
+> from a different fd to allow the other process to drain the pipe
+> buffer so that xwrite() can write again.  I suspect pump_io_round()
+> must not use xwrite() and should instead handle EAGAIN by skipping to
+> the next fd.
 
-> If we do as you suggest above, then fsmonitor.allowRemote=true would
-> override regardless of the protocol being used.
+Right, it's susceptible to looping forever in such a case. _But_ a
+blocking write is likewise susceptible to blocking forever. In either
+case, we're relying on the reading side to pull some bytes out of the
+pipe so we can make forward progress.
 
-Exactly.  The code should not try to outsmart the user.
+The key thing is that pump_io() is careful never to initiate a write()
+unless poll() has just told us that the descriptor is ready for writing.
 
-If the user says they wants to use it on a particular remote, even
-if you do not know if that particular remote system works, just let
-them try and see if it works.  If it does not, they can easily
-disable, because the enabiling was a deliberate act by them in the
-first place.  They know how to fix it.
+If something unexpected happens there (i.e., the descriptor is not
+really ready), a blocking descriptor is going to be stuck. And with
+xwrite(), we're similarly stuck (just looping instead of blocking).
+Without xwrite(), a non-blocking one _could_ be better off, because that
+EAGAIN would make it up to pump_io(). But what is it supposed to do? I
+guess it could go back into its main loop and hope that whatever bug
+caused the mismatch between poll() and write() goes away.
 
-Thanks.
+But even that would not have fixed the problem here on Windows. From my
+understanding, mingw_write() in this case would never write _any_ bytes.
+So we'd never make forward progress, and just loop writing 0 bytes and
+returning EAGAIN over and over.
 
+So I dunno. We could try to be a bit more defensive about non-blocking
+descriptors by avoiding xwrite() in this instance, but it only helps for
+a particular class of weird OS behavior/bugs. I'd prefer to see a real
+case that it would help before moving in that direction.
+
+-Peff
