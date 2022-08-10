@@ -2,216 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6DAEC25B07
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 17:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 997B8C25B07
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 17:36:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233210AbiHJReq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 13:34:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39394 "EHLO
+        id S231954AbiHJRgG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 13:36:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233111AbiHJRem (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 13:34:42 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8847583F10
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 10:34:37 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9119014AC1B;
-        Wed, 10 Aug 2022 13:34:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=STQVS8kLvL6aLEKS1mQBZWNpILk0V9YgJuHFHK
-        Zs4Qw=; b=XMhRfLseW1rp3BI3+5NCs1A874/R/Pa2ZNpdNYemXiKPnvmtxp1ku9
-        zQcmA0yuXNytGziPK2VRsOq4ZH5iNjIA7rXDJm3RaVyfDC9IRSNVCedtJqcd9pAP
-        ixU1l3BcrcdcBSSx7Qxbbpoi0MFw3uU1RuioImMyjqs/XdMmecehA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 887EA14AC1A;
-        Wed, 10 Aug 2022 13:34:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.32])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F409214AC19;
-        Wed, 10 Aug 2022 13:34:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Li Linchao <lilinchao@oschina.cn>
-Subject: Re: [PATCH v4] rev-list: support human-readable output for
- `--disk-usage`
-References: <pull.1313.v3.git.1660111276934.gitgitgadget@gmail.com>
-        <pull.1313.v4.git.1660130072657.gitgitgadget@gmail.com>
-Date:   Wed, 10 Aug 2022 10:34:32 -0700
-In-Reply-To: <pull.1313.v4.git.1660130072657.gitgitgadget@gmail.com> (Li
-        Linchao via GitGitGadget's message of "Wed, 10 Aug 2022 11:14:32
-        +0000")
-Message-ID: <xmqqlerwm28n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S232665AbiHJRgE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 13:36:04 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03D806110D
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 10:36:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1660152956;
+        bh=uDQBGP+V326WM2+7iA+JhdahqhafiWop9S2+hruz4zs=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=lmIxnx3EwtuneQxHq9QFwDLjvTORMrFfDMQ0h4jf6YM/85pMF7l26Ebe8sfmWdOFG
+         H1Px3+dDjZ1LDWou0HSEzfrnBAYU1u+GgcdHA2JLPRwzXOAE3ZH/uE4OLPTB+PhEbA
+         EmFZxqnnFP5HGeC6PE7c2iUpxOvRWf+erMSvPoks=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MlLE9-1ngfy52HAD-00lW7j; Wed, 10
+ Aug 2022 19:35:56 +0200
+Date:   Wed, 10 Aug 2022 19:35:54 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Calvin Wan <calvinwan@google.com>,
+        Alexander Meshcheryakov <alexander.s.m@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [BUG] Unicode filenames handling in `git log --stat`
+Message-ID: <20220810173554.sl3bxtosnszygs5f@tb-raspi4>
+References: <20220809182045.568598-1-calvinwan@google.com>
+ <xmqqsfm4prqk.fsf@gitster.g>
+ <20220810084017.gnnodcbt5lyibbf6@tb-raspi4>
+ <xmqqiln0p01z.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B2CB0D68-18D2-11ED-B4D6-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqiln0p01z.fsf@gitster.g>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:Lkvrnnw7tmlNQitn+cUb2ynlkhdV4duySefD6lHle4+EqUbL7x0
+ 2YWhtg1IDJBl2HyAoiUg2BOw96qjbg5dWLLyHSO28wdwMFqnzsJ1TpBe70ZNWDvrMGrfdTK
+ UZZWIXv/U5qynyo6QYUFyZ3WwPanaQeY9Yqs9IfokCuMCI1UeLlgMNVNZ58EkWHdJ2yWuaF
+ 5zJTveBK2JVo+f2uweNIw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jMLiEC8OSs0=:YJNrZjpLrfd8rhYxPr3TdL
+ BYTuLfExLd6kFqsyM7DcublNisqPjzLPOytyym85R06787rRY5w/NqAxPbVGO+a3PLyZ8iPfd
+ //Vclnaur92kotpMryHHW7rZbSGWaVnxxF+YsY54NlygbalewWc95J0njIQAQkdbkb+dL5llO
+ e33yvQSVvbi94JELZZSAI+OJjJK76N3BWQj1DkKkFxtGgAxWb/xJAoEu564bx1N6z33ZM1dXH
+ 2JB2epx+orpXOhVvFcTEHgtxmU+woE2qk7UWhKjZ64wKnhPjvZUCZLzZsc66ujz68/P3lYn9v
+ NC91gdxiS1b/WiljH+jPJhIjceKvEPCTC09/7PxG5Rq/k6fDgzkJiCDFvGiswiTuBLLCsCeMC
+ 2v6VT3J6aJYkn8U8J12cH1wJruT8pyoxfeVAYWzUeFiAaJnrMwQyPaCYUyV/3+EkpC8E/m8Vw
+ Hd3WV+7ab/CUuy7/Pp0pnw8VnYd/QaLnSvJk9zh6P+iVZrMZp5tiX3lTiQIsLMkbjMC+RDY71
+ gO/6BkkTkzl8XaslsvPs+DHUJwdiVxXUYaaJVKmxHMezkz4Po8wcFdSSYambroSc3PBPDW9NV
+ SgKJUL2PEi2H8tQ5wgOb/rqdifLK916YnrOnCArGIWUvr667jI36anclkRYBN/cou2pEOoOAb
+ tNYKmxsTaJvIM2ED9JG79XOs1ta0PPXITreQhwyx2f5LBVws5VG+iDprsuPW0tNsHCz5o6yZA
+ dN0I3q0OZRtTAk4rJzFrxoMtNIjzj1QhTGxXreFSBJu585Vir6Q1YxKQK5hSt2ApMwUNkKtC9
+ XspzCtE3C9xa/tfL87wmJQPF0YAIPov364rQiF2X0uX4ntoLjZCjMQSsHNvTQfat4D9H4TSyf
+ 6iSDV+2zADusan/2LIeRV00BUmXHO56eO9ESwcGSUR2SLNjSXHwQJ20V0Ilw9zkY6bfqqHFXw
+ kyJ2I2rouN6Y94MPoju2gB3bo6EDOmPpxQ8qap8d5xOvQ3Wc9nSW2Hpja6GhBN2cW386nn6Jl
+ Gb1juj0pYh507Z2NLZ4P1YBO+0AzGtrzftu3ZqpX3MJmZ/lwkqvZvcYiSen3d5Y36S5uXYtIn
+ 2On5O5i5TEmbWaEwhr9dKAtJbh4Cc4pfNWjtCmeETKheB2fYy6Hij0n0g==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Li Linchao via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Aug 10, 2022 at 08:53:28AM -0700, Junio C Hamano wrote:
+> Torsten B=F6gershausen <tboegi@web.de> writes:
+>
+> >  git log --stat
+> > [snip]
+> >  Arger.txt  | 1 +
+> >  =C4rger.txt | 1 +
+> >    2 files changed, 2 insertions(+)
+> >
+> > From this very first experiment I would suspect that we use
+> > strlen() somewhere rather then utf8.c::git_gcwidth()
+>
+> Yeah, that does sound like the case, and quite honestly, knowing
+> that the diffstat code is way older than unicode-width code, which
+> was added by you in mid 2014, I am not all that surprised if we used
+> to use strlen() throughout and we still do by mistake.
+>
+> Thanks for a doze of sanity.
 
-> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-> index 195e74eec63..5d3880874fc 100644
-> --- a/Documentation/rev-list-options.txt
-> +++ b/Documentation/rev-list-options.txt
-> @@ -242,6 +242,7 @@ ifdef::git-rev-list[]
->  	to `/dev/null` as the output does not have to be formatted.
->  
->  --disk-usage::
-> +--disk-usage=human::
->  	Suppress normal output; instead, print the sum of the bytes used
->  	for on-disk storage by the selected commits or objects. This is
->  	equivalent to piping the output into `git cat-file
-> @@ -249,6 +250,8 @@ ifdef::git-rev-list[]
->  	faster (especially with `--use-bitmap-index`). See the `CAVEATS`
->  	section in linkgit:git-cat-file[1] for the limitations of what
->  	"on-disk storage" means.
-> +	When it accepts a value `human`, like: `--disk-usage=human`, this
-> +	means to print objects size in human readable format.
+Some 2 updates here:
+- The strlen() needs a replacement.
+  It looks as if the following patch helps:
 
-"When it accepts" sounds wrong, because it implies there are two
-cases, i.e. the user gives "--disk-usage=human" and the command
-somehow decides to accept it, or to reject it, which is not what is
-going on.  How about phrasing it more like ...
+/* somewhere in diff.c */
+static size_t screen_utf8_width(const char *start)
+{
+       const char *cp =3D start;
+       size_t remain =3D strlen(start);
+       size_t width =3D 0;
 
-    With the optional value `human`, on-disk storage size is shown
-    in human-readable string (e.g. 12.23 KiB, 3.50 MiB).
+       while (remain) {
+               int n =3D utf8_width(&cp, &remain);
+               if (n < 0)
+                       return strlen(start); /* not UTF-8 ? Use strlen() *=
+/
+               width +=3D n;
+       }
+       return width;
+}
 
-perhaps?
+@@ -2620,7 +2635,7 @@ static void show_stats(struct diffstat_t *data, stru=
+ct diff_options *options)
+                        continue;
+			                }
+					                fill_print_name(file);
+							-               len =3D strlen(file->print_name);
+							+               len =3D screen_utf8_width(file->print_name);
+							                if (max_len < len)
+									                        max_len =3D len;
 
-> @@ -46,6 +46,7 @@ static const char rev_list_usage[] =
->  "    --parents\n"
->  "    --children\n"
->  "    --objects | --objects-edge\n"
-> +"    --disk-usage | --disk-usage=human\n"
+@@ -2743,7 +2758,7 @@ static void show_stats(struct diffstat_t *data, stru=
+ct diff_options *options)
+                 * "scale" the filename
+		                  */
+				                  len =3D name_width;
+						  -               name_len =3D strlen(name);
+						  +               name_len =3D screen_utf8_width(name);
+						                  if (name_width < name_len) {
 
-Writing it like
 
-	"--disk-usage[=human]\n"
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Let's see if I can make a proper patch out of it.
 
-would be more in line with ...
+The second problem, and I hoped it wasn't, seems to be related to what
+you had digged out earlier.
 
->  "    --[no-]object-names\n"
+>Sounds like a symptom observable when the width computed by
+>utf8.c::git_gcwidth(), using the width table imported from
+>unicode.org, and the width the terminal thinks each of the displayed
+>character has, do not match (e.g. seen when ambiguous characters are
+>involved, https://unicode.org/reports/tr11/#Ambiguous).
 
-... this one.
-
-> @@ -368,6 +370,17 @@ static int show_object_fast(
->  	return 1;
->  }
->  
-> +static void print_disk_usage(off_t size)
-> +{
-> +	struct strbuf sb = STRBUF_INIT;
-> +	if (human_readable)
-> +		strbuf_humanise_bytes(&sb, size);
-> +	else
-> +		strbuf_addf(&sb, "%"PRIuMAX, (uintmax_t)size);
-> +	puts(sb.buf);
-> +	strbuf_release(&sb);
-> +}
-
-Hmph, I am not sure if we want to make it a helper like this.  The
-normal case does not need to prepare the string into a strbuf but
-just can send the output to the standard output stream.
-
-It is probably easy to fix, like so:
-
-	if (!human_readable) {
-		printf("%" PRIuMAX "\n", disk_usage);
-	} else {
-		strbuf sb = STRBUF_INIT;
-		strbuf_humanise_bytes(&sb, disk_usage);
-		puts(sb.buf);
-		strbuf_release(&sb);
-	}
-
->  static inline int parse_missing_action_value(const char *value)
->  {
->  	if (!strcmp(value, "error")) {
-> @@ -473,6 +486,7 @@ static int try_bitmap_disk_usage(struct rev_info *revs,
->  				 int filter_provided_objects)
->  {
->  	struct bitmap_index *bitmap_git;
-> +	off_t size_from_bitmap;
-
-Questionably named variable.
-
->  	if (!show_disk_usage)
->  		return -1;
-> @@ -481,8 +495,8 @@ static int try_bitmap_disk_usage(struct rev_info *revs,
->  	if (!bitmap_git)
->  		return -1;
->  
-> -	printf("%"PRIuMAX"\n",
-> -	       (uintmax_t)get_disk_usage_from_bitmap(bitmap_git, revs));
-> +	size_from_bitmap = get_disk_usage_from_bitmap(bitmap_git, revs);
-> +	print_disk_usage(size_from_bitmap);
-
-It makes sense to make the function declare how it gets disk usage
-in its name, but once we call the function to get what we want,
-there is no need to keep saying we got it from bitmap.  If we ever
-gained another function that obtains the disk usage from other
-means, then this part of the code would become
-
-	if (use_bitmap)
-		variable = get_disk_usage_from_bitmap(...);
-	else
-		variable = get_disk_usage_from_other_means(...);
-
-	print_disk_usage(variable);
-
-Now, what should that variable be named?  It is clear that it
-shouldn't be named "from_bitmap" at all, because it may very well
-have come from somewhere else.
-
-You call it simply 'size' in print_disk_usage(), and that would
-probably be a good name to use here.  Or even better, "disk_usage".
-
-However, I think all of the above badness stems from the horrible
-way the existing code deals with "use_bitmap_index", and it is not
-in the scope of this patch to fix it, let's keep the above code
-as-is.  This is only called from the "if (use_bitmap_index)" so
-the size can only be from bitmap.
-
-> @@ -624,7 +638,20 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
->  			continue;
->  		}
->  
-> -		if (!strcmp(arg, "--disk-usage")) {
-> +		if (skip_prefix(arg, "--disk-usage", &arg)) {
-> +			if (*arg == '=') {
-> +				if (!strcmp(++arg, "human")) {
-> +					human_readable = 1;
-> +				} else
-> +					die(_("invalid value for '%s': '%s', try --disk-usage=human"), "--disk-usage", arg);
-
-This makes the hardcoded "--disk-usage=human" subject to
-translation, which it should not.  Perhaps like this:
-
-	die(_("invalid value for '%s': '%s', the only allowed format is "%s"),
-	    "--disk-usage=<format>", arg, "human");
-
-The main point is to ensure that "human" that we are not allowing
-the user to type in their language is left out of the
-_("translatable string").
-
-> +			} else if (*arg) {
-> +				/*
-> +				* Arguably should goto a label to continue chain of ifs?
-> +				* Doesn't matter unless we try to add --disk-usage-foo
-> +				* afterwards
-> +				*/
-
-Wrong indentation for a long comment?
-
-> +				usage(rev_list_usage);
-> +			}
+That needs a second patch, probably after some more digging,
+how unicode is rendedered on the different systems
