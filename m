@@ -2,150 +2,274 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60FF8C00140
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 10:05:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C69CAC00140
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 11:14:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231394AbiHJKFB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 06:05:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38906 "EHLO
+        id S231286AbiHJLOk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 07:14:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbiHJKFA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 06:05:00 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 725106DF85
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 03:04:59 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id a89so18412777edf.5
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 03:04:59 -0700 (PDT)
+        with ESMTP id S229447AbiHJLOh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 07:14:37 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFF993204A
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 04:14:35 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id b6so7614149wmq.5
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 04:14:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=ct0zPM4fHrnckeV5YIAyM97ais4kT1FRxRzfH73hwzE=;
-        b=YLobm12nAlU1mwxCUVb1r43c6OARuqQttzyvHnugEdmpZLWn4ILXSRGh3EIm9mNt/n
-         fWZHa3mlK5P0fDJPtfMe8VAduJ2/r6/SFSmqYF4dY7DR0MfRZs3WOvud6/Vzd44t7r4A
-         LfpG0NkJoYuIR3+Umc8cATkGA6dxdTyS/tLnD/Vzy+O+FsNSEzCuNUvs8Yly8kZRDg3t
-         O0VWns6OAsq1+LnchmbzKMs5P0NXbv+oFWMfxCUWjGIYqcP5cfJp6zY7aIkVBdsedHqJ
-         kw6lYtsrBttMVdI3n1yCsS7wCSs2Q886xiNehmnb9y9Bbj4ualVrWQQol18761NzESDh
-         zfww==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=0DCpRvl11u0K+CPpAtMRw3QqpjHROe3hctL7Swl4Cxo=;
+        b=MPzSzGBqQWrkaxTT71bMS9oQbBtig3cdGTr0mymkEsLu1aAYABz2QR81oJ6a+OXADV
+         NWhALSpQ26/D1EGlc3vKRbZndx9Er+efkP8W+XsBxEPHFR/G4ZkzKHiLR3yOFp4pULN7
+         OUSGm9crYSAUShqntbibtrZ/JMjbOcZgubTm88ceveUHmmFJaCj2Y2nRq7WqIpWyvpn/
+         3i6EJ9QAciWpatE4Rchjth8Mf8zd5K7oNRKZ8v9WokF6b3eX8kzteCS7PHIKZUWbj7uA
+         HcpcaaGKYwNMlCWxlzaPPjW6t+gsu8CdY2Ssr2AS+xpv5pI0gL68cewX6oLvL3JIcCiL
+         Nmow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=ct0zPM4fHrnckeV5YIAyM97ais4kT1FRxRzfH73hwzE=;
-        b=XMJk8gKXY+8QVRD5GmvwlFrBjy8Wi9fQqydvOGZSWjrmBXD1PfQntYsOjIWRM+6Uy7
-         Ecjp+/jTeuMUFi/EwvIjljqVZnoPRWXBpHdvPc0dq6UDSArvIcRW9y7N9UN4jfzTn+oh
-         iqXNnIZM9/8xjgs7Mf0eHd8pTjLB0tBv+hn8NoqoW7irryma3/7S7SL4swCWcG/m2T6U
-         4+Aa+ZU90osjfkcFgMjLQIkNSFGRMqkesMGqrtNxZ8+Z8qKY5j8LYAHtPUDQ7zUwehMx
-         C1lMStqTKcOyryWHS7CBzFn+NKtfUBdU0EJTobTXb5lVftyzcGLM2Ukt3CMlERe9ezmq
-         aWMQ==
-X-Gm-Message-State: ACgBeo1Q6jLu39f7BsteOVv/5P/Pha/+vyvLf10vrO17cgMwCTP0/3Nv
-        BC183JBNd+eY1pxeVy7Gro12mk52pD7+KRQKR4w=
-X-Google-Smtp-Source: AA6agR5uVA1SOnB7lvvAQunfipYeScACWy5x72/saD2sIF+uJ0+Plou8THwioIAuIKnV+UTlEMJ/ilZw+SmefRipu7A=
-X-Received: by 2002:aa7:dc10:0:b0:440:b446:c0cc with SMTP id
- b16-20020aa7dc10000000b00440b446c0ccmr11904089edu.34.1660125897832; Wed, 10
- Aug 2022 03:04:57 -0700 (PDT)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=0DCpRvl11u0K+CPpAtMRw3QqpjHROe3hctL7Swl4Cxo=;
+        b=Rx0DGMja6gxQ+HouhUyqqNbJ3EM2yiEBG7KB+b/rohJt5O0HD/QTg7jhCTX4Nu9xt4
+         qP3lI36rUKRnnPmUGX9yZKBbGb8Urc8NGSe8ky0VDICrlvEiNBGMeX8IvAnKYSeVvuDM
+         gVj2p5F0vxlC43HW63t7jpRCa1D/27TXG8dtetVG2XI7oYIJMDhsFMTKVtjhYdNIKal3
+         Le0tm5shywTztbtg1Ei4WR8c/ypDg98sHTfe0q03CCLRoYxxdPziQzlKl9Otfdipgh5J
+         cpe0SS5knPvsonh4x944Cx6z9sRLHR4e53m2zbwc0MYXgHqdu8AUC/3QkRbCU4FGpWvi
+         Ku/Q==
+X-Gm-Message-State: ACgBeo3fti2Pef4nKC82yQfkDcsBVVv9sRAML2VXRixDehNnOGGSgMXG
+        bdMosqlypfv0DhpJ55czrv7a5/uTCIQ=
+X-Google-Smtp-Source: AA6agR4pvIsKnZVAkvx3rknhWkzhLjqi5vAx+zHh3gdm8Yo6goIex+S3FZ09vSSW8hOkcprV6gTGXg==
+X-Received: by 2002:a1c:2947:0:b0:3a5:b746:abc6 with SMTP id p68-20020a1c2947000000b003a5b746abc6mr279736wmp.163.1660130073948;
+        Wed, 10 Aug 2022 04:14:33 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id cc11-20020a5d5c0b000000b002205ffe88edsm13509202wrb.31.2022.08.10.04.14.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Aug 2022 04:14:33 -0700 (PDT)
+Message-Id: <pull.1313.v4.git.1660130072657.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1313.v3.git.1660111276934.gitgitgadget@gmail.com>
+References: <pull.1313.v3.git.1660111276934.gitgitgadget@gmail.com>
+From:   "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 10 Aug 2022 11:14:32 +0000
+Subject: [PATCH v4] rev-list: support human-readable output for `--disk-usage`
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1266.v4.git.1658325913.gitgitgadget@gmail.com>
- <pull.1266.v5.git.1658342304.gitgitgadget@gmail.com> <59b465e5a7817c145172f25e73ad807c7ba67e84.1658342304.git.gitgitgadget@gmail.com>
- <p3r70610-8n52-s8q0-n641-onp4ps01330n@tzk.qr> <CAPOJW5xBUaAJtOvrefwbXv_WDTLa=6PTL5kEoOpRQfqqFAx3oA@mail.gmail.com>
- <6s4n3600-q5p7-92sr-4206-non3s8rr3n46@tzk.qr> <CAPOJW5yUi471cfAXuXaM4BCzVsfZ15J1Era4NuEpxEnmY6md9Q@mail.gmail.com>
- <p69r38sn-1ppn-q66q-9089-59394pq78772@tzk.qr> <CAPOJW5zYndyqwyN8xOcRQnwebqXciY-25hNL3fU=V5ac8fCpNA@mail.gmail.com>
- <s714sq49-o13q-5417-0o21-6397s3646q9o@tzk.qr> <CAPOJW5yNQvO3quG91jjC9pT-+NNhJta+H_E2R9-1wUzR+rPXnw@mail.gmail.com>
- <68r08n47-9o07-351s-710q-786q69429q86@tzk.qr> <4rs1s351-73np-4sq8-p6o8-r7178rp0p0n0@tzk.qr>
-In-Reply-To: <4rs1s351-73np-4sq8-p6o8-r7178rp0p0n0@tzk.qr>
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Date:   Wed, 10 Aug 2022 15:34:46 +0530
-Message-ID: <CAPOJW5w2NYbRkFOaqrNYVFkp5ud=aAxhGGV6gpdDPwnyx5TAVw@mail.gmail.com>
-Subject: Re: [PATCH v5 3/6] pack-bitmap-write: learn pack.writeBitmapLookupTable
- and add tests
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Li Linchao <lilinchao@oschina.cn>,
+        Li Linchao <lilinchao@oschina.cn>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 10, 2022 at 2:50 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Abhradeep,
-> I instrumented this, and saw that the `multi-pack-index` and
-> `multi-pack-index*.bitmap` files were unchanged by the `git repack`
-> invocation.
+From: Li Linchao <lilinchao@oschina.cn>
 
-Yeah, those two files remain unchanged here.
+The '--disk-usage' option for git-rev-list was introduced in 16950f8384
+(rev-list: add --disk-usage option for calculating disk usage, 2021-02-09).
+This is very useful for people inspect their git repo's objects usage
+infomation, but the resulting number is quit hard for a human to read.
 
-> Re-generating the MIDX bitmap forcefully after the repack seems to fix
-> things over here:
->
-> -- snip --
-> diff --git a/t/lib-bitmap.sh b/t/lib-bitmap.sh
-> index a95537e759b..564124bda27 100644
-> --- a/t/lib-bitmap.sh
-> +++ b/t/lib-bitmap.sh
-> @@ -438,7 +438,10 @@ midx_bitmap_partial_tests () {
->
->         test_expect_success 'setup partial bitmaps' '
->                 test_commit packed &&
-> +ls -l .git/objects/pack/ &&
->                 git repack &&
-> +git multi-pack-index write --bitmap &&
-> +ls -l .git/objects/pack/ &&
->                 test_commit loose &&
->                 git multi-pack-index write --bitmap 2>err &&
->                 test_path_is_file $midx &&
-> -- snap --
->
-> This suggests to me that the `multi-pack-index write --bitmap 2>err` call
-> in this hunk might reuse a stale MIDX bitmap, and that _that_  might be
-> the root cause of this breakage.
+Teach git rev-list to output a human readable result when using
+'--disk-usage'.
 
-Yeah, the `multi-pack-index write --bitmap 2>err` is creating the
-problem. More specifically the `multi-pack-index write` part. As you
-can see in my previous  comment (if you get the comment), I shared a
-screenshot there which pointed out that the multi-pack-index files in
-both cases are different. The portion from which it started to differ
-belongs to the `RIDX` chunk.
+Signed-off-by: Li Linchao <lilinchao@oschina.cn>
+---
+    rev-list: support human-readable output for disk-usage
+    
+    The '--disk-usage' option for git-rev-list was introduced in 16950f8384
+    (rev-list: add --disk-usage option for calculating disk usage,
+    2021-02-09). This is very useful for people inspect their git repo's
+    objects usage infomation, but the result number is quit hard for human
+    to read.
+    
+    Teach git rev-list to output more human readable result when using
+    '--disk-usage' to calculate objects disk usage.
+    
+    Signed-off-by: Li Linchao lilinchao@oschina.cn
 
-So, I used some debug lines in `midx_pack_order()` function[1] and
-found that the objects are sorted differently in those cases (i.e.
-passing case and failing case). For passing case, the RIDX chunk
-contents are like below -
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1313%2FCactusinhand%2Fllc%2Fadd-human-readable-option-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1313/Cactusinhand/llc/add-human-readable-option-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1313
 
-pack_order = [ 1, 36, 11, 6, 18, 3, 19, 12, 5, 31, 27, 23, 29, 8, 38,
-22, 9, 15, 14, 24, 37, 28, 7, 39, 10, 34, 26, 4, 30, 33, 2, 35, 17,
-32, 0, 21, 16, 25, 13, 40, 20,]
+Range-diff vs v3:
 
-And in the failing case, this is -
+ 1:  000a6b37ec9 ! 1:  e56da057a9a rev-list: support human-readable output for `--disk-usage`
+     @@ Documentation/rev-list-options.txt: ifdef::git-rev-list[]
+       --disk-usage::
+      +--disk-usage=human::
+       	Suppress normal output; instead, print the sum of the bytes used
+     --	for on-disk storage by the selected commits or objects. This is
+     -+	for on-disk storage by the selected commits or objects.
+     -+	When it accepts a value `human`, like: `--disk-usage=human`, this
+     -+	means to print objects size in human readable format. This is
+     + 	for on-disk storage by the selected commits or objects. This is
+       	equivalent to piping the output into `git cat-file
+     - 	--batch-check='%(objectsize:disk)'`, except that it runs much
+     +@@ Documentation/rev-list-options.txt: ifdef::git-rev-list[]
+       	faster (especially with `--use-bitmap-index`). See the `CAVEATS`
+     + 	section in linkgit:git-cat-file[1] for the limitations of what
+     + 	"on-disk storage" means.
+     ++	When it accepts a value `human`, like: `--disk-usage=human`, this
+     ++	means to print objects size in human readable format.
+     + endif::git-rev-list[]
+     + 
+     + --cherry-mark::
+      
+       ## builtin/rev-list.c ##
+      @@ builtin/rev-list.c: static const char rev_list_usage[] =
 
-pack_order = [ 12, 18, 3, 19, 1, 36, 11, 6, 5, 31, 27, 23, 29, 8, 38,
-22, 9, 15, 14, 24, 37, 28, 7, 39, 10, 34, 26, 4, 30, 33, 2, 35, 17,
-32, 0, 21, 16, 25, 13, 40, 20,]
 
-I went further and realized that this is due to the line[2] -
+ Documentation/rev-list-options.txt |  3 +++
+ builtin/rev-list.c                 | 35 ++++++++++++++++++++++++++----
+ t/t6115-rev-list-du.sh             | 22 +++++++++++++++++++
+ 3 files changed, 56 insertions(+), 4 deletions(-)
 
-    if (!e->preferred)
-        data[i].pack |= (1U << 31);
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 195e74eec63..5d3880874fc 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -242,6 +242,7 @@ ifdef::git-rev-list[]
+ 	to `/dev/null` as the output does not have to be formatted.
+ 
+ --disk-usage::
++--disk-usage=human::
+ 	Suppress normal output; instead, print the sum of the bytes used
+ 	for on-disk storage by the selected commits or objects. This is
+ 	equivalent to piping the output into `git cat-file
+@@ -249,6 +250,8 @@ ifdef::git-rev-list[]
+ 	faster (especially with `--use-bitmap-index`). See the `CAVEATS`
+ 	section in linkgit:git-cat-file[1] for the limitations of what
+ 	"on-disk storage" means.
++	When it accepts a value `human`, like: `--disk-usage=human`, this
++	means to print objects size in human readable format.
+ endif::git-rev-list[]
+ 
+ --cherry-mark::
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 30fd8e83eaf..df42e1b667e 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -46,6 +46,7 @@ static const char rev_list_usage[] =
+ "    --parents\n"
+ "    --children\n"
+ "    --objects | --objects-edge\n"
++"    --disk-usage | --disk-usage=human\n"
+ "    --unpacked\n"
+ "    --header | --pretty\n"
+ "    --[no-]object-names\n"
+@@ -81,6 +82,7 @@ static int arg_show_object_names = 1;
+ 
+ static int show_disk_usage;
+ static off_t total_disk_usage;
++static int human_readable;
+ 
+ static off_t get_object_disk_usage(struct object *obj)
+ {
+@@ -368,6 +370,17 @@ static int show_object_fast(
+ 	return 1;
+ }
+ 
++static void print_disk_usage(off_t size)
++{
++	struct strbuf sb = STRBUF_INIT;
++	if (human_readable)
++		strbuf_humanise_bytes(&sb, size);
++	else
++		strbuf_addf(&sb, "%"PRIuMAX, (uintmax_t)size);
++	puts(sb.buf);
++	strbuf_release(&sb);
++}
++
+ static inline int parse_missing_action_value(const char *value)
+ {
+ 	if (!strcmp(value, "error")) {
+@@ -473,6 +486,7 @@ static int try_bitmap_disk_usage(struct rev_info *revs,
+ 				 int filter_provided_objects)
+ {
+ 	struct bitmap_index *bitmap_git;
++	off_t size_from_bitmap;
+ 
+ 	if (!show_disk_usage)
+ 		return -1;
+@@ -481,8 +495,8 @@ static int try_bitmap_disk_usage(struct rev_info *revs,
+ 	if (!bitmap_git)
+ 		return -1;
+ 
+-	printf("%"PRIuMAX"\n",
+-	       (uintmax_t)get_disk_usage_from_bitmap(bitmap_git, revs));
++	size_from_bitmap = get_disk_usage_from_bitmap(bitmap_git, revs);
++	print_disk_usage(size_from_bitmap);
+ 	return 0;
+ }
+ 
+@@ -624,7 +638,20 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 
+-		if (!strcmp(arg, "--disk-usage")) {
++		if (skip_prefix(arg, "--disk-usage", &arg)) {
++			if (*arg == '=') {
++				if (!strcmp(++arg, "human")) {
++					human_readable = 1;
++				} else
++					die(_("invalid value for '%s': '%s', try --disk-usage=human"), "--disk-usage", arg);
++			} else if (*arg) {
++				/*
++				* Arguably should goto a label to continue chain of ifs?
++				* Doesn't matter unless we try to add --disk-usage-foo
++				* afterwards
++				*/
++				usage(rev_list_usage);
++			}
+ 			show_disk_usage = 1;
+ 			info.flags |= REV_LIST_QUIET;
+ 			continue;
+@@ -753,7 +780,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (show_disk_usage)
+-		printf("%"PRIuMAX"\n", (uintmax_t)total_disk_usage);
++		print_disk_usage(total_disk_usage);
+ 
+ cleanup:
+ 	release_revisions(&revs);
+diff --git a/t/t6115-rev-list-du.sh b/t/t6115-rev-list-du.sh
+index b4aef32b713..b34841a4ba8 100755
+--- a/t/t6115-rev-list-du.sh
++++ b/t/t6115-rev-list-du.sh
+@@ -48,4 +48,26 @@ check_du HEAD
+ check_du --objects HEAD
+ check_du --objects HEAD^..HEAD
+ 
++# As mentioned above, don't use hardcode sizes as actual size, but use the
++# output from git cat-file.
++test_expect_success 'rev-list --disk-usage=human' '
++	git rev-list --objects HEAD --disk-usage=human >actual &&
++	disk_usage_slow --objects HEAD >actual_size &&
++	grep "$(cat actual_size) bytes" actual
++'
++
++test_expect_success 'rev-list --disk-usage=human with bitmaps' '
++	git rev-list --objects HEAD --use-bitmap-index --disk-usage=human >actual &&
++	disk_usage_slow --objects HEAD >actual_size &&
++	grep "$(cat actual_size) bytes" actual
++'
++
++test_expect_success 'rev-list use --disk-usage unproperly' '
++	test_must_fail git rev-list --objects HEAD --disk-usage=typo 2>err &&
++	cat >expect <<-\EOF &&
++	fatal: invalid value for '\''--disk-usage'\'': '\''typo'\'', try --disk-usage=human
++	EOF
++	test_cmp err expect
++'
++
+ test_done
 
-I.e. 4- 5 `pack_midx_entry` objects have different `preferred` values
-in those cases. For example,
-"46193a971f5045cb3ca6022957541f9ccddfbfe78591d8506e2d952f8113059b"
-(with pack order 12) is `preferred` in failing case (that's why it is
-in the first position) and the same is `not preferred` in the passing
-case.
-
-It may be because of reusing a stale midx bitmap (as you said). But I
-am not sure. Just to ensure myself, I compared all the other
-packfiles, idx files and a pack `.bitmap` file (which you can see
-using ls command) of failing and passing cases and found that they are
-the same.
-
-Thanks :)
-
-[1] https://github.com/git/git/blob/c50926e1f48891e2671e1830dbcd2912a4563450/midx.c#L861
-[2] https://github.com/git/git/blob/c50926e1f48891e2671e1830dbcd2912a4563450/midx.c#L872
+base-commit: 679aad9e82d0dfd8ef3d1f98fa4629665496cec9
+-- 
+gitgitgadget
