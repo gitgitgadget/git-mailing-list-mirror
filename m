@@ -2,104 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6FCFC25B06
-	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 08:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE118C00140
+	for <git@archiver.kernel.org>; Wed, 10 Aug 2022 09:07:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231826AbiHJI4q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Aug 2022 04:56:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51394 "EHLO
+        id S231952AbiHJJHp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Aug 2022 05:07:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231818AbiHJI4n (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Aug 2022 04:56:43 -0400
-Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A61C86E8B0
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 01:56:39 -0700 (PDT)
-Received: by mail-vs1-xe35.google.com with SMTP id v128so14434686vsb.10
-        for <git@vger.kernel.org>; Wed, 10 Aug 2022 01:56:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc;
-        bh=ce3rnSqTxuyE/6hp+7kzEyFK+DkXKgO+NjAZkZLG330=;
-        b=L42Bu/C1KnVIeUpACckf2/B2ItkhwYlPiLpDXZcNPYg34YWtna5PrRB+znSs9wWSLL
-         KIzJCnhi4SBDyOR+QbHAwdEQTKLe8ZcQiB+dW6Hls/NJ7HGMwE30mGOzXpuMepnHWK+w
-         sH0Ndj2m36qEeGTwVHBE6XWx1VrbSOo5tNCDb+im/2Vxtzdr6BqbiMFQagMV1Tuo0qFy
-         Z/KBxJPpOU77MOH25Cw3MKd9D/lqZVWYfglAmljP8NmieKtgrCcpM7ryXE75kk7RVuCj
-         jSy1RLOInrKQvL1CYOk2IQJsE/1UnJ4ZulKBPWgT3l4K1rbje1rzwNv079siGz07LoUS
-         jdmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
-        bh=ce3rnSqTxuyE/6hp+7kzEyFK+DkXKgO+NjAZkZLG330=;
-        b=Ddgeq/7B5fmmXwSVtGzqKAhBoECIlQlHjwBpD7dqyEn5pULRiKtchxANEeABvt30af
-         17VVZzDmrO0VHUbZ8ejMuYoCCi1i6jU6hksJuhhbpM2wfWg+ZmliTo42zw919OPCBOSa
-         1K0wR3rJfDdFMy4ipMWByWBVQjDPmlHf3dEA/rY08Rz6FcMwwS5rcvdP8Shdnu03L1t4
-         9UmZV6zgQeX77RMDC7mydBPboaNbdq2VJndCzUCpS5UEk+9YXfZPTDd5J3vjKeOl5UxT
-         6cphg0GMX34Xxnm6ZMsp9A7zVy0l95P4AuD7+S0TkomDP9NQRTQqpJ4QPUDkF3I6Xd+e
-         LQdA==
-X-Gm-Message-State: ACgBeo1abp4jpsv6KPq8DrZKK73WckQmmMeaUYQr3pvfmVB31WoDV+m9
-        z1X/Qxo5Gdv0aSloI4zbk2tKK825VqlLBWpujNH8ACom97k=
-X-Google-Smtp-Source: AA6agR4be5JeWqs4J4jHrt5UEXLRO3W2+0OhQD+avTN8cU5TeEqrt40CY2+JAsmFbb6u8i4MBuWzcE+yenh5e/C15Ys=
-X-Received: by 2002:a67:e94c:0:b0:385:19e0:df01 with SMTP id
- p12-20020a67e94c000000b0038519e0df01mr11061761vso.2.1660121798728; Wed, 10
- Aug 2022 01:56:38 -0700 (PDT)
+        with ESMTP id S231906AbiHJJHm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Aug 2022 05:07:42 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F1027E83D
+        for <git@vger.kernel.org>; Wed, 10 Aug 2022 02:07:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1660122446;
+        bh=8Qds9Nh3kzHu9kDypMUf5SZloFIsDx+MZ6LJCreKR/s=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=CvWOKJbzKDkt9MomlMJnUoxv3A9b3PMVcx6IuzmVxqWf78XM5sP86+vNEBKrh0RNO
+         kGqNfQ/Ws+qH8T1TtfXya4sc9vgOw8ejs8WtWXoBnhzH2u6Ac/4PIlbP3/bzKDW3dt
+         p06Ele61E0e6xj42K/pF9kSRpZJpfigNMv6f8ozI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.204.74] ([89.1.214.151]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MplXp-1ncQBX1ARJ-00q7oz; Wed, 10
+ Aug 2022 11:07:26 +0200
+Date:   Wed, 10 Aug 2022 11:07:26 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] mingw: handle writes to non-blocking pipe
+In-Reply-To: <72d007c5-9429-1612-24d7-af5db906dd63@web.de>
+Message-ID: <1739sr2q-71p7-q601-2022-ps56r12pos50@tzk.qr>
+References: <YuikU//9OrdpKQcE@coredump.intra.peff.net> <YulFTSTbVaTwuQtt@coredump.intra.peff.net> <xmqq5yjahb8u.fsf@gitster.g> <YunxHOa2sJeEpJxd@coredump.intra.peff.net> <a9953278-b15f-fd76-17b0-e949c7937992@web.de> <YuquVEqEl6wxCLM7@coredump.intra.peff.net>
+ <41477326-5493-4d3c-246d-8a28969fa73e@web.de> <Yu05GjncDaGRTgce@coredump.intra.peff.net> <6854c54c-12ff-f613-4cdc-18b3b1a55ef1@web.de> <b3310324-7969-f9fb-a2e0-46e881d37786@web.de> <Yu/5LU+ZhbVRnSdM@coredump.intra.peff.net>
+ <72d007c5-9429-1612-24d7-af5db906dd63@web.de>
 MIME-Version: 1.0
-References: <20220809182045.568598-1-calvinwan@google.com> <xmqqsfm4prqk.fsf@gitster.g>
- <20220810084017.gnnodcbt5lyibbf6@tb-raspi4>
-In-Reply-To: <20220810084017.gnnodcbt5lyibbf6@tb-raspi4>
-From:   Alexander Meshcheryakov <alexander.s.m@gmail.com>
-Date:   Wed, 10 Aug 2022 12:56:11 +0400
-Message-ID: <CA+VDVVUKf48Q9A0hWPnBE+qG_7tBDuXKkdo+wWDU7iC3Wg=oEg@mail.gmail.com>
-Subject: Re: [BUG] Unicode filenames handling in `git log --stat`
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1543481212-1660122449=:206"
+X-Provags-ID: V03:K1:A89qXj0neWyXRuRUoeyvfvie2AzGY4Se35swS3qiMq+y0HDskn8
+ KqCl4LhXyfpaYH7gF0hUPMNBC74oUUpPLjQfEqjkXfhe63zELJpypQNFuqDllr5Vgs0zqqS
+ uDnEkqbNykt+YDTsS420olHuZ8Xxk5r5VopNENvkeM50JEpQaAMX6Xa+3yy8xc1F06TP888
+ bQUhi80P2/dtzi0gGsCFQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:aSOH9uTrCWs=:0dV1EYqep+skW5FGVo8xNd
+ chZ20fXR5T8fHNoNLALRy45V0/ajD11iA9Xijkgay+fxuZsAGiV+kUL1Vqh/csE5qVSIfkO2L
+ EH3DEOR8ibJ+CQ9SAlzjPm7vscdpTkwwhUZYa3n2bF0csukWb4hcMfzR/ThJEHTTujzrlXN9V
+ lcJA0Kv4DGc/P8ipAv8G1+m9A4RCsh1wCF1ih3kG4nCBBQi17zK9e7CLK7S0slFp5bHYG3B5M
+ RKQtgBIy8DHocpjY+uKnPPinyUSnB0klhlsVQt/OLR+sS9fvWK4HZJLe6PGc+dzstv7i6irny
+ JL+KsZBBbamlIZrr1h6S8pAuVwp+i3QrE+wzOLoycHAW2aN/6dzjm3iPdjbvgFU21tMg5nQvJ
+ Nn6TOd3PvrEWWtypPunkpjvv/7EwBu8mo5BbqWF8hht0tfTeXjNoVbNnsXNf57fLs1q+mzpwB
+ 6c0yTybA8QpLWNER1FlCDxmHIe98NbEK3Io64bSuaGXlxbmkg6iUKlanWkE2MDeje134MJePv
+ bB+ZVH4qtzp2HsmdPB/bFXY4E1JONugfUbGlhqvweY9vHxSLnBNDQ6IDqmTwGu8QT+hm+kbff
+ rUEahkpZaW7YOEwTwH8wkh99nsGnDc5h0aweZxAKzu8+GUZMibxiOGwz5gELj7VfCJDXMH0sw
+ igRyy+siD8oxN+5uqvmS+Yc++8e5Sq5oj+NIGdc9xtGIZm+CRT36121sBaqP89grhzqRa3QVI
+ F0Urlq7oFfnOHvKze1ELKXnostiufYM7PM4hM9CFs6PhlYfu3HhvDNnA+9d00JZkt10XbUMXw
+ cRvCvipyndHYb9x3NTwqrTkKqIMvRD4aFLNmBiSUwgzRnli3mAaijlf0R8Gsem/yDoOHv2Qje
+ 8iB+L3Mz6VhYAaGKW5pCCs8ExbPi5dyUAQAczSVPIlj3BkWMOGr7QBzANk7R0phpJGHrZ6O+m
+ gct/tWSICdy7UHvnD6PskK9g7twAYV88a7uf4H3adLStnhgk9RtLDUupTC58dMshuX1guHsxb
+ +GfuRrYB3YGrYutNZKXvvX/iKRFTrHbsQhxxaS7iSiaIuX0/AdLKG2r4BPnc7aX8yHDHNCNBl
+ T2uydEwi/lgohp7MVxsNLwlSWtl8e4S2NEy70+B4B4EoOHk/4cmK7RiHA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I believe I have found exact place where strlen is used incorrectly
-This is at diff.c:show_stats
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-https://github.com/git/git/blob/c50926e1f48891e2671e1830dbcd2912a4563450/di=
-ff.c#L2623
+--8323328-1543481212-1660122449=:206
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-It probably should be replaced with one of utf8_width, utf8_strnwidth
-or utf8_strwidth from utf8.c
+Hi Ren=C3=A9,
 
+On Wed, 10 Aug 2022, Ren=C3=A9 Scharfe wrote:
 
-On Wed, 10 Aug 2022 at 12:40, Torsten B=C3=B6gershausen <tboegi@web.de> wro=
-te:
+> write() on Windows reports ENOSPC when writing to a non-blocking pipe
+> whose buffer is full and rejects writes bigger than the buffer outright.
+> Change the error code to EAGAIN and try a buffer-sized partial write to
+> comply with POSIX and the expections of our Git-internal callers.
+
+Excellent analysis, thank you!
+
+However, let's reword this to clarify that the error code is set to EAGAIN
+only if the buffer-sized partial write fails.
+
 >
-> On Tue, Aug 09, 2022 at 10:55:31PM -0700, Junio C Hamano wrote:
-> > Calvin Wan <calvinwan@google.com> writes:
-> >
-> > > Hi Alexander,
-> > >
-> > > Thank you for the report! I attempted to reproduce with the steps you
-> > > provided, but was unable to do so. What commands would I have to run
-> > > on a clean git repository to reproduce this?
-> >
-> > Sounds like a symptom observable when the width computed by
-> > utf8.c::git_gcwidth(), using the width table imported from
-> > unicode.org, and the width the terminal thinks each of the displayed
-> > character has, do not match (e.g. seen when ambiguous characters are
-> > involved, https://unicode.org/reports/tr11/#Ambiguous).
-> >
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+>  compat/mingw.c | 19 ++++++++++++++++++-
+>  1 file changed, 18 insertions(+), 1 deletion(-)
 >
-> I am not fully sure about that - I can reproduce it with Latin based
-> file names as well:
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index b5502997e2..c6f244c0fe 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -689,6 +689,8 @@ int mingw_fflush(FILE *stream)
+>  	return ret;
+>  }
 >
->  git log --stat
-> [snip]
->  Arger.txt  | 1 +
->  =C3=84rger.txt | 1 +
->    2 files changed, 2 insertions(+)
+> +#define PIPE_BUFFER_SIZE (8192)
+
+This constant hails all the way back from 897bb8cb2c2 (Windows: A pipe()
+replacement whose ends are not inherited to children., 2007-12-07), in
+case anyone wondered like I did where that number came from (and why it is
+so low).
+
+It is outside the purview of this patch to change that constant, therefore
+I am fine with leaving this as-is.
+
+> +
+>  #undef write
+>  ssize_t mingw_write(int fd, const void *buf, size_t len)
+>  {
+> @@ -702,6 +704,21 @@ ssize_t mingw_write(int fd, const void *buf, size_t=
+ len)
+>  		else
+>  			errno =3D EINVAL;
+>  	}
+> +	if (result < 0 && errno =3D=3D ENOSPC) {
+
+It might make the code clearer to turn this into an `else if`.
+
+> +		/* check if fd is a non-blocking pipe */
+> +		HANDLE h =3D (HANDLE) _get_osfhandle(fd);
+> +		DWORD s;
+> +		if (GetFileType(h) =3D=3D FILE_TYPE_PIPE &&
+> +		    GetNamedPipeHandleState(h, &s, NULL, NULL, NULL, NULL, 0) &&
+> +		    (s & PIPE_NOWAIT)) {
+> +			DWORD obuflen;
+> +			if (!GetNamedPipeInfo(h, NULL, &obuflen, NULL, NULL))
+> +				obuflen =3D PIPE_BUFFER_SIZE;
+> +			if (len > obuflen)
+> +				return mingw_write(fd, buf, obuflen);
+
+It is probably easier to reason about to recurse instead of using a `goto`
+here.
+
+Thank you for this patch!
+Dscho
+
+> +			errno =3D EAGAIN;
+> +		}
+> +	}
 >
-> From this very first experiment I would suspect that we use
-> strlen() somewhere rather then utf8.c::git_gcwidth()
+>  	return result;
+>  }
+> @@ -1079,7 +1096,7 @@ int pipe(int filedes[2])
+>  	HANDLE h[2];
 >
-> More digging needed (but I don't promise anything today)
+>  	/* this creates non-inheritable handles */
+> -	if (!CreatePipe(&h[0], &h[1], NULL, 8192)) {
+> +	if (!CreatePipe(&h[0], &h[1], NULL, PIPE_BUFFER_SIZE)) {
+>  		errno =3D err_win_to_posix(GetLastError());
+>  		return -1;
+>  	}
+> --
+> 2.37.1.windows.1
+>
+
+--8323328-1543481212-1660122449=:206--
