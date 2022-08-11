@@ -2,82 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4EA4C19F2D
-	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 08:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11613C19F2D
+	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 08:38:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234154AbiHKIdO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Aug 2022 04:33:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38898 "EHLO
+        id S234569AbiHKIij (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Aug 2022 04:38:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233535AbiHKIdN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Aug 2022 04:33:13 -0400
+        with ESMTP id S234376AbiHKIii (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Aug 2022 04:38:38 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 630E88A7DE
-        for <git@vger.kernel.org>; Thu, 11 Aug 2022 01:33:12 -0700 (PDT)
-Received: (qmail 8558 invoked by uid 109); 11 Aug 2022 08:33:11 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 609C979684
+        for <git@vger.kernel.org>; Thu, 11 Aug 2022 01:38:37 -0700 (PDT)
+Received: (qmail 8577 invoked by uid 109); 11 Aug 2022 08:38:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Aug 2022 08:33:11 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Aug 2022 08:38:36 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19845 invoked by uid 111); 11 Aug 2022 08:33:12 -0000
+Received: (qmail 19873 invoked by uid 111); 11 Aug 2022 08:38:37 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Aug 2022 04:33:12 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Aug 2022 04:38:37 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 11 Aug 2022 04:33:11 -0400
+Date:   Thu, 11 Aug 2022 04:38:35 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Xavier Morel <xavier.morel@masklinn.net>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] fsck: downgrade tree badFilemode to "info"
-Message-ID: <YvS+x35sxXmO5H1h@coredump.intra.peff.net>
-References: <YvQcNpizy9uOZiAz@coredump.intra.peff.net>
- <YvQdR3sDqDMCIjIE@coredump.intra.peff.net>
- <xmqqo7wriwfl.fsf@gitster.g>
+Cc:     Li Linchao via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>, Li Linchao <lilinchao@oschina.cn>
+Subject: Re: [PATCH v4] rev-list: support human-readable output for
+ `--disk-usage`
+Message-ID: <YvTACxGqVPBa+IDx@coredump.intra.peff.net>
+References: <pull.1313.v3.git.1660111276934.gitgitgadget@gmail.com>
+ <pull.1313.v4.git.1660130072657.gitgitgadget@gmail.com>
+ <xmqqlerwm28n.fsf@gitster.g>
+ <YvQhHOkjZatIqlFr@coredump.intra.peff.net>
+ <xmqqy1vvgxv5.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqo7wriwfl.fsf@gitster.g>
+In-Reply-To: <xmqqy1vvgxv5.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 10, 2022 at 03:08:14PM -0700, Junio C Hamano wrote:
+On Wed, Aug 10, 2022 at 10:20:14PM -0700, Junio C Hamano wrote:
 
-> I was almost sure that before we "unified" the codepath for normal
-> tree reading and the one used for fsck in a mistaken way, which was
-> fixed in this series, we were catching these anomalous mode bits,
-> but the suspected regression is too long ago that it does not make a
-> practical difference if it was always broken or it was broken long
-> time ago.  The risk to start complaining on existing projects is the
-> same either way.
+> I still do not see the point of changing it to print to a strbuf and
+> puts() the result, though.  It does not make the code shorter, more
+> efficient, or more readable.  Once "if (we are producing humanize
+> format)" condition is hit, both of its branches can either be (1)
+> responsible to print the number to the standard output stream, using
+> whatever implementation, or (2) responsible to print the number to a
+> strbuf, so that somebody outside the if statement will be
+> respohnsible for printing that string to the standard output stream.
 
-I agree with the "it was so long ago it does not matter", but for the
-sake of posterity, here's what my digging found:
+I was not the original reviewer who suggested that change, but FWIW, I
+think the argument for cases like these is something like this. Between:
 
-  - we got the mode fsck checks in 64071805ed (git-fsck-cache: be
-    stricter about "tree" objects, 2005-07-27), though there is a proto
-    version that is even a little older. Back then we were using a
-    linked list to hold the parsed tree entries (!), but it was parsed
-    by a central spot in parse_tree_buffer().
+  if (some_cond) {
+    foo(do_some_prep());
+  } else {
+    foo(do_some_other_prep());
+  }
 
-  - that linked list code went away in 15b5536ee4 (Remove last vestiges
-    of generic tree_entry_list, 2006-05-29). But...
+and:
 
-  - ...by then we already had 1b0c7174a1 (tree/diff header cleanup.,
-    2006-03-29), which had tree_entry_extract(). And that commit
-    introduced canon_mode, including the same "set unexpected things to
-    a default", though of course back then it waas S_IFDIR since
-    gitlinks didn't exist. ;)
+  if (some_cond) {
+    x = do_some_prep();
+  } else {
+    x = do_some_other_prep();
+  }
+  foo(x);
 
-  - that canon_mode() was just a rename from DIFF_FILE_CANON_MODE(),
-    which ultimately came from 67574c403f ([PATCH] diff: mode bits
-    fixes, 2005-06-01)
+the latter makes it more clear that foo() is called on both sides of the
+conditional. In this case the "foo" is not exactly the same: on one it
+is printing a strbuf, and on the other it is a printf that
+direct-formats. But the principle is the same, if you want to make it
+clear that both sides will result in printing something.
 
-So some form of canon_mode() does predate the fsck checks, but I _think_
-the fsck code was using the old linked-list version until 15b5536ee4,
-and would not have been affected. So yes, there were probably 10 months
-in 2005-2006 where we would have detected these. :)
+As you note, it loses the possibility for one side of the conditional to
+do its "foo" in a more efficient way, but I don't think that's very
+important for this particular call site.
 
-Again, probably not important, but it was interesting for me at least to
-see the evolution of the tree code. Most of those changes predate my
-involvement with the code.
+> The patch chooses (2), which is more complex, for no good reason.  A
+> good thing about (1) is that the non-human codepath can STAY to be
+> the same as before, which is one fewer chance to introduce
+> unnecessary bugs.
+
+True.
+
+Again, I don't care much either way. But I am not quite on the "I do not
+see the point at all" side.
 
 -Peff
