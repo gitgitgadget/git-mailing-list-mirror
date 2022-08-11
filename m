@@ -2,71 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 645D7C19F2A
-	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 20:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 419F1C19F2A
+	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 21:35:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235459AbiHKUt4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Aug 2022 16:49:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52476 "EHLO
+        id S235462AbiHKVfN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Aug 2022 17:35:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbiHKUtz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Aug 2022 16:49:55 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FAA498A78
-        for <git@vger.kernel.org>; Thu, 11 Aug 2022 13:49:55 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F71D156256;
-        Thu, 11 Aug 2022 16:49:54 -0400 (EDT)
+        with ESMTP id S235472AbiHKVfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Aug 2022 17:35:07 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 340089F0FA
+        for <git@vger.kernel.org>; Thu, 11 Aug 2022 14:35:07 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E067142031;
+        Thu, 11 Aug 2022 17:35:06 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7e2uyhNLK4zMXCeq5NAdpn5fK2eF65GgaxjMMl
-        tk54g=; b=C38BsSbCThX5C76O3zuXcSBFRlGFNF3YLOdkNxwnQC31eUAIXf6Sa/
-        YLuJvBsYkmHEJsG97Qcr6Kw+yKJO7VC7X5p/+WffB3JwdP4wHpZ6sJaEWAffejnW
-        AYouPc4MzwqWHUb/lfXuJmqtuCoZzfblO9BYmNIiMS1jaxE9WM4eo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 175FD156255;
-        Thu, 11 Aug 2022 16:49:54 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=Wp/jLNWUeb2O
+        mF975Z1ja78RobYe+P5dt1e/C9B+8sk=; b=BnyX3y8q/jmK/vEpR0pfzVjjzYyL
+        RXjnA3Nyr/fL2wT1RicZ1mri6AheR6TZ1I8YdUbfjWvCpDhzPtHReqJJgxA+SUJb
+        gwvfGE52pR4rOt668WgMJeK3QkDhadaKg2TuCuWGecSAM4DZm5/8ItDlUGCIBULT
+        BwiD6g5EliUwcO8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F273214202F;
+        Thu, 11 Aug 2022 17:35:05 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.145.39.32])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7DE96156254;
-        Thu, 11 Aug 2022 16:49:53 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B004114202E;
+        Thu, 11 Aug 2022 17:35:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Li Linchao <lilinchao@oschina.cn>
-Subject: Re: [PATCH v5] rev-list: support human-readable output for
- `--disk-usage`
-References: <pull.1313.v4.git.1660130072657.gitgitgadget@gmail.com>
-        <pull.1313.v5.git.1660193274336.gitgitgadget@gmail.com>
-Date:   Thu, 11 Aug 2022 13:49:52 -0700
-In-Reply-To: <pull.1313.v5.git.1660193274336.gitgitgadget@gmail.com> (Li
-        Linchao via GitGitGadget's message of "Thu, 11 Aug 2022 04:47:54
-        +0000")
-Message-ID: <xmqqczd6ec9b.fsf@gitster.g>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 01/20] git.c: update NO_PARSEOPT markings
+References: <20220725123857.2773963-1-szeder.dev@gmail.com>
+        <20220725123857.2773963-2-szeder.dev@gmail.com>
+        <220725.86mtcxp8ib.gmgdl@evledraar.gmail.com>
+        <20220802173754.GA10040@szeder.dev> <xmqqsfmefjja.fsf@gitster.g>
+        <20220803213430.GB10040@szeder.dev>
+Date:   Thu, 11 Aug 2022 14:35:03 -0700
+In-Reply-To: <20220803213430.GB10040@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Wed, 3 Aug 2022 23:34:30 +0200")
+Message-ID: <xmqq8rnuea60.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 26945D00-19B7-11ED-8456-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 76A2FD64-19BD-11ED-AD1F-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Li Linchao via GitGitGadget" <gitgitgadget@gmail.com> writes:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-> From: Li Linchao <lilinchao@oschina.cn>
->
-> The '--disk-usage' option for git-rev-list was introduced in 16950f8384
-> (rev-list: add --disk-usage option for calculating disk usage, 2021-02-09).
-> This is very useful for people inspect their git repo's objects usage
-> infomation, but the resulting number is quit hard for a human to read.
->
-> Teach git rev-list to output a human readable result when using
-> '--disk-usage'.
->
-> Signed-off-by: Li Linchao <lilinchao@oschina.cn>
-> ---
+[elided here is a good discussion on how to (re)do command line
+completion without NO_PARSEOPT markings]
 
-Thanks, queued.
+> ...
+> However, I'll definitely need to think more about corner cases, e.g.
+> hitting 'git cmd --<TAB>' while outside a repository doesn't even
+> reaches parse_options() if that command requires a repository.  But
+> let's leave that for later and get this series in shape first.
+
+Yes.  I thought this series was mostly ready, except for a minor
+nits in the way things are explained in the proposed log message
+in [09/20].  How would we want to proceed from here?
+
+Thanks.
+
