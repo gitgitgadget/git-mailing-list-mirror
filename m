@@ -2,68 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 496A4C19F2A
-	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 12:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32468C19F2A
+	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 12:59:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235463AbiHKMtb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Aug 2022 08:49:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35498 "EHLO
+        id S235525AbiHKM7M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Aug 2022 08:59:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235467AbiHKMt3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Aug 2022 08:49:29 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0F686C77D
-        for <git@vger.kernel.org>; Thu, 11 Aug 2022 05:49:28 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id l22so21238097wrz.7
-        for <git@vger.kernel.org>; Thu, 11 Aug 2022 05:49:28 -0700 (PDT)
+        with ESMTP id S233504AbiHKM7L (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Aug 2022 08:59:11 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32312792C7
+        for <git@vger.kernel.org>; Thu, 11 Aug 2022 05:59:09 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id ay12so6616938wmb.1
+        for <git@vger.kernel.org>; Thu, 11 Aug 2022 05:59:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc;
-        bh=zTsIeSBjDPhYd7AGZ8cST1b+k8MMW6F56+0RazR2xPo=;
-        b=jJn176JxfUK4+vsFPJPG2Oz/Y1wuQpCVFiRITyiPJdoPx8TP9THy4gzHG7vj/4Auc4
-         V5PY79XPfPr/UfgE098N5YaaTpRGCUP0QIO1RwS27dgp7BrbwUqS7jYawnWtthkUwKjD
-         ayxtIj/D4h2XgxnvRHUa8Kr4ZQkbtgn8mvz+lENgbrZSwJRJip8LY9wDZai8DOcK1Yu0
-         pJ/lMc35caiHEXoqvwzBzfbi05h/JG9YeB9uhbeRmV7UVQtfldJUAi7TXRch2FQA04nG
-         LBy3G5q8/ZpNH1k3Yv0qTxmoZmvceHRU6XGx/gEkY3YEYZN8vhnJVWeNtK3ZKhYNuU1m
-         EIHQ==
+        bh=Ezzgn26UITYMxJ2EBbIGjqMQh5yKF5gU5NBuldKIvJ4=;
+        b=mNfHIXtriroJSzao6jb5TINO08bt8/cGm92PV4WP18/jiW154hJY59tmHPthCikIzV
+         Q0XantT+N+3D9Z3kyA59Hh9AW5e3kF7d2E7LRCz4aZskNImkZB/tg01PZ6URgaHaFPQA
+         DwD8l7NYmWb5hRieWW6fBtkWc5Bca/7v7UW7STJLPtUHOTKMqelzekTlCiMT1UKOpW6G
+         G+ynhTP/RFW0Yv4Lcdzh1OsuJ4A8xNySGk0gCUJduMjmFtSwweHfuNvee3v98eDLhCuk
+         yYf0LJfZxR6omjXEsgoENKWeU1TJq7GE8BNRXK3wpktR633DUMGXXViyNTPaM/7KkvL5
+         7MrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc;
-        bh=zTsIeSBjDPhYd7AGZ8cST1b+k8MMW6F56+0RazR2xPo=;
-        b=WVuzoJNp6q+pWaCyNFgkwAvic+wQ3tQ1Z+RNupmasb6HIuWh4EuX4Wcka0uyQJmw4S
-         GpcWe/SV3i6V3fKKhOpri5FSrZc4ckLUh2VlT0CdL38bvJb5d0d/9gn0bAji57cd8vpK
-         z1vhKqB4yex6eE/tjvSw/iY3EpC+txYPoD/H+hVhRtaQs+NMpoaxeAWlPfO45LwnE6vw
-         Vj0/TS4EtrWbSDIeBdisomESFWjz8WBP3Hy/ZibqcfAc5yQgx8hJeWvjOmcIMftx4iQY
-         N2ESUYadNBdvsMb8tf+tmtgHt9O5PCMt7+jhqbFjJArEvp8PnEu/ISvet6cwaJaspvY5
-         WY0Q==
-X-Gm-Message-State: ACgBeo30PKiy+el6PgsllPZW9Pxm/bBVcv3kclWB6+fDjTNf7ae4UKle
-        ofemnvfku1i0FvGToKyZ8Bk=
-X-Google-Smtp-Source: AA6agR4DjBY1a6rqUSp7l6lEQWiy+6b/Hn1VsS83RpabCH+2Tflengu0LxDvWUGE7VmPdkiE+fS9tg==
-X-Received: by 2002:adf:f10d:0:b0:220:7e4f:ceb6 with SMTP id r13-20020adff10d000000b002207e4fceb6mr20272267wro.316.1660222167334;
-        Thu, 11 Aug 2022 05:49:27 -0700 (PDT)
+        bh=Ezzgn26UITYMxJ2EBbIGjqMQh5yKF5gU5NBuldKIvJ4=;
+        b=fgqCuAE/jgSGhDQpmD1Q0Ye1bz7MIAK8BkjQ8nnb9USPGallo7Nwb/7zOdpyi3gnrt
+         dI1tNM0aTGsNDWgGAAbYERexrq5ROYuZuptizYv/tv0Dk5iFwZEOz3jJn8CFoU9QJ13x
+         +F7Z2IXfN1dvj1qBzI2OCut9NA9xCJRjKrBFmE4511CM60nQS0AyvoxAcwt6Aca00MSf
+         HnTYXYclb3x3LKeUwRmr2V79qbpEwpDN4YOVfly/VkLveKdYuDv4jh0cMD85sL1ZlmxI
+         bOoH5ZP7jbL6JjW3/FF0NoMdWYWq1OtC6rS238DCxp0EgLGiMfMOTU4tpiDR2AVbgh9n
+         ozfQ==
+X-Gm-Message-State: ACgBeo165I4rDlv0cDzoUQ9pUhlpPrjDsfAgT6V/wGMRmIHK8qae8ljl
+        qJ6M47hnIET+Bk+piFq7X2Y=
+X-Google-Smtp-Source: AA6agR4TvGrRenvtKfDqrw0Xex0BG7NwUf1W0vhCMZRP4qZimG0EipOW6gMftKS+mTQeZjqYMtC6lQ==
+X-Received: by 2002:a7b:ce02:0:b0:3a5:47a:3897 with SMTP id m2-20020a7bce02000000b003a5047a3897mr5610555wmc.102.1660222747548;
+        Thu, 11 Aug 2022 05:59:07 -0700 (PDT)
 Received: from [192.168.1.240] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id q3-20020a056000136300b0021b956da1dcsm18829303wrz.113.2022.08.11.05.49.26
+        by smtp.gmail.com with ESMTPSA id ba5-20020a0560001c0500b0021efc75914esm20009981wrb.79.2022.08.11.05.59.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Aug 2022 05:49:26 -0700 (PDT)
-Message-ID: <ec8204d5-9d0d-9850-f930-6fc1a8efacc5@gmail.com>
-Date:   Thu, 11 Aug 2022 13:49:19 +0100
+        Thu, 11 Aug 2022 05:59:07 -0700 (PDT)
+Message-ID: <23d86b94-3e2e-bdeb-3385-a996c07b699d@gmail.com>
+Date:   Thu, 11 Aug 2022 13:58:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 4/5] add -p: avoid ambiguous signed/unsigned comparison
+Subject: Re: [PATCH 5/5] cmake: avoid editing t/test-lib.sh
 Content-Language: en-GB-large
 To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 References: <pull.1320.git.1660143750.gitgitgadget@gmail.com>
- <4d24a4345ba66031d2ccf7ce472ed93ace82e9d6.1660143750.git.gitgitgadget@gmail.com>
+ <c7fc5a4ee4cbc49b8afb2f9579763482552fffb0.1660143750.git.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <4d24a4345ba66031d2ccf7ce472ed93ace82e9d6.1660143750.git.gitgitgadget@gmail.com>
+In-Reply-To: <c7fc5a4ee4cbc49b8afb2f9579763482552fffb0.1660143750.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -75,57 +76,124 @@ Hi Dscho
 On 10/08/2022 16:02, Johannes Schindelin via GitGitGadget wrote:
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> In the interactive `add` operation, users can choose to jump to specific
-> hunks, and Git will present the hunk list in that case. To avoid showing
-> too many lines at once, only a maximum of 21 hunks are shown, skipping
-> the "mode change" pseudo hunk.
+> In 7f5397a07c6c (cmake: support for testing git when building out of the
+> source tree, 2020-06-26), we implemented support for running Git's test
+> scripts even after building Git in a different directory than the source
+> directory.
 > 
-> The comparison performed to skip the "mode change" pseudo hunk (if any)
-> compares a signed integer `i` to the unsigned value `mode_change` (which
-> can be 0 or 1 because it is a 1-bit type).
+> The way we did this was to edit the file `t/test-lib.sh` to override
+> `GIT_BUILD_DIR` to point somewhere else than the parent of the `t/`
+> directory.
 > 
-> According to section 6.3.1.8 of the C99 standard (see e.g.
-> https://www.open-std.org/jtc1/sc22/WG14/www/docs/n1256.pdf), what should
-> happen is an automatic conversion of the "lesser" type to the "greater"
-> type, but since the types differ in signedness, it is ill-defined what
-> is the correct "usual arithmetic conversion".
+> This is unideal because it always leaves a tracked file marked as
+> modified, and it is all too easy to commit that change by mistake.
 > 
-> Which means that Visual C's behavior can (and does) differ from GCC's:
-> When compiling Git using the latter, `add -p`'s `goto` command shows no
-> hunks by default because it casts a negative start offset to a pretty
-> large unsigned value, breaking the "goto hunk" test case in
-> `t3701-add-interactive.sh`.
-> 
-> Let's avoid that by converting the unsigned bit explicitly to a signed
-> integer.
+> Let's change the strategy by teaching `t/test-lib.sh` to detect the
+> presence of a file called `GIT-BUILD-DIR` in the source directory. If it
+> exists, the contents are interpreted as the location to the _actual_
+> build directory. We then write this file as part of the CTest
+> definition.
 
-Oh the joys of bit-fields!
+I think it is really good to get away from editing the test files, but 
+one of the nice things about CMake's out of tree builds is that you can 
+have several build directories with different build configurations and 
+this change does not support that. Could we pass the build directory to 
+the test scripts as a commandline option or environment variable 
+instead? e.g.
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->   add-patch.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/add-patch.c b/add-patch.c
-> index 509ca04456b..3524555e2b0 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -1547,7 +1547,7 @@ soft_increment:
->   			strbuf_remove(&s->answer, 0, 1);
->   			strbuf_trim(&s->answer);
+   foreach(tsh ${test_scipts})
+    	add_test(NAME ${tsh}
+-		COMMAND ${SH_EXE} ${tsh} --no-bin-wrappers --no-chain-lint -vx
++		COMMAND ${SH_EXE} ${tsh} --no-bin-wrappers --no-chain-lint 
+--build-dir=${CMAKE_BINARY_DIR} -vx
 
-Unrelated to this change but why don't we just call strbuf_reset() here?
+   		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t)
+   endforeach()
 
->   			i = hunk_index - DISPLAY_HUNKS_LINES / 2;
-> -			if (i < file_diff->mode_change)
-> +			if (i < (int)file_diff->mode_change)
-
-The change itself looks good
+Doing that would avoid changing the main Makefile to remove a file which 
+almost certainly does not exist every time make is invoked as well.
 
 Best Wishes
 
 Phillip
 
->   				i = file_diff->mode_change;
->   			while (s->answer.len == 0) {
->   				i = display_hunks(s, file_diff, i);
+> To support building Git via a regular `make` invocation after building
+> it using CMake, we ensure that the `GIT-BUILD-DIR` file is deleted (for
+> convenience, this is done as part of the Makefile rule that is already
+> run with every `make` invocation to ensure that `GIT-BUILD-OPTIONS` is
+> up to date).
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   .gitignore                          |  1 +
+>   Makefile                            |  1 +
+>   contrib/buildsystems/CMakeLists.txt |  7 +------
+>   t/test-lib.sh                       | 11 ++++++++++-
+>   4 files changed, 13 insertions(+), 7 deletions(-)
+> 
+> diff --git a/.gitignore b/.gitignore
+> index a4522157641..b72ddf09346 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -2,6 +2,7 @@
+>   /fuzz_corpora
+>   /fuzz-pack-headers
+>   /fuzz-pack-idx
+> +/GIT-BUILD-DIR
+>   /GIT-BUILD-OPTIONS
+>   /GIT-CFLAGS
+>   /GIT-LDFLAGS
+> diff --git a/Makefile b/Makefile
+> index 04d0fd1fe60..9347ed90da7 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -3028,6 +3028,7 @@ else
+>   	@echo RUNTIME_PREFIX=\'false\' >>$@+
+>   endif
+>   	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
+> +	@if test -f GIT-BUILD-DIR; then rm GIT-BUILD-DIR; fi
+>   
+>   ### Detect Python interpreter path changes
+>   ifndef NO_PYTHON
+> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+> index fe606c179f7..29d7e236ae1 100644
+> --- a/contrib/buildsystems/CMakeLists.txt
+> +++ b/contrib/buildsystems/CMakeLists.txt
+> @@ -1067,14 +1067,9 @@ endif()
+>   #Make the tests work when building out of the source tree
+>   get_filename_component(CACHE_PATH ${CMAKE_CURRENT_LIST_DIR}/../../CMakeCache.txt ABSOLUTE)
+>   if(NOT ${CMAKE_BINARY_DIR}/CMakeCache.txt STREQUAL ${CACHE_PATH})
+> -	file(RELATIVE_PATH BUILD_DIR_RELATIVE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}/CMakeCache.txt)
+> -	string(REPLACE "/CMakeCache.txt" "" BUILD_DIR_RELATIVE ${BUILD_DIR_RELATIVE})
+>   	#Setting the build directory in test-lib.sh before running tests
+>   	file(WRITE ${CMAKE_BINARY_DIR}/CTestCustom.cmake
+> -		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh GIT_BUILD_DIR_REPL REGEX \"GIT_BUILD_DIR=(.*)\")\n"
+> -		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh content NEWLINE_CONSUME)\n"
+> -		"string(REPLACE \"\${GIT_BUILD_DIR_REPL}\" \"GIT_BUILD_DIR=\\\"$TEST_DIRECTORY/../${BUILD_DIR_RELATIVE}\\\"\" content \"\${content}\")\n"
+> -		"file(WRITE ${CMAKE_SOURCE_DIR}/t/test-lib.sh \${content})")
+> +		"file(WRITE ${CMAKE_SOURCE_DIR}/GIT-BUILD-DIR \"${CMAKE_BINARY_DIR}\")")
+>   	#misc copies
+>   	file(COPY ${CMAKE_SOURCE_DIR}/t/chainlint.sed DESTINATION ${CMAKE_BINARY_DIR}/t/)
+>   	file(COPY ${CMAKE_SOURCE_DIR}/po/is.po DESTINATION ${CMAKE_BINARY_DIR}/po/)
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 55857af601b..4468ac51f25 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -42,7 +42,16 @@ then
+>   	TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
+>   fi
+>   GIT_BUILD_DIR="${TEST_DIRECTORY%/t}"
+> -if test "$TEST_DIRECTORY" = "$GIT_BUILD_DIR"
+> +if test -f "$GIT_BUILD_DIR/GIT-BUILD-DIR"
+> +then
+> +	GIT_BUILD_DIR="$(cat "$GIT_BUILD_DIR/GIT-BUILD-DIR")" || exit 1
+> +	# On Windows, we must convert Windows paths lest they contain a colon
+> +	case "$(uname -s)" in
+> +	*MINGW*)
+> +		GIT_BUILD_DIR="$(cygpath -au "$GIT_BUILD_DIR")"
+> +		;;
+> +	esac
+> +elif test "$TEST_DIRECTORY" = "$GIT_BUILD_DIR"
+>   then
+>   	echo "PANIC: Running in a $TEST_DIRECTORY that doesn't end in '/t'?" >&2
+>   	exit 1
