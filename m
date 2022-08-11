@@ -2,73 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7397C19F2A
-	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 20:27:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FF63C19F2A
+	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 20:33:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235577AbiHKU1o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Aug 2022 16:27:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60116 "EHLO
+        id S236210AbiHKUdx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Aug 2022 16:33:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234782AbiHKU1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Aug 2022 16:27:43 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E43649F0D7
-        for <git@vger.kernel.org>; Thu, 11 Aug 2022 13:27:39 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id gb36so35381127ejc.10
-        for <git@vger.kernel.org>; Thu, 11 Aug 2022 13:27:39 -0700 (PDT)
+        with ESMTP id S236019AbiHKUdd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Aug 2022 16:33:33 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 824269F1B8
+        for <git@vger.kernel.org>; Thu, 11 Aug 2022 13:33:31 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id o22so24352786edc.10
+        for <git@vger.kernel.org>; Thu, 11 Aug 2022 13:33:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc;
-        bh=tHb4Z/qG38LdQgnsaId+UBIJgxQQG19RWvqPr6plr5M=;
-        b=f24/TvcoMIpnaYp6gvMZErSVcf9ejycnfmLNnVznj1Q3hydTICcMD11zsw7+3BAAru
-         qM6eb3bswrYm12Vgsl2UnW9TqZmNDpiIvoBMBgLbAKxwOg5IZ5XfighO8SpwA1uZKbZU
-         xr7TgXNGkcG9J22nNOVr33aW4aC5gDtHt4XRPBbMzUKkSWOp52nQoGUrqh1CJFk/OEaI
-         FNluNT4ht3Dn5sn8dmJj/uCtpp4uIr7nAJ5BHcxUOCazKlh7wG9TsQPn667kDFSyOppR
-         DuhOgNLUtFKzf1lO/9Z1czDdmA+1kogU2VN0t+anVrrSHtD6/iJmGExuwrelkLOMfbvZ
-         SErg==
+        bh=4BQ68PaEHwPn3jru7I5dAvDOI59yZaJ9owDzi5PdmlU=;
+        b=ahglaC5sazKcmiLl0OcY/C0DinyC13gxv5KOFqVw0VvgsSiDNfXoRhcRz3+lfaq1uP
+         ndV/9lxpE50hU14Saay2ZcSj/AETeyxiIc8g/ixasQaodSePF83LmjckJ4RUegYdmVvC
+         KdtEfC4hS9BW+3LZNJOGrYCnQiwh7h+zxPLuXIdawYKw8kMnyyPfMdIuCYAbFoZMlOW1
+         dJklIx0/g3uc2fWKlBFpdonWCK3g4FE8X/d1arAB/uSeXVdrirbj6xS8aClU3ljalEf1
+         JqrIkjRhyM0HuKDqcC4VA1flNrWHuzcOxjw7ogN3osESOIcQ6IQMlFz24UGVM6HMcGOM
+         yGew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc;
-        bh=tHb4Z/qG38LdQgnsaId+UBIJgxQQG19RWvqPr6plr5M=;
-        b=N0BfClhVg/E39WuWzWnSGK3slkVVVDsvUj5MH/Kq9dwKm03MbHTr0l5fA2a7EBGv1w
-         HuyXojAMIx/4vReyr1BdKkm4wVfX1EsrTHhmLXcDjE+7+0PSsonUvXem9SW8ls9WP2s+
-         A/gvDB4jM0z2XVSsuyeSokRsFvstipBi2IiKW1hHdtbGnPitfi2wbMRm+Kv92RuAp7gf
-         gY72mYTewN9HNlbl9wloKvx53dGGIC1KHLkFWDMQig/o26J1+zVTO3Uue+Nb0en2wSzT
-         LKYQAI0Omu9ZPrgRqBAaW3Rwme5XODbxgsH5npUoq5Tp+pkldLIJmUfJhRAfQQ1dJjoT
-         NUow==
-X-Gm-Message-State: ACgBeo0CJgHnctN1jE2a0cxUkHT/5rIj1+EB6u4ORk4TV2WD4san0aAh
-        LRm9jKeqBOlHzYwaVV3fyHQ=
-X-Google-Smtp-Source: AA6agR4JZLy+5d1J63j+VQwd+FF3WzA8JrlouCtRvumsslPsmZlSa/9hjON0skqc+D3S2AdcAxy5jg==
-X-Received: by 2002:a17:906:cc50:b0:730:b5fd:89cf with SMTP id mm16-20020a170906cc5000b00730b5fd89cfmr510842ejb.221.1660249658399;
-        Thu, 11 Aug 2022 13:27:38 -0700 (PDT)
+        bh=4BQ68PaEHwPn3jru7I5dAvDOI59yZaJ9owDzi5PdmlU=;
+        b=dYfixpOP+ZEltFCHwfpddwY1gnkJPBrkklCUBFymqdQ1Jea+3F4oyagK6mKyA8fPbV
+         KKl68fqAmCoT2kVhgqIX6iv2iMi1MSSXELzjtonm0NgWXNE9ayXTPtf3LtaIombCgden
+         2uqq8qGTxJUH2BzK90hO8qDgO9vCHfWcXEAyzxGnmdpcF3R0qXu1dH3vMp54y0I/hW6c
+         hqQCG5ApfTCI01Ky5+Dg37DFXPe0oPKEFChiXwsZsYddmHfbiOxBbR0ah1NYP2FpAnc9
+         0jTgJNeVHhrPQ5aWYXYpLzJCP7KlMMpqWG46ymRmLJCQoACobFtQYpAHK8qQc9ptcasi
+         ufvg==
+X-Gm-Message-State: ACgBeo1tLeN+GM23HSxF2OCHCxOndeGijUOE7h1fVWTJg3OvFLAjDyIJ
+        UtcjCGLTk4ntNOlDPTy0QVI=
+X-Google-Smtp-Source: AA6agR71bRzcQoiyQEOfaFw1a2ZC4wJmy1cWosQetvu/CIobwy5laeWXM4YlqcOzK/MGAxbzhXg6eQ==
+X-Received: by 2002:a05:6402:32a8:b0:43e:5490:295f with SMTP id f40-20020a05640232a800b0043e5490295fmr738419eda.193.1660250009863;
+        Thu, 11 Aug 2022 13:33:29 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id i20-20020a170906a29400b0072b85a735afsm42058ejz.113.2022.08.11.13.27.37
+        by smtp.gmail.com with ESMTPSA id e8-20020a170906844800b0072af102e65csm43541ejy.152.2022.08.11.13.33.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Aug 2022 13:27:37 -0700 (PDT)
+        Thu, 11 Aug 2022 13:33:29 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1oMEmH-001K2r-0G;
-        Thu, 11 Aug 2022 22:27:37 +0200
+        id 1oMErw-001KFr-1I;
+        Thu, 11 Aug 2022 22:33:28 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        vdye@github.com, steadmon@google.com
-Subject: Re: [PATCH v2 06/10] log: add default decoration filter
-Date:   Thu, 11 Aug 2022 21:30:43 +0200
-References: <pull.1301.git.1658844250.gitgitgadget@gmail.com>
- <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
- <bec532fb8c63b3ae784d442f438687a4f0bbad37.1659122979.git.gitgitgadget@gmail.com>
- <220804.86iln8e9hl.gmgdl@evledraar.gmail.com>
- <ac7b3a81-7ca6-05d3-6633-4204066aa933@github.com>
- <220805.86zggirb7b.gmgdl@evledraar.gmail.com>
- <2184ffe4-4fde-878f-052f-e7dcdebe8161@github.com>
+To:     Victoria Dye <vdye@github.com>
+Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, derrickstolee@github.com,
+        johannes.schindelin@gmx.de
+Subject: Re: [PATCH v3 09/11] builtin/bugreport.c: create '--diagnose' option
+Date:   Thu, 11 Aug 2022 22:30:22 +0200
+References: <pull.1310.v2.git.1659577543.gitgitgadget@gmail.com>
+ <pull.1310.v3.git.1660174473.gitgitgadget@gmail.com>
+ <1a1eb2c980635415c04d5c8d9a62bd972482d7dc.1660174473.git.gitgitgadget@gmail.com>
+ <220811.86edxnqcdk.gmgdl@evledraar.gmail.com>
+ <f9a5f658-7c6f-bb3a-d6df-0ab7d2908395@github.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <2184ffe4-4fde-878f-052f-e7dcdebe8161@github.com>
-Message-ID: <220811.86k07eplty.gmgdl@evledraar.gmail.com>
+In-reply-to: <f9a5f658-7c6f-bb3a-d6df-0ab7d2908395@github.com>
+Message-ID: <220811.86fsi2plk7.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -77,84 +75,66 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Aug 05 2022, Derrick Stolee wrote:
+On Thu, Aug 11 2022, Victoria Dye wrote:
 
-> On 8/5/2022 10:50 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >>=20
->> On Fri, Aug 05 2022, Derrick Stolee wrote:
->
->>> Now that this version removed the notes ref from the
->>> decoration, the stance for inclusion is simple:
+>> On Wed, Aug 10 2022, Victoria Dye via GitGitGadget wrote:
+>>=20
+>>> From: Victoria Dye <vdye@github.com>
 >>>
->>>   If Git offers to color the namespace with color.decoration.<slot>,
->>>   then Git decorates with that namespace by default.
+>>> Create a '--diagnose' option for 'git bugreport' to collect additional
+>>> information about the repository and write it to a zipped archive.
+>>> [...]
+>>>  'git bugreport' [(-o | --output-directory) <path>] [(-s | --suffix) <f=
+ormat>]
+>>> +		[--diagnose[=3D<mode>]]
+>>> [...]
+>>>  static const char * const bugreport_usage[] =3D {
+>>> -	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format=
+>]"),
+>>> +	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format=
+>] [--diagnose[=3D<mode>]"),
+>>>  	NULL
+>>>  };
 >>=20
->> I'm a bit confused, sorry.
->>=20
->> So aside from "notes", if we have a color.decoration.<slot> applying to
->> a ref now, it's a bug in your series if it's not showing up anymore?
+>> This still has the SYNOPSIS v.s. -h discrepancy noted in
+>> https://lore.kernel.org/git/220804.86v8r8ec4s.gmgdl@evledraar.gmail.com/
 >
-> The possible slots are:
->
->  * branch (refs/heads/)
->  * remoteBranch (refs/remotes/)
->  * tag (refs/tags/)
->  * stash (refs/stash)
->  * HEAD (HEAD)
->  * grafted (refs/replace/ or GIT_REPLACE_REF_BASE)
->
-> These are exactly the namespaces that are now shown by default in
-> this series.
+> The discrepancy you pointed out was on 'git diagnose' (which has since be=
+en
+> fixed),
 
-No, e.g. "tag" doesn't mean "refs/tags/*", it means *a tag object*. Try
-this on master:
+Ah, sorry. I missed that & conflated the two.
 
-	git update-ref refs/archived-tags/v2.36.0 refs/tags/v2.36.0
+> this is a pre-existing one in 'git bugreport'. I decided against
+> fixing *this* one because it didn't really fit into any of the patches in
+> this series, so it would need its own patch. When balancing "leave things
+> better than you found them" vs. "stay focused on the purpose of the serie=
+s",
+> I leaned towards the latter to avoid setting a precedent for other 'git
+> bugreport'-related scope creep.
 
-Then on master:
+In any case, I'm pointing out the difference in one of them having
+\n-wrapping inconsistent with the other, which is an addition in this
+series, sorry about not being clear.
 
-	./git -P -c color.decorate.tag=3D"bold blue" log --oneline -1 v2.36.0
-	6cd33dceed6 (tag: v2.36.0, gitster/yw/cmake-use-pcre2, gitgitgadget/yw/cma=
-ke-use-pcre2, tag: refs/archived-tags/v2.36.0) Git 2.36
+I see that there's also the difference in how they format "--suffix",
+but that's pre-existing & we can leave it for now. I think that's what
+you're pointing out here as pre-existing.
 
-But on "seen" currently:
+> If you have the patches to audit this sort of thing, I think a nice place=
+ to
+> fix this might be in a dedicated series fixing discrepancies tree-wide. E=
+ven
+> better, you could include the patches in your tree that detect them as pa=
+rt
+> of e.g. the 'static-analysis' CI job.
 
-	$ ./git -P -c color.decorate.tag=3D"bold blue" log --oneline -1 v2.36.0
-	6cd33dceed6 (tag: v2.36.0, gitster/yw/cmake-use-pcre2, gitgitgadget/yw/cma=
-ke-use-pcre2) Git 2.36
+Yeah I do have those, and will probably submit those sooner than later,
+and I'll end up spotting differences once they land on "master"
+(e.g. [1] is one such case).
 
-Before that "bold blue" applied to *tag objects*, but your series has
-made it apply to the refs/tags/* namespace.
+But this one is just one I eyeballed during review.
 
-I noted this (indirectly) before in
-https://lore.kernel.org/git/220726.86tu73ncf8.gmgdl@evledraar.gmail.com/;
-I.e. that I have a "refs/built-tags/" namespace.
-
-So that specifically seems like a regression by the criteria you've
-established for inclusion. I.e. we have objects that are impacted by
-existing coloring config now that your series is hiding, seemingly
-because you've conflated "tag object" with "a name in in refs/tags/".
-
-I *also* think it's overzelous to hide *uknown* things by default
-because we think we might add more *known* internal things in the
-future, but that's a distinct topic from this more narrow case, which
-seems to be a clear regression by criteria you're establishing &
-advocating for.
-
-> If someone adds a new color slot, then that would need to be
-> justified with a reason why that slot is important. We've already
-> had discussions as to why showing a decoration for notes is not
-> valuable to an end user. The stability of this config option (the
-> last addition of 'grafted' was in 2011) is good evidence that this
-> core set of namespaces is all users will need.
->
-> By contrast, the use of "hidden" namespaces is relatively new and
-> is expected to increase in the near future.
-
-I really don't see how you're making the leap that because nobody's
-bothered to customize the coloring for things in custom namespaces that
-it's OK to hide them entirely.
-
-I just leave everything at the default color settings, aside from (after
-checking my ~/.gitconfig) one bit of diff coloring default that I found
-annoying.
+1. https://lore.kernel.org/git/220811.86o7wrov26.gmgdl@evledraar.gmail.com/
