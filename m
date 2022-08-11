@@ -2,135 +2,308 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4343AC25B06
-	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 18:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FE13C25B0C
+	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 18:32:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235213AbiHKSU1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Aug 2022 14:20:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56192 "EHLO
+        id S235625AbiHKSci (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Aug 2022 14:32:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234491AbiHKSUX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Aug 2022 14:20:23 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 921323B9
-        for <git@vger.kernel.org>; Thu, 11 Aug 2022 11:20:20 -0700 (PDT)
-Received: (qmail 10271 invoked by uid 109); 11 Aug 2022 18:20:20 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Aug 2022 18:20:20 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24550 invoked by uid 111); 11 Aug 2022 18:20:20 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Aug 2022 14:20:20 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 11 Aug 2022 14:20:19 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] mingw: handle writes to non-blocking pipe
-Message-ID: <YvVIYyA8Js0WDAMc@coredump.intra.peff.net>
-References: <41477326-5493-4d3c-246d-8a28969fa73e@web.de>
- <Yu05GjncDaGRTgce@coredump.intra.peff.net>
- <6854c54c-12ff-f613-4cdc-18b3b1a55ef1@web.de>
- <b3310324-7969-f9fb-a2e0-46e881d37786@web.de>
- <Yu/5LU+ZhbVRnSdM@coredump.intra.peff.net>
- <72d007c5-9429-1612-24d7-af5db906dd63@web.de>
- <YvQO4ZYI8/fAk0Gj@coredump.intra.peff.net>
- <77244ffe-41c1-65bd-8984-8ed6909ffe07@web.de>
- <YvTCIVN2VBir7WEP@coredump.intra.peff.net>
- <976ac297-28ec-0a38-c4e1-eb7b94d0eb8c@web.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        with ESMTP id S234774AbiHKScg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Aug 2022 14:32:36 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C081E9D
+        for <git@vger.kernel.org>; Thu, 11 Aug 2022 11:32:35 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id z16so22188399wrh.12
+        for <git@vger.kernel.org>; Thu, 11 Aug 2022 11:32:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=CMR7b4r3kRXaCDXjFEdjBL4St6tPAwql87A4DDNThD4=;
+        b=OTwVIidydY/PPdEDMitAJRZdoD5+o6GmYOOSCvY853G5kRw8JXHukklOLhWfNh60bG
+         VS67c3ZfYxp0SGo5UoAPKGqL/l+KfkRMlwh3ra2K1UL08lp+QaR9/NtU9IwkP4zfSKcG
+         D88JhDo1AnWV29zdYmpCwbAJxRJ7Pf00JkxgEX7xj6DwL69fvFqZW4rrHRAdZbal+GyC
+         RZq7wdNW3puu7i6JxOZzY1jt2WU1HXh8ebOkRnJxzaHpeqaZp17Uefl4sV1mOAJmRtKL
+         ssDyiWbxTgzDuwqXABzrCM+6g6CzmGFTUCO61UNPla7uw5HL4lZRq8/mNGVelqS6cFPF
+         hINg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=CMR7b4r3kRXaCDXjFEdjBL4St6tPAwql87A4DDNThD4=;
+        b=Cqo7QgNbLhto1/94MjRSA6D8cIHF/53MoYlb51j4V79gjorfjuWYVSt52+kJg6KG0S
+         0tldKtaEd4yx4ldR3Bv9TEWrNLt2rnTzbCdwp4nDbtST3VqL/xstzF65C5VN0rwX48sr
+         tcyWJ/GYmZA9M+Dwz0EZBR5j0ykqb8aNQ35B1F6ehINXRywLhQwQdjXtp80aPvc98b51
+         MqP12RBfd8RBQ1bsDnsrvIbiY8CVbEaS51yr3zmWaFsCc2dQ5MDC/GWocKID1SP3kENK
+         qDqEAhjQYL3BXioulCskOsOlpiGPMhPnFwjSh5XuOlsm0hxD8DXMDY9A8Qs2/S96b69l
+         4Tzg==
+X-Gm-Message-State: ACgBeo2OnXBDdgfcH4O58KNrxhEJr3Xzm/WasQlkbP/ebiT1XR+eHl0k
+        3f+bs6oVEPf4ChuKu6O0EeLf03rcfRE=
+X-Google-Smtp-Source: AA6agR6F3xyVPQEdnke82E3TPpB/loHNVdUq71jTpC2A7FCu94CSNLnDJuCVR1IfVX5WMLlMJXmg9g==
+X-Received: by 2002:a5d:47aa:0:b0:21e:e1aa:2542 with SMTP id 10-20020a5d47aa000000b0021ee1aa2542mr153739wrb.19.1660242753688;
+        Thu, 11 Aug 2022 11:32:33 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c5-20020a7bc005000000b003a2d47d3051sm178753wmb.41.2022.08.11.11.32.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Aug 2022 11:32:33 -0700 (PDT)
+Message-Id: <pull.1317.v3.git.1660242752495.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1317.v2.git.1660233432.gitgitgadget@gmail.com>
+References: <pull.1317.v2.git.1660233432.gitgitgadget@gmail.com>
+From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 11 Aug 2022 18:32:32 +0000
+Subject: [PATCH v3] fsmonitor: option to allow fsmonitor to run against
+ network-mounted repos
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <976ac297-28ec-0a38-c4e1-eb7b94d0eb8c@web.de>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Eric DeCosta <edecosta@mathworks.com>,
+        Eric DeCosta <edecosta@mathworks.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 11, 2022 at 07:35:33PM +0200, René Scharfe wrote:
+From: Eric DeCosta <edecosta@mathworks.com>
 
-> OK, but we can't just split anything up as we like: POSIX wants us to
-> keep writes up to PIPE_BUF atomic.  When I read that name I mistakenly
-> thought it was the size of the pipe buffer, but it's a different value.
-> The minimum value according to POSIX is 512 bytes; on Linux it's 4KB.
-> 
-> And Windows doesn't seem to define it.  Bash's ulimit -p returns 8,
-> which is in units of 512 bytes, so it's 4KB like on Linux.  But that's
-> apparently not respected by Windows' write.
-> 
-> I just realized that we can interprete the situation slightly
-> differently.  Windows has effectively PIPE_BUF = 2^32, which means all
-> writes are atomic.  I don't see POSIX specifying a maximum allowed
-> value, so this must be allowed.  Which means you cannot rely on write
-> performing partial writes.  Makes sense?
+Though perhaps not common, there are uses cases where users have large,
+network-mounted repos. Having the ability to run fsmonitor against
+network paths would benefit those users.
 
-Hmm, I'm not sure. POSIX does allow writing a single byte if that's all
-the space there is, but only if the original _request_ was for more than
-PIPE_BUF. Which I guess matches what you're saying.
+Most modern Samba-based filers have the necessary support to enable
+fsmonitor on network-mounted repos. As a first step towards enabling
+fsmonitor to work against network-mounted repos, introduce a
+configuration option, 'fsmonitor.allowRemote'. Setting this option to
+true will override the default behavior (erroring-out) when a
+network-mounted repo is detected by fsmonitor.
 
-If the original request is smaller than PIPE_BUF, it does seem to say
-that EAGAIN is the correct output. But it also says:
+Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+---
+    Option to allow fsmonitor to run against repos on network file systems
+    
+    cc: Eric D eric.decosta@gmail.com
 
-  There is no exception regarding partial writes when O_NONBLOCK is set.
-  With the exception of writing to an empty pipe, this volume of
-  POSIX.1-2017 does not specify exactly when a partial write is
-  performed since that would require specifying internal details of the
-  implementation. Every application should be prepared to handle partial
-  writes when O_NONBLOCK is set and the requested amount is greater than
-  {PIPE_BUF}, just as every application should be prepared to handle
-  partial writes on other kinds of file descriptors.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1317%2Fedecosta-mw%2Fmaster-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1317/edecosta-mw/master-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1317
 
-  The intent of forcing writing at least one byte if any can be written
-  is to assure that each write makes progress if there is any room in
-  the pipe. If the pipe is empty, {PIPE_BUF} bytes must be written; if
-  not, at least some progress must have been made.
+Range-diff vs v2:
 
-So they are clearly aware of the "we need to make forward progress"
-problem. But how are you supposed to do that if you only have less than
-PIPE_BUF bytes left to write? And likewise, even if it is technically
-legal, having a PIPE_BUF of 2^32 seems like a quality-of-implementation
-issue.
+ 1:  7e67ce8c944 ! 1:  6c5f176cbee fsmonitor: option to allow fsmonitor to run against network-mounted repos
+     @@ Commit message
+          true will override the default behavior (erroring-out) when a
+          network-mounted repo is detected by fsmonitor.
+      
+     -    Additionally, as part of this first step, monitoring of network-mounted
+     -    repos will be restricted to those mounted over SMB regardless of the
+     -    value of 'fsmonitor.allowRemote' until more extensive testing can be
+     -    performed.
+     -
+          Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+      
+       ## compat/fsmonitor/fsm-settings-win32.c ##
+     @@ compat/fsmonitor/fsm-settings-win32.c: static enum fsmonitor_reason check_vfs4gi
+      +/*
+      + * Check if monitoring remote working directories is allowed.
+      + *
+     -+ * By default monitoring remote working directories is not allowed,
+     -+ * but users may override this behavior in enviroments where they
+     -+ * have proper support.
+     -+*/
+     -+static enum fsmonitor_reason check_allow_remote(struct repository *r)
+     ++ * By default, monitoring remote working directories is
+     ++ * disabled unless on a network filesystem that is known to
+     ++ * behave well.  Users may override this behavior in enviroments where
+     ++ * they have proper support.
+     ++ */
+     ++static int check_config_allowremote(struct repository *r)
+      +{
+      +	int allow;
+      +
+     -+	if (repo_config_get_bool(r, "fsmonitor.allowremote", &allow) || !allow)
+     -+		return FSMONITOR_REASON_REMOTE;
+     ++	if (!repo_config_get_bool(r, "fsmonitor.allowremote", &allow))
+     ++		return allow;
+      +
+     -+	return FSMONITOR_REASON_OK;
+     ++	return -1; /* fsmonitor.allowremote not set */
+      +}
+      +
+      +/*
+     -+ * Check if the remote working directory is mounted via SMB
+     ++ * Check remote working directory protocol.
+      + *
+     -+ * For now, remote working directories are only supported via SMB mounts
+     -+*/
+     -+static enum fsmonitor_reason check_smb(wchar_t *wpath)
+     ++ * Error if client machine cannot get remote protocol information.
+     ++ */
+     ++static void check_remote_protocol(wchar_t *wpath)
+      +{
+      +	HANDLE h;
+      +	FILE_REMOTE_PROTOCOL_INFO proto_info;
+      +
+      +	h = CreateFileW(wpath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
+     -+					FILE_FLAG_BACKUP_SEMANTICS, NULL);
+     ++			FILE_FLAG_BACKUP_SEMANTICS, NULL);
+      +
+      +	if (h == INVALID_HANDLE_VALUE) {
+      +		error(_("[GLE %ld] unable to open for read '%ls'"),
+      +		      GetLastError(), wpath);
+     -+		return FSMONITOR_REASON_ERROR;
+     ++		return;
+      +	}
+      +
+      +	if (!GetFileInformationByHandleEx(h, FileRemoteProtocolInfo,
+     -+									&proto_info, sizeof(proto_info))) {
+     ++		&proto_info, sizeof(proto_info))) {
+      +		error(_("[GLE %ld] unable to get protocol information for '%ls'"),
+      +		      GetLastError(), wpath);
+      +		CloseHandle(h);
+     -+		return FSMONITOR_REASON_ERROR;
+     ++		return;
+      +	}
+      +
+      +	CloseHandle(h);
+      +
+     -+	if (proto_info.Protocol == WNNC_NET_SMB)
+     -+		return FSMONITOR_REASON_OK;
+     ++	trace_printf_key(&trace_fsmonitor,
+     ++				"check_remote_protocol('%ls') remote protocol %#8.8lx",
+     ++				wpath, proto_info.Protocol);
+      +
+     -+	return FSMONITOR_REASON_ERROR;
+     ++	return;
+      +}
+      +
+       /*
+        * Remote working directories are problematic for FSMonitor.
+        *
+     -@@ compat/fsmonitor/fsm-settings-win32.c: static enum fsmonitor_reason check_vfs4git(struct repository *r)
+     -  */
+     - static enum fsmonitor_reason check_remote(struct repository *r)
+     - {
+     -+	enum fsmonitor_reason reason;
+     - 	wchar_t wpath[MAX_PATH];
+     - 	wchar_t wfullpath[MAX_PATH];
+     - 	size_t wlen;
+      @@ compat/fsmonitor/fsm-settings-win32.c: static enum fsmonitor_reason check_remote(struct repository *r)
+       		trace_printf_key(&trace_fsmonitor,
+       				 "check_remote('%s') true",
+       				 r->worktree);
+     --		return FSMONITOR_REASON_REMOTE;
+      +
+     -+		reason = check_smb(wfullpath);
+     -+		if (reason != FSMONITOR_REASON_OK)
+     -+			return reason;
+     -+		return check_allow_remote(r);
+     ++		check_remote_protocol(wfullpath);
+     ++
+     ++		switch (check_config_allowremote(r)) {
+     ++		case 0: /* config overrides and disables */
+     ++			return FSMONITOR_REASON_REMOTE;
+     ++		case 1: /* config overrides and enables */
+     ++			return FSMONITOR_REASON_OK;
+     ++		default:
+     ++			break; /* config has no opinion */
+     ++		}
+     ++
+     + 		return FSMONITOR_REASON_REMOTE;
+       	}
+       
+     - 	return FSMONITOR_REASON_OK;
+ 2:  7a071c9e6be < -:  ----------- fsmonitor.allowRemote now overrides default behavior
 
-And that doesn't really match what poll() is saying. The response from
-poll() told us we could write without blocking, which implies at least
-PIPE_BUF bytes available. But clearly it isn't available, since the
-write fails (with EAGAIN, but that is equivalent to blocking in POSIX's
-view here).
 
-Lawyering aside, I think it would be OK to move forward with cutting up
-writes at least to a size of 512 bytes. Git runs on lots of platforms,
-and none of the code can make an assumption that PIPE_BUF is larger than
-that. I.e., we are reducing atomicity provided by Windows, but that's
-OK.
+ compat/fsmonitor/fsm-settings-win32.c | 66 +++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
-I don't think that solves our problem fully, though. We might need to
-write 5 bytes, and telling mingw_write() to do so means it's supposed to
-abide by PIPE_BUF conventions. But again, we are in control of the
-calling code here. I don't think there's any reason that we care about
-PIPE_BUF atomicity. Certainly we don't get those atomicity guarantees on
-the socket side, which is where much of our writing happens, and our
-code is prepared to handle partial writes of any size. So we could just
-ignore that guarantee here.
+diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
+index 907655720bb..32c0695c6c1 100644
+--- a/compat/fsmonitor/fsm-settings-win32.c
++++ b/compat/fsmonitor/fsm-settings-win32.c
+@@ -24,6 +24,60 @@ static enum fsmonitor_reason check_vfs4git(struct repository *r)
+ 	return FSMONITOR_REASON_OK;
+ }
+ 
++/*
++ * Check if monitoring remote working directories is allowed.
++ *
++ * By default, monitoring remote working directories is
++ * disabled unless on a network filesystem that is known to
++ * behave well.  Users may override this behavior in enviroments where
++ * they have proper support.
++ */
++static int check_config_allowremote(struct repository *r)
++{
++	int allow;
++
++	if (!repo_config_get_bool(r, "fsmonitor.allowremote", &allow))
++		return allow;
++
++	return -1; /* fsmonitor.allowremote not set */
++}
++
++/*
++ * Check remote working directory protocol.
++ *
++ * Error if client machine cannot get remote protocol information.
++ */
++static void check_remote_protocol(wchar_t *wpath)
++{
++	HANDLE h;
++	FILE_REMOTE_PROTOCOL_INFO proto_info;
++
++	h = CreateFileW(wpath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
++			FILE_FLAG_BACKUP_SEMANTICS, NULL);
++
++	if (h == INVALID_HANDLE_VALUE) {
++		error(_("[GLE %ld] unable to open for read '%ls'"),
++		      GetLastError(), wpath);
++		return;
++	}
++
++	if (!GetFileInformationByHandleEx(h, FileRemoteProtocolInfo,
++		&proto_info, sizeof(proto_info))) {
++		error(_("[GLE %ld] unable to get protocol information for '%ls'"),
++		      GetLastError(), wpath);
++		CloseHandle(h);
++		return;
++	}
++
++	CloseHandle(h);
++
++	trace_printf_key(&trace_fsmonitor,
++				"check_remote_protocol('%ls') remote protocol %#8.8lx",
++				wpath, proto_info.Protocol);
++
++	return;
++}
++
+ /*
+  * Remote working directories are problematic for FSMonitor.
+  *
+@@ -115,6 +169,18 @@ static enum fsmonitor_reason check_remote(struct repository *r)
+ 		trace_printf_key(&trace_fsmonitor,
+ 				 "check_remote('%s') true",
+ 				 r->worktree);
++
++		check_remote_protocol(wfullpath);
++
++		switch (check_config_allowremote(r)) {
++		case 0: /* config overrides and disables */
++			return FSMONITOR_REASON_REMOTE;
++		case 1: /* config overrides and enables */
++			return FSMONITOR_REASON_OK;
++		default:
++			break; /* config has no opinion */
++		}
++
+ 		return FSMONITOR_REASON_REMOTE;
+ 	}
+ 
 
-> If we accept that, then we need a special write function for
-> non-blocking pipes that chops the data into small enough chunks.
-
-I'm not sure what "small enough" we can rely on, though. Really it is
-the interplay between poll() and write() that we care about here. We
-would like to know at what point poll() will tell us it's OK to write().
-But we don't know what the OS thinks of that.
-
-Or maybe we do, since I think poll() is our own compat layer. But it
-just seems to be based on select(). We do seem to use PeekNamedPipe()
-there to look on the reading side, but I don't know if there's an
-equivalent for writing.
-
-> Another oddity: t3701 with yesterday's patch finishes fine with -i, but
-> hangs without it (not just when running it via prove).  O_o
-
-Yes, definitely strange. I'd expect weirdness with "-v", for example,
-because of terminal stuff, but "-i" should have no impact on the running
-environment.
-
--Peff
+base-commit: c50926e1f48891e2671e1830dbcd2912a4563450
+-- 
+gitgitgadget
