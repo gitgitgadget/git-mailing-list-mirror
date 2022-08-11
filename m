@@ -2,121 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E5AFC19F2A
-	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 17:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50257C19F2A
+	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 17:53:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234418AbiHKRwK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Aug 2022 13:52:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34648 "EHLO
+        id S234583AbiHKRxw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Aug 2022 13:53:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229594AbiHKRwI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Aug 2022 13:52:08 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A780BA0624
-        for <git@vger.kernel.org>; Thu, 11 Aug 2022 10:52:07 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id w11-20020a17090a380b00b001f73f75a1feso6095512pjb.2
-        for <git@vger.kernel.org>; Thu, 11 Aug 2022 10:52:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:user-agent
-         :subject:cc:to:from:date:from:to:cc;
-        bh=qbS5G/PRBOnuLSpk5zzcj8e/VZNnqoYWUnrXvKpHs3s=;
-        b=D5wyUrhZsLu+E2bJ8ImdFUZv95PpRPXD7LUvshvsO1uzFrpf0qhKKelDgIrkab/zEF
-         eIs4RAMrEsdFdTFgtuuglAAOo0hnf51ZQ9GIXq9sFSSoI6Co58Q9Bn9lNj3OyBbGQ4LY
-         R8VIWJ1R55Jv22x7WF8YXGEcQE5KptBiYu0nE10bbecMnMYNxdCAMHza/akopdLL7Kop
-         AYDJESjAXpJqFkjFGUDp2Hj45vGAvnl54WqqlvACmxPqnea00sD9ecI2z0gfKPr3+yrp
-         ou33vuqi5bGfsrJxt0wdHNJDti6RDziWw3SHcxQiIdZ9+xSKeVZjlupjrOD6Yz/+8b9Q
-         smWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:user-agent
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=qbS5G/PRBOnuLSpk5zzcj8e/VZNnqoYWUnrXvKpHs3s=;
-        b=FtgsZIMoQ10lT8+fuJJOZAXSbw4P86PwwlkDNlGnv/I9hBbEMYUpAjETZgpfN8BTpf
-         MMqDoYHt/ckYVW/YP5f7Y+vMs0T5HWPp45c9OXT9bhQtYGoPzm+7ZpZdL6yig2Vk+DO/
-         ftweBIPVwNWznrSFv75PofS14fASnHegfzcAnKGX/JDMCAAm7r8sfnvJPGcZi4muwpNN
-         SiJtRsjVo49a/WT+kWdCxIW7EN3/EhUEosbfKAwKbZ2IzXGnCidt4fcYhzkHf6i9Z6wE
-         Mk9yZ/2SkoUB5mUwuJ7PRCFXoRS9tVQFnrOqRHDfoOLbsw2f45BpS3t7+X+O1CuoC1aL
-         mE+g==
-X-Gm-Message-State: ACgBeo1pSmi0qVc5rrUYYSlBd5LIzFUbiiRe9Ic3SiYZsYsxwG/fjYH/
-        Y/UGnueV7+cxhyCdPh8TbPutoeLCEgtbeA==
-X-Google-Smtp-Source: AA6agR4MT2I1RZQViwv6KAMU35SJF4BHNZNs7AyKE6kqgDK9YhEdcihHgjqg20HntKQGDQyHOwAhJg==
-X-Received: by 2002:a17:902:c7c4:b0:16e:d968:6343 with SMTP id r4-20020a170902c7c400b0016ed9686343mr250142pla.133.1660240326687;
-        Thu, 11 Aug 2022 10:52:06 -0700 (PDT)
-Received: from [127.0.0.1] ([106.208.38.243])
-        by smtp.gmail.com with ESMTPSA id z125-20020a623383000000b0052d2cd99490sm4370014pfz.5.2022.08.11.10.52.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Aug 2022 10:52:06 -0700 (PDT)
-Date:   Thu, 11 Aug 2022 23:22:03 +0530
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-CC:     Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Better advertise Git for GSoC ?
-User-Agent: K-9 Mail for Android
-Message-ID: <ED5A2C3F-8F96-425B-AEFF-179824438CF6@gmail.com>
+        with ESMTP id S229594AbiHKRxu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Aug 2022 13:53:50 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04B72A0624
+        for <git@vger.kernel.org>; Thu, 11 Aug 2022 10:53:47 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 088481551EE;
+        Thu, 11 Aug 2022 13:53:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=CxeeW6fmytQi2E0HT1q0dPcwuLyHdOzFjwdY3d
+        5Ms/Q=; b=XVvelFUPXFguW/nwriQcbNLc0dfhGRjcczV8aJHKqeGwgO6Q7jgtqk
+        WpypbEVQOAccHja1gINwBUfPAqT/9lksvejxZwxh9FBdkiq8QvAjnBuaWa5R9jla
+        M+ywS3S++nzc7eXsFWi3PMP3KJDDuIOBjk9TfM84pgSGkH4Bs6tHw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3E1A1551ED;
+        Thu, 11 Aug 2022 13:53:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.32])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6816E1551EC;
+        Thu, 11 Aug 2022 13:53:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric D <eric.decosta@gmail.com>
+Cc:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH v2 2/2] fsmonitor.allowRemote now overrides default
+ behavior
+References: <pull.1317.git.1660067049965.gitgitgadget@gmail.com>
+        <pull.1317.v2.git.1660233432.gitgitgadget@gmail.com>
+        <7a071c9e6be68b58306582dbac5952a5b1bcbc6a.1660233432.git.gitgitgadget@gmail.com>
+        <xmqqtu6ig1s5.fsf@gitster.g>
+        <CAMxJVdEV=rSXtM-nagvtMPdArkvQgoNauaQb1sk0CL3sPSvKmw@mail.gmail.com>
+Date:   Thu, 11 Aug 2022 10:53:43 -0700
+In-Reply-To: <CAMxJVdEV=rSXtM-nagvtMPdArkvQgoNauaQb1sk0CL3sPSvKmw@mail.gmail.com>
+        (Eric D.'s message of "Thu, 11 Aug 2022 13:49:07 -0400")
+Message-ID: <xmqqpmh6fyzc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8AE97E5C-199E-11ED-A978-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Eric D <eric.decosta@gmail.com> writes:
 
-So far we've had the fortune of working with many good contributors over t=
-hese years via GSoC=2E Some have even turned out to be regular contributors=
- to the project post GSoC=2E To gather GSoC contributors, we don't usually =
-rely much on explicit advertising of the Git project's participation in GSo=
-C (AFAIK) and this hasn't usually been a point of concern for us=2E
+> Well, needless to say I wasn't expecting GitGitGadget to do what it
+> did.I had squashed things down to just two commits and forced-pushed
+> the second commit thinking that just the relevant stuff from the
+> second commit would show up in the next patch. Obviously that didn't
+> happen. Sorry about that.
 
-Regardless, Google is now considering providing some options to expend our=
- possibility of gathering candidates who are not yet aware of the Git proje=
-ct=2E I thought of bringing this to the notice of the community and hearing=
- your thoughts about it=2E The options are:
+Oh, sorry to hear that.  If your ideal "logical progression" needs
+two commits, then please do present the series that way.  What GGG
+sent out was apparently not that (i.e. the same one from v1 with
+full of fix-ups for it in 2/2).
 
-  1=2E Community discussions
-  2=2E Org highlight video
-
-## Community discussions
-
-Google is planning to conduct virtual meetups where attendees can share th=
-eir GSoC and open source journey with a 10-15 minute pre-recorded talk duri=
-ng each session=2E This video would live in the Google Open Source YouTube =
-channel=2E
-
-This is more of an individual thing=2E Some details and interest could be =
-specified through the following link: https://forms=2Egle/cbGNSNTaLewT34TY7
-
-
-## Org highlight video
-
-The highlight video would be a short 2-3 minutes video about the organizat=
-ion=2E This could include some quick highlights of projects that contributo=
-rs have completed over the years, what contributors could learn by contribu=
-ting to Git=2E
-
-Videos will be featured on the Google Open Source YouTube channel and will=
- be available for the GSoC contributors to know more about the Git project=
-=2E
-
-I wanted to hear the thoughts of others in making a highlight video for th=
-e Git project=2E This might be a bit of a big undertaking that involves pla=
-nning=2E It might be worth the effort, though=2E
-
-The immediate milestone for now is to mention our interest before 14Aug202=
-2 to Google=2E So, do share your thoughts about whether it would be worthwh=
-ile to make an Org highlight video for Git [note 1]=2E
-
-
-[[ Footnotes ]]
-
-[note 1]: I personally feel it would be a worthwhile one to do=2E
-
---=20
-Sivaraam
