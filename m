@@ -2,85 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EF61C19F2D
-	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 08:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0DA5C19F2D
+	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 08:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234771AbiHKIwh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Aug 2022 04:52:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32932 "EHLO
+        id S234802AbiHKIxb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Aug 2022 04:53:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233120AbiHKIwf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Aug 2022 04:52:35 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F0D915F8
-        for <git@vger.kernel.org>; Thu, 11 Aug 2022 01:52:35 -0700 (PDT)
-Received: (qmail 8642 invoked by uid 109); 11 Aug 2022 08:52:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Aug 2022 08:52:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19955 invoked by uid 111); 11 Aug 2022 08:52:35 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Aug 2022 04:52:35 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 11 Aug 2022 04:52:33 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] pipe_command(): mark stdin descriptor as non-blocking
-Message-ID: <YvTDUWjmJKK/6c1s@coredump.intra.peff.net>
-References: <a9953278-b15f-fd76-17b0-e949c7937992@web.de>
- <YuquVEqEl6wxCLM7@coredump.intra.peff.net>
- <41477326-5493-4d3c-246d-8a28969fa73e@web.de>
- <Yu05GjncDaGRTgce@coredump.intra.peff.net>
- <6854c54c-12ff-f613-4cdc-18b3b1a55ef1@web.de>
- <b3310324-7969-f9fb-a2e0-46e881d37786@web.de>
- <Yu/5LU+ZhbVRnSdM@coredump.intra.peff.net>
- <0e1b8066-3f67-cec6-675a-05d2cf54c119@web.de>
- <YvQMsMv3EhiI/rTb@coredump.intra.peff.net>
- <dee6cce5-6f95-ecbe-1dd3-dd54f9746c67@web.de>
+        with ESMTP id S234791AbiHKIx0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Aug 2022 04:53:26 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B54F593502
+        for <git@vger.kernel.org>; Thu, 11 Aug 2022 01:53:24 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id b16so22088042edd.4
+        for <git@vger.kernel.org>; Thu, 11 Aug 2022 01:53:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc;
+        bh=lkhmFTC0Mt9AKj8wpql+GYKhA/h/i2WdmQGh4O3vgIA=;
+        b=aylpA8sx6OM8J1UgjR1M6hKB1cAYXZRbRiabd1fa4hr8nrFPbC+tDVXQZRWKPGSkXj
+         qNmACGHYEKvPxmgo9Nw+Y8AN8CbMQ96mLdkVUTjhJN60KMc0z9szwL/UfrBRNt6fr0i8
+         UJLLhfSjk2v+L74xIy6IXicCh5aY6jYI1RWgZ0aGJwAkgJtFvqduqa3MykDiOELO7ryI
+         60K05X3j6e3AtYHNY58Z6z8Hgu+9EGRIPC8RFfxIPkHtESlzlAt1vxb2HtrjLyokc2Oh
+         h7jcNqkVwKdJR/wpYRqrXE5rvo7JScZqbTd0qnInL8K7rVbwG2K3bXJw8mgN2Cd96TFK
+         5QKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc;
+        bh=lkhmFTC0Mt9AKj8wpql+GYKhA/h/i2WdmQGh4O3vgIA=;
+        b=TxmAaKlBSTaInBfMdw6zneWhI1uenRTtP4mlg8wGQe5v/16nEEg3/y3Oq8p5I96sbi
+         Fz364iRFMcYpaZjIjIqIiGCorbS7gxln7v+WvyJ/NxKSEKaQKrpk5P7ys6GUBG0Jr8it
+         lSPFwIQG7apW3yz2YXUzM4ODEtcb4Di2PWW4797xZIYfLe2xXDLHkc8dtwNJJOjuHKbE
+         IQF+5+QKOkbou47wwMjILCA4PKyN/TCF4gbIar21dCbDhkdfZr+Abiduv0e+wrH+8rrB
+         DQUkfqHbsg4zPc/U5Ya9fbQ04y6fYnhrCIGz2I+qWry1khcFOz0b/JxHqCnX5cuVr2Wk
+         sSwg==
+X-Gm-Message-State: ACgBeo0DsQAf1+4EgT4IAS2v8GtEcsFKHHF5ufF3vOXf6fWv3Ux1ml6x
+        IyBTpim5/UhMuhHbK5ucxsCXPjocKQec58nG3p/adqQuhPc=
+X-Google-Smtp-Source: AA6agR5dVXrM7Ypd31WFsnqHp2RzXnIPzTvgUc4t4DRfFcVOK0wsXXFDxyORYtKZWkmTsRlFGL1+S3s0GejcFqdqRGg=
+X-Received: by 2002:a05:6402:5192:b0:43d:cc0d:6ea4 with SMTP id
+ q18-20020a056402519200b0043dcc0d6ea4mr29943018edd.111.1660208002726; Thu, 11
+ Aug 2022 01:53:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <dee6cce5-6f95-ecbe-1dd3-dd54f9746c67@web.de>
+References: <CAO8o=D6p+aFOeRdTDHwPa1E+V45Uqh-TuSZbz0WU=rE-ksGj_w@mail.gmail.com>
+In-Reply-To: <CAO8o=D6p+aFOeRdTDHwPa1E+V45Uqh-TuSZbz0WU=rE-ksGj_w@mail.gmail.com>
+From:   Noam Yorav-Raphael <noamraph@gmail.com>
+Date:   Thu, 11 Aug 2022 11:53:11 +0300
+Message-ID: <CAO8o=D7QC71mnyKSceMpYJzVO4=POva=mJQ1bi0teUHPB9xesA@mail.gmail.com>
+Subject: Fwd: Idea: add --squash to cherry-pick
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 11, 2022 at 12:35:02AM +0200, René Scharfe wrote:
+Hi,
 
-> > The key thing is that pump_io() is careful never to initiate a write()
-> > unless poll() has just told us that the descriptor is ready for writing.
-> 
-> Right, and Windows breaks it by refusing to write data bigger than the
-> buffer even if it's empty.
-> 
-> What does "ready for writing" mean?  PIPE_BUF bytes are free, right?
+Here's something I need regularly, which I haven't found an easy
+solution for yet. If there's support, I may try and implement it.
 
-According to POSIX, it is "a write() will not block". ;)
+The need is described in this Stack Overflow question:
+https://stackoverflow.com/q/35123108. It's fairly popular (107 votes
+for the question, 154 for the best answer), but I find the suggested
+solution lacking.
 
-I think in practice for Unix systems it means that at least 1 byte is
-available.
+Basically, I would like to add a flag --squash to the cherry-pick
+command, that would apply the diff between the start and end of the
+specified range in one operation.
 
-> > If something unexpected happens there (i.e., the descriptor is not
-> > really ready), a blocking descriptor is going to be stuck. And with
-> > xwrite(), we're similarly stuck (just looping instead of blocking).
-> > Without xwrite(), a non-blocking one _could_ be better off, because that
-> > EAGAIN would make it up to pump_io(). But what is it supposed to do? I
-> > guess it could go back into its main loop and hope that whatever bug
-> > caused the mismatch between poll() and write() goes away.
-> 
-> It should check other fds to let the other side make some progress on
-> them, so that it eventually gets to drain the pipe we want to write to.
+The use case is that there's a feature branch which I would like to
+apply on another branch as one commit.
 
-Yes, that "go back into its main loop" would do that. But that's not
-guaranteed to produce progress any time soon. We may just busy-loop
-between poll() and write() returning EAGAIN if another descriptor isn't
-ready. And if the thing preventing further writes is something the
-process on the other side of the pipe can't fix (and thus we in turn
-can't help it fix things by doing a read()), then we'll loop forever.
-Which (if I understand it) is exactly the case here because the
-underlying code refused to do a partial write.
+I could use the `-n` flag to apply all the commits from the source
+branch without committing them. However, if there are conflicts, I
+would have to deal with them on every commit applied. Instead, what I
+want is to just apply the diff between the first and last commit, and
+then deal with the conflicts.
 
--Peff
+I find this to be a very natural operation. Usual cherry-pick applies
+the difference between commit A^ and commit A over HEAD. The suggested
+`git cherry-pick --squash A..B` would apply the difference between
+commit A and commit B over HEAD.
+
+What do you think?
+
+Thanks,
+Noam
