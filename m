@@ -2,165 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43BC9C25B08
-	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 13:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C53CC00140
+	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 14:00:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238617AbiHLNwf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Aug 2022 09:52:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40248 "EHLO
+        id S238507AbiHLOAw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Aug 2022 10:00:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238192AbiHLNwa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Aug 2022 09:52:30 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7986FA9257
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 06:52:28 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id o3-20020a17090a0a0300b001f7649cd317so8458948pjo.0
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 06:52:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc;
-        bh=EVsgDIJoUM2KStRWL8g4r0RMnhSC3VAh7si1cEX8iIk=;
-        b=kfAUIuXe2mFKHQY5i1/yhVBUdkZ76PIgq+LNq854vJHS4s2jD2SsCqjtSW91N6cc1F
-         a8+tjKJWxXip1vKow1T6/krH/DlN/2VXiiO6bpr6AnIiBuKEogm1XiGrUabyFNNMvaht
-         afBMJKXVkXCbaSBu+k953XtPGGqcDAd0QbkPZQ7SVhGOHc+QjBrMwhBUMf7jI8ntBCJv
-         pTxVepCmb145ht8uBkN1bHX3gvhPakct0QxUIh69+dky2xikBPooyeuBlHRU/8WwWjhB
-         DXISKeWqECbjdsmFqmXedYiKi1oQmmBb0kO1Gxpbk9spm08MutPDIo4Q6fE6Oua+z/rX
-         pkNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc;
-        bh=EVsgDIJoUM2KStRWL8g4r0RMnhSC3VAh7si1cEX8iIk=;
-        b=B3a8lKEaKwJ/YA9QXPG3M1I+ir264Cntnl5uJNITl0K398FtDDvs7nXi+kZxJeh80+
-         1wcHZabBJ5LwxZAocB90ieF6idy2mG9WcLrYVE91ukAwn6u3QXzOddON/Ii+2lqFBNf/
-         yfyuJGxJPjD3ggMZHqGvpEfWTAvm51YF2qLzrtvAF1UO07HYB8YH9yMS13/i29Fgj1KM
-         yLX5M2nT0DzIjiN8VHupEuCBugkUGSmOJfd7eJWH5YT4fl6EHtRW0Se/KgDErfjob7xo
-         B3hcDJPQda90i+glEPpRKuH8DbjM33g9fHQwdCrmwDCjMc35mEB4dLZWhx1jfe82wqV9
-         HtQQ==
-X-Gm-Message-State: ACgBeo1FVky9E70j/rSXJXvrH4knyVA7gt3Ps2X2yh2b1y1Omk95lPRg
-        6e7/g+F5ImItbxKqvZhgKWCv9D5fPlI=
-X-Google-Smtp-Source: AA6agR6oQJEWr+de4m0X2IAKO3ilA8eJN4mmzrWEhWEu1485wlRXFb02BSKkWq4y+EC5yX1vSkhpow==
-X-Received: by 2002:a17:903:200c:b0:16d:bc14:67e6 with SMTP id s12-20020a170903200c00b0016dbc1467e6mr4111395pla.128.1660312347569;
-        Fri, 12 Aug 2022 06:52:27 -0700 (PDT)
-Received: from localhost ([113.172.46.62])
-        by smtp.gmail.com with ESMTPSA id h7-20020a170902680700b0016cd74dae66sm1767034plk.28.2022.08.12.06.52.26
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Aug 2022 06:52:27 -0700 (PDT)
-Date:   Fri, 12 Aug 2022 20:52:24 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     git@vger.kernel.org
-Subject: t7527 intermittent failure on macOS APFS and possible fix
-Message-ID: <YvZbGAf+82WtNXcJ@danh.dev>
+        with ESMTP id S232085AbiHLOAv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Aug 2022 10:00:51 -0400
+X-Greylist: delayed 581 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 12 Aug 2022 07:00:50 PDT
+Received: from mx2.freebsd.org (mx2.freebsd.org [IPv6:2610:1c1:1:606c::19:2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48CBD82FAD
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 07:00:50 -0700 (PDT)
+Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits)
+         client-signature RSA-PSS (4096 bits))
+        (Client CN "mx1.freebsd.org", Issuer "R3" (verified OK))
+        by mx2.freebsd.org (Postfix) with ESMTPS id 4M44p10RQ4z4Cyc
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:51:05 +0000 (UTC)
+        (envelope-from garga@FreeBSD.org)
+Received: from smtp.freebsd.org (smtp.freebsd.org [96.47.72.83])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+         client-signature RSA-PSS (4096 bits) client-digest SHA256)
+        (Client CN "smtp.freebsd.org", Issuer "R3" (verified OK))
+        by mx1.freebsd.org (Postfix) with ESMTPS id 4M44p06pYzz3jQw
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:51:04 +0000 (UTC)
+        (envelope-from garga@FreeBSD.org)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
+        t=1660312265;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=SKF3LK9q7asbflyJImwBAS8MYakucBooGgm7g6nUM0Q=;
+        b=qfh47H3ZURxxLOAAR7OaGeQ/Iw2rQtn/0sTIQSeHNlGTxh7554MpYGe3HoJMJ9DaxoJRZe
+        dGexQA2mVAgiZtBTffcgfFrLuJ6yG56f3aUwzGQ02qg4jA3pk53Nf+/Td5h90rnAdScQ2r
+        Iv8y6aeylmPHXdUbqjE3LB+4f1/SRJ4mygi2Sv7JOjLKAeCARyVHtl2Us1IlOcMhgTVrOF
+        zCbtH65gx48L8q0BewUrA5bfkjtsSgyQrltkXkzxLz+eJY1v64IDUZ/KT1QIYSMvwfR0bx
+        KY7g64dcPS4hvEtvkvMs1bOJ5RaQH9rZzQpLLoGi5ncthFKazPVel2Gc+naJcA==
+Received: from [172.21.4.170] (dynamic-177-53-82-16.telecominternet.net.br [177.53.82.16])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (Client did not present a certificate)
+        (Authenticated sender: garga)
+        by smtp.freebsd.org (Postfix) with ESMTPSA id 4M44p047KTz1Jgk
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:51:04 +0000 (UTC)
+        (envelope-from garga@FreeBSD.org)
+Message-ID: <226317ba-a78f-216c-764c-52f4e393bd35@FreeBSD.org>
+Date:   Fri, 12 Aug 2022 10:51:03 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.1.2
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Language: en-US
+From:   Renato Botelho <garga@FreeBSD.org>
+Subject: git maintenance broken on FreeBSD
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
+        s=dkim; t=1660312265;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=SKF3LK9q7asbflyJImwBAS8MYakucBooGgm7g6nUM0Q=;
+        b=PKxWzKBsoBvzdc3ajb56fgn5QZ1CQO6/wdZIrvAouKu5o0oazUv+/SwQU+xgoLju2ETelB
+        2ruiCVM1gNA2LErAhF323av+Nne76oKCtPU3FWEc0QZ5xJcE9A51n/rXInvgM5hXHxOaxo
+        TLGUs8eF9L3JTVr/DRb7CiZAlrsrGmgNppavKsJE4QLcCyw2yrja6YDg6ytQh/FeFc75jt
+        SlUf1jqic3F0y0whyEQ0SGW/WX7syZyOjC/YWhB1g+UsNgwtkN/Di8suj6jEdu3blvis00
+        t0VgdHlNWn010VihR5Agvtvx8hKbBF1eNY3bhISunYyQUT45b8dt5zHI6YjAfQ==
+ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1660312265; a=rsa-sha256; cv=none;
+        b=B7qLrW6xoAcY36BT6FFiGBA8/L3vKo8IuT+Xsg6LsNXiAIn7ZNUcMK7p2V/0NF1tAQV7iV
+        wFyG5J3YYI6/6WpffkdV62S2B0e84ZRNqhl2Z2MhlPVtx2KkYT+HBcaDE+zMqHrRQzje9J
+        By56wqrReyn2hssnZj+bHqJ3+HUrSNZYZGG2Lb7I5vXd9DLJ+vMSwI/IQn21Xhwtk+1gla
+        FyAckCGsIBvYegq9YvatrXQYF2BpxtyyjmHH/3jlJMJyrId6gny+rkPfmZnAmENbiNwAK7
+        lmHXxoG3bBhSYD3PAoUpws9cZ8Mxyipn8BZpgnFGyn4wuU5YQ2h9nEAK4DKihA==
+ARC-Authentication-Results: i=1;
+        mx1.freebsd.org;
+        none
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+As reported at [1], git maintenance is not working on FreeBSD.  I didn't 
+find the time to dig into it but it seems like it's calling crontab 
+using parameters not supported on FreeBSD.
 
-Running t7527 on macOS with encrypted APFS filesystem.
-I observes intermittent failure, however, when I manually check the
-test cases, they're all passed.
-
-I suspected fileystem caching issue.
-I added those sync-s into test steps and the test pass.
-I'm not sure if this is the intending "fix" for the tests
-since we're testing the fsmonitor with t7527.
-
-Please advise!
-
-P/S: When debugging, I also found out that:
-"test-tool fsmonitor-client query" doesn't write the final newline
-character, thus making the output harder to read. The diff also have
-the final newline added.
-
------ 8< -------
-diff --git a/t/helper/test-fsmonitor-client.c b/t/helper/test-fsmonitor-client.c
-index 54a4856c48..98d6cf1440 100644
---- a/t/helper/test-fsmonitor-client.c
-+++ b/t/helper/test-fsmonitor-client.c
-@@ -55,6 +55,7 @@ static int do_send_query(const char *token)
- 
- 	write_in_full(1, answer.buf, answer.len);
- 	strbuf_release(&answer);
-+	write_in_full(1, "\n", 1);
- 
- 	return 0;
- }
-@@ -77,6 +78,7 @@ static int do_send_flush(void)
- 
- 	write_in_full(1, answer.buf, answer.len);
- 	strbuf_release(&answer);
-+	write_in_full(1, "\n", 1);
- 
- 	return 0;
- }
-diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index 56c0dfffea..3f2cef251d 100755
---- a/t/t7527-builtin-fsmonitor.sh
-+++ b/t/t7527-builtin-fsmonitor.sh
-@@ -430,6 +430,7 @@ test_expect_success 'edit some files' '
- 	edit_files &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
-+	sync &&
- 
- 	grep "^event: dir1/modified$"  .git/trace &&
- 	grep "^event: dir2/modified$"  .git/trace &&
-@@ -445,6 +446,7 @@ test_expect_success 'create some files' '
- 	create_files &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
-+	sync &&
- 
- 	grep "^event: dir1/new$" .git/trace &&
- 	grep "^event: dir2/new$" .git/trace &&
-@@ -459,6 +461,7 @@ test_expect_success 'delete some files' '
- 	delete_files &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
-+	sync &&
- 
- 	grep "^event: dir1/delete$" .git/trace &&
- 	grep "^event: dir2/delete$" .git/trace &&
-@@ -473,6 +476,7 @@ test_expect_success 'rename some files' '
- 	rename_files &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
-+	sync &&
- 
- 	grep "^event: dir1/rename$"  .git/trace &&
- 	grep "^event: dir2/rename$"  .git/trace &&
-@@ -490,6 +494,7 @@ test_expect_success 'rename directory' '
- 	mv dirtorename dirrenamed &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
-+	sync &&
- 
- 	grep "^event: dirtorename/*$" .git/trace &&
- 	grep "^event: dirrenamed/*$"  .git/trace
-@@ -503,6 +508,7 @@ test_expect_success 'file changes to directory' '
- 	file_to_directory &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
-+	sync &&
- 
- 	grep "^event: delete$"     .git/trace &&
- 	grep "^event: delete/new$" .git/trace
-@@ -516,6 +522,7 @@ test_expect_success 'directory changes to a file' '
- 	directory_to_file &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
-+	sync &&
- 
- 	grep "^event: dir1$" .git/trace
- '
----- >8 --------------
-
+[1] https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=260746
 -- 
-Danh
+Renato Botelho
