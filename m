@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0470C00140
-	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 20:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AB09C00140
+	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 20:10:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235854AbiHLUKs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Aug 2022 16:10:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36862 "EHLO
+        id S236627AbiHLUK5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Aug 2022 16:10:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234710AbiHLUKb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Aug 2022 16:10:31 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24A4B9594
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:10:28 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id h204-20020a1c21d5000000b003a5b467c3abso4249737wmh.5
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:10:28 -0700 (PDT)
+        with ESMTP id S235487AbiHLUKg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Aug 2022 16:10:36 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C6DBF70
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:10:31 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id q30so2234058wra.11
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:10:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=3DtPvUJ+3SPdT6od1QbO+EADYby4QM2OS5TX2k4hwJY=;
-        b=aoM7+JcNyutYtcacEjpFDOblJhAkysbiNrc7kIwjlgw37vP5YP3U3JF+/LDoaQoKl0
-         0my5/nbV1VgtNaJhmuoQWlOtPlhByOMHaBSYWKqkMCDzkoD21AjrwOXbfxWG+4/YWhAs
-         7W3ev7MzwbvcF2oX7FVCFAtVPDflTQJRDmAcMSVcF0gu0ycVNb1cX5ja9QhUZzH0lXGC
-         mKIq5m5OvBrA7MtGMd0QlZN+GnwD1r6um1GDvosWvLcvW68QR1lNwP5ZDnuHPu/umyEv
-         0/m+zkSB1VasyQ+6qdcIFWUk/yiigqykhMlR+avgzlnDt6Zh+xSWs97dXtpXZ4Ht/XL6
-         JhtQ==
+        bh=mARxQC56HROeHfnGhKZI2tZ091Okd3Z5usLlYR6Qcug=;
+        b=E25iyBYPgiMAkT28b3wtZ/e5hPa8+GEMpzXuQGvbkfb+C21Jc3OdMmicUK2+h8e/ZZ
+         gCOaitR9QOJmPpuxF+Kdnk9gijzn3dqkN/ijWx1+pkbSUXEh8cVYo6N6X8ph7oHNIM+V
+         MD4SzwKHOoa7NaREwgR7MGpC9pfsE3wj+RlBUmXAtEroezvglZbz8yr/iTRJsSX0xjs4
+         G+YqG1ZwBHC2IIVgVpTDfs/A7E2NrZ9w9c2NMx+cLlORucNihYDkvGk4HU58Sosf3oAS
+         njgGynm08SFuvVmpVW8X+q67MogPJhvmD6YzTUByg4Hro9LScpedKw4pxPWLMOe9wOH5
+         WXcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=3DtPvUJ+3SPdT6od1QbO+EADYby4QM2OS5TX2k4hwJY=;
-        b=UuHx2aSuwT51O/DpGr+wICi7DoompUPtXn7257eswAEUgixOpxP2+B7oOsXqg/EK00
-         Rz6Iv3RaYBYPgaaOO75wP9a0X5bwSFHha98DTVQMVZIldN0qmQaNswD3pq70s8Crmzg7
-         HCqMjGz5ufemqwcJzDmHSq8GR9y+1zH4KpfEmB5HvcNVIBkQR2VEsEL2f7Rn1AldTwvv
-         CdG1PHF4xEy+7I8gCtQ6ebK7yoATjhgTXxIre/ifrYR3kkWiBzWlW6ksFljbVePanyiR
-         Wl/NWAFyu4L9hetWyjiL7wnAveDI9UnK+DDbQaEfHe9gv73PuTBqa5amFhjNqt7Yzqg4
-         kABg==
-X-Gm-Message-State: ACgBeo3NTyR6ZXCcFfSh55/k3JaPMn3/ShDYifiga+LGDj3pzcOPzHhE
-        l0cUAI2ESg9UJ85fjYux7qOnFoXmZd0=
-X-Google-Smtp-Source: AA6agR79EB2GXQ2xD5BEh/+KaHp/H9XF/Egd0dg5L9dasDQqkQqENpKy3dPMA81mK1jGRS2Co3OaZg==
-X-Received: by 2002:a7b:c354:0:b0:39c:6753:21f8 with SMTP id l20-20020a7bc354000000b0039c675321f8mr3663214wmj.113.1660335028135;
-        Fri, 12 Aug 2022 13:10:28 -0700 (PDT)
+        bh=mARxQC56HROeHfnGhKZI2tZ091Okd3Z5usLlYR6Qcug=;
+        b=yxi1xIHMQ5WQQ3t+AxwSvIxYRKBdp6txiJYk6b1jsBSDUNdsk1kv8ZqaW7X8KVW9YO
+         ptktBqeUTWDX8pVm0f1xwA/URtsEuF7l95IFL/Kne1a4v8/MHVun0hvClm1Pxt7ndX5j
+         YL8IEXs3hfBvQmnWS3fEZXtvM6k9fwCQYttf5yyAVvMLsn2Bx82SQDLhIz8wJFrxObRQ
+         J5k8fprYVyPbEK5zTxDrxtd+6tst50sqMtQiUxn3FBj9kKJUSfIbR24wBRCxVlrWWbba
+         hgfV9KiOJLtY7XkDV6npFWC2wXYfF18qz8KQnqfJCaj5awf5ojFKmewkyjXlWp7ijLG+
+         PJ7w==
+X-Gm-Message-State: ACgBeo2uVL3T7purd9klCCiS3HGtV3Ip3cUsqIlSFseIhyvJzZlp9k97
+        SNNjy4mpSEEA48ojj0bSftTLKzJS+Qo=
+X-Google-Smtp-Source: AA6agR4YbplWWnjqOvbin+Zetilc2dlLASgl/o8yPbWZqrmByhchJcgsc4ujGPxatFXBGePEESInsw==
+X-Received: by 2002:a05:6000:811:b0:220:6262:ac66 with SMTP id bt17-20020a056000081100b002206262ac66mr2809392wrb.529.1660335030055;
+        Fri, 12 Aug 2022 13:10:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f13-20020a05600c154d00b003a52969e89csm673452wmg.4.2022.08.12.13.10.27
+        by smtp.gmail.com with ESMTPSA id f4-20020a1c6a04000000b003a54f1d007csm534916wmc.10.2022.08.12.13.10.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Aug 2022 13:10:27 -0700 (PDT)
-Message-Id: <b58d13325b2eaef32fac89fb2be8e29004560c45.1660335019.git.gitgitgadget@gmail.com>
+        Fri, 12 Aug 2022 13:10:29 -0700 (PDT)
+Message-Id: <718e3f434841ee4697a505d83f2e4acbeed364fd.1660335019.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1310.v4.git.1660335019.gitgitgadget@gmail.com>
 References: <pull.1310.v3.git.1660174473.gitgitgadget@gmail.com>
         <pull.1310.v4.git.1660335019.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 Aug 2022 20:10:15 +0000
-Subject: [PATCH v4 07/11] builtin/diagnose.c: create 'git diagnose' builtin
+Date:   Fri, 12 Aug 2022 20:10:17 +0000
+Subject: [PATCH v4 09/11] builtin/bugreport.c: create '--diagnose' option
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,217 +69,163 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Create a 'git diagnose' builtin to generate a standalone zip archive of
-repository diagnostics.
+Create a '--diagnose' option for 'git bugreport' to collect additional
+information about the repository and write it to a zipped archive.
 
-The "diagnose" functionality was originally implemented for Scalar in
-aa5c79a331 (scalar: implement `scalar diagnose`, 2022-05-28). However, the
-diagnostics gathered are not specific to Scalar-cloned repositories and
-can be useful when diagnosing issues in any Git repository.
+The '--diagnose' option behaves effectively as an alias for simultaneously
+running 'git bugreport' and 'git diagnose'. In the documentation, users are
+explicitly recommended to attach the diagnostics alongside a bug report to
+provide additional context to readers, ideally reducing some back-and-forth
+between reporters and those debugging the issue.
 
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Note that '--diagnose' may take an optional string arg (either 'stats' or
+'all'). If specified without the arg, the behavior corresponds to running
+'git diagnose' without '--mode'. As with 'git diagnose', this default is
+intended to help reduce unintentional leaking of sensitive information).
+Users can also explicitly specify '--diagnose=(stats|all)' to generate the
+respective archive created by 'git diagnose --mode=(stats|all)'.
+
+Suggested-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Helped-by: Derrick Stolee <derrickstolee@github.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- .gitignore                     |  1 +
- Documentation/git-diagnose.txt | 50 +++++++++++++++++++++++++++++
- Makefile                       |  1 +
- builtin.h                      |  1 +
- builtin/diagnose.c             | 57 ++++++++++++++++++++++++++++++++++
- git.c                          |  1 +
- t/t0092-diagnose.sh            | 32 +++++++++++++++++++
- 7 files changed, 143 insertions(+)
- create mode 100644 Documentation/git-diagnose.txt
- create mode 100644 builtin/diagnose.c
- create mode 100755 t/t0092-diagnose.sh
+ Documentation/git-bugreport.txt | 18 +++++++++++++
+ builtin/bugreport.c             | 27 ++++++++++++++++---
+ t/t0091-bugreport.sh            | 48 +++++++++++++++++++++++++++++++++
+ 3 files changed, 90 insertions(+), 3 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 42fd7253b44..80b530bbed2 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -53,6 +53,7 @@
- /git-cvsimport
- /git-cvsserver
- /git-daemon
-+/git-diagnose
- /git-diff
- /git-diff-files
- /git-diff-index
-diff --git a/Documentation/git-diagnose.txt b/Documentation/git-diagnose.txt
-new file mode 100644
-index 00000000000..ce07dd0725d
---- /dev/null
-+++ b/Documentation/git-diagnose.txt
-@@ -0,0 +1,50 @@
-+git-diagnose(1)
-+================
+diff --git a/Documentation/git-bugreport.txt b/Documentation/git-bugreport.txt
+index d8817bf3cec..eca726e5791 100644
+--- a/Documentation/git-bugreport.txt
++++ b/Documentation/git-bugreport.txt
+@@ -9,6 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git bugreport' [(-o | --output-directory) <path>] [(-s | --suffix) <format>]
++		[--diagnose[=<mode>]]
+ 
+ DESCRIPTION
+ -----------
+@@ -31,6 +32,10 @@ The following information is captured automatically:
+  - A list of enabled hooks
+  - $SHELL
+ 
++Additional information may be gathered into a separate zip archive using the
++`--diagnose` option, and can be attached alongside the bugreport document to
++provide additional context to readers.
 +
-+NAME
-+----
-+git-diagnose - Generate a zip archive of diagnostic information
+ This tool is invoked via the typical Git setup process, which means that in some
+ cases, it might not be able to launch - for example, if a relevant config file
+ is unreadable. In this kind of scenario, it may be helpful to manually gather
+@@ -49,6 +54,19 @@ OPTIONS
+ 	named 'git-bugreport-<formatted suffix>'. This should take the form of a
+ 	strftime(3) format string; the current local time will be used.
+ 
++--no-diagnose::
++--diagnose[=<mode>]::
++	Create a zip archive of supplemental information about the user's
++	machine, Git client, and repository state. The archive is written to the
++	same output directory as the bug report and is named
++	'git-diagnostics-<formatted suffix>'.
+++
++Without `mode` specified, the diagnostic archive will contain the default set of
++statistics reported by `git diagnose`. An optional `mode` value may be specified
++to change which information is included in the archive. See
++linkgit:git-diagnose[1] for the list of valid values for `mode` and details
++about their usage.
 +
-+SYNOPSIS
-+--------
-+[verse]
-+'git diagnose' [(-o | --output-directory) <path>] [(-s | --suffix) <format>]
-+
-+DESCRIPTION
-+-----------
-+Collects detailed information about the user's machine, Git client, and
-+repository state and packages that information into a zip archive. The
-+generated archive can then, for example, be shared with the Git mailing list to
-+help debug an issue or serve as a reference for independent debugging.
-+
-+The following information is captured in the archive:
-+
-+  * 'git version --build-options'
-+  * The path to the repository root
-+  * The available disk space on the filesystem
-+  * The name and size of each packfile, including those in alternate object
-+    stores
-+  * The total count of loose objects, as well as counts broken down by
-+    `.git/objects` subdirectory
-+
-+This tool differs from linkgit:git-bugreport[1] in that it collects much more
-+detailed information with a greater focus on reporting the size and data shape
-+of repository contents.
-+
-+OPTIONS
-+-------
-+-o <path>::
-+--output-directory <path>::
-+	Place the resulting diagnostics archive in `<path>` instead of the
-+	current directory.
-+
-+-s <format>::
-+--suffix <format>::
-+	Specify an alternate suffix for the diagnostics archive name, to create
-+	a file named 'git-diagnostics-<formatted suffix>'. This should take the
-+	form of a strftime(3) format string; the current local time will be
-+	used.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index ed66cb70e5a..d34f680c065 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1153,6 +1153,7 @@ BUILTIN_OBJS += builtin/credential-cache.o
- BUILTIN_OBJS += builtin/credential-store.o
- BUILTIN_OBJS += builtin/credential.o
- BUILTIN_OBJS += builtin/describe.o
-+BUILTIN_OBJS += builtin/diagnose.o
- BUILTIN_OBJS += builtin/diff-files.o
- BUILTIN_OBJS += builtin/diff-index.o
- BUILTIN_OBJS += builtin/diff-tree.o
-diff --git a/builtin.h b/builtin.h
-index 40e9ecc8485..8901a34d6bf 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -144,6 +144,7 @@ int cmd_credential_cache(int argc, const char **argv, const char *prefix);
- int cmd_credential_cache_daemon(int argc, const char **argv, const char *prefix);
- int cmd_credential_store(int argc, const char **argv, const char *prefix);
- int cmd_describe(int argc, const char **argv, const char *prefix);
-+int cmd_diagnose(int argc, const char **argv, const char *prefix);
- int cmd_diff_files(int argc, const char **argv, const char *prefix);
- int cmd_diff_index(int argc, const char **argv, const char *prefix);
- int cmd_diff(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/diagnose.c b/builtin/diagnose.c
-new file mode 100644
-index 00000000000..832493bba65
---- /dev/null
-+++ b/builtin/diagnose.c
-@@ -0,0 +1,57 @@
-+#include "builtin.h"
-+#include "parse-options.h"
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index 9de32bc96e7..530895be55f 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -5,6 +5,7 @@
+ #include "compat/compiler.h"
+ #include "hook.h"
+ #include "hook-list.h"
 +#include "diagnose.h"
+ 
+ 
+ static void get_system_info(struct strbuf *sys_info)
+@@ -59,7 +60,7 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
+ }
+ 
+ static const char * const bugreport_usage[] = {
+-	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>]"),
++	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>] [--diagnose[=<mode>]"),
+ 	NULL
+ };
+ 
+@@ -98,16 +99,21 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 	int report = -1;
+ 	time_t now = time(NULL);
+ 	struct tm tm;
++	enum diagnose_mode diagnose = DIAGNOSE_NONE;
+ 	char *option_output = NULL;
+ 	char *option_suffix = "%Y-%m-%d-%H%M";
+ 	const char *user_relative_path = NULL;
+ 	char *prefixed_filename;
++	size_t output_path_len;
+ 
+ 	const struct option bugreport_options[] = {
++		OPT_CALLBACK_F(0, "diagnose", &diagnose, N_("mode"),
++			       N_("create an additional zip archive of detailed diagnostics (default 'stats')"),
++			       PARSE_OPT_OPTARG, option_parse_diagnose),
+ 		OPT_STRING('o', "output-directory", &option_output, N_("path"),
+-			   N_("specify a destination for the bugreport file")),
++			   N_("specify a destination for the bugreport file(s)")),
+ 		OPT_STRING('s', "suffix", &option_suffix, N_("format"),
+-			   N_("specify a strftime format suffix for the filename")),
++			   N_("specify a strftime format suffix for the filename(s)")),
+ 		OPT_END()
+ 	};
+ 
+@@ -119,6 +125,7 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 					    option_output ? option_output : "");
+ 	strbuf_addstr(&report_path, prefixed_filename);
+ 	strbuf_complete(&report_path, '/');
++	output_path_len = report_path.len;
+ 
+ 	strbuf_addstr(&report_path, "git-bugreport-");
+ 	strbuf_addftime(&report_path, option_suffix, localtime_r(&now, &tm), 0, 0);
+@@ -133,6 +140,20 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 		    report_path.buf);
+ 	}
+ 
++	/* Prepare diagnostics, if requested */
++	if (diagnose != DIAGNOSE_NONE) {
++		struct strbuf zip_path = STRBUF_INIT;
++		strbuf_add(&zip_path, report_path.buf, output_path_len);
++		strbuf_addstr(&zip_path, "git-diagnostics-");
++		strbuf_addftime(&zip_path, option_suffix, localtime_r(&now, &tm), 0, 0);
++		strbuf_addstr(&zip_path, ".zip");
 +
-+static const char * const diagnose_usage[] = {
-+	N_("git diagnose [-o|--output-directory <path>] [-s|--suffix <format>]"),
-+	NULL
-+};
++		if (create_diagnostics_archive(&zip_path, diagnose))
++			die_errno(_("unable to create diagnostics archive %s"), zip_path.buf);
 +
-+int cmd_diagnose(int argc, const char **argv, const char *prefix)
-+{
-+	struct strbuf zip_path = STRBUF_INIT;
-+	time_t now = time(NULL);
-+	struct tm tm;
-+	char *option_output = NULL;
-+	char *option_suffix = "%Y-%m-%d-%H%M";
-+	char *prefixed_filename;
-+
-+	const struct option diagnose_options[] = {
-+		OPT_STRING('o', "output-directory", &option_output, N_("path"),
-+			   N_("specify a destination for the diagnostics archive")),
-+		OPT_STRING('s', "suffix", &option_suffix, N_("format"),
-+			   N_("specify a strftime format suffix for the filename")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, diagnose_options,
-+			     diagnose_usage, 0);
-+
-+	/* Prepare the path to put the result */
-+	prefixed_filename = prefix_filename(prefix,
-+					    option_output ? option_output : "");
-+	strbuf_addstr(&zip_path, prefixed_filename);
-+	strbuf_complete(&zip_path, '/');
-+
-+	strbuf_addstr(&zip_path, "git-diagnostics-");
-+	strbuf_addftime(&zip_path, option_suffix, localtime_r(&now, &tm), 0, 0);
-+	strbuf_addstr(&zip_path, ".zip");
-+
-+	switch (safe_create_leading_directories(zip_path.buf)) {
-+	case SCLD_OK:
-+	case SCLD_EXISTS:
-+		break;
-+	default:
-+		die_errno(_("could not create leading directories for '%s'"),
-+			  zip_path.buf);
++		strbuf_release(&zip_path);
 +	}
 +
-+	/* Prepare diagnostics */
-+	if (create_diagnostics_archive(&zip_path, DIAGNOSE_STATS))
-+		die_errno(_("unable to create diagnostics archive %s"),
-+			  zip_path.buf);
-+
-+	free(prefixed_filename);
-+	strbuf_release(&zip_path);
-+	return 0;
-+}
-diff --git a/git.c b/git.c
-index e5d62fa5a92..0b9d8ef7677 100644
---- a/git.c
-+++ b/git.c
-@@ -522,6 +522,7 @@ static struct cmd_struct commands[] = {
- 	{ "credential-cache--daemon", cmd_credential_cache_daemon },
- 	{ "credential-store", cmd_credential_store },
- 	{ "describe", cmd_describe, RUN_SETUP },
-+	{ "diagnose", cmd_diagnose, RUN_SETUP_GENTLY },
- 	{ "diff", cmd_diff, NO_PARSEOPT },
- 	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "diff-index", cmd_diff_index, RUN_SETUP | NO_PARSEOPT },
-diff --git a/t/t0092-diagnose.sh b/t/t0092-diagnose.sh
-new file mode 100755
-index 00000000000..b6923726fd7
---- /dev/null
-+++ b/t/t0092-diagnose.sh
-@@ -0,0 +1,32 @@
-+#!/bin/sh
-+
-+test_description='git diagnose'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success UNZIP 'creates diagnostics zip archive' '
+ 	/* Prepare the report contents */
+ 	get_bug_template(&buffer);
+ 
+diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
+index 08f5fe9caef..b6d2f591acd 100755
+--- a/t/t0091-bugreport.sh
++++ b/t/t0091-bugreport.sh
+@@ -78,4 +78,52 @@ test_expect_success 'indicates populated hooks' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success UNZIP '--diagnose creates diagnostics zip archive' '
 +	test_when_finished rm -rf report &&
 +
-+	git diagnose -o report -s test >out &&
-+	grep "Available space" out &&
++	git bugreport --diagnose -o report -s test >out &&
 +
 +	zip_path=report/git-diagnostics-test.zip &&
++	grep "Available space" out &&
 +	test_path_is_file "$zip_path" &&
 +
 +	# Check zipped archive content
@@ -294,10 +240,34 @@ index 00000000000..b6923726fd7
 +
 +	# Should not include .git directory contents by default
 +	! "$GIT_UNZIP" -l "$zip_path" | grep ".git/"
-+	grep "^Total: [0-9][0-9]*" out
 +'
 +
-+test_done
++test_expect_success UNZIP '--diagnose=stats excludes .git dir contents' '
++	test_when_finished rm -rf report &&
++
++	git bugreport --diagnose=stats -o report -s test >out &&
++
++	# Includes pack quantity/size info
++	"$GIT_UNZIP" -p "$zip_path" packs-local.txt >out &&
++	grep ".git/objects" out &&
++
++	# Does not include .git directory contents
++	! "$GIT_UNZIP" -l "$zip_path" | grep ".git/"
++'
++
++test_expect_success UNZIP '--diagnose=all includes .git dir contents' '
++	test_when_finished rm -rf report &&
++
++	git bugreport --diagnose=all -o report -s test >out &&
++
++	# Includes .git directory contents
++	"$GIT_UNZIP" -l "$zip_path" | grep ".git/" &&
++
++	"$GIT_UNZIP" -p "$zip_path" .git/HEAD >out &&
++	test_file_not_empty out
++'
++
+ test_done
 -- 
 gitgitgadget
 
