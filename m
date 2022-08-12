@@ -2,132 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B2C7C00140
-	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 21:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A20DAC00140
+	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 21:21:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234518AbiHLVRG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Aug 2022 17:17:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39802 "EHLO
+        id S234668AbiHLVVA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Aug 2022 17:21:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230519AbiHLVRD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Aug 2022 17:17:03 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C36E6E885
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 14:17:02 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E1D011B8DDA;
-        Fri, 12 Aug 2022 17:17:01 -0400 (EDT)
+        with ESMTP id S234546AbiHLVU6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Aug 2022 17:20:58 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF5187647C
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 14:20:56 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BDC3D13DD36;
+        Fri, 12 Aug 2022 17:20:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cBE7CIIA/vDb4Y0u+uyMaluHO/1PetnD7rIiA8
-        pzDoo=; b=aDSJZWRgECOD+1uiDGLUmWZhOVL3BxWg36x+i7zPvhsun4Q1maQ0i9
-        0bfbv/pQ3XB36LZT4OJaTCGpUHKN7V2DIGTpR6UaqfK5J5OFdlhnWBg2JalLe8rW
-        1nxGxmG6YL24/AcfSzrMtW4NKj/pU4CxEEFQuP5l/a1ovcjr1NJZs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DAB871B8DD9;
-        Fri, 12 Aug 2022 17:17:01 -0400 (EDT)
+        :content-type; s=sasl; bh=njvhVwveSu6qnepspBTRuRVZToYAVmaE8CiCXD
+        UX8vo=; b=kTOtZ2bifTPU771UnXWBkNh0/S71x0l41htdCIZhLNJz8Fn2iNbWOX
+        ttS9IuELoQ05CbYrwlgkb6mdExxh/zydPg2jiauK/AT4uGzrbqeI44qhx2QHR+iI
+        CqX5jsBaeYALKsoTQpnMK/P9f+x8NpEIx3DwIwW8k/32eYOn/Ores=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B229D13DD35;
+        Fri, 12 Aug 2022 17:20:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.145.39.32])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 85F3D1B8DD7;
-        Fri, 12 Aug 2022 17:16:58 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 28FF713DD34;
+        Fri, 12 Aug 2022 17:20:55 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, git@jeffhostetler.com, git@vger.kernel.org,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v2 2/2] tr2: shows scope unconditionally in addition to
- key-value pair
-References: <cover.1660272404.git.dyroneteng@gmail.com>
-        <9856058df68d61557b11dc2fc7179acae24f5d8e.1660272404.git.dyroneteng@gmail.com>
-Date:   Fri, 12 Aug 2022 14:16:57 -0700
-In-Reply-To: <9856058df68d61557b11dc2fc7179acae24f5d8e.1660272404.git.dyroneteng@gmail.com>
-        (Teng Long's message of "Fri, 12 Aug 2022 10:56:46 +0800")
-Message-ID: <xmqqo7wp9n7a.fsf@gitster.g>
+To:     Victoria Dye <vdye@github.com>
+Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, derrickstolee@github.com,
+        johannes.schindelin@gmx.de,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v4 05/11] scalar-diagnose: move functionality to common
+ location
+References: <pull.1310.v3.git.1660174473.gitgitgadget@gmail.com>
+        <pull.1310.v4.git.1660335019.gitgitgadget@gmail.com>
+        <c19f3632d4f2f966517a276e7096742c8477125c.1660335019.git.gitgitgadget@gmail.com>
+        <xmqq7d3db43z.fsf@gitster.g>
+        <a728c894-4e4a-44c3-a1f5-f87c8bfae13a@github.com>
+Date:   Fri, 12 Aug 2022 14:20:54 -0700
+In-Reply-To: <a728c894-4e4a-44c3-a1f5-f87c8bfae13a@github.com> (Victoria Dye's
+        message of "Fri, 12 Aug 2022 14:00:40 -0700")
+Message-ID: <xmqqk07d9n0p.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 199682D6-1A84-11ED-B8E9-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: A69FFB4E-1A84-11ED-8E63-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+Victoria Dye <vdye@github.com> writes:
 
-> diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-> index c5c8cfbbaa..37a3163be1 100644
-> --- a/trace2/tr2_tgt_event.c
-> +++ b/trace2/tr2_tgt_event.c
-> @@ -479,9 +479,12 @@ static void fn_param_fl(const char *file, int line, const char *param,
->  {
->  	const char *event_name = "def_param";
->  	struct json_writer jw = JSON_WRITER_INIT;
-> +	enum config_scope scope = current_config_scope();
-> +	const char *scope_name = config_scope_name(scope);
->  
->  	jw_object_begin(&jw, 0);
->  	event_fmt_prepare(event_name, file, line, NULL, &jw);
-> +	jw_object_string(&jw, "scope", scope_name);
->  	jw_object_string(&jw, "param", param);
->  	jw_object_string(&jw, "value", value);
->  	jw_end(&jw);
+>> Improved error reporting in 'create_diagnostics_archive()'. I was
+>> originally going to modify the "failed to write archive" error to trigger
+>> whenever 'create_diagnostics_archive()' returned a nonzero value.
+>> However, while working on it I realized the message would no longer be
+>> tied to a failure of 'write_archive()', making it less helpful in
+>> pinpointing an issue. To address the original issue
+>> ('add_directory_to_archiver()' silently failing in
+>> 'create_diagnostics_archive()'), I instead refactored those calls into a
+>> loop and added the error message. Now, there's exactly one error message
+>> printed for each possible early exit scenario from
+>> 'create_diagnostics_archive()', hopefully avoiding both redundancy &
+>> under-reporting.
 
-OK, that is quite straight-forward.
+Ah, I see.  I probably should have read the cover letter before
+responding.  I try to understand the new iteration _without_ relying
+on the cover letter first, to ensure that the resulting history is
+still understandable; when I see something questionable, however, I
+should see if cover letter gives more context and clues.  Sorry for
+the noise.
 
-> diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-> index c42fbade7f..69f8033077 100644
-> --- a/trace2/tr2_tgt_normal.c
-> +++ b/trace2/tr2_tgt_normal.c
-> @@ -298,8 +298,11 @@ static void fn_param_fl(const char *file, int line, const char *param,
->  			const char *value)
->  {
->  	struct strbuf buf_payload = STRBUF_INIT;
-> +	enum config_scope scope = current_config_scope();
-> +	const char *scope_name = config_scope_name(scope);
->  
-> -	strbuf_addf(&buf_payload, "def_param %s=%s", param, value);
-> +	strbuf_addf(&buf_payload, "def_param scope:%s %s=%s", scope_name, param,
-> +		    value);
->  	normal_io_write_fl(file, line, &buf_payload);
->  	strbuf_release(&buf_payload);
->  }
-
-So is this one.  Quite nice.
-
-Is everybody happy with the choice of ":" colon here, though?  The
-one in tgt_perf below uses the same delimiter that is used between
-<param, value> to delimit <"scope", scome_name>.  I am wondering if
-this one should use "=", the delimiter used between <param, value>
-in this output stream, to match.  I do not care at all either way,
-but I am mentioning it because I happened have noticed it, and
-because somebody else may care.
-
-Thanks, will queue.
-
-
-> diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-> index a1eff8bea3..8cb792488c 100644
-> --- a/trace2/tr2_tgt_perf.c
-> +++ b/trace2/tr2_tgt_perf.c
-> @@ -441,12 +441,17 @@ static void fn_param_fl(const char *file, int line, const char *param,
->  {
->  	const char *event_name = "def_param";
->  	struct strbuf buf_payload = STRBUF_INIT;
-> +	struct strbuf scope_payload = STRBUF_INIT;
-> +	enum config_scope scope = current_config_scope();
-> +	const char *scope_name = config_scope_name(scope);
->  
->  	strbuf_addf(&buf_payload, "%s:%s", param, value);
-> +	strbuf_addf(&scope_payload, "%s:%s", "scope", scope_name);
->  
-> -	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL, NULL,
-> -			 &buf_payload);
-> +	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL,
-> +			 scope_payload.buf, &buf_payload);
->  	strbuf_release(&buf_payload);
-> +	strbuf_release(&scope_payload);
->  }
->  
->  static void fn_repo_fl(const char *file, int line,
