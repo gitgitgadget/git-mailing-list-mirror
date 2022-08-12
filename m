@@ -2,189 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEF55C00140
-	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 15:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EFDCC00140
+	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 15:16:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238086AbiHLPE1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Aug 2022 11:04:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53768 "EHLO
+        id S239032AbiHLPQW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Aug 2022 11:16:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232014AbiHLPEZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Aug 2022 11:04:25 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40F5EA895A
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 08:04:24 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id a89so1677461edf.5
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 08:04:24 -0700 (PDT)
+        with ESMTP id S239025AbiHLPQC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Aug 2022 11:16:02 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE97785A9B
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 08:15:25 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id tl27so2564464ejc.1
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 08:15:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc;
-        bh=8DrxiMSa+FK9X51gEETLmqBMRdSqHPin/1x7WpCjw6Q=;
-        b=qY4jvKzMpVDoCZwFTiWVLDL3TWIarNck/oZrkaGzpumqawZm6HEZZHeLmphgOzB6xo
-         hRVYGiRmokm30Azm7Ux2bF0suUKV+8CbBHDn3LrvldZpka0yDo6A8fd/imeFGB8fSgpL
-         uAvfGFO8+gT7IRlLnk5LxNpI30/GNxWVePguX87hpon2E2s38r/VgvNyDMUXrVGCKvvN
-         ZsUql8tPs42WOiIKgxCFTYVdGVOCjbY0w5/DkmUskDrQuxnkuBBNCXa+tlEdC1eXAcoI
-         485zMlJvTz1PjTd4gJv8F+zrEIvOFJBCD0ui/nbKUjivo3BIoDjMpWSWRoXggHhJMAwG
-         yOTA==
+        bh=btwyYQC9gSLYf4GEP68EICW/XGg7lSAxMvrkazY05T4=;
+        b=Q8cuyCGJom4zTNkTgreS60ySDm8LYxuJR1k0hPnjO0+K7JLiSA4JE8fQmQNwrNdGht
+         mwQyoXsJjY8jbTGlmt+6jJWOwv675TFXekgX+X63YIlbZTnPaqQ5QLqJL0qv4cOyipPc
+         m4/VHqX13aIv6I1socvnkSWZdgEr3vO/S/mj8LmmHz5aIDVtGvOBqcXI9uNqHHSb+uQc
+         9Xojhyn5DB1LWC/krUnb/phSV17F/Zh9mEL28k5O8uMsam2UsiWsnaau2fZy7/8mIEut
+         /QmzMxhGyvE3G8BmhYS+0DGDNoOnsFYNoWG8jLF3QVGMyjbNNGYO22z2SxY81uanZK0Q
+         KQqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc;
-        bh=8DrxiMSa+FK9X51gEETLmqBMRdSqHPin/1x7WpCjw6Q=;
-        b=3gPyWAs0kDKqMeD/6xfFczdJG5+Pvh6PwgrpxExtw+J1oFPOUFmvioFHNAD4Anlw3v
-         P3chHQ3HGudehbAvo5KNqgXc3AR3PDEBUEVHvPMC9U72hC48oMCcmR0odQFVttam1Hjt
-         F69inguCqCCVjhp4QNAJHpRDJaM2tzbCpuFUvjkSxoL1GmJDzpiq42/wCdn5vTGPQZ5Q
-         prAEYILmXrPmpswPo24ace5TYDNHn6wPF4C8pqTIEqJi67HcxjxmfZNdJTHYBahrHR7T
-         UodBLGfMDgOj35U24QsCr1v4qg5jLCZA0Wz6ULXwOxPEq3zJ78So97plHCmHm545PcN/
-         cFFg==
-X-Gm-Message-State: ACgBeo2kW8Mppm4NVS0PBpnBZzB3/5rL067+KTMFY0R0s/w4gi3YChxx
-        M/KpXk+IFv2GK3wtviWjXII=
-X-Google-Smtp-Source: AA6agR6jf2v3CB4Tvjrc4uh8mCkcDrp9wEeG8immda/zUFMXAdIUHP2X2ojE5j98rWX8YIVzNm1T7A==
-X-Received: by 2002:a05:6402:2d1:b0:43c:bb20:71bf with SMTP id b17-20020a05640202d100b0043cbb2071bfmr3961325edx.59.1660316662867;
-        Fri, 12 Aug 2022 08:04:22 -0700 (PDT)
+        bh=btwyYQC9gSLYf4GEP68EICW/XGg7lSAxMvrkazY05T4=;
+        b=o57baVw9PnFdLr0AgNRWYcIK9G7eEXVHn0JqDWaVh5ybdDXYcTN+ZEYdMYEOyIq0Y5
+         OZ27P0ZirT2NBa3zwEPcFN9Vu8uOjWAkjCTOp5kCVrGhmMJSvxjhkFjQ3KL10mWaGdWL
+         7s5FiXnKh19VNumpbSc+PF36LHnb8pVlhs5cq6NqR3RkUM4it8TrwDZERHf4fG4/W+4d
+         cdlyGyrRm7Q5C2RWL4mX0k8ld6WmOtK2Rqz7H9rJIb6x9I2pI6lG42uxz3R0Gj8gTVQQ
+         eY/fqPtp0MkkNWK82uQxltsexh74xeskIQtkuflR3cfnkLb+MDV7a09Diq/wNDuGlu7J
+         Warg==
+X-Gm-Message-State: ACgBeo153e/yk/cmPfsizG0zRRvBrsBu2SFCbG9w8RXcJGNK0zQc+rDR
+        6g5pvQWGpl/iADoiV+tUYqs=
+X-Google-Smtp-Source: AA6agR7TtXy3rsp+s50EMMRFN/vM+Idv/Q1iK5JA3CPS80XS51M39H9a2KobqOZmPJPrtvzMvZ5dYg==
+X-Received: by 2002:a17:906:ee8e:b0:730:4a24:f311 with SMTP id wt14-20020a170906ee8e00b007304a24f311mr3067286ejb.420.1660317314740;
+        Fri, 12 Aug 2022 08:15:14 -0700 (PDT)
 Received: from localhost (94-21-58-102.pool.digikabel.hu. [94.21.58.102])
-        by smtp.gmail.com with ESMTPSA id x23-20020aa7dad7000000b0043a85d7d15esm1448421eds.12.2022.08.12.08.04.21
+        by smtp.gmail.com with ESMTPSA id c15-20020aa7d60f000000b0043d6ece495asm1480778edr.55.2022.08.12.08.15.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Aug 2022 08:04:22 -0700 (PDT)
-Date:   Fri, 12 Aug 2022 17:04:20 +0200
+        Fri, 12 Aug 2022 08:15:14 -0700 (PDT)
+Date:   Fri, 12 Aug 2022 17:15:13 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 04/20] t0040-parse-options: test parse_options() with
- various 'parse_opt_flags'
-Message-ID: <20220812150420.GA3790@szeder.dev>
+Subject: Re: [PATCH 09/20] parse-options: add support for parsing subcommands
+Message-ID: <20220812151513.GB3790@szeder.dev>
 References: <20220725123857.2773963-1-szeder.dev@gmail.com>
- <20220725123857.2773963-5-szeder.dev@gmail.com>
- <220725.86edy9p85i.gmgdl@evledraar.gmail.com>
+ <20220725123857.2773963-10-szeder.dev@gmail.com>
+ <220725.86a68xp7az.gmgdl@evledraar.gmail.com>
+ <20220725192947.GB2543@szeder.dev>
+ <220725.86wnc1nf6c.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <220725.86edy9p85i.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220725.86wnc1nf6c.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 25, 2022 at 04:38:48PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Jul 25 2022, SZEDER Gábor wrote:
-> 
-> > In 't0040-parse-options.sh' we thoroughly test the parsing of all
-> > types and forms of options, but in all those tests parse_options() is
-> > always invoked with a 0 flags parameter.
+On Mon, Jul 25, 2022 at 09:41:52PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> >> > @@ -206,6 +217,11 @@ struct option {
+> >> >  #define OPT_ALIAS(s, l, source_long_name) \
+> >> >  	{ OPTION_ALIAS, (s), (l), (source_long_name) }
+> >> >  
+> >> > +#define OPT_SUBCOMMAND(l, v, fn)      { OPTION_SUBCOMMAND, 0, (l), (v), NULL, \
+> >> > +					NULL, 0, NULL, 0, NULL, 0, (fn) }
+> >> > +#define OPT_SUBCOMMAND_F(l, v, fn, f) { OPTION_SUBCOMMAND, 0, (l), (v), NULL, \
+> >> > +					NULL, (f), NULL, 0, NULL, 0, (fn) }
+> >> 
+> >> Nit, I know you're carrying forward existing patterns, but since that
+> >> all pre-dated designated init perhaps we could just (untested):
+> >> 	
+> >> 	#define OPT_SUBCOMMAND_F(l, v, fn, f) { \
+> >> 		.type = OPTION_SUBCOMMAND, \
+> >> 		.long_name = (l), \
+> >> 		.value = (v), \
+> >> 		.ll_callback = (fn), \
+> >> 	}
+> >> 	#define OPT_SUBCOMMAND(l, v, fn) OPT_SUBCOMMAND_F((l), (v), (fn), 0)
+> >> 
+> >> Which IMO is much nicer. I have some patches somewhere to convert these
+> >> to saner patterns (I think not designated init, but the X() can be
+> >> defined in terms of X_F() like that, but since this is new we can use
+> >> designated init all the way...
 > >
-> > Add a few tests to demonstrate how various 'enum parse_opt_flags'
-> > values are supposed to influence option parsing.
-> >
-> > Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> > ---
-> >  t/helper/test-parse-options.c | 61 ++++++++++++++++++++++++++++++
-> >  t/helper/test-tool.c          |  1 +
-> >  t/helper/test-tool.h          |  1 +
-> >  t/t0040-parse-options.sh      | 70 +++++++++++++++++++++++++++++++++++
-> >  4 files changed, 133 insertions(+)
-> >
-> > diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
-> > index 48d3cf6692..32b906bd6a 100644
-> > --- a/t/helper/test-parse-options.c
-> > +++ b/t/helper/test-parse-options.c
-> > @@ -192,3 +192,64 @@ int cmd__parse_options(int argc, const char **argv)
-> >  
-> >  	return ret;
-> >  }
-> > +
-> > +static int parse_options_flags__cmd(int argc, const char **argv,
-> > +				    enum parse_opt_flags test_flags)
-> > +{
-> > +	const char *usage[] = {
-> > +		"<...> cmd [options]",
-> > +		NULL
-> > +	};
-> > +	int opt = 0;
-> > +	const struct option options[] = {
-> > +		OPT_INTEGER('o', "opt", &opt, "an integer option"),
-> > +		OPT_END()
-> > +	};
-> > +
-> > +	argc = parse_options(argc, argv, NULL, options, usage, test_flags);
-> > +
-> > +	printf("opt: %d\n", opt);
-> > +	for (int i = 0; i < argc; i++)
-> > +		printf("arg %02d: %s\n", i, argv[i]);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static enum parse_opt_flags test_flags = 0;
-> > +static const struct option test_flag_options[] = {
-> > +	OPT_GROUP("flag-options:"),
-> > +	OPT_BIT(0, "keep-dashdash", &test_flags,
-> > +		"pass PARSE_OPT_KEEP_DASHDASH to parse_options()",
-> > +		PARSE_OPT_KEEP_DASHDASH),
-> > +	OPT_BIT(0, "stop-at-non-option", &test_flags,
-> > +		"pass PARSE_OPT_STOP_AT_NON_OPTION to parse_options()",
-> > +		PARSE_OPT_STOP_AT_NON_OPTION),
-> > +	OPT_BIT(0, "keep-argv0", &test_flags,
-> > +		"pass PARSE_OPT_KEEP_ARGV0 to parse_options()",
-> > +		PARSE_OPT_KEEP_ARGV0),
-> > +	OPT_BIT(0, "keep-unknown", &test_flags,
-> > +		"pass PARSE_OPT_KEEP_UNKNOWN to parse_options()",
-> > +		PARSE_OPT_KEEP_UNKNOWN),
-> > +	OPT_BIT(0, "no-internal-help", &test_flags,
-> > +		"pass PARSE_OPT_NO_INTERNAL_HELP to parse_options()",
-> > +		PARSE_OPT_NO_INTERNAL_HELP),
-> > +	OPT_END()
-> > +};
-> > +
-> > +int cmd__parse_options_flags(int argc, const char **argv)
-> > +{
-> > +	const char *usage[] = {
-> > +		"test-tool parse-options-flags [flag-options] cmd [options]",
-> > +		NULL
-> > +	};
-> > +
-> > +	argc = parse_options(argc, argv, NULL, test_flag_options, usage,
-> > +			     PARSE_OPT_STOP_AT_NON_OPTION);
-> > +
-> > +	if (argc == 0 || strcmp(argv[0], "cmd")) {
-> > +		error("'cmd' is mandatory");
-> > +		usage_with_options(usage, test_flag_options);
-> > +	}
-> > +
-> > +	return parse_options_flags__cmd(argc, argv, test_flags);
-> > +}
-> > diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-> > index 318fdbab0c..6e62282b60 100644
-> > --- a/t/helper/test-tool.c
-> > +++ b/t/helper/test-tool.c
-> > @@ -51,6 +51,7 @@ static struct test_cmd cmds[] = {
-> >  	{ "online-cpus", cmd__online_cpus },
-> >  	{ "pack-mtimes", cmd__pack_mtimes },
-> >  	{ "parse-options", cmd__parse_options },
-> > +	{ "parse-options-flags", cmd__parse_options_flags },
-> >  	{ "parse-pathspec-file", cmd__parse_pathspec_file },
-> >  	{ "partial-clone", cmd__partial_clone },
-> >  	{ "path-utils", cmd__path_utils },
+> > Oh, I love this idea!  But are we there yet?  I remember the weather
+> > balloon about designated initializers, but I'm not sure whether we've
+> > already made the decision to allow them.
 > 
-> I wanted to add some new parse_options() code to
-> t/helper/test-parse-options.c in the past, but was stymied by its
-> cmd_*() going through a singular parse_options().
-> 
-> So just creating a new callback is a neat solution.
-> 
-> But wouldn't it be better to just create a new
-> t/helper/test-parse-options-something-.c & test file? It seems this
-> doesn't really share anything with the current helper & tests...
+> Yes, we've got a thoroughly hard dependency on that part of C99 for a
+> while now, and it's OK to add new ones (especially in cases like these,
+> where it makes thigs easier to read).
 
-Well, at least they share the concept, as they all test parse-options.
-And 'parse-options-flags' and 'parse-subcommands' do share the options
-array to specify the various parse_opt_flags.
+Good.  I updated this hunk to use designated initializers as you
+suggested, because all those unused 0/NULL fields in there are just...
+ugly.
 
-A new test script for these flags and/or for subcommands would
-definitely be worse, IMO.  I've found it very convenient that whenever
-I updated 'parse-options.{c,h}', I only needed to run a single
-'./t0040-parse-options.sh' script to check my changes.
+> > If we do, then I'm inclined
+> > to volunteer to clean up all those OPT_* macros in 'parse-options.h'
+> > with designated initializers,
+
+But I'll leave this for later, because it's awfully easy to make a
+mistake and assign a macro parameter to the wrong field, and I find
+the resulting diff very hard to review.
 
