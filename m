@@ -2,157 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A97FC25B0E
-	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 18:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4D97C00140
+	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 19:21:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238856AbiHLSv6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Aug 2022 14:51:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54024 "EHLO
+        id S235164AbiHLTVN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Aug 2022 15:21:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238908AbiHLSv4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Aug 2022 14:51:56 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10674E0DE
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 11:51:55 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id z2so2401540edc.1
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 11:51:54 -0700 (PDT)
+        with ESMTP id S230433AbiHLTVK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Aug 2022 15:21:10 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 728889A991
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 12:21:07 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id s11-20020a1cf20b000000b003a52a0945e8so958173wmc.1
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 12:21:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=1ABzOP9UWbYpEuZc2xnJ8ojXSOEdWyiKN/TDY4BHwTA=;
-        b=K3Zjb79pT+93NZegx/rR3jr6Mamyx5DFhBkwRakazichGT7VMa09Wa46E8mjvRk8E7
-         KOGNXJncoZX/CnZOq/Gu0pJ3UxtjDc2iZdx9Zdo31unLGVuryv9hZfDYmKgNjiXqkLBM
-         XFjNKs66x7cgmaxEQ7TI0mV4wH2cs7AGXlyho+kxXUNjEZTUZEe93l4QAXDWQcimtmi0
-         FCSiChWE9uwPiAGlhPNyuA59O5D/0Eu9AkGEug5vIF9BOe8fhUTX8PPJuzUcBw/u9sfr
-         /ickXYh8Mzz0iRM8FXbg6Fyc0k0ZUwzPceyuEy26riEuuIMLp63jDEpWlhJtRchBafW4
-         C94A==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc;
+        bh=kp2V31pl69zmrmmUzw0WMGqHCRVJNpWqPVxmmBv4SKc=;
+        b=m8Q9H0MbG+b+OMLw5qfjCoM/WVmfe8yVZ7YsOVi6MVjIxSBtIEBpzWbeD83zEIBHqQ
+         Hr4k/ssjC3tw10jIaE4J5wt65PDl0+LYLivLyN6dNy+1vp5VDnLWEDP1XDiOTXPnyMOP
+         dSCj7+C6aOrI1r1csxtWc7MPxanrhSdTXN20nyDySaPL0i4PCLpPuNWSvvY5jbCoySar
+         AIL/aSbETW4Fw1M7GGXRZSxT6oQHpfljDd/1znwM7Kks1/6X0Tqp2MVMlnbpjRhx9MDI
+         K8DYT2LNFCoQEm8SvK0Ui2ixH583JADKBSD/uLPy/rusiOgMSjHBtMAL4XZb4hfTrJ5c
+         DHaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=1ABzOP9UWbYpEuZc2xnJ8ojXSOEdWyiKN/TDY4BHwTA=;
-        b=rRwcqaOZfXlj8KWQ2EKdQkBm+gtrW/s8OunA2K8zSXE/o/qwlsgN4Z3rderf776xaZ
-         ZWLxyLCe6ri8PmAtFnImk+Bkorq+HXYs17e7ks9R3hItUDNbX1HmJzYNERypIyqG4fQA
-         oozlWt/kHy6Dg7ARYfraCh6LZQB35RQ6Y1JWYUhL6fJJGl/+pVcdQPDcSODAYddpGu2Y
-         JySOUreBWncCB+PICyOY7L0zcX27jSIS+2WCXipmQJsPxUwTQQyuqzEIrEkb72BGQtmc
-         m9dg0jj7DQXCr4M7Zxpo4qz4p7UyO5TDDfu5Z7pxC43Hr67Joffl3P72qPalxGlCCSg1
-         XHyA==
-X-Gm-Message-State: ACgBeo0heQbDd0cBDGCJdIC4uGKMCQd85/D6Bm0yMnUVF75mYNOgEDwd
-        YCZo/Wa6hLA8Ny9jwfQm2XbeteNmuvaWqWhxfng=
-X-Google-Smtp-Source: AA6agR6jP7tvAwJQ7sBZEnMclUsAlJH6hRjqPIkA4BJQobYCMOAq60EsPyso4flTg98ldPnOSmLfto0to19/PwWF2MM=
-X-Received: by 2002:aa7:dc10:0:b0:440:b446:c0cc with SMTP id
- b16-20020aa7dc10000000b00440b446c0ccmr4704219edu.34.1660330313450; Fri, 12
- Aug 2022 11:51:53 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc;
+        bh=kp2V31pl69zmrmmUzw0WMGqHCRVJNpWqPVxmmBv4SKc=;
+        b=HBvTtYBfmseFjMgs7em02c5hssfNuxNeonW/pP4Ie/578VU2vjWc4zBgg8Ty8zhxga
+         wW+mwV93/6deQmlmu5v7LqqmdVay4DiFtj13qbhpGea0vbiA6z/C3vKws9T39JP6OMLX
+         3+PzkSJa2ttHoKrBvW4JsAYrhgxaGv4K1AsDEeUlXWWhAGWk5AqXzussnb/ZbNaPAv9t
+         5bvsqabvz/oPfAdSR/bH/+XH3xVip2tgThmLCDX19SNhoTGIEVZscoCcKx1T2j73sotw
+         gff4ZPAxJFpcT7pvCdr1iHeQdj3c0ZdjUS/lAD6WnXksr3meV72BeGnBeZW31GMqJsLB
+         Zq1w==
+X-Gm-Message-State: ACgBeo0pbEy76S6VLRJlfdb15unZxSPsWo1O+9AZsB5saqbyxJyka6vS
+        dwrxakPlypujuNXpeSgn0fYSac97WLY=
+X-Google-Smtp-Source: AA6agR5RezAOi851KB0YtPeuZstSPFIx0n5pX1HMs1dUtTdKMJzUemkt01VdkBQq1i9NLAoOGrMMgA==
+X-Received: by 2002:a1c:7209:0:b0:3a5:c069:25d1 with SMTP id n9-20020a1c7209000000b003a5c06925d1mr6054710wmc.71.1660332065931;
+        Fri, 12 Aug 2022 12:21:05 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id v187-20020a1cacc4000000b0039747cf8354sm389122wme.39.2022.08.12.12.21.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 Aug 2022 12:21:05 -0700 (PDT)
+Message-ID: <333bbaa9-d484-7c20-90d6-e64edf8a8248@gmail.com>
+Date:   Fri, 12 Aug 2022 20:21:04 +0100
 MIME-Version: 1.0
-References: <pull.1266.v4.git.1658325913.gitgitgadget@gmail.com>
- <pull.1266.v5.git.1658342304.gitgitgadget@gmail.com> <59b465e5a7817c145172f25e73ad807c7ba67e84.1658342304.git.gitgitgadget@gmail.com>
- <p3r70610-8n52-s8q0-n641-onp4ps01330n@tzk.qr> <CAPOJW5xBUaAJtOvrefwbXv_WDTLa=6PTL5kEoOpRQfqqFAx3oA@mail.gmail.com>
- <6s4n3600-q5p7-92sr-4206-non3s8rr3n46@tzk.qr> <CAPOJW5yUi471cfAXuXaM4BCzVsfZ15J1Era4NuEpxEnmY6md9Q@mail.gmail.com>
- <p69r38sn-1ppn-q66q-9089-59394pq78772@tzk.qr> <CAPOJW5zYndyqwyN8xOcRQnwebqXciY-25hNL3fU=V5ac8fCpNA@mail.gmail.com>
- <s714sq49-o13q-5417-0o21-6397s3646q9o@tzk.qr> <CAPOJW5yNQvO3quG91jjC9pT-+NNhJta+H_E2R9-1wUzR+rPXnw@mail.gmail.com>
- <68r08n47-9o07-351s-710q-786q69429q86@tzk.qr> <4rs1s351-73np-4sq8-p6o8-r7178rp0p0n0@tzk.qr>
- <CAPOJW5w2NYbRkFOaqrNYVFkp5ud=aAxhGGV6gpdDPwnyx5TAVw@mail.gmail.com> <805fb0df-45ab-7edd-8787-662b84201e2b@github.com>
-In-Reply-To: <805fb0df-45ab-7edd-8787-662b84201e2b@github.com>
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Date:   Sat, 13 Aug 2022 00:21:42 +0530
-Message-ID: <CAPOJW5x0coFREUPjFbF_zzQYbfEjOrL-j-G4N7MBUN4N6uS2jw@mail.gmail.com>
-Subject: Re: [PATCH v5 3/6] pack-bitmap-write: learn pack.writeBitmapLookupTable
- and add tests
-To:     Derrick Stolee <derrickstolee@github.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC/PATCH] sequencer: do not translate reflog messages
+Content-Language: en-GB-large
+To:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Abhradeep Chakraborty via GitGitGadget 
-        <gitgitgadget@gmail.com>, git <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Junio C Hamano <gitster@pobox.com>
+References: <b8ab40b2b0e3e5d762b414329ad2f4552f935d28.1660318162.git.git@grubix.eu>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <b8ab40b2b0e3e5d762b414329ad2f4552f935d28.1660318162.git.git@grubix.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Hi Michael
 
-I think I have found the problem. Derrick was right that `mtime` part
-is not the culprit. I tried to understand the whole midx workflow and
-some questions were raised in my mind. I don't know whether those are
-features or bugs (because I do not have much experience in
-multi-pack-index code).
+On 12/08/2022 16:38, Michael J Gruber wrote:
+> Traditionally, reflog messages were never translated, in particular not
+> on storage.
+> 
+> Due to the switch of more parts of git to the sequencer, old changes in
+> the sequencer code may lead to recent changes in git's behaviour. E.g.:
+> c28cbc5ea6 ("sequencer: mark action_name() for translation", 2016-10-21)
+> marked several uses of `action_name()` for translation. Recently, this
+> lead to a partially translated reflog:
+> 
+> `rebase: fast-forward` is translated (e.g. in de to `Rebase: Vorspulen`)
+> whereas other reflog entries such as `rebase (pick):` remain
+> untranslated as they should be.
+> 
+> Change the relevant line in the sequencer so that this reflog entry
+> remains untranslated, as well.
+> 
+> Signed-off-by: Michael J Gruber <git@grubix.eu>
+> ---
+> The patch also changes `action_name()` not to translate the names This > makes no difference for `rebase: fast-forward` (I don't quite grok why
+> so far) but in any case, the callers mark the result of `action_name()`
+> (or do not mark it) so that the result itself should not be translated.
+> The full test suite passes either way.
+> 
+> RFC for my lack of full grasp of the relevant code paths.
+> 
+>   sequencer.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 5f22b7cd37..b456489590 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -395,11 +395,11 @@ static const char *action_name(const struct replay_opts *opts)
+>   {
+>   	switch (opts->action) {
+>   	case REPLAY_REVERT:
+> -		return N_("revert");
+> +		return "revert";
+>   	case REPLAY_PICK:
+> -		return N_("cherry-pick");
+> +		return "cherry-pick";
+>   	case REPLAY_INTERACTIVE_REBASE:
+> -		return N_("rebase");
+> +		return "rebase";
 
-I am writing a brief description for the context of the issue and the
-questions I have.
+Removing the N_() stops these strings from being extracted for 
+translation, but there are several callers left that are still using _() 
+to get the (now non-existent) translated string. I only had a quick look 
+but I think we should remove the _() from all the callers of action_name().
 
-Let us start from the `write_midx_internal()` function. As
-`packs_to_include` is null in our case, We can use the old midx to
-write a new midx file. The line `ctx.m =
-lookup_multi_pack_index(the_repository, object_dir)`[1]  does this. It
-also loads packs that do not belong to any multi-pack-indexes. It also
-sets `the_repository->objects->packed_git_intialized` to 1.  If we
-look at our test case (`setup partial bitmap`) the last `.pack` file
-(generated by `git repack &&` ) does not belong to any midx. So, that
-pack will be loaded in this step.
+Best Wishes
 
-[1] https://github.com/git/git/blob/5502f77b6944eda8e26813d8f542cffe7d110aea/midx.c#L1169
+Phillip
 
-Next let us move to the `if (ctx.m)`[2] block. As we will be writing a
-bitmap, `if (flags & MIDX_WRITE_REV_INDEX)` is true. Thus all packs
-related to the old midx are loaded and `ctx.info[ctx.nr].p` stores the
-pointers of these packs.
-
-[2] https://github.com/git/git/blob/5502f77b6944eda8e26813d8f542cffe7d110aea/midx.c#L1182
-
-After that we come to the `for_each_file_in_pack_dir(object_dir,
-add_pack_to_midx, &ctx);` line[3] . The `add_pack_to_midx`[4] function
-adds packs (that are not in the old midx) to `ctx.info`. Now I have a
-question here - Why are we using  the `add_packed_git()`[5] function
-provided we already loaded those packs in the
-`lookup_multi_pack_index` step (i.e. 1st step)? These packs are not
-added in `r->objects->packed_git`. This question is related to our
-current issue.
-
-I.e. instead of this -
-
-   ctx->info[ctx->nr].p = add_packed_git(full_path,
-
-full_path_len, 0);
-
-Why not this (or similar) -
-
-    for (cp = the_repository->objects->packed_git; cp; cp = cp->next)
-        if (!cmp_idx_or_pack_name(cp->pack_name, full_path))
-            ctx->info[ctx->nr].p = cp;
-
-[3] https://github.com/git/git/blob/5502f77b6944eda8e26813d8f542cffe7d110aea/midx.c#L1221
-[4] https://github.com/git/git/blob/5502f77b6944eda8e26813d8f542cffe7d110aea/midx.c#L462
-[5] https://github.com/git/git/blob/5502f77b6944eda8e26813d8f542cffe7d110aea/midx.c#L492
-
- `write_midx_bitmap()` function is where bitmap related code starts.
-let us directly jump into the `prepare_packed_git()` function (called
-by `get_all_packs()`[6]). As I said previously,
-`r->objects->packed_git_initialized` is already enabled so this
-function becomes a no-op function. Which means it does not load the
-newly written midx (by calling `prepare_multi_pack_index_one`
-function) and uses old midx to write the bitmap (though we still have
-new packs and they can be used with the old midx to generate the
-bitmap, maybe?) . Here comes my second question - Is this the desired
-case? or should we use the new midx to write the bitmaps?
-
-One important point to note is that `get_all_packs()` returns
-`r->objects->packed_git` which now stores pointers of all the packs
-and only these packfiles have their `->index` set.
-
-[6] https://github.com/git/git/blob/5502f77b6944eda8e26813d8f542cffe7d110aea/packfile.c#L1043
-
-Now let us move to the last function - `oe_set_in_pack()` (called by
-`prepare_midx_packing_data()`). Note that, we are passing
-`ctx->info[ctx->pack_perm[from->pack_int_id]].p` along with other
-parameters. As I have said in an earlier para (containing my first
-question), `ctx->info` has some packs (i.e. newer packs that are not
-related to the old midx) that are not installed in
-`r->objects->packed_git` . In other words, we have two instances of
-the same pack file - one in `r->objects->packed_git` list and another
-in `ctx->info[id].p`. As `prepare_in_pack_by_idx` function only sets
-`->index` for `r->objects->packed_git` packs, these packs (i.e.
-`ctx.info[id].p`) do not have their p->index set and thus end up
-calling the `oe_map_new_pack` function.
+>   	}
+>   	die(_("unknown action: %d"), opts->action);
+>   }
+> @@ -575,7 +575,7 @@ static int fast_forward_to(struct repository *r,
+>   	if (checkout_fast_forward(r, from, to, 1))
+>   		return -1; /* the callee should have complained already */
+>   
+> -	strbuf_addf(&sb, _("%s: fast-forward"), _(action_name(opts)));
+> +	strbuf_addf(&sb, "%s: fast-forward", action_name(opts));
+>   
+>   	transaction = ref_transaction_begin(&err);
+>   	if (!transaction ||
