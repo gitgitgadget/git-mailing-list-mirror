@@ -2,152 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEB3AC00140
-	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 08:37:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFFE8C00140
+	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 12:21:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237115AbiHLIhR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Aug 2022 04:37:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48030 "EHLO
+        id S237435AbiHLMV6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Aug 2022 08:21:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbiHLIhQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Aug 2022 04:37:16 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E6C81BEA3
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 01:37:15 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id w3so498308edc.2
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 01:37:15 -0700 (PDT)
+        with ESMTP id S233383AbiHLMV5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Aug 2022 08:21:57 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22D63B07E5
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 05:21:56 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id h22so606471qtu.2
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 05:21:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=9GZfzy7jReyQDjdP55rN5bwPVVk6SKFjsFQBnc4BZlU=;
-        b=CAC86xadCu5oiWtEmLYLf871Sc6oFO2b8/A/ztykgZsKAZ/0UFLhndgv55TUNXXYb+
-         NLkF8eq6KwE3aUjqlB4ho78lGmcjyVNrP1feO7HOcw4/IUDIrlY1XNESvENK7o7bCR9w
-         HzGJ8dgUdrSRVVykJCv1Kp8S07+psoC4qjUwego+Qj8shN1xVyc6GSQWpRlMPdPOBXiE
-         3mtgJwGSmyq6n+0WhqP6aL4HXpB6Sh7/Hv2Zq4ETpzAQ5zGqqjgo5zrY93QyPsDxXD5R
-         g1xvFpfOnmYs1OshrxDKJBRfpncw4B8jzbuh1hzbz7ZpheJETIT4sd4yLAYohdkauPd/
-         F2iw==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=tIE2Y4FBEHsCncTcoskgAjrxT5LurPcjuDECh7R1Jm0=;
+        b=fcBtff8Uxay9YGrei4qmzohqDBp8AGAaSwM00IQ1v996k6iZ/AbH8mkkHHlm+/sHcF
+         i1N+nMMJEJIn6RgNwyiYI0+6Gs+TLlbPZHa9tb7xtNj09aqqBcZMNgJFIcNf83qb3KPP
+         Z3tgqiRhaBEbMbZ2cH53mVR3yqgiWEtFlVbv6p/8UWACeYHyKLZEDatFzMPGB/bSlY/7
+         KTm/0QQApZKtYh+r9gQI1melHjU34Wp0JwNQmWrw57K9wG4KA9Uhe5zgiToOWNa7tNuh
+         hu+P9SEdWPnTSnKl6iMjaJdJML3RB7an92lyT/pkARkY13TIcZPxC9uw8hk8PDfq5NDT
+         G79Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=9GZfzy7jReyQDjdP55rN5bwPVVk6SKFjsFQBnc4BZlU=;
-        b=adZZDvCSnAcXa2aku3j6Aj6fYM3d0UyYZAGBWxKkmcYqU0DVKEYf2B6KGTyGM9T8oG
-         1rQL1gcFXIxN5IuUVfossGxrLYD2B5jf5La/QoUHwa4enR90SfdD4NRSnJygyegPe7Sw
-         GmdDqo2WukFkNOhPPnAgeCgc0TYvoD5mbhfziTaCfHWws2RGVGw2JpyDSWA31b7TnQll
-         BqWfLnrcfax68Hcm8yBzOVQjvwFJmvyq2iWZdH5beg27xzDEdmNCiN7KAdBPH4gQm7rL
-         CsnNkOiT07Z+WjBJo+qzHlJtjnWCZlrAz9g9KOxrPRld15XBzKbkiIiIYO28MDD6g8JX
-         eYYg==
-X-Gm-Message-State: ACgBeo0+utl3GT06FwWBE4D2O/aUGUTfiwRYJl2QrvVygcwCG5jAI1Eb
-        Kt/mcM2Q04jwXtq4ytcjFknXwpIipKeZGN2tKyL9MVVI1fTEOw==
-X-Google-Smtp-Source: AA6agR5jkJChfX7QZTgaQ9sAcFtkWuxHG6m47JhK3QzqMpziSwjn4HIcaGPVjbBF5EwrEsP77Kdcf2v1glGWd3wxtdU=
-X-Received: by 2002:a05:6402:5192:b0:43d:cc0d:6ea4 with SMTP id
- q18-20020a056402519200b0043dcc0d6ea4mr2589368edd.111.1660293433836; Fri, 12
- Aug 2022 01:37:13 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=tIE2Y4FBEHsCncTcoskgAjrxT5LurPcjuDECh7R1Jm0=;
+        b=B6lpp1HtVE3rlkFuaVSxXvx5sZMceQFLILRcdIDW11evUV9AXFoJmidYKxxV8nmgcR
+         TmZiJLjrYpfuUHL6HQS5tg6zgo6NcH8/6IAolBp5/IT4V4WN9Yxla/0OIwlGBjBYtozN
+         7FBNQCMghUiutTplUZp7tbA5ebOdlZfccBOEQR39LTSQQ8mE9+Pe+7VwHu42Is7x/cYL
+         6+NAwwsbd8VZeW0SVQltAn8Wf3PjiwLC0AA2puv4vo5OT+1fjPbZJg0Tqn6aVxem96GX
+         Gy5teOUbljNWNfyTeySSZu+LehyRfW+z+HdnDSCkcG840jx6BsiML6LFavcDM2uzYv+H
+         qVhQ==
+X-Gm-Message-State: ACgBeo3hmTDO//2zE9xD7ugQjHOhF+bZ+BRvrX6eeaxwyX5yI0A35OAs
+        7p2XN6q4hzo+DyOtOF+jObWW
+X-Google-Smtp-Source: AA6agR4rJ1GUslxxwixtTI/SYBPubT3y0MFoe4w1KcV9XaEMtoYVqlN0oQX4UdHSHoVPGQlNLIGyFA==
+X-Received: by 2002:a05:622a:1a01:b0:343:310d:fedf with SMTP id f1-20020a05622a1a0100b00343310dfedfmr3346863qtb.622.1660306915172;
+        Fri, 12 Aug 2022 05:21:55 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:bde0:34b4:88fb:47ff? ([2600:1700:e72:80a0:bde0:34b4:88fb:47ff])
+        by smtp.gmail.com with ESMTPSA id bk3-20020a05620a1a0300b006b9be18b774sm1555129qkb.105.2022.08.12.05.21.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 Aug 2022 05:21:54 -0700 (PDT)
+Message-ID: <16633d89-6ccd-859d-8533-9861ad831c45@github.com>
+Date:   Fri, 12 Aug 2022 08:21:54 -0400
 MIME-Version: 1.0
-References: <CAO8o=D6p+aFOeRdTDHwPa1E+V45Uqh-TuSZbz0WU=rE-ksGj_w@mail.gmail.com>
- <CAO8o=D7QC71mnyKSceMpYJzVO4=POva=mJQ1bi0teUHPB9xesA@mail.gmail.com>
- <a4c937ed-ea89-0564-db64-f0634fe7eeee@kdbg.org> <xmqqzggag28x.fsf@gitster.g>
-In-Reply-To: <xmqqzggag28x.fsf@gitster.g>
-From:   Noam Yorav-Raphael <noamraph@gmail.com>
-Date:   Fri, 12 Aug 2022 11:37:02 +0300
-Message-ID: <CAO8o=D7Zf3W2BwYwx91SK8STgi+xRbvEnZtdWhLahj6e_t0ZUw@mail.gmail.com>
-Subject: Re: Fwd: Idea: add --squash to cherry-pick
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.12.0
+Subject: Re: Partial-clone cause big performance impact on server
+Content-Language: en-US
+To:     =?UTF-8?B?56iL5rSL?= <chengyang@xiaomi.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     =?UTF-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
+        =?UTF-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>,
+        =?UTF-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>,
+        =?UTF-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
+        =?UTF-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
+References: <bfa3de4485614badb4a27d8cfba99968@xiaomi.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <bfa3de4485614badb4a27d8cfba99968@xiaomi.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank Hannes and Junio for your suggestions!
+On 8/11/22 4:09 AM, 程洋 wrote:> Hi.
+>      We observed big disk space save by partial-clone and require all of our users (2000+) to clone repository with partial-clone (filter=blob:none)
+>      However at busy time, we found it's extremely slow for user to fetch. Here is what we did.
+> 
+>     1. ask all users to fetch with filter=blob:none. And it's remarkable. Now our download size per user decrease from 460G to 180G.
 
-Another issue with using "git diff A...B | git apply --3way", besides
-it not showing the commit messages, is that I wouldn't be able to use
-a graphical merge tool that shows the entire source file. When I use
-"git cherry-pick" and there are conflicts, I see the change in the
-context of the entire file.
+I hope this includes the blob download during the initial checkout,
+because otherwise you have a very strange shape to make your commits and
+trees take up 180 GB.
 
-(I'm using this modification I made of the meld diff tool, which shows
-4 panes, and helps me understand the cause of the conflict:
-https://github.com/noamraph/meld)
+>     2. But at busy time, everyone's fetch become slow. (at idle hours, it takes us 5 minutes to clone a big repositories, but it takes more than 1 hour to clone the same repositories at busy hours)
+>     3. with GIT_TRACE_PACKET=1. We found on big repositories (200K+refs, 6m+ objects). Git will sends 40k want.
 
-My main problem with using "rebase -i" is that it would require me to
-fix merge conflicts one by one, on each commit in which they appear,
-instead of fixing all conflicts at once, treating the change from A to
-B as one. It also requires manual editing for every commit between A
-and B.
+You only have six million objects in the repo and yet have that size? It
+must be some very large blobs.
 
-I think that the best way to do what I want using the existing commands is:
+>     4. And we then track our server(which is gerrit with jgit). We found the server is couting objects. Then we check those 40k objects, most of them are blobs rather than commit. (which means they're not in bitmap)
 
-git checkout A
-git merge --squash B
-git commit --no-edit
-git checkout @{2}  # Go back to where we were at the beginning. This
-is not exact, as you're in detached HEAD state.
-git cherry-pick --edit @{1}  # cherry-pick the squashed commit A..B
+Are you seeing any commits in these requests? If the Git client is asking
+for blobs, then they should not be mixed with commit wants. What kind of
+operation are you doing to see these mixed wants?
 
-This allows you to fix the merge conflicts in one go, shows the entire
-files causing the conflicts, and allows you to edit the commit
-message, starting with the descriptions of all the squashed commits.
+If the request was only blobs, then the server should not need a "Counting
+objects" phase. It should jump immediately to preparing the objects (which
+will likely require parsing deltas, and that can be expensive). I don't
+know if JGit is doing something different, though.
 
-I think this also gives a pretty good explanation of what "cherry-pick
---squash" will do: it really is the analog of the "merge --squash",
-but for cherry-pick.
+>     5. We believe that's the root cause of our problem. Git sends too many "want SHA1" which are not in bitmap, cause the server to count objects  frequently, which then slow down the server.
+> 
+> What we want is, download the things we need to checkout to specific commit. But if one commit contain so many objects (like us , 40k+). It takes more time to counting than downloading.
 
-What do you think? Did I explain my need to "cherry-pick --squash" and
-explain its behavior?
+One thing that the microsoft/git fork uses in its "git-gvfs-helper" tool
+(which speaks the GVFS Protocol as a replacement for partial clone when
+using Azure Repos as a server) is a batched download of missing objects [1].
+The initial limit is 4000 objects at a time, but that helps keep each
+request small enough that it is less likely to fail for scale reasons alone.
 
-If I do an experiment and try to implement this, would this help?
+[1] https://github.com/microsoft/git/blob/vfs-2.37.1/gvfs-helper.c#L3510-L3520
+
+It might be interesting to create such batch-downloads for these partial
+clone blob-fetches.
 
 Thanks,
-Noam
-
-On Thu, Aug 11, 2022 at 7:43 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Johannes Sixt <j6t@kdbg.org> writes:
->
-> > That question on Stackoverflow asks "how to do X with Y". But Y (git
-> > cherry-pick) is the wrong tool to do X (apply commits from a branch to
-> > somewhere else in squashed form).
-> >
-> >    git diff A...B | git apply --3way
-> >
-> > would do what you want. You would have to come up with a new commit
-> > message anyway, so cherry-pick would be of little use there.
->
-> I do agree that cherry-pick is not the best solution for that XY
-> problem, but in a typical undisciplined development work, it is not
-> entirely implausible that pieces from original commit message may
-> still be of some use, exactly the same way as people would want to
-> use "squash" while "rebase -i".  Most commits may have completely
-> unusable "oops fix", "worked more", etc. messages, but some of them
-> may summarize what the past handful steps with such garbage messages
-> have done, which may be worth salvaging.
->
-> If I were solving the XY problem, I would probably use "rebase -i".
->
-> To transplant the range A..B of the history on top of HEAD, for
-> example, I'd start with (notice ^0 after B, as I do not trust myself
-> so I'd leave the true branch B untouched as I may make mistakes
-> while running rebase):
->
->     $ git checkout --detach HEAD        ;# this is only to use @{-1} later
->     $ git rebase -i --onto HEAD A B^0
->
-> Then if my goal is to squash everything down into a single commit,
-> then replace all 'pick', except for the first one, to 'squash'.
-> That will give me one single chance to edit a single commit message,
-> but the editor buffer starts with the log message from all of the
-> original, so I can pick good bits from them while writing new stuf.
->
-> I'll have the result on detached HEAD.  If I like the result, I may
-> update the branch I was originally on with it.
->
->     $ git checkout -B @{-1}
->
-> Or, if I don't, perhaps because I made mistakes, then I can just
-> discard it and go back to the original branch.
->
->     $ git checkout @{-1}
->
+-Stolee
