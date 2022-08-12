@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28FFCC00140
-	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 20:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2266C00140
+	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 20:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235100AbiHLUKa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Aug 2022 16:10:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36638 "EHLO
+        id S235155AbiHLUKd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Aug 2022 16:10:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234710AbiHLUK0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Aug 2022 16:10:26 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4749C64CA
+        with ESMTP id S234491AbiHLUK1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Aug 2022 16:10:27 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F18F66170
         for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:10:25 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id p10so2245291wru.8
+Received: by mail-wr1-x42a.google.com with SMTP id h13so2251547wrf.6
         for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=fTQyYbLVeujkIXWBZRa69qVeE19+Lc0IZap+yd+gMZw=;
-        b=F57dzq5xg1Yitx4aa+X5/VAoOGzT3p/dM4+d4mkS5W/HeAoDlH3H9srjhIeArXvuJa
-         KW2Fmf8rDTdmtk885i2zGfxYzxUcxR0EFxcBFclAyJXquVJ3Un6ee2Ip7FyGnXVSnAtp
-         tXFH9czvyHew/ZJgXfDLkCpArAmaDegkMNVLjZIi+oPjKZJgHnsDd/neC1QvC7vgjXCq
-         Vq2dp+kCwKsu9nP6sz3WRu5royR22MN6HtZUPYf5F8beNXY/fxodM1HW/IzaWAHT1iW+
-         Nzi0k+XsfYdMNWQ4FP3/Kcbe1G47y2nk8qfKr+rLJLsmmgD0jpRLt2LKgGIT+Pdk5T4b
-         YXaw==
+        bh=327gbsyYeccEL0tlq4IQ1Y7CXUns6oBUTnyfqIVz7cI=;
+        b=EDUWwtWwPM2IFRoc5LOML/V1i7NTbGAVl2dcyNuJtjHA7FW0shjnL97x/YKkO1f5r4
+         JvKgvGbITYNS7c6YcMP+aaBBtXBcR1vRtj1XAF8yv0ksCb/3NmtZ0RUoc8o9IOhJ+dAe
+         YTPWmTsINj7IxwUCKZZRtcpBEoMuO91gHJpMNWvYx141ZneDtFAmBKixnlIZeGhqkttQ
+         uJqLlsUhxAm/81sLI61jNnhd2KEzsnCacNoBhDHU84Ajx5Rgs9R2jICvuKCY5/xQTpyd
+         MOmE1DZvyFQU7+ZHXOaiKpZ+7Cd8jYOyE0aeuFuLEwUly4KXXtYvfgWeEEFro+No4jOC
+         2Vxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=fTQyYbLVeujkIXWBZRa69qVeE19+Lc0IZap+yd+gMZw=;
-        b=hyWJApzOT1JoYxC7/oA9Ivj/OZMc+o91CQLNLgxfe5HeIPTr0Yfes4PX6z4E8i8fQK
-         cQ5V0BXzt0BbfijYsgqqsL96UN6KEhp/jpyX6Koy9PDLgQr+YR8waRqBdxpl6uTgHO/n
-         nAgXV2MJRX2k8v1ALEGluO1ttfCvKPmPHviJXD8ddTXDqztBfswe56bj34DsptxZ4f9M
-         EOuPi/GNyLb1Mw0SbHdSQ2CRLnaM+hlLhmG7+7IFkMdKnsgj7HYEWXzEnDz61utVh3uL
-         /PWED9dahfTELc8EsX5ERPcOVHelbZ/y5/l3HUEKdMwN5hi6mknDLmWjZBOhfOeSsz6e
-         ibKQ==
-X-Gm-Message-State: ACgBeo3AW4l4Ulvo1Dtx5+7ztI6/DWRk4oD3A+Qpf7ZLTvsbD5kwmcD7
-        G108PrJbDnR4k/uxjj3o52KC3ZymGBg=
-X-Google-Smtp-Source: AA6agR5T/Ei8U/JcjW54MoPUDUzFkCNudHipDs5c2AcRf0TRSoSXGVR2gMB/KMPErm4BjD4AocfGMQ==
-X-Received: by 2002:a05:6000:3c6:b0:220:5efd:423c with SMTP id b6-20020a05600003c600b002205efd423cmr3039588wrg.214.1660335023426;
-        Fri, 12 Aug 2022 13:10:23 -0700 (PDT)
+        bh=327gbsyYeccEL0tlq4IQ1Y7CXUns6oBUTnyfqIVz7cI=;
+        b=ynga/nVwzBay+ZJczURob5z0ZZqHe1HPC7NHmueQjFfGAHkuuvmtILSbyKnhT4RyBq
+         SMKGjS2bKHopu2bRaZz2ORjf2imZdblkhme94/n3i0O6uLTA33qpX4+c29irLhWy4WPO
+         3btSWPma+Z88LqPZ6cjl9RbHf3w519Wqw6BPUoY7A7vKaswm+R1ldAsrqtkbYQ0CI+SU
+         g9y/4WcvWK0snYHEX8q5lzX1Gr/lGnW7BuZKHYo/NW2kL2IhU8uZiVCB0L9gA2si0NwL
+         eYX1CiEEArtIoM5YzR70CIpFjCe83vcGWRimFz0U0SMITmFkx+o6m9khZT3/SLIR3czK
+         L2KA==
+X-Gm-Message-State: ACgBeo2Bt/lfA77m9apkTghblRsaTU0XkJn2nbOS6PcmurOcu1uo+XiP
+        0aKu87QfrgKfwtEDiFA337mstSG5qkc=
+X-Google-Smtp-Source: AA6agR59Y9siVAGb8ojnUkMfU3imTZSo8E2kcqLNpjvpuyT1Nj9nEOgsiTLVE4eOGKDcld+QWzlSFQ==
+X-Received: by 2002:a05:6000:15c7:b0:222:ce5a:4b01 with SMTP id y7-20020a05600015c700b00222ce5a4b01mr2914648wry.206.1660335024361;
+        Fri, 12 Aug 2022 13:10:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 3-20020a05600c248300b003a342933727sm574106wms.3.2022.08.12.13.10.22
+        by smtp.gmail.com with ESMTPSA id l23-20020a05600c2cd700b003a502c23f2asm574585wmc.16.2022.08.12.13.10.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Aug 2022 13:10:22 -0700 (PDT)
-Message-Id: <78a93eb95bb0c43778501f03837bffdcf74e4c99.1660335019.git.gitgitgadget@gmail.com>
+        Fri, 12 Aug 2022 13:10:23 -0700 (PDT)
+Message-Id: <22ee8ea5a1e04a42ad359be4eb5ebc96bd5e5fa2.1660335019.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1310.v4.git.1660335019.gitgitgadget@gmail.com>
 References: <pull.1310.v3.git.1660174473.gitgitgadget@gmail.com>
         <pull.1310.v4.git.1660335019.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 Aug 2022 20:10:10 +0000
-Subject: [PATCH v4 02/11] scalar-diagnose: avoid 32-bit overflow of size_t
+Date:   Fri, 12 Aug 2022 20:10:11 +0000
+Subject: [PATCH v4 03/11] scalar-diagnose: add directory to archiver more
+ gently
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,35 +70,49 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Avoid 32-bit size_t overflow when reporting the available disk space in
-'get_disk_info' by casting the block size and available block count to
-'off_t' before multiplying them. Without this change, 'st_mult' would
-(correctly) report a size_t overflow on 32-bit systems at or exceeding 2^32
-bytes of available space.
+If a directory added to the 'scalar diagnose' archiver does not exist, warn
+and return 0 from 'add_directory_to_archiver()' rather than failing with a
+fatal error. This handles a failure edge case where the '.git/logs' has not
+yet been created when running 'scalar diagnose', but extends to any
+situation where a directory may be missing in the '.git' dir.
 
-Note that 'off_t' is a 64-bit integer even on 32-bit systems due to the
-inclusion of '#define _FILE_OFFSET_BITS 64' in 'git-compat-util.h' (see
-b97e911643 (Support for large files on 32bit systems., 2007-02-17)).
+Now, when a directory is missing a warning is captured in the diagnostic
+logs. This provides a user with more complete information than if 'scalar
+diagnose' simply failed with an error.
 
 Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- contrib/scalar/scalar.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/scalar/scalar.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 97e71fe19cd..04046452284 100644
+index 04046452284..b9092f0b612 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -348,7 +348,7 @@ static int get_disk_info(struct strbuf *out)
- 	}
+@@ -266,14 +266,20 @@ static int add_directory_to_archiver(struct strvec *archiver_args,
+ 					  const char *path, int recurse)
+ {
+ 	int at_root = !*path;
+-	DIR *dir = opendir(at_root ? "." : path);
++	DIR *dir;
+ 	struct dirent *e;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	size_t len;
+ 	int res = 0;
  
- 	strbuf_addf(out, "Available space on '%s': ", buf.buf);
--	strbuf_humanise_bytes(out, st_mult(stat.f_bsize, stat.f_bavail));
-+	strbuf_humanise_bytes(out, (off_t)stat.f_bsize * (off_t)stat.f_bavail);
- 	strbuf_addf(out, " (mount flags 0x%lx)\n", stat.f_flag);
- 	strbuf_release(&buf);
- #endif
+-	if (!dir)
++	dir = opendir(at_root ? "." : path);
++	if (!dir) {
++		if (errno == ENOENT) {
++			warning(_("could not archive missing directory '%s'"), path);
++			return 0;
++		}
+ 		return error_errno(_("could not open directory '%s'"), path);
++	}
+ 
+ 	if (!at_root)
+ 		strbuf_addf(&buf, "%s/", path);
 -- 
 gitgitgadget
 
