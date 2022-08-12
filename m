@@ -2,93 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C53CC00140
-	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 14:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C39BC00140
+	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 14:44:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238507AbiHLOAw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Aug 2022 10:00:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47354 "EHLO
+        id S235047AbiHLOoW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Aug 2022 10:44:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232085AbiHLOAv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Aug 2022 10:00:51 -0400
-X-Greylist: delayed 581 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 12 Aug 2022 07:00:50 PDT
-Received: from mx2.freebsd.org (mx2.freebsd.org [IPv6:2610:1c1:1:606c::19:2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48CBD82FAD
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 07:00:50 -0700 (PDT)
-Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits)
-         client-signature RSA-PSS (4096 bits))
-        (Client CN "mx1.freebsd.org", Issuer "R3" (verified OK))
-        by mx2.freebsd.org (Postfix) with ESMTPS id 4M44p10RQ4z4Cyc
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:51:05 +0000 (UTC)
-        (envelope-from garga@FreeBSD.org)
-Received: from smtp.freebsd.org (smtp.freebsd.org [96.47.72.83])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
-         client-signature RSA-PSS (4096 bits) client-digest SHA256)
-        (Client CN "smtp.freebsd.org", Issuer "R3" (verified OK))
-        by mx1.freebsd.org (Postfix) with ESMTPS id 4M44p06pYzz3jQw
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:51:04 +0000 (UTC)
-        (envelope-from garga@FreeBSD.org)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
-        t=1660312265;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=SKF3LK9q7asbflyJImwBAS8MYakucBooGgm7g6nUM0Q=;
-        b=qfh47H3ZURxxLOAAR7OaGeQ/Iw2rQtn/0sTIQSeHNlGTxh7554MpYGe3HoJMJ9DaxoJRZe
-        dGexQA2mVAgiZtBTffcgfFrLuJ6yG56f3aUwzGQ02qg4jA3pk53Nf+/Td5h90rnAdScQ2r
-        Iv8y6aeylmPHXdUbqjE3LB+4f1/SRJ4mygi2Sv7JOjLKAeCARyVHtl2Us1IlOcMhgTVrOF
-        zCbtH65gx48L8q0BewUrA5bfkjtsSgyQrltkXkzxLz+eJY1v64IDUZ/KT1QIYSMvwfR0bx
-        KY7g64dcPS4hvEtvkvMs1bOJ5RaQH9rZzQpLLoGi5ncthFKazPVel2Gc+naJcA==
-Received: from [172.21.4.170] (dynamic-177-53-82-16.telecominternet.net.br [177.53.82.16])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (Client did not present a certificate)
-        (Authenticated sender: garga)
-        by smtp.freebsd.org (Postfix) with ESMTPSA id 4M44p047KTz1Jgk
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:51:04 +0000 (UTC)
-        (envelope-from garga@FreeBSD.org)
-Message-ID: <226317ba-a78f-216c-764c-52f4e393bd35@FreeBSD.org>
-Date:   Fri, 12 Aug 2022 10:51:03 -0300
+        with ESMTP id S231698AbiHLOoV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Aug 2022 10:44:21 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6507AB418
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 07:44:19 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id f28so1145581pfk.1
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 07:44:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc;
+        bh=6mwq9UFytambkBOPr/0FPGcyCVIPr9eOY2nzN6CaYcY=;
+        b=LRudb5zR0ER+FkN4Ejq7/2U9RTY8Zj9ATdFF82WLomLBI7a7R0kwSlZin7X8WBg8uw
+         vdZRXMSoJZkIjABuORpYwtqPDSiyaR+jo/sjKX+QJl8sbg/yqC/3G94WWpEc7qgZ0+PY
+         roJAgN2IPHA2re98X8iyZILfTUpefFs4rQE2iY0guqx/5/952GRi68LhimBYQEL2/J/l
+         iyEdF2VMnHfks6lmqDHT/Lktx6Ih4erla9AIYRyWmG9tIZxe+FJpmrCFs1JWSKwvX/9+
+         IPoQy1x684Yk1hB/WTdmj7ehZm5ZhvbhN35+yviCPTzaO37A5wu2SHMbPYEWWLon6ocu
+         9jtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc;
+        bh=6mwq9UFytambkBOPr/0FPGcyCVIPr9eOY2nzN6CaYcY=;
+        b=qrwvqf+uCbT3F6YQy7Bl8uW++mtPK1KWDERvX0vx/7Gq86bc75T1iuvlVbBswevZkm
+         WlVOjZm6tlMmBHbMjmx+4twYhygkPvsesVtipBd6GeAe6zn9mullo5f8HCMPKEsnGef0
+         MMmczj4f9r9zVLU/zgEuLc0BcNOZUet8oQcrZZ3IrG890KDnHe5qrXLueWWa2vvzFGLQ
+         nlWX/CuTWnRHDtwpVnGxp9hBCFxO+g8gzFs0QhCqQl7MkdyqWkDalzC2LOhW989Fkt+v
+         bZBryhzHIP3CZCO8AkZrGk4sy2Ci8yBVk4RR+esDPuFuz+AwXZh5FbVLKv9bbKl3krSb
+         p9pg==
+X-Gm-Message-State: ACgBeo34uyzy9neQUHf0CBxntthltK/P4EzThWqWA50x6c85LJLOpTxS
+        g2Yd7l3WStj2TyE48v2SdG24BlTGBbY=
+X-Google-Smtp-Source: AA6agR48d2kwDGDnvPQkV/ZoWh8s/hNNEqAI6fqzgcylsvazgSaD4LeTsKoEpd25LdcH86XEODnRFg==
+X-Received: by 2002:a65:6290:0:b0:422:4a8f:c687 with SMTP id f16-20020a656290000000b004224a8fc687mr1895999pgv.57.1660315459089;
+        Fri, 12 Aug 2022 07:44:19 -0700 (PDT)
+Received: from localhost ([113.172.46.62])
+        by smtp.gmail.com with ESMTPSA id u6-20020a170902e5c600b0016d5626af4fsm1887844plf.21.2022.08.12.07.44.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Aug 2022 07:44:18 -0700 (PDT)
+Date:   Fri, 12 Aug 2022 21:44:16 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Renato Botelho <garga@freebsd.org>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git maintenance broken on FreeBSD
+Message-ID: <YvZnQFVMZZmz9TIX@danh.dev>
+References: <226317ba-a78f-216c-764c-52f4e393bd35@FreeBSD.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.1.2
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Language: en-US
-From:   Renato Botelho <garga@FreeBSD.org>
-Subject: git maintenance broken on FreeBSD
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
-        s=dkim; t=1660312265;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=SKF3LK9q7asbflyJImwBAS8MYakucBooGgm7g6nUM0Q=;
-        b=PKxWzKBsoBvzdc3ajb56fgn5QZ1CQO6/wdZIrvAouKu5o0oazUv+/SwQU+xgoLju2ETelB
-        2ruiCVM1gNA2LErAhF323av+Nne76oKCtPU3FWEc0QZ5xJcE9A51n/rXInvgM5hXHxOaxo
-        TLGUs8eF9L3JTVr/DRb7CiZAlrsrGmgNppavKsJE4QLcCyw2yrja6YDg6ytQh/FeFc75jt
-        SlUf1jqic3F0y0whyEQ0SGW/WX7syZyOjC/YWhB1g+UsNgwtkN/Di8suj6jEdu3blvis00
-        t0VgdHlNWn010VihR5Agvtvx8hKbBF1eNY3bhISunYyQUT45b8dt5zHI6YjAfQ==
-ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1660312265; a=rsa-sha256; cv=none;
-        b=B7qLrW6xoAcY36BT6FFiGBA8/L3vKo8IuT+Xsg6LsNXiAIn7ZNUcMK7p2V/0NF1tAQV7iV
-        wFyG5J3YYI6/6WpffkdV62S2B0e84ZRNqhl2Z2MhlPVtx2KkYT+HBcaDE+zMqHrRQzje9J
-        By56wqrReyn2hssnZj+bHqJ3+HUrSNZYZGG2Lb7I5vXd9DLJ+vMSwI/IQn21Xhwtk+1gla
-        FyAckCGsIBvYegq9YvatrXQYF2BpxtyyjmHH/3jlJMJyrId6gny+rkPfmZnAmENbiNwAK7
-        lmHXxoG3bBhSYD3PAoUpws9cZ8Mxyipn8BZpgnFGyn4wuU5YQ2h9nEAK4DKihA==
-ARC-Authentication-Results: i=1;
-        mx1.freebsd.org;
-        none
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <226317ba-a78f-216c-764c-52f4e393bd35@FreeBSD.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As reported at [1], git maintenance is not working on FreeBSD.  I didn't 
-find the time to dig into it but it seems like it's calling crontab 
-using parameters not supported on FreeBSD.
+On 2022-08-12 10:51:03-0300, Renato Botelho <garga@FreeBSD.org> wrote:
+> As reported at [1], git maintenance is not working on FreeBSD.  I didn't
+> find the time to dig into it but it seems like it's calling crontab using
+> parameters not supported on FreeBSD.
+> 
+> [1] https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=260746
 
-[1] https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=260746
+It seems like FreeBSD's cron is vixie-cron which requires <file>
+passed to crontab(1).
+
+     The crontab command conforms to IEEE Std 1003.2 (“POSIX.2”) with the
+     exception that the dangerous variant of calling crontab without a file
+     name in the first form of the command is not allowed by this
+     implementation.  The pseudo-filename ‘-’ must be specified to read from
+     standard input.  The new command syntax differs from previous versions of
+     Vixie Cron, as well as from the classic SVR3 syntax.
+
+I think other crontab implementation also accept "-" as filename for stdin.
+At least cronie, fcron, dcron, and busybox's crontab both supports "-" as stdin.
+
+I think this patch can fix FreeBSD's problem:
+
+---- 8< -----
+diff --git a/builtin/gc.c b/builtin/gc.c
+index eeff2b760e..45d908def3 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -2087,6 +2087,7 @@ static int crontab_update_schedule(int run_maintenance, int fd)
+ 	rewind(cron_list);
+ 
+ 	strvec_split(&crontab_edit.args, cmd);
++	strvec_push(&crontab_edit.args, "-");
+ 	crontab_edit.in = -1;
+ 	crontab_edit.git_cmd = 0;
+ 
+---- 8< ---------
+
+
 -- 
-Renato Botelho
+Danh
