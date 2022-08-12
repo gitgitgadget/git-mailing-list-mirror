@@ -2,262 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDC15C25B06
-	for <git@archiver.kernel.org>; Thu, 11 Aug 2022 23:57:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55267C25B06
+	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 00:31:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236440AbiHKX5R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Aug 2022 19:57:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55488 "EHLO
+        id S234733AbiHLAba (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Aug 2022 20:31:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234910AbiHKX5P (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Aug 2022 19:57:15 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81F869E2DB
-        for <git@vger.kernel.org>; Thu, 11 Aug 2022 16:57:14 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id p10so22955217wru.8
-        for <git@vger.kernel.org>; Thu, 11 Aug 2022 16:57:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc;
-        bh=REb1sQqGoWoxkX45enPvevbu0mHf9uPI29cBwtBDEfo=;
-        b=HPpkkglrSemf6PqsIBr4GIQcZpT3d3N7Hu7CuqMMfCsyz4mlSrhBPyHx8ii/RwFsMH
-         NxbUGlyE+UfZpp2Ta/HmDvJes44T2wfpTAyaLRsZl4UOfBIzU5rZfgXli0C9iogcAffQ
-         R+eQIVq758Y/5lvLXLEyjM+/6a6d93JuBJIhipilokZFW7m/0w73b+YlqFXPbAUc1qHS
-         OFonvSpf89ZeQcLjo9Fbrmn916f/+yKl40FWutznzl/jnefQ+TR8az1Y22AZ4NQklRQG
-         4BFt4SpXVuQoHgWbTrd0IdB9reRQu196/XFhUTZVHuGeGI6oq9xCEQWZsFhw3JjsArUu
-         VQXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=REb1sQqGoWoxkX45enPvevbu0mHf9uPI29cBwtBDEfo=;
-        b=vd9z14UPs7Fxy+xxfvv+kOvjqbRApafAPnjTvcLbZQGwrniBsXPIhzEWKW1DAwzUhn
-         slsejawXfAlDMCmGvaaRmfXCF82wfO93aqQ1zzn5tVscwo51LLJobBQKT2dSN9mTLQin
-         Jx/JMv5zJqKUKJ5R+8mTBDi/dqHPyXw4/Fj4rrX6iPrBBmFHNnZpk4UdLDFemX0W0LIJ
-         rb5e69ZQmtWLkhWKYjn9DAr5s4y9o+r2PYM2dQDKNMXgtIQI7vAC8BX0D6+FWQaTtpiS
-         h/AkmfqGb1wsFJoPj/X7gFMJlQVDK9HPbd14R+G6kWFQ8gvLvZJAKvV5Lv+o6Y+iEvQJ
-         7jKg==
-X-Gm-Message-State: ACgBeo1GcmkTLX4EIzmv4JOJn9d4mHO4gcIjZsoiA4Ipqf+jfrV772x7
-        z+AH0yiRTEy17PTpFF01mCj4tqo0x7Y=
-X-Google-Smtp-Source: AA6agR4nKhU7bV1Kbv5sURgjXU2Y/daHeBQm5Ww1YcPDaI3yqZhFMBPtAXvwBCPoDd1k1cKKEjkbMw==
-X-Received: by 2002:a5d:5986:0:b0:220:73d5:1f01 with SMTP id n6-20020a5d5986000000b0022073d51f01mr590216wri.417.1660262232788;
-        Thu, 11 Aug 2022 16:57:12 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n40-20020a05600c3ba800b003a5ca627333sm292829wms.8.2022.08.11.16.57.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Aug 2022 16:57:12 -0700 (PDT)
-Message-Id: <pull.1317.v4.git.1660262231357.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1317.v3.git.1660242752495.gitgitgadget@gmail.com>
-References: <pull.1317.v3.git.1660242752495.gitgitgadget@gmail.com>
-From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 11 Aug 2022 23:57:11 +0000
-Subject: [PATCH v4] fsmonitor: option to allow fsmonitor to run against
- network-mounted repos
-Fcc:    Sent
+        with ESMTP id S229833AbiHLAb3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Aug 2022 20:31:29 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31BE441D20
+        for <git@vger.kernel.org>; Thu, 11 Aug 2022 17:31:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1660264285;
+        bh=JKCvhPtLZIbmMCjnuTQeQ6RccKZtptTdy51v7iNslfI=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=BOYCkJ7q9hqb7Zdk0PHjteo+DgDN1izpR60ePmL6WhlUaq7e4rRHvQLU4FidczqX1
+         UriQAP2qcTenxtVxamEnkOm8r6MY+Re3YBYy8dl02ECQMZWQMGTGU+PTcJ0KoXZ8Lz
+         JSEbOIzUW7FS9ttHOy/e+i67roZDMu0MFibc0nrw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az48-342.y11my21s2nfuzmiq0sccgy5und.cx.internal.cloudapp.net
+ ([20.7.67.237]) by mail.gmx.net (mrgmx104 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1M8hZJ-1oHbcD3SRl-004h2n; Fri, 12 Aug 2022 02:31:25 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.37.2(2)
+Date:   Fri, 12 Aug 2022 00:31:22 +0000
+Message-Id: <20220812003122.4378-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.37.1
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Eric DeCosta <edecosta@mathworks.com>,
-        Eric DeCosta <edecosta@mathworks.com>
+Fcc:    Sent
+X-Provags-ID: V03:K1:DngZ7K8fmopIknBjkS4f8Nfi/ds6KwJGMHhI08iQqmPxoDs8yBe
+ soxLI7bwoY4TNuDQE8ApsQIGm7/+0S6BNB6zH7PO6QjWmbUDa6jGh81BpdxN68O6YrDD9NK
+ pcTftumogQUJnWYMefa7itGHPSFAWjJO0oYEjnI0G2o9lYaJ4+e2ItewK6DaZmqL/lw5fwL
+ YvE/99A+VMy2F3b8IH1bg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4+20fzNOTZk=:3Mkx2OVO1LVb4P4XAk1A76
+ +crd5DkDr/Cpg4qLva/mCYL0UUCV3U59ZNW9vmcYzd7wAIIvYzIdb7E/6N7pUgn1qKTbCcUpB
+ pbpIsUNy7K3No0dFYEerxSxnLuXRT/AoYQ50eC8TGRFUvra+fvxC6ASclP53nxeYmucb8uPK4
+ ra4r9+/d5uYd93iuyEf02rYbKUdkMWzYlF/J+Xeff39Mrx5+GVGsHGz4Rv+HlrNXvhwDe0xYG
+ PXENRMjUR0HE1nj5fg6rtVW5vyqozREIASQrBilePKCCCpL+HOonAi60vYxsA2+MLCjUT3cv/
+ zinhr0lFns0aezF0PxHbVbTsSYXG2dxYUG0af/dk/Z7qYJ/3Ikupv4pAtAI1vgSX7tGoirXqJ
+ htBwW/TmmL2zL+YfOB75H4sDBceV0Yc+77548K4+5gn3GHm3Xw0HlLPBcRtll1GS9OC2FNVbw
+ ZmDgU6lj/bfJhkkyeY4zDunn4g9aVC01Qb++0MU/xCXv+OXdEwqlnbYYNYTzlbns5uOsVPgLK
+ TD4rUDt8qh1BPclEmelb5smUzyzMq7be1kw5jufq/IhYMuPUQNwgRXahRS1z3Iq0UvhCeBrpq
+ JllUZ5CxKdG+gumcumr0lYOWJP4cgbjJnxBXyK7Pohazk6AjFW29ajyn0ZRCLBilrd39wgeTj
+ UN4OSXeV5IO/R+Gb2LobUrgHaJjKp54ZS3ksvPeEgjjrN9mU2gkCRq7FUUU3u7M1a8sdwVjhZ
+ xiOJ/N4gJS8NadBdCHJIBOxsHgzfzeTzVW7vo623boklz4Wzl8Gk/6MRseQx8eHbGpmjqdQqm
+ JA+pqd0Nw5farAGhNlbzcjLK6ar94KmptYr+gCxPxfxvsy4ZIrj91VqzsVgQq5Syfh8LHHl2a
+ K2+t+pEVXCSKGQxOA1LAH0j4Cmkh8gsDK5l8lBylsVQFXL7JQc2SLW/897dVW09cmi4D2uRMK
+ XRUuyXVCxaI/Dn7+8JV9qHb+gYJqmMvTlMTttE+riwBTtdvWdXv7YsNfEe16mGW5y3rNio79K
+ IEoljOhakwxl/BGeIBGon9f3RiLATq1UbjTTHpJTfxWebhMclUyozxxRXaHBPNpc+TlDOvZZ4
+ 0SwUxUooMMCb+uOgtw/UCymz2AoQBCLRPr1L/BfwKEl30Sd1gK/NRuH4w==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Eric DeCosta <edecosta@mathworks.com>
+Dear Git users,
 
-Though perhaps not common, there are uses cases where users have large,
-network-mounted repos. Having the ability to run fsmonitor against
-network paths would benefit those users.
+I hereby announce that Git for Windows 2.37.2(2) is available from:
 
-Most modern Samba-based filers have the necessary support to enable
-fsmonitor on network-mounted repos. As a first step towards enabling
-fsmonitor to work against network-mounted repos, introduce a
-configuration option, 'fsmonitor.allowRemote'. Setting this option to
-true will override the default behavior (erroring-out) when a
-network-mounted repo is detected by fsmonitor.
+    https://gitforwindows.org/
 
-Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
----
-    Option to allow fsmonitor to run against repos on network file systems
-    
-    cc: Eric D eric.decosta@gmail.com
+Changes since Git for Windows v2.37.1 (July 12th 2022)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1317%2Fedecosta-mw%2Fmaster-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1317/edecosta-mw/master-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/1317
+(Upcoming) breaking changes
 
-Range-diff vs v3:
+We updated the included Bash to version 5.1 (previously 4.4). Please
+check your shell scripts for potential compatibility issues.
 
- 1:  6c5f176cbee ! 1:  058dc400c8a fsmonitor: option to allow fsmonitor to run against network-mounted repos
-     @@ compat/fsmonitor/fsm-settings-win32.c: static enum fsmonitor_reason check_vfs4gi
-      + * Check if monitoring remote working directories is allowed.
-      + *
-      + * By default, monitoring remote working directories is
-     -+ * disabled unless on a network filesystem that is known to
-     -+ * behave well.  Users may override this behavior in enviroments where
-     ++ * disabled.  Users may override this behavior in enviroments where
-      + * they have proper support.
-      + */
-      +static int check_config_allowremote(struct repository *r)
-     @@ compat/fsmonitor/fsm-settings-win32.c: static enum fsmonitor_reason check_vfs4gi
-      + *
-      + * Error if client machine cannot get remote protocol information.
-      + */
-     -+static void check_remote_protocol(wchar_t *wpath)
-     ++static int check_remote_protocol(wchar_t *wpath)
-      +{
-      +	HANDLE h;
-      +	FILE_REMOTE_PROTOCOL_INFO proto_info;
-     @@ compat/fsmonitor/fsm-settings-win32.c: static enum fsmonitor_reason check_vfs4gi
-      +	if (h == INVALID_HANDLE_VALUE) {
-      +		error(_("[GLE %ld] unable to open for read '%ls'"),
-      +		      GetLastError(), wpath);
-     -+		return;
-     ++		return -1;
-      +	}
-      +
-      +	if (!GetFileInformationByHandleEx(h, FileRemoteProtocolInfo,
-     @@ compat/fsmonitor/fsm-settings-win32.c: static enum fsmonitor_reason check_vfs4gi
-      +		error(_("[GLE %ld] unable to get protocol information for '%ls'"),
-      +		      GetLastError(), wpath);
-      +		CloseHandle(h);
-     -+		return;
-     ++		return -1;
-      +	}
-      +
-      +	CloseHandle(h);
-     @@ compat/fsmonitor/fsm-settings-win32.c: static enum fsmonitor_reason check_vfs4gi
-      +				"check_remote_protocol('%ls') remote protocol %#8.8lx",
-      +				wpath, proto_info.Protocol);
-      +
-     -+	return;
-     ++	return 0;
-      +}
-      +
-       /*
-        * Remote working directories are problematic for FSMonitor.
-        *
-     +@@ compat/fsmonitor/fsm-settings-win32.c: static enum fsmonitor_reason check_vfs4git(struct repository *r)
-     +  */
-     + static enum fsmonitor_reason check_remote(struct repository *r)
-     + {
-     ++	int ret;
-     + 	wchar_t wpath[MAX_PATH];
-     + 	wchar_t wfullpath[MAX_PATH];
-     + 	size_t wlen;
-      @@ compat/fsmonitor/fsm-settings-win32.c: static enum fsmonitor_reason check_remote(struct repository *r)
-       		trace_printf_key(&trace_fsmonitor,
-       				 "check_remote('%s') true",
-       				 r->worktree);
-      +
-     -+		check_remote_protocol(wfullpath);
-     ++		ret = check_remote_protocol(wfullpath);
-     ++		if (ret < 0)
-     ++			return FSMONITOR_REASON_ERROR;
-      +
-      +		switch (check_config_allowremote(r)) {
-      +		case 0: /* config overrides and disables */
+Also, as previously announced, Git for Windows dropped support for
+Windows Vista.
 
+Around the beginning of 2023, Git for Windows will drop support for
+Windows 7 and for Windows 8, following Cygwin's and MSYS2's lead (Git
+for Windows relies on MSYS2 for components such as Bash and Perl).
 
- compat/fsmonitor/fsm-settings-win32.c | 68 +++++++++++++++++++++++++++
- 1 file changed, 68 insertions(+)
+New Features
 
-diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
-index 907655720bb..e5ec5b0a9f7 100644
---- a/compat/fsmonitor/fsm-settings-win32.c
-+++ b/compat/fsmonitor/fsm-settings-win32.c
-@@ -24,6 +24,59 @@ static enum fsmonitor_reason check_vfs4git(struct repository *r)
- 	return FSMONITOR_REASON_OK;
- }
- 
-+/*
-+ * Check if monitoring remote working directories is allowed.
-+ *
-+ * By default, monitoring remote working directories is
-+ * disabled.  Users may override this behavior in enviroments where
-+ * they have proper support.
-+ */
-+static int check_config_allowremote(struct repository *r)
-+{
-+	int allow;
-+
-+	if (!repo_config_get_bool(r, "fsmonitor.allowremote", &allow))
-+		return allow;
-+
-+	return -1; /* fsmonitor.allowremote not set */
-+}
-+
-+/*
-+ * Check remote working directory protocol.
-+ *
-+ * Error if client machine cannot get remote protocol information.
-+ */
-+static int check_remote_protocol(wchar_t *wpath)
-+{
-+	HANDLE h;
-+	FILE_REMOTE_PROTOCOL_INFO proto_info;
-+
-+	h = CreateFileW(wpath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
-+			FILE_FLAG_BACKUP_SEMANTICS, NULL);
-+
-+	if (h == INVALID_HANDLE_VALUE) {
-+		error(_("[GLE %ld] unable to open for read '%ls'"),
-+		      GetLastError(), wpath);
-+		return -1;
-+	}
-+
-+	if (!GetFileInformationByHandleEx(h, FileRemoteProtocolInfo,
-+		&proto_info, sizeof(proto_info))) {
-+		error(_("[GLE %ld] unable to get protocol information for '%ls'"),
-+		      GetLastError(), wpath);
-+		CloseHandle(h);
-+		return -1;
-+	}
-+
-+	CloseHandle(h);
-+
-+	trace_printf_key(&trace_fsmonitor,
-+				"check_remote_protocol('%ls') remote protocol %#8.8lx",
-+				wpath, proto_info.Protocol);
-+
-+	return 0;
-+}
-+
- /*
-  * Remote working directories are problematic for FSMonitor.
-  *
-@@ -76,6 +129,7 @@ static enum fsmonitor_reason check_vfs4git(struct repository *r)
-  */
- static enum fsmonitor_reason check_remote(struct repository *r)
- {
-+	int ret;
- 	wchar_t wpath[MAX_PATH];
- 	wchar_t wfullpath[MAX_PATH];
- 	size_t wlen;
-@@ -115,6 +169,20 @@ static enum fsmonitor_reason check_remote(struct repository *r)
- 		trace_printf_key(&trace_fsmonitor,
- 				 "check_remote('%s') true",
- 				 r->worktree);
-+
-+		ret = check_remote_protocol(wfullpath);
-+		if (ret < 0)
-+			return FSMONITOR_REASON_ERROR;
-+
-+		switch (check_config_allowremote(r)) {
-+		case 0: /* config overrides and disables */
-+			return FSMONITOR_REASON_REMOTE;
-+		case 1: /* config overrides and enables */
-+			return FSMONITOR_REASON_OK;
-+		default:
-+			break; /* config has no opinion */
-+		}
-+
- 		return FSMONITOR_REASON_REMOTE;
- 	}
- 
+  * Comes with Git v2.37.2.
+  * Comes with tig v2.5.6.
+  * Comes with Bash v5.1 patchlevel 016 .
+  * Comes with Perl v5.36.0.
+  * Git's executables are now marked Terminal Server-aware, meaning:
+    Git will be slightly faster when being run using Remote Desktop
+    Services.
+  * git svn is now based on subversion v1.14.2.
+  * Comes with GNU TLS v3.7.7.
 
-base-commit: c50926e1f48891e2671e1830dbcd2912a4563450
--- 
-gitgitgadget
+Bug Fixes
+
+  * Git for Windows now ships without the zmore and bzmore utilities
+    (which were broken and included only inadvertently).
+  * A regression in the vimdiff mode of git mergetool has been fixed.
+  * With certain network drives, it was reported that some attributes
+    associated with caching confused Git for Windows. This was fixed.
+
+Git-2.37.2.2-64-bit.exe | 6f91f1bb28b222f30c13f905a5e9b0ad491e67c28a37a238000def19f86e0a2f
+Git-2.37.2.2-32-bit.exe | 672569b7041024b1fdb5c29cc9a775658be78f7d3afea025973e07954f5070fa
+PortableGit-2.37.2.2-64-bit.7z.exe | 20d9b7e8e8b8b4f27d16420597772e19e7cb1f396b355473867942ed86d0d931
+PortableGit-2.37.2.2-32-bit.7z.exe | 36e24698b3cf5270d8276c80a1f7c14ff5d140ee2ac37e8e28a935d0a0ab3418
+MinGit-2.37.2.2-64-bit.zip | 12b7c2c8cb9db03fd8c81e618aab196a366d919b2dc0dcd5a062738a07960a05
+MinGit-2.37.2.2-32-bit.zip | d3bf1f155872cc431f3ebe898906d6b52988802ff7c3597d9bc16d0937f81209
+MinGit-2.37.2.2-busybox-64-bit.zip | 0a299ae5621ef69424d80b27b7a3b177f7299b124139d20afadfed9226648c47
+MinGit-2.37.2.2-busybox-32-bit.zip | 69cdd838c924eb4c989652191d77bd9a7ef069e4e059eced69cfeb1e92bfe343
+Git-2.37.2.2-64-bit.tar.bz2 | 96b564cfbd99e355e340e1ba5350674fa7c0a04b5390ccca078a1a37637eba6b
+Git-2.37.2.2-32-bit.tar.bz2 | 153defc4bed02814a772d473ae74a380e68a2377331ee8ad51ac6d21ed35cbbe
+
+Ciao,
+Johannes
