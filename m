@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B66CC00140
-	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 20:11:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63D21C25B0F
+	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 20:11:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235083AbiHLULB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Aug 2022 16:11:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37224 "EHLO
+        id S234710AbiHLULD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Aug 2022 16:11:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235476AbiHLUKg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Aug 2022 16:10:36 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C472DB1C7
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:10:30 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id z16so2233733wrh.12
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:10:30 -0700 (PDT)
+        with ESMTP id S234491AbiHLUKz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Aug 2022 16:10:55 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5CC210FDA
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:10:33 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id s11-20020a1cf20b000000b003a52a0945e8so1006844wmc.1
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 13:10:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=pj2xyvIUYdcDH2UsS/0PcbbfCcss9zcoh3OIoFN9ukY=;
-        b=gG1KVkd3Sdva0m5hvGfJLEFyzSZVAF+ipX/w+fjThLV/6yQOktH258t9WJZ7L3iTzd
-         txPaW30iW6Ld+s7OnpZzVxAG7N/KrZg692Oes76u5ypqvVVNcPVhWLmK4Yrit+tnQn6a
-         JSyAk0SfVyAXLfO+oMl7Tu5zt510zkcjI4/NszjP25dePRkNmU3wiD2HObLf6BiuRd0n
-         xBKA9du8MulEFDAxMkCcP+/nzD1m2gFpsDvnlKU1+vWRsHDxfXv7Qy11NLC7sYB2JCDs
-         rlhle6OkirLC+DP/cH0AenVwN/BPynzEbzZ46gP+o/ngUyzFkdNYnQGjYW399kASUo4O
-         qiRA==
+        bh=RhPe/2YGJzGbswB35npBDWGmS6OQlK0k/r1JD67kQvU=;
+        b=VZ8GLFKo65Lht6bc4OIAa6XfjjSijGV5BjsLU+uLFFOArGlVdUAHR06dqNR4aeF3LP
+         fVJhgS1mkseQWdNuoic9g3c6LQe5pi6o4PZr7LOO5PAEK6n9iQFAGDKRKO98EE1X9Cmo
+         uKfAVksIK4vXz8E2qMiG5wYsDxn0W2v7JtSxzUhfI6Qh7lQuQa9V1va7wLaUDjqJ3twm
+         3ujS9vI00GVaBkzJgyKb79SC9nDuyOEqUv7EjzMLVou55nPoHT3Q+BteoJ239SJPIwqK
+         gvhVBQyTOVIOPPd6WPr8HNCkU+DR2yO9+HVCWSw4FOTJXQjM3ZqCLc7YWbs8LFt1mchB
+         UbxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=pj2xyvIUYdcDH2UsS/0PcbbfCcss9zcoh3OIoFN9ukY=;
-        b=2fVnlHEmRIz2XKOuCyruddTpSezqBOuie19TsjU/cJelzU6HFkngDJWb70Jk4jdaAO
-         BDxEXPeEYwhvqDra+MZYBDDWnAiRhoqJ6ykxxYwNXEJjSeHum7sbJkVAGSQT1wUoQTvi
-         YqUlyM+stu5UN6URj3ewxDyPAgwb4SxSxkroWyalz67nHFMSRXeVBX4KsiISyE1JbCEV
-         xcP8vVtBNcm2Ji/pdzb/Ik55SuuYdPBM3HXHLySnH1cquMg1ob/LsYKE9nneQgu17bit
-         09Sj30hxvr+7UwT4M8IGXylmLNZV+Bbugp0hhCyeHLgasB154QvAu2X8vbwKpNMpoZBb
-         AlMA==
-X-Gm-Message-State: ACgBeo1TCEW8KY4uQD4uiYUghfjmZ4ZMKOsAa/hxaP6hHqsk1s8aR1Ww
-        hhSEi5OE5fzbxPfkLXdpjwmiTLt0w7c=
-X-Google-Smtp-Source: AA6agR7HQI4BL9/mSlTagcio+5Iiral4JVVPMedcneSmgAtJ3whKayEO+iqWV3/4f7tp6rgqdx1d+Q==
-X-Received: by 2002:a5d:5223:0:b0:21e:fc10:b818 with SMTP id i3-20020a5d5223000000b0021efc10b818mr2976554wra.676.1660335029016;
-        Fri, 12 Aug 2022 13:10:29 -0700 (PDT)
+        bh=RhPe/2YGJzGbswB35npBDWGmS6OQlK0k/r1JD67kQvU=;
+        b=MfDuqxvcA2UVY2wWqNBJ+SS2h2MR/+CoOLBqOXJTT5Uk6LaKLi8sIgvLK2dnNdkjHD
+         FVnGA/ALkm8meGfwADaK2V9RpXtoEJKrr3pjr7EnCGFMCe68NmZamQiSq6a10ctWSXUL
+         xda6cCufvPymVgADAYKQKwzTAJ7Tctcrqy0wNRX9r8wFOESlRVSCdVe4KIDGRlzq41Zi
+         iPsqa3OrghRWmwDRRHc27s451mGyuF/V5zYFtwcebClctF7HLXpqKikMz8BkGCd7TAmz
+         YXxIXBAn7ZDSjws4XCagF9ogS2O0eecStywvxIoL3i/JSZWXrVk+oYU0J/8lEDAW1Ey5
+         nnXg==
+X-Gm-Message-State: ACgBeo2Qb9+CW98Sz36jtsRGiVKHKecKb2qD3M95R9QBxmSE2pe+/86U
+        5s32BdhJ1A6P4Nvs7vXwnSe6h11raQM=
+X-Google-Smtp-Source: AA6agR77Dc5ZBTnlLs7yCzU3pbgJXmOuNEy+7E1jeCh7Ed0fhAlANz3CKDL6gArAnM6YWo5DokDiNg==
+X-Received: by 2002:a05:600c:34c9:b0:3a3:74a1:2754 with SMTP id d9-20020a05600c34c900b003a374a12754mr9892240wmq.35.1660335031914;
+        Fri, 12 Aug 2022 13:10:31 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j36-20020a05600c1c2400b003a4c6e67f01sm594523wms.6.2022.08.12.13.10.28
+        by smtp.gmail.com with ESMTPSA id s14-20020adfeb0e000000b0021d6d18a9f8sm279650wrn.76.2022.08.12.13.10.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Aug 2022 13:10:28 -0700 (PDT)
-Message-Id: <82be069e5e965c7193f15bb38ef523dc4b7b3592.1660335019.git.gitgitgadget@gmail.com>
+        Fri, 12 Aug 2022 13:10:31 -0700 (PDT)
+Message-Id: <728f8b81fd09a3d46f87d98a6eac38c46765d688.1660335019.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1310.v4.git.1660335019.gitgitgadget@gmail.com>
 References: <pull.1310.v3.git.1660174473.gitgitgadget@gmail.com>
         <pull.1310.v4.git.1660335019.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 12 Aug 2022 20:10:16 +0000
-Subject: [PATCH v4 08/11] builtin/diagnose.c: add '--mode' option
+Date:   Fri, 12 Aug 2022 20:10:19 +0000
+Subject: [PATCH v4 11/11] scalar: update technical doc roadmap
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,218 +69,40 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Create '--mode=<mode>' option in 'git diagnose' to allow users to optionally
-select non-default diagnostic information to include in the output archive.
-Additionally, document the currently-available modes, emphasizing the
-importance of not sharing a '--mode=all' archive publicly due to the
-presence of sensitive information.
+Update the Scalar roadmap to reflect the completion of generalizing 'scalar
+diagnose' into 'git diagnose' and 'git bugreport --diagnose'.
 
-Note that the option parsing callback - 'option_parse_diagnose()' - is added
-to 'diagnose.c' rather than 'builtin/diagnose.c' so that it may be reused in
-future callers configuring a diagnostics archive.
-
-Helped-by: Derrick Stolee <derrickstolee@github.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- Documentation/git-diagnose.txt | 17 ++++++++++++++++-
- builtin/diagnose.c             |  8 ++++++--
- diagnose.c                     | 30 ++++++++++++++++++++++++++++++
- diagnose.h                     |  3 +++
- t/t0092-diagnose.sh            | 30 +++++++++++++++++++++++++++++-
- 5 files changed, 84 insertions(+), 4 deletions(-)
+ Documentation/technical/scalar.txt | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-diagnose.txt b/Documentation/git-diagnose.txt
-index ce07dd0725d..3ec8cc7ad72 100644
---- a/Documentation/git-diagnose.txt
-+++ b/Documentation/git-diagnose.txt
-@@ -9,6 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git diagnose' [(-o | --output-directory) <path>] [(-s | --suffix) <format>]
-+	       [--mode=<mode>]
+diff --git a/Documentation/technical/scalar.txt b/Documentation/technical/scalar.txt
+index 08bc09c225a..f6353375f08 100644
+--- a/Documentation/technical/scalar.txt
++++ b/Documentation/technical/scalar.txt
+@@ -84,6 +84,9 @@ series have been accepted:
  
- DESCRIPTION
- -----------
-@@ -17,7 +18,7 @@ repository state and packages that information into a zip archive. The
- generated archive can then, for example, be shared with the Git mailing list to
- help debug an issue or serve as a reference for independent debugging.
+ - `scalar-diagnose`: The `scalar` command is taught the `diagnose` subcommand.
  
--The following information is captured in the archive:
-+By default, the following information is captured in the archive:
++- `scalar-generalize-diagnose`: Move the functionality of `scalar diagnose`
++  into `git diagnose` and `git bugreport --diagnose`.
++
+ Roughly speaking (and subject to change), the following series are needed to
+ "finish" this initial version of Scalar:
  
-   * 'git version --build-options'
-   * The path to the repository root
-@@ -27,6 +28,9 @@ The following information is captured in the archive:
-   * The total count of loose objects, as well as counts broken down by
-     `.git/objects` subdirectory
+@@ -91,12 +94,6 @@ Roughly speaking (and subject to change), the following series are needed to
+   and implement `scalar help`. At the end of this series, Scalar should be
+   feature-complete from the perspective of a user.
  
-+Additional information can be collected by selecting a different diagnostic mode
-+using the `--mode` option.
-+
- This tool differs from linkgit:git-bugreport[1] in that it collects much more
- detailed information with a greater focus on reporting the size and data shape
- of repository contents.
-@@ -45,6 +49,17 @@ OPTIONS
- 	form of a strftime(3) format string; the current local time will be
- 	used.
- 
-+--mode=(stats|all)::
-+	Specify the type of diagnostics that should be collected. The default behavior
-+	of 'git diagnose' is equivalent to `--mode=stats`.
-++
-+The `--mode=all` option collects everything included in `--mode=stats`, as well
-+as copies of `.git`, `.git/hooks`, `.git/info`, `.git/logs`, and
-+`.git/objects/info` directories. This additional information may be sensitive,
-+as it can be used to reconstruct the full contents of the diagnosed repository.
-+Users should exercise caution when sharing an archive generated with
-+`--mode=all`.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/diagnose.c b/builtin/diagnose.c
-index 832493bba65..cd260c20155 100644
---- a/builtin/diagnose.c
-+++ b/builtin/diagnose.c
-@@ -3,7 +3,7 @@
- #include "diagnose.h"
- 
- static const char * const diagnose_usage[] = {
--	N_("git diagnose [-o|--output-directory <path>] [-s|--suffix <format>]"),
-+	N_("git diagnose [-o|--output-directory <path>] [-s|--suffix <format>] [--mode=<mode>]"),
- 	NULL
- };
- 
-@@ -12,6 +12,7 @@ int cmd_diagnose(int argc, const char **argv, const char *prefix)
- 	struct strbuf zip_path = STRBUF_INIT;
- 	time_t now = time(NULL);
- 	struct tm tm;
-+	enum diagnose_mode mode = DIAGNOSE_STATS;
- 	char *option_output = NULL;
- 	char *option_suffix = "%Y-%m-%d-%H%M";
- 	char *prefixed_filename;
-@@ -21,6 +22,9 @@ int cmd_diagnose(int argc, const char **argv, const char *prefix)
- 			   N_("specify a destination for the diagnostics archive")),
- 		OPT_STRING('s', "suffix", &option_suffix, N_("format"),
- 			   N_("specify a strftime format suffix for the filename")),
-+		OPT_CALLBACK_F(0, "mode", &mode, N_("(stats|all)"),
-+			       N_("specify the content of the diagnostic archive"),
-+			       PARSE_OPT_NONEG, option_parse_diagnose),
- 		OPT_END()
- 	};
- 
-@@ -47,7 +51,7 @@ int cmd_diagnose(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	/* Prepare diagnostics */
--	if (create_diagnostics_archive(&zip_path, DIAGNOSE_STATS))
-+	if (create_diagnostics_archive(&zip_path, mode))
- 		die_errno(_("unable to create diagnostics archive %s"),
- 			  zip_path.buf);
- 
-diff --git a/diagnose.c b/diagnose.c
-index 9270056db2f..beb0a8741ba 100644
---- a/diagnose.c
-+++ b/diagnose.c
-@@ -13,6 +13,36 @@ struct archive_dir {
- 	int recursive;
- };
- 
-+struct diagnose_option {
-+	enum diagnose_mode mode;
-+	const char *option_name;
-+};
-+
-+static struct diagnose_option diagnose_options[] = {
-+	{ DIAGNOSE_STATS, "stats" },
-+	{ DIAGNOSE_ALL, "all" },
-+};
-+
-+int option_parse_diagnose(const struct option *opt, const char *arg, int unset)
-+{
-+	int i;
-+	enum diagnose_mode *diagnose = opt->value;
-+
-+	if (!arg) {
-+		*diagnose = unset ? DIAGNOSE_NONE : DIAGNOSE_STATS;
-+		return 0;
-+	}
-+
-+	for (i = 0; i < ARRAY_SIZE(diagnose_options); i++) {
-+		if (!strcmp(arg, diagnose_options[i].option_name)) {
-+			*diagnose = diagnose_options[i].mode;
-+			return 0;
-+		}
-+	}
-+
-+	return error(_("invalid --%s value '%s'"), opt->long_name, arg);
-+}
-+
- static void dir_file_stats_objects(const char *full_path, size_t full_path_len,
- 				   const char *file_name, void *data)
- {
-diff --git a/diagnose.h b/diagnose.h
-index 998775857a0..7a4951a7863 100644
---- a/diagnose.h
-+++ b/diagnose.h
-@@ -2,6 +2,7 @@
- #define DIAGNOSE_H
- 
- #include "strbuf.h"
-+#include "parse-options.h"
- 
- enum diagnose_mode {
- 	DIAGNOSE_NONE,
-@@ -9,6 +10,8 @@ enum diagnose_mode {
- 	DIAGNOSE_ALL
- };
- 
-+int option_parse_diagnose(const struct option *opt, const char *arg, int unset);
-+
- int create_diagnostics_archive(struct strbuf *zip_path, enum diagnose_mode mode);
- 
- #endif /* DIAGNOSE_H */
-diff --git a/t/t0092-diagnose.sh b/t/t0092-diagnose.sh
-index b6923726fd7..fca9b58489c 100755
---- a/t/t0092-diagnose.sh
-+++ b/t/t0092-diagnose.sh
-@@ -26,7 +26,35 @@ test_expect_success UNZIP 'creates diagnostics zip archive' '
- 
- 	# Should not include .git directory contents by default
- 	! "$GIT_UNZIP" -l "$zip_path" | grep ".git/"
--	grep "^Total: [0-9][0-9]*" out
-+'
-+
-+test_expect_success UNZIP '--mode=stats excludes .git dir contents' '
-+	test_when_finished rm -rf report &&
-+
-+	git diagnose -o report -s test --mode=stats >out &&
-+
-+	# Includes pack quantity/size info
-+	"$GIT_UNZIP" -p "$zip_path" packs-local.txt >out &&
-+	grep ".git/objects" out &&
-+
-+	# Does not include .git directory contents
-+	! "$GIT_UNZIP" -l "$zip_path" | grep ".git/"
-+'
-+
-+test_expect_success UNZIP '--mode=all includes .git dir contents' '
-+	test_when_finished rm -rf report &&
-+
-+	git diagnose -o report -s test --mode=all >out &&
-+
-+	# Includes pack quantity/size info
-+	"$GIT_UNZIP" -p "$zip_path" packs-local.txt >out &&
-+	grep ".git/objects" out &&
-+
-+	# Includes .git directory contents
-+	"$GIT_UNZIP" -l "$zip_path" | grep ".git/" &&
-+
-+	"$GIT_UNZIP" -p "$zip_path" .git/HEAD >out &&
-+	test_file_not_empty out
- '
- 
- test_done
+-- Generalize features not specific to Scalar: In the spirit of making Scalar
+-  configure only what is needed for large repo performance, move common
+-  utilities into other parts of Git. Some of this will be internal-only, but one
+-  major change will be generalizing `scalar diagnose` for use with any Git
+-  repository.
+-
+ - Move Scalar to toplevel: Move Scalar out of `contrib/` and into the root of
+   `git`, including updates to build and install it with the rest of Git. This
+   change will incorporate Scalar into the Git CI and test framework, as well as
 -- 
 gitgitgadget
-
