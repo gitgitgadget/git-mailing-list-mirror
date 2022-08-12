@@ -2,107 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C39BC00140
-	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 14:44:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEF55C00140
+	for <git@archiver.kernel.org>; Fri, 12 Aug 2022 15:04:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235047AbiHLOoW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Aug 2022 10:44:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37338 "EHLO
+        id S238086AbiHLPE1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Aug 2022 11:04:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231698AbiHLOoV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Aug 2022 10:44:21 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6507AB418
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 07:44:19 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id f28so1145581pfk.1
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 07:44:19 -0700 (PDT)
+        with ESMTP id S232014AbiHLPEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Aug 2022 11:04:25 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40F5EA895A
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 08:04:24 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id a89so1677461edf.5
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 08:04:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc;
-        bh=6mwq9UFytambkBOPr/0FPGcyCVIPr9eOY2nzN6CaYcY=;
-        b=LRudb5zR0ER+FkN4Ejq7/2U9RTY8Zj9ATdFF82WLomLBI7a7R0kwSlZin7X8WBg8uw
-         vdZRXMSoJZkIjABuORpYwtqPDSiyaR+jo/sjKX+QJl8sbg/yqC/3G94WWpEc7qgZ0+PY
-         roJAgN2IPHA2re98X8iyZILfTUpefFs4rQE2iY0guqx/5/952GRi68LhimBYQEL2/J/l
-         iyEdF2VMnHfks6lmqDHT/Lktx6Ih4erla9AIYRyWmG9tIZxe+FJpmrCFs1JWSKwvX/9+
-         IPoQy1x684Yk1hB/WTdmj7ehZm5ZhvbhN35+yviCPTzaO37A5wu2SHMbPYEWWLon6ocu
-         9jtQ==
+        bh=8DrxiMSa+FK9X51gEETLmqBMRdSqHPin/1x7WpCjw6Q=;
+        b=qY4jvKzMpVDoCZwFTiWVLDL3TWIarNck/oZrkaGzpumqawZm6HEZZHeLmphgOzB6xo
+         hRVYGiRmokm30Azm7Ux2bF0suUKV+8CbBHDn3LrvldZpka0yDo6A8fd/imeFGB8fSgpL
+         uAvfGFO8+gT7IRlLnk5LxNpI30/GNxWVePguX87hpon2E2s38r/VgvNyDMUXrVGCKvvN
+         ZsUql8tPs42WOiIKgxCFTYVdGVOCjbY0w5/DkmUskDrQuxnkuBBNCXa+tlEdC1eXAcoI
+         485zMlJvTz1PjTd4gJv8F+zrEIvOFJBCD0ui/nbKUjivo3BIoDjMpWSWRoXggHhJMAwG
+         yOTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc;
-        bh=6mwq9UFytambkBOPr/0FPGcyCVIPr9eOY2nzN6CaYcY=;
-        b=qrwvqf+uCbT3F6YQy7Bl8uW++mtPK1KWDERvX0vx/7Gq86bc75T1iuvlVbBswevZkm
-         WlVOjZm6tlMmBHbMjmx+4twYhygkPvsesVtipBd6GeAe6zn9mullo5f8HCMPKEsnGef0
-         MMmczj4f9r9zVLU/zgEuLc0BcNOZUet8oQcrZZ3IrG890KDnHe5qrXLueWWa2vvzFGLQ
-         nlWX/CuTWnRHDtwpVnGxp9hBCFxO+g8gzFs0QhCqQl7MkdyqWkDalzC2LOhW989Fkt+v
-         bZBryhzHIP3CZCO8AkZrGk4sy2Ci8yBVk4RR+esDPuFuz+AwXZh5FbVLKv9bbKl3krSb
-         p9pg==
-X-Gm-Message-State: ACgBeo34uyzy9neQUHf0CBxntthltK/P4EzThWqWA50x6c85LJLOpTxS
-        g2Yd7l3WStj2TyE48v2SdG24BlTGBbY=
-X-Google-Smtp-Source: AA6agR48d2kwDGDnvPQkV/ZoWh8s/hNNEqAI6fqzgcylsvazgSaD4LeTsKoEpd25LdcH86XEODnRFg==
-X-Received: by 2002:a65:6290:0:b0:422:4a8f:c687 with SMTP id f16-20020a656290000000b004224a8fc687mr1895999pgv.57.1660315459089;
-        Fri, 12 Aug 2022 07:44:19 -0700 (PDT)
-Received: from localhost ([113.172.46.62])
-        by smtp.gmail.com with ESMTPSA id u6-20020a170902e5c600b0016d5626af4fsm1887844plf.21.2022.08.12.07.44.18
+        bh=8DrxiMSa+FK9X51gEETLmqBMRdSqHPin/1x7WpCjw6Q=;
+        b=3gPyWAs0kDKqMeD/6xfFczdJG5+Pvh6PwgrpxExtw+J1oFPOUFmvioFHNAD4Anlw3v
+         P3chHQ3HGudehbAvo5KNqgXc3AR3PDEBUEVHvPMC9U72hC48oMCcmR0odQFVttam1Hjt
+         F69inguCqCCVjhp4QNAJHpRDJaM2tzbCpuFUvjkSxoL1GmJDzpiq42/wCdn5vTGPQZ5Q
+         prAEYILmXrPmpswPo24ace5TYDNHn6wPF4C8pqTIEqJi67HcxjxmfZNdJTHYBahrHR7T
+         UodBLGfMDgOj35U24QsCr1v4qg5jLCZA0Wz6ULXwOxPEq3zJ78So97plHCmHm545PcN/
+         cFFg==
+X-Gm-Message-State: ACgBeo2kW8Mppm4NVS0PBpnBZzB3/5rL067+KTMFY0R0s/w4gi3YChxx
+        M/KpXk+IFv2GK3wtviWjXII=
+X-Google-Smtp-Source: AA6agR6jf2v3CB4Tvjrc4uh8mCkcDrp9wEeG8immda/zUFMXAdIUHP2X2ojE5j98rWX8YIVzNm1T7A==
+X-Received: by 2002:a05:6402:2d1:b0:43c:bb20:71bf with SMTP id b17-20020a05640202d100b0043cbb2071bfmr3961325edx.59.1660316662867;
+        Fri, 12 Aug 2022 08:04:22 -0700 (PDT)
+Received: from localhost (94-21-58-102.pool.digikabel.hu. [94.21.58.102])
+        by smtp.gmail.com with ESMTPSA id x23-20020aa7dad7000000b0043a85d7d15esm1448421eds.12.2022.08.12.08.04.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Aug 2022 07:44:18 -0700 (PDT)
-Date:   Fri, 12 Aug 2022 21:44:16 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Renato Botelho <garga@freebsd.org>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git maintenance broken on FreeBSD
-Message-ID: <YvZnQFVMZZmz9TIX@danh.dev>
-References: <226317ba-a78f-216c-764c-52f4e393bd35@FreeBSD.org>
+        Fri, 12 Aug 2022 08:04:22 -0700 (PDT)
+Date:   Fri, 12 Aug 2022 17:04:20 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 04/20] t0040-parse-options: test parse_options() with
+ various 'parse_opt_flags'
+Message-ID: <20220812150420.GA3790@szeder.dev>
+References: <20220725123857.2773963-1-szeder.dev@gmail.com>
+ <20220725123857.2773963-5-szeder.dev@gmail.com>
+ <220725.86edy9p85i.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <226317ba-a78f-216c-764c-52f4e393bd35@FreeBSD.org>
+In-Reply-To: <220725.86edy9p85i.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-08-12 10:51:03-0300, Renato Botelho <garga@FreeBSD.org> wrote:
-> As reported at [1], git maintenance is not working on FreeBSD.  I didn't
-> find the time to dig into it but it seems like it's calling crontab using
-> parameters not supported on FreeBSD.
+On Mon, Jul 25, 2022 at 04:38:48PM +0200, Ævar Arnfjörð Bjarmason wrote:
 > 
-> [1] https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=260746
+> On Mon, Jul 25 2022, SZEDER Gábor wrote:
+> 
+> > In 't0040-parse-options.sh' we thoroughly test the parsing of all
+> > types and forms of options, but in all those tests parse_options() is
+> > always invoked with a 0 flags parameter.
+> >
+> > Add a few tests to demonstrate how various 'enum parse_opt_flags'
+> > values are supposed to influence option parsing.
+> >
+> > Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> > ---
+> >  t/helper/test-parse-options.c | 61 ++++++++++++++++++++++++++++++
+> >  t/helper/test-tool.c          |  1 +
+> >  t/helper/test-tool.h          |  1 +
+> >  t/t0040-parse-options.sh      | 70 +++++++++++++++++++++++++++++++++++
+> >  4 files changed, 133 insertions(+)
+> >
+> > diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
+> > index 48d3cf6692..32b906bd6a 100644
+> > --- a/t/helper/test-parse-options.c
+> > +++ b/t/helper/test-parse-options.c
+> > @@ -192,3 +192,64 @@ int cmd__parse_options(int argc, const char **argv)
+> >  
+> >  	return ret;
+> >  }
+> > +
+> > +static int parse_options_flags__cmd(int argc, const char **argv,
+> > +				    enum parse_opt_flags test_flags)
+> > +{
+> > +	const char *usage[] = {
+> > +		"<...> cmd [options]",
+> > +		NULL
+> > +	};
+> > +	int opt = 0;
+> > +	const struct option options[] = {
+> > +		OPT_INTEGER('o', "opt", &opt, "an integer option"),
+> > +		OPT_END()
+> > +	};
+> > +
+> > +	argc = parse_options(argc, argv, NULL, options, usage, test_flags);
+> > +
+> > +	printf("opt: %d\n", opt);
+> > +	for (int i = 0; i < argc; i++)
+> > +		printf("arg %02d: %s\n", i, argv[i]);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static enum parse_opt_flags test_flags = 0;
+> > +static const struct option test_flag_options[] = {
+> > +	OPT_GROUP("flag-options:"),
+> > +	OPT_BIT(0, "keep-dashdash", &test_flags,
+> > +		"pass PARSE_OPT_KEEP_DASHDASH to parse_options()",
+> > +		PARSE_OPT_KEEP_DASHDASH),
+> > +	OPT_BIT(0, "stop-at-non-option", &test_flags,
+> > +		"pass PARSE_OPT_STOP_AT_NON_OPTION to parse_options()",
+> > +		PARSE_OPT_STOP_AT_NON_OPTION),
+> > +	OPT_BIT(0, "keep-argv0", &test_flags,
+> > +		"pass PARSE_OPT_KEEP_ARGV0 to parse_options()",
+> > +		PARSE_OPT_KEEP_ARGV0),
+> > +	OPT_BIT(0, "keep-unknown", &test_flags,
+> > +		"pass PARSE_OPT_KEEP_UNKNOWN to parse_options()",
+> > +		PARSE_OPT_KEEP_UNKNOWN),
+> > +	OPT_BIT(0, "no-internal-help", &test_flags,
+> > +		"pass PARSE_OPT_NO_INTERNAL_HELP to parse_options()",
+> > +		PARSE_OPT_NO_INTERNAL_HELP),
+> > +	OPT_END()
+> > +};
+> > +
+> > +int cmd__parse_options_flags(int argc, const char **argv)
+> > +{
+> > +	const char *usage[] = {
+> > +		"test-tool parse-options-flags [flag-options] cmd [options]",
+> > +		NULL
+> > +	};
+> > +
+> > +	argc = parse_options(argc, argv, NULL, test_flag_options, usage,
+> > +			     PARSE_OPT_STOP_AT_NON_OPTION);
+> > +
+> > +	if (argc == 0 || strcmp(argv[0], "cmd")) {
+> > +		error("'cmd' is mandatory");
+> > +		usage_with_options(usage, test_flag_options);
+> > +	}
+> > +
+> > +	return parse_options_flags__cmd(argc, argv, test_flags);
+> > +}
+> > diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+> > index 318fdbab0c..6e62282b60 100644
+> > --- a/t/helper/test-tool.c
+> > +++ b/t/helper/test-tool.c
+> > @@ -51,6 +51,7 @@ static struct test_cmd cmds[] = {
+> >  	{ "online-cpus", cmd__online_cpus },
+> >  	{ "pack-mtimes", cmd__pack_mtimes },
+> >  	{ "parse-options", cmd__parse_options },
+> > +	{ "parse-options-flags", cmd__parse_options_flags },
+> >  	{ "parse-pathspec-file", cmd__parse_pathspec_file },
+> >  	{ "partial-clone", cmd__partial_clone },
+> >  	{ "path-utils", cmd__path_utils },
+> 
+> I wanted to add some new parse_options() code to
+> t/helper/test-parse-options.c in the past, but was stymied by its
+> cmd_*() going through a singular parse_options().
+> 
+> So just creating a new callback is a neat solution.
+> 
+> But wouldn't it be better to just create a new
+> t/helper/test-parse-options-something-.c & test file? It seems this
+> doesn't really share anything with the current helper & tests...
 
-It seems like FreeBSD's cron is vixie-cron which requires <file>
-passed to crontab(1).
+Well, at least they share the concept, as they all test parse-options.
+And 'parse-options-flags' and 'parse-subcommands' do share the options
+array to specify the various parse_opt_flags.
 
-     The crontab command conforms to IEEE Std 1003.2 (“POSIX.2”) with the
-     exception that the dangerous variant of calling crontab without a file
-     name in the first form of the command is not allowed by this
-     implementation.  The pseudo-filename ‘-’ must be specified to read from
-     standard input.  The new command syntax differs from previous versions of
-     Vixie Cron, as well as from the classic SVR3 syntax.
+A new test script for these flags and/or for subcommands would
+definitely be worse, IMO.  I've found it very convenient that whenever
+I updated 'parse-options.{c,h}', I only needed to run a single
+'./t0040-parse-options.sh' script to check my changes.
 
-I think other crontab implementation also accept "-" as filename for stdin.
-At least cronie, fcron, dcron, and busybox's crontab both supports "-" as stdin.
-
-I think this patch can fix FreeBSD's problem:
-
----- 8< -----
-diff --git a/builtin/gc.c b/builtin/gc.c
-index eeff2b760e..45d908def3 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -2087,6 +2087,7 @@ static int crontab_update_schedule(int run_maintenance, int fd)
- 	rewind(cron_list);
- 
- 	strvec_split(&crontab_edit.args, cmd);
-+	strvec_push(&crontab_edit.args, "-");
- 	crontab_edit.in = -1;
- 	crontab_edit.git_cmd = 0;
- 
----- 8< ---------
-
-
--- 
-Danh
