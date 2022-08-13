@@ -2,85 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC21EC19F2D
-	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 10:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32A13C19F2D
+	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 10:59:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239180AbiHMKP5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Aug 2022 06:15:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35522 "EHLO
+        id S231848AbiHMK7t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Aug 2022 06:59:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229719AbiHMKPz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Aug 2022 06:15:55 -0400
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F22D011836
-        for <git@vger.kernel.org>; Sat, 13 Aug 2022 03:15:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1660385754; x=1691921754;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=6TpTlOuFmzFUPGTE2j0XAdx5OzagIeW5D9CxltnMj9E=;
-  b=J/ZmuaoX3SZ+QsmUAOv4jjhAql2SpW2ID9jGRrZxSO9C53st2nj1g0hR
-   ke7Uvcta3vZEBds/OMyKwUF+IK/1pIlWkUwpb+nsGdz32avLCbdjRBkhd
-   rIXMl4xHSl5HfIPeZzHk1jbXOYBUWLZAaa1Hs94/dFMipE9bZB8IKGH5H
-   6yrG5Ne7CQ0Ws6JKvWgBK4Cd1g5EC82LjcgR9hehw1uKsLfBDvc4/R9cu
-   9J/Fls8+lJ70QPKQS82n8w9Bfof2BHC1fa1C1VmF6d7AHfEfnCNpg3k+X
-   b1JYqdl9V9KcEJzPc4yn12T0O3znparwQBr1LPQtRmdMfXhhWFiKOTZtr
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10437"; a="291742556"
-X-IronPort-AV: E=Sophos;i="5.93,233,1654585200"; 
-   d="scan'208";a="291742556"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2022 03:15:54 -0700
-X-IronPort-AV: E=Sophos;i="5.93,233,1654585200"; 
-   d="scan'208";a="666121492"
-Received: from leiwang7-mobl.ccr.corp.intel.com (HELO [10.254.213.221]) ([10.254.213.221])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2022 03:15:53 -0700
-Message-ID: <27fe218d-886d-2c26-e436-104acd2b9bf6@intel.com>
-Date:   Sat, 13 Aug 2022 18:15:51 +0800
+        with ESMTP id S229719AbiHMK7q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Aug 2022 06:59:46 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F88966A68
+        for <git@vger.kernel.org>; Sat, 13 Aug 2022 03:59:45 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id tl27so5889404ejc.1
+        for <git@vger.kernel.org>; Sat, 13 Aug 2022 03:59:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=oAame8GWQUl4qHzOmY3rB7qsPnGHAUnMw69bGSymlAY=;
+        b=kZ4eGRsv1h5Ew0cwa6KacY/6pEmp1WosKgW8Fkx0FAR7Mj7w5FMh9Gc6aK/Kxbv2sr
+         2ZfeCgEPI7fE8oxlXrjx4R3aiMjvIX1NZrkLzrPmAri1HVJUhwfXHmE6Tkvfi8zuGDge
+         3MiJ/9PwmQKv5UsCINtNDLUnOrFZ4IKRmzLRVlkqhACqVWxscOCBF2iF+d5Wff/39s3U
+         sy1wpppMdfrX/LMrzKF3ed8mYMLPx7JPHh+AbYZNdVikBt+vBSlw8e9gdAx25Y8wesYd
+         4axISr8UOIBMKa2t55J19XGbDkfapl72MMeQyJLPK4l6JKB4wfG+nHWRrBhjuIC6GZA+
+         erdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=oAame8GWQUl4qHzOmY3rB7qsPnGHAUnMw69bGSymlAY=;
+        b=3VFGV5NENzAT8w1F7D83ZHPOLZZzEbAEUELRyFN4EI9JKGXqj/iaM4uELAbxQ2yc4b
+         hhDrVe2klJ1QBdomQ+aU+ZuYOEZjM71F0qTXT1zZN7fBXLpd5WPUGeWk1B/kc1xRfocD
+         4xmtGQ4AoWlxz7pWXG7DdcqgrFz7WLyaiKfW8EJ6assCwfjWm8JkB8qsvW12TRSu7hb/
+         Fylkqy9wAsr9ngH+XzlI5DxQbPGw4fB3egspdU88HWV32bSx7Ix07KFXdQws3QiVwlkg
+         il4oBENddCiVdnN6ul0cjqPwPOeKMqSZaVVqs2ejv+GUp/phW8uLjNxavkIzlF4tWX5o
+         bMbw==
+X-Gm-Message-State: ACgBeo3kSOZc5nNmDbMxhusiXWD124YmzToZCaD3tDZBqwjkw1vj309P
+        sKPW32irLgVmj999xbabgt+Ffgc5Es2JSke0eHI=
+X-Google-Smtp-Source: AA6agR5hyiL3CbM7oUUC93+ureTS1BskCXViGigLsLwk58muaILtkEELj5rHH2RiFrGJbdHf3blIPsrNrKuYy2r6Mbs=
+X-Received: by 2002:a17:907:c0e:b0:731:614:e507 with SMTP id
+ ga14-20020a1709070c0e00b007310614e507mr5245973ejc.529.1660388383422; Sat, 13
+ Aug 2022 03:59:43 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Firefox/91.0 Thunderbird/91.12.0
-Subject: Re: [Question]: Does "git log" involve some stochastic operations?
-Content-Language: en-US
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-References: <20d7c54f-7438-1124-7a9e-fdc902a4cc18@intel.com>
- <CAPx1GveLZm0NH7hBqRSKHJMXttT8Wwnqm3ebjUEpbEXNwh+61w@mail.gmail.com>
-From:   "Wang, Lei" <lei4.wang@intel.com>
-In-Reply-To: <CAPx1GveLZm0NH7hBqRSKHJMXttT8Wwnqm3ebjUEpbEXNwh+61w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.1266.v4.git.1658325913.gitgitgadget@gmail.com>
+ <pull.1266.v5.git.1658342304.gitgitgadget@gmail.com> <59b465e5a7817c145172f25e73ad807c7ba67e84.1658342304.git.gitgitgadget@gmail.com>
+ <p3r70610-8n52-s8q0-n641-onp4ps01330n@tzk.qr> <CAPOJW5xBUaAJtOvrefwbXv_WDTLa=6PTL5kEoOpRQfqqFAx3oA@mail.gmail.com>
+ <6s4n3600-q5p7-92sr-4206-non3s8rr3n46@tzk.qr> <CAPOJW5yUi471cfAXuXaM4BCzVsfZ15J1Era4NuEpxEnmY6md9Q@mail.gmail.com>
+ <p69r38sn-1ppn-q66q-9089-59394pq78772@tzk.qr> <CAPOJW5zYndyqwyN8xOcRQnwebqXciY-25hNL3fU=V5ac8fCpNA@mail.gmail.com>
+ <s714sq49-o13q-5417-0o21-6397s3646q9o@tzk.qr> <CAPOJW5yNQvO3quG91jjC9pT-+NNhJta+H_E2R9-1wUzR+rPXnw@mail.gmail.com>
+ <68r08n47-9o07-351s-710q-786q69429q86@tzk.qr> <4rs1s351-73np-4sq8-p6o8-r7178rp0p0n0@tzk.qr>
+ <CAPOJW5w2NYbRkFOaqrNYVFkp5ud=aAxhGGV6gpdDPwnyx5TAVw@mail.gmail.com>
+ <805fb0df-45ab-7edd-8787-662b84201e2b@github.com> <CAPOJW5x0coFREUPjFbF_zzQYbfEjOrL-j-G4N7MBUN4N6uS2jw@mail.gmail.com>
+ <179c0d30-ccb1-36cf-f783-814c9c8d84c2@github.com>
+In-Reply-To: <179c0d30-ccb1-36cf-f783-814c9c8d84c2@github.com>
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Date:   Sat, 13 Aug 2022 16:29:32 +0530
+Message-ID: <CAPOJW5z99b0_NGBYDbZUvmzbWECJKxGvB4RffoPJYszfFB0cEg@mail.gmail.com>
+Subject: Re: [PATCH v5 3/6] pack-bitmap-write: learn pack.writeBitmapLookupTable
+ and add tests
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Abhradeep Chakraborty via GitGitGadget 
+        <gitgitgadget@gmail.com>, git <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wonderful! That make sense that each time I do the calculation, the 
-result will be slightly different.
-
-BR,
-Lei
-
-On 8/13/2022 10:35 AM, Chris Torek wrote:
-> On Fri, Aug 12, 2022 at 7:11 PM Wang, Lei <lei4.wang@intel.com> wrote:
->>   > git log --numstat --since="2022-06-01" --until="2022-06-21"
->> --no-merges --format=%n%n%s%n%H%n%cs%n%an\<%ae
->>
->> The number of the commits in the output is slightly different. I didn't
->> do any sync operation in the repo, so the only reason I can found is
->> that maybe git log involves some stochastic operations, so each time the
->> output will be a little changed. Is my assumption right?
-> The `--since` and `--until` date values use the *current time* if you do
-> not specify an exact time.  For instance, "yesterday" means "precisely
-> 24 hours ago" (86400 seconds ago), and "--since 2022-06-01" means
-> "since 1 June 2022 at whatever time of day it is right now".  If you want
-> commits with timestamps that are since *midnight* on that day, include
-> the midnight part in the date.
+On Sat, Aug 13, 2022 at 12:52 AM Derrick Stolee
+<derrickstolee@github.com> wrote:
 >
-> (This is probably a UX bug, of sorts: to mean "at now-oclock on a given
-> date" we should probably have a syntax like "2022-06-21:(now)" and
-> when a specific date is given, the default should be midnight for "since"
-> and 23:59:59 for "until", or 23:59:60 if that's a leap-second date.  But
-> changing this is probably not in the cards.)
+> So really, the problem is that we are handling the r->objects->packed_git
+> list instead of an array of packs that are under the control of the new
+> midx. This assumption is baked deep in the pack-objects flow, so it
+> would be hard to separate this idea.
 >
-> Chris
+> Perhaps doing the reprepare_packed_git() to regenerate the list would be
+> sufficient as a band-aid for now, but we would want to later do the big
+> dig of focusing the pack_data struct to a specific list of pack-files
+> (by default the set from get_all_packs(), but for midx bitmaps we can
+> supply a specific set of packs).
+
+`reprepare_packed_git()` can not stop it. Because this function
+updates `r->objects->packed_git` list (i.e. it reloads packs that are
+not in the old midx) and as I said before, we are setting `->index`
+for only r->objects->packed_git not ctx.info[id].p. So, it will call
+the `oe_map_new_pack()` function in either way.  I have tested it.
+
+One thing that really worries me is what if the failure is not related
+to calling `oe_map_new_pack()? I did all my work assuming that this
+function is the culprit. But I don't know if it is.
