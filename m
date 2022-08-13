@@ -2,74 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDC43C00140
-	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 02:57:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3EAAC00140
+	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 03:16:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234474AbiHMC5z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Aug 2022 22:57:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52338 "EHLO
+        id S234639AbiHMDQK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Aug 2022 23:16:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229719AbiHMC5w (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Aug 2022 22:57:52 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DCF79DB6A
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 19:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660359468;
-        bh=r/K7nDIWRTzsj0nb6YrIo2IhUxUZSqmydNoVs06RMI8=;
-        h=X-UI-Sender-Class:From:Subject:Date:To;
-        b=RAmjTtThZsBKjLOpg4ejYqXNdIwerttThcZFcG5SUUYzSQJordTHeGcTQ9asUOH2J
-         +0kEyhoshp0j+2ITir8Sb3X1Lwlv1lGUdJf4CqN++9q9hzFVuGVF4Ijk/iFcKWwXxS
-         7eq1E3RZE+aMCzYXClsDMmTmGPWfwVyl9Di5wSgs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from ston-dhcp-160-32-100-48.bloombb.net ([160.32.100.48]) by
- mail.gmx.net (mrgmx104 [212.227.17.174]) with ESMTPSA (Nemesis) id
- 1MOA3F-1o2gSI3aiv-00OZW4 for <git@vger.kernel.org>; Sat, 13 Aug 2022 04:57:48
- +0200
-From:   Ryan <rmrmail@gmx.com>
-Content-Type: text/plain;
-        charset=utf-8
+        with ESMTP id S229760AbiHMDQH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Aug 2022 23:16:07 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56A10186C3
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 20:16:04 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id z20so3353868edb.9
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 20:16:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc;
+        bh=XeGnfRu6VA0Vtb3Uha0DNnOyaFsP8pQquz3WQ2moiLM=;
+        b=Xdpl+0W5E06XeEH6vBfB82RU0Xa/iCwLUL7G9d0jgnfgo0tEumU+VXrY+nVqyaJZ9x
+         Cgv8b0XylJwEiLeDUMLIg9XOk/jHirShAM3+RBfTAGtgVnizaAK0Ujdn9lY1HSL69w15
+         fuijiKuvjKqo6juLQw02smtkilZKPYmPzjQIijaQHRyIfCPWhOHcRlADAHp71hUsVl4i
+         AK2G98rAsgmzpniV/BOzxTVM15I4DDJ2dMwE4QBPBvZ2hgn64J1s9OAcU1hHR7CmguU/
+         YSPvHpp3KK0bQncJa8cK+XpuxP02efhqBH3T3vZyxE5RmICDYZTNwyDmmPccTiq6ViX0
+         zWPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
+        bh=XeGnfRu6VA0Vtb3Uha0DNnOyaFsP8pQquz3WQ2moiLM=;
+        b=DpKYv+66arZmOpTiK16JqW4xEWna7FLCMTcM/AdNfBT5Kl8H1m1DrzZQQErB5SJML/
+         awIc/7v7nXwtEy8XkKiTj+FEUFyD/WbiVGkiE4DmNwI3GdTSjvQ1tjLeF8i76v4/CXyf
+         7Q1fBunKwU7koMcGG6h7bb6byB71hb4IBztjfx6g0ib7wrqznL98WrXXfpJsZ+9gVUAW
+         kKOBCSr1chHF+OqpgS3W2zLy5otT2ZEnlqm+0ViXW6xnB+0ztXBN6FKRHdn9w/EmIGIC
+         2jmyijtzrKb6K+AkTkySSjRuLVXOW67gT4V3yQrG6hmVdM2dkybnM2LngINvCavKiSY4
+         DoWQ==
+X-Gm-Message-State: ACgBeo3UF+wqE6qOYroyk85oApWjvFwYMJOMlACIiUEiznLUfYPCZOg3
+        0fEPK8JWiTnzx+EvQb8KszA+2BPoLsUgBMWfnXjw/CyqlxM=
+X-Google-Smtp-Source: AA6agR6DVYcRmB83C8vSWjnZsffGFbYj2Y4i5M4hBhuaKHaSP9u3Iq7NK8eA45xZaPfPtkcLS0O4KuxoqEBWxwyrets=
+X-Received: by 2002:a05:6402:4301:b0:43e:4d31:6ec0 with SMTP id
+ m1-20020a056402430100b0043e4d316ec0mr6038194edc.69.1660360562713; Fri, 12 Aug
+ 2022 20:16:02 -0700 (PDT)
+MIME-Version: 1.0
+References: <6896FBE4-9160-4969-8969-D92F9FE19F14@gmx.com>
+In-Reply-To: <6896FBE4-9160-4969-8969-D92F9FE19F14@gmx.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Fri, 12 Aug 2022 22:15:52 -0500
+Message-ID: <CAMP44s2A7nJDVRPbixPPPtTedg_Q53CEdw+sBpGZwOfQG4EZSg@mail.gmail.com>
+Subject: Re: "master" term - no one cares
+To:     Ryan <rmrmail@gmx.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.7\))
-Subject: "master" term - no one cares
-Message-Id: <6896FBE4-9160-4969-8969-D92F9FE19F14@gmx.com>
-Date:   Fri, 12 Aug 2022 21:57:46 -0500
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3608.120.23.2.7)
-X-Provags-ID: V03:K1:68siEVbqkoWfoepU/1Z9zomjhwlTZcOavxjpW48l3+lL84ddD1G
- gzx5n4y+EuRhEpeA3TH1JBTvNCcltVPyamFZWjjdRYSOEenq79+ErFQ89B+vMI/Q6loZVuJ
- UlcFqmJ/8eA2YGRMw8SK1xPmDvvqKYfBcbJ5+0Zu3x/906hyVvY4EkUzx+Rr70Q1UTGcNyB
- v+OkB/s7SOHfiMzzzCqtA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BzcGTTEOPqM=:GKmcmQ3EIzghPuJsUOjxp9
- DFbd8/HJpcYwcxL9NfmU7szUpMpBzCgSqTYuqzVBbUygYdSHCGyGaklB8ntUPnHCRkFhXjJHV
- WMvxFGKLQS+0UDTuOFn2I9Cle5cXZVRajJ+6cO/KGeRYNDHAhyeFWS26szS0CjMWUly7fTz/f
- opL+qawzyyCluT33WFXcU4cM+hxzkL/CQso81Gcp1FBEuiP6uYguR7wxk/BFHM3X63GDl/LP+
- yiuHd3OXSXiJcqZ/bgt8QabN07Mpi0gF50cNv9MD6SrYUxgY2iPtQNKvzr11LHuUJwWqRU+Fw
- IqHBX0fVe0qA8AfCSm7z/gYsajMXkfsVN84hAJZkjeeqU9zpIvHvdi2wEW6jjGTa6sSlzfD5s
- 6gHb3oAMVh5AsgLbt7Exdfj2w9Y+L7GD0qgebB07aSvI+nwy6OrRi2BOvhHztV5dsltARgjtw
- W4sq+4RPVgEf88tj4dsf5xWmckyhLyA5Ss5G3mAq92rhENzQCRxBBMB0+amfUZRYWq3t6hchD
- nuJ6v2o1q401pDGOafEeR6hQR7bGxQ75YWuRq8aMfkUYcAQHX/t/51P/Aa8PvzfASKtSZ/lSc
- B9RXE6+X8gR1rGK5M751/X9BGlP7dzpmGpkmylkW+SFa1ckUWqV0XOb/c4S3uSlfDrpVC1yUv
- hLSHlIxuNuryyJe3YQVrJttL2Cdpx5LHZIZ+IA0OIzOqj3pCb+RxjL5/hl2hHUHURzsxkumFo
- AWMlVWGcfVQtnklaTgOWhLoeB4+ykfjJ6ORxuQbQJvq+ffS20rba5JwkaODeWo9pV7A5pFG79
- LUbt0yRQQDyFaG7D2lJkAMPEXCASs4Ih7K+6UNccWWJHYo/W7hQ/LNjbMYcqP1gElNUFsH6dR
- wAQoLsYWRZ3kc2zDx9i/OLa+xXw7YZIpu4rSyGmPYaYAubWm5J7WFwjPepkRAGC2LVLfLqXHP
- nJoa/SvVka517w/HWQCabqO47pY5rLxuIfjFfE31KgYK+UI8lFEjQ387XATeaab85L5tXWp1B
- jmQr9+/wUvPVnwhxVoffr2I46iNJMWZ0/VwEv5xKk5tqiptS9OiiaKMp27xWdnD6sSnLl/38J
- mAC2nmiuXFlPXqG3VhXItze2wvZw8LIPfJkZ6z2Zd1zsCDkjlEfAGgzcg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I installed the windows version of git today and was annoyed with the =
-=E2=80=9Cwoke=E2=80=9D message stating that the =E2=80=9Cmaster=E2=80=9D =
-branch term will be changed to a different name to be more =
-=E2=80=9Cinclusive".
+On Fri, Aug 12, 2022 at 10:10 PM Ryan <rmrmail@gmx.com> wrote:
+>
+> I installed the windows version of git today and was annoyed with the =E2=
+=80=9Cwoke=E2=80=9D message stating that the =E2=80=9Cmaster=E2=80=9D branc=
+h term will be changed to a different name to be more =E2=80=9Cinclusive".
+>
+> Don=E2=80=99t waste your time, just get rid of this annoying woke questio=
+n in your installer.  Very annoying!!  No one thinks git has anything to do=
+ with slavery.  On the plus side, git is great, I just started learning it.=
+  Thanks!
 
-Don=E2=80=99t waste your time, just get rid of this annoying woke =
-question in your installer.  Very annoying!!  No one thinks git has =
-anything to do with slavery.  On the plus side, git is great, I just =
-started learning it.  Thanks!
+This is not a Git issue, this is a Git for Windows[1] issue: they are
+the ones exposing that message to their users at installation time.
 
-Ryan
+You can raise the issue in their issue tracker [2], but I wouldn't
+hold my breath.
 
+[1] https://gitforwindows.org/
+[2] https://github.com/git-for-windows/git/issues
+
+--=20
+Felipe Contreras
