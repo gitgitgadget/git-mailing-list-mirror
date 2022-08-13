@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4276C19F2D
-	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 09:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B484DC19F2D
+	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 09:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237319AbiHMJIt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Aug 2022 05:08:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38432 "EHLO
+        id S235971AbiHMJOO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Aug 2022 05:14:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbiHMJIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Aug 2022 05:08:48 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFFDF12D3E
-        for <git@vger.kernel.org>; Sat, 13 Aug 2022 02:08:46 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id r83-20020a1c4456000000b003a5cb389944so1450284wma.4
-        for <git@vger.kernel.org>; Sat, 13 Aug 2022 02:08:46 -0700 (PDT)
+        with ESMTP id S229507AbiHMJON (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Aug 2022 05:14:13 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D37415FF6
+        for <git@vger.kernel.org>; Sat, 13 Aug 2022 02:14:12 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id q30so3465441wra.11
+        for <git@vger.kernel.org>; Sat, 13 Aug 2022 02:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-language:content-transfer-encoding:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc;
-        bh=1dL0V8WsaP86T0GGTdIzazdVbc2fOUwClUK+/ikFMr0=;
-        b=L4DU7P0EPQm89vhJVHXN9yQYzGP09SUbMWnj3aSLaU+yj1r+MTw2O4kliCd9J+E9Cw
-         XXo2dP7DPu/MdANLpP/pD91At1GuHRjEtRSiahnHYXVfMVQE75B2WqmoEmftyD/bV2iZ
-         zzMiytEaZ74rCXoezGxW77duUshSPIItzhsMWIO6Z37syfZ657LD2f0EqfbsSvXw/dVZ
-         bfh3B3mJXEQLE0X0AziFNcLaMRjWdokjT8EptRUp9Wj3pZku7HqpK1UMqYoHQcLaNrTS
-         f4+PFucdHZ35JEa6cdoUxFNYE7d12pj3wvodP8GmnyTlmnnYeABChm3WZklP2wVoAm62
-         fVlg==
+        bh=Qf/ZKQqeSpMP+pUM6p10r/tB6+85FOQf9Qj6X8F9rFs=;
+        b=I+1ljb8X5H7jRi/CZSlOGAI9K5m124A7gq8evnhV+bgTu2v9zMh+YKM51XBbvfybbZ
+         3qUBcBd2wsivQwET9SxEYZOfJucn0Z0cvHKKDF0ljkRwqGiXFKnoLbU3Pm+ZeOfHnIsx
+         cJ7aZKh6FjFHvgmbgxmGK242g6/VMFcn6Jjhd76vm1vfhknNOmU0eumVfQZBq/zAYPp8
+         bue/oRpWE1jCDJmV33cXaELW6/F+4bXu2LI3r18A3kmIkfvVVVeZF6K0xeWyg2Ahsm+n
+         6VqukTAbHLrpQV2QnqHp56dBJPzuovL6qbD5IJmgjj9OkiKb2HWlvB/5fyLhQg1A1nsU
+         YiZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-language:content-transfer-encoding:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:cc:to:subject
          :x-gm-message-state:from:to:cc;
-        bh=1dL0V8WsaP86T0GGTdIzazdVbc2fOUwClUK+/ikFMr0=;
-        b=qTLDdyRRbcx14y98QDMbXjd0ASUqz4Eib/Tn1/hj87E08CcPCwbz6rvqaq/wulmIyQ
-         baYaE28IOYkf7tRRA5pcLVhxJ/qpn8CQBuA4wwpaAA3e5sqPQBb9ZhQCa16gOAy68QhW
-         TLFufZCoAtg7O8647vLDKJGrM9p5M6jLQJgfoN60aN21D3UTZyalI1hKYWgZXV9MDXUn
-         X7yuUJFLlBYhBI1nth48qm5KNdWU78pVbED5iM/Fu69s0mya4zITwgtRIQCd/tMEdcZj
-         g8Y/y2IDJT4Dxq3ICry6IJ+Wnc72g1p9De6tt2aTtK9j0nuwxIfVB91BYZSCzGLFkCp5
-         NIQQ==
-X-Gm-Message-State: ACgBeo3V2lktt8sfXnBvDDsY4PbfCwBqexoKXKMlQO4p71DBlFoW16xI
-        YSXHpIpKRrAI0t3QhTXsjm+JL3qIVBR1HhcL
-X-Google-Smtp-Source: AA6agR7ZTYMcFY+FUte8iYgLmc3IoZW8ZzrQpUw69yuYtCTuBPEI209LmxGheIjfhdnP1Yrl7M7ULw==
-X-Received: by 2002:a05:600c:3586:b0:3a3:2c03:1088 with SMTP id p6-20020a05600c358600b003a32c031088mr5109972wmq.64.1660381725385;
-        Sat, 13 Aug 2022 02:08:45 -0700 (PDT)
+        bh=Qf/ZKQqeSpMP+pUM6p10r/tB6+85FOQf9Qj6X8F9rFs=;
+        b=BrPaJJBKAJiPvRhjdviD5dXvgUhRdEMOCEZBfPj5QVvV/f5jU+NgBqfSl97QCxFAoV
+         Bf5FxriFqsW0AiZ3+zgcvvz68U/nIvBO6jWsqfnaFFRo/jyI0SRs1uoiUADBQsD0O47v
+         K70zW38qUW/RrVA67NyAnGJnbkTn4Vp4R6qKQzHWhGV8YS75jlTBlvHYWud+Qa+aFlUn
+         K7J2PUB1JNp6wJT8SWxzLWffrSvkgNiAs4aCZMD1S5K1g8rmCwgpZHiSVoh9T58pX/yj
+         JY/jvqOog7EeFGDqQ8AYRngzNEX8rC7mkYLSVJNg03StEzXLk+P9jCdrRwIXGmoCIwev
+         rnJw==
+X-Gm-Message-State: ACgBeo2JfYZ/w3FAGswjBJDG2/HXqdZi07ADfVz4VPVR0UR33+ltaHoq
+        d77R+ckOdrs1dRllAQ7LwN6Hu/t9EzmmpScA
+X-Google-Smtp-Source: AA6agR5x9MQV00kWA606tjPZ8X3+L8n5W7zkhZJMWAIaP9++4KxHK6tsvJfFDo5ej6Blte3Q6U85WA==
+X-Received: by 2002:a05:6000:118b:b0:21f:110d:99a9 with SMTP id g11-20020a056000118b00b0021f110d99a9mr3797942wrx.505.1660382051142;
+        Sat, 13 Aug 2022 02:14:11 -0700 (PDT)
 Received: from [192.168.2.52] (68.83-213-117.dynamic.clientes.euskaltel.es. [83.213.117.68])
-        by smtp.gmail.com with ESMTPSA id l40-20020a05600c1d2800b003a5b6086381sm2266637wms.48.2022.08.13.02.08.44
+        by smtp.gmail.com with ESMTPSA id k6-20020a05600c478600b003a30fbde91dsm2141252wmo.20.2022.08.13.02.14.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 Aug 2022 02:08:44 -0700 (PDT)
+        Sat, 13 Aug 2022 02:14:10 -0700 (PDT)
 Subject: Re: [PATCH] branch: allow "-" as a short-hand for "previous branch"
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+To:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Rub=c3=a9n_Justo_via_GitGitGadget?= 
         <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org
 References: <pull.1315.git.1659910949556.gitgitgadget@gmail.com>
- <s7862q69-05o8-s5s8-n635-823s34q358q4@tzk.qr>
+ <xmqq4jymvllq.fsf@gitster.g>
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <8b00e461-dbf2-1bd8-f9bd-b4c5673dd450@gmail.com>
-Date:   Sat, 13 Aug 2022 11:08:43 +0200
+Message-ID: <9693b83f-551e-e579-b267-af1d633dc381@gmail.com>
+Date:   Sat, 13 Aug 2022 11:14:09 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <s7862q69-05o8-s5s8-n635-823s34q358q4@tzk.qr>
+In-Reply-To: <xmqq4jymvllq.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -69,58 +69,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On Mon, Aug 8, 2022 at 4:47 PM Junio C Hamano<gitster@pobox.com>  wrote:
 
-Thanks for the /allow!
-
-On Mon, Aug 8, 2022 at 3:26 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de>  wrote:
-
-> Touching only the `delete_branches()` function suggests that other
-> commands are left as before, e.g. `git branch --unset-upstream -` would
-> probably fail.
->
-> That's fine, but the commit message claims that the `"-"` special-casing
-> is introduced for the `git branch` command, not just for `git branch -d`.
->
->>                        die(_("Couldn't look up commit object for HEAD"));
->>        }
-> At this stage, we already handled the `--remotes` flag, therefore I think
-> that this patch does not do the intended thing for this command-line:
->
->          git branch -d --remotes -
+> The "-d" and "-D" options being the more detructive ones among other
+> operation modes of the command, I am not sure if this change is even
+> desirable.  Even if it were, the implementation to special case a
+> single argument case like this ...
 >
 >> +     if ((argc == 1) && !strcmp(argv[0], "-")) {
 >> +             argv[0] = "@{-1}";
 >> +     }
-> This means that we only handle `git branch -d -`, but not `git branch -d
-> some-branch - some-other-branch`.
+> ... (by the way, we don't write braces around a single statement
+> block) would invite cries from confused users why none of these ...
 >
-> Could you fix that?
+>   $ git branch -m - new-name
+>   $ git branch new-branch -
+>   $ git branch --set-upstream-to=<upstream> -
+>
+> work and "-" works only for deletion.
 
-I did it on purpose, to be interpreted in the context of "git branch
--d/D" with just one branch: "previous branch". I agree the commit
-message does not suggest this, I can fix it.
+Agree. But the approach is to ease the deletion of previous branch,
+aligned with merge:
 
-My intention is a short-hand for "delete previous branch", the same
-way "git merge -" is "merge previous branch".
+$ git merge - -
+merge: - - not something we can merge
+$ git merge - old-branch
+merge: - - not something we can merge
 
-The workflow to address is just allow doing:
+In fact, I think it is a bit confuse to allow use it that way, and
+probably induces to error.
 
-$ git checkout work_to_review
-$ git checkout -
-$ git merge -
-$ git branch -d -
+Haven't think about -m, -c. If you think it is a good addition, I can do it.
 
-Instead of:
-
-$ git checkout work_to_review
-$ git checkout -
-$ git merge -
-$ git branch -d work_to_review
-
-The syntax @{-1} is hard for me to write, and I feel intuitive "-",
-like in "cd -".
-
-Make sense to me...
+I can fix the braces around that single statement block, sorry.
 
