@@ -2,140 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C46F7C19F2D
-	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 21:09:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5D1DC19F2D
+	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 22:17:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240464AbiHMVJW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Aug 2022 17:09:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41170 "EHLO
+        id S233577AbiHMWRT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Aug 2022 18:17:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240439AbiHMVJT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Aug 2022 17:09:19 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D6AE12D39
-        for <git@vger.kernel.org>; Sat, 13 Aug 2022 14:09:18 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id q39-20020a056830442700b0063889adc0ddso1968209otv.1
-        for <git@vger.kernel.org>; Sat, 13 Aug 2022 14:09:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:from:to:cc;
-        bh=P2CNX6z+dkDKnPIf9y/UQ2busK6bQk0lrKqKNZ8l7dM=;
-        b=MQjkdYUYKIRStduLHaYwsct1NvOWNai3uSlO0Iibg+IvJMhn8gprF/hJUmM3dRS/eb
-         quBI9L6PPMDfcQ938Xo4Sc6UACvdYGceFYweAf54KvWMdTEdjtS0ppzrbxTlMHhajnyp
-         HmJM8ULoJO0UjW96OPtlWCyjzRmWd0Hj+FoZ3rft2vJ5d+gyL4uoC5Y9UdVb27iBcizg
-         Hcw7D91EyrbJBF+vvwcLYCi1l2qrPhl/7GAgQMZW8BM8TUjosMV3zoXBRkw8XmadX6uE
-         PNmG4Qj9LxgIbqzFAarFK3oJhFP/cscNG5A/aD7/ORYfgIdg66+ch5qfDl8af9KR3mlQ
-         GRjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:x-gm-message-state:from:to:cc;
-        bh=P2CNX6z+dkDKnPIf9y/UQ2busK6bQk0lrKqKNZ8l7dM=;
-        b=IkhPpQ/mvSnwzGijKXHisf4BZqooIIjzp1S6KIIZ9KLtyYzrurPdLRDLoBnD+oHuVO
-         JkvNMmqKg/ak/zgnaVXyMREIoZDYIylmLE/iwfUrgYWQh3zJwchuT6MCk8+wlnOoxRkc
-         wkNvSBKyaW3xYgPApI86f1pkcRtUFS89Xo3zUnQxV+AmnFhzPshPqVC9v+hBxJW0Iz3g
-         1PCLQ8vjIv60igvBEr0+d68qENbrL3jbeFqFf0lKoepTmC7J5tOYj44CSO2RF3YWU7Dg
-         EPb4gqIUKP5hrySFt3AxyPG+daPK6DOo8tdvRDvd5Q2BpV6wPphbarWqxNUGXaKCSe2d
-         goEQ==
-X-Gm-Message-State: ACgBeo0bSVIz4+cBn6T84xaM9YItGbvhCB5MaRLm7UNYnNuoieB92YU8
-        L2ksCizwO2cclllahlXWcV7NxxYRC/8=
-X-Google-Smtp-Source: AA6agR74UxCyXmt+LCG7GsBCKRDRdS4t7lTbfMQEbzZ8I66wWsAoZvJV54ImDdIgl+OD1UdBNOrLxg==
-X-Received: by 2002:a9d:53cb:0:b0:637:1ddc:615c with SMTP id i11-20020a9d53cb000000b006371ddc615cmr3890946oth.3.1660424956988;
-        Sat, 13 Aug 2022 14:09:16 -0700 (PDT)
-Received: from smtpclient.apple ([104.223.97.2])
-        by smtp.gmail.com with ESMTPSA id l6-20020a05687014c600b00116861f45cfsm582118oab.23.2022.08.13.14.09.15
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 13 Aug 2022 14:09:16 -0700 (PDT)
-From:   mingli zhang <zmlfoolishfish@gmail.com>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
-Subject: [bug]fatal: fetch-pack: invalid index-pack output
-Message-Id: <50B3E989-0405-4B05-9940-D3943C62260A@gmail.com>
-Date:   Sun, 14 Aug 2022 05:09:13 +0800
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3696.80.82.1.1)
+        with ESMTP id S229523AbiHMWRT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Aug 2022 18:17:19 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E946350185
+        for <git@vger.kernel.org>; Sat, 13 Aug 2022 15:17:15 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9DE4D144485;
+        Sat, 13 Aug 2022 18:17:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=IeJqjxNzJI/FiDE2oRr8rk/gdJj6AI7H+zzTO5
+        arpeE=; b=u4yAxafptY0HJRSuXkrnamOutdd6+0ypcdZEBRQt+/DCArBi2f9sw4
+        Hd3hyZAoKnFbDwtRwaTcOO1GYw6UcQ1i6/q73aYSUHpuXca1UyI/8LfDxcRakH4k
+        ZXLP9auKYW+aGC3ChIk31rgaAUYW8SPtEonj7t9fJx1Z8KVbCw4JE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 95E87144483;
+        Sat, 13 Aug 2022 18:17:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C74A2144482;
+        Sat, 13 Aug 2022 18:17:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com,
+        philipoakley@iee.email, johncai86@gmail.com, me@ttaylorr.com
+Subject: Re: [PATCH v4 0/8] cat-file: add --batch-command remote-object-info
+ command
+References: <20220328191112.3092139-1-calvinwan@google.com>
+        <20220502170904.2770649-1-calvinwan@google.com>
+Date:   Sat, 13 Aug 2022 15:17:12 -0700
+In-Reply-To: <20220502170904.2770649-1-calvinwan@google.com> (Calvin Wan's
+        message of "Mon, 2 May 2022 17:08:56 +0000")
+Message-ID: <xmqqlerr94bb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: AEDEC2C8-1B55-11ED-B39D-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-HI,
+Style and coccinelle fixes; please squash in when you reroll.
 
-At some point, I exec git pull/fetch/clone will got a fatal message:
+ * var = xcalloc(count, sizeof(*var)) --> CALLOC_ARRAY(var, count)
+   for count != 1
 
-```
+ * sizeof (type) --> sizeof(type)
 
-fatal: fetch-pack: invalid index-pack output
+Thanks.
 
-```
+ builtin/cat-file.c | 2 +-
+ transport.c        | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-I use git 2.36.1 on MacOS Monterey 12.3.1
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 57c090f249..4afe82322f 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -515,7 +515,7 @@ static int get_remote_info(struct batch_options *opt, int argc, const char **arg
+ 		size_t j;
+ 		int include_size = 0, include_type = 0;
+ 
+-		remote_object_info = xcalloc(object_info_oids.nr, sizeof(struct object_info));
++		CALLOC_ARRAY(remote_object_info, object_info_oids.nr);
+ 		gtransport->smart_options->object_info = 1;
+ 		gtransport->smart_options->object_info_oids = &object_info_oids;
+ 		/**
+diff --git a/transport.c b/transport.c
+index 64bcc311ff..87197f0ec7 100644
+--- a/transport.c
++++ b/transport.c
+@@ -442,7 +442,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	struct ref *refs = NULL;
+ 	struct fetch_pack_args args;
+ 	struct ref *refs_tmp = NULL;
+-	struct ref *object_info_refs = xcalloc(1, sizeof (struct ref));
++	struct ref *object_info_refs = xcalloc(1, sizeof(struct ref));
+ 
+ 	memset(&args, 0, sizeof(args));
+ 	args.uploadpack = data->options.uploadpack;
+@@ -479,7 +479,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 		args.quiet = 1;
+ 		args.no_progress = 1;
+ 		for (i = 0; i < transport->smart_options->object_info_oids->nr; i++) {
+-			struct ref *temp_ref = xcalloc(1, sizeof (struct ref));
++			struct ref *temp_ref = xcalloc(1, sizeof(struct ref));
+ 			temp_ref->old_oid = *(transport->smart_options->object_info_oids->oid + i);
+ 			temp_ref->exact_oid = 1;
+ 			ref->next = temp_ref;
+-- 
+2.37.2-479-gedbcd27e9d
 
-```
-git --version
-04:51:36.776640 git.c:459 trace: built-in: git version
-git version 2.36.1
-
-```
-
-Example:
-
-```
-
-zml@localhashdata postgres % git pull -r
-04:53:33.553655 git.c:459 trace: built-in: git pull -r
-04:53:33.640927 run-command.c:654 trace: run_command: git merge-base =
---fork-point refs/remotes/origin/REL_14_STABLE REL_14_STABLE
-04:53:33.651808 run-command.c:654 trace: run_command: git fetch =
---update-head-ok
-04:53:33.658822 git.c:459 trace: built-in: git fetch --update-head-ok
-04:53:33.683642 run-command.c:654 trace: run_command: unset GIT_PREFIX; =
-GIT_PROTOCOL=3Dversion=3D2 ssh -o SendEnv=3DGIT_PROTOCOL git@github.com =
-'git-upload-pack '\''postgres/postgres.git'\'''
-remote: Enumerating objects: 16843, done.
-remote: Counting objects: 100% (16231/16231), done.
-remote: Compressing objects: 100% (4164/4164), done.
-04:53:40.822310 run-command.c:654 trace: run_command: git index-pack =
---stdin -v --fix-thin '--keep=3Dfetch-pack 70208 on localhashdata' =
---pack_header=3D2,10035
-04:53:40.828465 git.c:459 trace: built-in: git index-pack --stdin -v =
---fix-thin '--keep=3Dfetch-pack 70208 on localhashdata' =
---pack_header=3D2,10035
-remote: Total 10035 (delta 8554), reused 7150 (delta 5805), pack-reused =
-0
-Receiving objects: 100% (10035/10035), 6.93 MiB | 2.42 MiB/s, done.
-fatal: fetch-pack: invalid index-pack output
-
-```
-
-I try to config memory or use git pull -r --depth 1, but didn=E2=80=99t =
-help.
-
-My git config is
-
-```
-[core]
-packedGitLimit =3D 512m
-packedGitWindowSize =3D 512m
-compression =3D 0
-
-[pack]
-deltaCacheSize =3D 2047m
-packSizeLimit =3D 2047m
-windowMemory =3D 2047m
-```
-
-And the code dir permission is
-
-```
-drwxrwxrwx
-
-```
-
-Any suggestions ?
-
-Regards,
-Zhang Mingli=
