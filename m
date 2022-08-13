@@ -2,82 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3EAAC00140
-	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 03:16:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A85C9C25B0E
+	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 03:46:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234639AbiHMDQK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Aug 2022 23:16:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38038 "EHLO
+        id S234725AbiHMDqJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Aug 2022 23:46:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229760AbiHMDQH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Aug 2022 23:16:07 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56A10186C3
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 20:16:04 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id z20so3353868edb.9
-        for <git@vger.kernel.org>; Fri, 12 Aug 2022 20:16:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc;
-        bh=XeGnfRu6VA0Vtb3Uha0DNnOyaFsP8pQquz3WQ2moiLM=;
-        b=Xdpl+0W5E06XeEH6vBfB82RU0Xa/iCwLUL7G9d0jgnfgo0tEumU+VXrY+nVqyaJZ9x
-         Cgv8b0XylJwEiLeDUMLIg9XOk/jHirShAM3+RBfTAGtgVnizaAK0Ujdn9lY1HSL69w15
-         fuijiKuvjKqo6juLQw02smtkilZKPYmPzjQIijaQHRyIfCPWhOHcRlADAHp71hUsVl4i
-         AK2G98rAsgmzpniV/BOzxTVM15I4DDJ2dMwE4QBPBvZ2hgn64J1s9OAcU1hHR7CmguU/
-         YSPvHpp3KK0bQncJa8cK+XpuxP02efhqBH3T3vZyxE5RmICDYZTNwyDmmPccTiq6ViX0
-         zWPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
-        bh=XeGnfRu6VA0Vtb3Uha0DNnOyaFsP8pQquz3WQ2moiLM=;
-        b=DpKYv+66arZmOpTiK16JqW4xEWna7FLCMTcM/AdNfBT5Kl8H1m1DrzZQQErB5SJML/
-         awIc/7v7nXwtEy8XkKiTj+FEUFyD/WbiVGkiE4DmNwI3GdTSjvQ1tjLeF8i76v4/CXyf
-         7Q1fBunKwU7koMcGG6h7bb6byB71hb4IBztjfx6g0ib7wrqznL98WrXXfpJsZ+9gVUAW
-         kKOBCSr1chHF+OqpgS3W2zLy5otT2ZEnlqm+0ViXW6xnB+0ztXBN6FKRHdn9w/EmIGIC
-         2jmyijtzrKb6K+AkTkySSjRuLVXOW67gT4V3yQrG6hmVdM2dkybnM2LngINvCavKiSY4
-         DoWQ==
-X-Gm-Message-State: ACgBeo3UF+wqE6qOYroyk85oApWjvFwYMJOMlACIiUEiznLUfYPCZOg3
-        0fEPK8JWiTnzx+EvQb8KszA+2BPoLsUgBMWfnXjw/CyqlxM=
-X-Google-Smtp-Source: AA6agR6DVYcRmB83C8vSWjnZsffGFbYj2Y4i5M4hBhuaKHaSP9u3Iq7NK8eA45xZaPfPtkcLS0O4KuxoqEBWxwyrets=
-X-Received: by 2002:a05:6402:4301:b0:43e:4d31:6ec0 with SMTP id
- m1-20020a056402430100b0043e4d316ec0mr6038194edc.69.1660360562713; Fri, 12 Aug
- 2022 20:16:02 -0700 (PDT)
+        with ESMTP id S229760AbiHMDqG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Aug 2022 23:46:06 -0400
+X-Greylist: delayed 192 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 12 Aug 2022 20:46:03 PDT
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7D011EC77
+        for <git@vger.kernel.org>; Fri, 12 Aug 2022 20:46:03 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 99D0B1BAF1C;
+        Fri, 12 Aug 2022 23:42:50 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
+        :to:cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=OsoXXn1DCtbeD
+        RI8FX2UOunp7/NFSQ5UaISSOV4Gogk=; b=D5cynL0zQ5Wz1unxXqzvYOSQHHfGt
+        LsqDBWgoCwkiSjeIAg/W7HeDYxR00FzIVYAP+jj8jmzR51phLX8QbrTisicWdN+4
+        F8lcE1gldRv54TGDXoEkOr7sJ1S/R28oa3M8pwLOUEOIKQKpPBY7Ou7Bqrs99s2x
+        8Vdu7IsoNs5RJU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 930DB1BAF1B;
+        Fri, 12 Aug 2022 23:42:50 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Received: from pobox.com (unknown [71.254.192.78])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 055551BAF1A;
+        Fri, 12 Aug 2022 23:42:45 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Date:   Fri, 12 Aug 2022 23:42:42 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     Renato Botelho <garga@freebsd.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git maintenance broken on FreeBSD
+Message-ID: <YvcdskzUkocUv/d7@pobox.com>
+References: <226317ba-a78f-216c-764c-52f4e393bd35@FreeBSD.org>
+ <YvZnQFVMZZmz9TIX@danh.dev>
 MIME-Version: 1.0
-References: <6896FBE4-9160-4969-8969-D92F9FE19F14@gmx.com>
-In-Reply-To: <6896FBE4-9160-4969-8969-D92F9FE19F14@gmx.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Fri, 12 Aug 2022 22:15:52 -0500
-Message-ID: <CAMP44s2A7nJDVRPbixPPPtTedg_Q53CEdw+sBpGZwOfQG4EZSg@mail.gmail.com>
-Subject: Re: "master" term - no one cares
-To:     Ryan <rmrmail@gmx.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YvZnQFVMZZmz9TIX@danh.dev>
+X-Pobox-Relay-ID: FEB0BD5C-1AB9-11ED-8446-C85A9F429DF0-09356542!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 12, 2022 at 10:10 PM Ryan <rmrmail@gmx.com> wrote:
->
-> I installed the windows version of git today and was annoyed with the =E2=
-=80=9Cwoke=E2=80=9D message stating that the =E2=80=9Cmaster=E2=80=9D branc=
-h term will be changed to a different name to be more =E2=80=9Cinclusive".
->
-> Don=E2=80=99t waste your time, just get rid of this annoying woke questio=
-n in your installer.  Very annoying!!  No one thinks git has anything to do=
- with slavery.  On the plus side, git is great, I just started learning it.=
-  Thanks!
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+> On 2022-08-12 10:51:03-0300, Renato Botelho <garga@FreeBSD.org> wrote:
+>> As reported at [1], git maintenance is not working on FreeBSD.  I didn=
+'t
+>> find the time to dig into it but it seems like it's calling crontab us=
+ing
+>> parameters not supported on FreeBSD.
+>>=20
+>> [1] https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=3D260746
+>=20
+> It seems like FreeBSD's cron is vixie-cron which requires <file>
+> passed to crontab(1).
+>=20
+>      The crontab command conforms to IEEE Std 1003.2 (=E2=80=9CPOSIX.2=E2=
+=80=9D) with the
+>      exception that the dangerous variant of calling crontab without a =
+file
+>      name in the first form of the command is not allowed by this
+>      implementation.  The pseudo-filename =E2=80=98-=E2=80=99 must be s=
+pecified to read from
+>      standard input.  The new command syntax differs from previous vers=
+ions of
+>      Vixie Cron, as well as from the classic SVR3 syntax.
+>=20
+> I think other crontab implementation also accept "-" as filename for st=
+din.
+> At least cronie, fcron, dcron, and busybox's crontab both supports "-" =
+as stdin.
 
-This is not a Git issue, this is a Git for Windows[1] issue: they are
-the ones exposing that message to their users at installation time.
+A similar issue was noted in Fedora with cronie shortly
+after the git maintenance command was released:
 
-You can raise the issue in their issue tracker [2], but I wouldn't
-hold my breath.
+    https://bugzilla.redhat.com/show_bug.cgi?id=3D1939930#c1
 
-[1] https://gitforwindows.org/
-[2] https://github.com/git-for-windows/git/issues
+I noted that a patch just like the one below would suffice,
+but I was concerned that it wouldn't be welcome here because
+the behavior of crontab was specified by POSIX (even though
+it's very unfriendly and, apparently, supported by fewer and
+fewer implementations).
+
+If a change like this is made, aren't we trading one group
+of broken users for another?  It would fix users of newer
+systems at the expense of those on older systems, I would
+suspect.
+
+> I think this patch can fix FreeBSD's problem:
+>=20
+> ---- 8< -----
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index eeff2b760e..45d908def3 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -2087,6 +2087,7 @@ static int crontab_update_schedule(int run_mainte=
+nance, int fd)
+>  	rewind(cron_list);
+> =20
+>  	strvec_split(&crontab_edit.args, cmd);
+> +	strvec_push(&crontab_edit.args, "-");
+>  	crontab_edit.in =3D -1;
+>  	crontab_edit.git_cmd =3D 0;
+> =20
+> ---- 8< ---------
+
+In the end, cronie adjusted it's behavior, which was similar
+to that of the newer vixie-cron, in 8b0241f (Partially
+revert the behavior of crontab command without arguments,
+2021-03-17)=C2=B9.  It now behaves as required by POSIX if stdin
+is not a TTY.  That seems like a reasonable compromise and
+perhaps vixie-cron would be willing to do the same?
+
+=C2=B9 https://github.com/cronie-crond/cronie/commit/8b0241f
 
 --=20
-Felipe Contreras
+Todd
