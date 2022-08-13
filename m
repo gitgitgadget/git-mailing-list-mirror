@@ -2,74 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0A04C19F2D
-	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 16:55:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F34DDC19F2D
+	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 17:26:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239824AbiHMQz5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Aug 2022 12:55:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56400 "EHLO
+        id S240052AbiHMR0O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Aug 2022 13:26:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239657AbiHMQz4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Aug 2022 12:55:56 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B7842A94F
-        for <git@vger.kernel.org>; Sat, 13 Aug 2022 09:55:55 -0700 (PDT)
-Received: from [90.198.244.89] (helo=[192.168.0.6])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1oMuQS-0002mH-3l;
-        Sat, 13 Aug 2022 17:55:53 +0100
-Message-ID: <0dddb367-ebf9-930f-1b9c-000a532774d3@iee.email>
-Date:   Sat, 13 Aug 2022 17:55:51 +0100
+        with ESMTP id S235606AbiHMR0N (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Aug 2022 13:26:13 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CCE510543
+        for <git@vger.kernel.org>; Sat, 13 Aug 2022 10:26:10 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0769B141DEB;
+        Sat, 13 Aug 2022 13:26:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=iI+yVYeO4Auy
+        t6DCwrVwaNBsp6fnuDXa0PtH8ZO4M/A=; b=evso3xhDycQM/mp+pOlHp6C2weO4
+        WU0L6qOOxpA76DL4R5WpkaRlaNN7OhIjtg1JTcnV+nUROiL3lcLhAetXh+3VXG9Y
+        PnaKubdr38dbb6PthbHWfp7zuRzTXMeBGoqoDx1dG+RW+3HR8gi3CqDB70EU7j7u
+        6STN6CLn5G18+S4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F0596141DEA;
+        Sat, 13 Aug 2022 13:26:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 488E7141DE9;
+        Sat, 13 Aug 2022 13:26:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Derrick Stolee <derrickstolee@github.com>
+Cc:     Todd Zullinger <tmz@pobox.com>, Renato Botelho <garga@freebsd.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git maintenance broken on FreeBSD
+References: <226317ba-a78f-216c-764c-52f4e393bd35@FreeBSD.org>
+        <YvZnQFVMZZmz9TIX@danh.dev> <YvcdskzUkocUv/d7@pobox.com>
+        <xmqqczd4ag8f.fsf@gitster.g> <YvfFUuuydtYeuvRx@danh.dev>
+Date:   Sat, 13 Aug 2022 10:26:05 -0700
+In-Reply-To: <YvfFUuuydtYeuvRx@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcuG6p24g?=
+ =?utf-8?B?Q8O0bmc=?= Danh"'s message of
+        "Sat, 13 Aug 2022 22:37:54 +0700")
+Message-ID: <xmqqsfm08382.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: "master" term - no one cares
-Content-Language: en-US
-To:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Ryan <rmrmail@gmx.com>
-Cc:     git@vger.kernel.org
-References: <6896FBE4-9160-4969-8969-D92F9FE19F14@gmx.com>
- <CAMP44s2A7nJDVRPbixPPPtTedg_Q53CEdw+sBpGZwOfQG4EZSg@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <CAMP44s2A7nJDVRPbixPPPtTedg_Q53CEdw+sBpGZwOfQG4EZSg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 05349112-1B2D-11ED-9B22-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/08/2022 04:15, Felipe Contreras wrote:
-> On Fri, Aug 12, 2022 at 10:10 PM Ryan <rmrmail@gmx.com> wrote:
->> I installed the windows version of git today and was annoyed with the “woke” message stating that the “master” branch term will be changed to a different name to be more “inclusive".
->>
->> Don’t waste your time, just get rid of this annoying woke question in your installer.  Very annoying!!  No one thinks git has anything to do with slavery.  On the plus side, git is great, I just started learning it.  Thanks!
-> This is not a Git issue, this is a Git for Windows[1] issue: they are
-> the ones exposing that message to their users at installation time.
+=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
+:
+
+> Then, we are getting back to point #0, we don't have universally way
+> to specify stdin as input file for crontab(1) and "crontab -e" is
+> optional.
 >
-> You can raise the issue in their issue tracker [2], but I wouldn't
-> hold my breath.
->
-> [1] https://gitforwindows.org/
-> [2] https://github.com/git-for-windows/git/issues
->
-Thanks for the comment. The wider point is to ensure that everyone can 
-choose their own name for their primary line of development (plod), no 
-matter how fast or slow they plod along.
+> Perhaps, FreeBSD needs to carry this patch downstream; or
+> we will invent new preprocessor, let's say CRONTAB_DASH_IS_STDIN
+> which is defined in FreeBSD,
 
-There is a confusion between the use of the term that refers to the 
-*personal* mastery of a _craft_ or _artisan_ technique and, at least one 
-of, the historical choices for the usage of the term 'master', which was 
-a direct reference to slave servitude. That was for the use of 
-electrical circuits which would detect the 'tick' of a primary timing 
-pendulum and then have all the actual clock faces that indicated the 
-time be _driven_ from that 'master'.
+Does FreeBSD offer choices of cron implementations other than Vixie,
+just like some Linux distributions?  If somebody on a non-FreeBSD
+platform happens to choose to use Vixie, then they would presumably
+have the same problem, so a compile-time switch, whose default is
+hardcoded based on the target platform, would not work very well.
+The default will be wrong for some users, and users can later choose
+to switch between different cron implementations.
 
-The previous discussion include that of [1], in which I reference the 
-paper (it's [4]) regarding the chronometer (clock) .
+Configuration knob can be used as a workaround, but in this case, I
+am not sure if it is worth doing.  What's the downside of securely
+opening a temporary file and write whatever we are currently piping
+to a spawned "crontab" command and then giving the path to that
+temporary file to the "crontab" command?  Wouldn't that give us the
+maximal portability without that much code, no?
 
---
-Philip
-
-[1] 
-https://lore.kernel.org/git/4bbc8658-4dad-10ef-65a4-8f0f4f4fffd4@iee.email/
+I think this is all Derrick's code from 2fec604f (maintenance: add
+start/stop subcommands, 2020-09-11), so let's add him to the
+discussion.
