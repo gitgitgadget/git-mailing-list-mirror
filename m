@@ -2,133 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F0E2C19F2D
-	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 09:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC21EC19F2D
+	for <git@archiver.kernel.org>; Sat, 13 Aug 2022 10:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238086AbiHMJTp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Aug 2022 05:19:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46280 "EHLO
+        id S239180AbiHMKP5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Aug 2022 06:15:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbiHMJTo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Aug 2022 05:19:44 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A426B1EEC4
-        for <git@vger.kernel.org>; Sat, 13 Aug 2022 02:19:43 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id l4so3469448wrm.13
-        for <git@vger.kernel.org>; Sat, 13 Aug 2022 02:19:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-language:content-transfer-encoding:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc;
-        bh=woasTxfh4HsCtO6BZ91p85+YHOJNpUdYaxOG4teYaBk=;
-        b=QcuvWNWZKt1GDtpBgAOkvrK3P7kByBtzCPiIbOJTqQGX4sniNoEVo1gbn/n1Rqm6WU
-         OaUmJf4wv7x/UjEZj+cVfNtTG2Mqgl99RCSUejEiiU+NBkJVomp0l+vKi8Fmsk7Br2yb
-         X562L3ViW4LrvDx4R1Qvu2Xj3OKOnrkUlAdb6vscD98+XSDn+NMKMvAfLK+ZM52AZQj5
-         Zsi9eMbY/0XG8eemjXrHSFEpFpgTYNe9PYy9WDQagECnkmN/TfMFp/CuvnXrFFNMh/Nk
-         ZxND/04c2uGKcDgSRaBfcCoxz/pcfuc5CYTVD1qtf5bITzu3wtbwUEAb+N4mu/Ml7Nlo
-         Iybw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-language:content-transfer-encoding:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc;
-        bh=woasTxfh4HsCtO6BZ91p85+YHOJNpUdYaxOG4teYaBk=;
-        b=7mH3InGiPDDIPf+QSVyvyWmZjPwazCa3C1tMLbRcwCRkH2rt8DxaXyHJipT1lkpBoB
-         G5J8bb755JLoSb+9o2KZYDTywH0JtuU//voC0lqL4t135La3DKMWWPsPktnxLhYpkGML
-         6/Vcxja9n8KH71DBmHNZDtSYSwnBDQvOLCexhOw+p4aoPiwtsUpw9E+lG8NjklYNbc3h
-         pwwgWcnWMMDmNfaPx5tdUP4K8OruQdb7+IvprLtgvbZuv2pDiTrSPK4CECBwLDHJdIB2
-         JdApADpxktPO57zzCNvebXcrn6eZn1swebRGi3PBwnQ6L0R3yUs4RTZMP8VbsqePVu9p
-         ntKw==
-X-Gm-Message-State: ACgBeo3m1L2LbmHoTF647+gcVM/wo69lT5Qk4EzgjmeSs8IpK7t6JhO2
-        Z2H9G2rQpB4JgmBU25ApNjFk8Dyy/LG/JUw3
-X-Google-Smtp-Source: AA6agR62C3akBtATcYk7Y68l3Ai6naa4wtjj+kh000YH6AE0PGbmmTmtIj/YNRsv8Luo9jCAfjJAaw==
-X-Received: by 2002:a05:6000:1367:b0:21f:156d:1a8e with SMTP id q7-20020a056000136700b0021f156d1a8emr4052361wrz.89.1660382382244;
-        Sat, 13 Aug 2022 02:19:42 -0700 (PDT)
-Received: from [192.168.2.52] (68.83-213-117.dynamic.clientes.euskaltel.es. [83.213.117.68])
-        by smtp.gmail.com with ESMTPSA id c5-20020adffb05000000b0021e4f595590sm1596718wrr.28.2022.08.13.02.19.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 Aug 2022 02:19:41 -0700 (PDT)
-Subject: Re: [PATCH] branch: allow "-" as a short-hand for "previous branch"
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?UTF-8?Q?Rub=c3=a9n_Justo_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.1315.git.1659910949556.gitgitgadget@gmail.com>
- <s7862q69-05o8-s5s8-n635-823s34q358q4@tzk.qr> <xmqqk07iu3c3.fsf@gitster.g>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <be21e2ba-1c57-a5aa-a986-64413f3983c3@gmail.com>
-Date:   Sat, 13 Aug 2022 11:19:40 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        with ESMTP id S229719AbiHMKPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Aug 2022 06:15:55 -0400
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F22D011836
+        for <git@vger.kernel.org>; Sat, 13 Aug 2022 03:15:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1660385754; x=1691921754;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=6TpTlOuFmzFUPGTE2j0XAdx5OzagIeW5D9CxltnMj9E=;
+  b=J/ZmuaoX3SZ+QsmUAOv4jjhAql2SpW2ID9jGRrZxSO9C53st2nj1g0hR
+   ke7Uvcta3vZEBds/OMyKwUF+IK/1pIlWkUwpb+nsGdz32avLCbdjRBkhd
+   rIXMl4xHSl5HfIPeZzHk1jbXOYBUWLZAaa1Hs94/dFMipE9bZB8IKGH5H
+   6yrG5Ne7CQ0Ws6JKvWgBK4Cd1g5EC82LjcgR9hehw1uKsLfBDvc4/R9cu
+   9J/Fls8+lJ70QPKQS82n8w9Bfof2BHC1fa1C1VmF6d7AHfEfnCNpg3k+X
+   b1JYqdl9V9KcEJzPc4yn12T0O3znparwQBr1LPQtRmdMfXhhWFiKOTZtr
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10437"; a="291742556"
+X-IronPort-AV: E=Sophos;i="5.93,233,1654585200"; 
+   d="scan'208";a="291742556"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2022 03:15:54 -0700
+X-IronPort-AV: E=Sophos;i="5.93,233,1654585200"; 
+   d="scan'208";a="666121492"
+Received: from leiwang7-mobl.ccr.corp.intel.com (HELO [10.254.213.221]) ([10.254.213.221])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2022 03:15:53 -0700
+Message-ID: <27fe218d-886d-2c26-e436-104acd2b9bf6@intel.com>
+Date:   Sat, 13 Aug 2022 18:15:51 +0800
 MIME-Version: 1.0
-In-Reply-To: <xmqqk07iu3c3.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Firefox/91.0 Thunderbird/91.12.0
+Subject: Re: [Question]: Does "git log" involve some stochastic operations?
 Content-Language: en-US
+To:     Chris Torek <chris.torek@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+References: <20d7c54f-7438-1124-7a9e-fdc902a4cc18@intel.com>
+ <CAPx1GveLZm0NH7hBqRSKHJMXttT8Wwnqm3ebjUEpbEXNwh+61w@mail.gmail.com>
+From:   "Wang, Lei" <lei4.wang@intel.com>
+In-Reply-To: <CAPx1GveLZm0NH7hBqRSKHJMXttT8Wwnqm3ebjUEpbEXNwh+61w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 8, 2022 at 6:06 PM Junio C Hamano <gitster@pobox.com 
-<mailto:gitster@pobox.com>> wrote:
- >
- > Johannes Schindelin <Johannes.Schindelin@gmx.de 
-<mailto:Johannes.Schindelin@gmx.de>> writes:
- >
- > > @@ -1420,6 +1420,12 @@ static int 
-interpret_nth_prior_checkout(struct repository *r,
- > >       const char *brace;
- > >       char *num_end;
- > >
- > > +     if (namelen == 1 && *name == '-') {
- > > +             brace = name;
- > > +             nth = 1;
- > > +             goto find_nth_checkout;
- > > +     }
- > > +
- > >       if (namelen < 4)
- > >               return -1;
- > >       if (name[0] != '@' || name[1] != '{' || name[2] != '-')
- >
- > If a solution along this line works, it would be far cleaner design
- > than the various hacks we have done in the past, noticing "-" and
- > replacing with "@{-1}".  For one thing, we wouldn't be receiving a
- > "-" from the end user on the command line and in response say @{-1}
- > does not make sense in the context in an error message. That alone
- > makes the above approach to deal with it at the lowest level quite
- > attractive.
- >
- > In the list archive, however, you may be able to find a few past
- > discussions on why this is not a good idea (some of which I may no
- > longer agree with).  One thing that still worries me a bit is that
- > we often disambiguate the command line arguments by seeing "is this
- > (still) a rev, or is this a file, or can it be interpreted as both?"
- > and "-" is not judged to be a "rev", IIRC.
- >
- > Luckily, not many commands we have take "-" as if it were a file and
- > make it read from the standard input stream, but if there were (or
- > if we were to add a command to behave like so), treating "-" to mean
- > the same thing as "@{-1}" everywhere may require the "does this look
- > like a rev?"  heuristics (which is used by the "earlier ones must be
- > rev and not file, later ones must be file and cannot be interpreted
- > as rev, for you to omit '--' from the command line" logic) to be
- > taught that a lone "-" can be a rev.
- >
- > So it is quite a lot of thing that the new code needs to get right
- > before getting there.
+Wonderful! That make sense that each time I do the calculation, the 
+result will be slightly different.
 
-Agree. To make a substitution in the command line and to consider "-"
-in interpret_nth_prior_checkout, I see them as two very different games.
+BR,
+Lei
 
-Previous to this, I thought about making also a "git diff -",
-https://github.com/gitgitgadget/git/pull/1314 
-<https://github.com/gitgitgadget/git/pull/1314>. Suddenly there was 5
-commands with this substitution (checkout, merge, rebase, branch, diff)
-so I follow a little the path now Johannes suggests, making the
-substitution "- ~ @{-1}" deep in the system. For me, the implications,
-error cases, test cases... to consider was not worth the change to
-get what I was looking for: align the workflow "checkout/merge/branch
--d".
-
-Also discarded the "git diff -" change, because of so many flags and
-conditions "diff" has. So I only sent the "branch -" patch.
+On 8/13/2022 10:35 AM, Chris Torek wrote:
+> On Fri, Aug 12, 2022 at 7:11 PM Wang, Lei <lei4.wang@intel.com> wrote:
+>>   > git log --numstat --since="2022-06-01" --until="2022-06-21"
+>> --no-merges --format=%n%n%s%n%H%n%cs%n%an\<%ae
+>>
+>> The number of the commits in the output is slightly different. I didn't
+>> do any sync operation in the repo, so the only reason I can found is
+>> that maybe git log involves some stochastic operations, so each time the
+>> output will be a little changed. Is my assumption right?
+> The `--since` and `--until` date values use the *current time* if you do
+> not specify an exact time.  For instance, "yesterday" means "precisely
+> 24 hours ago" (86400 seconds ago), and "--since 2022-06-01" means
+> "since 1 June 2022 at whatever time of day it is right now".  If you want
+> commits with timestamps that are since *midnight* on that day, include
+> the midnight part in the date.
+>
+> (This is probably a UX bug, of sorts: to mean "at now-oclock on a given
+> date" we should probably have a syntax like "2022-06-21:(now)" and
+> when a specific date is given, the default should be midnight for "since"
+> and 23:59:59 for "until", or 23:59:60 if that's a leap-second date.  But
+> changing this is probably not in the cards.)
+>
+> Chris
