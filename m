@@ -2,120 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87CAEC19F2D
-	for <git@archiver.kernel.org>; Sun, 14 Aug 2022 02:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A471C25B06
+	for <git@archiver.kernel.org>; Sun, 14 Aug 2022 06:29:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240097AbiHNCF5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Aug 2022 22:05:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56810 "EHLO
+        id S229586AbiHNG3X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Aug 2022 02:29:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229731AbiHNCF4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Aug 2022 22:05:56 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02F3518347
-        for <git@vger.kernel.org>; Sat, 13 Aug 2022 19:05:55 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id qn6so8052009ejc.11
-        for <git@vger.kernel.org>; Sat, 13 Aug 2022 19:05:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=1JCG5TtOsvZHzfgJNC4H4l4Y7xuvs+vhuqpMrvcUUWM=;
-        b=fP8f8wWa9ffp2j9aY6/Reg7OT6csuiLuncztdLzYL10MpiZDm3jCDzok7J4usOBb/m
-         Xo9BisXPETdf14e0PnK9mWW4e0vfTK3Z0hJuQeffc9goUs8FOoY4bK2aP05MKJ8kMpRw
-         YKEN9DtG3SpGnFRCh/QMrBfdZ8eL8E+U70LEuXwXP+05l+oi7m9Zl39uK8kFAokCRptb
-         HO03N4z8P5KVUoO7CPyctbP58+1+AEtvhUPgEJqb2DGxcCzMj9xUwmWPfox1RrZaPIfP
-         wzBx6x9DFZkoHIe0ltypt125/7ot2zGkvGvY0bq003HNKGkSc9TjQKDUR4niLwZ33CFz
-         8WoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=1JCG5TtOsvZHzfgJNC4H4l4Y7xuvs+vhuqpMrvcUUWM=;
-        b=FlMiwREElPyhPP5H7hxubFGcFHe5qVipS1/9UgOz7pQPA/d4BizR35XekqVk4O8eGf
-         2yxXt5ObxNrVSPWt3IMIv2OmtGmlJn9QoMurjvM7ppxh2vapRsCBJK+KOsit0DTDCN1m
-         01g+ZtVZDuqLv6idrseVZMlvTaMdmRKUat6oJHBD6om+YNOOKwpk/5C7Wk/9R63Vqns+
-         783mNYmJpFPcGAeL1f6i3zYVLvCXGeTFPMkYJF4Qd9QYILlguJgyjQWfsNSLNDWHO3sl
-         SVRSJVTIABpYeoi+d+GAN+KaiWYMZARxgIPDebkbjDzkJCuvv9xhooGfJBR9WWyaihzd
-         gaZA==
-X-Gm-Message-State: ACgBeo0n/2UEmYfAtGdOBAgOf5e/hw2b5rcAAuqjoyZX0Ovum9eSigcP
-        xVGshT2/Wn5WeOxg9CkUHpGTSy1Hw40i+HKJDD8=
-X-Google-Smtp-Source: AA6agR6wL4A303gPD39GOfRb7B2oYC9o/0TVbTMnABlt3r7Lq7b26afg8FHFPk9L9xzua/iPw0nG7e/ebFfreQHKkk8=
-X-Received: by 2002:a17:906:93e8:b0:730:9e5c:b45a with SMTP id
- yl8-20020a17090693e800b007309e5cb45amr6396914ejb.530.1660442753567; Sat, 13
- Aug 2022 19:05:53 -0700 (PDT)
+        with ESMTP id S229479AbiHNG3W (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Aug 2022 02:29:22 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EDC71DA7B
+        for <git@vger.kernel.org>; Sat, 13 Aug 2022 23:29:21 -0700 (PDT)
+Received: (qmail 18351 invoked by uid 109); 14 Aug 2022 06:29:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 14 Aug 2022 06:29:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31421 invoked by uid 111); 14 Aug 2022 06:29:16 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 14 Aug 2022 02:29:16 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sun, 14 Aug 2022 02:29:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     Andrew Olsen <andrew.olsen@koordinates.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: [PATCH] is_promisor_object(): fix use-after-free of tree buffer
+Message-ID: <YviWO9Bhz5PU1HaL@coredump.intra.peff.net>
+References: <CAPJmHpVssKshapGYDF-ifU1fts-jFTC-HqxnjN8meSMP3weB4g@mail.gmail.com>
+ <YvS50W6wku5Y/NC7@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <6896FBE4-9160-4969-8969-D92F9FE19F14@gmx.com> <CAMP44s2A7nJDVRPbixPPPtTedg_Q53CEdw+sBpGZwOfQG4EZSg@mail.gmail.com>
- <0dddb367-ebf9-930f-1b9c-000a532774d3@iee.email>
-In-Reply-To: <0dddb367-ebf9-930f-1b9c-000a532774d3@iee.email>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sat, 13 Aug 2022 21:05:42 -0500
-Message-ID: <CAMP44s1XOyMgX+4hHzNXpUmJ0DURn93=B9dH0pBm5Fk5YRfdvg@mail.gmail.com>
-Subject: Re: "master" term - no one cares
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Ryan <rmrmail@gmx.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YvS50W6wku5Y/NC7@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 13, 2022 at 11:55 AM Philip Oakley <philipoakley@iee.email> wrote:
-> On 13/08/2022 04:15, Felipe Contreras wrote:
+On Thu, Aug 11, 2022 at 04:12:01AM -0400, Jeff King wrote:
 
-> > This is not a Git issue, this is a Git for Windows[1] issue: they are
-> > the ones exposing that message to their users at installation time.
-> >
-> Thanks for the comment. The wider point is to ensure that everyone can
-> choose their own name for their primary line of development (plod), no
-> matter how fast or slow they plod along.
+> So something like this makes the bug go away, though it does feel a
+> little dirty:
 
-Everyone can choose their own name without being asked. All software
-has dozens if not hundreds of default configurations that the user is
-not forced to choose at installation time. When I type "bash" I'm not
-asked what kind of prompt I would like, that would be annoying. I can
-choose to change my bash prompt any time I want, or I could choose to
-keep using the default.
+Having slept on this, I actually think it's the right approach, for the
+reasons given in the commit message below. And we definitely need to do
+_something_ to fix the bug, and preferably something small and un-risky,
+since this should probably go to 'maint'. The other obvious option is
+reverting the original patch, but I think the memory savings it brought
+would be hard to give up, and this patch should reliably fix the bug.
 
-We don't ask users what name they would like for the remote every time
-they clone a repository, we use "origin", and that's fine. The user
-can choose a different origin with --origin, or just use the default.
+Thanks again for a clear bug report.
 
-Being forced to make an *unnecessary* choice is just annoying, but we
-all know why the Git for Windows project is annoying their users and
-it has nothing to do with technical aspects and everything to do with
-*personal* politics.
+-- >8 --
+Subject: is_promisor_object(): fix use-after-free of tree buffer
 
-> There is a confusion between the use of the term that refers to the
-> *personal* mastery of a _craft_ or _artisan_ technique and, at least one
-> of, the historical choices for the usage of the term 'master', which was
-> a direct reference to slave servitude. That was for the use of
-> electrical circuits which would detect the 'tick' of a primary timing
-> pendulum and then have all the actual clock faces that indicated the
-> time be _driven_ from that 'master'.
+Since commit fcc07e980b (is_promisor_object(): free tree buffer after
+parsing, 2021-04-13), we'll always free the buffers attached to a
+"struct tree" after searching them for promisor links. But there's an
+important case where we don't want to do so: if somebody else is already
+using the tree!
 
-This may be the reason why some people used that name in the past, but
-it's not the reason I use it.
+This can happen during a "rev-list --missing=allow-promisor" traversal
+in a partial clone that is missing one or more trees or blobs. The
+backtrace for the free looks like this:
 
-For me if I was cloned there wouldn't be two equally valid versions of
-me, *I* am the original one, I am the "master" copy. This doesn't
-change if my clone is cloned in turn.
+      #1 free_tree_buffer tree.c:147
+      #2 add_promisor_object packfile.c:2250
+      #3 for_each_object_in_pack packfile.c:2190
+      #4 for_each_packed_object packfile.c:2215
+      #5 is_promisor_object packfile.c:2272
+      #6 finish_object__ma builtin/rev-list.c:245
+      #7 finish_object builtin/rev-list.c:261
+      #8 show_object builtin/rev-list.c:274
+      #9 process_blob list-objects.c:63
+      #10 process_tree_contents list-objects.c:145
+      #11 process_tree list-objects.c:201
+      #12 traverse_trees_and_blobs list-objects.c:344
+      [...]
 
-This is exactly how master branches in git are used. I have a master
-branch of git.git, but it's not *the* master branch. *The* master
-branch is the branch from which all the other branches came from,
-including "maint" and "next", and all the dozens of branches in
-thousands of other repositories. If the word "master" makes it sound
-more important than all the other branches in all the other
-repositories, it's because it is.
+We're in the middle of walking through the entries of a tree object via
+process_tree_contents(). We see a blob (or it could even be another tree
+entry) that we don't have, so we call is_promisor_object() to check it.
+That function loops over all of the objects in the promisor packfile,
+including the tree we're currently walking. When we're done with it
+there, we free the tree buffer. But as we return to the walk in
+process_tree_contents(), it's still holding on to a pointer to that
+buffer, via its tree_desc iterator, and it accesses the freed memory.
 
-Regardless of what name people use and for what reason, the reality is
-that "master" is still very widely used, despite of the campaign
-against it which was clearly driven by ideological reasons. And it's
-also a reality that the world is not going to end if users are not
-being forced to pick that one controversial configuration at
-installation time.
+Even a trivial use of "--missing=allow-promisor" triggers this problem,
+as the included test demonstrates (it's just a vanilla --blob:none
+clone).
 
-Cheers.
+We can detect this case by only freeing the tree buffer if it was
+allocated on our behalf. This is a little tricky since that happens
+inside parse_object(), and it doesn't tell us whether the object was
+already parsed, or whether it allocated the buffer itself. But by
+checking for an already-parsed tree beforehand, we can distinguish the
+two cases.
 
+That feels a little hacky, and does incur an extra lookup in the
+object-hash table. But that cost is fairly minimal compared to actually
+loading objects (and since we're iterating the whole pack here, we're
+likely to be loading most objects, rather than reusing cached results).
+
+It may also be a good direction for this function in general, as there
+are other possible optimizations that rely on doing some analysis before
+parsing:
+
+  - we could detect blobs and avoid reading their contents; they can't
+    link to other objects, but parse_object() doesn't know that we don't
+    care about checking their hashes.
+
+  - we could avoid allocating object structs entirely for most objects
+    (since we really only need them in the oidset), which would save
+    some memory.
+
+  - promisor commits could use the commit-graph rather than loading the
+    object from disk
+
+This commit doesn't do any of those optimizations, but I think it argues
+that this direction is reasonable, rather than relying on parse_object()
+and trying to teach it to give us more information about whether it
+parsed.
+
+The included test fails reliably under SANITIZE=address just when
+running "rev-list --missing=allow-promisor". Checking the output isn't
+strictly necessary to detect the bug, but it seems like a reasonable
+addition given the general lack of coverage for "allow-promisor" in the
+test suite.
+
+Reported-by: Andrew Olsen <andrew.olsen@koordinates.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The bug is in v2.32.0. I prepared this directly on top of fcc07e980b,
+but it should apply cleanly to any recent maint or master tips.
+
+ packfile.c               | 15 +++++++++++++--
+ t/t5616-partial-clone.sh |  7 +++++++
+ 2 files changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/packfile.c b/packfile.c
+index b79cbc8cd4..1556a5c3f3 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2225,7 +2225,17 @@ static int add_promisor_object(const struct object_id *oid,
+ 			       void *set_)
+ {
+ 	struct oidset *set = set_;
+-	struct object *obj = parse_object(the_repository, oid);
++	struct object *obj;
++	int we_parsed_object;
++
++	obj = lookup_object(the_repository, oid);
++	if (obj && obj->parsed) {
++		we_parsed_object = 0;
++	} else {
++		we_parsed_object = 1;
++		obj = parse_object(the_repository, oid);
++	}
++
+ 	if (!obj)
+ 		return 1;
+ 
+@@ -2247,7 +2257,8 @@ static int add_promisor_object(const struct object_id *oid,
+ 			return 0;
+ 		while (tree_entry_gently(&desc, &entry))
+ 			oidset_insert(set, &entry.oid);
+-		free_tree_buffer(tree);
++		if (we_parsed_object)
++			free_tree_buffer(tree);
+ 	} else if (obj->type == OBJ_COMMIT) {
+ 		struct commit *commit = (struct commit *) obj;
+ 		struct commit_list *parents = commit->parents;
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 5cb415386e..9c0e422a14 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -49,6 +49,13 @@ test_expect_success 'do partial clone 1' '
+ 	test "$(git -C pc1 config --local remote.origin.partialclonefilter)" = "blob:none"
+ '
+ 
++test_expect_success 'rev-list --missing=allow-promisor on partial clone' '
++	git -C pc1 rev-list --objects --missing=allow-promisor HEAD >actual &&
++	git -C pc1 rev-list --objects --missing=print HEAD >expect.raw &&
++	grep -v "^?" expect.raw >expect &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'verify that .promisor file contains refs fetched' '
+ 	ls pc1/.git/objects/pack/pack-*.promisor >promisorlist &&
+ 	test_line_count = 1 promisorlist &&
 -- 
-Felipe Contreras
+2.37.1.926.g40145d0bb9
+
