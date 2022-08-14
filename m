@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E5EAC25B06
-	for <git@archiver.kernel.org>; Sun, 14 Aug 2022 17:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C249FC25B0F
+	for <git@archiver.kernel.org>; Sun, 14 Aug 2022 17:00:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241723AbiHNRAV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Aug 2022 13:00:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45048 "EHLO
+        id S239845AbiHNRAX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Aug 2022 13:00:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241900AbiHNQ7q (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S241953AbiHNQ7q (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 14 Aug 2022 12:59:46 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E82B16450
-        for <git@vger.kernel.org>; Sun, 14 Aug 2022 09:55:21 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id h13so6630402wrf.6
-        for <git@vger.kernel.org>; Sun, 14 Aug 2022 09:55:21 -0700 (PDT)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D65DDF62
+        for <git@vger.kernel.org>; Sun, 14 Aug 2022 09:55:23 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id j7so6640542wrh.3
+        for <git@vger.kernel.org>; Sun, 14 Aug 2022 09:55:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=Khfczqb8FeCPc8s1/Pk5pADD4fZNIu98MwdUf2wIkq8=;
-        b=JjFapAk325PVFr2AiY6dYO3W2Z0atrWDw22XnG1UzvvMonHbmfQalZ7n1srLAxnvXq
-         kx0VPuF4p2IKtUXxIz2Xnm1HQf5veSHWqWIQUv59EMipjVbl+R2l2alRt5nCtmzM9V0/
-         AvD6NOvSetLlCxCybPZaUrkHKQCOfxMNPC6fD9WhOEYWaBHbYUj3gARf1e3uSm+eppl6
-         Qu3dTgLD5QxClfiWGL/qEluPuhkyWLfIiGkvKy4z5pyeC5FC5IGYb8TPdFkWqIsiL543
-         hXjED4ueOyDfM5gDC0jtuXK63Uphnfche++cVZ9YtxabzuHMfzahK1vPvBstMSQLqC/q
-         SMFg==
+        bh=HbVbbfV0XZun2uRwXAVRnrwH3J9jKCmHcoWiu3EahOI=;
+        b=J6S3lAF1yF+Xnn76al7fNVO1zuOP5+FkDPUNEvL9duslML2sYeRr7wU45JSD/TS8uq
+         4JovKKv79rqvrn2UdF/DQebbSIqjxY4hEvYLk5Z1nO/2QRAGZ19TO2867YHA+ytpJfzC
+         dK7zzzzzQDbuNNnvpe/gLB6GUYDOy7AMR8VoKa8LLizUZNy6bDUEZbp/IptMYOXZQ2Le
+         4qQsL18PO8tfUAU+c4b81DfVBthrNlxX5CmeEV4ppJ7oQE8bt8JtkILwwjjLFOk5rz7R
+         EdYid+MUZ5QLWjC+YrHxFyVXN3q3QUEzJ4drzMtvi/Tcz0G2ArWvk8ohSKfNkjaLr6aH
+         IQhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=Khfczqb8FeCPc8s1/Pk5pADD4fZNIu98MwdUf2wIkq8=;
-        b=B8+GQBu4ght1kouN5whadyx99VFU1wJMPYTDmhlBowtW1Oo508UNtwGomMNe4rwoFs
-         unuKWsblYuTl4YobKOS9OZNK+8VUJgBMXczsavuOy4kSyZ2i13z2h8dlponk/dpK78kz
-         MNVBvOGbytFA3SPzqqvXP8Hu4QP5cPqHRuWZgVM6GrvDZuDpK4aUYWMRhv2ENJ/ceipi
-         6yU74jw3UxeqZ4LRzL+ebQYS4YybSqfylJOKKrRbsG2fWDhCFfPv1kNrE4WnbdqIoFJ1
-         /aJTo31GY/YyntX5M5NlbCfxaQu1o7rdhzW02cWQvN5dgvUrhllhDlq9+unWr9tdGGhz
-         mRFg==
-X-Gm-Message-State: ACgBeo2qd5CvQFwNoiTfH8Rf0An1ZNdaXOpxJdZiosuzQo5e8kb9ZWR6
-        vLs3g67pZ8U6BKhCYjHPqLXW5Bgq2/w=
-X-Google-Smtp-Source: AA6agR5oHdOJSi12gEYWOXx+neT5a59krjeMlSvJM2w+KQAEmU9Pw5AjzieZfHKbvbovANbxOHlVtw==
-X-Received: by 2002:a05:6000:1051:b0:221:6d46:4f0f with SMTP id c17-20020a056000105100b002216d464f0fmr6554164wrx.163.1660496119583;
-        Sun, 14 Aug 2022 09:55:19 -0700 (PDT)
+        bh=HbVbbfV0XZun2uRwXAVRnrwH3J9jKCmHcoWiu3EahOI=;
+        b=HMsmtxbZgzbr/I6NxtrPl1bL2nrPpQBMrdWAdR67SD2paqXd7d/zJv8tuB0R1sadtC
+         v3KNC/a+ypMvzliRoZosRy/KMXM8Tk8XB9pw3pHRoSzmS9ssSvNu17sujNp7G7Iz3HDg
+         /mLgtkH5V5jeXpID5pWP2YIdPYT6giacsW4/mVEaBSIgV1q8nen1m0NMLVSEqWFtNVnb
+         0j408XfId1VCN9bXyBYm+fny8O5RmoJvOaqkYLkLwdAoZEq+0ib5T3V5b69bXJWkh85s
+         TTmTvMJRYItzWK/iWVgYD0Ngz8c3Cs7ZYSZgnb80Ndbi/cx12X0XzjpYbxqL9K2NJ0RG
+         hDfQ==
+X-Gm-Message-State: ACgBeo1YR9nt4Hjo5z9AQpAns1i/m2qV7F8Z/pWzlfU+YIF1FaZuBePy
+        vhjvTUukfEdrOVc2wlaGA6vp+N1PkOY=
+X-Google-Smtp-Source: AA6agR4lCtV94+EAqHIzBB4hIjDKbSepQ0gzSFG3OSi0uyF1h9MRabjwJDxcleDrGvlBozrVV9sLJQ==
+X-Received: by 2002:a05:6000:697:b0:224:bfb3:dbca with SMTP id bo23-20020a056000069700b00224bfb3dbcamr3825140wrb.646.1660496121590;
+        Sun, 14 Aug 2022 09:55:21 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b6-20020a05600c4e0600b003a5f4fccd4asm1183241wmq.35.2022.08.14.09.55.18
+        by smtp.gmail.com with ESMTPSA id q9-20020adff509000000b0021efc75914esm4946525wro.79.2022.08.14.09.55.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Aug 2022 09:55:18 -0700 (PDT)
-Message-Id: <b2b7c5c1703b0e0b64599cef26ead46a4ff46afb.1660496112.git.gitgitgadget@gmail.com>
+        Sun, 14 Aug 2022 09:55:21 -0700 (PDT)
+Message-Id: <b460516b306e6885cd1c0af1c3379fb953952de2.1660496112.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1266.v6.git.1660496112.gitgitgadget@gmail.com>
 References: <pull.1266.v5.git.1658342304.gitgitgadget@gmail.com>
         <pull.1266.v6.git.1660496112.gitgitgadget@gmail.com>
 From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 14 Aug 2022 16:55:09 +0000
-Subject: [PATCH v6 4/6] pack-bitmap-write: learn pack.writeBitmapLookupTable
- and add tests
+Date:   Sun, 14 Aug 2022 16:55:11 +0000
+Subject: [PATCH v6 6/6] bitmap-lookup-table: add performance tests for lookup
+ table
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,1540 +77,436 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 
-Teach Git to provide a way for users to enable/disable bitmap lookup
-table extension by providing a config option named 'writeBitmapLookupTable'.
-Default is false.
+Add performance tests to verify the performance of lookup table.
+`p5310-pack-bitmaps.sh` contain tests with and without lookup table.
+`p5312-pack-bitmaps-revs.sh` contain same tests with and without
+lookup table but with `pack.writeReverseIndex` enabled.
 
-Also add test to verify writting of lookup table.
+Lookup table makes Git run faster in most of the cases. Below is the
+result of `t/perf/p5310-pack-bitmaps.sh`.`perf/p5326-multi-pack-bitmaps.sh`
+gives similar result. The repository used in the test is linux kernel.
+
+Test                                                    this tree
+-----------------------------------------------------------------------
+5310.4: enable lookup table: false                    0.01(0.00+0.00)
+5310.5: repack to disk                                320.89(230.20+23.45)
+5310.6: simulated clone                               14.04(5.78+1.79)
+5310.7: simulated fetch                               1.95(3.05+0.20)
+5310.8: pack to file (bitmap)                         44.73(20.55+7.45)
+5310.9: rev-list (commits)                            0.78(0.46+0.10)
+5310.10: rev-list (objects)                           4.07(3.97+0.08)
+5310.11: rev-list with tag negated via --not          0.06(0.02+0.03)
+         --all (objects)
+5310.12: rev-list with negative tag (objects)         0.21(0.15+0.05)
+5310.13: rev-list count with blob:none                0.24(0.17+0.06)
+5310.14: rev-list count with blob:limit=1k            7.07(5.92+0.48)
+5310.15: rev-list count with tree:0                   0.25(0.17+0.07)
+5310.16: simulated partial clone                      5.67(3.28+0.64)
+5310.18: clone (partial bitmap)                       16.05(8.34+1.86)
+5310.19: pack to file (partial bitmap)                59.76(27.22+7.43)
+5310.20: rev-list with tree filter (partial bitmap)   0.90(0.18+0.16)
+5310.24: enable lookup table: true                    0.01(0.00+0.00)
+5310.25: repack to disk                               319.73(229.30+23.01)
+5310.26: simulated clone                              13.69(5.72+1.78)
+5310.27: simulated fetch                              1.84(3.02+0.16)
+5310.28: pack to file (bitmap)                        45.63(20.67+7.50)
+5310.29: rev-list (commits)                           0.56(0.39+0.8)
+5310.30: rev-list (objects)                           3.77(3.74+0.08)
+5310.31: rev-list with tag negated via --not          0.05(0.02+0.03)
+         --all (objects)
+5310.32: rev-list with negative tag (objects)         0.21(0.15+0.05)
+5310.33: rev-list count with blob:none                0.23(0.17+0.05)
+5310.34: rev-list count with blob:limit=1k            6.65(5.72+0.40)
+5310.35: rev-list count with tree:0                   0.23(0.16+0.06)
+5310.36: simulated partial clone                      5.57(3.26+0.59)
+5310.38: clone (partial bitmap)                       15.89(8.39+1.84)
+5310.39: pack to file (partial bitmap)                58.32(27.55+7.47)
+5310.40: rev-list with tree filter (partial bitmap)   0.73(0.18+0.15)
+
+Test 4-15 are tested without using lookup table. Same tests are
+repeated in 16-30 (using lookup table).
 
 Mentored-by: Taylor Blau <me@ttaylorr.com>
 Co-Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Co-Authored-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 ---
- Documentation/config/pack.txt     |   7 +
- builtin/multi-pack-index.c        |   7 +
- builtin/pack-objects.c            |   8 +
- midx.c                            |   3 +
- midx.h                            |   1 +
- t/t5310-pack-bitmaps.sh           | 792 ++++++++++++++++--------------
- t/t5311-pack-bitmaps-shallow.sh   |  53 +-
- t/t5326-multi-pack-bitmaps.sh     | 421 +++++++++-------
- t/t5327-multi-pack-bitmaps-rev.sh |  24 +-
- 9 files changed, 733 insertions(+), 583 deletions(-)
+ t/perf/lib-bitmap.sh               |  31 +++++++++
+ t/perf/p5310-pack-bitmaps.sh       |  78 +++++++++-------------
+ t/perf/p5311-pack-bitmaps-fetch.sh |  74 ++++++++++++---------
+ t/perf/p5312-pack-bitmaps-revs.sh  |  35 ++++++++++
+ t/perf/p5326-multi-pack-bitmaps.sh | 103 +++++++++++++++++------------
+ 5 files changed, 199 insertions(+), 122 deletions(-)
+ create mode 100755 t/perf/p5312-pack-bitmaps-revs.sh
 
-diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
-index ad7f73a1ead..b955ca572ec 100644
---- a/Documentation/config/pack.txt
-+++ b/Documentation/config/pack.txt
-@@ -164,6 +164,13 @@ When writing a multi-pack reachability bitmap, no new namehashes are
- computed; instead, any namehashes stored in an existing bitmap are
- permuted into their appropriate location when writing a new bitmap.
- 
-+pack.writeBitmapLookupTable::
-+	When true, Git will include a "lookup table" section in the
-+	bitmap index (if one is written). This table is used to defer
-+	loading individual bitmaps as late as possible. This can be
-+	beneficial in repositories that have relatively large bitmap
-+	indexes. Defaults to false.
-+
- pack.writeReverseIndex::
- 	When true, git will write a corresponding .rev file (see:
- 	link:../technical/pack-format.html[Documentation/technical/pack-format.txt])
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 8f24d59a753..e7cce1d26ee 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -87,6 +87,13 @@ static int git_multi_pack_index_write_config(const char *var, const char *value,
- 			opts.flags &= ~MIDX_WRITE_BITMAP_HASH_CACHE;
- 	}
- 
-+	if (!strcmp(var, "pack.writebitmaplookuptable")) {
-+		if (git_config_bool(var, value))
-+			opts.flags |= MIDX_WRITE_BITMAP_LOOKUP_TABLE;
-+		else
-+			opts.flags &= ~MIDX_WRITE_BITMAP_LOOKUP_TABLE;
-+	}
-+
- 	/*
- 	 * We should never make a fall-back call to 'git_default_config', since
- 	 * this was already called in 'cmd_multi_pack_index()'.
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 39e28cfcafc..46e26774963 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3148,6 +3148,14 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 		else
- 			write_bitmap_options &= ~BITMAP_OPT_HASH_CACHE;
- 	}
-+
-+	if (!strcmp(k, "pack.writebitmaplookuptable")) {
-+		if (git_config_bool(k, v))
-+			write_bitmap_options |= BITMAP_OPT_LOOKUP_TABLE;
-+		else
-+			write_bitmap_options &= ~BITMAP_OPT_LOOKUP_TABLE;
-+	}
-+
- 	if (!strcmp(k, "pack.usebitmaps")) {
- 		use_bitmap_index_default = git_config_bool(k, v);
- 		return 0;
-diff --git a/midx.c b/midx.c
-index 4e956cacb71..3ff6e91e6ee 100644
---- a/midx.c
-+++ b/midx.c
-@@ -1070,6 +1070,9 @@ static int write_midx_bitmap(const char *midx_name,
- 	if (flags & MIDX_WRITE_BITMAP_HASH_CACHE)
- 		options |= BITMAP_OPT_HASH_CACHE;
- 
-+	if (flags & MIDX_WRITE_BITMAP_LOOKUP_TABLE)
-+		options |= BITMAP_OPT_LOOKUP_TABLE;
-+
- 	/*
- 	 * Build the MIDX-order index based on pdata.objects (which is already
- 	 * in MIDX order; c.f., 'midx_pack_order_cmp()' for the definition of
-diff --git a/midx.h b/midx.h
-index 22e8e53288e..5578cd7b835 100644
---- a/midx.h
-+++ b/midx.h
-@@ -47,6 +47,7 @@ struct multi_pack_index {
- #define MIDX_WRITE_REV_INDEX (1 << 1)
- #define MIDX_WRITE_BITMAP (1 << 2)
- #define MIDX_WRITE_BITMAP_HASH_CACHE (1 << 3)
-+#define MIDX_WRITE_BITMAP_LOOKUP_TABLE (1 << 4)
- 
- const unsigned char *get_midx_checksum(struct multi_pack_index *m);
- void get_midx_filename(struct strbuf *out, const char *object_dir);
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index f775fc1ce69..c0607172827 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -26,22 +26,413 @@ has_any () {
- 	grep -Ff "$1" "$2"
+diff --git a/t/perf/lib-bitmap.sh b/t/perf/lib-bitmap.sh
+index 63d3bc7cece..55a8feb1dc4 100644
+--- a/t/perf/lib-bitmap.sh
++++ b/t/perf/lib-bitmap.sh
+@@ -67,3 +67,34 @@ test_partial_bitmap () {
+ 			--filter=tree:0 >/dev/null
+ 	'
  }
- 
--setup_bitmap_history
--
--test_expect_success 'setup writing bitmaps during repack' '
--	git config repack.writeBitmaps true
--'
--
--test_expect_success 'full repack creates bitmaps' '
--	GIT_TRACE2_EVENT="$(pwd)/trace" \
-+test_bitmap_cases () {
-+	writeLookupTable=false
-+	for i in "$@"
-+	do
-+		case "$i" in
-+		"pack.writeBitmapLookupTable") writeLookupTable=true;;
-+		esac
-+	done
 +
-+	test_expect_success 'setup test repository' '
-+		rm -fr * .git &&
-+		git init &&
-+		git config pack.writeBitmapLookupTable '"$writeLookupTable"'
-+	'
-+	setup_bitmap_history
-+
-+	test_expect_success 'setup writing bitmaps during repack' '
-+		git config repack.writeBitmaps true
++test_pack_bitmap () {
++	test_perf "repack to disk" '
++		git repack -ad
 +	'
 +
-+	test_expect_success 'full repack creates bitmaps' '
-+		GIT_TRACE2_EVENT="$(pwd)/trace" \
-+			git repack -ad &&
-+		ls .git/objects/pack/ | grep bitmap >output &&
-+		test_line_count = 1 output &&
-+		grep "\"key\":\"num_selected_commits\",\"value\":\"106\"" trace &&
-+		grep "\"key\":\"num_maximal_commits\",\"value\":\"107\"" trace
++	test_full_bitmap
++
++	test_expect_success "create partial bitmap state" '
++		# pick a commit to represent the repo tip in the past
++		cutoff=$(git rev-list HEAD~100 -1) &&
++		orig_tip=$(git rev-parse HEAD) &&
++
++		# now kill off all of the refs and pretend we had
++		# just the one tip
++		rm -rf .git/logs .git/refs/* .git/packed-refs &&
++		git update-ref HEAD $cutoff &&
++
++		# and then repack, which will leave us with a nice
++		# big bitmap pack of the "old" history, and all of
++		# the new history will be loose, as if it had been pushed
++		# up incrementally and exploded via unpack-objects
++		git repack -Ad &&
++
++		# and now restore our original tip, as if the pushes
++		# had happened
++		git update-ref HEAD $orig_tip
 +	'
 +
-+	basic_bitmap_tests
-+
-+	test_expect_success 'pack-objects respects --local (non-local loose)' '
-+		git init --bare alt.git &&
-+		echo $(pwd)/alt.git/objects >.git/objects/info/alternates &&
-+		echo content1 >file1 &&
-+		# non-local loose object which is not present in bitmapped pack
-+		altblob=$(GIT_DIR=alt.git git hash-object -w file1) &&
-+		# non-local loose object which is also present in bitmapped pack
-+		git cat-file blob $blob | GIT_DIR=alt.git git hash-object -w --stdin &&
-+		git add file1 &&
-+		test_tick &&
-+		git commit -m commit_file1 &&
-+		echo HEAD | git pack-objects --local --stdout --revs >1.pack &&
-+		git index-pack 1.pack &&
-+		list_packed_objects 1.idx >1.objects &&
-+		printf "%s\n" "$altblob" "$blob" >nonlocal-loose &&
-+		! has_any nonlocal-loose 1.objects
-+	'
-+
-+	test_expect_success 'pack-objects respects --honor-pack-keep (local non-bitmapped pack)' '
-+		echo content2 >file2 &&
-+		blob2=$(git hash-object -w file2) &&
-+		git add file2 &&
-+		test_tick &&
-+		git commit -m commit_file2 &&
-+		printf "%s\n" "$blob2" "$bitmaptip" >keepobjects &&
-+		pack2=$(git pack-objects pack2 <keepobjects) &&
-+		mv pack2-$pack2.* .git/objects/pack/ &&
-+		>.git/objects/pack/pack2-$pack2.keep &&
-+		rm $(objpath $blob2) &&
-+		echo HEAD | git pack-objects --honor-pack-keep --stdout --revs >2a.pack &&
-+		git index-pack 2a.pack &&
-+		list_packed_objects 2a.idx >2a.objects &&
-+		! has_any keepobjects 2a.objects
-+	'
-+
-+	test_expect_success 'pack-objects respects --local (non-local pack)' '
-+		mv .git/objects/pack/pack2-$pack2.* alt.git/objects/pack/ &&
-+		echo HEAD | git pack-objects --local --stdout --revs >2b.pack &&
-+		git index-pack 2b.pack &&
-+		list_packed_objects 2b.idx >2b.objects &&
-+		! has_any keepobjects 2b.objects
-+	'
-+
-+	test_expect_success 'pack-objects respects --honor-pack-keep (local bitmapped pack)' '
-+		ls .git/objects/pack/ | grep bitmap >output &&
-+		test_line_count = 1 output &&
-+		packbitmap=$(basename $(cat output) .bitmap) &&
-+		list_packed_objects .git/objects/pack/$packbitmap.idx >packbitmap.objects &&
-+		test_when_finished "rm -f .git/objects/pack/$packbitmap.keep" &&
-+		>.git/objects/pack/$packbitmap.keep &&
-+		echo HEAD | git pack-objects --honor-pack-keep --stdout --revs >3a.pack &&
-+		git index-pack 3a.pack &&
-+		list_packed_objects 3a.idx >3a.objects &&
-+		! has_any packbitmap.objects 3a.objects
-+	'
-+
-+	test_expect_success 'pack-objects respects --local (non-local bitmapped pack)' '
-+		mv .git/objects/pack/$packbitmap.* alt.git/objects/pack/ &&
-+		rm -f .git/objects/pack/multi-pack-index &&
-+		test_when_finished "mv alt.git/objects/pack/$packbitmap.* .git/objects/pack/" &&
-+		echo HEAD | git pack-objects --local --stdout --revs >3b.pack &&
-+		git index-pack 3b.pack &&
-+		list_packed_objects 3b.idx >3b.objects &&
-+		! has_any packbitmap.objects 3b.objects
-+	'
-+
-+	test_expect_success 'pack-objects to file can use bitmap' '
-+		# make sure we still have 1 bitmap index from previous tests
-+		ls .git/objects/pack/ | grep bitmap >output &&
-+		test_line_count = 1 output &&
-+		# verify equivalent packs are generated with/without using bitmap index
-+		packasha1=$(git pack-objects --no-use-bitmap-index --all packa </dev/null) &&
-+		packbsha1=$(git pack-objects --use-bitmap-index --all packb </dev/null) &&
-+		list_packed_objects packa-$packasha1.idx >packa.objects &&
-+		list_packed_objects packb-$packbsha1.idx >packb.objects &&
-+		test_cmp packa.objects packb.objects
-+	'
-+
-+	test_expect_success 'full repack, reusing previous bitmaps' '
- 		git repack -ad &&
--	ls .git/objects/pack/ | grep bitmap >output &&
--	test_line_count = 1 output &&
--	grep "\"key\":\"num_selected_commits\",\"value\":\"106\"" trace &&
--	grep "\"key\":\"num_maximal_commits\",\"value\":\"107\"" trace
--'
-+		ls .git/objects/pack/ | grep bitmap >output &&
-+		test_line_count = 1 output
-+	'
-+
-+	test_expect_success 'fetch (full bitmap)' '
-+		git --git-dir=clone.git fetch origin second:second &&
-+		git rev-parse HEAD >expect &&
-+		git --git-dir=clone.git rev-parse HEAD >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success 'create objects for missing-HAVE tests' '
-+		blob=$(echo "missing have" | git hash-object -w --stdin) &&
-+		tree=$(printf "100644 blob $blob\tfile\n" | git mktree) &&
-+		parent=$(echo parent | git commit-tree $tree) &&
-+		commit=$(echo commit | git commit-tree $tree -p $parent) &&
-+		cat >revs <<-EOF
-+		HEAD
-+		^HEAD^
-+		^$commit
-+		EOF
-+	'
-+
-+	test_expect_success 'pack-objects respects --incremental' '
-+		cat >revs2 <<-EOF &&
-+		HEAD
-+		$commit
-+		EOF
-+		git pack-objects --incremental --stdout --revs <revs2 >4.pack &&
-+		git index-pack 4.pack &&
-+		list_packed_objects 4.idx >4.objects &&
-+		test_line_count = 4 4.objects &&
-+		git rev-list --objects $commit >revlist &&
-+		cut -d" " -f1 revlist |sort >objects &&
-+		test_cmp 4.objects objects
-+	'
-+
-+	test_expect_success 'pack with missing blob' '
-+		rm $(objpath $blob) &&
-+		git pack-objects --stdout --revs <revs >/dev/null
-+	'
-+
-+	test_expect_success 'pack with missing tree' '
-+		rm $(objpath $tree) &&
-+		git pack-objects --stdout --revs <revs >/dev/null
-+	'
-+
-+	test_expect_success 'pack with missing parent' '
-+		rm $(objpath $parent) &&
-+		git pack-objects --stdout --revs <revs >/dev/null
-+	'
-+
-+	test_expect_success JGIT,SHA1 'we can read jgit bitmaps' '
-+		git clone --bare . compat-jgit.git &&
-+		(
-+			cd compat-jgit.git &&
-+			rm -f objects/pack/*.bitmap &&
-+			jgit gc &&
-+			git rev-list --test-bitmap HEAD
-+		)
-+	'
-+
-+	test_expect_success JGIT,SHA1 'jgit can read our bitmaps' '
-+		git clone --bare . compat-us.git &&
-+		(
-+			cd compat-us.git &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
-+			git repack -adb &&
-+			# jgit gc will barf if it does not like our bitmaps
-+			jgit gc
-+		)
-+	'
-+
-+	test_expect_success 'splitting packs does not generate bogus bitmaps' '
-+		test-tool genrandom foo $((1024 * 1024)) >rand &&
-+		git add rand &&
-+		git commit -m "commit with big file" &&
-+		git -c pack.packSizeLimit=500k repack -adb &&
-+		git init --bare no-bitmaps.git &&
-+		git -C no-bitmaps.git fetch .. HEAD
-+	'
-+
-+	test_expect_success 'set up reusable pack' '
-+		rm -f .git/objects/pack/*.keep &&
-+		git repack -adb &&
-+		reusable_pack () {
-+			git for-each-ref --format="%(objectname)" |
-+			git pack-objects --delta-base-offset --revs --stdout "$@"
-+		}
-+	'
-+
-+	test_expect_success 'pack reuse respects --honor-pack-keep' '
-+		test_when_finished "rm -f .git/objects/pack/*.keep" &&
-+		for i in .git/objects/pack/*.pack
-+		do
-+			>${i%.pack}.keep || return 1
-+		done &&
-+		reusable_pack --honor-pack-keep >empty.pack &&
-+		git index-pack empty.pack &&
-+		git show-index <empty.idx >actual &&
-+		test_must_be_empty actual
-+	'
-+
-+	test_expect_success 'pack reuse respects --local' '
-+		mv .git/objects/pack/* alt.git/objects/pack/ &&
-+		test_when_finished "mv alt.git/objects/pack/* .git/objects/pack/" &&
-+		reusable_pack --local >empty.pack &&
-+		git index-pack empty.pack &&
-+		git show-index <empty.idx >actual &&
-+		test_must_be_empty actual
-+	'
-+
-+	test_expect_success 'pack reuse respects --incremental' '
-+		reusable_pack --incremental >empty.pack &&
-+		git index-pack empty.pack &&
-+		git show-index <empty.idx >actual &&
-+		test_must_be_empty actual
-+	'
-+
-+	test_expect_success 'truncated bitmap fails gracefully (ewah)' '
-+		test_config pack.writebitmaphashcache false &&
-+		git repack -ad &&
-+		git rev-list --use-bitmap-index --count --all >expect &&
-+		bitmap=$(ls .git/objects/pack/*.bitmap) &&
-+		test_when_finished "rm -f $bitmap" &&
-+		test_copy_bytes 256 <$bitmap >$bitmap.tmp &&
-+		mv -f $bitmap.tmp $bitmap &&
-+		git rev-list --use-bitmap-index --count --all >actual 2>stderr &&
-+		test_cmp expect actual &&
-+		test_i18ngrep corrupt.ewah.bitmap stderr
-+	'
-+
-+	test_expect_success 'truncated bitmap fails gracefully (cache)' '
-+		git repack -ad &&
-+		git rev-list --use-bitmap-index --count --all >expect &&
-+		bitmap=$(ls .git/objects/pack/*.bitmap) &&
-+		test_when_finished "rm -f $bitmap" &&
-+		test_copy_bytes 512 <$bitmap >$bitmap.tmp &&
-+		mv -f $bitmap.tmp $bitmap &&
-+		git rev-list --use-bitmap-index --count --all >actual 2>stderr &&
-+		test_cmp expect actual &&
-+		test_i18ngrep corrupted.bitmap.index stderr
-+	'
-+
-+	# Create a state of history with these properties:
-+	#
-+	#  - refs that allow a client to fetch some new history, while sharing some old
-+	#    history with the server; we use branches delta-reuse-old and
-+	#    delta-reuse-new here
-+	#
-+	#  - the new history contains an object that is stored on the server as a delta
-+	#    against a base that is in the old history
-+	#
-+	#  - the base object is not immediately reachable from the tip of the old
-+	#    history; finding it would involve digging down through history we know the
-+	#    other side has
-+	#
-+	# This should result in a state where fetching from old->new would not
-+	# traditionally reuse the on-disk delta (because we'd have to dig to realize
-+	# that the client has it), but we will do so if bitmaps can tell us cheaply
-+	# that the other side has it.
-+	test_expect_success 'set up thin delta-reuse parent' '
-+		# This first commit contains the buried base object.
-+		test-tool genrandom delta 16384 >file &&
-+		git add file &&
-+		git commit -m "delta base" &&
-+		base=$(git rev-parse --verify HEAD:file) &&
-+
-+		# These intermediate commits bury the base back in history.
-+		# This becomes the "old" state.
-+		for i in 1 2 3 4 5
-+		do
-+			echo $i >file &&
-+			git commit -am "intermediate $i" || return 1
-+		done &&
-+		git branch delta-reuse-old &&
-+
-+		# And now our new history has a delta against the buried base. Note
-+		# that this must be smaller than the original file, since pack-objects
-+		# prefers to create deltas from smaller objects to larger.
-+		test-tool genrandom delta 16300 >file &&
-+		git commit -am "delta result" &&
-+		delta=$(git rev-parse --verify HEAD:file) &&
-+		git branch delta-reuse-new &&
-+
-+		# Repack with bitmaps and double check that we have the expected delta
-+		# relationship.
-+		git repack -adb &&
-+		have_delta $delta $base
-+	'
-+
-+	# Now we can sanity-check the non-bitmap behavior (that the server is not able
-+	# to reuse the delta). This isn't strictly something we care about, so this
-+	# test could be scrapped in the future. But it makes sure that the next test is
-+	# actually triggering the feature we want.
-+	#
-+	# Note that our tools for working with on-the-wire "thin" packs are limited. So
-+	# we actually perform the fetch, retain the resulting pack, and inspect the
-+	# result.
-+	test_expect_success 'fetch without bitmaps ignores delta against old base' '
-+		test_config pack.usebitmaps false &&
-+		test_when_finished "rm -rf client.git" &&
-+		git init --bare client.git &&
-+		(
-+			cd client.git &&
-+			git config transfer.unpackLimit 1 &&
-+			git fetch .. delta-reuse-old:delta-reuse-old &&
-+			git fetch .. delta-reuse-new:delta-reuse-new &&
-+			have_delta $delta $ZERO_OID
-+		)
-+	'
-+
-+	# And do the same for the bitmap case, where we do expect to find the delta.
-+	test_expect_success 'fetch with bitmaps can reuse old base' '
-+		test_config pack.usebitmaps true &&
-+		test_when_finished "rm -rf client.git" &&
-+		git init --bare client.git &&
-+		(
-+			cd client.git &&
-+			git config transfer.unpackLimit 1 &&
-+			git fetch .. delta-reuse-old:delta-reuse-old &&
-+			git fetch .. delta-reuse-new:delta-reuse-new &&
-+			have_delta $delta $base
-+		)
-+	'
-+
-+	test_expect_success 'pack.preferBitmapTips' '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
-+
-+			# create enough commits that not all are receive bitmap
-+			# coverage even if they are all at the tip of some reference.
-+			test_commit_bulk --message="%s" 103 &&
-+
-+			git rev-list HEAD >commits.raw &&
-+			sort <commits.raw >commits &&
-+
-+			git log --format="create refs/tags/%s %H" HEAD >refs &&
-+			git update-ref --stdin <refs &&
-+
-+			git repack -adb &&
-+			test-tool bitmap list-commits | sort >bitmaps &&
-+
-+			# remember which commits did not receive bitmaps
-+			comm -13 bitmaps commits >before &&
-+			test_file_not_empty before &&
-+
-+			# mark the commits which did not receive bitmaps as preferred,
-+			# and generate the bitmap again
-+			perl -pe "s{^}{create refs/tags/include/$. }" <before |
-+				git update-ref --stdin &&
-+			git -c pack.preferBitmapTips=refs/tags/include repack -adb &&
-+
-+			# finally, check that the commit(s) without bitmap coverage
-+			# are not the same ones as before
-+			test-tool bitmap list-commits | sort >bitmaps &&
-+			comm -13 bitmaps commits >after &&
-+
-+			! test_cmp before after
-+		)
-+	'
-+
-+	test_expect_success 'complains about multiple pack bitmaps' '
-+		rm -fr repo &&
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
-+
-+			test_commit base &&
-+
-+			git repack -adb &&
-+			bitmap="$(ls .git/objects/pack/pack-*.bitmap)" &&
-+			mv "$bitmap" "$bitmap.bak" &&
-+
-+			test_commit other &&
-+			git repack -ab &&
-+
-+			mv "$bitmap.bak" "$bitmap" &&
-+
-+			find .git/objects/pack -type f -name "*.pack" >packs &&
-+			find .git/objects/pack -type f -name "*.bitmap" >bitmaps &&
-+			test_line_count = 2 packs &&
-+			test_line_count = 2 bitmaps &&
-+
-+			git rev-list --use-bitmap-index HEAD 2>err &&
-+			grep "ignoring extra bitmap file" err
-+		)
-+	'
++	test_partial_bitmap
 +}
+diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
+index 7ad4f237bc3..b1399f1007e 100755
+--- a/t/perf/p5310-pack-bitmaps.sh
++++ b/t/perf/p5310-pack-bitmaps.sh
+@@ -4,51 +4,37 @@ test_description='Tests pack performance using bitmaps'
+ . ./perf-lib.sh
+ . "${TEST_DIRECTORY}/perf/lib-bitmap.sh"
  
--basic_bitmap_tests
-+test_bitmap_cases
- 
- test_expect_success 'incremental repack fails when bitmaps are requested' '
- 	test_commit more-1 &&
-@@ -54,375 +445,12 @@ test_expect_success 'incremental repack can disable bitmaps' '
- 	git repack -d --no-write-bitmap-index
- '
- 
--test_expect_success 'pack-objects respects --local (non-local loose)' '
--	git init --bare alt.git &&
--	echo $(pwd)/alt.git/objects >.git/objects/info/alternates &&
--	echo content1 >file1 &&
--	# non-local loose object which is not present in bitmapped pack
--	altblob=$(GIT_DIR=alt.git git hash-object -w file1) &&
--	# non-local loose object which is also present in bitmapped pack
--	git cat-file blob $blob | GIT_DIR=alt.git git hash-object -w --stdin &&
--	git add file1 &&
--	test_tick &&
--	git commit -m commit_file1 &&
--	echo HEAD | git pack-objects --local --stdout --revs >1.pack &&
--	git index-pack 1.pack &&
--	list_packed_objects 1.idx >1.objects &&
--	printf "%s\n" "$altblob" "$blob" >nonlocal-loose &&
--	! has_any nonlocal-loose 1.objects
--'
+-test_perf_large_repo
 -
--test_expect_success 'pack-objects respects --honor-pack-keep (local non-bitmapped pack)' '
--	echo content2 >file2 &&
--	blob2=$(git hash-object -w file2) &&
--	git add file2 &&
--	test_tick &&
--	git commit -m commit_file2 &&
--	printf "%s\n" "$blob2" "$bitmaptip" >keepobjects &&
--	pack2=$(git pack-objects pack2 <keepobjects) &&
--	mv pack2-$pack2.* .git/objects/pack/ &&
--	>.git/objects/pack/pack2-$pack2.keep &&
--	rm $(objpath $blob2) &&
--	echo HEAD | git pack-objects --honor-pack-keep --stdout --revs >2a.pack &&
--	git index-pack 2a.pack &&
--	list_packed_objects 2a.idx >2a.objects &&
--	! has_any keepobjects 2a.objects
--'
--
--test_expect_success 'pack-objects respects --local (non-local pack)' '
--	mv .git/objects/pack/pack2-$pack2.* alt.git/objects/pack/ &&
--	echo HEAD | git pack-objects --local --stdout --revs >2b.pack &&
--	git index-pack 2b.pack &&
--	list_packed_objects 2b.idx >2b.objects &&
--	! has_any keepobjects 2b.objects
--'
--
--test_expect_success 'pack-objects respects --honor-pack-keep (local bitmapped pack)' '
--	ls .git/objects/pack/ | grep bitmap >output &&
--	test_line_count = 1 output &&
--	packbitmap=$(basename $(cat output) .bitmap) &&
--	list_packed_objects .git/objects/pack/$packbitmap.idx >packbitmap.objects &&
--	test_when_finished "rm -f .git/objects/pack/$packbitmap.keep" &&
--	>.git/objects/pack/$packbitmap.keep &&
--	echo HEAD | git pack-objects --honor-pack-keep --stdout --revs >3a.pack &&
--	git index-pack 3a.pack &&
--	list_packed_objects 3a.idx >3a.objects &&
--	! has_any packbitmap.objects 3a.objects
--'
--
--test_expect_success 'pack-objects respects --local (non-local bitmapped pack)' '
--	mv .git/objects/pack/$packbitmap.* alt.git/objects/pack/ &&
--	rm -f .git/objects/pack/multi-pack-index &&
--	test_when_finished "mv alt.git/objects/pack/$packbitmap.* .git/objects/pack/" &&
--	echo HEAD | git pack-objects --local --stdout --revs >3b.pack &&
--	git index-pack 3b.pack &&
--	list_packed_objects 3b.idx >3b.objects &&
--	! has_any packbitmap.objects 3b.objects
--'
--
--test_expect_success 'pack-objects to file can use bitmap' '
--	# make sure we still have 1 bitmap index from previous tests
--	ls .git/objects/pack/ | grep bitmap >output &&
--	test_line_count = 1 output &&
--	# verify equivalent packs are generated with/without using bitmap index
--	packasha1=$(git pack-objects --no-use-bitmap-index --all packa </dev/null) &&
--	packbsha1=$(git pack-objects --use-bitmap-index --all packb </dev/null) &&
--	list_packed_objects packa-$packasha1.idx >packa.objects &&
--	list_packed_objects packb-$packbsha1.idx >packb.objects &&
--	test_cmp packa.objects packb.objects
--'
--
--test_expect_success 'full repack, reusing previous bitmaps' '
--	git repack -ad &&
--	ls .git/objects/pack/ | grep bitmap >output &&
--	test_line_count = 1 output
--'
--
--test_expect_success 'fetch (full bitmap)' '
--	git --git-dir=clone.git fetch origin second:second &&
--	git rev-parse HEAD >expect &&
--	git --git-dir=clone.git rev-parse HEAD >actual &&
--	test_cmp expect actual
--'
--
--test_expect_success 'create objects for missing-HAVE tests' '
--	blob=$(echo "missing have" | git hash-object -w --stdin) &&
--	tree=$(printf "100644 blob $blob\tfile\n" | git mktree) &&
--	parent=$(echo parent | git commit-tree $tree) &&
--	commit=$(echo commit | git commit-tree $tree -p $parent) &&
--	cat >revs <<-EOF
--	HEAD
--	^HEAD^
--	^$commit
--	EOF
--'
--
--test_expect_success 'pack-objects respects --incremental' '
--	cat >revs2 <<-EOF &&
--	HEAD
--	$commit
--	EOF
--	git pack-objects --incremental --stdout --revs <revs2 >4.pack &&
--	git index-pack 4.pack &&
--	list_packed_objects 4.idx >4.objects &&
--	test_line_count = 4 4.objects &&
--	git rev-list --objects $commit >revlist &&
--	cut -d" " -f1 revlist |sort >objects &&
--	test_cmp 4.objects objects
--'
--
--test_expect_success 'pack with missing blob' '
--	rm $(objpath $blob) &&
--	git pack-objects --stdout --revs <revs >/dev/null
--'
-+test_bitmap_cases "pack.writeBitmapLookupTable"
- 
--test_expect_success 'pack with missing tree' '
--	rm $(objpath $tree) &&
--	git pack-objects --stdout --revs <revs >/dev/null
--'
--
--test_expect_success 'pack with missing parent' '
--	rm $(objpath $parent) &&
--	git pack-objects --stdout --revs <revs >/dev/null
--'
--
--test_expect_success JGIT,SHA1 'we can read jgit bitmaps' '
--	git clone --bare . compat-jgit.git &&
--	(
--		cd compat-jgit.git &&
--		rm -f objects/pack/*.bitmap &&
--		jgit gc &&
--		git rev-list --test-bitmap HEAD
--	)
--'
--
--test_expect_success JGIT,SHA1 'jgit can read our bitmaps' '
--	git clone --bare . compat-us.git &&
--	(
--		cd compat-us.git &&
--		git repack -adb &&
--		# jgit gc will barf if it does not like our bitmaps
--		jgit gc
--	)
--'
--
--test_expect_success 'splitting packs does not generate bogus bitmaps' '
--	test-tool genrandom foo $((1024 * 1024)) >rand &&
--	git add rand &&
--	git commit -m "commit with big file" &&
--	git -c pack.packSizeLimit=500k repack -adb &&
--	git init --bare no-bitmaps.git &&
--	git -C no-bitmaps.git fetch .. HEAD
--'
--
--test_expect_success 'set up reusable pack' '
--	rm -f .git/objects/pack/*.keep &&
--	git repack -adb &&
--	reusable_pack () {
--		git for-each-ref --format="%(objectname)" |
--		git pack-objects --delta-base-offset --revs --stdout "$@"
--	}
--'
--
--test_expect_success 'pack reuse respects --honor-pack-keep' '
--	test_when_finished "rm -f .git/objects/pack/*.keep" &&
--	for i in .git/objects/pack/*.pack
--	do
--		>${i%.pack}.keep || return 1
--	done &&
--	reusable_pack --honor-pack-keep >empty.pack &&
--	git index-pack empty.pack &&
--	git show-index <empty.idx >actual &&
--	test_must_be_empty actual
--'
--
--test_expect_success 'pack reuse respects --local' '
--	mv .git/objects/pack/* alt.git/objects/pack/ &&
--	test_when_finished "mv alt.git/objects/pack/* .git/objects/pack/" &&
--	reusable_pack --local >empty.pack &&
--	git index-pack empty.pack &&
--	git show-index <empty.idx >actual &&
--	test_must_be_empty actual
--'
--
--test_expect_success 'pack reuse respects --incremental' '
--	reusable_pack --incremental >empty.pack &&
--	git index-pack empty.pack &&
--	git show-index <empty.idx >actual &&
--	test_must_be_empty actual
--'
--
--test_expect_success 'truncated bitmap fails gracefully (ewah)' '
--	test_config pack.writebitmaphashcache false &&
--	git repack -ad &&
--	git rev-list --use-bitmap-index --count --all >expect &&
--	bitmap=$(ls .git/objects/pack/*.bitmap) &&
--	test_when_finished "rm -f $bitmap" &&
--	test_copy_bytes 256 <$bitmap >$bitmap.tmp &&
--	mv -f $bitmap.tmp $bitmap &&
--	git rev-list --use-bitmap-index --count --all >actual 2>stderr &&
--	test_cmp expect actual &&
--	test_i18ngrep corrupt.ewah.bitmap stderr
--'
--
--test_expect_success 'truncated bitmap fails gracefully (cache)' '
--	git repack -ad &&
--	git rev-list --use-bitmap-index --count --all >expect &&
--	bitmap=$(ls .git/objects/pack/*.bitmap) &&
--	test_when_finished "rm -f $bitmap" &&
--	test_copy_bytes 512 <$bitmap >$bitmap.tmp &&
--	mv -f $bitmap.tmp $bitmap &&
--	git rev-list --use-bitmap-index --count --all >actual 2>stderr &&
--	test_cmp expect actual &&
--	test_i18ngrep corrupted.bitmap.index stderr
--'
--
--# Create a state of history with these properties:
+-# note that we do everything through config,
+-# since we want to be able to compare bitmap-aware
+-# git versus non-bitmap git
 -#
--#  - refs that allow a client to fetch some new history, while sharing some old
--#    history with the server; we use branches delta-reuse-old and
--#    delta-reuse-new here
--#
--#  - the new history contains an object that is stored on the server as a delta
--#    against a base that is in the old history
--#
--#  - the base object is not immediately reachable from the tip of the old
--#    history; finding it would involve digging down through history we know the
--#    other side has
--#
--# This should result in a state where fetching from old->new would not
--# traditionally reuse the on-disk delta (because we'd have to dig to realize
--# that the client has it), but we will do so if bitmaps can tell us cheaply
--# that the other side has it.
--test_expect_success 'set up thin delta-reuse parent' '
--	# This first commit contains the buried base object.
--	test-tool genrandom delta 16384 >file &&
--	git add file &&
--	git commit -m "delta base" &&
--	base=$(git rev-parse --verify HEAD:file) &&
--
--	# These intermediate commits bury the base back in history.
--	# This becomes the "old" state.
--	for i in 1 2 3 4 5
--	do
--		echo $i >file &&
--		git commit -am "intermediate $i" || return 1
--	done &&
--	git branch delta-reuse-old &&
--
--	# And now our new history has a delta against the buried base. Note
--	# that this must be smaller than the original file, since pack-objects
--	# prefers to create deltas from smaller objects to larger.
--	test-tool genrandom delta 16300 >file &&
--	git commit -am "delta result" &&
--	delta=$(git rev-parse --verify HEAD:file) &&
--	git branch delta-reuse-new &&
--
--	# Repack with bitmaps and double check that we have the expected delta
--	# relationship.
--	git repack -adb &&
--	have_delta $delta $base
+-# We intentionally use the deprecated pack.writebitmaps
+-# config so that we can test against older versions of git.
+-test_expect_success 'setup bitmap config' '
+-	git config pack.writebitmaps true
 -'
 -
--# Now we can sanity-check the non-bitmap behavior (that the server is not able
--# to reuse the delta). This isn't strictly something we care about, so this
--# test could be scrapped in the future. But it makes sure that the next test is
--# actually triggering the feature we want.
--#
--# Note that our tools for working with on-the-wire "thin" packs are limited. So
--# we actually perform the fetch, retain the resulting pack, and inspect the
--# result.
--test_expect_success 'fetch without bitmaps ignores delta against old base' '
--	test_config pack.usebitmaps false &&
--	test_when_finished "rm -rf client.git" &&
--	git init --bare client.git &&
--	(
--		cd client.git &&
--		git config transfer.unpackLimit 1 &&
--		git fetch .. delta-reuse-old:delta-reuse-old &&
--		git fetch .. delta-reuse-new:delta-reuse-new &&
--		have_delta $delta $ZERO_OID
--	)
+-# we need to create the tag up front such that it is covered by the repack and
+-# thus by generated bitmaps.
+-test_expect_success 'create tags' '
+-	git tag --message="tag pointing to HEAD" perf-tag HEAD
 -'
 -
--# And do the same for the bitmap case, where we do expect to find the delta.
--test_expect_success 'fetch with bitmaps can reuse old base' '
--	test_config pack.usebitmaps true &&
--	test_when_finished "rm -rf client.git" &&
--	git init --bare client.git &&
--	(
--		cd client.git &&
--		git config transfer.unpackLimit 1 &&
--		git fetch .. delta-reuse-old:delta-reuse-old &&
--		git fetch .. delta-reuse-new:delta-reuse-new &&
--		have_delta $delta $base
--	)
+-test_perf 'repack to disk' '
+-	git repack -ad
 -'
 -
--test_expect_success 'pack.preferBitmapTips' '
--	git init repo &&
--	test_when_finished "rm -fr repo" &&
--	(
--		cd repo &&
+-test_full_bitmap
 -
--		# create enough commits that not all are receive bitmap
--		# coverage even if they are all at the tip of some reference.
--		test_commit_bulk --message="%s" 103 &&
+-test_expect_success 'create partial bitmap state' '
+-	# pick a commit to represent the repo tip in the past
+-	cutoff=$(git rev-list HEAD~100 -1) &&
+-	orig_tip=$(git rev-parse HEAD) &&
 -
--		git rev-list HEAD >commits.raw &&
--		sort <commits.raw >commits &&
+-	# now kill off all of the refs and pretend we had
+-	# just the one tip
+-	rm -rf .git/logs .git/refs/* .git/packed-refs &&
+-	git update-ref HEAD $cutoff &&
 -
--		git log --format="create refs/tags/%s %H" HEAD >refs &&
--		git update-ref --stdin <refs &&
+-	# and then repack, which will leave us with a nice
+-	# big bitmap pack of the "old" history, and all of
+-	# the new history will be loose, as if it had been pushed
+-	# up incrementally and exploded via unpack-objects
+-	git repack -Ad &&
 -
--		git repack -adb &&
--		test-tool bitmap list-commits | sort >bitmaps &&
--
--		# remember which commits did not receive bitmaps
--		comm -13 bitmaps commits >before &&
--		test_file_not_empty before &&
--
--		# mark the commits which did not receive bitmaps as preferred,
--		# and generate the bitmap again
--		perl -pe "s{^}{create refs/tags/include/$. }" <before |
--			git update-ref --stdin &&
--		git -c pack.preferBitmapTips=refs/tags/include repack -adb &&
--
--		# finally, check that the commit(s) without bitmap coverage
--		# are not the same ones as before
--		test-tool bitmap list-commits | sort >bitmaps &&
--		comm -13 bitmaps commits >after &&
--
--		! test_cmp before after
--	)
+-	# and now restore our original tip, as if the pushes
+-	# had happened
+-	git update-ref HEAD $orig_tip
 -'
 -
--test_expect_success 'complains about multiple pack bitmaps' '
--	rm -fr repo &&
--	git init repo &&
--	test_when_finished "rm -fr repo" &&
--	(
--		cd repo &&
--
--		test_commit base &&
--
--		git repack -adb &&
--		bitmap="$(ls .git/objects/pack/pack-*.bitmap)" &&
--		mv "$bitmap" "$bitmap.bak" &&
--
--		test_commit other &&
--		git repack -ab &&
--
--		mv "$bitmap.bak" "$bitmap" &&
--
--		find .git/objects/pack -type f -name "*.pack" >packs &&
--		find .git/objects/pack -type f -name "*.bitmap" >bitmaps &&
--		test_line_count = 2 packs &&
--		test_line_count = 2 bitmaps &&
--
--		git rev-list --use-bitmap-index HEAD 2>err &&
--		grep "ignoring extra bitmap file" err
--	)
-+test_expect_success 'verify writing bitmap lookup table when enabled' '
-+	GIT_TRACE2_EVENT="$(pwd)/trace2" \
-+		git repack -ad &&
-+	grep "\"label\":\"writing_lookup_table\"" trace2
- '
+-test_partial_bitmap
++test_lookup_pack_bitmap () {
++	test_expect_success 'start the test from scratch' '
++		rm -rf * .git
++	'
++
++	test_perf_large_repo
++
++	# note that we do everything through config,
++	# since we want to be able to compare bitmap-aware
++	# git versus non-bitmap git
++	#
++	# We intentionally use the deprecated pack.writebitmaps
++	# config so that we can test against older versions of git.
++	test_expect_success 'setup bitmap config' '
++		git config pack.writebitmaps true
++	'
++
++	# we need to create the tag up front such that it is covered by the repack and
++	# thus by generated bitmaps.
++	test_expect_success 'create tags' '
++		git tag --message="tag pointing to HEAD" perf-tag HEAD
++	'
++
++	test_perf "enable lookup table: $1" '
++		git config pack.writeBitmapLookupTable '"$1"'
++	'
++
++	test_pack_bitmap
++}
++
++test_lookup_pack_bitmap false
++test_lookup_pack_bitmap true
  
  test_done
-diff --git a/t/t5311-pack-bitmaps-shallow.sh b/t/t5311-pack-bitmaps-shallow.sh
-index 872a95df338..9dae60f73e3 100755
---- a/t/t5311-pack-bitmaps-shallow.sh
-+++ b/t/t5311-pack-bitmaps-shallow.sh
-@@ -17,23 +17,40 @@ test_description='check bitmap operation with shallow repositories'
- # the tree for A. But in a shallow one, we've grafted away
- # A, and fetching A to B requires that the other side send
- # us the tree for file=1.
--test_expect_success 'setup shallow repo' '
--	echo 1 >file &&
--	git add file &&
--	git commit -m orig &&
--	echo 2 >file &&
--	git commit -a -m update &&
--	git clone --no-local --bare --depth=1 . shallow.git &&
--	echo 1 >file &&
--	git commit -a -m repeat
+diff --git a/t/perf/p5311-pack-bitmaps-fetch.sh b/t/perf/p5311-pack-bitmaps-fetch.sh
+index 47c3fd7581c..426fab87e32 100755
+--- a/t/perf/p5311-pack-bitmaps-fetch.sh
++++ b/t/perf/p5311-pack-bitmaps-fetch.sh
+@@ -3,42 +3,52 @@
+ test_description='performance of fetches from bitmapped packs'
+ . ./perf-lib.sh
+ 
+-test_perf_default_repo
+-
+-test_expect_success 'create bitmapped server repo' '
+-	git config pack.writebitmaps true &&
+-	git repack -ad
 -'
 -
--test_expect_success 'turn on bitmaps in the parent' '
+-# simulate a fetch from a repository that last fetched N days ago, for
+-# various values of N. We do so by following the first-parent chain,
+-# and assume the first entry in the chain that is N days older than the current
+-# HEAD is where the HEAD would have been then.
+-for days in 1 2 4 8 16 32 64 128; do
+-	title=$(printf '%10s' "($days days)")
+-	test_expect_success "setup revs from $days days ago" '
+-		now=$(git log -1 --format=%ct HEAD) &&
+-		then=$(($now - ($days * 86400))) &&
+-		tip=$(git rev-list -1 --first-parent --until=$then HEAD) &&
+-		{
+-			echo HEAD &&
+-			echo ^$tip
+-		} >revs
++test_fetch_bitmaps () {
++	test_expect_success 'setup test directory' '
++		rm -fr * .git
+ 	'
+ 
+-	test_perf "server $title" '
+-		git pack-objects --stdout --revs \
+-				 --thin --delta-base-offset \
+-				 <revs >tmp.pack
+-	'
++	test_perf_default_repo
+ 
+-	test_size "size   $title" '
+-		wc -c <tmp.pack
++	test_expect_success 'create bitmapped server repo' '
++		git config pack.writebitmaps true &&
++		git config pack.writeBitmapLookupTable '"$1"' &&
++		git repack -ad
+ 	'
+ 
+-	test_perf "client $title" '
+-		git index-pack --stdin --fix-thin <tmp.pack
+-	'
+-done
++	# simulate a fetch from a repository that last fetched N days ago, for
++	# various values of N. We do so by following the first-parent chain,
++	# and assume the first entry in the chain that is N days older than the current
++	# HEAD is where the HEAD would have been then.
++	for days in 1 2 4 8 16 32 64 128; do
++		title=$(printf '%10s' "($days days)")
++		test_expect_success "setup revs from $days days ago" '
++			now=$(git log -1 --format=%ct HEAD) &&
++			then=$(($now - ($days * 86400))) &&
++			tip=$(git rev-list -1 --first-parent --until=$then HEAD) &&
++			{
++				echo HEAD &&
++				echo ^$tip
++			} >revs
++		'
++
++		test_perf "server $title (lookup=$1)" '
++			git pack-objects --stdout --revs \
++					--thin --delta-base-offset \
++					<revs >tmp.pack
++		'
++
++		test_size "size   $title" '
++			wc -c <tmp.pack
++		'
++
++		test_perf "client $title (lookup=$1)" '
++			git index-pack --stdin --fix-thin <tmp.pack
++		'
++	done
++}
++
++test_fetch_bitmaps true
++test_fetch_bitmaps false
+ 
+ test_done
+diff --git a/t/perf/p5312-pack-bitmaps-revs.sh b/t/perf/p5312-pack-bitmaps-revs.sh
+new file mode 100755
+index 00000000000..0684b690af0
+--- /dev/null
++++ b/t/perf/p5312-pack-bitmaps-revs.sh
+@@ -0,0 +1,35 @@
++#!/bin/sh
++
++test_description='Tests pack performance using bitmaps (rev index enabled)'
++. ./perf-lib.sh
++. "${TEST_DIRECTORY}/perf/lib-bitmap.sh"
++
++test_lookup_pack_bitmap () {
++	test_expect_success 'start the test from scratch' '
++		rm -rf * .git
++	'
++
++	test_perf_large_repo
++
++	test_expect_success 'setup bitmap config' '
++		git config pack.writebitmaps true &&
++		git config pack.writeReverseIndex true
++	'
++
++	# we need to create the tag up front such that it is covered by the repack and
++	# thus by generated bitmaps.
++	test_expect_success 'create tags' '
++		git tag --message="tag pointing to HEAD" perf-tag HEAD
++	'
++
++	test_perf "enable lookup table: $1" '
++		git config pack.writeBitmapLookupTable '"$1"'
++	'
++
++	test_pack_bitmap
++}
++
++test_lookup_pack_bitmap false
++test_lookup_pack_bitmap true
++
++test_done
+diff --git a/t/perf/p5326-multi-pack-bitmaps.sh b/t/perf/p5326-multi-pack-bitmaps.sh
+index f2fa228f16a..d082e6cacbe 100755
+--- a/t/perf/p5326-multi-pack-bitmaps.sh
++++ b/t/perf/p5326-multi-pack-bitmaps.sh
+@@ -4,49 +4,64 @@ test_description='Tests performance using midx bitmaps'
+ . ./perf-lib.sh
+ . "${TEST_DIRECTORY}/perf/lib-bitmap.sh"
+ 
+-test_perf_large_repo
+-
+-# we need to create the tag up front such that it is covered by the repack and
+-# thus by generated bitmaps.
+-test_expect_success 'create tags' '
+-	git tag --message="tag pointing to HEAD" perf-tag HEAD
+-'
+-
+-test_expect_success 'start with bitmapped pack' '
 -	git repack -adb
 -'
 -
--test_expect_success 'shallow fetch from bitmapped repo' '
--	(cd shallow.git && git fetch)
+-test_perf 'setup multi-pack index' '
+-	git multi-pack-index write --bitmap
 -'
-+test_shallow_bitmaps () {
-+	writeLookupTable=false
+-
+-test_expect_success 'drop pack bitmap' '
+-	rm -f .git/objects/pack/pack-*.bitmap
+-'
+-
+-test_full_bitmap
+-
+-test_expect_success 'create partial bitmap state' '
+-	# pick a commit to represent the repo tip in the past
+-	cutoff=$(git rev-list HEAD~100 -1) &&
+-	orig_tip=$(git rev-parse HEAD) &&
+-
+-	# now pretend we have just one tip
+-	rm -rf .git/logs .git/refs/* .git/packed-refs &&
+-	git update-ref HEAD $cutoff &&
+-
+-	# and then repack, which will leave us with a nice
+-	# big bitmap pack of the "old" history, and all of
+-	# the new history will be loose, as if it had been pushed
+-	# up incrementally and exploded via unpack-objects
+-	git repack -Ad &&
+-	git multi-pack-index write --bitmap &&
+-
+-	# and now restore our original tip, as if the pushes
+-	# had happened
+-	git update-ref HEAD $orig_tip
+-'
+-
+-test_partial_bitmap
++test_bitmap () {
++	local enabled="$1"
 +
-+	for i in "$@"
-+	do
-+		case $i in
-+		"pack.writeBitmapLookupTable") writeLookupTable=true;;
-+		esac
-+	done
-+
-+	test_expect_success 'setup shallow repo' '
-+		rm -rf * .git &&
-+		git init &&
-+		git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
-+		echo 1 >file &&
-+		git add file &&
-+		git commit -m orig &&
-+		echo 2 >file &&
-+		git commit -a -m update &&
-+		git clone --no-local --bare --depth=1 . shallow.git &&
-+		echo 1 >file &&
-+		git commit -a -m repeat
++	test_expect_success "remove existing repo (lookup=$enabled)" '
++		rm -fr * .git
 +	'
 +
-+	test_expect_success 'turn on bitmaps in the parent' '
++	test_perf_large_repo
++
++	# we need to create the tag up front such that it is covered by the repack and
++	# thus by generated bitmaps.
++	test_expect_success 'create tags' '
++		git tag --message="tag pointing to HEAD" perf-tag HEAD
++	'
++
++	test_expect_success "use lookup table: $enabled" '
++		git config pack.writeBitmapLookupTable '"$enabled"'
++	'
++
++	test_expect_success "start with bitmapped pack (lookup=$enabled)" '
 +		git repack -adb
 +	'
 +
-+	test_expect_success 'shallow fetch from bitmapped repo' '
-+		(cd shallow.git && git fetch)
++	test_perf "setup multi-pack index (lookup=$enabled)" '
++		git multi-pack-index write --bitmap
 +	'
++
++	test_expect_success "drop pack bitmap (lookup=$enabled)" '
++		rm -f .git/objects/pack/pack-*.bitmap
++	'
++
++	test_full_bitmap
++
++	test_expect_success "create partial bitmap state (lookup=$enabled)" '
++		# pick a commit to represent the repo tip in the past
++		cutoff=$(git rev-list HEAD~100 -1) &&
++		orig_tip=$(git rev-parse HEAD) &&
++
++		# now pretend we have just one tip
++		rm -rf .git/logs .git/refs/* .git/packed-refs &&
++		git update-ref HEAD $cutoff &&
++
++		# and then repack, which will leave us with a nice
++		# big bitmap pack of the "old" history, and all of
++		# the new history will be loose, as if it had been pushed
++		# up incrementally and exploded via unpack-objects
++		git repack -Ad &&
++		git multi-pack-index write --bitmap &&
++
++		# and now restore our original tip, as if the pushes
++		# had happened
++		git update-ref HEAD $orig_tip
++	'
++
++	test_partial_bitmap
 +}
 +
-+test_shallow_bitmaps
-+test_shallow_bitmaps "pack.writeBitmapLookupTable"
- 
- test_done
-diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
-index 4fe57414c13..3b206adcee6 100755
---- a/t/t5326-multi-pack-bitmaps.sh
-+++ b/t/t5326-multi-pack-bitmaps.sh
-@@ -15,17 +15,24 @@ GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
- sane_unset GIT_TEST_MIDX_WRITE_REV
- sane_unset GIT_TEST_MIDX_READ_RIDX
- 
--midx_bitmap_core
--
- bitmap_reuse_tests() {
- 	from=$1
- 	to=$2
-+	writeLookupTable=false
-+
-+	for i in $3-${$#}
-+	do
-+		case $i in
-+		"pack.writeBitmapLookupTable") writeLookupTable=true;;
-+		esac
-+	done
- 
- 	test_expect_success "setup pack reuse tests ($from -> $to)" '
- 		rm -fr repo &&
- 		git init repo &&
- 		(
- 			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
- 			test_commit_bulk 16 &&
- 			git tag old-tip &&
- 
-@@ -43,6 +50,7 @@ bitmap_reuse_tests() {
- 	test_expect_success "build bitmap from existing ($from -> $to)" '
- 		(
- 			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
- 			test_commit_bulk --id=further 16 &&
- 			git tag new-tip &&
- 
-@@ -59,6 +67,7 @@ bitmap_reuse_tests() {
- 	test_expect_success "verify resulting bitmaps ($from -> $to)" '
- 		(
- 			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
- 			git for-each-ref &&
- 			git rev-list --test-bitmap refs/tags/old-tip &&
- 			git rev-list --test-bitmap refs/tags/new-tip
-@@ -66,244 +75,294 @@ bitmap_reuse_tests() {
- 	'
- }
- 
--bitmap_reuse_tests 'pack' 'MIDX'
--bitmap_reuse_tests 'MIDX' 'pack'
--bitmap_reuse_tests 'MIDX' 'MIDX'
-+test_midx_bitmap_cases () {
-+	writeLookupTable=false
-+	writeBitmapLookupTable=
-+
-+	for i in "$@"
-+	do
-+		case $i in
-+		"pack.writeBitmapLookupTable")
-+			writeLookupTable=true
-+			writeBitmapLookupTable="$i"
-+			;;
-+		esac
-+	done
-+
-+	test_expect_success 'setup test_repository' '
-+		rm -rf * .git &&
-+		git init &&
-+		git config pack.writeBitmapLookupTable '"$writeLookupTable"'
-+	'
- 
--test_expect_success 'missing object closure fails gracefully' '
--	rm -fr repo &&
--	git init repo &&
--	test_when_finished "rm -fr repo" &&
--	(
--		cd repo &&
-+	midx_bitmap_core
- 
--		test_commit loose &&
--		test_commit packed &&
-+	bitmap_reuse_tests 'pack' 'MIDX' "$writeBitmapLookupTable"
-+	bitmap_reuse_tests 'MIDX' 'pack' "$writeBitmapLookupTable"
-+	bitmap_reuse_tests 'MIDX' 'MIDX' "$writeBitmapLookupTable"
- 
--		# Do not pass "--revs"; we want a pack without the "loose"
--		# commit.
--		git pack-objects $objdir/pack/pack <<-EOF &&
--		$(git rev-parse packed)
--		EOF
-+	test_expect_success 'missing object closure fails gracefully' '
-+		rm -fr repo &&
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
- 
--		test_must_fail git multi-pack-index write --bitmap 2>err &&
--		grep "doesn.t have full closure" err &&
--		test_path_is_missing $midx
--	)
--'
-+			test_commit loose &&
-+			test_commit packed &&
- 
--midx_bitmap_partial_tests
-+			# Do not pass "--revs"; we want a pack without the "loose"
-+			# commit.
-+			git pack-objects $objdir/pack/pack <<-EOF &&
-+			$(git rev-parse packed)
-+			EOF
- 
--test_expect_success 'removing a MIDX clears stale bitmaps' '
--	rm -fr repo &&
--	git init repo &&
--	test_when_finished "rm -fr repo" &&
--	(
--		cd repo &&
--		test_commit base &&
--		git repack &&
--		git multi-pack-index write --bitmap &&
-+			test_must_fail git multi-pack-index write --bitmap 2>err &&
-+			grep "doesn.t have full closure" err &&
-+			test_path_is_missing $midx
-+		)
-+	'
- 
--		# Write a MIDX and bitmap; remove the MIDX but leave the bitmap.
--		stale_bitmap=$midx-$(midx_checksum $objdir).bitmap &&
--		rm $midx &&
-+	midx_bitmap_partial_tests
- 
--		# Then write a new MIDX.
--		test_commit new &&
--		git repack &&
--		git multi-pack-index write --bitmap &&
-+	test_expect_success 'removing a MIDX clears stale bitmaps' '
-+		rm -fr repo &&
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
-+			test_commit base &&
-+			git repack &&
-+			git multi-pack-index write --bitmap &&
-+
-+			# Write a MIDX and bitmap; remove the MIDX but leave the bitmap.
-+			stale_bitmap=$midx-$(midx_checksum $objdir).bitmap &&
-+			rm $midx &&
-+
-+			# Then write a new MIDX.
-+			test_commit new &&
-+			git repack &&
-+			git multi-pack-index write --bitmap &&
-+
-+			test_path_is_file $midx &&
-+			test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
-+			test_path_is_missing $stale_bitmap
-+		)
-+	'
- 
--		test_path_is_file $midx &&
--		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
--		test_path_is_missing $stale_bitmap
--	)
--'
-+	test_expect_success 'pack.preferBitmapTips' '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
- 
--test_expect_success 'pack.preferBitmapTips' '
--	git init repo &&
--	test_when_finished "rm -fr repo" &&
--	(
--		cd repo &&
-+			test_commit_bulk --message="%s" 103 &&
- 
--		test_commit_bulk --message="%s" 103 &&
-+			git log --format="%H" >commits.raw &&
-+			sort <commits.raw >commits &&
- 
--		git log --format="%H" >commits.raw &&
--		sort <commits.raw >commits &&
-+			git log --format="create refs/tags/%s %H" HEAD >refs &&
-+			git update-ref --stdin <refs &&
- 
--		git log --format="create refs/tags/%s %H" HEAD >refs &&
--		git update-ref --stdin <refs &&
-+			git multi-pack-index write --bitmap &&
-+			test_path_is_file $midx &&
-+			test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
- 
--		git multi-pack-index write --bitmap &&
--		test_path_is_file $midx &&
--		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
-+			test-tool bitmap list-commits | sort >bitmaps &&
-+			comm -13 bitmaps commits >before &&
-+			test_line_count = 1 before &&
- 
--		test-tool bitmap list-commits | sort >bitmaps &&
--		comm -13 bitmaps commits >before &&
--		test_line_count = 1 before &&
-+			perl -ne "printf(\"create refs/tags/include/%d \", $.); print" \
-+				<before | git update-ref --stdin &&
- 
--		perl -ne "printf(\"create refs/tags/include/%d \", $.); print" \
--			<before | git update-ref --stdin &&
-+			rm -fr $midx-$(midx_checksum $objdir).bitmap &&
-+			rm -fr $midx &&
- 
--		rm -fr $midx-$(midx_checksum $objdir).bitmap &&
--		rm -fr $midx &&
-+			git -c pack.preferBitmapTips=refs/tags/include \
-+				multi-pack-index write --bitmap &&
-+			test-tool bitmap list-commits | sort >bitmaps &&
-+			comm -13 bitmaps commits >after &&
- 
--		git -c pack.preferBitmapTips=refs/tags/include \
--			multi-pack-index write --bitmap &&
--		test-tool bitmap list-commits | sort >bitmaps &&
--		comm -13 bitmaps commits >after &&
-+			! test_cmp before after
-+		)
-+	'
- 
--		! test_cmp before after
--	)
--'
-+	test_expect_success 'writing a bitmap with --refs-snapshot' '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
- 
--test_expect_success 'writing a bitmap with --refs-snapshot' '
--	git init repo &&
--	test_when_finished "rm -fr repo" &&
--	(
--		cd repo &&
-+			test_commit one &&
-+			test_commit two &&
- 
--		test_commit one &&
--		test_commit two &&
-+			git rev-parse one >snapshot &&
- 
--		git rev-parse one >snapshot &&
-+			git repack -ad &&
- 
--		git repack -ad &&
-+			# First, write a MIDX which see both refs/tags/one and
-+			# refs/tags/two (causing both of those commits to receive
-+			# bitmaps).
-+			git multi-pack-index write --bitmap &&
- 
--		# First, write a MIDX which see both refs/tags/one and
--		# refs/tags/two (causing both of those commits to receive
--		# bitmaps).
--		git multi-pack-index write --bitmap &&
-+			test_path_is_file $midx &&
-+			test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
- 
--		test_path_is_file $midx &&
--		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
-+			test-tool bitmap list-commits | sort >bitmaps &&
-+			grep "$(git rev-parse one)" bitmaps &&
-+			grep "$(git rev-parse two)" bitmaps &&
- 
--		test-tool bitmap list-commits | sort >bitmaps &&
--		grep "$(git rev-parse one)" bitmaps &&
--		grep "$(git rev-parse two)" bitmaps &&
-+			rm -fr $midx-$(midx_checksum $objdir).bitmap &&
-+			rm -fr $midx &&
- 
--		rm -fr $midx-$(midx_checksum $objdir).bitmap &&
--		rm -fr $midx &&
-+			# Then again, but with a refs snapshot which only sees
-+			# refs/tags/one.
-+			git multi-pack-index write --bitmap --refs-snapshot=snapshot &&
- 
--		# Then again, but with a refs snapshot which only sees
--		# refs/tags/one.
--		git multi-pack-index write --bitmap --refs-snapshot=snapshot &&
-+			test_path_is_file $midx &&
-+			test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
- 
--		test_path_is_file $midx &&
--		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
-+			test-tool bitmap list-commits | sort >bitmaps &&
-+			grep "$(git rev-parse one)" bitmaps &&
-+			! grep "$(git rev-parse two)" bitmaps
-+		)
-+	'
- 
--		test-tool bitmap list-commits | sort >bitmaps &&
--		grep "$(git rev-parse one)" bitmaps &&
--		! grep "$(git rev-parse two)" bitmaps
--	)
--'
-+	test_expect_success 'write a bitmap with --refs-snapshot (preferred tips)' '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
- 
--test_expect_success 'write a bitmap with --refs-snapshot (preferred tips)' '
--	git init repo &&
--	test_when_finished "rm -fr repo" &&
--	(
--		cd repo &&
-+			test_commit_bulk --message="%s" 103 &&
- 
--		test_commit_bulk --message="%s" 103 &&
-+			git log --format="%H" >commits.raw &&
-+			sort <commits.raw >commits &&
- 
--		git log --format="%H" >commits.raw &&
--		sort <commits.raw >commits &&
-+			git log --format="create refs/tags/%s %H" HEAD >refs &&
-+			git update-ref --stdin <refs &&
- 
--		git log --format="create refs/tags/%s %H" HEAD >refs &&
--		git update-ref --stdin <refs &&
-+			git multi-pack-index write --bitmap &&
-+			test_path_is_file $midx &&
-+			test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
- 
--		git multi-pack-index write --bitmap &&
--		test_path_is_file $midx &&
--		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
-+			test-tool bitmap list-commits | sort >bitmaps &&
-+			comm -13 bitmaps commits >before &&
-+			test_line_count = 1 before &&
- 
--		test-tool bitmap list-commits | sort >bitmaps &&
--		comm -13 bitmaps commits >before &&
--		test_line_count = 1 before &&
-+			(
-+				grep -vf before commits.raw &&
-+				# mark missing commits as preferred
-+				sed "s/^/+/" before
-+			) >snapshot &&
- 
-+			rm -fr $midx-$(midx_checksum $objdir).bitmap &&
-+			rm -fr $midx &&
-+
-+			git multi-pack-index write --bitmap --refs-snapshot=snapshot &&
-+			test-tool bitmap list-commits | sort >bitmaps &&
-+			comm -13 bitmaps commits >after &&
-+
-+			! test_cmp before after
-+		)
-+	'
-+
-+	test_expect_success 'hash-cache values are propagated from pack bitmaps' '
-+		rm -fr repo &&
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
- 		(
--			grep -vf before commits.raw &&
--			# mark missing commits as preferred
--			sed "s/^/+/" before
--		) >snapshot &&
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
- 
--		rm -fr $midx-$(midx_checksum $objdir).bitmap &&
--		rm -fr $midx &&
-+			test_commit base &&
-+			test_commit base2 &&
-+			git repack -adb &&
- 
--		git multi-pack-index write --bitmap --refs-snapshot=snapshot &&
--		test-tool bitmap list-commits | sort >bitmaps &&
--		comm -13 bitmaps commits >after &&
-+			test-tool bitmap dump-hashes >pack.raw &&
-+			test_file_not_empty pack.raw &&
-+			sort pack.raw >pack.hashes &&
- 
--		! test_cmp before after
--	)
--'
-+			test_commit new &&
-+			git repack &&
-+			git multi-pack-index write --bitmap &&
- 
--test_expect_success 'hash-cache values are propagated from pack bitmaps' '
--	rm -fr repo &&
--	git init repo &&
--	test_when_finished "rm -fr repo" &&
--	(
--		cd repo &&
-+			test-tool bitmap dump-hashes >midx.raw &&
-+			sort midx.raw >midx.hashes &&
- 
--		test_commit base &&
--		test_commit base2 &&
--		git repack -adb &&
-+			# ensure that every namehash in the pack bitmap can be found in
-+			# the midx bitmap (i.e., that there are no oid-namehash pairs
-+			# unique to the pack bitmap).
-+			comm -23 pack.hashes midx.hashes >dropped.hashes &&
-+			test_must_be_empty dropped.hashes
-+		)
-+	'
- 
--		test-tool bitmap dump-hashes >pack.raw &&
--		test_file_not_empty pack.raw &&
--		sort pack.raw >pack.hashes &&
-+	test_expect_success 'no .bitmap is written without any objects' '
-+		rm -fr repo &&
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
- 
--		test_commit new &&
--		git repack &&
--		git multi-pack-index write --bitmap &&
-+			empty="$(git pack-objects $objdir/pack/pack </dev/null)" &&
-+			cat >packs <<-EOF &&
-+			pack-$empty.idx
-+			EOF
- 
--		test-tool bitmap dump-hashes >midx.raw &&
--		sort midx.raw >midx.hashes &&
-+			git multi-pack-index write --bitmap --stdin-packs \
-+				<packs 2>err &&
- 
--		# ensure that every namehash in the pack bitmap can be found in
--		# the midx bitmap (i.e., that there are no oid-namehash pairs
--		# unique to the pack bitmap).
--		comm -23 pack.hashes midx.hashes >dropped.hashes &&
--		test_must_be_empty dropped.hashes
--	)
--'
-+			grep "bitmap without any objects" err &&
- 
--test_expect_success 'no .bitmap is written without any objects' '
--	rm -fr repo &&
--	git init repo &&
--	test_when_finished "rm -fr repo" &&
--	(
--		cd repo &&
-+			test_path_is_file $midx &&
-+			test_path_is_missing $midx-$(midx_checksum $objdir).bitmap
-+		)
-+	'
-+
-+	test_expect_success 'graceful fallback when missing reverse index' '
-+		rm -fr repo &&
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
- 
--		empty="$(git pack-objects $objdir/pack/pack </dev/null)" &&
--		cat >packs <<-EOF &&
--		pack-$empty.idx
--		EOF
-+			test_commit base &&
- 
--		git multi-pack-index write --bitmap --stdin-packs \
--			<packs 2>err &&
-+			# write a pack and MIDX bitmap containing base
-+			git repack -adb &&
-+			git multi-pack-index write --bitmap &&
- 
--		grep "bitmap without any objects" err &&
-+			GIT_TEST_MIDX_READ_RIDX=0 \
-+				git rev-list --use-bitmap-index HEAD 2>err &&
-+			! grep "ignoring extra bitmap file" err
-+		)
-+	'
-+}
- 
--		test_path_is_file $midx &&
--		test_path_is_missing $midx-$(midx_checksum $objdir).bitmap
--	)
--'
-+test_midx_bitmap_cases
-+
-+test_midx_bitmap_cases "pack.writeBitmapLookupTable"
- 
--test_expect_success 'graceful fallback when missing reverse index' '
-+test_expect_success 'multi-pack-index write writes lookup table if enabled' '
- 	rm -fr repo &&
- 	git init repo &&
- 	test_when_finished "rm -fr repo" &&
- 	(
- 		cd repo &&
--
- 		test_commit base &&
--
--		# write a pack and MIDX bitmap containing base
--		git repack -adb &&
--		git multi-pack-index write --bitmap &&
--
--		GIT_TEST_MIDX_READ_RIDX=0 \
--			git rev-list --use-bitmap-index HEAD 2>err &&
--		! grep "ignoring extra bitmap file" err
-+		git config pack.writeBitmapLookupTable true &&
-+		git repack -ad &&
-+		GIT_TRACE2_EVENT="$(pwd)/trace" \
-+			git multi-pack-index write --bitmap &&
-+		grep "\"label\":\"writing_lookup_table\"" trace
- 	)
- '
- 
-diff --git a/t/t5327-multi-pack-bitmaps-rev.sh b/t/t5327-multi-pack-bitmaps-rev.sh
-index d30ba632c87..e65e311cd73 100755
---- a/t/t5327-multi-pack-bitmaps-rev.sh
-+++ b/t/t5327-multi-pack-bitmaps-rev.sh
-@@ -17,7 +17,27 @@ GIT_TEST_MIDX_READ_RIDX=0
- export GIT_TEST_MIDX_WRITE_REV
- export GIT_TEST_MIDX_READ_RIDX
- 
--midx_bitmap_core rev
--midx_bitmap_partial_tests rev
-+test_midx_bitmap_rev () {
-+	writeLookupTable=false
-+
-+	for i in "$@"
-+	do
-+		case $i in
-+		"pack.writeBitmapLookupTable") writeLookupTable=true;;
-+		esac
-+	done
-+
-+	test_expect_success 'setup bitmap config' '
-+		rm -rf * .git &&
-+		git init &&
-+		git config pack.writeBitmapLookupTable '"$writeLookupTable"'
-+	'
-+
-+	midx_bitmap_core rev
-+	midx_bitmap_partial_tests rev
-+}
-+
-+test_midx_bitmap_rev
-+test_midx_bitmap_rev "pack.writeBitmapLookupTable"
++test_bitmap false
++test_bitmap true
  
  test_done
 -- 
 gitgitgadget
-
