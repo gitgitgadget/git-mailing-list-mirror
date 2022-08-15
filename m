@@ -2,142 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90FF1C00140
-	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 12:25:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9A86C25B06
+	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 12:50:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241736AbiHOMZ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Aug 2022 08:25:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37686 "EHLO
+        id S242536AbiHOMum (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Aug 2022 08:50:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242445AbiHOMZt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Aug 2022 08:25:49 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2862E1903C
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 05:25:47 -0700 (PDT)
+        with ESMTP id S242588AbiHOMuj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Aug 2022 08:50:39 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6183F635D
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 05:50:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660566345;
-        bh=jXbELNQo50Zpzni+E8eGBkMBDg1xslNd8v09WMXrUFE=;
+        s=badeba3b8450; t=1660567826;
+        bh=2gjCQ+OyzKjt3czKsq1w2sSlnTUuVyLXE0wXpqsLKOs=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=SQPDVTiXP9yUannczZxSspgQUrXYxmoiIHj+KOKpNFz5fSlHUJJ/oLMs816hxepOn
-         iWEkQb1vYw0T+Mk4B5Mu6g9xBTfRpNy71GxxBx1C2kN9TSNM8PVM4VvbhdLsyi5k0X
-         +KodC2fTTvOkBqme5P6N73uUY31wZSfZjMDg9DBc=
+        b=Qt56RQjVhU6JwdvubV0Gl4RBh57UoN+36rU35TfLMUXHnRbYMA7mXmsGvrP2f7HgZ
+         fzCjaalN/PmbmV36n+MmHpAYeD31q9IYqY38T7zIMfCycmwadj8vTvB85f/TgHipHv
+         t5UaG1iNRKSN3c5qxGALSDfVyh2VRdXzh28MPeDg=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N6KUd-1nHn6H3TEv-016iXv; Mon, 15
- Aug 2022 14:25:44 +0200
-Date:   Mon, 15 Aug 2022 14:25:49 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N63Vi-1nHVSz3Kqe-016QdL; Mon, 15
+ Aug 2022 14:50:26 +0200
+Date:   Mon, 15 Aug 2022 14:50:29 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     demerphq <demerphq@gmail.com>
-cc:     Git <git@vger.kernel.org>
-Subject: Re: "bubbling up" patches in a commit sequence.
-In-Reply-To: <CANgJU+VYSuEkU+V0WRpsTPv9iPYeDo52MeMHuD7-Yp4JnA60NA@mail.gmail.com>
-Message-ID: <7o9n6751-2083-155s-02op-o5635o4qr278@tzk.qr>
-References: <CANgJU+VYSuEkU+V0WRpsTPv9iPYeDo52MeMHuD7-Yp4JnA60NA@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Justin Donnelly <justinrdonnelly@gmail.com>,
+        Justin Donnelly via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, newren@gmail.com, phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] git-prompt: show presence of unresolved conflicts at
+ command prompt
+In-Reply-To: <xmqqy1vq3zm3.fsf@gitster.g>
+Message-ID: <r980s5q6-7714-8r0q-4sp1-3qs1458r17qs@tzk.qr>
+References: <pull.1302.git.1658798595633.gitgitgadget@gmail.com>        <pull.1302.v2.git.1659132518935.gitgitgadget@gmail.com>        <CAGTqyRw-SYDbQy9aktq5s3ZhoDhUOCf-pEopjH9m7v5+PH7Qqg@mail.gmail.com> <xmqqy1vq3zm3.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:mCZcR5ceLu+sx7dMXtOA2Wh2hrZ2JYdTN6eZpQNjBj7FzPLYBFr
- gJBaVaqEmvif3ETOeCEgYF9rK301z/SWUjquk999upolNsY7i2eKMU/aEV4NgQrUK8S147f
- 8XMCnxZL79qIsyc7m+eKwXE0YkuTGiv3WE6eK9YhG+8jG0KwRxVfIly+yhIix6i5ob8Gm5s
- EMculRq9Og6alC7mS7BGw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:zXLk0ru73oU=:eFkPPFsv/UBznzgEPw76WI
- LZ2S8wWYLox6qfDdWPA5KaMpVvA6eK4O3MwO5uyuKdYcFgXULuy6BWaNz7vrrFSWMKnpGhv0p
- bLo/ulti/eLqdEuqpeUVTd2Rz2jyQhOjvCzfsndC6Dy4mHE9MqhA4g99vXImb0XHHuD2XjZgy
- ZDToB+feUPaE/uBYzTv15vay4/5RjqHnCbf+GG8JJHmO2qHffKKnWXaM9tGYq60tKVEmYiIlv
- I7mdNSJpAVRiXMaPen9rSkt6pESZo54SJY5eV8qQZ/L7CatMFaf7RHTbEUOga4i194C7tPX6h
- d0rDoGVXvMK6ivIZ3r+2F1ihLFC6EqErfPPX/l3anhZj246BkDTGY03bShoSi2hkn7osE64AD
- uYKzNWrh3IoOZv0UHmHgN5uUvi6tLs9NDcBRb2EtbciYCFOBgS6w5j9uOkldGFaHSHKtPa98B
- 0ZyoB5xRK/50La0iQ5yFxgNTf66E/BwZNHjAd2sOCgG35TRIi8w3h0iU3BDcIu6kdtyyGky19
- kkrleNlkwCa0uoRIMQRTUZ6pNV+PzzQbk6sm/MlF7jKqonijZUQAHskN9eBPC3YNFChdNnk0D
- 93a76mfqjph3jdhaVr4vtZzyvU08HMYwLPZ0ApnS9WQGwLRmKIye+0p47jiz27REj0shfx6F/
- WInDBLAp2SWd+MZWvsq0LMaOSt/ZYPaaLA6jK0ccN+Q1JhAOTmov2HJjam5Ci82GbFIBK9eT5
- awEm+x9fLs2Jme3PZPLMrQh6kQ5pPmAEqFuKy55jH+OJikXbMhS8br4RO2xqmv7gGzuxOWjfm
- agodBWEic2qtQdT9ONVTgkPNxX9pCSAVXrlkKmF5MsdjM0IoRAe3k6ZD16/6riTBpwHdAfh0f
- L4y31VOlakW57YtIHiTm326jRVKzcU6OD8izSEeXUpGJ5EaeKyawGENA6oVW2prRerIi5r40O
- eNuetFqDFxrprVCS8+E5+7IZbNlFWMLC5M/2XkXx0H3ae7rL6DSJNG3Xz6sjl/XZwBS2c0t8L
- 9jWQMOQK41htdPI87XL8Tiy4vCNcLp7w4+LpyRbD6Ue+hxXJ0c3N7BsZ3r2+vuvQ380/vdQE5
- fT3zk7EUcvPY3PHW0GgiLQ6o7kIU2dsuLZy11+nVOYDDmLQPaS3jirWLQ==
+X-Provags-ID: V03:K1:rVbwg+Ah9rW6nrU1R1/FB98sHovlLhP64nyETT4rdL6SU9blepN
+ whj4kyu9LIg8hlooJc5GUZH1KnLzJWfqlToFI3V0Iv15xBQBwMQ//Ts9K7I1CsV9tjk14i+
+ ark/IKX6c+kvnLuJSt0tZX88xaIXfux2NSghRiTJhikcuth5DPl+SKL0FLfq1ZaH2CJXlbH
+ 8USqRBd4y2LDz0RoQa8ng==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bAbSk1k2xPg=:Q1lJ3Ldjd1IZQW18wdMbm2
+ rwWlddWKH/hw93y1jHivT3cnBnuHF9Szup71QQ/gbk3NiWKghgJRG2WodfoZ/q5QWgJWTkb0e
+ Ny8ywHMdVfcKDwzxDiULZJMWEEDR8A4kTun8DKsFCiu+8Mw5/3SR0jGWWZi06m5j2ISehscen
+ wuRVS4cgDnR8DMkwR56wkIPKv6rPoREF2A+pRz5oOIrA8eGqafdr+eQ/AoQ8AZnStD+SwW+Cb
+ od29bhKnsXNIQS1vovxUM/k6jFd2bxJmqICyxfGjfm9MIm97M9Iqjb6DkMd7RRSMypzuRYbHA
+ 55mxtu4FUHFLE8yIdR4uLLJ00GeGTgAlmLBeovpjCyrs6McDikx9FUioohFu3n4RiQEkgT6on
+ 4TRf/WuKLIj+TYSjD0iU5uYFvRQtShSntRqNcNaPFAtB2yo1RUkjwB74mob8rkdan+mRijkBP
+ 30scWbvG1MQj/rq8on9OkpjowehOCjfb9iCcULBYOcvGdqNMkN0WKZa9DSdjXEEnfCERYWnpf
+ MdIlYDFdJQDmDSETICJVVxFbpc4RD8GJY6Pv7qJ1whHjvldHsiNTfgQbOroiE34Vr8b2MOkDY
+ uMaicC1hHQrZkm4dLqbxTNFsqDBjPWz7lQqierSZj6LH+WpD5BfSXo1ID+qaegK+9EUITRbxJ
+ mtRLXADkACE/gNlRXW9CidzWnW+PNE0uuP4zk2tE9YguDij7BgzSTVJyDBh5snoApobIJdONv
+ czUMCmx8OarVNTz8X51kW6CjPlyIzdVq3VYitDHSgdbLnH6F6Sf1vhshDfhBUYHEZQVilQhla
+ EIF7UOLs+VyfzymwjfT8ew0+A97wwhmsz7Afy+WmPctgBrqxtwNgrebXHYqCVaFTxbKxOR/vl
+ hR2U5tdXifRk6Plz5J7JsLcbm0fIxCYGgsM2E6iqW7+yoOI6eUlFzqr/1hQ1TFuk6RRWWERWz
+ JUCK1B/zbdC2ZRUZnJTFzqkLRo252LlDja+ZIsgPIK0UeAMHR+XxP4eUonhoDTdgIcOp5hGdQ
+ kn3gmqrILL7U2jbGUntDSBIl9rX7KwLcWo+0Di+xCSDqlVJFAIPZWfy94arfcrBafReZS1UOl
+ HgGsMa1bhDv07naRvsZksFgEgOXYY8q8bp9DmhTxiWk+kS/H2zYas0qeA==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Yves,
+Hi,
 
-On Sat, 13 Aug 2022, demerphq wrote:
+On Sun, 14 Aug 2022, Junio C Hamano wrote:
 
-> I keep finding myself using interactive rebase to try to find the
-> earliest place in a change sequence that a given commit can be placed
-> without conflicting with any other patch.
+> Justin Donnelly <justinrdonnelly@gmail.com> writes:
+>
+> > I hope this is against protocol/etiquette, but after some initial
+> > feedback from Junio, I haven't gotten any more. I wasn't sure if
+> > nobody had seen the patch, or if there just wasn't any interest.
+>
+> It probably is a bit of both.  I personally did not see much point
+> in adding the long "conflicts" marker to the shell prompt (I did
+> worry about possible complaints by end users triggered by seeing
+> them suddenly without asking, which was why I commented on the
+> patch) and I was waiting for interested folks to speak out.
 
-I find myself doing that a lot, too. So much so that I wrote shell code to
-do that for me. The essential idea is to use the diff hunk header of the
-hunk that I want to stage and transmogrify it into the `-L
-<start>,<end>:<path>` parameter of `git log` (and yes, the `sed` call to
-transmogrify that is a bit hard to read).
-
-The relevant part of the code looks like this:
-
--- snip --
-sh_quote () {
-	for arg
-	do
-		echo "'$(echo "$arg" | sed "s/'/'\\''/g")'"
-	done
-}
-
-staged_log () { # [--upstream=<ref> | -u <ref>]
-	upstream=not\ set
-	while case "$1" in
-	--upstream) shift; upstream="$1";;
-	--upstream=*) upstream="${1#*=}";;
-	-u) shift; upstream="$1";;
-	-*) die "Unknown option: $1";;
-	*) break;;
-	esac; do shift; done
-
-	test not\ set != "$upstream" ||
-	upstream="$(git rev-parse @{upstream} 2>/dev/null)"
-
-	# look beyond upstream if identical to HEAD
-	test -z "$upstream" || test 0 != $(git rev-list --count $upstream..) || upstream=
-	diff="$(git diff --cached -U1)"
-	cached_diff="$diff"
-	test -n "$diff" ||
-	diff="$(git diff -U1)"
-	test -n "$diff" ||
-	die "No changes"
-
-	args="$(echo "$diff" |
-		sed -ne '/^--- a\//{s/^-* a\/\(.*\)/'\''\1'\''/;x}' -e \
-			'/^@@ -/{s/^@@ -\([^, ]*\),\([^ ]*\).*/-L \1,+\2/;s/^@@ -\([^,]*\) .*/-L \1,+1/;G;s/\n/:/g;p}' |
-			tr '\n' ' ') ${upstream:+$upstream..} $(sh_quote "$@")"
-
-	eval "git log $args"
-
-	revs="$(eval "git log --pretty=%H --no-patch $args")"
-	case "$revs" in
-	*[!0-9a-z]*) ;; # multiple revs
-	'')
-		# not a single rev
-		test -z "$upstream" ||
-		staged_log -u ''
-		;;
-	?*)
-		printf "Commit (yes/no/edit)? "
-		read line
-		case "$line" in
-		[Yy]*) git commit --fixup "$revs" $(test -n "$cached_diff" || echo "-a");;
-		[Ee]*) git commit --fixup "$revs" $(test -n "$cached_diff" || echo "-a") -se;;
-		esac
-		;;
-	esac
-}
--- snap --
-
-Unfortunately, the `-L <...>` code currently works reliably only for a
-single hunk, if I use multiple hunks, I sometimes run into assertions.
-
-To help with that, the shell code looks at the staged hunk(s), if any.
-Only if no changes are staged, it falls back to the unstaged diff.
+Speaking for myself, I was too busy elsewhere. But now that I looked over
+the patch, I think it is fine. My only feedback is that it would be wise
+to only add a single test case because that is plenty enough (after all,
+it validates the `ls-files --unmerged` call and not the `cherry-pick`
+code) and it is unnecessary to waste the electricity on additional tests
+cases (even if somebody else foots the bill, it would do well for all of
+us to start being more mindful about energy consumption).
 
 Ciao,
 Dscho
