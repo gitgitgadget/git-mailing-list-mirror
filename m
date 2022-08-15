@@ -2,130 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBF54C25B0E
-	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 13:15:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 352BCC00140
+	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 13:18:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242909AbiHONPZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Aug 2022 09:15:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53578 "EHLO
+        id S242837AbiHONSo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Aug 2022 09:18:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242807AbiHONPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Aug 2022 09:15:12 -0400
-Received: from outboundhk.mxmail.xiaomi.com (outboundhk.mxmail.xiaomi.com [207.226.244.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6FFC41900E
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 06:15:09 -0700 (PDT)
-X-IronPort-AV: E=Sophos;i="5.93,238,1654531200"; 
-   d="scan'208";a="39221075"
-Received: from hk-mbx02.mioffice.cn (HELO xiaomi.com) ([10.56.8.122])
-  by outboundhk.mxmail.xiaomi.com with ESMTP; 15 Aug 2022 21:15:08 +0800
-Received: from yz-mbx07.mioffice.cn (10.237.88.127) by HK-MBX02.mioffice.cn
- (10.56.8.122) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 15 Aug
- 2022 21:15:08 +0800
-Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by yz-mbx07.mioffice.cn
- (10.237.88.127) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 15 Aug
- 2022 21:15:07 +0800
-Received: from BJ-MBX01.mioffice.cn ([fe80::1839:49c8:1d62:7218]) by
- BJ-MBX01.mioffice.cn ([fe80::1839:49c8:1d62:7218%9]) with mapi id
- 15.02.0986.029; Mon, 15 Aug 2022 21:15:07 +0800
-From:   =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
-To:     ZheNing Hu <adlternative@gmail.com>
-CC:     Jonathan Tan <jonathantanmy@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
-        =?utf-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>,
-        =?utf-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>,
-        =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
-        =?utf-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
-Subject: RE: [External Mail]Re: Partial-clone cause big performance impact on
- server
-Thread-Topic: [External Mail]Re: Partial-clone cause big performance impact on
- server
-Thread-Index: AditV5yCC1rR4WwDR+uOdfckQ0GBIQADD4yAAGB4/fAAT1esgAAhQ0wA
-Date:   Mon, 15 Aug 2022 13:15:07 +0000
-Message-ID: <44c62b62ce8f418d8929bdffc894d329@xiaomi.com>
-References: <bfa3de4485614badb4a27d8cfba99968@xiaomi.com>
- <20220811172219.2308120-1-jonathantanmy@google.com>
- <08dae83ba1b541adac0fd96e2f99b194@xiaomi.com>
- <CAOLTT8R6hNKWGen4RD2sSU-asjjS6HXnxY2JC4k9SeL4YDzB-g@mail.gmail.com>
-In-Reply-To: <CAOLTT8R6hNKWGen4RD2sSU-asjjS6HXnxY2JC4k9SeL4YDzB-g@mail.gmail.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.237.8.11]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        with ESMTP id S229490AbiHONSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Aug 2022 09:18:41 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF0F7183B4
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 06:18:40 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id 10so2342540iou.2
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 06:18:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=zsVJtcjilHgbDuTVjq2T1ruw4+F6OY1HASJMUvnYb/E=;
+        b=N/20ziEhfBMWnOlGlw+6YwBrbSvldZDAjmPeJWq7o/UG/i1GZvYGwAGCwbbfhY7F8I
+         Wr5ZRTsIz3tkgXVETW4dbFqA+lZyFISdu0BNgu5cV2nv1Pjgx+n+8pzzaHMOyZBNn1gU
+         KXUdo11aBzrCdD/F7YgZvpmx2naJ0DyqpMAUYAN48re+rxr/w2v7fXRQa1ie8YhTjCZn
+         e36PWUiX/pgupeBm5z+zHrqhQtRGVefbvdg7HRcGzjG0g+obdKVJeNBejD/AmEyyeRpd
+         oqCLSzYMEeQ01SSmxYZG/5lWxh6b7t9wUb9KM+OVntM1TJHNHPPeYXu8noi0YMelUhvs
+         mM1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=zsVJtcjilHgbDuTVjq2T1ruw4+F6OY1HASJMUvnYb/E=;
+        b=Ogps61vEQ++mmO8+Rn6zoHvea7kHMHvS2iSpFJLkmaS15RFa33HLsHz1PVVrG0uD4M
+         /BRjnGSCcHi9gfGIJpWnCy/XYY5uxneagAq6N/QagV3ArgUrKi2bTzaxL2+uf9mStyBV
+         cK0yUWyjWuvhmWf3UZ4+UyEsmlndVU7GrPyuEp8ylElggrPxjceaNTyDRUejnqBN/WK5
+         rDBP2/ECw58D8nic2aYhWdfa9G36Ot6dK0qypGqmvH7pE5xWDYDeqdbI/7byxb+BPPNX
+         zGDWysaqKgBDYsFQX7yPvRsg6mGSQiZvmEnXG8a4fAhHRJXpQNzZkM8AZyNcF3Cl9Ppk
+         hzaA==
+X-Gm-Message-State: ACgBeo3/FdXjNPt4nnfYvae0RPNA7yGaIwLUWRhSAIl/wxlFJ62fork8
+        bKQuDjEyNPTb/IWhC3sdG6WP
+X-Google-Smtp-Source: AA6agR7V07tyHx5KUpicMh2sCM841D/7G2dDoLHF236ynU8nciKePTUgMghyAD0rwsPLkO+WzUHxkg==
+X-Received: by 2002:a6b:ba08:0:b0:688:5fd3:e75b with SMTP id k8-20020a6bba08000000b006885fd3e75bmr1587477iof.59.1660569520180;
+        Mon, 15 Aug 2022 06:18:40 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:dc96:39f4:9d7d:e4b1? ([2600:1700:e72:80a0:dc96:39f4:9d7d:e4b1])
+        by smtp.gmail.com with ESMTPSA id z5-20020a029385000000b0033f4e58cfadsm3219186jah.133.2022.08.15.06.18.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Aug 2022 06:18:39 -0700 (PDT)
+Message-ID: <85e6fd08-c741-26d4-1393-4b115133e687@github.com>
+Date:   Mon, 15 Aug 2022 09:18:38 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: Partial-clone cause big performance impact on server
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?UTF-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
+        =?UTF-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>,
+        =?UTF-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>,
+        =?UTF-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
+        =?UTF-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
+References: <bfa3de4485614badb4a27d8cfba99968@xiaomi.com>
+ <YviaoXRctE9fg/mB@coredump.intra.peff.net>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <YviaoXRctE9fg/mB@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VGhlcmUgaXMgYSByZWFsbHkgZWFzeSB3YXkgdG8gcmVwcm9kdWNlIGl0DQoNCmdpdCBjbG9uZSAt
-LWZpbHRlcj1ibG9iOm5vbmUgLWIgbWFzdGVyICJodHRwczovL2FuZHJvaWQuZ29vZ2xlc291cmNl
-LmNvbS9wbGF0Zm9ybS9wcmVidWlsdHMvZ3JhZGxlLXBsdWdpbiINCg0KRXZlbiBHb29nbGUgQU9T
-UCBHZXJyaXQgd2lsbCBoYXZlIHRoaXMgcHJvYmxlbS4gWW91IHdpbGwgZmluZCBpdCBoYW5nIGZv
-ciBtaW51dGVzIG9uIGNoZWNrb3V0DQoNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0K
-PiBGcm9tOiBaaGVOaW5nIEh1IDxhZGx0ZXJuYXRpdmVAZ21haWwuY29tPg0KPiBTZW50OiBNb25k
-YXksIEF1Z3VzdCAxNSwgMjAyMiAxOjE2IFBNDQo+IFRvOiDnqIvmtIsgPGNoZW5neWFuZ0B4aWFv
-bWkuY29tPg0KPiBDYzogSm9uYXRoYW4gVGFuIDxqb25hdGhhbnRhbm15QGdvb2dsZS5jb20+OyBn
-aXRAdmdlci5rZXJuZWwub3JnOyDkvZXmtakNCj4gPGhlaGFvQHhpYW9taS5jb20+OyBYaW43IE1h
-IOmprOmRqyA8bWF4aW43QHhpYW9taS5jb20+OyDnn7PlpYnlhbUNCj4gPHNoaWZlbmdiaW5nQHhp
-YW9taS5jb20+OyDlh6HlhpvovokgPGZhbmp1bmh1aUB4aWFvbWkuY29tPjsg546L5rGJ5Z+6DQo+
-IDx3YW5naGFuamlAeGlhb21pLmNvbT4NCj4gU3ViamVjdDogUmU6IFtFeHRlcm5hbCBNYWlsXVJl
-OiBQYXJ0aWFsLWNsb25lIGNhdXNlIGJpZyBwZXJmb3JtYW5jZSBpbXBhY3Qgb24NCj4gc2VydmVy
-DQo+DQo+IFvlpJbpg6jpgq7ku7ZdIOatpOmCruS7tuadpea6kOS6juWwj+exs+WFrOWPuOWklumD
-qO+8jOivt+iwqOaFjuWkhOeQhuOAgg0KPg0KPiDnqIvmtIsgPGNoZW5neWFuZ0B4aWFvbWkuY29t
-PiDkuo4yMDIy5bm0OOaciDEz5pel5ZGo5YWtIDE2OjAw5YaZ6YGT77yaDQo+ID4NCj4gPiA+ID4g
-ICAgIDMuIHdpdGggR0lUX1RSQUNFX1BBQ0tFVD0xLiBXZSBmb3VuZCBvbiBiaWcgcmVwb3NpdG9y
-aWVzDQo+ICgyMDBLK3JlZnMsIDZtKyBvYmplY3RzKS4gR2l0IHdpbGwgc2VuZHMgNDBrIHdhbnQu
-DQo+ID4gPiA+ICAgICA0LiBBbmQgd2UgdGhlbiB0cmFjayBvdXIgc2VydmVyKHdoaWNoIGlzIGdl
-cnJpdCB3aXRoIGpnaXQpLiBXZSBmb3VuZA0KPiB0aGUgc2VydmVyIGlzIGNvdXRpbmcgb2JqZWN0
-cy4gVGhlbiB3ZSBjaGVjayB0aG9zZSA0MGsgb2JqZWN0cywgbW9zdCBvZiB0aGVtDQo+IGFyZSBi
-bG9icyByYXRoZXIgdGhhbiBjb21taXQuICh3aGljaCBtZWFucyB0aGV5J3JlIG5vdCBpbiBiaXRt
-YXApDQo+ID4gPiA+ICAgICA1LiBXZSBiZWxpZXZlIHRoYXQncyB0aGUgcm9vdCBjYXVzZSBvZiBv
-dXIgcHJvYmxlbS4gR2l0IHNlbmRzIHRvbw0KPiBtYW55ICJ3YW50IFNIQTEiIHdoaWNoIGFyZSBu
-b3QgaW4gYml0bWFwLCBjYXVzZSB0aGUgc2VydmVyIHRvIGNvdW50DQo+IG9iamVjdHMgZnJlcXVl
-bnRseSwgd2hpY2ggdGhlbiBzbG93IGRvd24gdGhlIHNlcnZlci4NCj4gPiA+ID4NCj4gPiA+ID4g
-V2hhdCB3ZSB3YW50IGlzLCBkb3dubG9hZCB0aGUgdGhpbmdzIHdlIG5lZWQgdG8gY2hlY2tvdXQg
-dG8gc3BlY2lmaWMNCj4gY29tbWl0LiBCdXQgaWYgb25lIGNvbW1pdCBjb250YWluIHNvIG1hbnkg
-b2JqZWN0cyAobGlrZSB1cyAsIDQwayspLiBJdCB0YWtlcw0KPiBtb3JlIHRpbWUgdG8gY291bnRp
-bmcgdGhhbiBkb3dubG9hZGluZy4NCj4gPiA+ID4gSXMgaXQgcG9zc2libGUgdG8gbGV0IGdpdCBv
-bmx5IHNlbmQgImNvbW1pdCB3YW50IiByYXRoZXIgdGhhbiBhbGwgdGhlDQo+IG9iamVjdHMgU0hB
-MSBvbmUgYnkgb25lPw0KPiA+ID4NCj4gPiA+IE9uIGEgdGVjaG5pY2FsIGxldmVsLCBpdCBtYXkg
-YmUgcG9zc2libGUgLSBhdCB0aGUgcG9pbnQgaW4gdGhlIEdpdA0KPiA+ID4gY29kZSB3aGVyZSB0
-aGUgYmF0Y2ggcHJlZmV0Y2ggb2NjdXJzLCBJJ20gbm90IHN1cmUgaWYgd2UgaGF2ZSB0aGUNCj4g
-PiA+IGNvbW1pdCwgYnV0IHdlIGNvdWxkIHBsdW1iIHRoZSBjb21taXQgaW5mb3JtYXRpb24gdGhl
-cmUuIChXZSBoYXZlDQo+ID4gPiB0aGUgdHJlZSwgYnV0IHRoaXMgZG9lc24ndCBoZWxwIHVzIGhl
-cmUgYmVjYXVzZSBhcyBmYXIgYXMgSSBrbm93LA0KPiA+ID4gdGhlIHRyZWUgd29uJ3QgYmUgaW4g
-dGhlIGJpdG1hcCBzbyB0aGUgc2VydmVyIHdvdWxkIG5lZWQgdG8gY291bnQNCj4gPiA+IG9iamVj
-dHMgYW55d2F5LCByZXN1bHRpbmcgaW4gdGhlIHNhbWUgcHJvYmxlbS4pDQo+ID4gPg0KPiA+ID4g
-SG93ZXZlciwgc2VuZGluZyBvbmx5IGNvbW1pdHMgYXMgd2FudHMgd291bGQgbWVhbiB0aGF0IHdl
-IHdvdWxkIGJlDQo+ID4gPiBmZXRjaGluZyBtb3JlIGJsb2JzIHRoYW4gbmVlZGVkLiBGb3IgZXhh
-bXBsZSwgaWYgd2Ugd2VyZSB0byBjbG9uZQ0KPiA+ID4gKHdpdGgNCj4gPiA+IGNoZWNrb3V0KSBh
-bmQgdGhlbiBjaGVja291dCBIRUFEXiwgc2VuZGluZyBhICJjb21taXQgd2FudCIgZm9yIHRoZQ0K
-PiA+ID4gbGF0dGVyIGNoZWNrb3V0IHdvdWxkIHJlc3VsdCBpbiBhbGwgYmxvYnMgcmVmZXJlbmNl
-ZCBieSB0aGUgY29tbWl0J3MNCj4gPiA+IHRyZWUgYmVpbmcgZmV0Y2hlZCBhbmQgbm90IG9ubHkg
-dGhlIGJsb2JzIHRoYXQgYXJlIGRpZmZlcmVudC4NCj4gPg0KPiA+IEl0IHNlZW1zIHlvdXIgc29s
-dXRpb24gcmVxdWlyZSBjaGFuZ2VzIGZyb20gYm90aCBzZXJ2ZXIgc2lkZSBhbmQNCj4gPiBjbGll
-bnQgc2lkZSBXaHkgbm90IHdlIGp1c3QgYWRkIGFub3RoZXIgZmlsdGVyLCBhbGxvdyBwYXJ0aWFs
-LWNsb25lIGFsd2F5cw0KPiBzZW5kcyBjb21taXQgbGV2ZWwgd2FudD8NCj4gPiBJZiB3ZSBjaGVj
-a291dCBIRUFEfjEsIHRoZW4gY2xpZW50IGNhbiBzZW5kICJ3YW50IEhFQUR+MSBIRUFEfjIiLg0K
-PiA+DQo+DQo+IEkgYW0gaW50ZXJlc3RpbmcgYWJvdXQgdGhpcyBxdWVzdGlvbiB0b28sIG1heWJl
-IEkgY2FuIHRyeSBpZiB3ZSBjYW4gZG8gdGhpcy4uIDstKQ0KPg0KPiBaaGVOaW5nIEh1DQojLyoq
-KioqKuacrOmCruS7tuWPiuWFtumZhOS7tuWQq+acieWwj+exs+WFrOWPuOeahOS/neWvhuS/oeaB
-r++8jOS7hemZkOS6juWPkemAgee7meS4iumdouWcsOWdgOS4reWIl+WHuueahOS4quS6uuaIlue+
-pOe7hOOAguemgeatouS7u+S9leWFtuS7luS6uuS7peS7u+S9leW9ouW8j+S9v+eUqO+8iOWMheaL
-rOS9huS4jemZkOS6juWFqOmDqOaIlumDqOWIhuWcsOazhOmcsuOAgeWkjeWItuOAgeaIluaVo+WP
-ke+8ieacrOmCruS7tuS4reeahOS/oeaBr+OAguWmguaenOaCqOmUmeaUtuS6huacrOmCruS7tu+8
-jOivt+aCqOeri+WNs+eUteivneaIlumCruS7tumAmuefpeWPkeS7tuS6uuW5tuWIoOmZpOacrOmC
-ruS7tu+8gSBUaGlzIGUtbWFpbCBhbmQgaXRzIGF0dGFjaG1lbnRzIGNvbnRhaW4gY29uZmlkZW50
-aWFsIGluZm9ybWF0aW9uIGZyb20gWElBT01JLCB3aGljaCBpcyBpbnRlbmRlZCBvbmx5IGZvciB0
-aGUgcGVyc29uIG9yIGVudGl0eSB3aG9zZSBhZGRyZXNzIGlzIGxpc3RlZCBhYm92ZS4gQW55IHVz
-ZSBvZiB0aGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGhlcmVpbiBpbiBhbnkgd2F5IChpbmNsdWRp
-bmcsIGJ1dCBub3QgbGltaXRlZCB0bywgdG90YWwgb3IgcGFydGlhbCBkaXNjbG9zdXJlLCByZXBy
-b2R1Y3Rpb24sIG9yIGRpc3NlbWluYXRpb24pIGJ5IHBlcnNvbnMgb3RoZXIgdGhhbiB0aGUgaW50
-ZW5kZWQgcmVjaXBpZW50KHMpIGlzIHByb2hpYml0ZWQuIElmIHlvdSByZWNlaXZlIHRoaXMgZS1t
-YWlsIGluIGVycm9yLCBwbGVhc2Ugbm90aWZ5IHRoZSBzZW5kZXIgYnkgcGhvbmUgb3IgZW1haWwg
-aW1tZWRpYXRlbHkgYW5kIGRlbGV0ZSBpdCEqKioqKiovIw0K
+On 8/14/2022 2:48 AM, Jeff King wrote:
+> On Thu, Aug 11, 2022 at 08:09:56AM +0000, 程洋 wrote:
+> 
+>>     4. And we then track our server(which is gerrit with jgit). We
+>>        found the server is couting objects. Then we check those 40k
+>>        objects, most of them are blobs rather than commit. (which
+>>        means they're not in bitmap)
+>>     5. We believe that's the root cause of our problem. Git sends too
+>>        many "want SHA1" which are not in bitmap, cause the server to
+>>        count objects  frequently, which then slow down the server.
+> 
+> I'd be surprised if bitmaps make a big difference either way here, since
+> blobs are very quick in the "counting" phase of pack-objects. They can't
+> link to anything else, so we should not be opening the object contents
+> at all! We just need to find them on disk, and then in many cases we can
+> send them over the wire without even decompressing (the exception is if
+> they are stored as deltas against an object the client doesn't have).
+> 
+> I didn't generate a test case, but I'm pretty sure that is how git.git's
+> pack-objects should behave. But you mentioned that the server is jgit;
+> it's possible that it isn't as optimized in that area.
+
+I just remembered that Gerrit specifically has branch-level security,
+where some branches are not visible to all users. For that reason, blobs
+cannot be served without first determining if they are reachable from a
+branch visible to the current user.
+
+I'm not sure if that's the problem in this particular case, but it could
+be.
+
+Thanks,
+-Stolee
+
