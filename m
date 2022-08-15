@@ -2,98 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39CD5C00140
-	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 07:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 924A9C00140
+	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 11:30:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241307AbiHOHFG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Aug 2022 03:05:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37898 "EHLO
+        id S231903AbiHOLaa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Aug 2022 07:30:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230350AbiHOHFE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Aug 2022 03:05:04 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC3511C90F
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 00:05:03 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id t2-20020a17090a4e4200b001f21572f3a4so6064975pjl.0
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 00:05:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=WPFmyejHBYIcQ2pVXbb1JcGX3q7HdWIWvbIUjGKBzbc=;
-        b=isU3keFAlHZBPqv59iz6V9YwvHeKdFfH0q5SNHlCyplslXUYIGrE1TZeDegIRhNkbn
-         YJJjUfpjE60lATNE677qkITdXBYrhg4xLRqrC21Ip3oboHdPg3O4iKXnThEnrj2fQPcg
-         vJ/Z1FC6NlbTIkkthtXcNduG5ZnoqqXZ8QLK9uJFHQSxjwNNURRA9fMn//iD3BsXOXnR
-         a0lgAl/IWA5hzrUVeAknzCh0+RzgTzW7HYLAL9xSxZ4/V/BAB1UEyZzAPyxv7jDDLCPy
-         3T8ILTcR2tStkQDIcnQOfkELF7xCJArVsQ7MX83pb/djzx44uplKl4e3wMCSXSwK9RN2
-         3VJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=WPFmyejHBYIcQ2pVXbb1JcGX3q7HdWIWvbIUjGKBzbc=;
-        b=MUCiLWnO/NapbeRRKITA5BOVVP9/ssznBAw8ilYOYi2z1/irrD/SEUTgaMRIfR3bTP
-         vc557HKo9ccQIPe5l+IFAkNHCMSFuBc4gukwKtrMYmZ1bo3Ww1Cpoq/TZm9lbYJ939ns
-         Tq49PZbR8O/a1rBTGfVWpc+r3M8nkQZaHtl/uwZ8RS4zQMpfK/H04LZwYevIpLYtqNCr
-         Kr4MbtB7W55QACZIyAaMb3xzDgZgMkgaXeFKxVjWCXQusnxULfF5lpvMq7NIOt/g0aeH
-         xtF/Wyy3wxB6xTgWHX/SsLVK6YRRz1DE8GvYLGJoVjmAfAIHUmyURnABAvEigBVKwCJ7
-         aXPA==
-X-Gm-Message-State: ACgBeo1KVx9u80huvYKl/WSq12olgtQF76JDs9T7R24j1EnSl41xL8gj
-        ItNs0nyIRiYmDY1sKx7tLSOX0F0Jcq0=
-X-Google-Smtp-Source: AA6agR53tHLfHeGTTt0fzKJdkMeZWk3pIhqDh32P7+mTOotdf4GXnNzRO8T9gpLnVKJ7r7lGGyD4oA==
-X-Received: by 2002:a17:90a:e7c2:b0:1f5:85ab:938c with SMTP id kb2-20020a17090ae7c200b001f585ab938cmr27265574pjb.133.1660547102766;
-        Mon, 15 Aug 2022 00:05:02 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4061:6e1f:625:2cf7:b814:95c1:a907])
-        by smtp.gmail.com with ESMTPSA id j7-20020a170903024700b0016d8d277c02sm4161474plh.25.2022.08.15.00.04.58
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 15 Aug 2022 00:05:02 -0700 (PDT)
-From:   Abhra303 <chakrabortyabhradeep79@gmail.com>
-To:     Git <git@vger.kernel.org>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Fixing midx bitmap related racy test failure (under sha-256)
-Date:   Mon, 15 Aug 2022 12:34:46 +0530
-Message-Id: <20220815070446.4990-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        with ESMTP id S231873AbiHOLa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Aug 2022 07:30:28 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 967ED26CA
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 04:30:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1660563017;
+        bh=zNTcVpp7zssOBLnpclbFRhq0tl4q/kpEZnzTkTuL3zA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=eqjLV/jWLy3deAwP3j8Y3LLaQ1B3oP0wPDXxA2fBJwe1eFDZBeAjlYAU2RRvVfGW2
+         YGvgr+VMDoygDHUZV+fOb8xzIY/YCw8WseUHMRO+5+eUxqku1pbYNMYy0wjNTMFl7k
+         h0pNe0VTL1P3TbytgSjTKwZ+a1VfAd/rRQ+sNgMU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQeA2-1o2BOp090o-00NmHE; Mon, 15
+ Aug 2022 13:30:17 +0200
+Date:   Mon, 15 Aug 2022 13:30:20 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Victoria Dye <vdye@github.com>, git-for-windows@googlegroups.com,
+        git@vger.kernel.org
+Subject: fixup! bug, was Re: [ANNOUNCE] Git for Windows 2.37.2
+In-Reply-To: <xmqqwnbdct1m.fsf@gitster.g>
+Message-ID: <16r2s842-1r7r-p05n-82o5-q01921r35oqr@tzk.qr>
+References: <20220811214252.4351-1-johannes.schindelin@gmx.de> <0e859fe2-3f23-4526-083c-082adb0028fc@github.com> <xmqqwnbdct1m.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:rF7pWHu1+O1MNROIPLID7Bt4whP6xc1qfxb1B07K7mKI+jSsgjb
+ mM8aEZPgGc30khaCkciPptYEUTJrw2kgQ1zRT/cAtp6ztVsllF6jOPwrLw6BMkSOOWOPKvc
+ K0RVT4aO4el7SIb1NxpAWnYFsW8+G6aOQVRyqohYMZtZXEZdiWyIiPxKDbmJi5hPAuR8ipd
+ 7sDuARBVVD7Sgpqgm9Vrw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SZqrFO78D4Y=:59xuwtF3iRegRO4wo1inpk
+ OeSY5/Vd3RpTzUWLXRlFhj9t/Y4gkA8a/F2nFfqYXw+ov+VG44mKHzw5TAw/Wmjoz8Rej1uLn
+ CqL+qUIQhpzKEf28JSQt0Sl4REoJ4gnuFzlc1SBN7BbbLVPZ80NTSotxXdvp2fOwkglGC3Gah
+ qFnrorwMd1EFKqBX3T3bPtb1OHbLkAJ2rVch9v3nhwU/1JbSK/PES8AHR1BOzasxwprg8Jo3I
+ bQQc7ZtSLP0D8WwfQgrN7tKAYoc6Bw70g3t192EdiEYTaATVX3rOpwhOzH3D9SETtr8QyWwC6
+ TRnZ9tgxA2F/pyFsnBdj/zwo7JakKCB9gjVxEiFC6BQwwYWmg3aPMMcid3ZG5vakxXVzCoKIn
+ 5fFa2ObgOzHD+W4yYyrzJbaTe+KFY3oeCj5m0vG7oNH5d9rAE9OfkbZvVXFeU4ugINGCPiBla
+ VDqy8wibCbo8OJYU1dti9Fnxjvq0Ej1kUWOtDKlDfrhZDN1qlufOMNDR7EdhOGJ1SN1lHC0EH
+ I+6slM5W8vSVQvhFHqAiTSMWl6Zdh0/uidJyHz2TNmKQSYpjF/cHs/Yaxhu+V3oSEFrz3b4/N
+ JxTFmzJob8PctIEpkXBTNtAon72gvi15Tu7uoC4fK+7Bt6iHXxPWdhFdreAG/Pgs6sApYeuhM
+ 5rfSIxpYNMr7wzmniw1KRyd3H/3FAvw5jHBToIAeng3P2GKf21jbPJbv6cuD/cyyE/uR27H3b
+ brllDMkwgbxqlKKpvVcvDp6D6Kf8yYf/9DOKrxDimbyv9Rn9HB/0IvNBXLJHgWiP8c0vBaxoe
+ riIarjqu9eb8vee5ctgH0iozTyPj7yLdJIShBog6SfWTDK6OUtVR4p5X74LjYmSkxAEqdeH/n
+ 4tYopHGDZ2USDKbauHvwBHTlpR9lJ3zRpSC7GZVEOR9xFoIxWiVo50XWNiUuVGl4uYrWcDYsK
+ N/+CP6qA9qNLDKzizTuVMM+wGgBEPR09qiDimEvu+v6LDopQoRJWAFM/wCCU8HQNshlpkRbXM
+ ULuCsex2tPH0m+ghzTZURrdVgHljBe/OqUa+w7upHgverJSPmsbEOkFUs7E4lMKPyfWzoRgwZ
+ H24ClvSP1QmlKoUruZZ40sHL4oaxflaKoBG59wCn+CPWTc+ajwelnXrZg==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Hi Junio,
 
-Hello developers,
+On Fri, 12 Aug 2022, Junio C Hamano wrote:
 
-I have been writing a patch series[1] to integrate a lookup table extension
-to .bitmap file. I reformatted the test code so that I can run the same
-tests for the lookup table extension. But this is causing a failure in a midx
-bitmap related test case[2]. It is not related to my code because this
-can be produced with out my changes.
+> Victoria Dye <vdye@github.com> writes:
+>
+> > Johannes Schindelin wrote:
+> > Just a heads-up: there was an issue with the process used to generate =
+this
+> > version. ...
+>
+> Sorry to see that it caused two cycles of release process.  Would it
+> have helped you if I had done things differently (other than "not
+> issuing maintenance releases that are not security relevant"), perhaps
+> giving a notice in advance by say a few days?
 
-If you see the test file[3] (with my changes) and also observe the test
-results[4], you'll notice that the said test case is always failing on the 
-second `test_midx_bitmap_cases` call under sha-256 only. This is racy in nature.
-I.e. it might pass after executing the test 2 or 3 times.
+Thank you for offering to accommodate Git for Windows' needs.
 
-I have been trying to solve the issue for one or two week but as I am not
-very clear about the internal working of multi-pack-index or repacking, I
-am still not able to solve the issue. Besides, my semester exam is starting
-from 18 Aug. So I have to give a significant amount of time to studies.
+In this instance, we tracked the problem down to
+https://github.com/gitgitgadget/git/issues/1321: When a rebase has a
+`pick` & `fixup` sequence and the `pick` failed and was skipped, then the
+`fixup` is still trying to amend `HEAD`, which is incorrect.
 
-So, it will be very helpful if anyone help me to find out the solution.
-You can know more from this thread[5].
+In this instance, that wreaked quite the havoc, dropping most of the
+Windows-specific changes due to mistaking the initial fake merge [*1*] for
+a real merge.
 
-Thanks :)
+I offer a more verbose version of this analysis in
+https://github.com/git-for-windows/git/pull/3981#issuecomment-1212856115
 
-[1] https://lore.kernel.org/git/pull.1266.git.1655728395.gitgitgadget@gmail.com/
-[2] https://github.com/Abhra303/git/blob/b460516b306e6885cd1c0af1c3379fb953952de2/t/lib-bitmap.sh#L195
-[3] https://github.com/Abhra303/git/blob/bitmap-commit-table/t/t5326-multi-pack-bitmaps.sh
-[4] https://github.com/Abhra303/git/runs/7827604510?check_suite_focus=true
-[5] https://lore.kernel.org/git/p3r70610-8n52-s8q0-n641-onp4ps01330n@tzk.qr/#t
+Ciao,
+Dscho
+
+Footnote *1*: In Git for Windows, we use the "merging-rebase" strategy
+where each rebase starts with a fake merge of the previous commit history
+("fake" because it uses `-s ours` to avoid taking any actual content
+changes). The idea is that the patches will be as clean and ready to
+submit to upstream as possible by rebasing them, yet still be able to
+fast-forward. For more details, see
+https://github.com/git-for-windows/build-extra/blob/ab941145aeef/shears.sh=
+#L12-L18
