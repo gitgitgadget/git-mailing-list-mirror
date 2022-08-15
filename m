@@ -2,113 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FFB2C00140
-	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 06:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39CD5C00140
+	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 07:05:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230444AbiHOGex (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Aug 2022 02:34:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35958 "EHLO
+        id S241307AbiHOHFG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Aug 2022 03:05:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230423AbiHOGew (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Aug 2022 02:34:52 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4600C1A3A6
-        for <git@vger.kernel.org>; Sun, 14 Aug 2022 23:34:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1660545283;
-        bh=LiNSYq7UrOkaZSJFiV3HKSaE1rBuQMrNFulxnZoVuME=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=B1JPzSih7KII1U7l/0MqSbJYaK2J/Kx319MOyAONiL6lodXkCPZOq0awH7mQHxGqN
-         5F79a75CNDJJ/oa0hO2y7CqVgVkY9o3rzZBYBSMkF3hIwJX7qBwcUuz3IQwexx3DpG
-         R3rFSEHj2FqNwxM4kSftBvcQ1SLOAkCWeBsK3mo4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mq182-1nbTlI38i2-00nRpR; Mon, 15
- Aug 2022 08:34:42 +0200
-Date:   Mon, 15 Aug 2022 08:34:41 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, alexander.s.m@gmail.com
-Subject: Re: [PATCH/RFC 1/1] diff.c: When appropriate, use utf8_strwidth()
-Message-ID: <20220815063441.uxrtdqsggmrqxxl2@tb-raspi4>
-References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
- <20220814133531.16952-1-tboegi@web.de>
- <xmqqfshy773n.fsf@gitster.g>
+        with ESMTP id S230350AbiHOHFE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Aug 2022 03:05:04 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC3511C90F
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 00:05:03 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id t2-20020a17090a4e4200b001f21572f3a4so6064975pjl.0
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 00:05:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=WPFmyejHBYIcQ2pVXbb1JcGX3q7HdWIWvbIUjGKBzbc=;
+        b=isU3keFAlHZBPqv59iz6V9YwvHeKdFfH0q5SNHlCyplslXUYIGrE1TZeDegIRhNkbn
+         YJJjUfpjE60lATNE677qkITdXBYrhg4xLRqrC21Ip3oboHdPg3O4iKXnThEnrj2fQPcg
+         vJ/Z1FC6NlbTIkkthtXcNduG5ZnoqqXZ8QLK9uJFHQSxjwNNURRA9fMn//iD3BsXOXnR
+         a0lgAl/IWA5hzrUVeAknzCh0+RzgTzW7HYLAL9xSxZ4/V/BAB1UEyZzAPyxv7jDDLCPy
+         3T8ILTcR2tStkQDIcnQOfkELF7xCJArVsQ7MX83pb/djzx44uplKl4e3wMCSXSwK9RN2
+         3VJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=WPFmyejHBYIcQ2pVXbb1JcGX3q7HdWIWvbIUjGKBzbc=;
+        b=MUCiLWnO/NapbeRRKITA5BOVVP9/ssznBAw8ilYOYi2z1/irrD/SEUTgaMRIfR3bTP
+         vc557HKo9ccQIPe5l+IFAkNHCMSFuBc4gukwKtrMYmZ1bo3Ww1Cpoq/TZm9lbYJ939ns
+         Tq49PZbR8O/a1rBTGfVWpc+r3M8nkQZaHtl/uwZ8RS4zQMpfK/H04LZwYevIpLYtqNCr
+         Kr4MbtB7W55QACZIyAaMb3xzDgZgMkgaXeFKxVjWCXQusnxULfF5lpvMq7NIOt/g0aeH
+         xtF/Wyy3wxB6xTgWHX/SsLVK6YRRz1DE8GvYLGJoVjmAfAIHUmyURnABAvEigBVKwCJ7
+         aXPA==
+X-Gm-Message-State: ACgBeo1KVx9u80huvYKl/WSq12olgtQF76JDs9T7R24j1EnSl41xL8gj
+        ItNs0nyIRiYmDY1sKx7tLSOX0F0Jcq0=
+X-Google-Smtp-Source: AA6agR53tHLfHeGTTt0fzKJdkMeZWk3pIhqDh32P7+mTOotdf4GXnNzRO8T9gpLnVKJ7r7lGGyD4oA==
+X-Received: by 2002:a17:90a:e7c2:b0:1f5:85ab:938c with SMTP id kb2-20020a17090ae7c200b001f585ab938cmr27265574pjb.133.1660547102766;
+        Mon, 15 Aug 2022 00:05:02 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4061:6e1f:625:2cf7:b814:95c1:a907])
+        by smtp.gmail.com with ESMTPSA id j7-20020a170903024700b0016d8d277c02sm4161474plh.25.2022.08.15.00.04.58
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 15 Aug 2022 00:05:02 -0700 (PDT)
+From:   Abhra303 <chakrabortyabhradeep79@gmail.com>
+To:     Git <git@vger.kernel.org>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Fixing midx bitmap related racy test failure (under sha-256)
+Date:   Mon, 15 Aug 2022 12:34:46 +0530
+Message-Id: <20220815070446.4990-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqfshy773n.fsf@gitster.g>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:i01WdoZ6viDmNQVUyD3D2OPODHElXm5iNMG/gcRB2uWzQGqmm1c
- oQjLrsxTDKEHb5ESTHA6LkduWxO9/19uIc2DwbqSymYuPh5ooebyhMeQven00snb9RtVXJB
- HP5KfcVXff5v+k4WJXm8YpM9brSBmGwHPZaTggpPw/5wCvKXQoYAveLDcMpRweq7iGbrtBq
- fKxwMfqrmgQybBbeCnXqQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:T13Z2Srfcww=:4THA47sYEFVi+Xf5iEGrUS
- Fl9AVDMJ240HW+d75yBrnvfKGE+SR89GMzN77/VupmrzHkXIpcQXIdmfRWjEf+na3Tx3IMZAN
- kxw5uyAn5Bjlzemf31KCyTrUQW5sNSYZWDY/fdusG8qb8evwj4UTncZu3Ag3mokzI4RlWhesu
- 3UFtiRo9yEPmCjxz4kKrMkrSuIExpsNyJacqxk7eXp6UQ3cih2NWV/R+ukOsEsLWvWUUtR1Ww
- zw7YBpp/ja2BDamo2/nVFXgyIr2OBoXlESunfznFedql5C+XyJHhLaok+LpTHbyYJqwppJ7yO
- r1RNOEvt9SNHX9/Cpeheha3rJHEl3AQEo3smbDo8SKnJXbfFTivHxlRbvvadjSu+22dgNOBcV
- 9q1M33eekQ4p+yXhjhXVPajkZT7cJw6RjKw8EzVW4aKxBcC1adZLMNCvPV/odmoEdXRAv1O7S
- sDJ1zQxTfAZ8ij4TauDQTyLoV1D0wvPFZaDNzPW3y50DERr9ju/i9LFxWECMVoVYA2C1wI8Ym
- GWaU/ET42wH/1O/nFSG8zPwJYkKfLgyQhOkNXIYTL/bTp+902+3+RXGC1Ew9c9t/3TTUO47eG
- sQo5GEGFHViaasLbPLOIkp3oOrDohR24TL3hEeBNm6kZgqMJEvUJiTW+S35LXAhesvXjOg56Y
- 4umd1Kbrn0gM7siFznR0tLWk/ZWfDVQms5D4QbiqBcHTq+HLeEoVMws7U4pqQj2wczVQWnWnk
- yFBuYwg/xrPS7lAei46jUX6jv8fqg8xXTlxRQ8iugICTXIhB18Sukd6C1wu9+awHzHeAz9gpX
- YjFYERWHksfLRr1CJO9z3di2vBHnOpkYVD8ZRD4wJFXb5uBy/74rGlbbR9eAgK0CW7EoVLhHt
- 6tk+CgUrcel0hAuaGxg31czSjc2baSMT4djMsH/LURPQMIWZ5pklMHJ0uZwKD06LRNnY1f5Z9
- UQiuC9sHchbPCL30xIn897PMyxdMhUnhh66e/lxchD5elZYTykAyFQ5r3Nm6+GFnwemTittSb
- PHJyjBeBieD6Iu44Y8sYbkysmd0BCmxi6vzvs2gGdTpJb91YXgsvt32TfPAgu0Fw+4RtEo3Np
- bHJu4xuisMQUhct44iwNv79/UmOrYDbQAuVCYmZkDD2cqhO8gM3Tjzgew==
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 14, 2022 at 04:12:12PM -0700, Junio C Hamano wrote:
-> tboegi@web.de writes:
->
-> > The choosen solution is to split code in diff.c like this
-> >
-> > strbuf_addf(&out, "%-*s", len, name);
-> >
-> > into 2 calls, like this:
-> >
-> > strbuf_addf(&out, "%s", name);
-> > if (len > utf8_strwidth(name))
-> >     strbuf_addchars(&out, ' ', len - utf8_strwidth(name));
->
-> Makes sense.  Is utf8_strwidth(name) cheap enough that we can call
-> it twice in a row on the same string casually, or should we avoid it
-> with a new variable?
->
-> It might be worth doing a helper function, even?
->
-> 	static inline strbuf_pad(struct strbuf *out, const char *s, size_t widt=
-h)
-> 	{
-> 		size_t w =3D utf8_strwidth(s);
->
-> 		strbuf_addstr(out, s);
-> 		if (w < width)
-> 			strbuf_addchars(out, ' ', width - w);
-> 	}
->
-> Other than that, sounds very sensible.
->
+From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 
-Thanks for the review.
+Hello developers,
 
-Actually, the commit message is wrong - after writing it, the code
-was changed into
+I have been writing a patch series[1] to integrate a lookup table extension
+to .bitmap file. I reformatted the test code so that I can run the same
+tests for the lookup table extension. But this is causing a failure in a midx
+bitmap related test case[2]. It is not related to my code because this
+can be produced with out my changes.
 
-if (len > utf8_strwidth(name))
-        num_padding_spaces =3D len - utf8_strwidth(name);
+If you see the test file[3] (with my changes) and also observe the test
+results[4], you'll notice that the said test case is always failing on the 
+second `test_midx_bitmap_cases` call under sha-256 only. This is racy in nature.
+I.e. it might pass after executing the test 2 or 3 times.
 
-and later
+I have been trying to solve the issue for one or two week but as I am not
+very clear about the internal working of multi-pack-index or repacking, I
+am still not able to solve the issue. Besides, my semester exam is starting
+from 18 Aug. So I have to give a significant amount of time to studies.
 
-if (num_padding_spaces)
-	strbuf_addchars(&out, ' ', num_padding_spaces);
+So, it will be very helpful if anyone help me to find out the solution.
+You can know more from this thread[5].
 
-(And having written this, there is probably room for test cases,
-IOW: a V2 will come the next days)
+Thanks :)
+
+[1] https://lore.kernel.org/git/pull.1266.git.1655728395.gitgitgadget@gmail.com/
+[2] https://github.com/Abhra303/git/blob/b460516b306e6885cd1c0af1c3379fb953952de2/t/lib-bitmap.sh#L195
+[3] https://github.com/Abhra303/git/blob/bitmap-commit-table/t/t5326-multi-pack-bitmaps.sh
+[4] https://github.com/Abhra303/git/runs/7827604510?check_suite_focus=true
+[5] https://lore.kernel.org/git/p3r70610-8n52-s8q0-n641-onp4ps01330n@tzk.qr/#t
