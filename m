@@ -2,114 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C947FC00140
-	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 13:22:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 142E1C00140
+	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 14:50:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242832AbiHONWo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Aug 2022 09:22:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35474 "EHLO
+        id S231808AbiHOOun (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Aug 2022 10:50:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231978AbiHONWn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Aug 2022 09:22:43 -0400
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1B11704B
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 06:22:42 -0700 (PDT)
-Received: by mail-il1-x12b.google.com with SMTP id a13so225927ild.3
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 06:22:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=CwJ0tcjDh2W+f9BOOhdYk92ITFtWlq9GjgtWkFafXrQ=;
-        b=eQZ5jyJyoGB38H5d0cS90SMlZbhd3pmhMAsFnFUXNcmGFxA4OexiRi2w840a95p5cR
-         uI1JFlvFpliXbnuPMIKQU0vFdGxexat3jaKslDOuiYQUipu6eVQ9T5O39y5+cNwYC7Cw
-         0Vt+cZxYYIPExocsd1TaascudcSKgHXEpdmliVw3FZ+/7l7vIA+BVh43bjXBftyE75nf
-         7VyxH+xtGTDD+EyOp0YoSOtXTaVff8QE3MAvfkxDWgivQWLdbXWXGh27x9a7ms0PKZeT
-         ZQewFwrb04DIEiN8bLdp/f7K2ABru0ja4cLeg0Ws7JxvogStHxzjqLuLNC09OYgWeTiF
-         JyaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=CwJ0tcjDh2W+f9BOOhdYk92ITFtWlq9GjgtWkFafXrQ=;
-        b=2pzU8kv7l1gfkmp2Y4m7DqSqkUYHXWf3qpAKLf9Z04fdKvsSe7zsWND3S4j5/P5Zrm
-         wbhwGLWxmzIC/BdkDnQVmGKS15kDznAsk/rcU1sjffInUDA+dNV+AJG0dtaEaVkIDmFK
-         RuVpJzEeUCuZmYGM1Hwjh4oKPm8sTeiw3Wqjik0Eh4j92Z3lmZjkSF+esmJFYyPofXR+
-         6WoIkSCbMjDCLRvcMch8pkZWmyRAKWSCHK17ih5o3lzD3IrEdiOfUDdPGJQiKBpDVkxv
-         QUFEzGsKikaEaNcGfFa64fOTQ+G/3IxXvcjsxiZdSlC22oHWM4hzUAqH0HcjySXuFHUX
-         w+jw==
-X-Gm-Message-State: ACgBeo2bTscwyMn+EoKPkMH78C7meoIAkKEI9J2rpBEhT0aVdd+HrUvt
-        HOFdPId1Y1iqlqoxogkIOflC
-X-Google-Smtp-Source: AA6agR7XBcLn8W5i5gmxCgZf+xtyG79QYg/OT9DuxvvNp/9wyAmnzjbzv2IN4ZKisaQBtwJ/7qGjKg==
-X-Received: by 2002:a05:6e02:170f:b0:2e5:f418:8d6a with SMTP id u15-20020a056e02170f00b002e5f4188d6amr20032ill.126.1660569761759;
-        Mon, 15 Aug 2022 06:22:41 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:dc96:39f4:9d7d:e4b1? ([2600:1700:e72:80a0:dc96:39f4:9d7d:e4b1])
-        by smtp.gmail.com with ESMTPSA id a65-20020a021644000000b003428d4edc70sm3300005jaa.176.2022.08.15.06.22.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Aug 2022 06:22:41 -0700 (PDT)
-Message-ID: <1dd29f43-1a8e-eb69-3320-7f5140a0e18e@github.com>
-Date:   Mon, 15 Aug 2022 09:22:40 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: git maintenance broken on FreeBSD
-Content-Language: en-US
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Todd Zullinger <tmz@pobox.com>,
-        Renato Botelho <garga@freebsd.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <226317ba-a78f-216c-764c-52f4e393bd35@FreeBSD.org>
- <YvZnQFVMZZmz9TIX@danh.dev> <YvcdskzUkocUv/d7@pobox.com>
- <xmqqczd4ag8f.fsf@gitster.g> <YvfFUuuydtYeuvRx@danh.dev>
- <xmqqsfm08382.fsf@gitster.g> <Yvfg7WwL8oCdxqzQ@tapette.crustytoothpaste.net>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <Yvfg7WwL8oCdxqzQ@tapette.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        with ESMTP id S229445AbiHOOuk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Aug 2022 10:50:40 -0400
+Received: from m12-13.163.com (m12-13.163.com [220.181.12.13])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id C09955598
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 07:50:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Mime-Version:Subject:From:Date:Message-Id; bh=ecgr6
+        1SgumPHRMuZMP/7w5IXnNcQXYvU5LqIxVjJ150=; b=po8WjFdAb8WR4uWI0PZm2
+        YE6GmA6DsGth1Zo7VTL/wUF5Q1uFE8ELLlKfxa80JSAsqD34InD/z5OnD3eoOAk8
+        zYjI1zz2zr51OMINDf23inHts/myDMtXB67870p76My+IRBFeQs7HgvD/wgrf8EV
+        Obr7u2/Xcfez72kxNrkGA4=
+Received: from smtpclient.apple (unknown [110.185.173.201])
+        by smtp9 (Coremail) with SMTP id DcCowAB3TysGXfpiquhdYQ--.56752S3;
+        Mon, 15 Aug 2022 22:49:43 +0800 (CST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [PATCH v2 3/3] doc: add documentation for the hide-refs hook
+From:   =?utf-8?B?5a2Z6LaF?= <16657101987@163.com>
+In-Reply-To: <CAPig+cQ4isWWEkfasdENzZWgUZzmBF9vXMTpM2XcxYaPgQbzSQ@mail.gmail.com>
+Date:   Mon, 15 Aug 2022 22:49:43 +0800
+Cc:     Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B180C0A0-0628-43D7-B73F-3F39A981A2BA@163.com>
+References: <pull.1301.git.git.1659543457.gitgitgadget@gmail.com>
+ <pull.1301.v2.git.git.1660524865.gitgitgadget@gmail.com>
+ <e737997eb31088a0ebe58c1db0e393a45170eabb.1660524865.git.gitgitgadget@gmail.com>
+ <CAPig+cQ4isWWEkfasdENzZWgUZzmBF9vXMTpM2XcxYaPgQbzSQ@mail.gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
+X-CM-TRANSID: DcCowAB3TysGXfpiquhdYQ--.56752S3
+X-Coremail-Antispam: 1Uf129KBjvJXoWxuF4UKr4ktF17uw1ruryrCrg_yoW5GFy3pF
+        W5XF15KF1kAr4jyws3Xw18GrWFyF93t34rGryUJa48ZFZ8AryxCr9F9rnYvFWxZrWvyw45
+        Wa1qqw48Xr98Z3DanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRaiikUUUUU=
+X-Originating-IP: [110.185.173.201]
+X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiPhZeglxBtr289wAAsp
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/13/2022 1:35 PM, brian m. carlson wrote:
-> On 2022-08-13 at 17:26:05, Junio C Hamano wrote:
->> Does FreeBSD offer choices of cron implementations other than Vixie,
->> just like some Linux distributions?  If somebody on a non-FreeBSD
->> platform happens to choose to use Vixie, then they would presumably
->> have the same problem, so a compile-time switch, whose default is
->> hardcoded based on the target platform, would not work very well.
->> The default will be wrong for some users, and users can later choose
->> to switch between different cron implementations.
-> 
-> I'm using Debian unstable, and I'm using Vixie cron.  I believe that's
-> the default implementation.  However, I could also well use cronie,
-> since that's available in Debian as well.  So, yeah, I think this is a
-> thing to consider.
-> 
->> Configuration knob can be used as a workaround, but in this case, I
->> am not sure if it is worth doing.  What's the downside of securely
->> opening a temporary file and write whatever we are currently piping
->> to a spawned "crontab" command and then giving the path to that
->> temporary file to the "crontab" command?  Wouldn't that give us the
->> maximal portability without that much code, no?
-> 
-> I think we should try to provide an option which works across at least
-> the versions on a particular OS.  The temporary file seems like a nice,
-> portable option, so I think we should just do that unless there's some
-> practical objection.
-> 
-> If Derrick doesn't get to it this next week, I can send a patch.
 
-I agree that the tempfile approach makes the most sense in terms of
-what we can do within the Git codebase.
 
-I won't be able to get to this change this week, so I'd be happy to
-review one of yours, brian. Be careful to test manually when making
-this change, because our tests don't actually interact with the system's
-crontab and instead verify the interaction using replacement commands.
+> On Aug 15, 2022, at 12:12, Eric Sunshine <sunshine@sunshineco.com> =
+wrote:
+>=20
+> On Sun, Aug 14, 2022 at 8:56 PM Sun Chao via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> "git upload-pack" or "git recevie-pack" can use "hide-refs"
+>=20
+> s/recevie/receive/
+>=20
+>> hook to filter the references during reference discovery phase.
+>>=20
+>> Signed-off-by: Sun Chao <sunchao9@huawei.com>
+>> ---
+>> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+>> @@ -249,6 +249,54 @@ If this hook exits with a non-zero status, `git =
+push` will abort without
+>> +This hook would be invoked by 'git-receive-pack' and =
+'git-upload-pack'
+>> +during the reference discovery phase, each reference and will be =
+filtered
+>=20
+> s/and//
+>=20
+>> +by this hook. The hook executes once with no arguments for each
+>> +'git-upload-pack' and 'git-receive-pack' process. Once the hook is =
+invoked,
+>> +a version number and server process name ('uploadpack' or 'receive') =
+will
+>> +send to it in pkt-line format, followed by a flush-pkt. The hook =
+should
+>> +response with its version number.
+>=20
+> s/response/respond/
+>=20
+>> +During reference discovery phase, each reference will be filtered by =
+this
+>> +hook. In the following example, the letter 'G' stands for =
+'git-receive-pack'
+>> +or 'git-upload-pack' and the letter 'H' stands for this hook. The =
+hook
+>> +decides if the reference will be hidden or not, it sends result back =
+in
+>> +pkt-line format protocol, a response "hide" the references will hide
+>> +to the client and can not fetch it even in protocol V2.
+>> +
+>> +       # Version negotiation
+>> +       G: PKT-LINE(version=3D1\0uploadpack)
+>> +       G: flush-pkt
+>> +       H: PKT-LINE(version=3D1)
+>> +       H: flush-pkt
+>> +
+>> +       # Send reference filter request to hook
+>> +       G: PKT-LINE(ref <refname>:<refnamefull>)
+>> +       G: flush-pkt
+>> +
+>> +       # Receive result from the hook.
+>> +       # Case 1: this reference is hidden
+>> +       H: PKT-LINE(hide)
+>> +       H: flush-pkt
+>> +
+>> +       # Case 2: this reference can be advertised
+>> +       H: flush-pkt
+>> +
+>> +To enable the `hide-refs` hook, we should config hiderefs with =
+`force:`
+>> +option, eg:
+>> +
+>> +       git config --add transfer.hiderefs force:refs/prefix1/
+>> +       git config --add uploadpack.hiderefs force:!refs/prefix2/
+>> +
+>> +the `hide-refs` will be called during reference discovery phase and
+>> +check each matched reference, a 'hide' reponse means the reference =
+will
+>=20
+> s/reponse/response/
+>=20
+>> +be hidden for its private data and even the `allowTipSHA1InWant` and
+>=20
+> s/and even the/even if/
+>=20
+>> +`allowReachableSHA1InWant` is set to true.
+>=20
+> s/is/are/
+>=20
 
-Thanks,
--Stolee
+thanks a lot ! I will update the patches right now.=
+
