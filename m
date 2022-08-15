@@ -2,89 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9299AC00140
-	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 13:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC16BC00140
+	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 13:04:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232063AbiHONCA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Aug 2022 09:02:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41998 "EHLO
+        id S232499AbiHONE5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Aug 2022 09:04:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232222AbiHONB6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Aug 2022 09:01:58 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D37E11827
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 06:01:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660568510;
-        bh=G9wSgURRLwT58o0Aob6dxFdFVLhi4s6sjMQ2Of7UNz0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=k1NB9xyAUzn8LGwGUqMvfAUc64gHG95fW9cihguJc0Dco9uKs0WGcku92t76jzT9L
-         6WF5kVON3CU7FirKIoAw4R8pdJmPGvBfR4sJsgn8kdCqkRE6Dz88W8++YpA0AY64MC
-         IJvgd/Iqdv7wu1OemaU7JZyfhVoBxdAhYWTFlfCw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MIx3C-1o3AG42NX0-00KSK0; Mon, 15
- Aug 2022 15:01:50 +0200
-Date:   Mon, 15 Aug 2022 15:01:54 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
-Subject: Re: [PATCH v4 0/3] t0021: convert perl script to C test-tool
- helper
-In-Reply-To: <cover.1660522524.git.matheus.bernardino@usp.br>
-Message-ID: <oop2rosn-011s-9rpn-04s5-ss12n45q615p@tzk.qr>
-References: <cover.1659291025.git.matheus.bernardino@usp.br> <cover.1660522524.git.matheus.bernardino@usp.br>
+        with ESMTP id S232440AbiHONEz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Aug 2022 09:04:55 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A27913F14
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 06:04:54 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id n4so8981096wrp.10
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 06:04:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc;
+        bh=DnWRiDN4Qf5O//IvvGXEQ+ZC0ScFc8W4YVroE9qiZ7Q=;
+        b=gqcumH44puluYczPK7c4XWdyQq1YHv0O9qAFHk2i1P9z4Fx+XvmR0TUp2Frhz7FcqL
+         vH4l1WRaa0CJJhFzvW2WUxPmaIHRqvSChWH+3Zy19fa7V0Gx4EbcVxYPSt/aBiYlrY65
+         ik5JaGRbOg1krlajLdnlgx7p5ksSxBW93GkMKKY4m/yC0U/S0kpJw+3vTk74VFfZJOV3
+         WK/zCv+XZoui1Qcg1IsgARA4N/ZsDYTgCz2JwYxvqBHtR5h919guYqeJYVdg/orw6Vdz
+         PMBOATxhTTSnZpOyOqfNmI/FCDqArdlEM0m3PEj4ML65UKq+phItLOgTQ/2o9k7V4E5U
+         axug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc;
+        bh=DnWRiDN4Qf5O//IvvGXEQ+ZC0ScFc8W4YVroE9qiZ7Q=;
+        b=1vAh9UXlzRyRXrRIMCv0YSgc4e0M5cUmDPlfID5opfoTUyyJW6x67XgSkOgtzHZkSS
+         zdvGmZCXqur6dtz11/mNaDLtIfb1i0j5Bw9npSwd1OqC/Goj/3myVguZpk0FDhs5RBDq
+         2XKJ6VVDb6fzoBWtW55ctNMqrcWmD+he65QYZeE2U38czhVqWel0bwTQDHJMgmtNOikC
+         DOT1WcHTASUZZz3PNj1OX2IcqNPlnGfcSNWMXaHIWng8MynI8CE/ATh64hriYMY8y+3s
+         RGBSRWc1860go/QEnzcPvdR8WNugyuq9xwZSbUQOiDnwc7Q+u8MO04GYfxPV78PIzRSm
+         +9fg==
+X-Gm-Message-State: ACgBeo3BfnwbMo0MtdLb/VLp3i3VqBy6akvJtoDLnfwSl3fcol/ziPee
+        v2ym+HmLVMKAgRRFq50+Kgs=
+X-Google-Smtp-Source: AA6agR4ikSjnoJFpQhLHdQ0fs/3oMkIs9l8/7gzgJQYDJGcn1jFuzLNfAVgBJomMjS4ApYqtjM3hPQ==
+X-Received: by 2002:a5d:47ab:0:b0:223:60ee:6c12 with SMTP id 11-20020a5d47ab000000b0022360ee6c12mr8496843wrb.315.1660568692837;
+        Mon, 15 Aug 2022 06:04:52 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id g17-20020a5d5551000000b0021f0af83142sm7266995wrw.91.2022.08.15.06.04.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Aug 2022 06:04:52 -0700 (PDT)
+Message-ID: <08a8e78d-7861-3da3-f6f6-bba466655071@gmail.com>
+Date:   Mon, 15 Aug 2022 14:04:50 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:qefcCMaw8O4s5J5kr/pfqM8evhMCoWMXUnFnqbq/Tb2t87tv1hv
- cmpehmEF8CC6m1K3kMtraEM0Sgonp3A7q6aT8gGkH3ePpynp/T2QlM15Jn0z965HesNLORP
- DaeJIzZQryI92LmXqj4QfWjYQf+a0r0JLgVXb3RRJ7Y+Z1hJVZjAJ607/pE3bd2YmaxEjcL
- tNnKIu1jtY0Q+QWaK8OwQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:o2N28mrGO10=:FjWiQJ367bfgwsAeOrwed+
- FEU4u3CKMr+ygg82xlyYYhQTNhTta3D2t2q2Dt2+GNjUDHK9fz8RZXksXLQp6pvXgWJoZsYM9
- L6UlLChWYD3lkLpWDRweZslqasKO8yGqI17TN2IAhGIdtrjJPCMbAsOoyTOz/9OmEXIax2Dy7
- wTHVMh8ATNwa8+sFXW5uV9rEZ441l/+cQK+FQH3kebe85o09KPO6aYK/uAvD3SbKSn8r6WBWt
- 7F0mq2QCL496dJSWn3qms/Gw2LbwT2no99QRkSVnz//gJ/e1si0JpX3pazmrwHO9oC/aIkvpq
- ozjBnTugvAbsIYhm+l/cQQVUhUblhq0w+kN4r/Omng+I0Fks+msYju2bKX49ca1olawuTAKyF
- 8ryjh83Z5VZIsfzs10tVQgSinouZtiutk5e1bSSY2qNwkytKqxM0wNiQKEVn+x+Ez0TNGsCRC
- BDNmHqItjlj6A6cw8IUBUESBfPyqlphyaY3MJGXZd/SDdHN6IqvYG7Vp7+TsMm3BHIa9idsU1
- WvB/XT46rdslNk7EV61MvhmoqlgikNsOF3zLzmhWaIK1hmIX4F9wtZgVAUffknB1sQiTXT5SU
- WdgbJCkY6NaYkoxuhAIWS8HLAJWXdt1U0FQ9Jiv91k71xUhOgTV14acC/11yauQc7I5mvTJbz
- oTVKbRD4gaKmQWtGmPdvrHUEbEzJpF9TExrwGYE3gQ3BObEd127W4ZmD5h9iXqh+Qu33Fwd9b
- gyd+60zkb8lfMJPwKeN5bhFQeb0xhtU/dYsIItQnHeUOCgO5r7hB4LUSiP+8UqEtVENvV8OdV
- kNXcEcw3bzcH0ARH3yUZ/Ooib792oE7D2usGEUlssBoZtrncl+wqgGNb/4knhcshu/NL2zFwE
- 0UybOk2g7hf8T62KFmT8/OJ1GaX1Zt7PXF7C0kzL2628u5SNHSAvcQxGRjjFusfEU3qIVMR0R
- aABOlJrjtWfseY/lLb8vPqnQIpiNtsSnrWXfHgX/O06bdqyUXM8pfLmUT32MDh3p74I4pJ2TK
- rMKnKeQaXEii9Mg8t6OyiBmE6VrqR4npELENVtVRGqAhwnHQsTlk+gPpx3qNgAls/xPoSmqDM
- INypkvPGMsN7vkHl7106MPg3u6uwCqaG0Rb5Nic2kSUEN7dlRucItFpKg==
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] git-prompt: show presence of unresolved conflicts at
+ command prompt
+Content-Language: en-GB-large
+To:     Junio C Hamano <gitster@pobox.com>,
+        Justin Donnelly <justinrdonnelly@gmail.com>
+Cc:     Justin Donnelly via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        newren@gmail.com, phillip.wood@dunelm.org.uk,
+        Johannes.Schindelin@gmx.de
+References: <pull.1302.git.1658798595633.gitgitgadget@gmail.com>
+ <pull.1302.v2.git.1659132518935.gitgitgadget@gmail.com>
+ <CAGTqyRw-SYDbQy9aktq5s3ZhoDhUOCf-pEopjH9m7v5+PH7Qqg@mail.gmail.com>
+ <xmqqy1vq3zm3.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqy1vq3zm3.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Matheus,
+Hi
 
-On Sun, 14 Aug 2022, Matheus Tavares wrote:
+On 15/08/2022 05:22, Junio C Hamano wrote:
+> Justin Donnelly <justinrdonnelly@gmail.com> writes:
+> 
+>> I hope this is against protocol/etiquette, but after some initial
+>> feedback from Junio, I haven't gotten any more. I wasn't sure if
+>> nobody had seen the patch, or if there just wasn't any interest.
+> 
+> It probably is a bit of both.  I personally did not see much point
+> in adding the long "conflicts" marker to the shell prompt (I did
+> worry about possible complaints by end users triggered by seeing
+> them suddenly without asking, which was why I commented on the
+> patch) and I was waiting for interested folks to speak out.
+> 
+> I do not know about other folks if they did see and did not find it
+> interesting, they are not looking at others' work, or your second
+> round came on a particularly bad day (busy with other topics, or
+> weekend just before the list was swamped with many new topics at the
+> beginning of a new week, or something).  Pinging on the thread like
+> you did would be the right thing to do to "kick" those, who did see
+> and who were in favor but who kept silent, into action ;-)
 
-> Main changes since v3:
-> Patch 2:
-> - Mentioned in commit message why we removed the flush() calls for the
->   log file handler.
-> - Removed 'buf[size] = \0' and relied on the fact that packet_read()
->   already 0-terminates the buffer. This also allows us to use NULL
->   instead of &size in many places, dropping down the unneeded variable.
-> - Used parse-options instead of manual argv fiddling. I'm not strongly
->   about one way or another, but I found the parse-options slightly
->   easier for new options that may be added in the future.
-> - Style: removed unnecessary {} and newline.
+I had not commented as I don't use the prompt. I have just had a quick 
+read and I wonder if it would be more efficient to use
+     git diff --cached --quiet --diff-filter=U
+rather than
+     git ls-files --unmerged 2>/dev/null
+to check if there are unmerged entries, but as we don't normally expect 
+there to be that many unmerged entries it probably does not matter.
 
-While I think that the `parse-options` were unnecessary churn, I won't
-object because I find that I cannot motivate myself to care all that much
-(other reviewers seem to find this type of aspects super exciting, a
-sentiment I do not share). I care much more about the essence, about the
-actual improvement brought about by your patch series, which is to reduce
-Git's test suite's reliance on scripting.
+Best Wishes
 
-The range-diff looks good to me, and I think this iteration is good to go.
-
-Thanks,
-Dscho
+Phillip
