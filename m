@@ -2,112 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC16BC00140
-	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 13:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBF54C25B0E
+	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 13:15:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232499AbiHONE5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Aug 2022 09:04:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44038 "EHLO
+        id S242909AbiHONPZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Aug 2022 09:15:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232440AbiHONEz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Aug 2022 09:04:55 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A27913F14
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 06:04:54 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id n4so8981096wrp.10
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 06:04:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc;
-        bh=DnWRiDN4Qf5O//IvvGXEQ+ZC0ScFc8W4YVroE9qiZ7Q=;
-        b=gqcumH44puluYczPK7c4XWdyQq1YHv0O9qAFHk2i1P9z4Fx+XvmR0TUp2Frhz7FcqL
-         vH4l1WRaa0CJJhFzvW2WUxPmaIHRqvSChWH+3Zy19fa7V0Gx4EbcVxYPSt/aBiYlrY65
-         ik5JaGRbOg1krlajLdnlgx7p5ksSxBW93GkMKKY4m/yC0U/S0kpJw+3vTk74VFfZJOV3
-         WK/zCv+XZoui1Qcg1IsgARA4N/ZsDYTgCz2JwYxvqBHtR5h919guYqeJYVdg/orw6Vdz
-         PMBOATxhTTSnZpOyOqfNmI/FCDqArdlEM0m3PEj4ML65UKq+phItLOgTQ/2o9k7V4E5U
-         axug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc;
-        bh=DnWRiDN4Qf5O//IvvGXEQ+ZC0ScFc8W4YVroE9qiZ7Q=;
-        b=1vAh9UXlzRyRXrRIMCv0YSgc4e0M5cUmDPlfID5opfoTUyyJW6x67XgSkOgtzHZkSS
-         zdvGmZCXqur6dtz11/mNaDLtIfb1i0j5Bw9npSwd1OqC/Goj/3myVguZpk0FDhs5RBDq
-         2XKJ6VVDb6fzoBWtW55ctNMqrcWmD+he65QYZeE2U38czhVqWel0bwTQDHJMgmtNOikC
-         DOT1WcHTASUZZz3PNj1OX2IcqNPlnGfcSNWMXaHIWng8MynI8CE/ATh64hriYMY8y+3s
-         RGBSRWc1860go/QEnzcPvdR8WNugyuq9xwZSbUQOiDnwc7Q+u8MO04GYfxPV78PIzRSm
-         +9fg==
-X-Gm-Message-State: ACgBeo3BfnwbMo0MtdLb/VLp3i3VqBy6akvJtoDLnfwSl3fcol/ziPee
-        v2ym+HmLVMKAgRRFq50+Kgs=
-X-Google-Smtp-Source: AA6agR4ikSjnoJFpQhLHdQ0fs/3oMkIs9l8/7gzgJQYDJGcn1jFuzLNfAVgBJomMjS4ApYqtjM3hPQ==
-X-Received: by 2002:a5d:47ab:0:b0:223:60ee:6c12 with SMTP id 11-20020a5d47ab000000b0022360ee6c12mr8496843wrb.315.1660568692837;
-        Mon, 15 Aug 2022 06:04:52 -0700 (PDT)
-Received: from [192.168.1.240] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id g17-20020a5d5551000000b0021f0af83142sm7266995wrw.91.2022.08.15.06.04.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Aug 2022 06:04:52 -0700 (PDT)
-Message-ID: <08a8e78d-7861-3da3-f6f6-bba466655071@gmail.com>
-Date:   Mon, 15 Aug 2022 14:04:50 +0100
+        with ESMTP id S242807AbiHONPM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Aug 2022 09:15:12 -0400
+Received: from outboundhk.mxmail.xiaomi.com (outboundhk.mxmail.xiaomi.com [207.226.244.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6FFC41900E
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 06:15:09 -0700 (PDT)
+X-IronPort-AV: E=Sophos;i="5.93,238,1654531200"; 
+   d="scan'208";a="39221075"
+Received: from hk-mbx02.mioffice.cn (HELO xiaomi.com) ([10.56.8.122])
+  by outboundhk.mxmail.xiaomi.com with ESMTP; 15 Aug 2022 21:15:08 +0800
+Received: from yz-mbx07.mioffice.cn (10.237.88.127) by HK-MBX02.mioffice.cn
+ (10.56.8.122) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 15 Aug
+ 2022 21:15:08 +0800
+Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by yz-mbx07.mioffice.cn
+ (10.237.88.127) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Mon, 15 Aug
+ 2022 21:15:07 +0800
+Received: from BJ-MBX01.mioffice.cn ([fe80::1839:49c8:1d62:7218]) by
+ BJ-MBX01.mioffice.cn ([fe80::1839:49c8:1d62:7218%9]) with mapi id
+ 15.02.0986.029; Mon, 15 Aug 2022 21:15:07 +0800
+From:   =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+To:     ZheNing Hu <adlternative@gmail.com>
+CC:     Jonathan Tan <jonathantanmy@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
+        =?utf-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>,
+        =?utf-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>,
+        =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
+        =?utf-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
+Subject: RE: [External Mail]Re: Partial-clone cause big performance impact on
+ server
+Thread-Topic: [External Mail]Re: Partial-clone cause big performance impact on
+ server
+Thread-Index: AditV5yCC1rR4WwDR+uOdfckQ0GBIQADD4yAAGB4/fAAT1esgAAhQ0wA
+Date:   Mon, 15 Aug 2022 13:15:07 +0000
+Message-ID: <44c62b62ce8f418d8929bdffc894d329@xiaomi.com>
+References: <bfa3de4485614badb4a27d8cfba99968@xiaomi.com>
+ <20220811172219.2308120-1-jonathantanmy@google.com>
+ <08dae83ba1b541adac0fd96e2f99b194@xiaomi.com>
+ <CAOLTT8R6hNKWGen4RD2sSU-asjjS6HXnxY2JC4k9SeL4YDzB-g@mail.gmail.com>
+In-Reply-To: <CAOLTT8R6hNKWGen4RD2sSU-asjjS6HXnxY2JC4k9SeL4YDzB-g@mail.gmail.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.237.8.11]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] git-prompt: show presence of unresolved conflicts at
- command prompt
-Content-Language: en-GB-large
-To:     Junio C Hamano <gitster@pobox.com>,
-        Justin Donnelly <justinrdonnelly@gmail.com>
-Cc:     Justin Donnelly via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        newren@gmail.com, phillip.wood@dunelm.org.uk,
-        Johannes.Schindelin@gmx.de
-References: <pull.1302.git.1658798595633.gitgitgadget@gmail.com>
- <pull.1302.v2.git.1659132518935.gitgitgadget@gmail.com>
- <CAGTqyRw-SYDbQy9aktq5s3ZhoDhUOCf-pEopjH9m7v5+PH7Qqg@mail.gmail.com>
- <xmqqy1vq3zm3.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqy1vq3zm3.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
-
-On 15/08/2022 05:22, Junio C Hamano wrote:
-> Justin Donnelly <justinrdonnelly@gmail.com> writes:
-> 
->> I hope this is against protocol/etiquette, but after some initial
->> feedback from Junio, I haven't gotten any more. I wasn't sure if
->> nobody had seen the patch, or if there just wasn't any interest.
-> 
-> It probably is a bit of both.  I personally did not see much point
-> in adding the long "conflicts" marker to the shell prompt (I did
-> worry about possible complaints by end users triggered by seeing
-> them suddenly without asking, which was why I commented on the
-> patch) and I was waiting for interested folks to speak out.
-> 
-> I do not know about other folks if they did see and did not find it
-> interesting, they are not looking at others' work, or your second
-> round came on a particularly bad day (busy with other topics, or
-> weekend just before the list was swamped with many new topics at the
-> beginning of a new week, or something).  Pinging on the thread like
-> you did would be the right thing to do to "kick" those, who did see
-> and who were in favor but who kept silent, into action ;-)
-
-I had not commented as I don't use the prompt. I have just had a quick 
-read and I wonder if it would be more efficient to use
-     git diff --cached --quiet --diff-filter=U
-rather than
-     git ls-files --unmerged 2>/dev/null
-to check if there are unmerged entries, but as we don't normally expect 
-there to be that many unmerged entries it probably does not matter.
-
-Best Wishes
-
-Phillip
+VGhlcmUgaXMgYSByZWFsbHkgZWFzeSB3YXkgdG8gcmVwcm9kdWNlIGl0DQoNCmdpdCBjbG9uZSAt
+LWZpbHRlcj1ibG9iOm5vbmUgLWIgbWFzdGVyICJodHRwczovL2FuZHJvaWQuZ29vZ2xlc291cmNl
+LmNvbS9wbGF0Zm9ybS9wcmVidWlsdHMvZ3JhZGxlLXBsdWdpbiINCg0KRXZlbiBHb29nbGUgQU9T
+UCBHZXJyaXQgd2lsbCBoYXZlIHRoaXMgcHJvYmxlbS4gWW91IHdpbGwgZmluZCBpdCBoYW5nIGZv
+ciBtaW51dGVzIG9uIGNoZWNrb3V0DQoNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0K
+PiBGcm9tOiBaaGVOaW5nIEh1IDxhZGx0ZXJuYXRpdmVAZ21haWwuY29tPg0KPiBTZW50OiBNb25k
+YXksIEF1Z3VzdCAxNSwgMjAyMiAxOjE2IFBNDQo+IFRvOiDnqIvmtIsgPGNoZW5neWFuZ0B4aWFv
+bWkuY29tPg0KPiBDYzogSm9uYXRoYW4gVGFuIDxqb25hdGhhbnRhbm15QGdvb2dsZS5jb20+OyBn
+aXRAdmdlci5rZXJuZWwub3JnOyDkvZXmtakNCj4gPGhlaGFvQHhpYW9taS5jb20+OyBYaW43IE1h
+IOmprOmRqyA8bWF4aW43QHhpYW9taS5jb20+OyDnn7PlpYnlhbUNCj4gPHNoaWZlbmdiaW5nQHhp
+YW9taS5jb20+OyDlh6HlhpvovokgPGZhbmp1bmh1aUB4aWFvbWkuY29tPjsg546L5rGJ5Z+6DQo+
+IDx3YW5naGFuamlAeGlhb21pLmNvbT4NCj4gU3ViamVjdDogUmU6IFtFeHRlcm5hbCBNYWlsXVJl
+OiBQYXJ0aWFsLWNsb25lIGNhdXNlIGJpZyBwZXJmb3JtYW5jZSBpbXBhY3Qgb24NCj4gc2VydmVy
+DQo+DQo+IFvlpJbpg6jpgq7ku7ZdIOatpOmCruS7tuadpea6kOS6juWwj+exs+WFrOWPuOWklumD
+qO+8jOivt+iwqOaFjuWkhOeQhuOAgg0KPg0KPiDnqIvmtIsgPGNoZW5neWFuZ0B4aWFvbWkuY29t
+PiDkuo4yMDIy5bm0OOaciDEz5pel5ZGo5YWtIDE2OjAw5YaZ6YGT77yaDQo+ID4NCj4gPiA+ID4g
+ICAgIDMuIHdpdGggR0lUX1RSQUNFX1BBQ0tFVD0xLiBXZSBmb3VuZCBvbiBiaWcgcmVwb3NpdG9y
+aWVzDQo+ICgyMDBLK3JlZnMsIDZtKyBvYmplY3RzKS4gR2l0IHdpbGwgc2VuZHMgNDBrIHdhbnQu
+DQo+ID4gPiA+ICAgICA0LiBBbmQgd2UgdGhlbiB0cmFjayBvdXIgc2VydmVyKHdoaWNoIGlzIGdl
+cnJpdCB3aXRoIGpnaXQpLiBXZSBmb3VuZA0KPiB0aGUgc2VydmVyIGlzIGNvdXRpbmcgb2JqZWN0
+cy4gVGhlbiB3ZSBjaGVjayB0aG9zZSA0MGsgb2JqZWN0cywgbW9zdCBvZiB0aGVtDQo+IGFyZSBi
+bG9icyByYXRoZXIgdGhhbiBjb21taXQuICh3aGljaCBtZWFucyB0aGV5J3JlIG5vdCBpbiBiaXRt
+YXApDQo+ID4gPiA+ICAgICA1LiBXZSBiZWxpZXZlIHRoYXQncyB0aGUgcm9vdCBjYXVzZSBvZiBv
+dXIgcHJvYmxlbS4gR2l0IHNlbmRzIHRvbw0KPiBtYW55ICJ3YW50IFNIQTEiIHdoaWNoIGFyZSBu
+b3QgaW4gYml0bWFwLCBjYXVzZSB0aGUgc2VydmVyIHRvIGNvdW50DQo+IG9iamVjdHMgZnJlcXVl
+bnRseSwgd2hpY2ggdGhlbiBzbG93IGRvd24gdGhlIHNlcnZlci4NCj4gPiA+ID4NCj4gPiA+ID4g
+V2hhdCB3ZSB3YW50IGlzLCBkb3dubG9hZCB0aGUgdGhpbmdzIHdlIG5lZWQgdG8gY2hlY2tvdXQg
+dG8gc3BlY2lmaWMNCj4gY29tbWl0LiBCdXQgaWYgb25lIGNvbW1pdCBjb250YWluIHNvIG1hbnkg
+b2JqZWN0cyAobGlrZSB1cyAsIDQwayspLiBJdCB0YWtlcw0KPiBtb3JlIHRpbWUgdG8gY291bnRp
+bmcgdGhhbiBkb3dubG9hZGluZy4NCj4gPiA+ID4gSXMgaXQgcG9zc2libGUgdG8gbGV0IGdpdCBv
+bmx5IHNlbmQgImNvbW1pdCB3YW50IiByYXRoZXIgdGhhbiBhbGwgdGhlDQo+IG9iamVjdHMgU0hB
+MSBvbmUgYnkgb25lPw0KPiA+ID4NCj4gPiA+IE9uIGEgdGVjaG5pY2FsIGxldmVsLCBpdCBtYXkg
+YmUgcG9zc2libGUgLSBhdCB0aGUgcG9pbnQgaW4gdGhlIEdpdA0KPiA+ID4gY29kZSB3aGVyZSB0
+aGUgYmF0Y2ggcHJlZmV0Y2ggb2NjdXJzLCBJJ20gbm90IHN1cmUgaWYgd2UgaGF2ZSB0aGUNCj4g
+PiA+IGNvbW1pdCwgYnV0IHdlIGNvdWxkIHBsdW1iIHRoZSBjb21taXQgaW5mb3JtYXRpb24gdGhl
+cmUuIChXZSBoYXZlDQo+ID4gPiB0aGUgdHJlZSwgYnV0IHRoaXMgZG9lc24ndCBoZWxwIHVzIGhl
+cmUgYmVjYXVzZSBhcyBmYXIgYXMgSSBrbm93LA0KPiA+ID4gdGhlIHRyZWUgd29uJ3QgYmUgaW4g
+dGhlIGJpdG1hcCBzbyB0aGUgc2VydmVyIHdvdWxkIG5lZWQgdG8gY291bnQNCj4gPiA+IG9iamVj
+dHMgYW55d2F5LCByZXN1bHRpbmcgaW4gdGhlIHNhbWUgcHJvYmxlbS4pDQo+ID4gPg0KPiA+ID4g
+SG93ZXZlciwgc2VuZGluZyBvbmx5IGNvbW1pdHMgYXMgd2FudHMgd291bGQgbWVhbiB0aGF0IHdl
+IHdvdWxkIGJlDQo+ID4gPiBmZXRjaGluZyBtb3JlIGJsb2JzIHRoYW4gbmVlZGVkLiBGb3IgZXhh
+bXBsZSwgaWYgd2Ugd2VyZSB0byBjbG9uZQ0KPiA+ID4gKHdpdGgNCj4gPiA+IGNoZWNrb3V0KSBh
+bmQgdGhlbiBjaGVja291dCBIRUFEXiwgc2VuZGluZyBhICJjb21taXQgd2FudCIgZm9yIHRoZQ0K
+PiA+ID4gbGF0dGVyIGNoZWNrb3V0IHdvdWxkIHJlc3VsdCBpbiBhbGwgYmxvYnMgcmVmZXJlbmNl
+ZCBieSB0aGUgY29tbWl0J3MNCj4gPiA+IHRyZWUgYmVpbmcgZmV0Y2hlZCBhbmQgbm90IG9ubHkg
+dGhlIGJsb2JzIHRoYXQgYXJlIGRpZmZlcmVudC4NCj4gPg0KPiA+IEl0IHNlZW1zIHlvdXIgc29s
+dXRpb24gcmVxdWlyZSBjaGFuZ2VzIGZyb20gYm90aCBzZXJ2ZXIgc2lkZSBhbmQNCj4gPiBjbGll
+bnQgc2lkZSBXaHkgbm90IHdlIGp1c3QgYWRkIGFub3RoZXIgZmlsdGVyLCBhbGxvdyBwYXJ0aWFs
+LWNsb25lIGFsd2F5cw0KPiBzZW5kcyBjb21taXQgbGV2ZWwgd2FudD8NCj4gPiBJZiB3ZSBjaGVj
+a291dCBIRUFEfjEsIHRoZW4gY2xpZW50IGNhbiBzZW5kICJ3YW50IEhFQUR+MSBIRUFEfjIiLg0K
+PiA+DQo+DQo+IEkgYW0gaW50ZXJlc3RpbmcgYWJvdXQgdGhpcyBxdWVzdGlvbiB0b28sIG1heWJl
+IEkgY2FuIHRyeSBpZiB3ZSBjYW4gZG8gdGhpcy4uIDstKQ0KPg0KPiBaaGVOaW5nIEh1DQojLyoq
+KioqKuacrOmCruS7tuWPiuWFtumZhOS7tuWQq+acieWwj+exs+WFrOWPuOeahOS/neWvhuS/oeaB
+r++8jOS7hemZkOS6juWPkemAgee7meS4iumdouWcsOWdgOS4reWIl+WHuueahOS4quS6uuaIlue+
+pOe7hOOAguemgeatouS7u+S9leWFtuS7luS6uuS7peS7u+S9leW9ouW8j+S9v+eUqO+8iOWMheaL
+rOS9huS4jemZkOS6juWFqOmDqOaIlumDqOWIhuWcsOazhOmcsuOAgeWkjeWItuOAgeaIluaVo+WP
+ke+8ieacrOmCruS7tuS4reeahOS/oeaBr+OAguWmguaenOaCqOmUmeaUtuS6huacrOmCruS7tu+8
+jOivt+aCqOeri+WNs+eUteivneaIlumCruS7tumAmuefpeWPkeS7tuS6uuW5tuWIoOmZpOacrOmC
+ruS7tu+8gSBUaGlzIGUtbWFpbCBhbmQgaXRzIGF0dGFjaG1lbnRzIGNvbnRhaW4gY29uZmlkZW50
+aWFsIGluZm9ybWF0aW9uIGZyb20gWElBT01JLCB3aGljaCBpcyBpbnRlbmRlZCBvbmx5IGZvciB0
+aGUgcGVyc29uIG9yIGVudGl0eSB3aG9zZSBhZGRyZXNzIGlzIGxpc3RlZCBhYm92ZS4gQW55IHVz
+ZSBvZiB0aGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGhlcmVpbiBpbiBhbnkgd2F5IChpbmNsdWRp
+bmcsIGJ1dCBub3QgbGltaXRlZCB0bywgdG90YWwgb3IgcGFydGlhbCBkaXNjbG9zdXJlLCByZXBy
+b2R1Y3Rpb24sIG9yIGRpc3NlbWluYXRpb24pIGJ5IHBlcnNvbnMgb3RoZXIgdGhhbiB0aGUgaW50
+ZW5kZWQgcmVjaXBpZW50KHMpIGlzIHByb2hpYml0ZWQuIElmIHlvdSByZWNlaXZlIHRoaXMgZS1t
+YWlsIGluIGVycm9yLCBwbGVhc2Ugbm90aWZ5IHRoZSBzZW5kZXIgYnkgcGhvbmUgb3IgZW1haWwg
+aW1tZWRpYXRlbHkgYW5kIGRlbGV0ZSBpdCEqKioqKiovIw0K
