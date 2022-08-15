@@ -2,152 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F37AC00140
-	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 05:12:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2FFFC00140
+	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 05:16:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232942AbiHOFMX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Aug 2022 01:12:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56026 "EHLO
+        id S233255AbiHOFQl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Aug 2022 01:16:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232699AbiHOFMV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Aug 2022 01:12:21 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C710EE61
-        for <git@vger.kernel.org>; Sun, 14 Aug 2022 22:12:19 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 503671C7FF1;
-        Mon, 15 Aug 2022 01:12:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=d3SyvbQTNi0uexhkctVT0dBMY
-        bXU9lOAcaziUGNJLWI=; b=pB5azR3/17IoESKXkxbTIrVWdDkVMzmrCHR0r+tW+
-        HD2wlqpvS/mOSeKQdwsr/KQaSvbwy+FptqBTx1Ivw0rTgE84hNdSN6o7e/PxeWnn
-        pFRo58FZ7YwM6fIxF/4zFkAHSJrrxSQkWk35Jpt6MmN0RyvoB1bdHxjU8CA2CSug
-        xg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 491A41C7FF0;
-        Mon, 15 Aug 2022 01:12:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ED89C1C7FEE;
-        Mon, 15 Aug 2022 01:12:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Documentation: mention the magic pathspec ":/"
-References: <20220814095253.3422612-1-thomas@t-8ch.de>
-Date:   Sun, 14 Aug 2022 22:12:12 -0700
-Message-ID: <xmqqsfly3xar.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S233220AbiHOFQj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Aug 2022 01:16:39 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6D4F1573B
+        for <git@vger.kernel.org>; Sun, 14 Aug 2022 22:16:38 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id 10so1721700iou.2
+        for <git@vger.kernel.org>; Sun, 14 Aug 2022 22:16:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc;
+        bh=XAmItbtO+swf+L2qjMq9n0zD/MBi2G/RkbHIQxG1ci0=;
+        b=IB4m5L0899lYOksNK18a/45CVxRQ7uiBQOaiqBVblaDUQyf8Uu31/U/8GvUuexfT/X
+         P5JI0aZBmy8n7q85d1IgPw/Yyb0ccZxpJxdDVtYirLCHFDra1rA+c2v/PlKYgjCB08Yk
+         7wcNFad1l5tuWlZWBqg2nbgHWiKgi7xp+jOOYhZoVFKr5QJwRthsIjH/e6FxD9xQB9Tw
+         PCrdkpwenc41lT7j9MMRISmRkUqsAwEnGc0+u2STxrC7/08HzYvtvDrvORrageKEZOFq
+         yC9d5Xjjvl4k0Sfc2RT6mjFa853NGa/pOxv9AUtPBgVILO9anLZXEX8k6XFYV05Ql8y8
+         9odg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
+        bh=XAmItbtO+swf+L2qjMq9n0zD/MBi2G/RkbHIQxG1ci0=;
+        b=celr+6VdvfXIxexhGyykQ+3zrYMPirnXPeUOk9lQcEeD6qeoGclwxGXqZ3Q+CL1fPJ
+         ce1TOYHHD9Ng5pbsSfeMFmyPWTDI6Ca1zl9MB+FNSZwgsxyEloSumJS4XagSI+hWJ8RW
+         TN7q3UgUQBmEQR+i6jyI/SWNVKxfeGu/B/HNxLgMvCN1oyLo4F/uOjS/CjuwlE5Ul3Sv
+         9BLhwbslD0W+PjYnxhNGukMmOhqbXnARDAcL9dmiYqYf7RCCz6QsfSWQLoF8dR01s5Xi
+         zYMpGAxqcmjLsHgWcc1vHT2dT1C0DCq5xneK3sxNjSJyA1YONcV9k8/34UHAG9hRHvPL
+         fkHg==
+X-Gm-Message-State: ACgBeo1sGRW/AjPuiJo5L5gy80hCx64ISEHN4qd3jCsIcjMEszk+m5fG
+        i9dKvPXbXcIT9BZgr/jasBuBrqVLhtdurWVHouw=
+X-Google-Smtp-Source: AA6agR5e5PWi+/3WiE3+MO8y5C0KDAuAsaxPucfWaXzAQAZo6mKXi5A01F8qFwYfE/5LOZqPxf47VtflY4RW7pADWTI=
+X-Received: by 2002:a05:6638:3450:b0:343:3c23:ec7e with SMTP id
+ q16-20020a056638345000b003433c23ec7emr6726776jav.67.1660540598260; Sun, 14
+ Aug 2022 22:16:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D2EE126E-1C58-11ED-A103-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <bfa3de4485614badb4a27d8cfba99968@xiaomi.com> <20220811172219.2308120-1-jonathantanmy@google.com>
+ <08dae83ba1b541adac0fd96e2f99b194@xiaomi.com>
+In-Reply-To: <08dae83ba1b541adac0fd96e2f99b194@xiaomi.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Mon, 15 Aug 2022 13:16:27 +0800
+Message-ID: <CAOLTT8R6hNKWGen4RD2sSU-asjjS6HXnxY2JC4k9SeL4YDzB-g@mail.gmail.com>
+Subject: Re: [External Mail]Re: Partial-clone cause big performance impact on server
+To:     =?UTF-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?UTF-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
+        =?UTF-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>,
+        =?UTF-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>,
+        =?UTF-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
+        =?UTF-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Wei=C3=9Fschuh <thomas@t-8ch.de> writes:
-
-Here before your sign-off is the place for you to justify why this
-patch is a good idea.
-
-> Signed-off-by: Thomas Wei=C3=9Fschuh <thomas@t-8ch.de>
-> ---
->  Documentation/gitcli.txt | 2 ++
->  1 file changed, 2 insertions(+)
+=E7=A8=8B=E6=B4=8B <chengyang@xiaomi.com> =E4=BA=8E2022=E5=B9=B48=E6=9C=881=
+3=E6=97=A5=E5=91=A8=E5=85=AD 16:00=E5=86=99=E9=81=93=EF=BC=9A
 >
-> diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-> index 1819a5a185..a421855bdb 100644
-> --- a/Documentation/gitcli.txt
-> +++ b/Documentation/gitcli.txt
-> @@ -78,6 +78,8 @@ you will.
->     using a '.' as a repository name in Git (a dot-repository) is a rel=
-ative
->     path and means your current repository.
-> =20
-> + * The magic pathspec `:/` refers to the root of the working tree.
-> +
+> > >     3. with GIT_TRACE_PACKET=3D1. We found on big repositories (200K+=
+refs, 6m+ objects). Git will sends 40k want.
+> > >     4. And we then track our server(which is gerrit with jgit). We fo=
+und the server is couting objects. Then we check those 40k objects, most of=
+ them are blobs rather than commit. (which means they're not in bitmap)
+> > >     5. We believe that's the root cause of our problem. Git sends too=
+ many "want SHA1" which are not in bitmap, cause the server to count object=
+s frequently, which then slow down the server.
+> > >
+> > > What we want is, download the things we need to checkout to specific =
+commit. But if one commit contain so many objects (like us , 40k+). It take=
+s more time to counting than downloading.
+> > > Is it possible to let git only send "commit want" rather than all the=
+ objects SHA1 one by one?
+> >
+> > On a technical level, it may be possible - at the point in the Git code=
+ where the
+> > batch prefetch occurs, I'm not sure if we have the commit, but we could
+> > plumb the commit information there. (We have the tree, but this doesn't=
+ help
+> > us here because as far as I know, the tree won't be in the bitmap so th=
+e server
+> > would need to count objects anyway, resulting in the same problem.)
+> >
+> > However, sending only commits as wants would mean that we would be
+> > fetching more blobs than needed. For example, if we were to clone (with
+> > checkout) and then checkout HEAD^, sending a "commit want" for the latt=
+er
+> > checkout would result in all blobs referenced by the commit's tree bein=
+g
+> > fetched and not only the blobs that are different.
+>
+> It seems your solution require changes from both server side and client s=
+ide
+> Why not we just add another filter, allow partial-clone always sends comm=
+it level want?
+> If we checkout HEAD~1, then client can send "want HEAD~1 HEAD~2".
+>
 
-This looks somewhat out of place.  Reading the previous entry, I
-notice it is about the path to a repository, not about path in your
-working tree.  The entry before it is about pathspec, so in a sense,
-what is truly out of place is the "dot is how you refer to the
-current repository".
+I am interesting about this question too, maybe I can try if we can do
+this.. ;-)
 
-I do not quite see why we want to single out ":/", i.e.  the "top"
-pathspec magic applied to an empty string, and not talk about the
-case when it was applied to non-empty string, e.g.  ":/*.c".  If we
-talk about pathspec magic, shouldn't we also talk about "exclude"
-magic, e.g. ":!\*.o", here?
-
-Besides, the new description is not exactly correct. The "top"
-pathspec magic does not inherently refers to the root.  In
-
-    $ cd sub/dire/ctory && git grep -e pattern
-
-we tell "git grep" to look for patterns in the current directory
-and in its subdirectories, and with
-
-    $ cd sub/dire/ctory && git grep -e pattern :/
-
-we lift the "current directory and below" limitation and instead
-look for matches everywhere, not limited to the root-level directory.
-We can find a patch from sub/foo.txt that is neither in our current
-directory or at the root-level directory.
-
-So, I do agree that the users must know more than "Many commands
-allow wildcards in paths" (the entry before the "dot is how you can
-refer to the current repository"), I do not think singling out ":/"
-and refer only to that is a wrong way to go about it for this
-document.  The gitcli manual does not even mention 'pathspec', which
-is the keyword to effectively find many things to learn in the
-glossary ("git help glossary"), and it would be the first thing to
-fix here, I would think.
-
-So after reading your patch and thinking about it for a few days,
-here is what I think is wrong in the current description, plus its
-fix.
-
-Thoughts?
-
- Documentation/gitcli.txt | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
-
-diff --git c/Documentation/gitcli.txt w/Documentation/gitcli.txt
-index 1819a5a185..40553fc578 100644
---- c/Documentation/gitcli.txt
-+++ w/Documentation/gitcli.txt
-@@ -57,9 +57,11 @@ When writing a script that is expected to handle rando=
-m user-input, it is
- a good practice to make it explicit which arguments are which by placing
- disambiguating `--` at appropriate places.
-=20
-- * Many commands allow wildcards in paths, but you need to protect
--   them from getting globbed by the shell.  These two mean different
--   things:
-+ * Many commands take paths to work on as "pathspec".  A pathspec elemen=
-t
-+   can be a literal string, which specifies the named path itself, or it
-+   can be a wildcard pattern, which specifies all paths that match the
-+   pattern.  Wildcards may need to be protected from getting globbed by
-+   the shell.  These two mean different things:
- +
- --------------------------------
- $ git restore *.c
-@@ -73,6 +75,8 @@ the paths in the index that match the pattern to be che=
-cked out to your
- working tree.  After running `git add hello.c; rm hello.c`, you will _no=
-t_
- see `hello.c` in your working tree with the former, but with the latter
- you will.
-++
-+To learn more about pathspec, see linkgit:gitglossary[7].
-=20
-  * Just as the filesystem '.' (period) refers to the current directory,
-    using a '.' as a repository name in Git (a dot-repository) is a relat=
-ive
+ZheNing Hu
