@@ -2,113 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2FFFC00140
-	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 05:16:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1851EC00140
+	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 05:32:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233255AbiHOFQl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Aug 2022 01:16:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58448 "EHLO
+        id S230232AbiHOFcU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Aug 2022 01:32:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233220AbiHOFQj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Aug 2022 01:16:39 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6D4F1573B
-        for <git@vger.kernel.org>; Sun, 14 Aug 2022 22:16:38 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id 10so1721700iou.2
-        for <git@vger.kernel.org>; Sun, 14 Aug 2022 22:16:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc;
-        bh=XAmItbtO+swf+L2qjMq9n0zD/MBi2G/RkbHIQxG1ci0=;
-        b=IB4m5L0899lYOksNK18a/45CVxRQ7uiBQOaiqBVblaDUQyf8Uu31/U/8GvUuexfT/X
-         P5JI0aZBmy8n7q85d1IgPw/Yyb0ccZxpJxdDVtYirLCHFDra1rA+c2v/PlKYgjCB08Yk
-         7wcNFad1l5tuWlZWBqg2nbgHWiKgi7xp+jOOYhZoVFKr5QJwRthsIjH/e6FxD9xQB9Tw
-         PCrdkpwenc41lT7j9MMRISmRkUqsAwEnGc0+u2STxrC7/08HzYvtvDrvORrageKEZOFq
-         yC9d5Xjjvl4k0Sfc2RT6mjFa853NGa/pOxv9AUtPBgVILO9anLZXEX8k6XFYV05Ql8y8
-         9odg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
-        bh=XAmItbtO+swf+L2qjMq9n0zD/MBi2G/RkbHIQxG1ci0=;
-        b=celr+6VdvfXIxexhGyykQ+3zrYMPirnXPeUOk9lQcEeD6qeoGclwxGXqZ3Q+CL1fPJ
-         ce1TOYHHD9Ng5pbsSfeMFmyPWTDI6Ca1zl9MB+FNSZwgsxyEloSumJS4XagSI+hWJ8RW
-         TN7q3UgUQBmEQR+i6jyI/SWNVKxfeGu/B/HNxLgMvCN1oyLo4F/uOjS/CjuwlE5Ul3Sv
-         9BLhwbslD0W+PjYnxhNGukMmOhqbXnARDAcL9dmiYqYf7RCCz6QsfSWQLoF8dR01s5Xi
-         zYMpGAxqcmjLsHgWcc1vHT2dT1C0DCq5xneK3sxNjSJyA1YONcV9k8/34UHAG9hRHvPL
-         fkHg==
-X-Gm-Message-State: ACgBeo1sGRW/AjPuiJo5L5gy80hCx64ISEHN4qd3jCsIcjMEszk+m5fG
-        i9dKvPXbXcIT9BZgr/jasBuBrqVLhtdurWVHouw=
-X-Google-Smtp-Source: AA6agR5e5PWi+/3WiE3+MO8y5C0KDAuAsaxPucfWaXzAQAZo6mKXi5A01F8qFwYfE/5LOZqPxf47VtflY4RW7pADWTI=
-X-Received: by 2002:a05:6638:3450:b0:343:3c23:ec7e with SMTP id
- q16-20020a056638345000b003433c23ec7emr6726776jav.67.1660540598260; Sun, 14
- Aug 2022 22:16:38 -0700 (PDT)
+        with ESMTP id S229637AbiHOFcT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Aug 2022 01:32:19 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13E471582B
+        for <git@vger.kernel.org>; Sun, 14 Aug 2022 22:32:18 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 57D30198224;
+        Mon, 15 Aug 2022 01:32:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=c2G8YP2N2Jgs/3k568TqftAI/DNgf3dEjJAZgBWJfXo=; b=TnjB
+        gYjhHAXoJYD77eG2Jo86hgXv34ZGdFbIS9dV4M+OvuWWYm6BkgDBl/FESHmnSKEe
+        FWVdJBBkkaFyqrDZRNTZu9DILt/RwgiUFtqE03eKYWKa0hNftMt6hjE3LnQth9LL
+        QTzwy2L0MUuJWF0z4IiWaz6xuKvmE3zb2WAq0Xk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 50C13198223;
+        Mon, 15 Aug 2022 01:32:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 01F0519821F;
+        Mon, 15 Aug 2022 01:32:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Andrew Olsen <andrew.olsen@koordinates.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] is_promisor_object(): fix use-after-free of tree buffer
+References: <CAPJmHpVssKshapGYDF-ifU1fts-jFTC-HqxnjN8meSMP3weB4g@mail.gmail.com>
+        <YvS50W6wku5Y/NC7@coredump.intra.peff.net>
+        <YviWO9Bhz5PU1HaL@coredump.intra.peff.net>
+Date:   Sun, 14 Aug 2022 22:32:12 -0700
+Message-ID: <xmqqmtc63wdf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <bfa3de4485614badb4a27d8cfba99968@xiaomi.com> <20220811172219.2308120-1-jonathantanmy@google.com>
- <08dae83ba1b541adac0fd96e2f99b194@xiaomi.com>
-In-Reply-To: <08dae83ba1b541adac0fd96e2f99b194@xiaomi.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 15 Aug 2022 13:16:27 +0800
-Message-ID: <CAOLTT8R6hNKWGen4RD2sSU-asjjS6HXnxY2JC4k9SeL4YDzB-g@mail.gmail.com>
-Subject: Re: [External Mail]Re: Partial-clone cause big performance impact on server
-To:     =?UTF-8?B?56iL5rSL?= <chengyang@xiaomi.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?UTF-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
-        =?UTF-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>,
-        =?UTF-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>,
-        =?UTF-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
-        =?UTF-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9E34D32A-1C5B-11ED-BDCD-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=E7=A8=8B=E6=B4=8B <chengyang@xiaomi.com> =E4=BA=8E2022=E5=B9=B48=E6=9C=881=
-3=E6=97=A5=E5=91=A8=E5=85=AD 16:00=E5=86=99=E9=81=93=EF=BC=9A
->
-> > >     3. with GIT_TRACE_PACKET=3D1. We found on big repositories (200K+=
-refs, 6m+ objects). Git will sends 40k want.
-> > >     4. And we then track our server(which is gerrit with jgit). We fo=
-und the server is couting objects. Then we check those 40k objects, most of=
- them are blobs rather than commit. (which means they're not in bitmap)
-> > >     5. We believe that's the root cause of our problem. Git sends too=
- many "want SHA1" which are not in bitmap, cause the server to count object=
-s frequently, which then slow down the server.
-> > >
-> > > What we want is, download the things we need to checkout to specific =
-commit. But if one commit contain so many objects (like us , 40k+). It take=
-s more time to counting than downloading.
-> > > Is it possible to let git only send "commit want" rather than all the=
- objects SHA1 one by one?
-> >
-> > On a technical level, it may be possible - at the point in the Git code=
- where the
-> > batch prefetch occurs, I'm not sure if we have the commit, but we could
-> > plumb the commit information there. (We have the tree, but this doesn't=
- help
-> > us here because as far as I know, the tree won't be in the bitmap so th=
-e server
-> > would need to count objects anyway, resulting in the same problem.)
-> >
-> > However, sending only commits as wants would mean that we would be
-> > fetching more blobs than needed. For example, if we were to clone (with
-> > checkout) and then checkout HEAD^, sending a "commit want" for the latt=
-er
-> > checkout would result in all blobs referenced by the commit's tree bein=
-g
-> > fetched and not only the blobs that are different.
->
-> It seems your solution require changes from both server side and client s=
-ide
-> Why not we just add another filter, allow partial-clone always sends comm=
-it level want?
-> If we checkout HEAD~1, then client can send "want HEAD~1 HEAD~2".
->
+Jeff King <peff@peff.net> writes:
 
-I am interesting about this question too, maybe I can try if we can do
-this.. ;-)
+> This can happen during a "rev-list --missing=allow-promisor" traversal
+> in a partial clone that is missing one or more trees or blobs. The
+> backtrace for the free looks like this:
+>
+>       #1 free_tree_buffer tree.c:147
+>       #2 add_promisor_object packfile.c:2250
+>       #3 for_each_object_in_pack packfile.c:2190
+>       #4 for_each_packed_object packfile.c:2215
+>       #5 is_promisor_object packfile.c:2272
+>       #6 finish_object__ma builtin/rev-list.c:245
+>       #7 finish_object builtin/rev-list.c:261
+>       #8 show_object builtin/rev-list.c:274
+>       #9 process_blob list-objects.c:63
+>       #10 process_tree_contents list-objects.c:145
+>       #11 process_tree list-objects.c:201
+>       #12 traverse_trees_and_blobs list-objects.c:344
+>       [...]
+>
+> We're in the middle of walking through the entries of a tree object via
+> process_tree_contents(). We see a blob (or it could even be another tree
+> entry) that we don't have, so we call is_promisor_object() to check it.
+> That function loops over all of the objects in the promisor packfile,
+> including the tree we're currently walking.
 
-ZheNing Hu
+I forgot that the above "loops over" happens only once to populate
+the oidset hashtable, and briefly wondered if we are being grossly
+inefficient by scanning pack .idx file each time we encounter a
+missing object.  "Upon first call, that function loops over
+... walking, to prepare a hashtable to answer if any object id is
+referred to by an object in promisor packs" would have helped ;-). 
+
+> It may also be a good direction for this function in general, as there
+> are other possible optimizations that rely on doing some analysis before
+> parsing:
+>
+>   - we could detect blobs and avoid reading their contents; they can't
+>     link to other objects, but parse_object() doesn't know that we don't
+>     care about checking their hashes.
+>
+>   - we could avoid allocating object structs entirely for most objects
+>     (since we really only need them in the oidset), which would save
+>     some memory.
+>
+>   - promisor commits could use the commit-graph rather than loading the
+>     object from disk
+>
+> This commit doesn't do any of those optimizations, but I think it argues
+> that this direction is reasonable, rather than relying on parse_object()
+> and trying to teach it to give us more information about whether it
+> parsed.
+
+Yeah, all of the future bits sound sensible. 
+
+Will queue.
+
+Thanks.
