@@ -2,537 +2,572 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9751C25B0F
-	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 01:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A884C25B06
+	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 01:07:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231182AbiHOBHC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Aug 2022 21:07:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33698 "EHLO
+        id S232050AbiHOBHI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Aug 2022 21:07:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229929AbiHOBHA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Aug 2022 21:07:00 -0400
-Received: from mail-vs1-xe31.google.com (mail-vs1-xe31.google.com [IPv6:2607:f8b0:4864:20::e31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D46511156
-        for <git@vger.kernel.org>; Sun, 14 Aug 2022 18:06:56 -0700 (PDT)
-Received: by mail-vs1-xe31.google.com with SMTP id 67so5970320vsv.2
-        for <git@vger.kernel.org>; Sun, 14 Aug 2022 18:06:56 -0700 (PDT)
+        with ESMTP id S229612AbiHOBHE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Aug 2022 21:07:04 -0400
+Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C06D011C28
+        for <git@vger.kernel.org>; Sun, 14 Aug 2022 18:07:02 -0700 (PDT)
+Received: by mail-vk1-xa2e.google.com with SMTP id q14so3053717vke.9
+        for <git@vger.kernel.org>; Sun, 14 Aug 2022 18:07:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=y3mh1wPIMjQCB26G0El4h0cGAmbno5/PAN+k4msD72U=;
-        b=UVk03kbB9sw8XHVd3njKn2lwlmrcPgroF9+1AD7IoTWfRviSsTiy1RzavG7C6zupra
-         kQPBGbUPvcTdhFDfWIHMvjTqlHMmOXzzVJPdDu2bsQYe0Dv5p3uN722loTVsVWNSu89C
-         qaejcfP8wmrD+BUrWre1rTvqOdSXfqlkiK4vnrYt4j56RiDEW7EPaDqPqJurdouzPS2O
-         F5RWEhkQjdkxkPUA/EceeWbuJibit1FnscwrybCaMeuzTdtZ9VmtCTDjL985Z1r67Doc
-         ured3REodJaLxbjFYhGm1/eIkuIknvjchE32z3UEWKwyzXMNBIes4rnxci79aBSBbrkt
-         5yVw==
+        bh=H0r8quyFTiIIC7aY/Dxgri8w0EKzVzGOM1r1GFtTMJo=;
+        b=ci44hjy7orRE+zmmOQkjmlabZiEZfcFYBajWJf2wTTRPFDhMB/IDEOPJToj2yzsbkC
+         7+/IXYUoJUcZjiOEOvHiXLMdd7/lbiYClmW3F3lKPFJklTpVKbL9UNfJfiwxSxqYUeOM
+         G9Dy5MByM99gGQD2mTmc0iXCQ4YKj5VKGrVGNTxvxXhA03N5q347YtXtwO5wUU+O6Hy2
+         w9vHFHK2TzZUhHq2hTP0p39Prl0VlsA8apO0ber3kjkxYp+hkcARcY4E+4dWPUbfN4M2
+         CJ65C3uzSoea/fu11hhTsNaTqwTIu3XOToUcg6jTSbDLRAm9YbQS+r0J4zUdkWMaPdMM
+         bpFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=y3mh1wPIMjQCB26G0El4h0cGAmbno5/PAN+k4msD72U=;
-        b=2X/8eK3A/64+p1CmOHPJQ9G9yPOd0gTCTxB++pxr2N5p0pKP3m9DRzolS2MvQLIjVZ
-         TwalV2TBv5YmdBjD75mh2/2XPOB5RCn7RaZdvaKLhHZxx00rhPCi7iUVIueVJBBRqLbj
-         Jhn+KUsmjp+ntWu4vOfyd9XH/FAXVGanWO9X8A+xkvFONLbAVZECoGepu6ylfLpojx8O
-         oPl8Pt6h95dkoBdfUDrFc3ayTBTrUarJ28zoJMXs4qk/LXHXWorgMWP1bJ9W2sP2tWOv
-         PyNDncLy0qbCV+OUnwcv684anpNTxHbiJUW+MoZrWdsR4vW8e/BM2lQL7V6CXoLF43lj
-         5vug==
-X-Gm-Message-State: ACgBeo0cH41PJqJ5ha4s2y0zKOzPQkd+giN5vaSCaR0/EsNgA4+bHBQp
-        FGQf3u9lnL8INnQZi6Ja4iSxWeoMotKZEg==
-X-Google-Smtp-Source: AA6agR7eXsAGqu2ml2lOE1jPkjEXlDHR0yWFET7WYiU6By55vXZXJf+IZHAUPGcKs/zmEKC6iCRmUQ==
-X-Received: by 2002:a67:ca12:0:b0:38a:7bf5:a588 with SMTP id z18-20020a67ca12000000b0038a7bf5a588mr5111832vsk.48.1660525614752;
-        Sun, 14 Aug 2022 18:06:54 -0700 (PDT)
+        bh=H0r8quyFTiIIC7aY/Dxgri8w0EKzVzGOM1r1GFtTMJo=;
+        b=yInRIuD1FXUwfvlEPj39pPvAO194alkcJPqq7BMnsxV0+5fMJYpON1pmIhi1hVZ/4A
+         y5gsnQjIbkr3f3pLf5z8/lj1G0aram+egVieO/3YNfT4S/6gN+NSwGcnt29R10Sc0MGQ
+         0SN6YYRSKZpRuC+lyaC927a1xZ09l4KANuCelWuiDSsHUaemm6OOa7Xvzf36h3jAJ+d3
+         Mom2EKfXLuhK18xWKcmGOMUIfT9AmdlW8bIH2EKR7cImHo2JufQ63y+fsjOydHPx7ub6
+         z6I/obQKjv5yC8hEbAtmggPxyhSdBXRHEznpDmvcSj7LTid2fqxK7uzFdYDwBmKcHEtS
+         W5VA==
+X-Gm-Message-State: ACgBeo3mSGuNRZ8W1NCbNjgj5ALFp15QiJFjj0yNtPokyN7qM6POepUl
+        xY3iKXFRLsMCI1z3LQ0JKc2IBD9scC/gzw==
+X-Google-Smtp-Source: AA6agR6+P7I4BksYoGFMnxm9VJ7T3FHNYVIMq9arQavyEVXX16rwwwNNQ98stYx9ArL/zZSjMSwE3Q==
+X-Received: by 2002:a1f:2f8e:0:b0:37c:ed7e:41a7 with SMTP id v136-20020a1f2f8e000000b0037ced7e41a7mr5611679vkv.6.1660525621298;
+        Sun, 14 Aug 2022 18:07:01 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.109.17])
-        by smtp.gmail.com with ESMTPSA id d66-20020a1f9b45000000b003791113188csm5943133vke.55.2022.08.14.18.06.52
+        by smtp.gmail.com with ESMTPSA id d66-20020a1f9b45000000b003791113188csm5943133vke.55.2022.08.14.18.06.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Aug 2022 18:06:54 -0700 (PDT)
+        Sun, 14 Aug 2022 18:07:00 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, avarab@gmail.com, johannes.schindelin@gmx.de
-Subject: [PATCH v4 0/3] t0021: convert perl script to C test-tool helper
-Date:   Sun, 14 Aug 2022 22:06:35 -0300
-Message-Id: <cover.1660522524.git.matheus.bernardino@usp.br>
+Cc:     gitster@pobox.com, avarab@gmail.com, johannes.schindelin@gmx.de,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v4 2/3] t0021: implementation the rot13-filter.pl script in C
+Date:   Sun, 14 Aug 2022 22:06:37 -0300
+Message-Id: <99d8458f35e5ed8dbb696a3f1f27e1704d17de38.1660522524.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <cover.1659291025.git.matheus.bernardino@usp.br>
-References: <cover.1659291025.git.matheus.bernardino@usp.br>
+In-Reply-To: <cover.1660522524.git.matheus.bernardino@usp.br>
+References: <cover.1660522524.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert t/t0021/rot13-filter.pl to a test-tool helper to avoid the PERL
-prereq in various tests.
+This script is currently used by three test files: t0021-conversion.sh,
+t2080-parallel-checkout-basics.sh, and
+t2082-parallel-checkout-attributes.sh. To avoid the need for the PERL
+dependency at these tests, let's convert the script to a C test-tool
+command. The following commit will take care of actually modifying the
+said tests to use the new C helper and removing the Perl script.
 
-Main changes since v3:
-Patch 2:
-- Mentioned in commit message why we removed the flush() calls for the
-  log file handler.
-- Removed 'buf[size] = \0' and relied on the fact that packet_read()
-  already 0-terminates the buffer. This also allows us to use NULL
-  instead of &size in many places, dropping down the unneeded variable.
-- Used parse-options instead of manual argv fiddling. I'm not strongly
-  about one way or another, but I found the parse-options slightly
-  easier for new options that may be added in the future.
-- Style: removed unnecessary {} and newline.
+The Perl script flushes the log file handler after each write. As
+commented in [1], this seems to be an early design decision that was
+later reconsidered, but possibly ended up being left in the code by
+accident:
 
-Notes:
-- About the s/die()/BUG()/ suggestion: I ended up leaving the die()
-  calls because this seems to be the preferred mechanics at the
-  t/helper/*.c files.
+	>> +$debug->flush();
+	>
+	> Isn't $debug flushed automatically?
 
-- About the suggestion of dropping the dot printing from Dscho: I really
-  wished we could do that because I dislike the huge function name at
-  pkt-line.*. Unfortunately, though, many tests in t0021-conversion.sh
-  do seem to rely on the number of dots printed to the log file to check
-  the proper number of packets sent. See e.g. the test 'required process
-  filter should process multiple packets'.
+	Maybe, but autoflush is not explicitly enabled. I will
+	enable it again (I disabled it because of Eric's comment
+	but I re-read the comment and he is only talking about
+	pipes).
 
-Matheus Tavares (3):
-  t0021: avoid grepping for a Perl-specific string at filter output
-  t0021: implementation the rot13-filter.pl script in C
-  tests: use the new C rot13-filter helper to avoid PERL prereq
+Anyways, this behavior is not really needed for the tests and the
+flush() calls make the code slightly larger, so let's avoid them
+altogether in the new C version.
 
- Makefile                                |   1 +
- pkt-line.c                              |   5 +-
- pkt-line.h                              |   8 +-
- t/helper/test-rot13-filter.c            | 382 ++++++++++++++++++++++++
- t/helper/test-tool.c                    |   1 +
- t/helper/test-tool.h                    |   1 +
- t/t0021-conversion.sh                   |  71 +++--
- t/t0021/rot13-filter.pl                 | 247 ---------------
- t/t2080-parallel-checkout-basics.sh     |   7 +-
- t/t2082-parallel-checkout-attributes.sh |   7 +-
- 10 files changed, 434 insertions(+), 296 deletions(-)
+[1]: https://lore.kernel.org/git/7F1F1A0E-8FC3-4FBD-81AA-37786DE0EF50@gmail.com/
+
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
+ Makefile                     |   1 +
+ pkt-line.c                   |   5 +-
+ pkt-line.h                   |   8 +-
+ t/helper/test-rot13-filter.c | 382 +++++++++++++++++++++++++++++++++++
+ t/helper/test-tool.c         |   1 +
+ t/helper/test-tool.h         |   1 +
+ 6 files changed, 396 insertions(+), 2 deletions(-)
  create mode 100644 t/helper/test-rot13-filter.c
- delete mode 100644 t/t0021/rot13-filter.pl
 
-Range-diff against v3:
-1:  5ec95c7e69 = 1:  64dc9af1ad t0021: avoid grepping for a Perl-specific string at filter output
-2:  86e6baba46 ! 2:  99d8458f35 t0021: implementation the rot13-filter.pl script in C
-    @@ Commit message
-         command. The following commit will take care of actually modifying the
-         said tests to use the new C helper and removing the Perl script.
-     
-    +    The Perl script flushes the log file handler after each write. As
-    +    commented in [1], this seems to be an early design decision that was
-    +    later reconsidered, but possibly ended up being left in the code by
-    +    accident:
-    +
-    +            >> +$debug->flush();T
-    +            >
-    +            > Isn't $debug flushed automatically?
-    +
-    +            Maybe, but autoflush is not explicitly enabled. I will
-    +            enable it again (I disabled it because of Eric's comment
-    +            but I re-read the comment and he is only talking about
-    +            pipes).
-    +
-    +    Anyways, this behavior is not really needed for the tests and the
-    +    flush() calls make the code slightly larger, so let's avoid them
-    +    altogether in the new C version.
-    +
-    +    [1]: https://lore.kernel.org/git/7F1F1A0E-8FC3-4FBD-81AA-37786DE0EF50@gmail.com/
-    +
-         Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-         Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-     
-    @@ t/helper/test-rot13-filter.c (new)
-     + * Example implementation for the Git filter protocol version 2
-     + * See Documentation/gitattributes.txt, section "Filter Protocol"
-     + *
-    -+ * Usage: test-tool rot13-filter [--always-delay] <log path> <capabilities>
-    ++ * Usage: test-tool rot13-filter [--always-delay] --log=<path> <capabilities>
-     + *
-     + * Log path defines a debug log file that the script writes to. The
-     + * subsequent arguments define a list of supported protocol capabilities
-    @@ t/helper/test-rot13-filter.c (new)
-     +#include "pkt-line.h"
-     +#include "string-list.h"
-     +#include "strmap.h"
-    ++#include "parse-options.h"
-     +
-     +static FILE *logfile;
-     +static int always_delay, has_clean_cap, has_smudge_cap;
-     +static struct strmap delay = STRMAP_INIT;
-     +
-    ++static inline const char *str_or_null(const char *str)
-    ++{
-    ++	return str ? str : "(null)";
-    ++}
-    ++
-     +static char *rot13(char *str)
-     +{
-     +	char *c;
-    @@ t/helper/test-rot13-filter.c (new)
-     +	return str;
-     +}
-     +
-    -+static char *get_value(char *buf, size_t size, const char *key)
-    ++static char *get_value(char *buf, const char *key)
-     +{
-     +	const char *orig_buf = buf;
-    -+	int orig_size = (int)size;
-    -+
-    -+	if (!skip_prefix_mem((const char *)buf, size, key, (const char **)&buf, &size) ||
-    -+	    !skip_prefix_mem((const char *)buf, size, "=", (const char **)&buf, &size) ||
-    -+	    !size)
-    -+		die("expected key '%s', got '%.*s'",
-    -+		    key, orig_size, orig_buf);
-    -+
-    -+	buf[size] = '\0';
-    ++	if (!buf ||
-    ++	    !skip_prefix((const char *)buf, key, (const char **)&buf) ||
-    ++	    !skip_prefix((const char *)buf, "=", (const char **)&buf) ||
-    ++	    !*buf)
-    ++		die("expected key '%s', got '%s'", key, str_or_null(orig_buf));
-     +	return buf;
-     +}
-     +
-    @@ t/helper/test-rot13-filter.c (new)
-     + */
-     +static char *packet_key_val_read(const char *key)
-     +{
-    -+	int size;
-     +	char *buf;
-    -+	if (packet_read_line_gently(0, &size, &buf) < 0)
-    ++	if (packet_read_line_gently(0, NULL, &buf) < 0)
-     +		return NULL;
-    -+	return xstrdup(get_value(buf, size, key));
-    ++	return xstrdup(get_value(buf, key));
-     +}
-     +
-     +static inline void assert_remote_capability(struct strset *caps, const char *cap)
-    @@ t/helper/test-rot13-filter.c (new)
-     +static void read_capabilities(struct strset *remote_caps)
-     +{
-     +	for (;;) {
-    -+		int size;
-    -+		char *buf = packet_read_line(0, &size);
-    ++		char *buf = packet_read_line(0, NULL);
-     +		if (!buf)
-     +			break;
-    -+		strset_add(remote_caps, get_value(buf, size, "capability"));
-    ++		strset_add(remote_caps, get_value(buf, "capability"));
-     +	}
-     +
-     +	assert_remote_capability(remote_caps, "clean");
-    @@ t/helper/test-rot13-filter.c (new)
-     +}
-     +
-     +static void check_and_write_capabilities(struct strset *remote_caps,
-    -+					 const char **caps, int caps_count)
-    ++					 const char **caps, int nr_caps)
-     +{
-     +	int i;
-    -+	for (i = 0; i < caps_count; i++) {
-    ++	for (i = 0; i < nr_caps; i++) {
-     +		if (!strset_contains(remote_caps, caps[i]))
-     +			die("our capability '%s' is not available from remote",
-     +			    caps[i]);
-    @@ t/helper/test-rot13-filter.c (new)
-     +{
-     +	for (;;) {
-     +		char *buf, *output;
-    -+		int size;
-     +		char *pathname;
-     +		struct delay_entry *entry;
-     +		struct strbuf input = STRBUF_INIT;
-    @@ t/helper/test-rot13-filter.c (new)
-     +		fprintf(logfile, " %s", pathname);
-     +
-     +		/* Read until flush */
-    -+		while ((buf = packet_read_line(0, &size))) {
-    ++		while ((buf = packet_read_line(0, NULL))) {
-     +			if (!strcmp(buf, "can-delay=1")) {
-     +				entry = strmap_get(&delay, pathname);
-    -+				if (entry && !entry->requested) {
-    ++				if (entry && !entry->requested)
-     +					entry->requested = 1;
-    -+				} else if (!entry && always_delay) {
-    ++				else if (!entry && always_delay)
-     +					add_delay_entry(pathname, 1, 1);
-    -+				}
-     +			} else if (starts_with(buf, "ref=") ||
-     +				   starts_with(buf, "treeish=") ||
-     +				   starts_with(buf, "blob=")) {
-    @@ t/helper/test-rot13-filter.c (new)
-     +			}
-     +		}
-     +
-    -+
-     +		read_packetized_to_strbuf(0, &input, 0);
-     +		fprintf(logfile, " %"PRIuMAX" [OK] -- ", (uintmax_t)input.len);
-     +
-    @@ t/helper/test-rot13-filter.c (new)
-     +
-     +static void packet_initialize(void)
-     +{
-    -+	int size;
-    -+	char *pkt_buf = packet_read_line(0, &size);
-    ++	char *pkt_buf = packet_read_line(0, NULL);
-     +
-    -+	if (!pkt_buf || strncmp(pkt_buf, "git-filter-client", size))
-    -+		die("bad initialize: '%s'", xstrndup(pkt_buf, size));
-    ++	if (!pkt_buf || strcmp(pkt_buf, "git-filter-client"))
-    ++		die("bad initialize: '%s'", str_or_null(pkt_buf));
-     +
-    -+	pkt_buf = packet_read_line(0, &size);
-    -+	if (!pkt_buf || strncmp(pkt_buf, "version=2", size))
-    -+		die("bad version: '%.*s'", (int)size, pkt_buf);
-    ++	pkt_buf = packet_read_line(0, NULL);
-    ++	if (!pkt_buf || strcmp(pkt_buf, "version=2"))
-    ++		die("bad version: '%s'", str_or_null(pkt_buf));
-     +
-    -+	pkt_buf = packet_read_line(0, &size);
-    ++	pkt_buf = packet_read_line(0, NULL);
-     +	if (pkt_buf)
-    -+		die("bad version end: '%.*s'", (int)size, pkt_buf);
-    ++		die("bad version end: '%s'", pkt_buf);
-     +
-     +	packet_write_fmt(1, "git-filter-server");
-     +	packet_write_fmt(1, "version=2");
-     +	packet_flush(1);
-     +}
-     +
-    -+static char *rot13_usage = "test-tool rot13-filter [--always-delay] <log path> <capabilities>";
-    ++static const char *rot13_usage[] = {
-    ++	"test-tool rot13-filter [--always-delay] --log=<path> <capabilities>",
-    ++	NULL
-    ++};
-     +
-     +int cmd__rot13_filter(int argc, const char **argv)
-     +{
-    -+	const char **caps;
-    -+	int cap_count, i = 1;
-    ++	int i, nr_caps;
-     +	struct strset remote_caps = STRSET_INIT;
-    ++	const char *log_path = NULL;
-     +
-    -+	if (argc > 1 && !strcmp(argv[1], "--always-delay")) {
-    -+		always_delay = 1;
-    -+		i++;
-    -+	}
-    -+	if (argc - i < 2)
-    -+		usage(rot13_usage);
-    ++	struct option options[] = {
-    ++		OPT_BOOL(0, "always-delay", &always_delay,
-    ++			 "delay all paths with the can-delay flag"),
-    ++		OPT_STRING(0, "log", &log_path, "path",
-    ++			   "path to the debug log file"),
-    ++		OPT_END()
-    ++	};
-    ++	nr_caps = parse_options(argc, argv, NULL, options, rot13_usage,
-    ++				PARSE_OPT_STOP_AT_NON_OPTION);
-     +
-    -+	logfile = fopen(argv[i++], "a");
-    ++	if (!log_path || !nr_caps)
-    ++		usage_with_options(rot13_usage, options);
-    ++
-    ++	logfile = fopen(log_path, "a");
-     +	if (!logfile)
-     +		die_errno("failed to open log file");
-     +
-    -+	caps = argv + i;
-    -+	cap_count = argc - i;
-    -+
-    -+	for (i = 0; i < cap_count; i++) {
-    -+		if (!strcmp(caps[i], "clean"))
-    -+			has_clean_cap = 1;
-    -+		else if (!strcmp(caps[i], "smudge"))
-    ++	for (i = 0; i < nr_caps; i++) {
-    ++		if (!strcmp(argv[i], "smudge"))
-     +			has_smudge_cap = 1;
-    ++		if (!strcmp(argv[i], "clean"))
-    ++			has_clean_cap = 1;
-     +	}
-     +
-     +	add_delay_entry("test-delay10.a", 1, 0);
-    @@ t/helper/test-rot13-filter.c (new)
-     +	packet_initialize();
-     +
-     +	read_capabilities(&remote_caps);
-    -+	check_and_write_capabilities(&remote_caps, caps, cap_count);
-    ++	check_and_write_capabilities(&remote_caps, argv, nr_caps);
-     +	fprintf(logfile, "init handshake complete\n");
-     +	strset_clear(&remote_caps);
-     +
-     +	command_loop();
-     +
-    -+	fclose(logfile);
-    ++	if (fclose(logfile))
-    ++		die_errno("error closing logfile");
-     +	free_delay_entries();
-     +	return 0;
-     +}
-3:  c66fc0a186 ! 3:  d6033abbce tests: use the new C rot13-filter helper to avoid PERL prereq
-    @@ t/t0021-conversion.sh: test_expect_success 'diff does not reuse worktree files t
-     -test_expect_success PERL 'required process filter should filter data' '
-     -	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
-     +test_expect_success 'required process filter should filter data' '
-    -+	test_config_global filter.protocol.process "test-tool rot13-filter debug.log clean smudge" &&
-    ++	test_config_global filter.protocol.process "test-tool rot13-filter --log=debug.log clean smudge" &&
-      	test_config_global filter.protocol.required true &&
-      	rm -rf repo &&
-      	mkdir repo &&
-    @@ t/t0021-conversion.sh: test_expect_success PERL 'required process filter should
-     -test_expect_success PERL 'required process filter should filter data for various subcommands' '
-     -	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
-     +test_expect_success 'required process filter should filter data for various subcommands' '
-    -+	test_config_global filter.protocol.process "test-tool rot13-filter debug.log clean smudge" &&
-    ++	test_config_global filter.protocol.process "test-tool rot13-filter --log=debug.log clean smudge" &&
-      	test_config_global filter.protocol.required true &&
-      	(
-      		cd repo &&
-    @@ t/t0021-conversion.sh: test_expect_success PERL 'required process filter should
-     +test_expect_success 'required process filter takes precedence' '
-      	test_config_global filter.protocol.clean false &&
-     -	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean" &&
-    -+	test_config_global filter.protocol.process "test-tool rot13-filter debug.log clean" &&
-    ++	test_config_global filter.protocol.process "test-tool rot13-filter --log=debug.log clean" &&
-      	test_config_global filter.protocol.required true &&
-      	rm -rf repo &&
-      	mkdir repo &&
-    @@ t/t0021-conversion.sh: test_expect_success PERL 'required process filter takes p
-     -test_expect_success PERL 'required process filter should be used only for "clean" operation only' '
-     -	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean" &&
-     +test_expect_success 'required process filter should be used only for "clean" operation only' '
-    -+	test_config_global filter.protocol.process "test-tool rot13-filter debug.log clean" &&
-    ++	test_config_global filter.protocol.process "test-tool rot13-filter --log=debug.log clean" &&
-      	rm -rf repo &&
-      	mkdir repo &&
-      	(
-    @@ t/t0021-conversion.sh: test_expect_success PERL 'required process filter should
-     -test_expect_success PERL 'required process filter should process multiple packets' '
-     -	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
-     +test_expect_success 'required process filter should process multiple packets' '
-    -+	test_config_global filter.protocol.process "test-tool rot13-filter debug.log clean smudge" &&
-    ++	test_config_global filter.protocol.process "test-tool rot13-filter --log=debug.log clean smudge" &&
-      	test_config_global filter.protocol.required true &&
-      
-      	rm -rf repo &&
-    @@ t/t0021-conversion.sh: test_expect_success PERL 'required process filter should
-     -test_expect_success PERL 'required process filter with clean error should fail' '
-     -	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
-     +test_expect_success 'required process filter with clean error should fail' '
-    -+	test_config_global filter.protocol.process "test-tool rot13-filter debug.log clean smudge" &&
-    ++	test_config_global filter.protocol.process "test-tool rot13-filter --log=debug.log clean smudge" &&
-      	test_config_global filter.protocol.required true &&
-      	rm -rf repo &&
-      	mkdir repo &&
-    @@ t/t0021-conversion.sh: test_expect_success PERL 'required process filter with cl
-     -test_expect_success PERL 'process filter should restart after unexpected write failure' '
-     -	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
-     +test_expect_success 'process filter should restart after unexpected write failure' '
-    -+	test_config_global filter.protocol.process "test-tool rot13-filter debug.log clean smudge" &&
-    ++	test_config_global filter.protocol.process "test-tool rot13-filter --log=debug.log clean smudge" &&
-      	rm -rf repo &&
-      	mkdir repo &&
-      	(
-    @@ t/t0021-conversion.sh: test_expect_success PERL 'process filter should restart a
-     -test_expect_success PERL 'process filter should not be restarted if it signals an error' '
-     -	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
-     +test_expect_success 'process filter should not be restarted if it signals an error' '
-    -+	test_config_global filter.protocol.process "test-tool rot13-filter debug.log clean smudge" &&
-    ++	test_config_global filter.protocol.process "test-tool rot13-filter --log=debug.log clean smudge" &&
-      	rm -rf repo &&
-      	mkdir repo &&
-      	(
-    @@ t/t0021-conversion.sh: test_expect_success PERL 'process filter should not be re
-     -test_expect_success PERL 'process filter abort stops processing of all further files' '
-     -	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
-     +test_expect_success 'process filter abort stops processing of all further files' '
-    -+	test_config_global filter.protocol.process "test-tool rot13-filter debug.log clean smudge" &&
-    ++	test_config_global filter.protocol.process "test-tool rot13-filter --log=debug.log clean smudge" &&
-      	rm -rf repo &&
-      	mkdir repo &&
-      	(
-    @@ t/t0021-conversion.sh: test_expect_success PERL 'invalid process filter must fai
-     -test_expect_success PERL 'delayed checkout in process filter' '
-     -	test_config_global filter.a.process "rot13-filter.pl a.log clean smudge delay" &&
-     +test_expect_success 'delayed checkout in process filter' '
-    -+	test_config_global filter.a.process "test-tool rot13-filter a.log clean smudge delay" &&
-    ++	test_config_global filter.a.process "test-tool rot13-filter --log=a.log clean smudge delay" &&
-      	test_config_global filter.a.required true &&
-     -	test_config_global filter.b.process "rot13-filter.pl b.log clean smudge delay" &&
-    -+	test_config_global filter.b.process "test-tool rot13-filter b.log clean smudge delay" &&
-    ++	test_config_global filter.b.process "test-tool rot13-filter --log=b.log clean smudge delay" &&
-      	test_config_global filter.b.required true &&
-      
-      	rm -rf repo &&
-    @@ t/t0021-conversion.sh: test_expect_success PERL 'delayed checkout in process fil
-     -test_expect_success PERL 'missing file in delayed checkout' '
-     -	test_config_global filter.bug.process "rot13-filter.pl bug.log clean smudge delay" &&
-     +test_expect_success 'missing file in delayed checkout' '
-    -+	test_config_global filter.bug.process "test-tool rot13-filter bug.log clean smudge delay" &&
-    ++	test_config_global filter.bug.process "test-tool rot13-filter --log=bug.log clean smudge delay" &&
-      	test_config_global filter.bug.required true &&
-      
-      	rm -rf repo &&
-    @@ t/t0021-conversion.sh: test_expect_success PERL 'missing file in delayed checkou
-     -test_expect_success PERL 'invalid file in delayed checkout' '
-     -	test_config_global filter.bug.process "rot13-filter.pl bug.log clean smudge delay" &&
-     +test_expect_success 'invalid file in delayed checkout' '
-    -+	test_config_global filter.bug.process "test-tool rot13-filter bug.log clean smudge delay" &&
-    ++	test_config_global filter.bug.process "test-tool rot13-filter --log=bug.log clean smudge delay" &&
-      	test_config_global filter.bug.required true &&
-      
-      	rm -rf repo &&
-    @@ t/t0021-conversion.sh: do
-      	"delayed checkout with $mode-collision don't write to the wrong place" '
-      		test_config_global filter.delay.process \
-     -			"\"$TEST_ROOT/rot13-filter.pl\" --always-delay delayed.log clean smudge delay" &&
-    -+			"test-tool rot13-filter --always-delay delayed.log clean smudge delay" &&
-    ++			"test-tool rot13-filter --always-delay --log=delayed.log clean smudge delay" &&
-      		test_config_global filter.delay.required true &&
-      
-      		git init $mode-collision &&
-    @@ t/t0021-conversion.sh: do
-      	(
-      		cd collision-with-submodule &&
-     -		git config filter.delay.process "\"$TEST_ROOT/rot13-filter.pl\" --always-delay delayed.log clean smudge delay" &&
-    -+		git config filter.delay.process "test-tool rot13-filter --always-delay delayed.log clean smudge delay" &&
-    ++		git config filter.delay.process "test-tool rot13-filter --always-delay --log=delayed.log clean smudge delay" &&
-      		git config filter.delay.required true &&
-      
-      		# We need Git to treat the submodule "a" and the
-    @@ t/t0021-conversion.sh: test_expect_success PERL,SYMLINKS,CASE_INSENSITIVE_FS \
-      	(
-      		cd progress &&
-     -		git config filter.delay.process "rot13-filter.pl delay-progress.log clean smudge delay" &&
-    -+		git config filter.delay.process "test-tool rot13-filter delay-progress.log clean smudge delay" &&
-    ++		git config filter.delay.process "test-tool rot13-filter --log=delay-progress.log clean smudge delay" &&
-      		git config filter.delay.required true &&
-      
-      		echo "*.a filter=delay" >.gitattributes &&
-    @@ t/t0021-conversion.sh: do
-      	(
-      		cd repo &&
-     -		git config filter.delay.process "../rot13-filter.pl delayed.log clean smudge delay" &&
-    -+		git config filter.delay.process "test-tool rot13-filter delayed.log clean smudge delay" &&
-    ++		git config filter.delay.process "test-tool rot13-filter --log=delayed.log clean smudge delay" &&
-      		git config filter.delay.required true &&
-      
-      		echo "*.a filter=delay" >.gitattributes &&
-    @@ t/t2080-parallel-checkout-basics.sh: test_expect_success SYMLINKS 'parallel chec
-     +test_expect_success '"git checkout ." report should not include failed entries' '
-      	test_config_global filter.delay.process \
-     -		"\"$(pwd)/rot13-filter.pl\" --always-delay delayed.log clean smudge delay" &&
-    -+		"test-tool rot13-filter --always-delay delayed.log clean smudge delay" &&
-    ++		"test-tool rot13-filter --always-delay --log=delayed.log clean smudge delay" &&
-      	test_config_global filter.delay.required true &&
-      	test_config_global filter.cat.clean cat  &&
-      	test_config_global filter.cat.smudge cat  &&
-    @@ t/t2082-parallel-checkout-attributes.sh: test_expect_success 'parallel-checkout
-     +test_expect_success 'parallel-checkout and delayed checkout' '
-      	test_config_global filter.delay.process \
-     -		"\"$(pwd)/rot13-filter.pl\" --always-delay \"$(pwd)/delayed.log\" clean smudge delay" &&
-    -+		"test-tool rot13-filter --always-delay \"$(pwd)/delayed.log\" clean smudge delay" &&
-    ++		"test-tool rot13-filter --always-delay --log=\"$(pwd)/delayed.log\" clean smudge delay" &&
-      	test_config_global filter.delay.required true &&
-      
-      	echo "abcd" >original &&
+diff --git a/Makefile b/Makefile
+index 2ec9b2dc6b..ae7def7c66 100644
+--- a/Makefile
++++ b/Makefile
+@@ -772,6 +772,7 @@ TEST_BUILTINS_OBJS += test-read-midx.o
+ TEST_BUILTINS_OBJS += test-ref-store.o
+ TEST_BUILTINS_OBJS += test-reftable.o
+ TEST_BUILTINS_OBJS += test-regex.o
++TEST_BUILTINS_OBJS += test-rot13-filter.o
+ TEST_BUILTINS_OBJS += test-repository.o
+ TEST_BUILTINS_OBJS += test-revision-walking.o
+ TEST_BUILTINS_OBJS += test-run-command.o
+diff --git a/pkt-line.c b/pkt-line.c
+index 8e43c2def4..ce4e73b683 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -309,7 +309,8 @@ int write_packetized_from_fd_no_flush(int fd_in, int fd_out)
+ 	return err;
+ }
+ 
+-int write_packetized_from_buf_no_flush(const char *src_in, size_t len, int fd_out)
++int write_packetized_from_buf_no_flush_count(const char *src_in, size_t len,
++					     int fd_out, int *packet_counter)
+ {
+ 	int err = 0;
+ 	size_t bytes_written = 0;
+@@ -324,6 +325,8 @@ int write_packetized_from_buf_no_flush(const char *src_in, size_t len, int fd_ou
+ 			break;
+ 		err = packet_write_gently(fd_out, src_in + bytes_written, bytes_to_write);
+ 		bytes_written += bytes_to_write;
++		if (packet_counter)
++			(*packet_counter)++;
+ 	}
+ 	return err;
+ }
+diff --git a/pkt-line.h b/pkt-line.h
+index 1f623de60a..79c538b99e 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -32,7 +32,13 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((f
+ int packet_flush_gently(int fd);
+ int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ int write_packetized_from_fd_no_flush(int fd_in, int fd_out);
+-int write_packetized_from_buf_no_flush(const char *src_in, size_t len, int fd_out);
++int write_packetized_from_buf_no_flush_count(const char *src_in, size_t len,
++					     int fd_out, int *packet_counter);
++static inline int write_packetized_from_buf_no_flush(const char *src_in,
++						     size_t len, int fd_out)
++{
++	return write_packetized_from_buf_no_flush_count(src_in, len, fd_out, NULL);
++}
+ 
+ /*
+  * Stdio versions of packet_write functions. When mixing these with fd
+diff --git a/t/helper/test-rot13-filter.c b/t/helper/test-rot13-filter.c
+new file mode 100644
+index 0000000000..f8d564c622
+--- /dev/null
++++ b/t/helper/test-rot13-filter.c
+@@ -0,0 +1,382 @@
++/*
++ * Example implementation for the Git filter protocol version 2
++ * See Documentation/gitattributes.txt, section "Filter Protocol"
++ *
++ * Usage: test-tool rot13-filter [--always-delay] --log=<path> <capabilities>
++ *
++ * Log path defines a debug log file that the script writes to. The
++ * subsequent arguments define a list of supported protocol capabilities
++ * ("clean", "smudge", etc).
++ *
++ * When --always-delay is given all pathnames with the "can-delay" flag
++ * that don't appear on the list bellow are delayed with a count of 1
++ * (see more below).
++ *
++ * This implementation supports special test cases:
++ * (1) If data with the pathname "clean-write-fail.r" is processed with
++ *     a "clean" operation then the write operation will die.
++ * (2) If data with the pathname "smudge-write-fail.r" is processed with
++ *     a "smudge" operation then the write operation will die.
++ * (3) If data with the pathname "error.r" is processed with any
++ *     operation then the filter signals that it cannot or does not want
++ *     to process the file.
++ * (4) If data with the pathname "abort.r" is processed with any
++ *     operation then the filter signals that it cannot or does not want
++ *     to process the file and any file after that is processed with the
++ *     same command.
++ * (5) If data with a pathname that is a key in the delay hash is
++ *     requested (e.g. "test-delay10.a") then the filter responds with
++ *     a "delay" status and sets the "requested" field in the delay hash.
++ *     The filter will signal the availability of this object after
++ *     "count" (field in delay hash) "list_available_blobs" commands.
++ * (6) If data with the pathname "missing-delay.a" is processed that the
++ *     filter will drop the path from the "list_available_blobs" response.
++ * (7) If data with the pathname "invalid-delay.a" is processed that the
++ *     filter will add the path "unfiltered" which was not delayed before
++ *     to the "list_available_blobs" response.
++ */
++
++#include "test-tool.h"
++#include "pkt-line.h"
++#include "string-list.h"
++#include "strmap.h"
++#include "parse-options.h"
++
++static FILE *logfile;
++static int always_delay, has_clean_cap, has_smudge_cap;
++static struct strmap delay = STRMAP_INIT;
++
++static inline const char *str_or_null(const char *str)
++{
++	return str ? str : "(null)";
++}
++
++static char *rot13(char *str)
++{
++	char *c;
++	for (c = str; *c; c++)
++		if (isalpha(*c))
++			*c += tolower(*c) < 'n' ? 13 : -13;
++	return str;
++}
++
++static char *get_value(char *buf, const char *key)
++{
++	const char *orig_buf = buf;
++	if (!buf ||
++	    !skip_prefix((const char *)buf, key, (const char **)&buf) ||
++	    !skip_prefix((const char *)buf, "=", (const char **)&buf) ||
++	    !*buf)
++		die("expected key '%s', got '%s'", key, str_or_null(orig_buf));
++	return buf;
++}
++
++/*
++ * Read a text packet, expecting that it is in the form "key=value" for
++ * the given key. An EOF does not trigger any error and is reported
++ * back to the caller with NULL. Die if the "key" part of "key=value" does
++ * not match the given key, or the value part is empty.
++ */
++static char *packet_key_val_read(const char *key)
++{
++	char *buf;
++	if (packet_read_line_gently(0, NULL, &buf) < 0)
++		return NULL;
++	return xstrdup(get_value(buf, key));
++}
++
++static inline void assert_remote_capability(struct strset *caps, const char *cap)
++{
++	if (!strset_contains(caps, cap))
++		die("required '%s' capability not available from remote", cap);
++}
++
++static void read_capabilities(struct strset *remote_caps)
++{
++	for (;;) {
++		char *buf = packet_read_line(0, NULL);
++		if (!buf)
++			break;
++		strset_add(remote_caps, get_value(buf, "capability"));
++	}
++
++	assert_remote_capability(remote_caps, "clean");
++	assert_remote_capability(remote_caps, "smudge");
++	assert_remote_capability(remote_caps, "delay");
++}
++
++static void check_and_write_capabilities(struct strset *remote_caps,
++					 const char **caps, int nr_caps)
++{
++	int i;
++	for (i = 0; i < nr_caps; i++) {
++		if (!strset_contains(remote_caps, caps[i]))
++			die("our capability '%s' is not available from remote",
++			    caps[i]);
++		packet_write_fmt(1, "capability=%s\n", caps[i]);
++	}
++	packet_flush(1);
++}
++
++struct delay_entry {
++	int requested, count;
++	char *output;
++};
++
++static void free_delay_entries(void)
++{
++	struct hashmap_iter iter;
++	struct strmap_entry *ent;
++
++	strmap_for_each_entry(&delay, &iter, ent) {
++		struct delay_entry *delay_entry = ent->value;
++		free(delay_entry->output);
++		free(delay_entry);
++	}
++	strmap_clear(&delay, 0);
++}
++
++static void add_delay_entry(char *pathname, int count, int requested)
++{
++	struct delay_entry *entry = xcalloc(1, sizeof(*entry));
++	entry->count = count;
++	entry->requested = requested;
++	if (strmap_put(&delay, pathname, entry))
++		BUG("adding the same path twice to delay hash?");
++}
++
++static void reply_list_available_blobs_cmd(void)
++{
++	struct hashmap_iter iter;
++	struct strmap_entry *ent;
++	struct string_list_item *str_item;
++	struct string_list paths = STRING_LIST_INIT_NODUP;
++
++	/* flush */
++	if (packet_read_line(0, NULL))
++		die("bad list_available_blobs end");
++
++	strmap_for_each_entry(&delay, &iter, ent) {
++		struct delay_entry *delay_entry = ent->value;
++		if (!delay_entry->requested)
++			continue;
++		delay_entry->count--;
++		if (!strcmp(ent->key, "invalid-delay.a")) {
++			/* Send Git a pathname that was not delayed earlier */
++			packet_write_fmt(1, "pathname=unfiltered");
++		}
++		if (!strcmp(ent->key, "missing-delay.a")) {
++			/* Do not signal Git that this file is available */
++		} else if (!delay_entry->count) {
++			string_list_append(&paths, ent->key);
++			packet_write_fmt(1, "pathname=%s", ent->key);
++		}
++	}
++
++	/* Print paths in sorted order. */
++	string_list_sort(&paths);
++	for_each_string_list_item(str_item, &paths)
++		fprintf(logfile, " %s", str_item->string);
++	string_list_clear(&paths, 0);
++
++	packet_flush(1);
++
++	fprintf(logfile, " [OK]\n");
++	packet_write_fmt(1, "status=success");
++	packet_flush(1);
++}
++
++static void command_loop(void)
++{
++	for (;;) {
++		char *buf, *output;
++		char *pathname;
++		struct delay_entry *entry;
++		struct strbuf input = STRBUF_INIT;
++		char *command = packet_key_val_read("command");
++
++		if (!command) {
++			fprintf(logfile, "STOP\n");
++			break;
++		}
++		fprintf(logfile, "IN: %s", command);
++
++		if (!strcmp(command, "list_available_blobs")) {
++			reply_list_available_blobs_cmd();
++			free(command);
++			continue;
++		}
++
++		pathname = packet_key_val_read("pathname");
++		if (!pathname)
++			die("unexpected EOF while expecting pathname");
++		fprintf(logfile, " %s", pathname);
++
++		/* Read until flush */
++		while ((buf = packet_read_line(0, NULL))) {
++			if (!strcmp(buf, "can-delay=1")) {
++				entry = strmap_get(&delay, pathname);
++				if (entry && !entry->requested)
++					entry->requested = 1;
++				else if (!entry && always_delay)
++					add_delay_entry(pathname, 1, 1);
++			} else if (starts_with(buf, "ref=") ||
++				   starts_with(buf, "treeish=") ||
++				   starts_with(buf, "blob=")) {
++				fprintf(logfile, " %s", buf);
++			} else {
++				/*
++				 * In general, filters need to be graceful about
++				 * new metadata, since it's documented that we
++				 * can pass any key-value pairs, but for tests,
++				 * let's be a little stricter.
++				 */
++				die("Unknown message '%s'", buf);
++			}
++		}
++
++		read_packetized_to_strbuf(0, &input, 0);
++		fprintf(logfile, " %"PRIuMAX" [OK] -- ", (uintmax_t)input.len);
++
++		entry = strmap_get(&delay, pathname);
++		if (entry && entry->output) {
++			output = entry->output;
++		} else if (!strcmp(pathname, "error.r") || !strcmp(pathname, "abort.r")) {
++			output = "";
++		} else if (!strcmp(command, "clean") && has_clean_cap) {
++			output = rot13(input.buf);
++		} else if (!strcmp(command, "smudge") && has_smudge_cap) {
++			output = rot13(input.buf);
++		} else {
++			die("bad command '%s'", command);
++		}
++
++		if (!strcmp(pathname, "error.r")) {
++			fprintf(logfile, "[ERROR]\n");
++			packet_write_fmt(1, "status=error");
++			packet_flush(1);
++		} else if (!strcmp(pathname, "abort.r")) {
++			fprintf(logfile, "[ABORT]\n");
++			packet_write_fmt(1, "status=abort");
++			packet_flush(1);
++		} else if (!strcmp(command, "smudge") &&
++			   (entry = strmap_get(&delay, pathname)) &&
++			   entry->requested == 1) {
++			fprintf(logfile, "[DELAYED]\n");
++			packet_write_fmt(1, "status=delayed");
++			packet_flush(1);
++			entry->requested = 2;
++			if (entry->output != output) {
++				free(entry->output);
++				entry->output = xstrdup(output);
++			}
++		} else {
++			int i, nr_packets = 0;
++			size_t output_len;
++			const char *p;
++			packet_write_fmt(1, "status=success");
++			packet_flush(1);
++
++			if (skip_prefix(pathname, command, &p) &&
++			    !strcmp(p, "-write-fail.r")) {
++				fprintf(logfile, "[WRITE FAIL]\n");
++				die("%s write error", command);
++			}
++
++			output_len = strlen(output);
++			fprintf(logfile, "OUT: %"PRIuMAX" ", (uintmax_t)output_len);
++
++			if (write_packetized_from_buf_no_flush_count(output,
++				output_len, 1, &nr_packets))
++				die("failed to write buffer to stdout");
++			packet_flush(1);
++
++			for (i = 0; i < nr_packets; i++)
++				fprintf(logfile, ".");
++			fprintf(logfile, " [OK]\n");
++
++			packet_flush(1);
++		}
++		free(pathname);
++		strbuf_release(&input);
++		free(command);
++	}
++}
++
++static void packet_initialize(void)
++{
++	char *pkt_buf = packet_read_line(0, NULL);
++
++	if (!pkt_buf || strcmp(pkt_buf, "git-filter-client"))
++		die("bad initialize: '%s'", str_or_null(pkt_buf));
++
++	pkt_buf = packet_read_line(0, NULL);
++	if (!pkt_buf || strcmp(pkt_buf, "version=2"))
++		die("bad version: '%s'", str_or_null(pkt_buf));
++
++	pkt_buf = packet_read_line(0, NULL);
++	if (pkt_buf)
++		die("bad version end: '%s'", pkt_buf);
++
++	packet_write_fmt(1, "git-filter-server");
++	packet_write_fmt(1, "version=2");
++	packet_flush(1);
++}
++
++static const char *rot13_usage[] = {
++	"test-tool rot13-filter [--always-delay] --log=<path> <capabilities>",
++	NULL
++};
++
++int cmd__rot13_filter(int argc, const char **argv)
++{
++	int i, nr_caps;
++	struct strset remote_caps = STRSET_INIT;
++	const char *log_path = NULL;
++
++	struct option options[] = {
++		OPT_BOOL(0, "always-delay", &always_delay,
++			 "delay all paths with the can-delay flag"),
++		OPT_STRING(0, "log", &log_path, "path",
++			   "path to the debug log file"),
++		OPT_END()
++	};
++	nr_caps = parse_options(argc, argv, NULL, options, rot13_usage,
++				PARSE_OPT_STOP_AT_NON_OPTION);
++
++	if (!log_path || !nr_caps)
++		usage_with_options(rot13_usage, options);
++
++	logfile = fopen(log_path, "a");
++	if (!logfile)
++		die_errno("failed to open log file");
++
++	for (i = 0; i < nr_caps; i++) {
++		if (!strcmp(argv[i], "smudge"))
++			has_smudge_cap = 1;
++		if (!strcmp(argv[i], "clean"))
++			has_clean_cap = 1;
++	}
++
++	add_delay_entry("test-delay10.a", 1, 0);
++	add_delay_entry("test-delay11.a", 1, 0);
++	add_delay_entry("test-delay20.a", 2, 0);
++	add_delay_entry("test-delay10.b", 1, 0);
++	add_delay_entry("missing-delay.a", 1, 0);
++	add_delay_entry("invalid-delay.a", 1, 0);
++
++	fprintf(logfile, "START\n");
++	packet_initialize();
++
++	read_capabilities(&remote_caps);
++	check_and_write_capabilities(&remote_caps, argv, nr_caps);
++	fprintf(logfile, "init handshake complete\n");
++	strset_clear(&remote_caps);
++
++	command_loop();
++
++	if (fclose(logfile))
++		die_errno("error closing logfile");
++	free_delay_entries();
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 318fdbab0c..d6a560f832 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -65,6 +65,7 @@ static struct test_cmd cmds[] = {
+ 	{ "read-midx", cmd__read_midx },
+ 	{ "ref-store", cmd__ref_store },
+ 	{ "reftable", cmd__reftable },
++	{ "rot13-filter", cmd__rot13_filter },
+ 	{ "dump-reftable", cmd__dump_reftable },
+ 	{ "regex", cmd__regex },
+ 	{ "repository", cmd__repository },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index bb79927163..21a91b1019 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -54,6 +54,7 @@ int cmd__read_cache(int argc, const char **argv);
+ int cmd__read_graph(int argc, const char **argv);
+ int cmd__read_midx(int argc, const char **argv);
+ int cmd__ref_store(int argc, const char **argv);
++int cmd__rot13_filter(int argc, const char **argv);
+ int cmd__reftable(int argc, const char **argv);
+ int cmd__regex(int argc, const char **argv);
+ int cmd__repository(int argc, const char **argv);
 -- 
 2.37.1
 
