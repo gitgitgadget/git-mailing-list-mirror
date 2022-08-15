@@ -2,91 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D035CC00140
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 02:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C144AC25B0D
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 05:07:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232590AbiHPCfl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Aug 2022 22:35:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54772 "EHLO
+        id S233258AbiHPFHI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 01:07:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233139AbiHPCfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Aug 2022 22:35:25 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21833139E3A
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 15:53:15 -0700 (PDT)
-Received: (qmail 28120 invoked by uid 109); 15 Aug 2022 22:53:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 15 Aug 2022 22:53:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16748 invoked by uid 111); 15 Aug 2022 22:53:14 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 15 Aug 2022 18:53:14 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 15 Aug 2022 18:53:13 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Andrew Olsen <andrew.olsen@koordinates.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] is_promisor_object(): fix use-after-free of tree buffer
-Message-ID: <YvrOWY2x19G1jCTK@coredump.intra.peff.net>
-References: <CAPJmHpVssKshapGYDF-ifU1fts-jFTC-HqxnjN8meSMP3weB4g@mail.gmail.com>
- <YvS50W6wku5Y/NC7@coredump.intra.peff.net>
- <YviWO9Bhz5PU1HaL@coredump.intra.peff.net>
- <xmqqmtc63wdf.fsf@gitster.g>
+        with ESMTP id S233144AbiHPFGq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 01:06:46 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C327263F
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 14:07:11 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DC87B19EB7B;
+        Mon, 15 Aug 2022 17:07:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=q64oY9UrU4z8zrRfUKRwAuz1hqpCDR6tDkF3gK
+        cc3Q0=; b=qs2W5gtE9Mmm+u5+hE6c1rsnZ+M9aG+M3SnIqfUf46+XzfjCZ83FvZ
+        dPn9MW2cGSNx8z7vr5Ys5WeV1hts+hwTW2althUc6QgdMttRujj2SD+mXx7M4gpY
+        dfMKmtGJ0CLIBrZhgN9aSEiGtDbhPY6bxICZFCLYvUJD+bKV3BcUk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D50FC19EB79;
+        Mon, 15 Aug 2022 17:07:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 54DAA19EB78;
+        Mon, 15 Aug 2022 17:07:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 5/5] rebase --keep-base: imply --no-fork-point
+References: <pull.1323.git.1660576283.gitgitgadget@gmail.com>
+        <68bcd10949ec7767d1e0ee8e2f0730ca36bad1c5.1660576283.git.gitgitgadget@gmail.com>
+Date:   Mon, 15 Aug 2022 14:07:06 -0700
+In-Reply-To: <68bcd10949ec7767d1e0ee8e2f0730ca36bad1c5.1660576283.git.gitgitgadget@gmail.com>
+        (Phillip Wood via GitGitGadget's message of "Mon, 15 Aug 2022 15:11:23
+        +0000")
+Message-ID: <xmqqczd1z05h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmtc63wdf.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3871DC12-1CDE-11ED-8A32-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 14, 2022 at 10:32:12PM -0700, Junio C Hamano wrote:
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> > We're in the middle of walking through the entries of a tree object via
-> > process_tree_contents(). We see a blob (or it could even be another tree
-> > entry) that we don't have, so we call is_promisor_object() to check it.
-> > That function loops over all of the objects in the promisor packfile,
-> > including the tree we're currently walking.
-> 
-> I forgot that the above "loops over" happens only once to populate
-> the oidset hashtable, and briefly wondered if we are being grossly
-> inefficient by scanning pack .idx file each time we encounter a
-> missing object.  "Upon first call, that function loops over
-> ... walking, to prepare a hashtable to answer if any object id is
-> referred to by an object in promisor packs" would have helped ;-).
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> Given the name of the option it is confusing if --keep-base actually
+> changes the base of the branch without --fork-point being explicitly
+> given on the command line.
 
-Right. When you have worked in an area, sometimes it is easy to forget
-which things are common knowledge and which are not. :) I don't mind at
-all if you want to amend the commit message as you apply.
+Does it merely "imply"?  As keep-base requests exactly the same base
+commit reused from the current history, doesn't fork-point a
+competing and conflicting request, i.e. "please compute an
+appropriate fork-point by looking at merge base with possibly
+rewound tips of upstream branch"?
 
-> > It may also be a good direction for this function in general, as there
-> > are other possible optimizations that rely on doing some analysis before
-> > parsing:
-> >
-> >   - we could detect blobs and avoid reading their contents; they can't
-> >     link to other objects, but parse_object() doesn't know that we don't
-> >     care about checking their hashes.
-> >
-> >   - we could avoid allocating object structs entirely for most objects
-> >     (since we really only need them in the oidset), which would save
-> >     some memory.
-> >
-> >   - promisor commits could use the commit-graph rather than loading the
-> >     object from disk
-> >
-> > This commit doesn't do any of those optimizations, but I think it argues
-> > that this direction is reasonable, rather than relying on parse_object()
-> > and trying to teach it to give us more information about whether it
-> > parsed.
-> 
-> Yeah, all of the future bits sound sensible. 
+> +		/*
+> +		 * --keep-base ignores config.forkPoint as it is confusing if
+> +		 * the branch base changes when using this option.
+> +		 */
 
-I very intentionally didn't work on those things yet, because I wanted
-to make sure we got a simple fix in as quickly as possible. That said, I
-don't have immediate plans for them. They are perhaps not quite small
-enough for #leftoverbits, but I think they might also be nice bite-sized
-chunks for somebody wanting to get their feet wet in that part of the
-code.
+The comment singles out config.forkPoint (Isn't that "rebase.forkPoint"???)
+as "confusing".  Do we ignore rebase.forkPoint when --keep-base is given?
+Do we honor --fork-point from the command line when --keep-base is given?
 
--Peff
+> +		if (options.fork_point < 0)
+> +			options.fork_point = 0;
