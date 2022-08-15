@@ -2,255 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71549C25B08
-	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 18:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93987C25B0E
+	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 19:02:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241107AbiHOS1Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Aug 2022 14:27:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55394 "EHLO
+        id S240461AbiHOTCq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Aug 2022 15:02:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241559AbiHOSZO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Aug 2022 14:25:14 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DAF92F004
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 11:18:38 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C5DBC152E8E;
-        Mon, 15 Aug 2022 14:18:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RxtI0qGRjCE7eR0XlttRhCtBaO6x4rK1VVfvgl
-        BNEmI=; b=coIX2SbERqRiXeyUjd1j71ysyj7h7rnAqKaon6Xz8SnCfQJ9zIplq9
-        0nvIEBLYzVAKhNXOCiff90o5PHGzTFGlbydpj32ZBFHBUQ8WjYE4fnty4Ujbvg9P
-        7RHI0km3Iizle8IPLrEbLa46CKp6yH0kq+XHnYxX9H8ITTU9rktBM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD265152E8D;
-        Mon, 15 Aug 2022 14:18:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 27B68152E8A;
-        Mon, 15 Aug 2022 14:18:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Sun Chao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Sun Chao <16657101987@163.com>,
-        Sun Chao <sunchao9@huawei.com>
-Subject: Re: [PATCH v4 1/3] hide-refs: add hook to force hide refs
-References: <pull.1301.v3.git.git.1660575384.gitgitgadget@gmail.com>
-        <pull.1301.v4.git.git.1660575688.gitgitgadget@gmail.com>
-        <01c63ea5feefd57721bdcab9f0a30d9c0112e753.1660575688.git.gitgitgadget@gmail.com>
-Date:   Mon, 15 Aug 2022 11:18:14 -0700
-In-Reply-To: <01c63ea5feefd57721bdcab9f0a30d9c0112e753.1660575688.git.gitgitgadget@gmail.com>
-        (Sun Chao via GitGitGadget's message of "Mon, 15 Aug 2022 15:01:26
-        +0000")
-Message-ID: <xmqqa6851ic9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S245122AbiHOTBT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Aug 2022 15:01:19 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29C084B48D
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 11:32:54 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id y1so7077991plb.2
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 11:32:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=iYlnyjlB3sK7ZOjKf80q+yPvo7ce4T6MnoIt6idcV0w=;
+        b=Mnt1Xp4EIaL46pzsfqfg09q2VW0UZiLfnlt69EUcEpfAPJjDyaSihR4PlTje4s4FPq
+         N88IkkKZbYfeXN9KqzBtlKG/yDOLtUxl1S+/pWznvmbAygIHxsUGJwaqH/HtjI1jjpva
+         sbwflQi/mMUZW92DRHl9THQ/crsTt3Or8YSzVR+EovzTyYWq3krhJCp7lkuBtEVEX5W0
+         1fYBQUgXf1+2JZCUpz8J12ikMI/8720Ct0gCD6r12HE6byMnf8skpCVBibV6zErIyIwo
+         JBvWqBtDHwjP42AArnPjOaLmGYNh99syCMjgaE3mKztwLbZY5+L2eMI1LlH2EBYtTTgB
+         RdXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=iYlnyjlB3sK7ZOjKf80q+yPvo7ce4T6MnoIt6idcV0w=;
+        b=CACSgnCmgaPgzBcW5NWLxAGvfHQBtqZHhITOaDqxBcB9rLl+Byrp4suBYtCEHI4tJq
+         Atif49v9KUnv+zOVfu2a62f1ryza/qS5lQcvBOZ8lgrBXoPeBkU4WfhLcZgN6a5CfXs4
+         qpj2wiZXAEYdHI5Opv+4DE8LCE3e+PhSTCMgRsuLE/hNWh+XVkKTpKSelP2yh07cnGr+
+         NLMowxFm297HsSsRo1I3Hrl5EuGnbm7U2qVoUHjunRnjb+Q4942WpI1tiHAqv7eqLUPH
+         jox2NBAmgQIwMVpHKataCryk0bNl1G4GKUF6nH4Ojz+Vf1I7DgpxQLdXTmFOSdY0JYbL
+         E7iQ==
+X-Gm-Message-State: ACgBeo3zDqsuUu4VP7ZgzQytU0uNklWFsrPHqi1BD+cFo1r0HY96vnJU
+        gnctOXZsF1dIEwMFx8kDgPw4y2NhWz4=
+X-Google-Smtp-Source: AA6agR5ftx1w6+XlaEDD4vWbBsUNgFSG9t5nGJ9JoEYQSQtHsm+Sml0SlmpQ0bb+0vQ+zYDQMh4ulw==
+X-Received: by 2002:a17:902:e749:b0:171:2480:4320 with SMTP id p9-20020a170902e74900b0017124804320mr18124128plf.153.1660588370455;
+        Mon, 15 Aug 2022 11:32:50 -0700 (PDT)
+Received: from localhost.localdomain ([2409:4061:2e4f:c6f9:502b:ee51:bd75:bfc6])
+        by smtp.gmail.com with ESMTPSA id f2-20020a17090ab94200b001fa9117a8edsm35509pjw.21.2022.08.15.11.32.47
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 15 Aug 2022 11:32:49 -0700 (PDT)
+From:   Abhra303 <chakrabortyabhradeep79@gmail.com>
+To:     Git <git@vger.kernel.org>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: [GSoC] Abhradeep's GSoC blogs (15 Aug, 2022 IST)
+Date:   Tue, 16 Aug 2022 00:02:17 +0530
+Message-Id: <20220815183217.7132-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A1311424-1CC6-11ED-B2EE-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This step seems to do too many things at once and is hard to assess
-its correctness, I am afraid.  Anybody who has deep understanding of
-the protocol involved share that impression?
+From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 
-> To enable the `hide-refs` hook, we should config hiderefs with `force:`
-> option, eg:
->
->         git config --add transfer.hiderefs force:refs/prefix1/
->         git config --add uploadpack.hiderefs force:!refs/prefix2/
->
-> the `hide-refs` will be called during reference discovery phase and
-> check each matched reference, a 'hide' response means the reference will
-> be hidden for its private data even if `allowTipSHA1InWant` or
-> `allowReachableSHA1InWant` are set to true.
+Hello developers, this is the thread where you can know about
+my weekly GSoC blog links.
 
-If the prefix is a sign to let the external process to tell if it is
-to be hidden or shown, it does not sound like "force" at all, at
-least to me ("force" sounds more like "no matter what other things
-may want to show it, these are hidden").
+My Project - Reachability bitmap improvements
 
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 31b48e728be..16f2a21e97a 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -296,7 +296,7 @@ static int show_ref_cb(const char *path_full, const struct object_id *oid,
->  	struct oidset *seen = data;
->  	const char *path = strip_namespace(path_full);
->  
-> -	if (ref_is_hidden(path, path_full))
-> +	if (ref_is_hidden(path, path_full) || ref_is_force_hidden(path, path_full))
->  		return 0;
+Blog update
+------------
 
-Are there places where only ref_is_hidden() is called, or do
-codepaths that used to care ref_is_hidden() now all have to write
-the above (A || B) conditional?  I am wondering why the new
-"force-hidden" check is not part of ref_is_hidden() so that the
-callers do not have to care.
+Title - GSoC week 9: finding the fix of the failing test case
+Blog link - https://medium.com/@abhra303/gsoc-week-9-finding-the-fix-of-the-failing-test-case-30bc623cb4c
 
-> @@ -1794,7 +1794,8 @@ static void reject_updates_to_hidden(struct command *commands)
->  		strbuf_setlen(&refname_full, prefix_len);
->  		strbuf_addstr(&refname_full, cmd->ref_name);
->  
-> -		if (!ref_is_hidden(cmd->ref_name, refname_full.buf))
-> +		if (!ref_is_hidden(cmd->ref_name, refname_full.buf) &&
-> +			!ref_is_force_hidden(cmd->ref_name, refname_full.buf))
+Summary -
 
-Likewise.
+This week I put most of the time on finding the root cause of a test
+failure. I took my roaring bitmap integration a little further. I decided
+to use Chunk-format API for the new `.bitmap` version. As midx also uses
+Chunk format, we can maintain uniformity in designing file format.
 
-> diff --git a/ls-refs.c b/ls-refs.c
-> index 98e69373c84..b5cb1316d38 100644
-> --- a/ls-refs.c
-> +++ b/ls-refs.c
-> @@ -84,7 +84,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
->  
->  	strbuf_reset(&data->buf);
->  
-> -	if (ref_is_hidden(refname_nons, refname))
-> +	if (mark_our_ref(refname_nons, refname, oid))
->  		return 0;
->  
->  	if (!ref_match(&data->prefixes, refname_nons))
-
-It used to be that send_ref() did not touch the object flag bits.
-It just said "if it is hidden, or if it is outside the namespace, do
-not show and return" before telling the other side about the ref,
-and even the ref we send to the other side, we did not muck with
-flag bits with OUR_REF bit (and we didn't touch HIDDEN_REF bit,
-either).
-
-Now we do.  How can it be determined if this change is correct and
-safe?
-
-If the ref is not hidden (either in the traditional sense, or with
-the new "force" sense), we do not return 0.  What if it is outside
-the namespace so we returned without sending it to the other side?
-The original code didn't touch the flags bit, but now we mark the
-object with OUR_REF bit even though we ended up not sending the ref
-to the other side.  Is that an intended change?
-
->  int parse_hide_refs_config(const char *var, const char *value, const char *section)
->  {
->  	const char *key;
-> +	int force = 0;
-> +
->  	if (!strcmp("transfer.hiderefs", var) ||
->  	    (!parse_config_key(var, section, NULL, NULL, &key) &&
->  	     !strcmp(key, "hiderefs"))) {
->  		char *ref;
->  		int len;
-> +		int forcelen;
->  
->  		if (!value)
->  			return config_error_nonbool(var);
-> +
-> +		forcelen = strlen("force:");
-> +		len = strlen(value);
-> +		if ((len >= forcelen) && !strncmp(value, "force:", forcelen)) {
-
-skip_prefix() would probably be a good API function to learn here, perhaps?
+I tried various ways to find the root cause but till now I am not able to
+do so. I need to investigate further because I have to be sure whether
+Calling `oe_map_new_pack()` function is causing the failure. As my exam
+is starting from 18 Aug, I can't spend much time here. But I think we
+are very near to solve the issue :)
 
 
-> +static struct child_process *hide_refs_proc;
-> +static struct packet_reader *hide_refs_reader;
-> +static void create_hide_refs_process(void) {
+Previous blogs 
+---------------
 
-Style.  The braces around a function block occupy their own line by
-themselves.
+-------------------------------------------------------
+Title - GSoC Week 7: improving Performance tests
+Blog link - https://medium.com/@abhra303/gsoc-week-7-improving-performance-tests-ea9bfa180775
 
-> +	struct child_process *proc;
-> +	struct packet_reader *reader;
-> +	const char *hook_path;
-> +	int version = 0;
-> +	int code;
-> +
-> +	hook_path = find_hook("hide-refs");
-> +	if (!hook_path) {
-> +		die("can not find hide-refs hook");
-> +	}
+Summary - 
 
-No need for braces around a single statement block.
+In this week I work further on Git specific CRoaring fixtures.
+Besides, there were another round of review on my bitmap-lookup-table
+patch series.
 
-Is that a condition worth dying, indicating a misconfiguration by
-the user?  Or would it make more sense to treat as if the process
-says no refs are hidden (or all refs are hidden)?
+For now I wrote all Git specific functions in roaring.c functions.
+As Taylor told me — we first need to check whether roaring bitmaps
+really create an impact in performance. With these functions roaring
+bitmaps can now be stored in network byte order which means it can
+work in big-endian systems also.
 
-I do not think we spell "cannot" as "can not" in our messages.
+Performance tests that I wrote previously were not accurate. Because
+the second call to test_bitmap is always working on the previously
+repacked repo, causing the the performance of the second call much
+faster than the previous one. My solution is to create a new file for
+each cases (i.e. with lookup table enabled and with lookup table disabled).
 
-> +	proc = (struct child_process *) xcalloc (1, sizeof (struct child_process));
-> +	reader = (struct packet_reader *) xcalloc (1, sizeof(struct packet_reader));
+There is another problem which is mysterious in nature. A test case under
+`t5327-multi-pack-bitmaps.sh` (and under `t5327-multi-pack-bitmaps-rev.sh`
+is failing when `GIT_TEST_DEFAULT_HASH=sha256`. It is passing in every other
+scenario. I found that this issue is related to the test script itself (and
+not related to the implementation code). I didn't get enough time to look
+into it though. I hope that I will be able to figure out the problem soon.
+-------------------------------------------------------
 
-Style.  No SP after xcalloc, or sizeof.
+Title - GSoC Week 6: using CRoaring library
+Blog link - https://medium.com/@abhra303/gsoc-week-6-using-croaring-library-be309cfa89f5
 
-> +	child_process_init(proc);
-> +	strvec_push(&proc->args, hook_path);
-> +	proc->in = -1;
-> +	proc->out = -1;
-> +	proc->trace2_hook_name = "hide-refs";
-> +	proc->err = 0;
-> +
-> +	code = start_command(proc);
-> +	if (code)
-> +		die("can not run hook hide-refs");
+Summary -
 
-Unusually named variable.  I think "code" here is a variable
-normally called "status" (or "ret" if it eventually becomes the
-return value from this function).  Shouldn't this function return an
-error and have it handled by its caller, by the way, instead of
-returning void and making liberal calls to die()?
+I missed the week 5 blog update. So this blog covers both
+week 5 and week 6 work updates. I submitted my latest version
+Of `lookup-table-extension` patch series. There are some issues
+with CRoaring e.g. it do not store in network byte order (which I
+confirmed in Roaringbitmap's google group[1]). So, I need to make
+some changes to fix it. I have already finished implementing
+`roaring_portable_network_serialize` and `..._deserialize`. My
+next step is to use its functions in Git's codebase. I will
+submit the patch series soon.
 
-> +	sigchain_push(SIGPIPE, SIG_IGN);
-> +
-> +	/* Version negotiaton */
-> +	packet_reader_init(reader, proc->out, NULL, 0,
-> +			   PACKET_READ_CHOMP_NEWLINE |
-> +			   PACKET_READ_GENTLE_ON_EOF);
-> +	code = packet_write_fmt_gently(proc->in, "version=1%c%s", '\0', hide_refs_section.buf);
-> +	if (!code)
-> +		code = packet_flush_gently(proc->in);
+-------------------------------------------------------
 
-In general, it is a bad pattern to hide mainline "good case"
-processing inside "if (previous steps all went fine)" conditionals,
-as it makes the code unnecessarily hard to follow.
+Title - GSoC Week 4: diving into roaring bitmaps
+Blog link - https://medium.com/@abhra303/gsoc-week-4-diving-into-roaring-bitmaps-f028f931d873
 
-Instead, we typically write more like this:
+Summary -
 
--- >8 -- cut here -- >8 --
+I am thinking of submitting a patch to explain the workings
+of bitmaps. I will be creating a new file 'technical/reachability-
+bitmaps.txt` for that. This week I spent my time on diving more into
+Croaring[1]. I tried to understand how they work internally, the
+available functions they offer, their serializing format etc.
+The serialisation format[2] seems fine to me but still I want to
+know Kaartic and Taylor’s opinions. Another thing I noticed here is
+that each roaring bitmaps are designed to store sets of 32-bit
+(unsigned) integers. Thus a Roaring bitmap can contain up to 4294967296
+integers. I am not sure if this is sufficient for us.
+My next step is to make the new bitmap format version 2(with roaring
+bitmaps) and modify rest of the code so that those code can accept
+the new bitmap format version.
 
-	int ret = -1; /* assume failure */
+-------------------------------------------------------
+Title - GSoC Week 3: working on further improvements
+Blog link - https://medium.com/@abhra303/gsoc-week-3-working-on-further-improvements-13a27db64cd5
 
-        if (packet_write_fmt_gently(...))
-		goto error_exit;
+Summary -
 
-	for (;;) {
-		... interact with the other side ...
-		if (error)
-			goto error_exit;
-	}
+In this week, I continued to work on further improvements of 
+The bitmap-lookup-table patch series. Some of the requested
+changes are (1) Improve the documentation and fix typos (2) add
+comments (3) Disable `pack.writeBitmapLookupTable` by default
+(4) Fix alignment issues (5) Make a `bitmap_lookup_table_triple`
+struct (6) Subtract the table_size from index_end irrespective of
+the value of GIT_TEST_READ_COMMIT_TABLE.
 
-	... continue with mainline "good case" processing ...
+After implementing all the requested changes, I started working
+on the idea I mentioned in my previous blog as my next step. The
+idea is to stop the xor stack filling loop if the current xor
+bitmap is already stored and assign `xor_bitmap` to it. As this
+bitmap is already stored, we don't need to iterate further as we
+know all the other bitmaps that are needed to parse this bitmap
+has already been stored.
 
-	... after all went well ...
-	ret = 0;
+My next step is to roughly implement roaring run bitmaps and
+run performance tests to check if it's really worth it.
 
-error_exit:
-	if (ret < 0) {
-		... emit error message ...
-		... clean-up specific to error case if necessary
-	}
-	... clean-up as needed ...
+-------------------------------------------------------
+Title - GSoC Week 2: redesign the table format
+Blog link - https://medium.com/@abhra303/gsoc-week-2-redesign-the-table-format-829dae755a5
 
-	return ret;
+Summary - 
 
--- 8< -- cut here -- 8< --
+In the last week, I worked on the reviews. Some major requested
+changes are (1) Use commit positions instead of commit oids in
+the table. (2) Use 8 byte offset positions instead of 4 bytes
+(3) use iterative approach for parsing xor bitmaps (4) Use
+`<commit_pos, offset, xor_pos>` triplets.
 
-I am not reviewing the rest of the patch in this sitting---I may
-later come back to continue reading it, but I'll stop here and send
-out comments on what I have seen first.
+While implementing these changes, I discovered some bugs in the
+previous version. I faced errors during this time. But finally
+managed to fixed those errors. Taylor helped me to get rid of
+some errors.
 
-Thanks.
+I think that we can optimise the parsing of xor bitmaps further
+by stopping stack filling loop when we get an already parsed
+bitmap since we know that bitmaps having xor relations with it
+has already been stored/parsed.
+
+------------------------------------------------------- 
+Title - GSoC Week 1: Let's Get started
+Blog link - https://medium.com/@abhra303/gsoc-week-1-lets-get-started-fad78ec34dcf
+
+Summary -
+
+This is the first blog that I wrote for GSoC. Taylor
+suggested that I should work on "integrating a lookup table
+extension" first as it is smaller compared to other sub-projects.
+
+The idea is to have a table at the end of .bitmap file which
+will contain the offsets (and xor-offsets) of the bitmaps of
+selected commits. Whenever git try to get the bitmap of a
+particular commit, instead of loading each bitmaps one by one,
+git will parse only the desired bitmap by using the offset and
+xor-offset of the table. This will reduce the overhead of
+loading each and every bitmap.
+-------------------------------------------------------
