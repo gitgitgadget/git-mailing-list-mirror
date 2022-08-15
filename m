@@ -2,93 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9994FC00140
-	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 16:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3C08C00140
+	for <git@archiver.kernel.org>; Mon, 15 Aug 2022 16:02:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232524AbiHOQBA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Aug 2022 12:01:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50390 "EHLO
+        id S230157AbiHOQCA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Aug 2022 12:02:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232138AbiHOQAf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Aug 2022 12:00:35 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 083FC389C
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 09:00:32 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 294D4151B68;
-        Mon, 15 Aug 2022 12:00:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PFEpK2CWXHFYNrvlktOR2M3MJFSxGkszGYFMLh
-        qldjw=; b=lfjOFIjI4F8YyBKmDjDibgGsOim5OpQcUaXevwlLJVV1zGBDL6En2O
-        j6YlKEC1XGjLLJbEghGpsL1rExm5aXPkDNY4N4HH+IJPrcoYENMnCQvUV7XgnqwZ
-        5ScNcJvGi9KGslH1IhZLxv55IXAdAGYrbdN9xQpaho9HtcagSxWdk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F9F2151B67;
-        Mon, 15 Aug 2022 12:00:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S229611AbiHOQB6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Aug 2022 12:01:58 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87B95B7E9
+        for <git@vger.kernel.org>; Mon, 15 Aug 2022 09:01:57 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id D0C423F4090;
+        Mon, 15 Aug 2022 12:01:56 -0400 (EDT)
+Received: from jeffhost-mbp.local (2.sub-97-44-2.myvzw.com [97.44.2.2])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 83D40151B66;
-        Mon, 15 Aug 2022 12:00:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Justin Donnelly <justinrdonnelly@gmail.com>,
-        Justin Donnelly via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        newren@gmail.com, phillip.wood@dunelm.org.uk,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v2] git-prompt: show presence of unresolved conflicts at
- command prompt
-References: <pull.1302.git.1658798595633.gitgitgadget@gmail.com>
-        <pull.1302.v2.git.1659132518935.gitgitgadget@gmail.com>
-        <CAGTqyRw-SYDbQy9aktq5s3ZhoDhUOCf-pEopjH9m7v5+PH7Qqg@mail.gmail.com>
-        <xmqqy1vq3zm3.fsf@gitster.g>
-        <08a8e78d-7861-3da3-f6f6-bba466655071@gmail.com>
-Date:   Mon, 15 Aug 2022 09:00:29 -0700
-In-Reply-To: <08a8e78d-7861-3da3-f6f6-bba466655071@gmail.com> (Phillip Wood's
-        message of "Mon, 15 Aug 2022 14:04:50 +0100")
-Message-ID: <xmqqilmt4huq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id EC4AF3F47F4;
+        Mon, 15 Aug 2022 12:01:54 -0400 (EDT)
+Subject: Re: [PATCH v4] fsmonitor: option to allow fsmonitor to run against
+ network-mounted repos
+To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Eric DeCosta <edecosta@mathworks.com>
+References: <pull.1317.v3.git.1660242752495.gitgitgadget@gmail.com>
+ <pull.1317.v4.git.1660262231357.gitgitgadget@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <47e86c2f-ab13-e8e6-8f69-0a79c3f4c343@jeffhostetler.com>
+Date:   Mon, 15 Aug 2022 12:01:50 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 631820F0-1CB3-11ED-9C10-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <pull.1317.v4.git.1660262231357.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: mailmunge 3.09 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> I had not commented as I don't use the prompt. I have just had a quick
-> read and I wonder if it would be more efficient to use
->     git diff --cached --quiet --diff-filter=U
-> rather than
->     git ls-files --unmerged 2>/dev/null
-> to check if there are unmerged entries,
 
-The former reads the on-disk index into in-core index, and reads
-tree objects (recursively for subdirectories) referenced by the
-HEAD, walks both in parallel to find differences and filters out the
-result to unmerged (I am not sure how well diff-filter works with
-unmerged paths, though).
+On 8/11/22 7:57 PM, Eric DeCosta via GitGitGadget wrote:
+> From: Eric DeCosta <edecosta@mathworks.com>
+> 
+> Though perhaps not common, there are uses cases where users have large,
+> network-mounted repos. Having the ability to run fsmonitor against
+> network paths would benefit those users.
+> 
+> Most modern Samba-based filers have the necessary support to enable
+> fsmonitor on network-mounted repos. As a first step towards enabling
+> fsmonitor to work against network-mounted repos, introduce a
+> configuration option, 'fsmonitor.allowRemote'. Setting this option to
+> true will override the default behavior (erroring-out) when a
+> network-mounted repo is detected by fsmonitor.
 
-The latter rads the on-disk index into in-core index, scans the
-entries and finds unmerged entries.
+V4 LGTM.  Thanks for your persistence and attention to detail here.
 
-So if we compare the overhead to run either command standalone, I am
-reasonably sure that the latter would be a lot more efficient.
+Jeff
 
-But if the shell prompt code already needs to run the diff-index for
-other reasons (e.g. to show if there is any modification added to
-the index), that may change the equation.  Instead of adding a
-separate and extra call to "ls-files -u", it might be more efficient
-if you can somehow piggy-back on an existing diff-index call.  For
-example, you may be running "git diff --cached --quiet" for exit code
-to show if any change has been added, but you can instead run "git
-diff --no-ext-diff --no-renames --cached --name-status" and (1) if
-there is any output, then the index is dirty, and (2) if there is a
-line that begins with "U", you have an unmerged path right there.
