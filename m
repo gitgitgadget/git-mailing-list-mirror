@@ -2,158 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30FCEC25B0E
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 11:20:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB580C25B0E
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 11:37:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232760AbiHPLUu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 07:20:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57778 "EHLO
+        id S234731AbiHPLh1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 07:37:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234885AbiHPLUU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 07:20:20 -0400
+        with ESMTP id S234748AbiHPLhN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 07:37:13 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2F5F65677
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 02:49:13 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D4F24DB78
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 04:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660643347;
-        bh=1oS6B/3Ql+6kzHLRuV7n2i9/VuNNouCNK28RVHX0+ko=;
+        s=badeba3b8450; t=1660647758;
+        bh=3RsiTNhmquDY3V2rlFROTBkEh2xkfkomFudK2BytWGA=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=X/P+LUcATpiEyuF5v2XeeJ/zoesIcgeryoCKHyDO0h6Ob7uAbHGW08XHrBXoUb58j
-         BueQOJzR/eA5SUkTBErT9DmQOr0n2sHTGlKqUyc9c3Np/GzeEFKUJhg+MyBkP0yqia
-         UPuHmAub6hoPlXtMqsWE8EZ3ZckqxUlFUj46jN/g=
+        b=Mm2fgpekZ+Xs8jkVEsqxRJJ8eTfiWEpC1iOYbQdsrjYC5n7+T/Q6sC2W+MgvI+wgV
+         5l0R26wOZ/wUotY3oha5+XKFYKuuSNv+R51HcECNhJivzKqHpWCNxFvMhJpsP9t9v1
+         IKShPC8lLnQNn2rHNKvaeMhKYCcyIWjNMtl75Js8=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M5wPb-1oGTbV3uot-007Rwc; Tue, 16
- Aug 2022 11:49:07 +0200
-Date:   Tue, 16 Aug 2022 11:49:06 +0200 (CEST)
+Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAOJP-1oC2eD2ATD-00BrBk; Tue, 16
+ Aug 2022 13:02:38 +0200
+Date:   Tue, 16 Aug 2022 13:02:38 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?Rub=C3=A9n_Justo_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Subject: Re: [PATCH] branch: allow "-" as a short-hand for "previous
- branch"
-In-Reply-To: <xmqqk07iu3c3.fsf@gitster.g>
-Message-ID: <5194s6qn-570s-6053-2104-9s22qo1874sn@tzk.qr>
-References: <pull.1315.git.1659910949556.gitgitgadget@gmail.com> <s7862q69-05o8-s5s8-n635-823s34q358q4@tzk.qr> <xmqqk07iu3c3.fsf@gitster.g>
+To:     phillip.wood@dunelm.org.uk
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael J Gruber <git@grubix.eu>, git@vger.kernel.org
+Subject: Re: [RFC/PATCH] sequencer: do not translate reflog messages
+In-Reply-To: <870072d5-d220-09e7-684b-f9d7d8d59c93@gmail.com>
+Message-ID: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr>
+References: <b8ab40b2b0e3e5d762b414329ad2f4552f935d28.1660318162.git.git@grubix.eu> <333bbaa9-d484-7c20-90d6-e64edf8a8248@gmail.com> <xmqqy1vt9ora.fsf@gitster.g> <92sr80s2-6311-p065-755s-61s28s543q6n@tzk.qr> <870072d5-d220-09e7-684b-f9d7d8d59c93@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-746212442-1660643349=:241"
-X-Provags-ID: V03:K1:WM9iTM5tgHI1WJcN4CBasqn7B+EZAC3aq+MWNSUMTEuFECYU1sH
- OdnrE/9a2sfYylSkNDn3zZkPldo1MWFOk9gGd70A9rTmHcyg7qPtGGG2v7hsbpaxGxFwCN0
- 1GlM3rNIDXX1nUIF1ykBjY7Mc9+2Jd4JjfFPWV/oaBo46zdIYqc4wMeMLR7HZZ+bu70p8Dq
- hUo5Kyu/eDXr8xu9dBZHQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Jb9SmRfdp7w=:AmcIkkA6ULrNUwfRxp04kV
- xLHOO/DInjIbq9/8WH/h0EOWX6F1BVJCiiKmGp5N63dqqx3zqtJb3fBZmSPv/bFAzXl9GNRQH
- HljPCEyrw1l/k/Yt2kXHVHh5hMxwGhqjSp0B4xMcKogJ7ARWtUhd/SFTxSKXnpfKtjHEbLOSu
- YyQmrtm3o6at1CCVjx35ebzxokH2H0VW4TWuXKKnRku1fV3yCZzFv1vRfTGBTtP9GbJ5LuOzq
- R/L6JqRIz17XtGGdqEu8IsmfHErudZLrkXihieM5j4Jv4nhgzT+/zv3JH0L2luc/8PREeh4Nm
- U0e8uqfQEyafPtrzRJJer2tmSo2Drd7/oX3QyV3qzy17isPW+zMd38HEuxuqNJYf3oIBHqBx1
- 6HhLuhACV7T9C2FQQCscf5CWQfuIaiZ1QKZFz1QdtoA3QWbVbeyDLNUehOsBVmG4JJ8P6hKQ6
- 4fwfZgi1ybCNtzqZXjLBoZBIlFOge3yOSdjkEr24kigZEZzhxCIIzYq9MlQPTxdnioEuvi45F
- bobZY94Uykco6DHO0pSEiDlxF+5xmt8mvdfKB8ndgQpXAP9yI+XrjjH1/5J0QtnBatVnmpjCe
- 6O29rg2SQ1tzZTervSwo/qsXxIk4boH5VftarUYVp3gTSvKBAEiETR7LKNOSGxTwePPf3ynJy
- 6uGW35SfXtRkuJ6ULmLiIb/ON2gUwUJ/P+Wym5aoT6zVc7jmMfevoA405x1GhqIhf5/MQ37Oy
- C8I+iUbl2pe1g++qYsBwRmjCMSUpjxUgYPKYUnbzzQyITwRPGKTnTeyO6PPriguV+J04jfJwD
- 4RuCXFTYXE7Lau9+k0ZR+dKNzv0mw+OitzuAbWB0xmk8dEaRrNanXN1+1uxgTh6pTuCiJlD0K
- MZ3reZzS2A5eTSYqv/b7vwQA3yYdWzzCu0GZOO/7k8LZ9SREMtAS7EoCgplFTB1daTI7i/I6o
- BNeZQrzh+1KRtrYx4kABdxPKTIb7LO+OIAAu3/HrSRTCFbvtu0pMjq6SvKTTnDAQIfU3qr+78
- 6EoE9IOb3poGaafCme+HVutravTkKQAkYJ9Y1DXTX7weMFlkF0bk0TrF3qZm53SxDsxWauj8e
- FUu6qcauJyhq4eRbLP7iACfycjZRaUVM6JaMxp7JtXQ4Ul+OZDoLq41xw==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:KVjS/0vdbq2F1XR/twR2P+rojJP3Kfc3ZesSiNBVOR7OV6eUeP3
+ aDyFkZGp8yfFP37pi03bEZrL6jKc+qGqDJnvwbqH8OUPRek5hMCOndhRqmkoOE5V0wVofdW
+ BQAsRpjIXqgUTV2yubrL/1cZVHgyyZZFi+HjERGc1cGdVXBh5kXizR2iEFo7BxVWouWnW/D
+ IxHm4t1qHtrEAhZNjiPsw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:LSiFflnz5Uk=:Qp3aCffF/0UtMIQTXYSfW+
+ ThSwzND7COZ0K9V9Nj5jLcPSo6C9OevImanLusEEyzGw6QyFv03jDPB46jSGADVq6xMFeuAvC
+ SV8AfdU5rhHdrduO9HtpMFIh7bdEnhohJxAy+I1odeqyEnhhrjbOoKQp+867JJwgKqCDfg3PP
+ p+XtthFgCuC09C4bP+bh2JXXtFkNsnhvhBnknU/bW4dMgDRe+LE9ve4BFnhidlUysVRWGeH7U
+ yl8cnh2tINlZVjMXM/27gMNw2BDRJNybw6THLBkEIC0cnLNKKfrjq1R7R8xu4KPVXoNjzh+Fa
+ j4Xgsn7YmXjH9LNk0IYafq1lXor8n0Zh+YJDlIc+hxoS3Y0llsbPIOsviAO6rLKERmopAcezs
+ GKiqXqaN8RvGvN8A4/thbpRLIqcnxBD73ysNqjacdYuNTRHJMNvTJ/OorNPmhSRNlfI4Mq5Tw
+ zsuoa3dolaGYpSG+W/Jnh7JOS506Ay8ebpizQeO9Dg2mz4Bqo5EnLEHBWM0GtP2r7/c8RFXjh
+ dFd3ss+PpVIRuGmxpPf0w2oh3cioFRwyqAbDkZ3sNSu7BjAvEFiC/s2D3rWVc1zJBkUqXH6d6
+ X+OumNdmbk7i2MFzwydRiCCxr8kPCWCexGAmMDiGsffIHwT9EUJ5kvZOZ53TVd2XOQbn4ElOE
+ HG1VjlOd7wIMt+OqNHwrk9g47urxQOATCOc6MT3wZkpkELpYCi6MOToFqbGFXPzBWaqewt3ZY
+ tMhayWl3FD1Ufyr9moafkwe9wyCmJZisRfId1X+LQ2VpVSgha7oiylVLPbmeyoX19tYykfM7M
+ XzQmVBcbVxGI1ZBBFmeZfkzk3smZE/gKnavt8aqboP+x2TOKxbiUn0fHa/JIULlEboPu//+JX
+ n59ArLZ7Z0PyrCDJrT9OFjif6einpzY6KTUEvJT3lNJj2uH8Z9PUT4sYq6ml0tRXgvquoy4HG
+ 2cuOHsCXGZjhewHN+voII8RF2xbHjBd22iKDpdDj0ejW6US0s7l8TiPWxhYTNhTTz23jjfk7d
+ K8ZWxMUDCb/inoQczYHv7B4NL5jpbLHAbYjhbcLNfnhooRopAekKzEkh1gkGhji25zIlxkJ7R
+ p8fdk3u+QPYFZPGhPpucsLGJSMBO1QBI16hL48jESsGFddyNHNC5cVdmQ==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Phillip,
 
---8323328-746212442-1660643349=:241
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, 16 Aug 2022, Phillip Wood wrote:
 
-Hi Junio,
-
-On Mon, 8 Aug 2022, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On 15/08/2022 21:20, Johannes Schindelin wrote:
 >
-> > @@ -1420,6 +1420,12 @@ static int interpret_nth_prior_checkout(struct =
-repository *r,
-> >  	const char *brace;
-> >  	char *num_end;
+> > On Fri, 12 Aug 2022, Junio C Hamano wrote:
 > >
-> > +	if (namelen =3D=3D 1 && *name =3D=3D '-') {
-> > +		brace =3D name;
-> > +		nth =3D 1;
-> > +		goto find_nth_checkout;
-> > +	}
-> > +
-> >  	if (namelen < 4)
-> >  		return -1;
-> >  	if (name[0] !=3D '@' || name[1] !=3D '{' || name[2] !=3D '-')
+> > > Phillip Wood <phillip.wood123@gmail.com> writes:
+> > >
+> > > > Removing the N_() stops these strings from being extracted for
+> > > > translation, but there are several callers left that are still usi=
+ng
+> > > > _() to get the (now non-existent) translated string. I only had a
+> > > > quick look but I think we should remove the _() from all the calle=
+rs
+> > > > of action_name().
+> > >
+> > > Thanks, that's all correct.
+> >
+> > I am afraid that it is not.
+> >
+> > In https://github.com/git/git/blob/v2.37.2/sequencer.c#L502-L503, for
+> > example, we use the value returned by `action_name()` in a translated
+> > message:
+> >
+> >  error(_("your local changes would be overwritten by %s."),
+> >   _(action_name(opts)));
 >
-> If a solution along this line works, it would be far cleaner design
-> than the various hacks we have done in the past, noticing "-" and
-> replacing with "@{-1}".
+> Isn't this message using action_name() to get the name of the command th=
+at the
+> user ran? As that name is not localized when the user runs the command I=
+ don't
+> see that we should be translating it (and playing sentence lego with the
+> result) in this message. I think the same applies to the message at line=
+ 689
+> that you mention below.
 
-Indeed, but it does not work as-is: `interpret_nth_prior_checkout()` is
-used on prefixes of a rev, and for the special handling of `-` we cannot
-have that.
+I do not believe that this error message talks about the command,
+otherwise it would use "`git %s`" instead of "%s" here. Imagine, for a
+second, that Git was written in French and you preferred to read your
+error messages in English, therefore set your locale, and you just issued
+a `git retour`, would this error message read well for you?
 
-To illustrate what I mean: `-` should not be idempotent to `@{-1}` because
-we want to allow things like `@{-1}^2~15` but we do not want `-^2~15` to
-be a synonym for that.
+	error: your local changes would be overwritten by retour.
 
-Therefore, the layer where this `-` handling needs to happen is somewhere
-above `interpret_nth_prior_checkout()`, but still well below
-`delete_branches()`.
+That looks wrong to me. I could see us changing this to:
 
-> For one thing, we wouldn't be receiving a "-" from the end user on the
-> command line and in response say @{-1} does not make sense in the
-> context in an error message.  That alone makes the above approach to
-> deal with it at the lowest level quite attractive.
->
-> In the list archive, however, you may be able to find a few past
-> discussions on why this is not a good idea (some of which I may no
-> longer agree with).  One thing that still worries me a bit is that
-> we often disambiguate the command line arguments by seeing "is this
-> (still) a rev, or is this a file, or can it be interpreted as both?"
-> and "-" is not judged to be a "rev", IIRC.
+	error: your local changes would be overwritten by `git retour`.
 
-I haven't had the time to perform a thorough analysis (and hoped that
-Rub=C3=A9n would rise up to the challenge), but I have not seen a lot of p=
-laces
-where `-` would be ambiguous, especially when taking into account that
-revision and file name arguments can be separated via `--`.
+or to:
 
-One thing we could do, however, would be to patch only
-`repo_interpret_branch_name()`, i.e. only allow `-` to imply the previous
-branch name in invocations where a branch name is asked for _explicitly_.
-I.e. not any random revision, but specifically a branch name.
+	error: your local changes would be overwritten by revert.
 
-This would address all of the `git branch` operations we care about, and
-leave invocations like `git diff -` unaddressed (which might be more
-confusing than we want it to be).
-
-> Luckily, not many commands we have take "-" as if it were a file and
-> make it read from the standard input stream, but if there were (or
-> if we were to add a command to behave like so), treating "-" to mean
-> the same thing as "@{-1}" everywhere may require the "does this look
-> like a rev?"  heuristics (which is used by the "earlier ones must be
-> rev and not file, later ones must be file and cannot be interpreted
-> as rev, for you to omit '--' from the command line" logic) to be
-> taught that a lone "-" can be a rev.
->
-> So it is quite a lot of thing that the new code needs to get right
-> before getting there.
-
-I am not claiming that it will be easy to perform that analysis. It will
-be worth the effort, though, I am sure.
-
-And it will be necessary because the current approach of
-special-special-casing `git branch -d -` is just too narrow, and a recipe
-for totally valid complaints by users.
+i.e. either use "`git %s`" without translating, or keeping "%s" with the
+translated `action_name()`. But it would probably read better to have the
+action name localized (which is what I suggested).
 
 Ciao,
 Dscho
-
---8323328-746212442-1660643349=:241--
