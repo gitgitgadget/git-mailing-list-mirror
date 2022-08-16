@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C611C25B0E
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 423B0C32771
 	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 23:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237820AbiHPX6T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 19:58:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49162 "EHLO
+        id S237826AbiHPX6V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 19:58:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234711AbiHPX6O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 19:58:14 -0400
+        with ESMTP id S237804AbiHPX6P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 19:58:15 -0400
 Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97D5E286DB
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 16:58:13 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ba1so3824059wrb.5
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 16:58:13 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 658982DABF
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 16:58:14 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id v3so14434518wrp.0
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 16:58:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=PD0L6ry8tE/Il46XwLLpiQGNHX3D7mXxn2j8YFl6pgM=;
-        b=QkYuRPwWKVo0yl1oHKc5DCw+8+tH2X97k/jv7VHt/bnMmc6KNg4sPXcyUJls334lwM
-         Tn265yXfQoDq/Z6O8OpH0rb5zb5I1dFe9AZ2tf4yWLpxHYOamTrQrvD5LdPWHU1shUqE
-         jn5sGZi8ts8lvxz80SwaqLXEU0ss+J/VrC07pKm9FgONzE5zx7Xx/DMEMTOAVOOZMXCs
-         hjUTL+zIwIe9pAfjzbgN2FpSbwCs0tBKAmOUoUyKk6y0HT+IX4sljhlaDsol3Wgp8TUJ
-         GRvHQUGc+Ix+foN49Hdr4YrfNYH9KCItGIyaWCYreISgRHLBrX50vfW6KGYInOmngN6F
-         ymvw==
+        bh=Rk5t5lMQh6qkJp4x6uWUKkap5JFyvSIX3ER9vz73ThE=;
+        b=dAcxBsSXZ6IiG2T5sYPgCwLMlAd+kjnuu299EQC2T+EZLZsXiStxpAu7MWhusto1/i
+         sWm1qn3piJgLbJWgLrsKW1NH9lr9YGFViO04W8X3VbeU1PDn2QYjigVuKDf37sRUZOOO
+         pKqGJBX4NYAvocyiztbZP+/SktrHzmO34zS+fUt/730Mzb1kpcy4KtL89GKl75BfUwkV
+         5ZOAXXvt+y1VkyQPs7MtS3QffIgLujCbjrbCn4PuGlQclt2T34u0573m7/Reb9mjV5GH
+         4zCl48f42bgXA0ysmqoyg/91+0B3rTllhQccwGx12kDkp9q5eo0Grhq8+hWieKyqB4F8
+         DhrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=PD0L6ry8tE/Il46XwLLpiQGNHX3D7mXxn2j8YFl6pgM=;
-        b=lWYILKJqpMbktSAmTgWz+cjSzY8LmSuYwdkHmdNcz5fgyFyICT43SHmj3hc9WQtIZ4
-         MhJue/MWaG/SeiuBqIuGP8xsntKSUUs3Yx8Io8r37hOowtEjr0kl4COx4zZaG1Dd7jm4
-         Y45j9162VSttGWNYIdJV6oyjz4aGb5j4ctikzAWZe6kkcDrVEKHmv75T+f64CV7aEDEf
-         vlhjZzH00MVs5VgxGgfMDap6k0uoI00Z0isM1SoXWAvLm4iy0gUOdBDw9nb664VCU45y
-         0CYWx8V/4EE6O8Tiep/e12uKdFGdFByMqGfik32DHQ1VuKB/0ebtGkbhysneCf4f5J3P
-         aKOA==
-X-Gm-Message-State: ACgBeo23EDP4jvE7r9i2R7Wi9oL0WD24N+prcZMAK9kJ79AXXcPcAabl
-        2UAKmtZRvvf1oATs9FW/598pCfpuKaM=
-X-Google-Smtp-Source: AA6agR75lfwxp04iJFmzNSluX1xX2uAXPdeapbJum8wd8RwQOyONl6ieY56nYLK3PhFQ9tzz4ORjVw==
-X-Received: by 2002:a5d:6445:0:b0:225:1a75:7754 with SMTP id d5-20020a5d6445000000b002251a757754mr2546383wrw.239.1660694291956;
-        Tue, 16 Aug 2022 16:58:11 -0700 (PDT)
+        bh=Rk5t5lMQh6qkJp4x6uWUKkap5JFyvSIX3ER9vz73ThE=;
+        b=K+1LU/pVRXcOek1i05GJwO7FoYhGhbYtPwjWzbyuC+84Qxry2Ld6ddAqpzF6f0T+zg
+         2fpuhwJImbz9e9zka58vrEc1xhWdr8c502wRR1QtoIQuVpYTRK+gyNn/QcP4lkjmT5Q5
+         yp7X7ue59BXBKAm8iF32iUsDTXmF9a+f2D1i859jlv2IXEtNodMC7BKU0N/ILyoYn8TA
+         /szUHX7mhJigOrPgkFdcX25JgUE5jFNs7R0koyGCRj4051hO1KLwKCItHTVFZHfyM8qD
+         6Ree6WIhIKaKNNH1WJv+ukgtqNz4jxGnvWtXT+AjXjWe8nFABRQhAl6AqFCuOkQh/gox
+         OPxg==
+X-Gm-Message-State: ACgBeo2TWHqKW9/0cgrWjDzBi9w5qk9eD7cTSSh2ptyihbv6+/gu5ikJ
+        SU1LQBZhuGzUuGpqy2m5VkNt/wtFOrU=
+X-Google-Smtp-Source: AA6agR4+CSYGQTFnLPZqZcuEQx1jg+sSVvDOZz4IBIAYN9ogveB4ExV2LlzUPhch1h1o0Aqs7XuEpQ==
+X-Received: by 2002:a05:6000:811:b0:220:6262:ac66 with SMTP id bt17-20020a056000081100b002206262ac66mr12245034wrb.529.1660694292750;
+        Tue, 16 Aug 2022 16:58:12 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l23-20020a05600c2cd700b003a2e1883a27sm373035wmc.18.2022.08.16.16.58.11
+        by smtp.gmail.com with ESMTPSA id j20-20020a05600c191400b003a5c1e916c8sm5273888wmq.1.2022.08.16.16.58.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Aug 2022 16:58:11 -0700 (PDT)
-Message-Id: <36fc3cb604d835f06bd5eca22b6eeff73e7117c8.1660694290.git.gitgitgadget@gmail.com>
+        Tue, 16 Aug 2022 16:58:12 -0700 (PDT)
+Message-Id: <4bacf8bce8acb1a21bad0648055cd480c81c6b07.1660694290.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1324.v2.git.1660694290.gitgitgadget@gmail.com>
 References: <pull.1324.git.1660673269.gitgitgadget@gmail.com>
         <pull.1324.v2.git.1660694290.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 Aug 2022 23:58:05 +0000
-Subject: [PATCH v2 1/5] scalar-unregister: handle error codes greater than 0
+Date:   Tue, 16 Aug 2022 23:58:06 +0000
+Subject: [PATCH v2 2/5] scalar-[un]register: clearly indicate source of error
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,33 +68,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-When 'scalar unregister' tries to disable maintenance and remove an
-enlistment, ensure that the return value is nonzero if either operation
-produces *any* nonzero return value, not just when they return a value less
-than 0.
+When a step in 'register_dir()' or 'unregister_dir()' fails, indicate which
+step failed with an error message, rather than silently assigning a nonzero
+return code.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- contrib/scalar/scalar.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ contrib/scalar/scalar.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 97e71fe19cd..e888fa5408e 100644
+index e888fa5408e..6025cd71604 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -253,10 +253,10 @@ static int unregister_dir(void)
+@@ -238,15 +238,16 @@ static int add_or_remove_enlistment(int add)
+ 
+ static int register_dir(void)
  {
+-	int res = add_or_remove_enlistment(1);
++	if (add_or_remove_enlistment(1))
++		return error(_("could not add enlistment"));
+ 
+-	if (!res)
+-		res = set_recommended_config(0);
++	if (set_recommended_config(0))
++		return error(_("could not set recommended config"));
+ 
+-	if (!res)
+-		res = toggle_maintenance(1);
++	if (toggle_maintenance(1))
++		return error(_("could not turn on maintenance"));
+ 
+-	return res;
++	return 0;
+ }
+ 
+ static int unregister_dir(void)
+@@ -254,10 +255,10 @@ static int unregister_dir(void)
  	int res = 0;
  
--	if (toggle_maintenance(0) < 0)
-+	if (toggle_maintenance(0))
- 		res = -1;
+ 	if (toggle_maintenance(0))
+-		res = -1;
++		res = error(_("could not turn off maintenance"));
  
--	if (add_or_remove_enlistment(0) < 0)
-+	if (add_or_remove_enlistment(0))
- 		res = -1;
+ 	if (add_or_remove_enlistment(0))
+-		res = -1;
++		res = error(_("could not remove enlistment"));
  
  	return res;
+ }
 -- 
 gitgitgadget
 
