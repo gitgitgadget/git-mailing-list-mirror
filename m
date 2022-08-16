@@ -2,92 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F103C2BB41
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 10:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8388BC2BB41
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 10:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234989AbiHPKnV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 06:43:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42430 "EHLO
+        id S235070AbiHPKsy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 06:48:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234421AbiHPKmy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 06:42:54 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDAB1EEF08
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 03:00:35 -0700 (PDT)
+        with ESMTP id S234216AbiHPKsj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 06:48:39 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBA3BBD2AB
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 03:11:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660644010;
-        bh=WR40s5quqoMnKj5u1ll3udqvIt6r0ZhstdhvNbCfctY=;
+        s=badeba3b8450; t=1660644699;
+        bh=WjA2ubCaP3btfL4Oiw7dZVMywjB4qg0KBSj8Hgcc1rk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=jmo3MGbtLxXHWaEJPOiCuGmzOtEElR52U52qi1EtgWtOgbjWGMb09JpP42BC1luRm
-         wZk+bffOagYOhwi59jWYf4PU1VZdMDKtDMkr2lOS+Fb0c/h8UOFFpq6Yca6aRXgHR6
-         uoohiHX9l5mnsdPqkGIAzDtOHzBgq9vzaRU75duA=
+        b=VJ37OnNNE+hEYE9IAyQRlYNB7V4EraZ2dzs8wO8Pm5K50jf5pxMHungDdLg31h7ZU
+         3izot0VJSn2OIyfR8s5xdTooTFbUl7N2Qnc5EUHDPopUFiRiaYeIbvsFYqE25fsodJ
+         7Xczkk3hsPsR16EAcrC1CU1evNhtivbS0GLu3z5g=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N0XCw-1nTsyM1EqC-00wYs2; Tue, 16
- Aug 2022 12:00:10 +0200
-Date:   Tue, 16 Aug 2022 12:00:11 +0200 (CEST)
+Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MryXH-1ncRFW3EZR-00o0XS; Tue, 16
+ Aug 2022 12:11:39 +0200
+Date:   Tue, 16 Aug 2022 12:11:40 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     phillip.wood@dunelm.org.uk
+To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 4/5] add -p: avoid ambiguous signed/unsigned comparison
-In-Reply-To: <ec8204d5-9d0d-9850-f930-6fc1a8efacc5@gmail.com>
-Message-ID: <p1nn7o5q-9r34-n27o-s8r6-50277p3rp604@tzk.qr>
-References: <pull.1320.git.1660143750.gitgitgadget@gmail.com> <4d24a4345ba66031d2ccf7ce472ed93ace82e9d6.1660143750.git.gitgitgadget@gmail.com> <ec8204d5-9d0d-9850-f930-6fc1a8efacc5@gmail.com>
+Subject: Re: [PATCH 1/5] cmake: align CTest definition with Git's CI runs
+In-Reply-To: <xmqqczd8m1lr.fsf@gitster.g>
+Message-ID: <7ss9r585-14rs-so68-o2n3-9qn9qn530742@tzk.qr>
+References: <pull.1320.git.1660143750.gitgitgadget@gmail.com> <9cf14984c0a71b1ccdff7db0699571bf5af1209b.1660143750.git.gitgitgadget@gmail.com> <xmqqczd8m1lr.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ZHradS1BjMZ7bYk2wRK4uuozQBWnPphnLe031Xv9jwVxBOk2xy9
- OvBOxa9TQRXZ98OrCe7hEP2T+Nxq4DO4jq1wauqVMIQmRq0qqzXxZ8gSN8JoCZgt5/nqjci
- /RFRDLw9eeCC5yAqmEsluC5bfO7QuoTWYhorIqQEkR3D4NTifvlvprISfhUxrET4SRTy9Zu
- e9uCIltkN4RRIBWyJYViA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Icuf1wnSOyY=:EUz0Vco7baPZ1PO8blOytD
- bJ2YkeoFdenrheFOhdWxEjtONpqz8POWpGYlKTU0h9pwsGpqxEeIsm23R6fthgbl5MrAsmsR4
- NQzz9WjS+n7CEcB/B1+sSZbXcHb3sNuKHNCirdQ9biaUAQ1wv6Fikptgx2xMBafHpWchZ98H/
- EfqUtrK1sbqm/niYMNq/rM2xFXqnqpmhBBhtHbLS1zldMDE3qOi4VYWQ+aHfBQEIkGuXmoaXg
- 1R3bNW6MN6WUQ3a3GucdCgMmajdfXong13Y1PIocPyjV0aVjYlnjQEHRCaz5b+8Oet9j625/C
- pXOxZls55168jofL6vz5GFv7PCkI0vqFQfYehZEKwn8Yk5+CIc0jLiFhQmVn0kIp5jDm9rho5
- ImOdHfuGhJeXhL7wjKUyrn6PNRNQO9vZxtWEGHmCzTjeb5yCFocNoA1QXPyEBRsruIV0v0H7s
- dIYsNeRNQ3Rvl4q1wLa6+6Fkhxc2Sy/wgpMlnRtlHm3c30vNiuas03HRwrRCo/JONKXKnGb32
- wWstJZ+XGvJr1+rA1SFh8OC6DEwSTe0cvjcmX09xy9t0N4EG1HicoSLD8ObJhfRc8LfUjAeF+
- iCIP35oSEVvAtu1fPtjNwecQ4gGHSGS+0JNWhs27VP2j0MJueK5YtP2AMZwJdFhJtthKCkDrr
- fk543oeRpgZnK6RtVjwYeXPlixSQdaAoBVtzberEvVYJUOsvi3xdbwg86nf22miI0XQ7mMH9u
- rnHyDc8/WOSrx+sWi+LXo4TAXnlgOYjoFiHW2kr0fbFC4HrrrZYW/RvcQpSyueq5MYRWwEcdP
- kwKhIpxNkWUgMBeBvAV0ns5Muz3dxwLqoRGkmzAEXuHalgf7rgxRBSpYzgD4M27VMdevnFaHE
- 9k2NCANkzbWWzKPcRLq/tc/Lctm1fYtUwHFdIlyjpPZthrZ4cyVyjTpOJjN56zL3a/wZZ7JLr
- +H8AnAVUMj8tffldBJj5vF6FS6q1bo3Y3n967LGWZaokyzJ8xUa5zDlUMF2fcNkyMc6iIEyvu
- eGhfobKp1YweCchKlT9O9GE/RNxWHJvqPHyWPU20jddMsXlI797smD059VdNq/J9m79mAVu1i
- ei92EhDsanHd4FX+mM/1astuYoI2axy60wU5S/v/MAwCCps+HqMnBFrjQ==
+X-Provags-ID: V03:K1:LUf9PqDd6B0vvw79Ivmv0Kjs1CpZb2vpm51DGSx4btuv/TF5xGT
+ Yi1Kd8sS5wA23jqNT2uhbRdCRPmOjA/rdmvuzMI5N7Vh9bgH/zciDxSuj3lT2j4VeYN+5ZG
+ LezFy3ndIhAolyfNlmQKsvKXoZJnVA16bHbgopzleN5btt1Zmz5ZYDlY5uAeWxdsBX1vRq0
+ TYx9XvzgxbtqhRzs1S4tg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tC3H8UhKSYg=:/1gfX+4Gvk1jlkXKdchWOc
+ Ytnt6oBeuSeDkckfDTrQrsaOdQPv3Mn5ZLn8VBk4gWzPIUa/mlhMOeBcgl0S2iMSkKITgmAm4
+ CLXoR+u5aDbefUdC3oOrOflowDq2TauBgxYzHlnj8mjGcjyrm8mngEDOJE2rbe8rNXkcotjYK
+ Ao5OQM138TlWUuk1RGi4KmmAIZj4FPaIk+bd8s3evdh7PWtRZKCcAslfmXTOXL+Xn0a/haGWU
+ H+rqk9HAxWWOctQcMcHJ+vI5cG81VtDzWXpiTqp4fBZ58n7tMP8clC/Zg/wuw5UMMZga+hE5h
+ TbKBNkZHKsCGDC3aBQrl3WoFXShlD7wqmZq2WqhHlBQTx8muP8ER7gA3bceRqE6urTJVg1pBY
+ jQTp1uIGWtMVlRmOyy2d/rI1S9lp38sOgQrbJnDwifpCKkb10Z27eYE38gCSOM52A0WRyLUFi
+ /apwab08gmCHq/vEVNi61giDlNnTn0To+ysghfvUZWpP+iwxN9b2JyHcw2rDhS7wX8oYs6VSM
+ 5SJC13S9/l0qQKoAcpa/36S0bi8V2hnG8WpU6JXHlRkh/sAp5wjf2ETtF5sK8pJj79fylIiZS
+ 7pnIu7KZNlZrE5Holksb0l7+4jaye+rtJZttcO82RZ10K0hw9rzuYoTXWsYvbv4y0BSyE89pK
+ wDGkZCFWgq5HRiFoD/DjaSwtgBQELanlFbnnr6DscGipGQkMT3YVxLfZVI9RpTAq3rrPCbqN+
+ 8F1hHhdmOQln+zBqe1csueEl0OyUvldecPuGz928kqKrPjVhUmri/vrWnIcjHlg7c05wWIdhx
+ C5mS8GffEgPCsgfsnxfmopgnlF9b7vXl2N/95wLpIEWqn0yKz+YEl5YK11P0OJprWi/0tvsGY
+ WVLJ9JSiarHU8DbJcbC06j+HGTSI70DXMQESj3O3RzSyhPZ2qDO0bPSaDYhAr8DfqEsfaZSiH
+ 19cbDlZGjTB37lgVCLrt2cLEkGYa9XfYUnb/lJjJUkpZsGwoUuYWoxf1TjOqrLPVmUiV6aPlq
+ Jo58QsCttDp4PT59I9s1xzUOo8mtYxu7JwWFr+0y68jKYWSB0lCXPwQiCri690mjHSpJbAX4u
+ bL1aT0BuA+kMlIzEumGxBf7b+9klobVUgT0sXCxz1GY198tkU1m3TeVVQ==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Hi Junio,
 
-On Thu, 11 Aug 2022, Phillip Wood wrote:
+On Wed, 10 Aug 2022, Junio C Hamano wrote:
 
-> On 10/08/2022 16:02, Johannes Schindelin via GitGitGadget wrote:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
-> > diff --git a/add-patch.c b/add-patch.c
-> > index 509ca04456b..3524555e2b0 100644
-> > --- a/add-patch.c
-> > +++ b/add-patch.c
-> > @@ -1547,7 +1547,7 @@ soft_increment:
-> >      strbuf_remove(&s->answer, 0, 1);
-> >      strbuf_trim(&s->answer);
+> > While at it, enable the command trace via `-x` and verbose output via
+> > `-v`, otherwise it would be near impossible to diagnose any problems.
 >
-> Unrelated to this change but why don't we just call strbuf_reset() here?
+> This sounds like a completely unrelated change.
 
-This part of the code is used when the `g` command (to "go to hunk") was
-issued by the user. And that `g` command allows for a number to be
-specified, e.g. `g1` to go to the first hunk.
+It may sound like it, but it is not. In order to make sense of the broken
+tests, I needed access to more verbose output than our test scripts
+provide by default.
 
-The `strbuf_remove(&s->answer, 0, 1)` removes the `g` from the command.
+When running the test suite on the command-line, it is easy to tell the
+user "oh, if you need more information, just call the test script with
+these here options: ...".
 
-The `strbuf_trim(&s->answer)` allows for whitespace between the `g` and
-the number, e.g. `g 1` should also go to the first hunk.
+This is not an option when running the tests within Visual Studio.
 
-If we called `strbuf_reset()` here, we would remove the number completely.
+Does this clarify the intention and validity of the proposed patch? If so,
+I will gladly try my best to improve the commit message to explain that
+intention better.
 
 Ciao,
 Dscho
