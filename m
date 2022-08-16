@@ -2,136 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A7ACC28B2B
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 10:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73CC3C28B2B
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 11:11:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234068AbiHPK4J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 06:56:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51334 "EHLO
+        id S235409AbiHPLLM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 07:11:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235194AbiHPKzj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 06:55:39 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 959726D575
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 03:09:38 -0700 (PDT)
+        with ESMTP id S235595AbiHPLKv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 07:10:51 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71046564CE
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 02:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660644567;
-        bh=kehraDIdy0O5vJyaS0/nGIeg42A8xEViJ2vPuGwceYM=;
+        s=badeba3b8450; t=1660640749;
+        bh=wysYBb29vpnJHnSxnEj7tpOJiItKTuuPsYlRCqnoXoo=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gZv3rcj3ZAKZMd78/hNKVSqdSsowG/fFPhtWJ9OxHiALThBCfWmbARhF9Y0EtIXFB
-         RU/2CJ1SypMrAYkgWs3aw0HvaFQzdL5LzicOQceaOHzamzB6SMmkb8+P5o9NTkVFcf
-         xyb8S4YDtIJuHhWBSPX6QHMrWFpMjCJc+Xlec3RU=
+        b=EKZmDGfWkqlGG/PeUF3b4T7WuO2OPa6Vo3cVptFS8TmJYI/XFErLxkX5hTGmwWY3Q
+         QJ0CYslOZw7PKTafDJ0QbZfJ1JUCmTjghzGb3sZFqp6PcNRvPrrYW349QibDxdJRw0
+         c8nijovkTWTGYJ61CMxsaUQ9K0rWnPeFxWS0ae/g=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MF3DW-1o8TBH1QBk-00FUNG; Tue, 16
- Aug 2022 12:09:27 +0200
-Date:   Tue, 16 Aug 2022 12:09:28 +0200 (CEST)
+Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MryT9-1ncSHA0IA1-00nvYn; Tue, 16
+ Aug 2022 11:05:49 +0200
+Date:   Tue, 16 Aug 2022 11:05:48 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     phillip.wood@dunelm.org.uk
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] cmake: avoid editing t/test-lib.sh
-In-Reply-To: <23d86b94-3e2e-bdeb-3385-a996c07b699d@gmail.com>
-Message-ID: <8o4q98s3-sr2r-34qq-p7pr-8o44061o0n76@tzk.qr>
-References: <pull.1320.git.1660143750.gitgitgadget@gmail.com> <c7fc5a4ee4cbc49b8afb2f9579763482552fffb0.1660143750.git.gitgitgadget@gmail.com> <23d86b94-3e2e-bdeb-3385-a996c07b699d@gmail.com>
+To:     Jeff King <peff@peff.net>
+cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Subject: Coverity, was Re: What's cooking in git.git (Oct 2021, #02; Wed,
+ 6)
+In-Reply-To: <YXBALFsf305U8mJs@coredump.intra.peff.net>
+Message-ID: <2n33pn8n-7529-443q-rq7n-q12nrqrn8p27@tzk.qr>
+References: <xmqqfstdr8b5.fsf@gitster.g> <YV5aaD418SyZqS/1@coredump.intra.peff.net> <YV5dmkkuCqAY2qqG@coredump.intra.peff.net> <YV5yi+AejPGO9qOi@nand.local> <YV/BMkZrj4xQyvUL@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2110080946060.395@tvgsbejvaqbjf.bet>
+ <YWC49+xCh+zum8Ms@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2110201416390.56@tvgsbejvaqbjf.bet> <YXBALFsf305U8mJs@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Ge549NsEGWZfeyQitBs9kd/rtbF8UygNzhNkVElNTomTznmI+sY
- +KQJvZkyHmxpId4fagi5qucTOhli0NUxp6/OruN5tm2XeY++SRuU77QOKb63LEJMFOSHVns
- sJg9/xgWWV30jqb2CcuDQOZiU83XkXlphLmqbaUWwP8GQn8TNVYywqkZ6Bk0V6K55G9TdYN
- 13klSK9rrbJ3aWQc9o6Bg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:HoXZz6TbAhY=:NboZyCML1sXXHAKGGJ9KEk
- bZ14TeGFCB7yvfCbtmYtQKwe9UcEcIiA4Ysn36AZ55YbnfJRc4/Py20tKZl5K5nMZ551wpnwO
- PtNEYn8NGAfSssJK/YmGp6Fo8k+2IMH3EXvzH9/smwDrdKjHOvYEN4GHjS6ZJBKvQzb7MkcYo
- Ne3PGiElACMgC5aVURrhyM939ja6DKJeis+qXvAlXvOVdWPU2DvrhevIrtP7KgPbIA+LclE04
- BYXFj1AroZ8TYFr1vJzUiOjz2dqphKQSCsZR1u1QllzlGAwqqvYqtuqz8SkVA13CP+FB/jSlM
- Q3yAEdvwrOCBzl7NXBFeU7v3giOB0RZclls83UBZCHgXbkdKzzEfOOkxzMLAWIWoA10zP7gja
- HXLcmxLzJLSyin5F5zNDSlh7TCv1Ujiz0vu/9SrxWuyseGs8JWaEfMdt/IMVZx1CP1fRJMjDc
- jTcLzYlQ7NJfrwn6z7Vv9AtlbdWBuzMW0wMYAuWIGS+/xYRmWPglplqdBP/DcUgecpQsU/exZ
- ARUxZrlKsbi/q1wt2Hw9sNwu2NljF/hzEluHA5ZPng50IMlnMyNTCCVAKCqR8D94aKowVx/6H
- RxGnbAPkpRso5a3o/BScqhg0Fa8cI0U98oSrLldgFfiLpDH4w12lqYYzxNCam3AUAi3ODpifn
- wqR5dRbElvCmHdilQSkG+wpVKyBrzsHYZXVhq6bnk9K6u1+IhWUG0x3XkPzKCqpoDkrh/9N2m
- xOciRzkQG7D5bYa8s3jnzn22LJd+MoK4vjT9tSRk7PW4nhSqJZVpwNyaH7Twik4nxQm5fie7s
- fZx+3h/csvhP2XBInSwo1cC6SD8U6JQBxl/fOY0++W6rq7jD9FA2dh2xpaXS0VH0Wt14GLXQi
- by5RkbNGaaHhD1g5ai2ZR4k71od8UseRGPBPEawC6SbyHki36KS5FTchVbiHoxCvSvItauPE0
- eko53kUL+1UUouTV5JvNVd0durbD3oiYYD7qkjvA3pnC+dAb69YGDqx5G91QIwEaz1AvO/93T
- b3tG6Quky8XyocernYOoHjHJM3Etggga7SSOmC2nAbKw410ll8lgdZuqO9O1TgXLwOMwD+r5t
- 7KmQgvMsS+TWi6H1HoFH7zjvdu1y+SgDH1NG/VI8WsDW33CGp72LGH5rw==
+X-Provags-ID: V03:K1:xBiX+KIcI2NYGDu48CHuLrPR4SltXKk8XE5aSKp9b0Eypo0Icti
+ 1ytMNiTbsf3nRpybKdddcEClj+06kJQRF/IzE8/46Fo3BBun2pQjQ/A8p5efNKD5xLjiHZv
+ FC1RvpGHrTfoakk8D44nPimbrcO1TUWsyLW/wIsRjgx8dmLdtDHp/U/8vA19YQIsHVwaFrh
+ Rh87FMNc5UmoPujUGL8cA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SoTcUfsBDHo=:cAGQhqb7fTnHH9lig43Sqb
+ +7SXTMzO4nScsD+XIJlBq2HGKS+UVhVQG7mbC8gMz5cnC4zu+MLUnlLYNHJW80xJo/rhQM7r9
+ LfJzU7xm1S/rfWh9/I1Z0B6+tOFqwhrB+PIZzRWRXylhZ5aKM3DV/bCPhSdgm4lUs1x/+f3/N
+ iRRc2aG+P4Dx8OS4wy47drimcw0gUdSvdkAIQMjQOsyhUpMGk1HFy28bfQyY2gbYm+Df+Da+C
+ VKYhbUJuVl/qvhm7vXVw7HdxdnCvDDnu81EQGaoQu8E8crDCw0NCWqADKAoaYyTRdEunrdopk
+ 0FVlUGynpJtDZENlzQ3Ai9Yz6imiRCa/K8LaWxQL9dZFJ0RRZa3fAafC30dZXsE46xS+2jG5a
+ L2knHAYGnwUj2+QLqJTxILNMwAeuCHMA6fsPJ1Y7Z44l0RJu2fIErDgrV2RzDh4gfCq6MzXfF
+ ILk3OG3Y7j2AhI1Olx+rT/609Ox+s9WSDd6mQbqanYwSYSpSa1899kHyzwUMC5yj/1oKkvABs
+ fJM8jxce3s3kAbsSvRz3KXPbhUGjD/bpkBjUEG77Ja4Vew2R3P8xXuHmigeg8ETLYzCB5pe6x
+ FTuwv22zl77ys6+r8t6xiy8DdtxAUh/vFgEs5G551fNPevYm6C03Xnh3pCFtNS1J3xUYQtGnv
+ VNcXJp00zgVcvFhfjXAjjByk6K7IULJdh7pDIDbN/3e76QtkS/2f9aUfyz6B9ltaLeeK7Va1u
+ 0LYUDjUFjdXIgSMdcu0IM1vjqF4uku/GWoYCFAi8/5FaoF2HaMVjK4IwcB7jahdxdtkn98JGJ
+ rxl7rkYAtrdDn9Htn5/UNSa9gkNW9Sxwrfkmp4KZMuyD4TLo9yg6VXYUXfFjoeMIP0RGFroWp
+ VTgqQ4f9lbkj/pLwqBYr7S/ARDrUVtJ8skUs5ZD23xSeeVFwkjV205w9Q4t21uVLWho7aboR4
+ C1vhlYECHx0LDCKtWNSuVm3xa3o6hIdyhuTIX4oyCLZWdCY4M4Aoq5qUrTryPL3KApd4U8sSb
+ OmIoJYSG0e3ca6DFKgoesSPhwIodqpctn2ktfEFZxzllOoAVyXSJ6tbzM2pTGbuanvuIOH+dU
+ G0lkajfDKGXPLLaCHJ2MP6dS3igj37dkevur+bQF8+G9/9LqSIQKO0Hfg==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Hi Peff & Taylor,
 
-On Thu, 11 Aug 2022, Phillip Wood wrote:
+On Wed, 20 Oct 2021, Jeff King wrote:
 
-> On 10/08/2022 16:02, Johannes Schindelin via GitGitGadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > In 7f5397a07c6c (cmake: support for testing git when building out of t=
-he
-> > source tree, 2020-06-26), we implemented support for running Git's tes=
-t
-> > scripts even after building Git in a different directory than the sour=
-ce
-> > directory.
-> >
-> > The way we did this was to edit the file `t/test-lib.sh` to override
-> > `GIT_BUILD_DIR` to point somewhere else than the parent of the `t/`
-> > directory.
-> >
-> > This is unideal because it always leaves a tracked file marked as
-> > modified, and it is all too easy to commit that change by mistake.
-> >
-> > Let's change the strategy by teaching `t/test-lib.sh` to detect the
-> > presence of a file called `GIT-BUILD-DIR` in the source directory. If =
-it
-> > exists, the contents are interpreted as the location to the _actual_
-> > build directory. We then write this file as part of the CTest
-> > definition.
+> On Wed, Oct 20, 2021 at 02:27:30PM +0200, Johannes Schindelin wrote:
 >
-> I think it is really good to get away from editing the test files, but o=
-ne of
-> the nice things about CMake's out of tree builds is that you can have se=
-veral
-> build directories with different build configurations and this change do=
-es not
-> support that. Could we pass the build directory to the test scripts as a
-> commandline option or environment variable instead? e.g.
+> > On Fri, 8 Oct 2021, Jeff King wrote:
+> >
+> > > On Fri, Oct 08, 2021 at 09:51:33AM +0200, Johannes Schindelin wrote:
+> > >
+> > > > FWIW I have set up an Azure Pipeline to keep Git for Windows'
+> > > > `main` branch covered by Coverity:
+> > > >
+> > > > https://dev.azure.com/git-for-windows/git/_build?definitionId=3D35
+> > > >
+> > > > It essentially calls into this scripted code:
+> > > > https://github.com/git-for-windows/build-extra/blob/4676f286a1ec83=
+0a5038b32400808a353dc6c48d/please.sh#L1820-L1915
+> > >
+> > > Do you have any objection to adding something like the Action I
+> > > showed eariler? It would do nothing in git-for-windows/git unless
+> > > you set up the right environment, so there shouldn't be any
+> > > downside.
+> >
+> > No objection. I'd just ask to use `${{github.repository}}` instead of
+> > hard-coding `peff/git`, and to really not run the workflow unless
+> > configured. So something like this:
 >
->   foreach(tsh ${test_scipts})
->    	add_test(NAME ${tsh}
-> -		COMMAND ${SH_EXE} ${tsh} --no-bin-wrappers --no-chain-lint -vx
-> +		COMMAND ${SH_EXE} ${tsh} --no-bin-wrappers --no-chain-lint
-> --build-dir=3D${CMAKE_BINARY_DIR} -vx
+> Yep, those were directions I was planning to take it.
 >
->   		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t)
->   endforeach()
+> > I am very much in favor of having this in git/git. Do you want to prov=
+ide
+> > the commit message, or do you want me to shepher this?
 >
-> Doing that would avoid changing the main Makefile to remove a file which
-> almost certainly does not exist every time make is invoked as well.
+> I'd be just as happy if you did (I hadn't even looked at it since my
+> earlier email).
+>
+> It sounds like Taylor is volunteering to set up the Coverity side for
+> git.git, and I can help him with getting those COVERITY_* variables into
+> the GitHub environment.
 
-This is indeed tempting, but one of the things I recommend to Visual
-Studio users for ages already is to run the tests in a Git Bash, i.e.
-outside of Visual Studio, to allow for passing `--run=3D...` options and t=
-he
-likes. This recommendation predates support for CTest, naturally, but it
-is still valid.
+Given the challenges with Coverity (false positives, lack of support on
+Synopsys' side, severely limited access to the reports), and given the
+renewed efforts by OSTIF that focus not on Coverity but on CodeQL, I am
+in favor of abandoning the idea to integrate Coverity in our GitHub
+workflow.
 
-And that recommended way of running tests would be broken by the suggested
-change because the tests would no longer run except when using CTest.
-
-Besides, while the semantics look tempting, the implementation details do
-not. The reason is that we use `GIT_BUILD_DIR` to source the
-`GIT-BUILD-OPTIONS` and to validate that Git was built, long before we
-parse the command-line in `t/test-lib.sh`. I want to refrain from the
-prerequisite extensive refactoring required to support this, at least in
-the context of this here patch series.
-
-Can we maybe agree that the proposed patch is a net improvement over the
-status quo, and think about a better solution independently (without
-blocking this here patch)?
+Regarding CodeQL, I am still uncertain what level of integration we will
+end up with, and the contacts I am working with are currently all on
+vacation, but I am confident that we will have an easier time going
+forward with static analysis using CodeQL instead of Coverity.
 
 Ciao,
 Dscho
