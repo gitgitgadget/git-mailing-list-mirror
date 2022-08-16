@@ -2,146 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77AFBC25B0E
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 20:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE26EC25B0E
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 21:18:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237213AbiHPUtQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 16:49:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36208 "EHLO
+        id S237511AbiHPVS6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 17:18:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231594AbiHPUtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 16:49:14 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21F855C946
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 13:49:13 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C02FE1347FA;
-        Tue, 16 Aug 2022 16:49:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=sC0HejC+jAOlnFGQNWvALsbtu/2GYkTCGpJ8+CPIO14=; b=YP6u
-        Y/3F/oW01dAeFP4Li4QcwF/5Rqz4jIXxblb4xdgN3SnF6lAY+QaC89v2tEWEMIKL
-        aM8k9OIVH/ftTOtsAZeAZGPZFMevEpkNVpvF5TSlMOPr1mxMbhZJA1IP8PBZU7iG
-        0pikRwwMRh9Yv+0pK9ioRd25ZWoVCp1cqdk3Jmg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B815D1347F9;
-        Tue, 16 Aug 2022 16:49:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2E9701347F8;
-        Tue, 16 Aug 2022 16:49:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de,
-        mjcheetham@outlook.com, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH 1/3] scalar: enable built-in FSMonitor on `register`
-References: <pull.1324.git.1660673269.gitgitgadget@gmail.com>
-        <62682ccf6964d6eebb67491db4a9476dbab56671.1660673269.git.gitgitgadget@gmail.com>
-Date:   Tue, 16 Aug 2022 13:49:10 -0700
-Message-ID: <xmqq4jybud6h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S237544AbiHPVSz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 17:18:55 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE04989939
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 14:18:53 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id v3so14099657wrp.0
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 14:18:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject:from:to:cc;
+        bh=MYH3fqHdLF8gXQtXy6qh5lL4xV46p5jtHu0fdJlCvrQ=;
+        b=iWDI7Xk9vzZJ97YUKYYrIf2PNDb/WWsIl4oiPGw3tgH6B6iktqTc+oLtB9uDiD/JDE
+         1Ffq9RnDN+Tgc3ZmZMwmzudIVeek1QatZug3zzi0T5sl1W958mDDu2Q6U8KoAEeNeFEB
+         jfTZiUVOLPso7N0CBIRtzNyjqR6v49+f6GoxUGR688+eVTqRM7nbTrk6BhXoD3Vj71Vm
+         wtJfjSPb99Va/ruYV9eurXe1NsEylFHF8h+H5GQbbiOhkqykvMxAj7D4HuaftREA/dxN
+         MWoFN5VTnqvPIL92eTcoGTmTsHCKsvnv/19w7hcLoS+Tihp6JXgHz1V2VMRo41WnF9t7
+         zT9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject
+         :x-gm-message-state:from:to:cc;
+        bh=MYH3fqHdLF8gXQtXy6qh5lL4xV46p5jtHu0fdJlCvrQ=;
+        b=mHTpiSPCg0IoSfgH/BW3WIufkxNQwcCPI6rn3MpU4zhWt40SAU10taK6qmrwRV/G0o
+         3bYPnCH6ZzRGA/z+ccQUP38iZMu6zJd1f3n3UnvNYP4ixHjwErvOhuGE9H/0PLijIoG1
+         v6bROqIjJl9uxAiyltKdfLjXrK5+KreU8k4kCgoXdVhwrjpnUWjm6Y6BPu22VZjRz+FR
+         8+mY3dSaF+tpbt1PfSSqQiVB+SMx0lNRsSa4sXRMrEBJxb2HooJ2IvFg5AhEOSsuMXLc
+         tE6xmm826gLqjbYrqcMHErKYPZ1HUu18Pf/9DAvauWdvdgERx8WgBjbKAP8302HuJcy7
+         rKaw==
+X-Gm-Message-State: ACgBeo1nTXH2mtrGRfKnl861KZtaA+P9vm4ABqnZKkCAtJC7/i36WiSg
+        Sa4/lMoOO4WHrXwhO5RRD0eW1yl0vh2SMA==
+X-Google-Smtp-Source: AA6agR7nF4G9OVusf8btZ8lAI6utZEKs0FCuhbqiSEWQ62ZKwPcJiIW/QhmyEJIhKcZvScW7LylMFQ==
+X-Received: by 2002:adf:d1c9:0:b0:225:f98:d602 with SMTP id b9-20020adfd1c9000000b002250f98d602mr4817112wrd.419.1660684732359;
+        Tue, 16 Aug 2022 14:18:52 -0700 (PDT)
+Received: from [192.168.2.52] (68.83-213-117.dynamic.clientes.euskaltel.es. [83.213.117.68])
+        by smtp.gmail.com with ESMTPSA id p17-20020a5d48d1000000b0022159d92004sm11084185wrs.82.2022.08.16.14.18.51
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Aug 2022 14:18:52 -0700 (PDT)
+Subject: [PATCH v3] branch: allow "-" as a short-hand for "previous branch"
+To:     git@vger.kernel.org
+References: <pull.1315.git.1659910949556.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <c24313c1-3ade-eebc-77ae-bf4489b993ab@gmail.com>
+Date:   Tue, 16 Aug 2022 23:18:51 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E16AB886-1DA4-11ED-8A71-CB998F0A682E-77302942!pb-smtp2.pobox.com
+In-Reply-To: <pull.1315.git.1659910949556.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+From: Rubén Justo <rjusto@gmail.com>
 
-> +static int start_fsmonitor_daemon(void)
-> +{
-> +	int res = 0;
-> +	if (fsmonitor_ipc__is_supported() &&
-> +	    fsmonitor_ipc__get_state() != IPC_STATE__LISTENING) {
-> +		struct strbuf err = STRBUF_INIT;
-> +		struct child_process cp = CHILD_PROCESS_INIT;
-> +
-> +		/* Try to start the FSMonitor daemon */
-> +		cp.git_cmd = 1;
-> +		strvec_pushl(&cp.args, "fsmonitor--daemon", "start", NULL);
-> +		if (!pipe_command(&cp, NULL, 0, NULL, 0, &err, 0)) {
-> +			/* Successfully started FSMonitor */
-> +			strbuf_release(&err);
-> +			return 0;
-> +		}
-> +
-> +		/* If FSMonitor really hasn't started, emit error */
-> +		if (fsmonitor_ipc__get_state() != IPC_STATE__LISTENING)
-> +			res = error(_("could not start the FSMonitor daemon: %s"),
-> +				    err.buf);
-> +
-> +		strbuf_release(&err);
-> +	}
-> +
-> +	return res;
-> +}
+Align "branch -d" with the intuitive use of "-" as a short-hand
+for "@{-1}", like in "checkout", "rebase" and "merge" commands.
 
-This somewhat curious code structure made me look, and made me
-notice that the behaviour is even more curious.  Even though
-pipe_command() fails, fsmonitor_ipc__get_state() can somehow become
-LISTENING, in which case we are OK?  If that is the case, a more natural
-way to write it would be:
+$ git branch -d -      # short-hand for: "git branch -d @{-1}"
+$ git branch -D -      # short-hand for: "git branch -D @{-1}"
 
-	int res = 0; /* assume success */
+So I can do:
 
-	if (fsmonitor_ipc__is_supported() &&
-            fsmonitor_ipc__get_state() != IPC_STATE__LISTENING) {
-		...
-                /* 
-                 * if we fail to start it ourselves, and there is no
-                 * daemon listening to us, it is an error.
-                 */
-		if (pipe_command(...) &&
-		    fsmonitor_ipc__get_state() != IPC_STATE__LISTENING)
-			res = error(...);
-		strbuf_release(&err);
-	}
-	return res;
+$ git checkout work_to_review
+$ git checkout -
+$ git merge - # or git rebase -
+$ git branch -d -
 
-and that would utilize "res" consistently throughout the function.
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
+     branch: allow "-" as a short-hand for "previous branch"
 
-Note that (I omitted unnecessary blank lines and added necessary
-ones in the above outline of the rewrite.
+     Align "branch -d" with the intuitive use of "-" as a short-hand for
+     "@{-1}", like in "checkout", "rebase" and "merge" commands.
 
-Stopping, stepping back a bit and rethinking, the above is not still
-exactly right.  If pipe_command() could lie and say "we failed to
-start" when we immediately after the failure can find a running
-daemon, what guarantees us that pipe_command() does not lie in the
-other direction?  So, in that sense, perhaps doing
+     $ git branch -d - # short-hand for: "git branch -d @{-1}" $ git branch
+     -D - # short-hand for: "git branch -D @{-1}"
 
-	/* we do not care if pipe_command() succeeds or not */
-	(void) pipe_command(...);
+     So I can do:
 
-        /*
-         * we check ourselves if we do have a usable daemon 
-         * and that is the authoritative answer.  we were asked
-         * to ensure that usable daemon exists, and we answer
-         * if we do or don't.
-         */
-	if (fsmonitor_ipc__get_state() != IPC_STATE__LISTENING)
-		res = error(...);
+     $ git checkout work_to_review $ git checkout - $ git merge - # or git
+     rebase - $ git branch -d -
 
-may be more true to the spirit of the code.
+     Signed-off-by: Rubén Justo rjusto@gmail.com
 
-It also is slightly curious if the caller wants to see "success"
-when fsmonitor is not supported.  I would have expected the caller
-to check and refrain from calling start/stop when it is not
-supported (and if there is an end-user interface to force the scalar
-command to "start", complain by saying "not supported here").  But
-as long as we are consistent, I guess it is OK.
+Published-As: 
+https://github.com/gitgitgadget/git/releases/tag/pr-1315%2Frjusto%2Fmaster-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git 
+pr-1315/rjusto/master-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1315
 
-The side that stops shares exactly the same two pieces of
-"curiosity" and may need to be updated exactly the same way.  It
-assumes that pipe_command() is unreliable and instead of reporting a
-possible failure, we sweep that under the rug, with a questionable
-"we do not care about pipe failing, as long as the daemon is
-listening, we do not care" attitude.  And the caller does not care
-"start" not stopping where it is not supported.
+Range-diff vs v2:
 
-Thanks.
+  1:  0fe48ada15b ! 1:  cc28546aea9 allow "-" as short-hand for "@{-1}" 
+in "branch -d"
+      @@
+        ## Metadata ##
+      -Author: rjusto <rjusto@gmail.com>
+      +Author: Rubén Justo <rjusto@gmail.com>
+
+        ## Commit message ##
+      -    allow "-" as short-hand for "@{-1}" in "branch -d"
+      +    branch: allow "-" as short-hand for "@{-1}" in "branch -d"
+
+           Align "branch -d" with the intuitive use of "-" as a short-hand
+           for "@{-1}", like in "checkout", "rebase" and "merge" commands.
+      @@ Commit message
+           $ git merge - # or git rebase -
+           $ git branch -d -
+
+      -    Signed-off-by: rjusto <rjusto@gmail.com>
+      +    Signed-off-by: Rubén Justo <rjusto@gmail.com>
+
+        ## builtin/branch.c ##
+       @@ builtin/branch.c: static int delete_branches(int argc, const 
+char **argv, int force, int kinds,
+
+
+  builtin/branch.c | 3 +++
+  1 file changed, 3 insertions(+)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 55cd9a6e998..7f7589bd4a8 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -241,6 +241,9 @@ static int delete_branches(int argc, const char 
+**argv, int force, int kinds,
+  			die(_("Couldn't look up commit object for HEAD"));
+  	}
+
++	if ((argc == 1) && !strcmp(argv[0], "-"))
++		argv[0] = "@{-1}";
++
+  	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
+  		char *target = NULL;
+  		int flags = 0;
+
+base-commit: 679aad9e82d0dfd8ef3d1f98fa4629665496cec9
+-- 
+2.36.1
