@@ -2,63 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE26EC25B0E
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 21:18:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 823F3C25B0E
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 21:27:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237511AbiHPVS6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 17:18:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33146 "EHLO
+        id S237203AbiHPV1S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 17:27:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237544AbiHPVSz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 17:18:55 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE04989939
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 14:18:53 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id v3so14099657wrp.0
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 14:18:53 -0700 (PDT)
+        with ESMTP id S233897AbiHPV1R (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 17:27:17 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A1948C47D
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 14:27:16 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id a4so2351199wrq.1
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 14:27:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:to:subject:from:to:cc;
-        bh=MYH3fqHdLF8gXQtXy6qh5lL4xV46p5jtHu0fdJlCvrQ=;
-        b=iWDI7Xk9vzZJ97YUKYYrIf2PNDb/WWsIl4oiPGw3tgH6B6iktqTc+oLtB9uDiD/JDE
-         1Ffq9RnDN+Tgc3ZmZMwmzudIVeek1QatZug3zzi0T5sl1W958mDDu2Q6U8KoAEeNeFEB
-         jfTZiUVOLPso7N0CBIRtzNyjqR6v49+f6GoxUGR688+eVTqRM7nbTrk6BhXoD3Vj71Vm
-         wtJfjSPb99Va/ruYV9eurXe1NsEylFHF8h+H5GQbbiOhkqykvMxAj7D4HuaftREA/dxN
-         MWoFN5VTnqvPIL92eTcoGTmTsHCKsvnv/19w7hcLoS+Tihp6JXgHz1V2VMRo41WnF9t7
-         zT9w==
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc;
+        bh=btKCCaSmo7fgvI6Fw6sry9xDTz0Nsc3fl5IbdzgZjO0=;
+        b=I1yi33muoRhKhXYOF147F31rqYudyR0NYRQUV+yYm2MBI3LsyO40MTgqu5ufE6V1oP
+         Zlb6YKkoocH2rX4VJmr+Qda2Lke6KjjRFfbQZQq6/VOQ78oc+wEr+ou60qerGhffxCaw
+         njPptTokcPvlFfIFW4XnYRlfmkjLI4Z08YjKBdH/kRDbZLflAP9TDHiQs+dtqgXOjYv8
+         LQ46N2KIdb/aD/BvZWGb1l7SQ1X6o83+enaMl0pTYwoQfNQ+02aaTPHdjTm418Bg3uSK
+         5eskwgpJhu5AP2qkcyI0Hp+WF8DM/romBdL+TNXTsmDZtMQ+xniGd24lmjg1xW2a+np7
+         OjDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:to:subject
+         :user-agent:date:message-id:from:references:cc:to:subject
          :x-gm-message-state:from:to:cc;
-        bh=MYH3fqHdLF8gXQtXy6qh5lL4xV46p5jtHu0fdJlCvrQ=;
-        b=mHTpiSPCg0IoSfgH/BW3WIufkxNQwcCPI6rn3MpU4zhWt40SAU10taK6qmrwRV/G0o
-         3bYPnCH6ZzRGA/z+ccQUP38iZMu6zJd1f3n3UnvNYP4ixHjwErvOhuGE9H/0PLijIoG1
-         v6bROqIjJl9uxAiyltKdfLjXrK5+KreU8k4kCgoXdVhwrjpnUWjm6Y6BPu22VZjRz+FR
-         8+mY3dSaF+tpbt1PfSSqQiVB+SMx0lNRsSa4sXRMrEBJxb2HooJ2IvFg5AhEOSsuMXLc
-         tE6xmm826gLqjbYrqcMHErKYPZ1HUu18Pf/9DAvauWdvdgERx8WgBjbKAP8302HuJcy7
-         rKaw==
-X-Gm-Message-State: ACgBeo1nTXH2mtrGRfKnl861KZtaA+P9vm4ABqnZKkCAtJC7/i36WiSg
-        Sa4/lMoOO4WHrXwhO5RRD0eW1yl0vh2SMA==
-X-Google-Smtp-Source: AA6agR7nF4G9OVusf8btZ8lAI6utZEKs0FCuhbqiSEWQ62ZKwPcJiIW/QhmyEJIhKcZvScW7LylMFQ==
-X-Received: by 2002:adf:d1c9:0:b0:225:f98:d602 with SMTP id b9-20020adfd1c9000000b002250f98d602mr4817112wrd.419.1660684732359;
-        Tue, 16 Aug 2022 14:18:52 -0700 (PDT)
+        bh=btKCCaSmo7fgvI6Fw6sry9xDTz0Nsc3fl5IbdzgZjO0=;
+        b=h4Gm58OhWrj4qdOaqETKzAjtv43AQzcvR8d/dqsbRcJ/uJooyhvfiwfghI7ZZwvtlb
+         MOXpC4zjD4ENhDHKXg3ReMWrm1P8vN1jHUV9f4Vs1qY3vor3exdm/EAj/CsZoLuiowSy
+         9tzDxhe6s62GOAlzxN7wlwwR9p95Q7H5c77BS1HIVGeuHdYHLPOS3WKrItNo/orKX8mw
+         fk1f72oVQcyqMgh6N3Au3twSN5iCTL+KdDKN35ovTrYDdMwDCnlsjKCvmZSOpE4O7hv2
+         SWMsst+02QKLBiRdPZOYzxFlh6gbCaUUQcfkmvUQE5AOnV5IsphbHX8HxqFQpUzsWdXE
+         HEEw==
+X-Gm-Message-State: ACgBeo0oNTA8c+dgooRz8geUCosLdsFV8Yk5YSpEejrJYA/v0NeqnJqs
+        H5xBkYoQgpLFaO57x+U9caU=
+X-Google-Smtp-Source: AA6agR4xD7l+GqVQNKM0kA2/CXgTebt1kHRhhvLN1YXZYgEFuzA/uO0eJ6e+8raFmf2Dy3Kqtth9Gg==
+X-Received: by 2002:a05:6000:151:b0:225:23dc:9b0d with SMTP id r17-20020a056000015100b0022523dc9b0dmr216567wrx.525.1660685235179;
+        Tue, 16 Aug 2022 14:27:15 -0700 (PDT)
 Received: from [192.168.2.52] (68.83-213-117.dynamic.clientes.euskaltel.es. [83.213.117.68])
-        by smtp.gmail.com with ESMTPSA id p17-20020a5d48d1000000b0022159d92004sm11084185wrs.82.2022.08.16.14.18.51
-        for <git@vger.kernel.org>
+        by smtp.gmail.com with ESMTPSA id e2-20020adfe382000000b0022517522f8asm2534416wrm.96.2022.08.16.14.27.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Aug 2022 14:18:52 -0700 (PDT)
-Subject: [PATCH v3] branch: allow "-" as a short-hand for "previous branch"
-To:     git@vger.kernel.org
+        Tue, 16 Aug 2022 14:27:13 -0700 (PDT)
+Subject: Re: [PATCH v2] allow "-" as short-hand for "@{-1}" in "branch -d"
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Rub=c3=a9n_Justo_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 References: <pull.1315.git.1659910949556.gitgitgadget@gmail.com>
+ <pull.1315.v2.git.1660669912043.gitgitgadget@gmail.com>
+ <xmqqo7wkt3w7.fsf@gitster.g>
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <c24313c1-3ade-eebc-77ae-bf4489b993ab@gmail.com>
-Date:   Tue, 16 Aug 2022 23:18:51 +0200
+Message-ID: <4707eba3-bcfa-24ef-ca6d-a23d6a64ee6d@gmail.com>
+Date:   Tue, 16 Aug 2022 23:27:12 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <pull.1315.git.1659910949556.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqo7wkt3w7.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -66,90 +71,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Rubén Justo <rjusto@gmail.com>
+On 8/16/22 8:55 PM, Junio C Hamano wrote:
+> 
+>> From: rjusto <rjusto@gmail.com>
+> 
+> Documentation/SubmittingPatches:
+> 
+>      Also notice that a real name is used in the `Signed-off-by`
+>      trailer. Please don't hide your real name.
+> 
 
-Align "branch -d" with the intuitive use of "-" as a short-hand
-for "@{-1}", like in "checkout", "rebase" and "merge" commands.
+Fixed.
 
-$ git branch -d -      # short-hand for: "git branch -d @{-1}"
-$ git branch -D -      # short-hand for: "git branch -D @{-1}"
+>>       -    branch: allow "-" as a short-hand for "previous branch"
+>>       +    allow "-" as short-hand for "@{-1}" in "branch -d"
+> 
+> The "branch:" prefix is lost here, which is not an improvement.  The
+> "<area>:" prefix is what makes it easier to locate a particular
+> change in "git shortlog --no-merges v2.37.0..v2.38.0".
 
-So I can do:
+Just want to reduce the confusion, as Johannes suggested, that could 
+apply to the whole command. But ok, I've put it back.
 
-$ git checkout work_to_review
-$ git checkout -
-$ git merge - # or git rebase -
-$ git branch -d -
+> 
+> As to the implementation, there is nothing to complain about, but as
+> we already discussed during the reivew of the first iteration, I am
+> not sure if the goal is sound in the first place.
+> 
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
-     branch: allow "-" as a short-hand for "previous branch"
+Sorry, I don't want to be annoying, I just think the effort is worth of it.
 
-     Align "branch -d" with the intuitive use of "-" as a short-hand for
-     "@{-1}", like in "checkout", "rebase" and "merge" commands.
+The change rounds the workflow: "checkout/merge/branch -d" and does not 
+introduce any new confusion or new circumstance. The commands that 
+already support the substitution doesn't support it in all combinations, 
+complex use cases can (probably, should) use the @{-1} syntax and 
+definitely those uses are not the candidates to use the short-hands.
 
-     $ git branch -d - # short-hand for: "git branch -d @{-1}" $ git branch
-     -D - # short-hand for: "git branch -D @{-1}"
+> Thanks.
+> 
 
-     So I can do:
+Thank you.
 
-     $ git checkout work_to_review $ git checkout - $ git merge - # or git
-     rebase - $ git branch -d -
-
-     Signed-off-by: Rubén Justo rjusto@gmail.com
-
-Published-As: 
-https://github.com/gitgitgadget/git/releases/tag/pr-1315%2Frjusto%2Fmaster-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git 
-pr-1315/rjusto/master-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1315
-
-Range-diff vs v2:
-
-  1:  0fe48ada15b ! 1:  cc28546aea9 allow "-" as short-hand for "@{-1}" 
-in "branch -d"
-      @@
-        ## Metadata ##
-      -Author: rjusto <rjusto@gmail.com>
-      +Author: Rubén Justo <rjusto@gmail.com>
-
-        ## Commit message ##
-      -    allow "-" as short-hand for "@{-1}" in "branch -d"
-      +    branch: allow "-" as short-hand for "@{-1}" in "branch -d"
-
-           Align "branch -d" with the intuitive use of "-" as a short-hand
-           for "@{-1}", like in "checkout", "rebase" and "merge" commands.
-      @@ Commit message
-           $ git merge - # or git rebase -
-           $ git branch -d -
-
-      -    Signed-off-by: rjusto <rjusto@gmail.com>
-      +    Signed-off-by: Rubén Justo <rjusto@gmail.com>
-
-        ## builtin/branch.c ##
-       @@ builtin/branch.c: static int delete_branches(int argc, const 
-char **argv, int force, int kinds,
-
-
-  builtin/branch.c | 3 +++
-  1 file changed, 3 insertions(+)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 55cd9a6e998..7f7589bd4a8 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -241,6 +241,9 @@ static int delete_branches(int argc, const char 
-**argv, int force, int kinds,
-  			die(_("Couldn't look up commit object for HEAD"));
-  	}
-
-+	if ((argc == 1) && !strcmp(argv[0], "-"))
-+		argv[0] = "@{-1}";
-+
-  	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
-  		char *target = NULL;
-  		int flags = 0;
-
-base-commit: 679aad9e82d0dfd8ef3d1f98fa4629665496cec9
--- 
-2.36.1
+Rubén.
