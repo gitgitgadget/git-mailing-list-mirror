@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80648C25B0E
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 23:58:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 432A5C25B0E
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 23:58:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237835AbiHPX6X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 19:58:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49342 "EHLO
+        id S237847AbiHPX6Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 19:58:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237811AbiHPX6Q (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237807AbiHPX6Q (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 16 Aug 2022 19:58:16 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA6E13DF31
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5446533406
         for <git@vger.kernel.org>; Tue, 16 Aug 2022 16:58:15 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id v3so14434573wrp.0
+Received: by mail-wm1-x32f.google.com with SMTP id m3-20020a05600c3b0300b003a5e0557150so1285742wms.0
         for <git@vger.kernel.org>; Tue, 16 Aug 2022 16:58:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=zYjewUCZigt4BLK5UfZbPXOdu2JYJk63IMi8RktRvQI=;
-        b=SG2Mwj/Cm5NMzjxPZ3u0ZHPYYTGwCEBuu8fZ1flD1aR6pu2U+KVi8CPx/mBjiFtfn/
-         ev7gRy6RuOlsChFa9aZg57R1KkfuRGpj3W5km+I2bFgLMD1tb8vBIbcXfOOsUeJAL0pk
-         sN/FtYIT3oc0P6TSgQpnM8Irmo1f1+qiOyyfUe8dkY1hFZlUFuGYtKZJU3Zp8MXptHJW
-         zbsUwyIpTmxLENMZhQhbLqIrVmvUpyELvq5dGGFmGWJclWnAI7hL2WtRo340FeCx+eyr
-         XV+Tq+62Tv3xE2Pbpu2gilkAoh3kmiVIvGmrwVXvSjTUKn6ncDPatJnbQSFE1DHP/sxB
-         3v2g==
+        bh=T51m18gM6jdCdci0G4hYfyGQ72rqihxSl/VeB8wRe4k=;
+        b=qKAjf++NAMFIMSFX+C5VEAkBGet9yB6k8VrSc8Je5nAXxYrhJe9ooHJ0jO+AI00gMw
+         /jB1pbZ0U4jpBG+jzPAsauRKTSfwbsQmtpBVEXCITTqTDkOvYOZJpMIxBFtDwHOYMW0x
+         efjhkPkXVlwJ4nMTw0DIkeMEa15rdH0/CVtis2g4UtHMzhNKZODW20LCDAcT9vPTOp1h
+         bU0l2BoRY8sIcdmrVCj0SbgOYeVo574fZYoVOdluV6ML4OHO/PYCsnb+c2k3eoEpd8p1
+         twh9PJq8Cw7hRAm6gl/+BVYGN4Y/GCN5I868dl4YgHHoN6DPbNOoU9wrYb4Yjk5OofsK
+         ebZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=zYjewUCZigt4BLK5UfZbPXOdu2JYJk63IMi8RktRvQI=;
-        b=6Pad13DelY1mU+l8kYfjnY7lNywKVKGLzBKJuDYm56sT5aBrTHl8v5Ysa4ecT6V9lh
-         JGKD1Zk5IDVN6tgE+Mos/x0VtR3l5LJTpzQQrRXcAI7jdowzYkNnCUjMms5rOuxSsG3K
-         qPhWL6QzmhRpC7VmnreXEQu71wqB+bAakunHQsLQl207NsOUW+W4bamGzhJiTjDVEeZb
-         qRziGU2M1+lzhQ0ovRx5OHu4nYA2H3UFa9vLzS2ThSKoV74dQBvC4KWgvgPY1JrCuLl9
-         mDyR0ORp6iHGomNCugHoIQg2mgpW0yEBmFMhpp3qbqHMGouufuCLuHeqA9NGK4HJHJdJ
-         VDRw==
-X-Gm-Message-State: ACgBeo2Va9R1D7KPn/9k41N6VyePQSGsNQFf/IkxHsFpN+8iYwP0LLlz
-        Fv5ngTmqk0OHVsvR9fdnJJ4/nOvz3sw=
-X-Google-Smtp-Source: AA6agR5iJ7qoE8iTj5RLrRXeJcDGHHWkpp5RAHdnXg6BQsvHnYJn0rHoDgni1bgFg4HH7TU6cB2BkQ==
-X-Received: by 2002:a05:6000:a1b:b0:220:6d98:e97e with SMTP id co27-20020a0560000a1b00b002206d98e97emr13270044wrb.211.1660694295169;
-        Tue, 16 Aug 2022 16:58:15 -0700 (PDT)
+        bh=T51m18gM6jdCdci0G4hYfyGQ72rqihxSl/VeB8wRe4k=;
+        b=tqN0F+bGh985Nlzzv8f+ZSgj1GCdg2gUowd4VuS05B1rrLAw0gYW0GdnbSLv2X3hbc
+         r3wnKDCh4KbqHvyfRPNgK7MlYjOLTQQ9k28m/tEkQMvummfSGRu1EBDof3QOLKhYw/NG
+         9TAzatXJSxwVrqAEjGihE6fKr9HQeA3/DolLWWP9DYSDIn5JN4w/5HxacSiR5Tpf+9Qo
+         F3EJDIhyEv99vN596FdOXWoq+nIbK5tlzByxS4+oY5TZgIrJILjgN8KhFijnXdIskjqA
+         OtKAmPvay+VAxgZucm4abBc7P0vS9DKQEvSQSW5pV73oMHkTHk3ZeZhFoMhZwOfi3VMa
+         BsrQ==
+X-Gm-Message-State: ACgBeo1ZH86dAQygVwleXlncCMPkrzSU96Xl6HVAdC8d4UmyGaE25Xr1
+        mTQ0SuYoV7GnWv0b9bm6XMCwCGLbI/Q=
+X-Google-Smtp-Source: AA6agR4KqjILX9iohuga8+FaubMfUOoaOPnCRshP7x7ngiPuBIXAkMRBGXC3faFfID4M8J8aPynQpg==
+X-Received: by 2002:a7b:c38e:0:b0:3a5:c383:c68 with SMTP id s14-20020a7bc38e000000b003a5c3830c68mr428130wmj.163.1660694293527;
+        Tue, 16 Aug 2022 16:58:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bk12-20020a0560001d8c00b0021f0ff1bc6csm10938851wrb.41.2022.08.16.16.58.14
+        by smtp.gmail.com with ESMTPSA id c3-20020adffb03000000b002206236ab3dsm11342955wrr.3.2022.08.16.16.58.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Aug 2022 16:58:14 -0700 (PDT)
-Message-Id: <dd59caa2e5aa7e76e75320e0a5d77ae5a408224a.1660694290.git.gitgitgadget@gmail.com>
+        Tue, 16 Aug 2022 16:58:13 -0700 (PDT)
+Message-Id: <5fdf8337972d7092aba06a9c750f42cd5868e630.1660694290.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1324.v2.git.1660694290.gitgitgadget@gmail.com>
 References: <pull.1324.git.1660673269.gitgitgadget@gmail.com>
         <pull.1324.v2.git.1660694290.gitgitgadget@gmail.com>
-From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 16 Aug 2022 23:58:09 +0000
-Subject: [PATCH v2 5/5] scalar: update technical doc roadmap with FSMonitor
- support
+From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 16 Aug 2022 23:58:07 +0000
+Subject: [PATCH v2 3/5] scalar: enable built-in FSMonitor on `register`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -62,63 +61,109 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     johannes.schindelin@gmx.de, mjcheetham@outlook.com,
         gitster@pobox.com, Victoria Dye <vdye@github.com>,
-        Victoria Dye <vdye@github.com>
+        Matthew John Cheetham <mjcheetham@outlook.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Victoria Dye <vdye@github.com>
+From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Update the Scalar roadmap to reflect completion of enabling the built-in
-FSMonitor in Scalar.
+Using the built-in FSMonitor makes many common commands quite a bit
+faster. So let's teach the `scalar register` command to enable the
+built-in FSMonitor and kick-start the fsmonitor--daemon process (for
+convenience).
 
-Note that implementation of 'scalar help' was moved to the final set of
-changes to move Scalar out of 'contrib/'. This is due to a dependency on
-changes to 'git help', as all changes to the main Git tree *exclusively*
-implemented to support Scalar are part of that series.
+For simplicity, we only support the built-in FSMonitor (and no external
+file system monitor such as e.g. Watchman).
 
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- Documentation/technical/scalar.txt | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ contrib/scalar/scalar.c          | 21 +++++++++++++++++++++
+ contrib/scalar/t/t9099-scalar.sh | 11 +++++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/Documentation/technical/scalar.txt b/Documentation/technical/scalar.txt
-index 08bc09c225a..047390e46eb 100644
---- a/Documentation/technical/scalar.txt
-+++ b/Documentation/technical/scalar.txt
-@@ -84,13 +84,13 @@ series have been accepted:
+diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+index 6025cd71604..28d915ec006 100644
+--- a/contrib/scalar/scalar.c
++++ b/contrib/scalar/scalar.c
+@@ -7,6 +7,8 @@
+ #include "parse-options.h"
+ #include "config.h"
+ #include "run-command.h"
++#include "simple-ipc.h"
++#include "fsmonitor-ipc.h"
+ #include "refs.h"
+ #include "dir.h"
+ #include "packfile.h"
+@@ -169,6 +171,12 @@ static int set_recommended_config(int reconfigure)
+ 		{ "core.autoCRLF", "false" },
+ 		{ "core.safeCRLF", "false" },
+ 		{ "fetch.showForcedUpdates", "false" },
++#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
++		/*
++		 * Enable the built-in FSMonitor on supported platforms.
++		 */
++		{ "core.fsmonitor", "true" },
++#endif
+ 		{ NULL, NULL },
+ 	};
+ 	int i;
+@@ -236,6 +244,16 @@ static int add_or_remove_enlistment(int add)
+ 		       "scalar.repo", the_repository->worktree, NULL);
+ }
  
- - `scalar-diagnose`: The `scalar` command is taught the `diagnose` subcommand.
- 
-+- 'scalar-add-fsmonitor: Enable the built-in FSMonitor in Scalar
-+  enlistments. At the end of this series, Scalar should be feature-complete
-+  from the perspective of a user.
++static int start_fsmonitor_daemon(void)
++{
++	assert(fsmonitor_ipc__is_supported());
 +
- Roughly speaking (and subject to change), the following series are needed to
- "finish" this initial version of Scalar:
++	if (fsmonitor_ipc__get_state() != IPC_STATE__LISTENING)
++		return run_git("fsmonitor--daemon", "start", NULL);
++
++	return 0;
++}
++
+ static int register_dir(void)
+ {
+ 	if (add_or_remove_enlistment(1))
+@@ -247,6 +265,9 @@ static int register_dir(void)
+ 	if (toggle_maintenance(1))
+ 		return error(_("could not turn on maintenance"));
  
--- Finish Scalar features: Enable the built-in FSMonitor in Scalar enlistments
--  and implement `scalar help`. At the end of this series, Scalar should be
--  feature-complete from the perspective of a user.
--
- - Generalize features not specific to Scalar: In the spirit of making Scalar
-   configure only what is needed for large repo performance, move common
-   utilities into other parts of Git. Some of this will be internal-only, but one
-@@ -98,9 +98,12 @@ Roughly speaking (and subject to change), the following series are needed to
-   repository.
++	if (fsmonitor_ipc__is_supported() && start_fsmonitor_daemon())
++		return error(_("could not start the FSMonitor daemon"));
++
+ 	return 0;
+ }
  
- - Move Scalar to toplevel: Move Scalar out of `contrib/` and into the root of
--  `git`, including updates to build and install it with the rest of Git. This
--  change will incorporate Scalar into the Git CI and test framework, as well as
--  expand regression and performance testing to ensure the tool is stable.
-+  `git`. This includes a variety of related updates, including:
-+    - building & installing Scalar in the Git root-level 'make [install]'.
-+    - builing & testing Scalar as part of CI.
-+    - moving and expanding test coverage of Scalar (including perf tests).
-+    - implementing 'scalar help'/'git help scalar' to display scalar
-+      documentation.
+diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
+index 10b1172a8aa..526f64d001c 100755
+--- a/contrib/scalar/t/t9099-scalar.sh
++++ b/contrib/scalar/t/t9099-scalar.sh
+@@ -13,10 +13,21 @@ PATH=$PWD/..:$PATH
+ GIT_TEST_MAINT_SCHEDULER="crontab:test-tool crontab ../cron.txt,launchctl:true,schtasks:true"
+ export GIT_TEST_MAINT_SCHEDULER
  
- Finally, there are two additional patch series that exist in Microsoft's fork of
- Git, but there is no current plan to upstream them. There are some interesting
++test_lazy_prereq BUILTIN_FSMONITOR '
++	git version --build-options | grep -q "feature:.*fsmonitor--daemon"
++'
++
+ test_expect_success 'scalar shows a usage' '
+ 	test_expect_code 129 scalar -h
+ '
+ 
++test_expect_success BUILTIN_FSMONITOR 'scalar register starts fsmon daemon' '
++	git init test/src &&
++	test_must_fail git -C test/src fsmonitor--daemon status &&
++	scalar register test/src &&
++	git -C test/src fsmonitor--daemon status
++'
++
+ test_expect_success 'scalar unregister' '
+ 	git init vanish/src &&
+ 	scalar register vanish/src &&
 -- 
 gitgitgadget
+
