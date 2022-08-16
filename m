@@ -2,123 +2,257 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB580C25B0E
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 11:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8126DC2BB41
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 11:48:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234731AbiHPLh1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 07:37:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47808 "EHLO
+        id S234530AbiHPLsc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 07:48:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234748AbiHPLhN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 07:37:13 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D4F24DB78
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 04:03:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660647758;
-        bh=3RsiTNhmquDY3V2rlFROTBkEh2xkfkomFudK2BytWGA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Mm2fgpekZ+Xs8jkVEsqxRJJ8eTfiWEpC1iOYbQdsrjYC5n7+T/Q6sC2W+MgvI+wgV
-         5l0R26wOZ/wUotY3oha5+XKFYKuuSNv+R51HcECNhJivzKqHpWCNxFvMhJpsP9t9v1
-         IKShPC8lLnQNn2rHNKvaeMhKYCcyIWjNMtl75Js8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAOJP-1oC2eD2ATD-00BrBk; Tue, 16
- Aug 2022 13:02:38 +0200
-Date:   Tue, 16 Aug 2022 13:02:38 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     phillip.wood@dunelm.org.uk
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael J Gruber <git@grubix.eu>, git@vger.kernel.org
-Subject: Re: [RFC/PATCH] sequencer: do not translate reflog messages
-In-Reply-To: <870072d5-d220-09e7-684b-f9d7d8d59c93@gmail.com>
-Message-ID: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr>
-References: <b8ab40b2b0e3e5d762b414329ad2f4552f935d28.1660318162.git.git@grubix.eu> <333bbaa9-d484-7c20-90d6-e64edf8a8248@gmail.com> <xmqqy1vt9ora.fsf@gitster.g> <92sr80s2-6311-p065-755s-61s28s543q6n@tzk.qr> <870072d5-d220-09e7-684b-f9d7d8d59c93@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:KVjS/0vdbq2F1XR/twR2P+rojJP3Kfc3ZesSiNBVOR7OV6eUeP3
- aDyFkZGp8yfFP37pi03bEZrL6jKc+qGqDJnvwbqH8OUPRek5hMCOndhRqmkoOE5V0wVofdW
- BQAsRpjIXqgUTV2yubrL/1cZVHgyyZZFi+HjERGc1cGdVXBh5kXizR2iEFo7BxVWouWnW/D
- IxHm4t1qHtrEAhZNjiPsw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:LSiFflnz5Uk=:Qp3aCffF/0UtMIQTXYSfW+
- ThSwzND7COZ0K9V9Nj5jLcPSo6C9OevImanLusEEyzGw6QyFv03jDPB46jSGADVq6xMFeuAvC
- SV8AfdU5rhHdrduO9HtpMFIh7bdEnhohJxAy+I1odeqyEnhhrjbOoKQp+867JJwgKqCDfg3PP
- p+XtthFgCuC09C4bP+bh2JXXtFkNsnhvhBnknU/bW4dMgDRe+LE9ve4BFnhidlUysVRWGeH7U
- yl8cnh2tINlZVjMXM/27gMNw2BDRJNybw6THLBkEIC0cnLNKKfrjq1R7R8xu4KPVXoNjzh+Fa
- j4Xgsn7YmXjH9LNk0IYafq1lXor8n0Zh+YJDlIc+hxoS3Y0llsbPIOsviAO6rLKERmopAcezs
- GKiqXqaN8RvGvN8A4/thbpRLIqcnxBD73ysNqjacdYuNTRHJMNvTJ/OorNPmhSRNlfI4Mq5Tw
- zsuoa3dolaGYpSG+W/Jnh7JOS506Ay8ebpizQeO9Dg2mz4Bqo5EnLEHBWM0GtP2r7/c8RFXjh
- dFd3ss+PpVIRuGmxpPf0w2oh3cioFRwyqAbDkZ3sNSu7BjAvEFiC/s2D3rWVc1zJBkUqXH6d6
- X+OumNdmbk7i2MFzwydRiCCxr8kPCWCexGAmMDiGsffIHwT9EUJ5kvZOZ53TVd2XOQbn4ElOE
- HG1VjlOd7wIMt+OqNHwrk9g47urxQOATCOc6MT3wZkpkELpYCi6MOToFqbGFXPzBWaqewt3ZY
- tMhayWl3FD1Ufyr9moafkwe9wyCmJZisRfId1X+LQ2VpVSgha7oiylVLPbmeyoX19tYykfM7M
- XzQmVBcbVxGI1ZBBFmeZfkzk3smZE/gKnavt8aqboP+x2TOKxbiUn0fHa/JIULlEboPu//+JX
- n59ArLZ7Z0PyrCDJrT9OFjif6einpzY6KTUEvJT3lNJj2uH8Z9PUT4sYq6ml0tRXgvquoy4HG
- 2cuOHsCXGZjhewHN+voII8RF2xbHjBd22iKDpdDj0ejW6US0s7l8TiPWxhYTNhTTz23jjfk7d
- K8ZWxMUDCb/inoQczYHv7B4NL5jpbLHAbYjhbcLNfnhooRopAekKzEkh1gkGhji25zIlxkJ7R
- p8fdk3u+QPYFZPGhPpucsLGJSMBO1QBI16hL48jESsGFddyNHNC5cVdmQ==
+        with ESMTP id S233504AbiHPLsD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 07:48:03 -0400
+Received: from mail-m972.mail.163.com (mail-m972.mail.163.com [123.126.97.2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7F3792DABF
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 04:22:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Mime-Version:Subject:From:Date:Message-Id; bh=IXuCD
+        TxJXrOX/pzCXkFokgpLqkY66vfMS/8nJ8Lklao=; b=Eg05BlCGvkhs90mevx41i
+        MgENuHibyO6AGm1PUOhvWDWpj8bVG4x8o1HpQLbRW8lAtQMZRutFIz19h/TOqqmQ
+        lp6V4qfv53rjODb9pVfUdd/5lrhtePJWGpsINt272wO6mN36HmmmRs/7tEMRJRpO
+        icVJ1ncArIIaD2LqHH97io=
+Received: from smtpclient.apple (unknown [122.9.237.141])
+        by smtp2 (Coremail) with SMTP id GtxpCgBXBdvcfftiHpMJWA--.14607S3;
+        Tue, 16 Aug 2022 19:22:06 +0800 (CST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [PATCH v4 1/3] hide-refs: add hook to force hide refs
+From:   =?utf-8?B?5a2Z6LaF?= <16657101987@163.com>
+In-Reply-To: <xmqqa6851ic9.fsf@gitster.g>
+Date:   Tue, 16 Aug 2022 19:22:03 +0800
+Cc:     Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>, Sun Chao <sunchao9@huawei.com>
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <AB93B5DC-7F78-4A55-BBA4-7CB10CAAFEF3@163.com>
+References: <pull.1301.v3.git.git.1660575384.gitgitgadget@gmail.com>
+ <pull.1301.v4.git.git.1660575688.gitgitgadget@gmail.com>
+ <01c63ea5feefd57721bdcab9f0a30d9c0112e753.1660575688.git.gitgitgadget@gmail.com>
+ <xmqqa6851ic9.fsf@gitster.g>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
+X-CM-TRANSID: GtxpCgBXBdvcfftiHpMJWA--.14607S3
+X-Coremail-Antispam: 1Uf129KBjvJXoW3AFW3Cw4DWw4kXw4xGr17Jrb_yoWxGFW8pF
+        WFkrZFyFsrJFyIyFnrZr1xZa48Zws5XFW3JrZag345AayYgFWxtFySgrWY9a47Cr4vga1j
+        9rWUX3s5Ga4DZFJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jeFAJUUUUU=
+X-Originating-IP: [122.9.237.141]
+X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiPhJfglxBtsQmCAABsx
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
 
-On Tue, 16 Aug 2022, Phillip Wood wrote:
+> On Aug 16, 2022, at 00:02, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Not "right now".
+>=20
+> Instead of flooding the list with repeated "oops that was wrong"
+> updates, it may be more effective use of others' time to wait for
+> more feedback before acting on them, and to take time to proofread
+> the result of your updates before sending them out.
+>=20
+> Thanks.
 
-> On 15/08/2022 21:20, Johannes Schindelin wrote:
->
-> > On Fri, 12 Aug 2022, Junio C Hamano wrote:
-> >
-> > > Phillip Wood <phillip.wood123@gmail.com> writes:
-> > >
-> > > > Removing the N_() stops these strings from being extracted for
-> > > > translation, but there are several callers left that are still usi=
-ng
-> > > > _() to get the (now non-existent) translated string. I only had a
-> > > > quick look but I think we should remove the _() from all the calle=
-rs
-> > > > of action_name().
-> > >
-> > > Thanks, that's all correct.
-> >
-> > I am afraid that it is not.
-> >
-> > In https://github.com/git/git/blob/v2.37.2/sequencer.c#L502-L503, for
-> > example, we use the value returned by `action_name()` in a translated
-> > message:
-> >
-> >  error(_("your local changes would be overwritten by %s."),
-> >   _(action_name(opts)));
->
-> Isn't this message using action_name() to get the name of the command th=
-at the
-> user ran? As that name is not localized when the user runs the command I=
- don't
-> see that we should be translating it (and playing sentence lego with the
-> result) in this message. I think the same applies to the message at line=
- 689
-> that you mention below.
+Got it, I'll take more time in reviewing my patch updates in the future.
 
-I do not believe that this error message talks about the command,
-otherwise it would use "`git %s`" instead of "%s" here. Imagine, for a
-second, that Git was written in French and you preferred to read your
-error messages in English, therefore set your locale, and you just issued
-a `git retour`, would this error message read well for you?
+> On Aug 16, 2022, at 02:18, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> If the prefix is a sign to let the external process to tell if it is
+> to be hidden or shown, it does not sound like "force" at all, at
+> least to me ("force" sounds more like "no matter what other things
+> may want to show it, these are hidden").
 
-	error: your local changes would be overwritten by retour.
+I=E2=80=99ve read the codes about refs hidden and I had 3 ideas in mind, =
+but I
+didn't know which is better: 1) create a new config item (like =
+transfer.forceHideRefsByHook),
+2) call `hide-refs` hook directly to check all refs if it exists, 3) add =
+a new prefix option
+to `transfer.hiderefs` to call the new hook.
 
-That looks wrong to me. I could see us changing this to:
+I choose the third one but it is indeed hard to understand and the =
+`force`
+is not appropriate.
 
-	error: your local changes would be overwritten by `git retour`.
+> Are there places where only ref_is_hidden() is called, or do
+> codepaths that used to care ref_is_hidden() now all have to write
+> the above (A || B) conditional?  I am wondering why the new
+> "force-hidden" check is not part of ref_is_hidden() so that the
+> callers do not have to care.
+>=20
+>> @@ -1794,7 +1794,8 @@ static void reject_updates_to_hidden(struct =
+command *commands)
+>> 		strbuf_setlen(&refname_full, prefix_len);
+>> 		strbuf_addstr(&refname_full, cmd->ref_name);
+>>=20
+>> -		if (!ref_is_hidden(cmd->ref_name, refname_full.buf))
+>> +		if (!ref_is_hidden(cmd->ref_name, refname_full.buf) &&
+>> +			!ref_is_force_hidden(cmd->ref_name, =
+refname_full.buf))
+>=20
+> Likewise.
 
-or to:
+In `mark_our_ref` I call ref_is_force_hidden() and ref_is_hidden() =
+separately for a ref, and put
+a new `HIDDEN_REF_FORCE` bit to the object flags if the ref is force =
+hidden, then in `has_unreachable`
+function the objects with this flag bit will be considered as 'not =
+ancestors of our ref=E2=80=99. And
+I do not want to change the original mechanism of ref_is_hidden(), this =
+is why I add a new object
+flag bit `HIDDEN_REF_FORCE`.
 
-	error: your local changes would be overwritten by revert.
+> It used to be that send_ref() did not touch the object flag bits.
+> It just said "if it is hidden, or if it is outside the namespace, do
+> not show and return" before telling the other side about the ref,
+> and even the ref we send to the other side, we did not muck with
+> flag bits with OUR_REF bit (and we didn't touch HIDDEN_REF bit,
+> either).
+>=20
+> Now we do.  How can it be determined if this change is correct and
+> safe?
 
-i.e. either use "`git %s`" without translating, or keeping "%s" with the
-translated `action_name()`. But it would probably read better to have the
-action name localized (which is what I suggested).
+I=E2=80=99m not very confident about the changes either so I have added =
+some test cases for
+upload-pack V1 and V2, but I think I need add more test cases for other =
+commands after
+considering your comment here.
 
-Ciao,
-Dscho
+>=20
+> If the ref is not hidden (either in the traditional sense, or with
+> the new "force" sense), we do not return 0.  What if it is outside
+> the namespace so we returned without sending it to the other side?
+> The original code didn't touch the flags bit, but now we mark the
+> object with OUR_REF bit even though we ended up not sending the ref
+> to the other side.  Is that an intended change?
+
+Yes, this is a intended change here.
+
+If I understand correctly, command `ls-refs` is called during protocol =
+V2, I mark the object
+flags here and use them when responding to command `fetch`, and I call =
+`check_non_tip()`
+before send the `want` data to the client which will check the force =
+hidden objects.
+
+>> +		if ((len >=3D forcelen) && !strncmp(value, "force:", =
+forcelen)) {
+>=20
+> skip_prefix() would probably be a good API function to learn here, =
+perhaps?
+>=20
+
+Will fix it.
+
+>=20
+>> +static struct child_process *hide_refs_proc;
+>> +static struct packet_reader *hide_refs_reader;
+>> +static void create_hide_refs_process(void) {
+>=20
+> Style.  The braces around a function block occupy their own line by
+> themselves.
+>=20
+Will fix it. And I will read the style document again before update the =
+patches.
+
+>=20
+> No need for braces around a single statement block.
+>=20
+Will fix it.
+
+> Is that a condition worth dying, indicating a misconfiguration by
+> the user?  Or would it make more sense to treat as if the process
+> says no refs are hidden (or all refs are hidden)?
+
+Thanks for your question here, I will think about it later. Just like =
+`pre-receive` hook,
+git server will skip it if it does not exists. I think we should not die =
+here.
+
+>=20
+> I do not think we spell "cannot" as "can not" in our messages.
+
+Will fix it.
+
+>=20
+>> +	proc =3D (struct child_process *) xcalloc (1, sizeof (struct =
+child_process));
+>> +	reader =3D (struct packet_reader *) xcalloc (1, sizeof(struct =
+packet_reader));
+>=20
+> Style.  No SP after xcalloc, or sizeof.
+
+Will fix it.
+
+>> +	code =3D start_command(proc);
+>> +	if (code)
+>> +		die("can not run hook hide-refs");
+>=20
+> Unusually named variable.  I think "code" here is a variable
+> normally called "status" (or "ret" if it eventually becomes the
+> return value from this function).  Shouldn't this function return an
+> error and have it handled by its caller, by the way, instead of
+> returning void and making liberal calls to die()?
+
+Will do.
+
+>=20
+>> +	code =3D packet_write_fmt_gently(proc->in, "version=3D1%c%s", =
+'\0', hide_refs_section.buf);
+>> +	if (!code)
+>> +		code =3D packet_flush_gently(proc->in);
+>=20
+> In general, it is a bad pattern to hide mainline "good case"
+> processing inside "if (previous steps all went fine)" conditionals,
+> as it makes the code unnecessarily hard to follow.
+>=20
+> Instead, we typically write more like this:
+>=20
+> -- >8 -- cut here -- >8 --
+>=20
+> 	int ret =3D -1; /* assume failure */
+>=20
+>        if (packet_write_fmt_gently(...))
+> 		goto error_exit;
+>=20
+> 	for (;;) {
+> 		... interact with the other side ...
+> 		if (error)
+> 			goto error_exit;
+> 	}
+>=20
+> 	... continue with mainline "good case" processing ...
+>=20
+> 	... after all went well ...
+> 	ret =3D 0;
+>=20
+> error_exit:
+> 	if (ret < 0) {
+> 		... emit error message ...
+> 		... clean-up specific to error case if necessary
+> 	}
+> 	... clean-up as needed ...
+>=20
+> 	return ret;
+>=20
+> -- 8< -- cut here -- 8< --
+>=20
+> I am not reviewing the rest of the patch in this sitting---I may
+> later come back to continue reading it, but I'll stop here and send
+> out comments on what I have seen first.
+>=20
+> Thanks.
+>=20
+
+Thanks a lot, I Will do it.
+
