@@ -2,129 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D14C4C2BB41
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 13:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE3C7C25B0E
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 14:02:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233461AbiHPNxR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 09:53:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55032 "EHLO
+        id S235676AbiHPOC1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 10:02:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230126AbiHPNxM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 09:53:12 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72EB746213
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 06:53:10 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id n7so1516063wrv.4
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 06:53:10 -0700 (PDT)
+        with ESMTP id S235616AbiHPOCZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 10:02:25 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51A497F0B0
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 07:02:24 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id bd26-20020a05600c1f1a00b003a5e82a6474so3775932wmb.4
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 07:02:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc;
-        bh=HTWjy5bzu8hhI19T8p4cd9sqj1uWmUkcsE+BJpk5Lx0=;
-        b=Eb7Gc12H2GbaOe4NNTlYX2gn2HjD0fXOjapIrEl/qirzAgGmrfLGYvIokB1AYJw7mn
-         uA1o2Mmxfu/KxUCSUDxwcKQnZxNBa48/ofg+/v6bgnLKbLgpDkRlSezU1ZgzRxRrV38C
-         1mynk0/TLEwcbJ5RUFtVqpFrmvgNsgFEu9KZ1dfc6hzaQPTDOa6PTZUipFEtw+ooQc8N
-         tp/LLUO/tX/xohLgDr131qA3SAorNN9LjUtJ07opg6l+wve6/gv/ZLyKqPCxXH7xugxM
-         L3QRWXYq6iWUILPyEGwY/wmYJztBNRH7bQ5J3dg3tjgJA7SFzHL0+aBXASQCfajsGX7Q
-         3iSA==
+        bh=pyn7pyOKlrhzv0hcVWzvp4w2Q02pasK9rLBVW5xpAUc=;
+        b=Lu/JqpRBrOfxhZmKsK0l/HyfvMp629X6QbFO4n4QHwRfBtuPMaSWNmW1Dzt8ziGcs+
+         VRUZQbcHvRmQz1QNCyITGXx5xEApo0Bie2l5GUckopdUW9rV1+28SUPOWB8P9fO1yVvm
+         D8RX1p4Ul+pHiMhuisp80/kfAFFcoIHtAqy6BSgPo23cnGKmLX80K04+s4c37Za/sr71
+         2hg8JB4VdTdt9/gFwPTlj+tZJsLNvhMADi/ddEHJssUCarqCKceRh958BnJlPtudrjXU
+         SDG9R4q3YtUf73820ie043qHclMVTFUW0vkRIDt2s1OcXHtEilircSfL2Kmg5L2APrKX
+         0bFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc;
-        bh=HTWjy5bzu8hhI19T8p4cd9sqj1uWmUkcsE+BJpk5Lx0=;
-        b=YeuKE5zk0Ybt4nHntNVTOa59lOA3O0e9jaBLbi+Ieq4FDrMDiHjf8sHfzYlNdCWQeM
-         qeG7NJriyhwdT9B+5D99etlpsjV7N8PrdkEb6Ejr4E42kBZ23p7wsiImFMwDqKVhv0Kb
-         Lc253Nx1REzftHjSy3FxwXEiuhGmTQZkGSvIs9HVOkQvSlV7hRwkWGa6mGPlfDCj2Cs9
-         4Vv0JmhYInyOJa0sXAPRk9FmHbBluXZvEvcv0ZQ6LA6xVgmAAWJj4zN1Olxy7C/p1yej
-         lD6ATtD0q7oqg0bhh+Q+x6KayEQMdYjpoBYjkVvNITlrMrS03Mg1KT+o9GWHaEaaT1vO
-         XFdw==
-X-Gm-Message-State: ACgBeo2fVMzwYRE3L4umpEALynnZJLARakyoRKAq3CeCoRFtzIAing20
-        TrJ2W76OBe+Bvl6o/HIWJjg=
-X-Google-Smtp-Source: AA6agR42B7npEJPzgIn8a+ySvPNfMvuje9SLKhuAZZNQCATHzC4LOuwHBC6qpzm43PvrEp899ofK3g==
-X-Received: by 2002:a5d:6f18:0:b0:225:2032:fca with SMTP id ay24-20020a5d6f18000000b0022520320fcamr440801wrb.182.1660657988997;
-        Tue, 16 Aug 2022 06:53:08 -0700 (PDT)
+        bh=pyn7pyOKlrhzv0hcVWzvp4w2Q02pasK9rLBVW5xpAUc=;
+        b=MOGnD/y2xUo2TyAIBrsEcJ94RKVqslGN7Ow6deeEj53fwMhaBDnI2E5cA7Ja4wmwIT
+         BWqrEBk/wuphzD97oMj95QRDoAkDdGXa0D7anHAT2nzBzYjfwVSDzjO4OZTF3+uabV+x
+         hN3LsyWU8A7gEb/13P6tasyQq+IApc1gGvlqCPIpVFgUm+TwfK/foKObMq0X8DWbJ6qH
+         o5pn3gwoLt9Ispb7kNPFspOZMI+8nL1O1+Q5LO9cPwsTOP86SW+dhpoBccRAyVM0AsHZ
+         9tHZCMBDCYOaUK5clwZzwt9Jhy0bMcHEpgwieUny0u9oJivp81S5cZEoNKjWDzxchXzH
+         nuRg==
+X-Gm-Message-State: ACgBeo3C+nrwkqSScVEHaBo6uTA4Bb7G1G5+l4Z2rXPd8lMNRLBmXocq
+        Uu+pyAvwQ5i2PfMz9J7wJNg=
+X-Google-Smtp-Source: AA6agR4lIbd3fyEsS4Da96FCOhjkO7/VwNNRNFtWwU8GJ1ZW3DXKX8dU1kQSM1g4XsWHe0q/4ci7Kw==
+X-Received: by 2002:a05:600c:b57:b0:3a5:3c06:f287 with SMTP id k23-20020a05600c0b5700b003a53c06f287mr19004534wmr.148.1660658542652;
+        Tue, 16 Aug 2022 07:02:22 -0700 (PDT)
 Received: from [192.168.1.240] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id bh13-20020a05600c3d0d00b003a550be861bsm13305911wmb.27.2022.08.16.06.53.08
+        by smtp.gmail.com with ESMTPSA id y2-20020adfe6c2000000b002207cec45cesm12893196wrm.81.2022.08.16.07.02.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Aug 2022 06:53:08 -0700 (PDT)
-Message-ID: <eab55cef-62bd-af2b-c295-1e76beca032f@gmail.com>
-Date:   Tue, 16 Aug 2022 14:53:07 +0100
+        Tue, 16 Aug 2022 07:02:22 -0700 (PDT)
+Message-ID: <ae2a2c1c-e592-16d4-aa50-a89cc7a2d31c@gmail.com>
+Date:   Tue, 16 Aug 2022 15:02:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/5] t3416: set $EDITOR in subshell
+Subject: Re: [PATCH v8 08/14] merge-resolve: rewrite in C
 Content-Language: en-GB-large
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1323.git.1660576283.gitgitgadget@gmail.com>
- <c1d91a2b190c6ea4550e33260a48a51cd0653a21.1660576283.git.gitgitgadget@gmail.com>
- <xmqqo7wl30tt.fsf@gitster.g>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk
+Cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+References: <20210317204939.17890-1-alban.gruin@gmail.com>
+ <20220809185429.20098-1-alban.gruin@gmail.com>
+ <20220809185429.20098-9-alban.gruin@gmail.com>
+ <08ea1eec-58fb-cbfa-d405-0d4159c99515@gmail.com>
+ <128n8n08-23ss-pnsr-n910-o39nr32q42n5@tzk.qr>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqo7wl30tt.fsf@gitster.g>
+In-Reply-To: <128n8n08-23ss-pnsr-n910-o39nr32q42n5@tzk.qr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
 
-On 15/08/2022 17:53, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+On 16/08/2022 13:17, Johannes Schindelin wrote:
+> Hi Phillip,
 > 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> On Wed, 10 Aug 2022, Phillip Wood wrote:
+> 
+>> On 09/08/2022 19:54, Alban Gruin wrote:
+>>> This rewrites `git merge-resolve' from shell to C.  As for `git
+>>> merge-one-file', this port is not completely straightforward and removes
+>>> calls to external processes to avoid reading and writing the index over
+>>> and over again.
+>>>
+>>>    - The call to `update-index -q --refresh' is replaced by a call to
+>>>      refresh_index().
+>>>
+>>>    - The call to `read-tree' is replaced by a call to unpack_trees() (and
+>>>      all the setup needed).
+>>>
+>>>    - The call to `write-tree' is replaced by a call to
+>>>      cache_tree_update().  This call is wrapped in a new function,
+>>>      write_tree().  It is made to mimick write_index_as_tree() with
+>>>      WRITE_TREE_SILENT flag, but without locking the index; this is taken
+>>>      care directly in merge_strategies_resolve().
+>>>
+>>>    - The call to `diff-index ...' is replaced by a call to
+>>>      repo_index_has_changes().
+>>>
+>>>    - The call to `merge-index', needed to invoke `git merge-one-file', is
+>>>      replaced by a call to the new merge_all_index() function.
+>>>
+>>> The index is read in cmd_merge_resolve(), and is wrote back by
+>>> merge_strategies_resolve().  This is to accomodate future applications:
+>>> in `git-merge', the index has already been read when the merge strategy
+>>> is called, so it would be redundant to read it again when the builtin
+>>> will be able to use merge_strategies_resolve() directly.
+>>>
+>>> The parameters of merge_strategies_resolve() will be surprising at first
+>>> glance: why using a commit list for `bases' and `remote', where we could
+>>> use an oid array, and a pointer to an oid?  Because, in a later commit,
+>>> try_merge_strategy() will be able to call merge_strategies_resolve()
+>>> directly, and it already uses a commit list for `bases' (`common') and
+>>> `remote' (`remoteheads'), and a string for `head_arg'.  To reduce
+>>> frictions later, merge_strategies_resolve() takes the same types of
+>>> parameters.
 >>
->> As $EDITOR is exported setting it in one test affects all subsequent
->> tests. Avoid this by always setting it in a subshell and remove a
->> couple of unnecessary call to set_fake_editor.
+>> git-merge-resolve will happily merge three trees, unfortunately using
+>> lists of commits will break that.
 > 
-> Unnecessary because it reuses the one that was established in the
-> previous test [1]?  Or unnecessary because we know "rebase -i" would
-> fail even before it gets to the point of asking an editor to tweak
-> the todo sequence [2]?  Or something else?
+> But isn't `merge-resolve` specifically implemented as a merge strategy? I
+> do not see any contract in Git's documentation that commits to supporting
+> direct calls to the implementation detail that is `git merge-resolve`:
+> 
+> 	$ man git-merge-resolve
+> 	No manual entry for git-merge-resolve
 
-I meant unnecessary as the editor does not change the todo list, but [2] 
-also applies.
+I've certainly got scripts that call "git merge-recursive" with a 
+mixture of commits and trees (it's kind of doing an cherry-pick), it 
+wouldn't surprise me if someone was doing something weird with 
+merge-resolve.
+>>> +int cmd_merge_resolve(int argc, const char **argv, const char *prefix)
+>>> +{
+>>> +	int i, sep_seen = 0;
+>>> +	const char *head = NULL;
+>>> +	struct commit_list *bases = NULL, *remote = NULL;
+>>> +	struct commit_list **next_base = &bases;
+>>> +	struct repository *r = the_repository;
+>>> +
+>>> +	if (argc < 5)
+>>> +		usage(builtin_merge_resolve_usage);
+>>
+>> I think it would be better to call parse_options() and then check argc. That
+>> would give better error messages for unknown options and supports '-h' for
+>> free.
+> 
+> Again, we are talking about a merge strategy, a program that is not meant
+> to be called directly by the user. Why should we complicate the code by
+> using the `parse_options` machinery?
 
-> If [1], it makes us wonder what happens when an earlier test gets
-> skipped.  If [2], it makes us wonder what happens when "rebase -i"
-> fails to fail as expected (does the test correctly diagnose it as a
-> new breakage in "rebase -i"?).
+I thought it would simplify the implementation of '-h' below. However as 
+the script does not support '-h' we should perhaps drop support for that 
+and the usage() call if we want a strictly equivalent conversion.
 
-I think those tests could be tightened up, I'll add a new patch that 
-renames them to describe what they are testing (that we fail if there is 
-more than one merge base) and greps for the expected error message.
+>> I think we also need to call git_config(). I see that read-tree respects
+>> submodule.recurse so I think we need the same here. I suspect we should
+>> also be reading the merge config to respect merge.conflictStyle.
+> 
+> Valid concerns. Extra brownie points if you can provide a simple test case
+> that demonstrates the current behavior.
+
+I'll add it to my todo list.
+
+>>> +
+>>> +	if (repo_index_has_changes(r, head_tree, &sb)) {
+>>> +		error(_("Your local changes to the following files "
+>>> +			"would be overwritten by merge:\n  %s"),
+>>> +		      sb.buf);
+>>
+>> This matches the script but I wonder why that did not check for unstaged
+>> changes.
+> 
+> Any deviations from the scripted behavior should be done on top of this
+> patch series, unless the deviations make the conversion substantially
+> cleaner.
+
+I agree. Having thought some more I suspect it is relying on 
+unpack_trees() to error out if there are unstaged changes.
 
 Best Wishes
 
 Phillip
 
->> @@ -102,7 +106,6 @@ test_expect_success 'rebase -i --onto main...side' '
->>   	git checkout side &&
->>   	git reset --hard K &&
->>   
->> -	set_fake_editor &&
->>   	test_must_fail git rebase -i --onto main...side J
->>   '
-> 
-> This is one of the "removing" instances.
-> 
->> @@ -187,8 +194,12 @@ test_expect_success 'rebase -i --keep-base main from side' '
->>   	git checkout side &&
->>   	git reset --hard K &&
->>   
->> -	set_fake_editor &&
->>   	test_must_fail git rebase -i --keep-base main
->>   '
-> 
-> And this is the other one.
-> 
-> Thanks.
+> Thanks,
+> Dscho
