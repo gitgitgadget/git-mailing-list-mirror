@@ -2,196 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B657C32772
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 09:58:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BC6FC2BB41
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 10:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234127AbiHPJ6Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 05:58:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58588 "EHLO
+        id S234033AbiHPKAH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 06:00:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234131AbiHPJ5b (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 05:57:31 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B71BD98
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 01:51:09 -0700 (PDT)
+        with ESMTP id S234038AbiHPJ7f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 05:59:35 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9991057544
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 02:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660639864;
-        bh=zyzZYFtCFYyV3gZwsJ4Pv72pcrDVTOK3qZmitMeY1zU=;
+        s=badeba3b8450; t=1660641117;
+        bh=olnswu0k82gCbIJveFkDwsUYh8/A+FNx+FDSFqmhWnI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=EwZaUX11eiXQk/FjpTzW3pykfL61l64R6/3PZCL7/siMM8y7Ne7S5zkdm/rt5dMDn
-         +EfIRuftFQ/+RxtuMroCzRxBsjWblKqhScOY9l5l5LYNxGW9S2+hNAoUeZn0rkQW12
-         1xTW5rcUFpLaPINddTCUgELMBEgRTefTz+DlN0HI=
+        b=UE3xD8aEeoyQGrq3YZNLpe5cVwaleBwbVK4BN/XkQVOm+ZGgiGxgPrV8yD+0mDtBz
+         IkIhapTvStIAM/4XgPrU1A18q0QxkSgnOxsjUCSnIIvw/voUO9Vk0+0EbGAJfYkIT/
+         NQA8dZRJpp5dCb5mqVXbrwkzABOo96rALZPb4FZo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtwZ4-1nW2iK0o04-00uLRU; Tue, 16
- Aug 2022 10:51:04 +0200
-Date:   Tue, 16 Aug 2022 10:51:04 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Ml6qM-1newUL1VLY-00lRmu; Tue, 16
+ Aug 2022 11:11:57 +0200
+Date:   Tue, 16 Aug 2022 11:11:57 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: js/bisect-in-c, was Re: What's cooking in git.git (Jul 2022,
- #03; Mon, 11)
-In-Reply-To: <220714.86mtdb1jmp.gmgdl@evledraar.gmail.com>
-Message-ID: <8o63pp64-4s00-1000-42s1-38so68398337@tzk.qr>
-References: <xmqqo7xufee7.fsf@gitster.g> <s3726r9p-r96o-7793-0qrq-o54rs4npr972@tzk.qr> <220713.865yk1456z.gmgdl@evledraar.gmail.com> <xmqqtu7ldmrz.fsf@gitster.g> <p8srrprq-s23s-711n-n452-34qr856qso29@tzk.qr> <220714.86mtdb1jmp.gmgdl@evledraar.gmail.com>
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 2/5] rebase: store orig_head as a commit
+In-Reply-To: <cced4a48360b4e4a8ce791e9404ac6b37bae4eba.1660576283.git.gitgitgadget@gmail.com>
+Message-ID: <59p441po-0o06-7660-r571-9nn8nos2r5q5@tzk.qr>
+References: <pull.1323.git.1660576283.gitgitgadget@gmail.com> <cced4a48360b4e4a8ce791e9404ac6b37bae4eba.1660576283.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-307542921-1660636832=:241"
-Content-ID: <o3935q70-r9p0-s5r1-s014-76pqr9o752q2@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:nF4DxaAG/drnYgGNvasOxGggCBfzbqLITvPcMvM+vUkUyDZhRFQ
- jZelZ+ogZNbTu1RToBEeMmkCha7YLylszsym1SNgX6pFmIcHiqf0XyuReZ+KuWge9Q6hHgv
- rEpBZ8hlrUrF1ei6XOSF8vE/S4hF0mAGJCqARqhaZZiCDJeAjENVq/Xb9LhirbPW9mqRmiI
- zV9IqlMYVGiy8R5BWlBzw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jhdOEVeZz+4=:obxS1sJA2WNux5FN42sI/m
- z7AWfQI9+OthKmYvdPQJHHQiC+cuaVsXS6o/YYNAgI+gAx5frfOWPyPXFFEQ8yoAqlLL+WXku
- 58MQPPBlxUi9NYDzpI0lciVNvLcN+mZVNhYSEa87Gfahd4OhFZHYVj0Edz81rGPozMxivxVyX
- 4uznynsuTYZsn+PvPFiG9rpnOutRimSTNh25qNNhe/aeaGURMS0Pe4jm0pqLBj5JyOR/gvru+
- Kg6fJrJctCLLnzNxTLrz/wGtwvi05LfqhYb3OfefslJKVREV4mbsF3Qw6wDKXsl5Aegtaxr7M
- anP7WQvClBsZaYu3v73JMSOb5dEkuR71Uav8GmqXwOZrpuVAELeP8TrMUUN/rCkmITkmKNecE
- tcPoMBsh1O/nw1+09UO74gh/VD0cstJb9QMwyG4RqmFUAPw9PHqDHpc9bl/07LQp7iroUdAvM
- JT5sowDaMrGEDaIfUjrCeM2zOMzAvXAMaBm79U75jstMNYzx3z81xmPCm/UxLCP6gLD1+ffhQ
- fFwRxWsoJ+oKbCJdPfFRF1RLe0hr/HccnazByyTZHE6nUESwYpwOpuPBttwKXo9lNudScOcOl
- j1d58yxzKJHxYr8BVHM9ix1cm8yQjIFVgQKpZqFmfsyvpxAnOol3XbyW2cz4hWbkZG0NAgQzk
- wuEIoEZ9UHSToDNrGDlFvjQp6O8uV5P+pPvHltLO2aGYxbRX8Atd+CHuwsCZmYFLiJqL0dcf/
- vgzY8URZzicdKplWEq/MRToutcuXZE1zwSfoGR4SPCGfIWbfBDKaX4QI3xznQiDZB6eePbRJO
- n45wpAWsM2c4rdu/vnVnmT++jCBhMEm9yL5jk6QM9hi/SOaOe8h0C5gqI9Z21vF5Zsbz6aMkJ
- DFE/V9s7LEe5nLuIxgG//i8R/Ynz1NDCgS9D/Vs3TSzvY5WM6Yx9qvmC8WoeFZ2B+VcHswbMt
- 0tIQ6DH/wFOMtYEnmOmvfI0JXiEMApXkVUX6UQP8GIzlFsB6phoKj+95LtkFJZQT+hWXjhHpX
- WoUyAlvt8HVDTjS0liY8+1VG6ePyGS8iaUxtirZgqhtzfCtYP4G6nuclzMMuDp8JHKZv1ra7Q
- fBSWSuU7qxTsctSLAnAD37+68AJtC6VfH6nJtAcTN5TmsJPl7pWa2hgfw==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:qQdRucgRKDv0FYaXNT7mwkdEQIyGIUVquvIr7A/7i9tuEnOg4fZ
+ kUTOufeP6WFPQ18TKvI1mHnxL4DrtqTPcZ8Z52HDV49anB+ZCPCF5ZASTK8ed6dGnsrthtD
+ cJMUfybk7YdXmRvUrHDdz/rP7kSKiH8KFhb+hJPbQIAPkf/0Ufb1hhXWuzDTtPc8qrRziun
+ LGd+SGHMoXoK8HgT01hag==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XeJWL5mLZfg=:eRkEbMOo8k8pi22gBRtEIH
+ /JrF05jlmbr1O1czOUVMY0K5sk8VZ4R2c2UyQKsLZ0BTauC5VUMehFnn54ospO0ttMDf/iI2k
+ RULoYw3g6qHEIgscikcnWaJb8F+THH7XMOLd1ZsfdbmLyrXIZE8OUnqkiqdN0ihQ+0Ubm1hl/
+ 2QoMN1keME/iURwu2YRREeiCy60n31FGnAaE52STX4k31sUJTz3MrEHRoxEKgX0ieYtos7cVa
+ EPOG6wAHsLfPys45ge35gj6KWbczbypVwFDmVAaYNA3C+C4MTlAjAf54dUdLzkX/KLdQqiuPp
+ 5459KEyVLSu/cVZV3NOX+/F03y50j0nsMP917PDGWj2UbgehFgYj4FHYlF4G9PL3ymYweSDkW
+ PcYaUg6Q9SEvRnvzyxj8fxr0/rIH+4tEVK1Sf3/rd1PO0hKJKiBqvgr2kGBLa+tGa2KfTnrvg
+ K/Eu0kPj/M/hED+Ge52WLBsJGP1hZZijqdWZ4zA6ZnROgz9hKI88FHLozgYC+CCK/hPWfslg2
+ qkj7Y27pFgGRRGAhsJ89mfRpOPFdDq+v10epyBcA0C4+MViKuZ7e5ZL+Nc4bOxhqnzhT57Lz/
+ OTAi56D9tHlcYq+0hKmPT/e5udg/Dl8nx7Uom2FRJd3zpVilQLd/zEVdHaC32dgmZEH+i8W4X
+ 2PDdM/Ox80imATvVTm5At7JAJoEfhT6VclIypY/nFDExI4mcwBRKE0XbTEe9rm5Wl8HQgUWsp
+ CnWDZsswnPF7YwrSwkamfF8lk6kU5tFm+RpMXWS0V9Vb0f/oUZTVo15zLy5nfa6ipGegnzxw5
+ CvEZ6ESk9pxT0SHvdcMLwPWC70TxZECyYIYP4GfvbxX4tku9LuDPx3IKdqN2tX218FPpVR2uA
+ pCmIsx4Z4A5Xin7yPnBn6uZcB6SEBlrsyRm2jbQ43pcqMjoZ3YZawhaxN+Ik5IXRQa7HjQdzI
+ 2Wse0NYt/FT8BhHB09jEbeYdrOfXROmKaIVWQq92sRXfKEN5ByLOgzpxIeChHpuvZ68oBv5l+
+ 8Tqe8AUHcJi/XpctcSLbjwDyDSXB8EzetQuiUOX5ErfXy9cBQtq9uXCRXdMDKemUe3bjW1dNd
+ VwKw0tEC82KdAlbPhP0Lr5DuZfZzq7/oSMwxTcr0Ozi10XE27Pi8Bl5Qw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Phillip,
 
---8323328-307542921-1660636832=:241
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Content-ID: <s9916nrs-nq87-6620-4713-p1o8np8ors5s@tvgsbejvaqbjf.bet>
+On Mon, 15 Aug 2022, Phillip Wood via GitGitGadget wrote:
 
-Hi =C3=86var,
-
-On Thu, 14 Jul 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> On Thu, Jul 14 2022, Johannes Schindelin wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> > On Wed, 13 Jul 2022, Junio C Hamano wrote:
-> >
-> >> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-> >>
-> >> > I'm not claiming that we always use 129 when we're fed bad options =
-etc.,
-> >> > but rather that that's what parse_options() does, so at this point =
-most
-> >> > commands do that consistently.
-> >> >
-> >> > 	./git --blah >/dev/null 2>&1; echo $?
-> >> > 	129
-> >> > 	./git status --blah >/dev/null 2>&1; echo $?
-> >> > 	129
-> >> >
-> >> > But yes, you can find exceptions still, e.g. try that with "git log=
-" and
-> >> > it'll return 128.
-> >>
-> >> Yup, that was my understanding as well.  We may have existing
-> >> breakage that we shouldn't be actively imitating when we do not have
-> >> to.
-> >
-> > This patch series already implements `git bisect` in the desired way:
-> >
-> > 	$ ./git bisect --invalid; echo $?
-> > 	usage: git bisect [help|start|bad|good|new|old|terms|skip|next|reset|=
-visualize|view|replay|log|run]
-> > 	129
->
-> It doesn't, the claim isn't that there's no way to have it return exit
-> code 129 on *some* invalid usage. In this case we do the "right" thing.
->
-> Rather that as noted in [1] there's other cases where we call die() and
-> should call usage_msg_opt().
+> Using a struct commit rather than a struct oid to hold orig_head means
+> that we error out straight away if branch being rebased does not point
+> to a commit. It also simplifies the code than handles finding the
+> merge base and fork point as it not longer has to convert from an oid
+> to a commit.
 
-It would have been better to take the time to spell out clearly that you
-are taking offense in `git bisect start -h` not behaving in the way you
-think is the rule in Git: to print a _subcommand_ usage and exit with code
-129.
+Very nice!
 
-However, this feedback fails to recognize the scope of this patch series.
+The diff is necessarily "chatty", therefore it is especially good that you
+separated out this concern into its own, easily-reviewable commit.
 
-The patch series' intention is not to fix anything that is currently
-broken. And it is already broken, my patch series does not introduce that
-breakage (and it would make more sense to address this breakage _after_
-the conversion, to avoid doubling the effort): The current output of `git
-bisect start -h` shows the usage of `bisect--helper`!
-
-Instead, the scope of the patch series is to finalize converting the
-`bisect` command to a full built-in, implemented in C, and avoiding the
-portability cost of running a POSIX shell script.
-
-Note: I agree with you that it would be nice for `git bisect start -h` to
-output a proper usage. There will be a time to discuss that, that time is
-just simply not right now.
-
-Since the scope is so different from what your feedback suggests, I have
-to admit that it taxes my patience to see that laser focus on aspects that
-are almost irrelevant compared to the aspects that should concern any
-good review of this series: the correctness of the conversion, with a
-heavy focus on the non-failure modes.
-
-No user would care about the exit code of a failure mode (as long as it is
-non-zero), if there are regressions e.g. in how `git bisect start
-=2D-good=3D=C3=86var --bad=3DDscho` behaves.
-
-So this hyper focus on what look like less relevant aspects is not only
-irritating, it actively distracts me, others and even yourself from the
-thorough review I would like to get: There have not been any thorough
-reviews of this patch series so far, and I think it is because of this
-here distraction.
-
-The cost of this distraction is quite real: not only is there a
-performance penalty of running POSIX shell scripts on Windows, there are
-also problems with anti-malware disliking the way the POSIX emulation
-layer works that we currently have to use on Windows to run `git bisect`,
-which would be fixed by `bisect` being a full built-in. This distracting
-feedback that prevents a thorough code review delays that fix for those
-users.
-
-To understand what I am aiming for, look at the deep analysis of the
-rot13 filter conversion from Perl to C in
-https://lore.kernel.org/git/4n20476q-6ssr-osp8-q5o3-p8ns726q4pn3@tzk.qr/,
-where I carefully compared the behavior of the scripted code with the C
-code that was designed to replace it.
-
-At this point, it is good to recall Parkinson's law of triviality:
-
-	Parkinson observed and illustrated that a committee whose job was
-	to approve plans for a nuclear power plant spent the majority of
-	its time with pointless discussions on relatively trivial and
-	unimportant but easy-to-grasp issues, such as what materials to
-	use for the staff bike-shed, while neglecting the less-trivial
-	proposed design of the nuclear power plant itself, which is far
-	more important but also a far more difficult and complex task to
-	criticise constructively.
-
-We've seen quite a few regressions as of recent that would have likely
-been prevented by thorough reviews that do not distract themselves with
-tangents, pet peeves and personal taste.
-
-It would do good if we the reviewers on the Git mailing list took to heart
-that Git is a software that millions of users depend on, not just our toy
-to play with, and therefore the purpose of our reviews should aim to keep
-Git working and safe. We will achieve that only if we avoid what Parkinson
-called pointless discussions and instead put in the effort to provide
-high-quality feedback that helps improve the design and the correctness of
-the code.
-
-In this instance, the discussion about exit codes and usage messages
-should be postponed, in favor of focusing on the actual scope of this
-patch series.
-
-Ciao,
-Johannes
-
---8323328-307542921-1660636832=:241--
+Thank you,
+Dscho
