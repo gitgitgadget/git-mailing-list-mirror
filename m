@@ -2,104 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63BD8C2BB41
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 10:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 044ECC32772
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 10:19:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234192AbiHPKEF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 06:04:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44646 "EHLO
+        id S233995AbiHPKTq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 06:19:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234131AbiHPKD1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 06:03:27 -0400
+        with ESMTP id S233391AbiHPKTW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 06:19:22 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00B1B2DAB1
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 02:15:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 536A840E12
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 01:57:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660641322;
-        bh=oJ1TQqillAteopFl6c5H0t2WvqNP4M6OqYqzG0CQzD8=;
+        s=badeba3b8450; t=1660640218;
+        bh=g+RQPRybAix2f+g4FOThvyed5glV+rj14SkhB0ouWwo=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ELfvDqBx70aaLy7dSz6x+V0GpYuq4y1RWO9GByoF3iaFRckWY96HvqaILm+Ps1gTg
-         INDwveJ2BrWgYMknA2d8w+IyqfksTtdQA968UYr5M3VvgheO60TfeQZW/1E701pMVY
-         OZaYtkwhzbMQdAWDs8lOGoe/QSkcot/o0ZZzW2no=
+        b=SaS3bprH2AF3xS6foiSas8wPlDQOQVEDl5g6aJizrU+7q9aTvBr1AmS8xu9eq9i+0
+         J06vW0JKcakQRPbU/2N5eslPSYANZoALmkYU8EwpYu8ZqcKg+EWvFKRKp0CiJin7l4
+         uGHZnmCvARiEbJjcsYBRUlgsuYBeee9Kpn3RxZ0s=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MXXyP-1nr5Wv0zAV-00YwjR; Tue, 16
- Aug 2022 11:15:22 +0200
-Date:   Tue, 16 Aug 2022 11:15:22 +0200 (CEST)
+Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtfJd-1nVDOP0KlT-00vAxT; Tue, 16
+ Aug 2022 10:56:58 +0200
+Date:   Tue, 16 Aug 2022 10:56:58 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 3/5] rebase: factor out merge_base calculation
-In-Reply-To: <xmqqczd12zhv.fsf@gitster.g>
-Message-ID: <77899422-7o79-s730-p529-72022r6o7442@tzk.qr>
-References: <pull.1323.git.1660576283.gitgitgadget@gmail.com> <019158db9d2dbb371705ba79a96a907e4a17cdb1.1660576283.git.gitgitgadget@gmail.com> <xmqqczd12zhv.fsf@gitster.g>
+cc:     git@vger.kernel.org
+Subject: js/bisect-in-c, was Re: What's cooking in git.git (Aug 2022, #05;
+ Mon, 15)
+In-Reply-To: <xmqq5yityzcu.fsf@gitster.g>
+Message-ID: <p053rrpq-17q7-pnrs-3794-o04ro1445s5s@tzk.qr>
+References: <xmqq5yityzcu.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:g6M+qcA0fuT5aE0I0DHwlKLCwZ2WYTRP7DRtJERKMep72u5Vdir
- BekWDaAWVtguK21S8jgQg1ZOJSHNIBcDLF1krH6QanAC1wAqY+N2DieMLTf/YZR8Shf8CmL
- hXKYcodu97vql/1KxKXjBy1lddu9+wSloj7OnMdYi7POOmjjr3elN5c04tmGuT1L06ZYOr6
- e5ZvX/5mpXX+Tua/1bM8g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vzPU3vubqXE=:+Hp5eMb08VuYwkMLKl0Wmq
- OR02fdqhpFeEmIj3rIDEFmF7ELIESEGj0VpTGVYg32dkV7M3odAOM/j3JPBNUbqWfEcjHUV7J
- vLwQAq2qcv3zqFfzNG7gxqvD5ch0721umSEQwOUjUMOIEsnTEGYwELZ9rSEcmgqsc+2V4LyZI
- 8uYhzDgkW69QRwFlyjJUbiWTNPvFFvShF/xBSGCwZppnf+F9ztJleXd+rKnSI6ofek8d45eL1
- JALZOh6zvCT64lizuY5AKHrfS3iRoML029VT/khvxKy+4BIclfV1T8gN16lsj609XkvUZ2qwM
- Em2hHRMA/1M8OQ80ftwPjYWN/kQ0wh69ayMiL6cyAY1sCdaAf33sdfbDBkuJ8HRXL883zqSd2
- gKcqkZiUuWp0pbEpSwaYUhTPhalIJmagzfGMVDpzJC/I+HZhGyZ/6Q2aEGmM+XUrknJqyC1ui
- Q3t5xEZBpj2V0Xbh+X18cpeKNID4fIwe3AECueZLpmQ1/fX2gCfleFZ3xGp4xs1Q+W6EPoicf
- Lvfvk+5ublg9kkEQEzXo1b1f39iAp01zKCHpetynxGlLqre4xFEjkb9eacDDvBQrl44ZhpRad
- gkxSQBxS2M1r3N/yR6n6fxoPXMDGpscceTq9F4yzloLL/GpK+mqnjwh3Y/8zg2nknx+SHq1+h
- EAOCFAwpfHw67OnBz8scMq5HXjQeHK20W1/VHo7lPUIBMnWM/Z11TFwJ+6AT77hW+GYYqENhA
- AbcBxd4S+NLClVMayxJ8QBI2asYQ+mrNaILNdCwkZZH1PD8QBgNL1I1RTr5HuEozCnc1IW0qo
- zyg2HewmwKyNUKGPdx1uhu7m7B+IoktODUzytfPlyNkbuGxu2MCGVjym0Zbc08bZL1lZg6sgN
- GJVjtTRGby9ZxAFdrtWr2ay5JkLZ5W96ttj/Qeur0dlRAk25mknlFA74z1AjWXTgAKW+REYT7
- iVF57qZpNC0o70zbqRwTyOxXIGiVnAnFQ2Xj596i9HfphuSF8LulDl6gMPAEiEIwUYDzbP+bB
- ltpag6Fxvt6ggdorymrq9PMmxDzhY0EYDfLcRfoTvklksbugff4sPJOZMPYuGXtj/mOQp56nT
- 4X72zBLY4EOo0N0DeQSysIc57g3jBbGlRI9Mzp9JVjcQNMyoQGYWOW0fg==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-2138905018-1660640220=:241"
+X-Provags-ID: V03:K1:nZxXxHd3OSM+CwL0zJ7W8BcHoKT1g0h0DA/ftwz93xPhs0qD7VS
+ Nyd4GPUQI7/JsgPv3HjrDO9KRgo/5jaDKfmYMMTmx9UciQopxyxqEx1wXojAdbjGfgrzb8B
+ aBK5avCcDlwCCXbs6/BB6dLdxrfTQsDAYQycUQ821VIb5LQRNBjN4CjdxzQfOHWOLfXJW1a
+ wrTBXJAD1+ThPl0Zw4Pxg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:uVvFqN29gKc=:MQYTls+rimBjWSmcKKbd7f
+ Qg3gTyZ6RvW1hvX6rJ2QOK1cWdk7/iWFpOivKRk+DYkl5zG0OQZbTWVokSnHsMkAt3xBpUFw0
+ Oa6QHMD1Zc5WouOzwEgQBk9BYAyKGbhiDHPa8ESmoTE4z/2mQdlvh6jnJwmwpaSbTFj6JKDjl
+ 5AkDeBQcGN2E5EJhF+Kyt0zDshDZL1dbExdxXF3R9qZAEBQ3bX/wL35jizlrhLEz5QtySP4Zh
+ BWNfmTtt208qNf2lEs2FDKulUeLiEierU221Q03uW30B7Ve4R/fdUjc9qIsxu1O5er7Tg+JH7
+ //91obB0Mp9pqODNGrWnhzpfz8CNQRVgb1il4fzHmbbQXdzgBFkpvuHK9fcMoxSCJUhMd8bCJ
+ K1UFZW9ItLJzkrZRU/spc9dMtKsYtbLwhu2si8PLW6pl9L0JrwcTeptNvfxbHrCPSkeF1iEls
+ 99/6pRGkFSD+F6NFHc/J12IJOCnbJv5vx7zcn99nYn9PtKRiWeSeH2PDIfEXmzCa3GP9Ykv0c
+ Jw8nAVwuH1tyn4y3uYY8dc+KHdbbw9RuwGkCX+e8lIxbrsf4FoXF4x8/wuDzX7ImvHqZZxD7Z
+ sVDG9oXI4HaaV+KCM8G8Mn2bmV0iNnq0QyZh3t7SPXBj5YlXZq/vAjNY6IkvbXmXRhbbwsghD
+ r1KbDjnWiNiSh4lNRzqdsxneUmPpeHUeQN+4r2GuMVIwMy4QJH1L+bCpIEt3p7ilnGdBSmar/
+ 8lLxjcp6/4sGcCYrljd4pPePedCAeH7Ydlf6HWlbxemL8q+ZnrzCZ1xMU8SmPpk6aEiHvYQld
+ P6Vyfn75wxC/h0NOCEVOyIcsQWcqrpv0q+jcYnfcSgqmwQ5+KEuqfYqdZT+SpkVAzG/5KNBx2
+ GCLxyjc7eFjYs5N5DUnloruGODjT2to5zMSNt4NqB2mr/DTFZtmASaxGMeVaN/adrOVrgHNZC
+ puwATNB7x1tjqou8w+v9YJXIWZmET86z7Zfp+C9Eywg1rbsHqt3im0cVWmgOqthKRP6jp/tkD
+ 5ir4YAv0EYCpxJPXdDQ334wCxxSBJfSrcf6LZ4Ew3tc39dGxTzc6k0EK2u4BWthkn1BFZURKA
+ D8/v1JFQ5+vJ//Lrtg4XXQ9HE10+xknIAoaOaEU6U/UammOy9wvrxSISw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-2138905018-1660640220=:241
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
 Hi Junio,
 
 On Mon, 15 Aug 2022, Junio C Hamano wrote:
 
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> * js/bisect-in-c (2022-06-27) 16 commits
+>  - bisect: no longer try to clean up left-over `.git/head-name` files
+>  - bisect: remove Cogito-related code
+>  - Turn `git bisect` into a full built-in
+>  - bisect: move even the command-line parsing to `bisect--helper`
+>  - bisect: teach the `bisect--helper` command to show the correct usage =
+strings
+>  - bisect--helper: return only correct exit codes in `cmd_*()`
+>  - bisect--helper: move the `BISECT_STATE` case to the end
+>  - bisect--helper: make `--bisect-state` optional
+>  - bisect--helper: align the sub-command order with git-bisect.sh
+>  - bisect--helper: using `--bisect-state` without an argument is a bug
+>  - bisect--helper: really retire `--bisect-autostart`
+>  - bisect--helper: really retire --bisect-next-check
+>  - bisect--helper: retire the --no-log option
+>  - bisect: avoid double-quoting when printing the failed command
+>  - bisect run: fix the error message
+>  - bisect: verify that a bogus option won't try to start a bisection
 >
-> > From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> >
-> > Separate out calculating the merge base between onto and head from the
-> > check for whether we can fast-forward or not. This means we can skip
-> > the fast-forward checks when the rebase is forced and avoid
-> > calculating the merge-base twice when --keep-base is given.
-> >
-> > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> > ---
-> > Note the unnecessary braces around "if (keep_base)" are added here
-> > reduce the churn on the next commit.
-
-This note...
-
-> > @@ -1668,7 +1678,11 @@ int cmd_rebase(int argc, const char **argv, con=
-st char *prefix)
-> >  			die(_("Does not point to a valid commit '%s'"),
-> >  				options.onto_name);
-> >  	}
-> > -
-> > +	if (keep_base) {
-> > +		oidcpy(&merge_base, &options.onto->object.oid);
-> > +	} else {
-> > +		fill_merge_base(&options, &merge_base);
-> > +	}
+>  Final bits of "git bisect.sh" have been rewritten in C.
 >
-> No need for braces around single-statement block on either side.
+>  Expecting a (hopefully final) reroll.
+>  cf. <20627.86ilolhnnn.gmgdl@evledraar.gmail.com>
+>  source: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
 
-... already addresses this feedback.
+I had another look at the thread and did not see any feedback that focuses
+on the actual scope of the patch series. Conversions from scripted parts
+of Git to built-ins are always a bit finicky (and hard to review, I
+admit).
+
+Therefore I would like to move the status to "needs review".
+
+I do not think that there are any major issues with it (=C3=86var's feedba=
+ck
+notwithstanding, it focuses on tangents that should be addressed after the
+conversion, to avoid losing focus), but I would love to see a thorough
+review of the conversion to avoid obvious regressions like the one in the
+built-in interactive `add` I had to fix recently.
 
 Ciao,
 Dscho
+
+--8323328-2138905018-1660640220=:241--
