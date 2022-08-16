@@ -2,153 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3C00C3F6B0
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 07:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28E28C2BB41
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 09:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232220AbiHPHgB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 03:36:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41752 "EHLO
+        id S233856AbiHPJuG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 05:50:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231894AbiHPHfH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 03:35:07 -0400
-Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com [IPv6:2607:f8b0:4864:20::e34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13C7742AC4
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 21:21:27 -0700 (PDT)
-Received: by mail-vs1-xe34.google.com with SMTP id 66so9062893vse.4
-        for <git@vger.kernel.org>; Mon, 15 Aug 2022 21:21:27 -0700 (PDT)
+        with ESMTP id S233965AbiHPJtk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 05:49:40 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D54E3391
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 01:59:37 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id l4so11770538wrm.13
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 01:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=7EK279c3g9JwtxFS9d8ef01EdjRIpu9UF765hGMbkqY=;
-        b=F6waIWp/MlAm4Ciia4rtezgAWzfX4u43kUZM1k5naqKjqhK1HGyyGqnOxsG0kL//D3
-         aUSXmcGJRaDtyrY1/VgqEnBuSDEz3VUHQfhAXRsux9Oa8VASt+xTLl4nYyJpNj9wuscv
-         Ugl9ZBmxtzhwpk9wLR7xIL+cdilPCjuvMQMuyRjGTgRDpCdoqJWkwNL9N4rRymMWeRbb
-         473Ovr2ZWs1BYFrB7L1iHIM0FThqlX62I7UJueEQ5P3Rok7tZ6nPhfJWRicHdKvnzLlO
-         KzMKsNUsbMnZNx1t95+0tzQCkIl1e08x91mV0+XJ/xzZoKcrZmUd6LCR9BIFfynFL95D
-         Upxw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc;
+        bh=zfnuYsTjxOUBZKc+3wtbha+R1t+v8/398pUnDvw22bQ=;
+        b=PqfXl9Jun3oLyxupKb1OWhL5iW0/cMibzN3wwuc8Y7KRW4F03tSEX8NIlnO7UGWrPz
+         Xq1Giy2pvo8xyeY2U9/18FiVzUzGRkKUzOnMxfNixWWblKRZDe7G3i4Y7xykSCBWhQ3Z
+         tFB4Mm4CsDh1e2algSmvEgynheYQ3TedGnPQmYEQQemEc1IY+ziqcwjSkKPUnWQqZ5Pk
+         j2y0XyWuOBbldPTjhKgVC9U5v5k8vdqskQkCfcssDqrbXSPkUEyFrqS+oOIfVVmd/1PA
+         sQIXnZpVbjrWrueqmapSI4ynZlEVXpohqqpg8qaVk4YEkN81K7EtrLrMHIWesyFEa/7u
+         qarw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=7EK279c3g9JwtxFS9d8ef01EdjRIpu9UF765hGMbkqY=;
-        b=qNaGY51EkUjL/olBwyK5WKSpqcHKwzDlOfwpa1a7i5BN1eipnYSKJZBPTWMwFtatqF
-         NvO/ski0SmmMqyucItV/VEngWpRKfz9esaPWZ/TDgPzsETy27KysrndU+cs4M3a/pQqU
-         99Mgo9+flvvXP5w7ajUwzwH4//A3nmA1U6aLQgCES3Vgt12qj3DL+WQ1WMKdPxud0ECH
-         yhEDHpsKLiWlH4wsb0iLcDfBQXZuLjbFohDSNMNCyntB7CBkl4pBN0guvMwI1MP8rsDK
-         RTP6SOxEH5YpChm0Yg2mmdScZw4sifcQnW8ufepH8UUbpBxH8Any7/ApIJUjSC2zkcKT
-         m+Kg==
-X-Gm-Message-State: ACgBeo1zfsGCXsR4j2WgvPXFyXnO7EhV4YbNNdqRUd+0UK9E49gAjlNr
-        +ePlEFxgY4QRVJ2pKpGjMQBVYf66Azltf9DiuqysFReg
-X-Google-Smtp-Source: AA6agR6V/LkviX8ry9gs2/jUFfF1rXGXDNXgIUe5bcz70tPgoXzuChC30WfzqOPa+w7UIj3GPj3Kcwn0uABFHj7Lxko=
-X-Received: by 2002:a67:ae05:0:b0:357:8b59:3a84 with SMTP id
- x5-20020a67ae05000000b003578b593a84mr7098116vse.51.1660623686581; Mon, 15 Aug
- 2022 21:21:26 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc;
+        bh=zfnuYsTjxOUBZKc+3wtbha+R1t+v8/398pUnDvw22bQ=;
+        b=DM3jCO9Kj52CdE8pWGoR6ocHShYnMcEjczqyDp4nkN/rll2gkM5M1vfNvz4AjEUy8Q
+         5ZszEaYdSjEtP8Sv7N1Y+q0gAFk78pQFTPH++BCIoRqmTeWWTQcYAidqiSlWkC7xr5Yf
+         oZTcNb5zkPCCCcVL3rjPUT/FYU/ZmXI0eiEfv2BTUQqfb7A4vIBBsQktGkoukKpcfThT
+         f9LVH2NxTbEn6OzrsKNTI4NS4pT9AbkzP+xt2AwPgaZ22W9jV8iIQnIs0v+3u0+wievI
+         8ATtsKY+SeYjPxZux8dUAOJEdGMH8anv2PmvYmdnxSSx/+8EszmefY9ZL91hq+FGYlR9
+         5f9A==
+X-Gm-Message-State: ACgBeo1Om91nfyt+Q47YnP4vgbl0dM+Crg9HcjYSEQeLlnq/kqaw6c7b
+        gaE8gXrZl9OWypIaWoNWaZmpy8Sofog=
+X-Google-Smtp-Source: AA6agR4QbVJUeYjc9V3tUd8NpZlphp7MqUQHen+WJJ+404Lgy12OBJY/kRoaKCiPd0vRTtd0SEeDUg==
+X-Received: by 2002:a5d:5a92:0:b0:223:7af9:be0e with SMTP id bp18-20020a5d5a92000000b002237af9be0emr11188754wrb.259.1660640376335;
+        Tue, 16 Aug 2022 01:59:36 -0700 (PDT)
+Received: from [192.168.1.240] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id e6-20020a5d5306000000b0021e519eba9bsm9245809wrv.42.2022.08.16.01.59.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Aug 2022 01:59:36 -0700 (PDT)
+Message-ID: <870072d5-d220-09e7-684b-f9d7d8d59c93@gmail.com>
+Date:   Tue, 16 Aug 2022 09:59:35 +0100
 MIME-Version: 1.0
-References: <pull.1302.git.1658798595633.gitgitgadget@gmail.com>
- <pull.1302.v2.git.1659132518935.gitgitgadget@gmail.com> <CAGTqyRw-SYDbQy9aktq5s3ZhoDhUOCf-pEopjH9m7v5+PH7Qqg@mail.gmail.com>
- <xmqqy1vq3zm3.fsf@gitster.g> <08a8e78d-7861-3da3-f6f6-bba466655071@gmail.com> <xmqqilmt4huq.fsf@gitster.g>
-In-Reply-To: <xmqqilmt4huq.fsf@gitster.g>
-From:   Justin Donnelly <justinrdonnelly@gmail.com>
-Date:   Tue, 16 Aug 2022 00:20:50 -0400
-Message-ID: <CAGTqyRyuV42-NRW_OKzy9F+LbFcZp-QZkM73LqrNkmOi60oU+w@mail.gmail.com>
-Subject: Re: [PATCH v2] git-prompt: show presence of unresolved conflicts at
- command prompt
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Justin Donnelly via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        newren@gmail.com, phillip.wood@dunelm.org.uk,
-        Johannes.Schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC/PATCH] sequencer: do not translate reflog messages
+Content-Language: en-GB-large
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org
+References: <b8ab40b2b0e3e5d762b414329ad2f4552f935d28.1660318162.git.git@grubix.eu>
+ <333bbaa9-d484-7c20-90d6-e64edf8a8248@gmail.com> <xmqqy1vt9ora.fsf@gitster.g>
+ <92sr80s2-6311-p065-755s-61s28s543q6n@tzk.qr>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <92sr80s2-6311-p065-755s-61s28s543q6n@tzk.qr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 15, 2022 at 12:00 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
-> > I had not commented as I don't use the prompt. I have just had a quick
-> > read and I wonder if it would be more efficient to use
-> >     git diff --cached --quiet --diff-filter=U
-> > rather than
-> >     git ls-files --unmerged 2>/dev/null
-> > to check if there are unmerged entries,
->
-> The former reads the on-disk index into in-core index, and reads
-> tree objects (recursively for subdirectories) referenced by the
-> HEAD, walks both in parallel to find differences and filters out the
-> result to unmerged (I am not sure how well diff-filter works with
-> unmerged paths, though).
->
-> The latter rads the on-disk index into in-core index, scans the
-> entries and finds unmerged entries.
->
-> So if we compare the overhead to run either command standalone, I am
-> reasonably sure that the latter would be a lot more efficient.
->
+Hi Dscho
 
-Here's how I tested performance. The setup and test execution code are
-below. I tested each technique (`git ls-files --unmerged 2>/dev/null`
-and `git diff --cached --quiet --diff-filter=U`) 3 times and listed
-the results. Please let me know if you see any problems with the
-methodology.
+On 15/08/2022 21:20, Johannes Schindelin wrote:
+> Hi Junio,
+> 
+> On Fri, 12 Aug 2022, Junio C Hamano wrote:
+> 
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>
+>>> Removing the N_() stops these strings from being extracted for
+>>> translation, but there are several callers left that are still using
+>>> _() to get the (now non-existent) translated string. I only had a
+>>> quick look but I think we should remove the _() from all the callers
+>>> of action_name().
+>>
+>> Thanks, that's all correct.
+> 
+> I am afraid that it is not.
+> 
+> In https://github.com/git/git/blob/v2.37.2/sequencer.c#L502-L503, for
+> example, we use the value returned by `action_name()` in a translated
+> message:
+> 
+> 	error(_("your local changes would be overwritten by %s."),
+> 		_(action_name(opts)));
 
-Setup:
-mkdir -p /tmp/perf/base && cd /tmp/perf/base
-git clone https://github.com/torvalds/linux.git
+Isn't this message using action_name() to get the name of the command 
+that the user ran? As that name is not localized when the user runs the 
+command I don't see that we should be translating it (and playing 
+sentence lego with the result) in this message. I think the same applies 
+to the message at line 689 that you mention below.
 
-Each test:
-cd /tmp/perf
-rm -rf test
-cp -r base test
-cd test/linux/drivers/watchdog
-git switch --detach v6.0-rc1 # pick some commit for consistency
-for f in *; do echo "/* a */" >> $f; done # 182 files
-git stash
-for f in *; do echo "/* b */" >> $f; done
-git commit -am "adding to end of files in watchdog directory"
-git stash pop
-time [[ $(git ls-files --unmerged 2>/dev/null) ]]
-# OR run the next one instead
-# time ! git diff --cached --quiet --diff-filter=U 2>/dev/null
+Best Wishes
 
-Results (hopefully this text lines up better for others than it does for me):
-time [[ $(git ls-files --unmerged 2>/dev/null) ]]
-      run 1     run 2     run3
-real  0m0.008s  0m0.009s  0m0.008s
-user  0m0.005s  0m0.001s  0m0.004s
-sys   0m0.004s  0m0.008s  0m0.004s
+Phillip
 
-time ! git diff --cached --quiet --diff-filter=U 2>/dev/null
-      run 1     run 2     run3
-real  0m0.009s  0m0.009s  0m0.007s
-user  0m0.004s  0m0.009s  0m0.007s
-sys   0m0.004s  0m0.000s  0m0.000s
-
-As you can see, the results are basically the same. I'm not sure if
-real world usage would yield different results. So for now, I'll defer
-to Junio's analysis and stick with `ls-files --unmerged`.
-
-> But if the shell prompt code already needs to run the diff-index for
-> other reasons (e.g. to show if there is any modification added to
-> the index), that may change the equation.  Instead of adding a
-> separate and extra call to "ls-files -u", it might be more efficient
-> if you can somehow piggy-back on an existing diff-index call.  For
-> example, you may be running "git diff --cached --quiet" for exit code
-> to show if any change has been added, but you can instead run "git
-> diff --no-ext-diff --no-renames --cached --name-status" and (1) if
-> there is any output, then the index is dirty, and (2) if there is a
-> line that begins with "U", you have an unmerged path right there.
-
-It had not occurred to me to consolidate and piggy-back off of other
-commands. I find the idea intriguing, but am not sure it makes sense
-to do it for only a single feature (especially this feature since the
-time to determine the conflict is short). I think it would make the
-code more complex, and it might be better to take a holistic approach
-to such an effort. Let me know if you strongly disagree.
-
-Thanks,
-Justin
+> Michael, I am afraid that we need more nuance here.
+> 
+> I do see that https://github.com/git/git/blob/v2.37.2/sequencer.c#L4316
+> calls `action_name()` without wrapping it in `_(...)`:
+> 
+> 	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
+> 
+> This suggests to me that the proper solution will be to carefully vet
+> which `_(action_name())` calls should drop the `_(...)` and which ones
+> should not, and to leave the `N_(...)` parts alone.
+> 
+> The affected calls seem to fall into these categories:
+> 
+> - reflog (do _not_ translate the action name)
+> 
+> - parameter of `error_resolve_conflict()` (do _not_ translate the
+>    parameter)
+> 
+> - error messages talking about `git <command>` (do _not_ translate the
+>    action name)
+> 
+> - error messages talking about the operation (_do_ translate the action
+>    name)
+> 
+> My take on which lines need to be patched:
+> 
+> - https://github.com/git/git/blob/v2.37.2/sequencer.c#L500
+> - https://github.com/git/git/blob/v2.37.2/sequencer.c#L538
+> - https://github.com/git/git/blob/v2.37.2/sequencer.c#L2384
+> - https://github.com/git/git/blob/v2.37.2/sequencer.c#L2392
+> - https://github.com/git/git/blob/v2.37.2/sequencer.c#L3715
+> 
+> but not
+> 
+> - https://github.com/git/git/blob/v2.37.2/sequencer.c#L503
+> - https://github.com/git/git/blob/v2.37.2/sequencer.c#L689
+> 
+> Ciao,
+> Dscho
