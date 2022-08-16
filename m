@@ -2,114 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEE83C2BB41
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 10:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5792C3F6B0
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 10:40:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234623AbiHPK3D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 06:29:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51496 "EHLO
+        id S234689AbiHPKkz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 06:40:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234538AbiHPK2n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 06:28:43 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F165E97D56
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 02:34:35 -0700 (PDT)
+        with ESMTP id S235022AbiHPKk0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 06:40:26 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A352E0FCD
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 02:56:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660642289;
-        bh=J75ZqXHuqWrDAHHcjXBx5jxCQjY4ClPMjIDux6kChXI=;
+        s=badeba3b8450; t=1660643763;
+        bh=TB9z6hZV142sC983ZkIeeO5QPgOiK9N6oybjO32jy/w=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Bkt8p4u66f/sMSdGT5yYiFZtPv5f1zLKVsvTASD6P2Us3HWDO3SYVZFa+vB8NJZ8k
-         2n4uxmALAOpEafTDknOo+llV27JG+zF44BhoYLh/0k+BupUjjVJ9gip/HgdncjJdMh
-         fiocdnNSbO0N+ps5fjo4vSYZwd7DGBYndY29NNjk=
+        b=SpHSB3IwaysLsYq7CEuREmrh32p7nEdxXxqcFs1QK5y3KCwrzaI+FWQD7r2U5d52O
+         g8MAxxTirHklHy5Z6sBpsxqxlcwLIeoadP4N607H/L1CEJsY31KHYym2XOvt2mhR3w
+         oBVeNjd1VkofqVc6XYb4tQao6iisPkIb1q1YcGwI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mo6qv-1nYaWR3Dhr-00paPQ; Tue, 16
- Aug 2022 11:31:28 +0200
-Date:   Tue, 16 Aug 2022 11:31:27 +0200 (CEST)
+Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mw9UK-1nYGcZ1h8m-00s9qj; Tue, 16
+ Aug 2022 11:56:03 +0200
+Date:   Tue, 16 Aug 2022 11:56:02 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Rub=C3=A9n_Justo_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] branch: allow "-" as a short-hand for "previous
- branch"
-In-Reply-To: <9693b83f-551e-e579-b267-af1d633dc381@gmail.com>
-Message-ID: <9so90892-25nr-0s4o-q98n-2qo76r3s89p3@tzk.qr>
-References: <pull.1315.git.1659910949556.gitgitgadget@gmail.com> <xmqq4jymvllq.fsf@gitster.g> <9693b83f-551e-e579-b267-af1d633dc381@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 4/5] add -p: avoid ambiguous signed/unsigned comparison
+In-Reply-To: <xmqq7d3gm1bl.fsf@gitster.g>
+Message-ID: <r1461365-9np6-n988-0288-9ps4o944qqp4@tzk.qr>
+References: <pull.1320.git.1660143750.gitgitgadget@gmail.com> <4d24a4345ba66031d2ccf7ce472ed93ace82e9d6.1660143750.git.gitgitgadget@gmail.com> <xmqq7d3gm1bl.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1496150523-1660642291=:241"
-X-Provags-ID: V03:K1:06/oLrng8c27r1KJY0ukG+IvugPpXIz82te7qOPv3zGgTVxd4yq
- 4Fax0Q2Y9DKcEHDRc5UxZpVUvQMSZjiw+EOYqMzo+sTPt1pO+oV8mTs1+e6WEvKiDY/Du6X
- ANNKybROYxJChG/pLoqvehN8SfjqluizdktuzCmpJ8Ly1aXyOJqKm4Cfr5UJceHQrDNPCMr
- MLSbGORP/epoHpydGyyUQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:A3fdYHmzpJA=:02d6WZ0NyuMnngF2y5j+Kd
- irsKsbPCDboALcnfVqKS43GjzhHhS7OtGTtrXsrK1+xN4zH33K8cxYPhdRyneHSlPqMfLASf0
- YKerUz1hmuWQd1QtxDlLEzmCPlGNL0lG6s+m1B+yicEfkUuA/Jy76RZPD0lNPoxFEZTZQnkbM
- odbWQ0PsYJocEF7TFB9KvkkHBLYWP5oV92R+Ilrw/e/KXp0wIwVNN+RWRcBwgVgxK2rsXvP5P
- RuxkeoM4C/YWrAcjDBG7D4QNKMYJqxT892OVyPp52dd1u0SDCbmfAiceBLEEjPRCnXAQ5Xm5m
- /wEbSC2SdA+Csp1fNWWhT2MvH23PvnaNv8uRVXO0I0PEIq3g3Sku84JRO076jh6QmriLwj9Er
- 6vm/7xv8euchrL4/HcTJkAM2MkV1ouSW840/k+NByQyMWBNThb1QlovasLV9k/k8+EUxU1dwP
- Ws4MMnv5tPnpP8cYV9DZrjyAqzu9E0FzroH+e4VpZuOtBNvE+f87A795NUQnbvqrMTL3V7Pdq
- LQzbbjY8MVpNzw9lxekzBJNEpeyCRtrYuRvkuUaH4IGaDRFKCAwbp338MXVZ+U9XvsxG1LVbf
- 8JqyPwNQ9n51RV+Eqbns5MHZ0/j3cGh3L5wnbOYMpvJMi0yMXHVHeSaKSUU0xxlX+qhFxsQx4
- EAliH1QGcTbkbdCYxuCF4V+7H/PCjUnn+go/IqfstJ2AMCqujBYkd14BYrCXQQMWqBhXIAuCR
- JffZ77ITC26Vb2M/aCsRm9mujcc3SRMQJyFbJ/BaCshrI0my/eJ3NTt+bm9vxUG+yz71+rhav
- 1hnWa0+RaSZ1FHLLw+KUEPp9IO9WfwZV3UR7Ptlgbv5BZML7e+LFJ6Pp3Z5pmo5KgQukm+7KE
- 4ZN2JlQyLm0uCKBqXVkzR/6mhSgwbd5boNzY9XDB14nVySv2403Fr0o25WQQMG83kFErluUvw
- OcYhh5ljR/S7mUKX+dhdAg6sIeSGf81ayEVLBzS8R+Lez8buZp58hCYpLFWr7YaXvgs+9Oae1
- XX3zY3+R5DoiXEIj/bhwenzB/JwH0jk2lT0lqP9fUPCJLUOwnkiHRkCLo4dyZ2NJ53c4/Y3nB
- MvFgWW4WdAxmSsqBtaajAcnvfsw2EgfnzTkNL+gb/rHynnVjO8R+dLz2w==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:NoNs6ulb+gMnNWU/7ycWilygcI0qJAvRe8CZp4aigF/ylIrPB4m
+ 1m25C54p7IIe6v1HmJBuejTMC/gVPWp8Dqq28PxO9llU/rwoBTaT75EGo7KAtMCQztmjlWl
+ sGAuCusde3yBBHt0sJ8YKGQ+PLaunm2RbYl2y+a2iWlOeJWFZNjyDXMOx/b1sFOVu1fcVzA
+ kUNZ0WplJzVQWXA3a5fzQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xG01TliZELs=:lxnYTfNCmlcWB6F6uRVfsG
+ xJq9p1UTPYr4mStpjBkwo+Xq+PdMdbIjDO2UBafwSdumXWKdbiZJbCLN7JB59zBMobs92U14+
+ ZGEYmbLj6rR8sLN3BhFjTVApVjlkPTCU6zbDJ8m6RbRC9ARXoJsv+v+PMH2tcH0lMIArsTlA6
+ l8bcGCPn+FCSv5AmEm5svAYvhOvPbe5tb2zBEkS+elcsoT6ZnRXhLxDM8gct2rB+ZQJS9gHmR
+ GEXcFFJKLR28W5w7317WKYlb8YuP0aWhknUZY5FIyAS8SKbEJ1BE8eEqHMZL81etMHLMdlz2o
+ T47NnHNSW3C7MqLV5+XBCOFGBiF9Z21t/UB5sYg0cs2KJto0UCw/UJZcVn3/MszHikdzzfVjx
+ SKP68VFAUFHhDDP8y/3XAK+acrJq3RxXtI+1P+P2fCADoUUHaukBnerJemtirgwNwxkewsInG
+ YA/bEjTv05h5zUNyI3p/h4VTEIJpwgyvPzI/VX4ZMSpO+fJe3Yq/2bIOWADNeSRNx0Ng6nfk9
+ lbm004lgPOIGzw5juohqa/blDDIp3unLSZr/WgCPdSfP9xLiMb2QxWxn4dTL/r29EHSE2pX7v
+ TCvshPY5RrcKhB76OZvp81iNoqJNT/QSEBghzSeXOQRoz3OOX1n/O5ZJOwwh8d7ArSYPdJM6U
+ YJ/91Xd7fXYUmhcX372VgYYekVY7VQ+9pI7O3nD/4BHjQyRQJEqHPt4+wJ1IJUpHly6+MsiCK
+ 9fkNKHah+45wyKF+cGbH9eJR0wuieT97lS7PblyYqLAdCPU2fopxu3O2ZgubkfEN3ftO6G+dk
+ q1Ym2f7FkYvzy3bd+FGrG7vuHuPe+UAGM8aO6EUxbWBky/MYCUsnbD/BGv0cR308OYrThqL+w
+ TKdyeMhKhGEGNpfx88koCRwZf0w5JPdMtJflc94nbJ5Lq4/BcAHRUXxKUl7tzyOYiMMJVr1+n
+ e/lQ3TIa8+8NaN50Mz2syWryU76qWSq6RdI7nxdSYFJab19MlXbF63EFba9PJ9fmVe77lQ7Vi
+ KH7JUAglv0vpArZFouycAwzNqM0vKU6VOWbeIW8HPB4Bk+1d4tCCPXygGAUIxGXWtbTUpywUK
+ mAEfTma8zNZimEtvvUj9p3/v6GsrewWa9KNVvwT8/NHsxSw/U/7A4DpFQ==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-1496150523-1660642291=:241
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, 10 Aug 2022, Junio C Hamano wrote:
 
-Hi Rub=C3=A9n,
-
-On Sat, 13 Aug 2022, Rub=C3=A9n Justo wrote:
-
-> On Mon, Aug 8, 2022 at 4:47 PM Junio C Hamano<gitster@pobox.com>  wrote:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
-> > The "-d" and "-D" options being the more detructive ones among other
-> > operation modes of the command, I am not sure if this change is even
-> > desirable.  Even if it were, the implementation to special case a
-> > single argument case like this ...
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > > +     if ((argc =3D=3D 1) && !strcmp(argv[0], "-")) {
-> > > +             argv[0] =3D "@{-1}";
-> > > +     }
-> > ... (by the way, we don't write braces around a single statement
-> > block) would invite cries from confused users why none of these ...
+> > In the interactive `add` operation, users can choose to jump to specif=
+ic
+> > hunks, and Git will present the hunk list in that case. To avoid showi=
+ng
+> > too many lines at once, only a maximum of 21 hunks are shown, skipping
+> > the "mode change" pseudo hunk.
 > >
-> >   $ git branch -m - new-name
-> >   $ git branch new-branch -
-> >   $ git branch --set-upstream-to=3D<upstream> -
+> > The comparison performed to skip the "mode change" pseudo hunk (if any=
+)
+> > compares a signed integer `i` to the unsigned value `mode_change` (whi=
+ch
+> > can be 0 or 1 because it is a 1-bit type).
 > >
-> > work and "-" works only for deletion.
+> > According to section 6.3.1.8 of the C99 standard (see e.g.
+> > https://www.open-std.org/jtc1/sc22/WG14/www/docs/n1256.pdf), what shou=
+ld
+> > happen is an automatic conversion of the "lesser" type to the "greater=
+"
+> > type, but since the types differ in signedness, it is ill-defined what
+> > is the correct "usual arithmetic conversion".
+> >
+> > Which means that Visual C's behavior can (and does) differ from GCC's:
+> > When compiling Git using the latter, `add -p`'s `goto` command shows n=
+o
+> > hunks by default because it casts a negative start offset to a pretty
+> > large unsigned value, breaking the "goto hunk" test case in
+> > `t3701-add-interactive.sh`.
+> >
+> > Let's avoid that by converting the unsigned bit explicitly to a signed
+> > integer.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
 >
-> Agree. But the approach is to ease the deletion of previous branch,
-> aligned with merge:
+> This looks more like a fix to a general problem, not limited to
+> windows or cmake, that we had since 9254bdfb (built-in add -p:
+> implement the 'g' ("goto") command, 2019-12-13).
 >
-> $ git merge - -
-> merge: - - not something we can merge
-> $ git merge - old-branch
-> merge: - - not something we can merge
+> Please pull this out of the series and let's have it reviewed
+> separately.
 
-This is confusing me: how is the patch supporting `git branch -d -`
-aligned with the presented `git merge` invocations?
+The scope of this patch series is to fix running the tests in Visual
+Studio when building using CMake.
 
-In any case, you now have two sets of feedback that say that
-special-casing one particular command-line and leaving all other
-invocations using `-` unchanged is undesirable, if you needed more than
-one such feedback.
+Pulling out this patch would break that patch series because it would
+leave that breakage in place.
+
+Except if you are asking to put this patch series on the back burner and
+prioritize the patch that fixes an ambiguous implicit cast between signed
+and unsigned data types?
+
+However, that would mean that I'd now have to address all of those
+implicit casts, which is unfortunately a larger amount of work than I can
+justify to take on.
+
+Therefore I move that in this instance, the perfect is the enemy of the
+good, and that the patch should remain within this patch series, even if
+the larger-scoped project to avoid any implicit signed/unsigned casts
+remains unaddressed.
+
+BTW I would have expected your review to ask the (in hindsight, obvious)
+question why the test suite still passes even with `vs-test` exercising
+the code that is compiled using Visual C?
+
+The answer to that would have been that the `vs-test` job of our CI runs
+defines `NO_PERL`, and t3701 is skipped completely if that is the case.
 
 Ciao,
 Dscho
-
---8323328-1496150523-1660642291=:241--
