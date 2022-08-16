@@ -2,124 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 827E6C25B0E
-	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 22:15:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44048C25B0E
+	for <git@archiver.kernel.org>; Tue, 16 Aug 2022 23:33:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237517AbiHPWPU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 18:15:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37322 "EHLO
+        id S232772AbiHPXdZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 19:33:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237358AbiHPWPQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 18:15:16 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2716078225
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 15:15:13 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E884813565E;
-        Tue, 16 Aug 2022 18:15:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pYNUpUJOYXIAahSKLnucPyyu5g/MGg49NbbNLL
-        KV4oU=; b=JDsC/UGhyQnBIlBuZZVIkQV/NkMe10+D7QQMGwVXKO3wpaIRaePHVd
-        fiXAMQVXEnaWCbpTOJYhyNWQb3SUp1rz/eChbS3JtROexsDRcbQgN1Mb68wfBFw0
-        /dT5vgPHbWbTwY6W6meCQADWfmFh+Bp34jmWlBotttrtYmWTpklJ4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E07C613565D;
-        Tue, 16 Aug 2022 18:15:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 58029135654;
-        Tue, 16 Aug 2022 18:15:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, johannes.schindelin@gmx.de,
-        mjcheetham@outlook.com
-Subject: Re: [PATCH 1/3] scalar: enable built-in FSMonitor on `register`
-References: <pull.1324.git.1660673269.gitgitgadget@gmail.com>
-        <62682ccf6964d6eebb67491db4a9476dbab56671.1660673269.git.gitgitgadget@gmail.com>
-        <xmqq4jybud6h.fsf@gitster.g>
-        <f766b31f-2f0c-316a-a445-407b8c5baddc@github.com>
-Date:   Tue, 16 Aug 2022 15:15:10 -0700
-In-Reply-To: <f766b31f-2f0c-316a-a445-407b8c5baddc@github.com> (Victoria Dye's
-        message of "Tue, 16 Aug 2022 14:57:01 -0700")
-Message-ID: <xmqqzgg3sump.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229453AbiHPXdX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 19:33:23 -0400
+Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9300552E63
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 16:33:20 -0700 (PDT)
+Received: by mail-ua1-x92a.google.com with SMTP id f15so4603716uao.12
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 16:33:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=DDigKaj41WDaXwB9XOpMCoSzyCTQwkygeymbGlZc/cU=;
+        b=CQkQoxRWX5teqMZXKgjE1PbE3wvJH7Fhc4xZVNL45UxMAxtxuw8G7YJ3PHqenCnuT9
+         W4lsj0kxehESajxwQAEWCC83cQNbz9heF658jJ9vC22HbKY014vJafsmTmanO/JkcEJ+
+         rmsOMY6xmbdTWYQo7wcwBlujtf+q5e2NWgn6j7fO33XgjZgMiN8ykUKeOnE82hafOBtL
+         XpoVD19Z5pExJlVVuxKMvJJ91C7xqQhDuK7tyyy85oWeALEO74OpuS2Zq45flJJuR62O
+         Y6+Ew2FD5qVdFJ16GtmcwBo7x2mAjbP7apUwaY45DxZRGWHPdwKZ/csTrveVw0/dGgfi
+         zD0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=DDigKaj41WDaXwB9XOpMCoSzyCTQwkygeymbGlZc/cU=;
+        b=RqCAo8dQO5Kr+1uhh/TOfRzAOYWAdrh20S+j3YITA0xhomKwcJBRtCAKYCiISP7yIe
+         S5L0oTTJIwTKFOBUjNt0duzlUDFdxyAe5QXg0UFq2UXkhSve13gTI/OLtzu5GMmzX2wg
+         PH6VEhln06npGQWzaJ2/x1bzkbUiEgqncI5aQkedoapsSL1tbYt02uUkJawn2f3sHK9Z
+         YsfLFSaOqA1Q/01ui6HJ6o2ElVz8NEM0XFjm0oA0y4F4FvxeqEuyVZU5zh1rNSYbNdLQ
+         9UcARmm0kWnw8WUsMBsKCgZynj5+HHbjzQpkC/kmBuM2iEBRKUlmtLWVh5CQbau2YbEg
+         a+5A==
+X-Gm-Message-State: ACgBeo0PJM/N1XCw3MFAOu11buKXAJ1eIP2Zj3l6RzzJzr3y/g2Wu7j+
+        vXhYtHCgzRfR+f7squmCeiKyUXsbyk8My5a90aFooGLI
+X-Google-Smtp-Source: AA6agR4sb23AO3NOJy2ogF1I7iLJSj4memNlgQhLYzWKGBUvR6kguBdRviHzC/Y5yQobk+lb2yD3OvJ9jzD+HL2evqA=
+X-Received: by 2002:ab0:5a9b:0:b0:38c:6969:7bae with SMTP id
+ w27-20020ab05a9b000000b0038c69697baemr9726701uae.3.1660692799666; Tue, 16 Aug
+ 2022 16:33:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E51E864A-1DB0-11ED-84D1-CB998F0A682E-77302942!pb-smtp2.pobox.com
+References: <pull.1302.git.1658798595633.gitgitgadget@gmail.com>
+ <pull.1302.v2.git.1659132518935.gitgitgadget@gmail.com> <CAGTqyRw-SYDbQy9aktq5s3ZhoDhUOCf-pEopjH9m7v5+PH7Qqg@mail.gmail.com>
+ <xmqqy1vq3zm3.fsf@gitster.g> <08a8e78d-7861-3da3-f6f6-bba466655071@gmail.com>
+ <xmqqilmt4huq.fsf@gitster.g> <CAGTqyRyuV42-NRW_OKzy9F+LbFcZp-QZkM73LqrNkmOi60oU+w@mail.gmail.com>
+In-Reply-To: <CAGTqyRyuV42-NRW_OKzy9F+LbFcZp-QZkM73LqrNkmOi60oU+w@mail.gmail.com>
+From:   Justin Donnelly <justinrdonnelly@gmail.com>
+Date:   Tue, 16 Aug 2022 19:32:43 -0400
+Message-ID: <CAGTqyRxt-+vLQPNbRCgKv3VvUMNEQF47DUH2Ht+CsKqDxgfjpw@mail.gmail.com>
+Subject: Re: [PATCH v2] git-prompt: show presence of unresolved conflicts at
+ command prompt
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Justin Donnelly via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        newren@gmail.com, phillip.wood@dunelm.org.uk,
+        Johannes.Schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Victoria Dye <vdye@github.com> writes:
+On Tue, Aug 16, 2022 at 12:20 AM Justin Donnelly
+<justinrdonnelly@gmail.com> wrote:
+>
+> On Mon, Aug 15, 2022 at 12:00 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Phillip Wood <phillip.wood123@gmail.com> writes:
+> >
+> > > I had not commented as I don't use the prompt. I have just had a quick
+> > > read and I wonder if it would be more efficient to use
+> > >     git diff --cached --quiet --diff-filter=U
+> > > rather than
+> > >     git ls-files --unmerged 2>/dev/null
+> > > to check if there are unmerged entries,
+> >
+> > The former reads the on-disk index into in-core index, and reads
+> > tree objects (recursively for subdirectories) referenced by the
+> > HEAD, walks both in parallel to find differences and filters out the
+> > result to unmerged (I am not sure how well diff-filter works with
+> > unmerged paths, though).
+> >
+> > The latter rads the on-disk index into in-core index, scans the
+> > entries and finds unmerged entries.
+> >
+> > So if we compare the overhead to run either command standalone, I am
+> > reasonably sure that the latter would be a lot more efficient.
+> >
+>
+> Here's how I tested performance. The setup and test execution code are
+> below. I tested each technique (`git ls-files --unmerged 2>/dev/null`
+> and `git diff --cached --quiet --diff-filter=U`) 3 times and listed
+> the results. Please let me know if you see any problems with the
+> methodology.
+>
+> Setup:
+> mkdir -p /tmp/perf/base && cd /tmp/perf/base
+> git clone https://github.com/torvalds/linux.git
+>
+> Each test:
+> cd /tmp/perf
+> rm -rf test
+> cp -r base test
+> cd test/linux/drivers/watchdog
+> git switch --detach v6.0-rc1 # pick some commit for consistency
+> for f in *; do echo "/* a */" >> $f; done # 182 files
+> git stash
+> for f in *; do echo "/* b */" >> $f; done
+> git commit -am "adding to end of files in watchdog directory"
+> git stash pop
+> time [[ $(git ls-files --unmerged 2>/dev/null) ]]
+> # OR run the next one instead
+> # time ! git diff --cached --quiet --diff-filter=U 2>/dev/null
+>
+> Results (hopefully this text lines up better for others than it does for me):
+> time [[ $(git ls-files --unmerged 2>/dev/null) ]]
+>       run 1     run 2     run3
+> real  0m0.008s  0m0.009s  0m0.008s
+> user  0m0.005s  0m0.001s  0m0.004s
+> sys   0m0.004s  0m0.008s  0m0.004s
+>
+> time ! git diff --cached --quiet --diff-filter=U 2>/dev/null
+>       run 1     run 2     run3
+> real  0m0.009s  0m0.009s  0m0.007s
+> user  0m0.004s  0m0.009s  0m0.007s
+> sys   0m0.004s  0m0.000s  0m0.000s
+>
 
->> 	/* we do not care if pipe_command() succeeds or not */
->> 	(void) pipe_command(...);
->> 
->>         /*
->>          * we check ourselves if we do have a usable daemon 
->>          * and that is the authoritative answer.  we were asked
->>          * to ensure that usable daemon exists, and we answer
->>          * if we do or don't.
->>          */
->> 	if (fsmonitor_ipc__get_state() != IPC_STATE__LISTENING)
->> 		res = error(...);
->> 
->> may be more true to the spirit of the code.
->
-> This is an unintentional artifact of some minor refactoring of the original
-> versions in 'microsoft/git'. Previously [1], there was no
-> 'fsmonitor_ipc__get_state()' check before calling 'git fsmonitor--daemon
-> start', so we'd expect failures whenever FSMonitor was already running. To
-> avoid making that 'pipe_command()' call when FSMonitor was already running,
-> I added an earlier call to 'fsmonitor_ipc__get_state()'. But, because I
-> didn't remove the later check, the code now implies that 'pipe_command()'
-> may give us "false negatives" (that is, fail but still manage to start the
-> FSMonitor).
->
-> I left the extraneous check in to be overly cautious, but realistically I
-> don't actually expect 'git fsmonitor--daemon start' to give us any false
-> positives or negatives. The code should reflect that:
->
-> 	int res = 0;
-> 	if (fsmonitor_ipc__is_supported() &&
-> 	    fsmonitor_ipc__get_state() != IPC_STATE__LISTENING) {
-> 		struct strbuf err = STRBUF_INIT;
-> 		struct child_process cp = CHILD_PROCESS_INIT;
->
-> 		/* Try to start the FSMonitor daemon */
-> 		cp.git_cmd = 1;
-> 		strvec_pushl(&cp.args, "fsmonitor--daemon", "start", NULL);
-> 		if (pipe_command(&cp, NULL, 0, NULL, 0, &err, 0))
-> 			res = error(_("could not start the FSMonitor daemon: %s"),
-> 				    err.buf);
->
-> 		strbuf_release(&err);
-> 	}
->
-> 	return res;
->
-> I'll re-roll with this shortly.
+Actually, what's probably more important is how long the commands take
+when there is no conflict (that will be a far more common situation).
+I tested that today, and the numbers were about the same.
 
-OK, that is one valid way to go about it.  After I sent my review
-comments, I however briefly wondered if we might *not* know if we
-are already running one, there is a reliable exclusion mechansim
-to prevent more than one monitor running at the same time, and we
-are running pipe_command(), fully expecting that it may fail when
-there is already a working one and a call to pipe_command() that
-is not "checked" is just being lazy because we can afford to be
-lazy here.
-
-If that is not what is going on, then the cleaned up version I am
-responding to does look more straight-forward and easy to
-understand.  On the other hand, if "we can start more than we need
-because we can rely on the exclusion mechanism" is what is going on,
-that is fine as well, but it does need to be documented, preferrably
-as in-code comment.
-
-Thanks.
+> As you can see, the results are basically the same. I'm not sure if
+> real world usage would yield different results. So for now, I'll defer
+> to Junio's analysis and stick with `ls-files --unmerged`.
+>
+> > But if the shell prompt code already needs to run the diff-index for
+> > other reasons (e.g. to show if there is any modification added to
+> > the index), that may change the equation.  Instead of adding a
+> > separate and extra call to "ls-files -u", it might be more efficient
+> > if you can somehow piggy-back on an existing diff-index call.  For
+> > example, you may be running "git diff --cached --quiet" for exit code
+> > to show if any change has been added, but you can instead run "git
+> > diff --no-ext-diff --no-renames --cached --name-status" and (1) if
+> > there is any output, then the index is dirty, and (2) if there is a
+> > line that begins with "U", you have an unmerged path right there.
+>
+> It had not occurred to me to consolidate and piggy-back off of other
+> commands. I find the idea intriguing, but am not sure it makes sense
+> to do it for only a single feature (especially this feature since the
+> time to determine the conflict is short). I think it would make the
+> code more complex, and it might be better to take a holistic approach
+> to such an effort. Let me know if you strongly disagree.
+>
+> Thanks,
+> Justin
