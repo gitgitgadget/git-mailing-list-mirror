@@ -2,56 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86579C25B08
-	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 21:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEB99C25B08
+	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 22:42:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241670AbiHQVpT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Aug 2022 17:45:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47618 "EHLO
+        id S239161AbiHQWmN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Aug 2022 18:42:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232315AbiHQVpS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Aug 2022 17:45:18 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF9D12AE5
-        for <git@vger.kernel.org>; Wed, 17 Aug 2022 14:45:17 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 00A7312E4FB;
-        Wed, 17 Aug 2022 17:45:17 -0400 (EDT)
+        with ESMTP id S233371AbiHQWmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Aug 2022 18:42:12 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C779998D09
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 15:42:10 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 70C9F1433F5;
+        Wed, 17 Aug 2022 18:42:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NeKJXd39kMeaf8A7f6BTJ4Inokz6Acd/gfS7t1
-        AR0zo=; b=cc3E/YGZh6n8hk64gOh9zHnowcRSiea8TZUjcta2hdBez88Tzr8Vdt
-        qBCvKl0ctU6LpSF1lOeX/Mk3XF/z1MiPIV8vDCyrKzPzPuoHo4EVzbneQykgG2Ht
-        84O2WMc5Mm4/W09jeI6/EDuYiaPMaIh3QQFnFNB341bgFfcxcYtJM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED6F812E4F9;
-        Wed, 17 Aug 2022 17:45:16 -0400 (EDT)
+        :content-type; s=sasl; bh=FEgUb2YPsc8UFqOdVOnZssRX3WJvY6ZsbIvdIh
+        hiDkE=; b=d66eoqq4er62/0qj3fhmuzJ0AwZk09AmTuXW21uo7RBKumQiiX3Od2
+        Ldl+vNHu1v4mS+RUUBif0176NxZsCf/ka/uP0WeiHCEz0X9Bxmbd3QH0zctxpgUw
+        kQKImR2rgkhFMumRUHiZQ5+4loUwrrkgFHMkHmkiPy3PHwz5CXDjE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 685E61433F4;
+        Wed, 17 Aug 2022 18:42:09 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 540D212E4F6;
-        Wed, 17 Aug 2022 17:45:16 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D13301433F3;
+        Wed, 17 Aug 2022 18:42:08 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 2/3] merge-ort: add comment to avoid surprise with
- new sub_flag variable
-References: <pull.1325.git.1660696081.gitgitgadget@gmail.com>
-        <pull.1325.v2.git.1660718028.gitgitgadget@gmail.com>
-        <340c0f46f74acd641945fceba5ab5feac011ae60.1660718028.git.gitgitgadget@gmail.com>
-Date:   Wed, 17 Aug 2022 14:45:15 -0700
-In-Reply-To: <340c0f46f74acd641945fceba5ab5feac011ae60.1660718028.git.gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 2/2] revision: allow --ancestry-path to take an argument
+References: <pull.1303.git.1660704498.gitgitgadget@gmail.com>
+        <99287b67fd1c1e9fbceb4877738fb0aed722ec4a.1660704498.git.gitgitgadget@gmail.com>
+Date:   Wed, 17 Aug 2022 15:42:07 -0700
+In-Reply-To: <99287b67fd1c1e9fbceb4877738fb0aed722ec4a.1660704498.git.gitgitgadget@gmail.com>
         (Elijah Newren via GitGitGadget's message of "Wed, 17 Aug 2022
-        06:33:47 +0000")
-Message-ID: <xmqqedxetuhg.fsf@gitster.g>
+        02:48:18 +0000")
+Message-ID: <xmqqpmgysda8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E19E56B0-1E75-11ED-8158-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: D3A26CA6-1E7D-11ED-A1D8-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -60,51 +57,174 @@ X-Mailing-List: git@vger.kernel.org
 
 > From: Elijah Newren <newren@gmail.com>
 >
-> Commit 4057523a40 ("submodule merge: update conflict error message",
-> 2022-08-04) added a sub_flag variable that is used to store a value from
-> enum conflict_and_info_types, but initializes it with an invalid value
-> of -1.  The code may never set it to a valid value, and use the invalid
-> one.  This can be surprising when reading over the code at first, but it
-> was intentional.  Add a comment making it clear that it is okay to be
-> using an invalid value, due to how it is used later.
+> We have long allowed users to run e.g.
+>     git log --ancestry-path next..seen
+> which shows all commits which satisfy all three of these criteria:
+>   * are an ancestor of seen
+>   * are not an ancestor next
+>   * have next as an ancestor
 
-The current code uses -1 as the "suggest the default course of
-action", so -1 is very much a "valid value" from the viewpoint of
-the code that suggests how to resolve.  It indeed is an invalid
-value from the viewpoint of those who maintain conflict_and_info_types
-enum.
+Is it a very good example, though?  Nothing builds on next, and next
+is not an ancestor of seen, so the command without --ancestry-path
+does give us individual commits that are not in 'next' yet, plus all
+the merge commits in master..seen but with --ancestry-path the
+answer is most likely an empty set.
 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  merge-ort.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/merge-ort.c b/merge-ort.c
-> index 67159fc6ef9..0a935a8135f 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -1886,7 +1886,7 @@ cleanup:
->  		const char *abbrev;
+If you replace 'next' with 'master', it does start to make sense,
+but that is a bit too straight first-parent merge chain that may not
+be all that interesting.
+
+> This commit allows another variant:
+>     git log --ancestry-path=$TOPIC next..seen
+> which shows all commits which satisfy all of these criteria:
+>   * are an ancestor of seen
+>   * are not an ancestor of next
+>   * have $TOPIC in their ancestry-path
+> that last bullet can be defined as commits meeting any of these
+> criteria:
+>     * are an ancestor of $TOPIC
+>     * have $TOPIC as an ancestor
+>     * are $TOPIC
+
+So, I have en/ancestry-path-in-a-range topic merged somewhere
+between 'master' and 'seen'.  Here is what I see:
+
+    $ seen/git log --oneline --ancestry-path=en/ancestry-path-in-a-range master..seen
+    21aef6c754 Merge branch 'ab/submodule-helper-leakfix' into seen
+    2a57fcc25e Merge branch 'ab/submodule-helper-prep' into seen
+    72ff5f5d3a ###
+    edb5cf4c31 Merge branch 'cw/remote-object-info' into seen
+    cc8f65a665 Merge branch 'ag/merge-strategies-in-c' into seen
+    c1bacacabf Merge branch 'es/mark-gc-cruft-as-experimental' into seen
+    fdf2d207d2 Merge branch 'js/bisect-in-c' into seen
+    2a1bbfc016 Merge branch 'po/glossary-around-traversal' into seen
+    7ecf004b9e Merge branch 'vd/scalar-enables-fsmonitor' into jch
+    9dba189986 Merge branch 'en/ancestry-path-in-a-range' into jch
+    4461e34d7d revision: allow --ancestry-path to take an argument
+    0605b4aad9 rev-list-options.txt: fix simple typo
+
+which is very much expected.  Two commits are what we want to
+highlight, and its merge into the first-parent-chain that leads to
+'seen', and all its descendants on 'seen' are shown.
+
+Due to the way "ancestry-path" is defined, replacing the value to
+"--ancestry-path" from 4461e34d7d to 0605b4aad9 would not change the
+output, which is also expected.  If this were a three-commit topic,
+giving the middle commit would find both the first one (i.e. the
+ancestor) and the third one (i.e. the descendant) in the topic, while
+excluding the much-less-interesting base commit and its ancestors
+the topic builds on. 
+
+I am not exactly sure when this feature is useful, though.  It is
+handy to be able to enumerate descendants of a given commit, so
+perhaps the user knows about 0605b4aad9 and is trying to find other
+commits on the same topic, or something?  But then the merges nearer
+the tip of 'seen' than 9dba189986 are not very useful for that
+purpose.  It somehow feels like a solution in search of a problem.
+
+> diff --git a/revision.c b/revision.c
+> index 0c6e26cd9c8..660f1dd1b9b 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1105,7 +1105,7 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
+>  			   struct commit_list **list, struct prio_queue *queue)
+>  {
+>  	struct commit_list *parent = commit->parents;
+> -	unsigned left_flag;
+> +	unsigned left_flag, ancestry_flag;
 >  
->  		util = xmalloc(sizeof(*util));
-> -		util->flag = sub_flag;
-> +		util->flag = sub_flag; /* May still be -1 */
->  		util->abbrev = NULL;
->  		if (!sub_not_initialized) {
->  			abbrev = repo_find_unique_abbrev(&subrepo, b, DEFAULT_ABBREV);
+>  	if (commit->object.flags & ADDED)
+>  		return 0;
+> @@ -1161,6 +1161,7 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
+>  		return 0;
+>  
+>  	left_flag = (commit->object.flags & SYMMETRIC_LEFT);
+> +	ancestry_flag = (commit->object.flags & ANCESTRY_PATH);
 
-This new comment may be a slight improvement, but a valid value of
-sub_flag is used only to signal the situation where the code does
-not know what to suggest, which feels backwards for longer-term code
-evolution.  Presumably, we would use the util->flag field to store
-which of the known cases we know what to suggest as we know better.
+Wouldn't we want
 
-I wonder if we should initialize the variable to the most generic
-CONFLICT_SUBMODULE_FAILED_TO_MERGE instead of -1.  The value would
-mean "use the default suggestion", and the two known unworkable
-values (not-initialized and history-not-available) are currently
-handled according to what these two values mean.  We may later add
-more specialization based on other CONFLICT_SUBMODULE_* values.
+	if (revs->ancestry_path)
+		ancestry_flag = (commit->object.flags & ANCESTRY_PATH);
 
-Thanks.
+instead, so that the propagation of contaminated flag bits ...
+
+>  	for (parent = commit->parents; parent; parent = parent->next) {
+>  		struct commit *p = parent->item;
+> @@ -1181,6 +1182,8 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
+>  			if (!*slot)
+>  				*slot = *revision_sources_at(revs->sources, commit);
+>  		}
+> +		if (revs->ancestry_path)
+> +			p->object.flags |= ancestry_flag;
+>  		p->object.flags |= left_flag;
+
+... can become a simple
+
+		p->object.flags |= ancestry_flag;
+
+here?  Or even just use a single variable to compute the set of
+flags to pass down i.e.
+
+	pass_flags = commit->object.flags & (SYMMETRIC_LEFT | ANCESTRY_PATH);
+
+before the loop, and then pass these two bits down at once, i.e.
+
+-  		p->object.flags |= left_flag;
++  		p->object.flags |= pass_flags;
+
+taking advantage of the fact that ANCESTRY_PATH and SYMMETRIC_LEFT
+bits can be set to any object only when these features are in use?
+
+Or did I misread the patch and sometimes ANCESTRY_PATH bit is set on
+objects even when revs->ancestry_path is not in use?
+
+> +static void limit_to_ancestry(struct commit_list *bottoms, struct commit_list *list)
+>  {
+>  	struct commit_list *p;
+>  	struct commit_list *rlist = NULL;
+> @@ -1323,7 +1333,7 @@ static void limit_to_ancestry(struct commit_list *bottom, struct commit_list *li
+>  	for (p = list; p; p = p->next)
+>  		commit_list_insert(p->item, &rlist);
+>  
+> -	for (p = bottom; p; p = p->next)
+> +	for (p = bottoms; p; p = p->next)
+>  		p->item->object.flags |= TMP_MARK;
+>  
+>  	/*
+> @@ -1356,38 +1366,39 @@ static void limit_to_ancestry(struct commit_list *bottom, struct commit_list *li
+>  	 */
+>  
+>  	/*
+> -	 * The ones that are not marked with TMP_MARK are uninteresting
+> +	 * The ones that are not marked with either TMP_MARK or
+> +	 * ANCESTRY_PATH are uninteresting
+>  	 */
+>  	for (p = list; p; p = p->next) {
+>  		struct commit *c = p->item;
+> -		if (c->object.flags & TMP_MARK)
+> +		if (c->object.flags & (TMP_MARK | ANCESTRY_PATH))
+>  			continue;
+>  		c->object.flags |= UNINTERESTING;
+>  	}
+>  
+> -	/* We are done with the TMP_MARK */
+> +	/* We are done with TMP_MARK and ANCESTRY_PATH */
+>  	for (p = list; p; p = p->next)
+> -		p->item->object.flags &= ~TMP_MARK;
+> -	for (p = bottom; p; p = p->next)
+> -		p->item->object.flags &= ~TMP_MARK;
+> +		p->item->object.flags &= ~(TMP_MARK | ANCESTRY_PATH);
+> +	for (p = bottoms; p; p = p->next)
+> +		p->item->object.flags &= ~(TMP_MARK | ANCESTRY_PATH);
+>  	free_commit_list(rlist);
+>  }
+
+We have called process_parents() to paint ancestor commits that can
+be reached from the commit(s) of interest.  This helper function is
+called after that is done, and propagates the ancestry_path bit in
+the reverse direction, i.e. from parent to child.
+
+Once we are done with this processing, we no longer need
+ANCESTRY_PATH bit because the surviving ones without UNINTERESTING
+bit set are the commits on the ancestry_path.  OK.
 
