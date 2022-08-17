@@ -2,132 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9CDEC25B08
-	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 17:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75BA0C25B08
+	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 17:38:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238051AbiHQRge (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Aug 2022 13:36:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59688 "EHLO
+        id S237914AbiHQRiN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Aug 2022 13:38:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241254AbiHQRgb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Aug 2022 13:36:31 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23CAEA1A53
-        for <git@vger.kernel.org>; Wed, 17 Aug 2022 10:36:30 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id k14so12651858pfh.0
-        for <git@vger.kernel.org>; Wed, 17 Aug 2022 10:36:30 -0700 (PDT)
+        with ESMTP id S237097AbiHQRiL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Aug 2022 13:38:11 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6E2BE04
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 10:38:09 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id m17so1468660qvv.7
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 10:38:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=0jfsMPjk5mZH0qGaH3yjNv5kWoZyiS4dsXLE2yR65cA=;
-        b=MI15K+r6jq7cD1HmWgqLOBcYqr/O4mz0gif+8VE3S10o9fGdw2H/hkaBOmcWK81nm+
-         xpKSnAG54Dvqkf77LTXnza2r2taDN+3KmHjR/kY9g3S+TZJrNHSaFWJWoOnYtwbFxrxH
-         O0RVHKYRGcnV/kkocFdjTIQX+CUKu+KwrnDow29yQbUjBK1aLaPxURPU1MczVi5qraR5
-         iJH4301LQKp4RhKFy4UYWM6O8TTwG7+RjR22kgot4y1YBikmT1cd9oGS+R1jSOfKaYTy
-         kDcpEJAFZizP9kZn2T8xbeeBUDJl4Oy/Cn06dFX/FYnslvkYC1IOC1SvbwSPQlLdfs1F
-         JE3Q==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=Qa/9NBoH5HQt5QfBt9bzQlG2DWTSDELVJF/2AS+69Gw=;
+        b=Z5U+K7gwQXobTRXtXUKg3a0Sgw3ONsCJ61fxyfynBRG1xA63V/9s8W8Q73V549XGCe
+         HXhkICoPmaDYJvSnX36mxM3qKYgaQCIctKJfa3Dlf4QKhUyeaRbWLVWh0OArp/3X1Jz5
+         FAuOd0+c3Nz31dB/Nv8DLvmkJ0CVPkqhAuH8I24SlR5Rm4FTN2MYIqE6lYBf8Xly9lyW
+         J8JqaK68ECHPDBOCIDURkahjbchKCNs1YfI4v+dWnxh8+fvvIRszh6EkxQK8PH2CWKOl
+         IyO//Eet2oVlHy4hKLvYg07avNZ39wLgKf2+KHcNtgruWaeAhHl2wXNT3QjskOzC8Ttd
+         gWMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=0jfsMPjk5mZH0qGaH3yjNv5kWoZyiS4dsXLE2yR65cA=;
-        b=5b+wt9TTgCq1t1PkYSrhvPIoCKs8+52NM9YrBOluOwtn7kdpp41IpNQNPbOyKAj5U1
-         RY22l6WCgktRo058b+f3ESiuOmnCHyg2Z534m0+UQgQEGxT4l5aoZXrAnE+tux4h83iq
-         FNGCWGYi0n0NHbTfmqUvINnlZMFRjn7yKcH68ZaMqvHonExZu6NXi0Skh3Gsjd9W93ng
-         JUd1r8WRE0qLHjrPO/g20SpH2SXjHvbBLS1kzTpT8Dtf0VPb32m1hUH5xW8KNew+2vC0
-         EuXj786R9ni/1uH8NkHxCwHkdeBHJGKL0cw2FJJDlFI4SC0TbLNLBctdKXvvMm1VjQzf
-         gWnQ==
-X-Gm-Message-State: ACgBeo2SdMbSykot6Z69aHfKNid4BUyQbznIbc1M5AX+Mbr9inI/kjyw
-        DpcwLVsyWFjWpm32QZsRUidz
-X-Google-Smtp-Source: AA6agR4PfmnqzXMPlng978c3YZYE+/fHZAV/vDlHP99sbXpereQc/wgTacrSEqxSYStoM4USxE3OYw==
-X-Received: by 2002:a63:170d:0:b0:415:f76d:45e1 with SMTP id x13-20020a63170d000000b00415f76d45e1mr22576389pgl.171.1660757789493;
-        Wed, 17 Aug 2022 10:36:29 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id cs7-20020a17090af50700b001f7613a9d0dsm1772943pjb.52.2022.08.17.10.36.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Aug 2022 10:36:28 -0700 (PDT)
-Message-ID: <6c39fc96-2e88-297e-38df-4bcb88447972@github.com>
-Date:   Wed, 17 Aug 2022 10:36:27 -0700
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=Qa/9NBoH5HQt5QfBt9bzQlG2DWTSDELVJF/2AS+69Gw=;
+        b=q42pG2gaedQ1zWgXDj6hklH+5UfkftoP5bX7MnRyePbvSzfF0ZCoPKIoKeJddMw492
+         T+2c0F9pYce0ZDJOayedbFubhHH2ZQY0rxSdvbi+uQavIomWVA0oM+h+J/XMLTl3P/4a
+         9WNIp9qgEcoQ4JBn5ZT8h/yL4pmvTFCY8ivsCz7tAiGhX3231V2Z9kHmN6H/PkEaFR+G
+         9/SccFjNuAvyCaxXExKgO5DpMoSo2oDYrX3GY/ed4/D+cE/We+7kIqkvzdT+Fa6UTOl6
+         y7cxrVuye0MBIuluffuhekV032ReA0Pxq+J5gC/QK2+CXIvRUatc4Y+DAV7ksOqpLvn0
+         j5Pg==
+X-Gm-Message-State: ACgBeo3yX91/todl+odAGpMRNYUs1P2l04tWCECR5Lx7ZrCOYNB7ujHd
+        DW6s0ShhP9DGduBWRm5CU2w4J8YbEYOEvAPD1as=
+X-Google-Smtp-Source: AA6agR53vWcpVFXiUiHHK+uaoyM79KR6CDdIwPcmEnw05bkAzaK0nL34Uk/HIWsPhNOWoOJc8hnFnGIckGZNs3vF0+c=
+X-Received: by 2002:a05:6214:20e7:b0:479:6ed5:e5ff with SMTP id
+ 7-20020a05621420e700b004796ed5e5ffmr23102640qvk.69.1660757888800; Wed, 17 Aug
+ 2022 10:38:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.12.0
-Subject: Re: [PATCH v2 4/5] scalar unregister: stop FSMonitor daemon
-Content-Language: en-US
-To:     Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de, mjcheetham@outlook.com,
-        gitster@pobox.com
-References: <pull.1324.git.1660673269.gitgitgadget@gmail.com>
- <pull.1324.v2.git.1660694290.gitgitgadget@gmail.com>
- <fc4aa1fde31fa0726cde2c1d4e41f3f140fff6f6.1660694290.git.gitgitgadget@gmail.com>
- <2cbbd732-b9e7-fe8b-9c77-f86a856d06c7@github.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <2cbbd732-b9e7-fe8b-9c77-f86a856d06c7@github.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+ <20220817075633.217934-2-shaoxuan.yuan02@gmail.com> <80f24382-1188-d450-d1e2-42f68c08e60b@github.com>
+In-Reply-To: <80f24382-1188-d450-d1e2-42f68c08e60b@github.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 17 Aug 2022 10:37:58 -0700
+Message-ID: <CABPp-BGvihOqmz14CBudQ=7_=QXc-3NN3o3Tmy=MY3ykkqwPiA@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] builtin/grep.c: add --sparse option
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee wrote:
-> On 8/16/2022 7:58 PM, Johannes Schindelin via GitGitGadget wrote:
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->>
->> Especially on Windows, we will need to stop that daemon, just in case
->> that the directory needs to be removed (the daemon would otherwise hold
->> a handle to that directory, preventing it from being deleted).
-> 
->> +static int stop_fsmonitor_daemon(void)
->> +{
->> +	assert(fsmonitor_ipc__is_supported());
->> +
->> +	if (fsmonitor_ipc__get_state() == IPC_STATE__LISTENING)
->> +		return run_git("fsmonitor--daemon", "stop", NULL);
->> +
->> +	return 0;
->> +}
->> +
->>  static int register_dir(void)
->>  {
->>  	if (add_or_remove_enlistment(1))
->> @@ -281,6 +291,9 @@ static int unregister_dir(void)
->>  	if (add_or_remove_enlistment(0))
->>  		res = error(_("could not remove enlistment"));
->>  
->> +	if (fsmonitor_ipc__is_supported() && stop_fsmonitor_daemon() < 0)
->> +		res = error(_("could not stop the FSMonitor daemon"));
->> +
-> 
-> One thing that is interesting about 'scalar unregister' is that it does
-> not change config values. At that point, we don't know which config values
-> are valuable to keep or not because the user may have set them before
-> 'scalar register', or otherwise liked the config options.
-> 
-> Here, the reason to stop the daemon is so we unlock the ability to delete
-> the directory on Windows.
-> 
-> Should this become part of cmd_delete() instead of unregister_dir()? Or,
-> do we think that users would opt to run 'scalar unregister' before trying
-> to delete their directory manually?
+On Wed, Aug 17, 2022 at 7:25 AM Derrick Stolee <derrickstolee@github.com> wrote:
+>
+> On 8/17/2022 3:56 AM, Shaoxuan Yuan wrote:
+> > Add a --sparse option to `git-grep`. This option is mainly used to:
+> >
+> > If searching in the index (using --cached):
+> >
+> > With --sparse, proceed the action when the current cache_entry is
+>
+> This phrasing is awkward. It might be better to reframe to describe the
+> _why_ before the _what_
+>
+>   When the '--cached' option is used with the 'git grep' command, the
+>   search is limited to the blobs found in the index, not in the worktree.
+>   If the user has enabled sparse-checkout, this might present more results
+>   than they would like, since the files outside of the sparse-checkout are
+>   unlikely to be important to them.
+>
+>   Change the default behavior of 'git grep' to focus on the files within
+>   the sparse-checkout definition. To enable the previous behavior, add a
+>   '--sparse' option to 'git grep' that triggers the old behavior that
+>   inspects paths outside of the sparse-checkout definition when paired
+>   with the '--cached' option.
+>
+> Or something like that. The documentation updates will also help clarify
+> what happens when '--cached' is not included. I assume '--sparse' is
+> ignored, but perhaps it _could_ allow looking at the cached files outside
+> the sparse-checkout definition, this could make the simpler invocation of
+> 'git grep --sparse <pattern>' be the way that users can search after their
+> attempt to search the worktree failed.
 
-After reading this, my first thought was that 'scalar unregister' should
-still turn off the FSMonitor daemon because, in addition to allowing for
-directory deletion in 'scalar delete', it's "cleaning up" some
-optionally-enabled behavior associated with Scalar (a la
-'toggle_maintenance(0)'). However, given that 'unregister' doesn't clear
-'core.fsmonitor', it really *isn't* comparable to 'toggle_maintenance(0)'.
+In addition to Stolee's comments, isn't this command line confusing?
 
-So I think you're right that it should only be associated with enlistment
-deletion (although I think 'delete_enlistment()' is the place for that -
-right before 'remove_dir_recursively()' - rather than 'cmd_delete()').
+  $ git grep --cached --sparse   # Do a *dense* search
+  $ git grep --cached            # Do a *sparse* search
 
-Thanks!
-
-> 
-> Thanks,
-> -Stolee
-
+?
