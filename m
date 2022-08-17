@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AB56C25B0E
-	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 00:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08981C25B0E
+	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 00:28:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237375AbiHQA2J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Aug 2022 20:28:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34048 "EHLO
+        id S230378AbiHQA2S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Aug 2022 20:28:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237285AbiHQA2G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Aug 2022 20:28:06 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 672C372849
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 17:28:05 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id g11so80527wrv.9
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 17:28:05 -0700 (PDT)
+        with ESMTP id S237573AbiHQA2H (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Aug 2022 20:28:07 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D3E02F3
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 17:28:06 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id bs25so14472649wrb.2
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 17:28:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=AYuywWNAHcQXkupiS7Llbsz+hOb5QF+T6kmpf2oK2wU=;
-        b=F73mvnVU49x6yTI3y4sMjlhbxJjx/H6dLrX1Se4nPTiT8s8y7IO9j2FhiQ9QtblVAz
-         vbMAHtliKjwhZbdGj7R0VznnBHMRINrGYvN4+oygvoN/0cLofWPiAZcyaiJ4Jyj8qFeg
-         Kp3gzSkkAFm4sRcYGeM1AJUTqWzBRSt4J30z83rzH8ROHW9YYthQ3YoyzJA29Lxc9O0R
-         +brRCqr2zJK/gRe0llKs1aFTU/+Hy29JZ/GXyrypKz0FT+k6yv22OG20FHRR4RojrR7i
-         ZFOaMciVKeZNBIEs/QgQq3e0iai4M0VWXddqlQB1Lgghe3oCHuDhQCTxUKefLtfOmC6c
-         m8iA==
+        bh=zEsAWHGcuI0aG8cEtf7eQJ+8ovfPnFkB0Pkd2+8KSU8=;
+        b=EazFa6CTIMactDbsvCQGYILMXVWs83wfursHSf0Eg4hPajDTnOhMnymbWTXMSKtWi1
+         K84Ypu6YcO00NjZOyx5v9i9WO37/3JYzZv8DDJwCgAG/NWk4U/+GPvVHQkDB1HUBMs0o
+         KlzYmJogor2qsSBpxMx70PcLBZzn/QvLpcx3B8pGSAhxdnYAo7ptH5XriH6CeAs4obLZ
+         vtq5kb0BXT6x/P+Bj2AkbnLsv+0Z2TibnMQ/TEvu9a9etONWMDEa9Lfalg5w6ngiBot5
+         QbtxlDd7UVHbTe6PAHomjTJOoidx0V2sC05Aj9cO3nge9QfJYVbSMlcPYdKWqzheI/ZG
+         pkOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=AYuywWNAHcQXkupiS7Llbsz+hOb5QF+T6kmpf2oK2wU=;
-        b=ufUUxEJ7lQJ9E6XjvteN+MgjKuNCQqS+qiFgbkB3e0+m8SOYjfLkTa5rFTKHWXdDRI
-         kMP+mmy51aNbKeIxD8VVb2lGt1zbWLKFgHAFjvEW75YdrOj7vnEZ1FeWFdcZDPFjpJPu
-         FmNIXHx54q1uYmBWl8GKOF9s96zueuOyGsy8rAawL7iGmAZw1XXkJ1vgvPPIsungq+4k
-         DUWtKHmhV9GFvdIht0a3FqC9RbPM2BIQa/gow0Jky5XWmf/ccDw+rn/SQCyb87DLgiKw
-         JdWJlYNRyZCTCdXhP5gg8pHa8IUSaaWcQ2go1vFd7WkVcJf2IBpNLzaLKZqWrE7cDOAM
-         ygHQ==
-X-Gm-Message-State: ACgBeo3qcloi3Y7WIuRPbLx3//Vsd0CiICOyQ26ykMInQ8bYQ/ITQ3tu
-        krXpONbSbf/UHE7mKpdmVAy62d7cP5g=
-X-Google-Smtp-Source: AA6agR7Dn1cFDlhlhtwTyTFueGzmNcLJ+jmqrhno2ixc2dCwZhjNzKn7/uMmncmIkIXkyLIYs+OaZA==
-X-Received: by 2002:a5d:5848:0:b0:222:c8cd:288 with SMTP id i8-20020a5d5848000000b00222c8cd0288mr12848795wrf.34.1660696083774;
-        Tue, 16 Aug 2022 17:28:03 -0700 (PDT)
+        bh=zEsAWHGcuI0aG8cEtf7eQJ+8ovfPnFkB0Pkd2+8KSU8=;
+        b=RlKE59Degcb6z2Dj9bIp63yEHgKt4vZLTEVJtiWDiyeox9OJrrF+/a5hrYy56EKn9K
+         DTzuh32epQflC2fFl2vgMj0qrj4DJTbqGxH96pQb91e4OpNP3wTDfBHZP/qYc6QGS4Lr
+         wgy2JlIshOtOcvn0+vP0ZcTN9X/xGqQ4Ja+98KPfAW7tHDetUck0fSxtFft5kfAaPTlC
+         YuLJwNoelF9r44c8z7/2sNHYmXA03VxpNNLMS2fM6actVAhecx9a1V3Xui93ML47INPw
+         GmLDXBcuijbm3hr66YgA6Ah9FJTwpQb4jgUugRLxsJedXe22cD1CPTvwxI3N4gJB9Z6h
+         DyAA==
+X-Gm-Message-State: ACgBeo3UrpWxxDDF6A6rRJZ9m/ywQv9IK9oEI8u4e4MQykX6pwMK+khY
+        Q0jAKWlh5lKmxhbbGxKXsV74yDTM+yY=
+X-Google-Smtp-Source: AA6agR6Oz3Y7NKC66RTkeoXDF4Mej8fH8aoDkY57vnDvD6iaVMEIRpFXK0F0+EjmoRKwQF+X6pPk+A==
+X-Received: by 2002:adf:e9c8:0:b0:224:f896:94bc with SMTP id l8-20020adfe9c8000000b00224f89694bcmr8388255wrn.635.1660696084555;
+        Tue, 16 Aug 2022 17:28:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e26-20020a05600c219a00b003a5de95b105sm295374wme.41.2022.08.16.17.28.03
+        by smtp.gmail.com with ESMTPSA id q29-20020adfab1d000000b002206ba7430bsm10207181wrc.15.2022.08.16.17.28.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Aug 2022 17:28:03 -0700 (PDT)
-Message-Id: <269714da7062cf9d9de5200ab564bd727e921359.1660696081.git.gitgitgadget@gmail.com>
+        Tue, 16 Aug 2022 17:28:04 -0700 (PDT)
+Message-Id: <010cf4ff3442902031360ed87a6f86cc9486581a.1660696081.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1325.git.1660696081.gitgitgadget@gmail.com>
 References: <pull.1325.git.1660696081.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 17 Aug 2022 00:28:00 +0000
-Subject: [PATCH 2/3] merge-ort: add comment to avoid surprise with new
- sub_flag variable
+Date:   Wed, 17 Aug 2022 00:28:01 +0000
+Subject: [PATCH 3/3] merge-ort: provide helpful submodule update message when
+ possible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,32 +68,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Commit 4057523a40 ("submodule merge: update conflict error message",
-2022-08-04) added a sub_flag variable that is used to store a value from
-enum conflict_and_info_types, but initializes it with an invalid value
-of -1.  The code may never set it to a valid value, and use the invalid
-one.  This can be surprising when reading over the code at first, but it
-was intentional.  Add a comment making it clear that it is okay to be
-using an invalid value, due to how it is used later.
+In commit 4057523a40 ("submodule merge: update conflict error message",
+2022-08-04), a more detailed message was provided when submodules
+conflict, in order to help users know how to resolve those conflicts.
+There were a couple situations for which a different message would be
+more appropriate, but that commit left handling those for future work.
+Unfortunately, that commit would check if any submodules were of the
+type that it didn't know how to explain, and, if so, would avoid
+providing the more detailed explanation even for the submodules it did
+know how to explain.
+
+Change this to have the code print the helpful messages for the subset
+of submodules it knows how to explain.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ merge-ort.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 67159fc6ef9..0a935a8135f 100644
+index 0a935a8135f..404f05e32d6 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -1886,7 +1886,7 @@ cleanup:
- 		const char *abbrev;
+@@ -4490,21 +4490,17 @@ static void print_submodule_conflict_suggestion(struct string_list *csub) {
+ 	if (!csub->nr)
+ 		return;
  
- 		util = xmalloc(sizeof(*util));
--		util->flag = sub_flag;
-+		util->flag = sub_flag; /* May still be -1 */
- 		util->abbrev = NULL;
- 		if (!sub_not_initialized) {
- 			abbrev = repo_find_unique_abbrev(&subrepo, b, DEFAULT_ABBREV);
+-	/*
+-	 * NEEDSWORK: The steps to resolve these errors deserve a more
+-	 * detailed explanation than what is currently printed below.
+-	 */
++	strbuf_add_separated_string_list(&subs, " ", csub);
+ 	for_each_string_list_item(item, csub) {
+ 		struct conflicted_submodule_item *util = item->util;
+ 
++		/*
++		 * NEEDSWORK: The steps to resolve these errors deserve a more
++		 * detailed explanation than what is currently printed below.
++		 */
+ 		if (util->flag == CONFLICT_SUBMODULE_NOT_INITIALIZED ||
+-			util->flag == CONFLICT_SUBMODULE_HISTORY_NOT_AVAILABLE)
+-			return;
+-	}
+-
+-	strbuf_add_separated_string_list(&subs, " ", csub);
+-	for_each_string_list_item(item, csub) {
+-		struct conflicted_submodule_item *util = item->util;
++		    util->flag == CONFLICT_SUBMODULE_HISTORY_NOT_AVAILABLE)
++			continue;
+ 
+ 		/*
+ 		 * TRANSLATORS: This is a line of advice to resolve a merge
 -- 
 gitgitgadget
-
