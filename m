@@ -2,103 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5AF5C25B08
-	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 19:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FB4FC2BB41
+	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 19:25:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241298AbiHQTS3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Aug 2022 15:18:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35492 "EHLO
+        id S241452AbiHQTZM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Aug 2022 15:25:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240952AbiHQTSY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Aug 2022 15:18:24 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3AA5DAE
-        for <git@vger.kernel.org>; Wed, 17 Aug 2022 12:18:22 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AB67012DB96;
-        Wed, 17 Aug 2022 15:18:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iHbCevJQ/XE1FNFdtCKj0tLjQb0XyIyC7vW5IE
-        QGJk0=; b=DYW4pr7DNr7whPcwj8E4WX11rrEoV5vEm4lbkeAYnqtL5f1/yxHOv3
-        7r1cMRdKP+Vk+3cUf9cR2rsp0OMK3wSQQwZZiWajeoK2ee21eX0g7FhQitUvrken
-        w5LYZUim8CR77SjSf7WIOALmXkPzxjGSrptmN9akqL6W1IpmG1qqE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3AB812DB95;
-        Wed, 17 Aug 2022 15:18:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1DA1712DB94;
-        Wed, 17 Aug 2022 15:18:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v8 08/14] merge-resolve: rewrite in C
-References: <20210317204939.17890-1-alban.gruin@gmail.com>
-        <20220809185429.20098-1-alban.gruin@gmail.com>
-        <20220809185429.20098-9-alban.gruin@gmail.com>
-        <08ea1eec-58fb-cbfa-d405-0d4159c99515@gmail.com>
-        <xmqqilmzkd7p.fsf@gitster.g>
-        <qs23r0n8-9r24-6095-3n9n-9131s69974p1@tzk.qr>
-        <xmqqedxgt1zx.fsf@gitster.g>
-        <848p4p89-2219-7874-ss50-2o0rp4r02902@tzk.qr>
-        <CABPp-BGSFYWvA5HktLf33=w7JB95iDLDNoE0gdA3oUtb+qYoQQ@mail.gmail.com>
-Date:   Wed, 17 Aug 2022 12:18:20 -0700
-In-Reply-To: <CABPp-BGSFYWvA5HktLf33=w7JB95iDLDNoE0gdA3oUtb+qYoQQ@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 17 Aug 2022 12:06:16 -0700")
-Message-ID: <xmqq7d36vfur.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S241196AbiHQTZJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Aug 2022 15:25:09 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 052FA5F55
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 12:25:09 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id a15so10698167qko.4
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 12:25:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=s/fLeppeRrNl0jBATLK1FUP5ZeILiHfVvWqbvH74h3o=;
+        b=oI9bYAysv+Xy/531zTqdE+kERRJEa6eCgCgR8w/q6gbVqQe72W0Y3SJpbPH+gQl1yF
+         qSPUhkUgAR7PGK7VJ+gS2iu8RZfWSiBFPPcuurzmsLSBp3RwSg2vdbVOR2rZzRiRvReA
+         rkWNjoyInJK5MqybI2xi2fZYW9MwaXd+sLaMwzJqN/DV9W+I/ktRif/Bj8a4/ZPCNo5i
+         Au9GCU5ql9gGgr6F2Ha4UzAj2jY+sXpji5qRvaqBp8v7td/wiqLCWlihvRq8IUAl1S5f
+         7//iX47nebLng/GKchyVkWECiyC2oCSk0LWe40/pbdUe1SfK4FPWAww/xyG/C6GNAhIB
+         qNGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=s/fLeppeRrNl0jBATLK1FUP5ZeILiHfVvWqbvH74h3o=;
+        b=KpGIJIDyOOB8/3Dzt45WlBAIl9IJQNJKbU9w4A/S5GoOb1juM5UOjTOqgHufv/C6gs
+         kSazmgqRLDF7eXDTngFFxToZLQiGngOURCKhSHir22zQohKJ74o3b7PryBF/vfhNlqKq
+         tcEcXoOfyJ6epTqMh6/W2Ikz44JSyXZ+B6f0QwiwX+P70R5uGgHNJG/jn7KyrrJRq4/I
+         h+vhAcLxcnmv9OqlzTu3fee2ba+jNHOuQby/EBTHxzt+lu6ecafjJ4fgqzWreZz0qVuM
+         GIcj6YG77MvVjkkt3rMA+KskbRQ3hY3ZRITXt0Q3Um5Adcio5SW9IfxK+y4pQfV5YHX1
+         BXow==
+X-Gm-Message-State: ACgBeo0BdTRxzd8DELq3VuiRm6uvgYrkzinybwx/fyax6x+DAhq88Hya
+        RO7xpJ6jhDTDa/AM9Yga8rCdB/TXfAVol9oLszM=
+X-Google-Smtp-Source: AA6agR6KmVxUUdt09TNBU9zsPYgBWNt89L6Tu064+k1Eig1TlgaWbegt+y0M/5z1RO+SJxoZ2/sGgZYBMp6LNiuKntA=
+X-Received: by 2002:a37:638c:0:b0:6ba:fcfa:3690 with SMTP id
+ x134-20020a37638c000000b006bafcfa3690mr14631446qkb.227.1660764308072; Wed, 17
+ Aug 2022 12:25:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5B55D4AC-1E61-11ED-B2A7-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+References: <xmqq5yityzcu.fsf@gitster.g> <p053rrpq-17q7-pnrs-3794-o04ro1445s5s@tzk.qr>
+ <CABPp-BFAERLt_z-D=7gbXWVA9JgsqTP_2iW9BLe5S=YbsQ1V6w@mail.gmail.com> <xmqqtu6avgub.fsf@gitster.g>
+In-Reply-To: <xmqqtu6avgub.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 17 Aug 2022 12:24:57 -0700
+Message-ID: <CABPp-BHBOqnU7DSLkYPig=c6+emWGaE1vdzaPk0D90yQdof+6A@mail.gmail.com>
+Subject: Re: js/bisect-in-c, was Re: What's cooking in git.git (Aug 2022, #05;
+ Mon, 15)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Wed, Aug 17, 2022 at 11:57 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> >> >  Expecting a (hopefully final) reroll.
+> >> ...
+> >
+> > Could I vote for just merging it down, as-is?  As far as I can tell,
+> > ... Further, such changes, while likely
+> > desirable for consistency among Git commands, would likely move us
+> > away from "faithful conversion from shell to C", and thus is likely
+> > better to be done as a separate step on top of the existing series
+> > anyway[4].
+>
+> If this were a faithful conversion, yes, merging it right now can be
+> one good approach; add a faithful but not very C-like convesion
+> first and then make it "more like C code" later.
+>
+> I however got an impression from the review discussion that it
+> subtly changes behaviour (IIRC, one thing pointed out was that exit
+> codes are now different from the original---there may or may not be
+> others, but my impression was they were all minor like the "exit
+> code" one).
+>
+> My "hopefully final" comment was not about a big rearchitecting
+> change like use of parse-options API but about adjusting such minor
+> behaviour diversion so that we can say "This may not be very C-like,
+> and does not use much of our established API, but it is a fairly
+> faithful bug-to-bug compatible translation.  Let's take it and make
+> it more like C incrementally".  And of course, what was implied in
+> "hopefully final" was that such adjustments would be tiny, trivial
+> and can be done without much controversy.  After all, I was aware
+> that the series was otherwise reviewed and received extensive
+> comments (sorry, I forgot that it was by you).
+>
+> Thanks.
 
-> There's also another concern you tried to address in your other email;
-> let me quote from that email here:
->
->> If you want to have an easy example of a custom merge strategy, then let's
->> have that easy example. `git-merge-resolve.sh` ain't that example.
->>
->> It would be a different matter if you had commented about
->> `git-merge-ours.sh`:
->> https://github.com/git/git/blob/v2.17.0/contrib/examples/git-merge-ours.sh
->> That _was_ a simple and easy example.
->
-> ...and it was _utterly useless_ as an example.  It only checked that
-> the user hadn't modified the index since HEAD.  It doesn't demonstrate
-> anything about how to merge differing entries, since that merge
-> strategy specifically ignores changes made on the other side.  Since
-> merging differing entries is the whole point of writing a strategy, I
-> see no educational value in that particular script.
->
-> `git-merge-resolve.sh` may be an imperfect example, but it's certainly
-> far superior to that.
-> ...
-> If someone makes a better example (which I agree could be done,
-> especially if it added lots of comments about what was required and
-> why), and ensures we keep useful test coverage (maybe using Junio's
-> c-resolve suggestion in another email), then my concerns about
-> reimplementing git-merge-resolve.sh in C go away.
->
-> If that happens, then I still think it's a useless exercise to do the
-> reimplementation -- unless someone can provide evidence of `-s
-> resolve` being in use -- but it's not a harmful exercise and wouldn't
-> concern me.
->
-> If the better example and mechanism to retain good test coverage
-> aren't provided, then I worry that reimplementing is a bunch of work
-> for an at best theoretical benefit, coupled with a double whammy
-> practical regression.
+Ah, gotcha.  My impression was that the exit codes did match what the
+previous shell code had done, but didn't match what other builtins
+usually return.  Perhaps I misread those discussion comments.
 
-Ah, you said many things I wanted to say already.  Thanks.
+Thanks for the clarification.
