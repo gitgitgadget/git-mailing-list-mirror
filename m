@@ -2,147 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D91FC25B08
-	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 09:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 406C6C25B08
+	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 09:50:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233014AbiHQJm7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Aug 2022 05:42:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51502 "EHLO
+        id S235432AbiHQJtw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Aug 2022 05:49:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230371AbiHQJm4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Aug 2022 05:42:56 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27C6D79A56
-        for <git@vger.kernel.org>; Wed, 17 Aug 2022 02:42:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660729369;
-        bh=/otrSGcbaINV9YQGINIJOwdw6mGL8j8Efi8c3X7pkIM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=c/nxK3FBLnAKBLdOu+4YTy88m4qBUIG5wsfMj+zZSrSMO4JONcHhbFy3w2yNdoUMd
-         0/SR3xEupgepDbvXnzs30JL3edhJPlOmsZHaWyPrg60i72GmsCZvI2Uhkwi5Z6rTo8
-         AsyeINZ4/b1LZzKow92RMeEScWTPfL+atXZu3oXY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.214.151]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOREc-1nzYFL13YU-00Py8J; Wed, 17
- Aug 2022 11:42:49 +0200
-Date:   Wed, 17 Aug 2022 11:42:48 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v8 08/14] merge-resolve: rewrite in C
-In-Reply-To: <xmqqedxgt1zx.fsf@gitster.g>
-Message-ID: <848p4p89-2219-7874-ss50-2o0rp4r02902@tzk.qr>
-References: <20210317204939.17890-1-alban.gruin@gmail.com> <20220809185429.20098-1-alban.gruin@gmail.com> <20220809185429.20098-9-alban.gruin@gmail.com> <08ea1eec-58fb-cbfa-d405-0d4159c99515@gmail.com> <xmqqilmzkd7p.fsf@gitster.g> <qs23r0n8-9r24-6095-3n9n-9131s69974p1@tzk.qr>
- <xmqqedxgt1zx.fsf@gitster.g>
+        with ESMTP id S231940AbiHQJtU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Aug 2022 05:49:20 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F41C6170E
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 02:49:15 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1oOFfl-0002z2-F2; Wed, 17 Aug 2022 11:49:13 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1oOFfk-000HqK-PB; Wed, 17 Aug 2022 11:49:12 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1oOFfk-00CI4h-44; Wed, 17 Aug 2022 11:49:12 +0200
+Date:   Wed, 17 Aug 2022 11:49:09 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     git@vger.kernel.org
+Cc:     entwicklung@pengutronix.de
+Subject: Bug in rebase --autosquash
+Message-ID: <20220817094909.v2ev4rpsmxjnii4x@pengutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:60bvUsSy6YbY8t5xgUnb8ULo0pzY9upssjJy3TayXV/XX9E0jwN
- lzx1t2qaDKXmDCrBeyQHSA3RZpREzbop+8n7HW4eLAfDzdOKEv5+G6EIEbULjU7hJkptFMR
- 12eUBfI/mHYWuvAM2ILDG5abgmEwfvjfZ7/xKe/tU6WitVkO0JNb4rjV7TX7fTJwEwrEbcY
- pZO1hgB6D7afcu6ssM7Bw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:E42wTRdzBwA=:KcrAD0O+JN25ziCkK3GfM8
- j3Wi8GQy0vZOxyKbjZMTI5012fBsvzB4YqORgsbqfofU4mnaObKUbFqUePGiXUPUVWar9tDaW
- u2MLHr3VSvW+cLrKSw0wFhZzKbHP+2XclxxkdPQi2qWWrKvmNo1xwlnUh6XRL7eYSQ20Of725
- vhewj1S8inHRDCvrkjKoOGbtlgwjZSlqyVc8Yn573cOfCog/8px8up8yxdWrHXeefLEijx8T2
- ujizz5vLeSMGqdf+hRu45BB6fonQ1dRzaKZGCZ3m70ugc+yQ99bSEMxbGLf42VAuI40r00QJj
- z7hObtSFJHjIo0cVDeJWAEa7k3blEQ7aDXa/+FsrcjqUsAH+8VWX0K3oYNshtwOxbqAz1SsFF
- pP7gC91N3X8hu9CrWLYf2Cm2nzKT/P+dQ/+9nxiNDjlk2O0D9/vYMthKy5tnDpOaoUQqx1ox6
- vD3+Xhakzu5GjPpICncS2TSBm/cpMAbY9ZORmgxubBB1D237WU7HZV+ncidhrwHZZT69hYB60
- GE+iKELMU17Y3C8IxyfxKu5IkG5EoI6QeILT3wtLK04PynWavPqH8HWLbG3HSIjwz2MFoOUmr
- glUgTla3I9Ydz8P5sH/yk+dSIguDTb8E4I7DG4KtsR4opdVxliB36c8iaOzDNL+hLp23/HN2e
- xnLpASihfP9nTmFs/0su0213EHCpC9VXhJIj9G5qcLFsXvjglSqOEyZ4hLO/o6qcNLTAzWEIo
- Ov3hmbwKiA6/xGDQNzgjCSt5KM+WL+iT0qhJCa404a4nG72M7n8AJ2KyYwpKQq2s5ULeJO2AF
- BMa2hSqeaId76vlLZBkZMPIvbAQ2fvsSUgc4gECAiWkE5r3y1UUygu+A3vl7Bz1HCrtCNXw9m
- rrSpIy4imX9zh3eVO2uleijUy+mYGOYLqVIildJkhpqn2QoBq6tHtUpsKEYzJB+pylJqNVomI
- BKJUHRCprk1zYZOGIeQg50Zp8J+hkDKGksatj6ewLMcb+PCgDdvsQrBsvt2cCYwluaGtwW6/1
- gtnGuUlkvIHdG1CK6hVa0Riw3dZuOBDiJorPG4hz5Zo7a7WIkyAY+DjbkE3fCWdctKRd/xAj9
- tPeBgTuZClZNYCFFS6+3Zi4iBxk+OH6i8/udOeY/I8I8E88oCgpBQf2Ug==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="6ieuep4ylwadiy7s"
+Content-Disposition: inline
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Tue, 16 Aug 2022, Junio C Hamano wrote:
+--6ieuep4ylwadiy7s
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > I'm all in favor of adding such a good example there, but there is no
-> > reason to hold back `git merge-resolve` from being implemented in C.
->
-> You did not address the primary point, i.e. why the particular
-> change is a bad one.  Sure, you lost a scripted porcelain or two
-> that are not used much, but in exchange for what?  That is _the_
-> issue and you skirt around it.
+Hello,
 
-In exchange for what I mentioned already in
-https://lore.kernel.org/git/qs23r0n8-9r24-6095-3n9n-9131s69974p1@tzk.qr/,
-i.e. in the part you deleted from the quoted mail:
+after:
 
-	We reduce Git's reliance on POSIX shell scripting, we reduce the
-	number of programming languages contributors need to be familiar
-	with, we open up to code coverage/static analysis tools that
-	handle C but not shell scripts, just to name a few.
+	uwe@taurus:~/tmp/git$ git version
+	git version 2.37.2
+	uwe@taurus:~/tmp/git$ git init
+	Initialized empty Git repository in /home/uwe/tmp/git/.git/
+	uwe@taurus:~/tmp/git$ echo contnt > file
+	uwe@taurus:~/tmp/git$ git add file
+	uwe@taurus:~/tmp/git$ git commit -m 'file with content'
+	...
+	uwe@taurus:~/tmp/git$ echo 'content' > file
+	uwe@taurus:~/tmp/git$ git commit --fixup=3D@ file
+	[main ef8f0bd27a56] fixup! file with content
+	uwe@taurus:~/tmp/git$ echo 'more content' >> file
+	uwe@taurus:~/tmp/git$ git commit --fixup=3D@ file
+	[main b40a214bf5fb] fixup! fixup! file with content
+	 1 file changed, 1 insertion(+)
 
-To reiterate why reducing the reliance on POSIX shell scripting is a good
-thing:
+running
 
-- we pay a steep price in the form of performance issues (you will recall
-  that merely rewriting the `rebase -i` engine in C and nothing else
-  improved the overall run time of p3404 5x on Windows, 4x on macOS and
-  still 3.5x on Linux, see
-  https://lore.kernel.org/git/cover.1483370556.git.johannes.schindelin@gmx=
-.de/)
+	git rebase -i --autosquash @~2
 
-  Yes, Linux sees such an incredible performance boost. Surprising, right?
+my editor presents me with:
 
-- on Windows, even aside from the performance problems (which I deem
-  reason enough on their own to aim for Git being implemented purely in
-  C), users run into issues where anti-malware simply blocks shell
-  scripts, sometimes even quarantines entire parts of Git for Windows.
+	pick ef8f0bd27a56 fixup! file with content
+	pick b40a214bf5fb fixup! fixup! file with content
 
-- have you ever attempted to debug a Git invocation that involves spawning
-  a shell script that in turn spawns the failing Git command, using `gdb`?
-  I have. It ain't pretty. And you know that there are easier ways to
-  abuse and deter new contributors than to ask them to do the same. In
-  particular when large amounts of data have to be passed between those
-  processes, typically via `stdio`.
+However I would have expected
 
-- show me the equivalent of CodeQL/Coverity for POSIX shell scripting? ;-)
+	pick ef8f0bd27a56 fixup! file with content
+	fixup b40a214bf5fb fixup! fixup! file with content
 
-- portability issues dictate that we're not just using your grand father's
-  POSIX shell scripting, but that we limit it to a subset that is opaque
-  to developers unfamiliar with Git project.
+instead.
 
-- as a consequence, our shell scripts are highly opinionated, often using
-  unintuitive idioms such as `&&` chains instead of `set -e`, which makes
-  them unsuitable as examples how to script Git for regular users.
+Is this a feature I don't understand?
 
-- a decreasing number of software developers is familiar with the
-  intricacies of that language, leaving us with tech debt.
+When the original commit is in the range (i.e. with
 
-In short, there is not a single shred of doubt in my mind that avoiding
-shell scripted parts in Git is a really good goal to have for this
-project.
+	git rebase -i --autosquash --root
 
-> The series makes us lose all strategies that are actively tested
-> that are spawned as a subprocess, which is the way all third-party
-> strategies will be used.
+) it does the right thing, i.e. my editor then has:
 
-Then have that even-simpler-than `git-merge-resolve.sh` example be tested
-as part of the test suite. That's what the test suite is for.
+	pick 0c1d21698c38 file with content
+	fixup ef8f0bd27a56 fixup! file with content
+	fixup b40a214bf5fb fixup! fixup! file with content
 
-> After this, we have less test coverage of the codepaths we care about,
-> which is *not* a scripted "resolve" strategy, but the code that runs
-> third-party strategies as externals.
+=2E Unrelated to that, but annoying is, that
 
-It is better to leave the responsibility of test coverage to the test
-suite, avoiding to ship the corresponding support code to users.
+	git rebase --autosquash --root
 
-tl;dr your concerns are easy to address, without having to incur the price
-of keeping parts of Git implemented in shell.
+doesn't do the right thing. It doesn't change the history at all, while
+I expected it to only contain a single commit then.
 
-Ciao,
-Dscho
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--6ieuep4ylwadiy7s
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmL8uZIACgkQwfwUeK3K
+7AnROggAnAcDC5Z8c9hnDZ7mW/C3DOUTvVgVL/+9k0L64M8NvOf0s8JqdnQQB8f8
+apJX7/VGcoRyFysOzocxngnIBNEygVFugw3yatvAZ2T3Um8jqSHXyG2PW0NtWjUS
+yXHyWdcEHGWlxeI8NRzaXaTJoNeKWzK21zlx2ynkOmuC/LCe3+ibxFBmB3j/uFmg
+BcGnt1z80OiYFi4oli0saP/r6e6NaAfTnDxoIUgzG1QFILHSGtKEDTpSZXqS/iOG
+cZm0vxl8uLf0LL7eamLlP53VdkTiekVj3wneFWwLaPk2GQfQbdOpQYK6AAORxlUC
+DlCu6U5ERFdAA4ybfLhT/lHq4msElA==
+=n+Z9
+-----END PGP SIGNATURE-----
+
+--6ieuep4ylwadiy7s--
