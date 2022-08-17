@@ -2,84 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82486C25B08
-	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 14:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01E25C25B08
+	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 15:54:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240122AbiHQOvP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Aug 2022 10:51:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36916 "EHLO
+        id S239443AbiHQPyc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Aug 2022 11:54:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237041AbiHQOvM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Aug 2022 10:51:12 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C53576478
-        for <git@vger.kernel.org>; Wed, 17 Aug 2022 07:51:12 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id p184so7406021iod.6
-        for <git@vger.kernel.org>; Wed, 17 Aug 2022 07:51:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=Uxd2vrhezLWE3jHoFmjeZAK5PCZp2st3/lcyscLI+o0=;
-        b=ET8zNWMXvUCFhe78mcxlor4RMuNRam+KdvIyHj0KvOFLvyesu+SyTaI8ruscbSJlKm
-         KccNTqcfNb3MlOvoGdQcyHKIagRNy0lExYOr8U/Kp3ZDTzfqexybGhqZBCLsMLaWO1Si
-         hiCJ7AxbRSooocln/jvzOKni92OKfOvjg5iPjfAe9tETKThewQ9mwCwrHP6fpMJblG+W
-         PbiWWh52C7vie9tHwmZCwzENupsgeslElAtrIkFJkXbnkgvCPrRAsl4HLI3U6cgLFZxk
-         YryCK5C2dT6plxQsZUS6k2JVgbsQbnubVfMXOCBGw+SmMj67xzttaGxqniLdB4IVUrJp
-         As0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=Uxd2vrhezLWE3jHoFmjeZAK5PCZp2st3/lcyscLI+o0=;
-        b=bew2reYoYJTAstp03mHyV1pUL0oV2hu4Y6dfuEhgRw9o30wOyDMOcbPkXfR3UItGzv
-         v6b6KlbvzojEMJVJXwGP2oWH0SFvh6WTcRwtfBDgzO9ywGwn0S8gTIx2NtkFWA/P7m+r
-         9zdqf91q3HkEh83jULPXLhShMMdY562CaBBRIDptgc8XV+RNk8vbWyGIadtU1pgSi6xa
-         WgWTlUS7CcCkL1tkBjI5VBZlF8oPt7pJojYwqxKTaxcth2GIQApMS0eROqNiMXVCa01P
-         kyAIVUIgTL0tWg/08cNepcV+RBeZqlWnEX1+fd+7f004dqzG9yIQMdyk5q52tX+V1Td2
-         ti8g==
-X-Gm-Message-State: ACgBeo32icZQqxAkGInAWlmM7lM59Oewg3pIMBULie2K/25Jul2BkPgR
-        vvsh5+0HlYRk7KTtppOnoYSV
-X-Google-Smtp-Source: AA6agR5FUcTEpSa7Cz97TgmPJHB06uTE81Nboqa4fIOP9aZ+oNPGv4QZlP+gYaB1/Iuzz5JiJ3QKIw==
-X-Received: by 2002:a5e:a815:0:b0:688:f11a:6e11 with SMTP id c21-20020a5ea815000000b00688f11a6e11mr1249027ioa.10.1660747871725;
-        Wed, 17 Aug 2022 07:51:11 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:f8cc:7049:fd75:5ebd? ([2600:1700:e72:80a0:f8cc:7049:fd75:5ebd])
-        by smtp.gmail.com with ESMTPSA id y92-20020a029565000000b003433f35eb40sm5523716jah.80.2022.08.17.07.51.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Aug 2022 07:51:11 -0700 (PDT)
-Message-ID: <69be513b-b6c3-3a92-6152-fddc835a6723@github.com>
-Date:   Wed, 17 Aug 2022 10:51:09 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v2 0/5] scalar: enable built-in FSMonitor
-Content-Language: en-US
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de, mjcheetham@outlook.com,
-        gitster@pobox.com, Victoria Dye <vdye@github.com>
+        with ESMTP id S238040AbiHQPy3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Aug 2022 11:54:29 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95CE39AFE5
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 08:54:27 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AE87B1B03A4;
+        Wed, 17 Aug 2022 11:54:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=FJ8u2ThAETOjLQcvoIA1WKpRLqX50d969GThxbSGndo=; b=givN
+        W5DdVGiyJlLCdVho65QzHlv6AUFd1+/mmc4Z16J1NxuAhIeI20p91ASCIn2pl//C
+        2jXzR68WWoT8utdR3ZSU4hDexDerdS3ckSiUrG4B8NUQOIZ8rRZ9PV1iKoSEcVb/
+        m1eOqojNJWQexAqGZjis8L/dBta2BVYI9xZAb2k=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A70DF1B03A3;
+        Wed, 17 Aug 2022 11:54:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 55C391B039E;
+        Wed, 17 Aug 2022 11:54:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, johannes.schindelin@gmx.de,
+        mjcheetham@outlook.com, Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v2 3/5] scalar: enable built-in FSMonitor on `register`
 References: <pull.1324.git.1660673269.gitgitgadget@gmail.com>
- <pull.1324.v2.git.1660694290.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1324.v2.git.1660694290.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        <pull.1324.v2.git.1660694290.gitgitgadget@gmail.com>
+        <5fdf8337972d7092aba06a9c750f42cd5868e630.1660694290.git.gitgitgadget@gmail.com>
+        <f5388e4d-7eb7-9333-6a8e-86ce449aced0@github.com>
+Date:   Wed, 17 Aug 2022 08:54:22 -0700
+Message-ID: <xmqq5yiqzx01.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: DD0E6440-1E44-11ED-818B-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/16/2022 7:58 PM, Victoria Dye via GitGitGadget wrote:
-> This series enables the built-in FSMonitor [1] on 'scalar'-registered
-> repository enlistments. To avoid errors when unregistering an enlistment,
-> the FSMonitor daemon is explicitly stopped during 'scalar unregister'.
+Derrick Stolee <derrickstolee@github.com> writes:
 
-I hadn't looked at this code in a while, so I poked around and
-asked some questions that might not even need answering.
+> On 8/16/2022 7:58 PM, Matthew John Cheetham via GitGitGadget wrote:
+>
+>> +#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
+>> +		/*
+>> +		 * Enable the built-in FSMonitor on supported platforms.
+>> +		 */
+>> +		{ "core.fsmonitor", "true" },
+>> +#endif
+>> +	if (fsmonitor_ipc__is_supported() && start_fsmonitor_daemon())
+>> +		return error(_("could not start the FSMonitor daemon"));
+>> +
+>
+> I initially worried if fsmonitor_ipc__is_supported() could use some
+> run-time information to detect if FS Monitor is supported (say, existence
+> of a network share or something). However, that implementation is
+> currently defined as a constant depending on
+> HAVE_FSMONITOR_DAEMON_BACKEND.
+>
+> The reason I was worried is that we could enable core.fsmonitor=true based
+> on the compile-time macro, but then avoid starting the daemon based on the
+> run-time results. If we get into this state, would the user's 'git status'
+> calls start complaining about the core.fsmonitor=true config because it is
+> not supported?
 
-Outside of a nit involving a test prereq, this version looks
-fine to me.
+Ah, I didn't consider the possibility where the user uses the
+configuration to say "enable it if you are able, but it is OK if you
+cannot".  Whether the "is supported" is dynamic or compiled-in, that
+may be a valid issue to consider.  An easy way out may be to declare
+that the value "true" for "core.fsmonitor" variable means exactly
+that, i.e. the user asks to run it, but it is not an error if it
+cannot run.
 
-Thanks,
--Stolee
+A variant that may need slightly more work would be to introduce a
+separate value (perhaps "when-able") that means that, while keeping
+the "true" to mean "run the built-in one, or error out to let me
+know otherwise" as before.
+
+Thanks.
