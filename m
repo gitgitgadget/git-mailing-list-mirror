@@ -2,64 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47448C25B08
-	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 05:38:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCA8EC32771
+	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 05:39:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231683AbiHQFiD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Aug 2022 01:38:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55084 "EHLO
+        id S238382AbiHQFjg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Aug 2022 01:39:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230221AbiHQFiB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Aug 2022 01:38:01 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC71062AB8
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 22:37:59 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 02E111287BB;
-        Wed, 17 Aug 2022 01:37:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=w9Yo6W52eEMORNMKkKV7wMf0oSnJm8g/JQLOQC
-        8+k/Q=; b=gwvLowCiJ1zQdOSSSL6/sE3hdFCbOuDDqX9zhlSH6OkFkPSf56t9mM
-        5cUSttucM2OHha5+8leTibRPVD+qABAWcRKdrY5AkOnAjmAnA85txR5LuIRXcjLs
-        FNHtpqbWV4uyBzBng0PSnMyVJdb7rDYBFOs8JBuYvP1nI92FeC96c=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DF1D81287B9;
-        Wed, 17 Aug 2022 01:37:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 419261287B8;
-        Wed, 17 Aug 2022 01:37:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 0/3] Fixups for cw/submodule-merge-messages
-References: <pull.1325.git.1660696081.gitgitgadget@gmail.com>
-Date:   Tue, 16 Aug 2022 22:37:56 -0700
-In-Reply-To: <pull.1325.git.1660696081.gitgitgadget@gmail.com> (Elijah Newren
-        via GitGitGadget's message of "Wed, 17 Aug 2022 00:27:58 +0000")
-Message-ID: <xmqqk0771lcb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S230034AbiHQFjf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Aug 2022 01:39:35 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 486BB4DF3E
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 22:39:34 -0700 (PDT)
+Received: (qmail 6273 invoked by uid 109); 17 Aug 2022 05:39:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Aug 2022 05:39:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13501 invoked by uid 111); 17 Aug 2022 05:39:35 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Aug 2022 01:39:35 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 17 Aug 2022 01:39:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] mingw: handle writes to non-blocking pipe
+Message-ID: <Yvx/FNlTx+DCiCOj@coredump.intra.peff.net>
+References: <6854c54c-12ff-f613-4cdc-18b3b1a55ef1@web.de>
+ <b3310324-7969-f9fb-a2e0-46e881d37786@web.de>
+ <Yu/5LU+ZhbVRnSdM@coredump.intra.peff.net>
+ <72d007c5-9429-1612-24d7-af5db906dd63@web.de>
+ <YvQO4ZYI8/fAk0Gj@coredump.intra.peff.net>
+ <77244ffe-41c1-65bd-8984-8ed6909ffe07@web.de>
+ <YvTCIVN2VBir7WEP@coredump.intra.peff.net>
+ <976ac297-28ec-0a38-c4e1-eb7b94d0eb8c@web.de>
+ <YvVIYyA8Js0WDAMc@coredump.intra.peff.net>
+ <c7c6524c-4f02-10f6-1a58-738cef5aecf2@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BFA20840-1DEE-11ED-B826-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c7c6524c-4f02-10f6-1a58-738cef5aecf2@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Sun, Aug 14, 2022 at 05:37:08PM +0200, René Scharfe wrote:
 
-> (Note that my first patch builds on Junio's patch-on-top, though it kind of
-> obviates the need for his patch. Let me know if you want me to rebase
-> directly on Calvin's patch and remove the need for your patch, Junio.)
+> Turns out that's not the case on Windows: 94f4d01932 (mingw: workaround
+> for hangs when sending STDIN, 2020-02-17) changed the compatibility
+> implementation to 'Make `poll()` always reply "writable" for write end
+> of the pipe.'.
 
-It paid off that I didn't merge the leakfix to 'next' ;-)  Please
-just tell me to drop the patch and build on top of what Calvin has
-in 'next' directly.
+Ah, good find. That kind of explains everything, then, I think. ;)
 
-Thanks.
+> > I'm not sure what "small enough" we can rely on, though. Really it is
+> > the interplay between poll() and write() that we care about here. We
+> > would like to know at what point poll() will tell us it's OK to write().
+> > But we don't know what the OS thinks of that.
+> 
+> Based on the output above I think Linux' poll() won't consider a pipe
+> writable that has less than PIPE_BUF (4096) available bytes.
+
+Right, that makes sense. It would have to in order to meet the atomicity
+requirement for write(), but still always make forward progress for each
+write().
+
+> Perhaps we should take the advice about PIPE_NOWAIT in the docs serious
+> and use overlapping (asynchronous) writes on Windows instead.  This
+> would mean reimplementing the whole pipe_command() with Windows API
+> commands, I imagine.
+
+I wouldn't be opposed to that, in the sense that it's supposed to be a
+black box to the caller, and it's relatively small in size. But I think
+we're pretty close to having something usable without that, so I'd like
+to pursue a smaller fix in the interim.
+
+> Avoiding xwrite() in pump_io_round() on top lets the test suite
+> finish successfully.
+
+That makes sense. We end up busy-looping between poll() and write()
+while we wait for our read descriptor to become available. But if poll()
+doesn't block, that's the best we can do.
+
+-Peff
