@@ -2,99 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75BA0C25B08
-	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 17:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11016C25B08
+	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 17:44:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237914AbiHQRiN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Aug 2022 13:38:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60754 "EHLO
+        id S238426AbiHQRoC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Aug 2022 13:44:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237097AbiHQRiL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Aug 2022 13:38:11 -0400
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6E2BE04
-        for <git@vger.kernel.org>; Wed, 17 Aug 2022 10:38:09 -0700 (PDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id m17so1468660qvv.7
-        for <git@vger.kernel.org>; Wed, 17 Aug 2022 10:38:09 -0700 (PDT)
+        with ESMTP id S240393AbiHQRoA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Aug 2022 13:44:00 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08D0225583
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 10:43:58 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id n21so10918037qkk.3
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 10:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=Qa/9NBoH5HQt5QfBt9bzQlG2DWTSDELVJF/2AS+69Gw=;
-        b=Z5U+K7gwQXobTRXtXUKg3a0Sgw3ONsCJ61fxyfynBRG1xA63V/9s8W8Q73V549XGCe
-         HXhkICoPmaDYJvSnX36mxM3qKYgaQCIctKJfa3Dlf4QKhUyeaRbWLVWh0OArp/3X1Jz5
-         FAuOd0+c3Nz31dB/Nv8DLvmkJ0CVPkqhAuH8I24SlR5Rm4FTN2MYIqE6lYBf8Xly9lyW
-         J8JqaK68ECHPDBOCIDURkahjbchKCNs1YfI4v+dWnxh8+fvvIRszh6EkxQK8PH2CWKOl
-         IyO//Eet2oVlHy4hKLvYg07avNZ39wLgKf2+KHcNtgruWaeAhHl2wXNT3QjskOzC8Ttd
-         gWMQ==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=sOh+xxbvuAlRtSYx76ZDJycR3gDadEwNUp7qGCpIyRc=;
+        b=c0HtjMtSKXWiNvNL3QqQKCIAmbI01JXnd8xyTsVy8DvDACR+3pde2+F8ymr8e84MDt
+         b16ebUkaOPO79noW1ok/IhkSJE86kLJGYsPhaV5pD4bV5N5MAsEfHSCam2btIZA4fLxx
+         QXxEFumWatB3ZHsQjnb8D67zka0f2WQRXRSGuJw9Vp/gzClWQLb6MZxd7it/Ve3lLaPg
+         t+f8o770W++Kz75JGI/sJR/1zbcA1wWXoiLXdpmYkOmA1DCdRx72k1ucH5cYWmEVk8pP
+         wnTHu3BbwD6uDy1PErGLdPF31Z6GOsU15EDik1sl7YCYKx/mJsOR0qWbLx2xDPhmBC2f
+         Gnjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=Qa/9NBoH5HQt5QfBt9bzQlG2DWTSDELVJF/2AS+69Gw=;
-        b=q42pG2gaedQ1zWgXDj6hklH+5UfkftoP5bX7MnRyePbvSzfF0ZCoPKIoKeJddMw492
-         T+2c0F9pYce0ZDJOayedbFubhHH2ZQY0rxSdvbi+uQavIomWVA0oM+h+J/XMLTl3P/4a
-         9WNIp9qgEcoQ4JBn5ZT8h/yL4pmvTFCY8ivsCz7tAiGhX3231V2Z9kHmN6H/PkEaFR+G
-         9/SccFjNuAvyCaxXExKgO5DpMoSo2oDYrX3GY/ed4/D+cE/We+7kIqkvzdT+Fa6UTOl6
-         y7cxrVuye0MBIuluffuhekV032ReA0Pxq+J5gC/QK2+CXIvRUatc4Y+DAV7ksOqpLvn0
-         j5Pg==
-X-Gm-Message-State: ACgBeo3yX91/todl+odAGpMRNYUs1P2l04tWCECR5Lx7ZrCOYNB7ujHd
-        DW6s0ShhP9DGduBWRm5CU2w4J8YbEYOEvAPD1as=
-X-Google-Smtp-Source: AA6agR53vWcpVFXiUiHHK+uaoyM79KR6CDdIwPcmEnw05bkAzaK0nL34Uk/HIWsPhNOWoOJc8hnFnGIckGZNs3vF0+c=
-X-Received: by 2002:a05:6214:20e7:b0:479:6ed5:e5ff with SMTP id
- 7-20020a05621420e700b004796ed5e5ffmr23102640qvk.69.1660757888800; Wed, 17 Aug
- 2022 10:38:08 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=sOh+xxbvuAlRtSYx76ZDJycR3gDadEwNUp7qGCpIyRc=;
+        b=qbWDbR+P2SvXc+LGGUoBI6wNsSm/ivw8uMusGVfGrRz+t9DHct5onFOAtq0cjYr9hY
+         NpluFBLEpNiOEY5QOK9nmdZvubWVXUjbWk0cozgZMQQR7oH+qRZgJOK+WFqu9NRIrW7/
+         8rOaLU99cfPTS/8KM6H0uOOf95BFl/wfBZJ/uc1BS11eeCmOlT+87heolClQyYjGUmlQ
+         CMfEkUou8jGaXQfT4Ag7IS+3ZFsyugoew0ppVuiRGLzgrpmJBHEvnV25v2nP9hSxgPBL
+         AJfz2+kX+IC7bCJqGV9CtIctJOs/SIIoiJ52A4UFhveic/5GLO6np9s6sZI7iCk/2tqJ
+         xmPg==
+X-Gm-Message-State: ACgBeo22t5Kp4k6irJh0GfSR6jX07j5TIa6SDCWq6qLWgRnF+cs965FK
+        8iY9RiC0LDv19AzXqE3TQwTH
+X-Google-Smtp-Source: AA6agR6shK9Lpg/xEPr1lXYZQ995MHMuPIxgTwuFariHXp4MjF4XF7Mli2H2PDr8fB7pjP0qyP1qRQ==
+X-Received: by 2002:a37:444b:0:b0:6b1:48dd:e56e with SMTP id r72-20020a37444b000000b006b148dde56emr19356559qka.501.1660758237782;
+        Wed, 17 Aug 2022 10:43:57 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:f8cc:7049:fd75:5ebd? ([2600:1700:e72:80a0:f8cc:7049:fd75:5ebd])
+        by smtp.gmail.com with ESMTPSA id fz9-20020a05622a5a8900b003447ee0a6bfsm1898791qtb.17.2022.08.17.10.43.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Aug 2022 10:43:57 -0700 (PDT)
+Message-ID: <e719d1e1-1849-07bc-ea08-2729985e5048@github.com>
+Date:   Wed, 17 Aug 2022 13:43:54 -0400
 MIME-Version: 1.0
-References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
- <20220817075633.217934-2-shaoxuan.yuan02@gmail.com> <80f24382-1188-d450-d1e2-42f68c08e60b@github.com>
-In-Reply-To: <80f24382-1188-d450-d1e2-42f68c08e60b@github.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 17 Aug 2022 10:37:58 -0700
-Message-ID: <CABPp-BGvihOqmz14CBudQ=7_=QXc-3NN3o3Tmy=MY3ykkqwPiA@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
 Subject: Re: [PATCH v1 1/2] builtin/grep.c: add --sparse option
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Language: en-US
+To:     Victoria Dye <vdye@github.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
+References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+ <20220817075633.217934-2-shaoxuan.yuan02@gmail.com>
+ <80f24382-1188-d450-d1e2-42f68c08e60b@github.com>
+ <xmqqh72ayeru.fsf@gitster.g>
+ <bc923a75-7d60-1199-40cd-9d5067d6511c@github.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <bc923a75-7d60-1199-40cd-9d5067d6511c@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 17, 2022 at 7:25 AM Derrick Stolee <derrickstolee@github.com> wrote:
->
-> On 8/17/2022 3:56 AM, Shaoxuan Yuan wrote:
-> > Add a --sparse option to `git-grep`. This option is mainly used to:
-> >
-> > If searching in the index (using --cached):
-> >
-> > With --sparse, proceed the action when the current cache_entry is
->
-> This phrasing is awkward. It might be better to reframe to describe the
-> _why_ before the _what_
->
->   When the '--cached' option is used with the 'git grep' command, the
->   search is limited to the blobs found in the index, not in the worktree.
->   If the user has enabled sparse-checkout, this might present more results
->   than they would like, since the files outside of the sparse-checkout are
->   unlikely to be important to them.
->
->   Change the default behavior of 'git grep' to focus on the files within
->   the sparse-checkout definition. To enable the previous behavior, add a
->   '--sparse' option to 'git grep' that triggers the old behavior that
->   inspects paths outside of the sparse-checkout definition when paired
->   with the '--cached' option.
->
-> Or something like that. The documentation updates will also help clarify
-> what happens when '--cached' is not included. I assume '--sparse' is
-> ignored, but perhaps it _could_ allow looking at the cached files outside
-> the sparse-checkout definition, this could make the simpler invocation of
-> 'git grep --sparse <pattern>' be the way that users can search after their
-> attempt to search the worktree failed.
+On 8/17/2022 1:34 PM, Victoria Dye wrote:
+> Junio C Hamano wrote:
+>> Yup.  Is that "--sparse" or "--unsparse"?  We are busting the sparse
+>> boundary and looking for everything, and calling the option to do so
+>> "--sparse" somehow feels counter-intuitive, at least to me.
+> 
+> It is a bit unintuitive, but '--sparse' is already used to mean "operate on
+> SKIP_WORKTREE entries (i.e., pretend the repo isn't a sparse-checkout)" in
+> both 'add' (0299a69694 (add: implement the --sparse option, 2021-09-24)) and
+> 'rm' (f9786f9b85 (rm: add --sparse option, 2021-09-24)). The
+> 'checkout-index' option '--ignore-skip-worktree-bits' indicates similar
+> behavior (and is, IMO, similarly confusing with its use of "ignore").
+> 
+> I'm not sure '--unsparse' would fit as an alternative, though, since 'git
+> grep' isn't really "unsparsifying" the repo (to me, that would imply
+> updating the index to remove the 'SKIP_WORKTREE' flag). Rather, it's looking
+> at files that are sparse when, by default, it does not. 
+> 
+> I still like the consistency of '--sparse' with existing similar options in
+> other commands but, if we want to try something clearer here, maybe
+> something like '--search-sparse' is more descriptive?
 
-In addition to Stolee's comments, isn't this command line confusing?
+My interpretation of '--sparse' is "include skip-worktree paths"
+thinking of those paths being "sparse paths".
 
-  $ git grep --cached --sparse   # Do a *dense* search
-  $ git grep --cached            # Do a *sparse* search
+A too-long version could be '--ignore-sparse-checkout', but I can
+understand the confusion where '--sparse' is interpreted as
+'--respect-sparse-checkout'.
 
-?
+The existing pattern here means that it isn't Shaoxuan's responsibility
+to pick a better name, but if we are interested in changing the name,
+then we have some work to replace the previous '--sparse' options with
+that name. I could do that replacement, assuming we land on a better name
+and are willing to have that change of behavior.
+
+Thanks,
+-Stolee
