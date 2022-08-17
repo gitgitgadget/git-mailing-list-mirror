@@ -2,106 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61840C25B08
-	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 06:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94D5AC25B08
+	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 06:33:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238529AbiHQGdx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Aug 2022 02:33:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45122 "EHLO
+        id S238572AbiHQGd5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Aug 2022 02:33:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229572AbiHQGdw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Aug 2022 02:33:52 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 485755722C
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 23:33:51 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id a4so3333220wrq.1
-        for <git@vger.kernel.org>; Tue, 16 Aug 2022 23:33:51 -0700 (PDT)
+        with ESMTP id S229572AbiHQGdy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Aug 2022 02:33:54 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 584895B047
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 23:33:52 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id n4so15028477wrp.10
+        for <git@vger.kernel.org>; Tue, 16 Aug 2022 23:33:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=XamFfe9m2oJ8n6Pb15A7D77lObBiioxBXlljhTJ8Uh4=;
-        b=WMw5oH8RujNBCswsQ85TmqbIi2NngfH0yA7pSKCEH/ksmELCYWPUO4F6GI/k51K7xU
-         j/Mxlm2SI5JY1mnKfaqVsoaDFAvCpV/128lyYvKydp2Vufp/Ieoj5Y4saTxObwYhK0az
-         kzAdd3CzsJ3kmbssR4WnjDA9JFJmLwCzNaH2/EayGpbdbnBpvOttRQAtaVVqg0XX9UgW
-         jomg1WdBIOyopbRAUafMKwlvNJJLCy28CXHPQvG4UWLm6W4gVzrjsPbc9lLced4PTYrS
-         Mu+OsH29TiBiPFa/hFgPVqV/VR9JGHW52NXH25aIpyXJ5lB9jSDca08V9PFISQ0+wpRP
-         aJvw==
+        bh=orLlAQr765bvkva4vFaQHGMvMkGu+ZWilMQG0k98LwA=;
+        b=hDbaNYH/2EamR+FD/rs39Go2n3XUJ4Nb1t0pHWbgsKdxSBEfxFl7RKDM1x7OC5M4ho
+         oR8zpXYOI6s3mf/xOUMQ3E8ZdrRIpTLedkwYEd/8U/Z8+rXiU8szqdYLytP7WYAb1SSz
+         4X/qdZs/Wclj1YmqCQCMENL1JJZIGlYxt5ZXzBMI8Ulb/ndKNk3dOk4Tj1HdG5jzL1oD
+         uWuy4e9HF3P3/iQWb5av/9TA3IVCFIzvmzIf0x1JyhFhuDYIEMNSNIRsxgWzYPqXp284
+         bpAA2Ft7oH3uSMgk+nk0j4o4puy58r1UqvzErX9uZ+NqFbLLM0ZTI18eEk7CsPMv0JR0
+         JO2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=XamFfe9m2oJ8n6Pb15A7D77lObBiioxBXlljhTJ8Uh4=;
-        b=c1nOH1NlBN1+xnGveeZYdgx61irmZzH7zxhHvhMgB04BVxvpgsfKs+kT+B3WKu2Y9r
-         Ci3+AZ0FbIqcRZna28MEEdeJkeCk45QI7Lv5nBw7hJ3kIvwuL5KXF6IF9f/sXw1loyZa
-         5ZhjwtINAD3zBcqaVYMlx4PxQiKkWUnDaEnlHcK+ID7WCTFIVEtvzRMQBjIE2Rf9za13
-         CK0AzPMUh/zdstudR9jzqRx8fgE4Sxk9ey6pYCZvkJJhmR4rg0HKp7+GCubuW5E3kfTP
-         jR3GFTbzZQbigtTL/UxZRVqeZYLxqSwBBwhH2XlIpCcGRVrjyNXiFwNYUt4urBV0Lmtf
-         KTIw==
-X-Gm-Message-State: ACgBeo390lClb2Q3h0b/HNSrBdibHwCBDrc1yP05wMvsoi7meGvVPqRa
-        e1BPY7gQXgNGMBKnMQ9vi2ZCFSQ+kWg=
-X-Google-Smtp-Source: AA6agR7uqlnjHRzKC/55HwzVUaokyQ7gKBdgjQyDx0Nl7bFMlPNJbYoF/ZczA3WRRS51l/YMc599JA==
-X-Received: by 2002:a05:6000:a09:b0:220:638f:3b4a with SMTP id co9-20020a0560000a0900b00220638f3b4amr13393527wrb.626.1660718029588;
-        Tue, 16 Aug 2022 23:33:49 -0700 (PDT)
+        bh=orLlAQr765bvkva4vFaQHGMvMkGu+ZWilMQG0k98LwA=;
+        b=u9FSs7zYKNx4qkzXC34Feq0C+A3GqRm7XxRuKDzdW/Mv4GUQe/RvsckNIW3Cp/w/VS
+         SUqcUslMF6HshaQ37VGn/4E2JgNqlfCpE5yiItgtv4HV6TnDEXxshKRZ7pUPqQJOsr8r
+         xlSTNFoJSMymRLLApMjDM0bZ6U4BMUEh/LrtieFy1tFgzDrx4tL/5ia2HSHLs60wpvU+
+         ekEsMxh6zBcVe1gj0zrsy2nyeIVpE1KRz9Aj2JDwfyrPARtGeV0TPiSExiUrEW130QqV
+         CGWaGYE15lyJ5s6rYLnGFUigbdRGy41Cr8U876jhk09rqn/MSychNvTctAiidIlTkt+p
+         0iFA==
+X-Gm-Message-State: ACgBeo1/iIhAGM6jrZQCnqKUafLkmGy2fltFaA7mC6DSRXbU5YoR2O0i
+        XYpWPC4piroW406tOyHZ8Js1ErLbdJg=
+X-Google-Smtp-Source: AA6agR7J0qhfMuoa1Ep7Jfibvjt26vmtPMFPmVc/ERU2eFsbym41CUcqJ7SJ155tqRytIM3hF2aIWA==
+X-Received: by 2002:adf:d4c2:0:b0:21e:ddf3:8b14 with SMTP id w2-20020adfd4c2000000b0021eddf38b14mr13824008wrk.355.1660718030543;
+        Tue, 16 Aug 2022 23:33:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r15-20020a5d52cf000000b0021f73c66198sm11997175wrv.1.2022.08.16.23.33.48
+        by smtp.gmail.com with ESMTPSA id e26-20020a05600c219a00b003a5de95b105sm1036616wme.41.2022.08.16.23.33.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Aug 2022 23:33:49 -0700 (PDT)
-Message-Id: <pull.1325.v2.git.1660718028.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1325.git.1660696081.gitgitgadget@gmail.com>
+        Tue, 16 Aug 2022 23:33:50 -0700 (PDT)
+Message-Id: <374278c6a1d64e4f9ae43c9c49801997dd338850.1660718028.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1325.v2.git.1660718028.gitgitgadget@gmail.com>
 References: <pull.1325.git.1660696081.gitgitgadget@gmail.com>
+        <pull.1325.v2.git.1660718028.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 17 Aug 2022 06:33:45 +0000
-Subject: [PATCH v2 0/3] Fixups for cw/submodule-merge-messages
+Date:   Wed, 17 Aug 2022 06:33:46 +0000
+Subject: [PATCH v2 1/3] merge-ort: remove translator lego in new "submodule
+ conflict suggestion"
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Calvin Wan <calvinwan@google.com>, Elijah Newren <newren@gmail.com>
+Cc:     Calvin Wan <calvinwan@google.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series fixes a few issues I noted in cw/submodule-merge-messages (which
-merged to next a few days ago). Sorry for not responding before that topic
-merged to next; I caught Covid near the end of my vacation and it took me
-out for a while. So here are a few patches on top instead.
+From: Elijah Newren <newren@gmail.com>
 
-Changes since v1:
+In commit 4057523a40 ("submodule merge: update conflict error message",
+2022-08-04), the new "submodule conflict suggestion" code was
+translating 6 different pieces of the new message and then used
+carefully crafted logic to allow stitching it back together with special
+formatting.  Keep the components of the message together as much as
+possible, so that:
+  * we reduce the number of things translators have to translate
+  * translators have more control over the format of the output
+  * the code is much easier for developers to understand too
 
- * rebased directly on top of Calvin's patch, allowing Junio's patch in
-   cw/submodule-merge-messages to be dropped.
+Also, reformat some comments running beyond the 80th column while at it.
 
-Elijah Newren (3):
-  merge-ort: remove translator lego in new "submodule conflict
-    suggestion"
-  merge-ort: add comment to avoid surprise with new sub_flag variable
-  merge-ort: provide helpful submodule update message when possible
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-ort.c | 88 +++++++++++++++++------------------------------------
+ 1 file changed, 28 insertions(+), 60 deletions(-)
 
- merge-ort.c | 104 +++++++++++++++++-----------------------------------
- 1 file changed, 34 insertions(+), 70 deletions(-)
-
-
-base-commit: 4057523a4061092e9181220d54dca9eadcb75bdc
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1325%2Fnewren%2Fsubmodule-merge-messages-fixups-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1325/newren/submodule-merge-messages-fixups-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1325
-
-Range-diff vs v1:
-
- 1:  46c9b48871b ! 1:  374278c6a1d merge-ort: remove translator lego in new "submodule conflict suggestion"
-     @@ merge-ort.c: static int record_conflicted_index_entries(struct merge_options *op
-      -	}
-      -	strbuf_reset(msg);
-      -	strbuf_add(msg, tmp.buf, tmp.len);
-     --	string_list_clear(&msg_list, 0);
-     --	strbuf_release(&tmp);
-      -}
-      -
-       static void print_submodule_conflict_suggestion(struct string_list *csub) {
- 2:  269714da706 = 2:  340c0f46f74 merge-ort: add comment to avoid surprise with new sub_flag variable
- 3:  010cf4ff344 = 3:  80207d18334 merge-ort: provide helpful submodule update message when possible
-
+diff --git a/merge-ort.c b/merge-ort.c
+index a52faf6e218..67159fc6ef9 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -4481,34 +4481,6 @@ static int record_conflicted_index_entries(struct merge_options *opt)
+ 	return errs;
+ }
+ 
+-static void format_submodule_conflict_suggestion(struct strbuf *msg) {
+-	struct strbuf tmp = STRBUF_INIT;
+-	struct string_list msg_list = STRING_LIST_INIT_DUP;
+-	int i;
+-
+-	string_list_split(&msg_list, msg->buf, '\n', -1);
+-	for (i = 0; i < msg_list.nr; i++) {
+-		if (!i)
+-			/*
+-			 * TRANSLATORS: This is line item of submodule conflict message
+-			 * from print_submodule_conflict_suggestion() below. For RTL
+-			 * languages, the following swap is suggested:
+-			 *      " - %s\n" -> "%s - \n"
+-			 */
+-			strbuf_addf(&tmp, _(" - %s\n"), msg_list.items[i].string);
+-		else
+-			/*
+-			 * TRANSLATORS: This is line item of submodule conflict message
+-			 * from print_submodule_conflict_suggestion() below. For RTL
+-			 * languages, the following swap is suggested:
+-			 *      "   %s\n" -> "%s   \n"
+-			 */
+-			strbuf_addf(&tmp, _("   %s\n"), msg_list.items[i].string);
+-	}
+-	strbuf_reset(msg);
+-	strbuf_add(msg, tmp.buf, tmp.len);
+-}
+-
+ static void print_submodule_conflict_suggestion(struct string_list *csub) {
+ 	struct string_list_item *item;
+ 	struct strbuf msg = STRBUF_INIT;
+@@ -4530,45 +4502,41 @@ static void print_submodule_conflict_suggestion(struct string_list *csub) {
+ 			return;
+ 	}
+ 
+-	printf(_("Recursive merging with submodules currently only supports "
+-		"trivial cases.\nPlease manually handle the merging of each "
+-		"conflicted submodule.\nThis can be accomplished with the following "
+-		"steps:"));
+-	putchar('\n');
+-
++	strbuf_add_separated_string_list(&subs, " ", csub);
+ 	for_each_string_list_item(item, csub) {
+ 		struct conflicted_submodule_item *util = item->util;
++
+ 		/*
+-		 * TRANSLATORS: This is a line of advice to resolve a merge conflict
+-		 * in a submodule. The second argument is the abbreviated id of the
+-		 * commit that needs to be merged.
+-		 * E.g. - go to submodule (sub), and either merge commit abc1234"
++		 * TRANSLATORS: This is a line of advice to resolve a merge
++		 * conflict in a submodule. The first argument is the submodule
++		 * name, and the second argument is the abbreviated id of the
++		 * commit that needs to be merged.  For example:
++		 *  - go to submodule (mysubmodule), and either merge commit abc1234"
+ 		 */
+-		strbuf_addf(&tmp, _("go to submodule (%s), and either merge commit %s\n"
+-			"or update to an existing commit which has merged those changes"),
+-			item->string, util->abbrev);
+-		format_submodule_conflict_suggestion(&tmp);
+-		strbuf_add(&msg, tmp.buf, tmp.len);
+-		strbuf_reset(&tmp);
++		strbuf_addf(&tmp, _(" - go to submodule (%s), and either merge commit %s\n"
++				    "   or update to an existing commit which has merged those changes\n"),
++			    item->string, util->abbrev);
+ 	}
+-	strbuf_add_separated_string_list(&subs, " ", csub);
+-	strbuf_addstr(&tmp, _("come back to superproject and run:"));
+-	strbuf_addf(&tmp, "\n\ngit add %s\n\n", subs.buf);
+-	strbuf_addstr(&tmp, _("to record the above merge or update"));
+-	format_submodule_conflict_suggestion(&tmp);
+-	strbuf_add(&msg, tmp.buf, tmp.len);
+-	strbuf_reset(&tmp);
+-
+-	strbuf_addstr(&tmp, _("resolve any other conflicts in the superproject"));
+-	format_submodule_conflict_suggestion(&tmp);
+-	strbuf_add(&msg, tmp.buf, tmp.len);
+-	strbuf_reset(&tmp);
+-
+-	strbuf_addstr(&tmp, _("commit the resulting index in the superproject"));
+-	format_submodule_conflict_suggestion(&tmp);
+-	strbuf_add(&msg, tmp.buf, tmp.len);
++
++	/*
++	 * TRANSLATORS: This is a detailed message for resolving submodule
++	 * conflicts.  The first argument is string containing one step per
++	 * submodule.  The second is a space-separated list of submodule names.
++	 */
++	strbuf_addf(&msg,
++		    _("Recursive merging with submodules currently only supports trivial cases.\n"
++		      "Please manually handle the merging of each conflicted submodule.\n"
++		      "This can be accomplished with the following steps:\n"
++		      "%s"
++		      " - come back to superproject and run:\n\n"
++		      "      git add %s\n\n"
++		      "   to record the above merge or update\n"
++		      " - resolve any other conflicts in the superproject\n"
++		      " - commit the resulting index in the superproject\n"),
++		    tmp.buf, subs.buf);
+ 
+ 	printf("%s", msg.buf);
++
+ 	strbuf_release(&subs);
+ 	strbuf_release(&tmp);
+ 	strbuf_release(&msg);
 -- 
 gitgitgadget
+
