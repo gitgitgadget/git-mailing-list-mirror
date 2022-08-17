@@ -2,104 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FB4FC2BB41
-	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 19:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 114F0C2BB41
+	for <git@archiver.kernel.org>; Wed, 17 Aug 2022 19:41:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241452AbiHQTZM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Aug 2022 15:25:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46270 "EHLO
+        id S241020AbiHQTlM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Aug 2022 15:41:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241196AbiHQTZJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Aug 2022 15:25:09 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 052FA5F55
-        for <git@vger.kernel.org>; Wed, 17 Aug 2022 12:25:09 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id a15so10698167qko.4
-        for <git@vger.kernel.org>; Wed, 17 Aug 2022 12:25:08 -0700 (PDT)
+        with ESMTP id S241752AbiHQTk7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Aug 2022 15:40:59 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5D9098D3A
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 12:40:56 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id fy5so26325951ejc.3
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 12:40:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=s/fLeppeRrNl0jBATLK1FUP5ZeILiHfVvWqbvH74h3o=;
-        b=oI9bYAysv+Xy/531zTqdE+kERRJEa6eCgCgR8w/q6gbVqQe72W0Y3SJpbPH+gQl1yF
-         qSPUhkUgAR7PGK7VJ+gS2iu8RZfWSiBFPPcuurzmsLSBp3RwSg2vdbVOR2rZzRiRvReA
-         rkWNjoyInJK5MqybI2xi2fZYW9MwaXd+sLaMwzJqN/DV9W+I/ktRif/Bj8a4/ZPCNo5i
-         Au9GCU5ql9gGgr6F2Ha4UzAj2jY+sXpji5qRvaqBp8v7td/wiqLCWlihvRq8IUAl1S5f
-         7//iX47nebLng/GKchyVkWECiyC2oCSk0LWe40/pbdUe1SfK4FPWAww/xyG/C6GNAhIB
-         qNGA==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc;
+        bh=Wr4Co+hdSk1HzVrPUVWgbbai/NxCTGufDRxwdtw8h/s=;
+        b=dHf/87egS7VJErhXHT1WZFPbgGKdhgNPLLEgHvvNdU49uL6XueETGtOulGo9DfG841
+         p7mZhRcIsSDokHL4Hg/Qpy31IDsoxKfiWX9MI4JqdK6mhReXXhWf2HsR365hh5W4+uVY
+         b5Yq5rOZpPZR9mVLpYZU0wlZ8pWHmH+dsiRk8/kgQH3any4I/PUX7iHlrVXFXS3CqXsn
+         Fce1fyOnEVFU0Q10IU8YIXZEb0Gc/ZoEelaGrr+ewm0xkNGi+b41+9Xn8kEAvpWKnYil
+         0XU4GVSPLptfENA3F+d8NsAM58CHStdZ6H/AlAH/CyuWHP6kYIlF19h5ueRvopurF5bH
+         HZdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=s/fLeppeRrNl0jBATLK1FUP5ZeILiHfVvWqbvH74h3o=;
-        b=KpGIJIDyOOB8/3Dzt45WlBAIl9IJQNJKbU9w4A/S5GoOb1juM5UOjTOqgHufv/C6gs
-         kSazmgqRLDF7eXDTngFFxToZLQiGngOURCKhSHir22zQohKJ74o3b7PryBF/vfhNlqKq
-         tcEcXoOfyJ6epTqMh6/W2Ikz44JSyXZ+B6f0QwiwX+P70R5uGgHNJG/jn7KyrrJRq4/I
-         h+vhAcLxcnmv9OqlzTu3fee2ba+jNHOuQby/EBTHxzt+lu6ecafjJ4fgqzWreZz0qVuM
-         GIcj6YG77MvVjkkt3rMA+KskbRQ3hY3ZRITXt0Q3Um5Adcio5SW9IfxK+y4pQfV5YHX1
-         BXow==
-X-Gm-Message-State: ACgBeo0BdTRxzd8DELq3VuiRm6uvgYrkzinybwx/fyax6x+DAhq88Hya
-        RO7xpJ6jhDTDa/AM9Yga8rCdB/TXfAVol9oLszM=
-X-Google-Smtp-Source: AA6agR6KmVxUUdt09TNBU9zsPYgBWNt89L6Tu064+k1Eig1TlgaWbegt+y0M/5z1RO+SJxoZ2/sGgZYBMp6LNiuKntA=
-X-Received: by 2002:a37:638c:0:b0:6ba:fcfa:3690 with SMTP id
- x134-20020a37638c000000b006bafcfa3690mr14631446qkb.227.1660764308072; Wed, 17
- Aug 2022 12:25:08 -0700 (PDT)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
+        bh=Wr4Co+hdSk1HzVrPUVWgbbai/NxCTGufDRxwdtw8h/s=;
+        b=EtE5zD9bcXV0Lk6bv28UKFhiQeA3wO8Nyo5CxQnMz+TKuOFuu0buCqjZnj5eZYtApF
+         CJZpV6OxFxdvjclLiG3K+VHZPGRhcSadB1tdxytp2y+KB+xE1y9BQU2dLgo4msuIyWho
+         /fRHMptJKtzDuUrQPo0/HOzaKhbvAvYlQ5ITXFyzmWXzJWnJXxSxFHl1WU9UJwcA8T5D
+         ml9tO732To/60F27kgkxwWYd+E/VC6k1TTGar+Ca2LUA84uCOO2k4icmwYc9bnkyONT8
+         I00LiDW4XQAksWRa4wsiTgztQiA36FKfBM7sEeb07Q8jzvSUAOXEKueD399BjwWMTjXi
+         N67Q==
+X-Gm-Message-State: ACgBeo09n0eYUoPi4gxdzCyWn1l77+7sWv/COFLYkavVWLckfd616qUH
+        sxZjJw+lfPPkLrGnq3USmtHhuoMOKgwQM/MvHeUlWHj6+wg=
+X-Google-Smtp-Source: AA6agR4xvcwfRnQbk4GfArDNpBJ+JMhwW8o3J7rpDSj9ngEAVLEeUQtla+L67QG9NiD81rHxVn3bNxZxXQaxRBoPZEg=
+X-Received: by 2002:a17:907:2c62:b0:730:d9b9:aabb with SMTP id
+ ib2-20020a1709072c6200b00730d9b9aabbmr17223807ejc.84.1660765255307; Wed, 17
+ Aug 2022 12:40:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqq5yityzcu.fsf@gitster.g> <p053rrpq-17q7-pnrs-3794-o04ro1445s5s@tzk.qr>
- <CABPp-BFAERLt_z-D=7gbXWVA9JgsqTP_2iW9BLe5S=YbsQ1V6w@mail.gmail.com> <xmqqtu6avgub.fsf@gitster.g>
-In-Reply-To: <xmqqtu6avgub.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 17 Aug 2022 12:24:57 -0700
-Message-ID: <CABPp-BHBOqnU7DSLkYPig=c6+emWGaE1vdzaPk0D90yQdof+6A@mail.gmail.com>
-Subject: Re: js/bisect-in-c, was Re: What's cooking in git.git (Aug 2022, #05;
- Mon, 15)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>
+References: <20220817094909.v2ev4rpsmxjnii4x@pengutronix.de>
+In-Reply-To: <20220817094909.v2ev4rpsmxjnii4x@pengutronix.de>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Wed, 17 Aug 2022 14:40:44 -0500
+Message-ID: <CAMP44s3iRbqgA9U4SeyRQUXdfqk=Stsw3kGqoGrFDRDWkV6GKA@mail.gmail.com>
+Subject: Re: Bug in rebase --autosquash
+To:     =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+Cc:     git@vger.kernel.org, entwicklung@pengutronix.de
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 17, 2022 at 11:57 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> >> >  Expecting a (hopefully final) reroll.
-> >> ...
-> >
-> > Could I vote for just merging it down, as-is?  As far as I can tell,
-> > ... Further, such changes, while likely
-> > desirable for consistency among Git commands, would likely move us
-> > away from "faithful conversion from shell to C", and thus is likely
-> > better to be done as a separate step on top of the existing series
-> > anyway[4].
->
-> If this were a faithful conversion, yes, merging it right now can be
-> one good approach; add a faithful but not very C-like convesion
-> first and then make it "more like C code" later.
->
-> I however got an impression from the review discussion that it
-> subtly changes behaviour (IIRC, one thing pointed out was that exit
-> codes are now different from the original---there may or may not be
-> others, but my impression was they were all minor like the "exit
-> code" one).
->
-> My "hopefully final" comment was not about a big rearchitecting
-> change like use of parse-options API but about adjusting such minor
-> behaviour diversion so that we can say "This may not be very C-like,
-> and does not use much of our established API, but it is a fairly
-> faithful bug-to-bug compatible translation.  Let's take it and make
-> it more like C incrementally".  And of course, what was implied in
-> "hopefully final" was that such adjustments would be tiny, trivial
-> and can be done without much controversy.  After all, I was aware
-> that the series was otherwise reviewed and received extensive
-> comments (sorry, I forgot that it was by you).
->
-> Thanks.
+On Wed, Aug 17, 2022 at 4:54 AM Uwe Kleine-K=C3=B6nig
+<u.kleine-koenig@pengutronix.de> wrote:
+> after:
 
-Ah, gotcha.  My impression was that the exit codes did match what the
-previous shell code had done, but didn't match what other builtins
-usually return.  Perhaps I misread those discussion comments.
+...
 
-Thanks for the clarification.
+> running
+>
+>         git rebase -i --autosquash @~2
+>
+> my editor presents me with:
+>
+>         pick ef8f0bd27a56 fixup! file with content
+>         pick b40a214bf5fb fixup! fixup! file with content
+>
+> However I would have expected
+>
+>         pick ef8f0bd27a56 fixup! file with content
+>         fixup b40a214bf5fb fixup! fixup! file with content
+>
+> instead.
+>
+> Is this a feature I don't understand?
+
+The problem is the code removes all "fixup! " prefixes and then tries
+to find a commit with that title, which isn't in the list. If you
+specify the commit hash, then it finds it and it works as you
+intended.
+
+I don't see why the code would do that though, since you are clearly
+intending to fix "fixup! file with content", not "file with content".
+
+This patch below (apologies for gmail auto wrapping in advance) should
+make it work as you intend.
+
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -6213,12 +6213,8 @@ int todo_list_rearrange_squash(struct todo_list
+*todo_list)
+                if (skip_fixupish(subject, &p)) {
+                        struct commit *commit2;
+
+-                       for (;;) {
+-                               while (isspace(*p))
+-                                       p++;
+-                               if (!skip_fixupish(p, &p))
+-                                       break;
+-                       }
++                       while (isspace(*p))
++                               p++;
+
+                        entry =3D hashmap_get_entry_from_hash(&subject2item=
+,
+                                                strhash(p), p,
+
+--=20
+Felipe Contreras
