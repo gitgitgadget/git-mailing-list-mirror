@@ -2,108 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E238C32772
-	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 17:00:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6993DC00140
+	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 17:16:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345193AbiHRRAy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Aug 2022 13:00:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35212 "EHLO
+        id S1345520AbiHRRQP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Aug 2022 13:16:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345271AbiHRRAO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2022 13:00:14 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63FCDBA9D0
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 10:00:10 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [104.129.158.24])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        with ESMTP id S1345032AbiHRRP5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2022 13:15:57 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7E2D61104
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 10:08:42 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7206614C855;
+        Thu, 18 Aug 2022 13:08:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/yTVRiCbUUfJukT2yOBfvUHOrZH5SD8iP5Q/sq
+        xp0JA=; b=j/4wSpb//uOu4PxOFRPv1Hp7oC3PMBu/P628ILg7bRXbdQKuXUk1Me
+        +OX3BIGGW1q396G9SbVZCe1/83gx7Hj4bz2AcAOgZJMZP5/eNlrtRbKZQP/YG6JF
+        PH0bjAJQPY7KegWxLbmnTER7ZK64aunOJRkzCb0UkpQqhRVAdVaNg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6936A14C854;
+        Thu, 18 Aug 2022 13:08:21 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 3AD445A29B;
-        Thu, 18 Aug 2022 17:00:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1660842009;
-        bh=D9XzTkz2BDSOZ3p74KrX0mx+OEXAvffxLFGZ8uDLXJs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=wFt1cKGdt/I8pUOwxVoSM0XGu0qzYfJyD+QVYo9uK0qYN3beFg9jlh7ITGwcS2eyG
-         LBGRgrHwzQq3Ar1LpRSiTiUANTfB89o2UdQ19qQmT7FhbpuQc3lwrayPqpIQp23P0W
-         16Dl/6MhLJ6DV+k1RT1vuPT8hxnCt8FJ7apd8Tt6MEjblUCX/RqRIBYlbZNk/aZcsc
-         3kVEvqPbzeR7xNczuMT6xV2hMjlrm8VK57MeQuY9fDhkHVzlbLd0hECuB/9CxQTKTB
-         u3PhlCdTP4e5O1mD7noT+KlbbT6xQDkcE17X5iOcSShYPPfPw8xHVTNO0BsJ8AN6u5
-         v0+YJFpYFtsnn4nJghuXito1ZjaqCPZxYRRASaIXOiBgXDBu+Z2MquU9Fak0RFgtnX
-         +V6yFIVpcgivlcFxFnrofxlem8lRZc+8NPikXPF85BbqsDjbSZOOjXfx3gnj8GMzhG
-         AdjKO/AhvHhYRAggwqzyjfI463Xz9aykyTdx4Z6UoQ6WjNusAJl
-Date:   Thu, 18 Aug 2022 17:00:07 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Sergio via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Sergei Krivonos <sergeikrivonos@gmail.com>
-Subject: Re: [PATCH 2/2] Add Eclipse project settings files to .gitignore
-Message-ID: <Yv5wF0DxVe38ygap@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Sergio via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Sergei Krivonos <sergeikrivonos@gmail.com>
-References: <pull.1307.git.git.1660831231.gitgitgadget@gmail.com>
- <106a0563cfc29b75dbdbd54ce55140762e133539.1660831231.git.gitgitgadget@gmail.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C28E614C853;
+        Thu, 18 Aug 2022 13:08:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     lilinchao@oschina.cn
+Cc:     git <git@vger.kernel.org>
+Subject: Re: [Question] How to know which branch(ref) is the latest updated
+ branch?
+References: <2022081818034939145210@oschina.cn>
+Date:   Thu, 18 Aug 2022 10:08:19 -0700
+In-Reply-To: <2022081818034939145210@oschina.cn> (lilinchao@oschina.cn's
+        message of "Thu, 18 Aug 2022 18:04:49 +0800")
+Message-ID: <xmqqa681qy2k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="aX47IbAj1HC1xKH3"
-Content-Disposition: inline
-In-Reply-To: <106a0563cfc29b75dbdbd54ce55140762e133539.1660831231.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.2.6 (2022-06-05)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5C64DB7E-1F18-11ED-8A93-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"lilinchao@oschina.cn" <lilinchao@oschina.cn> writes:
 
---aX47IbAj1HC1xKH3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> In a git based workflow, there are usually many active branches.
+> So, is there a convenient way to quickly know which branch is the
+> latest updated?
 
-On 2022-08-18 at 14:00:31, Sergio via GitGitGadget wrote:
-> From: Sergio <sergeikrivonos@gmail.com>
->=20
-> Signed-off-by: Sergio <sergeikrivonos@gmail.com>
-> ---
->  .gitignore | 2 ++
->  1 file changed, 2 insertions(+)
->=20
-> diff --git a/.gitignore b/.gitignore
-> index 42fd7253b44..13755c31caf 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -246,3 +246,5 @@ Release/
->  /git.VC.db
->  *.dSYM
->  /contrib/buildsystems/out
-> +/.cproject
-> +/.project
+These days "git branch" has "--sort" option, inherited from "for-each-ref",
+so
 
-I have no strong opinion on this change, but typically, to avoid a
-proliferation of patterns with everyone's favourite editor settings, it
-can be useful if each individual user sets their own editor files in
-~/.config/git/ignore (or core.excludesFile, if you prefer a different
-location).  For example, I do this with Vim-related files, and it
-applies to all repos on my system, such that other developers don't have
-to care what editor I use.
+    git branch --sort=-committerdate
 
-However, Eclipse is a popular editor, so it may be that Junio really
-likes this change since it will benefit many people.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+lists them from the most-recently-committed [*].
 
---aX47IbAj1HC1xKH3
-Content-Type: application/pgp-signature; name="signature.asc"
+HOWEVER.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.35 (GNU/Linux)
+There is no way to sort on the time when each branch was last
+updated.  You may do
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYv5wFgAKCRB8DEliiIei
-gTB/AP9KBA2TYshK6WBf2s/smGxS5c8VEvqp4ccuLevn10631gEAte3K0AZ4gJlA
-RuxYr5Y1VLk6p/Cz/2RnalMauD2nDQ4=
-=XApo
------END PGP SIGNATURE-----
+    git branch newbranch HEAD@{2.years.ago}
 
---aX47IbAj1HC1xKH3--
+to create a new branch (i.e. it is the last updated branch) that
+points at a commit that existed 2 years ago (hence it would be at
+least 2 years old, possibly more).  If for-each-ref learns a new
+placeholder %(reflogtime) that can be used to represent the
+timestamp of the latest reflog entry, you should be able to sort by
+the time when branch was last updated, but not until then.
+
+
+[Footnote]
+
+I have this handy alias
+
+    [alias]
+    notyet = branch --no-merged jch --no-merged seen --sort=-committerdate '??/*'
+
+to remind me of topics that are not yet in my integration branches
+while rebuilding them.
+
+In the end result, 'seen' is supposed to include "everything I saw
+and found possibly interesting", and 'jch' is supposed to be a
+subset of it, but explicitly saying "show branches that are not in
+either of these two" helps while rebuilding them (and I do so a few
+times a day).
