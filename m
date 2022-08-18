@@ -2,73 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3164C00140
-	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 17:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9B09C00140
+	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 17:32:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343597AbiHRRbW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Aug 2022 13:31:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52714 "EHLO
+        id S1344198AbiHRRcl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Aug 2022 13:32:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234758AbiHRRbV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2022 13:31:21 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38E97B603E
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 10:31:21 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B5B341BF003;
-        Thu, 18 Aug 2022 13:31:20 -0400 (EDT)
+        with ESMTP id S233857AbiHRRcj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2022 13:32:39 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A5D0B69DB
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 10:32:39 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C341E1BF87C;
+        Thu, 18 Aug 2022 13:32:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mBq4X3MgQpYaMImBXX44pe2lBv0iRGuezbCCbQ
-        t5v0w=; b=O7f/kA+khtEh21hRtEgTYnBAXOTLzXz31CM5N067bW/6bRx4vUMjcP
-        JLzlAquQBmb+JPm0DdO9iOLBpJSDW1p5uaa/pddiZyL2/BsSgvIT/NZvQrwav6Sa
-        A4bXCoeP4wydBp7rDwf8DJ40Vj3WBBU4KMTtU3j2lPb1QBvS9fbIE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id ACB7C1BF002;
-        Thu, 18 Aug 2022 13:31:20 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=mSVdPzHxZzQj
+        IVVQwao8LwuTDPt2t4fJUKOszF0FM0g=; b=A6r3gBcdgcvxoMmZ6ACdU9eR/rgQ
+        qZ14aSQufCSiLrNa4Of980UWNqc2QcDaJhBhIw9TJ7T0nP4FiD3Qi6ursHZBu/Ip
+        9LriYRpZmqsdA83bzNhfKrvGJIk6Vy6fAuv1+7J9jjBaoKW5D1OFemgnhY9rT+Jr
+        zEXobH1DbezEOB4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BBEC71BF87B;
+        Thu, 18 Aug 2022 13:32:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 445981BEFFD;
-        Thu, 18 Aug 2022 13:31:17 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 312D01BF87A;
+        Thu, 18 Aug 2022 13:32:35 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Sergio via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Sergei Krivonos <sergeikrivonos@gmail.com>
-Subject: Re: [PATCH 2/2] Add Eclipse project settings files to .gitignore
-References: <pull.1307.git.git.1660831231.gitgitgadget@gmail.com>
-        <106a0563cfc29b75dbdbd54ce55140762e133539.1660831231.git.gitgitgadget@gmail.com>
-Date:   Thu, 18 Aug 2022 10:31:16 -0700
-In-Reply-To: <106a0563cfc29b75dbdbd54ce55140762e133539.1660831231.git.gitgitgadget@gmail.com>
-        (Sergio via GitGitGadget's message of "Thu, 18 Aug 2022 14:00:31
-        +0000")
-Message-ID: <xmqqr11dpifv.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v8 08/14] merge-resolve: rewrite in C
+References: <20210317204939.17890-1-alban.gruin@gmail.com>
+        <20220809185429.20098-1-alban.gruin@gmail.com>
+        <20220809185429.20098-9-alban.gruin@gmail.com>
+        <08ea1eec-58fb-cbfa-d405-0d4159c99515@gmail.com>
+        <xmqqilmzkd7p.fsf@gitster.g>
+        <qs23r0n8-9r24-6095-3n9n-9131s69974p1@tzk.qr>
+        <xmqqedxgt1zx.fsf@gitster.g>
+        <848p4p89-2219-7874-ss50-2o0rp4r02902@tzk.qr>
+        <CABPp-BGSFYWvA5HktLf33=w7JB95iDLDNoE0gdA3oUtb+qYoQQ@mail.gmail.com>
+        <xmqq7d36vfur.fsf@gitster.g>
+        <220818.868rnlaa0h.gmgdl@evledraar.gmail.com>
+Date:   Thu, 18 Aug 2022 10:32:34 -0700
+In-Reply-To: <220818.868rnlaa0h.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 18 Aug 2022 16:24:38 +0200")
+Message-ID: <xmqqmtc1pidp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 90D7125C-1F1B-11ED-BB73-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BF494B50-1F1B-11ED-94CD-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Sergio via GitGitGadget" <gitgitgadget@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> From: Sergio <sergeikrivonos@gmail.com>
->
-> Signed-off-by: Sergio <sergeikrivonos@gmail.com>
-> ---
->  .gitignore | 2 ++
->  1 file changed, 2 insertions(+)
+> I may have missed something in this thread, but wouldn't an acceptable
+> way to please everyone here be to:
 
-Your interest in the git project is appreciated, but we try to keep
-our .gitignore to the common build artifacts.  Things that are
-created for those who share a certaion personal preference, like
-editor backup files, are best listed in .git/info/exclude (or
-$HOME/.gitignore).  I am an Emacs user but *~ is not in .gitignore
-in the project, for example.
-
-Thanks.
-
-
+Why pile on MORE cruft on top of a needless rewrite into an internal
+call, when it is cleaner to just get rid of the part that makes an
+internal call?
