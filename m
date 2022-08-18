@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D8E3C00140
-	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 21:41:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8454EC00140
+	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 21:41:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347120AbiHRVlQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Aug 2022 17:41:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59440 "EHLO
+        id S1347088AbiHRVlS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Aug 2022 17:41:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347042AbiHRVlB (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1347050AbiHRVlB (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 18 Aug 2022 17:41:01 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E854CBD28E
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 14:40:59 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id e20so2655543wri.13
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 14:40:59 -0700 (PDT)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6AE5BD292
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 14:41:00 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id r16so3144398wrm.6
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 14:41:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=tO6ZbNs8LLi+N880DSRDbPP1BK3ZQOfn9Rv9llB5YB8=;
-        b=cnIxuYUWgqYULgjeB5eq7Ebhef8Ho5ehdAags91PlRjctgGO2oEme34LXBFDKjyMMd
-         m2LLMnc3NG2lYUUbfflB494Rf0mzqSf5wpmt0Qn0TkDr2+EH5hI1bXsbKUvnMezTp3ib
-         VUY9FhD303O0AhvBl5E6oLimgFgeFarcewhmLICj7sXN9F6G5e4hAvRnWHbPcmlsg+Nl
-         qWoUOSaTSwu8qwx2gLm4tCDIRTqhFkmrRzKBHsvsv6Wze1iDe7QHiOUk0OgFFezsyZri
-         qp2pcit9l7TW2zEt7Wb7zwE4fGx/4ymfqwhmADUdxA/G1Lmtmj7WIG3M4pfYzOgzxNQi
-         GVAg==
+        bh=jCcEN1Fq7Sov4sFy7+377W2MPZQJ/v3rAKdOKIPYXKw=;
+        b=H3uARC2I2XEK7ItT+pNF0hxmjY2Erksholt9loPxeWDt4Li15jeXs+ZDV0Bsije7vi
+         T4tIgmRCLNLWbP2Jx2l5PmUAL47w7CmVKxItN2PnmmjFe0JBTCPu2UPNmEi7VDC/7s1V
+         FNAjshsxUiD3BJuKSCHZ6BYFE9x5DKiDfOHMviBZSACJqM0mGWcvQTIHfXpBFG33xyAO
+         fFG8Zw6E4wsFprN8aHFjYPt75lkFD892yBliFtdkvHDIfqej+gJgd/MNoSfv1pn7gIpU
+         CZB9FXBXRcFgTnIVMyZKyd2dFIXxP+vPxyov80rNbI+t11/P/U4TOib9iuvEJ7zxaFe5
+         PmSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=tO6ZbNs8LLi+N880DSRDbPP1BK3ZQOfn9Rv9llB5YB8=;
-        b=1BMfdaB29jn0vifWbsC2dbFrO8thdPu76E5bS/vLcb/+rUHAiYZ6E6wmk4nG+Bdt2o
-         EnItSGy3k6BrulJdiEpaNx5ClUp64O7NWQtMGusFjd3qjV72pzcBTNgxbt30qUlkWvqo
-         dktvKG8EMu2HVx/nu/LuvdWDaaFRS8nAKISN1HGaOFhKgW9I2RNDDJZOSoc9XRy+OyE2
-         2jij5JtpCgHAYqQlYsIiAXI1ABLNUEcctqVmfY7H767AcxrAWzI88WYTvY1LJ43ggLa4
-         0eVBKdePTxFSAI1E24YD0NwE3bzNTD4Qkk+FFgHvpG78TC5w0I5zM61jRYSGwY181HNB
-         bJxQ==
-X-Gm-Message-State: ACgBeo2L1gig0oEXFBUhsz4sp1YgJHvgSGIOChUJ+ovf7n6gEnSrdM1g
-        uAHlSjZxzPMo6llio7gX39MJprViCBw=
-X-Google-Smtp-Source: AA6agR45YWCKNyjRyqPbl3MfiP6lT36nT1Sy2WxjXQZ87sEM29/CgVu6iK5IxzZSO/rB8sucUYTwiw==
-X-Received: by 2002:a5d:4204:0:b0:225:382f:a8be with SMTP id n4-20020a5d4204000000b00225382fa8bemr265896wrq.379.1660858858187;
-        Thu, 18 Aug 2022 14:40:58 -0700 (PDT)
+        bh=jCcEN1Fq7Sov4sFy7+377W2MPZQJ/v3rAKdOKIPYXKw=;
+        b=046iIR4NiKHKYmoRETod3K/D5WBuoamWZtevNBmwASZH4ASh0apHxZRN+6eQA044+T
+         BCJ1okg/JnJNMnPpOr33NfF4xQOfZ+yFu86SqrAB3qP4GdwSIh8wW+yCft5Y4+4rCTPt
+         Ehdo/iwGhPeRX9WwcpzMf31MKsW7i5V+9y72UoCwIaSQQ06u6lrP6mKlGFJq6eu0NGSp
+         tojS6vHa6W5MnD2wLMFhhfsleOdQumzTYyW0qcuP2rUcW+axX2mfe4wy70STiL66n2DG
+         GXj/aKVQUR/9Ke8030nXLG5QMzzEK/I/yMKQvLlrylbOvuGX5TDlulrcuM8diIIeRBZm
+         Z3TQ==
+X-Gm-Message-State: ACgBeo1hpgiwm5ibYh9BBfn8NOjXBpIRJam4775WnahrY3iT0xSHO6b3
+        NMWZcAddadKnD+nYIhrfQzSSmEL4CIY=
+X-Google-Smtp-Source: AA6agR4ey2MPfXm6yrhyKtLahYozv+IyYkgpf/lidhA4CNGG3u7pU+Uo2YVtp7sUPQS0FPOIFcLhBQ==
+X-Received: by 2002:a5d:588f:0:b0:220:761a:6894 with SMTP id n15-20020a5d588f000000b00220761a6894mr2642477wrf.406.1660858859074;
+        Thu, 18 Aug 2022 14:40:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m4-20020a05600c3b0400b003a5ffec0b91sm3353599wms.30.2022.08.18.14.40.57
+        by smtp.gmail.com with ESMTPSA id z17-20020a5d4411000000b002252e5a6841sm2342177wrq.57.2022.08.18.14.40.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Aug 2022 14:40:57 -0700 (PDT)
-Message-Id: <aea8723e7181e99437f880f5d1578078e3fd350c.1660858853.git.gitgitgadget@gmail.com>
+        Thu, 18 Aug 2022 14:40:58 -0700 (PDT)
+Message-Id: <aced836aaa39c4c619d03510ba2343527e3a24af.1660858853.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1324.v3.git.1660858853.gitgitgadget@gmail.com>
 References: <pull.1324.v2.git.1660694290.gitgitgadget@gmail.com>
         <pull.1324.v3.git.1660858853.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 18 Aug 2022 21:40:48 +0000
-Subject: [PATCH v3 3/8] scalar-[un]register: clearly indicate source of error
+Date:   Thu, 18 Aug 2022 21:40:49 +0000
+Subject: [PATCH v3 4/8] scalar-delete: do not 'die()' in 'delete_enlistment()'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,54 +68,49 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-When a step in 'register_dir()' or 'unregister_dir()' fails, indicate which
-step failed with an error message, rather than silently assigning a nonzero
-return code.
+Rather than exiting with 'die()' when 'delete_enlistment()' encounters an
+error, return an error code with the appropriate message. There's no need
+for an abrupt exit with 'die()' in 'delete_enlistment()' because its only
+caller ('cmd_delete()') properly cleans up allocated resources and returns
+the 'delete_enlistment()' return value as its own exit code.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- contrib/scalar/scalar.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ contrib/scalar/scalar.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 8ef8dd55041..7be2a938b0c 100644
+index 7be2a938b0c..6de4d5b3721 100644
 --- a/contrib/scalar/scalar.c
 +++ b/contrib/scalar/scalar.c
-@@ -208,15 +208,16 @@ static int add_or_remove_enlistment(int add)
+@@ -407,7 +407,7 @@ static int delete_enlistment(struct strbuf *enlistment)
+ #endif
  
- static int register_dir(void)
- {
--	int res = add_or_remove_enlistment(1);
-+	if (add_or_remove_enlistment(1))
-+		return error(_("could not add enlistment"));
+ 	if (unregister_dir())
+-		die(_("failed to unregister repository"));
++		return error(_("failed to unregister repository"));
  
--	if (!res)
--		res = set_recommended_config(0);
-+	if (set_recommended_config(0))
-+		return error(_("could not set recommended config"));
+ #ifdef WIN32
+ 	/*
+@@ -418,13 +418,16 @@ static int delete_enlistment(struct strbuf *enlistment)
+ 	path_sep = find_last_dir_sep(enlistment->buf + offset);
+ 	strbuf_add(&parent, enlistment->buf,
+ 		   path_sep ? path_sep - enlistment->buf : offset);
+-	if (chdir(parent.buf) < 0)
+-		die_errno(_("could not switch to '%s'"), parent.buf);
++	if (chdir(parent.buf) < 0) {
++		int res = error_errno(_("could not switch to '%s'"), parent.buf);
++		strbuf_release(&parent);
++		return res;
++	}
+ 	strbuf_release(&parent);
+ #endif
  
--	if (!res)
--		res = toggle_maintenance(1);
-+	if (toggle_maintenance(1))
-+		return error(_("could not turn on maintenance"));
+ 	if (remove_dir_recursively(enlistment, 0))
+-		die(_("failed to delete enlistment directory"));
++		return error(_("failed to delete enlistment directory"));
  
--	return res;
-+	return 0;
- }
- 
- static int unregister_dir(void)
-@@ -224,10 +225,10 @@ static int unregister_dir(void)
- 	int res = 0;
- 
- 	if (toggle_maintenance(0))
--		res = -1;
-+		res = error(_("could not turn off maintenance"));
- 
- 	if (add_or_remove_enlistment(0))
--		res = -1;
-+		res = error(_("could not remove enlistment"));
- 
- 	return res;
+ 	return 0;
  }
 -- 
 gitgitgadget
