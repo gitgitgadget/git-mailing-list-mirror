@@ -2,100 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2410C00140
-	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 19:09:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E63BAC00140
+	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 19:12:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345546AbiHRTJT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Aug 2022 15:09:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39622 "EHLO
+        id S244712AbiHRTMc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Aug 2022 15:12:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345473AbiHRTJL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2022 15:09:11 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20FD6C00EE
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 12:09:09 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DAD521C03AF;
-        Thu, 18 Aug 2022 15:09:08 -0400 (EDT)
+        with ESMTP id S240608AbiHRTMb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2022 15:12:31 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCB39C6537
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 12:12:29 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 76A5113AA97;
+        Thu, 18 Aug 2022 15:12:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qinECa2jyIqG6MZZ+i0ys2gfMeRx6UQfsQOIcH
-        3rC4g=; b=roHkb16xze94c8sFZOD6W9UabgWjG1c/M2wEPwn+fv35PYjUH6y6AD
-        0bN6/MsLzagwmmu9H88UHyO3/JcngBGpjBsRiyPHKr0vqgsD3mehlx2L/vLrwnZw
-        g9+ibuZfrLmTSOI5iCM8PWZzyNYZ7V6Y5B9wWGT4CdVdXgI+vmyEw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D37AC1C03AE;
-        Thu, 18 Aug 2022 15:09:08 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=DwxIKjhdTnoi
+        J+kgkmAV8eRMg2Mkt0s1vgb9s58IpiI=; b=h6cDclc4YDVMSURZgDXxImG4PYEQ
+        +UtafMR8RZCL4V15VIEzXBx5XMItkoX8fAFD0OcXZrO6+xdf7+8uWpWxNCOEQsa/
+        UofGlU3i+tmGjMGkLW3iFEpuoOZDMfPkU3AtpF2yq45lJmS4NlWKe1rEGFgiur1i
+        QqgQMxjeCmUgaes=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6DEDF13AA96;
+        Thu, 18 Aug 2022 15:12:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 51E681C03AC;
-        Thu, 18 Aug 2022 15:09:05 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BBD8413AA92;
+        Thu, 18 Aug 2022 15:12:25 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     git@vger.kernel.org
-Subject: Re: vd/*
-References: <xmqq7d36s31e.fsf@gitster.g>
-        <491d822c-56f0-71df-8815-91ab863ebc9d@github.com>
-Date:   Thu, 18 Aug 2022 12:09:04 -0700
-In-Reply-To: <491d822c-56f0-71df-8815-91ab863ebc9d@github.com> (Victoria Dye's
-        message of "Thu, 18 Aug 2022 11:12:00 -0700")
-Message-ID: <xmqq5yippdwv.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, derrickstolee@github.com,
+        johannes.schindelin@gmx.de, Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v4 07/11] builtin/diagnose.c: create 'git diagnose' builtin
+References: <pull.1310.v3.git.1660174473.gitgitgadget@gmail.com>
+        <pull.1310.v4.git.1660335019.gitgitgadget@gmail.com>
+        <b58d13325b2eaef32fac89fb2be8e29004560c45.1660335019.git.gitgitgadget@gmail.com>
+        <220818.86edxd8k8q.gmgdl@evledraar.gmail.com>
+Date:   Thu, 18 Aug 2022 12:12:24 -0700
+In-Reply-To: <220818.86edxd8k8q.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 18 Aug 2022 20:43:22 +0200")
+Message-ID: <xmqqzgg1nz6v.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3A796758-1F29-11ED-809A-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: B1F21BC2-1F29-11ED-98DB-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Victoria Dye <vdye@github.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Junio C Hamano wrote:
->> * vd/scalar-enables-fsmonitor (2022-08-16) 5 commits
->>  - scalar: update technical doc roadmap with FSMonitor support
->>  - scalar unregister: stop FSMonitor daemon
->>  - scalar: enable built-in FSMonitor on `register`
->>  - scalar-[un]register: clearly indicate source of error
->>  - scalar-unregister: handle error codes greater than 0
->> 
->>  "scalar" now enables built-in fsmonitor on enlisted repositories,
->>  when able.
->> 
->>  Will merge to 'next'?
->>  source: <pull.1324.v2.git.1660694290.gitgitgadget@gmail.com>
+> On Fri, Aug 12 2022, Victoria Dye via GitGitGadget wrote:
 >
-> This should probably be "Expecting a reroll."; I have a couple of changes to
-> make in response to [1] and [2] and will send the new version later today.
+>> From: Victoria Dye <vdye@github.com>
+>> [...]
 >
-> [1] https://lore.kernel.org/git/f5388e4d-7eb7-9333-6a8e-86ce449aced0@github.com/
-> [2] https://lore.kernel.org/git/82716e5b-3522-68f5-7479-1b39811e0cb2@github.com/
+> This is correct:
 >
->> * vd/scalar-generalize-diagnose (2022-08-12) 11 commits
->>  - scalar: update technical doc roadmap
->>  - scalar-diagnose: use 'git diagnose --mode=all'
->>  - builtin/bugreport.c: create '--diagnose' option
->>  - builtin/diagnose.c: add '--mode' option
->>  - builtin/diagnose.c: create 'git diagnose' builtin
->>  - diagnose.c: add option to configure archive contents
->>  - scalar-diagnose: move functionality to common location
->>  - scalar-diagnose: move 'get_disk_info()' to 'compat/'
->>  - scalar-diagnose: add directory to archiver more gently
->>  - scalar-diagnose: avoid 32-bit overflow of size_t
->>  - scalar-diagnose: use "$GIT_UNZIP" in test
->> 
->>  The "diagnose" feature to create a zip archive for diagnostic
->>  material has been lifted from "scalar" and made into a feature of
->>  "git bugreport".
->> 
->>  Will merge to 'next'?
->>  source: <pull.1310.v4.git.1660335019.gitgitgadget@gmail.com>
+>> +'git diagnose' [(-o | --output-directory) <path>] [(-s | --suffix) <f=
+ormat>]
 >
-> I think the review on this has stabilized (and, personally, I'm happy with
-> the current version). Assuming no late-stage reviews come in, I think this
-> is ready for 'next'.
+> ...
+>
+>> +	N_("git diagnose [-o|--output-directory <path>] [-s|--suffix <format=
+>]"),
+>
+> But this is not, it's missing () around the short v.s. long option, and
+> we should have a space surrounding the "|" as well.
 
-Thanks.
+You are commenting on what appears inside N_() and I agree that it
+should match the other one.
+
+It is kind of sad that our usage strings do not allow proper
+translation and instead force translaters to _know_ that they are
+supposed to touch _only_ the placeholder strings (path and format in
+this case).
+
+Not your fault, or Victoria's, of course ;-)
