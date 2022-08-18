@@ -2,94 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5120C00140
-	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 19:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADEBEC00140
+	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 19:07:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345420AbiHRTDY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Aug 2022 15:03:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60418 "EHLO
+        id S1344061AbiHRTHS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Aug 2022 15:07:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233465AbiHRTDX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2022 15:03:23 -0400
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A86954C63D
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 12:03:22 -0700 (PDT)
-Received: by mail-qt1-x836.google.com with SMTP id cr9so1826064qtb.13
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 12:03:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:references:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:from:to:cc;
-        bh=4t+epIrC6vR8U9TrGKkEhtcvS9Ss83qTZ5qTKkzkM7U=;
-        b=NA3pLwlO0bQrCVKB+7zHGzh4qy2kXdJDrY0AbmI5wCR3FUUV2A1LQFJyTO8mafgfEW
-         uE7wFY9ZX1QD4+qUWdNE5uyduUb9Q01M0ADauTgRYsZD8U2/J+b15WzcPGLJL1+85Anp
-         ob+4LOcQOfkZLLVeHSgu6JmwGnH1saGwGNvcMs8eewcJHsplXUXH9QnwKMjrJdn5RlmV
-         urpGMx5eFL1Q4QERxfrXQtRJv5cXbyeJH8OYWPyzEjO5oLfDs+wXJ5QAqiK9rndlTc5S
-         ym+s71DF6H2OWZhpiKWlP7pXCcxwXjTpeXhSfvZ9sTU1MqovEcYYi7BvSDS07Irlf24u
-         F6fg==
+        with ESMTP id S233465AbiHRTHQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2022 15:07:16 -0400
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93E00C00E1
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 12:07:13 -0700 (PDT)
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-32a09b909f6so67545367b3.0
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 12:07:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:x-gm-message-state:from
-         :to:cc;
-        bh=4t+epIrC6vR8U9TrGKkEhtcvS9Ss83qTZ5qTKkzkM7U=;
-        b=VvHYbJvjlFkacK+3We5cGFbRbqmXJ3i3Tb/ryNZn5ohcr6mT2vrrSMYimRKRRMD4uX
-         Owr0Jy3S44M/Zo1JV7mdoL5j1X2KuetMo3UEIwtqJy2Oig5OW1LTvNbzNxof73Mksi9h
-         vPWMn0VUDw9dxy+4BwKUVgIyZyN8DYjxelxtFR9+Nz14oUclXqnszB0Outj8oEmQbD8H
-         vsKWSEsoh2RqI96ph/HM+C4+bgbGGChfEraKhei4A/wTm5xWzc2aZZBduah9chGXLc6U
-         y4ElEa/jIBbp2QlZ80Ppe8SUMYEV0RzOYGkDG2gWRmMMLGPItdGeb5H6KNRLGmldVkk2
-         JGZg==
-X-Gm-Message-State: ACgBeo3NNitoAOc5JUvMQjt4ya0zW3AVl4onR69ZNjTCtzPWBOaE/0av
-        Pu61KoB1WGmd3GPU76BC4dk=
-X-Google-Smtp-Source: AA6agR4JkfZpnTGlUC0UluVkVI9g/kwHLqvKn15UGFBIsqR1bPs34PWEO1Irvw9Xl+JKlDFjX9apDQ==
-X-Received: by 2002:ac8:5884:0:b0:344:6d9a:1e43 with SMTP id t4-20020ac85884000000b003446d9a1e43mr3962581qta.623.1660849401663;
-        Thu, 18 Aug 2022 12:03:21 -0700 (PDT)
-Received: from localhost (99-89-1-31.lightspeed.sntcca.sbcglobal.net. [99.89.1.31])
-        by smtp.gmail.com with ESMTPSA id t20-20020a05620a451400b006bae6f73e41sm2387008qkp.5.2022.08.18.12.03.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Aug 2022 12:03:21 -0700 (PDT)
-From:   Maxwell Bernstein <tekk.nolagi@gmail.com>
-X-Google-Original-From: "Maxwell Bernstein" <tekknolagi@gmail.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 18 Aug 2022 12:03:19 -0700
-Message-Id: <CM9DZ4Z18PY9.1T2O8U54X66FD@cedar>
-To:     "Junio C Hamano" <gitster@pobox.com>,
-        "Max Bernstein via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     <git@vger.kernel.org>,
-        "Max Bernstein" <donotemailthisaddress@bernsteinbear.com>,
-        "Max Bernstein" <max@bernsteinbear.com>,
-        "Christian Couder" <christian.couder@gmail.com>,
-        "Jonathan Tan" <jonathantanmy@google.com>
-Subject: Re: [PATCH v2] trailer: allow spaces in tokens
-X-Mailer: aerc 0.11.0
-References: <pull.1309.git.git.1660806376021.gitgitgadget@gmail.com>
- <pull.1309.v2.git.git.1660809243298.gitgitgadget@gmail.com>
- <xmqqk075qyq0.fsf@gitster.g>
-In-Reply-To: <xmqqk075qyq0.fsf@gitster.g>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=DIVqkod2mvmEg4yFKS8uefDJgAhLGG8Yk7OoWwL5VYo=;
+        b=YR2Y0dzoWtaqC3evUBfA3J+su+i2JeMC7wI3ljfh+0NXamr0d7JzPTmx/1O/S9ZPK9
+         5HkowWjR56ZdS6O32at7nUUbn7c/EB03esgRLoqCy9FG0zhWnczR4mE9Ih1Xn0LC1Dzh
+         2pdj49t3FvHFzS3mRHL1675rz7jS85dbZkx5HdzT4QbzphQFpI8Tya7u9J4MkhpuePMc
+         LyEcxlmmyqMoLwJWp/1LRJPQmxE8j/WjDodiEcqADjpsv/KxkNMnr9D4dHpYWqeTQ8iR
+         V6oSqOQla5baE2gZirbiVIr6mmuM5dit0sXS9pTjlIacOHl0MYVy9zr7j5+TIhWhb6G9
+         fq5w==
+X-Gm-Message-State: ACgBeo3N1MafuJTNzyDNYQq644PMuf+/Lq9vOqSV1oYiFjWoMAQupPSY
+        6jKTLZt2+fDKHkfyoFTL778gwah95z/B3ubiSbA=
+X-Google-Smtp-Source: AA6agR4E6KnRO8M4I31mQ5WW62qXkFntuSz2ptglSugsx/GYB106nfv0aFMBBwPe2ZGJlhwFicgcvGH8kEURpaGLCAY=
+X-Received: by 2002:a81:1ecc:0:b0:334:45e1:6fa9 with SMTP id
+ e195-20020a811ecc000000b0033445e16fa9mr4227766ywe.482.1660849632753; Thu, 18
+ Aug 2022 12:07:12 -0700 (PDT)
+MIME-Version: 1.0
+References: <xmqqa68ixcrf.fsf@gitster.g> <CAPig+cSz9RKj43_kwQFDQpN2Ggrimrw_DcOFnxGS+nBCPqDK5Q@mail.gmail.com>
+ <xmqqa68evodq.fsf@gitster.g> <o5340r34-027q-4ops-93o1-8368s4qropo5@tzk.qr>
+In-Reply-To: <o5340r34-027q-4ops-93o1-8368s4qropo5@tzk.qr>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 18 Aug 2022 15:07:01 -0400
+Message-ID: <CAPig+cRp4N=6EktoisKAH09aVAPkPgZfHJYcB5pJFJ-CUpBHFA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2022, #02; Fri, 5)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu Aug 18, 2022 at 9:54 AM PDT, Junio C Hamano wrote:
-> So, the updated code mistook the body of the message that is not a
-> sign-off, because there is a colon on the line, the line does not
-> begin with the colon, and everything before the colon is an alnum or
-> a whitespace, so squashed the paragraph break before the real
-> trailer block and the last line of the body and made it a body-less
-> commit log message?
-
-I agree that it is not ideal, and I'm not sure how to fix it. This commit
-probably shouldn't go in as-is; I modified the test in order to demonstrate
-this problem.
-
-> This might be a good demonstration of why it is a mistaken design to
-> allow whitespaces, which may steer us toward fixing the documentation?
+On Wed, Aug 10, 2022 at 5:26 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Mon, 8 Aug 2022, Junio C Hamano wrote:
+> > Eric Sunshine <sunshine@sunshineco.com> writes:
+> > > On Fri, Aug 5, 2022 at 11:44 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > >> * es/doc-creation-factor-fix (2022-07-28) 2 commits
+> > >>  Expecting a reroll.
+> > >
+> > > Per [1] and [2], I think the intention was to drop these patches
+> > > rather than moving forward with them.
+> > >
+> > I think we are expecting a submission by Dscho to replace these two
+> > patches.
 >
-> I dunno.  What do others think?
+> Oh? I thought Eric was on top of things much more than I am, I just tried
+> to provide clarity about the intentions behind the original wording.
+>
+> Eric, please do feel free to Cc: me on any new iteration you want to send;
+> I won't be able to work on a patch to reword the `range-diff`
+> documentation.
 
-I think allowing whitespace is good at least for the Phabricator project, w=
-hich
-despite being dead, has a number of existing users and existing commits. It
-unfortunately has a "Differential revision" trailer with whitespace.
+Unfortunately, I'm not going to be much help here since I don't grok
+"creation factor" well enough to put an explanation into words, even
+after having read the "algorithm" section multiple times[1]. The
+situation is further confused (at least to me) by the "algorithm"
+section in the `git range-diff` documentation stating that the "fudge
+factor ... should be smaller than 100%", yet your position in this
+discussion is that the creation factor can be greater than 100%.
+
+FOOTNOTES
+
+[1]: I likewise didn't understand it well enough when submitting[2]
+which added --creation-factor to `git format-patch`, which is why I
+punted at that time and simply referred the reader to the `git
+range-diff` documentation.
+
+[2]: https://lore.kernel.org/git/20180722095717.17912-14-sunshine@sunshineco.com/
