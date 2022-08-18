@@ -2,68 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A4E5C32773
-	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 16:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E238C32772
+	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 17:00:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242462AbiHRQ4j convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 18 Aug 2022 12:56:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54666 "EHLO
+        id S1345193AbiHRRAy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Aug 2022 13:00:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233857AbiHRQ4h (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2022 12:56:37 -0400
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E25E7C9903
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 09:56:36 -0700 (PDT)
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-3246910dac3so56844347b3.12
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 09:56:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
-        bh=BVaXlTizWiHAmI8UJj5exogu2iiyjUt5Hr9oyRwsUq0=;
-        b=0LcU0dSzFz/76//LBDV/wOKqtN/8y5xQHUkb0QnyvN4ngqqXEnedoFjs3aWFivxRop
-         BFrEYuzN09d0IyyoJI+ZeJNcWE7qvI19QsoffzanRmBJkJlsxVqIKxVvDzs2NZbWNFPb
-         vHrrmb+Y03+eMa/+6FJnqz4PifjOTEOH2HGD+uYQBOT+aLG1s+eW/oIhGa+gOT4G7he6
-         ea8ovnc5mFL3Jy5dlg3gKaLy+H6v10PaYnNE2s224T7YoozpfMY0PaHn5whXiEIHBwrL
-         BSjFi4mSz+H+k4dl6d2cPcfAmCcOreB+7sj+SkHjEnjgh/NWQ94aODOzzPemenMsnWlR
-         CcPQ==
-X-Gm-Message-State: ACgBeo1CXIdZuZ6not8ztfNtZOfJEI/ouPUWv4IiXQ+8NAOgshPcnREa
-        ARD95R7GnRwsLPQLOkzwTdY/hVeNc04wBKcmtf4=
-X-Google-Smtp-Source: AA6agR6JKqJhYlWRau7G8YZHOef8HeXsOOr9HA8gk0ekN12usMo9QFFyrJQ/6IHzEx8zgCr3grfzeEmA0Z3sX3TtA3g=
-X-Received: by 2002:a81:d543:0:b0:325:2240:ce5 with SMTP id
- l3-20020a81d543000000b0032522400ce5mr3689583ywj.210.1660841796092; Thu, 18
- Aug 2022 09:56:36 -0700 (PDT)
+        with ESMTP id S1345271AbiHRRAO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2022 13:00:14 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63FCDBA9D0
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 10:00:10 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [104.129.158.24])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 3AD445A29B;
+        Thu, 18 Aug 2022 17:00:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1660842009;
+        bh=D9XzTkz2BDSOZ3p74KrX0mx+OEXAvffxLFGZ8uDLXJs=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=wFt1cKGdt/I8pUOwxVoSM0XGu0qzYfJyD+QVYo9uK0qYN3beFg9jlh7ITGwcS2eyG
+         LBGRgrHwzQq3Ar1LpRSiTiUANTfB89o2UdQ19qQmT7FhbpuQc3lwrayPqpIQp23P0W
+         16Dl/6MhLJ6DV+k1RT1vuPT8hxnCt8FJ7apd8Tt6MEjblUCX/RqRIBYlbZNk/aZcsc
+         3kVEvqPbzeR7xNczuMT6xV2hMjlrm8VK57MeQuY9fDhkHVzlbLd0hECuB/9CxQTKTB
+         u3PhlCdTP4e5O1mD7noT+KlbbT6xQDkcE17X5iOcSShYPPfPw8xHVTNO0BsJ8AN6u5
+         v0+YJFpYFtsnn4nJghuXito1ZjaqCPZxYRRASaIXOiBgXDBu+Z2MquU9Fak0RFgtnX
+         +V6yFIVpcgivlcFxFnrofxlem8lRZc+8NPikXPF85BbqsDjbSZOOjXfx3gnj8GMzhG
+         AdjKO/AhvHhYRAggwqzyjfI463Xz9aykyTdx4Z6UoQ6WjNusAJl
+Date:   Thu, 18 Aug 2022 17:00:07 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Sergio via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Sergei Krivonos <sergeikrivonos@gmail.com>
+Subject: Re: [PATCH 2/2] Add Eclipse project settings files to .gitignore
+Message-ID: <Yv5wF0DxVe38ygap@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Sergio via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Sergei Krivonos <sergeikrivonos@gmail.com>
+References: <pull.1307.git.git.1660831231.gitgitgadget@gmail.com>
+ <106a0563cfc29b75dbdbd54ce55140762e133539.1660831231.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <pull.1303.git.1660704498.gitgitgadget@gmail.com>
- <pull.1303.v2.git.1660803467.gitgitgadget@gmail.com> <f580ec6d06072ea6ed2ecc4f8142b94fccbe4c0f.1660803467.git.gitgitgadget@gmail.com>
- <ee4a7a7f-d646-6357-233a-1fefde5607bf@github.com> <220818.86ilmp8rzn.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220818.86ilmp8rzn.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 18 Aug 2022 12:56:25 -0400
-Message-ID: <CAPig+cSerOZbVUH=Twh_yKiZH7wJdUQ+Wk_sp3pL7bR4rR8f2g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] revision: allow --ancestry-path to take an argument
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="aX47IbAj1HC1xKH3"
+Content-Disposition: inline
+In-Reply-To: <106a0563cfc29b75dbdbd54ce55140762e133539.1660831231.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/2.2.6 (2022-06-05)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 18, 2022 at 12:01 PM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> On Thu, Aug 18 2022, Derrick Stolee wrote:
-> > +test_ancestry () {
-> > +     args=$1
-> > +     expected=$2
->
-> Maybe add &&-chaining here (we do it in some cases, but I'm not sure
-> when such assignments would ever fail).
 
-Assignment shouldn't fail, but keeping the &&-chain intact here
-protects us against the unlikely event of someone inserting &&-chained
-code above these assignments and not realizing that the &&-chain is
-not intact at the assignment lines.
+--aX47IbAj1HC1xKH3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2022-08-18 at 14:00:31, Sergio via GitGitGadget wrote:
+> From: Sergio <sergeikrivonos@gmail.com>
+>=20
+> Signed-off-by: Sergio <sergeikrivonos@gmail.com>
+> ---
+>  .gitignore | 2 ++
+>  1 file changed, 2 insertions(+)
+>=20
+> diff --git a/.gitignore b/.gitignore
+> index 42fd7253b44..13755c31caf 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -246,3 +246,5 @@ Release/
+>  /git.VC.db
+>  *.dSYM
+>  /contrib/buildsystems/out
+> +/.cproject
+> +/.project
+
+I have no strong opinion on this change, but typically, to avoid a
+proliferation of patterns with everyone's favourite editor settings, it
+can be useful if each individual user sets their own editor files in
+~/.config/git/ignore (or core.excludesFile, if you prefer a different
+location).  For example, I do this with Vim-related files, and it
+applies to all repos on my system, such that other developers don't have
+to care what editor I use.
+
+However, Eclipse is a popular editor, so it may be that Junio really
+likes this change since it will benefit many people.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--aX47IbAj1HC1xKH3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.35 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYv5wFgAKCRB8DEliiIei
+gTB/AP9KBA2TYshK6WBf2s/smGxS5c8VEvqp4ccuLevn10631gEAte3K0AZ4gJlA
+RuxYr5Y1VLk6p/Cz/2RnalMauD2nDQ4=
+=XApo
+-----END PGP SIGNATURE-----
+
+--aX47IbAj1HC1xKH3--
