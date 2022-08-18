@@ -2,97 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83AF6C3F6B0
-	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 16:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A4E5C32773
+	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 16:56:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345136AbiHRQzw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Aug 2022 12:55:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53574 "EHLO
+        id S242462AbiHRQ4j convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 18 Aug 2022 12:56:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345143AbiHRQzZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2022 12:55:25 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62175C6EB5
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 09:55:21 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [104.129.158.24])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 4C5975A29B;
-        Thu, 18 Aug 2022 16:55:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1660841720;
-        bh=8gJQl9UgCP5OaC1bZ+dLmLUmdUMTpRDOlSyGZA8I0jI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=dD3Vo3TnhjSGmHkaPRodf7F2a/J/wgisRN+llgESEWXkcwmuZCiIE62APMueJAP8h
-         vQ4rKBeneI8KWfce5NjGWWmLg9UGJJeBHar89ZWfWKtbPnZREfZSun10OWLED7Utet
-         lf44Ffe9efGui8PCzqOM3OymzOxeRN4KgHN7hQtHbWcC7+P8G8AoobPkCcTUPPJlAd
-         UB1WcgWn0UD6o8Y/q5YOPe8E0OwG3JEGsRH0aiR5l0j4Z2TBRJzPCDHqRnjXUeQbqD
-         qfYNoSADfzgkEWf77QcCs1QX71PW3Sw1YU/U/xdGMCd/YdzznVH4taN48aL7z8TME8
-         mLK4a3HmIB4DmZxdJL6lXcjCDY06FRf0eCELjlh/ooSyFmjT4o5QrfcLz7cYhiLpyN
-         sarMss1eN8Ok7/K5BFgTnPz8ShOi1Li0YAbTx9eOYJ4zFTEnsG2F0bfvzY3v5VIHJR
-         dy62ospI8xusUy4JwfecfcKdoBOVqNuwrvEtbHU7eT0sSLYrmoc
-Date:   Thu, 18 Aug 2022 16:55:16 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Sergio via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Sergei Krivonos <sergeikrivonos@gmail.com>
-Subject: Re: [PATCH 1/2] Make rebase.autostash default
-Message-ID: <Yv5u9ApnKDSjSW8O@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Sergio via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Sergei Krivonos <sergeikrivonos@gmail.com>
-References: <pull.1307.git.git.1660831231.gitgitgadget@gmail.com>
- <c48fbf984ea42e7c13d56db015dc63c2495f5f5f.1660831231.git.gitgitgadget@gmail.com>
+        with ESMTP id S233857AbiHRQ4h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2022 12:56:37 -0400
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E25E7C9903
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 09:56:36 -0700 (PDT)
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-3246910dac3so56844347b3.12
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 09:56:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
+        bh=BVaXlTizWiHAmI8UJj5exogu2iiyjUt5Hr9oyRwsUq0=;
+        b=0LcU0dSzFz/76//LBDV/wOKqtN/8y5xQHUkb0QnyvN4ngqqXEnedoFjs3aWFivxRop
+         BFrEYuzN09d0IyyoJI+ZeJNcWE7qvI19QsoffzanRmBJkJlsxVqIKxVvDzs2NZbWNFPb
+         vHrrmb+Y03+eMa/+6FJnqz4PifjOTEOH2HGD+uYQBOT+aLG1s+eW/oIhGa+gOT4G7he6
+         ea8ovnc5mFL3Jy5dlg3gKaLy+H6v10PaYnNE2s224T7YoozpfMY0PaHn5whXiEIHBwrL
+         BSjFi4mSz+H+k4dl6d2cPcfAmCcOreB+7sj+SkHjEnjgh/NWQ94aODOzzPemenMsnWlR
+         CcPQ==
+X-Gm-Message-State: ACgBeo1CXIdZuZ6not8ztfNtZOfJEI/ouPUWv4IiXQ+8NAOgshPcnREa
+        ARD95R7GnRwsLPQLOkzwTdY/hVeNc04wBKcmtf4=
+X-Google-Smtp-Source: AA6agR6JKqJhYlWRau7G8YZHOef8HeXsOOr9HA8gk0ekN12usMo9QFFyrJQ/6IHzEx8zgCr3grfzeEmA0Z3sX3TtA3g=
+X-Received: by 2002:a81:d543:0:b0:325:2240:ce5 with SMTP id
+ l3-20020a81d543000000b0032522400ce5mr3689583ywj.210.1660841796092; Thu, 18
+ Aug 2022 09:56:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="rVHvZudXJZZNWUNo"
-Content-Disposition: inline
-In-Reply-To: <c48fbf984ea42e7c13d56db015dc63c2495f5f5f.1660831231.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.2.6 (2022-06-05)
+References: <pull.1303.git.1660704498.gitgitgadget@gmail.com>
+ <pull.1303.v2.git.1660803467.gitgitgadget@gmail.com> <f580ec6d06072ea6ed2ecc4f8142b94fccbe4c0f.1660803467.git.gitgitgadget@gmail.com>
+ <ee4a7a7f-d646-6357-233a-1fefde5607bf@github.com> <220818.86ilmp8rzn.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220818.86ilmp8rzn.gmgdl@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 18 Aug 2022 12:56:25 -0400
+Message-ID: <CAPig+cSerOZbVUH=Twh_yKiZH7wJdUQ+Wk_sp3pL7bR4rR8f2g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] revision: allow --ancestry-path to take an argument
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Aug 18, 2022 at 12:01 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> On Thu, Aug 18 2022, Derrick Stolee wrote:
+> > +test_ancestry () {
+> > +     args=$1
+> > +     expected=$2
+>
+> Maybe add &&-chaining here (we do it in some cases, but I'm not sure
+> when such assignments would ever fail).
 
---rVHvZudXJZZNWUNo
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2022-08-18 at 14:00:30, Sergio via GitGitGadget wrote:
-> From: Sergio <sergeikrivonos@gmail.com>
->=20
-> Signed-off-by: Sergio <sergeikrivonos@gmail.com>
-
-Typically you'll want to explain in the commit message why this is a
-valuable change. For example, I don't have this option set and don't use
-it, and I always stash my changes manually before rebasing.  You should
-tell me why the user will benefit from this setting defaulting to
-enabled, since I personally don't see a need for it.
-
-You may also want to discuss why any pitfalls of stash, such as unadded
-changes being added after a stash pop, are not problematic here and why
-this behaviour won't be more surprising or annoying to experienced users
-who are used to seeing an error message instead.
-
-This isn't to say that the change is bad or we shouldn't accept it, only
-that I (and others) need help understanding why it's a good change to make.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---rVHvZudXJZZNWUNo
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.35 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYv5u9AAKCRB8DEliiIei
-gcg9AQCdmTcyRr1Voj3ueuZ0HKH0RaKAmpBWlZi3aw2CNYnmBgEA0c70nkRbVVN0
-zK+ds4i2oeBj+XWEoe6sWkeVqZrSTQ8=
-=C9PJ
------END PGP SIGNATURE-----
-
---rVHvZudXJZZNWUNo--
+Assignment shouldn't fail, but keeping the &&-chain intact here
+protects us against the unlikely event of someone inserting &&-chained
+code above these assignments and not realizing that the &&-chain is
+not intact at the assignment lines.
