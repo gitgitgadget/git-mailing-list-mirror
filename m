@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FC30C00140
-	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 17:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8E9BC00140
+	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 17:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344971AbiHRRwX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Aug 2022 13:52:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52574 "EHLO
+        id S1345314AbiHRR4I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Aug 2022 13:56:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239324AbiHRRwW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2022 13:52:22 -0400
-Received: from mail-oo1-xc49.google.com (mail-oo1-xc49.google.com [IPv6:2607:f8b0:4864:20::c49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EA6BC6B5B
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 10:52:21 -0700 (PDT)
-Received: by mail-oo1-xc49.google.com with SMTP id x9-20020a4a8009000000b0044a835beeddso1081068oof.7
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 10:52:21 -0700 (PDT)
+        with ESMTP id S1344061AbiHRR4F (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2022 13:56:05 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF3ECB99FE
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 10:56:03 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id 196-20020a6301cd000000b0041b0f053fd1so1073841pgb.6
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 10:56:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=cc:to:from:subject:mime-version:message-id:in-reply-to:date:from:to
          :cc;
-        bh=8ZZNaEqO0EuBDv+0FKpUYXuAlj/GFOhTcGqRVhV0/0w=;
-        b=OLcomzQguwDT6VgFSI5ooIyiU6WQCdv+NRTCYm6d5fohkuRO3gwxoni3GcPylZp2Tr
-         HnL6/ThWl9qQWcNikPt3I3sNqR83TC9HnJQ6VOlnT59K2T+y6L8ZnxmZsz9pbs8LaFTg
-         VUIMCSWjg4TXs6YLxqDrZP6QlbMncK+1IDMTRwP5QKCHb6gqSoOaA1zUOw7dyHDqCgBv
-         BO6jpf0np+NfWLce0g3tx5sn0c6dqJ/hXXUSjRj1QLUIisC5nY0ERUaNIej05CzdXWus
-         3BNFJ0tMS36T6giO2+kBWCTav/zy8Ko5qn9UrrFYFLIRsI86JZEv3jGnkEUWwO85yy8n
-         LvPg==
+        bh=AT35HAtpZ2maT6QRoO6vk5rHhOGcgscKKkvJ/fsR6ns=;
+        b=jDhkji4PFJIa5BU8N7hzR6oNS8OCfhTvLXbURbLABFbQEWa9rupJQU8c0Ug4FzJuXi
+         kvip26R1yveJUIsAcIv1TouIjV42JdElaqHNiP63Nxh+JulPTlM3Q3LI1ISB34Q5ngtx
+         8OO7yvisAOgYIYCxmX3WSu0/mwX7VLsuP69BZBTTa4BybvyUgGLTrPSOSXRFTTGyfPRC
+         a4HRsniMCgBxQpVHlfTKqAz1MeWSVMP2UCJ6Eu4BxG9v7af34W9aDit8dwAKQ7Pvnveh
+         LRgZBpv3fDlAilgKSC+DYwc/C/dixItwBXIeKl4k44S1U+QpUayFUaZZcKnJbC4y6ltk
+         H9Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:from:subject:mime-version:message-id:in-reply-to:date
          :x-gm-message-state:from:to:cc;
-        bh=8ZZNaEqO0EuBDv+0FKpUYXuAlj/GFOhTcGqRVhV0/0w=;
-        b=kU7oifkYo6p7GWZxZ/Wi6b9DQHbOyiGLSJBoXCyTpl5tddfLE6cRMna41uaG6uh7oD
-         2EOGl1gUOj0LUP4oX4qtmovZlUpPWretVYoTyR6+HlWQDZwjb5P9kT9YIIEiB1o92hHi
-         Giy/Z5znK4RgzlZ3dq1sf6dLE3WNwlFZsT85u/jUh82tJNezXM20QR4WcOEYXZ803fun
-         oeU6Ua6DC2fvRIWvMwHlAM8sk8E0PPkAM8ruPZURnOefDpWeou1omtN1I3ZNO8Cgoev+
-         MDkRURnRR6ATYWWLNB6eOM7Cub+KhNNd4Z/un7ClMVK0ozXQaSGajEpCZslIbQR8TP/P
-         wqlA==
-X-Gm-Message-State: ACgBeo2+ak1Av8cTBS6ZP4l8Okv9jd3ihouuzEmw9BBvCGhCXoC8OZN+
-        BWE5KMGOaJnPjEWHhJjBSqYlMXs/DIWlSke95z73
-X-Google-Smtp-Source: AA6agR6QUJSYy0HFbEzjPdxO6JkcWu2UZ3QRb0fXF3xK9GfoH8rWSl13FWD0913p6kWzBee/t9OgzqKF9aAYTJoQxenS
+        bh=AT35HAtpZ2maT6QRoO6vk5rHhOGcgscKKkvJ/fsR6ns=;
+        b=E/lUiI817T+31HU9g/I7F65P40f0YH7preobVe0etp6Sl1SNIzrhvsTAmlNwd9gHkY
+         K+WFUkRJGQ2x+rV+E4vTEU3oumw7FGEAuWnbGn2RY0gNjwz7dias2t2B1uwmvGE4Fw4E
+         0pbvDiDLNwDCFcXB0WR0yHJyqDhIAUyLNo2sJZt/IQFIcDrtKPzqCWunIPS6aVgAn3ap
+         k5bLTWuJ7J71tE+RJb+c3cm6QIiPpWKG+Eue0DiGnUVNQy2an7PNb5ga4XebPhv4dBtW
+         4QZ42fi2ynBsG0HUOP3gjOzboM3fAJg2YsfwrVIK1lqVnmdtA5bfB4CMU2/LcSuq9Ub+
+         W21w==
+X-Gm-Message-State: ACgBeo118j3W9RG3m2C+1gHS82zEvPRchyhw6wtZsHVRH6bX4KtJnw5j
+        KI/BOp9JReoWjGG2KacxCqc4Z/p9gJCsWX/q73Yz
+X-Google-Smtp-Source: AA6agR4sILXAj7WQ5Wrw4XK7DTYPavvpWfPIisD3JtRAoVuWb50mQHf0VcEZvNznwBSoX/xnglT6JMq90gB17oIVWkse
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6870:1604:b0:116:82f4:a0f6 with
- SMTP id b4-20020a056870160400b0011682f4a0f6mr1871720oae.246.1660845140831;
- Thu, 18 Aug 2022 10:52:20 -0700 (PDT)
-Date:   Thu, 18 Aug 2022 10:52:16 -0700
-In-Reply-To: <xmqqo7whqyzs.fsf@gitster.g>
-Message-Id: <20220818175216.3530525-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:4c1b:b0:532:8f07:bba0 with
+ SMTP id ea27-20020a056a004c1b00b005328f07bba0mr3863402pfb.37.1660845363285;
+ Thu, 18 Aug 2022 10:56:03 -0700 (PDT)
+Date:   Thu, 18 Aug 2022 10:56:00 -0700
+In-Reply-To: <xmqqk075qyq0.fsf@gitster.g>
+Message-Id: <20220818175600.3531267-1-jonathantanmy@google.com>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.37.1.595.g718a3a8f04-goog
-Subject: Re: [PATCH] trailer: allow spaces in tokens
+Subject: Re: [PATCH v2] trailer: allow spaces in tokens
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jonathan Tan <jonathantanmy@google.com>,
@@ -65,47 +65,44 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
-> Jonathan, do you remember if the "be stricter" was in a response to
-> specific real world issues, or is this "we no longer allow whitespace"
-> an unintended side effect of the change?
+> "Max Bernstein via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+> > Range-diff vs v1:
+> >
+> >  1:  404a6d1b193 ! 1:  4d490851ac2 trailer: allow spaces in tokens
+> >      @@ Commit message
+> >       
+> >           Signed-off-by: Max Bernstein <max@bernsteinbear.com>
+> >       
+> >      + ## t/t4014-format-patch.sh ##
+> >      +@@ t/t4014-format-patch.sh: test_expect_success 'signoff: not really a signoff' '
+> >      + 	4:Subject: [PATCH] subject
+> >      + 	8:
+> >      + 	9:I want to mention about Signed-off-by: here.
+> >      +-	10:
+> >      +-	11:Signed-off-by: C O Mitter <committer@example.com>
+> >      ++	10:Signed-off-by: C O Mitter <committer@example.com>
+> >      + 	EOF
+> >      + 	test_cmp expect actual
+> >      + '
+> 
+> So, the updated code mistook the body of the message that is not a
+> sign-off, because there is a colon on the line, the line does not
+> begin with the colon, and everything before the colon is an alnum or
+> a whitespace, so squashed the paragraph break before the real
+> trailer block and the last line of the body and made it a body-less
+> commit log message?
+> 
+> This might be a good demonstration of why it is a mistaken design to
+> allow whitespaces, which may steer us toward fixing the documentation?
+> 
+> I dunno.  What do others think?
 
-Rereading the relevant mailing list thread, I think it's a bit of both.
-The sequence of events was as follows:
- - I made a patch set that changed sequencer.c (which, among other
-   things, controls the behavior of "commit -s") to use
-   interpret-trailers's functionality. This caused a change in the
-   behavior of a "commit -s" unit test (the "I want to mention about
-   Signed-off-by: here." one), because "commit -s" previously did not
-   support spaces before the separator. [1]
- - You mentioned that perhaps we should tighten it back. [2]
- - I agreed and tightened it, but didn't change the documentation. [3]
+Yeah, this was the same issue we discussed a few years ago [1]. "git
+commit -s" has never supported spaces before the colon (at least, it did
+not support it before my patch set in [1] and does not support it now)
+so it seems that having no spaces is already the established convention,
+and I think that interpret-trailers should follow it. I would agree that
+we should fix the documentation to match the current behavior.
 
 [1] https://lore.kernel.org/git/a416ab9b-ff1f-9a71-3e58-60fd4f8a6b8e@google.com/
-[2] https://lore.kernel.org/git/xmqqtwbroykt.fsf@gitster.mtv.corp.google.com/
-[3] https://lore.kernel.org/git/cover.1478028700.git.jonathantanmy@google.com/
-
-So the "real world issue" was a test in our test suite, and perhaps the
-side effect was unintended in that we wanted to preserve the behavior of
-"commit -s" but didn't think about other possible uses of
-interpret-trailers.
-
-> If the former, an equally valid "fix" to what Max reports here would
-> be to add such a real world issue or two as new tests to demonostrate
-> why allowing whitespaces was a mistake that hurts real-world workflow,
-> and fix the documentation.
->
-> I actually am suspecting it is the latter, only because we would have
-> added a testcase to show why whitespaces in the trailer label is a
-> bad idea in e4319562 if this was triggered by a real-world issue.
-
-The "I want to mention about Signed-off-by: here." test might be a
-sufficient real-world issue.
-
-> I would say that it would be a disaster, if we took any random
-> line with colon : in it in the middle of the commit message and
-> mistook it as a trailer (like the line above), but since we do not
-> allow paragraph breaks in the trailer block, as long as the message
-> has a valid trailer block, it might not be a huge issue.  I dunno.
-
-Yes, it would be fine if the paragraph was two or more lines long, but
-not if it's a single line.
