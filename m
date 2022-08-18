@@ -2,88 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88D73C00140
-	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 20:36:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5F49C00140
+	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 20:46:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244909AbiHRUgv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Aug 2022 16:36:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57316 "EHLO
+        id S240922AbiHRUqc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Aug 2022 16:46:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232083AbiHRUgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2022 16:36:50 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7580BD2B04
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 13:36:47 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EDB7914E78C;
-        Thu, 18 Aug 2022 16:36:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=csGg+d09owZdgb1AkkyTenK8CTzB1xcEery4I9
-        iEj14=; b=LA/Xv5Rxn+r3T/AGYWts75Z4H3aCZkbc0LL7tNRYjBRY07fUXzAdhZ
-        vpsFbfqi81BxRDj7tRQWEYBAP/DlUcrmIEhJfOT7MlL9pg/4fmOfG9nwDSBGPCpK
-        KB/qg0bg47w70TLB9mhgH7oJb5gfpY3wVWUlRgKBvh3CiyHFSy7sA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E5FA014E78B;
-        Thu, 18 Aug 2022 16:36:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 602EE14E78A;
-        Thu, 18 Aug 2022 16:36:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 4/4] po: adjust README to code
-References: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr>
-        <cover.1660828108.git.git@grubix.eu>
-        <e163c87b3efc1571cb3657df6459583af92f9f2b.1660828108.git.git@grubix.eu>
-Date:   Thu, 18 Aug 2022 13:36:42 -0700
-In-Reply-To: <e163c87b3efc1571cb3657df6459583af92f9f2b.1660828108.git.git@grubix.eu>
-        (Michael J. Gruber's message of "Thu, 18 Aug 2022 15:13:29 +0200")
-Message-ID: <xmqqilmpnvad.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S238275AbiHRUqb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2022 16:46:31 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE37DD2EB4
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 13:46:30 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-334dc616f86so72985857b3.8
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 13:46:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=u/q8M9SUCa6ZYle4hqYu+OcaCzbvX3IwIH6DUWos5mA=;
+        b=qHwMcWaOm1UUoqKyGRPsNwPHPHkXYqCyp5ekBa3/tz0f2EGKArZajyWWCZC/zRzfOM
+         +lSxTcqID08rIgoHfwfBpX2v+eO9wgZVzhofC8feeUN22+2RRrwdsvQ3OHpW8w+arePz
+         ACKAAW5XmCijNhxTjerOD7q48amrbbL8k4eJgtCLEHIhVylrDQ+bDhFwysvuSG8DS1+z
+         gSi/AzhRZ1xuYt4S7/c4txFLY/mEIK6jallPEhB4WwY2syr7/dFxT5bRrIWXjzJG9Dla
+         vk43nOugVZFMyhHbBqMq7lbmg4FaMVentMIKoBTUFBrUBuqa2tUe4BO/RTu7hUThfB2T
+         Jrpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=u/q8M9SUCa6ZYle4hqYu+OcaCzbvX3IwIH6DUWos5mA=;
+        b=4P/LHLEJhye2qtOgNRxzwjLsm/sy1Ke92POXrE9OD6yL6DZG5uxOeDN8RoW+fs6sBw
+         UgenTULWajOmIjTV+y2rxpegtrHY4JvfQxbBWwJk5ZRgrKpqArDo1+VmMgi7ikm6GqeA
+         xsy/tXrITFpC6RTb/9acOjuh7Q5wszsgpEkYEpfScGxkHlMVPU3g+pfT4bPNTT4kMLF+
+         LkWZ/Ei3VVltZ27zb0VH+EPFlYEdoqNPLaHapVHyyIeuM+SYaAEfiFTcXM2i1KQU7oF2
+         QqsENHF560Wm8qV7gJSn/7X8zWB/mQChC6iFzt1TnJuzQjOqvcoVmgYFn7fiU3TDdNvd
+         XvHw==
+X-Gm-Message-State: ACgBeo0v4zymRdhRVVbtjmyn5DIPZz06WVwlGawnEdhic0kVCBcy0ekN
+        pDlVeCezkpI5TEyy66v2Vo8qBavFyAQSxUlOOvFZbgS/Tvc=
+X-Google-Smtp-Source: AA6agR7RvyX7QJWuAPLqhqWfGtkMZbe5C7MNRH3xyjvmH/4DgKHDbMrHJWJOqiGT4uY1Uc1EjNS1BAwn8Lo00A6KGr8=
+X-Received: by 2002:a81:6e87:0:b0:334:344:6fdf with SMTP id
+ j129-20020a816e87000000b0033403446fdfmr4640916ywc.130.1660855589820; Thu, 18
+ Aug 2022 13:46:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7885BB26-1F35-11ED-955B-CB998F0A682E-77302942!pb-smtp2.pobox.com
+References: <pull.1309.git.git.1660806376021.gitgitgadget@gmail.com>
+ <pull.1309.v2.git.git.1660809243298.gitgitgadget@gmail.com>
+ <xmqqk075qyq0.fsf@gitster.g> <CM9DZ4Z18PY9.1T2O8U54X66FD@cedar>
+In-Reply-To: <CM9DZ4Z18PY9.1T2O8U54X66FD@cedar>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 18 Aug 2022 22:46:18 +0200
+Message-ID: <CAP8UFD1304rQh+9jMUkTmTvmNBxm6BNDt3=d07+C8iXSbJb2RA@mail.gmail.com>
+Subject: Re: [PATCH v2] trailer: allow spaces in tokens
+To:     Maxwell Bernstein <tekk.nolagi@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Max Bernstein via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Max Bernstein <donotemailthisaddress@bernsteinbear.com>,
+        Max Bernstein <max@bernsteinbear.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@grubix.eu> writes:
-
-> When we talk about sequencer action names as such (as opposed to command
-> names) we do translate the action name. Adjust the po README to reflect
-> this and to match the code base.
+On Thu, Aug 18, 2022 at 9:03 PM Maxwell Bernstein <tekk.nolagi@gmail.com> wrote:
 >
-> Signed-off-by: Michael J Gruber <git@grubix.eu>
-> ---
->  po/README.md | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> On Thu Aug 18, 2022 at 9:54 AM PDT, Junio C Hamano wrote:
+> > So, the updated code mistook the body of the message that is not a
+> > sign-off, because there is a colon on the line, the line does not
+> > begin with the colon, and everything before the colon is an alnum or
+> > a whitespace, so squashed the paragraph break before the real
+> > trailer block and the last line of the body and made it a body-less
+> > commit log message?
 >
-> diff --git a/po/README.md b/po/README.md
-> index 3e4f897d93..90b8455401 100644
-> --- a/po/README.md
-> +++ b/po/README.md
-> @@ -273,7 +273,7 @@ General advice:
->  
->    ```c
->    /* TRANSLATORS: %s will be "revert" or "cherry-pick" */
-> -  die(_("%s: Unable to write new index file"), action_name(opts));
-> +  die(_("%s: Unable to write new index file"), _(action_name(opts)));
->    ```
+> I agree that it is not ideal, and I'm not sure how to fix it. This commit
+> probably shouldn't go in as-is; I modified the test in order to demonstrate
+> this problem.
+>
+> > This might be a good demonstration of why it is a mistaken design to
+> > allow whitespaces, which may steer us toward fixing the documentation?
+> >
+> > I dunno.  What do others think?
+>
+> I think allowing whitespace is good at least for the Phabricator project, which
+> despite being dead, has a number of existing users and existing commits. It
+> unfortunately has a "Differential revision" trailer with whitespace.
 
-While "revert" and "cherry-pick" may have localized words in our po/
-dictionary, the message uses "%s:" placeholder to identify the Git
-operation that is reporting the problem, and the way the end-user
-who is getting the message triggered the Git operation was by
-running a subcommand of "git", isn't it?  
+I think allowing one white space before the separator is a good idea
+for the following reasons.
 
-Isn't it confusing for a user who typed "git revert" to see an error
-from _("revert")?  _("Unable to write new index file") is perfectly
-fine, though.
+First, if people use something like #, !, ~ or % as a separator, for
+example in the case of a trailer like "Bug #43", it is very natural to
+have a white space before the # separator.
+
+Note that GitLab for example uses the ~N format, where N is a number,
+for issues, !N for merge requests and %N for milestones. I think
+Bugzilla and many other bug trackers use a #N format for bug numbers.
+
+Also in some languages, like French, the typographical rules when
+writing regular text is to have a space (technically it's supposed to
+be a "non breaking space", see:
+https://en.wikipedia.org/wiki/Non-breaking_space, but in practice
+people use a regular space most of the time) before a colon. So it is
+very natural for a number of people in the world to automatically add
+a white space before a colon.
+
+https://en.wikipedia.org/wiki/Colon_(punctuation)#Spacing says: "In
+print, a thin space was traditionally placed before a colon and a
+thick space after it. In modern English-language printing, no space is
+placed before a colon and a single space is placed after it. In
+French-language typing and printing, the traditional rules are
+preserved. "
+
+I think it would be very annoying for users to find out that a number
+of otherwise proper trailers would not be taken into account only
+because they have a white space before the colon. At least there
+should be an option to allow that.
