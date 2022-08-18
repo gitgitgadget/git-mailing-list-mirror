@@ -2,130 +2,204 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECF45C00140
-	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 06:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39D10C00140
+	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 06:17:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243595AbiHRGQO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Aug 2022 02:16:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60610 "EHLO
+        id S243564AbiHRGRy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Aug 2022 02:17:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240832AbiHRGQM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2022 02:16:12 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80EA793522
-        for <git@vger.kernel.org>; Wed, 17 Aug 2022 23:16:10 -0700 (PDT)
-Received: (qmail 12054 invoked by uid 109); 18 Aug 2022 06:16:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Aug 2022 06:16:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23464 invoked by uid 111); 18 Aug 2022 06:16:11 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Aug 2022 02:16:11 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 18 Aug 2022 02:16:09 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jinwook Jeong <vustthat@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: bugreport: "git config --global" fails if an invalid .git file
- present
-Message-ID: <Yv3ZKcD0L0dSIavr@coredump.intra.peff.net>
-References: <CAA3Q-aYfn0om2tXjwH-9ayaX57Yj6xkKw1hpi2asthgHvWovsw@mail.gmail.com>
+        with ESMTP id S243263AbiHRGRw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2022 02:17:52 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCF8E96FDA
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 23:17:50 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id m10-20020a05600c3b0a00b003a603fc3f81so415217wms.0
+        for <git@vger.kernel.org>; Wed, 17 Aug 2022 23:17:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=kMO06dB3kmc0/SshrP7wgoi8kN78OozTSP+/oS2xZMk=;
+        b=b01xX3/atS+Wyi5CBPTSPAh3GcKU39sX3CArzDyHHhK/zUkvZr3UY6VBASUaUwGjKC
+         tPY9Y+1i7xRVZuHlEG9T7q8dBOkepWqtSprj8tTBVkSfur0mLQKPWAnOPmVZrxER9u7D
+         dxSkjMyrvRSlGfccYNUgwyq3mVfBPIbkGAx8czM+7EuKpANYePJ/eMYIteVdodd6aCNz
+         J/qheGoEmHYad9vWCDamTDUUyCG0ntbPqmnbN3yJMejviKGAQJup9ryoeblcz8VFfqT6
+         F2NiKvMwEO4sti1paMLxmA8AbNnmxC++K02X3kohsLCzdzO23ryw7f6A3wHt1LSp3IDU
+         TEYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=kMO06dB3kmc0/SshrP7wgoi8kN78OozTSP+/oS2xZMk=;
+        b=72/ZnNLroco5yXOcKQdRC/CVMunIzqSD1locJ/+x3em+lUp1WRvK/mT76XwJntCGgv
+         jEriC0KDVcc/ZA/xQhOhCRXQ5njcdTa1mWjoYUoQuH4biZuBlJjK2i5DlIFPHQFgYXoj
+         6YkV4yereiyUasMHHFFhlX1BR54EOi5+b6jIotUkMZhuptT2uIj7LbYzaPfsQN1eZ6g1
+         Hshl5vLstkzo3kD6uKXKN+7dloCyuXjmqKksVKaGkWEkJ8gjXynbLlPj3zrZP55YqHVw
+         Rp51L+OwjSIaaUeJphgb8vPAZcCUZ/7jvuKUOkA7Qx7m8+Zup32SpaCQ5fcKjxMU7IC8
+         IFGg==
+X-Gm-Message-State: ACgBeo06g5yMCL3qKW9c5dbZjHhRCQLTBOZP/PWMA8yYiCshIyAQBDXs
+        krhTdmh6E54SpvgpimQh7l0tn9imqGY=
+X-Google-Smtp-Source: AA6agR56z95WBKxvjb2Zyswt6h73F8Urx4i03kjt+qcJYX4jrpjJI8Ha2L0VReo8+fgmbre4is/iRg==
+X-Received: by 2002:a1c:7907:0:b0:3a5:a965:95e6 with SMTP id l7-20020a1c7907000000b003a5a96595e6mr4056581wme.75.1660803468957;
+        Wed, 17 Aug 2022 23:17:48 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m5-20020a05600c4f4500b003a5fa79007fsm996753wmq.7.2022.08.17.23.17.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Aug 2022 23:17:48 -0700 (PDT)
+Message-Id: <pull.1303.v2.git.1660803467.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1303.git.1660704498.gitgitgadget@gmail.com>
+References: <pull.1303.git.1660704498.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 18 Aug 2022 06:17:45 +0000
+Subject: [PATCH v2 0/2] Allow --ancestry-path to take an argument
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAA3Q-aYfn0om2tXjwH-9ayaX57Yj6xkKw1hpi2asthgHvWovsw@mail.gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 17, 2022 at 01:16:44AM +0900, Jinwook Jeong wrote:
+Changes since v1:
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> 
-> Executing `git config --global ...` and $PWD/.git exists as a file and
-> is invalid.
-> 
-> What did you expect to happen? (Expected behavior)
-> 
-> Git reads from or writes to the global config store.
-> 
-> What happened instead? (Actual behavior)
-> 
-> It prints:
->   fatal: invalid gitfile format: $PWD/.git
-> 
-> What's different between what you expected and what actually happened?
-> 
-> Git fails to access the global config even if the current directory's
-> `.git` file has nothing to do with the global config.
+ * Tweaked the commit message, and incorporated Junio's suggestion to update
+   left_flag and ancestry_flag together.
 
-I agree this isn't entirely friendly, but I think things are working as
-designed. Even though you're only asking to change global config, we do
-still speculatively check for a repository when running git-config at
-all, as various options could impact its behavior. So the backtrace
-looks like this:
+Series description:
 
-  0  die (err=0x5555558e5c33 "invalid gitfile format: %s") at usage.c:175
-  #1  0x00005555557fbc87 in read_gitfile_error_die (error_code=5, path=0x5555559abbd0 "/home/peff/.git", dir=0x0)
-      at setup.c:786
-  #2  0x00005555557fbfaa in read_gitfile_gently (path=0x5555559abbd0 "/home/peff/.git", return_error_code=0x0)
-      at setup.c:875
-  #3  0x00005555557fce4d in setup_git_directory_gently_1 (dir=0x7fffffffe160, gitdir=0x7fffffffe140,
-      report=0x7fffffffe120, die_on_error=1) at setup.c:1298
-  #4  0x00005555557fd4d6 in setup_git_directory_gently (nongit_ok=0x7fffffffe1ec) at setup.c:1455
-  #5  0x0000555555574a32 in run_builtin (p=0x55555596e9f0 <commands+624>, argc=4, argv=0x7fffffffe570) at git.c:436
-  #6  0x000055555557505f in handle_builtin (argc=4, argv=0x7fffffffe570) at git.c:720
+This came out of a previous thread[1], where I wanted to be able to run
+something like
 
-and when we hit the error, we have not even started running code
-specific to git-config, let alone seen that the "--global" option is in
-use.
+git log --oneline --ancestry-path=ab/submodule-cleanup main..seen
 
-There's another more subtle question lurking here. The config builtin is
-marked as RUN_SETUP_GENTLY, so it will run even if we are not inside a
-repository at all. But you can see in the backtrace above that we pass
-die_on_error=1 to setup_git_directory_gently_1(). That is, the "gentle"
-form here means "it is OK not to be in a repository", but if we see
-something that indicates we should be in a repository (like a .git
-file), but we hit an error examining it, we bail immediately. We _could_
-say "well, it's not a valid .git file, let's keep looking".
 
-And that would make your case Just Work. But it's also more dangerous;
-if a misconfiguration or transient error caused us to set up an
-unexpected environment, then the results could be quite wrong and
-confusing. Maybe less so for "git config", but for destructive
-operations it's a scarier concept.
+and see the commits in main..seen which contained ab/submodule-cleanup in
+their ancestry path. Let me start by defining the terminology "X is in a
+commit's ancestry path". By that, I just mean that either the commit is X,
+the commit is an ancestor of X, or the commit is a descendant of X. With
+that definition...
 
-So a patch like the one below does what you want, but I'm not sure it's
-a good idea for the reasons given above.
+The command
 
-In your case, the right resolution is probably to delete the bogus .git
-file.
+git log --ancestry-path A..B
 
--Peff
 
----
-diff --git a/setup.c b/setup.c
-index cefd5f63c4..aafb1e1e99 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1452,7 +1452,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 		die_errno(_("Unable to read current working directory"));
- 	strbuf_addbuf(&dir, &cwd);
- 
--	switch (setup_git_directory_gently_1(&dir, &gitdir, &report, 1)) {
-+	switch (setup_git_directory_gently_1(&dir, &gitdir, &report, !nongit_ok)) {
- 	case GIT_DIR_EXPLICIT:
- 		prefix = setup_explicit_git_dir(gitdir.buf, &cwd, &repo_fmt, nongit_ok);
- 		break;
-@@ -1503,6 +1503,11 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 		}
- 		*nongit_ok = 1;
- 		break;
-+	case GIT_DIR_INVALID_GITFILE:
-+		if (!nongit_ok)
-+			BUG("read_gitfile_gently() should have died on error");
-+		*nongit_ok = 1;
-+		break;
- 	case GIT_DIR_NONE:
- 		/*
- 		 * As a safeguard against setup_git_directory_gently_1 returning
+means find the commits in A..B which contain A in their ancestry path. I
+sometimes still want to use A..B to get the basic range, but would like to
+use a commit other than A for specifying which ancestry path is of interest.
+So, for example, I might want to use
+
+git log --ancestry-path=C A..B
+
+
+to mean find the commits in A..B which contain C in their ancestry path, or
+use
+
+git log --ancestry-path=C --ancestry-path=D A..B
+
+
+to mean find the commits in A..B which contain either C or D in their
+ancestry path.
+
+This series implements this request, by allowing --ancestry-path to take an
+optional argument. With it, I can find the answer to my question in the
+thread at [1] within the git.git repository (replacing branch names with
+actual hashes since the branches have since moved on):
+
+$ git log --oneline --ancestry-path=5b893f7d81 8168d5e9c2..ac0248bfba | wc -l
+36
+
+
+This returns the answer I want, whereas dropping the '=5b893f7d81' from the
+command line gives me 192 unwanted commits (228 total), and various other
+command line flags (--first-parent, --boundary, etc.) also fail to give me
+the set of commits I am looking for.
+
+[1]
+https://lore.kernel.org/git/CABPp-BF+8aqysioP_e27Q9kJ02rE2SuSqXu+XphzKWnk5a_Q+A@mail.gmail.com/
+
+Elijah Newren (2):
+  rev-list-options.txt: fix simple typo
+  revision: allow --ancestry-path to take an argument
+
+ Documentation/rev-list-options.txt | 47 +++++++++++++----
+ object.h                           |  2 +-
+ revision.c                         | 84 +++++++++++++++++++-----------
+ revision.h                         |  3 ++
+ t/t6019-rev-list-ancestry-path.sh  | 47 ++++++++++++++++-
+ 5 files changed, 139 insertions(+), 44 deletions(-)
+
+
+base-commit: 6a475b71f8c4ce708d69fdc9317aefbde3769e25
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1303%2Fnewren%2Fancestry-path-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1303/newren/ancestry-path-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1303
+
+Range-diff vs v1:
+
+ 1:  68ab719d99c = 1:  68ab719d99c rev-list-options.txt: fix simple typo
+ 2:  99287b67fd1 ! 2:  f580ec6d060 revision: allow --ancestry-path to take an argument
+     @@ Commit message
+          revision: allow --ancestry-path to take an argument
+      
+          We have long allowed users to run e.g.
+     -        git log --ancestry-path next..seen
+     +        git log --ancestry-path master..seen
+          which shows all commits which satisfy all three of these criteria:
+            * are an ancestor of seen
+     -      * are not an ancestor next
+     -      * have next as an ancestor
+     +      * are not an ancestor master
+     +      * have master as an ancestor
+      
+          This commit allows another variant:
+     -        git log --ancestry-path=$TOPIC next..seen
+     +        git log --ancestry-path=$TOPIC master..seen
+          which shows all commits which satisfy all of these criteria:
+            * are an ancestor of seen
+     -      * are not an ancestor of next
+     +      * are not an ancestor of master
+            * have $TOPIC in their ancestry-path
+          that last bullet can be defined as commits meeting any of these
+          criteria:
+     @@ revision.c: static int process_parents(struct rev_info *revs, struct commit *com
+       {
+       	struct commit_list *parent = commit->parents;
+      -	unsigned left_flag;
+     -+	unsigned left_flag, ancestry_flag;
+     ++	unsigned pass_flags;
+       
+       	if (commit->object.flags & ADDED)
+       		return 0;
+      @@ revision.c: static int process_parents(struct rev_info *revs, struct commit *commit,
+     + 	if (revs->no_walk)
+       		return 0;
+       
+     - 	left_flag = (commit->object.flags & SYMMETRIC_LEFT);
+     -+	ancestry_flag = (commit->object.flags & ANCESTRY_PATH);
+     +-	left_flag = (commit->object.flags & SYMMETRIC_LEFT);
+     ++	pass_flags = (commit->object.flags & (SYMMETRIC_LEFT | ANCESTRY_PATH));
+       
+       	for (parent = commit->parents; parent; parent = parent->next) {
+       		struct commit *p = parent->item;
+     @@ revision.c: static int process_parents(struct rev_info *revs, struct commit *com
+       			if (!*slot)
+       				*slot = *revision_sources_at(revs->sources, commit);
+       		}
+     -+		if (revs->ancestry_path)
+     -+			p->object.flags |= ancestry_flag;
+     - 		p->object.flags |= left_flag;
+     +-		p->object.flags |= left_flag;
+     ++		p->object.flags |= pass_flags;
+       		if (!(p->object.flags & SEEN)) {
+       			p->object.flags |= (SEEN | NOT_USER_GIVEN);
+     + 			if (list)
+      @@ revision.c: static int still_interesting(struct commit_list *src, timestamp_t date, int slop
+       }
+       
+
+-- 
+gitgitgadget
