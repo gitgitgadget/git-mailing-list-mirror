@@ -2,159 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3378EC00140
-	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 07:11:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 558DFC28B2B
+	for <git@archiver.kernel.org>; Thu, 18 Aug 2022 07:15:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243684AbiHRHLT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Aug 2022 03:11:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53630 "EHLO
+        id S243804AbiHRHPd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Aug 2022 03:15:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241522AbiHRHLS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Aug 2022 03:11:18 -0400
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66FB9895C6
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 00:11:17 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id g21so517817qka.5
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 00:11:17 -0700 (PDT)
+        with ESMTP id S235917AbiHRHPc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Aug 2022 03:15:32 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C878385A95
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 00:15:30 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ba1so673954wrb.5
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 00:15:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=yIMQUbULcTf0RsXIaMy00p/EyBB+v8KqBSo4jMkuNO8=;
-        b=hWPKhKX0rgI7Pvzgj/z9EE3qZTUU0BFIVBnc2U3OJzlu8pM+9fO8V0q5H72cC4Q6my
-         ywncbnXXf6vrAX8nhNHjk1BmTmoMNMkuK44dY1AjnIIZ8bCwDRMQeo0C/YeSQuCxqtNS
-         u5ZIb9fpNhUn3kjgKMpaMrXpOTxzuDUuqpsI2UCPEHUf6JeEa8QSpwNrYPnKr8FDz1pP
-         V0ETrw4oAr6HMGKQ0OGQAsmOOOqXjBLM6u072RxvtrwllsBfUW9UNkENUl5bwuhk0I2e
-         fWVZV7aHiIcoHnzdSfKmJAPdkONhXqKBE/NP7L6JcqiPNFXKERGLMaumhGJfvsyHLXC6
-         hAFA==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=+oHudiKLZdQMNgloDfH40ARogh/Mjvsts1oMojxyM3w=;
+        b=SuoUpyCZR3+zlDdwfM4E2kxkk9pcoGwqT8S/hTbrfkzrfCw9+E5I0dEaiZ2qGzNnjh
+         7w37ZWtypruQg27BnohmV2rGhiMT+tDyjuyZMbt6+Y1fPZ1SYL4JwW2MJfp45wpxZUa/
+         uURqKBeK3wQFLcl4yqvGHqoGVrsL4fWRpQv0hsafxHb2M7SxCn6iiu2/76U1DB83zvK0
+         oEuEyi+07pOmkfnGIxazcJWdYYGEbbRfhLh0PR0sTuyDwrY2S2kXPKw9OoVbCrJtuKaX
+         2tTVWl/Ish47vXd9B2jDR9QOkjFMYQFm+pq8SlNyue5Foud39tiB4Wm7VoeoDVAxpo/I
+         Y7RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=yIMQUbULcTf0RsXIaMy00p/EyBB+v8KqBSo4jMkuNO8=;
-        b=On66RVG9W0UAIEVB8dcBrCptuBJlfa4w7bI8akL+VlRQzBuun0+YimSmbMmf2a3qkY
-         ega4QfZ2twrVjvXxEyl6tBH6KI30/Pmz4lStP2BvNCta2Z7j5ck83bwFkIq99J5l5AW6
-         MQ2K/Lvmj+YGcmmOcIuotas2qgn0bCmn/Jg/8YkdkpQrHux12mtWxcDTJ0t7fMX6uOhc
-         VQ7J7yQvc/fKelRWOi/OdBZgBa/9Lxm1C8dFAMSlsYe7iQm3LeEQ+pFc0MBwYLmp2HY8
-         r/eR5Kf9kZc2GOu6GeYzh8aUnF4bDnZ08yYRTfeXEw21i40Y7XYYrYuPq4gzo8pE3RxT
-         ciCA==
-X-Gm-Message-State: ACgBeo3qxcl6qzNW4XBqDVsYRfhn+HaOgFIEWBvrHiTcbkhmptebHIxW
-        D5jYLtq7ZBjvSG3u1dFNWGc+LEP4JU24iS2SSWU=
-X-Google-Smtp-Source: AA6agR65KQBPILW3dRnaXhIq9ssbExW80Opf33lW61L51OvCFMCZcPpQOEz7/j3OpZ/TCAhdstipz/lcw61JvvDwgAg=
-X-Received: by 2002:a05:620a:444b:b0:6bb:238a:2454 with SMTP id
- w11-20020a05620a444b00b006bb238a2454mr1113273qkp.183.1660806676377; Thu, 18
- Aug 2022 00:11:16 -0700 (PDT)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=+oHudiKLZdQMNgloDfH40ARogh/Mjvsts1oMojxyM3w=;
+        b=UwRnmmVn3W1Z5oen/a8tnuRNfPUcknN/39MQJjUb6ryoOIcPPlvQFnLvpvBPEkk++l
+         arKvlNgkL7T5IDuPZZq7lvX2wh6xU4eOOpsI0DbLtvh5JgyN9C/K54ZdXrhinlYid6o9
+         2zK5FUcWi+mDK3Kng70kWxAA6DwO4EWKfnDJDjDu2QxMNSHplCzAH6nTDOqO6TDCGLb1
+         Y+C9kXQkSB5JRfGpWriejbp3HzaBNkz41b+RxEdUexPWYm2pm4MFAj/QbX3aao61XOiO
+         C4QBKr8mDj+Rn7YK5QTQchsqPn8jxUE9SH/XhlHphQtS+5DGjvMB3FP0Pz4AXXPKhJQk
+         YFQw==
+X-Gm-Message-State: ACgBeo3i6jxYfsIhzwiwC35mVH1gREh84K6tP/8xN82gnCdB4iW46JWW
+        O+nTkeIymislLCzUPXpS42acN7rMSQk=
+X-Google-Smtp-Source: AA6agR6EPq0NJ4Ka9UfMbQIKMXPsLNm/X5hqxBQr0FCVV3GVZj/a26PM3jP+ME050pO13nQl8dKrbQ==
+X-Received: by 2002:a05:6000:168e:b0:220:87da:c3e4 with SMTP id y14-20020a056000168e00b0022087dac3e4mr751018wrd.559.1660806928926;
+        Thu, 18 Aug 2022 00:15:28 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v5-20020a5d6105000000b002251c75c09csm659234wrt.90.2022.08.18.00.15.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Aug 2022 00:15:28 -0700 (PDT)
+Message-Id: <pull.1325.v3.git.1660806927.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1325.v2.git.1660718028.gitgitgadget@gmail.com>
+References: <pull.1325.v2.git.1660718028.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 18 Aug 2022 07:15:24 +0000
+Subject: [PATCH v3 0/3] Fixups for cw/submodule-merge-messages
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1323.git.1660576283.gitgitgadget@gmail.com> <019158db9d2dbb371705ba79a96a907e4a17cdb1.1660576283.git.gitgitgadget@gmail.com>
-In-Reply-To: <019158db9d2dbb371705ba79a96a907e4a17cdb1.1660576283.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 18 Aug 2022 00:11:05 -0700
-Message-ID: <CABPp-BGdaG99S9oyeSYD9NMa1sq_8zHnnh7hvCRp5v=8myP46g@mail.gmail.com>
-Subject: Re: [PATCH 3/5] rebase: factor out merge_base calculation
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Calvin Wan <calvinwan@google.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 15, 2022 at 8:14 AM Phillip Wood via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> Separate out calculating the merge base between onto and head from the
-> check for whether we can fast-forward or not. This means we can skip
-> the fast-forward checks when the rebase is forced and avoid
-> calculating the merge-base twice when --keep-base is given.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
-> Note the unnecessary braces around "if (keep_base)" are added here
-> reduce the churn on the next commit.
-> ---
->  builtin/rebase.c | 35 +++++++++++++++++++++++------------
->  1 file changed, 23 insertions(+), 12 deletions(-)
->
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 6cf9c95f4e1..86ea731ca3a 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -871,13 +871,9 @@ static int can_fast_forward(struct commit *onto, struct commit *upstream,
->         struct commit_list *merge_bases = NULL;
->         int res = 0;
->
-> -       merge_bases = get_merge_bases(onto, head);
-> -       if (!merge_bases || merge_bases->next) {
-> -               oidcpy(merge_base, null_oid());
-> +       if (is_null_oid(merge_base))
->                 goto done;
-> -       }
->
-> -       oidcpy(merge_base, &merge_bases->item->object.oid);
->         if (!oideq(merge_base, &onto->object.oid))
->                 goto done;
->
-> @@ -902,6 +898,20 @@ done:
->         return res && is_linear_history(onto, head);
->  }
->
-> +static void fill_merge_base(struct rebase_options *options,
-> +                           struct object_id *merge_base)
-> +{
-> +       struct commit_list *merge_bases = NULL;
-> +
-> +       merge_bases = get_merge_bases(options->onto, options->orig_head);
-> +       if (!merge_bases || merge_bases->next)
-> +               oidcpy(merge_base, null_oid());
-> +       else
-> +               oidcpy(merge_base, &merge_bases->item->object.oid);
-> +
-> +       free_commit_list(merge_bases);
-> +}
-> +
->  static int parse_opt_am(const struct option *opt, const char *arg, int unset)
->  {
->         struct rebase_options *opts = opt->value;
-> @@ -1668,7 +1678,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->                         die(_("Does not point to a valid commit '%s'"),
->                                 options.onto_name);
->         }
-> -
-> +       if (keep_base) {
-> +               oidcpy(&merge_base, &options.onto->object.oid);
-> +       } else {
-> +               fill_merge_base(&options, &merge_base);
-> +       }
->         if (options.fork_point > 0)
->                 options.restrict_revision =
->                         get_fork_point(options.upstream_name, options.orig_head);
-> @@ -1697,13 +1711,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->          * Check if we are already based on onto with linear history,
->          * in which case we could fast-forward without replacing the commits
->          * with new commits recreated by replaying their changes.
-> -        *
-> -        * Note that can_fast_forward() initializes merge_base, so we have to
-> -        * call it before checking allow_preemptive_ff.
->          */
-> -       if (can_fast_forward(options.onto, options.upstream, options.restrict_revision,
-> -                   options.orig_head, &merge_base) &&
-> -           allow_preemptive_ff) {
-> +       if (allow_preemptive_ff &&
-> +           can_fast_forward(options.onto, options.upstream, options.restrict_revision,
-> +                            options.orig_head, &merge_base)) {
+This series fixes a few issues I noted in cw/submodule-merge-messages (which
+merged to next a few days ago). Sorry for not responding before that topic
+merged to next; I caught Covid near the end of my vacation and it took me
+out for a while. So here are a few patches on top instead.
 
-I didn't catch anything new in my review of this patch, but I just
-really wanted to say how happy this final hunk makes me.  I hated that
-can_fast_forward() had to be called first; thanks for fixing that.
+Changes since v1:
+
+ * rebased directly on top of Calvin's patch, allowing Junio's patch in
+   cw/submodule-merge-messages to be dropped.
+
+Changes since v2:
+
+ * changed the second patch to instead initialize sub_flag to
+   CONFLICT_SUBMODULE_FAILED_TO_MERGE, as suggested by Junio. (thanks!)
+
+Elijah Newren (3):
+  merge-ort: remove translator lego in new "submodule conflict
+    suggestion"
+  merge-ort: avoid surprise with new sub_flag variable
+  merge-ort: provide helpful submodule update message when possible
+
+ merge-ort.c | 104 +++++++++++++++++-----------------------------------
+ 1 file changed, 34 insertions(+), 70 deletions(-)
 
 
->                 int flag;
->
->                 if (!(options.flags & REBASE_FORCE)) {
-> --
-> gitgitgadget
+base-commit: 4057523a4061092e9181220d54dca9eadcb75bdc
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1325%2Fnewren%2Fsubmodule-merge-messages-fixups-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1325/newren/submodule-merge-messages-fixups-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1325
+
+Range-diff vs v2:
+
+ 1:  374278c6a1d = 1:  374278c6a1d merge-ort: remove translator lego in new "submodule conflict suggestion"
+ 2:  340c0f46f74 < -:  ----------- merge-ort: add comment to avoid surprise with new sub_flag variable
+ -:  ----------- > 2:  48200773a1b merge-ort: avoid surprise with new sub_flag variable
+ 3:  80207d18334 = 3:  4c4a8f028d4 merge-ort: provide helpful submodule update message when possible
+
+-- 
+gitgitgadget
