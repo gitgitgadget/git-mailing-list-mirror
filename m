@@ -2,85 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28969C28D13
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 22:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06F06C28D13
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 23:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235115AbiHSWmg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 18:42:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52886 "EHLO
+        id S243404AbiHSXFV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 19:05:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbiHSWme (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 18:42:34 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FE8B10F6AA
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 15:42:30 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 37CEF1AFF35;
-        Fri, 19 Aug 2022 18:42:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=V2mML3+xIHMS
-        6ayIGzxNiCGkY2GyE7XkUPm0oklAcRg=; b=kbNfCmqtg/1dq87RB0oYEFW9QtEk
-        9u69/WqjoUm/YJ9MF5vNGdW5cLfq0oRhIesk4yUDYa6IilNzrOJhjV6jyR2v7Lgj
-        gyDiPYKcI42JPHWbeh91MLrcpikY03HJVBKK4JkytCStAypY1t13Wt6z7VXaZPBT
-        SRosjs5v249JRww=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 306DF1AFF34;
-        Fri, 19 Aug 2022 18:42:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9F33B1AFF33;
-        Fri, 19 Aug 2022 18:42:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 1/4] sequencer: do not translate reflog messages
-References: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr>
-        <cover.1660828108.git.git@grubix.eu>
-        <ea6c65c254bb08b20ea6c4d81200b847755b555c.1660828108.git.git@grubix.eu>
-        <220818.86zgg18umf.gmgdl@evledraar.gmail.com>
-        <6oqr69o7-qsps-sr86-o4r9-16r7no9n5424@tzk.qr>
-        <220819.86o7wg6zci.gmgdl@evledraar.gmail.com>
-        <xmqq8rnkklon.fsf@gitster.g>
-        <220819.864jy853qc.gmgdl@evledraar.gmail.com>
-Date:   Fri, 19 Aug 2022 15:42:25 -0700
-In-Reply-To: <220819.864jy853qc.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 19 Aug 2022 23:13:21 +0200")
-Message-ID: <xmqq4jy7kg8e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S243403AbiHSXFT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 19:05:19 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14DE5B6D5C
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 16:05:18 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id w28so4409122qtc.7
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 16:05:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=eX9+lBKRyRBR4S6pOo1JsvdZFTETnmDgXpLIMJ9TF/E=;
+        b=GMwOTqAn3Y7k2Klo3TmaE8LYRYyUX/60pslP4rJov479ZPMWHxqRnzZghsxvxB8WN8
+         wGeDd9udzsgUGEk4LfHca20bUSUnN26GL8Cn5CC6PqxVxGp3uCDiL4qmiONiIJsSMFau
+         uok684lnZHIcKz0h1qBkzJPWBiwcIOXa8g+QYNrt7+aWF4T8Ti5JtQVBEigSVyBFeTWN
+         TN1QuVKUnZEq0wAnPQWwdyyzITDjMzrIJE9YzL7kX20SAg8hN2F+6DEp9/HmPBopLKma
+         BpurBSFQD48w9oxAMi9qi2WhFyXhk2y4yIEcEhnOuIssBqicg1kKpASxRjb7JoGlXSh8
+         wIXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=eX9+lBKRyRBR4S6pOo1JsvdZFTETnmDgXpLIMJ9TF/E=;
+        b=R55sBIPNSHMxB83fvKqwc1El8N47YS7ruFXVEIIur67bxe8gpeMlnl60YNZ/BcW/aC
+         q8bx3Rt5Ohi9gh79ImEDjyQIf5lkPScgWPMwSIgZCRyvh+OyUcaL/wWaWlO0fEEIkQyF
+         MGVETksffyMfuFctkCDJfTGiXp2gypur0f/mmFlODDeyK+09za7MvEOLahE3QZRC3MV4
+         naOnZBM2pVTZK6v4PpE+I39xwTSCMnVbGeNwWEgzEDPCAbzq/S1atuot14cjOyQrbLDo
+         kQqg7fkgFzZXA4QCf/x5zx3uPD8iJxf2SULmfyHsB0FZHHF3KPb17qRf7h6N+VjrKTa3
+         fvMQ==
+X-Gm-Message-State: ACgBeo3UjrduQcr3k0K5pJAD3z9yPQIoruE7w739rkGz5WjGs7d9Mox1
+        FjvN+ZDx9hLextf9AFO/mmt2tz4H1Pn3o4GkDt00NelD
+X-Google-Smtp-Source: AA6agR68+hSMkMQhYTmDD44MgVayhovT/4tnQlXfeZbwnsBacuDSN3ak39MQ0QHEjzusBitlJrCm46WRND8v9drEKvc=
+X-Received: by 2002:ac8:5d88:0:b0:344:8185:d28a with SMTP id
+ d8-20020ac85d88000000b003448185d28amr8191260qtx.259.1660950317085; Fri, 19
+ Aug 2022 16:05:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 331131DE-2010-11ED-9CB8-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <Yv9Oay+tNqhLDqVl@coredump.intra.peff.net> <Yv9O2RK7ahmw5ge7@coredump.intra.peff.net>
+In-Reply-To: <Yv9O2RK7ahmw5ge7@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 19 Aug 2022 16:05:06 -0700
+Message-ID: <CABPp-BHvscxV+vVL-Tew2H4h8V_3bZpD0Qz9uEMwrV=X3zrYSg@mail.gmail.com>
+Subject: Re: [PATCH 2/6] log-tree: drop unused commit param in remerge_diff()
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> On Fri, Aug 19 2022, Junio C Hamano wrote:
+On Fri, Aug 19, 2022 at 1:50 AM Jeff King <peff@peff.net> wrote:
 >
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>
->>> Doesn't that also mean that the relevant functionality is now also (a=
-nd
->>> still?) broken on any repository where these translations ended up
->>> on-disk?
->>
->> It may, but the first response to that problem is not to make the
->> breakage in repositires worse by keep adding unparseable data to
->> them.
+> This function has never used its "commit" parameter since it was added
+> in db757e8b8d (show, log: provide a --remerge-diff capability,
+> 2022-02-02).
 >
-> *nod*, but where is that breakage specifically?
+> This makes sense; we already have separate parameters for the parents
+> (which lets us redo the merge) and the oid of the result tree (which we
+> can then diff against the remerge result).
+>
+> Let's drop the unused parameter in the name of clarity.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  log-tree.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/log-tree.c b/log-tree.c
+> index d0ac0a6327..82d9b5f650 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -956,8 +956,7 @@ static void cleanup_additional_headers(struct diff_options *o)
+>
+>  static int do_remerge_diff(struct rev_info *opt,
+>                            struct commit_list *parents,
+> -                          struct object_id *oid,
+> -                          struct commit *commit)
+> +                          struct object_id *oid)
+>  {
+>         struct merge_options o;
+>         struct commit_list *bases;
+> @@ -1052,7 +1051,7 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+>                                         "for octopus merges.\n");
+>                                 return 1;
+>                         }
+> -                       return do_remerge_diff(opt, parents, oid, commit);
+> +                       return do_remerge_diff(opt, parents, oid);
+>                 }
+>                 if (opt->combine_merges)
+>                         return do_diff_combined(opt, commit);
+> --
+> 2.37.2.928.g0821088f4a
 
-Set your LANG to something other than C and then run "git reflog"
-after running sequencer operations, and you'll see the same breakage
-that motivated Michael to send this patch set, I think.
+Yeah, looks like I could have just used commit instead of parents and
+oid, but since the calling code had those handy, I added them directly
+and forgot to remove commit.
 
+Patch looks good.
