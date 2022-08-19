@@ -2,97 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A4ABC28B2B
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 18:15:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D4DBC32772
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 18:15:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349994AbiHSSPB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 14:15:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52682 "EHLO
+        id S1350579AbiHSSPE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 14:15:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350196AbiHSSOk (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1350573AbiHSSOk (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 19 Aug 2022 14:14:40 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F902DECA
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:10:33 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id z16so6024275wrh.12
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:10:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc;
-        bh=/uQ/wY3O2DLvXJF7aFLpTR8jumBRrfJ8jOdYLRZtLo8=;
-        b=NmTtT2MP2mceWvKRvOSyDWIl3Be0VoMyDY2oCE9jJbJN63wXkNTPZtWXTwptLAfFXY
-         WoQTLWr9vJwpErTpfCRKjI8V9r7hLFHVb/8ODPdh7dVtJTTLpL+XOEtkgc2u9wE+Lwo1
-         hSvyeRrLoSk6AFeUmEYfjYTlhcy4nbP2R2Jae6lAPSuLw3IAnZyaeV6wueM7cRJmHkkP
-         tQ9/fn1nHoZoMfTZzGB8snZap06ykjtqtc54l8qVjB7YOA8a0K3OApC0wvPCyeQZkRU8
-         waD830DqShtRN9ngO8jPwHINTxt4OqU4wpQ5Q/IV7UKC5Uvkcv3deiX4u4n6D7UkCrZC
-         cuBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc;
-        bh=/uQ/wY3O2DLvXJF7aFLpTR8jumBRrfJ8jOdYLRZtLo8=;
-        b=ujNL/IqeiDDgKB1C7a210NRPpUEEAULnGnrG50knIqdt3U53IWyKrdN6FSC6k6VH/C
-         du2psNF+UnFpyGMc23muNWc0wUSGre6ElTl/5NHIg5VVnTzhFkwcb2D8cTdHBr2vGqnq
-         H2MNB6Q4CLw+yn3XnpV/Jr1QUbWBn/AFVKPAH0tqQN5PWWk/FdO/myP4cTjWj+4awIL2
-         /1xRda7ons44T/b5g8EhgS3Td26X3cGAKIiNGZWhT1rf410NNUQ1LUm/20pAkAscUqyr
-         /8kuNtywSz2OIW/M4TppHFsjAXZUJl6ll6V9PiyssFDAYtanezRGOeXRXqUdWMjcFgUk
-         Yp7w==
-X-Gm-Message-State: ACgBeo2wZneeOGtgIrCUVNPFdUu3hUGekXfJb5ScF14RfuSbjGbMlykL
-        1GrQcuLe0Y1H7FDk6Zz8cL8=
-X-Google-Smtp-Source: AA6agR55xJkCfxV6OLU96mVD2/tioTzRPpYHgfRAaWDuPmNShq/UgwW8dtjkmKnYAMxVmcPhpHosXA==
-X-Received: by 2002:a5d:5a9b:0:b0:225:3fa0:f9ca with SMTP id bp27-20020a5d5a9b000000b002253fa0f9camr1300706wrb.204.1660932631772;
-        Fri, 19 Aug 2022 11:10:31 -0700 (PDT)
-Received: from gmgdl ([213.220.124.15])
-        by smtp.gmail.com with ESMTPSA id j14-20020adfff8e000000b0021f0af83142sm4595441wrr.91.2022.08.19.11.10.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Aug 2022 11:10:31 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oP6Ry-000qJe-0B;
-        Fri, 19 Aug 2022 20:10:30 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 16/20] builtin/reflog.c: let parse-options parse
- subcommands
-Date:   Fri, 19 Aug 2022 20:08:22 +0200
-References: <20220725123857.2773963-1-szeder.dev@gmail.com>
- <20220819160411.1791200-1-szeder.dev@gmail.com>
- <20220819160411.1791200-17-szeder.dev@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220819160411.1791200-17-szeder.dev@gmail.com>
-Message-ID: <220819.86lerk5ckq.gmgdl@evledraar.gmail.com>
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A45ECF7E
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:11:07 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3280F1ACCB7;
+        Fri, 19 Aug 2022 14:11:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=h9G4B8FrhsLdkEubV/VY3csO4IRsfcS4EE3dxe
+        /aEYE=; b=InlFnp1lCfCII9dbvmVstXrfo2Gbgl/tYRbE06TaA1ivXR6FNQdBwX
+        unMgj2HmBNw/EkAbpbeD7lJ8Gj8Mp5E+iDCUwnet2FG2MU3sPvK79WgxpC5zOroy
+        DTAWYw1H5rd46gmOKA+FEhu/EzW/QgNoF46JPUcW58P/ayoZuhtVo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2C0411ACCB6;
+        Fri, 19 Aug 2022 14:11:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D54401ACCB5;
+        Fri, 19 Aug 2022 14:11:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?Q?Rub=C3=A9n?= Justo via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Subject: Re: [PATCH] branch: allow "-" as a short-hand for "previous branch"
+References: <pull.1315.git.1659910949556.gitgitgadget@gmail.com>
+        <s7862q69-05o8-s5s8-n635-823s34q358q4@tzk.qr>
+        <xmqqk07iu3c3.fsf@gitster.g>
+        <5194s6qn-570s-6053-2104-9s22qo1874sn@tzk.qr>
+        <55n449n3-71r9-28n9-094q-6r61545r7505@tzk.qr>
+Date:   Fri, 19 Aug 2022 11:11:02 -0700
+In-Reply-To: <55n449n3-71r9-28n9-094q-6r61545r7505@tzk.qr> (Johannes
+        Schindelin's message of "Fri, 19 Aug 2022 15:05:46 +0200 (CEST)")
+Message-ID: <xmqqr11ckssp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 49C64188-1FEA-11ED-A8C6-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, Aug 19 2022, SZEDER G=C3=A1bor wrote:
+> This patch does that:
+>
+> -- snip --
+> diff --git a/object-name.c b/object-name.c
+> index 4d2746574cd..a2732be3b71 100644
+> --- a/object-name.c
+> +++ b/object-name.c
+> @@ -1616,6 +1616,20 @@ int repo_interpret_branch_name(struct repository *r,
+>  	if (!namelen)
+>  		namelen = strlen(name);
+>
+> +	if (namelen == 1 && *name == '-') {
+> +		struct grab_nth_branch_switch_cbdata cb = {
+> +			.remaining = 1,
+> +			.sb = buf
+> +		};
+> +
+> +		if (refs_for_each_reflog_ent_reverse(get_main_ref_store(r),
+> +						     "HEAD",
+> +						     grab_nth_branch_switch,
+> +						     &cb) <= 0)
+> +			return -1;
+> +		return namelen;
+> +	}
+> +
 
-> +	parse_opt_subcommand_fn *fn =3D NULL;
+This is very reasonable.  
 
-Re the comment on notes.c this is a bit like that pattern...
+Anywhere we take '@{-1}', 'main', or 'js/dash-is-previous', nobody
+would be surprised if we take '-' and interpreted as '@{-1}' in
+addition.
 
-> -log_reflog:
-> -	return cmd_log_reflog(argc, argv, prefix);
-> +			     PARSE_OPT_KEEP_UNKNOWN_OPT);
-> +	if (fn)
-> +		return fn(argc - 1, argv + 1, prefix);
-> +	else
-> +		return cmd_log_reflog(argc, argv, prefix);
->  }
+However, as I said earlier, we have command line disambiguation that
+wants to tell dashed options, revs, and paths apart.  We need to
+find places that need adjusting and adjust them, *AND* then make
+sure that such tweaks do not introduce unintended side effect.
+These, especially the last one, take a careful work I would rather
+not to see unexperienced developer perform alone and take the
+finding by them blindly.
 
-Maybe more obvious (untested):
+> What does not work with this patch is `git show -`. I am not sure whether
+> we want to make that work, although I have to admit that I would use it.
+> Often. And this patch would make it work, the test suite even passes with
+> it:
 
-	if (!fn) {
-		argc--;
-		argv++;
-		fn =3D cmd_log_reflog;
-	}
-	return fn(argc, argv, prefix);
+Exactly my above point.  Nobody including our tests expect that a
+single '-' to be taken as a rev when we disambiguate command line
+arguments, so it is very unlikely that it is tested to ensure that a
+single '-' ends the revs and is checked for its "path-ness".  It is
+not surprising that the tests do not fail ;-).
 
+> -- snip --
+> diff --git a/revision.c b/revision.c
+> index f4eee11cc8b..207b554aef1 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -2802,7 +2802,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+>  		revarg_opt |= REVARG_CANNOT_BE_FILENAME;
+>  	for (left = i = 1; i < argc; i++) {
+>  		const char *arg = argv[i];
+> -		if (!seen_end_of_options && *arg == '-') {
+> +		if (!seen_end_of_options && *arg == '-' && arg[1]) {
+>  			int opts;
+>
+>  			opts = handle_revision_pseudo_opt(
+> -- snap --
+
+Thanks.  These two patch snippets in the message I am responding to
+are promising and exciting.
