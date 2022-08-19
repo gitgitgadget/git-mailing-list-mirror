@@ -2,177 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FD4BC25B0E
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 09:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D1DDC25B0E
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 09:25:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347874AbiHSJWp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 05:22:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57004 "EHLO
+        id S1348152AbiHSJZL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 05:25:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347426AbiHSJWo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 05:22:44 -0400
+        with ESMTP id S1348144AbiHSJZJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 05:25:09 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF01BF47C4
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 02:22:42 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80572F2D44
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 02:25:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660900960;
-        bh=ENV7pRWEQNRwistx/mbOnxQ3VMrmgteR888pM4Cm/7U=;
+        s=badeba3b8450; t=1660901100;
+        bh=QPoqGpub338iJv/HDeB6idr9ji1WmJbnqyNuEmSQt5k=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=hbdWvzy8J2aQwr+qNSBGsTzefmRtDdQvAw9wAWrf7RMq+p2eI9EkyynxtQ2BGw5bE
-         fr6/fcWR/59wG2k72V+vx3QKK0vpqa+e0FPsTXtWC6BSZj2SbPt/V+BB9PEfauoVxh
-         cUvbTedmETYHlVgHfclS+9kQiwwO+MGzdsEHnVPU=
+        b=dUWBv6CMhTJ2wVQP/kcgrlviR0AKFNQlLp8EIXse44HJ1IUr5eepqYm0OOIa2rMLr
+         qYmHAwTey7T19uDKZmtDYERT9I/uU0d87sAY4hpeOlOYtLSmO6ESFCC6EVTdf5z0tI
+         c/Uiw1X5DhpBN9i0vv8eBliF3SvUGD9ft4eYA+7g=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.25.183.122] ([89.1.212.11]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MBlxM-1oCuS41LrA-00C9I9; Fri, 19
- Aug 2022 11:22:40 +0200
-Date:   Fri, 19 Aug 2022 11:22:44 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1McH5Q-1nmc9n2Z0G-00cdvv; Fri, 19
+ Aug 2022 11:24:59 +0200
+Date:   Fri, 19 Aug 2022 11:25:05 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] merge-ort: remove code obsoleted by other changes
-In-Reply-To: <pull.1302.git.git.1660884355643.gitgitgadget@gmail.com>
-Message-ID: <596s400n-s6qs-0s08-s31s-99rq4o016647@tzk.qr>
-References: <pull.1302.git.git.1660884355643.gitgitgadget@gmail.com>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 1/4] sequencer: do not translate reflog messages
+In-Reply-To: <220818.86zgg18umf.gmgdl@evledraar.gmail.com>
+Message-ID: <6oqr69o7-qsps-sr86-o4r9-16r7no9n5424@tzk.qr>
+References: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr> <cover.1660828108.git.git@grubix.eu> <ea6c65c254bb08b20ea6c4d81200b847755b555c.1660828108.git.git@grubix.eu> <220818.86zgg18umf.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Mh/jaARN8cBOVpmrXvVMqlbCyqfPP5M1fO18KxYQnRF+oNwHVeZ
- N20EWBFPnNBwlYfcS4ChGFtLoPaBux5gBzc9Om5Z9EbAwE8gt2rea6d/eKADTnbaV3OmWNT
- 2UHbzJTisiCrpaBX94KWwzPSm9kjYIhl04U6RpeLmUCHNocoOpJcHzwkdvltSsGXwY9dtCO
- ZI8D9tuwkWG/2fETKpauA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jlrtyCNLA1w=:GnPcEXFMgR1IPtIwdN0zy9
- d0T982MthwWmvjzvAUxeCKQclo3Bl3xhq/mHhSJdVUE+vVIctTlRKfSTdlW0sRRiwhZymtQKI
- lEGLmtQddwo73WPhwBiCp3o27qzVQKtoCcGQlStknwglZyNn1lqzzsWW7bhIx6i9UdNlZA6Dq
- 2HXlRh+MgWrjBks/M/IXe7mw+BvWyoBqAPmgKAMPziKo/F8bJZjLEZrlTU6U7j/q4X2yd6NLN
- uXI34tlVTWdjJctDX0CBwgHK2n0se8wOBz9VROMtDdzJyUsnfr2v/fyVnRZW0XjZoERkhnAAB
- bxqRX3L9H5Ju36Gb4BQzJbHm5z9tv8/U19ooIvs+gBSyVujK+6R2zH2BosNxZu8KtuVifzIlo
- eDhffkv/wxseFl+QJj2ZRfZ68FzzPqFbP1IT4fYP/s9lR4GOmMPCMHw6xMa9skjVl8aKOWuLK
- lGv19C3g4+F+ugy8JIZuOc8K/jrMOLWQOzinCkKscwXKQCkojtnmqW2zCrVuTLihDhN9ySB+r
- Dc7ttV9R/xtOw3NEw4e7oKG8fKn7CzvhDs2OO1ojluGvw+GIRqx3qVJ27mek3qXVUhQ2v1hl2
- 63aTVnKmsq/OS5yli6ReuCXbRVaxiIWYZmO35SMeNYGpEJi4jATz07ZgVE/CWT7xg2JS7KRHj
- NN9Y3d6w9jnc2Ayu1WSjqrqSTrWa12DGZSKOtbhkyJNxPLqHIaNxzd39Ga3zM4RRLW4I1kYyx
- ab+3+xDhEY/XHCTJ+oCxqRFrvzCv+coHiBaPpj00L8/c7YahfnKA3G6txCF+fCnt11gUsppfi
- OPDI0MMoy7Avl9mOyjJ9vs0Wiwk+DTTMn7XGuSqABH7zan8f1fgrj6M9oX/naAbvhlHODX8rn
- xWk5XNc2dzjrl8RCoj7SpzZIjeGgerwmoEkimz5jRXENqxtfY5k8jCXPAnBr3yA9CZ8G45xnI
- /uW4LZLdb0q14EjdkQtGVrxED4nN/0CPWQiUxJEiuWPQSNEZfmGXmL6klw/wZU/F0bnqacznY
- KCznm9plMmlgvOPanHWtUrowWHiQMslgPDgNHsFDH2K3ys7azaguxeshls2R0ejFVgutliGoW
- gzlhTK1Y+2yFOcMcDnXXFYkCbRVnXOy6zzjX56LPKfeZn/7cZUH++blIQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-558495070-1660901107=:241"
+X-Provags-ID: V03:K1:1MywBM62/Id0eQHhkvaYLYABO1VyniWpbsUC4jZG+qszTJEIeu4
+ AGYkCj/znByX0Houztf81linbpnkW7tA5NtQNhafW3Ekw5W23QUmBH1DXMV9OCoU9AFE7dW
+ afGMYJfSKdQHpIlaKDlEbw9fM0+A46tfd1D36Ct3hch3e+46NCjG0hME0VOSB8KllatHIvS
+ cqrtkYB3wmRMbs9ZzDKZg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UzjXw92W9t0=:BxN4aNfYrBQDWKXpiPk8Kr
+ 9JPKlXk4orVklxTOMXW/830908Pb/FOuCFKuJyjbICl1Q4FKSqw46D9d+beDvM8rM7PGHVTEe
+ P+gs6zrFSTu0YmlvNml/b7G9m2HeRfEZWKidUuhQ4un8qu36jY7j8wPxfr1DTmC3wtoKpTCG7
+ oHPNvx+nmgxKmQ/5BqDsICR4CM3Yg2d8EMcYAtGJtIqwYrP0IL5p9SSIX7hobVGMi15AuMe5+
+ qqZE/DzmA2GskMCrJuVJrK5GbIZwWtHHlyrf1DUIUbEVEcDTzr5/Vuu6Rv4wWzZZFAouBy1hp
+ H8znPEt/20vtpDibp5aQrm6P3ER+ms/fgxC4C9cwmHoVtEDXOfAfnlxqlgnhxzSIeT7TVvQ0+
+ gEJ+QVtzG6oe4DdLALrvVR54e55FhETqVZImhzEfgIu1zRXObiSVzOV/CBbLtNgcR/CAVdIE/
+ L3DpyjrhplQUWIGEeBGheP5qXz3DIz223LaVsdsAllVtW8zjrTDlELmbIsKEFW2XkWnikc9bx
+ 3qDRVcc1ICbJ8SOgcWe017kFucgx3PgRNMZln4bFpywubu57tEBz5diAclMTOlriR3+ko2XUH
+ vLj5RZQAL7ckil/p5Z//neyN8DMhN6cNGk67tbWpf+T+GDZhPIS44IdbDhcV/OsLVj1Iz+ids
+ WnogucFpjMTqwdxmuLXF8QXjkvFxzerzo/u4ZBT8rEEm86aooTQwSGkWiiRQ74/L/YLtU4sLE
+ IxN87zGvQhadpVJeOoJ+yycVEOxZlC8LmKR6cojCzNe4k116pNXsmEYjk8F/yH4KOXYezg7SA
+ v2bEO4Z29x/3+Zv5jPRYtUh0NjT2YIl+3nw8maLcqGGXS8kBW2LN3FibmdTz6nRmwBm7Wqk8m
+ px7ey/hakORKb96niGCsmLqfC9SI2/H/KMwJ4e/IPnSva1/ge3rFl66SbXpukjM5+E9dOgMeq
+ v5iTO9Gsk/xBZMDkqzp0RkXvxX6YSAydKjFDJNdm6hrfFomkst5n255n0RbzPY6ZrAEI898et
+ qLooUGXoJNRcIx28QYGEUn9b0XryLFTS64UiXX30mbF5c6iVQkZWyor5fWRQfYN9QkksGRVgc
+ r1Ob/1aLXlJxOrdiuZryIVMg8ldaFJwjASxKf9MwngqD5fVU0CvEgcSVA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 19 Aug 2022, Elijah Newren via GitGitGadget wrote:
+--8323328-558495070-1660901107=:241
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> From: Elijah Newren <newren@gmail.com>
->
-> Commit 66b209b86a ("merge-ort: implement CE_SKIP_WORKTREE handling with
-> conflicted entries", 2021-03-20) added some code for merge-ort to handle
-> conflicted and skip_worktree entries in general.  Included in this was
-> an ugly hack for dealing with present-despite-skipped entries and a
-> testcase (t6428.2) specific to that hack, since at that time users could
-> accidentally get files into that state when using a sparse checkout.
->
-> However, with the merging of 82386b4496 ("Merge branch
-> 'en/present-despite-skipped'", 2022-03-09), that class of problems was
-> addressed globally and in a much cleaner way.  As such, the
-> present-despite-skipped hack in merge-ort is no longer needed and can
-> simply be removed.
->
-> No additional testcase is needed here; t6428.2 was written to test the
-> necessary functionality and is being kept.  The fact that this test
-> continues to pass despite the code being removed shows that the extra
-> code is no longer necessary.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->     merge-ort: remove code obsoleted by other changes
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-13=
-02%2Fnewren%2Fnuke-present-despite-skipped-hack-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1302/=
-newren/nuke-present-despite-skipped-hack-v1
-> Pull-Request: https://github.com/git/git/pull/1302
->
->  merge-ort.c | 22 ++--------------------
->  1 file changed, 2 insertions(+), 20 deletions(-)
+Hi =C3=86var,
 
-Nice!
+On Thu, 18 Aug 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Since I have been in the `merge-ort` code quite a bit as of late, I deem
-myself familiar enough with the code to dare offering my ACK.
+> On Thu, Aug 18 2022, Michael J Gruber wrote:
+>
+> > Traditionally, reflog messages were never translated, in particular no=
+t
+> > on storage.
+> >
+> > Due to the switch of more parts of git to the sequencer, old changes i=
+n
+> > the sequencer code may lead to recent changes in git's behaviour. E.g.=
+:
+> > c28cbc5ea6 ("sequencer: mark action_name() for translation", 2016-10-2=
+1)
+> > marked several uses of `action_name()` for translation. Recently, this
+> > lead to a partially translated reflog:
+> >
+> > `rebase: fast-forward` is translated (e.g. in de to `Rebase: Vorspulen=
+`)
+> > whereas other reflog entries such as `rebase (pick):` remain
+> > untranslated as they should be.
+> >
+> > Change the relevant line in the sequencer so that this reflog entry
+> > remains untranslated, as well.
+> >
+> > Signed-off-by: Michael J Gruber <git@grubix.eu>
+> > ---
+> >  sequencer.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 5f22b7cd37..51d75dfbe1 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -575,7 +575,7 @@ static int fast_forward_to(struct repository *r,
+> >  	if (checkout_fast_forward(r, from, to, 1))
+> >  		return -1; /* the callee should have complained already */
+> >
+> > -	strbuf_addf(&sb, _("%s: fast-forward"), _(action_name(opts)));
+> > +	strbuf_addf(&sb, "%s: fast-forward", action_name(opts));
+> >
+> >  	transaction =3D ref_transaction_begin(&err);
+> >  	if (!transaction ||
+>
+> I 95% agree with this direction, but the other 5% of me is thinking
+> "isn't this fine then? Let's keep it?".
 
-What is _particularly_ nice is that this patch removes an `lstat()` call
-that was a bit of a concern for me when using `merge-ort` in a
-worktree-less scenario. After some reasoning about the code, it turned out
-that it is not hit in that use case, nevertheless it is much easier to
-reason about `lstat()` calls that simply are not in the code.
+No, it's not fine, we mustn't keep it, because we expect Git itself to
+parse the reflog.
 
-Thank you!
-Dscho
+Ciao,
+Johannes
 
->
-> diff --git a/merge-ort.c b/merge-ort.c
-> index 8b7de0fbd8e..a6a3ab839a0 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -491,7 +491,6 @@ enum conflict_and_info_types {
->  	CONFLICT_FILE_DIRECTORY,
->  	CONFLICT_DISTINCT_MODES,
->  	CONFLICT_MODIFY_DELETE,
-> -	CONFLICT_PRESENT_DESPITE_SKIPPED,
->
->  	/* Regular rename */
->  	CONFLICT_RENAME_RENAME,   /* same file renamed differently */
-> @@ -536,8 +535,6 @@ static const char *type_short_descriptions[] =3D {
->  	[CONFLICT_FILE_DIRECTORY] =3D "CONFLICT (file/directory)",
->  	[CONFLICT_DISTINCT_MODES] =3D "CONFLICT (distinct modes)",
->  	[CONFLICT_MODIFY_DELETE] =3D "CONFLICT (modify/delete)",
-> -	[CONFLICT_PRESENT_DESPITE_SKIPPED] =3D
-> -		"CONFLICT (upgrade your version of git)",
->
->  	/*** Regular rename ***/
->  	[CONFLICT_RENAME_RENAME] =3D "CONFLICT (rename/rename)",
-> @@ -748,8 +745,7 @@ static void path_msg(struct merge_options *opt,
->  	/* Sanity checks */
->  	assert(omittable_hint =3D=3D
->  	       !starts_with(type_short_descriptions[type], "CONFLICT") ||
-> -	       type =3D=3D CONFLICT_DIR_RENAME_SUGGESTED ||
-> -	       type =3D=3D CONFLICT_PRESENT_DESPITE_SKIPPED);
-> +	       type =3D=3D CONFLICT_DIR_RENAME_SUGGESTED);
->  	if (opt->record_conflict_msgs_as_headers && omittable_hint)
->  		return; /* Do not record mere hints in headers */
->  	if (opt->priv->call_depth && opt->verbosity < 5)
-> @@ -4377,22 +4373,8 @@ static int record_conflicted_index_entries(struct=
- merge_options *opt)
->  			 * the CE_SKIP_WORKTREE bit and manually write those
->  			 * files to the working disk here.
->  			 */
-> -			if (ce_skip_worktree(ce)) {
-> -				struct stat st;
-> -
-> -				if (!lstat(path, &st)) {
-> -					char *new_name =3D unique_path(opt,
-> -								     path,
-> -								     "cruft");
-> -
-> -					path_msg(opt, CONFLICT_PRESENT_DESPITE_SKIPPED, 1,
-> -						 path, NULL, NULL, NULL,
-> -						 _("Note: %s not up to date and in way of checking out conflicted=
- version; old copy renamed to %s"),
-> -						 path, new_name);
-> -					errs |=3D rename(path, new_name);
-> -				}
-> +			if (ce_skip_worktree(ce))
->  				errs |=3D checkout_entry(ce, &state, NULL, NULL);
-> -			}
->
->  			/*
->  			 * Mark this cache entry for removal and instead add
->
-> base-commit: 6a475b71f8c4ce708d69fdc9317aefbde3769e25
-> --
-> gitgitgadget
->
+--8323328-558495070-1660901107=:241--
