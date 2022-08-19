@@ -2,85 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5495C28B2B
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 18:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7CCCC28B2B
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 18:32:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350535AbiHSSWJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 14:22:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36850 "EHLO
+        id S1350758AbiHSSc7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 14:32:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349812AbiHSSWI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 14:22:08 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEFD9BC109
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:22:07 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id s11so6592014edd.13
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:22:07 -0700 (PDT)
+        with ESMTP id S1349790AbiHSSc6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 14:32:58 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 588E7C9261
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:32:57 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id p9so2698882ilq.13
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:32:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc;
-        bh=Mk4js/MYhbQMEPZT95JdTRAPK/R5LTGYuYF37HDD+Hs=;
-        b=l0zRJy9FJbRXfpREP6/oPAC8jiJkAv6Q0iJs/bCKMLc5LGrBpVbmyOQQC1Scy0ahxT
-         ZCx4c78+UBLvLOIG4MYJ6DnLOe6ww6OUCrvMCQuOe1dCFZV4d+s8JvebRjDxmiiudTKE
-         DfaYDkmVKviQTmbqeFXLIFn+FvK64GFs6X9VWOgZIUZwuDqZrZxSpPO4ohMw81Heo5XA
-         di+b87exiRpSmUDRikQ+dpNMLjklL+pzdHrzCBAt8djHE4hhV15IadLz5nxePgBcDq7S
-         QKYMqsIEQQw51KQC8x9pftb4ky0xiCGQrJmBdqQdaQFvpYU0tZcdWGrcxS70ELyO2O+4
-         wwXQ==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=uOl/EOacu7ukmYl4YLVkOPpd/oOWgUflUVdqLthOUME=;
+        b=gIJ5Vm2SFpMtMslom6tP6D4jo4uOpxkzOQdck/8cbD6WG4Q1geBuLNe2W7rw8/muE7
+         hshk4bUna7v71J9L5CXcub/jz4l5meoVa0QSwD9ApFNpMBgpaMcCr9cMTNJ0g9xr0Dnu
+         GAICzaBc/3SkD+w1otKSqEbVLOtKtZwIUnWjJzITXOXdr82iW9XGuV9Kap+1LaDh5q2r
+         pgy5YqBroLSOlkjh07UElgtPsJIbgoefN7vdRqUevjRJULuCELoDf2CsMIBEqeaPDx8B
+         xvQCiim53gdj8vks68AfLytiBC76pula9wDI7U3mklpCfp60Bw2mlAn+xPXt56En34Zk
+         Q/BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=Mk4js/MYhbQMEPZT95JdTRAPK/R5LTGYuYF37HDD+Hs=;
-        b=UW2qYohGsDeLdXjgup2BmIFGGRDM2BI5Dd0bvQ7aSm9YZ0aDO/NaM04JCa5dXX/RqN
-         CxTe+pnoQ05KBZSdjBJnfDdBTNH3jypCfCRSMahJIvm/U2Z5Eg91/Vy4D8dzIkkrO5jR
-         QNQJE9S2pjfH8WziM8o+gLMKrdu2OAkT3vsplkK9h+G3pt9N9JqJOmbZu1QlEsibZTcj
-         HEjyzBR/yzxROPXDpv9PMJOmMN09WNnwx4FnzE9dHuzMR7OMo8yhs8MFBWJeqnHUlvnY
-         MfRv970qDOC/p+M4zJ9AwxPUWjjAmNPJrhMcTIrmeQ+MID3U3SoQUgWAEsdwcqa2wi3O
-         mEGQ==
-X-Gm-Message-State: ACgBeo3mVlBjsUspznzoyD07Xc6oTrfCj8138o2WMfHLIfVckuhur5MU
-        UOJ2hE4Nj4oCtymtW4bCTic=
-X-Google-Smtp-Source: AA6agR44qc/8CR8W9TY5ntrEb6J6x/DiUGDarKrIfSiyFFQTyZK74Q+ux/oPT5VUxERp9m3AFJLZlg==
-X-Received: by 2002:aa7:d856:0:b0:445:e147:e014 with SMTP id f22-20020aa7d856000000b00445e147e014mr7080072eds.425.1660933326338;
-        Fri, 19 Aug 2022 11:22:06 -0700 (PDT)
-Received: from localhost (84-236-78-250.pool.digikabel.hu. [84.236.78.250])
-        by smtp.gmail.com with ESMTPSA id kz9-20020a17090777c900b0072b3464c043sm2609574ejc.116.2022.08.19.11.22.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Aug 2022 11:22:05 -0700 (PDT)
-Date:   Fri, 19 Aug 2022 20:22:04 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 11/20] builtin/commit-graph.c: let parse-options parse
- subcommands
-Message-ID: <20220819182204.GA3373722@szeder.dev>
-References: <20220725123857.2773963-1-szeder.dev@gmail.com>
- <20220819160411.1791200-1-szeder.dev@gmail.com>
- <20220819160411.1791200-12-szeder.dev@gmail.com>
- <220819.8635ds6run.gmgdl@evledraar.gmail.com>
+        bh=uOl/EOacu7ukmYl4YLVkOPpd/oOWgUflUVdqLthOUME=;
+        b=NORR64PWcoUrboc5fQEyJpGT/Sy1ZiGX0Uh6guBdH5xvUsW0ShqUWuHfIdO8JSHtDn
+         WGvBGzKNaaO6P/yQda7xtGCdbw6PrJom1thmymTZsOnfKvdq9KJG5gaxeUKJ35RJeQTT
+         DeK6omOxuCtOoArOk3f0w90KKVlqlxYc5He0cgTlXFhqk0FQJSYeYeiIt/K3Ps9IEgPB
+         GH3uVPs5gE1/Dguxb93YDHbY3Hjx/XW0vRJrkvfnBObSymscxKfAbxLUQGS0fUyXjjLw
+         RJgayRGPPHpKGm9Ix1QkAexm6brjHAWkEwv+ipWU59pUpabEA5A6skXd/CWzNmZ3pPzp
+         Oqww==
+X-Gm-Message-State: ACgBeo2yA5EMRTKE9hEkvwfvDsHIfW2k4gOJRTwrypzmFz8PQLumg/0D
+        ZGXqUZnxXI1wKsp6snaWZn0r
+X-Google-Smtp-Source: AA6agR4uYugcJzYFexBSlSvWF7Od9+eCvA0dFWh5mTNN1vVu0LgIb5AJBMOjvE971g/phMr9nEcxeg==
+X-Received: by 2002:a05:6e02:148c:b0:2de:c3b:91d with SMTP id n12-20020a056e02148c00b002de0c3b091dmr4397036ilk.95.1660933976776;
+        Fri, 19 Aug 2022 11:32:56 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:55ca:650:1968:6180? ([2600:1700:e72:80a0:55ca:650:1968:6180])
+        by smtp.gmail.com with ESMTPSA id f1-20020a022401000000b003434acdba3dsm2015234jaa.105.2022.08.19.11.32.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Aug 2022 11:32:55 -0700 (PDT)
+Message-ID: <0f2df5ed-3380-8162-80c9-10d2eb644965@github.com>
+Date:   Fri, 19 Aug 2022 14:32:53 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <220819.8635ds6run.gmgdl@evledraar.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v3 1/8] scalar: constrain enlistment search
+Content-Language: en-US
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     johannes.schindelin@gmx.de, mjcheetham@outlook.com,
+        gitster@pobox.com, Victoria Dye <vdye@github.com>
+References: <pull.1324.v2.git.1660694290.gitgitgadget@gmail.com>
+ <pull.1324.v3.git.1660858853.gitgitgadget@gmail.com>
+ <2f6cad8361324cecdb0ee7b13a96477a8317c358.1660858853.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <2f6cad8361324cecdb0ee7b13a96477a8317c358.1660858853.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 19, 2022 at 07:53:08PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> > +	argc = parse_options(argc, argv, prefix, options,
-> > +			     builtin_commit_graph_usage, 0);
-> > +	FREE_AND_NULL(options);
+On 8/18/2022 5:40 PM, Victoria Dye via GitGitGadget wrote:
+> From: Victoria Dye <vdye@github.com>
 > 
-> Why FREE_AND_NULL() over free()?
+> Make the search for repository and enlistment root in
+> 'setup_enlistment_directory()' more constrained to simplify behavior and
+> adhere to 'GIT_CEILING_DIRECTORIES'.
 
-Heh, it's interesting that you should ask that ;)
+Thanks for doing this rather substantial rework. The logic makes
+sense to me and the tests really help to demonstrate the different
+cases.
 
-I followed the existing pattern for now, just like you did in
-84e4484f12 (commit-graph: use parse_options_concat(), 2021-08-23),
-where you made graph_verify() and graph_write() use FREE_AND_NULL() to
-release their concatenated options arrays.
-
-But yeah, a plain free() should work just fine in these cases.
+-Stolee
