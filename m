@@ -2,130 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 834DDC32771
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 15:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AA3AC32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 15:31:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349587AbiHSPNX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 11:13:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55318 "EHLO
+        id S1349676AbiHSPbj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 11:31:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348395AbiHSPNV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 11:13:21 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8B33C4A
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 08:13:20 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id c187-20020a1c35c4000000b003a30d88fe8eso4252837wma.2
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 08:13:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc;
-        bh=bOX8ajmQFXiaIrVYX5y5x4rRseHGVxfVaMG45Ler3qg=;
-        b=l7rEWcljYXX1OXJAftOLgm5RFUZmWpfTydjBQRA5Cg1W/vNC2Vz0z8wlfd7ZURxW0p
-         NehJaqTrkGGsA0fnw8KKMSu1/I6kKD/mq3/u3tcBbkPur2NI1RQpbU7NqTyzUtiPclmJ
-         Sjt0m2VBZcK7LbLF2eK7p4RG68B1mVmDtBFeoaOYmbQdlPwTiy1/jaVA0hoWIVwm9UKj
-         c1faGbq98SKcOlIiViIzOXNNNy8eSJVgs4jzgN45EdG+C5BXVwzOHmR5me2myGhWAohJ
-         OWHWTwmj8b4UPz4lEXxa0wgTh//Mchm/GHc3N+tAXAVVgV1nFkzn9NETzlqL6OnLveQz
-         Velw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc;
-        bh=bOX8ajmQFXiaIrVYX5y5x4rRseHGVxfVaMG45Ler3qg=;
-        b=38aBTdd8Idcy3pLKoI7vxTfo+t+5L6VfBpjA5I9VDT/T9zAj7jyjSA4Li/y62sPBjJ
-         WOkaHnRPboxEFfO+YodNJQp9bBDYZ/kctwSFxXkFSgUdHdQhX+dXg1sHBpq8WGXF1PNv
-         ftUxViCFE52Q0aXZaMJgqBHfHWasBVt2jcG1h3KKZQLlVyCEB6O9yx45MotQ7268CLAx
-         GmrScCCHhTTwgVbURvduJthetp9nD06Mc7c0VKYhHMDY7lDd4bkJ8ttAC9WsgWitlOKY
-         XCQg8hB78ZFPySGd+isnyINj/DNwx1ubO0lRtz3oy+IQMpCERbD8a3brGXWqra0AnAfw
-         l41Q==
-X-Gm-Message-State: ACgBeo04PgZrhYo7onmIg7mf2KuJx6OAYbLKb+2vOTK1AnN/qBuhUO5D
-        R2madvk5WyaGH2kchtSPtEs=
-X-Google-Smtp-Source: AA6agR5Hr4LQDOJNE5rhhEe1nUrTmX+qcPrMOUKfRjGMn/2oOVa8ea14hj95QPcfWKnQEUQKxXy07A==
-X-Received: by 2002:a05:600c:20a:b0:3a5:e40a:1821 with SMTP id 10-20020a05600c020a00b003a5e40a1821mr8122531wmi.125.1660921999414;
-        Fri, 19 Aug 2022 08:13:19 -0700 (PDT)
-Received: from gmgdl ([213.220.124.15])
-        by smtp.gmail.com with ESMTPSA id v2-20020a5d6b02000000b0021e30e9e44asm4150164wrw.53.2022.08.19.08.13.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Aug 2022 08:13:18 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oP3gT-000lP3-0S;
-        Fri, 19 Aug 2022 17:13:17 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 1/4] sequencer: do not translate reflog messages
-Date:   Fri, 19 Aug 2022 17:12:43 +0200
-References: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr>
- <cover.1660828108.git.git@grubix.eu>
- <ea6c65c254bb08b20ea6c4d81200b847755b555c.1660828108.git.git@grubix.eu>
- <220818.86zgg18umf.gmgdl@evledraar.gmail.com>
- <6oqr69o7-qsps-sr86-o4r9-16r7no9n5424@tzk.qr>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <6oqr69o7-qsps-sr86-o4r9-16r7no9n5424@tzk.qr>
-Message-ID: <220819.86o7wg6zci.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        with ESMTP id S1349193AbiHSPbi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 11:31:38 -0400
+Received: from m12-12.163.com (m12-12.163.com [220.181.12.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3E2CB100960
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 08:31:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Mime-Version:Subject:From:Date:Message-Id; bh=61285
+        IxISbIWqgNY53ZdUZGaYGbo8XcSzD3+/aP13Es=; b=CWaTN4swNDlehi6V5E8/4
+        livPOh2P/7WdG1hCgLf5BNV9hjMKHC0M9fFIqF/93klgJfBpuTpXKNqoCBFF59eM
+        ZFlWgRCZSIOjKOKecxOVMt1/U7FjXlq3CSlzl0DAUTGYoNvMcBTb/xCaOZ816Xj3
+        B0vyMVTg3Fya+rMlXmeoXU=
+Received: from smtpclient.apple (unknown [125.70.13.115])
+        by smtp8 (Coremail) with SMTP id DMCowAD3Eh2HrP9irxYHVA--.55179S3;
+        Fri, 19 Aug 2022 23:30:16 +0800 (CST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [PATCH v4 1/3] hide-refs: add hook to force hide refs
+From:   =?utf-8?B?5a2Z6LaF?= <16657101987@163.com>
+In-Reply-To: <20220818185111.4062955-1-calvinwan@google.com>
+Date:   Fri, 19 Aug 2022 23:30:15 +0800
+Cc:     Sun Chao via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>, Sun Chao <sunchao9@huawei.com>
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <F373DB9D-5C6D-4284-9DD7-D782DE1CDBCE@163.com>
+References: <20220818185111.4062955-1-calvinwan@google.com>
+To:     Calvin Wan <calvinwan@google.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
+X-CM-TRANSID: DMCowAD3Eh2HrP9irxYHVA--.55179S3
+X-Coremail-Antispam: 1Uf129KBjvJXoWxCF1DKrWkGryxtF1kJw1xAFb_yoWrJw4DpF
+        Z8K3WYkw4kJr97A3WkCayxXFW0ka95GFy5Jas8Jryjqwn8XF1IgF9xKa1Y9FWUWrW8Wa1j
+        vFWYqwn3Xas0va7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UsjjPUUUUU=
+X-Originating-IP: [125.70.13.115]
+X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiPghiglxBtvDVpQAAs9
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Aug 19 2022, Johannes Schindelin wrote:
 
-> Hi =C3=86var,
->
-> On Thu, 18 Aug 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> On Thu, Aug 18 2022, Michael J Gruber wrote:
->>
->> > Traditionally, reflog messages were never translated, in particular not
->> > on storage.
->> >
->> > Due to the switch of more parts of git to the sequencer, old changes in
->> > the sequencer code may lead to recent changes in git's behaviour. E.g.:
->> > c28cbc5ea6 ("sequencer: mark action_name() for translation", 2016-10-2=
-1)
->> > marked several uses of `action_name()` for translation. Recently, this
->> > lead to a partially translated reflog:
->> >
->> > `rebase: fast-forward` is translated (e.g. in de to `Rebase: Vorspulen=
-`)
->> > whereas other reflog entries such as `rebase (pick):` remain
->> > untranslated as they should be.
->> >
->> > Change the relevant line in the sequencer so that this reflog entry
->> > remains untranslated, as well.
->> >
->> > Signed-off-by: Michael J Gruber <git@grubix.eu>
->> > ---
->> >  sequencer.c | 2 +-
->> >  1 file changed, 1 insertion(+), 1 deletion(-)
->> >
->> > diff --git a/sequencer.c b/sequencer.c
->> > index 5f22b7cd37..51d75dfbe1 100644
->> > --- a/sequencer.c
->> > +++ b/sequencer.c
->> > @@ -575,7 +575,7 @@ static int fast_forward_to(struct repository *r,
->> >  	if (checkout_fast_forward(r, from, to, 1))
->> >  		return -1; /* the callee should have complained already */
->> >
->> > -	strbuf_addf(&sb, _("%s: fast-forward"), _(action_name(opts)));
->> > +	strbuf_addf(&sb, "%s: fast-forward", action_name(opts));
->> >
->> >  	transaction =3D ref_transaction_begin(&err);
->> >  	if (!transaction ||
->>
->> I 95% agree with this direction, but the other 5% of me is thinking
->> "isn't this fine then? Let's keep it?".
->
-> No, it's not fine, we mustn't keep it, because we expect Git itself to
-> parse the reflog.
+> On Aug 19, 2022, at 02:51, Calvin Wan <calvinwan@google.com> wrote:
+>=20
+> Hi Sun,
+>=20
+> A couple of us from the mailing list reviewed your patch yesterday =
+during
+> review club and I'm going to summarize our thoughts here.
+>=20
+> Starting with you commit message, it is not entirely clear what your
+> series is trying to achieve. While you do attempt to set the scene in
+> the first paragraph, it would be better to go into more detail of how =
+a
+> user would use this hook. Do you already have something like this
+> working downstream for you at your company? If so, that would be a =
+good
+> reference to provide context for readers. If not, try to sell your use
+> case better to us by providing examples and anything else this could =
+be
+> useful for. Your commit message should also have a broad description =
+of
+> the changes, explain difficult/tricky changes, and dicuss
+> tradeoffs/complexity. =20
 
-Doesn't that also mean that the relevant functionality is now also (and
-still?) broken on any repository where these translations ended up
-on-disk?
+First, I really appreciate that you spent your precious time reviewing =
+my
+patches and tell me where is not enough and how to do it. I will check
+my patches again and I wish I can update it with better descriptions in
+a week (I can do it only in the evening time so it need couple days).
+
+>=20
+> As Junio has noted, there is a lot going on here. For example, changes
+> you make to pre-existing functionality should come with an =
+explanation.
+> One way to manage this complexity for reviewers is by splitting up =
+your
+> changes into more logically different commits.
+
+Yes, Junio had given me some important comments just like yours and I
+still very seriously consider how to solve them. I will split up my =
+changes
+and write more explanations.
+
+>=20
+> For your tests, they should show a working example of thie feature, =
+the
+> motivation behind the feature, and a description of the interface. The
+
+Thanks, will do it.
+
+> structure of the tests is also confusing and there seem to be many
+> unnecessary tests. It is OK to be verbose and obvious in tests -- it =
+is
+> very important for reviewers and others looking at your tests to =
+easily
+> understand what each test is doing.
+
+Thanks, I will refactor the tests and add more descriptions to make them =
+easily
+understand.
+
+>=20
+>> `hide-refs` to hide the private data.
+>=20
+> Why is Gerrit being centralized relevant to ref-level access control?
+
+Will explain it in my next new update why I think so.
+
+>=20
+>> to the client and can not fetch its private data even in protocol V2.
+>=20
+> What is the reasoning behind special casing v2 here? Is it possible
+> you're confusing remote helper protocol and wire protocol?
+
+I will try to learn about the differences between them and answer the
+question here.
+
+>=20
+>> +static int lazy_load_hidden =3D 0;
+>> +// lazy load hidden refs for protocol V2
+>> +void lazy_load_hidden_refs(void) {
+>> +	lazy_load_hidden =3D 1;
+>> +}
+>> +
+>=20
+> What does lazy_load_hidden do?
+>=20
+> I know this is a lot to go thru for your first patch series, but =
+please
+> don't get discouraged! Feel free to ask any questions if you're =
+confused
+> about any of the feedback. We didn't dive too deeply into the =
+specifics
+> of your code since we believe there are higher level fundamental =
+issues
+> you should address first. There has also been similar discussion =
+regarding
+> differing ACLs within a single repository so it is probably worth a =
+read
+> here[1].
+
+I will not be discouraged, and I=E2=80=99m very glad and appreciate that =
+I can receive
+important review notes from Junio and the mailing list. I want to do =
+more
+contributions to git and wish one day I can help to review other =
+patches. But
+first I will fix my patches and make it more clearly.
+
+I need to reply first and wishing not making noise, because I think it =
+will
+take me couple days to resolve the review comments and update the =
+patches again.
+
+Thanks again.
+
+>=20
+> [1] =
+<CAJoAoZmsuwYCA8XGziEA-qwghg9h22Af98JQE1AuHHBRfQgrDA@mail.gmail.com>
+>=20
+
