@@ -2,132 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A389DC32771
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 13:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EF21C32773
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 13:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349112AbiHSNcb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 09:32:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46830 "EHLO
+        id S1349517AbiHSN6K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 09:58:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348643AbiHSNc3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 09:32:29 -0400
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6271CEEF14
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 06:32:28 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-3246910dac3so120805867b3.12
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 06:32:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=iX/KFxEI3TV+DWCmWFGKMuEsZ/YX5QqaALvrvSpZvZI=;
-        b=HmCwcoFHCaoZuxAsy1Rawkqb5UWU13/t9zFcVyWzKrRBCcMyZPIY4aQ5AU0EkAg6Zq
-         rdpwWKWVuokF383COeDblf8Sjceyd7AHjPlA0PMHwDxG8u0KQKHE0dhQr9JZrvH9ciEu
-         VgCabEBhdSrptNrxcbOKFntYZOBqIHR/6gXObxiNYDiFkUdLLP9b3n2RH16S0tFfdLlH
-         WD06TJO5wdutZe06IprE4Zb+1BX+0b1W8Sitc2EH3brpueF5dBPIWFDo83+Ge5hmhyJd
-         WwPwP6kEDH5yEKoVBsMndMqNooJWHmbn57JoBurF46AgPVBe5t/OMSeV9v2UTfIg/99p
-         ldlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=iX/KFxEI3TV+DWCmWFGKMuEsZ/YX5QqaALvrvSpZvZI=;
-        b=Hz7CNpT+KW/VLjz7XDhaYmIB8WY0UJ25Sro6CF8Wfndch6RCvpBL8zpzpkBqU8zQPC
-         4Ox4ltAoncKnLZZ42vXV1qxvHnw1djSAXC8VyLUSYocSojyiLNXN2WJImoL1x8VZm+h1
-         uSvFs6zog4pJYuvx6bQSFLX6eyP7bdEGTc/aYVj4WXFk7vKY7xkDX3PHyT5uo4mvS4JD
-         Xeu936aKijMJku4mpfqWGP0RlqDqvG4Lpb1UK1qrjDogZ6i3OBsZIjx0rACgUGXovVrp
-         kHw6oi7t+bwgOPqy5snB6Zli8PhIiHu95GBms+FLaY1WcmwNaTBnjIWhG1B2xFhoaRUW
-         Cv4w==
-X-Gm-Message-State: ACgBeo3HdkIW/OxRQkJS9zfWfTcF3OSc31ZSJJsNShcct+F6IlrM70WV
-        YapQ9jpwYNJTD+KejuDKITe69OSFq5X5FOBU/7Cfckj8
-X-Google-Smtp-Source: AA6agR57GJKVIbrw46gKOp+f8zPKsH8XTRmPDHJ9AHz/qen4wu2gGFpHLYUXdubOPb/7UrbHmDqmNMHHU0OJHpWaPG4=
-X-Received: by 2002:a25:c81:0:b0:68f:287d:453 with SMTP id 123-20020a250c81000000b0068f287d0453mr8260916ybm.191.1660915947530;
- Fri, 19 Aug 2022 06:32:27 -0700 (PDT)
+        with ESMTP id S1349351AbiHSN56 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 09:57:58 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DFFC100956
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 06:57:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1660917469;
+        bh=U1ndVtyu80dxk6SslkqZs3VJRV+aZDMz/qFZkJFCibE=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=IlfJn1AZX026Plz1W8vE0A2zFuIe5nBGS+S/pR7hZP7/KuRRemWjGIl4zYmox+c0k
+         aPSOHg4644A3I633ki0OaAjf7eRdVgHVEy1oEL0pjyQ0En5GrUvXQSj4gJwvH6yHNg
+         oc/pvasEMDZFxaBJ1M1rLuox2MHmGVvzZnWu+l2s=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.25.183.122] ([89.1.212.11]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MwfWa-1nR0rP25aU-00y8cq; Fri, 19
+ Aug 2022 15:57:49 +0200
+Date:   Fri, 19 Aug 2022 15:57:56 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/5] cmake: align CTest definition with Git's CI runs
+In-Reply-To: <xmqqmtc4xlr5.fsf@gitster.g>
+Message-ID: <870o76sq-1056-n0q2-002p-3s2po0808335@tzk.qr>
+References: <pull.1320.git.1660143750.gitgitgadget@gmail.com> <9cf14984c0a71b1ccdff7db0699571bf5af1209b.1660143750.git.gitgitgadget@gmail.com> <xmqqczd8m1lr.fsf@gitster.g> <7ss9r585-14rs-so68-o2n3-9qn9qn530742@tzk.qr> <xmqqmtc4xlr5.fsf@gitster.g>
 MIME-Version: 1.0
-References: <Yv9Oay+tNqhLDqVl@coredump.intra.peff.net> <Yv9OpXIQ9dYMQJ4B@coredump.intra.peff.net>
-In-Reply-To: <Yv9OpXIQ9dYMQJ4B@coredump.intra.peff.net>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Date:   Fri, 19 Aug 2022 14:32:13 +0100
-Message-ID: <CAPoeCOa6BDsunamy7_GtaSy-gL_0r3kAwDJ7ffA_uiFUzhen9w@mail.gmail.com>
-Subject: Re: [PATCH 1/6] xdiff: drop unused mmfile parameters from xdl_do_histogram_diff()
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:QNAB7euXxAurKB1mglSv08fYj2DsOfXZH4GFMcmg6s5n6G46TxE
+ FKUX87cpAGGB5oHrIXEF4YQCXvPYXWF656puQehozO2+Mce6DNMj/71HO73yMUAcRXHlMVd
+ cfEYQ9XIzTDt6e/3Ur/tqv7MI4RMWfDvwWrO0/E0nd600uTzytz5Os5W0OzJgqA+4Um54zT
+ N68KQBzn/oFzjBi5arVjg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kzIf9ZabHVQ=:+n+EWsd1Ke6f/tHYm5t7ei
+ WA5Ts4jiJSz4RuyPczcj8oUSflPtF734CPKTRXfM5t1zRbZmUpAuRRAZiSV0Dje8j3D/WdWPk
+ KjxWDgiK5T971EgG1dMyUv1dyVTXrH4lwRUIwxFxaAoR7LI7dsembROkqsocQxbD+VGStTTbY
+ PZWVEI+vW8BQLzd+75uu0ETHggWnPqzs5zui2DGtjYlZ4HW6HhIe4YhJ43NkZ67/ouwqPMyCS
+ MquNt15yHAQY5K0j5J30lEIFGM4I8T8ItfkhQoZkT/K9x3BwuK7PdVNZkKtA1sOtmaiGGYdpG
+ ZLZhk1xWfnD/3EvG8wLv2+b6h3aT5Ikc3soeAI2WxUHYWvjAKHmRnwO6ZfDFkGPjNO1Y6nFIe
+ WUcNLsuiLI46dS/ftLP0oapSpXRUPVaDlnm47zoQTVPOTuznrn6vykgFLfpmbrClxDZCrvua2
+ hREKShj6K+UlWDftKEPaIG31UDfIdQkHkKVX1aUro32LOhgZT6n/OO/wNPllg8tyB1PsiEahE
+ 2rbz5Mw9Z6c4z1D0l6UsLLkaeIYk0Xofl996guXMAbcmofZvV7QKfainFRsQeAl+KJhUIHA2m
+ BYtFgdFl+nc4PEZokWIvDW7On+Dwo6zmAg1FmyVbdWGCSN4Usd1nGW7OPxGWUckyFeW6wUMZq
+ HOsVYZQfWKKDdsqibDB416RDUAc+4ua70DDju2sEhcNyJEpSP67NSG7o/Upx+cya8uwnyP2D0
+ c07K+LLs+Xb2mvAz7vvXn3dc56u2W57jGjquflAP/P2w44C2TKr/SsjgBaALQn/QWsP2BLx5g
+ bv/b9EJRTknY0UZXigamnshWOBdbre2g6X1O2z0qMWYKwFcPCAbbRSCGrqcRr0G2qMVlepWZM
+ HZiyhvGXDXSwZBtK73jcZvxKccNX7kEst1FGM0sXW4NEd/1s/yybhBT8Q4TKr53wuGtT2XHGI
+ 829/NHQ34l0efC7dxj0iqgGDc2wC4yJwgy/3T7q+mL2h6gSya+rgLuoHjJr4CCfKe0IvQ8SfB
+ PRRn85SCD81J/mQKPW+m/QZYy0lJLMxEHtEd4yu/9Qx6qH20VPnlkew6t+mdQpJVruHmQ4rBb
+ u1QOu8emz/EHEHVf5p4zL0Pz1tLFkHLQsWHoPhqxaDel35k8gLV/HwChw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff
+Hi Junio,
 
-On Fri, 19 Aug 2022 at 09:49, Jeff King <peff@peff.net> wrote:
->
-> These are no longer used since 9df0fc3d57 (xdiff: fix a memory leak,
-> 2022-02-16), as the caller is expected to call xdl_prepare_env() itself.
-> After that change the histogram code only examines the prepared
-> xdfenv_t, not the original buffers.
+On Tue, 16 Aug 2022, Junio C Hamano wrote:
 
-Thanks, I seem to have a blind spot for unused parameters (I think
-this is at least the third such fix from you for one of my commits),
-I'm really looking forward to having -Wunused-parameter enabled,
-thanks for working on it. Looking at the xpatience.c I think we can
-remove the mmfile_t parameters there as well, they are only end up
-being used because patience_diff() gets called recursively. I'm about
-to go off list for a week, but I can look at putting a patch together
-for that when I get back unless you want to.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > On Wed, 10 Aug 2022, Junio C Hamano wrote:
+> >
+> >> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> >> writes:
+> >>
+> >> > While at it, enable the command trace via `-x` and verbose output v=
+ia
+> >> > `-v`, otherwise it would be near impossible to diagnose any problem=
+s.
+> >>
+> >> This sounds like a completely unrelated change.
+> >
+> > It may sound like it, but it is not. In order to make sense of the bro=
+ken
+> > tests, I needed access to more verbose output than our test scripts
+> > provide by default.
+> >
+> > When running the test suite on the command-line, it is easy to tell th=
+e
+> > user "oh, if you need more information, just call the test script with
+> > these here options: ...".
+> >
+> > This is not an option when running the tests within Visual Studio.
+>
+> I gave an example of "CI environment it is cumbersome to go back and
+> run only a single one" in the review you are responding to that may
+> explain why such a change is needed, and you gave us exactly the
+> context that was lacking here.  The environment does not let users
+> run the tests as anything but a single monolithic ball of wax.
 
-Best Wishes
+Good, I will amend the commit message.
 
-Phillip
+> > Does this clarify the intention and validity of the proposed patch? If=
+ so,
+> > I will gladly try my best to improve the commit message to explain tha=
+t
+> > intention better.
+>
+> It explains why -x -v is needed and needs to be a part of VS+CMake
+> topic, and it will help readers to have it in the explanation.  It
+> still does not justify why it has to be a part of a step to omit
+> bin-warppers and skip chain-lint that has nothing to do it, though.
 
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  xdiff/xdiffi.c     | 2 +-
->  xdiff/xdiffi.h     | 3 +--
->  xdiff/xhistogram.c | 3 +--
->  3 files changed, 3 insertions(+), 5 deletions(-)
->
-> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-> index 53e803e6bc..8c64519eac 100644
-> --- a/xdiff/xdiffi.c
-> +++ b/xdiff/xdiffi.c
-> @@ -326,7 +326,7 @@ int xdl_do_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
->         }
->
->         if (XDF_DIFF_ALG(xpp->flags) == XDF_HISTOGRAM_DIFF) {
-> -               res = xdl_do_histogram_diff(mf1, mf2, xpp, xe);
-> +               res = xdl_do_histogram_diff(xpp, xe);
->                 goto out;
->         }
->
-> diff --git a/xdiff/xdiffi.h b/xdiff/xdiffi.h
-> index 8f1c7c8b04..9d988e0263 100644
-> --- a/xdiff/xdiffi.h
-> +++ b/xdiff/xdiffi.h
-> @@ -58,7 +58,6 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_t *ecb,
->                   xdemitconf_t const *xecfg);
->  int xdl_do_patience_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
->                 xdfenv_t *env);
-> -int xdl_do_histogram_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
-> -               xdfenv_t *env);
-> +int xdl_do_histogram_diff(xpparam_t const *xpp, xdfenv_t *env);
->
->  #endif /* #if !defined(XDIFFI_H) */
-> diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
-> index df909004c1..16a8fe2f3f 100644
-> --- a/xdiff/xhistogram.c
-> +++ b/xdiff/xhistogram.c
-> @@ -362,8 +362,7 @@ static int histogram_diff(xpparam_t const *xpp, xdfenv_t *env,
->         return result;
->  }
->
-> -int xdl_do_histogram_diff(mmfile_t *file1, mmfile_t *file2,
-> -       xpparam_t const *xpp, xdfenv_t *env)
-> +int xdl_do_histogram_diff(xpparam_t const *xpp, xdfenv_t *env)
->  {
->         return histogram_diff(xpp, env,
->                 env->xdf1.dstart + 1, env->xdf1.dend - env->xdf1.dstart + 1,
-> --
-> 2.37.2.928.g0821088f4a
->
+Oh, that ;-)
+
+To be honest, I reflexively do that on Windows because it saves _so much
+time_.
+
+I will amend the commit message to clarify that, too.
+
+Ciao,
+Dscho
