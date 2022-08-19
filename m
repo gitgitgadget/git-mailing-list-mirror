@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C12AC28B2B
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 16:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF759C32773
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 16:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353092AbiHSQdH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 12:33:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60512 "EHLO
+        id S1353105AbiHSQdO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 12:33:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353168AbiHSQa4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 12:30:56 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E036011CF33
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:05:03 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id kb8so9649789ejc.4
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:05:03 -0700 (PDT)
+        with ESMTP id S1353017AbiHSQaX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 12:30:23 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 801A011BB2B
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:04:41 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id gk3so9625371ejb.8
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:04:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=bgK/lYD6M/Z8kE+tQYYNuVKJ9a1E7wvnkMFR+uXGYE0=;
-        b=XJsU4LyN1MSWz79XJeKzBYOx7tngb1uY+7JLzHMnXgLxrjvRaQdc+/J4zN+uimuaZX
-         VMZWW06UVlqBcoZaNBFLlV8zKiO6MMtIq6Q5LLtbZlYjfPzWDToCyj0yDQw3FOzxZJHU
-         7QpGKwwRABBC8CnLAqgfkTDH5CfPJH3vcJkO/J5JddDm5pgZByhZAOZpimUde9I0kS7t
-         gPVg0RfGHjWlRSyuOCBhveR2gd9cx7eSFntBC+frvo32ESe6mDH1dKrMy0yzDGqG0f3/
-         If6TsQQ/czm+/BQK9ohogEwqBiGtGLZO/amMPALAKCriRW+gQjwDjkY9T+ORnw+yW5bj
-         5iiw==
+        bh=6mBG6oeEPnLpU27Vlq5sUd/TK51DHUZyAgpmipQiFi8=;
+        b=JAb+bReW0cV1QzrKIJbonq2FQKmK6Y04xkjPzJKpjKaXKlM/1YBnVcvN9m8y04NXdo
+         EX/1OSnx6Qj6gdbbShwSAZLrVd3c82Ijww36Unveafg17WUc3RW76ft+gLy/EcuXsUIJ
+         pR/K6kJNDjQCoWj2X+MZwxmZDfetbzp/znUNEa35VyAbjZ6PxCZN+/4P2q/xqVX1nDcT
+         pxzF/NbjDUZa58tkUhDvyFZjOaGCBthXDBgIBswOcUO3DUDqW09FmIOzk7b4oD91bDTN
+         ljmI5AUPegcfKai9JZlIvF0H89FjXl9UoE9S5mmOsbvXDyZdKWg8g+Dl2eNwnG7ly+DE
+         6q+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=bgK/lYD6M/Z8kE+tQYYNuVKJ9a1E7wvnkMFR+uXGYE0=;
-        b=XsBIwqTwTA9WnQRB4908MZn8MaIH0dU3aSKp57cglvoIDD+yktoyP4PdwhqJxH2yXs
-         qMFBZkZFQMEBBdzk40GUphbcXsBbu7+yKqAXZ73sSS1u1q/7O1BInFadmrhXi1huTCyb
-         Nw+xtP0GZ20jMKRjF19XHs1MkR8EDtssJB9RYVnlNulEsdLDCGgUau8cTEFow6jWguRU
-         B6166FmTnuqJXkgj+f21PljvPQtCi5lze4j1p1S+8aZAaAm+tTz+M1dnpNPIRL6hya/z
-         C/AHAcW2YF2CYf0ct355rkET6uM1QpOo186Nm21iphe3cih/l6b1CEdrcgf4v/MnjyWM
-         Fpqg==
-X-Gm-Message-State: ACgBeo3GGI4s6sxbkKWM3TACudVOi6gEGzyWUrPAA5SAExGhVkcDjXhx
-        c+uyjqLdF8I9pmsSt0v7+GJNeG6gTjc=
-X-Google-Smtp-Source: AA6agR576hlMRuQdHUD2o7ngjgOOzxoLUZTU2xOl1wjh50uIeGRLyrybo6GsjEv/AVEvOSzGKh/Obw==
-X-Received: by 2002:a17:906:8a57:b0:730:8b50:610a with SMTP id gx23-20020a1709068a5700b007308b50610amr5262018ejc.557.1660925098469;
-        Fri, 19 Aug 2022 09:04:58 -0700 (PDT)
+        bh=6mBG6oeEPnLpU27Vlq5sUd/TK51DHUZyAgpmipQiFi8=;
+        b=CdpeyPKY/HgJ2lZGG1WcgF+Y/jEiO/eqKLd79NEnzRAQGMYW0o8MSuJJe/C0umiBy0
+         Uh7wqZw7GfR3213DSNau22o8Ex1Lur6dzrMJ/TljtkMfGBfIc+F7DVg4LSGVi4KJeXiI
+         1Kc3rL2zbE08QsYVhG5fZGTXUHoIqcJAQKERzwXmrGv0YRzWPB12AqPY7WRUMAXCSCRs
+         dJJvLueu6/Y4b8497BL4u5H7ESBK0BCq1zwxBBO++FWnL1ZUm0N59NcCil0HIH5hxice
+         mgVeaWjzlhowLFEz0I+Gscrs5NoMI8d7BMBhNS6zo7XS/+qe0i8U41X14bjPwWx/mSAG
+         bRyw==
+X-Gm-Message-State: ACgBeo3HqBuyjn0bzgsdLrJfI7e76nSU5KG+Ca1R8qydL8G0QXsPzCQf
+        tQtJeJVaDe10syWl5phJyi8kWtpo+z8=
+X-Google-Smtp-Source: AA6agR4vUjHN/tye9VAF1GmByPKjIc+TIPOtpwytL9JPK2J6/nlMnkUrqwYYCXwjM/vnhmYz0KlI5g==
+X-Received: by 2002:a17:907:60c8:b0:730:9efe:ecbd with SMTP id hv8-20020a17090760c800b007309efeecbdmr5136631ejc.90.1660925079529;
+        Fri, 19 Aug 2022 09:04:39 -0700 (PDT)
 Received: from localhost (84-236-78-250.pool.digikabel.hu. [84.236.78.250])
-        by smtp.gmail.com with ESMTPSA id og43-20020a1709071deb00b00732e3d94f4fsm2467864ejc.124.2022.08.19.09.04.57
+        by smtp.gmail.com with ESMTPSA id n3-20020a170906b30300b007081282cbd8sm2468520ejz.76.2022.08.19.09.04.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Aug 2022 09:04:57 -0700 (PDT)
+        Fri, 19 Aug 2022 09:04:39 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 14/20] builtin/multi-pack-index.c: let parse-options parse subcommands
-Date:   Fri, 19 Aug 2022 18:04:05 +0200
-Message-Id: <20220819160411.1791200-15-szeder.dev@gmail.com>
+Subject: [PATCH v2 04/20] t0040-parse-options: test parse_options() with various 'parse_opt_flags'
+Date:   Fri, 19 Aug 2022 18:03:55 +0200
+Message-Id: <20220819160411.1791200-5-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.37.2.817.g36f84ce71d
 In-Reply-To: <20220819160411.1791200-1-szeder.dev@gmail.com>
 References: <20220725123857.2773963-1-szeder.dev@gmail.com>
@@ -67,120 +67,198 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'git multi-pack-index' parses its subcommands with a couple of if-else
-if statements.  parse-options has just learned to parse subcommands,
-so let's use that facility instead, with the benefits of shorter code,
-handling missing or unknown subcommands, and listing subcommands for
-Bash completion.
+In 't0040-parse-options.sh' we thoroughly test the parsing of all
+types and forms of options, but in all those tests parse_options() is
+always invoked with a 0 flags parameter.
 
-Note that the functions implementing each subcommand only accept the
-'argc' and '**argv' parameters, so add a (unused) '*prefix' parameter
-to make them match the type expected by parse-options, and thus avoid
-casting function pointers.
+Add a few tests to demonstrate how various 'enum parse_opt_flags'
+values are supposed to influence option parsing.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- builtin/multi-pack-index.c | 51 ++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 29 deletions(-)
+ t/helper/test-parse-options.c | 66 +++++++++++++++++++++++++++++++++
+ t/helper/test-tool.c          |  1 +
+ t/helper/test-tool.h          |  1 +
+ t/t0040-parse-options.sh      | 70 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 138 insertions(+)
 
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 8f24d59a75..b8320d597b 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -104,7 +104,8 @@ static void read_packs_from_stdin(struct string_list *to)
- 	strbuf_release(&buf);
+diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
+index 48d3cf6692..88919785d3 100644
+--- a/t/helper/test-parse-options.c
++++ b/t/helper/test-parse-options.c
+@@ -192,3 +192,69 @@ int cmd__parse_options(int argc, const char **argv)
+ 
+ 	return ret;
  }
- 
--static int cmd_multi_pack_index_write(int argc, const char **argv)
-+static int cmd_multi_pack_index_write(int argc, const char **argv,
-+				      const char *prefix)
- {
- 	struct option *options;
- 	static struct option builtin_multi_pack_index_write_options[] = {
-@@ -160,7 +161,8 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
- 			       opts.refs_snapshot, opts.flags);
- }
- 
--static int cmd_multi_pack_index_verify(int argc, const char **argv)
-+static int cmd_multi_pack_index_verify(int argc, const char **argv,
-+				       const char *prefix)
- {
- 	struct option *options;
- 	static struct option builtin_multi_pack_index_verify_options[] = {
-@@ -186,7 +188,8 @@ static int cmd_multi_pack_index_verify(int argc, const char **argv)
- 	return verify_midx_file(the_repository, opts.object_dir, opts.flags);
- }
- 
--static int cmd_multi_pack_index_expire(int argc, const char **argv)
-+static int cmd_multi_pack_index_expire(int argc, const char **argv,
-+				       const char *prefix)
- {
- 	struct option *options;
- 	static struct option builtin_multi_pack_index_expire_options[] = {
-@@ -212,7 +215,8 @@ static int cmd_multi_pack_index_expire(int argc, const char **argv)
- 	return expire_midx_packs(the_repository, opts.object_dir, opts.flags);
- }
- 
--static int cmd_multi_pack_index_repack(int argc, const char **argv)
-+static int cmd_multi_pack_index_repack(int argc, const char **argv,
-+				       const char *prefix)
- {
- 	struct option *options;
- 	static struct option builtin_multi_pack_index_repack_options[] = {
-@@ -247,7 +251,15 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 			 const char *prefix)
- {
- 	int res;
--	struct option *builtin_multi_pack_index_options = common_opts;
-+	parse_opt_subcommand_fn *fn = NULL;
-+	struct option builtin_multi_pack_index_options[] = {
-+		OPT_SUBCOMMAND("repack", &fn, cmd_multi_pack_index_repack),
-+		OPT_SUBCOMMAND("write", &fn, cmd_multi_pack_index_write),
-+		OPT_SUBCOMMAND("verify", &fn, cmd_multi_pack_index_verify),
-+		OPT_SUBCOMMAND("expire", &fn, cmd_multi_pack_index_expire),
-+		OPT_END(),
-+	};
-+	struct option *options = parse_options_concat(builtin_multi_pack_index_options, common_opts);
- 
- 	git_config(git_default_config, NULL);
- 
-@@ -256,31 +268,12 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 	    the_repository->objects->odb)
- 		opts.object_dir = xstrdup(the_repository->objects->odb->path);
- 
--	argc = parse_options(argc, argv, prefix,
--			     builtin_multi_pack_index_options,
--			     builtin_multi_pack_index_usage,
--			     PARSE_OPT_STOP_AT_NON_OPTION);
--
--	if (!argc)
--		goto usage;
--
--	if (!strcmp(argv[0], "repack"))
--		res = cmd_multi_pack_index_repack(argc, argv);
--	else if (!strcmp(argv[0], "write"))
--		res =  cmd_multi_pack_index_write(argc, argv);
--	else if (!strcmp(argv[0], "verify"))
--		res =  cmd_multi_pack_index_verify(argc, argv);
--	else if (!strcmp(argv[0], "expire"))
--		res =  cmd_multi_pack_index_expire(argc, argv);
--	else {
--		error(_("unrecognized subcommand: %s"), argv[0]);
--		goto usage;
--	}
-+	argc = parse_options(argc, argv, prefix, options,
-+			     builtin_multi_pack_index_usage, 0);
-+	FREE_AND_NULL(options);
 +
-+	res = fn(argc, argv, prefix);
++static void print_args(int argc, const char **argv)
++{
++	for (int i = 0; i < argc; i++)
++		printf("arg %02d: %s\n", i, argv[i]);
++}
++
++static int parse_options_flags__cmd(int argc, const char **argv,
++				    enum parse_opt_flags test_flags)
++{
++	const char *usage[] = {
++		"<...> cmd [options]",
++		NULL
++	};
++	int opt = 0;
++	const struct option options[] = {
++		OPT_INTEGER('o', "opt", &opt, "an integer option"),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, NULL, options, usage, test_flags);
++
++	printf("opt: %d\n", opt);
++	print_args(argc, argv);
++
++	return 0;
++}
++
++static enum parse_opt_flags test_flags = 0;
++static const struct option test_flag_options[] = {
++	OPT_GROUP("flag-options:"),
++	OPT_BIT(0, "keep-dashdash", &test_flags,
++		"pass PARSE_OPT_KEEP_DASHDASH to parse_options()",
++		PARSE_OPT_KEEP_DASHDASH),
++	OPT_BIT(0, "stop-at-non-option", &test_flags,
++		"pass PARSE_OPT_STOP_AT_NON_OPTION to parse_options()",
++		PARSE_OPT_STOP_AT_NON_OPTION),
++	OPT_BIT(0, "keep-argv0", &test_flags,
++		"pass PARSE_OPT_KEEP_ARGV0 to parse_options()",
++		PARSE_OPT_KEEP_ARGV0),
++	OPT_BIT(0, "keep-unknown", &test_flags,
++		"pass PARSE_OPT_KEEP_UNKNOWN to parse_options()",
++		PARSE_OPT_KEEP_UNKNOWN),
++	OPT_BIT(0, "no-internal-help", &test_flags,
++		"pass PARSE_OPT_NO_INTERNAL_HELP to parse_options()",
++		PARSE_OPT_NO_INTERNAL_HELP),
++	OPT_END()
++};
++
++int cmd__parse_options_flags(int argc, const char **argv)
++{
++	const char *usage[] = {
++		"test-tool parse-options-flags [flag-options] cmd [options]",
++		NULL
++	};
++
++	argc = parse_options(argc, argv, NULL, test_flag_options, usage,
++			     PARSE_OPT_STOP_AT_NON_OPTION);
++
++	if (argc == 0 || strcmp(argv[0], "cmd")) {
++		error("'cmd' is mandatory");
++		usage_with_options(usage, test_flag_options);
++	}
++
++	return parse_options_flags__cmd(argc, argv, test_flags);
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 318fdbab0c..6e62282b60 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -51,6 +51,7 @@ static struct test_cmd cmds[] = {
+ 	{ "online-cpus", cmd__online_cpus },
+ 	{ "pack-mtimes", cmd__pack_mtimes },
+ 	{ "parse-options", cmd__parse_options },
++	{ "parse-options-flags", cmd__parse_options_flags },
+ 	{ "parse-pathspec-file", cmd__parse_pathspec_file },
+ 	{ "partial-clone", cmd__partial_clone },
+ 	{ "path-utils", cmd__path_utils },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index bb79927163..d8e8403d70 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -41,6 +41,7 @@ int cmd__oidtree(int argc, const char **argv);
+ int cmd__online_cpus(int argc, const char **argv);
+ int cmd__pack_mtimes(int argc, const char **argv);
+ int cmd__parse_options(int argc, const char **argv);
++int cmd__parse_options_flags(int argc, const char **argv);
+ int cmd__parse_pathspec_file(int argc, const char** argv);
+ int cmd__partial_clone(int argc, const char **argv);
+ int cmd__path_utils(int argc, const char **argv);
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index ed2fb620a9..8511ce24bb 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -456,4 +456,74 @@ test_expect_success '--end-of-options treats remainder as args' '
+ 	    --end-of-options --verbose
+ '
  
- 	free(opts.object_dir);
- 	return res;
--
--usage:
--	usage_with_options(builtin_multi_pack_index_usage,
--			   builtin_multi_pack_index_options);
- }
++test_expect_success 'KEEP_DASHDASH works' '
++	test-tool parse-options-flags --keep-dashdash cmd --opt=1 -- --opt=2 --unknown >actual &&
++	cat >expect <<-\EOF &&
++	opt: 1
++	arg 00: --
++	arg 01: --opt=2
++	arg 02: --unknown
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'KEEP_ARGV0 works' '
++	test-tool parse-options-flags --keep-argv0 cmd arg0 --opt=3 >actual &&
++	cat >expect <<-\EOF &&
++	opt: 3
++	arg 00: cmd
++	arg 01: arg0
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'STOP_AT_NON_OPTION works' '
++	test-tool parse-options-flags --stop-at-non-option cmd --opt=4 arg0 --opt=5 --unknown >actual &&
++	cat >expect <<-\EOF &&
++	opt: 4
++	arg 00: arg0
++	arg 01: --opt=5
++	arg 02: --unknown
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'KEEP_UNKNOWN works' '
++	test-tool parse-options-flags --keep-unknown cmd --unknown=1 --opt=6 -u2 >actual &&
++	cat >expect <<-\EOF &&
++	opt: 6
++	arg 00: --unknown=1
++	arg 01: -u2
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'NO_INTERNAL_HELP works for -h' '
++	test_expect_code 129 test-tool parse-options-flags --no-internal-help cmd -h 2>err &&
++	cat err &&
++	grep "^error: unknown switch \`h$SQ" err &&
++	grep "^usage: " err
++'
++
++for help_opt in help help-all
++do
++	test_expect_success "NO_INTERNAL_HELP works for --$help_opt" "
++		test_expect_code 129 test-tool parse-options-flags --no-internal-help cmd --$help_opt 2>err &&
++		cat err &&
++		grep '^error: unknown option \`'$help_opt\' err &&
++		grep '^usage: ' err
++	"
++done
++
++test_expect_success 'KEEP_UNKNOWN | NO_INTERNAL_HELP works' '
++	test-tool parse-options-flags --keep-unknown --no-internal-help cmd -h --help --help-all >actual &&
++	cat >expect <<-\EOF &&
++	opt: 0
++	arg 00: -h
++	arg 01: --help
++	arg 02: --help-all
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.37.2.817.g36f84ce71d
 
