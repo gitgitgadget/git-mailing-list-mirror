@@ -2,145 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4C26C28B2B
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 17:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE282C28B2B
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 17:36:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354603AbiHSRc4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 13:32:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33494 "EHLO
+        id S1354639AbiHSRgh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 13:36:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354507AbiHSRcm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 13:32:42 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBFB6D0238
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:51:24 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id A57363F4148;
-        Fri, 19 Aug 2022 12:50:26 -0400 (EDT)
-Received: from jeffhost-mbp.local (unknown [IPv6:2600:1014:b1a9:35ad:581:b5cb:d568:560a])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        with ESMTP id S1351084AbiHSRgP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 13:36:15 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B29162E2A
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:54:59 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 210EF138322;
+        Fri, 19 Aug 2022 12:53:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qhYaq0MMafNzgcVua37Sq0M25O6iJ+ngxrc5mk
+        Lcjmw=; b=eBxwOuXJmpaBiI3QzGq1gqfZ4mOuf3Omfk9A+utnx/1ilyMnZZRQ8h
+        TEx+3BAhoPFpUIdUS/9we8LOuJim0AAhNKL+Ddv9SgHVMgVKYBhhKQorwvsIe45c
+        TzfwrR3w06Qx5y1tf/j2pXM8obSI+ZrXpWbo7RfT8BrRMRyzXk5m8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17449138321;
+        Fri, 19 Aug 2022 12:53:48 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 1C6603F4155;
-        Fri, 19 Aug 2022 12:50:24 -0400 (EDT)
-Subject: Re: [PATCH] fsmonitor: option to allow fsmonitor to run against
- network-mounted repos
-To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Eric DeCosta <edecosta@mathworks.com>
-References: <pull.1326.git.1660855703816.gitgitgadget@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <a63bda82-3dfc-44e0-8ecf-ca340d0a95b4@jeffhostetler.com>
-Date:   Fri, 19 Aug 2022 12:50:19 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 672E013831F;
+        Fri, 19 Aug 2022 12:53:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, git@vger.kernel.org,
+        entwicklung@pengutronix.de
+Subject: Re: Bug in rebase --autosquash
+References: <20220817094909.v2ev4rpsmxjnii4x@pengutronix.de>
+        <8p78q4p9-9ro4-p5s4-r738-7sno17rqr414@tzk.qr>
+Date:   Fri, 19 Aug 2022 09:53:46 -0700
+In-Reply-To: <8p78q4p9-9ro4-p5s4-r738-7sno17rqr414@tzk.qr> (Johannes
+        Schindelin's message of "Fri, 19 Aug 2022 13:09:00 +0200 (CEST)")
+Message-ID: <xmqqpmgwmaxx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <pull.1326.git.1660855703816.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: mailmunge 3.09 on 209.68.5.199
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7E3BFD1E-1FDF-11ED-8B89-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> This demonstrates a somewhat obscure feature where the `fixup!` of a
+> `fixup!` magically targets the original commit.
+>
+> I understand that it is somewhat unintuitive that `fixup! fixup! abc` does
+> not target `fixup! abc` but instead `abc`, but that's how the tool has
+> been behaving forever.
+
+It certainly is handy when the original commit A has a fixup commit
+B, which gets later fixed up by another commit C, resulting in a
+sequence like this:
+
+    $ git rebase -i A~1 C
+
+    pick A original commit
+    fixup B fixup! original commit
+    fixup C fixup! fixup! original commit
+
+But if the user for some reason finds it is not quite ready to touch
+the original commit by squashing in the fixes, it may be reasonable
+to want to squash the two fixes together, so that it can later be
+applied to the original commit.  And it would be one natural way to
+request that with
+
+    $ git rebase -i A C
+
+that is, leave the history up to A intact, but everything above
+tweaked.  Without --autosquash, you would get
+
+    pick B fixup! original commit
+    pick C fixup! fixup! original commit
+
+and you would manually do
+
+    pick B fixup! original commit
+    fixup C fixup! fixup! original commit
+
+to squash B and C together into a single fix-up to be applied
+later.  It does not look all too unreasonable to expect the
+"--autosquash" feature to do that automatically for you.
+
+Thanks.
+
+    
 
 
-On 8/18/22 4:48 PM, Eric DeCosta via GitGitGadget wrote:
-> From: Eric DeCosta <edecosta@mathworks.com>
-> 
-> Though perhaps not common, there are uses cases where users have large,
-> network-mounted repos. Having the ability to run fsmonitor against
-> network paths would benefit those users.
-> 
-> As a first step towards enabling fsmonitor to work against
-> network-mounted repos, a configuration option, 'fsmonitor.allowRemote'
-> was introduced for Windows. Setting this option to true will override
-> the default behavior (erroring-out) when a network-mounted repo is
-> detected by fsmonitor. In order for macOS to have parity with Windows,
-> the same option is now introduced for macOS.
-
-We might also say that this config option only allows FSMonitor
-to TRY to consider using a network-mounted repo.  And that this
-ability is considered experimental until sufficient testing can
-be completed and we can determine the combinations of
-{ client os } x { server os } x { remote access } x { file system type }
-that are known to work or not work and we can update the defaults
-and the documentation accordingly.
-
-For example, on a MacOS client, we expect the local "fseventsd" service
-to send us recursive events on all files and sub directories under the
-repo root.  If the server is a Linux machine (which doesn't really do
-recursive events), does exporting the FS from the server over NFS or SMB
-(or whatever) cause the Linux host to send enough information to the
-client machine for fseventsd to synthesize the recursive event stream
-locally that FSMonitor expects.  It might.  It might not.  That
-combination should be tested (along with a lot of other combinations).
-
-But again, this patch is just about allowing the (informed?) user to
-try it and begin testing various combinations.
-
-
-> 
-> The the added wrinkle being that the Unix domain socket (UDS) file
-> used for IPC cannot be created in a network location; instead the
-> temporary directory is used.
-
-This scares me a bit.  I put the socket in the .git directory
-so that we are guaranteed that only one daemon will run on the
-repository and that all clients will know where to find that socket
-(if it exists).
-
-It looks like you're creating the UDS using a tmp pathname and
-writing the pathname to the actual .git/fsmonitor--daemon.ipc FILE.
-This adds a layer of indirection and is prone to races.
-
-
-The act of creating the actual socket is protected by code in
-unix-socket.c and unix-stream-server.c to try to safely create
-the socket and avoid stepping on another active daemon (who
-currently has the server-side of the socket open).
-
-My code also detects dead sockets (where a previous daemon died
-and failed to delete the socket).
-
-
-Additionally, allowing remote access means that the repo could
-be used by multiple client machines and/or by the server machine
-itself.  Consider the example of two MacOS clients mounting the
-remote repo and both wanting to start FSMonitor.  They would
-constantly fight to recreate a new local-tmp-based socket and
-update your pathname FILE and end up invalidating each other on
-each command.
-
-
-Also, if someone overwrites your new pathname FILE, but doesn't tell
-the daemon, the daemon will be orphaned -- still running, but no one
-will ever connect to it because the FILE no longer points to it.
-
-
-There was a suggestion later in this thread about using a SHA-1
-or SHA-256 hash of the pathname to avoid the tmp XXXXXX pattern
-and just put the socket in $HOME (and omit the need for the new
-fsmonitor-daemon.ipc FILE completely).  This might work, but we
-need to be careful because a user might have hardlinks or symlinks
-locally so there may be more than one unique path to the repo
-on the local system.  (It is OK to have more than one daemon
-listening to a repo, just less efficient.)
-
-
-As an interim step, you might try using my original socket code
-plus just the config.allowRemote=true change.  And test it on a
-mounted repo where you've converted the .git directory to a .git
-file and moved contents of the .git directory to somewhere local.
-Then the UDS would be created in the local GITDIR instead of on
-the remote system.  This won't help any of the sharing cases I
-described above, but will let you experiment with getting remote
-events.
-
-Jeff
-
-
-
-> base-commit: 9bf691b78cf906751e65d65ba0c6ffdcd9a5a12c
-> 
