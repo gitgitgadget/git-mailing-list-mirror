@@ -2,102 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE282C28B2B
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 17:36:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E96D8C32772
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 17:52:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354639AbiHSRgh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 13:36:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40530 "EHLO
+        id S1350508AbiHSRwP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 13:52:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351084AbiHSRgP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 13:36:15 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B29162E2A
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:54:59 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 210EF138322;
-        Fri, 19 Aug 2022 12:53:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qhYaq0MMafNzgcVua37Sq0M25O6iJ+ngxrc5mk
-        Lcjmw=; b=eBxwOuXJmpaBiI3QzGq1gqfZ4mOuf3Omfk9A+utnx/1ilyMnZZRQ8h
-        TEx+3BAhoPFpUIdUS/9we8LOuJim0AAhNKL+Ddv9SgHVMgVKYBhhKQorwvsIe45c
-        TzfwrR3w06Qx5y1tf/j2pXM8obSI+ZrXpWbo7RfT8BrRMRyzXk5m8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17449138321;
-        Fri, 19 Aug 2022 12:53:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 672E013831F;
-        Fri, 19 Aug 2022 12:53:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, git@vger.kernel.org,
-        entwicklung@pengutronix.de
-Subject: Re: Bug in rebase --autosquash
-References: <20220817094909.v2ev4rpsmxjnii4x@pengutronix.de>
-        <8p78q4p9-9ro4-p5s4-r738-7sno17rqr414@tzk.qr>
-Date:   Fri, 19 Aug 2022 09:53:46 -0700
-In-Reply-To: <8p78q4p9-9ro4-p5s4-r738-7sno17rqr414@tzk.qr> (Johannes
-        Schindelin's message of "Fri, 19 Aug 2022 13:09:00 +0200 (CEST)")
-Message-ID: <xmqqpmgwmaxx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7E3BFD1E-1FDF-11ED-8B89-CB998F0A682E-77302942!pb-smtp2.pobox.com
+        with ESMTP id S1351704AbiHSRvr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 13:51:47 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F352D64FA
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 10:25:23 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id q11-20020a170902dacb00b0016efd6984c3so3097341plx.17
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 10:25:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:mime-version:message-id:in-reply-to:date:from:to
+         :cc;
+        bh=jWZLfDwJzGMJew6UaYiraUN91wgJc1WTUlNXhMB0LyI=;
+        b=lXpMwcScFK87M0+62R4GEogaxo0ROVWPKdDcPOme4F3M3+OoROFP2k834Pf0lPKGDp
+         hTpTfrPUBAdh+svHgdyUpwMm8ZJ8ILnphScOVsJhCdrH9dFcSHPc8d80hfBAP0U7UaEL
+         qHTOBAJ1SQO7b8hTtpwjUIdqDzn4Qhwwu3jw43GswwFOAnq0mROM7QwZVmGaWpkwErUS
+         +l4SqmpqQbi30p3xfYbS8zT8P9qzSf8TRJ3urm6qKbpSHke1Xty+QcGzosIQ4OWhRDgt
+         u5GT3BO4EVdLTMTg2zj52mJ7n4J+rHllQzcz8QvnelzejR4lA4tNeD8IGdt/Qa5f1DQt
+         esGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:mime-version:message-id:in-reply-to:date
+         :x-gm-message-state:from:to:cc;
+        bh=jWZLfDwJzGMJew6UaYiraUN91wgJc1WTUlNXhMB0LyI=;
+        b=ZzYrEvSATvSTWZMELmye+bvs7Z7nDii8lmHgd41XXagT3gWC5nQy8W+4uuDEdF/Hfb
+         hSxfknLImGSw0LLMSMMxilPYOlFxgNdxear7Bi/YemlV3jYDo8CTPljdSlT3jCRaMshr
+         WzzEqxy+k20Fzl1Amw1urEC7Wk3dQBLjMUl/kRLCx1HDCVxgw4LpK1NEhUVDNkLg56kY
+         zsNxSH2H2FJ1qikibofBzYGtvjzTL0p0YZVt2qlqY8l5JXJWDkUoxzwIvebmnZnUH+hI
+         cK97qi/r0Jft0u7CzRYJpXI3rjGPNgsyJtJM2J8QDaKnfMvOucFnlQ4wn7+IdmCYD6AM
+         b20g==
+X-Gm-Message-State: ACgBeo0qhjpBjnArDS+JaZPGQpV4QXBvuJxxkb2ZTBQbQSwhS7f/jAlM
+        KVdFwtIvq5sloxyPAxcJgXo81ZTK76M3R+3ykn4n
+X-Google-Smtp-Source: AA6agR7+O1x5uHDBG6TgAHKRCXOJLWve0bBgcsrt8QiV6T5LKlxjB9BsqMKNeSSIVek/a/Wzl6l00RnFtiW0PG8OeT4p
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:249:b0:1e0:a8a3:3c6c with
+ SMTP id t9-20020a17090a024900b001e0a8a33c6cmr440304pje.0.1660929923125; Fri,
+ 19 Aug 2022 10:25:23 -0700 (PDT)
+Date:   Fri, 19 Aug 2022 10:25:19 -0700
+In-Reply-To: <CABPp-BFjxFeGO+NU4HFCGqDe4aRFhqOdOxNYVDf7EJOWdT5RgA@mail.gmail.com>
+Message-Id: <20220819172519.3703282-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.37.1.595.g718a3a8f04-goog
+Subject: Re: [PATCH v2 2/2] revision: allow --ancestry-path to take an argument
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Elijah Newren <newren@gmail.com> writes:
+> > Optional: Besides that, from what I can tell, sometimes the C commits
+> > themselves are marked with ANCESTRY_PATH (when they are explicitly
+> > specified) and sometimes they are not (when they are not explicitly
+> > specified). It's not a bug here, but it might be worth handling that in
+> > the ancestry_path_need_bottoms codepath (instead of explicitly setting
+> > TMP_MARK on the bottoms in limit_to_ancestry() - that way, I think we
+> > can also use ANCESTRY_PATH instead of TMP_MARK throughout the ancestry
+> > path codepaths, but I haven't tested it), at least to prevent possible
+> > future bugs.
+> 
+> That sounds like you're trying to duplicate the bug in my first
+> attempt at this patch.  If you try to coalesce ANCESTRY_PATH and
+> TMP_MARK, then you not only get all descendants of C, you also get all
+> descendants of any ancestor of C, which defeats the whole point of my
+> changes.
 
-> This demonstrates a somewhat obscure feature where the `fixup!` of a
-> `fixup!` magically targets the original commit.
->
-> I understand that it is somewhat unintuitive that `fixup! fixup! abc` does
-> not target `fixup! abc` but instead `abc`, but that's how the tool has
-> been behaving forever.
+Ah, yes you're right.
 
-It certainly is handy when the original commit A has a fixup commit
-B, which gets later fixed up by another commit C, resulting in a
-sequence like this:
+> It's true that I don't mark implicit C commits with ANCESTRY_PATH, but
+> those are always bottom commits that are the excluded end of a range
+> anyway.  While those could be marked without causing problems, it
+> would always be a waste of effort.
 
-    $ git rebase -i A~1 C
-
-    pick A original commit
-    fixup B fixup! original commit
-    fixup C fixup! fixup! original commit
-
-But if the user for some reason finds it is not quite ready to touch
-the original commit by squashing in the fixes, it may be reasonable
-to want to squash the two fixes together, so that it can later be
-applied to the original commit.  And it would be one natural way to
-request that with
-
-    $ git rebase -i A C
-
-that is, leave the history up to A intact, but everything above
-tweaked.  Without --autosquash, you would get
-
-    pick B fixup! original commit
-    pick C fixup! fixup! original commit
-
-and you would manually do
-
-    pick B fixup! original commit
-    fixup C fixup! fixup! original commit
-
-to squash B and C together into a single fix-up to be applied
-later.  It does not look all too unreasonable to expect the
-"--autosquash" feature to do that automatically for you.
-
-Thanks.
-
-    
-
-
+Yes, that's true.
