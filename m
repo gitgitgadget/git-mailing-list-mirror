@@ -2,63 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D1DDC25B0E
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 09:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F36AC32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 09:26:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348152AbiHSJZL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 05:25:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34404 "EHLO
+        id S1348158AbiHSJ0g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 05:26:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348144AbiHSJZJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 05:25:09 -0400
+        with ESMTP id S1347758AbiHSJ0f (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 05:26:35 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80572F2D44
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 02:25:08 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E80F6F43AC
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 02:26:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660901100;
-        bh=QPoqGpub338iJv/HDeB6idr9ji1WmJbnqyNuEmSQt5k=;
+        s=badeba3b8450; t=1660901189;
+        bh=18XY0BtsolcWPbBgriXbZTM37t79RZxe7lhra4knhS4=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dUWBv6CMhTJ2wVQP/kcgrlviR0AKFNQlLp8EIXse44HJ1IUr5eepqYm0OOIa2rMLr
-         qYmHAwTey7T19uDKZmtDYERT9I/uU0d87sAY4hpeOlOYtLSmO6ESFCC6EVTdf5z0tI
-         c/Uiw1X5DhpBN9i0vv8eBliF3SvUGD9ft4eYA+7g=
+        b=C81SjM9MnEnqYg46qo8dCPo/PTPPVFOMUBTQCvcfWiDuuMEN2sO3EF6nd5Sni0LcW
+         UugcFqRD4caxTjtYv2COd7My/InTYvdizUSXYBNErAuVqq4PIpSk9RtUQQ9ljNbWp9
+         1SM4VWuvS101tTCNoIZiUotYM9REAqAg+orIVfaI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.212.11]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1McH5Q-1nmc9n2Z0G-00cdvv; Fri, 19
- Aug 2022 11:24:59 +0200
-Date:   Fri, 19 Aug 2022 11:25:05 +0200 (CEST)
+Received: from [172.25.183.122] ([89.1.212.11]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7sHy-1oK0CF0Bak-004z3a; Fri, 19
+ Aug 2022 11:26:29 +0200
+Date:   Fri, 19 Aug 2022 11:26:35 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
 cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 1/4] sequencer: do not translate reflog messages
-In-Reply-To: <220818.86zgg18umf.gmgdl@evledraar.gmail.com>
-Message-ID: <6oqr69o7-qsps-sr86-o4r9-16r7no9n5424@tzk.qr>
-References: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr> <cover.1660828108.git.git@grubix.eu> <ea6c65c254bb08b20ea6c4d81200b847755b555c.1660828108.git.git@grubix.eu> <220818.86zgg18umf.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH 2/4] sequencer: do not translate parameters to
+ error_resolve_conflict()
+In-Reply-To: <220818.86v8qp8uid.gmgdl@evledraar.gmail.com>
+Message-ID: <06s6r3s7-27nn-1o9s-1n7p-5413284r8740@tzk.qr>
+References: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr> <cover.1660828108.git.git@grubix.eu> <4684d54aeb3e00c96ba581c824a04e47b7236db7.1660828108.git.git@grubix.eu> <220818.86v8qp8uid.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-558495070-1660901107=:241"
-X-Provags-ID: V03:K1:1MywBM62/Id0eQHhkvaYLYABO1VyniWpbsUC4jZG+qszTJEIeu4
- AGYkCj/znByX0Houztf81linbpnkW7tA5NtQNhafW3Ekw5W23QUmBH1DXMV9OCoU9AFE7dW
- afGMYJfSKdQHpIlaKDlEbw9fM0+A46tfd1D36Ct3hch3e+46NCjG0hME0VOSB8KllatHIvS
- cqrtkYB3wmRMbs9ZzDKZg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:UzjXw92W9t0=:BxN4aNfYrBQDWKXpiPk8Kr
- 9JPKlXk4orVklxTOMXW/830908Pb/FOuCFKuJyjbICl1Q4FKSqw46D9d+beDvM8rM7PGHVTEe
- P+gs6zrFSTu0YmlvNml/b7G9m2HeRfEZWKidUuhQ4un8qu36jY7j8wPxfr1DTmC3wtoKpTCG7
- oHPNvx+nmgxKmQ/5BqDsICR4CM3Yg2d8EMcYAtGJtIqwYrP0IL5p9SSIX7hobVGMi15AuMe5+
- qqZE/DzmA2GskMCrJuVJrK5GbIZwWtHHlyrf1DUIUbEVEcDTzr5/Vuu6Rv4wWzZZFAouBy1hp
- H8znPEt/20vtpDibp5aQrm6P3ER+ms/fgxC4C9cwmHoVtEDXOfAfnlxqlgnhxzSIeT7TVvQ0+
- gEJ+QVtzG6oe4DdLALrvVR54e55FhETqVZImhzEfgIu1zRXObiSVzOV/CBbLtNgcR/CAVdIE/
- L3DpyjrhplQUWIGEeBGheP5qXz3DIz223LaVsdsAllVtW8zjrTDlELmbIsKEFW2XkWnikc9bx
- 3qDRVcc1ICbJ8SOgcWe017kFucgx3PgRNMZln4bFpywubu57tEBz5diAclMTOlriR3+ko2XUH
- vLj5RZQAL7ckil/p5Z//neyN8DMhN6cNGk67tbWpf+T+GDZhPIS44IdbDhcV/OsLVj1Iz+ids
- WnogucFpjMTqwdxmuLXF8QXjkvFxzerzo/u4ZBT8rEEm86aooTQwSGkWiiRQ74/L/YLtU4sLE
- IxN87zGvQhadpVJeOoJ+yycVEOxZlC8LmKR6cojCzNe4k116pNXsmEYjk8F/yH4KOXYezg7SA
- v2bEO4Z29x/3+Zv5jPRYtUh0NjT2YIl+3nw8maLcqGGXS8kBW2LN3FibmdTz6nRmwBm7Wqk8m
- px7ey/hakORKb96niGCsmLqfC9SI2/H/KMwJ4e/IPnSva1/ge3rFl66SbXpukjM5+E9dOgMeq
- v5iTO9Gsk/xBZMDkqzp0RkXvxX6YSAydKjFDJNdm6hrfFomkst5n255n0RbzPY6ZrAEI898et
- qLooUGXoJNRcIx28QYGEUn9b0XryLFTS64UiXX30mbF5c6iVQkZWyor5fWRQfYN9QkksGRVgc
- r1Ob/1aLXlJxOrdiuZryIVMg8ldaFJwjASxKf9MwngqD5fVU0CvEgcSVA==
+Content-Type: multipart/mixed; boundary="8323328-373191695-1660901197=:241"
+X-Provags-ID: V03:K1:8ynxar4uZGvCUg+lFTYQyTrnL0b9kNDjgH1LLuhvguuCiML+1zf
+ khuDnLfy+z9+ahG3KYHDToiIu9Xii4aKfd6WRf18Ai1md/ACCnTIr58UV7vXLMgaz5gMX9z
+ SpJLNcQhcdJY7+PfvyKshb5/S68r2Cq0Y7YjR+VfOK98eeUW8uDultnubpJSMSS/cn3eWjo
+ ClLYiVw2bSnVe4I7YGKVA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sOlvOi+mdr4=:c1Ea2ZYE8iFiWfuoG7oY81
+ FxJzQpXOOuf07PhKlOCnMJruf6nFdKP9lOwfWUiR6BVRrXrT8ArmAOoVcxOHvzOsmZw+1jFOG
+ aOwAaMACpRZzoqC47mjg3jJJEkTNk+twwIHcLe8gaahiUNUikNhJoK/euRc4tHuVCSd9Of3O1
+ leQtjBGPKmsX1afNBHDM+gzx23H4/gXP+iJh6eHi4XwNbZCR7uUTrIv2Hw8FUOPGcODi+nc5X
+ xfxab0c554REfr10SSn0TvES8sVCfht3cbuwklN2USy3qD9Ii973xNUsMu8lzPb5iCWLNI0zf
+ d9iHX+g7yBxNAnoN9BVQttDx2mzYxTJdEHjOwtP4vJckhDbWgdjMsfW3ub8t4rk8vYOPQIJj6
+ bDvv/kIT1TLoiRETs6+Q1v5YbaEGCl2Kn+1hy2xvWu5y4OjftBN4NhaGjHXOaY+ZiOjoETJUC
+ CmQFK26K9VZ5vIYQvyNKMM+Zf5sF6E+LFilBYfE0PLTYMO/k390zc9e0Od3fEi8G+TTlMFY9A
+ HBhK9KtuOkHP/ZLSkASLM7BBrU9jeiKYBW1E0UZEoTc0PM8kJ6guxGhVZtuNDWBPdjCqAi02K
+ 1AWgcD+pxoPS4eVBmXDqSfCMYlNJxC5vl31KFYIZyCl0OCvddtGYIP6Rkn5yE4mfjPUqQvnLB
+ beAZyg5XMAfHR85TBb1MZ3VRd8GgZEzbwHiuLBFn8K03QPCaOdYtkcjeUDibeAbYc5qRhhl4+
+ 8QE4jZKlxvBBnMno/Ui4N2HB1bW1/P4opixvqs9nbA+YeqGSHcfK7zcMtUuT84bqxPk/iGju5
+ DltPyKD3WmRXF8tPb9jN2AXWN5nDPV7wTj5wHsZFM+j2lqt49GdU1VNVXy4L/GasjmuGcumXC
+ FFcjUigV2jzfDq9AeejGtuzVbtafKWwO94dwLmLOMgsTSUlrLyb5haGwCVYQLiJ+wvlkj5rpR
+ wiqt4pknlEbmHf29zBlntoInmu9h9xgTLdqmzF5IN0VQ4GKOQgTPHeAzDxjef3PLTkTcXPvhW
+ 4VdZY5xB5YHHQSPiSUq2O0Sa9M5NtUAbAGUJnbNoSh15N3fLTl3fDnQvOcFoAIY73ZNKw/tu+
+ Z00J14PqsmqTptMDMRbdfI9nLnKP0QSwZfZiQnK8guiMo0SFDN45kMd4A==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -66,7 +67,7 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-558495070-1660901107=:241
+--8323328-373191695-1660901197=:241
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
@@ -76,53 +77,46 @@ On Thu, 18 Aug 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
 > On Thu, Aug 18 2022, Michael J Gruber wrote:
 >
-> > Traditionally, reflog messages were never translated, in particular no=
-t
-> > on storage.
+> > `error_resolve_conflict()` checks the untranslated action_name
+> > parameter, so pass it as is.
 > >
-> > Due to the switch of more parts of git to the sequencer, old changes i=
-n
-> > the sequencer code may lead to recent changes in git's behaviour. E.g.=
-:
-> > c28cbc5ea6 ("sequencer: mark action_name() for translation", 2016-10-2=
-1)
-> > marked several uses of `action_name()` for translation. Recently, this
-> > lead to a partially translated reflog:
-> >
-> > `rebase: fast-forward` is translated (e.g. in de to `Rebase: Vorspulen=
-`)
-> > whereas other reflog entries such as `rebase (pick):` remain
-> > untranslated as they should be.
-> >
-> > Change the relevant line in the sequencer so that this reflog entry
-> > remains untranslated, as well.
-> >
+> > Suggested-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 > > Signed-off-by: Michael J Gruber <git@grubix.eu>
 > > ---
-> >  sequencer.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >  sequencer.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
 > >
 > > diff --git a/sequencer.c b/sequencer.c
-> > index 5f22b7cd37..51d75dfbe1 100644
+> > index 51d75dfbe1..8b32b239b9 100644
 > > --- a/sequencer.c
 > > +++ b/sequencer.c
-> > @@ -575,7 +575,7 @@ static int fast_forward_to(struct repository *r,
-> >  	if (checkout_fast_forward(r, from, to, 1))
-> >  		return -1; /* the callee should have complained already */
+> > @@ -537,7 +537,7 @@ static struct tree *empty_tree(struct repository *=
+r)
+> >  static int error_dirty_index(struct repository *repo, struct replay_o=
+pts *opts)
+> >  {
+> >  	if (repo_read_index_unmerged(repo))
+> > -		return error_resolve_conflict(_(action_name(opts)));
+> > +		return error_resolve_conflict(action_name(opts));
 > >
-> > -	strbuf_addf(&sb, _("%s: fast-forward"), _(action_name(opts)));
-> > +	strbuf_addf(&sb, "%s: fast-forward", action_name(opts));
+> >  	error(_("your local changes would be overwritten by %s."),
+> >  		_(action_name(opts)));
+> > @@ -3753,7 +3753,7 @@ static int do_reset(struct repository *r,
+> >  	init_checkout_metadata(&unpack_tree_opts.meta, name, &oid, NULL);
 > >
-> >  	transaction =3D ref_transaction_begin(&err);
-> >  	if (!transaction ||
+> >  	if (repo_read_index_unmerged(r)) {
+> > -		ret =3D error_resolve_conflict(_(action_name(opts)));
+> > +		ret =3D error_resolve_conflict(action_name(opts));
+> >  		goto cleanup;
+> >  	}
 >
-> I 95% agree with this direction, but the other 5% of me is thinking
-> "isn't this fine then? Let's keep it?".
+> Perhaps we should have the error_resolve_conflict() function take a
+> "enum replay_action" instead?
 
-No, it's not fine, we mustn't keep it, because we expect Git itself to
-parse the reflog.
+We could do that. We could also just delete the sequencer code. It's just
+that both are a bad idea.
 
 Ciao,
 Johannes
 
---8323328-558495070-1660901107=:241--
+--8323328-373191695-1660901197=:241--
