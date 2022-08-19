@@ -2,141 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 468D8C3F6B0
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 11:05:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3772DC32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 11:07:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348577AbiHSLFU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 07:05:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49206 "EHLO
+        id S1348664AbiHSLG4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 07:06:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346949AbiHSLEp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 07:04:45 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 170AEB7760
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 04:04:43 -0700 (PDT)
+        with ESMTP id S1348653AbiHSLG1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 07:06:27 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07A89FAC5A
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 04:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660907079;
-        bh=Nemez+zQXVBFPpO1vkaq3CdL50JzeBqBuqRTrc/C5l8=;
+        s=badeba3b8450; t=1660907168;
+        bh=04o+3RUMs9he0tyOqMuM9fnVhjHJE1i2pe/rwg/cb7M=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ZCEECU/0mxLOmlqBqsxnYODUnyUhLpcsT+VGOKCWP49TLN5oWZk870oOcp4s6MpgA
-         BOCjCPT+kFRfk9ve60Pk2UTh3aSQoA1bXwpU/bQu1KOlViIU70XRQCczF83E4sVrso
-         q9v2P9hubT1HLWGmgzCqm4qw10SFWfg+fAQ/YN+E=
+        b=GroIf/q/c6F9TrUoVajJhXFXunjQzeGMaJjJV/qVqzEqazHsprFs/Aw1ym9PGOLju
+         qjyhH/FciasrqZhpo7hMBNZ+wPNv1tVS/+18QEujcxmFgugzy8+zQOnz/SbS/xd3d8
+         vX0uWBszP1s5ZunmmBRIX1p5MJE4bxXoBwrJLSOk=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.25.183.122] ([89.1.212.11]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MVvPJ-1nx7GF3vhl-00RnYV; Fri, 19
- Aug 2022 13:04:39 +0200
-Date:   Fri, 19 Aug 2022 13:04:45 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MVNB1-1nwZ4Z1bOB-00SQqO; Fri, 19
+ Aug 2022 13:06:08 +0200
+Date:   Fri, 19 Aug 2022 13:06:14 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: js/bisect-in-c, was Re: What's cooking in git.git (Aug 2022,
- #05; Mon, 15)
-In-Reply-To: <xmqq35duvdow.fsf@gitster.g>
-Message-ID: <snn8r5pn-rr6n-376r-s663-92s81pos077p@tzk.qr>
-References: <xmqq5yityzcu.fsf@gitster.g> <p053rrpq-17q7-pnrs-3794-o04ro1445s5s@tzk.qr> <CABPp-BFAERLt_z-D=7gbXWVA9JgsqTP_2iW9BLe5S=YbsQ1V6w@mail.gmail.com> <xmqqtu6avgub.fsf@gitster.g> <CABPp-BHBOqnU7DSLkYPig=c6+emWGaE1vdzaPk0D90yQdof+6A@mail.gmail.com>
- <xmqq35duvdow.fsf@gitster.g>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: js/bisect-in-c (was: What's cooking in git.git (Aug 2022, #06;
+ Wed, 17))
+In-Reply-To: <220818.86czcxafew.gmgdl@evledraar.gmail.com>
+Message-ID: <285nq583-p3p0-q9q3-90s9-q2po503rsp0n@tzk.qr>
+References: <xmqq7d36s31e.fsf@gitster.g> <220818.86czcxafew.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:231wN9ouUawdFgZu11c1piPUJ1CUPdODmmM4/22dyHsklXphNBF
- LV7qPtOndvl6CIrHmjOSfm5AfhWp5F1zEH4xC0U289DsKVATIOOJ/dW/juSX2DEtOfF6HjQ
- qIM8l0SSjSWgBDwTGBETOuux4hOuce+uF9slGkKThzwnu2MFAt7Q3h8ID0xMMxG3d3IJ4cQ
- 1NovtQDo7jty7zkRQyvDg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7d2cPJoy81s=:vtOu5VHmIP1d33D5m8FTQm
- mri193qhVRIVHuMdh/VEy6s8TUvcEvMr/2Zj6AQeVJ8g8MA9xyitPLysE3C9kUwLT/2B6x0Er
- al6Nr963uxYeqCPacpZruymHn1ClA1gAtAiRf4NPJxRABORwzLGqps02Z87HWhPRSEWSloQlC
- /qX9I1E2ICs8zxCs9vdsP28St6v0jZjGJ5U/h7MfwnsHZJF/V31TGicD+IPbF9OUCO4nZwWFx
- /YuMrMwpmrFkJERt7LKCen3XGZHcfGyvVo/smY4h5mFVhHUjrC2LYeWPAVTDT+UzEBoO8JQiv
- nTlvS9AtWAQ0kWWp+SeqXtOqEmCiFHuPhuhyiJQ93NZ7dx+kEE02NdRhoQDTytE6QLrdOW9gy
- PT0vYMUdYOcWX8kw7r9oegOyZSsEIF2gsDQbQUnTxnzELevJ7Lax9k43CCKJIzQCZmLTvrZxZ
- d9PlwYqH2tOewQs2Kokr+XJAZAql+uYD/nsDvZoZlGBDH485QxNkqulfKN1GmqE796gcYWHpW
- jKWlB4tQ0XxVNntwgskZ89p+YWH2q40MEmIOGpPgrs5bZXH+ziEIlMiqNKr76EMv+MdxwRsp9
- /c0UHq3KjDnEbZQEHcVJ47/WcCZ6dm80cp0Jc+P4aCdyrkpo0JxV1LBnB6u+YFKMVxnWfNEJa
- F9zwS2eaeIRAGRYPRGSwVjhAVo7df0OwlnnV7+JYNUxKdONNaqxgMZXeSJBKkduwTCJ5w7tyK
- Dze1BG9Q2fHwEn3HsrKsXGzJ0Vbm815dAIptRYMTyAFLOsgsgg84gyTW8pJaHgkx1uTBHFv+M
- 93tT32wV3Ygh03daBF9ojtMzl6mbqH0U59nNuGaN78ckq55Z9zvlNlw7sdZXdE1wMPwveZLvE
- VUU8emA6lCX18zbtIOeT2izvVlHX3rgqz6Ifcy+NpV0LOB54vKZFHbCRmOLgcgGWXrnQOyELm
- a8DwAtID60neDtqc5Fys3QeUGDUWpg1hR3x+HSClw4EEYFDRKPVhXkjDEKzy6CHfXQd3QadlL
- Aq5TwSxGpnLwfTF6cASgvhaX9Scsd8C5/35m0FB8jWrYk49jQQeCjMfPd28qO6Oj+2i5r3ata
- 6Z2Ed/b/r6afTloO1ZsQsT4JjCZzjUvM04i9/abCV/Iq7Xof1t1UvQBhA==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-725568224-1660907176=:241"
+X-Provags-ID: V03:K1:ZTwv5FAHpxbIJWx4AqvqRFYyEKWNKeBCcq0HALQwQGZ10ZI/9N0
+ Oxn6ajJcyAAi3u6QmZLVSAplnPxkNggOupjbeOiO+PeFrsxYGSJ+GiV8Db43ndZhKnzBIzE
+ tZ08xn2L2YCj7c9s2j/TYRBXRG4nFNPI2U8B8hxXie80bi1iCRPu9F1GRoSlUIOPB3ybVQe
+ K4kqhfv3cJ5tKlimvUxfg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:gmhQbofsYjU=:WE6E5eGou/3hUjRFPinR3q
+ cV89BYEdgWT91NU96zdA/v+eW281Y4ckQmY2xicMa+AEF9S2/kdV68S0GqordOpL2IW41ubEb
+ nic8yQXsYZ5yCpzstp17fwKn51mnDO3hQS/Gj83jZY0vb9oN5Ea9R+B3ZYVhXNMyHMEYABV+C
+ DPbzlJ6rE6Tyq3DdYxdSf0UL0GyybsqjyCBVdtQ32BFkBgDKup8HSkdap8wRI4uu3NlN9M0/C
+ WCi0j6d7lAyEg+5/ZDw/vu3bBBROXoinlSXkTd5YZRvMsv6R2H277fOIJsQV/S7pFW5jMkNmG
+ GYSLvWF0DI6SCuBk8qVR+hrkuc8l41B2z6JqyuDSfMt4dN6z8RmL2uiQtUzFZ/FtxgtWDyZkh
+ Q3YbMsFOsop+JrOTkI0d7DZI7VTL4PUOT7SOg57+bFvAiTbekt+sBDssSrHw4dRumjdNZri5Y
+ N+4CYOx9ahtxZnvjmFYlT3bz5fJ8cwHznlqw1lTG8AiLoSnIoCEAWfWoCHuSqfCo1GevsA/wT
+ i5h63fuFkWtyJJnEF9Qmk31uRS2KoeDVUmOsfv52UjMa22gRSXJgrefAEn7z8SHZP0Npu1iMf
+ /fRlogp3uEm/EdPntZvRcxBKLG0O/IlGIDfFDL5N9TjXkKnpM+gl9dmlTG9bNdtFc40WHIeD7
+ eoa0y5SLcml0SDpB7NtbCXkdIn/gps+NhnOgrrPREFMTMZN3FIbjF+matDAaf//YJkGdKq99h
+ H1ownkhyXvnYi+89s4lyq/ncM+eFgitLzueyOibM/KGbI+0XQ21waOM4/qdKZ9+zKi5RozzVb
+ nKQNNyA/4IdaaDJBWdy6zUG0BUOA1oFHhLKiYWXexG7Im1Q+13H1Twul4jqPr1MSirZYYgR3G
+ YIuNVEi1mwb9SwJooNUG3iDwv8ndjaeczI54qQ2PMwGu/ypL9R98dXXRgel+5vvp+e3d4EzMW
+ tqpK1QxwAWXFKZRzd20jMSiYJtDx1txquK0GBcwvfD1BvDpG9+EMH3BHLkvXgA0oecHdz39jJ
+ 1V5QI5SeEeoIFrrgl4rdCcjdtcC/aeYqVeF80WwFpvALr4qUfoYGBUPiLgJKM5CUUG87678ej
+ k9zJU1REPobtN6y+8asevti0LUvalJZMDqgTmjc/yJKWAGr3FP9WJj+mA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, 17 Aug 2022, Junio C Hamano wrote:
+--8323328-725568224-1660907176=:241
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Elijah Newren <newren@gmail.com> writes:
+Hi =C3=86var,
+
+On Thu, 18 Aug 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> On Wed, Aug 17 2022, Junio C Hamano wrote:
 >
-> > Ah, gotcha.  My impression was that the exit codes did match what the
-> > previous shell code had done, but didn't match what other builtins
-> > usually return.  Perhaps I misread those discussion comments.
+> > * js/bisect-in-c (2022-06-27) 16 commits
+> >  - bisect: no longer try to clean up left-over `.git/head-name` files
+> >  - bisect: remove Cogito-related code
+> >  - Turn `git bisect` into a full built-in
+> >  - bisect: move even the command-line parsing to `bisect--helper`
+> >  - bisect: teach the `bisect--helper` command to show the correct usag=
+e strings
+> >  - bisect--helper: return only correct exit codes in `cmd_*()`
+> >  - bisect--helper: move the `BISECT_STATE` case to the end
+> >  - bisect--helper: make `--bisect-state` optional
+> >  - bisect--helper: align the sub-command order with git-bisect.sh
+> >  - bisect--helper: using `--bisect-state` without an argument is a bug
+> >  - bisect--helper: really retire `--bisect-autostart`
+> >  - bisect--helper: really retire --bisect-next-check
+> >  - bisect--helper: retire the --no-log option
+> >  - bisect: avoid double-quoting when printing the failed command
+> >  - bisect run: fix the error message
+> >  - bisect: verify that a bogus option won't try to start a bisection
+> >
+> >  Final bits of "git bisect.sh" have been rewritten in C.
+> >
+> >  Expecting a (hopefully final) reroll.
+> >  cf. <20627.86ilolhnnn.gmgdl@evledraar.gmail.com>
 >
-> Or perhaps I did ;-)
+> The msgid here is typo'd, the correct one is
+> https://lore.kernel.org/git/220627.86ilolhnnn.gmgdl@evledraar.gmail.com/
+> (i.e. a "2" is missing from the front).
+>
+> The more recent
+> https://lore.kernel.org/git/220817.86pmgzabv0.gmgdl@evledraar.gmail.com/
+> also has some more follow-up, and a proposed fix-up for one of the
+> issues I noted with the series (the completion helper interaction with
+> the new "bisect").
 
-The exit codes before and after this patch series are a red herring. The
-_current_ code prints this when calling `git bisect start -h`:
-
-	$ git bisect start -h
-	usage: git bisect--helper --bisect-reset [<commit>]
-	   or: git bisect--helper --bisect-terms [--term-good | --term-old | --te=
-rm-bad | --term-new]
-	   or: git bisect--helper --bisect-start [--term-{new,bad}=3D<term> --ter=
-m-{old,good}=3D<term>] [--no-checkout] [--first-parent] [<bad> [<good>...]=
-] [--] [<paths>...]
-	   or: git bisect--helper --bisect-next
-	   or: git bisect--helper --bisect-state (bad|new) [<rev>]
-	   or: git bisect--helper --bisect-state (good|old) [<rev>...]
-	   or: git bisect--helper --bisect-replay <filename>
-	   or: git bisect--helper --bisect-skip [(<rev>|<range>)...]
-	   or: git bisect--helper --bisect-visualize
-	   or: git bisect--helper --bisect-run <cmd>...
-
-	    --bisect-reset        reset the bisection state
-	    --bisect-next-check   check whether bad or good terms exist
-	    --bisect-terms        print out the bisect terms
-	    --bisect-start        start the bisect session
-	    --bisect-next         find the next bisection commit
-	    --bisect-state        mark the state of ref (or refs)
-	    --bisect-log          list the bisection steps so far
-	    --bisect-replay       replay the bisection process from the given fil=
-e
-	    --bisect-skip         skip some commits for checkout
-	    --bisect-visualize    visualize the bisection
-	    --bisect-run          use <cmd>... to automatically bisect
-	    --no-log              no log for BISECT_WRITE
-
-Notice how this talks about `bisect--helper` and about `--bisect-reset`.
-
-Also, the _current_ code exits with code 0 when calling `git bisect -h`.
-
-This has been the case even as far back as v2.25.1, and possibly even
-longer.
-
-Given these issues, I was mistakenly assuming that it would be okay to
-postpone these problems that are exclusively related to incorrect
-invocation of `git bisect`, and that it would make sense to focus on the
-conversion from shell code to C in _this_ patch series, and take care of
-these problems afterwards, instead of hodgepodging fixes for them into the
-same patch series as the conversion to C, the latter being hard enough to
-review as it stands, so much so that it received only a single high
-quality review.
-
-But I see that you somehow got the idea that the review that lacked
-attention to the common code path somehow was a valid review and you
-somehow got it in your mind that this was valid feedback and that the
-patch series needs to be reworked so that it _also_ addresses issues that
-have been broken _before_ it.
-
-Fine.
-
-I'll try to get to it next week. It does leave a foul taste that we're not
-separating concerns properly in the Git project, but block a patch series
-that has a specific, already large scope, just because one reviewer wants
-it to have another scope and for some reason that now must be the scope of
-the patch series.
+So now we should also include changes for the completion into this patch
+series? Are you serious?
 
 Ciao,
-Dscho
+Johannes
+
+--8323328-725568224-1660907176=:241--
