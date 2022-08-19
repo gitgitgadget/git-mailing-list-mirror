@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 010A2C38145
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 16:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7ED8FC32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 16:32:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352971AbiHSQcm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 12:32:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56838 "EHLO
+        id S1353009AbiHSQcn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 12:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353148AbiHSQao (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 12:30:44 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06256106F84
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:05:08 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id r4so6201142edi.8
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:05:08 -0700 (PDT)
+        with ESMTP id S1353026AbiHSQaY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 12:30:24 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54B3D11B4FF
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:04:37 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id a22so6200432edj.5
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:04:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=czD9IKDXPDmkyiZMTXPpK2zFD0z1cU5lU/BrnyZVdbo=;
-        b=dmz6UXgk9BJ8PL9Y0ilbZGHE5xmGoifr57eZSjGu28TcNwP+ISRHlxQVu57+cjoqYi
-         G3ovfAE4Y7oZzNGc8eN8Dh74e6vVG4sBNkdZrWCgnIZWl5tNdEFGY+ED/xNklEV05Hzm
-         I51tChCxAE1f6O1TRFUfzhP+WFkJ47p1JiwLx4+s6P+sApaqctj5EL4q9B/BvgV43n1D
-         M6VevjPlnNqnzKsvPrx3LzJseayMwNMJDwn4wcPErbY4wELpo20vz0fRdypje9YoT2TK
-         HuH0xDkNOSO2WaSpRNkQgx/dRHhQCC7FFKMUZAw8u4HPnSmjf7UkghJiMx2YCD+V8L3h
-         NxRw==
+        bh=cqA9SEcLtRKpsZOxTvEUaYqiTJf0VIUtiXd0AU7ytbo=;
+        b=MIt0axL8XlquNkpiY6BJwhyEGRJbfAnLd/7klxe6mQbz7oHIfKOStQusrAF//DQSkl
+         My5XCpwJbAg3YFAEFUQ7TaeqISADt4gazpWjFSjfcFhZ/1xNIoCdTk0kjsdV+g2x4gN5
+         xUlxrRQjYhqrJ9YRrPKUQqgRUlEPjs2PSS3MafeWBZXSL4WJMGw2rL9TGhMaOovkVS+B
+         af4A44jg1s16tpO5m7BIqy5AlpVr/zFPK4BU7BIYA+0SAZ1gnPm+3mI5bCe6sFM4NLX3
+         Mq4+uJGURR5c+LZ2PHXR2twPQmQQLI/hnexYXXN3F2FjbpxUvrTnmGlBNRvKvaDuErPa
+         bhKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=czD9IKDXPDmkyiZMTXPpK2zFD0z1cU5lU/BrnyZVdbo=;
-        b=reuDezvFUf0ZQeN3ZUFY2pKZp1oI2CfgCFb8l5O5p6YGILcSBHakULKlmXxuX8nFdf
-         j/rWyXxdqwdseBsjQNTuzfyTd/K791NExfIXBVySUhMXzWI0ROTAoxEBwkz0orBig9ys
-         1h7Dm7TpuXoBpDDz2FUUL4drsqLl9QAG5MnyWwGvkcW+a0sRyC6RopXdR6x5WqHYmWL9
-         9T/3Q6tngsw6XsVSqB1N9gRI0MkW6xye1/QvBXYN1e/ERjsEzB0XzTCWZoq5g3/dDSdc
-         FXDtn5yXD/Ifd6hb9m0J/Y1fLJdW8BLs0i5xe4tcv6asLNQtvKP6B4HW4tscocso8JWu
-         XX7g==
-X-Gm-Message-State: ACgBeo0l54ylJEjf8dqZx7HM75QupbwMNcFaOc0wGW3VwnSPVjnMeC31
-        C7O4PDnmzRRmnDACzXhWXjXd6h3EuL0=
-X-Google-Smtp-Source: AA6agR6rY7S6azF1nO1m2fqrpIq9hEuQXRaIOgcMAhOgUHheGgpnh8rRnZ3WQoR6yVC0ORHJAvo2TQ==
-X-Received: by 2002:a50:aa82:0:b0:445:dbba:6cb1 with SMTP id q2-20020a50aa82000000b00445dbba6cb1mr6706323edc.267.1660925103402;
-        Fri, 19 Aug 2022 09:05:03 -0700 (PDT)
+        bh=cqA9SEcLtRKpsZOxTvEUaYqiTJf0VIUtiXd0AU7ytbo=;
+        b=vvvjeL/SShnwIY6Jh8h1aMjcjpeXqIHHs9th+mqzAryJBp/Ibe0r1OGOFSuaOQERTR
+         B96xIPNhP/WxD9/nyZnJpohoEiKX7y8+w0Plwpi27va0FkpL0YIL8NV3y+zwurkzp990
+         Fju5bxrWbue8u2mwtqkNZlbQMRZPMIy4I0YovdimcFA+KLZ+AAMzO9zlJ39R/TU3GOPe
+         OzVQf42dwImw5VqJA6iXJwfnDIn2Q1eWVoRzgJEUn75qpHFxNp/Ayf0kX9YVivT5O+9y
+         ZbSWpMsPOmuQtp4QqgjBYVHznA9TSW8C37ov/jp6PxFokhmQSYpcDAxuCEWbz7agYyjH
+         DLPw==
+X-Gm-Message-State: ACgBeo1RCYH5bvKoQv3f/flEXkrLL805RDXdmlAiUf+BvxxwtSQOUqPS
+        izRwqZbr19BVum8lrO2v6ZworFG1DEo=
+X-Google-Smtp-Source: AA6agR5ctC3+lQ7yltG+Vpmdgoy2k47KKixgKxkm8fylGQiBz9yUQXtp2UmZ2h8112ZkbV00SwflNw==
+X-Received: by 2002:a05:6402:5c9:b0:446:fb0:56bb with SMTP id n9-20020a05640205c900b004460fb056bbmr6545733edx.173.1660925075866;
+        Fri, 19 Aug 2022 09:04:35 -0700 (PDT)
 Received: from localhost (84-236-78-250.pool.digikabel.hu. [84.236.78.250])
-        by smtp.gmail.com with ESMTPSA id q3-20020a056402040300b00445e1489313sm3238043edv.94.2022.08.19.09.05.02
+        by smtp.gmail.com with ESMTPSA id c23-20020a056402101700b00445b3cab975sm3258217edu.56.2022.08.19.09.04.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Aug 2022 09:05:03 -0700 (PDT)
+        Fri, 19 Aug 2022 09:04:35 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 17/20] builtin/remote.c: let parse-options parse subcommands
-Date:   Fri, 19 Aug 2022 18:04:08 +0200
-Message-Id: <20220819160411.1791200-18-szeder.dev@gmail.com>
+Subject: [PATCH v2 02/20] t3301-notes.sh: check that default operation mode doesn't take arguments
+Date:   Fri, 19 Aug 2022 18:03:53 +0200
+Message-Id: <20220819160411.1791200-3-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.37.2.817.g36f84ce71d
 In-Reply-To: <20220819160411.1791200-1-szeder.dev@gmail.com>
 References: <20220725123857.2773963-1-szeder.dev@gmail.com>
@@ -67,201 +67,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'git remote' parses its subcommands with a long list of if-else if
-statements.  parse-options has just learned to parse subcommands, so
-let's use that facility instead, with the benefits of shorter code,
-handling unknown subcommands, and listing subcommands for Bash
-completion.  Make sure that the default operation mode doesn't accept
-any arguments; and while at it remove the capitalization of the error
-message and adjust the test checking it accordingly.
+'git notes' without a subcommand defaults to listing all notes and
+doesn't accept any arguments.
 
-Note that 'git remote' has both 'remove' and 'rm' subcommands, and the
-former is preferred [1], so hide the latter for completion.
-
-Note also that the functions implementing each subcommand only accept
-the 'argc' and '**argv' parameters, so add a (unused) '*prefix'
-parameter to make them match the type expected by parse-options, and
-thus avoid casting a bunch of function pointers.
-
-[1] e17dba8fe1 (remote: prefer subcommand name 'remove' to 'rm',
-    2012-09-06)
+We are about to teach parse-options to handle subcommands, and update
+'git notes' to make use of that new feature.  So let's add a test to
+make sure that the upcoming changes don't inadvertenly change the
+behavior in this corner case.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- builtin/remote.c  | 70 +++++++++++++++++++++--------------------------
- t/t5505-remote.sh |  2 +-
- 2 files changed, 32 insertions(+), 40 deletions(-)
+ t/t3301-notes.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index d9b8746cb3..4a6d47c03a 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -150,7 +150,7 @@ static int parse_mirror_opt(const struct option *opt, const char *arg, int not)
- 	return 0;
- }
- 
--static int add(int argc, const char **argv)
-+static int add(int argc, const char **argv, const char *prefix)
- {
- 	int fetch = 0, fetch_tags = TAGS_DEFAULT;
- 	unsigned mirror = MIRROR_NONE;
-@@ -680,7 +680,7 @@ static void handle_push_default(const char* old_name, const char* new_name)
- }
- 
- 
--static int mv(int argc, const char **argv)
-+static int mv(int argc, const char **argv, const char *prefix)
- {
- 	int show_progress = isatty(2);
- 	struct option options[] = {
-@@ -844,7 +844,7 @@ static int mv(int argc, const char **argv)
- 	return 0;
- }
- 
--static int rm(int argc, const char **argv)
-+static int rm(int argc, const char **argv, const char *prefix)
- {
- 	struct option options[] = {
- 		OPT_END()
-@@ -1255,7 +1255,7 @@ static int show_all(void)
- 	return result;
- }
- 
--static int show(int argc, const char **argv)
-+static int show(int argc, const char **argv, const char *prefix)
- {
- 	int no_query = 0, result = 0, query_flag = 0;
- 	struct option options[] = {
-@@ -1358,7 +1358,7 @@ static int show(int argc, const char **argv)
- 	return result;
- }
- 
--static int set_head(int argc, const char **argv)
-+static int set_head(int argc, const char **argv, const char *prefix)
- {
- 	int i, opt_a = 0, opt_d = 0, result = 0;
- 	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
-@@ -1463,7 +1463,7 @@ static int prune_remote(const char *remote, int dry_run)
- 	return result;
- }
- 
--static int prune(int argc, const char **argv)
-+static int prune(int argc, const char **argv, const char *prefix)
- {
- 	int dry_run = 0, result = 0;
- 	struct option options[] = {
-@@ -1492,7 +1492,7 @@ static int get_remote_default(const char *key, const char *value, void *priv)
- 	return 0;
- }
- 
--static int update(int argc, const char **argv)
-+static int update(int argc, const char **argv, const char *prefix)
- {
- 	int i, prune = -1;
- 	struct option options[] = {
-@@ -1575,7 +1575,7 @@ static int set_remote_branches(const char *remotename, const char **branches,
- 	return 0;
- }
- 
--static int set_branches(int argc, const char **argv)
-+static int set_branches(int argc, const char **argv, const char *prefix)
- {
- 	int add_mode = 0;
- 	struct option options[] = {
-@@ -1594,7 +1594,7 @@ static int set_branches(int argc, const char **argv)
- 	return set_remote_branches(argv[0], argv + 1, add_mode);
- }
- 
--static int get_url(int argc, const char **argv)
-+static int get_url(int argc, const char **argv, const char *prefix)
- {
- 	int i, push_mode = 0, all_mode = 0;
- 	const char *remotename = NULL;
-@@ -1647,7 +1647,7 @@ static int get_url(int argc, const char **argv)
- 	return 0;
- }
- 
--static int set_url(int argc, const char **argv)
-+static int set_url(int argc, const char **argv, const char *prefix)
- {
- 	int i, push_mode = 0, add_mode = 0, delete_mode = 0;
- 	int matches = 0, negative_matches = 0;
-@@ -1739,41 +1739,33 @@ static int set_url(int argc, const char **argv)
- 
- int cmd_remote(int argc, const char **argv, const char *prefix)
- {
-+	parse_opt_subcommand_fn *fn = NULL;
- 	struct option options[] = {
- 		OPT__VERBOSE(&verbose, N_("be verbose; must be placed before a subcommand")),
-+		OPT_SUBCOMMAND("add", &fn, add),
-+		OPT_SUBCOMMAND("rename", &fn, mv),
-+		OPT_SUBCOMMAND_F("rm", &fn, rm, PARSE_OPT_NOCOMPLETE),
-+		OPT_SUBCOMMAND("remove", &fn, rm),
-+		OPT_SUBCOMMAND("set-head", &fn, set_head),
-+		OPT_SUBCOMMAND("set-branches", &fn, set_branches),
-+		OPT_SUBCOMMAND("get-url", &fn, get_url),
-+		OPT_SUBCOMMAND("set-url", &fn, set_url),
-+		OPT_SUBCOMMAND("show", &fn, show),
-+		OPT_SUBCOMMAND("prune", &fn, prune),
-+		OPT_SUBCOMMAND("update", &fn, update),
- 		OPT_END()
- 	};
--	int result;
- 
- 	argc = parse_options(argc, argv, prefix, options, builtin_remote_usage,
--		PARSE_OPT_STOP_AT_NON_OPTION);
-+			     PARSE_OPT_SUBCOMMAND_OPTIONAL);
- 
--	if (argc < 1)
--		result = show_all();
--	else if (!strcmp(argv[0], "add"))
--		result = add(argc, argv);
--	else if (!strcmp(argv[0], "rename"))
--		result = mv(argc, argv);
--	else if (!strcmp(argv[0], "rm") || !strcmp(argv[0], "remove"))
--		result = rm(argc, argv);
--	else if (!strcmp(argv[0], "set-head"))
--		result = set_head(argc, argv);
--	else if (!strcmp(argv[0], "set-branches"))
--		result = set_branches(argc, argv);
--	else if (!strcmp(argv[0], "get-url"))
--		result = get_url(argc, argv);
--	else if (!strcmp(argv[0], "set-url"))
--		result = set_url(argc, argv);
--	else if (!strcmp(argv[0], "show"))
--		result = show(argc, argv);
--	else if (!strcmp(argv[0], "prune"))
--		result = prune(argc, argv);
--	else if (!strcmp(argv[0], "update"))
--		result = update(argc, argv);
--	else {
--		error(_("Unknown subcommand: %s"), argv[0]);
--		usage_with_options(builtin_remote_usage, options);
-+	if (fn) {
-+		return !!fn(argc, argv, prefix);
-+	} else {
-+		if (argc) {
-+			error(_("unknown subcommand: %s"), argv[0]);
-+			usage_with_options(builtin_remote_usage, options);
-+		}
-+		return !!show_all();
- 	}
--
--	return result ? 1 : 0;
- }
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index a549a21ef6..9006196ac6 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -258,7 +258,7 @@ test_expect_success 'without subcommand accepts -v' '
- 
- test_expect_success 'without subcommand does not take arguments' '
- 	test_expect_code 129 git -C test remote origin 2>err &&
--	grep "^error: Unknown subcommand:" err
-+	grep "^error: unknown subcommand:" err
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index d742be8840..3288aaec7d 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -505,6 +505,11 @@ test_expect_success 'list notes with "git notes"' '
+ 	test_cmp expect actual
  '
  
- cat >test/expect <<EOF
++test_expect_success '"git notes" without subcommand does not take arguments' '
++	test_expect_code 129 git notes HEAD^^ 2>err &&
++	grep "^error: unknown subcommand" err
++'
++
+ test_expect_success 'list specific note with "git notes list <object>"' '
+ 	git rev-parse refs/notes/commits:$commit_3 >expect &&
+ 	git notes list HEAD^^ >actual &&
 -- 
 2.37.2.817.g36f84ce71d
 
