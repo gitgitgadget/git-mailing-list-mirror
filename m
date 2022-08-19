@@ -2,102 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 603B5C28B2B
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 18:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92955C32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 18:58:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350205AbiHSSpo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 14:45:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42458 "EHLO
+        id S1350938AbiHSS64 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 14:58:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349974AbiHSSpn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 14:45:43 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B26F3F321
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:45:42 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id c4so3124809iof.3
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:45:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=yYLLWzrFV0mGfExH3lc+J0gxuN6b4+IHWFS3ciOUrJs=;
-        b=Y/qCWRR7dWVt+3DPgcM+iiqWivjcK48pWI8gxjiQYAMFdtgVTPhsHRzyiLqrc0YlDs
-         ERL1VCmdHqOHDCYOM9FcE4/rGtMZzF75N5yCRgCg7fRtUZi2fmbnja1mRoOx3Kc/DQwr
-         hTjBYCWXdvElpn5vU5EsSXeVXmaP9CHTIUJp4zF64jwz/TZE0Cx0aoQD+QcEdhlns3+j
-         lRucuz060HFj6z3P2CTEvn+Db/jwcrOPGtKb3UAinTXVYAukQp6D0jP+n9MvGhKBuF1m
-         WRnlYoyRNfPWmG9Yy9MioDed4njincsadMWIGuMly9rZ1mrAYvNQHuwlxjkBkFdkvTJD
-         QavA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=yYLLWzrFV0mGfExH3lc+J0gxuN6b4+IHWFS3ciOUrJs=;
-        b=ZvR9odS272K3mzEh5DPSVYZxMlYoAwTMaSJcQiAp/LVUDDvV6BBfPlF/xlLcSG96NO
-         F/ZrAIOinhEYUY0+v93hv2cy4bSKuup3AbkGFGturRC3iAoVt6P32Xr6WnApTqEKUOD1
-         7djXghQ5DTE9NFpXUCbQQTxVVc4/eehy8XDXC7kUNnjoHS6qJEX6RpDu3Xd7w6Bl+zQv
-         oVXgimypdVPFDoF5LFJSVpKpitQRjetx4YuGFqGlfx/atWOUiuy+01aS4PtxFvrcopwk
-         23kotG9mMSLZiuVzIrolY6HRzETAhANMq+8zTpplNTIR9c/gDIVII38oMgbMo0T92yiP
-         iZCQ==
-X-Gm-Message-State: ACgBeo0gJB+TrBWxmARD3DSbtdQ/Ahe+sBa0qV5zehRC/gPZtM/5hDRk
-        W6uE/xyW6P6Z4+Bo5gb4Y7xV
-X-Google-Smtp-Source: AA6agR42688ZDqzN0sgoQ9TqYig28ReyFFJaEqJTGBvvJZsdEA+NRoSTe+HM8SLWNAqM67xu5BJ6lg==
-X-Received: by 2002:a6b:5f08:0:b0:688:9846:2f61 with SMTP id t8-20020a6b5f08000000b0068898462f61mr3863427iob.65.1660934741905;
-        Fri, 19 Aug 2022 11:45:41 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:55ca:650:1968:6180? ([2600:1700:e72:80a0:55ca:650:1968:6180])
-        by smtp.gmail.com with ESMTPSA id k10-20020a056638370a00b0034286300316sm2032401jav.166.2022.08.19.11.45.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Aug 2022 11:45:41 -0700 (PDT)
-Message-ID: <6b1e154d-e90f-aed9-64c4-6e6845abe25c@github.com>
-Date:   Fri, 19 Aug 2022 14:45:40 -0400
+        with ESMTP id S1350144AbiHSS6x (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 14:58:53 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 245474E845
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:58:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1660935528;
+        bh=CTf36Ryv8lCDVoNawgu0TiWfqzcc51QYg4r+i0wENLc=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=fLK9b81DL3HWqd5h/Lkn0iMLh1FIsKIJxqx/5ALZr9kV9ALsPFdH6IL2vNeEwBKfp
+         SWCtCcxZbYcB6i6mog3egejD+tQX0pxCvAcGZRuYpgDYRZX/i3M8jwQ3IfNWItMrL8
+         rRzHqU5UXVfCvOvsIhBPpD76ysf+Ve449I1sjWTU=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N3Gga-1nOnda2FZy-010Z9m; Fri, 19
+ Aug 2022 20:58:48 +0200
+Date:   Fri, 19 Aug 2022 20:58:47 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH] fsmonitor: option to allow fsmonitor to run against
+ network-mounted repos
+Message-ID: <20220819185847.ulr5yjcfsahydeff@tb-raspi4>
+References: <pull.1326.git.1660855703816.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH v3 0/8] scalar: enable built-in FSMonitor
-Content-Language: en-US
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de, mjcheetham@outlook.com,
-        gitster@pobox.com, Victoria Dye <vdye@github.com>
-References: <pull.1324.v2.git.1660694290.gitgitgadget@gmail.com>
- <pull.1324.v3.git.1660858853.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1324.v3.git.1660858853.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1326.git.1660855703816.gitgitgadget@gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:o0BAEZl08zD+2spMBkBmq58FJFqCB0NQyd0B6B6YVEa2A7lI96e
+ oVBPhnNjF4PYBFUdIQ06E0IdzuUCzA5B0Hb1NuEBCS7sXRQ1AsFHVdeSoEvVWOEgGi2o+c/
+ SGEI84DVOwIpLNjE8/MPZygxdl/pQwtbjZVbHrlTAiG1cMi9O/ZvFuW5kP3lGB524d2BKlC
+ kpCCvjNh6ajj2O6wEKwkQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:0YK1w9rbBKY=:+r403sVfFQfC6jR1d49xV7
+ QL+qTlH9YU3xWvd3ayKLZWsiMiUQcxTjVxKimr3nVat9pMAi1NFWn3dabwvlMGG7eLWG7IsnZ
+ HGHy6zEf8glk6rHXaZc/sKnyYZ2ytBAs37393f4UCDwJlO3Z9FFO7FSUwz4BhZVefvryQEGwb
+ UEpa6ZcAPqSkeE1ZPJkKUTW0MUePoHQei4URh1x7KYmC6wwAlEaSjYs6TtfsuTLJvphEuvxgp
+ p1yjdRZsHV7fHqqd5WTqrJhAt5cRMKn13slNQBD/cwRoR91Bv5uPfMYsu9zrzG7Bol+fKMRsc
+ wMoNBCbp5CLrmf0PCb7A0S56Kpin+/yVYCN73K4p4HrJ7+egIryFPX40Z0RRO1dEghjTSLm6U
+ wtgmtEQKduAYkJhjhbeZlp/yf2QapNlrb2UlTSNEMw8543sCC/Rh/T2gF4THFrRnSUBV57UeV
+ WiWHf9ztkQuFZcovACJWlE1/BWN3fdwNwOCXRt4Hnvdu0wYTO4WbUDXJHYZK3DLamYRGr1IxU
+ CgiKPaLjVyikKVfLOL0306dYE2OH+Wt1ZjH95vxW24KQJyMdKLv/qhZmbuWkTwKF9jCh/thTr
+ XrhPJ+SabRGJcsOCx1Vk73XxlzFAGo8DWSdkFy7x5m5Y9VfMrVmN1D8vkIi/QNYThfY+5AyKz
+ +EMuRmml4DGSkmVrh0QgHlKJRrEri0ZAbUCLjLOsgpY2qfgjSHMaCjKL1COao45afD/wV7XDw
+ OHm9QJEcoR1LS8eJT/yhb0oT49MkfQK419m2+JRAjutqha2A8ZQq5w3SJS+nKNLDNl0Ccnp4D
+ WFhF693DWyLZC9Wb5Q6l1fS3AZkzoWAEl4BCyuZH6Q53Kj0p0YxJiCVftnFlwvVLrbd280QV6
+ SCKzrvSUNcmLT8XpxQRlf7vqUblirCsz1e9E5smiBMR/Twj19cHXtnSE6a2+FghLNTqAE4WDW
+ +BZ4c38H66gURZTYNK2oVh43iFQMRoJVRw6CuXkEsqt+yTSAEeLWA85KYLtC8J6vBU5s4PouX
+ OtoWmBdm9Jfm0Vdxx15I+bQbI7qb+uwULue4bwMf6BZeSCklAFUe0UzH+vpAV6PlbKDIrgASh
+ OhDGVAJYikXVz5jlVmjMsAGiHIdOrfxp1PryFIDtXWJqzGnOuDuYzKoRQ==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/18/2022 5:40 PM, Victoria Dye via GitGitGadget wrote:
-> This series enables the built-in FSMonitor [1] on 'scalar'-registered
-> repository enlistments. To avoid errors when unregistering an enlistment,
-> the FSMonitor daemon is explicitly stopped during 'scalar unregister'.
-> 
-> Maintainer's note: this series has a minor conflict with
-> 'vd/scalar-generalize-diagnose'. Please let me know if there's anything else
-> I can provide (in addition to [2]) that would make resolution easier.
-> 
-> 
-> Changes since V2
-> ================
-> 
->  * Updated prerequisites for FSMonitor in Scalar to include
->    'fsm_settings__get_reason(the_repository) == FSMONITOR_REASON_OK' to
->    handle cases where the platform is supported, but the repository is not.
->  * Gated enabling the 'core.fsmonitor' on FSMonitor compatibility with the
->    repo.
->  * Replaced 'die()' failures in 'delete_enlistment()' with 'error()'s.
->  * Replaced 'BUILTIN_FSMONITOR' test prerequisite with already-existing
->    'FSMONITOR_DAEMON' for FSMonitor.
->  * Rewrote Scalar enlistment/repo search in 'setup_enlistment_directory()'
->    to avoid unconstrained search and respect 'GIT_CEILING_DIRECTORIES'.
->    Added tests to show the new expected behavior.
+On Thu, Aug 18, 2022 at 08:48:23PM +0000, Eric DeCosta via GitGitGadget wr=
+ote:
+> From: Eric DeCosta <edecosta@mathworks.com>
 
-I wrote a couple "thinking out loud" replies, but the series looks
-good to me without any changes.
+Just some comments on the commit message, please see inline.
 
-Thanks,
--Stolee
+>
+> Though perhaps not common, there are uses cases where users have large,
+> network-mounted repos. Having the ability to run fsmonitor against
+> network paths would benefit those users.
 
+I think that we can drop the "Though perhaps not common" - it doesn't
+add any information about the technical part of the patch.
+(And that is, what is important)
+
+And I personally use network-mounted repos every day ;-)
+
+Sone users have large, network-mounted repos. Having the ability
+to run fsmonitor against network paths would benefit those users.
+
+>
+> As a first step towards enabling fsmonitor to work against
+> network-mounted repos, a configuration option, 'fsmonitor.allowRemote'
+> was introduced for Windows. Setting this option to true will override
+> the default behavior (erroring-out) when a network-mounted repo is
+> detected by fsmonitor.
+[]
+The same option is now introduced for macOS.
+
+>
+> The the added wrinkle being that the Unix domain socket (UDS) file
+  ^^^ ^^^
+
+> used for IPC cannot be created in a network location; instead the
+> temporary directory is used.
