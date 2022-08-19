@@ -2,107 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DB26C32771
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 10:15:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57DAFC32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 10:19:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347191AbiHSKPA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 06:15:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57360 "EHLO
+        id S1347328AbiHSKT2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 06:19:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346861AbiHSKO6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 06:14:58 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6559EDAA34
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 03:14:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660904095;
-        bh=qRENCrn2BesZof1gyesj9+NG2UpHlQclekWx77R95BI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kzQbsZU1M9jDkdHRjSsZhfoffGk3erbXeh2TgxyW5xV4lZFKRIolIU/fEjFxO+fs3
-         nBtlExnKh9aLxT8ZjYdHMC7BBZX98FYwGrvQYWftVToZ/LlomuXldghWVpfUhEll1A
-         j3rABJBoNfI98sVIgq1pofsTisO7P2ff5FurlED0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.212.11]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MIMfW-1oAfgh1Tqm-00EJdO; Fri, 19
- Aug 2022 12:14:55 +0200
-Date:   Fri, 19 Aug 2022 12:15:02 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Mark Fulton <mfulton26@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: Programmatic patches (transform commits)
-In-Reply-To: <CAED_RJPh28o8bFsBEEzAYvp1DXhff2JWiTk3zHh3VbaHZephgg@mail.gmail.com>
-Message-ID: <n7prrp62-41o1-r280-qo55-9q7rnqs723p1@tzk.qr>
-References: <CAED_RJPh28o8bFsBEEzAYvp1DXhff2JWiTk3zHh3VbaHZephgg@mail.gmail.com>
+        with ESMTP id S1348205AbiHSKT1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 06:19:27 -0400
+Received: from mailproxy07.manitu.net (mailproxy07.manitu.net [217.11.48.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E2F0E3971
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 03:19:26 -0700 (PDT)
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: michael@grubix.eu)
+        by mailproxy07.manitu.net (Postfix) with ESMTPSA id 1C4AAC826A
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 12:19:23 +0200 (CEST)
+Received: by mail-io1-f50.google.com with SMTP id d68so2951598iof.11
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 03:19:22 -0700 (PDT)
+X-Gm-Message-State: ACgBeo3wkwg/JSSae08ujMuzWIAduHU0J7S2XXeyxvHyvfuqoEiPsXyo
+        Qo3660RjUBGLypk5coq4ayKtZqwgCe05UYlQoXM=
+X-Google-Smtp-Source: AA6agR7DgsUfSRYo6rol0GZLdTcevX/JDUduG7o5hfcKs9hDaBEA69+k6GqzdRhXJV9Y3atI+19Xbu3M8SOsyTs3edY=
+X-Received: by 2002:a6b:771a:0:b0:67b:d23e:277b with SMTP id
+ n26-20020a6b771a000000b0067bd23e277bmr3078967iom.203.1660904361604; Fri, 19
+ Aug 2022 03:19:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:J9dRgr0+YbdS8G3HU6VO8VTuwqLreSrlXeBsmN98YQu3D7KEUoF
- M7dBSySWqyJfNP+hL5l/+aDZT4rrnj7qUME1mQccbwVmY3YT/bK/G4xDu8zIroVO6cq46ZY
- Ue3ZzxanLSb+H7H4cbnYGiYcbVJh/kTMpGMH+yI0ESwLYFl5wXkREgdi+NLKstlJzrUerey
- zrGBSXzjJ3mk2+6RioI0g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TJyX+wG0Vao=:hYY3XEYI9c6XX7XNjIBhlU
- 7Khj4TyAkveZZ0u5J6GUwFm3q2fE8SNyAJf+l3tJsn78sYkSlN8QJd4HLPpfO8NGjBqFo4BWR
- 1ja4+USIiZTI/nsiuXzyJSK/5aJWjxBZUsjbzrGKufhWUAOwE0KyNuJCF835P3koC9+6vAnB+
- nCs3qN0KxAIgtHjbajLfUi1b+4DSKheKbP3kk7iqtubYwjgiA6JSXk8XbnoehlPiC71gAUWqY
- 2dmWgEHiss89DJWNUxN9xWGnw89/F0x58Mr1acsVgpeDghHgfo3oMLVVXYM9uI0gzTjRd8ELu
- Yzj6FWnEYUE7356D7LKx+abWLDVSSPgkdMv+LYsuuK6xBmeP8klekdurVlUU7+JuftpGhzZFd
- eUb6bIDklzl9p/unw1q/qhzsCruvTcwvE5zKNhQP1excoVHJGdacPOmiexJeV8o5RWisA5erj
- fkgofvB2C4oqIaVskvB9jK0pUjM++nJFG7WDrzMxSITq+QaX0Ulp/DwGUDlI+nhe6i2TztTGf
- 3IX2vziVpAtH/8bGyVzZeSv+EbTi0fUJApKE3j9/OF3UTUKOT41f1EFk5Z9PRerwOiWlG/B0L
- aj9+S0bdtP1kbuNXCtsCIYW/jyA6FPb+hf0wiAHDPIi0G606I5QTqd9SX7qGuqow5cJJWlzCp
- MZJY762iGrnaA7A9BUGH6xgWAS24UcAAThEc1PDUR33MrFPOWAdjyHkyG5ZhiwCd6tARIAIsV
- czOuD21QLVelF2UowQipxWem4Tw9FcNRDqXJnqAgDGhrTsrJlyX2MQLghrgPwK9AVmgSjEFrF
- eQAvKuUFYh5BU+RAOMIJpHYngeETIcBjcvK1cNE8dASFEgXaSHOLvoNz8BZFe5p09wbGh/sq9
- CQVKJnjfYHiJoYov0/u3rCOD9gaLntDZnVF3y7KHkfIKa7Si8AmZrWYbUTM35n05ofCKAzvXJ
- kgzAtdIK/0zkSxv/+/ZXAmBIAEVzkuCOx5T1MCYCrkDA1W8q9+VJh4dcFGKY3Lxpu/PRuJIU8
- raMSJCHP8nrXiuOei5fxrTblUzjq25mfcKu1G2lqM6T7FsPyEnk9I6s/nxsKzjQwVYGjrpNT2
- NlkSkuwnODknZ8SumJBiRVQcRyGvsyemS/cWENLxfx4xekju0R4JmTNBg==
-Content-Transfer-Encoding: quoted-printable
+References: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr> <cover.1660828108.git.git@grubix.eu>
+ <2p150404-o6r0-4p10-o0s4-orso00o6n369@tzk.qr>
+In-Reply-To: <2p150404-o6r0-4p10-o0s4-orso00o6n369@tzk.qr>
+From:   Michael J Gruber <git@grubix.eu>
+Date:   Fri, 19 Aug 2022 12:19:10 +0200
+X-Gmail-Original-Message-ID: <CAA19uiQhgxKDM8LJq-os=KuxmwVOt2eJ_pkpj0eLBU=E0MYLRQ@mail.gmail.com>
+Message-ID: <CAA19uiQhgxKDM8LJq-os=KuxmwVOt2eJ_pkpj0eLBU=E0MYLRQ@mail.gmail.com>
+Subject: Re: [PATCH 0/4] sequencer: clarify translations
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Mark,
-
-On Thu, 18 Aug 2022, Mark Fulton wrote:
-
-> Is there a way to commit a transform script that programmatically
-> applies file changes rather than committing the file changes directly?
+Am Fr., 19. Aug. 2022 um 11:32 Uhr schrieb Johannes Schindelin
+<Johannes.Schindelin@gmx.de>:
 >
-> e.g. Imagine in a large repository that a contributor wants to replace
-> certain instances of "abc" with "xyz". A transform script might be
-> like the following:
+> Hi Michael,
 >
-> ```sh
-> #!/bin/sh
+> On Thu, 18 Aug 2022, Michael J Gruber wrote:
 >
-> sed -i 's/abc/xyz/g' $(find .)
-> ```
+> > thanks for all your input to my RFC patch. I tried to summarize and pack
+> > everything up into this little series.
+> >
+> > A follow-up could (but does not have to) turn translated action names
+> > into untranslated git command names in some places.
+>
+> Thank you for persisting on this, and on behalf of the core Git reviewers
+> I would like to apologize for the hornets' nest.
 
-I do have a script to do such a thing, and I am sure other users do, too.
-It would be a simpler script if it did not have to accommodate for `sed`'s
-`-i` option behaving differently between GNU and BSD variants. For the GNU
-variant, I use
+No need to. After all, this thoroughness is a huge part of what makes
+git into what it is.
 
-	git grep -zl "$regex" | xargs -0r sed -i "s/$regex/$replacement/g"
+It's also why I'ven been participating much less: simply for lack of
+time. That thoroughness takes time, sometimes much more than expected
+(and can be frustrating, even in the very technical-physical meaning).
+But discussions here are always about the best solution (not "whose"
+solution "wins"), and that is why I'm always happy to be back for a
+bit.
 
-and for the BSD variant I use `sed -i ''` (i.e. an extra, empty argument)
-and skip the `-r` option because BSD `xargs` does not understand it.
+> I offer my ACK to this iteration of the patch series, with or without the
+> v2 of patch 4/4.
 
-> Applying such a "programmatic patch" will potentially edit many files.
-> Doing a code review on such a change is error prone due to authors
-> resolving merge conflicts manually, etc. while reviewing the patch in
-> some circumstances is much easier (especially tools for specifically
-> this type of file transformations are used to make it easy to parse
-> code, traverse abstract syntax trees, make edits, etc.).
+Thanks!
 
-In the Git project, we do have a track record of mentioning the exact
-commands for automated transformation in the commit message, see e.g.
-https://github.com/git/git/commit/8dcf73c5c940.
+Personally, I care only about the consistent reflog, which currently
+means untranslated. Not that I look at the reflog all the time, but
+...
 
-The idea is that any reviewer could run the same command, verify that the
-outcome is the same, and give their ACK. Or, in case of merge conflicts,
-they would re-run the command and commit the result using the original
-commit message.
-
-Ciao,
-Dscho
+Michael
