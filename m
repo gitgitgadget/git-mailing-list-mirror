@@ -2,245 +2,377 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21CCDC25B0E
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 04:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B81AEC25B0E
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 04:28:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239216AbiHSE1T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 00:27:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57728 "EHLO
+        id S1346062AbiHSE2V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 00:28:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233053AbiHSE1S (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 00:27:18 -0400
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F4D0D1E16
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 21:27:15 -0700 (PDT)
-Received: by mail-qv1-xf30.google.com with SMTP id l18so2600804qvt.13
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 21:27:15 -0700 (PDT)
+        with ESMTP id S233053AbiHSE2S (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 00:28:18 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6555CF64
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 21:28:14 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id a4so3841351wrq.1
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 21:28:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc;
-        bh=egPgEZcmEtu8uI2t/65ZoICxf709uo9elU2R0AnvDtI=;
-        b=Q3ynS0psOAWuyF6qT942xUv+r7xReLW0kZ7SjDQg6OqZp5lyA5CMYwabuNjwprhy2u
-         rIs+fhO8jV+nGORrHVgtKLjfwW+hHGXywmu10Tc/2Dc+m7hG5a3vS3MBPctkQJZ/5Qx7
-         YrTYZmqAXud7LpT0o/F8GX+csl3hFf0yZqb5V+d2xU8yHV48QA6LDPqhndo+9qxfzEmQ
-         6LvVnarQzixPzk7XWd093rTRiENJIRRMgzgOLZbwywMNKdVMpWl3hpxlQ7pzx2qNzUGh
-         yP8gJegtzOe7GFWKCZ19UCl858kftJ1iZDedax8icrTngPqJgUfM4iz64Ppz+rY5N+4s
-         GhuA==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=dkVOoLRVbULeqpGuUxyYCeScj/cWpy/9RXHO1x+spIo=;
+        b=IUUnbufm6WDyrJ2Y887h7BCCriML6ywNiEkeX/kiDFUMQXu0B+89wxscFvmpo5UTnA
+         HLcPOcJjRzVeLRJO3tITO8njGg38bcyH5asXSj+GejOjqXXc+4YORw4srF1GpSKQiesk
+         Wmp/lvOTUsJbwAJvOPKZkZV4mi2UMK+jouGoYd4rNHhWuYFRJnkuDmfEJMOqU0KWYNuX
+         lyVW8S7Z2Qcnh5HPLzQVTXV4lIdryIXrsZjhpEfYR8/MLc+hQSNNFSirBPAR7hq53gmD
+         qJYGHNr8z6jXH3s2Rhq/FMuh2dhwMFc3zFDp+weROHfZ9VnjI54/Xf42zqt3fSC9FpJR
+         v/Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
-        bh=egPgEZcmEtu8uI2t/65ZoICxf709uo9elU2R0AnvDtI=;
-        b=AiX+4S/bnEnejSWLzCPyH4DlsbRTVRnYQzHui0mCxCpQwcZ2m0XAq8hdYlztHzd3p+
-         MUUr/NG3zuMJJ0bXvOYMLhzFh1dMdMTXYyh/fU8SyGe1U+8qjVMBG4oG+N9AZ60R/woQ
-         wIumwGrbmZXHZwCyiXXMHq+OrEcSdO450EAzKXluMko7tsFh+fBjBvXPgb8EudfzjZss
-         LwvHKe2ZIXCRjFNwLQzI0eS8dkTfnZOedVFQfC1tDHrWRLGsh0/EwxrzS80t76NO7KYm
-         2aaO32NB/E3/pjvmSoNdwVu1M1InOnsr9YPN4kyM5pnMChxymYKJzxMrJP75mnjWtk6Y
-         eZLQ==
-X-Gm-Message-State: ACgBeo1YVYCWof/wW4UXQyph0iXKKineWwIasxOyMUKvOaRF9UaePCcp
-        VLZMdp73gOedPDZ6uCtEXmtG5uwjCbtauW75TR4=
-X-Google-Smtp-Source: AA6agR4gZfI2TRAHAqV6Gj+/H2Swg/waa8zFlAwl+TPhPnpZ+iyQtcpP9ihIFqIYDOs5jIPIs1friB9hlpJAPmzV9Dg=
-X-Received: by 2002:a05:6214:2a82:b0:476:b707:e1c4 with SMTP id
- jr2-20020a0562142a8200b00476b707e1c4mr4878733qvb.99.1660883234137; Thu, 18
- Aug 2022 21:27:14 -0700 (PDT)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=dkVOoLRVbULeqpGuUxyYCeScj/cWpy/9RXHO1x+spIo=;
+        b=KAUBUwaRruNy34a0C4WyJ3dm+zsT3EcE8rkj3JSGKVyNxQqpETqDpSaADlkuL6CT17
+         n3RlPxzVSX2P/f3sWRiRM8OnD0AUAzfuUHsbYK08QUx5ZdJIsqqwN7TNnc4f9dZu/1Na
+         NXxRm1yGJxpmy+rkvRAAcjW0TS/d7Sgc605dFCUOSLw/WN2YNTCyEp1iu4vAF38lbtAK
+         4MUHypRQ9QTnwRQW7LIVfeIsV22aePYUd8iol1TcFRQ5rIGoMunRKqeAzsStcr8I6A2Z
+         PTY6guTbDzi1XT0vU9X1cQMod7QBQ8POf/OhJSM58WFhT6Y6EUho9gl5EdFhGsLGkHun
+         I4Tw==
+X-Gm-Message-State: ACgBeo2t5FjDZQqi2dFy5NHYM+6PIjlj7IMWlsTttbAOD0DDrilHgYXR
+        Cp4nTdjisUHYqR+chR9rEaYyl6fmcKk=
+X-Google-Smtp-Source: AA6agR4xhd9xXKLQXx4OVW0Pz3FKFp1fmGslGkbrDVkRk1E1RGtvd+zN0EJz9HUDF/GjQx8nHPVwcw==
+X-Received: by 2002:a5d:47a5:0:b0:220:5985:6710 with SMTP id 5-20020a5d47a5000000b0022059856710mr3184756wrb.633.1660883292485;
+        Thu, 18 Aug 2022 21:28:12 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n3-20020a05600c3b8300b003a54fffa809sm4696781wms.17.2022.08.18.21.28.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Aug 2022 21:28:11 -0700 (PDT)
+Message-Id: <pull.1303.v3.git.1660883290.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1303.v2.git.1660803467.gitgitgadget@gmail.com>
+References: <pull.1303.v2.git.1660803467.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 19 Aug 2022 04:28:07 +0000
+Subject: [PATCH v3 0/3] Allow --ancestry-path to take an argument
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20210317204939.17890-1-alban.gruin@gmail.com> <20220809185429.20098-1-alban.gruin@gmail.com>
- <20220809185429.20098-9-alban.gruin@gmail.com> <08ea1eec-58fb-cbfa-d405-0d4159c99515@gmail.com>
- <xmqqilmzkd7p.fsf@gitster.g> <qs23r0n8-9r24-6095-3n9n-9131s69974p1@tzk.qr>
- <xmqqedxgt1zx.fsf@gitster.g> <848p4p89-2219-7874-ss50-2o0rp4r02902@tzk.qr>
- <CABPp-BGSFYWvA5HktLf33=w7JB95iDLDNoE0gdA3oUtb+qYoQQ@mail.gmail.com>
- <xmqq7d36vfur.fsf@gitster.g> <220818.868rnlaa0h.gmgdl@evledraar.gmail.com>
- <CABPp-BEvn5ovFF8DzjVW-H9rQ-UdU56uT_dk80w9p7DHokD+rQ@mail.gmail.com> <220819.865yip7xi0.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220819.865yip7xi0.gmgdl@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 18 Aug 2022 21:27:03 -0700
-Message-ID: <CABPp-BGmukb=C_wzg8774hYRRobGmNJybzh2kCSuLhqV+m4GqA@mail.gmail.com>
-Subject: Re: [PATCH v8 08/14] merge-resolve: rewrite in C
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 18, 2022 at 7:55 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Thu, Aug 18 2022, Elijah Newren wrote:
->
-> > On Thu, Aug 18, 2022 at 7:42 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > <avarab@gmail.com> wrote:
-> >>
-> >> On Wed, Aug 17 2022, Junio C Hamano wrote:
-> >>
-> >> > Elijah Newren <newren@gmail.com> writes:
-> >> >
-> >> >> There's also another concern you tried to address in your other ema=
-il;
-> >> >> let me quote from that email here:
-> >> >>
-> >> >>> If you want to have an easy example of a custom merge strategy, th=
-en let's
-> >> >>> have that easy example. `git-merge-resolve.sh` ain't that example.
-> >> >>>
-> >> >>> It would be a different matter if you had commented about
-> >> >>> `git-merge-ours.sh`:
-> >> >>> https://github.com/git/git/blob/v2.17.0/contrib/examples/git-merge=
--ours.sh
-> >> >>> That _was_ a simple and easy example.
-> >> >>
-> >> >> ...and it was _utterly useless_ as an example.  It only checked tha=
-t
-> >> >> the user hadn't modified the index since HEAD.  It doesn't demonstr=
-ate
-> >> >> anything about how to merge differing entries, since that merge
-> >> >> strategy specifically ignores changes made on the other side.  Sinc=
-e
-> >> >> merging differing entries is the whole point of writing a strategy,=
- I
-> >> >> see no educational value in that particular script.
-> >> >>
-> >> >> `git-merge-resolve.sh` may be an imperfect example, but it's certai=
-nly
-> >> >> far superior to that.
-> >> >> ...
-> >> >> If someone makes a better example (which I agree could be done,
-> >> >> especially if it added lots of comments about what was required and
-> >> >> why), and ensures we keep useful test coverage (maybe using Junio's
-> >> >> c-resolve suggestion in another email), then my concerns about
-> >> >> reimplementing git-merge-resolve.sh in C go away.
-> >> >>
-> >> >> If that happens, then I still think it's a useless exercise to do t=
-he
-> >> >> reimplementation -- unless someone can provide evidence of `-s
-> >> >> resolve` being in use -- but it's not a harmful exercise and wouldn=
-'t
-> >> >> concern me.
-> >> >>
-> >> >> If the better example and mechanism to retain good test coverage
-> >> >> aren't provided, then I worry that reimplementing is a bunch of wor=
-k
-> >> >> for an at best theoretical benefit, coupled with a double whammy
-> >> >> practical regression.
-> >> >
-> >> > Ah, you said many things I wanted to say already.  Thanks.
-> >>
-> >> I may have missed something in this thread, but wouldn't an acceptable
-> >> way to please everyone here be to:
-> >>
-> >>  1. Have git's behavior be that of the end of this series...
-> >>  2. Add a GIT_TEST_* mode where we'll optionally invoke these "built-i=
-n"
-> >>     merge strategies as commands, i.e. have them fall back to
-> >>     "try_merge_command()".
-> >
-> > In the portion of the email you quoted and responded to, most of the
-> > text was talking about how git-merge-resolve.sh serves an important
-> > educational purpose, yet you've only tried to address the testing
-> > issue.  I think both are important.
->
-> *Nod*, I meant (but should have said) "on the topic of the test
->  coverage"...
+Changes since v2:
 
-Ah, yes, that would have helped.  :-)
+ * Incorporated Stolee's suggested patch as a preliminary cleanup of t6019.
+   Slightly modified his patch by:
+   * fixing the "repetitive" typo pointed out by Eric
+   * removed the unnecessary "return 1" pointed out by Ævar
+   * switched "rev-list" to "log" since we are using --format anyway, in
+     order to remove the need to call "sed" afterward
+ * lots of wording improvements suggested by Jonathan
+ * fixed an issue with argument parsing pointed out by Jonathan
 
-> > The easiest way to fix the
-> > educational shortcoming of this series is to reverse the deleting of
-> > git-merge-resolve.sh, and restore the building and distribution of
-> > git-merge-resolve from that script.  Unfortunately, that generates a
-> > collision between both the script and the builtin being used to build
-> > the same file (namely, git-merge-resolve)...
->
-> I'd think if we were shipping it as an example we could give it a
-> different name, or not install it as an executable, but in the "shared"
-> part (along with the README etc.).
+Changes since v1:
 
-Seems reasonable; I'm slightly partial to the name
-"git-merge-strategy-demo" (though "--strategy strategy-demo" might
-look weird), or perhaps just "git-merge-demo" (though that makes
-people wonder what kind of demo).
+ * Tweaked the commit message, and incorporated Junio's suggestion to update
+   left_flag and ancestry_flag together.
 
-> Or keep it in-tree in contrib, but we did try that sort of thing before
-> with 49eb8d39c78 (Remove contrib/examples/*, 2018-03-25) :)
->
-> I think the best way forward is to just note in the documentation some
-> examples of how to write a merge driver, either by linking to an older
-> version of the script, or quoting it inline.
+Series description:
 
-Nitpick: "merge strategy", not "merge driver".
+This came out of a previous thread[1], where I wanted to be able to run
+something like
 
-A merge driver is something defined in .gitattributes and only ever
-functions on three versions of one file, never having bigger knowledge
-of the wider tree.  A merge driver is thus a special purpose three-way
-content merge of a single file (replacing the normal xdiff merge
-stuff) tailored to a specific file type.
+git log --oneline --ancestry-path=ab/submodule-cleanup main..seen
 
-A merge strategy, in contrast, is given multiple commits to merge and
-thus has a view of the whole tree.  A merge strategy needs to decide
-whether and how to handle directory/file conflicts, differing modes,
-submodule updates, recursive ancestor consolidation, file renames
-(including weird cases like colliding renames or renamed differently),
-directory renames, etc.  A merge strategy may well call various merge
-drivers (assuming some are defined in .gitattributes) for different
-paths within the tree, and/or fall back to calling (directly or
-indirectly) the code in xdiff to handle the three-way merge of
-individual files.
 
-> > which is yet another
-> > reason that the easiest solution available here is to just not rewrite
-> > this script in C at all.
->
-> I think there's bigger benefits to moving more things to C & built-ins,
-> so I'd prefer to see some version of this where what we do by default is
-> to call this C code (or similar), and not as a sub-process.
+and see the commits in main..seen which contained ab/submodule-cleanup in
+their ancestry path. Let me start by defining the terminology "X is in a
+commit's ancestry path". By that, I just mean that either the commit is X,
+the commit is an ancestor of X, or the commit is a descendant of X. With
+that definition...
 
-Yes, in general I agree there are big benefits to moving towards C &
-built-ins.  I'm unconvinced any of them apply in the specific case of
-merge-resolve, as noted at length earlier in this thread.
+The command
 
-If someone wants to do it anyway, they should just make sure that (1)
-testing of external merge strategies doesn't regress and remains well
-tested, and (2) there is a good story for educating users about how to
-write external merge strategies, or at least as good as what we have
-now.  If I feel either is being ignored or regressing, I'll likely
-express my concerns again.
+git log --ancestry-path A..B
 
-> > There are certainly other possible solutions to the educational issue,
-> > and might not even be too hard, but we'd need someone to implement one
-> > before I'd agree we found an "acceptable way to please everyone".  :-)
->
-> *nod*
->
-> >> So something like this on top of this series (assume my SOB etc. if th=
-is
-> >> is acceptable). I only tested this locally, but it seems to do the rig=
-ht
-> >> thing for me:
-> > <snip patch>
-> >
-> > How did you test?  I'm a bit confused...unless I'm misreading
-> > something, it appears to me that ci/lib.sh sets SKIP_DASHED_BUILT_INS
-> > unconditionally which would probably cause your proposal to break.
->
-> Admittedly not very thoroughly, but I'm fairly sure it does the right
-> thing when it comes to this, and SKIP_DASHED_BUILT_INS doesn't enter
-> into it (and all my local builds use SKIP_DASHED_BUILT_INS=3DY).
->
-> The try_merge_command() invokes merge-what-ever, and does a
-> run_command_v_opt(args.v, RUN_GIT_CMD). At that point we'll invoke a
-> "git merge-what-ever", i.e. we don't need a "git-merge-what-ever" binary
-> to exist.
->
-> This is what we do in general when git is invoking itself, and we'd need
-> to go out of our way to have it not work in this case (i.e. build it as
-> a stand-alone program, like git-http-fetch, and not as a built-in).
 
-Oh, right, I was mixing up git-merge-one-file (which merge-resolve has
-merge-index invoke, and yes including the dash right after "git") and
-`git merge-resolve`.  Sorry about that.
+means find the commits in A..B which contain A in their ancestry path. I
+sometimes still want to use A..B to get the basic range, but would like to
+use a commit other than A for specifying which ancestry path is of interest.
+So, for example, I might want to use
+
+git log --ancestry-path=C A..B
+
+
+to mean find the commits in A..B which contain C in their ancestry path, or
+use
+
+git log --ancestry-path=C --ancestry-path=D A..B
+
+
+to mean find the commits in A..B which contain either C or D in their
+ancestry path.
+
+This series implements this request, by allowing --ancestry-path to take an
+optional argument. With it, I can find the answer to my question in the
+thread at [1] within the git.git repository (replacing branch names with
+actual hashes since the branches have since moved on):
+
+$ git log --oneline --ancestry-path=5b893f7d81 8168d5e9c2..ac0248bfba | wc -l
+36
+
+
+This returns the answer I want, whereas dropping the '=5b893f7d81' from the
+command line gives me 192 unwanted commits (228 total), and various other
+command line flags (--first-parent, --boundary, etc.) also fail to give me
+the set of commits I am looking for.
+
+[1]
+https://lore.kernel.org/git/CABPp-BF+8aqysioP_e27Q9kJ02rE2SuSqXu+XphzKWnk5a_Q+A@mail.gmail.com/
+
+Derrick Stolee (1):
+  t6019: modernize tests with helper
+
+Elijah Newren (2):
+  rev-list-options.txt: fix simple typo
+  revision: allow --ancestry-path to take an argument
+
+ Documentation/rev-list-options.txt |  46 +++++++++----
+ object.h                           |   2 +-
+ revision.c                         |  89 ++++++++++++++++---------
+ revision.h                         |   9 +++
+ t/t6019-rev-list-ancestry-path.sh  | 101 +++++++++++------------------
+ 5 files changed, 141 insertions(+), 106 deletions(-)
+
+
+base-commit: 6a475b71f8c4ce708d69fdc9317aefbde3769e25
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1303%2Fnewren%2Fancestry-path-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1303/newren/ancestry-path-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1303
+
+Range-diff vs v2:
+
+ 1:  68ab719d99c = 1:  68ab719d99c rev-list-options.txt: fix simple typo
+ -:  ----------- > 2:  5226da2123e t6019: modernize tests with helper
+ 2:  f580ec6d060 ! 3:  b810b3c8a2a revision: allow --ancestry-path to take an argument
+     @@ Commit message
+              git log --ancestry-path master..seen
+          which shows all commits which satisfy all three of these criteria:
+            * are an ancestor of seen
+     -      * are not an ancestor master
+     +      * are not an ancestor of master
+            * have master as an ancestor
+      
+          This commit allows another variant:
+     @@ Documentation/rev-list-options.txt: Default mode::
+      -	directly on the ancestry chain between the 'commit1' and
+      -	'commit2', i.e. commits that are both descendants of 'commit1',
+      -	and ancestors of 'commit2'.
+     -+	or 'commit2 {caret}commit1'), only display commits in that
+     -+	range where <commit> is part of the ancestry chain.  By "part of
+     -+	the ancestry chain", we mean including <commit> itself and
+     -+	commits that are either ancestors or descendants of <commit>.
+     -+	If no commit is specified, use 'commit1' (the excluded part of
+     -+	the range) as <commit>.  Can be passed multiple times to look for
+     -+	commits in the ancestry range of multiple commits.
+     ++	or 'commit2 {caret}commit1'), only display commits in that range
+     ++	that are ancestors of <commit>, descendants of <commit>, or
+     ++	<commit> itself.  If no commit is specified, use 'commit1' (the
+     ++	excluded part of the range) as <commit>.  Can be passed multiple
+     ++	times; if so, a commit is included if it is any of the commits
+     ++	given or if it is an ancestor or descendant of one of them.
+       
+       A more detailed explanation follows.
+       
+     @@ Documentation/rev-list-options.txt: Note the major differences in `N`, `P`, and
+      -	range. I.e. only display commits that are ancestor of the ``to''
+      -	commit and descendants of the ``from'' commit.
+      +--ancestry-path[=<commit>]::
+     -+	Limit the displayed commits to those containing <commit> in their
+     -+	ancestry path.  I.e. only display <commit> and commits which have
+     -+	<commit> as either a direct ancestor or descendant.
+     ++	Limit the displayed commits to those which are an ancestor of
+     ++	<commit>, or which are a descendant of <commit>, or are <commit>
+     ++	itself.
+       +
+       As an example use case, consider the following commit history:
+       +
+     @@ revision.c: static int still_interesting(struct commit_list *src, timestamp_t da
+       
+       /*
+      - * "rev-list --ancestry-path A..B" computes commits that are ancestors
+     -+ * "rev-list --ancestry-path=C A..B" computes commits that are ancestors
+     -  * of B but not ancestors of A but further limits the result to those
+     +- * of B but not ancestors of A but further limits the result to those
+      - * that are descendants of A.  This takes the list of bottom commits and
+      - * the result of "A..B" without --ancestry-path, and limits the latter
+      - * further to the ones that can reach one of the commits in "bottom".
+     -+ * that have C in their ancestry path (i.e. are either ancestors of C,
+     -+ * descendants of C, or are C).  If multiple --ancestry-path=$COMMITTISH
+     -+ * arguments are supplied, we limit the result to those that have at
+     -+ * least one of those COMMITTISH in their ancestry path. If
+     -+ * --ancestry-path is specified with no commit, we use all bottom
+     -+ * commits for C.
+     ++ * "rev-list --ancestry-path=C_0 [--ancestry-path=C_1 ...] A..B"
+     ++ * computes commits that are ancestors of B but not ancestors of A but
+     ++ * further limits the result to those that have any of C in their
+     ++ * ancestry path (i.e. are either ancestors of any of C, descendants
+     ++ * of any of C, or are any of C). If --ancestry-path is specified with
+     ++ * no commit, we use all bottom commits for C.
+     ++ *
+     ++ * Before this function is called, ancestors of C will have already
+     ++ * been marked with ANCESTRY_PATH previously.
+      + *
+     -+ * Before this function is called, ancestors of C will have already been
+     -+ * marked with ANCESTRY_PATH previously, so we just need to also mark
+     -+ * the descendants here, then collect both sets of commits.
+     ++ * This takes the list of bottom commits and the result of "A..B"
+     ++ * without --ancestry-path, and limits the latter further to the ones
+     ++ * that have any of C in their ancestry path. Since the ancestors of C
+     ++ * have already been marked (a prerequisite of this function), we just
+     ++ * need to mark the descendants, then exclude any commit that does not
+     ++ * have any of these marks.
+        */
+      -static void limit_to_ancestry(struct commit_list *bottom, struct commit_list *list)
+      +static void limit_to_ancestry(struct commit_list *bottoms, struct commit_list *list)
+     @@ revision.c: static int limit_list(struct rev_info *revs)
+      -	if (revs->ancestry_path) {
+      -		bottom = collect_bottom_commits(original_list);
+      -		if (!bottom)
+     -+	if (revs->ancestry_path_need_bottoms) {
+     ++	if (revs->ancestry_path_implicit_bottoms) {
+      +		collect_bottom_commits(original_list,
+      +				       &revs->ancestry_path_bottoms);
+      +		if (!revs->ancestry_path_bottoms)
+     @@ revision.c: static int handle_revision_opt(struct rev_info *revs, int argc, cons
+       	const unsigned hexsz = the_hash_algo->hexsz;
+       
+      @@ revision.c: static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+     - 		revs->first_parent_only = 1;
+     - 	} else if (!strcmp(arg, "--exclude-first-parent-only")) {
+     - 		revs->exclude_first_parent_only = 1;
+     --	} else if (!strcmp(arg, "--ancestry-path")) {
+     -+	} else if (!strcmp(arg, "--ancestry-path") ||
+     -+		   skip_prefix(arg, "--ancestry-path=", &optarg)) {
+       		revs->ancestry_path = 1;
+       		revs->simplify_history = 0;
+       		revs->limited = 1;
+     -+		if (optarg) {
+     -+			struct commit *c;
+     -+			struct object_id oid;
+     -+			const char *msg = _("could not get commit for ancestry-path argument %s");
+     ++		revs->ancestry_path_implicit_bottoms = 1;
+     ++	} else if (skip_prefix(arg, "--ancestry-path=", &optarg)) {
+     ++		struct commit *c;
+     ++		struct object_id oid;
+     ++		const char *msg = _("could not get commit for ancestry-path argument %s");
+     ++
+     ++		revs->ancestry_path = 1;
+     ++		revs->simplify_history = 0;
+     ++		revs->limited = 1;
+      +
+     -+			if (repo_get_oid_committish(revs->repo, optarg, &oid))
+     -+				return error(msg, optarg);
+     -+			get_reference(revs, optarg, &oid, ANCESTRY_PATH);
+     -+			c = lookup_commit_reference(revs->repo, &oid);
+     -+			if (!c)
+     -+				return error(msg, optarg);
+     -+			commit_list_insert(c, &revs->ancestry_path_bottoms);
+     -+		} else {
+     -+			revs->ancestry_path_need_bottoms = 1;
+     -+		}
+     ++		if (repo_get_oid_committish(revs->repo, optarg, &oid))
+     ++			return error(msg, optarg);
+     ++		get_reference(revs, optarg, &oid, ANCESTRY_PATH);
+     ++		c = lookup_commit_reference(revs->repo, &oid);
+     ++		if (!c)
+     ++			return error(msg, optarg);
+     ++		commit_list_insert(c, &revs->ancestry_path_bottoms);
+       	} else if (!strcmp(arg, "-g") || !strcmp(arg, "--walk-reflogs")) {
+       		init_reflog_walk(&revs->reflog_info);
+       	} else if (!strcmp(arg, "--default")) {
+     @@ revision.h: struct rev_info {
+       			cherry_mark:1,
+       			bisect:1,
+       			ancestry_path:1,
+     -+			ancestry_path_need_bottoms:1,
+     ++
+     ++			/* True if --ancestry-path was specified without an
+     ++			 * argument. The bottom revisions are implicitly
+     ++			 * the arguments in this case.
+     ++			 */
+     ++			ancestry_path_implicit_bottoms:1,
+     ++
+       			first_parent_only:1,
+       			exclude_first_parent_only:1,
+       			line_level_traverse:1,
+     @@ t/t6019-rev-list-ancestry-path.sh: test_description='--ancestry-path'
+       #
+       #  D..M -- M.t                 == M
+       #  --ancestry-path D..M -- M.t == M
+     -@@ t/t6019-rev-list-ancestry-path.sh: test_expect_success 'rev-list --ancestry-path D..M' '
+     - 	test_cmp expect actual
+     - '
+     +@@ t/t6019-rev-list-ancestry-path.sh: test_ancestry () {
+     + test_ancestry "D..M" "E F G H I J K L M"
+       
+     -+test_expect_success 'rev-list --ancestry-path=F D..M' '
+     -+	test_write_lines E F J L M >expect &&
+     -+	git rev-list --ancestry-path=F --format=%s D..M |
+     -+	sed -e "/^commit /d" |
+     -+	sort >actual &&
+     -+	test_cmp expect actual
+     -+'
+     -+test_expect_success 'rev-list --ancestry-path=G D..M' '
+     -+	test_write_lines G H I J L M >expect &&
+     -+	git rev-list --ancestry-path=G --format=%s D..M |
+     -+	sed -e "/^commit /d" |
+     -+	sort >actual &&
+     -+	test_cmp expect actual
+     -+'
+     -+test_expect_success 'rev-list --ancestry-path=H D..M' '
+     -+	test_write_lines E G H I J L M >expect &&
+     -+	git rev-list --ancestry-path=H --format=%s D..M |
+     -+	sed -e "/^commit /d" |
+     -+	sort >actual &&
+     -+	test_cmp expect actual
+     -+'
+     -+
+     -+test_expect_success 'rev-list --ancestry-path=K D..M' '
+     -+	test_write_lines K L M >expect &&
+     -+	git rev-list --ancestry-path=K --format=%s D..M |
+     -+	sed -e "/^commit /d" |
+     -+	sort >actual &&
+     -+	test_cmp expect actual
+     -+'
+     -+
+     -+test_expect_success 'rev-list --ancestry-path=F --ancestry-path=K D..M' '
+     -+	test_write_lines E F J K L M >expect &&
+     -+	git rev-list --ancestry-path=F --ancestry-path=K --format=%s D..M |
+     -+	sed -e "/^commit /d" |
+     -+	sort >actual &&
+     -+	test_cmp expect actual
+     -+'
+     -+
+     - test_expect_success 'rev-list D..M -- M.t' '
+     - 	echo M >expect &&
+     - 	git rev-list --format=%s D..M -- M.t |
+     + test_ancestry "--ancestry-path D..M" "E F H I J L M"
+     ++test_ancestry "--ancestry-path=F D..M" "E F J L M"
+     ++test_ancestry "--ancestry-path=G D..M" "G H I J L M"
+     ++test_ancestry "--ancestry-path=H D..M" "E G H I J L M"
+     ++test_ancestry "--ancestry-path=K D..M" "K L M"
+     ++test_ancestry "--ancestry-path=F --ancestry-path=K D..M" "E F J K L M"
+     + 
+     + test_ancestry "D..M -- M.t" "M"
+     + test_ancestry "--ancestry-path D..M -- M.t" "M"
+
+-- 
+gitgitgadget
