@@ -2,60 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCC63C32771
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 11:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00E29C32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 11:23:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348632AbiHSLJA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 07:09:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58874 "EHLO
+        id S1348800AbiHSLXZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 07:23:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348484AbiHSLI6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 07:08:58 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07F61C2764
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 04:08:56 -0700 (PDT)
+        with ESMTP id S1348802AbiHSLXX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 07:23:23 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 306895FAB
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 04:23:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660907333;
-        bh=3b4rUebnI3MYXK9h/Tw5xZg6bD8XCBbdlP6kNq9ZVy0=;
+        s=badeba3b8450; t=1660908171;
+        bh=q7F5REJcbN18pEzFR5lynph6Krr3B9+I31M68w0jQCE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=e9pQF3pOkzkbGqByGfbqagXHl4EWOkgwHpLM217Rg41E4Kedt4d6T2Q8CeG0egEeM
-         Z6s3L1sYu0YMHjcg0+/gYcGNcLx4J3klR8R80KFj73C7lSs/8A26uLBp31P5xQvxMc
-         wJHutESLe1UqQ7q5mhuYyDfd77uYBSc9RqFv0IWE=
+        b=APw0sJF4xyPVl9cPIEoppDWfqCMhjVBaQo0M7yZCOYRJaNrL3gJzdHfHg90E4B2g0
+         YyInud+LIjnAQ5FlizsfXigQgydvtLNE7q3qecbLoAqccFaOK/RTG2MN6d2eCQil0o
+         Z8uLv0mOJ5eCesfqGsVgLmCIrzW5zPlVEsz9It+k=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.212.11]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MrQEx-1namxO3Rl1-00oSif; Fri, 19
- Aug 2022 13:08:53 +0200
-Date:   Fri, 19 Aug 2022 13:09:00 +0200 (CEST)
+Received: from [172.25.183.122] ([89.1.212.11]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MybGh-1nQIKM1ynN-00yyov; Fri, 19
+ Aug 2022 13:22:51 +0200
+Date:   Fri, 19 Aug 2022 13:22:56 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-cc:     git@vger.kernel.org, entwicklung@pengutronix.de
-Subject: Re: Bug in rebase --autosquash
-In-Reply-To: <20220817094909.v2ev4rpsmxjnii4x@pengutronix.de>
-Message-ID: <8p78q4p9-9ro4-p5s4-r738-7sno17rqr414@tzk.qr>
-References: <20220817094909.v2ev4rpsmxjnii4x@pengutronix.de>
+To:     Jeff King <peff@peff.net>
+cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Subject: Re: Coverity, was Re: What's cooking in git.git (Oct 2021, #02; Wed,
+ 6)
+In-Reply-To: <Yvw87DJOOu+/jG6o@coredump.intra.peff.net>
+Message-ID: <3896n74p-0r16-866o-r668-70q6pos078n9@tzk.qr>
+References: <xmqqfstdr8b5.fsf@gitster.g> <YV5aaD418SyZqS/1@coredump.intra.peff.net> <YV5dmkkuCqAY2qqG@coredump.intra.peff.net> <YV5yi+AejPGO9qOi@nand.local> <YV/BMkZrj4xQyvUL@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2110080946060.395@tvgsbejvaqbjf.bet>
+ <YWC49+xCh+zum8Ms@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2110201416390.56@tvgsbejvaqbjf.bet> <YXBALFsf305U8mJs@coredump.intra.peff.net> <2n33pn8n-7529-443q-rq7n-q12nrqrn8p27@tzk.qr> <Yvw87DJOOu+/jG6o@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-374883385-1660907342=:241"
-X-Provags-ID: V03:K1:7MNhI1HK3nOENqbBgYEJYojHftPaPgNjQ/0b7iEEF6eLkZqbjym
- CAaXEI8N/aTTgQz4SPg+yfLqrgoIdg4JCu7uC+R5MZpc4AgGoN0l0wMHi6nUTdfUnta9QBh
- McI3ykc83/SFWFc7Ppa07v7rvUNfeuQ01X5pLabMLJJeSyyWpXd2fYpww9JtbHeup0IM63W
- HKqQ5hNT3zwU4e8cTEJUw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YzdlxhL22kQ=:+8iiiDiidOkzh4lAp6UJwo
- mQP0zP0ceAKWqaxmMF1xmyM5oB67ae60lA3lYii6tRuSPesVkIVyWxKrFOe0NOiXeT/goRlyv
- wpn3arnZiFiJSVs8ZiGQXkwZ6f8IQJSyc7XDm8fPuFqGu1W1TdT1GVPDOhTv/CA8ybKze5fzN
- Nzr22hBJoKKoLFojGQDLhQdPqBlIVStA1vSA/43Y3diTN5hPxrD3SlEd1siODFymwhIrFXxd1
- Lsdu0orPDGAwH2uPr+W3efg+xAky5OOqQl+F4aBw7T8zVK1S1C4Qw04XqfLJC0wCLWZBcXNw6
- v4WGdNwJ5OMbfS+VYlqCH0jmu6Z/Cx9KZ6IPuhx3dwDFYLQI30xTdWJt/WFgiyZJ1ibzl1MiA
- VYNQ62F8QemLPZYv6uLNcXLQlY2+0s18hVL5EgW1BPpVuZ5J49Ja0ZDkn+Rf+Mb+h8MZh+3HP
- H3DvgzhynpDHYfnGCWf9gSuYS9FNRB1vW7aj57ERtNALngtylNLX0woNPciDmnSM9+mUs/9dC
- 1texngRJxvs+WBfMiiWDkYZY56Q8u7T23b5rnCjl93qbD6XVf4wg35tMV8DkEThfPCqQkzq22
- OahiV1pEc40r9TgtjrA9MUhurLuRk+U782rLJMfpL7pRxdlHQsj9q53ySBbHguEMDeHhmbeAG
- IVLwaZQLi44aj2lnFBXbBgW22uY+fXkIWb8IGf1GhhNBHqumdTnzARlv0Z/MpoUs0G+ST/OEC
- OFbgCajF47zVU+bNVyI3JxW7xY9496463I/dqA2LsNl8HPykjytifLyhCoukkijd9HfpPoFWh
- QE729GlN9hjvFV0I6WOFhi+UDfTa8djwFN030JNgL6z3rtX5s9BX2b0pA7Luxubsj5GW4SHXa
- 0QB8KYtGeXzUcMOzLQeLqzjvX9NKtJL/ECWylLkRLVoisGWkT0gWLDg9QpoBYls0xTO6fgde1
- 2HiQ4ujYgciaRnSeB+FgLw8yQR5fW9DXwXVNiDgOnM4MbJlbSxmvq0KyCu/h8P4V4BqRAx5Xw
- 1kEmfDxwEy9cX2z/o1/Gxw+NDDCahQo6UlnA0Vb0uayGBO56JV/gWnLGyfsV+zxDCvZa9m3eV
- YaDPKxGeyUCaEAdAyIbQLVykNSvhCA8XNI9ntIrMfEvpRGFQPxtra2HXQ==
+Content-Type: multipart/mixed; boundary="8323328-1990683218-1660908180=:241"
+X-Provags-ID: V03:K1:muJ5wYQ5flECwUVJkvj+rE/vMBFrJaPwlo0i15dsSrWunJOr8vM
+ x62snbtdmVuKeEt2QKkWkq0VL/uJ4DYBqJCdAHo/1htRaI5rpvynGkPtNBO3lJl/WGtn2Os
+ 4x4dz+JO6PFMDwzB3iW9VXh+fCp6RMfJQjH0eEH40rrRXVGhT+Y/SA5qek5Stslh9Zsf7QT
+ V+Sk4YrueHMEcs3yA0O4g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:QDXczAoErdg=:8sX1H6q8u5fCIai0Q3ayfu
+ ICSWYXCA1iyxUKU7S5+/T4YxWJbLGuNDefzOuSfAS7qBbbR/+KAIe0yQiA7Lqf8QSQkgCCYrP
+ eNc5jas07bRjSZv8slOnq5weYnVp1mU2lEU4TMOnrd+hn/cdqEsT/qdu7yKwekhyHZK6bmymc
+ kpo5EtjL66q70AL0ahvgD2DveFJ4Tp0wB2H/8mfw4dBQbJG8kE8JLtdyfH8k3qxC6+SXN/ilB
+ m2sxgNDAHTh51wB5ik6KERDLkAEApRSvXWGIovbcdDb0CbNz1E63ABSg2kNXZxoBB5u584BKP
+ 5FdG3gkf1vGHWWrXyYCWZJ/GMSsaNoxH4mBqw00+12NnB4BWRHhP0A/1D5T6FZu0wZ++MvXIe
+ lRAr+WEEULb30PbHZuGq/8ftfS+LZ8lHA6ku5F4sufChtOG7IPpGZ8srpmBFbLTTRVKUAVrwD
+ VH208S5rJod+iBQ4TWVi5hfm5j4jCJRt1VuQ4ab1vgxNhM+ptDzdwVLYAuOjZ+AGYoG5ldKIX
+ jf9kbiRDpY1U1yunbXDVIN6jA8xMS2ZJwVA7gvtmnfdwm2/8KI7Piaj4gi9HttfoZnWmhNtBA
+ dLHEToJqnp+dUK1CvWmtSxiYnwS3G0X67sgroWWKQr+2rraOau+YfizXG2oD/rxJyG9vuJKY6
+ 2gujbb0nnXYf7miaTlMy2t1pFNjW3Xjm9AYOy7Yt1Vr52cBSCJwKiR57ks4neegmahhLt8Cma
+ C+ew4ePWjLkC/1FDYBfXhoZwceaA05yztbHmuU+4vVxNlzpFDtko3QtAgjBbjxiOlhKovWVRy
+ lF/xqxHFJAE/MNxQumVo6wsdoNRNUgdddrvlBjV4JwZB2jUJcU0nWjsKE+4klTVjir/2EtKcG
+ 3Uf568LlK+DZ/cpIojxo5sSqsqfUD+ox3U9N5gm2Yxlv1/dUPalVm63XDIDhWzdz2maiWWpK+
+ /dQl8IcEdMDvRMeuNEuYQZnLWqtAx742++/H3I0gZS7DPoyA3u4rtKn/QqQxn/9lKs1THKmku
+ I+asJUoIFubQR5NWYiCpGUP/OFSBx539WXnY4HSs0Xfc+xZ1S0IX9UR2snyGNTe8gN9TL6JwE
+ +W9Ugo9UwPzAKbdpomjljCSoz1Wa+PFxCFlpgKezbWTuByrM+idjxyN5Q==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -63,58 +66,91 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-374883385-1660907342=:241
+--8323328-1990683218-1660908180=:241
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Uwe,
+Hi Peff,
 
-On Wed, 17 Aug 2022, Uwe Kleine-K=C3=B6nig wrote:
+On Tue, 16 Aug 2022, Jeff King wrote:
 
-> after:
+> On Tue, Aug 16, 2022 at 11:05:48AM +0200, Johannes Schindelin wrote:
 >
-> 	uwe@taurus:~/tmp/git$ git version
-> 	git version 2.37.2
-> 	uwe@taurus:~/tmp/git$ git init
-> 	Initialized empty Git repository in /home/uwe/tmp/git/.git/
-> 	uwe@taurus:~/tmp/git$ echo contnt > file
-> 	uwe@taurus:~/tmp/git$ git add file
-> 	uwe@taurus:~/tmp/git$ git commit -m 'file with content'
-> 	...
-> 	uwe@taurus:~/tmp/git$ echo 'content' > file
-> 	uwe@taurus:~/tmp/git$ git commit --fixup=3D@ file
-> 	[main ef8f0bd27a56] fixup! file with content
-> 	uwe@taurus:~/tmp/git$ echo 'more content' >> file
-> 	uwe@taurus:~/tmp/git$ git commit --fixup=3D@ file
-> 	[main b40a214bf5fb] fixup! fixup! file with content
-> 	 1 file changed, 1 insertion(+)
+> > > It sounds like Taylor is volunteering to set up the Coverity side fo=
+r
+> > > git.git, and I can help him with getting those COVERITY_* variables =
+into
+> > > the GitHub environment.
+> >
+> > Given the challenges with Coverity (false positives, lack of support o=
+n
+> > Synopsys' side, severely limited access to the reports), and given the
+> > renewed efforts by OSTIF that focus not on Coverity but on CodeQL, I a=
+m
+> > in favor of abandoning the idea to integrate Coverity in our GitHub
+> > workflow.
+> >
+> > Regarding CodeQL, I am still uncertain what level of integration we wi=
+ll
+> > end up with, and the contacts I am working with are currently all on
+> > vacation, but I am confident that we will have an easier time going
+> > forward with static analysis using CodeQL instead of Coverity.
 >
-> running
->
-> 	git rebase -i --autosquash @~2
->
-> my editor presents me with:
->
-> 	pick ef8f0bd27a56 fixup! file with content
-> 	pick b40a214bf5fb fixup! fixup! file with content
->
-> However I would have expected
->
-> 	pick ef8f0bd27a56 fixup! file with content
-> 	fixup b40a214bf5fb fixup! fixup! file with content
->
-> instead.
->
-> Is this a feature I don't understand?
+> OK. I haven't been that impressed with CodeQL for C so far, but it may
+> be getting better.
 
-This demonstrates a somewhat obscure feature where the `fixup!` of a
-`fixup!` magically targets the original commit.
+If your lack of being impressed stems from CodeQL's default suite catching
+very, very few issues, I agree with you.
 
-I understand that it is somewhat unintuitive that `fixup! fixup! abc` does
-not target `fixup! abc` but instead `abc`, but that's how the tool has
-been behaving forever.
+The reason why I am more hopeful about CodeQL than about Coverity is that
+I now have a contact to work with (although they are currently on
+vacation, so I get to work on other things for now, including `merge-ort`
+and trying to integrate `mimalloc` in Git for Windows). And that is one
+more contact who is willing to work with me than I ever had on the
+Coverity side of things.
+
+And apparently CodeQL's default settings optimize for reducing false
+positives in an attempt to avoid scaring potential users away.
+
+But I have credible assurances that CodeQL has many more checks in store
+that simply need to be enabled in order to catch way more issues, at the
+expense of risking more false positives.
+
+> I certainly would be happier with a system that made it easier to
+> display and share reports.
+>
+> Coverity does have a lot of false positives, but I've at least been able
+> to pick useful fixes out of them (especially because it is good about
+> saying "here are 5 new things to look at"). I've been continuing to
+> build my private branch with it, so we'll see if it turns up anything
+> useful. I do agree that inflicting it on ordinary users may be
+> counter-productive (I often have to stare really hard to understand why
+> its false positives are false, and that is not something I would wish
+> on, say, a GGG user).
+
+Don't get me wrong, I do not plan on dropping the Coverity builds of the
+Git for Windows project's `main` branch at
+https://dev.azure.com/git-for-windows/git/_build?definitionId=3D35.
+
+As you probably recall, I specifically looked through the Coverity report
+in advance of v2.37.0 and tried to address some of the issues in
+https://lore.kernel.org/git/pull.1264.git.1655336146.gitgitgadget@gmail.co=
+m/,
+with mixed results (mainly because of some time constraints on my side,
+combined with your willingness to help fix some issues with my patches, as
+well as Ren=C3=A9's, Taylor's and Junio's excellent assistance).
+
+However, the sheer amount of false positives, with intentional issues
+being a close second (in test helpers, we are not all that strict about
+releasing memory, for example), makes it a tough sell to ask more than
+just a few very dedicated contributors to have a look at the reports.
+
+With CodeQL, I am optimistic that we can get it to a point where the
+burden can be carried by a larger group of people, with the help of
+enthusiastic CodeQL experts, which also means that the reports have a
+bigger chance at making Git safer.
 
 Ciao,
 Dscho
 
---8323328-374883385-1660907342=:241--
+--8323328-1990683218-1660908180=:241--
