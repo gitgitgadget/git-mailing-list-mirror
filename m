@@ -2,115 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B382C28B2B
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 16:33:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B5D1C32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 16:46:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353034AbiHSQdk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 12:33:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56472 "EHLO
+        id S1353709AbiHSQq0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 12:46:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353013AbiHSQaX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 12:30:23 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D890611BB18
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:04:39 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id z2so6225389edc.1
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:04:39 -0700 (PDT)
+        with ESMTP id S1353910AbiHSQp1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 12:45:27 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAAFF113693
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:11:35 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-3375488624aso104475187b3.3
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 09:11:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=G3WecurfiAX9v2QnzN9OU0PPWWUXCsfqVqdSZ2A5O4E=;
-        b=Dd+nXdqYy+zwtDYzueWL0e+2GOAhxKsAr76CrsbVX5x+IExbFzIsQ4IrlbifL16kSk
-         P31EYOiVEiTzimai45ycdZzz++EhyaMe207jZOe/VOFmA95NGewjyZ7+lrJitUOmP3BO
-         kmENy8zwFxXEI0mkvvC1X5hn0RqlN2oi4b7j7Zq1Fh6l7DeUJCaqtsdGqmwv+0q1BNWX
-         gUBaktBmPKrsGbKDgcvcaTWty000qtk+d/5YPBQTLS1JcQINZv2jxZYM79axWaXUz3WM
-         xBBjzhhJZER7jwHcpecCyKTXSjclCYhKvkvBkN8fWOeesnkJcgIuM24Jgkh0d4NuAkOy
-         vbZg==
+        h=to:subject:message-id:date:from:mime-version:from:to:cc;
+        bh=8tN6LfAQkID5Js/s3G3/AnX8b8xE9jokcCvn9pbnjVQ=;
+        b=fFvdabB8DWm67aaA2MfHcmzrYBYqbjISBqiosQnehZk5LazB9j0Bd/xrG57wci8bNh
+         1L5hEbXpbX2f36/RTVbDJtKelIM0SPLQ1NaVLw9CQ2f0w46dnvCRIMc0x1oP7tBOkMmy
+         PMUZz1MLtLuQKAwhf7iVhxFjKdwTDsPxri5pueVTQGsjtma+JlHHyYf3VswqEySjTOHw
+         O4x1nUhZHlDufljgxzcPiV7iRCHU59AnjFYBm0UPWBaBUbV2sJPg95mHLXUdCvW6ubxA
+         AcMHOE/SLtebm05WKdxGVjNBF4Mw75bphnOiMW/eAZ+l4SYCy1c/51A5c4xILWxwEOIM
+         MKdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=G3WecurfiAX9v2QnzN9OU0PPWWUXCsfqVqdSZ2A5O4E=;
-        b=aFt/vywhIlvg1h5S8jXDa6BATiwOvSokpdOChONGBNx6cjyf+lfmVR057zH3B8GDMP
-         V9ysUshdVUmZwseEFOM9r8RWrGNqgMroYMsNdmQNfYKP8+bMC7DlgKH1fCcpukhDOKh+
-         UcdpmNmGYcpogzViYqi8CFGiTdrmw/xvPVkCO/UBYaHA0lj24n1UCuqI0B+UmTGWjfxa
-         1o2zwGQkOr6NFIchGSz7E0ZGMKgL3rPtpQLLoC22xphZymca6juFaFkqXrP91Psinu5Z
-         H7iq7XLbx+x2pbXNfWG77f6kZ4nudsua0/F6laO5XJTOlDo7Faml8k0Wg4oVQ072Sy4l
-         2jzQ==
-X-Gm-Message-State: ACgBeo2bCCAQYqriYG7v7KUqH7MMlMnQq1X+WiiaYiFwmH9sBVTp5vWK
-        R91Wlpfb+lWjWQUHgjhoJK2Q1t6pu6k=
-X-Google-Smtp-Source: AA6agR57A1XsSwVHdZg/13N5FPgfY37Vw+hyRS8MULtmm/V83Ldi0/IF5ZbEkqSbqyEbi1tfApmizA==
-X-Received: by 2002:a05:6402:34cf:b0:43d:96fd:bdfa with SMTP id w15-20020a05640234cf00b0043d96fdbdfamr6584215edc.40.1660925077797;
-        Fri, 19 Aug 2022 09:04:37 -0700 (PDT)
-Received: from localhost (84-236-78-250.pool.digikabel.hu. [84.236.78.250])
-        by smtp.gmail.com with ESMTPSA id q3-20020a056402040300b00445e1489313sm3237507edv.94.2022.08.19.09.04.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Aug 2022 09:04:37 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 03/20] t5505-remote.sh: check the behavior without a subcommand
-Date:   Fri, 19 Aug 2022 18:03:54 +0200
-Message-Id: <20220819160411.1791200-4-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.37.2.817.g36f84ce71d
-In-Reply-To: <20220819160411.1791200-1-szeder.dev@gmail.com>
-References: <20220725123857.2773963-1-szeder.dev@gmail.com>
- <20220819160411.1791200-1-szeder.dev@gmail.com>
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc;
+        bh=8tN6LfAQkID5Js/s3G3/AnX8b8xE9jokcCvn9pbnjVQ=;
+        b=qs2XwbzRkml7M2KIMv3RybKQM9iy7Z5s0eZxtC1oOHxqkfpfGJR/IVA2WBTbtjcmZC
+         vVAf8ft2ZTFejdUFwerMwCzcO7RmYpZsJ5Mu+8d/I4SxJkk2NIHdrSRsEYdHb7NzLe2v
+         IQ/2dShB1FBwYGguJKLsywXen5yhQdfMof5fbQ+1RqM448BDXlw84kgXoMMYuxjt6uOc
+         wTrNzZLCSFyrb6M3NtEF2x9yaGw6r9m/8pMUOgJ+7+w0Ture2R7AU1p6EVpto3YODq3L
+         KaAU5EGt2XpytjXUwU78ItDU/pZaz3auPspfi1BUoJwcjnUJSfgsfbQrehiVSSnkPQ6V
+         W6bQ==
+X-Gm-Message-State: ACgBeo1NxPVZNIw3KgBWcDvTm0S/QSKfVTdrFUIf8pyfsvthZF/iBtT/
+        jSEF1fknsUewnvVoX1tvzVATuG0wMOMn4w1goyXcTzKIKyY=
+X-Google-Smtp-Source: AA6agR7FMA366HKJL/9pYhzdkb88OdmGQsURO1/ZkUay9UmxkurJ8Wjl3LSfeXWhbMgSquOAD8Pfy4K/uKrbSt/HoRY=
+X-Received: by 2002:a25:da50:0:b0:693:74f2:21ca with SMTP id
+ n77-20020a25da50000000b0069374f221camr7087632ybf.567.1660925453781; Fri, 19
+ Aug 2022 09:10:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From:   Christian Heller <christian.heller63@gmail.com>
+Date:   Fri, 19 Aug 2022 12:10:43 -0400
+Message-ID: <CAOu2uD_CaVxxEtZhe4197ERDFASckUBtK_NyhmwQXr=5_reSXw@mail.gmail.com>
+Subject: git diff --functional-changes ?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'git remote' without a subcommand defaults to listing all remotes and
-doesn't accept any arguments except the '-v|--verbose' option.
+Feature request
 
-We are about to teach parse-options to handle subcommands, and update
-'git remote' to make use of that new feature.  So let's add some tests
-to make sure that the upcoming changes don't inadvertently change the
-behavior in these cases.
+I recently ran GNU indent on a larger C project which made all diffs
+horribly noisy.
+Is there an option for git diff to ignore changes due to the placement
+of curly braces '{', '}' ?
+Equally helpful would be an option to ignore changes to comments.
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- t/t5505-remote.sh | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+Something like:
+- delete all comments
+- re-normalize line-breaks and indentation
+- show only 'functional' changes
 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 6c7370f87f..a549a21ef6 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -241,6 +241,26 @@ test_expect_success 'add invalid foreign_vcs remote' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'without subcommand' '
-+	echo origin >expect &&
-+	git -C test remote >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'without subcommand accepts -v' '
-+	cat >expect <<-EOF &&
-+	origin	$(pwd)/one (fetch)
-+	origin	$(pwd)/one (push)
-+	EOF
-+	git -C test remote -v >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'without subcommand does not take arguments' '
-+	test_expect_code 129 git -C test remote origin 2>err &&
-+	grep "^error: Unknown subcommand:" err
-+'
-+
- cat >test/expect <<EOF
- * remote origin
-   Fetch URL: $(pwd)/one
--- 
-2.37.2.817.g36f84ce71d
-
+Regards,
+Chris
