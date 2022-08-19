@@ -2,86 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C32B4C32792
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 20:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23967C32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 20:59:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351889AbiHSUtq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 16:49:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48728 "EHLO
+        id S1352063AbiHSU7M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 16:59:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351680AbiHSUtS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 16:49:18 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCB09A061E
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 13:49:12 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id r16so6424656wrm.6
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 13:49:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc;
-        bh=ooA3ydplkn5wP5BPJPhLvXnm+4U4d0ZasVxA1wCiCP4=;
-        b=qbX9U2k6ETb4VjiypY/4lqwRpzMLg9QafNGtVN6Jsj47rFL/hjNeXu15YzOCQhEz3g
-         o9+wPmcWvqTyPNPCJ7WHFulpFomWBbr118EPI0q3yDk3wFI+g+LSq0ULzakSsQshqsGn
-         TTlIvSimuZsdn3jdCTdDs3lAc+arZIFgBBxowzMo7Xt0FAQ/14bNnBBZrN3VhgC8eCkB
-         70Evo4UQJLQgPSmKK2jYBCJCFbdodQZHXEf9CTJUy8JijkFQEKFBsk7X0A4oHTRrUfxv
-         lm6Q8az8il8vb4LGBjM7L4QL2qktUHyFzPAGNMrIapOH5w7efBfFtHAQU5m/CbAvZ321
-         4mXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc;
-        bh=ooA3ydplkn5wP5BPJPhLvXnm+4U4d0ZasVxA1wCiCP4=;
-        b=uQjViGr0lxmLpVZLwJZTq/H09gXBGiBd8jQ7YV1QLxOc2L58I5y7Sd8alP5AR3gs8I
-         Io+xCajJM1en4jNJWB5snK7k/1kpxEVJkbsyrcsY1SIYMOWRRbwYH5OpNxdvrDIPPXrl
-         5eqq6cHply+W5NV7ZBzTV+/DiFkQpEyYazoDrbKGjEr03CnsU1nnAqhW14uwMzOOZLg+
-         outFiySPMQRqGIVh6zArMaFwirvBBG170Z52vuDI8ZDLcX99A5BEatOGBM0Law1O+8Ob
-         6xxide4+K7riiwRKa1UkLGvlMmrAi7H2ZrbA4G6xaYtJOyzViFhKnrPCmjkmwmqBNLkS
-         FMNA==
-X-Gm-Message-State: ACgBeo0fXtMyzWF6Vp2Bg/Lf8ipHE1IJQYLTUcKXNtjAzSzj2UHiNgVe
-        7xlzSzNrkAV0n1BTEj+7n+bJFaWJnmk=
-X-Google-Smtp-Source: AA6agR5Unw2Xt9oSekAVogK+4xwaF3JQFGwlACu0pnxamh5TQsD0j2TGSmM0DCoC37KWeB1ylJSHhQ==
-X-Received: by 2002:a5d:50c3:0:b0:225:2840:2f41 with SMTP id f3-20020a5d50c3000000b0022528402f41mr5071163wrt.391.1660942150935;
-        Fri, 19 Aug 2022 13:49:10 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u5-20020a5d4685000000b0022526db2363sm4928236wrq.30.2022.08.19.13.49.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Aug 2022 13:49:10 -0700 (PDT)
-Message-Id: <pull.1330.git.1660942149.gitgitgadget@gmail.com>
-From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 19 Aug 2022 20:49:07 +0000
-Subject: [PATCH 0/2] t/perf: fix broken tests
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S1351994AbiHSU7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 16:59:10 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F06EA9FA8E
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 13:59:08 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7317819EA81;
+        Fri, 19 Aug 2022 16:59:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=90Dmo+mNroyy
+        hTsU1jehP95gbfuvda5hFd55BUUzVmQ=; b=vVFwp7u/a43pbABZKZXRPFhkB7Vk
+        SeLxnd40bXoDxtHkXwJ7bSQ6Ua56549KUU5lMW+wgSfk/BRlvNXIlZ9OulAfoJvS
+        MRpVi0mF1mGYONEO9gsI+vAouj3p7F87Zcr0avOUgOnZUvO/jggpk6fDNcFA8TDB
+        1twgU3DLOXhDSh8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6AE6619EA80;
+        Fri, 19 Aug 2022 16:59:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2005F19EA7E;
+        Fri, 19 Aug 2022 16:59:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 12/20] builtin/gc.c: let parse-options parse 'git
+ maintenance's subcommands
+References: <20220725123857.2773963-1-szeder.dev@gmail.com>
+        <20220819160411.1791200-1-szeder.dev@gmail.com>
+        <20220819160411.1791200-13-szeder.dev@gmail.com>
+Date:   Fri, 19 Aug 2022 13:59:02 -0700
+In-Reply-To: <20220819160411.1791200-13-szeder.dev@gmail.com> ("SZEDER
+        =?utf-8?Q?G=C3=A1bor=22's?= message of "Fri, 19 Aug 2022 18:04:03 +0200")
+Message-ID: <xmqq35dskl0p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C213696A-2001-11ED-9AE7-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series fixes two performance tests (p0004 & p0006) with syntax issues
-preventing them from running properly. Since these are pretty
-straightforward syntax bugs, the fixes don't seem to change the intended
-behavior of the tests.
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-Thanks!
+> 'git maintenanze' parses its subcommands with a couple of if
 
- * Victoria
+nanze?
 
-Victoria Dye (2):
-  p0004: fix prereq declaration
-  p0006: fix 'read-tree' argument ordering
+> statements.  parse-options has just learned to parse subcommands, so
+> let's use that facility instead, with the benefits of shorter code,
+> handling missing or unknown subcommands, and listing subcommands for
+> Bash completion.
+>
+> This change makes 'git maintenance' consistent with other commands in
+> that the help text shown for '-h' goes to standard output, not error,
+> in the exit code and error message on unknown subcommand, and the
+> error message on missing subcommand.  There is a test checking these,
+> which is now updated accordingly.
+>
+> Note that some of the functions implementing each subcommand don't
+> accept any parameters, so add the (unused) 'argc', '**argv' and
+> '*prefix' parameters to make them match the type expected by
+> parse-options, and thus avoid casting function pointers.
 
- t/perf/p0004-lazy-init-name-hash.sh | 2 +-
- t/perf/p0006-read-tree-checkout.sh  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+OK.  When the recently posted "unused annotation" and merges down
+together with this topic, we would want to add UNUSED() annotation
+to them so that we can get closer to be able to compile with -Wunused
+warning enabled, but we do not have to worry about it yet.
 
-
-base-commit: 795ea8776befc95ea2becd8020c7a284677b4161
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1330%2Fvdye%2Fbugfix%2Fperf-test-bugs-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1330/vdye/bugfix/perf-test-bugs-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1330
--- 
-gitgitgadget
+> +	struct option builtin_maintenance_options[] =3D {
+> +		OPT_SUBCOMMAND("run", &fn, maintenance_run),
+> +		OPT_SUBCOMMAND("start", &fn, maintenance_start),
+> +		OPT_SUBCOMMAND("stop", &fn, maintenance_stop),
+> +		OPT_SUBCOMMAND("register", &fn, maintenance_register),
+> +		OPT_SUBCOMMAND("unregister", &fn, maintenance_unregister),
+> +		OPT_END(),
+> +	};
+> +
+> +	argc =3D parse_options(argc, argv, prefix, builtin_maintenance_option=
+s,
+> +			     builtin_maintenance_usage, 0);
+> +	return fn(argc, argv, prefix);
