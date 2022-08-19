@@ -2,200 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2B44C32771
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 11:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0926C32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 12:54:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348583AbiHSLmu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 07:42:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48440 "EHLO
+        id S1349198AbiHSMyf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 08:54:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348580AbiHSLms (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 07:42:48 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36668FF23F
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 04:42:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660909361;
-        bh=wtJJ7S9Rw93uzX3YggOl/eFMuyQB74MDt/ScBMmtsKk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=huN4TXlqYHm6hz3VwWag4JtSvL42M4oz2hpCOhZuu4PVHj3X3SVRhTa6aoIKji+yU
-         mfkc3DI5c/jNVl7imZTXBoVXEHeY+z3WeEDfvmaKpMPB5YyZWyNHER82YqS2Wdl3FO
-         vNyOaWdR1okn9ycpDvWyLV5MCjYSekWqGDffVGJE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.212.11]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MwwZd-1nQqGQ25Fr-00yUF5; Fri, 19
- Aug 2022 13:42:41 +0200
-Date:   Fri, 19 Aug 2022 13:42:47 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Rub=C3=A9n_Justo_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] branch: allow "-" as a short-hand for "previous
- branch"
-In-Reply-To: <986564d9-4d49-b1ef-e2e0-65d6f67f9e79@gmail.com>
-Message-ID: <7s9s8p38-r22n-opnn-9219-0p49onrro70s@tzk.qr>
-References: <pull.1315.git.1659910949556.gitgitgadget@gmail.com> <xmqq4jymvllq.fsf@gitster.g> <9693b83f-551e-e579-b267-af1d633dc381@gmail.com> <9so90892-25nr-0s4o-q98n-2qo76r3s89p3@tzk.qr> <986564d9-4d49-b1ef-e2e0-65d6f67f9e79@gmail.com>
+        with ESMTP id S1349205AbiHSMyT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 08:54:19 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C23132BB4
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 05:53:58 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id x5so3210227qtv.9
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 05:53:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=5nz2I4F4utiEmMiY/hSvZ68SfLxxuGTmAhBhSOZJaxo=;
+        b=epefvzsrxTcYQQYj36Ul2nQ+omBDsjvyFGvwbtutbzmRwqMGzPTc1IkqkrTc8BCbgp
+         RwgsW/cHV+UOjN4qj3jJeSNXh3jfZnnMjwUqL9Tn/HXFS+QO4VOI/zItWaUkGtGKFfft
+         Jy6q8dDgoQ8/9qZLT+jcYoYGCstW6NL+SvM6R9VLQS6zTLwonooO0woDDkodmmMYh1UO
+         9baAf30/l7BA9js2hfa4/Rfkp8vnSODtE6FvL9c8a+/pENiLkvQrqkXQSBUocbezSmcf
+         z42Ty6nF5UgXIoZgnyr5Ube/8axksWPvAzlikBvvRt/ohZTgBQkJFMOk4JTryGW6b9ZV
+         +sLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=5nz2I4F4utiEmMiY/hSvZ68SfLxxuGTmAhBhSOZJaxo=;
+        b=hhU/va6c3k1syiV6p3PbywpullqmKdQBdlxeE+H4PlC2K0w8ivb2vT/qUCIo7xktVH
+         VGjQJEHdEZT7ROYQJfKu6FkhR+jYnS4Rq01WZuyv2wrQeTToQqGJHOhYU2Jvl0bWgcIx
+         bv8A0pVGriyFfOVPcXPLKgak8xstRXyIwavAE6REUTDJgriq380vBKBkCJAayfHvXXmq
+         Aq6xGzsPXJDqWq67Nz8IEHeVbz88dxyTI2hkeyfwWfts8355ygJ3wev4vIA4041zZlBR
+         11Aw9rYJ2NMNwwN1LZU6yzyR1s28NZJ7QSssYwU4C69VVwVP3AgAc3TyqxhTCufO84+o
+         IknA==
+X-Gm-Message-State: ACgBeo3dF6iv16svVS0YiUly8rbvox3VCetTvjzR5HevaET8lmoF2c6x
+        /C15AUxJvJzVZARLdxDAoLWw
+X-Google-Smtp-Source: AA6agR51Ou0aQpI3EHxvN7plfebl29KoMiuLvz464zb2vrdWfaqLoFljWXmWh5gJ0OkZNKE8gK1/Zg==
+X-Received: by 2002:a05:622a:1485:b0:343:781b:d1b with SMTP id t5-20020a05622a148500b00343781b0d1bmr6373940qtx.536.1660913636935;
+        Fri, 19 Aug 2022 05:53:56 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:55ca:650:1968:6180? ([2600:1700:e72:80a0:55ca:650:1968:6180])
+        by smtp.gmail.com with ESMTPSA id j20-20020a05620a411400b006b9a24dc9d7sm3645598qko.7.2022.08.19.05.53.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Aug 2022 05:53:56 -0700 (PDT)
+Message-ID: <7b7918f8-d997-89e8-2ba0-7bb31beb9335@github.com>
+Date:   Fri, 19 Aug 2022 08:53:55 -0400
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-255755273-1660909370=:241"
-X-Provags-ID: V03:K1:zgaE/XDJcWUw8b85ZhisXEgrQPpZ8T6mGxMvs+SVJCriEAluguv
- VH9HoRahNkZantsnmwC3J9vnS8GAiVATNnmn640b7TPSfx9KMCGMQY+Mf7VWasqfjhQNdhj
- cMSaeIQZAc4HEpR67rDnN+560FRgXzmgTBCIN5HsTxuVwQ9K5+hylc6bOXeeKM56cJRPtcc
- rEC9FY1ciPsb1GdXKiC4w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XnOahWyTMaw=:1GQQsj4QrsT6KLbQHPrBFA
- SQBcFsJVp2+cNU3IicavLanSAmMwP1+gQFfoQTwrSQkYk78Egf5zaTfUSoSkVzpWU3WngtrjC
- 2Xh9WPQoazSxkN8bAtMYtDw0XY4xebQqaNCTJPqrQxMphs5B+hL1m9n+OoM+G9D0m6rsr4EKQ
- PaimWw+ErCA5x569ri9wo3jQEvU9D5tGBBuGEooredPi4Ctu7EJmy6EXu596TwR/THiMCAtuN
- qfAjPTkfG70YOMVil+gPZ+W9fSWfKGadTcz+NGmZqMwmomW3+Fp8RlszFY623WyQOd3QMN+Ub
- 938m2JCzibo9r6eC/MOoTvX86hEoUy7ujhgM99s+NFqudbLoIgSHVDbED4Ozhj0iIl0C5GQ4Z
- xdSJqEXIviP7DoX/ztCaId8gFXC8t81nFTMscl5uSg2gysxu+1AvCMXXFEfle06CLuQMflx/Y
- x18R7iN/RGt2J+y6hYgngwC0nOVQdVVwuq6KFxllbHcSbmvd8qVRYRGXa8g8roW8j9KVu5cRY
- ZI2OEdFJIZs/I95iK4cHWfjTJ8BtTmN+WvRyqyqjOlvweoMW3yco3EjjPM5OPT6C8sveY9l4W
- N7QpGs4OcalMDnMQJk5uc/1WDjL42rP4cUf9VHnK/3U3V/qmQF58VwuD7G+NZdnl35VZQ+SQv
- iEkUb034ANa6O5MBkhpNt7VrPEWbEM4ZhNixTpuxFj6Q26orZ/IL/aCjvMbbtTjJsmqTdY1TQ
- /k4oI1K1/iRJCe4KjL3BBD3GjXCcGeX9ipCLBr6hAVNIahq/RPkjOt+ugDU0ooY0qedyeS7Z9
- 8LI/1Gk5lgK9+lwl6n7YXQXzAcxoj1xweMTidL6yUpcYfrEi3bsvDqz74AjPET6BldDTC6d4S
- 4UDYwhWtqOv6KbCiThs2/F59j4e742eRdoRykECmXWeEE7G6S1Xv0H+oEt0jS1td8fqQuQPRJ
- 8a5PWJ/BpzC3AGKl1XA7fg5j0G/ultGwVf3Y3GPk7mbSDnaXgJ41C1jSsd2y/SHEz/oJLxto7
- IaJ6Cg/SeQuJ76/+rol6IGNWGMv2Cq9PbEV7hRfsdaJvfnnDZfoPdabTHPOJxu3iejtD5LUak
- rqiTp6EcvmVv18PdKblj7FwOT10tXtpUNLOlqyUWd5mPIPuM8kQ4VyJLg==
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v3 0/3] Allow --ancestry-path to take an argument
+Content-Language: en-US
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <pull.1303.v2.git.1660803467.gitgitgadget@gmail.com>
+ <pull.1303.v3.git.1660883290.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <pull.1303.v3.git.1660883290.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 8/19/2022 12:28 AM, Elijah Newren via GitGitGadget wrote:
+> Changes since v2:
+> 
+>  * Incorporated Stolee's suggested patch as a preliminary cleanup of t6019.
+>    Slightly modified his patch by:
+>    * fixing the "repetitive" typo pointed out by Eric
+>    * removed the unnecessary "return 1" pointed out by Ævar
+>    * switched "rev-list" to "log" since we are using --format anyway, in
+>      order to remove the need to call "sed" afterward
 
---8323328-255755273-1660909370=:241
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Thanks! I appreciate you fixing all of my mistakes and
+incorporating all of the existing feedback. It also looks
+nicer as your patch 2 than as a third on top.
 
-Hi Rub=C3=A9n,
+This version looks good to me.
 
-On Tue, 16 Aug 2022, Rub=C3=A9n Justo wrote:
-
-> On 8/16/22 11:31 AM, Johannes Schindelin wrote:
->
-> > > $ git merge - old-branch
-> > > merge: - - not something we can merge
-> >
-> > This is confusing me: how is the patch supporting `git branch -d -`
-> > aligned with the presented `git merge` invocations?
->
-> "merge" supports multiple objects to be specified, but "-" only is accep=
-ted if
-> just one argument is specified, as Junio did it in:
->
-> commit 4e8115fff135a09f75020083f51722e7e35eb6e9
-> Author: Junio C Hamano <gitster@pobox.com>
-> Date:   Thu Apr 7 15:57:57 2011 -0700
->
->     merge: allow "-" as a short-hand for "previous branch"
->
->     Just like "git checkout -" is a short-hand for "git checkout @{-1}" =
-to
->     conveniently switch back to the previous branch, "git merge -" is a
->     short-hand for "git merge @{-1}" to conveniently merge the previous
-> branch.
->
->     It will allow me to say:
->
->         $ git checkout -b au/topic
->         $ git am -s ./+au-topic.mbox
->         $ git checkout pu
->         $ git merge -
->
->     which is an extremely typical and repetitive operation during my git=
- day.
->
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index d54e7ddbb1..0bdd19a137 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -1062,9 +1062,12 @@ int cmd_merge(int argc, const char **argv, const =
-char
-> *prefix)
->         if (!allow_fast_forward && fast_forward_only)
->                 die(_("You cannot combine --no-ff with --ff-only."));
->
-> -       if (!argc && !abort_current_merge && default_to_upstream)
-> -               argc =3D setup_with_upstream(&argv);
-> -
-> +       if (!abort_current_merge) {
-> +               if (!argc && default_to_upstream)
-> +                       argc =3D setup_with_upstream(&argv);
-> +               else if (argc =3D=3D 1 && !strcmp(argv[0], "-"))
-> +                       argv[0] =3D "@{-1}";
-> +       }
->         if (!argc)
->                 usage_with_options(builtin_merge_usage,
->                         builtin_merge_options);
-
-Ah, the vagaries of being a maintainer and everybody following your lead,
-even if you have a bad day and are grumpy, or as in this case just want to
-get a quick fix in that supports your workflow better, and then move on.
-
-If you read the commit message carefully, you will note that there is no
-justification for restricting it to the `argc =3D=3D 1` case.
-
-I assume that the implicit rationale is that it was just simpler to do it
-this way.
-
-The alternative would have been to modify `collect_parents()`, or even
-`get_merge_parent()` (which has many more callers), and at some stage the
-investigation would have been as involved as it will be in this here
-thread.
-
-However, it is one thing to integrate such a patch as a one-off, or do it
-two times, or three.
-
-It is another thing to do this again and again and again and seeing that
-we're not getting anywhere and only piling hack upon hack.
-
-It is this latter stage that we have arrived at.
-
-> So I aligned "branch -d" (or "delete-branch") with that.
->
-> The other two commands that already support "-", also works the same way=
-:
->
-> $ git checkout -B - default
-> fatal: '-' is not a valid branch name
->
-> $ git rebase default -
-> fatal: no such branch/commit '-'
->
-> To summarize, my goal is to allow:
->
-> $ git checkout work_to_review
-> $ git checkout -
-> $ git merge - # or git rebase -
-> $ git branch -d -
->
-> Makes sense to me...
-
-There are different qualities at play with these commands, though. `git
-checkout` cannot support more than a single revision argument. With `git
-merge`, technically we do support more than a single revision argument
-(via octopus merges), but support for it is limited (for example, we do
-not even support recursive octopus merges). You might say that it is
-discouraged to call `git merge` with more than one revision argument.
-
-With `git branch -d` or with `git branch --list`, we are in a different
-league. Those commands are commonly called with more than just a single
-branch name.
-
-And then there are the other commands that would benefit from support for
-`-` and that accept many more than one revision argument, too, such as
-`log`, `rev-parse`, `merge-base`, etc.
-
-Sure, we can accept one more one-off hack to support a single `-` argument
-to refer to the previous branch. The sum of those hacks, however, becomes
-a burden.
-
-Ciao,
-Dscho
-
---8323328-255755273-1660909370=:241--
+-Stolee
