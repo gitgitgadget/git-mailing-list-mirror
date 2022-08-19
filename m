@@ -2,87 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E96D8C32772
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 17:52:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85BB9C28B2B
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 17:52:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350508AbiHSRwP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 13:52:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34330 "EHLO
+        id S1352258AbiHSRwc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 13:52:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351704AbiHSRvr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 13:51:47 -0400
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F352D64FA
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 10:25:23 -0700 (PDT)
-Received: by mail-pl1-x64a.google.com with SMTP id q11-20020a170902dacb00b0016efd6984c3so3097341plx.17
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 10:25:23 -0700 (PDT)
+        with ESMTP id S1352397AbiHSRvw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 13:51:52 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BDCA2AC56
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 10:25:44 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id n7so5929434wrv.4
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 10:25:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:mime-version:message-id:in-reply-to:date:from:to
-         :cc;
-        bh=jWZLfDwJzGMJew6UaYiraUN91wgJc1WTUlNXhMB0LyI=;
-        b=lXpMwcScFK87M0+62R4GEogaxo0ROVWPKdDcPOme4F3M3+OoROFP2k834Pf0lPKGDp
-         hTpTfrPUBAdh+svHgdyUpwMm8ZJ8ILnphScOVsJhCdrH9dFcSHPc8d80hfBAP0U7UaEL
-         qHTOBAJ1SQO7b8hTtpwjUIdqDzn4Qhwwu3jw43GswwFOAnq0mROM7QwZVmGaWpkwErUS
-         +l4SqmpqQbi30p3xfYbS8zT8P9qzSf8TRJ3urm6qKbpSHke1Xty+QcGzosIQ4OWhRDgt
-         u5GT3BO4EVdLTMTg2zj52mJ7n4J+rHllQzcz8QvnelzejR4lA4tNeD8IGdt/Qa5f1DQt
-         esGg==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc;
+        bh=ATuFmKmG2wuZbyuAQZfq6Z5gdc1L3NIX93jAEayQKzI=;
+        b=XcdZB4kwC0DBL4rugHF1MfssqRqX+iYqqTeWl+pqTh81cb6GMHscfDTZdEwbf9Bs8W
+         2ubhpxFE+JyrsdafwKSjLvw3s1LzEXMO+lW+teiAtWjgT6/PBESJuMZkNeUd/C9H3X9M
+         40PUWZ6cL2+v3/rEu87lCEAkZ62bz7GvzQd0Ay+1iZHx9t7jJOgeYZ0nYc0muypOB32F
+         tp5qgzJbWK1FZbozx/uZeqJOVn1I2Z6YghxtixFqzF4siD4dPVc21hlCA/G83j/Dr3uJ
+         zTMOgbenXzgKeNmZnOwpIt8a1ZLmH7ksKKUNxz1l8aF6kdb0j6Ricg7T9MiIfgnvNzy2
+         KzqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:mime-version:message-id:in-reply-to:date
-         :x-gm-message-state:from:to:cc;
-        bh=jWZLfDwJzGMJew6UaYiraUN91wgJc1WTUlNXhMB0LyI=;
-        b=ZzYrEvSATvSTWZMELmye+bvs7Z7nDii8lmHgd41XXagT3gWC5nQy8W+4uuDEdF/Hfb
-         hSxfknLImGSw0LLMSMMxilPYOlFxgNdxear7Bi/YemlV3jYDo8CTPljdSlT3jCRaMshr
-         WzzEqxy+k20Fzl1Amw1urEC7Wk3dQBLjMUl/kRLCx1HDCVxgw4LpK1NEhUVDNkLg56kY
-         zsNxSH2H2FJ1qikibofBzYGtvjzTL0p0YZVt2qlqY8l5JXJWDkUoxzwIvebmnZnUH+hI
-         cK97qi/r0Jft0u7CzRYJpXI3rjGPNgsyJtJM2J8QDaKnfMvOucFnlQ4wn7+IdmCYD6AM
-         b20g==
-X-Gm-Message-State: ACgBeo0qhjpBjnArDS+JaZPGQpV4QXBvuJxxkb2ZTBQbQSwhS7f/jAlM
-        KVdFwtIvq5sloxyPAxcJgXo81ZTK76M3R+3ykn4n
-X-Google-Smtp-Source: AA6agR7+O1x5uHDBG6TgAHKRCXOJLWve0bBgcsrt8QiV6T5LKlxjB9BsqMKNeSSIVek/a/Wzl6l00RnFtiW0PG8OeT4p
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:249:b0:1e0:a8a3:3c6c with
- SMTP id t9-20020a17090a024900b001e0a8a33c6cmr440304pje.0.1660929923125; Fri,
- 19 Aug 2022 10:25:23 -0700 (PDT)
-Date:   Fri, 19 Aug 2022 10:25:19 -0700
-In-Reply-To: <CABPp-BFjxFeGO+NU4HFCGqDe4aRFhqOdOxNYVDf7EJOWdT5RgA@mail.gmail.com>
-Message-Id: <20220819172519.3703282-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.37.1.595.g718a3a8f04-goog
-Subject: Re: [PATCH v2 2/2] revision: allow --ancestry-path to take an argument
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc;
+        bh=ATuFmKmG2wuZbyuAQZfq6Z5gdc1L3NIX93jAEayQKzI=;
+        b=ePNfxZ7mjr3dbLKSdm9WKMfybeRbgSFlTr82OHeamZlUCGg8SgnCM0gek4sp4c33tS
+         QSUzxjWNN+BN6OH+WN4gh9s1CMxulLq2V5CK8MdCN9QHkTZApjEpx0ZUOQ3xyNJHqVnF
+         E2oDBsiLn5ORXsipXMeQcFmqxttAlQKtc7f5pkw9nk6EgY8E3PiaVjg54+jpuvGo3p1q
+         0/f12ubJSdMQ9wVO7PvdqEPu9JBl3IoHTm9I+hlo1So7Qvu1wBsSi3nLGuAvoiHAeFpf
+         OabARv3CIu/7ZGKQl3vqmfXdjjydfl7KclK1cpLsljXEfzHFuMko43jkz+NYZXxO2yrE
+         rtCw==
+X-Gm-Message-State: ACgBeo2YuFgPhZ1kwQj1oRdjegGIoXnoBbGpqnpFHXhDSLJxp9ThPglQ
+        qYctap0WAa4vtS1q+XcgQSU=
+X-Google-Smtp-Source: AA6agR4GCZaU8nGXMMdXovt8qvWWmlycyVI+tT+dLBoDAcBVOC5RyD/BiTgeHgmTyoq6rqsSfQq0pw==
+X-Received: by 2002:a5d:5601:0:b0:220:7144:2938 with SMTP id l1-20020a5d5601000000b0022071442938mr5084406wrv.50.1660929942685;
+        Fri, 19 Aug 2022 10:25:42 -0700 (PDT)
+Received: from gmgdl ([213.220.124.15])
+        by smtp.gmail.com with ESMTPSA id n189-20020a1ca4c6000000b003a540fef440sm9694885wme.1.2022.08.19.10.25.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Aug 2022 10:25:41 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oP5ka-000ovs-1p;
+        Fri, 19 Aug 2022 19:25:40 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 04/20] t0040-parse-options: test parse_options() with
+ various 'parse_opt_flags'
+Date:   Fri, 19 Aug 2022 19:23:44 +0200
+References: <20220725123857.2773963-1-szeder.dev@gmail.com>
+ <20220819160411.1791200-1-szeder.dev@gmail.com>
+ <20220819160411.1791200-5-szeder.dev@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <20220819160411.1791200-5-szeder.dev@gmail.com>
+Message-ID: <220819.86k0746t7v.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-> > Optional: Besides that, from what I can tell, sometimes the C commits
-> > themselves are marked with ANCESTRY_PATH (when they are explicitly
-> > specified) and sometimes they are not (when they are not explicitly
-> > specified). It's not a bug here, but it might be worth handling that in
-> > the ancestry_path_need_bottoms codepath (instead of explicitly setting
-> > TMP_MARK on the bottoms in limit_to_ancestry() - that way, I think we
-> > can also use ANCESTRY_PATH instead of TMP_MARK throughout the ancestry
-> > path codepaths, but I haven't tested it), at least to prevent possible
-> > future bugs.
-> 
-> That sounds like you're trying to duplicate the bug in my first
-> attempt at this patch.  If you try to coalesce ANCESTRY_PATH and
-> TMP_MARK, then you not only get all descendants of C, you also get all
-> descendants of any ancestor of C, which defeats the whole point of my
-> changes.
 
-Ah, yes you're right.
+On Fri, Aug 19 2022, SZEDER G=C3=A1bor wrote:
 
-> It's true that I don't mark implicit C commits with ANCESTRY_PATH, but
-> those are always bottom commits that are the excluded end of a range
-> anyway.  While those could be marked without causing problems, it
-> would always be a waste of effort.
+> +	for (int i =3D 0; i < argc; i++)
 
-Yes, that's true.
+See
+https://lore.kernel.org/git/CABPp-BHvQwct2WRRYGyzm=3DYVkjmwBqoe1DUtCicuQW=
+=3DjrQ2hdA@mail.gmail.com/;
+but maybe nothing to to be done here...
+
+> +	if (argc =3D=3D 0 || strcmp(argv[0], "cmd")) {
+
+Nit: !argc
+> +		error("'cmd' is mandatory");
+> +		usage_with_options(usage, test_flag_options);
+
+I think you want usage_msg_opt() instead.
+
+> +test_expect_success 'NO_INTERNAL_HELP works for -h' '
+> +	test_expect_code 129 test-tool parse-options-flags --no-internal-help c=
+md -h 2>err &&
+> +	cat err &&
+
+Stray "cat", presumably in error..
+
+> +	grep "^error: unknown switch \`h$SQ" err &&
+> +	grep "^usage: " err
+> +'
+> +
+> +for help_opt in help help-all
+> +do
+> +	test_expect_success "NO_INTERNAL_HELP works for --$help_opt" "
+> +		test_expect_code 129 test-tool parse-options-flags --no-internal-help =
+cmd --$help_opt 2>err &&
+> +		cat err &&
+
+ditto.
+
