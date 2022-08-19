@@ -2,114 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1F6CC32771
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 14:07:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97CDBC32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 14:10:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349073AbiHSOHY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 10:07:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58498 "EHLO
+        id S1348945AbiHSOKG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 10:10:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348481AbiHSOHX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 10:07:23 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 391DEE190B
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 07:07:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660918036;
-        bh=BaWwYAZL7WQqnQ+HWJXh9pPCpDM3NAkC2F7VcmfYT80=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=bnpehNNEUFqoTXi/58oIVxM5+QiTnPd5gbVTGMK3C7pHHf0XjRtO3eT+PsxXJXDhn
-         KjNSeWUUcZ7uWG1HOD5POHP0Zkn8N3rdMes5sMDFFCZRYbES470otmFu9Yp6VWLAVv
-         Lo7IlpA3MuUzQ6ipNccWYdUv2o2z9jeaDH5FwTiQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.212.11]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MacOQ-1nmx0z3j7y-00cD3d; Fri, 19
- Aug 2022 16:07:15 +0200
-Date:   Fri, 19 Aug 2022 16:07:23 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     phillip.wood@dunelm.org.uk
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 4/5] add -p: avoid ambiguous signed/unsigned comparison
-In-Reply-To: <9f8d808a-880c-fdd2-e915-d01c3f116cdc@gmail.com>
-Message-ID: <407ns96p-2n7n-rs60-40oo-81s02531q5q1@tzk.qr>
-References: <pull.1320.git.1660143750.gitgitgadget@gmail.com> <4d24a4345ba66031d2ccf7ce472ed93ace82e9d6.1660143750.git.gitgitgadget@gmail.com> <ec8204d5-9d0d-9850-f930-6fc1a8efacc5@gmail.com> <p1nn7o5q-9r34-n27o-s8r6-50277p3rp604@tzk.qr>
- <9f8d808a-880c-fdd2-e915-d01c3f116cdc@gmail.com>
+        with ESMTP id S1348475AbiHSOKE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 10:10:04 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63B18E1151
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 07:10:03 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id h5so4515119wru.7
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 07:10:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc;
+        bh=omoKpjZlOOrnBK6LrR2bQtvPmlxdLjG6WnCaxAQxIMY=;
+        b=QRoGaSra4GwuPvYGD5wjo7N8Gnd4WJLt7ngIc3JWIIqycC3giUEi6ZaBtj4ZR0ncE5
+         UmxCaqV3lub7pZSjEFXAJ9chUqeGMal2SxxiCaS7w8pTz9LWUw6BMWgBvnPBcLNRfD0q
+         efId3acsoOrg8ogX0auCT0jYsjJORC17scDx/QtxeSZQsiYOSzcsVWpDxOoi4A/IQ8jD
+         hAJ2QZlg3aErP6G2hvYgB5WI0PB6g6U5xwHoR04VRgfXCLve6IEjsUXx/oKSXui/MGe2
+         WlfbZp8e9shn4fEhxLxp94QgAjIXtx+5vZqm9N8Xc+K1o7Vas2disYORulX/26BQjSDp
+         X1aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc;
+        bh=omoKpjZlOOrnBK6LrR2bQtvPmlxdLjG6WnCaxAQxIMY=;
+        b=MDMicl7xPbhCaJT8+SGRQ90FlCCaKYIu9qVpxghCLnhNeEKa+MrUYfflH0UguqGlNp
+         tyX1HiTC+uzpqa6VB/UdHkO6TbjfBm4+BYww8+jQdi1ifVpDaeEdnHhlxDtAtSXTv90+
+         m5Xq6XfMuvbHG34mlaCeyKddcU1gDRaCKHpTtUrO+12rtSPgq6eFnCxInSvEW7SYYnzT
+         d1vcipswBnPNVK2+7dx/i5lPQ/4p/7q0NoIKjdATDQztLAdz/8t81aDkzfKOfeXOzdV0
+         FWplw6dDrVPGrN8fw286vpnY1sgzMlQ8E12y9LvPzHbchO9VFY0NX8UM08JsoD4F3Xpg
+         XwWQ==
+X-Gm-Message-State: ACgBeo2mRYXhd58lqaztutAKigB0sEprT7O5TjQ5e1PvqaYfFHcQO517
+        Vfl3AKh9kV0mNvANXjbPHxPyc8PgNdM/tA==
+X-Google-Smtp-Source: AA6agR4F+gqiE+w7Krmnn2YsCbd65hH0vhpjwGzdUpD+cA19MG33xtbmQMa0p5dmak9f5nKloowzsg==
+X-Received: by 2002:a5d:5711:0:b0:225:2884:cc88 with SMTP id a17-20020a5d5711000000b002252884cc88mr4315788wrv.141.1660918201709;
+        Fri, 19 Aug 2022 07:10:01 -0700 (PDT)
+Received: from gmgdl ([213.220.124.15])
+        by smtp.gmail.com with ESMTPSA id w6-20020a5d4b46000000b002205a5de337sm4088829wrs.102.2022.08.19.07.10.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Aug 2022 07:10:00 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oP2hD-000jWj-0J;
+        Fri, 19 Aug 2022 16:09:59 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/11] annotating unused function parameters
+Date:   Fri, 19 Aug 2022 15:58:19 +0200
+References: <Yv9gxqH6nK2KYnNj@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <Yv9gxqH6nK2KYnNj@coredump.intra.peff.net>
+Message-ID: <220819.861qtc8gug.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dGrQOW3txJxRuBPEeAaqFTBl1e4UUpuBEUX60Gqviv3dp//C90a
- LplIDeozoPMxiuHNSL0541C0aUT5ETQUNhg417oVyPYgCpiU4NU+kWM4ZYNbn2bSV9nPCKU
- e/t51B93E6T8gbgwyTD5YKoCGswWR0IjBjZDV99XJHdXOT8eYPlRI3RN6Arxlv3Z7dlq34D
- cpVS3g8j2LAizb/fNkeaA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OCVhzvb/fl4=:/9nB3nxmJ/qGYKWw+9JVfN
- IUdZiD5Sic3eDRes/ot9ZnMvIgyeu8zhk1p6HOf5cGkwyhD0Q5zSZoIiJixI4RriOILAU/K4k
- 8kn7EG8FzKXdW/O8Lzf+qyedyMi1QDmRXSXYlT8SlWSrL77+0lPXgCpRUVd2n5bljBBLIw36/
- D9jV+Dg8oOcOH54angm/1ihX5KsMb3jcNnXH0ZsRnX8iheLm3/DBKXnIszgjjE/POCIayu9A9
- OFv1cTfrEg0Ya1gyFNMHdyCVFQEEAbs+HjO5jQQ6963CJQiKX+F/jfusOTSFIlH1gMKwkvvM0
- D8YhoctdowLEP27p33ZDJbWFTx4K+V2CzS0IdFKeOoXGtikDx1lXd66Yg9YlApFdB7pSSPCHV
- IJV5lCaQbqJfL6kpOyKV7sl4oveLKq3SeCsJ5eDVWww726BOext0LaZ5yEYgKmKSFE/5Dzbvk
- Xgrtkm3VX142mmeC9YJy4Vk3d44hx9wCZD/9omIVE78XwZRPFp9jttGyfbphhFXHcxYq4YB7Y
- vjM/UN/N3zSErA9xZN8SqbPLNKmFVkgUmhYVBalosGaiFSxkpTXKYNjPCraw580pg/+LoICMr
- vIUH0RlYV0Yvg7Lmj1pSWuKgOZFcgzuCIrVXCEzI917s19lsEOmzsRDd9aH2MaFRTo4G6Tn9m
- Ck0fFyg5WHv94aO/7AJmI0md1z13ZyJCEUNJqcZfZnb5GbTp1czMRrJf9W7xwk0lBMV6IRRug
- Y/09/jzXxGj/NUUXBu3N4HzuzaBN7sWCB285RE+M4y+YuSnHFHnrwKqNt59DXWtB79imVUiJ7
- k4QfZQxjT4kG4kKO7yoOR5DVAgpItJOUTkuZjyccfVN5faRSmk1M5+prWBC+vK9wDLRtQLFX5
- 6P2tPocVtcA7rEqhBYfSEv3limuniN9SINbuafve39M473YTAnQrHdBrEzJ3v2T5d43YCB3y8
- NOOxy+FHmJHYg3i5r3urMm6BI/Flt1Vru5QT5IfAwn86HhKaQdq982P9z6C1sSzm+asXsICQH
- 4lYwQN7EvVI5FydeqnLO3zPhasfwSKzWCgDYolC1UlNxYRkZxjrYO94lJ6LB5XIfakqn1JXTr
- +wR2kY5ktoOPIkxTwQzmRGcppZZwY9TvZbeCk45LDXC9Rc60T56mO9RRA==
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
 
-On Tue, 16 Aug 2022, Phillip Wood wrote:
+On Fri, Aug 19 2022, Jeff King wrote:
 
-> On 16/08/2022 11:00, Johannes Schindelin wrote:
->
-> > On Thu, 11 Aug 2022, Phillip Wood wrote:
-> >
-> > > On 10/08/2022 16:02, Johannes Schindelin via GitGitGadget wrote:
-> > >
-> > > > diff --git a/add-patch.c b/add-patch.c
-> > > > index 509ca04456b..3524555e2b0 100644
-> > > > --- a/add-patch.c
-> > > > +++ b/add-patch.c
-> > > > @@ -1547,7 +1547,7 @@ soft_increment:
-> > > >       strbuf_remove(&s->answer, 0, 1);
-> > > >       strbuf_trim(&s->answer);
-> > >
-> > > Unrelated to this change but why don't we just call strbuf_reset() h=
-ere?
-> >
-> > This part of the code is used when the `g` command (to "go to hunk") w=
-as
-> > issued by the user. And that `g` command allows for a number to be
-> > specified, e.g. `g1` to go to the first hunk.
-> >
-> > The `strbuf_remove(&s->answer, 0, 1)` removes the `g` from the command=
-.
-> >
-> > The `strbuf_trim(&s->answer)` allows for whitespace between the `g` an=
-d
-> > the number, e.g. `g 1` should also go to the first hunk.
-> >
-> > If we called `strbuf_reset()` here, we would remove the number complet=
-ely.
->
-> Oh so if the user is not using interactive.singleKey then they can skip =
-the
-> prompt which displays the hunks and asks which one they want to jump to =
-by
-> guessing the number of the hunk they want and typing "g <n>".
+> I've been carrying a bunch of patches (for almost 4 years now!) that get
+> the code base compiling cleanly with -Wunused-parameter. This is a
+> useful warning in my opinion; it found real bugs[1] when applied to the
+> whole code base. So it would be nice to be able to turn it on all the
+> time and get the same protection going forward.
+> [...]
+> And of course the most important question is: do we like this direction
+> overall. This mass-annotation is a one-time pain. Going forward, the
+> only work would be requiring people to annotate new functions they add
+> (which again, is mostly going to be callbacks). IMHO it's worth it. In
+> addition to possibly finding errors, I think the annotations serve as an
+> extra clue for people reading the code about what the author intended.
 
-Yes, precisely.
+I've known you've had this out-of-tree for a while, and really like that
+it's on the path to getting integrated.
 
-I forgot that you are using `interactive.singleKey` (I planned on opting
-into that mode, but for some reason I never get around to flip the
-switch). The default mode is not the single key mode, though.
+But I have a hang-up about it, which is that I though __attribute__
+(unused) didn't work like *that*.
 
-Ciao,
-Dscho
+What it means (and maybe only I find this counter-intuitive) is "trust
+me, this is unused, but don't check!", furthermore it causes the
+compiler to completely ignore the variable for the purposes of *all*
+warnings, not just the unused one.
+
+I may still be missing something, but I wonder if this squashed in
+wouldn't be much better:
+=09
+	diff --git a/git-compat-util.h b/git-compat-util.h
+	index a9690126bb0..e02e2fc3f6d 100644
+	--- a/git-compat-util.h
+	+++ b/git-compat-util.h
+	@@ -190,9 +190,9 @@ struct strbuf;
+	 #define _SGI_SOURCE 1
+=09=20
+	 #if defined(__GNUC__)
+	-#define UNUSED(var) UNUSED_##var __attribute__((unused))
+	+#define UNUSED(var) var __attribute__((deprecated ("not 'deprecated', but=
+ expected not to be used!")))
+	 #else
+	-#define UNUSED(var) UNUSED_##var
+	+#define UNUSED(var) var
+	 #endif
+=09=20
+	 #if defined(WIN32) && !defined(__CYGWIN__) /* Both MinGW and MSVC */
+
+I.e. it's a bit counter-intuitive to mark these as "deprecated", but you
+can add a custom message (with both GCC and clang). Improvements to the
+message welcome.
+
+Now as in this series we stay silent if the variable is not used, but we
+*don't* stay silent if an UNUSED(var) is actually used, that'll now be
+an error:
+=09
+	xdiff/xdiffi.c: In function =E2=80=98xdl_call_hunk_func=E2=80=99:
+	xdiff/xdiffi.c:981:9: error: =E2=80=98xe=E2=80=99 is deprecated: not 'depr=
+ecated', but expected not to be used! [-Werror=3Ddeprecated-declarations]
+	  981 |         fprintf(stderr, "%p", (void*)xe);
+	      |         ^~~~~~~
+
+This also means that you don't need to rename the variable just to avoid
+"accidental" use, which also has the benefit of not tripping up the
+variable typo detection.
