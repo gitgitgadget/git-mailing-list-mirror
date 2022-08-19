@@ -2,70 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EB19C32771
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 22:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28969C28D13
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 22:42:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239966AbiHSWSB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 18:18:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36772 "EHLO
+        id S235115AbiHSWmg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 18:42:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240889AbiHSWRl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 18:17:41 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32A54106F8A
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 15:17:20 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6993819F3E0;
-        Fri, 19 Aug 2022 18:17:20 -0400 (EDT)
+        with ESMTP id S229497AbiHSWme (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 18:42:34 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FE8B10F6AA
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 15:42:30 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 37CEF1AFF35;
+        Fri, 19 Aug 2022 18:42:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=R5R6TYd3tOzreCAQ5dKRn6aEdMHNoksT0fxW2k
-        cS27Q=; b=vj7KtNIY3qFctBQ5g5qndXE+93TcKSld1zzRbO5k/1cWNiYKHGSJfv
-        5Fg8exBEUEohgIPoIX8V2rQdr+bvaOb2gqUXk2nK4JEeXfiUgPNThORY9WCt7XzL
-        BSFJDFRE5hTvrAWbIatVBJZ83DICT2sYDt9R+MeZwSgF+u0RSC700=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 62B6E19F3DF;
-        Fri, 19 Aug 2022 18:17:20 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=V2mML3+xIHMS
+        6ayIGzxNiCGkY2GyE7XkUPm0oklAcRg=; b=kbNfCmqtg/1dq87RB0oYEFW9QtEk
+        9u69/WqjoUm/YJ9MF5vNGdW5cLfq0oRhIesk4yUDYa6IilNzrOJhjV6jyR2v7Lgj
+        gyDiPYKcI42JPHWbeh91MLrcpikY03HJVBKK4JkytCStAypY1t13Wt6z7VXaZPBT
+        SRosjs5v249JRww=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 306DF1AFF34;
+        Fri, 19 Aug 2022 18:42:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2019E19F3DC;
-        Fri, 19 Aug 2022 18:17:17 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9F33B1AFF33;
+        Fri, 19 Aug 2022 18:42:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
-        avarab@gmail.com
-Subject: Re: [PATCH v4 0/3] t0021: convert perl script to C test-tool helper
-References: <cover.1659291025.git.matheus.bernardino@usp.br>
-        <cover.1660522524.git.matheus.bernardino@usp.br>
-        <oop2rosn-011s-9rpn-04s5-ss12n45q615p@tzk.qr>
-Date:   Fri, 19 Aug 2022 15:17:15 -0700
-In-Reply-To: <oop2rosn-011s-9rpn-04s5-ss12n45q615p@tzk.qr> (Johannes
-        Schindelin's message of "Mon, 15 Aug 2022 15:01:54 +0200 (CEST)")
-Message-ID: <xmqq8rnjkhec.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 1/4] sequencer: do not translate reflog messages
+References: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr>
+        <cover.1660828108.git.git@grubix.eu>
+        <ea6c65c254bb08b20ea6c4d81200b847755b555c.1660828108.git.git@grubix.eu>
+        <220818.86zgg18umf.gmgdl@evledraar.gmail.com>
+        <6oqr69o7-qsps-sr86-o4r9-16r7no9n5424@tzk.qr>
+        <220819.86o7wg6zci.gmgdl@evledraar.gmail.com>
+        <xmqq8rnkklon.fsf@gitster.g>
+        <220819.864jy853qc.gmgdl@evledraar.gmail.com>
+Date:   Fri, 19 Aug 2022 15:42:25 -0700
+In-Reply-To: <220819.864jy853qc.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 19 Aug 2022 23:13:21 +0200")
+Message-ID: <xmqq4jy7kg8e.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AF528BD4-200C-11ED-A3F5-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 331131DE-2010-11ED-9CB8-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Sun, 14 Aug 2022, Matheus Tavares wrote:
+> On Fri, Aug 19 2022, Junio C Hamano wrote:
 >
->> Main changes since v3:
->> Patch 2:
->> - Mentioned in commit message why we removed the flush() calls for the
->>   log file handler.
->> - Removed 'buf[size] = \0' and relied on the fact that packet_read()
->>   already 0-terminates the buffer. This also allows us to use NULL
-> ...
-> The range-diff looks good to me, and I think this iteration is good to go.
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>
+>>> Doesn't that also mean that the relevant functionality is now also (a=
+nd
+>>> still?) broken on any repository where these translations ended up
+>>> on-disk?
+>>
+>> It may, but the first response to that problem is not to make the
+>> breakage in repositires worse by keep adding unparseable data to
+>> them.
+>
+> *nod*, but where is that breakage specifically?
 
-Thanks, both.  Let's merge it down.
+Set your LANG to something other than C and then run "git reflog"
+after running sequencer operations, and you'll see the same breakage
+that motivated Michael to send this patch set, I think.
 
