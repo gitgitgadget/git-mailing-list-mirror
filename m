@@ -2,121 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F36AC32771
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 09:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F1EFC32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 09:30:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348158AbiHSJ0g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 05:26:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35398 "EHLO
+        id S1347780AbiHSJae (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 05:30:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347758AbiHSJ0f (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 05:26:35 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E80F6F43AC
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 02:26:33 -0700 (PDT)
+        with ESMTP id S1346238AbiHSJad (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 05:30:33 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5066FE9A99
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 02:30:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1660901189;
-        bh=18XY0BtsolcWPbBgriXbZTM37t79RZxe7lhra4knhS4=;
+        s=badeba3b8450; t=1660901425;
+        bh=mUvRWzUkZAy70rAZ0+EdhbRmEIPH207+1CGF3TIL+6g=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=C81SjM9MnEnqYg46qo8dCPo/PTPPVFOMUBTQCvcfWiDuuMEN2sO3EF6nd5Sni0LcW
-         UugcFqRD4caxTjtYv2COd7My/InTYvdizUSXYBNErAuVqq4PIpSk9RtUQQ9ljNbWp9
-         1SM4VWuvS101tTCNoIZiUotYM9REAqAg+orIVfaI=
+        b=h4r1IDaMI0gPCsWZNor53DgSaBWaA+sr95utLoJHSAvaYfPD/32zYuI5QRriTR7ny
+         lvkOBzhN3mFQjFCz5y2vT++E0e4vgW2HASbfS4/6fYH2ChojbINK7zIoWtnAfX//G8
+         zP9JO1hml9pK8z/tbpqTxxX7IBYqEnjp+bazdR1Q=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.183.122] ([89.1.212.11]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7sHy-1oK0CF0Bak-004z3a; Fri, 19
- Aug 2022 11:26:29 +0200
-Date:   Fri, 19 Aug 2022 11:26:35 +0200 (CEST)
+Received: from [172.25.183.122] ([89.1.212.11]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M4JqV-1oOhLk0dE1-000O5P; Fri, 19
+ Aug 2022 11:30:25 +0200
+Date:   Fri, 19 Aug 2022 11:30:31 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
+To:     Michael J Gruber <git@grubix.eu>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 2/4] sequencer: do not translate parameters to
- error_resolve_conflict()
-In-Reply-To: <220818.86v8qp8uid.gmgdl@evledraar.gmail.com>
-Message-ID: <06s6r3s7-27nn-1o9s-1n7p-5413284r8740@tzk.qr>
-References: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr> <cover.1660828108.git.git@grubix.eu> <4684d54aeb3e00c96ba581c824a04e47b7236db7.1660828108.git.git@grubix.eu> <220818.86v8qp8uid.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH 4/4 v2] sequencer: spell out command names and do not
+ translate them
+In-Reply-To: <ef8b4536322eebd2bed53157f43349e9158631ae.1660894946.git.git@grubix.eu>
+Message-ID: <o4op5qqo-206p-on30-49q7-n1qp4859q0n7@tzk.qr>
+References: <xmqqilmpnvad.fsf@gitster.g> <ef8b4536322eebd2bed53157f43349e9158631ae.1660894946.git.git@grubix.eu>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-373191695-1660901197=:241"
-X-Provags-ID: V03:K1:8ynxar4uZGvCUg+lFTYQyTrnL0b9kNDjgH1LLuhvguuCiML+1zf
- khuDnLfy+z9+ahG3KYHDToiIu9Xii4aKfd6WRf18Ai1md/ACCnTIr58UV7vXLMgaz5gMX9z
- SpJLNcQhcdJY7+PfvyKshb5/S68r2Cq0Y7YjR+VfOK98eeUW8uDultnubpJSMSS/cn3eWjo
- ClLYiVw2bSnVe4I7YGKVA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:sOlvOi+mdr4=:c1Ea2ZYE8iFiWfuoG7oY81
- FxJzQpXOOuf07PhKlOCnMJruf6nFdKP9lOwfWUiR6BVRrXrT8ArmAOoVcxOHvzOsmZw+1jFOG
- aOwAaMACpRZzoqC47mjg3jJJEkTNk+twwIHcLe8gaahiUNUikNhJoK/euRc4tHuVCSd9Of3O1
- leQtjBGPKmsX1afNBHDM+gzx23H4/gXP+iJh6eHi4XwNbZCR7uUTrIv2Hw8FUOPGcODi+nc5X
- xfxab0c554REfr10SSn0TvES8sVCfht3cbuwklN2USy3qD9Ii973xNUsMu8lzPb5iCWLNI0zf
- d9iHX+g7yBxNAnoN9BVQttDx2mzYxTJdEHjOwtP4vJckhDbWgdjMsfW3ub8t4rk8vYOPQIJj6
- bDvv/kIT1TLoiRETs6+Q1v5YbaEGCl2Kn+1hy2xvWu5y4OjftBN4NhaGjHXOaY+ZiOjoETJUC
- CmQFK26K9VZ5vIYQvyNKMM+Zf5sF6E+LFilBYfE0PLTYMO/k390zc9e0Od3fEi8G+TTlMFY9A
- HBhK9KtuOkHP/ZLSkASLM7BBrU9jeiKYBW1E0UZEoTc0PM8kJ6guxGhVZtuNDWBPdjCqAi02K
- 1AWgcD+pxoPS4eVBmXDqSfCMYlNJxC5vl31KFYIZyCl0OCvddtGYIP6Rkn5yE4mfjPUqQvnLB
- beAZyg5XMAfHR85TBb1MZ3VRd8GgZEzbwHiuLBFn8K03QPCaOdYtkcjeUDibeAbYc5qRhhl4+
- 8QE4jZKlxvBBnMno/Ui4N2HB1bW1/P4opixvqs9nbA+YeqGSHcfK7zcMtUuT84bqxPk/iGju5
- DltPyKD3WmRXF8tPb9jN2AXWN5nDPV7wTj5wHsZFM+j2lqt49GdU1VNVXy4L/GasjmuGcumXC
- FFcjUigV2jzfDq9AeejGtuzVbtafKWwO94dwLmLOMgsTSUlrLyb5haGwCVYQLiJ+wvlkj5rpR
- wiqt4pknlEbmHf29zBlntoInmu9h9xgTLdqmzF5IN0VQ4GKOQgTPHeAzDxjef3PLTkTcXPvhW
- 4VdZY5xB5YHHQSPiSUq2O0Sa9M5NtUAbAGUJnbNoSh15N3fLTl3fDnQvOcFoAIY73ZNKw/tu+
- Z00J14PqsmqTptMDMRbdfI9nLnKP0QSwZfZiQnK8guiMo0SFDN45kMd4A==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:XEp+84YmxO2XB2P3QcakUeAeY5dntd169PO5zFAZ5YcGwocFfsp
+ TZk/gfQibF5c5aat6zrPRlulRrdUYJPC9aQe6rWi4vCVNZOCQd9nlrCspfukOAdL3tkbSoL
+ CeR/g771zk4t3JGE34CuWgRkpiWw4eLrFY2ZGqXvUzjKNj2I9Pdkqi0DSrl4y3ckX23IoNe
+ WWCkYTtvoWQI1sbMvl5lA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sP6M6nT5YJ0=:5ufoj7IMzKhtDpXd6fvMOC
+ DXiIO+9s7f7aI+k8kiNJVy8NGpi5BmeL4ai2LzF5aksFgWPNeb7BBVLs5hBswLzd3VSsfcTQL
+ PnqzYg7V7XWmvamk647DbX3mMyR+8MxfSUZKZ/364eBGKeA0MP9Ez44GcUtQKIUSeSgm7/+Q+
+ AnyYu/eusOzXwVfEzNG22OpQuNunX9Ppkttt5KWkbywM+qE0lLb1RO0KZ7RTCQBoXeT0UC4hP
+ ElAa1DEQ7/QrkTeZ4b0GfEyUhh3i1F8ZATtzv0Wq0aNCHBrUFhvoFnOx0DtTC59NUDU/p8Pa2
+ QHoEAryY64HcnFIr8gYvpjUcJ0SHfCyhSJRyeCcb2aKlla6y5vGRUsNAy+AfrU04DaUlT9z5k
+ AySt+ku9UaGzFL9QIk+WbpoOQUUP5W8iY6o4cdVbgfl1xQbPspzY3czihW4TWN9FOJfXpKYpJ
+ ZLiriCbuT0DUI3Ghquwgf3NxT7dWjHNAhSFi9xMCGtkH2vG/dJJfnpnGP+Rr49NEKpgc4aTY/
+ HPc8ourxCH8GqgNBfDCwiQvu3j/NG1GzI0DWaqmEDenm/bWpc8ornZ9aixtA70tTy58kJ5LDR
+ 6TazmKJXF0b738QCWQH+WR63Y9jWOKH0eyR9bdutQAF2TcUlzuoX7qAXU/hSgyIxXuI56pRyl
+ m73OehEIM2OElwMKxEpwOeXUdJno+r79qVZenQLw9FX56ISmPAUHpOciLsWDPd7Ikfah73xBz
+ MMRg4Ot3Sr197MCvM51Re11K7sSs2oaruJilzkgAJazkBgCCNAhGBgaRmrPuLNZ31aPKjmhy7
+ RSuwejWH/tM7Lg50neK/e9AnsjSiLx1guO1Av2vbKoF6v0qSdrWCYfPlrdBaT2XjCc594zcfr
+ 8SgMKFbSTX1OGHQGnR3Yh/oodGUEf9zaX5fVGqXWa2EnMLeQFALBOScPv2fX7jI0VshAp9zVl
+ jbD7dJLJxmsCOBdYrTBN2wxL4XWfqx6C5mKqiRhI5/IcEoIKgY+6eTjypmMcZfZJ/eUtCHQoT
+ vVRRN5vaoDJSMwi/0UpdBh+KgCAf+hGTJxWMCYmCU5c+bIZW5+pwd38MTOtmL/G7vVBDML+bW
+ +M0cNXvVlWFmXgKOhfYffIZR0MNzsayoU76jPOeX40S7oxYFTieq6dN9Q==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Michael & Junio,
 
---8323328-373191695-1660901197=:241
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Fri, 19 Aug 2022, Michael J Gruber wrote:
 
-Hi =C3=86var,
-
-On Thu, 18 Aug 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> On Thu, Aug 18 2022, Michael J Gruber wrote:
+> When we talk about sequencer action names as such we do translate the
+> action name. In all cases, we talk about the like-named git command
+> name, though, which is not translated.
 >
-> > `error_resolve_conflict()` checks the untranslated action_name
-> > parameter, so pass it as is.
-> >
-> > Suggested-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> > Signed-off-by: Michael J Gruber <git@grubix.eu>
-> > ---
-> >  sequencer.c | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 51d75dfbe1..8b32b239b9 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -537,7 +537,7 @@ static struct tree *empty_tree(struct repository *=
-r)
-> >  static int error_dirty_index(struct repository *repo, struct replay_o=
-pts *opts)
-> >  {
-> >  	if (repo_read_index_unmerged(repo))
-> > -		return error_resolve_conflict(_(action_name(opts)));
-> > +		return error_resolve_conflict(action_name(opts));
-> >
-> >  	error(_("your local changes would be overwritten by %s."),
-> >  		_(action_name(opts)));
-> > @@ -3753,7 +3753,7 @@ static int do_reset(struct repository *r,
-> >  	init_checkout_metadata(&unpack_tree_opts.meta, name, &oid, NULL);
-> >
-> >  	if (repo_read_index_unmerged(r)) {
-> > -		ret =3D error_resolve_conflict(_(action_name(opts)));
-> > +		ret =3D error_resolve_conflict(action_name(opts));
-> >  		goto cleanup;
-> >  	}
+> In order to make the correspondence clearer, reword those error messages
+> to use the (untranslated) git command name, and adjust the po README to
+> match the code base.
 >
-> Perhaps we should have the error_resolve_conflict() function take a
-> "enum replay_action" instead?
+> Signed-off-by: Michael J Gruber <git@grubix.eu>
+> ---
+> I guess there are two extreme views regarding these cases (in terms of
+> how much to translate) and a few in between. v2 here implements the
+> one of these. As a result, we don't need to N_()-mark the action names
+> any more unless I'm overlooking something. I'm holding this back until
+> the consensus is clear.
 
-We could do that. We could also just delete the sequencer code. It's just
-that both are a bad idea.
+Thank you for being careful.
+
+In general, I would like to leave the decision whether or not to mention
+the _English_ word for an operation (or whether to treat the error
+message's prefix as a short-hand for the Git command) to the l10n
+maintainer, so that things can be consistent between translations.
 
 Ciao,
-Johannes
+Dscho
 
---8323328-373191695-1660901197=:241--
+> Overall, we are not consistent with the prefixes in our error messages
+> (command or not) nor the capitalisation. One could say that at the point
+> of an error/die worse has gone wrong than the wording, of course ;)
+>
+>  po/README.md | 2 +-
+>  sequencer.c  | 8 ++++----
+>  2 files changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/po/README.md b/po/README.md
+> index 3e4f897d93..7b7ad24412 100644
+> --- a/po/README.md
+> +++ b/po/README.md
+> @@ -273,7 +273,7 @@ General advice:
+>
+>    ```c
+>    /* TRANSLATORS: %s will be "revert" or "cherry-pick" */
+> -  die(_("%s: Unable to write new index file"), action_name(opts));
+> +  die(_("git %s: unable to write new index file"), action_name(opts));
+>    ```
+>
+>  We provide wrappers for C, Shell and Perl programs. Here's how they're
+> diff --git a/sequencer.c b/sequencer.c
+> index 79dad522f5..c26dc46268 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -539,8 +539,8 @@ static int error_dirty_index(struct repository *repo=
+, struct replay_opts *opts)
+>  	if (repo_read_index_unmerged(repo))
+>  		return error_resolve_conflict(action_name(opts));
+>
+> -	error(_("your local changes would be overwritten by %s."),
+> -		_(action_name(opts)));
+> +	error(_("git %s: your local changes would be overwritten"),
+> +		action_name(opts)));
+>
+>  	if (advice_enabled(ADVICE_COMMIT_BEFORE_MERGE))
+>  		advise(_("commit your changes or stash them to proceed."));
+> @@ -725,8 +725,8 @@ static int do_recursive_merge(struct repository *r,
+>  		 * TRANSLATORS: %s will be "revert", "cherry-pick" or
+>  		 * "rebase".
+>  		 */
+> -		return error(_("%s: Unable to write new index file"),
+> -			_(action_name(opts)));
+> +		return error(_("git %s: unable to write new index file"),
+> +			action_name(opts));
+>
+>  	if (!clean)
+>  		append_conflicts_hint(r->index, msgbuf,
+> --
+> 2.37.2.653.g5b2587383a
+>
+>
