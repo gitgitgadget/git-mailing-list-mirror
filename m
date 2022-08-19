@@ -2,152 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8597DC25B0E
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 04:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98221C25B0E
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 06:57:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344695AbiHSEqB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 00:46:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48334 "EHLO
+        id S1346656AbiHSG5l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 02:57:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237247AbiHSEp7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 00:45:59 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B475CC6CFA
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 21:45:58 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id z16so3836737wrh.12
-        for <git@vger.kernel.org>; Thu, 18 Aug 2022 21:45:58 -0700 (PDT)
+        with ESMTP id S1346676AbiHSG5k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 02:57:40 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FB8CDF4D6
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 23:57:39 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id a4so4116268wrq.1
+        for <git@vger.kernel.org>; Thu, 18 Aug 2022 23:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc;
-        bh=sczXWogkGlQREbLghl+N5Gpb/4as3Qa9m/wKedjGbjI=;
-        b=jdjGWsi9W63U/UFZd9BhngvoF90CBnGjnR+YEW0TVOms6shIkfRJArlhKBai5XioUV
-         MR3+gNdX7Tt9hKEtaL/bpLHIsVPSsl47isLzeCxWAy74bZ8Tj0cuU4I4jzNfQfmWZMSB
-         ogzAxIbl/LzvOgbbsbuKKmvL3Qvgr1HXefhOUC9PAUIr+1eN5nw+v5tSFTJ8EyYfHl66
-         XBLpzzLvPU1yzkJP9gidf0nygeFqgQ21BS2lStoHVKVbiGrOofIogRzCrYkBbdG8o6Qo
-         xp3ol9hL6jyERKFmYqEyqCt/cRze+wKZs5PKBd+X9LMBgoofmGCTB78J+4PRRN/9lT3V
-         u00w==
+        bh=lVnF047FVdASNiQ4TVaFKo95oyGrwzsr9lE743HRbDM=;
+        b=i9gOjVOvL1FippmWpX0eRGfcugfjvzqSyB/wKchOcPq0Doz/pZyNC2hh5daEOx2MxE
+         +Ua61tLOiW4vpatx0revQavM+0Uv6GaTC0/vRainlAJX4um4Cizx7Awof5gIIaIBGAfA
+         CobozGimw87WX79l/+ncF4gEZevW9M0yur6VotM0GAfPst/N8jrGwTPahK98NZZOOVnc
+         35/L2mCnA9BpbIQFjZ6h1OqB2QrzGWQ8jBKYJt5WI0NivnhxZmvTkUH+OdYNShgu/XDb
+         W5rKw5oBPdcEU/+0cRPioAAeO0T7wDp8pZdi/ENfpZ0v6mDxfGYAxK+/rlQSgafK3zo6
+         mnoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-message-state:from:to:cc;
-        bh=sczXWogkGlQREbLghl+N5Gpb/4as3Qa9m/wKedjGbjI=;
-        b=SkOSD1vl7dOd6F6VKhrPvIO6w48149M5Os34khU9tAsruh9sRE9yp50j5wYKpsvi02
-         ch1cHR3wUob5Q30+E2VkD/TZQGiWxvOa1kAm+3XO/ZCSOslEwdVKThhJPm7N85vSA+kL
-         XvUIoXPXRR11bRJVVogMfqIn4JcPrW1n6WH9wtSK3cQEuZJ1PtgqRXzFheqz1V6XvItj
-         OI/AejPo6MXdd7qMK1KeHkIsV77MGmb3iAjKqQuxeVRQaisi+dji91fqKnBBZq25Cp/2
-         OE+/fEtyZ9sjkiNWISQgIFVmh4JxpRiLBSsyHaCZ2MwomCEChw0p2q8CzMWSMR+4v5S3
-         SzEw==
-X-Gm-Message-State: ACgBeo1IKoglrwQpk/tpv8OHQb5aDyzZsgVkfweGsUUsHHZmPtPzAO3S
-        eDDjHtV59NVbHwBvBZqFRyDSVgkYC8o=
-X-Google-Smtp-Source: AA6agR6hunn40XBnqUxeshYL3sFJSvgBWbgdbhyP79DlnGiGA1Ywkg1Pnblzcf21tkQBbHgyy+jsBA==
-X-Received: by 2002:a5d:5a0c:0:b0:220:6cd2:33fb with SMTP id bq12-20020a5d5a0c000000b002206cd233fbmr2905817wrb.560.1660884356966;
-        Thu, 18 Aug 2022 21:45:56 -0700 (PDT)
+        bh=lVnF047FVdASNiQ4TVaFKo95oyGrwzsr9lE743HRbDM=;
+        b=7WAqUb/NX2hniBwFJTfXA7/IVy/8Zg+KZWxYvlClSjzaz9ulELU+e0JqTYaCtHl3zb
+         tFVmRe6SCYU9svWEe+UXwBRHwXCWybQTkgfdgFhKzJVXHsIotatsI8d3L4jaCt2KtsCX
+         N1gPsRUnd2gvvZQmf2l1ktd25r3UAQGlP3gncc9bucwn8Ag+fTSpAVVrCpm+kowLUfTM
+         3bM9Y76Ead0RSJlan2l2rpcSGTruRcxXf/6w095jpJdw94zEMBp8BgujVLSiCy0Ypfsk
+         yW/0kvFTbEBnZ/QvT5lK2BwfLy6cDXKJH9Llw1I9jM6BBoW3a+8PlwIg2qXYtfkQoYJW
+         I2nQ==
+X-Gm-Message-State: ACgBeo3AzRkOwDuFMJjgiJb8gZOqcmM0Hwt07+q18bZoI0d2JWPmM6I4
+        nBcgO5WLcMkL9IFIioArq0S9nay9/Y8=
+X-Google-Smtp-Source: AA6agR4lJa02VviXistyAnW8wS82btdpCM3PmHcXv6ziBEdg50goLKeVJwRzx+3Dfva0l9EgJ/iNHg==
+X-Received: by 2002:a05:6000:1888:b0:222:c8e3:6bb with SMTP id a8-20020a056000188800b00222c8e306bbmr3203788wri.88.1660892257482;
+        Thu, 18 Aug 2022 23:57:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m19-20020a05600c461300b003a550be861bsm3972914wmo.27.2022.08.18.21.45.56
+        by smtp.gmail.com with ESMTPSA id r6-20020a05600c35c600b003a626055569sm4424423wmq.16.2022.08.18.23.57.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Aug 2022 21:45:56 -0700 (PDT)
-Message-Id: <pull.1302.git.git.1660884355643.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 19 Aug 2022 04:45:55 +0000
-Subject: [PATCH] merge-ort: remove code obsoleted by other changes
+        Thu, 18 Aug 2022 23:57:36 -0700 (PDT)
+Message-Id: <pull.1327.git.1660892256.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 19 Aug 2022 06:57:33 +0000
+Subject: [PATCH 0/3] Show original filenames in merge tree
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+The git merge-tree command has not seen much of real-world usage (because it
+only recently learned to do something actually useful, and those changes
+have not been part of any official Git version yet), which means that we are
+prone to find corner-cases where we want to improve it in ways that we had
+not originally foreseen.
 
-Commit 66b209b86a ("merge-ort: implement CE_SKIP_WORKTREE handling with
-conflicted entries", 2021-03-20) added some code for merge-ort to handle
-conflicted and skip_worktree entries in general.  Included in this was
-an ugly hack for dealing with present-despite-skipped entries and a
-testcase (t6428.2) specific to that hack, since at that time users could
-accidentally get files into that state when using a sparse checkout.
+I had the chance to give it some real-world exposure and noticed the
+following concern: So far, git merge-tree shows munged file names in its
+output that would make sense if the corresponding files were written to disk
+(you cannot write a file and a directory of the same name, after all). But
+for an application or a web service relying on git merge-tree to operate in
+worktree-less mode, it makes much more sense to show the original file names
+because that's what the user needs to see.
 
-However, with the merging of 82386b4496 ("Merge branch
-'en/present-despite-skipped'", 2022-03-09), that class of problems was
-addressed globally and in a much cleaner way.  As such, the
-present-despite-skipped hack in merge-ort is no longer needed and can
-simply be removed.
+So let's do that.
 
-No additional testcase is needed here; t6428.2 was written to test the
-necessary functionality and is being kept.  The fact that this test
-continues to pass despite the code being removed shows that the extra
-code is no longer necessary.
+Note: The written-out tree object still uses the munged names, as do the
+conflict messages. But the machine-parseable part now consistently uses the
+original file names.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    merge-ort: remove code obsoleted by other changes
+Also note: This patch series addresses a bug where the ls-files -u-formatted
+output would not reveal the correct file names in a rename/rename conflict.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1302%2Fnewren%2Fnuke-present-despite-skipped-hack-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1302/newren/nuke-present-despite-skipped-hack-v1
-Pull-Request: https://github.com/git/git/pull/1302
+This patch series is based on en/merge-tree.
 
- merge-ort.c | 22 ++--------------------
- 1 file changed, 2 insertions(+), 20 deletions(-)
+Johannes Schindelin (3):
+  merge-tree -z: always show the original file name first
+  merge-tree: show the original file names in the conflict output
+  t4301: add a test case involving a rename, type change & modification
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 8b7de0fbd8e..a6a3ab839a0 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -491,7 +491,6 @@ enum conflict_and_info_types {
- 	CONFLICT_FILE_DIRECTORY,
- 	CONFLICT_DISTINCT_MODES,
- 	CONFLICT_MODIFY_DELETE,
--	CONFLICT_PRESENT_DESPITE_SKIPPED,
- 
- 	/* Regular rename */
- 	CONFLICT_RENAME_RENAME,   /* same file renamed differently */
-@@ -536,8 +535,6 @@ static const char *type_short_descriptions[] = {
- 	[CONFLICT_FILE_DIRECTORY] = "CONFLICT (file/directory)",
- 	[CONFLICT_DISTINCT_MODES] = "CONFLICT (distinct modes)",
- 	[CONFLICT_MODIFY_DELETE] = "CONFLICT (modify/delete)",
--	[CONFLICT_PRESENT_DESPITE_SKIPPED] =
--		"CONFLICT (upgrade your version of git)",
- 
- 	/*** Regular rename ***/
- 	[CONFLICT_RENAME_RENAME] = "CONFLICT (rename/rename)",
-@@ -748,8 +745,7 @@ static void path_msg(struct merge_options *opt,
- 	/* Sanity checks */
- 	assert(omittable_hint ==
- 	       !starts_with(type_short_descriptions[type], "CONFLICT") ||
--	       type == CONFLICT_DIR_RENAME_SUGGESTED ||
--	       type == CONFLICT_PRESENT_DESPITE_SKIPPED);
-+	       type == CONFLICT_DIR_RENAME_SUGGESTED);
- 	if (opt->record_conflict_msgs_as_headers && omittable_hint)
- 		return; /* Do not record mere hints in headers */
- 	if (opt->priv->call_depth && opt->verbosity < 5)
-@@ -4377,22 +4373,8 @@ static int record_conflicted_index_entries(struct merge_options *opt)
- 			 * the CE_SKIP_WORKTREE bit and manually write those
- 			 * files to the working disk here.
- 			 */
--			if (ce_skip_worktree(ce)) {
--				struct stat st;
--
--				if (!lstat(path, &st)) {
--					char *new_name = unique_path(opt,
--								     path,
--								     "cruft");
--
--					path_msg(opt, CONFLICT_PRESENT_DESPITE_SKIPPED, 1,
--						 path, NULL, NULL, NULL,
--						 _("Note: %s not up to date and in way of checking out conflicted version; old copy renamed to %s"),
--						 path, new_name);
--					errs |= rename(path, new_name);
--				}
-+			if (ce_skip_worktree(ce))
- 				errs |= checkout_entry(ce, &state, NULL, NULL);
--			}
- 
- 			/*
- 			 * Mark this cache entry for removal and instead add
+ builtin/merge-tree.c             |  2 +-
+ merge-ort.c                      | 16 +++++-----
+ merge-ort.h                      |  1 +
+ t/t4069-remerge-diff.sh          |  8 ++---
+ t/t4301-merge-tree-write-tree.sh | 54 +++++++++++++++++++++++++-------
+ 5 files changed, 57 insertions(+), 24 deletions(-)
 
-base-commit: 6a475b71f8c4ce708d69fdc9317aefbde3769e25
+
+base-commit: 7260e87248e743b197d34c1caf3949ae4fa3bc12
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1327%2Fdscho%2Fshow-original-filenames-in-merge-tree-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1327/dscho/show-original-filenames-in-merge-tree-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1327
 -- 
 gitgitgadget
