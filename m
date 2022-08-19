@@ -2,100 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92955C32771
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 18:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8E07C32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 18:59:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350938AbiHSS64 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 14:58:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58430 "EHLO
+        id S1350949AbiHSS7j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 14:59:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350144AbiHSS6x (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 14:58:53 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 245474E845
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:58:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1660935528;
-        bh=CTf36Ryv8lCDVoNawgu0TiWfqzcc51QYg4r+i0wENLc=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=fLK9b81DL3HWqd5h/Lkn0iMLh1FIsKIJxqx/5ALZr9kV9ALsPFdH6IL2vNeEwBKfp
-         SWCtCcxZbYcB6i6mog3egejD+tQX0pxCvAcGZRuYpgDYRZX/i3M8jwQ3IfNWItMrL8
-         rRzHqU5UXVfCvOvsIhBPpD76ysf+Ve449I1sjWTU=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N3Gga-1nOnda2FZy-010Z9m; Fri, 19
- Aug 2022 20:58:48 +0200
-Date:   Fri, 19 Aug 2022 20:58:47 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH] fsmonitor: option to allow fsmonitor to run against
- network-mounted repos
-Message-ID: <20220819185847.ulr5yjcfsahydeff@tb-raspi4>
-References: <pull.1326.git.1660855703816.gitgitgadget@gmail.com>
+        with ESMTP id S1350943AbiHSS7i (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 14:59:38 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39EED104459
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:59:37 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id 10so3987893iou.2
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 11:59:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=A8D6LF13S4HbeGbQdNjsVEaYRWfHqxjfdmOkl5EgdgE=;
+        b=E+NU87+XBgMlyr+aDnjmvOBcZ3fwssZgU6mQzSq1g5TQj4Vxsv3wk/fMZHJaD8sPUh
+         X2tNA7sAemR+TPikYyKl6xhRvJd3nIAAcdddG4QLS/oFmhAScYlUwCiE0wEu0VbHiq2G
+         N4Y2uBH9TWBCEFOebulzkYl9usedRESS6RxdET4QD94tB8q/NJt18jKX6zAYIES0oLcp
+         /frQn6Qkk/EnQVbNwdnTUkeCVTCS/lqBB27YEha99iXnN6Hma6aIpvbpPGIiiWs8T79+
+         e1dVGvaTZLJYp1lJFxAblYF49eEdKEpAHkDJiGkZrb039MtUBwntDxc6OlP5i2MqM0CG
+         v1GQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=A8D6LF13S4HbeGbQdNjsVEaYRWfHqxjfdmOkl5EgdgE=;
+        b=FpeGo6fDod9eCwKQ1NhdX8J093HoE6A9MYwf8Sckv5SY1C1/jmZVK6HRjXrhcCA12a
+         swyVGuD01wooknAVotzVQGv9HmGnCdf3bRyesHHLlwzA1P2XUouzBpNe/uMtT90JbZ6V
+         WoKTQcbi079GIEVsz9oEXjf7wqAQp2wT/ToeQN4JyaeUtmUulDlC/g+ZOG8HolqmSPAr
+         MNY/aH7RiXas4cVFXBNlDt0ovLvFjiH+dBmk6iMrZ/rQgcv3v+A7YZgpDuMevwplg8A3
+         uLvDCpTQ8ZlN+6/o/EeL9/0qnj7BqS69zw0dWbB9nL7MvINgszCIn6fApH0CEca1liKb
+         W7Mw==
+X-Gm-Message-State: ACgBeo0sGzlVZaJdIlkrXREHNYouNKqcsWNxb6BJnbxyvD73FjJ89MuK
+        1rRLw6a340gXMGMZ7HR/zkJE
+X-Google-Smtp-Source: AA6agR5HMaI4NCCstHebHCzs7wjXduX62fE+cG9b2dA0NC+52wWf7thmqgpCGtEEU5eCXttXBUS80g==
+X-Received: by 2002:a02:cccd:0:b0:346:e38b:1c5e with SMTP id k13-20020a02cccd000000b00346e38b1c5emr3763811jaq.47.1660935576573;
+        Fri, 19 Aug 2022 11:59:36 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:55ca:650:1968:6180? ([2600:1700:e72:80a0:55ca:650:1968:6180])
+        by smtp.gmail.com with ESMTPSA id cq13-20020a056638478d00b003428115672fsm2050452jab.30.2022.08.19.11.59.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Aug 2022 11:59:36 -0700 (PDT)
+Message-ID: <c22a8317-7d43-d84b-f63f-df2da31b4658@github.com>
+Date:   Fri, 19 Aug 2022 14:59:35 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1326.git.1660855703816.gitgitgadget@gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:o0BAEZl08zD+2spMBkBmq58FJFqCB0NQyd0B6B6YVEa2A7lI96e
- oVBPhnNjF4PYBFUdIQ06E0IdzuUCzA5B0Hb1NuEBCS7sXRQ1AsFHVdeSoEvVWOEgGi2o+c/
- SGEI84DVOwIpLNjE8/MPZygxdl/pQwtbjZVbHrlTAiG1cMi9O/ZvFuW5kP3lGB524d2BKlC
- kpCCvjNh6ajj2O6wEKwkQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0YK1w9rbBKY=:+r403sVfFQfC6jR1d49xV7
- QL+qTlH9YU3xWvd3ayKLZWsiMiUQcxTjVxKimr3nVat9pMAi1NFWn3dabwvlMGG7eLWG7IsnZ
- HGHy6zEf8glk6rHXaZc/sKnyYZ2ytBAs37393f4UCDwJlO3Z9FFO7FSUwz4BhZVefvryQEGwb
- UEpa6ZcAPqSkeE1ZPJkKUTW0MUePoHQei4URh1x7KYmC6wwAlEaSjYs6TtfsuTLJvphEuvxgp
- p1yjdRZsHV7fHqqd5WTqrJhAt5cRMKn13slNQBD/cwRoR91Bv5uPfMYsu9zrzG7Bol+fKMRsc
- wMoNBCbp5CLrmf0PCb7A0S56Kpin+/yVYCN73K4p4HrJ7+egIryFPX40Z0RRO1dEghjTSLm6U
- wtgmtEQKduAYkJhjhbeZlp/yf2QapNlrb2UlTSNEMw8543sCC/Rh/T2gF4THFrRnSUBV57UeV
- WiWHf9ztkQuFZcovACJWlE1/BWN3fdwNwOCXRt4Hnvdu0wYTO4WbUDXJHYZK3DLamYRGr1IxU
- CgiKPaLjVyikKVfLOL0306dYE2OH+Wt1ZjH95vxW24KQJyMdKLv/qhZmbuWkTwKF9jCh/thTr
- XrhPJ+SabRGJcsOCx1Vk73XxlzFAGo8DWSdkFy7x5m5Y9VfMrVmN1D8vkIi/QNYThfY+5AyKz
- +EMuRmml4DGSkmVrh0QgHlKJRrEri0ZAbUCLjLOsgpY2qfgjSHMaCjKL1COao45afD/wV7XDw
- OHm9QJEcoR1LS8eJT/yhb0oT49MkfQK419m2+JRAjutqha2A8ZQq5w3SJS+nKNLDNl0Ccnp4D
- WFhF693DWyLZC9Wb5Q6l1fS3AZkzoWAEl4BCyuZH6Q53Kj0p0YxJiCVftnFlwvVLrbd280QV6
- SCKzrvSUNcmLT8XpxQRlf7vqUblirCsz1e9E5smiBMR/Twj19cHXtnSE6a2+FghLNTqAE4WDW
- +BZ4c38H66gURZTYNK2oVh43iFQMRoJVRw6CuXkEsqt+yTSAEeLWA85KYLtC8J6vBU5s4PouX
- OtoWmBdm9Jfm0Vdxx15I+bQbI7qb+uwULue4bwMf6BZeSCklAFUe0UzH+vpAV6PlbKDIrgASh
- OhDGVAJYikXVz5jlVmjMsAGiHIdOrfxp1PryFIDtXWJqzGnOuDuYzKoRQ==
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 0/11] annotating unused function parameters
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+References: <Yv9gxqH6nK2KYnNj@coredump.intra.peff.net>
+ <220819.861qtc8gug.gmgdl@evledraar.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <220819.861qtc8gug.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 18, 2022 at 08:48:23PM +0000, Eric DeCosta via GitGitGadget wr=
-ote:
-> From: Eric DeCosta <edecosta@mathworks.com>
+On 8/19/2022 9:58 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, Aug 19 2022, Jeff King wrote:
+> 
+>> I've been carrying a bunch of patches (for almost 4 years now!) that get
+>> the code base compiling cleanly with -Wunused-parameter. This is a
+>> useful warning in my opinion; it found real bugs[1] when applied to the
+>> whole code base. So it would be nice to be able to turn it on all the
+>> time and get the same protection going forward.
+>> [...]
+>> And of course the most important question is: do we like this direction
+>> overall. This mass-annotation is a one-time pain. Going forward, the
+>> only work would be requiring people to annotate new functions they add
+>> (which again, is mostly going to be callbacks). IMHO it's worth it. In
+>> addition to possibly finding errors, I think the annotations serve as an
+>> extra clue for people reading the code about what the author intended.
+> 
+> I've known you've had this out-of-tree for a while, and really like that
+> it's on the path to getting integrated.
+> 
+> But I have a hang-up about it, which is that I though __attribute__
+> (unused) didn't work like *that*.
+> 
+> What it means (and maybe only I find this counter-intuitive) is "trust
+> me, this is unused, but don't check!", furthermore it causes the
+> compiler to completely ignore the variable for the purposes of *all*
+> warnings, not just the unused one.
 
-Just some comments on the commit message, please see inline.
+That's not the reason for the attribute at all. It's supposed to say "I
+know this is unused, but I still need it to be in the parameter list for
+other reasons. Don't create a warning for this case."
 
->
-> Though perhaps not common, there are uses cases where users have large,
-> network-mounted repos. Having the ability to run fsmonitor against
-> network paths would benefit those users.
+Interpreting it the way you are means "don't do the analysis. Just throw a
+warning." which doesn't make any sense.
 
-I think that we can drop the "Though perhaps not common" - it doesn't
-add any information about the technical part of the patch.
-(And that is, what is important)
+> I may still be missing something, but I wonder if this squashed in
+> wouldn't be much better:
+> 	
+> 	diff --git a/git-compat-util.h b/git-compat-util.h
+> 	index a9690126bb0..e02e2fc3f6d 100644
+> 	--- a/git-compat-util.h
+> 	+++ b/git-compat-util.h
+> 	@@ -190,9 +190,9 @@ struct strbuf;
+> 	 #define _SGI_SOURCE 1
+> 	 
+> 	 #if defined(__GNUC__)
+> 	-#define UNUSED(var) UNUSED_##var __attribute__((unused))
+> 	+#define UNUSED(var) var __attribute__((deprecated ("not 'deprecated', but expected not to be used!")))
+> 	 #else
+> 	-#define UNUSED(var) UNUSED_##var
+> 	+#define UNUSED(var) var
+> 	 #endif
 
-And I personally use network-mounted repos every day ;-)
+Does the deprecated attribute imply unused? Or at the very least, does it
+avoid the -Wunused-parameter warnings?
 
-Sone users have large, network-mounted repos. Having the ability
-to run fsmonitor against network paths would benefit those users.
+It might be helpful to _also_ have a deprecated annotation so we know to
+remove the UNUSED macro if a parameter starts being used again. The
+existing macro changes the variable name so we would get compiler errors
+if we started using it, but we could have a better message indicating
+exactly why things are not working.
 
->
-> As a first step towards enabling fsmonitor to work against
-> network-mounted repos, a configuration option, 'fsmonitor.allowRemote'
-> was introduced for Windows. Setting this option to true will override
-> the default behavior (erroring-out) when a network-mounted repo is
-> detected by fsmonitor.
-[]
-The same option is now introduced for macOS.
+So in that sense, you are onto something. Should we use both attributes?
 
->
-> The the added wrinkle being that the Unix domain socket (UDS) file
-  ^^^ ^^^
+At the very least, the warning message you recommend in the 'deprecated'
+attribute could be more direct about what we expect.
+	 
+	 #if defined(__GNUC__)
+	-#define UNUSED(var) UNUSED_##var __attribute__((unused))
+	+#define UNUSED(var) var __attribute__((unused)) \
+				 __attribute__((deprecated ("remove UNUSED macro before using")))
+	 #else
+	-#define UNUSED(var) UNUSED_##var
+	+#define UNUSED(var) var
+	 #endif
+	 
+	 #if defined(WIN32) && !defined(__CYGWIN__) /* Both MinGW and MSVC */
 
-> used for IPC cannot be created in a network location; instead the
-> temporary directory is used.
+Thanks,
+-Stolee
