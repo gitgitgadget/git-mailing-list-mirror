@@ -2,82 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3FB6C32771
-	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 19:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91C60C32771
+	for <git@archiver.kernel.org>; Fri, 19 Aug 2022 19:05:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350263AbiHSTE2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 15:04:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41136 "EHLO
+        id S1350287AbiHSTFN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 15:05:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349154AbiHSTEX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 15:04:23 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D25CECACA4
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 12:04:21 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id o2so3990739iof.8
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 12:04:21 -0700 (PDT)
+        with ESMTP id S1349713AbiHSTFM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 15:05:12 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53F7C109587
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 12:05:11 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id a4so6189171wrq.1
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 12:05:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=cgINUY2Hn2T9rUtSGHlkzuSvvsRYDNFwht6F4GWdU5c=;
-        b=JElkoEEYyM/U/qVNIY9puUMPNG8KvdBMo7KOFtA/inveubmSex+lCpaUHUvtFvxByF
-         HVNPuc1x7Vyyi80KS8k8hp4DksG8VSqA0VTCpCmW8WElkFUMgRKI/oU+19GkM2bM4Hzn
-         iWOEBVNnB0UoPMeX/yYspO/DDkQfOpG+yvMy83lmlW0hOnLz4fSEV0EToKnJx19c+vZ+
-         ALlm4/MfnrEzm8Dt4/MPiHFoy48vpYDDqVDgxikNqQKmVouzYts3LNed9Vx0T8ndTgkW
-         MmuuyiXU/T0Qhy6zEgjIATgvYCFlBXm1ENwsp6zXP8kigcLxoB+CmLzDSuJPjqrOiXcK
-         Ep8g==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc;
+        bh=XVhzq9CGBftkdK7GPO6Ui+IvJ6qDhJhpo/tKKudCtWM=;
+        b=mWUVkjw1v0SFGWzvat4lk/jH+OhW82KlKeWDFgbUIiAFm39iTa97lk0NA3O40TFE8n
+         rUE5w4DYaFckxythdSIvlO6UydjkW5NjCl9rIoaAykjB0D0iPSqIQ5fwArNcUNzsV2GP
+         FCHe1a3cEoFedand3330q1FXvkD6dBBsQmrg7Q4hPteiZOlCCmmwpyJXUbpdkydUWwvr
+         oGgv1Q7+AZB/XHEuCcjaux4yeegjL1cttJoN0ZZB4EJH5sNOk2KgM0h1BFCjK1mwlJsE
+         2JIEoWgMbA7AM9c3LcfYpeQmVbnqhPyAjIWrTVCNpp98MxtjIEdYAwkk0vdTd+z1K0RF
+         YFFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=cgINUY2Hn2T9rUtSGHlkzuSvvsRYDNFwht6F4GWdU5c=;
-        b=Q4oPO6HfXiAyVJVuyj3iRSTX2Kg0uZgJDgKjZhx9xEihp4oniERTrGa5kU2CLhZQWV
-         3es0SedzROJveSy2isJ6+RP14LXvyFRJxqlNIzC1IGXq9j0wj8cVoZisYqMEpe3/8bFD
-         ZlKI8o+uRxy3tr+xk75vJFPrh4Xc2gnUB6B0OItrxFI5DaWpCBfGwn29B3vAbe5H0+5P
-         R/uMgHdpqHnLiix2LmjJmNFP3dKMQvL2MRcBkzam3jJOqZ7tBeoc3WuLMw9DZavUe9Hu
-         9S4SFMzrNm35Lo8Sijn+tibS5JZjNI979cIynbiu4YJI32+1OVQRfAayY54VIO3GT4gq
-         OgDQ==
-X-Gm-Message-State: ACgBeo2ZCUYzBAuNLBFmk2XMTpFMEld7SfEclW/1HPUhw9K9+96Zp2Hw
-        XwkBTkbXTon+MX2jLmVoO0UREkKipsUi
-X-Google-Smtp-Source: AA6agR79frG/NXTzV0g8F7t3bZLcJsloF26ZOcz6ZZ+7dlEA1s0MS6rWMMekpJlRrN6zs3l/h/mTTA==
-X-Received: by 2002:a6b:6d0e:0:b0:689:21ec:3267 with SMTP id a14-20020a6b6d0e000000b0068921ec3267mr3846918iod.143.1660935861258;
-        Fri, 19 Aug 2022 12:04:21 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:55ca:650:1968:6180? ([2600:1700:e72:80a0:55ca:650:1968:6180])
-        by smtp.gmail.com with ESMTPSA id j26-20020a056638053a00b003434de98f1asm2083840jar.28.2022.08.19.12.04.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Aug 2022 12:04:21 -0700 (PDT)
-Message-ID: <cbbfbbdd-94de-d981-804b-fe199ca49754@github.com>
-Date:   Fri, 19 Aug 2022 15:04:19 -0400
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc;
+        bh=XVhzq9CGBftkdK7GPO6Ui+IvJ6qDhJhpo/tKKudCtWM=;
+        b=RvSzaYtsHkcv5QoXe8EBcbzLQk03T4Icdq/JYn29makLtsrclwb4aiN5RnAjbJAvhv
+         4jcH9y8wvc8qg3Xn4NuUBY4Q7l3UYU54uYuvADQhIPWwlvLY1eqNc+CQvFNWzVqrwrJe
+         9teBHr5ypmvc6m34c19qC8IaN7thyg2VyzYlcFV7jC+yNflNQJv9YsyIx+a/PrfvLo3V
+         G4hM/Q/6jyDSGjeRbdghTu5DArQA+AAE33sRj9O6CY6+znPG2C41FhdiVVFS40mn8SS+
+         0ZBVpziSn/WKdsmYvFydpWH0S+7Du410AA2LEd4ggtsz9hhAAZpweCkgw6128xXP0HvH
+         2t4w==
+X-Gm-Message-State: ACgBeo0lJxdZ6i+HBEBEO05kwPbCca+Z6xa4jWrFzGvxiNLKck/TbRmc
+        vc/wbZUiIwr4J2gmv+e5B+A=
+X-Google-Smtp-Source: AA6agR6qy6LB3w89hLMYFWl2NdQrOUlURjH9k6uNE6aJTJuMNn39l4c28ggexZR7bnNAgTYJnyynkw==
+X-Received: by 2002:a5d:47ab:0:b0:223:60ee:6c12 with SMTP id 11-20020a5d47ab000000b0022360ee6c12mr4882897wrb.315.1660935909796;
+        Fri, 19 Aug 2022 12:05:09 -0700 (PDT)
+Received: from gmgdl ([213.220.124.15])
+        by smtp.gmail.com with ESMTPSA id bp25-20020a5d5a99000000b0021f0c0c62d1sm4560509wrb.13.2022.08.19.12.05.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Aug 2022 12:05:09 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oP7Ip-000ryQ-1u;
+        Fri, 19 Aug 2022 21:05:07 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 09/20] parse-options: add support for parsing
+ subcommands
+Date:   Fri, 19 Aug 2022 21:03:27 +0200
+References: <20220725123857.2773963-1-szeder.dev@gmail.com>
+ <20220819160411.1791200-1-szeder.dev@gmail.com>
+ <20220819160411.1791200-10-szeder.dev@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <20220819160411.1791200-10-szeder.dev@gmail.com>
+Message-ID: <220819.86h7285a1o.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH 4/6] verify_one_sparse(): drop unused repository parameter
-Content-Language: en-US
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <Yv9Oay+tNqhLDqVl@coredump.intra.peff.net>
- <Yv9O+HDMLKglLcqY@coredump.intra.peff.net>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <Yv9O+HDMLKglLcqY@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/19/2022 4:51 AM, Jeff King wrote:
-> This function has never used its repository parameter since it was
-> introduced in 9ad2d5ea71 (sparse-index: loose integration with
-> cache_tree_verify(), 2021-03-30). As that commit notes, it may
-> eventually be extended further, and that might require looking at a
-> repository struct. But it would be easy to add it back later if
-> necessary.
 
-The good news is that 'struct index_state' now has a pointer to
-its repository, so we wouldn't need to add it back in.
+On Fri, Aug 19 2022, SZEDER G=C3=A1bor wrote:
 
-Thanks,
--Stolee
+> @@ -885,7 +977,14 @@ int parse_options(int argc, const char **argv,
+>  	case PARSE_OPT_COMPLETE:
+>  		exit(0);
+>  	case PARSE_OPT_NON_OPTION:
+> +	case PARSE_OPT_SUBCOMMAND:
+> +		break;
+
+This amounts to the same behavior, because...
+
+>  	case PARSE_OPT_DONE:
+> +		if (ctx.has_subcommands &&
+> +		    !(flags & PARSE_OPT_SUBCOMMAND_OPTIONAL)) {
+> +			error(_("need a subcommand"));
+> +			usage_with_options(usagestr, options);
+> +		}
+>  		break;
+
+...AFAICT we won't have PARSE_OPT_NON_OPTION *and* ctx.has_subcommands,
+but it's really confusing that before we'd fall through from
+PARSE_OPT_NON_OPTION to PARSE_OPT_DONE, but now we don't.'
 
