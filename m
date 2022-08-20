@@ -2,89 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AF61C25B08
-	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 21:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36C05C25B08
+	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 21:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232946AbiHTV1s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Aug 2022 17:27:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47250 "EHLO
+        id S233329AbiHTVfw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Aug 2022 17:35:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbiHTV1r (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Aug 2022 17:27:47 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 425A12A406
-        for <git@vger.kernel.org>; Sat, 20 Aug 2022 14:27:47 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7B941145644;
-        Sat, 20 Aug 2022 17:27:46 -0400 (EDT)
+        with ESMTP id S229472AbiHTVfv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Aug 2022 17:35:51 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ECE6248FD
+        for <git@vger.kernel.org>; Sat, 20 Aug 2022 14:35:50 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 455F01307A8;
+        Sat, 20 Aug 2022 17:35:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=1GdBStom6KyS
-        nPTTWOZjvBG0d6Ns1mdM0dCZT3mEJLs=; b=n9bQUERfxbGIObxtsY7LmWR3UMm4
-        DWgLjiAWZpoJMt1Vc6Ds2USQXlly2LSS6mmlxeam5p0D3fXr7E7LRhJ1F7PMQLgN
-        V77Eco62ac+Snt6gsxIvRyRJLeOSiNM4TdsEZkj3ViMTmvi/nWiLVtPzx8BLLSho
-        rygo302a0pO3acY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 72F53145641;
-        Sat, 20 Aug 2022 17:27:46 -0400 (EDT)
+        :content-type; s=sasl; bh=u714HGBfCYbSQDXWmi3U/UudLshSppOfVziqVg
+        zsq0U=; b=usP5hNiqT8JmmwksjmzTIspcerGJT7Io5NGMDrnYvsdaGBtEoKyEIw
+        yXYZBKEbDF3MrKGmu4tedLHZpdWzvqozdHET4WP1sdFCj0SZOjG1jXzJwaPMVRgn
+        qDY468ehLwdoDugU+4MxpGld4nlD2Ntjp79yA2t+lmhX69fQEg0zw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D1381307A7;
+        Sat, 20 Aug 2022 17:35:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C9B46145635;
-        Sat, 20 Aug 2022 17:27:45 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A60AC1307A6;
+        Sat, 20 Aug 2022 17:35:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 04/20] t0040-parse-options: test parse_options() with
- various 'parse_opt_flags'
-References: <20220725123857.2773963-1-szeder.dev@gmail.com>
-        <20220819160411.1791200-1-szeder.dev@gmail.com>
-        <20220819160411.1791200-5-szeder.dev@gmail.com>
-        <xmqqczcwksgj.fsf@gitster.g> <20220820103128.GD3373722@szeder.dev>
-Date:   Sat, 20 Aug 2022 14:27:44 -0700
-In-Reply-To: <20220820103128.GD3373722@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message
-        of "Sat, 20 Aug 2022 12:31:28 +0200")
-Message-ID: <xmqqr11ahagf.fsf@gitster.g>
+To:     Thorsten Otto <admin@tho-otto.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] "git am" gets confused when commit message contains text
+ looking like a diff
+References: <16297305.cDA1TJNmNo@earendil>
+Date:   Sat, 20 Aug 2022 14:35:48 -0700
+In-Reply-To: <16297305.cDA1TJNmNo@earendil> (Thorsten Otto's message of "Sat,
+        20 Aug 2022 09:12:04 +0200")
+Message-ID: <xmqqleriha2z.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: EEB3D568-20CE-11ED-9BE4-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0F198F0E-20D0-11ED-837C-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+Thorsten Otto <admin@tho-otto.de> writes:
 
-> On Fri, Aug 19, 2022 at 11:18:20AM -0700, Junio C Hamano wrote:
->> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
->>=20
->> > +static void print_args(int argc, const char **argv)
->> > +{
->> > +	for (int i =3D 0; i < argc; i++)
->> > +		printf("arg %02d: %s\n", i, argv[i]);
->> > +}
->>=20
->> It is not November 2022 yet (cf. Documentation/CodingGuidelines).
->
-> Oh, I've misunderstood =C3=86var's remarks about this in the previous
-> round, and thought it's fair game.
+> Apparently git tries to apply the diff from the git commit message, instead of 
+> the real diff.
 
-If we make it a "fair game", when we find a platform that has
-problems with the syntax, we will have to find them and fix up many
-places.  At least the number of the ones we let in by mistake are
-small and known, it may be still be manageable.
+This is very much expected, and that is why people indent diffs they
+quote to support their commit log messages.
 
-It is how to be conservative.
-
-> It doesn't matter for these tests, but 'test-tool parse-options' uses
-> the same format to print args:
-
-As long as 99 is enough for us, I do not very much care.  I just
-noticed an attempt to align that does not do a thorough job at it,
-and found it strange, that's all.
