@@ -2,102 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A62B0C28D13
-	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 00:18:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FFF6C28D13
+	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 00:41:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240543AbiHTASo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 20:18:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49700 "EHLO
+        id S1343732AbiHTAl1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 20:41:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236670AbiHTASm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 20:18:42 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84DAF61D48
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 17:18:39 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0F55D1B0764;
-        Fri, 19 Aug 2022 20:18:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=fSz1TzeH5HUzEw8j0rIGL34FvEyCkmY0OfEMdwBRV5I=; b=G1+M
-        nXIHGlVohrafn63fZCOm/fDNi2AAzXvlMjodXXifSr/cv59ZiD8LEJFhkDLZtNAU
-        ek2AatYFjJXYE5yHnDZe3FMpUALzCay56I6X9Ap38twIVDuvXrLA5kNVMkbNv4Cz
-        HK/4iSD32TCzRWPEEKFIuLP7SxjcHnL3bVxReZk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 06B071B0763;
-        Fri, 19 Aug 2022 20:18:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AEC951B075F;
-        Fri, 19 Aug 2022 20:18:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Aug 2022, #02; Fri, 5)
-References: <xmqqa68ixcrf.fsf@gitster.g>
-        <CAPig+cSz9RKj43_kwQFDQpN2Ggrimrw_DcOFnxGS+nBCPqDK5Q@mail.gmail.com>
-        <xmqqa68evodq.fsf@gitster.g>
-        <o5340r34-027q-4ops-93o1-8368s4qropo5@tzk.qr>
-        <CAPig+cRp4N=6EktoisKAH09aVAPkPgZfHJYcB5pJFJ-CUpBHFA@mail.gmail.com>
-Date:   Fri, 19 Aug 2022 17:18:34 -0700
-Message-ID: <xmqqo7wfix7p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S1343710AbiHTAl0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 20:41:26 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B09C0114196
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 17:41:24 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id w19so11618882ejc.7
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 17:41:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc;
+        bh=fQe/6+sG2cXb4VEwiBGkbi+n5AAqCwoP9tyRMPdksTo=;
+        b=mcDtEe4sob2BG4jllwQS0nia1oYEIDh/VOTwaSgSrJ0oo0cV9ZoTcRZGgSUJLO1iFm
+         d/cyu9r0Hdi+OZQIO1qmef4NW5EmbeeKVrnTxsq7CbXJLmmR69pK1REteXRMtaxplj0y
+         DXfovS1r2FEV2VkOi4iKpchjitdMpohUi5b3Tl2vLxn+tCX0/f7vIw2ODFjTrXeigOt0
+         H3PnXIQ/ACunsFMEIcFiQbooQEhXnpUj1hYpo2HbvM3bV1AU0NFgyhyFQ8txhPtMfguc
+         Q9XX1590abIXHSBGU7ou2CJaXviI1YH3ItHYLDGd5SMO4/+qh9HYtc0KKKMjKzSFVD7s
+         PgBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc;
+        bh=fQe/6+sG2cXb4VEwiBGkbi+n5AAqCwoP9tyRMPdksTo=;
+        b=RKEK8dx+zv4GgGXt066B38xIjeSks6jFkIvHsBK7C3ttIAMa/Sr1GS1RdUKM2qODfT
+         ZUaSLmik1zY6KU3tT1ebCN9wCuSgu1oQaS4gv6Svn6pUE5cZoBV2V5RmCUm8YnywZj5s
+         5KWXlFiRH26PHicU9b6Kn3xZ6YPjGDnigC7jSDUwad+HPeyMQUya/bCZy9dT1qqjTd2E
+         kE7hRSQKf7ctDlYWc4SrzqE08f4pskKbUcvUM0THbuzSqHA9EMgdTP62NlYIc7/qQpyR
+         JZ8O5yXF9nksLXnSOcTz4opniIzbQwQ5WulFpkBnaStUAhqz6ktqWL1ylVxQYxmE2/HY
+         DZ+g==
+X-Gm-Message-State: ACgBeo3vcp8p9BCaNyQ7h0dqA1Kp7WepQRBW/TjnzSMjIu2TEbT7nNVq
+        +QQnDj8PS8oA+Ap8xzL4VXG9HcT3U/CpTJzB1cmj1KD4cV0=
+X-Google-Smtp-Source: AA6agR6UZpP+f0M4UHNtlg67jGsUmXOSL8i6BUo38auR+zAHYLiDf9xhYEhMpqxqaGhKQ7IqV/9S42/DwLymHANTVxU=
+X-Received: by 2002:a17:907:94c7:b0:730:d5bc:14c with SMTP id
+ dn7-20020a17090794c700b00730d5bc014cmr6529159ejc.68.1660956083104; Fri, 19
+ Aug 2022 17:41:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A1B1E6EE-201D-11ED-BF48-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Fri, 19 Aug 2022 19:41:12 -0500
+Message-ID: <CAMP44s0sLdyuv1XxAu=TYMmAZgAqOQOzkRctXUsSA9NF9GY=RA@mail.gmail.com>
+Subject: [ANNOUNCE] git-remote-hg 0.6
+To:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hi,
 
-> Unfortunately, I'm not going to be much help here since I don't grok
-> "creation factor" well enough to put an explanation into words, even
-> after having read the "algorithm" section multiple times[1]. The
-> situation is further confused (at least to me) by the "algorithm"
-> section in the `git range-diff` documentation stating that the "fudge
-> factor ... should be smaller than 100%", yet your position in this
-> discussion is that the creation factor can be greater than 100%.
->
-> FOOTNOTES
->
-> [1]: I likewise didn't understand it well enough when submitting[2]
-> which added --creation-factor to `git format-patch`, which is why I
-> punted at that time and simply referred the reader to the `git
-> range-diff` documentation.
+git-remote-hg is a bidirectional bridge between Git and Mercurial. It
+is production-ready, has been widely tested, and was previously part
+of git.git.
 
-So it wasn't just me or other folks who were confused in the
-original discussion thread that lead to
+The big update in v0.6 is support for Python 3 since support for
+Python 2 has been removed in Mercurial 6.2. Other than that there's no
+difference from v0.5 which includes some minor features, bugfixes, and
+performance improvements.
 
-https://lore.kernel.org/git/xmqqa68nlfiz.fsf@gitster.g/
+I've tested as far back as Mercurial 2.4 up to 6.2, all versions work
+correctly, but Python 3 support seems to work only from around
+Mercurial 5.3. The testing framework has been updated to test all
+these versions.
 
-where I said
+https://github.com/felipec/git-remote-hg
 
-    ... The former helps the readers guess what a reasonable value
-    they want to specify is (e.g. "I can afford to dedicate yMB"), and
-    the latter is essential for the readers to decide how exactly they
-    express what they chose (e.g. "I want to give yMB, but it is
-    measured in bytes, so I'll write y * 10^20 here").  We need both.
+Cheers.
 
-    So _after_ they decide that 1.20 is the right number they want to
-    give to --creation-factor, the knowledge that the number is
-    expressed as percent does help them to write --creation-factor=120
-    correctly (not --creation-factor=1.20).
-
-    But for readers to come up with the number 1.20, there needs a
-    better explanation of what the number means in the first place.  "Go
-    read the algorithm section" is better than having nothing there, but
-    we should be able to do better by having a simple-to-understand
-    single paragraph description.
-
-i.e. out of the current documentation, it is hard for readers to
-extract information they need to decide what value they want to
-specify.  The part of it that talks about <percent> may tell them to
-spell "120" when they want to specify 1.20, but that is not all that
-helpful when they do not know what criteria they want to use to
-choose between 0.60 and 1.20 in the first place X-<.
+-- 
+Felipe Contreras
