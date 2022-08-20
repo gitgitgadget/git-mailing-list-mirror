@@ -2,84 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F8A6C25B08
-	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 08:56:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C915C25B08
+	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 09:02:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344696AbiHTI4V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Aug 2022 04:56:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37186 "EHLO
+        id S1344377AbiHTJCw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Aug 2022 05:02:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344142AbiHTI4U (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Aug 2022 04:56:20 -0400
+        with ESMTP id S1344142AbiHTJCu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Aug 2022 05:02:50 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E76F659F5
-        for <git@vger.kernel.org>; Sat, 20 Aug 2022 01:56:16 -0700 (PDT)
-Received: (qmail 21880 invoked by uid 109); 20 Aug 2022 08:56:15 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDD54205CB
+        for <git@vger.kernel.org>; Sat, 20 Aug 2022 02:02:49 -0700 (PDT)
+Received: (qmail 21900 invoked by uid 109); 20 Aug 2022 09:02:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 20 Aug 2022 08:56:15 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 20 Aug 2022 09:02:49 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9968 invoked by uid 111); 20 Aug 2022 08:56:17 -0000
+Received: (qmail 10043 invoked by uid 111); 20 Aug 2022 09:02:51 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 20 Aug 2022 04:56:17 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 20 Aug 2022 05:02:51 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 20 Aug 2022 04:56:15 -0400
+Date:   Sat, 20 Aug 2022 05:02:48 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 1/4] sequencer: do not translate reflog messages
-Message-ID: <YwChr17RntWnoNok@coredump.intra.peff.net>
-References: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr>
- <cover.1660828108.git.git@grubix.eu>
- <ea6c65c254bb08b20ea6c4d81200b847755b555c.1660828108.git.git@grubix.eu>
- <220818.86zgg18umf.gmgdl@evledraar.gmail.com>
- <6oqr69o7-qsps-sr86-o4r9-16r7no9n5424@tzk.qr>
- <220819.86o7wg6zci.gmgdl@evledraar.gmail.com>
- <xmqq8rnkklon.fsf@gitster.g>
- <220819.864jy853qc.gmgdl@evledraar.gmail.com>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: [PATCH v2 4/6] verify_one_sparse(): drop unused repository parameter
+Message-ID: <YwCjOETsh1o8u0Og@coredump.intra.peff.net>
+References: <Yv9Oay+tNqhLDqVl@coredump.intra.peff.net>
+ <Yv9O+HDMLKglLcqY@coredump.intra.peff.net>
+ <9829e1cf-21aa-0c10-0b64-c8a2ffdbc943@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <220819.864jy853qc.gmgdl@evledraar.gmail.com>
+In-Reply-To: <9829e1cf-21aa-0c10-0b64-c8a2ffdbc943@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 19, 2022 at 11:13:21PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Sat, Aug 20, 2022 at 10:48:47AM +0200, René Scharfe wrote:
 
-> 
-> On Fri, Aug 19 2022, Junio C Hamano wrote:
-> 
-> > Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+> > diff --git a/cache-tree.c b/cache-tree.c
+> > index 56db0b5026..c97111cccf 100644
+> > --- a/cache-tree.c
+> > +++ b/cache-tree.c
+> > @@ -857,9 +857,7 @@ int cache_tree_matches_traversal(struct cache_tree *root,
+> >  	return 0;
+> >  }
 > >
-> >> Doesn't that also mean that the relevant functionality is now also (and
-> >> still?) broken on any repository where these translations ended up
-> >> on-disk?
-> >
-> > It may, but the first response to that problem is not to make the
-> > breakage in repositires worse by keep adding unparseable data to
-> > them.
+> > -static void verify_one_sparse(struct repository *r,
+> > -			      struct index_state *istate,
+> > -			      struct cache_tree *it,
+> > +static void verify_one_sparse(struct index_state *istate,
 > 
-> *nod*, but where is that breakage specifically? I don't see where we're
-> parsing this message out again. I tried to test it out with the below
-> (making the message as un-helpful as possible). All our tests pass, but
-> of course our coverage may just be lacking...
+> This also removes the cache_tree parameter, which has never been used as
+> well, but is not mentioned in the commit message.  A good change, to be
+> sure.
 
-I'm not sure if you mean "where are we parsing this sequencer message
-specifically", or if you're just asking where we parse reflog messages
-at all. If the latter, try interpret_nth_prior_checkout() and its helper
-grab_nth_branch_switch().
+Good catch. I wrote the patch itself over a year ago (whenever the
+commit made it into 'next' and failed my compilation), but I didn't
+write the commit message until recently. And when re-reading the patch I
+totally missed that _two_ parameters went away.
 
-As far as I know, that's the only one we parse, so the answer for
-_these_ messages is: nowhere.
+Given that and Stolee's earlier comment, here's a proposed commit
+message that explains it better:
 
-I'm not sure if you're proposing to leave the "checkout" message
-untranslated, but translate everything else. If so, I'm not sure how I
-feel about that. On the one hand, it could help people who want the
-translation. On the other hand, it sounds like a maintainability
-nightmare. ;)
+-- >8 --
+Subject: verify_one_sparse(): drop unused parameters
 
--Peff
+This function has never used its repository or cache_tree parameters
+since it was introduced in 9ad2d5ea71 (sparse-index: loose integration
+with cache_tree_verify(), 2021-03-30).
+
+As that commit notes, it may eventually be extended further, and that
+might require looking at more data. But we can easily add them back if
+necessary (and the repository is even included in the index_state these
+days already). In the mean time, dropping them makes the code shorter
+and appeases -Wunused-parameter.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ cache-tree.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/cache-tree.c b/cache-tree.c
+index 56db0b5026..c97111cccf 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -857,9 +857,7 @@ int cache_tree_matches_traversal(struct cache_tree *root,
+ 	return 0;
+ }
+ 
+-static void verify_one_sparse(struct repository *r,
+-			      struct index_state *istate,
+-			      struct cache_tree *it,
++static void verify_one_sparse(struct index_state *istate,
+ 			      struct strbuf *path,
+ 			      int pos)
+ {
+@@ -910,7 +908,7 @@ static int verify_one(struct repository *r,
+ 			return 1;
+ 
+ 		if (pos >= 0) {
+-			verify_one_sparse(r, istate, it, path, pos);
++			verify_one_sparse(istate, path, pos);
+ 			return 0;
+ 		}
+ 
+-- 
+2.37.2.964.g6266ca593d
+
