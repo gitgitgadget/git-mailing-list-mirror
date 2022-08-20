@@ -2,140 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67879C25B08
-	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 11:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85A58C25B08
+	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 14:52:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345947AbiHTL72 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Aug 2022 07:59:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54602 "EHLO
+        id S1346050AbiHTOwF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Aug 2022 10:52:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345255AbiHTL70 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Aug 2022 07:59:26 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0A39BB60
-        for <git@vger.kernel.org>; Sat, 20 Aug 2022 04:59:24 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id o22so8451814edc.10
-        for <git@vger.kernel.org>; Sat, 20 Aug 2022 04:59:24 -0700 (PDT)
+        with ESMTP id S1344493AbiHTOwD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Aug 2022 10:52:03 -0400
+Received: from mail-vk1-xa34.google.com (mail-vk1-xa34.google.com [IPv6:2607:f8b0:4864:20::a34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F3E54DB4C
+        for <git@vger.kernel.org>; Sat, 20 Aug 2022 07:52:02 -0700 (PDT)
+Received: by mail-vk1-xa34.google.com with SMTP id bj43so3555197vkb.4
+        for <git@vger.kernel.org>; Sat, 20 Aug 2022 07:52:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc;
-        bh=aNbxb0vlp9txzn5mOktKkQ1ivXtuTTiAqDJ1eWZ2t5A=;
-        b=JRALEAbVeYFCJklLVknU+uJRFf4kxIUiHuudTtra2g8y8RZDtiyfk6OnY3WSClOdgg
-         bS7mgJDqBxSkfREMI1Cd8VmyA4qrF2IvotWaPwBGfvcbKwFZdYP42rtZHiv/iMMqVaoW
-         PMDNWAWsa8e7t8XjQbrZd8QEqNhcdSfRMWOvhwefOTE8Dn7YpdE2sfEV6EmcWOQM9stz
-         vyHl1YKo2fIEtbS+wgt2pKlNJQ/Tz7deeecwePQEm3Jgr7g+s9FC0uq1mNHtthAM9DNb
-         7nDEn/DBrl2gBS2gTR7kYghU5RcmRBNjWdM4c8gttffSIQjXcQIR09L6PZqJESNYCkO7
-         RgFg==
+        h=to:subject:message-id:date:from:mime-version:from:to:cc;
+        bh=0CCCvJqWD1f48tJwKmCzI/R6C4zf9k0GOs86jYk12nw=;
+        b=p5u1XwvC4Unp0lLScPjOsbgnJbTE6DI3cVSantEtU2mqoyPSX2Q9y9u1RSVIabAV88
+         j47VkhujKwOg61SDzpuk3lq4tRewjzy5tUBiWg6aZ8znKukIYqtrF3tZS5oyw8ONdwsW
+         aHkqmYVaabqGp1Xw2iWWA2cVRsiJhgfpa+lR1qrsYTJpp07D68BDKjp/fjTgONeKzVzF
+         7PZoahy3nlhSOito8hdmpmm+UQu3Y79yTm4QfYSMomy6Oi2F1Sju4W66NQ+fY18G0ByH
+         KhJnsiovwy9YBQJkugV+AKL8vU6naefokjoL4bD+L1xoGEUS+JdGFjJxWAzfNysSbxMR
+         qw5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
-        bh=aNbxb0vlp9txzn5mOktKkQ1ivXtuTTiAqDJ1eWZ2t5A=;
-        b=1UmtzZs89nNOaRSy3wa/04bBEzeJ6aR8CENinUeuAXfiLO5HRtX26XSoKmcjXy73Jd
-         FjiSXKZY0Jao50cWktSYBZAfIhWYO5eY4eEA9TDfWfbQLX/jjhmroxOR4pxtcG2jSc5d
-         cWk2QY5hRQQz0ws/RB0GA5uaCY/zkKou6Hnucw/aUiAeypHWUWwZ+yB7uLHWiMugQlkx
-         Yb6gEBV871CRW7JQmncPrfzPMNRL1ZFSzwWHhvzZTGv71JtV1cQFLooshDSNvkdoYHml
-         qs0Q/WtxPkV5gxp/yRy7WLneMTmcIkn5UyqDezlpc8QUNPNyTi4noSUqIpg1sgRFoUkR
-         zLiA==
-X-Gm-Message-State: ACgBeo39riPNRuU2MnOB2a0uDGfOMbUePdTkzhXx/2lbyRPQUWhh5y1j
-        hsbQFJqEl7KuYhiubSzdoWmWw4xrr4s0E1XpFV47Ubw54CsAQA==
-X-Google-Smtp-Source: AA6agR40DX2Az+jF5ftv/SE+JWoRFzdZv6OpEZVmYuOu+9mHEfBFhVYfG2hvc1dX0bvEkpGPE55YtzqrE2naietAUfA=
-X-Received: by 2002:a05:6402:270d:b0:43a:67b9:6eea with SMTP id
- y13-20020a056402270d00b0043a67b96eeamr9316638edd.94.1660996763247; Sat, 20
- Aug 2022 04:59:23 -0700 (PDT)
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc;
+        bh=0CCCvJqWD1f48tJwKmCzI/R6C4zf9k0GOs86jYk12nw=;
+        b=3j8tBtoIycURvhYvo2Jk/ziPkrSwj039yKtcS3diMAcokP1nhtsUJCZpBRTpTNh0eH
+         TzrSNFmWsqjXVK55t4l1hkd25Ow3tCh9vIiidk9Wsjd+Nmmpph766PcUBXrxKANG9Jqn
+         a/3YOwYb0iQ+1TtgoNnGg7Swwhv/yEuaqvVtbVpvicRpMIACzssPe06+1e48pqmEoQYH
+         t9tMsoRDPTxPYlgbEs99x1eS1ymjAxI344h92JzSdLOfYfkGTaVvdPo4UYHqbtst6lHv
+         kiQrRPxMz+RNDgdPebzidrECS2Ucj0EO2P5BUFxSLKlb67VJ/Y8VzpSpCIunH6luzrOh
+         UixQ==
+X-Gm-Message-State: ACgBeo3ivJlRvKRF4GUYD39vSeGULhbGFeiEwt4YcKLoM1M8V4rmMeyP
+        AwhH2xhNP0siM9Flw8vuHFcGFnKQAbS+KCR618Sxr87flvg6bQ1N3vbPQA==
+X-Google-Smtp-Source: AA6agR7XVcuzBpRzIEZlGuPjsHePVJe9E+LmQyG6QnwokUY3TOEhRYKf45InYd/TzKl7pV74ajeznXeW4aZkuCht7Vc=
+X-Received: by 2002:a05:6122:43:b0:379:35aa:69ec with SMTP id
+ q3-20020a056122004300b0037935aa69ecmr5089705vkn.15.1661007121409; Sat, 20 Aug
+ 2022 07:52:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <CADmGLV32OAg6HU+n1UsP2Fq-MjcyUsFFF=q0_jZCB0JEop5VUg@mail.gmail.com>
- <YwCe6ONEaeIj4SO/@coredump.intra.peff.net>
-In-Reply-To: <YwCe6ONEaeIj4SO/@coredump.intra.peff.net>
-From:   =?UTF-8?B?546L5bCP5bu6?= <littlejian8@gmail.com>
-Date:   Sat, 20 Aug 2022 19:59:11 +0800
-Message-ID: <CADmGLV2k9PGOMwS6zKwO6aY=aFJ7yvdgDkn8M2_XzPnEQkQQ0w@mail.gmail.com>
-Subject: Re: git clone with basic auth in url directly returns authentication
- failure after 401 received under some git versions
-To:     Jeff King <peff@peff.net>
-Cc:     Daniel Stenberg <daniel@haxx.se>, git@vger.kernel.org
+From:   squirrel <jatjasjem@gmail.com>
+Date:   Sat, 20 Aug 2022 15:51:38 +0100
+Message-ID: <CAAsFbAtu0vYhwa-Kb6dfpNBZ7jSLriVODi1s7H=-Deq9J6L0ww@mail.gmail.com>
+Subject: `git range-diff` lists chunks with uninteresting changes
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you very much for your answer=EF=BC=81
-Now I have a clear picture of what has been bothering me for a day.
-Indeed, use an https url directly, and it works well.
-Now I'm going to look into curl.
+When someone makes a PR, they may be asked to rebase their feature branch onto
+main to resolve conflicts. It may be useful to quickly see what changed during
+the rebase, that is how the new version of PR is different to the old one.
 
-Jeff King <peff@peff.net> =E4=BA=8E2022=E5=B9=B48=E6=9C=8820=E6=97=A5=E5=91=
-=A8=E5=85=AD 16:44=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Sat, Aug 20, 2022 at 10:51:16AM +0800, =E7=8E=8B=E5=B0=8F=E5=BB=BA wro=
-te:
->
-> > What's different between what you expected and what actually happened?
-> >
-> > When I use git v2.36.2  (docker image is alpine/git:v2.36.2) to clone
-> > with basic auth in url, when receiving the 401, it directly returns
-> > authentication failure, even recv head has www-authenticate: Basic
-> > realm=3DRestricted,
-> > and no request is send again. I think it should send request with
-> > authorization: Basic header after receive 401.
-> > And use git v2.34.2 (docker image is alpine/git:v2.34.1) to clone it wo=
-rks well.
->
-> I think the problem here is not the difference in Git versions, but
-> rather in libcurl versions. I can reproduce your problem using the
-> docker containers. But if I build locally, using the same version of
-> curl, then I see the issue with both git versions.
->
-> The problem is how curl handles cross-protocol redirects. From Git's
-> perspective, we hand the credentials to libcurl, and ask it to fetch the
-> requested URL, including following redirects. If it comes back with a
-> 401, then we assume our credentials were bad.
->
-> But what changed in curl is that it will now discard credentials during
-> a redirect. And in your example, there's a redirect from http to https
-> (uninteresting bits snipped from the output):
->
-> > Info: Connected to xxx.xxx (xxx.xxx.xxx.xxx) port 80 (#0)
-> > Send header: GET /xxx/xxx/info/refs?service=3Dgit-upload-pack HTTP/1.1
-> > Recv header: HTTP/1.1 302 Found
-> > Recv header: Location: https://xxx.xxx/xxx/xxx/info/refs?service=3Dgit-=
-upload-pack
->
-> In the older version, after the redirect we see a 401 and curl (not git)
-> resends with the stored credentials.
->
-> But in the newer version, we see this right after the redirect:
->
-> > Info: Connection #0 to host xxx.xxx left intact
-> > Info: Clear auth, redirects to port from 80 to 443
->
-> So it is dropping the credential that Git gave it.
->
-> The curl change seems to be from 620ea2141 (transfer: redirects to other
-> protocols or ports clear auth, 2022-04-25). The goal is to avoid leaking
-> credentials between ports: https://curl.se/docs/CVE-2022-27774.html
->
-> So that makes sense, though I wonder if curl ought to make an exception
-> for moving from 80 to 443 and http to https?
->
-> I don't think there's otherwise much Git can do here. We thought we gave
-> curl a username and password, but they weren't ultimately used. But Git
-> won't reissue the request, because it assumes the auth was rejected.
->
-> I guess we can ask curl if it saw a redirect, and assume if so that the
-> auth was cleared. That feels a bit hacky. And it's subverting curl's
-> attempt not to leak the credentials. In general, I'd like to defer as
-> much as possible to curl's ideas of how to handle things, because
-> they're much better at implementing http best practices than we are. :)
->
-> Another option is to allow the user to set CURLOPT_UNRESTRICTED_AUTH,
-> but that seems like a bad idea for the same reason.
->
-> Hopefully that explains what's going on. The short answer for your case
-> is: use an https url directly, and it should work. But there's an open
-> question of whether curl ought to handle this limited redirect case more
-> gracefully.
->
-> -Peff
+If the PR branch has not been reparented, you may get away with `git diff`.
+But if it has, `git diff` may contain a lot of changes from upstream. Instead,
+`git range-diff` can be used.
+
+The problem with this is that in this case `git range-diff` can show chunks
+with changes that have nothing to do with changes in the PR. Consider this
+repository (commands are runnable):
+
+    git init
+    git branch -m main
+    echo -e "a\nb\nc\nd\ne\n1\n2\n3\nf" > file
+    git add file
+    git commit -am "a b c d e f"
+
+    git checkout -b foo
+    echo -e "a\nb\nc\nd\ne\n1\n2\n3\nfoo" > file
+    git commit -am "f -> foo"
+
+    git checkout main
+    git checkout -b cat
+    echo -e "a\nb\ncat\nd\ne\n1\n2\n3\nf" > file
+    git commit -am "c -> cat"
+
+We got a few letters of alphabet on separate lines on main, and in branch
+foo `f` is changed to `foo`, and in branch cat `c` is changed to `cat`.
+
+    $ git log --all --graph --pretty=oneline
+    * 90e873e3 (HEAD -> cat) c -> cat
+    | * 3d8c1baf (foo) f -> foo
+    |/
+    * 4d2337dd (main) a b c d e f
+
+Now, still on cat, let's combine the two changes.
+
+    $ git rebase foo
+    Successfully rebased and updated refs/heads/cat
+
+    $ git log --all --graph --pretty=oneline
+    * 98e554a0 (HEAD -> cat) c -> cat
+    * 3d8c1baf (foo) f -> foo
+    * 4d2337dd (main) a b c d e f
+
+Now, `git rebase foo` worked automatically, so *the change* of the last commit
+on `cat` is the same as it was without rebase, which is changing `c` to `cat`.
+But if we run `git range-diff`, we will see this:
+
+    $ git range-diff 90e873e3...cat
+    -:  ------- > 1:  3d8c1ba f -> foo
+    1:  90e873e ! 2:  98e554a c -> cat
+        @@ file
+         +cat
+          d
+          e
+        - f
+        + foo
+
+It seems that this chunk is included for the sole reason that the change from
+`foo` is sort of close. If we try the same code, but put the lines `c` and `f`
+further apart, for example by replacing `e\n` with `e\n1\n2\n3\n` in the
+commands above, the output would be, as expected,
+
+    $ git range-diff f1e0a6cc3...cat
+    -:  ------- > 1:  4db06be f -> foo
+    1:  f1e0a6c = 2:  cc56db7 c -> cat
+
+I suggest not showing uninteresting chunks like that, or perhaps having a
+command line option that controls how close together the changes must be in
+order to be included in the output.
