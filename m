@@ -2,759 +2,624 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F417BC28D13
-	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 02:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AD37C28D13
+	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 02:51:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241413AbiHTCXi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Aug 2022 22:23:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33550 "EHLO
+        id S242215AbiHTCve (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Aug 2022 22:51:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235135AbiHTCXf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Aug 2022 22:23:35 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48A0A1835E
-        for <git@vger.kernel.org>; Fri, 19 Aug 2022 19:23:30 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1B55E1A18B7;
-        Fri, 19 Aug 2022 22:23:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=l
-        ma88uZlvc00S4J206cB9SVOF2m9VywJwLlc6Qj/VYY=; b=joHw6LT/KACFdA7w6
-        59+XrqFVKWRTPCYbt18kgpjDgm4YZcXKa/XHtKpH2dHGQC3DKpOzt1LTfVJZcC9z
-        fh8KBEG3C4WaUbXBvvW/7SsAWxNM8yz/4fxJ9DvEb5CYo/52SZD+/+yjMpBY7/H7
-        pvc51IyulbLB+A7TyIKAR+StHI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 134D61A18B6;
-        Fri, 19 Aug 2022 22:23:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ABC4A1A18B4;
-        Fri, 19 Aug 2022 22:23:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: What's cooking in git.git (Aug 2022, #07; Fri, 19)
-X-master-at: 795ea8776befc95ea2becd8020c7a284677b4161
-X-next-at: 83af4878235c0b991658350560d398d4e8edb8a9
-Date:   Fri, 19 Aug 2022 19:23:25 -0700
-Message-ID: <xmqqbksfirfm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S231168AbiHTCvc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Aug 2022 22:51:32 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1CC6B5E4C
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 19:51:29 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id s11so7577921edd.13
+        for <git@vger.kernel.org>; Fri, 19 Aug 2022 19:51:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc;
+        bh=K0vIBTYb9igPu3tImFgzC2Pa/00xU2M9aK+khn8j9kQ=;
+        b=P+TmNj0s/up+RDjH3d4u14kniaemhap5VQSkYVsyzllg2hzqHZ4RjHj2cW8P40Rrxl
+         4uvDpulsG1dnXM3MnCQ7J+aOCTNtoqUi38CABl82lVdacBmv46QwsnnRiKV5od2MGkDt
+         f7WB3d0F68ktBHrwoENphO02TPcadyxyw1nAopTcL9/CcO8OHi98Yov3wqaR9906FJce
+         3ufvHqoZ4eOQYbM1RDr8n9zWw8AuTIxjFCyioAPa9+wG1SI2WXKrgJCNXLLIVvK7vuHB
+         j4GIOsjBKcEEtdUu5HFF37u8+zMHqgt1+2+POye7q1I47U38GKRVvkmvQBDTr0umhlTn
+         PAIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=K0vIBTYb9igPu3tImFgzC2Pa/00xU2M9aK+khn8j9kQ=;
+        b=jVulwsGzqXvHiGfGcLVZwsaYeK1/Yda5VsCB0KNAcAmNE9GW0ZCChU+9eOJ4bfwkRy
+         JkV+zHaGP6jxn9B7K81Z2p7rrCUhZHJOJ/o9r2UtG2Y4Q9oVft3r/6m3TkS5ssRVrT3Z
+         l+dmUtSR5QO/8tW0iolbMDTgb4wMsntGmmddGUPd8mIk/tzD29ssZ/2yBOeJWXis3eWM
+         PCgNLhBd6fPBdVdFaIZUGBU4X74gM8wXioqAhedX/WNM0Q7RkTH5WsSdVI4PATVm8wqR
+         CPn+SxUhbEoybs9fo8IhhZN1+QhiXPGdG02yVgElwuq0VXMt8VQxmrdOpd5dNZn2oYcu
+         lsRw==
+X-Gm-Message-State: ACgBeo3sOFmYveDOXX1yXKb/bF+JnuuispeyX+9bFp+d4LSTEL2X7TBc
+        Z9Ks9ux2gTpRjwcdYPt0gzOFXMU2Jl6nFGofTujzGZaR9mpcqgMc
+X-Google-Smtp-Source: AA6agR7xyPlyI+m8al6Ve1n/qRyoeIfutNm5WTVlUkENli5wVoCBlOV8v5fR/u+F7rIBe8BAOWXdANBz7FML+hRVoYk=
+X-Received: by 2002:a05:6402:2216:b0:445:eb9a:bfb5 with SMTP id
+ cq22-20020a056402221600b00445eb9abfb5mr8304753edb.36.1660963887682; Fri, 19
+ Aug 2022 19:51:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 12AC5378-202F-11ED-BD70-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+From:   =?UTF-8?B?546L5bCP5bu6?= <littlejian8@gmail.com>
+Date:   Sat, 20 Aug 2022 10:51:16 +0800
+Message-ID: <CADmGLV32OAg6HU+n1UsP2Fq-MjcyUsFFF=q0_jZCB0JEop5VUg@mail.gmail.com>
+Subject: git clone with basic auth in url directly returns authentication
+ failure after 401 received under some git versions
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a future
-release).  Commits prefixed with '-' are only in 'seen', and aren't
-considered "accepted" at all.  A topic without enough support may be
-discarded after a long period of no activity.
-
-We are at the end of the week #6 of a 12-week cycle (cf.
-https://tinyurl.com/gitCal).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-vcs/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[New Topics]
-
-* en/ort-unused-code-removal (2022-08-19) 1 commit
- - merge-ort: remove code obsoleted by other changes
-
- Code clean-up.
-
- Will merge to 'next'?
- source: <pull.1302.git.git.1660884355643.gitgitgadget@gmail.com>
-
-
-* jd/prompt-show-conflict (2022-08-19) 1 commit
-  (merged to 'next' on 2022-08-19 at 83af487823)
- + git-prompt: show presence of unresolved conflicts at command prompt
-
- The bash prompt (in contrib/) learned to optionally indicate when
- the index is unmerged.
-
- Will merge to 'master'.
- source: <pull.1302.v3.git.1660695492382.gitgitgadget@gmail.com>
-
-
-* jk/unused-annotation (2022-08-19) 11 commits
- - is_path_owned_by_current_uid(): mark "report" parameter as unused
- - run-command: mark unused async callback parameters
- - mark unused read_tree_recursive() callback parameters
- - hashmap: mark unused callback parameters
- - config: mark unused callback parameters
- - streaming: mark unused virtual method parameters
- - transport: mark bundle transport_options as unused
- - refs: mark unused virtual method parameters
- - refs: mark unused reflog callback parameters
- - refs: mark unused each_ref_fn parameters
- - git-compat-util: add UNUSED macro
-
- Annotate function parameters that are not used (but cannot be
- removed for structural reasons), to prepare us to later compile
- with -Wunused warning turned on.
-
- Will merge to 'next'.
- source: <Yv9gxqH6nK2KYnNj@coredump.intra.peff.net>
-
-
-* jk/unused-fixes (2022-08-19) 6 commits
- - reflog: assert PARSE_OPT_NONEG in parse-options callbacks
- - reftable: drop unused parameter from reader_seek_linear()
- - verify_one_sparse(): drop unused repository parameter
- - match_pathname(): drop unused "flags" parameter
- - log-tree: drop unused commit param in remerge_diff()
- - xdiff: drop unused mmfile parameters from xdl_do_histogram_diff()
-
- Code clean-up to remove unused function parameters.
-
- Will merge to 'next'.
- source: <Yv9Oay+tNqhLDqVl@coredump.intra.peff.net>
-
-
-* js/merge-tree-without-munging-filenames (2022-08-19) 3 commits
- - t4301: add a test case involving a rename, type change & modification
- - merge-tree: show the original file names in the conflict output
- - merge-tree -z: always show the original file name first
-
- "git merge-tree" output was improved to help "merging without
- working tree" usecase better in a few ways.
- source: <pull.1327.git.1660892256.gitgitgadget@gmail.com>
-
-
-* mg/sequencer-untranslate-reflog (2022-08-19) 3 commits
- - sequencer: do not translate command names
- - sequencer: do not translate parameters to error_resolve_conflict()
- - sequencer: do not translate reflog messages
-
- The sequencer machinery translated messages left in the reflog by
- mistake, which has been corrected.
-
- Will merge to 'next'.
- source: <cover.1660828108.git.git@grubix.eu>
-
-
-* tb/midx-with-changing-preferred-pack-fix (2022-08-19) 6 commits
- - midx.c: include preferred pack correctly with existing MIDX
- - midx.c: extract `midx_fanout_add_pack_fanout()`
- - midx.c: extract `midx_fanout_add_midx_fanout()`
- - midx.c: extract `struct midx_fanout`
- - t/lib-bitmap.sh: avoid silencing stderr
- - t5326: demonstrate potential bitmap corruption
-
- Multi-pack index got corrupted when preferred pack changed from one
- pack to another in a certain way, which has been corrected.
-
- Needs review.
- source: <cover.1660944574.git.me@ttaylorr.com>
-
-
-* vd/fix-perf-tests (2022-08-19) 2 commits
- - p0006: fix 'read-tree' argument ordering
- - p0004: fix prereq declaration
-
- Rather trivial perf-test code fixes.
-
- Will merge to 'next'.
- source: <pull.1330.git.1660942149.gitgitgadget@gmail.com>
-
---------------------------------------------------
-[Graduated to 'master']
-
-* ds/bundle-uri-more (2022-08-10) 2 commits
-  (merged to 'next' on 2022-08-12 at 4f445a058d)
- + bundle-uri: add example bundle organization
- + docs: document bundle URI standard
-
- The "bundle URI" design gets documented.
- source: <pull.1248.v4.git.1660050761.gitgitgadget@gmail.com>
-
-
-* fc/vimdiff-layout-vimdiff3-fix (2022-08-10) 7 commits
-  (merged to 'next' on 2022-08-11 at a14fec292f)
- + mergetools: vimdiff: simplify tabfirst
- + mergetools: vimdiff: fix single window layouts
- + mergetools: vimdiff: rework tab logic
- + mergetools: vimdiff: fix for diffopt
- + mergetools: vimdiff: silence annoying messages
- + mergetools: vimdiff: make vimdiff3 actually work
- + mergetools: vimdiff: fix comment
-
- "vimdiff3" regression fix.
- source: <20220810154618.307275-1-felipe.contreras@gmail.com>
-
-
-* jk/fsck-tree-mode-bits-fix (2022-08-10) 3 commits
-  (merged to 'next' on 2022-08-11 at 219fe53025)
- + fsck: downgrade tree badFilemode to "info"
- + fsck: actually detect bad file modes in trees
- + tree-walk: add a mechanism for getting non-canonicalized modes
-
- "git fsck" reads mode from tree objects but canonicalizes the mode
- before passing it to the logic to check object sanity, which has
- hid broken tree objects from the checking logic.  This has been
- corrected, but to help exiting projects with broken tree objects
- that they cannot fix retroactively, the severity of anomalies this
- code detects has been demoted to "info" for now.
- source: <YvQcNpizy9uOZiAz@coredump.intra.peff.net>
-
-
-* ll/disk-usage-humanise (2022-08-11) 1 commit
-  (merged to 'next' on 2022-08-14 at 3873a83f90)
- + rev-list: support human-readable output for `--disk-usage`
-
- "git rev-list --disk-usage" learned to take an optional value
- "human" to show the reported value in human-readable format, like
- "3.40MiB".
- source: <pull.1313.v5.git.1660193274336.gitgitgadget@gmail.com>
-
-
-* po/doc-add-renormalize (2022-08-10) 1 commit
-  (merged to 'next' on 2022-08-11 at 53851663eb)
- + doc add: renormalize is not idempotent for CRCRLF
-
- Documentation for "git add --renormalize" has been improved.
- source: <20220810144450.470-2-philipoakley@iee.email>
-
-
-* sy/sparse-rm (2022-08-08) 5 commits
-  (merged to 'next' on 2022-08-12 at 5bf10965fb)
- + rm: integrate with sparse-index
- + rm: expand the index only when necessary
- + pathspec.h: move pathspec_needs_expanded_index() from reset.c to here
- + t1092: add tests for `git-rm`
- + Merge branch 'vd/sparse-reset-checkout-fixes' into sy/sparse-rm
- (this branch uses vd/sparse-reset-checkout-fixes.)
-
- "git rm" has become more aware of the sparse-index feature.
- source: <20220807041335.1790658-1-shaoxuan.yuan02@gmail.com>
-
-
-* vd/sparse-reset-checkout-fixes (2022-08-08) 4 commits
-  (merged to 'next' on 2022-08-12 at 755d6ecdb8)
- + unpack-trees: unpack new trees as sparse directories
- + cache.h: create 'index_name_pos_sparse()'
- + oneway_diff: handle removed sparse directories
- + checkout: fix nested sparse directory diff in sparse index
- (this branch is used by sy/sparse-rm.)
-
- Fixes to sparse index compatibility work for "reset" and "checkout"
- commands.
- source: <pull.1312.v3.git.1659985672.gitgitgadget@gmail.com>
-
---------------------------------------------------
-[Cooking]
-
-* vd/scalar-enables-fsmonitor (2022-08-18) 8 commits
-  (merged to 'next' on 2022-08-19 at 1e172e5647)
- + scalar: update technical doc roadmap with FSMonitor support
- + scalar unregister: stop FSMonitor daemon
- + scalar: enable built-in FSMonitor on `register`
- + scalar: move config setting logic into its own function
- + scalar-delete: do not 'die()' in 'delete_enlistment()'
- + scalar-[un]register: clearly indicate source of error
- + scalar-unregister: handle error codes greater than 0
- + scalar: constrain enlistment search
-
- "scalar" now enables built-in fsmonitor on enlisted repositories,
- when able.
-
- Will merge to 'master'.
- source: <pull.1324.v3.git.1660858853.gitgitgadget@gmail.com>
-
-
-* en/ancestry-path-in-a-range (2022-08-19) 3 commits
-  (merged to 'next' on 2022-08-19 at 4fce3015b3)
- + revision: allow --ancestry-path to take an argument
- + t6019: modernize tests with helper
- + rev-list-options.txt: fix simple typo
-
- "git rev-list --ancestry-path=C A..B" is a natural extension of
- "git rev-list A..B"; instead of choosing a subset of A..B to those
- that have ancestry relationship with A, it lets a subset with
- ancestry relationship with C.
-
- Will merge to 'master'.
- source: <pull.1303.v3.git.1660883290.gitgitgadget@gmail.com>
-
-
-* en/submodule-merge-messages-fixes (2022-08-18) 3 commits
-  (merged to 'next' on 2022-08-18 at eb89a1e70f)
- + merge-ort: provide helpful submodule update message when possible
- + merge-ort: avoid surprise with new sub_flag variable
- + merge-ort: remove translator lego in new "submodule conflict suggestion"
- (this branch uses cw/submodule-merge-messages.)
-
- Further update the help messages given while merging submodules.
-
- Will merge to 'master'.
- source: <pull.1325.v3.git.1660806927.gitgitgadget@gmail.com>
-
-
-* ed/fsmonitor-on-network-disk (2022-08-18) 2 commits
- - fsmonitor: option to allow fsmonitor to run against network-mounted repos
-  (merged to 'next' on 2022-08-14 at 637d458d9c)
- + fsmonitor: option to allow fsmonitor to run against network-mounted repos
-
- The built-in fsmonitor refuses to work on a network mounted
- repositories; a configuration knob for users to override this has
- been introduced.
-
- The second one needs more work.
- cf. <4q6248n0-nqr5-p5pp-64s3-qq7nr53q01op@tzk.qr>
- cf. <20220819185847.ulr5yjcfsahydeff@tb-raspi4>
- source: <pull.1317.v3.git.1660242752495.gitgitgadget@gmail.com>
-
-
-* jk/is-promisor-object-keep-tree-in-use (2022-08-14) 1 commit
-  (merged to 'next' on 2022-08-17 at 96033ff88d)
- + is_promisor_object(): fix use-after-free of tree buffer
-
- An earlier optimization discarded a tree-object buffer that is
- still in use, which has been corrected.
-
- Will merge to 'master'.
- source: <YviWO9Bhz5PU1HaL@coredump.intra.peff.net>
-
-
-* js/fetch-negotiation-trace (2022-08-15) 1 commit
-  (merged to 'next' on 2022-08-17 at 2c9e07b617)
- + fetch-pack: add tracing for negotiation rounds
-
- The common ancestor negotiation exchange during a "git fetch"
- session now leaves trace log.
-
- Will merge to 'master'.
- source: <4390677ec75d51487142adf7c2ab821cbd24a53e.1659477669.git.steadmon@google.com>
-
-
-* pw/rebase-keep-base-fixes (2022-08-18) 5 commits
- - rebase --keep-base: imply --no-fork-point
- - rebase --keep-base: imply --reapply-cherry-picks
- - rebase: factor out merge_base calculation
- - rebase: store orig_head as a commit
- - t3416: set $EDITOR in subshell
-
- "git rebase --keep-base" used to discard the commits that are
- already cherry-picked to the upstream, even when "keep-base" meant
- that the base, on top of which the history is being rebuilt, does
- not yet include these cherry-picked commits.  The --keep-base
- option now implies --reapply-cherry-picks and --no-fork-point
- options.
-
- Needs review.
- source: <pull.1323.git.1660576283.gitgitgadget@gmail.com>
-
-
-* ag/merge-strategies-in-c (2022-08-10) 14 commits
- - sequencer: use the "octopus" strategy without forking
- - sequencer: use the "resolve" strategy without forking
- - merge: use the "octopus" strategy without forking
- - merge: use the "resolve" strategy without forking
- - merge-octopus: rewrite in C
- - merge-recursive: move better_branch_name() to merge.c
- - merge-resolve: rewrite in C
- - merge-one-file: rewrite in C
- - update-index: move add_cacheinfo() to read-cache.c
- - merge-index: add a new way to invoke `git-merge-one-file'
- - merge-index: drop the index
- - merge-index: libify merge_one_path() and merge_all()
- - t6060: add tests for removed files
- - t6060: modify multiple files to expose a possible issue with merge-index
-
- An attempt to rewrite remaining merge strategies from shell to C.
- source: <20220809185429.20098-1-alban.gruin@gmail.com>
-
-
-* sy/mv-out-of-cone (2022-08-10) 9 commits
-  (merged to 'next' on 2022-08-17 at 2316d9ce4d)
- + mv: check overwrite for in-to-out move
- + advice.h: add advise_on_moving_dirty_path()
- + mv: cleanup empty WORKING_DIRECTORY
- + mv: from in-cone to out-of-cone
- + mv: remove BOTH from enum update_mode
- + mv: check if <destination> is a SKIP_WORKTREE_DIR
- + mv: free the with_slash in check_dir_in_index()
- + mv: rename check_dir_in_index() to empty_dir_has_sparse_contents()
- + t7002: add tests for moving from in-cone to out-of-cone
-
- "git mv A B" in a sparsely populated working tree can be asked to
- move a path from a directory that is "in cone" to another directory
- that is "out of cone".  Handling of such a case has been improved.
-
- Will merge to 'master'.
- source: <20220809120910.2021413-1-shaoxuan.yuan02@gmail.com>
-
-
-* vd/scalar-generalize-diagnose (2022-08-12) 11 commits
-  (merged to 'next' on 2022-08-18 at bd8e574713)
- + scalar: update technical doc roadmap
- + scalar-diagnose: use 'git diagnose --mode=all'
- + builtin/bugreport.c: create '--diagnose' option
- + builtin/diagnose.c: add '--mode' option
- + builtin/diagnose.c: create 'git diagnose' builtin
- + diagnose.c: add option to configure archive contents
- + scalar-diagnose: move functionality to common location
- + scalar-diagnose: move 'get_disk_info()' to 'compat/'
- + scalar-diagnose: add directory to archiver more gently
- + scalar-diagnose: avoid 32-bit overflow of size_t
- + scalar-diagnose: use "$GIT_UNZIP" in test
-
- The "diagnose" feature to create a zip archive for diagnostic
- material has been lifted from "scalar" and made into a feature of
- "git bugreport".
-
- Will merge to 'master'.
- source: <pull.1310.v4.git.1660335019.gitgitgadget@gmail.com>
-
-
-* jk/pipe-command-nonblock (2022-08-17) 6 commits
-  (merged to 'next' on 2022-08-17 at 91fe8e6354)
- + pipe_command(): mark stdin descriptor as non-blocking
- + pipe_command(): handle ENOSPC when writing to a pipe
- + pipe_command(): avoid xwrite() for writing to pipe
- + git-compat-util: make MAX_IO_SIZE define globally available
- + nonblock: support Windows
- + compat: add function to enable nonblocking pipes
-
- Fix deadlocks between main Git process and subprocess spawned via
- the pipe_command() API, that can kill "git add -p" that was
- reimplemented in C recently.
-
- Will merge to 'master'.
- source: <YvyE1RDFVAg4uQo1@coredump.intra.peff.net>
-
-
-* es/mark-gc-cruft-as-experimental (2022-08-03) 2 commits
- - config: let feature.experimental imply gc.cruftPacks=true
- - gc: add tests for --cruft and friends
-
- Enable gc.cruftpacks by default for those who opt into
- feature.experimental setting.
-
- Expecting a reroll.
- cf. <220804.86a68ke9d5.gmgdl@evledraar.gmail.com>
- cf. <6803b725-526e-a1c8-f15c-a9ed4a144d4c@github.com>
- source: <20220803205721.3686361-1-emilyshaffer@google.com>
-
-
-* sg/parse-options-subcommand (2022-08-19) 20 commits
- - builtin/worktree.c: let parse-options parse subcommands
- - builtin/stash.c: let parse-options parse subcommands
- - builtin/sparse-checkout.c: let parse-options parse subcommands
- - builtin/remote.c: let parse-options parse subcommands
- - builtin/reflog.c: let parse-options parse subcommands
- - builtin/notes.c: let parse-options parse subcommands
- - builtin/multi-pack-index.c: let parse-options parse subcommands
- - builtin/hook.c: let parse-options parse subcommands
- - builtin/gc.c: let parse-options parse 'git maintenance's subcommands
- - builtin/commit-graph.c: let parse-options parse subcommands
- - builtin/bundle.c: let parse-options parse subcommands
- - parse-options: add support for parsing subcommands
- - parse-options: drop leading space from '--git-completion-helper' output
- - parse-options: clarify the limitations of PARSE_OPT_NODASH
- - parse-options: PARSE_OPT_KEEP_UNKNOWN only applies to --options
- - api-parse-options.txt: fix description of OPT_CMDMODE
- - t0040-parse-options: test parse_options() with various 'parse_opt_flags'
- - t5505-remote.sh: check the behavior without a subcommand
- - t3301-notes.sh: check that default operation mode doesn't take arguments
- - git.c: update NO_PARSEOPT markings
-
- Introduce the "subcommand" mode to parse-options API and update the
- command line parser of Git commands with subcommands.
-
- Will merge to 'next'?
- source: <20220819160411.1791200-1-szeder.dev@gmail.com>
-
-
-* ds/bundle-uri-clone (2022-08-10) 5 commits
-  (merged to 'next' on 2022-08-18 at 5e8a3ec71e)
- + clone: --bundle-uri cannot be combined with --depth
- + bundle-uri: add support for http(s):// and file://
- + clone: add --bundle-uri option
- + bundle-uri: create basic file-copy logic
- + remote-curl: add 'get' capability
-
- Implement "git clone --bundle-uri".
-
- Will merge to 'master'.
- source: <pull.1300.v3.git.1660050703.gitgitgadget@gmail.com>
-
-
-* ds/decorate-filter-tweak (2022-08-05) 11 commits
-  (merged to 'next' on 2022-08-19 at 064b9daa85)
- + fetch: use ref_namespaces during prefetch
- + maintenance: stop writing log.excludeDecoration
- + log: create log.initialDecorationSet=all
- + log: add --clear-decorations option
- + log: add default decoration filter
- + log-tree: use ref_namespaces instead of if/else-if
- + refs: use ref_namespaces for replace refs base
- + refs: add array of ref namespaces
- + t4207: test coloring of grafted decorations
- + t4207: modernize test
- + refs: allow "HEAD" as decoration filter
-
- The namespaces used by "log --decorate" from "refs/" hierarchy by
- default has been tightened.
-
- Will merge to 'master'.
- source: <pull.1301.v3.git.1659722323.gitgitgadget@gmail.com>
-
-
-* es/doc-creation-factor-fix (2022-07-28) 2 commits
- - range-diff: clarify --creation-factor=<factor>
- - format-patch: clarify --creation-factor=<factor>
-
- Expecting a reroll.
- source: <7229p500-p2r4-on87-6802-8o90s36rr3s4@tzk.qr>
-
-
-* ab/submodule-helper-prep (2022-08-03) 28 commits
- - submodule--helper: fix bad config API usage
- - submodule--helper: libify "must_die_on_failure" code paths (for die)
- - submodule--helper: libify "must_die_on_failure" code paths
- - submodule--helper: libify determine_submodule_update_strategy()
- - submodule--helper: don't exit() on failure, return
- - submodule--helper: use "code" in run_update_command()
- - submodule--helper: move submodule_strategy_to_string() to only user
- - submodule--helper: don't call submodule_strategy_to_string() in BUG()
- - submodule--helper: add missing braces to "else" arm
- - submodule--helper: return "ret", not "1" from update_submodule()
- - submodule--helper: rename "int res" to "int ret"
- - submodule--helper: don't redundantly check "else if (res)"
- - submodule--helper: refactor "errmsg_str" to be a "struct strbuf"
- - submodule--helper: add "const" to copy of "update_data"
- - submodule--helper: pass a "const struct module_clone_data" to clone_submodule()
- - submodule--helper: move "sb" in clone_submodule() to its own scope
- - submodule--helper: use xstrfmt() in clone_submodule()
- - submodule--helper: replace memset() with { 0 }-initialization
- - submodule--helper style: add \n\n after variable declarations
- - submodule--helper style: don't separate declared variables with \n\n
- - submodule--helper: move "resolve-relative-url-test" to a test-tool
- - submodule--helper: move "check-name" to a test-tool
- - submodule--helper: move "is-active" to a test-tool
- - test-tool submodule-config: remove unused "--url" handling
- - submodule--helper: remove unused "list" helper
- - submodule--helper: remove unused "name" helper
- - submodule tests: test for "add <repository> <abs-path>"
- - submodule tests: test usage behavior
- (this branch is used by ab/submodule-helper-leakfix.)
-
- Code clean-up of "git submodule--helper".
-
- Expecting a (hopefully final?) reroll.
- cf. <220803.86h72tfpcc.gmgdl@evledraar.gmail.com>
- source: <cover-v2-00.28-00000000000-20220802T154036Z-avarab@gmail.com>
-
-
-* ab/dedup-config-and-command-docs (2022-07-29) 9 commits
- - docs: add CONFIGURATION sections that fuzzy map to built-ins
- - docs: add CONFIGURATION sections that map to a built-in
- - log docs: de-duplicate configuration sections
- - difftool docs: de-duplicate configuration sections
- - notes docs: de-duplicate configuration sections
- - apply docs: de-duplicate configuration sections
- - send-email docs: de-duplicate configuration sections
- - grep docs: de-duplicate configuration sections
- - docs: add and use include template for config/* includes
-
- Share the text used to explain configuration variables used by "git
- <subcmd>" in "git help <subcmd>" with the text from "git help config".
-
- Expecting a reroll.
- cf. <CAHd-oW5mD-H1kvuF9VEVb8KjaSkUSUpBH-WAkpCn6_Ci8o888w@mail.gmail.com>
- cf. <CAHd-oW7s6Hu24uTjCW9ROBbJkA5+7TCu32a4L_BXVLhcvw5kSw@mail.gmail.com>
- cf. <xmqqlesb4lwh.fsf@gitster.g>
- source: <cover-v2-0.9-00000000000-20220729T081959Z-avarab@gmail.com>
-
-
-* cw/remote-object-info (2022-08-13) 7 commits
- - SQUASH???
- - cat-file: add remote-object-info to batch-command
- - transport: add client support for object-info
- - serve: advertise object-info feature
- - protocol-caps: initialization bug fix
- - fetch-pack: move fetch initialization
- - fetch-pack: refactor packet writing
-
- A client component to talk with the object-info endpoint.
-
- Expecting a reroll.
- cf. <20220728230210.2952731-1-calvinwan@google.com>
- cf. <CAFySSZDvgwbbHCHfyuaqX3tKsr-GjJ9iihygg6rNNe46Ys7_EA@mail.gmail.com>
- source: <20220728230210.2952731-1-calvinwan@google.com>
-
-
-* mt/rot13-in-c (2022-08-14) 4 commits
-  (merged to 'next' on 2022-08-19 at 22152a150c)
- + tests: use the new C rot13-filter helper to avoid PERL prereq
- + t0021: implementation the rot13-filter.pl script in C
- + t0021: avoid grepping for a Perl-specific string at filter output
- + Merge branch 'mt/checkout-count-fix' into mt/rot13-in-c
-
- Test portability improvements.
-
- Will merge to 'master'.
- source: <cover.1660522524.git.matheus.bernardino@usp.br>
-
-
-* tl/trace2-config-scope (2022-08-11) 2 commits
- - tr2: shows scope unconditionally in addition to key-value pair
- - api-trace2.txt: print config key-value pair
-
- Tweak trace2 output about configuration variables.
-
- Will merge to 'next'?
- source: <cover.1660272404.git.dyroneteng@gmail.com>
-
-
-* ab/submodule-helper-leakfix (2022-08-03) 18 commits
- - submodule--helper: fix a configure_added_submodule() leak
- - submodule--helper: free rest of "displaypath" in "struct update_data"
- - submodule--helper: free some "displaypath" in "struct update_data"
- - submodule--helper: fix a memory leak in print_status()
- - submodule--helper: fix a leak in module_add()
- - submodule--helper: fix obscure leak in module_add()
- - submodule--helper: fix "reference" leak
- - submodule--helper: fix a memory leak in get_default_remote_submodule()
- - submodule--helper: fix a leak with repo_clear()
- - submodule--helper: fix "sm_path" and other "module_cb_list" leaks
- - submodule--helper: fix "errmsg_str" memory leak
- - submodule--helper: add and use *_release() functions
- - submodule--helper: don't leak {run,capture}_command() cp.dir argument
- - submodule--helper: "struct pathspec" memory leak in module_update()
- - submodule--helper: fix most "struct pathspec" memory leaks
- - submodule--helper: fix trivial get_default_remote_submodule() leak
- - submodule--helper: fix a leak in "clone_submodule"
- - Merge branch 'ab/submodule-helper-prep' into ab/submodule-helper-leakfix
- (this branch uses ab/submodule-helper-prep.)
-
- Plugging leaks in submodule--helper.
-
- Waiting for the "prep" step.
- source: <cover-v5-00.17-00000000000-20220802T155002Z-avarab@gmail.com>
-
-
-* cw/submodule-merge-messages (2022-08-04) 1 commit
-  (merged to 'next' on 2022-08-12 at ede0890319)
- + submodule merge: update conflict error message
- (this branch is used by en/submodule-merge-messages-fixes.)
-
- Update the message given when "git merge" sees conflicts at a path
- with a submodule while merging a superproject.
-
- Will wait for en/submodule-merge-messages-fixes to mature.
- source: <20220804195105.1303455-1-calvinwan@google.com>
-
-
-* po/glossary-around-traversal (2022-07-09) 3 commits
- - glossary: add reachability bitmap description
- - glossary: add commit graph description
- - glossary: add Object DataBase (ODB) abbreviation
-
- The glossary entries for "commit-graph file" and "reachability
- bitmap" have been added.
-
- Expecting a reroll.
- cf. <dfe0c1ab-33f8-f13e-71ce-1829bb0d2d7f@iee.email>
- source: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
-
-
-* ac/bitmap-lookup-table (2022-08-14) 6 commits
- - bitmap-lookup-table: add performance tests for lookup table
- - pack-bitmap: prepare to read lookup table extension
- - pack-bitmap-write: learn pack.writeBitmapLookupTable and add tests
- - pack-bitmap-write.c: write lookup table extension
- - bitmap: move `get commit positions` code to `bitmap_writer_finish`
- - Documentation/technical: describe bitmap lookup table extension
-
- The pack bitmap file gained a bitmap-lookup table to speed up
- locating the necessary bitmap for a given commit.
- source: <pull.1266.v6.git.1660496112.gitgitgadget@gmail.com>
-
-
-* tb/show-ref-count (2022-06-06) 2 commits
- - builtin/show-ref.c: limit output with `--count`
- - builtin/show-ref.c: rename `found_match` to `matches_nr`
-
- "git show-ref" learned to stop after emitting N refs with the new
- "--count=N" option.
-
- Expecting a reroll.
- cf. <xmqqczfl4ce1.fsf@gitster.g>
- source: <cover.1654552560.git.me@ttaylorr.com>
-
-
-* js/bisect-in-c (2022-06-27) 16 commits
- - bisect: no longer try to clean up left-over `.git/head-name` files
- - bisect: remove Cogito-related code
- - Turn `git bisect` into a full built-in
- - bisect: move even the command-line parsing to `bisect--helper`
- - bisect: teach the `bisect--helper` command to show the correct usage strings
- - bisect--helper: return only correct exit codes in `cmd_*()`
- - bisect--helper: move the `BISECT_STATE` case to the end
- - bisect--helper: make `--bisect-state` optional
- - bisect--helper: align the sub-command order with git-bisect.sh
- - bisect--helper: using `--bisect-state` without an argument is a bug
- - bisect--helper: really retire `--bisect-autostart`
- - bisect--helper: really retire --bisect-next-check
- - bisect--helper: retire the --no-log option
- - bisect: avoid double-quoting when printing the failed command
- - bisect run: fix the error message
- - bisect: verify that a bogus option won't try to start a bisection
-
- Final bits of "git bisect.sh" have been rewritten in C.
-
- Expecting a (hopefully final) reroll.
- cf. <20627.86ilolhnnn.gmgdl@evledraar.gmail.com>
- source: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
-
---------------------------------------------------
-[Discarded]
-
-* jt/connected-show-missing-from-which-side (2022-06-10) 1 commit
- . fetch,fetch-pack: clarify connectivity check error
-
- We may find an object missing after a "git fetch" stores the
- objects it obtained from the other side, but it is not necessarily
- because the remote failed to send necessary objects.  Reword the
- messages in an attempt to help users explore other possibilities
- when they hit this error.
-
- In stalled state for too long.
- Also it seems to break t5326 with sha256.
- source: <20220610195247.1177549-1-jonathantanmy@google.com>
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+
+I want to git clone with basic auth in url, such as git clone
+http://xxx:xxx@xxx.xxx/xxx/xxx
+
+What did you expect to happen? (Expected behavior)
+
+Clone successfully
+
+What happened instead? (Actual behavior)
+
+fatal: Authentication failed
+
+What's different between what you expected and what actually happened?
+
+When I use git v2.36.2  (docker image is alpine/git:v2.36.2) to clone
+with basic auth in url, when receiving the 401, it directly returns
+authentication failure, even recv head has www-authenticate: Basic
+realm=3DRestricted,
+and no request is send again. I think it should send request with
+authorization: Basic header after receive 401.
+And use git v2.34.2 (docker image is alpine/git:v2.34.1) to clone it works =
+well.
+
+
+Anything else you want to add:
+
+$ server git version: git version 2.30.2
+
+ Below is the GIT_CURL_VERBOSE information between 2 versions
+
+ GIT_CURL_VERBOSE info with v2.36.2 (docker image is alpine/git:v2.36.2) Ou=
+tput:
+ $ docker run -it -e GIT_CURL_VERBOSE=3D1 5de1a96efc49  clone
+http://xxx:xxx@xxx.xxx/xxx/xxx
+Cloning into 'xxx'...
+10:54:06.204996 http.c:664              =3D=3D Info:   Trying xxx.xxx.xxx.x=
+xx:80...
+10:54:06.235057 http.c:664              =3D=3D Info: Connected to xxx.xxx
+(xxx.xxx.xxx.xxx) port 80 (#0)
+10:54:06.235347 http.c:611              =3D> Send header, 0000000221
+bytes (0x000000dd)
+10:54:06.235406 http.c:623              =3D> Send header: GET
+/xxx/xxx/info/refs?service=3Dgit-upload-pack HTTP/1.1
+10:54:06.235665 http.c:623              =3D> Send header: Host: xxx.xxx
+10:54:06.235677 http.c:623              =3D> Send header: User-Agent: git/2=
+.36.2
+10:54:06.235687 http.c:623              =3D> Send header: Accept: */*
+10:54:06.235701 http.c:623              =3D> Send header:
+Accept-Encoding: deflate, gzip, br
+10:54:06.235712 http.c:623              =3D> Send header: Pragma: no-cache
+10:54:06.235727 http.c:623              =3D> Send header: Git-Protocol: ver=
+sion=3D2
+10:54:06.235779 http.c:623              =3D> Send header:
+10:54:06.240590 http.c:664              =3D=3D Info: Mark bundle as not
+supporting multiuse
+10:54:06.240658 http.c:611              <=3D Recv header, 0000000020
+bytes (0x00000014)
+10:54:06.240677 http.c:623              <=3D Recv header: HTTP/1.1 302 Foun=
+d
+10:54:06.240692 http.c:611              <=3D Recv header, 0000000037
+bytes (0x00000025)
+10:54:06.240700 http.c:623              <=3D Recv header: Date: Fri, 19
+Aug 2022 10:54:06 GMT
+10:54:06.240713 http.c:611              <=3D Recv header, 0000000025
+bytes (0x00000019)
+10:54:06.240723 http.c:623              <=3D Recv header: Content-Type: tex=
+t/html
+10:54:06.240737 http.c:611              <=3D Recv header, 0000000021
+bytes (0x00000015)
+10:54:06.240753 http.c:623              <=3D Recv header: Content-Length: 1=
+54
+10:54:06.240801 http.c:611              <=3D Recv header, 0000000024
+bytes (0x00000018)
+10:54:06.240812 http.c:623              <=3D Recv header: Connection: keep-=
+alive
+10:54:06.240828 http.c:611              <=3D Recv header, 0000000100
+bytes (0x00000064)
+10:54:06.240839 http.c:623              <=3D Recv header: Location:
+https://xxx.xxx/xxx/xxx/info/refs?service=3Dgit-upload-pack
+10:54:06.240847 http.c:611              <=3D Recv header, 0000000022
+bytes (0x00000016)
+10:54:06.240857 http.c:623              <=3D Recv header: Via: HTTP/1.1 SLB=
+.25
+10:54:06.240868 http.c:611              <=3D Recv header, 0000000002
+bytes (0x00000002)
+10:54:06.240876 http.c:623              <=3D Recv header:
+10:54:06.240884 http.c:664              =3D=3D Info: Ignoring the response-=
+body
+10:54:06.241141 http.c:664              =3D=3D Info: Connection #0 to host
+xxx.xxx left intact
+10:54:06.241331 http.c:664              =3D=3D Info: Clear auth, redirects
+to port from 80 to 443
+10:54:06.241350 http.c:664              =3D=3D Info: Issue another request
+to this URL: 'https://xxx.xxx/xxx/xxx/info/refs?service=3Dgit-upload-pack'
+10:54:06.241480 http.c:664              =3D=3D Info: NTLM-proxy picked AND
+auth done set, clear picked
+10:54:06.248582 http.c:664              =3D=3D Info:   Trying xxx.xxx.xxx.x=
+xx:443...
+10:54:06.254035 http.c:664              =3D=3D Info: Connected to xxx.xxx
+(xxx.xxx.xxx.xxx) port 443 (#1)
+10:54:06.254672 http.c:664              =3D=3D Info: ALPN: offers h2
+10:54:06.254723 http.c:664              =3D=3D Info: ALPN: offers http/1.1
+10:54:06.267498 http.c:664              =3D=3D Info:  CAfile:
+/etc/ssl/certs/ca-certificates.crt
+10:54:06.267561 http.c:664              =3D=3D Info:  CApath: none
+10:54:06.267838 http.c:664              =3D=3D Info: TLSv1.3 (OUT), TLS
+handshake, Client hello (1):
+10:54:06.277311 http.c:664              =3D=3D Info: TLSv1.3 (IN), TLS
+handshake, Server hello (2):
+10:54:06.277427 http.c:664              =3D=3D Info: TLSv1.2 (IN), TLS
+handshake, Certificate (11):
+10:54:06.278079 http.c:664              =3D=3D Info: TLSv1.2 (IN), TLS
+handshake, Server key exchange (12):
+10:54:06.278272 http.c:664              =3D=3D Info: TLSv1.2 (IN), TLS
+handshake, Server finished (14):
+10:54:06.278609 http.c:664              =3D=3D Info: TLSv1.2 (OUT), TLS
+handshake, Client key exchange (16):
+10:54:06.278685 http.c:664              =3D=3D Info: TLSv1.2 (OUT), TLS
+change cipher, Change cipher spec (1):
+10:54:06.278797 http.c:664              =3D=3D Info: TLSv1.2 (OUT), TLS
+handshake, Finished (20):
+10:54:06.284962 http.c:664              =3D=3D Info: TLSv1.2 (IN), TLS
+handshake, Finished (20):
+10:54:06.285064 http.c:664              =3D=3D Info: SSL connection using
+TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+10:54:06.285082 http.c:664              =3D=3D Info: ALPN: server accepted =
+h2
+10:54:06.285101 http.c:664              =3D=3D Info: Server certificate:
+10:54:06.285116 http.c:664              =3D=3D Info:  subject: CN=3D*.xxx.x=
+xx
+10:54:06.285133 http.c:664              =3D=3D Info:  start date: Apr  8
+00:00:00 2022 GMT
+10:54:06.285254 http.c:664              =3D=3D Info:  expire date: Apr  9
+23:59:59 2023 GMT
+10:54:06.285317 http.c:664              =3D=3D Info:  subjectAltName: host
+"xxx.xxx" matched cert's "*.xxx.xxx"
+10:54:06.285364 http.c:664              =3D=3D Info:  issuer: C=3DUS;
+O=3DDigiCert Inc; CN=3DRapidSSL TLS DV RSA Mixed SHA256 2020 CA-1
+10:54:06.285374 http.c:664              =3D=3D Info:  SSL certificate verif=
+y ok.
+10:54:06.285460 http.c:664              =3D=3D Info: Using HTTP2, server
+supports multiplexing
+10:54:06.285508 http.c:664              =3D=3D Info: Copying HTTP/2 data
+in stream buffer to connection buffer after upgrade: len=3D0
+10:54:06.285902 http.c:664              =3D=3D Info: h2h3 [:method: GET]
+10:54:06.285956 http.c:664              =3D=3D Info: h2h3 [:path:
+/xxx/xxx/info/refs?service=3Dgit-upload-pack]
+10:54:06.285977 http.c:664              =3D=3D Info: h2h3 [:scheme: https]
+10:54:06.285996 http.c:664              =3D=3D Info: h2h3 [:authority: xxx.=
+xxx]
+10:54:06.286011 http.c:664              =3D=3D Info: h2h3 [user-agent: git/=
+2.36.2]
+10:54:06.286019 http.c:664              =3D=3D Info: h2h3 [accept: */*]
+10:54:06.286029 http.c:664              =3D=3D Info: h2h3
+[accept-encoding: deflate, gzip, br]
+10:54:06.286039 http.c:664              =3D=3D Info: h2h3 [pragma: no-cache=
+]
+10:54:06.286048 http.c:664              =3D=3D Info: h2h3 [git-protocol: ve=
+rsion=3D2]
+10:54:06.286075 http.c:664              =3D=3D Info: Using Stream ID: 1
+(easy handle 0x7f4673e9e210)
+10:54:06.286401 http.c:611              =3D> Send header, 0000000219
+bytes (0x000000db)
+10:54:06.286459 http.c:623              =3D> Send header: GET
+/xxx/xxx/info/refs?service=3Dgit-upload-pack HTTP/2
+10:54:06.286473 http.c:623              =3D> Send header: Host: xxx.xxx
+10:54:06.286481 http.c:623              =3D> Send header: user-agent: git/2=
+.36.2
+10:54:06.286495 http.c:623              =3D> Send header: accept: */*
+10:54:06.286562 http.c:623              =3D> Send header:
+accept-encoding: deflate, gzip, br
+10:54:06.286604 http.c:623              =3D> Send header: pragma: no-cache
+10:54:06.286647 http.c:623              =3D> Send header: git-protocol: ver=
+sion=3D2
+10:54:06.286694 http.c:623              =3D> Send header:
+10:54:06.286835 http.c:664              =3D=3D Info: Connection state
+changed (MAX_CONCURRENT_STREAMS =3D=3D 128)!
+10:54:06.296853 http.c:611              <=3D Recv header, 0000000013
+bytes (0x0000000d)
+10:54:06.296907 http.c:623              <=3D Recv header: HTTP/2 401
+10:54:06.296924 http.c:611              <=3D Recv header, 0000000037
+bytes (0x00000025)
+10:54:06.296939 http.c:623              <=3D Recv header: date: Fri, 19
+Aug 2022 10:54:06 GMT
+10:54:06.296952 http.c:611              <=3D Recv header, 0000000047
+bytes (0x0000002f)
+10:54:06.296964 http.c:623              <=3D Recv header: content-type:
+application/json; charset=3DUTF-8
+10:54:06.297008 http.c:611              <=3D Recv header, 0000000020
+bytes (0x00000014)
+10:54:06.297023 http.c:623              <=3D Recv header: content-length: 6=
+9
+10:54:06.297035 http.c:611              <=3D Recv header, 0000000070
+bytes (0x00000046)
+10:54:06.297043 http.c:623              <=3D Recv header: traceparent:
+00-ad497b554e2addf5b0a94937024187c4-138a06a14cd9ed47-01
+10:54:06.297083 http.c:611              <=3D Recv header, 0000000042
+bytes (0x0000002a)
+10:54:06.297099 http.c:623              <=3D Recv header:
+www-authenticate: Basic realm=3DRestricted
+10:54:06.297116 http.c:611              <=3D Recv header, 0000000002
+bytes (0x00000002)
+10:54:06.297125 http.c:623              <=3D Recv header:
+10:54:06.297313 http.c:664              =3D=3D Info: Connection #1 to host
+xxx.xxx left intact
+fatal: Authentication failed for 'http://xxx.xxx/xxx/xxx/'
+
+ GIT_CURL_VERBOSE info with v2.34.2 (docker image is alpine/git:v2.34.1) Ou=
+tput:
+$ docker run -it -e GIT_CURL_VERBOSE=3D1  aaee7a44d8d4  clone
+http://xxx:xxx@xxx.xxx/xxx/xxx
+Cloning into 'xxx'...
+11:11:10.183612 http.c:664              =3D=3D Info:   Trying xxx.xxx.xxx:8=
+0...
+11:11:10.190536 http.c:664              =3D=3D Info: Connected to xxx.xxx
+(xxx.xxx.xxx) port 80 (#0)
+11:11:10.190719 http.c:611              =3D> Send header, 0000000221
+bytes (0x000000dd)
+11:11:10.190798 http.c:623              =3D> Send header: GET
+/xxx/xxx/info/refs?service=3Dgit-upload-pack HTTP/1.1
+11:11:10.190815 http.c:623              =3D> Send header: Host: xxx.xxx
+11:11:10.190828 http.c:623              =3D> Send header: User-Agent: git/2=
+.34.2
+11:11:10.190836 http.c:623              =3D> Send header: Accept: */*
+11:11:10.190844 http.c:623              =3D> Send header:
+Accept-Encoding: deflate, gzip, br
+11:11:10.190875 http.c:623              =3D> Send header: Pragma: no-cache
+11:11:10.190883 http.c:623              =3D> Send header: Git-Protocol: ver=
+sion=3D2
+11:11:10.190891 http.c:623              =3D> Send header:
+11:11:10.196034 http.c:664              =3D=3D Info: Mark bundle as not
+supporting multiuse
+11:11:10.196086 http.c:611              <=3D Recv header, 0000000020
+bytes (0x00000014)
+11:11:10.196104 http.c:623              <=3D Recv header: HTTP/1.1 302 Foun=
+d
+11:11:10.196120 http.c:611              <=3D Recv header, 0000000037
+bytes (0x00000025)
+11:11:10.196133 http.c:623              <=3D Recv header: Date: Fri, 19
+Aug 2022 11:11:10 GMT
+11:11:10.196272 http.c:611              <=3D Recv header, 0000000025
+bytes (0x00000019)
+11:11:10.196289 http.c:623              <=3D Recv header: Content-Type: tex=
+t/html
+11:11:10.196305 http.c:611              <=3D Recv header, 0000000021
+bytes (0x00000015)
+11:11:10.196318 http.c:623              <=3D Recv header: Content-Length: 1=
+54
+11:11:10.196362 http.c:611              <=3D Recv header, 0000000024
+bytes (0x00000018)
+11:11:10.196396 http.c:623              <=3D Recv header: Connection: keep-=
+alive
+11:11:10.196413 http.c:611              <=3D Recv header, 0000000100
+bytes (0x00000064)
+11:11:10.196429 http.c:623              <=3D Recv header: Location:
+https://xxx.xxx/xxx/xxx/info/refs?service=3Dgit-upload-pack
+11:11:10.196463 http.c:611              <=3D Recv header, 0000000022
+bytes (0x00000016)
+11:11:10.196504 http.c:623              <=3D Recv header: Via: HTTP/1.1 SLB=
+.27
+11:11:10.196544 http.c:611              <=3D Recv header, 0000000002
+bytes (0x00000002)
+11:11:10.196555 http.c:623              <=3D Recv header:
+11:11:10.196564 http.c:664              =3D=3D Info: Ignoring the response-=
+body
+11:11:10.196649 http.c:664              =3D=3D Info: Connection #0 to host
+xxx.xxx left intact
+11:11:10.196718 http.c:664              =3D=3D Info: Issue another request
+to this URL: 'https://xxx.xxx/xxx/xxx/info/refs?service=3Dgit-upload-pack'
+11:11:10.196869 http.c:664              =3D=3D Info: NTLM-proxy picked AND
+auth done set, clear picked!
+11:11:10.202506 http.c:664              =3D=3D Info:   Trying xxx.xxx.xxx:4=
+43...
+11:11:10.208418 http.c:664              =3D=3D Info: Connected to xxx.xxx
+(xxx.xxx.xxx) port 443 (#1)
+11:11:10.208923 http.c:664              =3D=3D Info: ALPN, offering h2
+11:11:10.208964 http.c:664              =3D=3D Info: ALPN, offering http/1.=
+1
+11:11:10.221901 http.c:664              =3D=3D Info:  CAfile:
+/etc/ssl/certs/ca-certificates.crt
+11:11:10.221963 http.c:664              =3D=3D Info:  CApath: none
+11:11:10.222300 http.c:664              =3D=3D Info: TLSv1.3 (OUT), TLS
+handshake, Client hello (1):
+11:11:10.233108 http.c:664              =3D=3D Info: TLSv1.3 (IN), TLS
+handshake, Server hello (2):
+11:11:10.233296 http.c:664              =3D=3D Info: TLSv1.2 (IN), TLS
+handshake, Certificate (11):
+11:11:10.233803 http.c:664              =3D=3D Info: TLSv1.2 (IN), TLS
+handshake, Server key exchange (12):
+11:11:10.233952 http.c:664              =3D=3D Info: TLSv1.2 (IN), TLS
+handshake, Server finished (14):
+11:11:10.234129 http.c:664              =3D=3D Info: TLSv1.2 (OUT), TLS
+handshake, Client key exchange (16):
+11:11:10.234311 http.c:664              =3D=3D Info: TLSv1.2 (OUT), TLS
+change cipher, Change cipher spec (1):
+11:11:10.234429 http.c:664              =3D=3D Info: TLSv1.2 (OUT), TLS
+handshake, Finished (20):
+11:11:10.240556 http.c:664              =3D=3D Info: TLSv1.2 (IN), TLS
+handshake, Finished (20):
+11:11:10.240640 http.c:664              =3D=3D Info: SSL connection using
+TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+11:11:10.240655 http.c:664              =3D=3D Info: ALPN, server accepted =
+to use h2
+11:11:10.240705 http.c:664              =3D=3D Info: Server certificate:
+11:11:10.240724 http.c:664              =3D=3D Info:  subject: CN=3D*.xxx.x=
+xx
+11:11:10.240743 http.c:664              =3D=3D Info:  start date: Apr  8
+00:00:00 2022 GMT
+11:11:10.240751 http.c:664              =3D=3D Info:  expire date: Apr  9
+23:59:59 2023 GMT
+11:11:10.240769 http.c:664              =3D=3D Info:  subjectAltName: host
+"xxx.xxx" matched cert's "*.xxx.xxx"
+11:11:10.240792 http.c:664              =3D=3D Info:  issuer: C=3DUS;
+O=3DDigiCert Inc; CN=3DRapidSSL TLS DV RSA Mixed SHA256 2020 CA-1
+11:11:10.240807 http.c:664              =3D=3D Info:  SSL certificate verif=
+y ok.
+11:11:10.240873 http.c:664              =3D=3D Info: Using HTTP2, server
+supports multiplexing
+11:11:10.240912 http.c:664              =3D=3D Info: Connection state
+changed (HTTP/2 confirmed)
+11:11:10.240926 http.c:664              =3D=3D Info: Copying HTTP/2 data
+in stream buffer to connection buffer after upgrade: len=3D0
+11:11:10.241310 http.c:664              =3D=3D Info: Using Stream ID: 1
+(easy handle 0x7ff7c6f93ab0)
+11:11:10.241507 http.c:611              =3D> Send header, 0000000219
+bytes (0x000000db)
+11:11:10.241539 http.c:623              =3D> Send header: GET
+/xxx/xxx/info/refs?service=3Dgit-upload-pack HTTP/2
+11:11:10.241593 http.c:623              =3D> Send header: Host: xxx.xxx
+11:11:10.241612 http.c:623              =3D> Send header: user-agent: git/2=
+.34.2
+11:11:10.241623 http.c:623              =3D> Send header: accept: */*
+11:11:10.241632 http.c:623              =3D> Send header:
+accept-encoding: deflate, gzip, br
+11:11:10.241642 http.c:623              =3D> Send header: pragma: no-cache
+11:11:10.241653 http.c:623              =3D> Send header: git-protocol: ver=
+sion=3D2
+11:11:10.241662 http.c:623              =3D> Send header:
+11:11:10.241944 http.c:664              =3D=3D Info: Connection state
+changed (MAX_CONCURRENT_STREAMS =3D=3D 128)!
+11:11:10.252717 http.c:611              <=3D Recv header, 0000000013
+bytes (0x0000000d)
+11:11:10.252792 http.c:623              <=3D Recv header: HTTP/2 401
+11:11:10.252811 http.c:611              <=3D Recv header, 0000000037
+bytes (0x00000025)
+11:11:10.252829 http.c:623              <=3D Recv header: date: Fri, 19
+Aug 2022 11:11:10 GMT
+11:11:10.252849 http.c:611              <=3D Recv header, 0000000047
+bytes (0x0000002f)
+11:11:10.252863 http.c:623              <=3D Recv header: content-type:
+application/json; charset=3DUTF-8
+11:11:10.252874 http.c:611              <=3D Recv header, 0000000020
+bytes (0x00000014)
+11:11:10.252887 http.c:623              <=3D Recv header: content-length: 6=
+9
+11:11:10.252938 http.c:611              <=3D Recv header, 0000000070
+bytes (0x00000046)
+11:11:10.252956 http.c:623              <=3D Recv header: traceparent:
+00-f423b7618abb5590f143da20b2febda1-e63b3c81e9e9dd7b-01
+11:11:10.252973 http.c:611              <=3D Recv header, 0000000042
+bytes (0x0000002a)
+11:11:10.252984 http.c:623              <=3D Recv header:
+www-authenticate: Basic realm=3DRestricted
+11:11:10.253028 http.c:611              <=3D Recv header, 0000000002
+bytes (0x00000002)
+11:11:10.253036 http.c:623              <=3D Recv header:
+11:11:10.253050 http.c:664              =3D=3D Info: Ignoring the response-=
+body
+11:11:10.253439 http.c:664              =3D=3D Info: Connection #1 to host
+xxx.xxx left intact
+11:11:10.253504 http.c:664              =3D=3D Info: Issue another request
+to this URL: 'https://xxx.xxx/xxx/xxx/info/refs?service=3Dgit-upload-pack'
+11:11:10.253611 http.c:664              =3D=3D Info: Found bundle for host
+xxx.xxx: 0x7ff7c6fbb590 [can multiplex]
+11:11:10.253679 http.c:664              =3D=3D Info: Re-using existing
+connection! (#1) with host xxx.xxx
+11:11:10.253783 http.c:664              =3D=3D Info: Connected to xxx.xxx
+(xxx.xxx.xxx) port 443 (#1)
+11:11:10.253856 http.c:664              =3D=3D Info: Server auth using
+Basic with user 'git'
+11:11:10.253893 http.c:664              =3D=3D Info: Using Stream ID: 3
+(easy handle 0x7ff7c6f93ab0)
+11:11:10.254109 http.c:611              =3D> Send header, 0000000290
+bytes (0x00000122)
+11:11:10.254171 http.c:623              =3D> Send header: GET
+/xxx/xxx/info/refs?service=3Dgit-upload-pack HTTP/2
+11:11:10.254184 http.c:623              =3D> Send header: Host: xxx.xxx
+11:11:10.254276 http.c:623              =3D> Send header: authorization: Ba=
+sic
+11:11:10.254302 http.c:623              =3D> Send header: user-agent: git/2=
+.34.2
+11:11:10.254313 http.c:623              =3D> Send header: accept: */*
+11:11:10.254325 http.c:623              =3D> Send header:
+accept-encoding: deflate, gzip, br
+11:11:10.254343 http.c:623              =3D> Send header: pragma: no-cache
+11:11:10.254356 http.c:623              =3D> Send header: git-protocol: ver=
+sion=3D2
+11:11:10.254366 http.c:623              =3D> Send header:
+11:11:10.326732 http.c:611              <=3D Recv header, 0000000013
+bytes (0x0000000d)
+11:11:10.326883 http.c:623              <=3D Recv header: HTTP/2 200
+11:11:10.326918 http.c:611              <=3D Recv header, 0000000037
+bytes (0x00000025)
+11:11:10.326943 http.c:623              <=3D Recv header: date: Fri, 19
+Aug 2022 11:11:10 GMT
+11:11:10.326954 http.c:611              <=3D Recv header, 0000000059
+bytes (0x0000003b)
+11:11:10.326973 http.c:623              <=3D Recv header: content-type:
+application/x-git-upload-pack-advertisement
+11:11:10.327000 http.c:611              <=3D Recv header, 0000000053
+bytes (0x00000035)
+11:11:10.327023 http.c:623              <=3D Recv header: cache-control:
+no-cache, max-age=3D0, must-revalidate
+11:11:10.327088 http.c:611              <=3D Recv header, 0000000040
+bytes (0x00000028)
+11:11:10.327114 http.c:623              <=3D Recv header: expires: Fri,
+01 Jan 1980 00:00:00 GMT
+11:11:10.327138 http.c:611              <=3D Recv header, 0000000018
+bytes (0x00000012)
+11:11:10.327149 http.c:623              <=3D Recv header: pragma: no-cache
+11:11:10.327164 http.c:611              <=3D Recv header, 0000000002
+bytes (0x00000002)
+11:11:10.327176 http.c:623              <=3D Recv header:
+11:11:10.327501 http.c:664              =3D=3D Info: Connection #1 to host
+xxx.xxx left intact
+warning: redirecting to https://xxx.xxx/xxx/xxx/
+11:11:10.328628 http.c:664              =3D=3D Info: Found bundle for host
+xxx.xxx: 0x7ff7c6fbb590 [can multiplex]
+11:11:10.328730 http.c:664              =3D=3D Info: Re-using existing
+connection! (#1) with host xxx.xxx
+11:11:10.328845 http.c:664              =3D=3D Info: Connected to xxx.xxx
+(xxx.xxx.xxx) port 443 (#1)
+11:11:10.328899 http.c:664              =3D=3D Info: Server auth using
+Basic with user 'git'
+11:11:10.328956 http.c:664              =3D=3D Info: Using Stream ID: 5
+(easy handle 0x7ff7c6f93ab0)
+11:11:10.329168 http.c:611              =3D> Send header, 0000000362
+bytes (0x0000016a)
+11:11:10.329286 http.c:623              =3D> Send header: POST
+/xxx/xxx/git-upload-pack HTTP/2
+11:11:10.329305 http.c:623              =3D> Send header: Host: xxx.xxx
+11:11:10.329313 http.c:623              =3D> Send header: authorization: Ba=
+sic
+11:11:10.329326 http.c:623              =3D> Send header: user-agent: git/2=
+.34.2
+11:11:10.329340 http.c:623              =3D> Send header:
+accept-encoding: deflate, gzip, br
+11:11:10.329365 http.c:623              =3D> Send header: content-type:
+application/x-git-upload-pack-request
+11:11:10.329444 http.c:623              =3D> Send header: accept:
+application/x-git-upload-pack-result
+11:11:10.329485 http.c:623              =3D> Send header: git-protocol: ver=
+sion=3D2
+11:11:10.329583 http.c:623              =3D> Send header: content-length: 1=
+64
+11:11:10.329594 http.c:623              =3D> Send header:
+11:11:10.329819 http.c:664              =3D=3D Info: We are completely
+uploaded and fine
+11:11:10.447431 http.c:611              <=3D Recv header, 0000000013
+bytes (0x0000000d)
+11:11:10.447496 http.c:623              <=3D Recv header: HTTP/2 200
+11:11:10.447516 http.c:611              <=3D Recv header, 0000000037
+bytes (0x00000025)
+11:11:10.447524 http.c:623              <=3D Recv header: date: Fri, 19
+Aug 2022 11:11:10 GMT
+11:11:10.447574 http.c:611              <=3D Recv header, 0000000052
+bytes (0x00000034)
+11:11:10.447591 http.c:623              <=3D Recv header: content-type:
+application/x-git-upload-pack-result
+11:11:10.447639 http.c:611              <=3D Recv header, 0000000053
+bytes (0x00000035)
+11:11:10.447649 http.c:623              <=3D Recv header: cache-control:
+no-cache, max-age=3D0, must-revalidate
+11:11:10.447660 http.c:611              <=3D Recv header, 0000000040
+bytes (0x00000028)
+11:11:10.447670 http.c:623              <=3D Recv header: expires: Fri,
+01 Jan 1980 00:00:00 GMT
+11:11:10.447679 http.c:611              <=3D Recv header, 0000000018
+bytes (0x00000012)
+11:11:10.447687 http.c:623              <=3D Recv header: pragma: no-cache
+11:11:10.447701 http.c:611              <=3D Recv header, 0000000070
+bytes (0x00000046)
+11:11:10.447717 http.c:623              <=3D Recv header: traceparent:
+00-3134d9583a00d714098ad8db7a2f7777-10b2626d4765359f-01
+11:11:10.447727 http.c:611              <=3D Recv header, 0000000002
+bytes (0x00000002)
+11:11:10.447736 http.c:623              <=3D Recv header:
+11:11:10.662595 http.c:664              =3D=3D Info: Connection #1 to host
+xxx.xxx left intact
+11:11:10.684884 http.c:664              =3D=3D Info: Found bundle for host
+xxx.xxx: 0x7ff7c6fbb590 [can multiplex]
+11:11:10.684972 http.c:664              =3D=3D Info: Re-using existing
+connection! (#1) with host xxx.xxx
+11:11:10.685045 http.c:664              =3D=3D Info: Connected to xxx.xxx
+(xxx.xxx.xxx) port 443 (#1)
+11:11:10.685122 http.c:664              =3D=3D Info: Server auth using
+Basic with user 'git'
+11:11:10.685194 http.c:664              =3D=3D Info: Using Stream ID: 7
+(easy handle 0x7ff7c6f93ab0)
+11:11:10.685431 http.c:611              =3D> Send header, 0000000388
+bytes (0x00000184)
+11:11:10.685462 http.c:623              =3D> Send header: POST
+/xxx/xxx/git-upload-pack HTTP/2
+11:11:10.685528 http.c:623              =3D> Send header: Host: xxx.xxx
+11:11:10.685579 http.c:623              =3D> Send header: authorization: Ba=
+sic
+11:11:10.685597 http.c:623              =3D> Send header: user-agent: git/2=
+.34.2
+11:11:10.685636 http.c:623              =3D> Send header:
+accept-encoding: deflate, gzip, br
+11:11:10.685671 http.c:623              =3D> Send header: content-type:
+application/x-git-upload-pack-request
+11:11:10.685685 http.c:623              =3D> Send header: accept:
+application/x-git-upload-pack-result
+11:11:10.685695 http.c:623              =3D> Send header: git-protocol: ver=
+sion=3D2
+11:11:10.685704 http.c:623              =3D> Send header: content-encoding:=
+ gzip
+11:11:10.685741 http.c:623              =3D> Send header: content-length: 1=
+9678
+11:11:10.685945 http.c:623              =3D> Send header:
+11:11:10.686431 http.c:664              =3D=3D Info: We are completely
+uploaded and fine
+11:11:11.165227 http.c:611              <=3D Recv header, 0000000013
+bytes (0x0000000d)
+11:11:11.165334 http.c:623              <=3D Recv header: HTTP/2 200
+11:11:11.165358 http.c:611              <=3D Recv header, 0000000037
+bytes (0x00000025)
+11:11:11.165370 http.c:623              <=3D Recv header: date: Fri, 19
+Aug 2022 11:11:11 GMT
+11:11:11.165391 http.c:611              <=3D Recv header, 0000000052
+bytes (0x00000034)
+11:11:11.165403 http.c:623              <=3D Recv header: content-type:
+application/x-git-upload-pack-result
+11:11:11.165414 http.c:611              <=3D Recv header, 0000000053
+bytes (0x00000035)
+11:11:11.165430 http.c:623              <=3D Recv header: cache-control:
+no-cache, max-age=3D0, must-revalidate
+11:11:11.165490 http.c:611              <=3D Recv header, 0000000040
+bytes (0x00000028)
+11:11:11.165501 http.c:623              <=3D Recv header: expires: Fri,
+01 Jan 1980 00:00:00 GMT
+11:11:11.165518 http.c:611              <=3D Recv header, 0000000018
+bytes (0x00000012)
+11:11:11.165537 http.c:623              <=3D Recv header: pragma: no-cache
+11:11:11.165553 http.c:611              <=3D Recv header, 0000000070
+bytes (0x00000046)
+11:11:11.165582 http.c:623              <=3D Recv header: traceparent:
+00-8526084c5ce698fc4aaa4cd887c14e04-1ff731d1925ebf82-01
+11:11:11.165591 http.c:611              <=3D Recv header, 0000000002
+bytes (0x00000002)
+11:11:11.165628 http.c:623              <=3D Recv header:
+remote: Enumerating objects: 165, done.
+remote: Counting objects: 100% (165/165), done.
+remote: Compressing objects: 100% (162/162), done.
+remote: Total 45555 (delta 77), reused 0 (delta 0), pack-reused 45390
+11:11:17.236374 http.c:664              =3D=3D Info: Connection #1 to host
+xxx.xxx left intact
+Receiving objects: 100% (45555/45555), 29.04 MiB | 4.85 MiB/s, done.
+Resolving deltas: 100% (35362/35362), done.
+
+Look forward to your favourable reply=EF=BC=81
