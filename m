@@ -2,107 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51662C25B08
-	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 08:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27109C25B08
+	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 08:49:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344710AbiHTIoa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Aug 2022 04:44:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55204 "EHLO
+        id S245060AbiHTItA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Aug 2022 04:49:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344259AbiHTIo3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Aug 2022 04:44:29 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA3B352DC5
-        for <git@vger.kernel.org>; Sat, 20 Aug 2022 01:44:26 -0700 (PDT)
-Received: (qmail 21851 invoked by uid 109); 20 Aug 2022 08:44:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 20 Aug 2022 08:44:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9865 invoked by uid 111); 20 Aug 2022 08:44:27 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 20 Aug 2022 04:44:27 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 20 Aug 2022 04:44:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?546L5bCP5bu6?= <littlejian8@gmail.com>
-Cc:     Daniel Stenberg <daniel@haxx.se>, git@vger.kernel.org
-Subject: Re: git clone with basic auth in url directly returns authentication
- failure after 401 received under some git versions
-Message-ID: <YwCe6ONEaeIj4SO/@coredump.intra.peff.net>
-References: <CADmGLV32OAg6HU+n1UsP2Fq-MjcyUsFFF=q0_jZCB0JEop5VUg@mail.gmail.com>
+        with ESMTP id S244085AbiHTIs7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Aug 2022 04:48:59 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A57455A81A
+        for <git@vger.kernel.org>; Sat, 20 Aug 2022 01:48:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1660985328;
+        bh=yq88YKBqj33CmdwR+iUiQlo2L+paVqD7Uw2djUio8kQ=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=IqOGtZnDbLdv+XVBV16B0dxicqRsaBIYEy48viLYAmnPEo1/O9kQGj7ZSEE6pfFJO
+         jjbwTWuf8mnv7hVVeX0Rt3qQQdC5AUhsfC9+B35HVGLHdMIIC2EKaToIXuGo1pbUTU
+         O//41NUGAqtQecJchjvoBdtBOYUqWKHXp/CQzrCw=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.27.48]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MrOdf-1pDW8l0CZD-00o4Qe; Sat, 20
+ Aug 2022 10:48:48 +0200
+Message-ID: <9829e1cf-21aa-0c10-0b64-c8a2ffdbc943@web.de>
+Date:   Sat, 20 Aug 2022 10:48:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CADmGLV32OAg6HU+n1UsP2Fq-MjcyUsFFF=q0_jZCB0JEop5VUg@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.1.2
+Subject: Re: [PATCH 4/6] verify_one_sparse(): drop unused repository parameter
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>
+References: <Yv9Oay+tNqhLDqVl@coredump.intra.peff.net>
+ <Yv9O+HDMLKglLcqY@coredump.intra.peff.net>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <Yv9O+HDMLKglLcqY@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:okOzyzxjr7airJrSq1EWNtYZXnO4AR0q/ZIgztnBGfn2WVFER06
+ K9Oyc3GNzxl7ZK3bVrPZfhdrSoWLQfgbvKMOg6ji/S9VAVnIs9LFXg1CT9jW7b9fiWyCByA
+ sp+RmbpiMBsHElWHZUj7JDgGS8Ae4XKhRPGZSuTRGFIdNLQpx9F5twKfvxYIYk8uLWX8V7a
+ EEyFmTz3g+kBj3ZBPCt+Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:spa+PqOF9uo=:QD+REx3fgYKUvqtzDt15nJ
+ reoLRolu+MvYHydJMr5tb4taEwgouYyASDnB01S61XyJFZoOIzrNfi4tK4xyrJtNX7WgiA4Iz
+ 1T2zFPn6CLppD4qMkVJWXR/o+NwBGmaX2D31lARHn5s3vLde0X3QfkTW/xuvhC6zudTohJ10/
+ l/Sq8fL4Y5ssse2VoF6kLZG9BHqNZnHuWjEQQTsDXc6Omz0U9c5pZ6b9c8tHCukXznO+5Nuyx
+ a0qboo10okhD4WF0AFabUHs5nTzeSAeKXfGDAR1JtU07190OxJGvfLJBSbTNSocsXDsmzJ6/J
+ BZome5FcuO1MEbnrBs22fHUro9QqD2vlOyLCi6/Jn9tyEHvU+o8gZ6/gTdE2OXCLNEGT0hOOA
+ p44QRgB/4L52Lm24QGtC7/eBAF+GYBsBexLoq2wuv6cesdfYctghUgudCC+uTPrYVW9CSulzE
+ tiiWUcZvYq/XFtlRIsStnlVNeSPuihSxwPan7K3MiXc5aEdQWhebJRvNfD62kTwcUWzQIzyDM
+ 8rr6N6AWSQZkHwrEhNcC9JyfsfWMLiMEEe6UawyZhMwMI1WbVmMr0rWwc4Cjk5tYV0G7fG9Rp
+ Pl+SLJQogsM4AKsZqLFiXE1iRx+wwvt0PsyKLKRoSbny6jTzOZTrc32S2NIz7ov9G/vVX24Jv
+ 0NvFzCyRf8/OQGNolk/jIy49zOAk7/N/yLBTihrHOyFf+ERmQevjotHI8cvftzNX44QfXUzvU
+ GRncn+UANLJFAknZloncoLnelWmbrXceHH9bZ8BYsPbk23dyE7dYRssAzVfZpEz/AhUQjg/pu
+ HDn0XRUP8RnMPidpKegeWxjD+q97M4frEmeM4SRwI5R3/WORk9Y1TmqQBBt0VqrIkhLXxXR5A
+ XfXz3kvYOd0neTCmUBkKSHWFMntlhlS/RwHoxcDXbBwq99uuNCXG0e1EY6nLFhYDizJRtmZCF
+ 66W4QiVoLDK9Pjk4BkbUL6d8xsr9tcFXFNDwkqg5FDbqee0L5yQBF7G36wJ3dv4Ump2jMzLNy
+ sb+WnX/4uQDn2iN6Vo4EXz3Ok3ukqCn4IG96s8MPr1x7RfRpQ/42m2WBTyT//KNiclSglgH7g
+ knci53OIsT1uxdDano2keSsuicsk3syYZc9
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 20, 2022 at 10:51:16AM +0800, 王小建 wrote:
+Am 19.08.22 um 10:51 schrieb Jeff King:
+> This function has never used its repository parameter since it was
+> introduced in 9ad2d5ea71 (sparse-index: loose integration with
+> cache_tree_verify(), 2021-03-30). As that commit notes, it may
+> eventually be extended further, and that might require looking at a
+> repository struct. But it would be easy to add it back later if
+> necessary. In the mean time, dropping it makes the code shorter and
+> appease -Wunused-parameter.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  cache-tree.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+>
+> diff --git a/cache-tree.c b/cache-tree.c
+> index 56db0b5026..c97111cccf 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -857,9 +857,7 @@ int cache_tree_matches_traversal(struct cache_tree *=
+root,
+>  	return 0;
+>  }
+>
+> -static void verify_one_sparse(struct repository *r,
+> -			      struct index_state *istate,
+> -			      struct cache_tree *it,
+> +static void verify_one_sparse(struct index_state *istate,
 
-> What's different between what you expected and what actually happened?
-> 
-> When I use git v2.36.2  (docker image is alpine/git:v2.36.2) to clone
-> with basic auth in url, when receiving the 401, it directly returns
-> authentication failure, even recv head has www-authenticate: Basic
-> realm=Restricted,
-> and no request is send again. I think it should send request with
-> authorization: Basic header after receive 401.
-> And use git v2.34.2 (docker image is alpine/git:v2.34.1) to clone it works well.
+This also removes the cache_tree parameter, which has never been used as
+well, but is not mentioned in the commit message.  A good change, to be
+sure.
 
-I think the problem here is not the difference in Git versions, but
-rather in libcurl versions. I can reproduce your problem using the
-docker containers. But if I build locally, using the same version of
-curl, then I see the issue with both git versions.
+>  			      struct strbuf *path,
+>  			      int pos)
+>  {
+> @@ -910,7 +908,7 @@ static int verify_one(struct repository *r,
+>  			return 1;
+>
+>  		if (pos >=3D 0) {
+> -			verify_one_sparse(r, istate, it, path, pos);
+> +			verify_one_sparse(istate, path, pos);
+>  			return 0;
+>  		}
+>
 
-The problem is how curl handles cross-protocol redirects. From Git's
-perspective, we hand the credentials to libcurl, and ask it to fetch the
-requested URL, including following redirects. If it comes back with a
-401, then we assume our credentials were bad.
-
-But what changed in curl is that it will now discard credentials during
-a redirect. And in your example, there's a redirect from http to https
-(uninteresting bits snipped from the output):
-
-> Info: Connected to xxx.xxx (xxx.xxx.xxx.xxx) port 80 (#0)
-> Send header: GET /xxx/xxx/info/refs?service=git-upload-pack HTTP/1.1
-> Recv header: HTTP/1.1 302 Found
-> Recv header: Location: https://xxx.xxx/xxx/xxx/info/refs?service=git-upload-pack
-
-In the older version, after the redirect we see a 401 and curl (not git)
-resends with the stored credentials.
-
-But in the newer version, we see this right after the redirect:
-
-> Info: Connection #0 to host xxx.xxx left intact
-> Info: Clear auth, redirects to port from 80 to 443
-
-So it is dropping the credential that Git gave it.
-
-The curl change seems to be from 620ea2141 (transfer: redirects to other
-protocols or ports clear auth, 2022-04-25). The goal is to avoid leaking
-credentials between ports: https://curl.se/docs/CVE-2022-27774.html
-
-So that makes sense, though I wonder if curl ought to make an exception
-for moving from 80 to 443 and http to https?
-
-I don't think there's otherwise much Git can do here. We thought we gave
-curl a username and password, but they weren't ultimately used. But Git
-won't reissue the request, because it assumes the auth was rejected.
-
-I guess we can ask curl if it saw a redirect, and assume if so that the
-auth was cleared. That feels a bit hacky. And it's subverting curl's
-attempt not to leak the credentials. In general, I'd like to defer as
-much as possible to curl's ideas of how to handle things, because
-they're much better at implementing http best practices than we are. :)
-
-Another option is to allow the user to set CURLOPT_UNRESTRICTED_AUTH,
-but that seems like a bad idea for the same reason.
-
-Hopefully that explains what's going on. The short answer for your case
-is: use an https url directly, and it should work. But there's an open
-question of whether curl ought to handle this limited redirect case more
-gracefully.
-
--Peff
