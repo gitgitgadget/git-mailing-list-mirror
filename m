@@ -2,106 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04F2BC25B08
-	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 18:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11FA6C3F6B0
+	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 21:20:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231320AbiHTSk5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Aug 2022 14:40:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53818 "EHLO
+        id S231968AbiHTVUe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Aug 2022 17:20:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbiHTSk4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Aug 2022 14:40:56 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B33D44556
-        for <git@vger.kernel.org>; Sat, 20 Aug 2022 11:40:55 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id z20so9147080edb.9
-        for <git@vger.kernel.org>; Sat, 20 Aug 2022 11:40:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=wZ6LYt7CuvrjzMEqgVHHkvCu/zfQC6rhOZzbZIG7X4U=;
-        b=Z8L1fIYkUPrMJNModRiqUSAIXB1/MJs3MltE7pwy++8vAaA/HlAoiLsRmx4qmVB+xw
-         pTbElbRuWDc5+vtGlC1TOH9QbO+A3KK9IIjk0cdmBW1gT4S4YsT6wwvba/2QNQ7YwSRB
-         e+hXYjrGWOJIg5dEicSXQtHCA2orXRuDY4NT6sckHY7I+ei2vwWDWThSTXwgCx4SvQ3R
-         /aaPCpGRpMMQp79wG6vVG/yoZLeMe3CX+s5ASB70JuyJmeS8+rn6Neeuix8rFQHnoVRE
-         VrG6zz33HeZM4JaBPEtg7VmdAfGJnfhph0mEWGAqghmfFDqHZ2W7UDcR+yOdvi9pdDiT
-         lRuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=wZ6LYt7CuvrjzMEqgVHHkvCu/zfQC6rhOZzbZIG7X4U=;
-        b=35v+vr3qdr79/pShCQ6aJTb1VVA28ETNdDnCqP8gMD/W/3xB5QR6UAnIS8XwBpvZMK
-         QOP5OY8PWhabPbXH2sQvRRcuBNxupZkZcybbux6BzA8uzh2u27Rh6u+hcliXO0aD7ojZ
-         +5JGLASYRDNH91JKrne8Ym6zkQlDalhbrL+PhGCbQvyvgtSm1HMJKZy2+0ChbWFsj8nX
-         Txosgga5JnuJWWvDJz2vt/TpofPnoeHTkxyJdrH0bVHRZYC7SOUhzDNLT2gmJ0v6k8bm
-         5sbb8E69aXDSOfBwaZ1TKDoaEvJmRFIrwCtgGbyKe1xiZaUXZG/I2dtl0c8ser6FKS51
-         LL+w==
-X-Gm-Message-State: ACgBeo2fTa9gYAsrW6vN+nmq0R+C017eDPxFjxKtZodgbPWi48mTZ3dV
-        hjL9FrZyu9ILfpnIqkDxTkqVQzz/FR/OXxlD3sc=
-X-Google-Smtp-Source: AA6agR5PQE2loiQek1fMzK78pSb+nmEao37vEmc8iM1CgMhV0nPEZ1/+NJxSVFjkvSR0K8VS1rwJD2r/b9IXj3hIQ8A=
-X-Received: by 2002:a05:6402:14e:b0:443:f58:17e9 with SMTP id
- s14-20020a056402014e00b004430f5817e9mr10473881edu.106.1661020853500; Sat, 20
- Aug 2022 11:40:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1660944574.git.me@ttaylorr.com> <4ddddc959b042faf7ae98a8e8eaa05e77f9ea23e.1660944574.git.me@ttaylorr.com>
-In-Reply-To: <4ddddc959b042faf7ae98a8e8eaa05e77f9ea23e.1660944574.git.me@ttaylorr.com>
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Date:   Sun, 21 Aug 2022 00:10:42 +0530
-Message-ID: <CAPOJW5zmbQ966KXjaEvxk-oHu01BsxwszUTu3et4SYGFCAegCA@mail.gmail.com>
-Subject: Re: [PATCH 6/6] midx.c: include preferred pack correctly with
- existing MIDX
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        with ESMTP id S231152AbiHTVUd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Aug 2022 17:20:33 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A65C40BC9
+        for <git@vger.kernel.org>; Sat, 20 Aug 2022 14:20:32 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F325E14551F;
+        Sat, 20 Aug 2022 17:20:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Sr79VkLnMPqvFyACPtnJ70JI3TUFAILu245nMb
+        XdzLo=; b=kf7cunC85XbOid9aJj+RDr3keymzARt9XRhVGshw5w9HD8abjeE5Y3
+        3s/zQYnCXK2OADtwJtaq/c9r79afC8VHU7T0AuwKoYC4MFpgUoUJ2TvrpjuNZE1m
+        8tDpH9SiuOU+vXq12Fly2m/Ic4Q3QqG11JcE3T79ybMzJv4XABtnM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EA56B14551E;
+        Sat, 20 Aug 2022 17:20:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 59EC814551D;
+        Sat, 20 Aug 2022 17:20:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <derrickstolee@github.com>,
-        jonathantanmy@google.com,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 1/4] sequencer: do not translate reflog messages
+References: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr>
+        <cover.1660828108.git.git@grubix.eu>
+        <ea6c65c254bb08b20ea6c4d81200b847755b555c.1660828108.git.git@grubix.eu>
+        <220818.86zgg18umf.gmgdl@evledraar.gmail.com>
+        <6oqr69o7-qsps-sr86-o4r9-16r7no9n5424@tzk.qr>
+        <220819.86o7wg6zci.gmgdl@evledraar.gmail.com>
+        <xmqq8rnkklon.fsf@gitster.g>
+        <220819.864jy853qc.gmgdl@evledraar.gmail.com>
+        <YwChr17RntWnoNok@coredump.intra.peff.net>
+Date:   Sat, 20 Aug 2022 14:20:27 -0700
+In-Reply-To: <YwChr17RntWnoNok@coredump.intra.peff.net> (Jeff King's message
+        of "Sat, 20 Aug 2022 04:56:15 -0400")
+Message-ID: <xmqq5yimipd0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: E9F4B16A-20CD-11ED-AE3F-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 20, 2022 at 3:00 AM Taylor Blau <me@ttaylorr.com> wrote:
+Jeff King <peff@peff.net> writes:
+
+> I'm not sure if you mean "where are we parsing this sequencer message
+> specifically", or if you're just asking where we parse reflog messages
+> at all. If the latter, try interpret_nth_prior_checkout() and its helper
+> grab_nth_branch_switch().
 >
-> +               if (-1 < preferred_pack && preferred_pack < start_pack)
-> +                       midx_fanout_add_pack_fanout(&fanout, info,
-> +                                                   preferred_pack, 1,
-> +                                                   cur_fanout);
-> +
+> As far as I know, that's the only one we parse, so the answer for
+> _these_ messages is: nowhere.
 
-All the other changes make sense to me but I have a question about
-this particular change. Instead of adding all the preferred objects
-again (but in this case these are being added from preferred pack) in
-`fanout->entries`, will it be better if we call
-`midx_fanout_add_pack_fanout()` function from
-`midx_fanout_add_midx_fanout()` when above conditions are met?
-Something like this -
+Unless translation in some language of these messages looks similar
+to what 'nth-prior' wants to find.  So the answer really is "asking
+if somebody parses _these_ messages is pointless" ;-)
 
-    static void midx_fanout_add_midx_fanout(struct midx_fanout *fanout,
-                                        struct multi_pack_index *m,
-                                        struct pack_info *info,
-                                        uint32_t cur_pack,
-                                        int preferred,
-                                        uint32_t cur_fanout)
-    {
-     ...
-          if (cur_fanout)
-                start = ntohl(m->chunk_oid_fanout[cur_fanout - 1]);
-          end = ntohl(m->chunk_oid_fanout[cur_fanout]);
-          if (preferred) {
-                midx_fanout_add_pack_fanout(&fanout, info, cur_pack,
-
-preferred, cur_fanout);
-                return;
-          }
-
-          for (.....) {
-          ........
-    }
-
-It may reduce some extra code work but also could decrease readability
-of the function(may be). What's your thought here?
-
-Thanks :)
+I outlined one possible approach to allow translat{able,ed} reflog
+messages without breaking 'nth-prior' and would allow us add more
+code to mechanically parse them if we wanted to elsewhere in the
+thread, by the way.  I do not plan to work on it soon, but without
+doing something like that first, letting translated messages
+randomly into reflog is asking for trouble, I am afraid.
