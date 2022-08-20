@@ -2,77 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9C5CC25B08
-	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 21:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AF61C25B08
+	for <git@archiver.kernel.org>; Sat, 20 Aug 2022 21:27:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232259AbiHTVWA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Aug 2022 17:22:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43414 "EHLO
+        id S232946AbiHTV1s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Aug 2022 17:27:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbiHTVV7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Aug 2022 17:21:59 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6083F40E2F
-        for <git@vger.kernel.org>; Sat, 20 Aug 2022 14:21:56 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B6DF21304AF;
-        Sat, 20 Aug 2022 17:21:54 -0400 (EDT)
+        with ESMTP id S229472AbiHTV1r (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Aug 2022 17:27:47 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 425A12A406
+        for <git@vger.kernel.org>; Sat, 20 Aug 2022 14:27:47 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7B941145644;
+        Sat, 20 Aug 2022 17:27:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JFPQIJXpzlfMMPOKMNF3XMNNn7KDvH3Xodm3SF
-        MZtaU=; b=lMFoSkXQ6/uqbWioMSRLwK3HFJp1wWi5APVyP3kTOoFC1EmcFZyLLF
-        P52uWJriIpa1KKXcxV3zf9Hci8ddr/yInBRvD0VsnTVMM5j2sBwahBw0kBWjrhQI
-        7sfZc6xsT/M/g/1ivxedVSYM1qL8zMaTT+BAiK7zF24p4p+3I8QG0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AE5F71304AE;
-        Sat, 20 Aug 2022 17:21:54 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=1GdBStom6KyS
+        nPTTWOZjvBG0d6Ns1mdM0dCZT3mEJLs=; b=n9bQUERfxbGIObxtsY7LmWR3UMm4
+        DWgLjiAWZpoJMt1Vc6Ds2USQXlly2LSS6mmlxeam5p0D3fXr7E7LRhJ1F7PMQLgN
+        V77Eco62ac+Snt6gsxIvRyRJLeOSiNM4TdsEZkj3ViMTmvi/nWiLVtPzx8BLLSho
+        rygo302a0pO3acY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 72F53145641;
+        Sat, 20 Aug 2022 17:27:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E05B1304AD;
-        Sat, 20 Aug 2022 17:21:54 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C9B46145635;
+        Sat, 20 Aug 2022 17:27:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/11] annotating unused function parameters
-References: <Yv9gxqH6nK2KYnNj@coredump.intra.peff.net>
-        <220819.861qtc8gug.gmgdl@evledraar.gmail.com>
-        <c22a8317-7d43-d84b-f63f-df2da31b4658@github.com>
-        <220819.868rnk54ju.gmgdl@evledraar.gmail.com>
-        <YwCtkwjWdJVHHZV0@coredump.intra.peff.net>
-Date:   Sat, 20 Aug 2022 14:21:53 -0700
-In-Reply-To: <YwCtkwjWdJVHHZV0@coredump.intra.peff.net> (Jeff King's message
-        of "Sat, 20 Aug 2022 05:46:59 -0400")
-Message-ID: <xmqqzgfyhaq6.fsf@gitster.g>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 04/20] t0040-parse-options: test parse_options() with
+ various 'parse_opt_flags'
+References: <20220725123857.2773963-1-szeder.dev@gmail.com>
+        <20220819160411.1791200-1-szeder.dev@gmail.com>
+        <20220819160411.1791200-5-szeder.dev@gmail.com>
+        <xmqqczcwksgj.fsf@gitster.g> <20220820103128.GD3373722@szeder.dev>
+Date:   Sat, 20 Aug 2022 14:27:44 -0700
+In-Reply-To: <20220820103128.GD3373722@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message
+        of "Sat, 20 Aug 2022 12:31:28 +0200")
+Message-ID: <xmqqr11ahagf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1D1164A8-20CE-11ED-BDF3-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: EEB3D568-20CE-11ED-9BE4-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-> Likewise, one thing I like about the renaming is that it fails
-> compilation regardless of -Werror.
-
-Yes, I like that aspect of the macro very much.
-
-> And finally, I actually prefer the parentheses of:
+> On Fri, Aug 19, 2022 at 11:18:20AM -0700, Junio C Hamano wrote:
+>> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+>>=20
+>> > +static void print_args(int argc, const char **argv)
+>> > +{
+>> > +	for (int i =3D 0; i < argc; i++)
+>> > +		printf("arg %02d: %s\n", i, argv[i]);
+>> > +}
+>>=20
+>> It is not November 2022 yet (cf. Documentation/CodingGuidelines).
 >
->   static int register_ref(const char *refname, const struct object_id *oid,
-> 			  int UNUSED(flags), void *UNUSED(cb_data))
+> Oh, I've misunderstood =C3=86var's remarks about this in the previous
+> round, and thought it's fair game.
 
-That, too.
+If we make it a "fair game", when we find a platform that has
+problems with the syntax, we will have to find them and fix up many
+places.  At least the number of the ones we let in by mistake are
+small and known, it may be still be manageable.
 
-> So I dunno. These are all matters of opinion, and if it was just my
-> patches, I'd say my taste wins. But all of us are going to have to write
-> these annotations at some time or another when we add callbacks, etc. So
-> we should at the very least pick a syntax the majority prefers. :)
+It is how to be conservative.
 
-Well, we can teach others a good taste ;-)
+> It doesn't matter for these tests, but 'test-tool parse-options' uses
+> the same format to print args:
+
+As long as 99 is enough for us, I do not very much care.  I just
+noticed an attempt to align that does not do a thorough job at it,
+and found it strange, that's all.
