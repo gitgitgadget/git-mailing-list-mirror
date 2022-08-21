@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95F2EC00140
-	for <git@archiver.kernel.org>; Sun, 21 Aug 2022 13:58:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53B8EC32772
+	for <git@archiver.kernel.org>; Sun, 21 Aug 2022 13:58:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230449AbiHUN6t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Aug 2022 09:58:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46900 "EHLO
+        id S230389AbiHUN6u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Aug 2022 09:58:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230266AbiHUN6f (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Aug 2022 09:58:35 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EE4E11145
+        with ESMTP id S230387AbiHUN6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Aug 2022 09:58:37 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 805FF13D69
         for <git@vger.kernel.org>; Sun, 21 Aug 2022 06:58:34 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id k17so4375249wmr.2
+Received: by mail-wm1-x32e.google.com with SMTP id m17-20020a7bce11000000b003a5bedec07bso6447399wmc.0
         for <git@vger.kernel.org>; Sun, 21 Aug 2022 06:58:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=hjdESJGog2T5WAlUFII3ek6mzY9CaXBVt2zJijzNBa0=;
-        b=eY1ztPZ0ex+MT74+G98zIouMQT5NztdW5hS2/n9nSdPO9V1a3/Gutw5GIWECSMCgaM
-         bmq93h3YE9GaCFMo+HggprVpSH2UQsCWBx+hF4327nkriyhc1GF8qUJuvAF/SSu/bFEU
-         jWPHIzVS0k+5xR9SWVuwXpsKHoj47IFmi9Wy4a5b+r4LFBuwoc9AdbqY/7RYy1bBui48
-         jd+mMKW6s2BjMcQ5PetA81UCit/iLS7W3iPmtAHX8HJMhgcfog4x+ku6Pq6yLQfSc8wu
-         8Xplui1TA4Q+IfeDHMq8BeNhDwWzENcoklODce/gTMz2pf3xF+knP3HX+i0bX1DaHNGP
-         NnEw==
+        bh=8Rz1uVDQWz4U0y4cf4XURYAetYXhFpBSzZfUy6MXW2E=;
+        b=BwOG2boKdfyQC+iDIslCmtk4KvoNlxVwayqRW7Ktk9/EjeIbsb0+8mZ3e8gRKHgVea
+         vwH6KaJgLh528dCxeTEmpTeEJLkXdfUyvOJOrF5ogtxycpjqAbRp/Ps8Ih54ZPQ9C6rO
+         bsrrramblCyHKh10Dn/5psTRe6y52vpX9d1G9fbnHYOms30UjYTBciG0EIozn4gVXiZi
+         wiA3cNcKBnDyMdT7pkza+IfPWhEWDJq+GK3bEsD6+UFJrhzHbTGKmQPxTIoHWWIKPRQT
+         6VbbtaYTPI/WreyXrIPOdTeUAeiJlj+VDsuQSRvzRhunzdasWQiBv/PoYLF0jnSx5Fm4
+         F4vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=hjdESJGog2T5WAlUFII3ek6mzY9CaXBVt2zJijzNBa0=;
-        b=mDJIrLVCSYQxcA5cxTU2w3+XRRUWousmgZOfOBlEQMbFnHWWZ2VC0QLMh1Mz00IecH
-         IlE0ZdPH6oX6ncWwTmLTzNgXxahrac8WBfAtHYGVzzGQpa45v4BcWk73GWmIMtTcvOtT
-         6JUWQuQaalhPA6fNPFvwjh3G1BmtkiqsFfCfAmKFGIzP0+U8+lFu214ZAfqA0WuQLSrf
-         g7wnn+Ietr8Hc9ooNczf6G9gy3XV48cRQhoyCM2A/LEKR3jVfQkJjmCu+WW5qskUEj8z
-         Y8ICTVewbuBEwXKDZNI/NSc4w8xwwtUnmkfXdaBj+Lkw1QpDMBUyhDQGRR1Ya3XTzZM6
-         RU8w==
-X-Gm-Message-State: ACgBeo3kOcggG8HHbmC3nBnlmFJlz3LCXo8cx61p0Wg7ldUR22RAKbsJ
-        J6rNtzOMvnCbiuvm1SslyLdg/RByy1JR8Or9
-X-Google-Smtp-Source: AA6agR5XY+Hk20YhAvPmTmTQD/1WQiB5kmKqA20cicX2xFOE2KwPkvru7PqcnLTTxw4UjRu2yWmZgQ==
-X-Received: by 2002:a05:600c:1988:b0:3a5:f47c:abce with SMTP id t8-20020a05600c198800b003a5f47cabcemr9827451wmq.121.1661090312473;
-        Sun, 21 Aug 2022 06:58:32 -0700 (PDT)
+        bh=8Rz1uVDQWz4U0y4cf4XURYAetYXhFpBSzZfUy6MXW2E=;
+        b=dofhTWNgIAhYlShYazMFY6doXE+khRW86BYdm9smYQprxxnasgtSSkAC+gQvY1GzkW
+         W7KiqUVR1Yh8mq23ZSrppwi7enJIrFmNxLJhyRgcLcUzVF2+lOhts/BojMa33AihTJqK
+         95lENMfE+Yu8RZK3/9YhpF+F4vdKRxiFUjT+nqQyktw15LcnWvMVm/eq+mzSD9OvEJVK
+         l1dRtqsDSRc3L6CAsxLw7z+AmlJe3Levpn4ah/Npqk3tuF5w31fCQm1fUYP5BgcS9DLX
+         1QAQOWegHDKWKDLSPwVeaEw8LhvD1bAWslT5YIu1tiD75lfSH9TdkjLPoUDqZChe1k74
+         +JpA==
+X-Gm-Message-State: ACgBeo2NzvgiISxm+iCrfrGx6PT3OT8mlcxWiAvROL0F8JZcGK7/JDHa
+        mg96Gg1J1prShr0kLJfdQTmSdpHCb696QSYi
+X-Google-Smtp-Source: AA6agR5oDAlhX4ybw4WGKKdxTm6VIbnN8NwSxoOJ1jzrZfq89RYj/+2n/KE/1/etkdOS1qSDOCNiaA==
+X-Received: by 2002:a05:600c:2315:b0:3a5:c2cc:1bee with SMTP id 21-20020a05600c231500b003a5c2cc1beemr9330758wmo.55.1661090313763;
+        Sun, 21 Aug 2022 06:58:33 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o12-20020a05600c4fcc00b003a5b788993csm12624872wmq.42.2022.08.21.06.58.31
+        by smtp.gmail.com with ESMTPSA id o12-20020a05600c4fcc00b003a5b788993csm12624872wmq.42.2022.08.21.06.58.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Aug 2022 06:58:31 -0700 (PDT)
+        Sun, 21 Aug 2022 06:58:32 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 07/32] submodule--helper: move "check-name" to a test-tool
-Date:   Sun, 21 Aug 2022 15:57:16 +0200
-Message-Id: <patch-v3-07.32-9c644460b1d-20220821T130231Z-avarab@gmail.com>
+Subject: [PATCH v3 08/32] submodule--helper: move "resolve-relative-url-test" to a test-tool
+Date:   Sun, 21 Aug 2022 15:57:17 +0200
+Message-Id: <patch-v3-08.32-03c8383b8e7-20220821T130231Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.2.1279.g64dec4e13cf
 In-Reply-To: <cover-v3-00.32-00000000000-20220821T130231Z-avarab@gmail.com>
 References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com> <cover-v3-00.32-00000000000-20220821T130231Z-avarab@gmail.com>
@@ -69,154 +69,150 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the "check-name" helper to a test-tool, since
-a6226fd772b (submodule--helper: convert the bulk of cmd_add() to C,
-2021-08-10) it has only been used by this test, not git-submodule.sh.
+As its name suggests the "resolve-relative-url-test" has never been
+used outside of the test suite, see 63e95beb085 (submodule: port
+resolve_relative_url from shell to C, 2016-04-15) for its original
+addition.
 
-As noted with its introduction in 0383bbb9015 (submodule-config:
-verify submodule names as paths, 2018-04-30) the intent of
-t7450-bad-git-dotfiles.sh has always been to unit test the
-check_submodule_name() function.
+Perhaps it would make sense to drop this code entirely, as we feel
+that we've got enough indirect test coverage, but let's leave that
+question to a possible follow-up change. For now let's keep the test
+coverage this gives us.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 24 -------------------
- t/helper/test-submodule.c   | 46 +++++++++++++++++++++++++++++++++++++
- t/t7450-bad-git-dotfiles.sh |  2 +-
- 3 files changed, 47 insertions(+), 25 deletions(-)
+ builtin/submodule--helper.c | 23 --------------------
+ t/helper/test-submodule.c   | 42 +++++++++++++++++++++++++++++++++++++
+ t/t0060-path-utils.sh       |  2 +-
+ 3 files changed, 43 insertions(+), 24 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index e10c3ac7550..e8458567976 100644
+index e8458567976..7e2986902dd 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2731,29 +2731,6 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
- 	return 0;
+@@ -96,28 +96,6 @@ static char *resolve_relative_url(const char *rel_url, const char *up_path, int
+ 	return resolved_url;
  }
  
--/*
-- * Exit non-zero if any of the submodule names given on the command line is
-- * invalid. If no names are given, filter stdin to print only valid names
-- * (which is primarily intended for testing).
-- */
--static int check_name(int argc, const char **argv, const char *prefix)
+-static int resolve_relative_url_test(int argc, const char **argv, const char *prefix)
 -{
--	if (argc > 1) {
--		while (*++argv) {
--			if (check_submodule_name(*argv) < 0)
--				return 1;
--		}
--	} else {
--		struct strbuf buf = STRBUF_INIT;
--		while (strbuf_getline(&buf, stdin) != EOF) {
--			if (!check_submodule_name(buf.buf))
--				printf("%s\n", buf.buf);
--		}
--		strbuf_release(&buf);
--	}
+-	char *remoteurl, *res;
+-	const char *up_path, *url;
+-
+-	if (argc != 4)
+-		die("resolve-relative-url-test only accepts three arguments: <up_path> <remoteurl> <url>");
+-
+-	up_path = argv[1];
+-	remoteurl = xstrdup(argv[2]);
+-	url = argv[3];
+-
+-	if (!strcmp(up_path, "(null)"))
+-		up_path = NULL;
+-
+-	res = relative_url(remoteurl, url, up_path);
+-	puts(res);
+-	free(res);
+-	free(remoteurl);
 -	return 0;
 -}
 -
- static int module_config(int argc, const char **argv, const char *prefix)
+ /* the result should be freed by the caller. */
+ static char *get_submodule_displaypath(const char *path, const char *prefix)
  {
- 	enum {
-@@ -3308,7 +3285,6 @@ static struct cmd_struct commands[] = {
- 	{"summary", module_summary, 0},
- 	{"push-check", push_check, 0},
- 	{"absorbgitdirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
--	{"check-name", check_name, 0},
- 	{"config", module_config, 0},
- 	{"set-url", module_set_url, 0},
- 	{"set-branch", module_set_branch, 0},
+@@ -3276,7 +3254,6 @@ static struct cmd_struct commands[] = {
+ 	{"clone", module_clone, SUPPORT_SUPER_PREFIX},
+ 	{"add", module_add, 0},
+ 	{"update", module_update, SUPPORT_SUPER_PREFIX},
+-	{"resolve-relative-url-test", resolve_relative_url_test, 0},
+ 	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
+ 	{"init", module_init, 0},
+ 	{"status", module_status, SUPPORT_SUPER_PREFIX},
 diff --git a/t/helper/test-submodule.c b/t/helper/test-submodule.c
-index 494c6558d9f..9f0eb440192 100644
+index 9f0eb440192..e0e0c53d386 100644
 --- a/t/helper/test-submodule.c
 +++ b/t/helper/test-submodule.c
-@@ -2,8 +2,16 @@
+@@ -2,6 +2,7 @@
  #include "test-tool-utils.h"
  #include "cache.h"
  #include "parse-options.h"
-+#include "submodule-config.h"
++#include "remote.h"
+ #include "submodule-config.h"
  #include "submodule.h"
  
-+#define TEST_TOOL_CHECK_NAME_USAGE \
-+	"test-tool submodule check-name <name>"
-+static const char *submodule_check_name_usage[] = {
-+	TEST_TOOL_CHECK_NAME_USAGE,
-+	NULL
-+};
-+
- #define TEST_TOOL_IS_ACTIVE_USAGE \
- 	"test-tool submodule is-active <name>"
- static const char *submodule_is_active_usage[] = {
-@@ -12,10 +20,47 @@ static const char *submodule_is_active_usage[] = {
- };
- 
- static const char *submodule_usage[] = {
-+	TEST_TOOL_CHECK_NAME_USAGE,
- 	TEST_TOOL_IS_ACTIVE_USAGE,
+@@ -19,9 +20,17 @@ static const char *submodule_is_active_usage[] = {
  	NULL
  };
  
-+/*
-+ * Exit non-zero if any of the submodule names given on the command line is
-+ * invalid. If no names are given, filter stdin to print only valid names
-+ * (which is primarily intended for testing).
-+ */
-+static int check_name(int argc, const char **argv)
++#define TEST_TOOL_RESOLVE_RELATIVE_URL_USAGE \
++	"test-tool submodule resolve-relative-url <up_path> <remoteurl> <url>"
++static const char *submodule_resolve_relative_url_usage[] = {
++	TEST_TOOL_RESOLVE_RELATIVE_URL_USAGE,
++	NULL,
++};
++
+ static const char *submodule_usage[] = {
+ 	TEST_TOOL_CHECK_NAME_USAGE,
+ 	TEST_TOOL_IS_ACTIVE_USAGE,
++	TEST_TOOL_RESOLVE_RELATIVE_URL_USAGE,
+ 	NULL
+ };
+ 
+@@ -76,9 +85,42 @@ static int cmd__submodule_is_active(int argc, const char **argv)
+ 	return !is_submodule_active(the_repository, argv[0]);
+ }
+ 
++static int resolve_relative_url(int argc, const char **argv)
 +{
-+	if (argc > 1) {
-+		while (*++argv) {
-+			if (check_submodule_name(*argv) < 0)
-+				return 1;
-+		}
-+	} else {
-+		struct strbuf buf = STRBUF_INIT;
-+		while (strbuf_getline(&buf, stdin) != EOF) {
-+			if (!check_submodule_name(buf.buf))
-+				printf("%s\n", buf.buf);
-+		}
-+		strbuf_release(&buf);
-+	}
++	char *remoteurl, *res;
++	const char *up_path, *url;
++
++	up_path = argv[0];
++	remoteurl = xstrdup(argv[1]);
++	url = argv[2];
++
++	if (!strcmp(up_path, "(null)"))
++		up_path = NULL;
++
++	res = relative_url(remoteurl, url, up_path);
++	puts(res);
++	free(res);
++	free(remoteurl);
 +	return 0;
 +}
 +
-+static int cmd__submodule_check_name(int argc, const char **argv)
++static int cmd__submodule_resolve_relative_url(int argc, const char **argv)
 +{
 +	struct option options[] = {
 +		OPT_END()
 +	};
 +	argc = parse_options(argc, argv, "test-tools", options,
-+			     submodule_check_name_usage, 0);
-+	if (argc)
-+		usage_with_options(submodule_check_name_usage, options);
++			     submodule_resolve_relative_url_usage, 0);
++	if (argc != 3)
++		usage_with_options(submodule_resolve_relative_url_usage, options);
 +
-+	return check_name(argc, argv);
++	return resolve_relative_url(argc, argv);
 +}
 +
- static int cmd__submodule_is_active(int argc, const char **argv)
- {
- 	struct option options[] = {
-@@ -32,6 +77,7 @@ static int cmd__submodule_is_active(int argc, const char **argv)
- }
- 
  static struct test_cmd cmds[] = {
-+	{ "check-name", cmd__submodule_check_name },
+ 	{ "check-name", cmd__submodule_check_name },
  	{ "is-active", cmd__submodule_is_active },
++	{ "resolve-relative-url", cmd__submodule_resolve_relative_url},
  };
  
-diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
-index 41706c1c9ff..2c24f120da3 100755
---- a/t/t7450-bad-git-dotfiles.sh
-+++ b/t/t7450-bad-git-dotfiles.sh
-@@ -21,7 +21,7 @@ test_expect_success 'check names' '
- 	valid/with/paths
- 	EOF
+ int cmd__submodule(int argc, const char **argv)
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 1f2007e62b7..68e29c904a6 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -22,7 +22,7 @@ relative_path() {
  
--	git submodule--helper check-name >actual <<-\EOF &&
-+	test-tool submodule check-name >actual <<-\EOF &&
- 	valid
- 	valid/with/paths
- 
+ test_submodule_relative_url() {
+ 	test_expect_success "test_submodule_relative_url: $1 $2 $3 => $4" "
+-		actual=\$(git submodule--helper resolve-relative-url-test '$1' '$2' '$3') &&
++		actual=\$(test-tool submodule resolve-relative-url '$1' '$2' '$3') &&
+ 		test \"\$actual\" = '$4'
+ 	"
+ }
 -- 
 2.37.2.1279.g64dec4e13cf
 
