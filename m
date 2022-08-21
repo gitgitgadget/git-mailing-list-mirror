@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30264C00140
-	for <git@archiver.kernel.org>; Sun, 21 Aug 2022 14:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE4A3C32772
+	for <git@archiver.kernel.org>; Sun, 21 Aug 2022 14:02:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231229AbiHUOCx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Aug 2022 10:02:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47558 "EHLO
+        id S231357AbiHUOCy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Aug 2022 10:02:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230511AbiHUOBz (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231215AbiHUOBz (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 21 Aug 2022 10:01:55 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4953823160
-        for <git@vger.kernel.org>; Sun, 21 Aug 2022 07:01:21 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id c187-20020a1c35c4000000b003a30d88fe8eso6422681wma.2
-        for <git@vger.kernel.org>; Sun, 21 Aug 2022 07:01:21 -0700 (PDT)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 417A813D69
+        for <git@vger.kernel.org>; Sun, 21 Aug 2022 07:01:22 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id k9so10325689wri.0
+        for <git@vger.kernel.org>; Sun, 21 Aug 2022 07:01:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=Ykoe4wu5z/sMjr2ids4DeW1vF7vBKq2AwINGMxJmPMA=;
-        b=XyBay0f4MBqcVCYVHSqVD5C7TjUUPWzYGfVWmL/bFq5U9rWiTK8nq5nbwUMeLkyCAw
-         mLBVpVRsvppxnEJnR7+qrqs87iBaI+HooWw8w0iu/2yPV+t+ySKR3JDgLmZgCZ4Pq0ha
-         L6iNMLCcKHSqU9LtR9x0olS+D2jcNns/sNUl/LmcHV6DxU0DA5o7qC+mJyQiBKruC87J
-         k6tT3PkRaT+R1RYDbC1MN3D7bQ4oYol5yhE7FmKoDtsUAMfIR/mUdTvf4XI5xexc61vv
-         tMPBBanihxGFGS/xgiS9sjcbpRK3Ta7fnGe0xn+CvvPR67PkcPasL2DSVsCWZgFgBHny
-         16gw==
+        bh=ZCKY8kboi08sOtEvX1Nz4fBVuDySO9b3FEZ3slAOpuc=;
+        b=DGhhbJmUAcM6VqGPj5ppI/oRL5VoRHZ7Z6nWaJCRh7/5Xd0YKfLluazKk9/kWbQxTd
+         It7S/8FjTf7lFSok+8265nVUD71rimU/+YiZHAAI5k+lDQP7E3vxyVOQNCq2zmiyj6yI
+         iqx7fdzLUK8ZvOSp6i4Pk0Zw+ARZIjbEuoyORVx1mRaTF5JWvQwzZRo/Gaag6EmxMK7h
+         OMCGUPpczA1Ew/fkiZSc31MG8xMF2llLHIQGVVI5ViF3mi3H6/xgztLpX/73twMWTPPw
+         2YE4L+amTHZ5grG2XOGWK9KgqgcotcdaldOdUzhObBVm4j2mxGOnG7wJF6v2YbdNyQDA
+         iPyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=Ykoe4wu5z/sMjr2ids4DeW1vF7vBKq2AwINGMxJmPMA=;
-        b=ZOn2SoRJ377pH+9uHSR39NO+gL2tYebwknMbKZpmaqxz2BkXxb2MGIfCVXpXUhhxKg
-         F0eCWCg0S190ZD31SPJV1GbTRokZ8NxyKtkBEL26fwBYA0JRjmEpoo/qp6uuGGWRsNLw
-         8yFxGwIouj4zO3nrgg4dXkqweEjWzySjpoCDWUzojtvGzUFwt9l3QNipe8/g0Hx6t33x
-         xFxfh50ao7jXI686enS1/eyvxO+XyTFPb+VDvXJo7OeoFFzcrnrnVvNuA8Io6tbk0aWh
-         zJXPjwJunkJDA/OM9pWAkjc48TIPt9D0Q8/70Rtp/5ybdLTaI8XWYJlR2PtdO3e13s2E
-         TTvA==
-X-Gm-Message-State: ACgBeo36edekeMfhM2wifcQJ8vRqS050NrTx113ByrYgQWSMEOKSePjw
-        H+qDQ5hOb2MOICkpW5BWobTYpEdmyInxMdCP
-X-Google-Smtp-Source: AA6agR7GhNxRh9GU+dbHns/ADZgFo810vRY39wS23HpteXA0pS4+LpPX+Ecr+wutHQyNQYjs303fQg==
-X-Received: by 2002:a05:600c:348e:b0:3a5:fbcf:4c1a with SMTP id a14-20020a05600c348e00b003a5fbcf4c1amr12775912wmq.171.1661090479505;
-        Sun, 21 Aug 2022 07:01:19 -0700 (PDT)
+        bh=ZCKY8kboi08sOtEvX1Nz4fBVuDySO9b3FEZ3slAOpuc=;
+        b=E7W8LHZ33CPSQKiy8TRq0VFSfsOuLwmVUPWP7dFVA4XLcvJHgXaeROeSsMDUbwwn+w
+         ns33xugaCiCbSL0O32A/AX5SahkHAhQ2UKOl8K7zKU9JfEN3WVlhxR+7isSC9iI6ZBcz
+         xoMyUJ8dBytverNSCjGUTnpT5x1kZ/F6cJ3uAyvwT74mz+mtDTWAr8G6UZ2f9a15PNHv
+         9TlmYLIWKYBPhKoS4yTb0XLKn3yMAAy6eElW81iHZvpXuw1xx0gUWhHZD5tpRM4JFepi
+         Z/VkwUUfh+a7tTI6NQ40LDZoReoRKYqoD4fLmsUL/7I7bv25fVb4qqWCv4t/SbYBjARn
+         ACiQ==
+X-Gm-Message-State: ACgBeo2jOTo5RTTWxoKe8nkzsRIawsSLmf666Ndgpei+Dnx0ntpI9y56
+        /4H1yB83UxH26vveXXt+IiHn3qdlvUdoO4GQ
+X-Google-Smtp-Source: AA6agR6btjDH+JUO2ULngtMiuy9WRXSeZGxrpBxQ+FFstSVGErJYHzjeCh7oBl3BOCpThrtbcSbCKA==
+X-Received: by 2002:adf:d087:0:b0:225:2252:3af2 with SMTP id y7-20020adfd087000000b0022522523af2mr8688314wrh.388.1661090480521;
+        Sun, 21 Aug 2022 07:01:20 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id q4-20020a1c4304000000b003a5c7a942edsm14449642wma.28.2022.08.21.07.01.18
+        by smtp.gmail.com with ESMTPSA id q4-20020a1c4304000000b003a5c7a942edsm14449642wma.28.2022.08.21.07.01.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Aug 2022 07:01:18 -0700 (PDT)
+        Sun, 21 Aug 2022 07:01:19 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 15/17] submodule--helper: free some "displaypath" in "struct update_data"
-Date:   Sun, 21 Aug 2022 15:59:39 +0200
-Message-Id: <patch-v6-15.17-f3cf49dd029-20220821T130415Z-avarab@gmail.com>
+Subject: [PATCH v6 16/17] submodule--helper: free rest of "displaypath" in "struct update_data"
+Date:   Sun, 21 Aug 2022 15:59:40 +0200
+Message-Id: <patch-v6-16.17-a99a7736fab-20220821T130415Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.2.1279.g64dec4e13cf
 In-Reply-To: <cover-v6-00.17-00000000000-20220821T130415Z-avarab@gmail.com>
 References: <cover-v5-00.17-00000000000-20220802T155002Z-avarab@gmail.com> <cover-v6-00.17-00000000000-20220821T130415Z-avarab@gmail.com>
@@ -69,79 +69,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make the update_data_release() function free "displaypath" member when
-appropriate. The "displaypath" member is always ours, the "const" on
-the "char *" was wrong to begin with.
+Fix a leak in code added in c51f8f94e5b (submodule--helper: run update
+procedures from C, 2021-08-24), we clobber the "displaypath" member of
+the passed-in "struct update_data" both so that die() messages in this
+update_submodule() function itself can use it, and for the
+run_update_procedure() called within this function.
 
-This leaves a leak of "displaypath" in update_submodule(), which as
-we'll see in subsequent commits is harder to deal with than this
-trivial fix.
+To make managing that clobbering easier let's wrap the
+update_submodule() in a new update_submodule_outer() function, which
+will do the clobbering and free(to_free) dance for us.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c        | 3 ++-
- t/t2403-worktree-move.sh           | 1 +
- t/t7412-submodule-absorbgitdirs.sh | 1 +
- t/t7419-submodule-set-branch.sh    | 1 +
- 4 files changed, 5 insertions(+), 1 deletion(-)
+ builtin/submodule--helper.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index e75d7fa2e10..dbbe412b24e 100644
+index dbbe412b24e..070e435b13e 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -1880,7 +1880,7 @@ static void submodule_update_clone_release(struct submodule_update_clone *suc)
- 
- struct update_data {
- 	const char *prefix;
--	const char *displaypath;
-+	char *displaypath;
- 	enum submodule_update_type update_default;
- 	struct object_id suboid;
- 	struct string_list references;
-@@ -1918,6 +1918,7 @@ struct update_data {
- 
- static void update_data_release(struct update_data *ud)
+@@ -2485,13 +2485,6 @@ static int update_submodule(struct update_data *update_data)
  {
-+	free(ud->displaypath);
- 	module_list_release(&ud->list);
+ 	int ret;
+ 
+-	ret = ensure_core_worktree(update_data->sm_path);
+-	if (ret)
+-		return ret;
+-
+-	update_data->displaypath = get_submodule_displaypath(
+-		update_data->sm_path, update_data->prefix);
+-
+ 	ret = determine_submodule_update_strategy(the_repository,
+ 						  update_data->just_cloned,
+ 						  update_data->sm_path,
+@@ -2565,6 +2558,24 @@ static int update_submodule(struct update_data *update_data)
+ 	return 0;
  }
  
-diff --git a/t/t2403-worktree-move.sh b/t/t2403-worktree-move.sh
-index a4e1a178e0a..1168e9f9982 100755
---- a/t/t2403-worktree-move.sh
-+++ b/t/t2403-worktree-move.sh
-@@ -2,6 +2,7 @@
++static int update_submodule_outer(struct update_data *update_data)
++{
++	char *to_free, *restore = update_data->displaypath;
++	int ret;
++
++	ensure_core_worktree(update_data->sm_path);
++
++	update_data->displaypath = to_free = get_submodule_displaypath(
++		update_data->sm_path, update_data->prefix);
++
++	ret = update_submodule(update_data);
++
++	free(to_free);
++	update_data->displaypath = restore;
++
++	return ret;
++}
++
+ static int update_submodules(struct update_data *update_data)
+ {
+ 	int i, ret = 0;
+@@ -2597,7 +2608,7 @@ static int update_submodules(struct update_data *update_data)
+ 		update_data->just_cloned = ucd.just_cloned;
+ 		update_data->sm_path = ucd.sub->path;
  
- test_description='test git worktree move, remove, lock and unlock'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
-index 1cfa150768d..2859695c6d2 100755
---- a/t/t7412-submodule-absorbgitdirs.sh
-+++ b/t/t7412-submodule-absorbgitdirs.sh
-@@ -6,6 +6,7 @@ This test verifies that `git submodue absorbgitdirs` moves a submodules git
- directory into the superproject.
- '
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup a real submodule' '
-diff --git a/t/t7419-submodule-set-branch.sh b/t/t7419-submodule-set-branch.sh
-index 3b925c302fc..96e98423214 100755
---- a/t/t7419-submodule-set-branch.sh
-+++ b/t/t7419-submodule-set-branch.sh
-@@ -9,6 +9,7 @@ This test verifies that the set-branch subcommand of git-submodule is working
- as expected.
- '
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- TEST_NO_CREATE_REPO=1
- . ./test-lib.sh
- 
+-		code = update_submodule(update_data);
++		code = update_submodule_outer(update_data);
+ 		if (!code)
+ 			continue;
+ 		ret = code;
 -- 
 2.37.2.1279.g64dec4e13cf
 
