@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90812C00140
-	for <git@archiver.kernel.org>; Sun, 21 Aug 2022 13:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E017C3F6B0
+	for <git@archiver.kernel.org>; Sun, 21 Aug 2022 14:00:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229494AbiHUN75 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Aug 2022 09:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48520 "EHLO
+        id S231221AbiHUOAA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Aug 2022 10:00:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230448AbiHUN7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Aug 2022 09:59:15 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0A9A237E1
-        for <git@vger.kernel.org>; Sun, 21 Aug 2022 06:58:50 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id bq11so3713088wrb.12
-        for <git@vger.kernel.org>; Sun, 21 Aug 2022 06:58:50 -0700 (PDT)
+        with ESMTP id S230508AbiHUN7S (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Aug 2022 09:59:18 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14D25237E2
+        for <git@vger.kernel.org>; Sun, 21 Aug 2022 06:58:51 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id m17-20020a7bce11000000b003a5bedec07bso6447618wmc.0
+        for <git@vger.kernel.org>; Sun, 21 Aug 2022 06:58:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=TE5sRvZLSD0CeQucb1GNMKqkll0IslG4KOS3GpgN1Kk=;
-        b=BcGLrS/1xUq29pv9qyG5g0pvwh2a6BEAmqQXZLggy95KU+UJb9n4COzvUIJNXG+rzR
-         BdDAMMTN/YjKX0op7Zlh66bmAkwIGhQ73szb/BKOfyfOyfn4t17fdoQvZl6NSCCeUs0K
-         LyYK+8eN99QowCUf4p/evL9+ob5BU3ManUsAOV9xbK1A5nZT6vlWlrDsObWe1jc3l262
-         XBsukgxBCtBmsoFpSm1UITFg5SJPi9ZJguEEaxJvCbCGEmIqRwQvHOzEWcrl4tO4Jvvm
-         Lib8FeIwrg2gR6voVmwwB1OeZouIt5mVmObvOLtmlxGKNzua4GK0OO0QLKYFy2l/Fcc0
-         uUIw==
+        bh=oWT9DEINhZAfPDN3z0lfujcDdOyfgNIqg/Mmmbh/ZSk=;
+        b=pEYAcPpxvAgUWx7weeNXkNx1gAT8esX3tWwlYS0Ua/u04LgDtfPiPcKa+QQFodvXGu
+         uuCc49Mw8xElpjo2Pv658MCIIifx2tzcL431V1qxSsG0F0eTvDbhDREYoWcXGC4S8iCk
+         og/quT3CWKtwOOZoAcFzPYgFAWAAfirKcwLYT0+/obVBoKtDVeId0q5UCvUjLQNZDS0q
+         kWJk6Vn0oit6i3GxDpAR3JBrj3gRqPr6TlanvkIB4zVYD3A025OX0ICFU8OF60A9i5NO
+         Vx6Q2HaP/Vyzjhx34I4voCYT81wc/szDAPCcW/wgiy1q709pZkpxMsycspujt2Bz/aX/
+         NJZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=TE5sRvZLSD0CeQucb1GNMKqkll0IslG4KOS3GpgN1Kk=;
-        b=SCfPJtrmvurNreJTGXEd4efcjdi3o0TCQ5IMPlMHd/58sHu+FO/+Twu+ucI/GvcGX1
-         6L3Qo1333GIFoCpmyO3rIQqV6PjS5cZZh2mgxwSnk2eEgjq4WfokKHoKeDXWvonhbdrj
-         YEDCJIz0RvwgTJH0170iznfaoXizcI62kZAZnX0kJu2dth7x+RYVMNoMCCGAj/hQUgpt
-         /9KbgiQiWWzku6CoWxpyJiJktinOdn9YU115SAKq7lW7L/VUTD80+dzQTpTg6HO/FNsc
-         1WkgZfRsXIynhWXwv1UmLH+GrZ5zFesSjp04H39FtoP2NADgCoSYCKvEg7+QGeGT23mY
-         HVqg==
-X-Gm-Message-State: ACgBeo15K++CDucrjBob+wabNDQdNk8aJe0YQ9iOGbyjIn8VuJzhTKD0
-        67aWsdu1Do/YCnJqX9rA1I2j2pJDRMKTtJvw
-X-Google-Smtp-Source: AA6agR5U7AILBHOA4bH35Ue/Qdq4I2H4D7i5ZvpBi2T/VCEcaLP8AjtJWmA9JxeN8gzmyjFcX8BAQg==
-X-Received: by 2002:a05:6000:1acb:b0:223:5de3:f8bf with SMTP id i11-20020a0560001acb00b002235de3f8bfmr8503392wry.691.1661090329229;
-        Sun, 21 Aug 2022 06:58:49 -0700 (PDT)
+        bh=oWT9DEINhZAfPDN3z0lfujcDdOyfgNIqg/Mmmbh/ZSk=;
+        b=X2oib3SPDOAe5Y+knRlmaSP6rnSxNRcKUU85h/VjbbUccCh0XwGdugF34jVChTWFGQ
+         wDtKBZOKJdq1YDg5YCtrP7Rbn55Z/uGLkeDbuv040YFCHXpg4fiQMXhlqri6BB/CG5jK
+         v1v0uifL8dF6IsN1IIhGF0W1cs9BH4tUyVqlgZxEg2N7xeuJSyJ8CiuyjVXKhiG6YG2X
+         oXMcKTARGyGQmDNhjf12vUvO0HihVEAIb6CPcIiZ0bMZ3Sqw0rNt4ncITH+3VYfAd6xO
+         2Cc7f8ILBxZgLWhe9kuF2eq1Fn8SwL3VX+P9I7CLtPw28AzDbWf8SwUW7UiV5XULueUF
+         8YAg==
+X-Gm-Message-State: ACgBeo1GMZOL+LGZgrPE1X5ZSUCff8+RanSY86gLYsCWh/idPXcabMv5
+        YFPOH49Ws43vH3pEQtbBxChlA1sxxb1KL7ep
+X-Google-Smtp-Source: AA6agR50vrht3lyiUCGXZIenG5/ft9Bfo6CLhS3bQcgIbHJb462amb7WEmyy0ilUU1Wig3ixWEzlig==
+X-Received: by 2002:a05:600c:1ca5:b0:3a6:c8d:f2f9 with SMTP id k37-20020a05600c1ca500b003a60c8df2f9mr12951172wms.54.1661090330277;
+        Sun, 21 Aug 2022 06:58:50 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o12-20020a05600c4fcc00b003a5b788993csm12624872wmq.42.2022.08.21.06.58.48
+        by smtp.gmail.com with ESMTPSA id o12-20020a05600c4fcc00b003a5b788993csm12624872wmq.42.2022.08.21.06.58.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Aug 2022 06:58:48 -0700 (PDT)
+        Sun, 21 Aug 2022 06:58:49 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 23/32] submodule--helper: use "code" in run_update_command()
-Date:   Sun, 21 Aug 2022 15:57:32 +0200
-Message-Id: <patch-v3-23.32-6cac6cb2fa6-20220821T130231Z-avarab@gmail.com>
+Subject: [PATCH v3 24/32] submodule--helper: don't exit() on failure, return
+Date:   Sun, 21 Aug 2022 15:57:33 +0200
+Message-Id: <patch-v3-24.32-6d56f671c7a-20220821T130231Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.2.1279.g64dec4e13cf
 In-Reply-To: <cover-v3-00.32-00000000000-20220821T130231Z-avarab@gmail.com>
 References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com> <cover-v3-00.32-00000000000-20220821T130231Z-avarab@gmail.com>
@@ -69,111 +69,137 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Apply some DRY principles in run_update_command() and don't have two
-"switch" statements over "ud->update_strategy.type" determine the same
-thing.
+Change code downstream of module_update() to short-circuit and return
+to the top-level on failure, rather than calling exit().
 
-First we were setting "must_die_on_failure = 1" in all cases except
-"SM_UPDATE_CHECKOUT" (and we'd BUG(...) out on the rest). This code
-was added in c51f8f94e5b (submodule--helper: run update procedures
-from C, 2021-08-24).
+To do so we need to diligently check whether we "must_die_on_failure",
+which is a pattern started in c51f8f94e5b (submodule--helper: run
+update procedures from C, 2021-08-24), but which hadn't been completed
+to the point where we could avoid calling exit() here.
 
-Then we'd duplicate same "switch" logic when we were using the
-"must_die_on_failure" variable.
+This introduces no functional changes, but makes it easier to both
+call these routines as a library in the future, and to eventually
+avoid leaking memory.
 
-Let's instead have the "case" branches in that inner "switch"
-determine whether or not the "update must continue" by picking an exit
-code.
+This and similar control flow in submodule--helper.c could be made
+simpler by properly "libifying" it, i.e. to have it consistently
+return -1 on failures, and to early return on any non-success.
 
-This also mostly avoids hardcoding the "128" exit code, instead we can
-make use of the return value of the die_message() function, which
-we've been calling here since 55b3f12cb54 (submodule update: use
-die_message(), 2022-03-15). We're still hardcoding it to determine if
-we "exit()", but subsequent commit(s) will address that.
+But let's leave that larger project for now, and (mostly) emulate what
+were doing with the "exit(128)" before this change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ builtin/submodule--helper.c | 35 +++++++++++++++++++++++++----------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c83b0897740..44b08a01c54 100644
+index 44b08a01c54..84e5e3beeb5 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2129,7 +2129,6 @@ static int run_update_command(struct update_data *ud, int subforce)
+@@ -2125,7 +2125,8 @@ static int fetch_in_submodule(const char *module_path, int depth, int quiet, str
+ 	return run_command(&cp);
+ }
+ 
+-static int run_update_command(struct update_data *ud, int subforce)
++static int run_update_command(struct update_data *ud, int subforce,
++			      int *must_die_on_failure)
  {
  	struct child_process cp = CHILD_PROCESS_INIT;
  	char *oid = oid_to_hex(&ud->oid);
--	int must_die_on_failure = 0;
- 
- 	switch (ud->update_strategy.type) {
- 	case SM_UPDATE_CHECKOUT:
-@@ -2143,19 +2142,16 @@ static int run_update_command(struct update_data *ud, int subforce)
- 		strvec_push(&cp.args, "rebase");
- 		if (ud->quiet)
- 			strvec_push(&cp.args, "--quiet");
--		must_die_on_failure = 1;
- 		break;
- 	case SM_UPDATE_MERGE:
- 		cp.git_cmd = 1;
- 		strvec_push(&cp.args, "merge");
- 		if (ud->quiet)
- 			strvec_push(&cp.args, "--quiet");
--		must_die_on_failure = 1;
- 		break;
- 	case SM_UPDATE_COMMAND:
- 		cp.use_shell = 1;
- 		strvec_push(&cp.args, ud->update_strategy.command);
--		must_die_on_failure = 1;
- 		break;
- 	default:
- 		BUG("unexpected update strategy type: %d",
-@@ -2166,32 +2162,35 @@ static int run_update_command(struct update_data *ud, int subforce)
- 	cp.dir = xstrdup(ud->sm_path);
- 	prepare_submodule_repo_env(&cp.env);
- 	if (run_command(&cp)) {
-+		int ret;
-+
- 		switch (ud->update_strategy.type) {
- 		case SM_UPDATE_CHECKOUT:
- 			die_message(_("Unable to checkout '%s' in submodule path '%s'"),
- 				    oid, ud->displaypath);
-+			/* the command failed, but update must continue */
-+			ret = 1;
- 			break;
- 		case SM_UPDATE_REBASE:
--			die_message(_("Unable to rebase '%s' in submodule path '%s'"),
--			    oid, ud->displaypath);
-+			ret = die_message(_("Unable to rebase '%s' in submodule path '%s'"),
-+					  oid, ud->displaypath);
- 			break;
- 		case SM_UPDATE_MERGE:
--			die_message(_("Unable to merge '%s' in submodule path '%s'"),
--			    oid, ud->displaypath);
-+			ret = die_message(_("Unable to merge '%s' in submodule path '%s'"),
-+					  oid, ud->displaypath);
- 			break;
- 		case SM_UPDATE_COMMAND:
--			die_message(_("Execution of '%s %s' failed in submodule path '%s'"),
--			    ud->update_strategy.command, oid, ud->displaypath);
-+			ret = die_message(_("Execution of '%s %s' failed in submodule path '%s'"),
-+					  ud->update_strategy.command, oid, ud->displaypath);
- 			break;
- 		default:
- 			BUG("unexpected update strategy type: %d",
- 			    ud->update_strategy.type);
+@@ -2189,7 +2190,7 @@ static int run_update_command(struct update_data *ud, int subforce)
  		}
--		if (must_die_on_failure)
--			exit(128);
  
--		/* the command failed, but update must continue */
--		return 1;
-+		if (ret == 128)
-+			exit(ret);
-+		return ret;
+ 		if (ret == 128)
+-			exit(ret);
++			*must_die_on_failure = 1;
+ 		return ret;
  	}
  
- 	if (ud->quiet)
+@@ -2221,7 +2222,8 @@ static int run_update_command(struct update_data *ud, int subforce)
+ 	return 0;
+ }
+ 
+-static int run_update_procedure(struct update_data *ud)
++static int run_update_procedure(struct update_data *ud,
++				int *must_die_on_failure)
+ {
+ 	int subforce = is_null_oid(&ud->suboid) || ud->force;
+ 
+@@ -2248,7 +2250,7 @@ static int run_update_procedure(struct update_data *ud)
+ 			    ud->displaypath, oid_to_hex(&ud->oid));
+ 	}
+ 
+-	return run_update_command(ud, subforce);
++	return run_update_command(ud, subforce, must_die_on_failure);
+ }
+ 
+ static const char *remote_submodule_branch(const char *path)
+@@ -2384,7 +2386,8 @@ static void update_data_to_args(struct update_data *update_data, struct strvec *
+ 				    "--no-single-branch");
+ }
+ 
+-static int update_submodule(struct update_data *update_data)
++static int update_submodule(struct update_data *update_data,
++			    int *must_die_on_failure)
+ {
+ 	ensure_core_worktree(update_data->sm_path);
+ 
+@@ -2420,9 +2423,15 @@ static int update_submodule(struct update_data *update_data)
+ 		free(remote_ref);
+ 	}
+ 
+-	if (!oideq(&update_data->oid, &update_data->suboid) || update_data->force)
+-		if (run_update_procedure(update_data))
++	if (!oideq(&update_data->oid, &update_data->suboid) || update_data->force) {
++		int ret;
++
++		ret = run_update_procedure(update_data, must_die_on_failure);
++		if (*must_die_on_failure)
++			return ret;
++		if (ret)
+ 			return 1;
++	}
+ 
+ 	if (update_data->recursive) {
+ 		struct child_process cp = CHILD_PROCESS_INIT;
+@@ -2438,14 +2447,13 @@ static int update_submodule(struct update_data *update_data)
+ 		prepare_submodule_repo_env(&cp.env);
+ 		update_data_to_args(&next, &cp.args);
+ 
+-		/* die() if child process die()'d */
+ 		ret = run_command(&cp);
+ 		if (!ret)
+ 			return 0;
+ 		die_message(_("Failed to recurse into submodule path '%s'"),
+ 			    update_data->displaypath);
+ 		if (ret == 128)
+-			exit(ret);
++			*must_die_on_failure = 1;
+ 		return ret;
+ 	}
+ 
+@@ -2478,12 +2486,19 @@ static int update_submodules(struct update_data *update_data)
+ 
+ 	for (i = 0; i < suc.update_clone_nr; i++) {
+ 		struct update_clone_data ucd = suc.update_clone[i];
++		int must_die_on_failure = 0;
++		int code;
+ 
+ 		oidcpy(&update_data->oid, &ucd.oid);
+ 		update_data->just_cloned = ucd.just_cloned;
+ 		update_data->sm_path = ucd.sub->path;
+ 
+-		if (update_submodule(update_data))
++		code = update_submodule(update_data, &must_die_on_failure);
++		if (code)
++			ret = code;
++		if (must_die_on_failure)
++			goto cleanup;
++		else if (code)
+ 			ret = 1;
+ 	}
+ 
 -- 
 2.37.2.1279.g64dec4e13cf
 
