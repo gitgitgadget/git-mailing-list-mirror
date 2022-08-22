@@ -2,185 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05FC9C28D13
-	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 18:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02DD3C28D13
+	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 18:48:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236711AbiHVS04 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Aug 2022 14:26:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51612 "EHLO
+        id S237747AbiHVSsP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Aug 2022 14:48:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236362AbiHVS0t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2022 14:26:49 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E990481D0
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 11:26:48 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id u14so14252949wrq.9
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 11:26:48 -0700 (PDT)
+        with ESMTP id S235412AbiHVSrx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2022 14:47:53 -0400
+Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com [IPv6:2607:f8b0:4864:20::e34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E99CE474DD
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 11:47:30 -0700 (PDT)
+Received: by mail-vs1-xe34.google.com with SMTP id l7so11899392vsc.0
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 11:47:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc;
-        bh=Dgfsyhs0RNsaLM3l4sKhqbZHr8ElrsZ6DZM1/8tvoTM=;
-        b=lK6rKXfJi8iBhIqNL2qRfabGuBn6LHsAZ4CW+miitl07n2IKxkVTp3EwOYhwHSHUqK
-         e4qCjDtCgUwOhSO/hwjzfqaDqbmyZclhDmVpJs+UJW3FQLFPwHR9S1Wl25HZqOY5GmNh
-         7sahLxeOumSw2ZpfkfOC7x6ZGC19pNGr+pOM7YC6oBvxbp3/wrX8oNat/15/DXIW7jk5
-         97Qg2L5jfQYpkfdtW455yUqWzPfGhkSy7M70oS04MyOOVOYLwiVM/ctdthihqu78Zw+L
-         zH3+ic++SfS8HoLhaxkoobLW/7Ul5AMozKCKwXy7NiQcWpJ8E3Dk7jIruYwdEo26SsmL
-         0OWA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=somuoiuB6LTMXm5YVryhiDQ+mvciybXtm0srNp9RInA=;
+        b=gbhz2n6KB5qb5pT/LeA94kf1B9RZNqmuQ79I2wIoUPPaWA2IWVvwuVP3/hiWLMh8Nk
+         8jiDpMH6VdPjLTz5jpnE4g43/oNt5vvaKxZIpUJnFQSmYQCCjHUSXfsv0GtmDAqyY4Lp
+         wnR9g/qyPZHxLJN4D27EQ7MdLj4VonD5oRf8iZ+ud31TPocFqgVsqIs7AGISEJE1ejzI
+         gO1489cgUbZBBQKduUWDzqcD+iwPxxjNr87bstXfQcdc9q+K3746NCrgG7Ag5JATguKf
+         Dt21e3/rgrq+BBzlq22c9VDxsRk5gNoltp+CWy50PUlAex1D0i0iC+GHyDanDNKwrjHk
+         J3PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=Dgfsyhs0RNsaLM3l4sKhqbZHr8ElrsZ6DZM1/8tvoTM=;
-        b=6SExWmpUGS4VM84Or4UaPhcysI2kCZsS3fmqEk2KP/uKmiy5WDVY2UxGYCKPR/foYp
-         MQtrrRmyhJItgNtMotWL+fnPgB2apwep4jwNDt8sKhuAVRORUZrngCuKLCc9UngX+lvZ
-         T9t0om36ChukxKKgQ+CtANOGn6CFH3b6qOJN0mObNgxa771BW5wVH0YZykn57aJULdv+
-         7RQrlVsINKD1B74QhLnRlXZmw5i+EwmpBupNtwG5EzgcMReSSenA4IbLHCxfxYrCZpCh
-         2Se8QK3NK7nULyd9COkfg0umP6NZ8020J6hYtnMyHJK2Ge82WiuRkE44TVJTtBpYJ7B7
-         SXRQ==
-X-Gm-Message-State: ACgBeo3rLgZzfWP0v+hO1Mea2z0a1H2D3ev8TBwZHlKiJOxU6LqHrfyo
-        nhtGw8bgpQ6sHCOHx7AuJ1VZXCtFQbQ=
-X-Google-Smtp-Source: AA6agR6n9G7LRDpdc2/G0W8sWUvSiuX5YaGJEp+LV4s5RPiZMn0An7VpT5rK1n1UXn8bYrriWXxmGg==
-X-Received: by 2002:a5d:47ca:0:b0:220:5cbc:1c59 with SMTP id o10-20020a5d47ca000000b002205cbc1c59mr11346673wrc.662.1661192806525;
-        Mon, 22 Aug 2022 11:26:46 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x17-20020adfec11000000b0020e6ce4dabdsm12529236wrn.103.2022.08.22.11.26.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Aug 2022 11:26:46 -0700 (PDT)
-Message-Id: <31a962fd5070d68964e545fb5506d795e8845ec3.1661192802.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1312.git.git.1661192802.gitgitgadget@gmail.com>
-References: <pull.1312.git.git.1661192802.gitgitgadget@gmail.com>
-From:   "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 22 Aug 2022 18:26:42 +0000
-Subject: [PATCH 3/3] t: detect and signal failure within loop
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=somuoiuB6LTMXm5YVryhiDQ+mvciybXtm0srNp9RInA=;
+        b=uzlRf015Y57EeXdgoA5vI1zRR9Mp8KncvBApXHhn57t3kfdCH0vt4ZrV8OdLq50utt
+         Aem7QwCqznN5LpEKcTJswRKP0GHPXxUa9ecKgxsmLuU5hSd4V3b0psl9vhaur9EGDXnS
+         7JR+to3oUNGwxc3h5M1y9nR6QL2qJ83GV/pEpkbSYGXksEN8270utxZWNjlTA1kvZ3dG
+         dhYXeqUyqdKlsoiqmBDpqJfTBGp0fESyPJ1pvq0BJDzMGZ328ir1oUSjQLLaVtbP6NUS
+         0rNVBqeU9RjUv3gVm271waz/bEs8bGkrvK5hotn0xVCwlQgpV1RPVH4kuh6E+xWfX3oO
+         GsHw==
+X-Gm-Message-State: ACgBeo3sVJyhBAopD7wXyTsWSefv5ohE0OVUef/E7cH11ROizLmCFqWk
+        PdacAe/Fey8t1W1gn52niRMxtGCcF2hKSHVtiBtXqJ4rBK1A4Q==
+X-Google-Smtp-Source: AA6agR7xK0TrNqzMNUs7XPcOWT3SYZmn2a4eHvNLrxHfBHN60sE72i7N5LqGVn8ei8tsBKgSapp3HPI0BvMwo2t54/0=
+X-Received: by 2002:a05:6102:3bd7:b0:390:6de3:785d with SMTP id
+ a23-20020a0561023bd700b003906de3785dmr1476837vsv.68.1661194049553; Mon, 22
+ Aug 2022 11:47:29 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+References: <CAAsFbAtu0vYhwa-Kb6dfpNBZ7jSLriVODi1s7H=-Deq9J6L0ww@mail.gmail.com>
+ <252qppor-o3pp-s13o-q59r-9166478no04r@tzk.qr>
+In-Reply-To: <252qppor-o3pp-s13o-q59r-9166478no04r@tzk.qr>
+From:   squirrel <jatjasjem@gmail.com>
+Date:   Mon, 22 Aug 2022 19:47:02 +0100
+Message-ID: <CAAsFbAsD_AwyO1KM2G10Gs8fWzErsXQUx2My2RdfmN6WefU4EA@mail.gmail.com>
+Subject: Re: `git range-diff` lists chunks with uninteresting changes
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Eric Sunshine <sunshine@sunshineco.com>
+Oh boy I messed up. There's a mistake in my reproduction example. Sorry!
 
-Failures within `for` and `while` loops can go unnoticed if not detected
-and signaled manually since the loop itself does not abort when a
-contained command fails, nor will a failure necessarily be detected when
-the loop finishes since the loop returns the exit code of the last
-command it ran on the final iteration, which may not be the command
-which failed. Therefore, detect and signal failures manually within
-loops using the idiom `|| return 1` (or `|| exit 1` within subshells).
+I was saying that the uninteresting chunks pop if the changes from upstream
+appear close to changes in feature branch. To demonstrate the case when they
+are not close, I said to add a few lines, `1\n2\n3\n`, to the initial file.
+Somehow I managed to include this `1\n2\n3\n` in the main example that was
+supposed to demonstrate the issue. The correct, copy-pasteable, example:
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- t/perf/p7527-builtin-fsmonitor.sh        | 2 +-
- t/t1092-sparse-checkout-compatibility.sh | 6 +++---
- t/t5329-pack-objects-cruft.sh            | 8 ++++----
- t/t6429-merge-sequence-rename-caching.sh | 2 +-
- 4 files changed, 9 insertions(+), 9 deletions(-)
+    git init
+    git branch -m main
+    echo -e "a\nb\nc\nd\ne\nf" > file
+    git add file
+    git commit -am "a b c d e f"
+    git checkout -b foo
+    echo -e "a\nb\nc\nd\ne\nfoo" > file
+    git commit -am "f -> foo"
+    git checkout main
+    git checkout -b cat
+    echo -e "a\nb\ncat\nd\ne\nf" > file
+    git commit -am "c -> cat"
+    git rebase foo
+    git range-diff foo cat@{1} cat
 
-diff --git a/t/perf/p7527-builtin-fsmonitor.sh b/t/perf/p7527-builtin-fsmonitor.sh
-index 9338b9ea008..c3f9a4caa4c 100755
---- a/t/perf/p7527-builtin-fsmonitor.sh
-+++ b/t/perf/p7527-builtin-fsmonitor.sh
-@@ -249,7 +249,7 @@ test_expect_success "Cleanup temp and matrix branches" "
- 	do
- 		for fsm_val in $fsm_values
- 		do
--			cleanup $uc_val $fsm_val
-+			cleanup $uc_val $fsm_val || return 1
- 		done
- 	done
- "
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index e13368861ce..0302e36fd66 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -556,7 +556,7 @@ test_expect_success 'blame with pathspec inside sparse definition' '
- 			deep/deeper1/a \
- 			deep/deeper1/deepest/a
- 	do
--		test_all_match git blame $file
-+		test_all_match git blame $file || return 1
- 	done
- '
- 
-@@ -1571,7 +1571,7 @@ test_expect_success 'sparse index is not expanded: blame' '
- 			deep/deeper1/a \
- 			deep/deeper1/deepest/a
- 	do
--		ensure_not_expanded blame $file
-+		ensure_not_expanded blame $file || return 1
- 	done
- '
- 
-@@ -1907,7 +1907,7 @@ test_expect_success 'rm pathspec outside sparse definition' '
- 		test_sparse_match test_must_fail git rm $file &&
- 		test_sparse_match test_must_fail git rm --cached $file &&
- 		test_sparse_match git rm --sparse $file &&
--		test_sparse_match git status --porcelain=v2
-+		test_sparse_match git status --porcelain=v2 || return 1
- 	done &&
- 
- 	cat >folder1-full <<-EOF &&
-diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
-index 8968f7a08d8..6049e2c1d78 100755
---- a/t/t5329-pack-objects-cruft.sh
-+++ b/t/t5329-pack-objects-cruft.sh
-@@ -29,7 +29,7 @@ basic_cruft_pack_tests () {
- 				while read oid
- 				do
- 					path="$objdir/$(test_oid_to_path "$oid")" &&
--					printf "%s %d\n" "$oid" "$(test-tool chmtime --get "$path")"
-+					printf "%s %d\n" "$oid" "$(test-tool chmtime --get "$path")" || exit 1
- 				done |
- 				sort -k1
- 			) >expect &&
-@@ -232,7 +232,7 @@ test_expect_success 'cruft tags rescue tagged objects' '
- 		while read oid
- 		do
- 			test-tool chmtime -1000 \
--				"$objdir/$(test_oid_to_path $oid)"
-+				"$objdir/$(test_oid_to_path $oid)" || exit 1
- 		done <objects &&
- 
- 		test-tool chmtime -500 \
-@@ -272,7 +272,7 @@ test_expect_success 'cruft commits rescue parents, trees' '
- 		while read object
- 		do
- 			test-tool chmtime -1000 \
--				"$objdir/$(test_oid_to_path $object)"
-+				"$objdir/$(test_oid_to_path $object)" || exit 1
- 		done <objects &&
- 		test-tool chmtime +500 "$objdir/$(test_oid_to_path \
- 			$(git rev-parse HEAD))" &&
-@@ -345,7 +345,7 @@ test_expect_success 'expired objects are pruned' '
- 		while read object
- 		do
- 			test-tool chmtime -1000 \
--				"$objdir/$(test_oid_to_path $object)"
-+				"$objdir/$(test_oid_to_path $object)" || exit 1
- 		done <objects &&
- 
- 		keep="$(basename "$(ls $packdir/pack-*.pack)")" &&
-diff --git a/t/t6429-merge-sequence-rename-caching.sh b/t/t6429-merge-sequence-rename-caching.sh
-index e1ce9199164..650b3cd14ff 100755
---- a/t/t6429-merge-sequence-rename-caching.sh
-+++ b/t/t6429-merge-sequence-rename-caching.sh
-@@ -725,7 +725,7 @@ test_expect_success 'avoid assuming we detected renames' '
- 		mkdir unrelated &&
- 		for i in $(test_seq 1 10)
- 		do
--			>unrelated/$i
-+			>unrelated/$i || exit 1
- 		done &&
- 		test_seq  2 10 >numbers &&
- 		test_seq 12 20 >values &&
--- 
-gitgitgadget
+Now if I was to use the command that you give:
+
+    $ git range-diff foo cat@{1} cat
+    1:  5b1a2f5 ! 1:  16c4eea c -> cat
+        @@ file
+         +cat
+          d
+          e
+        - f
+        + foo
+
+I think the command and the result are both correct. Indeed the change of
+`f` to `foo` is a difference between the two ranges. However, this change
+is just not interesting! I hope there's a way to not see it.
+
+Sorry about the mess up.
+
+On Mon, 22 Aug 2022 at 17:02, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi squirrel,
+>
+> On Sat, 20 Aug 2022, squirrel wrote:
+>
+> > When someone makes a PR, they may be asked to rebase their feature branch onto
+> > main to resolve conflicts. It may be useful to quickly see what changed during
+> > the rebase, that is how the new version of PR is different to the old one.
+> >
+> > If the PR branch has not been reparented, you may get away with `git diff`.
+> > But if it has, `git diff` may contain a lot of changes from upstream. Instead,
+> > `git range-diff` can be used.
+> >
+> > The problem with this is that in this case `git range-diff` can show chunks
+> > with changes that have nothing to do with changes in the PR. Consider this
+> > repository (commands are runnable):
+> >
+> >     git init
+> >     git branch -m main
+> >     echo -e "a\nb\nc\nd\ne\n1\n2\n3\nf" > file
+> >     git add file
+> >     git commit -am "a b c d e f"
+> >
+> >     git checkout -b foo
+> >     echo -e "a\nb\nc\nd\ne\n1\n2\n3\nfoo" > file
+> >     git commit -am "f -> foo"
+> >
+> >     git checkout main
+> >     git checkout -b cat
+> >     echo -e "a\nb\ncat\nd\ne\n1\n2\n3\nf" > file
+> >     git commit -am "c -> cat"
+> >
+> > We got a few letters of alphabet on separate lines on main, and in branch
+> > foo `f` is changed to `foo`, and in branch cat `c` is changed to `cat`.
+> >
+> >     $ git log --all --graph --pretty=oneline
+> >     * 90e873e3 (HEAD -> cat) c -> cat
+> >     | * 3d8c1baf (foo) f -> foo
+> >     |/
+> >     * 4d2337dd (main) a b c d e f
+> >
+> > Now, still on cat, let's combine the two changes.
+> >
+> >     $ git rebase foo
+> >     Successfully rebased and updated refs/heads/cat
+> >
+> >     $ git log --all --graph --pretty=oneline
+> >     * 98e554a0 (HEAD -> cat) c -> cat
+> >     * 3d8c1baf (foo) f -> foo
+> >     * 4d2337dd (main) a b c d e f
+> >
+> > Now, `git rebase foo` worked automatically, so *the change* of the last commit
+> > on `cat` is the same as it was without rebase, which is changing `c` to `cat`.
+> > But if we run `git range-diff`, we will see this:
+> >
+> >     $ git range-diff 90e873e3...cat
+> >     -:  ------- > 1:  3d8c1ba f -> foo
+> >     1:  90e873e ! 2:  98e554a c -> cat
+> >         @@ file
+> >          +cat
+> >           d
+> >           e
+> >         - f
+> >         + foo
+> >
+> > It seems that this chunk is included for the sole reason that the change from
+> > `foo` is sort of close. If we try the same code, but put the lines `c` and `f`
+> > further apart, for example by replacing `e\n` with `e\n1\n2\n3\n` in the
+> > commands above, the output would be, as expected,
+> >
+> >     $ git range-diff f1e0a6cc3...cat
+> >     -:  ------- > 1:  4db06be f -> foo
+> >     1:  f1e0a6c = 2:  cc56db7 c -> cat
+> >
+> > I suggest not showing uninteresting chunks like that, or perhaps having a
+> > command line option that controls how close together the changes must be in
+> > order to be included in the output.
+>
+> In a generic tool like `range-diff`, it is virtually guaranteed that the
+> default operation does not satisfy all use cases. This example
+> demonstrates that ;-)
+>
+> In general, the `A...B` form does what users want, namely show you pairs
+> between the "left" and the "right" commits in that symmetric range.
+>
+> However, you _can_ use `range-diff` in a way that it produces what you
+> want. In the example you provided above, `git range-diff foo cat@{1} cat`
+> should do it. That would be the `<upstream> <before> <after>` form.
+>
+> In general, you might need to play with `git merge-base --fork-point` (see
+> *1* for more information). I could imagine that the following command
+> might give you what you want in even more cases:
+>
+>         git range-diff \
+>                 $(git merge-base --fork-point @{u} @{1})..@{1} \
+>                 $(git merge-base --fork-point @{u} HEAD)..HEAD
+>
+> Ciao,
+> Johagnnes
+>
+> Footnote *1*: https://git-scm.com/docs/git-merge-base#_discussion_on_fork_point_mode
