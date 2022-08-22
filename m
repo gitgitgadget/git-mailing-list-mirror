@@ -2,173 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D118C32772
-	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 15:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C540FC32774
+	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 16:02:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236684AbiHVP6w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Aug 2022 11:58:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41996 "EHLO
+        id S234521AbiHVQCr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Aug 2022 12:02:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236198AbiHVP6v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2022 11:58:51 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2781713D22
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 08:58:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1661183916;
-        bh=JGsbg3fy1+5GY1PsaL+k52KjT6CjA4yIni1Yyd/7ZMw=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=WBN5otOhU6mD0IFGKeH59Nr3rRx2QJ/PNoyK5KcAXMBelofhYLFqONEfjzFvRMow0
-         sCHkrB1c82s4j80rfB2lO6O+MQAVrpldgAg/ag+5MGMnKak8kJLWyy22/MYYg5qMtI
-         8fLobH3E6WYrfeaScG22ZqDLah2CGPN+XGp4F4FU=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([91.47.146.19]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MuFD7-1pJufR2U9t-00uHXQ; Mon, 22
- Aug 2022 17:58:36 +0200
-Content-Type: multipart/mixed; boundary="------------wlDBucgAKJbvvupqeUAI6NZ8"
-Message-ID: <4e3edfa1-9c04-7a63-30ee-65fe6f2de62f@web.de>
-Date:   Mon, 22 Aug 2022 17:58:36 +0200
+        with ESMTP id S236955AbiHVQCk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2022 12:02:40 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65B9531DC4
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 09:02:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1661184156;
+        bh=IEEnSBmsoRkRvFad0hL4z/xt/lEuEgXZdSiJAt4Hu1w=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=cl6Dn4HGCUlOUjWs757H+OWZCJe6dajMMTESaI0/O/6DFv4Mcrh690nhag3IKSwro
+         76mX+JIo1f/0jPtpp0Ii881AsfSU4VaDiPNtFOhpmqtqummr0lNSXuj0VH0YG2FX13
+         +ONrJTELUzM9a6TLsx/oJ2DOdEKXwrBrKSIGKHNo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MIMbU-1oeRdH41YK-00EMCs; Mon, 22
+ Aug 2022 18:02:36 +0200
+Date:   Mon, 22 Aug 2022 18:02:35 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     squirrel <jatjasjem@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: `git range-diff` lists chunks with uninteresting changes
+In-Reply-To: <CAAsFbAtu0vYhwa-Kb6dfpNBZ7jSLriVODi1s7H=-Deq9J6L0ww@mail.gmail.com>
+Message-ID: <252qppor-o3pp-s13o-q59r-9166478no04r@tzk.qr>
+References: <CAAsFbAtu0vYhwa-Kb6dfpNBZ7jSLriVODi1s7H=-Deq9J6L0ww@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.1.2
-Subject: Re: `git patch-id --stable' vs quoted-printable
-To:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org, meta@public-inbox.org
-References: <20220822022503.M873583@dcvr> <xmqqczcsgbvn.fsf@gitster.g>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqczcsgbvn.fsf@gitster.g>
-X-Provags-ID: V03:K1:EBKnTJUpY2zGTG/fD1tD1X7pVfAiho2uvP1EgFfXUkYZv/dh5Hm
- GH7CK+IcyaS8SCsBEya/lrOCE/LnbEV0z4pjjmCURCGXmKabc5SqSt4KF9Y6SsHO4KqtD4w
- jduEkibJy7Ijlo8iqvkstZ1f6+RnpPoa7UFiHAn5E8DGYHj8JqPXVEvLxdyf/rWZBbKOiwW
- LU3+Q6Dr3z0Y6WGzuC7SA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:feo9T7QsIaw=:+jsAlSqy32ME8nDdFa9H/A
- ndWZaBuyvUa1LDsCVyySHuLxq9I2qnMxFouGN2fbDe7Y6aOjWjzEohmBhckGxgQ8DoneUM4a5
- b8CZ86yUrg6hFyn6Nf0sM6C+w+ii24bmgl1ZpjiLJNxvYG2JUfStc3VotvD064K/efcVjR4DO
- UuZGxjTSF5en/T0nSPavoeooNlo8DOD7IrtG7xuq7gjdw6ITbVnKycLH8RdgG2su7FDIWPybM
- oUKvedx6KVzlVt7+egmN5v+Exxqral4a6vaJomHVw2FpclrToBYrhqs8ZxuZu0RIgkCQWGVY0
- 5H9GxNIYo4CmHgtJoFSnu+HinifEhmOVLc+UuamQTk4fCQKCHE41oV7T1m7sfdU6ypZlHJknU
- 8Mg9pg+j9rlbotNg7IPtz9rtGSh6Lw3r61C7qJBNJKNSjgIT9NDpMSyJWEd92Q96bun9faNux
- IG58A83xN9DnPc68frff40SOUOxRYq4tKbX8MqOZcz/ZD32c5g6UjAXVLrJ8UrMlXLjcekvM6
- Hp794q64dCG8MwwOWfP6KG6SL1I3sK9b9mYD1/hVcLl1J8E2/KkGKinsyNp67xeoaN6RD6VA8
- 98gAwlNbTL7dDKz2h4M6sR4feNJUp888dc6gtpRx7T6lduljNxK5GVTKgU7lw1KZJ/+DG0RXM
- QtuThSFKS2v4ZmrJwDIiQmOmK8Z5en027zSqV7tiX/OJHLJChqoLR6V3arZugSM5r3Z5c+yCO
- d38r6m4Vx9vsVZTLo1zBs/abIj3kBByFDRiHE8DJKQqP1IuaEX1cua2AjCkARv+kQy7oqKPGY
- wdx4y/hVlaiJMpGoi8eI6xJOecv/p/pTNpUIxBIJRZKdYHsdUXvypW3H+JXjmCRNGEN2/M7I8
- aP+C7j1fxLuQvsbup2t5iXAhFghrL+9itQaqqGnD0G7el85Y3DBC8vaJDKUj637YosKehVa5K
- EgCj9+a+aoXHMv0U38u1YCtNINl0nIIwRUQEtFBGSfsa+Dqdwil2GtTyfgTO0CmOBhvkHxp9f
- bdeBnTaYspdoHAFakY3I3miFNhLCH9ejaw+ppT9IrA16CECfIgyoN08pNg3SxrEWL9fd5Qzlt
- k61tXJY/TZXEW2rtRpgGbigUzGAkiu1bAm+
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:jW7kxYlEuVIJOAtgpLsDcW1T8Ti/7yh9vbKddEv9GMPJ+hNcekq
+ pKqbE01Q74eKc6vzr4GqGwRS9E0ib18ambnQq8i+Z/vWgpj2CM1Pvhbi9tQukNNmaY59waB
+ lVEcnmzGhiN7dYo7ULKEiQ9laq0Uf7SEQ0INOoR1jZa/E3sfg1JDtRsKN1RgxL+SxT8+4k4
+ 5IMCT02HPEugmL124X8JA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:v4sYpjV4VMU=:HWC4AmA5SnXJhwKw6ZL/j1
+ H7sWif4YGtMRr/xnn/SMjQ2m1AzTAltCG33ITY0TR5H6bf5Xgi/pAW4vi9R2uw6MvLYUZo2Z5
+ f/O3ddcsPJ6jCsGP1GrsNc9CyAQM/fJZh7cCyZdPtBFXLrUB8Ilznbzqus6Nzc65csa3uXpSK
+ mku+hRJJuvvBdwEYeR4UvkxJgnb/zISKyXGzkruzU/s1U9dKUnxIr0dP/GwuKdXLbtwT9a+dI
+ SxCD0Gsg2kqIxfncXpaIONZV0wlNkSthJi7SeGaKtcs4buumne870wvcUFjYWMXRJyEVMknmy
+ iGu4wVTjIzrq6ru9o58DMQNAuGMkoz+naleBt2HKmpODjIq0aS/8Is23gttnCGfVXisV4mH9u
+ ye+rbRKceM1c0JzM4gGWlj9cPBVEn5qtad0U8RupnyTqdlj3b166Qpn+3cALYjp3PP9Kgi/yB
+ SuIu5T6bqRfYWuIU9R9MOzV4CjuytdREpov+WUoF5mdrFqDUAjiZukGydFfYo/on0FaLXcZyE
+ Oh96rFm8mIHD0GnRNO7RWWqtoxT6kmNirYkfQTCb7D5oZuTLxCuRzJeaBVvrWsM/XlYDhWwx7
+ Y8Xwf/LIBySUf9W4DT97P1AzXWgAWK7CiJsePKmSgr9KFxk8wnXI3kFj/mPPvEx26RpzUVIxm
+ tS841yipJpkVv1hv02lL7Osqb8Qr2yrqgje38Waxvpoo5bn9mw+1E8RFxR7dqTxtN5Pwgmbx5
+ OwAsGwa5yn1lpehimpFEggVbofXsPmbRaX1UB0cxyiv1oXEenMsoOn22wouKBidbiNpytWRiR
+ By64Fe7D6r5ArWWaWh3CKfwNeA+uz73n2H4OqpQCO8Koi06CT+NcBS1DMVyQzssOwY945iZZy
+ 4JmnFK/JdFGXJkKXHxpNOs24R68+iWGhIsI0P4dhx1tuKcHxOGAy2EoJWyE3b+pgIssZF2f0h
+ 386weF4PLaSGWcG62JvElN28aFJe3n7x5cZbDp1D3m3fos44C5jO2ggS4OVdy/pqASEpC2w7X
+ HCtYsarObjqb0iUXOuqBUtOkXHP8KzVcYz94QgKNV2b8W4reomOKmB/M8tHz6TWLWfIqsj6Pi
+ um+TrqbfTJCyjS+mhMOBGZWYVnQLnyVKjtEhTN7tOIWfhvc0K4nasbpww==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------wlDBucgAKJbvvupqeUAI6NZ8
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Hi squirrel,
 
-Am 22.08.22 um 06:06 schrieb Junio C Hamano:
-> Ren=C3=A9, do you remember if you used diff.suppressBlankEmpty
-> configuration when generating the patch in question at:
+On Sat, 20 Aug 2022, squirrel wrote:
+
+> When someone makes a PR, they may be asked to rebase their feature branc=
+h onto
+> main to resolve conflicts. It may be useful to quickly see what changed =
+during
+> the rebase, that is how the new version of PR is different to the old on=
+e.
 >
->     https://public-inbox.org/git/6727daf1-f077-7319-187e-ab4e55de3b2d@we=
-b.de/raw
+> If the PR branch has not been reparented, you may get away with `git dif=
+f`.
+> But if it has, `git diff` may contain a lot of changes from upstream. In=
+stead,
+> `git range-diff` can be used.
 >
-> by the way?
-
-I did not use that option.  Attached the copy from my Sent folder, which
-has spaces at the start of the blank lines in the config.txt hunk.
-
-Ren=C3=A9
-
---------------wlDBucgAKJbvvupqeUAI6NZ8
-Content-Type: message/rfc822; name="[PATCH] revert: optionally refer to commit
- in the \"reference\" format.eml"
-Content-Disposition: attachment; filename*0="[PATCH] revert: optionally refer
- to commit in the \"referenc"; filename*1="e\" format.eml"
-
-From - Sun, 26 Jun 2022 09:29:36 GMT
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00800000
-Message-ID: <6727daf1-f077-7319-187e-ab4e55de3b2d@web.de>
-Date: Sun, 26 Jun 2022 11:29:35 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.10.0
-Subject: Re: [PATCH] revert: optionally refer to commit in the "reference"
- format
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqsfp2b30k.fsf@gitster.g>
-From: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqsfp2b30k.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Am 22.05.22 um 06:32 schrieb Junio C Hamano:
-> ---
->  Documentation/config/revert.txt |  3 +++
->  Documentation/git-revert.txt    |  9 +++++++++
->  builtin/revert.c                |  2 ++
->  sequencer.c                     | 32 +++++++++++++++++++++++++++-----
->  sequencer.h                     |  1 +
->  t/t3501-revert-cherry-pick.sh   | 31 +++++++++++++++++++++++++++++++
->  6 files changed, 73 insertions(+), 5 deletions(-)
->  create mode 100644 Documentation/config/revert.txt
+> The problem with this is that in this case `git range-diff` can show chu=
+nks
+> with changes that have nothing to do with changes in the PR. Consider th=
+is
+> repository (commands are runnable):
 >
-> diff --git a/Documentation/config/revert.txt b/Documentation/config/reve=
-rt.txt
-> new file mode 100644
-> index 0000000000..797bfb6d62
-> --- /dev/null
-> +++ b/Documentation/config/revert.txt
-> @@ -0,0 +1,3 @@
-> +revert.reference::
-> +	Setting this variable to true makes `git revert` to behave
-> +	as if the `--reference` option is given.
+>     git init
+>     git branch -m main
+>     echo -e "a\nb\nc\nd\ne\n1\n2\n3\nf" > file
+>     git add file
+>     git commit -am "a b c d e f"
+>
+>     git checkout -b foo
+>     echo -e "a\nb\nc\nd\ne\n1\n2\n3\nfoo" > file
+>     git commit -am "f -> foo"
+>
+>     git checkout main
+>     git checkout -b cat
+>     echo -e "a\nb\ncat\nd\ne\n1\n2\n3\nf" > file
+>     git commit -am "c -> cat"
+>
+> We got a few letters of alphabet on separate lines on main, and in branc=
+h
+> foo `f` is changed to `foo`, and in branch cat `c` is changed to `cat`.
+>
+>     $ git log --all --graph --pretty=3Doneline
+>     * 90e873e3 (HEAD -> cat) c -> cat
+>     | * 3d8c1baf (foo) f -> foo
+>     |/
+>     * 4d2337dd (main) a b c d e f
+>
+> Now, still on cat, let's combine the two changes.
+>
+>     $ git rebase foo
+>     Successfully rebased and updated refs/heads/cat
+>
+>     $ git log --all --graph --pretty=3Doneline
+>     * 98e554a0 (HEAD -> cat) c -> cat
+>     * 3d8c1baf (foo) f -> foo
+>     * 4d2337dd (main) a b c d e f
+>
+> Now, `git rebase foo` worked automatically, so *the change* of the last =
+commit
+> on `cat` is the same as it was without rebase, which is changing `c` to =
+`cat`.
+> But if we run `git range-diff`, we will see this:
+>
+>     $ git range-diff 90e873e3...cat
+>     -:  ------- > 1:  3d8c1ba f -> foo
+>     1:  90e873e ! 2:  98e554a c -> cat
+>         @@ file
+>          +cat
+>           d
+>           e
+>         - f
+>         + foo
+>
+> It seems that this chunk is included for the sole reason that the change=
+ from
+> `foo` is sort of close. If we try the same code, but put the lines `c` a=
+nd `f`
+> further apart, for example by replacing `e\n` with `e\n1\n2\n3\n` in the
+> commands above, the output would be, as expected,
+>
+>     $ git range-diff f1e0a6cc3...cat
+>     -:  ------- > 1:  4db06be f -> foo
+>     1:  f1e0a6c =3D 2:  cc56db7 c -> cat
+>
+> I suggest not showing uninteresting chunks like that, or perhaps having =
+a
+> command line option that controls how close together the changes must be=
+ in
+> order to be included in the output.
 
-Shouldn't this be "were" instead of "is"?  Not fully sure.  Anyway:
+In a generic tool like `range-diff`, it is virtually guaranteed that the
+default operation does not satisfy all use cases. This example
+demonstrates that ;-)
 
-=2D-- >8 ---
-Subject: [PATCH] revert: config documentation fixes
+In general, the `A...B` form does what users want, namely show you pairs
+between the "left" and the "right" commits in that symmetric range.
 
-43966ab315 (revert: optionally refer to commit in the "reference"
-format, 2022-05-26) added the documentation file config/revert.txt.
-Actually include it in config.txt.
+However, you _can_ use `range-diff` in a way that it produces what you
+want. In the example you provided above, `git range-diff foo cat@{1} cat`
+should do it. That would be the `<upstream> <before> <after>` form.
 
-Make is used with a bare infinitive after the object; remove the "to".
+In general, you might need to play with `git merge-base --fork-point` (see
+*1* for more information). I could imagine that the following command
+might give you what you want in even more cases:
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- Documentation/config.txt        | 2 ++
- Documentation/config/revert.txt | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+	git range-diff \
+		$(git merge-base --fork-point @{u} @{1})..@{1} \
+		$(git merge-base --fork-point @{u} HEAD)..HEAD
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e284b042f2..e376d547ce 100644
-=2D-- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -495,6 +495,8 @@ include::config/repack.txt[]
+Ciao,
+Johannes
 
- include::config/rerere.txt[]
-
-+include::config/revert.txt[]
-+
- include::config/safe.txt[]
-
- include::config/sendemail.txt[]
-diff --git a/Documentation/config/revert.txt b/Documentation/config/revert=
-.txt
-index 797bfb6d62..802d6faca2 100644
-=2D-- a/Documentation/config/revert.txt
-+++ b/Documentation/config/revert.txt
-@@ -1,3 +1,3 @@
- revert.reference::
--	Setting this variable to true makes `git revert` to behave
-+	Setting this variable to true makes `git revert` behave
- 	as if the `--reference` option is given.
-=2D-
-2.36.1
-
---------------wlDBucgAKJbvvupqeUAI6NZ8--
+Footnote *1*: https://git-scm.com/docs/git-merge-base#_discussion_on_fork_=
+point_mode
