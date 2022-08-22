@@ -2,96 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CB02C28D13
-	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 13:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 939F8C28D13
+	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 14:14:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232206AbiHVN6g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Aug 2022 09:58:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44920 "EHLO
+        id S235682AbiHVOOI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Aug 2022 10:14:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234547AbiHVN6e (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2022 09:58:34 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5811010FCB
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 06:58:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661176701;
-        bh=O570wLuKh5UFUb3UpIPNgzJTeIP8sZrW9DTiOGbZSlg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NADcHFOPDkU4J6jk++ASsGjQAxXL3f9BIqh/lb9sNpXdLiR1cAWPqum4N0v7lVasD
-         Rc+cAZqSOrs+LOW7IhKSgE7xB/9Lnxx6em+xPDjwB5gyzJN6B5Hgd7aafarZ/vAFic
-         5fOwqpxZw5IixCFhfdAtR79Q0lnD1gBHAR6TLm/k=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.137.196] ([89.1.212.11]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEm6F-1oejzC1Xul-00GIUV; Mon, 22
- Aug 2022 15:58:21 +0200
-Date:   Mon, 22 Aug 2022 15:58:21 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Christian Couder <christian.couder@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Maxwell Bernstein <tekk.nolagi@gmail.com>,
-        Max Bernstein via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Max Bernstein <donotemailthisaddress@bernsteinbear.com>,
-        Max Bernstein <max@bernsteinbear.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2] trailer: allow spaces in tokens
-In-Reply-To: <CAP8UFD2kMXHxvg1tKVNLhY0Gweq2YrD7+tHmZXKwguYzRQ1Qpg@mail.gmail.com>
-Message-ID: <p8srs909-19p5-4o24-r245-roq46pp4s6p5@tzk.qr>
-References: <pull.1309.git.git.1660806376021.gitgitgadget@gmail.com> <pull.1309.v2.git.git.1660809243298.gitgitgadget@gmail.com> <xmqqk075qyq0.fsf@gitster.g> <CM9DZ4Z18PY9.1T2O8U54X66FD@cedar> <CAP8UFD1304rQh+9jMUkTmTvmNBxm6BNDt3=d07+C8iXSbJb2RA@mail.gmail.com>
- <xmqqa681nsrv.fsf@gitster.g> <xmqqwnb4n98f.fsf@gitster.g> <CAP8UFD2kMXHxvg1tKVNLhY0Gweq2YrD7+tHmZXKwguYzRQ1Qpg@mail.gmail.com>
+        with ESMTP id S235681AbiHVOOG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2022 10:14:06 -0400
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2E9ABF63
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 07:14:01 -0700 (PDT)
+Received: by mail-il1-x12a.google.com with SMTP id o3so5718010ilf.7
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 07:14:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=XWIiU7tCsy5bD2FJ3XID6U1S0ro0uVu4zOYcrj6plV0=;
+        b=HKbc341l2ed7Jaa2KJ1UuycnA4d4jL+rlGwH6uY2TI6Z1j8bPqRJwC8B1TPQyPEsn0
+         XTps3Gaso7xg/8qaVf1ntI0SkMUl7hbLpbG2DuyqT8WwLRn6mVeb1N28Fto5fWZnYgA/
+         cR7Id+lBL4cxCOhf97zBzwCvq5LvXFE+JbPa+DpG8i1bTZJ586RYgnYkDxtUwJx/qTgN
+         3BSKv7pRjQ2xGP6sP4Z3Q8I1j2zTQsVvGCKbFSchcWhY6vV0+MA/ecppic2GlapGTMlk
+         8jFAmC4MIXwCZRYtsCQY7ZpcAWGNpA/SFiXPw6ummX7Qs2LRI9QPg4BEgO12YCxkRonG
+         OTsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=XWIiU7tCsy5bD2FJ3XID6U1S0ro0uVu4zOYcrj6plV0=;
+        b=v09RdhftYV8h2KCBQqHPVnwb9BLmp19CGnHnA0feG27pr3gTXgi5Vj+hXmU5cqvbDs
+         sciFmI2S4NslOo8ZxN+ZndiaLdrW9wKG55EEzID6uk18Qfiyeu32iYAI8mxNi20a7VTy
+         FYqXl9GZ/TnJo2okQN/QF5Fr8CS2tANUZ3dz+sPiHS6JKfTt4ZiLshvMkGsgsSvkZUkx
+         AlUCpxVSK4Ee57nkDr20B1Kw9MAMjUiFAvtHWXTfM53CfY0QLtFG33SJccDdXtqrdgLM
+         Mi/hHTSpzBA20RewmF5JAxBzc9dDEpIGHxtWJI866dBhjae+Vtsk6a54Lxvmb+gJVajS
+         JTDw==
+X-Gm-Message-State: ACgBeo1mbHIK07yPzlGJ2jR7Ozi/Mpi1gZKkZXLQabCPNDgbwYyWT0sl
+        uudEK+/DR2UGNrHUrWSELho0RMa3q8Oy
+X-Google-Smtp-Source: AA6agR5gqQe70CBGXtT6TjazKdQ/VNDoDeq0p0CmweyvA4OKvRknRMWaUfXXJoJyHb4EBinOcvXpYg==
+X-Received: by 2002:a05:6e02:194d:b0:2df:8893:90bb with SMTP id x13-20020a056e02194d00b002df889390bbmr9854726ilu.242.1661177641178;
+        Mon, 22 Aug 2022 07:14:01 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:5550:8912:9500:397a? ([2600:1700:e72:80a0:5550:8912:9500:397a])
+        by smtp.gmail.com with ESMTPSA id b8-20020a026f48000000b003436da41c78sm5179560jae.76.2022.08.22.07.14.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Aug 2022 07:14:00 -0700 (PDT)
+Message-ID: <5181bfe9-a4d0-76ed-26ee-1f4400105e9e@github.com>
+Date:   Mon, 22 Aug 2022 10:14:00 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:p3Y/RYk9sty9gWhqsdXqel8AerYVYoAPASq29EMiO6jlOu1qvIl
- MJLzz4M0ihDMzHZZE3xiWajCA4B1ppdfTxlYaDceYG/Tzu1mAMmtAD1j8GSghR9xBarIx6q
- e9EhPYIy/FdmnqMszTvqp8WayKBQQ3vWdASKQ51Q2axFY41F98CpohDVFgiri6jh3ZKHS25
- FYJSp+li8PaZliKAoteSg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Izf5u6Jk9l0=:XsOELhTdKFoK0U0JlrlvvY
- msXgyF/bA6oVPejbpCaf9R9wtNccyh6TocZBGfKRMH/3Z4qUI/noH6gPHYuIQpfYt+LXf8x4i
- y9DTvIuybtu/Yz2OagtL5atdpFKP5Gd50LkpluU6a2F9DgKG8xzM+M6gEAT7AgewGizQzrlLh
- tgJgYeTqoHjBxuG0ugHXn2Ep9GwSBfOYc6gEitWa459xcxQRjpokhWRXH34sTGPXts8TSLkSE
- cpiQczP5jJ9QooNHFQY8tcEaHFk4lRUp7q8GnZQH2Zblp9oAUKjMVLmRoQiP7ml3hsqqvGPlj
- 7q6eu95rl6zirF6aAZJej0zYgKblnPhltQjLVUZp//ETEv/uus3SkaLQSk6j6XnZAMHj+xoG+
- xNGEomTr/rJGOwod7uTRgIac9FFJn7iKd+kRW85PYYU8yIRlxau8An59pexwnj8ftJ4Tl5i4A
- IstkqXv8J+Yd6IMQ0AcrmzPl3mv0gMKpK63I7/a1VvraZkTIu2PP6pNFFI+8dDgFvfKCByo/X
- aWAzmZcY5ZVrl7H7/CKRgl5etpN8jVGlMO4dPGukHS/3i+o0ZWNOnc6FkfFKnkWbfedPouxtB
- Za+IPtyNazrn3ngFAj1HEzU5aS11FDXsA4nrnDwXM0lRdxv1epJ5oW8MbFxjMYYro9e27ykJj
- /Eh8pDqXYq6vMy7IjPP3r6R34oxe60JVvrYZ/BzDCIKbN3arp2nfc3zqluGcw0F/cOO/XJEFB
- gHXNxFavkDiNPD366skd/aHD4aeSFYl3w70fsQlW5mGtaQ1TdashMdvPXZtSa4aHTQJpm27Ow
- 2EaCQw/1WKVusCnQCYPzFpVOt2rJOETs/tW3bxNj3BRupRXNvfmiYZ0dqeBRbrg73MYQm2T94
- WlymyRKrJYb+XsG/TuxyGef7pR9zTlkXBFV3xSIgESeRQ11E2QFici5ygDhYqge5x6urAyhRS
- GGx+gtLzhDDwwenAf1npptrMBUMSDJ/hQ1cVkobwQjI+jYCN5P4ekgA4DxqxSbLkJG6+x3hN0
- PB+w+KGLB8aFKn8exB3O/sxwYtTy2tCoAKMiJoFt63FDGg0zIVM3rXaVJJWYSxSFCjLUX1BIr
- LSQq7qpcnOiTfp5pD8Pjq9f/6PpWZkQLl1TZCX8qlSkVmxJiwmLlzcaDw==
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH 0/11] annotating unused function parameters
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+References: <Yv9gxqH6nK2KYnNj@coredump.intra.peff.net>
+ <220819.861qtc8gug.gmgdl@evledraar.gmail.com>
+ <c22a8317-7d43-d84b-f63f-df2da31b4658@github.com>
+ <220819.868rnk54ju.gmgdl@evledraar.gmail.com>
+ <YwCtkwjWdJVHHZV0@coredump.intra.peff.net>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <YwCtkwjWdJVHHZV0@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+On 8/20/2022 5:46 AM, Jeff King wrote:
+> On Fri, Aug 19, 2022 at 10:58:08PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> 
+>> Yes, I spoke too soon, sorry. We still need ((unused)). FWIW the below
+>> on top of master and doing:
+> 
+> Right. Using ((deprecated)) is really just a substitute for the variable
+> renaming part.
+> 
+> And I agree it works as advertised, though I think I prefer the
+> variable-renaming version.
+> 
+> One, it feels like we're abusing the deprecated attribute here. The
+> confusion in the compiler output I'm OK with, because we get a chance to
+> put our own message there (so I agree the output is actually better than
+> with my patch). But from time to time I've had to build with
+> -Wno-deprecated-declarations to get around _actual_ deprecated warnings
+> (e.g., compiling with OPENSSL_SHA1=Yes). And doing so would be cutting
+> out half the protection of UNUSED() in that case.
 
-On Fri, 19 Aug 2022, Christian Couder wrote:
+The fact that we can't turn on -Wno-deprecated-declarations is enough
+to convince me that we need to use the variable renaming trick.
 
-> On Fri, Aug 19, 2022 at 6:33 AM Junio C Hamano <gitster@pobox.com> wrote=
-:
-> >
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> > > but see a room for unrelated improvement from the current code,
-> > > namely, to allow exactly one optional space, immediately before the
-> > > separator and nowhere else.
-> >
-> > Ah, no, sorry, I misread the situation.  It's not a room for
-> > improvement.  It is very close to what the current code already does,
-> > i.e. to allow optional spaces immediately before the separator.  The
-> > difference is that the current code allows arbitrary number of
-> > optional spaces, not zero or exactly one.
->
-> Yeah, I think it makes sense to not change this default behavior, but
-> maybe, if people don't like it for some reason, allow options to tweak
-> it.
+Thanks,
+-Stolee
 
-That sounds like a very good compromise to me.
-
-Ciao,
-Dscho
