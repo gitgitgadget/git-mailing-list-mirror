@@ -2,108 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75049C28D13
-	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 22:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA64DC28D13
+	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 23:58:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237799AbiHVW0G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Aug 2022 18:26:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42316 "EHLO
+        id S236952AbiHVX6v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Aug 2022 19:58:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232461AbiHVW0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2022 18:26:05 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A19ED3AE7E
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 15:26:04 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id a22so15737323edj.5
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 15:26:04 -0700 (PDT)
+        with ESMTP id S230383AbiHVX6s (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2022 19:58:48 -0400
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5265192B1
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 16:58:45 -0700 (PDT)
+Received: by mail-qv1-xf36.google.com with SMTP id m5so6564212qvo.4
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 16:58:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=gt/dlluTfKupxyn9PqcdI15OC74CoWJX7Q0Xt/rj8HQ=;
-        b=aQ1FSlgipUeapw7lceUBsA3pD1+mY8tbWXqvpRGmjDC3EpE5V+Qm3TTct3kUA8hXsd
-         TNYPDyHLu+WglfUFRcgTLLtCY+i5PhQNS131r4bPhmBPdEjT/4l5Z+NJl3ILvMjyEuql
-         KpegZpN5PZTsnjXw8I9/B9OUn7nYWyMv+Izd0zJHsg64J79B6TF3+7zwsmilLbOMGIzd
-         Dgewo2YXga2Bi4UW9ZOw9Fje0M8r4tHAWDjeOmoLYz0o15ZeaFSvf02RDEG5rK/0W9+y
-         nYA3daKVYesQCzI5zq9E3UrZR3LUzk92MdmnSyriIqkzpGJlYsVmnsk3Z/5PCwbZS+3p
-         Hv3g==
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:to:from:to:cc;
+        bh=YyRK+JvvZAhJeXgbQdzUTLGDivV3ySWTEjObuTbAnPg=;
+        b=HwyIwJhUpjpbFxnLQf/ssXi3WDPLo13n5i9XWW3L1WcLVKdiIFuVQJ76Vyu5/UM9mW
+         DBQkOY/tQTnPJZXFBftCdzWHN20tI2fxVdYQRMvzRpYYqhlrl7JnN5MLoAmunWmhc20s
+         J+3De3QpJN4Rtfst2bTbAkG1NXvUZwJPdp9uzgI/vO1AfetCaoMjYcy87kZJ5yr47rzA
+         PauklxgCm965u0Ee3V3GeEnmRh2HTq7fgz/6y1KTvF0WVpWZDHKoz7q4VnGqoqKs5jmf
+         dFInspPauLJRY2ojO7fTerR1C1YUmvzj9ofOES5le35cTdyzBm3OQgi+zuZEEuRMypi3
+         VVsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=gt/dlluTfKupxyn9PqcdI15OC74CoWJX7Q0Xt/rj8HQ=;
-        b=bafpTwLG6kv9SmimLjz8/oDMWfDOFAMzvmJX7Q+pq03J8oLFXj3bI+gcYLRV8wJZ8m
-         cZepfoOqNXNtYlA4uca59FCQC0le/3j/gc5fnFXDfR6dcj98M7XU88RkEKEwHCjbSo4/
-         wFEZpKqxs3253zP/dNdA7Q7iGSUf8qT7A2vwRvtgnY7flclcFuYTGzUlUuEadOGjdcSJ
-         JWjfwLLk9dpkE3GIXb9xx5lXkokkDb83vla9qgG5oSoB92PwqyxyAgDMQcOUaL4qKrWo
-         iichl7yslIAf2n7hP1JPmkkb1d5MoW1PwZiJBIM3KPS+HW+mBZAW2mKCItpl9YyXtvWw
-         U61Q==
-X-Gm-Message-State: ACgBeo3K2LOfVA/YCvAFWGxZzJDYL+wyhgJTkvtRV8aEZCxQRgaXV5kI
-        9iio92r9qW14sASzfAEqfbo=
-X-Google-Smtp-Source: AA6agR51wok2JP/azPlR+y/dEWHG8NM50MUlPQIpauqdshbvl2WRL+m8gRnl/p5m76F4OnAPUC/PrA==
-X-Received: by 2002:a05:6402:5cd:b0:446:5965:f4af with SMTP id n13-20020a05640205cd00b004465965f4afmr1050261edx.12.1661207163139;
-        Mon, 22 Aug 2022 15:26:03 -0700 (PDT)
-Received: from localhost (84-236-78-250.pool.digikabel.hu. [84.236.78.250])
-        by smtp.gmail.com with ESMTPSA id la19-20020a170907781300b00734bfab4d59sm3492281ejc.170.2022.08.22.15.26.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Aug 2022 15:26:02 -0700 (PDT)
-Date:   Tue, 23 Aug 2022 00:26:01 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [Question] How to fix 'static-analysis' build on Ubuntu 20.04
-Message-ID: <20220822222601.GA1760@szeder.dev>
-References: <eb8779bc-fc41-f601-05f2-024e6bf3f316@github.com>
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:to:x-gm-message-state:from:to:cc;
+        bh=YyRK+JvvZAhJeXgbQdzUTLGDivV3ySWTEjObuTbAnPg=;
+        b=baCp+gJpwfdNi3NFP26n/M1mucx3+tJVhTpF9AK3pzMatDnfrbBdhKuo+Q2rv4gdYn
+         2/WrMAiWpDOjSoLEUJ5XKpV/lR8OJPKezjriNI8llujTM5JAMtxqRa4yiT0E27RDude3
+         /0Zz/dcKj9tt+XZWN5p8Cy4RULu2GAl98WXarpp1dRsDpMOj37Kd0ioSW+vVXYC98pZO
+         FPAVbbFSIvG+Jh0NtZt0lFaZgioUWJg787LsMy2Iq17B0jiWZcTGoMybuKgWoq2AP96B
+         z64zDuuWqDU87Z+Fg230D9mgzA+G/o9ks0vDAuLQ72a6um23ktpJJJy5LkV3JfciQhSD
+         +Q/A==
+X-Gm-Message-State: ACgBeo293oyrBC3Z0h/z5RWD3BQ6kwcLWDh7eM4bZxS+IyD06vW9t6pa
+        hHNBprPkuT5JtAg0vSdPEt4=
+X-Google-Smtp-Source: AA6agR7bwSkSDFz9AuMdsOcJ+EgPHaPFWpplkjU1lW5ti2fQVegWESZmyE4mgqjf1Fkl1uQ/D1wc3w==
+X-Received: by 2002:a05:6214:d66:b0:496:fc5d:e1f6 with SMTP id 6-20020a0562140d6600b00496fc5de1f6mr824287qvs.63.1661212725020;
+        Mon, 22 Aug 2022 16:58:45 -0700 (PDT)
+Received: from [192.168.1.128] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id ay13-20020a05620a178d00b006a6ab259261sm11148191qkb.29.2022.08.22.16.58.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Aug 2022 16:58:44 -0700 (PDT)
+To:     Git mailing list <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Bug in 'git log --remerge-diff' when used with '--find-object' and
+ '--submodule=log|diff'
+Message-ID: <43cf2a1d-058a-fd79-befe-7d9bc62581ed@gmail.com>
+Date:   Mon, 22 Aug 2022 19:58:43 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <eb8779bc-fc41-f601-05f2-024e6bf3f316@github.com>
+Content-Language: fr
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 22, 2022 at 11:19:11AM -0400, Derrick Stolee wrote:
-> While preparing my latest series, I noticed that the GitHub Actions CI
-> builds were cancelling the 'static-analysis' job because of a brownout of
-> Ubuntu 18.04. We are recommended to upgrade to 20.04.
-> 
-> However, we explicitly chose 18.04 in d051ed77ee6
-> (.github/workflows/main.yml: run static-analysis on bionic, 2021-02-08)
-> because coccinelle was not available in 20.04. It still isn't available
-> since I tried the basic update and it failed [1]
-> 
-> [1] https://github.com/gitgitgadget/git/runs/7955077955?check_suite_focus=true#step:3:98
-> 
-> Does anyone have an idea of how to install coccinelle on this newer
-> version? 
+Hi Elijah,
 
-Containers?  I've built Docker containers from most recent Coccinelle
-versions and used to use them in my custom Travis CI build jobs; the
-version included in Ubuntu 18.04 is rather old, and apparently it
-doesn't catch some transformations that later versions do [1].  I'm
-sure it's somehow possible to use such containers in GitHub Actions as
-well.
+I found two bugs in '--remerge-diff' when combined with both '--find-object' and
+'--submodule=log|diff'. I don't know if they have the same cause.
 
-> Should we try compiling it from source for this job?
+When using these flags together, *all* 2-parents merge commits are shown (even in a repo with
+no submodule!)
 
-It's not that difficult to build Coccinelle from source once you
-figure out its OCaml dependencies...  And luckily those dependencies
-seem to be rather stable: we can pass the same dozen or so package
-names to 'apt-get' to install all its build dependencies both on
-ubuntu:18.04 and :20.04 base images.
+Moreover, for merges with conflicted paths, all conflicted paths are shown as "(new submodule)",
+even if they are not a submodule (in fact, even when no submodule is present
+in the repository!).
 
-However, installing dependencies and building Coccinelle takes almost
-5 minutes on my machine; I don't think we'd want to add that much
-overhead to every CI build.
+This artificial example reproduces the bug:
 
-> Should we
-> consider moving off of coccinelle and onto a different tool?
+```bash
+#!/bin/bash
 
-Is there any other comparable tool out there?!
+set -euEo pipefail
 
+repo=repro
+rm -rf $repo
 
-[1] https://public-inbox.org/git/20220822213408.662482-1-szeder.dev@gmail.com/
-    a6a01e7d8a (promisor-remote: fix xcalloc() argument order, 2022-08-22)
-    d2c4e6292a (builtin rebase: use oideq(), 2019-04-06)
-    7762f44ee0 (builtin rebase: use FREE_AND_NULL, 2019-04-06)
-[2] In a sequential build; alas parallel builds always fail.
+TEST_AUTHOR_LOCALNAME=author
+TEST_AUTHOR_DOMAIN=example.com
+GIT_AUTHOR_EMAIL=${TEST_AUTHOR_LOCALNAME}@${TEST_AUTHOR_DOMAIN}
+GIT_AUTHOR_NAME='A U Thor'
+GIT_AUTHOR_DATE='1112354055 +0200'
+TEST_COMMITTER_LOCALNAME=committer
+TEST_COMMITTER_DOMAIN=example.com
+GIT_COMMITTER_EMAIL=${TEST_COMMITTER_LOCALNAME}@${TEST_COMMITTER_DOMAIN}
+GIT_COMMITTER_NAME='C O Mitter'
+GIT_COMMITTER_DATE='1112354055 +0200'
+export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
+export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
+export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
+export HOME=
+
+git -c init.defaultBranch=unimportant init $repo
+cd $repo
+echo i>file
+git add file
+git commit -m file
+git checkout -b side
+echo s>>file2
+git add file2
+git commit -am side
+git checkout -
+echo m >>file
+git commit -am main
+git merge side -m clean
+git checkout side
+echo c>>file
+git add file
+git commit -am side2
+git checkout -
+echo cc>>file
+git commit -am main2
+git merge side || true
+printf 'i\nm' > file
+git commit -am conflicted
+# look for a dummy object
+git log --oneline --diff-merges=r --submodule=log --find-object=2c042ac4213768e55791098110d2ef2ef845881a
+# same output with --submodule=diff
+```
+
+This is the output I get from the 'git log' call:
+
+b4f1be9 (HEAD -> unimportant) conflicted
+Submodule file 0000000...0000000 (new submodule)
+a4ef223 clean
+
+Notice both merges are shown despite none of them changing the number of occurences of 
+2c042ac4213768e55791098110d2ef2ef845881a, which does not even exist in this repository,
+and also that the conflicted merge shows 'file' as "new submodule".
+
+Cheers,
+
+Philippe.
