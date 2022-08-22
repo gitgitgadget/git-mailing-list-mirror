@@ -2,119 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35FACC28D13
-	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 18:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21B94C32774
+	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 18:14:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235610AbiHVSIY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Aug 2022 14:08:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59194 "EHLO
+        id S237104AbiHVSOh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Aug 2022 14:14:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234980AbiHVSIW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2022 14:08:22 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6B99C56
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 11:08:20 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id h22so8540406qtu.2
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 11:08:20 -0700 (PDT)
+        with ESMTP id S236626AbiHVSOf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2022 14:14:35 -0400
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2E8443E5C
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 11:14:33 -0700 (PDT)
+Received: by mail-qv1-xf34.google.com with SMTP id m5so5906152qvo.4
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 11:14:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc;
-        bh=otlyD8DU6ia0vyGrhtY+k4EwhMcyj8CB+TN4DiLewCY=;
-        b=r3vikR82mWcQSFtXWMIKYXxZI9LULWKL1gyUmlVx6zNDun+8ZFa9Lzsde0xmIo+1fC
-         k00szG+EFTUqGYoZYxwnCfVBNagQIugK//GeFdlbLGUJnBAgv3T9OZxmGXBz7hQXV2q7
-         cVDaK3vM04y3NiKKoCXS9sBU4Lg9tSNI5CDUS2BLAHgHY2NPh17h4l2ja4pvSHqvo+Z/
-         ABkyjMhVnomulf56KLSiXmDd0UQXcVxfTZSBQLkufgMtU1/eEpveKkL8B5xMzsAmcGay
-         1F4mGqk9+TJ0m/CUpOk/aCGb5joEP4NFot+Jfx4mEcT1zCbwWxyjahP1kT9RInhPbU9e
-         8JWw==
+        bh=bToazt1pzdp4dUBGacrL2eKzohmw9TeTYGjje51TxZc=;
+        b=FzdbJOxflUkdhdmzfx+tG2t585krWRmKx6zTqDQ/NaknRz6iy5hUpJtjPDw4Rdoaan
+         XfPWvS5pH8bZt1WoQ63TkBq1rS/Q8iPAB6F+9M3SGRfxSu+WTLfolw4pYd7YTk11IpC3
+         2jqqw3ChfAX1r6ED4RPIjyVi+Cg27+cY9wQWmP2AuErApC6S4sMaZV3lEDXJE08rb6OY
+         Iz5JGNUwfBAR12mMN4I0cJAGIU0x8JpIkEEzIhJuC5U9FbYu+eewNEG4JCPVEgeR+O01
+         XMhjlnNeWAYxFmBlCGTGPm7Fxao7GQs3kPdvnWUFiJVlEN7sKoMdl29TKOI2uEcoXjuR
+         ZL8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=otlyD8DU6ia0vyGrhtY+k4EwhMcyj8CB+TN4DiLewCY=;
-        b=QxhZWhcDWQurWH8A3gf47N7cdvRnEH0qbLdrx+Wv/kPFzVf0dlv207T6C7fuGgQA4h
-         sn9yMS6DzY3YOxfH99ZZE48V/1ah99DbEONHW/ds11t1U9cHX3pR3QkINxTVpGSfRxx9
-         YEi2cJS9aVqRXbC/sjq7hppm8wEB3cxFhF/ssMOxj9w/lqHRF0SFjZcwq2TenCuEjszH
-         /xzqKLTcKOYlrM6zflyQlI9xCRZA5W1kWIwZkViWMbPcRAKoOyAxH+atSdWDeIFpIZu2
-         xJ9+09akLrUyVaQl6dnNKyCpe+gdQgWepLG6S9/GtvCnvVGyxPSH8cSejFq/HpQWi3Ru
-         40fA==
-X-Gm-Message-State: ACgBeo30aOhhPGhQU7GAqu2Lyk3psL1lgx8sSeN8sEa8CuqwUchlQ8pA
-        swjqhLnf47fs50T1j7/G6ifROA==
-X-Google-Smtp-Source: AA6agR5SYdt42DqQlpvCzFVtsQcpHZI495n7EbYmBpzObfUN4Xy6l0cVQ6O3H7NEqoHu2s0umsUn8Q==
-X-Received: by 2002:ac8:7d90:0:b0:344:ac48:af55 with SMTP id c16-20020ac87d90000000b00344ac48af55mr9519105qtd.106.1661191699625;
-        Mon, 22 Aug 2022 11:08:19 -0700 (PDT)
+        bh=bToazt1pzdp4dUBGacrL2eKzohmw9TeTYGjje51TxZc=;
+        b=IVys0rpU/LbV/HX18T7UJlF/Jv6N53OPzEb1G7/WdTKCBL6vPXhw66yYde0jxrkj9G
+         yVMjz0Hh5weL351OYVA07WRuMvUTUbOs3cQ3J0ZHuY0iZl9/rN+pfWaIJuogkbmRndOP
+         uhsHWyBu3mMd0noiN0bRw4R5iHzWaISKsq56hGUS7FrzCoT0rz41q34HoRlZ5XwCoKDE
+         IgV6i8WjA1eBG0x79pGsWBC8OWYnXdt1XjfjAFiZtxISCVkRkO68KMp3TRW3bsHFGECl
+         K2scHp1cZu2DIzF6B7dXpPfHILvMkPG+rHRY+oLkdro64+ImDfpUg5xS7tOvs8HlqV7v
+         XFpQ==
+X-Gm-Message-State: ACgBeo3Z31SHmoBCjelAIDCdi/KZzXPOafiAgv6SP6vw5es4RqaSUJX5
+        6usyHUtF5GyY5XZFe468GlNN3A==
+X-Google-Smtp-Source: AA6agR7j67U6ON1DH//MnHnLMUfa8lLslxznLGlKMHPVdK4VCQJh8Ld9/Z9vYPGWIzUXtgJ6mlE7vw==
+X-Received: by 2002:a0c:a953:0:b0:495:5c8f:ae2f with SMTP id z19-20020a0ca953000000b004955c8fae2fmr16542912qva.20.1661192073018;
+        Mon, 22 Aug 2022 11:14:33 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id s11-20020a05620a29cb00b006bb49cfe147sm11441367qkp.84.2022.08.22.11.08.18
+        by smtp.gmail.com with ESMTPSA id t201-20020a37aad2000000b006b9264191b5sm12012155qke.32.2022.08.22.11.14.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Aug 2022 11:08:19 -0700 (PDT)
-Date:   Mon, 22 Aug 2022 14:08:18 -0400
+        Mon, 22 Aug 2022 11:14:32 -0700 (PDT)
+Date:   Mon, 22 Aug 2022 14:14:31 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <derrickstolee@github.com>,
-        jonathantanmy@google.com,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+        chakrabortyabhradeep79@gmail.com, jonathantanmy@google.com,
+        kaartic.sivaraam@gmail.com
 Subject: Re: [PATCH 6/6] midx.c: include preferred pack correctly with
  existing MIDX
-Message-ID: <YwPGEvf210HyLnLy@nand.local>
+Message-ID: <YwPHh/EDIS0S4uoj@nand.local>
 References: <cover.1660944574.git.me@ttaylorr.com>
  <4ddddc959b042faf7ae98a8e8eaa05e77f9ea23e.1660944574.git.me@ttaylorr.com>
- <CAPOJW5zmbQ966KXjaEvxk-oHu01BsxwszUTu3et4SYGFCAegCA@mail.gmail.com>
+ <3cecd058-aec2-d5f9-ef79-58cc10ce14fb@github.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPOJW5zmbQ966KXjaEvxk-oHu01BsxwszUTu3et4SYGFCAegCA@mail.gmail.com>
+In-Reply-To: <3cecd058-aec2-d5f9-ef79-58cc10ce14fb@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 21, 2022 at 12:10:42AM +0530, Abhradeep Chakraborty wrote:
-> On Sat, Aug 20, 2022 at 3:00 AM Taylor Blau <me@ttaylorr.com> wrote:
+On Mon, Aug 22, 2022 at 01:03:11PM -0400, Derrick Stolee wrote:
+> On 8/19/2022 5:30 PM, Taylor Blau wrote:
+>
+> > Resolve this by adding all objects from the preferred pack separately
+> > when it appears in the existing MIDX (if one was present). This will
+> > duplicate objects from that pack that *did* appear in the MIDX, but this
+> > is fine, since get_sorted_entries() already handles duplicates. (A
+> > future optimization in this area could avoid adding copies of objects
+> > that we know already existing in the MIDX.)
+>
+> ...
+>
+> > This resolves the bug described in the first patch of this series.
+>
+> Thinking ahead to when this is a commit, perhaps this could instead
+> refer to the 'preferred pack change with existing MIDX bitmap' test
+> case?
+
+Good idea, thanks.
+
+> > @@ -610,10 +609,7 @@ static void midx_fanout_add_midx_fanout(struct midx_fanout *fanout,
+> >  		nth_midxed_pack_midx_entry(m,
+> >  					   &fanout->entries[fanout->nr],
+> >  					   cur_object);
+> > -		if (nth_midxed_pack_int_id(m, cur_object) == preferred_pack)
+> > -			fanout->entries[fanout->nr].preferred = 1;
+> > -		else
+> > -			fanout->entries[fanout->nr].preferred = 0;
+> > +		fanout->entries[fanout->nr].preferred = 0;
+> >  		fanout->nr++;
+>
+> Here, we have lost the ability to set the 'preferred' bit from the
+> previous MIDX. Good.
+
+Yep, we don't want to propagate any of these bits forward when reusing
+an existing MIDX. Thinking on it more, I think this is the only
+legitimate use of MIDX reuse in the "I'm about to write bitmaps"
+context.
+
+I mentioned before the idea that we could use `--stdin-packs` now when
+writing a MIDX bitmap where before it wasn't implemented (likely due to
+problems caused by this bug). But the whole premise doesn't make a ton
+of sense:
+
+  - Every pack that's in the include_packs list would need to be handled
+    separately.
+
+  - And every pack that *isn't* in that list would be skipped.
+
+Which means that it wouldn't help at all to reuse an existing MIDX. The
+reason that we'd need to handle all included packs separately is subtle
+and a little different from what's going on here, though. The problem
+there is that if you have two packs, say P1 and P2, and P1 is in the
+include list but P2 is not, then any objects duplicated between the two
+and selected from P2 will disappear when writing the new MIDX.
+
+Since the set of packs that are going into the new MIDX are precisely
+equal to the set of packs that we'd need to handle separately, it
+probably makes sense to continue to avoid using the existing MIDX when
+writing a bitmap with the `--stdin-packs` option.
+
+> > @@ -694,6 +689,11 @@ static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
+> >  						    preferred, cur_fanout);
+> >  		}
 > >
-> > +               if (-1 < preferred_pack && preferred_pack < start_pack)
-> > +                       midx_fanout_add_pack_fanout(&fanout, info,
-> > +                                                   preferred_pack, 1,
-> > +                                                   cur_fanout);
+> > +		if (-1 < preferred_pack && preferred_pack < start_pack)
+> > +			midx_fanout_add_pack_fanout(&fanout, info,
+> > +						    preferred_pack, 1,
+> > +						    cur_fanout);
 > > +
 >
-> All the other changes make sense to me but I have a question about
-> this particular change. Instead of adding all the preferred objects
-> again (but in this case these are being added from preferred pack) in
-> `fanout->entries`, will it be better if we call
-> `midx_fanout_add_pack_fanout()` function from
-> `midx_fanout_add_midx_fanout()` when above conditions are met?
-> Something like this -
->
->     static void midx_fanout_add_midx_fanout(struct midx_fanout *fanout,
->                                         struct multi_pack_index *m,
->                                         struct pack_info *info,
->                                         uint32_t cur_pack,
->                                         int preferred,
->                                         uint32_t cur_fanout)
->     {
->      ...
->           if (cur_fanout)
->                 start = ntohl(m->chunk_oid_fanout[cur_fanout - 1]);
->           end = ntohl(m->chunk_oid_fanout[cur_fanout]);
->           if (preferred) {
->                 midx_fanout_add_pack_fanout(&fanout, info, cur_pack,
->
-> preferred, cur_fanout);
->                 return;
->           }
->
->           for (.....) {
->           ........
->     }
+> And here, when there is a preferred pack _in the previous MIDX_,
+> we add its objects a second time, but now with the preferred bit
+> on. If the preferred pack is _not_ in the previous MIDX, then the
+> 'preferred_pack < start_pack' condition will fail and the bits
+> would have been set within the for loop.
 
-A slightly simpler approach might be to see that the pack_midx_entry
-structure we get back from calling nth_midxed_pack_midx_entry() contains
-the pack from which each object is represented. So if we see one that
-collides with the preferred pack, then we can just skip it, since we
-know they'll be handled separately down below.
+Exactly!
 
-I'll add another patch on top which makes that optimization.
+> > @@ -346,7 +346,7 @@ test_expect_success 'preferred pack change with existing MIDX bitmap' '
+> >  		test_path_is_file $midx &&
+> >  		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
+> >
+> > -		test_must_fail git clone --no-local . clone2
+> > +		git clone --no-local . clone2
+>
+> I mentioned in patch 1 that this test could use some comments about
+> what is unexpected and what _is_ expected. I think this comment needs
+> an update in this patch:
+>
+> 	# Generate a new MIDX which changes the preferred pack to a pack
+> 	# contained in the existing MIDX, such that not all objects from
+> 	# p2 that appear in the MIDX had their copy selected from p2.
+
+Good eyes, thanks for spotting. I updated the comment below, too (which
+doesn't exist in this version of the patch, but you suggested adding to
+the first patch in this series).
 
 Thanks,
 Taylor
