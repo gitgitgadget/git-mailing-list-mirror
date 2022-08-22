@@ -2,203 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02DD3C28D13
-	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 18:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02E11C28D13
+	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 19:19:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237747AbiHVSsP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Aug 2022 14:48:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55390 "EHLO
+        id S235444AbiHVTTc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Aug 2022 15:19:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235412AbiHVSrx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2022 14:47:53 -0400
-Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com [IPv6:2607:f8b0:4864:20::e34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E99CE474DD
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 11:47:30 -0700 (PDT)
-Received: by mail-vs1-xe34.google.com with SMTP id l7so11899392vsc.0
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 11:47:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=somuoiuB6LTMXm5YVryhiDQ+mvciybXtm0srNp9RInA=;
-        b=gbhz2n6KB5qb5pT/LeA94kf1B9RZNqmuQ79I2wIoUPPaWA2IWVvwuVP3/hiWLMh8Nk
-         8jiDpMH6VdPjLTz5jpnE4g43/oNt5vvaKxZIpUJnFQSmYQCCjHUSXfsv0GtmDAqyY4Lp
-         wnR9g/qyPZHxLJN4D27EQ7MdLj4VonD5oRf8iZ+ud31TPocFqgVsqIs7AGISEJE1ejzI
-         gO1489cgUbZBBQKduUWDzqcD+iwPxxjNr87bstXfQcdc9q+K3746NCrgG7Ag5JATguKf
-         Dt21e3/rgrq+BBzlq22c9VDxsRk5gNoltp+CWy50PUlAex1D0i0iC+GHyDanDNKwrjHk
-         J3PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=somuoiuB6LTMXm5YVryhiDQ+mvciybXtm0srNp9RInA=;
-        b=uzlRf015Y57EeXdgoA5vI1zRR9Mp8KncvBApXHhn57t3kfdCH0vt4ZrV8OdLq50utt
-         Aem7QwCqznN5LpEKcTJswRKP0GHPXxUa9ecKgxsmLuU5hSd4V3b0psl9vhaur9EGDXnS
-         7JR+to3oUNGwxc3h5M1y9nR6QL2qJ83GV/pEpkbSYGXksEN8270utxZWNjlTA1kvZ3dG
-         dhYXeqUyqdKlsoiqmBDpqJfTBGp0fESyPJ1pvq0BJDzMGZ328ir1oUSjQLLaVtbP6NUS
-         0rNVBqeU9RjUv3gVm271waz/bEs8bGkrvK5hotn0xVCwlQgpV1RPVH4kuh6E+xWfX3oO
-         GsHw==
-X-Gm-Message-State: ACgBeo3sVJyhBAopD7wXyTsWSefv5ohE0OVUef/E7cH11ROizLmCFqWk
-        PdacAe/Fey8t1W1gn52niRMxtGCcF2hKSHVtiBtXqJ4rBK1A4Q==
-X-Google-Smtp-Source: AA6agR7xK0TrNqzMNUs7XPcOWT3SYZmn2a4eHvNLrxHfBHN60sE72i7N5LqGVn8ei8tsBKgSapp3HPI0BvMwo2t54/0=
-X-Received: by 2002:a05:6102:3bd7:b0:390:6de3:785d with SMTP id
- a23-20020a0561023bd700b003906de3785dmr1476837vsv.68.1661194049553; Mon, 22
- Aug 2022 11:47:29 -0700 (PDT)
+        with ESMTP id S238432AbiHVTTN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2022 15:19:13 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B5F50072
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 12:17:59 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F0CE1BC61C;
+        Mon, 22 Aug 2022 15:17:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=U+9mNUh5qe1e
+        fPMP/gLpduGyRSmAZoQIkIygi4poSrk=; b=acOukGZVmfNUnSP+iCWY0iKH4IZf
+        ktsRswGP+YZiSZqP8cg5J7uQy052TXVxALXQ3rRwC7SKgE6ebo804bTR8rZx7xI1
+        xgWqoEbfOTTkLFPcXTd/XNWWvV0myyT0iCqsmoiWLOeKsk53rvCMMHvSdMZUflzX
+        m3wHWFpS45VUcHY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 470851BC61B;
+        Mon, 22 Aug 2022 15:17:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D9AB01BC61A;
+        Mon, 22 Aug 2022 15:17:46 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 3/7] bundle-uri: create "key=value" line parsing
+References: <pull.1333.git.1661181174.gitgitgadget@gmail.com>
+        <49c4f88b6fd804f0bd5c62d523b45431846f4cee.1661181174.git.gitgitgadget@gmail.com>
+Date:   Mon, 22 Aug 2022 12:17:45 -0700
+In-Reply-To: <49c4f88b6fd804f0bd5c62d523b45431846f4cee.1661181174.git.gitgitgadget@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason via GitGitGadget"'s message
+ of "Mon, 22 Aug
+        2022 15:12:50 +0000")
+Message-ID: <xmqqo7wccckm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAAsFbAtu0vYhwa-Kb6dfpNBZ7jSLriVODi1s7H=-Deq9J6L0ww@mail.gmail.com>
- <252qppor-o3pp-s13o-q59r-9166478no04r@tzk.qr>
-In-Reply-To: <252qppor-o3pp-s13o-q59r-9166478no04r@tzk.qr>
-From:   squirrel <jatjasjem@gmail.com>
-Date:   Mon, 22 Aug 2022 19:47:02 +0100
-Message-ID: <CAAsFbAsD_AwyO1KM2G10Gs8fWzErsXQUx2My2RdfmN6WefU4EA@mail.gmail.com>
-Subject: Re: `git range-diff` lists chunks with uninteresting changes
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1AFFE55E-224F-11ED-8D75-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oh boy I messed up. There's a mistake in my reproduction example. Sorry!
+"=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason via GitGitGadget"  <gitgitgadget@=
+gmail.com>
+writes:
 
-I was saying that the uninteresting chunks pop if the changes from upstream
-appear close to changes in feature branch. To demonstrate the case when they
-are not close, I said to add a few lines, `1\n2\n3\n`, to the initial file.
-Somehow I managed to include this `1\n2\n3\n` in the main example that was
-supposed to demonstrate the issue. The correct, copy-pasteable, example:
+> +/**
+> + * General API for {transport,connect}.c etc.
+> + */
+> +int bundle_uri_parse_line(struct bundle_list *list, const char *line)
+> +{
+> +	int result;
+> +	const char *equals;
+> +	struct strbuf key =3D STRBUF_INIT;
+> +
+> +	if (!strlen(line))
+> +		return error(_("bundle-uri: got an empty line"));
+> +
+> +	equals =3D strchr(line, '=3D');
+> +
+> +	if (!equals)
+> +		return error(_("bundle-uri: line is not of the form 'key=3Dvalue'"))=
+;
+> +	if (line =3D=3D equals || !*(equals + 1))
+> +		return error(_("bundle-uri: line has empty key or value"));
 
-    git init
-    git branch -m main
-    echo -e "a\nb\nc\nd\ne\nf" > file
-    git add file
-    git commit -am "a b c d e f"
-    git checkout -b foo
-    echo -e "a\nb\nc\nd\ne\nfoo" > file
-    git commit -am "f -> foo"
-    git checkout main
-    git checkout -b cat
-    echo -e "a\nb\ncat\nd\ne\nf" > file
-    git commit -am "c -> cat"
-    git rebase foo
-    git range-diff foo cat@{1} cat
+The suggestions implied by my asking fall strictly into the "it does
+not have to exist here at this step and we can later extend it", but
+for something whose equivalent can be stored in our configuration
+file, it is curious why we _insist_ to refuse an empty string as the
+value.
 
-Now if I was to use the command that you give:
+I do not miss the "key alone without even '=3D' means 'true'"
+convention, personally, so insisting to have '=3D' is OK, but the
+inability to have an empty string as a value looks a bit disturbing.
 
-    $ git range-diff foo cat@{1} cat
-    1:  5b1a2f5 ! 1:  16c4eea c -> cat
-        @@ file
-         +cat
-          d
-          e
-        - f
-        + foo
+This depends on how the helper gets called, but most likely the
+caller has a single line of pkt-line that it GAVE us to process, so
+it sounds a bit wasteful to insist that "line" to be const to us and
+force us to use a separate strbuf, instead of just stuffing NUL at
+where we found '=3D' and pass the two halves to bundle_list_update().
 
-I think the command and the result are both correct. Indeed the change of
-`f` to `foo` is a difference between the two ranges. However, this change
-is just not interesting! I hope there's a way to not see it.
+Not a huge deal, it is just something I found funny in the "back in
+the days we coded together, Linus would never have written like
+this" way.
 
-Sorry about the mess up.
+Other than that small detail, the code looks OK to me.
 
-On Mon, 22 Aug 2022 at 17:02, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi squirrel,
->
-> On Sat, 20 Aug 2022, squirrel wrote:
->
-> > When someone makes a PR, they may be asked to rebase their feature branch onto
-> > main to resolve conflicts. It may be useful to quickly see what changed during
-> > the rebase, that is how the new version of PR is different to the old one.
-> >
-> > If the PR branch has not been reparented, you may get away with `git diff`.
-> > But if it has, `git diff` may contain a lot of changes from upstream. Instead,
-> > `git range-diff` can be used.
-> >
-> > The problem with this is that in this case `git range-diff` can show chunks
-> > with changes that have nothing to do with changes in the PR. Consider this
-> > repository (commands are runnable):
-> >
-> >     git init
-> >     git branch -m main
-> >     echo -e "a\nb\nc\nd\ne\n1\n2\n3\nf" > file
-> >     git add file
-> >     git commit -am "a b c d e f"
-> >
-> >     git checkout -b foo
-> >     echo -e "a\nb\nc\nd\ne\n1\n2\n3\nfoo" > file
-> >     git commit -am "f -> foo"
-> >
-> >     git checkout main
-> >     git checkout -b cat
-> >     echo -e "a\nb\ncat\nd\ne\n1\n2\n3\nf" > file
-> >     git commit -am "c -> cat"
-> >
-> > We got a few letters of alphabet on separate lines on main, and in branch
-> > foo `f` is changed to `foo`, and in branch cat `c` is changed to `cat`.
-> >
-> >     $ git log --all --graph --pretty=oneline
-> >     * 90e873e3 (HEAD -> cat) c -> cat
-> >     | * 3d8c1baf (foo) f -> foo
-> >     |/
-> >     * 4d2337dd (main) a b c d e f
-> >
-> > Now, still on cat, let's combine the two changes.
-> >
-> >     $ git rebase foo
-> >     Successfully rebased and updated refs/heads/cat
-> >
-> >     $ git log --all --graph --pretty=oneline
-> >     * 98e554a0 (HEAD -> cat) c -> cat
-> >     * 3d8c1baf (foo) f -> foo
-> >     * 4d2337dd (main) a b c d e f
-> >
-> > Now, `git rebase foo` worked automatically, so *the change* of the last commit
-> > on `cat` is the same as it was without rebase, which is changing `c` to `cat`.
-> > But if we run `git range-diff`, we will see this:
-> >
-> >     $ git range-diff 90e873e3...cat
-> >     -:  ------- > 1:  3d8c1ba f -> foo
-> >     1:  90e873e ! 2:  98e554a c -> cat
-> >         @@ file
-> >          +cat
-> >           d
-> >           e
-> >         - f
-> >         + foo
-> >
-> > It seems that this chunk is included for the sole reason that the change from
-> > `foo` is sort of close. If we try the same code, but put the lines `c` and `f`
-> > further apart, for example by replacing `e\n` with `e\n1\n2\n3\n` in the
-> > commands above, the output would be, as expected,
-> >
-> >     $ git range-diff f1e0a6cc3...cat
-> >     -:  ------- > 1:  4db06be f -> foo
-> >     1:  f1e0a6c = 2:  cc56db7 c -> cat
-> >
-> > I suggest not showing uninteresting chunks like that, or perhaps having a
-> > command line option that controls how close together the changes must be in
-> > order to be included in the output.
->
-> In a generic tool like `range-diff`, it is virtually guaranteed that the
-> default operation does not satisfy all use cases. This example
-> demonstrates that ;-)
->
-> In general, the `A...B` form does what users want, namely show you pairs
-> between the "left" and the "right" commits in that symmetric range.
->
-> However, you _can_ use `range-diff` in a way that it produces what you
-> want. In the example you provided above, `git range-diff foo cat@{1} cat`
-> should do it. That would be the `<upstream> <before> <after>` form.
->
-> In general, you might need to play with `git merge-base --fork-point` (see
-> *1* for more information). I could imagine that the following command
-> might give you what you want in even more cases:
->
->         git range-diff \
->                 $(git merge-base --fork-point @{u} @{1})..@{1} \
->                 $(git merge-base --fork-point @{u} HEAD)..HEAD
->
-> Ciao,
-> Johagnnes
->
-> Footnote *1*: https://git-scm.com/docs/git-merge-base#_discussion_on_fork_point_mode
+> +	strbuf_add(&key, line, equals - line);
+> +	result =3D bundle_list_update(key.buf, equals + 1, list);
+> +	strbuf_release(&key);
+> +
+> +	return result;
+> +}
+> diff --git a/bundle-uri.h b/bundle-uri.h
+> index 6692aa4b170..f725c9796f7 100644
+> --- a/bundle-uri.h
+> +++ b/bundle-uri.h
+> @@ -76,4 +76,16 @@ int for_all_bundles_in_list(struct bundle_list *list=
+,
+>   */
+>  int fetch_bundle_uri(struct repository *r, const char *uri);
+> =20
+> -#endif
+> +/**
+> + * General API for {transport,connect}.c etc.
+> + */
+> +
+> +/**
+> + * Parse a "key=3Dvalue" packet line from the bundle-uri verb.
+> + *
+> + * Returns 0 on success and non-zero on error.
+> + */
+> +int bundle_uri_parse_line(struct bundle_list *list,
+> +			  const char *line);
+> +
+> +#endif /* BUNDLE_URI_H */
