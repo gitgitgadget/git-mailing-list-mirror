@@ -2,135 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02E11C28D13
-	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 19:19:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EA47C49EC0
+	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 19:32:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235444AbiHVTTc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Aug 2022 15:19:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47864 "EHLO
+        id S238628AbiHVTcB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Aug 2022 15:32:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238432AbiHVTTN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2022 15:19:13 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B5F50072
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 12:17:59 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F0CE1BC61C;
-        Mon, 22 Aug 2022 15:17:50 -0400 (EDT)
+        with ESMTP id S239044AbiHVTau (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2022 15:30:50 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C3C45A160
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 12:25:42 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 96CF91ACBAE;
+        Mon, 22 Aug 2022 15:25:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=U+9mNUh5qe1e
-        fPMP/gLpduGyRSmAZoQIkIygi4poSrk=; b=acOukGZVmfNUnSP+iCWY0iKH4IZf
-        ktsRswGP+YZiSZqP8cg5J7uQy052TXVxALXQ3rRwC7SKgE6ebo804bTR8rZx7xI1
-        xgWqoEbfOTTkLFPcXTd/XNWWvV0myyT0iCqsmoiWLOeKsk53rvCMMHvSdMZUflzX
-        m3wHWFpS45VUcHY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 470851BC61B;
-        Mon, 22 Aug 2022 15:17:50 -0400 (EDT)
+        :content-type; s=sasl; bh=SSRIFCliVioIIWLE/pw5H11lRM7YZLUFQ22bD7
+        HPCdk=; b=miTpnwLf02uJ8zM1vOnGtd/bfrj3GXI4fz+q7lesU6PuOo6EmzatnS
+        mxg51ZM7mJu8bbA8AEio26fXTgmwg/o72Lax1T67JyfDGMkV77X/WfqalaOjGW80
+        V97HFx+R82ARFnq9KYEmxG6A+cLgPpon848uGn2YWeq58KWS9oT2A=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8F5FB1ACBAD;
+        Mon, 22 Aug 2022 15:25:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D9AB01BC61A;
-        Mon, 22 Aug 2022 15:17:46 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3B6CC1ACBA9;
+        Mon, 22 Aug 2022 15:25:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
         avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
         Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 3/7] bundle-uri: create "key=value" line parsing
+Subject: Re: [PATCH 5/7] bundle-uri: parse bundle list in config format
 References: <pull.1333.git.1661181174.gitgitgadget@gmail.com>
-        <49c4f88b6fd804f0bd5c62d523b45431846f4cee.1661181174.git.gitgitgadget@gmail.com>
-Date:   Mon, 22 Aug 2022 12:17:45 -0700
-In-Reply-To: <49c4f88b6fd804f0bd5c62d523b45431846f4cee.1661181174.git.gitgitgadget@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason via GitGitGadget"'s message
- of "Mon, 22 Aug
-        2022 15:12:50 +0000")
-Message-ID: <xmqqo7wccckm.fsf@gitster.g>
+        <1d1bd9c710327b4d705cfede017771da7fb6ec52.1661181174.git.gitgitgadget@gmail.com>
+Date:   Mon, 22 Aug 2022 12:25:37 -0700
+In-Reply-To: <1d1bd9c710327b4d705cfede017771da7fb6ec52.1661181174.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Mon, 22 Aug 2022
+        15:12:52 +0000")
+Message-ID: <xmqqilmkcc7i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1AFFE55E-224F-11ED-8D75-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 33F26C7A-2250-11ED-BAEA-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason via GitGitGadget"  <gitgitgadget@=
-gmail.com>
-writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +/**
-> + * General API for {transport,connect}.c etc.
-> + */
-> +int bundle_uri_parse_line(struct bundle_list *list, const char *line)
-> +{
-> +	int result;
-> +	const char *equals;
-> +	struct strbuf key =3D STRBUF_INIT;
-> +
-> +	if (!strlen(line))
-> +		return error(_("bundle-uri: got an empty line"));
-> +
-> +	equals =3D strchr(line, '=3D');
-> +
-> +	if (!equals)
-> +		return error(_("bundle-uri: line is not of the form 'key=3Dvalue'"))=
-;
-> +	if (line =3D=3D equals || !*(equals + 1))
-> +		return error(_("bundle-uri: line has empty key or value"));
+> To allow for the incremental fetch case, teach Git to understand a
+> bundle list that could be advertised at an independent bundle URI. Such
+> a bundle list is likely to be inspected by human readers, even if only
+> by the bundle provider creating the list. For this reason, we can take
+> our expected "key=value" pairs and instead format them using Git config
+> format.
 
-The suggestions implied by my asking fall strictly into the "it does
-not have to exist here at this step and we can later extend it", but
-for something whose equivalent can be stored in our configuration
-file, it is curious why we _insist_ to refuse an empty string as the
-value.
+"can" does not explain why it is a good idea.  "As a sequence of
+key=value pairs is a lot more dense and harder to read than the
+configuration file format, let's declare that it is the format we
+use in a file that holds a bundle-list" would be.
 
-I do not miss the "key alone without even '=3D' means 'true'"
-convention, personally, so insisting to have '=3D' is OK, but the
-inability to have an empty string as a value looks a bit disturbing.
+I do not personally buy it, though.  As I hinted in an earlier step,
+some trait we associate with our configuration fioe format, like the
+"last one wins" semantics, are undesirable ones, so even if we reuse
+the appearance of the text, the semantics would have to become
+different (including "syntax errors lead to die()" mentioned
+elsewhere in the proposed log message).
 
-This depends on how the helper gets called, but most likely the
-caller has a single line of pkt-line that it GAVE us to process, so
-it sounds a bit wasteful to insist that "line" to be const to us and
-force us to use a separate strbuf, instead of just stuffing NUL at
-where we found '=3D' and pass the two halves to bundle_list_update().
+> Update 'test-tool bundle-uri' to take this config file format as input.
+> It uses a filename instead of stdin because there is no existing way to
+> parse a FILE pointer in the config machinery. Using
+> git_config_from_mem() is overly complicated and more likely to introduce
+> bugs than this simpler version. I would rather have a slightly confusing
+> test helper than complicated product code.
 
-Not a huge deal, it is just something I found funny in the "back in
-the days we coded together, Linus would never have written like
-this" way.
+All the troubles described above seem to come from the initial
+mistake to try reusing the configuration file parser or reusing the
+configuration file format, at least to me.
 
-Other than that small detail, the code looks OK to me.
-
-> +	strbuf_add(&key, line, equals - line);
-> +	result =3D bundle_list_update(key.buf, equals + 1, list);
-> +	strbuf_release(&key);
-> +
-> +	return result;
-> +}
-> diff --git a/bundle-uri.h b/bundle-uri.h
-> index 6692aa4b170..f725c9796f7 100644
-> --- a/bundle-uri.h
-> +++ b/bundle-uri.h
-> @@ -76,4 +76,16 @@ int for_all_bundles_in_list(struct bundle_list *list=
-,
->   */
->  int fetch_bundle_uri(struct repository *r, const char *uri);
-> =20
-> -#endif
-> +/**
-> + * General API for {transport,connect}.c etc.
-> + */
-> +
-> +/**
-> + * Parse a "key=3Dvalue" packet line from the bundle-uri verb.
-> + *
-> + * Returns 0 on success and non-zero on error.
-> + */
-> +int bundle_uri_parse_line(struct bundle_list *list,
-> +			  const char *line);
-> +
-> +#endif /* BUNDLE_URI_H */
