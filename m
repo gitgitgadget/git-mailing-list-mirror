@@ -2,126 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E523DC28D13
-	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 13:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CB02C28D13
+	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 13:58:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235425AbiHVNyJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Aug 2022 09:54:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40922 "EHLO
+        id S232206AbiHVN6g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Aug 2022 09:58:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235427AbiHVNyI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2022 09:54:08 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A56B82FFCF
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 06:54:06 -0700 (PDT)
+        with ESMTP id S234547AbiHVN6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2022 09:58:34 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5811010FCB
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 06:58:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661176437;
-        bh=ZBU41MvzXDmzh7v8g7cZbf6whvvsCj2ysk5yqYQFCiQ=;
+        s=badeba3b8450; t=1661176701;
+        bh=O570wLuKh5UFUb3UpIPNgzJTeIP8sZrW9DTiOGbZSlg=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ae5+gUMRcOrtLirgvfKZBs3En8VeCf4wPtT0u6sk8NtwW2gDETYZrusNnzFlzP0Q+
-         KG+zRNR1LS7y0KYh5gr6fQ+WUv5vdkuQumGi6IB7Z7LkgNsw34pOE0/S/hQEuu9SvG
-         j1eMClA0TF2sN4xrwAlmN1bArmcyU0I20JwkkPqo=
+        b=NADcHFOPDkU4J6jk++ASsGjQAxXL3f9BIqh/lb9sNpXdLiR1cAWPqum4N0v7lVasD
+         Rc+cAZqSOrs+LOW7IhKSgE7xB/9Lnxx6em+xPDjwB5gyzJN6B5Hgd7aafarZ/vAFic
+         5fOwqpxZw5IixCFhfdAtR79Q0lnD1gBHAR6TLm/k=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.137.196] ([89.1.212.11]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N4hvR-1pPxxK0GuN-011jYR; Mon, 22
- Aug 2022 15:53:57 +0200
-Date:   Mon, 22 Aug 2022 15:53:56 +0200 (CEST)
+Received: from [172.26.137.196] ([89.1.212.11]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEm6F-1oejzC1Xul-00GIUV; Mon, 22
+ Aug 2022 15:58:21 +0200
+Date:   Mon, 22 Aug 2022 15:58:21 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Michael J Gruber <git@grubix.eu>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 2/4] sequencer: do not translate parameters to
- error_resolve_conflict()
-In-Reply-To: <xmqqfshsm8z1.fsf@gitster.g>
-Message-ID: <oqq42q11-3031-91or-no50-p68q85po1492@tzk.qr>
-References: <09rn6r61-38qo-4s1q-q7qq-p5onp6p87o44@tzk.qr> <cover.1660828108.git.git@grubix.eu> <4684d54aeb3e00c96ba581c824a04e47b7236db7.1660828108.git.git@grubix.eu> <220818.86v8qp8uid.gmgdl@evledraar.gmail.com> <06s6r3s7-27nn-1o9s-1n7p-5413284r8740@tzk.qr>
- <xmqqfshsm8z1.fsf@gitster.g>
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Maxwell Bernstein <tekk.nolagi@gmail.com>,
+        Max Bernstein via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Max Bernstein <donotemailthisaddress@bernsteinbear.com>,
+        Max Bernstein <max@bernsteinbear.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2] trailer: allow spaces in tokens
+In-Reply-To: <CAP8UFD2kMXHxvg1tKVNLhY0Gweq2YrD7+tHmZXKwguYzRQ1Qpg@mail.gmail.com>
+Message-ID: <p8srs909-19p5-4o24-r245-roq46pp4s6p5@tzk.qr>
+References: <pull.1309.git.git.1660806376021.gitgitgadget@gmail.com> <pull.1309.v2.git.git.1660809243298.gitgitgadget@gmail.com> <xmqqk075qyq0.fsf@gitster.g> <CM9DZ4Z18PY9.1T2O8U54X66FD@cedar> <CAP8UFD1304rQh+9jMUkTmTvmNBxm6BNDt3=d07+C8iXSbJb2RA@mail.gmail.com>
+ <xmqqa681nsrv.fsf@gitster.g> <xmqqwnb4n98f.fsf@gitster.g> <CAP8UFD2kMXHxvg1tKVNLhY0Gweq2YrD7+tHmZXKwguYzRQ1Qpg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:pnmWFl9M/Kf2aMNLtj2gMTcorFCWaxSZ4jHcU6gs/6htyExZDP/
- B7xKVuuLhqz0UCIJISQtyeUFc742AJ+s+rgDhDHnhf4c+Kz5xLe3Uod38JxvN1ZzZVpqGOb
- 0O3XuQGSRC0mTQGks0roeh+lp/DJZhqf+55on/g7bx8fBu42tDNC8oSpsK3r4o5iveFNlBy
- zgDX55s6w28Y+R21tweZA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OEnGZTA5nlg=:6sEEELahs0GZ2Z8VAGMwK3
- 7DwC9usXgzxODyAD+lF7LuIkedaCvx/hWZ3VaDSnXMcoqL+F6R3TA5ykMR2YVAEIhXyA0Wc+0
- PQcQbpVqFA5el+qjdIQzmxEAZrM7dWF1ZDIMhNcirXOYj+7iXEIFpXCziP7fgvgjncoNbjtaA
- cmLWjTCvNzgBs+O8S8D2vwEsFcZ8ALRpUMWVG1FzYfQnrlMUgPD1pjHGa+bZePKjJ2J7i+S2s
- KIqtSNHw7H52BcLzmZGP/l6UyLt+PtB1IT+8pkz8+HHWi8qiTH/GzgDXEbgGJZaRrnX7U/YDj
- YGpIvaAXg0Tym4ZRiUzYgmii3xW1z83DRY7JoGJiHwhsG9ioYysj7QnpYzDC9FuKB21G8bZ0s
- Vm/yRJL7ru/htW2thb6/DTQaYzsPMuyXBwVQQw1oF+1Zmmqckbmx9Bre5sl7Fce8FPkJvdORd
- vYobMdJ3YTP4ktUOyWdax0GMy7sp9QATp/mrQ1wooQpyCR5JTxescIEFQ+SjrudKKzOZUoqIW
- zQpgpVyqtfl8gzWTHr1++lpH3vJYMwvjQnE1liypgpBAWfHXnpF5DkyqgW9Mv5OiXHAy1V/XU
- LmyIBCr5fc3W26x6VuZ3+lQ2+kUJakzcZj5z1UJl6kvw8QoDyYiNb3WickDwPXWX2nL1gD4pX
- nczEHXKFkCdmI1qMWfW3lof2X+SbeubdN9zZQGu6jfwra97t2EMgfZRn2QnmIEp9ibD3Vt6LJ
- oheREFvhInFWk1tcZ7SDYD4R8nVztQNc1vSkS3tT4sNhe/ufV6kTvjh0c3U9lqX1upai8lkCo
- xR1ter0RtjsbFQLdvLNZJ9DzKc4pCYczlKmwVobgz4CSPppZtHo5bCxIJynarDXvdU0HXXgs+
- wUG9/OZjdn4VWJqoSU0OH3YgBStGo73wuEJyVNlNvhZVp/L3ycYRXppQdg3m8bajL+ZHi44xS
- a8Q2VJoeepE4yOV8TuTqVU2p6YUBBLW4V5PtLUygEuvs05pwsEBA+j4gyaMKHspHimnF8OXqT
- CI+Yrf8r7zgQ39y0bbowxupxrrktbA9oZ5dkaXHxHMNnfQvWv4aGYp1sO0FSVWG66REWMqn5i
- FnQlsyK+aZWz3U21Ff+0h03VjEaSAyxZM8LVOWdrw+gqzvHSbIbOls4nw==
+X-Provags-ID: V03:K1:p3Y/RYk9sty9gWhqsdXqel8AerYVYoAPASq29EMiO6jlOu1qvIl
+ MJLzz4M0ihDMzHZZE3xiWajCA4B1ppdfTxlYaDceYG/Tzu1mAMmtAD1j8GSghR9xBarIx6q
+ e9EhPYIy/FdmnqMszTvqp8WayKBQQ3vWdASKQ51Q2axFY41F98CpohDVFgiri6jh3ZKHS25
+ FYJSp+li8PaZliKAoteSg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Izf5u6Jk9l0=:XsOELhTdKFoK0U0JlrlvvY
+ msXgyF/bA6oVPejbpCaf9R9wtNccyh6TocZBGfKRMH/3Z4qUI/noH6gPHYuIQpfYt+LXf8x4i
+ y9DTvIuybtu/Yz2OagtL5atdpFKP5Gd50LkpluU6a2F9DgKG8xzM+M6gEAT7AgewGizQzrlLh
+ tgJgYeTqoHjBxuG0ugHXn2Ep9GwSBfOYc6gEitWa459xcxQRjpokhWRXH34sTGPXts8TSLkSE
+ cpiQczP5jJ9QooNHFQY8tcEaHFk4lRUp7q8GnZQH2Zblp9oAUKjMVLmRoQiP7ml3hsqqvGPlj
+ 7q6eu95rl6zirF6aAZJej0zYgKblnPhltQjLVUZp//ETEv/uus3SkaLQSk6j6XnZAMHj+xoG+
+ xNGEomTr/rJGOwod7uTRgIac9FFJn7iKd+kRW85PYYU8yIRlxau8An59pexwnj8ftJ4Tl5i4A
+ IstkqXv8J+Yd6IMQ0AcrmzPl3mv0gMKpK63I7/a1VvraZkTIu2PP6pNFFI+8dDgFvfKCByo/X
+ aWAzmZcY5ZVrl7H7/CKRgl5etpN8jVGlMO4dPGukHS/3i+o0ZWNOnc6FkfFKnkWbfedPouxtB
+ Za+IPtyNazrn3ngFAj1HEzU5aS11FDXsA4nrnDwXM0lRdxv1epJ5oW8MbFxjMYYro9e27ykJj
+ /Eh8pDqXYq6vMy7IjPP3r6R34oxe60JVvrYZ/BzDCIKbN3arp2nfc3zqluGcw0F/cOO/XJEFB
+ gHXNxFavkDiNPD366skd/aHD4aeSFYl3w70fsQlW5mGtaQ1TdashMdvPXZtSa4aHTQJpm27Ow
+ 2EaCQw/1WKVusCnQCYPzFpVOt2rJOETs/tW3bxNj3BRupRXNvfmiYZ0dqeBRbrg73MYQm2T94
+ WlymyRKrJYb+XsG/TuxyGef7pR9zTlkXBFV3xSIgESeRQ11E2QFici5ygDhYqge5x6urAyhRS
+ GGx+gtLzhDDwwenAf1npptrMBUMSDJ/hQ1cVkobwQjI+jYCN5P4ekgA4DxqxSbLkJG6+x3hN0
+ PB+w+KGLB8aFKn8exB3O/sxwYtTy2tCoAKMiJoFt63FDGg0zIVM3rXaVJJWYSxSFCjLUX1BIr
+ LSQq7qpcnOiTfp5pD8Pjq9f/6PpWZkQLl1TZCX8qlSkVmxJiwmLlzcaDw==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Christian,
 
-[Michael, I do not consider what I wrote below relevant for your patch
-series, you may ignore it if you want]
+On Fri, 19 Aug 2022, Christian Couder wrote:
 
-On Fri, 19 Aug 2022, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> >> Perhaps we should have the error_resolve_conflict() function take a
-> >> "enum replay_action" instead?
+> On Fri, Aug 19, 2022 at 6:33 AM Junio C Hamano <gitster@pobox.com> wrote=
+:
 > >
-> > We could do that. We could also just delete the sequencer code. It's j=
-ust
-> > that both are a bad idea.
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> > > but see a room for unrelated improvement from the current code,
+> > > namely, to allow exactly one optional space, immediately before the
+> > > separator and nowhere else.
+> >
+> > Ah, no, sorry, I misread the situation.  It's not a room for
+> > improvement.  It is very close to what the current code already does,
+> > i.e. to allow optional spaces immediately before the separator.  The
+> > difference is that the current code allows arbitrary number of
+> > optional spaces, not zero or exactly one.
 >
-> Sorry, but I do not quite understand this comment.
+> Yeah, I think it makes sense to not change this default behavior, but
+> maybe, if people don't like it for some reason, allow options to tweak
+> it.
 
-I expected a seasoned reviewer to offer such a suggestion only after
-looking up (or remembering) how `error_resolve_conflict()` is defined, and
-where, and where its callers are.
-
-After all, many suggestions that come to mind during a review turn out to
-be a bad idea when considering them carefully, and if that can be
-determined before the mail is sent, everybody wins back some time.
-
-In this instance, `error_resolve_conflict()` is declared in `advice.h`.
-The suggestion to use a sequencer-specific data type there sounds...
-controversial. But okay, maybe there are good reasons to suggest that.
-
-Let's look at the callers. Two callers in `sequencer.c`. Okay, maybe it
-makes a bit more sense. But one caller in `advice.c`? Let's dig deeper.
-
-That caller in `advice.c` is `die_resolve_conflict()`, which is called in
-the built-ins `commit`, `merge-recursive`, `merge` and `pull`.
-
-Those callers have nothing to do with the sequencer, therefore it is a bad
-idea to suggest using a sequencer-specific data type in that call chain.
-
-=46rom my perspective, that is enough to retire the suggestion.
-
-When I wrote what I wrote, I thought that it was a pretty quick thing to
-determine, so quick that I really expected to not see such a suggestion on
-the mailing list in the first place.
-
-In hindsight, I understand that you would have had to look at the code,
-and not just at the patch, to see this. And therefore it is probably not
-quite as obvious as I thought. I did not expect new contributors to be
-able to analyze this quickly, but a Git mailing list regular, yes.
-
-For my flippant response, I apologize.
-
-As for the suggestion I criticized: I stand by my assessment. It is not a
-good idea, and it was not necessary to send it out before doing a cursory
-sanity check. We want code contribution to have a high quality, and the
-code reviews should meet at least the same bar.
+That sounds like a very good compromise to me.
 
 Ciao,
 Dscho
-
