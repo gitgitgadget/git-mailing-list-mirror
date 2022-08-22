@@ -2,105 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05685C32792
-	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 21:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF357C28D13
+	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 21:24:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234937AbiHVVPS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Aug 2022 17:15:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40194 "EHLO
+        id S238056AbiHVVYL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Aug 2022 17:24:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231202AbiHVVPQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2022 17:15:16 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B28D7326DE
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 14:15:15 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id r16so14713592wrm.6
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 14:15:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=7mr1Af2DN/k1Hvdv82SbmxwTbpF3iGvPja4pljf4idg=;
-        b=W7IvvIS7TdZmj4y/ZGx+EI9re2OWS435rAAiBPphNB5g0nGeUoeXkJop1q2Ip/5Hky
-         hWQmWC0455ao1PW9LFJ4gvYLExIH+4DWyhdk1BrTSg9WWKD6wGjn3i8YrpnPdxTkGPi/
-         CNWyLfggjBxuEXP39jy/Ff6joL33r6170BGWWeNjoIcwDA7qVKxit5YfnM3JxsJkZhY3
-         UL0q50zld9HTUnXjBdPPhq5GHtS+jNXzGQmBxAD6XqvaaWpmT203jrYwUlunsgcwCL6H
-         RSHhBfhLDcvEjjjmpZatYJxd50tjDg6Xyt0YVJ5Uq6lP/LeT3pQ7OpaEMvI5Pc0JhTzL
-         rMEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=7mr1Af2DN/k1Hvdv82SbmxwTbpF3iGvPja4pljf4idg=;
-        b=IY1SnX0FQl8cs2Xb53TyftbSJdOtjVNzdxAoZG3HLgjEJl80JV1o7GPlbIofctdy9e
-         DPD7L7yRqqFhttU6tADbH5qW/PrcLTUCq28etMUCpTD3B/vvMfksxTP0KfRIiZz6KtrE
-         +l7rZBcS1SYHSvBwJFC05jMq2K9jeQi1f1ENqNVZQYo7ubI908NGrnCiPyEZBAPYHSRK
-         +wYM3awB6RQYLbFas9GqdYujPYRroc9vw1gO1JR4Bbq46+VJDHDqPzn38hYdNRr57Wli
-         +lWDOfIjUWJDpUteQq1yRMDn6ogSS5jOnNrVFg1FKy6V0EGffTb6cM0J4MDFz3RfjLCk
-         kzSg==
-X-Gm-Message-State: ACgBeo2S6AeXFkElNGr0qB/NCrqrpp5qfoUH4DRYnjxxmGADk1Lq7jhA
-        IEczw+4YLyoJqVGKB8j0soN5QtVAHTQ=
-X-Google-Smtp-Source: AA6agR4/0k+atDNG5OLeC/Y4w+99sa2CHX++hYoFsi/1c/PF/ODnqRjPTmCtIrrKSEc9Z6f/2ET97Q==
-X-Received: by 2002:a05:6000:1888:b0:222:ca41:dc26 with SMTP id a8-20020a056000188800b00222ca41dc26mr11095086wri.442.1661202914123;
-        Mon, 22 Aug 2022 14:15:14 -0700 (PDT)
-Received: from rah.. (2a02-8429-8157-8b01-3203-c8ff-fe28-5999.rev.sfr.net. [2a02:8429:8157:8b01:3203:c8ff:fe28:5999])
-        by smtp.gmail.com with ESMTPSA id s9-20020a05600c384900b003a35ec4bf4fsm15902928wmr.20.2022.08.22.14.15.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Aug 2022 14:15:13 -0700 (PDT)
-From:   Anthony Delannoy <anthony.2lannoy@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Anthony Delannoy <anthony.2lannoy@gmail.com>
-Subject: [PATCH v2 1/1] pathspec: fix memleak
-Date:   Mon, 22 Aug 2022 23:15:07 +0200
-Message-Id: <20220822211507.8693-2-anthony.2lannoy@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220822211507.8693-1-anthony.2lannoy@gmail.com>
-References: <20220822211507.8693-1-anthony.2lannoy@gmail.com>
+        with ESMTP id S234342AbiHVVYI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2022 17:24:08 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB8C337F9F
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 14:24:07 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C0981AD9DE;
+        Mon, 22 Aug 2022 17:24:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=KlnyAKD4cpRv
+        4Y4tkNrqgWoRxq9jaI8JpEB6Fu7ExaM=; b=DwyVrpLL1ZHJ99E9SOVjIM3aSp1k
+        lvtcUj28JCa6xjmDoStMTajva3Ob1FCiX+NCyD9nFHzT2FydCCbBema7W8cvMgUh
+        TQ9vKGnWkIt4zETQDItHpfdOOtctuwM2oU6nWECpSwgRL1wxbe4v4Xs1ODTD5oxq
+        ALjmeu9TQp8wSLU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 873921AD9DD;
+        Mon, 22 Aug 2022 17:24:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 22E2C1AD9DC;
+        Mon, 22 Aug 2022 17:24:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de,
+        szeder.dev@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 3/5] clone: add --bundle-uri option
+References: <pull.1300.v2.git.1659443384.gitgitgadget@gmail.com>
+        <pull.1300.v3.git.1660050703.gitgitgadget@gmail.com>
+        <00debaf6e77852efe1dcad4bfda5ebd5bf590ac4.1660050704.git.gitgitgadget@gmail.com>
+Date:   Mon, 22 Aug 2022 14:24:01 -0700
+In-Reply-To: <00debaf6e77852efe1dcad4bfda5ebd5bf590ac4.1660050704.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Tue, 09 Aug 2022
+        13:11:41 +0000")
+Message-ID: <xmqq8rngas5q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BECBBEF4-2260-11ED-B9F3-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak occuring in case of pathspec copy in preload_index.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Direct leak of 8 byte(s) in 8 object(s) allocated from:
-    #0 0x7f0a353ead47 in __interceptor_malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/11.3.0/libasan.so.6+0xb5d47)
-    #1 0x55750995e840 in do_xmalloc /home/anthony/src/c/git/wrapper.c:51
-    #2 0x55750995e840 in xmalloc /home/anthony/src/c/git/wrapper.c:72
-    #3 0x55750970f824 in copy_pathspec /home/anthony/src/c/git/pathspec.c:684
-    #4 0x557509717278 in preload_index /home/anthony/src/c/git/preload-index.c:135
-    #5 0x55750975f21e in refresh_index /home/anthony/src/c/git/read-cache.c:1633
-    #6 0x55750915b926 in cmd_status builtin/commit.c:1547
-    #7 0x5575090e1680 in run_builtin /home/anthony/src/c/git/git.c:466
-    #8 0x5575090e1680 in handle_builtin /home/anthony/src/c/git/git.c:720
-    #9 0x5575090e284a in run_argv /home/anthony/src/c/git/git.c:787
-    #10 0x5575090e284a in cmd_main /home/anthony/src/c/git/git.c:920
-    #11 0x5575090dbf82 in main /home/anthony/src/c/git/common-main.c:56
-    #12 0x7f0a348230ab  (/lib64/libc.so.6+0x290ab)
+> +	/*
+> +	 * Before fetching from the remote, download and install bundle
+> +	 * data from the --bundle-uri option.
+> +	 */
+> +	if (bundle_uri) {
+> +		/* At this point, we need the_repository to match the cloned repo. *=
+/
+> +		repo_init(the_repository, git_dir, work_tree);
+> +		if (fetch_bundle_uri(the_repository, bundle_uri))
+> +			warning(_("failed to fetch objects from bundle URI '%s'"),
+> +				bundle_uri);
+> +	}
 
-Signed-off-by: Anthony Delannoy <anthony.2lannoy@gmail.com>
----
- preload-index.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+I do not offhand know why I suddenly started seeing the issue for
+this relatively old commit I have had in my tree for at least 10
+days, but I am getting this
 
-diff --git a/preload-index.c b/preload-index.c
-index e5529a5863..100f7a374d 100644
---- a/preload-index.c
-+++ b/preload-index.c
-@@ -151,6 +151,12 @@ void preload_index(struct index_state *index,
- 	}
- 	stop_progress(&pd.progress);
- 
-+	if (pathspec) {
-+		/* earlier we made deep copies for each thread to work with */
-+		for (i = 0; i < threads; i++)
-+			clear_pathspec(&data[i].pathspec);
-+	}
-+
- 	trace_performance_leave("preload index");
- 
- 	trace2_data_intmax("index", NULL, "preload/sum_lstat", t2_sum_lstat);
--- 
-2.35.1
+builtin/clone.c: In function 'cmd_clone':
+builtin/clone.c:1248:17: error: ignoring return value of 'repo_init' decl=
+ared with attribute 'warn_unused_result' [-Werror=3Dunused-result]
+ 1248 |                 repo_init(the_repository, git_dir, work_tree);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+with the commit merged in 'seen'.
+
+It seems that the updated ab/submodule-helper-prep is doing it. =20
+
+Why can't that (or any of =C3=86var's) topic focus on what it needs to
+do, without churning the codebase and inflict damages to other
+topics like this?  Quite frustrating.
+
+I'll redo today's integration without the offending topic to give
+other topics test coverage.
+
 
