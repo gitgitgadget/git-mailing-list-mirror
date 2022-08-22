@@ -2,118 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AD6FC28D13
-	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 19:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3B41C32792
+	for <git@archiver.kernel.org>; Mon, 22 Aug 2022 19:44:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238841AbiHVToB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Aug 2022 15:44:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60150 "EHLO
+        id S238838AbiHVToG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Aug 2022 15:44:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238812AbiHVTn5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2022 15:43:57 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C412B1EECB
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 12:43:56 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F35FD134AC0;
-        Mon, 22 Aug 2022 15:43:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FTAEzYoBa0uQ
-        qzJXHLWFavIFtF3ClOtMgq1Ar8LICng=; b=mb0u/R82eh655WzLWNlaauHkGciI
-        xmPoGyfHOjqMd4/H1ZVSTPuss5gkaji3Vs9UjA0Co3K67RoTkkgkqc5YG9RppBCR
-        N00e5zjMzpr4CCX2I0c936hvB/TTmymdRdFjNeNO1MCpwMOKSVVhB8/cu4Pvs7IC
-        36oZg0UzZI7UcyY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EA3BA134ABF;
-        Mon, 22 Aug 2022 15:43:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 62019134ABE;
-        Mon, 22 Aug 2022 15:43:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Mohamed Akram <mohd.akram@outlook.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git diff prints long usage help if not run in git repo
-References: <A2326287-9808-4479-95C5-E54979E21F95@outlook.com>
-Date:   Mon, 22 Aug 2022 12:43:54 -0700
-In-Reply-To: <A2326287-9808-4479-95C5-E54979E21F95@outlook.com> (Mohamed
-        Akram's message of "Mon, 22 Aug 2022 18:22:21 +0000")
-Message-ID: <xmqq5yikcbd1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S238779AbiHVToD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2022 15:44:03 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BF1A2CCA3
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 12:44:02 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id f14so8743205qkm.0
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 12:44:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc;
+        bh=NWP1+csbBQEqgCxfKRLeObCZMofcOh4soPifCXjXAfw=;
+        b=CP0n0LT6TuVAmikSWIHYLfG3LhH5ohXGdk4HrHxlpWD0SKNAUykd2EYjgAvdaF+09o
+         IivVr7NSKZpq8IvlzlpXzpZEYxFK+/3ziAY3EjUyuSy2eSRfB43ht7UYTeZVa8VhP3tT
+         062sFS93Uhwlb1X7h0sKNqb7J6wNFAWzgwXBC4Fla8glmy1Ww+5f8U/wJzlCUolMEZAM
+         VeJBTNIcWrOtWdiBR7MC8SKC4PFaYD6h4GgWtexJnnGnBOG9NuIWjffdZcXuRzUVmSkm
+         z2VyJM5mVIkNYxhFWvTVf8KLfPOt/GnQsToYZU99Sq/kP85Zc1AHRfTeJ9lAfUVsDn65
+         f+iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
+        bh=NWP1+csbBQEqgCxfKRLeObCZMofcOh4soPifCXjXAfw=;
+        b=A2hO5SmTr5uVz5Qdq7ACkApyDh190OelihkdxPxmOikHkh+mIAppHbFA1fYBk4Gblv
+         eDs5PeS+btrBn4YMtaCQRTAg5/79Zt58N4cbTBw1Mhpti+E7XvuowBzpJ1/osq09aMT+
+         tw8ETxmT2QaZbKsvBUF/y5EXh5L3zo4nZRZBQiYOBsL0NleekAAGaQZR5JY/1l1oAh6K
+         NvXS+Cy2H9DeSVUqNoWPqBOeCgDXzJ7qSqffNVpqBo043/R7cTkgWCTduMj+TAuLrHii
+         m+D9GToj48XytdrMO9uPtogVrd/cFp2QPehh8ryAhIwwDG/LoFjjSJj6hbZ8SD4E+0u8
+         l+cA==
+X-Gm-Message-State: ACgBeo24qBAUhdZTQIChdWLaMIIQfhfcYZYWaOmxVEZLiZlWo8vSxWoQ
+        nnzNhxHej9+SJ/bXrlB7VG4log==
+X-Google-Smtp-Source: AA6agR5bOHjT3BMom8eo9D4osp+cK+3NnjKxCm3W9u3ncewns3507DyGO5jF/Sc6kVJqMUi2I/NRwA==
+X-Received: by 2002:a05:620a:24d5:b0:6bb:bed6:18d3 with SMTP id m21-20020a05620a24d500b006bbbed618d3mr13098820qkn.271.1661197441668;
+        Mon, 22 Aug 2022 12:44:01 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id m9-20020a05620a24c900b006af0ce13499sm12211824qkn.115.2022.08.22.12.44.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Aug 2022 12:44:01 -0700 (PDT)
+Date:   Mon, 22 Aug 2022 15:44:00 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+        chakrabortyabhradeep79@gmail.com, jonathantanmy@google.com,
+        kaartic.sivaraam@gmail.com
+Subject: Re: [PATCH 0/6] midx: permit changing the preferred pack when
+ reusing the MIDX
+Message-ID: <YwPcgIStTEelWJfK@nand.local>
+References: <cover.1660944574.git.me@ttaylorr.com>
+ <6c146fa9-48da-5f74-c91a-29c54e1da6ce@github.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C1E7401C-2252-11ED-894B-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <6c146fa9-48da-5f74-c91a-29c54e1da6ce@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mohamed Akram <mohd.akram@outlook.com> writes:
+On Mon, Aug 22, 2022 at 01:04:29PM -0400, Derrick Stolee wrote:
+> Thanks for putting this together. Definitely not an easy bug to find
+> and fix.
+>
+> I mostly have nitpicks, but the overall structure is sound.
 
-> When running `git diff` in a directory that=E2=80=99s not a git repo, i=
-t
-> prints a warning that this is the case, followed by a very long
-> help text that, on your average terminal, causes it to scroll so
-> much that the warning isn=E2=80=99t even visible. It should only print
-> the warning and nothing else like other git commands. This was
-> tested with git version 2.37.2 on macOS.
+Thanks very much for reviewing (both to you and Abhradeep). I have a new
+version that I'll send now, which incorporates your suggestions.
 
-Thanks for a clearly written feature request.  I think it is not
-unreasonable to stop after telling the user to use the --no-index
-option.
+It also adds a new patch on top that takes a slight optimization, by
+avoiding adding objects from the MIDX that show up in the (new)
+preferred pack, since we know we'll discard them anyway.
 
-But on the other hand, not using "--no-index" is not what causes
-such a "git diff" outside any repository fail.  If the user said
-
-     $ cd / && git diff
-
-it is clear that the user does not know they need to say what they
-want to compare against what.  The reason why the command fails is
-not because the user did not say
-
-     $ cd / && git diff --no-index
-
-but because the user did not say
-
-     $ cd / && git diff --no-index etc/passwd etc/group
-
-So, I dunno.
-
-Perhaps somebody can try the following patch and tell us if it is an
-improvement.  I know it is for the specific case "cd / && git diff"
-but it really depends on the reason why (1) the command was run
-outside any repository and why (2) the command was run without any
-arguments.  A shallow answer to both of them are "by mistake", but
-what I am trying to get at is that understanding the reason why such
-a mistake was made is probably the key to evaluate if the behaviour
-updated by the attached patch is a good idea.
-
-Thanks.
-
-
- diff-no-index.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git c/diff-no-index.c w/diff-no-index.c
-index 9a8b09346b..c8f2cdce05 100644
---- c/diff-no-index.c
-+++ w/diff-no-index.c
-@@ -259,9 +259,10 @@ int diff_no_index(struct rev_info *revs,
- 			     diff_no_index_usage, 0);
- 	if (argc !=3D 2) {
- 		if (implicit_no_index)
--			warning(_("Not a git repository. Use --no-index to "
--				  "compare two paths outside a working tree"));
--		usage_with_options(diff_no_index_usage, options);
-+			die(_("Not a git repository. Use --no-index to "
-+			      "compare two paths outside a working tree"));
-+		else
-+			usage_with_options(diff_no_index_usage, options);
- 	}
- 	FREE_AND_NULL(options);
- 	for (i =3D 0; i < 2; i++) {
+Thanks,
+Taylor
