@@ -2,154 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE4FBC32789
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 17:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64395C32772
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 18:11:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240358AbiHWRQm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 13:16:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57524 "EHLO
+        id S233188AbiHWSLo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 14:11:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344261AbiHWRPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 13:15:52 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 573477FE4F
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 06:51:04 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 6E3053F40F3;
-        Tue, 23 Aug 2022 09:51:03 -0400 (EDT)
-Received: from jeffhost-mbp.local (unknown [IPv6:2600:1014:b122:41a:c2:57ee:2a32:2b0e])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id DCA373F4090;
-        Tue, 23 Aug 2022 09:51:02 -0400 (EDT)
-Subject: Re: [PATCH] fsmonitor: option to allow fsmonitor to run against
- network-mounted repos
-To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
-        Eric DeCosta <edecosta@mathworks.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <pull.1326.git.1660855703816.gitgitgadget@gmail.com>
- <xmqqsflqlfjq.fsf@gitster.g> <092oq98r-39q3-4s66-0n0p-r77po7pq8275@tzk.qr>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <055470ae-1483-bbd4-5b23-3762a4c131b8@jeffhostetler.com>
-Date:   Tue, 23 Aug 2022 09:51:01 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S231160AbiHWSLS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 14:11:18 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5E0B6A48F
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 09:22:53 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id s199so16614957oie.3
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 09:22:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=Mcgxgj5hXnE6uTpWjt7JtPojgbm90i/5V1aYI6o1PpY=;
+        b=WQg7R+rl6EKMb/VO0qsSuNspbn+1JwDXLFSCMG3JxYP0igJ/QVvrVHVFOjhxxnvSLo
+         N6Rg/24YS3joLrmopEI3ChUTtfgm2pLAwupgqrVlHjov2f/5u7bp+hxxBlWMhdg9K6MV
+         HfhsH7Ah+4jbqQiAXwR+XAsrU6M2aX4dUnaUFYhlQNOFEIpp9gj8RUDsHCsdMY49MSNE
+         GDXABbH9gkn5bP6oVqrd2aFVyMxWPEab4ZqrpsKRCBuyY/mPyVCxNoX0ki2qV79vi1ql
+         ynIzG07lpC3teyOKz8KYuVoCLXzLasYoNZrJMtg1NWXNtzHwUuFyhf7Qd0dPUMVxvyzF
+         RX8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=Mcgxgj5hXnE6uTpWjt7JtPojgbm90i/5V1aYI6o1PpY=;
+        b=pLZ06zyOatDbRM4YWEHs1w7gmdaIGkdQA9/42uVLN3ptYt4/vf1JWstFIa3Xu7iVg+
+         uk5hjhgwsT5zouoPpPc68OIiLeiH0z6gJDpm6E0IEwwMCtLpcVTZW0BmkrPiMjnZUVyB
+         nY/NG3LGlfqIdVBs01TDbIIDt8XIUMWqjDMaB3FVBhsFWy8rqbCTotlFE2Hwq8OHLKJp
+         7tZ0qjZe6E9m+0aDoS/Ha0XgHsQGV/+PPTyMzWVmD/9MUsp0db86ljcJEg6Zpm8W+QrN
+         wyrsxoOQS6v59EqUNU/NLn81TyysXnUp6DXBSUZMYnmhvf1aT4tvpxAkW8lBuynqfRi1
+         gaUQ==
+X-Gm-Message-State: ACgBeo1Yorm4675xr4UoSDaC9YudYT44l8SVLdEGiI8dZiKhoDu/ntRb
+        /AXsiNXi3Abri6S7IxCdZxp4
+X-Google-Smtp-Source: AA6agR6/R6j6WV26ifMobA9Du/T477rZdHMA3nxCv7NkN7doeWSjZx76Atcr6bUgf5x+yZLgn4/glA==
+X-Received: by 2002:a54:4892:0:b0:344:e0df:df5 with SMTP id r18-20020a544892000000b00344e0df0df5mr1603179oic.234.1661271773176;
+        Tue, 23 Aug 2022 09:22:53 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:f1b9:9fd8:f860:8737? ([2600:1700:e72:80a0:f1b9:9fd8:f860:8737])
+        by smtp.gmail.com with ESMTPSA id cz31-20020a056870649f00b0011d5228d8e6sm1477669oab.25.2022.08.23.09.22.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Aug 2022 09:22:52 -0700 (PDT)
+Message-ID: <98b4d348-e162-29f0-85e2-e36a9a500792@github.com>
+Date:   Tue, 23 Aug 2022 12:22:51 -0400
 MIME-Version: 1.0
-In-Reply-To: <092oq98r-39q3-4s66-0n0p-r77po7pq8275@tzk.qr>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v2 7/7] midx.c: avoid adding preferred objects twice
 Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, Johannes.Schindelin@gmx.de,
+        chakrabortyabhradeep79@gmail.com, jonathantanmy@google.com,
+        kaartic.sivaraam@gmail.com
+References: <cover.1660944574.git.me@ttaylorr.com>
+ <cover.1661197803.git.me@ttaylorr.com>
+ <887ab9485faa21f5a5cd889d97895ed41013803d.1661197803.git.me@ttaylorr.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <887ab9485faa21f5a5cd889d97895ed41013803d.1661197803.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: mailmunge 3.09 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 8/22/2022 3:50 PM, Taylor Blau wrote:
+> The last commit changes the behavior of midx.c's `get_sorted_objects()`
+> function to handle the case of writing a MIDX bitmap while reusing an
+> existing MIDX and changing the identity of the preferred pack
+> separately.
+> 
+> As part of this change, all objects from the (new) preferred pack are
+> added to the fanout table in a separate pass. Since these copies of the
+> objects all have their preferred bits set, any duplicates will be
+> resolved in their favor.
+> 
+> Importantly, this includes any copies of those same objects that come
+> from the existing MIDX. We know at the time of adding them that they'll
+> be redundant if their source pack is the (new) preferred one, so we can
+> avoid adding them to the list in this case.
 
+Good call to reduce memory requirements.
 
-On 8/22/22 9:22 AM, Johannes Schindelin wrote:
-> Hi Junio,
-> 
-> On Sat, 20 Aug 2022, Junio C Hamano wrote:
-> 
->>> As a first step towards enabling fsmonitor to work against
->>> network-mounted repos, a configuration option, 'fsmonitor.allowRemote'
->>> was introduced for Windows. Setting this option to true will override
->>> the default behavior (erroring-out) when a network-mounted repo is
->>> detected by fsmonitor. In order for macOS to have parity with Windows,
->>> the same option is now introduced for macOS.
->>
->> With this merged in, recent CI runs for 'seen'
->>
->> e.g. https://github.com/git/git/actions/runs/2892889122
->>
->> seems to break macOS jobs, letting them hog CPU forever and exceed
->> 6hr or whatever the limit is.
->>
->> As an experiment I pushed out 'seen' but without this commit (not
->> the entire topic is excluded, the Windows one is still included).
->> As there is nothing specific to macOS between 'next' and 'seen',
->> macOS jobs seem to pass, which is not very surprising.
->>
->> https://github.com/git/git/actions/runs/2896207171
->>
->> As the patch collected some review comments, I've already marked it
->> in the "What's cooking" draft as expecting a reroll of that step;
->> until that happens, let's keep it out of 'seen'.
-> 
-> It makes sense to keep it out of `seen`, and at the same time I would like
-> to encourage Eric to investigate what causes those time-outs.
-> 
-> When toggling timestamps (click on the wheel on the upper right) at
-> https://github.com/git/git/runs/7927812510?check_suite_focus=true#step:4:1774,
-> it can be seen that at close to 1am, t9903 finished, but then nothing
-> happens until twenty past 6am.
-> 
-> I've downloaded the raw logs (also available via the wheel on the upper
-> right) to find out which test timed out:
-> 
-> 	$ diff -u \
-> 	  <(sed -n 's/.*\] \(t[0-9][^ ]*\).*/\1/p' <~/Downloads/17 | sort) \
-> 	  <(git ls-tree upstream/seen:t | cut -c 54- | grep '^t[0-9].*-.*sh$')
-> 
-> 	--- /dev/fd/63  2022-08-22 14:56:05.510269527 +0200
-> 	+++ /dev/fd/62  2022-08-22 14:56:05.510269527 +0200
-> 	@@ -794,6 +794,7 @@
-> 	 t7524-commit-summary.sh
-> 	 t7525-status-rename.sh
-> 	 t7526-commit-pathspec-file.sh
-> 	+t7527-builtin-fsmonitor.sh
-> 	 t7528-signed-commit-ssh.sh
-> 	 t7600-merge.sh
-> 	 t7601-merge-pull-config.sh
-> 	@@ -945,6 +946,7 @@
-> 	 t9812-git-p4-wildcards.sh
-> 	 t9813-git-p4-preserve-users.sh
-> 	 t9814-git-p4-rename.sh
-> 	+t9815-git-p4-submit-fail.sh
-> 	 t9816-git-p4-locked.sh
-> 	 t9817-git-p4-exclude.sh
-> 	 t9818-git-p4-block.sh
-> 	@@ -964,5 +966,8 @@
-> 	 t9832-unshelve.sh
-> 	 t9833-errors.sh
-> 	 t9834-git-p4-file-dir-bug.sh
-> 	+t9835-git-p4-metadata-encoding-python2.sh
-> 	+t9836-git-p4-metadata-encoding-python3.sh
-> 	 t9901-git-web--browse.sh
-> 	+t9902-completion.sh
-> 	 t9903-bash-prompt.sh
-> 
-> I have no idea what's up with t98* and t9902, but I would bet that they
-> were somehow "swallowed" by `prove` being terminated, and that the
-> actual test script that times out is t7527.
-> 
-> Eric: To investigate, you will want to reproduce the problem on a macOS
-> machine. If you have none available, you could create a temporary branch,
-> heavily edit the CI definition, and push it to GitHub. And by heavy edits
-> I mean something like this:
-> 
-> - Remove all non-macOS jobs from `.github/workflows/main.yml` (that means
->    removing all but the `regular` job, removing all but at least one
->    `macos` matrix entry, and removing the the `needs: ci-config` and
->    corresponding `if:` line.
-> 
-> - Edit `t/Makefile` to define `T = t7527-builtin-fsmonitor.sh` instead of
->    running all the tests.
-> 
-> - Edit `.github/workflows/main.yml` so that the step that causes the
->    time-out has a chance of timing out much sooner (and the subsequent
->    steps then have a chance to upload the relevant logs):
->    https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepstimeout-minutes
+> @@ -605,6 +606,15 @@ static void midx_fanout_add_midx_fanout(struct midx_fanout *fanout,
+>  	end = ntohl(m->chunk_oid_fanout[cur_fanout]);
+>  
+>  	for (cur_object = start; cur_object < end; cur_object++) {
+> +		if ((preferred_pack > -1) &&
+> +		    (preferred_pack == nth_midxed_pack_int_id(m, cur_object))) {
 
-I would also set GIT_TRACE_FSMONITOR and GIT_TRACE2_PERF (on both daemon
-and client sides of the tests) and capture the logs and try to figure
-out what is happening.
+nit: you don't need the extra parentheses here.
 
-I suspect that this testing should wait until you redo the patch to
-remove the tmp file stuff and just move the socket into $HOME as we
-talked about earlier.
-
-Jeff
-
+Thanks,
+-Stolee
