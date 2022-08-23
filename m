@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A852C32772
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 09:13:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C14BC32772
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 09:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349016AbiHWJNy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 05:13:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
+        id S243689AbiHWJN4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 05:13:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349189AbiHWJLU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 05:11:20 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21F9486C24
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 01:31:32 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id ay12so6806756wmb.1
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 01:31:32 -0700 (PDT)
+        with ESMTP id S1349206AbiHWJLW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 05:11:22 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64A0686C25
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 01:31:33 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id ay39-20020a05600c1e2700b003a5503a80cfso7310244wmb.2
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 01:31:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=uRgabWi8kMFnLk7MySU/fiQXaJR9mqMTeDJYFEoMCgY=;
-        b=EHwxNOxGk/qKAxIkOy1eY+tubuWk9CuxMItTlDN2MUsmi0NMFbHtAq4RxNLwRgu/vz
-         4i2XfiMjrPywPlzbSVs4o+vt/dOG+3zggBURKKEEvQxfPwaPzO7OD7thtj695ho8wqwg
-         dSu/yZXOmQ1FIftE6rr0HhPqvOgX+9MjkGAKFtnwjB9g9OF9/9P2M0cRc3qxYszuD1lm
-         JExmQz39GKoQvw7NWNNtNQpEXac2yBeN6w//NyUp1XHKLQSPHCA5w68uSMaDtb4hdQH2
-         UyjTPsXT6TDJII65URT9BcdGmd8CTsJmZeguqANIBttnVwsATWzl8PL9jjp+TCDin7bz
-         5VVQ==
+        bh=08yJomRBoQ6Yjeqi9A3chzlIQeCCUPVSzEQwULp2Unw=;
+        b=bAvRWwPin9Ie5I4MRaoCWzHn914onkB4Gz3bQDjc4dlzuvtf4fiIPeQvz/aJuNj8zd
+         /NNjONkdSt6joe+sJyzWyrE1MyCV8HwGzi3H1osBYuPWvUUcmsPkjmFQyJ3hGZK+uWud
+         Vfz4wvLZiZRfhvIlXpWOVSQxyspLbceQ7BlgT6Ydhpt4NhHmGCQRBxf26RgzJewvbBTI
+         lRkD0CPH6DvZE+I9c6IT2pD+vcskBn9FhLGgHA+obs53cKRtQ+6pC+sTqc5/zA8YqKIV
+         OJimLUPK8/MJ6RmBgMnD11ChJGbbQERwHzno5LPQZIDxpcEmFKdhrRjbtfIPMgfOcmi/
+         s9Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=uRgabWi8kMFnLk7MySU/fiQXaJR9mqMTeDJYFEoMCgY=;
-        b=FHhGIl9MZWcn0pA2RDmL0WTp9MSugdwSu5uDTt07OMaWobT2ADoQpOoavK8sy2stfY
-         QedKvmcX0YAxgsKaiWbU2Dsn4V1NQmSb1PlvauuwN6KFwLTYEYsUzyLM7TrLfuAtK7wD
-         CzYC6olDYHSE8+XohO1AOd1FoX1Z+/Vfo7475SY4Dc6Gs7LhQHNFtOgwifmudzdJkKZo
-         vHUIpWFGMThwZ5R+Hh7azvpEbL4rJIH+v3kPdoNYSK/9q/wqMFdq3vteHh+i3df2l8vB
-         aOm74xQPtecPaegu4FZ3kzo/8bzoFJvqCOcSzMSwsnHc6pOjnkAZDKrBmfebvbUFh+iD
-         IMww==
-X-Gm-Message-State: ACgBeo3efDHPg9Qrq3MzsWYZysR9N1LqqwGrzeOx90WBGDyoNvnMqLpz
-        IXc7y2lgx2LVXxnlUu5ax/8/ORfBqAU=
-X-Google-Smtp-Source: AA6agR48UNasHT5aoWuuM/cRjxtpmKmkBgf16y3ejVoSGaOT2G0ys6KWqjhP3n1DkYpbkNMDtS0ZEQ==
-X-Received: by 2002:a05:600c:5022:b0:3a6:ad4:1c6 with SMTP id n34-20020a05600c502200b003a60ad401c6mr1357187wmr.177.1661243466768;
-        Tue, 23 Aug 2022 01:31:06 -0700 (PDT)
+        bh=08yJomRBoQ6Yjeqi9A3chzlIQeCCUPVSzEQwULp2Unw=;
+        b=LoM7sXPTVWgeg8uk5xY+0CYlcjP/2u0/urN7AAc8ISjHnPNvb+xV7uXfdVQLHIovoZ
+         sDHeiazU3yu/fDV09zmWHkE54eiWDKaMCllGqAgQT7fniUJi9xNU7qH0psP1RqQyq525
+         GJMhljkzn8X2yydgdpxlLhyt5feq1r+GQp66gix8ka+6aQ1oOsA3cnYIxpN/EwHdX6yN
+         Z8mgOkg6iNoFpKnd9jyKBlOJqzu6hEgae1EA2h3YnVTbWEAnTE0fPd9GPMzb2RedmS1o
+         HG/vibKBY7frMzJSOPvOMWfMFL+fuPwXOenEkQJRmHf3RaL+PM/vIdNasJzG3ky5nCnO
+         Ngcw==
+X-Gm-Message-State: ACgBeo3cU1kHmjC9Z98Hz9/t+zKljUVtTW4506ArUFvu5E/r7V+u6kBY
+        h4oBMDuo4MjoGKC+FdX2ye8kHLLqx08=
+X-Google-Smtp-Source: AA6agR4T+sGq6gMN1HV/2sNRu8EdOV+8ALFy46AeFDc7RZrDBXIuQSz+wyBzN5iztDwzZYn/KUiZlw==
+X-Received: by 2002:a1c:3b04:0:b0:3a5:487c:6240 with SMTP id i4-20020a1c3b04000000b003a5487c6240mr1414800wma.152.1661243468889;
+        Tue, 23 Aug 2022 01:31:08 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a18-20020adfdd12000000b002205cbc1c74sm13536649wrm.101.2022.08.23.01.31.05
+        by smtp.gmail.com with ESMTPSA id s4-20020a1cf204000000b003a5f812635asm16365781wmc.39.2022.08.23.01.31.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Aug 2022 01:31:06 -0700 (PDT)
-Message-Id: <e00cb37b98ac09cff010e843ef19eeec761f8985.1661243463.git.gitgitgadget@gmail.com>
+        Tue, 23 Aug 2022 01:31:08 -0700 (PDT)
+Message-Id: <f96d5ab484c4971fce65f832185237ede0d37659.1661243463.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1320.v2.git.1661243463.gitgitgadget@gmail.com>
 References: <pull.1320.git.1660143750.gitgitgadget@gmail.com>
         <pull.1320.v2.git.1661243463.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Aug 2022 08:30:59 +0000
-Subject: [PATCH v2 1/5] cmake: make it easier to diagnose regressions in CTest
- runs
+Date:   Tue, 23 Aug 2022 08:31:01 +0000
+Subject: [PATCH v2 3/5] add -p: avoid ambiguous signed/unsigned comparison
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,43 +69,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When a test script fails in Git's test suite, the usual course of action
-is to re-run it using options to increase the verbosity of the output,
-e.g. `-v` and `-x`.
+In the interactive `add` operation, users can choose to jump to specific
+hunks, and Git will present the hunk list in that case. To avoid showing
+too many lines at once, only a maximum of 21 hunks are shown, skipping
+the "mode change" pseudo hunk.
 
-Like in Git's CI runs, when running the tests in Visual Studio via the
-CTest route, it is cumbersome or at least requires a very unintuitive
-approach to pass options to the test scripts.
+The comparison performed to skip the "mode change" pseudo hunk (if any)
+compares a signed integer `i` to the unsigned value `mode_change` (which
+can be 0 or 1 because it is a 1-bit type).
 
-So let's just pass those options by default: This will not clutter any
-output window but the log that is written to a log file will have
-information necessary to figure out test failures.
+According to section 6.3.1.8 of the C99 standard (see e.g.
+https://www.open-std.org/jtc1/sc22/WG14/www/docs/n1256.pdf), what should
+happen is an automatic conversion of the "lesser" type to the "greater"
+type, but since the types differ in signedness, it is ill-defined what
+is the correct "usual arithmetic conversion".
 
-While at it, also imitate what the Windows jobs in Git's CI runs do to
-accelerate running the test scripts: pass the `--no-bin-wrappers` and
-`--no-chain-lint` options. This makes the test runs noticeably faster
-because the `bin-wrappers/` scripts as well as the `chain-lint` code
-make heavy use of POSIX shell scripting, which is really, really slow on
-Windows due to the need to emulate POSIX behavior via the MSYS2 runtime.
+Which means that Visual C's behavior can (and does) differ from GCC's:
+When compiling Git using the latter, `add -p`'s `goto` command shows no
+hunks by default because it casts a negative start offset to a pretty
+large unsigned value, breaking the "goto hunk" test case in
+`t3701-add-interactive.sh`.
+
+Let's avoid that by converting the unsigned bit explicitly to a signed
+integer.
+
+Note: This is a long-standing bug in the Visual C build of Git, but it
+has never been caught because t3701 is skipped when `NO_PERL` is set,
+which is the case in the `vs-test` jobs of Git's CI runs.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/CMakeLists.txt | 2 +-
+ add-patch.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 1b23f2440d8..4aee1e24342 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1088,7 +1088,7 @@ file(GLOB test_scipts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
- #test
- foreach(tsh ${test_scipts})
- 	add_test(NAME ${tsh}
--		COMMAND ${SH_EXE} ${tsh}
-+		COMMAND ${SH_EXE} ${tsh} --no-bin-wrappers --no-chain-lint -vx
- 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t)
- endforeach()
- 
+diff --git a/add-patch.c b/add-patch.c
+index 509ca04456b..3524555e2b0 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1547,7 +1547,7 @@ soft_increment:
+ 			strbuf_remove(&s->answer, 0, 1);
+ 			strbuf_trim(&s->answer);
+ 			i = hunk_index - DISPLAY_HUNKS_LINES / 2;
+-			if (i < file_diff->mode_change)
++			if (i < (int)file_diff->mode_change)
+ 				i = file_diff->mode_change;
+ 			while (s->answer.len == 0) {
+ 				i = display_hunks(s, file_diff, i);
 -- 
 gitgitgadget
 
