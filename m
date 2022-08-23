@@ -2,119 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57400C32772
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 19:06:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC7E7C32772
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 19:08:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231449AbiHWTGY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 15:06:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37302 "EHLO
+        id S231494AbiHWTIu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 15:08:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231467AbiHWTGG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 15:06:06 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB02B6557D
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 10:42:14 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id k17so7572669wmr.2
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 10:42:14 -0700 (PDT)
+        with ESMTP id S231580AbiHWTI2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 15:08:28 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFAE7133641
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 10:47:00 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id d6so6142739ilg.4
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 10:47:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc;
-        bh=McHBbqFFym4vtRCw+1GYkiwBpIs8HlufUxgcYf2Xnu8=;
-        b=Jrbqr0j4LmhIXos4VBPvNSWFTrv7mxQlzTU0D7ptlZHeV0bs8Qr+41P/bVpIgD242B
-         on5oToNoqEeSBaPtR6pj6w+o8bm/jMmSS5+ewTzRK2ooUCRqzBenQJt/SNZM8NuNP5s4
-         xXXxPgqzIqqkG1chdufjnbjeQ+EMCVrpj1jch5HLkNYaZMEtnCzbQlSFMMVRSmsUtSZP
-         Thp7NiPgSswEYheAaT3hQ63AFuKGC71v1tUQM0MV2gZOXAiqHGK/whdPewZQo7zyDF7N
-         x3YK6CoPkJhMF8XyfY5LnaFtsVsg07qfPDvz2+ia3/0Ua7u8wtPx4uCstXi6hQq1lHPp
-         rZ6A==
+        d=google.com; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc;
+        bh=zuXKxyOyV5ZaiVu6wHk4ppA/HPhM/rBJYnl1Mf237No=;
+        b=gxbMgwWaaJ8uL+g+0OPK+es1xuaCC0GIIwtfmJ9m/edEoXWW7jvz38af9oh28rYk1Z
+         r3X6ayJ9fPmcWqnQTi2vSuR3/9tllPTK7rgG/fVkuve3T2dj21ScnnvK+QIsOcVOxWQl
+         wcZFiTfTnPiV96mKCl1yHEV3MGZSCPeo6oKdzL/QHwb8BeA0WZqJMyvzuGd+6wkfYpBC
+         IkHlOv6KqFKnUI2ZeCD7n1dN/nBDBYU6YETVz0ua4IViXAOONm46uz9ESWvnipgQQAWw
+         RuEmqYhWQ4etoZwQ+GGlKuC0Qd9hKW8Q0wl1Hew4PZ7q7J+MPJuv+A/MDwPF4Ic/4V2K
+         diZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc;
-        bh=McHBbqFFym4vtRCw+1GYkiwBpIs8HlufUxgcYf2Xnu8=;
-        b=VpVA/lWXUpq6rynNJnYAvBMnXAUdvrt4EDXj+EmPjC8UspW6Sh9hpmHGJeoobVbFWx
-         1KNdXPJJSo0qBXOUMd4Y9WZsKBUNuZI9LMyGdvIbuS0hDKN2BGUTdVRLrzhT5l4GSQw9
-         8NGp3cIg4G1V9EBszuWj1z2Z59UzUQfHuAE/OJmShnrCrDXOkVUgwtse/wjpQ7hzLKoX
-         y3AbpjL4eu5AVLdg3LD+Vzv6YDrYTPfzasbrLWCKZIMoQPuGWHVcSOqAjE5vJct01EZK
-         bXQv/RI+ZEvAgXNVRp4cK6P6+ShjYd80CSfBfeFCkyHzH7LmYFWgHd8U05QYcpb96911
-         PwcQ==
-X-Gm-Message-State: ACgBeo2ZMWntsY8FP++HuIju0rHNKPI5jeXh8aZIvtIsz1G4bqfoWR6b
-        OyEb8BbAjNmb72F9b8TCdSbsS0nMgpA=
-X-Google-Smtp-Source: AA6agR4UV9h9o0S1zAX0Bz/6rOD3OGvIk7nl/niOXeYd44G4DFcuVyCnWAciUmvEd4oM+Cfc5sGXuQ==
-X-Received: by 2002:a05:600c:8a7:b0:3a6:85b1:2275 with SMTP id l39-20020a05600c08a700b003a685b12275mr761131wmp.30.1661275692875;
-        Tue, 23 Aug 2022 10:28:12 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i6-20020a5d4386000000b0022159d92004sm8794622wrq.82.2022.08.23.10.28.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Aug 2022 10:28:12 -0700 (PDT)
-Message-Id: <pull.1334.git.1661275691795.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Aug 2022 17:28:11 +0000
-Subject: [PATCH] ci: update 'static-analysis' to Ubuntu 22.04
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc;
+        bh=zuXKxyOyV5ZaiVu6wHk4ppA/HPhM/rBJYnl1Mf237No=;
+        b=HOaN/dLr2syruLHO9ifR1uAPi7uTLljZnozWcJg8ls04VzaRnVRwuG+ANtBhYCHYYB
+         /JUsv5dHWahRhnqDAcdt/1bdUf4MizbSuC7svkBjqvDlIInJESTgdvoK/1u8SQ4KA73+
+         jA/LReNibwb7S2z0wn+NkOxKB+JIXqvWrf+YiQoUcn8CtW2YWY/xeW5cMzg3b4j/INVa
+         cSo0dIT7xjgLqRSdk2wKw0JizaBbg++hT2jYm684EQjwEWXljjOhtlHcf/7/z3cPb9k6
+         3KKnyiSJ26FzLNGKw1iyT4IdeHfFcUm8iUSibudT+pTIyxwaEBJ0lvfIaRAr8icdTsk7
+         sLRw==
+X-Gm-Message-State: ACgBeo1J88CgGWhEi4fhxSdHOD860VjzGTMorWqmF31ZuW4iEKAX8dmV
+        v9cASL529U0v1T+KFmdjKHpz7rC2mYEM0wpbDNLI
+X-Google-Smtp-Source: AA6agR4VFWD8hFt3OaPVoWKxl58GbWq333XfwjGAz7+B3PtsWFLpZxhQSbyPVxpaE327pb6PBATbR8endDFzZ2E8I/g=
+X-Received: by 2002:a92:ca4e:0:b0:2e9:67ff:8b29 with SMTP id
+ q14-20020a92ca4e000000b002e967ff8b29mr357696ilo.294.1661276736835; Tue, 23
+ Aug 2022 10:45:36 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+References: <CAO_RewbD+BJd1hPKCmCNM8wYBSUmZ2TuOoy6t1up1CT-rbn4DA@mail.gmail.com>
+ <xmqq8rniikrg.fsf@gitster.g> <CAO_RewZPXP1EUP90kU6uEQ3_CqqC7yWedjfNd7RaVASFSfrg0Q@mail.gmail.com>
+ <xmqq4jy6igb2.fsf@gitster.g> <CAO_RewaZHL34WBaoXVyXh6ZNVuG+fi5uGUbpRMsc9N=orHzx1Q@mail.gmail.com>
+ <xmqqzgfyh0vj.fsf@gitster.g> <YwQki4nAEOp4wvv9@tapette.crustytoothpaste.net>
+In-Reply-To: <YwQki4nAEOp4wvv9@tapette.crustytoothpaste.net>
+From:   Tim Hockin <thockin@google.com>
+Date:   Tue, 23 Aug 2022 10:45:24 -0700
+Message-ID: <CAO_RewZCjdGcC3fx7pPZEZ9iTk8_Xs7eBqaf8208da3fD=40mA@mail.gmail.com>
+Subject: Re: rev-parse: -- is sometimes a flag and sometimes an arg?
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Tim Hockin <thockin@google.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+Thanks!  That helps a lot.
 
-GitHub Actions scheduled a brownout of Ubuntu 18.04, which canceled all
-runs of the 'static-analysis' job in our CI runs. Update to 22.04 to
-avoid this as the brownout later turns into a complete deprecation.
-
-The use of 18.04 was set in d051ed77ee6 (.github/workflows/main.yml: run
-static-analysis on bionic, 2021-02-08) due to the lack of Coccinelle
-being available on 20.04 (which continues today).
-
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
-    ci: update 'static-analysis' to Ubuntu 20.04
-    
-    I noticed this while preparing my bundle URIs series. See an example
-    cancellation at [1]
-    
-    [1]
-    https://github.com/gitgitgadget/git/runs/7954913465?check_suite_focus=true
-    
-    I initially asked about this [2]. Thanks to Matthias Aßhauer for
-    pointing out that 22.04 has Coccinelle available [3].
-    
-    [2]
-    https://lore.kernel.org/git/eb8779bc-fc41-f601-05f2-024e6bf3f316@github.com/
-    [3]
-    https://github.com/gitgitgadget/git/pull/1334#issuecomment-1223597655
-    
-    Thanks,
-    
-     * Stolee
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1334%2Fderrickstolee%2Fstatic-analysis-ubuntu-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1334/derrickstolee/static-analysis-ubuntu-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1334
-
- .github/workflows/main.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index cd1f52692a5..831f4df56c5 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -309,7 +309,7 @@ jobs:
-     if: needs.ci-config.outputs.enabled == 'yes'
-     env:
-       jobname: StaticAnalysis
--    runs-on: ubuntu-18.04
-+    runs-on: ubuntu-22.04
-     steps:
-     - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
-
-base-commit: 795ea8776befc95ea2becd8020c7a284677b4161
--- 
-gitgitgadget
+On Mon, Aug 22, 2022 at 5:51 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2022-08-21 at 00:54:40, Junio C Hamano wrote:
+> > Tim Hockin <thockin@google.com> writes:
+> >
+> > > Sorry, I assumed it was clear, but that was dumb of me.
+> > >
+> > > I have a string - might be a tag name, might be a branch name, might
+> > > be a SHA (complete or partial).  I want to resolve that into a
+> > > canonical SHA.
+> >
+> > "git rev-parse --verify string" would insist that 'string' is an
+> > object name and show it as an object name to the standard output, or
+> > gives an error message and exits with a non-zero status.
+>
+> Note that this will print a full hex object ID whether it exists in the
+> repo or not if one is given (for example, the all-zeros object ID).  If
+> you want to verify that the object exists, write this:
+>
+> git rev-parse --verify string^{object}
+> --
+> brian m. carlson (he/him or they/them)
+> Toronto, Ontario, CA
