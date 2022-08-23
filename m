@@ -2,230 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E722BC32772
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 19:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99DBDC32772
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 20:29:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbiHWT56 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 15:57:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45424 "EHLO
+        id S231321AbiHWU3U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 16:29:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233638AbiHWT5k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 15:57:40 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22A9386B4B
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 12:08:13 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id l33-20020a05600c1d2100b003a645240a95so5879871wms.1
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 12:08:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc;
-        bh=tj78mM8Z6nkKNyJAp+4R+jQ4CoaTDGDEy6YKdUB3Y6c=;
-        b=pd2kjqeHu6cwgkVO9oP0qV+P/tyKByigzlmmp+JU9qz1Ynodk5F19negiOXfWJijUk
-         tZc1voydkKh3HvImOG6wpp7WJJ45/ObMwns/rWcGCCW7wCkPGi8KwGIK0jwaMQVg/YhY
-         32LqreWsYqPZMMGOCMkkXNW5YbsVSUlGBqmE1pXeIiVJJVN56Q7Uj+KFrbm1T/VOGuyE
-         a3gzrGSxTD6fwkS9NDpqoz3VP2okB0MHVOO892rfCgajoN43nDSylU+FFVeTlnDahBqe
-         zbbkXQyhdMUEjLIEo+PGDGeOb87SzJssOwlCVzYSLyocDiqEydy4LkIPoP7PX/ddMclw
-         dQMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc;
-        bh=tj78mM8Z6nkKNyJAp+4R+jQ4CoaTDGDEy6YKdUB3Y6c=;
-        b=UgK4fnuRBxl0AnWA4lUkVjfK4uaKV6ePoJ8LaCz7tu4srrcJz7CXfuetGZpgsH0yar
-         Ym/cjxa15KU1H6I6ms6YaAdDWi3+O2C4nccQezfQ8f5EAANPQ5yB2WNJztsCC6GAxZ3e
-         +fh7QN0QOz5Q25Y9JlE63IavtrKgLMFIbrcD7t7Ru9BnA2f8rjzbTQy0vtJj4RmbgfWP
-         t4CJsbhtc1GTa3FsS6py+90MGLMXohmvn0A1RaqzvcruA8x4tz+F/hA1JJaW7zYgy3jA
-         OUTDFZp85LBhRkONmGAzXLSBcEG13SFZJwwqj06EmtSil/F568v3m8oKYmTsWB7oZHv/
-         z+pw==
-X-Gm-Message-State: ACgBeo3/yLarqF7Woq5a3QioOAauj1txmPg+S7w/mhsXpF3bNyPGkMH6
-        ClAeH2CqAOYDcpAncAWacsXLxQcUFzg=
-X-Google-Smtp-Source: AA6agR4TBzyko3hjOlGcDiNPL13riPrTSMA/b/FHq8/xusWOX2GyZoThkkDIhIYbnFkskOiEHbykyQ==
-X-Received: by 2002:a05:600c:3b8c:b0:3a6:71a:f286 with SMTP id n12-20020a05600c3b8c00b003a6071af286mr3009888wms.120.1661281691131;
-        Tue, 23 Aug 2022 12:08:11 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v7-20020a5d5907000000b00220592005edsm14926527wrd.85.2022.08.23.12.08.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Aug 2022 12:08:10 -0700 (PDT)
-Message-Id: <pull.1313.git.git.1661281689747.gitgitgadget@gmail.com>
-From:   "Diomidis Spinellis via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Aug 2022 19:08:09 +0000
-Subject: [PATCH] grep: fix multibyte regex handling under macOS
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S230510AbiHWU3D (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 16:29:03 -0400
+Received: from EUR01-DB5-obe.outbound.protection.outlook.com (mail-oln040092064103.outbound.protection.outlook.com [40.92.64.103])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 998ED7A742
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 13:03:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=IQrpBKIPFNHqKyvRkx1Ok26Mc/bKEHm7s2XEUK2s+AEomaB4oViQSW9K8fvXivim+8S+I538KYa6wQeVph4mcrEYnV+MWFDcwHHyFT5O4d80u2Qz857AI4tN8GplCLIO/DDZgW+kVOAxd5XwULb+IGTBi4xzVJ8zPMHmkjrCyk8ieVxtm+YYW3tTuRyoHbO417yhOr+r9b8KGNj/BSu4kJzyUJfPi1HufsEpsqvCu7Hrqnla0Eu5/uUKwOLnxyjFc3Mguz0P4d26KjW/9phpWf5O1Gf0EVFkXovudI86pIWNH+qq0wNXHJv7uCVRweqsj+Z3SXDfSUtAdnZntybBWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=m65g/C3CAx8GC2E+CDUjvKhhnoroW+HrY2ztE8R7RsY=;
+ b=n80ikL+qzqkOWOWkfYtLnjnrO4eXQya+1sNZTO3+cWFkxrwUH/nZtuQpeZI52I3BB6bCdJgVz/Fewm+/jj78/6uLcs3kI8rp0UZ6VZyRD9Y6nRWPW6LCTlrDswFyhc4WOLSVX4ohNFtYrJ5h5VQpNwymJGXFiVsJYnTglNzCq5h+08T7A00ihUzQ8TZ0yKHd+eo4cg6qXVCWs20qDVjUCVs3SiMrjogKi6hkR/8lhENT0MR+nobIyct6mGGoIMbaeV/qTgLG0A43UlGDe55Er4JBBrGwlrMqHK+0Ky+PIa1KojEqIPvW+PMLcIBgRsODv1QukxzXBPYNUpYMjX1EaQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=m65g/C3CAx8GC2E+CDUjvKhhnoroW+HrY2ztE8R7RsY=;
+ b=nKHYJ1dyocgEYns5cNgTRe2Esp/WfWF/85YgSlyD5ev1GNl2PY2LmC8+C5QCiXdKIxiVfK9otNRs8JEr5Lw6ev56wYLOJvuHbUWxH00mkJzNkGRAZKaUjoxKih4FqU2mzpGc2AL6Zm03Z1FIFiIHXSLpDyaUBAa0iy8FAVmBmMKtz4RE1R8iJRzLecKANVeqHNVp1DmakDVdrt2QgZSHIVVTDHeNl993u5CCXljnW9TWCwdfKQyoDT6mho8C3dBqJ3uAQDaUKcgyMUvvbZV/nfSIVEouWjafmYxQTO1XUdPevt3ziea3EwqZLZbrlLuQJ6oXTJBfCmZdPsD5wDRlHg==
+Received: from DU0P195MB1649.EURP195.PROD.OUTLOOK.COM (2603:10a6:10:3a6::14)
+ by GVXP195MB1805.EURP195.PROD.OUTLOOK.COM (2603:10a6:150:1::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5546.21; Tue, 23 Aug
+ 2022 20:03:42 +0000
+Received: from DU0P195MB1649.EURP195.PROD.OUTLOOK.COM
+ ([fe80::1ef:e678:90c4:4c99]) by DU0P195MB1649.EURP195.PROD.OUTLOOK.COM
+ ([fe80::1ef:e678:90c4:4c99%9]) with mapi id 15.20.5546.024; Tue, 23 Aug 2022
+ 20:03:42 +0000
+From:   Mohamed Akram <mohd.akram@outlook.com>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git diff prints long usage help if not run in git repo
+Thread-Topic: git diff prints long usage help if not run in git repo
+Thread-Index: AQHYtlQfqVVTOIN0YESrilTsNXp0y627UmNigAGX1oA=
+Date:   Tue, 23 Aug 2022 20:03:42 +0000
+Message-ID: <A01F00AA-B96E-40EF-9017-9005A8AC1E14@outlook.com>
+References: <A2326287-9808-4479-95C5-E54979E21F95@outlook.com>
+ <xmqq5yikcbd1.fsf@gitster.g>
+In-Reply-To: <xmqq5yikcbd1.fsf@gitster.g>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mailer: Apple Mail (2.3696.120.41.1.1)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn:  [3DQBvDO5ZY8s+4RxFATPCoyAIiRg5iwPaKNpnyDVnNzlb69iE/PR1x2ghQ+CY82z]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 66febf4d-1ac8-4589-ce0d-08da85429420
+x-ms-traffictypediagnostic: GVXP195MB1805:EE_
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ubD35TWHV+4RtR9RM+lrdb1qxGKvcb04cgnGLDn+fzoIieGQqL6fVAZ4b9ctUXSyhvATZZ6NR8HkWlHie/ZNQowk6x9q31TG1uISvgl1UFqQTSThUnt7nhI0dsJ8DiET1t5kFQn+7r+9Z+wbTBwZHkc5JbRnwUooQZg4EhqlSKb2Ty+CA48O4pb+n6BQW4WqZb6ZK3qB5ve5fCWCUBRJmvOLgKep1QcBI3CcHSt72Z24/lt5sX7zhirJMuz5kOWoPG/jU8BW9cEscUval9V6M4UQQ1eC1oLy1EL1/vZdnd2wj6d/Ka2ZuSOgufgqupLSyOD8O+HxqGhHM6GtlX60Oj0wizhv7x83vlmGqgj7VSiXwDSJ2PyNRJbi0H9v5bJ16LWMv99juP0VGd4FsxIjc43B/kKbK6P5tqRAwR2/ZDrLK6hylbScPFglDOKONoUlIs4PUjPxwskXIu9JBSRFkqu5zlTogQ0fqoB6Hm3L1gPTcm6q9YP4pNOXp7dBBEEDETJIEAyUfAmRENi6KZBUGyz5vDE3PXWhxqMnu0SVQct46Wp4bpGV1y0OUevwxTEueDJqgLQqY1CJ8liuc7o50BNiz723VRD/zv5lpZc5z5pPFDjv5wp5rjFh83HWq/dzqkxBEIIU0e4EX99/1DrZkUmjdSo8pVCSvvRc7NXv1tPjdmdTGs2P7elmtFJ7y3CX
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UnU4ajZoT0ZoUmZMZk5yZXNWTkMvaFlTY3E4cnc4WENxN0FERWxwODQ5Q0VT?=
+ =?utf-8?B?UlF5emtFdWpxN2RlMzE2dG1aRFp3UnJ0aTB0T1dQQWZwWDZtcnF2MGtuNHZL?=
+ =?utf-8?B?WG5jalhiT055dTdHbGZmRHpCeTNjZFVoVnBVcWhRZ24rZFZORS9LNklTYkFz?=
+ =?utf-8?B?Vnc5S0ZwVFBvRXZvc3ZpckVQZFA0T1djVXBONlV0dE8zQjBWcmkrN3ZzNVZt?=
+ =?utf-8?B?K0xsMVM1b0k2eUZFTkJQM005ZDc4ZUxtTG5nclhGTGFkVFRuZE9xVThGUHhK?=
+ =?utf-8?B?VVlyYmVvUGV0dUZiRDZCVkRBRDRRSmMwSmxudVppclpRUkxvOVI0cGtKcmF6?=
+ =?utf-8?B?UmhkVkZuQ2hjNHZSTDhGWEdLTFBQMHJ6dXhmRFJoRGd5eXNzWkFtWnMvYzIr?=
+ =?utf-8?B?UytJb2V5aGN3TmdXQ2dZdFNrNE1tUjBEc1g4aDd1ZVZac2lIdEpjbzJOZHB1?=
+ =?utf-8?B?RlJMSzZwdHJMczBYdFNMKzdiYUlBSkJHK05KOUVvRlQyY0JyODI1ZEkwZE9S?=
+ =?utf-8?B?MktZRmVCQWVOZkw0aUhYSVIranJ0bkhZSzZhdHpnYllBTm5oUVVTSkxwUUs4?=
+ =?utf-8?B?aFNNMlRYM3BaMDVLNmJmRndYVEFXZzhZNGpScFZTWUN2THlVZ1pTcFBTNGpr?=
+ =?utf-8?B?S2dnZzBFTXVsV2tabWxtVzE1TUh5V2VCQnhkcWEySG1PL01PZExGb0RRNHEz?=
+ =?utf-8?B?aFl2R0VLT21BM0xmWndVanZ5aFQwL3pGcTVnT0ZmZ2VVYThkTlNDU1dqQTZm?=
+ =?utf-8?B?Um9DckhvckoydUc1aW9ucEZyNEF0ZTFHZTMxZEF4b0l6ZFZYQWEwaHEwVUxW?=
+ =?utf-8?B?eUlJZTVyYXhGK0tnSHl2bkZBRWdieThQQjhJbWNRTUpNYmhPYmVmN1NvZDdj?=
+ =?utf-8?B?ZmdaczBweDVUbnVXakNzMXhrcFNMOTFRTmEzVjRFdHh3THFpenJRVkp6UlBh?=
+ =?utf-8?B?TmhDR2xrNzlxemtLcnJMZnlrQU9MVjE1VU9vNVdyNGJTN1JvN2NIWUhQNnNx?=
+ =?utf-8?B?M3A4clhZK0orMkFpcG9ZUUUxd3VIL3A2dEJrK0VEQmlGZnpReTkrT1dSVGhz?=
+ =?utf-8?B?a01BQzdvMkRoYTZKTm4wWUM4QUlaenN6WVZMSk41Y1FWT1dJa3NJcDFlcmdz?=
+ =?utf-8?B?aGl3ZWtVOVBlOGdxdUVieDg2eURYTmQ0WUYycWhUeWl5cDNWaHRoSHNBZ016?=
+ =?utf-8?B?Rk1wOGd6NTRwZnkyOXBEVDl1RHFCN2hEYmd5ZmhrQXdycS9EUmJ6eDdmWHRh?=
+ =?utf-8?B?UnlFMWIxd0trWHBTQ2MyemErV05zd0RZZGJKZW5YU29qb2oyVzhSc1ZvT3VM?=
+ =?utf-8?B?NnhGZHdBZVdQNnNRc2RpYXFQV3U1N0dRRmo1Y3FyTVA0dFljdEsxdmhMaE45?=
+ =?utf-8?B?U0podk1vTmdlYjUvaC9pOTJtYlJ5YWxCWThXTW1qc3dTOTIyUlh1V3ZrMk9n?=
+ =?utf-8?B?SnRIcnc0QjJoL0tWN3ZnNUlYUTYrSXhYZ3RuRnAwc3g1amQ2cDgvSjlqUi9P?=
+ =?utf-8?B?QTc5YnJvODE5WitIeDdZTFFjZU5xb0hOVVR5bnpVKzJ6U3J5QVd6cWJvRTZB?=
+ =?utf-8?B?ODFHWXNua25POVBiZW1NazZwVkVnR3NsYzR5cXppWGY3T25HRHNXUFE1TnlC?=
+ =?utf-8?B?VDZrUW1sL3NHZ1VBRWl2MFI5RVJTdUc4cTVWbFlodUJKL1ZqQThxSVMxTmpC?=
+ =?utf-8?B?QjBqUDk1Z0hPSVdmYXNWR1drKzB4Y2VTVkw1bm1RdVZyN0VYTVp2MEJ1QXd4?=
+ =?utf-8?B?TmlNdGRoTHMrQ1M2VDVXekVaZFVxbUFIY2gvMmVvenYvVjdYckpDQksrdzlr?=
+ =?utf-8?B?cnpoMEhWRXBXT0xrN1E4Zz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <4EB1D7646243864AA3E522252BCBF366@EURP195.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Diomidis Spinellis <dds@aueb.gr>, Diomidis Spinellis <dds@aueb.gr>
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DU0P195MB1649.EURP195.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 66febf4d-1ac8-4589-ce0d-08da85429420
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Aug 2022 20:03:42.5391
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXP195MB1805
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Diomidis Spinellis <dds@aueb.gr>
-
-The 2013 commit 29de20504e9 fixed t0070-fundamental.sh under Darwin
-(macOS) by adopting Git's regex library.  However, this library is
-compiled with NO_MBSUPPORT, which causes git-grep to work incorrectly
-on multibyte (e.g. UTF-8) files.  Current macOS versions pass
-t0070-fundamental.sh with the native macOS regex library, which
-also supports multibyte characters.
-
-Adjust the Makefile to use the native regex library, and call
-setlocale(3) to set CTYPE according to the user's preference.  The
-setlocale(3) call is required on all platforms, but in platforms
-supporting gettext(3), setlocale(3) is called as a side-effect of
-initializing gettext(3).
-
-To avoid running the new tests on platforms still using the
-compatibility library, which is compiled without multibyte
-support, store the corresponding NO_REGEX setting in the
-GIT-BUILD-OPTIONS file.  This makes it available to the test
-scripts.  In addition, adjust the test-tool regex command to
-work with multibyte regexes to further test a platform's
-support for them.
-
-Signed-off-by: Diomidis Spinellis <dds@aueb.gr>
----
-    grep: fix multibyte regex handling under macOS
-    
-    The 2013 commit 29de20504e9 fixed t0070-fundamental.sh under Darwin
-    (macOS) by adopting Git's regex library. However, this library is
-    compiled with NO_MBSUPPORT, which causes git-grep to work incorrectly on
-    multibyte (e.g. UTF-8) files. Current macOS versions pass
-    t0070-fundamental.sh with the native macOS regex library, which also
-    supports multibyte characters.
-    
-    Adjust the Makefile to use the native regex library, and call
-    setlocale(3) to set CTYPE according to the user's preference. The
-    setlocale(3) call is required on all platforms, but in platforms
-    supporting gettext(3), setlocale(3) is called as a side-effect of
-    initializing gettext(3).
-    
-    To avoid running the new tests on platforms still using the
-    compatibility library, which is compiled without multibyte support,
-    store the corresponding NO_REGEX setting in the GIT-BUILD-OPTIONS file.
-    This makes it available to the test scripts. In addition, adjust the
-    test-tool regex command to work with multibyte regexes to further test a
-    platform's support for them.
-    
-    Signed-off-by: Diomidis Spinellis dds@aueb.gr
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1313%2Fdspinellis%2Ffix-macos-mb-grep-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1313/dspinellis/fix-macos-mb-grep-v1
-Pull-Request: https://github.com/git/git/pull/1313
-
- Makefile                  |  2 +-
- grep.c                    |  6 +++++-
- t/helper/test-regex.c     |  2 ++
- t/t7818-grep-multibyte.sh | 34 ++++++++++++++++++++++++++++++++++
- 4 files changed, 42 insertions(+), 2 deletions(-)
- create mode 100755 t/t7818-grep-multibyte.sh
-
-diff --git a/Makefile b/Makefile
-index 04d0fd1fe60..d1a98257150 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1427,7 +1427,6 @@ ifeq ($(uname_S),Darwin)
- 		APPLE_COMMON_CRYPTO = YesPlease
- 		COMPAT_CFLAGS += -DAPPLE_COMMON_CRYPTO
- 	endif
--	NO_REGEX = YesPlease
- 	PTHREAD_LIBS =
- endif
- 
-@@ -2970,6 +2969,7 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
- 	@echo NO_PTHREADS=\''$(subst ','\'',$(subst ','\'',$(NO_PTHREADS)))'\' >>$@+
- 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
-+	@echo NO_REGEX=\''$(subst ','\'',$(subst ','\'',$(NO_REGEX)))'\' >>$@+
- 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
- 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
- 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
-diff --git a/grep.c b/grep.c
-index 82eb7da1022..c31657c3da3 100644
---- a/grep.c
-+++ b/grep.c
-@@ -10,6 +10,8 @@
- #include "quote.h"
- #include "help.h"
- 
-+#include <locale.h>
-+
- static int grep_source_load(struct grep_source *gs);
- static int grep_source_is_binary(struct grep_source *gs,
- 				 struct index_state *istate);
-@@ -707,8 +709,10 @@ static struct grep_expr *grep_splice_or(struct grep_expr *x, struct grep_expr *y
- void compile_grep_patterns(struct grep_opt *opt)
- {
- 	struct grep_pat *p;
--	struct grep_expr *header_expr = prep_header_patterns(opt);
-+	struct grep_expr *header_expr;
- 
-+	setlocale(LC_CTYPE, "");
-+	header_expr = prep_header_patterns(opt);
- 	for (p = opt->pattern_list; p; p = p->next) {
- 		switch (p->token) {
- 		case GREP_PATTERN: /* atom */
-diff --git a/t/helper/test-regex.c b/t/helper/test-regex.c
-index d6f28ca8d14..ae4d7854abd 100644
---- a/t/helper/test-regex.c
-+++ b/t/helper/test-regex.c
-@@ -1,5 +1,6 @@
- #include "test-tool.h"
- #include "gettext.h"
-+#include <locale.h>
- 
- struct reg_flag {
- 	const char *name;
-@@ -85,6 +86,7 @@ int cmd__regex(int argc, const char **argv)
- 	}
- 	git_setup_gettext();
- 
-+	setlocale(LC_CTYPE, "");
- 	ret = regcomp(&r, pat, flags);
- 	if (ret) {
- 		if (silent)
-diff --git a/t/t7818-grep-multibyte.sh b/t/t7818-grep-multibyte.sh
-new file mode 100755
-index 00000000000..72129880fac
---- /dev/null
-+++ b/t/t7818-grep-multibyte.sh
-@@ -0,0 +1,34 @@
-+#!/bin/sh
-+
-+test_description='grep multibyte characters'
-+
-+. ./test-lib.sh
-+
-+# Multibyte regex search is only supported with a native regex library
-+# that supports them.
-+# (The included library is compiled with NO_MBSUPPORT) and only if it
-+test -z "$NO_REGEX" &&
-+  LC_ALL=en_US.UTF-8 test-tool regex '^.$' '¿' &&
-+  test_set_prereq MB_REGEX
-+
-+if ! test_have_prereq MB_REGEX
-+then
-+  skip_all='multibyte grep tests; Git compiled with NO_REGEX, NO_MBSUPPORT'
-+  test_done
-+fi
-+
-+test_expect_success 'setup' '
-+	test_write_lines "¿" >file &&
-+	git add file &&
-+	LC_ALL="en_US.UTF-8" &&
-+	export LC_ALL
-+'
-+test_expect_success 'grep exactly one char in single-char multibyte file' '
-+	git grep "^.$"
-+'
-+
-+test_expect_code 1 'grep two chars in single-char multibyte file' '
-+	git grep ".."
-+'
-+
-+test_done
-
-base-commit: ad60dddad72dfb8367bd695028b5b8dc6c33661b
--- 
-gitgitgadget
+SSBoYXZlbuKAmXQgdHJpZWQgaXQgYnV0IHRoYXQgcGF0Y2ggc2VlbXMgdG8gbWFrZSBzZW5zZSB0
+byBtZSwgYWx0aG91Z2ggSSBmb3VuZA0KYW5vdGhlciByZWxhdGVkIGlzc3VlIHNvIGl0IG1pZ2h0
+IG5lZWQgdHdlYWtpbmcuIFdoZW4gcnVubmluZyBgZ2l0IGRpZmZgIGluIGENCnJlcG8gb3duZWQg
+YnkgYW5vdGhlciB1c2VyLCB0aGUgd2FybmluZyBtZXNzYWdlIHNheXMgdGhhdCB0aGlzIGlzIG5v
+dCBhIGdpdA0KcmVwb3NpdG9yeSwgaW5zdGVhZCBvZiB0aGUgd2FybmluZyBzaG93biBieSBvdGhl
+ciBnaXQgY29tbWFuZHMgYWJvdXQNCiJkdWJpb3VzIG93bmVyc2hpcCIuIFRvIHJlcHJvZHVjZToN
+Cg0Kc3VkbyBta2RpciByZXBvDQpjZCByZXBvDQpzdWRvIGdpdCBpbml0DQpnaXQgZGlmZg0KDQo=
