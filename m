@@ -2,229 +2,360 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14698C32772
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 16:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46635C32772
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 16:32:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244369AbiHWQPN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 12:15:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51210 "EHLO
+        id S244728AbiHWQcN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 12:32:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244355AbiHWQOq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 12:14:46 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C30411A10
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 05:35:54 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id v7-20020a1cac07000000b003a6062a4f81so9494159wme.1
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 05:35:54 -0700 (PDT)
+        with ESMTP id S244653AbiHWQbs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 12:31:48 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A6A6923CB
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 06:03:44 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id n4so16896698wrp.10
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 06:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=sMahz/uOsSeehP3gAU3asVNIYUygxG7IYFMC5jM/h5w=;
-        b=PaNLw4ciolUiMBR69fpqX3yKZJTFTHhkmwFC2pHtAtZth1+YmgwXFZgyQRgPPlNkBw
-         O4JkOv8QqAH+YymPZQ/ftHt56V5cOXV7eJs/CWjYYIp9sVxdcqKqdD/MT53+rTLRiSkK
-         wIk7zCkYPqoHJl9ijCbbeZRWAkmNv7DJM8Wt99Qjug1jrBsIpSmPXcqzCRRGo0SbpkC8
-         +6oooxQYWmdSB3pkgOT1m3nTgrFoznNhBnGvpzkxf4sNs8kFqQTWD9WCIHTVdfOA2EKu
-         4j34eEP5wrizFwHXBkN4V73zYpkuCj8M0Sx7p5CBHxAgKDm9bHTu1fpeaN4S62jwAY+c
-         qGdw==
+        bh=5miujd8eQmzYhL6fsXqMLgsGlKgK2RxCYEXNpDWNabE=;
+        b=AvC64bNpbQ6vn4tveRYkst96+F3ivteNlSUC+3Y9fC2WbWqw2Fi+/4ELq7MiLTzMlI
+         iVUGHXYkFMcwnsC52GBpemp7Jc3Mie8PqK+eZwRVO6JoBVuaGC7YDcYTwYcIVNDfqaCI
+         vqlymHbOj/I9H6Aw7v1ALq90J/cDJBFOnNWNrel+aHcKhm9NPtuAjO5hV1+z2nKqhSbz
+         AAZuQ1cNRYPYJ80Qe7+p75MhWn2M7qtJMGyNYf8Ybg38jevSycQMM+ME0NlcyNnV+Ei2
+         rifoHJEMPshkOr9CfMzmtCV7mEs6atlXRf2xRTOhvL7GjiXRhaeJIoinlprNJ84WSuh7
+         /cng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=sMahz/uOsSeehP3gAU3asVNIYUygxG7IYFMC5jM/h5w=;
-        b=W7Rl2lw9HiNbB8ZYoUWmLCqJtAJY/vVMDfezrUqKxbJJwLBMYPWBgOvnlfFP8sodRJ
-         /ytNFtOab1IBmjpNcVwBcY/MrPZqrOnBV6cd9w+GZr0PAS0GlMK6/6Fbd9NiwJb0nIdH
-         AFU/v4OlIvLpOr3jHYmcvHCBhryFN9Tzlmp34LSXk8k121MPNne83PzKTrLt5teZD/ja
-         zTw8b2SPRku+5CE4xDQE8cqwCVv9OgFjBWhq+GJ9ozA123M6RUucjFGt0Gveq2CXWTFP
-         BrXjGSE63cfRZtxJMeZaPBGIjnP6bHyBzYNz/rjIMIMUUXV0LFFBRkFhjqrDOnSWUNTP
-         gfUQ==
-X-Gm-Message-State: ACgBeo0hou7Sja/0UwotZzvPD/nZ+N1Xy/Ho7ytv656ruw4wvG/CQHrN
-        e6UPzF6l4DbJedyame6h7cVyImHP220=
-X-Google-Smtp-Source: AA6agR4pMILrBfqjSCH8eFsXbEy5SyL0GmW3EA5HE3aQRK4Mvq4n8Zl0HjRdcgBzLehggfUnAdMe7A==
-X-Received: by 2002:a1c:3b04:0:b0:3a5:487c:6240 with SMTP id i4-20020a1c3b04000000b003a5487c6240mr2090851wma.152.1661258125155;
-        Tue, 23 Aug 2022 05:35:25 -0700 (PDT)
+        bh=5miujd8eQmzYhL6fsXqMLgsGlKgK2RxCYEXNpDWNabE=;
+        b=M+ZrDq+uCO+CUoszDEtJ7u4bNpyg3XsTDJwL1cPHxY62Qb1WYW6ZzKrDdO8W7lu0UY
+         Ih6x8IZY6ctJ++w9h15mDTBaFjtYbyHhVqMW/TXzw0ROHXvkkyOeqA44XkFZvrJm0b9h
+         fxy3QJPAh3ain1viSyc+hKx/i9OsX7YsJ6qcwGUQxlmVnqOSmpVtlDdQ/B5dAZKDi1fS
+         WuJgjyIG7PleDqjvzD9wEGdeN6yDE74Jg7SDPaBz2UvVKEJZQMYR+fHUP8VewZBdAjH8
+         l66g1qPUnyQ4EJgDVCTaiFS9RpKk+0BhtZ05LsYEjmSaRcEd2qHPE71DmNHYe/A4gm63
+         8hdA==
+X-Gm-Message-State: ACgBeo07luwVcRwA5U12APT4MrZ/b6fzOxfklFrcmjQpe6ee1qRbwPIF
+        VXmEO71BGvns15sq7O0Lu1Z4GRiC71o=
+X-Google-Smtp-Source: AA6agR4oNqexq/RnyGilaToUg2APDA4ZA1ubidzcVwJaSY7dC9FwusTIE8iqFqftABWJjzqdDN8Jag==
+X-Received: by 2002:a05:6000:15c7:b0:225:4ec1:4389 with SMTP id y7-20020a05600015c700b002254ec14389mr7426679wry.573.1661259822197;
+        Tue, 23 Aug 2022 06:03:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m30-20020a05600c3b1e00b003a6077384ecsm22063921wms.31.2022.08.23.05.35.24
+        by smtp.gmail.com with ESMTPSA id t2-20020a05600c41c200b003a541d893desm16830969wmh.38.2022.08.23.06.03.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Aug 2022 05:35:24 -0700 (PDT)
-Message-Id: <064b147451b04051a413b532cd97ae764ba68027.1661258122.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1335.git.1661258122.gitgitgadget@gmail.com>
-References: <pull.1335.git.1661258122.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Aug 2022 12:35:22 +0000
-Subject: [PATCH 2/2] range-diff: optionally accept a pathspec
+        Tue, 23 Aug 2022 06:03:41 -0700 (PDT)
+Message-Id: <pull.1326.v2.git.1661259820.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1326.git.1660855703816.gitgitgadget@gmail.com>
+References: <pull.1326.git.1660855703816.gitgitgadget@gmail.com>
+From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 23 Aug 2022 13:03:36 +0000
+Subject: [PATCH v2 0/4] fsmonitor: option to allow fsmonitor to run against network-mounted repos
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Eric DeCosta <edecosta@mathworks.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+cc: Johannes Schindelin Johannes.Schindelin@gmx.de cc: Jeff Hostetler
+git@jeffhostetler.com cc: Eric Sunshine sunshine@sunshineco.com cc: Torsten
+Bögershausen tboegi@web.de
 
-The `git range-diff` command can be quite expensive, which is not a
-surprise given that the underlying algorithm to match up pairs of
-commits between the provided two commit ranges has a cubic runtime.
+Eric DeCosta (2):
+  fsmonitor: option to allow fsmonitor to run against network-mounted
+    repos
+  fsmonitor: macOS: allow fsmonitor to run against network-mounted repos
 
-Therefore it makes sense to restrict the commit ranges as much as
-possible, to reduce the amount of input to that O(N^3) algorithm.
+edecosta (2):
+  Check working directory and Unix domain socket file for compatability
+  Minor refactoring and simplification of Windows settings checks
 
-In chatty repositories with wide trees, this is not necessarily
-possible merely by choosing commit ranges wisely.
+ compat/fsmonitor/fsm-settings-darwin.c | 72 +++++++++++++++++++-------
+ compat/fsmonitor/fsm-settings-win32.c  | 47 ++++++++++++++++-
+ fsmonitor-ipc.c                        | 40 ++++++++++++--
+ fsmonitor-ipc.h                        |  6 +++
+ fsmonitor-settings.c                   | 67 +++++++++++++++++++++++-
+ fsmonitor-settings.h                   |  4 ++
+ 6 files changed, 210 insertions(+), 26 deletions(-)
 
-Let's give users another option to restrict the commit ranges: by
-providing a pathspec. That helps in repositories with wide trees because
-it is likely that the user has a good idea which subset of the tree they
-are actually interested in.
 
-Example:
+base-commit: 9bf691b78cf906751e65d65ba0c6ffdcd9a5a12c
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1326%2Fedecosta-mw%2Ffsmonitor_macos-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1326/edecosta-mw/fsmonitor_macos-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1326
 
-	git range-diff upstream/main upstream/seen HEAD -- range-diff.c
+Range-diff vs v1:
 
-This shows commits that are either in the local branch or in `seen`, but
-not in `main`, skipping all commits that do not touch `range-diff.c`.
+ -:  ----------- > 1:  40ce21e85c9 fsmonitor: option to allow fsmonitor to run against network-mounted repos
+ -:  ----------- > 2:  46b4efd96cc fsmonitor: macOS: allow fsmonitor to run against network-mounted repos
+ 1:  425df16ac0b ! 3:  9b128a98149 fsmonitor: option to allow fsmonitor to run against network-mounted repos
+     @@
+       ## Metadata ##
+     -Author: Eric DeCosta <edecosta@mathworks.com>
+     +Author: edecosta <edecosta@mathworks.com>
+      
+       ## Commit message ##
+     -    fsmonitor: option to allow fsmonitor to run against network-mounted repos
+     +    Check working directory and Unix domain socket file for compatability
+      
+     -    Though perhaps not common, there are uses cases where users have large,
+     -    network-mounted repos. Having the ability to run fsmonitor against
+     -    network paths would benefit those users.
+     +    Perform separate checks for the working directory and Unix domain socket
+     +    (UDS) file location. The working directory may be located on a
+     +    network-mounted file system if 'fsmonitor.allowRemote' is true. The UDS
+     +    file may never be located on a network-mounted file system; additionally
+     +    it may not be located on FAT32 or NTFS file systems.
+      
+     -    As a first step towards enabling fsmonitor to work against
+     -    network-mounted repos, a configuration option, 'fsmonitor.allowRemote'
+     -    was introduced for Windows. Setting this option to true will override
+     -    the default behavior (erroring-out) when a network-mounted repo is
+     -    detected by fsmonitor. In order for macOS to have parity with Windows,
+     -    the same option is now introduced for macOS.
+     -
+     -    The the added wrinkle being that the Unix domain socket (UDS) file
+     -    used for IPC cannot be created in a network location; instead the
+     -    temporary directory is used.
+     -
+     -    Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+     +    Signed-off-by: edecosta <edecosta@mathworks.com>
+      
+       ## compat/fsmonitor/fsm-settings-darwin.c ##
+      @@
+     - #include "config.h"
+       #include "repository.h"
+       #include "fsmonitor-settings.h"
+     -+#include "fsmonitor-ipc.h"
+       #include "fsmonitor.h"
+     ++#include "fsmonitor-ipc.h"
+       #include <sys/param.h>
+       #include <sys/mount.h>
+       
+     -+/*
+     -+ * Check if monitoring remote working directories is allowed.
+     -+ *
+     -+ * By default, monitoring remote working directories is
+     -+ * disabled.  Users may override this behavior in enviroments where
+     -+ * they have proper support.
+     -+ */
+     -+static int check_config_allowremote(struct repository *r)
+     -+{
+     -+	int allow;
+     -+
+     -+	if (!repo_config_get_bool(r, "fsmonitor.allowremote", &allow))
+     -+		return allow;
+     -+
+     -+	return -1; /* fsmonitor.allowremote not set */
+     -+}
+     -+
+       /*
+     -  * [1] Remote working directories are problematic for FSMonitor.
+     +- * [1] Remote working directories are problematic for FSMonitor.
+     ++ * Remote working directories are problematic for FSMonitor.
+        *
+     +  * The underlying file system on the server machine and/or the remote
+     +  * mount type (NFS, SAMBA, etc.) dictates whether notification events
+      @@
+        * In theory, the above issues need to be addressed whether we are
+        * using the Hook or IPC API.
+        *
+     -+ * So (for now at least), mark remote working directories as
+     -+ * incompatible by default.
+     -+ *
+     -  * For the builtin FSMonitor, we create the Unix domain socket for the
+     +- * For the builtin FSMonitor, we create the Unix domain socket for the
+      - * IPC in the .git directory.  If the working directory is remote,
+      - * then the socket will be created on the remote file system.  This
+      - * can fail if the remote file system does not support UDS file types
+     @@ compat/fsmonitor/fsm-settings-darwin.c
+      - * well-known local directory on the client machine, but care should
+      - * be taken to ensure that $HOME is actually local and not a managed
+      - * file share.)
+     -+ * IPC in the temporary directory.  If the temporary directory is
+     -+ * remote, then the socket will be created on the remote file system.
+     -+ * This can fail if the remote file system does not support UDS file
+     -+ * types (e.g. smbfs to a Windows server) or if the remote kernel does
+     -+ * not allow a non-local process to bind() the socket.
+     -  *
+     -- * So (for now at least), mark remote working directories as
+     +- *
+     +  * So (for now at least), mark remote working directories as
+      - * incompatible.
+     -+ * Therefore remote UDS locations are marked as incompatible.
+     -  *
+     -  *
+     -  * [2] FAT32 and NTFS working directories are problematic too.
+     -  *
+     +- *
+     +- *
+     +- * [2] FAT32 and NTFS working directories are problematic too.
+     +- *
+      - * The builtin FSMonitor uses a Unix domain socket in the .git
+     -+ * The builtin FSMonitor uses a Unix domain socket in the temporary
+     -  * directory for IPC.  These Windows drive formats do not support
+     -  * Unix domain sockets, so mark them as incompatible for the daemon.
+     +- * directory for IPC.  These Windows drive formats do not support
+     +- * Unix domain sockets, so mark them as incompatible for the daemon.
+     ++ * incompatible unless fsmonitor.allowRemote is true.
+        *
+     +  */
+     + static enum fsmonitor_reason check_volume(struct repository *r)
+      @@ compat/fsmonitor/fsm-settings-darwin.c: static enum fsmonitor_reason check_volume(struct repository *r)
+       			 "statfs('%s') [type 0x%08x][flags 0x%08x] '%s'",
+       			 r->worktree, fs.f_type, fs.f_flags, fs.f_fstypename);
+       
+     -+	if (!(fs.f_flags & MNT_LOCAL)) {
+     -+		switch (check_config_allowremote(r)) {
+     -+		case 0: /* config overrides and disables */
+     ++	if (!(fs.f_flags & MNT_LOCAL)
+     ++		&& (fsm_settings__get_allow_remote(r) < 1))
+      +			return FSMONITOR_REASON_REMOTE;
+     -+		case 1: /* config overrides and enables */
+     -+			return FSMONITOR_REASON_OK;
+     -+		default:
+     -+			break; /* config has no opinion */
+     -+		}
+     -+
+     -+		return FSMONITOR_REASON_REMOTE;
+     -+	}
+      +
+      +	return FSMONITOR_REASON_OK;
+      +}
+      +
+     ++/*
+     ++ * For the builtin FSMonitor, we create the Unix domain socket (UDS)
+     ++ * for the IPC in the .git directory by default or $HOME if
+     ++ * fsmonitor.allowRemote is true.  If the directory is remote,
+     ++ * then the socket will be created on the remote file system. This
+     ++ * can fail if the remote file system does not support UDS file types
+     ++ * (e.g. smbfs to a Windows server) or if the remote kernel does not
+     ++ * allow a non-local process to bind() the socket.
+     ++ *
+     ++ * Therefore remote UDS locations are marked as incompatible.
+     ++ *
+     ++ * FAT32 and NTFS working directories are problematic too.
+     ++ *
+     ++ * These Windows drive formats do not support Unix domain sockets, so
+     ++ * mark them as incompatible for the location of the UDS file.
+     ++ *
+     ++ */
+      +static enum fsmonitor_reason check_uds_volume(void)
+      +{
+      +	struct statfs fs;
+     -+	const char *path = fsmonitor_ipc__get_path();
+     ++	struct strbuf path = STRBUF_INIT;
+     ++	const char *ipc_path = fsmonitor_ipc__get_path();
+     ++	strbuf_add(&path, ipc_path, strlen(ipc_path));
+      +
+     -+	if (statfs(path, &fs) == -1) {
+     ++	if (statfs(dirname(path.buf), &fs) == -1) {
+      +		int saved_errno = errno;
+      +		trace_printf_key(&trace_fsmonitor, "statfs('%s') failed: %s",
+     -+				 path, strerror(saved_errno));
+     ++				 path.buf, strerror(saved_errno));
+      +		errno = saved_errno;
+     ++		strbuf_release(&path);
+      +		return FSMONITOR_REASON_ERROR;
+      +	}
+      +
+      +	trace_printf_key(&trace_fsmonitor,
+      +			 "statfs('%s') [type 0x%08x][flags 0x%08x] '%s'",
+     -+			 path, fs.f_type, fs.f_flags, fs.f_fstypename);
+     ++			 path.buf, fs.f_type, fs.f_flags, fs.f_fstypename);
+     ++	strbuf_release(&path);
+      +
+       	if (!(fs.f_flags & MNT_LOCAL))
+       		return FSMONITOR_REASON_REMOTE;
+     @@ compat/fsmonitor/fsm-settings-darwin.c: enum fsmonitor_reason fsm_os__incompatib
+      +
+       	return FSMONITOR_REASON_OK;
+       }
+     -
+     - ## fsmonitor-ipc.c ##
+     -@@
+     - #include "fsmonitor-ipc.h"
+     - #include "run-command.h"
+     - #include "strbuf.h"
+     -+#include "tempfile.h"
+     - #include "trace2.h"
+     - 
+     - #ifndef HAVE_FSMONITOR_DAEMON_BACKEND
+     -@@ fsmonitor-ipc.c: int fsmonitor_ipc__is_supported(void)
+     - 	return 1;
+     - }
+     - 
+     --GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor--daemon.ipc")
+     -+GIT_PATH_FUNC(fsmonitor_ipc__get_pathfile, "fsmonitor--daemon.ipc")
+     -+
+     -+static char *gen_ipc_file(void)
+     -+{
+     -+	char *retval = NULL;
+     -+	struct tempfile *ipc;
+     -+
+     -+	const char *ipc_file = fsmonitor_ipc__get_pathfile();
+     -+	FILE *fp = fopen(ipc_file, "w");
+     -+
+     -+	if (!fp)
+     -+		die_errno("error opening '%s'", ipc_file);
+     -+	ipc = mks_tempfile_t("fsmonitor_ipc_XXXXXX");
+     -+	strbuf_write(&ipc->filename, fp);
+     -+	fclose(fp);
+     -+	retval = strbuf_detach(&ipc->filename, NULL);
+     -+	strbuf_release(&ipc->filename);
+     -+	return retval;
+     -+}
+     -+
+     -+const char *fsmonitor_ipc__get_path(void)
+     -+{
+     -+	char *retval = NULL;
+     -+	struct strbuf sb = STRBUF_INIT;
+     -+
+     -+	const char *ipc_file = fsmonitor_ipc__get_pathfile();
+     -+	FILE *fp = fopen(ipc_file, "r");
+     -+
+     -+	if (!fp) {
+     -+		return gen_ipc_file();
+     -+	} else {
+     -+		strbuf_read(&sb, fileno(fp), 0);
+     -+		fclose(fp);
+     -+		fp = fopen(sb.buf, "r");
+     -+		if (!fp) { /* generate new file */
+     -+			if (unlink(ipc_file) < 0)
+     -+				die_errno("could not remove '%s'", ipc_file);
+     -+			return gen_ipc_file();
+     -+		}
+     -+		fclose(fp);
+     -+		retval = strbuf_detach(&sb, NULL);
+     -+		strbuf_release(&sb);
+     -+		return retval;
+     -+	}
+     -+}
+     - 
+     - enum ipc_active_state fsmonitor_ipc__get_state(void)
+     - {
+     -
+     - ## fsmonitor-ipc.h ##
+     -@@ fsmonitor-ipc.h: int fsmonitor_ipc__is_supported(void);
+     -  */
+     - const char *fsmonitor_ipc__get_path(void);
+     - 
+     -+/*
+     -+ * Returns the pathname to the file that contains the pathname to the
+     -+ * IPC named pipe or Unix domain socket.
+     -+ */
+     -+const char *fsmonitor_ipc__get_pathfile(void);
+     -+
+     - /*
+     -  * Try to determine whether there is a `git-fsmonitor--daemon` process
+     -  * listening on the IPC pipe/socket.
+ -:  ----------- > 4:  15c965801f8 Minor refactoring and simplification of Windows settings checks
 
-Note: Since we piggy-back the pathspecs onto the `other_arg` mechanism
-that was introduced to be able to pass through the `--notes` option to
-the revision machinery, we must now ensure that the `other_arg` array is
-appended at the end (the revision range must come before the pathspecs,
-if any).
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git-range-diff.txt |  4 ++++
- builtin/range-diff.c             | 30 +++++++++++++++++++++++++++++-
- range-diff.c                     |  2 +-
- t/t3206-range-diff.sh            | 11 +++++++++++
- 4 files changed, 45 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-range-diff.txt b/Documentation/git-range-diff.txt
-index fe350d7f405..0b393715d70 100644
---- a/Documentation/git-range-diff.txt
-+++ b/Documentation/git-range-diff.txt
-@@ -12,6 +12,7 @@ SYNOPSIS
- 	[--no-dual-color] [--creation-factor=<factor>]
- 	[--left-only | --right-only]
- 	( <range1> <range2> | <rev1>...<rev2> | <base> <rev1> <rev2> )
-+	[[--] <path>...]
- 
- DESCRIPTION
- -----------
-@@ -19,6 +20,9 @@ DESCRIPTION
- This command shows the differences between two versions of a patch
- series, or more generally, two commit ranges (ignoring merge commits).
- 
-+In the presence of `<path>` arguments, these commit ranges are limited
-+accordingly.
-+
- To that end, it first finds pairs of commits from both commit ranges
- that correspond with each other. Two commits are said to correspond when
- the diff between their patches (i.e. the author information, the commit
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index c8ffcd35aea..9ae95b9c950 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -40,6 +40,8 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 	struct option *options;
- 	int res = 0;
- 	struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
-+	struct object_id oid;
-+	const char *p;
- 
- 	git_config(git_diff_ui_config, NULL);
- 
-@@ -47,7 +49,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 
- 	options = parse_options_concat(range_diff_options, diffopt.parseopts);
- 	argc = parse_options(argc, argv, prefix, options,
--			     builtin_range_diff_usage, 0);
-+			     builtin_range_diff_usage, PARSE_OPT_KEEP_DASHDASH);
- 
- 	diff_setup_done(&diffopt);
- 
-@@ -74,6 +76,20 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 			b = "HEAD";
- 		strbuf_addf(&range1, "%s..%.*s", b, a_len, a);
- 		strbuf_addf(&range2, "%.*s..%s", a_len, a, b);
-+	} else if (argc > 1 && (p = strstr(argv[0], "..."))) {
-+		const char *a = argv[0];
-+		int a_len = (int)(p - a);
-+
-+		if (!a_len) {
-+			a = "HEAD";
-+			a_len = strlen(a);
-+		}
-+		p += 3;
-+		if (!*p)
-+			p = "HEAD";
-+		strbuf_addf(&range1, "%s..%.*s", p, a_len, a);
-+		strbuf_addf(&range2, "%.*s..%s", a_len, a, p);
-+		strvec_pushv(&other_arg, argv + 1);
- 	} else if (argc == 2) {
- 		if (!is_range_diff_range(argv[0]))
- 			die(_("not a commit range: '%s'"), argv[0]);
-@@ -82,9 +98,21 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 		if (!is_range_diff_range(argv[1]))
- 			die(_("not a commit range: '%s'"), argv[1]);
- 		strbuf_addstr(&range2, argv[1]);
-+	} else if (argc > 2 &&
-+	    is_range_diff_range(argv[0]) && is_range_diff_range(argv[1])) {
-+		strbuf_addstr(&range1, argv[0]);
-+		strbuf_addstr(&range2, argv[1]);
-+		strvec_pushv(&other_arg, argv + 2);
- 	} else if (argc == 3) {
- 		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
- 		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
-+	} else if (argc > 3 &&
-+		   get_oid_committish(argv[0], &oid) &&
-+		   get_oid_committish(argv[1], &oid) &&
-+		   get_oid_committish(argv[2], &oid)) {
-+		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
-+		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
-+		strvec_pushv(&other_arg, argv + 3);
- 	} else {
- 		error(_("need two commit ranges"));
- 		usage_with_options(builtin_range_diff_usage, options);
-diff --git a/range-diff.c b/range-diff.c
-index f63b3ffc200..124dd678c38 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -57,9 +57,9 @@ static int read_patches(const char *range, struct string_list *list,
- 		     "--pretty=medium",
- 		     "--notes",
- 		     NULL);
-+	strvec_push(&cp.args, range);
- 	if (other_arg)
- 		strvec_pushv(&cp.args, other_arg->v);
--	strvec_push(&cp.args, range);
- 	cp.out = -1;
- 	cp.no_stdin = 1;
- 	cp.git_cmd = 1;
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index d12e4e4cc6c..f2821a69b6f 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -772,6 +772,17 @@ test_expect_success '--left-only/--right-only' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'ranges with pathspecs' '
-+	git range-diff topic...mode-only-change -- other-file >actual &&
-+	test_line_count = 2 actual &&
-+	topic_oid=$(git rev-parse --short topic) &&
-+	mode_change_oid=$(git rev-parse --short mode-only-change^) &&
-+	file_change_oid=$(git rev-parse --short mode-only-change) &&
-+	grep "$mode_change_oid" actual &&
-+	! grep "$file_change_oid" actual &&
-+	! grep "$topic_oid" actual
-+'
-+
- test_expect_success 'submodule changes are shown irrespective of diff.submodule' '
- 	git init sub-repo &&
- 	test_commit -C sub-repo sub-first &&
 -- 
 gitgitgadget
