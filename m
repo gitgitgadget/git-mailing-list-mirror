@@ -2,140 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67700C32774
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 07:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CE73C32772
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 09:12:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240589AbiHWHer (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 03:34:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43978 "EHLO
+        id S243570AbiHWJMu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 05:12:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240783AbiHWHeq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 03:34:46 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A732F62A9A
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 00:34:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661240082;
-        bh=GIyJs0vx6/XXCngv42KHA3Fd0BfhN3o8KjtzT6nUmoA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=GtA0g1arGv6CSaySQm+6T3tfLwQx4jrP01E4D+6hTxl8cSTAyElrJE0aHl+5zsac5
-         yqZRy7JhDS08xBopnRTfLO7qCNZ+CYbxMTqdfI+y83gVcc/61y7gIU8ntdM761vwX+
-         AtTcnWarBL/cZvogmx2o3p5sG+bU9UXXOBaQdeb4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N8XPt-1pUe8p1vGr-014VdS; Tue, 23
- Aug 2022 09:34:42 +0200
-Date:   Tue, 23 Aug 2022 09:34:42 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 3/5] tests: explicitly skip `chmod` calls on Windows
-In-Reply-To: <p79ppo86-022r-7sss-41q1-39n499n3266s@tzk.qr>
-Message-ID: <2553p8p9-q04r-75r6-5spn-8n9npno6q8p3@tzk.qr>
-References: <pull.1320.git.1660143750.gitgitgadget@gmail.com> <79abfa82c32ea686469cfe2417bc491c04179623.1660143750.git.gitgitgadget@gmail.com> <220811.86wnbfowbg.gmgdl@evledraar.gmail.com> <p79ppo86-022r-7sss-41q1-39n499n3266s@tzk.qr>
+        with ESMTP id S243882AbiHWJLr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 05:11:47 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 795B26CF43
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 01:31:32 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id h5so15267343wru.7
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 01:31:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=IF/dmoq0X+XnGg2S2jBSuz1NiJ+alYGXCdZTBMBMLD8=;
+        b=GLd/fNBGFGacFFvqqZCNfXRlPPF2DCZm2DIduXQPEz/G5/0KwGWaNJ2W8/4g4E8XK9
+         tCXWv+jdpGll+RREf0uCX3qPA2WDTuwdm4ABP+kpWhy+iuRAvf4kLELvdJaNLR6uwy6n
+         mQls5CHggfETYr30hmb6V3IO1oeCYP//OJqNPiy9X6pKPY9ixcXME/ZMmstxWCOnSMQL
+         eYWi/yPPim5Hv+g9el3Fc5wCmbhR2dAtmm8p/1Q8bGHAta+mlIdpVvnesxWsqYCwiAbl
+         tU+9sz739LQ2lLWZrGfiXF5qtkaHhEt3LIIKeuzl32dDhtg/orszz5q9METCXEkoR60g
+         kr7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=IF/dmoq0X+XnGg2S2jBSuz1NiJ+alYGXCdZTBMBMLD8=;
+        b=cRs7amiOW+ZBDwcZcZ76m1jqAh9kwjTwmZkxy5cVRPVOo2FGcKOAXipG7Cex/sbMVD
+         XtXmK8961EMGde/Cn0DWBoxWovAerYtFrgpD1dor2zRPt2VPMUiKc/r5o0C8716Je+Qu
+         DIfGZJHw8xk7mUJh4pITc8hAFw4qU2cg0Xg7//r/qBmmilIphKzDjUA9YDfe1IR8gu6t
+         eDo39YmH/xquTkAdc+1FAeoCvQaS59N0tWiNOC/kV+XV5rHpoV287SVa2FslWywn2wZe
+         BO8soWQ0ayTJAPQAxtefB4kOhEq7hpqKCskuasHQ42KgG/SzEtePxFE55qD80oY0l/hI
+         LEFw==
+X-Gm-Message-State: ACgBeo0ED3SfLnY4o8rlg+mT0PzWkFr21xvNEoc0dzsSrNPFei4xTy1L
+        FnKvE64bCrKt9SJBYHtIuUMn+eqwupY=
+X-Google-Smtp-Source: AA6agR4qRdp7JlGhmJnlEVJNzVccUOBVlxolfSh5VsoL8iiiF7pEVp4xXyClxjIV8Y9DWaou/5gu4A==
+X-Received: by 2002:adf:ed87:0:b0:225:6361:bb13 with SMTP id c7-20020adfed87000000b002256361bb13mr2309048wro.408.1661243465724;
+        Tue, 23 Aug 2022 01:31:05 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m7-20020a5d6247000000b0021db7b0162esm13351261wrv.105.2022.08.23.01.31.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Aug 2022 01:31:05 -0700 (PDT)
+Message-Id: <pull.1320.v2.git.1661243463.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1320.git.1660143750.gitgitgadget@gmail.com>
+References: <pull.1320.git.1660143750.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 23 Aug 2022 08:30:58 +0000
+Subject: [PATCH v2 0/5] Some fixes and an improvement for using CTest on Windows
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-836148870-1661240084=:205"
-X-Provags-ID: V03:K1:L2JtwcQMSQi3qSigIeXLZqPJ4dNVuWomyTwHPerp02CKT569YiP
- Bk4TqEnKdWs1UfS6HMdjr4TmfMrFGKzXdLsy5Y2t9+vS+3EnMaGG5XC4EaNjxUO6X4gZ+B/
- tOEcTwzwqAADnaEebLALjWtt8+us+17m7u8xrZ03jfn7QV8nQSHpIKJOTFfjzv+KH5QGUDQ
- EHoIuVdM2eENsHoYs4FJQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xoCe2Nn0c2E=:jM8RoZJ2W+zjUPUzyT8swl
- l3ms8jU7bi7XK4i0t0tP4AQ70mpIYZHfSF8XWAwEfuW/4TmeblQnHH1F14C6pVcwYhO8VgXfN
- RY1PfuEy5x5Ag1zOkDNz4LnQ68h5Jvm85CwsJR0x26o+SyDlWMPZR3zG/ipZuzWL3YQVnnPhj
- tRP8y6uUt4dh4tST6FA0w+WQrjqkgfMuN6A2WthUMePGRQp/uQFQOhazGagCPL2Lk9oky9xkm
- N0IKZr++d7NunXe3R8JajYfVYaieFUx1LszTNGFv8FBxU5TfTQDQpqKBtw/eXxpeUP5sewq/M
- hAzUa8uN+Vru0baSiib65CZO/fCbTqSOerQdMk1ZNwZ8pWTeB/OsR7KfzI3IYQltXJ/yTuPy3
- E9EhsBPmAH0Ow4o9ag/ZjNIqViHHRQmUs+ylWhutm5f+WfhoChPQVKQUrOzgdK177eiV+k+5d
- 4J2qbYwTFRbtr5bP2ff2RXkdXqF8ocHtl1IFJjbIuyeH800t1SppqyHr6yvrY1LyhZhdDJUnR
- qAJNWad+r4t5ah/jGcIApE8OTP7tw4nzoSzGUBCNgkAULScRSBoOWDQZraCMqW11fSCxH/yT4
- dS5j7CqR/hpAcqDqoSl1ajZLwy+hDl/lYZD7yewtQMWdzyVy9PVOMbnzNCBqqLQM3DUehWHo7
- oyykYbaV5AHrBUaInaaNh7mVKnLeFv26JechWbBr3+VxS3/8HOi9kEdv7laHSGoMXLYvkWC/m
- RjiUtxjPvlTrAP40YQcBrDeVuHa2Sppk8kk/8oqCWfV7W2ZsK+WhjTZ9J8Ed4LTEHG2azE8Vo
- hK/dm9n6Kwx8ZmxXPbKNGm6/XpY0AXOARcNAATv/iLhH911hc9dOZumFs0uv49Y1Y/6tJEq4v
- h0EFLu+9C31uCOWgOvHRfAbyKxFtfjD1U6dvZcHmRp6io8DURwarXY2itcADgb6dRVn5TYldt
- zwMOYG3fHzqagp1hR20i0GpGP8LbyoBueDqLNw8f5MAzx48im1qPiloqB4KqcWA8wLHbTiJL8
- ypaxWM0mWpQs5wdFEGymRw6y7Q4hd4maBsAkn2f2cIKqTYJgf3fh8Yt6E3TThH83mxsZ5MUr5
- B3G10QWoIMuln/6MGH+k3yxYJo26SJVpEDZ1N9o6wVYalBM5xWTqzsdGA==
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Visual Studio users enjoy support for running the test suite via CTest,
+thanks to Git's CMake definition.
 
---8323328-836148870-1661240084=:205
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In https://github.com/git-for-windows/git/issues/3966, it has been reported
+that this does not work out of the box, though, but causes a couple of test
+failures instead. These problems are not caught by Git's CI runs because the
+vs-tests jobs actually use prove to run the test suite, not CTest.
 
-Hi =C3=86var,
+In addition to fixing these problems, this patch series also addresses a
+long-standing gripe I have with the way Git's CMake definition supports
+CTest: It edits t/test-lib.sh, which leaves this file eternally modified
+(but these modification should never be committed, they refer to a
+local-only, configuration-dependent directory).
 
-On Mon, 22 Aug 2022, Johannes Schindelin wrote:
+Note: The signed/unsigned comparison bug in git add -p that is fixed in this
+here patch series is a relatively big one, and it merits further
+investigation whether there are similar bugs lurking in Git's code base.
+However, this is a much bigger project than can be addressed as part of this
+patch series, in particular because the analysis would require tools other
+than GCC's -Wsign-compare option (which totally misses the instance that is
+fixed in this here patch series).
 
-> Instead of wasting the run time (even on non-Windows platforms!) to
-> determine whether the `MINGW` prereq is set in order to skip the `chmod`
-> call or not, we can make `chmod` a no-op explicitly in that `case
-> $uname_s` block.
->
-> I will make it so.
+Changes since v1:
 
-tl;dr this patch needs to be dropped, without the suggested replacement.
+ * Clarified why it is a good idea to pass --no-bin-wrappers and
+   --no-chain-lint when running on Windows.
+ * Clarified why the add -p bug has not been caught earlier.
+ * Clarified the scope of this patch series to fix running Git's tests
+   within Visual Studio.
+ * Increased the time-out for the very slow t7112 test script.
+ * The test_chmod was determined to be not only faulty, but unneeded, and
+   was dropped.
 
-Gaaah!
+Johannes Schindelin (5):
+  cmake: make it easier to diagnose regressions in CTest runs
+  cmake: copy the merge tools for testing
+  add -p: avoid ambiguous signed/unsigned comparison
+  cmake: avoid editing t/test-lib.sh
+  cmake: increase time-out for a long-running test
 
-After struggling with this for much longer than I care to admit, and even
-debugging inside the MSYS2 runtime (which is a level boss if there ever
-was one), I found out that all about this patch was wrong.
+ .gitignore                          |  1 +
+ Makefile                            |  1 +
+ add-patch.c                         |  2 +-
+ contrib/buildsystems/CMakeLists.txt | 16 ++++++++--------
+ t/test-lib.sh                       | 11 ++++++++++-
+ 5 files changed, 21 insertions(+), 10 deletions(-)
 
-The suggested patch (making `chmod` a no-op) was wrong: the test suite
-started failing left and right. Why? Because `chmod` is not a _complete_
-no-op. The test suite does not use the `-o` flag you suggested (which
-would not make sense in Git's test suite, whether or not you remove file
-permissions for "others" than the current user or group, Git behaves
-identically), but it _does_ use the `-w`/`+w` flags, and those _are_
-respected, even on Windows.
 
-The way the write permission bits are translated to ACLs is admittedly
-somewhat magical or all kinds of wrong, too, depending on your point of
-view.
+base-commit: bbea4dcf42b28eb7ce64a6306cdde875ae5d09ca
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1320%2Fdscho%2Fctest-on-windows-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1320/dscho/ctest-on-windows-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1320
 
-But my original patch was also wrong. Why? Because it claimed that `chmod
-+x` does not work outside of MSYS2's pseudo Unix root directory tree. And
-that's simply not true.
+Range-diff vs v1:
 
-Whether you call `chmod +x C:/Users/avar/my-file.txt` or `chmod +x
-/tmp/avar.sh`, it "succeeds" (by silently ignoring the flag that is
-inapplicable on Windows, whether or not a file is executable is determined
-by its file extension, and yes, that means that shell scripts are never
-executable and we have to live with a nasty hack in Git to pretend that
-they are, based on their contents starting with a hash-bang line).
+ 1:  9cf14984c0a ! 1:  e00cb37b98a cmake: align CTest definition with Git's CI runs
+     @@ Metadata
+      Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+      
+       ## Commit message ##
+     -    cmake: align CTest definition with Git's CI runs
+     +    cmake: make it easier to diagnose regressions in CTest runs
+      
+     -    In Git's CI runs, the Windows tests are run with `--no-bin-wrappers` and
+     -    `--no-chain-lint`, mainly to win back some time caused by the serious
+     -    performance penalty paid for the tests relying so heavily on POSIX shell
+     -    scripting, which only works by using a POSIX emulation layer.
+     +    When a test script fails in Git's test suite, the usual course of action
+     +    is to re-run it using options to increase the verbosity of the output,
+     +    e.g. `-v` and `-x`.
+      
+     -    Let's do the same when running the tests, say, in Visual Studio.
+     +    Like in Git's CI runs, when running the tests in Visual Studio via the
+     +    CTest route, it is cumbersome or at least requires a very unintuitive
+     +    approach to pass options to the test scripts.
+      
+     -    While at it, enable the command trace via `-x` and verbose output via
+     -    `-v`, otherwise it would be near impossible to diagnose any problems.
+     +    So let's just pass those options by default: This will not clutter any
+     +    output window but the log that is written to a log file will have
+     +    information necessary to figure out test failures.
+     +
+     +    While at it, also imitate what the Windows jobs in Git's CI runs do to
+     +    accelerate running the test scripts: pass the `--no-bin-wrappers` and
+     +    `--no-chain-lint` options. This makes the test runs noticeably faster
+     +    because the `bin-wrappers/` scripts as well as the `chain-lint` code
+     +    make heavy use of POSIX shell scripting, which is really, really slow on
+     +    Windows due to the need to emulate POSIX behavior via the MSYS2 runtime.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+ 2:  86ab58b6508 = 2:  de7b47a9aa7 cmake: copy the merge tools for testing
+ 3:  79abfa82c32 < -:  ----------- tests: explicitly skip `chmod` calls on Windows
+ 4:  4d24a4345ba ! 3:  f96d5ab484c add -p: avoid ambiguous signed/unsigned comparison
+     @@ Commit message
+          Let's avoid that by converting the unsigned bit explicitly to a signed
+          integer.
+      
+     +    Note: This is a long-standing bug in the Visual C build of Git, but it
+     +    has never been caught because t3701 is skipped when `NO_PERL` is set,
+     +    which is the case in the `vs-test` jobs of Git's CI runs.
+     +
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## add-patch.c ##
+ 5:  c7fc5a4ee4c = 4:  22473d6b8f3 cmake: avoid editing t/test-lib.sh
+ -:  ----------- > 5:  6aaa675301c cmake: increase time-out for a long-running test
 
-So why did I claim that the `chmod +x` invocation does not work outside of
-that pseudo Unix root directory tree? Because it actually did not work, at
-least for me! But it worked on the build agents. Why? Because I have a
-command in my `~/.profile` that mounts several of my Git for Windows SDKs
-as "short-cuts" like `/sdk64`, `/sdk32` and the likes (think of these as
-bind-mounts). And those `mount` commands did not specify the `noacl` flag.
-
-So what's that `noacl` flag? It is magic, I can tell you. It basically
-makes all this pretense work where MSYS2 pretends that we are in a Unix
-environment with Unix permissions when we're not actually. The details are
-too gnarly and involved to explain, I won't write them up here in order to
-avoid putting even more readers to sleep than I must have done already.
-
-So my analysis was based on observation instead of inspection, cutting
-corners, and I dearly regret that now. By default, MSYS2 "mounts" the
-system drives as `/c`, `/d`, etc with that `noacl` flag, the same as it
-mounts the pseudo Unix root as `/`. And that is why the Git test suite
-does not throw up every time `chmod +x` is called. And it was a simple
-pilot error on my part that caused it to fail on my system, and I did not
-realize that the problem was confined to my system, and the bug was in my
-`~/.profile` and not in Git's code base.
-
-Working on Git for Windows is never boring.
-
-Ciao,
-Johannes
-
---8323328-836148870-1661240084=:205--
+-- 
+gitgitgadget
