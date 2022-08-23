@@ -2,211 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ED4BC32772
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 18:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61E76C32772
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 19:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233294AbiHWSmz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 14:42:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60202 "EHLO
+        id S231494AbiHWTC2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 15:02:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231947AbiHWSm2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 14:42:28 -0400
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5C5D89CC4
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 10:06:06 -0700 (PDT)
-Received: by mail-il1-x12f.google.com with SMTP id i8so780394ilk.8
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 10:06:06 -0700 (PDT)
+        with ESMTP id S231194AbiHWTCJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 15:02:09 -0400
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8B2AC7FB8
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 10:33:46 -0700 (PDT)
+Received: by mail-il1-f180.google.com with SMTP id h8so3577521ili.11
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 10:33:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=TxjnWjmcEZbPranEhaCx3sWDp1p5+82ucANlrvE/UU0=;
-        b=IHw7ja+QzFfZbR45m6RnTRqC4nJGG4cwSlHZseaTGO0lf7/5ZnE5AOoUATPa01qPub
-         4DQsMlVPmmR1oSH2w4RSiuhAmd5EnrGUSREItrN8gMTayajuBlgi0tRnp1et9CmxXCjN
-         z5tvDTfwZVr1yCfNMbZOic6GhZbSJ4HXl7F+yhW2Vg2jU1kfo2IGA1CRUnKoDBUCco0d
-         PgEK07wrNgYmtqrwOcretvzuLUSQp2r9mGswIsW50v0xhRucc7d1Bh0j+h9ISmCKXGl6
-         aXGXbnVpNQNUufM45YMiZ6DX1B+q1p3dOfxNN/R4WPYjhNMA6W9jOi2OHTsnGPPlBanw
-         kyNQ==
+        bh=Nh7HrzuYqchlYYVTjEfLoT77D29DNCeh+6NYRMdwEu4=;
+        b=JtMV//RExaRokkNPfw0gfmH7CLazI6oqBYlhkTS8I1RSOekwYoLbXk1eWPevbpUIhr
+         O2jEye9PhpVkBACXDYBuV7EuhCpwt9ytP4klsACDJTnlrhibv5ueCflF/swK+tBHJcdK
+         kYPiK/CKHRjrht+HwKKgPWLYnKFnCot71fZEJS0/oCREbOLRuCRpJIBCiY91bU6gGyB7
+         GAjEcLPcdWFkmiTHBzORs9Z9c6MCxue8FZnlafh+41q7heHjhI2U1SS2A0AIbwZLKtAg
+         hlbT/1WJQFSNg1tiqlweBdFtWSBgwpnyn8sQ1crGErfskN70vc0KaBt+LasA2kAQqCU9
+         xnUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=TxjnWjmcEZbPranEhaCx3sWDp1p5+82ucANlrvE/UU0=;
-        b=p4RlbbYFkgA+pC4ifJ4zv+LvQdW8kw9y39VxISL9hZyAmy7pCAlO7smYaRaD1MMeAe
-         wE3S6XQJJ9MRg2+IIh+ZrGrQoOy8TaVUaHY0/Q1KUrDhZIEaSpl300dqGx2Y8Ruv2XnU
-         OGfnBPiWA7dZRqH4G8ATEWtbJreY/XEvIjA/5nxYQc/8IbqBeR5zwgm7bkgb6dbDZtuh
-         tzXY6rYdp2+Kjuza2RqsmDzo4Pi3GK+AAZX+JnmxkkwIQ1zXj4POrqdl4DjpDaFmE9Xl
-         1VzNoux+7UA4ga379W2xiUPGY27f/RHqAGFZklf+uEzcnASN47X4PM1vJDTzKyjacMKW
-         vDTg==
-X-Gm-Message-State: ACgBeo3rK5Jj98NnEss9IRewGOHPRFPlk+GBPEEwOQmipW0VZtEHvitD
-        ix7Y/KPrcjtFLDDxqfoL5qUG3I1nmIfG
-X-Google-Smtp-Source: AA6agR7UCYq8N6q2dG1Gw5RpinMF1CRlIv3D/AR9ciBiS+tegnRFTIrRSzacznJ/o/bWP59sbnGlRA==
-X-Received: by 2002:a92:8748:0:b0:2d9:3f81:d0b7 with SMTP id d8-20020a928748000000b002d93f81d0b7mr260627ilm.310.1661274366018;
-        Tue, 23 Aug 2022 10:06:06 -0700 (PDT)
+        bh=Nh7HrzuYqchlYYVTjEfLoT77D29DNCeh+6NYRMdwEu4=;
+        b=D30qy9PmjiXP5LM1e7KxdG6RUQHacS4eu1zylB87Rjn9s6BGAlM4AI4dSM56ZlWcYg
+         RVGxSrgIqUn32qU+KkO1wlvzqdTe6xBAKAG2qeCPqGTLy8Psf44RBVZ3U21RFT045bDY
+         1b8TCMSdiqQrZ2/1vXtw9vgFDDLjo550CJVdht5A0YKR1cm12cvUwO/LoBe6CQFVavwD
+         Gh8aRi3KGm7UbQ7fo4HWNUxNXsB3EAAivSGohvOIkEy7ag2HYqI+dGmFWs9e23Aj1P00
+         F3sy3xAXfxqWsBtzdpe5p7qboatHwoy0/ObGN5x3mq4WQqiciNPk6e+HtFZ+KvlX0FFv
+         LUoA==
+X-Gm-Message-State: ACgBeo3/ClYUgyf9JHy7VraIRu78lRrUnOFFZ6XlDRgc/js4otzECeF4
+        FsbhBkc8MQL83uG5sD+NaK4sLVGkcfBB
+X-Google-Smtp-Source: AA6agR6pwP+raehOZtSyKyFrBsFePB+rRZ8MduqdbSH3YW19RKZtsJjCAGxkHZLU1jinT/chqFedOA==
+X-Received: by 2002:a05:6e02:12e1:b0:2df:32f4:3aab with SMTP id l1-20020a056e0212e100b002df32f43aabmr318569iln.276.1661275824640;
+        Tue, 23 Aug 2022 10:30:24 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:f1b9:9fd8:f860:8737? ([2600:1700:e72:80a0:f1b9:9fd8:f860:8737])
-        by smtp.gmail.com with ESMTPSA id y5-20020a027305000000b003427dcbb4d8sm5395690jab.84.2022.08.23.10.06.04
+        by smtp.gmail.com with ESMTPSA id z19-20020a056638215300b003435c50f000sm3129807jaj.14.2022.08.23.10.30.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Aug 2022 10:06:05 -0700 (PDT)
-Message-ID: <9e737b4b-4a17-09d5-6452-4ca5eef3d9da@github.com>
-Date:   Tue, 23 Aug 2022 13:06:03 -0400
+        Tue, 23 Aug 2022 10:30:24 -0700 (PDT)
+Message-ID: <aa44e0b4-6e51-f5dc-16f0-69688833192f@github.com>
+Date:   Tue, 23 Aug 2022 13:30:22 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
-Subject: Re: [PATCH] gc: use temporary file for editing crontab
+Subject: Re: [Question] How to fix 'static-analysis' build on Ubuntu 20.04
 Content-Language: en-US
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Renato Botelho <garga@FreeBSD.org>,
-        Todd Zullinger <tmz@pobox.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-References: <1dd29f43-1a8e-eb69-3320-7f5140a0e18e@github.com>
- <20220823010120.25388-1-sandals@crustytoothpaste.net>
- <6428252p-ssrn-7qs7-9p26-5so10r96s3os@tzk.qr>
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <eb8779bc-fc41-f601-05f2-024e6bf3f316@github.com>
+ <20220822222601.GA1760@szeder.dev>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <6428252p-ssrn-7qs7-9p26-5so10r96s3os@tzk.qr>
+In-Reply-To: <20220822222601.GA1760@szeder.dev>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/23/2022 5:12 AM, Johannes Schindelin wrote:
-> Hi brian,
-> 
-> On Tue, 23 Aug 2022, brian m. carlson wrote:
-
->> +	tmpedit = mks_tempfile_t(".git_cron_edit_tmpXXXXXX");
->> +	if (!tmpedit)
->> +		return error(_("failed to create crontab temporary file"));
-> 
-> It might make sense to use the same `goto out;` pattern here, to make it
-> easier to reason about the early exit even six years from now.
-> 
-> We do not even have to guard the `close_tempfile_gently()` behind an `if
-> (tempfile)` conditional because that function handles `NULL` parameters
-> gently.
-
-I don't think this is hard to reason about. It might mean that we
-need to change this if block in the future to use 'goto out', if we
-added another resource initialization before this one. That "future
-need" is the only thing making me lean towards using the goto, but
-we are just as likely to be in YAGNI territory here.
- 
->> +	cron_in = fdopen_tempfile(tmpedit, "w");
->> +	if (!cron_in) {
->> +		result = error(_("failed to open temporary file"));
->> +		goto out;
->> +	}
->> +
->>  	/*
->>  	 * Read from the .lock file, filtering out the old
->>  	 * schedule while appending the new schedule.
->> @@ -2086,19 +2096,6 @@ static int crontab_update_schedule(int run_maintenance, int fd)
->>  	cron_list = fdopen(fd, "r");
->>  	rewind(cron_list);
+On 8/22/2022 6:26 PM, SZEDER Gábor wrote:
+> On Mon, Aug 22, 2022 at 11:19:11AM -0400, Derrick Stolee wrote:
+>> While preparing my latest series, I noticed that the GitHub Actions CI
+>> builds were cancelling the 'static-analysis' job because of a brownout of
+>> Ubuntu 18.04. We are recommended to upgrade to 20.04.
 >>
->> -	strvec_split(&crontab_edit.args, cmd);
->> -	crontab_edit.in = -1;
->> -	crontab_edit.git_cmd = 0;
->> -
->> -	if (start_command(&crontab_edit))
->> -		return error(_("failed to run 'crontab'; your system might not support 'cron'"));
->> -
->> -	cron_in = fdopen(crontab_edit.in, "w");
->> -	if (!cron_in) {
->> -		result = error(_("failed to open stdin of 'crontab'"));
->> -		goto done_editing;
->> -	}
->> -
->>  	while (!strbuf_getline_lf(&line, cron_list)) {
->>  		if (!in_old_region && !strcmp(line.buf, BEGIN_LINE))
->>  			in_old_region = 1;
->> @@ -2132,14 +2129,22 @@ static int crontab_update_schedule(int run_maintenance, int fd)
->>  	}
+>> However, we explicitly chose 18.04 in d051ed77ee6
+>> (.github/workflows/main.yml: run static-analysis on bionic, 2021-02-08)
+>> because coccinelle was not available in 20.04. It still isn't available
+>> since I tried the basic update and it failed [1]
 >>
->>  	fflush(cron_in);
->> -	fclose(cron_in);
->> -	close(crontab_edit.in);
-> 
-> This worries me a bit. I could imagine that keeping the file open and then
-> expecting a spawned process to read its stdin from that file won't work on
-> Windows.
-
-This is focused only on the cron integration, which is not used on Windows,
-so I'm not worried about that.
-
-I was initially worried that we lost the fclose(cron_in), but of course it
-is handled by the close_tempfile_gently() at the end.
-
-> In any case, I would consider it the correct thing to do to close
-> the temp file here. In other words, I would like to move the
-> `close_tempfile_gently()` call to this location.
-> 
+>> [1] https://github.com/gitgitgadget/git/runs/7955077955?check_suite_focus=true#step:3:98
 >>
->> -done_editing:
->> +	strvec_split(&crontab_edit.args, cmd);
->> +	strvec_push(&crontab_edit.args, get_tempfile_path(tmpedit));
->> +	crontab_edit.git_cmd = 0;
->> +
->> +	if (start_command(&crontab_edit)) {
->> +		result = error(_("failed to run 'crontab'; your system might not support 'cron'"));
->> +		goto out;
->> +	}
->> +
-
-Here's the crux of the matter: we are no longer using stdin but
-instead passing an argument to point to a file with our desired
-schedule. I tested that this worked on my machine, and I'm glad
-this use is the POSIX standard.
-
-There is something wrong with this patch: it needs to update
-t/helper/test-crontab.c in order to pass t7900-maintenance.sh.
-
-Something like this works for me:
-
---- >8 ---
-
-diff --git a/t/helper/test-crontab.c b/t/helper/test-crontab.c
-index e7c0137a477..29425430466 100644
---- a/t/helper/test-crontab.c
-+++ b/t/helper/test-crontab.c
-@@ -17,8 +17,8 @@ int cmd__crontab(int argc, const char **argv)
- 		if (!from)
- 			return 0;
- 		to = stdout;
--	} else if (argc == 2) {
--		from = stdin;
-+	} else if (argc == 3) {
-+		from = fopen(argv[2], "r");
- 		to = fopen(argv[1], "w");
- 	} else
- 		return error("unknown arguments");
-
---- >8 ---
-
->>  	if (finish_command(&crontab_edit))
->>  		result = error(_("'crontab' died"));
->>  	else
->>  		fclose(cron_list);
->> +out:
->> +	close_tempfile_gently(tmpedit);
+>> Does anyone have an idea of how to install coccinelle on this newer
+>> version? 
 > 
-> Here, I would like to call `delete_tempfile(&tmpedit);` instead. That way,
-> the memory is released correctly, the temporary file is deleted, and
-> everything is neatly cleaned up.
+> Containers?  I've built Docker containers from most recent Coccinelle
+> versions and used to use them in my custom Travis CI build jobs; the
+> version included in Ubuntu 18.04 is rather old, and apparently it
+> doesn't catch some transformations that later versions do [1].  I'm
+> sure it's somehow possible to use such containers in GitHub Actions as
+> well.
 > 
-> The way I read the code, `delete_tempfile(&tmpedit)` would return early if
-> `tmpedit == NULL`, and otherwise clean everything up and release the
-> memory, so there is no need to guard this call behind an `if (tmpedit)`
-> conditional.
+>> Should we try compiling it from source for this job?
+> 
+> It's not that difficult to build Coccinelle from source once you
+> figure out its OCaml dependencies...  And luckily those dependencies
+> seem to be rather stable: we can pass the same dozen or so package
+> names to 'apt-get' to install all its build dependencies both on
+> ubuntu:18.04 and :20.04 base images.
 
-While the memory release is nice, I also think it would be good to use
-delete_tempfile() so the temporary file is deleted within this method,
-not waiting until the end of the process to do that cleanup.
+These are both good ideas to consider if we need to in the future,
+but it turns out that we can jump over 20.04 to 22.04 and that has
+the correct feeds to install Coccinelle. I submitted an update [1].
+
+[1] https://lore.kernel.org/git/pull.1334.git.1661275691795.gitgitgadget@gmail.com
+
+> However, installing dependencies and building Coccinelle takes almost
+> 5 minutes on my machine; I don't think we'd want to add that much
+> overhead to every CI build.
+> 
+>> Should we
+>> consider moving off of coccinelle and onto a different tool?
+> 
+> Is there any other comparable tool out there?!
+
+I didn't have one in mind, but maybe someone else did? You make me
+think that there is not, which isn't surprising.
 
 Thanks,
 -Stolee
