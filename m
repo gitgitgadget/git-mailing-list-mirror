@@ -2,305 +2,230 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2FBFC32789
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 19:52:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E722BC32772
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 19:58:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233650AbiHWTwA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 15:52:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52908 "EHLO
+        id S229491AbiHWT56 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 15:57:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233219AbiHWTv2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 15:51:28 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A081B6051B
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 11:55:45 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id u5so10272322wrt.11
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 11:55:44 -0700 (PDT)
+        with ESMTP id S233638AbiHWT5k (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 15:57:40 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22A9386B4B
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 12:08:13 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id l33-20020a05600c1d2100b003a645240a95so5879871wms.1
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 12:08:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc;
-        bh=/zzF2jGn0GacHZ51T7NWmhYhY7TMlOeRLghvEMcULuM=;
-        b=JBmnWRo8txjSPTib5AxolNuKma5qOnxby6kkEvxn/rwhuhwgRHDODutPs9n2oU5tLL
-         exGEnNtICNfX4UW9JqMb5JvgxQeUdXmiOHERgTKFbSw39pZUUUBPjOrxubJsjaeVHYoS
-         OmI+uUcMmLaEqQt5ZBavTRQmXT1JztqV07/euw0OA3GmwBSHz8ZghCJzXyWwHci/NTqr
-         dftnoDg880DbYjIgv/WNLMXzSqLFCCiwWRb4PyghyVdFHGWpguiAAzxaBYji5ejnYflj
-         JetNdQbriHvOBotPq7UOffp3bshd5XlYOpPpd9hj8cGwLXIcyHUD82JUVNzrsTlUpVZO
-         jrrQ==
+         :message-id:from:to:cc;
+        bh=tj78mM8Z6nkKNyJAp+4R+jQ4CoaTDGDEy6YKdUB3Y6c=;
+        b=pd2kjqeHu6cwgkVO9oP0qV+P/tyKByigzlmmp+JU9qz1Ynodk5F19negiOXfWJijUk
+         tZc1voydkKh3HvImOG6wpp7WJJ45/ObMwns/rWcGCCW7wCkPGi8KwGIK0jwaMQVg/YhY
+         32LqreWsYqPZMMGOCMkkXNW5YbsVSUlGBqmE1pXeIiVJJVN56Q7Uj+KFrbm1T/VOGuyE
+         a3gzrGSxTD6fwkS9NDpqoz3VP2okB0MHVOO892rfCgajoN43nDSylU+FFVeTlnDahBqe
+         zbbkXQyhdMUEjLIEo+PGDGeOb87SzJssOwlCVzYSLyocDiqEydy4LkIPoP7PX/ddMclw
+         dQMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=/zzF2jGn0GacHZ51T7NWmhYhY7TMlOeRLghvEMcULuM=;
-        b=c2xFo7pFvoAtZf3385kdCuHOdcYHvvuiZdVe1CYH6g72iCH5XUDP59m6Nmy3ZjT61P
-         ld6j4JXgqYiygc7GDfe7TMAcKLR1PdkTgC3YRTcBATXVrljA/9olH/Y4X2Mh7ICkRKRo
-         09vrMRgdyFp9zd5IhfGaWqR0zqyP/veRuO1SjmIdad6ySrEpP0v4V6hGA+qaKyMhy0GX
-         O7oQ0p1rPLlgd67mzg2iX60Md/mWhHQUkF4KMtSseQV2vB+ze/HfkuWWcmidagCWyu47
-         RLvIBpwr6V6MNDQTCb6XSwXA7F3/CQjOnrXiQ0sM3kAnpu+YZ5RolomF8wlksZurBUOo
-         RZcA==
-X-Gm-Message-State: ACgBeo0vREXal9x3eCOD570snBXz1W+RChBYCqlTEgbfZGspiH0u511b
-        PsHjcCFqyTkqpemFg38w4o8YmUtx4k0=
-X-Google-Smtp-Source: AA6agR5LqmhKlSUKYyOQsNXZgWvcEeaV6VyUKuMMMV6oHuzqnBcNWeHN8gxsXbrn4pLRFrV7QtS8yg==
-X-Received: by 2002:adf:ea09:0:b0:225:559a:b662 with SMTP id q9-20020adfea09000000b00225559ab662mr7075758wrm.396.1661280943278;
-        Tue, 23 Aug 2022 11:55:43 -0700 (PDT)
+         :message-id:x-gm-message-state:from:to:cc;
+        bh=tj78mM8Z6nkKNyJAp+4R+jQ4CoaTDGDEy6YKdUB3Y6c=;
+        b=UgK4fnuRBxl0AnWA4lUkVjfK4uaKV6ePoJ8LaCz7tu4srrcJz7CXfuetGZpgsH0yar
+         Ym/cjxa15KU1H6I6ms6YaAdDWi3+O2C4nccQezfQ8f5EAANPQ5yB2WNJztsCC6GAxZ3e
+         +fh7QN0QOz5Q25Y9JlE63IavtrKgLMFIbrcD7t7Ru9BnA2f8rjzbTQy0vtJj4RmbgfWP
+         t4CJsbhtc1GTa3FsS6py+90MGLMXohmvn0A1RaqzvcruA8x4tz+F/hA1JJaW7zYgy3jA
+         OUTDFZp85LBhRkONmGAzXLSBcEG13SFZJwwqj06EmtSil/F568v3m8oKYmTsWB7oZHv/
+         z+pw==
+X-Gm-Message-State: ACgBeo3/yLarqF7Woq5a3QioOAauj1txmPg+S7w/mhsXpF3bNyPGkMH6
+        ClAeH2CqAOYDcpAncAWacsXLxQcUFzg=
+X-Google-Smtp-Source: AA6agR4TBzyko3hjOlGcDiNPL13riPrTSMA/b/FHq8/xusWOX2GyZoThkkDIhIYbnFkskOiEHbykyQ==
+X-Received: by 2002:a05:600c:3b8c:b0:3a6:71a:f286 with SMTP id n12-20020a05600c3b8c00b003a6071af286mr3009888wms.120.1661281691131;
+        Tue, 23 Aug 2022 12:08:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j4-20020a05600c300400b003a601a1c2f7sm20334319wmh.19.2022.08.23.11.55.42
+        by smtp.gmail.com with ESMTPSA id v7-20020a5d5907000000b00220592005edsm14926527wrd.85.2022.08.23.12.08.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Aug 2022 11:55:42 -0700 (PDT)
-Message-Id: <cd16d8bb3d6a653ebe771d10821dd789ad87f90d.1661280941.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
-References: <pull.1326.v2.git.1661259820.gitgitgadget@gmail.com>
-        <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
-From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Aug 2022 18:55:40 +0000
-Subject: [PATCH v3 1/2] fsmonitor: macOS: allow fsmonitor to run against
- network-mounted repos
+        Tue, 23 Aug 2022 12:08:10 -0700 (PDT)
+Message-Id: <pull.1313.git.git.1661281689747.gitgitgadget@gmail.com>
+From:   "Diomidis Spinellis via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 23 Aug 2022 19:08:09 +0000
+Subject: [PATCH] grep: fix multibyte regex handling under macOS
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Eric DeCosta <edecosta@mathworks.com>,
-        Eric DeCosta <edecosta@mathworks.com>
+Cc:     Diomidis Spinellis <dds@aueb.gr>, Diomidis Spinellis <dds@aueb.gr>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Eric DeCosta <edecosta@mathworks.com>
+From: Diomidis Spinellis <dds@aueb.gr>
 
-Follow-on to the work done to allow Windows to work against
-network-mounted repos. Have macOS take advantage of the same
-configuration option, 'fsmonitor.allowRemote' that was introduced for
-Windows. Setting this option to true will override the default behavior
-(erroring-out) when a network-mounted repo is detected by fsmonitor.
+The 2013 commit 29de20504e9 fixed t0070-fundamental.sh under Darwin
+(macOS) by adopting Git's regex library.  However, this library is
+compiled with NO_MBSUPPORT, which causes git-grep to work incorrectly
+on multibyte (e.g. UTF-8) files.  Current macOS versions pass
+t0070-fundamental.sh with the native macOS regex library, which
+also supports multibyte characters.
 
-The added wrinkle being that the Unix domain socket (UDS) file used for
-IPC cannot be created in a network location; instead $HOME is used if
-'fsmonitor.allowRemote' is true.
+Adjust the Makefile to use the native regex library, and call
+setlocale(3) to set CTYPE according to the user's preference.  The
+setlocale(3) call is required on all platforms, but in platforms
+supporting gettext(3), setlocale(3) is called as a side-effect of
+initializing gettext(3).
 
-If $HOME is in a network location, allow the user to override this via
-the 'fsmonitor.socketDir' configuration option. There the user can
-specify any local directory for the location of the UDS file.
+To avoid running the new tests on platforms still using the
+compatibility library, which is compiled without multibyte
+support, store the corresponding NO_REGEX setting in the
+GIT-BUILD-OPTIONS file.  This makes it available to the test
+scripts.  In addition, adjust the test-tool regex command to
+work with multibyte regexes to further test a platform's
+support for them.
 
-Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+Signed-off-by: Diomidis Spinellis <dds@aueb.gr>
 ---
- fsmonitor-ipc.c      | 40 ++++++++++++++++++++++++--
- fsmonitor-ipc.h      |  6 ++++
- fsmonitor-settings.c | 67 ++++++++++++++++++++++++++++++++++++++++++--
- fsmonitor-settings.h |  4 +++
- 4 files changed, 112 insertions(+), 5 deletions(-)
+    grep: fix multibyte regex handling under macOS
+    
+    The 2013 commit 29de20504e9 fixed t0070-fundamental.sh under Darwin
+    (macOS) by adopting Git's regex library. However, this library is
+    compiled with NO_MBSUPPORT, which causes git-grep to work incorrectly on
+    multibyte (e.g. UTF-8) files. Current macOS versions pass
+    t0070-fundamental.sh with the native macOS regex library, which also
+    supports multibyte characters.
+    
+    Adjust the Makefile to use the native regex library, and call
+    setlocale(3) to set CTYPE according to the user's preference. The
+    setlocale(3) call is required on all platforms, but in platforms
+    supporting gettext(3), setlocale(3) is called as a side-effect of
+    initializing gettext(3).
+    
+    To avoid running the new tests on platforms still using the
+    compatibility library, which is compiled without multibyte support,
+    store the corresponding NO_REGEX setting in the GIT-BUILD-OPTIONS file.
+    This makes it available to the test scripts. In addition, adjust the
+    test-tool regex command to work with multibyte regexes to further test a
+    platform's support for them.
+    
+    Signed-off-by: Diomidis Spinellis dds@aueb.gr
 
-diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
-index 789e7397baa..1e3f0a6cf48 100644
---- a/fsmonitor-ipc.c
-+++ b/fsmonitor-ipc.c
-@@ -1,7 +1,6 @@
- #include "cache.h"
--#include "fsmonitor.h"
--#include "simple-ipc.h"
- #include "fsmonitor-ipc.h"
-+#include "fsmonitor-settings.h"
- #include "run-command.h"
- #include "strbuf.h"
- #include "trace2.h"
-@@ -47,7 +46,42 @@ int fsmonitor_ipc__is_supported(void)
- 	return 1;
- }
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1313%2Fdspinellis%2Ffix-macos-mb-grep-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1313/dspinellis/fix-macos-mb-grep-v1
+Pull-Request: https://github.com/git/git/pull/1313
+
+ Makefile                  |  2 +-
+ grep.c                    |  6 +++++-
+ t/helper/test-regex.c     |  2 ++
+ t/t7818-grep-multibyte.sh | 34 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 42 insertions(+), 2 deletions(-)
+ create mode 100755 t/t7818-grep-multibyte.sh
+
+diff --git a/Makefile b/Makefile
+index 04d0fd1fe60..d1a98257150 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1427,7 +1427,6 @@ ifeq ($(uname_S),Darwin)
+ 		APPLE_COMMON_CRYPTO = YesPlease
+ 		COMPAT_CFLAGS += -DAPPLE_COMMON_CRYPTO
+ 	endif
+-	NO_REGEX = YesPlease
+ 	PTHREAD_LIBS =
+ endif
  
--GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor--daemon.ipc")
-+GIT_PATH_FUNC(fsmonitor_ipc__get_default_path, "fsmonitor--daemon.ipc")
-+
-+const char *fsmonitor_ipc__get_path(void)
-+{
-+#ifdef WIN32
-+	return fsmonitor_ipc__get_default_path();
-+#else
-+	char *retval;
-+	SHA_CTX sha1ctx;
-+	const char *git_dir;
-+	const char *sock_dir;
-+	struct strbuf ipc_file = STRBUF_INIT;
-+	unsigned char hash[SHA_DIGEST_LENGTH];
-+
-+	if (fsm_settings__get_allow_remote(the_repository) < 1)
-+		return fsmonitor_ipc__get_default_path();
-+
-+	git_dir = get_git_dir();
-+	sock_dir = fsm_settings__get_socket_dir(the_repository);
-+
-+	SHA1_Init(&sha1ctx);
-+	SHA1_Update(&sha1ctx, git_dir, strlen(git_dir));
-+	SHA1_Final(hash, &sha1ctx);
-+
-+	if (sock_dir && *sock_dir)
-+		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
-+					sock_dir, hash_to_hex(hash));
-+	else
-+		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
-+	retval = interpolate_path(ipc_file.buf, 1);
-+	if (!retval)
-+		die(_("Invalid path: %s"), ipc_file.buf);
-+	strbuf_release(&ipc_file);
-+	return retval;
-+#endif
-+}
+@@ -2970,6 +2969,7 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
+ 	@echo NO_PTHREADS=\''$(subst ','\'',$(subst ','\'',$(NO_PTHREADS)))'\' >>$@+
+ 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
++	@echo NO_REGEX=\''$(subst ','\'',$(subst ','\'',$(NO_REGEX)))'\' >>$@+
+ 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
+ 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
+ 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
+diff --git a/grep.c b/grep.c
+index 82eb7da1022..c31657c3da3 100644
+--- a/grep.c
++++ b/grep.c
+@@ -10,6 +10,8 @@
+ #include "quote.h"
+ #include "help.h"
  
- enum ipc_active_state fsmonitor_ipc__get_state(void)
++#include <locale.h>
++
+ static int grep_source_load(struct grep_source *gs);
+ static int grep_source_is_binary(struct grep_source *gs,
+ 				 struct index_state *istate);
+@@ -707,8 +709,10 @@ static struct grep_expr *grep_splice_or(struct grep_expr *x, struct grep_expr *y
+ void compile_grep_patterns(struct grep_opt *opt)
  {
-diff --git a/fsmonitor-ipc.h b/fsmonitor-ipc.h
-index b6a7067c3af..4d27223c2a6 100644
---- a/fsmonitor-ipc.h
-+++ b/fsmonitor-ipc.h
-@@ -18,6 +18,12 @@ int fsmonitor_ipc__is_supported(void);
-  */
- const char *fsmonitor_ipc__get_path(void);
+ 	struct grep_pat *p;
+-	struct grep_expr *header_expr = prep_header_patterns(opt);
++	struct grep_expr *header_expr;
  
-+/*
-+ * Returns the pathname to the default IPC named pipe or Unix domain
-+ * socket.
-+ */
-+const char *fsmonitor_ipc__get_default_path(void);
-+
- /*
-  * Try to determine whether there is a `git-fsmonitor--daemon` process
-  * listening on the IPC pipe/socket.
-diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
-index 464424a1e92..a15eeecebf4 100644
---- a/fsmonitor-settings.c
-+++ b/fsmonitor-settings.c
-@@ -10,7 +10,9 @@
- struct fsmonitor_settings {
- 	enum fsmonitor_mode mode;
- 	enum fsmonitor_reason reason;
-+	int allow_remote;
- 	char *hook_path;
-+	char *sock_dir;
- };
++	setlocale(LC_CTYPE, "");
++	header_expr = prep_header_patterns(opt);
+ 	for (p = opt->pattern_list; p; p = p->next) {
+ 		switch (p->token) {
+ 		case GREP_PATTERN: /* atom */
+diff --git a/t/helper/test-regex.c b/t/helper/test-regex.c
+index d6f28ca8d14..ae4d7854abd 100644
+--- a/t/helper/test-regex.c
++++ b/t/helper/test-regex.c
+@@ -1,5 +1,6 @@
+ #include "test-tool.h"
+ #include "gettext.h"
++#include <locale.h>
  
- static enum fsmonitor_reason check_for_incompatible(struct repository *r)
-@@ -43,6 +45,7 @@ static struct fsmonitor_settings *alloc_settings(void)
- 	CALLOC_ARRAY(s, 1);
- 	s->mode = FSMONITOR_MODE_DISABLED;
- 	s->reason = FSMONITOR_REASON_UNTESTED;
-+	s->allow_remote = -1;
+ struct reg_flag {
+ 	const char *name;
+@@ -85,6 +86,7 @@ int cmd__regex(int argc, const char **argv)
+ 	}
+ 	git_setup_gettext();
  
- 	return s;
- }
-@@ -90,6 +93,26 @@ static void lookup_fsmonitor_settings(struct repository *r)
- 		fsm_settings__set_disabled(r);
- }
- 
-+int fsm_settings__get_allow_remote(struct repository *r)
-+{
-+	if (!r)
-+		r = the_repository;
-+	if (!r->settings.fsmonitor)
-+		lookup_fsmonitor_settings(r);
++	setlocale(LC_CTYPE, "");
+ 	ret = regcomp(&r, pat, flags);
+ 	if (ret) {
+ 		if (silent)
+diff --git a/t/t7818-grep-multibyte.sh b/t/t7818-grep-multibyte.sh
+new file mode 100755
+index 00000000000..72129880fac
+--- /dev/null
++++ b/t/t7818-grep-multibyte.sh
+@@ -0,0 +1,34 @@
++#!/bin/sh
 +
-+	return r->settings.fsmonitor->allow_remote;
-+}
++test_description='grep multibyte characters'
 +
-+const char *fsm_settings__get_socket_dir(struct repository *r)
-+{
-+	if (!r)
-+		r = the_repository;
-+	if (!r->settings.fsmonitor)
-+		lookup_fsmonitor_settings(r);
++. ./test-lib.sh
 +
-+	return r->settings.fsmonitor->sock_dir;
-+}
++# Multibyte regex search is only supported with a native regex library
++# that supports them.
++# (The included library is compiled with NO_MBSUPPORT) and only if it
++test -z "$NO_REGEX" &&
++  LC_ALL=en_US.UTF-8 test-tool regex '^.$' '¿' &&
++  test_set_prereq MB_REGEX
 +
- enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
- {
- 	if (!r)
-@@ -100,6 +123,7 @@ enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
- 	return r->settings.fsmonitor->mode;
- }
- 
++if ! test_have_prereq MB_REGEX
++then
++  skip_all='multibyte grep tests; Git compiled with NO_REGEX, NO_MBSUPPORT'
++  test_done
++fi
 +
- const char *fsm_settings__get_hook_path(struct repository *r)
- {
- 	if (!r)
-@@ -110,9 +134,44 @@ const char *fsm_settings__get_hook_path(struct repository *r)
- 	return r->settings.fsmonitor->hook_path;
- }
- 
-+void fsm_settings__set_allow_remote(struct repository *r)
-+{
-+	int allow;
++test_expect_success 'setup' '
++	test_write_lines "¿" >file &&
++	git add file &&
++	LC_ALL="en_US.UTF-8" &&
++	export LC_ALL
++'
++test_expect_success 'grep exactly one char in single-char multibyte file' '
++	git grep "^.$"
++'
 +
-+	if (!r)
-+		r = the_repository;
-+	if (!r->settings.fsmonitor)
-+		r->settings.fsmonitor = alloc_settings();
-+	if (!repo_config_get_bool(r, "fsmonitor.allowremote", &allow))
-+		r->settings.fsmonitor->allow_remote = allow;
++test_expect_code 1 'grep two chars in single-char multibyte file' '
++	git grep ".."
++'
 +
-+	return;
-+}
-+
-+void fsm_settings__set_socket_dir(struct repository *r)
-+{
-+	const char *path;
-+
-+	if (!r)
-+		r = the_repository;
-+	if (!r->settings.fsmonitor)
-+		r->settings.fsmonitor = alloc_settings();
-+
-+	if (!repo_config_get_pathname(r, "fsmonitor.socketdir", &path)) {
-+		FREE_AND_NULL(r->settings.fsmonitor->sock_dir);
-+		r->settings.fsmonitor->sock_dir = strdup(path);
-+	}
-+
-+	return;
-+}
-+
- void fsm_settings__set_ipc(struct repository *r)
- {
--	enum fsmonitor_reason reason = check_for_incompatible(r);
-+	enum fsmonitor_reason reason;
-+
-+	fsm_settings__set_allow_remote(r);
-+	fsm_settings__set_socket_dir(r);
-+	reason = check_for_incompatible(r);
- 
- 	if (reason != FSMONITOR_REASON_OK) {
- 		fsm_settings__set_incompatible(r, reason);
-@@ -135,7 +194,11 @@ void fsm_settings__set_ipc(struct repository *r)
- 
- void fsm_settings__set_hook(struct repository *r, const char *path)
- {
--	enum fsmonitor_reason reason = check_for_incompatible(r);
-+	enum fsmonitor_reason reason;
-+
-+	fsm_settings__set_allow_remote(r);
-+	fsm_settings__set_socket_dir(r);
-+	reason = check_for_incompatible(r);
- 
- 	if (reason != FSMONITOR_REASON_OK) {
- 		fsm_settings__set_incompatible(r, reason);
-diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
-index d9c2605197f..2de54c85e94 100644
---- a/fsmonitor-settings.h
-+++ b/fsmonitor-settings.h
-@@ -23,12 +23,16 @@ enum fsmonitor_reason {
- 	FSMONITOR_REASON_NOSOCKETS, /* NTFS,FAT32 do not support Unix sockets */
- };
- 
-+void fsm_settings__set_allow_remote(struct repository *r);
-+void fsm_settings__set_socket_dir(struct repository *r);
- void fsm_settings__set_ipc(struct repository *r);
- void fsm_settings__set_hook(struct repository *r, const char *path);
- void fsm_settings__set_disabled(struct repository *r);
- void fsm_settings__set_incompatible(struct repository *r,
- 				    enum fsmonitor_reason reason);
- 
-+int fsm_settings__get_allow_remote(struct repository *r);
-+const char *fsm_settings__get_socket_dir(struct repository *r);
- enum fsmonitor_mode fsm_settings__get_mode(struct repository *r);
- const char *fsm_settings__get_hook_path(struct repository *r);
- 
++test_done
+
+base-commit: ad60dddad72dfb8367bd695028b5b8dc6c33661b
 -- 
 gitgitgadget
-
