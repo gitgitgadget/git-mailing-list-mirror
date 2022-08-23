@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71198C32793
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 23:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B38D8C32793
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 23:38:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230211AbiHWX1M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 19:27:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52440 "EHLO
+        id S231955AbiHWXij (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 19:38:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229558AbiHWX1K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 19:27:10 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08B4E7CB5E
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 16:27:09 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id i16-20020a170902c95000b00172c39b3fb0so7966121pla.22
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 16:27:09 -0700 (PDT)
+        with ESMTP id S229445AbiHWXih (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 19:38:37 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 452D67FE5B
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 16:38:36 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id x7-20020aa79407000000b00536368f1a07so4418648pfo.13
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 16:38:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=content-transfer-encoding:cc:to:from:subject:references
          :mime-version:message-id:in-reply-to:date:from:to:cc;
-        bh=XnMrq55Vxsr8iqEE0SwEBgZVrX1kt4O0JARN7+1iuwg=;
-        b=gXX9OBjsQusUkngqe68HZJ6AkKNlfUN9iK6mUR56Er+CzhxD8QnAE1xWp0kTAuCQWW
-         L1rp84uFOXTWFw9LgnJ3qWQsu9oihAH72HLm81f/1hgvngKDbspDMIXDjl0BnvlVHbZu
-         asLdcTHBJb9daA/mReq1hSF30H+RhA3pLuqskKlACcklzPJb+igHFYStPTe0SEVTZ9Cv
-         ugI16XtOJwPE7AmkV0BwjYMHebXXs26qm3nHNVPTexWE9Cg3e4m1p48rLxezb+UE7O/g
-         qHYJs9eNb6IJnrQDh1EIANcXy3EHmQhwOuRgw92JFicAQ90B584MHsVXD6QHKPDolHNn
-         7EjA==
+        bh=qgTUPvmvv8M0wEcli2Nof0rGSj17vjHKJs7lQ6TpB68=;
+        b=ZhPydcgxdUNu+GqikB9d2nnMPzbBJysT5SSeBAhjTdiJshfk4+mmNgnCusTQp10OKH
+         P7g2HmFIHWn+I319vpGPrsNc0Ee4AO+nBjn7BTd2Ny7TfEZe0MtKrooyRBAmzc7Sk46l
+         wpXXWLpvB0CMrRq+zHKMTzNIKXtYMqOCssg703TCVftkXuxd8YaFue7O6EFG/nS+wYyk
+         F25WMrSKHwc3oQpeJbgA5UkMzcIBGbUepic8x8g5oTU4qBkSLa6Lh3fQGJDAQ9L20PwC
+         aIO5jMAyl8aYl8yQVo0snJ+pQi/aSk2IbUzaMcboppUgcftIdrxiKj3cvmXnnuqcXSw6
+         IBIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:from:subject:references
          :mime-version:message-id:in-reply-to:date:x-gm-message-state:from:to
          :cc;
-        bh=XnMrq55Vxsr8iqEE0SwEBgZVrX1kt4O0JARN7+1iuwg=;
-        b=v+BLzulFySVYRKxLJyxkON7K55qjaL/gM82ZVbBxptM9pOhgIFOgpBt42TMiJTBjD9
-         OfPlYYThL+fQoCArUmXM1jFD2PY8pGTdhUuK60MOAPkUN+4x/Fo8Y0SDYbQ9UuJ68hcH
-         /AHdch3Zcj/MZhbmM/stWHgl/BykC4mVKpT5BOBbMDKi//kYaG8AZZdjHouiUAEALvEF
-         jgiuP9FOajwPTSWC4n/L0ZjBzXOMMqPw7RGkT79F1ekmQfrUY+aN9+DA9aM07xozeNKK
-         ku2uxOWERQmLW0nBaIIQZWG0e4RHTicT3KRWSyMSy2msD6iVa9dO4c1Lwm0J2bU7v6Un
-         kTAg==
-X-Gm-Message-State: ACgBeo1Xq9FRs4fX/VRzSPr3TMrvfJGXFQa3IwKLhAvKjGtACvWe5HSB
-        oMCeotjnqaXI6qlH5eJNprCaxdfkFOkxhg==
-X-Google-Smtp-Source: AA6agR7LkIR8IFBrhUnb9DODaOnKcXD0NTWVYu+rXy9n2mc2LlVAcZHg6BXTjc8fnBO7h5F+/9GnDopzyJEZXw==
+        bh=qgTUPvmvv8M0wEcli2Nof0rGSj17vjHKJs7lQ6TpB68=;
+        b=MXXvcxUO1JksxIpi5jlpoeAd1cbgPJlpmuamo+kELgwJPoArlsWTaoZGCV6nwTBBeW
+         B0BNXGtTQ4wtxi2x1g60f7i18bNLx5PHEo91c1gxuJTfvf5AFKqYRdSTMLT+TYtpBU9x
+         hMBmtxNLmEfpOXSTSs9rF4t6+wUlNwdGWdB0LPLidzonptXNuSzOpIo+2hIQZ3pnFNzv
+         ak1XqHetPvs4Ho1IRUjX6gLWkyYAp/ooJGGk7TwiN5/9SLdiSqTJUo1ayQwKU5k4P59h
+         CN3rtp+zySXwlqnoCJDPtajaB6rRVIR9RKOSgGpkYm6LH46uAOBLJo3FwPlwnHBEFh2J
+         5XFw==
+X-Gm-Message-State: ACgBeo2ppr79yLf7nAbFyDi/DxSqy4BChCIg1y1SxnyUKdBIIRhzf0lN
+        LTnBqc0Gz6mQy5FdMziP3Qm566Q3+x4fWg==
+X-Google-Smtp-Source: AA6agR43Ca6V6KPtmhV83flHoUtjuqBKD1brAnysJBI0KE4WrdLlH7gHJAuBVwnfZGNIG8N0WXU/VqzBO2LTsg==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:130c:b0:535:ca9b:13e0 with SMTP
- id j12-20020a056a00130c00b00535ca9b13e0mr26785234pfu.55.1661297228319; Tue,
- 23 Aug 2022 16:27:08 -0700 (PDT)
-Date:   Tue, 23 Aug 2022 16:27:06 -0700
-In-Reply-To: <patch-v3-28.32-6d9bccb34c3-20220821T130231Z-avarab@gmail.com>
-Message-Id: <kl6lk06y4k39.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:1803:b0:536:e9a4:89d4 with SMTP
+ id y3-20020a056a00180300b00536e9a489d4mr6557973pfa.28.1661297915814; Tue, 23
+ Aug 2022 16:38:35 -0700 (PDT)
+Date:   Tue, 23 Aug 2022 16:38:34 -0700
+In-Reply-To: <patch-v3-29.32-d4b55f07a30-20220821T130231Z-avarab@gmail.com>
+Message-Id: <kl6lh7224jk5.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
 References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com>
- <cover-v3-00.32-00000000000-20220821T130231Z-avarab@gmail.com> <patch-v3-28.32-6d9bccb34c3-20220821T130231Z-avarab@gmail.com>
-Subject: Re: [PATCH v3 28/32] submodule--helper: libify "must_die_on_failure"
- code paths (for die)
+ <cover-v3-00.32-00000000000-20220821T130231Z-avarab@gmail.com> <patch-v3-29.32-d4b55f07a30-20220821T130231Z-avarab@gmail.com>
+Subject: Re: [PATCH v3 29/32] submodule--helper: check repo{_submodule,}_init()
+ return values
 From:   Glen Choo <chooglen@google.com>
 To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
         git@vger.kernel.org
@@ -69,126 +69,117 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Continue the libification of codepaths that previously relied on
-> "must_die_on_failure". In these cases we've always been early aborting
-> by calling die(), but as we know that these codpaths will properly
+> Fix code added in ce125d431aa (submodule: extract path to submodule
+> gitdir func, 2021-09-15) and a77c3fcb5ec (submodule--helper: get
+> remote names from any repository, 2022-03-04) which failed to check
+> the return values of repo_init() and repo_submodule_init(). If we
+> failed to initialize the repository or submodule we could segfault
+> when trying to access the invalid repository structs.
 
-s/codpaths/codepaths :p
+Yes, this sounds correct. repo_init() and repo_submodule_init() are pure
+initialization and have no intended side effects, so there's no reason
+to not check the return value.
 
-> handle return codes of 128 to mean an early abort let's have them use
-> die_message() instead.
 >
-> This still isn't a complete migration away from die() for these
-> codepaths, in particular this code in update_submodule() will still call =
-die() in some cases:
+> Let's also check that these were the only such logic errors in the
+> codebase by making use of the "warn_unused_result" attribute. This is
+> valid as of GCC 3.4.0 (and clang will catch it via its faking of
+> __GNUC__ ).
 >
-> 	char *remote_name =3D get_default_remote_submodule(update_data->sm_path)=
-;
-> 	const char *branch =3D remote_submodule_branch(update_data->sm_path);
->
-> But as that code is used by other callers than the "update" code let's
-> leave converting it for a subsequent commit.
+> As the comment being added to git-compat-util.h we're piggy-backing on
+> the LAST_ARG_MUST_BE_NULL version check out of lazyness. See
+> 9fe3edc47f1 (Add the LAST_ARG_MUST_BE_NULL macro, 2013-07-18) for its
+> addition. The marginal benefit of covering gcc 3.4.0..4.0.0 is
+> near-zero (or zero) at this point. It mostly matters that we catch
+> this somewhere.
+
+I'm not familiar enough with attributes and the requistie compiler
+versions, so I won't comment on this bit.
+
 >
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  builtin/submodule--helper.c | 29 +++++++++++++++++------------
->  1 file changed, 17 insertions(+), 12 deletions(-)
+>  builtin/submodule--helper.c | 9 +++++++--
+>  git-compat-util.h           | 3 +++
+>  repository.h                | 3 +++
+>  3 files changed, 13 insertions(+), 2 deletions(-)
 >
 > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 851000ae30e..5f109d422ea 100644
+> index 5f109d422ea..88fc01320f3 100644
 > --- a/builtin/submodule--helper.c
 > +++ b/builtin/submodule--helper.c
-> @@ -2245,9 +2245,9 @@ static int run_update_procedure(struct update_data =
-*ud)
->  		 */
->  		if (!is_tip_reachable(ud->sm_path, &ud->oid) &&
->  		    fetch_in_submodule(ud->sm_path, ud->depth, ud->quiet, &ud->oid))
-> -			die(_("Fetched in submodule path '%s', but it did not "
-> -			      "contain %s. Direct fetching of that commit failed."),
-> -			    ud->displaypath, oid_to_hex(&ud->oid));
-> +			return die_message(_("Fetched in submodule path '%s', but it did not =
-"
-> +					     "contain %s. Direct fetching of that commit failed."),
-> +					   ud->displaypath, oid_to_hex(&ud->oid));
->  	}
-> =20
->  	return run_update_command(ud, subforce);
-> @@ -2291,13 +2291,14 @@ static const char *remote_submodule_branch(const =
-char *path)
->  	return branch;
->  }
-> =20
-> -static void ensure_core_worktree(const char *path)
-> +static int ensure_core_worktree(const char *path)
+> @@ -63,7 +63,10 @@ static char *get_default_remote_submodule(const char *=
+module_path)
 >  {
->  	const char *cw;
 >  	struct repository subrepo;
 > =20
->  	if (repo_submodule_init(&subrepo, the_repository, path, null_oid()))
-> -		die(_("could not get a repository handle for submodule '%s'"), path);
-> +		return die_message(_("could not get a repository handle for submodule =
-'%s'"),
-> +				   path);
-> =20
->  	if (!repo_config_get_string_tmp(&subrepo, "core.worktree", &cw)) {
->  		char *cfg_file, *abs_path;
-> @@ -2315,6 +2316,8 @@ static void ensure_core_worktree(const char *path)
->  		free(abs_path);
->  		strbuf_release(&sb);
->  	}
-> +
-> +	return 0;
+> -	repo_submodule_init(&subrepo, the_repository, module_path, null_oid());
+> +	if (repo_submodule_init(&subrepo, the_repository, module_path,
+> +				null_oid()) < 0)
+> +		die(_("could not get a repository handle for submodule '%s'"),
+> +		    module_path);
+>  	return repo_get_default_remote(&subrepo);
 >  }
 > =20
->  static const char *submodule_update_type_to_label(enum submodule_update_=
-type type)
-> @@ -2390,7 +2393,9 @@ static int update_submodule(struct update_data *upd=
-ate_data)
->  {
->  	int ret;
+> @@ -1483,7 +1486,9 @@ static int add_possible_reference_from_superproject=
+(
+>  		struct strbuf err =3D STRBUF_INIT;
+>  		strbuf_add(&sb, odb->path, len);
 > =20
-> -	ensure_core_worktree(update_data->sm_path);
-> +	ret =3D ensure_core_worktree(update_data->sm_path);
-> +	if (ret)
-> +		return ret;
+> -		repo_init(&alternate, sb.buf, NULL);
+> +		if (repo_init(&alternate, sb.buf, NULL) < 0)
+> +			die(_("could not get a repository handle for gitdir '%s'"),
+> +			    sb.buf);
 > =20
->  	update_data->displaypath =3D get_submodule_displaypath(
->  		update_data->sm_path, update_data->prefix);
-> @@ -2406,8 +2411,8 @@ static int update_submodule(struct update_data *upd=
-ate_data)
->  	if (update_data->just_cloned)
->  		oidcpy(&update_data->suboid, null_oid());
->  	else if (resolve_gitlink_ref(update_data->sm_path, "HEAD", &update_data=
-->suboid))
-> -		die(_("Unable to find current revision in submodule path '%s'"),
-> -			update_data->displaypath);
-> +		return die_message(_("Unable to find current revision in submodule pat=
-h '%s'"),
-> +				   update_data->displaypath);
+>  		/*
+>  		 * We need to end the new path with '/' to mark it as a dir,
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 36a25ae252f..01d88650ba3 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -568,8 +568,11 @@ static inline int git_has_dir_sep(const char *path)
+>  /* The sentinel attribute is valid from gcc version 4.0 */
+>  #if defined(__GNUC__) && (__GNUC__ >=3D 4)
+>  #define LAST_ARG_MUST_BE_NULL __attribute__((sentinel))
+> +/* warn_unused_result exists as of gcc 3.4.0, but be lazy and check 4.0 =
+*/
+> +#define RESULT_MUST_BE_USED __attribute__ ((warn_unused_result))
+>  #else
+>  #define LAST_ARG_MUST_BE_NULL
+> +#define RESULT_MUST_BE_USED
+>  #endif
 > =20
->  	if (update_data->remote) {
->  		char *remote_name =3D get_default_remote_submodule(update_data->sm_pat=
-h);
-> @@ -2417,13 +2422,13 @@ static int update_submodule(struct update_data *u=
-pdate_data)
->  		if (!update_data->nofetch) {
->  			if (fetch_in_submodule(update_data->sm_path, update_data->depth,
->  					      0, NULL))
-> -				die(_("Unable to fetch in submodule path '%s'"),
-> -				    update_data->sm_path);
-> +				return die_message(_("Unable to fetch in submodule path '%s'"),
-> +						   update_data->sm_path);
->  		}
+>  #define MAYBE_UNUSED __attribute__((__unused__))
+> diff --git a/repository.h b/repository.h
+> index 797f471cce9..24316ac944e 100644
+> --- a/repository.h
+> +++ b/repository.h
+> @@ -1,6 +1,7 @@
+>  #ifndef REPOSITORY_H
+>  #define REPOSITORY_H
 > =20
->  		if (resolve_gitlink_ref(update_data->sm_path, remote_ref, &update_data=
-->oid))
-> -			die(_("Unable to find %s revision in submodule path '%s'"),
-> -			    remote_ref, update_data->sm_path);
-> +			return die_message(_("Unable to find %s revision in submodule path '%=
-s'"),
-> +					   remote_ref, update_data->sm_path);
+> +#include "git-compat-util.h"
+>  #include "path.h"
 > =20
->  		free(remote_ref);
->  	}
+>  struct config_set;
+> @@ -186,6 +187,7 @@ void repo_set_gitdir(struct repository *repo, const c=
+har *root,
+>  void repo_set_worktree(struct repository *repo, const char *path);
+>  void repo_set_hash_algo(struct repository *repo, int algo);
+>  void initialize_the_repository(void);
+> +RESULT_MUST_BE_USED
+>  int repo_init(struct repository *r, const char *gitdir, const char *work=
+tree);
+> =20
+>  /*
+> @@ -197,6 +199,7 @@ int repo_init(struct repository *r, const char *gitdi=
+r, const char *worktree);
+>   * Return 0 upon success and a non-zero value upon failure.
+>   */
+>  struct object_id;
+> +RESULT_MUST_BE_USED
+>  int repo_submodule_init(struct repository *subrepo,
+>  			struct repository *superproject,
+>  			const char *path,
 > --=20
 > 2.37.2.1279.g64dec4e13cf
