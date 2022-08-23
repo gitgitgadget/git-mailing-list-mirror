@@ -2,108 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9F97C38145
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 17:07:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AB88C32774
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 17:07:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343775AbiHWRHN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 13:07:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41130 "EHLO
+        id S1343906AbiHWRHf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 13:07:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343972AbiHWRE3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 13:04:29 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 898D7149F94
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 07:07:12 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id ay12so7265176wmb.1
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 07:07:12 -0700 (PDT)
+        with ESMTP id S1345056AbiHWRGU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 13:06:20 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04684A6C70
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 07:05:16 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id y19so4442909ilq.9
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 07:05:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=z9Y72uY1JWvEyAbZ56e7nhzE+B7jE355dN0HbRWkLyk=;
-        b=bbfhcLLwSZw4idOS68AZj9GQdj9TABlAmy7fprmecj7Rz+P0gYBvE/ZvdEPbrhgZFQ
-         3gPhKcSwLz5VL0uR0Rkh+DeGPGLRhT02Vgej475bYN3TEIXRicuVjZPuKjBXDSGAnpBS
-         BAesLwNh7yhYISuHn2OszntSrwXWAjSKMteYyQWnJDlFO4uQhPgwOJa/D1uxlKp3rAvy
-         QpbqLlKBDxKDocXmyhsGM0F+LYmaK8OhLTncjoP7SOJ+6+YvohXxi4zm94AkNhn5CGnK
-         MnInazfYqcaPjYH/bW4mSxo8xoZlgHfJ5EGYUlEx4OIWJfS5enzxs2DmvYRC/t12yyUY
-         KdKw==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=rrCs0ZPCF8/d3NdzgIK34bO0uJS+4zC5l6v78AF/gA0=;
+        b=g5ffrVOesiz3Xv98Bbcwpau3yDSooF3LjG1ylD/rSGRupx1D0eW+QuF4R6ENQ5ybPg
+         3gIC9U9FKoX6feIBVLuFuI5MOnUbb3bfkPLBZOhfjCA6mspFt8LlIsKtg5qOReohvGY4
+         tjGHj37/ewRfMptVBTqTsGAf0nQpzyNq1ayVGoRGv2ZDWhQO+A4WvyVwTn38TczwlMx6
+         lIUbRbHJweeZ+uLZ3QrwrE3rZRYv1tlHTzeqwzTB2sKjkJPZX0ModqT4+78G2mK9Ot4p
+         EPDK4IzzDFPJywsihhL90p+D0vbIhsdi3sE1yKowEEPlFYvBQRuWqbnapMrlAUnKvc70
+         MWQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=z9Y72uY1JWvEyAbZ56e7nhzE+B7jE355dN0HbRWkLyk=;
-        b=Y8GL4CGB5AoyU8aa6ItR1gjuPgcndOjHwdSe/PJVZJYA489HzvGRXTHvUSrPQ/5erx
-         THZuynr5QyDkEb+D/+07Stty/769JHr8tQ/gRIfw2RmZhni0FFcYjgolbJYp3u4+hbK0
-         NRyJnBzbznzetmnCnaZ2molHNQU5I2+ERHgyRY9ooyzfBB3o7n1nQNeWfvkAtY2liI61
-         7GGksAk/2zSP1kdbS6uTeK2wMoipPjdd/1qT7USx2g3hKRjr51l930C9gQN8LbW815C7
-         nVk+DJCK3J/Rkl/q+ZBnAKC9JjmamOryVkkz6mIYQKJiG5XjL3hEWmw7ChLPQ7Z4HNdB
-         OxnA==
-X-Gm-Message-State: ACgBeo3Hv3r5hTbEo44000ij9AEGxkdhmzBN4twWbR27pFCIHjbn0GHS
-        ZnryiYJhzsNQiIlihHkga7ffg2Q5R2nGqg==
-X-Google-Smtp-Source: AA6agR5Y5EGovMijIUCF/MLCZi0xbV6W8o8DK6tUaGI54JALQpX4LokIbO9P6Xj2d8X+11yEQ01g1A==
-X-Received: by 2002:a05:600c:198f:b0:3a6:2482:b2be with SMTP id t15-20020a05600c198f00b003a62482b2bemr2396951wmq.110.1661263630712;
-        Tue, 23 Aug 2022 07:07:10 -0700 (PDT)
-Received: from Precision-5550.dscbox.lan (lmontsouris-659-1-134-106.w82-127.abo.wanadoo.fr. [82.127.97.106])
-        by smtp.gmail.com with ESMTPSA id be13-20020a05600c1e8d00b003a511e92abcsm18028056wmb.34.2022.08.23.07.07.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Aug 2022 07:07:10 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Maxwell Bernstein <tekk.nolagi@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH] Documentation: clarify whitespace rules for trailers
-Date:   Tue, 23 Aug 2022 16:06:30 +0200
-Message-Id: <20220823140630.159718-1-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.37.2.383.g1c78c54f66
-In-Reply-To: <CAP8UFD2kMXHxvg1tKVNLhY0Gweq2YrD7+tHmZXKwguYzRQ1Qpg@mail.gmail.com>
-References: <CAP8UFD2kMXHxvg1tKVNLhY0Gweq2YrD7+tHmZXKwguYzRQ1Qpg@mail.gmail.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=rrCs0ZPCF8/d3NdzgIK34bO0uJS+4zC5l6v78AF/gA0=;
+        b=3aeABrRsfhTjBrjfKIdO3HAJvVr+KmD+jZYrADEGw9NDbQzI38GZis+L7H8cs7TJrz
+         wrZeCNMwLmJseaotYwR7BhsVn60hcYzbBzegB6ZTF7WVhoHJHz+Opu2P5cqjbCmVoSRJ
+         SP/quEDEv6nZsbrN8MQJASkvcQzh/Sb/5H89Fm89pkXsh64s8X4tqYAPhKkIWv+yyf91
+         PK12bVl3ivmns+evgoCtSVxco6p2ZMmciTc3zeJhUEgkBts7wpzO+51g5NZUDCJge9h0
+         TSj65TqKzXorgE/46N0F2tW6jaPe2Pk32l8TnGn2e2ExLgr369J8pfUXYd8JnFxWwIMy
+         LBaQ==
+X-Gm-Message-State: ACgBeo0ir+8LZ5NrL7b+CpRzsXkqRM3jWRHDkjzKWuEGNWGjyvi+YOz/
+        blKKjX+7IFzY+5Ml0G55kvGy
+X-Google-Smtp-Source: AA6agR6y1wEltFcP2i/bkmH3DyUkYpePygvJf5BP1m57WZBTmX0fxuetZOByLkptAuSqmTLdP7p7xQ==
+X-Received: by 2002:a05:6e02:158a:b0:2d3:f1c0:6b68 with SMTP id m10-20020a056e02158a00b002d3f1c06b68mr12852231ilu.38.1661263516222;
+        Tue, 23 Aug 2022 07:05:16 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:1d99:34da:b008:42fd? ([2600:1700:e72:80a0:1d99:34da:b008:42fd])
+        by smtp.gmail.com with ESMTPSA id g2-20020a05660203c200b006788259b526sm7128393iov.41.2022.08.23.07.05.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Aug 2022 07:05:15 -0700 (PDT)
+Message-ID: <5229519b-3af2-a023-8996-43343b130722@github.com>
+Date:   Tue, 23 Aug 2022 10:05:13 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v3 3/5] clone: add --bundle-uri option
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, dyroneteng@gmail.com, Johannes.Schindelin@gmx.de,
+        szeder.dev@gmail.com, mjcheetham@outlook.com, steadmon@google.com
+References: <pull.1300.v2.git.1659443384.gitgitgadget@gmail.com>
+ <pull.1300.v3.git.1660050703.gitgitgadget@gmail.com>
+ <00debaf6e77852efe1dcad4bfda5ebd5bf590ac4.1660050704.git.gitgitgadget@gmail.com>
+ <xmqq8rngas5q.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqq8rngas5q.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit e4319562bc (trailer: be stricter in parsing separators, 2016-11-02)
-restricted whitespaces allowed by `git interpret-trailers` in the "token"
-part of the trailers it reads. This commit didn't update the related
-documentation in Documentation/git-interpret-trailers.txt though.
+On 8/22/2022 5:24 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> +	/*
+>> +	 * Before fetching from the remote, download and install bundle
+>> +	 * data from the --bundle-uri option.
+>> +	 */
+>> +	if (bundle_uri) {
+>> +		/* At this point, we need the_repository to match the cloned repo. */
+>> +		repo_init(the_repository, git_dir, work_tree);
+>> +		if (fetch_bundle_uri(the_repository, bundle_uri))
+>> +			warning(_("failed to fetch objects from bundle URI '%s'"),
+>> +				bundle_uri);
+>> +	}
+> 
+> I do not offhand know why I suddenly started seeing the issue for
+> this relatively old commit I have had in my tree for at least 10
+> days, but I am getting this
+> 
+> builtin/clone.c: In function 'cmd_clone':
+> builtin/clone.c:1248:17: error: ignoring return value of 'repo_init' declared with attribute 'warn_unused_result' [-Werror=unused-result]
+>  1248 |                 repo_init(the_repository, git_dir, work_tree);
+>       |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+> 
+> with the commit merged in 'seen'.
 
-Also commit 60ef86a162 (trailer: support values folded to multiple lines,
-2016-10-21) updated the documentation, but didn't make it clear how many
-whitespace characters are allowed at the beginning of new lines in folded
-values.
+Thank you for pointing this out. Here is a patch that fixes
+the issue from this patch:
 
-Let's fix both of these issues by rewriting the paragraph describing
-what whitespaces are allowed by `git interpret-trailers` in the trailers
-it reads.
+--- >8 ---
+
+From 6df8bc6d7ffdc1b115d85ef9550bab5dcf1811f8 Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <derrickstolee@github.com>
+Date: Tue, 23 Aug 2022 09:53:47 -0400
+Subject: [PATCH] clone: warn on failure to repo_init()
+
+The --bundle-uri option was added in 55568919616 (clone: add
+--bundle-uri option, 2022-08-09), but this also introduced a call to
+repo_init() whose return value was ignored. Fix that ignored value by
+warning that the bundle URI process could not continue if it failed.
+
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/git-interpret-trailers.txt | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ builtin/clone.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 956a01d184..0e125d795b 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -60,10 +60,12 @@ non-whitespace lines before a line that starts with '---' (followed by a
- space or the end of the line). Such three minus signs start the patch
- part of the message. See also `--no-divider` below.
- 
--When reading trailers, there can be whitespaces after the
--token, the separator and the value. There can also be whitespaces
--inside the token and the value. The value may be split over multiple lines with
--each subsequent line starting with whitespace, like the "folding" in RFC 822.
-+When reading trailers, there can be no whitespace inside the token,
-+and only one regular space or tab character between the token and the
-+separator. There can be whitespaces before, inside or after the
-+value. The value may be split over multiple lines with each subsequent
-+line starting with at least one whitespace, like the "folding" in RFC
-+822.
- 
- Note that 'trailers' do not follow and are not intended to follow many
- rules for RFC 822 headers. For example they do not follow
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 4463789680b..e21d42dfee5 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1245,8 +1245,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	 */
+ 	if (bundle_uri) {
+ 		/* At this point, we need the_repository to match the cloned repo. */
+-		repo_init(the_repository, git_dir, work_tree);
+-		if (fetch_bundle_uri(the_repository, bundle_uri))
++		if (repo_init(the_repository, git_dir, work_tree))
++			warning(_("failed to initialize the repo, skipping bundle URI"));
++		else if (fetch_bundle_uri(the_repository, bundle_uri))
+ 			warning(_("failed to fetch objects from bundle URI '%s'"),
+ 				bundle_uri);
+ 	}
 -- 
-2.37.0
+2.37.1.vfs.0.0.rebase
+
 
