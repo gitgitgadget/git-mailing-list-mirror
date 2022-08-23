@@ -2,101 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53CB7C28D13
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 00:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5A29C28D13
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 01:01:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237717AbiHWAv2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Aug 2022 20:51:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52764 "EHLO
+        id S238753AbiHWBBt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Aug 2022 21:01:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232069AbiHWAv0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2022 20:51:26 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 737CB40BE4
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 17:51:25 -0700 (PDT)
+        with ESMTP id S238679AbiHWBBm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2022 21:01:42 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC7805723C
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 18:01:27 -0700 (PDT)
 Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id A027B5A26C;
-        Tue, 23 Aug 2022 00:51:24 +0000 (UTC)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 98FD85A1AC;
+        Tue, 23 Aug 2022 01:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1661215884;
-        bh=sOuIJjeDih5/5a9mclGuV0ytfJl5qVTScrI4rwBx+uw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=La6JTBye1V1TIVZY+CC1Jydge0X02aLiNVinxNGmhzpI7uiB7xc1N35pvK4kx1Elk
-         JKbIpdEI23GX9jh57A4kcDA1Lud88tizjEwskm8Z2YTper2JmKpVnDjTkp2HuKw62t
-         bKxWoJ5cdoXdI+MZiBALNjTqTWmjmPGUbMvj6PWulAIzZ587Y32OsodxOcwk7CtR8J
-         FsTNIU1e1eIm9+VyIUCST2iPHkYbc4myawqGVqU4X8h0oBjO9cN8V65FQ+6mDZlclx
-         kh95+5yiQgEgvtapv3reFyNH4L3kAC25yhvTly/nOwG4UGpHecfBIhMcUkt2cPOFeq
-         AaupDorViphSEvjs+H/wNa3pBCGoSMewroYZsrRmucmzy+GqZuMl1yzJuRMXNDSemj
-         dptfCX0cHagYnW5NJ3bmqfOsvfW9bkd9Ru8PrfIPqVuzb2P+k1lXCwSmHlFRXCQ3Gg
-         X6a6NEjL6vMigqsDJ0tkB0w3nZrYjtEZTip1ZYIFERMt8N4888P
-Date:   Tue, 23 Aug 2022 00:51:23 +0000
+        s=default; t=1661216486;
+        bh=+QOBTIU7olqIGY9mLwPTFulyaF5ylPr0UXthfFkc62A=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=TsCUNU5BLMkxkdZcF2+VKwS7TRFwSj6uNZn0W/pzTyZHww0SsZAfa2DiV6R4pPRRU
+         gmXhOH335NVHB4ypO+yAo9JzA4fW/WfRb3rYazHBIVDWOtqw000wDFELaeUey4vKCy
+         0x2YNO2WZhxGeP21j6IyAJQ9RKzqruxbzR8YXRYor9nx18P2Ily86QMrgGU5ZdiaHS
+         LXxs83EF8XEY2QGqcK5yyiY21lgbGF8FmfCNs/CRSlLrtUiDoCK1be3Dt9YO91CkCm
+         yP52x4Qi4Ov14JVGUI0ezvIRBxSebqhAedGs2hJlTcuSCTT2Wxto+hRWIrYHMp/p6+
+         Qg15rIWfUMM8Qu4dwsvnIh/oX/XGFh9gGvB30YdXbHzlf0/yuMcWYdFiwYTe3SjLLZ
+         FFMBNMvMi4EDB9yv/6anDbXcxuBAv6EqoOgJ30q4ylSRSmNIRO2zO1/Xqm3SrWXFjD
+         A5Drm+U5me2/ccpaIvxpQfwDWda9ba28azX5alpK47pglq+R75t
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Tim Hockin <thockin@google.com>, git@vger.kernel.org
-Subject: Re: rev-parse: -- is sometimes a flag and sometimes an arg?
-Message-ID: <YwQki4nAEOp4wvv9@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, Tim Hockin <thockin@google.com>,
-        git@vger.kernel.org
-References: <CAO_RewbD+BJd1hPKCmCNM8wYBSUmZ2TuOoy6t1up1CT-rbn4DA@mail.gmail.com>
- <xmqq8rniikrg.fsf@gitster.g>
- <CAO_RewZPXP1EUP90kU6uEQ3_CqqC7yWedjfNd7RaVASFSfrg0Q@mail.gmail.com>
- <xmqq4jy6igb2.fsf@gitster.g>
- <CAO_RewaZHL34WBaoXVyXh6ZNVuG+fi5uGUbpRMsc9N=orHzx1Q@mail.gmail.com>
- <xmqqzgfyh0vj.fsf@gitster.g>
+To:     <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Renato Botelho <garga@FreeBSD.org>,
+        Todd Zullinger <tmz@pobox.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: [PATCH] gc: use temporary file for editing crontab
+Date:   Tue, 23 Aug 2022 01:01:20 +0000
+Message-Id: <20220823010120.25388-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.37.2.609.g9ff673ca1a
+In-Reply-To: <1dd29f43-1a8e-eb69-3320-7f5140a0e18e@github.com>
+References: <1dd29f43-1a8e-eb69-3320-7f5140a0e18e@github.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="uzgHsEqpaRe/VT/w"
-Content-Disposition: inline
-In-Reply-To: <xmqqzgfyh0vj.fsf@gitster.g>
-User-Agent: Mutt/2.2.6 (2022-06-05)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+While cron is specified by POSIX, there are a wide variety of
+implementations in use.  On FreeBSD, the cron implementation requires a
+file name argument: if the user wants to edit standard input, they must
+specify "-".  However, this notation is not specified by POSIX, allowing
+the possibility that making such a change may break other, less common
+implementations.
 
---uzgHsEqpaRe/VT/w
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Since POSIX tells us that cron must accept a file name argument, let's
+solve this problem by specifying a temporary file instead.  This will
+ensure that we work with the vast majority of implementations.
 
-On 2022-08-21 at 00:54:40, Junio C Hamano wrote:
-> Tim Hockin <thockin@google.com> writes:
->=20
-> > Sorry, I assumed it was clear, but that was dumb of me.
-> >
-> > I have a string - might be a tag name, might be a branch name, might
-> > be a SHA (complete or partial).  I want to resolve that into a
-> > canonical SHA.
->=20
-> "git rev-parse --verify string" would insist that 'string' is an
-> object name and show it as an object name to the standard output, or
-> gives an error message and exits with a non-zero status.
+Reported-by: Renato Botelho <garga@FreeBSD.org>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+My apologies for the delay on this.  I forgot when I'd send a patch that
+I had a wedding out of town.
 
-Note that this will print a full hex object ID whether it exists in the
-repo or not if one is given (for example, the all-zeros object ID).  If
-you want to verify that the object exists, write this:
+ builtin/gc.c | 37 +++++++++++++++++++++----------------
+ 1 file changed, 21 insertions(+), 16 deletions(-)
 
-git rev-parse --verify string^{object}
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---uzgHsEqpaRe/VT/w
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.35 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYwQkiwAKCRB8DEliiIei
-gQppAQDMtleNPxVOIn2KzEx6WkObQanlXEZQo6tG0rOzq3YPfQEArWCOc4XZ2Bv/
-iHAjjkwkx9jFa0sq1kBov6Mn1+OlZgM=
-=7hG7
------END PGP SIGNATURE-----
-
---uzgHsEqpaRe/VT/w--
+diff --git a/builtin/gc.c b/builtin/gc.c
+index eeff2b760e..168dbdb5d9 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -2065,6 +2065,7 @@ static int crontab_update_schedule(int run_maintenance, int fd)
+ 	struct child_process crontab_edit = CHILD_PROCESS_INIT;
+ 	FILE *cron_list, *cron_in;
+ 	struct strbuf line = STRBUF_INIT;
++	struct tempfile *tmpedit;
+ 
+ 	get_schedule_cmd(&cmd, NULL);
+ 	strvec_split(&crontab_list.args, cmd);
+@@ -2079,6 +2080,15 @@ static int crontab_update_schedule(int run_maintenance, int fd)
+ 	/* Ignore exit code, as an empty crontab will return error. */
+ 	finish_command(&crontab_list);
+ 
++	tmpedit = mks_tempfile_t(".git_cron_edit_tmpXXXXXX");
++	if (!tmpedit)
++		return error(_("failed to create crontab temporary file"));
++	cron_in = fdopen_tempfile(tmpedit, "w");
++	if (!cron_in) {
++		result = error(_("failed to open temporary file"));
++		goto out;
++	}
++
+ 	/*
+ 	 * Read from the .lock file, filtering out the old
+ 	 * schedule while appending the new schedule.
+@@ -2086,19 +2096,6 @@ static int crontab_update_schedule(int run_maintenance, int fd)
+ 	cron_list = fdopen(fd, "r");
+ 	rewind(cron_list);
+ 
+-	strvec_split(&crontab_edit.args, cmd);
+-	crontab_edit.in = -1;
+-	crontab_edit.git_cmd = 0;
+-
+-	if (start_command(&crontab_edit))
+-		return error(_("failed to run 'crontab'; your system might not support 'cron'"));
+-
+-	cron_in = fdopen(crontab_edit.in, "w");
+-	if (!cron_in) {
+-		result = error(_("failed to open stdin of 'crontab'"));
+-		goto done_editing;
+-	}
+-
+ 	while (!strbuf_getline_lf(&line, cron_list)) {
+ 		if (!in_old_region && !strcmp(line.buf, BEGIN_LINE))
+ 			in_old_region = 1;
+@@ -2132,14 +2129,22 @@ static int crontab_update_schedule(int run_maintenance, int fd)
+ 	}
+ 
+ 	fflush(cron_in);
+-	fclose(cron_in);
+-	close(crontab_edit.in);
+ 
+-done_editing:
++	strvec_split(&crontab_edit.args, cmd);
++	strvec_push(&crontab_edit.args, get_tempfile_path(tmpedit));
++	crontab_edit.git_cmd = 0;
++
++	if (start_command(&crontab_edit)) {
++		result = error(_("failed to run 'crontab'; your system might not support 'cron'"));
++		goto out;
++	}
++
+ 	if (finish_command(&crontab_edit))
+ 		result = error(_("'crontab' died"));
+ 	else
+ 		fclose(cron_list);
++out:
++	close_tempfile_gently(tmpedit);
+ 	return result;
+ }
+ 
