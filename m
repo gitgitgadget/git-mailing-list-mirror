@@ -2,120 +2,211 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B70D4C32772
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 18:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ED4BC32772
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 18:42:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231829AbiHWS0K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 14:26:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56030 "EHLO
+        id S233294AbiHWSmz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 14:42:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233564AbiHWSZa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 14:25:30 -0400
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E4D5B2
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 09:43:34 -0700 (PDT)
-Received: by mail-io1-xd30.google.com with SMTP id 62so11348611iov.5
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 09:43:34 -0700 (PDT)
+        with ESMTP id S231947AbiHWSm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 14:42:28 -0400
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5C5D89CC4
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 10:06:06 -0700 (PDT)
+Received: by mail-il1-x12f.google.com with SMTP id i8so780394ilk.8
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 10:06:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc;
-        bh=HFueA3JNlMm9d3y1qNOxMKuvJFYTLVyKmGNvCzi/9Fo=;
-        b=UJWIYIlWNWQE/DzMswsU3SVYnK2vVYqHDYSEX7GcLDegZkaj3dJ8UdvARdAB0kmQtq
-         UKZiFfnw0uK/WiNXVMMlwHVV7Z2wPw5+bImpK+AbCbYGccmztY5tCwFpJzTcZJ13WveF
-         1dOHOIr4lvFPVMCalQYFoNT1KP3S1PW9JZUYXyU53lAXAp5Okgb28jw5xI/e056xbcfX
-         K34VwkNHzUv8RLzDzQVy5lX4182Kex2B06DiaK13G5wOOQZpUFdGf2WugUkvghfbWECp
-         k6hpuk3SOVH9WXTGH6bpZqS+OKJEelYqdzlpTd8vvhmy5Woh9AxkqyyIE9Rh19UaE0Hr
-         zxgg==
+        bh=TxjnWjmcEZbPranEhaCx3sWDp1p5+82ucANlrvE/UU0=;
+        b=IHw7ja+QzFfZbR45m6RnTRqC4nJGG4cwSlHZseaTGO0lf7/5ZnE5AOoUATPa01qPub
+         4DQsMlVPmmR1oSH2w4RSiuhAmd5EnrGUSREItrN8gMTayajuBlgi0tRnp1et9CmxXCjN
+         z5tvDTfwZVr1yCfNMbZOic6GhZbSJ4HXl7F+yhW2Vg2jU1kfo2IGA1CRUnKoDBUCco0d
+         PgEK07wrNgYmtqrwOcretvzuLUSQp2r9mGswIsW50v0xhRucc7d1Bh0j+h9ISmCKXGl6
+         aXGXbnVpNQNUufM45YMiZ6DX1B+q1p3dOfxNN/R4WPYjhNMA6W9jOi2OHTsnGPPlBanw
+         kyNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=HFueA3JNlMm9d3y1qNOxMKuvJFYTLVyKmGNvCzi/9Fo=;
-        b=5P6mVSS+xILCrpNInAGnFvcN+tZ0Vov38+BrmjOGO5aHQYf241IyA04UB1OwRcWAn4
-         LQ2AW1O1/z8kktJWSnziIdeGoq205kC1KE3eN67TjoKwDSArbL4tRd3zQVl13k7uKnKW
-         JzovbYmT7EYtsE12Xjm33ydljTVvodi4ZGKHFKKA5K6lG91xUHI87GXdcQTQwZCeDDxO
-         engyKw55nIoxMpi3HVJXZwlhK08hyDMKY0XADVqZaLIfJBwmnzN4AmkcYcnZIjH3uinM
-         h+R0uqCEDRBDCy4O7mZnEQ5ZP45OzrFEjmrA1uy4vshJTD8q/LYv5JgICdIQ0GvnozHV
-         LfQg==
-X-Gm-Message-State: ACgBeo02i+MOYX+hBPs0T9Fc7uccIlbGiqBQmVXICH5oMoOxgtEP3qCa
-        8v9mesnWVsBh7xaFwLw/8Ta8
-X-Google-Smtp-Source: AA6agR7jnAlFPju7v2ghHD5CR0gBeJwYzPU+rOXZ9DH28fTrfBBsc5gxUHxaF+G1nmbdQi7oqPDl1A==
-X-Received: by 2002:a02:cb85:0:b0:349:ed4e:af5a with SMTP id u5-20020a02cb85000000b00349ed4eaf5amr3036752jap.301.1661273013632;
-        Tue, 23 Aug 2022 09:43:33 -0700 (PDT)
+        bh=TxjnWjmcEZbPranEhaCx3sWDp1p5+82ucANlrvE/UU0=;
+        b=p4RlbbYFkgA+pC4ifJ4zv+LvQdW8kw9y39VxISL9hZyAmy7pCAlO7smYaRaD1MMeAe
+         wE3S6XQJJ9MRg2+IIh+ZrGrQoOy8TaVUaHY0/Q1KUrDhZIEaSpl300dqGx2Y8Ruv2XnU
+         OGfnBPiWA7dZRqH4G8ATEWtbJreY/XEvIjA/5nxYQc/8IbqBeR5zwgm7bkgb6dbDZtuh
+         tzXY6rYdp2+Kjuza2RqsmDzo4Pi3GK+AAZX+JnmxkkwIQ1zXj4POrqdl4DjpDaFmE9Xl
+         1VzNoux+7UA4ga379W2xiUPGY27f/RHqAGFZklf+uEzcnASN47X4PM1vJDTzKyjacMKW
+         vDTg==
+X-Gm-Message-State: ACgBeo3rK5Jj98NnEss9IRewGOHPRFPlk+GBPEEwOQmipW0VZtEHvitD
+        ix7Y/KPrcjtFLDDxqfoL5qUG3I1nmIfG
+X-Google-Smtp-Source: AA6agR7UCYq8N6q2dG1Gw5RpinMF1CRlIv3D/AR9ciBiS+tegnRFTIrRSzacznJ/o/bWP59sbnGlRA==
+X-Received: by 2002:a92:8748:0:b0:2d9:3f81:d0b7 with SMTP id d8-20020a928748000000b002d93f81d0b7mr260627ilm.310.1661274366018;
+        Tue, 23 Aug 2022 10:06:06 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:f1b9:9fd8:f860:8737? ([2600:1700:e72:80a0:f1b9:9fd8:f860:8737])
-        by smtp.gmail.com with ESMTPSA id f7-20020a056e0204c700b002ea1c777c45sm66643ils.56.2022.08.23.09.43.32
+        by smtp.gmail.com with ESMTPSA id y5-20020a027305000000b003427dcbb4d8sm5395690jab.84.2022.08.23.10.06.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Aug 2022 09:43:33 -0700 (PDT)
-Message-ID: <8d8e5256-8b87-7154-5865-675c2355b915@github.com>
-Date:   Tue, 23 Aug 2022 12:43:32 -0400
+        Tue, 23 Aug 2022 10:06:05 -0700 (PDT)
+Message-ID: <9e737b4b-4a17-09d5-6452-4ca5eef3d9da@github.com>
+Date:   Tue, 23 Aug 2022 13:06:03 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
-Subject: Re: [PATCH 5/7] bundle-uri: parse bundle list in config format
+Subject: Re: [PATCH] gc: use temporary file for editing crontab
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
-        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com
-References: <pull.1333.git.1661181174.gitgitgadget@gmail.com>
- <1d1bd9c710327b4d705cfede017771da7fb6ec52.1661181174.git.gitgitgadget@gmail.com>
- <xmqqilmkcc7i.fsf@gitster.g>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Renato Botelho <garga@FreeBSD.org>,
+        Todd Zullinger <tmz@pobox.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+References: <1dd29f43-1a8e-eb69-3320-7f5140a0e18e@github.com>
+ <20220823010120.25388-1-sandals@crustytoothpaste.net>
+ <6428252p-ssrn-7qs7-9p26-5so10r96s3os@tzk.qr>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqilmkcc7i.fsf@gitster.g>
+In-Reply-To: <6428252p-ssrn-7qs7-9p26-5so10r96s3os@tzk.qr>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/22/2022 3:25 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 8/23/2022 5:12 AM, Johannes Schindelin wrote:
+> Hi brian,
 > 
->> To allow for the incremental fetch case, teach Git to understand a
->> bundle list that could be advertised at an independent bundle URI. Such
->> a bundle list is likely to be inspected by human readers, even if only
->> by the bundle provider creating the list. For this reason, we can take
->> our expected "key=value" pairs and instead format them using Git config
->> format.
+> On Tue, 23 Aug 2022, brian m. carlson wrote:
+
+>> +	tmpedit = mks_tempfile_t(".git_cron_edit_tmpXXXXXX");
+>> +	if (!tmpedit)
+>> +		return error(_("failed to create crontab temporary file"));
 > 
-> "can" does not explain why it is a good idea.  "As a sequence of
-> key=value pairs is a lot more dense and harder to read than the
-> configuration file format, let's declare that it is the format we
-> use in a file that holds a bundle-list" would be.
+> It might make sense to use the same `goto out;` pattern here, to make it
+> easier to reason about the early exit even six years from now.
+> 
+> We do not even have to guard the `close_tempfile_gently()` behind an `if
+> (tempfile)` conditional because that function handles `NULL` parameters
+> gently.
 
-This "more dense and harder to read" was definitely my intention for
-wanting a different format. 
+I don't think this is hard to reason about. It might mean that we
+need to change this if block in the future to use 'goto out', if we
+added another resource initialization before this one. That "future
+need" is the only thing making me lean towards using the goto, but
+we are just as likely to be in YAGNI territory here.
+ 
+>> +	cron_in = fdopen_tempfile(tmpedit, "w");
+>> +	if (!cron_in) {
+>> +		result = error(_("failed to open temporary file"));
+>> +		goto out;
+>> +	}
+>> +
+>>  	/*
+>>  	 * Read from the .lock file, filtering out the old
+>>  	 * schedule while appending the new schedule.
+>> @@ -2086,19 +2096,6 @@ static int crontab_update_schedule(int run_maintenance, int fd)
+>>  	cron_list = fdopen(fd, "r");
+>>  	rewind(cron_list);
+>>
+>> -	strvec_split(&crontab_edit.args, cmd);
+>> -	crontab_edit.in = -1;
+>> -	crontab_edit.git_cmd = 0;
+>> -
+>> -	if (start_command(&crontab_edit))
+>> -		return error(_("failed to run 'crontab'; your system might not support 'cron'"));
+>> -
+>> -	cron_in = fdopen(crontab_edit.in, "w");
+>> -	if (!cron_in) {
+>> -		result = error(_("failed to open stdin of 'crontab'"));
+>> -		goto done_editing;
+>> -	}
+>> -
+>>  	while (!strbuf_getline_lf(&line, cron_list)) {
+>>  		if (!in_old_region && !strcmp(line.buf, BEGIN_LINE))
+>>  			in_old_region = 1;
+>> @@ -2132,14 +2129,22 @@ static int crontab_update_schedule(int run_maintenance, int fd)
+>>  	}
+>>
+>>  	fflush(cron_in);
+>> -	fclose(cron_in);
+>> -	close(crontab_edit.in);
+> 
+> This worries me a bit. I could imagine that keeping the file open and then
+> expecting a spawned process to read its stdin from that file won't work on
+> Windows.
 
-> I do not personally buy it, though.  As I hinted in an earlier step,
-> some trait we associate with our configuration fioe format, like the
-> "last one wins" semantics, are undesirable ones, so even if we reuse
-> the appearance of the text, the semantics would have to become
-> different (including "syntax errors lead to die()" mentioned
-> elsewhere in the proposed log message).
+This is focused only on the cron integration, which is not used on Windows,
+so I'm not worried about that.
 
-The points you made earlier about "last one wins" semantics are the
-biggest road-blocks to using the config file format, from what I've read
-so far. We could change those semantics to be different from my current
-implementation which respects the "last one wins" rule, and then that
-makes the config format match not as closely. That burden of avoiding
-multiple key values is not on the end-user but the bundle provider to
-match the new expectations. (There might be something we should be careful
-about when advertising the bundle list from our Git config in the
-'bundle-uri' command in the next series.)
+I was initially worried that we lost the fclose(cron_in), but of course it
+is handled by the close_tempfile_gently() at the end.
 
-The "syntax errors lead to die()" is mitigated by using
-CONFIG_ERROR_ERROR, which is what I meant by "Be careful to call..." I
-should have been more clear that we are _not_ going to die() based on the
-remote data. We might write an error message and then abort the bundle
-download.
+> In any case, I would consider it the correct thing to do to close
+> the temp file here. In other words, I would like to move the
+> `close_tempfile_gently()` call to this location.
+> 
+>>
+>> -done_editing:
+>> +	strvec_split(&crontab_edit.args, cmd);
+>> +	strvec_push(&crontab_edit.args, get_tempfile_path(tmpedit));
+>> +	crontab_edit.git_cmd = 0;
+>> +
+>> +	if (start_command(&crontab_edit)) {
+>> +		result = error(_("failed to run 'crontab'; your system might not support 'cron'"));
+>> +		goto out;
+>> +	}
+>> +
 
-With all of these points in mind, I'd still prefer to use the config file
-format as described in the design document. If you still don't agree, then
-I'll change the format to be key=value pairs split with newlines, and
-update the design document accordingly.
+Here's the crux of the matter: we are no longer using stdin but
+instead passing an argument to point to a file with our desired
+schedule. I tested that this worked on my machine, and I'm glad
+this use is the POSIX standard.
+
+There is something wrong with this patch: it needs to update
+t/helper/test-crontab.c in order to pass t7900-maintenance.sh.
+
+Something like this works for me:
+
+--- >8 ---
+
+diff --git a/t/helper/test-crontab.c b/t/helper/test-crontab.c
+index e7c0137a477..29425430466 100644
+--- a/t/helper/test-crontab.c
++++ b/t/helper/test-crontab.c
+@@ -17,8 +17,8 @@ int cmd__crontab(int argc, const char **argv)
+ 		if (!from)
+ 			return 0;
+ 		to = stdout;
+-	} else if (argc == 2) {
+-		from = stdin;
++	} else if (argc == 3) {
++		from = fopen(argv[2], "r");
+ 		to = fopen(argv[1], "w");
+ 	} else
+ 		return error("unknown arguments");
+
+--- >8 ---
+
+>>  	if (finish_command(&crontab_edit))
+>>  		result = error(_("'crontab' died"));
+>>  	else
+>>  		fclose(cron_list);
+>> +out:
+>> +	close_tempfile_gently(tmpedit);
+> 
+> Here, I would like to call `delete_tempfile(&tmpedit);` instead. That way,
+> the memory is released correctly, the temporary file is deleted, and
+> everything is neatly cleaned up.
+> 
+> The way I read the code, `delete_tempfile(&tmpedit)` would return early if
+> `tmpedit == NULL`, and otherwise clean everything up and release the
+> memory, so there is no need to guard this call behind an `if (tmpedit)`
+> conditional.
+
+While the memory release is nice, I also think it would be good to use
+delete_tempfile() so the temporary file is deleted within this method,
+not waiting until the end of the process to do that cleanup.
 
 Thanks,
 -Stolee
