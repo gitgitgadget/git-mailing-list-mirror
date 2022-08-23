@@ -2,90 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56375C32774
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 16:41:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9F97C38145
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 17:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245070AbiHWQlY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 12:41:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57150 "EHLO
+        id S1343775AbiHWRHN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 13:07:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245579AbiHWQkq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 12:40:46 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 012F56E2CF
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 06:08:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661260119;
-        bh=OlBhHKHUbv5KSoVn0Msf6Ntw2NhwrT5OHp1fmK6sibg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=e/Eggg0c2BbQ9S7+pihcbbE6D2sO/5ne5wKUwzlizIRsrJhEv0awYqki3laVExh7F
-         oliYBxgoBX/9uglJgJq6WAoXMoLUXd83/n/ULkcPcK14LsqTnYIjjLh+CTT/TFiqXQ
-         YMX2DW8G0fqUkJuC1FNjEuZsYi5GzJg6UPQyQLA8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MpUYu-1pDrpL1gCq-00pqX5; Tue, 23
- Aug 2022 15:08:39 +0200
-Date:   Tue, 23 Aug 2022 15:08:40 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-cc:     Git mailing list <git@vger.kernel.org>
-Subject: Re: Regression in 'git add -p' with 'interactive.diffFilter' since
- builtin version is default
-In-Reply-To: <ecf6f5be-22ca-299f-a8f1-bda38e5ca246@gmail.com>
-Message-ID: <s40ss309-3311-o08s-38r2-9144r33pq549@tzk.qr>
-References: <ecf6f5be-22ca-299f-a8f1-bda38e5ca246@gmail.com>
+        with ESMTP id S1343972AbiHWRE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 13:04:29 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 898D7149F94
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 07:07:12 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id ay12so7265176wmb.1
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 07:07:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc;
+        bh=z9Y72uY1JWvEyAbZ56e7nhzE+B7jE355dN0HbRWkLyk=;
+        b=bbfhcLLwSZw4idOS68AZj9GQdj9TABlAmy7fprmecj7Rz+P0gYBvE/ZvdEPbrhgZFQ
+         3gPhKcSwLz5VL0uR0Rkh+DeGPGLRhT02Vgej475bYN3TEIXRicuVjZPuKjBXDSGAnpBS
+         BAesLwNh7yhYISuHn2OszntSrwXWAjSKMteYyQWnJDlFO4uQhPgwOJa/D1uxlKp3rAvy
+         QpbqLlKBDxKDocXmyhsGM0F+LYmaK8OhLTncjoP7SOJ+6+YvohXxi4zm94AkNhn5CGnK
+         MnInazfYqcaPjYH/bW4mSxo8xoZlgHfJ5EGYUlEx4OIWJfS5enzxs2DmvYRC/t12yyUY
+         KdKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=z9Y72uY1JWvEyAbZ56e7nhzE+B7jE355dN0HbRWkLyk=;
+        b=Y8GL4CGB5AoyU8aa6ItR1gjuPgcndOjHwdSe/PJVZJYA489HzvGRXTHvUSrPQ/5erx
+         THZuynr5QyDkEb+D/+07Stty/769JHr8tQ/gRIfw2RmZhni0FFcYjgolbJYp3u4+hbK0
+         NRyJnBzbznzetmnCnaZ2molHNQU5I2+ERHgyRY9ooyzfBB3o7n1nQNeWfvkAtY2liI61
+         7GGksAk/2zSP1kdbS6uTeK2wMoipPjdd/1qT7USx2g3hKRjr51l930C9gQN8LbW815C7
+         nVk+DJCK3J/Rkl/q+ZBnAKC9JjmamOryVkkz6mIYQKJiG5XjL3hEWmw7ChLPQ7Z4HNdB
+         OxnA==
+X-Gm-Message-State: ACgBeo3Hv3r5hTbEo44000ij9AEGxkdhmzBN4twWbR27pFCIHjbn0GHS
+        ZnryiYJhzsNQiIlihHkga7ffg2Q5R2nGqg==
+X-Google-Smtp-Source: AA6agR5Y5EGovMijIUCF/MLCZi0xbV6W8o8DK6tUaGI54JALQpX4LokIbO9P6Xj2d8X+11yEQ01g1A==
+X-Received: by 2002:a05:600c:198f:b0:3a6:2482:b2be with SMTP id t15-20020a05600c198f00b003a62482b2bemr2396951wmq.110.1661263630712;
+        Tue, 23 Aug 2022 07:07:10 -0700 (PDT)
+Received: from Precision-5550.dscbox.lan (lmontsouris-659-1-134-106.w82-127.abo.wanadoo.fr. [82.127.97.106])
+        by smtp.gmail.com with ESMTPSA id be13-20020a05600c1e8d00b003a511e92abcsm18028056wmb.34.2022.08.23.07.07.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Aug 2022 07:07:10 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Maxwell Bernstein <tekk.nolagi@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH] Documentation: clarify whitespace rules for trailers
+Date:   Tue, 23 Aug 2022 16:06:30 +0200
+Message-Id: <20220823140630.159718-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.37.2.383.g1c78c54f66
+In-Reply-To: <CAP8UFD2kMXHxvg1tKVNLhY0Gweq2YrD7+tHmZXKwguYzRQ1Qpg@mail.gmail.com>
+References: <CAP8UFD2kMXHxvg1tKVNLhY0Gweq2YrD7+tHmZXKwguYzRQ1Qpg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:L4kynZ/oERhjuqy6CIkWLP0HanY4XHcid7n6BKs6wUEh8wp4YgJ
- h/ruoepZ/slutdhCI0lOo8Yz4uT+lrbM4drP/QEj2BdrbOfaQ44jUyHTZr1TfFmPOPgyTx6
- 7s+nyOv1zmLUn0veKfmh1F7NniYjLXhutn0yYMtGqu6bOZnYGBevxLXWq+JEeSdRgFp4Alz
- Yz1jGWgjnHRSGpTNn29/Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:67PwP3u9ptk=:8qpPkPL1PG39WRcZZttUAd
- gSTXcR9oUtZvv4gxy8CkDnjgGu+GjFmXjpeKRDnsM9p9rIYIMICXiDyfqCg4//nP/VjVY6AOw
- dkECiNdGLaKQ17nPcMgRAsj39rBPKRR9SCo7wfG5VoDJe1wkwtNzTFB2jWHIAQQlz8uquZjWr
- VqWkXMcxYnr+ZDeKoOtGop/5ydFVktg89gHbcdss7bgqE+QV5cf38P9wN6I19KFX+18MxPbHZ
- 4pL4koDB0j1J7QuKFxlNuS/5zRjAHsAjn17TBmFUXW8g+wnwDxTSg7nOqQGFf4eZEYbtfryU4
- 0eQlpa42HYG9O45mUG8f3zSWmuQFq56Yw83wR/ZeHu8VMr6ZUpQmnJ3CbVNCIXK4xWmEQOZx1
- R+enfa09ohlbr7oTRULkEx1+E7pspDkysqh1T3WThJlGKVVYbuhVti9VTPNiGUGHD7t4koInH
- 6vjEQ/jGFiCXrGq62NYrZaGY20SeyIymdzZ3Nm/oIEX5MS7hS0Q2St+tg44fg1C7fOgomQ9Zc
- lOh7o8Uu8tVhdcqdDJTwJ3+mndkFIzenENzjpxvIos0yYUTi+Bp1+WSAwC886qQlhy0WXkl9E
- tJaxoRGcNlpZry1pgFzkOHpa9QA9/JEiwAywinwOZTBb1e4Bf22v8pLNOE7Tra6/hsLI8qNmI
- +s9tVyySYLka8z8WMVIYImMn/CjPGpXKKecf1WeyLJgm+/jKW035MrT/T6Wh2CYZ/CP7kLEVa
- Z9QOGtup+HQegabL/KTebKfRDc96Y2BDe9eLDpCT56b4s88hV0q2jm7Xpf3tKs8/l0pnPV9Ri
- 68tiWXsXxg9HqjbPSkkF7Hx7HnccviJUIzWlM/TH64qm89w+4A+zlkex3/xq/vGYPxjKZtv72
- EIuD1KLkyGQr3pqbJzNe2PkvOopzpMJEjtJ7iwbGhyMDQH50R89ENx83b9il0VUgJCPrwUgfF
- m8djYt5ufHS99FtzeC9an9imMYhIm+RgnwWh5D93OL1H/LwclEwILcI9nPXddJ8embZXtmIye
- tRaKj2qxwL3S7ssnY63hkCiGQT8sVOjH+bZiKWA57JUC4oaBcmJkNZjwRZjQr/V5PJChskZyC
- AsCmLNnxel7vNDzk/drZjP7jRLvk3pmc3nulLRydEbiqq/PRR6YoFZE+g==
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philippe,
+Commit e4319562bc (trailer: be stricter in parsing separators, 2016-11-02)
+restricted whitespaces allowed by `git interpret-trailers` in the "token"
+part of the trailers it reads. This commit didn't update the related
+documentation in Documentation/git-interpret-trailers.txt though.
 
-On Mon, 22 Aug 2022, Philippe Blain wrote:
+Also commit 60ef86a162 (trailer: support values folded to multiple lines,
+2016-10-21) updated the documentation, but didn't make it clear how many
+whitespace characters are allowed at the beginning of new lines in folded
+values.
 
-> I found a regression in the builtin 'add -i'. I use diff-so-fancy [1]
-> as a pager and also use it via 'interactive.diffFilter'. With the
-> builtin implementation, this errors with:
->
->     error: could not parse colored hunk header '?[36m?[1m?[38;5;13m@ fil=
-e:1 @?[1m?[0m'
->
-> With the Perl version, it works fine.
+Let's fix both of these issues by rewriting the paragraph describing
+what whitespaces are allowed by `git interpret-trailers` in the trailers
+it reads.
+---
+ Documentation/git-interpret-trailers.txt | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Hmm. This looks different than what Peff reported in
-https://lore.kernel.org/git/20201112184026.GB701197@coredump.intra.peff.ne=
-t/,
-where the command errored out with:
+diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+index 956a01d184..0e125d795b 100644
+--- a/Documentation/git-interpret-trailers.txt
++++ b/Documentation/git-interpret-trailers.txt
+@@ -60,10 +60,12 @@ non-whitespace lines before a line that starts with '---' (followed by a
+ space or the end of the line). Such three minus signs start the patch
+ part of the message. See also `--no-divider` below.
+ 
+-When reading trailers, there can be whitespaces after the
+-token, the separator and the value. There can also be whitespaces
+-inside the token and the value. The value may be split over multiple lines with
+-each subsequent line starting with whitespace, like the "folding" in RFC 822.
++When reading trailers, there can be no whitespace inside the token,
++and only one regular space or tab character between the token and the
++separator. There can be whitespaces before, inside or after the
++value. The value may be split over multiple lines with each subsequent
++line starting with at least one whitespace, like the "folding" in RFC
++822.
+ 
+ Note that 'trailers' do not follow and are not intended to follow many
+ rules for RFC 822 headers. For example they do not follow
+-- 
+2.37.0
 
-	  $ git -c interactive.difffilter=3D'diff-so-fancy' add -p
-	  fatal: mismatched output from interactive.diffFilter
-	  hint: Your filter must maintain a one-to-one correspondence
-	  hint: between its input and output lines.
-
-I _think_ I have an idea how to address this. Stay tuned.
-
-Ciao,
-Dscho
