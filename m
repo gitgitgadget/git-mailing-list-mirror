@@ -2,207 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76900C38145
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 10:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99EF0C32772
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 11:20:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355837AbiHWKxO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 06:53:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50532 "EHLO
+        id S244252AbiHWLUH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 07:20:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356802AbiHWKwK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 06:52:10 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A463EAB4DE
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 02:12:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661245943;
-        bh=nYxK6izUDo6ucYNXqubwcQXW6FT5Mr5KGuAGAXj41+I=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=IOynUN1T2rAP4cSANSYYI1Ih/3TZb7lgwsF2rrX6F4SWQJGxLTTbZIVzj6OoZrolO
-         a8jiDJfSiKnMVQWF86hA+q3SI6RO0JY57DlkSPD52/N+5SOYLnXs6kpNSpv8hmXcsc
-         KnXN09PtwDdpgO7XX76O04gcQyBIgsNSjBhKvpAY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MsHns-1pJt7t3IZW-00tihL; Tue, 23
- Aug 2022 11:12:23 +0200
-Date:   Tue, 23 Aug 2022 11:12:21 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Renato Botelho <garga@FreeBSD.org>,
-        Todd Zullinger <tmz@pobox.com>,
-        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>
-Subject: Re: [PATCH] gc: use temporary file for editing crontab
-In-Reply-To: <20220823010120.25388-1-sandals@crustytoothpaste.net>
-Message-ID: <6428252p-ssrn-7qs7-9p26-5so10r96s3os@tzk.qr>
-References: <1dd29f43-1a8e-eb69-3320-7f5140a0e18e@github.com> <20220823010120.25388-1-sandals@crustytoothpaste.net>
+        with ESMTP id S1349905AbiHWLS1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 07:18:27 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B530F89919
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 02:22:00 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id a22so17208653edj.5
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 02:22:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc;
+        bh=iDgfMYYPfoEm6RH4Bh05iOqFOpoXAPm+EvVmfWsyZHg=;
+        b=UtnXKgCpxsfm7kQn0vENK5pivPLmoK3p0oizJ5tfDVvsqGl3qZ1SjquR96lMzefCmZ
+         aOhM4zt4A0tisbf2yCYX3e+pOUMNyJPV/44Y23tnHGhgs5g2LVHQxybG8S/ju0lEkaIg
+         vh6vXXjZkgtP2wPyui6sebeXqCBWR8AXkbfgy4uGsZdC0ReNI8PEBbmC4vvpP1S0kddO
+         knjTWo/+civB5QHoC/zRphfWwpYAW7z6+38vSCc75vG5Ydp7RI6XhhbZ3nyK5oYLzch5
+         i1cA6WiPzJmNNmUIOm74MEKWdCNKZcy5ccLdnS3DXR/U8y94lOZFqdq4G8omwx2RzKxF
+         HisQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc;
+        bh=iDgfMYYPfoEm6RH4Bh05iOqFOpoXAPm+EvVmfWsyZHg=;
+        b=SulZGtiUqc3dWS5MeZF9ot/UVr3u6ErsoxYL8jDfhMWwWQ4cIekaDr98V+n0m7aEvA
+         649L77p1YUUXDT/y7DE0rtDdOrF4vIft0+Hl65u3kJ+REZue66c1X9qvc6KyTdz1UQoU
+         A6c9wvoQA0LSLIbnbBXjWt1uxEBsAssAdkMOUI4akXb1erX5byfr6NlCW8zOzFM3k1Jr
+         kUd4YOy/NK4cGZ6k/nNP14bfeozc8jZIo1tPu6Bt0BGros+26gJMT2Z9E2egt3ji9Trd
+         Nho5V1xiVZVz6WWodq4vXYlqFADuSv13XAosF11AGwCMVydY0Ru/G+emyHstcgigx04w
+         KBfw==
+X-Gm-Message-State: ACgBeo3YdTFo1jkCDKzZYHcJJrjQ9Jb9xCpvk0n3Zv8OH/vTH7+66it7
+        8t4WfwIswf4urWqsgD5li0c=
+X-Google-Smtp-Source: AA6agR5eyiVhnRenQIxz/YYCY1yKKqXRBXvRClgqXsG8BNVqyjbbh+oIcAchF3uA51su9QJwaZYgrQ==
+X-Received: by 2002:a05:6402:530d:b0:446:e22:cca2 with SMTP id eo13-20020a056402530d00b004460e22cca2mr2752342edb.237.1661246519142;
+        Tue, 23 Aug 2022 02:21:59 -0700 (PDT)
+Received: from localhost (84-236-78-250.pool.digikabel.hu. [84.236.78.250])
+        by smtp.gmail.com with ESMTPSA id kv23-20020a17090778d700b0073d645e6dd8sm4463456ejc.223.2022.08.23.02.21.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Aug 2022 02:21:58 -0700 (PDT)
+Date:   Tue, 23 Aug 2022 11:21:56 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] promisor-remote: fix xcalloc() argument order
+Message-ID: <20220823092156.GB1735@szeder.dev>
+References: <20220822213408.662482-1-szeder.dev@gmail.com>
+ <xmqqh7249b8d.fsf@gitster.g>
+ <xmqq5yijahpm.fsf@gitster.g>
+ <20220823070417.GA1735@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:NPnexBwcwht+xqeAqh0ZIR0szkl0rxCMQrePudUylJCoJKK/jkx
- +BmilHf0x42cioJ5HS+R/Yv8mGDT0gjKstC5DU9Q3cjJhUdeMZXyddPD1fJ1g/Kjnfb8qQK
- 8zTV8CJ+uImvjIltZCo7jvk+xf0muC334R+V6UPj8pf10Zcufd8P6VlnykSbLHV3GoWJK/s
- 2PXH/vTDJUis/BsOuZBMA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:DloDKEIfcjw=:SMEkNa5e5TgaLe0KyQNbuq
- P4VE0UBG141qgwKe2kMHmfcj7TkfFRGO6LCJ0rsoh9dGEmoS+Bya2hK5QzElNGt5aP8+bg9wU
- BubYmMJe08fRKDoKQKRBhcsjqMv0XFOcpu627vWrkzJyPF8wH/oYYxkMsfpyLW5pqZFnoG69e
- +bslgG84tklOBxh1UDXKfimT0v7NnxobnEHIbFNmko+fVy9i074ZBt84N2y7tsNjwFXRPDnli
- 3mGDnehnYzJbfG4mCtcTBPjEK5DoH8ZJk7xg1IMZZIpbSyCjlQQ/qBXDa/oq04YtHEr0S5dpZ
- 1ltVfcY9QFTr1Du48W4wo3IClNqTggPryfwD6Egc8TypkPIXOWUkTkn4wUxCE4zMZi/B2rKC7
- 1zyDBTmpBvXRBPJ7lK3Bv+aVPb78LkICa8aew/wYqjA3huy166G/985mU2XyQ+53+C2X8F8iq
- NN05HWcKiTJtgDtKO1kLlvYKpXDM86r8euGVLBfSRmxBFxvSJeAClKEPUKWYdcSLADDuGqvF2
- PN/PLHoS9SzAlBCFney7mA5Znh3uidVNIcFqiE8oMNnAVhfzcTl1QKkihW8/ji7IXdDM5wI4C
- YAmhdZ8qQbgU5rqqmV6SWLNKvTFuVpfk0z8eW0IzaoLcIdrMsZhMreyXC88spiZ9d+tBWF2Cl
- 3IsKNACQNusegNCFwdGOo68NI4T+bKXjdxLB/CbasdC7Zsd0RQj/k08F8YV4NSJrmRRcRV326
- 8jD5JCTdpnOw5AoZsNIjHD7GB8MwXqC4MUl9nyrDNrAw4bY2nRrnw4qI6vgDBh58VMTkuwpqz
- QQQz5+p2fGWy1OLMSx7wL7Na5ItNzekOapvxBoJD/oKjR+kpM1c4tCNtkSAaca1uZK9vMpw+m
- 4DnXjV9beeEbSQh/UgNCovHUjYqhW0QA6jaT+3OeuvRCn4IJCHzziOsgn/DtzJFfCvXDs6Rdf
- 6edTdReO4ZSlObGHaMTuJGXoqHzyIuORNFLZeM/YyHkV8OV0cbo14zPqj4/mI//CDC7Poupbi
- vHgZ7EL6eDriQe5hr+CD3mJitHXvRdNVAl9Lo0tR0CeGzygAMQnLWb8gFPS413jhcBbLaT7g8
- By7h45nL4RCxPibCuriCyT5R29weIQKlodd8vDNd6csHa4SLJtRupSVbQ==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220823070417.GA1735@szeder.dev>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+On Tue, Aug 23, 2022 at 09:04:17AM +0200, SZEDER Gábor wrote:
+> On Mon, Aug 22, 2022 at 06:09:41PM -0700, Junio C Hamano wrote:
+> > Junio C Hamano <gitster@pobox.com> writes:
+> > 
+> > > ...  FWIW, "make coccicheck" with what I happen to have
+> > > notices it.
+> > 
+> > Oops, that was a serious typo.  "notices" -> "fails to notice".
+> 
+> Hm, that's strange.  1.1.1 did notice this transformation for me,
 
-On Tue, 23 Aug 2022, brian m. carlson wrote:
+Hang on, it's not quite that simple.
+Watch this, it will get weird:
 
-> While cron is specified by POSIX, there are a wide variety of
-> implementations in use.  On FreeBSD, the cron implementation requires a
-> file name argument: if the user wants to edit standard input, they must
-> specify "-".  However, this notation is not specified by POSIX, allowing
-> the possibility that making such a change may break other, less common
-> implementations.
->
-> Since POSIX tells us that cron must accept a file name argument, let's
-> solve this problem by specifying a temporary file instead.  This will
-> ensure that we work with the vast majority of implementations.
->
-> Reported-by: Renato Botelho <garga@FreeBSD.org>
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+# Batched spatch for faster processing, see 960154b9c1 (coccicheck:
+# optionally batch spatch invocations, 2019-05-06)
+$ grep SPATCH_BATCH_SIZE config.mak
+SPATCH_BATCH_SIZE = 32
+$ time make contrib/coccinelle/xcalloc.cocci.patch    
+    SPATCH contrib/coccinelle/xcalloc.cocci
+     SPATCH result: contrib/coccinelle/xcalloc.cocci.patch
 
-Beautiful commit message. Thank you!
+real	0m35.902s
+user	0m34.840s
+sys	0m1.030s
+# Found it, good.
+$ make -s cocciclean
+# Turn off batched processing (this is the default)
+$ sed -i -e '/SPATCH_BATCH_SIZE/ s/= .*/= 1/' config.mak
+$ time make contrib/coccinelle/xcalloc.cocci.patch    
+    SPATCH contrib/coccinelle/xcalloc.cocci
 
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index eeff2b760e..168dbdb5d9 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -2065,6 +2065,7 @@ static int crontab_update_schedule(int run_mainten=
-ance, int fd)
->  	struct child_process crontab_edit =3D CHILD_PROCESS_INIT;
->  	FILE *cron_list, *cron_in;
->  	struct strbuf line =3D STRBUF_INIT;
-> +	struct tempfile *tmpedit;
->
->  	get_schedule_cmd(&cmd, NULL);
->  	strvec_split(&crontab_list.args, cmd);
-> @@ -2079,6 +2080,15 @@ static int crontab_update_schedule(int run_mainte=
-nance, int fd)
->  	/* Ignore exit code, as an empty crontab will return error. */
->  	finish_command(&crontab_list);
->
-> +	tmpedit =3D mks_tempfile_t(".git_cron_edit_tmpXXXXXX");
-> +	if (!tmpedit)
-> +		return error(_("failed to create crontab temporary file"));
+real	0m24.553s
+user	0m21.468s
+sys	0m3.099s
+# Not only missed the transformation, but it's faster than batched
+# processing?!
 
-It might make sense to use the same `goto out;` pattern here, to make it
-easier to reason about the early exit even six years from now.
+# Let's invoke spatch directly.
+$ spatch --all-includes --sp-file contrib/coccinelle/xcalloc.cocci --patch . promisor-remote.c                               
+warning: Can't find macro file: /usr/local/bin/lib/coccinelle/standard.h
+warning: Can't find default iso file: /usr/local/bin/lib/coccinelle/standard.iso
+HANDLING: promisor-remote.c
+# Nope.
+$ spatch --all-includes --sp-file contrib/coccinelle/xcalloc.cocci --patch . promisor-remote.c lockfile.c
+warning: Can't find macro file: /usr/local/bin/lib/coccinelle/standard.h
+warning: Can't find default iso file: /usr/local/bin/lib/coccinelle/standard.iso
+HANDLING: promisor-remote.c lockfile.c
+$ spatch --all-includes --sp-file contrib/coccinelle/xcalloc.cocci --patch . promisor-remote.c git.c     
+warning: Can't find macro file: /usr/local/bin/lib/coccinelle/standard.h
+warning: Can't find default iso file: /usr/local/bin/lib/coccinelle/standard.iso
+HANDLING: promisor-remote.c git.c
+$ spatch --all-includes --sp-file contrib/coccinelle/xcalloc.cocci --patch . promisor-remote.c usage.c
+warning: Can't find macro file: /usr/local/bin/lib/coccinelle/standard.h
+warning: Can't find default iso file: /usr/local/bin/lib/coccinelle/standard.iso
+HANDLING: promisor-remote.c usage.c
+# Nope, nope, nope.
+$ spatch --all-includes --sp-file contrib/coccinelle/xcalloc.cocci --patch . promisor-remote.c builtin/*.c
+[...]
+# Nope!
 
-We do not even have to guard the `close_tempfile_gently()` behind an `if
-(tempfile)` conditional because that function handles `NULL` parameters
-gently.
+# But watch this!
+$ spatch --all-includes --sp-file contrib/coccinelle/xcalloc.cocci --patch . promisor-remote.c config.c
+warning: Can't find macro file: /usr/local/bin/lib/coccinelle/standard.h
+warning: Can't find default iso file: /usr/local/bin/lib/coccinelle/standard.iso
+HANDLING: promisor-remote.c config.c
+diff = 
+diff -u -p a/promisor-remote.c b/promisor-remote.c
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -146,7 +146,7 @@ static void promisor_remote_init(struct
+ 	if (r->promisor_remote_config)
+ 		return;
+ 	config = r->promisor_remote_config =
+-		xcalloc(sizeof(*r->promisor_remote_config), 1);
++		xcalloc(1, sizeof(*r->promisor_remote_config));
+ 	config->promisors_tail = &config->promisors;
+ 
+ 	repo_config(r, promisor_remote_config, config);
 
-> +	cron_in =3D fdopen_tempfile(tmpedit, "w");
-> +	if (!cron_in) {
-> +		result =3D error(_("failed to open temporary file"));
-> +		goto out;
-> +	}
-> +
->  	/*
->  	 * Read from the .lock file, filtering out the old
->  	 * schedule while appending the new schedule.
-> @@ -2086,19 +2096,6 @@ static int crontab_update_schedule(int run_mainte=
-nance, int fd)
->  	cron_list =3D fdopen(fd, "r");
->  	rewind(cron_list);
->
-> -	strvec_split(&crontab_edit.args, cmd);
-> -	crontab_edit.in =3D -1;
-> -	crontab_edit.git_cmd =3D 0;
-> -
-> -	if (start_command(&crontab_edit))
-> -		return error(_("failed to run 'crontab'; your system might not suppor=
-t 'cron'"));
-> -
-> -	cron_in =3D fdopen(crontab_edit.in, "w");
-> -	if (!cron_in) {
-> -		result =3D error(_("failed to open stdin of 'crontab'"));
-> -		goto done_editing;
-> -	}
-> -
->  	while (!strbuf_getline_lf(&line, cron_list)) {
->  		if (!in_old_region && !strcmp(line.buf, BEGIN_LINE))
->  			in_old_region =3D 1;
-> @@ -2132,14 +2129,22 @@ static int crontab_update_schedule(int run_maint=
-enance, int fd)
->  	}
->
->  	fflush(cron_in);
-> -	fclose(cron_in);
-> -	close(crontab_edit.in);
+# Huh?! (;
 
-This worries me a bit. I could imagine that keeping the file open and then
-expecting a spawned process to read its stdin from that file won't work on
-Windows.
+FWIW, I see this with Coccinelle 1.1.1, 1.0.8 and 1.0.6 as well.
 
-In any case, I would consider it the correct thing to do to close
-the temp file here. In other words, I would like to move the
-`close_tempfile_gently()` call to this location.
-
->
-> -done_editing:
-> +	strvec_split(&crontab_edit.args, cmd);
-> +	strvec_push(&crontab_edit.args, get_tempfile_path(tmpedit));
-> +	crontab_edit.git_cmd =3D 0;
-> +
-> +	if (start_command(&crontab_edit)) {
-> +		result =3D error(_("failed to run 'crontab'; your system might not su=
-pport 'cron'"));
-> +		goto out;
-> +	}
-> +
->  	if (finish_command(&crontab_edit))
->  		result =3D error(_("'crontab' died"));
->  	else
->  		fclose(cron_list);
-> +out:
-> +	close_tempfile_gently(tmpedit);
-
-Here, I would like to call `delete_tempfile(&tmpedit);` instead. That way,
-the memory is released correctly, the temporary file is deleted, and
-everything is neatly cleaned up.
-
-The way I read the code, `delete_tempfile(&tmpedit)` would return early if
-`tmpedit =3D=3D NULL`, and otherwise clean everything up and release the
-memory, so there is no need to guard this call behind an `if (tmpedit)`
-conditional.
-
-Side note: I do notice that `delete_tempfile(&tmpedit)` seems to _not_
-release memory when `tmpedit` is non-NULL when `tmpedit->active =3D=3D 0`.
-I consider this a bug in the `delete_tempfile()` code (in its `if
-(!is_tempfile_active(tempfile))` clause, it should call
-`deactivate_tempfile()` for non-NULL `tempfile`s and set `*tempfile_p =3D
-NULL;`), but it is outside the scope of your patch to address that.
-
-What do you think about my suggestions?
-
-Thanks,
-Dscho
-
->  	return result;
->  }
->
->
