@@ -2,148 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5A29C28D13
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 01:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3099C28D13
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 01:09:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238753AbiHWBBt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Aug 2022 21:01:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59942 "EHLO
+        id S239084AbiHWBJu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Aug 2022 21:09:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238679AbiHWBBm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Aug 2022 21:01:42 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC7805723C
-        for <git@vger.kernel.org>; Mon, 22 Aug 2022 18:01:27 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        with ESMTP id S239058AbiHWBJs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Aug 2022 21:09:48 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC88257E00
+        for <git@vger.kernel.org>; Mon, 22 Aug 2022 18:09:46 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E59DA1AF0A8;
+        Mon, 22 Aug 2022 21:09:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=hp+Eef4JV4+C
+        wFXZihPHPg3J1r6yjBvXBp6jJq/qH38=; b=m32qu/JPZ7B6pdEW+nktwzZc7Y+w
+        ENoaSGOrLX9gAKeO+CqeVRHoAefSQa+zOi2m1x1W8EKTfsPTmbKTOPYPUvBZd4Yu
+        BpIskzs0QSSeG9+YxmUp3/TWCNCOwi5vfaH7b8biHNCmH0eyVqTD6rNBwZQHHEEc
+        ZFPo5DgL+GuntpU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DDC611AF0A7;
+        Mon, 22 Aug 2022 21:09:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 98FD85A1AC;
-        Tue, 23 Aug 2022 01:01:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1661216486;
-        bh=+QOBTIU7olqIGY9mLwPTFulyaF5ylPr0UXthfFkc62A=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=TsCUNU5BLMkxkdZcF2+VKwS7TRFwSj6uNZn0W/pzTyZHww0SsZAfa2DiV6R4pPRRU
-         gmXhOH335NVHB4ypO+yAo9JzA4fW/WfRb3rYazHBIVDWOtqw000wDFELaeUey4vKCy
-         0x2YNO2WZhxGeP21j6IyAJQ9RKzqruxbzR8YXRYor9nx18P2Ily86QMrgGU5ZdiaHS
-         LXxs83EF8XEY2QGqcK5yyiY21lgbGF8FmfCNs/CRSlLrtUiDoCK1be3Dt9YO91CkCm
-         yP52x4Qi4Ov14JVGUI0ezvIRBxSebqhAedGs2hJlTcuSCTT2Wxto+hRWIrYHMp/p6+
-         Qg15rIWfUMM8Qu4dwsvnIh/oX/XGFh9gGvB30YdXbHzlf0/yuMcWYdFiwYTe3SjLLZ
-         FFMBNMvMi4EDB9yv/6anDbXcxuBAv6EqoOgJ30q4ylSRSmNIRO2zO1/Xqm3SrWXFjD
-         A5Drm+U5me2/ccpaIvxpQfwDWda9ba28azX5alpK47pglq+R75t
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Renato Botelho <garga@FreeBSD.org>,
-        Todd Zullinger <tmz@pobox.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-Subject: [PATCH] gc: use temporary file for editing crontab
-Date:   Tue, 23 Aug 2022 01:01:20 +0000
-Message-Id: <20220823010120.25388-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.37.2.609.g9ff673ca1a
-In-Reply-To: <1dd29f43-1a8e-eb69-3320-7f5140a0e18e@github.com>
-References: <1dd29f43-1a8e-eb69-3320-7f5140a0e18e@github.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 89EB81AF0A5;
+        Mon, 22 Aug 2022 21:09:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] promisor-remote: fix xcalloc() argument order
+References: <20220822213408.662482-1-szeder.dev@gmail.com>
+        <xmqqh7249b8d.fsf@gitster.g>
+Date:   Mon, 22 Aug 2022 18:09:41 -0700
+In-Reply-To: <xmqqh7249b8d.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        22 Aug 2022 15:14:58 -0700")
+Message-ID: <xmqq5yijahpm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 44EB9990-2280-11ED-A3F0-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While cron is specified by POSIX, there are a wide variety of
-implementations in use.  On FreeBSD, the cron implementation requires a
-file name argument: if the user wants to edit standard input, they must
-specify "-".  However, this notation is not specified by POSIX, allowing
-the possibility that making such a change may break other, less common
-implementations.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Since POSIX tells us that cron must accept a file name argument, let's
-solve this problem by specifying a temporary file instead.  This will
-ensure that we work with the vast majority of implementations.
+> ...  FWIW, "make coccicheck" with what I happen to have
+> notices it.
 
-Reported-by: Renato Botelho <garga@FreeBSD.org>
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
-My apologies for the delay on this.  I forgot when I'd send a patch that
-I had a wedding out of town.
+Oops, that was a serious typo.  "notices" -> "fails to notice".
 
- builtin/gc.c | 37 +++++++++++++++++++++----------------
- 1 file changed, 21 insertions(+), 16 deletions(-)
-
-diff --git a/builtin/gc.c b/builtin/gc.c
-index eeff2b760e..168dbdb5d9 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -2065,6 +2065,7 @@ static int crontab_update_schedule(int run_maintenance, int fd)
- 	struct child_process crontab_edit = CHILD_PROCESS_INIT;
- 	FILE *cron_list, *cron_in;
- 	struct strbuf line = STRBUF_INIT;
-+	struct tempfile *tmpedit;
- 
- 	get_schedule_cmd(&cmd, NULL);
- 	strvec_split(&crontab_list.args, cmd);
-@@ -2079,6 +2080,15 @@ static int crontab_update_schedule(int run_maintenance, int fd)
- 	/* Ignore exit code, as an empty crontab will return error. */
- 	finish_command(&crontab_list);
- 
-+	tmpedit = mks_tempfile_t(".git_cron_edit_tmpXXXXXX");
-+	if (!tmpedit)
-+		return error(_("failed to create crontab temporary file"));
-+	cron_in = fdopen_tempfile(tmpedit, "w");
-+	if (!cron_in) {
-+		result = error(_("failed to open temporary file"));
-+		goto out;
-+	}
-+
- 	/*
- 	 * Read from the .lock file, filtering out the old
- 	 * schedule while appending the new schedule.
-@@ -2086,19 +2096,6 @@ static int crontab_update_schedule(int run_maintenance, int fd)
- 	cron_list = fdopen(fd, "r");
- 	rewind(cron_list);
- 
--	strvec_split(&crontab_edit.args, cmd);
--	crontab_edit.in = -1;
--	crontab_edit.git_cmd = 0;
--
--	if (start_command(&crontab_edit))
--		return error(_("failed to run 'crontab'; your system might not support 'cron'"));
--
--	cron_in = fdopen(crontab_edit.in, "w");
--	if (!cron_in) {
--		result = error(_("failed to open stdin of 'crontab'"));
--		goto done_editing;
--	}
--
- 	while (!strbuf_getline_lf(&line, cron_list)) {
- 		if (!in_old_region && !strcmp(line.buf, BEGIN_LINE))
- 			in_old_region = 1;
-@@ -2132,14 +2129,22 @@ static int crontab_update_schedule(int run_maintenance, int fd)
- 	}
- 
- 	fflush(cron_in);
--	fclose(cron_in);
--	close(crontab_edit.in);
- 
--done_editing:
-+	strvec_split(&crontab_edit.args, cmd);
-+	strvec_push(&crontab_edit.args, get_tempfile_path(tmpedit));
-+	crontab_edit.git_cmd = 0;
-+
-+	if (start_command(&crontab_edit)) {
-+		result = error(_("failed to run 'crontab'; your system might not support 'cron'"));
-+		goto out;
-+	}
-+
- 	if (finish_command(&crontab_edit))
- 		result = error(_("'crontab' died"));
- 	else
- 		fclose(cron_list);
-+out:
-+	close_tempfile_gently(tmpedit);
- 	return result;
- }
- 
+> $ spatch version
+> spatch version 1.1.1 compiled with OCaml version 4.13.1
+> Flags passed to the configure script: --prefix=3D/usr --sysconfdir=3D/e=
+tc --libdir=3D/usr/lib --enable-ocaml --enable-python --enable-opt
+> OCaml scripting support: yes
+> Python scripting support: yes
+> Syntax of regular expressions: PCRE
+>
+> Anyway, the patch is correct.
+>
+> Thanks, will queue.
+>
+>> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+>> ---
+>>  promisor-remote.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/promisor-remote.c b/promisor-remote.c
+>> index 5b33f88bca..68f46f5ec7 100644
+>> --- a/promisor-remote.c
+>> +++ b/promisor-remote.c
+>> @@ -146,7 +146,7 @@ static void promisor_remote_init(struct repository=
+ *r)
+>>  	if (r->promisor_remote_config)
+>>  		return;
+>>  	config =3D r->promisor_remote_config =3D
+>> -		xcalloc(sizeof(*r->promisor_remote_config), 1);
+>> +		xcalloc(1, sizeof(*r->promisor_remote_config));
+>>  	config->promisors_tail =3D &config->promisors;
+>> =20
+>>  	repo_config(r, promisor_remote_config, config);
