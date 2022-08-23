@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19BE0C32772
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 22:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71198C32793
+	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 23:27:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231608AbiHWWm5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 18:42:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40828 "EHLO
+        id S230211AbiHWX1M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 19:27:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbiHWWm4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 18:42:56 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5277386FFA
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 15:42:55 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-334ab1f0247so260108757b3.7
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 15:42:55 -0700 (PDT)
+        with ESMTP id S229558AbiHWX1K (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 19:27:10 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08B4E7CB5E
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 16:27:09 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id i16-20020a170902c95000b00172c39b3fb0so7966121pla.22
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 16:27:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=content-transfer-encoding:cc:to:from:subject:references
          :mime-version:message-id:in-reply-to:date:from:to:cc;
-        bh=ukfxqA8N7bQGHocePXNB0MJJXacf5+pU5Q5vupGtU9A=;
-        b=IvztkIoXJS57PWZ47dhWSca8TKvYE4iG0Tg57rSVKduY7FiPRQ7zO+PJB9uNXNgXKy
-         hCA14gmlTNBz1holB/YqWYLoyrB1DQSAyNvaoiHzPnQ3C5vpk+N3OgNHEOQ5+y8hyxGq
-         FULLfao+9Wrs39xAZtEiUuy/Z8j8gxBvMnFAaaO2BbeOzsap1kOKDxca2B8oTuRRNYxp
-         bCc5hDDtW4kw7jEP/vf7yA/sh3qUUyB1ij6vRWDvg0Jv0l6famfANIqhQWE822J3Rg5q
-         6NGbKjL8JeG+jOfDwBsFMBdyT7Mqdmdy0FtG855usSnhzWUVXf0TGABIRQMExhMIFwLV
-         5X0A==
+        bh=XnMrq55Vxsr8iqEE0SwEBgZVrX1kt4O0JARN7+1iuwg=;
+        b=gXX9OBjsQusUkngqe68HZJ6AkKNlfUN9iK6mUR56Er+CzhxD8QnAE1xWp0kTAuCQWW
+         L1rp84uFOXTWFw9LgnJ3qWQsu9oihAH72HLm81f/1hgvngKDbspDMIXDjl0BnvlVHbZu
+         asLdcTHBJb9daA/mReq1hSF30H+RhA3pLuqskKlACcklzPJb+igHFYStPTe0SEVTZ9Cv
+         ugI16XtOJwPE7AmkV0BwjYMHebXXs26qm3nHNVPTexWE9Cg3e4m1p48rLxezb+UE7O/g
+         qHYJs9eNb6IJnrQDh1EIANcXy3EHmQhwOuRgw92JFicAQ90B584MHsVXD6QHKPDolHNn
+         7EjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:from:subject:references
          :mime-version:message-id:in-reply-to:date:x-gm-message-state:from:to
          :cc;
-        bh=ukfxqA8N7bQGHocePXNB0MJJXacf5+pU5Q5vupGtU9A=;
-        b=e4K6GRc2c8oahazfkB/BJhSzql/y+IjB32ZlaUo7Z2uEoDgSWKvOt7XSJHiFkWIwmk
-         Vjia4iomH94oph1lzWtS5MuelD9ScLdA6OMAWl4PH5mEwUYYBO/0ESDcUJFNLWXGIRhd
-         JmAR4RtXtktP71yBg/PyXFznEkZ0J+5nhNW0cwemTuIZuQ3MqQZbOmyHHBiXESqEJyF2
-         bemvw4fQBMKROcYwVPsOalIyGMCYMomuVt10kuPC8b9UUa5QreQ0vadmGNXeZuPAYiUz
-         ayqyLrwKIwQ4srmpLUvLvGfkkVJwhzwSXFKIuMIGUDtb71EqcIxTOAfG4d2vasiZpxeN
-         9Cag==
-X-Gm-Message-State: ACgBeo1IDoRbptWq4+mLQpXnROtzbZBzlqpvIPEPC13qkSV8krswW1cg
-        WO9jbJA7L+AUvhCe0XiXNWKsgU9N4qDwQg==
-X-Google-Smtp-Source: AA6agR6ZSFN/0EvAAEc37BEUjSSlomvW/OQKJoa9RrKBF2WGEjk0Ym2lSeL+b/uNET3KoG0ub4oJIBEMp2UmmQ==
+        bh=XnMrq55Vxsr8iqEE0SwEBgZVrX1kt4O0JARN7+1iuwg=;
+        b=v+BLzulFySVYRKxLJyxkON7K55qjaL/gM82ZVbBxptM9pOhgIFOgpBt42TMiJTBjD9
+         OfPlYYThL+fQoCArUmXM1jFD2PY8pGTdhUuK60MOAPkUN+4x/Fo8Y0SDYbQ9UuJ68hcH
+         /AHdch3Zcj/MZhbmM/stWHgl/BykC4mVKpT5BOBbMDKi//kYaG8AZZdjHouiUAEALvEF
+         jgiuP9FOajwPTSWC4n/L0ZjBzXOMMqPw7RGkT79F1ekmQfrUY+aN9+DA9aM07xozeNKK
+         ku2uxOWERQmLW0nBaIIQZWG0e4RHTicT3KRWSyMSy2msD6iVa9dO4c1Lwm0J2bU7v6Un
+         kTAg==
+X-Gm-Message-State: ACgBeo1Xq9FRs4fX/VRzSPr3TMrvfJGXFQa3IwKLhAvKjGtACvWe5HSB
+        oMCeotjnqaXI6qlH5eJNprCaxdfkFOkxhg==
+X-Google-Smtp-Source: AA6agR7LkIR8IFBrhUnb9DODaOnKcXD0NTWVYu+rXy9n2mc2LlVAcZHg6BXTjc8fnBO7h5F+/9GnDopzyJEZXw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a81:7992:0:b0:336:8015:4889 with SMTP id
- u140-20020a817992000000b0033680154889mr28872163ywc.80.1661294574594; Tue, 23
- Aug 2022 15:42:54 -0700 (PDT)
-Date:   Tue, 23 Aug 2022 15:42:38 -0700
-In-Reply-To: <patch-v3-01.32-77586985ab3-20220821T130231Z-avarab@gmail.com>
-Message-Id: <kl6lmtbu4m5d.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:130c:b0:535:ca9b:13e0 with SMTP
+ id j12-20020a056a00130c00b00535ca9b13e0mr26785234pfu.55.1661297228319; Tue,
+ 23 Aug 2022 16:27:08 -0700 (PDT)
+Date:   Tue, 23 Aug 2022 16:27:06 -0700
+In-Reply-To: <patch-v3-28.32-6d9bccb34c3-20220821T130231Z-avarab@gmail.com>
+Message-Id: <kl6lk06y4k39.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
 References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com>
- <cover-v3-00.32-00000000000-20220821T130231Z-avarab@gmail.com> <patch-v3-01.32-77586985ab3-20220821T130231Z-avarab@gmail.com>
-Subject: Re: [PATCH v3 01/32] submodule tests: test usage behavior
+ <cover-v3-00.32-00000000000-20220821T130231Z-avarab@gmail.com> <patch-v3-28.32-6d9bccb34c3-20220821T130231Z-avarab@gmail.com>
+Subject: Re: [PATCH v3 28/32] submodule--helper: libify "must_die_on_failure"
+ code paths (for die)
 From:   Glen Choo <chooglen@google.com>
 To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
         git@vger.kernel.org
@@ -68,86 +69,126 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Test what exit code and output we emit on "git submodule -h", how we
-> handle "--" when no subcommand is specified, and how the top-level
-> "--recursive" option is handled.
->
-> For "-h" this doesn't make sense, but let's test for it so that any
-> subsequent eventual behavior change will become clear.
->
-> For "--" this follows up on 68cabbfda36 (submodule: document default
-> behavior, 2019-02-15) and tests that "status" doesn't support
-> the "--" delimiter. There's no intrinsically good reason not to
-> support that. We behave this way due to edge cases in
-> git-submodule.sh's implementation, but as with "-h" let's assert our
-> current long-standing behavior for now.
->
-> For "--recursive" the exclusion of it from the top-level appears to
-> have been an omission in 15fc56a8536 (git submodule foreach: Add
-> --recursive to recurse into nested submodules, 2009-08-19), there
-> doesn't seem to be a reason not to support it alongside "--quiet" and
-> "--cached", but let's likewise assert our existing behavior for now.
->
-> I.e. as long as "status" is optional it would make sense to support
-> all of its options when it's omitted, but we only do that with
-> "--quiet" and "--cached", and curiously omit "--recursive".
+> Continue the libification of codepaths that previously relied on
+> "must_die_on_failure". In these cases we've always been early aborting
+> by calling die(), but as we know that these codpaths will properly
 
-Ah! Okay, this finally makes sense to me now. The usage strings in
-Documentation/git-submodule.txt and git-submodule.sh document both
-"--quiet" and "--cached", but that's bogus because we should either:
+s/codpaths/codepaths :p
 
-- pretend that "git submodule" doesn't default to "status", so we
-  should omit "--cached", or
-- be clearer that "git submodule" _does_ default to "status", so we
-  should include "--recursive"
-
-Now that we've acknowledged the existence of top-level "--recursive", we
-should probably amend the usage strings. To be honest, I think a less
-confusing, more consistent direction would be to just drop this "default
-to status" behavior but I doubt we can do that any time soon..
-
+> handle return codes of 128 to mean an early abort let's have them use
+> die_message() instead.
+>
+> This still isn't a complete migration away from die() for these
+> codepaths, in particular this code in update_submodule() will still call =
+die() in some cases:
+>
+> 	char *remote_name =3D get_default_remote_submodule(update_data->sm_path)=
+;
+> 	const char *branch =3D remote_submodule_branch(update_data->sm_path);
+>
+> But as that code is used by other callers than the "update" code let's
+> leave converting it for a subsequent commit.
 >
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  t/t7400-submodule-basic.sh | 26 ++++++++++++++++++++++++++
->  1 file changed, 26 insertions(+)
+>  builtin/submodule--helper.c | 29 +++++++++++++++++------------
+>  1 file changed, 17 insertions(+), 12 deletions(-)
 >
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index e7cec2e457a..b858871a953 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -14,6 +14,32 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 851000ae30e..5f109d422ea 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2245,9 +2245,9 @@ static int run_update_procedure(struct update_data =
+*ud)
+>  		 */
+>  		if (!is_tip_reachable(ud->sm_path, &ud->oid) &&
+>  		    fetch_in_submodule(ud->sm_path, ud->depth, ud->quiet, &ud->oid))
+> -			die(_("Fetched in submodule path '%s', but it did not "
+> -			      "contain %s. Direct fetching of that commit failed."),
+> -			    ud->displaypath, oid_to_hex(&ud->oid));
+> +			return die_message(_("Fetched in submodule path '%s', but it did not =
+"
+> +					     "contain %s. Direct fetching of that commit failed."),
+> +					   ud->displaypath, oid_to_hex(&ud->oid));
+>  	}
 > =20
->  . ./test-lib.sh
+>  	return run_update_command(ud, subforce);
+> @@ -2291,13 +2291,14 @@ static const char *remote_submodule_branch(const =
+char *path)
+>  	return branch;
+>  }
 > =20
-> +test_expect_success 'submodule usage: -h' '
-> +	git submodule -h >out 2>err &&
-> +	grep "^usage: git submodule" out &&
-> +	test_must_be_empty err
-> +'
+> -static void ensure_core_worktree(const char *path)
+> +static int ensure_core_worktree(const char *path)
+>  {
+>  	const char *cw;
+>  	struct repository subrepo;
+> =20
+>  	if (repo_submodule_init(&subrepo, the_repository, path, null_oid()))
+> -		die(_("could not get a repository handle for submodule '%s'"), path);
+> +		return die_message(_("could not get a repository handle for submodule =
+'%s'"),
+> +				   path);
+> =20
+>  	if (!repo_config_get_string_tmp(&subrepo, "core.worktree", &cw)) {
+>  		char *cfg_file, *abs_path;
+> @@ -2315,6 +2316,8 @@ static void ensure_core_worktree(const char *path)
+>  		free(abs_path);
+>  		strbuf_release(&sb);
+>  	}
 > +
-> +test_expect_success 'submodule usage: --recursive' '
-> +	test_expect_code 1 git submodule --recursive >out 2>err &&
-> +	grep "^usage: git submodule" err &&
-> +	test_must_be_empty out
-> +'
-> +
-> +test_expect_success 'submodule usage: status --' '
-> +	test_expect_code 1 git submodule -- &&
-> +	test_expect_code 1 git submodule --end-of-options
-> +'
-> +
-> +for opt in '--quiet' '--cached'
-> +do
-> +	test_expect_success "submodule usage: status $opt" '
-> +		git submodule $opt &&
-> +		git submodule status $opt &&
-> +		git submodule $opt status
-> +	'
-> +done
-> +
->  test_expect_success 'submodule deinit works on empty repository' '
->  	git submodule deinit --all
->  '
+> +	return 0;
+>  }
+> =20
+>  static const char *submodule_update_type_to_label(enum submodule_update_=
+type type)
+> @@ -2390,7 +2393,9 @@ static int update_submodule(struct update_data *upd=
+ate_data)
+>  {
+>  	int ret;
+> =20
+> -	ensure_core_worktree(update_data->sm_path);
+> +	ret =3D ensure_core_worktree(update_data->sm_path);
+> +	if (ret)
+> +		return ret;
+> =20
+>  	update_data->displaypath =3D get_submodule_displaypath(
+>  		update_data->sm_path, update_data->prefix);
+> @@ -2406,8 +2411,8 @@ static int update_submodule(struct update_data *upd=
+ate_data)
+>  	if (update_data->just_cloned)
+>  		oidcpy(&update_data->suboid, null_oid());
+>  	else if (resolve_gitlink_ref(update_data->sm_path, "HEAD", &update_data=
+->suboid))
+> -		die(_("Unable to find current revision in submodule path '%s'"),
+> -			update_data->displaypath);
+> +		return die_message(_("Unable to find current revision in submodule pat=
+h '%s'"),
+> +				   update_data->displaypath);
+> =20
+>  	if (update_data->remote) {
+>  		char *remote_name =3D get_default_remote_submodule(update_data->sm_pat=
+h);
+> @@ -2417,13 +2422,13 @@ static int update_submodule(struct update_data *u=
+pdate_data)
+>  		if (!update_data->nofetch) {
+>  			if (fetch_in_submodule(update_data->sm_path, update_data->depth,
+>  					      0, NULL))
+> -				die(_("Unable to fetch in submodule path '%s'"),
+> -				    update_data->sm_path);
+> +				return die_message(_("Unable to fetch in submodule path '%s'"),
+> +						   update_data->sm_path);
+>  		}
+> =20
+>  		if (resolve_gitlink_ref(update_data->sm_path, remote_ref, &update_data=
+->oid))
+> -			die(_("Unable to find %s revision in submodule path '%s'"),
+> -			    remote_ref, update_data->sm_path);
+> +			return die_message(_("Unable to find %s revision in submodule path '%=
+s'"),
+> +					   remote_ref, update_data->sm_path);
+> =20
+>  		free(remote_ref);
+>  	}
 > --=20
 > 2.37.2.1279.g64dec4e13cf
