@@ -2,177 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D02CC00140
-	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 18:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71406C32792
+	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 19:08:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239348AbiHXS44 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 14:56:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59032 "EHLO
+        id S236283AbiHXTIO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 15:08:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239105AbiHXS4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 14:56:55 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 437087C1D7
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 11:56:53 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id s3-20020a17090a2f0300b001facfc6fdbcso2434481pjd.1
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 11:56:53 -0700 (PDT)
+        with ESMTP id S231866AbiHXTIN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 15:08:13 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2152F474EF
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 12:08:12 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id z72so14170201iof.12
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 12:08:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc;
-        bh=aV01swQ01+3azCIPw/GSGTBdkrT/nvUqMCW0Z8HTMYw=;
-        b=L9HdrRarOMheg9GMkV/rZCgEiun00bfwLqxwcawlxB8pEQ2mirMkX2r4hDFWYfSoCk
-         VebOXnuBBr8VwYmWyVq0bfRr4siBTl0O8SXfGDSqlBQw6I8krWLlFLjo5aURiv6G2eEb
-         P1yQOB3Afaz3t4lvyUipnsUECir7Si8oGcKZhC3kQCdvkPvKznU0wCDYno4FjUtQFO+P
-         bbIJeINMsiviYAOzl/U7fiekx7kxZnMeDXGEp4H2C8SPcMqq2t38hs00JJdEDePSytNy
-         nC6ybBBie17Lg+K+IBNHps4KlY/2RR3zrxURFy2gAWM1c+Punx3oNsRQ9zxhRnIFvtYh
-         YEZg==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=yHDBiJrGU8MxWHdkxkeBKTbG891at/3nDvOeAMz+5B4=;
+        b=CqFDDpl+8yuWlgc99Cg8E6fvzgYcvD67Tb0wA+po0CzqStAbrf+43owjxTZCTM3JFb
+         Se4g17Faya3reyhFNhp5hFFQW/WzgPpydihEJsJ9887kIG3w1OmyDBApV48bsNnNYHX0
+         VM+mbsidE4N6B4jh/po8GGUgd/hDqdGPj9j+zjivVZByhq4NcWyEupv41B470miX5eAz
+         LX9iqC5OKNpxDbIstQaJ65yr4nvUFv69gyZ/lCQVPQ/SkfZqsWUHwAD5n0LhcYzpLuAD
+         X7sntfv3gcNdbRjB2Pn06Ta3iU34bU8UR53siYuA7l0swd31kRcEh/KSZkfVjnE2+Xl0
+         WQmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc;
-        bh=aV01swQ01+3azCIPw/GSGTBdkrT/nvUqMCW0Z8HTMYw=;
-        b=icIdUCjfWf9iHZKDK1Ku1947nbnqE6jOkmQDOq1QKAJNfpTNNNmLp4IHD8Jrj01kKz
-         cY9KLgJz3to/Us3TBwYmIJffvv/vLSkeUzLS9f+6Z6r948QfuZMe+akMkv2P6ktWOb+P
-         rjALgNnn1/a5jxdjiWRr3t4ePxDQ5D4x33rUdyp8NiL/lQek9e4YQiqmWLzcNDrdhq1b
-         1ZSc0gT0ZUhg2Vt7DviV4iFwPBqCWGJ7rB7nW/HMfSla0V4R8kv9QDl8w/KAGnIn8SFj
-         Z0GDlIryy+4HkYTfx6jRcmwxPi5MCTWIoEL+FnVrUCzrjAXB+c4BrfjNlrO7geNOVxSB
-         BiqQ==
-X-Gm-Message-State: ACgBeo1KVYkV6rD46yXspx2z7/+p+9Y84g9L07pzqLFzxaBg+5QHRd7G
-        ViFBIZAF24QUVfvzY72Pceg/BCLSOp0=
-X-Google-Smtp-Source: AA6agR6beA0/GN9Yreh3rqV0nRWzaOk9iP9URPzlDT13l3ezdYPdKjjko9Xbq2AhiFZyij735cMDPg==
-X-Received: by 2002:a17:902:d2c1:b0:16e:ea4e:36d3 with SMTP id n1-20020a170902d2c100b0016eea4e36d3mr376659plc.98.1661367412661;
-        Wed, 24 Aug 2022 11:56:52 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id t3-20020a170902d14300b0016f1319d2a7sm12700046plt.297.2022.08.24.11.56.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Aug 2022 11:56:51 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Diomidis Spinellis via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Diomidis Spinellis <dds@aueb.gr>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2] grep: fix multibyte regex handling under macOS
-References: <pull.1313.git.git.1661281689747.gitgitgadget@gmail.com>
-        <pull.1313.v2.git.git.1661289990205.gitgitgadget@gmail.com>
-Date:   Wed, 24 Aug 2022 11:56:51 -0700
-In-Reply-To: <pull.1313.v2.git.git.1661289990205.gitgitgadget@gmail.com>
-        (Diomidis Spinellis via GitGitGadget's message of "Tue, 23 Aug 2022
-        21:26:30 +0000")
-Message-ID: <xmqq5yih79n0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=yHDBiJrGU8MxWHdkxkeBKTbG891at/3nDvOeAMz+5B4=;
+        b=0vApz0Efk8NrOFroznQlY7NoodgXra/5AGlV9D/oeMbjs2N49ptA8e0WrI6Ry6Osn3
+         hgx/RJ4xoW25IYMylqZlTxuVT1e9XFdsv8JmSAIC/PNlQSQOW989hJTOlzfU8JaH9QRJ
+         3TkgABQafenr60kpv0X4oUaxtdL2xkGI+bwZ2RDplSlJYqIQI5ZYRDILtbP1kGuH+vg9
+         RUCEj7YrKmy8orss3OWJboFLeRQhgkwWIqOPKsO2RnGZh34K94aELN97sw/kzUA8R/Lh
+         FiGTF+Ggm7ihQUQSXEzo/o0dv+ZEHTx9TGUA8Q6m0yKhaLN70k2kFThyaWifwwAt40+P
+         X2yQ==
+X-Gm-Message-State: ACgBeo31nE3CMqVNcAv2FgvhUcYId8EmUXtL6nM31bXEWt8lOzKk3eRI
+        tfHKLI2tYsJmma4K62/oRMdd
+X-Google-Smtp-Source: AA6agR6EfN1zq/UT+Dd39N476zpSnPsf+V36GCYaQl9Qaj0D6M6SguR8T/GJP9shIEWEoPuuMG4rog==
+X-Received: by 2002:a05:6602:2d09:b0:688:f387:aab5 with SMTP id c9-20020a0566022d0900b00688f387aab5mr181071iow.107.1661368091481;
+        Wed, 24 Aug 2022 12:08:11 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:2955:515c:af53:c9f2? ([2600:1700:e72:80a0:2955:515c:af53:c9f2])
+        by smtp.gmail.com with ESMTPSA id a20-20020a924454000000b002dcfbf36438sm1306346ilm.12.2022.08.24.12.08.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Aug 2022 12:08:10 -0700 (PDT)
+Message-ID: <b70b2754-aaa9-e01a-a576-9d1c83b39736@github.com>
+Date:   Wed, 24 Aug 2022 15:08:10 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v1 1/2] builtin/grep.c: add --sparse option
+Content-Language: en-US
+To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
+Cc:     vdye@github.com
+References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+ <20220817075633.217934-2-shaoxuan.yuan02@gmail.com>
+ <80f24382-1188-d450-d1e2-42f68c08e60b@github.com>
+ <74ff1a97-fa98-7280-9d84-35dafaf3cb3d@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <74ff1a97-fa98-7280-9d84-35dafaf3cb3d@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Diomidis Spinellis via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On 8/24/2022 2:20 PM, Shaoxuan Yuan wrote:
+> Hi reviewrs,
+> 
+> I came back from busying with relocation :)
 
-> From: Diomidis Spinellis <dds@aueb.gr>
->
-> The 2013 commit 29de20504e9 fixed t0070-fundamental.sh under Darwin
-> (macOS) by adopting Git's regex library.  However, this library is
-> compiled with NO_MBSUPPORT, which causes git-grep to work incorrectly
-> on multibyte (e.g. UTF-8) files.  Current macOS versions pass
-> t0070-fundamental.sh with the native macOS regex library, which
-> also supports multibyte characters.
+Welcome back! I'm looking forward to overlapping our timezones a bit more.
+ 
+> On 8/17/2022 10:12 PM, Derrick Stolee wrote:
+>> On 8/17/2022 3:56 AM, Shaoxuan Yuan wrote:
+>>> Add a --sparse option to `git-grep`. This option is mainly used to:
 
-Very nice to see the last sentence in that paragraph.
+>> Or something like that. The documentation updates will also help clarify
+>> what happens when '--cached' is not included. I assume '--sparse' is
+>> ignored, but perhaps it _could_ allow looking at the cached files outside
+>> the sparse-checkout definition, this could make the simpler invocation of
+>> 'git grep --sparse <pattern>' be the way that users can search after their
+>> attempt to search the worktree failed.
+> 
+> This simpler version was in my earlier local branch, but later I
+> decided not to go with it. I found the difference between these two
+> approaches, is that "--cached --sparse" is more correct in terms of
+> how Git actually works (because sparsity is a concept in the index);
+> and "--sparse" is more comfortable for the end user.
+> 
+> I found the former one better here, because it is more self-explanatory,
+> and thus more info for the user, i.e. "you are now looking at the
+> index, and Git will also consider files outside of sparse definition."
+> 
+> To be honest, I don't know which one is "better", but I think I'll
+> keep the current implementation unless something more convincing shows
+> up later.
 
-> Signed-off-by: Diomidis Spinellis <dds@aueb.gr>
-> ---
+I think it is fine for you to keep the "--sparse requires --cached"
+approach that you have now, since we can always choose to extend
+the options to allow --sparse without --cached later.
 
-This part, from here ...
-
->     grep: fix multibyte regex handling under macOS
->     
->     The 2013 commit 29de20504e9 fixed t0070-fundamental.sh under Darwin
->     (macOS) by adopting Git's regex library. However, this library is
->     compiled with NO_MBSUPPORT, which causes git-grep to work incorrectly on
->     multibyte (e.g. UTF-8) files. Current macOS versions pass
->     t0070-fundamental.sh with the native macOS regex library, which also
->     supports multibyte characters.
->     
->     Adjust the Makefile to use the native regex library, and call
->     setlocale(3) to set CTYPE according to the user's preference. The
->     setlocale(3) call is required on all platforms, but in platforms
->     supporting gettext(3), setlocale(3) is called as a side-effect of
->     initializing gettext(3).
->     
->     To avoid running the new tests on platforms still using the
->     compatibility library, which is compiled without multibyte support,
->     store the corresponding NO_REGEX setting in the GIT-BUILD-OPTIONS file.
->     This makes it available to the test scripts. In addition, adjust the
->     test-tool regex command to work with multibyte regexes to further test a
->     platform's support for them.
->     
->     Signed-off-by: Diomidis Spinellis dds@aueb.gr
-
-... up to here does not need a separate sign-off.  It is primarily
-to describe what got changed between v1 and this version.  The
-changes can be seen in range-diff, and in some cases what the
-range-diff shows is sufficient to understand the difference, but it
-is better to either (1) supply explanation in your own words, or (2)
-omit almost duplicate description.
-
-> diff --git a/Makefile b/Makefile
-> index 04d0fd1fe60..d1a98257150 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1427,7 +1427,6 @@ ifeq ($(uname_S),Darwin)
->  		APPLE_COMMON_CRYPTO = YesPlease
->  		COMPAT_CFLAGS += -DAPPLE_COMMON_CRYPTO
->  	endif
-> -	NO_REGEX = YesPlease
->  	PTHREAD_LIBS =
->  endif
-
-I notice that this is the ONLY conditional section in our primary
-Makefile that switches upon the value of $(uname_<anything>).  After
-the dust settles, we should move this whole part to config.mak.uname
-as an unrelated clean-up.
-
-Alternatively, you can choose to do that (without losing NO_REGEX)
-as a preliminary clean-up patch and then build this "recent Darwin
-has usable regexp library" change on top of it.  I do not have a
-preference either way, other than that we do not want to see that
-done as part of this change "while we are at it".
-
-> diff --git a/grep.c b/grep.c
-> index 82eb7da1022..c31657c3da3 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -10,6 +10,8 @@
->  #include "quote.h"
->  #include "help.h"
->  
-> +#include <locale.h>
-
-Don't ever include system headers in generic *.c files.  The system
-headers on different platforms have subtle ordering restrictions
-among include files and definitions of feature test macros, and all
-those subtleties are supposed to be handled in one central place, in
-the "git-compat-util.h" file.
-
-A source file specific only to a particular platform is a different
-matter; they can include system headers that exist or are needed
-only on those systems directly.
-
-So far, "grep.c" has been successfully used for everybody (except
-Darwin), and if it needs touching, that means something is still
-wrong with Darwin.
-
-Is is because you are not using gettext()?  I thought our
-gettext.[ch] did consider some folks/platforms do not use system
-gettext() but perhaps its support for such build environment is
-slightly lacking and does not make necessary setlocale() calls.
-
-If that is why you are mucking with this file, the right place to
-add changes like this is not here specific to grep.c, but to the
-start-up sequence that happens before cmd_main() inside
-common-main.c or somewhere around there, I think.  Let me summon the
-author of 5e9637c6 (i18n: add infrastructure for translating Git
-with gettext, 2011-11-18) by Cc'ing.
+Thanks,
+-Stolee
