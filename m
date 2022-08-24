@@ -2,103 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E554C00140
-	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 16:47:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5272FC00140
+	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 17:33:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239274AbiHXQrU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 12:47:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45482 "EHLO
+        id S240208AbiHXRdN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 13:33:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240058AbiHXQqK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 12:46:10 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B861E220C1
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 09:46:08 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B86AC145CBB;
-        Wed, 24 Aug 2022 12:46:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ycaVFu1NZu3V
-        XapBFQmdplib9CHF7LWy/dcZh5XCt6s=; b=LlNdGqjo1QX1506jUV8oO6UGUn6x
-        JRwuSjXwCmptq1DwZL5lwjgqlAqe3yeia7C9MfBbVLaKwe5RPwp4+FqIJJe9S89C
-        t5rtr+LhrkSenaesGymEB9Gwu57N7tmwiMMybWGpsNVudUFK3cZCPTTAkGqUmhna
-        5UQmsfxSjb7uN7U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A5E1E145CBA;
-        Wed, 24 Aug 2022 12:46:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3E804145CB9;
-        Wed, 24 Aug 2022 12:46:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH v3 0/2] fsmonitor: option to allow fsmonitor to run
- against network-mounted repos
-References: <pull.1326.v2.git.1661259820.gitgitgadget@gmail.com>
-        <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
-Date:   Wed, 24 Aug 2022 09:46:02 -0700
-In-Reply-To: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com> (Eric
-        DeCosta via GitGitGadget's message of "Tue, 23 Aug 2022 18:55:39
-        +0000")
-Message-ID: <xmqqfshl8u9h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S240213AbiHXRdM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 13:33:12 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71FE47E306
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 10:33:11 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id j21so29490136ejs.0
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 10:33:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc;
+        bh=oxh1v8n68rd2gtYQE+xlAZpNrBCVeb/+23gMYHPvI/I=;
+        b=QUIddHy0QMch+TpqQYc+jsxdRQceuNAEu22t3p63OJN9oAIDNqpr38vHPbq0Y+eIAH
+         CQ3i0+rD/C3w07lnVr7R6j4pewBoBOFBESDaw20Atki/w+KwCZfEENSKd+2Ayn94EcOs
+         YXKQ/vQS0kqKL69468zCuJXz+6WJD3rvwu6pHIWlE+Z42PCznxCvtf95oX24EFdkapk0
+         P5nmEkwq+TtdQbkIgcCv8t9WniHk08o+Xp1ob03fv52aqMUoDxEBZ5/9bPfhRHKodter
+         S4H7nXaTodMCQn6MUD6YyGwYZQ2vBHQitzzEwrwEQgmk5HO0Ee8du1nIDX1Fyjq49UsC
+         Lpnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc;
+        bh=oxh1v8n68rd2gtYQE+xlAZpNrBCVeb/+23gMYHPvI/I=;
+        b=hWgMyHj5ATTINpzFe2B8ZJZmu8oahFZJkn4ToTjJugT8LzUwvCaU1kGBvGcRuUpxo5
+         CqGPJqq6Ghluzqf+8NErES7k7GTTdtWtHw0Har1U4cCxTrcbn4uVaESB6Rbf41AeWocN
+         8JYDciVe7QoC0f3/gVPHqsYlwSecjmbIFMZsPkg2qFURAoOHWJaYYU4D51eJUD3UfT6N
+         ohRG6aP8Wyj9Ih82iCipxwIG88dghf+nCfcS/pZQkbMWkfNBMZbBZdHWzlpOtJMe6IsI
+         mBwMIP01VHH0ggVVvCiWIeEtS2LgVR+q4aI9uCfAXACcIJ+MBnE0PBw0jngtQUezIAKd
+         quTQ==
+X-Gm-Message-State: ACgBeo3Ix1nV7o+NOiAM3+kgQdRdtBOOexkt2wnUFCv+rvzwK3kFwoXU
+        BEV7Y20wbqGskea3XoF4ZUw=
+X-Google-Smtp-Source: AA6agR7AObYidWUblTVm3p2GuKO3fkuODz/fhc/xcFfMvqrobZ/fI9SGtEIDCS+1UDCRdX7twBkv/Q==
+X-Received: by 2002:a17:906:fe46:b0:73d:939a:ec99 with SMTP id wz6-20020a170906fe4600b0073d939aec99mr18474ejb.169.1661362390010;
+        Wed, 24 Aug 2022 10:33:10 -0700 (PDT)
+Received: from localhost (78-131-17-114.pool.digikabel.hu. [78.131.17.114])
+        by smtp.gmail.com with ESMTPSA id kz3-20020a17090777c300b0073dafb227c0sm1388989ejc.161.2022.08.24.10.33.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Aug 2022 10:33:09 -0700 (PDT)
+Date:   Wed, 24 Aug 2022 19:33:07 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] promisor-remote: fix xcalloc() argument order
+Message-ID: <20220824173307.GF1735@szeder.dev>
+References: <20220822213408.662482-1-szeder.dev@gmail.com>
+ <20220823095733.58685-1-szeder.dev@gmail.com>
+ <xmqqwnax8wgy.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3E3ECDD6-23CC-11ED-8F91-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqwnax8wgy.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Aug 24, 2022 at 08:58:21AM -0700, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+> > Patch generated with:
+> >
+> >   make SPATCH_FLAGS=--recursive-includes contrib/coccinelle/xcalloc.cocci.patch
+> >
+> > Our default SPATCH_FLAGS ('--all-includes') doesn't catch this
+> > transformation by default, unless used in combination with a large-ish
+> > SPATCH_BATCH_SIZE which happens to put 'promisor-remote.c' with a file
+> > that includes 'repository.h' directly in the same batch.
+> 
+> Our default SPATCH_FLAGS is actually
+> 
+>     SPATCH_FLAGS = --all-includes --patch .
+> 
+> and I am wondering how "--patch ." part (or droppage thereof due to
+> overriding it from the command line) affects the outcome.
 
-> cc: Johannes Schindelin Johannes.Schindelin@gmx.de cc: Jeff Hostetler
-> git@jeffhostetler.com cc: Eric Sunshine sunshine@sunshineco.com cc: Tor=
-sten
-> B=C3=B6gershausen tboegi@web.de
->
-> Eric DeCosta (1):
->   fsmonitor: macOS: allow fsmonitor to run against network-mounted repo=
-s
->
-> edecosta (1):
->   Check working directory and Unix domain socket file for compatability
+'--patch .' is not part of SPATCH_FLAGS anymore, and for a good
+reason, see the recent 7b63ea5750 (Makefile: remove mandatory "spatch"
+arguments from SPATCH_FLAGS, 2022-07-05).
 
-Please describe why v3 exists (iow, what was wrong in v2 that v3
-improves) in the cover letter.  Especially when you send out two
-revisions in less than 12 hours, it gets disorienting at the
-receiving end.
-
-Thanks.
-
->  compat/fsmonitor/fsm-settings-darwin.c | 72 +++++++++++++++++++-------
->  fsmonitor-ipc.c                        | 40 ++++++++++++--
->  fsmonitor-ipc.h                        |  6 +++
->  fsmonitor-settings.c                   | 67 +++++++++++++++++++++++-
->  fsmonitor-settings.h                   |  4 ++
->  5 files changed, 164 insertions(+), 25 deletions(-)
->
->
-> base-commit: 795ea8776befc95ea2becd8020c7a284677b4161
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1326%=
-2Fedecosta-mw%2Ffsmonitor_macos-v3
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1326/ede=
-costa-mw/fsmonitor_macos-v3
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1326
->
-> Range-diff vs v2:
->
->  1:  40ce21e85c9 < -:  ----------- fsmonitor: option to allow fsmonitor=
- to run against network-mounted repos
->  2:  46b4efd96cc =3D 1:  cd16d8bb3d6 fsmonitor: macOS: allow fsmonitor =
-to run against network-mounted repos
->  3:  9b128a98149 =3D 2:  f977d140afa Check working directory and Unix d=
-omain socket file for compatability
->  4:  15c965801f8 < -:  ----------- Minor refactoring and simplification=
- of Windows settings checks
