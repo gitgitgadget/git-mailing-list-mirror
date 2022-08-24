@@ -2,63 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84C7AC3F6B0
-	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 20:00:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEDC5C3F6B0
+	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 21:00:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239116AbiHXT77 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 15:59:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52704 "EHLO
+        id S239717AbiHXVAO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 17:00:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237608AbiHXT74 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 15:59:56 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9A6640577
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 12:59:55 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id c13-20020a17090a4d0d00b001fb6921b42aso2590798pjg.2
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 12:59:55 -0700 (PDT)
+        with ESMTP id S230515AbiHXVAN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 17:00:13 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE126A4A4
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:00:12 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id t11-20020a17090a510b00b001fac77e9d1fso2857176pjh.5
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc;
-        bh=MBA7VqDRgsk0zUYgxCUl5dkGrOWgaNjlrcnu24QeLQI=;
-        b=ops9Ca5UV+C8frTW0QHykoh0KatGuv27V1tCI9ScZM398G8xfyUbHpMWkwz5GJk8id
-         CQ9Ez3ksjRxMrE8gdKygvlwFmhzoum3lnVX3pNnDp1i9fArdCNVXyjhhvyVsin1rZzBy
-         ocajbij36upr5d67X77jF5iGoNm3RPTiPtriRGlTXl9mvrtJyDcPeFJn/yNqQOZfhtE4
-         Mem7peLNZPxhVvL9t16y5F/x/+GQKXtZVMJyl/6o/agIgpwW9VHVqbKs6uWajZdxL50X
-         UATWnFRzvUBOSe0WKyhtb14yBdT7qTvyCD0uvwaSxvyMbPH7cwqkjGHfwZuUPYHR1D8+
-         pFpw==
+        bh=oODNe5pCFoj1KY8NCx/H14YPLSg8Qx1/kWlwlgOkIVo=;
+        b=dsqsUtCqk3eYwxPkthWA4VO0O8bypxM9oXZUVtInNAqhZYDluMwxeMu0e34zUvE/nz
+         qP7zS6IRGq0fwwcsIdkwn3bHg1ycJapg6x7aD2dNu584CakciJ/PEMqVr36fs+vLrPQk
+         NkeXB2vFf9phlsUWGIr9Jqg5veoJOK2AUdEQlM01lG/rA6zL/xBy35l1ZS4vJRkuEDD+
+         +jtvb+ihewFZTFBd7NzlkhW2l7S0FBokzkAYJQOtDQZAXmIvprPmx6s9+ah321axcPnE
+         yFap3MY3KNVK9CYkfoWcOuGd+rTDDiySCuaFAr14CaeLF9lzu46bSc1I8wUh0ZEesKHP
+         /Vjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc;
-        bh=MBA7VqDRgsk0zUYgxCUl5dkGrOWgaNjlrcnu24QeLQI=;
-        b=h3GeYcCajRDQnBiS241R1LQVeD9EnVk3YNMKCSbIharvD64RlEEG0Yiq3OsJ5ZdiNX
-         eMpNxt3dZ8hLkab9oLQG2EyJ4BH476YZBiCNsrhKu9HD6/YaF6TR0CWrXm6j83CjemQv
-         keC+Ba3En+iPlDvGlLlY8BCi2cJDpcqvZXzx+8+tN9kq/AT9VLrO3odBuwnjeKCRhH+X
-         YWg46s/BYOomuhsSpqiws89gYL3mnWXk1PuyKX6pdgiutQla5o3dxGax6l5ZKmlNBHLV
-         P5DjCtyqn9ph08X1u3/P+xh9KIeaxSWRl5R8Ks2IoYWoxC8/LW1rmVPXSdpN7rC41zQS
-         rHCg==
-X-Gm-Message-State: ACgBeo3o6s4BF7jV3eYuhWXvTfp67QVfWFXONeIJgDrst47lvaj+4j/Y
-        j359Xqh+3+F0YuaxEi0bwPM=
-X-Google-Smtp-Source: AA6agR4tUt5nToQ/6L/Fq1dR8r5Vcyif1/cmkV+QXNfqcsDTQqGr9A04z4Mbi+1RKjOLzlWDkldHWg==
-X-Received: by 2002:a17:902:6b84:b0:172:f7cc:175 with SMTP id p4-20020a1709026b8400b00172f7cc0175mr404130plk.158.1661371195386;
-        Wed, 24 Aug 2022 12:59:55 -0700 (PDT)
+        bh=oODNe5pCFoj1KY8NCx/H14YPLSg8Qx1/kWlwlgOkIVo=;
+        b=JiiwQEiYvMmPt7fnwSeX4Cqbzo79J2amf1rAV9GusZgxLveq0XvLbp6OS3/mCvRxa5
+         hYDp3CHL4ehyJNyg+Po/XTTSIGb5cX/G+Nls2P3OVUGYyRK7HxGXEtsh3ozPmBbnHzLp
+         DARcO3XWDf8qT3JCfZ59RanAHoVfyxdsYChfbhUNjgHvNlUQ8p8DXgOGtIg/liyGBuJS
+         96tQYrL+9Pl03M8C/nkaFFyh4ajAgw/ul4/WULR076YM2BEBH4OZ8Iady2mqeeYgOH5e
+         +HEh65IzzC66knJftLSkxHhjcHC1F7SGYqP4I6Hu6GPWG5pzo6PHdKli4eRMVYBAWqqc
+         c9HQ==
+X-Gm-Message-State: ACgBeo3llN/6tw6VIcXL3uHbIH2XI4UmbUno34nzw7tTbNZ6xw71P9bo
+        /cQUnGYk9koLHDXRqP3FdXM6ebRMwj4=
+X-Google-Smtp-Source: AA6agR4my0AdM+ckZD7hoN9b3HRu457rhKMcI2tBvGu53MR6Nh0mrYtFCdKUKsDo00mvzdW6LYCcCg==
+X-Received: by 2002:a17:902:cf0c:b0:172:a41b:63a8 with SMTP id i12-20020a170902cf0c00b00172a41b63a8mr712262plg.161.1661374812309;
+        Wed, 24 Aug 2022 14:00:12 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id h16-20020a635310000000b0041b5b929664sm11472933pgb.24.2022.08.24.12.59.54
+        by smtp.gmail.com with ESMTPSA id f17-20020a170902ce9100b0016c09a0ef87sm9384233plg.255.2022.08.24.14.00.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Aug 2022 12:59:54 -0700 (PDT)
+        Wed, 24 Aug 2022 14:00:11 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH] ci: update 'static-analysis' to Ubuntu 22.04
-References: <pull.1334.git.1661275691795.gitgitgadget@gmail.com>
-        <r49psprs-4s48-p6q9-o3q9-37nnr3oq301o@tzk.qr>
-Date:   Wed, 24 Aug 2022 12:59:54 -0700
-In-Reply-To: <r49psprs-4s48-p6q9-o3q9-37nnr3oq301o@tzk.qr> (Johannes
-        Schindelin's message of "Wed, 24 Aug 2022 16:40:18 +0200 (CEST)")
-Message-ID: <xmqq1qt576px.fsf@gitster.g>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] range-diff: optionally accept a pathspec
+References: <pull.1335.git.1661258122.gitgitgadget@gmail.com>
+        <064b147451b04051a413b532cd97ae764ba68027.1661258122.git.gitgitgadget@gmail.com>
+Date:   Wed, 24 Aug 2022 14:00:11 -0700
+In-Reply-To: <064b147451b04051a413b532cd97ae764ba68027.1661258122.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Tue, 23 Aug 2022
+        12:35:22 +0000")
+Message-ID: <xmqqh7215pd0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,28 +67,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> Hi Stolee,
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> On Tue, 23 Aug 2022, Derrick Stolee via GitGitGadget wrote:
+> The `git range-diff` command can be quite expensive, which is not a
+> surprise given that the underlying algorithm to match up pairs of
+> commits between the provided two commit ranges has a cubic runtime.
 >
->> From: Derrick Stolee <derrickstolee@github.com>
->>
->> GitHub Actions scheduled a brownout of Ubuntu 18.04, which canceled all
->> runs of the 'static-analysis' job in our CI runs. Update to 22.04 to
->> avoid this as the brownout later turns into a complete deprecation.
->>
->> The use of 18.04 was set in d051ed77ee6 (.github/workflows/main.yml: run
->> static-analysis on bionic, 2021-02-08) due to the lack of Coccinelle
->> being available on 20.04 (which continues today).
+> Therefore it makes sense to restrict the commit ranges as much as
+> possible, to reduce the amount of input to that O(N^3) algorithm.
 >
-> ACK!
+> In chatty repositories with wide trees, this is not necessarily
+> possible merely by choosing commit ranges wisely.
+>
+> Let's give users another option to restrict the commit ranges: by
+> providing a pathspec. That helps in repositories with wide trees because
+> it is likely that the user has a good idea which subset of the tree they
+> are actually interested in.
+>
+> Example:
+>
+> 	git range-diff upstream/main upstream/seen HEAD -- range-diff.c
+>
+> This shows commits that are either in the local branch or in `seen`, but
+> not in `main`, skipping all commits that do not touch `range-diff.c`.
+>
+> Note: Since we piggy-back the pathspecs onto the `other_arg` mechanism
+> that was introduced to be able to pass through the `--notes` option to
+> the revision machinery, we must now ensure that the `other_arg` array is
+> appended at the end (the revision range must come before the pathspecs,
+> if any).
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 
-Yup, this is probably a good move.  We tend to stay away from
-bleeding edge and instead pick a representative one that is likely
-to be with our real users, but 22.04 by no means is one.
+It is excellent that this now takes pathspec to sparsify the
+history.
 
-I guess we would want to do this even down to 'maint'?
+The implementation looks, eh, a bit dirty with obvious repetitions
+in the "..." case and two-ranges cases.  Three-arg cases sort-of
+looks different but that is because the original one does not even
+bother to ensure argv[0] and argv[1] are objects, while the new one
+does, so they are essentially doing the same things.
 
-Thanks, both.
+> diff --git a/Documentation/git-range-diff.txt b/Documentation/git-range-diff.txt
+> index fe350d7f405..0b393715d70 100644
+> --- a/Documentation/git-range-diff.txt
+> +++ b/Documentation/git-range-diff.txt
+> @@ -12,6 +12,7 @@ SYNOPSIS
+>  	[--no-dual-color] [--creation-factor=<factor>]
+>  	[--left-only | --right-only]
+>  	( <range1> <range2> | <rev1>...<rev2> | <base> <rev1> <rev2> )
+> +	[[--] <path>...]
+
+OK.
