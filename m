@@ -2,165 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 299E1C3F6B0
-	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 23:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B18DAC3F6B0
+	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 23:43:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230448AbiHXXEG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 19:04:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46192 "EHLO
+        id S230102AbiHXXnN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 19:43:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbiHXXEF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 19:04:05 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A33275482
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 16:04:04 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id e11-20020a17090a630b00b001f8b2deb88dso1747376pjj.1
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 16:04:04 -0700 (PDT)
+        with ESMTP id S229763AbiHXXnM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 19:43:12 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A655AC56
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 16:43:11 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id s206so16385548pgs.3
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 16:43:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:references
-         :mime-version:message-id:in-reply-to:date:from:to:cc;
-        bh=3YIXfv2n83dqQIauLzHqlrJguqvrAmLzbui1MmXyZkY=;
-        b=lqCqqSSYlYM66eDRxgucevKP5JBFfPBPE4HGm4UGlbUwbOcnJ9Jd1GPQXYMcD2Ujda
-         Ei9lZAWlUgAYPjAg7InCu2Pr1ZE4UrGmK2cmI4eO8+7Y6xS+fHAAa1+tNOUcoQjsZ+ON
-         7+X8fCiZ7HAWH8gUG3SqrfeFP/sGliR5RUPPb4gN4SxxlyWaJKBv7Pya3FCBAwCAQUzx
-         T4Ly8B5vqw/iRzz8f3MMiHOO1uu8qsqLRPhdtEnsgXhRqYszc4eLqiFHdR865NdPL4Mx
-         wNLF6nn2BqCmYiuAQloVtopwVVkzt+WwtWMyvpR9+2G3LuIg3J10eeOYOONJEaDRVXyw
-         eT6A==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc;
+        bh=6rm6lUTHJ/dT9KIXHlY7B5k8FO8dfYaFT3/ESMl2zN8=;
+        b=FD4KWHjdNg5jDgoYi0CO/9UeDk8V5ge9+SKMxvrta1efGUYDRoRasb7d5Ffwk9OUMp
+         gqWeZFJvvArO9dsIb37fVejeVlwVrMiThVP6RlxvOIDxj/WdQrY1zhQApC9A/zTIrMf2
+         hnT2uWKFLFJHVzQiSMBYNAPrjt+eWy2TfjI2PYnlEzVBjIsxshpeLQ0I0JHBKC7uW1qA
+         wcvcFiG/iifB9avbyaMYUofl571NJi1m/4H5FsaQ0M1GiiG26v00z8nZUMRyYdx3BVGH
+         F4aBPeMOj4QWC4gQTXnzFo7DkuVIKUPelkPb38vU4GUo3CzPhEEtaBveGmhcdJTAF8KG
+         PU4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:references
-         :mime-version:message-id:in-reply-to:date:x-gm-message-state:from:to
-         :cc;
-        bh=3YIXfv2n83dqQIauLzHqlrJguqvrAmLzbui1MmXyZkY=;
-        b=prMFTW2DorkLJ6kv5/steVLK1IX09mapt0ezPqm/YmXDdfIXupCazn6yTu/LrBoh7h
-         kN17rQzFlAgDLkdEtCJRN2npiLXxLgzv2UfkhLVZPPBC4Y5J6W5JmCdzKJJq3RBIkAM0
-         bM0dnaeAKKj5eFqv/R3QWM37Iled5RQ1HBvtSn1TzR/N6WH//ms8xJytBG3akPYA2w4Z
-         dKqJy2D/V0TSNWVEZm+oZ7jDv6WnH5dpvkKzl0oJXNzu04FIy6iCN/EUDbBc+bzuzNPu
-         KZRxPQEDgu5qKjpNhGcD1NHGxGZs6vmI0KNgZGDR0pUO809OPR4vmWTSIhJb1wEfpKt7
-         +f6A==
-X-Gm-Message-State: ACgBeo2K+Jee76jKsZF5DBgtFfTzUtPYI6In3rOnvx5PdGXSpY2Vi4BO
-        pT41A7WbhqL4trkOMpf4ZoTH7k9MUAJDfQ==
-X-Google-Smtp-Source: AA6agR7lIEm5H0n5U2o/BC7siJBayycbTGXwMxWJhIFw6JQBBMut0L27alvolPTmLoUDQOW9/ucVA6Y1ZI6QBg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:f542:b0:173:a8a:d7bf with SMTP id
- h2-20020a170902f54200b001730a8ad7bfmr979028plf.134.1661382244008; Wed, 24 Aug
- 2022 16:04:04 -0700 (PDT)
-Date:   Wed, 24 Aug 2022 16:03:55 -0700
-In-Reply-To: <patch-v6-16.17-a99a7736fab-20220821T130415Z-avarab@gmail.com>
-Message-Id: <kl6l35dl452c.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <cover-v5-00.17-00000000000-20220802T155002Z-avarab@gmail.com>
- <cover-v6-00.17-00000000000-20220821T130415Z-avarab@gmail.com> <patch-v6-16.17-a99a7736fab-20220821T130415Z-avarab@gmail.com>
-Subject: Re: [PATCH v6 16/17] submodule--helper: free rest of "displaypath" in
- "struct update_data"
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Prathamesh Chavan <pc44800@gmail.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc;
+        bh=6rm6lUTHJ/dT9KIXHlY7B5k8FO8dfYaFT3/ESMl2zN8=;
+        b=2MmSnKD04g1Dk6Xxr5NClKQBVmuGs7gQBqaUOKLg1vkPc9VJM29FkU8T4dfjuvyqJp
+         MPIsiN4WgZ8NQFSsPJ6a2CRwWPP6L2/vhLvawCIfZig835jC/1qEdsYW/xz5nnO235Y+
+         ksg8imJc4Y52PVh5N9iX6VYFipsU4nefqmNsDw0Q9ob9YKAw2V/rzBpv0MqTZXq4jwfr
+         0sojZTOeVRw4lGsBm0Q4W4zHIQl7Z1DgVgn2Ynj26wEcyfZYgEoFgya04fmotMbrM/yz
+         Kt3OTIoRrcO+BD0ocjrVKKpVuPm7p4GabX9zksnonSyZVszVR8BPCM7TRtt7MXB+RMWO
+         Z7CA==
+X-Gm-Message-State: ACgBeo0fEUeqygo8CngFS3SnZ4jFRd1K2ofSlXUY5NEul93kGwN5XrBi
+        NpPC7ILg4DlRg6bd6DObG/0=
+X-Google-Smtp-Source: AA6agR772pW6R/X5bcjCHQMfl1c4CO2Lzxoug+AIbHjJT88r+JkCaUiThr94j/bwN1RJTi51XV6nCw==
+X-Received: by 2002:a63:cd55:0:b0:42a:7649:77c7 with SMTP id a21-20020a63cd55000000b0042a764977c7mr991384pgj.149.1661384591267;
+        Wed, 24 Aug 2022 16:43:11 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id b16-20020a170903229000b001729fa08b8esm3799396plh.288.2022.08.24.16.43.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Aug 2022 16:43:10 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH] ci: update 'static-analysis' to Ubuntu 22.04
+References: <pull.1334.git.1661275691795.gitgitgadget@gmail.com>
+Date:   Wed, 24 Aug 2022 16:43:10 -0700
+In-Reply-To: <pull.1334.git.1661275691795.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Tue, 23 Aug 2022 17:28:11
+        +0000")
+Message-ID: <xmqqwnax438x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Fix a leak in code added in c51f8f94e5b (submodule--helper: run update
-> procedures from C, 2021-08-24), we clobber the "displaypath" member of
-> the passed-in "struct update_data" both so that die() messages in this
-> update_submodule() function itself can use it, and for the
-> run_update_procedure() called within this function.
+> From: Derrick Stolee <derrickstolee@github.com>
 >
-> To make managing that clobbering easier let's wrap the
-> update_submodule() in a new update_submodule_outer() function, which
-> will do the clobbering and free(to_free) dance for us.
+> GitHub Actions scheduled a brownout of Ubuntu 18.04, which canceled all
+> runs of the 'static-analysis' job in our CI runs. Update to 22.04 to
+> avoid this as the brownout later turns into a complete deprecation.
+>
+> The use of 18.04 was set in d051ed77ee6 (.github/workflows/main.yml: run
+> static-analysis on bionic, 2021-02-08) due to the lack of Coccinelle
+> being available on 20.04 (which continues today).
+>
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>     ci: update 'static-analysis' to Ubuntu 20.04
+>     
+>     I noticed this while preparing my bundle URIs series. See an example
+>     cancellation at [1]
+>     
+>     [1]
+>     https://github.com/gitgitgadget/git/runs/7954913465?check_suite_focus=true
+>     
+>     I initially asked about this [2]. Thanks to Matthias Aßhauer for
+>     pointing out that 22.04 has Coccinelle available [3].
 
-The only feedback I had on v5 was on this patch
-(https://lore.kernel.org/git/kl6l5yj7ubpt.fsf@chooglen-macbookpro.roam.corp=
-.google.com)
-where I said that update_submodule_outer() seemed like overkill and that
-I'd test an alternative.
+Thanks, it is already paying its dividend, it seems.
 
-I tested this approach
+We probably need to fix or revert/remove rules we have in
+unused.cocci that makes bogus "suggestion".
 
-  Assign and FREE_AND_NULL() update_data->displaypath [in
-  update_submodules(), but outside of update_submodule()] since this
-  is the only caller and it already does some prep work in this hunk.
+  https://github.com/git/git/runs/8005321972?check_suite_focus=true
 
-by reverting this patch and applying this one
-
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 3557665261..c932c857dd 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2486,9 +2486,6 @@ static int update_submodule(struct update_data *updat=
-e_data)
- 	if (ret)
- 		return ret;
-=20
--	update_data->displaypath =3D get_submodule_displaypath(
--		update_data->sm_path, update_data->prefix);
--
- 	ret =3D determine_submodule_update_strategy(the_repository,
- 						  update_data->just_cloned,
- 						  update_data->sm_path,
-@@ -2593,8 +2590,11 @@ static int update_submodules(struct update_data *upd=
-ate_data)
- 		oidcpy(&update_data->oid, &ucd.oid);
- 		update_data->just_cloned =3D ucd.just_cloned;
- 		update_data->sm_path =3D ucd.sub->path;
-+		update_data->displaypath =3D get_submodule_displaypath(
-+			update_data->sm_path, update_data->prefix);
-=20
- 		code =3D update_submodule(update_data);
-+		FREE_AND_NULL(update_data->displaypath);
- 		if (!code)
- 			continue;
- 		ret =3D code;
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
-
-Then I tested the update_submodule_outer() version and the
-FREE_AND_NULL() version by marking t7406-submodule-update.sh as
-TEST_PASSES_SANITIZE_LEAK=3Dtrue and diffing the test output. I didn't see
-any meaningful difference in the test output, which should mean that
-both versions fix all of the leaks in "git submodule update" that our
-test suite can catch.
-
-For good measure, I also tested a version of my code without the
-FREE_AND_NULL() call (albeit on v5, not v6), and I spotted the expected
-memory leak:
-
-  Direct leak of 10 byte(s) in 1 object(s) allocated from:
-      #0 0x000000000000 in __interceptor_malloc ../../../../src/libsanitize=
-r/lsan/lsan_interceptors.cpp:54
-      #1 0x000000000000 in strdup (/lib/x86_64-linux-gnu/libc.so.6+0x000000=
-000000)
-      #2 0x000000000000 in xstrdup wrapper.c:39
-      #3 0x000000000000 in get_submodule_displaypath builtin/submodule--hel=
-per.c:119
-      #4 0x000000000000 in update_submodules builtin/submodule--helper.c:25=
-85
-      #5 0x000000000000 in module_update builtin/submodule--helper.c:2716
-      #6 0x000000000000 in run_builtin git.c:466
-      #7 0x000000000000 in handle_builtin git.c:720
-      #8 0x000000000000 in run_argv git.c:787
-      #9 0x000000000000 in cmd_main git.c:920
-      #10 0x000000000000 in main common-main.c:56
-      #11 0x000000000000 in __libc_start_main (/lib/x86_64-linux-gnu/libc.s=
-o.6+0x000000000000)
-      #12 0x000000000000 in _start (git+0x000000000000)
-
-The CI runs are at:=20
-- FREE_AND_NULL(): https://github.com/chooglen/git/actions/runs/2920894120
-- update_submodule_outer(): https://github.com/chooglen/git/actions/runs/29=
-15661611
-- control study: https://github.com/chooglen/git/actions/runs/2915671776
-
-If FREE_AND_NULL() really plugs all of the leaks, I would strongly
-prefer using that (possibly in a "goto cleanup"), over introducing
-update_submodule_outer().
