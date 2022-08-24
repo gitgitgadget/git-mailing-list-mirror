@@ -2,161 +2,313 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CD34C00140
-	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 18:13:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C89CEC32796
+	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 18:20:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240494AbiHXSNo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 14:13:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45804 "EHLO
+        id S240495AbiHXSUd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 14:20:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240483AbiHXSNl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 14:13:41 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 123F76D9E5
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 11:13:40 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id c13-20020a17090a4d0d00b001fb6921b42aso2311174pjg.2
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 11:13:40 -0700 (PDT)
+        with ESMTP id S239596AbiHXSUc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 14:20:32 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 032B43ED4E
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 11:20:31 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id c16-20020a17090aa61000b001fb3286d9f7so3881409pjq.1
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 11:20:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc;
-        bh=I9I6DgsClOZCEeoT8KsCUPcKOF4wFvm9oq5R4rFWgnk=;
-        b=prNU/wRwc0fmYPTnk0Z0k6dQNVB4qnfDSiy2+7YkV7dz9psAB/LTvSw6NqrpXeswtb
-         0YRB3zKkV7lTmWbhp2xI9BA90k5T02fTi5gK78OBIDwj7ROOuGpd09Hti1odMm7/OnR4
-         MpgnfIbd+9k5wzPgNKySeYzv6FwK52YTa3AUdOVuINCKzDUOJVq0BwogdmBsY0mgwuhv
-         OGB2VpNDLHnIpQtU+qGKDUMF0qStekms8i89tuG4VyIlgkiwczPzpMCdFvC8KGgHcn+T
-         U3g17F3GTN68DRw9x2bYWpORbV4A6paSwqUMS6sfqY5FAj5uAxYtPHX/HMgExt66ciA8
-         hjgw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=DoApTJKUCjWMRRpIKeZl5kdXoh3tAzBJBOOMdi9MPhY=;
+        b=Rh5OBf42vvHO6Qc5k93J1UDQgrSkx9KYBw6ukgxQPrwhQS2s2J0T7ECJIc7fhMGgmn
+         AwvL8Bzr5o5bg1N32QxebSgX6xMI9NSWHyyhq6Rn3699uYYojUvjGWvNgRIzJ/IY4mtc
+         bX5klXjK8gpon4RpaQ4LHI9aDPnk440RM+2bmqU0JWzj5pZqa3nnH8vHOskBAkQp4nhV
+         hqXEbS+7AxPDGoD2Amf3WVwCO5XTEUiqhW1qnmqedfw1g118UxZbN/0FdwjatIjgFMsL
+         NIQbzLlJ6jmAsngyTH6UO+ZEn7ByWoo7OdpN6PROyfv9avjovNmju+3dyB1jbMoK4GaW
+         WJ1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc;
-        bh=I9I6DgsClOZCEeoT8KsCUPcKOF4wFvm9oq5R4rFWgnk=;
-        b=zWBDtAoC/tW8sWZe4oICyYKUIp392JhkSdq7aMnhEq4BTtVRdY4qH+62YYg1c6LWKz
-         Se+L/04iSuER1fGGfeQ/KuI7hcvZJHYRBI2csjLjcQOPQpfEO6b1DJUflfrlJqABkdYP
-         3o+XObBDzRmzCWGMqY//fFXhwJ7Wxly1HuQFVQdoU7NYlR76aS0nq3yQKtpqV7mA6GBB
-         Y7iCIRsv8Z1DuHjLehumnlOFrlQfvyvj8gXM1WGshBcQQxqoEe7waJ6bvlTy3OyNhgML
-         VWbqDzgqmWXh3MnJLkjWMPn2xoSkjloKNqlhE8K88+fuOr+e+8qnXPGfptM7ePvqpprs
-         m1Ng==
-X-Gm-Message-State: ACgBeo1dn9p5uAcs4ymQbfjJHs/GwgJc29gdCMKoFRGb/7ga5y1XR0h1
-        Ak+Lv4WtIR/REOP1mwQtU4k=
-X-Google-Smtp-Source: AA6agR5oG6gaEvZVMpzA8kMa7IJATJqHeBRN/e0x+4MTZRoYOIPxUFiOS5MG5BGPpU0IZ2aWQihl1w==
-X-Received: by 2002:a17:90b:4d12:b0:1f7:a6d1:24c1 with SMTP id mw18-20020a17090b4d1200b001f7a6d124c1mr367050pjb.15.1661364819336;
-        Wed, 24 Aug 2022 11:13:39 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id g18-20020aa796b2000000b0053725e331a1sm2563900pfk.82.2022.08.24.11.13.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Aug 2022 11:13:38 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Maxwell Bernstein <tekk.nolagi@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Documentation: clarify whitespace rules for trailers
-In-Reply-To: <20220823140630.159718-1-christian.couder@gmail.com> (Christian
-        Couder's message of "Tue, 23 Aug 2022 16:06:30 +0200")
-References: <CAP8UFD2kMXHxvg1tKVNLhY0Gweq2YrD7+tHmZXKwguYzRQ1Qpg@mail.gmail.com>
-        <20220823140630.159718-1-christian.couder@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-Date:   Wed, 24 Aug 2022 11:13:38 -0700
-Message-ID: <xmqq4jy18q7h.fsf@gitster.g>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=DoApTJKUCjWMRRpIKeZl5kdXoh3tAzBJBOOMdi9MPhY=;
+        b=Z7Lyo6dTxiFNuPcNIEkvD2ucRQRfaUTaiyHJKHmB6t3jWEXq4pH8FnRaDoslnbckwf
+         ETf4qv/YlxJr4vc1qcIgKicswz2ezv2IZcS3qY2yZdA+jlBnhjhZG27bnDDUSPC696+B
+         OOAtbJ52887bjCFUcf468wdIfhVGggeG/hDZ8oTmHr9ZlHCiS87afoecL0MZEesMQc8G
+         6FftHQOB2sNIDBwoF6s0bPqkNR8dwKrVZavknXTIG1A+rFt1JdBQfjGoxi2dCVqzh+W3
+         LyVvqfPj9na7iYUPrVMljm+42MM5SI/An3kByfLUDnHCmEOn4cmqwAe2LrKomZW6w6l4
+         VCnQ==
+X-Gm-Message-State: ACgBeo1xQawrrcmQH5Njpb7kpD/2MjJxSqiieZxBX2mNyYzjxxTU0hWx
+        dOz6xGXi+oIu/NzMI9PJiF3CIw0uWOg=
+X-Google-Smtp-Source: AA6agR7Ih66cFX0Gx3MdIJSGObYDxgdAvidrb8pDg7Z9wEKJcYaejLhHPqdZyNhu2J42zxR5TIQNFA==
+X-Received: by 2002:a17:90b:1e0a:b0:1f5:6554:d502 with SMTP id pg10-20020a17090b1e0a00b001f56554d502mr375574pjb.101.1661365230334;
+        Wed, 24 Aug 2022 11:20:30 -0700 (PDT)
+Received: from ?IPV6:2600:380:7721:3451:2462:b29e:17b0:e7cc? ([2600:380:7721:3451:2462:b29e:17b0:e7cc])
+        by smtp.gmail.com with ESMTPSA id y3-20020aa793c3000000b00536562f4c03sm9631993pff.146.2022.08.24.11.20.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Aug 2022 11:20:29 -0700 (PDT)
+Message-ID: <74ff1a97-fa98-7280-9d84-35dafaf3cb3d@gmail.com>
+Date:   Thu, 25 Aug 2022 02:20:27 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v1 1/2] builtin/grep.c: add --sparse option
+Content-Language: en-US
+To:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
+Cc:     vdye@github.com
+References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+ <20220817075633.217934-2-shaoxuan.yuan02@gmail.com>
+ <80f24382-1188-d450-d1e2-42f68c08e60b@github.com>
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+In-Reply-To: <80f24382-1188-d450-d1e2-42f68c08e60b@github.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hi reviewrs,
 
-> Commit e4319562bc (trailer: be stricter in parsing separators, 2016-11-02)
-> restricted whitespaces allowed by `git interpret-trailers` in the "token"
-> part of the trailers it reads. This commit didn't update the related
-> documentation in Documentation/git-interpret-trailers.txt though.
+I came back from busying with relocation :)
 
-OK.
+On 8/17/2022 10:12 PM, Derrick Stolee wrote:
+ > On 8/17/2022 3:56 AM, Shaoxuan Yuan wrote:
+ >> Add a --sparse option to `git-grep`. This option is mainly used to:
+ >>
+ >> If searching in the index (using --cached):
+ >>
+ >> With --sparse, proceed the action when the current cache_entry is
+ >
+ > This phrasing is awkward. It might be better to reframe to describe the
+ > _why_ before the _what_
+ >
+ >   When the '--cached' option is used with the 'git grep' command, the
+ >   search is limited to the blobs found in the index, not in the worktree.
+ >   If the user has enabled sparse-checkout, this might present more 
+results
+ >   than they would like, since the files outside of the 
+sparse-checkout are
+ >   unlikely to be important to them.
+ >
+ >   Change the default behavior of 'git grep' to focus on the files within
+ >   the sparse-checkout definition. To enable the previous behavior, add a
+ >   '--sparse' option to 'git grep' that triggers the old behavior that
+ >   inspects paths outside of the sparse-checkout definition when paired
+ >   with the '--cached' option.
 
-> Also commit 60ef86a162 (trailer: support values folded to multiple lines,
-> 2016-10-21) updated the documentation, but didn't make it clear how many
-> whitespace characters are allowed at the beginning of new lines in folded
-> values.
->
-> Let's fix both of these issues by rewriting the paragraph describing
-> what whitespaces are allowed by `git interpret-trailers` in the trailers
-> it reads.
-> ---
->  Documentation/git-interpret-trailers.txt | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+Good suggestion!
 
-Missing sign-off.
+ > Or something like that. The documentation updates will also help clarify
+ > what happens when '--cached' is not included. I assume '--sparse' is
+ > ignored, but perhaps it _could_ allow looking at the cached files outside
+ > the sparse-checkout definition, this could make the simpler invocation of
+ > 'git grep --sparse <pattern>' be the way that users can search after 
+their
+ > attempt to search the worktree failed.
 
+This simpler version was in my earlier local branch, but later I
+decided not to go with it. I found the difference between these two
+approaches, is that "--cached --sparse" is more correct in terms of
+how Git actually works (because sparsity is a concept in the index);
+and "--sparse" is more comfortable for the end user.
 
-> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-> index 956a01d184..0e125d795b 100644
-> --- a/Documentation/git-interpret-trailers.txt
-> +++ b/Documentation/git-interpret-trailers.txt
-> @@ -60,10 +60,12 @@ non-whitespace lines before a line that starts with '---' (followed by a
->  space or the end of the line). Such three minus signs start the patch
->  part of the message. See also `--no-divider` below.
->  
-> -When reading trailers, there can be whitespaces after the
-> -token, the separator and the value. There can also be whitespaces
-> -inside the token and the value. The value may be split over multiple lines with
-> -each subsequent line starting with whitespace, like the "folding" in RFC 822.
-> +When reading trailers, there can be no whitespace inside the token,
-> +and only one regular space or tab character between the token and the
-> +separator.
+I found the former one better here, because it is more self-explanatory,
+and thus more info for the user, i.e. "you are now looking at the
+index, and Git will also consider files outside of sparse definition."
 
-That may have been the intent, but does it match the behaviour?
+To be honest, I don't know which one is "better", but I think I'll
+keep the current implementation unless something more convincing shows
+up later.
 
-        static ssize_t find_separator(const char *line, const char *separators)
-        {
-                int whitespace_found = 0;
-                const char *c;
-                for (c = line; *c; c++) {
-                        if (strchr(separators, *c))
-                                return c - line;
-                        if (!whitespace_found && (isalnum(*c) || *c == '-'))
-                                continue;
-                        if (c != line && (*c == ' ' || *c == '\t')) {
-                                whitespace_found = 1;
-                                continue;
-                        }
-                        break;
-                }
-                return -1;
-        }
+ >> marked with SKIP_WORKTREE bit (the default is to skip this kind of
+ >> entry). Before this patch, --cached itself can realize this action.
+ >> Adding --sparse here grants the user finer control over sparse
+ >> entries. If the user only wants to peak into the index without
+ >
+ > s/peak/peek/
+ >
+ >> caring about sparse entries, --cached should suffice; if the user
+ >> wants to peak into the index _and_ cares about sparse entries,
+ >> combining --sparse with --cached can address this need.
+ >>
+ >> Suggested-by: Victoria Dye <vdye@github.com>
+ >> Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+ >> ---
+ >>  builtin/grep.c                  | 10 +++++++++-
+ >>  t/t7817-grep-sparse-checkout.sh | 12 ++++++------
+ >>  2 files changed, 15 insertions(+), 7 deletions(-)
+ >
+ > You mentioned in Slack that you missed the documentation of the --sparse
+ > option. Just pointing it out here so we don't forget.
 
-When parsing "X  :", first we encounter 'X', we haven't seen
-whitespace, 'X' passes isalnum(), and we continue.  Then we
-encounter ' ', we haven't seen whitespace but it is neither isalnum
-or dash, so we go on without hitting the first continue.  We are not
-at the beginning of the line, we are seeing a space, so we remember
-the fact that we saw whitespace and continue.  Next we see another ' ',
-we do not hit the first continue, we are not at the beginning of the
-line, and we are looking at ' ', so we again continue.  Finally, we see
-':' that is a separator and we return happily.
+Will do.
 
-The code seems to be allowing zero or more space/tab before the
-separator.
+ >>
+ >> diff --git a/builtin/grep.c b/builtin/grep.c
+ >> index e6bcdf860c..61402e8084 100644
+ >> --- a/builtin/grep.c
+ >> +++ b/builtin/grep.c
+ >> @@ -96,6 +96,8 @@ static pthread_cond_t cond_result;
+ >>
+ >>  static int skip_first_line;
+ >>
+ >> +static int grep_sparse = 0;
+ >> +
+ >
+ > I initially thought it might be good to not define an additional global,
+ > but there are many defined in this file outside of the context and they
+ > are spread out with extra whitespace like this.
+ >
+ >>  static void add_work(struct grep_opt *opt, struct grep_source *gs)
+ >>  {
+ >>      if (opt->binary != GREP_BINARY_TEXT)
+ >> @@ -525,7 +527,11 @@ static int grep_cache(struct grep_opt *opt,
+ >>      for (nr = 0; nr < repo->index->cache_nr; nr++) {
+ >>          const struct cache_entry *ce = repo->index->cache[nr];
+ >>
+ >> -        if (!cached && ce_skip_worktree(ce))
+ >
+ > This logic would skip files marked with SKIP_WORKTREE _unless_ --cached
+ > was provided.
+ >
+ >> +        /*
+ >> +         * If ce is a SKIP_WORKTREE entry, look into it when both
+ >> +         * --sparse and --cached are given.
+ >> +         */
+ >> +        if (!(grep_sparse && cached) && ce_skip_worktree(ce))
+ >>              continue;
+ >
+ > The logic of this if statement is backwards from the comment because a
+ > true statement means "skip the entry" _not_ "look into it".
+ >
+ >     /*
+ >      * Skip entries with SKIP_WORKTREE unless both --sparse and
+ >      * --cached are given.
+ >      */
 
-Stepping back and reading the original again, I think the original
-was almost correct.  There can be whitespaces after the token.
-There can be whitespaces after the separator.  There can be
-whitespaces after the value.  The only thing it got wrong was that
-it pretended to allow whitespaces inside the token, while in reality
-we allow whitespaces inside the value but not inside the token.
+Got it.
 
-So, a minimum fix would be to s/token and the value/value/; I do not
-mind a more extensive rewriting if it improves clarity and correctness,
-but "only one between the token and the separator" is not quite correct.
-Besides, that phrasing gives a false impression that the whitespace is
-mandatory, but you wanted to express "zero or one" optionality, no?
+ > But again, we might want to consider this alternative:
+ >
+ >     /*
+ >      * Skip entries with SKIP_WORKTREE unless --sparse is given.
+ >      */
+ >     if (!grep_sparse && ce_skip_worktree(ce))
+ >         continue;
+ >
+ > This will require further changes below, specifically this bit:
+ >
+ >             /*
+ >              * If CE_VALID is on, we assume worktree file and its
+ >              * cache entry are identical, even if worktree file has
+ >              * been modified, so use cache version instead
+ >              */
+ >             if (cached || (ce->ce_flags & CE_VALID)) {
+ >                 if (ce_stage(ce) || ce_intent_to_add(ce))
+ >                     continue;
+ >                 hit |= grep_oid(opt, &ce->oid, name.buf,
+ >                          0, name.buf);
+ >             } else {
+ >
+ > We need to activate this grep_oid() call also when ce_skip_worktree(c) is
+ > true. That is, if we want 'git grep --sparse' to extend the search beyond
+ > the worktree and into the sparse entries.
+ >
+ >>
+ >>          strbuf_setlen(&name, name_base_len);
+ >> @@ -963,6 +969,8 @@ int cmd_grep(int argc, const char **argv, const 
+char *prefix)
+ >>                 PARSE_OPT_NOCOMPLETE),
+ >>          OPT_INTEGER('m', "max-count", &opt.max_count,
+ >>              N_("maximum number of results per file")),
+ >> +        OPT_BOOL(0, "sparse", &grep_sparse,
+ >> +             N_("search sparse contents and expand sparse index")),
+ >
+ > This "and expand sparse index" is an internal implementation detail, 
+not a
+ > heplful item for the help text. Instead, perhaps:
+ >
+ >     "search the contents of files outside the sparse-checkout definition"
 
-> There can be whitespaces before, inside or after the
-> +value. The value may be split over multiple lines with each subsequent
-> +line starting with at least one whitespace, like the "folding" in RFC
-> +822.
->  
->  Note that 'trailers' do not follow and are not intended to follow many
->  rules for RFC 822 headers. For example they do not follow
+Sounds good!
+
+ > (Also, while the sparse index is being expanded right now, I would expect
+ > to not expand the sparse index by the end of the series.)
+ >
+ >> -test_expect_success 'grep --cached searches entries with the 
+SKIP_WORKTREE bit' '
+ >> +test_expect_success 'grep --cached and --sparse searches entries 
+with the SKIP_WORKTREE bit' '
+ >>      cat >expect <<-EOF &&
+ >>      a:text
+ >>      b:text
+ >>      dir/c:text
+ >>      EOF
+ >> -    git grep --cached "text" >actual &&
+ >> +    git grep --cached --sparse "text" >actual &&
+ >>      test_cmp expect actual
+ >>  '
+ >
+ > Please add a test that demonstrates the change of behavior when only 
+--cached
+ > is provided, not --sparse.
+
+Sure!
+
+ > (If you take my suggestion to allow 'git grep --sparse' to do something
+ > different, then also add a test for that case.)
+ >
+ >>
+ >> @@ -143,7 +143,7 @@ test_expect_success 'grep --recurse-submodules 
+honors sparse checkout in submodu
+ >>      test_cmp expect actual
+ >>  '
+ >>
+ >> -test_expect_success 'grep --recurse-submodules --cached searches 
+entries with the SKIP_WORKTREE bit' '
+ >> +test_expect_success 'grep --recurse-submodules --cached and 
+--sparse searches entries with the SKIP_WORKTREE bit' '
+ >>      cat >expect <<-EOF &&
+ >>      a:text
+ >>      b:text
+ >> @@ -152,7 +152,7 @@ test_expect_success 'grep --recurse-submodules 
+--cached searches entries with th
+ >>      sub/B/b:text
+ >>      sub2/a:text
+ >>      EOF
+ >> -    git grep --recurse-submodules --cached "text" >actual &&
+ >> +    git grep --recurse-submodules --cached --sparse "text" >actual &&
+ >>      test_cmp expect actual
+ >>  '
+ >> @@ -166,7 +166,7 @@ test_expect_success 'working tree grep does not 
+search the index with CE_VALID a
+ >>      test_cmp expect actual
+ >>  '
+ >>
+ >> -test_expect_success 'grep --cached searches index entries with both 
+CE_VALID and SKIP_WORKTREE' '
+ >> +test_expect_success 'grep --cached and --sparse searches index 
+entries with both CE_VALID and SKIP_WORKTREE' '
+ >>      cat >expect <<-EOF &&
+ >>      a:text
+ >>      b:text
+ >> @@ -174,7 +174,7 @@ test_expect_success 'grep --cached searches 
+index entries with both CE_VALID and
+ >>      EOF
+ >>      test_when_finished "git update-index --no-assume-unchanged b" &&
+ >>      git update-index --assume-unchanged b &&
+ >> -    git grep --cached text >actual &&
+ >> +    git grep --cached --sparse text >actual &&
+ >>      test_cmp expect actual
+ >>  '
+ >
+ > Same with these two tests. Add additional commands that show the 
+change of
+ > behavior when only using '--cached'.
+
+--
+Thanks,
+Shaoxuan
+
