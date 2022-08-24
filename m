@@ -2,99 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11F65C04AA5
-	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 21:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A20AC04AA5
+	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 21:21:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240415AbiHXVOA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 17:14:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50416 "EHLO
+        id S238348AbiHXVV5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 17:21:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236881AbiHXVN7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 17:13:59 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D8A77B2BD
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:13:58 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id r22so16109074pgm.5
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:13:58 -0700 (PDT)
+        with ESMTP id S232229AbiHXVV4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 17:21:56 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDEAE165B7
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:21:54 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id bs25so22294667wrb.2
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:21:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc;
-        bh=qY7Zk6FBgnWWL8wW+746HAt4xhP37vyR83D2cGbkxKY=;
-        b=Dnxe5T7bpWPD/Yr/Qr6gPcWZsZc2n/s5WLASnn9Fiyw9IAAG9EklmajdkfBblHh33R
-         tU/Q66Q/YP7wkegjHVGainkL7bhQ0Sg9aGD8OD3jwoLtL0OqYmEylUxzdFW2ciOW5LpW
-         9Z6D1g9lh8FjP/pjIe+j7AUzTfkh3nKbbF0HwveIxnPa+AZyyAkfZ3bkj4QjsqDRyYz/
-         nYh1OCzO91xOYCuV1JO00p4umnUvn4SXIefCWLTYYhK3bYXA3kPIjaLZuSDPxYzt1PZV
-         Hiqm/fTV2yfHr8DdBpusqu4hHrAeH58so95URqr3A1wff+ZdP+o4+484Pn5GAGj8G48u
-         VdNA==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=Od1kbTidoOdNpH0yOTDDO7vO4r9QtkStjTB2a95SYxc=;
+        b=nys0il+rSoIDWOzpQxVlNE5tTlhE3xmQ5hjzbG9p4Co1A7lbCJL+6D4zZNoB52agnB
+         +plzVxBEQE8/3A+PmQn0qVts//HZwbN/ithQ8/fag8AvBSy+aCZ/tUNWYA0WovkeX7Oi
+         7Aj0b8QS3H0BlgcRXN59n9dz85Fz2XxSwAjLqvAQZWr44vAANCouoalOs8931J9x8q02
+         NCzzQE3RgZ1qMQt36NXA6gBTR2TKZjT6DGulEpup1K5y4MgDB/Krf5sEi4J/D4jBfxJl
+         MAf9Vb3vCt/rucmCDBSS9TGFQ7GYz3xNg7Truo8/LAxz3eJUZYkntBz4NHtlo1jiBnW5
+         uMuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc;
-        bh=qY7Zk6FBgnWWL8wW+746HAt4xhP37vyR83D2cGbkxKY=;
-        b=eXxVueZwsx5kYkuTiTJVrwcv8QLGc8LKwBVfPOhVPMx9MLQtJPOhx7ny9nm0yHUS/f
-         i2375nyD+FhOyybuQqlv8fG+S8xFMrBXCN/b5OjFgAmeGwrtVz+xx6q/k09t7HbEyOoF
-         V4DOj9BC8g8IfI2rCuJrlaJyYW+ua75LnVjFOjmiZMlUeLA/jsDWBeuOzg5bMEtlIPwN
-         AC6iWRzlstcHMAeDG++OSsJ5ZAVgKrQksvrMzQ/N4mNGcyT5fy4uUuTma6ix7xRfHs3A
-         OKbsuD55vs13c4IvcFD0RCzC85wJ26byjCLBCrSCNQsflH1RKdjvBW5bU6LqzcERxnQo
-         52Kw==
-X-Gm-Message-State: ACgBeo0FmlUwlMStdeM0Uy3U51MehdF3k54IB65F0lir416EYqhXitFk
-        nEB9GE7zvkQcA0XFWexeX3/qYyfO30E=
-X-Google-Smtp-Source: AA6agR6ERiwD/ZG4IUDyVM6me+uKTr+1sL4w7n4g4PTKYW5RJu8bxnhOvvWI9FJHOY2ZjRChM2hgDA==
-X-Received: by 2002:a63:210f:0:b0:41c:650c:aea4 with SMTP id h15-20020a63210f000000b0041c650caea4mr583543pgh.267.1661375637848;
-        Wed, 24 Aug 2022 14:13:57 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id z24-20020aa79f98000000b0053627e0e860sm10782978pfr.27.2022.08.24.14.13.57
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=Od1kbTidoOdNpH0yOTDDO7vO4r9QtkStjTB2a95SYxc=;
+        b=OpJmP66m3zfyI2PhzR2vtuNbAb756vBCYmtw0NOTshyjDFbG6re1Z+8S4Ov1dZ4eag
+         Tr6qSLhdVw+FcE5/PC1A2pE8BwtSUPGUdAqnGwiDB1tbf1S6NYIk5LLJiUV9eKdkbWVl
+         PIojMuEhusWlDwqdPsEi6qAxCENZRulvDq/4giYa2JOv2wyTsxGq9MaZLudVNPJpt0EL
+         fnYSjUTjbEubChKIchk+MeFze69IpYVfiifdNr6LvLgUBdaAmb6yNSnXH7lhFD/Tx97G
+         HE2ZwLmHHyrzOmmm+XrVJl1unoOI3SFQDj1GM+4MVSz0Lmcnh4Fumpt0LzTD8KOjTssA
+         5Sqw==
+X-Gm-Message-State: ACgBeo2Z/uVvcjeWBe+VRp0OGLJXkbxOtS+lzuUbpDoQKWVZzIfBb2+y
+        Hra/LthNob3bfVA0b6G2IoMYoUdWi3Y=
+X-Google-Smtp-Source: AA6agR5dnTz5A7r3U3vR1IIAdF4umsnt2bPTq+0IAW45OQ90wDL/ltzopf9tmfxtDlwjlXL8XQ6guA==
+X-Received: by 2002:a5d:6712:0:b0:225:337c:3889 with SMTP id o18-20020a5d6712000000b00225337c3889mr512479wru.59.1661376113131;
+        Wed, 24 Aug 2022 14:21:53 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r17-20020a05600c35d100b003a1980d55c4sm2994515wmq.47.2022.08.24.14.21.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Aug 2022 14:13:57 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] promisor-remote: fix xcalloc() argument order
-References: <20220822213408.662482-1-szeder.dev@gmail.com>
-        <20220823095733.58685-1-szeder.dev@gmail.com>
-        <xmqqwnax8wgy.fsf@gitster.g> <20220824173307.GF1735@szeder.dev>
-Date:   Wed, 24 Aug 2022 14:13:57 -0700
-In-Reply-To: <20220824173307.GF1735@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-        "Wed, 24 Aug 2022 19:33:07 +0200")
-Message-ID: <xmqqbks95oq2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        Wed, 24 Aug 2022 14:21:52 -0700 (PDT)
+Message-Id: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1336.git.1661277870.gitgitgadget@gmail.com>
+References: <pull.1336.git.1661277870.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 24 Aug 2022 21:21:47 +0000
+Subject: [PATCH v2 0/4] built-in add -p: support diff-so-fancy better
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+Philippe Blain reported in
+https://lore.kernel.org/git/ecf6f5be-22ca-299f-a8f1-bda38e5ca246@gmail.com
+that there is a problem when running the built-in version of git add -p with
+diff-so-fancy [https://github.com/so-fancy/diff-so-fancy] as diff colorizer.
+The symptom is this:
 
-> On Wed, Aug 24, 2022 at 08:58:21AM -0700, Junio C Hamano wrote:
->> SZEDER Gábor <szeder.dev@gmail.com> writes:
->> 
->> > Patch generated with:
->> >
->> >   make SPATCH_FLAGS=--recursive-includes contrib/coccinelle/xcalloc.cocci.patch
->> >
->> > Our default SPATCH_FLAGS ('--all-includes') doesn't catch this
->> > transformation by default, unless used in combination with a large-ish
->> > SPATCH_BATCH_SIZE which happens to put 'promisor-remote.c' with a file
->> > that includes 'repository.h' directly in the same batch.
->> 
->> Our default SPATCH_FLAGS is actually
->> 
->>     SPATCH_FLAGS = --all-includes --patch .
->> 
->> and I am wondering how "--patch ." part (or droppage thereof due to
->> overriding it from the command line) affects the outcome.
->
-> '--patch .' is not part of SPATCH_FLAGS anymore, and for a good
-> reason, see the recent 7b63ea5750 (Makefile: remove mandatory "spatch"
-> arguments from SPATCH_FLAGS, 2022-07-05).
+    error: could not parse colored hunk header '?[36m?[1m?[38;5;13m@ file:1 @?[1m?[0m'
 
-Ahh, that makes my life a bit more cumbersome, as I was looking at
-how we did things on the 'maint' branch.
 
-Thanks, mystery solved.
+This patch series addresses that and should fix
+https://github.com/so-fancy/diff-so-fancy/issues/437
+
+Changes since v1:
+
+ * Added a commit to ignore dirty submodules just like the Perl version
+   does.
+
+Johannes Schindelin (4):
+  t3701: redefine what is "bogus" output of a diff filter
+  add -p: gracefully ignore unparseable hunk headers in colored diffs
+  add -p: handle `diff-so-fancy`'s hunk headers better
+  add -p: ignore dirty submodules
+
+ add-patch.c                | 24 ++++++++++++++----------
+ t/t3701-add-interactive.sh | 24 +++++++++++++++++++++++-
+ 2 files changed, 37 insertions(+), 11 deletions(-)
+
+
+base-commit: 795ea8776befc95ea2becd8020c7a284677b4161
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1336%2Fdscho%2Fdiff-so-fancy-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1336/dscho/diff-so-fancy-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1336
+
+Range-diff vs v1:
+
+ 1:  74ab50eeb1c = 1:  74ab50eeb1c t3701: redefine what is "bogus" output of a diff filter
+ 2:  b07f85a0359 = 2:  b07f85a0359 add -p: gracefully ignore unparseable hunk headers in colored diffs
+ 3:  9dac9f74d2e = 3:  9dac9f74d2e add -p: handle `diff-so-fancy`'s hunk headers better
+ -:  ----------- > 4:  540ce27c38a add -p: ignore dirty submodules
+
+-- 
+gitgitgadget
