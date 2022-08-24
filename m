@@ -2,152 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A512C00140
-	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 14:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 448CFC00140
+	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 15:47:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238272AbiHXOkd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 10:40:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52388 "EHLO
+        id S239664AbiHXPrb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 11:47:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239300AbiHXOkZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 10:40:25 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97BDF42ACE
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 07:40:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661352019;
-        bh=uv936r4ZuBkDu92FC8MaUVKk5RxVR03E90XaPhXMREI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ost+zt09Oux6VjRAuvBe/PIJS314x0rYjzXzWyMFDXQdTIdQC5yNs1eaPUT/RoCYm
-         s7d2GUb6mB+OpiYfHjYEsKrB+qRv2WeNuiVlcnWu61PzSv0v/OcXZUZ9tQYtHrnarC
-         T2aNYLPm2W2ZtXX/ReAipjfXVTdHM2LCId3jWe8Q=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MEm6L-1ofvia0eAl-00GFcM; Wed, 24
- Aug 2022 16:40:19 +0200
-Date:   Wed, 24 Aug 2022 16:40:18 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH] ci: update 'static-analysis' to Ubuntu 22.04
-In-Reply-To: <pull.1334.git.1661275691795.gitgitgadget@gmail.com>
-Message-ID: <r49psprs-4s48-p6q9-o3q9-37nnr3oq301o@tzk.qr>
-References: <pull.1334.git.1661275691795.gitgitgadget@gmail.com>
+        with ESMTP id S239746AbiHXPrM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 11:47:12 -0400
+Received: from us-smtp-delivery-120.mimecast.com (us-smtp-delivery-120.mimecast.com [170.10.129.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4285A10FE9
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 08:45:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mathworks.com;
+        s=mimecast20180117; t=1661355929;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=hDgdBQRrbeSV+A2bSgKajkpQjDOK0nx2fg3Y0KEHrCg=;
+        b=F+4TSwcG+Ujio5TNI2o9zWOhVejnz9iokGa/iPqtNhgHgvRKGQ9iKm1wd0liNSVQ+EAh96
+        5k6O4mXm3k9ClO0ohf7El5efHoB/OmpW+HOLMGe4fHlD427k1IMiEWiydl1/mm0TBnGZ4U
+        0vqciu2KW/5Qw1KDd1UP2HYLbAHFmlI=
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam10lp2108.outbound.protection.outlook.com [104.47.55.108]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-447-jU7x4obZNbeTfCjKQ7pAPg-2; Wed, 24 Aug 2022 11:45:27 -0400
+X-MC-Unique: jU7x4obZNbeTfCjKQ7pAPg-2
+Received: from BL0PR05MB5571.namprd05.prod.outlook.com (2603:10b6:208:2f::17)
+ by BYAPR05MB6023.namprd05.prod.outlook.com (2603:10b6:a03:d7::27) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5566.14; Wed, 24 Aug
+ 2022 15:45:24 +0000
+Received: from BL0PR05MB5571.namprd05.prod.outlook.com
+ ([fe80::905b:1fcb:940b:e999]) by BL0PR05MB5571.namprd05.prod.outlook.com
+ ([fe80::905b:1fcb:940b:e999%7]) with mapi id 15.20.5566.014; Wed, 24 Aug 2022
+ 15:45:24 +0000
+From:   Eric DeCosta <edecosta@mathworks.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>,
+        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
+CC:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: [PATCH] fsmonitor: option to allow fsmonitor to run against
+ network-mounted repos
+Thread-Topic: [PATCH] fsmonitor: option to allow fsmonitor to run against
+ network-mounted repos
+Thread-Index: AQHYs0PgP65/umilUkatLV07kvDAYa24YKj1gAKNTQCAAZpFgIABsXfA
+Date:   Wed, 24 Aug 2022 15:45:23 +0000
+Message-ID: <BL0PR05MB55716C6CC59D3258E55B25B9D9739@BL0PR05MB5571.namprd05.prod.outlook.com>
+References: <pull.1326.git.1660855703816.gitgitgadget@gmail.com>
+ <xmqqsflqlfjq.fsf@gitster.g> <092oq98r-39q3-4s66-0n0p-r77po7pq8275@tzk.qr>
+ <055470ae-1483-bbd4-5b23-3762a4c131b8@jeffhostetler.com>
+In-Reply-To: <055470ae-1483-bbd4-5b23-3762a4c131b8@jeffhostetler.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: b4d8090f-792b-48eb-484f-08da85e7a8a4
+x-ms-traffictypediagnostic: BYAPR05MB6023:EE_
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0
+x-microsoft-antispam-message-info: j6+lfYrn0gGoJl4HGRKOrox93h6rIMSBtI+G87X6xWebQ14ePWC6t8+gRIjBkvBg6vFw18mvfPoicPDupinu6d9kbaW+QiPw0NAGj9NeMb5qV660KY3xzKnCdYt3w9nk+e5UcUcApPo+WAIuE4unJ0iklfov3ttLlzNxYahlV+X/5XS/420Qo8hPdh+R7CH6Drv0rOSDE0mVGo6w1UZLo8NxOa6LvGLxo7eKS4oxnGPZicOOH6zRg71b8MvKqod5NfzXJXkt+Z/nJDKq9ibd/OT3GGl/y6oe3VZcxzMsPGMHpib209i2oIFBeqWgXLrekYX1J1twHYV36jqp1Ew4OiWFjSZqli3gnW/4VCmFQvP1BlBgD1ClEkYbBAaEoZeFFgFCJgmqhL3SWs2DfP5Yfx8JGHY4/cCL0xB6xLjaXKqialoMIjMNjkjX3nx1GFDVKFMLv4WLWeB939OvehDs1GCTa43D7Zw2PcI82GtfmowZy2zitVdxu8AWBbP2HYCfyRNtN9ZOk9/xg/6I7YbxP0qqBM9PmTYEi0Z9FQxoPH+lPsgUhVioPJ39U0Idqytt/VNEL3Y/ozJH4+5zEafI0A6NqtxP7M/W4GZWI3aYL3AMqWRAI/hZjRsJfjYvD67XWglFNjNi9wMgmy3oRvOBJMyTNMOBEFJHAGEQS/rCql1emUCcIhsblXEpItrjG/4GvraBIRnJ4eUpfYN3Or+veulaPbDVKLmfe3UkYMsiDV1PciUyUrj2unfeh41R/ipB3zwGRRFxPDFMUxYnfpOCD1bJ1nN164dNr0AJKf8z7d/jQzl60D4H+uXcNK13+J4K
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR05MB5571.namprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(396003)(39860400002)(366004)(376002)(346002)(136003)(86362001)(186003)(54906003)(122000001)(478600001)(4326008)(41300700001)(316002)(8676002)(110136005)(33656002)(66446008)(66556008)(66476007)(64756008)(38070700005)(66946007)(76116006)(9686003)(8936002)(26005)(6506007)(52536014)(38100700002)(4744005)(2906002)(5660300002)(7696005)(71200400001)(55016003);DIR:OUT;SFP:1101
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Ym9KQ3RjeG03bzJpNE9ZKzd2eGpMQTlpcXQ5K3JUYUVBaXdMbWpYMkVMem5s?=
+ =?utf-8?B?Z3FUS00vNGVqcU5FK3FGS3dvNmZXbnJlc1NENmMwcVhaaWptVjA5NitlTzlt?=
+ =?utf-8?B?b0dMaFNCd0RRSlF1YWlGcGpiemNwclpkdTZmNUVISHhHZTNpVUxqVU5ROEZ1?=
+ =?utf-8?B?a3lDU2VaZ01lTGNLcW5tL254T1R4b2JNMEpVNlBYUUltMGRMdVJmcEh3OFky?=
+ =?utf-8?B?M05iMzdDTWx6eUNicjVKeDJ2Q0VYM1htV1FJS2VYM01oY0J5UTR1bGxIdU9a?=
+ =?utf-8?B?bWhqb0dNU1ZrdjFTN3I3d0lmNlJFUFBkWVVmNWNSTVk1SGs4dHJRZXBwM20z?=
+ =?utf-8?B?bElEVGlzbThsMk9RaWNsQmNSZkZYTGZsNVNUaUNQd0dTYjcwMGYwRTNFUjVU?=
+ =?utf-8?B?bExwejBQaG9OVW1HVGRVcEJnOTltNk54L0hSSGMzRFFMc2M2YnVkOUFJSW5M?=
+ =?utf-8?B?RE9mMUtGQU10ZjljQXYzVHM0RGM5Y1V2VXM2elo0N1ZpTWJXdHFzTDJ5WE01?=
+ =?utf-8?B?WVkrc2JxU2JBVWlic3pOOXlPSFlac2VXR0Y4UXM1RTUvOFgwL1dObkhKRm1J?=
+ =?utf-8?B?aU90Y3cyTzQ5N05NVSsveGhhUUkrVjdBT2dzdEI5YUE3a3pOVGNYWFQ2UjZs?=
+ =?utf-8?B?UE9rdHF2eVA3a1JPY2MwNFdmVjdlSkpWamZPdW5sL0VlaG9uQ2RRRGM1ZzZh?=
+ =?utf-8?B?WCtrSDkzbjRQM0FOMVpvaUZKLzNVSkdNY0c1eEEwODlCV2hJVU9lS0hmSEVQ?=
+ =?utf-8?B?Y05kUUxlNXh4SDRSRFFYK09pd3R3c3ByL1VKbEw1NEp3NGVzM08xZU5OcjdS?=
+ =?utf-8?B?WFlJUUl3TFpaWVdRMytleVJvTU5NcmJOV2JIblZIcnJGWWZ0MmpwdTg1eWJY?=
+ =?utf-8?B?WU9Bb1BYSmE5eXUyY3lJN3IwQkZJRm5IN0dXWVhzUi9OTWF6NTkvQ3ExazhN?=
+ =?utf-8?B?UG5Ma1Irbk9UdTN4Mm0yNWd1UVp6OU02U0ZUT1Z3d1VmZENZa0RDdC9HeHIv?=
+ =?utf-8?B?djNJcHRBalR6TFpUZTVEa3o2dlhZZEUrNzlvZkxGME03b3VJNXhlMzc5STV4?=
+ =?utf-8?B?RlVjUnFDRmx3RmVBKy9xZ0d2VXZ3V2NYSThHdEw1MklzNmFER08xZk1rWVRp?=
+ =?utf-8?B?K01oMmlRTGlaQkR2S250cktERGs5dlpMSTBxRUxzWUl4WC9ETGY4Y0JxSzBj?=
+ =?utf-8?B?R0QrNmM2bWpOWGF1blVEZXpQTTRuQmV1Vnpyd21pckE4TXgrclB0bjVLei90?=
+ =?utf-8?B?VlluUEM3R3lLRWw5QXlFSmRGVnp3YkRjWGpTbFlCTk1MNGZZd1dUSUdrMUFX?=
+ =?utf-8?B?a0RRb3o3aGJLTmp1TmNSNmRJSVB4R3FGajJpa1ZDejdRWjJ1emRVL0lhZDdi?=
+ =?utf-8?B?d1Z6YlVHSTlEcFhmMnZMdW51VDBXUHpYTUJyWTM3d21Fa0ttTWlXTG14c0ov?=
+ =?utf-8?B?QjcveEVLVVdUMkp1bDdrV2didUxrZjl2bnE1dFNYV2hSNFNiMitTdjBxb3FL?=
+ =?utf-8?B?VU1VbGRiQnBRdWdLajVsb3JrOGdYc3k5aHZKdnZHT1R6R3luc3lWazZmMjNk?=
+ =?utf-8?B?eXd0OVJQQzhGOUZrZlZjZ3EzN2lYcmw0K2JNZFdYanorN1Q2VHczb2dUQ3hY?=
+ =?utf-8?B?QXRBV1U3SDl3NkRrU3NjelBZQUJUT1N5NVRyb1RzeXhZTlA5Z2tVK0ZhUGFk?=
+ =?utf-8?B?WE5KOXJUVlB5L0kvMUYrZjV2eFNPQzU4NlpZWkpDUmY3bmF1UDZyZzBBa1Bv?=
+ =?utf-8?B?VGVnYlZaQS94dUEwTEpMNklIMjhIajAzb2hkd1dweCtsODZ5WUJvV3ZmMm1k?=
+ =?utf-8?B?SEdrQ2JuTjgxYXpJdDIxR2RSZGh3cnJqSTBnWFJ3Q2wxVnUzczREM2N0blIx?=
+ =?utf-8?B?bFhJZi8vL0pHSU9DeXQyclV2dnpORWRSWTZKVUp1d3BRazZ4NkNSOU5iYS9j?=
+ =?utf-8?B?QWxwVktVTzE5VDhJRDloYlhYOEVROUlaKzlkR1gwUU1INzAwMURQUzlPN1Zr?=
+ =?utf-8?B?TlU3eHhFNTM5SnAzTXRKbm54T2lvSHE5RHFHS0FqWFVpdmpveXBFYnFXcFdR?=
+ =?utf-8?B?Zy80SS8yY3ZiWnFub0NSZDdQOFFDVVpZRHVBT1VCNStxZ0FTZFBsRTAvZk1n?=
+ =?utf-8?Q?YXN0fHz+EKBDm28xsAFWEOyyg?=
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-841434822-1661352020=:205"
-X-Provags-ID: V03:K1:K9oDyZ+g6c1vKHIMrv41MNz/6I9f7cuHs1m9vYCMcDjaVsN5dld
- f6u6jTu9GTMo8ZGd2ouTLS8HnYRxOcVcguvnQE5D+amXYlDsDE4xx73TngYj7CtDxG8ooBW
- OxBQzMM9lytGJZs9CzWnKHQSX24g9qjwvauTN0wy+viUbvbXSJUWbZFK/uL/byIkp2u8lUj
- aNaKq0E0FexQoRigbIqHA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:W7j1VEeTNYw=:T0qP3LUp5+rivn07RBV2bj
- bk1abd77HmxhIp6I/b+mWdBTIziCtz8lvW7JBiyqYgyWNjTqdfAZnoIDFaCRn+2of1Lr9DaGl
- cqnUe94j0m+n+G6cAiPUZA0Smeo/HFie8xNwYmngeN89C0HVvh8v9Y9/SDiheZ246is7qX1CA
- vF6R67rN4bEVGzLnRIgff+FruTSyj/UGZV1CsNi+Snc2++l+fZQls3NcZsP6LaebOuLb5DBO4
- z5eVT4Za9ggl0vx5K/3vTxiGuRm4SVD2BrPPoGFgcMEHgCJWomS/Jc/VMSYK93wH9Q1I+tULB
- kmnnWaxfRWCkbD84aSswRSGNsMIRtEMXjyHVJhuTemvg2moxG/nfFcuaNw9/GsbJ5Bsbg3Msk
- QDM9aSeD1qQxVa1Q79Qre3u3wQOUdmYgwXSgucHAK8jIQg4wKv/kt8PqeSAUCh2ylircKIZO+
- f/ljoxZVmTJZB39w9oRbGE7tcZFwxadV6jkGAamEX6VuE5xSZGtgIa9VFMcIdpRumWgJsXZc9
- eDANpTzOyY9ErHuUsHrS1qb5eR4nKFx6loWz92Fs8LRevTtE6VC2Vjhws9+1iuRu9iotQfhYc
- xAWogPKFsYQC7sD+OQhyjvfEiP1Ijp6zrBkmm0mItKvofCJrJiSN4BoxYZ4a+xgvggYfJ9dm8
- Mg510pRjwGKBpbZFhFzKrE5XlrtGuuDmTy0Mf0LFkGxS5B45pAshQxSOK9ptim3okwPx0tx6I
- 8GVcL/1FTUeZizBzyXppaJ8MMk0ac5zmX/cYYPbpO+DwJbLmcPAUyPPrnRYbtQnJdH/CgRg8Q
- MpihgxdNHItbxHOyezcuh6Q6dAg2QWx+/xKOPNhjuKaVZopYWgZdvIeBjeUnQGljnCNKtKwKc
- wFx9/6K1VQ+uBcHTgKYG7y01fNFNk6JVIL9lP+/S38FVaB59RLRcTBNc9iyW94/5LcX+FUV7Z
- jbGXbZc5S9BDhMI85UMQ7Ksz7CNteW2wdk4cYqtve1bZwhmIW8VdTJa9xeIhQtEQP8bH7iEWX
- OcxKML5I/8taA6Nz+DhNd3tq8Cwn3LL7XqeB64gdRHid45uY6vn+MKfIuB0HlKOf6fpWmTh8J
- AvlF2Adm81fnbhXp9+BVKiTtwjk0Y02DHmoZswzx5wftKqLFWdX3S1cEA==
+X-OriginatorOrg: mathworks.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR05MB5571.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b4d8090f-792b-48eb-484f-08da85e7a8a4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Aug 2022 15:45:23.8999
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 99dd3a11-4348-4468-9bdd-e5072b1dc1e6
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: lYGPceUg0zAYFaP8T3ziO/Jj3soreoc0FZuaYErhJp0DN1noDYsVqb6O3LvZu9YFQWECeUCbBx1z4ORjByGN+w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR05MB6023
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: mathworks.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+PiBJIHdvdWxkIGFsc28gc2V0IEdJVF9UUkFDRV9GU01PTklUT1IgYW5kIEdJVF9UUkFDRTJfUEVS
+RiAob24gYm90aCBkYWVtb24NCj4gYW5kIGNsaWVudCBzaWRlcyBvZiB0aGUgdGVzdHMpIGFuZCBj
+YXB0dXJlIHRoZSBsb2dzIGFuZCB0cnkgdG8gZmlndXJlDQo+IG91dCB3aGF0IGlzIGhhcHBlbmlu
+Zy4NCj4NCj4gSSBzdXNwZWN0IHRoYXQgdGhpcyB0ZXN0aW5nIHNob3VsZCB3YWl0IHVudGlsIHlv
+dSByZWRvIHRoZSBwYXRjaCB0bw0KPiByZW1vdmUgdGhlIHRtcCBmaWxlIHN0dWZmIGFuZCBqdXN0
+IG1vdmUgdGhlIHNvY2tldCBpbnRvICRIT01FIGFzIHdlDQo+IHRhbGtlZCBhYm91dCBlYXJsaWVy
+Lg0KPg0KPiBKZWZmDQoNCkFsbCB0ZXN0cyBhcmUgcGFzc2luZyBub3cgd2l0aCB0aGUgbmV3IHBh
+dGNoLiBCeSBkZWZhdWx0IHRoZSBzb2NrZXQgaXMgd3JpdHRlbiBpbnRvDQp0aGUgb3JpZ2luYWwg
+bG9jYXRpb24gKC5naXQgZGlyZWN0b3J5KSB1bmxlc3MgJ2ZzbW9uaXRvci5hbGxvd1JlbW90ZScg
+aXMgdHJ1ZS4gT25seQ0KdGhlbiBpcyAkSE9NRSB1c2VkIGFuZCBpZiAkSE9NRSBwcm92ZXMgdW5z
+dWl0YWJsZSB0aGUgdXNlciBjYW4gb3ZlcnJpZGUgdGhhdA0KYnkgc2V0dGluZyAnZnNtb25pdG9y
+LnNvY2tlckRpcicgdG8gc29tZSB2YWxpZCwgbG9jYWwgZGlyZWN0b3J5Lg0KDQotRXJpYw0K
 
---8323328-841434822-1661352020=:205
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Stolee,
-
-On Tue, 23 Aug 2022, Derrick Stolee via GitGitGadget wrote:
-
-> From: Derrick Stolee <derrickstolee@github.com>
->
-> GitHub Actions scheduled a brownout of Ubuntu 18.04, which canceled all
-> runs of the 'static-analysis' job in our CI runs. Update to 22.04 to
-> avoid this as the brownout later turns into a complete deprecation.
->
-> The use of 18.04 was set in d051ed77ee6 (.github/workflows/main.yml: run
-> static-analysis on bionic, 2021-02-08) due to the lack of Coccinelle
-> being available on 20.04 (which continues today).
-
-ACK!
-
->
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->     ci: update 'static-analysis' to Ubuntu 20.04
->
->     I noticed this while preparing my bundle URIs series. See an example
->     cancellation at [1]
->
->     [1]
->     https://github.com/gitgitgadget/git/runs/7954913465?check_suite_focu=
-s=3Dtrue
->
->     I initially asked about this [2]. Thanks to Matthias A=C3=9Fhauer fo=
-r
->     pointing out that 22.04 has Coccinelle available [3].
->
->     [2]
->     https://lore.kernel.org/git/eb8779bc-fc41-f601-05f2-024e6bf3f316@git=
-hub.com/
->     [3]
->     https://github.com/gitgitgadget/git/pull/1334#issuecomment-122359765=
-5
-
-This can be verified also by looking at the successful `static-analysis`
-run at
-https://github.com/gitgitgadget/git/runs/7979368539?check_suite_focus=3Dtr=
-ue
-(which is part of the PR/CI runs at
-https://github.com/gitgitgadget/git/pull/1334/checks).
-
-Thanks,
-Dscho
-
->
->     Thanks,
->
->      * Stolee
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1334%2=
-Fderrickstolee%2Fstatic-analysis-ubuntu-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1334/derr=
-ickstolee/static-analysis-ubuntu-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1334
->
->  .github/workflows/main.yml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index cd1f52692a5..831f4df56c5 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -309,7 +309,7 @@ jobs:
->      if: needs.ci-config.outputs.enabled =3D=3D 'yes'
->      env:
->        jobname: StaticAnalysis
-> -    runs-on: ubuntu-18.04
-> +    runs-on: ubuntu-22.04
->      steps:
->      - uses: actions/checkout@v2
->      - run: ci/install-dependencies.sh
->
-> base-commit: 795ea8776befc95ea2becd8020c7a284677b4161
-> --
-> gitgitgadget
->
-
---8323328-841434822-1661352020=:205--
