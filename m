@@ -2,182 +2,218 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FF62C3F6B0
-	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 21:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09CD2C3F6B0
+	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 21:06:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240629AbiHXVFw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 17:05:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46882 "EHLO
+        id S240197AbiHXVGt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 17:06:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239719AbiHXVFu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 17:05:50 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 839165E657
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:05:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661375139;
-        bh=Unlyzwuqgxer82E2NcI9tTlmMAK0Q3Ocxt2m4whXh1U=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=M2gSA7dpyRk7hAlgknoDbDTf3AQSbl+tfQrsw31GVO52HfDC945xy5m5ERYbFQNMH
-         NiNel7RD75afYq+04Dns1CUzLRgYYYIquic1qDEGQttZBtGoFeOPQrKuYhmNEbi0LE
-         A9xXnH/CO94fQR+l+2jQv7/Hfd0gvDBOOGQyqxUo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M9o21-1oUWTW0Zpl-005qM3; Wed, 24
- Aug 2022 23:05:39 +0200
-Date:   Wed, 24 Aug 2022 23:05:38 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/3] built-in add -p: support diff-so-fancy better
-In-Reply-To: <xmqqmtbt7b5p.fsf@gitster.g>
-Message-ID: <34qs5607-001o-0n6o-rson-9587q8r909qn@tzk.qr>
-References: <pull.1336.git.1661277870.gitgitgadget@gmail.com>        <ab012782-1d02-b90b-9a4a-179ecc3f8e9e@gmail.com>        <1r3pq48q-s728-8r2r-r4q3-72413r5483o1@tzk.qr>        <41781ceb-bfad-2534-2970-c74618c93f2a@gmail.com>       
- <145ddce5-8084-a024-39b5-9dea870d1afe@gmail.com> <xmqqmtbt7b5p.fsf@gitster.g>
+        with ESMTP id S234610AbiHXVGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 17:06:47 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B42236E898
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:06:46 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id y127so14716766pfy.5
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:06:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=8R5yYgz0WEm76g7mfn1ML4kN67OHmUu7ZEhNrfkT1D4=;
+        b=aSniFk0WAQ77EcJCsTKcnfRCDkQrBgcBPYCibJ0d2fvAthD5NvKBfT49j75dqdtRwl
+         4Xm1SBz+rA8n4wPOlVNdmlEl6E4zQD3Dw54F9Ja/vH8g0ac3NwcDYhIa4k/KNXhc2pXl
+         AzIrcTlvVZBMR/DxFQoLHp3wL7WNqk4gY/4hANa5vYizyQa4Qa2obR01UFGOI1mnWes3
+         9h0NRwzEgZ2di40GZ9oiUNqDVT9Qq+UPi27XQXnHYW1WYg/DyPzvXSLMKmupvhpYcuWW
+         drWw9rvEK04cKFCHaIW+ueiDUUc0Vca3obf7DDXIeYE1kHZiY6yvL6F5WFq+FtQ6Pdfe
+         K/EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc;
+        bh=8R5yYgz0WEm76g7mfn1ML4kN67OHmUu7ZEhNrfkT1D4=;
+        b=xZWXj1x87N74bYoUmMFQhbD6R2VzRmlVhVPHo3s0HbiGhp9s+LC+VNa2l9LsxqCn2s
+         TGAih9JlBY6R4P2UvE/2FjOJiTNOq6+s1OM4o8z2fcGKYTZam1tzCJO+X7thjquRKZKa
+         PFnIh/3h/qVFAUQhsvbHDBek6e8rV2JOPIOw3jCZF44ttLVtYAZwdwdNVmzkoi3V3dM5
+         Z7KgCskNoXOXMEQJ3vQUhSv3rUAilp8+JnikYo7XiWZnaxUk7rHSTZMJGpXG+R/y/6al
+         n0WPy/yWgksB0GJ/C4dCMaHyMqH+m05ly/XQrbIn3v2Ydiql/uCibyzjGZvU4NZfjQIo
+         BT6g==
+X-Gm-Message-State: ACgBeo3UN2FLNyAR27AlkPpWM1anLm0WkoQLIvCGam9L8aK4LG+DygLd
+        uNBQzzBPxqo4eHUrrRkzXPFawAVFD7M=
+X-Google-Smtp-Source: AA6agR7VF0kUiqxfJOoKJBb4O3pxuU1sC7L2C/DN+3NRaKpY+9MyhOpNFP1lZun81RN3cONpsy/wMg==
+X-Received: by 2002:a65:5688:0:b0:3c2:1015:988e with SMTP id v8-20020a655688000000b003c21015988emr606235pgs.280.1661375206169;
+        Wed, 24 Aug 2022 14:06:46 -0700 (PDT)
+Received: from ?IPV6:2600:380:7712:a9e4:18cf:29c3:6992:d9fc? ([2600:380:7712:a9e4:18cf:29c3:6992:d9fc])
+        by smtp.gmail.com with ESMTPSA id w6-20020a170902e88600b0016bf803341asm9746560plg.146.2022.08.24.14.06.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Aug 2022 14:06:45 -0700 (PDT)
+Message-ID: <666dc1a3-5f18-c487-6290-44b0646f5724@gmail.com>
+Date:   Thu, 25 Aug 2022 05:06:42 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:0kBZkzcnws4b2WlZ8CpV/+VrWS8gur8Z3oZixGbZrlQt1rnoe2O
- lqgSgg4mcm2Ip2taIO36ECwzzxxi5ElSoBFiLH/02ZBtJvButtb/jezRPru8w7gCXlrCUAA
- rWjDTeqEIQArbXsaCXVwJxwlmLSUwTRmmfo0qsm3LkO8bIw9Cnjd2ADjQLXiFiWo90PNX04
- 5DPm8eibiU3ZiRdD3UP+A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:oDIQtXI6Z9k=:PlfuhoNQ3/ifPE2H1T82Kc
- P1hfd3BcYpjijeM2adHxiTZzk1i91NdmXuiF5UPwF/mjmKGtanJd/bmdQZR68lJLMBMxhwpdl
- LAq/BAoEonRssjrX2qyPDvRMbPFZ43LcxTrZZ8L4ONyeHTsS9vZuapxdl0OCTIWJSQwW7IJhS
- ywHrPs9S0jo7zBst4a8nvRjka09lgAdVjBhKSapOF/Kx6ElPslYHqI5fzR4COFvO+2OWWcNez
- odCZ5V7+q8ysCRGbPr/DYKoxok5lN0bGEM3MsqFSbiX7bj7S9v3OTmQUQ+TZxBL0kLDmh9JXw
- M6N8J+cWoxY/88D0hmS1I9MAk4TpJip8WPweAQxabmNdNTgyIxL5bEViZxX1g/IjGuVczfWyk
- VB2BT5KenC+4QEEyAgfNqdb44+Cme0JDTJlPOuu9g5tHH778ROZHpe2jwSPhYY/TMgB0zIjoW
- g+G+7ddDvUIZEtDjh443Af6OG42cS3kX7u0NNvkLpyuB+UcPy+6X26S4oA/FvCHR3JHXkogkG
- SCeQRkEx+QjvRluw9Ec50v2Jcjm3CLQq3COQrCFtLnRDZxNgX9zwXg6E/1ZwZvlmlzgkSg/3k
- D7QbS3o0IWj6M7HgFZ8v6UD/xEYvl2sH2bSDDZ6r6I+DUNR/N/BLvfsahLI+16aWollCay+QJ
- I6iHlAiHJM57yGIGXFr5w6/wVRvZNhCKLY2iACFlN5SCcwmDxXNt7nCAptNmPrkuGl0XsGZuC
- GtX58YV1vtR4XJdzA4/eAAJEM1fpqWnUyh4j1eGvMgPbPBzrobB/N3ogyp/rLgNer/TAh9KzE
- vGp2V/usm0muiOqkzHzzHZ1XbaShf+Kx++R1s6gMCjgIW5LWjZNWbbSahjnmK4BmMdJdXzxcw
- ngtVD9cJzV2gOW67NGqy0OLi3JxlB5RKnIFKEjqewHJ1CIwm3c1goLBnyjvEVDcnKmwBasmp1
- aS8iJ5XYWf9cUfCydbu5e2pkkzIsvVUNQYiNTyz1qd1rXK2hLm499PPYrZkEJNGsgcxlBwWtp
- V4mIaVSMUDLFypU70J075LSo6FWOLgDQk0KFy+oGqAItCG1OELUnRd+5smPM7ydeTA1CK4uuT
- qAMCSb8hYkm5iIzK+5iMtroywDGLZeRLE5ZGKg3X++h0LOg4+HXmztkHQ==
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v1 2/2] builtin/grep.c: integrate with sparse index
+Content-Language: en-US
+To:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
+Cc:     vdye@github.com
+References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+ <20220817075633.217934-3-shaoxuan.yuan02@gmail.com>
+ <19dea639-389a-7258-e424-4912bde226df@github.com>
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+In-Reply-To: <19dea639-389a-7258-e424-4912bde226df@github.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio & Philippe,
+On 8/17/2022 10:23 PM, Derrick Stolee wrote:
+ > On 8/17/2022 3:56 AM, Shaoxuan Yuan wrote:
+ >> Turn on sparse index and remove ensure_full_index().
+ >>
+ >> Change it to only expands the index when using --sparse.
+ >>
+ >> The p2000 tests demonstrate a ~99.4% execution time reduction for
+ >> `git grep` using a sparse index.
+ >>
+ >> Test                                           HEAD~1 HEAD
+ >> 
+-----------------------------------------------------------------------------
+ >> 2000.78: git grep --cached bogus (full-v3)     0.019 0.018  (-5.2%)
+ >> 2000.79: git grep --cached bogus (full-v4)     0.017 0.016  (-5.8%)
+ >> 2000.80: git grep --cached bogus (sparse-v3)   0.29 0.0015 (-99.4%)
+ >> 2000.81: git grep --cached bogus (sparse-v4)   0.30 0.0018 (-99.4%)
+ >
+ > Good results.
+ >
+ > I think we could get interesting results even with the --sparse
+ > option if you go another step further (perhaps as a patch after
+ > this one).
 
-On Wed, 24 Aug 2022, Junio C Hamano wrote:
+OK.
 
-> Philippe Blain <levraiphilippeblain@gmail.com> writes:
->
-> >>>> However, I've tried it on a more "real-life" example, and then I ge=
-t:
-> >>>>
-> >>>>     error: mismatched output from interactive.diffFilter
-> >>>>     hint: Your filter must maintain a one-to-one correspondence
-> >>>>     hint: between its input and output lines.
-> >>>>
-> >>>> This is despite using "diff-so-fancy --patch" as interactive.diffFi=
-lter, which should
-> >>>> keep the number of lines the same.
-> >>>
-> >>> Would you mind sharing the example with me?
-> >>
-> >> In trying to write a reproducer, I realize that this is in fact a sep=
-arate "bug".
-> >> I happened to have a submodule in the repository I was testing, and i=
-t had modified
-> >> content. This is what was causing the "mismatched output" error, alth=
-ough I'm not
-> >> sure why. If I use a pathspec that does not include the submodule whe=
-n invoking
-> >> 'git add -p', it works correctly.
-> >>
-> >> I'm a bit out of time now but I'll try to write a separate
-> >> reproducer for this later today.
-> >
-> > So in trying to write a new reproducer, I found the cause of the
-> > bug. ...
+ >>
+ >> Optional reading about performance test results
+ >> -----------------------------------------------
+ >> Notice that because `git-grep` needs to parse blobs in the index, the
+ >> index reading time is minuscule comparing to the object parsing time.
+ >> And because of this, the p2000 test results cannot clearly reflect the
+ >> speedup for index reading: combining with the object parsing time,
+ >> the aggregated time difference is extremely close between HEAD~1 and
+ >> HEAD.
+ >>
+ >> Hence, the results presenting here are not directly extracted from the
+ >> p2000 test results. Instead, to make the performance difference more
+ >> visible, the test command is manually ran with GIT_TRACE2_PERF in the
+ >> four repos (full-v3, sparse-v3, full-v4, sparse-v4). The numbers here
+ >> are then extracted from the time difference between "region_enter" and
+ >> "region_leave" of label "do_read_index".
+ >
+ > This is a good point, but I don't recommend displaying them as if they
+ > were the output of a "./run HEAD~1 HEAD -- p2000-sparse-operations.sh"
+ > command. Instead, point out that the performance test does not show a
+ > major improvement and instead you have these "Before" and "After" results
+ > from testing manually and extracting trace2 regions.
 
-Ah. Submodules. The gift that keeps on giving.
+OK.
 
-I'm not _really_ complaining, though. It seems that with beautiful
-regularity, submodules come up as crucial parts of attack vectors in
-exploits that are reported to the git-security mailing list, requiring
-somebody with my abilities to implement fixes. Therefore, submodules award
-me with a sort of job security. :-)
+ >> @@ -519,11 +519,15 @@ static int grep_cache(struct grep_opt *opt,
+ >>          strbuf_addstr(&name, repo->submodule_prefix);
+ >>      }
+ >>
+ >> +    prepare_repo_settings(repo);
+ >> +    repo->settings.command_requires_full_index = 0;
+ >> +
+ >
+ > The best pattern is to put this in cmd_grep() immediately after parsing
+ > options. This guarantees that we don't parse and expand the index in any
+ > other code path.
 
-> I somehow had an impression that that the C reimplementation was
-> designed to be a bug-for-bug compatible faithful rewrite of the
-> original scripted version,
+Got it.
 
-Yes, it was designed as that, with a few things done differently, though,
-such as avoiding unnecessary `git diff` invocations, and using C-native
-data structures and memory management.
+ >>      if (repo_read_index(repo) < 0)
+ >>          die(_("index file corrupt"));
+ >>
+ >> -    /* TODO: audit for interaction with sparse-index. */
+ >> -    ensure_full_index(repo->index);
+ >> +    if (grep_sparse)
 
-One unfortunate consequence of avoiding the `git diff` invocations of
-`git-add--interactive.perl` that are not actually necessary is that I
-missed that one of those invocations specifically ignores dirty
-submodules, and that the Perl script then only processes files whose
-numstat shows up in _that_ diff output.
+A side note: this condition should be `grep_sparse && cached`.
 
-Fortunately, the fix is easy: simply ignore dirty submodules in _all_ `git
-diff` invocations of `add -p`.
+ >> +        ensure_full_index(repo->index);
+ >> +
+ > As mentioned before, this approach is the simplest way to make the case
+ > without --sparse faster, but the case _with_ --sparse will still be slow.
+ > The way to fix this would be to modify this portion of the loop:
 
-I will submit the next iteration as soon as the PR builds pass.
+I'm not sure. If --sparse here means we want to expand the index, it
+is expected to be slow (ensure_full_index is slow), isn't it?
 
-> but looking at the way how this bug is handled, I am not sure (it looks
-> as if the initial fix was to patch the code to match the symptom, not to
-> make the code to behave more faithfully to the scripted version).
+ >     if (S_ISREG(ce->ce_mode) &&
+ >         match_pathspec(repo->index, pathspec, name.buf, name.len, 0, 
+NULL,
+ >                S_ISDIR(ce->ce_mode) ||
+ >                S_ISGITLINK(ce->ce_mode))) {
+ >
+ > by adding an initial case
+ >
+ >     if (S_ISSPARSEDIR(ce->ce_mode)) {
+ >         hit |= grep_tree(opt, &ce->oid, name.buf, 0, name.buf);
+ >     } else if (S_ISREG(ce->ce_mode) &&
+ >            match_pathspec(repo->index, pathspec, name.buf, name.len, 
+0, NULL,
+ >                   S_ISDIR(ce->ce_mode) ||
+ >                   S_ISGITLINK(ce->ce_mode))) {
+ >
+ > and appropriately implement "grep_tree()" to walk the tree at ce->oid to
+ > find all matching files within, then call grep_oid() for each of those
+ > paths.
 
-The built-in `add -p` does something slightly different from the Perl
-version when it comes to the line ranges in hunk headers: instead of
-storing stringified versions of them and parsing & re-rendering them when
-the hunks are modified, the C version stores the actual numbers, adjusts
-them as needed (e.g. when hunks are split), and, crucially, renders them
-on the fly when displaying the hunks.
+Tree walking is faster, yes. So, for this approach to be faster, I
+think you are suggesting we should not expand the index, even when
+--sparse is given? Instead, we just rely on the tree walking logic,
+right?
 
-That means that also the colorized hunk headers are generated on the fly
-whenever the hunks are displayed, and they are never stored in rendered
-form, neither while parsing diffs nor when hunks are split or otherwise
-edited. That's why the built-in `add -p` looked for a `@@ ... @@` part in
-the colorized diff, so that it can display the remainder of that line
-after showing the rendered line range.
+ > Bonus points if you recognize that the pathspec uses prefix checks that
+ > allow pruning the search space and not parsing all of the trees
+ > recursively. But that can definitely be delayed for a future enhancement.
 
-And yes, this is a deviation from the bug-for-bug principle I follow for
-conversions from scripted commands to built-in C code, but it was for a
-good reason: memory management in C is less trivial than in Perl (where
-one essentially YOLOs memory management), and I was not prepared to invent
-a rope data structure just to be able to replace parts of a long string
-buffer with rendered text of a different length, nor was I prepared to
-call `memmove()` tons of times.
+OK.
 
-Note that the Perl version does something slightly iffy, too: if a diff
-colorizer is configured, it initially shows the original hunk headers
-(e.g. "@ file:16 @" in the `diff-so-fancy` case) but when the hunk is
-modified in any way, it generates "@@ -1,6 +1,7 @@"-style hunk headers and
-does not show the ones generated by the diff colorizer _at all_ anymore.
+ >> +test_expect_success 'grep expands index using --sparse' '
+ >> +    init_repos &&
+ >> +
+ >> +    # With --sparse and --cached, do not ignore sparse entries and
+ >> +    # expand the index.
+ >> +    test_all_match git grep --sparse --cached a
+ >> +'
+ >
+ > Here, you're testing that the behavior matches, but not testing that the
+ > index expands. (It does describe why you didn't include it in the later
+ > ensure_not_expanded tests.)
 
-In this patch series, I teach the built-in `add -p` to be more lenient and
-simply show the entire original hunk header after the rendered line range
-if no `@@ ... @@` part was found. If that part was found, we still replace
-it with the rendered line range.
+I was trying to "imply" the index expansion because of the behavior
+match. Yes, I think the test should be more explicit.
 
-Yes, it is a deviation from what the Perl version does. I consider it an
-improvement, though.
+ >> +
+ >> +test_expect_success 'grep is not expanded' '
+ >> +    init_repos &&
+ >> +
+ >> +    ensure_not_expanded grep a &&
+ >> +    ensure_not_expanded grep a -- deep/* &&
+ >> +    # grep does not match anything per se, so ! is used
+ >
+ > It can be helpful to say why:
+ >
+ >     # All files within the folder1/* pathspec are sparse,
+ >     # so this command does not find any matches.
 
-> As with any big rewrite, a complete re-implementation always has risks
-> to introduce unintended regressions and that is why starting with
-> faithful rewrite with the staged transition plan is valuable.
->
-> In this case, the staged transition plan, the step to flip the
-> default without before remove the old one, is working beautifully.
-> And it was only made possible with the actual users reporting issues
-> before they say "the new one is broken, so let's use the knob to
-> retain the old implementation".
+OK.
 
-Indeed, and thank you, Philippe, for bringing this to the Git mailing list
-so that I could do something about the bug.
+--
+Thanks,
+Shaoxuan
 
-Ciao,
-Dscho
+
