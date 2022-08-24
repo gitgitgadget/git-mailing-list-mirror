@@ -2,58 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B38D8C32793
-	for <git@archiver.kernel.org>; Tue, 23 Aug 2022 23:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B14BC32793
+	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 00:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231955AbiHWXij (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Aug 2022 19:38:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41004 "EHLO
+        id S232046AbiHXAH4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Aug 2022 20:07:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbiHWXih (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Aug 2022 19:38:37 -0400
+        with ESMTP id S229641AbiHXAHx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Aug 2022 20:07:53 -0400
 Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 452D67FE5B
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 16:38:36 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id x7-20020aa79407000000b00536368f1a07so4418648pfo.13
-        for <git@vger.kernel.org>; Tue, 23 Aug 2022 16:38:36 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0108491F2
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 17:07:52 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id f8-20020aa79d88000000b0053641810e97so4159889pfq.9
+        for <git@vger.kernel.org>; Tue, 23 Aug 2022 17:07:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=content-transfer-encoding:cc:to:from:subject:references
          :mime-version:message-id:in-reply-to:date:from:to:cc;
-        bh=qgTUPvmvv8M0wEcli2Nof0rGSj17vjHKJs7lQ6TpB68=;
-        b=ZhPydcgxdUNu+GqikB9d2nnMPzbBJysT5SSeBAhjTdiJshfk4+mmNgnCusTQp10OKH
-         P7g2HmFIHWn+I319vpGPrsNc0Ee4AO+nBjn7BTd2Ny7TfEZe0MtKrooyRBAmzc7Sk46l
-         wpXXWLpvB0CMrRq+zHKMTzNIKXtYMqOCssg703TCVftkXuxd8YaFue7O6EFG/nS+wYyk
-         F25WMrSKHwc3oQpeJbgA5UkMzcIBGbUepic8x8g5oTU4qBkSLa6Lh3fQGJDAQ9L20PwC
-         aIO5jMAyl8aYl8yQVo0snJ+pQi/aSk2IbUzaMcboppUgcftIdrxiKj3cvmXnnuqcXSw6
-         IBIQ==
+        bh=0q691PA29Gdom6ihQrwpY8EsgYq9K5XLM4wesHykw0M=;
+        b=hvtrMRLUIvmDuNdk+CpymROUeediIUTvPs6U2YXv1DMW7rL9SYQi6n6s0ukfc9b4FD
+         wnIEiEPdS4aDTr2oJE3WjV5DwJssnFzjE+d7L6wE7RmhvkDvMcQeX3+PeAOugJEsNd7u
+         YshDSabKxGL+YqoE1IH4pniN3RTCZ5+1gg5t03UEz+Y6yCeIgxDXlTKnpGUONhZ2pJYJ
+         uJ3kQrR+RkUKmbqS18H4ida3RZaFFu5S29oM+qq6JrfK7ZmkOvil81IFmfoH5TxmNJXY
+         ce2P32SJtgiE9zmD7XCiu+XoxJm6uYcvUWxwEve1ya7rF24uiZ1cqAY7vAhRQzxjdyW6
+         XQTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:from:subject:references
          :mime-version:message-id:in-reply-to:date:x-gm-message-state:from:to
          :cc;
-        bh=qgTUPvmvv8M0wEcli2Nof0rGSj17vjHKJs7lQ6TpB68=;
-        b=MXXvcxUO1JksxIpi5jlpoeAd1cbgPJlpmuamo+kELgwJPoArlsWTaoZGCV6nwTBBeW
-         B0BNXGtTQ4wtxi2x1g60f7i18bNLx5PHEo91c1gxuJTfvf5AFKqYRdSTMLT+TYtpBU9x
-         hMBmtxNLmEfpOXSTSs9rF4t6+wUlNwdGWdB0LPLidzonptXNuSzOpIo+2hIQZ3pnFNzv
-         ak1XqHetPvs4Ho1IRUjX6gLWkyYAp/ooJGGk7TwiN5/9SLdiSqTJUo1ayQwKU5k4P59h
-         CN3rtp+zySXwlqnoCJDPtajaB6rRVIR9RKOSgGpkYm6LH46uAOBLJo3FwPlwnHBEFh2J
-         5XFw==
-X-Gm-Message-State: ACgBeo2ppr79yLf7nAbFyDi/DxSqy4BChCIg1y1SxnyUKdBIIRhzf0lN
-        LTnBqc0Gz6mQy5FdMziP3Qm566Q3+x4fWg==
-X-Google-Smtp-Source: AA6agR43Ca6V6KPtmhV83flHoUtjuqBKD1brAnysJBI0KE4WrdLlH7gHJAuBVwnfZGNIG8N0WXU/VqzBO2LTsg==
+        bh=0q691PA29Gdom6ihQrwpY8EsgYq9K5XLM4wesHykw0M=;
+        b=ABRpGIc9n0RAgXFDVLAppODvMFQDRmqb5ld33Fz51QBXe5hSUtS67kgLlGe+D3TS8Y
+         6lkG3c1KVSGDT81Ce9WwZcIob6ySl2DxAvQTk4qrRBT1Cl0mzBlKFR6RA7Gv2DT5skE/
+         jfd2w84ge1YIHZDJXPSLLmNZ88ODJj9+fdXJrhYbH9TfnHEgAWdquBUkKBeX95taKtsT
+         afqZBezRUxHPjQJqTAtPBdPTkPogUeGqacURtyQv/+aXoe+z79Jsh07AJr6AUrG6X3G9
+         RVhi6RThGXhgW/EahcU82FXYjUa+TIUdMSIb3muw2Kf3K107BpNWsnMtEu1dglH4zfMP
+         PHvg==
+X-Gm-Message-State: ACgBeo2krPpqPTfY9pakVqFUgzLP30lC0vwIXaFY51G2W/jaKcAcUKpS
+        Qu0SOTRqnYV2FaEPnEscisTYY3JYB7akjw==
+X-Google-Smtp-Source: AA6agR40ZlEK/vxUYpQ/uwIwJcO5l/SEgsAFS8HFq2R5oEkdxW7PfVVWZvuu9ZshtWurfVeYLA26i14VFMGaPw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:1803:b0:536:e9a4:89d4 with SMTP
- id y3-20020a056a00180300b00536e9a489d4mr6557973pfa.28.1661297915814; Tue, 23
- Aug 2022 16:38:35 -0700 (PDT)
-Date:   Tue, 23 Aug 2022 16:38:34 -0700
-In-Reply-To: <patch-v3-29.32-d4b55f07a30-20220821T130231Z-avarab@gmail.com>
-Message-Id: <kl6lh7224jk5.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a62:1d86:0:b0:52d:9df0:2151 with SMTP id
+ d128-20020a621d86000000b0052d9df02151mr27072181pfd.33.1661299672266; Tue, 23
+ Aug 2022 17:07:52 -0700 (PDT)
+Date:   Tue, 23 Aug 2022 17:07:50 -0700
+In-Reply-To: <patch-v3-30.32-15c2490a978-20220821T130231Z-avarab@gmail.com>
+Message-Id: <kl6lczcq4i7d.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
 References: <cover-00.20-00000000000-20220728T161116Z-avarab@gmail.com>
- <cover-v3-00.32-00000000000-20220821T130231Z-avarab@gmail.com> <patch-v3-29.32-d4b55f07a30-20220821T130231Z-avarab@gmail.com>
-Subject: Re: [PATCH v3 29/32] submodule--helper: check repo{_submodule,}_init()
- return values
+ <cover-v3-00.32-00000000000-20220821T130231Z-avarab@gmail.com> <patch-v3-30.32-15c2490a978-20220821T130231Z-avarab@gmail.com>
+Subject: Re: [PATCH v3 30/32] submodule--helper: libify more "die" paths for module_update()
 From:   Glen Choo <chooglen@google.com>
 To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
         git@vger.kernel.org
@@ -69,117 +68,144 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Fix code added in ce125d431aa (submodule: extract path to submodule
-> gitdir func, 2021-09-15) and a77c3fcb5ec (submodule--helper: get
-> remote names from any repository, 2022-03-04) which failed to check
-> the return values of repo_init() and repo_submodule_init(). If we
-> failed to initialize the repository or submodule we could segfault
-> when trying to access the invalid repository structs.
-
-Yes, this sounds correct. repo_init() and repo_submodule_init() are pure
-initialization and have no intended side effects, so there's no reason
-to not check the return value.
-
+> As noted in a preceding commit the get_default_remote_submodule() and
+> remote_submodule_branch() functions would invoke die(), and thus leave
+> update_submodule() only partially lib-ified. Let's address the former
+> of those cases.
 >
-> Let's also check that these were the only such logic errors in the
-> codebase by making use of the "warn_unused_result" attribute. This is
-> valid as of GCC 3.4.0 (and clang will catch it via its faking of
-> __GNUC__ ).
+> Change the functions to return an int exit code (non-zero on failure),
+> while leaving the get_default_remote() function for the callers that
+> still want the die() semantics.
 >
-> As the comment being added to git-compat-util.h we're piggy-backing on
-> the LAST_ARG_MUST_BE_NULL version check out of lazyness. See
-> 9fe3edc47f1 (Add the LAST_ARG_MUST_BE_NULL macro, 2013-07-18) for its
-> addition. The marginal benefit of covering gcc 3.4.0..4.0.0 is
-> near-zero (or zero) at this point. It mostly matters that we catch
-> this somewhere.
-
-I'm not familiar enough with attributes and the requistie compiler
-versions, so I won't comment on this bit.
-
+> This change addresses 1/2 of the "die" issue in these two lines in
+> update_submodule():
+>
+> 	char *remote_name =3D get_default_remote_submodule(update_data->sm_path)=
+;
+> 	const char *branch =3D remote_submodule_branch(update_data->sm_path);
 >
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  builtin/submodule--helper.c | 9 +++++++--
->  git-compat-util.h           | 3 +++
->  repository.h                | 3 +++
->  3 files changed, 13 insertions(+), 2 deletions(-)
+>  builtin/submodule--helper.c | 58 +++++++++++++++++++++++--------------
+>  1 file changed, 37 insertions(+), 21 deletions(-)
 >
 > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 5f109d422ea..88fc01320f3 100644
+> index 88fc01320f3..9e4069b36cb 100644
 > --- a/builtin/submodule--helper.c
 > +++ b/builtin/submodule--helper.c
-> @@ -63,7 +63,10 @@ static char *get_default_remote_submodule(const char *=
-module_path)
+> @@ -31,48 +31,57 @@
+>  typedef void (*each_submodule_fn)(const struct cache_entry *list_item,
+>  				  void *cb_data);
+> =20
+> -static char *repo_get_default_remote(struct repository *repo)
+> +static int repo_get_default_remote(struct repository *repo, char **defau=
+lt_remote)
+>  {
+> -	char *dest =3D NULL, *ret;
+> +	char *dest =3D NULL;
+>  	struct strbuf sb =3D STRBUF_INIT;
+>  	struct ref_store *store =3D get_main_ref_store(repo);
+>  	const char *refname =3D refs_resolve_ref_unsafe(store, "HEAD", 0, NULL,
+>  						      NULL);
+> =20
+>  	if (!refname)
+> -		die(_("No such ref: %s"), "HEAD");
+> +		return die_message(_("No such ref: %s"), "HEAD");
+> =20
+>  	/* detached HEAD */
+> -	if (!strcmp(refname, "HEAD"))
+> -		return xstrdup("origin");
+> +	if (!strcmp(refname, "HEAD")) {
+> +		*default_remote =3D xstrdup("origin");
+> +		return 0;
+> +	}
+> =20
+>  	if (!skip_prefix(refname, "refs/heads/", &refname))
+> -		die(_("Expecting a full ref name, got %s"), refname);
+> +		return die_message(_("Expecting a full ref name, got %s"),
+> +				   refname);
+> =20
+>  	strbuf_addf(&sb, "branch.%s.remote", refname);
+>  	if (repo_config_get_string(repo, sb.buf, &dest))
+> -		ret =3D xstrdup("origin");
+> +		*default_remote =3D xstrdup("origin");
+>  	else
+> -		ret =3D dest;
+> +		*default_remote =3D dest;
+> =20
+>  	strbuf_release(&sb);
+> -	return ret;
+> +	return 0;
+>  }
+
+If we fail to look up the default remote for the branch, we assume it is
+"origin", otherwise, it is the default remote. So in the preimage this
+function would never return NULL, right? This matters in
+sync_submodule()..
+
+> =20
+> -static char *get_default_remote_submodule(const char *module_path)
+> +static int get_default_remote_submodule(const char *module_path, char **=
+default_remote)
 >  {
 >  	struct repository subrepo;
 > =20
-> -	repo_submodule_init(&subrepo, the_repository, module_path, null_oid());
-> +	if (repo_submodule_init(&subrepo, the_repository, module_path,
-> +				null_oid()) < 0)
-> +		die(_("could not get a repository handle for submodule '%s'"),
-> +		    module_path);
->  	return repo_get_default_remote(&subrepo);
+>  	if (repo_submodule_init(&subrepo, the_repository, module_path,
+>  				null_oid()) < 0)
+> -		die(_("could not get a repository handle for submodule '%s'"),
+> -		    module_path);
+> -	return repo_get_default_remote(&subrepo);
+> +		return die_message(_("could not get a repository handle for submodule =
+'%s'"),
+> +				   module_path);
+> +	return repo_get_default_remote(&subrepo, default_remote);
 >  }
 > =20
-> @@ -1483,7 +1486,9 @@ static int add_possible_reference_from_superproject=
-(
->  		struct strbuf err =3D STRBUF_INIT;
->  		strbuf_add(&sb, odb->path, len);
+>  static char *get_default_remote(void)
+>  {
+> -	return repo_get_default_remote(the_repository);
+> +	char *default_remote;
+> +	int code =3D repo_get_default_remote(the_repository, &default_remote);
+> +
+> +	if (code)
+> +		exit(code);
+> +
+> +	return default_remote;
+>  }
+
+repo_* usually denotes a difference between "the_repository" and "struct
+repository", so I don't really like having [repo_]get_default_remote()
+die/return differently. But it makes some sense to special case
+"the_repository" since it is the top level, so if it fails, something is
+very wrong. So on the whole, I'm ok with doing this to avoid disrupting
+other callers.
+
+> @@ -1159,6 +1168,7 @@ static void sync_submodule(const char *path, const =
+char *prefix,
+>  	char *sub_origin_url, *super_config_url, *displaypath, *default_remote;
+>  	struct strbuf sb =3D STRBUF_INIT;
+>  	char *sub_config_path =3D NULL;
+> +	int code;
 > =20
-> -		repo_init(&alternate, sb.buf, NULL);
-> +		if (repo_init(&alternate, sb.buf, NULL) < 0)
-> +			die(_("could not get a repository handle for gitdir '%s'"),
-> +			    sb.buf);
+>  	if (!is_submodule_active(the_repository, path))
+>  		return;
+> @@ -1198,10 +1208,9 @@ static void sync_submodule(const char *path, const=
+ char *prefix,
+>  		goto cleanup;
 > =20
->  		/*
->  		 * We need to end the new path with '/' to mark it as a dir,
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 36a25ae252f..01d88650ba3 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -568,8 +568,11 @@ static inline int git_has_dir_sep(const char *path)
->  /* The sentinel attribute is valid from gcc version 4.0 */
->  #if defined(__GNUC__) && (__GNUC__ >=3D 4)
->  #define LAST_ARG_MUST_BE_NULL __attribute__((sentinel))
-> +/* warn_unused_result exists as of gcc 3.4.0, but be lazy and check 4.0 =
-*/
-> +#define RESULT_MUST_BE_USED __attribute__ ((warn_unused_result))
->  #else
->  #define LAST_ARG_MUST_BE_NULL
-> +#define RESULT_MUST_BE_USED
->  #endif
-> =20
->  #define MAYBE_UNUSED __attribute__((__unused__))
-> diff --git a/repository.h b/repository.h
-> index 797f471cce9..24316ac944e 100644
-> --- a/repository.h
-> +++ b/repository.h
-> @@ -1,6 +1,7 @@
->  #ifndef REPOSITORY_H
->  #define REPOSITORY_H
-> =20
-> +#include "git-compat-util.h"
->  #include "path.h"
-> =20
->  struct config_set;
-> @@ -186,6 +187,7 @@ void repo_set_gitdir(struct repository *repo, const c=
-har *root,
->  void repo_set_worktree(struct repository *repo, const char *path);
->  void repo_set_hash_algo(struct repository *repo, int algo);
->  void initialize_the_repository(void);
-> +RESULT_MUST_BE_USED
->  int repo_init(struct repository *r, const char *gitdir, const char *work=
-tree);
-> =20
->  /*
-> @@ -197,6 +199,7 @@ int repo_init(struct repository *r, const char *gitdi=
-r, const char *worktree);
->   * Return 0 upon success and a non-zero value upon failure.
->   */
->  struct object_id;
-> +RESULT_MUST_BE_USED
->  int repo_submodule_init(struct repository *subrepo,
->  			struct repository *superproject,
->  			const char *path,
-> --=20
-> 2.37.2.1279.g64dec4e13cf
+>  	strbuf_reset(&sb);
+> -	default_remote =3D get_default_remote_submodule(path);
+> -	if (!default_remote)
+> -		die(_("failed to get the default remote for submodule '%s'"),
+> -		      path);
+> +	code =3D get_default_remote_submodule(path, &default_remote);
+> +	if (code)
+> +		exit(code);
+
+In the preimage, we used to check that default_remote is not NULL, but
+we don't check this any more. As we noted earlier, default_remote could
+never be NULL (because we used to die() on failure), so I think we never
+needed this check and it's ok to drop it.
+
+Is this the same reasoning you had?
+
