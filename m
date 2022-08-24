@@ -2,141 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B04F1C48BE4
-	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 21:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 099A3C04AA5
+	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 21:37:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240662AbiHXVWJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 17:22:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58324 "EHLO
+        id S239596AbiHXVhQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 17:37:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239769AbiHXVV7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 17:21:59 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A42EB165BC
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:21:58 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id e20so21771885wri.13
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:21:58 -0700 (PDT)
+        with ESMTP id S238115AbiHXVhP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 17:37:15 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9918642FB
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:37:13 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id c2so16827091plo.3
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 14:37:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc;
-        bh=S23Yrq2a5cJCgvTqD4EtlmQDsQQqxQPl5o1PKt5LxgI=;
-        b=cTZ34AVF/AdbQkcJlbNu8m9FX4lIle3yPsmcUtIeJfHTVavdMwGbPhB1uvWxHMZ8YS
-         uWxuGXeshXqeOuDWQN30UrGli2Z09anrQmGyGvRoW/5szgPs/L5NxuHhwMTV3/JH8Ey5
-         Si1KkKFtY6YH6cgTTrnBNxmdplCc6dOZuXmLFX4BzKg21sZmRDtS6Gj+h561VIh/FnEI
-         NoHjEU/d5Eb8n1SGS0DA0miT+5t6168N4N0cvM3KiWUy7b148OYFM9foG8uWnjzShlrt
-         FLnaxr7lfd6hSYZAWp3CXVmWr+aQEvXVHFRR2+hjEqbGhuauC680xdkzotDxSsVHpjzv
-         8SBA==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc;
+        bh=g4L944ae2cIUAvuzp6X+TmnXKa7Wn5dOfjhGDf3cAeo=;
+        b=ZwYC8HLcnvFFidCUM4EZpzpxH66ZuSKs+d1kRt2VhHYwgOL6BSL85DS6/98DgmIN2R
+         wz4ME6+OhxLjIxRGRTom/2KnJNRXyrwyCud6PG8vH+OQT854Fm/Zd7bMLoqXG+G9BrI1
+         5j2bpTgoXy4cWNYld1V371LY4sZwuoDckjJyue92wbQvBgE5SRGqWIuQ+UPBuSwXj6Pv
+         woeZ9GyLdU6+abDUe8zvT5d/+ito7zPs63TK/BW/zjkDViJK9cYTM3iSe71quxhvl0eQ
+         peEEZikLYpEbU0eb1fQifZ2boam6a3Bf+g+xOJZRNOGjrV6RPMAn/Ro69YP035gp2H28
+         1wVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=S23Yrq2a5cJCgvTqD4EtlmQDsQQqxQPl5o1PKt5LxgI=;
-        b=2M6PXDCiKbKnz9CrN60FQux7U5IHSWXGbtrj1TyfOiPtweTIlHfhLz3+miae4esN9e
-         GS8nCmWoMkDEzsc1mJ9XYTdR7iJ1Tt7aXHSC0UUrBO8/jb5/JRDjOfkOCqLW+d7whg4B
-         P4YkGNFB74IDmw3cWU24LYDnwHUYm1ABa8fqQcNWwm/fF/bP1l2dkY5ryybiDg2foaR9
-         N1SKMdjtm23oEsMDQUklUUlOLLoSlEIbhTbme3RUswQ10ADxlGdfqIiDgAmoWxQ/OlRj
-         pqLDKZK4LrtdwoYdkaD+SMFE6xKBvaD+cqsDtR1xX+iEdrZEEEaKmzBohvb3Ud+1MMyx
-         svKA==
-X-Gm-Message-State: ACgBeo3gaNVXLvpzutJOe7jwA1nihlDa5i8Le8ORnRLD7t/8c1BwiMgM
-        dNJ6eg8AHw6g0oIttydHDnZnb8k11o4=
-X-Google-Smtp-Source: AA6agR71Z4Ldk9ABk6sdwiY9dcpTcPnHdyn/607E1gJIl6veccAjoetAThFr7HZ9NSqov+WvzDqpkA==
-X-Received: by 2002:a05:6000:1210:b0:225:5eeb:fdf3 with SMTP id e16-20020a056000121000b002255eebfdf3mr549756wrx.334.1661376116764;
-        Wed, 24 Aug 2022 14:21:56 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bh19-20020a05600c3d1300b003a54d610e5fsm3253706wmb.26.2022.08.24.14.21.56
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc;
+        bh=g4L944ae2cIUAvuzp6X+TmnXKa7Wn5dOfjhGDf3cAeo=;
+        b=R1AhiILJxLzTxR+OrOr1qukDrYHXUKXy+XZcTG6iVRpar4VDfXzjsPTDcCCdgJS79U
+         Xz6CKrHc/8Kyn7AsGP27XCjHEtBOSf1RdeD71SmRCDBws9nzn5pJwqK/hzO266SqQgKU
+         XG6gEry6wXqg7ftjGvpzr0mcIbstr2hcDMrF6pH7pdtTfFeroAwBe4FoL6yM6SIvUMOc
+         GtWgZgO/wwSyQMF7xyt5+bikyDxihuDW/+XbHRBWErDewFPLILh92gBV1MIdE9gI7rOW
+         AFVB+/rDebqc1/hU8kWF7065zKwS2JcL323xin8OoV62FZ1ZZNyvJqYUKXKm7WQqCAvO
+         NJeA==
+X-Gm-Message-State: ACgBeo1qY6dQWru4hjI+Q/JXmVLY1x1kkqQ6VH5KbtfcVzxVBx6rIN0Q
+        9TFW0H4BCj4zyRly2nUjyNs=
+X-Google-Smtp-Source: AA6agR7vOoXoR1a0P4QTSZQrBhcUzAhN+vp9jiM/naFuSIi8eSeEax6e06ytzEpsCJhvnHH2U8oQqw==
+X-Received: by 2002:a17:90b:388c:b0:1fb:6738:6e50 with SMTP id mu12-20020a17090b388c00b001fb67386e50mr1024655pjb.231.1661377033276;
+        Wed, 24 Aug 2022 14:37:13 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id n66-20020a622745000000b0052d981e7842sm13464071pfn.208.2022.08.24.14.37.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Aug 2022 14:21:56 -0700 (PDT)
-Message-Id: <540ce27c38a68bebc9504a1cb19fb4076f87ae1c.1661376112.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
-References: <pull.1336.git.1661277870.gitgitgadget@gmail.com>
-        <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 24 Aug 2022 21:21:51 +0000
-Subject: [PATCH v2 4/4] add -p: ignore dirty submodules
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
+        Wed, 24 Aug 2022 14:37:12 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/3] built-in add -p: support diff-so-fancy better
+References: <pull.1336.git.1661277870.gitgitgadget@gmail.com>
+        <ab012782-1d02-b90b-9a4a-179ecc3f8e9e@gmail.com>
+        <1r3pq48q-s728-8r2r-r4q3-72413r5483o1@tzk.qr>
+        <41781ceb-bfad-2534-2970-c74618c93f2a@gmail.com>
+        <145ddce5-8084-a024-39b5-9dea870d1afe@gmail.com>
+        <xmqqmtbt7b5p.fsf@gitster.g>
+        <34qs5607-001o-0n6o-rson-9587q8r909qn@tzk.qr>
+Date:   Wed, 24 Aug 2022 14:37:12 -0700
+In-Reply-To: <34qs5607-001o-0n6o-rson-9587q8r909qn@tzk.qr> (Johannes
+        Schindelin's message of "Wed, 24 Aug 2022 23:05:38 +0200 (CEST)")
+Message-ID: <xmqq7d2x5nnb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Thanks to alwyas running `diff-index` and `diff-files` with the
-`--numstat` option (the latter with `--ignore-submodules=dirty`) before
-even generating any real diff to parse, the Perl version of `git add -p`
-simply ignored dirty submodules and does not even offer them up for
-staging.
+> One unfortunate consequence of avoiding the `git diff` invocations of
+> `git-add--interactive.perl` that are not actually necessary is that I
+> missed that one of those invocations specifically ignores dirty
+> submodules, and that the Perl script then only processes files whose
+> numstat shows up in _that_ diff output.
+>
+> Fortunately, the fix is easy: simply ignore dirty submodules in _all_ `git
+> diff` invocations of `add -p`.
 
-However, the built-in variant did not use that flag because it tries to
-run only one `diff` command, skipping the unneeded
-`diff-index`/`diff-files` invocation of the Perl variant and therefore
-only faithfully recapitulates what the Perl code does once it _does_
-generate and parse the real diff.
+OK, so it wasn't removing what is useless, but removing something
+whose result was used.  And our next move is not to bring us closer
+to how we used to correctly handle third-party diff filters by
+mimicking the original better but doing the handling of this
+particular piece differently.
 
-This causes a problem when running the built-in `add -p` with
-`diff-so-fancy` because that diff colorizer always inserts an empty line
-before the diff header to ensure that it produces 4 lines as expected by
-`git add -p` (the equivalent of the non-colorized `diff`, `index`, `---`
-and `+++` lines). But `git diff-files` does not produce any `index` line
-for dirty submodules.
+> I will submit the next iteration as soon as the PR builds pass.
 
-The underlying problem is not even the discrepancy in lines, but that
-`git add -p` presents diffs for dirty submodules: there is nothing that
-_can_ be staged for those.
+OK.
 
-Let's fix that bug, and teach the built-in `add -p` to ignore dirty
-submodules, too. This _incidentally_ also fixes the `diff-so-fancy`
-problem ;-)
+>> As with any big rewrite, a complete re-implementation always has risks
+>> to introduce unintended regressions and that is why starting with
+>> faithful rewrite with the staged transition plan is valuable.
+>>
+>> In this case, the staged transition plan, the step to flip the
+>> default without before remove the old one, is working beautifully.
+>> And it was only made possible with the actual users reporting issues
+>> before they say "the new one is broken, so let's use the knob to
+>> retain the old implementation".
+>
+> Indeed, and thank you, Philippe, for bringing this to the Git mailing list
+> so that I could do something about the bug.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- add-patch.c                |  3 ++-
- t/t3701-add-interactive.sh | 12 ++++++++++++
- 2 files changed, 14 insertions(+), 1 deletion(-)
+Yup.
 
-diff --git a/add-patch.c b/add-patch.c
-index 1f3f3611ee9..64807e7cdc0 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -417,7 +417,8 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- 	}
- 	color_arg_index = args.nr;
- 	/* Use `--no-color` explicitly, just in case `diff.color = always`. */
--	strvec_pushl(&args, "--no-color", "-p", "--", NULL);
-+	strvec_pushl(&args, "--no-color", "--ignore-submodules=dirty", "-p",
-+		     "--", NULL);
- 	for (i = 0; i < ps->nr; i++)
- 		strvec_push(&args, ps->items[i].original);
- 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 9deb7a87f1e..10058b7ce42 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -941,6 +941,18 @@ test_expect_success 'status ignores dirty submodules (except HEAD)' '
- 	! grep dirty-otherwise output
- '
- 
-+test_expect_success 'handle submodules' '
-+	echo 123 >>for-submodules/dirty-otherwise/initial.t &&
-+
-+	force_color git -C for-submodules add -p dirty-otherwise >output 2>&1 &&
-+	grep "No changes" output &&
-+
-+	force_color git -C for-submodules add -p dirty-head >output 2>&1 <y &&
-+	git -C for-submodules ls-files --stage dirty-head >actual &&
-+	rev="$(git -C for-submodules/dirty-head rev-parse HEAD)" &&
-+	grep "$rev" actual
-+'
-+
- test_expect_success 'set up pathological context' '
- 	git reset --hard &&
- 	test_write_lines a a a a a a a a a a a >a &&
--- 
-gitgitgadget
+To some people, "refatoring to match my subjective code aesthetics"
+may be personally the most important, and to some other people,
+"getting rid of scripted Porcelains" may be, but they are both wrong
+and these are their second most important goals ;-)  Not regressing
+end-user experience is, and we learned a valuable lesson here.  Be
+conservative and make sure we can revert to buy time when making a
+big rewrite like this one.
+
+Thanks, all.
