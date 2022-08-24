@@ -2,92 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01710C04AA5
-	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 22:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 422CBC04AA5
+	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 22:18:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231550AbiHXWLl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 18:11:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44074 "EHLO
+        id S229475AbiHXWSz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 18:18:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229915AbiHXWLk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 18:11:40 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78DDB7CB61
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 15:11:38 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id g8so12987321plq.11
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 15:11:38 -0700 (PDT)
+        with ESMTP id S229437AbiHXWSy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 18:18:54 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1473D7DF6D
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 15:18:54 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id g10-20020a63564a000000b0042aa3915494so4803734pgm.18
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 15:18:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc;
-        bh=cOhzATTo/1vQjhUWjZ+qolYqcUwfKQm8yhNRO+xyq7c=;
-        b=gmMKVXkCpipFXUbJ67AecEjm7no6XkXDklvhLdu39c2lnVy7yMuzynvgM8/o4gQ6o6
-         uC8fx8iknq7q4mSwUMy2sroulUfK6peyd736ig7K57Tsiax5UJiLc/2OQgnEa97Cf4wi
-         U0pE/K87qcgPBzqdCOgABD0H1sY29fww4s2MJ5098Fvt4vphf9izdCgycILnR1jGFl3c
-         qNhnBSKP6wtL3Hl11WB4ek2NcThJD83InGybeosBVttXZQJGip1W0/G7irxiW/ncYra7
-         neczf/cQP5kh4pwAIaLRvfCqstO1CfUKbtw2SO8njinDohqL+7ZmzuGYmgMYJ/r55xuj
-         0DuA==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:mime-version:message-id:in-reply-to:date:from:to
+         :cc;
+        bh=zG1dblgx5k71xltMK8nmCP/sIIuf0vqTfkIN3rJqRo4=;
+        b=TZDRrkO9+Xi9mN5g2bbHwJhQ4XtcmxPERtEVfXbtSQzwjh+JMZG5kzmBC2orv3dbNx
+         4EU0TRoXzpOt2d2BF+qRHBfshv0v00eeyBDzONVUfVLhXpzspBs7PCJ8HzGVrDDy1PbL
+         4mVc6e65ayBU8rX6cI+cVSU8gkpVDBW2V9RXS7p2XbyTgAFQAD9z3+418WVyd0WobSGl
+         kjcZ36yI6K8pInwyWGxKykLcG0XSSOHmoeGya2KdPpNEmqSgIDMWb6miHfIQea4MwIfO
+         n4BZeSyEoUgJ6/zGxWNNaZ3TCRjFimyljNYgfkaYnuNCczpokxlf1JtVbrm1AOSDTN1c
+         jtGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc;
-        bh=cOhzATTo/1vQjhUWjZ+qolYqcUwfKQm8yhNRO+xyq7c=;
-        b=RTsm8LcsfCwpVxfcHeAP752sduONm/S8UVhcncmQ2IjcPo7oUVmL6teTnKIVCIkCeM
-         pSc9wEZWX9EHB9Jo4AsEY60LQ0/BO12VKEczJU2TzW68QBMbfCGttTFxE7tGI2cX/w8y
-         JhOLZG0E4OUjbBB+Fz+s0HpOVpngYl+ajP9wUS6epd2xqaqxTQ4nOZ1QCQx2/sw0tUSr
-         4pbuY9EbkQ7evop3wQ+PkewqY4yXxJyf8buYXlERRhSJ0YMB13wWR1owrEUG4J+jiA9r
-         BTCX9rZufc7IF93l1RBLWEai7043BWNG5R9UKDS5Ktn4q3djw15Xov69EPoryUtCVwfA
-         tXPg==
-X-Gm-Message-State: ACgBeo2sR5KJCjF1yH+E+A6SXEpiqUu1qH+Sby6ggfXnB9AR0EG525m6
-        mRuRTJLhw9DBi2Rc9iKXuG0=
-X-Google-Smtp-Source: AA6agR4NZssutALj9WoRmeTBqG8I3geNCTbgvTaziHxjf8EV/GZ4Pj4EQNIVA6GlE/rcIg1qOnDBUw==
-X-Received: by 2002:a17:90a:db95:b0:1fa:c02b:5e34 with SMTP id h21-20020a17090adb9500b001fac02b5e34mr1158052pjv.159.1661379097303;
-        Wed, 24 Aug 2022 15:11:37 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id r18-20020aa79ed2000000b0052d4cb47339sm13526906pfq.151.2022.08.24.15.11.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Aug 2022 15:11:36 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
+        h=cc:to:from:subject:mime-version:message-id:in-reply-to:date
+         :x-gm-message-state:from:to:cc;
+        bh=zG1dblgx5k71xltMK8nmCP/sIIuf0vqTfkIN3rJqRo4=;
+        b=rGa2iZSAhiTVHMDyp/qfn5g+R7qyZFDtDIOJjchEETRzhmheykk6qqxP6zOoiUlVV3
+         Zl7M4GcE9c02gyp3X7PpzR2jBYwizlB1U3os81vP6L7pV8GwT6Qwzs68W8RpWZOazzoe
+         2njzijWZS/jPTR81dPFiD8IEp8pt67mOFBk6dEmH1F4CPnCuQUy910LXmna+OgoP4Io1
+         uXGHev+K3xv6HAxx5zIitltx9j7eBJythBTAkRhQeFq460PWaOa0ALEHuSbqWVVb9u2q
+         BZTLQx/CcynXklrm4iAYi3e6Wdv0fTU9OAwyuj3iKeNj+kooVluY8D1Coj3ruLSakf+m
+         5WnA==
+X-Gm-Message-State: ACgBeo03XqH14xHormmi811ms9B/rvkzDFZg/TJXbOhJDlmSlRRAQCzQ
+        SiNtrgO/NNAH+uMyO367j4muxnlj8m8SxVJYnMYC
+X-Google-Smtp-Source: AA6agR43UUqQkv96YShAZ+puITpnKaqURdlp56CP9tJqsxz1eZIYuThkB2A1tOcm0+1zlH3Cf+/5GxeFg7FAifsqQcBx
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a63:fc20:0:b0:41d:234f:53e2 with
+ SMTP id j32-20020a63fc20000000b0041d234f53e2mr778222pgi.199.1661379533637;
+ Wed, 24 Aug 2022 15:18:53 -0700 (PDT)
+Date:   Wed, 24 Aug 2022 15:18:50 -0700
+In-Reply-To: <68bcd10949ec7767d1e0ee8e2f0730ca36bad1c5.1660576283.git.gitgitgadget@gmail.com>
+Message-Id: <20220824221851.1684475-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.37.1.595.g718a3a8f04-goog
+Subject: Re: [PATCH 5/5] rebase --keep-base: imply --no-fork-point
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
         Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/4] built-in add -p: support diff-so-fancy better
-References: <pull.1336.git.1661277870.gitgitgadget@gmail.com>
-        <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
-Date:   Wed, 24 Aug 2022 15:11:36 -0700
-In-Reply-To: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Wed, 24 Aug 2022 21:21:47
-        +0000")
-Message-ID: <xmqq35dl5m1z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> @@ -1240,6 +1240,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  			die(_("options '%s' and '%s' cannot be used together"), "--keep-base", "--onto");
+>  		if (options.root)
+>  			die(_("options '%s' and '%s' cannot be used together"), "--keep-base", "--root");
+> +		/*
+> +		 * --keep-base ignores config.forkPoint as it is confusing if
+> +		 * the branch base changes when using this option.
+> +		 */
+> +		if (options.fork_point < 0)
+> +			options.fork_point = 0;
 
-> Philippe Blain reported in
-> https://lore.kernel.org/git/ecf6f5be-22ca-299f-a8f1-bda38e5ca246@gmail.com
-> that there is a problem when running the built-in version of git add -p with
-> diff-so-fancy [https://github.com/so-fancy/diff-so-fancy] as diff colorizer.
-> The symptom is this:
->
->     error: could not parse colored hunk header '?[36m?[1m?[38;5;13m@ file:1 @?[1m?[0m'
->
->
-> This patch series addresses that and should fix
-> https://github.com/so-fancy/diff-so-fancy/issues/437
->
-> Changes since v1:
->
->  * Added a commit to ignore dirty submodules just like the Perl version
->    does.
-
-Thanks, all.  Will queue, but it may miss this afternoon's
-integration I am preparing right now for pushing out.
-
+Hmm..doesn't forkPoint decide the set of commits to be rebased, not the
+point at which the new commits are created? If yes, that doesn't seem to
+have much to do with --keep-base.
