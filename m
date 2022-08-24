@@ -2,58 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8594C3F6B0
-	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 22:27:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13C4BC6498F
+	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 22:29:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbiHXW1I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 18:27:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42112 "EHLO
+        id S229770AbiHXW3B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 18:29:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbiHXW1H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 18:27:07 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E26116E898
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 15:27:06 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-334d894afd8so314599327b3.19
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 15:27:06 -0700 (PDT)
+        with ESMTP id S229756AbiHXW27 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 18:28:59 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59ECE7E307
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 15:28:58 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id m11-20020a17090a3f8b00b001fabfce6a26so1434360pjc.4
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 15:28:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=cc:to:from:subject:mime-version:message-id:in-reply-to:date:from:to
          :cc;
-        bh=6zZ1VEohubX/SbkHmlyI4DURH31vzmGAWjt16VuihGY=;
-        b=opQON6ZoACxcAqleZSHE3LbkMFiu744ojR9jKhDd2kr0L4sqAkpbAIqhXaAZxPpalJ
-         xa9GkQh9iOF8G/O+WaCL7ZJ//KO/aVRSspDwzHogKvZkxZnERLGpHLFmxbFZ8olfMww/
-         +Ty9aM6pmo6oy2xlmUy4Ul5+aWidDMn/zcqyQUssvHg/KyU1gV8AjsFmixu+MIXYmOMt
-         MXosF5uaNDTmkggACvFwCzcqxOL1kzTZ8UdAjOUZjT4OsHxqMZPkGxOfyaGrdRu9TXx4
-         3v8eIAfxT6IOJZ2eYHU1+jkmDdq2/W7vL3mCIpqDJVnNkOFJhg+c2hoJ9gLd+NLYs1cx
-         LfbQ==
+        bh=6Gc/xhlUJgLVGONRcf4svma3XtLPBgIsGzkpxEa7RlQ=;
+        b=cds3OVHKGDjKUddjymKPrro6edpbzMWUblGlv/MVEoyRyIb8roo14TPTrofBMR0FPu
+         sz8+6h7Kcyp5Lsk+0mmT539nGLmkzovZa3nWMZIeHhAIbLYpSpq0/fG/svBi9qIwKZmQ
+         p1uXRuKAe8X+PrywEruICMhx+b0npT4g7BxDYESwn4ATRG4CzdXBN6p2eY9+Mj4Ft/lP
+         ZVSfx89jx3NKTMaOioyxuBk0UuF2DM+sVmYvdUkmlEvuJjcfHZXte7JU8yLpGdbxFVCk
+         xx0xSG2R7aTAghapdgUgrSNlaDHSh2Y5NS/Nk7/AV/O80jpZwFkDLaWaIsuBB+VCrOJa
+         ojWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:from:subject:mime-version:message-id:in-reply-to:date
          :x-gm-message-state:from:to:cc;
-        bh=6zZ1VEohubX/SbkHmlyI4DURH31vzmGAWjt16VuihGY=;
-        b=Oyg9o4esqerHfi2lsSFTmZXOn1qk8yJegLAddp98LQ/VDiyCh5I/0gp44IxqUJKhxY
-         cBzPPqkOzMG3I8PZ2HUILaWMbg3rrCAiG5E+K2NRceOl3NqFNJh2w+U7UCr7xqyGEdJ3
-         zojmyPtx5YCHw+OOCXZOLLvO5lrswPu+mDFqttD6kU2OoK07j+1SfftfSeeVAX+hWedP
-         ceOzknsHmaPCRXWku2ni3bF5VgS2anZpPb7CQ5MjgyX/sUn+PkpkDgKwSP2y0vpX06hs
-         pgZaB10i0GiLw2OVFBD0DbkNcCl6Td0KLU01J2PWUezS5UHKaA7ORVMj9489IhQAOcCq
-         GmXw==
-X-Gm-Message-State: ACgBeo0IX9VdnQnVEO4h/JrYW+R77VVstYpbXGykb/YiKvILKtZ58xfH
-        B0JGxLX9P6qdweMem1z4lrCqScAyckjmTBa9rRVS
-X-Google-Smtp-Source: AA6agR4qXiiv1UI0fYmoWm2eWXbH81jpNcQ3F1Z61/iEqb9KMeJb5laxXTqcNaPlp3DiRHsDtXl7oU4Iyc006kU4SmwL
+        bh=6Gc/xhlUJgLVGONRcf4svma3XtLPBgIsGzkpxEa7RlQ=;
+        b=yc/MVTti6y03E7tSKeluPcve64t/3AaiKsedqjhDFw8Ml7q/HfFvPhKbwlyfO9xLi6
+         nVguGmssz7uD8DBBic18z+ro9GzzKnv7S4fJOIAjwBB6sHiSRCbmk6FllyeLxtnUAlqW
+         RCRfFkG6CWfC3NbsfJgZ7YfM8FODeLh+9ukBr7H0sr8Oh6b0woaDLHcsjK/8ffnt9Br6
+         IMPXkiHArr7GrpTYK7k5m4SLyqSkr2xY40Cpj+onIMXBdcvI7hCrpjVBXC8VGUMtgwod
+         kdoVWChGnRtbVfpJ3t4jpc7SmHzngLeNaLTVxSr7B5MSyggkEGu0Y+O6DbEVgoaYbZj0
+         ijKA==
+X-Gm-Message-State: ACgBeo3NHaINb72mF4MJ6KGMNw7cmYoqpdP1GlQJoClEOi6EuCsAC9cV
+        dakr5juRC+Z793gmK77w8ek/oVGn5KSbeO8Vls7Q
+X-Google-Smtp-Source: AA6agR47M3WutiyYduERTtLpTzhxxHZozzTr/JKqvzkoanS0qjBIqIpQb2+w6fzswPnz4DrX2up5zsAK08Jpc11X/Jvl
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:2d5a:0:b0:695:9023:d0d7 with
- SMTP id s26-20020a252d5a000000b006959023d0d7mr1105244ybe.529.1661380026175;
- Wed, 24 Aug 2022 15:27:06 -0700 (PDT)
-Date:   Wed, 24 Aug 2022 15:27:03 -0700
-In-Reply-To: <pull.1323.git.1660576283.gitgitgadget@gmail.com>
-Message-Id: <20220824222703.1685763-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:82c5:b0:172:bb8f:a584 with
+ SMTP id u5-20020a17090282c500b00172bb8fa584mr963334plz.49.1661380137841; Wed,
+ 24 Aug 2022 15:28:57 -0700 (PDT)
+Date:   Wed, 24 Aug 2022 15:28:55 -0700
+In-Reply-To: <eab55cef-62bd-af2b-c295-1e76beca032f@gmail.com>
+Message-Id: <20220824222855.1686175-1-jonathantanmy@google.com>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.37.1.595.g718a3a8f04-goog
-Subject: Re: [PATCH 0/5] rebase --keep-base: imply --reapply-cherry-picks and --no-fork-point
+Subject: Re: [PATCH 1/5] t3416: set $EDITOR in subshell
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
         Philippe Blain <levraiphilippeblain@gmail.com>,
         Denton Liu <liu.denton@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -63,26 +66,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> A while a go Philippe reported [1] that he was surprised 'git rebase
-> --keep-base' removed commits that had been cherry-picked upstream even
-> though to branch was not being rebased.
-[...]
-> [1]
-> https://lore.kernel.org/git/0EA8C067-5805-40A7-857A-55C2633B8570@gmail.com/
+Phillip Wood <phillip.wood123@gmail.com> writes:
+> Hi Junio
+> 
+> On 15/08/2022 17:53, Junio C Hamano wrote:
+> > "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> > 
+> >> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> >>
+> >> As $EDITOR is exported setting it in one test affects all subsequent
+> >> tests. Avoid this by always setting it in a subshell and remove a
+> >> couple of unnecessary call to set_fake_editor.
+> > 
+> > Unnecessary because it reuses the one that was established in the
+> > previous test [1]?  Or unnecessary because we know "rebase -i" would
+> > fail even before it gets to the point of asking an editor to tweak
+> > the todo sequence [2]?  Or something else?
+> 
+> I meant unnecessary as the editor does not change the todo list, but [2] 
+> also applies.
 
-In the thread at [1] I said that (in [2]) I expected that
---reapply-cherry-picks would be the default, but this implicit
---no-reapply-cherry-picks (in order to automatically exclude certain
-commits) is a long-available and long-advertised feature. So I
-symphatize with making certain modes of rebase automatically imply
---reapply-cherry-picks, but I think that either all modes (as much as
-possible) should imply it, or no mode should imply it.
-
-Having said that, I already looked at the code so I have included my
-review comments anyway (in case we do decide to have implied
---reapply-cherry-picks for --keep-base but not for other cases).
-
-As for the --fork-point part, I made a comment in my reply to patch 5.
-
-[2] https://lore.kernel.org/git/20200714035104.1465772-1-jonathantanmy@google.com/
+Maybe this is moot with the other changes you're planning, but even if
+the editor doesn't change the todo list, it's still necessary, right? At
+the very least, we need to suppress the default interactive editor and
+replace it with one that just reuses the input file without any
+modification.
