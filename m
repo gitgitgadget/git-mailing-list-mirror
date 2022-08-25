@@ -2,100 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B18DAC3F6B0
-	for <git@archiver.kernel.org>; Wed, 24 Aug 2022 23:43:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0072C04AA5
+	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 00:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230102AbiHXXnN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 19:43:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56016 "EHLO
+        id S229503AbiHYASR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 20:18:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229763AbiHXXnM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 19:43:12 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A655AC56
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 16:43:11 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id s206so16385548pgs.3
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 16:43:11 -0700 (PDT)
+        with ESMTP id S229437AbiHYASQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 20:18:16 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F70586897
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 17:18:15 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id cr9so14064169qtb.13
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 17:18:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc;
-        bh=6rm6lUTHJ/dT9KIXHlY7B5k8FO8dfYaFT3/ESMl2zN8=;
-        b=FD4KWHjdNg5jDgoYi0CO/9UeDk8V5ge9+SKMxvrta1efGUYDRoRasb7d5Ffwk9OUMp
-         gqWeZFJvvArO9dsIb37fVejeVlwVrMiThVP6RlxvOIDxj/WdQrY1zhQApC9A/zTIrMf2
-         hnT2uWKFLFJHVzQiSMBYNAPrjt+eWy2TfjI2PYnlEzVBjIsxshpeLQ0I0JHBKC7uW1qA
-         wcvcFiG/iifB9avbyaMYUofl571NJi1m/4H5FsaQ0M1GiiG26v00z8nZUMRyYdx3BVGH
-         F4aBPeMOj4QWC4gQTXnzFo7DkuVIKUPelkPb38vU4GUo3CzPhEEtaBveGmhcdJTAF8KG
-         PU4g==
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc;
+        bh=mxEttB2v6ZK0Vtu5XytDoKtfKOtfkWEYeFxmDPkELCs=;
+        b=GOageVLkxwMoty+tAxxfQ4Q2DJ0PeWQeJjVgAISWLtZ4L7FlxYuKgEdQIJC4nM0ExW
+         P5a6eIC2vJiBmHwFLgclpdIWulQ1eB57c5KvFni+rGwJ+tz2ts6R4x8VPhAK4L53evWk
+         PJlJC+9fNjT65PjyZZwDlkQuF4XsQ+lfNbeKuSA2GsG8e4kXBxLUJEZq5zwupMsTAkNQ
+         nf4mEE2A0Kh6F6ywCskOpTPByH0x8DSLM2PZLaChqj7JGFaClaj39WncM6xdkauLdBSl
+         HxvrHcONxMWswwdalDz4lJ7sL6/BcKMINVYwRPvEFQ8b1AOQ/OkVXM4Yxj/DPGxXM6dv
+         Zctw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
          :x-gm-message-state:from:to:cc;
-        bh=6rm6lUTHJ/dT9KIXHlY7B5k8FO8dfYaFT3/ESMl2zN8=;
-        b=2MmSnKD04g1Dk6Xxr5NClKQBVmuGs7gQBqaUOKLg1vkPc9VJM29FkU8T4dfjuvyqJp
-         MPIsiN4WgZ8NQFSsPJ6a2CRwWPP6L2/vhLvawCIfZig835jC/1qEdsYW/xz5nnO235Y+
-         ksg8imJc4Y52PVh5N9iX6VYFipsU4nefqmNsDw0Q9ob9YKAw2V/rzBpv0MqTZXq4jwfr
-         0sojZTOeVRw4lGsBm0Q4W4zHIQl7Z1DgVgn2Ynj26wEcyfZYgEoFgya04fmotMbrM/yz
-         Kt3OTIoRrcO+BD0ocjrVKKpVuPm7p4GabX9zksnonSyZVszVR8BPCM7TRtt7MXB+RMWO
-         Z7CA==
-X-Gm-Message-State: ACgBeo0fEUeqygo8CngFS3SnZ4jFRd1K2ofSlXUY5NEul93kGwN5XrBi
-        NpPC7ILg4DlRg6bd6DObG/0=
-X-Google-Smtp-Source: AA6agR772pW6R/X5bcjCHQMfl1c4CO2Lzxoug+AIbHjJT88r+JkCaUiThr94j/bwN1RJTi51XV6nCw==
-X-Received: by 2002:a63:cd55:0:b0:42a:7649:77c7 with SMTP id a21-20020a63cd55000000b0042a764977c7mr991384pgj.149.1661384591267;
-        Wed, 24 Aug 2022 16:43:11 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id b16-20020a170903229000b001729fa08b8esm3799396plh.288.2022.08.24.16.43.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Aug 2022 16:43:10 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH] ci: update 'static-analysis' to Ubuntu 22.04
-References: <pull.1334.git.1661275691795.gitgitgadget@gmail.com>
-Date:   Wed, 24 Aug 2022 16:43:10 -0700
-In-Reply-To: <pull.1334.git.1661275691795.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Tue, 23 Aug 2022 17:28:11
-        +0000")
-Message-ID: <xmqqwnax438x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        bh=mxEttB2v6ZK0Vtu5XytDoKtfKOtfkWEYeFxmDPkELCs=;
+        b=uSrI2NI/etqFlxkrK41AvebHtoBndng408wJCmc+zteSi9mTxPsiU1aRmvi89Xl6vh
+         X0OGO9QgA2jEP6rUusu82O1NTqaLv09M/vxlH4BIY7KWsMdUxtNSlJRYaRsJA8oknJFk
+         vaBTp6QDU3Yx6rRP/S0t0SRxtUqtO8faOYIIdcJPJj2YgmKYjFddWj2dRX0IPriV4iYy
+         3Wj+s7KzS9gMBdFk3cgmYvUu4UaUTDAp61jukwHXK2PYxQJzKSLR6GJhDKhdH1wavNFx
+         M/pRA3fUkjZO4P69GLzUz/DVJoQ1VLbVAz3BkMFjCYpgFjvMm4nmVWHVp4MVyvF0UZeI
+         cHBg==
+X-Gm-Message-State: ACgBeo2VwB/CTvtXrzV658iizYBuHtBqXcPtvNFBpwUwJMsrIgkbOvQu
+        NUPYSRpYaX//CH6m6eGXBF8=
+X-Google-Smtp-Source: AA6agR4x4SXGYB/73FcVqn0yQ12uyIvDVh7y8qDfiHxvqRUk+TN0Mw42CloFCvHjbOTXxtGJT7hR+A==
+X-Received: by 2002:ac8:5c12:0:b0:343:6c0e:df90 with SMTP id i18-20020ac85c12000000b003436c0edf90mr1667794qti.4.1661386694509;
+        Wed, 24 Aug 2022 17:18:14 -0700 (PDT)
+Received: from [192.168.1.128] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id v42-20020a05622a18aa00b003436103df40sm14599478qtc.8.2022.08.24.17.18.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Aug 2022 17:18:14 -0700 (PDT)
+Subject: Re: [PATCH v2 0/4] built-in add -p: support diff-so-fancy better
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1336.git.1661277870.gitgitgadget@gmail.com>
+ <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <241d3760-5b7a-fb3e-00dc-bf54bda92c82@gmail.com>
+Date:   Wed, 24 Aug 2022 20:18:13 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
+Content-Language: fr
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Dscho,
 
-> From: Derrick Stolee <derrickstolee@github.com>
->
-> GitHub Actions scheduled a brownout of Ubuntu 18.04, which canceled all
-> runs of the 'static-analysis' job in our CI runs. Update to 22.04 to
-> avoid this as the brownout later turns into a complete deprecation.
->
-> The use of 18.04 was set in d051ed77ee6 (.github/workflows/main.yml: run
-> static-analysis on bionic, 2021-02-08) due to the lack of Coccinelle
-> being available on 20.04 (which continues today).
->
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->     ci: update 'static-analysis' to Ubuntu 20.04
->     
->     I noticed this while preparing my bundle URIs series. See an example
->     cancellation at [1]
->     
->     [1]
->     https://github.com/gitgitgadget/git/runs/7954913465?check_suite_focus=true
->     
->     I initially asked about this [2]. Thanks to Matthias Aßhauer for
->     pointing out that 22.04 has Coccinelle available [3].
+Le 2022-08-24 à 17:21, Johannes Schindelin via GitGitGadget a écrit :
+> Philippe Blain reported in
+> https://lore.kernel.org/git/ecf6f5be-22ca-299f-a8f1-bda38e5ca246@gmail.com
+> that there is a problem when running the built-in version of git add -p with
+> diff-so-fancy [https://github.com/so-fancy/diff-so-fancy] as diff colorizer.
+> The symptom is this:
+> 
+>     error: could not parse colored hunk header '?[36m?[1m?[38;5;13m@ file:1 @?[1m?[0m'
+> 
+> 
+> This patch series addresses that and should fix
+> https://github.com/so-fancy/diff-so-fancy/issues/437
+> 
+> Changes since v1:
+> 
+>  * Added a commit to ignore dirty submodules just like the Perl version
+>    does.
+> 
+> Johannes Schindelin (4):
+>   t3701: redefine what is "bogus" output of a diff filter
+>   add -p: gracefully ignore unparseable hunk headers in colored diffs
+>   add -p: handle `diff-so-fancy`'s hunk headers better
+>   add -p: ignore dirty submodules
+> 
+>  add-patch.c                | 24 ++++++++++++++----------
+>  t/t3701-add-interactive.sh | 24 +++++++++++++++++++++++-
+>  2 files changed, 37 insertions(+), 11 deletions(-)
+> 
+> 
+> base-commit: 795ea8776befc95ea2becd8020c7a284677b4161
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1336%2Fdscho%2Fdiff-so-fancy-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1336/dscho/diff-so-fancy-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1336
+> 
+> Range-diff vs v1:
+> 
+>  1:  74ab50eeb1c = 1:  74ab50eeb1c t3701: redefine what is "bogus" output of a diff filter
+>  2:  b07f85a0359 = 2:  b07f85a0359 add -p: gracefully ignore unparseable hunk headers in colored diffs
+>  3:  9dac9f74d2e = 3:  9dac9f74d2e add -p: handle `diff-so-fancy`'s hunk headers better
+>  -:  ----------- > 4:  540ce27c38a add -p: ignore dirty submodules
+> 
 
-Thanks, it is already paying its dividend, it seems.
+Thanks, 4/4 fixes the mismatched output bug. Just after I sent my last email, 
+I asked myself "but why does 'git add -p' presents dirty submodule to the user,
+as they can't be staged?" :) 
 
-We probably need to fix or revert/remove rules we have in
-unused.cocci that makes bogus "suggestion".
+A small question about 2/4, any reason why you did not use a "Reported-by:" 
+trailer ? Not that I care that much, but I think using such a trailer is more
+standard, and makes for easier statistics as it's more parseable :)
 
-  https://github.com/git/git/runs/8005321972?check_suite_focus=true
+Thanks again for the quick fixes,
 
+Philippe.
