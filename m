@@ -2,142 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48864C28D13
-	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 11:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13388C04AA5
+	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 12:00:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237854AbiHYLKr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Aug 2022 07:10:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47948 "EHLO
+        id S241217AbiHYMAC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Aug 2022 08:00:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236708AbiHYLKp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2022 07:10:45 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF4249D11C
-        for <git@vger.kernel.org>; Thu, 25 Aug 2022 04:10:44 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id lx1so2398149ejb.12
-        for <git@vger.kernel.org>; Thu, 25 Aug 2022 04:10:44 -0700 (PDT)
+        with ESMTP id S241367AbiHYL7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2022 07:59:54 -0400
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37E82E09C
+        for <git@vger.kernel.org>; Thu, 25 Aug 2022 04:59:50 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-3376851fe13so501672137b3.6
+        for <git@vger.kernel.org>; Thu, 25 Aug 2022 04:59:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc;
-        bh=LqHhlrHKu/1+gLsrtydPsyYZt22Iub0hTI5BAUR8GEI=;
-        b=WqMuovg4PlSJFQtxlYEz3Mz7NuUp6rRvnrnG/syz8xO3Dpytw+933ZxGnrCaP9QC/y
-         FGHY0xIWOXJX32+qW2cPW/Dt3+n36dYk35jqLj6FtZTHOIu2zWHi0qCXtDgdgR52uof+
-         4FjV2RdCPW5LSjjTCMoF4bhWfbfYlNz8mwMwKHfRryLkpS7heQVFWfH0gZaJnP2dpnqb
-         25Df3iHIlJk6lPKZiOU8lljdEaJlZIsQaQyZFazgo+UaWvsJGSZ/Do9TwGNqMMxmdi+s
-         ymWPnRrRZeFPuuPMVfuEt7dTVrvun3/Nhx+GENWnNaM4vhpHNFxWoTjPgXayc85Uuiyw
-         SLLw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=MaUI2JttgOcijLh5G9PRDhb4+pVAUiKuoy7xZ8eoz9o=;
+        b=jk2X3t8WbAw9pIPPbEvv+nPa9a59ztKcLbo+GZu5yNRZn5ClBZOZHbwsZvhseh447I
+         Ht67YUoDWn7YEqQn9o9F83e0Iy7vw65YjhJf6+vj+92piEXPu4tjZnHLRLfiwe3of57J
+         7y6mfQVrOcZn4vk8q8h1hqt2/zVzX407nFaJWxmPpMfy4uxD5avl+tWlVhhT4zBRpl56
+         V+1146urx8p8dUyi9cqTgxI0HLFyUn+C+280uRuAZF+zypetaYeBsLz3JmSFNVFSyY8a
+         OIH4hUCqcTfv/6NIzW/M2Oiwkh8mJzFzV1BsMuz/8DU7FyXNO3UWG6SpUuBVFXijpjx6
+         XKvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc;
-        bh=LqHhlrHKu/1+gLsrtydPsyYZt22Iub0hTI5BAUR8GEI=;
-        b=H7S6UnCL0jPtSAxHR8rlQW925WQzQcVFXt5J7pp8yiPUSilYQF9dqoIUMvyfcRIipp
-         1LNSErY4prJFsNPCRRX6O3CAFcTCzIe44CvdZ1X54gxjqIaoJbU2F4DFjRd8+ospsRds
-         S5kbMYaqOeEPBRYiIsXWQK90iH6CYdlvRkyUKBCTb14o/57PTnauZnZKBQ9s9STFaN6R
-         L3Y0t2uYTs6juKsVvNKLdqafKk7/vxF7ZVsnbVK3dqDLqGGsCS8/9Wh9UqbBCFmmLk9B
-         p9xa3eP1Gw7vHrF0CWMY/LYxEoNF7GdFvlaQQ+hjWDTXgSNc92/uJfk3rU8LI3xosPw1
-         sBEA==
-X-Gm-Message-State: ACgBeo3oG7YgZUzv3X0I+awFEYgXiigHH/oDMGKAD+ApOc4kWX0/JpZA
-        OicipEVAxXL51OP69WShknQ=
-X-Google-Smtp-Source: AA6agR6TObAJnfuZYZ7nJ8vPI1oJDU53EIyWukCFvqreLHe4N1j5uDJ54Fowm4bfQCLtUyQ7nFZD1Q==
-X-Received: by 2002:a17:907:a042:b0:73d:c891:2f6b with SMTP id gz2-20020a170907a04200b0073dc8912f6bmr1998370ejc.139.1661425843430;
-        Thu, 25 Aug 2022 04:10:43 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id v9-20020a1709062f0900b00722e603c39asm2294559eji.31.2022.08.25.04.10.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Aug 2022 04:10:42 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oRAl0-001EnS-0N;
-        Thu, 25 Aug 2022 13:10:42 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/11] annotating unused function parameters
-Date:   Thu, 25 Aug 2022 13:00:19 +0200
-References: <Yv9gxqH6nK2KYnNj@coredump.intra.peff.net>
- <220819.861qtc8gug.gmgdl@evledraar.gmail.com>
- <c22a8317-7d43-d84b-f63f-df2da31b4658@github.com>
- <220819.868rnk54ju.gmgdl@evledraar.gmail.com>
- <YwCtkwjWdJVHHZV0@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <YwCtkwjWdJVHHZV0@coredump.intra.peff.net>
-Message-ID: <220825.86edx44lzh.gmgdl@evledraar.gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=MaUI2JttgOcijLh5G9PRDhb4+pVAUiKuoy7xZ8eoz9o=;
+        b=dOazGANklepkWkqvs9NZW8XwnAtEm8L79IegeRG4B3GBOyf/E5L/LniYSHv22xIEtR
+         GTjz8ZMb6S1Ja6q2+/oBMSvQoiweqQ47hBQjEx3x5I5Ft7dcP+m+1thwf2fzzvvqnA1M
+         EdfuDZlA+j4z70dRnBVnR7NSZNnTd4agLsr89YnCS6KlwF72bHS6naOhXWhPkzcMRo62
+         x5/NJoRXwteDRwsHxsTVpoLZ7YalgRMmb3HoC67pKaDQ/qMlvplgwQ74RxQ7dOKtKs4X
+         WHKOcQkCtf5fUc8EReK9t1p152FwoLKLsybfBg8mCu389uzrjjHhxvtNryDxq/IoREZN
+         3lVQ==
+X-Gm-Message-State: ACgBeo3Nbxee2KwajiVyJ84fnk2kbU9FKY3qPDCHNI/K6X0F0FdFCbmg
+        qR1l7eaDYDUJIst9IgK4mWkiyfci83nhYIHtVdAzz4wCp+I=
+X-Google-Smtp-Source: AA6agR5Ta8MXnJI/hytLwtdKJ8JAQ5J4Lag6DbUAJPusFF9RbEBQ5CMeqvOtPdZQDmKjvpzR8hsUM2Q+uIVQLubhmYQ=
+X-Received: by 2002:a05:6902:10ca:b0:671:3616:9147 with SMTP id
+ w10-20020a05690210ca00b0067136169147mr2861930ybu.105.1661428789946; Thu, 25
+ Aug 2022 04:59:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <CAP8UFD2kMXHxvg1tKVNLhY0Gweq2YrD7+tHmZXKwguYzRQ1Qpg@mail.gmail.com>
+ <20220823140630.159718-1-christian.couder@gmail.com> <xmqq4jy18q7h.fsf@gitster.g>
+In-Reply-To: <xmqq4jy18q7h.fsf@gitster.g>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 25 Aug 2022 13:59:38 +0200
+Message-ID: <CAP8UFD0EfhDo9ZMNSYp8YVHXJs6mYtSBs=hwoFZWWF3xZ0wjpg@mail.gmail.com>
+Subject: Re: [PATCH] Documentation: clarify whitespace rules for trailers
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Maxwell Bernstein <tekk.nolagi@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Sat, Aug 20 2022, Jeff King wrote:
-
-> On Fri, Aug 19, 2022 at 10:58:08PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+On Wed, Aug 24, 2022 at 8:13 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
->> Yes, I spoke too soon, sorry. We still need ((unused)). FWIW the below
->> on top of master and doing:
+> Christian Couder <christian.couder@gmail.com> writes:
+
+> > -When reading trailers, there can be whitespaces after the
+> > -token, the separator and the value. There can also be whitespaces
+> > -inside the token and the value. The value may be split over multiple lines with
+> > -each subsequent line starting with whitespace, like the "folding" in RFC 822.
+> > +When reading trailers, there can be no whitespace inside the token,
+> > +and only one regular space or tab character between the token and the
+> > +separator.
 >
-> Right. Using ((deprecated)) is really just a substitute for the variable
-> renaming part.
+> That may have been the intent, but does it match the behaviour?
 >
-> And I agree it works as advertised, though I think I prefer the
-> variable-renaming version.
+>         static ssize_t find_separator(const char *line, const char *separators)
+>         {
+>                 int whitespace_found = 0;
+>                 const char *c;
+>                 for (c = line; *c; c++) {
+>                         if (strchr(separators, *c))
+>                                 return c - line;
+>                         if (!whitespace_found && (isalnum(*c) || *c == '-'))
+>                                 continue;
+>                         if (c != line && (*c == ' ' || *c == '\t')) {
+>                                 whitespace_found = 1;
+>                                 continue;
+>                         }
+>                         break;
+>                 }
+>                 return -1;
+>         }
 >
-> One, it feels like we're abusing the deprecated attribute here. The
-
-Definitely, but structurally it seems like a better pick. I.e. isn't the
-only problem with it the "deprecated" and its interaction with
--Wno-deprecated.
-
-If the exact same feature existed as a "insert-custom-warning", which
-would work exactly "deprecated" without the default warning "prefix"
-would you think this would fit perfectly?
-
-> ...
-> -Wno-deprecated-declarations to get around _actual_ deprecated warnings
-> (e.g., compiling with OPENSSL_SHA1=3DYes). And doing so would be cutting
-> out half the protection of UNUSED() in that case.
-
-This is mildly annoying, but I don't really think it's a practical
-issue. We're talking about running this without
--Wno-deprecated-declarations in CI, and by default.
-
-For unused parameters it's enough that we're catching them somewhere, or
-in common compilation settings, we don't need to catch them
-*everywhere*, do we?
-
-IOW is anyone writing patches where they're testing with
--Wno-deprecated-declarations *and* adding unused parameters *and* won't
-test without -Wno-deprecated-declarations before submitting them, *and*
-nobody else will catch it?
-
-> Likewise, one thing I like about the renaming is that it fails
-> compilation regardless of -Werror. So it will be caught in any compile,
-> no matter what. And I do automatically compile without DEVELOPER=3D1 when
-> on a detached HEAD, because historical commits often trigger warnings.
-> Go back far enough and OPENSSL_SHA1 was the default, which generates
-> lots of warnings these days. :)
-
-*nod*, I think this also goes the other way. It's nice to be able to use
-DEVOPTS=3Dno-error to "get past" various minor issues. I consider an
-unused parameter as being a minor issue. E.g. when ad-hoc cherry-picking
-something to test on an older version it can be annoying to have to make
-larger changes when a DEVOPTS=3Dno-error would do.
-
-> And finally, I actually prefer the parentheses of:
+> When parsing "X  :", first we encounter 'X', we haven't seen
+> whitespace, 'X' passes isalnum(), and we continue.  Then we
+> encounter ' ', we haven't seen whitespace but it is neither isalnum
+> or dash, so we go on without hitting the first continue.  We are not
+> at the beginning of the line, we are seeing a space, so we remember
+> the fact that we saw whitespace and continue.  Next we see another ' ',
+> we do not hit the first continue, we are not at the beginning of the
+> line, and we are looking at ' ', so we again continue.  Finally, we see
+> ':' that is a separator and we return happily.
 >
->   static int register_ref(const char *refname, const struct object_id *oi=
-d,
-> 			  int UNUSED(flags), void *UNUSED(cb_data))
+> The code seems to be allowing zero or more space/tab before the
+> separator.
 
-...and now to the real reason for the follow-up. You/Junio were CC'd,
-but this is breaking coccinelle, see:
-https://lore.kernel.org/git/220825.86ilmg4mil.gmgdl@evledraar.gmail.com/
+Yeah, I agree. I misread the code. I will send a new version soon.
 
-So, bikeshedding-wise I don't care to argue the point. But between odd
-syntax highlighting and now one analysis tool barfing on it it's a bit
-more than a bikeshed :)
+Thanks.
