@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA732C28D13
-	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 14:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96D0BC64991
+	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 14:36:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242143AbiHYOge (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Aug 2022 10:36:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33782 "EHLO
+        id S242172AbiHYOgf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Aug 2022 10:36:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242080AbiHYOgZ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S242076AbiHYOgZ (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 25 Aug 2022 10:36:25 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F8D16593
-        for <git@vger.kernel.org>; Thu, 25 Aug 2022 07:36:23 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id h24so24892775wrb.8
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AF92AA4F4
+        for <git@vger.kernel.org>; Thu, 25 Aug 2022 07:36:24 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id a4so24928984wrq.1
         for <git@vger.kernel.org>; Thu, 25 Aug 2022 07:36:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc;
-        bh=fU/xzQCqw/Hw4pqVQ6vYzbQsxC26a7OF1RmKqLhlVGo=;
-        b=cOpHcY8Ev9M8K9hiSxaMt6slkYeiepIDgSYAa/tztN073OhlhZI0/vPz2Mu/ep6t01
-         lrFWv/wky4xqW5mVFyJQxZ1IiSNWq4f2Ixfq4NBVDJlp6goAYfapx3HAnhpihRwtM2FB
-         2i90uK7wz9sPHUlJs9lMUydGly7Z1cDZAxN1gtTQ2Qt+jCey2YZq9Y9Z6Eya/4UUdIOq
-         EHmGBKNUK431xGBASlysPsWImvLjq3LhCVuIWYdKluS4MKgJZ6gyMakH6AsVx1o6owWl
-         W8TZYGpOMnpVaCON/Og83SSB9pOcTAqgnoiQXEEJRrDNMQHTuXAqd0TKVqyzu1I3WS6k
-         zSWg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc;
+        bh=1yC5Wv1NsWdozjXB4QyYZ+Pc30xfRmVSE0XFWPKkjIo=;
+        b=Rlz+XABr110kkjESOBZ4JhehCIa5MYpHo9gNE6h9yDCof1GiGRmL1YE412owaFrzCH
+         ye5cMsKOmO74fCRra05eXdwBKFMxRmO3k45NGjTbpG4mTmTLfbmLP43KMM7zW4BSZdjD
+         +FMBfnyK1JrqDggBbxxZTKWiP2drMDgaop9jBoFlC4DiS2k6grpsh1J4yZoQJm+RjimA
+         prPIYC1K87ZEI8a7k5WaiELaPjhqsPvFVlDFSehgfv1eIEDPrYOlchjiF6v2W/c9mS0c
+         wUkUmJuk8/hp5FLGrlsOzvk4A+a3YD2syqvJEB15Ht8ZkuwoNGTxKvDbfQOf9QTe8uKj
+         p2dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc;
-        bh=fU/xzQCqw/Hw4pqVQ6vYzbQsxC26a7OF1RmKqLhlVGo=;
-        b=c+E1nWsEl+ZmIdRAKFsR/PkobzwGfA8OZlZgQl75/W2hfbcEXFAQfdih8UrA1K43FH
-         AsaP4vevhUP/2nmnAe65A/PPkxtASKWoLAho+8LYfzGDMtXV246pGR1JuTFrS7YoJb9h
-         liIl9fEz7jcXNGyO7x5zj5ZG0stf24vOSpvhdUQLZrGg1x5wnZHH2pU4KpKZUc4pmeZw
-         8ub9qsmqkCvQlUUuYO8PSqwBzjGOh7kxPGEDInH6H5vWg3WgVD8SSZgT+DhFbG583W6Q
-         5yz0Evo55FyIaUFeORzd/AriMWZTOVJYXUh851VJ30JBCBw+n97YrcBaUV68vLIayb39
-         hQpg==
-X-Gm-Message-State: ACgBeo3ik8LmtcogJxlc3onWkLeI5XarQ36iZSN8Hd9pGOmU4e0MI8sh
-        zU4S65FbRzCx9tQ+5YTNOiFBz15a5Ec=
-X-Google-Smtp-Source: AA6agR63hAzsEnz+U1jmkfj5DXbME2DjSWvo9gKPAqiRCpad3mEG+EoKYphEEsDyTVwo3UiYZrU44A==
-X-Received: by 2002:a5d:595e:0:b0:225:3dd7:e376 with SMTP id e30-20020a5d595e000000b002253dd7e376mr2461516wri.223.1661438181382;
-        Thu, 25 Aug 2022 07:36:21 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=1yC5Wv1NsWdozjXB4QyYZ+Pc30xfRmVSE0XFWPKkjIo=;
+        b=mJeh2t1i3ILC74QqJTdWzBBjquMatwVThtgpgtSU5VYAFBer8xow3GU8Pw/BbOphSk
+         7rZhryTbdA/maafTz62nPQACeYYZ0gQ0y1CJ+rq88aeLW69HQSxtEPxJohz2GFcbtr+U
+         nHsW43D6mSrA7jw9U0u7oirkAuBiESEZ/6BN9tYNblijPIz2nMKJnev+9CPUSWdtBAJ8
+         Fw5g17nughqPVJ/WKjy1j1KiCS09+7JRagnMRHAsu6jKKRgHPfahZayvL1K+KXj9gozM
+         e4eWUm3n5e6a171kvnGJVNjSZmKorkzgzGNU6oCjWHeeif0YpEXZ8/TE9geleG/2Mfql
+         LoQw==
+X-Gm-Message-State: ACgBeo2JKYJMidoDp7p/PC0OY0fQo7hJRXvWuOllYs/0WbqGBxWjMNwV
+        Va73PP7hvhFDGNQzzI0vVBTNacyx5GA=
+X-Google-Smtp-Source: AA6agR5O8NiGSWclGQbn1SYet6cdROuayt569bEjCQ3gTE69SbT6+VDFeu7rYDaGTHI/snVJfoR8FA==
+X-Received: by 2002:a05:6000:1c0c:b0:225:569c:dd2c with SMTP id ba12-20020a0560001c0c00b00225569cdd2cmr2445826wrb.628.1661438182266;
+        Thu, 25 Aug 2022 07:36:22 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m27-20020a056000181b00b0022549ac786asm14418027wrh.47.2022.08.25.07.36.20
+        by smtp.gmail.com with ESMTPSA id m27-20020a056000181b00b0022549ac786asm14418027wrh.47.2022.08.25.07.36.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Aug 2022 07:36:20 -0700 (PDT)
+        Thu, 25 Aug 2022 07:36:21 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,10 +54,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/5] cocci: make "incremental" possible + a ccache-like tool
-Date:   Thu, 25 Aug 2022 16:36:12 +0200
-Message-Id: <cover-0.5-00000000000-20220825T141212Z-avarab@gmail.com>
+Subject: [PATCH 1/5] Makefile: add ability to TAB-complete cocci *.patch rules
+Date:   Thu, 25 Aug 2022 16:36:13 +0200
+Message-Id: <patch-1.5-8604ac9bfbc-20220825T141212Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.2.1279.g64dec4e13cf
+In-Reply-To: <cover-0.5-00000000000-20220825T141212Z-avarab@gmail.com>
+References: <cover-0.5-00000000000-20220825T141212Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,57 +67,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series makes the "coccicheck" rule incremental by only re-running
-"spatch" for those file/rule combinations that changed.
+Declare the contrib/coccinelle/<rule>.cocci.patch rules in such a way
+as to allow TAB-completion, and slightly optimize the Makefile by
+cutting down on the number of $(wildcard) in favor of defining
+"coccicheck" and "coccicheck-pending" in terms of the same
+incrementally filtered list.
 
-The result is that e.g. running "make coccicheck" followed by a:
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-	make -W grep.c coccicheck
-
-Will take around 2s instead of a *lot* longer. The 3/5 change has all
-the details about this, and why it's safe.
-
-Furthermore we'll properly handle re-building if any of the required
-headers change (e.g. column.h).
-
-I had a previous stab at trying to make "coccicheck" faster a while
-ago in [1], but that was fatally flawed because it would break in
-cases where grep.c e.g. dependen on a header that changed.
-
-This series doesn't suffer from that issue, because we piggy-back on
-the corresponding .depend/* files to extract dependency info. This
-does mean that the incremental speed-ups depend on
-COMPUTE_HEADER_DEPENDENCIES=yes (which is the case with "gcc" and
-"clang" by default).
-
-I've been running with this series locally for a while. I think it
-should fully solve the lamentations about the coccicheck being too
-slow (e.g. in [2]), particularly when paired with the new
-"spatchcache" helper added in 5/5.
-
-Even without that helper running "make coccicheck" e.g. after applying
-a patch series now becomes viable, provided the patches don't modify
-one of the "rebuild everything" files we have (such as cache.h and
-git-compat-util.h).
-
-1. https://lore.kernel.org/git/20210302205103.12230-1-avarab@gmail.com/
-2. https://lore.kernel.org/git/xmqqh7249b8d.fsf@gitster.g/
-
-Ævar Arnfjörð Bjarmason (5):
-  Makefile: add ability to TAB-complete cocci *.patch rules
-  Makefile: have "coccicheck" re-run if flags change
-  cocci: make "coccicheck" rule incremental
-  cocci: make incremental compilation even faster
-  spatchcache: add a ccache-alike for "spatch"
-
- .gitignore                                    |   1 +
- Makefile                                      | 114 +++++++--
- contrib/coccinelle/spatchcache                | 217 ++++++++++++++++++
- .../coccinelle/the_repository.pending.cocci   |   1 -
- shared.mak                                    |   4 +-
- 5 files changed, 310 insertions(+), 27 deletions(-)
- create mode 100755 contrib/coccinelle/spatchcache
-
+diff --git a/Makefile b/Makefile
+index e8adeb09f1c..bd8faac61ee 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3135,9 +3135,15 @@ check: $(GENERATED_H)
+ 		exit 1; \
+ 	fi
+ 
++COCCI = $(wildcard contrib/coccinelle/*.cocci)
++COCCI_PATCHES = $(addsuffix .patch,$(COCCI))
++COCCICHECK_PENDING = $(filter %.pending.cocci.patch,$(COCCI_PATCHES))
++COCCICHECK = $(filter-out $(COCCICHECK_PENDING),$(COCCI_PATCHES))
++
+ COCCI_TEST_RES = $(wildcard contrib/coccinelle/tests/*.res)
+ 
+-%.cocci.patch: %.cocci $(COCCI_SOURCES)
++$(COCCI_PATCHES): $(COCCI_SOURCES)
++$(COCCI_PATCHES): %.patch: %
+ 	$(QUIET_SPATCH) \
+ 	if test $(SPATCH_BATCH_SIZE) = 0; then \
+ 		limit=; \
+@@ -3174,11 +3180,11 @@ $(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : contrib/coccinell
+ coccicheck-test: $(COCCI_TEST_RES_GEN)
+ 
+ coccicheck: coccicheck-test
+-coccicheck: $(addsuffix .patch,$(filter-out %.pending.cocci,$(wildcard contrib/coccinelle/*.cocci)))
++coccicheck: $(COCCICHECK)
+ 
+ # See contrib/coccinelle/README
+ coccicheck-pending: coccicheck-test
+-coccicheck-pending: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.pending.cocci))
++coccicheck-pending: $(COCCICHECK_PENDING)
+ 
+ .PHONY: coccicheck coccicheck-pending
+ 
+@@ -3446,7 +3452,7 @@ profile-clean:
+ 
+ cocciclean:
+ 	$(RM) -r .build/contrib/coccinelle
+-	$(RM) contrib/coccinelle/*.cocci.patch*
++	$(RM) $(COCCI_PATCHES)*
+ 
+ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) -r .build
 -- 
 2.37.2.1279.g64dec4e13cf
 
