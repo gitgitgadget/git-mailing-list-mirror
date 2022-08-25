@@ -2,104 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FCAFECAAD1
-	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 22:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EE66ECAAD1
+	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 22:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241807AbiHYWRE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Aug 2022 18:17:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51872 "EHLO
+        id S244357AbiHYWVI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Aug 2022 18:21:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232099AbiHYWRC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2022 18:17:02 -0400
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68E0F8E4C9
-        for <git@vger.kernel.org>; Thu, 25 Aug 2022 15:17:01 -0700 (PDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id n14so13253253qvq.10
-        for <git@vger.kernel.org>; Thu, 25 Aug 2022 15:17:01 -0700 (PDT)
+        with ESMTP id S244346AbiHYWVG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2022 18:21:06 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 065C9C2751
+        for <git@vger.kernel.org>; Thu, 25 Aug 2022 15:21:05 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id n21so16341048qkk.3
+        for <git@vger.kernel.org>; Thu, 25 Aug 2022 15:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc;
-        bh=s4Fj5/2fsGxY5jkwwjJG5gYneKEHOZyBoVgyPCR9SVQ=;
-        b=Dh28sTsi2hsCM7FtIKVkjwPV/Vy0pU3j5ZrrJe0sKraNsHHk1GOs3eEOQP1TDZApET
-         yd9d4hotmifShA+k0jUgimLeitidO82Z1rbhHqw2SE5E6+v1v3ERE7SPjMzUvShiuEO/
-         6lK/ScJFOF93TBsG4Avdx+eu2s8uqSUesi3IIzSd13+JAeYlNrA6GIPGdKR5P93Wha/g
-         6uRdwyxEvifbxoF1xeccww2nIP8Ux13vUtJrenaaEdfg0vluoIaRHyEPdEU/9O1j7g1Y
-         rpWF1x8rhoXhpNQYWqN8kwgsRCQsyqIn1ndLz4753IdAluYc4sOrfL/9mgCXdeUDMXdJ
-         ftYQ==
+        bh=Kgzh/cuOCA8POMmW17ncdCL8sS/9StWTnHLD8Yw7T48=;
+        b=PHlLIckDgmdszcsaLnMXCnCuGiU4kVGw+smOhsFc61BLv0dpBfZfMvXnuaOSc2Tse9
+         wWybb/Nhtr7tgyGr9kS1aIyfPuF3OfK34u9b02P5M3rA+TYKCVhblyTmC45XDV4zVau5
+         Qf9z+7Le4gdAFxy8V7wnhoj1NCxPNgO/PmcpjA/2TnbUaHhIHc6VU+6dL8TItwfpMDrA
+         BJgcijReTEaHIpfYMy6dwl3eys4Qt+1NGb6CjzR2kFv0PUyM0BYENsUMRyJ29Xyytmf3
+         L329xaiC1kTqUwtrT7Fv6U2rwsjslJaX1dul5z/eIWiIN2QtAr2ifgw+HVs+SSwS0WHX
+         wgkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=s4Fj5/2fsGxY5jkwwjJG5gYneKEHOZyBoVgyPCR9SVQ=;
-        b=PBz4WV/vsh8fzy8bdascm4PjBDUaF+BEVZSQKa/DfCcR23/fOXwuJDTRuiFR78hSwq
-         B9T4DS1CKZUgBoeoiD6QzUrgpyLLLaTzcD1cmrV/NyG3zgrWH5eeSy24uVQCdK0yEM1A
-         NRs/gtvIBksDmDCVLN3Nrg07VbZ3ZcviOj72y+++gL7uCXMkQGXtRvNYvYXsp0aBXyOC
-         /sYavtd1MjhKG7Nk6b6bKlUYmXrSw4AHtTCVDmHxA3PoJZ1V/04ETnBXpFZ13A1BYz1b
-         L9VhD0VVVO65kujUWohOs/JTy3Y0+HCFyIoPl/WTCk+UTjaipEyJKCSIJOKaMChChVPE
-         fbaw==
-X-Gm-Message-State: ACgBeo3jDDZzU10Ddby161/O0gGPW6gQ3eFFizs5wcZf4KHyjeO/lBWe
-        UZ4k9t1VVpyu32xvjcUowzCY4Q==
-X-Google-Smtp-Source: AA6agR7wJeA7MEfL0HwuH6TQh/ysW3NEenHyDzY0yAwZAU727JKAPh/wdyuoFl17k4dplmBYk4/FqA==
-X-Received: by 2002:a05:6214:c2b:b0:476:813a:b173 with SMTP id a11-20020a0562140c2b00b00476813ab173mr5775902qvd.31.1661465820192;
-        Thu, 25 Aug 2022 15:17:00 -0700 (PDT)
+        bh=Kgzh/cuOCA8POMmW17ncdCL8sS/9StWTnHLD8Yw7T48=;
+        b=BkqNCMcq5mumEz4vqUfVAjCw+MrWWGISZaBxW050MCgpWwYHwNoGJ37kthli8zslcl
+         LtZqIa0hlRfL2A6rPWuV5ZPMzfiL+244Ln6ZYpcRQPat4ZNr4JVvZDZgkYRctbjT19bR
+         whHZqBohQmUXBjktEKUNFJYypsOgF0x/WsvaiT/2jaO3NWV73LS2S2RR2q4uUIFmlBK7
+         0RP2tc7GKCbYL9OUfNTMoi59LM/odqY8l95EIhTP9d1fOp0sJZUzhrBCyOK62S7z1+aW
+         gjIry4nSbEZ2C7hPUiAtZ7xiztqKkA2Fg40Obs5Lhlzgayp207CZlDRJiBEgSrEKx9W+
+         pd9A==
+X-Gm-Message-State: ACgBeo1nTY3bvGg6gS+0515kXKeJeHvikhvm/wec2CcLrioXPIrNhuaI
+        1gsB9WcGu4JqbpGGk+nak6e4BQ==
+X-Google-Smtp-Source: AA6agR7QdINoD9EcYBaOStoOPom4syQWDIHqUchnSiX/61XRJ74+uCMtwBO1pRY9pGDkO/s6JKF4Fw==
+X-Received: by 2002:a37:bb04:0:b0:6b8:f051:924b with SMTP id l4-20020a37bb04000000b006b8f051924bmr4679577qkf.32.1661466064046;
+        Thu, 25 Aug 2022 15:21:04 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id de17-20020a05620a371100b006bc5cdc890bsm495200qkb.77.2022.08.25.15.16.59
+        by smtp.gmail.com with ESMTPSA id w30-20020a05620a0e9e00b006bb619a6a85sm494991qkm.48.2022.08.25.15.21.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Aug 2022 15:16:59 -0700 (PDT)
-Date:   Thu, 25 Aug 2022 18:16:53 -0400
+        Thu, 25 Aug 2022 15:21:03 -0700 (PDT)
+Date:   Thu, 25 Aug 2022 18:21:02 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH v6 0/6] [GSoC] bitmap: integrate a lookup table extension
- to the bitmap format
-Message-ID: <Ywf01YqJKNsGfffx@nand.local>
-References: <pull.1266.v5.git.1658342304.gitgitgadget@gmail.com>
- <pull.1266.v6.git.1660496112.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2022, #08; Wed, 24)
+Message-ID: <Ywf1zngpKknCmGYl@nand.local>
+References: <xmqqa67s5275.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.1266.v6.git.1660496112.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqa67s5275.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Abhradeep,
-
-On Sun, Aug 14, 2022 at 04:55:05PM +0000, Abhradeep Chakraborty via GitGitGadget wrote:
-> Changes since v5:
+On Wed, Aug 24, 2022 at 10:20:30PM -0700, Junio C Hamano wrote:
+> * ac/bitmap-lookup-table (2022-08-14) 6 commits
+>  - bitmap-lookup-table: add performance tests for lookup table
+>  - pack-bitmap: prepare to read lookup table extension
+>  - pack-bitmap-write: learn pack.writeBitmapLookupTable and add tests
+>  - pack-bitmap-write.c: write lookup table extension
+>  - bitmap: move `get commit positions` code to `bitmap_writer_finish`
+>  - Documentation/technical: describe bitmap lookup table extension
 >
-> As the failure in the test case is not due to this code, I think it makes no
-> sense to delay the patch further.
+>  The pack bitmap file gained a bitmap-lookup table to speed up
+>  locating the necessary bitmap for a given commit.
 >
->  * The performance test changes were not accurate as the second
->    test_bitmap_cases call using the repo built for the previous call. This
->    version fixes that.
->  * Taylor suggested some minor changes. Those are addressed in this version.
+>  Needs review.
+>  cf. <YwOXIE8K0GJRLuDT@nand.local>
+>  source: <pull.1266.v6.git.1660496112.gitgitgadget@gmail.com>
 
-Apologies for my slow reaction time reviewing this series. Between
-looking at that preferred pack bug you and Dscho spotted to catching up
-after my vacation, it has taken me longer than I wanted to to take a
-look at this.
+I took a careful look at the latest version of this series (v6) and was
+happy with the results. My review is here:
 
-I read through v6 carefully and am happy with the current state of
-things. I think there are some small incremental clean-ups that we could
-do on top, but they need not block this series, especially since the new
-code is made opt-in behind a configuration knob.
+    https://lore.kernel.org/git/Ywf01YqJKNsGfffx@nand.local
 
-This series all looks great to me, and the performance numbers that you
-achieved at the end are a nice payoff for all of your hard work. Well
-done!
+and I think that this is ready to start cooking in next. Well done,
+Abhradeep!
 
-    Reviewed-by: Taylor Blau <me@ttaylorr.com>
+> * tb/midx-with-changing-preferred-pack-fix (2022-08-22) 7 commits
+>  - midx.c: avoid adding preferred objects twice
+>  - midx.c: include preferred pack correctly with existing MIDX
+>  - midx.c: extract `midx_fanout_add_pack_fanout()`
+>  - midx.c: extract `midx_fanout_add_midx_fanout()`
+>  - midx.c: extract `struct midx_fanout`
+>  - t/lib-bitmap.sh: avoid silencing stderr
+>  - t5326: demonstrate potential bitmap corruption
+>
+>  Multi-pack index got corrupted when preferred pack changed from one
+>  pack to another in a certain way, which has been corrected.
+>
+>  Will merge to 'next'?
+>  cf. <be9c7c72-ba24-3e1a-8428-58a2e2afa09a@github.com>
+>  source: <cover.1661197803.git.me@ttaylorr.com>
+
+Yeah, this one is ready to go. Stolee gave it a look in the email that
+you linked, and said it looked good to him.
+
+Abhradeep took a brief look and didn't notice any problems (but I think
+he is quite busy outside of GSoC right now and so didn't appear to spend
+a significant amount of time reviewing it).
+
+This should probably be taken to next at the same time or before
+ac/bitmap-lookup-table, since that topic seems to tickle the bug more
+often than not.
+
+> * tb/show-ref-count (2022-06-06) 2 commits
+>  - builtin/show-ref.c: limit output with `--count`
+>  - builtin/show-ref.c: rename `found_match` to `matches_nr`
+>
+>  "git show-ref" learned to stop after emitting N refs with the new
+>  "--count=N" option.
+>
+>  Expecting a reroll.
+>  cf. <xmqqczfl4ce1.fsf@gitster.g>
+>  source: <cover.1654552560.git.me@ttaylorr.com>
+
+Feel free to discard for now. I put this topic down, and don't think
+that it's essential to get back to anytime soon-ish.
 
 Thanks,
 Taylor
