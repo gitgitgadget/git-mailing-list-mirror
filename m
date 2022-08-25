@@ -2,149 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D2B0ECAA2B
-	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 19:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF24FECAA27
+	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 19:50:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229711AbiHYToY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Aug 2022 15:44:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38292 "EHLO
+        id S242997AbiHYTuh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Aug 2022 15:50:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243020AbiHYToX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2022 15:44:23 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB875BFC4F
-        for <git@vger.kernel.org>; Thu, 25 Aug 2022 12:44:21 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id z2so27450843edc.1
-        for <git@vger.kernel.org>; Thu, 25 Aug 2022 12:44:21 -0700 (PDT)
+        with ESMTP id S230343AbiHYTuf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2022 15:50:35 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9C0C33A30
+        for <git@vger.kernel.org>; Thu, 25 Aug 2022 12:50:34 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id bd26-20020a05600c1f1a00b003a5e82a6474so3048615wmb.4
+        for <git@vger.kernel.org>; Thu, 25 Aug 2022 12:50:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc;
-        bh=NPEZuTe7tkFlahXoIeyxO6wPhXCg7GZ4dT62wo1+/Lk=;
-        b=cPJ6q3H0pzGTa+KhnwANe9wvZJ9gi0Gr1xXiNhOvtRuY29Ck2lnKUSzEy0Zini7mis
-         0g7J1MN3PAEf6IGjh7PwXZt0Ptm+sKSkS+XdvR4X/mYg628xooeJvPZTmNArCCmK/CeE
-         WGTHLZN4onZg4r57ge3aSwWIxeHm8Lu4z4L4BDEdM8ldgaeEfmcoHKKFAx94ihMEGRYN
-         73v2dctUW2z2pcob+dSKoheo+8+7y/v9toKNvdqJ5xZ2Ejiz3fo3lhrV1CwsDRqHEyWn
-         FRJFzPMz4Z0tkmxizMqdxCav0hOHyyZiETH8qcV7DMP77TQSkUL3PWFt4mp/JoM/+lZu
-         ppZA==
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc;
+        bh=gNs8lIaI2RV4wO/Ugm9Ihib6c5xgHgMP9imPLmacU7g=;
+        b=okULyt1M/P5mYcb0/zyijxc8TkSBwUECDAb32gi2zt/v7FwaS8YCC88a07Ev8OG1NK
+         p5aORwIP7GKJeEJwLgGlThKr7/eyB+t6oRyarF4el6/mSKYJxsK3T7OeYJu5Tmmj8XEL
+         NRXcp7gym9xrduef3nWdaOwqwlvunymoEmxvwU5+VRYwJgDHpIYvRQ+zPawW9RUHmEjn
+         cHXNOMi7v/scazd7Jw2ZasZdUx6CufX35ZLPaE741m7CrLaG1kThgRCna4e5RJcxI/MV
+         EB39hFuFgIvNcHP0VYOxtW8OisG0P5m9eeRB4XA5BxSlPSpaSKdOBoCPaZYN/w+q+Ayy
+         CCQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
          :x-gm-message-state:from:to:cc;
-        bh=NPEZuTe7tkFlahXoIeyxO6wPhXCg7GZ4dT62wo1+/Lk=;
-        b=AziFmJ60Y3iANtCl+Zy6xnGkv+4JernFFEJ8rqnBcLYc2w2tE8YQXQXw4P+6W5Nvuu
-         vRQC2wrF1jd/iEGpWoAWhMAzCiHd/XQEb5ZuEAlbC1JwBJ34ieMokshaUv8UPtE6yWvI
-         e4u7K7d9U0V1Ctif9k6FFqIELDcxnDggKvpzI0ypGRqFwe2wmb2/cXuovTY82sYBSRQk
-         DOuRWheUQwOD/Tveity3x6J+yUOe2SpzWlDJJLaBgGH3zPFF/WHSngATuJm7RQM95YuB
-         /MJRQ+dZITQqhaQoUmmyOu5fNstvyB8jvtsrgRlJEtU9Q0jIMpY+KgO644bILG28GPPf
-         fkyw==
-X-Gm-Message-State: ACgBeo1arn8h8V4vW6DYE0yDinTo0A9gOBnTGXNJmM3ZXQ5uFVsXEfrS
-        jE9tmePNXh3J2sIw1jLvJCA=
-X-Google-Smtp-Source: AA6agR60rztuPq0RzKtOnV0DeH6LMrPgisi5B43Utt19QMzgcewRwGL7+uOXb6xpXsfDqFKWtJ3Huw==
-X-Received: by 2002:a05:6402:248d:b0:437:dd4c:e70e with SMTP id q13-20020a056402248d00b00437dd4ce70emr4284764eda.75.1661456660323;
-        Thu, 25 Aug 2022 12:44:20 -0700 (PDT)
-Received: from localhost (78-131-17-114.pool.digikabel.hu. [78.131.17.114])
-        by smtp.gmail.com with ESMTPSA id d25-20020a056402079900b00447e2aeeba2sm119356edy.27.2022.08.25.12.44.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Aug 2022 12:44:19 -0700 (PDT)
-Date:   Thu, 25 Aug 2022 21:44:18 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/5] cocci: make "coccicheck" rule incremental
-Message-ID: <20220825194418.GI1735@szeder.dev>
-References: <cover-0.5-00000000000-20220825T141212Z-avarab@gmail.com>
- <patch-3.5-6fa83695f1f-20220825T141212Z-avarab@gmail.com>
+        bh=gNs8lIaI2RV4wO/Ugm9Ihib6c5xgHgMP9imPLmacU7g=;
+        b=SVGMDQjO3q4G6divE+fD/Q11b8E2IEniNxPwjkJOYj5/sDvftpGfhCdw8w4FEUQl/H
+         BlVle9+kbyMndeGT9k1SBJfOO4wrYkqMF07F05kI2jNecRVknOV6AsgNhOpNchh0Cs0U
+         f749ENqdXHkja4Pwzf8xk1/fY7TFqv4Fq8iXkyxolnQcHCJQdOF09DRsG48f0OChK/o9
+         9NoxL2+Ylipj7rj95JCUHt1wjlUZ79xLlob+UqdJxonM9jEEWvffR9VxaZSMFlwj9OJD
+         Wl+yc+7oJubmsyEYhlLcMX3FoQGsVhesEwUZGz4pJlfeBa9jsqnGTySZOb1581ArCzhp
+         0BbQ==
+X-Gm-Message-State: ACgBeo0cqkrc1LflIMl9aI9Ciz/u1djtmbojlzUunPUeCajd7X0U3lfj
+        iRKOR2vYs0QmBcNgDtcOQtkIGCQBHF8=
+X-Google-Smtp-Source: AA6agR5h7/VFLkLnd6J18PqA9sQ36R9PvOYy+saV/FID8DEVAT+v2j8z3RXlE3O7dIsK7jH35u/RuA==
+X-Received: by 2002:a05:600c:3516:b0:3a5:c28a:f01d with SMTP id h22-20020a05600c351600b003a5c28af01dmr9592954wmq.165.1661457033498;
+        Thu, 25 Aug 2022 12:50:33 -0700 (PDT)
+Received: from [192.168.2.52] (5.83-213-116.dynamic.clientes.euskaltel.es. [83.213.116.5])
+        by smtp.gmail.com with ESMTPSA id n123-20020a1ca481000000b003a5c244fc13sm6297948wme.2.2022.08.25.12.50.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Aug 2022 12:50:33 -0700 (PDT)
+Subject: Re: [PATCH] branch: allow "-" as a short-hand for "previous branch"
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?Rub=c3=a9n_Justo_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <pull.1315.git.1659910949556.gitgitgadget@gmail.com>
+ <s7862q69-05o8-s5s8-n635-823s34q358q4@tzk.qr> <xmqqk07iu3c3.fsf@gitster.g>
+ <5194s6qn-570s-6053-2104-9s22qo1874sn@tzk.qr>
+ <55n449n3-71r9-28n9-094q-6r61545r7505@tzk.qr>
+ <4d8eb431-dc25-5ea9-14b8-3f84ae0c1561@gmail.com> <xmqqo7w82sx1.fsf@gitster.g>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <b5076054-1be6-1dc5-868a-05005a594b0d@gmail.com>
+Date:   Thu, 25 Aug 2022 21:50:31 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <xmqqo7w82sx1.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-3.5-6fa83695f1f-20220825T141212Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 25, 2022 at 04:36:15PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> * Since we create a single "*.cocci.patch+" we don't know where to
->   pick up where we left off. Note that (per [1]) we've had a race
->   condition since 960154b9c17 (coccicheck: optionally batch spatch
->   invocations, 2019-05-06) which might result in us producing corrupt
->   patches to to the concurrent appending to "$@+" in the pre-image.
+
+On 8/25/22 6:23 PM, Junio C Hamano wrote:
+> Rubén Justo <rjusto@gmail.com> writes:
 > 
->   That bug is now fixed.
-
-There is no bug, because there is no concurrent appending to "$@+".
-The message you mention seems to be irrelevant, as it talks about
-'xargs -P', but the invocation in '%.cocci.patch' targets never used
-'-P'.
-
-
-> Which is why we'll not depend on $(FOUND_H_SOURCES) but the *.o file
-> corresponding to the *.c file, if it exists already. This means that
-> we can do:
+>> struct rev_info *revs, struct s
+>>                  revarg_opt |= REVARG_CANNOT_BE_FILENAME;
+>>          for (left = i = 1; i < argc; i++) {
+>>                  const char *arg = argv[i];
+>> -               if (!seen_end_of_options && *arg == '-') {
+>> +               if (!seen_end_of_options && *arg == '-' &&
+>> !strchr(".^~:@", arg[1])) {
 > 
->     make all
->     make coccicheck
->     make -W column.h coccicheck
+> Yuck.  I really didn't want to see that strchr() or any other logic
+> that _knows_ what letter is allowed after a "rev".  It will be
+> impossible to keep it in sync with the real code paths that needs to
+> know and parses these syntactical constructs, and folks new to the
+> codebase will never be able to tell at a first glance if the above
+> is sufficient (or what the strchr() is doing).
 > 
-> By depending on the *.o we piggy-back on
-> COMPUTE_HEADER_DEPENDENCIES. See c234e8a0ecf (Makefile: make the
-> "sparse" target non-.PHONY, 2021-09-23) for prior art of doing that
-> for the *.sp files. E.g.:
-> 
->     make contrib/coccinelle/free.cocci.patch
->     make -W column.h contrib/coccinelle/free.cocci.patch
-> 
-> Will take around 15 seconds for the second command on my 8 core box if
-> I didn't run "make" beforehand to create the *.o files. But around 2
-> seconds if I did and we have those "*.o" files.
-> 
-> Notes about the approach of piggy-backing on *.o for dependencies:
-> 
-> * It *is* a trade-off since we'll pay the extra cost of running the C
->   compiler, but we're probably doing that anyway.
 
-This assumption doesn't hold, and I very much dislike the idea of
-depending on *.o files:
+Some logic is needed to disambiguate from options. It is difficult than 
+that set of chars changes, they are all around the code. And if any new 
+is added should be reviewed and hopefully some test will be broken.
 
-  - Our static-analysis CI job doesn't build Git, now it will have to.
+Maybe a more centralized approach?
 
-  - I don't have Coccinelle installed, because my distro doesn't ship
-    it, and though the previous release did ship it, it was outdated.
-    Instead I use Coccinelle's most recent version from a container
-    which doesn't contain any build tools apart from 'make' for 'make
-    coccicheck'.
+diff --git a/parse-options.c b/parse-options.c
+index 2757bd94c1..303854e8a4 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -740,7 +741,7 @@ enum parse_opt_result parse_options_step(struct 
+parse_opt_ctx_t *ctx,
+                     ctx->argc != ctx->total)
+                         break;
 
-    With this patch series I can't use this containerized Coccinelle
-    at all, because even though I've already built git on the host,
-    the dependency on *.o files triggers a BUILD-OPTIONS check during
-    'make coccicheck', and due to the missing 'curl-config' the build
-    options do differ, triggering a rebuild, which in the absence of a
-    compiler fails.
-
-    And then the next 'make' on the host will have to rebuild
-    everything again...
+-               if (*arg != '-' || strchr(".^~:@", arg[1])) {
++               if (*arg != '-' || 
+!check_refchar_component_special(arg[1])) {
+                         if (parse_nodash_opt(ctx, arg, options) == 0)
+                                 continue;
+                         if (ctx->flags & PARSE_OPT_STOP_AT_NON_OPTION)
 
 
->  * We can take better advantage of parallelism, while making sure that
->    we don't racily append to the contrib/coccinelle/swap.cocci.patch
->    file from multiple workers.
-> 
->    Before this change running "make coccicheck" would by default end
->    up pegging just one CPU at the very end for a while, usually as
->    we'd finish whichever *.cocci rule was the most expensive.
-> 
->    This could be mitigated by combining "make -jN" with
->    SPATCH_BATCH_SIZE, see 960154b9c17 (coccicheck: optionally batch
->    spatch invocations, 2019-05-06). But doing so required careful
->    juggling, as e.g. setting both to 4 would yield 16 workers.
+diff --git a/refs.c b/refs.c
+index 0ed9f99ccc..5327a8ec1f 100644
+--- a/refs.c
++++ b/refs.c
+@@ -159,6 +159,32 @@ static int check_refname_component(const char 
+*refname, int *flags,
+         return cp - refname;
+  }
 
-No, setting both to 4 does yield 4 workers.
-
-SPATCH_BATCH_SIZE has nothing to do with parallelism; it is merely the
-number of C source files that we pass to a single 'spatch' invocation,
-but for any given semantic patch it's still a sequential loop.
-
++int check_refchar_component_special(char refchar)
++{
++        int ch = refchar & 255;
++        unsigned char disp = refname_disposition[ch];
++
++        switch (disp) {
++        case 1:
++                /* end of component */
++                return 0;
++        case 2:
++                /* ".." components */
++                return 0;
++        case 3:
++                /* "@{" components */
++                return 0;
++        case 4:
++                /* forbidden char */
++                return 0;
++        case 5:
++                /* pattern */
++                return 0;
++        }
++
++        return -1;
++}
++
+  static int check_or_sanitize_refname(const char *refname, int flags,
+                                      struct strbuf *sanitized)
+  {
