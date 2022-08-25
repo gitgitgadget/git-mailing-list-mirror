@@ -2,117 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24EA7C04AA5
-	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 00:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4A89C3F6B0
+	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 00:30:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229707AbiHYA3V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Aug 2022 20:29:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59816 "EHLO
+        id S230039AbiHYAa6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Aug 2022 20:30:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiHYA3T (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Aug 2022 20:29:19 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB412804B4
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 17:29:18 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id h27so14020277qkk.9
-        for <git@vger.kernel.org>; Wed, 24 Aug 2022 17:29:18 -0700 (PDT)
+        with ESMTP id S229437AbiHYAay (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Aug 2022 20:30:54 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07E3481B20
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 17:30:54 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id e28so14108665qts.1
+        for <git@vger.kernel.org>; Wed, 24 Aug 2022 17:30:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc;
-        bh=tByyhOFdi8FMzOuOJYXynQJHp6vjh8lz6iGElqg5HNY=;
-        b=TZDnN8X8nZOu196y9MocsBKLhdiFtkn8FNEbV0g7vBc5lfjKUXHXNNLNK1dbMn/dq+
-         OneMcMzzak2OeQccPAlvnuaMusM2B8j+rPFQpzr39axQe8Jg9UMltlysGtjhO0QNaxSf
-         wKEnh7vbe6yFzg3ckGBC5PcUOz5d0yuVZoWSo1EC22tV8GC272vvZSPjPB/w3Mfml4r+
-         QXXHb0DlCYtgE9SQK2usiCaMgxzc7ZBX1LhlXg3mTqiQbReHktQ9yFsrP7OrUqJCUvlP
-         PfIj2QXFezkeCQPkZlSpOvrXp9+IISafP6Yd8ZLz/OFfk1bDX5STrC7ybDZCJI6gAKDY
-         WGNA==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=nPqIFQZXgeWSZNvIBU1A/gSkxl1agHcsYaVnWTdzhFI=;
+        b=ckgaJNO/NYiGak58g6oDSnK3RlEPv0OGP/St7xeTwX+rr+OrNWCojl+xe4DepvhDA/
+         H47a//6yILGYQW0My2WE1uMiuF/w+5hz9kA0OztJaP1QNKvkJFCERZGfXPfGeSqVmmuZ
+         oPLRCW7vr/Xxtoe5H+2snHlJfFCviBt2n22JTgbBvjaswdPhzWEEsdsV72XO6p8prqX1
+         YIbiLisq1YW/HeHLQoeQ4sHecOTlnf306aVLpQrM4wp6zdHkDG6JKNC6XzxMiVk4GT4l
+         TkGPgLpI0hz8KBj4IcF/OaOW8VB1WBmEPwNrgk7INp7t4gCzVBNj0MZ9A0Xb/6rDsOD5
+         HX+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=tByyhOFdi8FMzOuOJYXynQJHp6vjh8lz6iGElqg5HNY=;
-        b=NcuTqN5G99GwlYkD1VJL3w1eLpWf7VhCPyAzwmFxMF0vpnI9lmCn0TAhlns4w8IJzn
-         BgHWwZuWKc0hLogVZhuEvwDJvcmf8rFA7qzsEHZeUp7IlKmtiaS1QBWFwV76X8rIjcOo
-         SpcPIzQsuqEki1m5jU45cG3b7UJBXTPu56Qh1RqyvYcXbPM2oXtnvuKIzl2X9pbMF8ka
-         huXostGBDgSjgtd06sYLy9fSVIGR6n58cKtOsPOFfNgaFzEayRKnf0VTad4c/+GbbGvQ
-         JJK6pqQNbGip+Jk/n5zhC2g1dk7yw7G5hW58oBJPpJ4ZyA1/SrWvyUr7aPasFsJcFsvo
-         D7gQ==
-X-Gm-Message-State: ACgBeo16kAVX529rs8iSz1Jhqq8mJt8uKIqaCT/dUU3toRJ7g2iRTkM2
-        cDfBA4YxH4x5NMbMcMGKg3k=
-X-Google-Smtp-Source: AA6agR6MC9m5imDEGZxKL9g9bij2N8izl/llCzpnFmyUF06y7gnchDQgQLRZh7vHsuU+ETYkCRBjpA==
-X-Received: by 2002:a05:620a:b04:b0:6ba:e707:b245 with SMTP id t4-20020a05620a0b0400b006bae707b245mr1386293qkg.418.1661387357797;
-        Wed, 24 Aug 2022 17:29:17 -0700 (PDT)
-Received: from [192.168.1.128] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id b17-20020ac84f11000000b0031e9ab4e4cesm13547982qte.26.2022.08.24.17.29.17
+        bh=nPqIFQZXgeWSZNvIBU1A/gSkxl1agHcsYaVnWTdzhFI=;
+        b=lK1slCltkp2zFM/m9iZvXRWecGt9A6u1PqinYj9NzNXu2M/5/ILKp15Kww42pjqiD/
+         idpqd9Lum6Y8srS0e9Gt3WU51yp+npkNuRhbx1QIRAWlyJhmdHHFuDlIceei7/uL8PJy
+         1ROMuIjmD9TZZ7stCrOnLCTFgN5cdIXgbYu2TsuVYWmcV3mGAZk8vnFBiQJcPwZGziZN
+         B2XKCEEAMDkfJsuYDVDwTteZc1a5cWT67wsP1F9ZJcte6UywQyvP+uNpBaElV4OnMbZl
+         ZsVNGC0//zWfn8VKMxjD535j+t8KQZ65BdXSki3qCcO7Uu3gNGNpR/xcTfWCzO+NZfW9
+         h8gw==
+X-Gm-Message-State: ACgBeo1itCY5qC5VsdIqLTzF/+XmUnU2Y2AE5eLD2zbSExVkZlKhLaVf
+        VEwjg8UMYzZlNOHPpBx8phjg
+X-Google-Smtp-Source: AA6agR7JDAwM9H4ZISP+rBRFmKlssDwymyrZc0AB39HxZg8xcYrYqM6JUbw8Ms+QGwWXvjqAoexPPg==
+X-Received: by 2002:a05:622a:13c6:b0:342:f6c7:5305 with SMTP id p6-20020a05622a13c600b00342f6c75305mr1723262qtk.348.1661387453147;
+        Wed, 24 Aug 2022 17:30:53 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:64e6:a996:33b5:bb90? ([2600:1700:e72:80a0:64e6:a996:33b5:bb90])
+        by smtp.gmail.com with ESMTPSA id ey13-20020a05622a4c0d00b003434e47515csm13345630qtb.7.2022.08.24.17.30.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Aug 2022 17:29:17 -0700 (PDT)
-Subject: Re: [PATCH 4/5] rebase --keep-base: imply --reapply-cherry-picks
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1323.git.1660576283.gitgitgadget@gmail.com>
- <9cd4c372ee4b3e5ba45c66a43ad0edaf52f0eed9.1660576283.git.gitgitgadget@gmail.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <53130a55-8bae-0414-64c2-bb577a1ae02d@gmail.com>
-Date:   Wed, 24 Aug 2022 20:29:16 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        Wed, 24 Aug 2022 17:30:52 -0700 (PDT)
+Message-ID: <7364f631-e05b-0db8-aaa4-9f0101b6db56@github.com>
+Date:   Wed, 24 Aug 2022 20:30:51 -0400
 MIME-Version: 1.0
-In-Reply-To: <9cd4c372ee4b3e5ba45c66a43ad0edaf52f0eed9.1660576283.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.12.0
+Subject: Re: [PATCH] ci: update 'static-analysis' to Ubuntu 22.04
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.1334.git.1661275691795.gitgitgadget@gmail.com>
+ <xmqqwnax438x.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqwnax438x.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
-
-Le 2022-08-15 à 11:11, Phillip Wood via GitGitGadget a écrit :
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 8/24/22 7:43 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
-> As --keep-base does not rebase the branch it is confusing if it
-> removes commits that have been cherry-picked to the upstream branch.
-> As --reapply-cherry-picks is not supported by the "apply" backend this
-> commit ensures that cherry-picks are reapplied by forcing the upstream
-> commit to match the onto commit unless --no-reapply-cherry-picks is
-> given.
+>> From: Derrick Stolee <derrickstolee@github.com>
+>>
+>> GitHub Actions scheduled a brownout of Ubuntu 18.04, which canceled all
+>> runs of the 'static-analysis' job in our CI runs. Update to 22.04 to
+>> avoid this as the brownout later turns into a complete deprecation.
+>>
+>> The use of 18.04 was set in d051ed77ee6 (.github/workflows/main.yml: run
+>> static-analysis on bionic, 2021-02-08) due to the lack of Coccinelle
+>> being available on 20.04 (which continues today).
+>>
+>> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+>> ---
+>>     ci: update 'static-analysis' to Ubuntu 20.04
+>>     
+>>     I noticed this while preparing my bundle URIs series. See an example
+>>     cancellation at [1]
+>>     
+>>     [1]
+>>     https://github.com/gitgitgadget/git/runs/7954913465?check_suite_focus=true
+>>     
+>>     I initially asked about this [2]. Thanks to Matthias Aßhauer for
+>>     pointing out that 22.04 has Coccinelle available [3].
 > 
-> Reported-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-
-Thanks a lot for picking this up ! I still think that it's a good idea
-to do that. At least now since 767a4ca648 (sequencer: advise if skipping 
-cherry-picked commit, 2021-08-30) we get a warning, but I think changing
-the default for '--keep-base' is even better.
-
-> ---
->  Documentation/git-rebase.txt     |  2 +-
->  builtin/rebase.c                 | 15 ++++++++++++++-
->  t/t3416-rebase-onto-threedots.sh | 21 +++++++++++++++++++++
->  3 files changed, 36 insertions(+), 2 deletions(-)
+> Thanks, it is already paying its dividend, it seems.
 > 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 080658c8710..dc0c6c54e27 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -218,7 +218,7 @@ leave out at most one of A and B, in which case it defaults to HEAD.
->  	merge base of `<upstream>` and `<branch>`. Running
->  	`git rebase --keep-base <upstream> <branch>` is equivalent to
->  	running
-> -	`git rebase --onto <upstream>...<branch> <upstream> <branch>`.
-> +	`git rebase --reapply-cherry-picks --onto <upstream>...<branch> <upstream> <branch>`.
->  +
->  This option is useful in the case where one is developing a feature on
->  top of an upstream branch. While the feature is being worked on, the
+> We probably need to fix or revert/remove rules we have in
+> unused.cocci that makes bogus "suggestion".
+> 
+>   https://github.com/git/git/runs/8005321972?check_suite_focus=true
 
-I think the doc should explicitely mention "This implies `--reapply-cherry-picks`",
-in addition to your changes.
+Yes, this is definitely a bogus suggestion. It's probable that it
+is picked up by the newer version of Coccinelle.
 
-Cheers,
+I would recommend removing unused.cocci in a patch after this one,
+and then you can apply both into 'maint'.
 
-Philippe.
+Perhaps a careful rewrite of unused.cocci could fix these kind of
+suggestions using the latest version of Coccinelle, but now is not
+the time to wait for that.
+
+Thanks,
+-Stolee
