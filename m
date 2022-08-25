@@ -2,153 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A314C04AA5
-	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 08:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59D47C04AA5
+	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 08:31:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239263AbiHYIX2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Aug 2022 04:23:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49416 "EHLO
+        id S234589AbiHYIbt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Aug 2022 04:31:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235985AbiHYIXZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2022 04:23:25 -0400
-Received: from blade-b3-vm-relay.servers.aueb.gr (blade-b3-vm-relay.servers.aueb.gr [195.251.255.106])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 440C5A572E
-        for <git@vger.kernel.org>; Thu, 25 Aug 2022 01:23:21 -0700 (PDT)
-Received: from blade-a1-vm-smtp.servers.aueb.gr (blade-a1-vm-smtp.servers.aueb.gr [195.251.255.217])
-        by blade-b3-vm-relay.servers.aueb.gr (Postfix) with ESMTP id CA972C18;
-        Thu, 25 Aug 2022 11:23:16 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aueb.gr; s=201901;
-        t=1661415796; bh=qXawh6lNGRdWGfgaWiqDvZrT3TG2j7oLL1HUo4o0tv0=;
-        h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
-        b=jNjDfvWAMjbLFVPlRq4fgWVlTYsq1OrdRpHs086r14nlE/E4Qhaqb+29PnMA3DBLQ
-         b85RP/+rGtzZk5VdXCAgitWftCUAghThp5XTLW0d9dW0mlI9RdOi2PCm/hfSUNsszU
-         YgjDdwg+Z9DtSx5VlDOFysnwebeWeMq/HgYE4iv2gO9gl6g7J0lAkN7rJzSVbd3DsJ
-         mv287rRgXwhNlfJjaoLZ8ZV9rCKksc5mneJMnJA/p31uSPLOAjV5DRdvmKlGwqe44R
-         CfTwqc3C1Mn6ZlqimxIHOvC400SjRCo6c1+5AelcJKBBbiro1Lcck+g/jyr4lp6LyG
-         YL7D2yCFkmpog==
-Received: from [192.168.136.3] (ppp-2-84-110-115.home.otenet.gr [2.84.110.115])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: dds)
-        by blade-a1-vm-smtp.servers.aueb.gr (Postfix) with ESMTPSA id 62EB259F;
-        Thu, 25 Aug 2022 11:23:16 +0300 (EEST)
-Message-ID: <a30f4979-a5d0-c517-9868-cda783874d5b@aueb.gr>
-Date:   Thu, 25 Aug 2022 11:23:15 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
+        with ESMTP id S232346AbiHYIbs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2022 04:31:48 -0400
+X-Greylist: delayed 502 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 25 Aug 2022 01:31:46 PDT
+Received: from balab.aueb.gr (unknown [IPv6:2001:648:2ffe:3:a800:ff:fe99:2593])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 88A9666113
+        for <git@vger.kernel.org>; Thu, 25 Aug 2022 01:31:45 -0700 (PDT)
+Received: by balab.aueb.gr (Postfix, from userid 1000)
+        id 4D570246161; Thu, 25 Aug 2022 11:23:21 +0300 (EEST)
 From:   Diomidis Spinellis <dds@aueb.gr>
-Subject: Re: [PATCH v2] grep: fix multibyte regex handling under macOS
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Diomidis Spinellis via GitGitGadget <gitgitgadget@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.1313.git.git.1661281689747.gitgitgadget@gmail.com>
- <pull.1313.v2.git.git.1661289990205.gitgitgadget@gmail.com>
- <xmqq5yih79n0.fsf@gitster.g>
-Content-Language: el
-Organization: Athens University of Economics and Business
-Phone:  +30 210 8203621
-In-Reply-To: <xmqq5yih79n0.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, avarab@gmail.com,
+        gitster@pobox.com, Diomidis Spinellis <dds@aueb.gr>
+Subject: [PATCH v3] grep: fix multibyte regex handling under macOS
+Date:   Thu, 25 Aug 2022 11:20:45 +0300
+Message-Id: <20220825082045.2662893-1-dds@aueb.gr>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <pull.1313.v2.git.git.1661289990205.gitgitgadget () gmail ! com>
+References: <pull.1313.v2.git.git.1661289990205.gitgitgadget () gmail ! com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24-Aug-22 21:56, Junio C Hamano wrote:
-> "Diomidis Spinellis via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
->> From: Diomidis Spinellis <dds@aueb.gr>
->>
->> The 2013 commit 29de20504e9 fixed t0070-fundamental.sh under Darwin
->> (macOS) by adopting Git's regex library.  However, this library is
->> compiled with NO_MBSUPPORT, which causes git-grep to work incorrectly
->> on multibyte (e.g. UTF-8) files.  Current macOS versions pass
->> t0070-fundamental.sh with the native macOS regex library, which
->> also supports multibyte characters.
-> 
-> Very nice to see the last sentence in that paragraph.
-> 
->> Signed-off-by: Diomidis Spinellis <dds@aueb.gr>
->> ---
-> 
-> This part, from here ...
+The commit 29de20504e (Makefile: fix default regex settings on
+Darwin, 2013-05-11) fixed t0070-fundamental.sh under Darwin (macOS) by
+adopting Git's regex library.  However, this library is compiled with
+NO_MBSUPPORT, which causes git-grep to work incorrectly on multibyte
+(e.g. UTF-8) files.  Current macOS versions pass t0070-fundamental.sh
+with the native macOS regex library, which also supports multibyte
+characters.
 
-[...]
+Adjust the Makefile to use the native regex library, and call
+setlocale(3) to set CTYPE according to the user's preference.
+The setlocale call is required on all platforms, but in platforms
+supporting gettext(3), setlocale was called as a side-effect of
+initializing gettext.  Therefore, move the CTYPE setlocale call from
+gettext.c to common-main.c and the corresponding locale.h include
+into git-compat-util.h.
 
-> ... up to here does not need a separate sign-off.  
+To avoid running the new tests on the few platforms still using the
+compatibility library, which is compiled without multibyte support,
+store the corresponding NO_REGEX setting in the GIT-BUILD-OPTIONS file.
+This makes it available to the test scripts.  Thanks to the global
+initialization of CTYPE setlocale, the test-tool regex command now
+works correctly with multibyte regexes and is used to further test
+a platform's support for them.
 
-Apologies for this.  I was led to believe that gitgitgadget would 
-seamlessly interface between GitHub's pull request and the Git project's 
-email workflow, but I don't see this happening.  Not sure if this is due 
-to a fault in gitgitgadget or due to my misuse of it.  I think 
-gitgitgadget expects users not to squash their subsequent commits.  In 
-any case, I'm switching to git-send-mail, which provides more visibility 
-and control of the process.
+Signed-off-by: Diomidis Spinellis <dds@aueb.gr>
+---
+- Move added setlocale from grep.c and test-regex.c to common-main.c
+- Move added locale.h include from the above files to git-compat-util.h
+- Correct use of test_expect_code 1
+- Have old commit reference in the commit message follow commit
+  referencing conventions
 
->> diff --git a/Makefile b/Makefile
->> index 04d0fd1fe60..d1a98257150 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -1427,7 +1427,6 @@ ifeq ($(uname_S),Darwin)
->>   		APPLE_COMMON_CRYPTO = YesPlease
->>   		COMPAT_CFLAGS += -DAPPLE_COMMON_CRYPTO
->>   	endif
->> -	NO_REGEX = YesPlease
->>   	PTHREAD_LIBS =
->>   endif
-> 
-> I notice that this is the ONLY conditional section in our primary
-> Makefile that switches upon the value of $(uname_<anything>).  After
-> the dust settles, we should move this whole part to config.mak.uname
-> as an unrelated clean-up.
-> 
-> Alternatively, you can choose to do that (without losing NO_REGEX)
-> as a preliminary clean-up patch and then build this "recent Darwin
-> has usable regexp library" change on top of it.  I do not have a
-> preference either way, other than that we do not want to see that
-> done as part of this change "while we are at it".
+ Makefile                  |  2 +-
+ common-main.c             |  1 +
+ gettext.c                 |  2 --
+ git-compat-util.h         |  1 +
+ t/t7818-grep-multibyte.sh | 34 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 37 insertions(+), 3 deletions(-)
+ create mode 100755 t/t7818-grep-multibyte.sh
 
-I was also surprised to see a $(uname) conditional in the Makefile.  I 
-prefer to finish the macOS grep UTF-8 bug fix before discussing related 
-house cleaning.
+diff --git a/Makefile b/Makefile
+index 04d0fd1fe6..d1a9825715 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1427,7 +1427,6 @@ ifeq ($(uname_S),Darwin)
+ 		APPLE_COMMON_CRYPTO = YesPlease
+ 		COMPAT_CFLAGS += -DAPPLE_COMMON_CRYPTO
+ 	endif
+-	NO_REGEX = YesPlease
+ 	PTHREAD_LIBS =
+ endif
+ 
+@@ -2970,6 +2969,7 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
+ 	@echo NO_PTHREADS=\''$(subst ','\'',$(subst ','\'',$(NO_PTHREADS)))'\' >>$@+
+ 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
++	@echo NO_REGEX=\''$(subst ','\'',$(subst ','\'',$(NO_REGEX)))'\' >>$@+
+ 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
+ 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
+ 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
+diff --git a/common-main.c b/common-main.c
+index c531372f3f..0a22861f1c 100644
+--- a/common-main.c
++++ b/common-main.c
+@@ -40,6 +40,7 @@ int main(int argc, const char **argv)
+ 
+ 	git_resolve_executable_dir(argv[0]);
+ 
++	setlocale(LC_CTYPE, "");
+ 	git_setup_gettext();
+ 
+ 	initialize_the_repository();
+diff --git a/gettext.c b/gettext.c
+index bb5ba1fe7c..f139008d0a 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -10,7 +10,6 @@
+ #include "config.h"
+ 
+ #ifndef NO_GETTEXT
+-#	include <locale.h>
+ #	include <libintl.h>
+ #	ifdef GIT_WINDOWS_NATIVE
+ 
+@@ -80,7 +79,6 @@ static int test_vsnprintf(const char *fmt, ...)
+ 
+ static void init_gettext_charset(const char *domain)
+ {
+-	setlocale(LC_CTYPE, "");
+ 	charset = locale_charset();
+ 	bind_textdomain_codeset(domain, charset);
+ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 58d7708296..c6fa3c7469 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -212,6 +212,7 @@
+ #endif
+ #include <errno.h>
+ #include <limits.h>
++#include <locale.h>
+ #ifdef NEEDS_SYS_PARAM_H
+ #include <sys/param.h>
+ #endif
+diff --git a/t/t7818-grep-multibyte.sh b/t/t7818-grep-multibyte.sh
+new file mode 100755
+index 0000000000..a3889f9822
+--- /dev/null
++++ b/t/t7818-grep-multibyte.sh
+@@ -0,0 +1,34 @@
++#!/bin/sh
++
++test_description='grep multibyte characters'
++
++. ./test-lib.sh
++
++# Multibyte regex search is only supported with a native regex library
++# that supports it.
++# (The supplied compatibility library is compiled with NO_MBSUPPORT.)
++test -z "$NO_REGEX" &&
++  LC_ALL=en_US.UTF-8 test-tool regex '^.$' '¿' &&
++  test_set_prereq MB_REGEX
++
++if ! test_have_prereq MB_REGEX
++then
++  skip_all='multibyte grep tests; Git compiled with NO_REGEX, NO_MBSUPPORT'
++  test_done
++fi
++
++test_expect_success 'setup' '
++	test_write_lines "¿" >file &&
++	git add file &&
++	LC_ALL="en_US.UTF-8" &&
++	export LC_ALL
++'
++test_expect_success 'grep exactly one char in single-char multibyte file' '
++	git grep "^.$"
++'
++
++test_expect_success 'grep two chars in single-char multibyte file' '
++	test_expect_code 1 git grep ".."
++'
++
++test_done
+-- 
+2.30.2
 
->> diff --git a/grep.c b/grep.c
->> index 82eb7da1022..c31657c3da3 100644
->> --- a/grep.c
->> +++ b/grep.c
->> @@ -10,6 +10,8 @@
->>   #include "quote.h"
->>   #include "help.h"
->>   
->> +#include <locale.h>
-> 
-> Don't ever include system headers in generic *.c files.  The system
-> headers on different platforms have subtle ordering restrictions
-> among include files and definitions of feature test macros, and all
-> those subtleties are supposed to be handled in one central place, in
-> the "git-compat-util.h" file.
-> 
-> A source file specific only to a particular platform is a different
-> matter; they can include system headers that exist or are needed
-> only on those systems directly.
-> 
-> So far, "grep.c" has been successfully used for everybody (except
-> Darwin), and if it needs touching, that means something is still
-> wrong with Darwin.
-
-Thank you for clarifying the division of responsibility among files.  I 
-changed the fix accordingly.
-
-> Is is because you are not using gettext()?  I thought our
-> gettext.[ch] did consider some folks/platforms do not use system
-> gettext() but perhaps its support for such build environment is
-> slightly lacking and does not make necessary setlocale() calls.
-
-I believe that grep was working by accident on other platforms, thanks 
-to setlocale calls made in gettext.c.  I don't think grep should depend 
-on the implementation of gettext.  Thankfully, according to test 
-results, it turns out that we can now globally initialize the CTYPE 
-locale, making its state available both to gettext.c and grep.c.
