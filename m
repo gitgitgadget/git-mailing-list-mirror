@@ -2,153 +2,205 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECA8AECAAA3
-	for <git@archiver.kernel.org>; Thu, 25 Aug 2022 23:47:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D2A6ECAAA3
+	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 00:20:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239891AbiHYXrX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Aug 2022 19:47:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40168 "EHLO
+        id S231485AbiHZAUf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Aug 2022 20:20:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229675AbiHYXrV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Aug 2022 19:47:21 -0400
-Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 748A7BCCF7
-        for <git@vger.kernel.org>; Thu, 25 Aug 2022 16:47:20 -0700 (PDT)
-Received: by mail-vk1-xa2e.google.com with SMTP id i129so10930228vke.3
-        for <git@vger.kernel.org>; Thu, 25 Aug 2022 16:47:20 -0700 (PDT)
+        with ESMTP id S229521AbiHZAUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Aug 2022 20:20:34 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52B2B2F39E
+        for <git@vger.kernel.org>; Thu, 25 Aug 2022 17:20:32 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id 72so59827pfx.9
+        for <git@vger.kernel.org>; Thu, 25 Aug 2022 17:20:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc;
-        bh=iGriOuyREme7FMQqJTtJRLEeb25yMeqMone5MdtpCAk=;
-        b=AIfjJy5LCLG0zZsZM68/QDHIUT4anBFGjtmTTVRwpNhoZ3U7bIYlCKobRR1YJph09Z
-         2gO7RwEJFd5GRY7/BEYZWLScwCj65yZYMoRUHGuoQTvmvYn8NufbcZL0BStN+gNisMCd
-         ufMrgD64b1oO3Ey9ZCVJGSnBGlkJTv+1NqTFFaf1eWyrMpw5gzCXotK9D/WT/HxSU914
-         EL1+1Bo94UXXUcIWcSsBisxrvPL1E7Nfs9ZRK2a1OFkhtwgGv1HyHgWPfAtgcSRmUPus
-         +b66CCqjgZev+MAfmvdIR59VAw3UcWhB4sEor2N90ZoX2McNMlKrOqbzHYyjDcWz7MKM
-         irkw==
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:from:to:cc;
+        bh=on2Aqe4Vk1682qgUkiDTyQwNfFygShR/XuV4lSNR9ZA=;
+        b=kdTrtbibcz4GSZVmPoQL01ofXMmjbPjSkLctOB5vtURkIVNJH5HdffE59Xn5o72a2J
+         zH2OvoYSqPIDKpJ7MDwLR02QZAey4i2x/6SdTcns6aIrI+UjLqowiygcnvF5uUyPC6nX
+         ovC7NUzDuDDXfOYn8qSKJf6KZPHiE4YILMUp5g8VPYjFNOsOUxfVe+XocEKm94XetAWs
+         QMfIu1PGVz+HJQc5bC18iCZfUK2TmXah1DD0oALRYUDrmE+NtMt6qOKWNZehg53e0Q61
+         bVby3foA34jB9DyhnKyP/NMmuXheav9RgLxmqHttEoT/FD9DM8C3XLhRiqiQoMuSKnjg
+         zhMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc;
-        bh=iGriOuyREme7FMQqJTtJRLEeb25yMeqMone5MdtpCAk=;
-        b=PQ2rJAUUEuGBZ7fhfloM5RuCnyGwfwfXa7qmnaFOChDVM+C5N1q7qH7fDuWe1jxDZa
-         iwGFCdJWYRQwDbERgIO1tsouQQcXksET1dD/ZsQytC9qolsZ8k9Lt96ET14P3VmDEoPF
-         dEtZtn3enAbb+Zu8+bqTxPC4ZcTzQNVmtTIyjJvuMOUkjNi6Tb7texD4ne6AfgiDuToX
-         OCA8jXXw46BUY1S20weWooUj2HabDhi/adSYyiZVUlMn3AU0HERpsA+EbEaOgP8OPBzN
-         sk49inpt04ppkEAGLFmh2yoKABcH02xlFdEvkSPUmUnjia/ot8Wp9kLw6+ioMZIZUSQF
-         dAwA==
-X-Gm-Message-State: ACgBeo1KSzXVHJQgXIxW3g5DzwoPA9C+lcWNcuwwxI4LHWR5xW/COuxT
-        2hzbXDV96Kyozvwbqr5lO5uGPV46+kF55Bc88Cg1Egi+51bavQ==
-X-Google-Smtp-Source: AA6agR6cpgbr9sYAkalNOZ08pOSXBZe3rEg8oV1aW1hYrULjbzpKiU85Dj4NRIEZcjxriFWIruXwr/7jdkQv63DJLfY=
-X-Received: by 2002:a1f:e882:0:b0:384:194d:66bb with SMTP id
- f124-20020a1fe882000000b00384194d66bbmr2382378vkh.33.1661471239488; Thu, 25
- Aug 2022 16:47:19 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc;
+        bh=on2Aqe4Vk1682qgUkiDTyQwNfFygShR/XuV4lSNR9ZA=;
+        b=x+h1m6jX/Wx2EI0UCSQIsCEexPikxiX2xMGocERGyABKxS5bLjA2zDkkx5lU2rpnV1
+         woKApowfQSCC8RF1J2CGumNhSbT3GkPdStz6W1lr8cuP4TM7B2DDC1c+fB/B16aQzr8j
+         v9EWrPNowu8V3sd1Dxv8iMRUT4mz7gCaCEaHILIGReS0xdQdB3deUKbgEFspnk2e9p+x
+         1LSx7MAXSTYC8iX+zVLILkCxARwiN2uS7GPV5NCLqBSjIYHjeCpT0i60OD1XD1YK/+Y0
+         74teOeRXutU2KGe9H2eRejamdzcSXSPD2PLT+VEqJGcQoD/6qfPhYQMH8VvyjdGg1m/a
+         Lk1g==
+X-Gm-Message-State: ACgBeo3S8wXLlrALj4MeiGiwVdIjnGz0ZiVAs6CygZY2yeLDxbu4hl6N
+        6j2dv+lmvwY9mcBQnW+ov0E=
+X-Google-Smtp-Source: AA6agR6xtQpQyo6WKUFw3wbcRu8HlNBHVSyZMcdoNaFD5O5Uq6MKlM1oeH6DIh3Wwv6uO0xoH64osw==
+X-Received: by 2002:a63:f753:0:b0:42a:bfc9:ea52 with SMTP id f19-20020a63f753000000b0042abfc9ea52mr1221453pgk.408.1661473231731;
+        Thu, 25 Aug 2022 17:20:31 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id u9-20020a170902e5c900b00172f4835f65sm134099plf.271.2022.08.25.17.20.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Aug 2022 17:20:31 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Diomidis Spinellis <dds@aueb.gr>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        avarab@gmail.com
+Subject: Re: [PATCH v3] grep: fix multibyte regex handling under macOS
+References: <20220825082045.2662893-1-dds@aueb.gr>
+Date:   Thu, 25 Aug 2022 17:20:30 -0700
+Message-ID: <xmqqpmgn26up.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Javier Mora <cousteaulecommandant@gmail.com>
-Date:   Fri, 26 Aug 2022 01:47:08 +0200
-Message-ID: <CAH1-q0iPsnkypiF=2LRgXwNqE_+R0gj706FCKgqGEUum+OAhQg@mail.gmail.com>
-Subject: Potential problems with url.<base>.insteadOf
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The choice of `url.<replacement>.insteadOf <original>` as a way to
-replace URLs is not only a bit confusing, as it has already been
-discussed[1], but also presents some problems and makes it impossible
-to achieve certain configurations.
-[1] https://public-inbox.org/git/20181122173109.GI28192@sigill.intra.peff.net/
+Diomidis Spinellis <dds@aueb.gr> writes:
 
-SCENARIO 1:
-I want to replace all references to the (now defunct)
-'http://example.org/' to the new server, 'http://example.com/'.
+> diff --git a/Makefile b/Makefile
+> index 04d0fd1fe6..d1a9825715 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1427,7 +1427,6 @@ ifeq ($(uname_S),Darwin)
+>  		APPLE_COMMON_CRYPTO = YesPlease
+>  		COMPAT_CFLAGS += -DAPPLE_COMMON_CRYPTO
+>  	endif
+> -	NO_REGEX = YesPlease
+>  	PTHREAD_LIBS =
+>  endif
+>  
+> @@ -2970,6 +2969,7 @@ GIT-BUILD-OPTIONS: FORCE
+>  	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
+>  	@echo NO_PTHREADS=\''$(subst ','\'',$(subst ','\'',$(NO_PTHREADS)))'\' >>$@+
+>  	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
+> +	@echo NO_REGEX=\''$(subst ','\'',$(subst ','\'',$(NO_REGEX)))'\' >>$@+
+>  	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
+>  	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
+>  	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
 
-OK, that is easy (even if a bit counter-intuitive).  Just do:
-git config url.'http://example.com/'.insteadOf 'http://example.org/'
+Build part looks good to me.
 
-SCENARIO 2:
-I want to replace BOTH 'http://example.org/' and 'http://example.net/'
-with 'http://example.com/'.
+> diff --git a/common-main.c b/common-main.c
+> index c531372f3f..0a22861f1c 100644
+> --- a/common-main.c
+> +++ b/common-main.c
+> @@ -40,6 +40,7 @@ int main(int argc, const char **argv)
+>  
+>  	git_resolve_executable_dir(argv[0]);
+>  
+> +	setlocale(LC_CTYPE, "");
+>  	git_setup_gettext();
+>  
+>  	initialize_the_repository();
+> diff --git a/gettext.c b/gettext.c
+> index bb5ba1fe7c..f139008d0a 100644
+> --- a/gettext.c
+> +++ b/gettext.c
+> @@ -10,7 +10,6 @@
+>  #include "config.h"
+>  
+>  #ifndef NO_GETTEXT
+> -#	include <locale.h>
+>  #	include <libintl.h>
+>  #	ifdef GIT_WINDOWS_NATIVE
+>  
+> @@ -80,7 +79,6 @@ static int test_vsnprintf(const char *fmt, ...)
+>  
+>  static void init_gettext_charset(const char *domain)
+>  {
+> -	setlocale(LC_CTYPE, "");
+>  	charset = locale_charset();
+>  	bind_textdomain_codeset(domain, charset);
+> 
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 58d7708296..c6fa3c7469 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -212,6 +212,7 @@
+>  #endif
+>  #include <errno.h>
+>  #include <limits.h>
+> +#include <locale.h>
+>  #ifdef NEEDS_SYS_PARAM_H
+>  #include <sys/param.h>
+>  #endif
 
-Well, now I have a problem.  If I do:
+I'll let others more familiar with the locale support to comment on
+these changes.  We are unconditionally including <locale.h> now;
+before platforms that lack locale.h can set NO_GETTEXT but that will
+no longer work as a "workaround" for them.  I do not know if thta is
+a practical downside to anybody, but it could be a problem.
 
-git config url.'http://example.com/'.insteadOf 'http://example.org/'
-git config url.'http://example.com/'.insteadOf 'http://example.net/'
+> diff --git a/t/t7818-grep-multibyte.sh b/t/t7818-grep-multibyte.sh
+> new file mode 100755
+> index 0000000000..a3889f9822
+> --- /dev/null
+> +++ b/t/t7818-grep-multibyte.sh
 
-the second entry will replace the first, since I'm just using the
-config entry `url.http://example.com/.insteadOf` twice.
-So, it appears that this simply cannot be done in Git!
-(Maybe if I daisy-chain them?  like .org -> .net and then .net -> .com)
+Do we need a new test script for this?
 
-SCENARIO 3:
-I had set 'http://example.org/' to redirect to 'http://example.com/',
-but that was a mistake, or there has been a migration, and it should
-be 'http://example.edu/'.
+> @@ -0,0 +1,34 @@
+> +#!/bin/sh
+> +
+> +test_description='grep multibyte characters'
+> +
+> +. ./test-lib.sh
+> +
+> +# Multibyte regex search is only supported with a native regex library
+> +# that supports it.
+> +# (The supplied compatibility library is compiled with NO_MBSUPPORT.)
 
-The "natural reaction" here is to rewrite the command with the right
-replacement value, but if I write:
+This file is not specific to Darwin; "... with a native regex
+library" etc. is not something we want to see here.
 
-git config url.'http://example.com/'.insteadOf 'http://example.org/'
-git config url.'http://example.edu/'.insteadOf 'http://example.org/'
+> +test -z "$NO_REGEX" &&
+> +  LC_ALL=en_US.UTF-8 test-tool regex '^.$' '¿' &&
+> +  test_set_prereq MB_REGEX
 
-the second command doesn't replace the first, but instead is added alongside.
-I'll need to manually unset the first:
+We can safely drop 'test -z "$NO_REGEX" &&' part here, no?  Even if
+we omit it, those who built with NO_REGEX would fail "test-tool
+regex" step above.  And by omitting $NO_REGEX check, we do not have
+to look for and update the condition when the fallback regex engine
+we use starts supporting MB_REGEX.
 
-git config --unset url.'http://example.com/'.insteadOf
+> +if ! test_have_prereq MB_REGEX
+> +then
+> +  skip_all='multibyte grep tests; Git compiled with NO_REGEX, NO_MBSUPPORT'
+> +  test_done
+> +fi
 
-SCENARIO 4:
-For some reason (e.g. because I messed up in scenario 3), there are
-two insteadOf entries in the git config with the same value.
-This results in an ambiguous case, and Git does nothing to prevent it!
-The documentation says that the longest insteadOf value wins, but both
-have the same length since both are the same URL.
+I do not think if we need a single use prereq here.  We can just
+use whatever condition that is used to set MB_REGEX above and do the
+skip-all thing here.
 
-----
+> +test_expect_success 'setup' '
+> +	test_write_lines "¿" >file &&
+> +	git add file &&
+> +	LC_ALL="en_US.UTF-8" &&
+> +	export LC_ALL
+> +'
 
-SOLUTION:
-None of this would happen if, instead of a
-`url.<replacement>.insteadOf <original>` approach, Git followed the
-opposite approach, `url.<original>.replaceWith <replacement>` (or
-`rewriteTo`, as it is suggested in [1]).
-So this approach is not only more intuitive and looks more resilient,
-it IS more resilient.
+Missing inter-test blank line.
 
-Let's have a look at the previous scenarios again:
+> +test_expect_success 'grep exactly one char in single-char multibyte file' '
+> +	git grep "^.$"
+> +'
 
-SCENARIO 1:
-About as easy as before, except that it follows a more readable "from
-... to ..." scheme:
+I am not sure how much value we are getting out of this test, which
+is identical to what we already tested earlier above with "test-tool
+regex".
 
-git config url.'http://example.org/'.replaceWith 'http://example.com/'
-
-(which I suspect will also give Git less trouble to find in the
-config, or at least it feels like it would).
-
-SCENARIO 2:
-Easy peasy.  Two different sources with the same target = two
-different keys with the same value:
-
-git config url.'http://example.org/'.replaceWith 'http://example.com/'
-git config url.'http://example.net/'.replaceWith 'http://example.com/'
-
-And we no longer have the problem that we cannot replace two different
-URLs with the same replacement.
-
-SCENARIO 3:
-Rewriting the rule will simply overwrite the old value:
-
-git config url.'http://example.org/'.replaceWith 'http://example.com/'
-git config url.'http://example.org/'.replaceWith 'http://example.edu/'
-
-SCENARIO 4:
-Scenario 4 simply cannot happen with this approach under normal
-circumstances because there can't be two entries with the same key but
-different values, unless the user edited the config file manually.
-(But there CAN be two entries with different keys and the same value,
-which is what caused scenario 4 before.)
-
-So, it might be a good idea to implement and recommend the
-`replaceWith` (or `rewriteTo`) syntax, and deprecate the `insteadOf`
-syntax (although it'll probably be necessary to keep it around for
-backwards compatibility).
+> +test_expect_success 'grep two chars in single-char multibyte file' '
+> +	test_expect_code 1 git grep ".."
+> +'
+> +
+> +test_done
