@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2CC0ECAAD4
-	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 16:13:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2EF3ECAAA3
+	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 16:16:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243678AbiHZQNb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Aug 2022 12:13:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44088 "EHLO
+        id S1343803AbiHZQQn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Aug 2022 12:16:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231512AbiHZQN3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2022 12:13:29 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B437CBFEAA
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 09:13:28 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id x19so116072pfr.1
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 09:13:28 -0700 (PDT)
+        with ESMTP id S1343750AbiHZQQm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2022 12:16:42 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 418CCD8B27
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 09:16:41 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id 76so1995671pfy.3
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 09:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc;
-        bh=NY+Lg6LHbTGr6rjYjkvsuRQq07ZNJMY4JAZ76g0GzOU=;
-        b=Nv2atkqLIPgeOG5juOR3FnTq7nXN/tpyUHkOgcfA/iI7VA6WiqstmxbFpe/mO9UvcY
-         aJXyRV8WLfOZQtA7zYILVbFC5i3yTo9b4d+h4NpUioo9O2UdkSgwFoYiIuzpySsNnUMd
-         d6+9g8TCaTznJQANcXYVoSoO9R4ceIGElIBmz0LxouJxwHtu/iOoQF2Izve6eN8XxfUK
-         PScD+61uLIXI5qxUCNtfrRFrvZLmdjJJZZ78EKIKLpA2IuO+I5uyGJxQf4xR2vyLuuQC
-         a+bGrwEF/l24iuyDb+0euAKEFPZrFEvl5fBJ4/k4CHr9yqxH7ZhwYAaPdctsRo3Pzr9+
-         zFhg==
+        bh=UmzM3d9sqNeD1nymtWm1oINMpAHTWtSnecYHsIkVIHY=;
+        b=ZKmZlSc5tfSDXVyv03oAPsMSE56QHjMhnI/4LILun2LNn1b+8OHSK33jEx5vHDWay9
+         9fUAO/BdiVvVCzlMbUGC9F+0Zr1ChfwCw5OtnwyYfHXZ+3N2fHZntS0+y6uI7M5OQWXN
+         d5ms80GBRVzCXuOdQJHksSg/301PZdItzDprZwgiltmD5UPue3Uf0z01YJH4WrgSpHL/
+         gzLsnwTar+SJLBK/VTm8bZ7OBV6PD8tFfuqBE99/7BlzYzJR1R3uDLD9oaaI/y/JWPqk
+         +YGsbYx4jl7lyNeDXp22zxNOpiXe6iQzg6FKDtFkLwy2Adn+BAJT6UKDHHV7d1I1Xerj
+         qizA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc;
-        bh=NY+Lg6LHbTGr6rjYjkvsuRQq07ZNJMY4JAZ76g0GzOU=;
-        b=RtTC2gbZE54y6kZhvHgNs8kdGa6XGxtKzL/YLMlbiLCV7sBZPKnjYDrhxbXjy3RR8O
-         LnioQ+BL3wHvafpwwjeCOZQxPHaVuqA/noqNA5cacUr/Fob7DMOqBKcQP+D0+T4LWqrC
-         UtpkcP9xNk/+oifNlSctEW+IoT2g2QqYYUoBJ8cxqWf2KGlfcsXVyKfB/mCMZXTXQlM3
-         E7xEsmC44wmWPBdcJAtrm1nSGs0PvYH6fHvzYcjoa8p4d0hCsQVGqdPVsjWdl407Afdc
-         d5w/wYvX+ZLlvr+1/nlH2xYNIWsBBeKimZatNV7/u6blbeRCMBPsC3ALaZCtnhZ0NDNP
-         xCOg==
-X-Gm-Message-State: ACgBeo2UyCYt3ArRYfyQX9Jtb7SrREzTOs3FxGeMHdpSEm0qHGEc+OJf
-        8IIK8sKtAimeuyAhsw352CiE9/E7ACk=
-X-Google-Smtp-Source: AA6agR7e1wnT95kKckqhJ96f5IB10tvPAyCAlTcoSn9RlzTm+kzBBITCCxfBkPpmIGn//k8/dKoHng==
-X-Received: by 2002:a05:6a00:1907:b0:534:f2ef:e8fe with SMTP id y7-20020a056a00190700b00534f2efe8femr4527313pfi.65.1661530407979;
-        Fri, 26 Aug 2022 09:13:27 -0700 (PDT)
+        bh=UmzM3d9sqNeD1nymtWm1oINMpAHTWtSnecYHsIkVIHY=;
+        b=TQvLQJrCfyVY5O2nhbv+VHpAjdvlDx/1u4EV5eNKG4h2L4kYQk10RBIctTs8D6SFa6
+         WWf4S2UisoM8bdA9c5BstCb9hGXuWFe98JDgcyLCowMKv22VwIOSF6LiPMZBsP7OGUAM
+         bDhNrNbPctziTJTmgrgXMp7sjJdurfibyhSZCSZpqJE2Thfc7Mk+ShG3GbtJGZ+hHzWK
+         WW7+Xkp2J7rLW/nrFd/CflVbPsY0dFLDKndws7DtsAgEndmaJu9I0u8T11l3jUT2u0XH
+         vTcUE+VaBBJUc/6hgxt/SANL7l1wtKJ1A/+y2U1JQMu4wh7Ou0i5WI4Oedi7ymbUWd+k
+         rkvA==
+X-Gm-Message-State: ACgBeo2sejBymBE04qVKftaODn/40JT9isz9k9WGEKS7dTyLz8cteSKJ
+        0qXFKow6RC3vgsLfdCxve7o=
+X-Google-Smtp-Source: AA6agR6Sef25IT5LqiU26YPEKitVBu5ZxzJkSm2aWhVr0T1UQ8dVAD8C1kMHk+dJlb8urc3mlaobxQ==
+X-Received: by 2002:a65:6d9a:0:b0:42b:4ab5:b87 with SMTP id bc26-20020a656d9a000000b0042b4ab50b87mr3803230pgb.5.1661530600723;
+        Fri, 26 Aug 2022 09:16:40 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id j12-20020a170902da8c00b0016784c93f23sm1805487plx.197.2022.08.26.09.13.27
+        by smtp.gmail.com with ESMTPSA id 13-20020a170902c24d00b0016ecc7d5297sm1781346plg.292.2022.08.26.09.16.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Aug 2022 09:13:27 -0700 (PDT)
+        Fri, 26 Aug 2022 09:16:40 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Javier Mora <cousteaulecommandant@gmail.com>
 Cc:     git@vger.kernel.org
 Subject: Re: Potential problems with url.<base>.insteadOf
 References: <CAH1-q0iPsnkypiF=2LRgXwNqE_+R0gj706FCKgqGEUum+OAhQg@mail.gmail.com>
-Date:   Fri, 26 Aug 2022 09:13:27 -0700
+Date:   Fri, 26 Aug 2022 09:16:40 -0700
 In-Reply-To: <CAH1-q0iPsnkypiF=2LRgXwNqE_+R0gj706FCKgqGEUum+OAhQg@mail.gmail.com>
         (Javier Mora's message of "Fri, 26 Aug 2022 01:47:08 +0200")
-Message-ID: <xmqq7d2v0yqg.fsf@gitster.g>
+Message-ID: <xmqq35dj0yl3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,43 +66,17 @@ X-Mailing-List: git@vger.kernel.org
 
 Javier Mora <cousteaulecommandant@gmail.com> writes:
 
-> The choice of `url.<replacement>.insteadOf <original>` as a way to
-> replace URLs is not only a bit confusing, as it has already been
-> discussed[1], but also presents some problems and makes it impossible
-> to achieve certain configurations.
-> [1] https://public-inbox.org/git/20181122173109.GI28192@sigill.intra.peff.net/
->
-> SCENARIO 1:
-> I want to replace all references to the (now defunct)
-> 'http://example.org/' to the new server, 'http://example.com/'.
->
-> OK, that is easy (even if a bit counter-intuitive).  Just do:
-> git config url.'http://example.com/'.insteadOf 'http://example.org/'
->
-> SCENARIO 2:
-> I want to replace BOTH 'http://example.org/' and 'http://example.net/'
-> with 'http://example.com/'.
+> This results in an ambiguous case, and Git does nothing to prevent it!
+> The documentation says that the longest insteadOf value wins, but both
+> have the same length since both are the same URL.
 
-So, you want to end up with
+The longest has this case in mind:
 
-    [url "http://example.com/"]
-	insteadOf = http://example.org
-	insteadOf = http://example.net
+    [url "A"] insteadof = https://example.com/
+    [url "B"] insteadof = https://example.com/special/
 
-but you cannot get there with only "git config VARIABLE VALUE",
-because that syntax is used to clear the existing values for
-VARIRABLE before setting it to VALUE.
+So "A" is used as a replacement for the whole site, except for the
+special hierarchy that is rewritten to "B".
 
-Have you tried
-
-    $ git config url.http://example.com/.insteadof http://example.org
-
-that clears existing values for url.http://example.com/.insteadof
-and sets it to "http://example.org", then immediately follow it with
-
-    $ git config --add url.http://example.com/.insteadof http://example.net
-
-that keeps existing values for url.http://example.com/.insteadof
-and adds another value to the same variable?
-
-
+Getting rid of what you no longer need with "config --unset" is the
+right thing to do, and you did fine in the previous example.
