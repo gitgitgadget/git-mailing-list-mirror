@@ -2,101 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6CB0ECAAA3
-	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 07:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97F55ECAAD2
+	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 07:12:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245214AbiHZHKo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Aug 2022 03:10:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33266 "EHLO
+        id S245184AbiHZHMx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Aug 2022 03:12:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245215AbiHZHKj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2022 03:10:39 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B5C5DF32
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 00:10:34 -0700 (PDT)
-Received: (qmail 17990 invoked by uid 109); 26 Aug 2022 07:10:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 26 Aug 2022 07:10:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4358 invoked by uid 111); 26 Aug 2022 07:10:35 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 26 Aug 2022 03:10:35 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 26 Aug 2022 03:10:32 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/11] annotating unused function parameters
-Message-ID: <Ywhx6LLe6YcS/2xf@coredump.intra.peff.net>
-References: <Yv9gxqH6nK2KYnNj@coredump.intra.peff.net>
- <220819.861qtc8gug.gmgdl@evledraar.gmail.com>
- <c22a8317-7d43-d84b-f63f-df2da31b4658@github.com>
- <220819.868rnk54ju.gmgdl@evledraar.gmail.com>
- <YwCtkwjWdJVHHZV0@coredump.intra.peff.net>
- <220825.86edx44lzh.gmgdl@evledraar.gmail.com>
+        with ESMTP id S244966AbiHZHMr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2022 03:12:47 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E99FD2B21
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 00:12:46 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-324ec5a9e97so14821317b3.7
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 00:12:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc;
+        bh=QNlxIB4IVA+cp6sRLMGR3+lVI+dSu4VLntaSO58nvkg=;
+        b=Yg5GLXJtZWVQjga/HcUph//d/M4umO+dNxUR3Z2jcjBmmPxeQ2dxh9rtV6WS0+a3ME
+         +p1lFKd9TXC7Hrm7DrfJVD2wLQNOxT+W+4XvoQ1oMe/hgXgBdbsHIZE/S21OZWKvonuD
+         cvwsJqE6gfiggM/foqhMopbKOOcnnwUVnsf6LCK2eTW4ZFvOAfNiEa8mjXQS5AjtixVk
+         MkHhMMgGJoU9tqPVpxLC81gGQsahg+9gtbTkCXczdW3HofC+TKW2DatzgE9/IaQYCivb
+         73SA7dUs/f+gHd3eEtpy/7j9xDzNEINpuaf3RkKF7tmF444da4E7URHEs6T4pD4vRkXy
+         ZqBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc;
+        bh=QNlxIB4IVA+cp6sRLMGR3+lVI+dSu4VLntaSO58nvkg=;
+        b=yK0J+NHLREUAqROgwM4u33KWkQIzDsFbpM9kgBOqRWLY4X/mnyI/MSvnC2NF71hsA/
+         jsoVGb04FBoiV3PhnSDil3vNF47JS4WzAOs4Qa9Gj211oraKpGzZwK/g6z3LCA3v4sIz
+         uGQufoxpyAB9gANxApQAHkIUI+I0bzq/ErTcrx28cDkyp+EO3x2NhVb+w3DtWNy/eob3
+         fXGtD15azAcKnKBRafGMwpJIokhdLwb98Y/osLIMBA3wcBK35MJNYUu9IJQ3ITEhNo8h
+         Z7OYeIQK8RnOhHsTCTP23teR9JhDcqhefzuB0vv2xgy97UKbsEJy9Qil/2fADGSWmOMa
+         qdYw==
+X-Gm-Message-State: ACgBeo3VD9uFxz8tDthAG9iLRCVUGiDJ1Mq4uVC+KD+65gt7Aan3QJSo
+        Da554mHd9+zR15M5rVsiAAvlYgcg79+yl/+TwAG9XpiWe48=
+X-Google-Smtp-Source: AA6agR42qwULknb5qQBIwAo2voKrfn2h6KfutcyjLoRKmGF5fTskMwLzegUY9QufPwNWc7wFRC98Crl8ltZKogM3DJc=
+X-Received: by 2002:a81:ae0e:0:b0:33f:767b:5e3d with SMTP id
+ m14-20020a81ae0e000000b0033f767b5e3dmr345191ywh.418.1661497964883; Fri, 26
+ Aug 2022 00:12:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <220825.86edx44lzh.gmgdl@evledraar.gmail.com>
+From:   Zang <zealot0630@gmail.com>
+Date:   Fri, 26 Aug 2022 15:12:34 +0800
+Message-ID: <CAOrge3pTP5WU3Z1HRLz7xqExwt7_n33FUkh9KQP2m6VyuA9sJw@mail.gmail.com>
+Subject: Considering add log.format and show.format configure option
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 25, 2022 at 01:00:19PM +0200, Ævar Arnfjörð Bjarmason wrote:
+Hi forks,
 
-> > One, it feels like we're abusing the deprecated attribute here. The
-> 
-> Definitely, but structurally it seems like a better pick. I.e. isn't the
-> only problem with it the "deprecated" and its interaction with
-> -Wno-deprecated.
-> 
-> If the exact same feature existed as a "insert-custom-warning", which
-> would work exactly "deprecated" without the default warning "prefix"
-> would you think this would fit perfectly?
+People including me are asking feature to use different format for log and show:
 
-Yeah, I agree that would remove my complaint about overloading the
-meaning. I don't think that exists, though.
+https://stackoverflow.com/questions/20579889/different-pretty-formats-for-git-log-and-git-show
+https://stackoverflow.com/questions/37898232/make-different-pretty-settings-for-git-log-and-git-show
 
-> This is mildly annoying, but I don't really think it's a practical
-> issue. We're talking about running this without
-> -Wno-deprecated-declarations in CI, and by default.
-> 
-> For unused parameters it's enough that we're catching them somewhere, or
-> in common compilation settings, we don't need to catch them
-> *everywhere*, do we?
+Can we consider add such option to git-config
 
-No, but the farther away you go from the edit-compile-run cycle, the
-more painful warnings become. Catching them immediately and fully has
-real value, as it means the cost of correcting them is lower. So all
-things being equal, I think we should prefer universal solutions when
-they're available (and for example compiler errors over say, coccinelle
-or other analysis tools).
+[format]
+    mylogformat = <...>
+    myshowformat = <...>
+[log]
+    format = mylogformat
+[show]
+    format = myshowformat
 
-(And yes, I know all things sadly aren't equal; see below...)
+Which should work same as
 
-> IOW is anyone writing patches where they're testing with
-> -Wno-deprecated-declarations *and* adding unused parameters *and* won't
-> test without -Wno-deprecated-declarations before submitting them, *and*
-> nobody else will catch it?
-
-Probably not. I don't actually build with -Wno-deprecated-declarations
-routinely. But my fear is that some platform may be stuck there for a
-while (because an overzealous libc marks something). But that's kind of
-hypothetical, so we may have to just accept it and cross that bridge if
-we come to it.
-
-> > And finally, I actually prefer the parentheses of:
-> >
-> >   static int register_ref(const char *refname, const struct object_id *oid,
-> > 			  int UNUSED(flags), void *UNUSED(cb_data))
-> 
-> ...and now to the real reason for the follow-up. You/Junio were CC'd,
-> but this is breaking coccinelle, see:
-> https://lore.kernel.org/git/220825.86ilmg4mil.gmgdl@evledraar.gmail.com/
-
-Ugh. Yeah, that is really unfortunate. I much prefer the parenthesized
-syntax, but if we can't find a way to unconfuse third-party parsing,
-then switching is probably the least-bad solution.
-
--Peff
+git log --format=mylogformat
+git show --format=myshowformat
