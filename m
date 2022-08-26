@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97DA0ECAAD2
-	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 09:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 631E0ECAAD8
+	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 09:39:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343984AbiHZJji (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Aug 2022 05:39:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60282 "EHLO
+        id S1343989AbiHZJjj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Aug 2022 05:39:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343975AbiHZJjh (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1343852AbiHZJjh (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 26 Aug 2022 05:39:37 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2B2A9DB41
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 02:39:35 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id u5so1113360wrt.11
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 02:39:35 -0700 (PDT)
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D081DAE216
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 02:39:36 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id n17so1136561wrm.4
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 02:39:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=R9n5jXs4FmjziGiQa7WHIy+y0b4GSV/osty3hWFDyCc=;
-        b=SIvG56otYmjuYIU+Rldiqv2tfB7/3zo1GrjZGCbyxq/yeMGMXUjdIlV1RTypzED4vV
-         ztv9F3HWbooknLd6pdd2ntactEvTMCPHavl1bEFGDmYEInYFNr74mlCaPPW+DjCNq7gy
-         BPnYMIfhaM2nPaqeiCBMsWUL1szdQlaYoFhTM8lQPRI/xpuC+mU81SZhilbyUN9q+Wfq
-         Gy8QhMIGVBwI8GhRdBOXKqdYpVT4f5cLoPlYg9yH5nT01uBUBIYbW//2/0V4ZJVEZ/c/
-         S3rUBNjWqsZ6qOUS4uQflDOtNaZQjlYKvYvRYdiNtjdrBcMIxDjZksDZ1iWBhidz/rYk
-         aFig==
+        bh=cozaAwc+epvp4IegY/IBfVoSuI833gg9OLEeBehc8B4=;
+        b=YVBCwwv9fqU7V+bCVTNBkyn2y5OkxVONC01/q6+ssg78kOsafErILNtvQcSvxv1hbY
+         3BeOEC1TgAT1gHQHCObatZMbwuZR0Dr9EKwZDKkvkp+oONUGEEAbnKv6IHZcSI3+fV4/
+         5g2SwLrW8cjZmocVdJKVdKWlgM19z0aChau9g71YcOaEs+gVHC6eB2vijlE5J0aP8NFH
+         LgDctFStPHo/8iSvAIqnExcsQAgB4eN6oGLAqFY27YZSvfn6yqlFpHHSuhaxnvPytDZY
+         vKI/LlQC8LEUkh1JoVUk1IlSXbodqZXcvlACqpYneDOsbiy8bSQij/CAExNwuDH3m+Qi
+         FdsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=R9n5jXs4FmjziGiQa7WHIy+y0b4GSV/osty3hWFDyCc=;
-        b=GDzm3bUELlPSENeBTrbqStxw/kRH7UvQvGcCPWcLgkad5mEzjz/6PKmPucZotbCOaK
-         1ApMcDZpX8Sxh9MCDkJ+c4+VuKX7wVYV+ZnFvm2Eb0FHQfkrRvhh2JHdGH4ZQAxYigcM
-         vl+siEOcFFXVqB1TccIcAEafkuZumK/llDg82mTus1D00mn+veXuJrhPw3HRHHKqGmFT
-         UxIWAJWinVRECTsZioOYElpJI7b8/zJ2RAQ3svH57w0Mh7zdHE7KqVYiJ9PBqf6fkbIV
-         rwXHG+R/dA94p4Wk9aEj45rJv/r6nfbTP4eaRbikemC4hY8muyeJ0k8W+vQJtB5rl27c
-         6Brg==
-X-Gm-Message-State: ACgBeo39vhRvl8zwsQFbPFxSski5KQ9uiQyuIrSMVIVt1QIJQiS7WTUc
-        P8RvHj6xfyFEK9y4pPAAUZOx2t82iPU=
-X-Google-Smtp-Source: AA6agR7kIJJGwjKN7S6qTF1vuACSUn0QPUsqz6c1kusk8cNp+GsaxIoseKcFy2HHfP6Fe91HMaJuuQ==
-X-Received: by 2002:a5d:6da9:0:b0:225:59e2:ee40 with SMTP id u9-20020a5d6da9000000b0022559e2ee40mr4269381wrs.540.1661506774051;
-        Fri, 26 Aug 2022 02:39:34 -0700 (PDT)
+        bh=cozaAwc+epvp4IegY/IBfVoSuI833gg9OLEeBehc8B4=;
+        b=NcP51Zwpn87aXuW1V7qNlirmIqjYVLN1X7vBUiSNcjFYmgMkM/jEtZy4GmLCVhffJM
+         9Jp6RKwHjhHZJ4ZJANRx2EHoYIUX/rhxSul99Q0TEQaucSjxd6Yxikvdde7aVxFWBpIN
+         MXQoChQhMvPyct4p+q/5q5UpX0Xv8wg1Zp+jFZLojHvOFxY5/aqsM674X431AUaBZU7R
+         G6HW+KsvyqyEGr0mpjYzMd/loylpDdhFimmJAZ12h/HnJCFMwQ/N08LEJAERTH5NnAdw
+         wgzrF41DCoRF4u+Y865vvwccSHiAU647zyVpgi4+BNhWxPBk94WJ1MyMsRuWzJafyKKS
+         933w==
+X-Gm-Message-State: ACgBeo2MoL2kfDj3CvOGHMs5sUyFDqQUyV1JFD05GvjmvsdLSP0RdNDj
+        1Mle//xD0kuC5pxr7dj0983lJgQKEJw=
+X-Google-Smtp-Source: AA6agR6m1IAa1a3JLdwtbPdcoStrhHI5dvgE61KvKLAMScaPlo2dNITz5F7uITPyAc6ObNF526Adjw==
+X-Received: by 2002:adf:e101:0:b0:225:a31:854b with SMTP id t1-20020adfe101000000b002250a31854bmr4288420wrz.143.1661506775142;
+        Fri, 26 Aug 2022 02:39:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e16-20020a05600c219000b003a5537bb2besm1834294wme.25.2022.08.26.02.39.32
+        by smtp.gmail.com with ESMTPSA id p11-20020adff20b000000b002257f1a227dsm1439999wro.46.2022.08.26.02.39.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Aug 2022 02:39:33 -0700 (PDT)
-Message-Id: <150f29a1c48917577ccaa93c0d4548c871adc1f6.1661506770.git.gitgitgadget@gmail.com>
+        Fri, 26 Aug 2022 02:39:34 -0700 (PDT)
+Message-Id: <4cd7f09557c7d0a4802b07d1e8440015e0a50524.1661506770.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1335.v2.git.1661506770.gitgitgadget@gmail.com>
 References: <pull.1335.git.1661258122.gitgitgadget@gmail.com>
         <pull.1335.v2.git.1661506770.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 26 Aug 2022 09:39:28 +0000
-Subject: [PATCH v2 1/3] range-diff: reorder argument handling
+Date:   Fri, 26 Aug 2022 09:39:29 +0000
+Subject: [PATCH v2 2/3] range-diff: consistently validate the arguments
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,59 +67,93 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In d9c66f0b5bf (range-diff: first rudimentary implementation,
-2018-08-13), we introduced the argument handling of the `range-diff`
-command, special-casing three different stanzas based on the argument
-count.
+This patch lets `range-diff` validate the arguments not only when
+invoked with one or two arguments, but also in the code path where three
+arguments are handled.
 
-The somewhat unorthodox order (first handling the case of 2 arguments,
-then 3, then 1) was chosen for clarity: the natural argument number is 2
-because that is how many revision ranges are used internally. The code
-to handle three arguments is relatively trivial, so it was added next.
-And finally, the code to ungarble a single symmetric range into two
-separate ones was added, because it was the most complicated (the most
-inelegant part being about interpreting empty sides of the symmetric
-range as `HEAD`).
-
-In preparation for allowing pathspecs in `git range-diff` invocations,
-where we no longer have the luxury of using the number of arguments to
-disambiguate between these three different ways to specify the commit
-ranges, we need to order these cases by argument count, in descending
-order.
-
-This patch is best viewed with `--color-moved`.
+While at it, we now use `usage_msg_opt*()` consistently.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/range-diff.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/range-diff.c | 41 +++++++++++++++++++++++++++++------------
+ 1 file changed, 29 insertions(+), 12 deletions(-)
 
 diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index 50318849d65..f8d3869d357 100644
+index f8d3869d357..71319ed1d84 100644
 --- a/builtin/range-diff.c
 +++ b/builtin/range-diff.c
-@@ -55,7 +55,10 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 	if (!simple_color)
+@@ -40,6 +40,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+ 	struct option *options;
+ 	int res = 0;
+ 	struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
++	struct object_id oid;
+ 
+ 	git_config(git_diff_ui_config, NULL);
+ 
+@@ -56,24 +57,41 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
  		diffopt.use_color = 1;
  
--	if (argc == 2) {
-+	if (argc == 3) {
-+		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
-+		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
-+	} else if (argc == 2) {
+ 	if (argc == 3) {
++		if (get_oid_committish(argv[0], &oid))
++			usage_msg_optf(_("not a revision: '%s'"),
++				       builtin_range_diff_usage, options,
++				       argv[0]);
++		else if (get_oid_committish(argv[1], &oid))
++			usage_msg_optf(_("not a revision: '%s'"),
++				       builtin_range_diff_usage, options,
++				       argv[1]);
++		else if (get_oid_committish(argv[2], &oid))
++			usage_msg_optf(_("not a revision: '%s'"),
++				       builtin_range_diff_usage, options,
++				       argv[2]);
++
+ 		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
+ 		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
+ 	} else if (argc == 2) {
  		if (!is_range_diff_range(argv[0]))
- 			die(_("not a commit range: '%s'"), argv[0]);
- 		strbuf_addstr(&range1, argv[0]);
-@@ -63,9 +66,6 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 		if (!is_range_diff_range(argv[1]))
- 			die(_("not a commit range: '%s'"), argv[1]);
+-			die(_("not a commit range: '%s'"), argv[0]);
+-		strbuf_addstr(&range1, argv[0]);
++			usage_msg_optf(_("not a commit range: '%s'"),
++				       builtin_range_diff_usage, options,
++				       argv[0]);
++		else if (!is_range_diff_range(argv[1]))
++			usage_msg_optf(_("not a commit range: '%s'"),
++				       builtin_range_diff_usage, options,
++				       argv[1]);
+ 
+-		if (!is_range_diff_range(argv[1]))
+-			die(_("not a commit range: '%s'"), argv[1]);
++		strbuf_addstr(&range1, argv[0]);
  		strbuf_addstr(&range2, argv[1]);
--	} else if (argc == 3) {
--		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
--		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
  	} else if (argc == 1) {
  		const char *b = strstr(argv[0], "..."), *a = argv[0];
  		int a_len;
+ 
+-		if (!b) {
+-			error(_("single arg format must be symmetric range"));
+-			usage_with_options(builtin_range_diff_usage, options);
+-		}
++		if (!b)
++			usage_msg_optf(_("not a symmetric range: '%s'"),
++				       builtin_range_diff_usage, options,
++				       argv[0]);
+ 
+ 		a_len = (int)(b - a);
+ 		if (!a_len) {
+@@ -85,10 +103,9 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+ 			b = "HEAD";
+ 		strbuf_addf(&range1, "%s..%.*s", b, a_len, a);
+ 		strbuf_addf(&range2, "%.*s..%s", a_len, a, b);
+-	} else {
+-		error(_("need two commit ranges"));
+-		usage_with_options(builtin_range_diff_usage, options);
+-	}
++	} else
++		usage_msg_opt(_("need two commit ranges"),
++			      builtin_range_diff_usage, options);
+ 	FREE_AND_NULL(options);
+ 
+ 	range_diff_opts.dual_color = simple_color < 1;
 -- 
 gitgitgadget
 
