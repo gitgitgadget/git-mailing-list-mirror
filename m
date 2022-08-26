@@ -2,136 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E473ECAAA3
-	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 07:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6CB0ECAAA3
+	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 07:10:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229631AbiHZHJZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Aug 2022 03:09:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57070 "EHLO
+        id S245214AbiHZHKo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Aug 2022 03:10:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245162AbiHZHJY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2022 03:09:24 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 170F6D2B0C
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 00:09:24 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id p18so850195plr.8
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 00:09:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=3CYBzQJQ7+6ESVI8Mu0AO4lJPsgQeOD2pbzQ0mwWr/w=;
-        b=TI1cnI68PYSbMF1by/vMkSd9L0iSeGuTp1x9003B2/jAaEokGzH09Nree4+oe3l+Sl
-         NmnNFRE8L3q4vF4JObwE8MEHa2682ezve89nEYv0a8OTxLczlgL7whL1gBg1X1NOqnlC
-         7xzlbajCQW1fViAUC/AtqifpepItGEucZp5EH0TlxCbLJnj83v/uoP12whnBq5uhEKU6
-         KHhmERAGHxzo/YR9Q65JeB439nVzMx0tFPdpy+d3Lfofz82U/Kv7pI54AG2ma9h7wlYh
-         x6i0BUYjJqtNo6mKpnIq4jPU2uWKzUqtOJtPpM6ZuXWYtB0aJ526CTW30dTkAp1usxjj
-         /Tbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=3CYBzQJQ7+6ESVI8Mu0AO4lJPsgQeOD2pbzQ0mwWr/w=;
-        b=ZIETFnC4++RcR51j13B0W7lh3v3mvblcu4Z1NHeMZMsZlDBCdk4GaO53g5YhskBcC0
-         w1aaU23fn1UcNTkftdpuJyVbebWjYz5Hig9+379en1/eFvy8ZMEk20PwroZnePeh5P4Z
-         r4hBYmfwIWCcwBgBFu6NEuxEaJbSsnKXqfxI5e4dLRsjvvvzpIISHq7mcpkz6EQnCM41
-         H277Mwfc6bBNSzuNn87b62IA+a0UXq6ABUCVCrPFGU+SJ+7egzbi7tuKtVIBeNp7oHlB
-         Rr24gZEA4rLRPo0gq/fX9nbrNqvJTHOz4cPunJskplaHshi+ZJKe81UnLGHfcUk9Qr8A
-         T8Qg==
-X-Gm-Message-State: ACgBeo1z5ZDejXvtc/X4VtUlGXcuVZTUcovn/9J3yelLvvnTYy7gpHne
-        hjCAEUl9eEQjvINzog2+7dtQSLwtN3Z/vhVV
-X-Google-Smtp-Source: AA6agR4ZeNRad1XwHFgtMkrXJmU77CIbAoA4lLs9DOwum7p8rgjC3tP6e+H5UAIcpsnYjXQbKFqI2A==
-X-Received: by 2002:a17:90b:1d84:b0:1f5:b66:7460 with SMTP id pf4-20020a17090b1d8400b001f50b667460mr3030520pjb.50.1661497763415;
-        Fri, 26 Aug 2022 00:09:23 -0700 (PDT)
-Received: from code-infra-dev-cbj.ea134 ([140.205.70.43])
-        by smtp.gmail.com with ESMTPSA id t12-20020a62d14c000000b0052f3a7bc29fsm866930pfl.202.2022.08.26.00.09.20
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Aug 2022 00:09:23 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, avarab@gmail.com, derrickstolee@github.com,
-        me@ttaylorr.com, tenglong.tl@alibaba-inc.com,
-        Teng Long <dyroneteng@gmail.com>,
-        XingXin <moweng.xx@antgroup.com>
-Subject: [PATCH 1/1] pack-bitmap.c: avoid exposing absolute paths
-Date:   Fri, 26 Aug 2022 15:09:12 +0800
-Message-Id: <20220826070912.70274-2-dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.35.1.581.g7a5d018042
-In-Reply-To: <20220826070912.70274-1-dyroneteng@gmail.com>
-References: <20220826070912.70274-1-dyroneteng@gmail.com>
+        with ESMTP id S245215AbiHZHKj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2022 03:10:39 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B5C5DF32
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 00:10:34 -0700 (PDT)
+Received: (qmail 17990 invoked by uid 109); 26 Aug 2022 07:10:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 26 Aug 2022 07:10:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4358 invoked by uid 111); 26 Aug 2022 07:10:35 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 26 Aug 2022 03:10:35 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 26 Aug 2022 03:10:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/11] annotating unused function parameters
+Message-ID: <Ywhx6LLe6YcS/2xf@coredump.intra.peff.net>
+References: <Yv9gxqH6nK2KYnNj@coredump.intra.peff.net>
+ <220819.861qtc8gug.gmgdl@evledraar.gmail.com>
+ <c22a8317-7d43-d84b-f63f-df2da31b4658@github.com>
+ <220819.868rnk54ju.gmgdl@evledraar.gmail.com>
+ <YwCtkwjWdJVHHZV0@coredump.intra.peff.net>
+ <220825.86edx44lzh.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <220825.86edx44lzh.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In "open_midx_bitmap_1()" and "open_pack_bitmap_1()", when we find that
-there are multiple bitmaps, we will only open the first one and then
-leave warnings about the remaining pack information, the information
-will contain the absolute path of the repository, for example in a
-alternates usage scenario. So let's hide this kind of potentially
-sensitive information in this commit.
+On Thu, Aug 25, 2022 at 01:00:19PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Found-by: XingXin <moweng.xx@antgroup.com>
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
----
- pack-bitmap.c                 | 8 ++++----
- t/t5310-pack-bitmaps.sh       | 2 +-
- t/t5326-multi-pack-bitmaps.sh | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+> > One, it feels like we're abusing the deprecated attribute here. The
+> 
+> Definitely, but structurally it seems like a better pick. I.e. isn't the
+> only problem with it the "deprecated" and its interaction with
+> -Wno-deprecated.
+> 
+> If the exact same feature existed as a "insert-custom-warning", which
+> would work exactly "deprecated" without the default warning "prefix"
+> would you think this would fit perfectly?
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 36134222d7a..5103d91d18a 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -331,8 +331,8 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
- 	if (bitmap_git->pack || bitmap_git->midx) {
- 		struct strbuf buf = STRBUF_INIT;
- 		get_midx_filename(&buf, midx->object_dir);
--		/* ignore extra bitmap file; we can only handle one */
--		warning("ignoring extra bitmap file: %s", buf.buf);
-+		/* ignore extra midx bitmap files; we can only handle one */
-+		warning("ignoring extra midx bitmap files");
- 		close(fd);
- 		strbuf_release(&buf);
- 		return -1;
-@@ -402,8 +402,8 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
- 	}
- 
- 	if (bitmap_git->pack || bitmap_git->midx) {
--		/* ignore extra bitmap file; we can only handle one */
--		warning("ignoring extra bitmap file: %s", packfile->pack_name);
-+		/* ignore extra bitmap files; we can only handle one */
-+		warning("ignoring extra bitmap files");
- 		close(fd);
- 		return -1;
- 	}
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index f775fc1ce69..7cd6d79a022 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -421,7 +421,7 @@ test_expect_success 'complains about multiple pack bitmaps' '
- 		test_line_count = 2 bitmaps &&
- 
- 		git rev-list --use-bitmap-index HEAD 2>err &&
--		grep "ignoring extra bitmap file" err
-+		grep "ignoring extra bitmap files" err
- 	)
- '
- 
-diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
-index 4fe57414c13..1786f28376a 100755
---- a/t/t5326-multi-pack-bitmaps.sh
-+++ b/t/t5326-multi-pack-bitmaps.sh
-@@ -303,7 +303,7 @@ test_expect_success 'graceful fallback when missing reverse index' '
- 
- 		GIT_TEST_MIDX_READ_RIDX=0 \
- 			git rev-list --use-bitmap-index HEAD 2>err &&
--		! grep "ignoring extra bitmap file" err
-+		grep "multi-pack bitmap is missing required reverse index" err
- 	)
- '
- 
--- 
-2.37.2.1.g1591e7ee52e
+Yeah, I agree that would remove my complaint about overloading the
+meaning. I don't think that exists, though.
 
+> This is mildly annoying, but I don't really think it's a practical
+> issue. We're talking about running this without
+> -Wno-deprecated-declarations in CI, and by default.
+> 
+> For unused parameters it's enough that we're catching them somewhere, or
+> in common compilation settings, we don't need to catch them
+> *everywhere*, do we?
+
+No, but the farther away you go from the edit-compile-run cycle, the
+more painful warnings become. Catching them immediately and fully has
+real value, as it means the cost of correcting them is lower. So all
+things being equal, I think we should prefer universal solutions when
+they're available (and for example compiler errors over say, coccinelle
+or other analysis tools).
+
+(And yes, I know all things sadly aren't equal; see below...)
+
+> IOW is anyone writing patches where they're testing with
+> -Wno-deprecated-declarations *and* adding unused parameters *and* won't
+> test without -Wno-deprecated-declarations before submitting them, *and*
+> nobody else will catch it?
+
+Probably not. I don't actually build with -Wno-deprecated-declarations
+routinely. But my fear is that some platform may be stuck there for a
+while (because an overzealous libc marks something). But that's kind of
+hypothetical, so we may have to just accept it and cross that bridge if
+we come to it.
+
+> > And finally, I actually prefer the parentheses of:
+> >
+> >   static int register_ref(const char *refname, const struct object_id *oid,
+> > 			  int UNUSED(flags), void *UNUSED(cb_data))
+> 
+> ...and now to the real reason for the follow-up. You/Junio were CC'd,
+> but this is breaking coccinelle, see:
+> https://lore.kernel.org/git/220825.86ilmg4mil.gmgdl@evledraar.gmail.com/
+
+Ugh. Yeah, that is really unfortunate. I much prefer the parenthesized
+syntax, but if we can't find a way to unconfuse third-party parsing,
+then switching is probably the least-bad solution.
+
+-Peff
