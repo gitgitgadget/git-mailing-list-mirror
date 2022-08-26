@@ -2,89 +2,343 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F20FECAAD2
-	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 09:34:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 153C4ECAAD6
+	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 09:39:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343608AbiHZJeY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Aug 2022 05:34:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53426 "EHLO
+        id S245226AbiHZJjh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Aug 2022 05:39:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234289AbiHZJeX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2022 05:34:23 -0400
-Received: from mail-vk1-xa2d.google.com (mail-vk1-xa2d.google.com [IPv6:2607:f8b0:4864:20::a2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB420F4F
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 02:34:21 -0700 (PDT)
-Received: by mail-vk1-xa2d.google.com with SMTP id d6so398925vko.7
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 02:34:21 -0700 (PDT)
+        with ESMTP id S1343852AbiHZJjf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2022 05:39:35 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66A6CBD4C6
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 02:39:34 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id bu22so791760wrb.3
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 02:39:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc;
-        bh=yYQKbnXzWYWSD1ezpJVEeMLvZoF8Gob02VWcqqB1PAo=;
-        b=Ua07EuZFU7rSRPwiwRn3G+i/MTwrIUiFO681xEPO3V9uewLfYFKF764WTORqjj/tTb
-         +B3La6q53rqiegmwhzw9bCYCxP+Nh53ozOw+nGkQs2ct4uNpPLydT0ZzqGeqR1NpJBty
-         fAN/rwh8DxGon9LeOykzmT5kYDIjw9FLdR5m1iuAJ93dUuDrLhi5difCcvHlI0l7KQfC
-         6zoYAhYIKs/hn2dVrZbp4P3mVuZOmUZGnM3Qx0rxhbQKTaVhD2AzKcfK+y7QQj3rDQ8F
-         yQIJFF7VS8nM85OKpBp3s1Nln90i1L70KNp3164+WS3kJPnGtj8Bm3auHg9R6fjCOJiy
-         zUkg==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=Xz7J6OrGaIgQ7hSnkce2GXnpTMORuOGYW2GpHHfDyeQ=;
+        b=AaYVzruWuFNBfwmQ/0Dhced/NgnoTbi+qO/KBKi8MzyEzhoTY6KMcLudn0PB0Kcy76
+         cazPluljyvoOqxKg9LQWMKTTBFP9+a2700hM4pftjtG8+KAuqWUzC+xGqpsqPqMmbrBR
+         hxpfIMfqTFFICNJy/RAqCu5lxXyBIL6qf+H0I/CsL0Y5WdIMlsD6UEyxfg9VbesU0xu6
+         ezrCydoNsBGz8dVd+pQOGJ8FL31sLZ1TZ7J7fE/oErHWcJJz/T3ocfsp/hp4FPJvRQkc
+         uzUPKjHIsI79VO39Dy//D2WFYn+RHIAcWv13IHFstllyruw33t4d2xVZntAqKD5r2a1C
+         n8MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
-        bh=yYQKbnXzWYWSD1ezpJVEeMLvZoF8Gob02VWcqqB1PAo=;
-        b=UZHGGA30HG8xU4WKet1oAj3UvQds8UUCqTsiyDJo2xC1vLxjJLRPZfqFLV1RcF43h6
-         NONpklZTUNj+BKiglZ5XF4pBcmTQs5Lj9DpxmkIIac2gZEGuvlqxRVx+/xs76rWRTUGr
-         xraONZWStbj2Ld84hwPTsI5wKwk41DpbXF15pkyyJulBVuThvx+4PQlqdn1E7D1h2WbW
-         pHFuvGOVbEIqL/fDwtZhtgxFrKCHKQrjLNgm68gtUZOdEIZ73cs9SchLwbjZVE9KBrYn
-         IhhcmemjIXFXGk1IiyUFYGpumsVAF5fwGosYnMiKXHZJNbMEklUaVdSZD7+6Rz8xi14I
-         7YTw==
-X-Gm-Message-State: ACgBeo13S2ap9cCcF1qhi3twAO3ecocmSrMVuWP8jyJ2Kg1byUluZUHy
-        dD6uq4SYoStTpzihg6boijqPLduIjkvOX3bnDA4ClEIl49U=
-X-Google-Smtp-Source: AA6agR48o0ujepaAmOpXX7+Y6VcWmyy/3If3/OByzuZGUkGFS9RHhL7cudA5ae4FefqDKej9HlQ1WVJXt+umVYyuR80=
-X-Received: by 2002:a05:6122:2004:b0:38c:daf0:59 with SMTP id
- l4-20020a056122200400b0038cdaf00059mr2967620vkd.6.1661506460836; Fri, 26 Aug
- 2022 02:34:20 -0700 (PDT)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=Xz7J6OrGaIgQ7hSnkce2GXnpTMORuOGYW2GpHHfDyeQ=;
+        b=A8Ob4evthCIUpxXQ72JRZpc2S7ogKcJ8oAUnAIRow/7s31eSL7XwDx7rf2jCS5JWgS
+         bdhCIR6fdzw3e0x5XNZF9Btf8GHZYH7f2j1kFP1exSzmoFmyA0LwTVgWmtbbn+2gpzOx
+         QfQX8NACj8gViELTb/3OgKct7WqFp12Z2G2IowGbYndLXIvVkeggKY0SLgFQ7e/uyaoB
+         xSpnTH4PO0gmUgbBSdXuvIMd2LCnXlVQRSsm1LusyRMzkfaAMHIb1AtTFXrlapxMlBNp
+         6NFlNqcFYNrV48anyixDLDtNFRK/Sw/9rxzcbICPAYBz3Wck0ckwJZW1jy3qL4W92MM0
+         V87w==
+X-Gm-Message-State: ACgBeo0nsgxv/z/ZhCxkGRxaF54W5AcekrJ8q7ae7mNOcnDy1B3WFd3D
+        qolNoiDKH2TfY+z/krsBBf/HEX15uWs=
+X-Google-Smtp-Source: AA6agR4unQDOd6y0zk+Yo+wUJKnLfRLqycWIOoNsQ963N8RhP0C3OH8Bp2SqCbkanHIaiXYXV6dvZw==
+X-Received: by 2002:a5d:5388:0:b0:225:4427:696a with SMTP id d8-20020a5d5388000000b002254427696amr4503264wrv.355.1661506772566;
+        Fri, 26 Aug 2022 02:39:32 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bj22-20020a0560001e1600b002251639bfd0sm1400493wrb.59.2022.08.26.02.39.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Aug 2022 02:39:31 -0700 (PDT)
+Message-Id: <pull.1335.v2.git.1661506770.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1335.git.1661258122.gitgitgadget@gmail.com>
+References: <pull.1335.git.1661258122.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 26 Aug 2022 09:39:27 +0000
+Subject: [PATCH v2 0/3] Allow passing pathspecs to git range-diff
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CAH1-q0iPsnkypiF=2LRgXwNqE_+R0gj706FCKgqGEUum+OAhQg@mail.gmail.com>
- <87a67rjxb6.fsf@linux-m68k.org>
-In-Reply-To: <87a67rjxb6.fsf@linux-m68k.org>
-From:   Javier Mora <cousteaulecommandant@gmail.com>
-Date:   Fri, 26 Aug 2022 11:34:09 +0200
-Message-ID: <CAH1-q0j8a4q47UOBvUp0W0JgF+W7J+EQLLRhv9hx-dxdhqSYqA@mail.gmail.com>
-Subject: Re: Potential problems with url.<base>.insteadOf
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-El vie, 26 ago 2022 a las 9:09, Andreas Schwab
-(<schwab@linux-m68k.org>) escribi=C3=B3:
->
-> On Aug 26 2022, Javier Mora wrote:
->
-> > Well, now I have a problem.  If I do:
-> >
-> > git config url.'http://example.com/'.insteadOf 'http://example.org/'
-> > git config url.'http://example.com/'.insteadOf 'http://example.net/'
->
-> git config --add url.'http://example.com/'.insteadOf 'http://example.net/=
-'
+I just had the need to find out upstream commits corresponding to a handful
+of backported commits, and most importantly, identify upstream commits
+touching a given file that had not yet been backported.
 
-Well, that was embarrassing...
-My bad; I didn't know about the `--add` option (nor that gitconfig
-supported multi-value options, for that matter, but that's on me for
-not reading the whole manpage).
-Maybe the manpage section on `insteadOf` should mention that it's a
-multi-value option, but I see that this is not a bug as I thought it
-was.  (If anything, a not-very-intuitive feature, but that's a
-different matter.)
+This new mode helped me identify them.
 
-One minor issue I still see is the fact that adding the same insteadOf
-key-value pair multiple times will result in the same line being added
-multiple times unless you explicitly delete it first; there doesn't
-seem to be an easy way to "add key-value pair if it doesn't exist
-yet".  (The closest seems to be `--replace-all`, but that complicates
-things a bit.)
+Changes since v1:
+
+ * The command-line parameter parsing now avoids duplicating code as much as
+   possible.
+ * This also fixes a bug where git range-diff <incorrect-symmetric-range> --
+   <pathspec> was mistaken for using the three-revision stanza.
+ * Consistent validation of the command-line arguments has been extracted
+   into its own patch.
+ * Sadly, these changes make the overall diff much larger. I hope that the
+   readability is worth that price.
+
+Johannes Schindelin (3):
+  range-diff: reorder argument handling
+  range-diff: consistently validate the arguments
+  range-diff: optionally accept pathspecs
+
+ Documentation/git-range-diff.txt |   4 ++
+ builtin/range-diff.c             | 101 +++++++++++++++++++++++--------
+ range-diff.c                     |   2 +-
+ t/t3206-range-diff.sh            |  13 +++-
+ 4 files changed, 94 insertions(+), 26 deletions(-)
+
+
+base-commit: 795ea8776befc95ea2becd8020c7a284677b4161
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1335%2Fdscho%2Frange-diff-with-pathspec-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1335/dscho/range-diff-with-pathspec-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1335
+
+Range-diff vs v1:
+
+ 1:  7fe4f228ae0 ! 1:  150f29a1c48 range-diff: reorder argument handling
+     @@ Commit message
+          In preparation for allowing pathspecs in `git range-diff` invocations,
+          where we no longer have the luxury of using the number of arguments to
+          disambiguate between these three different ways to specify the commit
+     -    ranges, we need to order these cases by argument count, in ascending
+     +    ranges, we need to order these cases by argument count, in descending
+          order.
+      
+          This patch is best viewed with `--color-moved`.
+     @@ builtin/range-diff.c: int cmd_range_diff(int argc, const char **argv, const char
+       		diffopt.use_color = 1;
+       
+      -	if (argc == 2) {
+     --		if (!is_range_diff_range(argv[0]))
+     --			die(_("not a commit range: '%s'"), argv[0]);
+     --		strbuf_addstr(&range1, argv[0]);
+     --
+     --		if (!is_range_diff_range(argv[1]))
+     --			die(_("not a commit range: '%s'"), argv[1]);
+     --		strbuf_addstr(&range2, argv[1]);
+     ++	if (argc == 3) {
+     ++		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
+     ++		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
+     ++	} else if (argc == 2) {
+     + 		if (!is_range_diff_range(argv[0]))
+     + 			die(_("not a commit range: '%s'"), argv[0]);
+     + 		strbuf_addstr(&range1, argv[0]);
+     +@@ builtin/range-diff.c: int cmd_range_diff(int argc, const char **argv, const char *prefix)
+     + 		if (!is_range_diff_range(argv[1]))
+     + 			die(_("not a commit range: '%s'"), argv[1]);
+     + 		strbuf_addstr(&range2, argv[1]);
+      -	} else if (argc == 3) {
+      -		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
+      -		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
+     --	} else if (argc == 1) {
+     -+	if (argc == 1) {
+     + 	} else if (argc == 1) {
+       		const char *b = strstr(argv[0], "..."), *a = argv[0];
+       		int a_len;
+     - 
+     -@@ builtin/range-diff.c: int cmd_range_diff(int argc, const char **argv, const char *prefix)
+     - 			b = "HEAD";
+     - 		strbuf_addf(&range1, "%s..%.*s", b, a_len, a);
+     - 		strbuf_addf(&range2, "%.*s..%s", a_len, a, b);
+     -+	} else if (argc == 2) {
+     -+		if (!is_range_diff_range(argv[0]))
+     -+			die(_("not a commit range: '%s'"), argv[0]);
+     -+		strbuf_addstr(&range1, argv[0]);
+     -+
+     -+		if (!is_range_diff_range(argv[1]))
+     -+			die(_("not a commit range: '%s'"), argv[1]);
+     -+		strbuf_addstr(&range2, argv[1]);
+     -+	} else if (argc == 3) {
+     -+		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
+     -+		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
+     - 	} else {
+     - 		error(_("need two commit ranges"));
+     - 		usage_with_options(builtin_range_diff_usage, options);
+ -:  ----------- > 2:  4cd7f09557c range-diff: consistently validate the arguments
+ 2:  064b147451b ! 3:  a52ad40e015 range-diff: optionally accept a pathspec
+     @@ Metadata
+      Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+      
+       ## Commit message ##
+     -    range-diff: optionally accept a pathspec
+     +    range-diff: optionally accept pathspecs
+      
+          The `git range-diff` command can be quite expensive, which is not a
+          surprise given that the underlying algorithm to match up pairs of
+     @@ Documentation/git-range-diff.txt: DESCRIPTION
+      
+       ## builtin/range-diff.c ##
+      @@ builtin/range-diff.c: int cmd_range_diff(int argc, const char **argv, const char *prefix)
+     + 		OPT_END()
+     + 	};
+       	struct option *options;
+     - 	int res = 0;
+     +-	int res = 0;
+     ++	int i, dash_dash = -1, res = 0;
+       	struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
+     -+	struct object_id oid;
+     -+	const char *p;
+     + 	struct object_id oid;
+     ++	const char *three_dots = NULL;
+       
+       	git_config(git_diff_ui_config, NULL);
+       
+     @@ builtin/range-diff.c: int cmd_range_diff(int argc, const char **argv, const char
+       	diff_setup_done(&diffopt);
+       
+      @@ builtin/range-diff.c: int cmd_range_diff(int argc, const char **argv, const char *prefix)
+     - 			b = "HEAD";
+     - 		strbuf_addf(&range1, "%s..%.*s", b, a_len, a);
+     - 		strbuf_addf(&range2, "%.*s..%s", a_len, a, b);
+     -+	} else if (argc > 1 && (p = strstr(argv[0], "..."))) {
+     -+		const char *a = argv[0];
+     -+		int a_len = (int)(p - a);
+     -+
+     -+		if (!a_len) {
+     -+			a = "HEAD";
+     -+			a_len = strlen(a);
+     + 	if (!simple_color)
+     + 		diffopt.use_color = 1;
+     + 
+     +-	if (argc == 3) {
+     +-		if (get_oid_committish(argv[0], &oid))
+     ++	for (i = 0; i < argc; i++)
+     ++		if (!strcmp(argv[i], "--")) {
+     ++			dash_dash = i;
+     ++			break;
+      +		}
+     -+		p += 3;
+     -+		if (!*p)
+     -+			p = "HEAD";
+     -+		strbuf_addf(&range1, "%s..%.*s", p, a_len, a);
+     -+		strbuf_addf(&range2, "%.*s..%s", a_len, a, p);
+     -+		strvec_pushv(&other_arg, argv + 1);
+     - 	} else if (argc == 2) {
+     - 		if (!is_range_diff_range(argv[0]))
+     - 			die(_("not a commit range: '%s'"), argv[0]);
+     ++
+     ++	if (dash_dash == 3 ||
+     ++	    (dash_dash < 0 && argc > 2 &&
+     ++	     !get_oid_committish(argv[0], &oid) &&
+     ++	     !get_oid_committish(argv[1], &oid) &&
+     ++	     !get_oid_committish(argv[2], &oid))) {
+     ++		if (dash_dash < 0)
+     ++			; /* already validated arguments */
+     ++		else if (get_oid_committish(argv[0], &oid))
+     + 			usage_msg_optf(_("not a revision: '%s'"),
+     + 				       builtin_range_diff_usage, options,
+     + 				       argv[0]);
+      @@ builtin/range-diff.c: int cmd_range_diff(int argc, const char **argv, const char *prefix)
+     - 		if (!is_range_diff_range(argv[1]))
+     - 			die(_("not a commit range: '%s'"), argv[1]);
+     - 		strbuf_addstr(&range2, argv[1]);
+     -+	} else if (argc > 2 &&
+     -+	    is_range_diff_range(argv[0]) && is_range_diff_range(argv[1])) {
+     -+		strbuf_addstr(&range1, argv[0]);
+     -+		strbuf_addstr(&range2, argv[1]);
+     -+		strvec_pushv(&other_arg, argv + 2);
+     - 	} else if (argc == 3) {
+     + 
+       		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
+       		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
+     -+	} else if (argc > 3 &&
+     -+		   get_oid_committish(argv[0], &oid) &&
+     -+		   get_oid_committish(argv[1], &oid) &&
+     -+		   get_oid_committish(argv[2], &oid)) {
+     -+		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
+     -+		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
+     -+		strvec_pushv(&other_arg, argv + 3);
+     - 	} else {
+     - 		error(_("need two commit ranges"));
+     - 		usage_with_options(builtin_range_diff_usage, options);
+     +-	} else if (argc == 2) {
+     +-		if (!is_range_diff_range(argv[0]))
+     ++
+     ++		strvec_pushv(&other_arg, argv +
+     ++			     (dash_dash < 0 ? 3 : dash_dash));
+     ++	} else if (dash_dash == 2 ||
+     ++		   (dash_dash < 0 && argc > 1 &&
+     ++		    is_range_diff_range(argv[0]) &&
+     ++		    is_range_diff_range(argv[1]))) {
+     ++		if (dash_dash < 0)
+     ++			; /* already validated arguments */
+     ++		else if (!is_range_diff_range(argv[0]))
+     + 			usage_msg_optf(_("not a commit range: '%s'"),
+     + 				       builtin_range_diff_usage, options,
+     + 				       argv[0]);
+     +@@ builtin/range-diff.c: int cmd_range_diff(int argc, const char **argv, const char *prefix)
+     + 
+     + 		strbuf_addstr(&range1, argv[0]);
+     + 		strbuf_addstr(&range2, argv[1]);
+     +-	} else if (argc == 1) {
+     +-		const char *b = strstr(argv[0], "..."), *a = argv[0];
+     ++
+     ++		strvec_pushv(&other_arg, argv +
+     ++			     (dash_dash < 0 ? 2 : dash_dash));
+     ++	} else if (dash_dash == 1 ||
+     ++		   (dash_dash < 0 && argc > 0 &&
+     ++		    (three_dots = strstr(argv[0], "...")))) {
+     ++		const char *a, *b;
+     + 		int a_len;
+     + 
+     +-		if (!b)
+     ++		if (dash_dash < 0)
+     ++			; /* already validated arguments */
+     ++		else if (!(three_dots = strstr(argv[0], "...")))
+     + 			usage_msg_optf(_("not a symmetric range: '%s'"),
+     +-				       builtin_range_diff_usage, options,
+     +-				       argv[0]);
+     ++					 builtin_range_diff_usage, options,
+     ++					 argv[0]);
+     + 
+     +-		a_len = (int)(b - a);
+     +-		if (!a_len) {
+     ++		if (three_dots == argv[0]) {
+     + 			a = "HEAD";
+     + 			a_len = strlen(a);
+     ++		} else {
+     ++			a = argv[0];
+     ++			a_len = (int)(three_dots - a);
+     + 		}
+     +-		b += 3;
+     +-		if (!*b)
+     ++
+     ++		if (three_dots[3])
+     ++			b = three_dots + 3;
+     ++		else
+     + 			b = "HEAD";
+     ++
+     + 		strbuf_addf(&range1, "%s..%.*s", b, a_len, a);
+     + 		strbuf_addf(&range2, "%.*s..%s", a_len, a, b);
+     ++
+     ++		strvec_pushv(&other_arg, argv +
+     ++			     (dash_dash < 0 ? 1 : dash_dash));
+     + 	} else
+     + 		usage_msg_opt(_("need two commit ranges"),
+     + 			      builtin_range_diff_usage, options);
+      
+       ## range-diff.c ##
+      @@ range-diff.c: static int read_patches(const char *range, struct string_list *list,
+     @@ range-diff.c: static int read_patches(const char *range, struct string_list *lis
+       	cp.git_cmd = 1;
+      
+       ## t/t3206-range-diff.sh ##
+     +@@ t/t3206-range-diff.sh: test_expect_success 'A^! and A^-<n> (unmodified)' '
+     + '
+     + 
+     + test_expect_success 'A^{/..} is not mistaken for a range' '
+     +-	test_must_fail git range-diff topic^.. topic^{/..} 2>error &&
+     ++	test_must_fail git range-diff topic^.. topic^{/..} -- 2>error &&
+     + 	test_i18ngrep "not a commit range" error
+     + '
+     + 
+      @@ t/t3206-range-diff.sh: test_expect_success '--left-only/--right-only' '
+       	test_cmp expect actual
+       '
+
+-- 
+gitgitgadget
