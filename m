@@ -2,145 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F541ECAAD2
-	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 05:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9FF1ECAAD2
+	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 07:09:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244818AbiHZFLg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Aug 2022 01:11:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35608 "EHLO
+        id S245168AbiHZHJY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Aug 2022 03:09:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244961AbiHZFLT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2022 01:11:19 -0400
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C1051A3BD
-        for <git@vger.kernel.org>; Thu, 25 Aug 2022 22:11:11 -0700 (PDT)
-Received: by mail-il1-x12a.google.com with SMTP id f3so299672ilq.5
-        for <git@vger.kernel.org>; Thu, 25 Aug 2022 22:11:11 -0700 (PDT)
+        with ESMTP id S244943AbiHZHJX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2022 03:09:23 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33469D2B02
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 00:09:21 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id f12so691588plb.11
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 00:09:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc;
-        bh=kl9SX92270+dkCY+HTOhclE9fXKaT99L2qpQjjWMSyM=;
-        b=ZSufhGK67Z01HF34CtByOoBV0df7RYfd8rNAj1IREVofrIqfVjQA0O/knIANaGx5Qt
-         4hVGdMI7IE2YaxxchwCTzsRqf9VUwEyjWe0DeZbn3qI+Sum9BP5bMMi5yc8UDKUmYJeW
-         6LyPyW87ryVgBnpuueiFSqNlKJcAOxuW0+2lfZLiyHonK4TgW1YCDqqjJOD70Lb4ltAc
-         RcOT0hYGB60j4uAa+HQ5y7/jMGfiL5PiKskaPpdip80YzZX5koBXSQP8mjAyY0vkREXy
-         VsA7pekb1luKW5dc2QsxJu/UtXAMUHsMqd19ttBCGOkyitdBvWoVcMasHEdqk5bRvvyl
-         8nBQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=4zSnk0KsVijcG2U1nlcVmLdVYdKl5uJu+1cxq5RUs8Y=;
+        b=INUvQubWyTzI/G+eGwgA6Ws35NGQtF0GAOvh91lRz3uTBlvbuYAofr6Ay5r8JbjqJS
+         xPrhGfOU49tDeTAM+QLmKP29y88LhGIcdgZOGRWxZ5E/9Z2HDJGgs8ETFW7JIUc1Jh5V
+         er6ZOKwqI4e8PWUoC3OJCD3Wbgx0UsNhDkJ0FiHY5RVX7/uvaoJ3dWoGAdXba4hKjNds
+         egzRh3+uKIlgjWlGC9Metm8Zi5YbjSvrrwcSHnOj40QMZ4gySHuwaFPtY87Fh4jUhofu
+         rMl8v/HksFOlHeyQr3L96ykXPEcYw9LOHOfbpPHmwghPWTnlAWnpGK9O0sJ5yzUu1t6g
+         FnUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
-        bh=kl9SX92270+dkCY+HTOhclE9fXKaT99L2qpQjjWMSyM=;
-        b=7OcJBfb3nFvrMaPAIzV3TNuVTXsect9nyI0yF/qOHOCiAXRAp+DoSzNKg6ebAGLhPm
-         pfOYvtCM6BjoGKiIYHGPkACvSKLqcn/k1sjcjMcoRv4Jdc3LGl4xa+UuNLLNkhGMAmbr
-         mfOkErGRJBr0Yp1fNUyTFS0HqjQ8RaXqtX4EFjfcOzJO3jEPRgnlJrXafd0fMdeByxJz
-         ZUqDeiUBkzwl7kxDrvy6+wR+olmKYMSA53GKbZF77BqrN4il5tcP6fnqO4dZGoPKGj0A
-         Awp1cIliFxkl5YSLdu49GdpMOTCmoyOjCWxE5H0podQfee3gjZRge4jmDi9wPjZJrHqJ
-         Pspg==
-X-Gm-Message-State: ACgBeo0i8SP8EzhF1YQMiOS8U5gM9Ej+bpJl3Yffe4k4gfwlY9iUx41A
-        7adF9PfCdqHrgohb1Q4tqKX6GHYuSGKESLE8Gx9+IuKYeSVFzQ==
-X-Google-Smtp-Source: AA6agR5Sq1fejAj1DjsjVb+yXpG5ih8JSedHZN7p+nz/56DL/T1y/ZgFVmfy89djFdmGfnNXBiowlBWVpCU4f03r0B0=
-X-Received: by 2002:a05:6e02:2163:b0:2ea:367:f1be with SMTP id
- s3-20020a056e02216300b002ea0367f1bemr3220927ilv.213.1661490670606; Thu, 25
- Aug 2022 22:11:10 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=4zSnk0KsVijcG2U1nlcVmLdVYdKl5uJu+1cxq5RUs8Y=;
+        b=pb43MyyY6ORt180Dv3MHlzQPJ6BHQzXKB2gCoHMz0PHu1Mcd6sfbNSZ0lOk2xiHvo7
+         c0kckxoSy4hbsywAbRZhmsvSDlNfBnTqlUCSNsLBtCbGZmb7CpOND+TK5mpouAIQD3Ib
+         dSlKTM3066PFr3YDdHgBVSVWA4d/RKTVoi4J0DLW0qsJDksmylJGkPTrT7Ev85ie28Qs
+         xIo47l4167LaaujFDpw7h+8Hue4ye0A2+SXbgMO4nLKw+MYs2zPFOB5FKhI4jI7hrSsz
+         RkpDiQYXxV7CcQZRZPe14HP920W3hgYKLI1kjeJMpBTs7HJ1m0IzrCtYxEChvvQEtApY
+         +5Qw==
+X-Gm-Message-State: ACgBeo1+guv2V5BZYzemLerBHKVp6Nl+fGQspjCeR1O8dbsQW/B7J30r
+        tNJjb2mBgdKkszJrkht/mtEyy22HHzqrJWa3
+X-Google-Smtp-Source: AA6agR5aokUE2cR1ow3BHIkJQODkRjlp3JX34cMl/g5d4xugJoXO4UGmaoCvqal9zavJ5M7WkW/czg==
+X-Received: by 2002:a17:902:e849:b0:16e:81c6:2cb7 with SMTP id t9-20020a170902e84900b0016e81c62cb7mr2558382plg.110.1661497760563;
+        Fri, 26 Aug 2022 00:09:20 -0700 (PDT)
+Received: from code-infra-dev-cbj.ea134 ([140.205.70.43])
+        by smtp.gmail.com with ESMTPSA id t12-20020a62d14c000000b0052f3a7bc29fsm866930pfl.202.2022.08.26.00.09.17
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Aug 2022 00:09:20 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, avarab@gmail.com, derrickstolee@github.com,
+        me@ttaylorr.com, tenglong.tl@alibaba-inc.com,
+        Teng Long <dyroneteng@gmail.com>
+Subject: [PATCH 0/1] pack-bitmap.c: avoid exposing absolute paths
+Date:   Fri, 26 Aug 2022 15:09:11 +0800
+Message-Id: <20220826070912.70274-1-dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.35.1.581.g7a5d018042
 MIME-Version: 1.0
-References: <pull.1316.git.1659958159193.gitgitgadget@gmail.com>
- <xmqqczdau2yd.fsf@gitster.g> <46ca40a9-2d9a-3c7c-3272-938003f4967a@github.com>
-In-Reply-To: <46ca40a9-2d9a-3c7c-3272-938003f4967a@github.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Fri, 26 Aug 2022 13:10:59 +0800
-Message-ID: <CAOLTT8QnHkRkVdcrkYNF40krxVudowymSG20U_tkgZ+A2waZgw@mail.gmail.com>
-Subject: Re: [PATCH] [RFC] list-objects-filter: introduce new filter sparse:buffer=<spec>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> =E4=BA=8E2022=E5=B9=B48=E6=9C=889=
-=E6=97=A5=E5=91=A8=E4=BA=8C 21:37=E5=86=99=E9=81=93=EF=BC=9A
->
-> On 8/8/2022 12:15 PM, Junio C Hamano wrote:
-> > "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> >> From: ZheNing Hu <adlternative@gmail.com>
-> >>
-> >> Although we already had a `--filter=3Dsparse:oid=3D<oid>` which
-> >> can used to clone a repository with limited objects which meet
-> >> filter rules in the file corresponding to the <oid> on the git
-> >> server. But it can only read filter rules which have been record
-> >> in the git server before.
-> >
-> > Was the reason why we have "we limit to an object we already have"
-> > restriction because we didn't want to blindly use a piece of
-> > uncontrolled arbigrary end-user data here?  Just wondering.
->
-> One of the ideas here was to limit the opportunity of sending an
-> arbitrary set of data over the Git protocol and avoid exactly the
-> scenario you mention.
->
+This patch tries to avoid the problem of leaking sensitive information that
+could output the absolute path of the repository when try to open multiple
+bitmaps. For example, in "alternates" scenario, where the repository
+"alternate_repo" serves as alternate object stores for repository
+"want_to_borrow" , and each of both has it's own bitmap file, then we run
+`git rev-list --use-bitmap-index HEAD`, the output might be:
 
-I find that sparse-checkout uses a "cone" mode to limit the set of send
-data, which can achieve performance improvement. I don't know if we can
-use this mode here? With a brief look, it seems that the "cone" mode is
-ensuring that the filter rule we add is directory and does not contain some
-special rule '!', '?', '*', '[', ']'. But now if we transport the
-filter rule to git server,
-git server cannot check if the filter rule is a directory, because it invol=
-ves
-paths in multiple commits. e.g. in 9e6f67, "test" can be a directory, but i=
-n
-e5e154e, "test" can be a file... I don't know how to solve this problem...
+  $ cd want_to_borrow.git
+  $ git rev-list --test-bitmap HEAD
+  warning: ignoring extra bitmap file: /Users/tenglong.tl/Downloads/alternate_repo.git/.git/objects/pack/pack-bff67e2a7a154e6933afe61b3681726cf9bd8e8b.pack
+  Bitmap v1 test (1 entries loaded)
+  Found bitmap for 30f146d41a7a86930fae3f4a5e1f1c1f2bfacbba. 64 bits / 11030517 checksum
+  Verifying bitmap entries: 100% (3/3), done.
+  OK!
 
-> Another was that it is incredibly expensive to compute the set of
-> reachable objects within an arbitrary sparse-checkout definition,
-> since it requires walking trees (bitmaps do not help here). This
-> is why (to my knowledge) no Git hosting service currently supports
-> this mechanism at scale. At minimum, using the stored OID would
-> allow the host to keep track of these pre-defined sets and do some
-> precomputing of reachable data using bitmaps to keep clones and
-> fetches reasonable at all.
->
-> The other side of the issue is that we do not have a good solution
-> for resolving how to change this filter in the future, in case the
-> user wants to expand their sparse-checkout definition and update
-> their partial clone filter.
->
-> There used to be a significant issue where a 'git checkout'
-> would fault in a lot of missing trees because the index needed to
-> reference the files outside of the sparse-checkout definition. Now
-> that the sparse index exists, this is less of an impediment, but
-> it can still cause some pain.
->
-> At this moment, I think path-scoped filters have a lot of problems
-> that need solving before they can be used effectively in the wild.
-> I would prefer that we solve those problems before making the
-> feature more complicated. That's a tall ask, since these problems
-> do not have simple solutions.
->
+After apply this patch:
 
-I have a good idea that if we can let such path-scoped filters work,
-we can apply sparse-checkout with it... Maybe one day, users can
-use:
+  $ git rev-list --test-bitmap HEAD
+  warning: ignoring extra bitmap files
+  Bitmap v1 test (1 entries loaded)
+  Found bitmap for 30f146d41a7a86930fae3f4a5e1f1c1f2bfacbba. 64 bits / 11030517 checksum
+  Verifying bitmap entries: 100% (3/3), done.
+  OK!
 
-git clone --sparse --filter=3D"sparse:buffer=3Ddir" xxx.git
+Thanks.
 
-to have the repo with sparse-checkout results...
-Needless to say, this is very tempting.
+Teng Long (1):
+  pack-bitmap.c: avoid exposing absolute paths
 
-> Thanks,
-> -Stolee
+ pack-bitmap.c                 | 8 ++++----
+ t/t5310-pack-bitmaps.sh       | 2 +-
+ t/t5326-multi-pack-bitmaps.sh | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-Thanks,
-ZheNing Hu
+-- 
+2.37.2.1.g1591e7ee52e
+
