@@ -2,90 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69185ECAAA3
-	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 16:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 670A2ECAAA6
+	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 16:54:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344535AbiHZQuZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Aug 2022 12:50:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48906 "EHLO
+        id S1344907AbiHZQyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Aug 2022 12:54:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344559AbiHZQuD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2022 12:50:03 -0400
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8941AE3C07
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 09:48:31 -0700 (PDT)
-Received: by mail-qk1-x72e.google.com with SMTP id g16so1533803qkl.11
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 09:48:31 -0700 (PDT)
+        with ESMTP id S1344909AbiHZQyN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2022 12:54:13 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1143A3468
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 09:54:08 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id o4so2154117pjp.4
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 09:54:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc;
-        bh=kndzUYjTjhRUsBUozQq48r7S0n78pqdr/Odg5r8h3PA=;
-        b=PDZkLqJNzpJtv46TExCzoSMGHtCQmxiqcpfJYZZ0ZdnwseGcxhLM8XLQigENBqEqUi
-         5kGg8N5c+uwjUwWfGOoVi+sIiAD2ZOrD9P31J4ZvmMgyKtp/+SuY9kHe0bziWa0Nr/b7
-         bKUIU5Q/c06D6QyvTrG6fZQcb69HPPAevVf+Y=
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc;
+        bh=n9Ur+n3sxg04CXOQyaaSdyeME75ha5djfIMe9X+SAH4=;
+        b=DgWOVpGAmfapSEwn7dP+v7ItPXCegw/KcJ9DgyZn9wYaEgQEI5s/3NpDODiEi19Czb
+         VZtBlECNVf09p4KPfBc1TzbzO6a3wnS6Gzv7jytNWT8nxsLBN3Dlb1jQkV2eWbckJ1Bm
+         pVV0Ec1dIhZN+1nWnvNXfkq+jwPwrk0FpQ2rXgBoAnLuYLQsyPIP9aZuT3fhYKqjCQaO
+         vPGb3FuuZYC72h5mWDPPYYihO5Jt/xUfDNGTiF6fvEnKnuehDYvptXpYT7vMF4FMgLV5
+         5teBgAlmGkUpRrnXEj+iMHOMXump6q3zJnUCq/wpCGrdth/Up/dyV6p/czHFt35G7lot
+         7sxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc;
-        bh=kndzUYjTjhRUsBUozQq48r7S0n78pqdr/Odg5r8h3PA=;
-        b=zquunTkRMoBfrSbrIpQUp/VhXonGfb1asmCXCxavmRQH5KCVzg6iz0jNt14wS31MX9
-         UiJ9klhNiCelxwSwKiuCPqtKtOM2E/Kla12rABrHI1XsRJLLISN/zwgocshZxqLYfh2z
-         AuCB6slxJksNv6q0q5PUe81xjA/yhJiNPS8RuUwbLiwtNWg30dGWEYb+l3KoC5gAnOGU
-         /Auha7DfHYiV2gY0fofT61q3blLTCzddBDRiLdA0o7Wztgaq8hxscPx3FWP3gG6IyLxL
-         YgxNPFzJLHK7kbdhE5hCKgBg0GrvjoiK2D+KGuP6MdcyPnff80+1QFeTG8KnLv8a6leE
-         MDwA==
-X-Gm-Message-State: ACgBeo2QN+YzNykmX/JAju1LTKbeYs8IBGwI6kamK9Tzg+lgq5bjKWDQ
-        wcGEVqakdNHc6x++1bDOgvqFJI0tVyoMng==
-X-Google-Smtp-Source: AA6agR65LUnUCPaSHSyMd2UKoW5Rxrbmjz+xD3/C/X9ZiOlCnnKlwkF6Vnpg5p2HGOBr9FhN/pNGfw==
-X-Received: by 2002:a05:620a:4244:b0:6a7:9714:a7c4 with SMTP id w4-20020a05620a424400b006a79714a7c4mr422053qko.611.1661532509932;
-        Fri, 26 Aug 2022 09:48:29 -0700 (PDT)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id h5-20020a05620a400500b006b872b606b1sm40582qko.128.2022.08.26.09.48.29
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc;
+        bh=n9Ur+n3sxg04CXOQyaaSdyeME75ha5djfIMe9X+SAH4=;
+        b=Vf55URUD6G5m0g8QFLvLj+PsUa9GsA/IlQYEVx9TQlFV1grAG7T7me7rVGcSqQ/jr4
+         L37mGguxW8ngwAdJVLDerBkhgDNpIG3VrLOD6ppnlaKCz81/qefdQQjGXGQGbajFa6+A
+         QR/KRXTBmzXjrx8ztv1eKI/2zK+MFTAQyOkvcF6RGVk4omDKugxdqKQTDssIa/DHfjMv
+         IrmXck8q/6jmoXqOuYmffFnShwtw3wqJNq6RDCT5S6r8GP2k2P6q4u6+P3oEEY3Dwd2U
+         DUDO3wAMbtDwu46YAY8Ml0dLb5j9eISF/NPbBk0ti8L0cBeXxNyJJJY5vsykXXq6aZUh
+         gDmA==
+X-Gm-Message-State: ACgBeo3cyyydYfP7GpGe+PL+zIRF1sfKvvLQHgZXrr63JWR0AoFe9yWW
+        rgv2NBHIjrcCDr4awtHX5aU=
+X-Google-Smtp-Source: AA6agR4MW2/JLSTzhOlBTOAOF54YsIPdu80sJTQWZgYgNFkfnUDsE23GID96C3P9Kd2USmGRRPmGMw==
+X-Received: by 2002:a17:90b:48d0:b0:1fb:3853:b23 with SMTP id li16-20020a17090b48d000b001fb38530b23mr5091784pjb.219.1661532847156;
+        Fri, 26 Aug 2022 09:54:07 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id h9-20020a170902680900b0015e8d4eb26esm1798972plk.184.2022.08.26.09.54.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Aug 2022 09:48:29 -0700 (PDT)
-Date:   Fri, 26 Aug 2022 12:48:28 -0400
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: Re: forcing an in-body From header
-Message-ID: <20220826164828.cxsveqtjiyimdj7s@meerkat.local>
-References: <c403e526-7455-4f26-fcef-97c99f9af539@rasmusvillemoes.dk>
+        Fri, 26 Aug 2022 09:54:06 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/3] range-diff: consistently validate the arguments
+References: <pull.1335.git.1661258122.gitgitgadget@gmail.com>
+        <pull.1335.v2.git.1661506770.gitgitgadget@gmail.com>
+        <4cd7f09557c7d0a4802b07d1e8440015e0a50524.1661506770.git.gitgitgadget@gmail.com>
+Date:   Fri, 26 Aug 2022 09:54:06 -0700
+In-Reply-To: <4cd7f09557c7d0a4802b07d1e8440015e0a50524.1661506770.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Fri, 26 Aug 2022
+        09:39:29 +0000")
+Message-ID: <xmqq8rnbymhd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <c403e526-7455-4f26-fcef-97c99f9af539@rasmusvillemoes.dk>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 26, 2022 at 03:17:34PM +0200, Rasmus Villemoes wrote:
-> Hi,
-> 
-> Some mailing lists mangle the real From: header, making it a little hard
-> for maintainers to apply patches directly using 'git am'. See e.g.
-> https://lists.openembedded.org/g/openembedded-core/message/166515 . One
-> way to work around that is by having an in-body From: "header".
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-This is only tangentially related to the problem at hand, but the list in
-question is also mirrored on lore.kernel.org:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> This patch lets `range-diff` validate the arguments not only when
+> invoked with one or two arguments, but also in the code path where three
+> arguments are handled.
+>
+> While at it, we now use `usage_msg_opt*()` consistently.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/range-diff.c | 41 +++++++++++++++++++++++++++++------------
+>  1 file changed, 29 insertions(+), 12 deletions(-)
 
-https://lore.kernel.org/openembedded-core/20220531151052.3667079-1-sean.anderson@seco.com/
+Very nice.  The updated series is worth having if only for this
+step.  Very very pleasing.
 
-The mirroring is done with a direct push hook from groups.io, which is why we
-get messages without all the groups.io mangling.
-
-> However, merely setting sendemail.from or format.from is not enough to
-> get such a header, if the value happens to be identical to the patch
-> author (which it would usually be). So, could we get some config knob
-> and/or command line switch to force an in-body from header? Then one
-> could set that on a per-project basis, for projects with such mailing lists.
-
-I agree that it's a nice feature to have, though I would put this into the
-sendemail config instead of using an env variable, something like:
-
-    [sendemail]
-      in-body-headers = From
-
--K
