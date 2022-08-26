@@ -2,99 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17B10ECAAA3
-	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 15:53:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A352ECAAD4
+	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 16:02:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343602AbiHZPxy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Aug 2022 11:53:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40734 "EHLO
+        id S234010AbiHZQCj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Aug 2022 12:02:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237300AbiHZPxw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2022 11:53:52 -0400
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93BA0220D0
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 08:53:51 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 258FC5C02CE;
-        Fri, 26 Aug 2022 11:53:49 -0400 (EDT)
-Received: from imap46 ([10.202.2.96])
-  by compute3.internal (MEProxy); Fri, 26 Aug 2022 11:53:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hurrell.net; h=
-        cc:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm2; t=1661529229; x=1661615629; bh=EQswOZSY31
-        7d3psFSt3SVgJbkSqTgFymg1nKfobPFoY=; b=WHM8rvD8qHx1F0L9UWtNJINj1I
-        SmjzgSRy5FIhA/2z6ledS85Yb/+alf94n1I2hpDeQizaFcuilZgt38PBIHeIVPgd
-        k38Oextdh4feIJbSozSVKzoYtwg+k4m+DvxVY6/mHhWpj1Mr2W1jcrDAeNm3SQ5w
-        hT96hZyV/3A7HSxs1djNfh6+o42aDSwVNJcMQKmaewrFzycIBZrAthijjuixPXiO
-        eFhDIY3BhhqiAnwD9SM2gB9DpEIXiEG64nBC3eW1MuzWECg8X7DY4enYNrIhGSUa
-        V69b3wqvM1QDSxP5flwAlF6WfMM5pESE3aJMBJq2DhMrouC1OUM2Ak9oaZ5w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1661529229; x=1661615629; bh=EQswOZSY317d3psFSt3SVgJbkSqT
-        gFymg1nKfobPFoY=; b=FIWpFQavEj9d/ajzUXg3Wo9BWCXJL4frfC1SqOD+G1sE
-        Tag9C+E8XeaeQFO17dXU9a17iQeUcC9WitkL+JbjAHddFHhzAueN5ao/cruc3pYi
-        8pK1J+K8eqmj2y8a5w7MXqaN6JMj4nLn+zTiR9p2MDLlBw7uAHsnWmXxsLG77Jr0
-        clWUoobkJlJI7Dn/ifBm1ATaeG74rzX9qFcxHGE34ZB9uwNZGSXMdbxugp5MBHtQ
-        FpDJ4jIdRwNzOLvguP3F45Xy7TIvJqcx5HGtu5xZPiNc8M4BMLycuhHwDHucq5ta
-        X6MLQPDbGb5Itqg3sZ/PL15Cg3NoPh4zNPshx7GpWw==
-X-ME-Sender: <xms:jOwIY3l0cSMchMVLB0NeAPh0GcX8_fYwPo0UMdAMIkHFle80Hauv3g>
-    <xme:jOwIY61pdZtekeVUuvGQ9G-2FrmQRe2uP8A7EaoxYsSZWtw8Y84ClJm9bpMevuMGL
-    DvbISwafg91dttG_OA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdejhedgleefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    goufhushhpvggtthffohhmrghinhculdegledmnecujfgurhepofgfggfkjghffffhvfev
-    ufgtsehttdertderredtnecuhfhrohhmpedfifhrvghgucfjuhhrrhgvlhhlfdcuoehgrh
-    gvgheshhhurhhrvghllhdrnhgvtheqnecuggftrfgrthhtvghrnhepteduvddtffeltddt
-    feekfedugedtjeeufeevjeefhfetteegtdeludfhieeugfffnecuffhomhgrihhnpehgih
-    htrdhiohdpphhusghlihgtqdhinhgsohigrdhorhhgnecuvehluhhsthgvrhfuihiivgep
-    tdenucfrrghrrghmpehmrghilhhfrhhomhepghhrvghgsehhuhhrrhgvlhhlrdhnvght
-X-ME-Proxy: <xmx:jOwIY9rEyxbIMcm53aqY3ZB4pIDmWeiSUw1HcOal8aP6Jzarpc9FEg>
-    <xmx:jOwIY_kYepFBqhVG_Ggoq9xHGybAV6-4ynHJij_Sq5DnfPp-ACUb6A>
-    <xmx:jOwIY10cPNMEGQibLBXdrkjS1ro3knjABtFMEWwNW3yU5qJOms0x1g>
-    <xmx:jewIYyhFih-Z0z7Ag4WKeCUW3STEB18qIb0QR_AXHqJUqqZVmPn0Sg>
-Feedback-ID: i12114735:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 742B82A20075; Fri, 26 Aug 2022 11:53:48 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-841-g7899e99a45-fm-20220811.002-g7899e99a
-Mime-Version: 1.0
-Message-Id: <70e68b28-73fa-4d16-a135-cbb03ea09d35@betaapp.fastmail.com>
-In-Reply-To: <4e0eff48-4a3e-4f0e-9ed2-d01ec38442a5@www.fastmail.com>
-References: <4e0eff48-4a3e-4f0e-9ed2-d01ec38442a5@www.fastmail.com>
-Date:   Fri, 26 Aug 2022 17:53:28 +0200
-From:   "Greg Hurrell" <greg@hurrell.net>
-To:     git@vger.kernel.org
-Cc:     "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Subject: Re: Bad behavior in xhistogram.c in the face of hash collisions?
+        with ESMTP id S244667AbiHZQCh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2022 12:02:37 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 033D6D31FC
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 09:02:36 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id r15-20020a17090a1bcf00b001fabf42a11cso2202796pjr.3
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 09:02:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc;
+        bh=DAtDii/ZDrfOMJ53eU2ayqOC70GOpVIrQ2Eu3Ax2Sk0=;
+        b=FM1kK56HtkXAl8xb5cqFCrbVTYRdKy1UJCydjDvOc/3S55Yv6T7aN+meXUXlKTNp6k
+         0uDmLQsbLyNb82kwGtWYmZOAARZ34fF9DVxTU9XtKVyIosZv0R2TWa45oUNlNPVK7ZL0
+         iOYsQSzCqtxiAWSM+uuP3B2nbWcxfW3Ei/9eG+UJOWT7EPd9brC5IrKOnp2SL/gcFcOs
+         EnUK3L5EWA9IjXSiBUTz98B1C8OvhDpJ5FMbKeNR4/o3p+j94FH6m37X2TenfcKGLP+E
+         FK01Xo/p6KWzd+JRrEXByk5SZV9dee1eEr1wSJAbeSD8b0lvM4Csd49cxmQtnAYw4NHr
+         H+vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc;
+        bh=DAtDii/ZDrfOMJ53eU2ayqOC70GOpVIrQ2Eu3Ax2Sk0=;
+        b=ax6WerLb4daJHNPiIlAIpspK5jrkkDSMCIOzXc9RJCovZcyfJlWtf6JR556jA9gN/U
+         pAVbFNjxXyMwQgjoGyKpO3Lo01+EG5uWRMQA2SwWqBlP5BMZjSGnj/ZbWATk5LvaXQxN
+         xMN9Iii2ZOMWLIGfzqvCsHm8T6y14K0NNmZ8z9OGEhX7UKcVq3Z1M3LDNMQ2TLNBpWxk
+         uI8dGsWktNjhx7aSX46pWSzx8yyq28ZW3ZWJK96D0EfMnZkjCgWFr3zxb3L9KDnVdns/
+         Gr1+YsxSsn2NKJNUUlagk7jEJ0VpL4NlXsiiiF0Fv8AWF6pZvx2pshFzdb0ytiPn1Lp+
+         pKAw==
+X-Gm-Message-State: ACgBeo2fORiRrLJ1S6GdHJqRt27VgUwA3FhrCoYNS5e7I10cEyxK2x5J
+        feDo1IZK48B5PrZi72XpUTE=
+X-Google-Smtp-Source: AA6agR5f/KGOSYj4XsjFgo31sG6HPWHHE7difAyIq1Mwdm4hcD3jdWNYe/W02bfZvEimlbS2CVHGzw==
+X-Received: by 2002:a17:90b:4c81:b0:1fb:51c2:7961 with SMTP id my1-20020a17090b4c8100b001fb51c27961mr4923303pjb.36.1661529755025;
+        Fri, 26 Aug 2022 09:02:35 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id ft15-20020a17090b0f8f00b001fbbbe38387sm1850666pjb.10.2022.08.26.09.02.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Aug 2022 09:02:34 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH v6 0/6] [GSoC] bitmap: integrate a lookup table
+ extension to the bitmap format
+References: <pull.1266.v5.git.1658342304.gitgitgadget@gmail.com>
+        <pull.1266.v6.git.1660496112.gitgitgadget@gmail.com>
+        <Ywf01YqJKNsGfffx@nand.local>
+Date:   Fri, 26 Aug 2022 09:02:34 -0700
+In-Reply-To: <Ywf01YqJKNsGfffx@nand.local> (Taylor Blau's message of "Thu, 25
+        Aug 2022 18:16:53 -0400")
+Message-ID: <xmqqlerb0z8l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 16, 2021, at 2:40 PM, Greg Hurrell wrote:
-> 
-> I think I may have found a bug in the histogram diff algorithm that
-> manifests when there is a hash collision.  This behavior seems to exist
-> in the JGit implimentation (https://git.io/J0Ud8) too, and was brought
-> across with the port-to-C in 8c912eea94a2.
+Taylor Blau <me@ttaylorr.com> writes:
 
-Thought I had better bump the thread as I did a fire-and-forget on it
-a year ago and never followed up because I wasn't super confident
-about my findings.
+> This series all looks great to me, and the performance numbers that you
+> achieved at the end are a nice payoff for all of your hard work. Well
+> done!
+>
+>     Reviewed-by: Taylor Blau <me@ttaylorr.com>
 
-I'd be interested in corroboration of my analysis, to see whether there
-really is a bug there. Not quoting my entire email here so as to keep
-things brief, but the original can be seen at:
-
-https://public-inbox.org/git/4e0eff48-4a3e-4f0e-9ed2-d01ec38442a5@www.fastmail.com/
-
-(Phillip, CC'ing you for an opinion because I see you have made a few
-changes to xdiff/xhistogram.c relatively recently.)
-
-Best wishes,
-Greg
+Thanks, both.
