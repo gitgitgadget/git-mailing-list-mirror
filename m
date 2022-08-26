@@ -2,185 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E9FDECAAD5
-	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 22:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA5D3ECAAD4
+	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 23:15:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345355AbiHZWqn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Aug 2022 18:46:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35806 "EHLO
+        id S1345436AbiHZXPq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Aug 2022 19:15:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239972AbiHZWqm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2022 18:46:42 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8158FE1939
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 15:46:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1661553990;
-        bh=F2gTxydCDMklGwOdiXgj/F0nNDzoR3pFYUjxeexLJ78=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=Dgru+5OTJir8yzq4M7NRBRte0uxjTvIXoQ2HLN6vBBxAkWZutMKqhzG3CCDdiVlwr
-         nRRrIxLsPru82AE8Z6FCcXD+3gHoG3MuPwzpvtJKcPMdJ6oxDm66Y1ElMXNlFwFQ0i
-         DgmZZqHygO6G2Lb9kzIVP+9t55ZDMj6vkeGQpNOM=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.21.84]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MY5fd-1ov6OR1I0z-00YFo8; Sat, 27
- Aug 2022 00:46:30 +0200
-Message-ID: <526a174e-b179-c284-a21c-7afe0a0b4df2@web.de>
-Date:   Sat, 27 Aug 2022 00:46:29 +0200
+        with ESMTP id S231826AbiHZXPp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2022 19:15:45 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FE14D51C7
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 16:15:43 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id a4so2379534qto.10
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 16:15:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc;
+        bh=LCDAaxgpU2mu0gGI8EH2qbPCiCxwgWMRpRBfDV40T5I=;
+        b=VdnP3gsznv/9fedEEvClfwPOfD2YJrnhb05AOWzjq8tLl/n69QUxHti1/JmwqXX6Aa
+         19+p3xmF/WrdqdVwJdklzECtVhqjnVjvOaCtiNiadTzAi0wMriuXUUxjXjlg1p52Z+nx
+         BMrc+yEAFF7izb8r/0dRhmxHD9h1TJKHWTvsNaP7fEzaYMYxlLYR8X7NjuWJxeBqAIN6
+         efVnKqalPvhA5uvTNbYoQk1/dl4b5TLoP2kOY4aAFgqufMYro/mpXbOjl6IPQFvs6wUS
+         Xv+9NJkiuI2871aSQ0vvdod9V5NJPa6PtN5F2JAXdFIZul0SVqvJRTxbl0m94L/sf42v
+         sp3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc;
+        bh=LCDAaxgpU2mu0gGI8EH2qbPCiCxwgWMRpRBfDV40T5I=;
+        b=vatUrPIDRpZqei1J7cVhddL1HnMP1Rrd3yH4oyAn+lvJwp0xayzbUkXjhXUTIp4fWa
+         J1SsuKMS4D4mT4lNuzdLecdonnJepmSnHe5X/1QTM+4ddLaub0kTjY8edRO/mFAHE/jv
+         2KkfVcvp0Lqk3OFP5eBOCjmDjzDmbKfbWC+UkyL3ZBPQmpI6c1xKs7rFJ2DPZZKU+i0J
+         cAVwz9r1Vq/clP+q1zlP/EcrDQHr8CEeByOgwVLQgJH9WCJHPE4dWTrchsVuG45Vbc2B
+         2ME+KPyzRekfJ/wXQVi5hgZKZDCymCUlTSPdcEBNk0T3mtzlTQ79ukvgVYW3RkaMlm2D
+         gW1Q==
+X-Gm-Message-State: ACgBeo1bYcNY2wlBzzr1KLd8OrPshm5jHG91w+pO+VXrA38fG9cfSA6l
+        92y2aTu9Dumxijt/+Cza8/5FWVxIkIA=
+X-Google-Smtp-Source: AA6agR5V1L/n4w/qePQz5zU1OnPfzJT8nKYETPfasqF/+G0fxzEz+H5YVkJGg2/f17GPA1FLwpLKFQ==
+X-Received: by 2002:a05:622a:178e:b0:344:56a8:25da with SMTP id s14-20020a05622a178e00b0034456a825damr1619967qtk.375.1661555741976;
+        Fri, 26 Aug 2022 16:15:41 -0700 (PDT)
+Received: from [192.168.1.128] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id r6-20020a05620a298600b006b98315c6fbsm874267qkp.1.2022.08.26.16.15.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Aug 2022 16:15:41 -0700 (PDT)
+Subject: Re: [PATCH v2 0/4] built-in add -p: support diff-so-fancy better
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+References: <pull.1336.git.1661277870.gitgitgadget@gmail.com>
+ <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
+ <241d3760-5b7a-fb3e-00dc-bf54bda92c82@gmail.com>
+ <818s0453-677s-sos7-24r2-qq66o4r81r4q@tzk.qr>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <a9a6c73c-65d5-795e-6830-a543c2513941@gmail.com>
+Date:   Fri, 26 Aug 2022 19:15:40 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.1.2
-Subject: Re: curiosities with tempfile.active
-To:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-References: <YwXw2ytUlrXSSRh7@coredump.intra.peff.net>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <YwXw2ytUlrXSSRh7@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:mLBSM3CW4w8kmsnsXCEPOmBxmjZNJbSGMo4AiAFz8El6bQEoEo7
- ncUNsHRK71YoOPMcogzvcD+SwPzoQ/YwZVIAf9tgK5FSFmsJTQ9Mr0nftGf4yxLVK+T31QV
- mDUeQn+z6LbaDNefmzWGotKy+8aZw2mViy1BvxKo6kJa3dD2+O8GHC29M0b4e/WB35pgx1F
- fz5rv6DfM8GnkJ+YQCN6w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:JyStri/zASg=:ZBN2g7ED8YWv5dn9mLJV3b
- gyyGwt4i9ynwQGzp0qXLjLNlktzcLR5yMb1TFCMP4GQBD2r1Tdk/ABdxXzKl1KgHFw3VE3F/X
- OaA/vT2lAD87K1/0fG8xSmseI04H5MWAzP1S6C6CZHOPpNcukK0BBjzodcH1lGeKLpdwDsWxk
- z/DoFzDQ69rh8mzIxxs+r30ZH0jRJXJjUHYKm2AOyKDEY6q/uvmVIH+YzQ4KZdhChxF1lHjLS
- nEPMjkokEgP2NBnh3GU0w6AARTUvDgClsenBAAPHKPY2JmllqBkjZigEob9gBBN32RMeFp2ho
- Tx4o6u+2YfTHiSOWfBIugVmaNPKekX3AkifyBNCddqeNuekC3eLsL1btA8luoMI25dtAzZKeV
- 3wopV9P3d0/uKPHWYvbQdeT4m2KFinq1PvRanmmziiPhGPQLNm0rZMkAtXoARV7MLB84YLoq8
- +k/UBX8S3Fhlll4Sr8erc6XQRWLFkWYZZY3/m9vFfIPQQzJVCUya8b1VHZOidxTx8UgD5V6O3
- riWqZ0KQOfgWZagxJ2fugNExJcbXm6nrecjGOnEJnQnr3oXKjqwArhWKpUrOHS+/j2+LEfk2f
- v0ZVfTsSkngFHRsME3Rs1mj95D13kTAZGxpKc1TF3gkJH/jpiN4EUoi0jbEp3RKYKWemPM+gT
- 7Kdym0AiNBKlWPsIz7Fglixh3IBJKu78W9pIaJsKE5zwMOLqVVAtV+HEEJ8xTvwp5DywxGgs7
- E5CEGr2DCDiW9k3tKYoJTIvQQP1WHayZ8ZbBojliS9IZohK1yUHMwDTsiaRi2pJjtgEqwfLPc
- w0hzz2hZ45SH1dORD8BdgOJajHD+jGZbgeNQMvYOp/ebn7PZXkmu7elkodUQrL3Eex3FNTYXY
- 0lP/Inyr1fiJpFQmggGVrP6KOaZaqnJGJ9cLTy71EVVQuYRW7lNweKU8BqrfMCZjU1b80y6fc
- KbEQhgQ9CcHozHjrtkSW+j1yauIP83NgDeXDW3ZXSDiUhLaCwbxnuzc8GOtvbI7ykPXWOyItH
- THH853sNyqcya8WpuJohoqdi8J1BbW2h1hiYJ35/BePLZTjbZ5DMRYbg6XXF+7o7ooKhHkmPh
- S7N9qGKccUnQS4KF6E/qLHnldlwQctHVsIX
+In-Reply-To: <818s0453-677s-sos7-24r2-qq66o4r81r4q@tzk.qr>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.08.22 um 11:35 schrieb Jeff King:
-> But here's the interesting twist. Commit 2c2db194bd (tempfile: add
-> mks_tempfile_dt(), 2022-04-20) recently taught remove_tempfiles() to
-> drop a surrounding directory. And it does so by munging the filename
-> buffer. It has to, because we can't allocate a new buffer in a signal
-> handler.
->
-> But is it also idempotent(-ish)? The directory removal itself is,
-> because it checks:
->
->   tempfile->filename.buf[tempfile->directorylen] =3D=3D '/'
->
-> before overwriting that byte with a NUL, so it should only be true once
-> (though I note this violates the usual "volatile" rules for signal
-> handlers, it's probably OK in practice since we know the NUL will be
-> written before we call rmdir()).
->
-> But after that happens, the filename buffer now contains a C string that
-> points to the directory. And if we end up in remove_tempfiles() again
-> due to another signal, we'll try to unlink(p->filename.buf), which will
-> now unlink the directory! I'm not sure how that behaves on all systems.
-> On Linux it's a noop. And if it just deleted the directory, that would
-> be OK. I seem to recall on old versions of SunOS it did bad things
-> (maybe because it really did unlink it, but without checking for
-> orphaned entries inside).
+Hi Dscho,
 
-https://pubs.opengroup.org/onlinepubs/9699919799/functions/unlink.html
-says of the unlink(2) parameter: "The path argument shall not name a
-directory unless the process has appropriate privileges and the
-implementation supports using unlink() on directories."  So we better
-not do that..
+Le 2022-08-26 à 07:43, Johannes Schindelin a écrit :
+> Hi Philippe,
+> 
+> On Wed, 24 Aug 2022, Philippe Blain wrote:
+> 
+>> Le 2022-08-24 à 17:21, Johannes Schindelin via GitGitGadget a écrit :
+>>> Philippe Blain reported in
+>>> https://lore.kernel.org/git/ecf6f5be-22ca-299f-a8f1-bda38e5ca246@gmail.com
+>>> that there is a problem when running the built-in version of git add -p with
+>>> diff-so-fancy [https://github.com/so-fancy/diff-so-fancy] as diff colorizer.
+>>> The symptom is this:
+>>>
+>>>     error: could not parse colored hunk header '?[36m?[1m?[38;5;13m@ file:1 @?[1m?[0m'
+>>>
+>>>
+>>> This patch series addresses that and should fix
+>>> https://github.com/so-fancy/diff-so-fancy/issues/437
+>>>
+>>> Changes since v1:
+>>>
+>>>  * Added a commit to ignore dirty submodules just like the Perl version
+>>>    does.
+>>>
+>>> Johannes Schindelin (4):
+>>>   t3701: redefine what is "bogus" output of a diff filter
+>>>   add -p: gracefully ignore unparseable hunk headers in colored diffs
+>>>   add -p: handle `diff-so-fancy`'s hunk headers better
+>>>   add -p: ignore dirty submodules
+>>>
+>>>  add-patch.c                | 24 ++++++++++++++----------
+>>>  t/t3701-add-interactive.sh | 24 +++++++++++++++++++++++-
+>>>  2 files changed, 37 insertions(+), 11 deletions(-)
+>>>
+>>>
+>>> base-commit: 795ea8776befc95ea2becd8020c7a284677b4161
+>>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1336%2Fdscho%2Fdiff-so-fancy-v2
+>>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1336/dscho/diff-so-fancy-v2
+>>> Pull-Request: https://github.com/gitgitgadget/git/pull/1336
+>>>
+>>> Range-diff vs v1:
+>>>
+>>>  1:  74ab50eeb1c = 1:  74ab50eeb1c t3701: redefine what is "bogus" output of a diff filter
+>>>  2:  b07f85a0359 = 2:  b07f85a0359 add -p: gracefully ignore unparseable hunk headers in colored diffs
+>>>  3:  9dac9f74d2e = 3:  9dac9f74d2e add -p: handle `diff-so-fancy`'s hunk headers better
+>>>  -:  ----------- > 4:  540ce27c38a add -p: ignore dirty submodules
+>>>
+>>
+>> Thanks, 4/4 fixes the mismatched output bug. Just after I sent my last email,
+>> I asked myself "but why does 'git add -p' presents dirty submodule to the user,
+>> as they can't be staged?" :)
+>>
+>> A small question about 2/4, any reason why you did not use a "Reported-by:"
+>> trailer ? Not that I care that much, but I think using such a trailer is more
+>> standard, and makes for easier statistics as it's more parseable :)
+> 
+> Good suggestion.
+> 
+> How about adding your review? I'll then add a "Reviewed-by:" trailer, too
+> ;-)
 
-=2D-- >8 ---
-Subject: [PATCH] tempfile: avoid directory cleanup race
+I won't have time to look at the code changes themselves, and I've never looked 
+at the builtin add -p code (nor the original Perl one!) so it would take some time.
 
-The temporary directory created by mks_tempfile_dt() is deleted by first
-deleting the file within, then truncating the filename strbuf and
-passing the resulting string to rmdir(2).  When the cleanup routine is
-invoked concurrently by a signal handler we can end up passing the now
-truncated string to unlink(2), however, which could cause problems on
-some systems.
-
-Avoid that issue by remembering the directory name separately.  This way
-the paths stay unchanged.  A signal handler can still race with normal
-cleanup, but deleting the same files and directories twice is harmless.
-
-Reported-by: Jeff King <peff@peff.net>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- tempfile.c | 14 ++++++--------
- tempfile.h |  2 +-
- 2 files changed, 7 insertions(+), 9 deletions(-)
-
-diff --git a/tempfile.c b/tempfile.c
-index 2024c82691..7414c81e31 100644
-=2D-- a/tempfile.c
-+++ b/tempfile.c
-@@ -59,14 +59,11 @@ static VOLATILE_LIST_HEAD(tempfile_list);
- static void remove_template_directory(struct tempfile *tempfile,
- 				      int in_signal_handler)
- {
--	if (tempfile->directorylen > 0 &&
--	    tempfile->directorylen < tempfile->filename.len &&
--	    tempfile->filename.buf[tempfile->directorylen] =3D=3D '/') {
--		strbuf_setlen(&tempfile->filename, tempfile->directorylen);
-+	if (tempfile->directory) {
- 		if (in_signal_handler)
--			rmdir(tempfile->filename.buf);
-+			rmdir(tempfile->directory);
- 		else
--			rmdir_or_warn(tempfile->filename.buf);
-+			rmdir_or_warn(tempfile->directory);
- 	}
- }
-
-@@ -115,7 +112,7 @@ static struct tempfile *new_tempfile(void)
- 	tempfile->owner =3D 0;
- 	INIT_LIST_HEAD(&tempfile->list);
- 	strbuf_init(&tempfile->filename, 0);
--	tempfile->directorylen =3D 0;
-+	tempfile->directory =3D NULL;
- 	return tempfile;
- }
-
-@@ -141,6 +138,7 @@ static void deactivate_tempfile(struct tempfile *tempf=
-ile)
- {
- 	tempfile->active =3D 0;
- 	strbuf_release(&tempfile->filename);
-+	free(tempfile->directory);
- 	volatile_list_del(&tempfile->list);
- 	free(tempfile);
- }
-@@ -254,7 +252,7 @@ struct tempfile *mks_tempfile_dt(const char *directory=
-_template,
-
- 	tempfile =3D new_tempfile();
- 	strbuf_swap(&tempfile->filename, &sb);
--	tempfile->directorylen =3D directorylen;
-+	tempfile->directory =3D xmemdupz(tempfile->filename.buf, directorylen);
- 	tempfile->fd =3D fd;
- 	activate_tempfile(tempfile);
- 	return tempfile;
-diff --git a/tempfile.h b/tempfile.h
-index d7804a214a..5b9e8743dd 100644
-=2D-- a/tempfile.h
-+++ b/tempfile.h
-@@ -82,7 +82,7 @@ struct tempfile {
- 	FILE *volatile fp;
- 	volatile pid_t owner;
- 	struct strbuf filename;
--	size_t directorylen;
-+	char *directory;
- };
-
- /*
-=2D-
-2.37.2
-
+Cheers,
+Philippe.
