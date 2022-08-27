@@ -2,138 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA5D3ECAAD4
-	for <git@archiver.kernel.org>; Fri, 26 Aug 2022 23:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32D5AECAAD5
+	for <git@archiver.kernel.org>; Sat, 27 Aug 2022 00:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345436AbiHZXPq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Aug 2022 19:15:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45302 "EHLO
+        id S243363AbiH0AIQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Aug 2022 20:08:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231826AbiHZXPp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Aug 2022 19:15:45 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FE14D51C7
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 16:15:43 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id a4so2379534qto.10
-        for <git@vger.kernel.org>; Fri, 26 Aug 2022 16:15:43 -0700 (PDT)
+        with ESMTP id S231528AbiH0AIP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Aug 2022 20:08:15 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80B2DE831D
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 17:08:13 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id l5-20020a05683004a500b0063707ff8244so2050287otd.12
+        for <git@vger.kernel.org>; Fri, 26 Aug 2022 17:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc;
-        bh=LCDAaxgpU2mu0gGI8EH2qbPCiCxwgWMRpRBfDV40T5I=;
-        b=VdnP3gsznv/9fedEEvClfwPOfD2YJrnhb05AOWzjq8tLl/n69QUxHti1/JmwqXX6Aa
-         19+p3xmF/WrdqdVwJdklzECtVhqjnVjvOaCtiNiadTzAi0wMriuXUUxjXjlg1p52Z+nx
-         BMrc+yEAFF7izb8r/0dRhmxHD9h1TJKHWTvsNaP7fEzaYMYxlLYR8X7NjuWJxeBqAIN6
-         efVnKqalPvhA5uvTNbYoQk1/dl4b5TLoP2kOY4aAFgqufMYro/mpXbOjl6IPQFvs6wUS
-         Xv+9NJkiuI2871aSQ0vvdod9V5NJPa6PtN5F2JAXdFIZul0SVqvJRTxbl0m94L/sf42v
-         sp3w==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc;
+        bh=NFiklxQvhb1Q4mVVCS2cSdbdyMYVWg76Z+KJjbNqxEw=;
+        b=mMihlqiC6dW91JObT7PkVvypm7ykmWWSj41rEH3PZZwnygR9+sSQFn7PqLEeQ7XHYg
+         Q+bGvrHJAZiyvdoXpSYKvC/y1ARGYEe7rTNGHDCVKp3OwTMHUJ7d+gfXUADj0MuHwXB4
+         UNUFMMKZn3vasXIa+lC1SGNPeZmzM7b+NQwbDjKfLhWjM3xmM75rA3uoDMJ6MZexSleH
+         /pwZNXAWeeiitxXwW/4WOPiGagfLvuuk1VBDQGX1s/NeHgRV9b6Q+wXKP3MB3RRahDId
+         VGfzpLvVSiBv2bIdhUGj1SdxMLOGEVURkDTXOaMg+wOCiInybgzfksWVbKaq0x2Vl9bx
+         zQfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc;
-        bh=LCDAaxgpU2mu0gGI8EH2qbPCiCxwgWMRpRBfDV40T5I=;
-        b=vatUrPIDRpZqei1J7cVhddL1HnMP1Rrd3yH4oyAn+lvJwp0xayzbUkXjhXUTIp4fWa
-         J1SsuKMS4D4mT4lNuzdLecdonnJepmSnHe5X/1QTM+4ddLaub0kTjY8edRO/mFAHE/jv
-         2KkfVcvp0Lqk3OFP5eBOCjmDjzDmbKfbWC+UkyL3ZBPQmpI6c1xKs7rFJ2DPZZKU+i0J
-         cAVwz9r1Vq/clP+q1zlP/EcrDQHr8CEeByOgwVLQgJH9WCJHPE4dWTrchsVuG45Vbc2B
-         2ME+KPyzRekfJ/wXQVi5hgZKZDCymCUlTSPdcEBNk0T3mtzlTQ79ukvgVYW3RkaMlm2D
-         gW1Q==
-X-Gm-Message-State: ACgBeo1bYcNY2wlBzzr1KLd8OrPshm5jHG91w+pO+VXrA38fG9cfSA6l
-        92y2aTu9Dumxijt/+Cza8/5FWVxIkIA=
-X-Google-Smtp-Source: AA6agR5V1L/n4w/qePQz5zU1OnPfzJT8nKYETPfasqF/+G0fxzEz+H5YVkJGg2/f17GPA1FLwpLKFQ==
-X-Received: by 2002:a05:622a:178e:b0:344:56a8:25da with SMTP id s14-20020a05622a178e00b0034456a825damr1619967qtk.375.1661555741976;
-        Fri, 26 Aug 2022 16:15:41 -0700 (PDT)
-Received: from [192.168.1.128] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id r6-20020a05620a298600b006b98315c6fbsm874267qkp.1.2022.08.26.16.15.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Aug 2022 16:15:41 -0700 (PDT)
-Subject: Re: [PATCH v2 0/4] built-in add -p: support diff-so-fancy better
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1336.git.1661277870.gitgitgadget@gmail.com>
- <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
- <241d3760-5b7a-fb3e-00dc-bf54bda92c82@gmail.com>
- <818s0453-677s-sos7-24r2-qq66o4r81r4q@tzk.qr>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <a9a6c73c-65d5-795e-6830-a543c2513941@gmail.com>
-Date:   Fri, 26 Aug 2022 19:15:40 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc;
+        bh=NFiklxQvhb1Q4mVVCS2cSdbdyMYVWg76Z+KJjbNqxEw=;
+        b=OI3JrW+5tGwTb7/6+RLmL3ws5BL2gKsGLJnFxYkJOGc25X9oQlhkIxa2NvsKOem/8x
+         iZLAjCsOUKSUNcPnvYNyhmEWhHYqAzGr02WFDGQO1OsA36HDRCqE71OkeleEr82tOS/a
+         2dhDfIZpkwCOMvHymNxzkX9MCz/bRIz9SSlTGqQiT4GjdCPcGtN5GZ0I8gpF4omFiKFl
+         fgSabGNLAq6Ep8U/PJj7kRKrrbG/i4tU/BU7xFUu3yRnF3t+OY42XvElvG/iHTDeArew
+         kKkgv1GZRZcSGzQqYlBkodV1aq6KE+p3CO/VqMQhwFa/+MM8ovX+0MJnrf/0I+Ud+vFe
+         wnWQ==
+X-Gm-Message-State: ACgBeo1ehUMrMcC5uImx5ciNk9vNkniLjGxQ5mwnK0Hztk0hZtU/1Nv0
+        nI6QKjkCZ+6DISD0ozCeANGJgCA1Scs=
+X-Google-Smtp-Source: AA6agR5Z4SaTFfrkXWAKaKgrRPwDjCTT/PWKpQMCPJQ/orlTZ3G1giCjZDgyvn80sBbbRoBhO92p3w==
+X-Received: by 2002:a9d:5a88:0:b0:638:911a:d7fd with SMTP id w8-20020a9d5a88000000b00638911ad7fdmr2190706oth.6.1661558892497;
+        Fri, 26 Aug 2022 17:08:12 -0700 (PDT)
+Received: from localhost ([2806:2f0:4000:94d:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id s24-20020a056808009800b00342e8bd2299sm1694179oic.6.2022.08.26.17.08.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Aug 2022 17:08:11 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Justin Donnelly <justinrdonnelly@gmail.com>,
+        Joakim Petersen <joak-pet@online.no>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] completion: prompt: use generic colors
+Date:   Fri, 26 Aug 2022 19:08:10 -0500
+Message-Id: <20220827000810.2917816-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.37.2.351.g9bf691b78c.dirty
 MIME-Version: 1.0
-In-Reply-To: <818s0453-677s-sos7-24r2-qq66o4r81r4q@tzk.qr>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+When the prompt command mode was introduced in 1bfc51ac81 (Allow
+__git_ps1 to be used in PROMPT_COMMAND, 2012-10-10) the assumption was
+that it was necessary in order to properly add colors to PS1 in bash,
+but this wasn't true.
 
-Le 2022-08-26 à 07:43, Johannes Schindelin a écrit :
-> Hi Philippe,
-> 
-> On Wed, 24 Aug 2022, Philippe Blain wrote:
-> 
->> Le 2022-08-24 à 17:21, Johannes Schindelin via GitGitGadget a écrit :
->>> Philippe Blain reported in
->>> https://lore.kernel.org/git/ecf6f5be-22ca-299f-a8f1-bda38e5ca246@gmail.com
->>> that there is a problem when running the built-in version of git add -p with
->>> diff-so-fancy [https://github.com/so-fancy/diff-so-fancy] as diff colorizer.
->>> The symptom is this:
->>>
->>>     error: could not parse colored hunk header '?[36m?[1m?[38;5;13m@ file:1 @?[1m?[0m'
->>>
->>>
->>> This patch series addresses that and should fix
->>> https://github.com/so-fancy/diff-so-fancy/issues/437
->>>
->>> Changes since v1:
->>>
->>>  * Added a commit to ignore dirty submodules just like the Perl version
->>>    does.
->>>
->>> Johannes Schindelin (4):
->>>   t3701: redefine what is "bogus" output of a diff filter
->>>   add -p: gracefully ignore unparseable hunk headers in colored diffs
->>>   add -p: handle `diff-so-fancy`'s hunk headers better
->>>   add -p: ignore dirty submodules
->>>
->>>  add-patch.c                | 24 ++++++++++++++----------
->>>  t/t3701-add-interactive.sh | 24 +++++++++++++++++++++++-
->>>  2 files changed, 37 insertions(+), 11 deletions(-)
->>>
->>>
->>> base-commit: 795ea8776befc95ea2becd8020c7a284677b4161
->>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1336%2Fdscho%2Fdiff-so-fancy-v2
->>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1336/dscho/diff-so-fancy-v2
->>> Pull-Request: https://github.com/gitgitgadget/git/pull/1336
->>>
->>> Range-diff vs v1:
->>>
->>>  1:  74ab50eeb1c = 1:  74ab50eeb1c t3701: redefine what is "bogus" output of a diff filter
->>>  2:  b07f85a0359 = 2:  b07f85a0359 add -p: gracefully ignore unparseable hunk headers in colored diffs
->>>  3:  9dac9f74d2e = 3:  9dac9f74d2e add -p: handle `diff-so-fancy`'s hunk headers better
->>>  -:  ----------- > 4:  540ce27c38a add -p: ignore dirty submodules
->>>
->>
->> Thanks, 4/4 fixes the mismatched output bug. Just after I sent my last email,
->> I asked myself "but why does 'git add -p' presents dirty submodule to the user,
->> as they can't be staged?" :)
->>
->> A small question about 2/4, any reason why you did not use a "Reported-by:"
->> trailer ? Not that I care that much, but I think using such a trailer is more
->> standard, and makes for easier statistics as it's more parseable :)
-> 
-> Good suggestion.
-> 
-> How about adding your review? I'll then add a "Reviewed-by:" trailer, too
-> ;-)
+It's true that the \[ \] markers add the information needed to properly
+calculate the width of the prompt, and they have to be added directly to
+PS1, a function returning them doesn't work.
 
-I won't have time to look at the code changes themselves, and I've never looked 
-at the builtin add -p code (nor the original Perl one!) so it would take some time.
+But that is because bash coverts the \[ \] markers in PS1 to \001 \002,
+which is what readline ultimately needs in order to calculate the width.
 
-Cheers,
-Philippe.
+We don't need bash to do this conversion, we can use \001 \002
+ourselves, and then the prompt command mode is not necessary to display
+colors.
+
+This is what functions returning colors are supposed to do [1].
+
+[1] http://mywiki.wooledge.org/BashFAQ/053
+
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+
+FTR, it's possible zsh will implement these \001 \002 markers too, so
+there would be no need for different behavior depending on the shell.
+
+ contrib/completion/git-prompt.sh | 19 +++++++------------
+ t/t9903-bash-prompt.sh           |  8 ++++----
+ 2 files changed, 11 insertions(+), 16 deletions(-)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 1435548e00..01bd807657 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -96,9 +96,7 @@
+ #
+ # If you would like a colored hint about the current dirty state, set
+ # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
+-# the colored output of "git status -sb" and are available only when
+-# using __git_ps1 for PROMPT_COMMAND or precmd in Bash,
+-# but always available in Zsh.
++# the colored output of "git status -sb".
+ #
+ # If you would like __git_ps1 to do nothing in the case when the current
+ # directory is set up to be ignored by git, then set
+@@ -255,12 +253,12 @@ __git_ps1_colorize_gitstring ()
+ 		local c_lblue='%F{blue}'
+ 		local c_clear='%f'
+ 	else
+-		# Using \[ and \] around colors is necessary to prevent
++		# Using \001 and \002 around colors is necessary to prevent
+ 		# issues with command line editing/browsing/completion!
+-		local c_red='\[\e[31m\]'
+-		local c_green='\[\e[32m\]'
+-		local c_lblue='\[\e[1;34m\]'
+-		local c_clear='\[\e[0m\]'
++		local c_red=$'\001\e[31m\002'
++		local c_green=$'\001\e[32m\002'
++		local c_lblue=$'\001\e[1;34m\002'
++		local c_clear=$'\001\e[0m\002'
+ 	fi
+ 	local bad_color=$c_red
+ 	local ok_color=$c_green
+@@ -564,11 +562,8 @@ __git_ps1 ()
+ 		b="\${__git_ps1_branch_name}"
+ 	fi
+ 
+-	# NO color option unless in PROMPT_COMMAND mode or it's Zsh
+ 	if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
+-		if [ $pcmode = yes ] || [ -n "${ZSH_VERSION-}" ]; then
+-			__git_ps1_colorize_gitstring
+-		fi
++		__git_ps1_colorize_gitstring
+ 	fi
+ 
+ 	local f="$h$w$i$s$u$p"
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 6a30f5719c..594042f562 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -13,10 +13,10 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ . "$GIT_BUILD_DIR/contrib/completion/git-prompt.sh"
+ 
+ actual="$TRASH_DIRECTORY/actual"
+-c_red='\\[\\e[31m\\]'
+-c_green='\\[\\e[32m\\]'
+-c_lblue='\\[\\e[1;34m\\]'
+-c_clear='\\[\\e[0m\\]'
++c_red='\001\e[31m\002'
++c_green='\001\e[32m\002'
++c_lblue='\001\e[1;34m\002'
++c_clear='\001\e[0m\002'
+ 
+ test_expect_success 'setup for prompt tests' '
+ 	git init otherrepo &&
+-- 
+2.37.2.351.g9bf691b78c.dirty
+
