@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64A6AECAAD2
-	for <git@archiver.kernel.org>; Sat, 27 Aug 2022 12:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04018C0502E
+	for <git@archiver.kernel.org>; Sat, 27 Aug 2022 12:44:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232879AbiH0Moj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Aug 2022 08:44:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39284 "EHLO
+        id S232938AbiH0Moq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Aug 2022 08:44:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231391AbiH0Moc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Aug 2022 08:44:32 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C71003137A
-        for <git@vger.kernel.org>; Sat, 27 Aug 2022 05:44:31 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id v16so2035795wrm.8
-        for <git@vger.kernel.org>; Sat, 27 Aug 2022 05:44:31 -0700 (PDT)
+        with ESMTP id S232793AbiH0Mof (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Aug 2022 08:44:35 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41B2E31374
+        for <git@vger.kernel.org>; Sat, 27 Aug 2022 05:44:34 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id bd26-20020a05600c1f1a00b003a5e82a6474so2119063wmb.4
+        for <git@vger.kernel.org>; Sat, 27 Aug 2022 05:44:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=4nZ5T9cMdKhWlaoNeMMhrxt/eq5mUn7eiiPvf1i1Ivs=;
-        b=bnrsnPagXcSb+GyUfwG6PItwpgs6SZJt9BrP+y8a7QgtldKys4AYqPhaoHMFg7f4+e
-         kfKJVYbjcV1JHBCawZ5sJf6CLyPoEXOk/q24qo/go6cskT8bjLC/uKgvqpCMyFA+Lffo
-         cQ4nFMurOlJ12Uqc01v5b9aG/ZzDZ/R42RfbjkrNcPYd5o0aTq8lRrOdFHLUozu5dZZl
-         TFYv1D/fkJXDliI65g2wdRoy7rl4ycgF4nTweEbFuUrJs5HzQANFypnD2V/9YCbFyqxM
-         1/FsNIQfgey8qu9SC+ldcbGIg6xsJYtveVr8vGvaz/qokHvczW7pCrIs8xC9iwzfgfe2
-         0VXA==
+        bh=oaO05srWf/I52sc2LqNWTDuaqmQesAxh5GR52Lgsn+E=;
+        b=DfA60Rk6hcHUVT8IqwPDwYzoZlxtLOmtfGu6Q1wogzrzS2MeHhYB27v5kSw1hBsBXa
+         GeZM9uiHQh+LHfCINJEf1iyYLLQynXE2YRenxUbh60uom6Bx+w7zhu/eOYowZ4wbGfA8
+         7dVXTlh72Qa8DNIh0QlIGlymXDq2Vt61AbcmTyhz9DFQhkqZg/h9Z04buJpEHKtAGmrG
+         hP60aPKSWh/A7AGFzY3vyzog5R1cpUU7xvPUdbnyL5bmw7aU13e7iPEea0Q6fQJ7rWcP
+         2kKNEyjzRo6ZlEd0KyUVWwzMYImPRgCkfpJFKWC+qMd5c9ynNTxVSRLuuCFo5DGFWjcm
+         eh1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=4nZ5T9cMdKhWlaoNeMMhrxt/eq5mUn7eiiPvf1i1Ivs=;
-        b=yQpvRF5F0n2Z3UcXhCTg1NgdnViTPOXuwE1KVY4rUapL17ZLpmTtS0jbTPba2UJi5g
-         /fmxfCo95E59T+J3NDhmWY6xK3ZUMaNI9lm8ZjyupUwuRDxwjLvFn4DoDcXAaBrM8yZG
-         KG78CoBeudSTbhVZL5/klldIueWqA4Yi3NVbioTYSTfO+3zQsfb/4rd6m5LE9guWvJgW
-         8TT2kUlDZOhDkC/bmZr93uGvnvn4W/XKl7M3nxAbVIpwA/da7tvz/ammTCEcslJvpc76
-         IySa9K/JAJpTtJ2ZVpIWcZBuw4Qnru4rBhH0wtyDDHfBPkRH6E5nKdSJsQ1NC5LbUT9j
-         cfsA==
-X-Gm-Message-State: ACgBeo14MWvUJm8MHWlOi/BNEParh57OD69DoGMD/Qqoa/AnjeCKALPf
-        jxQkBZNHhTTLuou+2VCk+94hx8O5VlQ=
-X-Google-Smtp-Source: AA6agR6xjNMHoPlRNen16TYuvzDABNW+AoBI0fCAPITTR8FsU4Iry9lnD/kirySeXDk9o/4q15MLcw==
-X-Received: by 2002:adf:d081:0:b0:225:8625:53e0 with SMTP id y1-20020adfd081000000b00225862553e0mr2079554wrh.542.1661604270196;
-        Sat, 27 Aug 2022 05:44:30 -0700 (PDT)
+        bh=oaO05srWf/I52sc2LqNWTDuaqmQesAxh5GR52Lgsn+E=;
+        b=QvVhvJjqS0h7qvDrBZ09dAFChWoIiEMlrdofjT7T4z4ktkFRh/2H5FP5Z9mx3VI69t
+         qTOFD1ewyZ6mDeonHO39/nsWJb9hTO781/MDjiR8M7GDzfK0ywUleAVVnKqWjWuLNCML
+         KUZx/S7c806FxzRz7o39vAr2ueUGnG7Dz8tmIn/GzefBsw86QBfTMRxAxPx3Sp68wBtG
+         JS892wfVp+9jOoxRzC6XmBMU41VNJrOU/Vpdf2PVjO0aUM8ibEF/BqYw3H49Ol834+9f
+         ctd9qERQ8lZ3zm0Eu3zWUnJznggGKpetges1fDWhaxLYAbKgqG7hcPNptsnJ6yCeCKJx
+         miiQ==
+X-Gm-Message-State: ACgBeo2K0fRKmjQrgn4+Z/yH/AFja1HhMQ5DIIIeb95sqvegVev51BpW
+        Vd4x9rk+4JxYOaZJ+ZPNJlgRuxfcNhw=
+X-Google-Smtp-Source: AA6agR40eMMdY9Y1QuytOxQ/73zo5Z69k4BEf8IFljot6MqlRoN20DipkYoLsMN9hRdA1OqXEMOeVw==
+X-Received: by 2002:a05:600c:1009:b0:3a5:4512:5f71 with SMTP id c9-20020a05600c100900b003a545125f71mr2309735wmc.134.1661604272507;
+        Sat, 27 Aug 2022 05:44:32 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v20-20020a05600c15d400b003a331c6bffdsm2501773wmf.47.2022.08.27.05.44.29
+        by smtp.gmail.com with ESMTPSA id v15-20020adfe28f000000b002255eebf785sm2200099wri.89.2022.08.27.05.44.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Aug 2022 05:44:29 -0700 (PDT)
-Message-Id: <1e43148864a52ffe05b5075bd0e449c0e056f078.1661604264.git.gitgitgadget@gmail.com>
+        Sat, 27 Aug 2022 05:44:31 -0700 (PDT)
+Message-Id: <9ab30552c6ae6a5d0a85d7a7bbdd10af4a4cf7ec.1661604264.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1132.v5.git.1661604264.gitgitgadget@gmail.com>
 References: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
         <pull.1132.v5.git.1661604264.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 27 Aug 2022 12:44:10 +0000
-Subject: [PATCH v5 02/16] bisect--helper: really retire --bisect-next-check
+Date:   Sat, 27 Aug 2022 12:44:12 +0000
+Subject: [PATCH v5 04/16] bisect--helper: simplify exit code computation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,36 +74,34 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In 911aba14205 (bisect--helper: retire `--bisect-next-check` subcommand,
-2021-09-13), we removed the usage string and the implementation, but not
-actually the option.
+We _already_ have a function to determine whether a given `enum
+bisect_error` value is non-zero but still _actually_ indicates success.
+
+Let's use it instead of duplicating the logic.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/bisect--helper.c | 3 ---
- 1 file changed, 3 deletions(-)
+ builtin/bisect--helper.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 2cc69e1eee5..bdf7ce18d7a 100644
+index aa94c25ec73..2f9c7f54f3f 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -1280,7 +1280,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
- 		BISECT_RESET = 1,
--		BISECT_NEXT_CHECK,
- 		BISECT_TERMS,
- 		BISECT_START,
- 		BISECT_AUTOSTART,
-@@ -1296,8 +1295,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
- 			 N_("reset the bisection state"), BISECT_RESET),
--		OPT_CMDMODE(0, "bisect-next-check", &cmdmode,
--			 N_("check whether bad or good terms exist"), BISECT_NEXT_CHECK),
- 		OPT_CMDMODE(0, "bisect-terms", &cmdmode,
- 			 N_("print out the bisect terms"), BISECT_TERMS),
- 		OPT_CMDMODE(0, "bisect-start", &cmdmode,
+@@ -1380,12 +1380,5 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	}
+ 	free_terms(&terms);
+ 
+-	/*
+-	 * Handle early success
+-	 * From check_merge_bases > check_good_are_ancestors_of_bad > bisect_next_all
+-	 */
+-	if ((res == BISECT_INTERNAL_SUCCESS_MERGE_BASE) || (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND))
+-		res = BISECT_OK;
+-
+-	return -res;
++	return is_bisect_success(res) ? 0 : -res;
+ }
 -- 
 gitgitgadget
 
