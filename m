@@ -2,82 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85EDEECAAD1
-	for <git@archiver.kernel.org>; Sat, 27 Aug 2022 21:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2C49ECAAD1
+	for <git@archiver.kernel.org>; Sun, 28 Aug 2022 00:39:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229882AbiH0VsA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Aug 2022 17:48:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48894 "EHLO
+        id S230375AbiH1AjF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Aug 2022 20:39:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbiH0Vr7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Aug 2022 17:47:59 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCB3D42AD3
-        for <git@vger.kernel.org>; Sat, 27 Aug 2022 14:47:58 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 2so5975478edx.2
-        for <git@vger.kernel.org>; Sat, 27 Aug 2022 14:47:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=3E8DomDlBx69QMvTIwJVdNBH3vlU8hQ5m8OWcZscKy8=;
-        b=fFvsBwT5zrO6kjLi5xN2IIcEghJaIfvad60n8T6EWBHudtwoqlZAvFHXrSb2PQEh0d
-         UHRuy6SEWDa817f9olKDdA93h5vsp00h5l9KR0wX2i7qj313lDshBRAg85SJIymexnSb
-         j9PwlmD1wr4HP00QsErQt4QO/Kc2o+FvWIKfcpXdfYvmq2Od7JuMkTh9wWvyl4w3ZvEC
-         I7je/a9A+BmW2O+M94BQ0lhZRHmJz1Kg9W/nSmHoeY1oOFQ7Ufq8jxOJjmO0v7qstzsF
-         fT3ZzSl9MX7UvTttxDrZR5l8+mniK8a2moDF6hfje8G5QMkq1A7aKtiOjcmuD1PjRnJp
-         8d8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=3E8DomDlBx69QMvTIwJVdNBH3vlU8hQ5m8OWcZscKy8=;
-        b=M4ckc0/ZDkCxp/CYVg49snHH9LkBXJ7SpGnVaRWz+CMQp12MNjXc+h64G6A5TuD9Z6
-         e9623j5t7TEu4veYJn9+S2yZZuMzJ60TzIzOGNmjatGQQTnrt1WDypqaHmhXfT5QtiiZ
-         Qh7LyQqjksUWgHzTTMe3zb7Mx1gwEnDXElvA+b32F9BT/xB3iGR3NXT2zick128HLQN+
-         3fzE1yYYE4jcVyZg2nq2vrp5o8z7TUjLWkzInarzpTJIE0BHoWvcVjoN818Sn+s/paO2
-         25q8sTS0VYaX7Ziu0RGfC/eJr2T9p+zxlTZ0i6qn5yMyLU7VrlXglTksV9PypFNuhuXZ
-         Xm7A==
-X-Gm-Message-State: ACgBeo1jgH1nzbBCuFG8nKWlCUlw8ius0aqzeiKNUwDaeUsqe1qmfVUq
-        QstzxLgoNoXx9bQhOJGJG37T3Rxmb1GilmIJ0pE=
-X-Google-Smtp-Source: AA6agR5PAnMggJvxp8e9hAjYGQpkydEw6ZgtnYsyoqxq1Sl4uaSbzyvNcKKs6dBq00ccgMITF8IZmB4Gdn8FN7RmFPs=
-X-Received: by 2002:a05:6402:35c:b0:43c:8f51:130 with SMTP id
- r28-20020a056402035c00b0043c8f510130mr11343698edw.393.1661636877159; Sat, 27
- Aug 2022 14:47:57 -0700 (PDT)
+        with ESMTP id S230346AbiH1AjE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Aug 2022 20:39:04 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB4073C16A
+        for <git@vger.kernel.org>; Sat, 27 Aug 2022 17:39:03 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id AB0DF5A26C
+        for <git@vger.kernel.org>; Sun, 28 Aug 2022 00:39:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1661647142;
+        bh=6RUua6yAXFRtjijYe3wSnsMVqKMVQ10tfGPcFuyBNFI=;
+        h=Date:From:Cc:Subject:References:Content-Type:Content-Disposition:
+         In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
+         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=kLrDZ+GfGSn6717AvTCuH5+AMFrT8gNE87flnsS+NkkZyAyIG5WwuY0lngmh12EKV
+         x7/kx4H7PbZC909LOCsXsZsQubPcIlolVM+lF380CxDbnhEyuON6lYASUvusP3oZ24
+         H7Y+eXjtmF1G70yDouvYgAii5f7baO7KrxBA1nX8j0bEzsRHVsef8T4DbkCec9BKMJ
+         nf+rhjz/Rp2wT3aSpcNcpzawDQ4u+DxvcQ4eE+9AhqXQUdaF5b7AhGK0D2atw/wH5f
+         YC0h+42praqtDv+BAl5tvb4iFfvbzO/jZ5n8zXsikPEbD53kAhUo07ukZ4mBxGOuoH
+         7Tu7YD9vTArr9FMK6HaFcGrh3AFWLOhnfwBNMx9nIJeC9mWkzi2Jey/rw4UqU2enxB
+         H6ESiQxl0j1mqas32IfN6Sqm2TqdsnboG2zvxRM6ZyZRrdFuQiBce+XQKsa9m+nlm6
+         s2guYHCfMqWJmYNJN9m3VXbiJtr+LK5Mozmkc8XX5aVAoqJNUz8
+Date:   Sun, 28 Aug 2022 00:39:03 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [Proposal] Pass additional metadata to sendemail-validate hook
+ from git send-emailg
+Message-ID: <Ywq5J2q9PwBrXnrm@tapette.crustytoothpaste.net>
+References: <87czcm7maf.fsf@amd.com>
 MIME-Version: 1.0
-References: <YwXw2ytUlrXSSRh7@coredump.intra.peff.net> <526a174e-b179-c284-a21c-7afe0a0b4df2@web.de>
- <YwoV9/xAcWTRbUBG@coredump.intra.peff.net>
-In-Reply-To: <YwoV9/xAcWTRbUBG@coredump.intra.peff.net>
-From:   Chris Torek <chris.torek@gmail.com>
-Date:   Sat, 27 Aug 2022 14:47:45 -0700
-Message-ID: <CAPx1Gvddmk8cfWGg7M8gJ=rxnoTgQRgQNX95BgYcQk1N3VUi8A@mail.gmail.com>
-Subject: Re: curiosities with tempfile.active
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="tEq59MVacIwtNPJM"
+Content-Disposition: inline
+In-Reply-To: <87czcm7maf.fsf@amd.com>
+User-Agent: Mutt/2.2.6 (2022-06-05)
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 27, 2022 at 6:05 AM Jeff King <peff@peff.net> wrote:
-> Yeah, I saw that. It's a bit vague, and if the call returns ENOSYS or
-> EISDIR, that would be perfectly fine. It's the "what happens on the
-> implementations that do support it..." part that I'm more worried about. :)
 
-The history here is that pre-4.2BSD, Unix systems had no mkdir
-system call. You used mknod() to make a truly empty directory and
-the link() to create the "." and ".." entries within it, and all three of
-these operations were restricted to the super-user.  There was no
-rmdir either, so again, unlink() as the super-user was permitted to
-do the job (with three calls to unlink the "." and ".." entries first and
-then remove the directory).
+--tEq59MVacIwtNPJM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Unlinking a directory when it still contains "." leaves the link count
-at 1 and there's no GC, so it sits around occupying an inode.
+On 2022-08-26 at 21:00:25, Strawbridge, Michael wrote:
+> Hi,
 
-If you have a mkdir() system call and don't need backwards
-compatibility, you get to have these return EISDIR errors...
+Hey,
 
-Chris
+> I was hoping to put a feature proposal forward for git send-email.
+>=20
+> For git send-email there is a git hook, sendemail-validate which
+> gets the body of the email that will be sent but is missing some
+> of the metadata that git send-email has access to.  I propose that
+> we also pass the extra metadata that gets presented to the user
+> later on via stdout such as: From, To, Cc, Subject, Date,
+> Message-Id, X-Mailer, MIME-Version, Content-Transfer-Encoding to
+> the git hook.
+>=20
+> I'm willing to work on the patch but want to make sure the idea
+> would be accepted first.
+
+I think the idea is interesting and would be willing to see a patch come
+to the list.
+
+However, having said that, we typically evaluate patches, not proposals,
+so to see if it's actually accepted, you'd have to actually send a
+patch.  We may find that while the idea is interesting, it turns out to
+be infeasible, or, for whatever reason, the patch is unsuitable.
+
+I know that this is different from how other projects typically work,
+where you typically pitch an idea first and then implement, but it's
+what we do here.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--tEq59MVacIwtNPJM
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.35 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYwq5JwAKCRB8DEliiIei
+gRKzAQDXgrI7s7n9PMd21Iwk1m3M81n5dOG5ZDkDzyvxbGHnMQD5AXX95HbxZzDN
+44C8LS8DJ/m9ogin44Avopc5WbgUrgE=
+=CmnP
+-----END PGP SIGNATURE-----
+
+--tEq59MVacIwtNPJM--
