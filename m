@@ -2,77 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01914ECAAD5
-	for <git@archiver.kernel.org>; Sun, 28 Aug 2022 20:05:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 408E3ECAAD5
+	for <git@archiver.kernel.org>; Sun, 28 Aug 2022 20:47:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229645AbiH1UFt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Aug 2022 16:05:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41610 "EHLO
+        id S229612AbiH1UrJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Aug 2022 16:47:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbiH1UFs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Aug 2022 16:05:48 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A0E71403A
-        for <git@vger.kernel.org>; Sun, 28 Aug 2022 13:05:48 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id y127so6367001pfy.5
-        for <git@vger.kernel.org>; Sun, 28 Aug 2022 13:05:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc;
-        bh=XzztR83C69gsbMcxvf6BNugdDhlnB6kYS/BkJcj61TM=;
-        b=BnshgGIhi0mtaG6B4iBhY9Hwb/BT8K/6+WtZ/JeUsf4EQ8EpMyf55s/HhTj9YkKs1e
-         TOhP8MTEAL7JuEVUFF+aBMeDt78Vs1NW5V4iKip87cGM/0M9nLcjjQjDM+5mvhMiXXDE
-         AAy8dpGgoHhsKDwvdxwPA0Mh/LkowQ6IqVa8kXdOW8xz+7AuXxxofV/0CH/r0Wui9JUH
-         4TxkQJOsdXX+2V+fgXm38mvuy9lO9LuUCHOqmlFP3SRApxJZcdmqd5n5YU3Yf27DHk95
-         kRH6bLiuOMg0/MiulI6btxknYUtAztO1gcnHDqz97UVaudjHHqX9CqRaRYv3w71ECxwg
-         RbnA==
+        with ESMTP id S229445AbiH1UrI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Aug 2022 16:47:08 -0400
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A3C62B61C
+        for <git@vger.kernel.org>; Sun, 28 Aug 2022 13:47:07 -0700 (PDT)
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-324ec5a9e97so153536937b3.7
+        for <git@vger.kernel.org>; Sun, 28 Aug 2022 13:47:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc;
-        bh=XzztR83C69gsbMcxvf6BNugdDhlnB6kYS/BkJcj61TM=;
-        b=rOXrDZ3ctiSCllTXhgkV5te3xtL+09P4JWumaz2mcJOqAnkRwe45FQJocWIyyOO76u
-         ZwhB5CsxwYk17LvzQ81hxDMTVsDq+zAkErVaNh12fJrAGZqgiAgLEyGIdPGghVy7Cq5s
-         zAtHxS65hw/wgkBmE7yYVrkwMWJdC5+adueeAZV+mCe3wuZDOio5WYAO11hR8Ak1HIZt
-         TU1xypOh4NiWDpDZiVKScANsCRy2ZMB2rEZlBH+T7sJNrYf+7tAGgLXhydeKNR9PXZ+W
-         qcwEFXzKebwsMmBZTJ1qE7BGvNoLwihMeAqDWL3GnMITm8MbRP9Yh5uLjtFPeQmaf96I
-         eQgw==
-X-Gm-Message-State: ACgBeo0rB4jBYCEasiupl+hgq1ON2lwvDHcUkTbONdX+WOrAylqQlktN
-        PXjPhXu6aAu/bwn+0dBxqTg=
-X-Google-Smtp-Source: AA6agR5x7z1tdzdMwC42prnkIS2Trase150uCWpsFmfD4HcCUx7iYXha/u8w8AFnsVv4cKCaZH1fmA==
-X-Received: by 2002:a63:c00c:0:b0:42b:80a3:28a0 with SMTP id h12-20020a63c00c000000b0042b80a328a0mr9214115pgg.311.1661717147574;
-        Sun, 28 Aug 2022 13:05:47 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id e6-20020a170902784600b0016dcbdf9492sm5786971pln.92.2022.08.28.13.05.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Aug 2022 13:05:46 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 0/3] fix failing t4301 test and &&-chain breakage
-References: <pull.1339.git.1661663879.gitgitgadget@gmail.com>
-Date:   Sun, 28 Aug 2022 13:05:46 -0700
-In-Reply-To: <pull.1339.git.1661663879.gitgitgadget@gmail.com> (Eric Sunshine
-        via GitGitGadget's message of "Sun, 28 Aug 2022 05:17:56 +0000")
-Message-ID: <xmqq35dgt9ph.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=MpYDVQ6BaKDY4feKoLdJebj8+HPWWDl5ox8t6pkTrKg=;
+        b=0nb8v1bUgWt/XOxVzYou82/Y0AAxEKe59TuK4iPNZqVOiI8B0XgbiWfP8xA1GIzPs5
+         LBQiVQAnW7dm8p6lw8BT48uYlSisjiNDF6UzHPEM0w8Ds5ZWaMCrr/tYyUd4FmgCppBW
+         hR21B2JyX7cMQTpGPVU2m1ZTPsYexC3C0wPtiVUlQxhwjKqRUuIYEKaCijNkTK4+0bOb
+         irzLmhqojDANC1XrBJvGma0KwChFZqP2EznzfzU5E/fMQHSU9l5RQgcHg/30y/ca9o+O
+         OyMNozJ9/nfZyPfoC7SckTMVAiyQzk07bC0HXBpJqH+e4ZOrNjxGZjz6Hy24ntiAu3ml
+         13Iw==
+X-Gm-Message-State: ACgBeo1CQf6xrIyZ9GxMn7ZdHPjjfp3jwD6THaIESFz9jlK0ZCR6qijB
+        qfi725AXMIVaNf2qUUoJwB2TlcXetb2bhgzIRYADiMRnguI=
+X-Google-Smtp-Source: AA6agR4ZYePFE42vEZkIRJkduOmry+wMrRPqdN+xIKYPTtzVcNDVjPH427lQH3S6f2yH00FFgnEow9lHdyg8f7bknws=
+X-Received: by 2002:a0d:c307:0:b0:335:6fff:dc70 with SMTP id
+ f7-20020a0dc307000000b003356fffdc70mr7507015ywd.493.1661719626045; Sun, 28
+ Aug 2022 13:47:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1339.git.1661663879.gitgitgadget@gmail.com> <xmqq35dgt9ph.fsf@gitster.g>
+In-Reply-To: <xmqq35dgt9ph.fsf@gitster.g>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 28 Aug 2022 16:46:55 -0400
+Message-ID: <CAPig+cSzQAwQLVXbQRLpOJOC=APP-T0DfCzw87xuXKfM8nzSWw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] fix failing t4301 test and &&-chain breakage
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> Eric Sunshine (3):
->   t4301: account for behavior differences between sed implementations
->   t4031: fix broken &&-chains and add missing loop termination
->   t4301: emit blank line in more idiomatic fashion
+On Sun, Aug 28, 2022 at 4:05 PM Junio C Hamano <gitster@pobox.com> wrote:
+> "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >   t4301: account for behavior differences between sed implementations
+> >   t4031: fix broken &&-chains and add missing loop termination
+> >   t4301: emit blank line in more idiomatic fashion
 >
->  t/t4301-merge-tree-write-tree.sh | 24 ++++++++++++------------
->  1 file changed, 12 insertions(+), 12 deletions(-)
+> The second one is off by 270.
 
-The second one is off by 270.
+Shall I re-roll or will you fix it while queuing (assuming you queue it)?
