@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2A14ECAAD2
-	for <git@archiver.kernel.org>; Sun, 28 Aug 2022 06:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B77DECAAD2
+	for <git@archiver.kernel.org>; Sun, 28 Aug 2022 06:54:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232853AbiH1GyA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Aug 2022 02:54:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54316 "EHLO
+        id S232901AbiH1GyD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Aug 2022 02:54:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232602AbiH1Gx6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Aug 2022 02:53:58 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ACAE52FF9
+        with ESMTP id S232721AbiH1Gx7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Aug 2022 02:53:59 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA82E52FC8
         for <git@vger.kernel.org>; Sat, 27 Aug 2022 23:53:56 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id l3so5177568plb.10
-        for <git@vger.kernel.org>; Sat, 27 Aug 2022 23:53:55 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id l3so5177579plb.10
+        for <git@vger.kernel.org>; Sat, 27 Aug 2022 23:53:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:date:references:subject:cc:to
          :from:sender:from:to:cc;
-        bh=a2gDV3ASq5izY6jAiy4PdA9SBiRwWmUL3o3eN/Il0BE=;
-        b=o/rQ+VD85Urg03Lq7cR53pl+CPGPwjO/Wdq3L5PHvXE2tch72uEou0Twe4D5Llvszq
-         8o8eIe9uKyQYFZBREBkiBsc5X4s33iFvOAZeMJgfVzE68tGnnFB1D27MSNI+8XugoCv4
-         oUHN1GuLsBWSceqYczXlF66muNuO3rSx2ZEjlRCo/tcpPhA/EuzwNiEObqdBz1g8HbFC
-         ZoPUI1ewdiV1PCj6cHPvFXeBQpz+2ifGSoIOvVkdQ3bR3Ru/wdOKMkv6LtJK6jZGYDBu
-         QOBrdVbGUF69oBcR+k8W2pitvcTMzojV1YwNpf4FYh9v7dHEFcdGL7wj87+OcwUfqYJb
-         OGrw==
+        bh=uxJra4/45zAeohrkhls5+cUYP/AwSDSS/oSWV40wvn4=;
+        b=kA8p60u2L1EgLgYIzSj1D9bCfnCxhW54yUFAgYZQgGrhC/ea5XW/7gmAV8VjEWzwqa
+         LQMAtjLP1TSF273Fyiu/nGQOfPgW9Y1DXK0QNm6biE7DDL/6Uak8W3YJKHm6y7iv7jvO
+         M2hdXFo2R6mDPI4wqhRlfHlhnBh12CeKszj6MlC6/m53Iskf+qjnszslhyeMgeV614QL
+         dfir+yY/1pjJoDPNe5Odg1vAKjltwMkO5NaUjG6++PNABDtjFbpqFXlhmApg2HfjC5Ur
+         ULvZm2o5OAwTKaUdtF4twFhlT96KcHdbDhrOpln6VgN3KoDO1FQPnO6iMhn0W7uscLCS
+         4ybQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:date:references:subject:cc:to
          :from:sender:x-gm-message-state:from:to:cc;
-        bh=a2gDV3ASq5izY6jAiy4PdA9SBiRwWmUL3o3eN/Il0BE=;
-        b=OBw0nZyeAaU+UC8EEJzt3hIU6yf+4XuZecVJnYjtb2P1+9IDtIG/lblaH4b2dzZoeY
-         DFN8Cg2b9UlrbrfYHpZKvu7Ta0qTmRjDwwX/cYAc698GKrRNDsCnzVnPIqlPPUO9Bn3G
-         Due7++ckrSgfit9ScL7+91DkuYdwJKWHUYR6Ni4C8B/VxHjM/jJaXo3ZJmDnCUWtHzsc
-         iASzncB/eyA9O+2hjQm+iHvKPZ3psxYphirPI27rQ6sjfgM0PSoxC8DsqBDyHtqTfSRu
-         PIr6ab6SJKJEYO2lEGf9ip0z5lovnlwP5amm45x8mriBAQnXUurWMisiTwVu21kqNmCZ
-         1W/Q==
-X-Gm-Message-State: ACgBeo3jdumMcEun8sl0yMEMgxeHEIpU822lClLxuAcf+j1CG2KZiokN
-        xIwYOkBxVRyMUXVjYMET304=
-X-Google-Smtp-Source: AA6agR6nGWq97QjxzzH2EMqek+23AkctgauxcchAFi4biEDOJT5Ecfob0P0GoSVj0GTNRgPEKnQUpg==
-X-Received: by 2002:a17:902:f64d:b0:172:d004:8b2d with SMTP id m13-20020a170902f64d00b00172d0048b2dmr11266748plg.14.1661669634755;
-        Sat, 27 Aug 2022 23:53:54 -0700 (PDT)
+        bh=uxJra4/45zAeohrkhls5+cUYP/AwSDSS/oSWV40wvn4=;
+        b=yqpmsgnEYtFLWpN5NESMD9+GlaxcbaYSsYHWlRF4aU/NWvOWW/GTaarw0B/3JsBulP
+         C/JA/hCTSbFXO0iAJawAoIPz9TxXBTI+r0hVzKvfa+CMU/P0KPgbbytwC8Y9R1z77W4X
+         AvqBzFlZIK4PP5MWDUSuYs03eqVz5yM9LBT76xtmMl68xZjW55qVkQES2DRDdR/4jexQ
+         eLJMdhplLJB7/xz/Z2PjdxnNcIdoXLqetaxY9lc0+yiZxcYBmpiCZG0hA0+3PCN3Q8qq
+         Y6OoEv9BDlPtPu5jZo+Pbf18rU+FIiw8cCLuxumutiD9iwb6ibczO4OC7lyRVBGx4Rp9
+         lsQw==
+X-Gm-Message-State: ACgBeo05hoPfqSW85LIpCKR2tX+KvFqljQCM+DX+WN2w6/RPVSzUCHwd
+        qyCRpUVgWetRYjvjhW6VbQw=
+X-Google-Smtp-Source: AA6agR7fiUzp3lxTD/I03tF30pcFMH1AA2T+FirWMBEKnhW67EtRru/hTapINteHNxNNXL39qtPodQ==
+X-Received: by 2002:a17:902:8505:b0:171:3df7:dea1 with SMTP id bj5-20020a170902850500b001713df7dea1mr11268564plb.110.1661669635656;
+        Sat, 27 Aug 2022 23:53:55 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id y16-20020aa79430000000b0052e7debb8desm4684512pfo.121.2022.08.27.23.53.54
+        by smtp.gmail.com with ESMTPSA id z5-20020a623305000000b005251f4596f0sm4717766pfz.107.2022.08.27.23.53.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Aug 2022 23:53:54 -0700 (PDT)
+        Sat, 27 Aug 2022 23:53:55 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
@@ -57,13 +57,13 @@ Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
         Elijah Newren <newren@gmail.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v5 05/16] bisect--helper: make `terms` an explicit
- singleton
+Subject: Re: [PATCH v5 06/16] bisect--helper: make the order consistently
+ `argc, argv`
 References: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
         <pull.1132.v5.git.1661604264.gitgitgadget@gmail.com>
-        <92b3b116ef8f879192d9deb94d68b73e29d5dcd6.1661604264.git.gitgitgadget@gmail.com>
+        <c9dc0281e38bf9bc0bce72de172b5dbadbcbb1f5.1661604264.git.gitgitgadget@gmail.com>
 Date:   Sat, 27 Aug 2022 23:53:54 -0700
-Message-ID: <xmqqk06svoxp.fsf@gitster.g>
+Message-ID: <xmqqedx0voxp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,25 +74,16 @@ X-Mailing-List: git@vger.kernel.org
 "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 writes:
 
-> -struct bisect_terms {
-> +static struct bisect_terms {
->  	char *term_good;
->  	char *term_bad;
-> -};
-> +} terms;
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> In C, the natural order is for `argc` to come before `argv` by virtue of
+> the `main()` function declaring the parameters in precisely that order.
+>
+> It is confusing & distracting, then, when readers familiar with the C
+> language read code where that order is switched around.
+>
+> Let's just change the order and avoid that type of developer friction.
 
-On the surface, more global state may feel sad, but I do not think
-we want to run multiple bisection in one session anyway.  Overall
-this may result in a simplicity win, hopefully.
-
-The patch is noisy, but mostly from rewriting "terms->member" to
-"terms.member".  I am not sure if that was worth the effort, though.
-You had a code that plumbed a parameter through the call graph, and
-instead of destroying that arrangement, you could have just replaced
-the reference at the beginning of the call chain to use the global
-state instead of an on-stack variable that the caller used to have.
-
-I have no strong preference, but I do not think that it particularly
-contributes to "clarifying that we are using global state" to make
-direct accesses to the variable everywhere.  I dunno.
-
+Thanks.  This did look disturbing to me every time I peeked into
+this part of the code.  To some it may be insignificant detail, but
+these things add up.  The result is much nicer.
