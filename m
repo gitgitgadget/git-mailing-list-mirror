@@ -2,118 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81B8FECAAD5
-	for <git@archiver.kernel.org>; Sun, 28 Aug 2022 12:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01914ECAAD5
+	for <git@archiver.kernel.org>; Sun, 28 Aug 2022 20:05:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229498AbiH1Mu5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Aug 2022 08:50:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52702 "EHLO
+        id S229645AbiH1UFt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Aug 2022 16:05:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbiH1Muy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Aug 2022 08:50:54 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1625DB86C
-        for <git@vger.kernel.org>; Sun, 28 Aug 2022 05:50:52 -0700 (PDT)
-Received: (qmail 27458 invoked by uid 109); 28 Aug 2022 12:50:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 28 Aug 2022 12:50:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29708 invoked by uid 111); 28 Aug 2022 12:50:51 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 28 Aug 2022 08:50:51 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 28 Aug 2022 08:50:50 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        git@vger.kernel.org
-Subject: ac/bitmap-lookup-table, was Re: What's cooking in git.git (Aug 2022,
- #09; Fri, 26)
-Message-ID: <YwtkqmPSEikWPLv5@coredump.intra.peff.net>
-References: <xmqqbks6ya5d.fsf@gitster.g>
+        with ESMTP id S229507AbiH1UFs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Aug 2022 16:05:48 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A0E71403A
+        for <git@vger.kernel.org>; Sun, 28 Aug 2022 13:05:48 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id y127so6367001pfy.5
+        for <git@vger.kernel.org>; Sun, 28 Aug 2022 13:05:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc;
+        bh=XzztR83C69gsbMcxvf6BNugdDhlnB6kYS/BkJcj61TM=;
+        b=BnshgGIhi0mtaG6B4iBhY9Hwb/BT8K/6+WtZ/JeUsf4EQ8EpMyf55s/HhTj9YkKs1e
+         TOhP8MTEAL7JuEVUFF+aBMeDt78Vs1NW5V4iKip87cGM/0M9nLcjjQjDM+5mvhMiXXDE
+         AAy8dpGgoHhsKDwvdxwPA0Mh/LkowQ6IqVa8kXdOW8xz+7AuXxxofV/0CH/r0Wui9JUH
+         4TxkQJOsdXX+2V+fgXm38mvuy9lO9LuUCHOqmlFP3SRApxJZcdmqd5n5YU3Yf27DHk95
+         kRH6bLiuOMg0/MiulI6btxknYUtAztO1gcnHDqz97UVaudjHHqX9CqRaRYv3w71ECxwg
+         RbnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc;
+        bh=XzztR83C69gsbMcxvf6BNugdDhlnB6kYS/BkJcj61TM=;
+        b=rOXrDZ3ctiSCllTXhgkV5te3xtL+09P4JWumaz2mcJOqAnkRwe45FQJocWIyyOO76u
+         ZwhB5CsxwYk17LvzQ81hxDMTVsDq+zAkErVaNh12fJrAGZqgiAgLEyGIdPGghVy7Cq5s
+         zAtHxS65hw/wgkBmE7yYVrkwMWJdC5+adueeAZV+mCe3wuZDOio5WYAO11hR8Ak1HIZt
+         TU1xypOh4NiWDpDZiVKScANsCRy2ZMB2rEZlBH+T7sJNrYf+7tAGgLXhydeKNR9PXZ+W
+         qcwEFXzKebwsMmBZTJ1qE7BGvNoLwihMeAqDWL3GnMITm8MbRP9Yh5uLjtFPeQmaf96I
+         eQgw==
+X-Gm-Message-State: ACgBeo0rB4jBYCEasiupl+hgq1ON2lwvDHcUkTbONdX+WOrAylqQlktN
+        PXjPhXu6aAu/bwn+0dBxqTg=
+X-Google-Smtp-Source: AA6agR5x7z1tdzdMwC42prnkIS2Trase150uCWpsFmfD4HcCUx7iYXha/u8w8AFnsVv4cKCaZH1fmA==
+X-Received: by 2002:a63:c00c:0:b0:42b:80a3:28a0 with SMTP id h12-20020a63c00c000000b0042b80a328a0mr9214115pgg.311.1661717147574;
+        Sun, 28 Aug 2022 13:05:47 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id e6-20020a170902784600b0016dcbdf9492sm5786971pln.92.2022.08.28.13.05.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Aug 2022 13:05:46 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 0/3] fix failing t4301 test and &&-chain breakage
+References: <pull.1339.git.1661663879.gitgitgadget@gmail.com>
+Date:   Sun, 28 Aug 2022 13:05:46 -0700
+In-Reply-To: <pull.1339.git.1661663879.gitgitgadget@gmail.com> (Eric Sunshine
+        via GitGitGadget's message of "Sun, 28 Aug 2022 05:17:56 +0000")
+Message-ID: <xmqq35dgt9ph.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqbks6ya5d.fsf@gitster.g>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 26, 2022 at 02:20:30PM -0700, Junio C Hamano wrote:
+"Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> * ac/bitmap-lookup-table (2022-08-26) 6 commits
->   (merged to 'next' on 2022-08-26 at 7914c141eb)
->  + bitmap-lookup-table: add performance tests for lookup table
->  + pack-bitmap: prepare to read lookup table extension
->  + pack-bitmap-write: learn pack.writeBitmapLookupTable and add tests
->  + pack-bitmap-write.c: write lookup table extension
->  + bitmap: move `get commit positions` code to `bitmap_writer_finish`
->  + Documentation/technical: describe bitmap lookup table extension
-> 
->  The pack bitmap file gained a bitmap-lookup table to speed up
->  locating the necessary bitmap for a given commit.
-> 
->  Will merge to 'next'?
->  cf. <Ywf01YqJKNsGfffx@nand.local>
->  source: <pull.1266.v6.git.1660496112.gitgitgadget@gmail.com>
+> Eric Sunshine (3):
+>   t4301: account for behavior differences between sed implementations
+>   t4031: fix broken &&-chains and add missing loop termination
+>   t4301: emit blank line in more idiomatic fashion
+>
+>  t/t4301-merge-tree-write-tree.sh | 24 ++++++++++++------------
+>  1 file changed, 12 insertions(+), 12 deletions(-)
 
-We may want this on top:
-
--- >8 --
-Subject: pack-bitmap-write: drop unused pack_idx_entry parameters
-
-Our write_selected_commits_v1() function takes an array of
-pack_idx_entry structs. We used to need them for computing commit
-positions, but since aa30162559 (bitmap: move `get commit positions`
-code to `bitmap_writer_finish`, 2022-08-14), the caller passes in a
-separate array of positions for us. We can drop the unused array (and
-its matching length parameter).
-
-Likewise, when we added write_lookup_table() in 93eb41e240
-(pack-bitmap-write.c: write lookup table extension, 2022-08-14), it
-receives the same array of positions. So its "index" parameter was never
-used at all.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- pack-bitmap-write.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
-
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 2cfc92f287..a213f5eddc 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -649,8 +649,6 @@ static const struct object_id *oid_access(size_t pos, const void *table)
- }
- 
- static void write_selected_commits_v1(struct hashfile *f,
--				      struct pack_idx_entry **index,
--				      uint32_t index_nr,
- 				      uint32_t *commit_positions,
- 				      off_t *offsets)
- {
-@@ -685,8 +683,6 @@ static int table_cmp(const void *_va, const void *_vb, void *_data)
- }
- 
- static void write_lookup_table(struct hashfile *f,
--			       struct pack_idx_entry **index,
--			       uint32_t index_nr,
- 			       uint32_t *commit_positions,
- 			       off_t *offsets)
- {
-@@ -808,10 +804,10 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
- 		commit_positions[i] = commit_pos;
- 	}
- 
--	write_selected_commits_v1(f, index, index_nr, commit_positions, offsets);
-+	write_selected_commits_v1(f, commit_positions, offsets);
- 
- 	if (options & BITMAP_OPT_LOOKUP_TABLE)
--		write_lookup_table(f, index, index_nr, commit_positions, offsets);
-+		write_lookup_table(f, commit_positions, offsets);
- 
- 	if (options & BITMAP_OPT_HASH_CACHE)
- 		write_hash_cache(f, index, index_nr);
--- 
-2.37.2.1039.gebf11fa8a3
-
+The second one is off by 270.
