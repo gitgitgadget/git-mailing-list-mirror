@@ -2,105 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2C49ECAAD1
-	for <git@archiver.kernel.org>; Sun, 28 Aug 2022 00:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36340C0502A
+	for <git@archiver.kernel.org>; Sun, 28 Aug 2022 01:01:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230375AbiH1AjF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Aug 2022 20:39:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46058 "EHLO
+        id S231578AbiH1BBO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Aug 2022 21:01:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230346AbiH1AjE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Aug 2022 20:39:04 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB4073C16A
-        for <git@vger.kernel.org>; Sat, 27 Aug 2022 17:39:03 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id AB0DF5A26C
-        for <git@vger.kernel.org>; Sun, 28 Aug 2022 00:39:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1661647142;
-        bh=6RUua6yAXFRtjijYe3wSnsMVqKMVQ10tfGPcFuyBNFI=;
-        h=Date:From:Cc:Subject:References:Content-Type:Content-Disposition:
-         In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
-         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=kLrDZ+GfGSn6717AvTCuH5+AMFrT8gNE87flnsS+NkkZyAyIG5WwuY0lngmh12EKV
-         x7/kx4H7PbZC909LOCsXsZsQubPcIlolVM+lF380CxDbnhEyuON6lYASUvusP3oZ24
-         H7Y+eXjtmF1G70yDouvYgAii5f7baO7KrxBA1nX8j0bEzsRHVsef8T4DbkCec9BKMJ
-         nf+rhjz/Rp2wT3aSpcNcpzawDQ4u+DxvcQ4eE+9AhqXQUdaF5b7AhGK0D2atw/wH5f
-         YC0h+42praqtDv+BAl5tvb4iFfvbzO/jZ5n8zXsikPEbD53kAhUo07ukZ4mBxGOuoH
-         7Tu7YD9vTArr9FMK6HaFcGrh3AFWLOhnfwBNMx9nIJeC9mWkzi2Jey/rw4UqU2enxB
-         H6ESiQxl0j1mqas32IfN6Sqm2TqdsnboG2zvxRM6ZyZRrdFuQiBce+XQKsa9m+nlm6
-         s2guYHCfMqWJmYNJN9m3VXbiJtr+LK5Mozmkc8XX5aVAoqJNUz8
-Date:   Sun, 28 Aug 2022 00:39:03 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [Proposal] Pass additional metadata to sendemail-validate hook
- from git send-emailg
-Message-ID: <Ywq5J2q9PwBrXnrm@tapette.crustytoothpaste.net>
-References: <87czcm7maf.fsf@amd.com>
+        with ESMTP id S229524AbiH1BBN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Aug 2022 21:01:13 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65C5452DE9
+        for <git@vger.kernel.org>; Sat, 27 Aug 2022 18:01:12 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id og21so9470948ejc.2
+        for <git@vger.kernel.org>; Sat, 27 Aug 2022 18:01:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=Twp6qd1XAhqfBQPqObhJca8JqjYnZXsnUjZqFvlwVOk=;
+        b=iXeqZWwdbLABxLw/LVPI7LZRhEKl0N8/jvpDyhc3g9vdFUijaemT1X03vTGFtaiALt
+         xMpmDl3m81oZSGOAxAJA2nM11IdwNkxMqzrsbm2WTT2EfcNyGSiMKFOC3RCABxfmBsLF
+         SMqqPE9XcwyMFkAxcOfbbQ7PHW/vDbbz66tLVAF3yUZRDquPQWbUoYBzrPBwChYR3Un9
+         DKyetzd5N5rheA8tBieIOBp7zhAvc9IzIMRSwf5r3YbELFqW4WYbqQFsRd88W8tlQmCo
+         KtKblscuuQvqGgBUGnF0UIhpUcxDveg3PYJbQy2m/v/Tc1tkduMOVfT/gu3J1WSRpoGo
+         RKIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=Twp6qd1XAhqfBQPqObhJca8JqjYnZXsnUjZqFvlwVOk=;
+        b=T2D6XWr+HBLVcDeMrx9WrXu0Hn4ePeN+nY21xkMdrHhEu2fU+TdRHCXTsFmV5kHecF
+         G54uM8ZukXoKqfG9XkcPKXgqPbPjkmPL4J+X4nfGYVXgq+Eq8/hMjpOUXN4dRbvc8mSC
+         +Aek39iEMn0wx+O2IJxODZLbK5q9bpf6lduKmK7CTfVKqiMy9R+HNjJD9eMSCtJNjrKT
+         MomGZrRdorCfCzFVKfUNV96/uvTnpn59C8R4aJjtBDqioj/UxfJmHQa2/1KESl4PQnnc
+         hHQntjJsFat6gz0aKBXpFfC6qcHeqx4JvUrTGr2q2Xt/MUHgANmh46AnbeJx9KY5S47q
+         Kq7Q==
+X-Gm-Message-State: ACgBeo1yE90USaICm2hNznFnzlbmB4ZWqW7DZP2cC2jyaEBToigNd37C
+        UREzS7uhCo9G5R7wxZNl/iZBxeWVcJfecwafbhAgrWgA
+X-Google-Smtp-Source: AA6agR7K5ghahyJ9ibd8w3D1EsxNQBCwhf4PgYzg/IXAFoEFHSnymd8nrc+/8yQU163g6o9FPZRiwyv6oR50Z2tuHl0=
+X-Received: by 2002:a17:906:ef90:b0:730:9d18:17b3 with SMTP id
+ ze16-20020a170906ef9000b007309d1817b3mr9594313ejb.141.1661648470946; Sat, 27
+ Aug 2022 18:01:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="tEq59MVacIwtNPJM"
-Content-Disposition: inline
-In-Reply-To: <87czcm7maf.fsf@amd.com>
-User-Agent: Mutt/2.2.6 (2022-06-05)
-To:     unlisted-recipients:; (no To-header on input)
+References: <AM0PR08MB4323160241D4341FB1B99CC2FD749@AM0PR08MB4323.eurprd08.prod.outlook.com>
+In-Reply-To: <AM0PR08MB4323160241D4341FB1B99CC2FD749@AM0PR08MB4323.eurprd08.prod.outlook.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Sat, 27 Aug 2022 20:00:59 -0500
+Message-ID: <CAMP44s2iwWhpeBrzuRK5mB9ekpy4MRu5OEQ-BA4mvbUb1EJRqw@mail.gmail.com>
+Subject: Re: Ambiguous 'HEAD' issue.
+To:     Caglar Akyuz <caglar.akyuz@sparsetechnology.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Aug 27, 2022 at 5:15 PM Caglar Akyuz
+<caglar.akyuz@sparsetechnology.com> wrote:
 
---tEq59MVacIwtNPJM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Recently I changed one of my repo's origin URL from gitlab to github.  After this switch, I start getting:
+>
+>   warning: refname 'HEAD' is ambiguous.
 
-On 2022-08-26 at 21:00:25, Strawbridge, Michael wrote:
-> Hi,
+> * git show-ref | grep -i head -> nothing suspicious
 
-Hey,
+Are you sure? You don't have a ref called "HEAD"? Just "HEAD".
 
-> I was hoping to put a feature proposal forward for git send-email.
->=20
-> For git send-email there is a git hook, sendemail-validate which
-> gets the body of the email that will be sent but is missing some
-> of the metadata that git send-email has access to.  I propose that
-> we also pass the extra metadata that gets presented to the user
-> later on via stdout such as: From, To, Cc, Subject, Date,
-> Message-Id, X-Mailer, MIME-Version, Content-Transfer-Encoding to
-> the git hook.
->=20
-> I'm willing to work on the patch but want to make sure the idea
-> would be accepted first.
-
-I think the idea is interesting and would be willing to see a patch come
-to the list.
-
-However, having said that, we typically evaluate patches, not proposals,
-so to see if it's actually accepted, you'd have to actually send a
-patch.  We may find that while the idea is interesting, it turns out to
-be infeasible, or, for whatever reason, the patch is unsuitable.
-
-I know that this is different from how other projects typically work,
-where you typically pitch an idea first and then implement, but it's
-what we do here.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---tEq59MVacIwtNPJM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.35 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYwq5JwAKCRB8DEliiIei
-gRKzAQDXgrI7s7n9PMd21Iwk1m3M81n5dOG5ZDkDzyvxbGHnMQD5AXX95HbxZzDN
-44C8LS8DJ/m9ogin44Avopc5WbgUrgE=
-=CmnP
------END PGP SIGNATURE-----
-
---tEq59MVacIwtNPJM--
+-- 
+Felipe Contreras
