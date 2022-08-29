@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46E77ECAAD2
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 15:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FF56C0502C
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 15:12:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230098AbiH2PML (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 11:12:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59120 "EHLO
+        id S229531AbiH2PMO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 11:12:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230056AbiH2PMG (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229841AbiH2PMG (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 29 Aug 2022 11:12:06 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD2617FE63
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C3B28048C
         for <git@vger.kernel.org>; Mon, 29 Aug 2022 08:12:04 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id b16so2961448wru.7
+Received: by mail-wm1-x335.google.com with SMTP id v7-20020a1cac07000000b003a6062a4f81so8358176wme.1
         for <git@vger.kernel.org>; Mon, 29 Aug 2022 08:12:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=MQ1YxpBjGbCs7mGlupYs9gX/EOGPy8W/4fdNR9zno1Y=;
-        b=OXpT4aYZWagH5PCuiGjAFgpV2zWwAZqUZON2KJaC36iwufe2rd7vOUrvC1KTvP9mb5
-         jLOjNbIeEwP2PDkjnz8KG0j9L4+XKXuKqrFbnrkFHXrLrMZWyZ+pDqyh+gJTKpqSzFtg
-         KPxoWQZQJfKPTH+2xuBjOUn+ql14tfAXQNNcpWz8Yia+Cbf7jJzbxmtyOVpnUSqiuQLn
-         id+inzUtrOoNecUV2OYJBZhRcHTLfKPAJxDOkBXiA0ijxAyX7oRJcD70WNQQFJk3rUk1
-         OeIUVNWTzM2Z8x5+Ou+w+B3JtvjmfTamDaB2O6ILQ03O+X3spzpSs9HqKgtfeL0ES940
-         IVWQ==
+        bh=s2wDran9qrKhEZfd9bp5Vw0MKm0nDv2S770U3TfCHeA=;
+        b=Z0/+Zfh48XzuI8hjFqfvuLNey1KuPr2JR14+dQV2mPklXQB3GC4AQfsUH7vvcf8xsm
+         7sD0Xbxg/D6tWNzOahOi5v3hH7+3rDy42bUOQTSkD6w3E3fmu88LBn245M//14QG10X9
+         dAjG3kxnKkINKrOOy7U7pubAR1+L/urejdcKf+n6ixJ5NRjwoYkkPoTCXfMzXW+pSkOF
+         nXDRfFXi/ZXgf8AvAxSw+JUKL8Ti8FGYEuhZz8SWax4qGz78hwm25ZSF/x7KNBDYEdjN
+         KCalvegKztJCEtlb/l9Id6vqzQHQ6ur6lfLRiL16i4DLXtwHP9nC58GUSb5Mwm5fA5xW
+         dfTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=MQ1YxpBjGbCs7mGlupYs9gX/EOGPy8W/4fdNR9zno1Y=;
-        b=4MAGP1/eiYy8INaouK/Wcm2mNv+1D0tkRdN+gAhXW5NI3xlWDOiGVQW/zsjAt67kL3
-         6P/dNsx92JkIL2esC/UfgybCjvdvD7eZJXNiSlNwlX6XOw0cHKpxBFVSv1JUlWgIk1Jr
-         pMttThiJ03o6rDBD/qFvzQpIqswfRC9TmbYQTWyDJ5yMHdKbU2UzleJnG0oXqOgU4IzZ
-         B8SJYazAPCuZaqiumP/VRReEgRt70MuEDZwv6qhRhNd75v0rG1kGqBHmSgUNyHUrZKMq
-         GA6p49aaYFOoGOCkQAtrNei1f5E5a25MNhydaYSzXsZnoVm4H1K+85IUfRy2uLdQliHw
-         FcEw==
-X-Gm-Message-State: ACgBeo39sSfGBOTes0z5sCprmwg4VUPnGnADULhZkiJOB9Fcbplq89XI
-        gzimbbDzPNGGQhPxC/uIMXf9QasfbyM=
-X-Google-Smtp-Source: AA6agR4tgE4b+O72YI34Gv8Y+MGVkG0QDBZDP9mXSFTPm07eZYFy5r7K1GZuphzb++nVbeO41ZcxGg==
-X-Received: by 2002:a05:6000:795:b0:226:d45a:ffe5 with SMTP id bu21-20020a056000079500b00226d45affe5mr5378794wrb.33.1661785923902;
-        Mon, 29 Aug 2022 08:12:03 -0700 (PDT)
+        bh=s2wDran9qrKhEZfd9bp5Vw0MKm0nDv2S770U3TfCHeA=;
+        b=0YcyPL0IToW+tnBU9RieZK6mZT2tTKpBUB+V481RP8FWQ/Fz6x3B2+gFVr/G2hl7Ta
+         l4mjX2zN60meiD7x8XJQO0tCjePXQsFTU46IsPxujf0jt8E3BmN+8AMwis963A3rnceF
+         3vI5blnAMXODaMnG5VNyGFUQzjmMKYTQSA8zp4w94IwRPF+m7oXQN7LJ9+/2/n0SSs+t
+         xu2184G43oSPdOo5G285jr9mNMrS5Vyy9HqETf6SyApUbS/826Cx9a0mBIjg6JsdA+Qa
+         ihobdrmfIwIkrx4mzpO6XqjOK69BJPyQoGpv/94j9oQWLk+2W+Dtx/eXRI4Y2jOByvQA
+         NvYA==
+X-Gm-Message-State: ACgBeo3YqSzooUKFb+B8u0Dm8aO0vBzlHVKFq8l5DcyaP7cU+4aJr6DT
+        mnOFM+HQ4V3LBqOfPbS8hStNRhmEchc=
+X-Google-Smtp-Source: AA6agR4f5MXO1/pSs22zn0wvPdUzS8xDP/GA2VD1we8pIcHLwIGuAIfQifkJZBUZnDy0PDvS1+eShA==
+X-Received: by 2002:a05:600c:4f48:b0:3a5:e707:bb8c with SMTP id m8-20020a05600c4f4800b003a5e707bb8cmr7312642wmq.198.1661785922678;
+        Mon, 29 Aug 2022 08:12:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u1-20020a05600c440100b003a31ca9dfb6sm9700415wmn.32.2022.08.29.08.12.02
+        by smtp.gmail.com with ESMTPSA id l6-20020adff486000000b0021e13efa17esm7509899wro.70.2022.08.29.08.12.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 08:12:03 -0700 (PDT)
-Message-Id: <e3e3a178f98183032b3df8ad9c81a096fe4af556.1661785916.git.gitgitgadget@gmail.com>
+        Mon, 29 Aug 2022 08:12:02 -0700 (PDT)
+Message-Id: <7a9f0b107e636ed57e511d2c145fc63596c1c69b.1661785916.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com>
 References: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
         <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 29 Aug 2022 15:11:55 +0000
-Subject: [PATCH v3 4/5] add -p: handle `diff-so-fancy`'s hunk headers better
+Date:   Mon, 29 Aug 2022 15:11:54 +0000
+Subject: [PATCH v3 3/5] add -p: insert space in colored hunk header as needed
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,68 +68,107 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The `diff-so-fancy` diff colorizer produces hunk headers that look
-nothing like what the built-in `add -p` expects: there is no `@@ ... @@`
-line range, and therefore the parser cannot determine where any extra
-information starts (such as the function name that is often added to
-those hunk header lines).
+We are about to teach `git add -p` to show the entire hunk header if the
+`@@ ... @@` line range cannot be parsed. Previously, we showed only the
+remainder of that hunk header as an "colored_extra" part.
 
-However, we can do better than simply swallowing the unparseable hunk
-header. There is probably information the user wants to see, after all.
-In the `diff-so-fancy` case, it shows something like `@ file:1 @`.
+To prepare for that, detect if that "colored_extra" part starts with any
+non-whitespace character (ignoring ANSI escape sequences) and insert a
+space, to make the output much more pleasant.
 
-If the line range could not be found in the colored hunk header, let's
-just show the complete hunk header.
+Note that this has an effect already before we make `git add -p` more
+lenient when parsing the hunk headers: diff filters could already remove
+the space after the line range, which is precisely what we do in the
+regression test introduced by this commit.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-patch.c                | 13 +++++++++++--
- t/t3701-add-interactive.sh |  4 ++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ add-patch.c                | 22 ++++++++++++++++++++++
+ t/t3701-add-interactive.sh | 10 +++++++++-
+ 2 files changed, 31 insertions(+), 1 deletion(-)
 
 diff --git a/add-patch.c b/add-patch.c
-index 9d575d30ed0..0217cdd7c4a 100644
+index f2fffe1af02..9d575d30ed0 100644
 --- a/add-patch.c
 +++ b/add-patch.c
-@@ -363,8 +363,17 @@ static int parse_hunk_header(struct add_p_state *s, struct hunk *hunk)
- 	if (p && (p = memmem(p + 4, eol - p - 4, " @@", 3)))
- 		header->colored_extra_start = p + 3 - s->colored.buf;
- 	else
--		/* could not parse colored hunk header, showing nothing */
--		header->colored_extra_start = hunk->colored_start;
-+		/*
-+		 * We tried to parse the line range out of the colored hunk
-+		 * header, so that we could show just the extra information
-+		 * after the line range.
-+		 *
-+		 * At this point, we did not find that line range, but the hunk
-+		 * header likely has information that the user might find
-+		 * interesting. Let's just show the entire hunk header instead
-+		 * in that case.
-+		 */
-+		header->colored_extra_start = line - s->colored.buf;
- 	header->colored_extra_end = hunk->colored_start;
+@@ -8,6 +8,7 @@
+ #include "diff.h"
+ #include "compat/terminal.h"
+ #include "prompt.h"
++#include "utf8.h"
  
- 	return 0;
+ enum prompt_mode_type {
+ 	PROMPT_MODE_CHANGE = 0, PROMPT_DELETION, PROMPT_ADDITION, PROMPT_HUNK,
+@@ -635,6 +636,23 @@ static size_t find_next_line(struct strbuf *sb, size_t offset)
+ 	return eol - sb->buf + 1;
+ }
+ 
++static int starts_with_non_ws(const char *p, size_t len)
++{
++	for (;;) {
++		size_t skip;
++
++		if (!len || isspace(*p))
++			return 0;
++		skip = display_mode_esc_sequence_len(p);
++		if (!skip)
++			return 1;
++		if (skip > len)
++			return 0;
++		p += skip;
++		len -= skip;
++	}
++}
++
+ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+ 			ssize_t delta, int colored, struct strbuf *out)
+ {
+@@ -649,6 +667,7 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+ 		size_t len;
+ 		unsigned long old_offset = header->old_offset;
+ 		unsigned long new_offset = header->new_offset;
++		int needs_extra_space = 0;
+ 
+ 		if (!colored) {
+ 			p = s->plain.buf + header->extra_start;
+@@ -658,6 +677,7 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+ 			p = s->colored.buf + header->colored_extra_start;
+ 			len = header->colored_extra_end
+ 				- header->colored_extra_start;
++			needs_extra_space = starts_with_non_ws(p, len);
+ 		}
+ 
+ 		if (s->mode->is_reverse)
+@@ -673,6 +693,8 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+ 			strbuf_addf(out, ",%lu", header->new_count);
+ 		strbuf_addstr(out, " @@");
+ 
++		if (needs_extra_space)
++			strbuf_addch(out, ' ');
+ 		if (len)
+ 			strbuf_add(out, p, len);
+ 		else if (colored)
 diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 49200b7df68..39e68b6d066 100755
+index c2187f9cec8..49200b7df68 100755
 --- a/t/t3701-add-interactive.sh
 +++ b/t/t3701-add-interactive.sh
-@@ -775,10 +775,14 @@ test_expect_success 'handle iffy colored hunk headers' '
- 		add -p <n &&
- 	force_color git -c interactive.diffFilter="sed \"s/\(.*@@\).*/\1FN/\"" \
- 		add -p >output 2>&1 <n &&
-+	force_color git -c interactive.diffFilter="sed \"s/\(.*@@\).*/file/\"" \
-+		add -p >output-so-fancy 2>&1 <n &&
- 	if test_have_prereq ADD_I_USE_BUILTIN
- 	then
-+		grep "@ file\$" output-so-fancy &&
- 		grep "@ FN\$" output
- 	else
-+		grep "^file\$" output-so-fancy &&
- 		grep "@FN\$" output
- 	fi
+@@ -772,7 +772,15 @@ test_expect_success 'handle iffy colored hunk headers' '
+ 	echo content >test &&
+ 	printf n >n &&
+ 	force_color git -c interactive.diffFilter="sed s/@@/XX/g" \
+-		add -p <n
++		add -p <n &&
++	force_color git -c interactive.diffFilter="sed \"s/\(.*@@\).*/\1FN/\"" \
++		add -p >output 2>&1 <n &&
++	if test_have_prereq ADD_I_USE_BUILTIN
++	then
++		grep "@ FN\$" output
++	else
++		grep "@FN\$" output
++	fi
  '
+ 
+ test_expect_success 'handle very large filtered diff' '
 -- 
 gitgitgadget
 
