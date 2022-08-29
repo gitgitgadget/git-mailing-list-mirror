@@ -2,73 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61D4AC6FA69
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 17:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81764C6FA81
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 17:20:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231341AbiH2RFP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 13:05:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38282 "EHLO
+        id S230058AbiH2RUG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 13:20:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231310AbiH2REv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2022 13:04:51 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DA899C50B
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 10:04:26 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id 69so6589460pgb.13
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 10:04:26 -0700 (PDT)
+        with ESMTP id S229598AbiH2RUA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2022 13:20:00 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB6CEE0A6
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 10:19:56 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id h13-20020a17090a648d00b001fdb9003787so3892847pjj.4
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 10:19:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=FoqvgOU1EcVmvYjTOyJ3Ua9W9chB6g60WxotoaRkZQo=;
-        b=SbhfUV/WnKLJOJhMV3l10scGsJHK1Ps/sAjBcfbA5LJxmCwcziuuE+6kdGLsNbi4vk
-         6aboamRvCz7ijChbuxf6RyBbqK03J5hfKaBuiMmQf5ad1U5h1HHW52JsfJXUm/U7TKeP
-         r7s2kSf6rBBv+9BP/XcOwsDadMYpd3Ht3i10NwrOn5tZaOJTZwLos9saDIQFs6yHE5r5
-         JhGviAJBh26kR3hWsIqmPlA0RT/Wj6s3R+F37u5Fx/lG0PbJjp+CgKh3QUIji3CGPWFy
-         8ia6EfYMIBSzClVQtuW98Leq6fXrTsFTL/urrYFoKx21kU9kqfwcNYj/s6Hml2Q7gTGD
-         JyAw==
+        bh=Rq5xaKuoM3ff5RPjLRAOM3HrTmXyMOgLmNNxaolMioI=;
+        b=Qz7sQYynZy0VDu+0om9ANNzcelr16IHvusZWvv3FdvfQsdEBin/Zv5ZlOjoxF4brAZ
+         TZrQrhuk/9MkgoFZx8mZEG79a5YTqGwPR92iIPWbQ/+Fq4SSlPNjLPNJI+6Z4VNu1fMY
+         SpI8PP1aKYA8FFukRQhfXkN0P8uHZyGenL0nWuLEP0kZHHgRC8pda7xyafe8lnOX3cWm
+         /wNWAvUsqQ42J9W2DxXQB/YBPlhneFGpP0LMVySnimpbdb2FhO7cXGXz4QydXMzNPvzt
+         TLFIix4ZuSaXSlOUxg6RREVDu4YgPstQhzYVT5kx8cQDaZ5gkWKBqH3um75bBgRlL6ZA
+         HOUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date;
-        bh=FoqvgOU1EcVmvYjTOyJ3Ua9W9chB6g60WxotoaRkZQo=;
-        b=ueaEFkwjxh12LsTz3etwg+MmwV5PgR6rBHz9Ro9jVyuDFyq4kVMxQb6q19k2jNbNMu
-         INwCssqEOgX6nmufAIfOmINUqplxcFAJ14adihCvfKKrahjpOvUJZJhj9yISeo9ThKrx
-         8Z9jjAMt0MZvD3q5gJbSaHupIZvEYnZoxr/FAg9zXme0P3bw4Z7FOIdzzmiioCunJRBL
-         oY1IGGcF5xeCk/s3x4STbVd3327heqVRoq+rfQ6BIaMAiZZcITgpjWmNwKdxSDYeT31d
-         5tpOIQNaVCb9rYNykJviesdCSHB0h4DQyykiTEsJoDPFh02GrWtqqa7LSY2o/N86vY3n
-         BihA==
-X-Gm-Message-State: ACgBeo3G9g7Yc3ra6ez5KRsXyLle8wTkMDcM5a0fRIBnh+4z56GMqz5G
-        tCyw2QuFNV0+qjAaCtkMm97sAfKyhAo=
-X-Google-Smtp-Source: AA6agR4FLgx+lc2JGk82rpRIOGrPKuSjGbP/D7cxX/a1rUa2taGXthOfU9rEFych8xl4CHlCDRKFPQ==
-X-Received: by 2002:aa7:8c44:0:b0:535:ed0c:f401 with SMTP id e4-20020aa78c44000000b00535ed0cf401mr6796376pfd.48.1661792664970;
-        Mon, 29 Aug 2022 10:04:24 -0700 (PDT)
+        bh=Rq5xaKuoM3ff5RPjLRAOM3HrTmXyMOgLmNNxaolMioI=;
+        b=ablnj3/KsbwCEEbhYx9CopeM8AavsvwDNhCSC3QmbUPaYU7OPBtr4fI+HHQ7ohjvhO
+         LCS8tUkQhXJqDzYKRM/X7sHDrdPZg7aoCVZzax2Lpurhktds8vIysgokMA0lQm8d/OpJ
+         lcNStVuiEnntvMz4+04Ji1D/DVqzI8IjeGXPUb6bsJB9MjmfzwVi4MWPXZxZzDrMISI/
+         dI/KEjsPvfloRFsWecZz+01KH/C2bf9lryglQQs4ZAXOkYaHgnoPiB2cMTXx8P1Qctdt
+         rv1vzgfHWNt93fPmmAJXAFBOa+qQDY9hqjR8l4A/IgDVqt6Qaeodv9okFiC+o7Xk3TeH
+         aFnA==
+X-Gm-Message-State: ACgBeo0PKfBJk5SEdqwUQz5b6fHMhVhKRaYFvoIhdn4IPa/jBDrZnLS2
+        OzpjNXuSjPWWEbT37uAGOVk=
+X-Google-Smtp-Source: AA6agR6acxFUhZUpm1Nvhne3pbGJak6gAEwlNa9owepoQEwvln4fTjJlyWFHZEmoeJb9wHsxJsU2wg==
+X-Received: by 2002:a17:90a:aa08:b0:1fd:8016:29f1 with SMTP id k8-20020a17090aaa0800b001fd801629f1mr14210895pjq.23.1661793596147;
+        Mon, 29 Aug 2022 10:19:56 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id m62-20020a625841000000b005379c1368e4sm7682954pfb.179.2022.08.29.10.04.24
+        by smtp.gmail.com with ESMTPSA id k27-20020a635a5b000000b0042aca53b4cesm5456891pgm.70.2022.08.29.10.19.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 10:04:24 -0700 (PDT)
+        Mon, 29 Aug 2022 10:19:55 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v5 05/16] bisect--helper: make `terms` an explicit
- singleton
-References: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
-        <pull.1132.v5.git.1661604264.gitgitgadget@gmail.com>
-        <92b3b116ef8f879192d9deb94d68b73e29d5dcd6.1661604264.git.gitgitgadget@gmail.com>
-        <xmqqk06svoxp.fsf@gitster.g>
-        <662758rn-942n-1n3s-25r9-o7qn071s0567@tzk.qr>
-Date:   Mon, 29 Aug 2022 10:04:24 -0700
-In-Reply-To: <662758rn-942n-1n3s-25r9-o7qn071s0567@tzk.qr> (Johannes
-        Schindelin's message of "Mon, 29 Aug 2022 14:13:48 +0200 (CEST)")
-Message-ID: <xmqqy1v7ouav.fsf@gitster.g>
+        git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v2 3/4] add -p: handle `diff-so-fancy`'s hunk headers
+ better
+References: <pull.1336.git.1661277870.gitgitgadget@gmail.com>
+        <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
+        <9dac9f74d2e19899b3e6c1d28e83878ded4469d6.1661376112.git.gitgitgadget@gmail.com>
+        <xmqq5yibqxs0.fsf@gitster.g>
+        <0q0psp09-8993-96r6-3r90-q4s368p98510@tzk.qr>
+Date:   Mon, 29 Aug 2022 10:19:55 -0700
+In-Reply-To: <0q0psp09-8993-96r6-3r90-q4s368p98510@tzk.qr> (Johannes
+        Schindelin's message of "Mon, 29 Aug 2022 15:32:24 +0200 (CEST)")
+Message-ID: <xmqqilmbotl0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -78,38 +73,30 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> I have no strong preference, but I do not think that it particularly
->> contributes to "clarifying that we are using global state" to make
->> direct accesses to the variable everywhere.  I dunno.
+> Here is why: in the _regular_ case, i.e. when we have a colored hunk
+> header like `@@ -936 +936 @@ wow()`, we manage to parse the line range,
+> and then record the offset of the extra part that starts afterwards.
 >
-> I do have a strong preference to avoid mixing and matching global
-> variables with functions that pretend not to use said global variables, as
-> it is too easy to forget to pass through the corresponding parameter to a
-> function at a lower layer when that function accesses the global variable
-> anyway.
+> This extra part is non-empty, therefore we add an extra space.
+>
+> But that part already starts with a space, so now we end up with two
+> spaces.
 
-When you have a truly well "libified" API and a program that needs
-to use global to communicate to other parts of the system, then the
-approach I suggested would follow a much better design taste.  For
-example, if your program takes an argument --option=string, and you
-for whatever reason have to use a global variable to store the value
-due to limitation of your option parsing API, you'd create a global
-variable to store the string.  But well libified API functions (say,
-the ones from the C library) do not have to care if you are using a
-global or an on-stack variable.  I would not rewrite strlen(const
-char *) to my_strlen(void) that only looks at the global variable
-and use it instead.
+In other words, this breaks because the original code depended on
+having the extra whitespace before the "funcname" part.
 
-But it is quite possible that bisect--helper may not have such a
-clean interface, in which case it is pefectly OK for everybody to
-look at the global directly.  My comment was mostly a reaction based
-on the assumption that your earlier "libifyable state" comment meant
-that these call graphs are nicely libified and pass everything they
-need through via parameters, in which case, the ultimate callers of
-these helper functions that take "struct bisect_terms *", like
-free_terms(), may have the parameter they pass down to the callchain
-on their stack, and now have to pass a pointer to a global, without
-the callchain that is "as libified as possible" having to know.
+Stepping back a bit, if the final goal for the UI generation out of
+this string is to append the material with a whitespace before it
+for better visual separation, then the original should probably have
+(at least conceptually) lstrip'ed the leading whitespaces from the
+string it found after " @@" and then appended the result to where it
+is showing, with its own single whitespace as a prefix.  It would
+have prevented this bug from happening by future-proofing, and made
+the final output nicer, as any excess whitespaces between the " @@"
+and "funcname" would have been turned into a single SP.
 
+The "prepend one iff it does not already begin with a whitespace" is
+a (at least mentally to the developer) less expensive approach that
+is fine, too.
 
-
+Thanks.
