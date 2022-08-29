@@ -2,65 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FBB3ECAAA4
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 17:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4B2CECAAA4
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 17:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230321AbiH2RaJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 13:30:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54930 "EHLO
+        id S229866AbiH2Rld (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 13:41:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230457AbiH2RaF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2022 13:30:05 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3AE022515
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 10:30:00 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id q3so5454023pjg.3
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 10:30:00 -0700 (PDT)
+        with ESMTP id S229536AbiH2Rlc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2022 13:41:32 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2FD553013
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 10:41:31 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id jm11so8680537plb.13
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 10:41:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=fjwLmsUiL3+QzFGzu74IQoyuFOcoYoG3bmGjWx8UbXQ=;
-        b=TFEojd0K4SjQK90OfEfCXVytFtnb5O3K/18q3QWAaPVkmPihOVlGeFvetyatQFcBPs
-         uuAHlW+56KYbuHRvESfTHfoEdDkZnqq5wbqTdx4XPUcqOlZsrPJP2tW+qlpLrHCN64fy
-         dVLVvEKIa//PiSPQBLZKpHdAFH3VWACdsPPfrBViC3GwtsyyyrWDpWJHfO+O8KV3/A2/
-         CXdW3FlVS39kXehtOWH2fJC2hLWEEBeCbO+zowx83VNwZszI4Mx+KWbMRcqUaZoB4DSP
-         F/VkjAzHwYHZkoe83YDf8dbc00EHfgO0eKUCiIDuxtdN502/VVan+92z+PbgqX3n+pD2
-         e9kQ==
+        bh=1JBhyPjNkwubP1ut/M83ilAuFfZfq9Fqu/AShk8eq9Y=;
+        b=aid7JW1e9c6ZH2yEeDw6vYvHgl4gayIOa1rg/JyTSRkG+VpIuXU/MP9PDrWEbw7g/3
+         J8fxUb+VAp4uj5eUr0949lUu6rTgaVgGGrAIYG/5jRpEjv5BBG99163KszdU9C1bfCS2
+         tD90/jxwKw5y39Rt+nusEsNul+uFSRbn+FLfXPxl0TC7cq0AEcb8j/xIfzrSpV0n6Ddj
+         OkDRB1vBTJB7NtsFWTX/oICzYdhGXE6OoCFMzdg7iG8fMfI6DK++uK6kR5qs3PQqoDp/
+         +uZ9nBhtVB4+jN4ey3s5SkZtMNjEm0ImhNrVi+9JEG7r3idHm8qFbz4QI5nxl1l5E0Ej
+         ytaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date;
-        bh=fjwLmsUiL3+QzFGzu74IQoyuFOcoYoG3bmGjWx8UbXQ=;
-        b=GrStUFmOsd1jJ0dgQi6mG86L6+tHYntq1jFQipWj94W+/YzbD0UrMg9lUo1W+DXMJX
-         Res9pn0bcAjNiCeXRMtzdFMfApsVP73tI2sYQ8v3IiLbur2CO6uMnm3qsT3bsGxrSlh1
-         FT4qJM90FoO7fBXUpfnZWYo9cp5qmlJDE7EERmYssrPOZzj638BScCubyYJBo9PL4kiZ
-         PHk07xNeRcCQAv8fwjAmy/29f6UoswZzkTUt3epRxIwsBj1+WC4DyjNlQye+onQEnQPW
-         h081YPftFqoxQAh1uIMrVUECvlnpK1kfwGSUhDtegJGYYgMzQgARRG8HZ2UT/cbjSyw9
-         doWg==
-X-Gm-Message-State: ACgBeo1M/Zx6ek2jMwBFt2nlUTdEvSoGZ/lSi4iyEeH4RLspKryR8uZ1
-        xyIJTuJePIfDEi4mNE+0dQxiAC5dz4o=
-X-Google-Smtp-Source: AA6agR4GdROXdhr2jz32c/MLAG6lklYmamgpO1K8ULSIxkkqyiYdjmBFGJ71RIGEBerwGdMyC18Vow==
-X-Received: by 2002:a17:90b:3506:b0:1fd:9a86:2f4c with SMTP id ls6-20020a17090b350600b001fd9a862f4cmr11332687pjb.99.1661794199886;
-        Mon, 29 Aug 2022 10:29:59 -0700 (PDT)
+        bh=1JBhyPjNkwubP1ut/M83ilAuFfZfq9Fqu/AShk8eq9Y=;
+        b=PzF1j1e1yzc+IqmGirsW2WzVOG81OgazrJXPRx2ARD+7vbNXzSl7w9c8EByWlXvKtC
+         JcGFSIXAuJQdgrB6qsTqtcLFpW6ai0YhokuvjrbEku1XeD8iRI/FxQGHlB2xSg1XaYUu
+         TQA/hK2I1rqlY9j3ZurCTJZjKgaDharNOEF5XLVlh4wK/SsVXMF9gWmpWxauhYXhn13Y
+         zyJLAkr1UepOG4JLyHmeI4YMvuO4zZy9IrW9njr1s7/mm9rP41oYeFagTgdW6t8YcSM3
+         K3OyZZCmQ+nQ/B6StMqDlxYCsjL+vVNUltgsB11NdsrkXSNASxDeEiER2E2i4sjAbzIW
+         Y6/g==
+X-Gm-Message-State: ACgBeo1kt4TVv7P/srNl/gkHGGCwVW2bOTool7EZmklvboSIgBMxWuCz
+        SjK7y7On5MQeqtT0poip+vQ76qhtUgs=
+X-Google-Smtp-Source: AA6agR7oOAvYuDqIomrHUaCsNOCz8TTsQ++WRxKndazvzBY1Vwa8eZ2Y0gyPO9nbNRxqq2Dc+vc3sA==
+X-Received: by 2002:a17:902:f711:b0:170:9e3c:1540 with SMTP id h17-20020a170902f71100b001709e3c1540mr17197209plo.22.1661794891226;
+        Mon, 29 Aug 2022 10:41:31 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id a6-20020a170902ecc600b0016ed5266a5csm7911898plh.170.2022.08.29.10.29.59
+        by smtp.gmail.com with ESMTPSA id b4-20020a63d304000000b0042c60bef7b5sm1133724pgg.85.2022.08.29.10.41.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 10:29:59 -0700 (PDT)
+        Mon, 29 Aug 2022 10:41:30 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] pretty: separate out the logic to decide the use of
- in-body from
+Subject: Re: [PATCH 2/2] format-patch: allow forcing the use of in-body
+ From: header
 References: <20220826213203.3258022-1-gitster@pobox.com>
-        <20220826213203.3258022-2-gitster@pobox.com>
-        <08p469q7-2os4-p391-9nr4-10q7o9s4414s@tzk.qr>
-Date:   Mon, 29 Aug 2022 10:29:59 -0700
-In-Reply-To: <08p469q7-2os4-p391-9nr4-10q7o9s4414s@tzk.qr> (Johannes
-        Schindelin's message of "Mon, 29 Aug 2022 13:32:27 +0200 (CEST)")
-Message-ID: <xmqq7d2rot48.fsf@gitster.g>
+        <20220826213203.3258022-3-gitster@pobox.com>
+        <q84op991-3s0n-r0q5-32pn-096595o03rs8@tzk.qr>
+Date:   Mon, 29 Aug 2022 10:41:30 -0700
+In-Reply-To: <q84op991-3s0n-r0q5-32pn-096595o03rs8@tzk.qr> (Johannes
+        Schindelin's message of "Mon, 29 Aug 2022 13:48:05 +0200 (CEST)")
+Message-ID: <xmqqilmbne0l.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,54 +70,112 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Hi Junio,
+>> Note.  This is an uncooked early draft.
 >
-> On Fri, 26 Aug 2022, Junio C Hamano wrote:
+> Did you mean to mark the patch as [RFC], then?
+
+It is mixture between that and WIP.
+
+>> Things to think about include (but not limited to, of course):
+>>
+>>  * Should this rather be --use-inbody-from=yes,no,auto tristate,
+>>    that defaults to "auto", which is the current behaviour i.e.
+>>    "when --from is given, add it only when it does not match the
+>>    payload".  "yes" would mean "always emit the --from address as
+>>    in-body From:" and "no" would mean ... what?  "Ignore --from"?
+>>    Then why is the user giving --from in the first place?
 >
->> When pretty-printing the log message for a given commit in e-mail
->> format (e.g. "git format-patch"), we add in-body "From:" header when
->> the author identity of the commit is different from the identity of
->> the person who is "sending" the mail.
+> I would offer up the suggestion `--in-body-from={never,always,auto}` for
+> consideration.
+
+That is essentially the same as the "Boolean plus auto" tristate, a
+very common pattern in our UI.  The problem is that false-never-no
+does not make much sense in this case, because you do not need it.
+You can instead refrain from passing --from to achieve the same
+effect.
+
+>>  * Should it be "inbody" or "in-body"?
 >
-> The quotes around "sending" made me stumble over this a bit. Maybe replace
-> it by saying "the person running the command"?
+> The latter.
 
-It reads much better.
+OK.  This cascades up to 1/2 (there is a new helper function with
+the phrase in its name).
 
->> Split out the logic into a helper function.  Because the "from_ident
->> must be set" condition is there not because it is used in the
->> ident_cmp() next, but because the codepath that is entered when this
->> logic says "Yes, you should use in-body from" requires values there
->> in from_ident member, so separate it out into an if() statement on
->> its own to clarify it.
+>>  * Should it have a corresponding configuration variable?
 >
-> Even after reading this three times, I had trouble understanding it. I
-> then consulted the diff and started to grasp what you mean. I have no
-> good idea how to improve the wording, but maybe you can give it another
-> go? Or simply state that the condition was untangled a bit.
+> Probably. The commit message talks about mailing lists requiring different
+> behavior from the default, which is likely to affect all patches generated
+> from a corresponding local checkout. Having a config variable would lower
+> the cognitive burden of having to remember this process detail.
 
-Yeah, (pp->from_ident != NULL) there serves two purposes.  Whatever
-else is in that if() statement, the body of the statement depends on
-the pp->from_ident being non-NULL and the control must not enter
-there otherwise.  The other purpose is to guard the other half of
-the if() statement, which happens to be ident_cmp() that looks at
-the same pp->from_ident and depends on it being non-NULL.
+OK.
 
-I think the condition gets much cleaner by untangling it to
+>> diff --git a/builtin/log.c b/builtin/log.c
+>> index 9b937d59b8..83b2d01b49 100644
+>> --- a/builtin/log.c
+>> +++ b/builtin/log.c
+>> @@ -1897,6 +1897,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>>  			   N_("show changes against <refspec> in cover letter or single patch")),
+>>  		OPT_INTEGER(0, "creation-factor", &creation_factor,
+>>  			    N_("percentage by which creation is weighted")),
+>> +		OPT_BOOL(0, "force-inbody-from", &rev.force_inbody_from,
+>> +			 N_("Use in-body From: even for your own commit")),
+>
+> Please start the usage text in lower-case, to keep it consistent with the
+> rest of the usage texts.
 
-    - use_inbody_from() function does *not* check pp->from_ident; it
-      just assumes it is not NULL 
+Right.
 
-    - the caller becomes
+> Also, I would like to avoid the personal address "you" in that text, and
+> also the verb "use". Maybe something like this:
+>
+> 	show in-body From: even if identical to the header
 
-	if (pp->from_ident && use_inbody_from(...)) {
-		... stuff that use pp->from_ident ...
-	}
+Much nicer.  I'll take it.
 
-> P.S.: I do not know how strongly you feel these days about lines longer
-> than 80 columns, but personally I do not care about this rule, so I am
-> more than just fine with adding such a line here.
+>> diff --git a/pretty.c b/pretty.c
+>> index 51e3fa5736..e266208c0b 100644
+>> --- a/pretty.c
+>> +++ b/pretty.c
+>> @@ -483,6 +483,8 @@ static int use_inbody_from(const struct pretty_print_context *pp, const struct i
+>>  		return 0;
+>>  	if (ident_cmp(pp->from_ident, ident))
+>>  		return 1;
+>> +	if (pp->rev && pp->rev->force_inbody_from)
+>> +		return 1;
+>
+> It would probably make sense to move this before `ident_cmp()`, to avoid
+> unneeded calls ("is the ident the same? no? well, thank you for your
+> answer but I'll insert the header anyway!").
 
-I allowed wider line for function decl, by inertia, for
-greppability, but I should fix that.  Thanks for noticing.
+I tend to prefer adding new things at the end when all things are
+equal, but in this case the new thing is an overriding condition, so
+it does make sense to have it before the call.
 
+>> diff --git a/revision.h b/revision.h
+>> index bb91e7ed91..a2d3813a21 100644
+>> --- a/revision.h
+>> +++ b/revision.h
+>> @@ -208,6 +208,7 @@ struct rev_info {
+>>
+>>  	/* Format info */
+>>  	int		show_notes;
+>> +	unsigned int	force_inbody_from;
+>
+> The reason why this isn't added to the `:1` bits below is probably the
+> anticipation of the tri-state, but if that tri-state never materializes,
+> adding it as a bit is still the right thing to do.
+
+It might make sense to turn this into the common "Boolean plus auto"
+tristate, but the utility of "no" in this case is dubious, so I was
+not planning to go that route.
+
+This member is a full fledged word because the address of it given
+to OPT_BOOL(), and we cannot take an address of a bitfield member in
+a struct.
+
+Bit-pinching in this struct is not very useful.  Even if we traverse
+a million commits in a single run, we will use a single "struct
+rev_info" instance.
+
+Thanks for reading it over.
