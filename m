@@ -2,160 +2,238 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 292A6ECAAD5
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 15:38:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 755F0ECAAD5
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 16:36:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229687AbiH2PiF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 11:38:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37056 "EHLO
+        id S230106AbiH2QgT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 12:36:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbiH2PiC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2022 11:38:02 -0400
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2075.outbound.protection.outlook.com [40.107.244.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36DDA8982C
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 08:38:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NWXV57CXE4I6J5LZfsAopgqwyMl5ay5trNkno5qF8vr2DCsSBKzdE+4Ba01F8vOs5jTosxbw210qn8UJ5VTyQGWpel/oebNOTlYSLBtlda7tEEwR71XvKfXngwVMmyM4ZvkVcCmzW2lpDSJDq9BqwaAXBvBhpOIL0ZUfw6t4b0wqx91Rcl/aJtI957sSGtIpI/Q99E4SxmrjtrHr2IeXDYGoFMaQGGjwPN8otS/gdMghlWwfMRz7PAR4CHCENWhUME11tB9e2KCDj60ZEBd73bntKmqxIwVICz65wQb3fsFpPuK02ybL2O7ixaXUPaYaM8yEt4nAzNNap5Ilj7pgwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=R7BDnJuFKdcT92cPNNLUhRekR4yrtKuYM7ZRfvl143Q=;
- b=K15EvYxNhTA6Fpk+YhPxpq3IqRF7nJNEg9ZWRbkDxCtsdTiIq0nXurHzWUA6uBe2GU418RGf1etd2eyVYWYNuftp7dVTXjv27PmRmRmP9RoX+STrB/iw5IP2u60pm8c1wO7cn33o9vLoz764AOqYgA7Qdz60CzegWfxyw69XxoBBIlrQSLi48hEpXAWnQP8+e4jgeBT0LNYWXMNiZYlapcs3cyHqLUeGaMU7J4nTBwBLaICBNwM0Lqx+BnI9jbeRmQ3OLL755s4XeKEO0cp6hEnAGdI9uUi7R+zltxgpTFcnUJLKUrQZ5OYgWnNNVSkBEZSiwYLgj7SR4fHrw/ZMiQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=R7BDnJuFKdcT92cPNNLUhRekR4yrtKuYM7ZRfvl143Q=;
- b=VXIwt/I6IbeXfjxTvPbljLbAqBcLxoaN9p+vFKaqwmR5wckc4ztAFvLVx/aNK8RzlYG9R5LzAk6yx5bnE5LwXqq21N21p+TSKhAihlwhCuvyLt9qtRgWNHlIpV28skpDNGM0In++3bXe7cqsJHx0iPO5lgrScc8UNuksnswgCBU=
-Received: from DM6PR12MB4356.namprd12.prod.outlook.com (2603:10b6:5:2aa::8) by
- PH7PR12MB6955.namprd12.prod.outlook.com (2603:10b6:510:1b8::7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5566.15; Mon, 29 Aug 2022 15:37:56 +0000
-Received: from DM6PR12MB4356.namprd12.prod.outlook.com
- ([fe80::e43e:bec3:4746:37d]) by DM6PR12MB4356.namprd12.prod.outlook.com
- ([fe80::e43e:bec3:4746:37d%5]) with mapi id 15.20.5566.021; Mon, 29 Aug 2022
- 15:37:56 +0000
-From:   "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [Proposal] Pass additional metadata to sendemail-validate hook
- from git send-email
-Thread-Topic: [Proposal] Pass additional metadata to sendemail-validate hook
- from git send-email
-Thread-Index: AQHYuY7dQt28v+tPjkSID7y+EecLra3GBtuA
-Date:   Mon, 29 Aug 2022 15:37:55 +0000
-Message-ID: <8735dfkqlo.fsf@amd.com>
-References: <87czcm7maf.fsf@amd.com>
-In-Reply-To: <87czcm7maf.fsf@amd.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: mu4e 1.7.0; emacs 28.1
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 1fece2e4-5754-4897-8704-08da89d471b7
-x-ms-traffictypediagnostic: PH7PR12MB6955:EE_
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: DAl7xwaQ7MQ3ymE5GsbhVzKihECeBVxS52Nv6hZk0Juklmg1okYk1gDiYM4GoIovYmC/53OuyYnkRA4WOnW5pg2L3tNkiDPutMcU68msI0hstLS+8hBMHJjnkFRtLd94+L/zt7suwnMiMKsazF8T7ku+9CoPFMs/Z23QMiKfFL713P8xaAclQHKIxHQCIiqH9TCntcZc7TlRa1pyPbc9roMeAWknDNEV7Igzke2XD1L9sSwSX3QPGmY7uqsOGmZD4USCKdt9HEFJePVeOg3PvPxrMBg0tcag4RM00m3TiugVYB/uyk5nFGhjiPdOOxLjqp8sLEH71KDdIITUATtbeGDZy9HL+I7YJbUNSl+2CNE6ujFY+Sn32F5fa1rzXgx2UlQbYpDcy7RcetwN7/ny/txozpVdes4Aj2BoDlxfsGrU3746XzWCqVZQp+PHQ8c7yeBOwwwxvGlBTI8gsnGohlkUkrR1ZJ9UB/zfZeuzQKwtNhbAbf0Xu2Z3+g2Exr0Mz2GiVTEl7KfxODqCdHDy0DQl43Qklb48XN4D+dQB7gCtmFKDw2MTybbQccMSZbcIpZAyhWUb58uQmjJvk7mkU11Pm3BxnikcYGFZSKiaNBngUfLur05DN7BjblxeL3zhZSGfuJ7cKdXN3z0K7mVtaOgZkCTQr7mOJ3D9mYy0t8xtwtO7Bnl4LgckcQ6jBr7zbObpm9JzjCXqeSwAZ+AXcgPBN/saK4BBA5ruhb/hNCXeManEmUyGUVUyZjqCngzrA//u8dT2cWZzmKUa/wI6DA==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4356.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(346002)(136003)(376002)(366004)(39860400002)(396003)(66946007)(66556008)(64756008)(36756003)(86362001)(66476007)(122000001)(8676002)(66446008)(76116006)(91956017)(38070700005)(38100700002)(6506007)(41300700001)(83380400001)(2616005)(478600001)(6486002)(26005)(53546011)(71200400001)(316002)(2906002)(186003)(15650500001)(6512007)(6916009)(5660300002)(8936002);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Z7gL2KrmyiaWYL1I0Ywcwe6qNjdE16RLI46mK5uaKcGcRKF8SlyFIv2eaN?=
- =?iso-8859-1?Q?b7h8uineWrYGRCtOEBvvZEUDbGU2Oh7eWkrHlN8NQ1A7hA6a38gJIIfgZz?=
- =?iso-8859-1?Q?WeM2YsoEImLxi2Pv+MKAweV8FGCIISlXajW2/t7Wdi9MPo71UZGAV3BV8I?=
- =?iso-8859-1?Q?j2ZWAlm+WuXWxK0dIwItfOObP8QMRebF6ZoJuVcYyVPz2IGu/EtbSlon0x?=
- =?iso-8859-1?Q?P+h8oPG034DZr5ru2bPAFINl0BEohOD+CGx59Z/hpw5yiF4RPYzDo0EX+j?=
- =?iso-8859-1?Q?HQkYKwhITZc3m/CWSJMfVKPTKdr2gwdckyvR+yvd5g+vhzgUzJ5zubXq5I?=
- =?iso-8859-1?Q?HgYcJFFhKmkLLas4SC2sNzhhq+wjZpbH9M70LvursgBDtClWrpJvGrClOh?=
- =?iso-8859-1?Q?bfeI1Tgsrk92FoK80SWgpmkHjGYNvPmfs7Ave+PVwSM0aTpruk5z1EjRN1?=
- =?iso-8859-1?Q?AI1YpryyZd0XWU6m1DuCxlGUbdOEsUegTIjYZOUNrDyKm+ei8NkEAD5DHL?=
- =?iso-8859-1?Q?/vs/6R2qRSsb5gZa/Qw2rfx4iMv2MT/kLp5HWpBBV9dpjbrJt1xjzYg5JW?=
- =?iso-8859-1?Q?j+rVgsQGdFvoda5DozmKpmX1VS7HuPsElJD2lfrVdlLK+iptKxPbGysO0a?=
- =?iso-8859-1?Q?5gXp5Lg63OsQUobhQTU3lZ2JQfaFmoDfZ8AXN5ydOAEHFclJ6ocdq+cJIW?=
- =?iso-8859-1?Q?BHO3nTthxWG6g6FfEFLp+FrvPg/C/mxA+wfVcFeZDbRPBzxUNbljrOoX7V?=
- =?iso-8859-1?Q?Q+pPhbKjw2gGHh9of2pFu/wk1LrhFb7sY2Yq1/nQ3vnO6VPf6aAU1fHEcD?=
- =?iso-8859-1?Q?KhGwJRXrAVxTxm2jbKXDrccFhUG1X8NNSFIqNjkVlFcdRRb5oZaAix0IY9?=
- =?iso-8859-1?Q?MJU0Es979UcZw8bY4RzyX5llN53rlMIgP++5ttCxyANgLhd30w5mA804/U?=
- =?iso-8859-1?Q?xy5Jc+qddav3spWHcBD6gHHKI8JarM6jiAL4j2uOafeaQ7tW7z5oFtTd+o?=
- =?iso-8859-1?Q?MAvm1s20k+13mc39nre4ak+EHYSR47BOz8rIdqknT0Dti0dku3Oi7ijnx5?=
- =?iso-8859-1?Q?HE+c0mSLBDczgtVG7fiAy9p7Lu/+OnAewlkNVynZqxzRIz9m+8IUYd9TrU?=
- =?iso-8859-1?Q?Lsikhd4e6bX6oMgHnZZR7jwOc1rUWWxGXrptBAXsBL+QjhqffP9KhRIubv?=
- =?iso-8859-1?Q?cDEU87t2OSpuTQ/V3t6xT511n98y3nOAitTJHvXtLk3lgFq3VgLfTqJwq4?=
- =?iso-8859-1?Q?mL/yrX6maUlPrPrdQ07hBJOoq8bkVjy8KlkjCtcAWiv2dpd64QQAAUazP1?=
- =?iso-8859-1?Q?WeYhns/Wwej6UES8w6/gxWSxPVjbinE0d6jYLdiPQWECuzLN4AaSyMZWO0?=
- =?iso-8859-1?Q?GHRjgIUDOmaud+5AmbaXwsNJizE3qoSc8w5JO26CfY7jO949pHtJjQorUl?=
- =?iso-8859-1?Q?F7OwoM3mpT43YKTiqME+jVTiR15ld/DWSC8dtYPZ3PZ7Do9Rh4h4TMGcR2?=
- =?iso-8859-1?Q?nKFDPyiewX1w4kHBHMLoztN7OR6Ot+TFLRUpGdPRY+g5ctQzz87sr++l79?=
- =?iso-8859-1?Q?Cc9eUUInJzQAtbK1k+RpHY8PyZUn9Vg4pbzHZNwRw6p6qWiCX5fJl34RXR?=
- =?iso-8859-1?Q?5KZCN27h068XtRGV3FUelGfeRBNBf+vgj9?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229469AbiH2QgR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2022 12:36:17 -0400
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7283C4DB07
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 09:36:16 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id f4so6445107qkl.7
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 09:36:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc;
+        bh=J32yyZ6LXMK30bCB/4prlFBlBWelEMT/BSZZFD6iIUU=;
+        b=Ni0Gmj2Kd4WDgwwHCBBtCHMjP+LhdRKeD3LageJUlrPJKBDXJcFo0cY7zMspz3BlPU
+         HUyG6hdpArXso2o5Mms9Py8crKOKpu2ApcCmAByCw5pzPBTOkIsuYay/8yH1e6LFtQgH
+         AjG1Bf45BXs63Td7cCQf4CLbvbL0PB/aE/SQ2Pu6qSwHl3HgU/qsOXyEedbWOo4+s01d
+         e+zbsijbwzleK4P9ebkHa3UXXBLZwnzG7oRhy/uMyjCFerwob7ZssUyrwDSKFLX21RaM
+         JqEfRPEnwzraT7UdhgTE0DopNx31JJtXsQh8ET0vfSTVOk5rhvUvcvBMWTBamYIMKjO9
+         WS9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc;
+        bh=J32yyZ6LXMK30bCB/4prlFBlBWelEMT/BSZZFD6iIUU=;
+        b=lVyGRdUbHPMSHOifa023+hAt9ML1fNG8UNJQVYS0qC7hzFtUU8kYZwc2ZmNkK3gKDf
+         gqd1oV1tE+G9moTg892VNDy9BVoXdqxTbXKVdmqHlhE+D22YueUP/3EtupKBRvb+T9EF
+         6R4/X0ndrEIOEfYF2B8ArulpDDYlzzde9n73UHfncdoUDSn6+7E+ndOZhn6Izg+UmV2j
+         KyC7cLBbGOs7yxitqBlB7hkB/JCyGrgetvvus7cal17jZ9h8byXfHqEUH+J9eoTFsb42
+         9qaitEMP1M26rN9lis0NAQFJhZLCaOAxgb9PCj6QTbPzDYmdN2PmyfOWNI8fiMixW+MX
+         tSBQ==
+X-Gm-Message-State: ACgBeo2XJfPXGVM6VO0ni/xqxywjwZWqFmAeUKpr3vMV4Tqxb7+WUgYc
+        Tcwf9W/1bWfD+Z0oqeJS5zmkvms/iOc=
+X-Google-Smtp-Source: AA6agR5aASuC731Xvs/arkonoG1pJuLBcV+P3Rr0b3ZgtvQtuKKTmYNUHT17PR+ZDdgj3Fjaijoe4A==
+X-Received: by 2002:a05:620a:4407:b0:6ba:f3cc:49a3 with SMTP id v7-20020a05620a440700b006baf3cc49a3mr8759856qkp.699.1661790975406;
+        Mon, 29 Aug 2022 09:36:15 -0700 (PDT)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id bp8-20020a05620a458800b006b93ff541dasm6424850qkb.8.2022.08.29.09.36.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Aug 2022 09:36:14 -0700 (PDT)
+Subject: Re: Bug in 'git log --remerge-diff' when used with '--find-object'
+ and '--submodule=log|diff'
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+References: <43cf2a1d-058a-fd79-befe-7d9bc62581ed@gmail.com>
+ <CABPp-BEkC8xEkNa+hyKFKhO=cbBZqNqGWehqxbRzE6-BVR27NQ@mail.gmail.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <b19c7090-109c-8988-56cf-4f8887de3845@gmail.com>
+Date:   Mon, 29 Aug 2022 12:36:20 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4356.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1fece2e4-5754-4897-8704-08da89d471b7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Aug 2022 15:37:56.0115
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: y9B7N5wYO+a5Syf9QrPDPXiMqAGb9f9fDd2uyAVmBRFxfyfMC0/U2wlciQQ3v2EMH/tOj8BaR54L5ufXgQBG9A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6955
+In-Reply-To: <CABPp-BEkC8xEkNa+hyKFKhO=cbBZqNqGWehqxbRzE6-BVR27NQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Elijah,
 
-Thanks for getting back to me.  I'll write up a patch.
+Le 2022-08-24 à 03:36, Elijah Newren a écrit :
+> Hi Philippe,
+> 
+> On Mon, Aug 22, 2022 at 4:58 PM Philippe Blain
+> <levraiphilippeblain@gmail.com> wrote:
+>>
+>> Hi Elijah,
+>>
+>> I found two bugs in '--remerge-diff' when combined with both '--find-object' and
+>> '--submodule=log|diff'. I don't know if they have the same cause.
+>>
+>> When using these flags together, *all* 2-parents merge commits are shown (even in a repo with
+>> no submodule!)
+>>
+>> Moreover, for merges with conflicted paths, all conflicted paths are shown as "(new submodule)",
+>> even if they are not a submodule (in fact, even when no submodule is present
+>> in the repository!).
+>>
+>> This artificial example reproduces the bug:
+>>
+>> ```bash
+>> #!/bin/bash
+>>
+>> set -euEo pipefail
+>>
+>> repo=repro
+>> rm -rf $repo
+>>
+>> TEST_AUTHOR_LOCALNAME=author
+>> TEST_AUTHOR_DOMAIN=example.com
+>> GIT_AUTHOR_EMAIL=${TEST_AUTHOR_LOCALNAME}@${TEST_AUTHOR_DOMAIN}
+>> GIT_AUTHOR_NAME='A U Thor'
+>> GIT_AUTHOR_DATE='1112354055 +0200'
+>> TEST_COMMITTER_LOCALNAME=committer
+>> TEST_COMMITTER_DOMAIN=example.com
+>> GIT_COMMITTER_EMAIL=${TEST_COMMITTER_LOCALNAME}@${TEST_COMMITTER_DOMAIN}
+>> GIT_COMMITTER_NAME='C O Mitter'
+>> GIT_COMMITTER_DATE='1112354055 +0200'
+>> export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
+>> export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
+>> export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
+>> export HOME=
+>>
+>> git -c init.defaultBranch=unimportant init $repo
+>> cd $repo
+>> echo i>file
+>> git add file
+>> git commit -m file
+>> git checkout -b side
+>> echo s>>file2
+>> git add file2
+>> git commit -am side
+>> git checkout -
+>> echo m >>file
+>> git commit -am main
+>> git merge side -m clean
+>> git checkout side
+>> echo c>>file
+>> git add file
+>> git commit -am side2
+>> git checkout -
+>> echo cc>>file
+>> git commit -am main2
+>> git merge side || true
+>> printf 'i\nm' > file
+>> git commit -am conflicted
+>> # look for a dummy object
+>> git log --oneline --diff-merges=r --submodule=log --find-object=2c042ac4213768e55791098110d2ef2ef845881a
+>> # same output with --submodule=diff
+>> ```
+>>
+>> This is the output I get from the 'git log' call:
+>>
+>> b4f1be9 (HEAD -> unimportant) conflicted
+>> Submodule file 0000000...0000000 (new submodule)
+>> a4ef223 clean
+>>
+>> Notice both merges are shown despite none of them changing the number of occurences of
+>> 2c042ac4213768e55791098110d2ef2ef845881a, which does not even exist in this repository,
+>> and also that the conflicted merge shows 'file' as "new submodule".
+> 
+> Thanks for the report, and the steps to reproduce.  Very helpful.
+> 
+> After some digging, it appears the remerge-diff headers are
+> misinterpreted by the submodule code.  They transform what would have
+> been the following output:
+> 
+>     b4f1be9 (HEAD -> unimportant) conflicted
+>     diff --git a/file b/file
+>     remerge CONFLICT (content): Merge conflict in file
+>     a4ef223 clean
+> 
+> into what you saw, namely
+> 
+>     b4f1be9 (HEAD -> unimportant) conflicted
+>     Submodule file 0000000...0000000 (new submodule)
+>     a4ef223 clean
+> 
+> We can recover the intended remerge-diff header with the following simple patch:
+> 
+> diff --git a/diff.c b/diff.c
+> index 974626a621..be23f66057 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3429,14 +3429,16 @@ static void builtin_diff(const char *name_a,
+> 
+>         if (o->submodule_format == DIFF_SUBMODULE_LOG &&
+>             (!one->mode || S_ISGITLINK(one->mode)) &&
+> -           (!two->mode || S_ISGITLINK(two->mode))) {
+> +           (!two->mode || S_ISGITLINK(two->mode)) &&
+> +           (one->mode || two->mode)) {
+>                 show_submodule_diff_summary(o, one->path ? one->path :
+> two->path,
+>                                 &one->oid, &two->oid,
+>                                 two->dirty_submodule);
+>                 return;
+>         } else if (o->submodule_format == DIFF_SUBMODULE_INLINE_DIFF &&
+>                    (!one->mode || S_ISGITLINK(one->mode)) &&
+> -                  (!two->mode || S_ISGITLINK(two->mode))) {
+> +                  (!two->mode || S_ISGITLINK(two->mode)) &&
+> +                  (one->mode || two->mode)) {
+>                 show_submodule_inline_diff(o, one->path ? one->path : two->path,
+>                                 &one->oid, &two->oid,
+>                                 two->dirty_submodule);
+> 
+> In other words, when we have information about something other than a
+> submodule, don't attempt to treat it as information about a submodule.
 
-brian m. carlson writes:
+Thanks for digging into this.
+From what I understand in the case of a remerge-diff, both modes are all-zero, and this is
+not expected by the submodule diff code. Were you planning to submit a proper
+patch ? I could get to it eventually, but not before mid/end of September...
 
-> On 2022-08-26 at 21:00:25, Strawbridge, Michael wrote:
-> > Hi,
->=20
-> Hey,
->=20
-> > I was hoping to put a feature proposal forward for git=20
-> > send-email.
-> >=20
-> > For git send-email there is a git hook, sendemail-validate=20
-> > which
-> > gets the body of the email that will be sent but is missing=20
-> > some
-> > of the metadata that git send-email has access to.  I propose=20
-> > that
-> > we also pass the extra metadata that gets presented to the=20
-> > user
-> > later on via stdout such as: From, To, Cc, Subject, Date,
-> > Message-Id, X-Mailer, MIME-Version, Content-Transfer-Encoding=20
-> > to
-> > the git hook.
-> >=20
-> > I'm willing to work on the patch but want to make sure the=20
-> > idea
-> > would be accepted first.
->=20
-> I think the idea is interesting and would be willing to see a=20
-> patch come
-> to the list.
->=20
-> However, having said that, we typically evaluate patches, not=20
-> proposals,
-> so to see if it's actually accepted, you'd have to actually send=20
-> a
-> patch.  We may find that while the idea is interesting, it turns=20
-> out to
-> be infeasible, or, for whatever reason, the patch is unsuitable.
->=20
-> I know that this is different from how other projects typically=20
-> work,
-> where you typically pitch an idea first and then implement, but=20
-> it's
-> what we do here.
-> --=20
-> brian m. carlson (he/him or they/them)
-> Toronto, Ontario, CA
+> 
+> Now, whether the remerge-diff header should be shown is an interesting
+> one -- it's a carry on to the discussion in the thread at [1], and
+> isn't simple to answer.
+> [1] https://lore.kernel.org/git/CABPp-BHjU+wDXNnf-rsGy86GvOFWH6qVLPEfAA2JDfLFRU4WSA@mail.gmail.com/
+
+Thanks for a link to a very interesting discussion! However I'm not exactly sure 
+what you meant here. Are you saying that:
+
+- we use '--remerge-diff', so we are interested in seeing 
+  (re)merge diffs
+- we do not use '-p', so we are not interested in seeing diffs
+- to reconcile both of the above, the code shows only the remerge diff header ?
+
+Because if I do add '-p', (in my reproducer) I still do not get any diff content. But if I remove
+'--find-object', then I do...
+
+> As for the first bug, the showing of any 2-parent commits, yes that's
+> true.  But it's not limited to remerge-diff; you can change
+> --diff-merges=r to --diff-merges=c or --diff-merges=cc and see the
+> same thing.  I'm not sure if that means that my looking at the
+> do_diff_combined() logic when developing the do_remerge_diff()
+> function meant I copied a bug, or if I independently came up with it
+> on my own.  But, for now, I need some sleep.  Just thought I'd give
+> you an update on what I have found so far, though.
+> 
+
+Yes, I had noticed that I had the same behaviour with --cc or -c, I forgot to mention it.
+With 'separate' or 'first-parent', though, no commits are shown (as expected).
+To be clear, this behaviour is independent of the use of '--submodule=short|log|diff'.
+
+Thanks for your answer,
+
+Philippe.
