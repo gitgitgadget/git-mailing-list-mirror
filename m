@@ -2,134 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CBD7ECAAD5
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 12:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7A8DECAAD4
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 12:24:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbiH2MOE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 08:14:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51170 "EHLO
+        id S229867AbiH2MYi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 08:24:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231843AbiH2MNX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2022 08:13:23 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60F73C07
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 04:57:50 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id j14so453199lfu.4
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 04:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rasmusvillemoes.dk; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=+OOzg984B7mM4+XAnfjDTrXVWE7UU5jLjuSdC//DojU=;
-        b=hveYIJRbWx8/H/i0GWDCS1WPsywwkbjB35TEg3WPyf8/WoPdnH3mDdyvCLMabQ3McT
-         QpoE5n9T3ly5Ok7NIIHRG/+B2BpyWoOm9z7gHJDKCG1Gxoj99HYHSClFMH89keSCX2Ih
-         ITmUi8fx0XAhhkqRY5IDHiTSoI5S5aLr8a5vY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=+OOzg984B7mM4+XAnfjDTrXVWE7UU5jLjuSdC//DojU=;
-        b=svBUGb+BzS+C671i893RwlVkktvh5pRHGk63SZQvFnfgo3anNvwSu/6XOsUwZ5MUuj
-         Qu1QoNyqknzIIBj0tqQI1bm278Lv4ufcitMZaylLfDuEMun7s87qsFRtekCxaUpVDY1H
-         HOPtDAf2Gjv/AaF7ZYkyYcDUbqtMlO5OIWr1PwyDbHfLUMUv9LVEaF6toickugePvsN+
-         OXjHx0rEcY0Es7srVaOKQm+cNzH+wxDSB5YDyBirTZVKaQcwzUd4A4XxGOPr+dbutbc+
-         uT2Lx/YxJF3JMBtvBqHrh1OtqC0LacmGQSi04mfuDrbCdWRCLY7KmO8wfMz8XzYQuZfT
-         M0rg==
-X-Gm-Message-State: ACgBeo3k0BuQlDjhy4S7fxO7eyXlPh2+nPaPdPTTBoFQM+LeBr51LJ0V
-        F+cVTTRZbqJGrFpujCY1LWnFzrbdu2r6QUy8
-X-Google-Smtp-Source: AA6agR4T3ycpzGDGWjb+varidgSXjSKwkb3A8OLsvASsy8X0nyhJyo9mCdbLfwxfk5kPsszsD5kuDw==
-X-Received: by 2002:ac2:5fad:0:b0:493:2ce:6938 with SMTP id s13-20020ac25fad000000b0049302ce6938mr5923074lfe.541.1661774221478;
-        Mon, 29 Aug 2022 04:57:01 -0700 (PDT)
-Received: from [172.16.11.74] ([81.216.59.226])
-        by smtp.gmail.com with ESMTPSA id z14-20020a056512370e00b0048960b581e3sm279152lfr.8.2022.08.29.04.56.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Aug 2022 04:57:00 -0700 (PDT)
-Message-ID: <f07a2387-dbbc-fd13-9817-069767c75165@rasmusvillemoes.dk>
-Date:   Mon, 29 Aug 2022 13:56:58 +0200
+        with ESMTP id S232233AbiH2MYM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2022 08:24:12 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6F1B7E023
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 05:08:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1661774863;
+        bh=Gy3tmwLSb1lukEdruFqNsCTySYcNdQoZcoGxeWZEmNo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=AqSibDFh+VDLpkv1K8BRqL6/KsZgPJBdlcmekl1xPGKOFsSbQlkg4Iu93PR5sN7gA
+         8dbteTn4dF0CogBKvmsDNRkYbukixRSgmCVxGwGFv1bH+EkLVfo3ZKGEU51NSU1bfL
+         vsgbuVNWU+9VDN8JS1RK63StTadAzWqWvCRodVIU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MpUUw-1pBa4H0AAe-00prnc; Mon, 29
+ Aug 2022 13:24:29 +0200
+Date:   Mon, 29 Aug 2022 13:24:27 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Aug 2022, #09; Fri, 26)
+In-Reply-To: <xmqq5yiey6sy.fsf@gitster.g>
+Message-ID: <46q59po8-o647-n859-0314-86q214ps668o@tzk.qr>
+References: <xmqqbks6ya5d.fsf@gitster.g> <xmqq5yiey6sy.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: forcing an in-body From header
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Luca Ceresoli <luca.ceresoli@bootlin.com>
-References: <c403e526-7455-4f26-fcef-97c99f9af539@rasmusvillemoes.dk>
- <20220826164828.cxsveqtjiyimdj7s@meerkat.local> <xmqqo7w6yl8y.fsf@gitster.g>
-From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
-In-Reply-To: <xmqqo7w6yl8y.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:WxYRzyJcJvOJb1HCmXFaL6sQBPctR3wSamRoXUqVkONr5dnxD6k
+ el0F35D9La78e4dZqFh26yJlZW1Dnx4c2zis2iaB+3yxqIV+q9ewjFotCvuDBQgZWDfNlyb
+ fglL89X79NimJe/pgc+Xj669vaF5rEoGWmWo+/So8LGH+YPPWPPnHTGH7wLjOftosxo5jMn
+ Kb9o1RRbOUtPHjkeSkQCA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:c27sr4TMnEE=:g9za/48lqxfj2FBbPOdIgp
+ N9e7lscnXpsjG57hmbfJ7H/CRxXFFfirbcntMQmtlmdsYKrJU1ESgq7VyLtGByqKFRDbZO4Fa
+ eEJzE0OT8cUOQ/BN1EzkNEN080KSUtlbGE8XJTnWq7NLAC9apzpJTecyRft6Av+rLF+DNK66t
+ hJ1/3RIGJEjVfK7ytdEV8FzJ9fcjJpwoekPaguOJKe8VRKUR/xKKEWGLOp3sexAeKyHJZI3hk
+ a0/3kzjW0FoDYNRHHSSA5Hz5lvV9dsqJ4gGC0TTgtOdYPWnjZJBsAo3221q2TkWHg5It9vlGU
+ UfEb4jQsd88BITVp0gAwhkK0NoVjDtKR8IrGDcSRpRmsdUd7JOGRFZ7UK/dp98YfVUanRnp3Q
+ 0isFaFVWGsdRD9kFECJZGDpaH45Gzs53hRJ1tl8TSI8if0WRHFMARCaZObaMUp2fcv8Ca7dQt
+ Kuemm8oLWkndZflgi7Wwdy9P+bXuj+uv/RyEdwEEymPWMs4bwnW+3fQxu3dBI2IbL2kgiEhor
+ 4O7QlAK3b6KaKCL4G0I5Q2pxUuedXTsu+4cXzIeOKr0pQ24W0+5jKXhd+8DfDk4G2JFhGDv6q
+ ca8m79kJ7yPwOY4V5pHJh10Q/Nh06qEOs04vn4nKYpQdyYvW1zncjp5nnCz2nBTWAK1AuNtIt
+ P5jrSueFVPJsKu1Q+8EUFSiB2ILRLSxk0aGEaYpiNExt6Mk1+MbmCb0hPZATKuRphLHGEOtmX
+ snE7zuoCReosxCK+2oO4wTDwT2tJoXqDAQft2cYIFBGFliNZQQjZidZaeXK7cY0Md3ABXdJdI
+ 0o6/dCN+SZTG7crDdOIGWSYZxw5+Y+h6z06uHmeUF9RgeMZ9RFz33aIYHp3TzoSlAhDq043IV
+ KTlZUe1rOG/33nx96UHMjjS7SjPFs/e1XHFcGYeBaM+g8eXhM2j7OSmqJCvdSdkz4/UJgIjhm
+ TFco9oVMT7u6F2HusWB7mJEGh7klJEZf66atHPdg0ouM0pfEtXv9ji2l/F3eFZltIKa0jBZ+H
+ 31JeHLXYM8iy2h9qat14uoQ8DAjvDS9XWdf1wdJ4VhaE8eK70cg5VB/bqZBgReG/6QZX74M5y
+ NxcIElzFXJaXsoiw7Wp2Mdg5RX35nMwSEwrJTf86z9UcsO5mKQbrFnw4+BZE14nM+lLIoaY88
+ Aq0FQtVpxeTmfehCylJVbWWBB+gv2aPvLJNLt7ZB4bDDVuaw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 26/08/2022 19.20, Junio C Hamano wrote:
-> Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
-> 
->> I agree that it's a nice feature to have, though I would put this into the
->> sendemail config instead of using an env variable, something like:
->>
->>     [sendemail]
->>       in-body-headers = From
-> 
-> A change only for send-email does sound quite attractive.
-> 
-> I encourage folks to run format-patch first, make amends as needed
-> in the output files, proofread the result once again, all before
-> finally handing it to send-email for sending out. 
+Hi Junio,
 
-That's at least my usual workflow, yes.
+On Fri, 26 Aug 2022, Junio C Hamano wrote:
 
- If a "force
-> in-body headers" command line option plus a configuration variable
-> added to "git send-email" would work for them, I would be OK with
-> such a change.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > We are at the end of week #7 in a 12-week cycle toward Git 2.38
+> > (tinyurl.com/gitCal).  As we have accumulated enough material on
+> > the 'maint' branch, we may want to tag 2.37.3 early next week.
+>
+> Just a head-up I promised earlier.
+>
+> As we do not have anything else that is ready and urgent cooking in
+> cabal, we are not in a hurry to tag another maintenance release, but
+> since we have enough stuff...
 
-It would work for me, except that if I am to rely on git send-email to
-munge the body of the file(s) I pass to it, I'd really like a way for
---dry-run to reassure me that that will actually happen. Currently that
-only prints the headers, which is quite useful to check that the To and
-Cc are as expected (especially when one has some to-cmd or cc-cmd
-configured).
+Thank you for the heads-up.
 
-> There may be folks who do not use "git send-email" to send out their
-> patches, and a change to "git format-patch" may help them, though.
-
-Maybe, yes. I also stumbled on this paragraph in git format-patch --help
-which would probably need some adjustment
-
-           Note that this option is only useful if you are actually
-sending the
-           emails and want to identify yourself as the sender, but
-retain the
-           original author (and git am will correctly pick up the in-body
-           header). Note also that git send-email already handles this
-           transformation for you, and this option should not be used if
-you are
-           feeding the result to git send-email.
-
-I don't know how git send-email behaves if there already is an in-body
-From, or if it is different than the one that send-email was about to
-add itself.
-
-Somehow I got the cover letter of the mini-series, but neither of the
-two actual patches. I can't answer the big-picture question of whether
-this belongs in format-patch, send-email or both, but:
-
-> * Should it be "inbody" or "in-body"?
-
-in-body, I think.
-
-> * Should it have a corresponding configuration variable?
-
-Most definitely yes, it's something I'd want to set for certain projects
-in the local .git/config file, and not a command line option I want to
-have to remember when doing the occasional contribution for those projects.
-
-Thanks for the quick responses and initial draft work on this.
-
-Rasmus
+Ciao,
+Dscho
