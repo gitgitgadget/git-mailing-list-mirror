@@ -2,172 +2,262 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19808ECAAD5
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 13:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D44E9ECAAD5
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 15:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229633AbiH2Nci (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 09:32:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50928 "EHLO
+        id S230135AbiH2PMF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 11:12:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiH2Ncg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2022 09:32:36 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 312DBF58B
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 06:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661779945;
-        bh=+mOEwinYjTgqX0OPgYEeIOOjB0MqQ0yrxISiPhURGto=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Gr059eraDMPmsmuEZaFFzSQHrCwx84q8R3XtUUdG24FKzfYldJUj/N1ZHsGrFd84K
-         zXvl6Xs1RwJsr+IvA8fRqtd1A+q+L2aeHy36eCap8mqtpq7EbfmrxBttcz6oC2VowL
-         Rt5/3+jUp/iiKa8qgKvd1nxIhNZGNk5CBi8zl+3o=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MtwYu-1pG4ZB0Xoi-00uKlz; Mon, 29
- Aug 2022 15:32:25 +0200
-Date:   Mon, 29 Aug 2022 15:32:24 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v2 3/4] add -p: handle `diff-so-fancy`'s hunk headers
- better
-In-Reply-To: <xmqq5yibqxs0.fsf@gitster.g>
-Message-ID: <0q0psp09-8993-96r6-3r90-q4s368p98510@tzk.qr>
-References: <pull.1336.git.1661277870.gitgitgadget@gmail.com>        <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>        <9dac9f74d2e19899b3e6c1d28e83878ded4469d6.1661376112.git.gitgitgadget@gmail.com> <xmqq5yibqxs0.fsf@gitster.g>
+        with ESMTP id S229994AbiH2PMD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2022 11:12:03 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5909582F9B
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 08:12:01 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id bu22so10252809wrb.3
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 08:12:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=E3weF9LxtndMAqlCnJ8JVZDT4r5Nt4ammySbezW0fMg=;
+        b=hGtMbazWJ1G94SOazspq3/ON5U8R7+W8xja2SSTCt1BDrf8zTj1pS90gbqINoWy5AM
+         BLXncRLIUSqORw/9AsNMdf9E/FkaataT0E+G6z8RiyIByDVG0PkdcUauygqmdQrIkmmW
+         XuaG2e2TuGGjaQs9p5cOF5TB8D2HGugYwB3WGG26zBNzJ6NxkQ37XOmsfU4d3fTNtsnf
+         sLuEvODs0Zc8n6XOukXK9agI7Hp2+iYGqUSCJehwPb1aEpfkhlbcmmvWa5k5tTNMNxgX
+         WnYXUhiY0QCKfEr7Us7ub+KmVcjIiK01IZPeWjgjRI8TdPQoolh7BSoOgx49EKX7Ptgj
+         O+gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=E3weF9LxtndMAqlCnJ8JVZDT4r5Nt4ammySbezW0fMg=;
+        b=7IKjkZoAxskLs0GWsNn+6F9nD/hoW+Z5Ve7cILYmp0SlO+pztC5mIvp6kn7/MbafCl
+         5YfTSuBsz4QH8I18kfnCnP34Dq1QLOEE3JZ+VeEuBib7oI5kgJKTCqNQH90WszdDPGr3
+         rVyXpi/SZIHAPGptAYDaqIKmfQaSoQFrzntMqKe/91P6/MuSjIJXZmQU3y04pcWMy+H8
+         t6BNKOWz8S5mfeH3pXJL/f81a0IapTMKDya2RdttnO5DPzE2JTvhq9Z3LXaQ31Nc5Bly
+         3UlfqR/wbATukwkopfvWo42NsLe12KPcOyUsEOQO9DYbHZUq3X+YPTDl3g/nnxv+cQt7
+         0Hjw==
+X-Gm-Message-State: ACgBeo1gzWAvflTp7XlWNfVf70LfCz2JgOXeZphe0vgoK++Xdyf5Xw35
+        ntgpRPGGn0Hj1paYMGoTXGGBRYP84kk=
+X-Google-Smtp-Source: AA6agR4iCU7FKCvViMIW1MdANZ1qyCVVw8lZm90O3CeKr4VrpTBk0qb8as+bSzaVUl6FpKf0KKRPjA==
+X-Received: by 2002:a5d:6f0d:0:b0:226:d1c8:a1 with SMTP id ay13-20020a5d6f0d000000b00226d1c800a1mr5956234wrb.476.1661785919084;
+        Mon, 29 Aug 2022 08:11:59 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w17-20020a5d6091000000b002237fd66585sm7254238wrt.92.2022.08.29.08.11.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Aug 2022 08:11:58 -0700 (PDT)
+Message-Id: <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
+References: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 29 Aug 2022 15:11:51 +0000
+Subject: [PATCH v3 0/5] built-in add -p: support diff-so-fancy better
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:KSs4aMkpc10D6OayDx9ABi9a26qjb6TAblf51TemTfgY0dpQ4GX
- wFx2Y2kTnX8aGDHtrzRWMF8LZUdGGUzbnQavWrdorJTpO8uwd58dgWIY0cmfbdY3TDNiLDe
- i4LPY45Lrb6N/2toEflejR3cufNOSXLv2b96BAx9GLH1h/a0FEdZ3FVOWBa8bpJU+DwrO0G
- cdIuT3Dgi46bwcQt/L3eg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:cEIUsZFbg6g=:Rfm1F6GHuUVGceeo7hTcU5
- a5a0uMoMWTzIOSj5PtKuwsClb2xWyg0TaBak2wJYARjxxgHKTWRPIjnZdkOb0kNiie1jxHaHR
- US1ga8gYpXvUs66fV362xPlFnwTrRAky1plGMB+d5r1eBuPMXPSkDk5bi1ltnTCu0ZNqmO6h7
- 5zEmua/9FuVDrTh1OGbNgHIM/oi2naQNZkhupusPNlphJCcmewXeXFa/fqRGlSg5UMsVGdgXU
- xYYquoC0oykKcSFpcIe2v+qr3c8CxcAb6GLAsOXU2tcD0cw56HAOXr+0xorpdTI/pq/1f9OxZ
- HfE2fvDPqv+LoKBkVELYcTNT9YvXn6cS01F3Ls4hFod1JPOORqueOz4Qm8ahtgrn6egsqL9S9
- XJThN+AMeGNzmvRDavwgFvGvhlZaXCXu5Eg85zejsn8GfMuHAUNz0wQtEaXLFQyilhWFX22ym
- JrAv7vXG8nMmgOhKnylQZetEtm4fyElYzEZCmbcb1eNrNZgenE4W8osvDyIU11o1t3E5jFQ1Y
- ukWs8wl/HvdNFksaIBVg+Tlq/So+fxC+OjNY/DHM7ZCIUAltp8mNxXdeJgeecdMuyrBBIYjJj
- yPQhmGHBru9V/9itaq9mVTr2RutpPa/BffJlvFhpjV/xCULQexgiaNePuzWwbQTGaBKnFsi+H
- FfohYR1wbCw8uLneI/vh+b2kh+s7kyYypPQRoQGW4GXwNWwfeka9Rw1kCHQr7wEmlndG3vb6C
- 63HURotSAjg69B3IC024RDHdFXbAwyWRI1balZ7qkdvd5wQEj86vJGtj3L0aJJcTa78qhK42D
- tpPbi6wfVRtkUxWUSeeBwjApLbibxnXri2BBLhLNyoFZnknm6Ck1SgAvzOwNTAFn2q8tBsUDK
- u12mGmnZ3h2wRrgwmAJYX3rvY1qHiQHXpvKx1Yw3cGNGRNmeCpEgxmFAhg+fNOK1W8yArRVK0
- +JlczI6Fm0hVG0g8cTdx/bfXtmKkZi0nSb/PyQdgDPCMZzJW67rhatfJ/ymn8SSfU/LIf5660
- GzdmqL06KLCkujk4jLt0/ZBnRy/xPO8I2iKxbW3UszZZ1bOnGZ5YCc2AqJKY4F2suiE3Y9IDU
- uaCLVeJ9MhpfyQ5oHNuanP8DPChVY7QZu/QtyjfeSJgmxa6uPjtS9+vvQ==
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Philippe Blain reported in
+https://lore.kernel.org/git/ecf6f5be-22ca-299f-a8f1-bda38e5ca246@gmail.com
+that there is a problem when running the built-in version of git add -p with
+diff-so-fancy [https://github.com/so-fancy/diff-so-fancy] as diff colorizer.
+The symptom is this:
 
-On Mon, 29 Aug 2022, Junio C Hamano wrote:
+    error: could not parse colored hunk header '?[36m?[1m?[38;5;13m@ file:1 @?[1m?[0m'
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> >  	else
-> >  		/* could not parse colored hunk header, showing nothing */
-> > -		header->colored_extra_start =3D hunk->colored_start;
-> > +		header->colored_extra_start =3D line - s->colored.buf;
->
-> This is the only thing that corresponds to the proposed log message.
-> The comment that says "showing nothing" is no longer correct, and
-> needs to be updated.
 
-Correct.
+This patch series addresses that and should fix
+https://github.com/so-fancy/diff-so-fancy/issues/437
 
-> Everything else in this patch is about adding an extra space
-> depending on what is in the "funcname" part.
+Changes since v2:
 
-... because that logic was not relevant before this commit.
+ * Added the appropriate "Reported-by" trailer to the commit message.
+ * Split out the logic to insert a space between the colored line range and
+   the extra information, if needed.
+ * That logic was now corrected to see whether that space is really needed.
+ * To verify that the logic does what we need it to do, the added regression
+   test now specifically tests for that (single) extra space that we want to
+   be inserted.
+ * Reworded a stale comment that claimed that we might suppress the entire
+   colored hunk header (which we no longer do).
+ * Rebased to the current tip of the main branch to avoid a merge conflict
+   with 716c1f649e3 (pipe_command(): mark stdin descriptor as non-blocking,
+   2022-08-17).
 
-> The code does not know or care if it is an attempt to do diff-so-fancy's
-> headers better by doing something we didn't do to the normal header we
-> managed to have parsed; rather the extra space thing is done
-> unconditionally and does not know or care if extra_start is truly after
-> " @@" or a place in the line the new code computed.
->
-> So the following three hunks either need to be made into a separate
-> patch, or deserves to be explained in a new paragraph in the
-> proposed log message.
+Changes since v1:
 
-I've opted to split the changes out into their own patch because it
-improves the reviewability of the patch series.
+ * Added a commit to ignore dirty submodules just like the Perl version
+   does.
 
-> >  	header->colored_extra_end =3D hunk->colored_start;
-> >
-> >  	return 0;
-> > @@ -649,6 +650,7 @@ static void render_hunk(struct add_p_state *s, str=
-uct hunk *hunk,
-> >  		size_t len;
-> >  		unsigned long old_offset =3D header->old_offset;
-> >  		unsigned long new_offset =3D header->new_offset;
-> > +		int needs_extra_space =3D 0;
-> >
-> >  		if (!colored) {
-> >  			p =3D s->plain.buf + header->extra_start;
-> > @@ -658,6 +660,8 @@ static void render_hunk(struct add_p_state *s, str=
-uct hunk *hunk,
-> >  			p =3D s->colored.buf + header->colored_extra_start;
-> >  			len =3D header->colored_extra_end
-> >  				- header->colored_extra_start;
-> > +			if (utf8_strnwidth(p, len, 1 /* skip ANSI */) > 0)
-> > +				needs_extra_space =3D 1;
+Johannes Schindelin (5):
+  t3701: redefine what is "bogus" output of a diff filter
+  add -p: gracefully ignore unparseable hunk headers in colored diffs
+  add -p: insert space in colored hunk header as needed
+  add -p: handle `diff-so-fancy`'s hunk headers better
+  add -p: ignore dirty submodules
 
-Let me add a review of my own: This hunk is incorrect ;-)
+ add-patch.c                | 49 ++++++++++++++++++++++++++++++--------
+ t/t3701-add-interactive.sh | 35 ++++++++++++++++++++++++++-
+ 2 files changed, 73 insertions(+), 11 deletions(-)
 
-Here is why: in the _regular_ case, i.e. when we have a colored hunk
-header like `@@ -936 +936 @@ wow()`, we manage to parse the line range,
-and then record the offset of the extra part that starts afterwards.
 
-This extra part is non-empty, therefore we add an extra space.
+base-commit: 07ee72db0e97b5c233f8ada0abb412248c2f1c6f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1336%2Fdscho%2Fdiff-so-fancy-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1336/dscho/diff-so-fancy-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1336
 
-But that part already starts with a space, so now we end up with two
-spaces.
+Range-diff vs v2:
 
-A fix for this will be part of the next iteration.
+ 1:  74ab50eeb1c = 1:  a01fa5d25e4 t3701: redefine what is "bogus" output of a diff filter
+ 2:  b07f85a0359 ! 2:  cbe833bd141 add -p: gracefully ignore unparseable hunk headers in colored diffs
+     @@ Commit message
+      
+          [diff-so-fancy]: https://github.com/so-fancy/diff-so-fancy
+      
+     +    Reported-by: Philippe Blain <levraiphilippeblain@gmail.com>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## add-patch.c ##
+     @@ t/t3701-add-interactive.sh: test_expect_success 'detect bogus diffFilter output'
+       	force_color test_must_fail git add -p <y
+       '
+       
+     -+test_expect_success 'gracefully fail to parse colored hunk header' '
+     ++test_expect_success 'handle iffy colored hunk headers' '
+      +	git reset --hard &&
+      +
+      +	echo content >test &&
+     -+	test_config interactive.diffFilter "sed s/@@/XX/g" &&
+     -+	printf y >y &&
+     -+	force_color git add -p <y
+     ++	printf n >n &&
+     ++	force_color git -c interactive.diffFilter="sed s/@@/XX/g" \
+     ++		add -p <n
+      +'
+      +
+     - test_expect_success 'diff.algorithm is passed to `git diff-files`' '
+     + test_expect_success 'handle very large filtered diff' '
+       	git reset --hard &&
+     - 
+     + 	# The specific number here is not important, but it must
+ 3:  9dac9f74d2e ! 3:  7a9f0b107e6 add -p: handle `diff-so-fancy`'s hunk headers better
+     @@ Metadata
+      Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+      
+       ## Commit message ##
+     -    add -p: handle `diff-so-fancy`'s hunk headers better
+     +    add -p: insert space in colored hunk header as needed
+      
+     -    The `diff-so-fancy` diff colorizer produces hunk headers that look
+     -    nothing like the built-in `add -p` expects: there is no `@@ ... @@` line
+     -    range, and therefore the parser cannot determine where any extra
+     -    information starts, such as the function name that is often added to
+     -    those hunk header lines.
+     +    We are about to teach `git add -p` to show the entire hunk header if the
+     +    `@@ ... @@` line range cannot be parsed. Previously, we showed only the
+     +    remainder of that hunk header as an "colored_extra" part.
+      
+     -    However, we can do better than simply swallowing the unparseable hunk
+     -    header. In the `diff-so-fancy` case, it shows something like `@ file:1
+     -    @`. Let's just show the complete hunk header because it probably offers
+     -    useful information.
+     +    To prepare for that, detect if that "colored_extra" part starts with any
+     +    non-whitespace character (ignoring ANSI escape sequences) and insert a
+     +    space, to make the output much more pleasant.
+     +
+     +    Note that this has an effect already before we make `git add -p` more
+     +    lenient when parsing the hunk headers: diff filters could already remove
+     +    the space after the line range, which is precisely what we do in the
+     +    regression test introduced by this commit.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+     @@ add-patch.c
+       
+       enum prompt_mode_type {
+       	PROMPT_MODE_CHANGE = 0, PROMPT_DELETION, PROMPT_ADDITION, PROMPT_HUNK,
+     -@@ add-patch.c: static int parse_hunk_header(struct add_p_state *s, struct hunk *hunk)
+     - 		header->colored_extra_start = p + 3 - s->colored.buf;
+     - 	else
+     - 		/* could not parse colored hunk header, showing nothing */
+     --		header->colored_extra_start = hunk->colored_start;
+     -+		header->colored_extra_start = line - s->colored.buf;
+     - 	header->colored_extra_end = hunk->colored_start;
+     +@@ add-patch.c: static size_t find_next_line(struct strbuf *sb, size_t offset)
+     + 	return eol - sb->buf + 1;
+     + }
+       
+     - 	return 0;
+     ++static int starts_with_non_ws(const char *p, size_t len)
+     ++{
+     ++	for (;;) {
+     ++		size_t skip;
+     ++
+     ++		if (!len || isspace(*p))
+     ++			return 0;
+     ++		skip = display_mode_esc_sequence_len(p);
+     ++		if (!skip)
+     ++			return 1;
+     ++		if (skip > len)
+     ++			return 0;
+     ++		p += skip;
+     ++		len -= skip;
+     ++	}
+     ++}
+     ++
+     + static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+     + 			ssize_t delta, int colored, struct strbuf *out)
+     + {
+      @@ add-patch.c: static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+       		size_t len;
+       		unsigned long old_offset = header->old_offset;
+     @@ add-patch.c: static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+       			p = s->colored.buf + header->colored_extra_start;
+       			len = header->colored_extra_end
+       				- header->colored_extra_start;
+     -+			if (utf8_strnwidth(p, len, 1 /* skip ANSI */) > 0)
+     -+				needs_extra_space = 1;
+     ++			needs_extra_space = starts_with_non_ws(p, len);
+       		}
+       
+       		if (s->mode->is_reverse)
+     @@ add-patch.c: static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+       		else if (colored)
+      
+       ## t/t3701-add-interactive.sh ##
+     -@@ t/t3701-add-interactive.sh: test_expect_success 'gracefully fail to parse colored hunk header' '
+     +@@ t/t3701-add-interactive.sh: test_expect_success 'handle iffy colored hunk headers' '
+       	echo content >test &&
+     - 	test_config interactive.diffFilter "sed s/@@/XX/g" &&
+     - 	printf y >y &&
+     --	force_color git add -p <y
+     -+	force_color git add -p >output 2>&1 <y &&
+     -+	grep XX output
+     + 	printf n >n &&
+     + 	force_color git -c interactive.diffFilter="sed s/@@/XX/g" \
+     +-		add -p <n
+     ++		add -p <n &&
+     ++	force_color git -c interactive.diffFilter="sed \"s/\(.*@@\).*/\1FN/\"" \
+     ++		add -p >output 2>&1 <n &&
+     ++	if test_have_prereq ADD_I_USE_BUILTIN
+     ++	then
+     ++		grep "@ FN\$" output
+     ++	else
+     ++		grep "@FN\$" output
+     ++	fi
+       '
+       
+     - test_expect_success 'diff.algorithm is passed to `git diff-files`' '
+     + test_expect_success 'handle very large filtered diff' '
+ -:  ----------- > 4:  e3e3a178f98 add -p: handle `diff-so-fancy`'s hunk headers better
+ 4:  540ce27c38a = 5:  cfa6914aee0 add -p: ignore dirty submodules
 
-Ciao,
-Dscho
-
-> >  		}
-> >
-> >  		if (s->mode->is_reverse)
-> > @@ -673,6 +677,8 @@ static void render_hunk(struct add_p_state *s, str=
-uct hunk *hunk,
-> >  			strbuf_addf(out, ",%lu", header->new_count);
-> >  		strbuf_addstr(out, " @@");
-> >
-> > +		if (needs_extra_space)
-> > +			strbuf_addch(out, ' ');
-> >  		if (len)
-> >  			strbuf_add(out, p, len);
-> >  		else if (colored)
-> > diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> > index 7e3c1de71f5..9deb7a87f1e 100755
-> > --- a/t/t3701-add-interactive.sh
-> > +++ b/t/t3701-add-interactive.sh
-> > @@ -772,7 +772,8 @@ test_expect_success 'gracefully fail to parse colo=
-red hunk header' '
-> >  	echo content >test &&
-> >  	test_config interactive.diffFilter "sed s/@@/XX/g" &&
-> >  	printf y >y &&
-> > -	force_color git add -p <y
-> > +	force_color git add -p >output 2>&1 <y &&
-> > +	grep XX output
-> >  '
->
-> It is good to make sure that XX that was munged appears in the
-> output.  This however does not check anything about the
-> needs-extra-space logic.  It should.  If the extra-space logic is
-> moved to a separate patch, then this step can have the above test,
-> but then the separate patch needs to update it to check the
-> additional logic.
->
-> Other than that, looking very good.
->
+-- 
+gitgitgadget
