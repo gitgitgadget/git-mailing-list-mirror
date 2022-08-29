@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FF56C0502C
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 15:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1272ECAAD2
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 15:12:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229531AbiH2PMO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 11:12:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59006 "EHLO
+        id S230147AbiH2PM2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 11:12:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229841AbiH2PMG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2022 11:12:06 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C3B28048C
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 08:12:04 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id v7-20020a1cac07000000b003a6062a4f81so8358176wme.1
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 08:12:04 -0700 (PDT)
+        with ESMTP id S230144AbiH2PMS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2022 11:12:18 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED74A84EC8
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 08:12:06 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id j26so4421347wms.0
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 08:12:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=s2wDran9qrKhEZfd9bp5Vw0MKm0nDv2S770U3TfCHeA=;
-        b=Z0/+Zfh48XzuI8hjFqfvuLNey1KuPr2JR14+dQV2mPklXQB3GC4AQfsUH7vvcf8xsm
-         7sD0Xbxg/D6tWNzOahOi5v3hH7+3rDy42bUOQTSkD6w3E3fmu88LBn245M//14QG10X9
-         dAjG3kxnKkINKrOOy7U7pubAR1+L/urejdcKf+n6ixJ5NRjwoYkkPoTCXfMzXW+pSkOF
-         nXDRfFXi/ZXgf8AvAxSw+JUKL8Ti8FGYEuhZz8SWax4qGz78hwm25ZSF/x7KNBDYEdjN
-         KCalvegKztJCEtlb/l9Id6vqzQHQ6ur6lfLRiL16i4DLXtwHP9nC58GUSb5Mwm5fA5xW
-         dfTA==
+        bh=AmBpF+luDAG/4AOSYnKvZhSPCdIyN9n6q5ReqcPRgYk=;
+        b=Pgk2NgXHoUYwui4Jixda5J2Zvw8bV//uXkQg60Sd1QqWcg8IIRU4qjl3QfgT/87N2L
+         Rm/T7dE+pIeKMnaF4PT9VtMmhTRGT4ebVFooo538QY71N27XZ8w5Rbb0xKc5DnlsYMru
+         C9N+HhdaoF8HxCYtF+x2bwMIYVqs844+HtCjBx7KjUWLHW77Wa9oipg+wYYDbtj3EFz9
+         5pT+AayificFVpjRKnwuqVoVNiPTWLbXuQnO9ODX8NcV2CdeCv0yRNXWMDc4+XpqHH4E
+         DlQpjr0HNLbEDwUCwrWUaQilZaQbJvI0/t54ptLTIDbkTxT13NKRFFhrCNLffSvQFF0j
+         WRIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=s2wDran9qrKhEZfd9bp5Vw0MKm0nDv2S770U3TfCHeA=;
-        b=0YcyPL0IToW+tnBU9RieZK6mZT2tTKpBUB+V481RP8FWQ/Fz6x3B2+gFVr/G2hl7Ta
-         l4mjX2zN60meiD7x8XJQO0tCjePXQsFTU46IsPxujf0jt8E3BmN+8AMwis963A3rnceF
-         3vI5blnAMXODaMnG5VNyGFUQzjmMKYTQSA8zp4w94IwRPF+m7oXQN7LJ9+/2/n0SSs+t
-         xu2184G43oSPdOo5G285jr9mNMrS5Vyy9HqETf6SyApUbS/826Cx9a0mBIjg6JsdA+Qa
-         ihobdrmfIwIkrx4mzpO6XqjOK69BJPyQoGpv/94j9oQWLk+2W+Dtx/eXRI4Y2jOByvQA
-         NvYA==
-X-Gm-Message-State: ACgBeo3YqSzooUKFb+B8u0Dm8aO0vBzlHVKFq8l5DcyaP7cU+4aJr6DT
-        mnOFM+HQ4V3LBqOfPbS8hStNRhmEchc=
-X-Google-Smtp-Source: AA6agR4f5MXO1/pSs22zn0wvPdUzS8xDP/GA2VD1we8pIcHLwIGuAIfQifkJZBUZnDy0PDvS1+eShA==
-X-Received: by 2002:a05:600c:4f48:b0:3a5:e707:bb8c with SMTP id m8-20020a05600c4f4800b003a5e707bb8cmr7312642wmq.198.1661785922678;
-        Mon, 29 Aug 2022 08:12:02 -0700 (PDT)
+        bh=AmBpF+luDAG/4AOSYnKvZhSPCdIyN9n6q5ReqcPRgYk=;
+        b=cJmO4JO13hOsdIW0kuVy+gq5eSFHaloWQUuxV25vbupjSBDc2uhmlzcCby76yD5v7p
+         r0pwe6rA3iQGyIsGr+Fv3FTNUjwDMWVCqajXfTEU6kPgbDY/kKHClo3jRefPr4sLJMCf
+         sawVaV68NvAyy/zIWpS1SbaB5lnPSc7DQhrNNQJ0DXf7g4SPzVweA2NNUMUSUO/9FR12
+         VrM+fPFZ3qK6q18ZuMogzheHc8BPxO+ly9awzRiMRjxkNH9yrkNo0ZeBl+FeXK0CKOdJ
+         dcKfLmWVYRRYxLp7hwD61WFI8UMa/j++3YeX2C2Zo/jyn9Kt2EermINKhTRF/dWtNaVR
+         +YwA==
+X-Gm-Message-State: ACgBeo0UrbVQCiAQ0AchRQ2mMXuBss8FSGKoI185stnQBq/BJiCsdmNC
+        iB4T1ADQJN6P1exhjGdCOVP3oouVzME=
+X-Google-Smtp-Source: AA6agR5YWocVsc1bncLIRicaoQr2uowieGR3ck1uLyMV90Bf6fpd+N7PRuSrzoxb25++xeNQSNgSwQ==
+X-Received: by 2002:a05:600c:4148:b0:3a5:4f94:577b with SMTP id h8-20020a05600c414800b003a54f94577bmr7284075wmm.167.1661785924976;
+        Mon, 29 Aug 2022 08:12:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l6-20020adff486000000b0021e13efa17esm7509899wro.70.2022.08.29.08.12.02
+        by smtp.gmail.com with ESMTPSA id i15-20020a05600c400f00b003a54f1d007csm9444263wmm.10.2022.08.29.08.12.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 08:12:02 -0700 (PDT)
-Message-Id: <7a9f0b107e636ed57e511d2c145fc63596c1c69b.1661785916.git.gitgitgadget@gmail.com>
+        Mon, 29 Aug 2022 08:12:04 -0700 (PDT)
+Message-Id: <cfa6914aee0d3ef84d726b97699f438fd4b254d9.1661785916.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com>
 References: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
         <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 29 Aug 2022 15:11:54 +0000
-Subject: [PATCH v3 3/5] add -p: insert space in colored hunk header as needed
+Date:   Mon, 29 Aug 2022 15:11:56 +0000
+Subject: [PATCH v3 5/5] add -p: ignore dirty submodules
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,107 +68,75 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We are about to teach `git add -p` to show the entire hunk header if the
-`@@ ... @@` line range cannot be parsed. Previously, we showed only the
-remainder of that hunk header as an "colored_extra" part.
+Thanks to alwyas running `diff-index` and `diff-files` with the
+`--numstat` option (the latter with `--ignore-submodules=dirty`) before
+even generating any real diff to parse, the Perl version of `git add -p`
+simply ignored dirty submodules and does not even offer them up for
+staging.
 
-To prepare for that, detect if that "colored_extra" part starts with any
-non-whitespace character (ignoring ANSI escape sequences) and insert a
-space, to make the output much more pleasant.
+However, the built-in variant did not use that flag because it tries to
+run only one `diff` command, skipping the unneeded
+`diff-index`/`diff-files` invocation of the Perl variant and therefore
+only faithfully recapitulates what the Perl code does once it _does_
+generate and parse the real diff.
 
-Note that this has an effect already before we make `git add -p` more
-lenient when parsing the hunk headers: diff filters could already remove
-the space after the line range, which is precisely what we do in the
-regression test introduced by this commit.
+This causes a problem when running the built-in `add -p` with
+`diff-so-fancy` because that diff colorizer always inserts an empty line
+before the diff header to ensure that it produces 4 lines as expected by
+`git add -p` (the equivalent of the non-colorized `diff`, `index`, `---`
+and `+++` lines). But `git diff-files` does not produce any `index` line
+for dirty submodules.
+
+The underlying problem is not even the discrepancy in lines, but that
+`git add -p` presents diffs for dirty submodules: there is nothing that
+_can_ be staged for those.
+
+Let's fix that bug, and teach the built-in `add -p` to ignore dirty
+submodules, too. This _incidentally_ also fixes the `diff-so-fancy`
+problem ;-)
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-patch.c                | 22 ++++++++++++++++++++++
- t/t3701-add-interactive.sh | 10 +++++++++-
- 2 files changed, 31 insertions(+), 1 deletion(-)
+ add-patch.c                |  3 ++-
+ t/t3701-add-interactive.sh | 12 ++++++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/add-patch.c b/add-patch.c
-index f2fffe1af02..9d575d30ed0 100644
+index 0217cdd7c4a..ee6a3d3b712 100644
 --- a/add-patch.c
 +++ b/add-patch.c
-@@ -8,6 +8,7 @@
- #include "diff.h"
- #include "compat/terminal.h"
- #include "prompt.h"
-+#include "utf8.h"
+@@ -426,7 +426,8 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 	}
+ 	color_arg_index = args.nr;
+ 	/* Use `--no-color` explicitly, just in case `diff.color = always`. */
+-	strvec_pushl(&args, "--no-color", "-p", "--", NULL);
++	strvec_pushl(&args, "--no-color", "--ignore-submodules=dirty", "-p",
++		     "--", NULL);
+ 	for (i = 0; i < ps->nr; i++)
+ 		strvec_push(&args, ps->items[i].original);
  
- enum prompt_mode_type {
- 	PROMPT_MODE_CHANGE = 0, PROMPT_DELETION, PROMPT_ADDITION, PROMPT_HUNK,
-@@ -635,6 +636,23 @@ static size_t find_next_line(struct strbuf *sb, size_t offset)
- 	return eol - sb->buf + 1;
- }
- 
-+static int starts_with_non_ws(const char *p, size_t len)
-+{
-+	for (;;) {
-+		size_t skip;
-+
-+		if (!len || isspace(*p))
-+			return 0;
-+		skip = display_mode_esc_sequence_len(p);
-+		if (!skip)
-+			return 1;
-+		if (skip > len)
-+			return 0;
-+		p += skip;
-+		len -= skip;
-+	}
-+}
-+
- static void render_hunk(struct add_p_state *s, struct hunk *hunk,
- 			ssize_t delta, int colored, struct strbuf *out)
- {
-@@ -649,6 +667,7 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
- 		size_t len;
- 		unsigned long old_offset = header->old_offset;
- 		unsigned long new_offset = header->new_offset;
-+		int needs_extra_space = 0;
- 
- 		if (!colored) {
- 			p = s->plain.buf + header->extra_start;
-@@ -658,6 +677,7 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
- 			p = s->colored.buf + header->colored_extra_start;
- 			len = header->colored_extra_end
- 				- header->colored_extra_start;
-+			needs_extra_space = starts_with_non_ws(p, len);
- 		}
- 
- 		if (s->mode->is_reverse)
-@@ -673,6 +693,8 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
- 			strbuf_addf(out, ",%lu", header->new_count);
- 		strbuf_addstr(out, " @@");
- 
-+		if (needs_extra_space)
-+			strbuf_addch(out, ' ');
- 		if (len)
- 			strbuf_add(out, p, len);
- 		else if (colored)
 diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index c2187f9cec8..49200b7df68 100755
+index 39e68b6d066..a4f45fc48a0 100755
 --- a/t/t3701-add-interactive.sh
 +++ b/t/t3701-add-interactive.sh
-@@ -772,7 +772,15 @@ test_expect_success 'handle iffy colored hunk headers' '
- 	echo content >test &&
- 	printf n >n &&
- 	force_color git -c interactive.diffFilter="sed s/@@/XX/g" \
--		add -p <n
-+		add -p <n &&
-+	force_color git -c interactive.diffFilter="sed \"s/\(.*@@\).*/\1FN/\"" \
-+		add -p >output 2>&1 <n &&
-+	if test_have_prereq ADD_I_USE_BUILTIN
-+	then
-+		grep "@ FN\$" output
-+	else
-+		grep "@FN\$" output
-+	fi
+@@ -965,6 +965,18 @@ test_expect_success 'status ignores dirty submodules (except HEAD)' '
+ 	! grep dirty-otherwise output
  '
  
- test_expect_success 'handle very large filtered diff' '
++test_expect_success 'handle submodules' '
++	echo 123 >>for-submodules/dirty-otherwise/initial.t &&
++
++	force_color git -C for-submodules add -p dirty-otherwise >output 2>&1 &&
++	grep "No changes" output &&
++
++	force_color git -C for-submodules add -p dirty-head >output 2>&1 <y &&
++	git -C for-submodules ls-files --stage dirty-head >actual &&
++	rev="$(git -C for-submodules/dirty-head rev-parse HEAD)" &&
++	grep "$rev" actual
++'
++
+ test_expect_success 'set up pathological context' '
+ 	git reset --hard &&
+ 	test_write_lines a a a a a a a a a a a >a &&
 -- 
 gitgitgadget
-
