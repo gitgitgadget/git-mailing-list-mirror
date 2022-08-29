@@ -2,367 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C79AEECAAD2
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 12:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B92AECAAD4
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 12:37:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230015AbiH2MfN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 08:35:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60848 "EHLO
+        id S230134AbiH2MhI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 08:37:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229949AbiH2Meq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2022 08:34:46 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF963BA9C9
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 05:18:31 -0700 (PDT)
+        with ESMTP id S230026AbiH2Mgt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2022 08:36:49 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94B58578AA
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 05:20:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661775472;
-        bh=s1YXfryq5FHG3CbIvtjKE2ybw+uRl0KnfYQaRgMcm0o=;
+        s=badeba3b8450; t=1661775606;
+        bh=V7OoNYRYi3SeS3Bcm5nI3+Xopm3wc9xWzLD8qoHDDpM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=YKwmgzIycfQPfJk68DfQz3ES5wwLwfueTqd1xRoQYlTV2B2z132RwjZsbWFaR2Tjt
-         8ijbx4tzGESYSnaemipfzb9XNxzf6ftEhuR9Caekis0RpM4D8xZEdD8fR4wnR9GxXu
-         v3EQ5AOkCX8gwJOYf+t07oQ2ktYwV5gIG0ESlvN8=
+        b=U4XAu39dObVUnZ1q5b59/xn3oBRXRX8KnSh0/8hiDYsLyVGL2Cix9mtPwHN/PLLGz
+         No+4tF2httYdhYPC1aqGd2EuSAqXIVZCHCY8yZVRDTqkbH1XR4sadnN/sM8M3jAy1v
+         FAn+yiuuQCURGVm0CoZRBCnIbcmSXazhHWI8+6V0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MgvrB-1p35FP2C69-00hKLl; Mon, 29
- Aug 2022 14:04:42 +0200
-Date:   Mon, 29 Aug 2022 14:04:42 +0200 (CEST)
+Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MhD2Y-1p6fG01hWk-00eMfr; Mon, 29
+ Aug 2022 14:20:06 +0200
+Date:   Mon, 29 Aug 2022 14:20:05 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-cc:     git@vger.kernel.org, alexander.s.m@gmail.com
-Subject: Re: [PATCH v2 1/1] diff.c: When appropriate, use utf8_strwidth()
-In-Reply-To: <20220827085007.20030-1-tboegi@web.de>
-Message-ID: <0q921n79-sr17-2794-83r0-r59rnqq03pp2@tzk.qr>
-References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com> <20220827085007.20030-1-tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Miriam Rubio <mirucam@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH v5 09/16] bisect run: fix the error message
+In-Reply-To: <xmqq8rn8voh2.fsf@gitster.g>
+Message-ID: <06q285oq-np8q-qpo1-s470-74q5s3s3478o@tzk.qr>
+References: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>        <pull.1132.v5.git.1661604264.gitgitgadget@gmail.com>        <409492ad830828f2b5f341706ad9ad1c64f66d6e.1661604264.git.gitgitgadget@gmail.com> <xmqq8rn8voh2.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1794559620-1661774683=:189"
-X-Provags-ID: V03:K1:h7fmuaA+uoHdiaJLl+blkR6I+mRbZL3vGrXxYAA1g+zUn4o1a7Z
- SpStZmGxuyoOGYHCE88xAMtv8cnugKN46dI/AZAm7NpHyFbyxFMfZwIJFiv1cKNpZmlxkIB
- GDGXABZCCUxSYrCzQlwvJWjwx4AFlI2AOi1ycBxfu2iWNF5Pw0FILKjzAW+WtLjcRL0NiZj
- wff0WaFUq8nXWe+Dzt2MQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6jmxsDMT0MM=:VZGNGoj25MX4PpCmuDFEAB
- Qj+HO5SGrdMHjqHQ/5lHb5CPz6m3YA3NIu4pP9JrJqKzyNpdyW8bLPluXbgQ/fHRRtyOp21zt
- jSuU9LPMc+3Vqkl7JEKuGpZ6mZFbC+PIDMsji5yRTYAKG7T5un8xfCPWpS3NQ3IzRuVrndUfG
- KnIBYOQ1Odiov2vdFDvQ+YVspVLZR8wSuJ+T3PvjdTrCvkUuezguOAv5XC4xm3bHbG8fZnn/C
- 3DIU1t/u04Iw/NZkBC9suMd+TUiNYYaWTu8i2mkJaKvfQsv6dTzOmtKjHxnELAr4od8UpSlVK
- uwp9qIjDW6E7BSojMx/FjFgoevSp74/fGMVBH+NiAmrPQwRzYzCil/4gPhTxg6tJzNaxnK95Q
- BGXA39+G/X4RvR7aO93je4uT8dzEHKXBjrn2ijxWjnYnd5n9VImdVFpRDK+T33caK0f9WEBRU
- y61p74snHpDVZkdoTLBRN5jYZU1Re3xfgPJv6YvN73LEWTtoQiABiuZlc3AVlQOJdwTy8xV+i
- pBii+FkRlR1dkmBMVa++ba3nH0KQdr5wsUp3B6J+cWVERudRZcdVJZVLuEAN7H4RHqrunzXPC
- 0zMmXYbrJWvClAS1Wlyqh4HI0CZm3C3AzScez7KIcJYkQ4C2zlQGCKDxyH/fFeLOxhXoZyiPY
- 4L6+GvNa5Oq34cs+2UIkcogbo/zmf0JFNxIwMeP61c2385tZvOZ9PkrxRUozAg+TLiFBEdJqU
- +cFqDMGSp8FrPAitYcyFipY86xpNy8q2tjwyKdof435DMqCej7neBTo9wAqiC/+2VTpLZ8M8M
- M7j9vm7qT/w6LmPX7h8FvK3oM1/dLYRfg2Tmj+Jsri/aHH78iATFuhFvhy/mVQMvSFSOWNWBY
- x1xNJNDtHl74xw1kVRAbeqESnpBmOFBf553E+vlxwxo4/XE7X36cj/qV0ksAhRuu97VHCj9ic
- o8N4AFkqUV+D3l5oakSPdmZaw7vJB+Hrq/rOpxHfL3KY4SRCLeNvI78TOC4hTOh4uYWUEkgte
- /jjj2x8o7yY3wmhd1tz3aN9xFxfp6TPgmLiW6ydr87sF/ux3GviSV/wD6oEk1AEYAk37hvhUZ
- f713lWKOnWYNZxP0uCtJvbGPgJkpNQ5zXDrrs6QHnnx3Ug9mkiuGeKrqA==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:qzxqwGwpJiaJJlafKPBKH+4fJ8lD28OAhCZFh0GI+Gl5hHTgAQf
+ h8HnHqKRH4Q56kZIgWIFKg5G2NmlmH/aTdTekQQ0ZMmlczPG5YHs6KyQPqvhIZH5uz4NPeX
+ CZQF92LWtdBf1gIKYnY69gj22IwT0D5ZZF6a5GsIYgKjhFr+Qz6ibD5eZdoDMsLPHuUjlVO
+ vNKOgtCoB4ip2J0+Z5rTQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Eqc2l0WNjiA=:pcRZfVHbPfJAacFSiS7K1t
+ mmkk2TszTwU5RMRBkYzCT45QEBR10DeWZnqKuZScwDdjQjGDhaxD5U5KqkJFfJRqH7r7OiqEH
+ sWccEXyQHCTqEbfjb+LPG94g7/UnNIOe8TJFMQ368YAHIlch9T+Mbl2+pqpr+AqsaRUjtNDnA
+ vpewxu1zkcA4SXi5zKdN8xnifXviTT5TjuqVgd/LneVuDBm8E+IWAC21d/yuVWWBqVBXZlmZ9
+ TzMksAq1P4YR+16Ns31qBv+Qro0HJ9lmWwPDSadn5IKs5LjVfGgGVMKy070lF8ZrQDK6pvOOI
+ WxRCCdDu9eLvLuqkb9Zkv64YDXK8j1XqwpoXWXm60DxDv3He1z/THVRQTLD8E2O0Wy7TR5o2b
+ 4IplJuJl8bB4JSDS3qnxyl3qFXxE2wFX4OYumJw+ykXghAqWkNPPSmIJBSImZT2Q3C02cK2yH
+ zx/iPdqNTg8S86rFWFV3l5Co9wahQpkd5uEHGqjtqmJVVHm8SRDeRguCkUwWs4Qs0mxZadE7R
+ 2xHD3Gwe53MDDw30oGRo4KaPmu+n0LQgF3zl+3zdy6ZbmfXu49VjCi4QNNExBc5hFqJSJO7WA
+ +hssSzanBwfNYOSNOqtZxQ88ea9xSC+kxRx5ehLpZu0xVzJL7ti4E4ZvwTTd6Z73XMIPXPxQH
+ nVOdSZ/fSM2HWoEa5e4c6rQs7H7x1RzLVbV3Lgvx7O/JC30+a0ZBDtdunIDYUBOOJHMN1vc32
+ 34qfs913fI/OVaqOsYJ/sCjhuujhZWL9wOOmUTKIFw0V6x2y2NHOQr27j+5U0Ex2NmvYhRELJ
+ 8rQzIoulhIw/PvDQxuXVKP5k3HotolkMXzLpsagKhxn9p4b8KZW5i2XB2qZ22DX7wrtAOsNT5
+ s+uyadwAZyid5RuArw93i82A2mOmSJbCM4OsJSD1GUocGkH7j/IX9Xd9Gm9l2HZnz+e0tqSaJ
+ S5KpX6x937jVBHQa7FES+4mFEs6zdQHnz+KE8WpSCemtHowJEYGcqEkSQ1aaY1G5tM9y1b7Xy
+ AWiIbI2Gi4GbtA3i+/MciQyYVreYNKz+u9Xf7YVhwddOQIsW7pCFgjzVUxxS5zUGzwvq1KtL8
+ g5FYj2yxn4Ev3ci03y2cFmn9a1b1Wv5svcn9PyUkVrNUexMkVblFmugag==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323328-1794559620-1661774683=:189
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Sun, 28 Aug 2022, Junio C Hamano wrote:
 
-Hi Torsten,
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > In d1bbbe45df8 (bisect--helper: reimplement `bisect_run` shell functio=
+n
+> > in C, 2021-09-13), we ported the `bisect run` subcommand to C, includi=
+ng
+> > the part that prints out an error message when the implicit `git bisec=
+t
+> > bad` or `git bisect good` failed.
+> >
+> > However, the error message was supposed to print out whether the state
+> > was "good" or "bad", but used a bogus (because non-populated) `args`
+> > variable for it.
+> >
+> > Helped-by: Elijah Newren <newren@gmail.com>
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  builtin/bisect--helper.c    |  2 +-
+> >  t/t6030-bisect-porcelain.sh | 10 ++++++++++
+> >  2 files changed, 11 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> > index d797cd1cef8..a00167f1373 100644
+> > --- a/builtin/bisect--helper.c
+> > +++ b/builtin/bisect--helper.c
+> > @@ -1430,7 +1430,7 @@ static int cmd_bisect_run(int argc, const char *=
+*argv, const char *prefix)
+> >  			printf(_("bisect found first bad commit"));
+> >  			res =3D BISECT_OK;
+> >  		} else if (res) {
+> > -			error(_("bisect run failed: 'git bisect--helper --bisect-state"
+> > +			error(_("bisect run failed: 'git bisect"
+> >  			" %s' exited with error code %d"), new_state, res);
+> >  		} else {
+> >  			continue;
+>
+> The change to retire "bisect--helper" from the end-user facing error
+> message makes tons of sense, but I am not quite sure if the proposed
+> log message describes the change correctly.  Or is this a fallout of
+> some "rebase -i" gotcha that a log message meant for one commit was
+> applied to a different commit, or something?
 
-On Sat, 27 Aug 2022, tboegi@web.de wrote:
+This is indeed a fall-out from some interactive rebase. Thank you for
+catching it.
 
-> From: Torsten B=C3=B6gershausen <tboegi@web.de>
->
-> When unicode filenames (encoded in UTF-8) are used, the visible width
-> on the screen is not the same as strlen(filename).
->
-> For example, `git log --stat` may produce an output like this:
->
-> $ git log --stat
->
-> [snip the header]
->
->  Arger.txt  | 1 +
->  =C3=84rger.txt | 1 +
->  2 files changed, 2 insertions(+)
->
-> A side note: the original report was about cyrillic filenames.
-> After some investigations it turned out that
-> a) This is not a problem with "ambiguous characters" in unicode
-> b) The same problem exist for all unicode code points (so we
->   can use Latin based Umlauts for demonstrations below)
->
-> The '=C3=84' takes the same space on the screen as the 'A'.
-> But needs one more byte in memory, so the the `git log --stat` output
-> for "Arger.txt" (!) gets mis-aligned:
-> The maximum length is derived from "=C3=84rger.txt", 10 bytes in memory,
-> 9 positions on the screen. That is why "Arger.txt" gets one extra ' '
-> for aligment, it needs 9 bytes in memory.
-> If there was a file "=C3=96", it would be correctly aligned by chance,
-> but "=C3=96h=C3=B6" would not.
->
-> The solution is of course, to use utf8_strwidth() instead of strlen()
-> when dealing with the width on screen.
->
-> And then there is another problem: code like this
-> strbuf_addf(&out, "%-*s", len, name);
->
-> (or using the underlying snprintf() function) does not align the
-> buffer to a minimum of len measured in screen-width, but uses the
-> memory count, if name is UTF-8 encoded.
->
-> We could be tempted to wish that snprintf() was UTF-8 aware.
-> That doesn't seem to be the case anywhere (tested on Linux and Mac),
-> probably snprintf() uses the "bytes in memory"/strlen() approach to be
-> compatible with older versions and this will never change.
+You can actually see it in the thread history: v2 still had a diff that
+was aligned with the commit message, but
+<46fe0774-66e7-8947-cd79-d35229eec25a@web.de> graduated between v2 and v3
+and partially addressed the issue fixed by this here patch.
 
-An interesting read so, far, but...
+I'm glad that we caught this in time for v6. This is the commit message I
+plan on using:
 
->
-> The choosen solution is to split code in diff.c like this
->
-> strbuf_addf(&out, "%-*s", len, name);
->
-> into something like this:
->
-> size_t num_padding_spaces =3D 0;
-> // [snip]
-> if (len > utf8_strwidth(name))
->     num_padding_spaces =3D len - utf8_strwidth(name);
-> strbuf_addf(&out, "%s", name);
-> if (num_padding_spaces)
->     strbuf_addchars(&out, ' ', num_padding_spaces);
+=2D- snip --
+    bisect run: fix the error message
 
-... this sounds like it would benefit from beinv refactored into a
-separate function, e.g. `strbuf_add_padded(buf, utf8string)`, both for
-readability as well as for self-documentation.
+    In d1bbbe45df8 (bisect--helper: reimplement `bisect_run` shell functio=
+n
+    in C, 2021-09-13), we ported the `bisect run` subcommand to C, includi=
+ng
+    the part that prints out an error message when the implicit `git bisec=
+t
+    bad` or `git bisect good` failed.
 
-Also, it is unclear to me why we have to evaluate `utf8_strwidth()`
-_twice_ and why we do not assign the result to a variable called `width`
-and then have a conditional like
+    However, the error message was supposed to print out whether the state
+    was "good" or "bad", but used a bogus (because non-populated) `args`
+    variable for it. This was fixed in 80c2e9657f2 (bisect--helper: report
+    actual bisect_state() argument on error, 2022-01-18), but the error
+    message still talks about `bisect--helper`, which is an implementation
+    detail that should not concern end users.
 
-	if (width < len) /* pad to `len` columns */
-		strbuf_addchars(&out, ' ' , len - width);
+    Fix that, and add a regression test to ensure that the intended form o=
+f
+    the error message.
+=2D- snap --
 
-instead. That would sound more logical to me.
-
-Besides, since the simple change from `strlen()` to `utf8_strwidth()` is
-so different from changing `strbuf_addf(...)`, I would prefer to see them
-split into two patches.
-
->
-> Tests:
-> Two things need to be tested:
-> - The calculation of the maximum width
-> - The calculation of num_padding_spaces
->
-> The name "textfile" is changed into "textfil=C3=AB", both have a width o=
-f 8.
-> If strlen() was used, to get the maximum width, the shorter "binfile" wo=
-uld
-> have been mis-aligned:
->  binfile   |  [snip]
->  textfil=C3=AB | [snip]
->
-> If only "binfile" would be renamed into "binfil=C3=AB":
->  binfil=C3=AB |  [snip]
->  textfile | [snip]
->
-> In order to verify that the width is calculated correctly everywhere,
-> "binfile" is renamed into "binf=C3=AFl=C3=AB", giving 2 bytes more in st=
-rlen()
-> "textfile" is renamed into "textfil=C3=AB", 1 byte more in strlen(),
-> and the updated t4012-diff-binary.sh checks the correct aligment:
->  binf=C3=AFl=C3=AB  | [snip]
->  textfil=C3=AB | [snip]
-
-I wonder whether you can change only _one_ name and still verify the
-correctness. When you make two changes at the same time, it is always
-possible for one change to "cancel out" the other one, and therefore it is
-harder to reason about the correctness of your patch.
-
-Better keep it simple and change only one instance (personally, I would
-have changed two letters in the longer one).
-
->
-> Reported-by: Alexander Meshcheryakov <alexander.s.m@gmail.com>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
->  diff.c                 | 37 +++++++++++++++++++++++--------------
->  t/t4012-diff-binary.sh | 14 +++++++-------
->  2 files changed, 30 insertions(+), 21 deletions(-)
->
-> diff --git a/diff.c b/diff.c
-> index 974626a621..cf38e1dc88 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -2591,7 +2591,7 @@ void print_stat_summary(FILE *fp, int files,
->  static void show_stats(struct diffstat_t *data, struct diff_options *op=
-tions)
->  {
->  	int i, len, add, del, adds =3D 0, dels =3D 0;
-> -	uintmax_t max_change =3D 0, max_len =3D 0;
-> +	uintmax_t max_change =3D 0, max_width =3D 0;
-
-Why rename `max_len`, but not `len`? I would have expected (and agreed
-with seeing) `len` to be renamed to `width`, too.
-
->  	int total_files =3D data->nr, count;
->  	int width, name_width, graph_width, number_width =3D 0, bin_width =3D =
-0;
->  	const char *reset, *add_c, *del_c;
-> @@ -2620,9 +2620,9 @@ static void show_stats(struct diffstat_t *data, st=
-ruct diff_options *options)
->  			continue;
->  		}
->  		fill_print_name(file);
-> -		len =3D strlen(file->print_name);
-> -		if (max_len < len)
-> -			max_len =3D len;
-> +		len =3D utf8_strwidth(file->print_name);
-> +		if (max_width < len)
-> +			max_width =3D len;
->
->  		if (file->is_unmerged) {
->  			/* "Unmerged" is 8 characters */
-> @@ -2646,7 +2646,7 @@ static void show_stats(struct diffstat_t *data, st=
-ruct diff_options *options)
->
->  	/*
->  	 * We have width =3D stat_width or term_columns() columns total.
-> -	 * We want a maximum of min(max_len, stat_name_width) for the name par=
-t.
-> +	 * We want a maximum of min(max_width, stat_name_width) for the name p=
-art.
->  	 * We want a maximum of min(max_change, stat_graph_width) for the +- p=
-art.
->  	 * We also need 1 for " " and 4 + decimal_width(max_change)
->  	 * for " | NNNN " and one the empty column at the end, altogether
-> @@ -2701,8 +2701,8 @@ static void show_stats(struct diffstat_t *data, st=
-ruct diff_options *options)
->  		graph_width =3D options->stat_graph_width;
->
->  	name_width =3D (options->stat_name_width > 0 &&
-> -		      options->stat_name_width < max_len) ?
-> -		options->stat_name_width : max_len;
-> +		      options->stat_name_width < max_width) ?
-> +		options->stat_name_width : max_width;
-
-It is a bit sad that the diff lines regarding the renamed variable drown
-out the actual change (`strlen()` -> `utf8_strwidth()`). But the end
-result is nicer.
-
-Thank you for working on this!
+Ciao,
 Dscho
-
->
->  	/*
->  	 * Adjust adjustable widths not to exceed maximum width
-> @@ -2734,6 +2734,7 @@ static void show_stats(struct diffstat_t *data, st=
-ruct diff_options *options)
->  		char *name =3D file->print_name;
->  		uintmax_t added =3D file->added;
->  		uintmax_t deleted =3D file->deleted;
-> +		size_t num_padding_spaces =3D 0;
->  		int name_len;
->
->  		if (!file->is_interesting && (added + deleted =3D=3D 0))
-> @@ -2743,7 +2744,7 @@ static void show_stats(struct diffstat_t *data, st=
-ruct diff_options *options)
->  		 * "scale" the filename
->  		 */
->  		len =3D name_width;
-> -		name_len =3D strlen(name);
-> +		name_len =3D utf8_strwidth(name);
->  		if (name_width < name_len) {
->  			char *slash;
->  			prefix =3D "...";
-> @@ -2753,10 +2754,14 @@ static void show_stats(struct diffstat_t *data, =
-struct diff_options *options)
->  			if (slash)
->  				name =3D slash;
->  		}
-> +		if (len > utf8_strwidth(name))
-> +			num_padding_spaces =3D len - utf8_strwidth(name);
->
->  		if (file->is_binary) {
-> -			strbuf_addf(&out, " %s%-*s |", prefix, len, name);
-> -			strbuf_addf(&out, " %*s", number_width, "Bin");
-> +			strbuf_addf(&out, " %s%s ", prefix,  name);
-> +			if (num_padding_spaces)
-> +				strbuf_addchars(&out, ' ', num_padding_spaces);
-> +			strbuf_addf(&out, "| %*s", number_width, "Bin");
->  			if (!added && !deleted) {
->  				strbuf_addch(&out, '\n');
->  				emit_diff_symbol(options, DIFF_SYMBOL_STATS_LINE,
-> @@ -2776,8 +2781,10 @@ static void show_stats(struct diffstat_t *data, s=
-truct diff_options *options)
->  			continue;
->  		}
->  		else if (file->is_unmerged) {
-> -			strbuf_addf(&out, " %s%-*s |", prefix, len, name);
-> -			strbuf_addstr(&out, " Unmerged\n");
-> +			strbuf_addf(&out, " %s%s ", prefix,  name);
-> +			if (num_padding_spaces)
-> +				strbuf_addchars(&out, ' ', num_padding_spaces);
-> +			strbuf_addstr(&out, "| Unmerged\n");
->  			emit_diff_symbol(options, DIFF_SYMBOL_STATS_LINE,
->  					 out.buf, out.len, 0);
->  			strbuf_reset(&out);
-> @@ -2803,8 +2810,10 @@ static void show_stats(struct diffstat_t *data, s=
-truct diff_options *options)
->  				add =3D total - del;
->  			}
->  		}
-> -		strbuf_addf(&out, " %s%-*s |", prefix, len, name);
-> -		strbuf_addf(&out, " %*"PRIuMAX"%s",
-> +		strbuf_addf(&out, " %s%s ", prefix,  name);
-> +		if (num_padding_spaces)
-> +			strbuf_addchars(&out, ' ', num_padding_spaces);
-> +		strbuf_addf(&out, "| %*"PRIuMAX"%s",
->  			number_width, added + deleted,
->  			added + deleted ? " " : "");
->  		show_graph(&out, '+', add, add_c, reset);
-> diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
-> index c509143c81..2d49de01c8 100755
-> --- a/t/t4012-diff-binary.sh
-> +++ b/t/t4012-diff-binary.sh
-> @@ -113,20 +113,20 @@ test_expect_success 'diff --no-index with binary c=
-reation' '
->  '
->
->  cat >expect <<EOF
-> - binfile  |   Bin 0 -> 1026 bytes
-> - textfile | 10000 +++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
-> + binf=C3=AFl=C3=AB  |   Bin 0 -> 1026 bytes
-> + textfil=C3=AB | 10000 ++++++++++++++++++++++++++++++++++++++++++++++++=
-+++++++++++++
->  EOF
->
->  test_expect_success 'diff --stat with binary files and big change count=
-' '
-> -	printf "\01\00%1024d" 1 >binfile &&
-> -	git add binfile &&
-> +	printf "\01\00%1024d" 1 >binf=C3=AFl=C3=AB &&
-> +	git add binf=C3=AFl=C3=AB &&
->  	i=3D0 &&
->  	while test $i -lt 10000; do
->  		echo $i &&
->  		i=3D$(($i + 1)) || return 1
-> -	done >textfile &&
-> -	git add textfile &&
-> -	git diff --cached --stat binfile textfile >output &&
-> +	done >textfil=C3=AB &&
-> +	git add textfil=C3=AB &&
-> +	git -c core.quotepath=3Dfalse diff --cached --stat binf=C3=AFl=C3=AB t=
-extfil=C3=AB >output &&
->  	grep " | " output >actual &&
->  	test_cmp expect actual
->  '
-> --
-> 2.34.0
->
->
-
---8323328-1794559620-1661774683=:189--
