@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56984C0502C
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 20:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 614FFECAAD2
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 20:54:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229478AbiH2Uya (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 16:54:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52266 "EHLO
+        id S229738AbiH2Uyc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 16:54:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbiH2UyY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2022 16:54:24 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 231E3861D5
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 13:54:23 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id c7so4984389wrp.11
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 13:54:23 -0700 (PDT)
+        with ESMTP id S229687AbiH2Uy1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2022 16:54:27 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E0599C2F5
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 13:54:25 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id b5so11654676wrr.5
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 13:54:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=qmsYLljht0Usq3r7uS3Jei7wDsWb5bwYrAKGSGWUZVA=;
-        b=Lu8WtaHpM8dCvSPuhoAKeio5DenOYppdCWSe8uyDWDjtsA30OzgiwU+ZIMa10wYHCM
-         4/dXgEZfHl57pGz8eLclIIMUBycp7UcRlydcIb61Y0W+MTEROtqKoyaOHV7kMQdoxzku
-         p3Sjx67YzfF1UsoCq2wd7wbO1nhfbeNdOINn2r09b271F46/wA3h4asRNPzkLnm5Homr
-         lw7gl0ytI0YTYaCwImrck1pTm/kkQVp/ZXeRk9tMvHQoavS+DyW2Cbtnga/2qXuUICsV
-         e3YRt7SDAiffJj97osjIVOtf1G+i29JxjbzfYkJA7OhugeJ+cHHlQ3qT+9fy4cH7Tnwk
-         mKhg==
+        bh=iSzxIQogg6zwsEHgDzSYmH9zyqomLzQ/xCWHlrw8wo0=;
+        b=cEiLtaPBW/QtrCaNwyHUgnm9pO4+cZre6WXGxf4wCt9zgwoSaEdaIP559SKyh3dBFM
+         2DTMYYhfG8xnsV7s9l3to/ChJ+ybLu9DjK23p5JdkXR9U2yBRyDMDQe2REc5ruX6Ztty
+         ChJxbiyr4H3hGnRDS7Ryt6k0si7WNAg6T1dtGUhEiSKUfyj8MQrSeUabLUIkexbnrUSW
+         J0REgCWD4ZmnhldHQBbFsfsVdWx2K5xL5pfYIXoBmDq84HUjK/cpcxkzMkV5mEDyzPdw
+         RaPE5e/6AG3goVJct/DBAv9Iy746iyFhHA/FK6ESqm98epsxeriX672EfchHdC7WyrUA
+         h4xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=qmsYLljht0Usq3r7uS3Jei7wDsWb5bwYrAKGSGWUZVA=;
-        b=yXbX8qQ2hpCGUmveglL3r9c/ON0RBTsIi7ckFL5/gHl3ee0wdsvRyRZRGtvRmUIS5p
-         Ad7Tm0B2F6w8dJgjuzVfhRQLaYpeHiTLArpkfKTqMgS1Pe+aqOBTArwM8nTwTG9LGWOJ
-         iXdGtfDBKEOzQ877ZqWjDIiSGTmdTR5iGXZ35eMgY04x5jbQcf3Akv/LFoPPsOOCqfwR
-         WgBjWZGsRpM2rlcc4pp4/K8iAZx7xMSzBVhw/f6JK0xPp56tko7E1u4ukpUPW39euwkU
-         3RIRz29GZrn92QIQIrJLnKcwwWW6lc2C85m9Lr+bXgpoJtI3M1ARMvamJtMDaKPZOA8y
-         wRQA==
-X-Gm-Message-State: ACgBeo2jysyk/G1L21MdIoEQewlyY9n0Q3Ylr9Lgrb46qEDjp5lADpb2
-        od1p0dY/1QdwnJ9jJqzHg6tmuuvZow4=
-X-Google-Smtp-Source: AA6agR63H8Yt6tlE/uJHDGPjWSIBbRm8fvL5AHYHuJ+inVq5fxdYSlNwMkzfvPMh/wwA6r1h5DOpsQ==
-X-Received: by 2002:a5d:64e2:0:b0:225:79d3:d6c4 with SMTP id g2-20020a5d64e2000000b0022579d3d6c4mr7315777wri.464.1661806461311;
-        Mon, 29 Aug 2022 13:54:21 -0700 (PDT)
+        bh=iSzxIQogg6zwsEHgDzSYmH9zyqomLzQ/xCWHlrw8wo0=;
+        b=2pF6PmkHvZwejmTS41AE4HRVThrsHP5IttyOy1pFiQE5vefd/pKRA7AxrOAsB3299Y
+         8y8zak/hGni4QekeH/wUIsfrZ22svIuclnu1LCw6nMAVHbdO3jk5ffiWJGbENgmk1SpH
+         8iZOVmrJXg3foXCH0B+cvt1s3ZPbTGiXVp5BVc5diZDyXBBNSB2WOlzcSRuCXI7deNuJ
+         x4aZuTsqBYvBpYkvKTw+E2O3HopycIv8Pqa6/w+UNYSzWSP+92DecmpVy9o+913yf2V6
+         44A7pkso95obalWnk/B+5Xyh18faoD2uWR+uDv2icjPVO0kptYZLfLggObMzCYH10nbr
+         zL6A==
+X-Gm-Message-State: ACgBeo0QOeAnA4ZxRZ48KLhaw+KRL5OgLnTl683OQbMgAWOBydW3CQGl
+        gwROjZP6zA2mblKX16Tevg4c03L93eM=
+X-Google-Smtp-Source: AA6agR61rsmyPVdfh0f9BQQ3MAYpAK4onVHt+li7lvxY7Luj4D9GPxtl6JDi0NB2h+1yIu40C0c91A==
+X-Received: by 2002:adf:e845:0:b0:226:d461:9cf1 with SMTP id d5-20020adfe845000000b00226d4619cf1mr5730620wrn.136.1661806463136;
+        Mon, 29 Aug 2022 13:54:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x18-20020a5d4452000000b00225307f43fbsm7764007wrr.44.2022.08.29.13.54.20
+        by smtp.gmail.com with ESMTPSA id ay15-20020a5d6f0f000000b002207a5d8db3sm8133290wrb.73.2022.08.29.13.54.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 13:54:20 -0700 (PDT)
-Message-Id: <eab40dcb296fd6a6ea14d13107cdc3ca6e64e311.1661806456.git.gitgitgadget@gmail.com>
+        Mon, 29 Aug 2022 13:54:22 -0700 (PDT)
+Message-Id: <6f7f2f9a3f19b6d874d644b7fb7feb3a72fc6227.1661806456.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1321.git.git.1661806456.gitgitgadget@gmail.com>
 References: <pull.1321.git.git.1661806456.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 29 Aug 2022 20:54:14 +0000
-Subject: [PATCH 4/6] submodule: return target of submodule symref
+Date:   Mon, 29 Aug 2022 20:54:16 +0000
+Subject: [PATCH 6/6] clone, submodule update: check out branches
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,227 +67,223 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-resolve_gitlink_ref() can tell us which oid the submodule ref is
-pointing to, but in a future commit, we would also like to know the
-symbolic ref target if we are checking a symbolic ref. Teach
-resolve_gitlink_ref() to "return" the symbolic ref's target via an "out"
-parameter.
+Teach "git submodule update" to update submodules by creating and
+checking out the current superproject branch when
+"submodule.propagateBranches=true". "git clone --recurse-submodules"
+also learns this trick because it is implemented with "git submodule
+update --recursive".
 
-This changes resolve_gitlink_ref()'s signature so that new callers
-trying to use the old signature will be stopped by the compiler. If we
-returned the target instead (just like refs_resolve_ref_unsafe()), we
-would be more consistent with refs_resolve_ref_unsafe(), but callers
-expecting the old signature will get the opposite return value from what
-they expect (since exit code 0 means success, but NULL pointer means
-failure). We should do this refactor once we think that nobody will try
-to use the old signature.
+With "submodule.propagateBranches=true", submodules are cloned with
+"--detach" so that they do not contain branches from their upstream.
+This prevents conflicts between branch names from the superproject and
+the branch names from the submodule's upstream. Arguably, "--detach"
+should also be the default for "submodule.propagateBranches=false"
+since it doesn't make sense to create a submodule branch when the
+submodule is always expected to be in detached HEAD. But, to be
+conservative, this commit does not change the behavior of
+"submodule.propagateBranches=false".
+
+"git submodule update" tries to create the branch as long as it is not
+currently checked out, thus it will fail if the submodule has the
+branch, but it is not checked out. This is fine because the main purpose
+of "git submodule update" is to clone new submodules (which have no
+branches, and will never have this problem). "git checkout" with
+"submodule.propagateBranches" will cover the use case of recursively
+checking out an existing branch.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/submodule--helper.c |  8 +++++---
- builtin/update-index.c      |  4 ++--
- combine-diff.c              |  3 ++-
- diff-lib.c                  |  2 +-
- dir.c                       |  2 +-
- object-file.c               |  2 +-
- read-cache.c                |  4 ++--
- refs.c                      | 10 ++++++----
- refs.h                      |  5 ++++-
- unpack-trees.c              |  3 ++-
- 10 files changed, 26 insertions(+), 17 deletions(-)
+ builtin/submodule--helper.c | 28 ++++++++++++++++++++++++++--
+ t/t5617-clone-submodules.sh | 34 ++++++++++++++++++++++++++++++++++
+ t/t7406-submodule-update.sh | 22 ++++++++++++++++++++++
+ 3 files changed, 82 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index b63f420ecef..dd00a0db522 100644
+index cbf6bda4850..7eb2c45900e 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2466,7 +2466,8 @@ static int update_submodule(struct update_data *update_data)
+@@ -1695,6 +1695,9 @@ static int clone_submodule(struct module_clone_data *clone_data)
+ 			strvec_push(&cp.args, clone_data->single_branch ?
+ 				    "--single-branch" :
+ 				    "--no-single-branch");
++		if (the_repository->settings.submodule_propagate_branches)
++			strvec_push(&cp.args, "--detach");
++
  
+ 		strvec_push(&cp.args, "--");
+ 		strvec_push(&cp.args, clone_data->url);
+@@ -1733,6 +1736,9 @@ static int clone_submodule(struct module_clone_data *clone_data)
+ 	if (error_strategy)
+ 		git_config_set_in_file(p, "submodule.alternateErrorStrategy",
+ 				       error_strategy);
++	if (the_repository->settings.submodule_propagate_branches)
++		git_config_set_in_file(p, "submodule.propagateBranches",
++				       "true");
+ 
+ 	free(sm_alternate);
+ 	free(error_strategy);
+@@ -1792,6 +1798,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	memset(&filter_options, 0, sizeof(filter_options));
+ 	argc = parse_options(argc, argv, prefix, module_clone_options,
+ 			     git_submodule_helper_usage, 0);
++	prepare_repo_settings(the_repository);
+ 
+ 	clone_data.dissociate = !!dissociate;
+ 	clone_data.quiet = !!quiet;
+@@ -1872,6 +1879,7 @@ struct submodule_update_clone {
+ struct update_data {
+ 	const char *prefix;
+ 	const char *displaypath;
++	const char *super_branch;
+ 	enum submodule_update_type update_default;
+ 	struct object_id suboid;
+ 	struct string_list references;
+@@ -2206,6 +2214,8 @@ static int run_update_command(struct update_data *ud, int subforce)
+ 		strvec_pushl(&cp.args, "checkout", "-q", NULL);
+ 		if (subforce)
+ 			strvec_push(&cp.args, "-f");
++		if (ud->super_branch)
++			strvec_pushl(&cp.args, "-b", ud->super_branch, NULL);
+ 		break;
+ 	case SM_UPDATE_REBASE:
+ 		cp.git_cmd = 1;
+@@ -2456,6 +2466,7 @@ static void update_data_to_args(struct update_data *update_data, struct strvec *
+ static int update_submodule(struct update_data *update_data)
+ {
+ 	int submodule_up_to_date;
++	const char *submodule_head = NULL;
+ 
+ 	ensure_core_worktree(update_data->sm_path);
+ 
+@@ -2469,7 +2480,7 @@ static int update_submodule(struct update_data *update_data)
  	if (update_data->just_cloned)
  		oidcpy(&update_data->suboid, null_oid());
--	else if (resolve_gitlink_ref(update_data->sm_path, "HEAD", &update_data->suboid))
-+	else if (resolve_gitlink_ref(update_data->sm_path, "HEAD",
-+				     &update_data->suboid, NULL))
+ 	else if (resolve_gitlink_ref(update_data->sm_path, "HEAD",
+-				     &update_data->suboid, NULL))
++				     &update_data->suboid, &submodule_head))
  		die(_("Unable to find current revision in submodule path '%s'"),
  			update_data->displaypath);
  
-@@ -2482,7 +2483,8 @@ static int update_submodule(struct update_data *update_data)
- 				    update_data->sm_path);
- 		}
- 
--		if (resolve_gitlink_ref(update_data->sm_path, remote_ref, &update_data->oid))
-+		if (resolve_gitlink_ref(update_data->sm_path, remote_ref,
-+					&update_data->oid, NULL))
- 			die(_("Unable to find %s revision in submodule path '%s'"),
- 			    remote_ref, update_data->sm_path);
- 
-@@ -3231,7 +3233,7 @@ static void die_on_repo_without_commits(const char *path)
- 	strbuf_addstr(&sb, path);
- 	if (is_nonbare_repository_dir(&sb)) {
- 		struct object_id oid;
--		if (resolve_gitlink_ref(path, "HEAD", &oid) < 0)
-+		if (resolve_gitlink_ref(path, "HEAD", &oid, NULL) < 0)
- 			die(_("'%s' does not have a commit checked out"), path);
- 	}
- 	strbuf_release(&sb);
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index b62249905f1..19a21a4586c 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -339,7 +339,7 @@ static int process_directory(const char *path, int len, struct stat *st)
- 		if (S_ISGITLINK(ce->ce_mode)) {
- 
- 			/* Do nothing to the index if there is no HEAD! */
--			if (resolve_gitlink_ref(path, "HEAD", &oid) < 0)
-+			if (resolve_gitlink_ref(path, "HEAD", &oid, NULL) < 0)
- 				return 0;
- 
- 			return add_one_path(ce, path, len, st);
-@@ -365,7 +365,7 @@ static int process_directory(const char *path, int len, struct stat *st)
+@@ -2493,7 +2504,13 @@ static int update_submodule(struct update_data *update_data)
+ 		free(remote_ref);
  	}
  
- 	/* No match - should we add it as a gitlink? */
--	if (!resolve_gitlink_ref(path, "HEAD", &oid))
-+	if (!resolve_gitlink_ref(path, "HEAD", &oid, NULL))
- 		return add_one_path(NULL, path, len, st);
- 
- 	/* Error out. */
-diff --git a/combine-diff.c b/combine-diff.c
-index b0ece954808..88efcaeefa7 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1060,7 +1060,8 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 			elem->mode = canon_mode(st.st_mode);
- 		} else if (S_ISDIR(st.st_mode)) {
- 			struct object_id oid;
--			if (resolve_gitlink_ref(elem->path, "HEAD", &oid) < 0)
-+			if (resolve_gitlink_ref(elem->path, "HEAD", &oid,
-+						NULL) < 0)
- 				result = grab_blob(opt->repo, &elem->oid,
- 						   elem->mode, &result_size,
- 						   NULL, NULL);
-diff --git a/diff-lib.c b/diff-lib.c
-index 7eb66a417aa..0c1f76d5fe9 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -53,7 +53,7 @@ static int check_removed(const struct index_state *istate, const struct cache_en
- 		 * a directory --- the blob was removed!
- 		 */
- 		if (!S_ISGITLINK(ce->ce_mode) &&
--		    resolve_gitlink_ref(ce->name, "HEAD", &sub))
-+		    resolve_gitlink_ref(ce->name, "HEAD", &sub, NULL))
+-	submodule_up_to_date = oideq(&update_data->oid, &update_data->suboid);
++	if (update_data->super_branch &&
++	    submodule_head &&
++	    !skip_prefix(submodule_head, "refs/heads/", &submodule_head))
++		submodule_up_to_date = !strcmp(update_data->super_branch, submodule_head);
++	else
++		submodule_up_to_date = oideq(&update_data->oid, &update_data->suboid);
++
+ 	if (!submodule_up_to_date || update_data->force)
+ 		if (run_update_procedure(update_data))
  			return 1;
+@@ -2551,6 +2568,12 @@ static int update_submodules(struct update_data *update_data)
+ 		goto cleanup;
  	}
- 	return 0;
-diff --git a/dir.c b/dir.c
-index d7cfb08e441..33368b399e2 100644
---- a/dir.c
-+++ b/dir.c
-@@ -3255,7 +3255,7 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
- 	struct object_id submodule_head;
  
- 	if ((flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
--	    !resolve_gitlink_ref(path->buf, "HEAD", &submodule_head)) {
-+	    !resolve_gitlink_ref(path->buf, "HEAD", &submodule_head, NULL)) {
- 		/* Do not descend and nuke a nested git work tree. */
- 		if (kept_up)
- 			*kept_up = 1;
-diff --git a/object-file.c b/object-file.c
-index 5b270f046dd..a10a49d7a2a 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2526,7 +2526,7 @@ int index_path(struct index_state *istate, struct object_id *oid,
- 		strbuf_release(&sb);
- 		break;
- 	case S_IFDIR:
--		return resolve_gitlink_ref(path, "HEAD", oid);
-+		return resolve_gitlink_ref(path, "HEAD", oid, NULL);
- 	default:
- 		return error(_("%s: unsupported file type"), path);
- 	}
-diff --git a/read-cache.c b/read-cache.c
-index 4de207752dc..4b68bd0c9a6 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -285,7 +285,7 @@ static int ce_compare_gitlink(const struct cache_entry *ce)
- 	 *
- 	 * If so, we consider it always to match.
- 	 */
--	if (resolve_gitlink_ref(ce->name, "HEAD", &oid) < 0)
-+	if (resolve_gitlink_ref(ce->name, "HEAD", &oid, NULL) < 0)
- 		return 0;
- 	return !oideq(&oid, &ce->oid);
- }
-@@ -776,7 +776,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
++	if (the_repository->settings.submodule_propagate_branches) {
++		struct branch *current_branch = branch_get(NULL);
++		if (current_branch)
++			update_data->super_branch = current_branch->name;
++	}
++
+ 	for (i = 0; i < suc.update_clone_nr; i++) {
+ 		struct update_clone_data ucd = suc.update_clone[i];
  
- 	namelen = strlen(path);
- 	if (S_ISDIR(st_mode)) {
--		if (resolve_gitlink_ref(path, "HEAD", &oid) < 0)
-+		if (resolve_gitlink_ref(path, "HEAD", &oid, NULL) < 0)
- 			return error(_("'%s' does not have a commit checked out"), path);
- 		while (namelen && path[namelen-1] == '/')
- 			namelen--;
-diff --git a/refs.c b/refs.c
-index 90bcb271687..d72015c95e9 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1784,19 +1784,21 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
- }
+@@ -2634,6 +2657,7 @@ static int module_update(int argc, const char **argv, const char *prefix)
+ 	memset(&filter_options, 0, sizeof(filter_options));
+ 	argc = parse_options(argc, argv, prefix, module_update_options,
+ 			     git_submodule_helper_usage, 0);
++	prepare_repo_settings(the_repository);
  
- int resolve_gitlink_ref(const char *submodule, const char *refname,
--			struct object_id *oid)
-+			struct object_id *oid, const char **referent_out)
- {
- 	struct ref_store *refs;
- 	int flags;
-+	const char *referent;
+ 	if (opt.require_init)
+ 		opt.init = 1;
+diff --git a/t/t5617-clone-submodules.sh b/t/t5617-clone-submodules.sh
+index b5c66cb18cb..215fb02e9fb 100755
+--- a/t/t5617-clone-submodules.sh
++++ b/t/t5617-clone-submodules.sh
+@@ -12,10 +12,17 @@ pwd=$(pwd)
+ test_expect_success 'setup' '
+ 	git checkout -b main &&
+ 	test_commit commit1 &&
++	mkdir subsub &&
++	(
++		cd subsub &&
++		git init &&
++		test_commit subsubcommit1
++	) &&
+ 	mkdir sub &&
+ 	(
+ 		cd sub &&
+ 		git init &&
++		git submodule add "file://$pwd/subsub" subsub &&
+ 		test_commit subcommit1 &&
+ 		git tag sub_when_added_to_super &&
+ 		git branch other
+@@ -106,4 +113,31 @@ test_expect_success '--no-also-filter-submodules overrides clone.filterSubmodule
+ 	test_cmp_config -C super_clone3/sub false --default false remote.origin.promisor
+ '
  
- 	refs = get_submodule_ref_store(submodule);
++test_expect_success 'submodule.propagateBranches checks out branches at correct commits' '
++	git -C sub checkout -b not-main &&
++	git -C subsub checkout -b not-main &&
++	git clone --recurse-submodules \
++		-c submodule.propagateBranches=true \
++		"file://$pwd/." super_clone4 &&
++
++	# Assert that each repo is pointing to "main"
++	for REPO in "super_clone4" "super_clone4/sub" "super_clone4/sub/subsub"
++	do
++	    HEAD_BRANCH=$(git -C $REPO symbolic-ref HEAD) &&
++	    test $HEAD_BRANCH = "refs/heads/main" || return 1
++	done &&
++
++	# Assert that the submodule branches are pointing to the right revs
++	EXPECT_SUB_OID="$(git -C super_clone4 rev-parse :sub)" &&
++	ACTUAL_SUB_OID="$(git -C super_clone4/sub rev-parse refs/heads/main)" &&
++	test $EXPECT_SUB_OID = $ACTUAL_SUB_OID &&
++	EXPECT_SUBSUB_OID="$(git -C super_clone4/sub rev-parse :subsub)" &&
++	ACTUAL_SUBSUB_OID="$(git -C super_clone4/sub/subsub rev-parse refs/heads/main)" &&
++	test $EXPECT_SUBSUB_OID = $ACTUAL_SUBSUB_OID &&
++
++	# Assert that the submodules do not have branches from their upstream
++	test_must_fail git -C super_clone4/sub rev-parse not-main &&
++	test_must_fail git -C super_clone4/sub/subsub rev-parse not-main
++'
++
+ test_done
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 6cc07460dd2..00a6fec8912 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -1178,4 +1178,26 @@ test_expect_success 'submodule update --recursive skip submodules with strategy=
+ 	test_cmp expect.err actual.err
+ '
  
- 	if (!refs)
- 		return -1;
--
--	if (!refs_resolve_ref_unsafe(refs, refname, 0, oid, &flags) ||
--	    is_null_oid(oid))
-+	referent = refs_resolve_ref_unsafe(refs, refname, 0, oid, &flags);
-+	if (!referent || is_null_oid(oid))
- 		return -1;
-+	if (referent_out)
-+		*referent_out = referent;
- 	return 0;
- }
- 
-diff --git a/refs.h b/refs.h
-index 47cb9edbaa8..c5ae76654c5 100644
---- a/refs.h
-+++ b/refs.h
-@@ -136,9 +136,12 @@ int peel_iterated_oid(const struct object_id *base, struct object_id *peeled);
-  * submodule (which must be non-NULL). If the resolution is
-  * successful, return 0 and set oid to the name of the object;
-  * otherwise, return a non-zero value.
-+ *
-+ * FIXME: Return "referent" just like refs_resolve_ref_unsafe(). This will be
-+ * safe to do once we merge resolve_gitlink_ref() into master.
-  */
- int resolve_gitlink_ref(const char *submodule, const char *refname,
--			struct object_id *oid);
-+			struct object_id *oid, const char **referent);
- 
- /*
-  * Return true iff abbrev_name is a possible abbreviation for
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 8a454e03bff..43a1a056a19 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -2202,7 +2202,8 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
- 
- 	if (S_ISGITLINK(ce->ce_mode)) {
- 		struct object_id oid;
--		int sub_head = resolve_gitlink_ref(ce->name, "HEAD", &oid);
-+		int sub_head =
-+			resolve_gitlink_ref(ce->name, "HEAD", &oid, NULL);
- 		/*
- 		 * If we are not going to update the submodule, then
- 		 * we don't care.
++test_expect_success 'submodule update with submodule.propagateBranches checks out branches' '
++	test_when_finished "rm -fr top-cloned" &&
++	cp -r top-clean top-cloned &&
++
++	# Create a new upstream submodule
++	git init middle2 &&
++	test_commit -C middle2 "middle2" &&
++	git -C top submodule add ../middle2 middle2 &&
++	git -C top commit -m "add middle2" &&
++
++	git -C top-cloned checkout -b "new-branch" &&
++	git -C top-cloned pull origin main &&
++	test_config -C top-cloned submodule.propagateBranches true &&
++	git -C top-cloned submodule update --recursive &&
++
++	for REPO in "top-cloned/middle2" "top-cloned/middle" "top-cloned/middle/bottom"
++	do
++	    HEAD_BRANCH=$(git -C $REPO symbolic-ref HEAD) &&
++	    test $HEAD_BRANCH = "refs/heads/new-branch" || return 1
++	done
++'
++
+ test_done
 -- 
 gitgitgadget
-
