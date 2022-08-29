@@ -2,223 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 054A3ECAAD4
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 12:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7D66ECAAD2
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 12:31:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231913AbiH2MZn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 08:25:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56974 "EHLO
+        id S229546AbiH2MbH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 08:31:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231987AbiH2MZZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2022 08:25:25 -0400
+        with ESMTP id S229478AbiH2Mae (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2022 08:30:34 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D29B390C66
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 05:09:15 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27BA3CE03
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 05:14:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661774922;
-        bh=+zYpeHCQO/fjt8VZ2hQVJaQN4R4CG8ThhIfORkOzobA=;
+        s=badeba3b8450; t=1661775230;
+        bh=f9hvsZrw38dQOkDR2k6Zldttkzm3/82sqBvH7nQ++BI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=c4HP22cZkBKI1QIEMclsenQGHGfucdN3SVbH4VO95w2rxHvR5YEzZyQLa5yQ8pTc9
-         GeGeyyZRJlf/OhqPi8O4/v1CuwJT18SPFjLfuy+JVcSxQawc7UdQq5ozeppzNzzqQi
-         6fUTVG3gwcDBIfhCUq1RJEe45C1XYiyv7VukVzoM=
+        b=gc3x2p7e6TXKu8GPZiL9TrcrO7c0anX2lF1MGRDIftQ4J7kaTY75P8aqN54wjw5Ci
+         5CTb73A1xTIOEYcztq7S61iguFFjJW6Svq8mNGhvqlsISYhwNdhDZMAm7P6pF09NQ5
+         N6Ibj9DFNdDr+pn4SWYv700euQIpxOXbXtnABzMc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N6bjy-1pTnJ20sTW-0186c0; Mon, 29
- Aug 2022 13:48:06 +0200
-Date:   Mon, 29 Aug 2022 13:48:05 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZCbB-1oxlHA37tR-00VCnG; Mon, 29
+ Aug 2022 14:13:49 +0200
+Date:   Mon, 29 Aug 2022 14:13:48 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] format-patch: allow forcing the use of in-body From:
- header
-In-Reply-To: <20220826213203.3258022-3-gitster@pobox.com>
-Message-ID: <q84op991-3s0n-r0q5-32pn-096595o03rs8@tzk.qr>
-References: <20220826213203.3258022-1-gitster@pobox.com> <20220826213203.3258022-3-gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Miriam Rubio <mirucam@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Re: [PATCH v5 05/16] bisect--helper: make `terms` an explicit
+ singleton
+In-Reply-To: <xmqqk06svoxp.fsf@gitster.g>
+Message-ID: <662758rn-942n-1n3s-25r9-o7qn071s0567@tzk.qr>
+References: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>        <pull.1132.v5.git.1661604264.gitgitgadget@gmail.com>        <92b3b116ef8f879192d9deb94d68b73e29d5dcd6.1661604264.git.gitgitgadget@gmail.com> <xmqqk06svoxp.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-789095324-1661773204=:189"
-Content-ID: <s85qr850-5123-4129-6s0n-onnr159o8447@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:X5R/WHGageYVIxxsQHY9L0sRzizlhHlfLWbGMNsPocHVr9z4K5K
- wuf2QgIm7h0ti/XtZg8vgIT7UT3HkHLLvnJtUBmO2uuLa3yOQ9wChaH+DOETpIOnENAXSBU
- 2iy5iOhkz9egZZ1VodoJlJtzJEBKZ8uZPgijYubjTf76oNNC3rqH13lPA1yP8RhaBNJaJpi
- P/ovD2jAPWhPGUgmW7KBg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:m/aDHF4TF+Q=:qmFsoaGKAirrpeZDtYKpIo
- dtg+bJJ/oH0NWbhm0E4pQsfYOpf0Vy9y3Do0TbWT1H/BcTMJxc0GMc1s0lQv99qc3tb32+itp
- Cn3P2criL19Mo6OiY6lc6BjphckVEE9GN39a3Cbki557QgoNQweb+atut9Ippp9VyqK4Kadno
- Ltw2QePW003MCZ/xnkqxw+bw5ArhLOTs8+LDomFVmvZVy0lDYipJ9AUp0q3tERUa+HbwCcn/H
- EC2iWQ9bsP0V2BG49oJgmOboACLrdeW7Yupl/KvMzY6fMNGmtgcYlqgLmrevRqqUv6ufqSp1v
- Cw/8hN+F8A1rhAoqwyEtxv0w7/5RCBqjT1v1h7ZETKesNI6hhEMcMYBbBzDp3oWyPXLVKXxdx
- QwJnUv8ni/Iot46Xx6emWc5Ws9+dV60cmxTttAjID+cQI8cZ//DDIC9OrbZl/AOvvIcQVMi1t
- hIKtQRT61cfv9E7xPuhnj0fawZWaUwt8LRQ3HurR3GNIMpfp5TOQsKvE9ctab/ny3VRNxvKXO
- ff/wGeg9Tz66/xD2nxLI/rUj9ZWP6BhI0y/zrRWxMMFgyNbxmBsggo3MB3RsQD/IGFQPcKPnH
- 2pV1HT3+6J6CWoxczudsFmLSlPp0YOJ1pVcG1UV94xHVzkUh9BhOWFa+1ppRF/uqInV1F8/KZ
- 6njVmQ1aYkmYfsYpQK08wbH6RzbDGxOgciEsXRrcZ5nOlv9+manAIRVwUWyGi9KFqstOeSihu
- 1oWqorLovIUohoQLRcI6B5vJ1WSUVoH4rV9Fhsh9ERh+DF8JPBiCrHbiV/EXqEHDBozNuZGHb
- wMJ/VzA1M8Eynwrzw8UisK+Y2ubAPwcvKChYjv0lf9oBPE9L84jggXwpbSW3LH3fAnLaxLbce
- UgxZCYqCqflizXmS6Rrswi0uEVl6ZfORgbwQ7mZbru5XK/ADpeHpm5aFHE2tDvxt3KAymrroF
- Yas/QB9WzU+zmg80v5ewE2z2wZMvic5Kgl7F8r47BbkHASrrGIzVsrib/jKzq97uZWSyiPp3s
- T8GjtW8UvqZYrLGaOAM1y6EfQYGKXrV0CuvvXG2u41BQeje1lQLQToncVQc1Bk/yJ6FEiKqYj
- 16sI4SDi35eJkUZOnpwzJHtjcgE0PP+/QKmMZw/aqNEAYGlTe7sPdLccQ==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:yScYt1sNwz15GKRbMeIN1i5evxJ0J75Vz5mnzu0PuOTXRppwT5V
+ cyFxUwZ78tHLefrNwzmwtxHwMTUhsxtbRZjEF/3gSutcGbTbm6h+DJJ7jRjS9FKZ6jHbkRq
+ syIeeUFsOdgqmoIZiJxIt8tnLYn2NqTA8EfDeNP4aiS+1Dmeat274HfzBDUznPO0aot+gKX
+ IrhBGUq+Ak2pW7WTMzSDQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4qLFsqGwHSw=:msnRvc9RYqE1lhsXUNuBYk
+ t7pJUQD3YfvQ5bGsHhs+sh/F3mFZ637N7BlSQUbjZhB286ZyzRJgb4z2K1sHzqE7MdVYHhJYQ
+ g6cSSXmYzXMDs3AhZhRpN6sZB4csjNmK6M97Z+hthM26KuYivE79h/paf4ki4FRgwH7JAk3/r
+ uiD86Te5EN5yvH1vQE3SxSPIodKVj3RkMjBJgKQT1hSMovAebHuhGobqUgLOfVcxbXkXyY3yo
+ XbVBShvHx3GjSr46aGR4jcimUhJs0tJqmgK785Zvi5J23yLK7QEwEvPbkYHNp3mr2px+UGyAJ
+ 3g0/LqnMxZGTAYH/63YxoQAA/dR6OV9Z2Dn8F4MUvokqJJBl9ufbfxsCVhiTz1Ce4UwLm8wjo
+ QkNxPKqDDzb4RahQLTAMVNzVbhmSDaGBri5DwPhdkGYKCuBBMCB56UeavSXTOJWJj5ByiRcvH
+ Rw73OSt4woE3JR/X+hF4NZ0vMk058d8woLXuku6iVUlD1Bk4H6myI57o1O5Tr6F3hdRCz4Kjc
+ IliUq8u5wj+3SBGHfCcpIS4oXE+eolZW1toYSupA7hsXVGJ1r/ZwHtZ6Z/CbzkLd8GnZns729
+ r/dGD5QljOo7d5RuwC11DhWNbuG0IaZ3Sh2RQ5W5qf1DJu0ARc+lqRGU/aO7ykgFxx70yr0FD
+ ZvuUlekBnS0JDvMUlvQVaQI5ap0O0b3mLWRAvLgEDrjRZbsvmXKbZrnPiWUE2ZiYxgIbeE7OK
+ AfiqXA71SCerCDeHXkUh5+sIaJg3Nmj7VzTxQkQzapbZCPTbmfdrc2NDqRo679QS8sZnDUVrw
+ v9bRzby/65aHddkpZLncZ0wZnqeSLXg7S6LO+vrk7cC7aeQuJfX6qpoeb0vmXtlVUiRi15xmR
+ XofzStPcia25eJfhHtn6VV/uTEy2PlXvtagKKZNBwOkn7iBvqwzVTa7Q4FWw3HH2/ONFE9jR/
+ 19GflCNcFUosAQUADFZSeA9KCuVejkDeoDfVgA1HPOVCdHbeYdNrvzzQs6wWdIe2ZClaIp8k4
+ HlVJ22bwNlB44X9Tn+PZO77y8NxYbws7CB9qCkAESabUT3C2yBMPjYzqIWWIWtvWYa5U8OEcu
+ QLYDKe32z1FtlVuonbhnz7oBPX+3Mh2qJbjxkyHJp5sh1La+4dYuM70VA==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-789095324-1661773204=:189
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Content-ID: <658qnpsn-3rro-s2or-s18r-91o224oqs11p@tvgsbejvaqbjf.bet>
-
 Hi Junio,
 
-On Fri, 26 Aug 2022, Junio C Hamano wrote:
+On Sat, 27 Aug 2022, Junio C Hamano wrote:
 
-> Users may be authoring and committing their commits under the same
-> e-mail address they use to send their patches from, in which case
-> they shouldn't need to use the in-body From: line in their outgoing
-> e-mails.  At the receiving end, "git am" will use the address on the
-> "From:" header of the incoming e-mail and all should be well.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
-> Some mailing lists, however, mangle the From: address from what the
-> original sender had; in such an unfortunate situation, the user may
-> want to add the in-body "From:" header even for their own patch.
+> > -struct bisect_terms {
+> > +static struct bisect_terms {
+> >  	char *term_good;
+> >  	char *term_bad;
+> > -};
+> > +} terms;
 >
-> "git format-patch --[no-]force-inbody-from" was invented for such
-> users.
+> On the surface, more global state may feel sad, but I do not think
+> we want to run multiple bisection in one session anyway.  Overall
+> this may result in a simplicity win, hopefully.
 >
-> Note.  This is an uncooked early draft.
-
-Did you mean to mark the patch as [RFC], then?
-
-> Things to think about include (but not limited to, of course):
+> The patch is noisy, but mostly from rewriting "terms->member" to
+> "terms.member".  I am not sure if that was worth the effort, though.
+> You had a code that plumbed a parameter through the call graph, and
+> instead of destroying that arrangement, you could have just replaced
+> the reference at the beginning of the call chain to use the global
+> state instead of an on-stack variable that the caller used to have.
 >
->  * Should this rather be --use-inbody-from=3Dyes,no,auto tristate,
->    that defaults to "auto", which is the current behaviour i.e.
->    "when --from is given, add it only when it does not match the
->    payload".  "yes" would mean "always emit the --from address as
->    in-body From:" and "no" would mean ... what?  "Ignore --from"?
->    Then why is the user giving --from in the first place?
+> I have no strong preference, but I do not think that it particularly
+> contributes to "clarifying that we are using global state" to make
+> direct accesses to the variable everywhere.  I dunno.
 
-I would offer up the suggestion `--in-body-from=3D{never,always,auto}` for
-consideration.
+I do have a strong preference to avoid mixing and matching global
+variables with functions that pretend not to use said global variables, as
+it is too easy to forget to pass through the corresponding parameter to a
+function at a lower layer when that function accesses the global variable
+anyway.
 
->  * Should it be "inbody" or "in-body"?
-
-The latter.
-
->  * Should it have a corresponding configuration variable?
-
-Probably. The commit message talks about mailing lists requiring different
-behavior from the default, which is likely to affect all patches generated
-from a corresponding local checkout. Having a config variable would lower
-the cognitive burden of having to remember this process detail.
-
->  * Should this patch be scrapped and the feature should be done
->    inside "git send-email" instead?
-
-Since it affects the `--pretty=3Demail` mode, the current patch seems to a=
-im
-for the correct layer.
-
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 9b937d59b8..83b2d01b49 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1897,6 +1897,8 @@ int cmd_format_patch(int argc, const char **argv, =
-const char *prefix)
->  			   N_("show changes against <refspec> in cover letter or single patc=
-h")),
->  		OPT_INTEGER(0, "creation-factor", &creation_factor,
->  			    N_("percentage by which creation is weighted")),
-> +		OPT_BOOL(0, "force-inbody-from", &rev.force_inbody_from,
-> +			 N_("Use in-body From: even for your own commit")),
-
-Please start the usage text in lower-case, to keep it consistent with the
-rest of the usage texts.
-
-Also, I would like to avoid the personal address "you" in that text, and
-also the verb "use". Maybe something like this:
-
-	show in-body From: even if identical to the header
-
->  		OPT_END()
->  	};
->
-> diff --git a/pretty.c b/pretty.c
-> index 51e3fa5736..e266208c0b 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -483,6 +483,8 @@ static int use_inbody_from(const struct pretty_print=
-_context *pp, const struct i
->  		return 0;
->  	if (ident_cmp(pp->from_ident, ident))
->  		return 1;
-> +	if (pp->rev && pp->rev->force_inbody_from)
-> +		return 1;
-
-It would probably make sense to move this before `ident_cmp()`, to avoid
-unneeded calls ("is the ident the same? no? well, thank you for your
-answer but I'll insert the header anyway!").
-
->  	return 0;
->  }
->
-> diff --git a/revision.h b/revision.h
-> index bb91e7ed91..a2d3813a21 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -208,6 +208,7 @@ struct rev_info {
->
->  	/* Format info */
->  	int		show_notes;
-> +	unsigned int	force_inbody_from;
-
-The reason why this isn't added to the `:1` bits below is probably the
-anticipation of the tri-state, but if that tri-state never materializes,
-adding it as a bit is still the right thing to do.
-
->  	unsigned int	shown_one:1,
->  			shown_dashes:1,
->  			show_merge:1,
-> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> index fbec8ad2ef..a4ecd433e2 100755
-> --- a/t/t4014-format-patch.sh
-> +++ b/t/t4014-format-patch.sh
-> @@ -1400,6 +1400,19 @@ test_expect_success '--from omits redundant in-bo=
-dy header' '
->  	test_cmp expect patch.head
->  '
->
-> +test_expect_success 'with --force-inbody-from, --from keeps redundant i=
-n-body header' '
-> +	git format-patch --force-inbody-from \
-> +		-1 --stdout --from=3D"A U Thor <author@example.com>" >patch &&
-> +	cat >expect <<-\EOF &&
-> +	From: A U Thor <author@example.com>
-> +
-> +	From: A U Thor <author@example.com>
-> +
-> +	EOF
-> +	sed -ne "/^From:/p; /^$/p; /^---$/q" patch >patch.head &&
-> +	test_cmp expect patch.head
-> +'
-
-The test script starts to look a bit non-DRY with all those repetitions of
-`A U Thor <author@example.com>`, but that's hardly the responsibility of
-this here patch to address.
-
-Thank you,
+Ciao,
 Dscho
-
-> +
->  test_expect_success 'in-body headers trigger content encoding' '
->  	test_env GIT_AUTHOR_NAME=3D"=C3=A9x=C3=B6t=C3=ACc" test_commit exotic =
-&&
->  	test_when_finished "git reset --hard HEAD^" &&
-> --
-> 2.37.2-587-g47adba97a9
->
->
-
---8323328-789095324-1661773204=:189--
