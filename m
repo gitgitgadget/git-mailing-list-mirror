@@ -2,180 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4B2CECAAA4
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 17:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B7B7ECAAA2
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 17:47:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229866AbiH2Rld (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 13:41:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45328 "EHLO
+        id S230029AbiH2Rrd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 13:47:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbiH2Rlc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2022 13:41:32 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2FD553013
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 10:41:31 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id jm11so8680537plb.13
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 10:41:31 -0700 (PDT)
+        with ESMTP id S229926AbiH2Rrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2022 13:47:31 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16C005721C
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 10:47:31 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id c2so8726140plo.3
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 10:47:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=1JBhyPjNkwubP1ut/M83ilAuFfZfq9Fqu/AShk8eq9Y=;
-        b=aid7JW1e9c6ZH2yEeDw6vYvHgl4gayIOa1rg/JyTSRkG+VpIuXU/MP9PDrWEbw7g/3
-         J8fxUb+VAp4uj5eUr0949lUu6rTgaVgGGrAIYG/5jRpEjv5BBG99163KszdU9C1bfCS2
-         tD90/jxwKw5y39Rt+nusEsNul+uFSRbn+FLfXPxl0TC7cq0AEcb8j/xIfzrSpV0n6Ddj
-         OkDRB1vBTJB7NtsFWTX/oICzYdhGXE6OoCFMzdg7iG8fMfI6DK++uK6kR5qs3PQqoDp/
-         +uZ9nBhtVB4+jN4ey3s5SkZtMNjEm0ImhNrVi+9JEG7r3idHm8qFbz4QI5nxl1l5E0Ej
-         ytaA==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date;
+        bh=jj9NvfPLNCKoHjewvOhO7AKDGnUNHJ2dw4t7afw5INQ=;
+        b=jEgGLeVXt/xd/hKh5tcrIDwjY2E7wjsQrKsHp+kLS1y1grGBbbVEGOsvQwmFbmfl83
+         ow/ndUwjgdtaswcpkU8BiXVl4WN7Cfw0wjDCs3wplKXpy5QrxjuOicUyyvtFyGLaVgJM
+         J2u6AWttnKKYynC6lDOXo2zekusyZg8ODcgWIeNBV/WifHYGz9y2cJ3TlOdcEizhk84z
+         KUx/FWI8u9Ge1nEEx6r6Rzmmk/Dv7qrZwNzEdF5nBRX4nMbgul4bbciHHG/e4oqDQ/7K
+         gpRNgEDx9SQ0gFdqiEfzQF/xpbKY8ezKsq5q8f+Em7vKy9IzqKEk8OZuDWgfV5XCXxCk
+         pTFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=1JBhyPjNkwubP1ut/M83ilAuFfZfq9Fqu/AShk8eq9Y=;
-        b=PzF1j1e1yzc+IqmGirsW2WzVOG81OgazrJXPRx2ARD+7vbNXzSl7w9c8EByWlXvKtC
-         JcGFSIXAuJQdgrB6qsTqtcLFpW6ai0YhokuvjrbEku1XeD8iRI/FxQGHlB2xSg1XaYUu
-         TQA/hK2I1rqlY9j3ZurCTJZjKgaDharNOEF5XLVlh4wK/SsVXMF9gWmpWxauhYXhn13Y
-         zyJLAkr1UepOG4JLyHmeI4YMvuO4zZy9IrW9njr1s7/mm9rP41oYeFagTgdW6t8YcSM3
-         K3OyZZCmQ+nQ/B6StMqDlxYCsjL+vVNUltgsB11NdsrkXSNASxDeEiER2E2i4sjAbzIW
-         Y6/g==
-X-Gm-Message-State: ACgBeo1kt4TVv7P/srNl/gkHGGCwVW2bOTool7EZmklvboSIgBMxWuCz
-        SjK7y7On5MQeqtT0poip+vQ76qhtUgs=
-X-Google-Smtp-Source: AA6agR7oOAvYuDqIomrHUaCsNOCz8TTsQ++WRxKndazvzBY1Vwa8eZ2Y0gyPO9nbNRxqq2Dc+vc3sA==
-X-Received: by 2002:a17:902:f711:b0:170:9e3c:1540 with SMTP id h17-20020a170902f71100b001709e3c1540mr17197209plo.22.1661794891226;
-        Mon, 29 Aug 2022 10:41:31 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=jj9NvfPLNCKoHjewvOhO7AKDGnUNHJ2dw4t7afw5INQ=;
+        b=bBWucrMvIF5p/qhmC03sCZZAGQV8cenY4GU6wwdHfqUm34wW0zbhcQVrxu4urjek8z
+         DBn6NuTSOOYhfBDFgcTNOOewVWFfv1Q5QTHplCFDn8PvGvO9hGdpH0VGePoHTsCdL0BJ
+         kyXNiYOi2Zx03XEL8qsZPqVOfbhHpctIP2O88qUsh6ITluFGAIH38GpmS/j8bRrfvwpv
+         d9P1h0GuZ/CjPODYDXv3uDYf3AfMW3f6NI7X7E8Ird72T4DSVuEe1GP6R26y7VXakz4i
+         vYE1bsWPlwH9yCdI4W9NIMB8JQQGzwbe41iNujj9FZ0LhnykLi27udiL7IUnRe7fJ1LS
+         ijPg==
+X-Gm-Message-State: ACgBeo2Evep7G7cgt82Xx+jED5KTSQZPuAtDycmQM0CbkxByg8iV6zs4
+        ze6/p1OuGviwy4KydiVg8+U=
+X-Google-Smtp-Source: AA6agR4j9XG4WOFXzzzX//8UM6j4MYJpnRZd8ACbbAUSTd+erVSDvOsXfTJWUaB3bB8dIVo5PISYCw==
+X-Received: by 2002:a17:902:8ec8:b0:173:12cb:e6c1 with SMTP id x8-20020a1709028ec800b0017312cbe6c1mr17417890plo.64.1661795250507;
+        Mon, 29 Aug 2022 10:47:30 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id b4-20020a63d304000000b0042c60bef7b5sm1133724pgg.85.2022.08.29.10.41.30
+        by smtp.gmail.com with ESMTPSA id b4-20020a17090a5a0400b001fda6f4d45esm3530188pjd.19.2022.08.29.10.47.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 10:41:30 -0700 (PDT)
+        Mon, 29 Aug 2022 10:47:30 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] format-patch: allow forcing the use of in-body
- From: header
-References: <20220826213203.3258022-1-gitster@pobox.com>
-        <20220826213203.3258022-3-gitster@pobox.com>
-        <q84op991-3s0n-r0q5-32pn-096595o03rs8@tzk.qr>
-Date:   Mon, 29 Aug 2022 10:41:30 -0700
-In-Reply-To: <q84op991-3s0n-r0q5-32pn-096595o03rs8@tzk.qr> (Johannes
-        Schindelin's message of "Mon, 29 Aug 2022 13:48:05 +0200 (CEST)")
-Message-ID: <xmqqilmbne0l.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Miriam Rubio <mirucam@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v5 05/16] bisect--helper: make `terms` an explicit
+ singleton
+References: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com>
+        <pull.1132.v5.git.1661604264.gitgitgadget@gmail.com>
+        <92b3b116ef8f879192d9deb94d68b73e29d5dcd6.1661604264.git.gitgitgadget@gmail.com>
+        <220829.86o7w32vv2.gmgdl@evledraar.gmail.com>
+Date:   Mon, 29 Aug 2022 10:47:29 -0700
+In-Reply-To: <220829.86o7w32vv2.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 29 Aug 2022 12:20:13 +0200")
+Message-ID: <xmqqedwzndqm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
->> Note.  This is an uncooked early draft.
+> On Sat, Aug 27 2022, Johannes Schindelin via GitGitGadget wrote:
 >
-> Did you mean to mark the patch as [RFC], then?
-
-It is mixture between that and WIP.
-
->> Things to think about include (but not limited to, of course):
->>
->>  * Should this rather be --use-inbody-from=yes,no,auto tristate,
->>    that defaults to "auto", which is the current behaviour i.e.
->>    "when --from is given, add it only when it does not match the
->>    payload".  "yes" would mean "always emit the --from address as
->>    in-body From:" and "no" would mean ... what?  "Ignore --from"?
->>    Then why is the user giving --from in the first place?
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> [...]
+>> -	free((void *)terms->term_good);
+>> -	terms->term_good = xstrdup(good);
+>> -	free((void *)terms->term_bad);
+>> -	terms->term_bad = xstrdup(bad);
+>> +	free((void *)terms.term_good);
+>> +	terms.term_good = xstrdup(good);
+>> +	free((void *)terms.term_bad);
+>> +	terms.term_bad = xstrdup(bad);
+>>  }
 >
-> I would offer up the suggestion `--in-body-from={never,always,auto}` for
-> consideration.
-
-That is essentially the same as the "Boolean plus auto" tristate, a
-very common pattern in our UI.  The problem is that false-never-no
-does not make much sense in this case, because you do not need it.
-You can instead refrain from passing --from to achieve the same
-effect.
-
->>  * Should it be "inbody" or "in-body"?
+> This is pre-existing, and dates back to 0f30233a11f (bisect--helper:
+> `bisect_write` shell function in C, 2019-01-02), but it appears this
+> cast to a "void *" was never needed. Perhaps some C++-ism that crept in
+> here?
 >
-> The latter.
+> As we're changing this all around perhaps it's worth droppping the cast,
+> or it could be left for some other "remove redundant casts" series.
 
-OK.  This cascades up to 1/2 (there is a new helper function with
-the phrase in its name).
+Nice to notice it.  I suspect that at some point in the evolution of
+the offending patch in 2019 the members were of type "const char *"
+and needed to cast the constness away, or something, perhaps?
 
->>  * Should it have a corresponding configuration variable?
->
-> Probably. The commit message talks about mailing lists requiring different
-> behavior from the default, which is likely to affect all patches generated
-> from a corresponding local checkout. Having a config variable would lower
-> the cognitive burden of having to remember this process detail.
-
-OK.
-
->> diff --git a/builtin/log.c b/builtin/log.c
->> index 9b937d59b8..83b2d01b49 100644
->> --- a/builtin/log.c
->> +++ b/builtin/log.c
->> @@ -1897,6 +1897,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->>  			   N_("show changes against <refspec> in cover letter or single patch")),
->>  		OPT_INTEGER(0, "creation-factor", &creation_factor,
->>  			    N_("percentage by which creation is weighted")),
->> +		OPT_BOOL(0, "force-inbody-from", &rev.force_inbody_from,
->> +			 N_("Use in-body From: even for your own commit")),
->
-> Please start the usage text in lower-case, to keep it consistent with the
-> rest of the usage texts.
-
-Right.
-
-> Also, I would like to avoid the personal address "you" in that text, and
-> also the verb "use". Maybe something like this:
->
-> 	show in-body From: even if identical to the header
-
-Much nicer.  I'll take it.
-
->> diff --git a/pretty.c b/pretty.c
->> index 51e3fa5736..e266208c0b 100644
->> --- a/pretty.c
->> +++ b/pretty.c
->> @@ -483,6 +483,8 @@ static int use_inbody_from(const struct pretty_print_context *pp, const struct i
->>  		return 0;
->>  	if (ident_cmp(pp->from_ident, ident))
->>  		return 1;
->> +	if (pp->rev && pp->rev->force_inbody_from)
->> +		return 1;
->
-> It would probably make sense to move this before `ident_cmp()`, to avoid
-> unneeded calls ("is the ident the same? no? well, thank you for your
-> answer but I'll insert the header anyway!").
-
-I tend to prefer adding new things at the end when all things are
-equal, but in this case the new thing is an overriding condition, so
-it does make sense to have it before the call.
-
->> diff --git a/revision.h b/revision.h
->> index bb91e7ed91..a2d3813a21 100644
->> --- a/revision.h
->> +++ b/revision.h
->> @@ -208,6 +208,7 @@ struct rev_info {
->>
->>  	/* Format info */
->>  	int		show_notes;
->> +	unsigned int	force_inbody_from;
->
-> The reason why this isn't added to the `:1` bits below is probably the
-> anticipation of the tri-state, but if that tri-state never materializes,
-> adding it as a bit is still the right thing to do.
-
-It might make sense to turn this into the common "Boolean plus auto"
-tristate, but the utility of "no" in this case is dubious, so I was
-not planning to go that route.
-
-This member is a full fledged word because the address of it given
-to OPT_BOOL(), and we cannot take an address of a bitfield member in
-a struct.
-
-Bit-pinching in this struct is not very useful.  Even if we traverse
-a million commits in a single run, we will use a single "struct
-rev_info" instance.
-
-Thanks for reading it over.
+In any case, such a change belongs to either preliminary clean-up
+before the series, or post clean-up after the dust settles, not
+something we'd want to see "while we are at it" to distract us.
