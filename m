@@ -2,172 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87E04ECAAD5
-	for <git@archiver.kernel.org>; Sun, 28 Aug 2022 21:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F103ECAAA2
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 02:48:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229457AbiH1Vlx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Aug 2022 17:41:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34910 "EHLO
+        id S229468AbiH2CsO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Aug 2022 22:48:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbiH1Vlw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Aug 2022 17:41:52 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC2FF13FA1
-        for <git@vger.kernel.org>; Sun, 28 Aug 2022 14:41:50 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 6BA645A26C;
-        Sun, 28 Aug 2022 21:41:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1661722909;
-        bh=/P9bcJObTotj/qSX4jbFZrcs1DF94NMEfzYz6ewu6og=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=qdyJ8ez7pD3TIVLweJ3l3MptTdE3C1+bk6LTHZ5EuoR0y1Qnq850JlPfvOYd/cbs9
-         aSV4+PgbcrqiiPe4RNDfwWhS+pjHhDFqYscL13dfQagk/v0hMCD4MFR6AmmiqQ9abQ
-         vCY6TpnHL9b3fcQ7oU6ySXxrXzo0f54vWWT5nHoNozGdMhMCSMMReV+DIVpqpikfNK
-         sTCda4zjcRCxFRkqOCgdR16u6cST5xwNHUNsyI8shX2tjnEoOt0+Nzh/2sa+g+USpV
-         8XW4CzamCNfsnCqBH/uK/SVaMEkTb1cZfCH3mfKUIP9ASUP4Mi6r7y2IgTJvrqZAXw
-         vUw2KcWQS74pYJycD8Vw7saMmhMxgG6zimG3gMOdgGao94XAN3d+iecBOcrDlEV57g
-         4h7eezk5hrPyhP3/rXSO3qd7S1ku+f98OVEPJnG5alUZYnFDET2jPA/wrNnX6FYH7j
-         0Ted1DWTmtN2eLgwwx1gd9zWYj2SfGHFGdgrQlB9aVEMApmH22z
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Renato Botelho <garga@FreeBSD.org>
-Subject: [PATCH v2] gc: use temporary file for editing crontab
-Date:   Sun, 28 Aug 2022 21:41:43 +0000
-Message-Id: <20220828214143.754759-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.37.2.609.g9ff673ca1a
-In-Reply-To: <20220823010120.25388-1-sandals@crustytoothpaste.net>
-References: <20220823010120.25388-1-sandals@crustytoothpaste.net>
+        with ESMTP id S229379AbiH2CsM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Aug 2022 22:48:12 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31EFE33A24
+        for <git@vger.kernel.org>; Sun, 28 Aug 2022 19:48:12 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id 76so6910637pfy.3
+        for <git@vger.kernel.org>; Sun, 28 Aug 2022 19:48:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc;
+        bh=5UpLxzOFQ7wudio7mfSh08tWPvB/lmHmd8w4NxP7Zx0=;
+        b=fDUlh46oJEBDbugeYewy+86LrOJWgJdUMF7KG8e3e3s7uPwpEm1alhgsB2KnF4VFJx
+         LSBEN108YN5/dzOqpoHzJ8NnMHskeSJuSb0lDZlzGUneCva8SgZJn8JoSZvi+aX2vLWg
+         9W6ouhNbYf0BazTNO5VslUHojBuWItmmds49eNUSD/ioJf8v4JnsCPBNui2RfqzVlema
+         69MQfdoSlBKPCoX4Kp0kFVSP5IiuI5egK+T1vsg7xfhIpaVQ3uqsQf5ovfKfIhWXbsHa
+         V7LM7W8msZZH/WJIch6ddhBaNJMqUbWRlQ/1odaF9Z92vjX5Ik7EHbaQhL9g+QIzqjb4
+         Gp7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=5UpLxzOFQ7wudio7mfSh08tWPvB/lmHmd8w4NxP7Zx0=;
+        b=TjmuOavXP/os9FQ3HDD7VxyaWwMbrdcXupgBNn8eo8jcxFHBDNVZ+2Akt5hR8IJgAb
+         ieytkX8twrSJrRk9Po/w6EhmapypVPtyb7SLKPYhCZRzpY4jJGyN11JYEelndyF4auKb
+         x1aUOtH0KmRKmi0E9UBnK7spgaicDjT6C3uHvvmtxhgeH8CQvVSBgZsObJ3nopHqTQsi
+         +e5olalc1qPcdkHB/BJAS8AxmRDFcY7/+KDBaXHuck1IZEYbt1fYwfLH3/v7rHg9wviN
+         rU5tvsjJS/gnLCk08XJ4OrrpbQE3XtJJod5c6IoHskCfCt8Udhyy8lCPRS2AcmJQbKRa
+         4eaQ==
+X-Gm-Message-State: ACgBeo0Tag/FINx7OVadKcK8ZUedOsbP4VznUGgAJ5thG0NlaHlhCMXJ
+        tWm3EPQgDj6iOZQnn3+vADU=
+X-Google-Smtp-Source: AA6agR4fL0k/veRJz3hfBlsx8y0E6+kDoZ+FWvtw+mYlqno/criml195HIhMWocKG27aPniv9UyPiw==
+X-Received: by 2002:a63:f709:0:b0:42b:399:f197 with SMTP id x9-20020a63f709000000b0042b0399f197mr11879660pgh.382.1661741291678;
+        Sun, 28 Aug 2022 19:48:11 -0700 (PDT)
+Received: from localhost.localdomain ([205.204.117.103])
+        by smtp.gmail.com with ESMTPSA id n2-20020a170902e54200b0016d1bee1519sm6127835plf.102.2022.08.28.19.48.08
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 28 Aug 2022 19:48:10 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     gitster@pobox.com
+Cc:     avarab@gmail.com, derrickstolee@github.com, dyroneteng@gmail.com,
+        git@vger.kernel.org, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH 0/1] pack-bitmap.c: avoid exposing absolute paths
+Date:   Mon, 29 Aug 2022 10:48:03 +0800
+Message-Id: <20220829024803.47496-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.37.1.210.g6a6f1a04889.dirty
+In-Reply-To: <xmqqtu5zyndk.fsf@gitster.g>
+References: <xmqqtu5zyndk.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While cron is specified by POSIX, there are a wide variety of
-implementations in use.  On FreeBSD, the cron implementation requires a
-file name argument: if the user wants to edit standard input, they must
-specify "-".  However, this notation is not specified by POSIX, allowing
-the possibility that making such a change may break other, less common
-implementations.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Since POSIX tells us that cron must accept a file name argument, let's
-solve this problem by specifying a temporary file instead.  This will
-ensure that we work with the vast majority of implementations.
+> Doesn't it make it harder to diagnose where the extra bitmap file
+> you do not need exists (so that you can check if you can/want
+> to/need to remove it)?
 
-Note that because delete_tempfile closes the file for us, we should not
-call fclose here on the handle, since doing so will introduce a double
-free.
+Yes, if we want that warnings for diagnosing we shouldn't remove the related
+path but I think it should build on the security concerns. I don't mean that
+to warning the packfile name in a absolute path is a danger, but when serving
+a git server maybe we don't want to expose the real path information on server
+to client users.
 
-Reported-by: Renato Botelho <garga@FreeBSD.org>
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
-Changes from v1:
+> If the "ignoring extra" is a totally expected situation (e.g. it is
+> not suprising if we always ignore the bitmapfile in the alternate
+> when we have our own), perhaps we should squelch the warning in such
+> expected cases altogether (while warning other cases where we see
+> more bitmap files than we expect to see, which may be an anomaly
+> worth warning about), and that may be an improvement worth spending
+> development cycles on, but I am not sure about this one.
 
-* Use `goto out;` in additional places.
-* Fix broken test.
-* Use `delete_tempfile`.
-* Improve commit message to mention `fclose` rationale.
+That's exactly good suggestion. In my opinion, I think to avoid the sensitive
+warning and the same time we keep some information to let the users know "Oh,
+there are some extra existing bitmaps we just ignored then maybe can do some
+optimization works", but I think just remove the total warning here is
+reasonable also, i'm good with it.
 
- builtin/gc.c            | 39 +++++++++++++++++++++++----------------
- t/helper/test-crontab.c |  4 ++--
- 2 files changed, 25 insertions(+), 18 deletions(-)
-
-diff --git a/builtin/gc.c b/builtin/gc.c
-index eeff2b760e..0d9e6dabef 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -2065,6 +2065,7 @@ static int crontab_update_schedule(int run_maintenance, int fd)
- 	struct child_process crontab_edit = CHILD_PROCESS_INIT;
- 	FILE *cron_list, *cron_in;
- 	struct strbuf line = STRBUF_INIT;
-+	struct tempfile *tmpedit = NULL;
- 
- 	get_schedule_cmd(&cmd, NULL);
- 	strvec_split(&crontab_list.args, cmd);
-@@ -2079,6 +2080,17 @@ static int crontab_update_schedule(int run_maintenance, int fd)
- 	/* Ignore exit code, as an empty crontab will return error. */
- 	finish_command(&crontab_list);
- 
-+	tmpedit = mks_tempfile_t(".git_cron_edit_tmpXXXXXX");
-+	if (!tmpedit) {
-+		result = error(_("failed to create crontab temporary file"));
-+		goto out;
-+	}
-+	cron_in = fdopen_tempfile(tmpedit, "w");
-+	if (!cron_in) {
-+		result = error(_("failed to open temporary file"));
-+		goto out;
-+	}
-+
- 	/*
- 	 * Read from the .lock file, filtering out the old
- 	 * schedule while appending the new schedule.
-@@ -2086,19 +2098,6 @@ static int crontab_update_schedule(int run_maintenance, int fd)
- 	cron_list = fdopen(fd, "r");
- 	rewind(cron_list);
- 
--	strvec_split(&crontab_edit.args, cmd);
--	crontab_edit.in = -1;
--	crontab_edit.git_cmd = 0;
--
--	if (start_command(&crontab_edit))
--		return error(_("failed to run 'crontab'; your system might not support 'cron'"));
--
--	cron_in = fdopen(crontab_edit.in, "w");
--	if (!cron_in) {
--		result = error(_("failed to open stdin of 'crontab'"));
--		goto done_editing;
--	}
--
- 	while (!strbuf_getline_lf(&line, cron_list)) {
- 		if (!in_old_region && !strcmp(line.buf, BEGIN_LINE))
- 			in_old_region = 1;
-@@ -2132,14 +2131,22 @@ static int crontab_update_schedule(int run_maintenance, int fd)
- 	}
- 
- 	fflush(cron_in);
--	fclose(cron_in);
--	close(crontab_edit.in);
- 
--done_editing:
-+	strvec_split(&crontab_edit.args, cmd);
-+	strvec_push(&crontab_edit.args, get_tempfile_path(tmpedit));
-+	crontab_edit.git_cmd = 0;
-+
-+	if (start_command(&crontab_edit)) {
-+		result = error(_("failed to run 'crontab'; your system might not support 'cron'"));
-+		goto out;
-+	}
-+
- 	if (finish_command(&crontab_edit))
- 		result = error(_("'crontab' died"));
- 	else
- 		fclose(cron_list);
-+out:
-+	delete_tempfile(&tmpedit);
- 	return result;
- }
- 
-diff --git a/t/helper/test-crontab.c b/t/helper/test-crontab.c
-index e7c0137a47..2942543046 100644
---- a/t/helper/test-crontab.c
-+++ b/t/helper/test-crontab.c
-@@ -17,8 +17,8 @@ int cmd__crontab(int argc, const char **argv)
- 		if (!from)
- 			return 0;
- 		to = stdout;
--	} else if (argc == 2) {
--		from = stdin;
-+	} else if (argc == 3) {
-+		from = fopen(argv[2], "r");
- 		to = fopen(argv[1], "w");
- 	} else
- 		return error("unknown arguments");
+Thanks.
