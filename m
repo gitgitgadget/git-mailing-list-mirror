@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C6AFECAAD4
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 20:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45CC0ECAAD8
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 20:54:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229683AbiH2Uy0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 16:54:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52218 "EHLO
+        id S229691AbiH2Uy1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 16:54:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229659AbiH2UyX (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229663AbiH2UyX (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 29 Aug 2022 16:54:23 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E9EA81B20
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 13:54:21 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id s23so4815227wmj.4
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 13:54:21 -0700 (PDT)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22C2582845
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 13:54:22 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id k17so4820940wmr.2
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 13:54:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=VBmlkK5/i+WZz4kX9tb0g/+bYeVRK7sjPeTnmm/LLl0=;
-        b=dcXijBNJ/LSblEe40i4HjsT1qgRMVPYq93vWRO0/08bLENk7Lt8GcCoWn+nLK3f7xj
-         CIB2RYfpTBG3ayOgv3kS3Q70mL/bYAqBoABtU1JJ6WSVn5eAm+PrFJkRxCuSfAVDUB/j
-         o5R+xWGbDJJd11jOMB7BooygbV1P1fqEN5/b60ugHJn0jD80QdQMr9/nV2fh2tcGFppe
-         2cnxLtHfdtQGM8JkIxM8lPVpF/tcPlqYajH0WFN0nyN5zhDsMumTg9r2F2nnSsrEw7rJ
-         8B04NiqrFC2O/xOkZLWStiGUUMZNRlDFyXC2nDt6syAkI4cCPtrWbKVICd/c8PaCAaGz
-         HLYg==
+        bh=dVT4Komgau6X4o+PgTxTUfj/QefvKOJ79AQA8TUj2zQ=;
+        b=VsHRjFNFrYGVTHxVZHkrCWeDcRiW8yXLVuuNs4JMYHNFMT49qzDc4O5gGTEq+JXzul
+         pAjzWqJhPq+W5aItOD++UJupeZBnL+3UzeVR41bkKxm+uF1MnGWnuBDaeaMHhI41b1R2
+         OGIS2sLvt3HyPyPMeKl/7xEjUWn1QIXrBHF0qzMrJ0+qqUWijTSpnKxVEl/e3s2W/Kp7
+         0SFc1nWri23x6TMpHi05EfnvY6pG1PmxEhCaWRDWedblMzIOJheHwleBHoRaaQpywNtt
+         hEi1+oC9cjeROyr7QnasR+Bsjr2TkeSVx/L1UVrD0sKfUrwB3SFF+XHMgNA9gJQdhPWZ
+         J0Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=VBmlkK5/i+WZz4kX9tb0g/+bYeVRK7sjPeTnmm/LLl0=;
-        b=b/rLYPRuSADgsK86G0wa15tgLmPn5qiOFo2A3bKQpJHH7qHmUUA72cIx+hSgXP/bvK
-         9zqC/UT7eAcM3lejk36sZWB8KF/owM5RW6wEQUumY2DTvsi+DMudQZAiXmWE0CNggfOQ
-         GTKORzKYy7IcepieT7VSNzkD+lQBY8WsVAPzMtNq9ryTc4AnpA3zxOfp+QYmle2r+tkE
-         +nXqk3a6TzD+XCN5CzoGHdHLGhIEvTq//3j/x8aFdRzOuqsNX4eZ+BFhT29gYN9TP4+B
-         3x7IhxmzvNkZPNs1U0NMxrxy5fJwtcL6qsJwN5XKAfLODtP+xavVBc0Kq0wqEr6wToXV
-         Zp7g==
-X-Gm-Message-State: ACgBeo3gyU9BIcyo6x1Q7oKYwhD/NHp5TeuS3jtKFMc741XlVkg4SqXV
-        5pD/Y6ySL3dFVeRYvwrWHYDUldPPcpo=
-X-Google-Smtp-Source: AA6agR7aPrgfvpcjy56Ep/RDYNL7YDTBfaFcqJCfI9EYJGoXG4YnxJCbyrkMrrcgsvyVemYDM8ZA1w==
-X-Received: by 2002:a05:600c:34c5:b0:3a5:fd9d:7b2b with SMTP id d5-20020a05600c34c500b003a5fd9d7b2bmr7848653wmq.1.1661806459632;
-        Mon, 29 Aug 2022 13:54:19 -0700 (PDT)
+        bh=dVT4Komgau6X4o+PgTxTUfj/QefvKOJ79AQA8TUj2zQ=;
+        b=nfajSEadvkAPkBmdowHyJXHrfOuqHKi3dvFDQ+TFeowBh9iGin/SvmLs6wyuO26+Nm
+         RucOydH/5kqKhanfFNfQgMEaquXSgahcjCv0OjNgyltgHn1Dz6qUk8EfcP4CFc/U4RBH
+         p0BUqgK+Ib/+68R9tw09RE+2e4lJZ6kOueZ4GDDa09WSH8tuCw0bCXbopQQjpEFxlwR1
+         9tClPP+zDdML0GE4h6VlnTcm6negZolFVB+Jy2JDTS4MAhT68h/pxklq8NiyBd2iKQqD
+         vS8KXbWUFLkyPxv0JfMGrNymimmS3cSsIygnvu+V/ZubUVCYGG+KR7kuBHWtl9zAM3qB
+         kjHg==
+X-Gm-Message-State: ACgBeo02lbG0ix0RSCwHt8N+jxlFgW7x5Db6RJBVtDty9g5GnXv2rtFx
+        qYf7AToa6oYMZ3QZwNXXendqD2/VPko=
+X-Google-Smtp-Source: AA6agR4D39Kgq3gG6BvkXQHIohr8pWSfHujf/UCzHKCBTVAQTRYrjxrVta8Q6T3JVrrM57ChK5JyAw==
+X-Received: by 2002:a05:600c:3ac3:b0:3a5:e1de:5994 with SMTP id d3-20020a05600c3ac300b003a5e1de5994mr7896424wms.133.1661806460477;
+        Mon, 29 Aug 2022 13:54:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n5-20020a05600c3b8500b003a319b67f64sm407366wms.0.2022.08.29.13.54.19
+        by smtp.gmail.com with ESMTPSA id i10-20020a1c3b0a000000b003a601707174sm10221990wma.33.2022.08.29.13.54.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 13:54:19 -0700 (PDT)
-Message-Id: <35f068eb0318653ee0474b30d3420d210f47f8e4.1661806456.git.gitgitgadget@gmail.com>
+        Mon, 29 Aug 2022 13:54:20 -0700 (PDT)
+Message-Id: <d8a2faf9ce7de2562424181109120a6d84b0e470.1661806456.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1321.git.git.1661806456.gitgitgadget@gmail.com>
 References: <pull.1321.git.git.1661806456.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 29 Aug 2022 20:54:12 +0000
-Subject: [PATCH 2/6] repo-settings: add submodule_propagate_branches
+Date:   Mon, 29 Aug 2022 20:54:13 +0000
+Subject: [PATCH 3/6] t5617: drop references to remote-tracking branches
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,164 +67,32 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-When processes recurse into submodules, the child processes have to
-use the same value of "submodule.propagateBranches" as the parent
-process regardless of whether the process is spawned in the superproject
-or submodule, otherwise the behavior may be inconsistent if the
-repositories don't agree on the config.
-
-We haven't needed a way to propagate the config because because the only
-command that reads "submodule.propagateBranches" is "git branch", which
-only has one mode of operation with "--recurse-submodules". However, a
-future commit will teach "submodule.propagateBranches" to "git submodule
-update", making this necessary.
-
-Propagate "submodule.propagateBranches" to child processes by adding a
-corresponding GIT_INTERNAL_* environment variable and repository
-setting, and setting the environment variable inside
-prepare_submodule_repo_env(). Then, refactor builtin/branch.c to read
-the repository setting.
-
-Using an internal environment variable is a potentially leaky
-abstraction because environment variables can come from sources besides
-the parent process. A more robust solution would be to teach Git that
-the repository is a submodule and to only read
-"submodule.propagateBranches" from the superproject config. There is WIP
-for this on the ML [1].
-
-Another alternative would be to pass "-c submodule.propagateBranches" to
-all child processes. This is error-prone because many different
-processes are invoked directly or indirectly by "git submodule update"
-(e.g. "git submodule--helper clone", "git clone", "git checkout"). With
-an environment variable, we can avoid this work because
-prepare_submodule_repo_env() is already called for submodule child
-processes.
-
-[1] https://lore.kernel.org/git/20220310004423.2627181-1-emilyshaffer@google.com/
+It has included submodule cloning tests without remote-tracking branches
+tests since f05da2b48b (clone, submodule: pass partial clone filters to
+submodules, 2022-02-04) at least. Rename it accordingly so that we can
+put future submodule cloning tests there.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/branch.c | 11 +++--------
- cache.h          |  1 +
- repo-settings.c  | 11 ++++++-----
- repository.h     |  1 +
- submodule.c      |  2 ++
- 5 files changed, 13 insertions(+), 13 deletions(-)
+ ...617-clone-submodules-remote.sh => t5617-clone-submodules.sh} | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+ rename t/{t5617-clone-submodules-remote.sh => t5617-clone-submodules.sh} (97%)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 55cd9a6e998..1201e41ef8c 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -40,7 +40,6 @@ static const char * const builtin_branch_usage[] = {
- static const char *head;
- static struct object_id head_oid;
- static int recurse_submodules = 0;
--static int submodule_propagate_branches = 0;
+diff --git a/t/t5617-clone-submodules-remote.sh b/t/t5617-clone-submodules.sh
+similarity index 97%
+rename from t/t5617-clone-submodules-remote.sh
+rename to t/t5617-clone-submodules.sh
+index ca8f80083a2..b5c66cb18cb 100755
+--- a/t/t5617-clone-submodules-remote.sh
++++ b/t/t5617-clone-submodules.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
  
- static int branch_use_color = -1;
- static char branch_colors[][COLOR_MAXLEN] = {
-@@ -106,10 +105,6 @@ static int git_branch_config(const char *var, const char *value, void *cb)
- 		recurse_submodules = git_config_bool(var, value);
- 		return 0;
- 	}
--	if (!strcasecmp(var, "submodule.propagateBranches")) {
--		submodule_propagate_branches = git_config_bool(var, value);
--		return 0;
--	}
+-test_description='Test cloning repos with submodules using remote-tracking branches'
++test_description='Test cloning repos with submodules'
  
- 	return git_color_default_config(var, value, cb);
- }
-@@ -714,7 +709,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
- 			     0);
--
-+	prepare_repo_settings(the_repository);
- 	if (!delete && !rename && !copy && !edit_description && !new_upstream &&
- 	    !show_current && !unset_upstream && argc == 0)
- 		list = 1;
-@@ -730,7 +725,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_branch_usage, options);
- 
- 	if (recurse_submodules_explicit) {
--		if (!submodule_propagate_branches)
-+		if (!the_repository->settings.submodule_propagate_branches)
- 			die(_("branch with --recurse-submodules can only be used if submodule.propagateBranches is enabled"));
- 		if (noncreate_actions)
- 			die(_("--recurse-submodules can only be used to create branches"));
-@@ -738,7 +733,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 
- 	recurse_submodules =
- 		(recurse_submodules || recurse_submodules_explicit) &&
--		submodule_propagate_branches;
-+		the_repository->settings.submodule_propagate_branches;
- 
- 	if (filter.abbrev == -1)
- 		filter.abbrev = DEFAULT_ABBREV;
-diff --git a/cache.h b/cache.h
-index 302810b353a..023f8feba42 100644
---- a/cache.h
-+++ b/cache.h
-@@ -505,6 +505,7 @@ static inline enum object_type object_type(unsigned int mode)
- #define GIT_WORK_TREE_ENVIRONMENT "GIT_WORK_TREE"
- #define GIT_PREFIX_ENVIRONMENT "GIT_PREFIX"
- #define GIT_SUPER_PREFIX_ENVIRONMENT "GIT_INTERNAL_SUPER_PREFIX"
-+#define GIT_SUBMODULE_PROPAGATE_BRANCHES_ENVIRONMENT "GIT_INTERNAL_SUBMODULE_PROPAGATE_BRANCHES"
- #define DEFAULT_GIT_DIR_ENVIRONMENT ".git"
- #define DB_ENVIRONMENT "GIT_OBJECT_DIRECTORY"
- #define INDEX_ENVIRONMENT "GIT_INDEX_FILE"
-diff --git a/repo-settings.c b/repo-settings.c
-index 43bc881bfc9..2fde9bcdbf6 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -60,16 +60,17 @@ void prepare_repo_settings(struct repository *r)
- 	repo_cfg_bool(r, "pack.usesparse", &r->settings.pack_use_sparse, 1);
- 	repo_cfg_bool(r, "core.multipackindex", &r->settings.core_multi_pack_index, 1);
- 	repo_cfg_bool(r, "index.sparse", &r->settings.sparse_index, 0);
-+	repo_cfg_bool(r, "submodule.propagateBranches", &r->settings.submodule_propagate_branches, 0);
- 
- 	/*
--	 * The GIT_TEST_MULTI_PACK_INDEX variable is special in that
--	 * either it *or* the config sets
--	 * r->settings.core_multi_pack_index if true. We don't take
--	 * the environment variable if it exists (even if false) over
--	 * any config, as in most other cases.
-+	 * Boolean settings from config and environment variables. Only
-+	 * take the environment variable if it is true, otherwise, use
-+	 * the config.
- 	 */
- 	if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0))
- 		r->settings.core_multi_pack_index = 1;
-+	if (git_env_bool(GIT_SUBMODULE_PROPAGATE_BRANCHES_ENVIRONMENT, 0))
-+		r->settings.submodule_propagate_branches = 1;
- 
- 	/*
- 	 * Non-boolean config
-diff --git a/repository.h b/repository.h
-index 797f471cce9..bf36b9ee6d7 100644
---- a/repository.h
-+++ b/repository.h
-@@ -36,6 +36,7 @@ struct repo_settings {
- 	int fetch_write_commit_graph;
- 	int command_requires_full_index;
- 	int sparse_index;
-+	int submodule_propagate_branches;
- 
- 	struct fsmonitor_settings *fsmonitor; /* lazily loaded */
- 
-diff --git a/submodule.c b/submodule.c
-index 3fa5db3ecdf..510c1b04a76 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -504,6 +504,8 @@ static void print_submodule_diff_summary(struct repository *r, struct rev_info *
- 
- void prepare_submodule_repo_env(struct strvec *out)
- {
-+	if (the_repository->settings.submodule_propagate_branches)
-+		strvec_pushf(out, "%s=1", GIT_SUBMODULE_PROPAGATE_BRANCHES_ENVIRONMENT);
- 	prepare_other_repo_env(out, DEFAULT_GIT_DIR_ENVIRONMENT);
- }
- 
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 -- 
 gitgitgadget
 
