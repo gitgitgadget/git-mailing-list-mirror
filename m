@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CABCECAAD2
-	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 21:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E731ECAAD8
+	for <git@archiver.kernel.org>; Mon, 29 Aug 2022 21:38:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229770AbiH2Viu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 29 Aug 2022 17:38:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54658 "EHLO
+        id S229776AbiH2Viw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 29 Aug 2022 17:38:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229813AbiH2Vil (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Aug 2022 17:38:41 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A816D816B2
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 14:38:40 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id q15so4087442pfn.11
-        for <git@vger.kernel.org>; Mon, 29 Aug 2022 14:38:40 -0700 (PDT)
+        with ESMTP id S229819AbiH2Vim (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Aug 2022 17:38:42 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85D7781B28
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 14:38:41 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id x23so9234808pll.7
+        for <git@vger.kernel.org>; Mon, 29 Aug 2022 14:38:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:sender:from:to:cc:subject:date;
-        bh=j/MfIrQY4laDXr69h8Jg/zDjk2oNKxg1wyWNe1Ccfjc=;
-        b=lXOSXCk3GelFzIljLJgC/ebHdKJlI5MsvnwhjGH0i3yeh0fyvX5C+WKdyCVcEF7by3
-         r7C1aDpA/ugOGyzDeFYe7xo5yZqf5xkYvx2kCoB5f9TKAZPXHPcYV3ZtQUOxxMnyAB4X
-         r2bq+XV4zIZ+Qr0t366TY1T+9GxEhqtCAnHEgH96uyjggqaGFmECLdwygvQ2LfN9TrHd
-         DTV+ctQggLz+14w1EnhZKcV/EJx5TYbOJdNA2F85PgTLTOO9TQwyMcQwrvoiDpkwgLRw
-         F10+C1XNAaVYNm4G6kL8y3fjKjWL+tR1V4REe3SskLl/s1bLJHWND+mhu5mw+GoqXLTl
-         nY3w==
+        bh=1n6L7d08RFYkk44tzzGfXzVIq5piqiUIfxM2dcOtShE=;
+        b=aSVnW9aqmTi8PiCSOcZx3tHuL3AUrt6bsYunMVpiswKW6XeRtTckbrfAC1W7wdDmEF
+         TvdSS9DXlFtiPQ7uiz2iimYmosXvY0blBoUGClXKRYbGLwklj9wP3VnbVimuGOkbtYvu
+         OY70UAViNC7uM2KVuWqzOf2kTAMzFKB06ouHRPFo0gJXSl7L03TY5kKZKlQnSWluvcjm
+         Kdbc0l4+triV/XZ6uz1rcNNxvMDPuLQ7SActqboynlsCZnGKsauidG3Hn2l/1aholHe0
+         ez3VZmAICo8TK/Ks4XvTgcQiRCgKYOUmF7e08EM8Q7ZV782gh4UCqvpzSvOL0N6FB+C7
+         fJJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:sender:x-gm-message-state:from:to
          :cc:subject:date;
-        bh=j/MfIrQY4laDXr69h8Jg/zDjk2oNKxg1wyWNe1Ccfjc=;
-        b=mmXe5cymCu6jIfeTZv26FiAyzNf+PJ0raBPXqLZhzClR3CMkwZycOfWzR2/rF/TV0J
-         f1N/oEhHMkLrKEeNrMt/VMxEa8pZ2gMeSH5b6wyTGakslkpqLMTVj5yfuHkRZbbo9966
-         kn6qHnIGyil6tTvzfvNVbnBiV0M61PwqBAqcllxbbfXP+V2uJc9leJfC3GtM3xKTbKk8
-         88f08r6fFQYXmA9JWwmCs4GntPdkV6ftdw+YixDPKupVPgqgVXDAPCJ2Z2fWF+TojUyy
-         Bi2eXTXHulEZvTdt5aqAs7baOXEqxDpAB7u9tltLjqKS+Y4z/ukB+qGkVaNxXi7fERHo
-         W4gw==
-X-Gm-Message-State: ACgBeo2H+eM4CpyXiRg23C4Q8VPeY0Q3JbyLohyADqm8QenaCxkAZKEO
-        /w9xPXRYg8j3szS0bW3nmqBZFhZKbDc=
-X-Google-Smtp-Source: AA6agR6JFPxpm4Jqsg2M70FqGDr6yQBaf/ug7g6R8YiBVb39c9oDo2r8G+xBeA+c4JbJwaDyuTlLjA==
-X-Received: by 2002:a65:6491:0:b0:42a:c39a:e58e with SMTP id e17-20020a656491000000b0042ac39ae58emr15221797pgv.68.1661809119810;
-        Mon, 29 Aug 2022 14:38:39 -0700 (PDT)
+        bh=1n6L7d08RFYkk44tzzGfXzVIq5piqiUIfxM2dcOtShE=;
+        b=wvoX4b+VrJVpiITg8wnLeWZKdzWxH+/xwsOIKF5pIm799nf7mQZUX0O4aiyt2erzse
+         u1QJ9bV9uwAAq9ASefJO7/a2xOHA+UEkcGvWS3aJ+opnHvNP4iGUNVFjw/LDDh5ITMnE
+         1Zkf3Smf0gN4dX8SylH0VpTExHWz1pgiRYF0sZ28PHLm0FViETU1Q4Pm3XOn+JzLY6qe
+         Y8aCj9f/dlmG7KQELdnnBGmPT1nQAxmuf3W4y7qUhmDmZM+FWHyQPTwzJQOXjtHnnodq
+         NoY9y+ATjH9gRDFcmwnMMitHr8xn8reJkbnx9HSXRR3W+9NF2lo/c/LexakRdTiW7JeU
+         mQCA==
+X-Gm-Message-State: ACgBeo2rm3YdKHyxd4/Z1b+vreSUDZHP9wNnKHN1ZbVwlDF+PoK3BbMO
+        u3dj8JUp8wvBY7uoeXnnMAk1bpLIDgQ=
+X-Google-Smtp-Source: AA6agR5JhPfJAT8mHIS/A6Qbr+eTWR/vWPLpn2LlBma9cMIRfeLoU9FkcfHtvslwRa4OauV2pFq0sQ==
+X-Received: by 2002:a17:902:8ec8:b0:173:12cb:e6c1 with SMTP id x8-20020a1709028ec800b0017312cbe6c1mr18131107plo.64.1661809120753;
+        Mon, 29 Aug 2022 14:38:40 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id w85-20020a627b58000000b00535d094d6ecsm7775014pfc.108.2022.08.29.14.38.38
+        by smtp.gmail.com with ESMTPSA id o7-20020a170902d4c700b0017509940418sm631736plg.79.2022.08.29.14.38.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Aug 2022 14:38:38 -0700 (PDT)
+        Mon, 29 Aug 2022 14:38:40 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v2 2/3] format-patch: allow forcing the use of in-body From: header
-Date:   Mon, 29 Aug 2022 14:38:36 -0700
-Message-Id: <20220829213837.13849-3-gitster@pobox.com>
+Subject: [PATCH v2 3/3] format-patch: learn format.forceInBodyFrom configuration variable
+Date:   Mon, 29 Aug 2022 14:38:37 -0700
+Message-Id: <20220829213837.13849-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.37.2-621-gd3a800faf0
 In-Reply-To: <20220829213837.13849-1-gitster@pobox.com>
 References: <20220826213203.3258022-1-gitster@pobox.com>
@@ -65,117 +65,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Users may be authoring and committing their commits under the same
-e-mail address they use to send their patches from, in which case
-they shouldn't need to use the in-body From: line in their outgoing
-e-mails.  At the receiving end, "git am" will use the address on the
-"From:" header of the incoming e-mail and all should be well.
+As the need to use the "--force-in-body-from" option primarily is
+tied to which mailing list the mails go to (and get their From:
+address mangled), it is likely that a user who needs to use this
+option once to interact with their upstream project needs to use it
+for all patches they send out.
 
-Some mailing lists, however, mangle the From: address from what the
-original sender had; in such a situation, the user may want to add
-the in-body "From:" header even for their own patches.
-
-"git format-patch --[no-]force-in-body-from" was invented for such
-users.
+Add a configuration variable, suitable for setting in the local
+configuration file per repository, for this.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-format-patch.txt |  9 +++++++++
- builtin/log.c                      |  5 +++++
- pretty.c                           |  2 ++
- revision.h                         |  1 +
- t/t4014-format-patch.sh            | 13 +++++++++++++
- 5 files changed, 30 insertions(+)
+ Documentation/config/format.txt    |  4 ++++
+ Documentation/git-format-patch.txt |  2 ++
+ builtin/log.c                      |  4 ++++
+ t/t4014-format-patch.sh            | 24 ++++++++++++++++++++++++
+ 4 files changed, 34 insertions(+)
 
+diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
+index fdbc06a4d2..c7303d8d9f 100644
+--- a/Documentation/config/format.txt
++++ b/Documentation/config/format.txt
+@@ -15,6 +15,10 @@ format.from::
+ 	different.  If set to a non-boolean value, format-patch uses that
+ 	value instead of your committer identity.  Defaults to false.
+ 
++format.forceInBodyFrom::
++	Provides the default value for the `--[no-]force-in-body-from`
++	option to format-patch.  Defaults to false.
++
+ format.numbered::
+ 	A boolean which can enable or disable sequence numbers in patch
+ 	subjects.  It defaults to "auto" which enables it only if there
 diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index be797d7a28..7c7f244e57 100644
+index 7c7f244e57..dfcc7da4c2 100644
 --- a/Documentation/git-format-patch.txt
 +++ b/Documentation/git-format-patch.txt
-@@ -275,6 +275,15 @@ header). Note also that `git send-email` already handles this
- transformation for you, and this option should not be used if you are
- feeding the result to `git send-email`.
+@@ -283,6 +283,8 @@ feeding the result to `git send-email`.
+ 	the in-body "From:" is added even when the sender and the
+ 	author have the same name and address, which may help if the
+ 	mailing list software mangles the sender's identity.
++	Defaults to the value of the `format.forceInBodyFrom`
++	configuration variable.
  
-+--[no-]force-in-body-from::
-+	With the e-mail sender specified via the `--from` option, by
-+	default, an in-body "From:" to identify the real author of
-+	the commit is added at the top of the commit log message if
-+	the sender is different from the author.  With this option,
-+	the in-body "From:" is added even when the sender and the
-+	author have the same name and address, which may help if the
-+	mailing list software mangles the sender's identity.
-+
  --add-header=<header>::
  	Add an arbitrary header to the email headers.  This is in addition
- 	to any configured headers, and may be used multiple times.
 diff --git a/builtin/log.c b/builtin/log.c
-index 9b937d59b8..78ccd37bd9 100644
+index 78ccd37bd9..776bc9afdb 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -52,6 +52,7 @@ static int default_encode_email_headers = 1;
- static int decoration_style;
- static int decoration_given;
- static int use_mailmap_config = 1;
-+static unsigned int force_in_body_from;
- static const char *fmt_patch_subject_prefix = "PATCH";
- static int fmt_patch_name_max = FORMAT_PATCH_NAME_MAX_DEFAULT;
- static const char *fmt_pretty;
-@@ -1897,6 +1898,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			   N_("show changes against <refspec> in cover letter or single patch")),
- 		OPT_INTEGER(0, "creation-factor", &creation_factor,
- 			    N_("percentage by which creation is weighted")),
-+		OPT_BOOL(0, "force-in-body-from", &force_in_body_from,
-+			 N_("show in-body From: even if identical to the e-mail header")),
- 		OPT_END()
- 	};
- 
-@@ -1940,6 +1943,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN |
- 			     PARSE_OPT_KEEP_DASHDASH);
- 
-+	rev.force_in_body_from = force_in_body_from;
-+
- 	/* Make sure "0000-$sub.patch" gives non-negative length for $sub */
- 	if (fmt_patch_name_max <= strlen("0000-") + strlen(fmt_patch_suffix))
- 		fmt_patch_name_max = strlen("0000-") + strlen(fmt_patch_suffix);
-diff --git a/pretty.c b/pretty.c
-index cf418a6b20..b7553e3fe0 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -480,6 +480,8 @@ static void append_line_with_color(struct strbuf *sb, struct grep_opt *opt,
- static int use_in_body_from(const struct pretty_print_context *pp,
- 			    const struct ident_split *ident)
- {
-+	if (pp->rev && pp->rev->force_in_body_from)
-+		return 1;
- 	if (ident_cmp(pp->from_ident, ident))
- 		return 1;
- 	return 0;
-diff --git a/revision.h b/revision.h
-index bb91e7ed91..6e346a60ab 100644
---- a/revision.h
-+++ b/revision.h
-@@ -221,6 +221,7 @@ struct rev_info {
- 			missing_newline:1,
- 			date_mode_explicit:1,
- 			preserve_subject:1,
-+			force_in_body_from:1,
- 			encode_email_headers:1,
- 			include_header:1;
- 	unsigned int	disable_stdin:1;
+@@ -1007,6 +1007,10 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 			from = NULL;
+ 		return 0;
+ 	}
++	if (!strcmp(var, "format.forceinbodyfrom")) {
++		force_in_body_from = git_config_bool(var, value);
++		return 0;
++	}
+ 	if (!strcmp(var, "format.notes")) {
+ 		int b = git_parse_maybe_bool(value);
+ 		if (b < 0)
 diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index fbec8ad2ef..347f7f7f35 100755
+index 347f7f7f35..ad5c029279 100755
 --- a/t/t4014-format-patch.sh
 +++ b/t/t4014-format-patch.sh
-@@ -1400,6 +1400,19 @@ test_expect_success '--from omits redundant in-body header' '
+@@ -1413,6 +1413,30 @@ test_expect_success 'with --force-in-body-from, redundant in-body from is kept'
  	test_cmp expect patch.head
  '
  
-+test_expect_success 'with --force-in-body-from, redundant in-body from is kept' '
-+	git format-patch --force-in-body-from \
++test_expect_success 'format.forceInBodyFrom, equivalent to --force-in-body-from' '
++	git -c format.forceInBodyFrom=yes format-patch \
 +		-1 --stdout --from="A U Thor <author@example.com>" >patch &&
 +	cat >expect <<-\EOF &&
 +	From: A U Thor <author@example.com>
 +
++	From: A U Thor <author@example.com>
++
++	EOF
++	sed -ne "/^From:/p; /^$/p; /^---$/q" patch >patch.head &&
++	test_cmp expect patch.head
++'
++
++test_expect_success 'format.forceInBodyFrom, equivalent to --force-in-body-from' '
++	git -c format.forceInBodyFrom=yes format-patch --no-force-in-body-from \
++		-1 --stdout --from="A U Thor <author@example.com>" >patch &&
++	cat >expect <<-\EOF &&
 +	From: A U Thor <author@example.com>
 +
 +	EOF
