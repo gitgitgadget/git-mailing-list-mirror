@@ -2,119 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AAE8ECAAA1
-	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 10:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA3BDC0502A
+	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 13:17:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229915AbiH3KwJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Aug 2022 06:52:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50862 "EHLO
+        id S229793AbiH3NRz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Aug 2022 09:17:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230073AbiH3Kvw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2022 06:51:52 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDA36F077B
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 03:51:25 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id n17so13668562wrm.4
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 03:51:25 -0700 (PDT)
+        with ESMTP id S229573AbiH3NRx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2022 09:17:53 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1569D21D5
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 06:17:52 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id h204-20020a1c21d5000000b003a5b467c3abso9915669wmh.5
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 06:17:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=QVmqLabwClWirtsJiFl87kzuGn+HZoZmE9vScaUcyAc=;
-        b=ieSuQQiaXwAvaL96VV45m6bKBeBNnKOz6nxydGT56ewJJgGawAsM0II1GxZL/ZA5pu
-         AwLHIJdyT/M+1emWqikselpnRQMs6VMTTeWHZ7aqKO2cQW8Nyzi/kydUAjcgCLjvMI/0
-         VskATz5KHitCBt09Bt1svn1SsHmJK1AQB/82lNnF8++yt3n5PRzp9PZl+qSguojcTrvU
-         AZWLbYOFE8M8M4M8A9qrVlNILtCCrtQxpCXAMXnMoNn0Va6qisgGoIYqrdoU7M2no05d
-         TS1sErVhcioQHMx6Jry8yOBXGIwFJu7OUVEdwLDgG5jps5uSvaTSNZC9kH1prlb+CSon
-         v1sg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc;
+        bh=2qVkkmOgykRdYz9SqNY6NW9hJKDFh4vKcreY1S7xMbw=;
+        b=CaP9mD0YmbRfgltoB7Cjd2fXdWU/bM2bdVWc31T9implqA9j3QsYXTE8f4sW6h+hc7
+         f8BOY7xPLS3+WK8HWS3ydhVEP6/oJ8liRM8yEXfN2F0ptrKxv1BduiobeOk5fngt+DK0
+         agvOHrSyQDSfpfxUgF+a9dVSM12BgtyzeIZorpfZHvq4T8HuP3jZUFeS1JKbdhq/DYlS
+         gNE9raZgTgzgJwHhnuKyZY7kHeuGltfm5MJQPr7MdTzM8S89VqsGTlmRzjW3V06S8BB8
+         TsYl+QEgGyYf30PPskBKigKlHYMUq8GLJ6xV+Vud8aY5dg7mk+TxznqYSatvfH3V9HRF
+         Pnnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=QVmqLabwClWirtsJiFl87kzuGn+HZoZmE9vScaUcyAc=;
-        b=HtPsG0w0jtZ8QWu/DoKVHB+wz0aqhuNMOJtr39dLBHC4K1b9tSyNJumxdy+j1OLjt+
-         dd6c1/ShPgyF5KhZeUsz8/SIq2utnFROcs/U+YqssJ476LVryz1/RNKcYF7qTOLwCOET
-         ZMNvSlZA36hIPp8zSWrx8vwSXgm3aOdkr+zKeVPnbwMKx9ko3mOQzyX+uzBBebf53Cex
-         pG6XE6x9Ur0lb4R84kNp/lYYfD+mF1lCktJRXdgNMS/gPTbgmGm7pXUupwtj8hS2dD1D
-         AEDGpHzzEvzeVGvRYBhITTWn51AtKPYNkOWGvqiCA6inCo/i6heflc0KqYmr1ItCPD/W
-         WNxA==
-X-Gm-Message-State: ACgBeo1dVk4iKYk18HZoU/qZ4wN5QdPqRBllYRv+AMa7zfCJr6mBc7Eo
-        aWETtIYCesMy7oQbaBlQ2hPYTTorBtbL+w==
-X-Google-Smtp-Source: AA6agR6CFj1DYVMVJiMj9ixqPjoV6XBq70S87TcXu9yO3R7NqZKZBfJT7AfsIPMFkZimp/dzmYXZpA==
-X-Received: by 2002:a5d:640c:0:b0:226:d32d:c4a9 with SMTP id z12-20020a5d640c000000b00226d32dc4a9mr7731603wru.651.1661856676772;
-        Tue, 30 Aug 2022 03:51:16 -0700 (PDT)
-Received: from Precision-5550.. ([2a01:e0a:595:6400::ae22:851d])
-        by smtp.gmail.com with ESMTPSA id az27-20020a05600c601b00b003a5c244fc13sm12034766wmb.2.2022.08.30.03.51.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Aug 2022 03:51:16 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Maxwell Bernstein <tekk.nolagi@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2] Documentation: clarify whitespace rules for trailers
-Date:   Tue, 30 Aug 2022 12:50:46 +0200
-Message-Id: <20220830105046.324041-1-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.37.2.383.g1c78c54f66
-In-Reply-To: <CAP8UFD0EfhDo9ZMNSYp8YVHXJs6mYtSBs=hwoFZWWF3xZ0wjpg@mail.gmail.com>
-References: <CAP8UFD0EfhDo9ZMNSYp8YVHXJs6mYtSBs=hwoFZWWF3xZ0wjpg@mail.gmail.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc;
+        bh=2qVkkmOgykRdYz9SqNY6NW9hJKDFh4vKcreY1S7xMbw=;
+        b=4bGZWWo8cxmPEHtFntHDPSfpyyQqpD7Uuyb2ZGreTEtwJ/vonfDJamyZzaTiEEKKZO
+         c+RrWAdBNWuthQ/wvsRbmvuOprbYcYHkencVsyztjUx/+58RAk2Txva2dgvzDuu4GFpA
+         dM2gqYqOWjOsrAoA/LCGOqcP116TQHgxMEK2Q3Zm2PvALCboay2QTuVY4nUoEMM7FFSJ
+         YOcc3/yDMkP9zTvMSPd+qHCCSj6IjIyYwef3DTABjd5vK1hjCpg72rn5tuQqG3q0XTHU
+         +lylGG+wXB13PlnXOCq7zbACzOf0j0DIDQUyw7Fz7RmNpAGrIXbU3joB3d7hTyHOsefV
+         fEbQ==
+X-Gm-Message-State: ACgBeo2IqHEDETtN6DFG/s2EaHxgvUlZhY4pW1Ifp8j9WK86o7EQlPs/
+        FbxVWdyMsBJdBse9tbxvmsw=
+X-Google-Smtp-Source: AA6agR6hQBRRVEaGgBRuopA5cAK0/pdpB6G5FJGPWVInxwVFPLQFpHntcpOV7c+mEX8qCZPCXdUhYQ==
+X-Received: by 2002:a05:600c:224c:b0:3a6:7234:551 with SMTP id a12-20020a05600c224c00b003a672340551mr9611509wmm.27.1661865471393;
+        Tue, 30 Aug 2022 06:17:51 -0700 (PDT)
+Received: from [192.168.1.74] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id v20-20020a05600c15d400b003a331c6bffdsm11382296wmf.47.2022.08.30.06.17.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Aug 2022 06:17:50 -0700 (PDT)
+Message-ID: <9261de42-3287-6ccb-6cf5-21c0a8ee1f17@gmail.com>
+Date:   Tue, 30 Aug 2022 14:17:49 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 1/5] t3701: redefine what is "bogus" output of a diff
+ filter
+Content-Language: en-US
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
+ <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com>
+ <a01fa5d25e4a94dd8ece5e328f853c000a2ad0f9.1661785916.git.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <a01fa5d25e4a94dd8ece5e328f853c000a2ad0f9.1661785916.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit e4319562bc (trailer: be stricter in parsing separators, 2016-11-02)
-restricted whitespaces allowed by `git interpret-trailers` in the "token"
-part of the trailers it reads. This commit didn't update the related
-documentation in Documentation/git-interpret-trailers.txt though.
+Hi Dscho
 
-Also commit 60ef86a162 (trailer: support values folded to multiple lines,
-2016-10-21) updated the documentation, but didn't make it clear how many
-whitespace characters are allowed at the beginning of new lines in folded
-values.
+On 29/08/2022 16:11, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> When parsing the colored version of a diff, the interactive `add`
+> command really relies on the colored version having the same number of
+> lines as the non-colored version. That is an invariant.
+> 
+> However, in the 'detect bogus diffFilter output' test case in t3701, we
+> essentially required a hunk header that contains parseable `@@ ... @@`
+> hunk headers, and called all colored diffs without such hunks bogus.
+> 
+> The reason for this is that we would like to show the users the adjusted
+> hunk headers _including_ the extra part after the `@@ ... @@`
+> information, which usually contains things like the function name or
+> soms such.
+> 
+> Now, there is a _very_ popular diff colorizer called `diff-so-fancy`
+> that does not produce such colored diffs as the built-in `add` command
+> expects. Nevertheless, the Perl variant of the `add` command handles
+> those nicely, essentially by ignoring the hunk header and saying "there
+> is nothing else we can show except the original hunk header, even if we
+> had to adjust the line range and the original hunk header might get that
+> wrong".
+> 
+> In preparation for teaching the built-in interactive `add` to be a bit
+> more lenient, let's change the 'detect bogus diffFilter output' test
+> case so that it verifies that a mismatched number of lines causes the
+> command to error out, but not an unparseable hunk header.
 
-Let's fix both of these issues by rewriting the paragraph describing
-what whitespaces are allowed by `git interpret-trailers` in the trailers
-it reads.
+The existing test deletes the first line of the diff[1] - so it is 
+removing the "diff --git ..." header not the hunk header. This patch 
+changes the filter to delete everything except the diff header which 
+seems like a less realistic test.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
-Changes since v1:
+Best Wishes
 
-  - rebased on top of 6c8e4ee870 (The sixteenth batch, 2022-08-29),
-  - added my "Signed-off-by: ...",
-  - clarified that there can be no whitespace before the token,
-  - clarified that "any number of regular space and tab characters are
-    allowed between the token and the separator".
+Phillip
 
- Documentation/git-interpret-trailers.txt | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+[1] To verify this I changed the filter to  "sed 1d | tee 
+filtered-diff". filtered diff-contains
+index 0889435..d95f3ad 100644
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 956a01d184..6d6197cd0a 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -60,10 +60,12 @@ non-whitespace lines before a line that starts with '---' (followed by a
- space or the end of the line). Such three minus signs start the patch
- part of the message. See also `--no-divider` below.
- 
--When reading trailers, there can be whitespaces after the
--token, the separator and the value. There can also be whitespaces
--inside the token and the value. The value may be split over multiple lines with
--each subsequent line starting with whitespace, like the "folding" in RFC 822.
-+When reading trailers, there can be no whitespace before or inside the
-+token, but any number of regular space and tab characters are allowed
-+between the token and the separator. There can be whitespaces before,
-+inside or after the value. The value may be split over multiple lines
-+with each subsequent line starting with at least one whitespace, like
-+the "folding" in RFC 822.
- 
- Note that 'trailers' do not follow and are not intended to follow many
- rules for RFC 822 headers. For example they do not follow
--- 
-2.37.2.383.g1c78c54f66
+--- a/test
 
++++ b/test
+
+@@ -1,6 +1 @@
+
+-10
+
+-20
+
+-30
+
+-40
+
+-50
+
+-60
+
++content
+
+
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   t/t3701-add-interactive.sh | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index 3b7df9bed5a..88d8133f38f 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -761,7 +761,7 @@ test_expect_success 'detect bogus diffFilter output' '
+>   	git reset --hard &&
+>   
+>   	echo content >test &&
+> -	test_config interactive.diffFilter "sed 1d" &&
+> +	test_config interactive.diffFilter "sed q" &&
+>   	printf y >y &&
+>   	force_color test_must_fail git add -p <y
+>   '
