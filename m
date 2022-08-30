@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75069ECAAA1
-	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 18:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64790ECAAA1
+	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 18:51:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231709AbiH3SvL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Aug 2022 14:51:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35922 "EHLO
+        id S231766AbiH3SvZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Aug 2022 14:51:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231205AbiH3Suv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2022 14:50:51 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BFD04C61D
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 11:50:37 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id bu22so15070802wrb.3
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 11:50:37 -0700 (PDT)
+        with ESMTP id S231650AbiH3Sux (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2022 14:50:53 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A7994DB68
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 11:50:38 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id n17-20020a05600c501100b003a84bf9b68bso1733596wmr.3
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 11:50:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=NoYvMA/epqY3ghH1gKytvRGrE08JXJ83K6Pyb8wiZSw=;
-        b=YaJTvEcI6+puKdvaY8a3wSwXTAaebPuPXfZDLIMLXT16uAEQy31BT7Kc7z6an0IKXz
-         FM5mBRYQ8jW0mxPByTFga50tbdukKKYq+YVNQsnMhw0galSYj0WK9GZH3CYfKf6NbYcr
-         Tpduwlrws3YvQQRG7/LtQoPx7+dsC90ogHdn/p7XmesTVoVy1EOvhQne39bE4iMk4VeH
-         Jir9HYx0QyfQQ0OX6W1lJUUv/uqHlHGPK195OZZm44JgV25+MGkIfegHd+BpTeNeXghg
-         VnpF1lZoNWOQInDOSjIj/XPnl6Nhaeol9A5u/74wkOZN+26NpLa8JEv1el7E82R+5sb7
-         P7aw==
+        bh=Ivc0GYFwon7YWFjfTUcP59rgkrO1VN2FSeDMK/I4SJo=;
+        b=HuC7LkP1zxJ3J3mRkfpggG04zNlzRaSZns1GVkU6kxRViA/x/KnJch4RjtXNg6j/EM
+         2mm+2hBd8E4z50Y9JQYhyb2H//JjqcoV7CqNVX5P5irF9oLMEvJ36tPescX8edMtQoNW
+         g+2mvcMcZiJkcamtO7iYr1akK+tYDvLZE1R/l6YUeirGUY2CyHqGZ0T4UpcCH0a0RKYb
+         P/sO/u+v0dodEHLPBhMou07YUx0Ld+mIN8HRdJLcP11CJZMyjtxtYHF/6/VApJ043l0N
+         JNs1KjMPQ9dFBOckAh0lDICyRdJ6HLGIRkZZHlMnhpD7we2HCWeij9E6MeG3IZZAB/Hs
+         oWUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=NoYvMA/epqY3ghH1gKytvRGrE08JXJ83K6Pyb8wiZSw=;
-        b=4iBKAFQSePt6DmmY6Yg95fbE/c0voX/lKXO130YwMloLV05VxEIfVGkEM8fNxiUUGc
-         RxSG/UewaG9pAHRN9yYppabtRCBdj5mpHqwGmJzT8JcsSHjNr26x8Ulv6P75JiwPDj+i
-         gicE9D+sjVLetjs5B3krMfBJ67xYGjJuHmB2FqPOTn0p5xm91znGk15JBlFvdm6XMopR
-         QgD92A3gw58aBNWfnnQADp+eHsHevLO50BSA/T4efdOpTADIK4+izl5bFOwKiiGq6/3k
-         6rcohknvK4C3gyudAdNR1werOUgTD9aIb6wQLnTbbYzxtAyCUZu31TzfFR325iKUIJw3
-         m4Aw==
-X-Gm-Message-State: ACgBeo227FAvLJVdHRMUG6NV8xHNrgqWLp4XaIWgpt70zWmjVml5XIKf
-        LIQIU6IIO2XEIyTXd+WgxZ7TH2oE/hQ=
-X-Google-Smtp-Source: AA6agR5YDR1dDK2zpE6IXbCnyRslj9SgaXgTJEld+6kb1Yw+lmIDZ02tZ055NyUynZCM1yF4FdMxjw==
-X-Received: by 2002:a05:6000:795:b0:226:e8d9:828c with SMTP id bu21-20020a056000079500b00226e8d9828cmr726389wrb.464.1661885435276;
-        Tue, 30 Aug 2022 11:50:35 -0700 (PDT)
+        bh=Ivc0GYFwon7YWFjfTUcP59rgkrO1VN2FSeDMK/I4SJo=;
+        b=Cs6Kg4i+rvelU+1DuWlxv7vgNwgBVm+OBMj2D3lyb/9JSuBpo5c2/i8nIOD9sA5lRR
+         gxeDIg7Yp9kcdSYN1eN5dVEARAFS3TsExBCsRbmT6QxDAJkd470QZhcY/ctPRayiMcIs
+         htqKxb2N/eZLccBJuksQ/XUbbqLK5bJO2Wo35wYJrOIjUjpkoUuXyxdtYi+Z16NxZ3aO
+         gILPi+NQ0pBKFBh8+AWSpRb6C7TFfKimnDF2bmujMN95K2JNp6wIhu9eoPDATGny9xzo
+         mMqX5SZVllkJOynGJzudHxiqZwwPHJFQsQctPL/shoJIAOPtR9FLS9In1TjagKvKJEv8
+         F0ng==
+X-Gm-Message-State: ACgBeo1QP2gk76oihDseDXJWMHuy2pF9MOv1RRQUlQgGI+rvLDjD3/m2
+        7Hd3zihcWSqDU5/8pXtXUA/hervIqY8=
+X-Google-Smtp-Source: AA6agR4B9S24AGJiE1BbDb6cYNnaOw72ibrNCI5XnxnHN/Tj8Ou5LoG+xp0JoT1vloKWW8lY5ZpoaQ==
+X-Received: by 2002:a05:600c:4ece:b0:3a6:28:bc59 with SMTP id g14-20020a05600c4ece00b003a60028bc59mr10529316wmq.154.1661885436235;
+        Tue, 30 Aug 2022 11:50:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v18-20020a1cf712000000b003a5c7a942edsm12547648wmh.28.2022.08.30.11.50.34
+        by smtp.gmail.com with ESMTPSA id bd22-20020a05600c1f1600b003a8436e2a94sm9188636wmb.16.2022.08.30.11.50.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Aug 2022 11:50:34 -0700 (PDT)
-Message-Id: <e7623508f90916d494915637342cd2327c7eea5e.1661885419.git.gitgitgadget@gmail.com>
+        Tue, 30 Aug 2022 11:50:35 -0700 (PDT)
+Message-Id: <3f052580c95ff5a570374d17391de1592aa34047.1661885419.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1132.v6.git.1661885419.gitgitgadget@gmail.com>
 References: <pull.1132.v5.git.1661604264.gitgitgadget@gmail.com>
         <pull.1132.v6.git.1661885419.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 30 Aug 2022 18:50:15 +0000
-Subject: [PATCH v6 12/16] bisect--helper: make `state` optional
+Date:   Tue, 30 Aug 2022 18:50:16 +0000
+Subject: [PATCH v6 13/16] bisect: move even the command-line parsing to
+ `bisect--helper`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,73 +75,84 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In preparation for making `git bisect` a real built-in, let's prepare
-the `bisect--helper` built-in to handle `git bisect--helper good` and
-`git bisect--helper bad`, i.e. do not require the `state` subcommand to
-be passed explicitly.
+On our journey to a fully built-in `git bisect`, this is the
+last step.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/bisect--helper.c | 22 +++++++++++++++++++++-
- git-bisect.sh            |  2 +-
- 2 files changed, 22 insertions(+), 2 deletions(-)
+ builtin/bisect--helper.c |  1 -
+ git-bisect.sh            | 49 +---------------------------------------
+ 2 files changed, 1 insertion(+), 49 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index ac3b2e5b61c..61e819e4efc 100644
+index 61e819e4efc..6bcf16d9f62 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -1447,6 +1447,7 @@ static int cmd_bisect_run(int argc, const char **argv, const char *prefix)
- 
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
-+	struct strvec args = STRVEC_INIT;
- 	parse_opt_subcommand_fn *fn = NULL;
- 	int res = 0;
- 	struct option options[] = {
-@@ -1464,10 +1465,29 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	argc = parse_options(argc, argv, prefix, options,
--			     bisect_usage, 0);
-+			     bisect_usage, PARSE_OPT_SUBCOMMAND_OPTIONAL);
-+
-+	if (!fn) {
-+		if (!argc)
-+			usage_msg_opt(_("need a command"), bisect_usage,
-+				      options);
-+
-+		set_terms("bad", "good");
-+		get_terms();
-+		if (check_and_set_terms(argv[0]))
-+			usage_msg_optf(_("unknown command: '%s'"), bisect_usage,
-+				       options, argv[0]);
-+
-+		strvec_push(&args, "state");
-+		strvec_pushv(&args, argv);
-+		argc = args.nr;
-+		argv = args.v;
-+		fn = cmd_bisect_state;
-+	}
- 
- 	res = fn(argc, argv, prefix);
- 	free_terms();
-+	strvec_clear(&args);
- 
- 	return is_bisect_success(res) ? 0 : -res;
- }
+@@ -1455,7 +1455,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		OPT_SUBCOMMAND("terms", &fn, cmd_bisect_terms),
+ 		OPT_SUBCOMMAND("start", &fn, cmd_bisect_start),
+ 		OPT_SUBCOMMAND("next", &fn, cmd_bisect_next),
+-		OPT_SUBCOMMAND("state", &fn, cmd_bisect_state),
+ 		OPT_SUBCOMMAND("log", &fn, cmd_bisect_log),
+ 		OPT_SUBCOMMAND("replay", &fn, cmd_bisect_replay),
+ 		OPT_SUBCOMMAND("skip", &fn, cmd_bisect_skip),
 diff --git a/git-bisect.sh b/git-bisect.sh
-index e19847eba0d..f4df8709d84 100755
+index f4df8709d84..028d39cd9ce 100755
 --- a/git-bisect.sh
 +++ b/git-bisect.sh
-@@ -60,7 +60,7 @@ case "$#" in
- 	start)
- 		git bisect--helper start "$@" ;;
- 	bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
--		git bisect--helper state "$cmd" "$@" ;;
-+		git bisect--helper "$cmd" "$@" ;;
- 	skip)
- 		git bisect--helper skip "$@" || exit;;
- 	next)
+@@ -34,51 +34,4 @@ Please use "git help bisect" to get the full man page.'
+ OPTIONS_SPEC=
+ . git-sh-setup
+ 
+-TERM_BAD=bad
+-TERM_GOOD=good
+-
+-get_terms () {
+-	if test -s "$GIT_DIR/BISECT_TERMS"
+-	then
+-		{
+-		read TERM_BAD
+-		read TERM_GOOD
+-		} <"$GIT_DIR/BISECT_TERMS"
+-	fi
+-}
+-
+-case "$#" in
+-0)
+-	usage ;;
+-*)
+-	cmd="$1"
+-	get_terms
+-	shift
+-	case "$cmd" in
+-	help)
+-		git bisect -h ;;
+-	start)
+-		git bisect--helper start "$@" ;;
+-	bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
+-		git bisect--helper "$cmd" "$@" ;;
+-	skip)
+-		git bisect--helper skip "$@" || exit;;
+-	next)
+-		# Not sure we want "next" at the UI level anymore.
+-		git bisect--helper next "$@" || exit ;;
+-	visualize|view)
+-		git bisect--helper visualize "$@" || exit;;
+-	reset)
+-		git bisect--helper reset "$@" ;;
+-	replay)
+-		git bisect--helper replay "$@" || exit;;
+-	log)
+-		git bisect--helper log || exit ;;
+-	run)
+-		git bisect--helper run "$@" || exit;;
+-	terms)
+-		git bisect--helper terms "$@" || exit;;
+-	*)
+-		usage ;;
+-	esac
+-esac
++exec git bisect--helper "$@"
 -- 
 gitgitgadget
 
