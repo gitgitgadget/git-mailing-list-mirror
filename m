@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85CCFECAAD4
-	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 09:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7957C0502A
+	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 09:32:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231889AbiH3Jc2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Aug 2022 05:32:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49404 "EHLO
+        id S231906AbiH3Jcb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Aug 2022 05:32:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231835AbiH3JcK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2022 05:32:10 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFF26A2AA1
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 02:31:54 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-11edd61a9edso9320356fac.5
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 02:31:54 -0700 (PDT)
+        with ESMTP id S231533AbiH3JcL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2022 05:32:11 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CF0FA262D
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 02:31:59 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id m21-20020a9d6ad5000000b00638df677850so7672885otq.5
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 02:31:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=qtmTPmGqyXKWpAUmv4NjuF3YtIG+Z0tJK74Y+XaK6Hw=;
-        b=GlakI9oK92jW3NT+zMQTBEq7UcpAtpSMfRcPQAw/Dm9lKFNHGpsgguJkKQViuoqknt
-         6KGmmPn6YMyOfq4Wi8rlLHgJD66Bz38JlE5+oeEtmIMZ9jcvrEf85bIk/B8zjoVNEJnF
-         TLyQRnFR9qWj0TUYfYQyUBYkmNXqV/Z+j4MbpogTKwTvARnLnsihSY+8KyFwpqigfl/D
-         QW3RRNRP+52Lu7oAECd/s0Y6bzLTVvQ6CIeksy5p2Z3Oc3hxyE791BSpDRbOimgQEyZE
-         Cxeuj10ufZru7PZqrPA5BNKWoK5y5olbkeOkzbf+aTLqNjgwUiHH3WBjtdpNsLr2Ge8M
-         7sCA==
+        bh=48c2N2EyXPtPruhNliOaiDF4uD1lfRJ+2RdzFVO51GA=;
+        b=G60gQgd9RKfvo9jjs6Mz+2jxWlqHxLQzUPHPrciCG5HIhU7QugQdi4ZnshOXXb+SCs
+         RGqbnpPvtsVtkCP36ta+iOkmIIfg1qLQUHK43s683qPvZT+3w2yxLzVcHzaj7Zq39NU9
+         ZkxnZ/zeGOxkoL2wvYVaYhovP9rsVSCWIeTb+D3SU4Ajry1oDT3qb+3QgwGznLlUBbcA
+         fJvLYyv2KMAFOO9Hbb72rcN52wfg3jaejALtDVsUZDkRk8/1lJte+me8USFw5sdLmVh3
+         CGlmnYUGwVtZs7v8k3zTq/RxLXbcbQLL9tNIBiCA/I1JjnISF6FhAeI0ahM6Il0YbDoC
+         u1RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=qtmTPmGqyXKWpAUmv4NjuF3YtIG+Z0tJK74Y+XaK6Hw=;
-        b=PKzzcdrb/1nnn7AUPaHPCaN8EW/bmoLnWwJOwNPNoEVFJrsQFMAAlyT2he8jJRPUIW
-         +qkQjAieHArLcH7M2xPbobz5xBRyS/bbvW3b52LbmxqpeQOlhMaGiBme9xtYymeWYGuf
-         0VKyK1tbwGxmKbUlX9sZq0c30k0SKwFKJ5MVB47fcY+yWFl5uc/QcZHY86Whr9/qnoXm
-         Pg/NMc1R1y4thyQO3fGfDY8G3OaeSUJ6rwK7E5L46mza0Epm1ccbXO7brPG2aZlg5SzS
-         lZdcTR38OsC3Fif/CHVBIY38RlSUxcDh+XHwmELaPAY7rw6vE58eUEKD83f9b1YeBuAi
-         N4/Q==
-X-Gm-Message-State: ACgBeo1VowKnY21ZdzHVqYYpvndnhuoLwj0UkD3OaZvcgxIYaOkd9Dc5
-        Azay0yfeuBwHIcZ1FxbmHYieuZDAcWA=
-X-Google-Smtp-Source: AA6agR7TGKiOFjTWMVK+1eXVU/eEIJGZ9mvxzOTcr7t1pXykiIF4yPyVecAIPSq4OwCQkZszYqFtdw==
-X-Received: by 2002:a05:6808:16a1:b0:345:ca3c:318e with SMTP id bb33-20020a05680816a100b00345ca3c318emr7153406oib.2.1661851913867;
-        Tue, 30 Aug 2022 02:31:53 -0700 (PDT)
+        bh=48c2N2EyXPtPruhNliOaiDF4uD1lfRJ+2RdzFVO51GA=;
+        b=TyuGSNoXyF2xavm3Tmp3jA2gAKHZXlJsZBNsSQ1xbLRef5yxtG2OSKMAiX3N4OXV+l
+         D2nAs5/uV7cFUsYugecYcIQDrmcJa6eWuwbCg5i4SAp08BNeqAbbuZsAELQW7uBcGkEy
+         /I85N05ks8lSGR7CvkccC3igRw7Ojkkx3/Xp8YNs6Bk1BNngapvBpZptEmiYNKV/ynWj
+         jQj8WDKTCYGSGr7rRA2NEj8+4ZmcMvqAN+5U3CnnuR3JvXtNxCP8lLGlm9kffkrwa9vC
+         c5gzB3JJRFqsATkr5XgaV8SGadXfEICXAVZfD5vyGC0c/nWtk9r4S5zRnMlVvL4ruvXe
+         6XVA==
+X-Gm-Message-State: ACgBeo3O5UnYrgGEjbdxSjXNgAof8b/ubSxuLm0ZoGL7em2kqgbEX9tR
+        CLnKS89V9QGzIk2l29iGWsSOSoym/lk=
+X-Google-Smtp-Source: AA6agR4EX5A06Fp/pYTZxocI33NzKYy1lMGshdSUkIRUCw5HKPB2Ag3k7S/lCIM2yNNPp7y5/F34RA==
+X-Received: by 2002:a9d:7495:0:b0:639:5528:9f1 with SMTP id t21-20020a9d7495000000b00639552809f1mr8237570otk.12.1661851918455;
+        Tue, 30 Aug 2022 02:31:58 -0700 (PDT)
 Received: from localhost ([2806:2f0:4000:eec:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id k4-20020a056870958400b000fb2aa6eef2sm7485611oao.32.2022.08.30.02.31.53
+        by smtp.gmail.com with ESMTPSA id bl2-20020a056808308200b00334c2e81dfbsm6022761oib.0.2022.08.30.02.31.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Aug 2022 02:31:53 -0700 (PDT)
+        Tue, 30 Aug 2022 02:31:58 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     git-fc@googlegroups.com,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 08/51] test: reset environment variables
-Date:   Tue, 30 Aug 2022 04:30:55 -0500
-Message-Id: <20220830093138.1581538-9-felipe.contreras@gmail.com>
+Subject: [PATCH 11/51] completion: zsh: trivial improvement
+Date:   Tue, 30 Aug 2022 04:30:58 -0500
+Message-Id: <20220830093138.1581538-12-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.37.2.351.g9bf691b78c.dirty
 In-Reply-To: <20220830093138.1581538-1-felipe.contreras@gmail.com>
 References: <20220830093138.1581538-1-felipe.contreras@gmail.com>
@@ -63,32 +63,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These should not affect the tests.
+$words has basically all the words we need, except the first one: git.
+
+Lets simply add that instead of passing the original, which contains
+options we don't want to pass downstream (like -c and -C).
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t9903-bash-prompt.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ contrib/completion/git-completion.zsh | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 6a30f5719c..c94c351e23 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -18,6 +18,14 @@ c_green='\\[\\e[32m\\]'
- c_lblue='\\[\\e[1;34m\\]'
- c_clear='\\[\\e[0m\\]'
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index 1905ff98b7..4d81ca73b5 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -220,9 +220,6 @@ __git_zsh_main ()
+ {
+ 	local curcontext="$curcontext" state state_descr line
+ 	typeset -A opt_args
+-	local -a orig_words
+-
+-	orig_words=( ${words[@]} )
  
-+unset GIT_PS1_SHOWDIRTYSTATE
-+unset GIT_PS1_SHOWSTASHSTATE
-+unset GIT_PS1_SHOWUNTRACKEDFILES
-+unset GIT_PS1_COMPRESSSPARSESTATE
-+unset GIT_PS1_SHOWUPSTREAM
-+unset GIT_PS1_STATESEPARATOR
-+unset GIT_PS1_SHOWCOLORHINTS
-+
- test_expect_success 'setup for prompt tests' '
- 	git init otherrepo &&
- 	echo 1 >file &&
+ 	_arguments -C \
+ 		'(-p --paginate --no-pager)'{-p,--paginate}'[pipe all output into ''less'']' \
+@@ -262,7 +259,7 @@ __git_zsh_main ()
+ 
+ 		(( $+opt_args[--help] )) && command='help'
+ 
+-		words=( ${orig_words[@]} )
++		words=( git ${words[@]} )
+ 
+ 		__git_zsh_bash_func $command
+ 		;;
 -- 
 2.37.2.351.g9bf691b78c.dirty
 
