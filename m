@@ -2,109 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D84EECAAA1
-	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 14:02:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEBC5ECAAD1
+	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 14:14:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229785AbiH3OCu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Aug 2022 10:02:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38470 "EHLO
+        id S230288AbiH3OOx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Aug 2022 10:14:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229699AbiH3OCs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2022 10:02:48 -0400
+        with ESMTP id S230043AbiH3OOv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2022 10:14:51 -0400
 Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F07B1B4413
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 07:02:46 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35015F619A
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 07:14:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661868164;
-        bh=FjVOx++loLp5PZ4uBMW0cFO+qQA5wMWvldjOki+YLQo=;
+        s=badeba3b8450; t=1661868878;
+        bh=ghTLqQ8rYNBZ4FiVHwwV6Mm08ckrYmeUn3y6S46DG5A=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LznMVbAI4vD3tFxhgvdJO795pUewQyjg66+c9MJ+9ccKHs5mzaLa6mGN1MT4As1ts
-         dft53I5YiE9auJA8TJNGOyi0ON7hJ1XrW1/yqdQtrUe/VubX6on0LCRXCTlIsDtMbG
-         eNoDNX/vO0iT6izAz8q3eCzS1GnEEmzHyGOVwwzU=
+        b=CxT7ULHCJB1flDHmU9zr1/ayfxv5a9afN7bNayI2xZEy95eeUfNXISqUrlFmMbhCo
+         6sSoks70OyhIM3P+PDGac2SlFp+B4UhJFI/ElL6nVu2dkedtiJ8NPAuX78Ylmc+Rdp
+         JB4l9NzW8eA01YYhTwn0U++YCvO+cHLG7bcSPLWc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Md6Qr-1p25jD0ZOd-00aF0m; Tue, 30
- Aug 2022 16:02:44 +0200
-Date:   Tue, 30 Aug 2022 16:02:44 +0200 (CEST)
+Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtOKi-1pGB7I0hLC-00usAT; Tue, 30
+ Aug 2022 16:14:38 +0200
+Date:   Tue, 30 Aug 2022 16:14:37 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Elijah Newren <newren@gmail.com>
-cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 0/3] fix failing t4301 test and &&-chain breakage
-In-Reply-To: <CABPp-BGBEfFh0z0YHGcHE+rva9JdapXprPn-RSmif0xn6fcxYw@mail.gmail.com>
-Message-ID: <30rq792s-818n-q078-3837-977prpqqprq6@tzk.qr>
-References: <pull.1339.git.1661663879.gitgitgadget@gmail.com> <CABPp-BGBEfFh0z0YHGcHE+rva9JdapXprPn-RSmif0xn6fcxYw@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v2 3/4] add -p: handle `diff-so-fancy`'s hunk headers
+ better
+In-Reply-To: <xmqqilmbotl0.fsf@gitster.g>
+Message-ID: <p11s25nn-15qr-o2q1-5700-1q581sr9331n@tzk.qr>
+References: <pull.1336.git.1661277870.gitgitgadget@gmail.com> <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com> <9dac9f74d2e19899b3e6c1d28e83878ded4469d6.1661376112.git.gitgitgadget@gmail.com> <xmqq5yibqxs0.fsf@gitster.g> <0q0psp09-8993-96r6-3r90-q4s368p98510@tzk.qr>
+ <xmqqilmbotl0.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:etYMW4Qh3/pKQhM7lY3dfZ3QgdEi0fpkKuepCW8jXV/HFTJDXGQ
- LeZOd9ccxqiUpIrjE88NRoM2qaXeslQ/Vat+z+TUw0iM3xe7gnyDiJV7LHD1XoUuJfaQ1IB
- BKGinanIC9t9L08RCuGmszezib6CbflUBKK3UWHFBTB3H3eFQS3AGEOutJ93Ryk7LTGPCpH
- ks9JGYn91JEkeT4NFYvfQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:K3aTsLud7yU=:UUFKLIQG70GWf3G/Pv64S8
- GL5htnosSBrv8Gw3nK4K84OtR2YUsHJG7K9zPoO2qDx1x05j8SerkD5CERwlR4+VXCrcXi6wF
- KCGYMS80ZmW+MBpBf9JXHhLP8sCRCwaAFhnoRQqXscgEbw0on4qQzRig0o0YfHF7iJT2VqHZv
- Sg3hWIOnr0NwfDjHvenTgG61UOSS3E0ZuMiYZ3wV+atCvyI+pQFyUBSIXzQj0U/1L9M+GO7n7
- 0qKax0ap0R+JP0/b5tanvNdtiXjRgpm5Gn0exkWAq87+T8JW8BNJEP/ECYJq4oCPGNX+dJM6i
- A5jFtnRfEzdjmst1/evOTp+1ERoO7TsDWaSCseSf05UI8NZSaH2Ihm0M8CpTi0tepIr8XBRFt
- ChQSGE7Funi4d7l9B5XcRAFXm6C5jGk3i53jhH8HY06SYcjjCbuINRtkyRVNJvZ5RQh/FZRnn
- RT7J6bUkAw0RHU0J/XnngRGPA5AJqs+Ke0FzL/rRNXq9saq5hUXIKteiQ3Bievmg0+n2w1c6i
- yo/UM8daeRZyaCYd31iOEJLHit8Exqdj29KUeRbl4uDEfPuCCYGHawvTGS1JK5Uv9hqtlulPj
- tjJvjp/Mh+US5/VuuIT57jHjYLbzAabUoD35G2oRGn85x2Delo7YqjWcwDS+CjF5B3WrTeDLi
- HyoCsZEaPaVYq8QhjAVT73YzrBHCxnJj2NsV0hDLNLd9SKjCN64NzUyCTit9mM2NPYWVgbL0P
- BHlhfggQpNt6oopAsSdj12o4vqOM41XpZ1q8UkXAfYRREXmNgQdeYhZTq0pSN4+GNEV9MOhWV
- iXaN+P84UEHcyVqCaR8ylx8Qjqa/NdyiuS28s3neWE2TmSLmV8lmxbVVplvwSAw0bP3FHZk4H
- k5jfQSqbPr8Tr3QzJ/UxIFPUgcCQRaJL2qKe7U1oaLRPmCFjroEYi8e1zrnvyu6MK4waM7nya
- o7y6YBReRjcyCNlHMzr/hDc8kGP49IoQhTwXVod/5L8ZaJo3Q8L6/Le6TdHPbdn/cUdzjUm38
- fGJeqQ6xlB2nQ4+akgCPAtVDjWGepIqn/zCZQD7a+cw0UOS1FNTzkIIW8A7ZjLxhlnWZZZ0wE
- Sfh+KN5//HmTSU2IcoeZ/Whn9grlQLlE97yPmMD1NaCkgSGkBwPZfMR6g==
+X-Provags-ID: V03:K1:qKFTLP0ihhKmSUTih5gTDo0MCCkxW4mg5pbgMEbRvIIkmK/U0U3
+ sSLGNoNGu1TC3ty3GmRTP3fNx9poWjyqhflaMouF2hhkgU8wQoMs4Cx6b/riE+4YbPf96xr
+ 9eATCe2PYiwYvSG8l47D+P3iFrkXVe8+esxSdt/mYEdRC1f3Vt0sHZDpIdaNtOF0lk6mt6N
+ f8AEHHxj5wsCp7Uz7PbGQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:e0px8SLlUOI=:UxrtOWOYhY2vyabjNsuTnh
+ k8ig5F+y0CpWBgazAvxXtwai326y2I7UodnMUSmHordIauwSEke+x5XKAwcyiavIYYr7LXmf7
+ Pxcrv2hREKWilUecnvikBg7EIHPbeIguQh2WQE7ehoLU+n0Sf1t2syS/ClfLfY1TVqI3SNXFT
+ eLzJsDTmfCO/x6HMTqKzZGqrWgvxhyzwh4YsujTNLi20jDifskB8CvVdCdmWKC4yp1uzq5BVh
+ U/KBD/Ai4e95hWMmhb4qPfACZWIG1hikthbiJpV0lyuBrqQUsy/JuUC3gNw74dkfcamMezK3M
+ 8P7XWjI8rejGOIG4U1lJchyBRTVBmKC00dr6nY9ftEh4X74USqDx1idFpm/dOpkxxRts1FlW8
+ GjKVlsx8t0ArSJmrRdgqVFE4yiQ6u5cxoYWqzzbQ8IqRMXGoNBj6bPTlJXgoC57YDCUIRqfJZ
+ 6hd6YsLyiTn6AS0POaKiJXa4C5AN0+ah7hPXa5wAmtf1Xzp0ckP5MefcQgp5qOrLft4laLIce
+ 46NXX0Y/JjRoTIhekKoGoB8tat/gbtv3PelXIL1FS2Tre1SlTdiRL+r75gQEJTrSmHxqkYW72
+ oTKPDRbYJ7hnEC0FO5FvGqkwektBO1FASEjrABbyHqgNE5lKm3axUe2jDaEtjqXio1mOJ8eVN
+ QDjotIZl7uulJGw4AG7xzmJQBB3oK/C7uvnyiMH04Tc4uyqh5vCA3IkeRAFxwS8BN6CfvpdfK
+ Xg/SFSva+9b/cfGTqVOUpDExUA+1FG3lW5olJ/PjpwROBj6tosbKcXUSqAS75wZ/7FW60Vvwu
+ LGE/BnEABnmuqHpGwFXpzWQom2d0mGF+05syQqqAHPUKQh8jlVudPvFwqFi6fb29vk8xcHaby
+ UsW5s2D8h6cfW/9LW1VlOhIvYf63HCkZlTpZ19xKOooEQtlfk8Qm6UFVB4oSade/5Gei90lAR
+ NfSk1SFomAHglgqF+LolDDkmgJqcVBKpXGoVTKbYOLgZJQNagjJveY2NSW8CWRuK1qNRRwQMR
+ YNTtTOew1Q59fJ5qRspw45Vjo1qbKFEr/aOoJmRbPdzEpBu0JC3ZMU3mCPY0EJ1U4g1g5Al3E
+ Pswl7fmmuXdZlJvtzFJRFcXw4BwfRDMpDU4H683JB6hTOdqvuctGD9ZAw==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah & Eric,
+Hi Junio,
 
-On Mon, 29 Aug 2022, Elijah Newren wrote:
+On Mon, 29 Aug 2022, Junio C Hamano wrote:
 
-> On Sat, Aug 27, 2022 at 10:18 PM Eric Sunshine via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > This series fixes a failing test in t4301 due to 'sed' behavioral
-> > differences between implementations. It also fixes a couple broken &&-=
-chains
-> > and adds missing explicit loop termination.
-> >
-> > The third patch is entirely subjective and can be dropped if unwanted.=
- I
-> > spent more than a few minutes puzzling over the script's use of 'print=
-f
-> > "\\n"' rather than the more typical 'printf "\n"' or even a simple 'ec=
-ho',
-> > wondering if there was some subtlety I was missing or whether Elijah h=
-ad
-> > encountered an unusual situation in which '\\n' was needed over '\n'. =
-The
-> > third patch chooses to replace 'printf "\\n"' with 'echo' which I find=
- more
-> > idiomatic, but I can see value in using 'printf "\n"' as perhaps being
-> > clearer that it is adding a newline where one is missing.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> I can't actually provide the reasoning for it; I took Dscho's testcase
-> from [1] and used it as a basis for adding several other testcases.
-> When I was copying & pasting and adjusting, I just didn't notice the
-> 'printf "\\n"'.  But using a simple echo makes sense.
+> > Here is why: in the _regular_ case, i.e. when we have a colored hunk
+> > header like `@@ -936 +936 @@ wow()`, we manage to parse the line range=
+,
+> > and then record the offset of the extra part that starts afterwards.
+> >
+> > This extra part is non-empty, therefore we add an extra space.
+> >
+> > But that part already starts with a space, so now we end up with two
+> > spaces.
 >
-> [1] https://lore.kernel.org/git/3b4ed8bb1bb615277ee51a7b2af5fc53bae0a6e4=
-.1660892256.git.gitgitgadget@gmail.com/
+> In other words, this breaks because the original code depended on
+> having the extra whitespace before the "funcname" part.
 
-No other reason than that I _seem_ to recall having run into some issues
-where _some_ POSIX shell (was it BusyBox' ash?) did not like the
-single-escape form "\n".
+Yes.
 
-I have no firm recollection, though, and am fine with converting all of
-the double backslashes to single backslashes (read: I am very indifferent
-to this issue).
+> Stepping back a bit, if the final goal for the UI generation out of
+> this string is to append the material with a whitespace before it
+> for better visual separation, then the original should probably have
+> (at least conceptually) lstrip'ed the leading whitespaces from the
+> string it found after " @@" and then appended the result to where it
+> is showing, with its own single whitespace as a prefix.
+
+Yes, with one twist: ANSI escape sequences can make lstrip'ing non-trivial
+(granted, the line range parser totally ignores the fact that `@@<RESET> `
+is a totally legitimate end of a colored line range).
+
+> It would have prevented this bug from happening by future-proofing, and
+> made the final output nicer, as any excess whitespaces between the " @@"
+> and "funcname" would have been turned into a single SP.
+>
+> The "prepend one iff it does not already begin with a whitespace" is
+> a (at least mentally to the developer) less expensive approach that
+> is fine, too.
+
+Yes, it is definitely less expensive.
 
 Ciao,
 Dscho
