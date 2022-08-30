@@ -2,97 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80324ECAAA1
-	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 21:46:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD0DDECAAA1
+	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 22:11:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231648AbiH3Vqa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Aug 2022 17:46:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53532 "EHLO
+        id S231387AbiH3WLO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Aug 2022 18:11:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231741AbiH3Vq0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2022 17:46:26 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06A5E8C465
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 14:46:24 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id l3so12364109plb.10
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 14:46:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=BZBkiBFNHvW5+yOyVo66VYfyT6FbpkEwDTe49Ko/OIM=;
-        b=GPenL4LaDzMz5EYMSHDaGZLiVdgHSh2ryxb+qirbuFUsl+A0f9HzsdN1Djg4hyRKP6
-         SIMje0h+w4wS6SkFfpqjdMJ+XDwDlVdoXTUDtIohzcalgj0kD7MYXLaGLEyrkfe3fAnI
-         QWBM4pp00AaU8RcHSJMWwL9YvQoMgoM67mgTICfE3xQaPBspkEy9zYa1rdvYTGXX3K7o
-         4jWof3lQJWb4LSJVd/2L2OSbYmUxa8ZPV/I5idQQMMn6CWlCPGsxNGXQ2WTgzQ/3Leak
-         o0vK22QPLBlPfeYg697NE6+j77DZAwx8O4HDtnMYsRrnrhJvwAlJywF9ce/w6yVK80hR
-         XekQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=BZBkiBFNHvW5+yOyVo66VYfyT6FbpkEwDTe49Ko/OIM=;
-        b=2ktXnmu8ymo1YyQjBbFp4R9nnBb5nPIJ7qqw9GRFax3RQKB3AwHimiTfyDSrVoc4ry
-         E7De6a5d8LfjqEeZM75HRawLaad7t4CeNxAxWuEWOgJjSdyZReiBk7fcyH2cnK/NcbdT
-         u9ooxp8FYloCN7gMrKK4BbKIwnTqd1KvvEbrtwit84V0ijn01PBBG0kbXkdS0ythqBQB
-         +svyfmsmtvzrufsHoygi+So6vyyR96scGqS71tJg/5+GbUtv78Vx3g57SSsKMKIY8Gge
-         8Sxyjdi9N6l1n0/ZiK6BR/tl8XO9Q7vNb/6Ql1kqt5ekxwlDkIgF02B1U4r7GvtB4Kg8
-         EOPA==
-X-Gm-Message-State: ACgBeo14OeRqyAuIZGtcJpFdoAujnYs/Eo65XQiFq01BfnOmzUk5ioJG
-        zmMyLGI/CJNbJxgyG+xIum3EySHG0U4=
-X-Google-Smtp-Source: AA6agR6cEcCTSQNzkqr07IyzmBQG2kEBAEWG5b8/nXaG/CG2EKcOCDyJ43QlbC8b9/dXQEir60lUHA==
-X-Received: by 2002:a17:90b:1c8e:b0:1f7:524f:bfcc with SMTP id oo14-20020a17090b1c8e00b001f7524fbfccmr57761pjb.132.1661895982748;
-        Tue, 30 Aug 2022 14:46:22 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id p63-20020a634242000000b0042a6dde1d66sm2117710pga.43.2022.08.30.14.46.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Aug 2022 14:46:22 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     phillip.wood@dunelm.org.uk,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: validating signed/unsigned comparisons with Coccinelle, was Re:
- [PATCH 0/3] A couple of CI fixes regarding the built-in add --patch
-References: <pull.1340.git.1661867664.gitgitgadget@gmail.com>
-        <p9p431r8-nq64-02sq-3049-n10rrn1o89o7@tzk.qr>
-        <dc48ce59-530e-da74-93ad-9eb4a17e391c@gmail.com>
-        <73spp934-1q41-1123-41no-q2337954op92@tzk.qr>
-        <xmqqbks1ifmw.fsf@gitster.g>
-Date:   Tue, 30 Aug 2022 14:46:22 -0700
-In-Reply-To: <xmqqbks1ifmw.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        30 Aug 2022 14:29:59 -0700")
-Message-ID: <xmqqzgflh0b5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S231272AbiH3WLI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2022 18:11:08 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B429E578BA
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 15:11:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1661897462;
+        bh=h6tTP+2xOWmoRhxJlHm+xzgjHKsBI3GuJT7Z57IaVq0=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=Bv2C37H78ucOHlkRoSsOn3Si52lO36nKjguuOZod0djMZ1hWV2pOl2gojCUnB7kMe
+         dfLXjj6bqqOsP7TovXOM3jLKh9tjvoJb5XkEXozpRyBfKEAcij8GHRsPs0gp1c9aZm
+         HKtrPAJazZa885o1JgB+Q6/X4WsxJVwIxztFG4mE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az80-686.x3uy1q3lbwyuxmoobr5vjueqqh.dx.internal.cloudapp.net
+ ([20.66.26.76]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 1MiJV6-1p4ypc0i3i-00fU4k; Wed, 31 Aug 2022 00:11:02 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.37.3
+Date:   Tue, 30 Aug 2022 22:10:58 +0000
+Message-Id: <20220830221058.4307-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.37.2
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
+Fcc:    Sent
+X-Provags-ID: V03:K1:YPMfHXB19VWeQx78ofRxj7GEcq3taRs3g7ujXZFq2tZV0FsWxx0
+ Rl6lztnpgESHS1ITqcjulV2YVjYZ9w8t9sKH4Kq/JtwAk5GCQ5a7uNSJ5SHrE1mno47DTqj
+ WwPP7bxkEPSXmNpa9gZe10tNLrhKIZiZzC+Q4dYVoR5H3YSFk3CDx1KLeRigOpJE316mihZ
+ 4Z/VvSBXtdbUuc5Oh+7bg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3K/iM1lTP9Q=:DP+kR6OONkDN0/tWZOQhhZ
+ l57dl4VDGFodho+6fmh/BSTChgZDrl70xR7qu9fUJ3rYbwUXbFPQKNms9Fxxossw+r06T18yp
+ B3oSiESVf98PVC0aDYhqLUsiasNur/YaSgcvAMkdpeXs7Vf7OLqBguDJUq/HiF6yhdqlZ45fA
+ KhFxO2eTafwk3GZs9r8ujXnU5fS2RIa9V8Mozq9OFAGulmMXF+NST5KtUksQtEvYndoL19g8T
+ VFNn4CSXR1hlB5bKiEopd+wzTJZuqKEmFEna0WwM2iR/r81MJYfhmb/GEzcmNCMq6Xn8Jq7gJ
+ C2lxRZa6gKfo/48+I+ICSj0EC043WCEbIhjKnfCVENCSy14VUdj8FHyxhCdI7CYXhwlEexKXt
+ HV3610+Rk34AalZIJ40E38Od5Fc2no9jRCLpzfnB3hV4fRhvicjF8dgspyq8SWfjSnweKay5E
+ qqQiGeHBnPMYtXU3uDZX9+ZE+sSG4/0WjRu93thDzInL7ZnqCpRo515lRVa6E+sQ+qY1XqS4+
+ p8dnNAy40mn+IaFPULUbKy0ov1KasMUF9Cxo1iRevnq7/HlwlHJGKVspONs2VrhJ4TGI/uAAl
+ smvEvA+GxFbMl7QsAX2+4EYfykpLPNe72a1pQPeDqDJMyRb9+2chWuff7qrMQ4XHiOHfRYGgy
+ 9ve0vGu0NmanV2DN3YuFll9lnlRaWCSKreFzqsmRv+YFR8JPV1YyqrP4O6YIW8xFdo1Tq85Ys
+ LCDE5c9M0jie+YGpTvjpaffHA6HWi5dG9Hilz4cLnp4YWdZ9wW0YIghXfNeYVvQrO65tqnk9T
+ laD6oQc7XFRTP+Zilfm3ThQYKvU6fOT/RyK32/EQjBa4Di7LLZa4fHooTmZKY4tuHPLUjihOg
+ cphwTLryS154QILpneiRLbGgftEoLjBKmngdsB7+hF/IXElkAgNne36oaUUh04Vo1ozExE61M
+ 1DHVEx+lLBFgAvrvZQ30MS8nKe4KQ73VG05Q88AACWabjY0143UJ5TxxrNtbRK3n8XW2oD2W2
+ iiuyOnz6lkQk3D0iz/iDrBe1yhvLmQKo4h82Xmb9+zRhDk+ArDXNKgs7ZDz7Jr6qZRTBMmIJh
+ pQ8Tftax7q3XZfhgyjvfACTfdjIYHp0XAoxuOGGj29FcinGLYU4HQyGFQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Dear Git users,
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> Hi Phillip,
->>
->> On Tue, 30 Aug 2022, Phillip Wood wrote:
->>
->>> I wonder if they would be interested in fixing the parsing bug we found
->>> with Peff's UNUSED() series.
->>
->> Could you point me to the relevant mail? I am sure that I can come up with
->> an MCVE that will help them pinpoint the bug and fix it as quickly as they
->> did with this here bug.
+I hereby announce that Git for Windows 2.37.3 is available from:
 
-I think the reference Peff posted is much closer to the description
-of the "parsing bug".  Sorry for  the noise.
+    https://gitforwindows.org/
 
->> Still amazed at the turn-around time,
->> Dscho
+Changes since Git for Windows v2.37.2(2) (August 11th 2022)
 
-Yes, indeed.
+New Features
 
-Thanks.
+  * Comes with Git v2.37.3.
+  * Comes with tig v2.5.7.
+
+Bug Fixes
+
+  * Git for Windows now correctly handles .doc files that are not Word
+    Documents.
+
+Git-2.37.3-64-bit.exe | b0442f1b8ea40b6f94ef9a611121d2c204f6aa7f29c54315d2ce59876c3d134e
+Git-2.37.3-32-bit.exe | 5cc8e503989f0a3b3a5529c19074b07d83d7a6bc163532efa577bddbddfe3da3
+PortableGit-2.37.3-64-bit.7z.exe | ecd013c3aecdde0ffb363d5058d379a9c4037ff9ffbc004218632e288490f35c
+PortableGit-2.37.3-32-bit.7z.exe | fbb50b45117ee1ca559e353f19b9a903f08febba50bd88fb4c3c3ddf533f024c
+MinGit-2.37.3-64-bit.zip | cec8d038fadbdd82e269a5c458fd2a62711c1bb9a76c85f07c46de3bff6cdf32
+MinGit-2.37.3-32-bit.zip | cac833cce9d71b96520418551c03e9dd377293da64a146f1603efb71ddc7771a
+MinGit-2.37.3-busybox-64-bit.zip | fca6336cb65687464869212606b1afa603b405af055521de3eb35cd414691a31
+MinGit-2.37.3-busybox-32-bit.zip | 4553b4e93b9daf8903d52561f00afb740da7bad47504a0777bcd8ac0a741a85e
+Git-2.37.3-64-bit.tar.bz2 | 414d77223eaec06fe814df4973ef3af345c04fb04646b889eb7a2df4ea602e63
+Git-2.37.3-32-bit.tar.bz2 | 4c3f5d2976d3c1804f32d2331ca26c6af30616babb2480baeb8856305ec2ec34
+
+Ciao,
+Johannes
