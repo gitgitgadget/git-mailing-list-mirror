@@ -2,72 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA3BDC0502A
-	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 13:17:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45873ECAAA1
+	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 13:23:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229793AbiH3NRz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Aug 2022 09:17:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35416 "EHLO
+        id S229598AbiH3NXM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Aug 2022 09:23:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229573AbiH3NRx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2022 09:17:53 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1569D21D5
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 06:17:52 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id h204-20020a1c21d5000000b003a5b467c3abso9915669wmh.5
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 06:17:52 -0700 (PDT)
+        with ESMTP id S229486AbiH3NXL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2022 09:23:11 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9E5BAD8E
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 06:23:10 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id e20so14178131wri.13
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 06:23:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc;
-        bh=2qVkkmOgykRdYz9SqNY6NW9hJKDFh4vKcreY1S7xMbw=;
-        b=CaP9mD0YmbRfgltoB7Cjd2fXdWU/bM2bdVWc31T9implqA9j3QsYXTE8f4sW6h+hc7
-         f8BOY7xPLS3+WK8HWS3ydhVEP6/oJ8liRM8yEXfN2F0ptrKxv1BduiobeOk5fngt+DK0
-         agvOHrSyQDSfpfxUgF+a9dVSM12BgtyzeIZorpfZHvq4T8HuP3jZUFeS1JKbdhq/DYlS
-         gNE9raZgTgzgJwHhnuKyZY7kHeuGltfm5MJQPr7MdTzM8S89VqsGTlmRzjW3V06S8BB8
-         TsYl+QEgGyYf30PPskBKigKlHYMUq8GLJ6xV+Vud8aY5dg7mk+TxznqYSatvfH3V9HRF
-         Pnnw==
+        bh=aYqOEc2c03l6q35gPNRmBvBiKx8eqQAH1STMLvy+1ug=;
+        b=N+NNsxmjnCx4glgDQOEgV9XW/DeIZXaLU5ziQLmYu3TyxaPIeXmZpk/EoqUGPjKx3s
+         oTBhPEosP3goHQTERE1yQEqplgQUNcj2aCV73/4YNnbiCfSwGKrbrd1W14AzR5Kt4len
+         8vNScLm56NtP7QpGVrMUzfZbR+pw/TsVSizCEE3P4kS0B2qWcEOIeN2ME8zHl9YzTOrY
+         wW72L/LrN8LLv2zDf2fxZmQTcsP+djkLBESPIp5COgHVX3f1VqB4xd0Owv8elvyEgTDI
+         ijwlryg0woRczaWqqZaNxGpacU608pcGqihizXVO431b1EnSbR58EchG2LIJksP3rHOM
+         EHKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc;
-        bh=2qVkkmOgykRdYz9SqNY6NW9hJKDFh4vKcreY1S7xMbw=;
-        b=4bGZWWo8cxmPEHtFntHDPSfpyyQqpD7Uuyb2ZGreTEtwJ/vonfDJamyZzaTiEEKKZO
-         c+RrWAdBNWuthQ/wvsRbmvuOprbYcYHkencVsyztjUx/+58RAk2Txva2dgvzDuu4GFpA
-         dM2gqYqOWjOsrAoA/LCGOqcP116TQHgxMEK2Q3Zm2PvALCboay2QTuVY4nUoEMM7FFSJ
-         YOcc3/yDMkP9zTvMSPd+qHCCSj6IjIyYwef3DTABjd5vK1hjCpg72rn5tuQqG3q0XTHU
-         +lylGG+wXB13PlnXOCq7zbACzOf0j0DIDQUyw7Fz7RmNpAGrIXbU3joB3d7hTyHOsefV
-         fEbQ==
-X-Gm-Message-State: ACgBeo2IqHEDETtN6DFG/s2EaHxgvUlZhY4pW1Ifp8j9WK86o7EQlPs/
-        FbxVWdyMsBJdBse9tbxvmsw=
-X-Google-Smtp-Source: AA6agR6hQBRRVEaGgBRuopA5cAK0/pdpB6G5FJGPWVInxwVFPLQFpHntcpOV7c+mEX8qCZPCXdUhYQ==
-X-Received: by 2002:a05:600c:224c:b0:3a6:7234:551 with SMTP id a12-20020a05600c224c00b003a672340551mr9611509wmm.27.1661865471393;
-        Tue, 30 Aug 2022 06:17:51 -0700 (PDT)
+        bh=aYqOEc2c03l6q35gPNRmBvBiKx8eqQAH1STMLvy+1ug=;
+        b=6qHHXWDNo6NHY+Hayc9ye/+EorGnYqUrq+oTfV5nAuI+rBBIFKeS9DU16GeCA+v+49
+         EpBJTSIpQO/WvbQGcbqls+gFpmc1Y/jWNQq5NFIkxFkd/08EmwjWJQbGfTy3ZSvmFTsJ
+         eq3k6GG42UmMxdRICkktQM05pyU/noI19ekngqrIF5ujC93L+Zhirry64dyHYcMjjatl
+         dxk+lcpzto6AAumcWhf6Q4yz1StkvYAi1pl6waycUg0+fQ/DOrLFbL4SdI+qE6p7Vofq
+         MCqxlzdX/kFMIw7AGaMDUgAd0tnjZMc6pgVqN2NrgjQSOSq6GL0sAFVyWIDb/X9dicZ6
+         aOyQ==
+X-Gm-Message-State: ACgBeo3yIPh3f5SnySWmz4b54/FWOgc+qRV/il875ahNQTvlU3XfwDjl
+        njDtcEAyLk5AEMKSVHhc4KQ=
+X-Google-Smtp-Source: AA6agR5gzsMmm+DMkLffe0hmoCb1G4ileoTD/HRP0KxNh0RO9WwcV9Dfc3JABKAGLK3NJPtGYvObMQ==
+X-Received: by 2002:a05:6000:813:b0:226:da5a:84a9 with SMTP id bt19-20020a056000081300b00226da5a84a9mr5718244wrb.309.1661865788727;
+        Tue, 30 Aug 2022 06:23:08 -0700 (PDT)
 Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id v20-20020a05600c15d400b003a331c6bffdsm11382296wmf.47.2022.08.30.06.17.50
+        by smtp.gmail.com with ESMTPSA id l14-20020a05600c4f0e00b003a6a3595edasm13008267wmq.27.2022.08.30.06.23.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Aug 2022 06:17:50 -0700 (PDT)
-Message-ID: <9261de42-3287-6ccb-6cf5-21c0a8ee1f17@gmail.com>
-Date:   Tue, 30 Aug 2022 14:17:49 +0100
+        Tue, 30 Aug 2022 06:23:08 -0700 (PDT)
+Message-ID: <4960a9a9-3a48-f6ce-6412-0e6eb8997e1d@gmail.com>
+Date:   Tue, 30 Aug 2022 14:23:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 1/5] t3701: redefine what is "bogus" output of a diff
- filter
+Subject: Re: [PATCH v3 4/5] add -p: handle `diff-so-fancy`'s hunk headers
+ better
 Content-Language: en-US
 To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 References: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
  <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com>
- <a01fa5d25e4a94dd8ece5e328f853c000a2ad0f9.1661785916.git.gitgitgadget@gmail.com>
+ <e3e3a178f98183032b3df8ad9c81a096fe4af556.1661785916.git.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <a01fa5d25e4a94dd8ece5e328f853c000a2ad0f9.1661785916.git.gitgitgadget@gmail.com>
+In-Reply-To: <e3e3a178f98183032b3df8ad9c81a096fe4af556.1661785916.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -79,82 +78,75 @@ Hi Dscho
 On 29/08/2022 16:11, Johannes Schindelin via GitGitGadget wrote:
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> When parsing the colored version of a diff, the interactive `add`
-> command really relies on the colored version having the same number of
-> lines as the non-colored version. That is an invariant.
+> The `diff-so-fancy` diff colorizer produces hunk headers that look
+> nothing like what the built-in `add -p` expects: there is no `@@ ... @@`
+> line range, and therefore the parser cannot determine where any extra
+> information starts (such as the function name that is often added to
+> those hunk header lines).
 > 
-> However, in the 'detect bogus diffFilter output' test case in t3701, we
-> essentially required a hunk header that contains parseable `@@ ... @@`
-> hunk headers, and called all colored diffs without such hunks bogus.
+> However, we can do better than simply swallowing the unparseable hunk
+> header. There is probably information the user wants to see, after all.
+> In the `diff-so-fancy` case, it shows something like `@ file:1 @`.
 > 
-> The reason for this is that we would like to show the users the adjusted
-> hunk headers _including_ the extra part after the `@@ ... @@`
-> information, which usually contains things like the function name or
-> soms such.
-> 
-> Now, there is a _very_ popular diff colorizer called `diff-so-fancy`
-> that does not produce such colored diffs as the built-in `add` command
-> expects. Nevertheless, the Perl variant of the `add` command handles
-> those nicely, essentially by ignoring the hunk header and saying "there
-> is nothing else we can show except the original hunk header, even if we
-> had to adjust the line range and the original hunk header might get that
-> wrong".
-> 
-> In preparation for teaching the built-in interactive `add` to be a bit
-> more lenient, let's change the 'detect bogus diffFilter output' test
-> case so that it verifies that a mismatched number of lines causes the
-> command to error out, but not an unparseable hunk header.
+> If the line range could not be found in the colored hunk header, let's
+> just show the complete hunk header.
 
-The existing test deletes the first line of the diff[1] - so it is 
-removing the "diff --git ..." header not the hunk header. This patch 
-changes the filter to delete everything except the diff header which 
-seems like a less realistic test.
+Looking at the tests, I don't think we just show the complete hunk 
+header, we show the offsets from the unfiltered diff as well. I think 
+that is unfortunate as it kind of defeats the purpose of 
+interactive.diffFilter which is to the the user see the diff how they 
+want to (so long as it has the same number of lines)
 
 Best Wishes
 
 Phillip
 
-[1] To verify this I changed the filter to  "sed 1d | tee 
-filtered-diff". filtered diff-contains
-index 0889435..d95f3ad 100644
-
---- a/test
-
-+++ b/test
-
-@@ -1,6 +1 @@
-
--10
-
--20
-
--30
-
--40
-
--50
-
--60
-
-+content
-
-
-
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->   t/t3701-add-interactive.sh | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   add-patch.c                | 13 +++++++++++--
+>   t/t3701-add-interactive.sh |  4 ++++
+>   2 files changed, 15 insertions(+), 2 deletions(-)
 > 
+> diff --git a/add-patch.c b/add-patch.c
+> index 9d575d30ed0..0217cdd7c4a 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -363,8 +363,17 @@ static int parse_hunk_header(struct add_p_state *s, struct hunk *hunk)
+>   	if (p && (p = memmem(p + 4, eol - p - 4, " @@", 3)))
+>   		header->colored_extra_start = p + 3 - s->colored.buf;
+>   	else
+> -		/* could not parse colored hunk header, showing nothing */
+> -		header->colored_extra_start = hunk->colored_start;
+> +		/*
+> +		 * We tried to parse the line range out of the colored hunk
+> +		 * header, so that we could show just the extra information
+> +		 * after the line range.
+> +		 *
+> +		 * At this point, we did not find that line range, but the hunk
+> +		 * header likely has information that the user might find
+> +		 * interesting. Let's just show the entire hunk header instead
+> +		 * in that case.
+> +		 */
+> +		header->colored_extra_start = line - s->colored.buf;
+>   	header->colored_extra_end = hunk->colored_start;
+>   
+>   	return 0;
 > diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 3b7df9bed5a..88d8133f38f 100755
+> index 49200b7df68..39e68b6d066 100755
 > --- a/t/t3701-add-interactive.sh
 > +++ b/t/t3701-add-interactive.sh
-> @@ -761,7 +761,7 @@ test_expect_success 'detect bogus diffFilter output' '
->   	git reset --hard &&
->   
->   	echo content >test &&
-> -	test_config interactive.diffFilter "sed 1d" &&
-> +	test_config interactive.diffFilter "sed q" &&
->   	printf y >y &&
->   	force_color test_must_fail git add -p <y
+> @@ -775,10 +775,14 @@ test_expect_success 'handle iffy colored hunk headers' '
+>   		add -p <n &&
+>   	force_color git -c interactive.diffFilter="sed \"s/\(.*@@\).*/\1FN/\"" \
+>   		add -p >output 2>&1 <n &&
+> +	force_color git -c interactive.diffFilter="sed \"s/\(.*@@\).*/file/\"" \
+> +		add -p >output-so-fancy 2>&1 <n &&
+>   	if test_have_prereq ADD_I_USE_BUILTIN
+>   	then
+> +		grep "@ file\$" output-so-fancy &&
+>   		grep "@ FN\$" output
+>   	else
+> +		grep "^file\$" output-so-fancy &&
+>   		grep "@FN\$" output
+>   	fi
 >   '
