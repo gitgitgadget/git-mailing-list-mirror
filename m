@@ -2,112 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C43F2ECAAD1
-	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 15:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B66D4ECAAD1
+	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 15:20:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229720AbiH3PMZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Aug 2022 11:12:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58506 "EHLO
+        id S230210AbiH3PUn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Aug 2022 11:20:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230142AbiH3PMU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2022 11:12:20 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC34A122BFF
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 08:12:18 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id n17so14660350wrm.4
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 08:12:18 -0700 (PDT)
+        with ESMTP id S229652AbiH3PUl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2022 11:20:41 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9187758085
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 08:20:39 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id v16so11956374wrm.8
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 08:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc;
-        bh=vNktmWlkkE2K7rQTftkQ9fM6T6ZytPnum4HuSqgvpO8=;
-        b=nOOFv7vWe8/hsLSbJ2ndPPr+1scDgaaTboWaXmCAowxF4EX9b+JI0roMPPoHJyRukI
-         iE/n1nEIcXs9EHvz36tV5ec4hTSbT+G2bbFPmI7QPAMu6uXvPRuXXQSXP8K/4QthMb+4
-         K5w1I1l6HPscOtFLdgTSykrKgxI5ZVtjCaF0MpfpmPy8T9+7wTqf/VkuaPnz36UlFMyK
-         fD9tAcux+JUQZJCk3A/QaduvLpPHkRw6skIIfZti7ymMeLodTjFTBlimyUnTk2ibbk69
-         93/mqwE+RXOfjx0FLUn4pWxZWAMQuNMedOXTa9enWB78T8J5oQsJLV5souuKxtmwDXFI
-         5zsw==
+        bh=Dw3IjqxctPdkCjpeheRU24aRPESvwGAN+cDdR0vCDy0=;
+        b=juJ81AVxWvwl3uQ0yqco4MLiKIzW+G9oyBaIGK4TIqKTexupeDgaTc0p6p1RKH5eaK
+         NzU8svoYR54K3l4DQ0UXZLLNZ7NHVrFPlY1alAR+e9coBvds51QV6MN6NypHA+7hcuQS
+         llfIHPXiUvG6hQbKgJ4PopGvlEfyadNeOA9cOAKnvkgOXG4f6Mtgxi0j+ouBpFxFYxrl
+         9X4JKyq43Nrvve9LugYFPl4dRuomwzVyv3Ua+/ymzCzz7BddBEI2blLjnSvWpI3F2X+F
+         nHxe+NwpqPmlde9CmAbM0FEKRAikl2b5aSaOpfUTVOoUZmRjlACLytf7MTOD+PR8t7ML
+         me0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc;
-        bh=vNktmWlkkE2K7rQTftkQ9fM6T6ZytPnum4HuSqgvpO8=;
-        b=lfAPyrfggq4OZARZKYXLpoG9Lbqs4ujphXcII5FKuRuvt8FHqYi0pGZWu+7i1E8IAw
-         UE8fjS9JlpjcMU0mLocoo2PunrQDqY8dI0moX8klt6/EHoeTPLemeTftWVtfc8L2j6rK
-         yV/Yyr1xV3DfSTCseEtQQ/qCPO+w4+XL0gzsmagFTkAdqWULuvuhd+xOkMymgpLGV/8O
-         hWNqpTM++XWGb8V4pws98XaDJhPVoaPhU0WlkFte/Q/7Pay29SdEuM6hADjjj/fCVOv8
-         eT11ifd9/6dq0mjpDYJqux4NRSxXShVKFbKcf0xXlmyJLKGL76afUk3aBkUiZJTWnFXL
-         aSRg==
-X-Gm-Message-State: ACgBeo0Yg2DgNbV5WZpFPau1qkL0Efq0vOSToBWPhCmcnc5QsY7kEY57
-        5/JDzuLwuTyn1vET86WALbsjwPOjtaH4Mw==
-X-Google-Smtp-Source: AA6agR6XlC1TSaxSj8STV8Qwy7HkQB5PcaLlAed1JcP5brRwr+4nLV84vDvm9Sdp4SLdR9FfxMPLDw==
-X-Received: by 2002:a5d:5c0e:0:b0:226:e686:c30a with SMTP id cc14-20020a5d5c0e000000b00226e686c30amr1574117wrb.571.1661872337072;
-        Tue, 30 Aug 2022 08:12:17 -0700 (PDT)
+        bh=Dw3IjqxctPdkCjpeheRU24aRPESvwGAN+cDdR0vCDy0=;
+        b=Fm1Y2596xpAkyEdgBKuO4/solKidiurKH2Hk9BE1WNLEW51weegxff9NIly7quKnZV
+         AiDoaCe4+Zs6P2ZCOCult3yaHYm/GW2DDW6x3l3EzGMnH3idaD/2uZD/xOby7sP+ueh6
+         outGsBFnwj9lL1X6lI/LTuqxFexkF89hHHGPrl/VZ075PiSoMqhI7YeFv2PdOF1Dyh0/
+         RVfAp4rJFgZBqD0rL+UWKcXcramVxzBGaZM8627Ojsa13A0ehCIp56NKVo+Z5QMP1GmB
+         ho0LKfcrSaf9YJ+jFe7KqQxeLgbYvkZ/KMyTJ8jUmYKOsyIetbhMAbQnw6hoUaURMuPz
+         0yNA==
+X-Gm-Message-State: ACgBeo1gLdeIINCb/JQwfvC0nU3jhdL3Yc0AeomaSgCXh0sga0zG3zQA
+        U/I0/5SdaEcP7pyHN7gT8rE=
+X-Google-Smtp-Source: AA6agR6HzEuymsPcsji1Dh42hzV3PdpOrkOSBnhmoG5OU2zPRjByON1N6JxYFqF3tmsFCV6vR8wgbQ==
+X-Received: by 2002:a5d:50c3:0:b0:226:e77f:ccaf with SMTP id f3-20020a5d50c3000000b00226e77fccafmr1190738wrt.163.1661872838155;
+        Tue, 30 Aug 2022 08:20:38 -0700 (PDT)
 Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id f14-20020adff98e000000b002252ec781f7sm9869266wrr.8.2022.08.30.08.12.16
+        by smtp.gmail.com with ESMTPSA id r10-20020adff10a000000b002211fc70174sm11404437wro.99.2022.08.30.08.20.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Aug 2022 08:12:16 -0700 (PDT)
-Message-ID: <4bf29cdc-ab03-3fcd-b02d-a9840e07b4f5@gmail.com>
-Date:   Tue, 30 Aug 2022 16:12:15 +0100
+        Tue, 30 Aug 2022 08:20:37 -0700 (PDT)
+Message-ID: <26fdecfe-1715-1b12-2cd4-ec114f5b426b@gmail.com>
+Date:   Tue, 30 Aug 2022 16:19:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.12.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/5] t3416: set $EDITOR in subshell
+Subject: Re: [PATCH 0/3] A couple of CI fixes regarding the built-in add
+ --patch
 Content-Language: en-US
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20220824222855.1686175-1-jonathantanmy@google.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1340.git.1661867664.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20220824222855.1686175-1-jonathantanmy@google.com>
+In-Reply-To: <pull.1340.git.1661867664.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan
+Hi Dscho
 
-On 24/08/2022 23:28, Jonathan Tan wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->> Hi Junio
->>
->> On 15/08/2022 17:53, Junio C Hamano wrote:
->>> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>>
->>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>>>
->>>> As $EDITOR is exported setting it in one test affects all subsequent
->>>> tests. Avoid this by always setting it in a subshell and remove a
->>>> couple of unnecessary call to set_fake_editor.
->>>
->>> Unnecessary because it reuses the one that was established in the
->>> previous test [1]?  Or unnecessary because we know "rebase -i" would
->>> fail even before it gets to the point of asking an editor to tweak
->>> the todo sequence [2]?  Or something else?
->>
->> I meant unnecessary as the editor does not change the todo list, but [2]
->> also applies.
-> 
-> Maybe this is moot with the other changes you're planning, but even if
-> the editor doesn't change the todo list, it's still necessary, right? At
-> the very least, we need to suppress the default interactive editor and
-> replace it with one that just reuses the input file without any
-> modification.
-
-The default GIT_EDITOR when running the test suite is ":" and 
-GIT_SEQUENCE_EDITOR and sequence.editor are unset so we don't need to 
-set an editor in the tests unless we want to change the todo list.
-
-Best Wishes
+All three patches look good to me, thanks for working on them.
 
 Phillip
 
+On 30/08/2022 14:54, Johannes Schindelin via GitGitGadget wrote:
+> This is an attempt to address the concern Junio raised in
+> https://lore.kernel.org/git/xmqq7d3gm1bl.fsf@gitster.g/: originally
+> motivated by a test suite failure when running Git's test suite in Visual
+> Studio, this pulls out the signed vs unsigned fix whose implications are
+> potentially much wider than Visual C.
+> 
+> While in that space, I spent the time (which took almost as long as I
+> expected
+> [https://lore.kernel.org/git/nrr2312s-q256-61n7-2843-7r0s817rp432@tzk.qr/])
+> to craft a semantic patch to scrutinize Git's source code for similar issues
+> (narrator's voice: there were no other instances, what did ya expect?).
+> 
+> To verify the fix, I then worked on a patch to exercise the built-in git add
+> -p in the test suite even when NO_PERL is set, and while developing this
+> patch and validating it, I got really puzzled that the add -p test case in
+> t6132 did not need to be guarded behind a PERL prereq. So this patch series
+> also includes a fix for that.
+> 
+> The story arc that binds all of these patches together is that they all
+> revolve around NO_PERL and CI issues that involve git add --patch.
+> 
+> Note: This patch series is based on ds/github-actions-use-newer-ubuntu (but
+> probably applies cleanly even on maint) because I tried to develop a
+> semantic patch to fix similar issues in the code base. However, I've since
+> run into what looks like a bug in Coccinelle
+> [https://github.com/coccinelle/coccinelle/issues/284]. My latest version of
+> that semantic patch looks like this, but I stopped when running it on Git's
+> source code triggered the bug for 66 of Git's .c files:
+> 
+> @@
+> type T = { unsigned int };
+> T:n b;
+> type S != { unsigned int, size_t };
+> S s;
+> binary operator o != { &&, || };
+> @@
+> -s o b
+> +s o (S)b
+> 
+> @@
+> type T = { unsigned int };
+> T:n b;
+> type S != { unsigned int, size_t };
+> S s;
+> binary operator o != { &&, || };
+> @@
+> -b o s
+> +(S)b o s
+> 
+> 
+> Johannes Schindelin (3):
+>    add -p: avoid ambiguous signed/unsigned comparison
+>    t3701: test the built-in `add -i` regardless of NO_PERL
+>    t6132(NO_PERL): do not run the scripted `add -p`
+> 
+>   add-patch.c                 | 2 +-
+>   t/t3701-add-interactive.sh  | 4 ++--
+>   t/t6132-pathspec-exclude.sh | 6 +++++-
+>   3 files changed, 8 insertions(+), 4 deletions(-)
+> 
+> 
+> base-commit: ef46584831268a83591412a33783caf866867482
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1340%2Fdscho%2Fbuilt-in-add-i-does-not-need-perl-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1340/dscho/built-in-add-i-does-not-need-perl-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1340
