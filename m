@@ -2,109 +2,247 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEBC5ECAAD1
-	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 14:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FEC8ECAAA1
+	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 14:17:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230288AbiH3OOx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Aug 2022 10:14:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53354 "EHLO
+        id S230483AbiH3ORN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Aug 2022 10:17:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230043AbiH3OOv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2022 10:14:51 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35015F619A
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 07:14:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661868878;
-        bh=ghTLqQ8rYNBZ4FiVHwwV6Mm08ckrYmeUn3y6S46DG5A=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=CxT7ULHCJB1flDHmU9zr1/ayfxv5a9afN7bNayI2xZEy95eeUfNXISqUrlFmMbhCo
-         6sSoks70OyhIM3P+PDGac2SlFp+B4UhJFI/ElL6nVu2dkedtiJ8NPAuX78Ylmc+Rdp
-         JB4l9NzW8eA01YYhTwn0U++YCvO+cHLG7bcSPLWc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtOKi-1pGB7I0hLC-00usAT; Tue, 30
- Aug 2022 16:14:38 +0200
-Date:   Tue, 30 Aug 2022 16:14:37 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v2 3/4] add -p: handle `diff-so-fancy`'s hunk headers
- better
-In-Reply-To: <xmqqilmbotl0.fsf@gitster.g>
-Message-ID: <p11s25nn-15qr-o2q1-5700-1q581sr9331n@tzk.qr>
-References: <pull.1336.git.1661277870.gitgitgadget@gmail.com> <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com> <9dac9f74d2e19899b3e6c1d28e83878ded4469d6.1661376112.git.gitgitgadget@gmail.com> <xmqq5yibqxs0.fsf@gitster.g> <0q0psp09-8993-96r6-3r90-q4s368p98510@tzk.qr>
- <xmqqilmbotl0.fsf@gitster.g>
+        with ESMTP id S230454AbiH3ORK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2022 10:17:10 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F2F5A6C2D
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 07:17:06 -0700 (PDT)
+Received: from host-92-14-211-167.as13285.net ([92.14.211.167] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1oT236-0005cZ-E4;
+        Tue, 30 Aug 2022 15:17:05 +0100
+Message-ID: <96b04fc0-eadc-af01-502a-e5236a393ac4@iee.email>
+Date:   Tue, 30 Aug 2022 15:17:03 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:qKFTLP0ihhKmSUTih5gTDo0MCCkxW4mg5pbgMEbRvIIkmK/U0U3
- sSLGNoNGu1TC3ty3GmRTP3fNx9poWjyqhflaMouF2hhkgU8wQoMs4Cx6b/riE+4YbPf96xr
- 9eATCe2PYiwYvSG8l47D+P3iFrkXVe8+esxSdt/mYEdRC1f3Vt0sHZDpIdaNtOF0lk6mt6N
- f8AEHHxj5wsCp7Uz7PbGQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:e0px8SLlUOI=:UxrtOWOYhY2vyabjNsuTnh
- k8ig5F+y0CpWBgazAvxXtwai326y2I7UodnMUSmHordIauwSEke+x5XKAwcyiavIYYr7LXmf7
- Pxcrv2hREKWilUecnvikBg7EIHPbeIguQh2WQE7ehoLU+n0Sf1t2syS/ClfLfY1TVqI3SNXFT
- eLzJsDTmfCO/x6HMTqKzZGqrWgvxhyzwh4YsujTNLi20jDifskB8CvVdCdmWKC4yp1uzq5BVh
- U/KBD/Ai4e95hWMmhb4qPfACZWIG1hikthbiJpV0lyuBrqQUsy/JuUC3gNw74dkfcamMezK3M
- 8P7XWjI8rejGOIG4U1lJchyBRTVBmKC00dr6nY9ftEh4X74USqDx1idFpm/dOpkxxRts1FlW8
- GjKVlsx8t0ArSJmrRdgqVFE4yiQ6u5cxoYWqzzbQ8IqRMXGoNBj6bPTlJXgoC57YDCUIRqfJZ
- 6hd6YsLyiTn6AS0POaKiJXa4C5AN0+ah7hPXa5wAmtf1Xzp0ckP5MefcQgp5qOrLft4laLIce
- 46NXX0Y/JjRoTIhekKoGoB8tat/gbtv3PelXIL1FS2Tre1SlTdiRL+r75gQEJTrSmHxqkYW72
- oTKPDRbYJ7hnEC0FO5FvGqkwektBO1FASEjrABbyHqgNE5lKm3axUe2jDaEtjqXio1mOJ8eVN
- QDjotIZl7uulJGw4AG7xzmJQBB3oK/C7uvnyiMH04Tc4uyqh5vCA3IkeRAFxwS8BN6CfvpdfK
- Xg/SFSva+9b/cfGTqVOUpDExUA+1FG3lW5olJ/PjpwROBj6tosbKcXUSqAS75wZ/7FW60Vvwu
- LGE/BnEABnmuqHpGwFXpzWQom2d0mGF+05syQqqAHPUKQh8jlVudPvFwqFi6fb29vk8xcHaby
- UsW5s2D8h6cfW/9LW1VlOhIvYf63HCkZlTpZ19xKOooEQtlfk8Qm6UFVB4oSade/5Gei90lAR
- NfSk1SFomAHglgqF+LolDDkmgJqcVBKpXGoVTKbYOLgZJQNagjJveY2NSW8CWRuK1qNRRwQMR
- YNTtTOew1Q59fJ5qRspw45Vjo1qbKFEr/aOoJmRbPdzEpBu0JC3ZMU3mCPY0EJ1U4g1g5Al3E
- Pswl7fmmuXdZlJvtzFJRFcXw4BwfRDMpDU4H683JB6hTOdqvuctGD9ZAw==
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [RFC PATCH 1/2] notes: support fetching notes from an external
+ repo
+Content-Language: en-GB
+To:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org
+Cc:     Johan Herland <johan@herland.net>,
+        "Jason A . Donenfeld" <Jason@zx2c4.com>,
+        Christian Hesse <mail@eworm.de>
+References: <20220802075401.2393-1-vegard.nossum@oracle.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <20220802075401.2393-1-vegard.nossum@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Sorry for late comment.
 
-On Mon, 29 Aug 2022, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 02/08/2022 08:54, Vegard Nossum wrote:
+> Notes are currently always fetched from the current repo. However, in
+> certain situations you may want to keep notes in a separate repository
+> altogether.
 >
-> > Here is why: in the _regular_ case, i.e. when we have a colored hunk
-> > header like `@@ -936 +936 @@ wow()`, we manage to parse the line range=
-,
-> > and then record the offset of the extra part that starts afterwards.
-> >
-> > This extra part is non-empty, therefore we add an extra space.
-> >
-> > But that part already starts with a space, so now we end up with two
-> > spaces.
+> In my specific case, I am using cgit to display notes for repositories
+> that are owned by others but hosted on a shared machine, so I cannot
+> really add the notes directly to their repositories.
 >
-> In other words, this breaks because the original code depended on
-> having the extra whitespace before the "funcname" part.
-
-Yes.
-
-> Stepping back a bit, if the final goal for the UI generation out of
-> this string is to append the material with a whitespace before it
-> for better visual separation, then the original should probably have
-> (at least conceptually) lstrip'ed the leading whitespaces from the
-> string it found after " @@" and then appended the result to where it
-> is showing, with its own single whitespace as a prefix.
-
-Yes, with one twist: ANSI escape sequences can make lstrip'ing non-trivial
-(granted, the line range parser totally ignores the fact that `@@<RESET> `
-is a totally legitimate end of a colored line range).
-
-> It would have prevented this bug from happening by future-proofing, and
-> made the final output nicer, as any excess whitespaces between the " @@"
-> and "funcname" would have been turned into a single SP.
+> This patch makes it so that you can do:
 >
-> The "prepend one iff it does not already begin with a whitespace" is
-> a (at least mentally to the developer) less expensive approach that
-> is fine, too.
+>     const char *notes_repo_path = "path/to/notes.git";
+>     const char *notes_ref = "refs/notes/commits";
+>
+>     struct repository notes_repo;
+>     struct display_notes_opt notes_opt;
+>
+>     repo_init(&notes_repo, notes_repo_path, NULL);
+>     add_to_alternates_memory(notes_repo.objects->odb->path);
+>
+>     init_display_notes(&notes_opt);
+>     notes_opt.repo = &notes_repo;
+>     notes_opt.use_default_notes = 0;
+>
+>     string_list_append(&notes_opt.extra_notes_refs, notes_ref);
+>     load_display_notes(&notes_opt);
+>
+> ...and then notes will be taken from the given ref in the external
+> repository.
+>
+> Given that the functionality is not exposed through the command line,
+> there is currently no way to add regression tests for this.
+>
+> Cc: Johan Herland <johan@herland.net>
+> Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+> Cc: Christian Hesse <mail@eworm.de>
+> Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+> ---
+>  common-main.c |  2 ++
+>  notes.c       | 15 ++++++++++++---
+>  notes.h       |  3 +++
+>  refs.c        | 12 +++++++++---
+>  refs.h        |  2 ++
+>  5 files changed, 28 insertions(+), 6 deletions(-)
 
-Yes, it is definitely less expensive.
+Where's the documentation? Without a clarity of purpose and usage then,
+for me, it doesn't fly.
 
-Ciao,
-Dscho
+I feel that underlying this there may something that's interesting, but
+without the 'SPIN' narrative (situation, problem, implication, and
+need-payoff) I'm not sure what it's trying to do from a broad user
+perspective. (Spin is just one approach to 'selling' the patches;-)
+
+I'd agree that Notes are 'odd' in that they are out of sequence relative
+to commits, and may not be common between users viewing the same repo.
+I'd like to understand the issues in a wider context.
+--
+Philip
+
+>
+> diff --git a/common-main.c b/common-main.c
+> index c531372f3f..74b69a4632 100644
+> --- a/common-main.c
+> +++ b/common-main.c
+> @@ -1,6 +1,7 @@
+>  #include "cache.h"
+>  #include "exec-cmd.h"
+>  #include "attr.h"
+> +#include "notes.h"
+>  
+>  /*
+>   * Many parts of Git have subprograms communicate via pipe, expect the
+> @@ -43,6 +44,7 @@ int main(int argc, const char **argv)
+>  	git_setup_gettext();
+>  
+>  	initialize_the_repository();
+> +	init_default_notes_repository();
+>  
+>  	attr_start();
+>  
+> diff --git a/notes.c b/notes.c
+> index 7452e71cc8..90ec625192 100644
+> --- a/notes.c
+> +++ b/notes.c
+> @@ -73,11 +73,17 @@ struct non_note {
+>  #define SUBTREE_SHA1_PREFIXCMP(key_sha1, subtree_sha1) \
+>  	(memcmp(key_sha1, subtree_sha1, subtree_sha1[KEY_INDEX]))
+>  
+> +struct repository *default_notes_repo;
+>  struct notes_tree default_notes_tree;
+>  
+>  static struct string_list display_notes_refs = STRING_LIST_INIT_NODUP;
+>  static struct notes_tree **display_notes_trees;
+>  
+> +void init_default_notes_repository()
+> +{
+> +	default_notes_repo = the_repository;
+> +}
+> +
+>  static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
+>  		struct int_node *node, unsigned int n);
+>  
+> @@ -940,10 +946,10 @@ void string_list_add_refs_by_glob(struct string_list *list, const char *glob)
+>  {
+>  	assert(list->strdup_strings);
+>  	if (has_glob_specials(glob)) {
+> -		for_each_glob_ref(string_list_add_one_ref, glob, list);
+> +		repo_for_each_glob_ref_in(default_notes_repo, string_list_add_one_ref, glob, NULL, list);
+>  	} else {
+>  		struct object_id oid;
+> -		if (get_oid(glob, &oid))
+> +		if (repo_get_oid(default_notes_repo, glob, &oid))
+>  			warning("notes ref %s is invalid", glob);
+>  		if (!unsorted_string_list_has_string(list, glob))
+>  			string_list_append(list, glob);
+> @@ -1019,7 +1025,7 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+>  	t->dirty = 0;
+>  
+>  	if (flags & NOTES_INIT_EMPTY || !notes_ref ||
+> -	    get_oid_treeish(notes_ref, &object_oid))
+> +	    repo_get_oid_treeish(default_notes_repo, notes_ref, &object_oid))
+>  		return;
+>  	if (flags & NOTES_INIT_WRITABLE && read_ref(notes_ref, &object_oid))
+>  		die("Cannot use notes ref %s", notes_ref);
+> @@ -1088,6 +1094,9 @@ void load_display_notes(struct display_notes_opt *opt)
+>  
+>  	assert(!display_notes_trees);
+>  
+> +	if (opt->repo)
+> +		default_notes_repo = opt->repo;
+> +
+>  	if (!opt || opt->use_default_notes > 0 ||
+>  	    (opt->use_default_notes == -1 && !opt->extra_notes_refs.nr)) {
+>  		string_list_append(&display_notes_refs, default_notes_ref());
+> diff --git a/notes.h b/notes.h
+> index c1682c39a9..c7aae85ea6 100644
+> --- a/notes.h
+> +++ b/notes.h
+> @@ -6,6 +6,8 @@
+>  struct object_id;
+>  struct strbuf;
+>  
+> +void init_default_notes_repository();
+> +
+>  /*
+>   * Function type for combining two notes annotating the same object.
+>   *
+> @@ -256,6 +258,7 @@ void free_notes(struct notes_tree *t);
+>  struct string_list;
+>  
+>  struct display_notes_opt {
+> +	struct repository *repo;
+>  	int use_default_notes;
+>  	struct string_list extra_notes_refs;
+>  };
+> diff --git a/refs.c b/refs.c
+> index 90bcb27168..cf0dc85872 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -468,8 +468,8 @@ void normalize_glob_ref(struct string_list_item *item, const char *prefix,
+>  	strbuf_release(&normalized_pattern);
+>  }
+>  
+> -int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+> -	const char *prefix, void *cb_data)
+> +int repo_for_each_glob_ref_in(struct repository *r, each_ref_fn fn,
+> +	const char *pattern, const char *prefix, void *cb_data)
+>  {
+>  	struct strbuf real_pattern = STRBUF_INIT;
+>  	struct ref_filter filter;
+> @@ -492,12 +492,18 @@ int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+>  	filter.prefix = prefix;
+>  	filter.fn = fn;
+>  	filter.cb_data = cb_data;
+> -	ret = for_each_ref(filter_refs, &filter);
+> +	ret = refs_for_each_ref(get_main_ref_store(r), filter_refs, &filter);
+>  
+>  	strbuf_release(&real_pattern);
+>  	return ret;
+>  }
+>  
+> +int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+> +	const char *prefix, void *cb_data)
+> +{
+> +	return repo_for_each_glob_ref_in(the_repository, fn, pattern, prefix, cb_data);
+> +}
+> +
+>  int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data)
+>  {
+>  	return for_each_glob_ref_in(fn, pattern, NULL, cb_data);
+> diff --git a/refs.h b/refs.h
+> index 47cb9edbaa..1375c8531f 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -366,6 +366,8 @@ int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_dat
+>  /* iterates all refs that match the specified glob pattern. */
+>  int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
+>  
+> +int repo_for_each_glob_ref_in(struct repository *r, each_ref_fn fn, const char *pattern,
+> +			 const char *prefix, void *cb_data);
+>  int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+>  			 const char *prefix, void *cb_data);
+>  
+
