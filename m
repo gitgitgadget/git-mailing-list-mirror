@@ -2,101 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AF60ECAAD1
-	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 13:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D84EECAAA1
+	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 14:02:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231313AbiH3NzF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Aug 2022 09:55:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49752 "EHLO
+        id S229785AbiH3OCu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Aug 2022 10:02:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231307AbiH3Nyi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2022 09:54:38 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F60D10FB
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 06:54:32 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id e13so13421792wrm.1
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 06:54:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc;
-        bh=IMltBZ4M0IkpvwXFSb8AG5YF2NMVr6CiU5ni2/ATH48=;
-        b=Q1G+in45TGMbhcW4xPfRLB4n+Lok/cU6x7iDmt2rBnv83nxqAgcKSxQuczWRFsfJFA
-         UScTvwPabkbtSRfG1/iMn61sUG8PkxeHn9W9q9Q4vmyatd95auOY5V69lTHqkllDW79S
-         fQPgO95c08jS+8Mivuz25cSfS5hxs4f2zzo1o1Cv9qVO+ogYXbdEyHVpYJltk4gIyddT
-         zZsHEd76ghacyxT89W22alKhfq1qGUtDhmU587mntJbfYMKhZiYd42l7dGGBz3dwQAdC
-         ELoUhBIeQbpClTckrNJgRWgRa/WIroIFCopS1VbUlxfvJnDmYY+hI1GXYFI2vQWZlIxO
-         ai8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=IMltBZ4M0IkpvwXFSb8AG5YF2NMVr6CiU5ni2/ATH48=;
-        b=d0wemjjJAReVW6zIYyWN7V/sLgSge3eGJ9wef3glZPhVRIPIIZAW9GshXQM9El+L+Z
-         i/44v+fIoTTt9mobOCv1kL8jhQ40Jm6P44G7KcglqwlY8T8TAghV7/9VD5th3vgmUcvZ
-         n/MJtVuSgAoCDHRQhz0hBfmknC43GWcbJjVDd1XIc/70qQHazDnP8+TNiajvMAA9+XNZ
-         0Jw4Lc3S/xGAmqmLz3Gv0YJjMWyTq1ypLSJWEaJcZzHawOuDhW0VyS1WAA7fcw5ZbYGb
-         M1CPGhKQoOMjRx7tLhoBYDfvFamWUP+rdSgNdpg9NMbAP2yaonux8n+4YYVS2nMY0aTH
-         8yNQ==
-X-Gm-Message-State: ACgBeo20s7T3nXxmtM8lE1zLhIkmgV3uVA1ZBN62tLVzg05xjDwtc44m
-        R40xtv3Zh+0q1tx8a+6LUR/HGodaBds=
-X-Google-Smtp-Source: AA6agR6oIKOFjOoyYoK4lAxZM6GVzaQggFEB/HnqGxdtZzZiNiHoIJODs/ashKbIhRr8dIB3m1hIPA==
-X-Received: by 2002:a05:6000:1789:b0:225:7557:94f9 with SMTP id e9-20020a056000178900b00225755794f9mr8943392wrg.635.1661867670361;
-        Tue, 30 Aug 2022 06:54:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o19-20020a5d58d3000000b00226de10c0c2sm4448144wrf.15.2022.08.30.06.54.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Aug 2022 06:54:29 -0700 (PDT)
-Message-Id: <736f2dde6918822e5f8234dc8cddcb94aa3f92ac.1661867664.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1340.git.1661867664.gitgitgadget@gmail.com>
-References: <pull.1340.git.1661867664.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 30 Aug 2022 13:54:24 +0000
-Subject: [PATCH 3/3] t6132(NO_PERL): do not run the scripted `add -p`
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229699AbiH3OCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2022 10:02:48 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F07B1B4413
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 07:02:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1661868164;
+        bh=FjVOx++loLp5PZ4uBMW0cFO+qQA5wMWvldjOki+YLQo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=LznMVbAI4vD3tFxhgvdJO795pUewQyjg66+c9MJ+9ccKHs5mzaLa6mGN1MT4As1ts
+         dft53I5YiE9auJA8TJNGOyi0ON7hJ1XrW1/yqdQtrUe/VubX6on0LCRXCTlIsDtMbG
+         eNoDNX/vO0iT6izAz8q3eCzS1GnEEmzHyGOVwwzU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Md6Qr-1p25jD0ZOd-00aF0m; Tue, 30
+ Aug 2022 16:02:44 +0200
+Date:   Tue, 30 Aug 2022 16:02:44 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Elijah Newren <newren@gmail.com>
+cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 0/3] fix failing t4301 test and &&-chain breakage
+In-Reply-To: <CABPp-BGBEfFh0z0YHGcHE+rva9JdapXprPn-RSmif0xn6fcxYw@mail.gmail.com>
+Message-ID: <30rq792s-818n-q078-3837-977prpqqprq6@tzk.qr>
+References: <pull.1339.git.1661663879.gitgitgadget@gmail.com> <CABPp-BGBEfFh0z0YHGcHE+rva9JdapXprPn-RSmif0xn6fcxYw@mail.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:etYMW4Qh3/pKQhM7lY3dfZ3QgdEi0fpkKuepCW8jXV/HFTJDXGQ
+ LeZOd9ccxqiUpIrjE88NRoM2qaXeslQ/Vat+z+TUw0iM3xe7gnyDiJV7LHD1XoUuJfaQ1IB
+ BKGinanIC9t9L08RCuGmszezib6CbflUBKK3UWHFBTB3H3eFQS3AGEOutJ93Ryk7LTGPCpH
+ ks9JGYn91JEkeT4NFYvfQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:K3aTsLud7yU=:UUFKLIQG70GWf3G/Pv64S8
+ GL5htnosSBrv8Gw3nK4K84OtR2YUsHJG7K9zPoO2qDx1x05j8SerkD5CERwlR4+VXCrcXi6wF
+ KCGYMS80ZmW+MBpBf9JXHhLP8sCRCwaAFhnoRQqXscgEbw0on4qQzRig0o0YfHF7iJT2VqHZv
+ Sg3hWIOnr0NwfDjHvenTgG61UOSS3E0ZuMiYZ3wV+atCvyI+pQFyUBSIXzQj0U/1L9M+GO7n7
+ 0qKax0ap0R+JP0/b5tanvNdtiXjRgpm5Gn0exkWAq87+T8JW8BNJEP/ECYJq4oCPGNX+dJM6i
+ A5jFtnRfEzdjmst1/evOTp+1ERoO7TsDWaSCseSf05UI8NZSaH2Ihm0M8CpTi0tepIr8XBRFt
+ ChQSGE7Funi4d7l9B5XcRAFXm6C5jGk3i53jhH8HY06SYcjjCbuINRtkyRVNJvZ5RQh/FZRnn
+ RT7J6bUkAw0RHU0J/XnngRGPA5AJqs+Ke0FzL/rRNXq9saq5hUXIKteiQ3Bievmg0+n2w1c6i
+ yo/UM8daeRZyaCYd31iOEJLHit8Exqdj29KUeRbl4uDEfPuCCYGHawvTGS1JK5Uv9hqtlulPj
+ tjJvjp/Mh+US5/VuuIT57jHjYLbzAabUoD35G2oRGn85x2Delo7YqjWcwDS+CjF5B3WrTeDLi
+ HyoCsZEaPaVYq8QhjAVT73YzrBHCxnJj2NsV0hDLNLd9SKjCN64NzUyCTit9mM2NPYWVgbL0P
+ BHlhfggQpNt6oopAsSdj12o4vqOM41XpZ1q8UkXAfYRREXmNgQdeYhZTq0pSN4+GNEV9MOhWV
+ iXaN+P84UEHcyVqCaR8ylx8Qjqa/NdyiuS28s3neWE2TmSLmV8lmxbVVplvwSAw0bP3FHZk4H
+ k5jfQSqbPr8Tr3QzJ/UxIFPUgcCQRaJL2qKe7U1oaLRPmCFjroEYi8e1zrnvyu6MK4waM7nya
+ o7y6YBReRjcyCNlHMzr/hDc8kGP49IoQhTwXVod/5L8ZaJo3Q8L6/Le6TdHPbdn/cUdzjUm38
+ fGJeqQ6xlB2nQ4+akgCPAtVDjWGepIqn/zCZQD7a+cw0UOS1FNTzkIIW8A7ZjLxhlnWZZZ0wE
+ Sfh+KN5//HmTSU2IcoeZ/Whn9grlQLlE97yPmMD1NaCkgSGkBwPZfMR6g==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Elijah & Eric,
 
-When using the non-built-in version of `git add -p` in a `NO_PERL`
-build, we expect that invocation to fail.
+On Mon, 29 Aug 2022, Elijah Newren wrote:
 
-However, when b02fdbc80a4 (pathspec: correct an empty string used as a
-pathspec element, 2022-05-29) added a test case to t6132 to exercise
-`git add -p`, it did not add appropriate prereqs (which admittedly did
-not exist back then).
+> On Sat, Aug 27, 2022 at 10:18 PM Eric Sunshine via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > This series fixes a failing test in t4301 due to 'sed' behavioral
+> > differences between implementations. It also fixes a couple broken &&-=
+chains
+> > and adds missing explicit loop termination.
+> >
+> > The third patch is entirely subjective and can be dropped if unwanted.=
+ I
+> > spent more than a few minutes puzzling over the script's use of 'print=
+f
+> > "\\n"' rather than the more typical 'printf "\n"' or even a simple 'ec=
+ho',
+> > wondering if there was some subtlety I was missing or whether Elijah h=
+ad
+> > encountered an unusual situation in which '\\n' was needed over '\n'. =
+The
+> > third patch chooses to replace 'printf "\\n"' with 'echo' which I find=
+ more
+> > idiomatic, but I can see value in using 'printf "\n"' as perhaps being
+> > clearer that it is adding a newline where one is missing.
+>
+> I can't actually provide the reasoning for it; I took Dscho's testcase
+> from [1] and used it as a basis for adding several other testcases.
+> When I was copying & pasting and adjusting, I just didn't notice the
+> 'printf "\\n"'.  But using a simple echo makes sense.
+>
+> [1] https://lore.kernel.org/git/3b4ed8bb1bb615277ee51a7b2af5fc53bae0a6e4=
+.1660892256.git.gitgitgadget@gmail.com/
 
-Let's specify the appropriate prereqs.
+No other reason than that I _seem_ to recall having run into some issues
+where _some_ POSIX shell (was it BusyBox' ash?) did not like the
+single-escape form "\n".
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t6132-pathspec-exclude.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+I have no firm recollection, though, and am fine with converting all of
+the double backslashes to single backslashes (read: I am very indifferent
+to this issue).
 
-diff --git a/t/t6132-pathspec-exclude.sh b/t/t6132-pathspec-exclude.sh
-index 9fdafeb1e90..cada952f9ae 100755
---- a/t/t6132-pathspec-exclude.sh
-+++ b/t/t6132-pathspec-exclude.sh
-@@ -293,7 +293,11 @@ test_expect_success 'add with all negative' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'add -p with all negative' '
-+test_lazy_prereq ADD_I_USE_BUILTIN_OR_PERL '
-+	test_have_prereq ADD_I_USE_BUILTIN || test_have_prereq PERL
-+'
-+
-+test_expect_success ADD_I_USE_BUILTIN_OR_PERL 'add -p with all negative' '
- 	H=$(git rev-parse HEAD) &&
- 	git reset --hard $H &&
- 	git clean -f &&
--- 
-gitgitgadget
+Ciao,
+Dscho
