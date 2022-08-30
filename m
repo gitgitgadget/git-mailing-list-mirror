@@ -2,199 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2E37ECAAA1
-	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 14:47:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A16EFECAAA1
+	for <git@archiver.kernel.org>; Tue, 30 Aug 2022 15:03:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229752AbiH3Orh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 30 Aug 2022 10:47:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49848 "EHLO
+        id S230087AbiH3PDS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 30 Aug 2022 11:03:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbiH3Ore (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Aug 2022 10:47:34 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72637B514A
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 07:47:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661870846;
-        bh=taOB8JCgrBjBizR105LlgIuu0+Vi3qPpBqTs+wfTPEg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Vvazu0kPiR7uSWSQ0xBg5yS8yqAV5bL2XIHL6s5K8kylbQaJR067GhwRdvqBAYI40
-         wOPAHHyyStFpG7OJAXUycGVrx+JDi1NJRIZT+y9saNRElAAtDeerF3/n6cb+HSrHRG
-         t5nf6LmjEsodEPa5hypvXfhdN5+O1wLPSv2XWgow=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([89.1.212.11]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVNAr-1os6HJ36Yh-00SN02; Tue, 30
- Aug 2022 16:47:26 +0200
-Date:   Tue, 30 Aug 2022 16:47:26 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 11/16] bisect--helper: calling `bisect_state()` without
- an argument is a bug
-In-Reply-To: <220829.86sflf2w57.gmgdl@evledraar.gmail.com>
-Message-ID: <5594qo11-716s-61qn-2rn9-q114199sp3p0@tzk.qr>
-References: <pull.1132.v4.git.1656354677.gitgitgadget@gmail.com> <pull.1132.v5.git.1661604264.gitgitgadget@gmail.com> <8a0adfe3867157102e75d53ed928603ad634b904.1661604264.git.gitgitgadget@gmail.com> <220829.86sflf2w57.gmgdl@evledraar.gmail.com>
+        with ESMTP id S230117AbiH3PDP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Aug 2022 11:03:15 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB7FD10D4F7
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 08:03:14 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id m16so14586009wru.9
+        for <git@vger.kernel.org>; Tue, 30 Aug 2022 08:03:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc;
+        bh=qcCOoEQg1XfPMz7K4EWD2ZPv1xXzYEy50pQbjNMGJIs=;
+        b=dBzxifCaRQnQQgCxhB4SEE6OR7bsIRa8Bb/76qG6wM4uYNTOZidwNYboBgtA3/AIsg
+         7NGUYYMj1VnccDURpYZ6+ELYt5Z6bNBi8up9vGDjK3P5YgfkGDBUR/51WCpNPc4rmI1K
+         MQU7mzuKqbHQ71U2i7jFWe5WfC0Juh5aoG1AZe0afOpfFRSvyRr9ZZheGG9lZJK2oheP
+         Avl2bCUUnu5qZh7NGWZQQjMKD6H3ug+kpnmCUq2A2WerUiWCSaZ1bohmzFb0Ty81Z7WP
+         yNCb2f85yK6AIIy111HrzIirU3K+Uox9+XGV/waqrkk5ugOF6TICHQ+bhMbZWIKSWZQu
+         jHrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc;
+        bh=qcCOoEQg1XfPMz7K4EWD2ZPv1xXzYEy50pQbjNMGJIs=;
+        b=Sina7QIqu2Udp+lDr7wTm+BmYdV9earsCvU+cImrVUs3GNGRWCxA1p9FY7/IyLIu2j
+         av99XvdzLYGl0teCTzArDifQ/Js0jvWPZMzhetFvq7yePq8z+t93/GyxI1pL/arXsB5t
+         XRjCWPhr1XYbWeFdyr9lCFpeMIAtXvcH7+5WlyZnqk0bT+iOvpzIm8cNzEQDHEw9RLNX
+         xfNQEuI548arOBu66VTuKDbZBzmyKkiapAAa10nMZ3beXGSZRQchoGuhM/1eWBvhYECc
+         EWmu3273g/hzMPOhpPbiBxABH3pdRTuM5dn8/16ANR78rx4uowRqt6trJWXuKiiy9B9X
+         8r5A==
+X-Gm-Message-State: ACgBeo2ZT3Ea8nrJMQ0ZimzShmOgC2kb2gir0Gv5cQMUP3LG2jYjKtiF
+        d274dNC/B4wzIm+6CRILaONa6dgJtF5zhA==
+X-Google-Smtp-Source: AA6agR48UDEh3lPsDzrvILImJvXJUaceqzVhcGj6RNOvhKRrP8AwyAX5bA9fjTv5GfDVxzdHkLTMXw==
+X-Received: by 2002:a5d:5289:0:b0:225:4852:4248 with SMTP id c9-20020a5d5289000000b0022548524248mr8832773wrv.228.1661871793257;
+        Tue, 30 Aug 2022 08:03:13 -0700 (PDT)
+Received: from [192.168.1.74] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id r28-20020adfa15c000000b0021db7b0162esm9960663wrr.105.2022.08.30.08.03.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Aug 2022 08:03:12 -0700 (PDT)
+Message-ID: <dc1b42fa-0420-6d15-03ab-60d34a42ed73@gmail.com>
+Date:   Tue, 30 Aug 2022 16:03:11 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1794163750-1661870848=:189"
-X-Provags-ID: V03:K1:LnIXYip4HDeroIEoR2WyfcoI8DfkQdGCtG2JMgnqyUYoB9CXJd2
- 2UlKfU8kKtsDvMrSSOOqQqnXlJZKeMYb1Ar95SkElPLzp2hykRZGdixyL02Vrqanu59z//5
- HgWnOZvBl1+rzWx33HgMrRARyKQKSf++z5DA2fCy0ttPVZJBZYrLG260moa1s46giIbFuAW
- 89wBJMVhj/t/1Y4EBkxcQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:WlavJGUPDOM=:sfULeRAMhIXGCrTolabMMx
- f6Pp/UMuwLy7DEjkqaR0nuWyP8yOPROw+Ys9e2PuF1pD0SyS8ZAzo5x4ldEUXpm+3yRh+R9zo
- Nq6VGleazkewQjbbEiZB+yYpXjFBwrrgBF5D71q0yTneRkdex1d+VDzhSp2R4aiRStCuLtztP
- GOxN0oMSGityXTR8LcHyD3OjeDRYUoqQ/VT2l5HwETxsbe+I0dSl1TBl6QD4JFAC17w0bDiTR
- fsp76P9CuorfewEWeCKwE/2y66MG1MsqkcvntLuhDi/FdVIqZq9dGzf5biTBAdyPiVTJkYdsY
- 3gjITd+RYMbq7tsQ7NshRm1PhEQBMbCPngTZUjMVxtzCDrowoM+f+nuKWXzUNOwJ8i+StPJdL
- Shrxwi/pMCiBpJIntXLDji7hvT2H14TEJxDwuHBU8eKcq8w7WV8zq3gi6DRdOIVqmUlVbYJrZ
- YN5JA0zGrfGg48U+MRm4fy7mbO8R3tjZerSWjGzXcfOuqbtl8DzQOHjM6R5uqC4BDJFEsP6aV
- PJY1j5qIqes955vIXixY3qccCp3IWGdR9HZpnYmOiM8WWJE+qbLupl1p1ZzqIoY3WiYbOOKDQ
- 0/RjFCocqhzBiemnXXDra0PnfjSBOXzYb/6I4vIuG91eLGrYIBt73cHfrgaHROMACMZ6tqwTb
- 4BB0Onv9EB80ALP+FwaQnGdjM9GMCGLTtIXbzI0KpAJHWfAZbtIJftYMGWgRpjDKntQNnfNek
- Nx/3HtLBi9hdkwpNjle4W3QH1Lt4GK13jq/cgFpmZeOI9Ols3rw7Ei82MjgkDEPXhcgzEcVC9
- f4q9SeE1JM6Weew/SkJs20Kkg6yLG9mbZ5CFOBPutMNXlIzUdDhO0AifkIIgjajDGq6g3KF49
- zlcw2X+3PqSfGn0W7HZH0KCtrGEOX1kPl9hwuWOT+ukovNyNppqB2WoZAoXyX/lHhPu88PNDD
- Mav23x12UtN+3qkDCECv3I/M2wZgsbaH3nTHPN7LBL0H2xFFFwNjdaVPmM3jaGs7x4BcftwbM
- hPa9JnSIBYxVf1WHrjmN+1KQOeVBOVqYymCoG1UqD1gTVLHNXjOSzP8HEOC91IdlZ+1z3YPrB
- gy7a4jZR6Vtsg5PKK6mg3oA7VlAtWWixYW3paUp5DA1NPJ5EcnXNwtipbqIaq5d6QC56qrdFJ
- gs9WbGURBc0tmzWOxF++Jg3++0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 3/5] rebase: factor out merge_base calculation
+Content-Language: en-US
+To:     Jonathan Tan <jonathantanmy@google.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20220824220251.1682480-1-jonathantanmy@google.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20220824220251.1682480-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Jonathan
 
---8323328-1794163750-1661870848=:189
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Thanks for taking a look at this series
 
-Hi =C3=86var,
+On 24/08/2022 23:02, Jonathan Tan wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> @@ -1668,7 +1678,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>>   			die(_("Does not point to a valid commit '%s'"),
+>>   				options.onto_name);
+>>   	}
+>> -
+>> +	if (keep_base) {
+>> +		oidcpy(&merge_base, &options.onto->object.oid);
+>> +	} else {
+>> +		fill_merge_base(&options, &merge_base);
+>> +	}
+>>   	if (options.fork_point > 0)
+>>   		options.restrict_revision =
+>>   			get_fork_point(options.upstream_name, options.orig_head);
+> 
+> This patch makes sense, except for this part: why is fill_merge_base()
+> only called for non-keep_base, but it seemed to be unconditionally
+> called before? For what it's worth, all tests pass even with this diff:
 
-On Mon, 29 Aug 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+It's an optimization, we have already calculated the merge base above in 
+the "onto" calculation when --keep-base is given. This is what I meant 
+by "avoid calculating the merge-base twice when --keep-base is given" in 
+the commit message, maybe I should  try and come up with some clearer 
+wording.
 
->
-> On Sat, Aug 27 2022, Johannes Schindelin via GitGitGadget wrote:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > The `bisect_state()` function is now a purely internal function and mu=
-st
-> > be called with a valid state, everything else is a bug.
->
-> I'm confused by the "is now purely an internal", when did that happen
-> exactly? That wording is new in this v5.
+Best Wishes
 
-Yes, it is new. It is part of that huge amount of work to not only convert
-the script to a built-in but also "while at it" migrate the entire
-`bisect--helper` on top of the subcommand API, as you specifically asked
-for, and it was that ask that blocked the patch series which would
-probably otherwise have been accepted as-is, with the subcommand migration
-left as a follow-up patch series with a much narrower scope than the
-current iteration.
+Phillip
 
-As to when it happened exactly? In 07/16 of this patch series iteration,
-as explained as part of the commit message:
 
-	Note that a couple of `bisect_*()` functions are not converted into
-	`cmd_bisect_*()` functions directly, as they have callers other than the
-	`OPT_SUBCOMMAND()` one (and the original functions did not expect
-	a subcommand name to be passed as `argv[0]`, unlike the convention for
-	the `cmd_*()` functions. In those cases, we introduce wrapper functions
-	`cmd_*()` that also call the original function.
-
-I did not repeat in the commit message all details that the diff explains
-much more eloquently, such as `cmd_bisect_state()` now being a wrapper
-around `bisect_state()`.
-
-> Before this series wasn't the only caller "internal" (git-bisect.sh) as
-> well? From the CL:
->
->      -    bisect--helper: using `--bisect-state` without an argument is =
-a bug
->      +    bisect--helper: calling `bisect_state()` without an argument i=
-s a bug
->
->      -    The `bisect--helper` command is not expected to be used direct=
-ly by the
->      -    user. Therefore, it is a bug if it receives no argument to the
->      -    `--bisect-state` command mode, not a user error. Which means t=
-hat we
->      -    need to call `BUG()` instead of `die()`.
->      +    The `bisect_state()` function is now a purely internal functio=
-n and must
->      +    be called with a valid state, everything else is a bug.
->
-> Before the migration to OPT_SUBCOMMAND earlier in this series:
->
-> 	$ ./git bisect--helper state
-> 	usage: git bisect--helper --bisect-reset [<commit>]
-> 	   or: git bisect--helper --bisect-terms [--term-good | --term-old | --=
-term-bad | --term-new]
-> 	   or: git bisect--helper --bisect-start [--term-{new,bad}=3D<term> --t=
-erm-{old,good}=3D<term>] [--no-checkout] [--first-parent] [<bad> [<good>..=
-.]] [--] [<paths>...]
-> 	   or: git bisect--helper --bisect-next
-> 	   or: git bisect--helper --bisect-state (bad|new) [<rev>]
-> 	   or: git bisect--helper --bisect-state (good|old) [<rev>...]
-> 	   or: git bisect--helper --bisect-replay <filename>
-> 	   or: git bisect--helper --bisect-skip [(<rev>|<range>)...]
-> 	   or: git bisect--helper --bisect-visualize
-> 	   or: git bisect--helper --bisect-run <cmd>...
->
-> 	    --bisect-reset        reset the bisection state
-> 	    --bisect-terms        print out the bisect terms
-> 	    --bisect-start        start the bisect session
-> 	    --bisect-next         find the next bisection commit
-> 	    --bisect-state        mark the state of ref (or refs)
-> 	    --bisect-log          list the bisection steps so far
-> 	    --bisect-replay       replay the bisection process from the given f=
-ile
-> 	    --bisect-skip         skip some commits for checkout
-> 	    --bisect-visualize    visualize the bisection
-> 	    --bisect-run          use <cmd>... to automatically bisect
->
-> After that:
->
-> 	$ ./git bisect--helper state
-> 	fatal: need at least one argument
->
-> 	usage: git bisect (good|bad) [<rev>...]
->
-> So intra-series we were showing the wrong SYNOPSIS for this
-> internal-only command. I don't think that matters per-se (and the
-> end-state fixes it up), but doesn't it point to some ordering oddity
-> here?
->
-> AFAICT we couldn't call "state" without an argument from git-bisect.sh
-> before, and that's the only (and internal) caller, so shouldn't this
-> BUG() come earlier?
-
-Yes, it could come earlier. Or later. It is part of some follow-up patches
-that need to come after 07/16, in whatever order.
-
-I appreciate that you want to help.
-
-My concern is that by having to focus on answering such questions that I
-consider a thorough review of the iteration to answer handily, I cannot
-spend the same time and focus on preventing bugs I consider a lot more
-critical. We saw some bug reports about the built-in `add -i` recently,
-for example, that could have been prevented if the focus of the code
-review was not so much on details that the end user won't ever see (such
-as the order of patches or whether to broaden the scope and size of a
-patch series instead of leaving follow-up work to subsequent patch
-series), and more on unintentional changes that the users very much
-experience, and not in a good way. I would appreciate it a lot if we could
-focus first and foremost on preventing bugs cause problems to Git's users.
-
-Thank you,
-Johannes
-
---8323328-1794163750-1661870848=:189--
+>    -       if (keep_base) {
+>    -               oidcpy(&merge_base, &options.onto->object.oid);
+>    -       } else {
+>    -               fill_merge_base(&options, &merge_base);
+>    -       }
+>    +       fill_merge_base(&options, &merge_base);
