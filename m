@@ -2,202 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55354ECAAD1
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 20:04:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C918ECAAD1
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 20:05:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230288AbiHaUEi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 16:04:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53996 "EHLO
+        id S230437AbiHaUFx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 16:05:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbiHaUEg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 16:04:36 -0400
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3565C0B60
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 13:04:35 -0700 (PDT)
-Received: by mail-pg1-x52a.google.com with SMTP id 73so6063171pga.1
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 13:04:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date;
-        bh=kuyDPYBr0SIhdnxeSNNNNOFgaa1J/1wty3JmgS1HeFc=;
-        b=AXCLbmUs2Jl5wm1gaiCQfs3ik3UDSkuxgI7nSN7VjFZYim8U62EUSZf1C5aTxLZRok
-         fjmQ+buY4vBoiE6rQAQmvg8KirwicuxOF5ohTl6dQhDASd0UAKr89TogZMolY1rQkAjb
-         8SMkCxDOz/Nkcx80w0zShScNWY1nplv5IJ7dki7nwsfSMHUtxfgnr0EvMRQupgJMWIdh
-         57nApa5Lo4oLBu2x7qtUMcPyGFrbt6t8YHwgWvxn2BxIdVZvSre4vej8uQo9ETTQJ1sa
-         hZITxmA2+qichaSQl8ftFpsfBbyLEWAaz9YkQZAOStTFWlBQ8+ZSRSaZrd3Oo4SupB05
-         q0ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date;
-        bh=kuyDPYBr0SIhdnxeSNNNNOFgaa1J/1wty3JmgS1HeFc=;
-        b=MJTCBMEP2PrqQcVi922ubaUNLnCEWU6s2yOEW11wA3Met9+3wJT/AnppKFP1xFLjJI
-         0JYtqaUY6VUG/i9kNiVWL/fcoW+2rEvM/9th30kDgt5HM3Pl7SBZRFILBoGJA3OPdSCm
-         GcnFzsr++d5IArcqnNUd1t8ykflhqwkP+OtFu2Waal6K1mZ3VEsEK0LhE4cGJsytLapS
-         27UgGkiKUqYjhhng/vXgYh9ujoaiVZEdzma4lkV9WVzt/cNK5USDM49J/dchZhDoUd76
-         t+9KpCK19QJcRrw2j1Du0HEkLa69KgWJ/GP5jHfA8O6khdRm8SiY+/DdaXNQWkaYNIaT
-         HsKg==
-X-Gm-Message-State: ACgBeo1dp7z76m8gkYweCJZ+OsBn1+SHeZxTRBOsjohHi/7xAcv6WDKx
-        +Yo38mcC0XsSOxg1QNE74fc=
-X-Google-Smtp-Source: AA6agR7dkG2Mz3waDJzShX6U15dz1GHAhjdQG/F4GW9Zfjm/547Mox/mgoidaKQ02EzGAGm+i5EQkg==
-X-Received: by 2002:a63:8bc9:0:b0:42b:2375:79b3 with SMTP id j192-20020a638bc9000000b0042b237579b3mr22768478pge.207.1661976275188;
-        Wed, 31 Aug 2022 13:04:35 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id q15-20020a17090311cf00b0016eede528b4sm12132958plh.61.2022.08.31.13.04.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 13:04:34 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH v4 1/4] fsmonitor: add two new config options,
- allowRemote and socketDir
-References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
-        <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
-        <836a791e6b7fd4490674254ce03105a8ca2175cb.1661962145.git.gitgitgadget@gmail.com>
-Date:   Wed, 31 Aug 2022 13:04:34 -0700
-Message-ID: <xmqq7d2ofact.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229710AbiHaUFw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 16:05:52 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7664949B46
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 13:05:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1661976324;
+        bh=RdLUWwm7rt+GLd/RMeyk9c4z7hRMbzV26WK66FDtpIQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=YRWn+/sCHXK2a5dBMSwJITJLaqnqkSWfLvZHkvnEfr0x7DQX/fLbz/Gnf+VeNAYER
+         cDuyENoeEAuXAdgUBuq/s1BSGegvdcXCDZ+S4Uht3fikxpyW82Sttiu362PCngxxm/
+         GUurEPeC+FOWi9trkqv/uLlyzCoYUiZSY8cvY3Vk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N8ofO-1pVhbu1046-015tEn; Wed, 31
+ Aug 2022 22:05:24 +0200
+Date:   Wed, 31 Aug 2022 22:05:23 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     phillip.wood@dunelm.org.uk
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 5/5] add -p: ignore dirty submodules
+In-Reply-To: <c205f8e2-62f9-d4b2-0ccf-51dcabc12224@gmail.com>
+Message-ID: <op19530n-27qo-r35s-r1q7-18s3259ps78o@tzk.qr>
+References: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com> <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com> <cfa6914aee0d3ef84d726b97699f438fd4b254d9.1661785916.git.gitgitgadget@gmail.com> <c205f8e2-62f9-d4b2-0ccf-51dcabc12224@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:cFHDjq69W0eW8B7JiXncr2S1zZipA20x7QlOzI1pAnniOp9opUX
+ gBiG3JU+68Dx4T3uzoe3J1F+cYtvREmQyMnmYmwDIP2ecy6VIgPCbJvMjRnwdCMA5A9NdkL
+ qhr5DDl7ANbwC79m2lR97eprbs8nr5Wbfg3Hv2a5Sz6Phf/+ZeRTzhtg9gbhTqqxVvBRsMw
+ +lKM44q1ZbiddXxs5UVdg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:nFLO7EyxzzE=:TD0xFClkjjGwZ7B0C58zOu
+ nFLDh0ylbnwMXpvkrrf79V/Mld6TrPvM6yCnj9SU/JFPqBLz8qxnfooJHpDsxaLrN+1aXsEgB
+ s9D+JtYiNvNTRNAYeVHTSt9sAMQ1i50LBh9dkomlP+R/OKwuUl+pTNWCt2nusqGO0hEM7noi7
+ 4DGE9BF4Kreu3UMqSVha3d9klUl22Uk76Fj544XqimuFEcenDypwbET7XyqzMRyei1TmjYm0W
+ 6wYFVq/hfDTU97B7rGjTgU62RlyqDyUXVsH2Y/2b8dBvDi+w0VN6HJs92XsDqz3RnCg4t92tk
+ /gAVa96/shiNagB0ZCAm4ozdt05PmzJArDOftBXUp5/QLvSYcfKQHCubBO9oaLl5uCB35UqpS
+ TuYb/iebGjZ4omYr5TdxZ6zNXvTL5//2kjikxYch3Cx9rNpnO+THA/zqd+tuj1JCTyzv8xlEE
+ CK8u2Rsy3WAtT5p/oC2GZ380X/GG+GF0goASoc91WeQX75mAV6c4m2+jbht7Cl9R0/NCrdw7g
+ tbAmVBcWINlNjOPIWbQO1WkD4w1qnE5HTlbtznvOr4LkRQIGZI7f2yzzVwNq5gHyM9N3kG38o
+ xyJAZMLy6u2c50sC284n00AHcFcgcynDYdUrrm53PROC/E3yDSJNRbs5q56ESTjtr1qDj7JkJ
+ N3NH+zKJ03ip2TuNKKJSgSRJGgjO+EFKyxoLfYGyQS4raDNzlmCyPyK+ita+CR6DAY7Em/KDI
+ ar1BSInVCafyMOn/ENAGHFX9j6fbli4q7c5nhjDSo8uu0SP1X0XwY35N3vi8P2JRwIUDxjsyw
+ +JKDWg+KtW2PwxtlietIHtNzShyvBdTU7R70EsIbuRg1lKrIDvlclh5XnfOBkqAutQW4ZnljT
+ /FmgHXSYlgn7qCbI3v384YiUnjbHsO8L29bVEt1OEUzpgRy7f5E13ashnsAFpkYjIHS0zdDap
+ Jplf9ZhCbHf/KBrP8tozV+m1849gun+HQ1SC9NHc6ji1+VDxHHZvG33Eay0sAz+DJubmPFuhP
+ g63ECx9Xl3C++pvcuae6H2a1QZcL6rMifla8mg/CcntxR0306pbI4TlxyqzvEOJ0MnLPZnCgb
+ eN/teReiB+1DTABzwVbNM/wWYufgHkPgEW4RNYDp1jprrtNu4XB0kexwynoVctvrBloky0nKe
+ Jo3bvPO/k5xk/38EZf39tCg4Vw
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Phillip,
 
-> From: Eric DeCosta <edecosta@mathworks.com>
+On Tue, 30 Aug 2022, Phillip Wood wrote:
+
+> On 29/08/2022 16:11, Johannes Schindelin via GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > Thanks to alwyas running `diff-index` and `diff-files` with the
+> > `--numstat` option (the latter with `--ignore-submodules=3Ddirty`) bef=
+ore
+> > even generating any real diff to parse, the Perl version of `git add -=
+p`
+> > simply ignored dirty submodules and does not even offer them up for
+> > staging.
 >
-> Introduce two new configuration options
->
->    fsmonitor.allowRemote - setting this to true overrides fsmonitor's
->    default behavior of erroring out when enountering network file
->    systems. Additionly, when true, the Unix domain socket (UDS) file
->    used for IPC is located in $HOME rather than in the .git directory.
->
->    fsmonitor.socketDir - allows for the UDS file to be located
->    anywhere the user chooses rather $HOME.
+> I had a bit of a hard time understanding this paragraph. To me the fact =
+that
+> the perl version is using --numstat is not that important here, what is
+> important is that it is using --ignore-submodules=3Ddirty when it genera=
+tes its
+> list of files to show and that information is consigned to a parenthesiz=
+ed
+> aside.
 
-Before describing "what they do", please justify why we need to add
-them.  The usual way to do so is to start with some observation of
-the status quo, and describe the "gap" between what can be done with
-the current system and what the users would want to do.  It might
-further be necessary to justify why "would want to do" is worthwhile
-to support.  I suspect that you can do all of the above in a couple
-of paragraphs, and you'd succeed if the solution you chose would
-fall out as a natural consequence in the mind of readers who follow
-your line of thought by reading these introductory paragraphs.  And
-then after the stage is set like so, the above description of what
-you chose to implement as a solution should come.
+Yes, the `--ignore-submodules=3Ddirty` part is important, but so is the
+`--numstat` part.
 
->  struct fsmonitor_settings {
->  	enum fsmonitor_mode mode;
->  	enum fsmonitor_reason reason;
-> +	int allow_remote;
+It is important because the Perl script would parse that numstat part and
+only offer files up for further processing for which it saw those numbers.
+Then it would go ahead and run a full diff on those files, which basically
+doubled the work.
 
-I am debating myuself if a comment like
+And it is that doubling of work that I tried to avoid when implementing
+the built-in version. The bug came about because the full diff call wasn't
+using the `--ignore-submodules=3Ddirty` option, and that's what I missed.
 
-	int allow_remote; /* -1: undecided, 0: unallowed, 1: allowed */
+This is maybe more interesting a story for the cover letter, to be able to
+understand how this bug was introduced, and maybe to offer an opportunity
+for others (in addition to myself) to learn from my mistake.
 
-is necessary (I know it would help if we had one; I am just
-wondering if it is too obvious).
+> The fix itself looks good.
 
->  	char *hook_path;
-> +	char *sock_dir;
->  };
->  
->  static enum fsmonitor_reason check_for_incompatible(struct repository *r)
-> @@ -43,6 +45,7 @@ static struct fsmonitor_settings *alloc_settings(void)
->  	CALLOC_ARRAY(s, 1);
->  	s->mode = FSMONITOR_MODE_DISABLED;
->  	s->reason = FSMONITOR_REASON_UNTESTED;
-> +	s->allow_remote = -1;
->  
->  	return s;
->  }
-
-OK.  socket_dir is naturally NULL at the start.
-
-> @@ -100,6 +123,7 @@ enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
->  	return r->settings.fsmonitor->mode;
->  }
->  
-> +
->  const char *fsm_settings__get_hook_path(struct repository *r)
->  {
->  	if (!r)
-
-A noise hunk?
-
-> @@ -110,9 +134,44 @@ const char *fsm_settings__get_hook_path(struct repository *r)
-> ...
-> +void fsm_settings__set_socket_dir(struct repository *r)
-> +{
-> +	const char *path;
-> +
-> +	if (!r)
-> +		r = the_repository;
-> +	if (!r->settings.fsmonitor)
-> +		r->settings.fsmonitor = alloc_settings();
-> +
-> +	if (!repo_config_get_pathname(r, "fsmonitor.socketdir", &path)) {
-> +		FREE_AND_NULL(r->settings.fsmonitor->sock_dir);
-> +		r->settings.fsmonitor->sock_dir = strdup(path);
-
-As we are overwriting it immediately, just calling free(), not
-FREE_AND_NULL(), is more appropriate, isn't it?
-
-> @@ -135,7 +194,11 @@ void fsm_settings__set_ipc(struct repository *r)
->  
->  void fsm_settings__set_hook(struct repository *r, const char *path)
->  {
-> -	enum fsmonitor_reason reason = check_for_incompatible(r);
-> +	enum fsmonitor_reason reason;
-> +
-> +	fsm_settings__set_allow_remote(r);
-> +	fsm_settings__set_socket_dir(r);
-> +	reason = check_for_incompatible(r);
->  
->  	if (reason != FSMONITOR_REASON_OK) {
->  		fsm_settings__set_incompatible(r, reason);
-> diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
-> index d9c2605197f..2de54c85e94 100644
-> --- a/fsmonitor-settings.h
-> +++ b/fsmonitor-settings.h
-> @@ -23,12 +23,16 @@ enum fsmonitor_reason {
->  	FSMONITOR_REASON_NOSOCKETS, /* NTFS,FAT32 do not support Unix sockets */
->  };
->  
-> +void fsm_settings__set_allow_remote(struct repository *r);
-> +void fsm_settings__set_socket_dir(struct repository *r);
-
-Do these two need to be extern?
-
-I would imagine that implementations in compat/fsmonitor/* would
-just call fsm_settings__set_hook() or __set_ipc() and that causes
-these two to be called as part of the set-up sequence.  Do they need
-to call these two directly?
-
-If not, we probably should make them static.  I suspect that some
-existing declarations in this header file fall into the same
-category and may need to become static for the same reason, which
-you can do as a preliminary clean-up patch, or post-clean-up after
-the dust settles.  Regardless of which approach to take for existing
-ones, we do not want to make it worse by adding new externally
-visible names that do not have to be visible.
-
->  void fsm_settings__set_ipc(struct repository *r);
->  void fsm_settings__set_hook(struct repository *r, const char *path);
->  void fsm_settings__set_disabled(struct repository *r);
->  void fsm_settings__set_incompatible(struct repository *r,
->  				    enum fsmonitor_reason reason);
->  
-> +int fsm_settings__get_allow_remote(struct repository *r);
-> +const char *fsm_settings__get_socket_dir(struct repository *r);
-
-On the other hand, these may need to be query-able by the
-implementations.
-
->  enum fsmonitor_mode fsm_settings__get_mode(struct repository *r);
->  const char *fsm_settings__get_hook_path(struct repository *r);
+Thanks!
+Dscho
