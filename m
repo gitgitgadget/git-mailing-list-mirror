@@ -2,80 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09F32ECAAD3
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 16:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 298D6ECAAD3
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 16:52:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231436AbiHaQXT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 12:23:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39520 "EHLO
+        id S231667AbiHaQw0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 12:52:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229882AbiHaQXS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 12:23:18 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2D88AFAC8
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:23:17 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id 202so13918574pgc.8
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:23:17 -0700 (PDT)
+        with ESMTP id S232279AbiHaQwS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 12:52:18 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60AFDB04C
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:52:05 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id b16so19182427edd.4
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:52:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=wkkwx/fOO809T1OnCkav1G/BZv9xLdjb0Au2rac7FsA=;
-        b=UdCWnAkQ5miYHiVUMxKrJMGy4i///Ugnm3c+RYpJtCo/icfRCSxAm412vaQ9uXn3+J
-         idYy1ucJzVDoXWf9xBPh1BQAreXmeW2iC8BQNQFJmD87zz8w0UqQQOk7dEg4FFiJ7liX
-         2/yFItqNR/eRDxPE9FkL7Hk87vfwY1HHYssyOnxD3h4ACqunIurseY8u30O2+1Gai/HY
-         PxQmVUxWdDl2cv8sr2SZlfgu7fZRsomnKsS40qyBTAQZ4G2goEXU2bPjr4oUr3PKmw2b
-         Z7YHFg5oOP1wNec1bhylwY50BUt8YbwRKJ3JnrPKDPL9kxIAfgjL+VwXd6ilVGflrEOZ
-         lVcw==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date;
+        bh=JeZEyORbpbC8OP1gdLxPcfnmEy8HHTfhMKkPM9DxN0c=;
+        b=bgEHoSdAwLG+Lpw/a2Sq0EATFkH3rVaNFYtjAt4zx8KVzR82SbiFpHRDKwQsmagXvv
+         Y6yZ4sgcP88cOnn44ut+s6beZIbB0jtbhBS4+t02fdA8A+E4qUqbs/kYdRRiIqIPiEyc
+         3K+2PSlf7sajLogiVSj+Q+Kt0ul8IZ34q8DGingSmauWE6XjJFkf17NxrRWpIoxq7yTK
+         9vuTkqrhxA+CM+y76WBWZ94MXjwdLpzBKas91o1MaeH2CimuI2GeIOamO1ZaTF9A6Ku2
+         JEzKQKPrTXNIDxV6uA86u104fM+9Vg+OlIylpXJ2DDlQ8isA/eP15gAotp6QbLD+GN71
+         0q5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=wkkwx/fOO809T1OnCkav1G/BZv9xLdjb0Au2rac7FsA=;
-        b=VRKelXgI9dik9LtZjPmxI1p740nDzqfqfG3nVyJ4J2ug4UGE0H6aFK5OYT4Vn8MhQn
-         hQcUrlNWMXAdujiBkeDr7Pvab+dQkitsTJd+huvOUCtO+KJIGTG0gnwhl4ft86aNuO6b
-         neiRcUOV13wC8znxEz0QtgeHRAqQUWRSpRhZmtUWNrpQMMj/9xpApCYQwRb9Uvc4IvpQ
-         343X54bGEVRCRO3o3ZE6s16cIqSFq0AvBM+IwYO+lMwdIeLGAyGGOGj6+w4XP+yeSYFE
-         dzuFv6HtPa9e8ndnCWHb7b1F8ESGVx2LG148rMPfu3xL7ck54vq9BgHCUGxfcQ2O9JnC
-         C6Mg==
-X-Gm-Message-State: ACgBeo2ye2zUgHhga+oXAWlg9h350gdkH5xpfR028Rc56h8pph67QZoM
-        MctbrCcfSgTio2Gq3ViiDrDLYfoQJFU=
-X-Google-Smtp-Source: AA6agR60G4v380RN78U27jPiGzWyhD3O8wntNVmOpp+pB5KdMigZ3iAfOkI7KFEhK23+GF7qcV5FHA==
-X-Received: by 2002:a05:6a02:206:b0:427:93bb:9f99 with SMTP id bh6-20020a056a02020600b0042793bb9f99mr22331791pgb.542.1661962997097;
-        Wed, 31 Aug 2022 09:23:17 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id x14-20020aa79a4e000000b00537cfbb2810sm10932008pfj.65.2022.08.31.09.23.15
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=JeZEyORbpbC8OP1gdLxPcfnmEy8HHTfhMKkPM9DxN0c=;
+        b=P1Vuf5QSafPp4NTx6IyhnffcO9qwCn5Grm/BtAozcw2dJPcOLO84hO0KlBLdBr8bV2
+         xFMsbcLvxAl3PwFCRNXTbZe2aMpwGPaikbyDrNBiKcRfOI/ERVlbf0A98EgTvO/U1Sk9
+         mE83fiOcnYIXzF5JUXu3DyTf4W8y2W7fpmLH3Cvhtl08/u7lySyOCqLcQtnrefEEoFfs
+         OmRXmUmb5MD+kubKgA6I5SCfb8+c5fNBEApXs3kJgbdP9z6VRKbEgDOc484MraiU6fJO
+         E0OQAQ49TYgm0PAGoUcHOfh5FLwbtCkpoypJvq2jEFBUI430MXu4zXfmbVaaMo61/0fz
+         SRHg==
+X-Gm-Message-State: ACgBeo25+blVH0FwqN6mSmtkfX9/NynsUy/15sq5npxqL7vm3Vp+qWZA
+        DlcUkIOPuseLJGE5B/vZT7g=
+X-Google-Smtp-Source: AA6agR5WsM1aUEvidM8psnqDtCMooZ3J15ziGr1e4OiDRTyxB6xIv6Pt9CEOoqI7VHeWKnvyQ057Gg==
+X-Received: by 2002:a05:6402:145a:b0:448:303c:d811 with SMTP id d26-20020a056402145a00b00448303cd811mr16708846edx.414.1661964724230;
+        Wed, 31 Aug 2022 09:52:04 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id n21-20020aa7d055000000b00447b1772a26sm9228427edo.12.2022.08.31.09.52.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 09:23:15 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: jk/unused-annotation + ab/unused-annotation
-References: <xmqqilm9k0bc.fsf@gitster.g>
-        <220831.86fshcal32.gmgdl@evledraar.gmail.com>
-        <Yw99xMnkiv/Qjnst@coredump.intra.peff.net>
-Date:   Wed, 31 Aug 2022 09:23:15 -0700
-In-Reply-To: <Yw99xMnkiv/Qjnst@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 31 Aug 2022 11:27:00 -0400")
-Message-ID: <xmqqr10wgz64.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Wed, 31 Aug 2022 09:52:03 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oTQwc-000MAr-2a;
+        Wed, 31 Aug 2022 18:52:02 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com,
+        johannes.schindelin@gmx.de, gitster@pobox.com,
+        Victoria Dye <vdye@github.com>,
+        Johannes Schindelin <johasc@microsoft.com>
+Subject: Re: [PATCH 4/8] scalar: implement the `help` subcommand
+Date:   Wed, 31 Aug 2022 18:48:58 +0200
+References: <pull.1341.git.1661961746.gitgitgadget@gmail.com>
+ <46d0fddfe8fbc2c568cb5a3d14594276db2bc1a9.1661961746.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <46d0fddfe8fbc2c568cb5a3d14594276db2bc1a9.1661961746.git.gitgitgadget@gmail.com>
+Message-ID: <220831.8635dc9wzx.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> Yeah, I think we should use the deprecated attribute. Since the original
-> has been reverted, I think the next step would be for me to fix up the
-> patches to use that approach from the start, and re-submit.
+On Wed, Aug 31 2022, Johannes Schindelin via GitGitGadget wrote:
+
+> From: Johannes Schindelin <johasc@microsoft.com>
 >
-> I was dragging my feet a little hoping that we might get some coccinelle
-> parsing miracle in the interim.
+> It is merely handing off to `git help scalar`.
+>
+> Signed-off-by: Johannes Schindelin <johasc@microsoft.com>
+> Signed-off-by: Victoria Dye <vdye@github.com>
+> ---
+>  scalar.c | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+>
+> diff --git a/scalar.c b/scalar.c
+> index 642d16124eb..675d7a6b0a9 100644
+> --- a/scalar.c
+> +++ b/scalar.c
+> @@ -819,6 +819,25 @@ static int cmd_delete(int argc, const char **argv)
+>  	return res;
+>  }
+>  
+> +static int cmd_help(int argc, const char **argv)
+> +{
+> +	struct option options[] = {
+> +		OPT_END(),
+> +	};
+> +	const char * const usage[] = {
+> +		N_("scalar help"),
 
-Yup, that was why I ignored the "deprecated" one when I dealt with
-the replacement series yesterday.
+
+This should not have N_(), as it's a literal command.
+
+> +		NULL
+> +	};
+> +
+> +	argc = parse_options(argc, argv, NULL, options,
+> +			     usage, 0);
+> +
+> +	if (argc != 0)
+
+If we're re-rolling anyway we usually just do "if (argc)". We don't need
+to worry about argc < 0 (despite the signed type, which is a historical
+C wart).
+
+> +		usage_with_options(usage, options);
+> +
+> +	return run_git("help", "scalar", NULL);
+
+Performance isn't sensitive here, but have you tried just calling
+cmd_help() instead with the appropriate arguments? It would avoid
+spawning another command..
