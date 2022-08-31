@@ -2,197 +2,257 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7125AECAAD1
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 18:05:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA319ECAAD1
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 18:43:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232016AbiHaSFd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 14:05:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38632 "EHLO
+        id S232864AbiHaSnV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 14:43:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230315AbiHaSFb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 14:05:31 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 638E0357DA
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 11:05:30 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id w5so3126638wrn.12
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 11:05:30 -0700 (PDT)
+        with ESMTP id S232177AbiHaSnC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 14:43:02 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 428BB20A
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 11:42:23 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id m10-20020a17090a730a00b001fa986fd8eeso173182pjk.0
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 11:42:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc;
-        bh=KW0ZTbYeJFvhuzlRW1blCvnaSr7MnJ1vxDMcdjdKdJk=;
-        b=NbzMQi/SaQXI2DnRJ8VRVN7926Md76y/w+1yrGm+X3d3TgpDdPj8GtLaPfBJWJdcWM
-         KhmrEx3TP7a4+i2uF5VMcqfQBWzAQOllprRmg8+7VuBxwsEXskE0tin7zLU2mTCEZgGI
-         ofSUiepc6RQ7BqMHQCLBWpq2nVMCxPyQSSbpMtxXhUyFRoBR3ejTkl5XZ2WsE7saUrwB
-         kQtaxBEzug8b4Cc9n5ujNR8mB7Wz2krxI5Y5XwfTnBjYx7gbFifws5ru14AF6qZ9xRQV
-         nb7GUqVvEEldgbnoCypi1a+aoMax36EnUeUc55hiPgh8ybWks/ApAEeMT2MkkzkjNGYc
-         4Dzg==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc;
+        bh=F59uyLdvElIGwPA1XhuUe7jMt9EWQFXThGQAJPqOfjc=;
+        b=er8M29HASKygxhlcImwHjGy+CuyUlEqTlKFZ5+SYVJyhqJsFJQwPb6YhkHAqDgJTi7
+         EK3ovVTz5/M1Qo+vntsXArdtkOk/H8GdoD5SLEVR27iLm2OnD7cmi2NclFFZ9/C2WFTN
+         m2Wq93B9c40kwDkZAfXkdQChoWyHC3abz5Xt4Xautf0ciauP0L1nLzme4ZUqvCMou9+M
+         pISwi04cZgrOykPwCclD2MVMEvIy47lq8F15p1jFIZJj0kNxbd/VnEn3xK0dLu6yvON8
+         syE9lwybqtEIwAtOkjkoBuRy2F/vQvtMG/e1CJj87j4Qb9WlRo5i09NC5I58dzCC5wSz
+         y00g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc;
-        bh=KW0ZTbYeJFvhuzlRW1blCvnaSr7MnJ1vxDMcdjdKdJk=;
-        b=2rksoVqcw7iPfzzLVOopgiaEcabQTlr4E0imQntsvfI9uc8aJer6lpiZDOMeLP5x8u
-         KbPw0VrB+AK49KYi8MM3eAtTXmMTCtVA5n5Ao1c5zl33qFfml+z+xKIQXmjx843/FOBW
-         trmix+zFeiQjRIiV9hXD8raxvIY2bUdn0FzgpiNK4DPWGFF+I36PENRbyA1nxkAr9um8
-         Oduu/765azszlA+ro3nayndQanUWwmQfgyLLKPHk9k0XZZ7t7y/toG4UnTdC6So7ZcvM
-         FoXt2EaBGS21E0ZIORD1o5JURbXINn7O/0+bCijrdIEYkTPP//rM4cnvcYugHY+uUrOe
-         l5AA==
-X-Gm-Message-State: ACgBeo1pL85uTV2Bow8ANB7F1ryjG93l53iMwHjNRFLKnLRWrkKfR/FM
-        AuNMnIKmR+eo8aHgaf9ggNRQaQ8aDis=
-X-Google-Smtp-Source: AA6agR6T9KigtdRtQri0AbV1f2Te6psy7MuzttuljGg+1exGMxEg89vs6i1PSNojexmAQCu+ZinWig==
-X-Received: by 2002:a05:6000:1541:b0:222:cf65:18d7 with SMTP id 1-20020a056000154100b00222cf6518d7mr12265329wry.659.1661969128768;
-        Wed, 31 Aug 2022 11:05:28 -0700 (PDT)
-Received: from localhost (62-165-236-110.pool.digikabel.hu. [62.165.236.110])
-        by smtp.gmail.com with ESMTPSA id c16-20020adffb50000000b00226d473ebd6sm11158844wrs.86.2022.08.31.11.05.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 11:05:28 -0700 (PDT)
-Date:   Wed, 31 Aug 2022 20:05:26 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] ci: update 'static-analysis' to Ubuntu 22.04
-Message-ID: <20220831180526.GA1802@szeder.dev>
-References: <pull.1334.git.1661275691795.gitgitgadget@gmail.com>
- <xmqqwnax438x.fsf@gitster.g>
- <7364f631-e05b-0db8-aaa4-9f0101b6db56@github.com>
- <xmqqfshl3pbp.fsf@gitster.g>
- <220825.86ilmg4mil.gmgdl@evledraar.gmail.com>
- <Ywh6v8oo3nRl/O5h@coredump.intra.peff.net>
- <xmqqczcnymtd.fsf@gitster.g>
- <20220831084403.GA13663@szeder.dev>
- <220831.867d2oa95p.gmgdl@evledraar.gmail.com>
+        bh=F59uyLdvElIGwPA1XhuUe7jMt9EWQFXThGQAJPqOfjc=;
+        b=EHOoTzIykFXN8K0HNpgMAEdxoQl8P8qS62YVqSG4jH9/26kwHfdIPHgAUvv1g53bLo
+         v+fwngRyGLsX/aJa0yI8FFMnKUDZQDWTIMBX6s6ksBR8IoTIsNKt9otIGks8BnEvWUS8
+         sUBsLQbdsgjkg4X/MyvWSXaO6Hgy0ZjYDThY0xW6J5gCzGhWs+hw1BugBnA51OS3/bNS
+         OTduVOwdtch4yjV2ibrSQoghl/9KIwiKyihc+JEE/QWD94eQGGZLr8RS1tabsBxgaHAH
+         oFE2/jjfA4JZ9+X6g2zoWV2sbKcbljXg8ZOPFChCO262DZVSTkMNBH1rZDQ9U7e6l5i1
+         tN9w==
+X-Gm-Message-State: ACgBeo37wWPwKuTKlSTtgliohECNaC3xsj+yVn/dt2O3xh/BuDSi5U+n
+        /qUMHt4O2HbtJPRQyxPcIv2s
+X-Google-Smtp-Source: AA6agR5It2YtPZDuLoCZZk74JTEtJ+urs3syKfiTNCmK8C8/j/SLYlqkMVQYTxjV2ut+R+o/OFSwFA==
+X-Received: by 2002:a17:902:b607:b0:170:c7fc:388a with SMTP id b7-20020a170902b60700b00170c7fc388amr27276967pls.29.1661971342644;
+        Wed, 31 Aug 2022 11:42:22 -0700 (PDT)
+Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id k6-20020a170902ce0600b0015e8d4eb1dbsm11956148plg.37.2022.08.31.11.42.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 Aug 2022 11:42:22 -0700 (PDT)
+Message-ID: <85ad26ba-8461-fdda-fb26-c99080dfa10d@github.com>
+Date:   Wed, 31 Aug 2022 11:42:20 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.13.0
+Subject: Re: [PATCH 0/8] scalar: integrate into core Git
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com,
+        johannes.schindelin@gmx.de, gitster@pobox.com
+References: <pull.1341.git.1661961746.gitgitgadget@gmail.com>
+ <220831.86y1v48h2x.gmgdl@evledraar.gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <220831.86y1v48h2x.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <220831.867d2oa95p.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 31, 2022 at 02:13:51PM +0200, Ævar Arnfjörð Bjarmason wrote:
+Ævar Arnfjörð Bjarmason wrote:
 > 
-> On Wed, Aug 31 2022, SZEDER Gábor wrote:
+> On Wed, Aug 31 2022, Victoria Dye via GitGitGadget wrote:
 > 
-> > On Fri, Aug 26, 2022 at 09:46:54AM -0700, Junio C Hamano wrote:
-> >> Jeff King <peff@peff.net> writes:
-> >> 
-> >> >> But the fix here isn't to delete unused.cocci, but to hold off on the
-> >> >> UNUSEwork D() patches until we figure out how to make coccinelle jive with
-> >> >> them.
-> >> >
-> >> > Yeah, my general skepticism and disappointment above notwithstanding,
-> >> > this seems like the best path forward from here. I tried a few other
-> >> > tricks (like --macro-file and --iso-file), but if its parser chokes, I
-> >> > don't think there's much we can do about it. Even if we wrote a patch to
-> >> > coccinelle itself (and I have no interest in doing that myself), it
-> >> > would take a while to become available.
-> >> 
-> >> If it is just a single unused.cocci, I would actually think removing
-> >> it would be a much better path forward.  UNUSED() that renames to
-> >> help folks without checking compilers would help noticing bad code
-> >> much earlier than unused.cocci many contributors are not running
-> >> themselves anyway.
-> >
-> > Here is another reason for the removal of 'unused.cocci': it's very
-> > costly to apply that semantic patch to the whole code base.
-> >
-> >   make SPATCH_BATCH_SIZE=32 contrib/coccinelle/unused.cocci.patch
-> >
-> > takes 440s on my machine, whereas the second slowest 'object_id.cocci'
-> > takes only 56s [1].  Applying 'unused.cocci' to some of our source files
-> > individually takes well over a minute:
-> >
-> >   $ time spatch --all-includes --sp-file contrib/coccinelle/unused.cocci builtin/log.c
-> >   warning: Can't find macro file: /usr/local/bin/lib/coccinelle/standard.h
-> >   warning: Can't find default iso file: /usr/local/bin/lib/coccinelle/standard.iso
-> >   HANDLING: builtin/log.c
-> >   Note: processing took    83.1s: builtin/log.c
-> >   
-> >   real	1m23.083s
-> >   user	1m22.983s
+>> This series completes the initial implementation of the Scalar command as a
+>> core component of Git. For readers new to the topic of Scalar, the
+>> roadmap/design doc [1] provides some background information including how
+>> the project started & evolved, as well as its current intent & high-level
+>> design.
+>>
+>> [...]
+>>
+>> Prior series
+>> ============
+>>
+>>  * Add 'scalar' command in 'contrib/':
+>>    https://lore.kernel.org/git/pull.1005.v10.git.1638538470.gitgitgadget@gmail.com/
+>>  * Introduce 'scalar diagnose':
+>>    https://lore.kernel.org/git/pull.1128.v6.git.1653145696.gitgitgadget@gmail.com/
+>>  * Add '-c/-C' compatibility:
+>>    https://lore.kernel.org/git/pull.1130.v2.git.1643380317358.gitgitgadget@gmail.com/
+>>  * [DROPPED] Integrate Scalar into CI builds:
+>>    https://lore.kernel.org/git/pull.1129.git.1654160735.gitgitgadget@gmail.com/
+>>  * Document Scalar's role in Git & plan remaining work:
+>>    https://lore.kernel.org/git/pull.1275.v2.git.1657584367.gitgitgadget@gmail.com/
+>>  * Generalize 'scalar diagnose' into 'git diagnose' builtin & 'git bugreport
+>>    --diagnose':
+>>    https://lore.kernel.org/git/pull.1310.v4.git.1660335019.gitgitgadget@gmail.com/
+>>  * Add FSMonitor support to Scalar, refactor enlistment search:
+>>    https://lore.kernel.org/git/pull.1324.v3.git.1660858853.gitgitgadget@gmail.com/
+>>
+>> Thanks!
+>>
+>>  * Victoria
 > 
-> If you remove the "done:" line in cmd_format_patch() buiiltin/log.c runs
-> in ~200ms instead of ~40s for me. Perhaps we should be discussing
-> removing or refactoring that one line of code instead? :)
+> I'm happy to see this finally coming. I can say I've thoroughly reviewed
+> it & tested it for the better part of a year now. Since most of it is
+> the same or functionally the same as previous patches I sent at [1] and
+> [2]. It's odd not to see any mention of that here:
 > 
-> Removing coccinelle rules because we're seeing slowness somewhere seems
-> particularly short-sighted to me.
+> 	1. https://lore.kernel.org/git/cover-v2-0.1-00000000000-20220623T100554Z-avarab@gmail.com/
+> 	2. https://lore.kernel.org/git/patch-1.1-86fb8d56307-20211028T185016Z-avarab@gmail.com/
 
-It's not just slowness, it's drastic slowness.  I'm looking at two
-"from scratch" 'make coccicheck' runs here, one with 'unused.cocci'
-taking 9m51s, one without taking 4m56s.  So 'unused.cocci' effectively
-doubled the runtime, and wastes other developers' time and resources.
+For what it's worth, the lack of mention wasn't meant as a snub. I
+intentionally wrote this series (with the exception of patches 3 & 4) in a
+vacuum and avoided using any prior approaches as a reference. In this case,
+that includes the series you linked, the 'microsoft/git' implementation with
+'INCLUDE_SCALAR' [1], and Dscho's dropped CI integration [2]. 
 
-I don't see anything wrong with removing a semantic patch that is as
-slow as 'unused.cocci' in its current form on our current codebase.
-We can always re-add it later, after those interested managed to
-figure out a way to address its slowness, and updated the semantic
-patch and/or the codebase accordingly.
+Like updating the docs & roadmap, my goal was to start "fresh" and keep
+myself free of any prior discussions/assumptions about the role/purpose of
+Scalar that may no longer apply to my approach. Although there's something
+to be said for learning from prior work, I preferred combing through the
+code to fully understand the *existing* architecture, then using that
+understanding to figure out where Scalar best fits in. Then, of course, I
+would iterate on and revise that design based on review comments. :) 
 
-> Maybe we do run into intractable problems somewhere with it being slow,
+[1] https://github.com/microsoft/git/commit/4f553e0027190484899afba955c7cd3f1de77532
+[2] https://lore.kernel.org/git/pull.1129.git.1654160735.gitgitgadget@gmail.com/
 
-Looking at the runtimes I showed above, I think deeming it intractable
-is fully justified.
-
-> and we'd also like to cater to more "interactive" use.
 > 
-> But we shouldn't do that by removing rules until we get below some
-> runtime limit, but rather by creating a "batch" category or something
-> (just like we have "pending") now.
+> In any case. I applied this & a rebased version I've kept of [1]
+> locally, and I'll be commenting below on the diff between the two, which
+> I produced with:
 > 
-> Or, just actually look into why it's slow and fix those issues and/or
-> report them upstream.
-
-IMO this should be the other way around: if applying a semantic patch
-is this slow, then first look into why it's slow, fix it, and only
-then submit it for merging.  A semantic patch this slow shouldn't have
-been merged in the first place.
-
-> There's nothing in unused.cocci that we either aren't running into
-> elsewhere, or wouldn't run into if we had 10x the coccinelle rules we
-> have now (which I think would be a good direction, we should rely on it
-> more heavily).
-
-Several developers have already stated that they might run 'make
-coccicheck' more often if it weren't so slow.  I think we must keep
-this in mind when adding new semantic patches, and should aim for a
-good return of investment between the usefulness of the semantic patch
-and its overhead.  'unused.cocci' doesn't seem to strike a good
-balance here.
-
-I doubt that I would ever run 'make coccicheck' if we had 10x as many
-semantic patches.
-
-> I've found that being able to have a ccache-like tool for "spatch"[1]
-> solved almost all of the practical performance concerns I had with
-> it. I.e. I can just run things in a batch, and usually any interactive
-> use will hit things already in cache.
-
-Well, perhaps that's why you didn't notice just how slow
-'unused.cocci' can be... :)  Please don't forget about the runtime of
-a default "from scratch" 'make coccicheck'.
-
-> To the extent it doesn't it's usually some pathological issue in spatch.
+> 	git diff --stat -p avar/scalar-move-build-from-contrib-3 HEAD -- ':!t/t9211-scalar-clone.sh' ':!Documentation/technical/scalar.txt' ':!t/perf/'
 > 
-> >   sys	0m0.033s
-> >   $ time spatch --all-includes --sp-file contrib/coccinelle/unused.cocci builtin/rebase.c 
-> >   warning: Can't find macro file: /usr/local/bin/lib/coccinelle/standard.h
-> >   warning: Can't find default iso file: /usr/local/bin/lib/coccinelle/standard.iso
-> >   HANDLING: builtin/rebase.c
-> >   Note: processing took    83.2s: builtin/rebase.c
-> >   
-> >   real	1m23.223s
-> >   user	1m23.156s
-> >   sys	0m0.017s
+> I.e. you can get my version at
+> http://github.com/avar/git/tree/avar/scalar-move-build-from-contrib-3 if
+> you're interested, and I omitted the changes to paths unique to yours:
+
+For the sake of readability/saving space, I cut out parts of the diff you
+noted as "ok" or otherwise didn't seem to need comment (like nits). If I
+neglected to comment on something you'd like me to respond to, though,
+please let me know!
+
+> 	 
+> 	diff --git a/Documentation/scalar.txt b/Documentation/scalar.txt
+> 	index f33436c7f65..505a1cea0fd 100644
+> 	--- a/Documentation/scalar.txt
+> 	+++ b/Documentation/scalar.txt
+> 	@@ -163,4 +163,4 @@ linkgit:git-clone[1], linkgit:git-maintenance[1].
+> 	 
+> 	 GIT
+> 	 ---
+> 	-Part of the linkgit:git[1] suite
+> 	+Associated with the linkgit:git[1] suite
 > 
-> I didn't look at this one, but I assume it's some similar (and probably
-> easily fixed) pathological issue.
+> You just kept this, but it really should be the former. The target
+> audience of this bit of the documentation is some sysadmin that's
+> wondering what this "scalar" thing is, and does "man scalar".
 > 
-> 1. https://lore.kernel.org/git/patch-5.5-ce4734e5d79-20220825T141212Z-avarab@gmail.com/
+> Let's not be cute, we're shipping it as part of git, it's not
+> "associated" anymore, it's part of the git suite.
+
+I originally chose to leave the "associated" to distinguish it from the
+builtins invoked with 'git <command>' (since 'scalar' is invoked directly).
+However, given that every single other "GIT" section in the docs (including
+other directly-invoked commands like 'gitk') says "Part of the
+linkgit:git[1] suite", it should probably be changed here as well.
+
+> 	 
+> 	+SCALAR_OBJS += scalar.o
+> 	+.PHONY: scalar-objs
+> 	+scalar-objs: $(SCALAR_OBJS)
+> 
+> This part looks missing from yours. I.e. we do this with the rest of our
+> "objects", just gravy of course...
+
+This hunk is from my series, I believe it's missing from yours (unless I
+missed it elsewhere in the diff). It's also mentioned explicitly in the
+commit message of patch 2 [3].
+
+[3] https://lore.kernel.org/git/4d69e5eaccb8873eece666a3d2bb2b22abdde7ea.1661961746.git.gitgitgadget@gmail.com/
+
+> 
+> 	@@ -3536,6 +3514,7 @@ ALL_COMMANDS += git-citool
+> 	 ALL_COMMANDS += git-gui
+> 	 ALL_COMMANDS += gitk
+> 	 ALL_COMMANDS += gitweb
+> 	+ALL_COMMANDS += scalar
+> 	 
+> 	 .PHONY: check-docs
+> 	 check-docs::
+> 	@@ -3571,7 +3550,7 @@ check-docs::
+> 	 		    -e 's/\.txt//'; \
+> 	 	) | while read how cmd; \
+> 	 	do \
+> 	-		case " $(patsubst %$X,%,$(ALL_COMMANDS) $(BUILT_INS) $(EXCLUDED_PROGRAMS) scalar) " in \
+> 	+		case " $(patsubst %$X,%,$(ALL_COMMANDS) $(BUILT_INS) $(EXCLUDED_PROGRAMS)) " in \
+> 	 		*" $$cmd "*)	;; \
+> 	 		*) echo "removed but $$how: $$cmd" ;; \
+> 	 		esac; \
+> 	diff --git a/builtin/help.c b/builtin/help.c
+> 	index 09ac4289f13..6f2796f211e 100644
+> 	--- a/builtin/help.c
+> 	+++ b/builtin/help.c
+> 	@@ -440,6 +440,8 @@ static const char *cmd_to_page(const char *git_cmd)
+> 	 		return git_cmd;
+> 	 	else if (is_git_command(git_cmd))
+> 	 		return xstrfmt("git-%s", git_cmd);
+> 	+	else if (!strcmp("scalar", git_cmd))
+> 	+		return xstrdup(git_cmd);
+> 	 	else
+> 	 		return xstrfmt("git%s", git_cmd);
+> 	 }
+> 
+> Works, but I wonder if 3/8 here in your series is what we really want,
+> i.e. isn't the point of "git" to be a holistic thing for git, and for
+> "scalar" to be set apart from that?
+> 
+> But OTOH much of the docs would need to cross-link anyway...
+
+Like you noted earlier, Scalar is *part of* the Git suite, despite being
+invoked with 'scalar' (rather than the 'git' executable). Having 'git help
+scalar' work the same way as, e.g., 'git help gitk' is, to me, a sensible
+approach both from a philosophical "what is Scalar?" perspective and a user
+experience/ease-of-access perspective.
+
+> 
+> 	diff --git a/command-list.txt b/command-list.txt
+> 	index 27bd54af49c..f96bdabd7d9 100644
+> 	--- a/command-list.txt
+> 	+++ b/command-list.txt
+> 	@@ -16,7 +16,6 @@
+> 	 #   synchingrepositories
+> 	 #   synchelpers
+> 	 #   purehelpers
+> 	-#   optionalcontrib
+> 	 #
+> 	 # The type names are self explanatory. But if you want to see what
+> 	 # command belongs to what group to get a better picture, have a look
+> 	@@ -236,4 +235,3 @@ gittutorial                             guide
+> 	 gittutorial-2                           guide
+> 	 gitweb                                  ancillaryinterrogators
+> 	 gitworkflows                            guide
+> 	-scalar                                  optionalcontrib
+> 
+> You don't have it in command-list at all, shouldn't you?
+
+I missed that part of the docs, but I agree that it should be in the
+command-list. Thanks for pointing this out!
+
+> 
+> Thanks.
+
