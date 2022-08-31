@@ -2,166 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD48FECAAD1
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 19:46:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF499ECAAD1
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 19:54:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231688AbiHaTqS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 15:46:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34314 "EHLO
+        id S232047AbiHaTyl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 15:54:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230403AbiHaTqR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 15:46:17 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E73A645073
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 12:46:15 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id gb36so9605719ejc.10
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 12:46:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date;
-        bh=CebBVrOCpMYO+xEiik1IE3zhVoYjxsYS6c/x1C4Ty7U=;
-        b=HCHgUJIgXBT93s9bM9jYEEQw4fRXpAnXND+jK8ZuliEZhuUjBbiHi81i+ZVLUjlgOW
-         HFgSSAk6KCESGOw5hMvEfcKLsizsu8J4f64qHaeaG0QbZ7n9Qn+1ZYG0J7ZR3CJq+SYN
-         qq1oNrWMzY+sb/m2NbjB3jLoxTOgXyy6s0BdDeazbDAV77IRdFhulUVRIETsUKi7RvQV
-         BYUd4rmdPG53HEJ5WPDmjSWwnebsXt+9+2ObMrMWWkjngrZNyf99sJbE+RA5fna3VRtM
-         9UAJ6WGxDf+w10JWrgT0ZR0FO2r2s1JrZ2RuFtLSDXWN9FWHOGSHK1gxK062uTr0ZgHz
-         +BIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=CebBVrOCpMYO+xEiik1IE3zhVoYjxsYS6c/x1C4Ty7U=;
-        b=aHd8lf3krfT1aC2kubdUUTtyXd8SgkzasLOcC/rFI0SRPT3Bx7WLDdCnnM2+NndegV
-         97dMIWURfcCSgWFVfodZrhw/C8CeVDsN0SsLQQCmqO66jmZEQa+AOitfVnFuO7XSsteI
-         L39n52t/K8kUxl7rP6GGd7U6Y6fRtTnrnk9AQicFg+x9AhnoQWGMSB+6tv+Qmkq5Ulx0
-         kd05tzlHK3HmROcFkERkydYHF4xVwCPViz6gMKMKxMLVS8C/0H7NiJwhq8YqOvTkuwbz
-         63gv2uYa/UQ3JGJE1YKLCoxq3Vs189rB1++F+EMRYLk+Gt4/0Y1lvs2NgXYDq/rf3f9X
-         +u7g==
-X-Gm-Message-State: ACgBeo0Mgz9bDnm2GVL4PY6bkZu4xNGuv0D7dZI+stlhOsPPPs/J9z8h
-        MOEV8bjl8hRZvCUH39r3dxsP0WR5hp71ag==
-X-Google-Smtp-Source: AA6agR4fXdmpc2Wt/3Q1TfGIt1SnucB++SR1soCsSmU0z7iAWt3vAzdubA9p3zLPBqNIMcYjYyInaw==
-X-Received: by 2002:a17:907:271b:b0:730:aa8e:74eb with SMTP id w27-20020a170907271b00b00730aa8e74ebmr21707204ejk.478.1661975174339;
-        Wed, 31 Aug 2022 12:46:14 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id u22-20020aa7db96000000b0044687e93f74sm75634edt.43.2022.08.31.12.46.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 12:46:13 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oTTfA-000Rzs-3B;
-        Wed, 31 Aug 2022 21:46:12 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH v4 1/4] fsmonitor: add two new config options,
- allowRemote and socketDir
-Date:   Wed, 31 Aug 2022 21:41:28 +0200
-References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
- <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
- <836a791e6b7fd4490674254ce03105a8ca2175cb.1661962145.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <836a791e6b7fd4490674254ce03105a8ca2175cb.1661962145.git.gitgitgadget@gmail.com>
-Message-ID: <220831.86h71s8ad7.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229601AbiHaTyi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 15:54:38 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B22C8EE6A1
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 12:54:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1661975669;
+        bh=AiAXBXRl+wc30fl/Ni4fhjooA6qdmfmKcbhsvA8zuAQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=avcI39nlxi2k0JZM0FvTCOo9fMdJsMpegMtmJzY31MVcprLkJX1rN2lSBpUEDkZPC
+         y3Drstr4KEWVWPClN/VjRpptHrWoSzLblxEjt4Hc7ecE1cqd9EncvND7/jKMWsf0eV
+         N5+7lbq1/rp9uO4P/UCljFWV/mKFVAwZmEzw+wa0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MC34h-1oYeqm1wYH-00CTmS; Wed, 31
+ Aug 2022 21:54:29 +0200
+Date:   Wed, 31 Aug 2022 21:54:29 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     phillip.wood@dunelm.org.uk
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Subject: Re: js/add-p-diff-parsing-fix (was: What's cooking in git.git (Aug
+ 2022, #10; Tue, 30))
+In-Reply-To: <b0a368a1-a6cc-1940-4804-3cbcae1db235@gmail.com>
+Message-ID: <578r404o-r7or-6pnp-2s59-o6s0525nn38p@tzk.qr>
+References: <xmqqilm9k0bc.fsf@gitster.g> <220831.86bks0ajy7.gmgdl@evledraar.gmail.com> <b0a368a1-a6cc-1940-4804-3cbcae1db235@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-377237880-1661975671=:189"
+X-Provags-ID: V03:K1:AboD2ZOiH1JEFd9jeFRHAsfdesE/urCQxH39ktx9bmQNtDd+Oxk
+ g2rrcHIkdS1i+stcHFaYfVhrqJHIUD1wgjpVFi9f3NjclGCiSXzW9l0Kx7U37NvHzPjvp81
+ Jb3vXj51eXvWd5RnNLO9Y7Q0Y2meBlf1IyjGLfmo6o8Q5pi0uRYIDID7KM92WQU/j8DnzzW
+ NJSmwGOOF/3lr+Oc5Do9g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:AwrdlocwR6Y=:6Fd+80ItcMkR/ksqueS6KY
+ sHbH8zQaKcp3c7iw5UWxdEW3OFBxsRLNOYxZXTAxAmhSJTiQ51xj4aT4lx4OI4m/w5RjqQHCP
+ zijHPc8sRiaEtJaAUYHWIEZO0+/yUWuLP+uoPZH9toBGvwbUGwRSmQYHd8zcgm9Uihn4Bnw9N
+ Mx37ttQqfn7gzHQmgtMcv6RXkJOysfOKz0LsGx7p//UIL+3Ki6Z/hvSshfzxoncBUoHnIskWI
+ kvpDe/dx13wbtBGanrWJSvwy7uy7PTlmWZXbjyV7ywd07xyN1wFkQ+FG4PLhrgwqbqHbPnuTV
+ hsq6Au74DzWZHxnAe7pZ4GphrKbNyW2VWh2Wp2dTcOurT7WiTh6FTW+VZWJKkuAgfrUIjiVni
+ xEVas6E1ESbYMLzDIQvbXmcD8Fk3Q8j2W81PTflcwvez5rPguejH9vXF2Q+XLAgrPTJ4roESw
+ xxemnlAfxHWiUWo0VFlM2qke8mnNsblV7XIxwXMAgc+SJvDH9sVBf+dpZ+qj473EL3vMQJQy7
+ UzOZEHcfnAkMQQ9EP99qP02jxJqVkacsB/ybJzzMKTJiaPVXF1lhYKqLThY6XFrjxxV02tL3Z
+ DrxuuTQkwSLWwBTDZMkX6ZmrVqE+sKcD42e+xtSgLYPDZyqKsKjFs/esj3BUyfNIISuvstyWP
+ jQBiKQ871Y5ALddsYF8UkPm9LAvYqpBGUIj1c3VJlienbVniMV3U1MPy+nPoxrJrXkaE7C9JK
+ 41ebbpCFTBbuGHCGjnT5q/5IR48x5yA5d5HEDV3oiEfNMEPt1gmGRfPcPMTlsDM7aJ0sy/jHF
+ Y/AtQlvmRTvUePFOd1IOGSez0vjZkQUqmvnU+3ChcoGbLPtc+ZP90U+IKtmQXBSfugn/87af6
+ W0H894FRX8tpi+amQrA6q2RbgJ/o6CcxYoCmNOyt99Rz5qKm8VRnP/sDinUTt8V/3Q0ZXC+TM
+ W9Bj6609JLaDKd1RcTQamwvKOtoYjaN/mPiKFaOZKLGV078v2iIMmmmHcbGW2Jqjl2PcAR3Eb
+ cCVyygtgVwVYHU4lrRCOZ6QMd62MfqzAb8vHo4d5YVQczWuDS78wGsHyHCC0xr8FfHBtvu9pE
+ CFehUXWR/I8HkVAKheSTFSAhcYrBkmm7ELLvvT98O82ECGTWIH05Fg4lQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, Aug 31 2022, Eric DeCosta via GitGitGadget wrote:
+--8323328-377237880-1661975671=:189
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> From: Eric DeCosta <edecosta@mathworks.com>
-> [...]
->  	enum fsmonitor_reason reason;
-> +	int allow_remote;
->  	char *hook_path;
-> +	char *sock_dir;
->  };
+Hi Phillip,
 
-Any reason we couldn't just add this to "struct repo_settings" and ...
+On Wed, 31 Aug 2022, Phillip Wood wrote:
 
-> +int fsm_settings__get_allow_remote(struct repository *r)
-> +{
-> +	if (!r)
-> +		r = the_repository;
-> +	if (!r->settings.fsmonitor)
-> +		lookup_fsmonitor_settings(r);
-> +
-> +	return r->settings.fsmonitor->allow_remote;
-> +}
-> +
-> +const char *fsm_settings__get_socket_dir(struct repository *r)
-> +{
-> +	if (!r)
-> +		r = the_repository;
-> +	if (!r->settings.fsmonitor)
-> +		lookup_fsmonitor_settings(r);
-> +
-> +	return r->settings.fsmonitor->sock_dir;
-> +}
-> +
+> On 31/08/2022 09:29, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >
+> > On Tue, Aug 30 2022, Junio C Hamano wrote:
+> >
+> > > * js/add-p-diff-parsing-fix (2022-08-29) 5 commits
+> > >   - add -p: ignore dirty submodules
+> > >   - add -p: handle `diff-so-fancy`'s hunk headers better
+> > >   - add -p: insert space in colored hunk header as needed
+> > >   - add -p: gracefully ignore unparseable hunk headers in colored di=
+ffs
+> > >   - t3701: redefine what is "bogus" output of a diff filter
+> > >
+> > >   Those who use diff-so-fancy as the diff-filter noticed a regressio=
+n
+> > >   or two in the reimplemented "add -p", which has been corrected.
+> > >
+> > >   Will merge to 'next'?
+> > >   source: <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com>
+> >
+> > This LGTM.
+>
+> I'm not sure that the different output from the builtin version compared=
+ to
+> the perl version when using interactive.diffFilter is an improvement. Th=
+e perl
+> version leaves the filtered output alone but the builtin version has sta=
+rted
+> prepending @@ -a,b +d,c @@ to the "hunk header" lines produced by the fi=
+lter.
 
-...instead of this whole ceremony...
+A convincing argument!
 
-> +void fsm_settings__set_allow_remote(struct repository *r)
-> +{
-> +	int allow;
-> +
-> +	if (!r)
-> +		r = the_repository;
-> +	if (!r->settings.fsmonitor)
-> +		r->settings.fsmonitor = alloc_settings();
-> +	if (!repo_config_get_bool(r, "fsmonitor.allowremote", &allow))
-> +		r->settings.fsmonitor->allow_remote = allow;
-> +
-> +	return;
-> +}
+And after implementing this (and dropping the patches that implemented a
+deviation from the Perl script's behavior), the patch series looks so much
+more elegant, too!
 
-Just have a single repo_cfg_bool() line in prepare_repo_settings()
-instead?
+Ciao,
+Dscho
 
-(There are some reasons for the "lazy" behavior of fsmonitor-settings.c,
-but surely a simple boolean variable we can read on startup isn't it,
-and we already paid the cost to do so with the configset...)
-
-
-> +void fsm_settings__set_socket_dir(struct repository *r)
-> +{
-> +	const char *path;
-> +
-> +	if (!r)
-> +		r = the_repository;
-> +	if (!r->settings.fsmonitor)
-> +		r->settings.fsmonitor = alloc_settings();
-> +
-> +	if (!repo_config_get_pathname(r, "fsmonitor.socketdir", &path)) {
-> +		FREE_AND_NULL(r->settings.fsmonitor->sock_dir);
-
-...maybe this socket dir stuff is the exception though.
-
-> +		r->settings.fsmonitor->sock_dir = strdup(path);
-
-Aren't you strdup()-ing an already strdup()'d string, and therefore
-leaking memory? Also this should be xstrdup(), surely?
-
-> +	}
-> +
-> +	return;
-> +}
-> +
->  void fsm_settings__set_ipc(struct repository *r)
->  {
-> -	enum fsmonitor_reason reason = check_for_incompatible(r);
-> +	enum fsmonitor_reason reason;
-> +
-> +	fsm_settings__set_allow_remote(r);
-> +	fsm_settings__set_socket_dir(r);
-> +	reason = check_for_incompatible(r);
-
-This seems rather backwards, as odd as this API itself is already, isn't
-the whole idea that after we call lookup_fsmonitor_settings() it will
-have set() anything that's mandatory?
-
-But maybe I haven't grokked it ... :)
+--8323328-377237880-1661975671=:189--
