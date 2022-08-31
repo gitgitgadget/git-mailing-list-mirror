@@ -2,165 +2,245 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2552BECAAD1
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 16:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25DF3ECAAD1
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 16:09:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230034AbiHaQDy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 12:03:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56176 "EHLO
+        id S231360AbiHaQJM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 12:09:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231450AbiHaQCz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 12:02:55 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 100A980B58
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:02:54 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id h1so7606465wmd.3
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:02:53 -0700 (PDT)
+        with ESMTP id S230002AbiHaQJK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 12:09:10 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED489A61F1
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:08 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id k9so18953077wri.0
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=NHckKwoRME6izHezy19QDuLVea12ybAgp0ADMPSukzw=;
-        b=aGDdFHH2klE3q+vHfSLone/CkLw+JBcfgLz1yKi6qqutiQSAvUQTtFx5xYl/IJWKqU
-         t3EMkbrLFqRvXJfqrAQkSHPk+I4A3Paq8SiAOi367Wpcu7OyOWdxLzTMneSuw7d/vERt
-         pISus+haneTZpW3GW686bwgf78C9WBCejF9Duw0L4QZy48aO6HkAyJt/I4X/OeZB296h
-         PwWcKSEJY6imWHjpymzYZkIb5yY21l8PeztL3czg72TPWC31eOLi/IrKAYHGIgloihbF
-         wtU6d6T/UIshfUms/CBz2Mr/EpGPdZ5A4ytJvyO9vkdqZdEgVyf1CVu7EYvustRIWsZI
-         9eMA==
+        bh=T6B36VGkHoEy8o2VMzAMXfZN/Cqvj4n2fspFc3eA4Co=;
+        b=oYZglVE+k+DWH8IXJOs7RP/3ZfbMy6zvQPxpsp1clghDwHYT8FVgG4cO2Y6J9zxHiN
+         Dg0hsHk+7r0aizZYEkcwCbtQE9Jh3MMKPoO4P3R7uJOuaahkxRueX4cCZJ1dGAsPwV5K
+         6Q8IxQnJmJQeaEEZAP3TES2ODqJrjSKgeJZ3u8ftyuxormVomyZkTtMtsPbrLE0iR4HY
+         rZXJYKca033g0zhSB9zndov+zHEl0jSdVSjksb0C1hOhrDGlO1OQj3Uk/qlVgjZBZomW
+         xQKh2eatPy0VnCWxje8ZcBEqH5Xvp9N29ul6onUtGrH79QWUkyO79BVy3LvMVFGZzcYP
+         BeWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=NHckKwoRME6izHezy19QDuLVea12ybAgp0ADMPSukzw=;
-        b=SGhz4kkhc23Wao9B9xF/ZQw7UuvmWFzoa844ipBWsnqwOIMaOmZjf/qaHrd08+f+q9
-         KiBNR/X7IjZ5CickXO9fA4IZIUreDPB3kDS6aEToOjxyiCijhzi0JsFe8S8yrtNVY3gn
-         WFgHS+FgIghBXJ8bbKx2c8iOjKSth4v622UeBexFdGeO5HTVlWlXmltF2PDdJZDoq50n
-         zKDPEs0aKSHQR+U+2mZJsSNBzSIxh2r7545/AsHCQzrvchjbCkHsRn2gEjg70wXP8Zqj
-         yastRkuyG1BXbMBkoiY/LI8tj0GwWUeRCruFlfPL2VdAU0y25ejVc7Oqo/qYfgj5vyb2
-         gp0Q==
-X-Gm-Message-State: ACgBeo2DsEhIOiuQFhuWSubFKiht6YseD+aqJ7YZJ+zxpIbIfTJmTzLW
-        +1WyzIVJP60n7ze7pHGu/AYkXvr4dHQ=
-X-Google-Smtp-Source: AA6agR4TMOfYyGoAqS1XM0I0QmDCVe0N6F+/ctklPxAhvWjWBUP6sieOqgYwZTAWijx6kcJm1DHhwA==
-X-Received: by 2002:a1c:a107:0:b0:3a6:8b06:cf19 with SMTP id k7-20020a1ca107000000b003a68b06cf19mr2435895wme.195.1661961772218;
-        Wed, 31 Aug 2022 09:02:52 -0700 (PDT)
+        bh=T6B36VGkHoEy8o2VMzAMXfZN/Cqvj4n2fspFc3eA4Co=;
+        b=upjLU2XNqXDSwoI9u3vNcTjU+DQb1AoGUHlLKPE4WQPV5CJKQjrNCbFFpSKEU2vyfH
+         14CGV+VqGdaXN/OJEBZDeQsf4oAZCBkOiS8lh5KagzE+0uyEamLTDr+d9hYhxFFOwo+6
+         ILEZNYXOvMsn4E5iSYKVmWABBvvdnQc3kIEsLy3L3lRju0mTy8FJvdycuV26S1YL7iHi
+         OstQEw/AhMeb5PskvSHjzZGbDvlFo8tm+xwQQwam8E4Rha8K2QugUZnTtNBGCudIWmp2
+         nkb5ZUVrMPeUuONaMFqTRF1MQmbIruQS+PUWPajc3a21jSyhQqLoJYyrHB2Xgda44wDy
+         Jwgw==
+X-Gm-Message-State: ACgBeo3IrusrwWiuR7sYasVu4/KyLXFcpYikgAom19KxLE4D9noK0nXZ
+        mh4Szj0ZldXKZtEiBTdOAS5JvG2qBjE=
+X-Google-Smtp-Source: AA6agR66u670MUdC0ioxXtRcIdE7rjBUNk4h5Ue9SOODG/LyUu7dmSGlQb6CJr3Y20ZP2D+H6AiSxA==
+X-Received: by 2002:a5d:6e8c:0:b0:225:5f3f:1d8f with SMTP id k12-20020a5d6e8c000000b002255f3f1d8fmr12981273wrz.610.1661962147197;
+        Wed, 31 Aug 2022 09:09:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o26-20020a05600c511a00b003a643ac2b08sm2595246wms.8.2022.08.31.09.02.50
+        by smtp.gmail.com with ESMTPSA id o21-20020a05600c4fd500b003a32297598csm2807651wmq.43.2022.08.31.09.09.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 09:02:51 -0700 (PDT)
-Message-Id: <8bbe913dccf91bc4e6c76cbe85c585d223fc4aef.1661961746.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1341.git.1661961746.gitgitgadget@gmail.com>
-References: <pull.1341.git.1661961746.gitgitgadget@gmail.com>
-From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 31 Aug 2022 16:02:25 +0000
-Subject: [PATCH 8/8] Documentation/technical: include Scalar technical doc
+        Wed, 31 Aug 2022 09:09:05 -0700 (PDT)
+Message-Id: <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
+References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
+From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 31 Aug 2022 16:09:00 +0000
+Subject: [PATCH v4 0/4] fsmonitor: option to allow fsmonitor to run against network-mounted repos
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     derrickstolee@github.com, johannes.schindelin@gmx.de,
-        gitster@pobox.com, Victoria Dye <vdye@github.com>,
-        Victoria Dye <vdye@github.com>
+Cc:     Eric DeCosta <edecosta@mathworks.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Victoria Dye <vdye@github.com>
+cc: Johannes Schindelin Johannes.Schindelin@gmx.de cc: Jeff Hostetler
+git@jeffhostetler.com cc: Eric Sunshine sunshine@sunshineco.com cc: Torsten
+Bögershausen tboegi@web.de
 
-Include 'Documentation/technical/scalar.txt' alongside the other HTML
-technical docs when installing them.
+Allow fsmonitor to run against network-mounted repos on macOS.
 
-Now that the document is intended as a widely-accessible reference, remove
-the internal work-in-progress roadmap from the document. Those details
-should no longer be needed to guide Scalar's development and, if they were
-left, they could fall out-of-date and be misleading to readers.
+There are four parts to this effort:
 
-Signed-off-by: Victoria Dye <vdye@github.com>
----
- Documentation/Makefile             |  1 +
- Documentation/technical/scalar.txt | 61 ------------------------------
- 2 files changed, 1 insertion(+), 61 deletions(-)
+ 1. Introduce two new configuration options
+    
+    fsmonitor.allowRemote - setting this to true overrides fsmonitor's
+    default behavior of erroring out when enountering network file systems.
+    Additionly, when true, the Unix domain socket (UDS) file used for IPC is
+    located in $HOME rather than in the .git directory.
+    
+    fsmonitor.socketDir - allows for the UDS file to be located anywhere the
+    user chooses rather $HOME.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 16c9e062390..9ec53afdf18 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -116,6 +116,7 @@ TECH_DOCS += technical/parallel-checkout
- TECH_DOCS += technical/partial-clone
- TECH_DOCS += technical/racy-git
- TECH_DOCS += technical/reftable
-+TECH_DOCS += technical/scalar
- TECH_DOCS += technical/send-pack-pipeline
- TECH_DOCS += technical/shallow
- TECH_DOCS += technical/trivial-merge
-diff --git a/Documentation/technical/scalar.txt b/Documentation/technical/scalar.txt
-index 0600150b3ad..921cb104c3c 100644
---- a/Documentation/technical/scalar.txt
-+++ b/Documentation/technical/scalar.txt
-@@ -64,64 +64,3 @@ some "global" `git` options (e.g., `-c` and `-C`).
- Because `scalar` is not invoked as a Git subcommand (like `git scalar`), it is
- built and installed as its own executable in the `bin/` directory, alongside
- `git`, `git-gui`, etc.
--
--Roadmap
---------
--
--NOTE: this section will be removed once the remaining tasks outlined in this
--roadmap are complete.
--
--Scalar is a large enough project that it is being upstreamed incrementally,
--living in `contrib/` until it is feature-complete. So far, the following patch
--series have been accepted:
--
--- `scalar-the-beginning`: The initial patch series which sets up
--  `contrib/scalar/` and populates it with a minimal `scalar` command that
--  demonstrates the fundamental ideas.
--
--- `scalar-c-and-C`: The `scalar` command learns about two options that can be
--  specified before the command, `-c <key>=<value>` and `-C <directory>`.
--
--- `scalar-diagnose`: The `scalar` command is taught the `diagnose` subcommand.
--
--- `scalar-generalize-diagnose`: Move the functionality of `scalar diagnose`
--  into `git diagnose` and `git bugreport --diagnose`.
--
--- 'scalar-add-fsmonitor: Enable the built-in FSMonitor in Scalar
--  enlistments. At the end of this series, Scalar should be feature-complete
--  from the perspective of a user.
--
--Roughly speaking (and subject to change), the following series are needed to
--"finish" this initial version of Scalar:
--
--- Move Scalar to toplevel: Move Scalar out of `contrib/` and into the root of
--  `git`. This includes a variety of related updates, including:
--    - building & installing Scalar in the Git root-level 'make [install]'.
--    - builing & testing Scalar as part of CI.
--    - moving and expanding test coverage of Scalar (including perf tests).
--    - implementing 'scalar help'/'git help scalar' to display scalar
--      documentation.
--
--Finally, there are two additional patch series that exist in Microsoft's fork of
--Git, but there is no current plan to upstream them. There are some interesting
--ideas there, but the implementation is too specific to Azure Repos and/or VFS
--for Git to be of much help in general.
--
--These still exist mainly because the GVFS protocol is what Azure Repos has
--instead of partial clone, while Git is focused on improving partial clone:
--
--- `scalar-with-gvfs`: The primary purpose of this patch series is to support
--  existing Scalar users whose repositories are hosted in Azure Repos (which does
--  not support Git's partial clones, but supports its predecessor, the GVFS
--  protocol, which is used by Scalar to emulate the partial clone).
--
--  Since the GVFS protocol will never be supported by core Git, this patch series
--  will remain in Microsoft's fork of Git.
--
--- `run-scalar-functional-tests`: The Scalar project developed a quite
--  comprehensive set of integration tests (or, "Functional Tests"). They are the
--  sole remaining part of the original C#-based Scalar project, and this patch
--  adds a GitHub workflow that runs them all.
--
--  Since the tests partially depend on features that are only provided in the
--  `scalar-with-gvfs` patch series, this patch cannot be upstreamed.
+ 2. Using the values of above configuration options, locate the UDS file in
+    the desired location with a unique name based on the SHA1 of the path of
+    the .git folder.
+
+ 3. Ensure that both the working directory (.git directory) and the UDS file
+    location are compatible with fsmonitor
+
+ 4. Normalize the paths returned by FSEvents to the real path for each
+    affected file or directory
+
+Eric DeCosta (4):
+  fsmonitor: add two new config options, allowRemote and socketDir
+  fsmonitor: generate unique Unix socket file name in the desired
+    location
+  fsmonitor: ensure filesystem and unix socket filesystem are compatible
+  fsmonitor: normalize FSEvents event paths to the real path
+
+ compat/fsmonitor/fsm-listen-darwin.c   | 11 ++--
+ compat/fsmonitor/fsm-settings-darwin.c | 72 +++++++++++++++++++-------
+ fsmonitor-ipc.c                        | 40 ++++++++++++--
+ fsmonitor-ipc.h                        |  6 +++
+ fsmonitor-settings.c                   | 67 +++++++++++++++++++++++-
+ fsmonitor-settings.h                   |  4 ++
+ 6 files changed, 172 insertions(+), 28 deletions(-)
+
+
+base-commit: 795ea8776befc95ea2becd8020c7a284677b4161
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1326%2Fedecosta-mw%2Ffsmonitor_macos-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1326/edecosta-mw/fsmonitor_macos-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1326
+
+Range-diff vs v3:
+
+ 1:  cd16d8bb3d6 ! 1:  836a791e6b7 fsmonitor: macOS: allow fsmonitor to run against network-mounted repos
+     @@ Metadata
+      Author: Eric DeCosta <edecosta@mathworks.com>
+      
+       ## Commit message ##
+     -    fsmonitor: macOS: allow fsmonitor to run against network-mounted repos
+     +    fsmonitor: add two new config options, allowRemote and socketDir
+      
+     -    Follow-on to the work done to allow Windows to work against
+     -    network-mounted repos. Have macOS take advantage of the same
+     -    configuration option, 'fsmonitor.allowRemote' that was introduced for
+     -    Windows. Setting this option to true will override the default behavior
+     -    (erroring-out) when a network-mounted repo is detected by fsmonitor.
+     +    Introduce two new configuration options
+      
+     -    The added wrinkle being that the Unix domain socket (UDS) file used for
+     -    IPC cannot be created in a network location; instead $HOME is used if
+     -    'fsmonitor.allowRemote' is true.
+     +       fsmonitor.allowRemote - setting this to true overrides fsmonitor's
+     +       default behavior of erroring out when enountering network file
+     +       systems. Additionly, when true, the Unix domain socket (UDS) file
+     +       used for IPC is located in $HOME rather than in the .git directory.
+      
+     -    If $HOME is in a network location, allow the user to override this via
+     -    the 'fsmonitor.socketDir' configuration option. There the user can
+     -    specify any local directory for the location of the UDS file.
+     +       fsmonitor.socketDir - allows for the UDS file to be located
+     +       anywhere the user chooses rather $HOME.
+      
+          Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+      
+     - ## fsmonitor-ipc.c ##
+     -@@
+     - #include "cache.h"
+     --#include "fsmonitor.h"
+     --#include "simple-ipc.h"
+     - #include "fsmonitor-ipc.h"
+     -+#include "fsmonitor-settings.h"
+     - #include "run-command.h"
+     - #include "strbuf.h"
+     - #include "trace2.h"
+     -@@ fsmonitor-ipc.c: int fsmonitor_ipc__is_supported(void)
+     - 	return 1;
+     - }
+     - 
+     --GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor--daemon.ipc")
+     -+GIT_PATH_FUNC(fsmonitor_ipc__get_default_path, "fsmonitor--daemon.ipc")
+     -+
+     -+const char *fsmonitor_ipc__get_path(void)
+     -+{
+     -+#ifdef WIN32
+     -+	return fsmonitor_ipc__get_default_path();
+     -+#else
+     -+	char *retval;
+     -+	SHA_CTX sha1ctx;
+     -+	const char *git_dir;
+     -+	const char *sock_dir;
+     -+	struct strbuf ipc_file = STRBUF_INIT;
+     -+	unsigned char hash[SHA_DIGEST_LENGTH];
+     -+
+     -+	if (fsm_settings__get_allow_remote(the_repository) < 1)
+     -+		return fsmonitor_ipc__get_default_path();
+     -+
+     -+	git_dir = get_git_dir();
+     -+	sock_dir = fsm_settings__get_socket_dir(the_repository);
+     -+
+     -+	SHA1_Init(&sha1ctx);
+     -+	SHA1_Update(&sha1ctx, git_dir, strlen(git_dir));
+     -+	SHA1_Final(hash, &sha1ctx);
+     -+
+     -+	if (sock_dir && *sock_dir)
+     -+		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
+     -+					sock_dir, hash_to_hex(hash));
+     -+	else
+     -+		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
+     -+	retval = interpolate_path(ipc_file.buf, 1);
+     -+	if (!retval)
+     -+		die(_("Invalid path: %s"), ipc_file.buf);
+     -+	strbuf_release(&ipc_file);
+     -+	return retval;
+     -+#endif
+     -+}
+     - 
+     - enum ipc_active_state fsmonitor_ipc__get_state(void)
+     - {
+     -
+     - ## fsmonitor-ipc.h ##
+     -@@ fsmonitor-ipc.h: int fsmonitor_ipc__is_supported(void);
+     -  */
+     - const char *fsmonitor_ipc__get_path(void);
+     - 
+     -+/*
+     -+ * Returns the pathname to the default IPC named pipe or Unix domain
+     -+ * socket.
+     -+ */
+     -+const char *fsmonitor_ipc__get_default_path(void);
+     -+
+     - /*
+     -  * Try to determine whether there is a `git-fsmonitor--daemon` process
+     -  * listening on the IPC pipe/socket.
+     -
+       ## fsmonitor-settings.c ##
+      @@
+       struct fsmonitor_settings {
+ -:  ----------- > 2:  2cb026a6317 fsmonitor: generate unique Unix socket file name in the desired location
+ 2:  f977d140afa ! 3:  a3110f1e25a Check working directory and Unix domain socket file for compatability
+     @@
+       ## Metadata ##
+     -Author: edecosta <edecosta@mathworks.com>
+     +Author: Eric DeCosta <edecosta@mathworks.com>
+      
+       ## Commit message ##
+     -    Check working directory and Unix domain socket file for compatability
+     +    fsmonitor: ensure filesystem and unix socket filesystem are compatible
+      
+          Perform separate checks for the working directory and Unix domain socket
+          (UDS) file location. The working directory may be located on a
+     @@ Commit message
+          file may never be located on a network-mounted file system; additionally
+          it may not be located on FAT32 or NTFS file systems.
+      
+     -    Signed-off-by: edecosta <edecosta@mathworks.com>
+     +    Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+      
+       ## compat/fsmonitor/fsm-settings-darwin.c ##
+      @@
+ -:  ----------- > 4:  56cabf3be3b fsmonitor: normalize FSEvents event paths to the real path
+
 -- 
 gitgitgadget
