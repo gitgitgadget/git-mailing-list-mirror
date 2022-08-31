@@ -2,245 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25DF3ECAAD1
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 16:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20CC9ECAAD4
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 16:09:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231360AbiHaQJM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 12:09:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38240 "EHLO
+        id S231450AbiHaQJP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 12:09:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230002AbiHaQJK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 12:09:10 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED489A61F1
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:08 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id k9so18953077wri.0
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:08 -0700 (PDT)
+        with ESMTP id S231351AbiHaQJM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 12:09:12 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 945DF43E6A
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:10 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id h204-20020a1c21d5000000b003a5b467c3abso11960286wmh.5
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=T6B36VGkHoEy8o2VMzAMXfZN/Cqvj4n2fspFc3eA4Co=;
-        b=oYZglVE+k+DWH8IXJOs7RP/3ZfbMy6zvQPxpsp1clghDwHYT8FVgG4cO2Y6J9zxHiN
-         Dg0hsHk+7r0aizZYEkcwCbtQE9Jh3MMKPoO4P3R7uJOuaahkxRueX4cCZJ1dGAsPwV5K
-         6Q8IxQnJmJQeaEEZAP3TES2ODqJrjSKgeJZ3u8ftyuxormVomyZkTtMtsPbrLE0iR4HY
-         rZXJYKca033g0zhSB9zndov+zHEl0jSdVSjksb0C1hOhrDGlO1OQj3Uk/qlVgjZBZomW
-         xQKh2eatPy0VnCWxje8ZcBEqH5Xvp9N29ul6onUtGrH79QWUkyO79BVy3LvMVFGZzcYP
-         BeWA==
+        bh=UH6BST2xsgOSZkwrhMmvFJO7kolfu7XJE/lE1W/C990=;
+        b=NkluoF2pA89kig8wZVm2Rv579t3ZE/7X8j2IC63XYZmqbTp2YVTOn5HJWMLCT2A2l8
+         /lh+CqIn0z8hEAHDg/AywwZDUXZZKZXyIeLJoQKo31x3kqJQ7NBO0RD9CSpAGiysIR/J
+         NnJsVL0/kM/DzdIl9wpU72QxNDjin1VxOe0qPh0yR8ZKkQuHZPyrl85qen11HXPDrF36
+         5hGfEOkmnF7JZTSe+PfmY15gG2PXEvfBmgomZ37rfFaARn48EJZnu3/rYq5VBNrAoxDI
+         rECUxDYjPy96XmDriNjuI8dj1A3hvi9vw7Oe/CikyaGADkcz9PDLXYtqCjXu5eYH6SU8
+         jhQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=T6B36VGkHoEy8o2VMzAMXfZN/Cqvj4n2fspFc3eA4Co=;
-        b=upjLU2XNqXDSwoI9u3vNcTjU+DQb1AoGUHlLKPE4WQPV5CJKQjrNCbFFpSKEU2vyfH
-         14CGV+VqGdaXN/OJEBZDeQsf4oAZCBkOiS8lh5KagzE+0uyEamLTDr+d9hYhxFFOwo+6
-         ILEZNYXOvMsn4E5iSYKVmWABBvvdnQc3kIEsLy3L3lRju0mTy8FJvdycuV26S1YL7iHi
-         OstQEw/AhMeb5PskvSHjzZGbDvlFo8tm+xwQQwam8E4Rha8K2QugUZnTtNBGCudIWmp2
-         nkb5ZUVrMPeUuONaMFqTRF1MQmbIruQS+PUWPajc3a21jSyhQqLoJYyrHB2Xgda44wDy
-         Jwgw==
-X-Gm-Message-State: ACgBeo3IrusrwWiuR7sYasVu4/KyLXFcpYikgAom19KxLE4D9noK0nXZ
-        mh4Szj0ZldXKZtEiBTdOAS5JvG2qBjE=
-X-Google-Smtp-Source: AA6agR66u670MUdC0ioxXtRcIdE7rjBUNk4h5Ue9SOODG/LyUu7dmSGlQb6CJr3Y20ZP2D+H6AiSxA==
-X-Received: by 2002:a5d:6e8c:0:b0:225:5f3f:1d8f with SMTP id k12-20020a5d6e8c000000b002255f3f1d8fmr12981273wrz.610.1661962147197;
-        Wed, 31 Aug 2022 09:09:07 -0700 (PDT)
+        bh=UH6BST2xsgOSZkwrhMmvFJO7kolfu7XJE/lE1W/C990=;
+        b=ZbnvgDbU/tuttvLCEFz7lCkdPjcNfM+SLYGHgy3VtwXj76vNxkM7GBEYGlpOJ2mq3L
+         0gO0SfV6ZTde92qi62R0EVNnZzqdAmiER6hSiRJSJm5RgYy5HCkvBkRmeuY+lgE1lK6E
+         KP+PADewCh42FtMbmk5FgirXe/FBhRmwfQ3My+K4kLF/IaEUjwl0V7jzbl9cr6gfktbO
+         UFiMHQBtLRZufneIRaUY+VTQ7eroypVvXeV3UOFy8DYvZdH6+19LL0iFZL+WYdViTQkU
+         a/8l+3csRwTz+VIGBeV1/QJXxvHgrv4dE3dXMrTrtQOM0dTWhrcwYpHvICAgwEBTyv9Q
+         GKBw==
+X-Gm-Message-State: ACgBeo36qNJUxCNlL2hqpT4YRJXbZ0xCIsIz5ttWBnFtNsAkh4bcvcYg
+        5XMfi715uOLidVdmiyJtXKxiCLHhOZk=
+X-Google-Smtp-Source: AA6agR6X3XwNuo44x441CkWFOXxcZ0rzmJMOgPCW5xAnt9pY7olB5xa9twUlVqnVlfcNIJ2HFKnJsQ==
+X-Received: by 2002:a05:600c:1ca0:b0:3a8:41cf:a31f with SMTP id k32-20020a05600c1ca000b003a841cfa31fmr2527898wms.161.1661962148879;
+        Wed, 31 Aug 2022 09:09:08 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o21-20020a05600c4fd500b003a32297598csm2807651wmq.43.2022.08.31.09.09.05
+        by smtp.gmail.com with ESMTPSA id i6-20020a1c3b06000000b003a4efb794d7sm2827667wma.36.2022.08.31.09.09.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 09:09:05 -0700 (PDT)
-Message-Id: <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
+        Wed, 31 Aug 2022 09:09:07 -0700 (PDT)
+Message-Id: <836a791e6b7fd4490674254ce03105a8ca2175cb.1661962145.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
 References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
+        <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
 From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 31 Aug 2022 16:09:00 +0000
-Subject: [PATCH v4 0/4] fsmonitor: option to allow fsmonitor to run against network-mounted repos
+Date:   Wed, 31 Aug 2022 16:09:01 +0000
+Subject: [PATCH v4 1/4] fsmonitor: add two new config options, allowRemote and
+ socketDir
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Eric DeCosta <edecosta@mathworks.com>
+Cc:     Eric DeCosta <edecosta@mathworks.com>,
+        Eric DeCosta <edecosta@mathworks.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-cc: Johannes Schindelin Johannes.Schindelin@gmx.de cc: Jeff Hostetler
-git@jeffhostetler.com cc: Eric Sunshine sunshine@sunshineco.com cc: Torsten
-Bögershausen tboegi@web.de
+From: Eric DeCosta <edecosta@mathworks.com>
 
-Allow fsmonitor to run against network-mounted repos on macOS.
+Introduce two new configuration options
 
-There are four parts to this effort:
+   fsmonitor.allowRemote - setting this to true overrides fsmonitor's
+   default behavior of erroring out when enountering network file
+   systems. Additionly, when true, the Unix domain socket (UDS) file
+   used for IPC is located in $HOME rather than in the .git directory.
 
- 1. Introduce two new configuration options
-    
-    fsmonitor.allowRemote - setting this to true overrides fsmonitor's
-    default behavior of erroring out when enountering network file systems.
-    Additionly, when true, the Unix domain socket (UDS) file used for IPC is
-    located in $HOME rather than in the .git directory.
-    
-    fsmonitor.socketDir - allows for the UDS file to be located anywhere the
-    user chooses rather $HOME.
+   fsmonitor.socketDir - allows for the UDS file to be located
+   anywhere the user chooses rather $HOME.
 
- 2. Using the values of above configuration options, locate the UDS file in
-    the desired location with a unique name based on the SHA1 of the path of
-    the .git folder.
+Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+---
+ fsmonitor-settings.c | 67 ++++++++++++++++++++++++++++++++++++++++++--
+ fsmonitor-settings.h |  4 +++
+ 2 files changed, 69 insertions(+), 2 deletions(-)
 
- 3. Ensure that both the working directory (.git directory) and the UDS file
-    location are compatible with fsmonitor
-
- 4. Normalize the paths returned by FSEvents to the real path for each
-    affected file or directory
-
-Eric DeCosta (4):
-  fsmonitor: add two new config options, allowRemote and socketDir
-  fsmonitor: generate unique Unix socket file name in the desired
-    location
-  fsmonitor: ensure filesystem and unix socket filesystem are compatible
-  fsmonitor: normalize FSEvents event paths to the real path
-
- compat/fsmonitor/fsm-listen-darwin.c   | 11 ++--
- compat/fsmonitor/fsm-settings-darwin.c | 72 +++++++++++++++++++-------
- fsmonitor-ipc.c                        | 40 ++++++++++++--
- fsmonitor-ipc.h                        |  6 +++
- fsmonitor-settings.c                   | 67 +++++++++++++++++++++++-
- fsmonitor-settings.h                   |  4 ++
- 6 files changed, 172 insertions(+), 28 deletions(-)
-
-
-base-commit: 795ea8776befc95ea2becd8020c7a284677b4161
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1326%2Fedecosta-mw%2Ffsmonitor_macos-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1326/edecosta-mw/fsmonitor_macos-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/1326
-
-Range-diff vs v3:
-
- 1:  cd16d8bb3d6 ! 1:  836a791e6b7 fsmonitor: macOS: allow fsmonitor to run against network-mounted repos
-     @@ Metadata
-      Author: Eric DeCosta <edecosta@mathworks.com>
-      
-       ## Commit message ##
-     -    fsmonitor: macOS: allow fsmonitor to run against network-mounted repos
-     +    fsmonitor: add two new config options, allowRemote and socketDir
-      
-     -    Follow-on to the work done to allow Windows to work against
-     -    network-mounted repos. Have macOS take advantage of the same
-     -    configuration option, 'fsmonitor.allowRemote' that was introduced for
-     -    Windows. Setting this option to true will override the default behavior
-     -    (erroring-out) when a network-mounted repo is detected by fsmonitor.
-     +    Introduce two new configuration options
-      
-     -    The added wrinkle being that the Unix domain socket (UDS) file used for
-     -    IPC cannot be created in a network location; instead $HOME is used if
-     -    'fsmonitor.allowRemote' is true.
-     +       fsmonitor.allowRemote - setting this to true overrides fsmonitor's
-     +       default behavior of erroring out when enountering network file
-     +       systems. Additionly, when true, the Unix domain socket (UDS) file
-     +       used for IPC is located in $HOME rather than in the .git directory.
-      
-     -    If $HOME is in a network location, allow the user to override this via
-     -    the 'fsmonitor.socketDir' configuration option. There the user can
-     -    specify any local directory for the location of the UDS file.
-     +       fsmonitor.socketDir - allows for the UDS file to be located
-     +       anywhere the user chooses rather $HOME.
-      
-          Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
-      
-     - ## fsmonitor-ipc.c ##
-     -@@
-     - #include "cache.h"
-     --#include "fsmonitor.h"
-     --#include "simple-ipc.h"
-     - #include "fsmonitor-ipc.h"
-     -+#include "fsmonitor-settings.h"
-     - #include "run-command.h"
-     - #include "strbuf.h"
-     - #include "trace2.h"
-     -@@ fsmonitor-ipc.c: int fsmonitor_ipc__is_supported(void)
-     - 	return 1;
-     - }
-     - 
-     --GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor--daemon.ipc")
-     -+GIT_PATH_FUNC(fsmonitor_ipc__get_default_path, "fsmonitor--daemon.ipc")
-     -+
-     -+const char *fsmonitor_ipc__get_path(void)
-     -+{
-     -+#ifdef WIN32
-     -+	return fsmonitor_ipc__get_default_path();
-     -+#else
-     -+	char *retval;
-     -+	SHA_CTX sha1ctx;
-     -+	const char *git_dir;
-     -+	const char *sock_dir;
-     -+	struct strbuf ipc_file = STRBUF_INIT;
-     -+	unsigned char hash[SHA_DIGEST_LENGTH];
-     -+
-     -+	if (fsm_settings__get_allow_remote(the_repository) < 1)
-     -+		return fsmonitor_ipc__get_default_path();
-     -+
-     -+	git_dir = get_git_dir();
-     -+	sock_dir = fsm_settings__get_socket_dir(the_repository);
-     -+
-     -+	SHA1_Init(&sha1ctx);
-     -+	SHA1_Update(&sha1ctx, git_dir, strlen(git_dir));
-     -+	SHA1_Final(hash, &sha1ctx);
-     -+
-     -+	if (sock_dir && *sock_dir)
-     -+		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
-     -+					sock_dir, hash_to_hex(hash));
-     -+	else
-     -+		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
-     -+	retval = interpolate_path(ipc_file.buf, 1);
-     -+	if (!retval)
-     -+		die(_("Invalid path: %s"), ipc_file.buf);
-     -+	strbuf_release(&ipc_file);
-     -+	return retval;
-     -+#endif
-     -+}
-     - 
-     - enum ipc_active_state fsmonitor_ipc__get_state(void)
-     - {
-     -
-     - ## fsmonitor-ipc.h ##
-     -@@ fsmonitor-ipc.h: int fsmonitor_ipc__is_supported(void);
-     -  */
-     - const char *fsmonitor_ipc__get_path(void);
-     - 
-     -+/*
-     -+ * Returns the pathname to the default IPC named pipe or Unix domain
-     -+ * socket.
-     -+ */
-     -+const char *fsmonitor_ipc__get_default_path(void);
-     -+
-     - /*
-     -  * Try to determine whether there is a `git-fsmonitor--daemon` process
-     -  * listening on the IPC pipe/socket.
-     -
-       ## fsmonitor-settings.c ##
-      @@
-       struct fsmonitor_settings {
- -:  ----------- > 2:  2cb026a6317 fsmonitor: generate unique Unix socket file name in the desired location
- 2:  f977d140afa ! 3:  a3110f1e25a Check working directory and Unix domain socket file for compatability
-     @@
-       ## Metadata ##
-     -Author: edecosta <edecosta@mathworks.com>
-     +Author: Eric DeCosta <edecosta@mathworks.com>
-      
-       ## Commit message ##
-     -    Check working directory and Unix domain socket file for compatability
-     +    fsmonitor: ensure filesystem and unix socket filesystem are compatible
-      
-          Perform separate checks for the working directory and Unix domain socket
-          (UDS) file location. The working directory may be located on a
-     @@ Commit message
-          file may never be located on a network-mounted file system; additionally
-          it may not be located on FAT32 or NTFS file systems.
-      
-     -    Signed-off-by: edecosta <edecosta@mathworks.com>
-     +    Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
-      
-       ## compat/fsmonitor/fsm-settings-darwin.c ##
-      @@
- -:  ----------- > 4:  56cabf3be3b fsmonitor: normalize FSEvents event paths to the real path
-
+diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
+index 464424a1e92..a15eeecebf4 100644
+--- a/fsmonitor-settings.c
++++ b/fsmonitor-settings.c
+@@ -10,7 +10,9 @@
+ struct fsmonitor_settings {
+ 	enum fsmonitor_mode mode;
+ 	enum fsmonitor_reason reason;
++	int allow_remote;
+ 	char *hook_path;
++	char *sock_dir;
+ };
+ 
+ static enum fsmonitor_reason check_for_incompatible(struct repository *r)
+@@ -43,6 +45,7 @@ static struct fsmonitor_settings *alloc_settings(void)
+ 	CALLOC_ARRAY(s, 1);
+ 	s->mode = FSMONITOR_MODE_DISABLED;
+ 	s->reason = FSMONITOR_REASON_UNTESTED;
++	s->allow_remote = -1;
+ 
+ 	return s;
+ }
+@@ -90,6 +93,26 @@ static void lookup_fsmonitor_settings(struct repository *r)
+ 		fsm_settings__set_disabled(r);
+ }
+ 
++int fsm_settings__get_allow_remote(struct repository *r)
++{
++	if (!r)
++		r = the_repository;
++	if (!r->settings.fsmonitor)
++		lookup_fsmonitor_settings(r);
++
++	return r->settings.fsmonitor->allow_remote;
++}
++
++const char *fsm_settings__get_socket_dir(struct repository *r)
++{
++	if (!r)
++		r = the_repository;
++	if (!r->settings.fsmonitor)
++		lookup_fsmonitor_settings(r);
++
++	return r->settings.fsmonitor->sock_dir;
++}
++
+ enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
+ {
+ 	if (!r)
+@@ -100,6 +123,7 @@ enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
+ 	return r->settings.fsmonitor->mode;
+ }
+ 
++
+ const char *fsm_settings__get_hook_path(struct repository *r)
+ {
+ 	if (!r)
+@@ -110,9 +134,44 @@ const char *fsm_settings__get_hook_path(struct repository *r)
+ 	return r->settings.fsmonitor->hook_path;
+ }
+ 
++void fsm_settings__set_allow_remote(struct repository *r)
++{
++	int allow;
++
++	if (!r)
++		r = the_repository;
++	if (!r->settings.fsmonitor)
++		r->settings.fsmonitor = alloc_settings();
++	if (!repo_config_get_bool(r, "fsmonitor.allowremote", &allow))
++		r->settings.fsmonitor->allow_remote = allow;
++
++	return;
++}
++
++void fsm_settings__set_socket_dir(struct repository *r)
++{
++	const char *path;
++
++	if (!r)
++		r = the_repository;
++	if (!r->settings.fsmonitor)
++		r->settings.fsmonitor = alloc_settings();
++
++	if (!repo_config_get_pathname(r, "fsmonitor.socketdir", &path)) {
++		FREE_AND_NULL(r->settings.fsmonitor->sock_dir);
++		r->settings.fsmonitor->sock_dir = strdup(path);
++	}
++
++	return;
++}
++
+ void fsm_settings__set_ipc(struct repository *r)
+ {
+-	enum fsmonitor_reason reason = check_for_incompatible(r);
++	enum fsmonitor_reason reason;
++
++	fsm_settings__set_allow_remote(r);
++	fsm_settings__set_socket_dir(r);
++	reason = check_for_incompatible(r);
+ 
+ 	if (reason != FSMONITOR_REASON_OK) {
+ 		fsm_settings__set_incompatible(r, reason);
+@@ -135,7 +194,11 @@ void fsm_settings__set_ipc(struct repository *r)
+ 
+ void fsm_settings__set_hook(struct repository *r, const char *path)
+ {
+-	enum fsmonitor_reason reason = check_for_incompatible(r);
++	enum fsmonitor_reason reason;
++
++	fsm_settings__set_allow_remote(r);
++	fsm_settings__set_socket_dir(r);
++	reason = check_for_incompatible(r);
+ 
+ 	if (reason != FSMONITOR_REASON_OK) {
+ 		fsm_settings__set_incompatible(r, reason);
+diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
+index d9c2605197f..2de54c85e94 100644
+--- a/fsmonitor-settings.h
++++ b/fsmonitor-settings.h
+@@ -23,12 +23,16 @@ enum fsmonitor_reason {
+ 	FSMONITOR_REASON_NOSOCKETS, /* NTFS,FAT32 do not support Unix sockets */
+ };
+ 
++void fsm_settings__set_allow_remote(struct repository *r);
++void fsm_settings__set_socket_dir(struct repository *r);
+ void fsm_settings__set_ipc(struct repository *r);
+ void fsm_settings__set_hook(struct repository *r, const char *path);
+ void fsm_settings__set_disabled(struct repository *r);
+ void fsm_settings__set_incompatible(struct repository *r,
+ 				    enum fsmonitor_reason reason);
+ 
++int fsm_settings__get_allow_remote(struct repository *r);
++const char *fsm_settings__get_socket_dir(struct repository *r);
+ enum fsmonitor_mode fsm_settings__get_mode(struct repository *r);
+ const char *fsm_settings__get_hook_path(struct repository *r);
+ 
 -- 
 gitgitgadget
+
