@@ -2,135 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ED2DECAAD5
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 19:58:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55354ECAAD1
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 20:04:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231332AbiHaT6P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 15:58:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48106 "EHLO
+        id S230288AbiHaUEi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 16:04:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232097AbiHaT6L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 15:58:11 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB56FEEF1B
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 12:58:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661975868;
-        bh=IUyCK/7oDQnQYevLwVj/F/SUIpgIjvb75C/2HVcgZk4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=K4kQpMDk0O/C4feKl4xDC/4AGwYAeaoIBnFQjsWgbnpTdUfR6iqgbNbXa587/FePP
-         jrm0nzkv2J1lXyckM8qZjZbVavtfEJBEBzdbLsbR+Ww7gn67N23Yhh//IXUb7JpHcN
-         g/DgEiup1huiBhk7pfCCvPPHooeJ22K8j9QRIm+g=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MhD2Y-1p6NMU0ZT0-00eLvW; Wed, 31
- Aug 2022 21:57:48 +0200
-Date:   Wed, 31 Aug 2022 21:57:47 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Jeff King <peff@peff.net>
-cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v3 1/5] t3701: redefine what is "bogus" output of a diff
- filter
-In-Reply-To: <Yw+Cm+0EuqIZvY66@coredump.intra.peff.net>
-Message-ID: <r3nsqo6s-5531-r8rn-0434-315q4r0r88q9@tzk.qr>
-References: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com> <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com> <a01fa5d25e4a94dd8ece5e328f853c000a2ad0f9.1661785916.git.gitgitgadget@gmail.com> <9261de42-3287-6ccb-6cf5-21c0a8ee1f17@gmail.com>
- <xmqq7d2pifby.fsf@gitster.g> <742b42af-a298-219d-a35f-1fa8ba985aed@gmail.com> <Yw9/81QFPsSjDUTM@coredump.intra.peff.net> <Yw+Cm+0EuqIZvY66@coredump.intra.peff.net>
+        with ESMTP id S229710AbiHaUEg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 16:04:36 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3565C0B60
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 13:04:35 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id 73so6063171pga.1
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 13:04:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date;
+        bh=kuyDPYBr0SIhdnxeSNNNNOFgaa1J/1wty3JmgS1HeFc=;
+        b=AXCLbmUs2Jl5wm1gaiCQfs3ik3UDSkuxgI7nSN7VjFZYim8U62EUSZf1C5aTxLZRok
+         fjmQ+buY4vBoiE6rQAQmvg8KirwicuxOF5ohTl6dQhDASd0UAKr89TogZMolY1rQkAjb
+         8SMkCxDOz/Nkcx80w0zShScNWY1nplv5IJ7dki7nwsfSMHUtxfgnr0EvMRQupgJMWIdh
+         57nApa5Lo4oLBu2x7qtUMcPyGFrbt6t8YHwgWvxn2BxIdVZvSre4vej8uQo9ETTQJ1sa
+         hZITxmA2+qichaSQl8ftFpsfBbyLEWAaz9YkQZAOStTFWlBQ8+ZSRSaZrd3Oo4SupB05
+         q0ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date;
+        bh=kuyDPYBr0SIhdnxeSNNNNOFgaa1J/1wty3JmgS1HeFc=;
+        b=MJTCBMEP2PrqQcVi922ubaUNLnCEWU6s2yOEW11wA3Met9+3wJT/AnppKFP1xFLjJI
+         0JYtqaUY6VUG/i9kNiVWL/fcoW+2rEvM/9th30kDgt5HM3Pl7SBZRFILBoGJA3OPdSCm
+         GcnFzsr++d5IArcqnNUd1t8ykflhqwkP+OtFu2Waal6K1mZ3VEsEK0LhE4cGJsytLapS
+         27UgGkiKUqYjhhng/vXgYh9ujoaiVZEdzma4lkV9WVzt/cNK5USDM49J/dchZhDoUd76
+         t+9KpCK19QJcRrw2j1Du0HEkLa69KgWJ/GP5jHfA8O6khdRm8SiY+/DdaXNQWkaYNIaT
+         HsKg==
+X-Gm-Message-State: ACgBeo1dp7z76m8gkYweCJZ+OsBn1+SHeZxTRBOsjohHi/7xAcv6WDKx
+        +Yo38mcC0XsSOxg1QNE74fc=
+X-Google-Smtp-Source: AA6agR7dkG2Mz3waDJzShX6U15dz1GHAhjdQG/F4GW9Zfjm/547Mox/mgoidaKQ02EzGAGm+i5EQkg==
+X-Received: by 2002:a63:8bc9:0:b0:42b:2375:79b3 with SMTP id j192-20020a638bc9000000b0042b237579b3mr22768478pge.207.1661976275188;
+        Wed, 31 Aug 2022 13:04:35 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id q15-20020a17090311cf00b0016eede528b4sm12132958plh.61.2022.08.31.13.04.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Aug 2022 13:04:34 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH v4 1/4] fsmonitor: add two new config options,
+ allowRemote and socketDir
+References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
+        <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
+        <836a791e6b7fd4490674254ce03105a8ca2175cb.1661962145.git.gitgitgadget@gmail.com>
+Date:   Wed, 31 Aug 2022 13:04:34 -0700
+Message-ID: <xmqq7d2ofact.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:fLoAfeuDJAKJ+ebyQFTdXHG/u2J3g7zCnrIqUe9IQ6f99jqWJod
- iM54AsNO/iBpFRekGiUS4i+AN07EbqRaX8ARsecagJjlWrzGVayYa2OEMDA+Ia0w5wHl2OI
- n1KmuzQ3PI+FuStFTPN4B2lbqDjya3j16xPpPwR9bJwxcrP9+gNyTbEsTQggrbzLjASsIem
- 5eOWCiNWZcAlcGAr6rlMQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:KUUs7Cj7QQs=:yZbVlxKPquS2q7jsZqCBUG
- ID9vej/pxuGzuI5fY8dJ0TPmRAceW1rmMro0MoSYDlVTXx+Dbm2yjfuzx9vmNyiHbIXU9nPuM
- hnIx+nxmBFPRibc6E/QqLj0/2H2tkyM1/rkFX3BpV4Ln9S0WzFle+5wj17iC0JiXUsTzLeafN
- bfpDORSmy+L3fZQVM/MJdsG8vSZf/iN1LY8/krfMf5238rhY507RkBZCRBDKrj1DflBf8PTd6
- V8MQxQBUtD7wbJHwEzj+Hxh1ur+HnICrsbrJoq5XiuqB0C0+8wd9zj5kDAxAnMnWNqcbFb1zW
- QZR3v0/6h33OMgUlFHFK8AUoLtPeCBpColuVRXtO/1PZ0xQCmd/n8IV1SJCfFhVLmB3BFd/oE
- 1B2SDoTaRQXuO8y0DdIgGPDUgxb3UOeaJBumi18aIteV45kECFA7bWrP39MTcIE1oif8uQT/O
- osgJNXjcQ9Cym8m5d5jTBNaxnmsQwpu7LNgLsHjtt/4SShR7JVMTooECVtNYcI7V3ovJfoX7p
- o0NfhlRdExEvub+1y+d1kqG06BETOTxUg9mMCPwf3AbdHugLR6a6cIBNaMDvNSdA7ul2dpzVq
- fYHPnr5ZiPjzu1Stkrlok5yabIl3PL2MRRRDB5C9JtRLcf0tUXHY6t8SKQ6Mh3YAZA71cUbst
- cZbGCrKiWSAuhobumWRu02kuDAei8bBYsqyeDgDP6THT0+I4DFfJIPVnsn7bTvRIVnCWaBqJx
- vEWu9RWMv3umlMxIVOX4Jky7RNYfF34oSp6jwUIaj6Tf4BtZA3B3faFNq9RlG6+OITdVW5AMV
- HnbWr2/QRXzT+6qnUXpRWyUVAuWiFfDH+qWgfiWCx2tDQOxqB9pwkbT/aTSY0RWfMJuWfWkKl
- sXK6e04h4Eg4ZlA26NnDdigGM0kkMffc94EfTR3sNwfHYkdjrtIvvz+jYime0iOB+b0Jg6zu3
- Uw/YB98OlZr4qLtTovpvLe0f0+fY4VK+z1e8X4fNWrctGmYaNLeVotn+1QTwkOGlNHFVhazPJ
- m3Po5DU7+GZRu66G2RzJNOIFiqiUgdMxm9qKrCrbOQwNtZO+ySJ0s2laYSk1a7adJbaPCR/Dt
- 3giPQFYJ4YSXr9fUORcWaTLmG3CMF1jx+IJy3mDLrDOaEhIg+x0VpQbqmKQcLG7/APTdClUbf
- fBBsLuv4APRLhd3cGwrhwBZrSm
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+"Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Wed, 31 Aug 2022, Jeff King wrote:
+> From: Eric DeCosta <edecosta@mathworks.com>
+>
+> Introduce two new configuration options
+>
+>    fsmonitor.allowRemote - setting this to true overrides fsmonitor's
+>    default behavior of erroring out when enountering network file
+>    systems. Additionly, when true, the Unix domain socket (UDS) file
+>    used for IPC is located in $HOME rather than in the .git directory.
+>
+>    fsmonitor.socketDir - allows for the UDS file to be located
+>    anywhere the user chooses rather $HOME.
 
-> On Wed, Aug 31, 2022 at 11:36:19AM -0400, Jeff King wrote:
->
-> > > I'm struggling to understand the need for this change from the expla=
-nation
-> > > in the commit message as it seems to me  to assume the line being de=
-leted is
-> > > the hunk header when in fact it is deleting the diff header.
-> >
-> > FWIW, as the author of the original test, I'm also confused about why =
-it
-> > needs to be changed. The filter I wrote in the original test was just
-> > "echo too-short". It was switched to "sed 1d" because the original did
-> > not read the input at all, which racily caused Git to see SIGPIPE:
-> >
-> >   https://lore.kernel.org/git/20200113170417.GK32750@szeder.dev/
-> >
-> > Switching to "exit 0" would bring that problem back. But I think "sed =
-q"
-> > potentially does, too, because sed will quit without reading all of th=
-e
-> > input. We really do want something like "sed 1d" that changes the numb=
-er
-> > of lines, but ensures that the filter reads to EOF.
->
-> By the way, the test change is needed for it to pass with the change in
-> patch 2, where we become more lenient about parsing the hunk header.
-> That implies to me that the builtin version's check for one-to-one line
-> correspondence is broken, but we didn't notice.
+Before describing "what they do", please justify why we need to add
+them.  The usual way to do so is to start with some observation of
+the status quo, and describe the "gap" between what can be done with
+the current system and what the users would want to do.  It might
+further be necessary to justify why "would want to do" is worthwhile
+to support.  I suspect that you can do all of the above in a couple
+of paragraphs, and you'd succeed if the solution you chose would
+fall out as a natural consequence in the mind of readers who follow
+your line of thought by reading these introductory paragraphs.  And
+then after the stage is set like so, the above description of what
+you chose to implement as a solution should come.
 
-And that's exactly the case. It was an off-by-one bug ;-)
+>  struct fsmonitor_settings {
+>  	enum fsmonitor_mode mode;
+>  	enum fsmonitor_reason reason;
+> +	int allow_remote;
 
-> In the perl version, that test fails because it triggers the
-> mismatched-output check:
->
->   $ GIT_TEST_ADD_I_USE_BUILTIN=3Dfalse ./t3701-add-interactive.sh --verb=
-ose-only=3D56
->   [...]
->   fatal: mismatched output from interactive.diffFilter
->   hint: Your filter must maintain a one-to-one correspondence
->   hint: between its input and output lines.
->   ok 56 - detect bogus diffFilter output
->
-> but the builtin version complains about the hunk header:
->
->   $ GIT_TEST_ADD_I_USE_BUILTIN=3Dtrue ./t3701-add-interactive.sh --verbo=
-se-only=3D56
->   [...]
->   error: could not parse colored hunk header '?[31m-10?[m'
->   ok 56 - detect bogus diffFilter output
->
-> Once patch 2 is applied, we stop complaining there, and we _should_
-> complain that the number of lines isn't the same. But we don't:
->
->   $ GIT_TEST_ADD_I_USE_BUILTIN=3Dtrue ./t3701-add-interactive.sh --verbo=
-se-only=3D56
->   test_must_fail: command succeeded: git add -p
->   not ok 56 - detect bogus diffFilter output
+I am debating myuself if a comment like
 
-Yes, that matches my analysis, and I already pushed a new iteration before
-even noticing your mail, only waiting for the CI run to finish before I
-submit it.
+	int allow_remote; /* -1: undecided, 0: unallowed, 1: allowed */
 
-Ciao,
-Dscho
+is necessary (I know it would help if we had one; I am just
+wondering if it is too obvious).
+
+>  	char *hook_path;
+> +	char *sock_dir;
+>  };
+>  
+>  static enum fsmonitor_reason check_for_incompatible(struct repository *r)
+> @@ -43,6 +45,7 @@ static struct fsmonitor_settings *alloc_settings(void)
+>  	CALLOC_ARRAY(s, 1);
+>  	s->mode = FSMONITOR_MODE_DISABLED;
+>  	s->reason = FSMONITOR_REASON_UNTESTED;
+> +	s->allow_remote = -1;
+>  
+>  	return s;
+>  }
+
+OK.  socket_dir is naturally NULL at the start.
+
+> @@ -100,6 +123,7 @@ enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
+>  	return r->settings.fsmonitor->mode;
+>  }
+>  
+> +
+>  const char *fsm_settings__get_hook_path(struct repository *r)
+>  {
+>  	if (!r)
+
+A noise hunk?
+
+> @@ -110,9 +134,44 @@ const char *fsm_settings__get_hook_path(struct repository *r)
+> ...
+> +void fsm_settings__set_socket_dir(struct repository *r)
+> +{
+> +	const char *path;
+> +
+> +	if (!r)
+> +		r = the_repository;
+> +	if (!r->settings.fsmonitor)
+> +		r->settings.fsmonitor = alloc_settings();
+> +
+> +	if (!repo_config_get_pathname(r, "fsmonitor.socketdir", &path)) {
+> +		FREE_AND_NULL(r->settings.fsmonitor->sock_dir);
+> +		r->settings.fsmonitor->sock_dir = strdup(path);
+
+As we are overwriting it immediately, just calling free(), not
+FREE_AND_NULL(), is more appropriate, isn't it?
+
+> @@ -135,7 +194,11 @@ void fsm_settings__set_ipc(struct repository *r)
+>  
+>  void fsm_settings__set_hook(struct repository *r, const char *path)
+>  {
+> -	enum fsmonitor_reason reason = check_for_incompatible(r);
+> +	enum fsmonitor_reason reason;
+> +
+> +	fsm_settings__set_allow_remote(r);
+> +	fsm_settings__set_socket_dir(r);
+> +	reason = check_for_incompatible(r);
+>  
+>  	if (reason != FSMONITOR_REASON_OK) {
+>  		fsm_settings__set_incompatible(r, reason);
+> diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
+> index d9c2605197f..2de54c85e94 100644
+> --- a/fsmonitor-settings.h
+> +++ b/fsmonitor-settings.h
+> @@ -23,12 +23,16 @@ enum fsmonitor_reason {
+>  	FSMONITOR_REASON_NOSOCKETS, /* NTFS,FAT32 do not support Unix sockets */
+>  };
+>  
+> +void fsm_settings__set_allow_remote(struct repository *r);
+> +void fsm_settings__set_socket_dir(struct repository *r);
+
+Do these two need to be extern?
+
+I would imagine that implementations in compat/fsmonitor/* would
+just call fsm_settings__set_hook() or __set_ipc() and that causes
+these two to be called as part of the set-up sequence.  Do they need
+to call these two directly?
+
+If not, we probably should make them static.  I suspect that some
+existing declarations in this header file fall into the same
+category and may need to become static for the same reason, which
+you can do as a preliminary clean-up patch, or post-clean-up after
+the dust settles.  Regardless of which approach to take for existing
+ones, we do not want to make it worse by adding new externally
+visible names that do not have to be visible.
+
+>  void fsm_settings__set_ipc(struct repository *r);
+>  void fsm_settings__set_hook(struct repository *r, const char *path);
+>  void fsm_settings__set_disabled(struct repository *r);
+>  void fsm_settings__set_incompatible(struct repository *r,
+>  				    enum fsmonitor_reason reason);
+>  
+> +int fsm_settings__get_allow_remote(struct repository *r);
+> +const char *fsm_settings__get_socket_dir(struct repository *r);
+
+On the other hand, these may need to be query-able by the
+implementations.
+
+>  enum fsmonitor_mode fsm_settings__get_mode(struct repository *r);
+>  const char *fsm_settings__get_hook_path(struct repository *r);
