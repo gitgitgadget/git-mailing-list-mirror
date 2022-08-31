@@ -2,64 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9742C0502A
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 15:27:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49CFEECAAD4
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 15:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231522AbiHaP1F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 11:27:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44966 "EHLO
+        id S231768AbiHaPcn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 11:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231393AbiHaP1D (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 11:27:03 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DA30D7D0B
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 08:27:01 -0700 (PDT)
-Received: (qmail 14944 invoked by uid 109); 31 Aug 2022 15:27:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 31 Aug 2022 15:27:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14507 invoked by uid 111); 31 Aug 2022 15:27:01 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Aug 2022 11:27:01 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 31 Aug 2022 11:27:00 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: jk/unused-annotation + ab/unused-annotation (was: What's cooking
- in git.git (Aug 2022, #10; Tue, 30))
-Message-ID: <Yw99xMnkiv/Qjnst@coredump.intra.peff.net>
-References: <xmqqilm9k0bc.fsf@gitster.g>
- <220831.86fshcal32.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229892AbiHaPcl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 11:32:41 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95FC2C32CD
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 08:32:40 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-340f82c77baso195218027b3.1
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 08:32:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc;
+        bh=rNG0YqdvxXCcGzjzo3LKuhX+iQN5YJAog+DecdtJQUY=;
+        b=LR+bWUCrjjol0aoBfOrCd1cQNp346GHlZph8ofIiiO2x/40MFmzCTq6g3wK0pdAwiH
+         viFz7aSHtfYi2mqIdhQ4yFO/j3BbUT8noQM41k1QHnfUZicgqZnLjE/O/QlKjXLHhIb5
+         0KqdJ5sVwh0IlGc6BUWvwFwS5rqFkDX1275dvuSKseoBLZqQD9+NKsVVm699KLEICxLk
+         u3NaxWaFYhj6XsuV6GAnn6/j26NTQ0FumlZ6x0vho8/Ttl5rezBR8Sg5NHNKkFuVefYV
+         PSqxBC+RLsniCtsyIfpiNWbxt+X+zZ/20SZBLxH8zsvSZW+razKr26kcN8daZLACeGYX
+         InaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc;
+        bh=rNG0YqdvxXCcGzjzo3LKuhX+iQN5YJAog+DecdtJQUY=;
+        b=PqoL8GmAXr7qBANVQeWdCANmBFoQ3GoryStuhG+MzyOETCtSxKU8pp6/Wss6bYZROO
+         LvZQXkWOuHWA3FYA/+5Pc4TpyuIY4OLgYgOL/KOSLB+KrSu97KXVcfZjwN9uFtuQMcMo
+         +495nrs4YNKjPsSPeEzJzuhgl+iWjOnNUP61kIFjDmCJTzd5gJjtTXUvkLn48wdY+3/w
+         iRxmAv9eSEZIMErdmuG1X+OuLgebHSKhjD8xHoCo6eLRrnXdMHZH30AQHR/C3kwCVTSl
+         hko/sIsOGeiTXCR5SVnB0UUZbBjj8PZFNgCUsNbzCxIjUyEG7UvcK5DX8HJIbQI7WEfV
+         ccJw==
+X-Gm-Message-State: ACgBeo3qqpBHIKvqzV9r88vNb0Gm2yLwkNY8jNCi5u8tE+zIi8lXiU+k
+        PJK2470wzZzkUWg2qofip4IBVsI4G6TEyvAAYto9WBbxuBJAOg==
+X-Google-Smtp-Source: AA6agR5m1ZAGDsbrBs4yYt9k+GKHslSnqmzhCxs/GJunuVdNMUlxJ3NP/BS6Zug6xKSqjUAo7RFlRpzPlvhUS6XUITs=
+X-Received: by 2002:a0d:cc4f:0:b0:337:ef0:ad2b with SMTP id
+ o76-20020a0dcc4f000000b003370ef0ad2bmr18759081ywd.365.1661959959203; Wed, 31
+ Aug 2022 08:32:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <220831.86fshcal32.gmgdl@evledraar.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 31 Aug 2022 17:32:28 +0200
+Message-ID: <CAP8UFD3CBrz4JzMqUO-56ucRTkonPh+TkJQhfxTaSbhi8EmFjw@mail.gmail.com>
+Subject: Draft of Git Rev News edition 90
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 31, 2022 at 10:00:50AM +0200, Ævar Arnfjörð Bjarmason wrote:
+Hi everyone!
 
-> I see you did this already in 4f464a7b54a (Revert "Merge branch
-> 'jk/unused-annotation' into next", 2022-08-30), per [1] and [2] you &
-> Jeff seemed to agree on my approach in [3] as a way forward.
-> 
-> The ab/unused-annotation in "seen" (not in this WC E-Mail) is a rebased
-> version of 1/2 of that series. Without the 2/2 [4] it won't catch the
-> accidental use of parameters.
-> 
-> Were you planning on picking that up, or would you like it submitted
-> separately? I know there were reservations about (ab)using "deprecated"
-> for this, but per the rationale in [4] and Jeff's [2] it seemed like
-> there was consensus to go that route.
+A draft of a new Git Rev News edition is available here:
 
-Yeah, I think we should use the deprecated attribute. Since the original
-has been reverted, I think the next step would be for me to fix up the
-patches to use that approach from the start, and re-submit.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-90.md
 
-I was dragging my feet a little hoping that we might get some coccinelle
-parsing miracle in the interim.
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
--Peff
+  https://github.com/git/git.github.io/issues/596
+
+You can also reply to this email.
+
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition late on Friday
+September 2nd. (Yeah this is very late, sorry.)
+
+Thanks,
+Christian.
