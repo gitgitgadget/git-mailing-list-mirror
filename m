@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20CC9ECAAD4
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 16:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CD21ECAAD3
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 16:09:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231450AbiHaQJP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 12:09:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38260 "EHLO
+        id S231663AbiHaQJ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 12:09:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231351AbiHaQJM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 12:09:12 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 945DF43E6A
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:10 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id h204-20020a1c21d5000000b003a5b467c3abso11960286wmh.5
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:10 -0700 (PDT)
+        with ESMTP id S231403AbiHaQJO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 12:09:14 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ED14AFAC7
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:12 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id m16so18883022wru.9
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=UH6BST2xsgOSZkwrhMmvFJO7kolfu7XJE/lE1W/C990=;
-        b=NkluoF2pA89kig8wZVm2Rv579t3ZE/7X8j2IC63XYZmqbTp2YVTOn5HJWMLCT2A2l8
-         /lh+CqIn0z8hEAHDg/AywwZDUXZZKZXyIeLJoQKo31x3kqJQ7NBO0RD9CSpAGiysIR/J
-         NnJsVL0/kM/DzdIl9wpU72QxNDjin1VxOe0qPh0yR8ZKkQuHZPyrl85qen11HXPDrF36
-         5hGfEOkmnF7JZTSe+PfmY15gG2PXEvfBmgomZ37rfFaARn48EJZnu3/rYq5VBNrAoxDI
-         rECUxDYjPy96XmDriNjuI8dj1A3hvi9vw7Oe/CikyaGADkcz9PDLXYtqCjXu5eYH6SU8
-         jhQQ==
+        bh=LpOHQYd/OqaxsJSFz0fEed2hnZFuxw4EuQJ1lFaj3ag=;
+        b=d8lgbWuBA8M2AbIGhPaKbDhij4VyDk6xsDL7N72m/37Fl2R4tps7J/k1ztWcQyrR3V
+         8mCTVBplyYOP4w4ghsBKm1hBm+gD71fo81dzZij867iAfrOwMTBjV1UbCgxAiOO1e3Oz
+         NLGjUAXNwRoXhrZoFpix5YSjF7UkH4PTVWp+1Vd9Z5blZ6zEPRRuZsrsxBcT/VKM4V+0
+         i8SAEuhvvBAjD4/bIC6iH1qNBgjUuJpp38oM+gK/hd+9Zw7iPqrk4OmkO6SIfHxxc/tS
+         LTBSIKwpe07Pek+vzP+IV40DWNnmFy4AAPcpH+Ac7uLDMQYGMBvlMLQu5NkOtFWq3MJ+
+         dmHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=UH6BST2xsgOSZkwrhMmvFJO7kolfu7XJE/lE1W/C990=;
-        b=ZbnvgDbU/tuttvLCEFz7lCkdPjcNfM+SLYGHgy3VtwXj76vNxkM7GBEYGlpOJ2mq3L
-         0gO0SfV6ZTde92qi62R0EVNnZzqdAmiER6hSiRJSJm5RgYy5HCkvBkRmeuY+lgE1lK6E
-         KP+PADewCh42FtMbmk5FgirXe/FBhRmwfQ3My+K4kLF/IaEUjwl0V7jzbl9cr6gfktbO
-         UFiMHQBtLRZufneIRaUY+VTQ7eroypVvXeV3UOFy8DYvZdH6+19LL0iFZL+WYdViTQkU
-         a/8l+3csRwTz+VIGBeV1/QJXxvHgrv4dE3dXMrTrtQOM0dTWhrcwYpHvICAgwEBTyv9Q
-         GKBw==
-X-Gm-Message-State: ACgBeo36qNJUxCNlL2hqpT4YRJXbZ0xCIsIz5ttWBnFtNsAkh4bcvcYg
-        5XMfi715uOLidVdmiyJtXKxiCLHhOZk=
-X-Google-Smtp-Source: AA6agR6X3XwNuo44x441CkWFOXxcZ0rzmJMOgPCW5xAnt9pY7olB5xa9twUlVqnVlfcNIJ2HFKnJsQ==
-X-Received: by 2002:a05:600c:1ca0:b0:3a8:41cf:a31f with SMTP id k32-20020a05600c1ca000b003a841cfa31fmr2527898wms.161.1661962148879;
-        Wed, 31 Aug 2022 09:09:08 -0700 (PDT)
+        bh=LpOHQYd/OqaxsJSFz0fEed2hnZFuxw4EuQJ1lFaj3ag=;
+        b=CMQaZ2OBisE58DychwCbKcd6UBn+FoTRrybZGZtpl76zV2SYBXvDzNunkKeKEIJ+0w
+         f9HRFPUA9K2mv5j4WcmubzMW4ZbRXuzJ1HUzWKoNnRbGxMalrebojGn/RI0pUIJc9kIo
+         KV36tRetsHvPffWtghwDpMiq5Xppq5cFKUfnUXtch3T9mYW9ec3KYZ0iXYOrkBbsmbYD
+         DD9aUppKhpqSkxykhhy6Rjblo0aa7EFmC23bjSohXCiBS3rrP0gpS6aMtkuurZFBqgwC
+         NFzQuc0OafafzYku3vq53/XSMPA7XmcrY1lrziCJRqS5xh3W+07oco8fbqotXjPHZQPz
+         nypA==
+X-Gm-Message-State: ACgBeo3QAT332ObNeLgtKnboo376gYuHphBV79/doXnDNJ/1g3s721Wi
+        3awq9NBE23y49Ut31EsPjXeSCbWBjic=
+X-Google-Smtp-Source: AA6agR7fofupf6IWxYiKBBgjo0ngxX74BunpDqp87CuY6H6Dad3xGia/uBFFqJEE2RhpdS80X9TcAg==
+X-Received: by 2002:a5d:46d0:0:b0:226:d133:3a4a with SMTP id g16-20020a5d46d0000000b00226d1333a4amr11714330wrs.400.1661962150758;
+        Wed, 31 Aug 2022 09:09:10 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i6-20020a1c3b06000000b003a4efb794d7sm2827667wma.36.2022.08.31.09.09.07
+        by smtp.gmail.com with ESMTPSA id w5-20020a5d6805000000b0021e8d205705sm12077965wru.51.2022.08.31.09.09.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 09:09:07 -0700 (PDT)
-Message-Id: <836a791e6b7fd4490674254ce03105a8ca2175cb.1661962145.git.gitgitgadget@gmail.com>
+        Wed, 31 Aug 2022 09:09:09 -0700 (PDT)
+Message-Id: <2cb026a631704b004b06e4a944c79a434df08440.1661962145.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
 References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
         <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
 From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 31 Aug 2022 16:09:01 +0000
-Subject: [PATCH v4 1/4] fsmonitor: add two new config options, allowRemote and
- socketDir
+Date:   Wed, 31 Aug 2022 16:09:02 +0000
+Subject: [PATCH v4 2/4] fsmonitor: generate unique Unix socket file name in
+ the desired location
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,159 +68,92 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Eric DeCosta <edecosta@mathworks.com>
 
-Introduce two new configuration options
-
-   fsmonitor.allowRemote - setting this to true overrides fsmonitor's
-   default behavior of erroring out when enountering network file
-   systems. Additionly, when true, the Unix domain socket (UDS) file
-   used for IPC is located in $HOME rather than in the .git directory.
-
-   fsmonitor.socketDir - allows for the UDS file to be located
-   anywhere the user chooses rather $HOME.
+Based on the values of fsmonitor.allowRemote and fsmonitor.socketDir
+locate the Unix domain socket file in the desired location (either
+the .git directory, $HOME, or fsmonitor.socketDir). If the location
+is other than the .git directory, generate a unique file name based
+on the SHA1 has of the path to the .git directory.
 
 Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
 ---
- fsmonitor-settings.c | 67 ++++++++++++++++++++++++++++++++++++++++++--
- fsmonitor-settings.h |  4 +++
- 2 files changed, 69 insertions(+), 2 deletions(-)
+ fsmonitor-ipc.c | 40 +++++++++++++++++++++++++++++++++++++---
+ fsmonitor-ipc.h |  6 ++++++
+ 2 files changed, 43 insertions(+), 3 deletions(-)
 
-diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
-index 464424a1e92..a15eeecebf4 100644
---- a/fsmonitor-settings.c
-+++ b/fsmonitor-settings.c
-@@ -10,7 +10,9 @@
- struct fsmonitor_settings {
- 	enum fsmonitor_mode mode;
- 	enum fsmonitor_reason reason;
-+	int allow_remote;
- 	char *hook_path;
-+	char *sock_dir;
- };
- 
- static enum fsmonitor_reason check_for_incompatible(struct repository *r)
-@@ -43,6 +45,7 @@ static struct fsmonitor_settings *alloc_settings(void)
- 	CALLOC_ARRAY(s, 1);
- 	s->mode = FSMONITOR_MODE_DISABLED;
- 	s->reason = FSMONITOR_REASON_UNTESTED;
-+	s->allow_remote = -1;
- 
- 	return s;
- }
-@@ -90,6 +93,26 @@ static void lookup_fsmonitor_settings(struct repository *r)
- 		fsm_settings__set_disabled(r);
+diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
+index 789e7397baa..1e3f0a6cf48 100644
+--- a/fsmonitor-ipc.c
++++ b/fsmonitor-ipc.c
+@@ -1,7 +1,6 @@
+ #include "cache.h"
+-#include "fsmonitor.h"
+-#include "simple-ipc.h"
+ #include "fsmonitor-ipc.h"
++#include "fsmonitor-settings.h"
+ #include "run-command.h"
+ #include "strbuf.h"
+ #include "trace2.h"
+@@ -47,7 +46,42 @@ int fsmonitor_ipc__is_supported(void)
+ 	return 1;
  }
  
-+int fsm_settings__get_allow_remote(struct repository *r)
+-GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor--daemon.ipc")
++GIT_PATH_FUNC(fsmonitor_ipc__get_default_path, "fsmonitor--daemon.ipc")
++
++const char *fsmonitor_ipc__get_path(void)
 +{
-+	if (!r)
-+		r = the_repository;
-+	if (!r->settings.fsmonitor)
-+		lookup_fsmonitor_settings(r);
++#ifdef WIN32
++	return fsmonitor_ipc__get_default_path();
++#else
++	char *retval;
++	SHA_CTX sha1ctx;
++	const char *git_dir;
++	const char *sock_dir;
++	struct strbuf ipc_file = STRBUF_INIT;
++	unsigned char hash[SHA_DIGEST_LENGTH];
 +
-+	return r->settings.fsmonitor->allow_remote;
++	if (fsm_settings__get_allow_remote(the_repository) < 1)
++		return fsmonitor_ipc__get_default_path();
++
++	git_dir = get_git_dir();
++	sock_dir = fsm_settings__get_socket_dir(the_repository);
++
++	SHA1_Init(&sha1ctx);
++	SHA1_Update(&sha1ctx, git_dir, strlen(git_dir));
++	SHA1_Final(hash, &sha1ctx);
++
++	if (sock_dir && *sock_dir)
++		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
++					sock_dir, hash_to_hex(hash));
++	else
++		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
++	retval = interpolate_path(ipc_file.buf, 1);
++	if (!retval)
++		die(_("Invalid path: %s"), ipc_file.buf);
++	strbuf_release(&ipc_file);
++	return retval;
++#endif
 +}
-+
-+const char *fsm_settings__get_socket_dir(struct repository *r)
-+{
-+	if (!r)
-+		r = the_repository;
-+	if (!r->settings.fsmonitor)
-+		lookup_fsmonitor_settings(r);
-+
-+	return r->settings.fsmonitor->sock_dir;
-+}
-+
- enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
+ 
+ enum ipc_active_state fsmonitor_ipc__get_state(void)
  {
- 	if (!r)
-@@ -100,6 +123,7 @@ enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
- 	return r->settings.fsmonitor->mode;
- }
+diff --git a/fsmonitor-ipc.h b/fsmonitor-ipc.h
+index b6a7067c3af..4d27223c2a6 100644
+--- a/fsmonitor-ipc.h
++++ b/fsmonitor-ipc.h
+@@ -18,6 +18,12 @@ int fsmonitor_ipc__is_supported(void);
+  */
+ const char *fsmonitor_ipc__get_path(void);
  
++/*
++ * Returns the pathname to the default IPC named pipe or Unix domain
++ * socket.
++ */
++const char *fsmonitor_ipc__get_default_path(void);
 +
- const char *fsm_settings__get_hook_path(struct repository *r)
- {
- 	if (!r)
-@@ -110,9 +134,44 @@ const char *fsm_settings__get_hook_path(struct repository *r)
- 	return r->settings.fsmonitor->hook_path;
- }
- 
-+void fsm_settings__set_allow_remote(struct repository *r)
-+{
-+	int allow;
-+
-+	if (!r)
-+		r = the_repository;
-+	if (!r->settings.fsmonitor)
-+		r->settings.fsmonitor = alloc_settings();
-+	if (!repo_config_get_bool(r, "fsmonitor.allowremote", &allow))
-+		r->settings.fsmonitor->allow_remote = allow;
-+
-+	return;
-+}
-+
-+void fsm_settings__set_socket_dir(struct repository *r)
-+{
-+	const char *path;
-+
-+	if (!r)
-+		r = the_repository;
-+	if (!r->settings.fsmonitor)
-+		r->settings.fsmonitor = alloc_settings();
-+
-+	if (!repo_config_get_pathname(r, "fsmonitor.socketdir", &path)) {
-+		FREE_AND_NULL(r->settings.fsmonitor->sock_dir);
-+		r->settings.fsmonitor->sock_dir = strdup(path);
-+	}
-+
-+	return;
-+}
-+
- void fsm_settings__set_ipc(struct repository *r)
- {
--	enum fsmonitor_reason reason = check_for_incompatible(r);
-+	enum fsmonitor_reason reason;
-+
-+	fsm_settings__set_allow_remote(r);
-+	fsm_settings__set_socket_dir(r);
-+	reason = check_for_incompatible(r);
- 
- 	if (reason != FSMONITOR_REASON_OK) {
- 		fsm_settings__set_incompatible(r, reason);
-@@ -135,7 +194,11 @@ void fsm_settings__set_ipc(struct repository *r)
- 
- void fsm_settings__set_hook(struct repository *r, const char *path)
- {
--	enum fsmonitor_reason reason = check_for_incompatible(r);
-+	enum fsmonitor_reason reason;
-+
-+	fsm_settings__set_allow_remote(r);
-+	fsm_settings__set_socket_dir(r);
-+	reason = check_for_incompatible(r);
- 
- 	if (reason != FSMONITOR_REASON_OK) {
- 		fsm_settings__set_incompatible(r, reason);
-diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
-index d9c2605197f..2de54c85e94 100644
---- a/fsmonitor-settings.h
-+++ b/fsmonitor-settings.h
-@@ -23,12 +23,16 @@ enum fsmonitor_reason {
- 	FSMONITOR_REASON_NOSOCKETS, /* NTFS,FAT32 do not support Unix sockets */
- };
- 
-+void fsm_settings__set_allow_remote(struct repository *r);
-+void fsm_settings__set_socket_dir(struct repository *r);
- void fsm_settings__set_ipc(struct repository *r);
- void fsm_settings__set_hook(struct repository *r, const char *path);
- void fsm_settings__set_disabled(struct repository *r);
- void fsm_settings__set_incompatible(struct repository *r,
- 				    enum fsmonitor_reason reason);
- 
-+int fsm_settings__get_allow_remote(struct repository *r);
-+const char *fsm_settings__get_socket_dir(struct repository *r);
- enum fsmonitor_mode fsm_settings__get_mode(struct repository *r);
- const char *fsm_settings__get_hook_path(struct repository *r);
- 
+ /*
+  * Try to determine whether there is a `git-fsmonitor--daemon` process
+  * listening on the IPC pipe/socket.
 -- 
 gitgitgadget
 
