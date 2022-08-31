@@ -2,115 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF499ECAAD1
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 19:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32782ECAAD4
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 19:56:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232047AbiHaTyl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 15:54:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41474 "EHLO
+        id S232133AbiHaT4L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 15:56:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbiHaTyi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 15:54:38 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B22C8EE6A1
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 12:54:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661975669;
-        bh=AiAXBXRl+wc30fl/Ni4fhjooA6qdmfmKcbhsvA8zuAQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=avcI39nlxi2k0JZM0FvTCOo9fMdJsMpegMtmJzY31MVcprLkJX1rN2lSBpUEDkZPC
-         y3Drstr4KEWVWPClN/VjRpptHrWoSzLblxEjt4Hc7ecE1cqd9EncvND7/jKMWsf0eV
-         N5+7lbq1/rp9uO4P/UCljFWV/mKFVAwZmEzw+wa0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MC34h-1oYeqm1wYH-00CTmS; Wed, 31
- Aug 2022 21:54:29 +0200
-Date:   Wed, 31 Aug 2022 21:54:29 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     phillip.wood@dunelm.org.uk
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org
-Subject: Re: js/add-p-diff-parsing-fix (was: What's cooking in git.git (Aug
- 2022, #10; Tue, 30))
-In-Reply-To: <b0a368a1-a6cc-1940-4804-3cbcae1db235@gmail.com>
-Message-ID: <578r404o-r7or-6pnp-2s59-o6s0525nn38p@tzk.qr>
-References: <xmqqilm9k0bc.fsf@gitster.g> <220831.86bks0ajy7.gmgdl@evledraar.gmail.com> <b0a368a1-a6cc-1940-4804-3cbcae1db235@gmail.com>
+        with ESMTP id S231531AbiHaT4E (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 15:56:04 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60D53659C4
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 12:56:01 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id m1so19812356edb.7
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 12:56:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date;
+        bh=qIzj7wtQjjhViZ9sJHLglRCVc4g7WDrNKBvmroqqxs0=;
+        b=WHy+pB7o700KVroyZWN12IOMACM8dtyIPGQpX/TZfvo9KWvABeTzcfG1osjyhyH2Et
+         G1iaXvSh1XaJjNngmzE0UmJEJ67WbllyKijG04cOVGMm8hV5qJFo5aH2s3QbqfPEaYXz
+         qoCn7epbp1sk4hmO5OXAwrsQ31C/62KvJRUXjjGR76s2vcIFCFUgfQjrxv/S5ZSdGgRy
+         tui+KH1+RA7sweMhWbgDaOV6ItIhBoeQ21P2JWUEmOxDm+lV+ChtoV6+de0axi1nGNuZ
+         lMKkiBjHRfhWUhKHfz1Rw51/FKjd6SGbaaj4pk2EcuEu862fQNVaKAM6VADJIOJJRe/s
+         uAAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=qIzj7wtQjjhViZ9sJHLglRCVc4g7WDrNKBvmroqqxs0=;
+        b=L5PhS0Po0ZSoXh3AUHn/B9mMZ/Nk/7uC98iV+mXp9kmHmmKcS4mu8sY8crzo0cIbkY
+         ZWryLjjs0qVJl8ELEBZGvSOMpy+t/h9JpD8kHJ2EurzR5x8JfVzm8y5lqfPINLjbhbnS
+         bsXuScHqFS3Wjv0cQ3FBje3yUUXgt6iGoT2o6//PrKHk85ND8Na8y9/c9FS3rIuaz0zE
+         FSLVZleSCTrwG1NGZaP9sb/X3UwumDwMQBCHKIZ0YbEUDGeFA984gM3ct2hYsPu4agwd
+         57zo+ezuWcMYCUnZofZQ+z+cay96zq8H5lZcKtVoeihqEulIhZt1LVUioaCNyRaJrhEF
+         YCRw==
+X-Gm-Message-State: ACgBeo1Xy7/qI10p8hMpTVLE/PwvPLR2VUlCkIIPbM2dPXMif8HUhp8p
+        2nONfIlipYi6H0ZB07lkay4=
+X-Google-Smtp-Source: AA6agR4VDYMBAku9AecPkoHCKqbiPOUHHJNx5pfKuJ3x04CmfOuGWD7TP7IVUJyKi9vQAiV4zwak2w==
+X-Received: by 2002:a05:6402:25c6:b0:43b:7797:d953 with SMTP id x6-20020a05640225c600b0043b7797d953mr26298813edb.254.1661975759823;
+        Wed, 31 Aug 2022 12:55:59 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id g11-20020a170906538b00b0072b85a735afsm7547659ejo.113.2022.08.31.12.55.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Aug 2022 12:55:59 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oTToc-000SMU-2G;
+        Wed, 31 Aug 2022 21:55:58 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH v4 2/4] fsmonitor: generate unique Unix socket file name
+ in the desired location
+Date:   Wed, 31 Aug 2022 21:49:24 +0200
+References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
+ <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
+ <2cb026a631704b004b06e4a944c79a434df08440.1661962145.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <2cb026a631704b004b06e4a944c79a434df08440.1661962145.git.gitgitgadget@gmail.com>
+Message-ID: <220831.86czcg89wx.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-377237880-1661975671=:189"
-X-Provags-ID: V03:K1:AboD2ZOiH1JEFd9jeFRHAsfdesE/urCQxH39ktx9bmQNtDd+Oxk
- g2rrcHIkdS1i+stcHFaYfVhrqJHIUD1wgjpVFi9f3NjclGCiSXzW9l0Kx7U37NvHzPjvp81
- Jb3vXj51eXvWd5RnNLO9Y7Q0Y2meBlf1IyjGLfmo6o8Q5pi0uRYIDID7KM92WQU/j8DnzzW
- NJSmwGOOF/3lr+Oc5Do9g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:AwrdlocwR6Y=:6Fd+80ItcMkR/ksqueS6KY
- sHbH8zQaKcp3c7iw5UWxdEW3OFBxsRLNOYxZXTAxAmhSJTiQ51xj4aT4lx4OI4m/w5RjqQHCP
- zijHPc8sRiaEtJaAUYHWIEZO0+/yUWuLP+uoPZH9toBGvwbUGwRSmQYHd8zcgm9Uihn4Bnw9N
- Mx37ttQqfn7gzHQmgtMcv6RXkJOysfOKz0LsGx7p//UIL+3Ki6Z/hvSshfzxoncBUoHnIskWI
- kvpDe/dx13wbtBGanrWJSvwy7uy7PTlmWZXbjyV7ywd07xyN1wFkQ+FG4PLhrgwqbqHbPnuTV
- hsq6Au74DzWZHxnAe7pZ4GphrKbNyW2VWh2Wp2dTcOurT7WiTh6FTW+VZWJKkuAgfrUIjiVni
- xEVas6E1ESbYMLzDIQvbXmcD8Fk3Q8j2W81PTflcwvez5rPguejH9vXF2Q+XLAgrPTJ4roESw
- xxemnlAfxHWiUWo0VFlM2qke8mnNsblV7XIxwXMAgc+SJvDH9sVBf+dpZ+qj473EL3vMQJQy7
- UzOZEHcfnAkMQQ9EP99qP02jxJqVkacsB/ybJzzMKTJiaPVXF1lhYKqLThY6XFrjxxV02tL3Z
- DrxuuTQkwSLWwBTDZMkX6ZmrVqE+sKcD42e+xtSgLYPDZyqKsKjFs/esj3BUyfNIISuvstyWP
- jQBiKQ871Y5ALddsYF8UkPm9LAvYqpBGUIj1c3VJlienbVniMV3U1MPy+nPoxrJrXkaE7C9JK
- 41ebbpCFTBbuGHCGjnT5q/5IR48x5yA5d5HEDV3oiEfNMEPt1gmGRfPcPMTlsDM7aJ0sy/jHF
- Y/AtQlvmRTvUePFOd1IOGSez0vjZkQUqmvnU+3ChcoGbLPtc+ZP90U+IKtmQXBSfugn/87af6
- W0H894FRX8tpi+amQrA6q2RbgJ/o6CcxYoCmNOyt99Rz5qKm8VRnP/sDinUTt8V/3Q0ZXC+TM
- W9Bj6609JLaDKd1RcTQamwvKOtoYjaN/mPiKFaOZKLGV078v2iIMmmmHcbGW2Jqjl2PcAR3Eb
- cCVyygtgVwVYHU4lrRCOZ6QMd62MfqzAb8vHo4d5YVQczWuDS78wGsHyHCC0xr8FfHBtvu9pE
- CFehUXWR/I8HkVAKheSTFSAhcYrBkmm7ELLvvT98O82ECGTWIH05Fg4lQ==
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-377237880-1661975671=:189
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, Aug 31 2022, Eric DeCosta via GitGitGadget wrote:
 
-Hi Phillip,
-
-On Wed, 31 Aug 2022, Phillip Wood wrote:
-
-> On 31/08/2022 09:29, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >
-> > On Tue, Aug 30 2022, Junio C Hamano wrote:
-> >
-> > > * js/add-p-diff-parsing-fix (2022-08-29) 5 commits
-> > >   - add -p: ignore dirty submodules
-> > >   - add -p: handle `diff-so-fancy`'s hunk headers better
-> > >   - add -p: insert space in colored hunk header as needed
-> > >   - add -p: gracefully ignore unparseable hunk headers in colored di=
-ffs
-> > >   - t3701: redefine what is "bogus" output of a diff filter
-> > >
-> > >   Those who use diff-so-fancy as the diff-filter noticed a regressio=
-n
-> > >   or two in the reimplemented "add -p", which has been corrected.
-> > >
-> > >   Will merge to 'next'?
-> > >   source: <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com>
-> >
-> > This LGTM.
+> From: Eric DeCosta <edecosta@mathworks.com>
 >
-> I'm not sure that the different output from the builtin version compared=
- to
-> the perl version when using interactive.diffFilter is an improvement. Th=
-e perl
-> version leaves the filtered output alone but the builtin version has sta=
-rted
-> prepending @@ -a,b +d,c @@ to the "hunk header" lines produced by the fi=
-lter.
+> Based on the values of fsmonitor.allowRemote and fsmonitor.socketDir
+> locate the Unix domain socket file in the desired location (either
+> the .git directory, $HOME, or fsmonitor.socketDir). If the location
+> is other than the .git directory, generate a unique file name based
+> on the SHA1 has of the path to the .git directory.
 
-A convincing argument!
+Per:
 
-And after implementing this (and dropping the patches that implemented a
-deviation from the Perl script's behavior), the patch series looks so much
-more elegant, too!
+	fsmonitor-ipc.h- * Returns the pathname to the IPC named pipe or Unix domain socket
+	fsmonitor-ipc.h- * where a `git-fsmonitor--daemon` process will listen.  This is a
+	fsmonitor-ipc.h- * per-worktree value.
 
-Ciao,
-Dscho
+> +	git_dir = get_git_dir();
+> +	sock_dir = fsm_settings__get_socket_dir(the_repository);
+> +
+> +	SHA1_Init(&sha1ctx);
+> +	SHA1_Update(&sha1ctx, git_dir, strlen(git_dir));
+> +	SHA1_Final(hash, &sha1ctx);
+> +
+> +	if (sock_dir && *sock_dir)
+> +		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
+> +					sock_dir, hash_to_hex(hash));
+> +	else
 
---8323328-377237880-1661975671=:189--
+But here we (from eyeballing this, maybe I've missed something):
+
+ 1. Get the path to the git dir
+ 2. SHA-1 hash that path, presumably to make it fixed size & get rid of
+    slashes etc.
+ 3. Make that the IPC filename
+
+Per the "per worktree" can't we just check if:
+
+ * We have a .git/worktree/? If so derive the name from that.
+ * We don't? Then we just have one? Stick it in in there? I.e. isn't the
+   hash_to_hex() here redundant?
+
+...
+
+> +		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
+
+... but not here, so is it just for this "else", but got carried over
+above?
+
+I think if we're creating a new global cookie file, and presumably
+potentially a *lot* of them in the user's ~ we should at least
+prominently document that somewhere.
+
+But more generally couldn't this?:
+
+ * Play nice with $HOME/.config/git/ etc, as is the usual convention these days on *nix
+ * We would have to the equivalent of a "mkdir -p", but if we stick it
+   in .config/git/fsmonitor-sockets or something we could have a nested
+   path there that mirrors the path to the repo.
+
+The latter can really help with debugging, you have this random
+.git-fsmonitor-XXXXX file, where the XXXX is totally mysterious, until
+you eventually find this code & discover it's a SHA-1 hash of some other
+path...
