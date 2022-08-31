@@ -2,121 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 249EEC0502A
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 06:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8754ECAAD3
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 07:37:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230156AbiHaGWD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 02:22:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37482 "EHLO
+        id S229611AbiHaHhi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 03:37:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229786AbiHaGV5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 02:21:57 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36A61BD0A7
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 23:21:56 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id i188-20020a1c3bc5000000b003a7b6ae4eb2so6126300wma.4
-        for <git@vger.kernel.org>; Tue, 30 Aug 2022 23:21:56 -0700 (PDT)
+        with ESMTP id S229457AbiHaHhh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 03:37:37 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3943ACA15
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 00:37:34 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id cr9so10339272qtb.13
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 00:37:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc;
-        bh=FbAzcYrfg8wQJJ1BMIBW8a/ealwSpSlEigebpgIFtY0=;
-        b=KZYUHTCxqyvYn12X/FG5eH0orSdC+D5dFH2r+p72S4YZ49XCI7Yvt+1t9m/YNMLNg7
-         1Q2F93IJuTOpbqEUtc4E0LPHMt7tbA6AoUAZiUEn96HFPmY4DEZMmQ7FT32jY/E2M8Bc
-         DlMIIqa/JB3w+2DIBEN1+dGrW4oj7UfmeZxWOXaJ5W4EaISMKuGQz3U8zu6Z+v3uQmCM
-         W7+d8FKzf6gmMscsqhHD5OEzjwzhGE48HJPGhZx9jCLNi+8bfYlZLi0srccihokGZiuH
-         4Q15Ii5oHDtR+J7+psTvTWOLAo25aRmgOn69rfpEZMfzLnjUqiTdNtOWwwGfU2V83Pcp
-         FJcw==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc;
+        bh=Bh8tAlDaSp9nTgdmuOpjDhE37Q9uORhiPcXkcFph6a4=;
+        b=Y+5RKKrPAYaegN13jTelNopbIFIm8S9+MjULiSls1oDc30GUWnhbflhCbEID/LHJfV
+         BoUh8VKaYlyQhQywNXEu3sfqKPhhdCHOeZ6tZ0hrBQLbf0V7HVLO5yUaMexouQutCOdH
+         H9ZyyADPqP7QoOdNr6xyVVc/7fNJI1JfMYTAWt76mx4nrPewXhaPnrJrHBBw13TBaOZq
+         aZwnnoRitLeqAaGOgN2RFHI7ufzIeUZxNPOf5TQDvQfipLuiygGVlUpGz5B2RYw/0Lda
+         8Nxc6Hc7iRb6+8/iPvhBXHLdC3eNjr4QeOdlApj2xcF+liFHY7QlNa5cjDd5n8POEqRy
+         zSGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=FbAzcYrfg8wQJJ1BMIBW8a/ealwSpSlEigebpgIFtY0=;
-        b=RWwRr/I6g4BOsekVjCSSkHm/QkRq2U0wVAT6X/pZRHCj+NP//5Q/RK/LqZO5x/b9/B
-         sRmFyls/Wo15JQTGnAaj4k5Qr0gmMhkj4WY7brPNiX/3C0zfqp6GQcegPqBtzm3dz5/K
-         yloYHjxOQKdf0xBDkHAUIH7YzEi9GIE75/s4W6IWZQQHNAlm+idUplRNEOVHhOcLmsqf
-         kEVNxv/hQAOn2UvRzbt9yMEYU0S5L3Esoz6Dsx7U712au+nj1ZOWOeIwKjJTDj/5Iwph
-         o6D4/YKZL3RsE29OlyPhRKsAmz3iXMu0bGn4pOjXlRHtAJhxRBbqY1T1pXiDz65hVQOa
-         /MZQ==
-X-Gm-Message-State: ACgBeo0syn23/oLqWX4iPXnMUgdAwSSbzeKVzfRwyG32RVo8cKvUQsEI
-        DyplRBtmpokFGNe2YdJicOk69c6D3Zs=
-X-Google-Smtp-Source: AA6agR6wQP9olATzqK1AZDd/YUGnivgebY0eClm2iDhoyAFz4ZrTIuh4N8VICKoumGL6CO4Efb2E+g==
-X-Received: by 2002:a05:600c:2c47:b0:3a6:4623:4ccf with SMTP id r7-20020a05600c2c4700b003a646234ccfmr929088wmg.85.1661926914512;
-        Tue, 30 Aug 2022 23:21:54 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c6-20020adffb06000000b002250c35826dsm11087610wrr.104.2022.08.30.23.21.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Aug 2022 23:21:53 -0700 (PDT)
-Message-Id: <46ea0d7dd6555dbb9939940207fa2c8044d0ab56.1661926908.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1342.git.1661926908.gitgitgadget@gmail.com>
-References: <pull.1342.git.1661926908.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 31 Aug 2022 06:21:48 +0000
-Subject: [PATCH 3/3] diff: fix filtering of merge commits under --remerge-diff
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
+        bh=Bh8tAlDaSp9nTgdmuOpjDhE37Q9uORhiPcXkcFph6a4=;
+        b=FZYBt0/79quZpZTfgoEY3Is5e/6X30imwUXjtsnXhnDtLXU5DlMs2/BuG+ecCa//oN
+         kiVIJzg6d7asnMl2ti04aYFkBtd1IrPtYIelZZGfhY0v1tfD1kvZ/snQ7AEv1DQFJ7SM
+         C3w9aOQlsgKr/6UPK9Hi5DG0vI7Yywzc+SUfvpuY65adIIfL4yLr1pvjjVyEOdVXbPZo
+         1La+h+iYyMfbEEEoD8CtUqguyW1A8p8h6VJ8Sh7NxJ4IvJPB96eCrXdzpys2yBfGcz+d
+         khcOBP1MNCSNrdl1Yrtq4vrUDzC3YQviZgwHRs7M7CJ5oHW3j6W+ip/bVBP6Ml7z10v0
+         PTfw==
+X-Gm-Message-State: ACgBeo0sv1eqZNdyQZtWsCBAIqAhcwSV917b4Ie0ubOeOCx/PMfm2/b8
+        sx0LnodoXYNjGiAk2+kPy6y6ER9wxhCdK706aYU=
+X-Google-Smtp-Source: AA6agR6SOI6zhksheVOfEyV2okcLfDp1Jr7vWSI00vmEIb/BdKy59p6Qlp6JqtrBPzxdWa1W94IggcdzQeFuOw7ijvM=
+X-Received: by 2002:ac8:5b06:0:b0:344:6481:86cb with SMTP id
+ m6-20020ac85b06000000b00344648186cbmr17467502qtw.523.1661931454058; Wed, 31
+ Aug 2022 00:37:34 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+References: <43cf2a1d-058a-fd79-befe-7d9bc62581ed@gmail.com>
+ <CABPp-BEkC8xEkNa+hyKFKhO=cbBZqNqGWehqxbRzE6-BVR27NQ@mail.gmail.com>
+ <b19c7090-109c-8988-56cf-4f8887de3845@gmail.com> <CABPp-BGxN=9f4ODeRsX5TMuKRujCuhmRxCm4br43HNqm3Vmanw@mail.gmail.com>
+In-Reply-To: <CABPp-BGxN=9f4ODeRsX5TMuKRujCuhmRxCm4br43HNqm3Vmanw@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 31 Aug 2022 00:37:23 -0700
+Message-ID: <CABPp-BGxPTz3tZtjGNH1MAVCKtHpjYzNVwtmux5WzuMXWphV5A@mail.gmail.com>
+Subject: Re: Bug in 'git log --remerge-diff' when used with '--find-object'
+ and '--submodule=log|diff'
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On Mon, Aug 29, 2022 at 7:51 PM Elijah Newren <newren@gmail.com> wrote:
+>
+> On Mon, Aug 29, 2022 at 9:36 AM Philippe Blain
+> <levraiphilippeblain@gmail.com> wrote:
+> >
+> > Hi Elijah,
+> >
+> > Le 2022-08-24 =C3=A0 03:36, Elijah Newren a =C3=A9crit :
+> > > Hi Philippe,
+> > >
+> > > On Mon, Aug 22, 2022 at 4:58 PM Philippe Blain
+> > > <levraiphilippeblain@gmail.com> wrote:
+> > >>
+> > >> Hi Elijah,
+> > >>
+> > >> I found two bugs in '--remerge-diff' when combined with both '--find=
+-object' and
+> > >> '--submodule=3Dlog|diff'. I don't know if they have the same cause.
+[...]
+> > >> This artificial example reproduces the bug:
+[...]
+> > > Thanks for the report, and the steps to reproduce.  Very helpful.
+> > >
+> > > After some digging, it appears the remerge-diff headers are
+> > > misinterpreted by the submodule code.
+[...]
+> >
+> > Thanks for digging into this.
+> > From what I understand in the case of a remerge-diff, both modes are al=
+l-zero, and this is
+> > not expected by the submodule diff code. Were you planning to submit a =
+proper
+> > patch ? I could get to it eventually, but not before mid/end of Septemb=
+er...
+>
+> I intend to submit a proper patch; I've just been busy.
 
-Commit 95433eeed9 ("diff: add ability to insert additional headers for
-paths", 2022-02-02) introduced the possibility of additional headers.
-Because there could be conflicts with no content differences (e.g. a
-modify/delete conflict resolved in favor of taking the modified file
-as-is), that commit also modified the diff_queue_is_empty() and
-diff_flush_patch() logic to ensure these headers were included even if
-there was no associated content diff.
+I have some patches that I think fix all the --remerge-diff issues;
+see https://lore.kernel.org/git/pull.1342.git.1661926908.gitgitgadget@gmail=
+.com/
 
-However, the added logic was a bit inconsistent between these two
-functions.  diff_queue_is_empty() overlooked the fact that the
-additional headers strmap could be non-NULL and empty, which would cause
-it to display commits that should have been filtered out.
-
-Fix the diff_queue_is_empty() logic to also account for
-additional_path_headers being empty.
-
-Reported-by: Philippe Blain <levraiphilippeblain@gmail.com>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- diff.c                  | 1 +
- t/t4069-remerge-diff.sh | 5 +++++
- 2 files changed, 6 insertions(+)
-
-diff --git a/diff.c b/diff.c
-index 9535e755c73..f5c0e0599c9 100644
---- a/diff.c
-+++ b/diff.c
-@@ -5910,6 +5910,7 @@ int diff_queue_is_empty(struct diff_options *o)
- 	int i;
- 	int include_conflict_headers =
- 	    (o->additional_path_headers &&
-+	     strmap_get_size(o->additional_path_headers) &&
- 	     !o->pickaxe_opts &&
- 	     (!o->filter || filter_bit_tst(DIFF_STATUS_UNMERGED, o)));
- 
-diff --git a/t/t4069-remerge-diff.sh b/t/t4069-remerge-diff.sh
-index 95a16d19aec..07323ebafe0 100755
---- a/t/t4069-remerge-diff.sh
-+++ b/t/t4069-remerge-diff.sh
-@@ -56,6 +56,11 @@ test_expect_success 'remerge-diff on a clean merge' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'remerge-diff on a clean merge with a filter' '
-+	git show --oneline --remerge-diff --diff-filter=U bc_resolution >actual &&
-+	test_must_be_empty actual
-+'
-+
- test_expect_success 'remerge-diff with both a resolved conflict and an unrelated change' '
- 	git log -1 --oneline ab_resolution >tmp &&
- 	cat <<-EOF >>tmp &&
--- 
-gitgitgadget
+I looked briefly at the same issue affecting --cc and -c, but only
+enough to find it appears to have a different codepath and I don't see
+any obvious similar fixes for it.
