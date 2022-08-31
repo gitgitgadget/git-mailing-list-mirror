@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92752ECAAD1
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 16:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63913ECAAD3
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 16:09:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231724AbiHaQJa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 12:09:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38314 "EHLO
+        id S231727AbiHaQJd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 12:09:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231438AbiHaQJO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 12:09:14 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9F7DB0880
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:13 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id e20so18880231wri.13
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:13 -0700 (PDT)
+        with ESMTP id S231454AbiHaQJW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 12:09:22 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD426C3F69
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:15 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id k6-20020a05600c1c8600b003a54ecc62f6so8279881wms.5
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:09:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=3xkCrUGmHxE0Vlh7KaT9kiu2RtYJf6DDPSmtM4ZuucI=;
-        b=c59XG0/H/r60WoWBvmnTwse3yFrJAgZGHVWv2JLMME2hzFlw03aSRuxrEL4J8Nkw9B
-         sHPVgDp+v1mDDwmsAmziH6snt/LthXfc8L9ozNtJKqZCgZsXfgxIp8wToUhz7ESrWHga
-         uFXZLQNhvNttU4mLlDvBwzSzW2i/2JkYXf7pAc5O3FEjMwLp3rKm+OirbeodUX545f04
-         tBsmoH5MVJTgxtgxrKTmcBlwVIVVGrcvXvvACvjTyviRvG84LRGvHG8HTrlef/4jl8dD
-         1pNZLubwVt60/5/t/AnAJ7BT0dBYTxShSPChxFgYTmwJryfEUN/+SVR0g9JBHeVvhdW2
-         NUXw==
+        bh=Zg7O1XjMqNJ0aoj0nTaeReoT+ibJ7sZub876zOA0gsY=;
+        b=f75KbIW3tBpD4pLYwNbFjabreI1uUCGTN9jZzxHbxB7V9yj47I6pixqpVdibzdkpdZ
+         4ySKboIKJxP2Abk/LTe5qma5aERlVidnBQrAMEU7P+4ydfmCmURKmKRQ/T6B3mdU5Yom
+         tnbV279zD/hvKeJ4pxGu68sVV7nhh9b/z3kuxBj8A/oxm0ZvgOStQnCEiqr+tPAGtvrH
+         8PwfOJueGiMh+UGv/Yz47OeHt+VrcsmSGYWMIRJsKch/uW9aRY3yUguZHwwPxsU00Rpn
+         ZZxZU+4GGD/fH2JK8uewIjspZsB1MEA7A72j62bNQ13dXTZypbXTI6y1HHYIrT51lS08
+         VBjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=3xkCrUGmHxE0Vlh7KaT9kiu2RtYJf6DDPSmtM4ZuucI=;
-        b=zt8O3bL1iePWZJNs4M3zpr1OLPvQEyI7nw42tjsJ85vaLXX2ZXWPY/9CB0IfqlMUqs
-         lRf8KEuMypltZ/zVFdFn3ENdXIgd1KcgadkZLsZjDpNSE583bUyjJZGoPvyTHxZkNngc
-         3eE+pTcQACMHUt6d2jRV+G8O1MFCZROs+NPevJuc89STtA2WsVjwbwkho9KH3PjiODuW
-         PpFs9kGmOxPaGtkwm5uBPeXwOomP9ukrDHDUbj4vDrVGDcwdr9yrEhrIu2e/DY/F1I8h
-         O/Vtxf4MWiqemrMXH2xlZFhsNonQ2ojQo6JUBozk1GQ2QaMYtRIq6EmTjM9mMzF9PuGt
-         48TQ==
-X-Gm-Message-State: ACgBeo0OReMR98RwfKFjc+Mphzlg1lzHQ/vAbUcpMTzN2cRNdMYVvQpN
-        wtk7Pk5AefmWQGWdm8e22VlNY2I3qzI=
-X-Google-Smtp-Source: AA6agR45eGgAhlILdfrSEZ6Z6Szx3QmXEK6OnvyCr4a7sSfn+uTYg9wXXGvcZNirk4x84D2WigaRXQ==
-X-Received: by 2002:adf:f6cb:0:b0:220:7859:7bf with SMTP id y11-20020adff6cb000000b00220785907bfmr11693195wrp.683.1661962152263;
-        Wed, 31 Aug 2022 09:09:12 -0700 (PDT)
+        bh=Zg7O1XjMqNJ0aoj0nTaeReoT+ibJ7sZub876zOA0gsY=;
+        b=CoAg436aYseoHt+NBbwT3sWeQov7bwXplJTTfVd7bbn6Z993aGW8LuDYkn03Eu2lmI
+         Wi0UCvo4OhShmK9LKxJREqNlTHUhB+eeK7xzWbkLLa6sH6tiIvpftK2vu5tqWKSDCuEo
+         OBaSIoxAgstk6WOZz1R5jIuHl+itxlguEwVU6cFiK5+3sh7ZSBrMSdcDj2vOHsFATJSO
+         jgzwbs3kQTr7+C1AQd1Jven9RvAk58QAMV1s/US0vjeuqSa5GpoTOuM8fPqO1Zjn8hDP
+         VwhgHY4++rsyV7ZpEs8GDxr+VeL8GuxHEN6jb5Kmc3uMqZaB2it9a64OZjlEbrJi/Igv
+         0niQ==
+X-Gm-Message-State: ACgBeo24UfQ71pKLTfB3D0YyEUqqH975hHBUgEyj7iK3G1rVgP7bp6pJ
+        FeGiwwak0XYoLx3sHKtUqTd9dqFmI9A=
+X-Google-Smtp-Source: AA6agR6o+aEycLIssOMvcFHUA083j7opI9lp7hVe+XP0NdL834yELwlxEq32vNbFek4fzjfc3osNTw==
+X-Received: by 2002:a05:600c:418a:b0:3a5:e724:21d4 with SMTP id p10-20020a05600c418a00b003a5e72421d4mr2547777wmh.168.1661962154175;
+        Wed, 31 Aug 2022 09:09:14 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q28-20020a056000137c00b002205cbc1c74sm12405331wrz.101.2022.08.31.09.09.11
+        by smtp.gmail.com with ESMTPSA id c16-20020adffb50000000b00226d473ebd6sm10952364wrs.86.2022.08.31.09.09.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 09:09:11 -0700 (PDT)
-Message-Id: <a3110f1e25a19da5791aa1675a82556d95469248.1661962145.git.gitgitgadget@gmail.com>
+        Wed, 31 Aug 2022 09:09:13 -0700 (PDT)
+Message-Id: <56cabf3be3b9e228bc948da372db4c9d11fd3926.1661962145.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
 References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
         <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
 From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 31 Aug 2022 16:09:03 +0000
-Subject: [PATCH v4 3/4] fsmonitor: ensure filesystem and unix socket
- filesystem are compatible
+Date:   Wed, 31 Aug 2022 16:09:04 +0000
+Subject: [PATCH v4 4/4] fsmonitor: normalize FSEvents event paths to the real
+ path
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,125 +68,76 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Eric DeCosta <edecosta@mathworks.com>
 
-Perform separate checks for the working directory and Unix domain socket
-(UDS) file location. The working directory may be located on a
-network-mounted file system if 'fsmonitor.allowRemote' is true. The UDS
-file may never be located on a network-mounted file system; additionally
-it may not be located on FAT32 or NTFS file systems.
+Consider the following network working directory that is mounted under
+/System/Volumes/Data:
+
+/network/working/directory
+
+The git working directory path is:
+
+/System/Volumes/Data/network/working/directory
+
+The paths reported by FSEvents always start with /network. fsmonitor
+expects paths to be under the working directory; therefore it
+fails to match /network/... and ignores the change.
+
+Change things such that if fsmonitor.allowRemote is true that the
+paths reported via FSEevents are normalized to the real path.
 
 Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
 ---
- compat/fsmonitor/fsm-settings-darwin.c | 72 +++++++++++++++++++-------
- 1 file changed, 52 insertions(+), 20 deletions(-)
+ compat/fsmonitor/fsm-listen-darwin.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
-index efc732c0f31..dc79538607f 100644
---- a/compat/fsmonitor/fsm-settings-darwin.c
-+++ b/compat/fsmonitor/fsm-settings-darwin.c
-@@ -3,11 +3,12 @@
- #include "repository.h"
- #include "fsmonitor-settings.h"
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index 8e208e8289e..2ed828649ff 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -26,6 +26,7 @@
  #include "fsmonitor.h"
-+#include "fsmonitor-ipc.h"
- #include <sys/param.h>
- #include <sys/mount.h>
+ #include "fsm-listen.h"
+ #include "fsmonitor--daemon.h"
++#include "fsmonitor-settings.h"
  
- /*
-- * [1] Remote working directories are problematic for FSMonitor.
-+ * Remote working directories are problematic for FSMonitor.
-  *
-  * The underlying file system on the server machine and/or the remote
-  * mount type (NFS, SAMBA, etc.) dictates whether notification events
-@@ -27,26 +28,8 @@
-  * In theory, the above issues need to be addressed whether we are
-  * using the Hook or IPC API.
-  *
-- * For the builtin FSMonitor, we create the Unix domain socket for the
-- * IPC in the .git directory.  If the working directory is remote,
-- * then the socket will be created on the remote file system.  This
-- * can fail if the remote file system does not support UDS file types
-- * (e.g. smbfs to a Windows server) or if the remote kernel does not
-- * allow a non-local process to bind() the socket.  (These problems
-- * could be fixed by moving the UDS out of the .git directory and to a
-- * well-known local directory on the client machine, but care should
-- * be taken to ensure that $HOME is actually local and not a managed
-- * file share.)
-- *
-  * So (for now at least), mark remote working directories as
-- * incompatible.
-- *
-- *
-- * [2] FAT32 and NTFS working directories are problematic too.
-- *
-- * The builtin FSMonitor uses a Unix domain socket in the .git
-- * directory for IPC.  These Windows drive formats do not support
-- * Unix domain sockets, so mark them as incompatible for the daemon.
-+ * incompatible unless fsmonitor.allowRemote is true.
-  *
-  */
- static enum fsmonitor_reason check_volume(struct repository *r)
-@@ -65,6 +48,51 @@ static enum fsmonitor_reason check_volume(struct repository *r)
- 			 "statfs('%s') [type 0x%08x][flags 0x%08x] '%s'",
- 			 r->worktree, fs.f_type, fs.f_flags, fs.f_fstypename);
- 
-+	if (!(fs.f_flags & MNT_LOCAL)
-+		&& (fsm_settings__get_allow_remote(r) < 1))
-+			return FSMONITOR_REASON_REMOTE;
-+
-+	return FSMONITOR_REASON_OK;
-+}
-+
-+/*
-+ * For the builtin FSMonitor, we create the Unix domain socket (UDS)
-+ * for the IPC in the .git directory by default or $HOME if
-+ * fsmonitor.allowRemote is true.  If the directory is remote,
-+ * then the socket will be created on the remote file system. This
-+ * can fail if the remote file system does not support UDS file types
-+ * (e.g. smbfs to a Windows server) or if the remote kernel does not
-+ * allow a non-local process to bind() the socket.
-+ *
-+ * Therefore remote UDS locations are marked as incompatible.
-+ *
-+ * FAT32 and NTFS working directories are problematic too.
-+ *
-+ * These Windows drive formats do not support Unix domain sockets, so
-+ * mark them as incompatible for the location of the UDS file.
-+ *
-+ */
-+static enum fsmonitor_reason check_uds_volume(void)
-+{
-+	struct statfs fs;
-+	struct strbuf path = STRBUF_INIT;
-+	const char *ipc_path = fsmonitor_ipc__get_path();
-+	strbuf_add(&path, ipc_path, strlen(ipc_path));
-+
-+	if (statfs(dirname(path.buf), &fs) == -1) {
-+		int saved_errno = errno;
-+		trace_printf_key(&trace_fsmonitor, "statfs('%s') failed: %s",
-+				 path.buf, strerror(saved_errno));
-+		errno = saved_errno;
-+		strbuf_release(&path);
-+		return FSMONITOR_REASON_ERROR;
-+	}
-+
-+	trace_printf_key(&trace_fsmonitor,
-+			 "statfs('%s') [type 0x%08x][flags 0x%08x] '%s'",
-+			 path.buf, fs.f_type, fs.f_flags, fs.f_fstypename);
-+	strbuf_release(&path);
-+
- 	if (!(fs.f_flags & MNT_LOCAL))
- 		return FSMONITOR_REASON_REMOTE;
- 
-@@ -85,5 +113,9 @@ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
- 	if (reason != FSMONITOR_REASON_OK)
- 		return reason;
- 
-+	reason = check_uds_volume();
-+	if (reason != FSMONITOR_REASON_OK)
-+		return reason;
-+
- 	return FSMONITOR_REASON_OK;
+ struct fsm_listen_data
+ {
+@@ -183,7 +184,6 @@ static void my_add_path(struct fsmonitor_batch *batch, const char *path)
+ 	free(composed);
  }
+ 
+-
+ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 			     void *ctx,
+ 			     size_t num_of_events,
+@@ -209,7 +209,12 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 		/*
+ 		 * On Mac, we receive an array of absolute paths.
+ 		 */
+-		path_k = paths[k];
++		if (fsm_settings__get_allow_remote(the_repository) > 0) {
++			strbuf_reset(&tmp);
++			strbuf_realpath_forgiving(&tmp, paths[k], 0);
++			path_k = tmp.buf;
++		} else
++			path_k = paths[k];
+ 
+ 		/*
+ 		 * If you want to debug FSEvents, log them to GIT_TRACE_FSMONITOR.
+@@ -237,6 +242,7 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 
+ 			fsmonitor_force_resync(state);
+ 			fsmonitor_batch__free_list(batch);
++			batch = NULL;
+ 			string_list_clear(&cookie_list, 0);
+ 
+ 			/*
+@@ -313,7 +319,6 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 
+ 		case IS_WORKDIR_PATH:
+ 			/* try to queue normal pathnames */
+-
+ 			if (trace_pass_fl(&trace_fsmonitor))
+ 				log_flags_set(path_k, event_flags[k]);
+ 
 -- 
 gitgitgadget
-
