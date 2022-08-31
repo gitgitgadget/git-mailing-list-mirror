@@ -2,91 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49CFEECAAD4
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 15:32:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0BDBECAAD4
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 15:36:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231768AbiHaPcn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 11:32:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54102 "EHLO
+        id S231815AbiHaPgY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 11:36:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229892AbiHaPcl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 11:32:41 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95FC2C32CD
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 08:32:40 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-340f82c77baso195218027b3.1
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 08:32:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc;
-        bh=rNG0YqdvxXCcGzjzo3LKuhX+iQN5YJAog+DecdtJQUY=;
-        b=LR+bWUCrjjol0aoBfOrCd1cQNp346GHlZph8ofIiiO2x/40MFmzCTq6g3wK0pdAwiH
-         viFz7aSHtfYi2mqIdhQ4yFO/j3BbUT8noQM41k1QHnfUZicgqZnLjE/O/QlKjXLHhIb5
-         0KqdJ5sVwh0IlGc6BUWvwFwS5rqFkDX1275dvuSKseoBLZqQD9+NKsVVm699KLEICxLk
-         u3NaxWaFYhj6XsuV6GAnn6/j26NTQ0FumlZ6x0vho8/Ttl5rezBR8Sg5NHNKkFuVefYV
-         PSqxBC+RLsniCtsyIfpiNWbxt+X+zZ/20SZBLxH8zsvSZW+razKr26kcN8daZLACeGYX
-         InaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc;
-        bh=rNG0YqdvxXCcGzjzo3LKuhX+iQN5YJAog+DecdtJQUY=;
-        b=PqoL8GmAXr7qBANVQeWdCANmBFoQ3GoryStuhG+MzyOETCtSxKU8pp6/Wss6bYZROO
-         LvZQXkWOuHWA3FYA/+5Pc4TpyuIY4OLgYgOL/KOSLB+KrSu97KXVcfZjwN9uFtuQMcMo
-         +495nrs4YNKjPsSPeEzJzuhgl+iWjOnNUP61kIFjDmCJTzd5gJjtTXUvkLn48wdY+3/w
-         iRxmAv9eSEZIMErdmuG1X+OuLgebHSKhjD8xHoCo6eLRrnXdMHZH30AQHR/C3kwCVTSl
-         hko/sIsOGeiTXCR5SVnB0UUZbBjj8PZFNgCUsNbzCxIjUyEG7UvcK5DX8HJIbQI7WEfV
-         ccJw==
-X-Gm-Message-State: ACgBeo3qqpBHIKvqzV9r88vNb0Gm2yLwkNY8jNCi5u8tE+zIi8lXiU+k
-        PJK2470wzZzkUWg2qofip4IBVsI4G6TEyvAAYto9WBbxuBJAOg==
-X-Google-Smtp-Source: AA6agR5m1ZAGDsbrBs4yYt9k+GKHslSnqmzhCxs/GJunuVdNMUlxJ3NP/BS6Zug6xKSqjUAo7RFlRpzPlvhUS6XUITs=
-X-Received: by 2002:a0d:cc4f:0:b0:337:ef0:ad2b with SMTP id
- o76-20020a0dcc4f000000b003370ef0ad2bmr18759081ywd.365.1661959959203; Wed, 31
- Aug 2022 08:32:39 -0700 (PDT)
-MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 31 Aug 2022 17:32:28 +0200
-Message-ID: <CAP8UFD3CBrz4JzMqUO-56ucRTkonPh+TkJQhfxTaSbhi8EmFjw@mail.gmail.com>
-Subject: Draft of Git Rev News edition 90
-To:     git <git@vger.kernel.org>
+        with ESMTP id S231282AbiHaPgW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 11:36:22 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3F91C2775
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 08:36:20 -0700 (PDT)
+Received: (qmail 14965 invoked by uid 109); 31 Aug 2022 15:36:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 31 Aug 2022 15:36:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14717 invoked by uid 111); 31 Aug 2022 15:36:20 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 31 Aug 2022 11:36:20 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 31 Aug 2022 11:36:19 -0400
+From:   Jeff King <peff@peff.net>
+To:     phillip.wood@dunelm.org.uk
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Glen Choo <chooglen@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 1/5] t3701: redefine what is "bogus" output of a diff
+ filter
+Message-ID: <Yw9/81QFPsSjDUTM@coredump.intra.peff.net>
+References: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com>
+ <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com>
+ <a01fa5d25e4a94dd8ece5e328f853c000a2ad0f9.1661785916.git.gitgitgadget@gmail.com>
+ <9261de42-3287-6ccb-6cf5-21c0a8ee1f17@gmail.com>
+ <xmqq7d2pifby.fsf@gitster.g>
+ <742b42af-a298-219d-a35f-1fa8ba985aed@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <742b42af-a298-219d-a35f-1fa8ba985aed@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+On Wed, Aug 31, 2022 at 10:26:17AM +0100, Phillip Wood wrote:
 
-A draft of a new Git Rev News edition is available here:
+> > Is it that all it cares about is that the output has the same number
+> > of lines as the input?  If so, I agree that it is much less realistic,
+> > but it may not matter in practice.  Even an "exit 0" might do ;-)
+> 
+> Yes I think it only cares that there are the same number of lines which begs
+> the question "why are we changing this test in the first place?". The commit
+> message talks about the being unable to parse the hunk header but that's
+> only true because we would be looking in the wrong place for it - the output
+> does in fact contain a valid hunk header. With this change there is no hunk
+> header in the filtered output at all. In practice if the number of lines
+> differs it is normally because the filter messed with the diff header and
+> removed some lines from it which is what the existing test simulates.
+> 
+> I'm struggling to understand the need for this change from the explanation
+> in the commit message as it seems to me  to assume the line being deleted is
+> the hunk header when in fact it is deleting the diff header.
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-90.md
+FWIW, as the author of the original test, I'm also confused about why it
+needs to be changed. The filter I wrote in the original test was just
+"echo too-short". It was switched to "sed 1d" because the original did
+not read the input at all, which racily caused Git to see SIGPIPE:
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+  https://lore.kernel.org/git/20200113170417.GK32750@szeder.dev/
 
-  https://github.com/git/git.github.io/issues/596
+Switching to "exit 0" would bring that problem back. But I think "sed q"
+potentially does, too, because sed will quit without reading all of the
+input. We really do want something like "sed 1d" that changes the number
+of lines, but ensures that the filter reads to EOF.
 
-You can also reply to this email.
-
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
-
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Kaartic and I plan to publish this edition late on Friday
-September 2nd. (Yeah this is very late, sorry.)
-
-Thanks,
-Christian.
+-Peff
