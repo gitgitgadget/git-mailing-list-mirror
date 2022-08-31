@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4488AECAAD1
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 08:42:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3A8BECAAD4
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 08:42:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230220AbiHaImH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 04:42:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54310 "EHLO
+        id S231410AbiHaImJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 04:42:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229922AbiHaIl7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 04:41:59 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 100B4B654D
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 01:41:56 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id b16so9649502wru.7
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 01:41:55 -0700 (PDT)
+        with ESMTP id S229468AbiHaImB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 04:42:01 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A1B1BC139
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 01:41:58 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id i188-20020a1c3bc5000000b003a7b6ae4eb2so6300473wma.4
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 01:41:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=f+6RnR+UOCGk8nGiev9avJTFFxjPfkLJ2BYP/DNJDbw=;
-        b=LDEaLizvnFsr0Sr7fpj0CfopJNJB/iAenIMDOhxOf8I1UEzrXwaU9Gn8prGSoG3gWp
-         mgxjQA5ceb9iepuEESnOHFoRfSzVtP9eJbrwqPE8Zyn1AWc194xbESflWTwgCJZSNEyQ
-         rjpxq9AJZuvIVl7C2ZeVPMBJ3s2mNHq2Y15lITxRQfJCjttj9R+omKXQyND8KyfFrJ0L
-         VGDFVy5ke0TjvBXYFXMSvm6mCBR292R8PJT3cb1RGidnhdPRVg2GiEVmLEIvfcOI6JDh
-         M+oQ27ZJ54j7PGO6tsoDPESSDnUZ2sFnvDfQdpM35Oh9yboN23gT7ceW2veo0fk43iUG
-         cfkw==
+        bh=loljUwOh+V8eEcPKxiGOV/4liCWlIU/orrgdes9tYLA=;
+        b=aE7SzK80CII/xe2n7Z8w3x6ACtI+siOJXx5AyZyAyHxLOOoxyCOyvZxAyqNLR/ULQD
+         3Hei8i43rR5tZlTQU5VA1JrZ0XYyhM4mlre3JzVVO3WU54PmIPYSufKu++C2EqRhoTVy
+         Ey0aJerJ+JsjqEFTyElkcP3XPXqgL9krHNHW3tZ8FKzFZNqbyFFqoiyinpA+W6GvBupe
+         dSXm+dwvBEitqknHcdfAkzMxbIn5mkIzhjOqUPpJodDPUH61cd5sdTY0tsKyjgnxdFoS
+         3e69V0a+qmiavNw5MmaiJvBjREl4NrRK6H9xC5tElr1EgNbSszNm6MPP8m5BCL1ovc5l
+         nHbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=f+6RnR+UOCGk8nGiev9avJTFFxjPfkLJ2BYP/DNJDbw=;
-        b=EyMtJnCgN1boiGQIhmdsMg4Eycyt3izTWfIs0Rv0D3qEtgwzMNgSSJHpVsTyjBkDRT
-         D3D+B/zt9q78UsoO1EHVkB/Stci7mWf8/XW4FSRFub5vqYyrQ+boIxbWimb/FlVtohRV
-         020/ECZ6gJ/Hh65osJyb9v7zB+5fGUq4AtO+7BtIYcP44NkyHCW1hvWrcgEZ7HutXy9V
-         i/z9X+osYLMx6Zqta58CYwh+jXDMrVtC6xZhPTitQf31wS1PWVZlhfSFHoC3atYdB+3j
-         V0rZnk0F0/mPt0s5Dy8OQfE17+3MrY6TiS38Bi3FNqs3g9uPZPeqHGdFzoJ8rvKOV91F
-         UF3Q==
-X-Gm-Message-State: ACgBeo0ibV/xoyQW4ookHERpcIruE/ImUfhfaPBqcPEsYzK4rTHKbmTy
-        7UPXe1q+2350zDj6GK++q06jheH0RLtMYw==
-X-Google-Smtp-Source: AA6agR4cMGL3euxSMKpIFr1LzG3lnp4iINZ32/iEp/LFOknM6aVppEfZq250SzDRtQp0vnKSgx3kgw==
-X-Received: by 2002:adf:9cca:0:b0:226:dfa0:3fb7 with SMTP id h10-20020adf9cca000000b00226dfa03fb7mr5804017wre.412.1661935314228;
-        Wed, 31 Aug 2022 01:41:54 -0700 (PDT)
+        bh=loljUwOh+V8eEcPKxiGOV/4liCWlIU/orrgdes9tYLA=;
+        b=XrnR9P0fpOvzy5KcOqtLSG50IN40WGBo+HyV/WNQb72nUonxrhXysVGpLUxToQfRnB
+         FJII4UpV4SE421L0h/Qt5s0+AVsqEB+03MdISBzivfneAwl1isxrnx8Y9mEnqWcAJIg3
+         ZgAX2rmoetMtU/li/pRvaIEbct+8WMGvdlUCOuX7Ee6hlHvxpr7Z9sZDYaAMSjKTz823
+         D8pB9HzfbhbFgoVr3vAZRdLXC0+WTKQYveeIetT2svisdQspyiisjfm6E5qLr7uT9EA0
+         rbZ4J3ywwpgXuQTBI9QHiRMdRrq0V4lqfaobCrC5Du5waVqgAVvECqyQQUMwXHlxDc5Y
+         103Q==
+X-Gm-Message-State: ACgBeo0yFe4bX/Phg13KvEQ+hcc73ZCqCXNBrd6W/gGvBjj199xvACvz
+        Elz+SCgOkRds1DQkawZvjnYw07vV1EfZiw==
+X-Google-Smtp-Source: AA6agR79TTqO8avVZyYo3+Kp5YfSVa+PPFn0KJVdtdZMnKSkFIUSle7dMXYmwrl9aGYck5+E5XobuA==
+X-Received: by 2002:a05:600c:5102:b0:3a5:a46d:5d4b with SMTP id o2-20020a05600c510200b003a5a46d5d4bmr1340268wms.68.1661935316391;
+        Wed, 31 Aug 2022 01:41:56 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n2-20020a7bc5c2000000b003a5c064717csm1439036wmk.22.2022.08.31.01.41.53
+        by smtp.gmail.com with ESMTPSA id n2-20020a7bc5c2000000b003a5c064717csm1439036wmk.22.2022.08.31.01.41.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 01:41:53 -0700 (PDT)
+        Wed, 31 Aug 2022 01:41:55 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Matheus Tavares <matheus.bernardino@usp.br>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 3/9] send-email docs: de-duplicate configuration sections
-Date:   Wed, 31 Aug 2022 10:41:34 +0200
-Message-Id: <patch-v3-3.9-c36feb6f35a-20220831T083759Z-avarab@gmail.com>
+Subject: [PATCH v3 5/9] notes docs: de-duplicate and combine configuration sections
+Date:   Wed, 31 Aug 2022 10:41:36 +0200
+Message-Id: <patch-v3-5.9-5b0ea00aa33-20220831T083759Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.3.1406.g184357183a6
 In-Reply-To: <cover-v3-0.9-00000000000-20220831T083759Z-avarab@gmail.com>
 References: <cover-v2-0.9-00000000000-20220729T081959Z-avarab@gmail.com> <cover-v3-0.9-00000000000-20220831T083759Z-avarab@gmail.com>
@@ -68,141 +68,210 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-De-duplicate the discussion of "send-email" configuration, such that
-the "git-config(1)" manual page becomes the source of truth, and
-"git-send-email(1)" includes the relevant part.
+Combine the various "notes" configuration sections spread across
+Documentation/config/notes.txt and Documentation/git-notes.txt to live
+in the former, and to be included in the latter.
 
-Most commands that suffered from such duplication had diverging text
-discussing the same variables, but in this case some config was also
-only discussed in one or the other.
-
-This is mostly a move-only change, the exception is a minor rewording
-of changing wording like "see above" to "see linkgit:git-config[1]",
-as well as a clarification about the big section of command-line
-option tweaking config being discussed in git-send-email(1)'s main
-docs.
+We'll now forward link from "git notes" to the "CONFIGURATION" section
+below, rather than to "git-config(1)" when discussing configuration
+variables that are (also) discussed in that section.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config/sendemail.txt | 40 +++++++++++++++++++++++++++---
- Documentation/git-send-email.txt   | 36 ++-------------------------
- 2 files changed, 39 insertions(+), 37 deletions(-)
+ Documentation/config/notes.txt | 43 +++++++++++++++-----------
+ Documentation/git-log.txt      | 16 ++--------
+ Documentation/git-notes.txt    | 55 +++-------------------------------
+ 3 files changed, 33 insertions(+), 81 deletions(-)
 
-diff --git a/Documentation/config/sendemail.txt b/Documentation/config/sendemail.txt
-index 50baa5d6bfb..51da7088a84 100644
---- a/Documentation/config/sendemail.txt
-+++ b/Documentation/config/sendemail.txt
-@@ -18,17 +18,49 @@ sendemail.<identity>.*::
- 	identity is selected, through either the command-line or
- 	`sendemail.identity`.
- 
-+sendemail.multiEdit::
-+	If true (default), a single editor instance will be spawned to edit
-+	files you have to edit (patches when `--annotate` is used, and the
-+	summary when `--compose` is used). If false, files will be edited one
-+	after the other, spawning a new editor each time.
-+
-+sendemail.confirm::
-+	Sets the default for whether to confirm before sending. Must be
-+	one of 'always', 'never', 'cc', 'compose', or 'auto'. See `--confirm`
-+	in the linkgit:git-send-email[1] documentation for the meaning of these
-+	values.
-+
- sendemail.aliasesFile::
-+	To avoid typing long email addresses, point this to one or more
-+	email aliases files.  You must also supply `sendemail.aliasFileType`.
-+
- sendemail.aliasFileType::
-+	Format of the file(s) specified in sendemail.aliasesFile. Must be
-+	one of 'mutt', 'mailrc', 'pine', 'elm', or 'gnus', or 'sendmail'.
+diff --git a/Documentation/config/notes.txt b/Documentation/config/notes.txt
+index aeef56d49ae..c7c4811734b 100644
+--- a/Documentation/config/notes.txt
++++ b/Documentation/config/notes.txt
+@@ -3,6 +3,9 @@ notes.mergeStrategy::
+ 	conflicts.  Must be one of `manual`, `ours`, `theirs`, `union`, or
+ 	`cat_sort_uniq`.  Defaults to `manual`.  See "NOTES MERGE STRATEGIES"
+ 	section of linkgit:git-notes[1] for more information on each strategy.
 ++
-+What an alias file in each format looks like can be found in
-+the documentation of the email program of the same name. The
-+differences and limitations from the standard formats are
-+described below:
-++
-+--
-+sendmail;;
-+*	Quoted aliases and quoted addresses are not supported: lines that
-+	contain a `"` symbol are ignored.
-+*	Redirection to a file (`/path/name`) or pipe (`|command`) is not
-+	supported.
-+*	File inclusion (`:include: /path/name`) is not supported.
-+*	Warnings are printed on the standard error output for any
-+	explicitly unsupported constructs, and any other lines that are not
-+	recognized by the parser.
-+--
- sendemail.annotate::
- sendemail.bcc::
- sendemail.cc::
- sendemail.ccCmd::
- sendemail.chainReplyTo::
--sendemail.confirm::
- sendemail.envelopeSender::
- sendemail.from::
--sendemail.multiEdit::
- sendemail.signedoffbycc::
- sendemail.smtpPass::
- sendemail.suppresscc::
-@@ -44,7 +76,9 @@ sendemail.thread::
- sendemail.transferEncoding::
- sendemail.validate::
- sendemail.xmailer::
--	See linkgit:git-send-email[1] for description.
-+	These configuration variables all provide a default for
-+	linkgit:git-send-email[1] command-line options. See its
-+	documentation for details.
++This setting can be overridden by passing the `--strategy` option to
++linkgit:git-notes[1].
  
- sendemail.signedoffcc (deprecated)::
- 	Deprecated alias for `sendemail.signedoffbycc`.
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 41cd8cb4247..3290043053a 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -456,41 +456,9 @@ Information
+ notes.<name>.mergeStrategy::
+ 	Which merge strategy to choose when doing a notes merge into
+@@ -11,28 +14,35 @@ notes.<name>.mergeStrategy::
+ 	linkgit:git-notes[1] for more information on the available strategies.
+ 
+ notes.displayRef::
+-	The (fully qualified) refname from which to show notes when
+-	showing commit messages.  The value of this variable can be set
+-	to a glob, in which case notes from all matching refs will be
+-	shown.  You may also specify this configuration variable
+-	several times.  A warning will be issued for refs that do not
+-	exist, but a glob that does not match any refs is silently
+-	ignored.
++	Which ref (or refs, if a glob or specified more than once), in
++	addition to the default set by `core.notesRef` or
++	`GIT_NOTES_REF`, to read notes from when showing commit
++	messages with the 'git log' family of commands.
+ +
+ This setting can be overridden with the `GIT_NOTES_DISPLAY_REF`
+ environment variable, which must be a colon separated list of refs or
+ globs.
+ +
++A warning will be issued for refs that do not exist,
++but a glob that does not match any refs is silently ignored.
+++
++This setting can be disabled by the `--no-notes` option to the 'git
++log' family of commands, or by the `--notes=<ref>` option accepted by
++those commands.
+++
+ The effective value of "core.notesRef" (possibly overridden by
+ GIT_NOTES_REF) is also implicitly added to the list of refs to be
+ displayed.
+ 
+ notes.rewrite.<command>::
+ 	When rewriting commits with <command> (currently `amend` or
+-	`rebase`) and this variable is set to `true`, Git
+-	automatically copies your notes from the original to the
+-	rewritten commit.  Defaults to `true`, but see
+-	"notes.rewriteRef" below.
++	`rebase`), if this variable is `false`, git will not copy
++	notes from the original to the rewritten commit.  Defaults to
++	`true`.  See also "`notes.rewriteRef`" below.
+++
++This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
++environment variable, which must be a colon separated list of refs or
++globs.
+ 
+ notes.rewriteMode::
+ 	When copying notes during a rewrite (see the
+@@ -46,14 +56,13 @@ environment variable.
+ 
+ notes.rewriteRef::
+ 	When copying notes during a rewrite, specifies the (fully
+-	qualified) ref whose notes should be copied.  The ref may be a
+-	glob, in which case notes in all matching refs will be copied.
+-	You may also specify this configuration several times.
++	qualified) ref whose notes should be copied.  May be a glob,
++	in which case notes in all matching refs will be copied.  You
++	may also specify this configuration several times.
+ +
+ Does not have a default value; you must configure this variable to
+ enable note rewriting.  Set it to `refs/notes/commits` to enable
+ rewriting for the default commit notes.
+ +
+-This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
+-environment variable, which must be a colon separated list of refs or
+-globs.
++Can be overridden with the `GIT_NOTES_REWRITE_REF` environment variable.
++See `notes.rewrite.<command>` above for a further description of its format.
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index b1285aee3c2..410095e9a4f 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -237,19 +237,9 @@ log.showSignature::
+ mailmap.*::
+ 	See linkgit:git-shortlog[1].
+ 
+-notes.displayRef::
+-	Which refs, in addition to the default set by `core.notesRef`
+-	or `GIT_NOTES_REF`, to read notes from when showing commit
+-	messages with the `log` family of commands.  See
+-	linkgit:git-notes[1].
+-+
+-May be an unabbreviated ref name or a glob and may be specified
+-multiple times.  A warning will be issued for refs that do not exist,
+-but a glob that does not match any refs is silently ignored.
+-+
+-This setting can be disabled by the `--no-notes` option,
+-overridden by the `GIT_NOTES_DISPLAY_REF` environment variable,
+-and overridden by the `--notes=<ref>` option.
++include::includes/cmd-config-section-rest.txt[]
++
++include::config/notes.txt[]
+ 
+ GIT
+ ---
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 0a4200674c4..efbc10f0f59 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -44,7 +44,7 @@ using the `--notes` option. Such notes are added as a patch commentary
+ after a three dash separator line.
+ 
+ To change which notes are shown by 'git log', see the
+-"notes.displayRef" configuration in linkgit:git-log[1].
++"notes.displayRef" discussion in <<CONFIGURATION>>.
+ 
+ See the "notes.rewrite.<command>" configuration for a way to carry
+ notes across commands that rewrite commits.
+@@ -307,6 +307,7 @@ with 'git log', so if you use such notes, you'll probably need to write
+ some special-purpose tools to do something useful with them.
+ 
+ 
++[[CONFIGURATION]]
  CONFIGURATION
  -------------
  
--sendemail.aliasesFile::
--	To avoid typing long email addresses, point this to one or more
--	email aliases files.  You must also supply `sendemail.aliasFileType`.
-+include::includes/cmd-config-section-all.txt[]
+@@ -316,57 +317,9 @@ core.notesRef::
+ 	This setting can be overridden through the environment and
+ 	command line.
  
--sendemail.aliasFileType::
--	Format of the file(s) specified in sendemail.aliasesFile. Must be
--	one of 'mutt', 'mailrc', 'pine', 'elm', or 'gnus', or 'sendmail'.
+-notes.mergeStrategy::
+-	Which merge strategy to choose by default when resolving notes
+-	conflicts.  Must be one of `manual`, `ours`, `theirs`, `union`, or
+-	`cat_sort_uniq`.  Defaults to `manual`.  See "NOTES MERGE STRATEGIES"
+-	section above for more information on each strategy.
 -+
--What an alias file in each format looks like can be found in
--the documentation of the email program of the same name. The
--differences and limitations from the standard formats are
--described below:
+-This setting can be overridden by passing the `--strategy` option.
+-
+-notes.<name>.mergeStrategy::
+-	Which merge strategy to choose when doing a notes merge into
+-	refs/notes/<name>.  This overrides the more general
+-	"notes.mergeStrategy".  See the "NOTES MERGE STRATEGIES" section above
+-	for more information on each available strategy.
+-
+-notes.displayRef::
+-	Which ref (or refs, if a glob or specified more than once), in
+-	addition to the default set by `core.notesRef` or
+-	`GIT_NOTES_REF`, to read notes from when showing commit
+-	messages with the 'git log' family of commands.
+-	This setting can be overridden on the command line or by the
+-	`GIT_NOTES_DISPLAY_REF` environment variable.
+-	See linkgit:git-log[1].
+-
+-notes.rewrite.<command>::
+-	When rewriting commits with <command> (currently `amend` or
+-	`rebase`), if this variable is `false`, git will not copy
+-	notes from the original to the rewritten commit.  Defaults to
+-	`true`.  See also "`notes.rewriteRef`" below.
 -+
----
--sendmail;;
--*	Quoted aliases and quoted addresses are not supported: lines that
--	contain a `"` symbol are ignored.
--*	Redirection to a file (`/path/name`) or pipe (`|command`) is not
--	supported.
--*	File inclusion (`:include: /path/name`) is not supported.
--*	Warnings are printed on the standard error output for any
--	explicitly unsupported constructs, and any other lines that are not
--	recognized by the parser.
----
--
--sendemail.multiEdit::
--	If true (default), a single editor instance will be spawned to edit
--	files you have to edit (patches when `--annotate` is used, and the
--	summary when `--compose` is used). If false, files will be edited one
--	after the other, spawning a new editor each time.
--
--sendemail.confirm::
--	Sets the default for whether to confirm before sending. Must be
--	one of 'always', 'never', 'cc', 'compose', or 'auto'. See `--confirm`
--	in the previous section for the meaning of these values.
-+include::config/sendemail.txt[]
+-This setting can be overridden by the `GIT_NOTES_REWRITE_REF`
+-environment variable.
++include::includes/cmd-config-section-rest.txt[]
  
- EXAMPLES
- --------
+-notes.rewriteMode::
+-	When copying notes during a rewrite, what to do if the target
+-	commit already has a note.  Must be one of `overwrite`,
+-	`concatenate`, `cat_sort_uniq`, or `ignore`.  Defaults to
+-	`concatenate`.
+-+
+-This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
+-environment variable.
+-
+-notes.rewriteRef::
+-	When copying notes during a rewrite, specifies the (fully
+-	qualified) ref whose notes should be copied.  May be a glob,
+-	in which case notes in all matching refs will be copied.  You
+-	may also specify this configuration several times.
+-+
+-Does not have a default value; you must configure this variable to
+-enable note rewriting.
+-+
+-Can be overridden with the `GIT_NOTES_REWRITE_REF` environment variable.
++include::config/notes.txt[]
+ 
+ 
+ ENVIRONMENT
 -- 
 2.37.3.1406.g184357183a6
 
