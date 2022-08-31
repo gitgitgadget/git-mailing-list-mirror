@@ -2,77 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2ED3ECAAD1
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 20:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34E29ECAAD1
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 20:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231202AbiHaUoc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 16:44:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49004 "EHLO
+        id S231874AbiHaU6M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 16:58:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbiHaUo1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 16:44:27 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1C3DEA14E
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 13:44:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1661978658;
-        bh=XhkQ764JbTEL9jiZLwCLi90WgXpYLpKwDWbgHBFwhCI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=e6lni3EP1k6KrHEdeLNiXVJeFFA8i+B6iT3kXdieWjKkTengiW/xHQ3bemucocpro
-         dM4PfPobeqASAdGbk21fTYteQshme7E/66+CCpNHhGD79F9u+wQV7n7Ac1I4TdqXb1
-         k6Fx3RO4TDULqjADDQY8c2i6HNj+hemy/89Z41W4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MSKu0-1oreDi1aWW-00Sf92; Wed, 31
- Aug 2022 22:44:18 +0200
-Date:   Wed, 31 Aug 2022 22:44:18 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     phillip.wood@dunelm.org.uk
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/5] built-in add -p: support diff-so-fancy better
-In-Reply-To: <1d4bf456-6fc0-b675-f0ee-f8ce99bd38b2@gmail.com>
-Message-ID: <31rnq09n-5nor-22n0-r68n-5o46p313p5p3@tzk.qr>
-References: <pull.1336.v2.git.1661376112.gitgitgadget@gmail.com> <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com> <1d4bf456-6fc0-b675-f0ee-f8ce99bd38b2@gmail.com>
+        with ESMTP id S231660AbiHaU6J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 16:58:09 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EB53D3EFC
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 13:58:06 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id n23-20020a7bc5d7000000b003a62f19b453so236544wmk.3
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 13:58:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=Xcd0u5sX46uyp5gvRct9QL9P6aQDzvPVWI6B40FZSe8=;
+        b=P2lDQ8jG6aNxrQYFcgPYiFqE0w3VttoVxPtXS868csygmBE0RPrYuB9Y/6/IdFeM9P
+         r29nwr0f+NeJPwPSfDY+KulC/4BWfyxKxkplaYxGB56sby+LAQ02yM/7S8ZWhkrUQp5d
+         xeBBf7tcCM+Gg+6Wt3Ald/WrcTJmIt/j0P6sxjs0Ci5PNqrk0P337DeVIg6EtNHXIcbr
+         +DNigTs7/CfnbGcrAUOisup5IPVdkdJLagXumEce6jRGENqZ9NWsaFwtN16qMTZKiQmW
+         COviQyMcR6HkoYMZY9soizxz5u07xM59oVG8ZM/qoZSLLq/bFjq7pFwrmobA9J9KKpvo
+         UWWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=Xcd0u5sX46uyp5gvRct9QL9P6aQDzvPVWI6B40FZSe8=;
+        b=5iW3WkX24Qgye43/lINKiy+K7g+qEUYmCuq//qVKRpCNT83hhzQAc3F6lA6NNuMi+B
+         eBjrfXYdPeIN9ar9vUJgAVxtZYdGcbJoQOQpAnD7WRAxsXlhegrZn92AhmhpIAlvDwlU
+         9pKfjzarNuw7G1l1FLhaQ4hQe7E/XrHwa/3p53Sv613XVhvUjeo1bkGQfijWcaBOVdqa
+         y6lAyVuwNkzozMbKA9IFtM3mjniJvjn6eCkwHE9eElh0qf57ElL3NA7b1bs8RZ2qbdWf
+         XQySV9Rus9VsnqqKaz1dgj5EGaAIntmfSxyD1IiAAnzc7zH2wWuDmgNDnYBDXVhEqEPz
+         XYlA==
+X-Gm-Message-State: ACgBeo0hMOu7lDGyHcRI+Rup1Rpfe63NgAysbWW3Bi3FmNCXir02fE5w
+        yNWyLUE7rtB0yqRaHTgMLld4fscC7AJjhg==
+X-Google-Smtp-Source: AA6agR6Zzl43FtbbaunBLMysqgxEshHe4RbYRObA6j5Qzllv/xu7VRpg88vTsGSX1tWevQZ1x6wtuw==
+X-Received: by 2002:a1c:4c03:0:b0:3a5:d65c:c1e7 with SMTP id z3-20020a1c4c03000000b003a5d65cc1e7mr3170954wmf.4.1661979484628;
+        Wed, 31 Aug 2022 13:58:04 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id i16-20020adffc10000000b002253af82fa7sm15766955wrr.9.2022.08.31.13.58.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Aug 2022 13:58:03 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 2/9] Makefile: add ability to TAB-complete cocci *.patch rules
+Date:   Wed, 31 Aug 2022 22:57:49 +0200
+Message-Id: <patch-v2-2.9-0998948b881-20220831T205130Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.37.3.1420.g76f8a3d556c
+In-Reply-To: <cover-v2-0.9-00000000000-20220831T205130Z-avarab@gmail.com>
+References: <cover-0.5-00000000000-20220825T141212Z-avarab@gmail.com> <cover-v2-0.9-00000000000-20220831T205130Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:FPJDEl4v7svBifZSTs2qaaOCaX376CS0bOXmV0yAfpq9ISudEO8
- 1i8TB1o5sqap6IRH2ompGlnkmLJBKohRDi5Vpju9e7RdpneWw3eZ+RGQw4QHKNiZijzSBDD
- C7zp1mQXb0lY2Mq9PSYTydgedQfI0yuqVtUmpcqtzi9POrz+v+RNgyFmnr0JG3Mn9IccNkA
- FqT+hGNGSeXpXSUaP+ZAQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:VbxMw7SgP6I=:oRuEQ/GNz2iFkuB4dfFp0x
- hQJrq9Abzgd4383UstUQGCRC3HSB6sASkVvxZNx+wvMebQvtKDwlY+yF20K6GVUqoUqIuXGMX
- roJxAxDanN7bESrTR/KHO1A2HEm3az6ktxcf52by0ttFpgigisdvKjlpw1rtUDCisWkjh2a3b
- AMcPEwzIUW9NrOWUzESBofUAFI9DIrtSG6clVKK+WpcqqCT7vdiWckCjODbBy9qNNEJuz6Klq
- 171TWS8wlU+OCi4jthqC+6xpHbUONnFvj5iiDyzZG2KYLxWYGDtb+WuhJlx2VKx2bjqBg4YuG
- N1Zo7sPNJzF/u5XS9sJ8GeBh6cTIDULgDzY1O1Q4a2kzgICwuAUfj2R6aZf6IScLxEZGv/zL3
- XOBrmvdxM2kxrCLSXA9U4Y2sHAB+E/kztkAS17bVxTOFHh/app0wI/HFG2y7+s8uNTMKbKvit
- ysa6aCYT347cPQGAICmvV+SAO6OyG7ydtG2Ww4UZ1YZ2bQF2DW7juVfZXv7mMVbLAoAi0FxmA
- ThsWCU7NApUlEH46jgYoNvKjPB5eZ9a2OKXcKf5rbhGyGdWpZnPQVge91EJPn7IO795/0j0GF
- 7ZBXks6GBj51vfReVOkogVa1knMO+wPxPlfT3uPrQ0JRVYAzScpRXmra0PA/cYQsHnCH4tnI6
- nMdcaB9z2Zoi2ahEAP4YxHiFNslyVPCb0aI10s5oLUraZx4IKMNAzgY8SImnMTPfmFOExCbKs
- 6b0ikVSHdk1SWK+DaP9FHSh2dTylpCaMqIU+fPAWUGLUQauaSSDwc9eFhGYXfBkgAjdaDRzWz
- JajmRL/MyzYMg0GukiTOPh2sqVmWqvL5Py1liKqgKt8LUwfE5XCugqCevVanmVhMEeURhh+iZ
- IcVWOvgkLEcBglWRQtWYr1L+Gc4Cw7mME+CRuw5QZVCJYv1ieouLWT7s45b5gPxCKj5nhfqY/
- 6rjMkHjFWLSMN1SAtcbWG0HSwfPKn40TLLoPrnEwZl34L6S5joac3sZNnqQUVFBcuLfN9elnO
- CWLQ8XRN7Xqdw+IgVikPauYCK3+0ghbjT/rozJGV+0urs1pjSeN2/c7ptxUpKKdqMb+QNgVv/
- Gv8cAes/qR0Hbf8e140EyWjKLeyR7xLvYTxhLHLSskozHu2Gl/6oN/JgO39oaofZn8j1tN5/y
- /QYomxmZVMB3CbF7Op1AN7Glyz
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Declare the contrib/coccinelle/<rule>.cocci.patch rules in such a way
+as to allow TAB-completion, and slightly optimize the Makefile by
+cutting down on the number of $(wildcard) in favor of defining
+"coccicheck" and "coccicheck-pending" in terms of the same
+incrementally filtered list.
 
-On Tue, 30 Aug 2022, Phillip Wood wrote:
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-> I'm not convinced about patch 1 or about showing the hunk offsets with
-> interactive.diffFilter in patch 4 but the series looks basically sound.
+diff --git a/Makefile b/Makefile
+index eac30126e29..42a70eeaef4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3139,9 +3139,15 @@ check: $(GENERATED_H)
+ 		exit 1; \
+ 	fi
+ 
++COCCI = $(wildcard contrib/coccinelle/*.cocci)
++COCCI_PATCHES = $(addsuffix .patch,$(COCCI))
++COCCICHECK_PENDING = $(filter %.pending.cocci.patch,$(COCCI_PATCHES))
++COCCICHECK = $(filter-out $(COCCICHECK_PENDING),$(COCCI_PATCHES))
++
+ COCCI_TEST_RES = $(wildcard contrib/coccinelle/tests/*.res)
+ 
+-%.cocci.patch: %.cocci $(COCCI_SOURCES)
++$(COCCI_PATCHES): $(COCCI_SOURCES)
++$(COCCI_PATCHES): %.patch: %
+ 	$(QUIET_SPATCH) \
+ 	if test $(SPATCH_BATCH_SIZE) = 0; then \
+ 		limit=; \
+@@ -3178,11 +3184,11 @@ $(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : contrib/coccinell
+ coccicheck-test: $(COCCI_TEST_RES_GEN)
+ 
+ coccicheck: coccicheck-test
+-coccicheck: $(addsuffix .patch,$(filter-out %.pending.cocci,$(wildcard contrib/coccinelle/*.cocci)))
++coccicheck: $(COCCICHECK)
+ 
+ # See contrib/coccinelle/README
+ coccicheck-pending: coccicheck-test
+-coccicheck-pending: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.pending.cocci))
++coccicheck-pending: $(COCCICHECK_PENDING)
+ 
+ .PHONY: coccicheck coccicheck-pending
+ 
+@@ -3450,7 +3456,7 @@ profile-clean:
+ 
+ cocciclean:
+ 	$(RM) -r .build/contrib/coccinelle
+-	$(RM) contrib/coccinelle/*.cocci.patch*
++	$(RM) $(COCCI_PATCHES)*
+ 
+ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) -r .build
+-- 
+2.37.3.1420.g76f8a3d556c
 
-The fourth iteration of this patch series that I just sent out should
-address both concerns.
-
-Thank you!
-Dscho
