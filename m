@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 485B0ECAAD3
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 08:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC934ECAAD1
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 08:42:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229888AbiHaIl5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 04:41:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54250 "EHLO
+        id S230085AbiHaImA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 04:42:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229583AbiHaIlz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 04:41:55 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFB51B655F
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 01:41:53 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id ay12so6968923wmb.1
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 01:41:53 -0700 (PDT)
+        with ESMTP id S229468AbiHaIl4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 04:41:56 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8D3CB6560
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 01:41:54 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id d5so6967072wms.5
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 01:41:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=lCcLjELQewX38BLCD3LpGvqi2PLpoqjXS8dqNsp+ixw=;
-        b=R2EytjCwRh4/K1AXei7QKwvWQw8WR6HpVAcHGgN7qSd2BrOOan7JyZ1fGGDqODvtH6
-         g8S6rUKjlvw/WHewnHfo++Hcb/sxRRQZRbxhNl7JAv8Hnj+OCkcYNpFB22UhUBVjdjn4
-         DINDaOR1d6niVKgESFfADUYqRoZyGqs27HybmikwoNyQpTaw+tuE0cjyuh0nQow1pyk2
-         cUQj+FuzOeJBiO7COByN7jDnnOoUJsliUDljB4OX42ApusGwSsb8eTHQHkaJjaYqN6kc
-         McZs6R0mqkKM3gHEOsJCFF73fZ7DO4rgqI5vj9Y4St/T60d06keMNsMbXQVIGFcwlDaw
-         QPPQ==
+        bh=G1QA90W7BkClbULc6WUseq2OEi/28M14TQ1sYTnxL3U=;
+        b=hHPk+Utn3pOn6+InB04Em/b8WCPEQGx98Icnm0nxH07UT8Jq866d7loaMTvfvwx0na
+         OOljipborCi3i3OQ00OdOvPp/vlpAbBiJIYd9P9d96nmQfUQMhCnEL9sGn5H6KkaFLP3
+         ZY7KA3o1BHAttvHnd5cMRtzD9is9yICTsN7YuzK7CKSQtoz96H1F/0ju6vMeDeu6qwUx
+         7fGDzUQMoX4MvMtlkn96VXwhdF1y4KXJ8bGopoIzbulxSQjJeO7O2XvTOgMFjpo4QlmS
+         nLUQEYHXSGDbdO8GIJY4HpVJ1/LS/dD2OS0lJxOit1PjAiFcsjxqpMfjmsM+wQ6IIoye
+         nBaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=lCcLjELQewX38BLCD3LpGvqi2PLpoqjXS8dqNsp+ixw=;
-        b=ht1wckep1pOy/qfg7yU5OInMbgvPDkZ/bxrIMq1cleybvNX5RmAS/7VIVYCQ38MQ9Q
-         XAtI2kJcSAQBciHEAwQQQo+Xbu1EkBveKGpzl5012I+Qa39t1SLKzdvpVGqlUxwLY+ai
-         tIcpHyx70qvUpdxW3GJuE2/wneDKmTlSlrfdbsN4t7C8kXvhyiGs89aIPcXFCgxsF9oz
-         whDCzns0XdlgLjtM5v2IRFbVG7iTUYpVH3SJ9EkQfoh8hVRhF2+P5AXXTE5YsWxf+vJY
-         PoEx4T7CVuAe94Ua3ly4R1fvCo6KClVAqE3gfiznScpBMCJIW7JGTJubrV2yRTm6DDI9
-         Ep/Q==
-X-Gm-Message-State: ACgBeo3PfFATFVkJmGjpf6xFDn0XTQvaK/6PPsyNvb3hD6wSJvCfMYCo
-        tooehg1IlunBtaaPJljpaGWXgBXgg4P+jg==
-X-Google-Smtp-Source: AA6agR4P76Ls42w+lzekQ9GpwQfSUPEboHCYMulrJewtYWgnSLbRSMKOAzjPIItE/k66BOtVhzwF4Q==
-X-Received: by 2002:a1c:44d7:0:b0:3a6:725:c0a7 with SMTP id r206-20020a1c44d7000000b003a60725c0a7mr1305055wma.137.1661935312069;
-        Wed, 31 Aug 2022 01:41:52 -0700 (PDT)
+        bh=G1QA90W7BkClbULc6WUseq2OEi/28M14TQ1sYTnxL3U=;
+        b=mwD2CAB7Fjpbk+capyHbgmy0Wcs5h3tMlKwvDwGX4zbpIi+ljNKY6+fC/IiRrPKEvi
+         ZAWpjmEjNFOTrvyYHDMGb5drlTC1/8TduXTilBixlKyEL+t6KVxnntqWJiWRg9nGu7AF
+         cLrswDfHWExvx9OTs+idFbry1/Ha3xgLgi5iiIJEDDkKktNL8Jd03l/LbgB03goRCWeD
+         Zgr+fQPUoyzPVWcCxqaKwE/HMTJ1CKxDcBA8ThFDIyGInMzSxbrhrGtEH0zzFL0YNTql
+         +rPB/n7KvDzCDIZWD/GcUu0nlErIPY5aJ8LymhYHmoR/ileNq5dZJhxUf1eZvoPZ0gEQ
+         3gmw==
+X-Gm-Message-State: ACgBeo1CUF3lxu2CAE5tOTC8UJVsJlOH36E3q0/E0M7SFSoLuHKbTgIc
+        CtRPP/pX/wPtMQLwqyZrAA9jTGhNOygmRg==
+X-Google-Smtp-Source: AA6agR6Pm52jNsHR4vwXba4RWRob3su/YglEPnlwWgAxaIK7Ee26vpItjUtCc2k6pOIQH8hJBE3j3w==
+X-Received: by 2002:a05:600c:4f10:b0:3a5:f8c8:a5b5 with SMTP id l16-20020a05600c4f1000b003a5f8c8a5b5mr1261363wmq.34.1661935313139;
+        Wed, 31 Aug 2022 01:41:53 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n2-20020a7bc5c2000000b003a5c064717csm1439036wmk.22.2022.08.31.01.41.51
+        by smtp.gmail.com with ESMTPSA id n2-20020a7bc5c2000000b003a5c064717csm1439036wmk.22.2022.08.31.01.41.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 01:41:51 -0700 (PDT)
+        Wed, 31 Aug 2022 01:41:52 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Matheus Tavares <matheus.bernardino@usp.br>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 1/9] docs: add and use include template for config/* includes
-Date:   Wed, 31 Aug 2022 10:41:32 +0200
-Message-Id: <patch-v3-1.9-da21c19978c-20220831T083759Z-avarab@gmail.com>
+Subject: [PATCH v3 2/9] grep docs: de-duplicate configuration sections
+Date:   Wed, 31 Aug 2022 10:41:33 +0200
+Message-Id: <patch-v3-2.9-d16e927caa2-20220831T083759Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.3.1406.g184357183a6
 In-Reply-To: <cover-v3-0.9-00000000000-20220831T083759Z-avarab@gmail.com>
 References: <cover-v2-0.9-00000000000-20220729T081959Z-avarab@gmail.com> <cover-v3-0.9-00000000000-20220831T083759Z-avarab@gmail.com>
@@ -68,157 +68,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In b6a8d09f6d8 (gc docs: include the "gc.*" section from "config" in
-"gc", 2019-04-07) the "git gc" documentation was made to include the
-config/gc.txt in its "CONFIGURATION" section. We do that in several
-other places, but "git gc" was the only one with a blurb above the
-include to orient the reader.
+Include the "config/grep.txt" file in "git-grep.txt", instead of
+repeating an almost identical description of the "grep" configuration
+variables in two places.
 
-We don't want readers to carefully scrutinize "git-config(1)" and
-"git-gc(1)" looking for discrepancies, instead we should tell them
-that the latter includes a part of the former.
+There is no loss of information here that isn't shown in the addition
+to "grep.txt". This change was made by copying the contents of
+"git-grep.txt"'s version over the "grep.txt" version. Aside from the
+change "grep.txt" being made here the two were identical.
 
-This change formalizes that wording in two new templates to be
-included, one for the "git gc" case where the entire section is
-included from "git-config(1)", and another for when the inclusion of
-"git-config(1)" follows discussion unique to that documentation. In
-order to use that re-arrange the order of those being discussed in the
-"git-merge(1)" documentation.
+This documentation started being copy/pasted around in
+b22520a37c8 (grep: allow -E and -n to be turned on by default via
+configuration, 2011-03-30). After that in e.g. 6453f7b3486 (grep: add
+grep.fullName config variable, 2014-03-17) they started drifting
+apart, with only grep.fullName being described in the command
+documentation.
+
+In 434e6e753fe (config.txt: move grep.* to a separate file,
+2018-10-27) we gained the include, but didn't do this next step, let's
+do it now.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/Makefile                             | 1 +
- Documentation/git-fsck.txt                         | 2 ++
- Documentation/git-gc.txt                           | 3 +--
- Documentation/git-imap-send.txt                    | 2 ++
- Documentation/git-merge.txt                        | 5 ++++-
- Documentation/git-mergetool.txt                    | 3 +++
- Documentation/git-rebase.txt                       | 2 ++
- Documentation/includes/cmd-config-section-all.txt  | 3 +++
- Documentation/includes/cmd-config-section-rest.txt | 3 +++
- 9 files changed, 21 insertions(+), 3 deletions(-)
- create mode 100644 Documentation/includes/cmd-config-section-all.txt
- create mode 100644 Documentation/includes/cmd-config-section-rest.txt
+ Documentation/config/grep.txt |  7 +++++--
+ Documentation/git-grep.txt    | 29 ++---------------------------
+ 2 files changed, 7 insertions(+), 29 deletions(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index bd6b6fcb930..849af6da307 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -62,6 +62,7 @@ HOWTO_TXT += $(wildcard howto/*.txt)
+diff --git a/Documentation/config/grep.txt b/Documentation/config/grep.txt
+index 182edd813a5..e521f20390c 100644
+--- a/Documentation/config/grep.txt
++++ b/Documentation/config/grep.txt
+@@ -17,8 +17,11 @@ grep.extendedRegexp::
+ 	other than 'default'.
  
- DOC_DEP_TXT += $(wildcard *.txt)
- DOC_DEP_TXT += $(wildcard config/*.txt)
-+DOC_DEP_TXT += $(wildcard includes/*.txt)
+ grep.threads::
+-	Number of grep worker threads to use.
+-	See `grep.threads` in linkgit:git-grep[1] for more information.
++	Number of grep worker threads to use. If unset (or set to 0), Git will
++	use as many threads as the number of logical cores available.
++
++grep.fullName::
++	If set to true, enable `--full-name` option by default.
  
- ifdef MAN_FILTER
- MAN_TXT = $(filter $(MAN_FILTER),$(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT))
-diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
-index 5088783dccb..29318ea957e 100644
---- a/Documentation/git-fsck.txt
-+++ b/Documentation/git-fsck.txt
-@@ -107,6 +107,8 @@ care about this output and want to speed it up further.
+ grep.fallbackToNoIndex::
+ 	If set to true, fall back to git grep --no-index if git grep
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 58d944bd578..dabdbe8471d 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -343,34 +343,9 @@ performance in this case, it might be desirable to use `--threads=1`.
  CONFIGURATION
  -------------
  
+-grep.lineNumber::
+-	If set to true, enable `-n` option by default.
+-
+-grep.column::
+-	If set to true, enable the `--column` option by default.
+-
+-grep.patternType::
+-	Set the default matching behavior. Using a value of 'basic', 'extended',
+-	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
+-	`--fixed-strings`, or `--perl-regexp` option accordingly, while the
+-	value 'default' will return to the default matching behavior.
+-
+-grep.extendedRegexp::
+-	If set to true, enable `--extended-regexp` option by default. This
+-	option is ignored when the `grep.patternType` option is set to a value
+-	other than 'default'.
+-
+-grep.threads::
+-	Number of grep worker threads to use. If unset (or set to 0), Git will
+-	use as many threads as the number of logical cores available.
+-
+-grep.fullName::
+-	If set to true, enable `--full-name` option by default.
+-
+-grep.fallbackToNoIndex::
+-	If set to true, fall back to git grep --no-index if git grep
+-	is executed outside of a git repository.  Defaults to false.
 +include::includes/cmd-config-section-all.txt[]
-+
- include::config/fsck.txt[]
  
- DISCUSSION
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index 0af7540a0c8..a65c9aa62d6 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -110,8 +110,7 @@ users and their repositories.
- CONFIGURATION
- -------------
++include::config/grep.txt[]
  
--The below documentation is the same as what's found in
--linkgit:git-config[1]:
-+include::includes/cmd-config-section-all.txt[]
- 
- include::config/gc.txt[]
- 
-diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
-index 63cf498ce9f..f7b18515141 100644
---- a/Documentation/git-imap-send.txt
-+++ b/Documentation/git-imap-send.txt
-@@ -54,6 +54,8 @@ CONFIGURATION
- To use the tool, `imap.folder` and either `imap.tunnel` or `imap.host` must be set
- to appropriate values.
- 
-+include::includes/cmd-config-section-rest.txt[]
-+
- include::config/imap.txt[]
- 
- EXAMPLES
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index fee1dc2df28..2d6a1391c89 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -383,13 +383,16 @@ include::merge-strategies.txt[]
- 
- CONFIGURATION
- -------------
--include::config/merge.txt[]
- 
- branch.<name>.mergeOptions::
- 	Sets default options for merging into branch <name>. The syntax and
- 	supported options are the same as those of 'git merge', but option
- 	values containing whitespace characters are currently not supported.
- 
-+include::includes/cmd-config-section-rest.txt[]
-+
-+include::config/merge.txt[]
-+
- SEE ALSO
- --------
- linkgit:git-fmt-merge-msg[1], linkgit:git-pull[1],
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index f784027bc13..c44e205629b 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -102,6 +102,9 @@ success of the resolution after the custom tool has exited.
- CONFIGURATION
- -------------
- :git-mergetool: 1
-+
-+include::includes/cmd-config-section-all.txt[]
-+
- include::config/mergetool.txt[]
- 
- TEMPORARY FILES
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 1877942180e..9cb8931c7ac 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -1259,6 +1259,8 @@ merge cmake
- CONFIGURATION
- -------------
- 
-+include::includes/cmd-config-section-all.txt[]
-+
- include::config/rebase.txt[]
- include::config/sequencer.txt[]
- 
-diff --git a/Documentation/includes/cmd-config-section-all.txt b/Documentation/includes/cmd-config-section-all.txt
-new file mode 100644
-index 00000000000..296a239f2ab
---- /dev/null
-+++ b/Documentation/includes/cmd-config-section-all.txt
-@@ -0,0 +1,3 @@
-+Everything below this line in this section is selectively included
-+from the linkgit:git-config[1] documentation. The content is the same
-+as what's found there:
-diff --git a/Documentation/includes/cmd-config-section-rest.txt b/Documentation/includes/cmd-config-section-rest.txt
-new file mode 100644
-index 00000000000..b1e7682c1dc
---- /dev/null
-+++ b/Documentation/includes/cmd-config-section-rest.txt
-@@ -0,0 +1,3 @@
-+Everything above this line in this section isn't included from the
-+linkgit:git-config[1] documentation. The content that follows is the
-+same as what's found there:
+ GIT
+ ---
 -- 
 2.37.3.1406.g184357183a6
 
