@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93FBFECAAD4
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 23:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 788A2ECAAD1
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 23:19:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232901AbiHaXTm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 19:19:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44528 "EHLO
+        id S232905AbiHaXTo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 19:19:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232774AbiHaXSw (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232778AbiHaXSw (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 31 Aug 2022 19:18:52 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E0AA1037E1
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 16:18:47 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id e13so19222147wrm.1
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 16:18:47 -0700 (PDT)
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 159DF1037D0
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 16:18:46 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id u18so7465108wrq.10
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 16:18:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=Uq0C+dZrVb4mtBQ15qg+F6gPAcsIySojqkrl3I8Lz14=;
-        b=N6e0RFTYAhBrexDHnVAeQqtY4XRV8vOF+9+jHs7s/4W+i1pAse80tSlU4CldCjMwRB
-         9tMPCz7VuGw0ylSoNb/w8fqbZLqfXKqJd29qcoyYjiuFnCwTX9s+WCZsXALnTfEWllPE
-         798afTG74WF9gRn1pNhDYwA63JFEn394vA+za5Bi2oBqgSU/hG3bmD9fBdPfGpMA7Jn6
-         dzQKfUaUeEpVqMcqvz3oxFBDQWB+lM8tupO/PTVmgY7VjAz/B614svNRIm/6ehp9/ouf
-         3x2gpSw3FuQFICW51u+s6F5LhWHb3DIMMP9+fORSh7LCty/03StzMEf306nt90H5Aos9
-         TmuQ==
+        bh=A/84xM0zF+mQqXYyVHmSpgTf/ySnQI6v8lZMHTM1K5s=;
+        b=Tdgo9ZjFFKHnnRas/hDDR/13ophtAQN7w+o94u08bGRdrQ+9UMTKSmG2Xjh52DlNoc
+         i1aLL+iz+OK1QX93ADCsDOMHzNPsK6L8yoGZRb86bcfagjwpDBFn7QxgFyU0RzK0xBNI
+         difcNu6g0MZHd03pQPyz+BpVknHPpZeoFq5DzpvcNTkpyFNfwvLad/ay2fpw+tdfxJOv
+         a9n5DNp+0DDxhUxYEJG93XebxhD80EvzOCEa1sBwbxY2opRlvfCFUHSNishjqD2oWwOU
+         RfGF8t5ZZx1u6tEjO52MnZi+PtFq8slWnnQMMxx2AH1rRnT7J1GeifwB4b5YgiEjY7wg
+         6O/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=Uq0C+dZrVb4mtBQ15qg+F6gPAcsIySojqkrl3I8Lz14=;
-        b=T9w7r6LyeJsTN4EfvBGye/0tYkdtTHB+nyeqEjwpb+qd3geVy0nWC4xhWiRjHaxmLc
-         9mcG/+cEx+mQWOTTIAx/SwmrfG7QcEYVYTr2oB/ih9giVcAHgYwtRN/Oh/d8g7PhdSgQ
-         zpnMqtALGChewCz/pS1RJFhW3hh+1zkEQPznflvl1p4DpQCbd1L/3llTEXtH7tHbz68v
-         s/3iNWt+5yO6U5jXjiwPShUFVuEdHYkCg7UQ6PPLdUnPzujZ1yTBse1Nni+/ktPWMQcu
-         L9GOhmxyztFSOEyV2Hc5yKbQMhBzne2HnSA8BEA3aXWKxQcNJyb6JVD34lBqYKErx7C2
-         q70Q==
-X-Gm-Message-State: ACgBeo2ivH2pi6pvUpNVlzaoyU+xUOTGfccobllnaRZbmzNdr/R7I1tH
-        M/pzX1ZoDwLl6MxKjxKjwgcTzgmzKSvqJg==
-X-Google-Smtp-Source: AA6agR6Q4o3+BxFROTU6coBPqyJBRW3rC/+dJwScZMAXK6cUTN71i/kr5EYlb5BC0ifrVLB/yj/Hyg==
-X-Received: by 2002:a5d:47a9:0:b0:226:e849:4373 with SMTP id 9-20020a5d47a9000000b00226e8494373mr4238942wrb.57.1661987925998;
+        bh=A/84xM0zF+mQqXYyVHmSpgTf/ySnQI6v8lZMHTM1K5s=;
+        b=62V+3hZEQM1taXKYk0AhdyBtDt7d2bIO7o1LI5oAfsKpsvnHLIpQNZOs4rc1VzfWkF
+         D9GI3Ztt2Alm03a5pdLvgmhlNCHbLOYOuhesp4+sHPAe56akpCCJ4+17mqEqljfVtbeF
+         OAN+UJXHXE0mUFdPEd/YaFV1iYnIStgsC0q0uTyjcUlOc9zEy4wG9cs3iXJdOwl2PpmL
+         XXNhA8aycWCgO0eejx1Jqk3WpMBkwlOQisvueZL1e65DjmZlDgHW11VVFHfCnHaZzNXB
+         BxznJV8mPWrAcn0ZDaFf5jMV9TgmwHlX7X9WD7hgbJB9Goym0vyfA413xjlJYKH8PLC1
+         wVIA==
+X-Gm-Message-State: ACgBeo25U4LUprVxIK9z3MzD7yRRCnBiuovZcLRxmBriOtDFkBSRkRM4
+        RzOuACzSiN3J9k7E7RNrxz8O3XNJvOTaxQ==
+X-Google-Smtp-Source: AA6agR4Ze6pNZXyixtGOgrMS3pRIrJ6ADmCZ3hQ+qMvkKTl3y1lXyVJEIYP0QiqzgkK1u3DePSqWQQ==
+X-Received: by 2002:a5d:47cd:0:b0:220:70a2:5383 with SMTP id o13-20020a5d47cd000000b0022070a25383mr13052393wrc.258.1661987925200;
         Wed, 31 Aug 2022 16:18:45 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u18-20020a05600c19d200b003a5a5069107sm3317903wmq.24.2022.08.31.16.18.45
+        by smtp.gmail.com with ESMTPSA id u18-20020a05600c19d200b003a5a5069107sm3317903wmq.24.2022.08.31.16.18.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 16:18:45 -0700 (PDT)
+        Wed, 31 Aug 2022 16:18:44 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 32/33] submodule--helper: libify even more "die" paths for module_update()
-Date:   Thu,  1 Sep 2022 01:18:14 +0200
-Message-Id: <patch-v4-32.33-3254a8ca6eb-20220831T230519Z-avarab@gmail.com>
+Subject: [PATCH v4 31/33] submodule--helper: libify more "die" paths for module_update()
+Date:   Thu,  1 Sep 2022 01:18:13 +0200
+Message-Id: <patch-v4-31.33-a0d71b4e8bb-20220831T230519Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.3.1420.g76f8a3d556c
 In-Reply-To: <cover-v4-00.33-00000000000-20220831T230519Z-avarab@gmail.com>
 References: <cover-v3-00.32-00000000000-20220821T130231Z-avarab@gmail.com> <cover-v4-00.33-00000000000-20220831T230519Z-avarab@gmail.com>
@@ -72,106 +72,147 @@ X-Mailing-List: git@vger.kernel.org
 
 As noted in a preceding commit the get_default_remote_submodule() and
 remote_submodule_branch() functions would invoke die(), and thus leave
-update_submodule() only partially lib-ified. We've addressed the
-former of those in a preceding commit, let's now address the latter.
+update_submodule() only partially lib-ified. Let's address the former
+of those cases.
 
-In addition to lib-ifying the function this fixes a potential (but
-obscure) segfault introduced by a logic error in
-1012a5cbc3f (submodule--helper run-update-procedure: learn --remote,
-2022-03-04):
+Change the functions to return an int exit code (non-zero on failure),
+while leaving the get_default_remote() function for the callers that
+still want the die() semantics.
 
-We were assuming that remote_submodule_branch() would always return
-non-NULL, but if the submodule_from_path() call in that function fails
-we'll return NULL. See its introduction in
-92bbe7ccf1f (submodule--helper: add remote-branch helper,
-2016-08-03). I.e. we'd previously have segfaulted in the xstrfmt()
-call in update_submodule() seen in the context.
+This change addresses 1/2 of the "die" issue in these two lines in
+update_submodule():
+
+	char *remote_name = get_default_remote_submodule(update_data->sm_path);
+	const char *branch = remote_submodule_branch(update_data->sm_path);
+
+We can safely remove the "!default_remote" case from sync_submodule(),
+because our get_default_remote_submodule() function now returns a
+die_message() on failure, so we can have it an dother callers check if
+the exit code should be non-zero instead.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 41 ++++++++++++++++++++++---------------
- 1 file changed, 25 insertions(+), 16 deletions(-)
+ builtin/submodule--helper.c | 58 +++++++++++++++++++++++--------------
+ 1 file changed, 37 insertions(+), 21 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 9de3a3c921a..3f822eac3a1 100644
+index dfd71f0f2b2..9de3a3c921a 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2268,42 +2268,49 @@ static int run_update_procedure(const struct update_data *ud)
- 	return run_update_command(ud, subforce);
- }
+@@ -31,48 +31,57 @@
+ typedef void (*each_submodule_fn)(const struct cache_entry *list_item,
+ 				  void *cb_data);
  
--static const char *remote_submodule_branch(const char *path)
-+static int remote_submodule_branch(const char *path, const char **branch)
+-static char *repo_get_default_remote(struct repository *repo)
++static int repo_get_default_remote(struct repository *repo, char **default_remote)
  {
- 	const struct submodule *sub;
--	const char *branch = NULL;
- 	char *key;
-+	*branch = NULL;
+-	char *dest = NULL, *ret;
++	char *dest = NULL;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct ref_store *store = get_main_ref_store(repo);
+ 	const char *refname = refs_resolve_ref_unsafe(store, "HEAD", 0, NULL,
+ 						      NULL);
  
- 	sub = submodule_from_path(the_repository, null_oid(), path);
- 	if (!sub)
--		return NULL;
-+		return die_message(_("could not initialize submodule at path '%s'"),
-+				   path);
+ 	if (!refname)
+-		die(_("No such ref: %s"), "HEAD");
++		return die_message(_("No such ref: %s"), "HEAD");
  
- 	key = xstrfmt("submodule.%s.branch", sub->name);
--	if (repo_config_get_string_tmp(the_repository, key, &branch))
--		branch = sub->branch;
-+	if (repo_config_get_string_tmp(the_repository, key, branch))
-+		*branch = sub->branch;
- 	free(key);
- 
--	if (!branch)
--		return "HEAD";
-+	if (!*branch) {
-+		*branch = "HEAD";
+ 	/* detached HEAD */
+-	if (!strcmp(refname, "HEAD"))
+-		return xstrdup("origin");
++	if (!strcmp(refname, "HEAD")) {
++		*default_remote = xstrdup("origin");
 +		return 0;
 +	}
  
--	if (!strcmp(branch, ".")) {
-+	if (!strcmp(*branch, ".")) {
- 		const char *refname = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
+ 	if (!skip_prefix(refname, "refs/heads/", &refname))
+-		die(_("Expecting a full ref name, got %s"), refname);
++		return die_message(_("Expecting a full ref name, got %s"),
++				   refname);
  
- 		if (!refname)
--			die(_("No such ref: %s"), "HEAD");
-+			return die_message(_("No such ref: %s"), "HEAD");
+ 	strbuf_addf(&sb, "branch.%s.remote", refname);
+ 	if (repo_config_get_string(repo, sb.buf, &dest))
+-		ret = xstrdup("origin");
++		*default_remote = xstrdup("origin");
+ 	else
+-		ret = dest;
++		*default_remote = dest;
  
- 		/* detached HEAD */
- 		if (!strcmp(refname, "HEAD"))
--			die(_("Submodule (%s) branch configured to inherit "
--			      "branch from superproject, but the superproject "
--			      "is not on any branch"), sub->name);
-+			return die_message(_("Submodule (%s) branch configured to inherit "
-+					     "branch from superproject, but the superproject "
-+					     "is not on any branch"), sub->name);
- 
- 		if (!skip_prefix(refname, "refs/heads/", &refname))
--			die(_("Expecting a full ref name, got %s"), refname);
--		return refname;
-+			return die_message(_("Expecting a full ref name, got %s"),
-+					   refname);
-+
-+		*branch = refname;
-+		return 0;
- 	}
- 
--	return branch;
-+	/* Our "branch" is coming from repo_config_get_string_tmp() */
+ 	strbuf_release(&sb);
+-	return ret;
 +	return 0;
  }
  
- static int ensure_core_worktree(const char *path)
-@@ -2439,7 +2446,9 @@ static int update_submodule(struct update_data *update_data)
- 		code = get_default_remote_submodule(update_data->sm_path, &remote_name);
- 		if (code)
- 			return code;
--		branch = remote_submodule_branch(update_data->sm_path);
-+		code = remote_submodule_branch(update_data->sm_path, &branch);
+-static char *get_default_remote_submodule(const char *module_path)
++static int get_default_remote_submodule(const char *module_path, char **default_remote)
+ {
+ 	struct repository subrepo;
+ 
+ 	if (repo_submodule_init(&subrepo, the_repository, module_path,
+ 				null_oid()) < 0)
+-		die(_("could not get a repository handle for submodule '%s'"),
+-		    module_path);
+-	return repo_get_default_remote(&subrepo);
++		return die_message(_("could not get a repository handle for submodule '%s'"),
++				   module_path);
++	return repo_get_default_remote(&subrepo, default_remote);
+ }
+ 
+ static char *get_default_remote(void)
+ {
+-	return repo_get_default_remote(the_repository);
++	char *default_remote;
++	int code = repo_get_default_remote(the_repository, &default_remote);
++
++	if (code)
++		exit(code);
++
++	return default_remote;
+ }
+ 
+ static char *resolve_relative_url(const char *rel_url, const char *up_path, int quiet)
+@@ -1159,6 +1168,7 @@ static void sync_submodule(const char *path, const char *prefix,
+ 	char *sub_origin_url, *super_config_url, *displaypath, *default_remote;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	char *sub_config_path = NULL;
++	int code;
+ 
+ 	if (!is_submodule_active(the_repository, path))
+ 		return;
+@@ -1198,10 +1208,9 @@ static void sync_submodule(const char *path, const char *prefix,
+ 		goto cleanup;
+ 
+ 	strbuf_reset(&sb);
+-	default_remote = get_default_remote_submodule(path);
+-	if (!default_remote)
+-		die(_("failed to get the default remote for submodule '%s'"),
+-		      path);
++	code = get_default_remote_submodule(path, &default_remote);
++	if (code)
++		exit(code);
+ 
+ 	remote_key = xstrfmt("remote.%s.url", default_remote);
+ 	free(default_remote);
+@@ -2422,9 +2431,16 @@ static int update_submodule(struct update_data *update_data)
+ 				   update_data->displaypath);
+ 
+ 	if (update_data->remote) {
+-		char *remote_name = get_default_remote_submodule(update_data->sm_path);
+-		const char *branch = remote_submodule_branch(update_data->sm_path);
+-		char *remote_ref = xstrfmt("refs/remotes/%s/%s", remote_name, branch);
++		char *remote_name;
++		const char *branch;
++		char *remote_ref;
++		int code;
++
++		code = get_default_remote_submodule(update_data->sm_path, &remote_name);
 +		if (code)
 +			return code;
- 		remote_ref = xstrfmt("refs/remotes/%s/%s", remote_name, branch);
++		branch = remote_submodule_branch(update_data->sm_path);
++		remote_ref = xstrfmt("refs/remotes/%s/%s", remote_name, branch);
  
  		if (!update_data->nofetch) {
+ 			if (fetch_in_submodule(update_data->sm_path, update_data->depth,
 -- 
 2.37.3.1420.g76f8a3d556c
 
