@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02F57ECAAD4
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 23:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0698CECAAD1
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 23:19:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232819AbiHaXTT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 19:19:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44232 "EHLO
+        id S232864AbiHaXTV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 19:19:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232771AbiHaXSi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 19:18:38 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D84109C8E5
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 16:18:37 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id ay39-20020a05600c1e2700b003a5503a80cfso433500wmb.2
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 16:18:37 -0700 (PDT)
+        with ESMTP id S232781AbiHaXSk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 19:18:40 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33EBD4C636
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 16:18:39 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id s7so5225854wro.2
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 16:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=0deIMqRssHJnhF+97Hb/RsRCpTEMFfSZNWXu0YUuhZU=;
-        b=Fd1rJhcSbRbLda8BASBre+JVAvrucK2KdGRY4+R1R/3WLxhuaCEFmFLRTKMGfZxdRY
-         VTLVctiBEAwEo3araidwFLqVC4v7AUzBqWdF6YC+SMgAgg4h/c7PUDfNPIz4QwhuCuRy
-         +Or/JsbvMQqppTtCL1VLyykjF8nF7Tb5tOLyOLU2X5O5MzxoxZN3IBZksk9xF5pho9bG
-         wTufHWaPzixcijzHLsEOOKMN2wL+EaJw1C8UEMfZ82HsvE7E8tm/0XF0wP80kAGrslqu
-         VoU2n4J3P8uzHpNjFtpRtkh/2Z6TeXA6SB31q++R7JQcCGMThbPaAUi4oYmg+2OkF9aX
-         j2BA==
+        bh=jLGnDA05jM1kKA+Us9LI/1yvfDX1KqtqYdb/PpOyae0=;
+        b=Qe9gnegHX2QfQQkiJHrD7x/ZjZPXS7lgfeK3qCpkDDRFtGhlHbPthOWcyuM7vT3ol5
+         d7bqxGtiPoIdurEIg1VAPNTLba0wrz5GD+9YKnHLK1v4QgE0TQdQvPJzyi+8GzRHmLvw
+         xbVCBo7A1ZzQjMsTukFBrgq/mQllQG7XGmX1Nwbt2FIPNMDNfiSxVhDkPo61KpDOIQH3
+         GrZ/U/ISxipbzEuj1QoHdiwQRDJkPCCYhNglGJ6zsfjgz1ZqUFpdSSlARTWvArhM/e2D
+         9Agf8D5+JhcS4I8KMJ//yricoEsGNCH/yNO8Vy30qrtuh3+xzbhuZGtWOuQC2ZzgHown
+         voVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=0deIMqRssHJnhF+97Hb/RsRCpTEMFfSZNWXu0YUuhZU=;
-        b=0jlMQ3JVU8YY+bK/q00pvfGcG/xXtMToBLrQwDSlOf5J1MjIdFg+AKyEXS0rUhYpUp
-         XvhZ73M1U1NMK4TZ5DMgLWBM/GcxgJzrbPIPlF2qYZDZ68+OChmFs+fu9uC9+7PsyNSq
-         u+K2mcOrqO032tM7J0GAGbXx/BXmdqq81HaoOPTd40uUzT5gj27txztndxM8KvltezEc
-         cPZH5cHAEjWNpwlPpD+Mpdx5UfvkLVfmc9luL5/D8RXTm0joTJWWMGTQJb40TpU4mlH2
-         7YKfJb1nmRRRFYN8blvCYxwnhIAcrCIhflrdbtNE5lFy9RvvrvRSMmchx+dvTliOBweZ
-         4h3A==
-X-Gm-Message-State: ACgBeo0dDdurArxb2fDIiPYX9Qx88aEZP2URG++hR9xvvgstB5QMLT1u
-        XA3/i4YzxLGZ82m2GVWo6L1PhFmP9A4O8w==
-X-Google-Smtp-Source: AA6agR79DYJ9gHmS0jwNYPlwh5BgnPO4MDMppN6KzvpjO/D+JD8roE2845ljem078xZGe1NGQH+Jmg==
-X-Received: by 2002:a05:600c:2f88:b0:3a5:4014:4b47 with SMTP id t8-20020a05600c2f8800b003a540144b47mr3302876wmn.96.1661987916337;
-        Wed, 31 Aug 2022 16:18:36 -0700 (PDT)
+        bh=jLGnDA05jM1kKA+Us9LI/1yvfDX1KqtqYdb/PpOyae0=;
+        b=obGXg/MUpw15dPPP/Ks9kuw2/WdOht44fpOA2YE9eP+BbvOyM6sVAnE41TvUkTAcZC
+         4b6IyFIuN0H1KT431ZhmUzTLiNDppVpf+z9Wvv0hiLhDTmEkgMhHdjIDLoGBBL6kCeFm
+         gQc1/cZZMSoIX3S/kDvHxleJ30PjUkIPE2VVILk2+ksQvbd7kfJ5TA8r4G+9ZXBIcROW
+         pz1ws58bgZAX4ERvjDW768RmHv8MqYVw1fhCwHPX7b5zmcSJMHYH1okva9msR3BXXApv
+         iDVNFWKpNPamPsCTNGRBcgNDJcKcUKQStyAnc8l40pELAukmVrz61V4PR40iJ4rgm2On
+         hMHA==
+X-Gm-Message-State: ACgBeo3My8//JydZcjRuKg2I1YP1SojCjlQ0mOCplt6HehXxkS85RvjW
+        dkIsxwT14kN66faOOOusUnThwSsW9RffCA==
+X-Google-Smtp-Source: AA6agR5fPt7/KsekhLdJlOlt2OCm4R4UlZnniyuTusZQ+V5wzCbj7hQ+2o7W/+t+eAy1iEWtd/PFxg==
+X-Received: by 2002:a5d:6f0c:0:b0:226:eda7:ee93 with SMTP id ay12-20020a5d6f0c000000b00226eda7ee93mr2607781wrb.657.1661987918664;
+        Wed, 31 Aug 2022 16:18:38 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u18-20020a05600c19d200b003a5a5069107sm3317903wmq.24.2022.08.31.16.18.35
+        by smtp.gmail.com with ESMTPSA id u18-20020a05600c19d200b003a5a5069107sm3317903wmq.24.2022.08.31.16.18.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 16:18:35 -0700 (PDT)
+        Wed, 31 Aug 2022 16:18:38 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Prathamesh Chavan <pc44800@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 20/33] submodule--helper: return "ret", not "1" from update_submodule()
-Date:   Thu,  1 Sep 2022 01:18:02 +0200
-Message-Id: <patch-v4-20.33-fdd9ef8b6f6-20220831T230519Z-avarab@gmail.com>
+Subject: [PATCH v4 23/33] submodule API: don't handle SM_..{UNSPECIFIED,COMMAND} in to_string()
+Date:   Thu,  1 Sep 2022 01:18:05 +0200
+Message-Id: <patch-v4-23.33-d101aa6c8c5-20220831T230519Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.3.1420.g76f8a3d556c
 In-Reply-To: <cover-v4-00.33-00000000000-20220831T230519Z-avarab@gmail.com>
 References: <cover-v3-00.32-00000000000-20220821T130231Z-avarab@gmail.com> <cover-v4-00.33-00000000000-20220831T230519Z-avarab@gmail.com>
@@ -70,55 +70,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend the update_submodule() function to return the failing "ret" on
-error, instead of overriding it with "1".
+Change the submodule_strategy_to_string() function added in
+3604242f080 (submodule: port init from shell to C, 2016-04-15) to
+really return a "const char *". In the "SM_UPDATE_COMMAND" case it
+would return a strbuf_detach().
 
-This code was added in b3c5f5cb048 (submodule: move core cmd_update()
-logic to C, 2022-03-15), and this change ends up not making a
-difference as this function is only called in update_submodules(). If
-we return non-zero here we'll always in turn return "1" in
-module_update().
+Furthermore, this function would return NULL on SM_UPDATE_UNSPECIFIED,
+so it wasn't safe to xstrdup() its return value in the general case,
+or to use it in a sprintf() format as the code removed in the
+preceding commit did.
 
-But if we didn't do that and returned any other non-zero exit code in
-update_submodules() we'd fail the test that's being amended
-here. We're still testing the status quo here.
+But its callers would never call it with either SM_UPDATE_UNSPECIFIED
+or SM_UPDATE_COMMAND. Let's have its behavior reflect how its only
+user expects it to behave, and BUG() out on the rest.
 
-This change makes subsequent refactoring of update_submodule() easier,
-as we'll no longer need to worry about clobbering the "ret" we get
-from the run_command().
+By doing this we can also stop needlessly xstrdup()-ing and free()-ing
+the memory for the config we're setting. We can instead always use
+constant strings. We can also use the *_tmp() variant of
+git_config_get_string().
+
+Let's also rename this submodule_strategy_to_string() function to
+submodule_update_type_to_string(). Now that it's only tasked with
+returning a string version of the "enum submodule_update_type type".
+Before it would look at the "command" field in "struct
+submodule_update_strategy".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 2 +-
- t/t7406-submodule-update.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ builtin/submodule--helper.c | 10 +++++-----
+ submodule.c                 | 12 +++++-------
+ submodule.h                 |  2 +-
+ 3 files changed, 11 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 4fbbffb4637..59c3a9afe6e 100644
+index 965196a005d..35989c81603 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2448,7 +2448,7 @@ static int update_submodule(struct update_data *update_data)
- 			    update_data->displaypath);
- 		if (ret == 128)
- 			exit(ret);
--		return 1;
-+		return ret;
- 	}
+@@ -418,7 +418,8 @@ static void init_submodule(const char *path, const char *prefix,
+ {
+ 	const struct submodule *sub;
+ 	struct strbuf sb = STRBUF_INIT;
+-	char *upd = NULL, *url = NULL, *displaypath;
++	const char *upd;
++	char *url = NULL, *displaypath;
  
+ 	displaypath = get_submodule_displaypath(path, prefix);
+ 
+@@ -474,14 +475,14 @@ static void init_submodule(const char *path, const char *prefix,
+ 
+ 	/* Copy "update" setting when it is not set yet */
+ 	strbuf_addf(&sb, "submodule.%s.update", sub->name);
+-	if (git_config_get_string(sb.buf, &upd) &&
++	if (git_config_get_string_tmp(sb.buf, &upd) &&
+ 	    sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
+ 		if (sub->update_strategy.type == SM_UPDATE_COMMAND) {
+ 			fprintf(stderr, _("warning: command update mode suggested for submodule '%s'\n"),
+ 				sub->name);
+-			upd = xstrdup("none");
++			upd = "none";
+ 		} else {
+-			upd = xstrdup(submodule_strategy_to_string(&sub->update_strategy));
++			upd = submodule_update_type_to_string(sub->update_strategy.type);
+ 		}
+ 
+ 		if (git_config_set_gently(sb.buf, upd))
+@@ -490,7 +491,6 @@ static void init_submodule(const char *path, const char *prefix,
+ 	strbuf_release(&sb);
+ 	free(displaypath);
+ 	free(url);
+-	free(upd);
+ }
+ 
+ static void init_submodule_cb(const struct cache_entry *list_item, void *cb_data)
+diff --git a/submodule.c b/submodule.c
+index 3fa5db3ecdf..1ebda30c506 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -415,10 +415,9 @@ int parse_submodule_update_strategy(const char *value,
  	return 0;
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 6cc07460dd2..c5f5dbe55e0 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -769,7 +769,7 @@ test_expect_success 'submodule update continues after recursive checkout error'
- 	   echo "" > file
- 	  )
- 	 ) &&
--	 test_must_fail git submodule update --recursive &&
-+	 test_expect_code 1 git submodule update --recursive &&
- 	 (cd submodule2 &&
- 	  git rev-parse --verify HEAD >../actual
- 	 ) &&
+ }
+ 
+-const char *submodule_strategy_to_string(const struct submodule_update_strategy *s)
++const char *submodule_update_type_to_string(enum submodule_update_type type)
+ {
+-	struct strbuf sb = STRBUF_INIT;
+-	switch (s->type) {
++	switch (type) {
+ 	case SM_UPDATE_CHECKOUT:
+ 		return "checkout";
+ 	case SM_UPDATE_MERGE:
+@@ -428,12 +427,11 @@ const char *submodule_strategy_to_string(const struct submodule_update_strategy
+ 	case SM_UPDATE_NONE:
+ 		return "none";
+ 	case SM_UPDATE_UNSPECIFIED:
+-		return NULL;
+ 	case SM_UPDATE_COMMAND:
+-		strbuf_addf(&sb, "!%s", s->command);
+-		return strbuf_detach(&sb, NULL);
++		BUG("init_submodule() should handle type %d", type);
++	default:
++		BUG("unexpected update strategy type: %d", type);
+ 	}
+-	return NULL;
+ }
+ 
+ void handle_ignore_submodules_arg(struct diff_options *diffopt,
+diff --git a/submodule.h b/submodule.h
+index bfaa9da1868..6a9fec6de11 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -72,7 +72,7 @@ void die_path_inside_submodule(struct index_state *istate,
+ enum submodule_update_type parse_submodule_update_type(const char *value);
+ int parse_submodule_update_strategy(const char *value,
+ 				    struct submodule_update_strategy *dst);
+-const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
++const char *submodule_update_type_to_string(enum submodule_update_type type);
+ void handle_ignore_submodules_arg(struct diff_options *, const char *);
+ void show_submodule_diff_summary(struct diff_options *o, const char *path,
+ 			    struct object_id *one, struct object_id *two,
 -- 
 2.37.3.1420.g76f8a3d556c
 
