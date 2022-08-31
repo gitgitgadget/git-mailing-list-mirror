@@ -2,188 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE491ECAAD4
-	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 16:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57370ECAAD1
+	for <git@archiver.kernel.org>; Wed, 31 Aug 2022 16:03:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231290AbiHaQDF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 12:03:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55944 "EHLO
+        id S229512AbiHaQDH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 12:03:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231891AbiHaQCm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 12:02:42 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 684D6B72AB
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:02:31 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id b5so18876864wrr.5
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:02:31 -0700 (PDT)
+        with ESMTP id S231899AbiHaQCn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 12:02:43 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 290C5B6D0B
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:02:35 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id n17so18889076wrm.4
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 09:02:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc;
-        bh=RK6M6vNaCuXmD05IIM118P3ecENeGQ6PIeoWjahGIWo=;
-        b=NIMvk7K4p4KfVx9tySOeWkvlT8ZYaQR6tBqy4ylgHtQY8IeE+/UzEy0Aiq+iBN8y3m
-         kBwTlmWNgDyheWc28Esp3QdI91pDHIdUAeBw6L2ibzeL9m9yPpWxR+kgnnabMspbkfI4
-         r0QckCvgzdygYKIGuwXJGnzy5ZemPjtu1RT7CHL8uvlIBxCXsDCd/73p5T8b/rQfbfXb
-         gqsKw/q69v+6MRPhzHU9UdhfdKVpFMWJV5HMt1/KlAZjdsHoPLqXfCfM4+iQYZxaZhkz
-         oa/5NXfYec7rtW1tpoOiSq8C3DQCxxP3MxdOxhZ4fi0M23i5VAxS1QbBToegpQdpwvaV
-         np1Q==
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=+sA02ZlHH203KZ20PCvybxVgbV54HnngBsC+EL6Obxw=;
+        b=PFaoU0Wqy4dcniH/IS+H7geKYZuQTOoFoXVxmOP6iziHeKEUWJhQYlXBtb9XKFstxZ
+         btCasodI7Tk44/S2TvLuoWTXC/nj/Od5AWOE/CD/nvf6LXXy1fEqpWAuh5vxWjDZh4TK
+         KEvk/7bIV4VzbaYxmGcK58y92eLncZQZzEF8k2Qa0boXo7bR+xDc613dA3H0Zdj4uRUA
+         FMgIqTX6IC164jWrApnP3oZ9Zo0GV6K41dVoXp7UYO7AZcF4Uez8IcDklwdOxFb9Nv+s
+         8sixvcscs2blqctLE/kS661kudjMYouD2jfZ/piB+gQZYDqYllLn2l/6OGqMJujYUhv/
+         95kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc;
-        bh=RK6M6vNaCuXmD05IIM118P3ecENeGQ6PIeoWjahGIWo=;
-        b=vHDKTfq6sHpvD2ywwJ1gyrrvo35OXB3s3Zaw0pqG+qSxiFQTc30ubKPQUbyDl/w/1S
-         tRXCKB7ONHX9g+Ytgh5UQUI9PEZJoIyBc2siQgA8B01TdMSu82F8PQQgRGYTOdRRAID5
-         YE6FhBoEHl9wiE6mQVD4Faj2qUb4TkwnulnRp/tLme781R2K3mnVyMQ3NX6F21P2Fkla
-         jpJl1SE4/khUcdWYnWYqu8ME1D9eQqLD8Wv8BgcZ2y4KbzptaYMmUv6haj3G628xC4nc
-         X13Vkfzq5JFh/AF7hY/QVNXzqY7I0RpzcPG8p2041dJU3SxaLC7q76cm/OXHIRYb0lof
-         LHYA==
-X-Gm-Message-State: ACgBeo1T+v26idXERR+GS4nqolyhPYkdyxjHaWg8pmhmUSHpvrN3KWeP
-        +gfc0vZRDN62HlDR4cj1w+v0q1tj+gg=
-X-Google-Smtp-Source: AA6agR590roVJdw30UZmfP9lHWOqMl/Zxrdbt1X6ysG/AVfCPFvYCv8e9uEAM2/mzgTToqojdSUXrQ==
-X-Received: by 2002:a05:6000:381:b0:221:7542:61bb with SMTP id u1-20020a056000038100b00221754261bbmr12168014wrf.305.1661961749030;
-        Wed, 31 Aug 2022 09:02:29 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=+sA02ZlHH203KZ20PCvybxVgbV54HnngBsC+EL6Obxw=;
+        b=1lOW/gGxnKMV2LSk0vDlPsHG8D51jDxVqQH8FZgXmMpGJgr95OCXAz5zLVX02XRWCi
+         8S4mc1vt0+QfdiotqVX9864Ad5OHm1jAY9qQCCCQLrwL7d9ZjLkVf53Y05yBZ63p6+O4
+         w4oHFd5yXCDk1RMTaCAcwMOGF2tLmJT00mnc//cRwoms1ojp5eV8sKAuEF0RV3ahy9Pe
+         p84LGKEzavdbsoZxnhu4cF8nMPh087CL3MECerTGDUlGYCGhKTku+UIf5QZkFezC/DOT
+         f4AYSnJ68IA7aqNvmD/7r4s3iJeRBMLoFrx2VYCy9+Xaf40LjK4dQgnYRcbmLSp3pUqY
+         UhBQ==
+X-Gm-Message-State: ACgBeo04NnKUati2gVaNH344RqgnAVmZCpwcJstQewaAhHDBmO4JbJwJ
+        ybvaw+nzrbRRMHa5p6F0CkUTnmeC7pY=
+X-Google-Smtp-Source: AA6agR6VxmLiNnNqeOG12HbfZmhUg8GjMju/UTidC69ZOSuQURH06ccGpXQxXc+ULAFSEs3A2ej3Lw==
+X-Received: by 2002:a05:6000:381:b0:221:7540:b1ee with SMTP id u1-20020a056000038100b002217540b1eemr11780538wrf.307.1661961753401;
+        Wed, 31 Aug 2022 09:02:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k36-20020a05600c1ca400b003a5f3de6fddsm3146384wms.25.2022.08.31.09.02.27
+        by smtp.gmail.com with ESMTPSA id r10-20020a05600c284a00b003a531c7aa66sm2628554wmb.1.2022.08.31.09.02.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 09:02:27 -0700 (PDT)
-Message-Id: <pull.1341.git.1661961746.gitgitgadget@gmail.com>
+        Wed, 31 Aug 2022 09:02:31 -0700 (PDT)
+Message-Id: <fcf73e775746b102a4d5196c5ebbb06467e08cf6.1661961746.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1341.git.1661961746.gitgitgadget@gmail.com>
+References: <pull.1341.git.1661961746.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 31 Aug 2022 16:02:17 +0000
-Subject: [PATCH 0/8] scalar: integrate into core Git
+Date:   Wed, 31 Aug 2022 16:02:18 +0000
+Subject: [PATCH 1/8] scalar: fix command documentation section header
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     derrickstolee@github.com, johannes.schindelin@gmx.de,
-        gitster@pobox.com, Victoria Dye <vdye@github.com>
+        gitster@pobox.com, Victoria Dye <vdye@github.com>,
+        Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series completes the initial implementation of the Scalar command as a
-core component of Git. For readers new to the topic of Scalar, the
-roadmap/design doc [1] provides some background information including how
-the project started & evolved, as well as its current intent & high-level
-design.
+From: Victoria Dye <vdye@github.com>
 
+Rename the last section header in 'contrib/scalar/scalar.txt' from "Scalar"
+to "GIT". The linting rules of the 'documentation' CI build enforce the
+existence of a "GIT" section in command documentation. Although 'scalar.txt'
+is not yet checked, it will be in a future patch.
 
-Goals
-=====
+Here, changing the header name is more appropriate than making a
+Scalar-specific exception to the linting rule. The existing "Scalar" section
+contains only a link back to the main Git documentation, essentially the
+same as the "GIT" section in builtin documentation. Changing the section
+name further clarifies the Scalar-Git association and maintains consistency
+with the rest of Git.
 
-The goal of this series is, as noted in the roadmap linked earlier, to
-integrate Scalar as a core user-facing component of Git. There's no
-individual existing precedent that the integration is 100% based on; it's
-more of an amalgam of the approaches used with builtins installed directly
-to the bindir (e.g. 'git-upload-pack'), contributed tools (e.g. 'gitk'), and
-the 'git' executable itself. The resulting behavior is:
+Signed-off-by: Victoria Dye <vdye@github.com>
+---
+ contrib/scalar/scalar.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- * Scalar is built & installed unconditionally (like a builtin).
- * Scalar is included in 'bin-wrappers/' and is installed into the 'bin/'
-   directory (like 'git-upload-pack').
- * Scalar's documentation is installed as 'man1' docs (like 'gitk').
- * Scalar is not invoked via the 'git' executable (it's called directly,
-   like 'git' itself).
-
-The move out of 'contrib/' is also intended to mean that the relationship
-between Git and Scalar should no longer be a strict one-way dependency. In
-this series, this architectural change is what permits making a change to
-'help.c' specifically for the sake of Scalar. Future contributions can and
-should (where appropriate!) share code between Scalar and non-Scalar parts
-of Git.
-
-
-Organization
-============
-
-The series is broken up as follows:
-
- 1. Fix a CI-breaking documentation error in 'scalar.txt' (patch 1).
- 2. Move Scalar code out of 'contrib/' and into core Git, including changes
-    in build definition(s) to build & install Scalar and its resources
-    (patch 2).
- 3. Make 'git help scalar' open the 'scalar' command documentation,
-    introduce 'scalar help' as an alias. This is done after moving out of
-    'contrib/' due to it involving Scalar-related changes to the non-Scalar
-    file 'help.c' (patches 3-4).
- 4. Expand test coverage, including perf testing (patches 5-6)
- 5. Add a perf test configuration allowing users to register standard perf
-    test repos with Scalar (patch 7).
- 6. Remove the internally-focused Scalar roadmap from
-    'Documentation/technical/scalar.txt', include it as one of the HTML
-    technical docs (patch 8).
-
-
-Prior series
-============
-
- * Add 'scalar' command in 'contrib/':
-   https://lore.kernel.org/git/pull.1005.v10.git.1638538470.gitgitgadget@gmail.com/
- * Introduce 'scalar diagnose':
-   https://lore.kernel.org/git/pull.1128.v6.git.1653145696.gitgitgadget@gmail.com/
- * Add '-c/-C' compatibility:
-   https://lore.kernel.org/git/pull.1130.v2.git.1643380317358.gitgitgadget@gmail.com/
- * [DROPPED] Integrate Scalar into CI builds:
-   https://lore.kernel.org/git/pull.1129.git.1654160735.gitgitgadget@gmail.com/
- * Document Scalar's role in Git & plan remaining work:
-   https://lore.kernel.org/git/pull.1275.v2.git.1657584367.gitgitgadget@gmail.com/
- * Generalize 'scalar diagnose' into 'git diagnose' builtin & 'git bugreport
-   --diagnose':
-   https://lore.kernel.org/git/pull.1310.v4.git.1660335019.gitgitgadget@gmail.com/
- * Add FSMonitor support to Scalar, refactor enlistment search:
-   https://lore.kernel.org/git/pull.1324.v3.git.1660858853.gitgitgadget@gmail.com/
-
-Thanks!
-
- * Victoria
-
-[1]
-https://lore.kernel.org/git/65eda9755d2a29e222bf7e6cc719921b24377cc6.1657584367.git.gitgitgadget@gmail.com/
-
-Johannes Schindelin (2):
-  git help: special-case `scalar`
-  scalar: implement the `help` subcommand
-
-Victoria Dye (6):
-  scalar: fix command documentation section header
-  scalar: include in standard Git build & installation
-  scalar-clone: add test coverage
-  t/perf: add Scalar performance tests
-  t/perf: add 'GIT_PERF_USE_SCALAR' run option
-  Documentation/technical: include Scalar technical doc
-
- .gitignore                                    |   1 +
- Documentation/Makefile                        |   2 +
- {contrib/scalar => Documentation}/scalar.txt  |   2 +-
- Documentation/technical/scalar.txt            |  61 --------
- Makefile                                      |  30 ++--
- builtin/help.c                                |   2 +
- contrib/buildsystems/CMakeLists.txt           |   9 +-
- contrib/scalar/.gitignore                     |   2 -
- contrib/scalar/Makefile                       |  35 -----
- contrib/scalar/t/Makefile                     |  81 -----------
- contrib/scalar/scalar.c => scalar.c           |  20 +++
- t/perf/README                                 |   4 +
- t/perf/p9210-scalar.sh                        |  43 ++++++
- t/perf/perf-lib.sh                            |  13 +-
- t/perf/run                                    |   3 +
- .../t/t9099-scalar.sh => t/t9210-scalar.sh    |  10 +-
- t/t9211-scalar-clone.sh                       | 135 ++++++++++++++++++
- 17 files changed, 249 insertions(+), 204 deletions(-)
- rename {contrib/scalar => Documentation}/scalar.txt (99%)
- delete mode 100644 contrib/scalar/.gitignore
- delete mode 100644 contrib/scalar/Makefile
- delete mode 100644 contrib/scalar/t/Makefile
- rename contrib/scalar/scalar.c => scalar.c (98%)
- create mode 100755 t/perf/p9210-scalar.sh
- rename contrib/scalar/t/t9099-scalar.sh => t/t9210-scalar.sh (96%)
- create mode 100755 t/t9211-scalar-clone.sh
-
-
-base-commit: d42b38dfb5edf1a7fddd9542d722f91038407819
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1341%2Fvdye%2Ffeature%2Fscalar-toplevel-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1341/vdye/feature/scalar-toplevel-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1341
+diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
+index 1a12dc45077..505a1cea0fd 100644
+--- a/contrib/scalar/scalar.txt
++++ b/contrib/scalar/scalar.txt
+@@ -161,6 +161,6 @@ SEE ALSO
+ --------
+ linkgit:git-clone[1], linkgit:git-maintenance[1].
+ 
+-Scalar
++GIT
+ ---
+ Associated with the linkgit:git[1] suite
 -- 
 gitgitgadget
+
