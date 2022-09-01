@@ -2,95 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0D80ECAAD1
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 16:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC39DECAAD3
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 16:19:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234994AbiIAQRR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 12:17:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57456 "EHLO
+        id S233905AbiIAQTM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Sep 2022 12:19:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234947AbiIAQRQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 12:17:16 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0858E3B969
-        for <git@vger.kernel.org>; Thu,  1 Sep 2022 09:17:15 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id x1-20020a17090ab00100b001fda21bbc90so2880747pjq.3
-        for <git@vger.kernel.org>; Thu, 01 Sep 2022 09:17:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=HVmc/uH/NTa0C5mrlu4TgOg29TgUVJVMsDTIFPerbvw=;
-        b=gV7DH2lTXQnV+QXrXrPkpIQ6iZuzAQ+k1/hp3RLakM/PpTCBRnjZw5zUHs6u21fXBA
-         Ay97l+lwo7ZKdzoP3a6Sb/X72qWoTwBPCZMKKexkF2FBDvEru5qLWG/btpjhGeiFhTJD
-         d5s1Xo6+S4m1keXzXVd/uRv93AnnLSng2wtrPw7ibc2gAxoqTa0PtFJtRdR/1KbQ22/v
-         Fw64LI0TKRlqxmK8k5y22E7AGXBVLQMqopSN3m/HcTjnnnoyh8w9zvuWt7zV75Gju/dA
-         v2eyWIywRQ78LTHti4DJeQdbX7qQtXxKTW5JpHAOUKOl7AEHqP0SAmZ/dHeUm6y0y/ET
-         A0ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=HVmc/uH/NTa0C5mrlu4TgOg29TgUVJVMsDTIFPerbvw=;
-        b=Yk3RpvAw0ZT+JUwPoAKfJ5pGPh8qyqydywmrHYiSG9eRKnpx6/TKl8PHwvVydZyNhR
-         q2N6SLwxnofVNgsp8AG1Ptsliy2xxMd2/5J1LYPaOAF2ZBwOTCeC2caMFJJoJE15LKsK
-         53o9Jaz5WESRgNsZCbt9eZNbDBnkXZyVctR36fUMKiU2dG5PBIcBsD3Jn9EVw8KF9Ey8
-         2UmxPxnMk7z5SqFhW89bJkOkYJFkhUqPfPR9s2+7LVBhCh7PZk+qgoEXw/udsdOgkEoJ
-         IJ64HECxEYtVE4z0O7YyemhRiWFHo6O58RS/LLXIORESWV06Hov+RE5ah+UoOaEwM+Y7
-         xGcQ==
-X-Gm-Message-State: ACgBeo12FAqx1ZeGcjDEXTocuFk4vWc94EzwBCv4WloKJ/GpEij+aOaZ
-        JpWjnxBUW+XrnRtSI0TuPmyLEJF8ACk=
-X-Google-Smtp-Source: AA6agR5mgJdGy22Z34la3fmhcnqxv0w48Y2dFyNoUn89f+wRWcjxd/mtatXF7C0DcqbtHc8kB3UeeQ==
-X-Received: by 2002:a17:902:c611:b0:174:7f4c:3b4d with SMTP id r17-20020a170902c61100b001747f4c3b4dmr24252693plr.130.1662049034447;
-        Thu, 01 Sep 2022 09:17:14 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id m4-20020a170902bb8400b001636d95fe59sm14011295pls.172.2022.09.01.09.17.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 09:17:13 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 3/3] add -p: ignore dirty submodules
-References: <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com>
-        <pull.1336.v4.git.1661977877.gitgitgadget@gmail.com>
-        <116f0cf5cabee3590957731740b33e800b762f34.1661977877.git.gitgitgadget@gmail.com>
-Date:   Thu, 01 Sep 2022 09:17:13 -0700
-In-Reply-To: <116f0cf5cabee3590957731740b33e800b762f34.1661977877.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Wed, 31 Aug 2022
-        20:31:17 +0000")
-Message-ID: <xmqqo7vzax2u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S233260AbiIAQTL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2022 12:19:11 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3DFE91D3A
+        for <git@vger.kernel.org>; Thu,  1 Sep 2022 09:19:10 -0700 (PDT)
+Received: (qmail 24840 invoked by uid 109); 1 Sep 2022 16:19:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Sep 2022 16:19:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11347 invoked by uid 111); 1 Sep 2022 16:19:10 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Sep 2022 12:19:10 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 1 Sep 2022 12:19:09 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
+        Xin7 Ma =?utf-8?B?6ams6ZGr?= <maxin7@xiaomi.com>,
+        =?utf-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>,
+        =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
+        =?utf-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
+Subject: Re: [External Mail]Re: Partial-clone cause big performance impact on
+ server
+Message-ID: <YxDbfXyWzgokb1Bq@coredump.intra.peff.net>
+References: <bfa3de4485614badb4a27d8cfba99968@xiaomi.com>
+ <YviaoXRctE9fg/mB@coredump.intra.peff.net>
+ <b0101e7e0e61496a92c2299454c2696a@xiaomi.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b0101e7e0e61496a92c2299454c2696a@xiaomi.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Thu, Sep 01, 2022 at 06:53:01AM +0000, 程洋 wrote:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Thanks to alwyas running `diff-index` and `diff-files` with the
+> At first I also think it's some implementation bugs by jgit. However I
+> can also reproduce it on cgit. Here is the steps, I'm not sure if you
+> can reproduce too.
+> 
+> 1. Clone a repository from AOSP to local machine:  `git clone
+>    "https://android.googlesource.com/platform/prebuilts/gradle-plugin"`
+> 2. try to clone from localhost using cgit server.
+>    `GIT_TRACE_PACKET=1 git clone --filter=blob:none -b master
+>    user@localhost:/home/user/repositories/gradle-plugin `
+> 3. During checkout phase, it also takes 15 seconds before actual downloading.
 
-"always".
+I don't see that at all. A few things on your reproduction:
 
-I notice that this round (like the previous one, v3) is made not to
-apply on 'maint'.  As I said in the earlier review, in general I
-prefer to fork a bugfix topic out of 'maint' unless there is a
-strong reason not to.
+  - you have to tell the local server repo that filters are OK:
 
-It is a different matter if all these bugfix topics are actually
-merged down to 'maint' and tagged a new maintenance release by me.
-But I'd prefer to make it easier for motivated distro packagers to
-adopt fixes that proves good in our 'master' front to their maint
-releases, and it would be much easier to just merge a topic based on
-'maint' than having to cherry-pick a topic based on 'master'.
+      git -C gradle-plugin config uploadpack.allowfilter true
 
-Thanks.
+  - your example goes over localhost ssh. Is your server configured to
+    allow passing the GIT_PROTOCOL environment variable? If not, you're
+    using the v0 protocol. In which case you'll have to set a config
+    option to allow clients to fetch objects that the server didn't
+    advertise.
+
+    If you do it with allowReachableSHA1InWant, like this:
+
+      git -C gradle-plugin config uploadpack.allowReachableSHA1InWant true
+
+    then there will be a short delay while it checks their
+    reachability. That check happens via an external rev-list. I think
+    it's not clever enough to use bitmaps, though it could. However, in
+    this example, the delay only seems to be around 800ms for me (and of
+    course we didn't generate bitmaps anyway, so that wouldn't matter).
+
+    If you instead do:
+
+      git -C gradle-plugin config uploadpack.allowAnySHA1InWant true
+
+    then that reachability check goes away.
+
+    But on modern servers, most of this should be moot anyway. A
+    well-configured server should support protocol v2, which defaults to
+    allowAnySHA1InWant.
+
+    If you use --no-local to disable local-clone optimizations, then you
+    can use --filter without having to go through ssh. That should use
+    protocol version 2, as a "real" server would.
+
+So all told, I think a more realistic reproduction is:
+
+  $ git clone https://android.googlesource.com/platform/prebuilts/gradle-plugin
+  $ git -C gradle-plugin config uploadpack.allowfilter true
+  $ git clone --filter=blob:none --no-local -b master grade-plugin foo
+
+which takes ~3s for me.
+
+I do think upload-pack spends more time than it needs in this case, as
+it's keen to call parse_object() on oids that the client asks for. Which
+means we'll open up those blobs and check their sha1s before sending
+them out, which isn't strictly necessary.
+
+All of this seems orthogonal to the original claim that "Counting
+objects" was taking a while, though. The delays here are all inside
+upload-pack, before it spawns pack-objects. And it's pack-objects that
+says "Counting objects".
+
+-Peff
