@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88AD2ECAAD5
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 09:41:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C16EECAAD1
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 09:41:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233832AbiIAJlf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 05:41:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32886 "EHLO
+        id S229534AbiIAJlg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Sep 2022 05:41:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233422AbiIAJlS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 05:41:18 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D714E126495
-        for <git@vger.kernel.org>; Thu,  1 Sep 2022 02:41:16 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id n17so21552648wrm.4
-        for <git@vger.kernel.org>; Thu, 01 Sep 2022 02:41:16 -0700 (PDT)
+        with ESMTP id S233645AbiIAJlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2022 05:41:19 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 042D7130627
+        for <git@vger.kernel.org>; Thu,  1 Sep 2022 02:41:18 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id e20so21519180wri.13
+        for <git@vger.kernel.org>; Thu, 01 Sep 2022 02:41:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=3fNp0xWy4ypRVVc6MHsw8lJAmPQZQlIUMjSn2xeBII8=;
-        b=RnzkbtYG8ZWcevWVS9T6XQsUFb2Dfu4+Z31GECjQd5Zn4kw7xFM7alWdzFpO2R7XOB
-         DSfhJ+PwmZ6FVPsqepzg2/DcQURrOz6nlUfoucU1vzAMWvcvcTmHpf3QZ2Pp3qTbUY/G
-         1UratLLn+DtT4JTrKEf45tNVyMjRCgW7XGWN7qCm/A9D3OdB4B8wSfagXiSz7DYeJKlM
-         713u7iCzbWZ27BQOFlLALZhcN/xqtwTqIsjCWoCUaM7huJWRXgybSVL80rd4GE+4NxG7
-         3EtC79PrvqVEjIZSYk6WodQ8ljFdRXtQyU+HXSjgpWB/v0maPVx/SxbI4SI06j+oHv6u
-         EFZQ==
+        bh=gU1Fn+L+0RDtC1OZCd5rrkOyjVxmCDcYGKf/sTgNgIE=;
+        b=MWj2ZOt1fpIyHUZTRmm+hO/6CkW/IDFNeb1g13fxY6/xpdkfSB4W4zkUfqeg/H7Hf1
+         K7CHw0m4zKKc6lr588H7PqjUTGEheCdEwy8+pCHGqM16ZchC3ax62Ozxx8EKqCUw15Ny
+         DbW0bih/lXfZ5T+Kv1xKJeGErI24d8brAmIbAYsCxr6l+aymWByYM/Lh1xASkP0cTDo3
+         JDfmVq2hWEB3xlyTQ3pNGICyJAc1j6LvHLhTz3AvwyXKjH7BzKhICnj+1OAO7erDA2kj
+         ikwWWLYNwk9hGiTaxAL/mI1tClF8XRzOQi0EFVy7O+UX71s5OQWNxYok6cca50N/mW2u
+         XQhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=3fNp0xWy4ypRVVc6MHsw8lJAmPQZQlIUMjSn2xeBII8=;
-        b=THHpo4Hn1CSzkFdRmIqVFf7fN+waGrpTFsN8IPmfjQ2nS1YZQjpsC+xe60Jw7Df+F9
-         PthRpF2sap+/jdWwFUD6EcLJrKAgPs8GzwjbZkFq1Ys4xzFbbARjbDMUIHRSBYR51u+y
-         5/8P3ODf+UmFw9OynZvyBlSR0q8K9DrAVRFeujgek3tQQEdh5h+Swnq63b9CuXTKzIm1
-         8StDWRYRTrga9VHuR61zJJd5cDHllMkBtHiWHZCIN6tghrRAUUjSkkpZU4VX63Ww8Bz3
-         pvu8Krb7EXXBDaM4nkJkbjMvp6kG92mNiQAMI5ESebmuuuzO8EsfEh51ytE1WX2wkYP5
-         AuNw==
-X-Gm-Message-State: ACgBeo3NxMWSo/yI+8AUSDAtqBRvTCLR6CdNbrIzha9t1stFdr4uKgNr
-        VlYhJkY5hZNxVJJkbgSurXIzemyrdng=
-X-Google-Smtp-Source: AA6agR5kFsKkHCquhi6QL9LFdcyW1F1IkT/xfe7m1pToIx2jq6W03a5GWeOGsAmYRpZ7IQlJRqa7Og==
-X-Received: by 2002:a5d:5847:0:b0:221:748d:243c with SMTP id i7-20020a5d5847000000b00221748d243cmr13548110wrf.222.1662025275106;
-        Thu, 01 Sep 2022 02:41:15 -0700 (PDT)
+        bh=gU1Fn+L+0RDtC1OZCd5rrkOyjVxmCDcYGKf/sTgNgIE=;
+        b=dOydkolB8FCRMMiZ4VGCTXhoyQ9KhnnlBN45k/nmqg30vNP2CoyCt6+vlAGzECH0mq
+         WvdrbPXkDvpF8EQ1e182w2l2qjVN/zuDotrnJMK8lrfecQrFV46wjIvXOAjyjBvV4rNm
+         vpqM6b5TDRWkOyB8ZFZ0Z1ZHuNKJuQ+OLK6WFe2M8zvs/P1/HcV0Jc7/bDd4/ytZJmsq
+         q+ltAaqzQ4croCYwLzDBRMRaA0lJ2HYmreuUov1cYdl8Si3OW9XcBISZ3fXWTnnPA+CJ
+         kD+/9wG77KPeMXtSm7Paf6k0YRXkrm1JEj334LJ0ThKJQM35P80Yuu6MJ/OzFQn1asYa
+         eImw==
+X-Gm-Message-State: ACgBeo1ouxbxRh09QuwClmKjtXxqixf3vHk9YknCuEJpi5A/lijhxEed
+        +tq845v269fnsgGH4C9HsazLVG/meuc=
+X-Google-Smtp-Source: AA6agR7mOYTVZVGJREwNso4kGgJWfMU9x/ln3uZNkIc90ScPYUdwQSqw+ndRxrOY1LDgPmCYJfTs1w==
+X-Received: by 2002:a5d:40d1:0:b0:226:d793:ccac with SMTP id b17-20020a5d40d1000000b00226d793ccacmr11539445wrq.238.1662025276324;
+        Thu, 01 Sep 2022 02:41:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 12-20020a05600c028c00b003a317ee3036sm4750590wmk.2.2022.09.01.02.41.14
+        by smtp.gmail.com with ESMTPSA id l6-20020adff486000000b0021e13efa17esm14523729wro.70.2022.09.01.02.41.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 02:41:14 -0700 (PDT)
-Message-Id: <19fd72c34dcd1332df638d76b0b028e9d9da3d41.1662025272.git.gitgitgadget@gmail.com>
+        Thu, 01 Sep 2022 02:41:15 -0700 (PDT)
+Message-Id: <0df61091c194ed46fda4d70272fcbcfdbedc8770.1662025272.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1343.git.1662025272.gitgitgadget@gmail.com>
 References: <pull.1343.git.1662025272.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Sep 2022 09:41:10 +0000
-Subject: [PATCH 1/3] commit-graph: let commit graph respect commit graft
+Date:   Thu, 01 Sep 2022 09:41:11 +0000
+Subject: [PATCH 2/3] list-object-filter: pass traversal_context in
+ filter_init_fn
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,98 +75,171 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-In repo_parse_commit_internal(), if we want to use
-commit graph, it will call parse_commit_in_graph() to
-parse commit's content from commit graph, otherwise
-call repo_read_object_file() to parse commit's content
-from commit object.
-
-repo_read_object_file() will respect commit graft,
-which can correctly amend commit's parents. But
-parse_commit_in_graph() not. Inconsistencies here may
-result in incorrect processing of shallow clone.
-
-So let parse_commit_in_graph() respect commit graft as
-repo_read_object_file() does, which can solve this problem.
+Pass traversal_context to all filter init functions, so that
+we can read or modify the rev_info of traversal_context in the
+filter initialization function.
 
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- commit-graph.c | 36 ++++++++++++++++++++++++++++++------
- 1 file changed, 30 insertions(+), 6 deletions(-)
+ list-objects-filter.c | 12 ++++++++++--
+ list-objects-filter.h |  2 ++
+ list-objects.c        | 10 +---------
+ list-objects.h        |  8 ++++++++
+ 4 files changed, 21 insertions(+), 11 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index f2a36032f84..89bb6f87079 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -820,6 +820,7 @@ static int fill_commit_in_graph(struct repository *r,
- 	struct commit_list **pptr;
- 	const unsigned char *commit_data;
- 	uint32_t lex_index;
-+	struct commit_graft *graft;
- 
- 	while (pos < g->num_commits_in_base)
- 		g = g->base_graph;
-@@ -833,31 +834,54 @@ static int fill_commit_in_graph(struct repository *r,
- 
- 	set_commit_tree(item, NULL);
- 
-+	graft = lookup_commit_graft(r, &item->object.oid);
-+	if (graft)
-+		r->parsed_objects->substituted_parent = 1;
-+
- 	pptr = &item->parents;
- 
- 	edge_value = get_be32(commit_data + g->hash_len);
- 	if (edge_value == GRAPH_PARENT_NONE)
- 		return 1;
--	pptr = insert_parent_or_die(r, g, edge_value, pptr);
-+	if (!(graft && (graft->nr_parent < 0 || grafts_replace_parents)))
-+		pptr = insert_parent_or_die(r, g, edge_value, pptr);
- 
- 	edge_value = get_be32(commit_data + g->hash_len + 4);
- 	if (edge_value == GRAPH_PARENT_NONE)
- 		return 1;
- 	if (!(edge_value & GRAPH_EXTRA_EDGES_NEEDED)) {
--		pptr = insert_parent_or_die(r, g, edge_value, pptr);
--		return 1;
-+		if (!(graft && (graft->nr_parent < 0 || grafts_replace_parents))) {
-+			pptr = insert_parent_or_die(r, g, edge_value, pptr);
-+			return 1;
-+		}
- 	}
- 
- 	parent_data_ptr = (uint32_t*)(g->chunk_extra_edges +
- 			  4 * (uint64_t)(edge_value & GRAPH_EDGE_LAST_MASK));
- 	do {
- 		edge_value = get_be32(parent_data_ptr);
--		pptr = insert_parent_or_die(r, g,
--					    edge_value & GRAPH_EDGE_LAST_MASK,
--					    pptr);
-+		if (!(graft && (graft->nr_parent < 0 || grafts_replace_parents))) {
-+			pptr = insert_parent_or_die(r, g,
-+						    edge_value & GRAPH_EDGE_LAST_MASK,
-+						    pptr);
-+		}
- 		parent_data_ptr++;
- 	} while (!(edge_value & GRAPH_LAST_EDGE));
- 
-+	if (graft) {
-+		int i;
-+		struct commit *new_parent;
-+		for (i = 0; i < graft->nr_parent; i++) {
-+			new_parent = lookup_commit(r,
-+						   &graft->parent[i]);
-+			if (!new_parent)
-+				die(_("bad graft parent %s in commit %s"),
-+				       oid_to_hex(&graft->parent[i]),
-+				       oid_to_hex(&item->object.oid));
-+			pptr = &commit_list_insert(new_parent, pptr)->next;
-+		}
-+	}
-+
- 	return 1;
+diff --git a/list-objects-filter.c b/list-objects-filter.c
+index 1c1ee3d1bb1..76e8659ea73 100644
+--- a/list-objects-filter.c
++++ b/list-objects-filter.c
+@@ -112,6 +112,7 @@ static enum list_objects_filter_result filter_blobs_none(
  }
  
+ static void filter_blobs_none__init(
++	struct traversal_context *ctx,
+ 	struct list_objects_filter_options *filter_options,
+ 	struct filter *filter)
+ {
+@@ -249,6 +250,7 @@ static void filter_trees_free(void *filter_data) {
+ }
+ 
+ static void filter_trees_depth__init(
++	struct traversal_context *ctx,
+ 	struct list_objects_filter_options *filter_options,
+ 	struct filter *filter)
+ {
+@@ -336,6 +338,7 @@ include_it:
+ }
+ 
+ static void filter_blobs_limit__init(
++	struct traversal_context *ctx,
+ 	struct list_objects_filter_options *filter_options,
+ 	struct filter *filter)
+ {
+@@ -519,6 +522,7 @@ static void filter_sparse_free(void *filter_data)
+ }
+ 
+ static void filter_sparse_oid__init(
++	struct traversal_context *ctx,
+ 	struct list_objects_filter_options *filter_options,
+ 	struct filter *filter)
+ {
+@@ -609,6 +613,7 @@ static enum list_objects_filter_result filter_object_type(
+ }
+ 
+ static void filter_object_type__init(
++	struct traversal_context *ctx,
+ 	struct list_objects_filter_options *filter_options,
+ 	struct filter *filter)
+ {
+@@ -734,6 +739,7 @@ static void filter_combine__finalize_omits(
+ }
+ 
+ static void filter_combine__init(
++	struct traversal_context *ctx,
+ 	struct list_objects_filter_options *filter_options,
+ 	struct filter* filter)
+ {
+@@ -744,7 +750,7 @@ static void filter_combine__init(
+ 	CALLOC_ARRAY(d->sub, d->nr);
+ 	for (sub = 0; sub < d->nr; sub++)
+ 		d->sub[sub].filter = list_objects_filter__init(
+-			filter->omits ? &d->sub[sub].omits : NULL,
++			ctx, filter->omits ? &d->sub[sub].omits : NULL,
+ 			&filter_options->sub[sub]);
+ 
+ 	filter->filter_data = d;
+@@ -754,6 +760,7 @@ static void filter_combine__init(
+ }
+ 
+ typedef void (*filter_init_fn)(
++	struct traversal_context *ctx,
+ 	struct list_objects_filter_options *filter_options,
+ 	struct filter *filter);
+ 
+@@ -771,6 +778,7 @@ static filter_init_fn s_filters[] = {
+ };
+ 
+ struct filter *list_objects_filter__init(
++	struct traversal_context *ctx,
+ 	struct oidset *omitted,
+ 	struct list_objects_filter_options *filter_options)
+ {
+@@ -792,7 +800,7 @@ struct filter *list_objects_filter__init(
+ 
+ 	CALLOC_ARRAY(filter, 1);
+ 	filter->omits = omitted;
+-	init_fn(filter_options, filter);
++	init_fn(ctx, filter_options, filter);
+ 	return filter;
+ }
+ 
+diff --git a/list-objects-filter.h b/list-objects-filter.h
+index 9e98814111c..0a3cb500976 100644
+--- a/list-objects-filter.h
++++ b/list-objects-filter.h
+@@ -5,6 +5,7 @@ struct list_objects_filter_options;
+ struct object;
+ struct oidset;
+ struct repository;
++struct traversal_context;
+ 
+ /*
+  * During list-object traversal we allow certain objects to be
+@@ -72,6 +73,7 @@ struct filter;
+  * filter *`.
+  */
+ struct filter *list_objects_filter__init(
++	struct traversal_context *ctx,
+ 	struct oidset *omitted,
+ 	struct list_objects_filter_options *filter_options);
+ 
+diff --git a/list-objects.c b/list-objects.c
+index 250d9de41cb..698e4dbe8ff 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -13,14 +13,6 @@
+ #include "object-store.h"
+ #include "trace.h"
+ 
+-struct traversal_context {
+-	struct rev_info *revs;
+-	show_object_fn show_object;
+-	show_commit_fn show_commit;
+-	void *show_data;
+-	struct filter *filter;
+-};
+-
+ static void show_commit(struct traversal_context *ctx,
+ 			struct commit *commit)
+ {
+@@ -448,7 +440,7 @@ void traverse_commit_list_filtered(
+ 	};
+ 
+ 	if (revs->filter.choice)
+-		ctx.filter = list_objects_filter__init(omitted, &revs->filter);
++		ctx.filter = list_objects_filter__init(&ctx, omitted, &revs->filter);
+ 
+ 	do_traverse(&ctx);
+ 
+diff --git a/list-objects.h b/list-objects.h
+index 9eaf4de8449..44c598e9ce8 100644
+--- a/list-objects.h
++++ b/list-objects.h
+@@ -16,6 +16,14 @@ void mark_edges_uninteresting(struct rev_info *revs,
+ struct oidset;
+ struct list_objects_filter_options;
+ 
++struct traversal_context {
++	struct rev_info *revs;
++	show_object_fn show_object;
++	show_commit_fn show_commit;
++	void *show_data;
++	struct filter *filter;
++};
++
+ void traverse_commit_list_filtered(
+ 	struct rev_info *revs,
+ 	show_commit_fn show_commit,
 -- 
 gitgitgadget
 
