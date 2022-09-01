@@ -2,61 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14D5DECAAD3
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 13:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B813ECAAD3
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 13:54:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233577AbiIANWI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 09:22:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50234 "EHLO
+        id S234405AbiIANyB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Sep 2022 09:54:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233919AbiIANVo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 09:21:44 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFC1F1C12F
-        for <git@vger.kernel.org>; Thu,  1 Sep 2022 06:20:00 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id v16so19611103wrm.8
-        for <git@vger.kernel.org>; Thu, 01 Sep 2022 06:20:00 -0700 (PDT)
+        with ESMTP id S234386AbiIANx5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2022 09:53:57 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A28E1B62
+        for <git@vger.kernel.org>; Thu,  1 Sep 2022 06:53:55 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id j26so9074744wms.0
+        for <git@vger.kernel.org>; Thu, 01 Sep 2022 06:53:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date;
-        bh=mjyxBXO/Q67LRq7q+ZBorUGhYnfrQtLaOy8OBVlG140=;
-        b=D8bBsBsqekNJo+vm6ba2A0e8lqC6YcEWSz8a5wosDrJbHXX78KdJWbj17+RnTL3lQm
-         zPeCXRKmI7n3uLnhR5MuYOTVZjJUA/ZqXKZ+aIRfYbJ5gUZUxEf43jZg+4KepjOtEQhh
-         55H3lK+KgcZ1d7Q3SSmk0N17aAdnOI4Qa1p/FuqHmrPQIh1lbJz/occCirYTYDrgKxD8
-         jJGntFI/4+pnhHnIBpKoh5g6KgFdhqti0p7h2XoTVibDq0hPavGpk0EEehecwlrffICm
-         KHGeEsYL+AswwpNcEKW5bU+xn1pquWIljukEC+Uxuam/so6LweLfXmhZnZU1Saeoh4v1
-         N/sQ==
+        bh=74x/yVsLVnBdlUtSAE6jo9sTC2/Ko8leMaGZn/KdssI=;
+        b=RafFbC/vNq4gHYJ1pArOqiqifdw7z4oNKxdrtfDUYCk0MJHUyskdsD6xKH/gEeaf56
+         ZiCXV9AXRNS49yNTO3QCiwmxlsBpanVzQM7yaVgNznL9f7FoGjQxBiUAhLfla1qSH58A
+         2IPdiTM7TG5+u3H6Y0bDy/IOBQUoEBbNwJU066mKCdahRV1zKYnE639l4uaID+kAQfnE
+         lyYYZyYuyX6D0Ou7csTSPoR1YVkbBj+6M2SN0hoO0NtThD1rtCRvRVzN+tj1AKcyzdMu
+         5ZmQz1gkID/8VgURGA5xxxsPkcmKkY8qzN6puoNN83RwBF0e95iUMrV0aMnAksgl9DjF
+         ELKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=mjyxBXO/Q67LRq7q+ZBorUGhYnfrQtLaOy8OBVlG140=;
-        b=JNGdRxxWO70LrUMge8nkdY8FXW/Q+tzoyOfO1eGyEmCncIu8334KFYlpNNEtlOqzs+
-         1HyNgnVgPmLxgOjUdBBwo6u8yxTXkClfoFxbx8WmQHe8gxKz6ljhM1/RQ9WM96r+p0Yo
-         gi4ZjQXK63vA5CVOWUpnbAsdGYaJ4Dqcd3PZs8d0l9Q6rUb16LUILDAX/Ws+YVaFT80J
-         DffYjlDKYHaa+Pfcb28VBV0SzOmdzWqwvujIlVlX0smouy/0KYJjuc6pw6/w/U336arK
-         LczJt6Qu+xzpd2kICY8ZM8Bgs8lVqDT47KBG3vLtfjoKEDLepRmdN5nkCphsvTkYciX3
-         EPBA==
-X-Gm-Message-State: ACgBeo0XkvPgFfWSDZHXQnRL78BnQdvYGqsAcGXhjDcQwdIYMSPmEeiY
-        FS4rAnxnstzg47CZjTo3HY8=
-X-Google-Smtp-Source: AA6agR6qq4YcMkEbcA5+7zBxHq8O9aW0qY3pSFt9zfDM97Py8ROxWb4KpCLD6KfVfOJ2vCmikicNsw==
-X-Received: by 2002:a5d:6c63:0:b0:226:dc02:2a75 with SMTP id r3-20020a5d6c63000000b00226dc022a75mr10358609wrz.185.1662038399439;
-        Thu, 01 Sep 2022 06:19:59 -0700 (PDT)
+        bh=74x/yVsLVnBdlUtSAE6jo9sTC2/Ko8leMaGZn/KdssI=;
+        b=jCc2kvu0ghCwmufZRc+u/a674VE4BtpHwS/2tfOFpai7kfEbj4IsEAd6r15TUPnHBK
+         iXa4/N/wDNVZLkxt/Gx2JC7QoV1Z1WTHUIk7INVoOVh6aYOznpVWo/Ursv5Ndboyw1GQ
+         BfTFqsOxeduI64rzSA0mOZjEnQKToLvPNmJqsSo6+xFfUrlad1l4PWUDN7k5aw5VQQ/N
+         s9rzSf1lFh0oEBLjnNGZhY284x7YdVdA3le30lDSS2/t1E9JMWxtIV/oUX3ezvNUn7j4
+         CScl/A10lAF5+EHFjTb7dEJv7Pm6k1Yeig3rSPOaxLDUB14UqZ6y/8JYKrArpdjT1G+K
+         3hBg==
+X-Gm-Message-State: ACgBeo2E2r4zqZZKK+KuAyYG0RemdSneYbhvtH1P7GYKIRd/n7bVyJRE
+        IAicr+RArYkc3EK3Q7/D+8o=
+X-Google-Smtp-Source: AA6agR5ezVuMiUHO/6WPcaTIEim8fX1CVg16BaV7ZtDw7+nZNDKPeItlONeWuSZhWuKGp3FH5/dUcw==
+X-Received: by 2002:a05:600c:1912:b0:3a5:f4fc:cd40 with SMTP id j18-20020a05600c191200b003a5f4fccd40mr5288178wmq.205.1662040433976;
+        Thu, 01 Sep 2022 06:53:53 -0700 (PDT)
 Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id g12-20020adff40c000000b00226e5e07fe9sm6171721wro.10.2022.09.01.06.19.58
+        by smtp.gmail.com with ESMTPSA id j6-20020a056000124600b002258956f373sm14543938wrx.95.2022.09.01.06.53.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Sep 2022 06:19:59 -0700 (PDT)
-Message-ID: <a6f68650-678a-ab5f-a432-87fab8821dc2@gmail.com>
-Date:   Thu, 1 Sep 2022 14:19:57 +0100
+        Thu, 01 Sep 2022 06:53:53 -0700 (PDT)
+Message-ID: <19d4c44b-868e-628d-5715-54f37ef56c0d@gmail.com>
+Date:   Thu, 1 Sep 2022 14:53:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 1/3] add -p: detect more mismatches between plain vs
- colored diffs
+Subject: Re: [PATCH v4 2/3] add -p: gracefully handle unparseable hunk headers
+ in colored diffs
+Content-Language: en-US
 To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
@@ -64,10 +65,9 @@ Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 References: <pull.1336.v3.git.1661785916.gitgitgadget@gmail.com>
  <pull.1336.v4.git.1661977877.gitgitgadget@gmail.com>
- <25187c3a3c2bb440ab0af34011db41361d4e2496.1661977877.git.gitgitgadget@gmail.com>
-Content-Language: en-US
+ <cd1c51005068247fc92f1c515469bcd384bfe589.1661977877.git.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <25187c3a3c2bb440ab0af34011db41361d4e2496.1661977877.git.gitgitgadget@gmail.com>
+In-Reply-To: <cd1c51005068247fc92f1c515469bcd384bfe589.1661977877.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -79,81 +79,166 @@ Hi Dscho
 On 31/08/2022 21:31, Johannes Schindelin via GitGitGadget wrote:
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> When parsing the colored version of a diff, the interactive `add`
-> command really relies on the colored version having the same number of
-> lines as the plain (uncolored) version. That is an invariant.
+> In
+> https://lore.kernel.org/git/ecf6f5be-22ca-299f-a8f1-bda38e5ca246@gmail.com,
+> Phillipe Blain reported that the built-in `git add -p` command fails
+> when asked to use [`diff-so-fancy`][diff-so-fancy] to colorize the diff.
 > 
-> We already have code to verify correctly when the colored diff has less
-> lines than the plain diff. Modulo an off-by-one bug: If the last diff
-> line has no matching colored one, the code pretends to succeed, still.
+> The reason is that this tool produces colored diffs with a hunk header
+> that does not contain any parseable `@@ ... @@` line range information,
+> and therefore we cannot detect any part in that header that comes after
+> the line range.
 > 
-> To make matters worse, when we adjusted the test in 1e4ffc765db (t3701:
-> adjust difffilter test, 2020-01-14), we did not catch this because `add
-> -p` fails for a _different_ reason: it does not find any colored hunk
-> header that contains a parseable line range.
+> As proposed by Phillip Wood, let's take that for a clear indicator that
+> we should show the hunk headers verbatim. This is what the Perl version
+> of the interactive `add` command did, too.
 > 
-> If we change the test case so that the line range _can_ be parsed, the
-> bug is exposed.
-> 
-> Let's address all of the above by
-> 
-> - fixing the off-by-one,
-> 
-> - adjusting the test case to allow `add -p` to parse the line range
-> 
-> - making the test case more stringent by verifying that the expected
->    error message is shown
-> 
-> Also adjust a misleading code comment about the now-fixed code.
+> This commit is best viewed with `--color-moved --ignore-space-change`.
 
-Thanks for re-rolling, this looks good. The commit message explains the 
-problem well and the fix is good, I especially like the fact that you've 
-added a grep for the correct error message.
+or --color-moved-ws=allow-indentation-change
 
-Related to this we also have code that detects over-long output from the 
-filter, I'm not sure if we have a test for that but I think the 
-implementation looks ok.
+This looks pretty good, unsurprisingly I like the fact that the output 
+now matches the perl version. I was confused by the grep in the test 
+which lead me to realize we're printing an color escape code when we 
+shouldn't.
+
+> [diff-so-fancy]: https://github.com/so-fancy/diff-so-fancy
+> 
+> Reported-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   add-patch.c                | 42 ++++++++++++++++++++------------------
+>   t/t3701-add-interactive.sh | 10 +++++++++
+>   2 files changed, 32 insertions(+), 20 deletions(-)
+> 
+> diff --git a/add-patch.c b/add-patch.c
+> index 34f3807ff32..3699ca1fcaf 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -238,6 +238,7 @@ struct hunk_header {
+>   	 * include the newline.
+>   	 */
+>   	size_t extra_start, extra_end, colored_extra_start, colored_extra_end;
+> +	unsigned suppress_colored_line_range:1;
+>   };
+>   
+>   struct hunk {
+> @@ -358,15 +359,14 @@ static int parse_hunk_header(struct add_p_state *s, struct hunk *hunk)
+>   	if (!eol)
+>   		eol = s->colored.buf + s->colored.len;
+>   	p = memmem(line, eol - line, "@@ -", 4);
+> -	if (!p)
+> -		return error(_("could not parse colored hunk header '%.*s'"),
+> -			     (int)(eol - line), line);
+> -	p = memmem(p + 4, eol - p - 4, " @@", 3);
+> -	if (!p)
+> -		return error(_("could not parse colored hunk header '%.*s'"),
+> -			     (int)(eol - line), line);
+> +	if (p && (p = memmem(p + 4, eol - p - 4, " @@", 3)))
+
+nit: there should be braces round both arms of the if, but it's hardly 
+the first one that does not follow our official style.
+
+> +		header->colored_extra_start = p + 3 - s->colored.buf;
+> +	else {
+> +		/* could not parse colored hunk header, leave as-is */
+> +		header->colored_extra_start = hunk->colored_start;
+> +		header->suppress_colored_line_range = 1;
+> +	}
+>   	hunk->colored_start = eol - s->colored.buf + (*eol == '\n');
+> -	header->colored_extra_start = p + 3 - s->colored.buf;
+>   	header->colored_extra_end = hunk->colored_start;
+>   
+>   	return 0;
+> @@ -666,18 +666,20 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+                 if (!colored) {
+                         p = s->plain.buf + header->extra_start;
+                         len = header->extra_end - header->extra_start;
+                 } else {
+                         strbuf_addstr(out, s->s.fraginfo_color);
+
+I don't think we want to add this escape sequence unless we're going to 
+dynamically generate the hunk header
+
+                         p = s->colored.buf + header->colored_extra_start;
+                         len = header->colored_extra_end
+                                 - header->colored_extra_start;
+
+If we cannot parse the hunk header then len is non-zero...
+
+                 }
+>   
+> -		if (s->mode->is_reverse)
+> -			old_offset -= delta;
+> -		else
+> -			new_offset += delta;
+> -
+> -		strbuf_addf(out, "@@ -%lu", old_offset);
+> -		if (header->old_count != 1)
+> -			strbuf_addf(out, ",%lu", header->old_count);
+> -		strbuf_addf(out, " +%lu", new_offset);
+> -		if (header->new_count != 1)
+> -			strbuf_addf(out, ",%lu", header->new_count);
+> -		strbuf_addstr(out, " @@");
+> +		if (!colored || !header->suppress_colored_line_range) {
+> +			if (s->mode->is_reverse)
+> +				old_offset -= delta;
+> +			else
+> +				new_offset += delta;
+> +
+> +			strbuf_addf(out, "@@ -%lu", old_offset);
+> +			if (header->old_count != 1)
+> +				strbuf_addf(out, ",%lu", header->old_count);
+> +			strbuf_addf(out, " +%lu", new_offset);
+> +			if (header->new_count != 1)
+> +				strbuf_addf(out, ",%lu", header->new_count);
+> +			strbuf_addstr(out, " @@");
+> +		}
+>   
+>   		if (len)
+>   			strbuf_add(out, p, len);
+
+... and so we print the filtered hunk header here and do not reset the 
+color below. That is probably ok as the filter should be resetting it's 
+own colors but we shouldn't be printing the color at the beginning of 
+the line above in that case.
+
+                 else if (colored)
+                         strbuf_addf(out, "%s\n", s->s.reset_color);
+                 else
+                         strbuf_addch(out, '\n');
+         }
+
+
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index 8a594700f7b..47ed6698943 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -767,6 +767,16 @@ test_expect_success 'detect bogus diffFilter output' '
+>   	grep "mismatched output" output
+>   '
+>   
+> +test_expect_success 'handle iffy colored hunk headers' '
+> +	git reset --hard &&
+> +
+> +	echo content >test &&
+> +	printf n >n &&
+> +	force_color git -c interactive.diffFilter="sed s/.*@@.*/XX/" \
+> +		add -p >output 2>&1 <n &&
+> +	grep "^[^@]*XX[^@]*$" output
+
+I was wondering why this wasn't just `grep "^XX$"` as we should be 
+printing the output of the diff filter verbatim. That lead to my 
+comments about outputting escape codes above. Apart from that this patch 
+looks good.
 
 Best Wishes
 
 Phillip
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->   add-patch.c                | 5 ++++-
->   t/t3701-add-interactive.sh | 5 +++--
->   2 files changed, 7 insertions(+), 3 deletions(-)
-> 
-> diff --git a/add-patch.c b/add-patch.c
-> index 509ca04456b..34f3807ff32 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -592,7 +592,10 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
->   			if (colored_eol)
->   				colored_p = colored_eol + 1;
->   			else if (p != pend)
-> -				/* colored shorter than non-colored? */
-> +				/* non-colored has more lines? */
-> +				goto mismatched_output;
-> +			else if (colored_p == colored_pend)
-> +				/* last line has no matching colored one? */
->   				goto mismatched_output;
->   			else
->   				colored_p = colored_pend;
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 3b7df9bed5a..8a594700f7b 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -761,9 +761,10 @@ test_expect_success 'detect bogus diffFilter output' '
->   	git reset --hard &&
->   
->   	echo content >test &&
-> -	test_config interactive.diffFilter "sed 1d" &&
-> +	test_config interactive.diffFilter "sed 6d" &&
->   	printf y >y &&
-> -	force_color test_must_fail git add -p <y
-> +	force_color test_must_fail git add -p <y >output 2>&1 &&
-> +	grep "mismatched output" output
->   '
->   
+> +'
+> +
 >   test_expect_success 'handle very large filtered diff' '
+>   	git reset --hard &&
+>   	# The specific number here is not important, but it must
