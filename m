@@ -2,127 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2E81ECAAD3
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 18:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72535ECAAD3
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 18:36:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233770AbiIAScQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 14:32:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38532 "EHLO
+        id S232008AbiIASgz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Sep 2022 14:36:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232992AbiIAScO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 14:32:14 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99F427C31D
-        for <git@vger.kernel.org>; Thu,  1 Sep 2022 11:32:13 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id t5so18006669pjs.0
-        for <git@vger.kernel.org>; Thu, 01 Sep 2022 11:32:13 -0700 (PDT)
+        with ESMTP id S234693AbiIASg2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2022 14:36:28 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 340D57FE53
+        for <git@vger.kernel.org>; Thu,  1 Sep 2022 11:35:38 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id z8so14947289edb.6
+        for <git@vger.kernel.org>; Thu, 01 Sep 2022 11:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=FwpOFxnMyGC9oZlBZZ4qiefc4Dl+gajd5Gw5UDQPWh0=;
-        b=IDBprngdHNCpQpI+qbTtN6/9WEgaobGLZeWxzOZFkZUT6sNI0OJbe8EFIRYYZK8Q3l
-         CAEF46rm2HnDbkSEmUO/SG5drOK1Tm/FBnmrRBpCnwZIborg1CLQHrA82sSUGNd+uOY8
-         CZYXd/R2YuYk2cVGtbkxnUmYVTM8S1RKk0jnalCXMBb8HFRIuMF9G53ZE0xecRUOI7nk
-         4xQsej5ptE56T35SorHbluZnV0aY2c4Sn+0n4yO6i10IWJMkoccUDgLGKtPTHNw/eo03
-         CIVbZHySU1vjx8NHJME+I4mEPzvl63jslxRK+nScanpliG2kVgnCvhQQkOaUaB/jqBpq
-         nBHA==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date;
+        bh=qDrn60qj8aPt1sInx9UwNuw5Nut+3XFtykRPAGSjm8Q=;
+        b=Wg4V661vv5DMHm3WfZ6efeMVITwKrCqxnWvsnhyVVeButeDxJuQVshGK73zNtGRltg
+         m6AGyMUigOLEdAhmsgIHFgVyn/zPYVY/P/s9OvCU2FmcK8IGURFTNVRn2qy4WRshyoMG
+         zH8t+ceLyl6TbZH2j9pZ3jwzFCu9Ll4MR7/8ykvrseCvOjj3tI5FDllugNu4zxmnmP2/
+         +SddbaCbKrUf+RX886rhUdhO0uGCo9L4lnj7E8QFfBHrV4wcfb+67vNMRMJ9w6udAnV6
+         dVxvcWymxw8PGvmWnA0ZiuQDEp69BFc+/9ty3N80SpI01nD4OWkiut1YHfSB+kERYQ59
+         Oe+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=FwpOFxnMyGC9oZlBZZ4qiefc4Dl+gajd5Gw5UDQPWh0=;
-        b=52bFoGOy7pVxIis39jlOLZ6rRnLjckl35UwWEJMWxl+xEDmmuQtf7/e1njhI8TA/Lo
-         mfT3h3ZxaMXshu9FPzHm8jyYfVsrGGDNuX5H0zcV3taQv+8InyGNzGSBXQooUBnVZXpy
-         K/F0mQyktUYnX1UKo7kFqO53sClNteCQEiLjz0mR1xdFYi9L+1HFhiTdUdWF5Itlh1iT
-         w09AFI6SMLJ+Aqdu3txM/+fY7Wr5vlJwgBelHkVuJvSp2up/GbQKhJsGuAi04WeyJRUu
-         rkVM5YV8XEISI2O7ROhPnxgQuUAdE7cEmsHm9Nw1cV0twUQTt0ktomtZXvx1PQjfrtrF
-         ZPWA==
-X-Gm-Message-State: ACgBeo3Rn+yIjWO1+9mQmoQx2cOJiyzh/TvbflOd4Nnea71FO0dq+UTO
-        zoJA+1KHXjtMQN+hBYOsmH8=
-X-Google-Smtp-Source: AA6agR5yCM7E91Om6ZgGTXmxU82+oETb7wcj1EwtRA6bD0OG2cB1Ypln+Wo+7XG2IEP3fG9cohQ9Hg==
-X-Received: by 2002:a17:902:7003:b0:172:cbb0:9af8 with SMTP id y3-20020a170902700300b00172cbb09af8mr32338970plk.57.1662057133070;
-        Thu, 01 Sep 2022 11:32:13 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id q3-20020a170902dac300b001751d0ac555sm6179523plx.148.2022.09.01.11.32.12
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=qDrn60qj8aPt1sInx9UwNuw5Nut+3XFtykRPAGSjm8Q=;
+        b=FrKxa6z84ZQodU0p0uJ5kwWa0IZs9QcTBjafjTBUlCeR6JLFn04/so7/XJe5TfyD3j
+         TvrbimXOXWZbiQdBsYemPdz6KkdOE4wQsLsMX0z3IzdlsPQoZChJE3c2H+0fiV22I0I9
+         +i6gsl5TaMC4Nem2AkEDnHFyzrVGF5DuiuSxP03OjJRr6BjAVAcuXXO0QM/r/ucGCBiN
+         UBaUEXoDCvw0GAHA4kN5GWJ/vk61fwdGlMS5O5h1S3RISNoFkC+n62f3rvyF9EGJ2ZaC
+         cfFxfXhp19GroKgZYaRHd2noBzrBXslPG2o7j/SEv8i69WWv5+BQWAKZOqW+gm9sBVws
+         jGWw==
+X-Gm-Message-State: ACgBeo3+d/WB6h+PuFPMlLmHpOYC6dT7Wl2hIPGxt7gNQAmmAkTDKgmG
+        SrgQq9TQdmWnWYok44S5nJV6iB9u9sMiWQ==
+X-Google-Smtp-Source: AA6agR5CL+uIHue9D0RgJ5ABZYbsewV47IO3hlLKi1jlh93r9FZzM2IGa0WRTvpouMIGZht+W4kpcQ==
+X-Received: by 2002:a05:6402:b15:b0:447:ee8c:7ace with SMTP id bm21-20020a0564020b1500b00447ee8c7acemr25461598edb.306.1662057334779;
+        Thu, 01 Sep 2022 11:35:34 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id lc18-20020a170906dff200b007307c4c8a5dsm6086ejc.58.2022.09.01.11.35.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 11:32:12 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH] t1800: correct test to handle Cygwin
-References: <20220901173942.abolcr4aa5gixncm@lucy.dinwoodie.org>
-Date:   Thu, 01 Sep 2022 11:32:12 -0700
-In-Reply-To: <20220901173942.abolcr4aa5gixncm@lucy.dinwoodie.org> (Adam
-        Dinwoodie's message of "Thu, 1 Sep 2022 18:39:42 +0100")
-Message-ID: <xmqqedwv9c9f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Thu, 01 Sep 2022 11:35:34 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oTp2L-000Lsa-1f;
+        Thu, 01 Sep 2022 20:35:33 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 7/9] cocci: make "coccicheck" rule incremental
+Date:   Thu, 01 Sep 2022 20:04:45 +0200
+References: <cover-0.5-00000000000-20220825T141212Z-avarab@gmail.com>
+ <cover-v2-0.9-00000000000-20220831T205130Z-avarab@gmail.com>
+ <patch-v2-7.9-120607b5da6-20220831T205130Z-avarab@gmail.com>
+ <20220901163859.GA122568@szeder.dev>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <20220901163859.GA122568@szeder.dev>
+Message-ID: <220901.86y1v3hrii.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adam Dinwoodie <adam@dinwoodie.org> writes:
 
-> On Cygwin, when failing to spawn a process using start_command, Git
-> outputs the same error as on Linux systems, rather than using the
-> GIT_WINDOWS_NATIVE-specific error output.  The WINDOWS test prerequisite
-> is set in both Cygwin and native Windows environments, which means it's
-> not appropriate to use to anticipate the error output from
-> start_command.  Instead, use the MINGW test prerequisite, which is only
-> set for Git in native Windows environments, and not for Cygwin.
+On Thu, Sep 01 2022, SZEDER G=C3=A1bor wrote:
+
+> On Wed, Aug 31, 2022 at 10:57:54PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> Optimize the very slow "coccicheck" target to take advantage of
+>> incremental rebuilding, and fix outstanding dependency problems with
+>> the existing rule.
+>>=20
+>> The rule is now faster both on the initial run as we can make better
+>> use of GNU make's parallelism than the old ad-hoc combination of
+>> make's parallelism combined with $(SPATCH_BATCH_SIZE) and/or the
+>> "--jobs" argument to "spatch(1)".
 >
-> Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
-> ---
+> On my machine a "from scratch" 'make -j4 coccicheck' without the
+> inacceptably slow 'unused.cocci' takes 9m28s, with
+> SPATCH_BATCH_SIZE=3D32 it takes 6m39s.  If we invoke 'spatch' like in
+> the patch below and let one 'spatch' invocation process all source
+> files one by one (i.e. unlike the batched invocations) and using its
+> '--jobs' option then it takes 4m56s.
 >
-> The job of setting Cygwin up to get Git CI builds, either as part of the
-> main CI builds or as something using separate automation, is rapidly
-> rising up my when-I-have-the-time to-do list...
+> This patch series is slower than any of the above, as it takes 10m3s.
 
-I added a few who probably are more familiar with Windows situation
-than those already CC'ed.
+But is such from-scratch building your primary use-case?
 
-A quick grep in the test directory
+When I e.g. do a "make coccicheck" on master, then:
 
-    $ git grep '\<WINDOWS\>" t
+	git merge gitster/ac/bitmap-lookup-table
 
-hits this one and t7450-bad-git-dotfiles.sh and nothing else, but
-we do have quite a many hits of "test_have_prereq !MINGW,!CYGWIN".
+Or whatever, it takes much less time than before, ditto things like:
 
-I guess it depends on how common various "glitches" MINGW and CYGWIN
-prerequistes are trying to cover, but I am wondering if we are
-helped by having three (i.e. MINGW, CYGWIN, and WINDOWS)
-prerequisites, or does WINDOWS as a separate prerequisite
-contributes more to the confusion (and if so, if it is a good idea
-to remove and use only MINGW and CYGWIN prerequistes).
+	time make -W grep.h contrib/coccinelle/free.cocci.patch
 
-One possible roadblock is that it is not easy to express "MINGW or
-CYGWIN" in the prerequisite syntax and WINDOWS prerequisite is an
-easy way to fill that gap.
+I.e. changing a file and wanting to re-run it for all of its reverse
+dependencies (this is with the *.o files).
 
-In any case, thanks for a fix.  Will queue.
-
->  t/t1800-hook.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>>  * Before this change running "make coccicheck" would by default end
+>>    up pegging just one CPU at the very end for a while, usually as
+>>    we'd finish whichever *.cocci rule was the most expensive.
+>>=20
+>>    This could be mitigated by combining "make -jN" with
+>>    SPATCH_BATCH_SIZE, see 960154b9c17 (coccicheck: optionally batch
+>>    spatch invocations, 2019-05-06). But doing so required careful
+>>    juggling, as e.g. setting both to 4 would yield 16 workers.
 >
-> diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
-> index 64096adac7..fae8b2faf9 100755
-> --- a/t/t1800-hook.sh
-> +++ b/t/t1800-hook.sh
-> @@ -159,7 +159,7 @@ test_expect_success 'git hook run a hook with a bad shebang' '
->  	# TODO: We should emit the same (or at least a more similar)
->  	# error on Windows and !Windows. See the OS-specific code in
->  	# start_command()
-> -	if test_have_prereq !WINDOWS
-> +	if test_have_prereq !MINGW
->  	then
->  		cat >expect <<-\EOF
->  		fatal: cannot run bad-hooks/test-hook: ...
+> As pointed out previously, this is not the case.
+
+Yes we discussed this in v1, I just missed this in the re-roll. Sorry!
+Will fix it in the next iteration.
+
+>  include config.mak.uname
+>  -include config.mak.autogen
+> @@ -3139,19 +3137,17 @@ COCCI_TEST_RES =3D $(wildcard contrib/coccinelle/=
+tests/*.res)
+>=20=20
+>  %.cocci.patch: %.cocci $(COCCI_SOURCES)
+>  	$(QUIET_SPATCH) \
+> -	if test $(SPATCH_BATCH_SIZE) =3D 0; then \
+> -		limit=3D; \
+> -	else \
+> -		limit=3D'-n $(SPATCH_BATCH_SIZE)'; \
+> -	fi; \
+> -	if ! echo $(COCCI_SOURCES) | xargs $$limit \
+> -		$(SPATCH) $(SPATCH_FLAGS) \
+> -		--sp-file $< --patch . \
+> +	filelist=3D$@.filelist; \
+> +	: Blank lines between filenames are necessary to put each file in separ=
+ate group ; \
+> +	printf "%s\\n\\n" $(COCCI_SOURCES) >$$filelist && \
+> +	if ! $(SPATCH) $(SPATCH_FLAGS) --jobs $(SPATCH_JOBS) \
+> +		--sp-file $< --patch . --file-groups $$filelist \
+
+Yes, I think it's unfortunate that there *are* faster ways to run it,
+but they rely on doing things in batches of N, which doesn't really jive
+well with make's incremental model of the world.
+
+But I think we can either have that, or the ability to incrementally
+(re)build.
+
+Do you see some easy way to have our cake & eat it too here? If
+you/others really feel strongly about this use case I could also keep
+the old method, and just hide this all behind a SPATCH_INCREMENTAL=3DY
+flag or something. But I'm hoping we can turn this (mostly) into some
+win-win.
