@@ -2,130 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E24F9ECAAD1
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 18:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CFA5ECAAD3
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 19:18:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233501AbiIASur (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 14:50:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46486 "EHLO
+        id S233289AbiIATSZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Sep 2022 15:18:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233815AbiIASun (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 14:50:43 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738DB8C024
-        for <git@vger.kernel.org>; Thu,  1 Sep 2022 11:50:38 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id a36so19965633edf.5
-        for <git@vger.kernel.org>; Thu, 01 Sep 2022 11:50:38 -0700 (PDT)
+        with ESMTP id S232301AbiIATSY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2022 15:18:24 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D50A974BAB
+        for <git@vger.kernel.org>; Thu,  1 Sep 2022 12:18:23 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id 62so15453011iov.5
+        for <git@vger.kernel.org>; Thu, 01 Sep 2022 12:18:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date;
-        bh=ne8pSsdJ96jYikWmUNghzGpUK3kK/DOKnCLgnH9kYO0=;
-        b=GfeAqAYjOFPaz7y8mgomZijG9+oCnP5dhwsBvawsoNf/fLFFmzftC8UVxpNbp8KvE6
-         YpjfnxjR6f/m2vszUuFC78xlhYKVcqmqdhjMJ22/9Fg2HzbPTp1kBQ4sw9Xcymazen+H
-         k5nzfG06mynEviGsdyFfsf7+vNUfACh/9BQ8aE+TK57wFqtBmuXdbJytwiDsQC7pw7z0
-         Vpc8oll6y1YnjDX7MonOk272EfB7niC6OOdRUR4LRVDzM8Fg5N2lTh7nOaZ6MjWEBKf0
-         Up8C4kKmCCLFgflDJKw0rXel6OOUjxJ+qme0WOe8I4TBWnkUxnlvLz+6zM92uYfPUqWw
-         P4Rw==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=all2eyHfpAvQn2zTW1ICJkUIa+P5ZvoguSIqH1AmshA=;
+        b=NAIaGL0V2+rg3Qs4e4B+HGw+qzmihSmmKldcKfES0EgU7i7PFrUUXL+XCgpFvHnLq6
+         p0/zQ6cNuU7Riisu89QXI07r/5aYzuhHXKmOBTDZSRIP5pgImlqthtU4Nv59PZ+p6IpK
+         wVzj1Cbqcv7J2n8Z9No1rWwU0RSa/oWF+yPQMKEGbbK7z9TyRh76eDdZBHX9eDejEkn3
+         eneBedNsw4jZcbRWtUXjsU1mTJ+YQP2Kx14fnstZspmJejgjjdXyyoE4KsG+5bWRel9Q
+         QIEoppjCTvlsCI/2ak79QPD0W7LdIqeVjkTbEmh+jdePojHC03bS1MOcIKIU5xJxM4hb
+         cWVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=ne8pSsdJ96jYikWmUNghzGpUK3kK/DOKnCLgnH9kYO0=;
-        b=4K/9XJLfGENPbS/6h4Ej6iTcH6TSD/Fiy3ymPZ8/lMpkTc5NOF2mEVQrkSQs/Eer5W
-         5s0Dmb1yHv5NR15oRBIpV5ztmJe30GNzkfhurvLoDDLVQ7hLOMDo5gyNAS1QlF9GNTyH
-         aB10H7Ls1J6Nld4IEzDWH3B9uwouOkvG6U7jrJbQt1T/hKAyqPkTZO7urVogD6dpC0Sh
-         5YVix9umaBSRefWvGkndZRGB7JTFtOkULSP3gqydXO5Ck1GAe3jt+Zjd5JXzcA9e+iZX
-         dHq43LAvqOpVyyPufa9T++APBOXEgJT1Qknmfc6ZUl5XywoF4eOZGjevNrCx9R6bLr4R
-         JbDA==
-X-Gm-Message-State: ACgBeo2yir3xGGdy8BqbgFREimj27qZS/Z9eHCHC5c5fmFiZxFMvnhmi
-        rZNEGx+OMpIDsvD9XB/6nog=
-X-Google-Smtp-Source: AA6agR6nlcY2YzgLjD7HvgFR6t71zH4XjZllDrFEmbCbpkeGES+7C2EKKFvlIul23YRwsViHeno6ew==
-X-Received: by 2002:a05:6402:1f86:b0:447:8edd:1c4b with SMTP id c6-20020a0564021f8600b004478edd1c4bmr29340739edc.163.1662058236634;
-        Thu, 01 Sep 2022 11:50:36 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id s2-20020a1709064d8200b0073923a68974sm8677714eju.206.2022.09.01.11.50.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 11:50:36 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oTpGt-000MNc-0z;
-        Thu, 01 Sep 2022 20:50:35 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH 0/3] Output fixes for --remerge-diff
-Date:   Thu, 01 Sep 2022 20:46:44 +0200
-References: <pull.1342.git.1661926908.gitgitgadget@gmail.com>
- <xmqqv8q7dhh4.fsf@gitster.g>
- <CABPp-BHULBGAbmY1r9fpRr+MrjqOp7j-devOgkfA25jpYBGY9g@mail.gmail.com>
- <xmqqo7vzce39.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <xmqqo7vzce39.fsf@gitster.g>
-Message-ID: <220901.86tu5rhqtg.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=all2eyHfpAvQn2zTW1ICJkUIa+P5ZvoguSIqH1AmshA=;
+        b=nXfWa1VX5q0fUJL33qhfehlKWQc9pbjI9h2z2g/TAzVKm9z6jWgGHqSj0d9JabtMdB
+         nXxHodRa8DrsIezZ7sp4MjOiu+sUY2WhVwSv3hR+Gx+DwtY9e7lgBP+KKCtNocBHnqDG
+         FeS6eWrpcaw4a+MS0RVkfvg7XQO4fcAMwkR2JOiK6FnIBc82ZPRzCFZJLhb5urOZU000
+         fjmAsNs1MGfIuyNOv8sHVm2rmbYzyhHrCCM72ZXkExjJRI1PTXbgZZEatYXyp1rnbgQ0
+         S3J4WQkScAxYKQiyhh/jMXgunrSq4E5bfPEi724nRxegFoBsVCb7GveDX2f/QAFdLbFE
+         4Z1g==
+X-Gm-Message-State: ACgBeo0dz+jRrEHprg8+JbKOtLJCDU1oey1mv2IbB2eNAVGCriQIeA6M
+        dAH9frtImvSXO0AGQl3UJ57J
+X-Google-Smtp-Source: AA6agR4QJYqrAgSNyZ8ofaYQ9A8wIVNWAExpM5hj1Q4m3kmDh824tqhz1EVOXLH8jhohq9swjCBwew==
+X-Received: by 2002:a05:6638:4811:b0:349:d619:a9d9 with SMTP id cp17-20020a056638481100b00349d619a9d9mr18259113jab.240.1662059903259;
+        Thu, 01 Sep 2022 12:18:23 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id m15-20020a5d968f000000b0068998da3851sm9172138ion.52.2022.09.01.12.18.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Sep 2022 12:18:22 -0700 (PDT)
+Message-ID: <8b9e8c2d-7a64-2d66-83a8-2a7daff9a81c@github.com>
+Date:   Thu, 1 Sep 2022 15:18:21 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH 1/3] commit-graph: let commit graph respect commit graft
+Content-Language: en-US
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        ZheNing Hu <adlternative@gmail.com>
+References: <pull.1343.git.1662025272.gitgitgadget@gmail.com>
+ <19fd72c34dcd1332df638d76b0b028e9d9da3d41.1662025272.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <19fd72c34dcd1332df638d76b0b028e9d9da3d41.1662025272.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 9/1/2022 5:41 AM, ZheNing Hu via GitGitGadget wrote:
+> From: ZheNing Hu <adlternative@gmail.com>
+> 
+> In repo_parse_commit_internal(), if we want to use
+> commit graph, it will call parse_commit_in_graph() to
+> parse commit's content from commit graph, otherwise
+> call repo_read_object_file() to parse commit's content
+> from commit object.
+> 
+> repo_read_object_file() will respect commit graft,
+> which can correctly amend commit's parents. But
+> parse_commit_in_graph() not. Inconsistencies here may
+> result in incorrect processing of shallow clone.
+> 
+> So let parse_commit_in_graph() respect commit graft as
+> repo_read_object_file() does, which can solve this problem.
 
-On Thu, Sep 01 2022, Junio C Hamano wrote:
+If grafts or replace-objects exist, then the commit-graph
+is disabled and this code will never be called. I would
+expect a test case demonstrating the change in behavior
+here, but that is impossible.
 
-> Elijah Newren <newren@gmail.com> writes:
->
->> On Wed, Aug 31, 2022 at 6:13 PM Junio C Hamano <gitster@pobox.com> wrote:
->>>
->>> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>>
->>> > Philippe Blain found and reported a couple issues with the output of
->>> > --remerge-diff[1]. After digging in, I think one of them actually counts as
->>> > two separate issues, so here's a series with three patches to fix these
->>> > issues. Each includes testcases to keep us from regressing.
->>>
->>> Including this to 'seen' seems to break the leaks-check CI job X-<.
->>>
->>> https://github.com/git/git/runs/8124648321?check_suite_focus=true
->>
->> That's...surprising.  Any chance of a mis-merge?
->>
->> I ask for two reasons:
->>   * This series, built on main, passed the leaks-check job.
->
-> Ah, that.
->
-> Yes, I did rebase it to 'maint' to be nice to our users as this is
-> not a new feature development but a bugfix or two.
->
-> This is why I hate the leak-check CI job (yes, I do help maintain
-> all parts of the tree, but it does not mean I have to love every bit
-> of the codebase, and this is one of the things I love to hate).
->
-> Instead of saying "subcommand X with feature Y? It ought to be clean
-> so complain if leak checker find something. subcommand Z? It is
-> known to be unclean, so do not bother", it says "In this test in
-> entirety, we currently happen to use only the ones that are clean"
-> and penalizes developers who wants to use an unclean tool merely for
-> checking.  The approach is fundamentally flawed and does not play
-> well with multiple integration branches, just like we saw here.
+The commit-graph parsing should not be bogged down with
+this logic.
 
-We've discussed doing it that way before. I wouldn't be fundamentally
-opposed, but I do think we're far enough along the way to being
-leak-free that we'd want to mark more than just a "top-level" command as
-leak-free.
+Thanks,
+-Stolee
 
-It's just also not the case that we even could do that in all but the
-most trivial cases. Most commands still leak somewhere in some obscure
-cases, but we have entire tests now where the code they run in those
-common cases doesn't leak.
-
-However, in this case this seems to just be a case that Elijah tested
-his code on base X, and you applied it on base Y.
-
-I don't really see how the approach you're suggesting would be any more
-likely to be resilient in the face of that. Then we'd presumably use
-some command that's leak-free on "master", but that command wouldn't be
-leak-free on "maint".
