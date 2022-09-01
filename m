@@ -2,131 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF72CECAAD1
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 04:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A820ECAAD2
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 04:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229514AbiIAEB3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 00:01:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35082 "EHLO
+        id S232699AbiIAE7F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Sep 2022 00:59:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbiIAEB0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 00:01:26 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA329153D15
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 21:01:25 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id b2so12361572qkh.12
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 21:01:25 -0700 (PDT)
+        with ESMTP id S229970AbiIAE7D (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2022 00:59:03 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DD94114C6A
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 21:59:02 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id l5so12634828qvs.13
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 21:59:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=C/ZpX+aOFi6r4E2xrmr5LxlK0Lo7LXii4SafhrXbgH8=;
-        b=PWrGFLX2RPrdy1T5QuRP09Ne3ede1o0Fn6FVnxYCWgjhWZRY25T7XLCbTugp35QLsw
-         5Hftr6NXG0Cy/MmDiefXoKHQhqZTDkvQAfEJAcsQ1+jW5gvOrr0B72PfSLxerf9bkJQO
-         a+Yk4rehVX9R1PWQhXM2wCPqx75/ysFzswhoCp9K3Q4Lb+vYjkYBmRrdcB2hxlkLyJo2
-         MGz5Lnk58yEqsFSwpRS8Bj0Si7pmA632PDnMPKDBUgmjJZoR3uaBO6uOSTo5bzUpFEFe
-         n1EU2jtnZA3B1tDya7qz5SEPkoq4BH8y0hVht4gSUhWDNM3outjWB4ak0Jfpr2A+WZ9l
-         ZedQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc;
+        bh=Ubk/h9kaQMkC/3ZClAritelwkXujKPgIB6NdC1aABl4=;
+        b=cZK2p6TyqW65AaksXmnPoT4gZUBZU7e11qSrGrYkCzsVME1SdJrNE1f47C2jSzNrQr
+         qZEqaaRvLpQEnsMo2k2Huea5+Wc8Bv8bF6PzppctwF7/7y+JqHWYsR/HHXnosIiJwuJz
+         ZQQ/4yIDuXWJydE460z8p+c/8/eH9mxPr/BMeL1xs8ncJsKdqm6VysasH0WHBfXezR17
+         tQ+Hsxm2FZqcBc50mofF23lWX/Wu7qEJ1wDePqverqnwXfo6DjwApABPMAUMERx9jXne
+         n6AVPuXK3Mxc3slshYb/MsgoqDc+keNgy/M6TEAZCORDIfYIUUXDoHD65xrySeN8JpOk
+         sMNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=C/ZpX+aOFi6r4E2xrmr5LxlK0Lo7LXii4SafhrXbgH8=;
-        b=EmaGRfxe8LItraXve6c0+W+IbpSSf18RV+fg0l0P0fLdrTUNDAkI7VTfbFfIiZp/M6
-         rymxtVUF9o2SFxUCzZ3pecR2GUbpehNwNhNyn6SalHqNEO74CCLiaKEgLXDQp3NMSRi/
-         3ZattaEFrQS2ZdEuCLLQV3tZ/aE1xa8OOCDIJLFm1F5k4c9PhxHMeW2eD07xamEK9Z2y
-         Kshq7TIldbBEXgbmrim8Eq/7aCYQBr3sXQ0LylHysAzWWMTjtHUPJkUXioODQ28AmrhC
-         yr9YF+eO8x5zVuVlgw9n6IfS3Z4os7ylvrIs5e7PIKRWcCKrbKJwovTzAfxK/KjOzL1L
-         zd3Q==
-X-Gm-Message-State: ACgBeo271JVb2yoU98SQnzP4TPS51Z7ETBLmo9Z3TfikmPea18gtpgd9
-        W6rPUS1lT4yt/0Njc4o3gxt/9gYTNwQCkCI1KRE=
-X-Google-Smtp-Source: AA6agR75OAp58d2UyNPtGfH0Nv3qerfjkKDUuxlmaftWPi5jdzE61kNSVqew0hoUv8inki6oDAUDK1JeAbgEzzDppDI=
-X-Received: by 2002:a05:620a:4546:b0:6bb:da4a:e0d9 with SMTP id
- u6-20020a05620a454600b006bbda4ae0d9mr18293929qkp.187.1662004885041; Wed, 31
- Aug 2022 21:01:25 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=Ubk/h9kaQMkC/3ZClAritelwkXujKPgIB6NdC1aABl4=;
+        b=duBrwmgC2ii2HWC6pZyvMVtr5LFxAsfPdQ07D0DijA6zxx9CR/QyYMnlH9FbkJPoYO
+         wbv0L+0SOT6MEsUPhSN8LagbgxZaRhUZzQ+aHFaAUDRSl8iwc/Gpd9hnSUMTYRvIeGlI
+         Kb68zQ4Mcd+kaadHayqfk0lgZK/Y/r+9jkxJgDP5MyjdNY3x9Q+8wzLpCdKSV56SFvbs
+         wMaXt9QfvdPVNXUucbbTo44fUnUys+cnVJix97mQIhXU+rZlJfY3ADNaarTS+I6cDpJY
+         jzX+jM2jcSl9Bh6IPLHQSchtqnPC8DZTide9wvcMWVRmQjECYpKLQH/IzXmBWmJqdn1B
+         SEUg==
+X-Gm-Message-State: ACgBeo3Vnp0ziqCWqC3Yz3obestRGXv5J8xllNRM1FsCZxuSCExJ38mI
+        OHtNqzsHvRYE0+IOsC62MCEcRq3D45Y=
+X-Google-Smtp-Source: AA6agR6l8M3QuQDP+32uqvQ7db299B+rnJbAuFJER489Vf/eIPQKT8A9+IIS1FeFTNJUrQ2/x2YMZw==
+X-Received: by 2002:a0c:f1c3:0:b0:499:2b45:8b1c with SMTP id u3-20020a0cf1c3000000b004992b458b1cmr1475923qvl.19.1662008341494;
+        Wed, 31 Aug 2022 21:59:01 -0700 (PDT)
+Received: from ffyuanda.localdomain (99-110-131-145.lightspeed.irvnca.sbcglobal.net. [99.110.131.145])
+        by smtp.gmail.com with ESMTPSA id i5-20020a375405000000b006bb2f555ba4sm10752245qkb.41.2022.08.31.21.59.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Aug 2022 21:59:01 -0700 (PDT)
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+To:     git@vger.kernel.org
+Cc:     derrickstolee@github.com, vdye@github.com,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Subject: [PATCH v3 0/3] grep: integrate with sparse index
+Date:   Wed, 31 Aug 2022 21:57:33 -0700
+Message-Id: <20220901045736.523371-1-shaoxuan.yuan02@gmail.com>
+X-Mailer: git-send-email 2.37.0
+In-Reply-To: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
 MIME-Version: 1.0
-References: <pull.1342.git.1661926908.gitgitgadget@gmail.com>
- <xmqqv8q7dhh4.fsf@gitster.g> <CABPp-BHULBGAbmY1r9fpRr+MrjqOp7j-devOgkfA25jpYBGY9g@mail.gmail.com>
-In-Reply-To: <CABPp-BHULBGAbmY1r9fpRr+MrjqOp7j-devOgkfA25jpYBGY9g@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 31 Aug 2022 21:01:14 -0700
-Message-ID: <CABPp-BFJ3-MxJOuU+Rd-1AtVeC0SH3NJnpN=L0511vhkLchiJA@mail.gmail.com>
-Subject: Re: [PATCH 0/3] Output fixes for --remerge-diff
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 31, 2022 at 8:47 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Wed, Aug 31, 2022 at 6:13 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> > > Philippe Blain found and reported a couple issues with the output of
-> > > --remerge-diff[1]. After digging in, I think one of them actually counts as
-> > > two separate issues, so here's a series with three patches to fix these
-> > > issues. Each includes testcases to keep us from regressing.
-> >
-> > Including this to 'seen' seems to break the leaks-check CI job X-<.
-> >
-> > https://github.com/git/git/runs/8124648321?check_suite_focus=true
->
-> That's...surprising.  Any chance of a mis-merge?
->
-> I ask for two reasons:
->   * This series, built on main, passed the leaks-check job.
->   * The link you provide points to t4069 as the test failing, but the
-> second patch of this series removes the TEST_PASSES_SANITIZE_LEAK=true
-> line from t4069, which should make that test a no-op for the
-> leaks-check job.
+Integrate `git-grep` with sparse-index and test the performance
+improvement.
 
-Actually, looks not like a mis-merge, but some kind of faulty `git am`
-application.  The merge in question isn't available for me to fetch,
-but clicking through the UI from the link you provide eventually leads
-me to:
+Changes since v2
+----------------
 
-    https://github.com/git/git/commit/81f120208d02afee71543d4f588b471950f156f2
+* Modify the commit message for "builtin/grep.c: integrate with sparse
+  index" to make it obvious that the perf test results are not from
+  p2000 tests, but from manual perf runs.
 
-which does NOT match what I submitted:
+* Add tree-walking logic as an extra (the third) patch to improve the
+  performance when --sparse is used. This resolved the left-over-bit
+  in v2 [1].
 
-    https://lore.kernel.org/git/feac97494600e522125b7bb202f4dc5ca020ca99.1661926908.git.gitgitgadget@gmail.com/
+[1] https://lore.kernel.org/git/20220829232843.183711-1-shaoxuan.yuan02@gmail.com/
 
-It's close, but despite still including this part of my commit message:
+Changes since v1
+----------------
 
-"""
-This also removes the TEST_PASSES_SANITIZE_LEAK=true declaration from
-t4069, as there is apparently some kind of memory leak with the pickaxe
-code.
-"""
+* Rewrite the commit message for "builtin/grep.c: add --sparse option"
+  to be clearer.
 
-it's missing this part of the diff:
+* Update the documentation (both in-code and man page) for --sparse.
 
-diff --git a/t/t4069-remerge-diff.sh b/t/t4069-remerge-diff.sh
-index e3e6fbd97b2..95a16d19aec 100755
---- a/t/t4069-remerge-diff.sh
-+++ b/t/t4069-remerge-diff.sh
-@@ -2,7 +2,6 @@
+* Add a few tests to test the new behavior (when _only_ --cached is
+  supplied).
 
- test_description='remerge-diff handling'
+* Reformat the perf test results to not look like directly from p2000
+  tests.
 
--TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
+* Put the "command_requires_full_index" lines right after parse_options().
 
- # This test is ort-specific
+* Add a pathspec test in t1092, and reword a few test documentations.
 
+Shaoxuan Yuan (3):
+  builtin/grep.c: add --sparse option
+  builtin/grep.c: integrate with sparse index
+  builtin/grep.c: walking tree instead of expanding index with --sparse
 
-That part of the diff is important.  I did not add any leaks to the
-code (I did run the leaks-checking job and looked through the output
-to verify that none of them involved any codepath I added or
-modified), but I did add some test code which exercises pre-existing
-memory leaks, and testing those codepaths is critical to verify I got
-the appropriate fixes.  Any idea what happened here?
+ Documentation/git-grep.txt               |  5 ++-
+ builtin/grep.c                           | 46 +++++++++++++++++++++---
+ t/perf/p2000-sparse-operations.sh        |  1 +
+ t/t1092-sparse-checkout-compatibility.sh | 18 ++++++++++
+ t/t7817-grep-sparse-checkout.sh          | 34 ++++++++++++++----
+ 5 files changed, 92 insertions(+), 12 deletions(-)
 
-Either way, I'm going to resubmit the series due to your other
-suggestion.  So long as the unfortunate munging doesn't occur again,
-things should be fine if you just take the new series.
+Range-diff against v2:
+1:  ab5ff488a1 = 1:  db1f5a5409 builtin/grep.c: add --sparse option
+2:  68c7ecee73 ! 2:  af566c7862 builtin/grep.c: integrate with sparse index
+    @@ Commit message
+     
+         Turn on sparse index and remove ensure_full_index().
+     
+    -    Change it to only expands the index when using --sparse.
+    +    Change it to only expand the index when using --sparse.
+     
+    -    The p2000 tests demonstrate a ~99.4% execution time reduction for
+    +    The p2000 tests do not demonstrate a significant improvement,
+    +    because the index read is a small portion of the full process
+    +    time, compared to the blob parsing. The times below reflect the
+    +    time spent in the "do_read_index" trace region as shown using
+    +    GIT_TRACE2_PERF=1.
+    +
+    +    The tests demonstrate a ~99.4% execution time reduction for
+         `git grep` using a sparse index.
+     
+    -    Test                                  Before       After
+    +    Test                                  HEAD~        HEAD
+         -----------------------------------------------------------------------------
+         git grep --cached bogus (full-v3)     0.019        0.018  (-5.2%)
+         git grep --cached bogus (full-v4)     0.017        0.016  (-5.8%)
+    @@ builtin/grep.c: int cmd_grep(int argc, const char **argv, const char *prefix)
+      		int fallback = 0;
+      		git_config_get_bool("grep.fallbacktonoindex", &fallback);
+     
+    - ## t/perf/p2000-sparse-operations.sh ##
+    -@@ t/perf/p2000-sparse-operations.sh: test_perf_on_all git read-tree -mu HEAD
+    - test_perf_on_all git checkout-index -f --all
+    - test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
+    - test_perf_on_all "git rm -f $SPARSE_CONE/a && git checkout HEAD -- $SPARSE_CONE/a"
+    -+test_perf_on_all git grep --cached bogus
+    - 
+    - test_done
+    -
+      ## t/t1092-sparse-checkout-compatibility.sh ##
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse index is not expanded: rm' '
+      	ensure_not_expanded rm -r deep
+-:  ---------- > 3:  757ac7ddee builtin/grep.c: walking tree instead of expanding index with --sparse
+
+base-commit: d42b38dfb5edf1a7fddd9542d722f91038407819
+-- 
+2.37.0
+
