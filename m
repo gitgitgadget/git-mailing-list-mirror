@@ -2,97 +2,217 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99385ECAAD3
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 17:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83074ECAAD3
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 17:53:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231244AbiIAR1K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 13:27:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37490 "EHLO
+        id S233933AbiIARxO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Sep 2022 13:53:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232107AbiIAR1I (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 13:27:08 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42ECA8688C
-        for <git@vger.kernel.org>; Thu,  1 Sep 2022 10:27:08 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id h13-20020a17090a648d00b001fdb9003787so3351444pjj.4
-        for <git@vger.kernel.org>; Thu, 01 Sep 2022 10:27:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=i5kf6iosy3+1gP76xKqhL1GDjkVXDhFs3cWTOQda7Bo=;
-        b=oGg+K76iY/PBzoueig68PV8/xFprla689XP7xuaGMfMu8XPURApqyFLU3n2tN0owP5
-         q5aHyJHlzZ9LmlnUGARqD+pF4ubX+wcIDdhuvJhB1eq7c92B+hTDtGTkQdzyr9bUJ63X
-         WPwR9bw62ULFq0I2IHn7RLh69t1VYAQIvQWhC+mk8OVJQHliMU1+U0P1lvWDnX1E26y2
-         sjoK05zefdCQre650P/BVcLXXvSTn+WsDGlNEixulU4zs3ddWSZmfhL8PIgLBy2DE4LN
-         8lnYHYbU3ikYPVdkla0mr9jhUDPzfnPa4azQvlBx2xZ9p36ZEoquNUIF/IhUyYtP+2+a
-         H29w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=i5kf6iosy3+1gP76xKqhL1GDjkVXDhFs3cWTOQda7Bo=;
-        b=n1aTWTyPVs96U9VDcio9KLzsGrWLU8o9jnXHZjT9GcDGU4zJnn9YYceu7JR+qa525C
-         b+W4HezKYwK1+8uZlzEgFI6f1+VfHAfSO67+Cx/K1n4FaqmXwRlbCpuLLgf1P10WtrPd
-         CH6sNEQpKh6t6hbpPZO2pkz/FzSnnfB0huf0vq54aBe/dHenpjuzFkc4JJznWHpEUeRU
-         Puu96cgieqVV4KhoAP+hdu3HbrtcUEyUlPewRbZW3K/kX1s7Bjn0743boVEjGGTTYCPJ
-         5XOQszZEeVzuIiWGNOhzsTRbZg8zCdJuLFJpw7kGkYCJP1Uc8HUkB4YUJRYQWqJ4pmkh
-         BZtQ==
-X-Gm-Message-State: ACgBeo2/Zq3V+bDjmBmhlyqecUe3pA4+pD9mJS8agDYzvEPTTNx6N3jg
-        rLHETk2nqMauWdj1oyeGfiw=
-X-Google-Smtp-Source: AA6agR6g0xLGFOSegQ3PW7yxenfZCKQrF9eaZLeUO2eWfBQ0Zkc8YqGZqiAYP3nTnUAUVYbnn8lS1g==
-X-Received: by 2002:a17:90a:62cc:b0:1fa:c17d:de02 with SMTP id k12-20020a17090a62cc00b001fac17dde02mr249774pjs.26.1662053227669;
-        Thu, 01 Sep 2022 10:27:07 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id u66-20020a626045000000b0052da33fe7d2sm11846534pfb.95.2022.09.01.10.27.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 10:27:07 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com, vdye@github.com
-Subject: Re: [PATCH v3 3/3] builtin/grep.c: walking tree instead of
- expanding index with --sparse
-References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
-        <20220901045736.523371-1-shaoxuan.yuan02@gmail.com>
-        <20220901045736.523371-4-shaoxuan.yuan02@gmail.com>
-        <xmqqpmgf9fpr.fsf@gitster.g>
-Date:   Thu, 01 Sep 2022 10:27:06 -0700
-In-Reply-To: <xmqqpmgf9fpr.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        01 Sep 2022 10:17:36 -0700")
-Message-ID: <xmqqler39f9x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S232713AbiIARxL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2022 13:53:11 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8652680356
+        for <git@vger.kernel.org>; Thu,  1 Sep 2022 10:53:10 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id A99A8CA124E;
+        Thu,  1 Sep 2022 13:53:09 -0400 (EDT)
+Received: from jeffhost-mbp.local (unknown [IPv6:2600:1015:b110:392b:419c:9e3f:5ae7:8840])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 45A25CC83F1;
+        Thu,  1 Sep 2022 13:53:09 -0400 (EDT)
+Subject: Re: [PATCH v4 1/4] fsmonitor: add two new config options, allowRemote
+ and socketDir
+To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Eric DeCosta <edecosta@mathworks.com>
+References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
+ <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
+ <836a791e6b7fd4490674254ce03105a8ca2175cb.1661962145.git.gitgitgadget@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <8acf1e78-bac4-7f59-11a4-996aa160bbdc@jeffhostetler.com>
+Date:   Thu, 1 Sep 2022 13:53:08 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <836a791e6b7fd4490674254ce03105a8ca2175cb.1661962145.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: mailmunge 3.09 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> writes:
->
->> Before this patch, whenever --sparse is used, `git-grep` utilizes the
->> ensure_full_index() method to expand the index and search all the
->> entries. Because this method requires walking all the trees and
->> constructing the index, it is the slow part within the whole command.
->>
->> To achieve better performance, this patch uses grep_tree() to search the
->> sparse directory entries and get rid of the ensure_full_index() method.
->
-> When you encounter a "sparsedir" (i.e. a tree recorded in index),
-> you should know the path leading to that directory. Even though I no
-> longer remember the details of the implementations of grep_$where()
-> which I did long time ago, I think grep_tree() should know how to
-> pass the leading path down, as that is the most natural way to
-> implement the recursive behaviour.  This patch should be able to
-> piggyback on that.
 
-To avoid unnecessary scare, the above is just me "thinking aloud",
-after reading the proposed log message, and agreeing with the
-direction taken by this patch.  Not giving a suggestion to go
-different route or anything like that.  I should have said "OK" or
-something at the end of the paragraph.
+On 8/31/22 12:09 PM, Eric DeCosta via GitGitGadget wrote:
+> From: Eric DeCosta <edecosta@mathworks.com>
+> 
+> Introduce two new configuration options
+> 
+>     fsmonitor.allowRemote - setting this to true overrides fsmonitor's
+>     default behavior of erroring out when enountering network file
+>     systems. Additionly, when true, the Unix domain socket (UDS) file
+>     used for IPC is located in $HOME rather than in the .git directory.
+> 
+>     fsmonitor.socketDir - allows for the UDS file to be located
+>     anywhere the user chooses rather $HOME.
+> 
+> Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+> ---
+>   fsmonitor-settings.c | 67 ++++++++++++++++++++++++++++++++++++++++++--
+>   fsmonitor-settings.h |  4 +++
+>   2 files changed, 69 insertions(+), 2 deletions(-)
+> 
+> diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
+> index 464424a1e92..a15eeecebf4 100644
+> --- a/fsmonitor-settings.c
+> +++ b/fsmonitor-settings.c
+> @@ -10,7 +10,9 @@
+>   struct fsmonitor_settings {
+>   	enum fsmonitor_mode mode;
+>   	enum fsmonitor_reason reason;
+> +	int allow_remote;
+>   	char *hook_path;
+> +	char *sock_dir;
+>   };
+>   
+>   static enum fsmonitor_reason check_for_incompatible(struct repository *r)
+> @@ -43,6 +45,7 @@ static struct fsmonitor_settings *alloc_settings(void)
+>   	CALLOC_ARRAY(s, 1);
+>   	s->mode = FSMONITOR_MODE_DISABLED;
+>   	s->reason = FSMONITOR_REASON_UNTESTED;
+> +	s->allow_remote = -1;
+>   
+>   	return s;
+>   }
+> @@ -90,6 +93,26 @@ static void lookup_fsmonitor_settings(struct repository *r)
+>   		fsm_settings__set_disabled(r);
+>   }
+>   
+> +int fsm_settings__get_allow_remote(struct repository *r)
+> +{
+> +	if (!r)
+> +		r = the_repository;
+> +	if (!r->settings.fsmonitor)
+> +		lookup_fsmonitor_settings(r);
+> +
+> +	return r->settings.fsmonitor->allow_remote;
+> +}
+> +
+> +const char *fsm_settings__get_socket_dir(struct repository *r)
+> +{
+> +	if (!r)
+> +		r = the_repository;
+> +	if (!r->settings.fsmonitor)
+> +		lookup_fsmonitor_settings(r);
+> +
+> +	return r->settings.fsmonitor->sock_dir;
+> +}
+> +
+>   enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
+>   {
+>   	if (!r)
+> @@ -100,6 +123,7 @@ enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
+>   	return r->settings.fsmonitor->mode;
+>   }
+>   
+> +
+>   const char *fsm_settings__get_hook_path(struct repository *r)
+>   {
+>   	if (!r)
+> @@ -110,9 +134,44 @@ const char *fsm_settings__get_hook_path(struct repository *r)
+>   	return r->settings.fsmonitor->hook_path;
+>   }
+>   
+> +void fsm_settings__set_allow_remote(struct repository *r)
+> +{
+> +	int allow;
+> +
+> +	if (!r)
+> +		r = the_repository;
+> +	if (!r->settings.fsmonitor)
+> +		r->settings.fsmonitor = alloc_settings();
+> +	if (!repo_config_get_bool(r, "fsmonitor.allowremote", &allow))
+> +		r->settings.fsmonitor->allow_remote = allow;
+> +
+> +	return;
+> +}
+> +
+> +void fsm_settings__set_socket_dir(struct repository *r)
+> +{
+> +	const char *path;
+> +
+> +	if (!r)
+> +		r = the_repository;
+> +	if (!r->settings.fsmonitor)
+> +		r->settings.fsmonitor = alloc_settings();
+> +
+> +	if (!repo_config_get_pathname(r, "fsmonitor.socketdir", &path)) {
+> +		FREE_AND_NULL(r->settings.fsmonitor->sock_dir);
+> +		r->settings.fsmonitor->sock_dir = strdup(path);
+> +	}
+> +
+> +	return;
+> +}
+> +
+>   void fsm_settings__set_ipc(struct repository *r)
+>   {
+> -	enum fsmonitor_reason reason = check_for_incompatible(r);
+> +	enum fsmonitor_reason reason;
+> +
+> +	fsm_settings__set_allow_remote(r);
+> +	fsm_settings__set_socket_dir(r);
+> +	reason = check_for_incompatible(r);
+>   
+>   	if (reason != FSMONITOR_REASON_OK) {
+>   		fsm_settings__set_incompatible(r, reason);
+> @@ -135,7 +194,11 @@ void fsm_settings__set_ipc(struct repository *r)
+>   
+>   void fsm_settings__set_hook(struct repository *r, const char *path)
+>   {
+> -	enum fsmonitor_reason reason = check_for_incompatible(r);
+> +	enum fsmonitor_reason reason;
+> +
+> +	fsm_settings__set_allow_remote(r);
+> +	fsm_settings__set_socket_dir(r);
+> +	reason = check_for_incompatible(r);
 
-Thanks for working on this topic.
+When we use the hook interface (to talk to a third-party
+app like Watchman) we do not use the unix domain socket.
+(We talk to the hook child using a normal pipe.)
+
+FWIW, I added code in my series to limit the use of hook-based
+fsmonitors to local filesystems for the paranoia-based
+reasons I've described before.  It wasn't because of the UDS.
+
+So we don't need to set the socket directory in this case.
+
+>   
+>   	if (reason != FSMONITOR_REASON_OK) {
+>   		fsm_settings__set_incompatible(r, reason);
+> diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
+> index d9c2605197f..2de54c85e94 100644
+> --- a/fsmonitor-settings.h
+> +++ b/fsmonitor-settings.h
+> @@ -23,12 +23,16 @@ enum fsmonitor_reason {
+>   	FSMONITOR_REASON_NOSOCKETS, /* NTFS,FAT32 do not support Unix sockets */
+>   };
+>   
+> +void fsm_settings__set_allow_remote(struct repository *r);
+> +void fsm_settings__set_socket_dir(struct repository *r);
+>   void fsm_settings__set_ipc(struct repository *r);
+>   void fsm_settings__set_hook(struct repository *r, const char *path);
+>   void fsm_settings__set_disabled(struct repository *r);
+>   void fsm_settings__set_incompatible(struct repository *r,
+>   				    enum fsmonitor_reason reason);
+>   
+> +int fsm_settings__get_allow_remote(struct repository *r);
+> +const char *fsm_settings__get_socket_dir(struct repository *r);
+>   enum fsmonitor_mode fsm_settings__get_mode(struct repository *r);
+>   const char *fsm_settings__get_hook_path(struct repository *r);
+>   
+> 
