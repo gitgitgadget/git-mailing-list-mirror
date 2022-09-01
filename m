@@ -2,97 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 780AFECAAD3
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 08:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7AC9ECAAD3
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 08:51:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233736AbiIAIFx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 04:05:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55572 "EHLO
+        id S233179AbiIAIvt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Sep 2022 04:51:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233689AbiIAIFb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 04:05:31 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6407B40E22
-        for <git@vger.kernel.org>; Thu,  1 Sep 2022 01:05:17 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id c2so16387501plo.3
-        for <git@vger.kernel.org>; Thu, 01 Sep 2022 01:05:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=QUhg2aZrHhPdc2pFn+oaWCkktjzpMnZ4lWP3Kb91zfg=;
-        b=LCrk5zfwPgomcB/ikwDNtkqvrXwMjuZrhIgvxQRwTxtClM5APJQIZVGCsq4jU538lh
-         1zTVvfE+AMriWgj5OVc4TC3vv3wb8WZUZA1ncfaV4cIZcdo+fWyAv1udrnCQA4nrGly+
-         /34E7k7bb0bRuKLHJp89RMCF9J/cph20qWTGFc5lsHqzGj4GYWCKJKXNcbsKy4qn+sOV
-         8HvMYY2vsnKR5zgWZMLf2Ch8SER0Qwd7lncz20wQt93lsOax6yjwVhB1rmDIRDxEwsSj
-         xG/V8IsmAqi7dTYd5UTf6DcB68I7iXHgp13ucM13/YnR/gm8p53byp9ZS/1nusMpUCeO
-         ssRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=QUhg2aZrHhPdc2pFn+oaWCkktjzpMnZ4lWP3Kb91zfg=;
-        b=70rbN0/kpNiW1UL+iBxDrds5/9ORcgZTyRzEXeX1Yujzwaa8KUliJ85CXEt6tYqOTd
-         bIXKrsZm9iFDDERlPi+KWz2ja98NkLU5aHK4LHTiP3Y5mDnrW0ow1u0orF4KMAmO4K6g
-         dg5ZnCeEz2Gx6M5XEqB163yDYKOm8Cyj8Ym2CMsgCTOhztNPF/iV6c0K1Z1wmsH4qyiZ
-         rA/nvF2lXgMcZ3JjcWB27jYVVeygiCcIqRMU0EzJBqyU3/49zWS8ZZXvHBgAxgJ8Zpi3
-         AFO4vUlT3MwUaJlfJ1v6d1epI31tDYgSPSYMtGdruuK1+kVyE2I7fV2JcTfsKtwxoYhz
-         VsmA==
-X-Gm-Message-State: ACgBeo1hFBlloZWCg4amDVd2Rzjcu41mCXHn5+E/H6WpZ5fl7uLBWf4F
-        STgcLl8uizTzu5n3K4V26qQ=
-X-Google-Smtp-Source: AA6agR4vTrLWiTMmaNBCCWzfv5Wk5OmD/poctTueNMjcXaJiNuAsLK/pSGcdjSp0ig60lsFUz2X0kQ==
-X-Received: by 2002:a17:902:f641:b0:172:e2f8:7efb with SMTP id m1-20020a170902f64100b00172e2f87efbmr28688328plg.140.1662019516667;
-        Thu, 01 Sep 2022 01:05:16 -0700 (PDT)
-Received: from localhost.localdomain ([205.204.117.103])
-        by smtp.gmail.com with ESMTPSA id v66-20020a622f45000000b00536f0370db8sm12314397pfv.212.2022.09.01.01.05.13
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Sep 2022 01:05:15 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     gitgitgadget@gmail.com
-Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
-        gitster@pobox.com, me@ttaylorr.com, mjcheetham@outlook.com,
-        newren@gmail.com, steadmon@google.com, tenglong.tl@alibaba-inc.com
-Subject: [PATCH 5/7] bundle-uri: parse bundle list in config format
-Date:   Thu,  1 Sep 2022 16:05:09 +0800
-Message-Id: <20220901080509.35003-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.37.1.232.g7580e1f09af
-In-Reply-To: <1d1bd9c710327b4d705cfede017771da7fb6ec52.1661181174.git.gitgitgadget@gmail.com>
-References: <1d1bd9c710327b4d705cfede017771da7fb6ec52.1661181174.git.gitgitgadget@gmail.com>
+        with ESMTP id S233597AbiIAIvn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2022 04:51:43 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02E43BA170
+        for <git@vger.kernel.org>; Thu,  1 Sep 2022 01:51:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1662022277;
+        bh=CElpDwaKG04Aiug/dD/WoLVOeMWxsEpSPfmTakIdV54=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=jSjKcjyF53xsdm7y//h/SZyDbw4Msk5JDyaCoavVIZIDAdK8HDLzIF8kKySNCr0Lc
+         B2WgEyuAwlxFqrXMOHPIN+dLmzGvhxAOBlY1LU4UeaJZuhw6mxdT1ki+wc9ARTF365
+         mFdmR/DuC/xHg7Ex9SUwVHsr0rJ7g4mIl0vAsdXc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M9Fnj-1oRBcA2Get-006OXy; Thu, 01
+ Sep 2022 10:51:17 +0200
+Date:   Thu, 1 Sep 2022 10:51:15 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com,
+        Victoria Dye <vdye@github.com>,
+        Johannes Schindelin <johasc@microsoft.com>
+Subject: Re: [PATCH 4/8] scalar: implement the `help` subcommand
+In-Reply-To: <46d0fddfe8fbc2c568cb5a3d14594276db2bc1a9.1661961746.git.gitgitgadget@gmail.com>
+Message-ID: <5q412o8n-60so-52qn-883q-s3spo168o7r9@tzk.qr>
+References: <pull.1341.git.1661961746.gitgitgadget@gmail.com> <46d0fddfe8fbc2c568cb5a3d14594276db2bc1a9.1661961746.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:4rfpgzFXQr7ny/sKkisjdMm2fn1D0uwVda1uamO2uMnvb+GfhSy
+ lEZAqje2wuoRDqnePK527xG1oYb+Xla1Hfbvs9FkhwqwqfKpfCDksUJUG4enBPVSFCqCT+2
+ eCg7sE4mKqZhbZ4DVDjzz1BHUVdacNua5NqpkJDVCDJdtyYeWL173SpaYaDPWwLPGK4BM70
+ iZBACTbzcO4e7Fzlaz6AQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Z4cA6XaWjjY=:EJ+4Oy95x50JnTNAhxJjwJ
+ dxsh9XwzcR5TqJM8PkWfAFstRRa85jTf5vjje+2g47LPc5ThWqBnYYpSzNYHBYHO7uL7dBX0o
+ BSJ0jrTdKdGNoI2pOEU3ZcZesEx889Md5xzewMuTvU6zKYubhckANp8ok5KcXxOA2ZGuBuhhX
+ X9IApyWYMN4Tdj0tS4Dr0K7v2p/iCIpNpMcrQgRHXwfIKMSMdBli/e0bwb4hDEkLzrxkbgFqq
+ SbRMXeuo9ypF4Ewq1bmEAXQ8AiZieC3h9k54yyrdfND/N2KZzxsGmlWAMTSW6iUf3eZ6NnaVW
+ qYx6Rc4UHOV4BbEmLC/HQy+swvDMUF3mT9bQ6SxSlLjvDPZ6bUMo6Lwn2S4lZkLS9jWApoyni
+ ewe+d2p2o1gB9U0ldO+0MwTMhiXMNc4YUwFToocXU88Ic2cDY1G7tFY4/Uq40/TNKZGt70drh
+ QNlWZBp1FAM2nnED1JSAsbeiyQV62gNNYcXrS2sAUFb4YFhsjZUFtsn3xEn+KkntSa9wwzZa7
+ fuZ+9VvyxotHIY/brBMBUM/wn+xQBmyZFk2gJlozcRntMtCpV/ws4jdaxv0nu6Ao3Ft1kESqC
+ 38bQd4bpneIq89BK4m5K7l28h/QCLCKgqKrnZPKuHWtXk/2WgOVCTCrga0/ncd6k1P9uBxvqU
+ sPnbYnMYZuv6fdORk1BvXOZXAV+/wwBarYgV4vg3w2qnu1d8UMdFO+apLE9mIvJJyIgBmBqE8
+ ywqIHmM1zJejXGK2yDTfMauksei+F/W2fIRzOEBBoSIc8+QBQtZfVBnGJE4YXX7J755HpJroU
+ 6NPAbv87QzofbJ91QPyKwnywoMhbDut7pN0zw1VTClg+0jNw6p39Ps0qfxakd/eJfgJUZie+P
+ P6ODZcPRDofwh2NYO2IT54NA297G3xjtllg8xlH+A2cLv0DSb8o0bqRTjG/qiIw7yi+NYzqpn
+ sxuoEW2mG+K36pJ9qHkC70pJyWOPAXug7uE/q6HbOhFIpjeBnQOizMGR0aPKj44bCmNMKZRck
+ nvffdtuzX3Qez+kfWU1RQYsPfJZ066u8FkVKq16atTFcMrnyHLwqHT0YvMp2NQfmDQesg8Ww9
+ Z5SOdY6Ors9F9B3LqoLMIPhLFoDgg5eU6dG65ZLS1mKP8LFIoO1PbMfFQ==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+Hi Victoria,
 
-> diff --git a/bundle-uri.h b/bundle-uri.h
-> index 41a1510a4ac..294ac804140 100644
-> --- a/bundle-uri.h
-> +++ b/bundle-uri.h
-> @@ -71,6 +71,16 @@ int for_all_bundles_in_list(struct bundle_list *list,
->  struct FILE;
->  void print_bundle_list(FILE *fp, struct bundle_list *list);
+On Wed, 31 Aug 2022, Johannes Schindelin via GitGitGadget wrote:
+
+> From: Johannes Schindelin <johasc@microsoft.com>
+
+I probably left that in by mistake. Could I bother you to change this (and
+the corresponding Signed-off-by: footer) to use my usual email address?
+
+Thank you,
+Dscho
+
 >
-> +/**
-> + * A bundle URI may point to a bundle list where the key=value
-> + * pairs are provided in config file format. This method is
-> + * exposed publicly for testing purposes.
-> + */
+> It is merely handing off to `git help scalar`.
+>
+> Signed-off-by: Johannes Schindelin <johasc@microsoft.com>
+> Signed-off-by: Victoria Dye <vdye@github.com>
+> ---
+>  scalar.c | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+>
+> diff --git a/scalar.c b/scalar.c
+> index 642d16124eb..675d7a6b0a9 100644
+> --- a/scalar.c
+> +++ b/scalar.c
+> @@ -819,6 +819,25 @@ static int cmd_delete(int argc, const char **argv)
+>  	return res;
+>  }
+>
+> +static int cmd_help(int argc, const char **argv)
+> +{
+> +	struct option options[] =3D {
+> +		OPT_END(),
+> +	};
+> +	const char * const usage[] =3D {
+> +		N_("scalar help"),
+> +		NULL
+> +	};
 > +
-> +int parse_bundle_list_in_config_format(const char *uri,
-> +				       const char *filename,
-> +				       struct bundle_list *list);
+> +	argc =3D parse_options(argc, argv, NULL, options,
+> +			     usage, 0);
 > +
-
-Although the comment clarifies the purpose of why to introduce
-"parse_bundle_list_in_config_format", but I think this API is useful if finally
-config format is supported. So far, we have a API names "bundle_uri_parse_line"
-which is used to parsing key-value pairs and package into bundle list, I think
-maybe we should rename the API name from "parse_bundle_list_in_config_format" to
-"bundle_uri_parse_config_format", maybe better in my opinion for more consistent
-naming. I think it doesnt break anything, feel free to accept or remain.
-
-Thanks.
+> +	if (argc !=3D 0)
+> +		usage_with_options(usage, options);
+> +
+> +	return run_git("help", "scalar", NULL);
+> +}
+> +
+>  static int cmd_version(int argc, const char **argv)
+>  {
+>  	int verbose =3D 0, build_options =3D 0;
+> @@ -858,6 +877,7 @@ static struct {
+>  	{ "run", cmd_run },
+>  	{ "reconfigure", cmd_reconfigure },
+>  	{ "delete", cmd_delete },
+> +	{ "help", cmd_help },
+>  	{ "version", cmd_version },
+>  	{ "diagnose", cmd_diagnose },
+>  	{ NULL, NULL},
+> --
+> gitgitgadget
+>
+>
