@@ -2,79 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8306DECAAD1
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 01:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53DF3ECAAD1
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 02:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231954AbiIABNq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 21:13:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46958 "EHLO
+        id S232756AbiIAC2s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 22:28:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229638AbiIABNp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 21:13:45 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C8E612A5FA
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 18:13:44 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id i5-20020a17090a2a0500b001fd8708ffdfso958796pjd.2
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 18:13:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=doSbtUzEz8pSkkktdMkJQvnXHcGYmy8lz2299FypXsU=;
-        b=nGBn6XiBdRLKJJIYixvJ7uMLBGTVxlsxbXaNgtC+NRr73o42Tlwgbrsk88i5TJQ0xv
-         beM5SRlIeYsoGzN5H8OLpRQEbviNFp+Dhhli7QMEJ8pUUQANd1E2LdeMaim97h9L2W2l
-         L8ZIBKDhWg/rYhgJFOUPG196BqyeOLVv8f2rqLexcXUXYXZOqpgEzqhdWvOw8NHXz7+3
-         HEAIxw3jYDFydqw6MxNSi+wvDlsxUW+NpeIiY20RijErZJDk1rcnQ12RyBj8mcQQ2gCV
-         umFQPl/76jagsVACTTuioxzd77WV5KbHyBsKmcTZmFv+IgwPIRJ/FbPRnUSCxbsumSTl
-         fA6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=doSbtUzEz8pSkkktdMkJQvnXHcGYmy8lz2299FypXsU=;
-        b=wlyXeiSeNJoQOhz1lk1Hjy5gB7N3GVPlnf7HmI7tS0D57f4rVzAWoX1Y+wc3Wfpsif
-         vfqVc6qB2W7wYw2Yx2qui2DatucvMM1ll/qhBEVysbYjxY5z4MdmcDXCI+KdiETaUpdg
-         1kL4b8ZtJPjnqXtLru2sgArBTgD+qprebNo4nJXMqatNFavS+t6LdRtlGGRMme/Ttusb
-         atMn6ju6xIIZzwOcw9JWOFDfbMrBOyZTP/m/m4ktRJ/OpxH85pXZpkaf0t2ycP2AfTMB
-         KL0fZne3Dd4vUsGMSJIi6YCYkTChyAaH8X4IFY5uBfzTuGQZsonbOyKBsaCrl2D3Wd1s
-         qtXQ==
-X-Gm-Message-State: ACgBeo2m0C0n0RpcqjGhhGz7ndd2GE6wj0PM7pm/5tDGH84Ciah9UvDD
-        VKYzoL+AEc5GW5zGTkq1RdY=
-X-Google-Smtp-Source: AA6agR4053rms78EQU9e/bcNJcXQD3oQi3KiMBjLF+VQ0/gsPiUA7YuYoDnVDu50vwMQ6s2k/KiRyQ==
-X-Received: by 2002:a17:902:f70a:b0:173:36e4:eddf with SMTP id h10-20020a170902f70a00b0017336e4eddfmr27977030plo.9.1661994823733;
-        Wed, 31 Aug 2022 18:13:43 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id u3-20020a170902e5c300b0016edd557412sm1828213plf.201.2022.08.31.18.13.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 18:13:43 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 0/3] Output fixes for --remerge-diff
-References: <pull.1342.git.1661926908.gitgitgadget@gmail.com>
-Date:   Wed, 31 Aug 2022 18:13:43 -0700
-In-Reply-To: <pull.1342.git.1661926908.gitgitgadget@gmail.com> (Elijah Newren
-        via GitGitGadget's message of "Wed, 31 Aug 2022 06:21:45 +0000")
-Message-ID: <xmqqv8q7dhh4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S232808AbiIAC2k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 22:28:40 -0400
+X-Greylist: delayed 181 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 31 Aug 2022 19:28:38 PDT
+Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B7BB10B945
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 19:28:37 -0700 (PDT)
+Received: from [10.0.2.15] ([147.147.167.40])
+        by smtp with ESMTPA
+        id TZtSoUPGLLmeETZtToMfy5; Thu, 01 Sep 2022 03:25:33 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1661999133; bh=fLPau/eX+87rz79nZK20guOtyYvBNosmuIU66VDplJk=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=kkoYHWSLy/Wr9VKNuEEjh1s6JPtR750AS1qf+cyiNen5g8EMP//pDj1/dRINyfJLu
+         Y4yuFE9Q8EpFmG/nKaVwuHAStCCn0XYOWKwt5+ukUk1cPy16BQ5XErFxp7FMYHPqGO
+         r2yIwoKscCjz6vJCqKhl4PtRwpDWvmJrcigrRUNMMpejSaeqdh5UlpWJ+m1csUqRNZ
+         p+HhEpGp7f6kqIvgdhqd8OexBk0N3glbKIDfgRAGnFPcKKoAHPAPKgi/qdAVKq+5sm
+         qbXpitryMGSkp+gqdVSOmIljfktTDH0zYORkH9T9zAylB273pp8B3fuRVNBwLv4ZKv
+         ue6BbxERUlxkA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=M/5elg8s c=1 sm=1 tr=0 ts=6310181d
+ a=nyqnwr6A7Kzjd6EpZhiMcA==:117 a=nyqnwr6A7Kzjd6EpZhiMcA==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=s8AV3YTns38XMBn0O3EA:9 a=QEXdDO2ut3YA:10
+ a=iMKwS5WCztSl3EfDOHEb:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <db2442fb-5b38-9556-39db-ba621bdf2476@ramsayjones.plus.com>
+Date:   Thu, 1 Sep 2022 03:25:22 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v4 1/4] fsmonitor: add two new config options, allowRemote
+ and socketDir
+Content-Language: en-GB
+To:     Junio C Hamano <gitster@pobox.com>,
+        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>
+References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
+ <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
+ <836a791e6b7fd4490674254ce03105a8ca2175cb.1661962145.git.gitgitgadget@gmail.com>
+ <xmqq7d2ofact.fsf@gitster.g>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <xmqq7d2ofact.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfOqL8Hn7HbHBoZvGXUwtQ25He+w5jd+qJwN4N6Kd1A3kP5YHWlPf3Npn4Jm6bYX3uYuXieD7a4KniiA+DsMuoHY1wAAsaq5seRSMoC51F9s8sFubgHmM
+ RKhNghX9AszAqmP0YlaFR8qgDUR+5ENhXL43gWYdKQinQ1czhmpl2q053meBQVmHTb4VgsF1aavNYFj70RLTVSGGVqrvkcfU3cc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Philippe Blain found and reported a couple issues with the output of
-> --remerge-diff[1]. After digging in, I think one of them actually counts as
-> two separate issues, so here's a series with three patches to fix these
-> issues. Each includes testcases to keep us from regressing.
 
-Including this to 'seen' seems to break the leaks-check CI job X-<.
+On 31/08/2022 21:04, Junio C Hamano wrote:
+> "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+[snip]
+>> diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
+>> index d9c2605197f..2de54c85e94 100644
+>> --- a/fsmonitor-settings.h
+>> +++ b/fsmonitor-settings.h
+>> @@ -23,12 +23,16 @@ enum fsmonitor_reason {
+>>  	FSMONITOR_REASON_NOSOCKETS, /* NTFS,FAT32 do not support Unix sockets */
+>>  };
+>>  
+>> +void fsm_settings__set_allow_remote(struct repository *r);
+>> +void fsm_settings__set_socket_dir(struct repository *r);
+> 
+> Do these two need to be extern?
+> 
 
-https://github.com/git/git/runs/8124648321?check_suite_focus=true
+On 'seen' after building:
+  ...
+  $ ./static-check.pl >ssc
+  $ diff nsc ssc
+  3a4
+  > bundle-uri.o	- for_all_bundles_in_list
+  15d15
+  < config.o	- git_config_from_file_with_options
+  40a41,43
+  > fsmonitor-settings.o	- fsm_settings__get_allow_remote
+  > fsmonitor-settings.o	- fsm_settings__get_socket_dir
+  > fsmonitor-settings.o	- fsm_settings__set_allow_remote
+  44a48
+  > fsmonitor-settings.o	- fsm_settings__set_socket_dir
+  $ 
+
+.. so probably not. ;-)
+
+ATB,
+Ramsay Jones
+
 
