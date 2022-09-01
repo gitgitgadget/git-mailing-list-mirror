@@ -2,58 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 273E2ECAAD4
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 00:30:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46891ECAAD1
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 00:30:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232176AbiIAAal (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 20:30:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47556 "EHLO
+        id S232178AbiIAAam (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 20:30:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232025AbiIAAaV (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232003AbiIAAaV (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 31 Aug 2022 20:30:21 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1BA67FE41
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:11 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id k9so20313662wri.0
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:11 -0700 (PDT)
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C85E6AA3E
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:09 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id k17so8180524wmr.2
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=oqUh3cjpNmKm4FAaZzlli3XUOmHrKMdNuCJ7vI/P/a4=;
-        b=FF14YGpiaYO1Op6FiX7laXOMSGKfPFJB5s1P/rp16sbvgXai7J6RwQeLhEtOhHJSOs
-         fLYCkeKh0dz80yRgyCNAXg6RhmlXhWTwePikwP6DPmRRyJtWu+1GXzqP8b3ZUqAHIkTF
-         x9rJcW8+/29QNk50jRaLa0rEbt4n1SOML/Ua1nvbNNIBKv2+aJF3+9jQyuEkS7Bg0Xfd
-         fyTNDWS5o/KQZVV/5T/iTP83nWyW6x1daZh6KiJUmnElUS5saRxjhu60TKY41FfzuKFS
-         nlB9OzF4pFib8XAObFs0nkyhXCcHPoCyvAvhltGUlgltbsoyhUrHSpYfo0pQv+ARLJ1W
-         5JgQ==
+        bh=q86GMcjBtEEokqSMLg6tH3ZO+WReq/RUwXBUegY1+6U=;
+        b=TcpCbHfHLuAP07jYqpLsgSvO3AbPaEmF0EAhH9oKCj55LdpV1tcNsq94CuuunG5b2C
+         oMi4RIbraogmKFXzCyxrl5Xwy8npxu6iZBF9BR3Vt9twQaI8gqZlDr4D/QDt3QyHqaQ/
+         +Ayk68TpSPhjH5Xsu92z1Z2XyQL2D9V8slvEAbvAxyiSeAgAcQwW2JsxhVb1y0RmQjn8
+         imD7uyCt32EF+rIeCn0qeSEw6WgKYHvk42yuIGHTgYIpFRIrbtVTDxlZk7Rn4NkxUfLH
+         iuPlJ2iWl3vhf7PGzobGawXKXK+qXKceAsayxasfa9/5qxM+vTA4kdIaNX5yaLb82dat
+         g4Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=oqUh3cjpNmKm4FAaZzlli3XUOmHrKMdNuCJ7vI/P/a4=;
-        b=fkFQRnBMRJoo3nQNO7WbR8EC8LjAyOF6oKwn/xuOrXMhBP9MVvbXlulV1reOAgnWed
-         TBeSREq05t49/y6c6ysAAHz1UtRVAMypaw7IM/LfkCbil2JUCdaXGiU1D1wBEYhBCQ2I
-         vO+42MLb8xes0aOHme/g6aPhmLREDOInfKYpgXfdI7Py1ZznL0/ibta7y/6GLAkkALOz
-         blJNp0IZrwv9m7sfzU49i/aMAb/3hD+eNHd/nxWIgkBZvjy+RgaoFN/LiI5bNKbMd7di
-         spDcfVFgtdKTKtNsJIEc8lYci32I8YKk8893xWCIstciZevc177T3L3YEYa/ZOHQHNi4
-         M/DA==
-X-Gm-Message-State: ACgBeo1+7WeG8teIpYeRSCfnHMB68qeM/xpR+0YEkV1AikWJJFiCurXT
-        ONQq9yVl/DKZ86+L9YkEbkbwdFgVgK4=
-X-Google-Smtp-Source: AA6agR5XdVlNksn+dhhQ+ZyULjpxXPOCsPzV4bTscZvcJLHwHDQwgWUfBJJ2pRPwuYV1ySX9NXklAA==
-X-Received: by 2002:a5d:6a01:0:b0:21a:338c:4862 with SMTP id m1-20020a5d6a01000000b0021a338c4862mr12561239wru.631.1661992209853;
-        Wed, 31 Aug 2022 17:30:09 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r6-20020a5d4946000000b00226d2462b32sm12290086wrs.52.2022.08.31.17.30.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=q86GMcjBtEEokqSMLg6tH3ZO+WReq/RUwXBUegY1+6U=;
+        b=I9RP8z4NJzE/UqoATiVKaPCbdbplZNofCa9mslBmGXyQaYkh+4xS99h59bwsGSRi1U
+         4DSnXQ6BadxdqrYpzS0Ap1eFEkYr9ucm8sXH1kDC/BuZ34F2G6ufvhQcgo/NGBKe2ETo
+         l0q11q+R5bUDPHl/l1aH5U3NdJ1r7VfOm2oAkLNmCSPmLWmaGWu3aqyy8IblO7RXpUac
+         7wQyuKrCLaS5qXL9nTrgnapc8KXOm3eaJlTmbUrPr/SXafsd3FxULTT7haahpT1hJJ7r
+         4SPrVmz8S1JhxPQEEUcD0ErXCGf3z7Lu3su7FnzP2u/TPPO1qpxLFgkdb+yf3Wc2Fn41
+         XaKw==
+X-Gm-Message-State: ACgBeo3MWvHd3kCi6uIQl/NeYod5/lmuoAxyQjjFhDGQKsBgaEeRMEhM
+        aYK2L9jyb2jUriIyUh3+vPxU2wOF1ho=
+X-Google-Smtp-Source: AA6agR4xTqlCCqYaYylyrja0ZLpwo5FiRuphbEcnzfB2CtrSHI0Ozr9L2GxQHxwwv5HXRDXoKvwcaw==
+X-Received: by 2002:a05:600c:3c84:b0:3a6:9596:fa1f with SMTP id bg4-20020a05600c3c8400b003a69596fa1fmr3412767wmb.162.1661992208118;
         Wed, 31 Aug 2022 17:30:08 -0700 (PDT)
-Message-Id: <86a718bfa5585c826fc98f8844a52faabb45fa55.1661992197.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j5-20020a05600c42c500b003a54fffa809sm3253093wme.17.2022.08.31.17.30.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Aug 2022 17:30:07 -0700 (PDT)
+Message-Id: <737d666bf9e309686f95e4909998c33200c1e0a4.1661992197.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
 References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
 From:   "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Sep 2022 00:29:47 +0000
-Subject: [PATCH 09/18] chainlint.pl: don't require `&` background command to
- end with `&&`
+Date:   Thu, 01 Sep 2022 00:29:46 +0000
+Subject: [PATCH 08/18] t/Makefile: apply chainlint.pl to existing self-tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,68 +70,182 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Eric Sunshine <sunshine@sunshineco.com>
 
-The exit status of the `&` asynchronous operator which starts a command
-in the background is unconditionally zero, and the few places in the
-test scripts which launch commands asynchronously are not interested in
-the exit status of the `&` operator (though they often capture the
-background command's PID). As such, there is little value in complaining
-about broken &&-chain for a command launched in the background, and
-doing so would only make busy-work for test authors. Therefore, take
-this special case into account when checking for &&-chain breakage.
+Now that chainlint.pl is functional, take advantage of the existing
+chainlint self-tests to validate its operation. (While at it, stop
+validating chainlint.sed against the self-tests since it will soon be
+retired.)
+
+Due to chainlint.sed implementation limitations leaking into the
+self-test "expect" files, a few of them require minor adjustment to make
+them compatible with chainlint.pl which does not share those
+limitations.
+
+First, because `sed` does not provide any sort of real recursion,
+chainlint.sed only emulates recursion into subshells, and each level of
+recursion leads to a multiplicative increase in complexity of the `sed`
+rules. To avoid substantial complexity, chainlint.sed, therefore, only
+emulates subshell recursion one level deep. Any subshell deeper than
+that is passed through as-is, which means that &&-chains are not checked
+in deeper subshells. chainlint.pl, on the other hand, employs a proper
+recursive descent parser, thus checks subshells to any depth and
+correctly flags broken &&-chains in deep subshells.
+
+Second, due to sed's line-oriented nature, chainlint.sed, by necessity,
+folds multi-line quoted strings into a single line. chainlint.pl, on the
+other hand, employs a proper lexical analyzer which preserves quoted
+strings as-is, including embedded newlines.
+
+Furthermore, the output of chainlint.sed and chainlint.pl do not match
+precisely in terms of whitespace. However, since the purpose of the
+self-checks is to verify that the ?!AMP?! annotations are being
+correctly added, minor whitespace differences are immaterial. For this
+reason, rather than adjusting whitespace in all existing self-test
+"expect" files to match the new linter's output, the `check-chainlint`
+target ignores whitespace differences. Since `diff -w` is not POSIX,
+`check-chainlint` attempts to employ `git diff -w`, and only falls back
+to non-POSIX `diff -w` (and `-u`) if `git diff` is not available.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/chainlint.pl                            |  2 +-
- t/chainlint/chain-break-background.expect |  9 +++++++++
- t/chainlint/chain-break-background.test   | 10 ++++++++++
- 3 files changed, 20 insertions(+), 1 deletion(-)
- create mode 100644 t/chainlint/chain-break-background.expect
- create mode 100644 t/chainlint/chain-break-background.test
+ t/Makefile                                    | 29 +++++++++++++++----
+ t/chainlint/block.expect                      |  2 +-
+ t/chainlint/here-doc-multi-line-string.expect |  3 +-
+ t/chainlint/multi-line-string.expect          | 11 +++++--
+ t/chainlint/nested-subshell.expect            |  2 +-
+ t/chainlint/t7900-subtree.expect              | 13 +++++++--
+ 6 files changed, 46 insertions(+), 14 deletions(-)
 
-diff --git a/t/chainlint.pl b/t/chainlint.pl
-index 31c444067ce..ba3fcb0c8e6 100755
---- a/t/chainlint.pl
-+++ b/t/chainlint.pl
-@@ -483,7 +483,7 @@ sub match_ending {
- }
+diff --git a/t/Makefile b/t/Makefile
+index 1c80c0c79a0..11f276774ea 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -38,7 +38,7 @@ T = $(sort $(wildcard t[0-9][0-9][0-9][0-9]-*.sh))
+ THELPERS = $(sort $(filter-out $(T),$(wildcard *.sh)))
+ TPERF = $(sort $(wildcard perf/p[0-9][0-9][0-9][0-9]-*.sh))
+ CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.test)))
+-CHAINLINT = sed -f chainlint.sed
++CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
  
- my @safe_endings = (
--	[qr/^(?:&&|\|\||\|)$/],
-+	[qr/^(?:&&|\|\||\||&)$/],
- 	[qr/^(?:exit|return)$/, qr/^(?:\d+|\$\?)$/],
- 	[qr/^(?:exit|return)$/, qr/^(?:\d+|\$\?)$/, qr/^;$/],
- 	[qr/^(?:exit|return|continue)$/],
-diff --git a/t/chainlint/chain-break-background.expect b/t/chainlint/chain-break-background.expect
-new file mode 100644
-index 00000000000..28f9114f42d
---- /dev/null
-+++ b/t/chainlint/chain-break-background.expect
-@@ -0,0 +1,9 @@
-+JGIT_DAEMON_PID= &&
-+git init --bare empty.git &&
-+> empty.git/git-daemon-export-ok &&
-+mkfifo jgit_daemon_output &&
-+{
-+	jgit daemon --port="$JGIT_DAEMON_PORT" . > jgit_daemon_output &
-+	JGIT_DAEMON_PID=$!
-+} &&
-+test_expect_code 2 git ls-remote --exit-code git://localhost:$JGIT_DAEMON_PORT/empty.git
-diff --git a/t/chainlint/chain-break-background.test b/t/chainlint/chain-break-background.test
-new file mode 100644
-index 00000000000..e10f656b055
---- /dev/null
-+++ b/t/chainlint/chain-break-background.test
-@@ -0,0 +1,10 @@
-+JGIT_DAEMON_PID= &&
-+git init --bare empty.git &&
-+>empty.git/git-daemon-export-ok &&
-+mkfifo jgit_daemon_output &&
-+{
-+# LINT: exit status of "&" is always 0 so &&-chaining immaterial
-+	jgit daemon --port="$JGIT_DAEMON_PORT" . >jgit_daemon_output &
-+	JGIT_DAEMON_PID=$!
-+} &&
-+test_expect_code 2 git ls-remote --exit-code git://localhost:$JGIT_DAEMON_PORT/empty.git
+ all: $(DEFAULT_TEST_TARGET)
+ 
+@@ -73,10 +73,29 @@ clean-chainlint:
+ 
+ check-chainlint:
+ 	@mkdir -p '$(CHAINLINTTMP_SQ)' && \
+-	sed -e '/^# LINT: /d' $(patsubst %,chainlint/%.test,$(CHAINLINTTESTS)) >'$(CHAINLINTTMP_SQ)'/tests && \
+-	sed -e '/^[ 	]*$$/d' $(patsubst %,chainlint/%.expect,$(CHAINLINTTESTS)) >'$(CHAINLINTTMP_SQ)'/expect && \
+-	$(CHAINLINT) '$(CHAINLINTTMP_SQ)'/tests | grep -v '^[	]*$$' >'$(CHAINLINTTMP_SQ)'/actual && \
+-	diff -u '$(CHAINLINTTMP_SQ)'/expect '$(CHAINLINTTMP_SQ)'/actual
++	for i in $(CHAINLINTTESTS); do \
++		echo "test_expect_success '$$i' '" && \
++		sed -e '/^# LINT: /d' chainlint/$$i.test && \
++		echo "'"; \
++	done >'$(CHAINLINTTMP_SQ)'/tests && \
++	{ \
++		echo "# chainlint: $(CHAINLINTTMP_SQ)/tests" && \
++		for i in $(CHAINLINTTESTS); do \
++			echo "# chainlint: $$i" && \
++			sed -e '/^[ 	]*$$/d' chainlint/$$i.expect; \
++		done \
++	} >'$(CHAINLINTTMP_SQ)'/expect && \
++	$(CHAINLINT) --emit-all '$(CHAINLINTTMP_SQ)'/tests | \
++		grep -v '^[ 	]*$$' >'$(CHAINLINTTMP_SQ)'/actual && \
++	if test -f ../GIT-BUILD-OPTIONS; then \
++		. ../GIT-BUILD-OPTIONS; \
++	fi && \
++	if test -x ../git$$X; then \
++		DIFFW="../git$$X --no-pager diff -w --no-index"; \
++	else \
++		DIFFW="diff -w -u"; \
++	fi && \
++	$$DIFFW '$(CHAINLINTTMP_SQ)'/expect '$(CHAINLINTTMP_SQ)'/actual
+ 
+ test-lint: test-lint-duplicates test-lint-executable test-lint-shell-syntax \
+ 	test-lint-filenames
+diff --git a/t/chainlint/block.expect b/t/chainlint/block.expect
+index da60257ebc4..37dbf7d95fa 100644
+--- a/t/chainlint/block.expect
++++ b/t/chainlint/block.expect
+@@ -1,7 +1,7 @@
+ (
+ 	foo &&
+ 	{
+-		echo a
++		echo a ?!AMP?!
+ 		echo b
+ 	} &&
+ 	bar &&
+diff --git a/t/chainlint/here-doc-multi-line-string.expect b/t/chainlint/here-doc-multi-line-string.expect
+index 2578191ca8a..be64b26869a 100644
+--- a/t/chainlint/here-doc-multi-line-string.expect
++++ b/t/chainlint/here-doc-multi-line-string.expect
+@@ -1,4 +1,5 @@
+ (
+-	cat <<-TXT && echo "multi-line	string" ?!AMP?!
++	cat <<-TXT && echo "multi-line
++	string" ?!AMP?!
+ 	bap
+ )
+diff --git a/t/chainlint/multi-line-string.expect b/t/chainlint/multi-line-string.expect
+index ab0dadf748e..27ff95218e7 100644
+--- a/t/chainlint/multi-line-string.expect
++++ b/t/chainlint/multi-line-string.expect
+@@ -1,9 +1,14 @@
+ (
+-	x="line 1		line 2		line 3" &&
+-	y="line 1		line2" ?!AMP?!
++	x="line 1
++		line 2
++		line 3" &&
++	y="line 1
++		line2" ?!AMP?!
+ 	foobar
+ ) &&
+ (
+-	echo "xyz" "abc		def		ghi" &&
++	echo "xyz" "abc
++		def
++		ghi" &&
+ 	barfoo
+ )
+diff --git a/t/chainlint/nested-subshell.expect b/t/chainlint/nested-subshell.expect
+index 41a48adaa2b..02e0a9f1bb5 100644
+--- a/t/chainlint/nested-subshell.expect
++++ b/t/chainlint/nested-subshell.expect
+@@ -6,7 +6,7 @@
+ 	) >file &&
+ 	cd foo &&
+ 	(
+-		echo a
++		echo a ?!AMP?!
+ 		echo b
+ 	) >file
+ )
+diff --git a/t/chainlint/t7900-subtree.expect b/t/chainlint/t7900-subtree.expect
+index 1cccc7bf7e1..69167da2f27 100644
+--- a/t/chainlint/t7900-subtree.expect
++++ b/t/chainlint/t7900-subtree.expect
+@@ -1,10 +1,17 @@
+ (
+-	chks="sub1sub2sub3sub4" &&
++	chks="sub1
++sub2
++sub3
++sub4" &&
+ 	chks_sub=$(cat <<TXT | sed "s,^,sub dir/,"
+ ) &&
+-	chkms="main-sub1main-sub2main-sub3main-sub4" &&
++	chkms="main-sub1
++main-sub2
++main-sub3
++main-sub4" &&
+ 	chkms_sub=$(cat <<TXT | sed "s,^,sub dir/,"
+ ) &&
+ 	subfiles=$(git ls-files) &&
+-	check_equal "$subfiles" "$chkms$chks"
++	check_equal "$subfiles" "$chkms
++$chks"
+ )
 -- 
 gitgitgadget
 
