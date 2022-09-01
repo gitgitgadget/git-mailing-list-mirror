@@ -2,102 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53DF3ECAAD1
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 02:28:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9BBBECAAD1
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 02:38:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232756AbiIAC2s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 22:28:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55158 "EHLO
+        id S230101AbiIACix (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 22:38:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232808AbiIAC2k (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 22:28:40 -0400
-X-Greylist: delayed 181 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 31 Aug 2022 19:28:38 PDT
-Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B7BB10B945
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 19:28:37 -0700 (PDT)
-Received: from [10.0.2.15] ([147.147.167.40])
-        by smtp with ESMTPA
-        id TZtSoUPGLLmeETZtToMfy5; Thu, 01 Sep 2022 03:25:33 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1661999133; bh=fLPau/eX+87rz79nZK20guOtyYvBNosmuIU66VDplJk=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=kkoYHWSLy/Wr9VKNuEEjh1s6JPtR750AS1qf+cyiNen5g8EMP//pDj1/dRINyfJLu
-         Y4yuFE9Q8EpFmG/nKaVwuHAStCCn0XYOWKwt5+ukUk1cPy16BQ5XErFxp7FMYHPqGO
-         r2yIwoKscCjz6vJCqKhl4PtRwpDWvmJrcigrRUNMMpejSaeqdh5UlpWJ+m1csUqRNZ
-         p+HhEpGp7f6kqIvgdhqd8OexBk0N3glbKIDfgRAGnFPcKKoAHPAPKgi/qdAVKq+5sm
-         qbXpitryMGSkp+gqdVSOmIljfktTDH0zYORkH9T9zAylB273pp8B3fuRVNBwLv4ZKv
-         ue6BbxERUlxkA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=M/5elg8s c=1 sm=1 tr=0 ts=6310181d
- a=nyqnwr6A7Kzjd6EpZhiMcA==:117 a=nyqnwr6A7Kzjd6EpZhiMcA==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=s8AV3YTns38XMBn0O3EA:9 a=QEXdDO2ut3YA:10
- a=iMKwS5WCztSl3EfDOHEb:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <db2442fb-5b38-9556-39db-ba621bdf2476@ramsayjones.plus.com>
-Date:   Thu, 1 Sep 2022 03:25:22 +0100
+        with ESMTP id S229498AbiIACiw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 22:38:52 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97A34136B00
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 19:38:46 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id x80so11535716pgx.0
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 19:38:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=siKWoiweguDT56ZRs/drBCsf3/ydI46W/DXbLrn37FQ=;
+        b=Id/OXyRciuu6mBQMIX3d6UPyvOmLQl2r/D+5WdF5ESp4DGmauHB9r+YtsZomuAteGT
+         XtkRGlcs1NydFgCrkvjdHVEYMrx0WFEy8bApKGtXEGkCjNKIbR/8RKv7g8rLVpi2pgfE
+         bJeHUSEzrkhhpTH8QCOb+JdRQeyRnIXXFzL+k6nS25Ncc235XIpUATkJm69w1U8KhBVC
+         oAq+rA0ong4NDg8tBzx1OSOoje3gtybgD7i9RGM0EZYRoK4DC1GFnh1jXpSJ0epOXwxQ
+         BBiccHY53Mc6DwtSF6inkyLDNGLsGUPcnqgR4kF1zA5yx/1np/yBUuma5Xu2+T/+vbLS
+         yAGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=siKWoiweguDT56ZRs/drBCsf3/ydI46W/DXbLrn37FQ=;
+        b=RF/GQzyn2hhQP8X19KCWi6vzX4vxVLuXi1cyIxATPSGvlrByRdby7SHrk8JlOXHO4E
+         FtB2185dgsefPRO1pHALkBwxHd0glgm6iHZt1RA+QQwFLmLluBOhWAj/PqDP3cLAPvPD
+         yc9/+GuB3WXQVUNobkNsBBOi8D2m4YLJmm5NZxDU2Jl3gV9q2zgV6MJGQTCmFL8H1IX6
+         jroyB8cZ4IuRZdl1Bo/IB7kRNhv49hy2DKOhriJBif9I0/f441Nh9jnBQO6LcDZylShV
+         NieyhUiZlm67j0wJQFgF1HvensphG0qd41SUoY884+bm1dNEbjQrAxzBvKxY9Xhl1F8p
+         6z5A==
+X-Gm-Message-State: ACgBeo1HPvpaJS5pmYhAdf8TG15REr/+JGuSSRxIeI7ucen7vqo2iYmT
+        p9V8QtzqkHgvYis9M8mqQpI=
+X-Google-Smtp-Source: AA6agR6ztx9soO8d/3SNiRLnVNt2KunRkWl+m2C0D7e/x1LuirrX40NgonT4LfBBlOB/XUWRRUI0gA==
+X-Received: by 2002:a63:b03:0:b0:429:c549:d1f1 with SMTP id 3-20020a630b03000000b00429c549d1f1mr25028800pgl.131.1661999926126;
+        Wed, 31 Aug 2022 19:38:46 -0700 (PDT)
+Received: from localhost.localdomain ([205.204.117.103])
+        by smtp.gmail.com with ESMTPSA id jf9-20020a170903268900b00174f43129fbsm6060929plb.47.2022.08.31.19.38.43
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 31 Aug 2022 19:38:45 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     gitgitgadget@gmail.com
+Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
+        gitster@pobox.com, me@ttaylorr.com, mjcheetham@outlook.com,
+        newren@gmail.com, steadmon@google.com, tenglong.tl@alibaba-inc.com
+Subject: [PATCH 4/7] bundle-uri: unit test "key=value" parsing
+Date:   Thu,  1 Sep 2022 10:38:38 +0800
+Message-Id: <20220901023838.19263-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.37.1.229.g42ab0356e5e.dirty
+In-Reply-To: <7e4e4656e530395d055abac2a59e93866c9a0de2.1661181174.git.gitgitgadget@gmail.com>
+References: <7e4e4656e530395d055abac2a59e93866c9a0de2.1661181174.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v4 1/4] fsmonitor: add two new config options, allowRemote
- and socketDir
-Content-Language: en-GB
-To:     Junio C Hamano <gitster@pobox.com>,
-        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>
-References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
- <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
- <836a791e6b7fd4490674254ce03105a8ca2175cb.1661962145.git.gitgitgadget@gmail.com>
- <xmqq7d2ofact.fsf@gitster.g>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <xmqq7d2ofact.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfOqL8Hn7HbHBoZvGXUwtQ25He+w5jd+qJwN4N6Kd1A3kP5YHWlPf3Npn4Jm6bYX3uYuXieD7a4KniiA+DsMuoHY1wAAsaq5seRSMoC51F9s8sFubgHmM
- RKhNghX9AszAqmP0YlaFR8qgDUR+5ENhXL43gWYdKQinQ1czhmpl2q053meBQVmHTb4VgsF1aavNYFj70RLTVSGGVqrvkcfU3cc=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
+> +> +	init_bundle_list(&list);
+> +	while (strbuf_getline(&sb, stdin) != EOF) {
+> +		if (bundle_uri_parse_line(&list, sb.buf) < 0)
+> +			err = error("bad line: '%s'", sb.buf);
+> +	}
 
-On 31/08/2022 21:04, Junio C Hamano wrote:
-> "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-[snip]
->> diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
->> index d9c2605197f..2de54c85e94 100644
->> --- a/fsmonitor-settings.h
->> +++ b/fsmonitor-settings.h
->> @@ -23,12 +23,16 @@ enum fsmonitor_reason {
->>  	FSMONITOR_REASON_NOSOCKETS, /* NTFS,FAT32 do not support Unix sockets */
->>  };
->>  
->> +void fsm_settings__set_allow_remote(struct repository *r);
->> +void fsm_settings__set_socket_dir(struct repository *r);
-> 
-> Do these two need to be extern?
-> 
+The command to write such a test is useful for people who
+want to experiment about the feature, Thanks. On top of that,
+I have a little question about the condition:
 
-On 'seen' after building:
-  ...
-  $ ./static-check.pl >ssc
-  $ diff nsc ssc
-  3a4
-  > bundle-uri.o	- for_all_bundles_in_list
-  15d15
-  < config.o	- git_config_from_file_with_options
-  40a41,43
-  > fsmonitor-settings.o	- fsm_settings__get_allow_remote
-  > fsmonitor-settings.o	- fsm_settings__get_socket_dir
-  > fsmonitor-settings.o	- fsm_settings__set_allow_remote
-  44a48
-  > fsmonitor-settings.o	- fsm_settings__set_socket_dir
-  $ 
+  if (bundle_uri_parse_line(&list, sb.buf) < 0)
 
-.. so probably not. ;-)
+"bundle_uri_parse_line" will call "bundle_list_update" inside, and
+could get the result of it as "bundle_uri_parse_line"'s return, then
+actually "bundle_list_update" could return "1", so I'm not sure but maybe
+the line could modified to:
 
-ATB,
-Ramsay Jones
+  if (bundle_uri_parse_line(&list, sb.buf))
 
+at here.
 
+Thanks.
