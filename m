@@ -2,148 +2,252 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4227EECAAD2
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 22:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6421ECAAD3
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 22:40:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234910AbiIAWgZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 18:36:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36124 "EHLO
+        id S235192AbiIAWkI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Sep 2022 18:40:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233598AbiIAWgY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 18:36:24 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C5EE2C108
-        for <git@vger.kernel.org>; Thu,  1 Sep 2022 15:36:23 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-11eb8b133fbso913121fac.0
-        for <git@vger.kernel.org>; Thu, 01 Sep 2022 15:36:23 -0700 (PDT)
+        with ESMTP id S235128AbiIAWkF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2022 18:40:05 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE67DDE92
+        for <git@vger.kernel.org>; Thu,  1 Sep 2022 15:40:01 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id u18so131183wrq.10
+        for <git@vger.kernel.org>; Thu, 01 Sep 2022 15:40:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc;
-        bh=1Bku6RFz/CvCbqZWzNjBzV40eU89p7s/KCTWx+y7JGQ=;
-        b=aJwhCEwJzeWQUJo2osWLJ9uKHjnvizr2iWilCoNNQSG+C8CN4c/VOqwyDOvnlYWDy+
-         srByOxPEJf0SEpnpERvyFSZSMvTASQvvX3WRafyTx87Lj+3h2uyo/0QtG5n7Jg3sH+MZ
-         xQY2S1ALiTT5WsVR0VfO6GPR0zz3v0pImp0Fvg9bNj6Xa53uk7E0uVM+LW4jabOPSR9P
-         MZw6G/2KOQKb1ZwRX2QjxZu/E2EDVQbxHWRdytBEtYc/H3Hlszo1sIKjZO3PEEoXM0to
-         w2tN6IGTMW2kHWhe/fm50E8AQX9S/Sf2+UdSqVIcQrWJQRrFuoza6h86bCMbGKv2AIz7
-         seRg==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date;
+        bh=MdhWoBMsuyG7iCe9BxXfdroz7Oy34kbx1EYw6HrMDgA=;
+        b=dn+RMNOd09qAmYa70+a2zNqhH4+Jg0PoWfoycFxh4RtzYEXaoH9vWwEPP0ZHWU9A0m
+         DFUXI4IzTasFVLth4y2UbOxWsx5OxtJFT2UHU3HLhi8XVCaRkmXGqhWAhBrSlgMJo/v2
+         2lBsQ6dG8IAW13h9zhNfMNxvRhZCFEC1jZqcNBfqzslLjLVxYaD55w4zxFJxhxuZEM4r
+         PF+4KXKcdWbGlkai/hdmQI6wPuhKp8NhedW/gCieHt4ZBwV6t1taOptilo5S5FYeTtNQ
+         8fT66f/bTs1S6RUCLtzqFX2ifeC2zauIwti5Jnr0+kTOLqFxfqPvgPsDhG+p2oRIcXkJ
+         toqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=1Bku6RFz/CvCbqZWzNjBzV40eU89p7s/KCTWx+y7JGQ=;
-        b=B+xMzesun27Yc1DhgZgI4Jz2SYwxA6sivysH//ZANJAIsKyjPTOj40eaCgtg3W6Uvk
-         rIkp1qzCbD5nT28LcJJQMP6tzh2jJFiRIg1w5KPuNOcJ25ePnZ1l2KUZqunw1ekrn/tk
-         dugdV14t0JQS2pf1dYZEymcg2Y9ULXe/v2gu/AVqLVNYPBHNqMXsHe3W5Age7gsL7/5m
-         Fvg8GS1jf8wO6Iy/k4f12+IBpNpT/kS1Vs6+NDzBwNb/z/zULH8dp7L4BvZ1dodB1tLq
-         ymzMQthwX6Kq2G5qsInI4e5SJuXEdfoj9TT8XVTuQxuYZtmtSi23ZP/KQYIdWISPLHIs
-         MtHg==
-X-Gm-Message-State: ACgBeo1UssTa+tdtW0oeNF1I/PCmZi1ckUaM4JCWC/3H0wjnpaU278h4
-        2pKJDmXvICmbsJE0a63K7d/XFteoFws=
-X-Google-Smtp-Source: AA6agR6KiidqiVYW9PwC3F/PsrF+liD61/qitdGPAarmM8wsTjKro3aFnzrrfu1wcE4QOGZjdNokwQ==
-X-Received: by 2002:a05:6870:830c:b0:122:339c:9bcb with SMTP id p12-20020a056870830c00b00122339c9bcbmr747389oae.224.1662071782455;
-        Thu, 01 Sep 2022 15:36:22 -0700 (PDT)
-Received: from ?IPV6:2600:1700:5a60:7720:19b:a8b4:73c:2e5? ([2600:1700:5a60:7720:19b:a8b4:73c:2e5])
-        by smtp.gmail.com with ESMTPSA id m15-20020a9d73cf000000b006393aa233d5sm246573otk.27.2022.09.01.15.36.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Sep 2022 15:36:22 -0700 (PDT)
-Message-ID: <cd11cc71-397a-e186-7d53-4a122f830903@gmail.com>
-Date:   Thu, 1 Sep 2022 15:36:20 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v3 3/3] builtin/grep.c: walking tree instead of expanding
- index with --sparse
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com, vdye@github.com
-References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
- <20220901045736.523371-1-shaoxuan.yuan02@gmail.com>
- <20220901045736.523371-4-shaoxuan.yuan02@gmail.com>
- <xmqqpmgf9fpr.fsf@gitster.g>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-In-Reply-To: <xmqqpmgf9fpr.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=MdhWoBMsuyG7iCe9BxXfdroz7Oy34kbx1EYw6HrMDgA=;
+        b=ywAsLN5hy6rgWHcHBnm66P0nKX0FOE66yosXae9YpTO2d0rFI3fzStxg9cOfl/wb/D
+         TvGS6HQiYYvjZi93qeiU8CnBySBG+WKZTTwh9rQgtEg36qRUqmml+b91fRzTjLTNaze+
+         PFQ/IgQUg14oGbxlesNDJlcdwuWRm5gE92hxBQK01i2IG12WoJN9TPYoWPVJGWg9g/CL
+         v12JDHaHnaNEeoDYoqnfLLBL5O3Z25IYfzvKtvs/krYZh/xM7kJNOX0DOX+CKiR0FWFo
+         kFiMbpdNI53Kb6NjiJBpHU4QybSzd+XbsMGKn99fFwVgOJAYWkRW0kPozvbGNoL6UFZB
+         GjfA==
+X-Gm-Message-State: ACgBeo2fUFdTsIYvdIKPtJC+8N1QvfJMhZkQL2zlc8A/+Ze5XXAfeJFJ
+        3MOVtiq4DaWJF+wj6QuksOT6BiEgfDM=
+X-Google-Smtp-Source: AA6agR7Diwdn8wZfvISjAEXjQVsrv33IN1Uj7Piv4hMEo3nwIfZ3HHuEo3uKXLbuQM52Mop8kOqyFQ==
+X-Received: by 2002:a5d:4d12:0:b0:226:d878:e096 with SMTP id z18-20020a5d4d12000000b00226d878e096mr13310291wrt.377.1662072000158;
+        Thu, 01 Sep 2022 15:40:00 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h9-20020adff189000000b00226d01a4635sm72768wro.35.2022.09.01.15.39.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Sep 2022 15:39:59 -0700 (PDT)
+Message-Id: <pull.1345.git.1662071998812.gitgitgadget@gmail.com>
+From:   "Julia Ramer via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 01 Sep 2022 22:39:58 +0000
+Subject: [PATCH] embargoed releases: also describe the git-security list and
+ the process
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     git-security@googlegroups.com, Julia Ramer <gitprplr@gmail.com>,
+        Julia Ramer <gitprplr@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/1/2022 10:17 AM, Junio C Hamano wrote:
- > Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> writes:
- >
- >> Before this patch, whenever --sparse is used, `git-grep` utilizes the
- >> ensure_full_index() method to expand the index and search all the
- >> entries. Because this method requires walking all the trees and
- >> constructing the index, it is the slow part within the whole command.
- >>
- >> To achieve better performance, this patch uses grep_tree() to search the
- >> sparse directory entries and get rid of the ensure_full_index() method.
- >
- > When you encounter a "sparsedir" (i.e. a tree recorded in index),
- > you should know the path leading to that directory. Even though I no
- > longer remember the details of the implementations of grep_$where()
- > which I did long time ago, I think grep_tree() should know how to
- > pass the leading path down, as that is the most natural way to
- > implement the recursive behaviour.  This patch should be able to
- > piggyback on that.
+From: Julia Ramer <gitprplr@gmail.com>
 
-Yes, though this commit [1] from 6 years ago started to assume that
-grep_tree() only accepts root tree or commit, so the function fails
-to process a tree like "sparsedir". It's the pathspec matching base that
-was messed up. The support for a tree that is not at root-level was
-added in this series.
+With the recent turnover on the git-security list, questions came up how
+things are usually run. Rather than answering questions individually,
+extend Git's existing documentation about security vulnerabilities to
+describe the git-security mailing list, how things are run on that list,
+and what to expect throughout the process from the time a security bug
+is reported all the way to the time when a fix is released.
 
-[1] 74ed43711fd1cd7ce155d338f87ebe52cb74d9e2
+Signed-off-by: Julia Ramer <gitprplr@gmail.com>
+---
+    embargoed releases: also describe the git-security list and the process
 
- >> @@ -537,8 +534,26 @@ static int grep_cache(struct grep_opt *opt,
- >>
- >>          strbuf_setlen(&name, name_base_len);
- >>          strbuf_addstr(&name, ce->name);
- >> +        if (S_ISSPARSEDIR(ce->ce_mode)) {
- >> +            enum object_type type;
- >> +            struct tree_desc tree;
- >> +            void *data;
- >> +            unsigned long size;
- >> +            struct strbuf base = STRBUF_INIT;
- >> +
- >> +            strbuf_addstr(&base, ce->name);
- >> +
- >> +            data = read_object_file(&ce->oid, &type, &size);
- >> +            init_tree_desc(&tree, data, size);
- >>
- >> +            /*
- >> +             * sneak in the ce_mode using check_attr parameter
- >> +             */
- >> +            hit |= grep_tree(opt, pathspec, &tree, &base,
- >> +                     base.len, ce->ce_mode);
- >
- > OK.  Instead of inventing a new "base" strbuf, we could reuse
- > existing name while running the grep_tree() and restore it after it
- > returns, and I suspect that the end result would be more in line
- > with how grep_cache() uses that "name" buffer for all the cache
- > entries.  But that is not a correctness issue (it is move about
- > preventing from making the code worse).
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1345%2Fprplr%2Fupdate_embargo_doc-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1345/prplr/update_embargo_doc-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1345
 
-Oh right, thanks for the suggestion!
+ .../howto/coordinate-embargoed-releases.txt   | 143 +++++++++++++++---
+ 1 file changed, 122 insertions(+), 21 deletions(-)
 
- >> @@ -598,7 +613,14 @@ static int grep_tree(struct grep_opt *opt, 
-const struct pathspec *pathspec,
- >>          int te_len = tree_entry_len(&entry);
- >>
- >>          if (match != all_entries_interesting) {
- >> -            strbuf_addstr(&name, base->buf + tn_len);
- >> +            if (S_ISSPARSEDIR(check_attr)) {
- >> +                // object is a sparse directory entry
- >
- > No // comments, please.
+diff --git a/Documentation/howto/coordinate-embargoed-releases.txt b/Documentation/howto/coordinate-embargoed-releases.txt
+index 601aae88e9a..43400fd6025 100644
+--- a/Documentation/howto/coordinate-embargoed-releases.txt
++++ b/Documentation/howto/coordinate-embargoed-releases.txt
+@@ -1,6 +1,121 @@
+ Content-type: text/asciidoc
+-Abstract: When a critical vulnerability is discovered and fixed, we follow this
+- script to coordinate a public release.
++Abstract: When a vulnerability is reported, we follow these guidelines to
++ assess the vulnerability, create and review a fix, and coordinate embargoed
++ security releases.
++
++The `git-security` mailing list
++===============================
++
++Responsible disclosures of vulnerabilities, analysis, proposed fixes as
++well as the orchestration of coordinated embargoed releases all happen on the
++`git-security` mailing list at <git-security@googlegroups.com>.
++
++In this context, the term "embargo" refers to the time period that information
++about a vulnerability is kept under wraps and only shared on a need-to-know
++basis. This is necessary to protect Git's users from bad actors who would
++otherwise be made aware of attack vectors that could be exploited. "Lifting the
++embargo" refers to publishing the version that fixes the vulnerabilities.
++
++Audience of the `git-security` mailing list
++-------------------------------------------
++
++Anybody may contact the `git-security` mailing list by sending an email
++to <git-security@googlegroups.com>, though the archive is closed to the
++public and only accessible to subscribed members.
++
++There are a few dozen subscribed members: core Git developers who are trusted
++with addressing vulnerabilities, and stakeholders (i.e. owners of products
++affected by security vulnerabilities in Git).
++
++Most of the discussions revolve around assessing the severity of the reported
++bugs (including the decision whether the report is security-relevant or can be
++redirected to the public mailing list), how to remediate the bug, determining
++the timeline of the disclosure as well as aligning priorities and
++requirements.
++
++Communications
++--------------
++
++If you are a stakeholder, it is a good idea to pay close attention to the
++discussions, as pertinent information may be buried in the middle of a lively
++conversation that might not look relevant to your interests. For example, the
++tentative timeline might be agreed upon in the middle of discussing code
++comment formatting in one of the patches and whether or not to combine fixes
++for multiple, separate vulnerabilities into the same embargoed release. Most
++mail threads are not usually structured specifically to communicate
++agreements, assessments or timelines.
++
++A bug's life: Typical timeline
++==============================
++
++- A bug is reported to the `git-security` mailing list.
++
++- Within a couple of days, someone from the core Git team responds with an
++  initial assessment of the bug’s severity.
++
++- Other core developers - including the Git maintainer - chime in.
++
++- After discussion, if consensus is reached that the bug is not critical enough
++  to warrant any embargo, the reporter is redirected to the public Git mailing
++  list. This ends the reporter's interaction with the `git-security` list.
++
++- If the bug is critical enough for an embargo, ideas are presented on how to
++  address the vulnerability.
++
++- Usually around that time, the Git maintainer or their delegate(s) open a draft
++  security advisory in the `git/git` repository on GitHub (see below for more
++  details).
++
++- Depending on the preferences of the involved contributors and reviewers, code
++  review then happens either on the `git-security` mailing list or in a private
++  fork associated with the draft security advisory.
++
++- Once the review has settled and everyone involved in the review agrees that
++  the patches are ready, the Git maintainer determines a release date as well
++  as the release trains that are serviced. The decision regarding which versions
++  need a backported fix is based on input from the reporter, the contributor who
++  worked on the patches, and from stakeholders (e.g. operators of hosting sites
++  who may want to analyze whether the given bug is exploited via any of the
++  repositories they host).
++
++- Subsequently, branches with the fixes are pushed to private repositories that
++  are owned by the Git project, with tightly controlled access.
++
++- The tags are created by the Git maintainer and pushed to the same
++  repositories.
++
++- Less than a week before the release, a mail with the relevant information is
++  sent to <distros@vs.openwall.org> (see below), a list used to pre-announce embargoed
++  releases of open source projects to the stakeholders of all major Linux
++  distributions. This includes a Git bundle of the tagged version(s), but no
++  further specifics of the vulnerability.
++
++- Public communication is then prepared in advance of the release date. This
++  includes blog posts and mails to the Git and Git for Windows mailing lists.
++
++- The Git for Windows maintainer prepares the corresponding release artifacts,
++  based on the tags created that have been prepared by the Git maintainer.
++
++- Git for Windows release artifacts are made available under embargo to
++  stakeholders via a mail to the `git-security` list.
++
++- On the day of the release, at around 10am Pacific Time, the Git maintainer
++  pushes the tag and the `master` branch to the public repository, then sends
++  out an announcement mail.
++
++- Once the tag is pushed, the Git for Windows maintainer publishes the
++  corresponding tag and creates a GitHub Release with the associated release
++  artifacts (Git for Windows installer, Portable Git, MinGit, etc).
++
++- Git for Windows release is then announced via a mail to the public Git and
++  Git for Windows mailing lists as well as via a tweet.
++
++- A mail to <oss-security@lists.openwall.org> (see below for details) is sent as a
++  follow-up to the <distros@vs.openwall.org> one, describing the vulnerability in
++  detail, often including a proof of concept of an exploit.
++
++Note: The Git project makes no guarantees about timelines, but aims to keep
++embargoes reasonably short in the interest of keeping Git's users safe.
+ 
+ How we coordinate embargoed releases
+ ====================================
+@@ -14,30 +129,16 @@ what Operating System or distribution they run.
+ Open a Security Advisory draft
+ ------------------------------
+ 
+-The first step is to https://github.com/git/git/security/advisories/new[open an
+-advisory]. Technically, it is not necessary, but it is convenient and saves a
+-bit of hassle. This advisory can also be used to obtain the CVE number and it
+-will give us a private fork associated with it that can be used to collaborate
+-on a fix.
+-
+-Release date of the embargoed version
+--------------------------------------
+-
+-If the vulnerability affects Windows users, we want to have our friends over at
+-Visual Studio on board. This means we need to target a "Patch Tuesday" (i.e. a
+-second Tuesday of the month), at the minimum three weeks from heads-up to
+-coordinated release.
+-
+-If the vulnerability affects the server side, or can benefit from scans on the
+-server side (i.e. if `git fsck` can detect an attack), it is important to give
+-all involved Git repository hosting sites enough time to scan all of those
+-repositories.
++The first step is to https://github.com/git/git/security/advisories/new[open
++an advisory]. Technically, this is not necessary. However, it is the most
++convenient way to obtain the CVE number and it give us a private repository
++associated with it that can be used to collaborate on a fix.
+ 
+ Notifying the Linux distributions
+ ---------------------------------
+ 
+ At most two weeks before release date, we need to send a notification to
+-distros@vs.openwall.org, preferably less than 7 days before the release date.
++<distros@vs.openwall.org>, preferably less than 7 days before the release date.
+ This will reach most (all?) Linux distributions. See an example below, and the
+ guidelines for this mailing list at
+ https://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists[here].
 
-OK.
-
-Thanks,
-Shaoxuan
-
-
-
+base-commit: e72d93e88cb20b06e88e6e7d81bd1dc4effe453f
+-- 
+gitgitgadget
