@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75D0CECAAD1
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 00:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 644C1ECAAD4
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 00:30:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232132AbiIAAaa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 20:30:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46574 "EHLO
+        id S232154AbiIAAad (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 20:30:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231891AbiIAAaI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 20:30:08 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2230422CA
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:06 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id z14-20020a7bc7ce000000b003a5db0388a8so2420357wmk.1
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:06 -0700 (PDT)
+        with ESMTP id S231941AbiIAAaU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 20:30:20 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ABDD56BB2
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:09 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id k9so20313530wri.0
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc;
-        bh=g5sz2lNydeA2+NtaZNWjc4Wf0QYQKS+84cFK0G1aZg8=;
-        b=PuyX7RcU1PhkN77LIOCx0uj0cRAy17fRYQSZ2C98rUKPEIdqjhZuFFeHsejQVcmH/P
-         sqvQBvwjgboNurbD3DKmWoDenF8FFYUNReO2JC8T8Qm9zSwbTSwbM7hf1zTtmTuQWUMn
-         atMKg8Rlojp+f2tHn5HajP/pHovafybpyVEcCto3Yzu5sszTCfMKzX0Cigs95sMCD7sl
-         P8md7G41rWPpcD3VfwxnRIyyj+8aEKrf9LBG0xn4PUbAoLP9TH4JnKa10CMy+0lhusJD
-         Y3IykPwtfAcnfCYaTCygq8Hwe79GWmIDz6BLB1Swx0gry9ivdy7ZpwJUNSwI0GR1ubWd
-         h3BQ==
+        bh=5+ckIDZAAoQ96Z/lwz0pSCfyVgJt+I5FQnr5SSG0NHg=;
+        b=hUeg2BmrhMpL88pdVZ7jEA9eg4aQTSJAGgfHrvh620FdIj3OrD3StGiQT6Nh1nNRJl
+         H3YdbnsEtmMryMOoFgmGFhm8/Z+I7/9KiIUugmx/e1+zNnMsPYqEuKyfZGQaWHxXLAJp
+         cpxI8W54RmYZ6qhQVgI/aLb3vjs7z2RRwOHXnKf08SGHV3/d0oX0xjQE3cdl23QUz0aB
+         7FZlBu/7J7TTcksQqPvHAfeUjeWrTuFd6tzyfVG4XNxkVcLFt0jqAZHOQ9ObVqHXYSH3
+         BB+UJNQJF7jJ1A16tpuZGKUlg+soxH/MPDIM+w7qwmDBAq9ca3IHrfi/cqcod07rcoHd
+         jILQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=g5sz2lNydeA2+NtaZNWjc4Wf0QYQKS+84cFK0G1aZg8=;
-        b=T0GeuKijjulH/yqAkwXWwSD/lnD3a8tz+eBjgYUD0UhJhkGupxCNyKX0PBB7Se7pqm
-         oQMDaD2pGpDKnLUT/0JwjSl4WfQ/xBDRZhWYcrr3awSG2WAQGeTd328zxxJhfxOMjRBq
-         DvzigBlCWGBJ+RdHFgUOaYWEQ7KcninAWSGZZZvVKNyrhNFZGvjzd5GtFw3tZII8vR49
-         ZSGV6K5jTEHXrxthZScIqK05qKDYneflFwQlvSrTTiACDdzpNUgL9iNCQv5inE4Y5t20
-         XbXpgdI7jzi3dVtOuJIGa98ToakJoxhvuTddwyUhQ3ENUM7BzJg25URJS1mzqKLxu2mB
-         CclA==
-X-Gm-Message-State: ACgBeo1tbBR/1713h+OMwUA3OxH2kmQvRtDPxLFs9RAVju4Bz6JNYqjb
-        q8t90CxOUCObXsP8t3LTfKTfJCk4CGI=
-X-Google-Smtp-Source: AA6agR42F2XM9uJICIiFySSUZbNnQJ0kFL4DqPi2+kUFImf25cL93sNddfFNGDT/2jlOSrvripjFog==
-X-Received: by 2002:a05:600c:4e8b:b0:3a5:f5bf:9c5a with SMTP id f11-20020a05600c4e8b00b003a5f5bf9c5amr3479048wmq.85.1661992205276;
-        Wed, 31 Aug 2022 17:30:05 -0700 (PDT)
+        bh=5+ckIDZAAoQ96Z/lwz0pSCfyVgJt+I5FQnr5SSG0NHg=;
+        b=Rge3NH4Q1y8qWwlxsUhBV5IR4WWajve0m5IdQ0tpn1y8AYsVqpXkPK5iNTU4xjTaNX
+         c7a4uHCkLggAw+UJPOM7ypzatLcyYrqwL/bfV+NVTNML7ieU+BtSkFS3jyx2vKu9UZDQ
+         ArY1VoeDMT74Q6kZQBIzuZNVjw5wwVA96Ubg2vAZTifkpskB9ouw0HDLV12BfwI1WBTP
+         OcBlK4aEIF/SrWxEFBgjryLmiZk8V+di6EdvZB5nUvPnlbRDVwVxfoQsr3iiCyLBx+Bt
+         0IXjTEeijGtjQ+bNoGXK/0kZZXxAPT3uJhp31W8OmPOJxcqkWuJjuL38PSVYewMhcUdq
+         qDsQ==
+X-Gm-Message-State: ACgBeo0Hajf1rb1NXQ506RW+8JK3fijL6owOC6Ay10RxSbRDgnSqAdBp
+        e7t7ZbVMk2Sj2pmJ8L9STWdG/KAnk6w=
+X-Google-Smtp-Source: AA6agR7uPxziZCcXHDZpC1XRiek31QKoSYsHARVdzIBdldb9vuuBeWRCPtbmySzqS8sgNhtyN/3GtQ==
+X-Received: by 2002:a05:6000:616:b0:226:d80b:76ab with SMTP id bn22-20020a056000061600b00226d80b76abmr10325560wrb.547.1661992207119;
+        Wed, 31 Aug 2022 17:30:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ay21-20020a05600c1e1500b003a536d5aa2esm3657937wmb.11.2022.08.31.17.30.04
+        by smtp.gmail.com with ESMTPSA id w6-20020a1cf606000000b003a5fa79007fsm3428898wmc.7.2022.08.31.17.30.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 17:30:04 -0700 (PDT)
-Message-Id: <0de14477a42f2c18efb4b1e0ba52155645a7f0e2.1661992197.git.gitgitgadget@gmail.com>
+        Wed, 31 Aug 2022 17:30:06 -0700 (PDT)
+Message-Id: <ee627a09719a4a7347c97783c1bf8f9cb9ddbf89.1661992197.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
 References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
 From:   "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Sep 2022 00:29:43 +0000
-Subject: [PATCH 05/18] chainlint.pl: add parser to identify test definitions
+Date:   Thu, 01 Sep 2022 00:29:45 +0000
+Subject: [PATCH 07/18] chainlint.pl: don't require `return|exit|continue` to
+ end with `&&`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,101 +71,171 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Eric Sunshine <sunshine@sunshineco.com>
 
-Finish fleshing out chainlint.pl by adding ScriptParser, a parser which
-scans shell scripts for tests defined by test_expect_success() and
-test_expect_failure(), plucks the test body from each definition, and
-passes it to TestParser for validation. It recognizes test definitions
-not only at the top-level of test scripts but also tests synthesized
-within compound commands such as loops and function.
+In order to check for &&-chain breakage, each time TestParser encounters
+a new command, it checks whether the previous command ends with `&&`,
+and -- with a couple exceptions -- signals breakage if it does not. The
+first exception is that a command may validly end with `||`, which is
+commonly employed as `command || return 1` at the very end of a loop
+body to terminate the loop early. The second is that piping one
+command's output with `|` to another command does not constitute a
+&&-chain break (the exit status of the pipe is the exit status of the
+final command in the pipe).
+
+However, it turns out that there are a few additional cases found in the
+wild in which it is likely safe for `&&` to be missing even when other
+commands follow. For instance:
+
+    while {condition-1}
+    do
+        test {condition-2} || return 1 # or `exit 1` within a subshell
+        more-commands
+    done
+
+    while {condition-1}
+    do
+        test {condition-2} || continue
+        more-commands
+    done
+
+Such cases indicate deliberate thought about failure modes by the test
+author, thus flagging them as breaking the &&-chain is not helpful.
+Therefore, take these special cases into consideration when checking for
+&&-chain breakage.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/chainlint.pl | 63 +++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 60 insertions(+), 3 deletions(-)
+ t/chainlint.pl                             | 20 ++++++++++++++++++--
+ t/chainlint/chain-break-continue.expect    | 12 ++++++++++++
+ t/chainlint/chain-break-continue.test      | 13 +++++++++++++
+ t/chainlint/chain-break-return-exit.expect |  4 ++++
+ t/chainlint/chain-break-return-exit.test   |  5 +++++
+ t/chainlint/return-loop.expect             |  5 +++++
+ t/chainlint/return-loop.test               |  6 ++++++
+ 7 files changed, 63 insertions(+), 2 deletions(-)
+ create mode 100644 t/chainlint/chain-break-continue.expect
+ create mode 100644 t/chainlint/chain-break-continue.test
+ create mode 100644 t/chainlint/chain-break-return-exit.expect
+ create mode 100644 t/chainlint/chain-break-return-exit.test
+ create mode 100644 t/chainlint/return-loop.expect
+ create mode 100644 t/chainlint/return-loop.test
 
 diff --git a/t/chainlint.pl b/t/chainlint.pl
-index ad257106e56..d526723ac00 100755
+index 898573a9100..31c444067ce 100755
 --- a/t/chainlint.pl
 +++ b/t/chainlint.pl
-@@ -487,18 +487,75 @@ DONE:
- 	$self->SUPER::accumulate($tokens, $cmd);
+@@ -473,13 +473,29 @@ sub ends_with {
+ 	return 1;
  }
  
-+# ScriptParser is a subclass of ShellParser which identifies individual test
-+# definitions within test scripts, and passes each test body through TestParser
-+# to identify possible problems. ShellParser detects test definitions not only
-+# at the top-level of test scripts but also within compound commands such as
-+# loops and function definitions.
- package ScriptParser;
- 
-+use base 'ShellParser';
-+
- sub new {
- 	my $class = shift @_;
--	my $self = bless {} => $class;
--	$self->{output} = [];
-+	my $self = $class->SUPER::new(@_);
- 	$self->{ntests} = 0;
- 	return $self;
- }
- 
-+# extract the raw content of a token, which may be a single string or a
-+# composition of multiple strings and non-string character runs; for instance,
-+# `"test body"` unwraps to `test body`; `word"a b"42'c d'` to `worda b42c d`
-+sub unwrap {
-+	my $token = @_ ? shift @_ : $_;
-+	# simple case: 'sqstring' or "dqstring"
-+	return $token if $token =~ s/^'([^']*)'$/$1/;
-+	return $token if $token =~ s/^"([^"]*)"$/$1/;
-+
-+	# composite case
-+	my ($s, $q, $escaped);
-+	while (1) {
-+		# slurp up non-special characters
-+		$s .= $1 if $token =~ /\G([^\\'"]*)/gc;
-+		# handle special characters
-+		last unless $token =~ /\G(.)/sgc;
-+		my $c = $1;
-+		$q = undef, next if defined($q) && $c eq $q;
-+		$q = $c, next if !defined($q) && $c =~ /^['"]$/;
-+		if ($c eq '\\') {
-+			last unless $token =~ /\G(.)/sgc;
-+			$c = $1;
-+			$s .= '\\' if $c eq "\n"; # preserve line splice
-+		}
-+		$s .= $c;
++sub match_ending {
++	my ($tokens, $endings) = @_;
++	for my $needles (@$endings) {
++		next if @$tokens < scalar(grep {$_ ne "\n"} @$needles);
++		return 1 if ends_with($tokens, $needles);
 +	}
-+	return $s
++	return undef;
 +}
 +
-+sub check_test {
-+	my $self = shift @_;
-+	my ($title, $body) = map(unwrap, @_);
-+	$self->{ntests}++;
-+	my $parser = TestParser->new(\$body);
-+	my @tokens = $parser->parse();
-+	return unless $emit_all || grep(/\?![^?]+\?!/, @tokens);
-+	my $checked = join(' ', @tokens);
-+	$checked =~ s/^\n//;
-+	$checked =~ s/^ //mg;
-+	$checked =~ s/ $//mg;
-+	$checked .= "\n" unless $checked =~ /\n$/;
-+	push(@{$self->{output}}, "# chainlint: $title\n$checked");
-+}
++my @safe_endings = (
++	[qr/^(?:&&|\|\||\|)$/],
++	[qr/^(?:exit|return)$/, qr/^(?:\d+|\$\?)$/],
++	[qr/^(?:exit|return)$/, qr/^(?:\d+|\$\?)$/, qr/^;$/],
++	[qr/^(?:exit|return|continue)$/],
++	[qr/^(?:exit|return|continue)$/, qr/^;$/]);
 +
- sub parse_cmd {
--	return undef;
-+	my $self = shift @_;
-+	my @tokens = $self->SUPER::parse_cmd();
-+	return @tokens unless @tokens && $tokens[0] =~ /^test_expect_(?:success|failure)$/;
-+	my $n = $#tokens;
-+	$n-- while $n >= 0 && $tokens[$n] =~ /^(?:[;&\n|]|&&|\|\|)$/;
-+	$self->check_test($tokens[1], $tokens[2]) if $n == 2; # title body
-+	$self->check_test($tokens[2], $tokens[3]) if $n > 2;  # prereq title body
-+	return @tokens;
- }
+ sub accumulate {
+ 	my ($self, $tokens, $cmd) = @_;
+ 	goto DONE unless @$tokens;
+ 	goto DONE if @$cmd == 1 && $$cmd[0] eq "\n";
  
- # main contains high-level functionality for processing command-line switches,
+-	# did previous command end with "&&", "||", "|"?
+-	goto DONE if ends_with($tokens, [qr/^(?:&&|\|\||\|)$/]);
++	# did previous command end with "&&", "|", "|| return" or similar?
++	goto DONE if match_ending($tokens, \@safe_endings);
+ 
+ 	# flag missing "&&" at end of previous command
+ 	my $n = find_non_nl($tokens);
+diff --git a/t/chainlint/chain-break-continue.expect b/t/chainlint/chain-break-continue.expect
+new file mode 100644
+index 00000000000..47a34577100
+--- /dev/null
++++ b/t/chainlint/chain-break-continue.expect
+@@ -0,0 +1,12 @@
++git ls-tree --name-only -r refs/notes/many_notes |
++while read path
++do
++	test "$path" = "foobar/non-note.txt" && continue
++	test "$path" = "deadbeef" && continue
++	test "$path" = "de/adbeef" && continue
++
++	if test $(expr length "$path") -ne $hexsz
++	then
++		return 1
++	fi
++done
+diff --git a/t/chainlint/chain-break-continue.test b/t/chainlint/chain-break-continue.test
+new file mode 100644
+index 00000000000..f0af71d8bd9
+--- /dev/null
++++ b/t/chainlint/chain-break-continue.test
+@@ -0,0 +1,13 @@
++git ls-tree --name-only -r refs/notes/many_notes |
++while read path
++do
++# LINT: broken &&-chain okay if explicit "continue"
++	test "$path" = "foobar/non-note.txt" && continue
++	test "$path" = "deadbeef" && continue
++	test "$path" = "de/adbeef" && continue
++
++	if test $(expr length "$path") -ne $hexsz
++	then
++		return 1
++	fi
++done
+diff --git a/t/chainlint/chain-break-return-exit.expect b/t/chainlint/chain-break-return-exit.expect
+new file mode 100644
+index 00000000000..dba292ee89b
+--- /dev/null
++++ b/t/chainlint/chain-break-return-exit.expect
+@@ -0,0 +1,4 @@
++for i in 1 2 3 4 ; do
++	git checkout main -b $i || return $?
++	test_commit $i $i $i tag$i || return $?
++done
+diff --git a/t/chainlint/chain-break-return-exit.test b/t/chainlint/chain-break-return-exit.test
+new file mode 100644
+index 00000000000..e2b059933aa
+--- /dev/null
++++ b/t/chainlint/chain-break-return-exit.test
+@@ -0,0 +1,5 @@
++for i in 1 2 3 4 ; do
++# LINT: broken &&-chain okay if explicit "return $?" signals failure
++	git checkout main -b $i || return $?
++	test_commit $i $i $i tag$i || return $?
++done
+diff --git a/t/chainlint/return-loop.expect b/t/chainlint/return-loop.expect
+new file mode 100644
+index 00000000000..cfc0549befe
+--- /dev/null
++++ b/t/chainlint/return-loop.expect
+@@ -0,0 +1,5 @@
++while test $i -lt $((num - 5))
++do
++	git notes add -m "notes for commit$i" HEAD~$i || return 1
++	i=$((i + 1))
++done
+diff --git a/t/chainlint/return-loop.test b/t/chainlint/return-loop.test
+new file mode 100644
+index 00000000000..f90b1713005
+--- /dev/null
++++ b/t/chainlint/return-loop.test
+@@ -0,0 +1,6 @@
++while test $i -lt $((num - 5))
++do
++# LINT: "|| return {n}" valid loop escape outside subshell; no "&&" needed
++	git notes add -m "notes for commit$i" HEAD~$i || return 1
++	i=$((i + 1))
++done
 -- 
 gitgitgadget
 
