@@ -2,215 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B3ACECAAD1
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 04:59:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CC2EECAAD2
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 06:54:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232733AbiIAE7L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 00:59:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55308 "EHLO
+        id S233045AbiIAGyP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Sep 2022 02:54:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229970AbiIAE7G (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 00:59:06 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D87C114C6D
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 21:59:05 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id x5so12591729qtv.9
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 21:59:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc;
-        bh=1PkTszXOfBFdziwolQmk/RQW12UAYu5GxbEPYVQct2g=;
-        b=hD3ikJPTCie27VzxY8gyW9XGpoCtCElfE2aKk0QfmLu/JqlytNe9SjTrc7FOeIIiT9
-         1jz0jAtxJpZZEG80h7P5a0YglcqIqBqt5LKUabCEDtfFMV294MqA0w4tM/dG/tXYlOmt
-         vo1QJRKMAh+RabOFhnkn8HgDtBD69RsC+xcZFKvkp2WmW4KfGWUFeyCcouLXxBTXlPep
-         vTJ0jsoLB2tKBQnil37A90Nps9733xrhEZxhxl/+2NcYT5PYfXFBFyWnRQEyI5G9uRdV
-         8OHewHK1UPp5ijDc3IbajGxIfDLO/STU8Rtufyf7oujAVpCPoN66R0OtgybUDw5t6r5b
-         cC8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
-        bh=1PkTszXOfBFdziwolQmk/RQW12UAYu5GxbEPYVQct2g=;
-        b=dtq13s93KIhY2y7pvE8Jccng/DZEoxR4j5U2RndshzL0MQquDw9MmAp4DtQYLhsM5x
-         D282Z2ynkUtjRZDUGaiXITi4+xSOCg5Qefa9+snNn1MSUnAjKOozwoFTdoh5LbcZkuNG
-         kcPByuP3CaV5UXXvrxBU/LJJxHCW+l0d40W9awasEyiu+rgQovcMFs/gD5kVaVzTqkPk
-         eDr0CIBs+Bx7UxUJjyKAJ7XPUUs+znwQnSsanJd8VV8T2LJuU10yRPIP7rpTzFjgKzLQ
-         vtua08GnZg68KxYjZ3KNQSkEQjWdm5hVO3XKJVRquv9PSAg3w6HRSC6v64/TwOAibCZp
-         RXSA==
-X-Gm-Message-State: ACgBeo3vIDLVtwcQAZWXvcWmlfulhXqSbEjNO1ET46f1CLdBKTONgf86
-        1rUtSGKzV2oGld3pke1zm+wsYfcF7qk=
-X-Google-Smtp-Source: AA6agR5+ekUxISKqW/LJ3SlzFPOMh1oUKRvWE9t7vRORKSWcQ91ORZFPBEhMJsESYegP7/WW9nBykQ==
-X-Received: by 2002:a05:622a:199c:b0:344:7645:9ba1 with SMTP id u28-20020a05622a199c00b0034476459ba1mr22205414qtc.629.1662008344440;
-        Wed, 31 Aug 2022 21:59:04 -0700 (PDT)
-Received: from ffyuanda.localdomain (99-110-131-145.lightspeed.irvnca.sbcglobal.net. [99.110.131.145])
-        by smtp.gmail.com with ESMTPSA id i5-20020a375405000000b006bb2f555ba4sm10752245qkb.41.2022.08.31.21.59.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 21:59:04 -0700 (PDT)
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-To:     git@vger.kernel.org
-Cc:     derrickstolee@github.com, vdye@github.com,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Subject: [PATCH v3 3/3] builtin/grep.c: walking tree instead of expanding index with --sparse
-Date:   Wed, 31 Aug 2022 21:57:36 -0700
-Message-Id: <20220901045736.523371-4-shaoxuan.yuan02@gmail.com>
-X-Mailer: git-send-email 2.37.0
-In-Reply-To: <20220901045736.523371-1-shaoxuan.yuan02@gmail.com>
-References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
- <20220901045736.523371-1-shaoxuan.yuan02@gmail.com>
+        with ESMTP id S232456AbiIAGyJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2022 02:54:09 -0400
+X-Greylist: delayed 62 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 31 Aug 2022 23:54:06 PDT
+Received: from outboundhk.mxmail.xiaomi.com (outboundhk.mxmail.xiaomi.com [118.143.206.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6C22D1208FD
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 23:54:06 -0700 (PDT)
+X-IronPort-AV: E=Sophos;i="5.93,280,1654531200"; 
+   d="scan'208";a="28858337"
+Received: from hk-mbx01.mioffice.cn (HELO xiaomi.com) ([10.56.8.121])
+  by outboundhk.mxmail.xiaomi.com with ESMTP; 01 Sep 2022 14:53:03 +0800
+Received: from yz-mbx03.mioffice.cn (10.237.88.123) by HK-MBX01.mioffice.cn
+ (10.56.8.121) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 1 Sep 2022
+ 14:53:02 +0800
+Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by yz-mbx03.mioffice.cn
+ (10.237.88.123) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 1 Sep 2022
+ 14:53:02 +0800
+Received: from BJ-MBX01.mioffice.cn ([fe80::1839:49c8:1d62:7218]) by
+ BJ-MBX01.mioffice.cn ([fe80::1839:49c8:1d62:7218%9]) with mapi id
+ 15.02.0986.029; Thu, 1 Sep 2022 14:53:02 +0800
+From:   =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+To:     Jeff King <peff@peff.net>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
+        =?utf-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>,
+        =?utf-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>,
+        =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
+        =?utf-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
+Subject: RE: [External Mail]Re: Partial-clone cause big performance impact on
+ server
+Thread-Topic: [External Mail]Re: Partial-clone cause big performance impact on
+ server
+Thread-Index: AditV5yCC1rR4WwDR+uOdfckQ0GBIQCDyEaAA5jIzsA=
+Date:   Thu, 1 Sep 2022 06:53:01 +0000
+Message-ID: <b0101e7e0e61496a92c2299454c2696a@xiaomi.com>
+References: <bfa3de4485614badb4a27d8cfba99968@xiaomi.com>
+ <YviaoXRctE9fg/mB@coredump.intra.peff.net>
+In-Reply-To: <YviaoXRctE9fg/mB@coredump.intra.peff.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.237.8.11]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before this patch, whenever --sparse is used, `git-grep` utilizes the
-ensure_full_index() method to expand the index and search all the
-entries. Because this method requires walking all the trees and
-constructing the index, it is the slow part within the whole command.
-
-To achieve better performance, this patch uses grep_tree() to search the
-sparse directory entries and get rid of the ensure_full_index() method.
-
-Why grep_tree() is a better choice over ensure_full_index()?
-
-1) grep_tree() is as correct as ensure_full_index(). grep_tree() looks
-   into every sparse-directory entry (represented by a tree) recursively
-   when looping over the index, and the result of doing so matches the
-   result of expanding the index.
-
-2) grep_tree() utilizes pathspecs to limit the scope of searching.
-   ensure_full_index() always expands the index when --sparse is used,
-   that means it will always walk all the trees and blobs in the repo
-   without caring if the user only wants a subset of the content, i.e.
-   using a pathspec. On the other hand, grep_tree() will only search
-   the contents that match the pathspec, and thus possibly walking fewer
-   trees.
-
-3) grep_tree() does not construct and copy back a new index, while
-   ensure_full_index() does. This also saves some time.
-
-----------------
-Performance test
-
-- Summary:
-
-p2000 tests demonstrate a ~91% execution time reduction for
-`git grep --cached --sparse <pattern> -- <pathspec>` using tree-walking
-logic.
-
-Test                                                                          HEAD~   HEAD
----------------------------------------------------------------------------------------------------
-2000.78: git grep --cached --sparse bogus -- f2/f1/f1/builtin/* (full-v3)     0.11    0.09 (≈)
-2000.79: git grep --cached --sparse bogus -- f2/f1/f1/builtin/* (full-v4)     0.08    0.09 (≈)
-2000.80: git grep --cached --sparse bogus -- f2/f1/f1/builtin/* (sparse-v3)   0.44    0.04 (-90.9%)
-2000.81: git grep --cached --sparse bogus -- f2/f1/f1/builtin/* (sparse-v4)   0.46    0.04 (-91.3%)
-
-- Command used for testing:
-
-	git grep --cached --sparse bogus -- f2/f1/f1/builtin/*
-
-The reason for specifying a pathspec is that, if we don't specify a
-pathspec, then grep_tree() will walk all the trees and blobs to find the
-pattern, and the time consumed doing so is not too different from using
-the original ensure_full_index() method, which also spends most of the
-time walking trees. However, when a pathspec is specified, this latest
-logic will only walk the area of trees enclosed by the pathspec, and the
-time consumed is reasonably a lot less.
-
-That is, if we don't specify a pathspec, the performance difference [1]
-is quite small: both methods walk all the trees and take generally same
-amount of time (even with the index construction time included for
-ensure_full_index()).
-
-[1] Performance test result without pathspec:
-
-	Test                                                    HEAD~  HEAD
-	-----------------------------------------------------------------------------
-	2000.78: git grep --cached --sparse bogus (full-v3)     6.17   5.19 (≈)
-	2000.79: git grep --cached --sparse bogus (full-v4)     6.19   5.46 (≈)
-	2000.80: git grep --cached --sparse bogus (sparse-v3)   6.57   6.44 (≈)
-	2000.81: git grep --cached --sparse bogus (sparse-v4)   6.65   6.28 (≈)
-
-Suggested-by: Derrick Stolee <derrickstolee@github.com>
-Helped-by: Derrick Stolee <derrickstolee@github.com>
-Helped-by: Victoria Dye <vdye@github.com>
-Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
----
- builtin/grep.c                    | 32 ++++++++++++++++++++++++++-----
- t/perf/p2000-sparse-operations.sh |  1 +
- 2 files changed, 28 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index a0b4dbc1dc..8c0edccd8e 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -522,9 +522,6 @@ static int grep_cache(struct grep_opt *opt,
- 	if (repo_read_index(repo) < 0)
- 		die(_("index file corrupt"));
- 
--	if (grep_sparse)
--		ensure_full_index(repo->index);
--
- 	for (nr = 0; nr < repo->index->cache_nr; nr++) {
- 		const struct cache_entry *ce = repo->index->cache[nr];
- 
-@@ -537,8 +534,26 @@ static int grep_cache(struct grep_opt *opt,
- 
- 		strbuf_setlen(&name, name_base_len);
- 		strbuf_addstr(&name, ce->name);
-+		if (S_ISSPARSEDIR(ce->ce_mode)) {
-+			enum object_type type;
-+			struct tree_desc tree;
-+			void *data;
-+			unsigned long size;
-+			struct strbuf base = STRBUF_INIT;
-+
-+			strbuf_addstr(&base, ce->name);
-+
-+			data = read_object_file(&ce->oid, &type, &size);
-+			init_tree_desc(&tree, data, size);
- 
--		if (S_ISREG(ce->ce_mode) &&
-+			/*
-+			 * sneak in the ce_mode using check_attr parameter
-+			 */
-+			hit |= grep_tree(opt, pathspec, &tree, &base,
-+					 base.len, ce->ce_mode);
-+			strbuf_release(&base);
-+			free(data);
-+		} else if (S_ISREG(ce->ce_mode) &&
- 		    match_pathspec(repo->index, pathspec, name.buf, name.len, 0, NULL,
- 				   S_ISDIR(ce->ce_mode) ||
- 				   S_ISGITLINK(ce->ce_mode))) {
-@@ -598,7 +613,14 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 		int te_len = tree_entry_len(&entry);
- 
- 		if (match != all_entries_interesting) {
--			strbuf_addstr(&name, base->buf + tn_len);
-+			if (S_ISSPARSEDIR(check_attr)) {
-+				// object is a sparse directory entry
-+				strbuf_addbuf(&name, base);
-+			} else {
-+				// object is a commit or a root tree
-+				strbuf_addstr(&name, base->buf + tn_len);
-+			}
-+
- 			match = tree_entry_interesting(repo->index,
- 						       &entry, &name,
- 						       0, pathspec);
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-index fce8151d41..a0b71bb3b4 100755
---- a/t/perf/p2000-sparse-operations.sh
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -124,5 +124,6 @@ test_perf_on_all git read-tree -mu HEAD
- test_perf_on_all git checkout-index -f --all
- test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
- test_perf_on_all "git rm -f $SPARSE_CONE/a && git checkout HEAD -- $SPARSE_CONE/a"
-+test_perf_on_all git grep --cached --sparse bogus -- "f2/f1/f1/builtin/*"
- 
- test_done
--- 
-2.37.0
-
+Pg0KPiA+ICAgICA0LiBBbmQgd2UgdGhlbiB0cmFjayBvdXIgc2VydmVyKHdoaWNoIGlzIGdlcnJp
+dCB3aXRoIGpnaXQpLiBXZQ0KPiA+ICAgICAgICBmb3VuZCB0aGUgc2VydmVyIGlzIGNvdXRpbmcg
+b2JqZWN0cy4gVGhlbiB3ZSBjaGVjayB0aG9zZSA0MGsNCj4gPiAgICAgICAgb2JqZWN0cywgbW9z
+dCBvZiB0aGVtIGFyZSBibG9icyByYXRoZXIgdGhhbiBjb21taXQuICh3aGljaA0KPiA+ICAgICAg
+ICBtZWFucyB0aGV5J3JlIG5vdCBpbiBiaXRtYXApDQo+ID4gICAgIDUuIFdlIGJlbGlldmUgdGhh
+dCdzIHRoZSByb290IGNhdXNlIG9mIG91ciBwcm9ibGVtLiBHaXQgc2VuZHMgdG9vDQo+ID4gICAg
+ICAgIG1hbnkgIndhbnQgU0hBMSIgd2hpY2ggYXJlIG5vdCBpbiBiaXRtYXAsIGNhdXNlIHRoZSBz
+ZXJ2ZXIgdG8NCj4gPiAgICAgICAgY291bnQgb2JqZWN0cyAgZnJlcXVlbnRseSwgd2hpY2ggdGhl
+biBzbG93IGRvd24gdGhlIHNlcnZlci4NCj4NCj4gSSdkIGJlIHN1cnByaXNlZCBpZiBiaXRtYXBz
+IG1ha2UgYSBiaWcgZGlmZmVyZW5jZSBlaXRoZXIgd2F5IGhlcmUsIHNpbmNlIGJsb2JzDQo+IGFy
+ZSB2ZXJ5IHF1aWNrIGluIHRoZSAiY291bnRpbmciIHBoYXNlIG9mIHBhY2stb2JqZWN0cy4gVGhl
+eSBjYW4ndCBsaW5rIHRvDQo+IGFueXRoaW5nIGVsc2UsIHNvIHdlIHNob3VsZCBub3QgYmUgb3Bl
+bmluZyB0aGUgb2JqZWN0IGNvbnRlbnRzIGF0IGFsbCEgV2UNCj4ganVzdCBuZWVkIHRvIGZpbmQg
+dGhlbSBvbiBkaXNrLCBhbmQgdGhlbiBpbiBtYW55IGNhc2VzIHdlIGNhbiBzZW5kIHRoZW0NCj4g
+b3ZlciB0aGUgd2lyZSB3aXRob3V0IGV2ZW4gZGVjb21wcmVzc2luZyAodGhlIGV4Y2VwdGlvbiBp
+cyBpZiB0aGV5IGFyZQ0KPiBzdG9yZWQgYXMgZGVsdGFzIGFnYWluc3QgYW4gb2JqZWN0IHRoZSBj
+bGllbnQgZG9lc24ndCBoYXZlKS4NCj4NCj4gSSBkaWRuJ3QgZ2VuZXJhdGUgYSB0ZXN0IGNhc2Us
+IGJ1dCBJJ20gcHJldHR5IHN1cmUgdGhhdCBpcyBob3cgZ2l0LmdpdCdzIHBhY2stDQo+IG9iamVj
+dHMgc2hvdWxkIGJlaGF2ZS4gQnV0IHlvdSBtZW50aW9uZWQgdGhhdCB0aGUgc2VydmVyIGlzIGpn
+aXQ7IGl0J3MgcG9zc2libGUNCj4gdGhhdCBpdCBpc24ndCBhcyBvcHRpbWl6ZWQgaW4gdGhhdCBh
+cmVhLg0KDQpBdCBmaXJzdCBJIGFsc28gdGhpbmsgaXQncyBzb21lIGltcGxlbWVudGF0aW9uIGJ1
+Z3MgYnkgamdpdC4gSG93ZXZlciBJIGNhbiBhbHNvIHJlcHJvZHVjZSBpdCBvbiBjZ2l0LiBIZXJl
+IGlzIHRoZSBzdGVwcywgSSdtIG5vdCBzdXJlIGlmIHlvdSBjYW4gcmVwcm9kdWNlIHRvby4NCg0K
+MS4gQ2xvbmUgYSByZXBvc2l0b3J5IGZyb20gQU9TUCB0byBsb2NhbCBtYWNoaW5lOiAgYGdpdCBj
+bG9uZSAiaHR0cHM6Ly9hbmRyb2lkLmdvb2dsZXNvdXJjZS5jb20vcGxhdGZvcm0vcHJlYnVpbHRz
+L2dyYWRsZS1wbHVnaW4iYA0KMi4gdHJ5IHRvIGNsb25lIGZyb20gbG9jYWxob3N0IHVzaW5nIGNn
+aXQgc2VydmVyLiAgIGBHSVRfVFJBQ0VfUEFDS0VUPTEgZ2l0IGNsb25lIC0tZmlsdGVyPWJsb2I6
+bm9uZSAtYiBtYXN0ZXIgdXNlckBsb2NhbGhvc3Q6L2hvbWUvdXNlci9yZXBvc2l0b3JpZXMvZ3Jh
+ZGxlLXBsdWdpbiBgDQozLiBEdXJpbmcgY2hlY2tvdXQgcGhhc2UsIGl0IGFsc28gdGFrZXMgMTUg
+c2Vjb25kcyBiZWZvcmUgYWN0dWFsIGRvd25sb2FkaW5nLg0KDQpJdCdzIHJlYWxseSBlYXN5IHRv
+IHJlcHJvZHVjZSwgYXMgbG9uZyBhcyB0aGUgcmVwb3NpdG9yeSBoYXMgc28gbWFueSBibG9icyB0
+byBjaGVja291dA0KDQo+DQo+IC1QZWZmDQojLyoqKioqKuacrOmCruS7tuWPiuWFtumZhOS7tuWQ
+q+acieWwj+exs+WFrOWPuOeahOS/neWvhuS/oeaBr++8jOS7hemZkOS6juWPkemAgee7meS4iumd
+ouWcsOWdgOS4reWIl+WHuueahOS4quS6uuaIlue+pOe7hOOAguemgeatouS7u+S9leWFtuS7luS6
+uuS7peS7u+S9leW9ouW8j+S9v+eUqO+8iOWMheaLrOS9huS4jemZkOS6juWFqOmDqOaIlumDqOWI
+huWcsOazhOmcsuOAgeWkjeWItuOAgeaIluaVo+WPke+8ieacrOmCruS7tuS4reeahOS/oeaBr+OA
+guWmguaenOaCqOmUmeaUtuS6huacrOmCruS7tu+8jOivt+aCqOeri+WNs+eUteivneaIlumCruS7
+tumAmuefpeWPkeS7tuS6uuW5tuWIoOmZpOacrOmCruS7tu+8gSBUaGlzIGUtbWFpbCBhbmQgaXRz
+IGF0dGFjaG1lbnRzIGNvbnRhaW4gY29uZmlkZW50aWFsIGluZm9ybWF0aW9uIGZyb20gWElBT01J
+LCB3aGljaCBpcyBpbnRlbmRlZCBvbmx5IGZvciB0aGUgcGVyc29uIG9yIGVudGl0eSB3aG9zZSBh
+ZGRyZXNzIGlzIGxpc3RlZCBhYm92ZS4gQW55IHVzZSBvZiB0aGUgaW5mb3JtYXRpb24gY29udGFp
+bmVkIGhlcmVpbiBpbiBhbnkgd2F5IChpbmNsdWRpbmcsIGJ1dCBub3QgbGltaXRlZCB0bywgdG90
+YWwgb3IgcGFydGlhbCBkaXNjbG9zdXJlLCByZXByb2R1Y3Rpb24sIG9yIGRpc3NlbWluYXRpb24p
+IGJ5IHBlcnNvbnMgb3RoZXIgdGhhbiB0aGUgaW50ZW5kZWQgcmVjaXBpZW50KHMpIGlzIHByb2hp
+Yml0ZWQuIElmIHlvdSByZWNlaXZlIHRoaXMgZS1tYWlsIGluIGVycm9yLCBwbGVhc2Ugbm90aWZ5
+IHRoZSBzZW5kZXIgYnkgcGhvbmUgb3IgZW1haWwgaW1tZWRpYXRlbHkgYW5kIGRlbGV0ZSBpdCEq
+KioqKiovIw0K
