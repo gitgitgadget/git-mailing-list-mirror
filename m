@@ -2,155 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1548CECAAD1
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 00:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8306DECAAD1
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 01:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232244AbiIAAbF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 20:31:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47730 "EHLO
+        id S231954AbiIABNq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 21:13:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232098AbiIAAaX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 20:30:23 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2535EAA4E5
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:19 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id s7so5364909wro.2
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:19 -0700 (PDT)
+        with ESMTP id S229638AbiIABNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 21:13:45 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C8E612A5FA
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 18:13:44 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id i5-20020a17090a2a0500b001fd8708ffdfso958796pjd.2
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 18:13:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc;
-        bh=ErgQMUsG7c28yKpl9jLIaLFXZ1NiyhHYBFR/p41F6Cw=;
-        b=bQ25yg89kMP8uFhpAlQb623k7bcWkf++kn/xE0Y7AH9p1QuYzQdA07lor0GLbxTZBN
-         O7kuUdibrqPmH0voPHxOBCjIHSpAN5lVENvZ1vXLf+F4F0Jl7ytRhCI+3ILnEeuTc0Rn
-         LculC68xmnhpkijV//OM4FoAT5zI23wDpnbOgf76ZErMmhMNVZDcQMvn22VAwY7eoT3I
-         tO0wUsXDauxC8NUCy/OsYhnsqZRpzL03SJgGWzNXTulCnjmkn766sl6veiuhkawDaR/X
-         6VHy2zPwYwQoXbfzSLMk0BhTNDbiKio5XAl4MHFFz3GmnpOIH0CReqQB+9o235cyxuWE
-         HEAg==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date;
+        bh=doSbtUzEz8pSkkktdMkJQvnXHcGYmy8lz2299FypXsU=;
+        b=nGBn6XiBdRLKJJIYixvJ7uMLBGTVxlsxbXaNgtC+NRr73o42Tlwgbrsk88i5TJQ0xv
+         beM5SRlIeYsoGzN5H8OLpRQEbviNFp+Dhhli7QMEJ8pUUQANd1E2LdeMaim97h9L2W2l
+         L8ZIBKDhWg/rYhgJFOUPG196BqyeOLVv8f2rqLexcXUXYXZOqpgEzqhdWvOw8NHXz7+3
+         HEAIxw3jYDFydqw6MxNSi+wvDlsxUW+NpeIiY20RijErZJDk1rcnQ12RyBj8mcQQ2gCV
+         umFQPl/76jagsVACTTuioxzd77WV5KbHyBsKmcTZmFv+IgwPIRJ/FbPRnUSCxbsumSTl
+         fA6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
-        bh=ErgQMUsG7c28yKpl9jLIaLFXZ1NiyhHYBFR/p41F6Cw=;
-        b=RrSZzlpaW5Abq4d2NLvyDbqxyAKkOYHh7H3T8InV4whli04go8E+jYuEuxnA7ga4H7
-         Z0JmF+42i4b4MZrM9rUo8IlCci9Az5IehBQGSv4saVTznVaDLkRjbnemVmH/IwdXU7i8
-         /P40/Ry7gjUj3b1wYCHYo0kNRHYqIfNsF3ZWhLDUghX6f94hHABZN0M7DDJ6Kj9ukyrf
-         BQgN3wbDYg4LClEfcc+zEOt/W45kOXIM9nPjQHyW4opC/YOz2zISh7hJ82ypUtFc0wmg
-         ivqFSW8+nB5YbKUcEdItVspMmBIsQ6Llng47AiQLL4XRS6pZaAG3Jv/Q5ikiGhVpJtfy
-         wovA==
-X-Gm-Message-State: ACgBeo3w/olhjaWiSQ9BFfT/N1Yv1wzB3iv9PXNWi7GLkO7Zq4Uq6WQl
-        X5MpOL5m6xFKjqfW+565HyvYTMZdJ4s=
-X-Google-Smtp-Source: AA6agR54jfo1qqNZhcZ3FBMZv53THXAmmFYj/Xh/HVOjurq3EPZc3gWOJdYoZ6nBRZL1Th5EJqC3aw==
-X-Received: by 2002:a5d:5943:0:b0:226:d08e:fe11 with SMTP id e3-20020a5d5943000000b00226d08efe11mr13302184wri.78.1661992218195;
-        Wed, 31 Aug 2022 17:30:18 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i14-20020a05600c354e00b003a5dde32e4bsm3601087wmq.37.2022.08.31.17.30.17
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date;
+        bh=doSbtUzEz8pSkkktdMkJQvnXHcGYmy8lz2299FypXsU=;
+        b=wlyXeiSeNJoQOhz1lk1Hjy5gB7N3GVPlnf7HmI7tS0D57f4rVzAWoX1Y+wc3Wfpsif
+         vfqVc6qB2W7wYw2Yx2qui2DatucvMM1ll/qhBEVysbYjxY5z4MdmcDXCI+KdiETaUpdg
+         1kL4b8ZtJPjnqXtLru2sgArBTgD+qprebNo4nJXMqatNFavS+t6LdRtlGGRMme/Ttusb
+         atMn6ju6xIIZzwOcw9JWOFDfbMrBOyZTP/m/m4ktRJ/OpxH85pXZpkaf0t2ycP2AfTMB
+         KL0fZne3Dd4vUsGMSJIi6YCYkTChyAaH8X4IFY5uBfzTuGQZsonbOyKBsaCrl2D3Wd1s
+         qtXQ==
+X-Gm-Message-State: ACgBeo2m0C0n0RpcqjGhhGz7ndd2GE6wj0PM7pm/5tDGH84Ciah9UvDD
+        VKYzoL+AEc5GW5zGTkq1RdY=
+X-Google-Smtp-Source: AA6agR4053rms78EQU9e/bcNJcXQD3oQi3KiMBjLF+VQ0/gsPiUA7YuYoDnVDu50vwMQ6s2k/KiRyQ==
+X-Received: by 2002:a17:902:f70a:b0:173:36e4:eddf with SMTP id h10-20020a170902f70a00b0017336e4eddfmr27977030plo.9.1661994823733;
+        Wed, 31 Aug 2022 18:13:43 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id u3-20020a170902e5c300b0016edd557412sm1828213plf.201.2022.08.31.18.13.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 17:30:17 -0700 (PDT)
-Message-Id: <d95a4239014326d425fd667aab89789e3d198a64.1661992197.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
-References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
-From:   "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Sep 2022 00:29:55 +0000
-Subject: [PATCH 17/18] t/Makefile: teach `make test` and `make prove` to run
- chainlint.pl
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 31 Aug 2022 18:13:43 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 0/3] Output fixes for --remerge-diff
+References: <pull.1342.git.1661926908.gitgitgadget@gmail.com>
+Date:   Wed, 31 Aug 2022 18:13:43 -0700
+In-Reply-To: <pull.1342.git.1661926908.gitgitgadget@gmail.com> (Elijah Newren
+        via GitGitGadget's message of "Wed, 31 Aug 2022 06:21:45 +0000")
+Message-ID: <xmqqv8q7dhh4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Fabian Stelzer <fs@gigacodes.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Eric Sunshine <sunshine@sunshineco.com>
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Unlike chainlint.sed which "lints" a single test body at a time, thus is
-invoked once per test, chainlint.pl can check all test bodies in all
-test scripts with a single invocation. As such, it is akin to other bulk
-"linters" run by the Makefile, such as `test-lint-shell-syntax`,
-`test-lint-duplicates`, etc.
+> Philippe Blain found and reported a couple issues with the output of
+> --remerge-diff[1]. After digging in, I think one of them actually counts as
+> two separate issues, so here's a series with three patches to fix these
+> issues. Each includes testcases to keep us from regressing.
 
-Therefore, teach `make test` and `make prove` to invoke chainlint.pl
-along with the other bulk linters. Also, since the single chainlint.pl
-invocation by `make test` or `make prove` has already checked all tests
-in all scripts, instruct the individual test scripts not to run
-chainlint.pl on themselves unnecessarily.
+Including this to 'seen' seems to break the leaks-check CI job X-<.
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- t/Makefile | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
-
-diff --git a/t/Makefile b/t/Makefile
-index 11f276774ea..3db48c0cb64 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -36,14 +36,21 @@ CHAINLINTTMP_SQ = $(subst ','\'',$(CHAINLINTTMP))
- 
- T = $(sort $(wildcard t[0-9][0-9][0-9][0-9]-*.sh))
- THELPERS = $(sort $(filter-out $(T),$(wildcard *.sh)))
-+TLIBS = $(sort $(wildcard lib-*.sh)) annotate-tests.sh
- TPERF = $(sort $(wildcard perf/p[0-9][0-9][0-9][0-9]-*.sh))
-+TINTEROP = $(sort $(wildcard interop/i[0-9][0-9][0-9][0-9]-*.sh))
- CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.test)))
- CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
- 
-+# `test-chainlint` (which is a dependency of `test-lint`, `test` and `prove`)
-+# checks all tests in all scripts via a single invocation, so tell individual
-+# scripts not to "chainlint" themselves
-+CHAINLINTSUPPRESS = GIT_TEST_CHAIN_LINT=0 && export GIT_TEST_CHAIN_LINT &&
-+
- all: $(DEFAULT_TEST_TARGET)
- 
- test: pre-clean check-chainlint $(TEST_LINT)
--	$(MAKE) aggregate-results-and-cleanup
-+	$(CHAINLINTSUPPRESS) $(MAKE) aggregate-results-and-cleanup
- 
- failed:
- 	@failed=$$(cd '$(TEST_RESULTS_DIRECTORY_SQ)' && \
-@@ -52,7 +59,7 @@ failed:
- 	test -z "$$failed" || $(MAKE) $$failed
- 
- prove: pre-clean check-chainlint $(TEST_LINT)
--	@echo "*** prove ***"; $(PROVE) --exec '$(TEST_SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
-+	@echo "*** prove ***"; $(CHAINLINTSUPPRESS) $(PROVE) --exec '$(TEST_SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
- 	$(MAKE) clean-except-prove-cache
- 
- $(T):
-@@ -99,6 +106,9 @@ check-chainlint:
- 
- test-lint: test-lint-duplicates test-lint-executable test-lint-shell-syntax \
- 	test-lint-filenames
-+ifneq ($(GIT_TEST_CHAIN_LINT),0)
-+test-lint: test-chainlint
-+endif
- 
- test-lint-duplicates:
- 	@dups=`echo $(T) $(TPERF) | tr ' ' '\n' | sed 's/-.*//' | sort | uniq -d` && \
-@@ -121,6 +131,9 @@ test-lint-filenames:
- 		test -z "$$bad" || { \
- 		echo >&2 "non-portable file name(s): $$bad"; exit 1; }
- 
-+test-chainlint:
-+	@$(CHAINLINT) $(T) $(TLIBS) $(TPERF) $(TINTEROP)
-+
- aggregate-results-and-cleanup: $(T)
- 	$(MAKE) aggregate-results
- 	$(MAKE) clean
-@@ -136,4 +149,5 @@ valgrind:
- perf:
- 	$(MAKE) -C perf/ all
- 
--.PHONY: pre-clean $(T) aggregate-results clean valgrind perf check-chainlint clean-chainlint
-+.PHONY: pre-clean $(T) aggregate-results clean valgrind perf \
-+	check-chainlint clean-chainlint test-chainlint
--- 
-gitgitgadget
+https://github.com/git/git/runs/8124648321?check_suite_focus=true
 
