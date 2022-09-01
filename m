@@ -2,55 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEE0FECAAD1
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 00:30:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBCFDECAAD4
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 00:30:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231589AbiIAAaE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 31 Aug 2022 20:30:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46148 "EHLO
+        id S231700AbiIAAaF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 31 Aug 2022 20:30:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231441AbiIAAaC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Aug 2022 20:30:02 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80CF21EAF8
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:00 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id i188-20020a1c3bc5000000b003a7b6ae4eb2so443527wma.4
-        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:00 -0700 (PDT)
+        with ESMTP id S229607AbiIAAaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Aug 2022 20:30:03 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7B5125C4C
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:01 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id w5so4092468wrn.12
+        for <git@vger.kernel.org>; Wed, 31 Aug 2022 17:30:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc;
-        bh=8jfbem/YRp5Tb34zZvNLgmlBybUAuPOQwvQSrYRQE/c=;
-        b=EZm7G/YZXhSemDH6Z5gm/hglnqm+Qoa1yADNG76qgXYfnAsZ8iX2vAlWHMwYAhd10g
-         LrIv5reu3FNaWFph+Y4kAlQrtUwCPLjuA+Xb8VLzOWioUAGXlcccIX8SwpEj9Cpg6jSb
-         SdlfrB85uflb0/pc75Nsozy4kqBL8hgXEzmB87lb9kXZ08hTcW9Eqz0gBwjlsoxae7X4
-         HU4PpMRo6lKlPQqyvSnHHQTdb+VzJWgpDdyrmDFVAn8YpJuxKuPwHhwpMyt3BpCGgVz+
-         mAXLlNwmof9wzZO6C0jHA0LOJctP+kUkCVLkBD9f2vw7WB4PsOuBzhbEisCN/Julimvd
-         v7dQ==
+         :references:in-reply-to:message-id:from:to:cc;
+        bh=qzKTWlJoINKQudyGiXVS/3T0blznJqjVaOqJ1HdYyfk=;
+        b=F642mROJV4TYjqZnZQz00thpEq+uRs74AUok4sxRvtlXSzD2VhpHH2QL1ydFdDPjYW
+         VGit6kcrlqkdrfAe4GSRWHup8N6k4zZm3eJlUCCVTRdY2kHsI3rx7RRSeoqvJOC/8LDL
+         IuudfIQEi1gfC4GlzJ411GirOycvIJd2rCmyxMQv6EGZKhaZm+8Ffsi93fkvOrJw9rdB
+         nZCk16S3/QaRGuo+/OgHkZBRwj7o7xHvwhkQtmUfIs3WUb+tjzedGFHHpEpVE6ac9TlU
+         AlxM+5fwT+t9FhrEkCs0sHTkwRE0xVzXzpkjZntpCFIA97k0nn8+xVOdzTYlj9lDIHKC
+         1pJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc;
-        bh=8jfbem/YRp5Tb34zZvNLgmlBybUAuPOQwvQSrYRQE/c=;
-        b=VsdC6uJCoBIyj87hlj/uyywPigraB+Uqqh1GuuarfBhVKJwEOfCrFwzgdja62ttH2M
-         aW14YUEM2EqibderBnursnoIRieGpVQ2JCP7TftUMgops468liLJiOQt1ppxbxZmk+fJ
-         MXynCsVgJi+xdL9vm6FsJCleZeWpkvCeObQWOIuXjamzsNKQCIOgzTYUmMWta9OKE47Y
-         doPoupyd4u8KuVI9Og6V2aS2JgB/lqF3g1yA0indwrs3PXCIeuZ39O7Wz0gkXY64a1Yw
-         UgdaZ2ghidYSA5HosXiCfFtw2Qpwg4FR3Y5bdNRDd8alSByCnEJSu1cswwuvz7nrqk9K
-         iXJw==
-X-Gm-Message-State: ACgBeo3kLxodz5O1o/bgBam/hCp7pOmVGKtQRnY26YjTEA/sKDxelWSh
-        VA6mbXn/nhlXuMQYF0IGw+M6eCyPc+c=
-X-Google-Smtp-Source: AA6agR53Ba8UmGJr9ZBKwtv3ZSp9JKg82hPOBRcbDBnF1NusGTBIH5QBgXfNfghSHNexk2v5ffSWqg==
-X-Received: by 2002:a05:600c:3c8a:b0:3a6:7719:6118 with SMTP id bg10-20020a05600c3c8a00b003a677196118mr3461981wmb.199.1661992198732;
-        Wed, 31 Aug 2022 17:29:58 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc;
+        bh=qzKTWlJoINKQudyGiXVS/3T0blznJqjVaOqJ1HdYyfk=;
+        b=PZXDLGsuPgLNqW73LirjSSdDVn2icigqsWjA802gGfaoUJe2Ovq10bY4G4RuP6GrCY
+         efBY9DqdtumsZNZ+vabHE29pXPERCFzMi62MG7EXOwI/wJt79N1m6mlTHXUPbMrMBwZV
+         +t12VydAzwVdPy91Vm4k+d93EaiYVPKJB/mUapkgmIaLjHZiGFkCyWOvirva3W/nagbT
+         sQlKoxEwM71F+17c6Z0IKsH93dXmgf7XWPfN4AeCM9+TiLwvxCbcf0f66CTiYOv7zEiz
+         rHMa9+kIO8xxhoLMMSlGNhmrQzj+FDutWfWjoBXDTpdnOQC/LJXDnObzzM4O2AXUnZRR
+         G8SA==
+X-Gm-Message-State: ACgBeo1x04qlogWcQmNnQth7Tkc28lsRvNQkaihsWvMgOOBcnSbrOxT1
+        BYdXm1vwGqDgCP6oyqm6Gngy27jmyd0=
+X-Google-Smtp-Source: AA6agR767JjMPgT+lvC4e79oydVgzU4QQLlp9LP2yg4Sls9lQ6VfYg3zsMdawaKDijfnaUXVNRMaGQ==
+X-Received: by 2002:a5d:6d85:0:b0:225:760f:1d50 with SMTP id l5-20020a5d6d85000000b00225760f1d50mr12659884wrs.608.1661992200032;
+        Wed, 31 Aug 2022 17:30:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o12-20020a05600c378c00b003a5f4fccd4asm3369111wmr.35.2022.08.31.17.29.57
+        by smtp.gmail.com with ESMTPSA id z18-20020adff752000000b0021e5adb92desm13121125wrp.60.2022.08.31.17.29.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Aug 2022 17:29:58 -0700 (PDT)
-Message-Id: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
+        Wed, 31 Aug 2022 17:29:59 -0700 (PDT)
+Message-Id: <3423df94bd6035640828a2508968cf8e1f5b4dda.1661992197.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
+References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
 From:   "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 01 Sep 2022 00:29:38 +0000
-Subject: [PATCH 00/18] make test "linting" more comprehensive
+Date:   Thu, 01 Sep 2022 00:29:39 +0000
+Subject: [PATCH 01/18] t: add skeleton chainlint.pl
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -60,240 +62,188 @@ Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Fabian Stelzer <fs@gigacodes.de>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Eric Sunshine <sunshine@sunshineco.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A while back, Peff successfully nerd-sniped[1] me into tackling a
-long-brewing idea I had about (possibly) improving "chainlint" performance
-by linting all tests in all scripts with a single command invocation instead
-of running "sed" 26800+ times (once for each test). The new linter
-introduced by this series can check all test definitions in the entire
-project in a single invocation, and each test definition is checked only
-once no matter how many times the test is actually run (unlike chainlint.sed
-which will check a test repeatedly if, for instance, the test is run in a
-loop). Moreover, all test definitions in the project are "linted" even if
-some of those tests would not run on a particular platform or under a
-certain configuration (unlike chainlint.sed which only lints tests which
-actually run).
+From: Eric Sunshine <sunshine@sunshineco.com>
 
-The new linter is a good deal smarter than chainlint.sed and understands not
-just shell syntax but also some semantics of test construction, unlike
-chainlint.sed which is merely heuristics-based. For instance, the new linter
-recognizes cases when a broken &&-chain is legitimate, such as when "$?" is
-handled explicitly or when a failure is signaled directly with "false", in
-which case the &&-chain leading up to the "false" is immaterial, as well as
-other cases. Unlike chainlint.sed, it recognizes that a semicolon after the
-last command in a compound statement is harmless, thus won't interpret the
-semicolon as breaking the &&-chain.
+Although chainlint.sed usefully identifies broken &&-chains in tests, it
+has several shortcomings which include:
 
-The new linter also provides considerably better coverage for broken
-&&-chains. The "magic exit code 117" &&-chain checker built into test-lib.sh
-only works for top-level command invocations; it doesn't work within "{...}"
-groups, "(...)" subshells, "$(...)" substitutions, or within bodies of
-compound statements, such as "if", "for", "while", "case", etc.
-chainlint.sed partly fills the gap by catching broken &&-chains in "(...)"
-subshells one level deep, but bugs can still lurk behind broken &&-chains in
-the other cases. The new linter catches broken &&-chains within all those
-constructs to any depth.
+  * only detects &&-chain breakage in subshells (one-level deep)
 
-Another important improvement is that the new linter understands that shell
-loops do not terminate automatically when a command in the loop body fails,
-and that the condition needs to be handled explicitly by the test author by
-using "|| return 1" (or "|| exit 1" in a subshell) to signal failure.
-Consequently, the new linter will complain when a loop is lacking "|| return
-1" (or "|| exit 1").
+  * does not check for broken top-level &&-chains; that task is left to
+    the "magic exit code 117" checker built into test-lib.sh, however,
+    that detection does not extend to `{...}` blocks, `$(...)`
+    expressions, or compound statements such as `if...fi`,
+    `while...done`, `case...esac`
 
-Finally, unlike chainlint.sed which (not surprisingly) is implemented in
-"sed", the new linter is written in Perl, thus should be more accessible to
-a wider audience, and is structured as a traditional top-down parser which
-makes it much easier to reason about.
+  * uses heuristics, which makes it (potentially) fallible and difficult
+    to tweak to handle additional real-world cases
 
-The new linter could eventually subsume other linting tasks such as
-check-nonportable-shell.pl (which itself takes a couple seconds to run on my
-machine), though it probably should be renamed to something other than
-"chainlint" since it is no longer targeted only at spotting &&-chain breaks,
-but that can wait for another day.
+  * written in `sed` and employs advanced `sed` operators which are
+    probably not well-known to many programmers, thus the pool of people
+    who can maintain it is likely small
 
-Ævar offered some sensible comments[2,3] about optimizing the Makefile rules
-related to chainlint, but those optimizations are not tackled here for a few
-reasons: (1) this series is already quite long, (2) I'd like to keep the
-series focused on its primary goal of installing a new and improved linter,
-(3) these patches do not make the Makefile situation any worse[4], and (4)
-those optimizations can easily be done atop this series[5].
+  * manually simulates recursion into subshells which makes it much more
+    difficult to reason about than, say, a traditional top-down parser
 
-Junio: This series is nominally atop es/t4301-sed-portability-fix which is
-in "next", and es/fix-chained-tests, es/test-chain-lint, and es/chainlint,
-all of which are already in "master".
+  * checks each test as the test is run, which can get expensive for
+    tests which are run repeatedly by functions or loops since their
+    bodies will be checked over and over (tens or hundreds of times)
+    unnecessarily
 
-Dscho: This series conflicts with some patches carried only by the Git for
-Windows project; the resolutions are obvious and simple. The new linter also
-identifies some problems in tests carried only by the Git for Windows
-project.
+To address these shortcomings, begin implementing a more functional and
+precise test linter which understands shell syntax and semantics rather
+than employing heuristics, thus is able to recognize structural problems
+with tests beyond broken &&-chains.
 
-[1] https://lore.kernel.org/git/YJzGcZpZ+E9R0gYd@coredump.intra.peff.net/
-[2]
-https://lore.kernel.org/git/RFC-patch-1.1-bb3f1577829-20211213T095456Z-avarab@gmail.com/
-[3] https://lore.kernel.org/git/211213.86tufc8oop.gmgdl@evledraar.gmail.com/
-[4]
-https://lore.kernel.org/git/CAPig+cSFtpt6ExbVDbcx3tZodrKFuM-r2GMW4TQ2tJmLvHBFtQ@mail.gmail.com/
-[5] https://lore.kernel.org/git/211214.86tufbbbu3.gmgdl@evledraar.gmail.com/
+The new linter is written in Perl, thus should be more accessible to a
+wider audience, and is structured as a traditional top-down parser which
+makes it much easier to reason about, and allows it to inspect compound
+statements within test bodies to any depth.
 
-Eric Sunshine (18):
-  t: add skeleton chainlint.pl
-  chainlint.pl: add POSIX shell lexical analyzer
-  chainlint.pl: add POSIX shell parser
-  chainlint.pl: add parser to validate tests
-  chainlint.pl: add parser to identify test definitions
-  chainlint.pl: validate test scripts in parallel
-  chainlint.pl: don't require `return|exit|continue` to end with `&&`
-  t/Makefile: apply chainlint.pl to existing self-tests
-  chainlint.pl: don't require `&` background command to end with `&&`
-  chainlint.pl: don't flag broken &&-chain if `$?` handled explicitly
-  chainlint.pl: don't flag broken &&-chain if failure indicated
-    explicitly
-  chainlint.pl: complain about loops lacking explicit failure handling
-  chainlint.pl: allow `|| echo` to signal failure upstream of a pipe
-  t/chainlint: add more chainlint.pl self-tests
-  test-lib: retire "lint harder" optimization hack
-  test-lib: replace chainlint.sed with chainlint.pl
-  t/Makefile: teach `make test` and `make prove` to run chainlint.pl
-  t: retire unused chainlint.sed
+Furthermore, it can check all test definitions in the entire project in
+a single invocation rather than having to be invoked once per test, and
+each test definition is checked only once no matter how many times the
+test is actually run.
 
- contrib/buildsystems/CMakeLists.txt           |   2 +-
- t/Makefile                                    |  49 +-
- t/README                                      |   5 -
- t/chainlint.pl                                | 730 ++++++++++++++++++
- t/chainlint.sed                               | 399 ----------
- t/chainlint/blank-line-before-esac.expect     |  18 +
- t/chainlint/blank-line-before-esac.test       |  19 +
- t/chainlint/block.expect                      |  15 +-
- t/chainlint/block.test                        |  15 +-
- t/chainlint/chain-break-background.expect     |   9 +
- t/chainlint/chain-break-background.test       |  10 +
- t/chainlint/chain-break-continue.expect       |  12 +
- t/chainlint/chain-break-continue.test         |  13 +
- t/chainlint/chain-break-false.expect          |   9 +
- t/chainlint/chain-break-false.test            |  10 +
- t/chainlint/chain-break-return-exit.expect    |  19 +
- t/chainlint/chain-break-return-exit.test      |  23 +
- t/chainlint/chain-break-status.expect         |   9 +
- t/chainlint/chain-break-status.test           |  11 +
- t/chainlint/chained-block.expect              |   9 +
- t/chainlint/chained-block.test                |  11 +
- t/chainlint/chained-subshell.expect           |  10 +
- t/chainlint/chained-subshell.test             |  13 +
- .../command-substitution-subsubshell.expect   |   2 +
- .../command-substitution-subsubshell.test     |   3 +
- t/chainlint/complex-if-in-cuddled-loop.expect |   2 +-
- t/chainlint/double-here-doc.expect            |   2 +
- t/chainlint/double-here-doc.test              |  12 +
- t/chainlint/dqstring-line-splice.expect       |   3 +
- t/chainlint/dqstring-line-splice.test         |   7 +
- t/chainlint/dqstring-no-interpolate.expect    |  11 +
- t/chainlint/dqstring-no-interpolate.test      |  15 +
- t/chainlint/empty-here-doc.expect             |   3 +
- t/chainlint/empty-here-doc.test               |   5 +
- t/chainlint/exclamation.expect                |   4 +
- t/chainlint/exclamation.test                  |   8 +
- t/chainlint/for-loop-abbreviated.expect       |   5 +
- t/chainlint/for-loop-abbreviated.test         |   6 +
- t/chainlint/for-loop.expect                   |   4 +-
- t/chainlint/function.expect                   |  11 +
- t/chainlint/function.test                     |  13 +
- t/chainlint/here-doc-indent-operator.expect   |   5 +
- t/chainlint/here-doc-indent-operator.test     |  13 +
- t/chainlint/here-doc-multi-line-string.expect |   3 +-
- t/chainlint/if-condition-split.expect         |   7 +
- t/chainlint/if-condition-split.test           |   8 +
- t/chainlint/if-in-loop.expect                 |   2 +-
- t/chainlint/if-in-loop.test                   |   2 +-
- t/chainlint/loop-detect-failure.expect        |  15 +
- t/chainlint/loop-detect-failure.test          |  17 +
- t/chainlint/loop-detect-status.expect         |  18 +
- t/chainlint/loop-detect-status.test           |  19 +
- t/chainlint/loop-in-if.expect                 |   2 +-
- t/chainlint/loop-upstream-pipe.expect         |  10 +
- t/chainlint/loop-upstream-pipe.test           |  11 +
- t/chainlint/multi-line-string.expect          |  11 +-
- t/chainlint/nested-loop-detect-failure.expect |  31 +
- t/chainlint/nested-loop-detect-failure.test   |  35 +
- t/chainlint/nested-subshell.expect            |   2 +-
- t/chainlint/one-liner-for-loop.expect         |   9 +
- t/chainlint/one-liner-for-loop.test           |  10 +
- t/chainlint/return-loop.expect                |   5 +
- t/chainlint/return-loop.test                  |   6 +
- t/chainlint/semicolon.expect                  |   2 +-
- t/chainlint/sqstring-in-sqstring.expect       |   4 +
- t/chainlint/sqstring-in-sqstring.test         |   5 +
- t/chainlint/t7900-subtree.expect              |  13 +-
- t/chainlint/token-pasting.expect              |  27 +
- t/chainlint/token-pasting.test                |  32 +
- t/chainlint/while-loop.expect                 |   4 +-
- t/t0027-auto-crlf.sh                          |   7 +-
- t/t3070-wildmatch.sh                          |   5 -
- t/test-lib.sh                                 |  12 +-
- 73 files changed, 1439 insertions(+), 449 deletions(-)
+At this stage, the new linter is just a skeleton containing boilerplate
+which handles command-line options, collects and reports statistics, and
+feeds its arguments -- paths of test scripts -- to a (presently)
+do-nothing script parser for validation. Subsequent changes will flesh
+out the functionality.
+
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ t/chainlint.pl | 115 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 115 insertions(+)
  create mode 100755 t/chainlint.pl
- delete mode 100644 t/chainlint.sed
- create mode 100644 t/chainlint/blank-line-before-esac.expect
- create mode 100644 t/chainlint/blank-line-before-esac.test
- create mode 100644 t/chainlint/chain-break-background.expect
- create mode 100644 t/chainlint/chain-break-background.test
- create mode 100644 t/chainlint/chain-break-continue.expect
- create mode 100644 t/chainlint/chain-break-continue.test
- create mode 100644 t/chainlint/chain-break-false.expect
- create mode 100644 t/chainlint/chain-break-false.test
- create mode 100644 t/chainlint/chain-break-return-exit.expect
- create mode 100644 t/chainlint/chain-break-return-exit.test
- create mode 100644 t/chainlint/chain-break-status.expect
- create mode 100644 t/chainlint/chain-break-status.test
- create mode 100644 t/chainlint/chained-block.expect
- create mode 100644 t/chainlint/chained-block.test
- create mode 100644 t/chainlint/chained-subshell.expect
- create mode 100644 t/chainlint/chained-subshell.test
- create mode 100644 t/chainlint/command-substitution-subsubshell.expect
- create mode 100644 t/chainlint/command-substitution-subsubshell.test
- create mode 100644 t/chainlint/double-here-doc.expect
- create mode 100644 t/chainlint/double-here-doc.test
- create mode 100644 t/chainlint/dqstring-line-splice.expect
- create mode 100644 t/chainlint/dqstring-line-splice.test
- create mode 100644 t/chainlint/dqstring-no-interpolate.expect
- create mode 100644 t/chainlint/dqstring-no-interpolate.test
- create mode 100644 t/chainlint/empty-here-doc.expect
- create mode 100644 t/chainlint/empty-here-doc.test
- create mode 100644 t/chainlint/exclamation.expect
- create mode 100644 t/chainlint/exclamation.test
- create mode 100644 t/chainlint/for-loop-abbreviated.expect
- create mode 100644 t/chainlint/for-loop-abbreviated.test
- create mode 100644 t/chainlint/function.expect
- create mode 100644 t/chainlint/function.test
- create mode 100644 t/chainlint/here-doc-indent-operator.expect
- create mode 100644 t/chainlint/here-doc-indent-operator.test
- create mode 100644 t/chainlint/if-condition-split.expect
- create mode 100644 t/chainlint/if-condition-split.test
- create mode 100644 t/chainlint/loop-detect-failure.expect
- create mode 100644 t/chainlint/loop-detect-failure.test
- create mode 100644 t/chainlint/loop-detect-status.expect
- create mode 100644 t/chainlint/loop-detect-status.test
- create mode 100644 t/chainlint/loop-upstream-pipe.expect
- create mode 100644 t/chainlint/loop-upstream-pipe.test
- create mode 100644 t/chainlint/nested-loop-detect-failure.expect
- create mode 100644 t/chainlint/nested-loop-detect-failure.test
- create mode 100644 t/chainlint/one-liner-for-loop.expect
- create mode 100644 t/chainlint/one-liner-for-loop.test
- create mode 100644 t/chainlint/return-loop.expect
- create mode 100644 t/chainlint/return-loop.test
- create mode 100644 t/chainlint/sqstring-in-sqstring.expect
- create mode 100644 t/chainlint/sqstring-in-sqstring.test
- create mode 100644 t/chainlint/token-pasting.expect
- create mode 100644 t/chainlint/token-pasting.test
 
-
-base-commit: d42b38dfb5edf1a7fddd9542d722f91038407819
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1322%2Fsunshineco%2Fchainlintperl-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1322/sunshineco/chainlintperl-v1
-Pull-Request: https://github.com/git/git/pull/1322
+diff --git a/t/chainlint.pl b/t/chainlint.pl
+new file mode 100755
+index 00000000000..e8ab95c7858
+--- /dev/null
++++ b/t/chainlint.pl
+@@ -0,0 +1,115 @@
++#!/usr/bin/env perl
++#
++# Copyright (c) 2021-2022 Eric Sunshine <sunshine@sunshineco.com>
++#
++# This tool scans shell scripts for test definitions and checks those tests for
++# problems, such as broken &&-chains, which might hide bugs in the tests
++# themselves or in behaviors being exercised by the tests.
++#
++# Input arguments are pathnames of shell scripts containing test definitions,
++# or globs referencing a collection of scripts. For each problem discovered,
++# the pathname of the script containing the test is printed along with the test
++# name and the test body with a `?!FOO?!` annotation at the location of each
++# detected problem, where "FOO" is a tag such as "AMP" which indicates a broken
++# &&-chain. Returns zero if no problems are discovered, otherwise non-zero.
++
++use warnings;
++use strict;
++use File::Glob;
++use Getopt::Long;
++
++my $show_stats;
++my $emit_all;
++
++package ScriptParser;
++
++sub new {
++	my $class = shift @_;
++	my $self = bless {} => $class;
++	$self->{output} = [];
++	$self->{ntests} = 0;
++	return $self;
++}
++
++sub parse_cmd {
++	return undef;
++}
++
++# main contains high-level functionality for processing command-line switches,
++# feeding input test scripts to ScriptParser, and reporting results.
++package main;
++
++my $getnow = sub { return time(); };
++my $interval = sub { return time() - shift; };
++if (eval {require Time::HiRes; Time::HiRes->import(); 1;}) {
++	$getnow = sub { return [Time::HiRes::gettimeofday()]; };
++	$interval = sub { return Time::HiRes::tv_interval(shift); };
++}
++
++sub show_stats {
++	my ($start_time, $stats) = @_;
++	my $walltime = $interval->($start_time);
++	my ($usertime) = times();
++	my ($total_workers, $total_scripts, $total_tests, $total_errs) = (0, 0, 0, 0);
++	for (@$stats) {
++		my ($worker, $nscripts, $ntests, $nerrs) = @$_;
++		print(STDERR "worker $worker: $nscripts scripts, $ntests tests, $nerrs errors\n");
++		$total_workers++;
++		$total_scripts += $nscripts;
++		$total_tests += $ntests;
++		$total_errs += $nerrs;
++	}
++	printf(STDERR "total: %d workers, %d scripts, %d tests, %d errors, %.2fs/%.2fs (wall/user)\n", $total_workers, $total_scripts, $total_tests, $total_errs, $walltime, $usertime);
++}
++
++sub check_script {
++	my ($id, $next_script, $emit) = @_;
++	my ($nscripts, $ntests, $nerrs) = (0, 0, 0);
++	while (my $path = $next_script->()) {
++		$nscripts++;
++		my $fh;
++		unless (open($fh, "<", $path)) {
++			$emit->("?!ERR?! $path: $!\n");
++			next;
++		}
++		my $s = do { local $/; <$fh> };
++		close($fh);
++		my $parser = ScriptParser->new(\$s);
++		1 while $parser->parse_cmd();
++		if (@{$parser->{output}}) {
++			my $s = join('', @{$parser->{output}});
++			$emit->("# chainlint: $path\n" . $s);
++			$nerrs += () = $s =~ /\?![^?]+\?!/g;
++		}
++		$ntests += $parser->{ntests};
++	}
++	return [$id, $nscripts, $ntests, $nerrs];
++}
++
++sub exit_code {
++	my $stats = shift @_;
++	for (@$stats) {
++		my ($worker, $nscripts, $ntests, $nerrs) = @$_;
++		return 1 if $nerrs;
++	}
++	return 0;
++}
++
++Getopt::Long::Configure(qw{bundling});
++GetOptions(
++	"emit-all!" => \$emit_all,
++	"stats|show-stats!" => \$show_stats) or die("option error\n");
++
++my $start_time = $getnow->();
++my @stats;
++
++my @scripts;
++push(@scripts, File::Glob::bsd_glob($_)) for (@ARGV);
++unless (@scripts) {
++	show_stats($start_time, \@stats) if $show_stats;
++	exit;
++}
++
++push(@stats, check_script(1, sub { shift(@scripts); }, sub { print(@_); }));
++show_stats($start_time, \@stats) if $show_stats;
++exit(exit_code(\@stats));
 -- 
 gitgitgadget
+
