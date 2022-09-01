@@ -2,234 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC131ECAAD3
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 16:04:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32926ECAAD3
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 16:08:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234782AbiIAQEW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 12:04:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52828 "EHLO
+        id S234881AbiIAQIx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Sep 2022 12:08:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234772AbiIAQET (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 12:04:19 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90B108002C
-        for <git@vger.kernel.org>; Thu,  1 Sep 2022 09:04:18 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id c7so16320324wrp.11
-        for <git@vger.kernel.org>; Thu, 01 Sep 2022 09:04:18 -0700 (PDT)
+        with ESMTP id S234874AbiIAQIe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2022 12:08:34 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4D589109A
+        for <git@vger.kernel.org>; Thu,  1 Sep 2022 09:08:32 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id c2so17512183plo.3
+        for <git@vger.kernel.org>; Thu, 01 Sep 2022 09:08:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date;
-        bh=0zu0RcKhd0E2/I612A/JsAkR03PbsKf3OL6OrXdZTr4=;
-        b=Kn/MC2RJZtpWHfIN9rkoZPcG6ae9IBnoG5sRd0g7L+nYUt9iH1uR7hqatyd22rCZfz
-         xWGArLEaZpYAMAwz6AzH+T2Fmd0tPTZHUhb2e8JtKpX1izLviXb9eq/Qf6EMGUPCOqso
-         jDk3YpH5P3QMf9YwpC8bRPCi5DrhpsGllutUJ6W++BX5pBrjjlnOXVKBsKbJ00mEWQYw
-         bBN+FHMAz33+BGntkIlsZyX3KJsxYXe5bo1eAnnqf38ggXUKhD36LOHz8rtamqIN4ojp
-         QIube1Ppk9nDvYbeFHJsyGUJRPNido1jefOtTKS3yAgRsk4Gy9GNaqV9dSUbmbZeiFY0
-         MbJw==
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=Hwiu0uTGDkwurms739DkQd0eRyAmQZ7MkkklSJHrnfI=;
+        b=JfFg44dIqxP+dABRwxIV56PwGm79Ns4ZIt869I5LBXQZkKabrD+xchW1IgEv10amKU
+         uITrl8YvzDI5QEHyh5OQTaUD5sj8ajoTqCM2RCCT+N35RStuTMraK8MeQh6Y1xNsLIHy
+         /HCITtt4erof/f50wuB9spgv0otoPHAHW94HFW+nxpzJ9A10RqAdJvdeJzgWFa5lpkxA
+         paM8Wq95VJRok3YrhRFr2OTsAfWuDZo8/Fcwr0dbjNSOzWdjh91DVchFq3GMnX9Dk/by
+         9hTZw41gDSEnS1EQlRWQ3JUzgHK9dILRdnDMFa5aDCDmTSxtxyrjOC7ekhDoy7fGpqnE
+         M81Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=0zu0RcKhd0E2/I612A/JsAkR03PbsKf3OL6OrXdZTr4=;
-        b=BEEsdOiE+P4lqhnB3VNtEGnhPSKxaKZZv2xGk7Fjbjnxhrzk4JIEEOAnMLUbWZGBKt
-         O9SDuXZ6AiMJrz/7/p5hqFzCt6z0qq+pc9ho/h5izh4WFrOQYnLjFJ/Mjrsxq1DNAMcw
-         KG6yz7yU0mlVj3kg0sYfRfUVCfqlgLXmJK/FZhQYwZ5/LpOIkN/zCYYdMAxknn/oD6o1
-         Lid+eBbbCwhOE2/cbI2pv5AdXMwffU65sKckb3EoxoTc49UNhfBOmbhTmvsPvTauc295
-         h3W5MBfkD/aLUTIUpW2TYQsBcm2wz4aQcLdxhx3fSHlUR1TvoWPfOBF57RkhCK3l37yD
-         KNaQ==
-X-Gm-Message-State: ACgBeo1aIpGnK+ZtThj1HvWi9L7v2MV7/sgmvhS75FIP2dT/joVc3ZKp
-        ZeqIAlpnPBuslh63So9MdK4=
-X-Google-Smtp-Source: AA6agR79KtA5RAXDdxqYiOrfdbdR+ilHDonJxS4vE/EUYURm5lOZGxpZOdv43XXumUTgZVRHFbdS2w==
-X-Received: by 2002:a05:6000:81d:b0:226:dbad:1699 with SMTP id bt29-20020a056000081d00b00226dbad1699mr11662902wrb.212.1662048257059;
-        Thu, 01 Sep 2022 09:04:17 -0700 (PDT)
-Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id t8-20020adfdc08000000b002258413c310sm15197194wri.88.2022.09.01.09.04.16
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=Hwiu0uTGDkwurms739DkQd0eRyAmQZ7MkkklSJHrnfI=;
+        b=nC/oSx0TRD4TSuoNBmhued8KDeEUdXyZ51VsJiwl8zgTdmlVL7fUimBGyEdljjnnYZ
+         4qDp6pSqL6MkDpDFXgc4yjlacnVEv9Jm+ilnh+b813K1wIvqcp6Mixl9HRIhOhol+Wn6
+         L0G4lET4iTNU36Itj/61df0k4QnGfngkCfCiwN739bAItWOteSwssr0A2jyBqYWtc75W
+         peW7lB4quuaiy1SdHpgCGswZHDuse3ynssSsDjbHE9TlrNr4dZTADFn+hUa5UJpTWC5l
+         V4SIa0VKgId/9ax1dAXJk4BXfyTtut6Ituy8mXa5Q2tgyU7zfYdOxVWN/nFizuOMMDnr
+         Vz/g==
+X-Gm-Message-State: ACgBeo0w3bVkB25lzWGNHwIiEwXcH2U+sjd400PJzEPA+PdWe6plYiAM
+        RqbEvUGg284/DMcmbUxytzuax8pl9TE2
+X-Google-Smtp-Source: AA6agR5wuHIJeZIl5UPBnB/eznY8+x79UK8aMefi6E/ldI4i9KaSwEnolXMPH8/+qeyjYpQNgOa+zw==
+X-Received: by 2002:a17:902:c945:b0:16e:d24d:1b27 with SMTP id i5-20020a170902c94500b0016ed24d1b27mr32143526pla.51.1662048512236;
+        Thu, 01 Sep 2022 09:08:32 -0700 (PDT)
+Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id bc13-20020a656d8d000000b00421841943dfsm5369359pgb.12.2022.09.01.09.08.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Sep 2022 09:04:16 -0700 (PDT)
-Message-ID: <ced55750-21bb-c264-ef2d-666aca77fa2b@gmail.com>
-Date:   Thu, 1 Sep 2022 17:04:15 +0100
+        Thu, 01 Sep 2022 09:08:31 -0700 (PDT)
+Message-ID: <552dc600-9a6e-988c-a4ff-18a6eb45e121@github.com>
+Date:   Thu, 1 Sep 2022 09:08:29 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 0/3] built-in add -p: support diff-so-fancy better
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.13.0
+Subject: Re: [PATCH 4/8] scalar: implement the `help` subcommand
 Content-Language: en-US
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1336.v4.git.1661977877.gitgitgadget@gmail.com>
- <pull.1336.v5.git.1662046939.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.1336.v5.git.1662046939.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com,
+        johannes.schindelin@gmx.de, gitster@pobox.com,
+        Johannes Schindelin <johasc@microsoft.com>
+References: <pull.1341.git.1661961746.gitgitgadget@gmail.com>
+ <46d0fddfe8fbc2c568cb5a3d14594276db2bc1a9.1661961746.git.gitgitgadget@gmail.com>
+ <220831.8635dc9wzx.gmgdl@evledraar.gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <220831.8635dc9wzx.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
+Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Aug 31 2022, Johannes Schindelin via GitGitGadget wrote:
+> 
+>> From: Johannes Schindelin <johasc@microsoft.com>
+>>
+>> It is merely handing off to `git help scalar`.
+>>
+>> Signed-off-by: Johannes Schindelin <johasc@microsoft.com>
+>> Signed-off-by: Victoria Dye <vdye@github.com>
+>> ---
+>>  scalar.c | 20 ++++++++++++++++++++
+>>  1 file changed, 20 insertions(+)
+>>
+>> diff --git a/scalar.c b/scalar.c
+>> index 642d16124eb..675d7a6b0a9 100644
+>> --- a/scalar.c
+>> +++ b/scalar.c
+>> @@ -819,6 +819,25 @@ static int cmd_delete(int argc, const char **argv)
+>>  	return res;
+>>  }
+>>  
+>> +static int cmd_help(int argc, const char **argv)
+>> +{
+>> +	struct option options[] = {
+>> +		OPT_END(),
+>> +	};
+>> +	const char * const usage[] = {
+>> +		N_("scalar help"),
+> 
+> 
+> This should not have N_(), as it's a literal command.
 
-On 01/09/2022 16:42, Johannes Schindelin via GitGitGadget wrote:
-> Philippe Blain reported in
-> https://lore.kernel.org/git/ecf6f5be-22ca-299f-a8f1-bda38e5ca246@gmail.com
-> that there is a problem when running the built-in version of git add -p with
-> diff-so-fancy [https://github.com/so-fancy/diff-so-fancy] as diff colorizer.
-> The symptom is this:
-> 
->      error: could not parse colored hunk header '?[36m?[1m?[38;5;13m@ file:1 @?[1m?[0m'
-> 
-> 
-> This patch series addresses that and should fix
-> https://github.com/so-fancy/diff-so-fancy/issues/437
-> 
-> Changes since v4:
-> 
->   * The second patch was further simplified, avoiding to print extra ANSI
->     sequences if the hunk header is shown verbatim.
+Thanks, will fix. 
 
-That was a quick re-roll! I'm very happy with this version
+> 
+>> +		NULL
+>> +	};
+>> +
+>> +	argc = parse_options(argc, argv, NULL, options,
+>> +			     usage, 0);
+>> +
+>> +	if (argc != 0)
+> 
+> If we're re-rolling anyway we usually just do "if (argc)". We don't need
+> to worry about argc < 0 (despite the signed type, which is a historical
+> C wart).
 
-Thanks
+Normally I'd agree, but in this case there's a readability benefit to
+explicitly comparing 'argc' to 0. 'scalar help' expects exactly zero
+positional arguments, and showing the '!= 0' makes that expectation clearer
+(likewise, 'scalar delete' checks that 'argc != 1' because it expects
+exactly one positional arg). 
 
-Phillip
+> 
+>> +		usage_with_options(usage, options);
+>> +
+>> +	return run_git("help", "scalar", NULL);
+> 
+> Performance isn't sensitive here, but have you tried just calling
+> cmd_help() instead with the appropriate arguments? It would avoid
+> spawning another command..
 
-> Changes since v3:
-> 
->   * Instead of deviating from how the Perl version of git add -p did things,
->     we now teach the built-in version to display hunk headers verbatim when
->     no line range could be parsed out (instead of showing the line range
->     anyways). This was a very good idea of Phillip's, dramatically
->     simplifying the patch series.
->   * Also, this iteration drops the first patch that claims to redefine what
->     we consider bogus, but only hides an off-by-one. In its stead, there is
->     now a patch that fixes said off-by-one.
-> 
-> Changes since v2:
-> 
->   * Added the appropriate "Reported-by" trailer to the commit message.
->   * Split out the logic to insert a space between the colored line range and
->     the extra information, if needed.
->   * That logic was now corrected to see whether that space is really needed.
->   * To verify that the logic does what we need it to do, the added regression
->     test now specifically tests for that (single) extra space that we want to
->     be inserted.
->   * Reworded a stale comment that claimed that we might suppress the entire
->     colored hunk header (which we no longer do).
->   * Rebased to the current tip of the main branch to avoid a merge conflict
->     with 716c1f649e3 (pipe_command(): mark stdin descriptor as non-blocking,
->     2022-08-17).
-> 
-> Changes since v1:
-> 
->   * Added a commit to ignore dirty submodules just like the Perl version
->     does.
-> 
-> Johannes Schindelin (3):
->    add -p: detect more mismatches between plain vs colored diffs
->    add -p: gracefully handle unparseable hunk headers in colored diffs
->    add -p: ignore dirty submodules
-> 
->   add-patch.c                | 33 +++++++++++++++++++++++----------
->   t/t3701-add-interactive.sh | 27 +++++++++++++++++++++++++--
->   2 files changed, 48 insertions(+), 12 deletions(-)
-> 
-> 
-> base-commit: 07ee72db0e97b5c233f8ada0abb412248c2f1c6f
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1336%2Fdscho%2Fdiff-so-fancy-v5
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1336/dscho/diff-so-fancy-v5
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1336
-> 
-> Range-diff vs v4:
-> 
->   1:  25187c3a3c2 = 1:  25187c3a3c2 add -p: detect more mismatches between plain vs colored diffs
->   2:  cd1c5100506 ! 2:  93d0e3b4d2a add -p: gracefully handle unparseable hunk headers in colored diffs
->       @@ Commit message
->            we should show the hunk headers verbatim. This is what the Perl version
->            of the interactive `add` command did, too.
->        
->       -    This commit is best viewed with `--color-moved --ignore-space-change`.
->       -
->            [diff-so-fancy]: https://github.com/so-fancy/diff-so-fancy
->        
->            Reported-by: Philippe Blain <levraiphilippeblain@gmail.com>
->       @@ add-patch.c: static int parse_hunk_header(struct add_p_state *s, struct hunk *hu
->        -	if (!p)
->        -		return error(_("could not parse colored hunk header '%.*s'"),
->        -			     (int)(eol - line), line);
->       -+	if (p && (p = memmem(p + 4, eol - p - 4, " @@", 3)))
->       ++	if (p && (p = memmem(p + 4, eol - p - 4, " @@", 3))) {
->        +		header->colored_extra_start = p + 3 - s->colored.buf;
->       -+	else {
->       ++	} else {
->        +		/* could not parse colored hunk header, leave as-is */
->        +		header->colored_extra_start = hunk->colored_start;
->        +		header->suppress_colored_line_range = 1;
->       @@ add-patch.c: static int parse_hunk_header(struct add_p_state *s, struct hunk *hu
->         
->         	return 0;
->        @@ add-patch.c: static void render_hunk(struct add_p_state *s, struct hunk *hunk,
->       - 				- header->colored_extra_start;
->       - 		}
->       -
->       --		if (s->mode->is_reverse)
->       --			old_offset -= delta;
->       --		else
->       --			new_offset += delta;
->       --
->       --		strbuf_addf(out, "@@ -%lu", old_offset);
->       --		if (header->old_count != 1)
->       --			strbuf_addf(out, ",%lu", header->old_count);
->       --		strbuf_addf(out, " +%lu", new_offset);
->       --		if (header->new_count != 1)
->       --			strbuf_addf(out, ",%lu", header->new_count);
->       --		strbuf_addstr(out, " @@");
->       -+		if (!colored || !header->suppress_colored_line_range) {
->       -+			if (s->mode->is_reverse)
->       -+				old_offset -= delta;
->       -+			else
->       -+				new_offset += delta;
->       + 		if (!colored) {
->       + 			p = s->plain.buf + header->extra_start;
->       + 			len = header->extra_end - header->extra_start;
->       ++		} else if (header->suppress_colored_line_range) {
->       ++			strbuf_add(out,
->       ++				   s->colored.buf + header->colored_extra_start,
->       ++				   header->colored_extra_end -
->       ++				   header->colored_extra_start);
->        +
->       -+			strbuf_addf(out, "@@ -%lu", old_offset);
->       -+			if (header->old_count != 1)
->       -+				strbuf_addf(out, ",%lu", header->old_count);
->       -+			strbuf_addf(out, " +%lu", new_offset);
->       -+			if (header->new_count != 1)
->       -+				strbuf_addf(out, ",%lu", header->new_count);
->       -+			strbuf_addstr(out, " @@");
->       -+		}
->       -
->       - 		if (len)
->       - 			strbuf_add(out, p, len);
->       ++			strbuf_add(out, s->colored.buf + hunk->colored_start,
->       ++				   hunk->colored_end - hunk->colored_start);
->       ++			return;
->       + 		} else {
->       + 			strbuf_addstr(out, s->s.fraginfo_color);
->       + 			p = s->colored.buf + header->colored_extra_start;
->        
->         ## t/t3701-add-interactive.sh ##
->        @@ t/t3701-add-interactive.sh: test_expect_success 'detect bogus diffFilter output' '
->       @@ t/t3701-add-interactive.sh: test_expect_success 'detect bogus diffFilter output'
->        +	printf n >n &&
->        +	force_color git -c interactive.diffFilter="sed s/.*@@.*/XX/" \
->        +		add -p >output 2>&1 <n &&
->       -+	grep "^[^@]*XX[^@]*$" output
->       ++	grep "^XX$" output
->        +'
->        +
->         test_expect_success 'handle very large filtered diff' '
->   3:  116f0cf5cab = 3:  47943b603b1 add -p: ignore dirty submodules
-> 
+As a matter of design preference, I'd rather avoid invoking builtins via
+their 'cmd_*()' entrypoint. Doing so in 'scalar.c' would also introduce some
+function name conflicts. While that's an overcomeable problem, precedent
+across Git doesn't appear to indicate one approach is better than the other,
+so I'm happy with things as they are. 
