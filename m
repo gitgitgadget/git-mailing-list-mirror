@@ -2,83 +2,214 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7305AECAAD3
-	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 16:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83520ECAAD1
+	for <git@archiver.kernel.org>; Thu,  1 Sep 2022 17:03:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235032AbiIAQzT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 12:55:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41880 "EHLO
+        id S235116AbiIARDZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Sep 2022 13:03:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234933AbiIAQzP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 12:55:15 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3A8A2408C
-        for <git@vger.kernel.org>; Thu,  1 Sep 2022 09:55:13 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id i7-20020a17090adc0700b001fd7ccbec3cso6126059pjv.0
-        for <git@vger.kernel.org>; Thu, 01 Sep 2022 09:55:13 -0700 (PDT)
+        with ESMTP id S235082AbiIARDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Sep 2022 13:03:14 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E151698D30
+        for <git@vger.kernel.org>; Thu,  1 Sep 2022 10:03:13 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id 10so15130324iou.2
+        for <git@vger.kernel.org>; Thu, 01 Sep 2022 10:03:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=LxQUylCKQ5QHVCnXBaN1mwhZVp4P2sP9CfRRs4S9XxA=;
-        b=fUIHw1pXd4Zg7i0xQMZiJF0qft9mM9HyOi3IgFg51ixZhg2dgtf8Tzs7AMQxYV+t2C
-         d8ixpzMkfAWAiLuXbtzfXGjZn2M8+JDydYV9pnyI42wrQtuilRkqUSSlh+OMVUQQzkm3
-         ZIWicn4oioeEIum+lZEo678lsB3UOMUklhFA+TqVPhUKhkTw2x1pG/TyX7d0EZLAv96p
-         SeECOV+oy48sBjbUcpsy2UcOoyCTxAKnoiwdM1dMpwmdyaJPMkKHOdS7JClO0/DoUKim
-         Qk9Hc49kheG5i7SwxHiysJooubg9H72QIGk9AA5zbjrVq8Ee7wxGCYYIyItgfGTsbUbE
-         0m7g==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=v1WfGrIXBeTOCXivPJ5rqc48o63ybrKkYJeO97lJseA=;
+        b=BDxHCZpwqbMa1zfAf1qqqLekVzW7GSktShGW19DoRl+ibu6B3kw80G0g0fMTCauWBN
+         eiQNCr3yrYXX90xghj7zK97iQSv86fIIOoHGUvHK9mI/LMdPR3NZ0dydXkHeJLcRRL9X
+         yHLioADjTA4VYBuusMu8AnQUOTlpUMWgK3HxW3Fn/lhlOHD1slwE4DURw3RqNfOTgjn4
+         ou+smUmO8P+7S+VUEOyZwb+/ONWPVx+aKBRXctyQUlAfURRdYlt1ZikcjLc5Ex3TibwV
+         f1oXavITdMkCdDOni5CR/0JsbpbdhbFjr0n3eVSfPyoBoT5rBdkNfw9Vy6rtkYWhV96Z
+         vMaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=LxQUylCKQ5QHVCnXBaN1mwhZVp4P2sP9CfRRs4S9XxA=;
-        b=zfxXGB/eEjyIBgI5DsJCAW5Vx1qxkrgQ9AHW30bQU9IEwgvcM8WSQfdEEKoCzCitYF
-         8BDDAjoEtuIwmzKbszsHOjdrOTlu+r5wKA2lcewKLl98023XnsiCjETcuWhHaiuFAm6n
-         JUuP6lD3AzZ2d8H83N9bITnT1d/LUXQ20d/zyf7VLsUklUPgdyexEXxKdzWZzGdrA1uM
-         bv5cLtYIeZRPgssi69mLpeSnmW8urUJnlSwRRhmeoJ+upLrkvrkgWoxkYUkZEymKOzW1
-         xZyR/m52ItiORKakq4UrccwNlZSxEszEmqCck8F95umqnXeMDwLYFJMyD65XypgYCPWk
-         Zmhg==
-X-Gm-Message-State: ACgBeo3MIKrT+ZUp4w3zcXrvfO4Lb8dTh4xkAndNUN/te2rXPIt3QHbM
-        LIlQHe7IXm1ZiOyKUBZGRma7yky/kpE=
-X-Google-Smtp-Source: AA6agR6+dVzMNfpzuH43wD0TOEZI9PF7/htJsk/5hwJIZy2QOAnaD7xj3UY84zPs5AS3EjD35BO9vw==
-X-Received: by 2002:a17:902:7596:b0:170:a235:b737 with SMTP id j22-20020a170902759600b00170a235b737mr32071679pll.118.1662051313104;
-        Thu, 01 Sep 2022 09:55:13 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id m15-20020a170902bb8f00b00172dda377fesm13927945pls.260.2022.09.01.09.55.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 09:55:12 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v5 3/3] add -p: ignore dirty submodules
-References: <pull.1336.v4.git.1661977877.gitgitgadget@gmail.com>
-        <pull.1336.v5.git.1662046939.gitgitgadget@gmail.com>
-        <47943b603b1f2330b36a3050fe7463bca6eeddef.1662046939.git.gitgitgadget@gmail.com>
-Date:   Thu, 01 Sep 2022 09:55:12 -0700
-In-Reply-To: <47943b603b1f2330b36a3050fe7463bca6eeddef.1662046939.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Thu, 01 Sep 2022
-        15:42:19 +0000")
-Message-ID: <xmqqv8q79gr3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=v1WfGrIXBeTOCXivPJ5rqc48o63ybrKkYJeO97lJseA=;
+        b=XHjjFYApXNs2jmzU9Ys28gdN4xmnEKEB8io2vzmo9drILeM04ip95wF2VjT3T7yUzQ
+         +A2z88uztA43FLc65MF+/J8isqBvyWVBL+SJI4q6vFjRY6sW94G9G0cc6QzPynXS1i0f
+         lnlIXeDQnyxvEHv+EEdAFrkqBOVCr23MPczBQmUWrtgpiNE+wTIZgwgu/t7nITgRKEwD
+         rmJEokY5zeyTWgIaMmZ0bebqZQmhBL5c2amrw79oHFSG+XHI1FeUBtxocZWrJRZhjJO/
+         MMsjbGBcet1QI7qTvaWDJflRtHTbWpgtt1nTYhcvgpHrTT3coPyfNOz78NH1e7LvibJv
+         Iy1A==
+X-Gm-Message-State: ACgBeo32RBx3Vk6MvayUcPES7GyAp3MbWcBx1Tw8B2IQM/tauIMXu4fu
+        UWYi4MhUl7oma4A70BlYE0jDD8QdpQWQ
+X-Google-Smtp-Source: AA6agR44GSktzcrt7B1AbitAQTA2knmXRkFtDsXUz/Z3KhzrFNSc0HTbPTEvOpfOoKazsdQuzyoIeQ==
+X-Received: by 2002:a05:6638:4117:b0:346:b5e1:383a with SMTP id ay23-20020a056638411700b00346b5e1383amr18663845jab.264.1662051793234;
+        Thu, 01 Sep 2022 10:03:13 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id o20-20020a02a1d4000000b0034c114c1de6sm1928725jah.74.2022.09.01.10.03.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Sep 2022 10:03:13 -0700 (PDT)
+Message-ID: <e74b326d-ce4a-31c3-5424-e35858cdb569@github.com>
+Date:   Thu, 1 Sep 2022 13:03:12 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v3 3/3] builtin/grep.c: walking tree instead of expanding
+ index with --sparse
+Content-Language: en-US
+To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
+Cc:     vdye@github.com
+References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+ <20220901045736.523371-1-shaoxuan.yuan02@gmail.com>
+ <20220901045736.523371-4-shaoxuan.yuan02@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <20220901045736.523371-4-shaoxuan.yuan02@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On 9/1/2022 12:57 AM, Shaoxuan Yuan wrote: 
+> Test                                                                          HEAD~   HEAD
+> ---------------------------------------------------------------------------------------------------
+> 2000.78: git grep --cached --sparse bogus -- f2/f1/f1/builtin/* (full-v3)     0.11    0.09 (≈)
+> 2000.79: git grep --cached --sparse bogus -- f2/f1/f1/builtin/* (full-v4)     0.08    0.09 (≈)
+> 2000.80: git grep --cached --sparse bogus -- f2/f1/f1/builtin/* (sparse-v3)   0.44    0.04 (-90.9%)
+> 2000.81: git grep --cached --sparse bogus -- f2/f1/f1/builtin/* (sparse-v4)   0.46    0.04 (-91.3%)
+> 
+> - Command used for testing:
+> 
+> 	git grep --cached --sparse bogus -- f2/f1/f1/builtin/*
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Thanks to alwyas running `diff-index` and `diff-files` with the
+It's good to list this command after the table. It allows you to shrink
+the table by using "...":
 
-"always".  If I do not forget I'll amend before merging it to 'seen'.
+Test                                HEAD~   HEAD
+---------------------------------------------------------
+2000.78: git grep ... (full-v3)     0.11    0.09 (≈)
+2000.79: git grep ... (full-v4)     0.08    0.09 (≈)
+2000.80: git grep ... (sparse-v3)   0.44    0.04 (-90.9%)
+2000.81: git grep ... (sparse-v4)   0.46    0.04 (-91.3%)
 
-Thanks.
+This saves horizontal space without losing clarity. The test numbers help,
+too.
+
+>  		strbuf_setlen(&name, name_base_len);
+>  		strbuf_addstr(&name, ce->name);
+> +		if (S_ISSPARSEDIR(ce->ce_mode)) {
+> +			enum object_type type;
+> +			struct tree_desc tree;
+> +			void *data;
+> +			unsigned long size;
+> +			struct strbuf base = STRBUF_INIT;
+> +
+> +			strbuf_addstr(&base, ce->name);
+> +
+> +			data = read_object_file(&ce->oid, &type, &size);
+> +			init_tree_desc(&tree, data, size);
+>  
+> -		if (S_ISREG(ce->ce_mode) &&
+> +			/*
+> +			 * sneak in the ce_mode using check_attr parameter
+> +			 */
+> +			hit |= grep_tree(opt, pathspec, &tree, &base,
+> +					 base.len, ce->ce_mode);
+> +			strbuf_release(&base);
+> +			free(data);
+> +		} else if (S_ISREG(ce->ce_mode) &&
+
+I think this is a good setup for transitioning from the index scan
+to the tree-walking grep_tree() method. Below, I recommend calling
+the method slightly differently, though.
+
+>  		    match_pathspec(repo->index, pathspec, name.buf, name.len, 0, NULL,
+>  				   S_ISDIR(ce->ce_mode) ||
+>  				   S_ISGITLINK(ce->ce_mode))) {
+> @@ -598,7 +613,14 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+>  		int te_len = tree_entry_len(&entry);
+>  
+>  		if (match != all_entries_interesting) {
+> -			strbuf_addstr(&name, base->buf + tn_len);
+> +			if (S_ISSPARSEDIR(check_attr)) {
+> +				// object is a sparse directory entry
+> +				strbuf_addbuf(&name, base);
+> +			} else {
+> +				// object is a commit or a root tree
+> +				strbuf_addstr(&name, base->buf + tn_len);
+> +			}
+> +
+
+I think this is abusing the check_attr too much, since this will also
+trigger a different if branch further down the method.
+
+These lines are the same if tn_len is zero, so will it suffice to pass
+0 for that length? You are passing base.len when you call it, so maybe
+that should be zero?
+
+When I apply this change, all tests pass, so if there _is_ something
+different between the two implementations, then it isn't covered by
+tests:
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 8c0edccd8e..fc4adf876a 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -549,8 +549,7 @@ static int grep_cache(struct grep_opt *opt,
+ 			/*
+ 			 * sneak in the ce_mode using check_attr parameter
+ 			 */
+-			hit |= grep_tree(opt, pathspec, &tree, &base,
+-					 base.len, ce->ce_mode);
++			hit |= grep_tree(opt, pathspec, &tree, &base, 0, 0);
+ 			strbuf_release(&base);
+ 			free(data);
+ 		} else if (S_ISREG(ce->ce_mode) &&
+@@ -613,13 +612,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		int te_len = tree_entry_len(&entry);
+ 
+ 		if (match != all_entries_interesting) {
+-			if (S_ISSPARSEDIR(check_attr)) {
+-				// object is a sparse directory entry
+-				strbuf_addbuf(&name, base);
+-			} else {
+-				// object is a commit or a root tree
+-				strbuf_addstr(&name, base->buf + tn_len);
+-			}
++			strbuf_addstr(&name, base->buf + tn_len);
+ 
+ 			match = tree_entry_interesting(repo->index,
+ 						       &entry, &name,
+
+> +test_perf_on_all git grep --cached --sparse bogus -- "f2/f1/f1/builtin/*"
+
+We can't use this path in general, because we don't always run the test
+using the Git repository as the test repo (see GIT_PERF_[LARGE_]REPO
+variables in t/perf/README).
+
+We _can_ however use the structure that we have implied in our construction,
+which is to use a path that we know exists and is still outside of the
+sparse-checkout cone. Truncating to "f2/f1/f1/*" is sufficient for this.
+
+Modifying the test and running them on my machine, I get:
+
+Test                               HEAD~1            HEAD
+----------------------------------------------------------------------------
+2000.78: git grep ... (full-v3)    0.19(0.72+0.18)   0.18(0.84+0.13) -5.3%  
+2000.79: git grep ... (full-v4)    0.17(0.83+0.16)   0.19(0.84+0.14) +11.8% 
+2000.80: git grep ... (sparse-v3)  0.35(1.02+0.13)   0.15(0.85+0.15) -57.1% 
+2000.81: git grep ... (sparse-v4)  0.37(1.06+0.12)   0.15(0.89+0.15) -59.5%
+
+So, it's still expensive to do the blob search over a wider pathspec than
+the test as you designed it, but this will work for other repo, such as the
+Linux kernel:
+
+Test                                HEAD~1             HEAD
+------------------------------------------------------------------------------
+2000.78: git grep ... (full-v3)     3.16(19.37+2.55)   2.56(15.24+1.76) -19.0%
+2000.79: git grep ... (full-v4)     2.97(17.84+2.00)   2.59(15.51+1.89) -12.8%
+2000.80: git grep ... (sparse-v3)   8.39(24.74+2.34)   2.13(16.03+1.72) -74.6%
+2000.81: git grep ... (sparse-v4)   8.39(24.73+2.40)   2.16(16.14+1.90) -74.3%
+
+Thanks,
+-Stolee
