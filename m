@@ -2,88 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 235A9ECAAA1
-	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 21:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA508ECAAA1
+	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 23:41:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229694AbiIBVbd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Sep 2022 17:31:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56868 "EHLO
+        id S229854AbiIBXlh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Sep 2022 19:41:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230159AbiIBVb2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2022 17:31:28 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F609EF015
-        for <git@vger.kernel.org>; Fri,  2 Sep 2022 14:31:27 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id 130so4891364ybw.8
-        for <git@vger.kernel.org>; Fri, 02 Sep 2022 14:31:27 -0700 (PDT)
+        with ESMTP id S229500AbiIBXlg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2022 19:41:36 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95C7BBD155
+        for <git@vger.kernel.org>; Fri,  2 Sep 2022 16:41:35 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id t5so3411027pjs.0
+        for <git@vger.kernel.org>; Fri, 02 Sep 2022 16:41:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date;
-        bh=izst4J6NRxlepDZ+gV7agy2rngMArI1yNlbFgdxru3Y=;
-        b=f95gQ8m8cCcGGUDIgFMclAIP2PGSdgsc26BZSpNDdBCb6YXRn7jcYijYVzlSgi/x9L
-         B+iECFuYGCHth39g3Yzbnse+jVbsDUJtpOVz7cuWBtH37TdzerJAXyMoxvNn28lNaLbs
-         sHw9is3S32PoHcqjEugWdjLK70ILcfUIi321/TvUk0tUYfFNB0UeSQUvgEgy+AzRFOgk
-         chf6mU83rqZ9nYNg3amW0G/nuC+DBL7dQsYc3hLmhhcf4zePcbXm+dmNmlilqaHj0ab9
-         hbJAxogHCpbovZEHNOVWy35CnENkiScMo8YAPtGK9bgCEEKIua/3B8+iFqxslAW6Sp11
-         giTA==
+        d=google.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date;
+        bh=xtbQlTpz9LE8YjBGSWlV6Gxk9RgDJOy/T8kuyysPdfg=;
+        b=TMNCuBE5XRS99uhxKTqmTMiwOYYaV9qAUZ172T/2kHvQfu50lBBVvrIJMWECyQzcgT
+         SgVv3BDEewolJ/iYg+RjKJ61cS+UuwsDAug/tiQvKJi9aScPP24NULNhMrgGf2Up/hcc
+         x+FLlZxhV8+FOLtK49IsiNjgNYyCJexsgv/efUXNngsqScggtbd22C8ZkH752ooUqb5e
+         Am6h0Dr9NjnkfjneSGMaqy8+mo7Sopa7gXV7slTWY4hy+WSDoIIl56Px5Jo+KPYX/dx3
+         4YbkJhy6eFnf0TAszxTrI6kMtNSyB2jUavvMYjwbCNE8ZHQ2/SM0zoBzpEPYFX2A1Uax
+         82nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=izst4J6NRxlepDZ+gV7agy2rngMArI1yNlbFgdxru3Y=;
-        b=MeM+4ywfy0+Lx+SgJVKSyvtzJJVVk7nP36Y0gyAODdmHMfMyJW+jl0X3GMbfWdEI/Z
-         04P8qwUxnb8e3sRVKDT4MLD87PQoOb9jGkRlw54/hNUmc0Ww1qtoKHh8cuaDAircsOFz
-         VkP4+t8P+ceEKtE551rrqnu9oBfW+3W2rg2GyN6G5Hvspz2ipvnTxUqtMo0jIZj2+yWi
-         vX4VHCXBzD3RtV9vdywBTkCeA0qrvQQOJYVjKrPNBsqDr3h5DjaCDHc4GwusuwAELPBj
-         /dVQYBE0zo4W8rYLpyuvucPUZTP3ZCWJsk/VyDrpkC1HTUBXrWrOn7QnCBBy/X23qcXn
-         slPQ==
-X-Gm-Message-State: ACgBeo0JLXa9PZKNNObpWqIXuZqRvfFgwQfT5t9Bdc5sfZgQ3sM62/XC
-        FcdO0o6vhhKKLmWliyLnL2/bSNTxXi8QOKZZ+wom09YMH5FnFrs9
-X-Google-Smtp-Source: AA6agR6hHJ+vgWsebv0KX3u4UJ/YxxfXHg1aum3jBupY2ZFu4KI+VHeS56mOvcl6fEk70Z5In2pF0HIchol3LEPz8C8=
-X-Received: by 2002:a05:6902:2cb:b0:684:aebe:49ab with SMTP id
- w11-20020a05690202cb00b00684aebe49abmr25487660ybh.242.1662154285803; Fri, 02
- Sep 2022 14:31:25 -0700 (PDT)
-MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 2 Sep 2022 23:31:14 +0200
-Message-ID: <CAP8UFD2MDhwLd7yevK721Ln_JAeb2J4tti9io5rCdVFxZsdKPw@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 90
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        lwn@lwn.net, Glen Choo <chooglen@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=xtbQlTpz9LE8YjBGSWlV6Gxk9RgDJOy/T8kuyysPdfg=;
+        b=zbBqTPDxMR87u5cQ+J91VjxaRPoIjWkUS2R/0g2IF9WIdH0uOXC/NiigWsPkh3+r2m
+         qA+MGrCawKeaQFof5NNA2QyZpr7KC9ruor+3SWMlWIwWgZ8xX3LADOYCE1D/DfR7TjbJ
+         EqbvvDlg8cF4gsqfb8mHkm6zTs7bUIT+3raKxedft7YXIALUJ976KgchoNKWA+SKfkaW
+         +bQgdYJOvO06n0DZKkfxspnNYkaeC29vFfFnN4ipITEN3cBVGq6Hny+b/2hkuQmFokvC
+         prL1F/knhLW7l3QWZOIeWc9IAIsB90hnI18dBbW/wp0DFGOV7ATTH1Wirxfj11L5+I8l
+         U73A==
+X-Gm-Message-State: ACgBeo35wsewYc3nhXtKbQfnO3Bs+tcOcw6IhWg7U7N9FX2quxvaXyT7
+        gYei7yTb8dvEO++jQipbXerarscPaalisg==
+X-Google-Smtp-Source: AA6agR5+UhVyEkwWJv37mcBz4s8OF+zqCZ7CUDl1VXmkh5LorlS6w3HvnBhiq9YihebBFSVy2FKc9Q==
+X-Received: by 2002:a17:902:c944:b0:174:f62a:14f0 with SMTP id i4-20020a170902c94400b00174f62a14f0mr23385944pla.168.1662162094988;
+        Fri, 02 Sep 2022 16:41:34 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:74f1:8209:5955:91e3])
+        by smtp.gmail.com with ESMTPSA id s13-20020a17090302cd00b00172cb8b97a8sm2214350plk.5.2022.09.02.16.41.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Sep 2022 16:41:34 -0700 (PDT)
+Date:   Fri, 2 Sep 2022 16:41:27 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason via
+         GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        newren@gmail.com, avarab@gmail.com, mjcheetham@outlook.com,
         Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 3/7] bundle-uri: create "key=value" line parsing
+Message-ID: <YxKUpyaejATs/3SQ@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r?=
+        =?iso-8859-1?Q?=F0?= Bjarmason via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        newren@gmail.com, avarab@gmail.com, mjcheetham@outlook.com,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.1333.git.1661181174.gitgitgadget@gmail.com>
+ <49c4f88b6fd804f0bd5c62d523b45431846f4cee.1661181174.git.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <49c4f88b6fd804f0bd5c62d523b45431846f4cee.1661181174.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+On 2022.08.22 15:12, Ævar Arnfjörð Bjarmason via GitGitGadget wrote:
+> From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
+>  <avarab@gmail.com>
+> 
+> When advertising a bundle list over Git's protocol v2, we will use
+> packet lines. Each line will be of the form "key=value" representing a
+> bundle list. Connect the API necessary for Git's transport to the
+> key-value pair parsing created in the previous change.
 
-The 90th edition of Git Rev News is now published:
-
-  https://git.github.io/rev_news/2022/08/31/edition-90/
-
-Thanks a lot to Glen Choo, Carlo Marcelo Arenas Bel=C3=B3n and Johannes
-Schindelin who helped
-this month!
-
-Sorry about the small amount of content in the "Other News" section
-this month due to vacations.
-
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
-
-PS: An issue for the next edition is already opened and contributions
-are welcome:
-
-  https://github.com/git/git.github.io/issues/598
+Since we're not actually implementing advertisement via proto v2 in this
+series, could we add an additional paragraph noting that this is useful
+now for implementing the test helper in the next patch?
