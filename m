@@ -2,211 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C761DC54EE9
-	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 13:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DCF8C6FA85
+	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 14:02:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238666AbiIBNHQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Sep 2022 09:07:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38494 "EHLO
+        id S238898AbiIBOCz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Sep 2022 10:02:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236685AbiIBNGz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2022 09:06:55 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBBF91157FC
-        for <git@vger.kernel.org>; Fri,  2 Sep 2022 05:44:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1662122540;
-        bh=TT85Q1D+nqgnMsZe78MXwjgEuPQmh2LizpzWbfNGN1s=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=b6VDxeZqtiVxpPWa3Lk4+Yx8yVq+xkHIiXSOVhlpYWTtd61bRwN1R4Hneu5sqC88c
-         HUnPB8la9Xwx1v4HRudvuIumuyd9JcaOf97avbLeAoqo1NBusUwXIydfgjHTrrg9sk
-         goYgd4YIk6TbbRfcoJz9QOl6SYBQNoULVngVNtVo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mn2WF-1pDIdg3rKJ-00k6xd; Fri, 02
- Sep 2022 14:42:20 +0200
-Date:   Fri, 2 Sep 2022 14:42:18 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: several messages
-In-Reply-To: <f5dbcbf78db127d738c11a1aca416201298426cf.1661992197.git.gitgitgadget@gmail.com>
-Message-ID: <9on60586-rr40-onn0-907s-53816r61qn07@tzk.qr>
-References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com> <f5dbcbf78db127d738c11a1aca416201298426cf.1661992197.git.gitgitgadget@gmail.com>
+        with ESMTP id S238807AbiIBOBR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2022 10:01:17 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05287153D37
+        for <git@vger.kernel.org>; Fri,  2 Sep 2022 06:32:05 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id 62so1599495iov.5
+        for <git@vger.kernel.org>; Fri, 02 Sep 2022 06:32:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=1UynP8dtT9wEZWISHtm13jluTfoX5bi12JUEWYjgrxM=;
+        b=YJXYYZvAaxE1GWBQ7FkmCzAZXT2ZtdvoeVcyCwpbCq0Kn8GvzJtGkmu2u2npWc2ThQ
+         GtdI060RJ66jhi8fnwjc2pdWAR0iOaNql8nAkTM9HFo9E3vdN9eRdbdOLYvgajUhB5zN
+         gmOvGHhXWopxVDYygmKSyZkWjtJ/GUJii/E0M8LT1CKMOKZh0a+siZKPF1qfBRa04KHX
+         xwCu8rvCRW1sUZaCoj1mtPP72UdJojJ7Ak6PXFknR8BzNCrL/oUK61xaYDJWXToIugyH
+         x37GSceZziFaCm+WvXgXlqLa4yXCw+cK122LH7Ka4seqSKWceiweU8Xf/C/V0ZacZF3o
+         f+7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=1UynP8dtT9wEZWISHtm13jluTfoX5bi12JUEWYjgrxM=;
+        b=feYheTdV6IcU9u/7Ka1iVXA4yzX6ZCGL/jBwjOlc/QLgzs7aSjrRG01u2TyFG20ji+
+         CnKF73SLf/DRqcIBc6K1LVALaTBXLFqCd9IdaTNBSCUuwzSHxNl4yU5VZtR0vla8UFyb
+         4J5eWUCtfvBaD5kbHdQVms7SSopQaOS7NUlAgvhJblJAPBrzjaqAaqL4sXqGaYhW01Ij
+         qCgYzD46xkx4P0NlAolTQRpMOHJWvRUPeSXRPHVv9yoSs3fjCJMBF73D3qX/BqRsddfi
+         CPyM2DoTNUH8XBAn36O+jrt2kKh2Ml6SVhkUVD/S+UoC+himsQMxQTXRp9nfnqXH74f8
+         oDBg==
+X-Gm-Message-State: ACgBeo0lOB//6IwNxh/Coot0otpV+t1ZcJLz/41geCxMfB7IWfuQuCDo
+        TXCySJF74LqTp0cyGUAfanpasO1+g0Ny
+X-Google-Smtp-Source: AA6agR61ZFkMK4rHUMta624YwyH615taNS6PwskHYuzyGNslqTcak9zPIGcqaLp3OA8KtWQOes0WPQ==
+X-Received: by 2002:a05:6638:3805:b0:349:ffd0:9a86 with SMTP id i5-20020a056638380500b00349ffd09a86mr19227787jav.227.1662125524426;
+        Fri, 02 Sep 2022 06:32:04 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id p7-20020a056e0206c700b002e900a19516sm828793ils.38.2022.09.02.06.32.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Sep 2022 06:32:04 -0700 (PDT)
+Message-ID: <8dea9ffe-d03b-f838-6cc5-db0de5024d9f@github.com>
+Date:   Fri, 2 Sep 2022 09:32:01 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:k8Pm0Fe3kwND2xDnQ67wOdMB0XrtSW6XDDCrj0crjuuVs/xXSch
- 760aw9TFci+o2c/FCVFg2TMl3Zwss53Ev0wuT5bZ1JeOpomlOkpZI3szERBkAOXb2i7rXr+
- 4lV1y6JTEjeIZ9t9g6hbDUUsQ94lG2RNfBbrd0Ki66uM5r4PwVskOwT6zpWdheVuUZpIjEG
- BZaRnwluOypw8KGn0gufA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SRFZmafB9LM=:9mGElvtQTZmo5YfS2Lteta
- OguXscIOp7Yuzrg33Nk8n5o8eYdjpPRsw/ybBrkSMx4sq5STOzfztvaPoxpF6iD2esxnV3Kb1
- 6j1IwlEJan2WHDkQoKV25h3M7wjb9iSjkiD8PcXnlNkN4dXihnmhxydMfd43w8spwhmtlwmRU
- GE1aWvOcRuNHlRPwCm517WSruCiHaa3z7+BsdyKWFvJA3zPBOM8c03wwFWT+AgkBOYQlKcqQl
- HrkHzHlvqiIeFVVsIIu49K0cjJyvpg1oH0caWbzQy4Xl7cnW84tc5u31cwiPeiT8ZH+3ZgdOe
- +8mm6WsaHgsnGW4mIEHNkcy+Yf6XHTwTdVAcoKaZ1Tr9r6xflhw+kxlbxxSZxAdpZlh4RGO6T
- gmLA1hKSiHnVQnZQirMWxcIqE6SCk3UUEBs9f4eInZ263atnbQnuQxI2qGl4NOIqJuNK+74sh
- pnOjd0ZFU91NXnIsJ+xnMegZnJNEle6P2hqj3EkJF0YU+V4Ttj+PzPeezBo9lG9E11E2Nk98+
- d/umOT/84QST+o35hkxQUfsu5pDNq9WnKOH4JYimzkZktUfp4A+xch5qXjjdOlWH1fyF4ZlOo
- vBBDK1Tsnd/7KXRCVvTh2XVsPYleKo9P6OKaXXMI+fOO+B80XDXRLDy1GnYjDUoaV41DifwuR
- SY+x/hm4pHJwj3hAEQiiDVquOp385smGkXfA8Yf4Cj+NYUJtKT6XQR7v6Xw510QqrNx90zvXU
- XD5IZ4pojBhaOQO25Z0i24EC3aClOEubaBzWt9TFHJhmzRPLtjNx11QMzKQv88S4WBrVIsdus
- TVrv9cpjx9YzdQymmMuB/tLkX0N7xgyxXzcXPO7Wpz+AmzZc+ebrZ1d4idLZ1HYLII85yBl4l
- urOCGMPfpT2+6gAcSaSzDc3nl0MhTCLfXbTt31QLH7sAkpB6wLCJhcBo6Y1aL7JISOrilNwRI
- 6B+kDTwUW4e0bGrE7h5R3hmL9UWCttAkMENSIqIHT60RttMuoMBtSRld5qAiCWGcs+oQ6WwoA
- IL9Si2mB0F6IZbvtyqC10dVRfScpx+p76qFR504iigDlnEuJvUKPjR0iJ+qtQbJrA9h41UXsu
- WIzBikZdQY3ylBIBv8Up3H8Mtuwx37qZ3mYqZ0ZUMzY+DsGFHmQndRM/hBPLeWcJGOSiWmeUf
- WgQQDlz3Gm6YTU4jaGi+Y+8lqS
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH] unpack-trees: fix sparse directory recursion check
+Content-Language: en-US
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     shaoxuan.yuan02@gmail.com, gitster@pobox.com,
+        Victoria Dye <vdye@github.com>
+References: <pull.1344.git.1662066153644.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <pull.1344.git.1662066153644.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+On 9/1/2022 5:02 PM, Victoria Dye via GitGitGadget wrote:
+> From: Victoria Dye <vdye@github.com>
+> 
+> Ensure 'is_sparse_directory_entry()' receives a valid 'name_entry *' if one
+> exists in the list of tree(s) being unpacked in 'unpack_callback()'.
+> 
+> Currently, 'is_sparse_directory_entry()' is called with the first
+> 'name_entry' in the 'names' list of entries on 'unpack_callback()'. However,
+> this entry may be empty even when other elements of 'names' are not (such as
+> when switching from an orphan branch back to a "normal" branch). As a
+> result, 'is_sparse_directory_entry()' could incorrectly indicate that a
+> sparse directory is *not* actually sparse because the name of the index
+> entry does not match the (empty) 'name_entry' path.
 
-On Thu, 1 Sep 2022, Eric Sunshine via GitGitGadget wrote:
+Thank you for finding the root cause here. It was very non-obvious!
 
->  contrib/buildsystems/CMakeLists.txt           |   2 +-
->  t/Makefile                                    |  49 +-
->  t/README                                      |   5 -
->  t/chainlint.pl                                | 730 ++++++++++++++++++
->  t/chainlint.sed                               | 399 ----------
->  t/chainlint/blank-line-before-esac.expect     |  18 +
->  t/chainlint/blank-line-before-esac.test       |  19 +
->  t/chainlint/block.expect                      |  15 +-
->  t/chainlint/block.test                        |  15 +-
->  t/chainlint/chain-break-background.expect     |   9 +
->  t/chainlint/chain-break-background.test       |  10 +
->  t/chainlint/chain-break-continue.expect       |  12 +
->  t/chainlint/chain-break-continue.test         |  13 +
->  t/chainlint/chain-break-false.expect          |   9 +
->  t/chainlint/chain-break-false.test            |  10 +
->  t/chainlint/chain-break-return-exit.expect    |  19 +
->  t/chainlint/chain-break-return-exit.test      |  23 +
->  t/chainlint/chain-break-status.expect         |   9 +
->  t/chainlint/chain-break-status.test           |  11 +
->  t/chainlint/chained-block.expect              |   9 +
->  t/chainlint/chained-block.test                |  11 +
->  t/chainlint/chained-subshell.expect           |  10 +
->  t/chainlint/chained-subshell.test             |  13 +
->  .../command-substitution-subsubshell.expect   |   2 +
->  .../command-substitution-subsubshell.test     |   3 +
->  t/chainlint/complex-if-in-cuddled-loop.expect |   2 +-
->  t/chainlint/double-here-doc.expect            |   2 +
->  t/chainlint/double-here-doc.test              |  12 +
->  t/chainlint/dqstring-line-splice.expect       |   3 +
->  t/chainlint/dqstring-line-splice.test         |   7 +
->  t/chainlint/dqstring-no-interpolate.expect    |  11 +
->  t/chainlint/dqstring-no-interpolate.test      |  15 +
->  t/chainlint/empty-here-doc.expect             |   3 +
->  t/chainlint/empty-here-doc.test               |   5 +
->  t/chainlint/exclamation.expect                |   4 +
->  t/chainlint/exclamation.test                  |   8 +
->  t/chainlint/for-loop-abbreviated.expect       |   5 +
->  t/chainlint/for-loop-abbreviated.test         |   6 +
->  t/chainlint/for-loop.expect                   |   4 +-
->  t/chainlint/function.expect                   |  11 +
->  t/chainlint/function.test                     |  13 +
->  t/chainlint/here-doc-indent-operator.expect   |   5 +
->  t/chainlint/here-doc-indent-operator.test     |  13 +
->  t/chainlint/here-doc-multi-line-string.expect |   3 +-
->  t/chainlint/if-condition-split.expect         |   7 +
->  t/chainlint/if-condition-split.test           |   8 +
->  t/chainlint/if-in-loop.expect                 |   2 +-
->  t/chainlint/if-in-loop.test                   |   2 +-
->  t/chainlint/loop-detect-failure.expect        |  15 +
->  t/chainlint/loop-detect-failure.test          |  17 +
->  t/chainlint/loop-detect-status.expect         |  18 +
->  t/chainlint/loop-detect-status.test           |  19 +
->  t/chainlint/loop-in-if.expect                 |   2 +-
->  t/chainlint/loop-upstream-pipe.expect         |  10 +
->  t/chainlint/loop-upstream-pipe.test           |  11 +
->  t/chainlint/multi-line-string.expect          |  11 +-
->  t/chainlint/nested-loop-detect-failure.expect |  31 +
->  t/chainlint/nested-loop-detect-failure.test   |  35 +
->  t/chainlint/nested-subshell.expect            |   2 +-
->  t/chainlint/one-liner-for-loop.expect         |   9 +
->  t/chainlint/one-liner-for-loop.test           |  10 +
->  t/chainlint/return-loop.expect                |   5 +
->  t/chainlint/return-loop.test                  |   6 +
->  t/chainlint/semicolon.expect                  |   2 +-
->  t/chainlint/sqstring-in-sqstring.expect       |   4 +
->  t/chainlint/sqstring-in-sqstring.test         |   5 +
->  t/chainlint/t7900-subtree.expect              |  13 +-
->  t/chainlint/token-pasting.expect              |  27 +
->  t/chainlint/token-pasting.test                |  32 +
->  t/chainlint/while-loop.expect                 |   4 +-
->  t/t0027-auto-crlf.sh                          |   7 +-
->  t/t3070-wildmatch.sh                          |   5 -
->  t/test-lib.sh                                 |  12 +-
->  73 files changed, 1439 insertions(+), 449 deletions(-)
->  create mode 100755 t/chainlint.pl
->  delete mode 100644 t/chainlint.sed
->  create mode 100644 t/chainlint/blank-line-before-esac.expect
->  create mode 100644 t/chainlint/blank-line-before-esac.test
->  create mode 100644 t/chainlint/chain-break-background.expect
->  create mode 100644 t/chainlint/chain-break-background.test
->  create mode 100644 t/chainlint/chain-break-continue.expect
->  create mode 100644 t/chainlint/chain-break-continue.test
->  create mode 100644 t/chainlint/chain-break-false.expect
->  create mode 100644 t/chainlint/chain-break-false.test
->  create mode 100644 t/chainlint/chain-break-return-exit.expect
->  create mode 100644 t/chainlint/chain-break-return-exit.test
->  create mode 100644 t/chainlint/chain-break-status.expect
->  create mode 100644 t/chainlint/chain-break-status.test
->  create mode 100644 t/chainlint/chained-block.expect
->  create mode 100644 t/chainlint/chained-block.test
->  create mode 100644 t/chainlint/chained-subshell.expect
->  create mode 100644 t/chainlint/chained-subshell.test
->  create mode 100644 t/chainlint/command-substitution-subsubshell.expect
->  create mode 100644 t/chainlint/command-substitution-subsubshell.test
->  create mode 100644 t/chainlint/double-here-doc.expect
->  create mode 100644 t/chainlint/double-here-doc.test
->  create mode 100644 t/chainlint/dqstring-line-splice.expect
->  create mode 100644 t/chainlint/dqstring-line-splice.test
->  create mode 100644 t/chainlint/dqstring-no-interpolate.expect
->  create mode 100644 t/chainlint/dqstring-no-interpolate.test
->  create mode 100644 t/chainlint/empty-here-doc.expect
->  create mode 100644 t/chainlint/empty-here-doc.test
->  create mode 100644 t/chainlint/exclamation.expect
->  create mode 100644 t/chainlint/exclamation.test
->  create mode 100644 t/chainlint/for-loop-abbreviated.expect
->  create mode 100644 t/chainlint/for-loop-abbreviated.test
->  create mode 100644 t/chainlint/function.expect
->  create mode 100644 t/chainlint/function.test
->  create mode 100644 t/chainlint/here-doc-indent-operator.expect
->  create mode 100644 t/chainlint/here-doc-indent-operator.test
->  create mode 100644 t/chainlint/if-condition-split.expect
->  create mode 100644 t/chainlint/if-condition-split.test
->  create mode 100644 t/chainlint/loop-detect-failure.expect
->  create mode 100644 t/chainlint/loop-detect-failure.test
->  create mode 100644 t/chainlint/loop-detect-status.expect
->  create mode 100644 t/chainlint/loop-detect-status.test
->  create mode 100644 t/chainlint/loop-upstream-pipe.expect
->  create mode 100644 t/chainlint/loop-upstream-pipe.test
->  create mode 100644 t/chainlint/nested-loop-detect-failure.expect
->  create mode 100644 t/chainlint/nested-loop-detect-failure.test
->  create mode 100644 t/chainlint/one-liner-for-loop.expect
->  create mode 100644 t/chainlint/one-liner-for-loop.test
->  create mode 100644 t/chainlint/return-loop.expect
->  create mode 100644 t/chainlint/return-loop.test
->  create mode 100644 t/chainlint/sqstring-in-sqstring.expect
->  create mode 100644 t/chainlint/sqstring-in-sqstring.test
->  create mode 100644 t/chainlint/token-pasting.expect
->  create mode 100644 t/chainlint/token-pasting.test
+> +test_expect_success 'checkout orphan then non-orphan' '
+> +	init_repos &&
+> +
+> +	test_all_match git checkout --orphan test-orphan &&
+> +	test_all_match git status --porcelain=v2 &&
+> +	test_all_match git checkout base &&
+> +	test_all_match git status --porcelain=v2
+> +'
+> +
 
-This looks like it was a lot of work. And that it would be a lot of work
-to review, too, and certainly even more work to maintain.
+This test demonstrates how specific the case needs to be for this to
+actually happen.
 
-Are we really sure that we want to burden the Git project with this much
-stuff that is not actually related to Git's core functionality?
+Could it also happen if we are going from a commit without that
+sparse directory and then to a commit with that sparse directory? I
+think that would be a more common case, but I was unable to
+manipulate the test repo in t1092 to trigger this bug in the existing
+test cases.
 
-It would be one thing if we could use a well-maintained third-party tool
-to do this job. But adding this to our plate? I hope we can avoid that.
+This makes me think that this bug _is_ extremely rare, so we don't
+need to rush this into a 2.37.4 or anything. It would be good to
+bring it into 2.38.0-rc0, though.
 
-Ciao,
-Dscho
+Thanks!
+-Stolee
