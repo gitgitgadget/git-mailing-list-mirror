@@ -2,127 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E2F5ECAAD5
-	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 09:18:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EE1FC38145
+	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 09:39:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235927AbiIBJSh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Sep 2022 05:18:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44792 "EHLO
+        id S235653AbiIBJj2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Sep 2022 05:39:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236169AbiIBJSA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2022 05:18:00 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4C91CC305
-        for <git@vger.kernel.org>; Fri,  2 Sep 2022 02:17:56 -0700 (PDT)
+        with ESMTP id S235639AbiIBJj0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2022 05:39:26 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B9C2AA34B
+        for <git@vger.kernel.org>; Fri,  2 Sep 2022 02:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1662110238;
-        bh=yl70vyOh9mm34qK9ZVmFLmVj+Nu8mQMseRqk5QYL9Vw=;
+        s=badeba3b8450; t=1662111562;
+        bh=j/9HT9pn5ft8AMVtDywSUJZJZdMAenbkKZrwxE0EOng=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=aYWsoBsPHmP8qBI8gLQ8gIM2BEDPSnAslFNe4m+2bQcDYptIHL6fQJiucxF23QmJf
-         kmsliGVq/6y5SpQpPsZuZDap/JdcdyMd/2crAmAGZnmewfqBG79JQ3mbISv48+GgbK
-         YbekFDf8QENuf7IRQIaF9YgDsQoxGaSEwi/pd97E=
+        b=SfUdgJeT+ZPb/ASlpcMod7hvGGqnU1NJhclvkVmORK3uYT0caX05/oSCub3yEg+bn
+         ReMkxmpsbQQ8Xvuq5ApI6QWubSY0Udt+GXwLvENV6/EXMqOULR4AHgmp7zXeiLTpau
+         6RgaaIbeEWmT1jOL+jvvykbgVWU71weIbQKbEqaM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTzb8-1ouxLw0giI-00R05p; Fri, 02
- Sep 2022 11:17:18 +0200
-Date:   Fri, 2 Sep 2022 11:17:17 +0200 (CEST)
+Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MPGRz-1okCxD0A0r-00PfQt; Fri, 02
+ Sep 2022 11:39:22 +0200
+Date:   Fri, 2 Sep 2022 11:39:20 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Victoria Dye <vdye@github.com>
-cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com
-Subject: Re: [PATCH 7/8] t/perf: add 'GIT_PERF_USE_SCALAR' run option
-In-Reply-To: <72f6661d-be02-dbb8-7110-b8de6bac77f6@github.com>
-Message-ID: <p78rqo9o-o1p2-qq6q-6oo4-94828so928nq@tzk.qr>
-References: <pull.1341.git.1661961746.gitgitgadget@gmail.com> <96e08a95265ea66839b439ce8abc50b34395aaa3.1661961746.git.gitgitgadget@gmail.com> <60p9nos4-n576-qqq2-p8n9-969sro247141@tzk.qr> <72f6661d-be02-dbb8-7110-b8de6bac77f6@github.com>
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:     git@vger.kernel.org, alexander.s.m@gmail.com
+Subject: Re: [PATCH v3 1/2] diff.c: When appropriate, use utf8_strwidth(),
+ part1
+In-Reply-To: <20220902042133.13883-1-tboegi@web.de>
+Message-ID: <9o5o2rqs-r7q4-p22r-0oss-1n09por2n248@tzk.qr>
+References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com> <20220902042133.13883-1-tboegi@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:eYv6V8qye2WzK/aqM5fCUIqT6mxcUZihCOZU8zP6OTJ5dLmtKW5
- F20Gi8e4SplJB6TwHxYWUDLst07+YvovYx8j5GsPAlAAyNrZm1MaBx5HVjOkeEjBuY1v5nD
- pgA/XTS6U8gSS/aac+07B4pRp8DROiDP5SgPIMAbpCrE+yvOhxkcY6wmBvPef8N2VK1Dpit
- bE7BG+qhGeoFIKROq9b+g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:tcyMIADc5jw=:OWiRDBSQerlj02QqWQBCB/
- B/DODkv8YJb9WUb1ZF11kfnM8/w1oELPAGlYf1AaE1FU0ovaiAw0XlT31OG/LB6vrhbboOnZ+
- 6uIsaMkF1oJoP+qr/afYPxQK2oCkQSbu+uDXPXAHcOMh34FBWyIx9i6Kt5yY3QtLHL4tnJWHC
- DOrcirc42F4fG79uStdPggE1tAm8bMzdF+cR7d9dFdhL1PTWCnRCyBpPMxQCHbYL8BDpmxpjI
- Gw+XFsjKQKFhkJ0tDYQ2Pe49sxFywark4gG7lHE+V/YiCm41EHX5Z4CEmu2tLr4jA5e7PwCmA
- hjpgMY6n2SLyNhEluL6LtRMwT+SO6YnFcq0BIBvvfRXytMZ22dD7BQqZQ58RQ5d3kncg5BPdD
- yMHVkvkvMeQjuORuO96pH/56WO4xTtiECI68LaltC2/+8fQiQ+dVCNCGICJbluXixdfOqAuGv
- DMGfmrLuo5xl8AP3+at2sgFBGqmnXrEs4wEDjLoMm91N3zDPMQdSkCZtM5XQzw77DSPSDlwHv
- QKtxz0PPT+twc9baAlUmlEfmCyWrFJspYC9GFnm1HAD8QEKcj4XYiKRhyUwjJp7VKp0lg3hiD
- fS3ii7FXif3c0GbYU6N+Z8p66nYAT+9cVJcXoakl/2pVttDk3QSiOBzFroB/W9wOb9Dzrw/LY
- wcYOPYlVayVpvZO2fJmFde3xGJxeLOTMnoqDnn684bGI6PALMvxDj9fTDqcXkNPCKIhrYvJWu
- 05qigO0ZA5vttoY8kxb8d/OSqs6Cm5oPluK0rkUjLvZpp9W9Xvdt/wv+Vw3ruTsoSdjOj4cKS
- 8F6lLOGrfPFB8vt9LAXLEU4ZuIbsey9IbXourjG6yDFoDhr7YiK517uHqzwgWiQjo+wUjn58S
- jNf9U/EfwWZcQE6DcYpR/ZZA5oq+ly9rWW/gY0oQUsIwE8ifnY53iuS9etMTrGtYA4mZUppVY
- 04wm4QSbe4Wm/ekRqt4CPHcBQuoDzcmuD4277SNsnZPNaMHDvWGQanxURmfBgpApQht7HysSV
- kBrwd8OiCudFFiM7XRgu3P4/aM/0zjmyN6nV+qfgJh+UmAveAMNJEMx3jlsBD4zqz2DyAskOq
- dA6HQB4oPA01iMyMyxX0vP15CHzQm8EwZm8vPgsos1G2Qnf2dOXYpDGrATigpKw04DtdywT/8
- apTyS5/2iBedafJ/xYpYIAZQ4m
+X-Provags-ID: V03:K1:FwwEWnpoI3lSSKIUnwzxg7zP94KTzmqFf+h9jn20z4SzsAt7Jpw
+ nM3KAsPxjW+bFOvtKSX/dY3LEUtj5h/AxZxdbjX/L/AkUgLD+zwRyGepdH0Igqg6jsfP34N
+ OnTJE6g4WiTozzwowapqjMdyDMLmZuhmKGlcXdmb5024CNHBn+tzlOzBlahMdP81623+prg
+ eDmnqESTLskfVfQhZ+1Rw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:wK9ZZAPrjkc=:/Z/3E/yu+4oqAjEbuR7dHf
+ dmginY+/zOvlEy5Zmc3sN5nHEjtEpNxOGtVX8Y52+weZ6RTUnhH49ueMIAds6bHqO8QUlRC+u
+ vReUrm0FG9IEitnhv6SU431OyG9V4RJ2bwdRWFQXuNdVtlaTTamAqathsicApiodbPbCWXWk/
+ BZUpKjPKvuqytM2nJN3Wr2MT8fco0JJYPtP/iJy/7fqrJwm2rsUyIueBY0+mrA8wC62LsMQ9N
+ kNEjBE6z7SOH36z1jm634CjgmhN/TT9jCqtICZwZ/25x32rIJSgv0l6dCY6lglVrict19vnqa
+ 39jb5EBxXYBzb3YVoqfEWAsnNTLkQAdn36WSqMCMP3zI32zD8ZCS42V3v9z2QawRnbkjS5L12
+ 8lg3CzRhKLnZlIC+dYidRQeghOeFihj8Qp2ghnCDdhqE5VpZYFa4Psunk5/Veorh06xZWSWA+
+ XS/9wjKNyMcKtdTxLlaHjbfyYrvl/I2sE7RRVpdXSWPRIFyWyncRn84jpMQ4/nXxrxkp534yq
+ EmfactvUoOffAMLlvs3uyVNfQavu1rcsdlliRf5dFUe69jP54TzniGtNQGElpP4KWks3i/2H7
+ /OPksou1PeswhFq4luhSmVuj9PpD9DjSd0MvSYtTLb4c0yAjcE/v65AjAitxMkWcNGNMyAKqP
+ 1rmMsc8zB9JVG+MO/B/CkeGfnLfHB7EERkjRlU7AWry6xaKlW3dQxnuQ3DZXAO4O9EHscbMS1
+ n6ND18jpcQfgW7ORvCLb2ZUu1Z7PjoByX9qki5CvtKzVQ6iKY8up7nyu4vwF9vWJYcOXXs/LE
+ 7nfpZ+NVKz/DZzcuDcrTUfeLYJMRavT3Y0vDR2C6/1ubdEslAPBILGDLuTQLhvwMHw2Uj+SkT
+ gA/wanp3rOHttydWfpo1s0olvn5x1iT5xA+z+fJ191GeRuWUmXA2k0u7SlK2512Il0kfPYMJq
+ B7Pu9Y1t9O0quzRTSZDQhiGAzPds4YljAGVZ40iSZwtLLAHvKIxW1ce1sfyEJtWChJOKTVqS4
+ V0PfeqLtAUOci5btCzx9TulQNHlP+Pg0kkOrL4ONQ4W3IHXCJsjyKIczbYBeoVcupce/wkLdW
+ 1kKm7rj/x+iCEcwhEPNTD5upC2b7HPKfOqMq9RlI16u1UGD8ZzNehHuY1VC5rASKTWLvQiFv4
+ LYQf6dvNm4F5dqpiEejQvWpLJV
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Victoria,
+Hi Torsten,
 
-On Thu, 1 Sep 2022, Victoria Dye wrote:
+On Fri, 2 Sep 2022, tboegi@web.de wrote:
 
-> Johannes Schindelin wrote:
-> >
-> > On Wed, 31 Aug 2022, Victoria Dye via GitGitGadget wrote:
-> >
-> >> From: Victoria Dye <vdye@github.com>
-> >>
-> >> Add a 'GIT_PERF_USE_SCALAR' environment variable (and corresponding p=
-erf
-> >> config 'useScalar') to register a repository created with any of:
-> >>
-> >> * test_perf_fresh_repo
-> >> * test_perf_default_repo
-> >> * test_perf_large_repo
-> >>
-> >> as a Scalar enlistment. This is intended to allow a developer to test=
- the
-> >> impact of Scalar on already-defined performance scenarios.
-> >
-> > Great idea!
-> >
-> >> [...]
-> >> @@ -130,7 +137,11 @@ test_perf_fresh_repo () {
-> >>  	"$MODERN_GIT" init -q "$repo" &&
-> >>  	(
-> >>  		cd "$repo" &&
-> >> -		test_perf_do_repo_symlink_config_
-> >> +		test_perf_do_repo_symlink_config_ &&
-> >> +		if test_bool_env "$GIT_PERF_USE_SCALAR" false
-> >> +		then
-> >> +			"$MODERN_SCALAR" register
-> >
-> > Do we need to unregister anything here? My guess is that no, the "glob=
-al"
-> > config we're using in tests is "$TRASH_DIRECTORY/.gitconfig", and the =
-side
-> > effect of scheduling the maintenance task won't matter in practice. Bu=
-t I
-> > might have missed something and we may want to have an explicit
-> > `unregister` step.
-> >
-> > What's your take on this?
->
-> As you guessed, a '.gitconfig' is created in the trash directory of each
-> test containing the Scalar registration and I haven't seen any issues
-> arising from the scheduled maintenance, so I don't think an 'unregister'=
- is
-> necessary.
+> diff --git a/diff.c b/diff.c
+> index 974626a621..b5df464de5 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -2620,7 +2620,7 @@ static void show_stats(struct diffstat_t *data, st=
+ruct diff_options *options)
+>  			continue;
+>  		}
+>  		fill_print_name(file);
+> -		len =3D strlen(file->print_name);
+> +		len =3D utf8_strwidth(file->print_name);
 
-Thank you for checking!
+So this is no longer a length (in bytes) but a width (in columns).
 
-> However, while verifying that, I noticed that the registration wasn't
-> happening *at all* because 'test_bool_env' is currently being used
-> incorrectly. The fix is straightforward - I'll make sure to correct it
-> in the next version.
+In 2/2, a similar change incurs renaming `max_len` to `max_width`.
 
-Oh, great, then my feedback was at least _somewhat_ helpful... ;-)
+I would prefer for 1/2 and 2/2 to be on the same page here: either they
+both rename variables that have `len` in their name but are actually about
+a width (in columns), or neither of the patches rename these variables.
 
-Ciao,
+Thanks,
 Dscho
+
+>  		if (max_len < len)
+>  			max_len =3D len;
+>
+> @@ -2743,7 +2743,7 @@ static void show_stats(struct diffstat_t *data, st=
+ruct diff_options *options)
+>  		 * "scale" the filename
+>  		 */
+>  		len =3D name_width;
+> -		name_len =3D strlen(name);
+> +		name_len =3D utf8_strwidth(name);
+>  		if (name_width < name_len) {
+>  			char *slash;
+>  			prefix =3D "...";
+> --
+> 2.34.0
+>
+>
