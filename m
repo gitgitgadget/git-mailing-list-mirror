@@ -2,166 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFDC5ECAAA1
-	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 03:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A461EECAAD2
+	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 04:01:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235460AbiIBDxz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Sep 2022 23:53:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52758 "EHLO
+        id S233014AbiIBEAr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Sep 2022 00:00:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235429AbiIBDxf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Sep 2022 23:53:35 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80BB123BC8
-        for <git@vger.kernel.org>; Thu,  1 Sep 2022 20:53:33 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id u18so703908wrq.10
-        for <git@vger.kernel.org>; Thu, 01 Sep 2022 20:53:33 -0700 (PDT)
+        with ESMTP id S231948AbiIBEAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2022 00:00:39 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34FBC51A19
+        for <git@vger.kernel.org>; Thu,  1 Sep 2022 21:00:35 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id h188so869369pgc.12
+        for <git@vger.kernel.org>; Thu, 01 Sep 2022 21:00:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=XtacciwFJOv4DbTyWmlidVssEVu/hCV3UP0dDaxo41Q=;
-        b=aZSEvrNXsYZexMz/fhta91krFWLncM9Z/rMNVAO8O/KV+FWFgeGVEXIRKAn7q6r1ub
-         IcfVT8fOdoV+fvPSb+FToAiGSXSD4hiI8Lkn0EU0+cnYkIbcknaKvL4SHy5sgKdC1j5K
-         PfdZPZOAS9ZAcfMTbibEZlXyD6pRAWJIpM/J2hi6XRxEUI1zr+z5gGTfNTRPY/PsBBHQ
-         iYQY7cAZmfQStnrC+6TdpgM1a0NaSZ1XEUUipJaJ4XNxN31R1ZBDIMXQMSXUPq6SUM9C
-         tmP1Xavb2N6UsWydm6O10aV7dJ0xGenKV9AOG53fQFp7EEn0dYb675VGNz3Mloa5IylN
-         iemQ==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=zOKjUZAHy+75Ho8Il5anCaBAYxiqk8NgaeJqd9EGghk=;
+        b=HGBT0iiU0KdWDRgtnB/BpzY5uP3eZ64roNQmMEEwAuofSd7yxWig9OH+B7av6489wJ
+         snowRRSUHo3UU9YuVD9Gug7a+z5r3ZQ5YjsxlBdvr92ut03vt7t0/68IL0z8qQ+Iuw3Q
+         xG+iN5Bk/v2X8CdXYMonOWiojI4dMDNh5xXiFxkKPJUlXHFeY8YnZMjt1IewC4BLytJE
+         5TkhCIeJZG6QalS7bPqFB7W4fywtbkwSQeSVD5JvSOTl84O7htQL7VKxxiCgMdzsiS2A
+         2MVp6GEMUlNaaNlf6xjo/zDAjHUtF3ai6+dO6E6NVYol/YrdTJauDawayJnN1gpLP8Bs
+         Otqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=XtacciwFJOv4DbTyWmlidVssEVu/hCV3UP0dDaxo41Q=;
-        b=D5ofFiSDsYxeMwx/sb+CuP0cG5iAsm9K73BkCMEqIjUdmSZo/4pS3q0X58Z0QFE2Q/
-         URFbRMyqPzBkHyzFHC+rubCiBnggid2cT/FA1g1L/MYMVDLFr3Vyx+pNZW74ZtvEbDxx
-         Bvik8pPBgjWzdKmUY5uftZvflB2770z4d9KuX8rVJ1t0LzI/Kz2LSNFtm4zxg+PAAoKS
-         1Go3snq61Z7G7Oqqj0o6kgstJLaRM6hmwmbKQoM2pu7Ka+BGeKwOQdKy7Z58F1fGQF2A
-         AjUYZGsAp/yU5f5zKzJhMZV55Kj/80lm2TpkhierM/NqnsIN/fYXLhgLo0ibJFaJOcqx
-         V4Og==
-X-Gm-Message-State: ACgBeo0sC3eC9IwAdCb/zH3osdAf9qCfvBPra6Z2LZcais3imoNmnoxw
-        kNM70svsOc+zooP/BWPAm/2wOQSFiQE=
-X-Google-Smtp-Source: AA6agR60ZHh9tjoB9fg1q5/4Zw5hRqjFke7Vly91MdBeRYdea9dyk7hBrIG8dUKs4aNDzefXNvF/Pg==
-X-Received: by 2002:a05:6000:1d8c:b0:226:eea4:49ef with SMTP id bk12-20020a0560001d8c00b00226eea449efmr5469562wrb.663.1662090811641;
-        Thu, 01 Sep 2022 20:53:31 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f14-20020a05600c4e8e00b003a5dbdea6a8sm9256280wmq.27.2022.09.01.20.53.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Sep 2022 20:53:31 -0700 (PDT)
-Message-Id: <pull.1342.v3.git.1662090810.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1342.v2.git.1662016087.gitgitgadget@gmail.com>
-References: <pull.1342.v2.git.1662016087.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 02 Sep 2022 03:53:27 +0000
-Subject: [PATCH v3 0/3] Output fixes for --remerge-diff
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=zOKjUZAHy+75Ho8Il5anCaBAYxiqk8NgaeJqd9EGghk=;
+        b=S6eS+NyRgkARPTEi7MM7PFA++uFVmAREDxt0tl6wiJ1hw3KZ5+E6/2XOl2WhvS9mzI
+         VzWRZhsUdnEYw8Ka4ylj82ImpM/H5oEoo+hGPisxDTjRX7HZ9s02we21ImSfqYL9ArSd
+         4B/NSEkS8ne6vvoWxhk1j3sUf3P9QQcssSGupll1KW9ZbSSQC8B2uyIc20adFUDT/kZF
+         5wMuo4MmfUvzBo3gRvs6os3BqizIKJ1UQMEYtEFWZznyzGDaBVx24Todg/1NlcO6+wnQ
+         fGkF650SvSuM0sQVdd6OXPZ9kCTna9M0isGL0DTfQRN8N6mL6DZGYwD6Aaq6PSO6qBos
+         Ei9A==
+X-Gm-Message-State: ACgBeo2YEVd02rReetOAB+T3YLSy2mVjR1La3EZfqBKXbWNqp4cuSUEf
+        +QD4j+dMJsvbqcgHTnTFYh2p
+X-Google-Smtp-Source: AA6agR7HIxp9uDpMWulb/pp7+hiyVzozbgU1zdkVrV+asjDR7LswbzA6V8otvIb41cf2mYs0E8wDPA==
+X-Received: by 2002:a63:6f0c:0:b0:42a:55fb:60c5 with SMTP id k12-20020a636f0c000000b0042a55fb60c5mr28810078pgc.192.1662091235250;
+        Thu, 01 Sep 2022 21:00:35 -0700 (PDT)
+Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id f18-20020a170902ab9200b001750792f20asm381895plr.238.2022.09.01.21.00.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Sep 2022 21:00:35 -0700 (PDT)
+Message-ID: <72f6661d-be02-dbb8-7110-b8de6bac77f6@github.com>
+Date:   Thu, 1 Sep 2022 21:00:33 -0700
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.13.0
+Subject: Re: [PATCH 7/8] t/perf: add 'GIT_PERF_USE_SCALAR' run option
+Content-Language: en-US
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com
+References: <pull.1341.git.1661961746.gitgitgadget@gmail.com>
+ <96e08a95265ea66839b439ce8abc50b34395aaa3.1661961746.git.gitgitgadget@gmail.com>
+ <60p9nos4-n576-qqq2-p8n9-969sro247141@tzk.qr>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <60p9nos4-n576-qqq2-p8n9-969sro247141@tzk.qr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philippe Blain found and reported a couple issues with the output of
---remerge-diff[1]. After digging in, I think one of them actually counts as
-two separate issues, so here's a series with three patches to fix these
-issues. Each includes testcases to keep us from regressing.
+Johannes Schindelin wrote:
+> Hi Victoria,
+> 
+> On Wed, 31 Aug 2022, Victoria Dye via GitGitGadget wrote:
+> 
+>> From: Victoria Dye <vdye@github.com>
+>>
+>> Add a 'GIT_PERF_USE_SCALAR' environment variable (and corresponding perf
+>> config 'useScalar') to register a repository created with any of:
+>>
+>> * test_perf_fresh_repo
+>> * test_perf_default_repo
+>> * test_perf_large_repo
+>>
+>> as a Scalar enlistment. This is intended to allow a developer to test the
+>> impact of Scalar on already-defined performance scenarios.
+> 
+> Great idea!
+> 
+>> [...]
+>> @@ -130,7 +137,11 @@ test_perf_fresh_repo () {
+>>  	"$MODERN_GIT" init -q "$repo" &&
+>>  	(
+>>  		cd "$repo" &&
+>> -		test_perf_do_repo_symlink_config_
+>> +		test_perf_do_repo_symlink_config_ &&
+>> +		if test_bool_env "$GIT_PERF_USE_SCALAR" false
+>> +		then
+>> +			"$MODERN_SCALAR" register
+> 
+> Do we need to unregister anything here? My guess is that no, the "global"
+> config we're using in tests is "$TRASH_DIRECTORY/.gitconfig", and the side
+> effect of scheduling the maintenance task won't matter in practice. But I
+> might have missed something and we may want to have an explicit
+> `unregister` step.
+> 
+> What's your take on this?
 
-Changes since v2:
+As you guessed, a '.gitconfig' is created in the trash directory of each
+test containing the Scalar registration and I haven't seen any issues
+arising from the scheduled maintenance, so I don't think an 'unregister' is
+necessary. However, while verifying that, I noticed that the registration
+wasn't happening *at all* because 'test_bool_env' is currently being used
+incorrectly. The fix is straightforward - I'll make sure to correct it in
+the next version.
 
- * Added a comment describing the rationale for the new
-   diff_filepair_is_phoney() function.
+Thanks!
 
-Changes since v1:
+> 
+> Ciao,
+> Dscho
+> 
+>> +		fi
+>>  	)
+>>  }
 
- * Added a new diff_filepair_is_phoney() function to make the code more
-   self-documenting, as suggested by Junio.
- * Note: Patch 2, as called out in its commit message, disables
-   TEST_PASSES_SANITIZE_LEAK for t4069. This is not because I introduce any
-   memory leaks, but because I add new testcases invoking additional parts
-   of the code (pickaxe stuff) which already had pre-existing leaks. This is
-   not a change since v1, but this somehow accidentally got munged out of
-   Junio's application of my v1.
-
-Note: The issue fixed by the third commit for --remerge-diff is also an
-issue exhibited by 'git log --cc $FILTER_RULES $COMMIT' (or by -c instead of
---cc). However, as far as I can tell the causes are different and come from
-separate codepaths; this series focuses on --remerge-diff and hence makes no
-attempt to fix independent (even if similar) --cc or -c issues.
-
-[1]
-https://lore.kernel.org/git/43cf2a1d-058a-fd79-befe-7d9bc62581ed@gmail.com/
-
-Elijah Newren (3):
-  diff: have submodule_format logic avoid additional diff headers
-  diff: fix filtering of additional headers under --remerge-diff
-  diff: fix filtering of merge commits under --remerge-diff
-
- diff.c                  | 32 ++++++++++++++++++++++++++------
- t/t4069-remerge-diff.sh | 30 +++++++++++++++++++++++++++++-
- 2 files changed, 55 insertions(+), 7 deletions(-)
-
-
-base-commit: 6c8e4ee870332d11e4bba84901654b355a9ff016
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1342%2Fnewren%2Fremerge-diff-output-fixes-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1342/newren/remerge-diff-output-fixes-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1342
-
-Range-diff vs v2:
-
- 1:  aea0bbc1c6a ! 1:  ed28acaed97 diff: have submodule_format logic avoid additional diff headers
-     @@ Commit message
-      
-          The submodule_format handling is another codepath with the same issue;
-          it would operate on these additional headers and attempt to display them
-     -    as submodule changes.  Prevent that by explicitly checking for both
-     -    modes being 0.
-     +    as submodule changes.  Prevent that by explicitly checking for "phoney"
-     +    filepairs (i.e. filepairs with both modes being 0).
-      
-          Reported-by: Philippe Blain <levraiphilippeblain@gmail.com>
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-     @@ diff.c: static void add_formatted_headers(struct strbuf *msg,
-      +static int diff_filepair_is_phoney(struct diff_filespec *one,
-      +				   struct diff_filespec *two)
-      +{
-     ++	/*
-     ++	 * This function specifically looks for pairs injected by
-     ++	 * create_filepairs_for_header_only_notifications().  Such
-     ++	 * pairs are "phoney" in that they do not represent any
-     ++	 * content or even mode difference, but were inserted because
-     ++	 * diff_queued_diff previously had no pair associated with
-     ++	 * that path but we needed some pair to avoid losing the
-     ++	 * "remerge CONFLICT" header associated with the path.
-     ++	 */
-      +	return !DIFF_FILE_VALID(one) && !DIFF_FILE_VALID(two);
-      +}
-      +
-     @@ diff.c: static void builtin_diff(const char *name_a,
-      -	if (!DIFF_FILE_VALID(one) && !DIFF_FILE_VALID(two)) {
-      +	if (diff_filepair_is_phoney(one, two)) {
-       		/*
-     - 		 * We should only reach this point for pairs from
-     +-		 * We should only reach this point for pairs from
-     ++		 * We should only reach this point for pairs generated from
-       		 * create_filepairs_for_header_only_notifications().  For
-     +-		 * these, we should avoid the "/dev/null" special casing
-     +-		 * above, meaning we avoid showing such pairs as either
-     ++		 * these, we want to avoid the "/dev/null" special casing
-     ++		 * above, because we do not want such pairs shown as either
-     + 		 * "new file" or "deleted file" below.
-     + 		 */
-     + 		lbl[0] = a_one;
-      
-       ## t/t4069-remerge-diff.sh ##
-      @@ t/t4069-remerge-diff.sh: test_expect_success 'remerge-diff w/ diff-filter=U: all conflict headers, no dif
- 2:  3bd622d5b45 = 2:  f91bea2bbc3 diff: fix filtering of additional headers under --remerge-diff
- 3:  7903f8380dc = 3:  084a037756d diff: fix filtering of merge commits under --remerge-diff
-
--- 
-gitgitgadget
