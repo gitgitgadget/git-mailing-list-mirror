@@ -2,159 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 668E4C54EE9
-	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 09:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A9BEC38145
+	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 10:13:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235019AbiIBJrG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Sep 2022 05:47:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48232 "EHLO
+        id S234985AbiIBKNY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Sep 2022 06:13:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235541AbiIBJrF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2022 05:47:05 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9250C696A
-        for <git@vger.kernel.org>; Fri,  2 Sep 2022 02:47:03 -0700 (PDT)
+        with ESMTP id S235811AbiIBKMv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2022 06:12:51 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84CB24D4D5
+        for <git@vger.kernel.org>; Fri,  2 Sep 2022 03:12:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1662112021;
-        bh=e/yM35KyDHRYSkvW4VbLuktJ+8B3kPCZXTRZjNZJLbs=;
+        s=badeba3b8450; t=1662113535;
+        bh=r8hw0H2drzkCoqpJqHRQ8h/EPHYjPOtceFqSDYVedaQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=epf4QiL2GUuzjIxvMPxzIc97xcgX6d28lAcYsPHlXk91bB9PdAf6GcWwFDFDYA9SH
-         3AsJkO1yLNDqorH08YWjJy+gR2wU6Gjc0TCjZjOc+2+Vw2cm7xBKqx3ccKeluL8+1N
-         XIg4eTxwiDCB9BEX8myi5NupM0gcjw4SzOMIqqkE=
+        b=PyCmvqyvk8tH++DU4FA+pabd4pTWJf/OwkaavBojPv7SJ4TZOofrPIDPiGICIXC9s
+         K9+41ttVPON7UpbyJg7osLRahKXz0xYgL8RGLX8V5Tm7KscN/+0RSc4SEfuzim5ZmE
+         bvrmOV0e7W21mpQfgkMoWFLZx6yUnZz+ddoIbBmc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N0oFz-1pH3PU29a9-00wjhz; Fri, 02
- Sep 2022 11:47:01 +0200
-Date:   Fri, 2 Sep 2022 11:47:00 +0200 (CEST)
+Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZTmY-1oreEj021m-00WUsS; Fri, 02
+ Sep 2022 12:12:15 +0200
+Date:   Fri, 2 Sep 2022 12:12:14 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
 cc:     git@vger.kernel.org, alexander.s.m@gmail.com
-Subject: Re: [PATCH v2 1/1] diff.c: When appropriate, use utf8_strwidth()
-In-Reply-To: <20220829175425.cmbwtqpxrq4ppnnk@tb-raspi4>
-Message-ID: <8p9rs98o-o802-569o-n59r-07orq1690182@tzk.qr>
-References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com> <20220827085007.20030-1-tboegi@web.de> <0q921n79-sr17-2794-83r0-r59rnqq03pp2@tzk.qr> <20220829175425.cmbwtqpxrq4ppnnk@tb-raspi4>
+Subject: Re: [PATCH v3 2/2] diff.c: More changes and tests around
+ utf8_strwidth()
+In-Reply-To: <20220902042138.13901-1-tboegi@web.de>
+Message-ID: <00059orr-6p52-q0ro-306r-s225561s2912@tzk.qr>
+References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com> <20220902042138.13901-1-tboegi@web.de>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-371541868-1662111815=:189"
-Content-ID: <8s0qs318-27oq-8816-4926-0sq4qr122o79@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:xjyHieaS7aKPauy9qyaSX4DKLgBR/UWYAXIvgOQE0KhRI81Rb0K
- kY/oO5qoqqMFcUrJnDi3G7qLYfBzg2dBNUvKNLKF6lGxxJa+W9xa+Z2BEIazNY0WB4hVR3l
- 0i60QHqajKwnSwY4P60Uwt5SM5lm5hmyrojuaoSjoHzcDP/zYMIa3siDG7WkuuOJ5r8W3W9
- JG79twn+6jjvWICKJ1YqQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:MT3DXgvnLJw=:xxWlYWgl48KdZe6P47No2+
- OcdgLjJ41nTMNe04iTUivz1Ep3PZHddsiIwx/BgJk/3Rg7qAqviXgv+KyedfX4TSxrv1BBlRp
- uGwrMDZd5nql14PpYjDr7QPdYUGMMpfr6IzWVr7+GfSDBSA5s+5OHpU0cHiif5eKMW/utoRIv
- wztvgu7RxHodUo6F2gnuJre4d0HtUQ6GOuhDkraYyEI9OebUNCYZ6/1V1BV+FfRdhuvhBwEMO
- gNqFgOm8cRJZ4Tov6XDMknppwHTCDP/5+esEWJe4tqGpekUD7h52UkD6cJygDsE5M1VeETfJM
- nspqUm0MFg5p2kSIGjw4j8J1oXp+A52EeBmoB+h/Ga64BZT5ZOdg2pDKwh9Mq43MKjyUfmqqh
- NCteSEZhw1953O8L0jmtzaN92YbbHxWDcksXGCgbXiy5U2v9KXjEJx2l7LC/TBu54+6obOiQ0
- dJ5XlI5c/8ptQK2iX6ZBB754UmIornvvwWzORyKWfx75IyerWKgc7R3XvG6AbO5IfltD8us+G
- rPIxEdGib68B7O3/4WZjS2JG1JoVa/ea3H55U4/K2Yc5v1I8AAdJK8WLIpF4eF3MaCygFWTxo
- 0vngDSsaM4oA32JuEFO0kOcc0bMOsADBb7LRdM60CDcDC/GKxpRkt9wI03PEWZH8PhKnCYtyV
- xw08DsgFOHMwGEogWz3a9BLD+hVJyJbznUN18w2mPMvQ/8Du+tKVfZiA/vvfN+4InxSLD9UAG
- O/CsLTBvfLqqcwypOGWRX5Hi4FiFg+m9vuHFpmMnMnq5J51pU3Z3GdshRdY+uV9mrmQydfqEf
- 5Bep+AFSlZ6JGJXy2ocs/vm5qpGwAGCZZdpMoU8fbbBw/lUNlhr5a9ffon1Sa/q9AsOr1gg/2
- JWFQrW1t3vlgcZMOU1vj9cdkaxFpQpKPnURpKP+xcx64XQQ+W6AqmWE6HdAf1dYpuzPpfzKyV
- eBoo5aKfVpWlyyRIp7RN1PGOxRnN4X4KfJdLn5opoDGqfSYInVjDi/uMjgUsRI8EtZ7jop5hK
- FomIrhStx1rWcLbK/k6BXpXoHD7cUwck1NAEOT3o0ERhcrvvutlei7VI64oFfgR4P2fTOF1HW
- MtBVd/JfwjOFolvPc6JSp7SFH9p9aQiFD7RQ2bz5Loaqgtr0s8gPD4voTNNeDeK0ImaUFJXmf
- lRGIajjdO/ejqAWbsRl6+dZCMX
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:k31Npu7Y4bUOfdkpB7wyZZLJsZVyfeyrh09Vi2Dj3bTdjvhxzwz
+ eb4Ozia+2Zg3LvB+6x57+yDt4Fwuynt+ceEqgwQyI4LbsnjA/wX1UHTZRs1QEY/gJ3JMkgv
+ 8pDNLehYxfKFpOJIXEyAEmkMCKUFswX4aF4OZdgmM0XYc7Pm7T2ndmebaIEtsoiUbc2xoHB
+ dzRCNo8EO+j0dlpAanhyg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:eKFPsl7UDI4=:onO7fvKcm/RU9a1NcTF2NN
+ Pb9TXpbsdceLCLQdl2J04ZfLtcwfFI8HGkHcUsracDYpKxyb2Ob1ygG/jhbJy1YmwSqKT3c9Z
+ Oc9ZLZWTT4M/rIZpwFUd1+l/mRvzJc/2FA1ib92W29qKLEamxpPlkuHuOwHBMtKbMG32C75T5
+ YF7oppPohg26qG5ywmnHn8jqtJ4b1NWr+Ny3FZB85OSvV7whNR+T2TYvNYDQC6u0ckurXTQ6i
+ F+S/Po3CIOrKRnqMG/sQSlMwacMVrdb1ihMA6JxY+C1QNq6DpMV4vjE3vUYNChsVc8i/VYsaz
+ gUwbqgdWc0NAcvEvvimqXfhTYSfkJG0FJS5Vvux4QMs3d1ZGJhgOBUgDEW2syVzVpTpGa1oyu
+ DMztEKBij/2IQNbKY5mFLPZyc+74SbnLroV44GAf8UNRLtxBAbQUwO5eng59mOnfaKM6o+XWz
+ 6XfLBJJyT2N7JviGxvljlIvtSU9RtqX5v2XjshEtm7msHhEtjvhl4Tr0wnbzq8rWSqeCBumsm
+ pnL/BpGO1n6l8fTRvFfg+rRkeRSRpxbS0z+1ws28NqVz9dakHpCipSckH9c82IE9K+fYclDnN
+ IFsE9dDqKjdRi7U3FpsmeRMhBOCc1F+PGhLHj8VtNQtBRL+We2r+DwLBTZ7EN7IiqglbG6TxF
+ Sezw/Q/2sVqFxiUCP19Nrf5pbynneXUEen8aVDsSqOPr6JC9VFmevyJDWqpRQzZYCcr5TYbeo
+ +C1jIkTULLUce4Q9a1rvOd+YY93aelOv2lhpLafsLpaU7GyXOp0jyKA977VCRsSV54IntXAlL
+ NeWLUzdHcr9nOzZ9CfqLVDeg6RlXsUBZUBKAqpKhCSr3yk/now9R3BEGQNF6LFs0s+6XXUGER
+ pGgaRLL+9hpSJcvXH7viZyq7oimtfJZmalLcT6OnsCXjJKlnceyHRcJ5bKkkmDJCFPN0VNum9
+ wm7qrrGmeynVCQbIGq3vp1XY/UA8+LhAbUOYE8FxpVgCV5cLzxpWn0/RlP5KtX2MsQS5SjwNo
+ Z+x5zw3kyyi9VuFFjgOoQUzGz/uowWPokgzQMGZl+7lDvFq4JL1IA0GglyaG/5ONmxVmUmIe+
+ bDxS0fX1KW0TWL/R2JVM0bV+/WsKbX65y+RMvW5w/RATQCrkfXaM1S0ccOfUnOXNHqkDQNPnI
+ wQugCsMg0ES2F2RNv/jzhwZrLS
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-371541868-1662111815=:189
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Content-ID: <o7p98175-9nrn-761q-2o75-89r5q7nnrr67@tvgsbejvaqbjf.bet>
-
 Hi Torsten,
 
-On Mon, 29 Aug 2022, Torsten B=C3=B6gershausen wrote:
+On Fri, 2 Sep 2022, tboegi@web.de wrote:
 
-> On Mon, Aug 29, 2022 at 02:04:42PM +0200, Johannes Schindelin wrote:
-> > >
-> > > The choosen solution is to split code in diff.c like this
-> > >
-> > > strbuf_addf(&out, "%-*s", len, name);
-> > >
-> > > into something like this:
-> > >
-> > > size_t num_padding_spaces =3D 0;
-> > > // [snip]
-> > > if (len > utf8_strwidth(name))
-> > >     num_padding_spaces =3D len - utf8_strwidth(name);
-> > > strbuf_addf(&out, "%s", name);
-> > > if (num_padding_spaces)
-> > >     strbuf_addchars(&out, ' ', num_padding_spaces);
-> >
-> > ... this sounds like it would benefit from beinv refactored into a
-> > separate function, e.g. `strbuf_add_padded(buf, utf8string)`, both for
-> > readability as well as for self-documentation.
+> diff --git a/diff.c b/diff.c
+> index b5df464de5..cf38e1dc88 100644
+> --- a/diff.c
+> +++ b/diff.c
+> [...]
+> @@ -2753,10 +2754,14 @@ static void show_stats(struct diffstat_t *data, =
+struct diff_options *options)
+>  			if (slash)
+>  				name =3D slash;
+>  		}
+> +		if (len > utf8_strwidth(name))
+> +			num_padding_spaces =3D len - utf8_strwidth(name);
+
+Here, we determine how many spaces are needed for padding. The value is
+later used in three instances, and from the diff it is not immediately
+obvious that all code paths are covered. I did verify locally that this is
+the case, though, so all is good.
+
 >
-> Yes, but:
-> All (tm) strbuf() functions use an unsigned size_t, and are not
-> tolerant against passing 0 as "do nothing".
+>  		if (file->is_binary) {
+> -			strbuf_addf(&out, " %s%-*s |", prefix, len, name);
+> -			strbuf_addf(&out, " %*s", number_width, "Bin");
 
-I am missing something, as this seems not to contradict the idea of
-`strbuf_add_padded()`. Simply provide the desired width as a `size_t`,
-compare the width of the actual added string, and if it is shorter, pad
-with spaces. At no stage does this require a signed type, all involved
-values are strictly non-negative.
+This was already a bit wasteful by calling `strbuf_addf()` twice, where
+one time would have sufficed. (This applies to the other two code paths
+below, too.)
 
-> >
-> > Also, it is unclear to me why we have to evaluate `utf8_strwidth()`
-> > _twice_ and why we do not assign the result to a variable called `widt=
-h`
-> > and then have a conditional like
-> >
-> > 	if (width < len) /* pad to `len` columns */
-> > 		strbuf_addchars(&out, ' ' , len - width);
-> >
-> > instead. That would sound more logical to me.
->
-> This is caused by the logic in diff.c:
->   /*
->    * Find the longest filename and max number of changes
->    */
->    for (i =3D 0; (i < count) && (i < data->nr); i++) {
->        struct diffstat_file *file =3D data->files[i];
->        [snip]
->        len =3D utf8_strwidth(file->print_name);
->        if (max_width < len)
->           max_width =3D len;
-> // and later
->     /*
->      * From here name_width is the width of the name area,
->      * and graph_width is the width of the graph area.
->      * max_change is used to scale graph properly.
->      */
->     for (i =3D 0; i < count; i++) {
->     /*
->      * "scale" the filename
->      */
->      // TB: Which means either shortening it with ...
->      // Or padding it, if needed, and here we need
->      // another
->      name_len =3D utf8_strwidth(name);
+> +			strbuf_addf(&out, " %s%s ", prefix,  name);
+> +			if (num_padding_spaces)
+> +				strbuf_addchars(&out, ' ', num_padding_spaces);
+> +			strbuf_addf(&out, "| %*s", number_width, "Bin");
 
-I was referring to this part of the commit message:
+Instead of fixing this, we now add yet another `strbuf*()` call.
 
-	if (len > utf8_strwidth(name))
-		num_padding_spaces =3D len - utf8_strwidth(name);
+But this could be done more elegantly, via a single `strbuf_addf()` call:
 
-Here, we evaluate `utf8_strwidth(name)`, compare it to `len`, and if the
-former was smaller, we evaluate the same function call _again_.
+			strbuf_addf(&out, "%s%s%*s | %*s",
+				    prefix, name, num_padding_spaces, "",
+				    number_width, "Bin");
 
-What my feedback intended to suggest was to store the result and reuse it:
+By the way, it would flow much better, I think, if we used the
+short-and-sweet variable name `padding` instead of `num_padding_spaces`.
 
-	name_width =3D utf8_strwidth(name);
-	if (name_width < len)
-		num_padding_spaces =3D len - name_width;
+>  			if (!added && !deleted) {
+>  				strbuf_addch(&out, '\n');
+>  				emit_diff_symbol(options, DIFF_SYMBOL_STATS_LINE,
+> @@ -2776,8 +2781,10 @@ static void show_stats(struct diffstat_t *data, s=
+truct diff_options *options)
+>  			continue;
+>  		}
+>  		else if (file->is_unmerged) {
+> -			strbuf_addf(&out, " %s%-*s |", prefix, len, name);
+> -			strbuf_addstr(&out, " Unmerged\n");
+> +			strbuf_addf(&out, " %s%s ", prefix,  name);
+> +			if (num_padding_spaces)
+> +				strbuf_addchars(&out, ' ', num_padding_spaces);
+> +			strbuf_addstr(&out, "| Unmerged\n");
+
+This can become
+
+			strbuf_addf(&out, " %s%s%*s | Unmerged",
+				    prefix, name, padding, "");
+
+instead.
+
+>  			emit_diff_symbol(options, DIFF_SYMBOL_STATS_LINE,
+>  					 out.buf, out.len, 0);
+>  			strbuf_reset(&out);
+> @@ -2803,8 +2810,10 @@ static void show_stats(struct diffstat_t *data, s=
+truct diff_options *options)
+>  				add =3D total - del;
+>  			}
+>  		}
+> -		strbuf_addf(&out, " %s%-*s |", prefix, len, name);
+> -		strbuf_addf(&out, " %*"PRIuMAX"%s",
+> +		strbuf_addf(&out, " %s%s ", prefix,  name);
+> +		if (num_padding_spaces)
+> +			strbuf_addchars(&out, ' ', num_padding_spaces);
+> +		strbuf_addf(&out, "| %*"PRIuMAX"%s",
+>  			number_width, added + deleted,
+>  			added + deleted ? " " : "");
+
+And this reads better as
+
+		strbuf_addf(&out, " %s%s%*s | %*"PRIuMAX"%s",
+			    prefix, name, padding, "",
+			    number_width, added + deleted,
+			    added + deleted ? " " : "");
+
+If we modify the code in this manner, we avoid repeating a pretty
+unreadable pattern three times, using a much more readable pattern
+instead.
+
+Random note: The existing code (not your fault) is hard to follow because
+it calls `show_graph()` for `add` and `del` always, even if their counts
+are zero (in which case `show_graph()` returns early), while the
+separating space is appended in the otherwise unrelated `strbuf_addf()`
+call before that, but uses the (unscaled) `added + deleted` as condition
+for that separator. It would be much easier to follow like this:
+
+		strbuf_addf(&out, " %s%s%*s | %*"PRIuMAX",
+			    prefix, name, padding, "",
+			    number_width, added + deleted);
+
+		if (add || del) {
+			strbuf_addch(&out, ' ');
+			show_graph(&out, '+', add, add_c, reset);
+			show_graph(&out, '-', del, del_c, reset);
+		}
+
+But I consider this #leftoverbits, not something to burden your
+contribution with.
 
 Ciao,
 Dscho
 
---8323328-371541868-1662111815=:189--
+>  		show_graph(&out, '+', add, add_c, reset);
