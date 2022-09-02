@@ -2,78 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 391E5C6FA82
-	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 18:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2306BC6FA82
+	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 18:45:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229883AbiIBSfJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Sep 2022 14:35:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57418 "EHLO
+        id S230075AbiIBSpI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Sep 2022 14:45:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229881AbiIBSe4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2022 14:34:56 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 907E211C30
-        for <git@vger.kernel.org>; Fri,  2 Sep 2022 11:34:53 -0700 (PDT)
-Received: (qmail 1394 invoked by uid 109); 2 Sep 2022 18:34:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 02 Sep 2022 18:34:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31480 invoked by uid 111); 2 Sep 2022 18:34:53 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 02 Sep 2022 14:34:53 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 2 Sep 2022 14:34:52 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        with ESMTP id S230088AbiIBSpE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2022 14:45:04 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D320E48EA0
+        for <git@vger.kernel.org>; Fri,  2 Sep 2022 11:45:00 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id h188so2648845pgc.12
+        for <git@vger.kernel.org>; Fri, 02 Sep 2022 11:45:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date;
+        bh=45tyYYEtPQoCJuCMrEDzlEcrJcMqpzGk28Zex2uda5c=;
+        b=PmGWfTCVOgfZYwoWU/GYEAGEQJ2TpJb3hb+5ydToEOsVzAWRezZ1xQ+fJb/fIwsgxY
+         IKW6IVSrfMAMVLlRTc2aiQB/XSCidFovfPoSVj9wlrvVEbQ9esS3fJXG20UsjsITqQNP
+         v5lAez6Pvf7RuCEwjnl2y8qkrcskZf6+XY66+hCVGgsVXtWvH2iFkQuQ/7PiSDJeAIUd
+         l8PMooKcG8CWszAgI5aaratrWsHwxgsIVzhLTWJhcoqWfeI36BaczlJT12L0HZYOLZQd
+         h/m+3v4/qJZfDIlVliGmTyIzNcEzmqBL/6233J04BwNdKbTEPmGgUQJva1l5qyF5Ouxg
+         mNOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date;
+        bh=45tyYYEtPQoCJuCMrEDzlEcrJcMqpzGk28Zex2uda5c=;
+        b=MpSXOvOBqF2j8it7igP49416jwKQ5QxjjAERmB/ghkK65Dui62vPRPJtCieAAZJH9w
+         Qj1H/lzgYKlB1EsZDFEluxPSBWQEdwgfyvw0jCq3KfjQN6+Cla9seL7CbA6TLJgdK0JY
+         nEQML5/xkc2cblZtlCmit+sAPgpZ9NA4lon//BUIvgd5tkp3QaRwJud0a1H14eVD0/pl
+         a0BF3eFjU8cuZcTXMKEPiSIrK3uNsgig1ACJLmH0+z44oTabW7FkIR25cAovYehhY78A
+         LIJrD9yIDZZDtbE1LZ8UwQOq5jeFEFWPsBD8D0fepaAHrrV8khpTk51KaqiWAT2FcstZ
+         HVSA==
+X-Gm-Message-State: ACgBeo3LOlt6hFXI5gfY03r9rJjRDuyNh05DtnBuoPiBEV5I+yLM65B3
+        LsJHFQ4r9/aMC2YXCfuzY0M=
+X-Google-Smtp-Source: AA6agR5ME3gHisAeoIc9jQc2ka0IbZHvntzD6SN0KngE6gKLjBNGpgLsW7N3ePaROVXdnuK+LxF+2Q==
+X-Received: by 2002:a63:334f:0:b0:42b:15a6:826a with SMTP id z76-20020a63334f000000b0042b15a6826amr31255488pgz.14.1662144300223;
+        Fri, 02 Sep 2022 11:45:00 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id p129-20020a622987000000b0052e6d5ee183sm2158790pfp.129.2022.09.02.11.44.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Sep 2022 11:44:59 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Git List <git@vger.kernel.org>,
         Elijah Newren <newren@gmail.com>,
         Fabian Stelzer <fs@gigacodes.de>
 Subject: Re: several messages
-Message-ID: <YxJMzMyjGCyp/b4w@coredump.intra.peff.net>
 References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
- <f5dbcbf78db127d738c11a1aca416201298426cf.1661992197.git.gitgitgadget@gmail.com>
- <9on60586-rr40-onn0-907s-53816r61qn07@tzk.qr>
- <CAPig+cRCME=SYyV2bDNoAJjdnHUAWUqSP00aO_v-KWdNvasKpA@mail.gmail.com>
+        <f5dbcbf78db127d738c11a1aca416201298426cf.1661992197.git.gitgitgadget@gmail.com>
+        <9on60586-rr40-onn0-907s-53816r61qn07@tzk.qr>
+        <CAPig+cRCME=SYyV2bDNoAJjdnHUAWUqSP00aO_v-KWdNvasKpA@mail.gmail.com>
+        <YxJMzMyjGCyp/b4w@coredump.intra.peff.net>
+Date:   Fri, 02 Sep 2022 11:44:59 -0700
+In-Reply-To: <YxJMzMyjGCyp/b4w@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 2 Sep 2022 14:34:52 -0400")
+Message-ID: <xmqq5yi58vkk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPig+cRCME=SYyV2bDNoAJjdnHUAWUqSP00aO_v-KWdNvasKpA@mail.gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 02, 2022 at 02:16:21PM -0400, Eric Sunshine wrote:
+Jeff King <peff@peff.net> writes:
 
-> > It would be one thing if we could use a well-maintained third-party tool
-> > to do this job. But adding this to our plate? I hope we can avoid that.
-> 
-> I understand your concerns about review and maintenance burden, and
-> you're not the first to make such observations; when chainlint.sed was
-> submitted, it was greeted with similar concerns[1,2], all very
-> understandable. The key takeaway[3] from that conversation, though,
-> was that, unlike user-facing features which must be reviewed in detail
-> and maintained in perpetuity, this is a mere developer aid which can
-> be easily ejected from the project if it ever becomes a maintenance
-> burden or shows itself to be unreliable. Potential maintenance burden
-> aside, a very real benefit of such a tool is that it should help
-> prevent bugs from slipping into the project going forward[4], which is
-> indeed the aim of all our developer-focused aids.
+> Thanks for this response and especially the links. My initial gut
+> response was similar to Dscho's. Which is not surprising, because it
+> apparently was also my initial response to chainlint.sed back then. ;)
+>
+> But I do think that chainlint.sed has proven itself to be both useful
+> and not much of a maintenance burden. My only real complaint was the
+> additional runtime in a few corner cases, and that is exactly what
+> you're addressing here.
 
-Thanks for this response and especially the links. My initial gut
-response was similar to Dscho's. Which is not surprising, because it
-apparently was also my initial response to chainlint.sed back then. ;)
+I have nothing to add to the above ;-)  Thanks all (including Dscho
+who made us be more explicit in pros-and-cons).
 
-But I do think that chainlint.sed has proven itself to be both useful
-and not much of a maintenance burden. My only real complaint was the
-additional runtime in a few corner cases, and that is exactly what
-you're addressing here.
 
-I'm not excited about carefully reviewing it. At the same time, given
-the low stakes, I'm kind of willing to accept that between the tests and
-the results of running it on the current code base, the proof is in the
-pudding.
-
--Peff
