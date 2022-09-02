@@ -2,91 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2306BC6FA82
-	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 18:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0D10ECAAD5
+	for <git@archiver.kernel.org>; Fri,  2 Sep 2022 18:45:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230075AbiIBSpI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Sep 2022 14:45:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54782 "EHLO
+        id S230083AbiIBSpR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Sep 2022 14:45:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230088AbiIBSpE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2022 14:45:04 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D320E48EA0
-        for <git@vger.kernel.org>; Fri,  2 Sep 2022 11:45:00 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id h188so2648845pgc.12
-        for <git@vger.kernel.org>; Fri, 02 Sep 2022 11:45:00 -0700 (PDT)
+        with ESMTP id S230081AbiIBSpP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2022 14:45:15 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4357B5A2FF
+        for <git@vger.kernel.org>; Fri,  2 Sep 2022 11:45:12 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id o4so2840401pjp.4
+        for <git@vger.kernel.org>; Fri, 02 Sep 2022 11:45:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=45tyYYEtPQoCJuCMrEDzlEcrJcMqpzGk28Zex2uda5c=;
-        b=PmGWfTCVOgfZYwoWU/GYEAGEQJ2TpJb3hb+5ydToEOsVzAWRezZ1xQ+fJb/fIwsgxY
-         IKW6IVSrfMAMVLlRTc2aiQB/XSCidFovfPoSVj9wlrvVEbQ9esS3fJXG20UsjsITqQNP
-         v5lAez6Pvf7RuCEwjnl2y8qkrcskZf6+XY66+hCVGgsVXtWvH2iFkQuQ/7PiSDJeAIUd
-         l8PMooKcG8CWszAgI5aaratrWsHwxgsIVzhLTWJhcoqWfeI36BaczlJT12L0HZYOLZQd
-         h/m+3v4/qJZfDIlVliGmTyIzNcEzmqBL/6233J04BwNdKbTEPmGgUQJva1l5qyF5Ouxg
-         mNOA==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date;
+        bh=Op8w6wu61Sy6z5JKRzSnlSjBcziu4QKBsB5bX/elMx8=;
+        b=pu0MeWcxD1LSvU/gIiYQzO711T7ZtjvRbrlqQG7rsV+oYFMRGt2H+J38UXg5niDU8O
+         uuoUzJTTG1wv5jWk6hKwLydiT0VBYhxdJSgckuAV3xjKiXdfy5OBwKe4PynZI544nBbY
+         s0y2Ag74MF3ByCVb2CROGIj+xvHS3xxKdhTpG7WqxlSero1mTBwfT4l4sn+iwPwM3Apo
+         VKq93tyukAHuvLMz61nlw1IKjMIAa0ouApSDmyfBDc6WP1g6S4s4e+I4agSC4m4A0qAp
+         Lv3kZ9ZJ+4/eGueyub7GTBwhNx64fe0SMUW9t7WlISu4N11H0VbDXbVi8TkkOfmntykn
+         +Jvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=45tyYYEtPQoCJuCMrEDzlEcrJcMqpzGk28Zex2uda5c=;
-        b=MpSXOvOBqF2j8it7igP49416jwKQ5QxjjAERmB/ghkK65Dui62vPRPJtCieAAZJH9w
-         Qj1H/lzgYKlB1EsZDFEluxPSBWQEdwgfyvw0jCq3KfjQN6+Cla9seL7CbA6TLJgdK0JY
-         nEQML5/xkc2cblZtlCmit+sAPgpZ9NA4lon//BUIvgd5tkp3QaRwJud0a1H14eVD0/pl
-         a0BF3eFjU8cuZcTXMKEPiSIrK3uNsgig1ACJLmH0+z44oTabW7FkIR25cAovYehhY78A
-         LIJrD9yIDZZDtbE1LZ8UwQOq5jeFEFWPsBD8D0fepaAHrrV8khpTk51KaqiWAT2FcstZ
-         HVSA==
-X-Gm-Message-State: ACgBeo3LOlt6hFXI5gfY03r9rJjRDuyNh05DtnBuoPiBEV5I+yLM65B3
-        LsJHFQ4r9/aMC2YXCfuzY0M=
-X-Google-Smtp-Source: AA6agR5ME3gHisAeoIc9jQc2ka0IbZHvntzD6SN0KngE6gKLjBNGpgLsW7N3ePaROVXdnuK+LxF+2Q==
-X-Received: by 2002:a63:334f:0:b0:42b:15a6:826a with SMTP id z76-20020a63334f000000b0042b15a6826amr31255488pgz.14.1662144300223;
-        Fri, 02 Sep 2022 11:45:00 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=Op8w6wu61Sy6z5JKRzSnlSjBcziu4QKBsB5bX/elMx8=;
+        b=uiKS3xvMmoLInjSpB82ZdghdjjmU+OQ227jzjPfTanmYqW0sPV9wLV5VMvoX9M7G09
+         kO73p+hOoV2DJ2sxcgqLLRFqI2LNKwq+OXTfHsZenFJp4OQwKfTXXbnO+J6Lb/Rk9tcK
+         EMC73MBsAfo739rzfktZTdhdeJ9Z3M76Lj4JWfxkbp5smQJ+BeX0w1vey9zrqR7H3Dux
+         JjxmX/ApDPZHum8Kr9WPy+CHnjYYKRHDmAQF0K0o3rW8YyHJWpWYoivC/6m/bkdCDRoO
+         ZtMUmDKHrW0x2fWm8PErsNXeYrP2xKKiToyFtPuB+owIGWssAb4XOLbY0dB1HEqAnq7t
+         b2RQ==
+X-Gm-Message-State: ACgBeo2fjSSoNPsMjFsozc+qM2izjVS0TD/yen44/eNncYmJoqzjvmDu
+        HdSOtRUwv1tDfjYNZ9yriEQ=
+X-Google-Smtp-Source: AA6agR5M0KYA7708S6/K9z65dypYZHlwvMq166qAXEq+S2irtys0yVfo68hvZtH3U6iG2ZEcpuUHGQ==
+X-Received: by 2002:a17:90b:4acd:b0:1f4:cf0c:7a68 with SMTP id mh13-20020a17090b4acd00b001f4cf0c7a68mr6148848pjb.178.1662144311542;
+        Fri, 02 Sep 2022 11:45:11 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id p129-20020a622987000000b0052e6d5ee183sm2158790pfp.129.2022.09.02.11.44.59
+        by smtp.gmail.com with ESMTPSA id e126-20020a621e84000000b00535c4b7f1eesm2130769pfe.87.2022.09.02.11.45.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Sep 2022 11:44:59 -0700 (PDT)
+        Fri, 02 Sep 2022 11:45:11 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>
-Subject: Re: several messages
-References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
-        <f5dbcbf78db127d738c11a1aca416201298426cf.1661992197.git.gitgitgadget@gmail.com>
-        <9on60586-rr40-onn0-907s-53816r61qn07@tzk.qr>
-        <CAPig+cRCME=SYyV2bDNoAJjdnHUAWUqSP00aO_v-KWdNvasKpA@mail.gmail.com>
-        <YxJMzMyjGCyp/b4w@coredump.intra.peff.net>
-Date:   Fri, 02 Sep 2022 11:44:59 -0700
-In-Reply-To: <YxJMzMyjGCyp/b4w@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 2 Sep 2022 14:34:52 -0400")
-Message-ID: <xmqq5yi58vkk.fsf@gitster.g>
+To:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+Cc:     git@vger.kernel.org, ingy@ingy.net, szeder.dev@gmail.com
+Subject: Re: [PATCH] rev-parse --parseopt: detect missing opt-spec
+References: <20220902175902.22346-1-oystwa@gmail.com>
+        <20220902180134.23225-1-oystwa@gmail.com>
+Date:   Fri, 02 Sep 2022 11:45:10 -0700
+In-Reply-To: <20220902180134.23225-1-oystwa@gmail.com> (=?utf-8?Q?=22?=
+ =?utf-8?Q?=C3=98ystein?= Walle"'s
+        message of "Fri, 2 Sep 2022 20:01:34 +0200")
+Message-ID: <xmqq1qst8vk9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Øystein Walle <oystwa@gmail.com> writes:
 
-> Thanks for this response and especially the links. My initial gut
-> response was similar to Dscho's. Which is not surprising, because it
-> apparently was also my initial response to chainlint.sed back then. ;)
+> Damnit, forgot the v3. Hope that's okay.
 >
-> But I do think that chainlint.sed has proven itself to be both useful
-> and not much of a maintenance burden. My only real complaint was the
-> additional runtime in a few corner cases, and that is exactly what
-> you're addressing here.
+> Øsse
 
-I have nothing to add to the above ;-)  Thanks all (including Dscho
-who made us be more explicit in pros-and-cons).
-
-
+Sure, and thanks.
