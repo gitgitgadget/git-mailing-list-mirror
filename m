@@ -2,98 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D727FECAAD4
-	for <git@archiver.kernel.org>; Sat,  3 Sep 2022 13:29:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FA67ECAAD4
+	for <git@archiver.kernel.org>; Sat,  3 Sep 2022 18:48:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231220AbiICN3t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Sep 2022 09:29:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49406 "EHLO
+        id S231517AbiICSsy convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 3 Sep 2022 14:48:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229928AbiICN3s (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Sep 2022 09:29:48 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1448217598
-        for <git@vger.kernel.org>; Sat,  3 Sep 2022 06:29:44 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id se27so8740347ejb.8
-        for <git@vger.kernel.org>; Sat, 03 Sep 2022 06:29:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=Jine2qF8ZtIMutr1n7GjdcKq+fIM0J93rzyqbh/CzQ8=;
-        b=kUCjIQ5x7ApnhHIXjEvRGMN5be6f870PZhjpACgq89OW3iPxPlcPXwTCBvHnvoMST2
-         mnwYxBCkWqHQy8llXm1eKp18m03MSUxPiyot9Cgh8oMyooxV9ugoEXrwTrY6zL7BOEQp
-         dEhp7ybC1uqC01Mx3z03zOLh8Mmm/nPvK/JsPPnp8xL2vdvRyb9efXKcaM3uIA8gKxuG
-         Quei0PvpGsCg7A4dtmFgjlVpf3JAvFuieHHYG/ycGFRV9ior2IglVw6Q+LjhxjCysWp4
-         7XRVRbNuRbgi5fjc3vSaVF6BSuM7U53UZ+C8PFTZnOEYWcPvYBmWf1Px5CsABI2DImg2
-         379g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=Jine2qF8ZtIMutr1n7GjdcKq+fIM0J93rzyqbh/CzQ8=;
-        b=jgJ2X5uL52wlbfR3k0y4Sn4gBIAkuFF/JgvK4Cuns7G0oBuDL0drO+9E/Z+AKEoH+l
-         /7KwXxZRypm39IIJnJqNFmS8Zgbf6HuN6EZCeuyZGoYxXsJPJya93eYgv6TgcDEA2por
-         BJDnC9mVaI7F4uAccH3y/m+MC9at2UnOtbI17CN41azEbQcT9LbA4/gWl1MaV8lwN9Kz
-         nIHKH+sklfMHM18amBbG1zAXCA8cWyKJLCTN9Bf/ERxlz04DooWJLw+2nNYNkZDBIqA4
-         MNQfpDmsSRXMcD/u21f8IVAoIhqRYmJteRAngJZzvxQvdclPcmQiMQzW/gAAzsB0pTuX
-         9weA==
-X-Gm-Message-State: ACgBeo3APgs7XosNtlVczsf4Idq90X8WgzmajK1oX27eOhcJqJSAxmqZ
-        qZ6eSGONG6GS7OGarXunjlBZwoNiQgdH8BO2OPfNiB/HssHr7w==
-X-Google-Smtp-Source: AA6agR7hB+NxxSxA5iqNrS3lhj17T5F/G6NDUPIwMRx3CoIscaYSHfpMU+TTE4snbmW48yAiEHKGaspY/W7MlM0OIPI=
-X-Received: by 2002:a17:906:4794:b0:742:a5b2:546d with SMTP id
- cw20-20020a170906479400b00742a5b2546dmr11477946ejc.158.1662211782605; Sat, 03
- Sep 2022 06:29:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover-v2-0.9-00000000000-20220729T081959Z-avarab@gmail.com> <cover-v3-0.9-00000000000-20220831T083759Z-avarab@gmail.com>
-In-Reply-To: <cover-v3-0.9-00000000000-20220831T083759Z-avarab@gmail.com>
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-Date:   Sat, 3 Sep 2022 10:29:31 -0300
-Message-ID: <CAHd-oW4QpPBUqo5ToWXtBg7-LHbEam7aqSALSrwaA3OABma8ng@mail.gmail.com>
-Subject: Re: [PATCH v3 0/9] docs: de-duplicate sections, add more
- CONFIGURATION sections
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S229493AbiICSsx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Sep 2022 14:48:53 -0400
+Received: from bee.birch.relay.mailchannels.net (bee.birch.relay.mailchannels.net [23.83.209.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF3CF5280A
+        for <git@vger.kernel.org>; Sat,  3 Sep 2022 11:48:51 -0700 (PDT)
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+        by relay.mailchannels.net (Postfix) with ESMTP id 167C83C138F
+        for <git@vger.kernel.org>; Sat,  3 Sep 2022 18:48:51 +0000 (UTC)
+Received: from cpanel-007-fra.hostingww.com (unknown [127.0.0.6])
+        (Authenticated sender: instrampxe0y3a)
+        by relay.mailchannels.net (Postfix) with ESMTPA id 2CE873C11AF
+        for <git@vger.kernel.org>; Sat,  3 Sep 2022 18:48:50 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1662230930; a=rsa-sha256;
+        cv=none;
+        b=3nE5Cm0rDfXUr7OjDjU+wUjourjwXU2rXtqYySVk71jk91qkMMWFRgC92DBRwh+rEof92A
+        H+Ied+TJXpwXdyAUgURXEVn3tmoLiuAQ+DfE+2jFUl98Jv5xp3NfoH1gR4fUibM/3zPkuk
+        Da21l4Jb5r3KbcSpi0unSScUZ34E5wrp38bGhfq51Hm9ziu8co/3o2+41VL0eNzOYKZHKP
+        RniJKTYBSQfC4H2Y+DLXzmEhRQ1nPl1Xo1zArGiffdV3Nk/6jboxDKH7E0cBzzoLmkqTDB
+        9jwj+uD6+bIC+bf8UMhJXfC/Puq+Y+qC7ruVjYNlyrROChR6PLKUa87xmQ/cgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+        s=arc-2022; t=1662230930;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=S6wczgz7V901p95+tSyO+4E/3clXF2Hxj5Q/xaElmwI=;
+        b=sk7tVJsdIm8wx3PY/+sGH+q8JDkIVfEFQYTrhe+o/pKdbRaluqNsB1S5hzFTukxluSUnAH
+        IwNQUs+/aj1fg7mu8smJ2BECg8wiOX7CEPkMEuDnmKNOwWHwDsFYEwNE04t5uTmv2w5b73
+        APD8pRcXg3Ni4gHS8HVQcNMGPqBVfRY0i+ClgXg8ymr4czqck7d/yWpOSpUeIVH/3xPbHi
+        5o8nEc7BBZBozwXTS78+MNcCgq8Tgex6usNnk+TuUUmtrFefoPid3/t4Ks+WV/VQyVhLvw
+        R089wUmUQgPjwFMzq/VC+wbo29jl7xNcBjVF3MyGvc2cvg0lQKKWZWu1bRnOFw==
+ARC-Authentication-Results: i=1;
+        rspamd-f776c45b8-x2vss;
+        auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MailChannels-Auth-Id: instrampxe0y3a
+X-Plucky-Language: 1a84f3d64810ae17_1662230930652_2528070737
+X-MC-Loop-Signature: 1662230930652:2412625365
+X-MC-Ingress-Time: 1662230930652
+Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
+ [3.69.87.180])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
+        by 100.103.147.32 (trex/6.7.1);
+        Sat, 03 Sep 2022 18:48:50 +0000
+Received: from ppp-46-244-252-68.dynamic.mnet-online.de ([46.244.252.68]:57936 helo=heisenberg.fritz.box)
+        by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.95)
+        (envelope-from <calestyo@scientia.org>)
+        id 1oUYCE-0008Oi-R3
+        for git@vger.kernel.org;
+        Sat, 03 Sep 2022 18:48:48 +0000
+Message-ID: <4e9ad5486e8a887f1e92cc4e401ca61be5f2bb9a.camel@scientia.org>
+Subject: status on security of embedded repos?
+From:   Christoph Anton Mitterer <calestyo@scientia.org>
+To:     git@vger.kernel.org
+Date:   Sat, 03 Sep 2022 20:48:43 +0200
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
+User-Agent: Evolution 3.44.4-1+b1 
+MIME-Version: 1.0
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AuthUser: calestyo@scientia.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, =C3=86var
+Hey.
 
-Thanks for the reroll. I looked at the range-diff, and you've
-addressed almost all of my comments from the previous version. I only
-spot one issue:
+A while ago there was this discussion about security issues with
+respect to bare repos embedded in another repo[0][1].
 
-On Wed, Aug 31, 2022 at 5:41 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> Range-diff against v2:
-> [...]
->  8:  5c379ab1476 !  8:  af912e9ca65 docs: add CONFIGURATION sections that=
- map to a built-in
->     @@ Documentation/git-fast-import.txt: operator can use this facility =
-to peek at the
->       --------
->       linkgit:git-fast-export[1]
->
->     + ## Documentation/git-init.txt ##
->     +@@ Documentation/git-init.txt: $ git commit    <3>
->     + <2> Add all existing files to the index.
->     + <3> Record the pristine state as the first commit in the history.
->     +
->     ++CONFIGURATION
->     ++-------------
->     ++
->     ++include::includes/cmd-config-section-all.txt[]
->     ++
->     ++include::config/init.txt[]
->     ++
->     + GIT
->     + ---
->     + Part of the linkgit:git[1] suite
->     +
 
-Shouldn't this change be part of commit 9 instead of 8?
+I just wondered what's the status on this? Was that fixed in a way that
+one can clone untrusted repos and navigate / use git commands within
+them, without any risk… or is it still open?
+
+Saw proposed patches like:
+https://lore.kernel.org/git/pull.1261.git.git.1651861810633.gitgitgadget@gmail.com/#r
+
+But it seems at least as of git 2.37.2, ther's no safe.barerepository
+option, yet.
+
+
+Also, couldn't the same happen for non-bare repos, too, or how is that
+prevented for such?
+
+
+Thanks,
+Chris.
+
+
+[0] https://lwn.net/ml/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com/
+[1] https://lwn.net/Articles/892755/
