@@ -2,308 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E62DECAAA1
-	for <git@archiver.kernel.org>; Sat,  3 Sep 2022 00:38:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD9A3C38145
+	for <git@archiver.kernel.org>; Sat,  3 Sep 2022 00:38:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231536AbiICAiT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Sep 2022 20:38:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59508 "EHLO
+        id S231603AbiICAiU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Sep 2022 20:38:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231258AbiICAiS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Sep 2022 20:38:18 -0400
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D5448F94F
+        with ESMTP id S231439AbiICAiT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Sep 2022 20:38:19 -0400
+Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF99A9D8CC
         for <git@vger.kernel.org>; Fri,  2 Sep 2022 17:38:17 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-11eb8b133fbso8896115fac.0
+Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-11e7e0a63e2so8791051fac.4
         for <git@vger.kernel.org>; Fri, 02 Sep 2022 17:38:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=fmDeb9ARZt2QtFz1w76b5lE7Z0lbvSOrqqflQ8w1OBU=;
-        b=m70lCsAzCQAE4k0WFLyvSuQVNC7O70vbvkGOis0JQSqd3yicCYjQhGADvUBYsHI3fx
-         FBU7UNaMycqAebBS6wWOu0315jQFqfUNsCCTxIco2aqkDtQsi6gX+qlBxKLh7OZgghES
-         6KVCfB6qfWZsTa8MUoiunrIsAkP80BVFUAcUodO30rKD7XDkHcvgHVWWvVLQgLx1eIFY
-         AVXMwpg0gfWokDIcTjRu/RASY1pAcMq44lXO22rJ2aNfsnUmAlvKm8iErkomblJyYSxN
-         d0pZR8xkBxogwPKGkmBcd4NkwDJOJJWIdVl5hEqJGWplre47afzPmieQAgBRAv2cIh73
-         MWng==
+        bh=jOtJ79aFd8RCKOpzHr11un7LMCyqar9A66DYrIrSupY=;
+        b=BrQfB2nrXlfkoeuuEeUKJvx83+LI4oEmGXyvZ6gCXbj9WMxZQgUxs+fgqdRI1OUhY9
+         eHsmRobaq71YJtdJg6qiFMhng0Yh89usJtD/c36bNPHYXmg1RUy4yNP/a5pr2f2F95T2
+         w8oXyH4GY2rX0qrbmPpZ5D3gqkE4M0fG/8CaWK4AHJacLcwsTSkUa7b3GLuZJQdnII4S
+         WZYDBgFIpz9b9eAzLRh1zZ47FMsV1O1uv2hR1CoQJBvjhvbzhMiIf7BQ8dus0Lsbse/y
+         hJ72CqcCe/t69WKY/xkbcGKgE+5xQTbBVVr3WaZkFORc+kfBFnfKsyiMCpivo+yrVdGE
+         /rZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=fmDeb9ARZt2QtFz1w76b5lE7Z0lbvSOrqqflQ8w1OBU=;
-        b=MG1RAdM3/HYWGkdE7Jz9jkanSfmd/m7M4nm11v8ClPLYUqT7NB9kPVLupzpZ/mM52Y
-         /Fn4/n5NTb2UB6Srf1DLryJLKhaLjBm1tUlzj5lcUrX3DiLrIOvA8jUFmzpNXtIxek2q
-         axf0zOEG4kn9DTbU/n/Ij2xcyuZPafj2VpdZ7rJAimp4fuaC3YkibICG6ikPuSH8gNFU
-         vgtGzZJcpXSRIWPVZLrZuzCc7nmKgf/Fd2pyxDwC0HBzOfy5Quglxx2zlAJMLwikt+Mm
-         pK63P4Ic30slsvWqJD+dQt3W2HQFkGRdleY13gEgScQ82xwsjn1eOb2zXB/EVRtnkX0s
-         UCvQ==
-X-Gm-Message-State: ACgBeo0c8TWzlgScqm4Dkng88NI7CNBYt/96d1dV09FDJcUAzU19lFHB
-        gwWVjEqisqE3nj0AIxymS4imc8QPXUk=
-X-Google-Smtp-Source: AA6agR4008ZVE2xuvuVX/cHijANC9dM2ojrscXHThdvHYdwr+yutchQl+MJxALwHpcexz0l01YuQDw==
-X-Received: by 2002:a05:6870:5705:b0:11e:553:1a6f with SMTP id k5-20020a056870570500b0011e05531a6fmr3635616oap.97.1662165496090;
+        bh=jOtJ79aFd8RCKOpzHr11un7LMCyqar9A66DYrIrSupY=;
+        b=ttIXsvl2gBQt2C+reC4uBUkeQBWdzZc5SB7nN0fkGYr3ztva9EHpNHETH1M2vunCYx
+         P1YClfz1EmVTrzzNHdsSOQZwEKterhylCxuB3DKAXNPtt3wjGcSc6lkrPRk0bqxL8Y85
+         qfdE3eHENrQlaEQFVlxe1Lv7xJNwQHLRSPV9STyChzBusBCHRPtwi28Sf9bvEwHPhz0t
+         mcw7O0K5RD7gkPUJn0c1/AYLitkjqqcE6YdHzXynsOQoO4JWHFSY4PMst+X2eVDc2HLI
+         GAsqPsanMTv6lTkmx8kENqBIcHWEdEblichiY6qLqBcr9cWOd55YKjA+025dWtgCvd8M
+         e2Cw==
+X-Gm-Message-State: ACgBeo3pyp0lQsOFf4M1TDYD7CBkhQbHdTuA902oPA3Zx4jxH91pLgPc
+        BqLOJ42viLGD7+qkx8J1XfMp9UhxodM=
+X-Google-Smtp-Source: AA6agR63X4OhP5qhOv/Ni1aNdp6C5fen02taA/YX5k7/d3RT2h5WKQTlvs7pbzW3r+JznjDeYuBz3w==
+X-Received: by 2002:a54:4696:0:b0:343:46c5:9b2c with SMTP id k22-20020a544696000000b0034346c59b2cmr3148641oic.8.1662165496991;
         Fri, 02 Sep 2022 17:38:16 -0700 (PDT)
 Received: from ffyuanda.localdomain (99-110-131-145.lightspeed.irvnca.sbcglobal.net. [99.110.131.145])
-        by smtp.gmail.com with ESMTPSA id n6-20020a4ad626000000b00435785e7b49sm1172472oon.19.2022.09.02.17.38.15
+        by smtp.gmail.com with ESMTPSA id n6-20020a4ad626000000b00435785e7b49sm1172472oon.19.2022.09.02.17.38.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Sep 2022 17:38:15 -0700 (PDT)
+        Fri, 02 Sep 2022 17:38:16 -0700 (PDT)
 From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 To:     git@vger.kernel.org
 Cc:     derrickstolee@github.com, vdye@github.com, gitster@pobox.com,
         Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Subject: [PATCH v4 0/3] grep: integrate with sparse index
-Date:   Fri,  2 Sep 2022 17:36:20 -0700
-Message-Id: <20220903003623.64750-1-shaoxuan.yuan02@gmail.com>
+Subject: [PATCH v4 1/3] builtin/grep.c: add --sparse option
+Date:   Fri,  2 Sep 2022 17:36:21 -0700
+Message-Id: <20220903003623.64750-2-shaoxuan.yuan02@gmail.com>
 X-Mailer: git-send-email 2.37.0
-In-Reply-To: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+In-Reply-To: <20220903003623.64750-1-shaoxuan.yuan02@gmail.com>
 References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+ <20220903003623.64750-1-shaoxuan.yuan02@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Integrate `git-grep` with sparse-index and test the performance
-improvement.
+Add a --sparse option to `git-grep`.
 
-Changes since v3
-----------------
-* Shorten the perf result tables in commit message.
+When the '--cached' option is used with the 'git grep' command, the
+search is limited to the blobs found in the index, not in the worktree.
+If the user has enabled sparse-checkout, this might present more results
+than they would like, since the files outside of the sparse-checkout are
+unlikely to be important to them.
 
-* Update the commit message to reflect the changes in the commit.
+Change the default behavior of 'git grep' to focus on the files within
+the sparse-checkout definition. To enable the previous behavior, add a
+'--sparse' option to 'git grep' that triggers the old behavior that
+inspects paths outside of the sparse-checkout definition when paired
+with the '--cached' option.
 
-* Update the commit message to indicate the performance improvement
-  is dependent on the pathspec.
+Suggested-by: Victoria Dye <vdye@github.com>
+Helped-by: Derrick Stolee <derrickstolee@github.com>
+Helped-by: Victoria Dye <vdye@github.com>
+Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+---
+ Documentation/git-grep.txt      |  5 ++++-
+ builtin/grep.c                  | 10 +++++++++-
+ t/t7817-grep-sparse-checkout.sh | 34 +++++++++++++++++++++++++++------
+ 3 files changed, 41 insertions(+), 8 deletions(-)
 
-* Stop passing `ce_mode` through `check_attr`. Instead, set the
-  `base_len` to 0 to make the code more reasonable and less abuse of
-  `check_attr`.
-
-* Remove another invention of `base`. Use the existing `name` as the
-  argument for `grep_tree()`, and reset it back to `ce->name` after
-  `grep_tree()` returns.
-
-* Update the p2000 test to use a more general pathspec for better
-  compatibility (i.e. do not use git repository specific pathspec).
-
-* Add tests to t1092 'grep is not expanded' to verify the change
-  brought by "builtin/grep.c: walking tree instead of expanding index
-  with --sparse": the index *never* expands.
-
-Changes since v2
-----------------
-
-* Modify the commit message for "builtin/grep.c: integrate with sparse
-  index" to make it obvious that the perf test results are not from
-  p2000 tests, but from manual perf runs.
-
-* Add tree-walking logic as an extra (the third) patch to improve the
-  performance when --sparse is used. This resolved the left-over-bit
-  in v2 [1].
-
-[1] https://lore.kernel.org/git/20220829232843.183711-1-shaoxuan.yuan02@gmail.com/
-
-Changes since v1
-----------------
-
-* Rewrite the commit message for "builtin/grep.c: add --sparse option"
-  to be clearer.
-
-* Update the documentation (both in-code and man page) for --sparse.
-
-* Add a few tests to test the new behavior (when _only_ --cached is
-  supplied).
-
-* Reformat the perf test results to not look like directly from p2000
-  tests.
-
-* Put the "command_requires_full_index" lines right after parse_options().
-
-* Add a pathspec test in t1092, and reword a few test documentations.
-
-Shaoxuan Yuan (3):
-  builtin/grep.c: add --sparse option
-  builtin/grep.c: integrate with sparse index
-  builtin/grep.c: walking tree instead of expanding index with --sparse
-
- Documentation/git-grep.txt               |  5 +++-
- builtin/grep.c                           | 31 ++++++++++++++++++---
- t/perf/p2000-sparse-operations.sh        |  1 +
- t/t1092-sparse-checkout-compatibility.sh | 26 ++++++++++++++++++
- t/t7817-grep-sparse-checkout.sh          | 34 +++++++++++++++++++-----
- 5 files changed, 86 insertions(+), 11 deletions(-)
-
-Range-diff against v3:
-1:  1fa8c62d95 ! 1:  f1d8271a9b builtin/grep.c: add --sparse option
-    @@ Commit message
-         inspects paths outside of the sparse-checkout definition when paired
-         with the '--cached' option.
-     
-    -    Helped-by: Derrick Stolee <derrickstolee@github.com>
-         Suggested-by: Victoria Dye <vdye@github.com>
-    +    Helped-by: Derrick Stolee <derrickstolee@github.com>
-    +    Helped-by: Victoria Dye <vdye@github.com>
-         Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-     
-      ## Documentation/git-grep.txt ##
-2:  ce4fba3c35 ! 2:  7aa4b8bc81 builtin/grep.c: integrate with sparse index
-    @@ Commit message
-         are then extracted from the time difference between "region_enter" and
-         "region_leave" of label "do_read_index".
-     
-    +    Helped-by: Victoria Dye <vdye@github.com>
-         Helped-by: Derrick Stolee <derrickstolee@github.com>
-         Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-     
-3:  240883aa11 ! 3:  6a2e753a19 builtin/grep.c: walking tree instead of expanding index with --sparse
-    @@ Commit message
-     
-         - Summary:
-     
-    -    p2000 tests demonstrate a ~91% execution time reduction for
-    -    `git grep --cached --sparse <pattern> -- <pathspec>` using tree-walking
-    -    logic.
-    -
-    -    Test                                                                          HEAD~   HEAD
-    -    ---------------------------------------------------------------------------------------------------
-    -    2000.78: git grep --cached --sparse bogus -- f2/f1/f1/builtin/* (full-v3)     0.11    0.09 (≈)
-    -    2000.79: git grep --cached --sparse bogus -- f2/f1/f1/builtin/* (full-v4)     0.08    0.09 (≈)
-    -    2000.80: git grep --cached --sparse bogus -- f2/f1/f1/builtin/* (sparse-v3)   0.44    0.04 (-90.9%)
-    -    2000.81: git grep --cached --sparse bogus -- f2/f1/f1/builtin/* (sparse-v4)   0.46    0.04 (-91.3%)
-    +    p2000 tests demonstrate a ~71% execution time reduction for
-    +    `git grep --cached --sparse bogus -- "f2/f1/f1/*"` using tree-walking
-    +    logic. However, notice that this result varies depending on the pathspec
-    +    given. See below "Command used for testing" for more details.
-    +
-    +    Test                              HEAD~   HEAD
-    +    -------------------------------------------------------
-    +    2000.78: git grep ... (full-v3)   0.35    0.39 (≈)
-    +    2000.79: git grep ... (full-v4)   0.36    0.30 (≈)
-    +    2000.80: git grep ... (sparse-v3) 0.88    0.23 (-73.8%)
-    +    2000.81: git grep ... (sparse-v4) 0.83    0.26 (-68.6%)
-     
-         - Command used for testing:
-     
-    -            git grep --cached --sparse bogus -- f2/f1/f1/builtin/*
-    +            git grep --cached --sparse bogus -- "f2/f1/f1/*"
-     
-         The reason for specifying a pathspec is that, if we don't specify a
-         pathspec, then grep_tree() will walk all the trees and blobs to find the
-    @@ Commit message
-         logic will only walk the area of trees enclosed by the pathspec, and the
-         time consumed is reasonably a lot less.
-     
-    +    Generally speaking, because the performance gain is acheived by walking
-    +    less trees, which are specified by the pathspec, the HEAD time v.s.
-    +    HEAD~ time in sparse-v[3|4], should be proportional to
-    +    "pathspec enclosed area" v.s. "all area", respectively. Namely, the
-    +    wider the <pathspec> is encompassing, the less the performance
-    +    difference between HEAD~ and HEAD, and vice versa.
-    +
-         That is, if we don't specify a pathspec, the performance difference [1]
-    -    is quite small: both methods walk all the trees and take generally same
-    -    amount of time (even with the index construction time included for
-    +    is indistinguishable: both methods walk all the trees and take generally
-    +    same amount of time (even with the index construction time included for
-         ensure_full_index()).
-     
-    -    [1] Performance test result without pathspec:
-    +    [1] Performance test result without pathspec (hence walking all trees):
-    +
-    +            Command used:
-    +
-    +                    git grep --cached --sparse bogus
-     
-    -            Test                                                    HEAD~  HEAD
-    -            -----------------------------------------------------------------------------
-    -            2000.78: git grep --cached --sparse bogus (full-v3)     6.17   5.19 (≈)
-    -            2000.79: git grep --cached --sparse bogus (full-v4)     6.19   5.46 (≈)
-    -            2000.80: git grep --cached --sparse bogus (sparse-v3)   6.57   6.44 (≈)
-    -            2000.81: git grep --cached --sparse bogus (sparse-v4)   6.65   6.28 (≈)
-    +            Test                                HEAD~  HEAD
-    +            ---------------------------------------------------
-    +            2000.78: git grep ... (full-v3)     6.17   5.19 (≈)
-    +            2000.79: git grep ... (full-v4)     6.19   5.46 (≈)
-    +            2000.80: git grep ... (sparse-v3)   6.57   6.44 (≈)
-    +            2000.81: git grep ... (sparse-v4)   6.65   6.28 (≈)
-     
-         Suggested-by: Derrick Stolee <derrickstolee@github.com>
-         Helped-by: Derrick Stolee <derrickstolee@github.com>
-    @@ builtin/grep.c: static int grep_cache(struct grep_opt *opt,
-     +			struct tree_desc tree;
-     +			void *data;
-     +			unsigned long size;
-    -+			struct strbuf base = STRBUF_INIT;
-    -+
-    -+			strbuf_addstr(&base, ce->name);
-     +
-     +			data = read_object_file(&ce->oid, &type, &size);
-     +			init_tree_desc(&tree, data, size);
-      
-     -		if (S_ISREG(ce->ce_mode) &&
-    -+			/*
-    -+			 * sneak in the ce_mode using check_attr parameter
-    -+			 */
-    -+			hit |= grep_tree(opt, pathspec, &tree, &base,
-    -+					 base.len, ce->ce_mode);
-    -+			strbuf_release(&base);
-    ++			hit |= grep_tree(opt, pathspec, &tree, &name, 0, 0);
-    ++			strbuf_reset(&name);
-    ++			strbuf_addstr(&name, ce->name);
-     +			free(data);
-     +		} else if (S_ISREG(ce->ce_mode) &&
-      		    match_pathspec(repo->index, pathspec, name.buf, name.len, 0, NULL,
-      				   S_ISDIR(ce->ce_mode) ||
-      				   S_ISGITLINK(ce->ce_mode))) {
-    -@@ builtin/grep.c: static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
-    - 		int te_len = tree_entry_len(&entry);
-    - 
-    - 		if (match != all_entries_interesting) {
-    --			strbuf_addstr(&name, base->buf + tn_len);
-    -+			if (S_ISSPARSEDIR(check_attr)) {
-    -+				// object is a sparse directory entry
-    -+				strbuf_addbuf(&name, base);
-    -+			} else {
-    -+				// object is a commit or a root tree
-    -+				strbuf_addstr(&name, base->buf + tn_len);
-    -+			}
-    -+
-    - 			match = tree_entry_interesting(repo->index,
-    - 						       &entry, &name,
-    - 						       0, pathspec);
-     
-      ## t/perf/p2000-sparse-operations.sh ##
-     @@ t/perf/p2000-sparse-operations.sh: test_perf_on_all git read-tree -mu HEAD
-      test_perf_on_all git checkout-index -f --all
-      test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
-      test_perf_on_all "git rm -f $SPARSE_CONE/a && git checkout HEAD -- $SPARSE_CONE/a"
-    -+test_perf_on_all git grep --cached --sparse bogus -- "f2/f1/f1/builtin/*"
-    ++test_perf_on_all git grep --cached --sparse bogus -- "f2/f1/f1/*"
-    + 
-    + test_done
-    +
-    + ## t/t1092-sparse-checkout-compatibility.sh ##
-    +@@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'grep is not expanded' '
-    + 
-    + 	# All files within the folder1/* pathspec are sparse,
-    + 	# so this command does not find any matches
-    +-	ensure_not_expanded ! grep a -- folder1/*
-    ++	ensure_not_expanded ! grep a -- folder1/* &&
-    ++
-    ++	# test out-of-cone pathspec with or without wildcard
-    ++	ensure_not_expanded grep --sparse --cached a -- "folder1/a" &&
-    ++	ensure_not_expanded grep --sparse --cached a -- "folder1/*" &&
-    ++
-    ++	# test in-cone pathspec with or without wildcard
-    ++	ensure_not_expanded grep --sparse --cached a -- "deep/a" &&
-    ++	ensure_not_expanded grep --sparse --cached a -- "deep/*"
-    + '
-      
-      test_done
-
-base-commit: be1a02a17ede4082a86dfbfee0f54f345e8b43ac
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 58d944bd57..bdd3d5b8a6 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -28,7 +28,7 @@ SYNOPSIS
+ 	   [-f <file>] [-e] <pattern>
+ 	   [--and|--or|--not|(|)|-e <pattern>...]
+ 	   [--recurse-submodules] [--parent-basename <basename>]
+-	   [ [--[no-]exclude-standard] [--cached | --no-index | --untracked] | <tree>...]
++	   [ [--[no-]exclude-standard] [--cached [--sparse] | --no-index | --untracked] | <tree>...]
+ 	   [--] [<pathspec>...]
+ 
+ DESCRIPTION
+@@ -45,6 +45,9 @@ OPTIONS
+ 	Instead of searching tracked files in the working tree, search
+ 	blobs registered in the index file.
+ 
++--sparse::
++	Use with --cached. Search outside of sparse-checkout definition.
++
+ --no-index::
+ 	Search files in the current directory that is not managed by Git.
+ 
+diff --git a/builtin/grep.c b/builtin/grep.c
+index e6bcdf860c..12abd832fa 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -96,6 +96,8 @@ static pthread_cond_t cond_result;
+ 
+ static int skip_first_line;
+ 
++static int grep_sparse = 0;
++
+ static void add_work(struct grep_opt *opt, struct grep_source *gs)
+ {
+ 	if (opt->binary != GREP_BINARY_TEXT)
+@@ -525,7 +527,11 @@ static int grep_cache(struct grep_opt *opt,
+ 	for (nr = 0; nr < repo->index->cache_nr; nr++) {
+ 		const struct cache_entry *ce = repo->index->cache[nr];
+ 
+-		if (!cached && ce_skip_worktree(ce))
++		/*
++		 * Skip entries with SKIP_WORKTREE unless both --sparse and
++		 * --cached are given.
++		 */
++		if (!(grep_sparse && cached) && ce_skip_worktree(ce))
+ 			continue;
+ 
+ 		strbuf_setlen(&name, name_base_len);
+@@ -963,6 +969,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			   PARSE_OPT_NOCOMPLETE),
+ 		OPT_INTEGER('m', "max-count", &opt.max_count,
+ 			N_("maximum number of results per file")),
++		OPT_BOOL(0, "sparse", &grep_sparse,
++			 N_("search the contents of files outside the sparse-checkout definition")),
+ 		OPT_END()
+ 	};
+ 	grep_prefix = prefix;
+diff --git a/t/t7817-grep-sparse-checkout.sh b/t/t7817-grep-sparse-checkout.sh
+index eb59564565..a9879cc980 100755
+--- a/t/t7817-grep-sparse-checkout.sh
++++ b/t/t7817-grep-sparse-checkout.sh
+@@ -118,13 +118,19 @@ test_expect_success 'grep searches unmerged file despite not matching sparsity p
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'grep --cached searches entries with the SKIP_WORKTREE bit' '
++test_expect_success 'grep --cached and --sparse searches entries with the SKIP_WORKTREE bit' '
++	cat >expect <<-EOF &&
++	a:text
++	EOF
++	git grep --cached "text" >actual &&
++	test_cmp expect actual &&
++
+ 	cat >expect <<-EOF &&
+ 	a:text
+ 	b:text
+ 	dir/c:text
+ 	EOF
+-	git grep --cached "text" >actual &&
++	git grep --cached --sparse "text" >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -143,7 +149,15 @@ test_expect_success 'grep --recurse-submodules honors sparse checkout in submodu
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'grep --recurse-submodules --cached searches entries with the SKIP_WORKTREE bit' '
++test_expect_success 'grep --recurse-submodules --cached and --sparse searches entries with the SKIP_WORKTREE bit' '
++	cat >expect <<-EOF &&
++	a:text
++	sub/B/b:text
++	sub2/a:text
++	EOF
++	git grep --recurse-submodules --cached "text" >actual &&
++	test_cmp expect actual &&
++
+ 	cat >expect <<-EOF &&
+ 	a:text
+ 	b:text
+@@ -152,7 +166,7 @@ test_expect_success 'grep --recurse-submodules --cached searches entries with th
+ 	sub/B/b:text
+ 	sub2/a:text
+ 	EOF
+-	git grep --recurse-submodules --cached "text" >actual &&
++	git grep --recurse-submodules --cached --sparse "text" >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -166,7 +180,15 @@ test_expect_success 'working tree grep does not search the index with CE_VALID a
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'grep --cached searches index entries with both CE_VALID and SKIP_WORKTREE' '
++test_expect_success 'grep --cached and --sparse searches index entries with both CE_VALID and SKIP_WORKTREE' '
++	cat >expect <<-EOF &&
++	a:text
++	EOF
++	test_when_finished "git update-index --no-assume-unchanged b" &&
++	git update-index --assume-unchanged b &&
++	git grep --cached text >actual &&
++	test_cmp expect actual &&
++
+ 	cat >expect <<-EOF &&
+ 	a:text
+ 	b:text
+@@ -174,7 +196,7 @@ test_expect_success 'grep --cached searches index entries with both CE_VALID and
+ 	EOF
+ 	test_when_finished "git update-index --no-assume-unchanged b" &&
+ 	git update-index --assume-unchanged b &&
+-	git grep --cached text >actual &&
++	git grep --cached --sparse text >actual &&
+ 	test_cmp expect actual
+ '
+ 
 -- 
 2.37.0
 
