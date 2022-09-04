@@ -2,106 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FA67ECAAD4
-	for <git@archiver.kernel.org>; Sat,  3 Sep 2022 18:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25402C6FA82
+	for <git@archiver.kernel.org>; Sun,  4 Sep 2022 06:05:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231517AbiICSsy convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sat, 3 Sep 2022 14:48:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43632 "EHLO
+        id S229906AbiIDF5c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Sep 2022 01:57:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbiICSsx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Sep 2022 14:48:53 -0400
-Received: from bee.birch.relay.mailchannels.net (bee.birch.relay.mailchannels.net [23.83.209.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF3CF5280A
-        for <git@vger.kernel.org>; Sat,  3 Sep 2022 11:48:51 -0700 (PDT)
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id 167C83C138F
-        for <git@vger.kernel.org>; Sat,  3 Sep 2022 18:48:51 +0000 (UTC)
-Received: from cpanel-007-fra.hostingww.com (unknown [127.0.0.6])
-        (Authenticated sender: instrampxe0y3a)
-        by relay.mailchannels.net (Postfix) with ESMTPA id 2CE873C11AF
-        for <git@vger.kernel.org>; Sat,  3 Sep 2022 18:48:50 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1662230930; a=rsa-sha256;
-        cv=none;
-        b=3nE5Cm0rDfXUr7OjDjU+wUjourjwXU2rXtqYySVk71jk91qkMMWFRgC92DBRwh+rEof92A
-        H+Ied+TJXpwXdyAUgURXEVn3tmoLiuAQ+DfE+2jFUl98Jv5xp3NfoH1gR4fUibM/3zPkuk
-        Da21l4Jb5r3KbcSpi0unSScUZ34E5wrp38bGhfq51Hm9ziu8co/3o2+41VL0eNzOYKZHKP
-        RniJKTYBSQfC4H2Y+DLXzmEhRQ1nPl1Xo1zArGiffdV3Nk/6jboxDKH7E0cBzzoLmkqTDB
-        9jwj+uD6+bIC+bf8UMhJXfC/Puq+Y+qC7ruVjYNlyrROChR6PLKUa87xmQ/cgw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-        s=arc-2022; t=1662230930;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=S6wczgz7V901p95+tSyO+4E/3clXF2Hxj5Q/xaElmwI=;
-        b=sk7tVJsdIm8wx3PY/+sGH+q8JDkIVfEFQYTrhe+o/pKdbRaluqNsB1S5hzFTukxluSUnAH
-        IwNQUs+/aj1fg7mu8smJ2BECg8wiOX7CEPkMEuDnmKNOwWHwDsFYEwNE04t5uTmv2w5b73
-        APD8pRcXg3Ni4gHS8HVQcNMGPqBVfRY0i+ClgXg8ymr4czqck7d/yWpOSpUeIVH/3xPbHi
-        5o8nEc7BBZBozwXTS78+MNcCgq8Tgex6usNnk+TuUUmtrFefoPid3/t4Ks+WV/VQyVhLvw
-        R089wUmUQgPjwFMzq/VC+wbo29jl7xNcBjVF3MyGvc2cvg0lQKKWZWu1bRnOFw==
-ARC-Authentication-Results: i=1;
-        rspamd-f776c45b8-x2vss;
-        auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MailChannels-Auth-Id: instrampxe0y3a
-X-Plucky-Language: 1a84f3d64810ae17_1662230930652_2528070737
-X-MC-Loop-Signature: 1662230930652:2412625365
-X-MC-Ingress-Time: 1662230930652
-Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
- [3.69.87.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
-        by 100.103.147.32 (trex/6.7.1);
-        Sat, 03 Sep 2022 18:48:50 +0000
-Received: from ppp-46-244-252-68.dynamic.mnet-online.de ([46.244.252.68]:57936 helo=heisenberg.fritz.box)
-        by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.95)
-        (envelope-from <calestyo@scientia.org>)
-        id 1oUYCE-0008Oi-R3
-        for git@vger.kernel.org;
-        Sat, 03 Sep 2022 18:48:48 +0000
-Message-ID: <4e9ad5486e8a887f1e92cc4e401ca61be5f2bb9a.camel@scientia.org>
-Subject: status on security of embedded repos?
-From:   Christoph Anton Mitterer <calestyo@scientia.org>
-To:     git@vger.kernel.org
-Date:   Sat, 03 Sep 2022 20:48:43 +0200
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-User-Agent: Evolution 3.44.4-1+b1 
+        with ESMTP id S229509AbiIDF5b (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Sep 2022 01:57:31 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 126F84D24E
+        for <git@vger.kernel.org>; Sat,  3 Sep 2022 22:57:30 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id b142so4753439iof.10
+        for <git@vger.kernel.org>; Sat, 03 Sep 2022 22:57:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=lemtK+Wi8YWtqgVDajh+mFxNWdXBoU2A6nyFxWSOItA=;
+        b=lvTvcdE9AZACmBwWiE3Ze3n4oQqg6idcfbwTs0Ws9Fe0mWoLi+8A3H+x/eJqahy13A
+         ERGrmN5UeC15NLg7Vupv+4zGSy+TZjOMdYIvPINs0By4C8Us51dEcG7eZjV36Y7UsF8A
+         Nc8XvRaG+ow0+aZD6/cKjNlCMS2Wa7mSWXEkRPyVHGGTcbLC7HtaYqhe//HKj0VTItJM
+         Suyy+iTw3OuBhWK+SRbG4HQGkW6bJdAtkOmtbZfVH8F3u9pyVMmCFzaux5YE1I5gfmrr
+         jybkQscsmCvK4C7oFRo+db+Z7XpILbFJTfsMNKr+6NaCZ7ZDKczKotPgqgldmD9orx2A
+         CtvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=lemtK+Wi8YWtqgVDajh+mFxNWdXBoU2A6nyFxWSOItA=;
+        b=S5e7u8Dt4pqbWbW/iZF688ZpBmTdKsZgNNVqE+3ylt21n88Z5igZYcH2eWqI9ULe5D
+         3c7yFQEUDkdczq++ABp5EA8pnLejAwsKV97gbxW0Pd1SnXyLohxvQW4is/4Gn+emsuzS
+         C4VAjZWssBqssshBV+54YENvhSyBiI2poZg5RuhWBOoCEY+I1QKNrAyzuVCfGBErhTlm
+         gSyetpWmqKt04guYq9NhUWSGg3Obyt8uYWnDXOXlvOSjcge7dliM5HLuSH4Mi2NCqwk7
+         gJsLKmz2yttsaLgxqLqr2VhnLekUq0jqWuTj3Aonp2sYNQ6qO/YaEFc5pp62KvPjE0QL
+         SHiA==
+X-Gm-Message-State: ACgBeo0493/bz9qVDF9RGPiEoCBMyDpW5pZWNHIKiyDgWUUDO/7ZGHr4
+        6nBsspHiXGz7XYFsj4rRlBR2c35RA49ZQobQeGI=
+X-Google-Smtp-Source: AA6agR5sz5bIkAvzHIHEkFVara8dQjHV7U7GZegZN+0A+/L9e0R/GrmYQR9caG66UeDPke327Lz0cNAGZzX2FLHiqOI=
+X-Received: by 2002:a05:6602:4015:b0:688:c39a:dcd9 with SMTP id
+ bk21-20020a056602401500b00688c39adcd9mr19921354iob.206.1662271049444; Sat, 03
+ Sep 2022 22:57:29 -0700 (PDT)
 MIME-Version: 1.0
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AuthUser: calestyo@scientia.org
+References: <pull.1343.git.1662025272.gitgitgadget@gmail.com>
+ <19fd72c34dcd1332df638d76b0b028e9d9da3d41.1662025272.git.gitgitgadget@gmail.com>
+ <8b9e8c2d-7a64-2d66-83a8-2a7daff9a81c@github.com>
+In-Reply-To: <8b9e8c2d-7a64-2d66-83a8-2a7daff9a81c@github.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sun, 4 Sep 2022 13:57:18 +0800
+Message-ID: <CAOLTT8SMQ9nPPs0OnxhH4n_A46WqW8Fv=priFs=NLuBycoBuug@mail.gmail.com>
+Subject: Re: [PATCH 1/3] commit-graph: let commit graph respect commit graft
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey.
+Derrick Stolee <derrickstolee@github.com> =E4=BA=8E2022=E5=B9=B49=E6=9C=882=
+=E6=97=A5=E5=91=A8=E4=BA=94 03:18=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On 9/1/2022 5:41 AM, ZheNing Hu via GitGitGadget wrote:
+> > From: ZheNing Hu <adlternative@gmail.com>
+> >
+> > In repo_parse_commit_internal(), if we want to use
+> > commit graph, it will call parse_commit_in_graph() to
+> > parse commit's content from commit graph, otherwise
+> > call repo_read_object_file() to parse commit's content
+> > from commit object.
+> >
+> > repo_read_object_file() will respect commit graft,
+> > which can correctly amend commit's parents. But
+> > parse_commit_in_graph() not. Inconsistencies here may
+> > result in incorrect processing of shallow clone.
+> >
+> > So let parse_commit_in_graph() respect commit graft as
+> > repo_read_object_file() does, which can solve this problem.
+>
+> If grafts or replace-objects exist, then the commit-graph
+> is disabled and this code will never be called. I would
+> expect a test case demonstrating the change in behavior
+> here, but that is impossible.
+>
 
-A while ago there was this discussion about security issues with
-respect to bare repos embedded in another repo[0][1].
+Thanks for the clarification.
+I don't really know what's the wrong here, but just let do a little test:
 
+1. Revert this commit 19fd72c34dcd1332df638d76b0b028e9d9da3d41
+$ git revert 19fd72
 
-I just wondered what's the status on this? Was that fixed in a way that
-one can clone untrusted repos and navigate / use git commands within
-them, without any risk… or is it still open?
+2. Clone the git repo
+$ git clone --bare git@github.com:git/git.git
 
-Saw proposed patches like:
-https://lore.kernel.org/git/pull.1261.git.git.1651861810633.gitgitgadget@gmail.com/#r
+3. Write commit graph
+$ git commit-graph write
 
-But it seems at least as of git 2.37.2, ther's no safe.barerepository
-option, yet.
+4. Use the depth=3D<depth> to clone (depth=3D1)
+$  git clone --no-checkout --no-local --=3Ddepth=3D1 git.git git1
+Cloning into 'git1'...
+remote: Enumerating objects: 4306, done.
+remote: Counting objects: 100% (4306/4306), done.
+remote: Compressing objects: 100% (3785/3785), done.
 
+4.  Use the depth=3D<depth> to clone (depth=3D2)
+$  git clone --no-checkout --no-local --=3Ddepth=3D2 git.git git2
+Cloning into 'git2'...
+remote: Enumerating objects: 4311, done.
+remote: Counting objects: 100% (4311/4311), done.
+remote: Compressing objects: 100% (3788/3788), done.
 
-Also, couldn't the same happen for non-bare repos, too, or how is that
-prevented for such?
+5. Use the depth filter to clone (depth=3D1)
+$  git clone --no-checkout --no-local --filter=3Ddepth:1 git.git git3
+Cloning into 'git3'...
+remote: Enumerating objects: 4306, done.
+remote: Counting objects: 100% (4306/4306), done.
+remote: Compressing objects: 100% (3785/3785), done.
 
+6. Use the depth filter to clone (depth=3D2)
+$  git clone --no-checkout --no-local --filter=3Ddepth:2 git.git git4
+Cloning into 'git4'...
+remote: Enumerating objects: 322987, done.
+remote: Counting objects: 100% (322987/322987), done.
+remote: Compressing objects: 100% (77441/77441), done.
+
+As we can see, when we use --filter=3Ddepth:<depth> (depth >=3D 2),
+it seems like we clone a lot of objects. The result is significantly
+different from git clone --depth=3D<depth> (depth >=3D 2).
+
+So I debug it by reproducing the git pack-objects process:
+
+I find there are different action between --filter=3Ddepth:<depth> and
+ --depth=3D<depth> .
+
+--filter=3Ddepth:<depth> will be successfully resolved commit parents in
+parse_commit_in_graph(),
+
+Call stack( cmd_pack_objects -> get_object_list -> traverse_commit_list ->
+traverse_commit_list_filtered -> do_traverse -> get_revision ->
+get_revision_internal -> get_revision_1 -> process_parents ->
+repo_parse_commit_gently -> repo_parse_commit_internal ->
+parse_commit_in_graph)
+
+--depth=3D<depth> will failed in parse_commit_in_graph(), and call
+repo_read_object_file() to resolved commit parents.
+
+Call stack( cmd_pack_objects -> get_object_list -> traverse_commit_list ->
+traverse_commit_list_filtered -> do_traverse -> get_revision ->
+get_revision_internal -> get_revision_1 -> process_parents ->
+repo_parse_commit_gently -> repo_parse_commit_internal ->
+repo_read_object_file)
+
+> The commit-graph parsing should not be bogged down with
+> this logic.
+>
+
+So I try to fix this problem by let commit-graph respect commit-graft.
+I don't know if I overlook something before...
+
+> Thanks,
+> -Stolee
+>
 
 Thanks,
-Chris.
-
-
-[0] https://lwn.net/ml/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com/
-[1] https://lwn.net/Articles/892755/
+ZheNing Hu
