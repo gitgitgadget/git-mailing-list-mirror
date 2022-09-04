@@ -2,58 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25402C6FA82
-	for <git@archiver.kernel.org>; Sun,  4 Sep 2022 06:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3974ECAAD3
+	for <git@archiver.kernel.org>; Sun,  4 Sep 2022 07:28:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229906AbiIDF5c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Sep 2022 01:57:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39020 "EHLO
+        id S233721AbiIDH23 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Sep 2022 03:28:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbiIDF5b (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Sep 2022 01:57:31 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 126F84D24E
-        for <git@vger.kernel.org>; Sat,  3 Sep 2022 22:57:30 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id b142so4753439iof.10
-        for <git@vger.kernel.org>; Sat, 03 Sep 2022 22:57:30 -0700 (PDT)
+        with ESMTP id S233361AbiIDH2B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Sep 2022 03:28:01 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81C7C47BB8
+        for <git@vger.kernel.org>; Sun,  4 Sep 2022 00:27:59 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id e195so4869943iof.1
+        for <git@vger.kernel.org>; Sun, 04 Sep 2022 00:27:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=lemtK+Wi8YWtqgVDajh+mFxNWdXBoU2A6nyFxWSOItA=;
-        b=lvTvcdE9AZACmBwWiE3Ze3n4oQqg6idcfbwTs0Ws9Fe0mWoLi+8A3H+x/eJqahy13A
-         ERGrmN5UeC15NLg7Vupv+4zGSy+TZjOMdYIvPINs0By4C8Us51dEcG7eZjV36Y7UsF8A
-         Nc8XvRaG+ow0+aZD6/cKjNlCMS2Wa7mSWXEkRPyVHGGTcbLC7HtaYqhe//HKj0VTItJM
-         Suyy+iTw3OuBhWK+SRbG4HQGkW6bJdAtkOmtbZfVH8F3u9pyVMmCFzaux5YE1I5gfmrr
-         jybkQscsmCvK4C7oFRo+db+Z7XpILbFJTfsMNKr+6NaCZ7ZDKczKotPgqgldmD9orx2A
-         CtvA==
+        bh=EE1CjC/ou0iBlH61EHhj/4Ct2o6tJ8W+noAALE+uZXw=;
+        b=UaMBlG1Gmc8HtqFfgNqsDYvtgyu9q8XqPpmc6YM8LDV4t197YHbFZxHGkoa0DndigB
+         6Z3bXIZh3zb8HYQD0nDmzVfUg+Mr4oiPugvv/QZnPqVu1tOJvqjyW18f2dJIPgXciGp8
+         jmHzLzxcnlNX3NY3NbLQNT5+c84RhFvJ1F13aTThztynpCvyBEQA9aqmSUuTTXv1VyUm
+         GgVB87t1wKQkQUHqIEjWF5MSKOsY4mpOZAPRqUQY/NubMaB5/GIyKgmUchasmypb4B2G
+         7tNifudExHDktrrU08U1bez1SnJ4UZOPE1qgQafitu9XvrZcDvzoxCGe6YKBamaJylJF
+         mkoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=lemtK+Wi8YWtqgVDajh+mFxNWdXBoU2A6nyFxWSOItA=;
-        b=S5e7u8Dt4pqbWbW/iZF688ZpBmTdKsZgNNVqE+3ylt21n88Z5igZYcH2eWqI9ULe5D
-         3c7yFQEUDkdczq++ABp5EA8pnLejAwsKV97gbxW0Pd1SnXyLohxvQW4is/4Gn+emsuzS
-         C4VAjZWssBqssshBV+54YENvhSyBiI2poZg5RuhWBOoCEY+I1QKNrAyzuVCfGBErhTlm
-         gSyetpWmqKt04guYq9NhUWSGg3Obyt8uYWnDXOXlvOSjcge7dliM5HLuSH4Mi2NCqwk7
-         gJsLKmz2yttsaLgxqLqr2VhnLekUq0jqWuTj3Aonp2sYNQ6qO/YaEFc5pp62KvPjE0QL
-         SHiA==
-X-Gm-Message-State: ACgBeo0493/bz9qVDF9RGPiEoCBMyDpW5pZWNHIKiyDgWUUDO/7ZGHr4
-        6nBsspHiXGz7XYFsj4rRlBR2c35RA49ZQobQeGI=
-X-Google-Smtp-Source: AA6agR5sz5bIkAvzHIHEkFVara8dQjHV7U7GZegZN+0A+/L9e0R/GrmYQR9caG66UeDPke327Lz0cNAGZzX2FLHiqOI=
-X-Received: by 2002:a05:6602:4015:b0:688:c39a:dcd9 with SMTP id
- bk21-20020a056602401500b00688c39adcd9mr19921354iob.206.1662271049444; Sat, 03
- Sep 2022 22:57:29 -0700 (PDT)
+        bh=EE1CjC/ou0iBlH61EHhj/4Ct2o6tJ8W+noAALE+uZXw=;
+        b=1YimawgjTgfXYjhJOuWewDp1ATz2zaO3tqekWFd0OTb+j0geIp7Am/bXoPTFpWgcOn
+         +L2BCJzl+kfV1z8BV/sJa38U7SYflkQ5jk7quKn3GGhtakr6ttIWEQveAXJvYBBQ2FWR
+         bjQASkgt+Nrtjfr02q/PntmIrDOsqF5KUdIdvYw8ynMRV78qlzSz8g5br8A0bNpf8bxB
+         Hcdj8WBxw5TDs9znV41KpcLJL9fuGfIyuANG52wegrHgTd7muhX1CriV/o7/XFueg5hj
+         zCNqcrvK79nqSW84ebT10Zb7M9vcFnReItLv38HvFo3i9okh3ZMjuAe9gK2y1MInwIpB
+         R+kw==
+X-Gm-Message-State: ACgBeo3cvWj9CuTYcHEXggpqVwhh61vRAnZgTyexHukBjukFL4dd6oSy
+        KcfXx7eOJvWEDPJwu5GQ9FDTD3XheqNYvGx/7ZU=
+X-Google-Smtp-Source: AA6agR4GB+MdL54hHjvpblWZSenuCMPTON6cj2cqaK2QSJh505tbESj6MwJB7gJg8ki4SPpYPyS4RmILrtyVN3L6bFU=
+X-Received: by 2002:a05:6638:1396:b0:350:1059:29bb with SMTP id
+ w22-20020a056638139600b00350105929bbmr3955531jad.67.1662276478786; Sun, 04
+ Sep 2022 00:27:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1343.git.1662025272.gitgitgadget@gmail.com>
- <19fd72c34dcd1332df638d76b0b028e9d9da3d41.1662025272.git.gitgitgadget@gmail.com>
- <8b9e8c2d-7a64-2d66-83a8-2a7daff9a81c@github.com>
-In-Reply-To: <8b9e8c2d-7a64-2d66-83a8-2a7daff9a81c@github.com>
+References: <pull.1343.git.1662025272.gitgitgadget@gmail.com> <a14028be-2fd2-258d-94f5-c010669de8a6@github.com>
+In-Reply-To: <a14028be-2fd2-258d-94f5-c010669de8a6@github.com>
 From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 4 Sep 2022 13:57:18 +0800
-Message-ID: <CAOLTT8SMQ9nPPs0OnxhH4n_A46WqW8Fv=priFs=NLuBycoBuug@mail.gmail.com>
-Subject: Re: [PATCH 1/3] commit-graph: let commit graph respect commit graft
+Date:   Sun, 4 Sep 2022 15:27:47 +0800
+Message-ID: <CAOLTT8T5gxC9F2KS--c8L3=-zzET=eRj_jNZxKeKGcoNZipzWw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] list-object-filter: introduce depth filter
 To:     Derrick Stolee <derrickstolee@github.com>
 Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
@@ -70,108 +68,189 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Derrick Stolee <derrickstolee@github.com> =E4=BA=8E2022=E5=B9=B49=E6=9C=882=
-=E6=97=A5=E5=91=A8=E4=BA=94 03:18=E5=86=99=E9=81=93=EF=BC=9A
+=E6=97=A5=E5=91=A8=E4=BA=94 03:24=E5=86=99=E9=81=93=EF=BC=9A
 >
 > On 9/1/2022 5:41 AM, ZheNing Hu via GitGitGadget wrote:
-> > From: ZheNing Hu <adlternative@gmail.com>
-> >
-> > In repo_parse_commit_internal(), if we want to use
-> > commit graph, it will call parse_commit_in_graph() to
-> > parse commit's content from commit graph, otherwise
-> > call repo_read_object_file() to parse commit's content
-> > from commit object.
-> >
-> > repo_read_object_file() will respect commit graft,
-> > which can correctly amend commit's parents. But
-> > parse_commit_in_graph() not. Inconsistencies here may
-> > result in incorrect processing of shallow clone.
-> >
-> > So let parse_commit_in_graph() respect commit graft as
-> > repo_read_object_file() does, which can solve this problem.
+> > This patch let partial clone have the similar capabilities of the shall=
+ow
+> > clone git clone --depth=3D<depth>.
+> ...
+> > Now we can use git clone --filter=3D"depth=3D<depth>" to omit all commi=
+ts whose
+> > depth is >=3D <depth>. By this way, we can have the advantages of both =
+shallow
+> > clone and partial clone: Limiting the depth of commits, get other objec=
+ts on
+> > demand.
 >
-> If grafts or replace-objects exist, then the commit-graph
-> is disabled and this code will never be called. I would
-> expect a test case demonstrating the change in behavior
-> here, but that is impossible.
+> I have several concerns about this proposal.
+>
+> The first is that "depth=3DX" doesn't mean anything after the first
+> clone. What will happen when we fetch the remaining objects?
 >
 
-Thanks for the clarification.
-I don't really know what's the wrong here, but just let do a little test:
+According to the current results, yes, it still downloads a large number
+of commits.
 
-1. Revert this commit 19fd72c34dcd1332df638d76b0b028e9d9da3d41
-$ git revert 19fd72
+Do a litte test again:
 
-2. Clone the git repo
-$ git clone --bare git@github.com:git/git.git
-
-3. Write commit graph
-$ git commit-graph write
-
-4. Use the depth=3D<depth> to clone (depth=3D1)
-$  git clone --no-checkout --no-local --=3Ddepth=3D1 git.git git1
-Cloning into 'git1'...
-remote: Enumerating objects: 4306, done.
-remote: Counting objects: 100% (4306/4306), done.
-remote: Compressing objects: 100% (3785/3785), done.
-
-4.  Use the depth=3D<depth> to clone (depth=3D2)
-$  git clone --no-checkout --no-local --=3Ddepth=3D2 git.git git2
-Cloning into 'git2'...
+$ git clone --filter=3Ddepth:2 git.git git
+Cloning into 'git'...
 remote: Enumerating objects: 4311, done.
 remote: Counting objects: 100% (4311/4311), done.
 remote: Compressing objects: 100% (3788/3788), done.
 
-5. Use the depth filter to clone (depth=3D1)
-$  git clone --no-checkout --no-local --filter=3Ddepth:1 git.git git3
-Cloning into 'git3'...
-remote: Enumerating objects: 4306, done.
-remote: Counting objects: 100% (4306/4306), done.
-remote: Compressing objects: 100% (3785/3785), done.
+Just see how many objects...
+$ git cat-file --batch-check --batch-all-objects | grep blob | wc -l
+warning: This repository uses promisor remotes. Some objects may not be loa=
+ded.
+    4098
+$ git cat-file --batch-check --batch-all-objects | grep tree | wc -l
+warning: This repository uses promisor remotes. Some objects may not be loa=
+ded.
+     211
+$ git cat-file --batch-check --batch-all-objects | grep commit | wc -l
+warning: This repository uses promisor remotes. Some objects may not be loa=
+ded.
+       2
 
-6. Use the depth filter to clone (depth=3D2)
-$  git clone --no-checkout --no-local --filter=3Ddepth:2 git.git git4
-Cloning into 'git4'...
-remote: Enumerating objects: 322987, done.
-remote: Counting objects: 100% (322987/322987), done.
-remote: Compressing objects: 100% (77441/77441), done.
+$ git checkout HEAD~
 
-As we can see, when we use --filter=3Ddepth:<depth> (depth >=3D 2),
-it seems like we clone a lot of objects. The result is significantly
-different from git clone --depth=3D<depth> (depth >=3D 2).
+Fetch nothing...because depth=3D2.
 
-So I debug it by reproducing the git pack-objects process:
+$  git checkout HEAD~
+remote: Enumerating objects: 198514, done.
+remote: Counting objects: 100% (198514/198514), done.
+remote: Compressing objects: 100% (68511/68511), done.
+remote: Total 198514 (delta 128408), reused 198509 (delta 128406), pack-reu=
+sed 0
+Receiving objects: 100% (198514/198514), 77.07 MiB | 9.58 MiB/s, done.
+Resolving deltas: 100% (128408/128408), done.
+remote: Enumerating objects: 1, done.
+remote: Counting objects: 100% (1/1), done.
+remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (1/1), 14.35 KiB | 14.35 MiB/s, done.
+remote: Enumerating objects: 198014, done.
+remote: Counting objects: 100% (198014/198014), done.
+remote: Compressing objects: 100% (68362/68362), done.
+remote: Total 198014 (delta 128056), reused 198012 (delta 128055), pack-reu=
+sed 0
+Receiving objects: 100% (198014/198014), 76.55 MiB | 14.00 MiB/s, done.
+Resolving deltas: 100% (128056/128056), done.
+Previous HEAD position was 624a936234 Merge branch 'en/merge-multi-strategi=
+es'
+HEAD is now at 014a9ea207 Merge branch 'en/t4301-more-merge-tree-tests'
 
-I find there are different action between --filter=3Ddepth:<depth> and
- --depth=3D<depth> .
+Fetch a lot of objects... (three times!)
 
---filter=3Ddepth:<depth> will be successfully resolved commit parents in
-parse_commit_in_graph(),
+$ git cat-file --batch-check --batch-all-objects | grep blob | wc -l
+warning: This repository uses promisor remotes. Some objects may not be loa=
+ded.
+    4099
+$ git cat-file --batch-check --batch-all-objects | grep tree | wc -l
+warning: This repository uses promisor remotes. Some objects may not be loa=
+ded.
+    130712
+$ git cat-file --batch-check --batch-all-objects | grep commit | wc -l
+warning: This repository uses promisor remotes. Some objects may not be loa=
+ded.
+    67815
 
-Call stack( cmd_pack_objects -> get_object_list -> traverse_commit_list ->
-traverse_commit_list_filtered -> do_traverse -> get_revision ->
-get_revision_internal -> get_revision_1 -> process_parents ->
-repo_parse_commit_gently -> repo_parse_commit_internal ->
-parse_commit_in_graph)
+It fetched too many Commits and Trees... But Surprisingly, only one
+more blob was downloaded.
 
---depth=3D<depth> will failed in parse_commit_in_graph(), and call
-repo_read_object_file() to resolved commit parents.
+I admit that this is a very bad action, That's because we
+have no commits locally...
 
-Call stack( cmd_pack_objects -> get_object_list -> traverse_commit_list ->
-traverse_commit_list_filtered -> do_traverse -> get_revision ->
-get_revision_internal -> get_revision_1 -> process_parents ->
-repo_parse_commit_gently -> repo_parse_commit_internal ->
-repo_read_object_file)
+Maybe one solution: we can also provide a commit-id parameter
+inside the depth filter, like --filter=3D"commit:014a9ea207, depth:1"...
+we can clone with blob:none filter to download all trees/commits,
+then fetch blobs with this "commit-depth" filter.... even we can
+provide a more complex filter: --filter=3D"commit:014a9ea207, depth:1, type=
+=3Dblob"
+This may avoid downloading too many unneeded commits and trees...
 
-> The commit-graph parsing should not be bogged down with
-> this logic.
+git fetch --filter=3D"commit:014a9ea207, depth:1, type=3Dblob"
+
+If git fetch have learned this filter, then git checkout or other commands =
+can
+ use this filter internally heuristically:
+
+e.g.
+
+git checkout HEAD~
+if HEAD~ missing | 75% blobs/trees in HEAD~ missing -> use "commit-depth" f=
+ilter
+else -> use blob:none filter
+
+We can even make this commit-depth filter support multiple commits later.
+
+> Partial clone is designed to download a subset of objects, but make
+> the remaining reachable objects downloadable on demand. By dropping
+> reachable commits, the normal partial clone mechanism would result
+> in a 'git rev-list' call asking for a missing commit. Would this
+> inherit the "depth=3DX" but result in a huge amount of over-downloading
+> the trees and blobs in that commit range? Would it result in downloading
+> commits one-by-one, and then their root trees (and all reachable objects
+> from those root trees)?
 >
 
-So I try to fix this problem by let commit-graph respect commit-graft.
-I don't know if I overlook something before...
+I don't know if it's possible let git rev-list know that commits is missing=
+, and
+stop download them. (just like git cat-file --batch --batch-all-objects doe=
+s)
+
+Similarly, you can let git log or other commands to understand this...
+
+Probably a config var: fetch.skipmissingcommits...
+
+> Finally, computing the set of objects to send is just as expensive as
+> if we had a shallow clone (we can't use bitmaps). However, we get the
+> additional problem where fetches do not have a shallow boundary, so
+> the server will send deltas based on objects that are not necessarily
+> present locally, triggering extra requests to resolve those deltas.
+>
+
+Agree, I think this maybe a problem, but there is no good solution for it.
+
+> This fallout remains undocumented and unexplored in this series, but I
+> doubt the investigation would result in positive outcomes.
+>
+> > Disadvantages of git clone --depth=3D<depth> --filter=3Dblob:none: we m=
+ust call
+> > git fetch --unshallow to lift the shallow clone restriction, it will
+> > download all history of current commit.
+>
+> How does your proposal fix this? Instead of unshallowing, users will
+> stumble across these objects and trigger huge downloads by accident.
+>
+
+As mentioned above, I would expect a commit-depth filter to fix this.
+
+> > Disadvantages of git clone --filter=3Dblob:none with git sparse-checkou=
+t: The
+> > git client needs to send a lot of missing objects' id to the server, th=
+is
+> > can be very wasteful of network traffic.
+>
+> Asking for a list of blobs (especially limited to a sparse-checkout) is
+> much more efficient than what will happen when a user tries to do almost
+> anything in a repository formed the way you did here.
+>
+
+Yes. also as mentioned above, enabling this filter in some specific cases:
+e.g. we have the commit but not all trees/blobs in it.
+
+> Thinking about this idea, I don't think it is viable. I would need to
+> see a lot of work done to test these scenarios closely to believe that
+> this type of partial clone is a desirable working state.
+>
+
+Agree.
 
 > Thanks,
 > -Stolee
->
 
-Thanks,
+Thanks to these reviews and criticisms, it makes me think more :)
+
 ZheNing Hu
