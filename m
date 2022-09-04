@@ -2,240 +2,251 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C549C54EE9
-	for <git@archiver.kernel.org>; Sun,  4 Sep 2022 09:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DC07ECAAD5
+	for <git@archiver.kernel.org>; Sun,  4 Sep 2022 23:12:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbiIDJOg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Sep 2022 05:14:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52756 "EHLO
+        id S235407AbiIDXMX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Sep 2022 19:12:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233210AbiIDJOe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Sep 2022 05:14:34 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02019B4AF
-        for <git@vger.kernel.org>; Sun,  4 Sep 2022 02:14:33 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id r141so4940575iod.4
-        for <git@vger.kernel.org>; Sun, 04 Sep 2022 02:14:32 -0700 (PDT)
+        with ESMTP id S229596AbiIDXMW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Sep 2022 19:12:22 -0400
+Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9288B201AB
+        for <git@vger.kernel.org>; Sun,  4 Sep 2022 16:12:18 -0700 (PDT)
+Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-11e9a7135easo17970169fac.6
+        for <git@vger.kernel.org>; Sun, 04 Sep 2022 16:12:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=PEdwK3ZpSDydQfnIASH6dzxEG2fjhaIOueUxrBrXcr4=;
-        b=dDGWhAks9ZDBmis2laESs1a+0q5NE1cilkYgAVl2xCw+b28NW638yMQRaR7gqZIU9a
-         Rm8PCEHr3tRUVzyuggCPLTzI6FwE+GC2/TDAM/Oet1A6CJMb+QlPbdSs71QJf7zlQwcl
-         GLMc36ylektAxJT62NbqpsONOyJ+YZ/9MLN+582VusI3k3X2zUWy8QyYpgWGNNIt1BHg
-         lskeBsfGI8CzM6VDeR/KPeL/NHCsjG310gJR+gtyCeHUb9ltqjRK9N8wdvPdAYhyjQY4
-         Vx/sp87ZLBZhjTxs4OvacT+uy/yeAm3hRb4vThq8OR/FyClwwNWt5Ashsyb3TqBOTovU
-         VPkA==
+        d=usp.br; s=usp-google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=Fv7EipD4piemLRLCfHaRedKyKXyu2JdvbZw4ZCFzJqk=;
+        b=NdAcv+VwdQByYyVIHh4gaU4s4F43c9e0H1AwdCpKcuMcx78tjUfAq4NVg8kID1TYSG
+         YRyc/PGmVsncQ+Wib+VSKyYoCpZTDG0yTiGC0FjYjgo5S3yP0iYp1460UPz1rTpdOzMC
+         zslJ+TNDHTMEDCi/9ZeUmgxbJ82/gR0+R7ht9eL9l91XbXbb5O6MZ3lnLdNRGbO6CKEZ
+         cgGz0GfJUN/ljykXaUjc1a0814wwFjfTqjmk0p6nQrREPdk2sanY4IbKj7jwdT7/2UhI
+         lGsL/UuhdAbOrvzB7jbsWRZDXmBnNOgmXiR5dhXOxIHj/hmRrTEeP/QmeJ2ROdBUguuq
+         ttfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=PEdwK3ZpSDydQfnIASH6dzxEG2fjhaIOueUxrBrXcr4=;
-        b=8RIq2aziCa24MxrEccWI9sk8SCMWC53A40gngyquFFIgXeGAVVgFSi4OpcVaqyyIEu
-         UXMp9ozHO56q+8ZLP5gFPbtYi0RETeXw+ZWpEfUoytMfIylmJAW3kE6Ti7/jbnPLtyBN
-         GTcWZXxm4dAw8c+Jq8mkvp/IdRA/e5ehM7zg5XyhvFXp4mmxaVThZ6RZuM6muVcxJN0E
-         c6bs5dr5butDLYfykkPYpAAhn6Do79aHSZCXrupbyt36swvtfHsYIKq7ARTYx934lRiR
-         3hVHkRghxsW002PYjO0A/spl8ulKu87XLQOqmBuWOuZHW4jFqrZXZ7iRpCDZf/788fxs
-         Tssw==
-X-Gm-Message-State: ACgBeo3Hj2/wWuXVDZDKuzqSCtr8F365xSJrMKKcDyPkP74W+52Zw0Uk
-        1Xq72vVp3RxhswHOis8CMsbMepWbZFBA62HOzj4=
-X-Google-Smtp-Source: AA6agR6hbDdVonuivYP+9NoaMV22QXbxWWnLtgJKqlor+DfOBJstOcNSTzFM49TeQUMkhSDQAgHhM7sRpST4PXPFe8U=
-X-Received: by 2002:a6b:6704:0:b0:688:d06b:2233 with SMTP id
- b4-20020a6b6704000000b00688d06b2233mr20720617ioc.174.1662282872318; Sun, 04
- Sep 2022 02:14:32 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=Fv7EipD4piemLRLCfHaRedKyKXyu2JdvbZw4ZCFzJqk=;
+        b=RPKfomgvCb4VteUTWfKKlFuD7RDO4hxPi4KXhpYG2C6T1kImmo2YxBEVTdc2rswWPo
+         Fk4365lWvmLkFtoWg/5WXODMJSIrfXcpvnwUpMO+UQksQPkvGQocUhwNHxWB2bmh//vF
+         8haKsK75oDCjkIYyli8X8hv4N6E0YJCgD64xy4YZxwE3K9OjoEEtlwUuGRVt6uYTSGgh
+         X+tpP0jFstMXhj22+2o3Ti4KdQmuv13Ym7W4mrlz1xvELRiZllN7eM5YSuBUrX0JMtXA
+         9ZZdVouC8roTVobTzGt13pfdzL0b2p4HdyVIBugj3Ji8BZHQG6UIkXRvEDHqOf0IoLas
+         ElPw==
+X-Gm-Message-State: ACgBeo21VGDm3WAvymlDMomAXR4JE2Q+Ws3M1uI9xlRLsIAjNjIXZumV
+        q4qpw0DSz8ho9lzh3//P6NxUj+ktWVGXvg==
+X-Google-Smtp-Source: AA6agR6BLpZ5/As2nZWHLptOnmlGoNHJYysjJF05zgWRM6I2daHuk576B8fCoTzcWBKfklvdQlZ2WQ==
+X-Received: by 2002:a05:6870:b606:b0:122:4eaf:e6d0 with SMTP id cm6-20020a056870b60600b001224eafe6d0mr7479114oab.167.1662333137435;
+        Sun, 04 Sep 2022 16:12:17 -0700 (PDT)
+Received: from mango.meuintelbras.local ([177.32.109.17])
+        by smtp.gmail.com with ESMTPSA id m15-20020a9d73cf000000b006393aa233d5sm3958609otk.27.2022.09.04.16.12.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 04 Sep 2022 16:12:16 -0700 (PDT)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     git@vger.kernel.org
+Cc:     l.s.r@web.de, gitster@pobox.com
+Subject: [PATCH] format-patch: warn if commit msg contains a patch delimiter
+Date:   Sun,  4 Sep 2022 20:12:05 -0300
+Message-Id: <d0b577825124ac684ab304d3a1395f3d2d0708e8.1662333027.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-References: <pull.1343.git.1662025272.gitgitgadget@gmail.com>
- <a14028be-2fd2-258d-94f5-c010669de8a6@github.com> <o48053s6-5540-1234-5roq-92q6981r2306@tzk.qr>
-In-Reply-To: <o48053s6-5540-1234-5roq-92q6981r2306@tzk.qr>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 4 Sep 2022 17:14:20 +0800
-Message-ID: <CAOLTT8S2r1gzyF8YAORuGwian+QwSniAPd8br0xn_P5gPyxpgg@mail.gmail.com>
-Subject: Re: [PATCH 0/3] list-object-filter: introduce depth filter
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> =E4=BA=8E2022=E5=B9=B49=E6=
-=9C=882=E6=97=A5=E5=91=A8=E4=BA=94 21:48=E5=86=99=E9=81=93=EF=BC=9A
->
-> Hi ZheNing,
->
-> first of all: thank you for working on this. In the past, I thought that
-> this feature would be likely something we would want to have in Git.
->
+When applying a patch, `git am` looks for special delimiter strings
+(such as "---") to know where the message ends and the actual diff
+starts. If one of these strings appears in the commit message itself,
+`am` might get confused and fail to apply the patch properly. This has
+already caused inconveniences in the past [1][2]. To help avoid such
+problem, let's make `git format-patch` warn on commit messages
+containing one of the said strings.
 
-Originally, I just find "full git checkout" after partial-clone will
-send so many blob-ids:
+[1]: https://lore.kernel.org/git/20210113085846-mutt-send-email-mst@kernel.org/
+[2]: https://lore.kernel.org/git/16297305.cDA1TJNmNo@earendil/
 
-$ git clone --filter=3Dblob:none --no-checkout --sparse
-git@github.com:derrickstolee/sparse-checkout-example.git
-$ cd sparse-checkout-example
-$ GIT_TRACE_PACKET=3D$HOME/packet.trace git checkout HEAD
-$ grep want $HOME/packet.trace  | wc -l
-4060
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
+ builtin/log.c           |  1 +
+ log-tree.c              |  1 +
+ mailinfo.c              |  4 ++--
+ mailinfo.h              |  3 +++
+ pretty.c                | 21 ++++++++++++++++++++-
+ pretty.h                |  3 ++-
+ revision.h              |  3 ++-
+ t/t4014-format-patch.sh | 16 ++++++++++++++++
+ 8 files changed, 47 insertions(+), 5 deletions(-)
 
-So I just think about whether this process can be simplified between
-the client and the server. In git checkout, users only need all the objects
-in a commit. So maybe we can let the git client tell the server about this
-commit-id, then the server downloads all objects in this commit. Then I
-find it just looks like git clone|fetch --depth=3D1, but the shallow-clone =
-doesn't
-seem as easy to extend missing objects as the partial-clone.
+diff --git a/builtin/log.c b/builtin/log.c
+index 56e2d95e86..edc84abaef 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1973,6 +1973,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	rev.diffopt.flags.recursive = 1;
+ 	rev.diffopt.no_free = 1;
+ 	rev.subject_prefix = fmt_patch_subject_prefix;
++	rev.check_in_body_patch_breaks = 1;
+ 	memset(&s_r_opt, 0, sizeof(s_r_opt));
+ 	s_r_opt.def = "HEAD";
+ 	s_r_opt.revarg_opt = REVARG_COMMITTISH;
+diff --git a/log-tree.c b/log-tree.c
+index 3e8c70ddcf..25ed5452b1 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -766,6 +766,7 @@ void show_log(struct rev_info *opt)
+ 	ctx.after_subject = extra_headers;
+ 	ctx.preserve_subject = opt->preserve_subject;
+ 	ctx.encode_email_headers = opt->encode_email_headers;
++	ctx.check_in_body_patch_breaks = opt->check_in_body_patch_breaks;
+ 	ctx.reflog_info = opt->reflog_info;
+ 	ctx.fmt = opt->commit_format;
+ 	ctx.mailmap = opt->mailmap;
+diff --git a/mailinfo.c b/mailinfo.c
+index 9621ba62a3..9945ea6267 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -646,7 +646,7 @@ static void decode_transfer_encoding(struct mailinfo *mi, struct strbuf *line)
+ 	free(ret);
+ }
+ 
+-static inline int patchbreak(const struct strbuf *line)
++int patchbreak(const struct strbuf *line)
+ {
+ 	size_t i;
+ 
+@@ -682,7 +682,7 @@ static inline int patchbreak(const struct strbuf *line)
+ 	return 0;
+ }
+ 
+-static int is_scissors_line(const char *line)
++int is_scissors_line(const char *line)
+ {
+ 	const char *c;
+ 	int scissors = 0, gap = 0;
+diff --git a/mailinfo.h b/mailinfo.h
+index f2ffd0349e..8d4dda5deb 100644
+--- a/mailinfo.h
++++ b/mailinfo.h
+@@ -53,4 +53,7 @@ void setup_mailinfo(struct mailinfo *);
+ int mailinfo(struct mailinfo *, const char *msg, const char *patch);
+ void clear_mailinfo(struct mailinfo *);
+ 
++int patchbreak(const struct strbuf *line);
++int is_scissors_line(const char *line);
++
+ #endif /* MAILINFO_H */
+diff --git a/pretty.c b/pretty.c
+index 6d819103fb..9f999029f5 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -5,6 +5,7 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "string-list.h"
++#include "mailinfo.h"
+ #include "mailmap.h"
+ #include "log-tree.h"
+ #include "notes.h"
+@@ -2097,7 +2098,8 @@ void pp_remainder(struct pretty_print_context *pp,
+ 		  int indent)
+ {
+ 	struct grep_opt *opt = pp->rev ? &pp->rev->grep_filter : NULL;
+-	int first = 1;
++	int first = 1, found_delimiter = 0;
++	struct strbuf linebuf = STRBUF_INIT;
+ 
+ 	for (;;) {
+ 		const char *line = *msg_p;
+@@ -2107,6 +2109,17 @@ void pp_remainder(struct pretty_print_context *pp,
+ 		if (!linelen)
+ 			break;
+ 
++		if (pp->check_in_body_patch_breaks) {
++			strbuf_reset(&linebuf);
++			strbuf_add(&linebuf, line, linelen);
++			if (patchbreak(&linebuf) || is_scissors_line(linebuf.buf)) {
++				strbuf_strip_suffix(&linebuf, "\n");
++				warning("commit message has a patch delimiter: '%s'",
++					linebuf.buf);
++				found_delimiter = 1;
++			}
++		}
++
+ 		if (is_blank_line(line, &linelen)) {
+ 			if (first)
+ 				continue;
+@@ -2133,6 +2146,12 @@ void pp_remainder(struct pretty_print_context *pp,
+ 		}
+ 		strbuf_addch(sb, '\n');
+ 	}
++
++	if (found_delimiter)
++		warning("git am might fail to apply this patch. "
++			"Consider indenting the offending lines.");
++
++	strbuf_release(&linebuf);
+ }
+ 
+ void pretty_print_commit(struct pretty_print_context *pp,
+diff --git a/pretty.h b/pretty.h
+index f34e24c53a..12df2f4a39 100644
+--- a/pretty.h
++++ b/pretty.h
+@@ -49,7 +49,8 @@ struct pretty_print_context {
+ 	struct string_list *mailmap;
+ 	int color;
+ 	struct ident_split *from_ident;
+-	unsigned encode_email_headers:1;
++	unsigned encode_email_headers:1,
++		 check_in_body_patch_breaks:1;
+ 	struct pretty_print_describe_status *describe_status;
+ 
+ 	/*
+diff --git a/revision.h b/revision.h
+index 61a9b1316b..f384ab716f 100644
+--- a/revision.h
++++ b/revision.h
+@@ -230,7 +230,8 @@ struct rev_info {
+ 			date_mode_explicit:1,
+ 			preserve_subject:1,
+ 			encode_email_headers:1,
+-			include_header:1;
++			include_header:1,
++			check_in_body_patch_breaks:1;
+ 	unsigned int	disable_stdin:1;
+ 	/* --show-linear-break */
+ 	unsigned int	track_linear:1,
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index fbec8ad2ef..4868ea2b91 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -2329,4 +2329,20 @@ test_expect_success 'interdiff: solo-patch' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'warn if commit message contains patch delimiter' '
++	>delim &&
++	git add delim &&
++	GIT_EDITOR="printf \"title\n\n---\" >" git commit &&
++	git format-patch -1 2>stderr &&
++	grep "warning: commit message has a patch delimiter" stderr
++'
++
++test_expect_success 'warn if commit message contains scissors' '
++	>scissors &&
++	git add scissors &&
++	GIT_EDITOR="printf \"title\n\n-- >8 --\" >" git commit &&
++	git format-patch -1 2>stderr &&
++	grep "warning: commit message has a patch delimiter" stderr
++'
++
+ test_done
+-- 
+2.37.2
 
-https://git-scm.com/docs/partial-clone#_non_tasks also said:
-
-Every time the subject of "demand loading blobs" comes up it seems
-that someone suggests that the server be allowed to "guess" and send
-additional objects that may be related to the requested objects.
-
-So I guess --filter=3Ddepth:<depth> may be a solution, but as you and
-Derrick have said: there are still very many problems with this depth filte=
-r.
-
-> But Stolee's concerns are valid, and made me think about it more. See
-> below for a more detailed analysis.
->
-> On Thu, 1 Sep 2022, Derrick Stolee wrote:
->
-> > On 9/1/2022 5:41 AM, ZheNing Hu via GitGitGadget wrote:
-> >
-> > > [...]
-> > >
-> > > Disadvantages of git clone --filter=3Dblob:none with git
-> > > sparse-checkout: The git client needs to send a lot of missing
-> > > objects' id to the server, this can be very wasteful of network
-> > > traffic.
-> >
-> > Asking for a list of blobs (especially limited to a sparse-checkout) is
-> > much more efficient than what will happen when a user tries to do almos=
-t
-> > anything in a repository formed the way you did here.
->
-> I agree. When you have all the commit and tree objects on the local side,
-> you can enumerate all the blob objects you need in one fell swoop, then
-> fetch them in a single network round trip.
->
-> When you lack tree objects, or worse, commit objects, this is not true.
-> You may very well need to fetch _quite_ a bunch of objects, then inspect
-> them to find out that you need to fetch more tree/commit objects, and the=
-n
-> a couple more round trips, before you can enumerate all of the objects yo=
-u
-> need.
->
-
-I think this is because the previous design was that you had to fetch
-these missing
-commits (also trees) and all their ancestors. Maybe we can modify git
-rev-list to
-make it understand missing commits...
-
-> Concrete example: let's assume that you clone git.git with a "partial
-> depth" of 50. That is, while cloning, all of the tip commits' graphs will
-> be traversed up until the commits that are removed by 49 edges in the
-> commit graph. For example, v0.99~49 will be present locally after cloning=
-,
-> but not v0.99~50.
->
-> Now, the first-parent depth of v0.99 is 955 (verify with `git rev-list
-> --count --first-parent v0.99`). None of the commits reachable from v0.99
-> other than the tip itself seem to be closer to any other tag, so all
-> commits reachable from v0.99~49 will be missing locally. And since revert=
-s
-> are rare, we must assume that the vast majority of the associated root
-> tree objects are missing, too.
->
-> Digging through history, a contributor might need to investigate where,
-> say, `t/t4100/t-apply-7.expect` was introduced (it was in v0.99~206)
-> because they found something looking like a bug and they need to read the
-> commit message to see whether it was intentional. They know that this fil=
-e
-> was already present in v0.99. Naturally, the command-line to investigate
-> that is:
->
->         git log --diff-filter=3DA v0.99 -- t/t4100/t-apply-7.expect
->
-> So what does Git do in that operation? It traverses the commits starting
-> from v0.99, following the chain along the commit parents. When it
-> encounters v0.99~49, it figures out that it has to fetch v0.99~50. To see
-> whether v0.99~49 introduced that file, it then has to inspect that commit
-> object and then fetch the tree object (v0.99~50^{tree}). Then, Git
-> inspects that tree to find out the object ID for v0.99~50^{tree}:t/, sees
-> that it is identical to v0.99~49^{tree}:t/ and therefore the pathspec
-> filter skips this commit from the output of the `git log` command. A
-> couple of parent traversals later (always fetching the parent commit
-> object individually, then the associated tree object, then figuring out
-> that `t/` is unchanged) Git will encounter v0.99~55 where `t/` _did_
-> change. So now it also has to fetch _that_ tree object.
->
-
-Very convincing example. I think some git commands which may require
-all missing commits history, should fetch all commits in a batch. (so this
-depth filter is not very useful here)
-
-> In total, we are looking at 400+ individual network round trips just to
-> fetch the required tree/commit objects, i.e. before Git can show you the
-> output of that `git log` command. And that's just for back-filling the
-> missing tree/commit objects.
->
-> If we had done this using a shallow clone, Git would have stopped at the
-> shallow boundary, the user would have had a chance to increase the depth
-> in bigger chunks (probably first extending the depth by 50, then maybe
-> 100, then maybe going for 500) and while it would have been a lot of
-> manual labor, the total time would be still a lot shorter than those 400+
-> network round trips (which likely would incur some throttling on the
-> server side).
->
-
-Agree.
-
-> > Thinking about this idea, I don't think it is viable. I would need to
-> > see a lot of work done to test these scenarios closely to believe that
-> > this type of partial clone is a desirable working state.
->
-> Indeed, it is hard to think of a way how the design could result in
-> anything but undesirable behavior, both on the client and the server side=
-.
->
-> We also have to consider that our experience with large repositories
-> demonstrates that tree and commit objects delta pretty well and are
-> virtually never a concern when cloning. It is always the sheer amount of
-> blob objects that is causing poor user experience when performing
-> non-partial clones of large repositories.
->
-
-Thanks, I think I understand the problem here. By the way, does it make
-sense to download just some of the commits/trees in some big repository
-which have several million commits/trees?
-
-> Now, I can be totally wrong in my expectation that there is _no_ scenario
-> where cloning with a "partial depth" would cause anything but poor
-> performance. If I am wrong, then there is value in having this feature,
-> but since it causes undesirable performance in all cases I can think of,
-> it definitely should be guarded behind an opt-in flag.
->
-
-Well, now I think this depth filter might be a better fit for git fetch.
-
-If git checkout or other commands which just need to check
-few commits, and find almost all objects (maybe >=3D 75%) in a
-commit are not local, it can use this depth filter to download them.
-
-> Ciao,
-> Dscho
-
-Thanks,
-ZheNing Hu
