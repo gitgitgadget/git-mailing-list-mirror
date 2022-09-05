@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A7C4ECAAD5
-	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 08:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FAD2ECAAA1
+	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 08:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236988AbiIEI3a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Sep 2022 04:29:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55900 "EHLO
+        id S237869AbiIEI3d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Sep 2022 04:29:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237821AbiIEI2s (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237822AbiIEI2s (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 5 Sep 2022 04:28:48 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 970BD4D241
-        for <git@vger.kernel.org>; Mon,  5 Sep 2022 01:27:24 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id v7-20020a1cac07000000b003a6062a4f81so7343875wme.1
-        for <git@vger.kernel.org>; Mon, 05 Sep 2022 01:27:24 -0700 (PDT)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 221FE4D4FE
+        for <git@vger.kernel.org>; Mon,  5 Sep 2022 01:27:29 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id m17-20020a7bce11000000b003a5bedec07bso7369268wmc.0
+        for <git@vger.kernel.org>; Mon, 05 Sep 2022 01:27:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=FSRPk0utgaaZ4KhwogSS4ItmV5JB5Q8+TAvxIiYVyDA=;
-        b=VSUKeYZ/rHOKnAMSJmdKSZg80GH+iLy9uqoOaqbt2g7BzWWgKW0n+VNnPMRjFWLmUk
-         wsqt552HMfZqEgwcTLDwHQe/SaPLGp38XKIwlusQAI8nIqL6HDJcsbazlrYeKwat1LQH
-         P0MpwkfbypCF/3z8u69SniKduDiYTn7PWEVdUhghLxZp0NSVIOA9sBYIf4l3yQXiPCdM
-         l+s9YS70yqJ1qMcoFohfcswjsatrgh9FUO68U/uPd81kQKtnaypiT4Ui/MlFPsfkklHB
-         Y5SjxxQcbNsIG8f7Nlp9EtyZDNQ4lVMAhaDl96/IQ/BU64XE2YJC/tybMeE9WzYAUCYp
-         Bf5g==
+        bh=IdUy3+kZe4DFrQgXE6IqVhIyiNFZjiUVuT2YejjzYl4=;
+        b=gIynVatqXSmXncPCbGVX5WKzU6Vko0y2wU8xzzjPeYi2SEEG9g4tsiILo2HYOTT4Jd
+         vJ229qUaxH2c2iLvWB7SCcovTfQiGTPyGfMNRIGMlplVP4O2OLYZRj6EdxRXtYp+cn7f
+         yzUfFhpkTUbFV+fMpd0ET95W/Ekk1kZbSG7ezEqx+iLtp7gR0tPa6gbY+otQHGPonJuX
+         mra4kqCWqY3bshgP9KFQr2PuPdttQWAOGS/LeKbRxsHf1ldMUuYYFXxAKcX+/jwzI9qL
+         Du1gj1BMxGJ4nxDru/CpizaUpo61u0ID8eE0FwRuu3XSG20tH1Pn4k1aYGYrfMHRtwXH
+         RT/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=FSRPk0utgaaZ4KhwogSS4ItmV5JB5Q8+TAvxIiYVyDA=;
-        b=sPAZXT2lwGNKJ7qaLq3bj30mr7gbKh6zB7fxhlKY52BccRVXc2La/kZ2ZGov6S3kvQ
-         1VBPxxSzINFzw3ER5Injt4/TqtWxTXWcVpnMRPrhlx/BM0rbTsilOtLXM75mq4BkWi9i
-         pUqho737uMZ90Y2wWS083mkyDVEX17yL2WC6WK/YtBLq8mX5KUju76pDiLvQYzkiDlnZ
-         qEcPehLXsF+Pkugn6e6fjKW6puI4qYbUQhw2frsjc1THefJnMhKSGjjsM1PPx4weXmy7
-         ojQEUHZeGpIvnOZa/acVShXWlNL+inZ3Zn1q/UQ3dzULJgngb7KGAt919ZgKmF4OnmrS
-         na2g==
-X-Gm-Message-State: ACgBeo27QjVYtPNYKm3uRCsDW+/LlDuBfXQRSrbcbTxmqmDZ/9Q4UsJK
-        uC2PDSGEnBcTAmIZpDTi8m67YXreTi6cFg==
-X-Google-Smtp-Source: AA6agR4jv/GpBaK0rtfLBgv7JEcM7CHuyFQpH67y4XfSJDi19hf3DsZiTx3SRfCQ6Dj7YOtVlgZ99g==
-X-Received: by 2002:a05:600c:2242:b0:3a8:4007:bc5e with SMTP id a2-20020a05600c224200b003a84007bc5emr9542948wmm.99.1662366441281;
-        Mon, 05 Sep 2022 01:27:21 -0700 (PDT)
+        bh=IdUy3+kZe4DFrQgXE6IqVhIyiNFZjiUVuT2YejjzYl4=;
+        b=tY59UYtQnKdB9ICcKbrZ/LwMviQj/9W9QRobgF4s7+f9Utp4bLaC4B8Z8IIuFPUm20
+         DcVOn8Q5lL03LjNx+wPJjCHuF1L/AoyC0fwQX3LUQQHeDDHxQPKPumm3NzwKspsz95ay
+         qFISUCbuQwJQvT/VSBY5Y67idDlLvsvJPVx4rFDrZ5Rnys8pbfn14tFoKRHrG6ULWpqZ
+         pTOqNpFB2S11NFikB1LF/KVubJagm7xYYqJ4kgziexOOXlmyl0Ix53MXypvc76TN70sY
+         KxjqabRmjPltZa0GS2D3/b1i7kOhWCVKZRH5Q3ggKNPqmNebrTC+Aw1V1vX99TPv6tGQ
+         1j2Q==
+X-Gm-Message-State: ACgBeo22toxKTqXQLhCMYgLKq0JCvkqkUQ3M9IvKFnNpIIPuiJc5ueBC
+        3kaNxr9+exxz40eOfMAB/hnaCdJIEtsiCA==
+X-Google-Smtp-Source: AA6agR7621J7qXq84rZGfCQt1Es+AG2vV/MAprncF/Vujvyj3M8IzTKb0Fj0XvaxMNHIof/Q/xmlqA==
+X-Received: by 2002:a05:600c:4f10:b0:3a5:f8c8:a5b5 with SMTP id l16-20020a05600c4f1000b003a5f8c8a5b5mr10083364wmq.34.1662366444112;
+        Mon, 05 Sep 2022 01:27:24 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i4-20020a05600c354400b003a2f6367049sm10564258wmq.48.2022.09.05.01.27.20
+        by smtp.gmail.com with ESMTPSA id i4-20020a05600c354400b003a2f6367049sm10564258wmq.48.2022.09.05.01.27.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Sep 2022 01:27:20 -0700 (PDT)
+        Mon, 05 Sep 2022 01:27:23 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
         John Cai <johncai86@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 30/34] doc txt & -h consistency: make "commit" consistent
-Date:   Mon,  5 Sep 2022 10:26:41 +0200
-Message-Id: <patch-30.34-0aea4ee2e03-20220902T092734Z-avarab@gmail.com>
+Subject: [PATCH 33/34] doc txt & -h consistency: make "worktree" consistent
+Date:   Mon,  5 Sep 2022 10:26:44 +0200
+Message-Id: <patch-33.34-280c3b56d97-20220902T092734Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.3.1425.g73df845bcb2
 In-Reply-To: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
 References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
@@ -71,34 +71,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make the "-h" output of "git commit" consistent with the *.txt version
-by exhaustively listing the options that it takes.
+Make the "worktree" -h output consistent with the *.txt version.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/commit.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ builtin/worktree.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 21ad4ccbf87..64f420bcbf6 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -40,7 +40,14 @@
- #include "pretty.h"
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index ba6846c3788..4a24d53be15 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -16,17 +16,18 @@
+ #include "quote.h"
  
- static const char * const builtin_commit_usage[] = {
--	N_("git commit [<options>] [--] <pathspec>..."),
-+	N_("git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]\n"
-+	   "           [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]\n"
-+	   "           [-F <file> | -m <msg>] [--reset-author] [--allow-empty]\n"
-+	   "           [--allow-empty-message] [--no-verify] [-e] [--author=<author>]\n"
-+	   "           [--date=<date>] [--cleanup=<mode>] [--[no-]status]\n"
-+	   "           [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
-+	   "           [(--trailer <token>[(=|:)<value>])...] [-S[<keyid>]]\n"
-+	   "           [--] [<pathspec>...]"),
- 	NULL
- };
- 
+ #define BUILTIN_WORKTREE_ADD_USAGE \
+-	N_("git worktree add [<options>] <path> [<commit-ish>]")
++	N_("git worktree add [-f] [--detach] [--checkout] [--lock [--reason <string>]]\n" \
++	   "                 [-b <new-branch>] <path> [<commit-ish>]")
+ #define BUILTIN_WORKTREE_LIST_USAGE \
+-	N_("git worktree list [<options>]")
++	N_("git worktree list [-v | --porcelain [-z]]")
+ #define BUILTIN_WORKTREE_LOCK_USAGE \
+-	N_("git worktree lock [<options>] <path>")
++	N_("git worktree lock [--reason <string>] <worktree>")
+ #define BUILTIN_WORKTREE_MOVE_USAGE \
+ 	N_("git worktree move <worktree> <new-path>")
+ #define BUILTIN_WORKTREE_PRUNE_USAGE \
+-	N_("git worktree prune [<options>]")
++	N_("git worktree prune [-n] [-v] [--expire <expire>]")
+ #define BUILTIN_WORKTREE_REMOVE_USAGE \
+-	N_("git worktree remove [<options>] <worktree>")
++	N_("git worktree remove [-f] <worktree>")
+ #define BUILTIN_WORKTREE_REPAIR_USAGE \
+ 	N_("git worktree repair [<path>...]")
+ #define BUILTIN_WORKTREE_UNLOCK_USAGE \
 -- 
 2.37.3.1425.g73df845bcb2
 
