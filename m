@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0E42ECAAD5
-	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 08:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D9B9ECAAD5
+	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 08:27:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237618AbiIEI1Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Sep 2022 04:27:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53888 "EHLO
+        id S237621AbiIEI1S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Sep 2022 04:27:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237572AbiIEI1B (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Sep 2022 04:27:01 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17B45193
-        for <git@vger.kernel.org>; Mon,  5 Sep 2022 01:27:00 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id c131-20020a1c3589000000b003a84b160addso6645002wma.2
+        with ESMTP id S237585AbiIEI1C (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2022 04:27:02 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0508CDFF
+        for <git@vger.kernel.org>; Mon,  5 Sep 2022 01:27:01 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id h204-20020a1c21d5000000b003a5b467c3abso7337589wmh.5
         for <git@vger.kernel.org>; Mon, 05 Sep 2022 01:27:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=GyTXPB5OauXc/DW3rjfYm60LdGuRAxAMKkQJ0jj1E/Y=;
-        b=q6D3LtD14LmBs1tPboKcDMBPPdZKNwZpjAZYTmhMCpxK5ylhDBkveFDqgwD8KeIZuF
-         x4sBUgimI33ng3ABaYdzHeXpyhSXKAIhSQI7A+tgEKIF7Qkm7FqzLnssxDA++BF5k0WO
-         T2++QUl9RY+IG99igwRy2gqXZtGvw8oDDiPqNWB6NmaSefpUYZaER0Myn1bjc1AcKF++
-         QPeVhemQ314Tp2/0ht/rezdieoXbzqUsRc3MiIH3grpAUSOxvcRxpgMEPqb/62lsupgI
-         WbF+dEvFRhWJnWYX5JkWYF2t03hBciUrUsE1EKkpijMUhWUUvtzHYEmQ7+R4Fh+E1Ale
-         TVtg==
+        bh=kOkihAzbAgzYJ1FHpFF2E1YoGSEhHH0wjHagigMkUyQ=;
+        b=Hn+ftNiA6P8J/xrC01ORLdVxdu0BqCvBO1RSnIlqHEKh/NDdkmkQX+8mgtrynOQvyX
+         eXaELmFFDWL3IzkvLUT8zI11JzlA01mTgHYtzIZbwAxe0lSDkfiHulsfW0uHBpTc1IVZ
+         axVifOv5gBHzsozmY2EpXIWVXkRdyrHIfq0/SW62KM1tB3ohrtKc58abpVHSMR6U/Z4+
+         1FYnHCqUW8wJ97PvliaoTsnHXpzmzOiEVaGIn1RuTyRKPt/GscABKxuX+J3ja92y2Fog
+         mX2ANQtOmBBUNyPzDkecFpzZ+pguINVh1neoY0DnVEPxtOtd44M9fg67101z6APfmanY
+         9OGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=GyTXPB5OauXc/DW3rjfYm60LdGuRAxAMKkQJ0jj1E/Y=;
-        b=raJ0YAwg8sPexAWbLkK/PSHUIbfaUf8lrUaQrDWgIUx+G2HrFHrQSsro42FcDR8YfJ
-         m2cLWugzWTPoQUAtcRu5iFsqpOSufsfCYdy4cKYJlB2N89URk6ErZIEh184uE4lk+RS4
-         B8SOKcZa5gS9v57eSAdVbZArJrii7sfwyQhW5Yqk4dYiU4yundvvUjrvIqhAbDfxHYXo
-         U6C8j2ayk2IiqZGqD9KiDJf2aT7/QuVHpSuhAhV8kNhuaIh/aKo8XQ2gXHPzJuy/plN7
-         taXDmzNcQZZCJ45uzbdk/VybBMjwWz39pTbvHm/+P4nBGjn2pB6xcQbNVFtYjWZOKtd2
-         U9vw==
-X-Gm-Message-State: ACgBeo2SM2EHf2shuwdQkjFeOci8VvOOiJLXow0lN9EnVkZZlHPYBRZB
-        Zf5trT7Ogh8Gf8l2j/hqRsBlY6eVVHPvHA==
-X-Google-Smtp-Source: AA6agR7LzcOc0L9in/z2ZLSs6pmP3dqh23lCDWFzGICOAbAmS/vwTes8X2WGlaTjEmGYWTTLrp8spg==
-X-Received: by 2002:a7b:c016:0:b0:3a5:fff2:62f4 with SMTP id c22-20020a7bc016000000b003a5fff262f4mr10382902wmb.104.1662366418332;
-        Mon, 05 Sep 2022 01:26:58 -0700 (PDT)
+        bh=kOkihAzbAgzYJ1FHpFF2E1YoGSEhHH0wjHagigMkUyQ=;
+        b=zPZ8zCL056TxF+R1H0LNLs3U4vdHrPR3UlRZYEKN3sHOCjhBdsAba2kYQEDvtPgeZ6
+         wMIdRDFi12ix/4q8/cwiwTL/+6Ghc1Vr7FANSUXykCuckFwAXbjuVHbeaxgM0yZrXBBv
+         Y8NxMOeWEnfEc4G57YOWkk10BCpGDngHjqmggGPyHphrqKb/J2esxMaWXhxq8e9D/8z3
+         9nQKd4dw8Km7sB4ytXzVvf9WakIiB+JGJiVf4R3J+E8+rnqn7dxokR71X8OhVBbjq/SX
+         i0oRRysfaCVZ8/6r2n5nUlQfCEOtRl2fQhbcM3TuCsc0tPaXc+HuyJNv29mMfj3/nQzz
+         1aPw==
+X-Gm-Message-State: ACgBeo06q+ramAOXu1Ssofd0hFzwEhMaJdK8iud1ttf84yIfSQPKi4uk
+        10FM6GZ1pS8ybpEBcycN3rBoupIq3gasww==
+X-Google-Smtp-Source: AA6agR6/4spEsDC2hYZlVMxh6PbynKO+E++S6CwFfEHPaTpZ4lxdTvzTTols97ymzxMyYpjCnr4tdw==
+X-Received: by 2002:a05:600c:3512:b0:3a5:e9d3:d418 with SMTP id h18-20020a05600c351200b003a5e9d3d418mr10160878wmq.0.1662366419166;
+        Mon, 05 Sep 2022 01:26:59 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i4-20020a05600c354400b003a2f6367049sm10564258wmq.48.2022.09.05.01.26.57
+        by smtp.gmail.com with ESMTPSA id i4-20020a05600c354400b003a2f6367049sm10564258wmq.48.2022.09.05.01.26.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Sep 2022 01:26:57 -0700 (PDT)
+        Mon, 05 Sep 2022 01:26:58 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
         John Cai <johncai86@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 07/34] doc SYNOPSIS & -h: fix incorrect alternates syntax
-Date:   Mon,  5 Sep 2022 10:26:18 +0200
-Message-Id: <patch-07.34-a070c97f29b-20220902T092734Z-avarab@gmail.com>
+Subject: [PATCH 08/34] built-ins: consistently add "\n" between "usage" and options
+Date:   Mon,  5 Sep 2022 10:26:19 +0200
+Message-Id: <patch-08.34-75c39a2ff83-20220902T092734Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.3.1425.g73df845bcb2
 In-Reply-To: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
 References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
@@ -71,78 +71,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix the incorrect "[-o | --option <argument>]" syntax, which should be
-"[(-o | --option) <argument>]", we were previously claiming that only
-the long option accepted the "<argument>", which isn't what we meant.
+Change commands in the "diff" family and "rev-list" to separate the
+usage information and option listing with an empty line.
 
-Unlike a preceding commit where this was fixed for commands which had
-inconsistent "-h" and *.txt, for "stash" it's been with us in both the
-"-h" and *.txt since bd514cada4b (stash: introduce 'git stash store',
-2013-06-15).
+In the case of "git diff -h" we did this already (but let's use a
+consistent "\n" pattern there), for the rest these are now consistent
+with how the parse_options() API would emit usage.
+
+As we'll see in a subsequent commit this also helps to make the "git
+<cmd> -h" output more easily machine-readable, as we can assume that
+the usage usage information is separated from the options by an empty
+line.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-stash.txt | 6 +++---
- builtin/stash.c             | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ builtin/diff-files.c | 1 +
+ builtin/diff-index.c | 1 +
+ builtin/diff-tree.c  | 1 +
+ builtin/diff.c       | 3 ++-
+ builtin/rev-list.c   | 1 +
+ 5 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 6e15f475257..0df21321e50 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -14,12 +14,12 @@ SYNOPSIS
- 'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
- 'git stash' branch <branchname> [<stash>]
- 'git stash' [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]
--	     [-u|--include-untracked] [-a|--all] [-m|--message <message>]
-+	     [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]
- 	     [--pathspec-from-file=<file> [--pathspec-file-nul]]
- 	     [--] [<pathspec>...]]
- 'git stash' clear
- 'git stash' create [<message>]
--'git stash' store [-m|--message <message>] [-q|--quiet] <commit>
-+'git stash' store [(-m|--message) <message>] [-q|--quiet] <commit>
+diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+index 92cf6e1e922..096ea2fedbc 100644
+--- a/builtin/diff-files.c
++++ b/builtin/diff-files.c
+@@ -15,6 +15,7 @@
  
- DESCRIPTION
- -----------
-@@ -47,7 +47,7 @@ stash index (e.g. the integer `n` is equivalent to `stash@{n}`).
- COMMANDS
- --------
+ static const char diff_files_usage[] =
+ "git diff-files [-q] [-0 | -1 | -2 | -3 | -c | --cc] [<common-diff-options>] [<path>...]"
++"\n"
+ COMMON_DIFF_OPTIONS_HELP;
  
--push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [-m|--message <message>] [--pathspec-from-file=<file> [--pathspec-file-nul]] [--] [<pathspec>...]::
-+push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [(-m|--message) <message>] [--pathspec-from-file=<file> [--pathspec-file-nul]] [--] [<pathspec>...]::
+ int cmd_diff_files(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index 7d158af6b6d..e667cf52e7d 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -11,6 +11,7 @@
+ static const char diff_cache_usage[] =
+ "git diff-index [-m] [--cached] "
+ "[<common-diff-options>] <tree-ish> [<path>...]"
++"\n"
+ COMMON_DIFF_OPTIONS_HELP;
  
- 	Save your local modifications to a new 'stash entry' and roll them
- 	back to HEAD (in the working tree and in the index).
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 1ba24c11737..0fc359e9d39 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -29,7 +29,7 @@ static const char * const git_stash_usage[] = {
- 	N_("git stash branch <branchname> [<stash>]"),
- 	"git stash clear",
- 	N_("git stash [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
--	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
-+	   "          [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]\n"
- 	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
- 	   "          [--] [<pathspec>...]]"),
- 	N_("git stash save [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
-@@ -73,13 +73,13 @@ static const char * const git_stash_clear_usage[] = {
- };
+ int cmd_diff_index(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index 116097a404a..23f58702fa0 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -85,6 +85,7 @@ static int diff_tree_stdin(char *line)
+ static const char diff_tree_usage[] =
+ "git diff-tree [--stdin] [-m] [-c | --cc] [-s] [-v] [--pretty] [-t] [-r] [--root] "
+ "[<common-diff-options>] <tree-ish> [<tree-ish>] [<path>...]\n"
++"\n"
+ "  -r            diff recursively\n"
+ "  -c            show combined diff for merge commits\n"
+ "  --cc          show combined diff for merge commits removing uninteresting hunks\n"
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 54bb3de964c..67760b67552 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -30,7 +30,8 @@ static const char builtin_diff_usage[] =
+ "   or: git diff [<options>] [--merge-base] <commit> [<commit>...] <commit> [--] [<path>...]\n"
+ "   or: git diff [<options>] <commit>...<commit> [--] [<path>...]\n"
+ "   or: git diff [<options>] <blob> <blob>\n"
+-"   or: git diff [<options>] --no-index [--] <path> <path>\n"
++"   or: git diff [<options>] --no-index [--] <path> <path>"
++"\n"
+ COMMON_DIFF_OPTIONS_HELP;
  
- static const char * const git_stash_store_usage[] = {
--	N_("git stash store [-m|--message <message>] [-q|--quiet] <commit>"),
-+	N_("git stash store [(-m|--message) <message>] [-q|--quiet] <commit>"),
- 	NULL
- };
+ static const char *blob_path(struct object_array_entry *entry)
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index fba6f5d51f3..f67e2b33555 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -21,6 +21,7 @@
  
- static const char * const git_stash_push_usage[] = {
- 	N_("git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
--	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
-+	   "          [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]\n"
- 	   "          [--] [<pathspec>...]]"),
- 	NULL
- };
+ static const char rev_list_usage[] =
+ "git rev-list [<options>] <commit-id>... [-- <path>...]\n"
++"\n"
+ "  limiting output:\n"
+ "    --max-count=<n>\n"
+ "    --max-age=<epoch>\n"
 -- 
 2.37.3.1425.g73df845bcb2
 
