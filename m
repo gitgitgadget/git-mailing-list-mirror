@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D9B9ECAAD5
-	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 08:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EC98ECAAD5
+	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 08:27:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237621AbiIEI1S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Sep 2022 04:27:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53900 "EHLO
+        id S237633AbiIEI1Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Sep 2022 04:27:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237585AbiIEI1C (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236988AbiIEI1C (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 5 Sep 2022 04:27:02 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0508CDFF
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7869193
         for <git@vger.kernel.org>; Mon,  5 Sep 2022 01:27:01 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id h204-20020a1c21d5000000b003a5b467c3abso7337589wmh.5
-        for <git@vger.kernel.org>; Mon, 05 Sep 2022 01:27:00 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id c11so6043906wrp.11
+        for <git@vger.kernel.org>; Mon, 05 Sep 2022 01:27:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=kOkihAzbAgzYJ1FHpFF2E1YoGSEhHH0wjHagigMkUyQ=;
-        b=Hn+ftNiA6P8J/xrC01ORLdVxdu0BqCvBO1RSnIlqHEKh/NDdkmkQX+8mgtrynOQvyX
-         eXaELmFFDWL3IzkvLUT8zI11JzlA01mTgHYtzIZbwAxe0lSDkfiHulsfW0uHBpTc1IVZ
-         axVifOv5gBHzsozmY2EpXIWVXkRdyrHIfq0/SW62KM1tB3ohrtKc58abpVHSMR6U/Z4+
-         1FYnHCqUW8wJ97PvliaoTsnHXpzmzOiEVaGIn1RuTyRKPt/GscABKxuX+J3ja92y2Fog
-         mX2ANQtOmBBUNyPzDkecFpzZ+pguINVh1neoY0DnVEPxtOtd44M9fg67101z6APfmanY
-         9OGw==
+        bh=Hea2vi2NWUuK/hENlYVLOY5BKstOUOO5qGWcLAUM3Qw=;
+        b=ViLVcKTq0FTbtK5/L8Yf+x+CGw7CRZvV+nwfPg2FEpvYMQm3bNflJ7p/029lQ8FHQz
+         9dfRRl89LB6pA1RKqi3/bH0cBix4IgzmCLnaReZKDuirS2ig8Hoj6E/KY5882upItHcq
+         hb8MJvdIGFHjeuCoAaoWPnny16fe4t4mzcLJyd1kNl3mdLI756j4CKgQTI571C4A6oMn
+         RBA+N4qddAxpI9TLM4U02rDP2aSBiV2YlieASpI8GtrNhFOba+KV+McV+jkCcbq7Gbsw
+         0PgSpOtODpOl8xxGaRhX8OY1Vwdob9sa5/ZH+Y3Dweapu5yGdHvPVXxo33tZodxYcjQk
+         Ze1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=kOkihAzbAgzYJ1FHpFF2E1YoGSEhHH0wjHagigMkUyQ=;
-        b=zPZ8zCL056TxF+R1H0LNLs3U4vdHrPR3UlRZYEKN3sHOCjhBdsAba2kYQEDvtPgeZ6
-         wMIdRDFi12ix/4q8/cwiwTL/+6Ghc1Vr7FANSUXykCuckFwAXbjuVHbeaxgM0yZrXBBv
-         Y8NxMOeWEnfEc4G57YOWkk10BCpGDngHjqmggGPyHphrqKb/J2esxMaWXhxq8e9D/8z3
-         9nQKd4dw8Km7sB4ytXzVvf9WakIiB+JGJiVf4R3J+E8+rnqn7dxokR71X8OhVBbjq/SX
-         i0oRRysfaCVZ8/6r2n5nUlQfCEOtRl2fQhbcM3TuCsc0tPaXc+HuyJNv29mMfj3/nQzz
-         1aPw==
-X-Gm-Message-State: ACgBeo06q+ramAOXu1Ssofd0hFzwEhMaJdK8iud1ttf84yIfSQPKi4uk
-        10FM6GZ1pS8ybpEBcycN3rBoupIq3gasww==
-X-Google-Smtp-Source: AA6agR6/4spEsDC2hYZlVMxh6PbynKO+E++S6CwFfEHPaTpZ4lxdTvzTTols97ymzxMyYpjCnr4tdw==
-X-Received: by 2002:a05:600c:3512:b0:3a5:e9d3:d418 with SMTP id h18-20020a05600c351200b003a5e9d3d418mr10160878wmq.0.1662366419166;
-        Mon, 05 Sep 2022 01:26:59 -0700 (PDT)
+        bh=Hea2vi2NWUuK/hENlYVLOY5BKstOUOO5qGWcLAUM3Qw=;
+        b=okyx8PZPPc8Lo7Up70BxOTnOLsBdyjDEFDAfdi7a6cDMpLCsJwmt7c/I5lyU61YjlS
+         x1VQrCbarY+iflVFwSZdNRbmdhXEABmcP3jlHotadNuFY/s0Xaoms+rMa3RAg+WB6E09
+         nH7kJ0KpbBEGlYOBCvElmWq1zR8t9DxFPJFReClFjagO/iDKFcbTqLF+oM9Nmr9Ciapu
+         zcznkInZPCnkUbkejlvbpGMB4ufmyUBgviij/NrI3XxFoibFfgy9vaqMWX3aLdtQmHmq
+         Y63mDYYb/EVGhegXWyLLy0VWa3dFjwxdIag0XABw7IMoVKyC9/Vas1ofBEcRNFB9Lh6M
+         M8rg==
+X-Gm-Message-State: ACgBeo2ParB9XfYn6IKOG3Et3sK/qD44BF7ntb3hW+slS6xpt4hrCbLH
+        fxEQU3stXC2CfR6Ltc+ONs/vu58Dq+YkyA==
+X-Google-Smtp-Source: AA6agR7s6q+Lhd5ylOVR9672h6zgK5ViykJSaolFzwntKRVHcmMQxMRpLeiMfKXpw8RcgrT7tRB1Uw==
+X-Received: by 2002:a5d:4301:0:b0:21b:8af6:4a21 with SMTP id h1-20020a5d4301000000b0021b8af64a21mr24899489wrq.296.1662366421110;
+        Mon, 05 Sep 2022 01:27:01 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i4-20020a05600c354400b003a2f6367049sm10564258wmq.48.2022.09.05.01.26.58
+        by smtp.gmail.com with ESMTPSA id i4-20020a05600c354400b003a2f6367049sm10564258wmq.48.2022.09.05.01.27.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Sep 2022 01:26:58 -0700 (PDT)
+        Mon, 05 Sep 2022 01:27:00 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
         John Cai <johncai86@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 08/34] built-ins: consistently add "\n" between "usage" and options
-Date:   Mon,  5 Sep 2022 10:26:19 +0200
-Message-Id: <patch-08.34-75c39a2ff83-20220902T092734Z-avarab@gmail.com>
+Subject: [PATCH 10/34] doc txt & -h consistency: fix incorrect alternates syntax
+Date:   Mon,  5 Sep 2022 10:26:21 +0200
+Message-Id: <patch-10.34-965f6b3b3cb-20220902T092734Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.3.1425.g73df845bcb2
 In-Reply-To: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
 References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
@@ -71,89 +71,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change commands in the "diff" family and "rev-list" to separate the
-usage information and option listing with an empty line.
+Fix the incorrect "[-o | --option <argument>]" syntax, which should be
+"[(-o | --option) <argument>]", we were previously claiming that only
+the long option accepted the "<argument>", which isn't what we meant.
 
-In the case of "git diff -h" we did this already (but let's use a
-consistent "\n" pattern there), for the rest these are now consistent
-with how the parse_options() API would emit usage.
-
-As we'll see in a subsequent commit this also helps to make the "git
-<cmd> -h" output more easily machine-readable, as we can assume that
-the usage usage information is separated from the options by an empty
-line.
+This syntax issue for "bugreport" originated in
+238b439d698 (bugreport: add tool to generate debugging info,
+2020-04-16), and for "diagnose" in 6783fd3cef0 (builtin/diagnose.c:
+create 'git diagnose' builtin, 2022-08-12), which copied and adjusted
+"bugreport" documentation and code.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/diff-files.c | 1 +
- builtin/diff-index.c | 1 +
- builtin/diff-tree.c  | 1 +
- builtin/diff.c       | 3 ++-
- builtin/rev-list.c   | 1 +
- 5 files changed, 6 insertions(+), 1 deletion(-)
+ builtin/bugreport.c | 2 +-
+ builtin/diagnose.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index 92cf6e1e922..096ea2fedbc 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -15,6 +15,7 @@
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index faa268f3cfb..23170113cc8 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -60,7 +60,7 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
+ }
  
- static const char diff_files_usage[] =
- "git diff-files [-q] [-0 | -1 | -2 | -3 | -c | --cc] [<common-diff-options>] [<path>...]"
-+"\n"
- COMMON_DIFF_OPTIONS_HELP;
+ static const char * const bugreport_usage[] = {
+-	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format>]\n"
++	N_("git bugreport [(-o|--output-directory) <file>] [(-s|--suffix) <format>]\n"
+ 	   "              [--diagnose[=<mode>]"),
+ 	NULL
+ };
+diff --git a/builtin/diagnose.c b/builtin/diagnose.c
+index c7672fa99e2..54491f2c51c 100644
+--- a/builtin/diagnose.c
++++ b/builtin/diagnose.c
+@@ -3,7 +3,7 @@
+ #include "diagnose.h"
  
- int cmd_diff_files(int argc, const char **argv, const char *prefix)
-diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-index 7d158af6b6d..e667cf52e7d 100644
---- a/builtin/diff-index.c
-+++ b/builtin/diff-index.c
-@@ -11,6 +11,7 @@
- static const char diff_cache_usage[] =
- "git diff-index [-m] [--cached] "
- "[<common-diff-options>] <tree-ish> [<path>...]"
-+"\n"
- COMMON_DIFF_OPTIONS_HELP;
- 
- int cmd_diff_index(int argc, const char **argv, const char *prefix)
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index 116097a404a..23f58702fa0 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -85,6 +85,7 @@ static int diff_tree_stdin(char *line)
- static const char diff_tree_usage[] =
- "git diff-tree [--stdin] [-m] [-c | --cc] [-s] [-v] [--pretty] [-t] [-r] [--root] "
- "[<common-diff-options>] <tree-ish> [<tree-ish>] [<path>...]\n"
-+"\n"
- "  -r            diff recursively\n"
- "  -c            show combined diff for merge commits\n"
- "  --cc          show combined diff for merge commits removing uninteresting hunks\n"
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 54bb3de964c..67760b67552 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -30,7 +30,8 @@ static const char builtin_diff_usage[] =
- "   or: git diff [<options>] [--merge-base] <commit> [<commit>...] <commit> [--] [<path>...]\n"
- "   or: git diff [<options>] <commit>...<commit> [--] [<path>...]\n"
- "   or: git diff [<options>] <blob> <blob>\n"
--"   or: git diff [<options>] --no-index [--] <path> <path>\n"
-+"   or: git diff [<options>] --no-index [--] <path> <path>"
-+"\n"
- COMMON_DIFF_OPTIONS_HELP;
- 
- static const char *blob_path(struct object_array_entry *entry)
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index fba6f5d51f3..f67e2b33555 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -21,6 +21,7 @@
- 
- static const char rev_list_usage[] =
- "git rev-list [<options>] <commit-id>... [-- <path>...]\n"
-+"\n"
- "  limiting output:\n"
- "    --max-count=<n>\n"
- "    --max-age=<epoch>\n"
+ static const char * const diagnose_usage[] = {
+-	N_("git diagnose [-o|--output-directory <path>] [-s|--suffix <format>]\n"
++	N_("git diagnose [(-o|--output-directory) <path>] [(-s|--suffix) <format>]\n"
+ 	   "             [--mode=<mode>]"),
+ 	NULL
+ };
 -- 
 2.37.3.1425.g73df845bcb2
 
