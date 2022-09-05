@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA559ECAAA1
-	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 08:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24A5AC6FA86
+	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 08:27:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237663AbiIEI1i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Sep 2022 04:27:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54092 "EHLO
+        id S237670AbiIEI1l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Sep 2022 04:27:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237605AbiIEI1L (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Sep 2022 04:27:11 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CFBFEE13
-        for <git@vger.kernel.org>; Mon,  5 Sep 2022 01:27:05 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id j26so4865265wms.0
-        for <git@vger.kernel.org>; Mon, 05 Sep 2022 01:27:05 -0700 (PDT)
+        with ESMTP id S237622AbiIEI1S (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2022 04:27:18 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2362712775
+        for <git@vger.kernel.org>; Mon,  5 Sep 2022 01:27:07 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id b16so10278231wru.7
+        for <git@vger.kernel.org>; Mon, 05 Sep 2022 01:27:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=Rt+xlTIIru/9bRW3JAN5QSP+qJRpWcq3MCJ0Nzbyxx0=;
-        b=IFU3qEZjTE4L/RQnBjxt5fCryWY7+8T9Hq92/hzZzTlfN75wTREvytBCswqQ9zjQtU
-         68+VCb5OD26jH3rqu+VINtIfmz38y8JZvbIXz5UIlDY074jgs8jbPrFdaBy1GH7tJj0s
-         hMrnhbHH0GnoSXN9h/5Qv0UJP7Gvkxl9agBiCeEt3TPpF+cnMd48DrKCxXbCi4dv66FI
-         HSTWEneWxZoGmKJHUUsUN2Fz6NWBBSgUd4zGWBFEsAp9JrVUk9iIH7R1/VPgoZyoXj7h
-         PCtyUvHe//4a9O+E/Nfg++8NeFzf62hyK33/6tiDmBNoKY1V11Bg7QrqU0mgqwMiC+Jr
-         tGow==
+        bh=otZe8EhGhPEh/fzuhcfw6OHOoCIKrQBIiYv1nc4qb7k=;
+        b=WGylKSQ1LGwbJshnAxrOtVjxpI1ikA9v60Pg860YmKMx5c6pqodwKSA47AcLODwtBC
+         BiBLV8dL5OQQNkF6VMLqogYFTU4CMNxyDvo7WqVo5CysUg7aP0Ypgp3ldqZdblIVy4IO
+         tZrRP37gHFM/Eb9UGCHSafqLfaDnc8xcpkSb0voAudKaipN/T5Sz2WTY1hOP4OGHiJww
+         dx2naIyYCLuipRDlcci8YRKu3fxURU+eQTQJDr/Wjt6rDAqdoeKh+vs1dKwLxazU42sy
+         ZZ8eYYW8B4Gn9FednlPTiGwKbydi9U6UwManYXx8MS14uRFRDXdUc5RczvMi3T6OK/PC
+         lUOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=Rt+xlTIIru/9bRW3JAN5QSP+qJRpWcq3MCJ0Nzbyxx0=;
-        b=tnngLgV2ULsurqE7E5eW4jwpPbzFnFh4NHFnv8OdnKnOm+fIyEUH326I1Y02P3F8fD
-         6l8mrxwc8erEEJHU4d+BNHI5nWKL3DuTikiPxCd3qiQTkRWGTUehXFkOwH7X6H5xxUYz
-         VZ3GmlgR0I0SX5R3f6sR++DHVLubee5oMIWA6XJDKj4Gqy+RqBvZRaFWtjNOZEnhNcGr
-         AI2At/GqbS/zc5pjs6hPJv4lNjptUH9Y2dCEiAyahWywQpGJbE+TX8rRsVPXl+wUeI6q
-         QyRLDcWyVdSr/K8WxvL7H+rwZiSZsQJULqfbb13rKsJo79N58tgMedVmVm2FD7oH6+L8
-         fYTw==
-X-Gm-Message-State: ACgBeo0NwSedRWZmMo0Uxkx0Niul2dqeS7p9MsFJ6y1KEJoCPK3raPUV
-        Lz+4IcvvfOXx2/WlQ1IDismgTToECgErGA==
-X-Google-Smtp-Source: AA6agR6njZhV/rUrcf+AMnBl5uJSEpp6ZbTFUDyZ+YqJHZtVVBKLg4yTS7ANp5NI+zhN99h420Wxlw==
-X-Received: by 2002:a1c:f016:0:b0:3a8:3d3b:6b8a with SMTP id a22-20020a1cf016000000b003a83d3b6b8amr9933216wmb.168.1662366424099;
+        bh=otZe8EhGhPEh/fzuhcfw6OHOoCIKrQBIiYv1nc4qb7k=;
+        b=lVIptJG6Barlv6tZkOnj0qw2/N3PflIKE939SaCazyLp/1oiKRD3mQpOcvFyvnSAZn
+         AyUkIE/GOYt4/FmHgTPrr0t+dRKShHfhS1aEkBLVG/TLYjR19jAtO4D6EFDCZsdOe3HN
+         /onbTggEiTcXvQqM3dz3FXqQg80gvcnU5mAU7+zYEczq6eGcuvdmQz4aM7WktNk3dpq+
+         3dfgZHE7/WPUZ1UpU2Ij35Yi/x/mKxYQ/MPgG5dXec13JjwTqhRr/eWUQKJNRz2bqyhg
+         vn3reYzB1cLIDAfo9n/JH6ZmbpDLRnrTPs1uzBxgwp/HVDNYURtIR5ewRsotLXIagvX3
+         qHEQ==
+X-Gm-Message-State: ACgBeo1VZyLH6nvoxD/4iLS2RQFo2esXh6VRAh1ij+cAbJAXCjI9PUQt
+        nro5MhwUfCk4GY6C7uvE26p62NYb+BvsPA==
+X-Google-Smtp-Source: AA6agR5f7PTSGRNRCEn0p8qvrV7oiFHgGvNVNgJhmMxf1On7MQM6cEtjKhb3T/FUYFSGFFS8+30vrg==
+X-Received: by 2002:a5d:4882:0:b0:225:3148:9f85 with SMTP id g2-20020a5d4882000000b0022531489f85mr23277592wrq.224.1662366424957;
         Mon, 05 Sep 2022 01:27:04 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i4-20020a05600c354400b003a2f6367049sm10564258wmq.48.2022.09.05.01.27.03
+        by smtp.gmail.com with ESMTPSA id i4-20020a05600c354400b003a2f6367049sm10564258wmq.48.2022.09.05.01.27.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Sep 2022 01:27:03 -0700 (PDT)
+        Mon, 05 Sep 2022 01:27:04 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
         John Cai <johncai86@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 13/34] doc txt & -h consistency: correct padding around "[]()"
-Date:   Mon,  5 Sep 2022 10:26:24 +0200
-Message-Id: <patch-13.34-d88690fa849-20220902T092734Z-avarab@gmail.com>
+Subject: [PATCH 14/34] stash doc SYNOPSIS & -h: correct padding around "[]()"
+Date:   Mon,  5 Sep 2022 10:26:25 +0200
+Message-Id: <patch-14.34-12ec2627504-20220902T092734Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.3.1425.g73df845bcb2
 In-Reply-To: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
 References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
@@ -78,183 +78,109 @@ not "( --all | <pack-filename>... )".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-diff-files.txt     | 2 +-
- Documentation/git-merge-base.txt     | 4 ++--
- Documentation/git-pack-redundant.txt | 2 +-
- Documentation/git-prune-packed.txt   | 2 +-
- Documentation/git-rerere.txt         | 2 +-
- Documentation/git-show-branch.txt    | 4 ++--
- Documentation/git-show-ref.txt       | 4 ++--
- Documentation/git-var.txt            | 2 +-
- Documentation/git-verify-pack.txt    | 2 +-
- builtin/bugreport.c                  | 2 +-
- builtin/diagnose.c                   | 2 +-
- builtin/sparse-checkout.c            | 2 +-
- 12 files changed, 15 insertions(+), 15 deletions(-)
+ Documentation/git-stash.txt | 12 ++++++------
+ builtin/stash.c             | 28 ++++++++++++++--------------
+ 2 files changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/Documentation/git-diff-files.txt b/Documentation/git-diff-files.txt
-index bf1febb9ae7..591e3801b7b 100644
---- a/Documentation/git-diff-files.txt
-+++ b/Documentation/git-diff-files.txt
-@@ -9,7 +9,7 @@ git-diff-files - Compares files in the working tree and the index
- SYNOPSIS
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 0df21321e50..379bea645db 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -9,17 +9,17 @@ SYNOPSIS
  --------
  [verse]
--'git diff-files' [-q] [-0|-1|-2|-3|-c|--cc] [<common-diff-options>] [<path>...]
-+'git diff-files' [-q] [-0 | -1 | -2 | -3 | -c | --cc] [<common-diff-options>] [<path>...]
+ 'git stash' list [<log-options>]
+-'git stash' show [-u|--include-untracked|--only-untracked] [<diff-options>] [<stash>]
+-'git stash' drop [-q|--quiet] [<stash>]
+-'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
++'git stash' show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>]
++'git stash' drop [-q | --quiet] [<stash>]
++'git stash' (pop | apply) [--index] [-q | --quiet] [<stash>]
+ 'git stash' branch <branchname> [<stash>]
+-'git stash' [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]
+-	     [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]
++'git stash' [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
++	     [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]
+ 	     [--pathspec-from-file=<file> [--pathspec-file-nul]]
+ 	     [--] [<pathspec>...]]
+ 'git stash' clear
+ 'git stash' create [<message>]
+-'git stash' store [(-m|--message) <message>] [-q|--quiet] <commit>
++'git stash' store [(-m | --message) <message>] [-q | --quiet] <commit>
  
  DESCRIPTION
  -----------
-diff --git a/Documentation/git-merge-base.txt b/Documentation/git-merge-base.txt
-index 2d944e0851f..b01ba3d3565 100644
---- a/Documentation/git-merge-base.txt
-+++ b/Documentation/git-merge-base.txt
-@@ -9,8 +9,8 @@ git-merge-base - Find as good common ancestors as possible for a merge
- SYNOPSIS
- --------
- [verse]
--'git merge-base' [-a|--all] <commit> <commit>...
--'git merge-base' [-a|--all] --octopus <commit>...
-+'git merge-base' [-a | --all] <commit> <commit>...
-+'git merge-base' [-a | --all] --octopus <commit>...
- 'git merge-base' --is-ancestor <commit> <commit>
- 'git merge-base' --independent <commit>...
- 'git merge-base' --fork-point <ref> [<commit>]
-diff --git a/Documentation/git-pack-redundant.txt b/Documentation/git-pack-redundant.txt
-index ee7034b5e52..dda80a740c8 100644
---- a/Documentation/git-pack-redundant.txt
-+++ b/Documentation/git-pack-redundant.txt
-@@ -9,7 +9,7 @@ git-pack-redundant - Find redundant pack files
- SYNOPSIS
- --------
- [verse]
--'git pack-redundant' [ --verbose ] [ --alt-odb ] ( --all | <pack-filename>... )
-+'git pack-redundant' [--verbose] [--alt-odb] (--all | <pack-filename>...)
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-prune-packed.txt b/Documentation/git-prune-packed.txt
-index 9fed59a3172..844d6f808a0 100644
---- a/Documentation/git-prune-packed.txt
-+++ b/Documentation/git-prune-packed.txt
-@@ -9,7 +9,7 @@ git-prune-packed - Remove extra objects that are already in pack files
- SYNOPSIS
- --------
- [verse]
--'git prune-packed' [-n|--dry-run] [-q|--quiet]
-+'git prune-packed' [-n | --dry-run] [-q | --quiet]
- 
- 
- DESCRIPTION
-diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere.txt
-index 4b613d4140c..9d0e6f53e7e 100644
---- a/Documentation/git-rerere.txt
-+++ b/Documentation/git-rerere.txt
-@@ -8,7 +8,7 @@ git-rerere - Reuse recorded resolution of conflicted merges
- SYNOPSIS
- --------
- [verse]
--'git rerere' [clear|forget <pathspec>|diff|remaining|status|gc]
-+'git rerere' [clear | forget <pathspec> | diff | remaining | status | gc]
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index 5cc2fcefbab..e0d71a208c4 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -8,12 +8,12 @@ git-show-branch - Show branches and their commits
- SYNOPSIS
- --------
- [verse]
--'git show-branch' [-a|--all] [-r|--remotes] [--topo-order | --date-order]
-+'git show-branch' [-a | --all] [-r | --remotes] [--topo-order | --date-order]
- 		[--current] [--color[=<when>] | --no-color] [--sparse]
- 		[--more=<n> | --list | --independent | --merge-base]
- 		[--no-name | --sha1-name] [--topics]
- 		[(<rev> | <glob>)...]
--'git show-branch' (-g|--reflog)[=<n>[,<base>]] [--list] [<ref>]
-+'git show-branch' (-g | --reflog)[=<n>[,<base>]] [--list] [<ref>]
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
-index ab4d271925d..d1d56f68b43 100644
---- a/Documentation/git-show-ref.txt
-+++ b/Documentation/git-show-ref.txt
-@@ -8,8 +8,8 @@ git-show-ref - List references in a local repository
- SYNOPSIS
- --------
- [verse]
--'git show-ref' [-q|--quiet] [--verify] [--head] [-d|--dereference]
--	     [-s|--hash[=<n>]] [--abbrev[=<n>]] [--tags]
-+'git show-ref' [-q | --quiet] [--verify] [--head] [-d | --dereference]
-+	     [-s | --hash[=<n>]] [--abbrev[=<n>]] [--tags]
- 	     [--heads] [--] [<pattern>...]
- 'git show-ref' --exclude-existing[=<pattern>]
- 
-diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
-index 387cc1b9142..6aa521fab23 100644
---- a/Documentation/git-var.txt
-+++ b/Documentation/git-var.txt
-@@ -9,7 +9,7 @@ git-var - Show a Git logical variable
- SYNOPSIS
- --------
- [verse]
--'git var' ( -l | <variable> )
-+'git var' (-l | <variable>)
- 
- DESCRIPTION
- -----------
-diff --git a/Documentation/git-verify-pack.txt b/Documentation/git-verify-pack.txt
-index 61ca6d04c20..b8720dce8ab 100644
---- a/Documentation/git-verify-pack.txt
-+++ b/Documentation/git-verify-pack.txt
-@@ -9,7 +9,7 @@ git-verify-pack - Validate packed Git archive files
- SYNOPSIS
- --------
- [verse]
--'git verify-pack' [-v|--verbose] [-s|--stat-only] [--] <pack>.idx ...
-+'git verify-pack' [-v | --verbose] [-s | --stat-only] [--] <pack>.idx...
- 
- 
- DESCRIPTION
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index bb138161943..61d93383f51 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -60,7 +60,7 @@ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
- }
- 
- static const char * const bugreport_usage[] = {
--	N_("git bugreport [(-o|--output-directory) <file>] [(-s|--suffix) <format>]\n"
-+	N_("git bugreport [(-o | --output-directory) <file>] [(-s | --suffix) <format>]\n"
- 	   "              [--diagnose[=<mode>]]"),
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 0fc359e9d39..7d82ead6760 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -24,16 +24,16 @@
+ static const char * const git_stash_usage[] = {
+ 	N_("git stash list [<options>]"),
+ 	N_("git stash show [<options>] [<stash>]"),
+-	N_("git stash drop [-q|--quiet] [<stash>]"),
+-	N_("git stash ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
++	N_("git stash drop [-q | --quiet] [<stash>]"),
++	N_("git stash (pop | apply) [--index] [-q | --quiet] [<stash>]"),
+ 	N_("git stash branch <branchname> [<stash>]"),
+ 	"git stash clear",
+-	N_("git stash [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
+-	   "          [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]\n"
++	N_("git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n"
++	   "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n"
+ 	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
+ 	   "          [--] [<pathspec>...]]"),
+-	N_("git stash save [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
+-	   "          [-u|--include-untracked] [-a|--all] [<message>]"),
++	N_("git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n"
++	   "          [-u | --include-untracked] [-a | --all] [<message>]"),
  	NULL
  };
-diff --git a/builtin/diagnose.c b/builtin/diagnose.c
-index 54491f2c51c..64a65e2842b 100644
---- a/builtin/diagnose.c
-+++ b/builtin/diagnose.c
-@@ -3,7 +3,7 @@
- #include "diagnose.h"
  
- static const char * const diagnose_usage[] = {
--	N_("git diagnose [(-o|--output-directory) <path>] [(-s|--suffix) <format>]\n"
-+	N_("git diagnose [(-o | --output-directory) <path>] [(-s | --suffix) <format>]\n"
- 	   "             [--mode=<mode>]"),
+@@ -48,17 +48,17 @@ static const char * const git_stash_show_usage[] = {
+ };
+ 
+ static const char * const git_stash_drop_usage[] = {
+-	N_("git stash drop [-q|--quiet] [<stash>]"),
++	N_("git stash drop [-q | --quiet] [<stash>]"),
  	NULL
  };
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 287716db68e..aac0f708e42 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -20,7 +20,7 @@
- static const char *empty_base = "";
  
- static char const * const builtin_sparse_checkout_usage[] = {
--	N_("git sparse-checkout (init|list|set|add|reapply|disable) <options>"),
-+	N_("git sparse-checkout (init | list | set | add | reapply | disable) <options>"),
+ static const char * const git_stash_pop_usage[] = {
+-	N_("git stash pop [--index] [-q|--quiet] [<stash>]"),
++	N_("git stash pop [--index] [-q | --quiet] [<stash>]"),
+ 	NULL
+ };
+ 
+ static const char * const git_stash_apply_usage[] = {
+-	N_("git stash apply [--index] [-q|--quiet] [<stash>]"),
++	N_("git stash apply [--index] [-q | --quiet] [<stash>]"),
+ 	NULL
+ };
+ 
+@@ -73,20 +73,20 @@ static const char * const git_stash_clear_usage[] = {
+ };
+ 
+ static const char * const git_stash_store_usage[] = {
+-	N_("git stash store [(-m|--message) <message>] [-q|--quiet] <commit>"),
++	N_("git stash store [(-m | --message) <message>] [-q | --quiet] <commit>"),
+ 	NULL
+ };
+ 
+ static const char * const git_stash_push_usage[] = {
+-	N_("git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
+-	   "          [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]\n"
++	N_("git stash [push [-p | --patch] [-k | --[no-]keep-index] [-q | --quiet]\n"
++	   "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n"
+ 	   "          [--] [<pathspec>...]]"),
+ 	NULL
+ };
+ 
+ static const char * const git_stash_save_usage[] = {
+-	N_("git stash save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
+-	   "               [-u|--include-untracked] [-a|--all] [<message>]"),
++	N_("git stash save [-p | --patch] [-k | --[no-]keep-index] [-q | --quiet]\n"
++	   "               [-u | --include-untracked] [-a | --all] [<message>]"),
  	NULL
  };
  
