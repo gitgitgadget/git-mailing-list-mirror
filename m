@@ -2,100 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11D74ECAAD3
-	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 13:51:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFBBCECAAD3
+	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 13:54:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238297AbiIENvU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Sep 2022 09:51:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33154 "EHLO
+        id S237415AbiIENyg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Sep 2022 09:54:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238245AbiIENvI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Sep 2022 09:51:08 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 218A858B69
-        for <git@vger.kernel.org>; Mon,  5 Sep 2022 06:51:03 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id k9so11514877wri.0
-        for <git@vger.kernel.org>; Mon, 05 Sep 2022 06:51:03 -0700 (PDT)
+        with ESMTP id S237446AbiIENye (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2022 09:54:34 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E979CE01A
+        for <git@vger.kernel.org>; Mon,  5 Sep 2022 06:54:32 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id n17so11492137wrm.4
+        for <git@vger.kernel.org>; Mon, 05 Sep 2022 06:54:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=Mi7DGozDB/BCfbl4lfk6Zz/ebRa8IDPcV4h+vZxNX8Y=;
-        b=otXQfuJk7B5OzD4JFCafxzNWv17lzHGggOMp4gBdh2Gfztxtw3CHJOcucgvtM2l9zb
-         GciXJv1Qa7ZbsLQsdd9OhIcmP2njgrdwSVYYtYKnL3jjxuuhKfR9QiW1dWcoOGIdkkYv
-         WxrrOCQUec3hkAaYxEp7uZnEvKiOa4n+M1TxTcGkZlDIMHKSpIM7YRT0Nhot0+lpX0/t
-         PGn7dx5eb/dyduYZxcLAdRiOFpzy2YBN6hLJMpR3DUSzSE1w4PgnAI78V5QpDMg+neXk
-         q4Tf1gAfIgCNbC+j6uEoMXs5A1XLsCgH5l9M0uUKW/u4+DbLCSTlXODyJBe0tkrhAO8p
-         kpeA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date;
+        bh=g7r6AA4YbqD2dXdeg0kM4ikVt+IkNoPny7rIRH4ZT2c=;
+        b=iWj1Bn6Z0FZobvWOZUDNmlDuYznw17A6mweVgofNhq/sZmve7g24IwU3ml7QUxytTJ
+         w1Pt69YijWdg1d/+X5kpPesN2YB/DM/GjVRIchEWfEn013BcWJKCBJPovzTXwy1pLoKB
+         F4L+m/2B3rWJo7faWrLEPVib+xV8edsFxhNkMgBGvmd29xcYuQ8PqlgkmyTi/6/lRic0
+         gNMIbhCh0YqdAsszr3a1bMgX0BumMqbh5y8JbCYSe6RlGenWxzCggMTbJZauZde32Xn9
+         Hi7HiSPs2EudqZwjwgkfxMQ7Qcdl/gCMJr34qdLfOh0uUSIJitz583mig6Xeb1k6JpGj
+         VIDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Mi7DGozDB/BCfbl4lfk6Zz/ebRa8IDPcV4h+vZxNX8Y=;
-        b=zzvrE1QKpcTTCudhHulXjpdF632jNeL//SXutPMA5GSoQbqtrfWPhu0VIJgTDuCifG
-         axtpA7P3kKbgDeiLLbOdw4Z21CMDp0d8TL7Vro9WcoBZ2mpikPuVnzgnt3/OCOcQLT71
-         vR7ohZrNPtQ/x3vhqSqeuACHvplP7UamGSjqNPibMIwhN5ae4pJyZ1gIXD0XKsoUV9Ac
-         8FIK7wwCzmuMvltgDDiG8g4KHvDERQHMLUpVf6m4YQet6GSiVAfcP7ZWcL5JuBfSdLeD
-         pfskJaxCmQ9/ZjBpmMP/agCkjCDODGsZ7eopQwaw4UmX1fli8V/5Vr8icL8+vhcKwuiC
-         SU+g==
-X-Gm-Message-State: ACgBeo2ChNlugpC4w2SqfMHt1tMRXUU9QJ+RPRG+nE7qXDOjsp0DH7DF
-        CK0rDS4aTe1ImYt603B6JlE=
-X-Google-Smtp-Source: AA6agR5P83bLCtUMEdCBhCkZDlwttOgc47ac1IsTEqJfO9rD+3qBONsVZN4VfwtYbtnsD4h+cO4jJQ==
-X-Received: by 2002:a5d:62cc:0:b0:228:afe3:9fce with SMTP id o12-20020a5d62cc000000b00228afe39fcemr1799629wrv.618.1662385861850;
-        Mon, 05 Sep 2022 06:51:01 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=g7r6AA4YbqD2dXdeg0kM4ikVt+IkNoPny7rIRH4ZT2c=;
+        b=Lsyijf5gbDt3bllOBwWHCUS3NXMeoLLVeOyxQunjHQXAdMHhMlnJjAbyDGlq5UmRVG
+         u4ZrzZGC1H1H8Gqm2VjzLflsEPktGYirzpM2E1/fiisb9hNalnPk/kV2D9gUZ4tq8dk6
+         kxk6V1s7FrA51dCRH6ZMbyAV8+Ua7PTXWxChM4w0hLyX3papjk+ZWSdShpuHqDk0AuR5
+         3zA4La5yQSt8TvLTauB3OaNvTFyMHipmAytXpc5lSZ2jJJMOqIjgLt0ck4hcsodATxUi
+         8DE8eC1C9ibumNHu1+mfaT8QhRWwYrDaZRYQOINb3XJiw7DgD5uoLtx8tvaRPvoKEMTQ
+         h11g==
+X-Gm-Message-State: ACgBeo0senzvKKyxxea4CkiAyPFdzFLJslcuwDobwqy/gOC4CQ8F3Th0
+        tsRtcciLOkDGgHsAhQSr230=
+X-Google-Smtp-Source: AA6agR6F4KQq7rIHpzDxJKoMYbg0ERfy7YKem36NGrBc6fNygx1DF3svLmi/+5jqLaILZfMxBmfujw==
+X-Received: by 2002:adf:f5d0:0:b0:228:6ca8:21f2 with SMTP id k16-20020adff5d0000000b002286ca821f2mr3864973wrp.271.1662386071400;
+        Mon, 05 Sep 2022 06:54:31 -0700 (PDT)
 Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id e18-20020a5d5012000000b00226dedf1ab7sm3764283wrt.76.2022.09.05.06.51.01
+        by smtp.gmail.com with ESMTPSA id d11-20020adfe84b000000b0021f131de6aesm9156974wrn.34.2022.09.05.06.54.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Sep 2022 06:51:01 -0700 (PDT)
-Message-ID: <0a997c9d-d601-637b-9389-9dfd300083cd@gmail.com>
-Date:   Mon, 5 Sep 2022 14:51:00 +0100
+        Mon, 05 Sep 2022 06:54:31 -0700 (PDT)
+Message-ID: <84ecdf96-3fdd-ae2a-39a0-f5098a8fa2e5@gmail.com>
+Date:   Mon, 5 Sep 2022 14:54:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.0
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 5/5] rebase --keep-base: imply --no-fork-point
 Reply-To: phillip.wood@dunelm.org.uk
-To:     Jonathan Tan <jonathantanmy@google.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
+Subject: Re: [PATCH 4/5] rebase --keep-base: imply --reapply-cherry-picks
+Content-Language: en-US
+To:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Denton Liu <liu.denton@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20220824221851.1684475-1-jonathantanmy@google.com>
-Content-Language: en-US
-In-Reply-To: <20220824221851.1684475-1-jonathantanmy@google.com>
+References: <pull.1323.git.1660576283.gitgitgadget@gmail.com>
+ <9cd4c372ee4b3e5ba45c66a43ad0edaf52f0eed9.1660576283.git.gitgitgadget@gmail.com>
+ <53130a55-8bae-0414-64c2-bb577a1ae02d@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <53130a55-8bae-0414-64c2-bb577a1ae02d@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan
+Hi Philippe
 
-On 24/08/2022 23:18, Jonathan Tan wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> @@ -1240,6 +1240,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->>   			die(_("options '%s' and '%s' cannot be used together"), "--keep-base", "--onto");
->>   		if (options.root)
->>   			die(_("options '%s' and '%s' cannot be used together"), "--keep-base", "--root");
->> +		/*
->> +		 * --keep-base ignores config.forkPoint as it is confusing if
->> +		 * the branch base changes when using this option.
->> +		 */
->> +		if (options.fork_point < 0)
->> +			options.fork_point = 0;
+On 25/08/2022 01:29, Philippe Blain wrote:
+>> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+>> index 080658c8710..dc0c6c54e27 100644
+>> --- a/Documentation/git-rebase.txt
+>> +++ b/Documentation/git-rebase.txt
+>> @@ -218,7 +218,7 @@ leave out at most one of A and B, in which case it defaults to HEAD.
+>>   	merge base of `<upstream>` and `<branch>`. Running
+>>   	`git rebase --keep-base <upstream> <branch>` is equivalent to
+>>   	running
+>> -	`git rebase --onto <upstream>...<branch> <upstream> <branch>`.
+>> +	`git rebase --reapply-cherry-picks --onto <upstream>...<branch> <upstream> <branch>`.
+>>   +
+>>   This option is useful in the case where one is developing a feature on
+>>   top of an upstream branch. While the feature is being worked on, the
 > 
-> Hmm..doesn't forkPoint decide the set of commits to be rebased, not the
-> point at which the new commits are created? If yes, that doesn't seem to
-> have much to do with --keep-base.
+> I think the doc should explicitely mention "This implies `--reapply-cherry-picks`",
+> in addition to your changes.
 
-I think it depends a bit on how you look at it. You're right that 
---fork-point restricts the set of commits that are rebased, but it also 
-effectively changes the branch base as it removes commits from the branch.
+That's a good idea, I've already extended the documentation to mention 
+the effect of --keep-base in the discussion of --reapply-cherry-picks, 
+I'll add an extra sentence to the discussion of --keep-base as well.
 
-Best Wishes
+Thanks
 
 Phillip
