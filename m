@@ -2,248 +2,326 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32B4EECAAD3
-	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 10:58:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E95CFECAAD5
+	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 11:04:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237787AbiIEK57 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Sep 2022 06:57:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44212 "EHLO
+        id S238064AbiIELEB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Sep 2022 07:04:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237730AbiIEK5z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Sep 2022 06:57:55 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A159E56B8A
-        for <git@vger.kernel.org>; Mon,  5 Sep 2022 03:57:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1662375467;
-        bh=2Dh66P0pBGskj5DPpI5AkmwAmWF4OLxHUVBsQysDdAg=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=DAfj8hPZ6gDF7BucmqFd8YGEX3WzutV+pptKHN8F9m64YAVDnfnacg+jx/GCMK4BM
-         A4K9pNZbyZCpzlQGXQYW17MzFgPgbvp9uCUjc1OHf4rz3HJoWCua/3TG+PpokQShnH
-         FBnFVkCnbbctHX8bcAqPYCVfu/ZsB3MGko1Z9GgQ=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([91.47.144.123]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MsrhK-1pNxNC3Rxg-00t6Pw; Mon, 05
- Sep 2022 12:57:46 +0200
-Message-ID: <904b784d-a328-011f-c71a-c2092534e0f7@web.de>
-Date:   Mon, 5 Sep 2022 12:57:45 +0200
+        with ESMTP id S238241AbiIELDs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2022 07:03:48 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C17F5A456
+        for <git@vger.kernel.org>; Mon,  5 Sep 2022 04:03:45 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id fy31so16325898ejc.6
+        for <git@vger.kernel.org>; Mon, 05 Sep 2022 04:03:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date;
+        bh=7WJm06ExWBjzAcrJB+bNMu5TMIScv/bxZ2MZrthtdII=;
+        b=LVB/ZUYusoVqJOBGdpXffpA6bNkGFu9rEIl7OQVdk1vpLvQ4AXoK+T7KG4kj0vnvLM
+         jahPCGTLO4S+C7yHWp/8nHladMRrYWZa3c2MAnjEBhaeq28JoeHmW749LrRdoass9msS
+         c9eEWQyGfhPu20Qt124EYziSp4x9Y2knkQs6UClsz/Qq0QmuDTh2tcKVy6sbqvh8ybTB
+         BFV6vLrVuZXw2GQIAz5OcQbGOVZcXSSv/ScqMIvM1sTodastzWDjHwKwhCR2jNYDgHtJ
+         xR8J4cLNz0BuXWl79DUkcNPnKcuCWQQ3O4OKXZ73trzEzcGsqzETvsBKg49+kdXZkLR0
+         albw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=7WJm06ExWBjzAcrJB+bNMu5TMIScv/bxZ2MZrthtdII=;
+        b=2j3avtnHvABPSB9Qjx+9ccIYSMi3kEjo3C5ERB8D83yQol9AFv2InHKiBWIleDYYSi
+         ZjlBF/RarY2wfcmUKfrpuow8KkFx4k1PoCcJkrV7owZ0sYSuYTqFQL3kcOteySgDBjyP
+         hpiS+jiUxxJoPW9V/6Tm1HlT4cdobW3kTSIVIgFC/GNuUVjGHlHbLDtLWHBlOfajM2SQ
+         c7E45BZI09fZhF6S6THEfgbUK7MW8hzMGFYXKUIHJJE1lhfwcpnpk5O5WBT6UoIIcvq5
+         5aVcNuu8xhA+lmxCysya9y4v7/DNDTcDHZv76f9b9euMq0PHlkZa5W9r6VlMXq3gsPhQ
+         8PQw==
+X-Gm-Message-State: ACgBeo2ruC/9XisNYdKo9N/gJBP6qLbGPB3MkbTqQiYXVkM+y/DMk3hs
+        Xw1oYe6imscWdmkhPGXl9mE=
+X-Google-Smtp-Source: AA6agR7M3CnRa1t875PtiHc0STkbsH6KTPyYnrPDjEKes3MoeHoc3KKk6VVP1XM4yxtu0truUGEc2Q==
+X-Received: by 2002:a17:907:31ce:b0:742:1206:529e with SMTP id xf14-20020a17090731ce00b007421206529emr21300021ejb.643.1662375824092;
+        Mon, 05 Sep 2022 04:03:44 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id v1-20020a170906292100b0073ae9ba9ba8sm4882965ejd.3.2022.09.05.04.03.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Sep 2022 04:03:42 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oV9tF-000LJk-3B;
+        Mon, 05 Sep 2022 13:03:41 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] diff --no-index: unleak paths[] elements
+Date:   Mon, 05 Sep 2022 13:01:51 +0200
+References: <xmqqilm579hc.fsf@gitster.g> <xmqqilm51gn6.fsf@gitster.g>
+ <01pn98p2-qppn-260p-8o80-n5483p41859o@tzk.qr>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <01pn98p2-qppn-260p-8o80-n5483p41859o@tzk.qr>
+Message-ID: <220905.86zgfekrqq.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.2.1
-Subject: Re: [PATCH] format-patch: warn if commit msg contains a patch
- delimiter
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-References: <d0b577825124ac684ab304d3a1395f3d2d0708e8.1662333027.git.matheus.bernardino@usp.br>
- <220905.864jxmme0a.gmgdl@evledraar.gmail.com>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <220905.864jxmme0a.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:wMBEzeQzLmuUnjO6K/sC5D061jQ9nrFbUIFyyMQH2mMuTdeZvj3
- LJB0F7rzebXbqXdMLi54BIzfyF8I90e/Uz5yXhhfp4LLKEOCKEHfj+bL66Q1cfYcLCg6nWp
- Z//bGcYnTEOPeZLittLldb9c5ta9C2psRBxL8b0cn07Wl5bgGPaYMRn19KHabUSG0LOyIfd
- +5Lxx8AwPBP1BGFkKKNFA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:EFKUknZ36XE=:x5IC9kcpimX+FSo7NC09YX
- sYQtih4GZK4mOU0+LIv2PSkRH5xzIWFFYQpgnGs/sbbnYXNeY6TDidZZc78A6geYoC9r2E+Pi
- rCWhz1Exb3Wug28fgHpDbbmkqJvTfs4nGhU/0JmBBRVaItje3eqK8NpKa7zXKP2P/Bc8mAcDt
- 6dGPxnFRa6ImqrdDd5+wWLIv8l1t6izhPVFPE5W3s2gcV56ijqX9x7t9POuh5+Ke7OZUc8l+M
- iSzYp71Ner0ef9m2dZcKaaB/B6zYbAybdt2fpiZ1CRS+yujhm3b818sMr6rirJvAHwh+bb7qy
- 7fnJWvw6nEjEoI1PTJOPNekEYoVIRklvku2BabHpXrqsy36DldSwlGJVghnw/G0G7fJDHoMYs
- IfersGqgmn/RGXrHOw1ytTcycyWRxlI6xutDlFhd902lpGyEMkQS+uWd9LA4BQrUHjmqir7bo
- Hd3ApSoDDHWJIfjoQkXCSCjK1pFQ8mU2a8LiM882Vo+XwHsIeYvpVsQ2dnL+XwasIyH0nwkok
- v5573dgtbwEdIDJB/F8aLA2F85PZNzCD6Ii4JnTcTzO+9A6oF+lattIoX/wCKIDx/jg2WS46L
- Yhb/0Bmkwsi3OZF/+mWc0adcGOZtFAKLR5GFLlKFc9pM5Dgt19WTH2IrLL8Zzb3FaGmApfiNZ
- VYl/JNYw00huh4ZOu+QtVMUsMI+UWi7GvimSef0Al9FVAaUA9hITJkdUiMlN+oMFtVDtIVOv9
- s2aUCmrsaFFQFmQhzvk5lDBdtdr1ofDHuKsLe97afUvX7lnX4+GeZWvs50igS2Siu/cSBYXMG
- UO1gmyaGvp6ieosWsoF5JxK8zJC45ytNhX4z6F8vP8gw06+N1lVE5lmygHHhm6oVthfFmE//2
- 2TRePz5VIbfbR4l8YoYHOnPpbBsYTt2PV949rjVE4LlZolKiStT/50pws5f6lm96fwwt+P0Y/
- djbtHbvthP3hixpzdL3g8d4DbVWTwETdqSn//2ImgsX4TFFVABb1MNZEAp3SjyC/x67YSXtFO
- W601mZCqLte/Mq0u/Y0qalHu2gsspFpducvyNEr0Xu8kh1z3Sj1oVxsbxHuLLflW3jNnsq7IY
- PnLBomF/CqRLJsIl+M415/9pSzGnEfLWWKX18zKWawwLp8c3OWMttDJGZonz2fv19XCD9O/KB
- ryO3Q=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.09.22 um 10:01 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+
+On Mon, Sep 05 2022, Johannes Schindelin wrote:
+
+> Hi Junio,
 >
-> On Sun, Sep 04 2022, Matheus Tavares wrote:
+> On Fri, 2 Sep 2022, Junio C Hamano wrote:
 >
->> When applying a patch, `git am` looks for special delimiter strings
->> (such as "---") to know where the message ends and the actual diff
->> starts. If one of these strings appears in the commit message itself,
->> `am` might get confused and fail to apply the patch properly. This has
->> already caused inconveniences in the past [1][2]. To help avoid such
->> problem, let's make `git format-patch` warn on commit messages
->> containing one of the said strings.
+>> "git diff --no-index" codepath starts with the two elements in
+>> argv[] and munges them into two paths to be compared, stored in a
+>> separate path[] arrays.  The munging is implemented in a rather
+>> haphazard way, sometimes overwriting old version with a new copy,
+>> and sometimes a constant string assigned to path[], making it
+>> impossible to release the resources properly:
 >>
->> [1]: https://lore.kernel.org/git/20210113085846-mutt-send-email-mst@ker=
-nel.org/
->> [2]: https://lore.kernel.org/git/16297305.cDA1TJNmNo@earendil/
+>>  * A single dash "-" from the command line is a special signal that
+>>    the standard input is used for the side to be compared, and is
+>>    internally replaced with a copy of string "-" at a known address.
+>>
+>>  * When run in a subdirectory, full paths to the two paths are
+>>    allocated and placed in path[].
+>>
+>>  * After the above happens, when comparing a file with a directory,
+>>    the directory side is replaced with the path to a file in the
+>>    directory with the same name as the file.
+>>
+>> This was perfectly fine for just two strings that are pathnames used
+>> during the lifetime of the program and cleaned up upon program exit,
+>> but it gets in the way when leak sanitizer is in effect.  The third
+>> step can be losing the full path that was allocated in the second
+>> step, but it is not easy to tell if its input is an allocated piece
+>> of memory to begin with.
+>>
+>> Loosen the earlier two steps a bit so that elements of the path[]
+>> array that come to the directory/file comparison code are either the
+>> singleton "-" or an allocated piece of memory.  Use that knowledge
+>> in the third step to release an allocated piece of memory when it
+>> replaces the path to a directory with the path to a file in that
+>> directory, and also at the end to release the two elements of the
+>> path[] array as needed.
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>
+>>  * The previous one allowed strbuf_release() to free replacement.buf
+>>    which may be used in path[0] or path[1] potentially leading to
+>>    double freeing.  The kosher way may be to use strbuf_detach() in
+>>    fixup_paths(), but this is a simpler fix, it is getting late in
+>>    the day, and I am getting sick of fighting the leak-checker, so...
 >
-> I followed this topic with one eye, and have run into this myself in the
-> past. I'm not against this warning, but I wonder if we can't fix
-> "am/apply" to just be smarter. The cases I've seen are all ones where:
+> I wonder whether a much better way would be to first fix the code to
+> always release `replacement`, like so:
 >
->  * We have a copy/pasted git diff, but we could disambiguate based on
->    (at least) the "---" line being a telltale for the "real" patch, and
->    the "X file changed..." diffstat.
->  * We have a not-quite-git-looking patch diff in the commit message
->    (which we'd normally detect and apply), as in your [2].
+> -- snip --
+> diff --git a/diff-no-index.c b/diff-no-index.c
+> index 9a8b09346bd..87047605385 100644
+> --- a/diff-no-index.c
+> +++ b/diff-no-index.c
+> @@ -242,7 +242,7 @@ int diff_no_index(struct rev_info *revs,
+>  		  int implicit_no_index,
+>  		  int argc, const char **argv)
+>  {
+> -	int i, no_index;
+> +	int i, no_index, ret;
+>  	const char *paths[2];
+>  	struct strbuf replacement = STRBUF_INIT;
+>  	const char *prefix = revs->prefix;
+> @@ -294,17 +294,23 @@ int diff_no_index(struct rev_info *revs,
+>  	setup_diff_pager(&revs->diffopt);
+>  	revs->diffopt.flags.exit_with_status = 1;
 >
-> Couldn't we just be a bit smarter about applying these, and do a
-> look-ahead and find what the user meant.
-
-Whatever we use to separate message from diff can be included in that
-message by an unsuspecting user and "---" can be part of a diff.  An
-earlier discussion yielded an idea, but no implementation:
-https://lore.kernel.org/git/20200204010524-mutt-send-email-mst@kernel.org/
-
-> Is any case, having such a warning won't "settle" this issue, as we're
-> able to deal with this non-ambiguity in commit objects/the push/fetch
-> protocol. It's just "format-patch/am" as a "wire protocol" that has this
-> issue.
+> -	if (queue_diff(&revs->diffopt, paths[0], paths[1]))
+> -		return 1;
+> +	if (queue_diff(&revs->diffopt, paths[0], paths[1])) {
+> +		ret = 1;
+> +		goto out;
+> +	}
+> +
+>  	diff_set_mnemonic_prefix(&revs->diffopt, "1/", "2/");
+>  	diffcore_std(&revs->diffopt);
+>  	diff_flush(&revs->diffopt);
 >
-> But anyway, that's the state of the world now, so warning() about it is
-> fair, even if we had a fix for the "apply" part we might want to warn
-> for a while to note that it's an issue on older gits.
+> -	strbuf_release(&replacement);
+> -
+>  	/*
+>  	 * The return code for --no-index imitates diff(1):
+>  	 * 0 = no changes, 1 = changes, else error
+>  	 */
+> -	return diff_result_code(&revs->diffopt, 0);
+> +	ret = diff_result_code(&revs->diffopt, 0);
+> +
+> +out:
+> +	strbuf_release(&replacement);
+> +
+> +	return ret;
+>  }
+> -- snap --
 >
->> +		if (pp->check_in_body_patch_breaks) {
->> +			strbuf_reset(&linebuf);
->> +			strbuf_add(&linebuf, line, linelen);
->> +			if (patchbreak(&linebuf) || is_scissors_line(linebuf.buf)) {
->> +				strbuf_strip_suffix(&linebuf, "\n");
+> After that, the proposed diff could be replaced by this diff:
 >
-> Hrm, it's a (small) shame that the patchbreak() function takes a "struct
-> strbuf" rather than a char */size_t in this case (seemingly for no good
-> reason, as it's "const"?).
+> -- snip --
+> diff --git a/diff-no-index.c b/diff-no-index.c
+> index 87047605385..d350e4381bc 100644
+> --- a/diff-no-index.c
+> +++ b/diff-no-index.c
+> @@ -244,6 +244,7 @@ int diff_no_index(struct rev_info *revs,
+>  {
+>  	int i, no_index, ret;
+>  	const char *paths[2];
+> +	struct string_list to_release = STRING_LIST_INIT_DUP;
+>  	struct strbuf replacement = STRBUF_INIT;
+>  	const char *prefix = revs->prefix;
+>  	struct option no_index_options[] = {
+> @@ -274,6 +275,12 @@ int diff_no_index(struct rev_info *revs,
+>  			p = file_from_standard_input;
+>  		else if (prefix)
+>  			p = prefix_filename(prefix, p);
+> +		else {
+> +			char *dup = xstrdup(p);
+> +
+> +			p = dup;
+> +			string_list_append_nodup(&to_release, dup);
+> +		}
+>  		paths[i] = p;
+>  	}
+>
+> @@ -310,6 +317,7 @@ int diff_no_index(struct rev_info *revs,
+>  	ret = diff_result_code(&revs->diffopt, 0);
+>
+>  out:
+> +	string_list_clear(&to_release, 1);
+>  	strbuf_release(&replacement);
+>
+>  	return ret;
+>
+> -- snap --
+>
+> That approach has the distinct advantage of making it very easy to reason
+> about the code.
+>
+> What do you think?
+>
+> Ciao,
+> Dscho
+>
+>>
+>>  diff-no-index.c | 24 ++++++++++++++++++++++--
+>>  1 file changed, 22 insertions(+), 2 deletions(-)
+>>
+>>
+>> diff --git a/diff-no-index.c b/diff-no-index.c
+>> index 9a8b09346b..77a126469b 100644
+>> --- a/diff-no-index.c
+>> +++ b/diff-no-index.c
+>> @@ -208,6 +208,14 @@ static void append_basename(struct strbuf *path, const char *dir, const char *fi
+>>  	strbuf_addstr(path, tail ? tail + 1 : file);
+>>  }
+>>
+>> +static void free_allocated_path(const char *path)
+>> +{
+>> +	if (!path ||
+>> +	    (path == file_from_standard_input))
+>> +		return;
+>> +	free((char *)path);
+>> +}
+>> +
+>>  /*
+>>   * DWIM "diff D F" into "diff D/F F" and "diff F D" into "diff F D/F"
+>>   * Note that we append the basename of F to D/, so "diff a/b/file D"
+>> @@ -226,9 +234,11 @@ static void fixup_paths(const char **path, struct strbuf *replacement)
+>>  		return;
+>>  	if (isdir0) {
+>>  		append_basename(replacement, path[0], path[1]);
+>> +		free_allocated_path(path[0]);
+>>  		path[0] = replacement->buf;
+>>  	} else {
+>>  		append_basename(replacement, path[1], path[0]);
+>> +		free_allocated_path(path[1]);
+>>  		path[1] = replacement->buf;
+>>  	}
+>>  }
+>> @@ -274,6 +284,8 @@ int diff_no_index(struct rev_info *revs,
+>>  			p = file_from_standard_input;
+>>  		else if (prefix)
+>>  			p = prefix_filename(prefix, p);
+>> +		else
+>> +			p = xstrdup(p);
+>>  		paths[i] = p;
+>>  	}
+>>
+>> @@ -294,13 +306,21 @@ int diff_no_index(struct rev_info *revs,
+>>  	setup_diff_pager(&revs->diffopt);
+>>  	revs->diffopt.flags.exit_with_status = 1;
+>>
+>> -	if (queue_diff(&revs->diffopt, paths[0], paths[1]))
+>> +	if (queue_diff(&revs->diffopt, paths[0], paths[1])) {
+>> +		free_allocated_path(paths[0]);
+>> +		free_allocated_path(paths[1]);
+>>  		return 1;
+>> +	}
+>>  	diff_set_mnemonic_prefix(&revs->diffopt, "1/", "2/");
+>>  	diffcore_std(&revs->diffopt);
+>>  	diff_flush(&revs->diffopt);
+>>
+>> -	strbuf_release(&replacement);
+>> +	/*
+>> +	 * do not strbuf_release(&replacement), as it is in paths[]
+>> +	 * when replacement was actually used.
+>> +	 */
+>> +	free_allocated_path(paths[0]);
+>> +	free_allocated_path(paths[1]);
+>>
+>>  	/*
+>>  	 * The return code for --no-index imitates diff(1):
+>> --
+>> 2.37.3-661-g73a641a77a
+>>
+>>
 
-A strbuf is NUL-terminated, a length-limited string (char */size_t)
-doesn't have to be.  That means the current implementation can use
-functions like starts_with(), but a faithful version that promises to
-stay within a given length cannot.  So the reason is probably
-convenience.  With skip_prefix_mem() it wouldn't be that bad, though:
+That looks like a much better approach, I'd think you'd want this on
+top, because:
 
-=2D--
- mailinfo.c | 37 +++++++++++++++++++------------------
- 1 file changed, 19 insertions(+), 18 deletions(-)
+ * We entirely avoid playing cames with the string_list "dup" and then
+   "nodup" append. In some cases we have to, but in this case we can
+   just get the pointer to the member we just created, and avoid the
+   explicit xstrdup() in the caller.
+ * The free_util=1 in your code isn't needed/is a bug, we make no use of
+   "util" here, so it should be free_util=0
+ * It avoids the "add braces to all if/else arms" part of
+   CodingGuidelines.
 
-diff --git a/mailinfo.c b/mailinfo.c
-index 9621ba62a3..ae2e70e363 100644
-=2D-- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -646,32 +646,30 @@ static void decode_transfer_encoding(struct mailinfo=
- *mi, struct strbuf *line)
- 	free(ret);
- }
-
--static inline int patchbreak(const struct strbuf *line)
-+static int patchbreak(const char *buf, size_t len)
- {
--	size_t i;
+diff --git a/diff-no-index.c b/diff-no-index.c
+index d350e4381bc..2861319c0e5 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -275,12 +275,8 @@ int diff_no_index(struct rev_info *revs,
+ 			p = file_from_standard_input;
+ 		else if (prefix)
+ 			p = prefix_filename(prefix, p);
+-		else {
+-			char *dup = xstrdup(p);
 -
- 	/* Beginning of a "diff -" header? */
--	if (starts_with(line->buf, "diff -"))
-+	if (skip_prefix_mem(buf, len, "diff -", &buf, &len))
- 		return 1;
-
- 	/* CVS "Index: " line? */
--	if (starts_with(line->buf, "Index: "))
-+	if (skip_prefix_mem(buf, len, "Index: ", &buf, &len))
- 		return 1;
-
- 	/*
- 	 * "--- <filename>" starts patches without headers
- 	 * "---<sp>*" is a manual separator
- 	 */
--	if (line->len < 4)
-+	if (len < 4)
- 		return 0;
-
--	if (starts_with(line->buf, "---")) {
-+	if (skip_prefix_mem(buf, len, "---", &buf, &len)) {
- 		/* space followed by a filename? */
--		if (line->buf[3] =3D=3D ' ' && !isspace(line->buf[4]))
-+		if (len > 1 && buf[0] =3D=3D ' ' && !isspace(buf[1]))
- 			return 1;
- 		/* Just whitespace? */
--		for (i =3D 3; i < line->len; i++) {
--			unsigned char c =3D line->buf[i];
-+		for (; len; buf++, len--) {
-+			unsigned char c =3D buf[0];
- 			if (c =3D=3D '\n')
- 				return 1;
- 			if (!isspace(c))
-@@ -682,14 +680,14 @@ static inline int patchbreak(const struct strbuf *li=
-ne)
- 	return 0;
- }
-
--static int is_scissors_line(const char *line)
-+static int is_scissors_line(const char *line, size_t len)
- {
- 	const char *c;
- 	int scissors =3D 0, gap =3D 0;
- 	const char *first_nonblank =3D NULL, *last_nonblank =3D NULL;
- 	int visible, perforation =3D 0, in_perforation =3D 0;
-
--	for (c =3D line; *c; c++) {
-+	for (c =3D line; len; c++, len--) {
- 		if (isspace(*c)) {
- 			if (in_perforation) {
- 				perforation++;
-@@ -705,12 +703,14 @@ static int is_scissors_line(const char *line)
- 			perforation++;
- 			continue;
- 		}
--		if (starts_with(c, ">8") || starts_with(c, "8<") ||
--		    starts_with(c, ">%") || starts_with(c, "%<")) {
-+		if (skip_prefix_mem(c, len, ">8", &c, &len) ||
-+		    skip_prefix_mem(c, len, "8<", &c, &len) ||
-+		    skip_prefix_mem(c, len, ">%", &c, &len) ||
-+		    skip_prefix_mem(c, len, "%<", &c, &len)) {
- 			in_perforation =3D 1;
- 			perforation +=3D 2;
- 			scissors +=3D 2;
--			c++;
-+			c--, len++;
- 			continue;
- 		}
- 		in_perforation =3D 0;
-@@ -747,7 +747,8 @@ static int check_inbody_header(struct mailinfo *mi, co=
-nst struct strbuf *line)
- {
- 	if (mi->inbody_header_accum.len &&
- 	    (line->buf[0] =3D=3D ' ' || line->buf[0] =3D=3D '\t')) {
--		if (mi->use_scissors && is_scissors_line(line->buf)) {
-+		if (mi->use_scissors &&
-+		    is_scissors_line(line->buf, line->len)) {
- 			/*
- 			 * This is a scissors line; do not consider this line
- 			 * as a header continuation line.
-@@ -808,7 +809,7 @@ static int handle_commit_msg(struct mailinfo *mi, stru=
-ct strbuf *line)
- 	if (convert_to_utf8(mi, line, mi->charset.buf))
- 		return 0; /* mi->input_error already set */
-
--	if (mi->use_scissors && is_scissors_line(line->buf)) {
-+	if (mi->use_scissors && is_scissors_line(line->buf, line->len)) {
- 		int i;
-
- 		strbuf_setlen(&mi->log_message, 0);
-@@ -826,7 +827,7 @@ static int handle_commit_msg(struct mailinfo *mi, stru=
-ct strbuf *line)
- 		return 0;
+-			p = dup;
+-			string_list_append_nodup(&to_release, dup);
+-		}
++		else
++			p = string_list_append(&to_release, p)->string;
+ 		paths[i] = p;
  	}
-
--	if (patchbreak(line)) {
-+	if (patchbreak(line->buf, line->len)) {
- 		if (mi->message_id)
- 			strbuf_addf(&mi->log_message,
- 				    "Message-Id: %s\n", mi->message_id);
-=2D-
-2.37.2
-
+ 
+@@ -317,7 +313,7 @@ int diff_no_index(struct rev_info *revs,
+ 	ret = diff_result_code(&revs->diffopt, 0);
+ 
+ out:
+-	string_list_clear(&to_release, 1);
++	string_list_clear(&to_release, 0);
+ 	strbuf_release(&replacement);
+ 
+ 	return ret;
