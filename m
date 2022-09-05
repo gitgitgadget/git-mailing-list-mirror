@@ -2,128 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75E3BECAAD5
-	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 14:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0AC7ECAAD3
+	for <git@archiver.kernel.org>; Mon,  5 Sep 2022 18:50:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236567AbiIEOej (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Sep 2022 10:34:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59630 "EHLO
+        id S232168AbiIESuT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Sep 2022 14:50:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238340AbiIEOed (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Sep 2022 10:34:33 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC81DBB2
-        for <git@vger.kernel.org>; Mon,  5 Sep 2022 07:34:23 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id c11so7390780wrp.11
-        for <git@vger.kernel.org>; Mon, 05 Sep 2022 07:34:23 -0700 (PDT)
+        with ESMTP id S230036AbiIESuQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Sep 2022 14:50:16 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 395AE614C
+        for <git@vger.kernel.org>; Mon,  5 Sep 2022 11:50:12 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id q21so4709729edc.9
+        for <git@vger.kernel.org>; Mon, 05 Sep 2022 11:50:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=8D5z0jZR7gDgIGM6PjJgrcQxhsLX4i4p44w362X4Cqo=;
-        b=VCLJtfx+BUoex4sQ5aVNzw59y/sXnxgyin9xm17uT6m4I/9HscGTork6Ebfhq1PZCV
-         s/AoV69df74dou5A7UyrL73BujW3veL7siznY4ToAG2q/k+TX6i9StFjKJsU50CGVeZw
-         EMPwflJzky0ZJWiWKbqBYDa1wq3s3J09caCogYYbXBkAs6z1guJ473C2D1B/rZa6Igqs
-         WsjQP1t9Hs6/jcas/gL+VGUs9kpiY9B2r2nX9lW7F4cX8VhxZjELwXbo9TkPMSUTAwVM
-         IBGhR/1qhbDnQqLAQZ0f+JZJn6itSrs+lQNuP0L0JV1uFNPqGIdS4GMG313AvdFTJK/1
-         PHkQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=39NBr4GsO7NL6A3snae8PTXW6fXl3DeIMlxSNoJxFKk=;
+        b=kNdnYSJZ2n4Uc19JZ0CQqf06FR/pN9s53FyN0LBbaHp7qU1o159B2/XRimY0T1iHNl
+         3fR1LU1tYwK6a0z0/Ot4sysp7HXSc4xLcMI/3IufjQj12YN5pn5f6T7aBjnp5QfccXd/
+         gbh8zbhqll8oEY/TYNFxl2dGoZnRdh2Efiv1FCiR3PGCysQKZEcRR/KxQAMSDawSEwvJ
+         ACKpLnSbwlV90XdMGTsxnQKpEA6FdQvNdXIWbkfpfiJnwxeaO41AkGO6yAcNqW5AzgOb
+         OIGi65QPNxv6gEtMsxmkHxkiBWY4Hi4DqfmY81iOH50oroysDsVDKjDRXI+gNdxsdpzk
+         d2VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=8D5z0jZR7gDgIGM6PjJgrcQxhsLX4i4p44w362X4Cqo=;
-        b=rDs1iOv/EDoUJEfsBPfppPGTzpQOmSvpPfw6gfclExem38jUxVw1NbTecFwk3lxL8x
-         cLZwja5kTMcKpknGwcOekx8kMl1EA6xBTCzvxb2kl4MZdg3H2lSCLiUvgGLgXfYyyVh5
-         19+wAChX7QX98prC2VcnPyKEw6FsmnY7CZZylRqYyBFSqaxEh3VMHKYdqRvv/VRvcioj
-         Pe/S399r3XsRUouGHhhH4+HWweklUtYk9mxI3UeDBd+zwkTN6XGViIqqALUr5eCZrPyS
-         aTNwsRITA2oDbgz82rUlj38cTQ4x0tzEpjN1Yr71nhb8ul9LXyWNmVE8s/5NE9ZQLEBt
-         5xzg==
-X-Gm-Message-State: ACgBeo2cgjCGGGYWeXCDPCZvho75JW52uX8YfPKhNSEHzFG/r+ieIAI4
-        UXcNKk/WFVq3xPKusX0aBUGrOKDqyNw=
-X-Google-Smtp-Source: AA6agR6LRRLbWVZmSbpGocYpWq+bBWLSFcRULxr6AyV08thkeOkfGRq1q5aNkx/ebmstXb8LGMMY9g==
-X-Received: by 2002:a05:6000:1f83:b0:228:6278:796b with SMTP id bw3-20020a0560001f8300b002286278796bmr5240164wrb.520.1662388461708;
-        Mon, 05 Sep 2022 07:34:21 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a8-20020adfeec8000000b00226d1821abesm8884442wrp.56.2022.09.05.07.34.21
+        bh=39NBr4GsO7NL6A3snae8PTXW6fXl3DeIMlxSNoJxFKk=;
+        b=hWemrxxrw07FIc1GlqBLfUwHvNy2Fp7qNQvWhCH3UAIEmwDvonTTnV+ranLRB51J+d
+         gnstZ0Vz/zo7k+Zi6/kZ4Ut4DPwtsfJnykYfv04c4MylrB0gKq4gW9MwGGWygoIp1piQ
+         YfIMkH0olDQCAT5thQYdt74fCX6xFieChdS8g+3v1AXhsImKyNk2V0OwIPwEwcGO3O00
+         b+JJI+YizFm3HNAB4pC7xb4xeREm1L6jxgBH3u3h8XZa98GPDF1czmv3dGmM82z4486O
+         44tkPp9AQqI9BUgIlRjXF/7dPuxJSgWuICmSW2hatwt0ggZfVbi8G7fqpdyQLgoTulgI
+         XX1Q==
+X-Gm-Message-State: ACgBeo2cgYCIRMBIhcV2WT7h6xjLr7/vOvuf3KULryXW2CuNQjvitMg9
+        XnhJgfMjVAjOyhE62qzvpbMxDw5SpfI=
+X-Google-Smtp-Source: AA6agR5BgOK9aRK13MBzlcOIQIF5aBvlGlRZWtUJOW7utpy5xwfZe9UqUDWfN/oUYZ490UU8e+YRYg==
+X-Received: by 2002:a05:6402:198:b0:442:da5a:6716 with SMTP id r24-20020a056402019800b00442da5a6716mr44009583edv.5.1662403810665;
+        Mon, 05 Sep 2022 11:50:10 -0700 (PDT)
+Received: from localhost (62-165-236-110.pool.digikabel.hu. [62.165.236.110])
+        by smtp.gmail.com with ESMTPSA id u9-20020a1709061da900b0073d83f80b05sm5391843ejh.94.2022.09.05.11.50.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Sep 2022 07:34:21 -0700 (PDT)
-Message-Id: <aaa2f3ec3139a7a48001d1d0357c302d0dc68780.1662388460.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1346.git.1662388460.gitgitgadget@gmail.com>
-References: <pull.1346.git.1662388460.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?Rub=C3=A9n=20Justo?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Mon, 05 Sep 2022 14:34:19 +0000
-Subject: [PATCH 1/2] branch: refactor edit_description command switch case
+        Mon, 05 Sep 2022 11:50:10 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 0/5] parse-options: minor cleanups for handling subcommands
+Date:   Mon,  5 Sep 2022 20:50:02 +0200
+Message-Id: <20220905185007.9042-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.37.3.989.g4c3dfb3304
+In-Reply-To: <20220819160411.1791200-1-szeder.dev@gmail.com>
+References: <20220819160411.1791200-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
-        =?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>
+I still wanted to make a few minor cleanups after v2 of
+'sg/parse-options-subcommand', but while I got distracted with some
+Coccinelle stuff that topic got merged to 'next', and it's now in
+'master'.  Oh, well.
 
-Minor refactoring to reduce the return exits in the switch case
-handling the edit_description command, so the calls to strbuf_release
-can also be reduced.
+So here are those cleanups on top of that topic (or on top of 'master').
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
- builtin/branch.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+The changes really are minor: the first four patches shouldn't alter
+behavior in any way, and even the last one touches only two error
+messages.
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 55cd9a6e998..5229cb796f8 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -614,7 +614,7 @@ static int edit_branch_description(const char *branch_name)
- 	strbuf_reset(&buf);
- 	if (launch_editor(edit_description(), &buf, NULL)) {
- 		strbuf_release(&buf);
--		return -1;
-+		return 1;
- 	}
- 	strbuf_stripspace(&buf, 1);
- 
-@@ -791,6 +791,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	} else if (edit_description) {
- 		const char *branch_name;
- 		struct strbuf branch_ref = STRBUF_INIT;
-+		int ret = 0;
- 
- 		if (!argc) {
- 			if (filter.detached)
-@@ -803,19 +804,17 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 
- 		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
- 		if (!ref_exists(branch_ref.buf)) {
--			strbuf_release(&branch_ref);
--
- 			if (!argc)
--				return error(_("No commit on branch '%s' yet."),
-+				ret = error(_("No commit on branch '%s' yet."),
- 					     branch_name);
- 			else
--				return error(_("No branch named '%s'."),
-+				ret = error(_("No branch named '%s'."),
- 					     branch_name);
--		}
--		strbuf_release(&branch_ref);
-+		} else
-+			ret = edit_branch_description(branch_name);
- 
--		if (edit_branch_description(branch_name))
--			return 1;
-+		strbuf_release(&branch_ref);
-+		return ret;
- 	} else if (copy) {
- 		if (!argc)
- 			die(_("branch name required"));
+SZEDER Gábor (5):
+  t0040-parse-options: remove leftover debugging
+  test-parse-options.c: don't use for loop initial declaration
+  test-parse-options.c: fix style of comparison with zero
+  notes: simplify default operation mode arguments check
+  notes, remote: show unknown subcommands between `'
+
+ builtin/notes.c               | 11 +++++++----
+ builtin/remote.c              |  2 +-
+ t/helper/test-parse-options.c |  7 ++++---
+ t/t0040-parse-options.sh      |  2 --
+ 4 files changed, 12 insertions(+), 10 deletions(-)
+
 -- 
-gitgitgadget
+2.37.3.989.g4c3dfb3304
 
