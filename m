@@ -2,208 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1727ECAAD5
-	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 17:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83935C38145
+	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 18:26:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236239AbiIFRY4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Sep 2022 13:24:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36600 "EHLO
+        id S229638AbiIFS0w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Sep 2022 14:26:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236189AbiIFRYM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2022 13:24:12 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 271458E459
-        for <git@vger.kernel.org>; Tue,  6 Sep 2022 10:13:46 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 8F488CA1249;
-        Tue,  6 Sep 2022 13:13:45 -0400 (EDT)
-Received: from jeffhost-mbp.local (unknown [IPv6:2600:1015:b110:85b0:ed17:3499:a7f5:58a])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 297A7CC8327;
-        Tue,  6 Sep 2022 13:13:45 -0400 (EDT)
-Subject: Re: [PATCH v4 4/4] fsmonitor: normalize FSEvents event paths to the
- real path
-To:     Eric DeCosta <edecosta@mathworks.com>,
-        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
- <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
- <56cabf3be3b9e228bc948da372db4c9d11fd3926.1661962145.git.gitgitgadget@gmail.com>
- <bdf26d53-7068-87a6-484b-aeef99be35bd@jeffhostetler.com>
- <BYAPR05MB5573B477ED53CBC4C996729DD97A9@BYAPR05MB5573.namprd05.prod.outlook.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <a583a787-1f54-74ba-add1-61f9e30d5c2a@jeffhostetler.com>
-Date:   Tue, 6 Sep 2022 13:13:38 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S229596AbiIFS0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2022 14:26:51 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AC8A9AFA6
+        for <git@vger.kernel.org>; Tue,  6 Sep 2022 11:26:50 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id n17-20020a05600c501100b003a84bf9b68bso7946169wmr.3
+        for <git@vger.kernel.org>; Tue, 06 Sep 2022 11:26:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date;
+        bh=aBFj6uft2mUelAgyvCkWBdpXTiCaA33xN9vwrri9wfw=;
+        b=lpEi+1vVdowYomFVfLksD1zH47bcpRp9lPqp3IiMx01kQoK4XG4eDT7z7KxNjnpuHf
+         Pm/kgnzd5jAhxetbmX73hsgW9Gowm+dyRG3AXJUBMDMFnozDXrD4kpdYVoH5CCfZV/+C
+         930BL7JBoWkn9wlnFpaJHwArHdWWonheXkF/rMxZC52WTMKWX/wpR5p1kf6/VC2ZtX9D
+         LxYLd/yhu/AQl0vtQE/eeOxrz1RoyX2bEueUnoKNwMlXcGu6gHGNIb0wPrUYV3qd1FSK
+         0HYETD2gmAk6dk3+BGz/0cPDb7Ui2QUkky7Tft4c5KPcItRuRBjJIIPBQrCs95mDNOau
+         fW9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=aBFj6uft2mUelAgyvCkWBdpXTiCaA33xN9vwrri9wfw=;
+        b=f17o/IU4JBrcfuPTR760EVtQ1eLC4lZobt+5Yhn2F5rPLmzi6b4R4qxjEaPQSwFEeB
+         huTkAI1zGO08mxXbGHhMCBlwbz3SBiKe72Eip2WLkMs+CCaPKQ9c3jETIxuJTjeHKM4/
+         BdQUagjiksFsFxbOmpGN/FE6TYwD7N3XISI1CBmfSNDC+Yfm4qibHcjX8cHAFJJVEcdh
+         XptecP506aviExdYgVclCZ2tJCxINUtkfLyZlpKs63Xc3OZFvycq40wFBYuOjQ/Njxne
+         8A6to+mZJtshrdG8DOn/NoA5e5lPtlOERVAIniZMfN+rkOWvLQQi53ZnWYAv/M9kBAOG
+         uYTg==
+X-Gm-Message-State: ACgBeo1u81ftK8Pq9Iy4QogO1qOhR9iA7UwT+cAzYqvvRLEuipIoXyrX
+        Ou+OjmIXIuwYsaUkN7Rj+f0X5w7gP2ujWMKM7HpZAKN52gY=
+X-Google-Smtp-Source: AA6agR4Z8h8HMjvuMP1z518ZZdm61w+ly5G47+vHsrngk4ezbdsbUBqPIjsFa6QnYEEm51xS8+OeFdaGbfvFBhsqJRM=
+X-Received: by 2002:a7b:ca42:0:b0:3a6:9d:a444 with SMTP id m2-20020a7bca42000000b003a6009da444mr14860638wml.51.1662488808639;
+ Tue, 06 Sep 2022 11:26:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <BYAPR05MB5573B477ED53CBC4C996729DD97A9@BYAPR05MB5573.namprd05.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: mailmunge 3.09 on 209.68.5.199
+References: <CA+4x=b_07g6STT0nvma_gRhv=zdj+7TQx5SxKLUtuqONLwv=TQ@mail.gmail.com>
+ <YxJkn7K3zRm1u3Vn@tapette.crustytoothpaste.net>
+In-Reply-To: <YxJkn7K3zRm1u3Vn@tapette.crustytoothpaste.net>
+From:   Lana Deere <lana.deere@gmail.com>
+Date:   Tue, 6 Sep 2022 14:26:12 -0400
+Message-ID: <CA+4x=b_KP4rMH-EDmVCD_4LHPiLx32J2OJC6Mm5xpQ-QUcSKuA@mail.gmail.com>
+Subject: Re: 2.37.2 can't "git pull" but 2.18.0 can
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Lana Deere <lana.deere@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The 'git ls-remote origin' command on both produces about 3600 lines
+of output which appears to consist of all the branches in our repo.
+The two outputs are identical according to diff.  Both include a
+single mention of the switch-to-qt5 branch,
+
+$ diff /tmp/ls-remote*
+[no output here]
+$ grep switch-to-qt5 /tmp/ls-remote.*
+/tmp/ls-remote.2.18:6a9363081d05c313ba6a6ac59183193f1340bb1f
+refs/heads/feature/switch-to-qt5
+/tmp/ls-remote.2.37:6a9363081d05c313ba6a6ac59183193f1340bb1f
+refs/heads/feature/switch-to-qt5
+
+The 'git config -l' from both versions is almost the same - two lines
+have moved around.
+$ diff /tmp/config*
+1,2d0
+< filter.lfs.required=true
+< filter.lfs.clean=git-lfs clean -- %f
+4a3,4
+> filter.lfs.required=true
+> filter.lfs.clean=git-lfs clean -- %f
+
+$ cat /tmp/config.2.37
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+filter.lfs.clean=git-lfs clean -- %f
+user.name=Lana Deere
+user.email=lana.deere@gmail.com
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+color.branch=false
+color.diff=false
+color.grep=false
+color.interactive=false
+color.pager=false
+color.showbranch=false
+color.status=false
+color.ui=false
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+remote.origin.url=http://lana@githost:7990/scm/dp/sw.git
+remote.origin.fetch=+refs/heads/master:refs/remotes/origin/master
+branch.master.remote=origin
+branch.master.merge=refs/heads/master
+branch.feature/switch-to-qt5.remote=origin
+branch.feature/switch-to-qt5.merge=refs/heads/feature/switch-to-qt5
 
 
-On 9/2/22 12:35 PM, Eric DeCosta wrote:
-> 
-> 
->> -----Original Message-----
->> From: Jeff Hostetler <git@jeffhostetler.com>
->> Sent: Thursday, September 1, 2022 4:06 PM
->> To: Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>;
->> git@vger.kernel.org
->> Cc: Eric DeCosta <edecosta@mathworks.com>
->> Subject: Re: [PATCH v4 4/4] fsmonitor: normalize FSEvents event paths to the
->> real path
->>
->>
->>
->> On 8/31/22 12:09 PM, Eric DeCosta via GitGitGadget wrote:
->>> From: Eric DeCosta <edecosta@mathworks.com>
->>>
->>> Consider the following network working directory that is mounted under
->>> /System/Volumes/Data:
->>>
->>> /network/working/directory
->>>
->>> The git working directory path is:
->>>
->>> /System/Volumes/Data/network/working/directory
->>>
->>> The paths reported by FSEvents always start with /network. fsmonitor
->>> expects paths to be under the working directory; therefore it fails to
->>> match /network/... and ignores the change.
->>
->> I'm not sure I understand what's going on here.
->> Are you saying that FSEvents reports network mounted directories with a
->> path relative to the mount-point rather than an absolute path?
->>
-> 
-> Yes
-> 
->> In your example, is "/network/working/directory" a valid path on your
->> system (that also happens to be the same directory as
->> "/System/Volumes/...")
->>
->> That is, do you have some aliasing going on where both paths are valid -- like
->> a pair of hard-linked directories?
->> Or, is there something special about a network mount point?
->>
->>
->> Did you have to "cd /System/Volumes/..." to get Git to have the absolute
->> path be this?  Or were you doing a "cd /network/..."?
->> (Sorry to ask so many questions but I don't have a pair of systems to test any
->> of this on right now.)
->>
-> 
->   "/network/working/directory" is mounted under
-> "/System/Volumes/Data/network/working/directory"
-> 
-> There is also a symlink:
-> 
-> "/network" -> "/System/Volumes/Data/network"
-> 
-> No matter if I "cd /System/Volumes/Data/network/working/directory"
-> or "cd /network/working/directory" the paths reported by FSEvents
-> always start with "/network/working/directory"
-> 
-> If I do a similar symlink with local directories, I do not get this
-> unexpected behavior.
-> 
-> I need to remove the symlink and try it that way, but I need to
-> coordinate with the machine's owner.
+.. Lana (lana.deere@gmail.com)
 
-
-I think you have stumbled upon a recent MacOS feature called
-"firmlinks".  I'm just reading up on it myself, so I shouldn't
-speculate here (yet), but maybe you too could do some reading
-on the subject.
-
-This makes me wonder if the symlink is historical.  The real
-magic is in the firmlinks.  For example, if I do:
-
-	$ (cd / ; ls -l | grep Users)
-	drwxr-xr-x   6 root  admin   192 Apr  6  2020 Users
-
-	$ (cd /Users ; df .)
-	Filesystem   512-blocks      Used Available Capacity iused      ifree 
-%iused  Mounted on
-	/dev/disk1s1  976490576 608954344 338850488    65% 4181323 4878271557 
-  0%   /System/Volumes/Data
-
-we can see that /Users is on /System/Volumes/Data (and there is a
-/System/Volumes/Data/Users directory with the same metadata), but
-it is not a symlink.
-
-
-See [1] for more info.
-
-[1] 
-http://www.swiftforensics.com/2019/10/macos-1015-volumes-firmlink-magic.html
-
-
-[...]
->>> @@ -209,7 +209,12 @@ static void
->> fsevent_callback(ConstFSEventStreamRef streamRef,
->>>    		/*
->>>    		 * On Mac, we receive an array of absolute paths.
->>>    		 */
->>> -		path_k = paths[k];
->>> +		if (fsm_settings__get_allow_remote(the_repository) > 0) {
->>> +			strbuf_reset(&tmp);
->>> +			strbuf_realpath_forgiving(&tmp, paths[k], 0);
->>> +			path_k = tmp.buf;
->>> +		} else
->>> +			path_k = paths[k];
->>
->> This feels wrong.
->>
->> It is not that fsmonitor.allowRemote is true, but whether or not this
->> particular file system *IS* remote, right?
-> 
-> True. I suppose each path could be checked, or some bit could be set
-> if the working directory is remote, perhaps along the lines of
-> fsmonitor_ipc__get_path. Then the determination of the IPC path
-> and whether it is remote would be in one place. fsm-settings-*
-> would then just get that bit and check it against allowRemote.
-> 
-> Thoughts?
-
-I'll do some digging here.  There ought to be a way to tell if a
-component directory in a pathname has a firmlink peer.  (But I'm
-traveling for GitMerge, so I might not have time to look at this
-until afterwards.)
-
-This would indicate that a "bi-directional wormhole" (their words)
-alias is available (and hopefully, a way to computer the other peer....)
-
-I'm thinking that the "/network/..." path in the FSEvents is because
-FSEventD is using a particular peer spelling (that we weren't
-expecting).
-
-If we can compute the spellings of the peers once when the daemon
-starts up (and maybe make a little dictionary), then we can do
-prefix tricks on the absolute path after the
-         path_k = paths[k];
-step in fsevent_callback() to extract a relative path rather than
-an absolute path.
-
-Then call fsmonitor_classify_path_relative() instead of _absolute().
-
-Watch out though, there are several places that do
-         rel = path+k + ...state->path_worktree_watch.len...
-that would need to be adjusted.
-
-Hope this helps,
-Jeff
-
-
-
-
-
+On Fri, Sep 2, 2022 at 4:16 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2022-09-02 at 19:27:55, Lana Deere wrote:
+> > I'm testing an upgrade to git 2.37.2 from the current version we're
+> > using of 2.18.0.  When I try to pull in my development tree, 2.37.2
+> > gives me an error but 2.18.0 things all is fine:
+> >
+> > $ /tools/linux-x86_64/git/2.37.2/bin/git pull
+> > Your configuration specifies to merge with the ref
+> > 'refs/heads/feature/switch-to-qt5'
+> > from the remote, but no such ref was fetched.
+> >
+> > $ /tools/linux-x86_64/git/2.18.0/bin/git pull
+> > From http://githost:7990/scm/dp/sw
+> >  * branch                  feature/switch-to-qt5 -> FETCH_HEAD
+> > Already up to date.
+> >
+> > Anyone have any ideas about this?  All I could find on google was a
+> > suggestion that the "no such ref" message indicates the remote branch
+> > was deleted, but that's not the case here.
+>
+> Can you provide the output of `git ls-remote origin` (assuming that's
+> the remote you're using) and `git config -l` (the latter with both
+> versions)?  I don't know of any reason why Git 2.37 should be broken in
+> this regard, but I suspect that there's a difference in configuration
+> between the two leading to this.
+> --
+> brian m. carlson (he/him or they/them)
+> Toronto, Ontario, CA
