@@ -2,108 +2,251 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D01E9ECAAA1
-	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 18:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B363DECAAA1
+	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 19:03:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229696AbiIFSjK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Sep 2022 14:39:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42040 "EHLO
+        id S229708AbiIFTDC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Sep 2022 15:03:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229847AbiIFSjB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2022 14:39:01 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB035B940D
-        for <git@vger.kernel.org>; Tue,  6 Sep 2022 11:38:55 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id m17-20020a7bce11000000b003a5bedec07bso10177602wmc.0
-        for <git@vger.kernel.org>; Tue, 06 Sep 2022 11:38:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=6d3GJ+dlVZl+OLtKX3R4wOjocGsnfy+0gorRL0IwMsI=;
-        b=PEgBJTFnKHgAbtTVZ9Nz4ZToJdgGvsZOvwZrWBxSq5RhSVEzAscHsFq4F3/Hni/Ucc
-         FQuWykOfCdaofZUsmpupZuco1I7fqYATbh0cmZiJM3kgkkgjz7B1ABb/L+Q8t3NNmK4i
-         Dg2/rQDj/hIVHjs0mG15WtKL0e1o8vDrTL6mmE04IJW33GlWyppqHMwr2QR2n9sL2GSV
-         uG2s0EFvIGIimuLLyZKjDim0ctpI3U5OtB6b3uIYmGsINbKYaML0J/Byc6VCJSFIw9Sb
-         olKuo4r9HfvJSZ1QqzEV2b1HsFAcWr/N5po/mssbs8gwizL/E/rhG93VrAeodHOYCHeI
-         EXxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=6d3GJ+dlVZl+OLtKX3R4wOjocGsnfy+0gorRL0IwMsI=;
-        b=2V90nM+Sjh8Zz/gOm0Fgl+jbf3EIJrq3+hbTGOThUqvbzMS1QC65f8koMKGHGHJpt7
-         llw8VK3xhp/nUlCY/69UJO2TP/QSsw5ufZLfzd7NG5reN45PXhlMl28npTFIwaFuNlSI
-         +gBb4NsAtfVc9fZb4Wr1bLmEz4VHnVbnTNBodDcam/cPVd26GCKY+JO90k2nTj096P+k
-         pG03zxckLK5+EXSrXcgK+jvXoDJWhqSE1ULshBU2phuteyaT1NwWv7rOqI7P9ZjzDniz
-         qd5Ixbzd3Xijpzo57T4OgIPjmZBahIaQ3pJG2FAQeiAYFwO7FUoOD37bn4779C4IbXqs
-         BPEg==
-X-Gm-Message-State: ACgBeo3vtZVsaDVJoIiFWGE8BHWCADtfQJstzP3oY6anBRc0EvTf4xP9
-        6nXd3BqyHfrQZMVTzRDK8KPVZ/7G4YdzbOXUpcZkMA2h
-X-Google-Smtp-Source: AA6agR5nbdFAgSg6z2NlJ6o6B+PZowJ+89+AUcqY3Spbovtoa+GnbdDH4xNyl0EjYHsI2wpkUdQ9CYZPS2x3uw2475I=
-X-Received: by 2002:a7b:ca42:0:b0:3a6:9d:a444 with SMTP id m2-20020a7bca42000000b003a6009da444mr14880859wml.51.1662489533429;
- Tue, 06 Sep 2022 11:38:53 -0700 (PDT)
+        with ESMTP id S229819AbiIFTCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2022 15:02:48 -0400
+Received: from us-smtp-delivery-120.mimecast.com (us-smtp-delivery-120.mimecast.com [170.10.129.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 487148B2DD
+        for <git@vger.kernel.org>; Tue,  6 Sep 2022 12:02:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mathworks.com;
+        s=mimecast20180117; t=1662490948;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=mNfztwAq3s8cyJIugyv7SHggP71gfEnMfaDcmAC0+hk=;
+        b=NNv+wyg4r+4N2t6UJDxPvFXTo5UV5B841S7Gjz/iVOH1EQI+X9zRETm4vlo1lsPWmCiQWf
+        uZeT8oU7dogHXPft5MHOUsl5r/UPUIAe9izF4h9lXptBQXXCR/0R9fx58UrkItCCvm2GQP
+        o0R7OoMXDKexWv4z9diEYsAXfw8b3PU=
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam11lp2174.outbound.protection.outlook.com [104.47.57.174]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-641-ImeOjhn8O4Kss7ay5x2bpA-1; Tue, 06 Sep 2022 15:02:27 -0400
+X-MC-Unique: ImeOjhn8O4Kss7ay5x2bpA-1
+Received: from BL0PR05MB5571.namprd05.prod.outlook.com (2603:10b6:208:2f::17)
+ by SN6PR05MB5950.namprd05.prod.outlook.com (2603:10b6:805:fb::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5612.5; Tue, 6 Sep
+ 2022 19:02:24 +0000
+Received: from BL0PR05MB5571.namprd05.prod.outlook.com
+ ([fe80::86c9:5cc7:6693:d9f7]) by BL0PR05MB5571.namprd05.prod.outlook.com
+ ([fe80::86c9:5cc7:6693:d9f7%6]) with mapi id 15.20.5612.007; Tue, 6 Sep 2022
+ 19:02:24 +0000
+From:   Eric DeCosta <edecosta@mathworks.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>,
+        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: [PATCH v4 4/4] fsmonitor: normalize FSEvents event paths to the
+ real path
+Thread-Topic: [PATCH v4 4/4] fsmonitor: normalize FSEvents event paths to the
+ real path
+Thread-Index: AQHYvVQH5djpr+NntUyFzNLwjYXiEq3LAbkAgAFSbnCABlkzAIAAGvZQ
+Date:   Tue, 6 Sep 2022 19:02:24 +0000
+Message-ID: <BL0PR05MB5571765C903A82FDD990956AD97E9@BL0PR05MB5571.namprd05.prod.outlook.com>
+References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
+ <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
+ <56cabf3be3b9e228bc948da372db4c9d11fd3926.1661962145.git.gitgitgadget@gmail.com>
+ <bdf26d53-7068-87a6-484b-aeef99be35bd@jeffhostetler.com>
+ <BYAPR05MB5573B477ED53CBC4C996729DD97A9@BYAPR05MB5573.namprd05.prod.outlook.com>
+ <a583a787-1f54-74ba-add1-61f9e30d5c2a@jeffhostetler.com>
+In-Reply-To: <a583a787-1f54-74ba-add1-61f9e30d5c2a@jeffhostetler.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL0PR05MB5571:EE_|SN6PR05MB5950:EE_
+x-ms-office365-filtering-correlation-id: fd26a132-f191-49ef-1d4b-08da903a559b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0
+x-microsoft-antispam-message-info: QRMBqaiViL5iItNMk3m4+ExZrHRNjjIESUzh5F+kYEQ/dytR3SCeYFndMd8W8kKGKPcuB0qz8w39H/C4m7Z61a3O57rVHfUgqD4JYtAumEmxB9enN3ZZhsR73Rn25DMmwT1BBwGN7tK6garMAixitHuJxTj8U1uSwa9kqCZg8NbPHZCLL4it9b5t91yUImbV3SlQBRwder4FAAJ3dDLFYIhr25sU5vPtiNFAjw+VSC+IUXFuviP3gOxVltCUVmPhorYyJ2n/kq2TsfZ0rwEo/lOokz4dG1G2if6Nz2FpDDbb/187CdXeCMF30JFwA2NHx8wdUl5WMRNnozuZi/SMiWTprghg3B8MAkmud/DYQ18X56THS84IPOKj4nzFc3R5QitVv+rlXFGFyoj5yCCMyLKcyRX7bat0tljscmv4EB/w8RqrQCJSCPfYo1fPut6nmw985JbBWlWS+MK6gDzV6k40lQYPKf8RHzioM5jphJKJgPGeTLRDHHlqvNrRD93cMXR1P6UrECHE9AAj082d/QDSEJqEzys1mpNW6NYLPyuxxOyNfJmFmsay1882afA/IzDKqV3+kg2CJND2WnzpooR58ZT0Y//eDAa6bRgb66XbPyvYe6N80e4lql+n68wNsHMctMKcvyi3BiDvarQ2cRQ8qZHCX5hRxz8lbDt5VZmnoEAYQdwwiMZQ/GAB2b/IglwaGj3hQy6Iyu4k6jAgZzZJP9O5ZdTC86vzugx5opGWu1GM1CA8pE3jq6JjmcgDmqFbbNDcgW47jHtrCmSNXi/iie2YdV8qx+V+sya3P/4=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR05MB5571.namprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(366004)(39860400002)(346002)(136003)(396003)(376002)(122000001)(8676002)(33656002)(2906002)(52536014)(5660300002)(64756008)(8936002)(84970400001)(66446008)(83380400001)(66476007)(66556008)(76116006)(66946007)(110136005)(316002)(71200400001)(478600001)(41300700001)(38070700005)(55016003)(6506007)(53546011)(19627235002)(966005)(9686003)(38100700002)(26005)(7696005)(186003)(86362001);DIR:OUT;SFP:1101
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?eUhhemZqOTQ5MFpGTDRYUTh2eWF1M1JOYjIxM2pKNFpYdlQyZXZFZE9WWE10?=
+ =?utf-8?B?d2NiQUNSbm5xaDB3S3RkUVgrcngwMUNMZWpxQmR4SU1saURBUzlITno4N2k1?=
+ =?utf-8?B?OXdzKzJLS3VZeHBTV2dPTlFDKzlVd0RKbnB3MWRPS2liczJMZ0hkd0V4SFpN?=
+ =?utf-8?B?WStWOUpLRXBPUHRXU0krYW9oL0lqK24vSm0ySTY0M1dlMkUzMmE3ZHVvTW5p?=
+ =?utf-8?B?dkNrdzhUQjlJTnk2amtpUWV6RzNQRUsxKzhadEpselNRYzdLVU5jTWQzUmxV?=
+ =?utf-8?B?SFVra3NUdmpLTDRQVEF2Y2lXWUpJbkJNeHlWME5vWmRHYWxRT1VLbkQzUndw?=
+ =?utf-8?B?V2srbjNHcmY3M2pweUJKZmlUaGMxb1VoaWRBNFEwdk5PNEdlSjRCbkhlMXIy?=
+ =?utf-8?B?cHZBbU9KRDRyNmwrRVFMSHNiaExLTUI0WXJ3TWZ2VU05Wm5RQ1RHd2pyNGda?=
+ =?utf-8?B?QVhkTlNkbVFTNHhGekdZTzZpL0t0cmJjTEJOalNMbFVWNjBzeFZnc1RqWDF2?=
+ =?utf-8?B?UUhjVTdCQWNFNnRSU2ZpQkc5SE45WGdmbi9iRTBsVDY3WVRJZXhnSzBZSmVU?=
+ =?utf-8?B?K0ZWdTc4WG9JQmFKS1RzK2JDQ0FyQjZEc0l0VFZ5czVjc0w2aWlzMXFzOTAz?=
+ =?utf-8?B?aUgydVkrWXEveE4rS09Ud09KM3U0TmFNbHBOeXJtbVArWEhJdDVQRXVHalY3?=
+ =?utf-8?B?dloydEE4cjlFZnlqemJuMGZJa2hhRWYwZGIyMm9LMTYyN3hBc1lKTlNOcDlk?=
+ =?utf-8?B?OGNUc2JIbDRkV0p0a05ETytuN01NTHZpMmxkWjYyZGJHSW90dmxKUTBvY1gy?=
+ =?utf-8?B?SDNyeUJmWG41NkM4RGoxQnd5TzNpWkpWVmdkTEsxeUhTNVFtVGlMTklodWhH?=
+ =?utf-8?B?ZzExWkUxNmJZaXN1SXpDVzQvMWJQZnVkUDRrKzNtK0VuSkU3ZDA2MVpBN1Jq?=
+ =?utf-8?B?OXRqVkRrTUpvTEUvVXpZc2pkN090YTRWSUMzcTdiUCtUN0doOHVZS09sR2Qx?=
+ =?utf-8?B?Wnh2dXhFK0o2TjV5WWlkYzU1Und2N3lKUHdPR0Jvdnd2TndCRHdiMWdPakdu?=
+ =?utf-8?B?a1FhN1VrWGZqOXZGWC9laDJvTldXU1drU0xweXBFNTZCMHM1UGVDZkpBdTVz?=
+ =?utf-8?B?bkp3eWhkLzJKZ2Rpd1lDdVI5dTVua1BNSW9YbHNyMlJmczJSOHBiRjhXN0Fr?=
+ =?utf-8?B?Q013MXpOcjJQZzNPWGRIdWo1TFhjcGY4aXYxVjU4K1R4b0RZYk1zdlYxR2Ns?=
+ =?utf-8?B?U05XRHp3NXoyQi85SnhPOTFJQWpyS3VmRzNFVVhoVFpVUkpURDdhNXhyR3Bw?=
+ =?utf-8?B?WnJWbXozQ2FGa0ZqM2MvMlpKNG1xdWpoY1RWUGZodjVoNzZqRUpqVS9HOFk0?=
+ =?utf-8?B?UlFJNjdMRFJsdkhNU0d1UVorM2JXSEFPcjMrRDZMc0liWkhOdG1veG9YVXA3?=
+ =?utf-8?B?RkZ0cFVWbE5hTHR0R0swcVhrTSttcFMwLy9DdUJXdTVZVEZYaThTZ2pIeS9O?=
+ =?utf-8?B?V2E1QjlrNllRRHd6cXVIM0ZIalR4SUdIZ1VJaUptNVN1aFVhUFQ0MGp3bU1u?=
+ =?utf-8?B?bk5KeGlreEhNQ2ticWVIZGJCbHZBT1hicTZPWXBZU3VxMmhyUUpaTWhiV0ZT?=
+ =?utf-8?B?VFpYSGJ3aFdWVVh2NElmVTM0b2l6cGFNbW92b2RhR29CeGEycEoxSTBnRllV?=
+ =?utf-8?B?SWFBczc4azF0NDBiMDNGVnJUK0IwRkRIZFY1UDByektzTUFxT3Z0V2picXVn?=
+ =?utf-8?B?dkFsdGI2TlNTQmdqZVJUYmdpZ0M0Y1BRSjJONlFEaGxicjh1OUY1bnkvZmMw?=
+ =?utf-8?B?V1lpRjJXSjJja09iNXNQZFBPUGdaMm1KdW1LN2hmbWIrZW91dTBFVGw0dkFX?=
+ =?utf-8?B?OHRpR0ZQOGgyTmpwaERWM3RhSXJFTzNkQ2tLdmhhNzNXY3VEYUoxajIybHV4?=
+ =?utf-8?B?VEtxSXFPamtqNEZOWllBUXJwdFo0SWMyTWZScnI4M21UQnlraHM3OFNka2Ny?=
+ =?utf-8?B?aTl0ZzhqOU9zRWQrRzkrTThKYUlkOTc1Z2FiTlI0S1R5bHRXKzk5YWpGZGxJ?=
+ =?utf-8?B?K3dFV1EvRU41RGtyQStOeUg2bmhqbkh2emhtL3VnbHcyWHJiNlZkQko0aVRh?=
+ =?utf-8?Q?8zeMJC9ZlASc9O6m9AoT+Sa6J?=
 MIME-Version: 1.0
-References: <CA+4x=b_07g6STT0nvma_gRhv=zdj+7TQx5SxKLUtuqONLwv=TQ@mail.gmail.com>
- <9676rprp-s6p4-o2r5-6s86-5939os5qn855@tzk.qr>
-In-Reply-To: <9676rprp-s6p4-o2r5-6s86-5939os5qn855@tzk.qr>
-From:   Lana Deere <lana.deere@gmail.com>
-Date:   Tue, 6 Sep 2022 14:38:17 -0400
-Message-ID: <CA+4x=b91W31eAnShPzVw1zta43OYwArsgW0EsU1-0vkOw+qGyA@mail.gmail.com>
-Subject: Re: 2.37.2 can't "git pull" but 2.18.0 can
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: mathworks.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR05MB5950
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: mathworks.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With --prune set, the 2.18.0 pull still works but the 2.37.2 pull
-still fails.  There are several of us sharing this branch and we
-aren't having any issues pushing or pulling with 2.18.0.
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogSmVmZiBIb3N0ZXRsZXIg
+PGdpdEBqZWZmaG9zdGV0bGVyLmNvbT4NCj4gU2VudDogVHVlc2RheSwgU2VwdGVtYmVyIDYsIDIw
+MjIgMToxNCBQTQ0KPiBUbzogRXJpYyBEZUNvc3RhIDxlZGVjb3N0YUBtYXRod29ya3MuY29tPjsg
+RXJpYyBEZUNvc3RhIHZpYSBHaXRHaXRHYWRnZXQNCj4gPGdpdGdpdGdhZGdldEBnbWFpbC5jb20+
+OyBnaXRAdmdlci5rZXJuZWwub3JnDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjQgNC80XSBmc21v
+bml0b3I6IG5vcm1hbGl6ZSBGU0V2ZW50cyBldmVudCBwYXRocyB0bw0KPiB0aGUgcmVhbCBwYXRo
+DQo+IA0KPiANCj4gDQo+IE9uIDkvMi8yMiAxMjozNSBQTSwgRXJpYyBEZUNvc3RhIHdyb3RlOg0K
+PiA+DQo+ID4NCj4gPj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gPj4gRnJvbTogSmVm
+ZiBIb3N0ZXRsZXIgPGdpdEBqZWZmaG9zdGV0bGVyLmNvbT4NCj4gPj4gU2VudDogVGh1cnNkYXks
+IFNlcHRlbWJlciAxLCAyMDIyIDQ6MDYgUE0NCj4gPj4gVG86IEVyaWMgRGVDb3N0YSB2aWEgR2l0
+R2l0R2FkZ2V0IDxnaXRnaXRnYWRnZXRAZ21haWwuY29tPjsNCj4gPj4gZ2l0QHZnZXIua2VybmVs
+Lm9yZw0KPiA+PiBDYzogRXJpYyBEZUNvc3RhIDxlZGVjb3N0YUBtYXRod29ya3MuY29tPg0KPiA+
+PiBTdWJqZWN0OiBSZTogW1BBVENIIHY0IDQvNF0gZnNtb25pdG9yOiBub3JtYWxpemUgRlNFdmVu
+dHMgZXZlbnQgcGF0aHMNCj4gPj4gdG8gdGhlIHJlYWwgcGF0aA0KPiA+Pg0KPiA+Pg0KPiA+Pg0K
+PiA+PiBPbiA4LzMxLzIyIDEyOjA5IFBNLCBFcmljIERlQ29zdGEgdmlhIEdpdEdpdEdhZGdldCB3
+cm90ZToNCj4gPj4+IEZyb206IEVyaWMgRGVDb3N0YSA8ZWRlY29zdGFAbWF0aHdvcmtzLmNvbT4N
+Cj4gPj4+DQo+ID4+PiBDb25zaWRlciB0aGUgZm9sbG93aW5nIG5ldHdvcmsgd29ya2luZyBkaXJl
+Y3RvcnkgdGhhdCBpcyBtb3VudGVkDQo+ID4+PiB1bmRlcg0KPiA+Pj4gL1N5c3RlbS9Wb2x1bWVz
+L0RhdGE6DQo+ID4+Pg0KPiA+Pj4gL25ldHdvcmsvd29ya2luZy9kaXJlY3RvcnkNCj4gPj4+DQo+
+ID4+PiBUaGUgZ2l0IHdvcmtpbmcgZGlyZWN0b3J5IHBhdGggaXM6DQo+ID4+Pg0KPiA+Pj4gL1N5
+c3RlbS9Wb2x1bWVzL0RhdGEvbmV0d29yay93b3JraW5nL2RpcmVjdG9yeQ0KPiA+Pj4NCj4gPj4+
+IFRoZSBwYXRocyByZXBvcnRlZCBieSBGU0V2ZW50cyBhbHdheXMgc3RhcnQgd2l0aCAvbmV0d29y
+ay4gZnNtb25pdG9yDQo+ID4+PiBleHBlY3RzIHBhdGhzIHRvIGJlIHVuZGVyIHRoZSB3b3JraW5n
+IGRpcmVjdG9yeTsgdGhlcmVmb3JlIGl0IGZhaWxzDQo+ID4+PiB0byBtYXRjaCAvbmV0d29yay8u
+Li4gYW5kIGlnbm9yZXMgdGhlIGNoYW5nZS4NCj4gPj4NCj4gPj4gSSdtIG5vdCBzdXJlIEkgdW5k
+ZXJzdGFuZCB3aGF0J3MgZ29pbmcgb24gaGVyZS4NCj4gPj4gQXJlIHlvdSBzYXlpbmcgdGhhdCBG
+U0V2ZW50cyByZXBvcnRzIG5ldHdvcmsgbW91bnRlZCBkaXJlY3RvcmllcyB3aXRoDQo+ID4+IGEg
+cGF0aCByZWxhdGl2ZSB0byB0aGUgbW91bnQtcG9pbnQgcmF0aGVyIHRoYW4gYW4gYWJzb2x1dGUg
+cGF0aD8NCj4gPj4NCj4gPg0KPiA+IFllcw0KPiA+DQo+ID4+IEluIHlvdXIgZXhhbXBsZSwgaXMg
+Ii9uZXR3b3JrL3dvcmtpbmcvZGlyZWN0b3J5IiBhIHZhbGlkIHBhdGggb24geW91cg0KPiA+PiBz
+eXN0ZW0gKHRoYXQgYWxzbyBoYXBwZW5zIHRvIGJlIHRoZSBzYW1lIGRpcmVjdG9yeSBhcw0KPiA+
+PiAiL1N5c3RlbS9Wb2x1bWVzLy4uLiIpDQo+ID4+DQo+ID4+IFRoYXQgaXMsIGRvIHlvdSBoYXZl
+IHNvbWUgYWxpYXNpbmcgZ29pbmcgb24gd2hlcmUgYm90aCBwYXRocyBhcmUNCj4gPj4gdmFsaWQg
+LS0gbGlrZSBhIHBhaXIgb2YgaGFyZC1saW5rZWQgZGlyZWN0b3JpZXM/DQo+ID4+IE9yLCBpcyB0
+aGVyZSBzb21ldGhpbmcgc3BlY2lhbCBhYm91dCBhIG5ldHdvcmsgbW91bnQgcG9pbnQ/DQo+ID4+
+DQo+ID4+DQo+ID4+IERpZCB5b3UgaGF2ZSB0byAiY2QgL1N5c3RlbS9Wb2x1bWVzLy4uLiIgdG8g
+Z2V0IEdpdCB0byBoYXZlIHRoZQ0KPiA+PiBhYnNvbHV0ZSBwYXRoIGJlIHRoaXM/IE9yIHdlcmUg
+eW91IGRvaW5nIGEgImNkIC9uZXR3b3JrLy4uLiI/DQo+ID4+IChTb3JyeSB0byBhc2sgc28gbWFu
+eSBxdWVzdGlvbnMgYnV0IEkgZG9uJ3QgaGF2ZSBhIHBhaXIgb2Ygc3lzdGVtcyB0bw0KPiA+PiB0
+ZXN0IGFueSBvZiB0aGlzIG9uIHJpZ2h0IG5vdy4pDQo+ID4+DQo+ID4NCj4gPiAiL25ldHdvcmsv
+d29ya2luZy9kaXJlY3RvcnkiIGlzIG1vdW50ZWQgdW5kZXINCj4gPiAiL1N5c3RlbS9Wb2x1bWVz
+L0RhdGEvbmV0d29yay93b3JraW5nL2RpcmVjdG9yeSINCj4gPg0KPiA+IFRoZXJlIGlzIGFsc28g
+YSBzeW1saW5rOg0KPiA+DQo+ID4gIi9uZXR3b3JrIiAtPiAiL1N5c3RlbS9Wb2x1bWVzL0RhdGEv
+bmV0d29yayINCj4gPg0KPiA+IE5vIG1hdHRlciBpZiBJICJjZCAvU3lzdGVtL1ZvbHVtZXMvRGF0
+YS9uZXR3b3JrL3dvcmtpbmcvZGlyZWN0b3J5Ig0KPiA+IG9yICJjZCAvbmV0d29yay93b3JraW5n
+L2RpcmVjdG9yeSIgdGhlIHBhdGhzIHJlcG9ydGVkIGJ5IEZTRXZlbnRzDQo+ID4gYWx3YXlzIHN0
+YXJ0IHdpdGggIi9uZXR3b3JrL3dvcmtpbmcvZGlyZWN0b3J5Ig0KPiA+DQo+ID4gSWYgSSBkbyBh
+IHNpbWlsYXIgc3ltbGluayB3aXRoIGxvY2FsIGRpcmVjdG9yaWVzLCBJIGRvIG5vdCBnZXQgdGhp
+cw0KPiA+IHVuZXhwZWN0ZWQgYmVoYXZpb3IuDQo+ID4NCj4gPiBJIG5lZWQgdG8gcmVtb3ZlIHRo
+ZSBzeW1saW5rIGFuZCB0cnkgaXQgdGhhdCB3YXksIGJ1dCBJIG5lZWQgdG8NCj4gPiBjb29yZGlu
+YXRlIHdpdGggdGhlIG1hY2hpbmUncyBvd25lci4NCj4gDQo+IA0KPiBJIHRoaW5rIHlvdSBoYXZl
+IHN0dW1ibGVkIHVwb24gYSByZWNlbnQgTWFjT1MgZmVhdHVyZSBjYWxsZWQgImZpcm1saW5rcyIu
+DQo+IEknbSBqdXN0IHJlYWRpbmcgdXAgb24gaXQgbXlzZWxmLCBzbyBJIHNob3VsZG4ndCBzcGVj
+dWxhdGUgaGVyZSAoeWV0KSwgYnV0DQo+IG1heWJlIHlvdSB0b28gY291bGQgZG8gc29tZSByZWFk
+aW5nIG9uIHRoZSBzdWJqZWN0Lg0KPiANCj4gVGhpcyBtYWtlcyBtZSB3b25kZXIgaWYgdGhlIHN5
+bWxpbmsgaXMgaGlzdG9yaWNhbC4gVGhlIHJlYWwgbWFnaWMgaXMgaW4gdGhlDQo+IGZpcm1saW5r
+cy4gRm9yIGV4YW1wbGUsIGlmIEkgZG86DQo+IA0KPiAkIChjZCAvIDsgbHMgLWwgfCBncmVwIFVz
+ZXJzKQ0KPiBkcnd4ci14ci14IDYgcm9vdCBhZG1pbiAxOTIgQXByIDYgMjAyMCBVc2Vycw0KPiAN
+Cj4gJCAoY2QgL1VzZXJzIDsgZGYgLikNCj4gRmlsZXN5c3RlbSA1MTItYmxvY2tzIFVzZWQgQXZh
+aWxhYmxlIENhcGFjaXR5IGl1c2VkIGlmcmVlICVpdXNlZCBNb3VudGVkDQo+IG9uDQo+IC9kZXYv
+ZGlzazFzMSA5NzY0OTA1NzYgNjA4OTU0MzQ0IDMzODg1MDQ4OCA2NSUgNDE4MTMyMyA0ODc4Mjcx
+NTU3IDAlDQo+IC9TeXN0ZW0vVm9sdW1lcy9EYXRhDQo+IA0KPiB3ZSBjYW4gc2VlIHRoYXQgL1Vz
+ZXJzIGlzIG9uIC9TeXN0ZW0vVm9sdW1lcy9EYXRhIChhbmQgdGhlcmUgaXMgYQ0KPiAvU3lzdGVt
+L1ZvbHVtZXMvRGF0YS9Vc2VycyBkaXJlY3Rvcnkgd2l0aCB0aGUgc2FtZSBtZXRhZGF0YSksIGJ1
+dCBpdCBpcw0KPiBub3QgYSBzeW1saW5rLg0KPiANCj4gDQo+IFNlZSBbMV0gZm9yIG1vcmUgaW5m
+by4NCj4gDQo+IFsxXQ0KPiBodHRwOi8vd3d3LnN3aWZ0Zm9yZW5zaWNzLmNvbS8yMDE5LzEwL21h
+Y29zLTEwMTUtdm9sdW1lcy1maXJtbGluay0NCj4gbWFnaWMuaHRtbCA8aHR0cHM6Ly9wcm90ZWN0
+LQ0KPiB1cy5taW1lY2FzdC5jb20vcy9RTjRxQ1lFWkIyaDFwN2pXY0cxQ2J3P2RvbWFpbj1zd2lm
+dGZvcmVuc2ljcy5jbw0KPiBtPg0KPiANCj4gDQoNCkhtbSwgSSBkb24ndCBzZWUgYW55dGhpbmcg
+dGhhdCBzdWdnZXN0cyBhIGZpcm1saW5rIGlzIGludm9sdmVkIGJ1dCB0aGlzIGlzIG5ldyB0byBt
+ZSBzbyBtYXliZSBJIGp1c3QgZG9uJ3Qgc2VlIGl0LiBUaGVyZSBpcyBhbiBhdXRvbW91bnQgaW4g
+YWRkaXRpb24gdG8gdGhlIHN5bWxpbmsgdGhvdWdoLg0KDQpTbywgZGlzcGVuc2luZyB3aXRoIHRo
+ZSBhYnN0cmFjdCAiL25ldHdvcmsiIHBhdGgsIGFuZCBnZXR0aW5nIHRvIHRoZSBkZXRhaWxzIG9m
+IG15IGVudmlyb25tZW50Og0KDQolIG1vdW50IHwgZ3JlcCAvbWF0aHdvcmtzDQptYXAgYXV0by5z
+ZnMuc29sMi5tYXRod29ya3Mgb24gL1N5c3RlbS9Wb2x1bWVzL0RhdGEvbWF0aHdvcmtzIChhdXRv
+ZnMsIGF1dG9tb3VudGVkLCBub2Jyb3dzZSkNCnRyaWdnZXJlZCBtYXAgYXV0by5zZnMuc29sMi5k
+ZXZlbCBvbiAvU3lzdGVtL1ZvbHVtZXMvRGF0YS9tYXRod29ya3MvZGV2ZWwgKGF1dG9mcywgYXV0
+b21vdW50ZWQsIG5vYnJvd3NlKQ0KdHJpZ2dlcmVkIG1hcCBzZnMud29ybGR3aWRlLlVTLU5hdGlj
+ay5zb2wyLmRldmVsLnNicyBvbiAvU3lzdGVtL1ZvbHVtZXMvRGF0YS9tYXRod29ya3MvZGV2ZWwv
+c2JzIChhdXRvZnMsIGF1dG9tb3VudGVkLCBub2Jyb3dzZSkNCnRyaWdnZXJlZCBtYXAgc2ZzLndv
+cmxkd2lkZS5VUy1OYXRpY2suZGV2ZWwuc2JzLjI5IG9uIC9TeXN0ZW0vVm9sdW1lcy9EYXRhL21h
+dGh3b3Jrcy9kZXZlbC9zYnMvMjkgKGF1dG9mcywgYXV0b21vdW50ZWQsIG5vYnJvd3NlKQ0KYmF0
+ZnMtc2IyOS1uZnM6L3ZtZ3Ivc2JzMjkvZWRlY29zdGEuQmJhc2hwcm9kMS5qMTkyODU2MC4yIG9u
+IC9TeXN0ZW0vVm9sdW1lcy9EYXRhL21hdGh3b3Jrcy9kZXZlbC9zYnMvMjkvZWRlY29zdGEuQmJh
+c2hwcm9kMS5qMTkyODU2MC4yIChuZnMsIG5vZGV2LCBhdXRvbW91bnRlZCwgbm9hdGltZSwgbm9i
+cm93c2UpDQouLi4NCg0KJSBscyAtbCAvIHwgZ3JlcCBtYXRod29ya3MNCmxyd3hyLXhyLXggICAx
+IHJvb3QgIHdoZWVsICAgIDM1IEF1ZyAyOSAxMDoyNSBob21lQCAtPiAvU3lzdGVtL1ZvbHVtZXMv
+RGF0YS9tYXRod29ya3MvaG9tZQ0KbHJ3eHIteHIteCAgIDEgcm9vdCAgd2hlZWwgICAgMzAgQXVn
+IDI5IDEwOjI1IG1hdGh3b3Jrc0AgLT4gL1N5c3RlbS9Wb2x1bWVzL0RhdGEvbWF0aHdvcmtzDQoN
+Ck15IHdvcmt0cmVlIGlzOiAvU3lzdGVtL1ZvbHVtZXMvRGF0YS9tYXRod29ya3MvZGV2ZWwvc2Jz
+LzI5L2VkZWNvc3RhLkJiYXNocHJvZDEuajE5Mjg1NjAuMg0Kb3IsIGVxdWl2YWxlbnRseSB2aWEg
+dGhlIHN5bWxpbmsganVzdDogL21hdGh3b3Jrcy9kZXZlbC9zYnMvMjkvZWRlY29zdGEuQmJhc2hw
+cm9kMS5qMTkyODU2MC4yDQoNCkkgaGF2ZSBzdWRvJ2VycyBhY2Nlc3Mgbm93OyBzbyBJIGNhbiB0
+cnkgbW91bnRpbmcgdGhpbmdzIG1hbnVhbGx5LCBtZXNzIGFib3V0IHdpdGggc3ltbGlua3MgYW5k
+IHNlZSB3aGF0IEkgZ2V0Lg0KDQo+IFsuLi5dDQo+ID4+PiBAQCAtMjA5LDcgKzIwOSwxMiBAQCBz
+dGF0aWMgdm9pZA0KPiA+PiBmc2V2ZW50X2NhbGxiYWNrKENvbnN0RlNFdmVudFN0cmVhbVJlZiBz
+dHJlYW1SZWYsDQo+ID4+PiAvKg0KPiA+Pj4gKiBPbiBNYWMsIHdlIHJlY2VpdmUgYW4gYXJyYXkg
+b2YgYWJzb2x1dGUgcGF0aHMuDQo+ID4+PiAqLw0KPiA+Pj4gLSBwYXRoX2sgPSBwYXRoc1trXTsN
+Cj4gPj4+ICsgaWYgKGZzbV9zZXR0aW5nc19fZ2V0X2FsbG93X3JlbW90ZSh0aGVfcmVwb3NpdG9y
+eSkgPiAwKSB7DQo+ID4+PiArIHN0cmJ1Zl9yZXNldCgmdG1wKTsNCj4gPj4+ICsgc3RyYnVmX3Jl
+YWxwYXRoX2ZvcmdpdmluZygmdG1wLCBwYXRoc1trXSwgMCk7DQo+ID4+PiArIHBhdGhfayA9IHRt
+cC5idWY7DQo+ID4+PiArIH0gZWxzZQ0KPiA+Pj4gKyBwYXRoX2sgPSBwYXRoc1trXTsNCj4gPj4N
+Cj4gPj4gVGhpcyBmZWVscyB3cm9uZy4NCj4gPj4NCj4gPj4gSXQgaXMgbm90IHRoYXQgZnNtb25p
+dG9yLmFsbG93UmVtb3RlIGlzIHRydWUsIGJ1dCB3aGV0aGVyIG9yIG5vdCB0aGlzDQo+ID4+IHBh
+cnRpY3VsYXIgZmlsZSBzeXN0ZW0gKklTKiByZW1vdGUsIHJpZ2h0Pw0KPiA+DQo+ID4gVHJ1ZS4g
+SSBzdXBwb3NlIGVhY2ggcGF0aCBjb3VsZCBiZSBjaGVja2VkLCBvciBzb21lIGJpdCBjb3VsZCBi
+ZSBzZXQNCj4gPiBpZiB0aGUgd29ya2luZyBkaXJlY3RvcnkgaXMgcmVtb3RlLCBwZXJoYXBzIGFs
+b25nIHRoZSBsaW5lcyBvZg0KPiA+IGZzbW9uaXRvcl9pcGNfX2dldF9wYXRoLiBUaGVuIHRoZSBk
+ZXRlcm1pbmF0aW9uIG9mIHRoZSBJUEMgcGF0aA0KPiA+IGFuZCB3aGV0aGVyIGl0IGlzIHJlbW90
+ZSB3b3VsZCBiZSBpbiBvbmUgcGxhY2UuIGZzbS1zZXR0aW5ncy0qDQo+ID4gd291bGQgdGhlbiBq
+dXN0IGdldCB0aGF0IGJpdCBhbmQgY2hlY2sgaXQgYWdhaW5zdCBhbGxvd1JlbW90ZS4NCj4gPg0K
+PiA+IFRob3VnaHRzPw0KPiANCj4gSSdsbCBkbyBzb21lIGRpZ2dpbmcgaGVyZS4gVGhlcmUgb3Vn
+aHQgdG8gYmUgYSB3YXkgdG8gdGVsbCBpZiBhDQo+IGNvbXBvbmVudCBkaXJlY3RvcnkgaW4gYSBw
+YXRobmFtZSBoYXMgYSBmaXJtbGluayBwZWVyLiAoQnV0IEknbQ0KPiB0cmF2ZWxpbmcgZm9yIEdp
+dE1lcmdlLCBzbyBJIG1pZ2h0IG5vdCBoYXZlIHRpbWUgdG8gbG9vayBhdCB0aGlzDQo+IHVudGls
+IGFmdGVyd2FyZHMuKQ0KPiANCj4gVGhpcyB3b3VsZCBpbmRpY2F0ZSB0aGF0IGEgImJpLWRpcmVj
+dGlvbmFsIHdvcm1ob2xlIiAodGhlaXIgd29yZHMpDQo+IGFsaWFzIGlzIGF2YWlsYWJsZSAoYW5k
+IGhvcGVmdWxseSwgYSB3YXkgdG8gY29tcHV0ZXIgdGhlIG90aGVyIHBlZXIuLi4uKQ0KPiANCj4g
+SSdtIHRoaW5raW5nIHRoYXQgdGhlICIvbmV0d29yay8uLi4iIHBhdGggaW4gdGhlIEZTRXZlbnRz
+IGlzIGJlY2F1c2UNCj4gRlNFdmVudEQgaXMgdXNpbmcgYSBwYXJ0aWN1bGFyIHBlZXIgc3BlbGxp
+bmcgKHRoYXQgd2Ugd2VyZW4ndA0KPiBleHBlY3RpbmcpLg0KPiANCj4gSWYgd2UgY2FuIGNvbXB1
+dGUgdGhlIHNwZWxsaW5ncyBvZiB0aGUgcGVlcnMgb25jZSB3aGVuIHRoZSBkYWVtb24NCj4gc3Rh
+cnRzIHVwIChhbmQgbWF5YmUgbWFrZSBhIGxpdHRsZSBkaWN0aW9uYXJ5KSwgdGhlbiB3ZSBjYW4g
+ZG8NCj4gcHJlZml4IHRyaWNrcyBvbiB0aGUgYWJzb2x1dGUgcGF0aCBhZnRlciB0aGUNCj4gcGF0
+aF9rID0gcGF0aHNba107DQo+IHN0ZXAgaW4gZnNldmVudF9jYWxsYmFjaygpIHRvIGV4dHJhY3Qg
+YSByZWxhdGl2ZSBwYXRoIHJhdGhlciB0aGFuDQo+IGFuIGFic29sdXRlIHBhdGguDQo+IA0KPiBU
+aGVuIGNhbGwgZnNtb25pdG9yX2NsYXNzaWZ5X3BhdGhfcmVsYXRpdmUoKSBpbnN0ZWFkIG9mIF9h
+YnNvbHV0ZSgpLg0KPiANCj4gV2F0Y2ggb3V0IHRob3VnaCwgdGhlcmUgYXJlIHNldmVyYWwgcGxh
+Y2VzIHRoYXQgZG8NCj4gcmVsID0gcGF0aCtrICsgLi4uc3RhdGUtPnBhdGhfd29ya3RyZWVfd2F0
+Y2gubGVuLi4uDQo+IHRoYXQgd291bGQgbmVlZCB0byBiZSBhZGp1c3RlZC4NCj4gDQo+IEhvcGUg
+dGhpcyBoZWxwcywNCj4gSmVmZg0KPiANCj4gDQpUaGFua3MgZm9yIHRoZSBpbnNpZ2h0cywgSSds
+bCBkaWcgYXJvdW5kIGFuZCB0ZXN0IHRoaW5ncyBvdXQgc29tZSBtb3JlLg0KDQotRXJpYw0KDQo=
 
-.. Lana (lana.deere@gmail.com)
-
-
-
-On Mon, Sep 5, 2022 at 6:25 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Lana,
->
-> On Fri, 2 Sep 2022, Lana Deere wrote:
->
-> > I'm testing an upgrade to git 2.37.2 from the current version we're
-> > using of 2.18.0.  When I try to pull in my development tree, 2.37.2
-> > gives me an error but 2.18.0 things all is fine:
-> >
-> > $ /tools/linux-x86_64/git/2.37.2/bin/git pull
-> > Your configuration specifies to merge with the ref
-> > 'refs/heads/feature/switch-to-qt5'
-> > from the remote, but no such ref was fetched.
->
-> I bet this means that that `switch-to-qt5` branch was deleted on the
-> remote side, in which case...
->
-> > $ /tools/linux-x86_64/git/2.18.0/bin/git pull
-> > From http://githost:7990/scm/dp/sw
-> >  * branch                  feature/switch-to-qt5 -> FETCH_HEAD
-> > Already up to date.
->
-> ... Git would lie here and simply use the locally-cached version of the
-> last successfully-fetched `switch-to-qt5` branch.
->
-> To test this, you could pass the `--prune` option to `pull` (see
-> https://git-scm.com/docs/git-pull#Documentation/git-pull.txt---prune for
-> details), then try both pulls, and I bet _both_ will now fail.
->
-> Ciao,
-> Johannes
->
-> > Anyone have any ideas about this?  All I could find on google was a
-> > suggestion that the "no such ref" message indicates the remote branch
-> > was deleted, but that's not the case here.
-> >
-> >
-> > .. Lana (lana.deere@gmail.com)
-> >
