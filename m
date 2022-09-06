@@ -2,33 +2,32 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E593C38145
-	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 21:02:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16898ECAAA1
+	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 21:04:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230059AbiIFVCT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Sep 2022 17:02:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58652 "EHLO
+        id S230026AbiIFVEl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Sep 2022 17:04:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230080AbiIFVCQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2022 17:02:16 -0400
+        with ESMTP id S229486AbiIFVEj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2022 17:04:39 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67F26A8CC7
-        for <git@vger.kernel.org>; Tue,  6 Sep 2022 14:02:14 -0700 (PDT)
-Received: (qmail 19329 invoked by uid 109); 6 Sep 2022 21:02:14 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB1012DC
+        for <git@vger.kernel.org>; Tue,  6 Sep 2022 14:04:36 -0700 (PDT)
+Received: (qmail 19338 invoked by uid 109); 6 Sep 2022 21:04:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Sep 2022 21:02:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Sep 2022 21:04:36 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5760 invoked by uid 111); 6 Sep 2022 21:02:14 -0000
+Received: (qmail 5774 invoked by uid 111); 6 Sep 2022 21:04:36 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Sep 2022 17:02:14 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Sep 2022 17:04:36 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 6 Sep 2022 17:02:13 -0400
+Date:   Tue, 6 Sep 2022 17:04:35 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] lookup_commit_in_graph(): use prepare_commit_graph() to
- check for graph
-Message-ID: <Yxe1VbyYovwprPgQ@coredump.intra.peff.net>
+Subject: [PATCH 2/2] rev-list: disable commit graph with --verify-objects
+Message-ID: <Yxe1422xPYoMNlkG@coredump.intra.peff.net>
 References: <Yxe0k++LA/UfFLF/@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -38,90 +37,116 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We exit early from lookup_commit_in_graph() if the commit_graph pointer
-is NULL, under the assumption that we don't have a graph to look at. But
-the graph pointer is lazy-loaded; if no other code happens to have
-called prepare_commit_graph(), we'll incorrectly assume that one isn't
-available at all.
+Since the point of --verify-objects is to actually load and checksum the
+bytes of each object, optimizing out reads using the commit graph runs
+contrary to our goal.
 
-This has a pretty small performance impact in practice, because the
-fallback will generally be to call parse_object() instead. That ends up
-in parse_commit_buffer(), which loads the graph data itself. So the
-first commit we see won't use the graph, but subsequent ones will. Since
-using the graph is just an optimization there's generally no
-user-visible difference, but if you instrument rev-list like so:
+The most targeted way to implement this would be for the revision
+traversal code to check revs->verify_objects and avoid using the commit
+graph. But it's difficult to be sure we've hit all of the correct spots.
+For instance, I started this patch by writing the first of the included
+test cases, where the corrupted commit is directly on rev-list's command
+line. And that is easy to fix by teaching get_reference() to check
+revs->verify_objects before calling lookup_commit_in_graph().
 
-  diff --git a/revision.c b/revision.c
-  index ee702e498a..63c488ffb6 100644
-  --- a/revision.c
-  +++ b/revision.c
-  @@ -381,6 +381,9 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
-           * parsing commit data from disk.
-           */
-          commit = lookup_commit_in_graph(revs->repo, oid);
-  +       warning("%s %s in commit graph",
-  +               commit ? "found" : "did not find",
-  +               name);
-          if (commit)
-                  object = &commit->object;
-          else
+But that doesn't cover the second test case: when we traverse to a
+corrupted commit, we'd parse the parent in process_parents(). So we'd
+need to check there, too. And it keeps going. In handle_commit() we
+sometimes parses commits, too, though I couldn't figure out a way to
+trigger it that did not already parse via get_reference() or tag
+peeling. And try_to_simplify_commit() has its own parse call, and so on.
 
-and run (in git.git):
+So it seems like the safest thing is to just disable the commit graph
+for the whole process when we see the --verify-objects option. We can do
+that either in builtin/rev-list.c, where we use the option, or in
+revision.c, where we parse it. There are some subtleties:
 
-  git commit-graph write --reachable
-  git rev-list origin/master origin/next >/dev/null
+  - putting it in rev-list.c is less surprising in some ways, because
+    there we know we are just doing a single traversal. In a command
+    which does multiple traversals in a single process, it's rather
+    unexpected to globally disable the commit graph.
 
-you'll see that we fail to find the first one:
+  - putting it in revision.c is less surprising in some ways, because
+    the caller does not have to remember to disable the graph
+    themselves. But this is already tricky! The verify_objects flag in
+    rev_info doesn't do anything by itself. The caller has to provide an
+    object callback which does the right thing.
 
-  warning: did not find origin/master in commit graph
-  warning: found origin/next in commit graph
+  - for that reason, in practice nobody but rev-list uses this option in
+    the first place. So the distinction is probably not important either
+    way. Arguably it should just be an option of rev-list, and not the
+    general revision machinery; right now you can run "git log
+    --verify-objects", but it does not actually do anything useful.
 
-After this patch, you'll see that we find both:
+  - checking for a parsed revs.verify_objects flag in rev-list.c is too
+    late. By that time we've already passed the arguments to
+    setup_revisions(), which will have parsed the commits using the
+    graph.
 
-  warning: found origin/master in commit graph
-  warning: found origin/next in commit graph
+So this commit disables the graph as soon as we see the option in
+revision.c. That's a pretty broad hammer, but it does what we want, and
+in practice nobody but rev-list is using this flag anyway.
 
-Even though the performance implication is small here, there are two
-important reasons to do this:
-
-  - it's downright confusing if you are hunting a bug triggered by the
-    use of the commit graph. It may or may not trigger depending on the
-    number and ordering of tips you ask for.
-
-  - prepare_commit_graph() has other policy logic, too. In particular,
-    if we've loaded a commit graph and then disabled the graph via
-    disable_commit_graph(), that should take precedence.
-
-    I'm not sure if this can trigger bad behavior in practice. The only
-    caller there is upload-pack's deepen_by_rev_list(), which should be
-    avoiding the commit graph for its traversal tips, but probably
-    wasn't before this patch. Whether you could come up with a case
-    where that mattered is unclear. Still, this is obviously the right
-    thing to be doing.
+The tests cover both the "tip" and "parent" cases. Obviously our hammer
+hits them both in this case, but it's good to check both in case
+somebody later tries the more focused approach.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I couldn't find any other reason to avoid calling prepare_commit_graph()
-here (especially since it ends up lazy-loaded as discussed above). The
-cost of the call should not be high; after the first call, it is
-simplified down to a few integer checks.
+ revision.c      |  1 +
+ t/t1450-fsck.sh | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+)
 
- commit-graph.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index f2a36032f8..aef076e145 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -901,7 +901,7 @@ struct commit *lookup_commit_in_graph(struct repository *repo, const struct obje
- 	struct commit *commit;
- 	uint32_t pos;
+diff --git a/revision.c b/revision.c
+index ee702e498a..00f9c7943b 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2426,6 +2426,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->tree_objects = 1;
+ 		revs->blob_objects = 1;
+ 		revs->verify_objects = 1;
++		disable_commit_graph(revs->repo);
+ 	} else if (!strcmp(arg, "--unpacked")) {
+ 		revs->unpacked = 1;
+ 	} else if (starts_with(arg, "--unpacked=")) {
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 53c2aa10b7..f9a1bc5de7 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -507,6 +507,34 @@ test_expect_success 'rev-list --verify-objects with bad sha1' '
+ 	test_i18ngrep -q "error: hash mismatch $(dirname $new)$(test_oid ff_2)" out
+ '
  
--	if (!repo->objects->commit_graph)
-+	if (!prepare_commit_graph(repo))
- 		return NULL;
- 	if (!search_commit_pos_in_graph(id, repo->objects->commit_graph, &pos))
- 		return NULL;
++test_expect_success 'set up repository with commit-graph' '
++	git init corrupt-graph &&
++	(
++		cd corrupt-graph &&
++		test_commit one &&
++		test_commit two &&
++		git commit-graph write --reachable
++	)
++'
++
++corrupt_graph_obj () {
++	oid=$(git -C corrupt-graph rev-parse "$1") &&
++	obj=corrupt-graph/.git/objects/$(test_oid_to_path $oid) &&
++	test_when_finished 'mv backup $obj' &&
++	mv $obj backup &&
++	echo garbage >$obj
++}
++
++test_expect_success 'rev-list --verify-objects with commit graph (tip)' '
++	corrupt_graph_obj HEAD &&
++	test_must_fail git -C corrupt-graph rev-list --verify-objects HEAD
++'
++
++test_expect_success 'rev-list --verify-objects with commit graph (parent)' '
++	corrupt_graph_obj HEAD^ &&
++	test_must_fail git -C corrupt-graph rev-list --verify-objects HEAD
++'
++
+ test_expect_success 'force fsck to ignore double author' '
+ 	git cat-file commit HEAD >basis &&
+ 	sed "s/^author .*/&,&/" <basis | tr , \\n >multiple-authors &&
 -- 
 2.37.3.1134.gfd534b3986
-
