@@ -2,89 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72CD6ECAAD5
-	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 15:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68FA8ECAAA1
+	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 15:25:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233720AbiIFPS0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Sep 2022 11:18:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36056 "EHLO
+        id S239069AbiIFPZK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Sep 2022 11:25:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238269AbiIFPRq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2022 11:17:46 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 502B192F58
-        for <git@vger.kernel.org>; Tue,  6 Sep 2022 07:30:38 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id w28so8115267qtc.7
-        for <git@vger.kernel.org>; Tue, 06 Sep 2022 07:30:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=YA+Fr142u/8IOo8hC6KTCOuD5NmhTLZhZ1b+Sn5JkFA=;
-        b=QdOtUc1B/VLkZDZYgbg8cx59XcSlOBhmJbBKhDXTW5sSt6pLsl/mS/kN0gR3v9Z7F/
-         8jioG0reX2bnVD5w0eGZQcEx/tPXQPsAFAMxgTrKeXC4ae+tbK5vQU2CvTNCmIciNeW8
-         lh6/cDTHQU7t6Ov0H46aGuGILSQMG1/gNhKUg9+OonLMCAUkfSqgkalx7eFLB7tLEsld
-         GcHW+OLtO5ChjvRm3l6JxN1UrmeIgGFrl5kioWYvtddYIVV9Em/lJvSQebyNEnVyChNC
-         qNFRBAfzY1l/YuNgpbYIBG6EChFQU5uEk00Yz11GozSyHJinyk0iZcfOyGH1yHoJMBsp
-         Ua3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=YA+Fr142u/8IOo8hC6KTCOuD5NmhTLZhZ1b+Sn5JkFA=;
-        b=FkiNgE4OXu0PIUN5yslw4NXsH6SbV2o3YC4LMvzJD45qkPm8nqS5VE53bFY878q6wn
-         niq+fvN7hRjYzyq/ku+bz77i0BT26b1fSFKls1dFGT/qQAQrPJLDGHbASukVW8sfXG1y
-         E34UtphP4p3brEDZN5Msf8mUFB5UWt5IeoVL5cKEQqKVi/20hn95R7vvh+dJsPRXgNDZ
-         tJ0Jy6uwyeTjbi53Az1txfu+N7gFydLLIx+B/5g6+uxUEj89Fgz8aYosAz3OShrD0O62
-         ydd1bzNKGH3Aqtsh2PR9d9D47hMnWY+DJSPhiG6HKrX50tKeqwDw1XkYtFuWHRK0LNI5
-         Eppw==
-X-Gm-Message-State: ACgBeo00SDoCf7Il2hyNEWmS2T6L9HT7k1FVud4eKZr1M+gx5CIwfjUv
-        w3RXo3BpMBPuCp4NsfbSxQNmLCRQMMmlYjEo45LBt02/6Tf+jw==
-X-Google-Smtp-Source: AA6agR6p+qKCgVvvrsE3FE2c+w+1ib6Y8Pp2CfSbhdLy/IQqnRDPOrXaU7G0CqZkSsjMgh4lK9gMGyql+EqGSL+6oN8=
-X-Received: by 2002:a05:620a:4546:b0:6bb:da4a:e0d9 with SMTP id
- u6-20020a05620a454600b006bbda4ae0d9mr36351443qkp.187.1662473862620; Tue, 06
- Sep 2022 07:17:42 -0700 (PDT)
+        with ESMTP id S239070AbiIFPYt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2022 11:24:49 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 611E7BD4DC
+        for <git@vger.kernel.org>; Tue,  6 Sep 2022 07:36:23 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 29AA1CA1259;
+        Tue,  6 Sep 2022 10:27:25 -0400 (EDT)
+Received: from jeffhost-mbp.local (unknown [IPv6:2600:1015:b110:85b0:ed17:3499:a7f5:58a])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id C201CCC831D;
+        Tue,  6 Sep 2022 10:27:24 -0400 (EDT)
+Subject: Re: [PATCH v4 1/4] fsmonitor: add two new config options, allowRemote
+ and socketDir
+To:     Eric DeCosta <edecosta@mathworks.com>,
+        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <pull.1326.v3.git.1661280941.gitgitgadget@gmail.com>
+ <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
+ <836a791e6b7fd4490674254ce03105a8ca2175cb.1661962145.git.gitgitgadget@gmail.com>
+ <791b3386-501b-d69d-3f4e-1401aa0c4865@jeffhostetler.com>
+ <BYAPR05MB5573AACF524A1319B8F1119CD97A9@BYAPR05MB5573.namprd05.prod.outlook.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <664ece2e-b149-8058-5937-b726810a59da@jeffhostetler.com>
+Date:   Tue, 6 Sep 2022 10:27:23 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <xmqqilm1yp3m.fsf@gitster.g>
-In-Reply-To: <xmqqilm1yp3m.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 6 Sep 2022 07:17:31 -0700
-Message-ID: <CABPp-BEX0ScdAvQ1YaPUPNQ197mhcRMEFnHBoJ_0MBTK3nv_DA@mail.gmail.com>
-Subject: en/remerge-diff-fixes (Was: Re: What's cooking in git.git (Sep 2022,
- #01; Mon, 5))
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <BYAPR05MB5573AACF524A1319B8F1119CD97A9@BYAPR05MB5573.namprd05.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: mailmunge 3.09 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Tue, Sep 6, 2022 at 12:41 AM Junio C Hamano <gitster@pobox.com> wrote:
 
-> * en/remerge-diff-fixes (2022-09-02) 3 commits
->  - diff: fix filtering of merge commits under --remerge-diff
->  - diff: fix filtering of additional headers under --remerge-diff
->  - diff: have submodule_format logic avoid additional diff headers
->
->  Fix a few "git log --remerge-diff" bugs.
->
->  Will probably need to rebase to make it mergeable to 'maint'.
->  source: <pull.1342.v3.git.1662090810.gitgitgadget@gmail.com>
+On 9/2/22 12:54 PM, Eric DeCosta wrote:
+> 
+> 
+>> -----Original Message-----
+>> From: Jeff Hostetler <git@jeffhostetler.com>
+>> Sent: Thursday, September 1, 2022 5:22 PM
+>> To: Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>;
+>> git@vger.kernel.org
+>> Cc: Eric DeCosta <edecosta@mathworks.com>
+>> Subject: Re: [PATCH v4 1/4] fsmonitor: add two new config options,
+>> allowRemote and socketDir
+>>
+>>
+>>
+>> On 8/31/22 12:09 PM, Eric DeCosta via GitGitGadget wrote:
+>>> From: Eric DeCosta <edecosta@mathworks.com>
+>>>
+>>> Introduce two new configuration options
+[...]
+>> 5. In fsm-settings-darwin.c:fsm_os__incompatible()
+>>      complain if the socket path is remote (when is-ipc is set).
+>>
+>>      This probably ought to be a new _REASON_ type for non-local
+>>      UDS.  And this is independent of whether the actual worktree
+>>      is remote or whether remote worktrees are allowed.
+> 
+> I thought that was what FSMONITOR_REASON_NOSOCKETS was for?
 
-It rebases to 'maint' without conflict and the result correctly
-applies there...but rebasing to maint causes it to drop a line of code
-("TEST_PASSES_SANITIZE_LEAK=true") which is called out in the commit
-message, making the commit message look funny.  Also, while that line
-removal turns out to not matter to maint (because the leak checker was
-already off), it is critical for main.  So, if you merge the rebased
-result back to main, the leak check will fail -- unless the merge back
-is an "evil merge" that restores the removal of that line.
+Yeah, I was probably juggling too many things in my
+head when I was making that list.  And I'm sure it'll
+fall our when you see what the code looks like.  The
+_NOSOCKETS case should basically be just the places where
+you test the path of the socket-dir (if it is always outside
+of the .git dir).  None of the tests on the actual workdir
+inspection should hit it anymore, right?
 
-So, which of the following would you prefer?
-  * A separate series for maint and main?
-  * Just ignore maint?
-  * Me to rebase on maint to tweak the commit message, and then you
-carefully reinstate the line removal as part of the merge back to
-main?
+And we can save for a later day whether or not to test
+for NTFS and FAT32 (local or remote) in the Darwin code
+based on whether or not the kernel sends FSEvents for
+them.
+
+Jeff
+
