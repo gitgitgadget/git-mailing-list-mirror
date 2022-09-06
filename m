@@ -2,90 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E4E5ECAAA1
-	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 22:52:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FB6DECAAA1
+	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 22:58:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229662AbiIFWwl convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 6 Sep 2022 18:52:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37952 "EHLO
+        id S229795AbiIFW6Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Sep 2022 18:58:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbiIFWwj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2022 18:52:39 -0400
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E4C386063
-        for <git@vger.kernel.org>; Tue,  6 Sep 2022 15:52:38 -0700 (PDT)
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-3452214cec6so69140757b3.1
-        for <git@vger.kernel.org>; Tue, 06 Sep 2022 15:52:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=++/14MdZtlp310BhanpxQw90unjE8fsik3sUoA3UaAU=;
-        b=XAPMCJbkITZRHIgCODkz2Fj/bNOD6P5jloKXL+y86VGzrSeG3/JhUF2EkkMis7LJH+
-         gwixjqdUS2DRp+lJ4NOOKSEgNfWKOIMbYqfhi1BcRes+Hz7LK22mfWpHGlfHzdT9+g8K
-         626WjHUDQvwHHCqauGkrV1X1jV/5uwG5rTeHjt8KFXN4QRAe/GZcetGjwaF+GgnYU1wb
-         gZ/iJS72k/CNCPQazdzx0v8tqjH+JOlP/zMs4vkSbykgX0R8SQB7+cS/x0U/KgxRd5gn
-         exkBYf2aASqeFpuS3tIuJItRlAhOY2k1p8mftpni5fEcSdBdEIYPr8SzyXezHqbfWwSQ
-         pj8A==
-X-Gm-Message-State: ACgBeo2155NDpWb3sD/sLyXUMc/5KVPyjSB7I9zlJxpQ/CdvnLHt3zl+
-        pMKtCh4HXOK7R54Kcp81ugb9evtmvk9ROpTGjY0=
-X-Google-Smtp-Source: AA6agR6V5FHCnK8SGOuI/BOVu2xzZu/lJ7FOujmKuWI/8DvDZqv8GG/NLkycdRoqeqBLqrXuXOAtdNFJrNY1QkX9/Fw=
-X-Received: by 2002:a0d:c307:0:b0:335:6fff:dc70 with SMTP id
- f7-20020a0dc307000000b003356fffdc70mr732226ywd.493.1662504757632; Tue, 06 Sep
- 2022 15:52:37 -0700 (PDT)
+        with ESMTP id S229593AbiIFW6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2022 18:58:22 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34A7F4D267
+        for <git@vger.kernel.org>; Tue,  6 Sep 2022 15:58:21 -0700 (PDT)
+Received: (qmail 19784 invoked by uid 109); 6 Sep 2022 22:58:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Sep 2022 22:58:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6612 invoked by uid 111); 6 Sep 2022 22:58:21 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Sep 2022 18:58:21 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 6 Sep 2022 18:58:19 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
+        Xin7 Ma =?utf-8?B?6ams6ZGr?= <maxin7@xiaomi.com>,
+        =?utf-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>,
+        =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
+        =?utf-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
+Subject: [PATCH 0/3] speeding up on-demand fetch for blobs in partial clone
+Message-ID: <YxfQi4qg8uJHs7Gp@coredump.intra.peff.net>
+References: <bfa3de4485614badb4a27d8cfba99968@xiaomi.com>
+ <YviaoXRctE9fg/mB@coredump.intra.peff.net>
+ <b0101e7e0e61496a92c2299454c2696a@xiaomi.com>
+ <YxDbfXyWzgokb1Bq@coredump.intra.peff.net>
+ <d5305274b7c24adbaf6ad9ab92ac3b6a@xiaomi.com>
+ <YxeTsWrjpKo+JGfq@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
- <62fc652eb47a4df83d88a197e376f28dbbab3b52.1661992197.git.gitgitgadget@gmail.com>
- <20220906223537.M956576@dcvr>
-In-Reply-To: <20220906223537.M956576@dcvr>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 6 Sep 2022 18:52:26 -0400
-Message-ID: <CAPig+cSx661-HEr3JcAD5MuYfgHviGQ1cSAftkgw6gj2FgTQVg@mail.gmail.com>
-Subject: Re: [PATCH 06/18] chainlint.pl: validate test scripts in parallel
-To:     Eric Wong <e@80x24.org>
-Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YxeTsWrjpKo+JGfq@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 6, 2022 at 6:35 PM Eric Wong <e@80x24.org> wrote:
-> Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> > +unless ($Config{useithreads} && eval {
-> > +     require threads; threads->import();
->
-> Fwiw, the threads(3perl) manpage has this since 2014:
->
->        The use of interpreter-based threads in perl is officially discouraged.
+On Tue, Sep 06, 2022 at 02:38:41PM -0400, Jeff King wrote:
 
-Thanks for pointing this out. I did see that, but as no better
-alternative was offered, and since I did want this to work on Windows,
-I went with it.
+> On Mon, Sep 05, 2022 at 11:17:21AM +0000, 程洋 wrote:
+> 
+> > Sorry, I told you the wrong branch. It should be "android-t-preview-1"
+> > git clone --filter=blob:none --no-local -b android-t-preview-1 grade-plugin
+> > 
+> > Can you try this one?
+> 
+> Yes, I see more slow-down there. There are many more blobs there, but I
+> don't think it's really the number of them, but their sizes.
+> 
+> The problem is that both upload-pack and pack-objects are keen to call
+> parse_object() on their inputs. For commits, etc, that is usually
+> sensible; we have to parse the object to see what it points to. But for
+> blobs, the only thing we do is inflate a ton of bytes in order to check
+> the sha1. That's not really productive here; if there is a bit
+> corruption, the client will notice it on the receiving side.
 
-> I was bummed, too :<  but I've decided it wasn't worth the
-> effort to deal with the problems threads could cause down the
-> line in future Perl versions.  For example, common libraries
-> like File::Temp will chdir behind-the-scenes which is
-> thread-unsafe.
->
-> (of course I only care about *BSD and Linux on MMU hardware,
-> so I use SOCK_SEQPACKET and fork() freely :>)
+So here's a cleaned-up series which makes this a lot faster.
 
-I'm not overly worried about the deprecation at the moment since (1)
-chainlint.pl isn't a widely used script -- it's audience is very
-narrow; (2) the `$Config{useithreads}` conditional can be seen as an
-automatic escape-hatch, and (if need be) I can even make `--jobs=1` be
-an explicit escape hatch, and there's already --no-chain-lint for an
-extreme escape-hatch; (3) the script is pretty much standalone -- it
-doesn't rely upon any libraries like File::Temp or others; (4) Ævar
-has ideas for using the Makefile for parallelism instead; (5) we can
-cross the deprecation-bridge when/if it actually does become a
-problem, either by dropping parallelism from chainlint.pl or by
-dropping chainlint.pl itself.
+The special sauce is in patch 2, along with timings. The first one is
+just preparing, and the final one is a small cleanup it enables.
+
+I based these directly on the current tip of master. There will be a
+small conflict in the test script when merging with the "rev-list
+--verify-objects" series I just sent in:
+
+  https://lore.kernel.org/git/Yxe0k++LA%2FUfFLF%2F@coredump.intra.peff.net/
+
+The resolution is to just keep the tests added by both sides.
+
+  [1/3]: parse_object(): allow skipping hash check
+  [2/3]: upload-pack: skip parse-object re-hashing of "want" objects
+  [3/3]: parse_object(): check commit-graph when skip_hash set
+
+ object.c        | 21 ++++++++++++++++++---
+ object.h        |  6 ++++++
+ revision.c      | 14 +++-----------
+ t/t1450-fsck.sh | 20 ++++++++++++++++++++
+ upload-pack.c   |  8 ++------
+ 5 files changed, 49 insertions(+), 20 deletions(-)
+
+-Peff
