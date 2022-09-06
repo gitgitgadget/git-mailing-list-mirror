@@ -2,109 +2,199 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81E2EECAAA1
-	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 12:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0A92ECAAA1
+	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 13:10:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239818AbiIFMcn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Sep 2022 08:32:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59524 "EHLO
+        id S234103AbiIFNKw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Sep 2022 09:10:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239511AbiIFMcG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2022 08:32:06 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED3451FB
-        for <git@vger.kernel.org>; Tue,  6 Sep 2022 05:31:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1662467493;
-        bh=BQRAUcy25RphMFO07Vg4abgTq5JiRW/WzWKtmOuffvs=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=cQJWhSVRJdgS1eTjybUdq9bk/pChe2AAbNxGQRFjYBobKXJZKwS4t3gi7u3xKNdlD
-         +9ywwCi8CTF4CnAJODAHcLgSIikoRfAlJssVnF+qaFAGLGEUV/5R7xZy4UAx7F2AVn
-         ej08hjY7upGmQ+LSsvbXtyzLK0Y849S2TKkfdN7Q=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([91.47.144.123]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mv3Yg-1pMXtk3WDo-00qucy; Tue, 06
- Sep 2022 14:31:32 +0200
-Message-ID: <df5f8305-79d5-2c12-bdf0-961428c0bdd1@web.de>
-Date:   Tue, 6 Sep 2022 14:31:32 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.2.1
-Subject: [PATCH 2/2] diff-no-index: release prefixed filenames
-Content-Language: en-US
+        with ESMTP id S234036AbiIFNKu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2022 09:10:50 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 592AE1AF38
+        for <git@vger.kernel.org>; Tue,  6 Sep 2022 06:10:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1662469829;
+        bh=3kHU5Cj80w2KxVFvNjwD9iBaT3tw6z7CFhTMcLoVIuo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Vxw67B7pTYaKOFtz2jzB+zYsuPTXZfNf0lXv73w3Hq4Yi71fWq1ojZKlhoACrih2j
+         U2/7RzL9Bnqv0YOeNL5+ym2jU159n4E6QeUAjK6jCK4llCuBZlcAi/fgBZpWSn3vWr
+         hkJa/Y4nK6T0SrbEDxsKJ+Wi/GNwA95LX/L/dBig=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N2mBQ-1pWM7F35Se-0136WS; Tue, 06
+ Sep 2022 15:10:29 +0200
+Date:   Tue, 6 Sep 2022 15:10:29 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <xmqqilm579hc.fsf@gitster.g> <xmqqilm51gn6.fsf@gitster.g>
- <181c029b-8b36-4b04-30f9-97a3f252bfbc@web.de> <xmqq8rmx1saz.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq8rmx1saz.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] tests: replace mingw_test_cmp with a helper in C
+In-Reply-To: <xmqqwnbv7trp.fsf@gitster.g>
+Message-ID: <354qp59q-r4r3-1971-5o09-71q224911orp@tzk.qr>
+References: <pull.1309.git.1659106382128.gitgitgadget@gmail.com> <xmqqwnbv7trp.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:RTQuj4POHfIZfTWoI4B28sEeAjbDRWxvceOs8xl2lS3B33ml7N/
+ npwd+a1YQBKXM2x9z8AeHo+2L6jb5Dj1LiFGroqwBgZj2nYDVsGnASTrvRScztUG4On7ogy
+ Qsrz2OOWYNNdotPLYvk8b+lBjTIdudbw+tZXInKGeAZb3Vaua+b5y2vcT3sscfStSxOVfBF
+ TuWMjbc/hnyoutTBk6SIA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:esnCD5zin3g=:wAruoVaMeavl3VsWSimSce
+ yr8w0rq0iN+IGGsIjEoAihNE0Emi73TQ9LXvL/TxzvLblXG6f/z2Ur9WXZg7PbK5EKCcv36UM
+ OYC1wZi9kF2IcOmbsuMtjatTQGDc+kMknbXpARrR6IhphQ2gDfgad7BmJPz72XT+WcTd0coDO
+ WXnLCTigKPkH5v/wsyDwC5VCfeqCxWvFB5fuILT69NfPPqLf0NZl1ThIn9ZlJwIup8OZF9FzW
+ tTpsIiROmnK1bT2Ctpm5EOBxavTHNfpEBKCQ2d7jeCCzD9eDBRK/V/xLxeCGk4zlCpB8xB4Iy
+ J5ALP7cTWTSiJMIT5EM0z2UFedUqQ1rwLVUA7vmKdgh5eLNJ0mXVwi56guHjYTe2+kldKR0jv
+ LkYQ7WvN+ihmaFKrXEhFkTBKErZn4xC/PEHWO/V2Jq/udAEbzToXz9dsJmcdpeSiT3JouUhds
+ phcE308k5wJUej8K6j8UG/QRbQKVxHZE1e8l3Jc+uFbs/rVaelSo6vHgExXiUgmzbf6yF1qmh
+ +TjSVVH8zKUW2U0pcaYOwZs7SpLcuA6CjvWlPAdJYqk0r2E09fxwVWTekmlK0DlNDG9WMyNOH
+ 0PO9RRjuuVbIwHJQWh2Fl2R2ytqTcS02g/+WIMKrQdWPJGR9AZyOlbbwIjWfaUO/hNDbHCWa4
+ alXOd56RQzeNGylNQFconcM57OY5X15GfP66VYPrLR+7ZiYYBWIDmyXX2Le+qlKlib8IJ6z+I
+ Lasu9h0DD9c2KWUkc5sQzWgEnPbyUerhvdPpisH497b2x4xghkckZxKHagLXGJjZwHFpIh5vx
+ E4XEffffGcagTUZ6RvJISqfbrpklhQGNft/At2bjaPTLNFuPnDiIQ2yffrDsGMKDmY1YjjLY3
+ xMRqQMnj2mVokhXIuEyrMoClggcPWOkKC93Y+GKyBW7mDYPfQY1WMGLcybM0neMmB2OsSB3S/
+ ASSx3xaMHfq5qJStxMA9+2L1xubLNF80X416ug5HX3H3ziSiXNcxx6Yy55bGcZY4KFFsX2XJr
+ GNte/2JtQTbGftxLO+KQdtmSqFIQ4JK9B/vjxnohbISIo6qIftiVbqSySAqtLVRAqWow/KmjD
+ DlP57VauunN+7jOwb2Y+FI3ICgFGKnxblVjirEBepxr2PKgUuQJjzl9pkyy4YVhPkzvoqZyTj
+ yZTSgXvsWBjsn369KJuzZ5Qzeb
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:PzDmdmkeTB4fsQHZJG5r+TN09IEOhsKSajp43e4IUS0U3uMgv/2
- HQwyEom1uGnSAu6ir3skaWuN41pRFPYKugR7vJJx/mG4ZDXRgt/7DozVP3IiaCjK6HdVGpq
- CeoFhSIEpSmrewGgljcch4RWDel80+/bdeSGjoD4YMj3pGaWgFySV0JdbuZ/mgT1k35tdlx
- PHJLelkRc2AfKA6sTzaVw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:yI9jWqpmB88=:hjmhfJEDzMSf0n1X3ZJ15I
- 1ecDTVrBmwErTxEcYDYezPHVUJ5Q/5Cdkxgt4Slf/bI6I1BFcZFV1wSUAbMCBNm5yzP1BPm1P
- PXTFOSPikNOLiAVav9k6gTeN7+MJNPeSN11Xleq4s+k5K6WYE6qbMz+XKMdXi3tP5rSpdPsFq
- P9CIvbr2otx7Lb2AgbxDChrHccKMk8vFr2DSy+bYoGgLByr2MA9ix0StW1vVHpYlDgJFr7v8r
- zpNrRB2qRNy3gwhjbEvRyFMfcrBesZrV41LZ0uHjndDsP8PFZP0up72pSeHRJiz+dCZGAw+Yd
- OYx1wV2qRjZMwdlvXka8ZS+jqyVQjLCrJwGL50yzCEJtsuVW3fpzosQ5CbcdE+U7AwRAy/YYG
- UwzcQtX1SN4AVIx+TODpIC+bcFU3DfcI/uVD6VD1RR2jn3z5uf9ANr1K7oOXkoKzVrI9e6PBu
- v3HPEJzmIyrkYpUv1qbkMz0hT708H/zA6cdb0OVHQ+hDWiHkzH7oE5sWB8g9rWOh9TFf3O1Zf
- tYi+yvkuc3Q8bvVGDtEecNoeHN9QJ3ikVXYn2+B/i5zFfhjUmOWsRXCK/x6znHw+KtvZwyyNp
- 8u/s8t+V+rjIyEhILNEJVqzAUoRTER5EsKgQoKqMJl9sTxlz2yW2F4X7EYClBZQo0Vdj0+Mft
- VXvEtcjqHiFqBR3Ij5sBeCpDhNQKVr/+jXCM7cPPdkj9WoKc0GZXmzvykOQ4llRLFZIAdVBuA
- /eDt/UGxwE/kK82CtA9bjUdHDKZ57EaYFKi5IhhD30FvcMbGhNsqzgZxMbq1ezWmbT7a/YSnK
- OBGCkILfG2NW1X0tpKrL0pmuWhcGZZcvgaHkMpC4AgpWw32dJ/1tGFmxLA/p4sapwlmF7/ynb
- JwIT9gfhQLXYsjxtE3/cSh75gp87P9Vs4u+jikAvtHIEo6hlY+M4t1FOCha1lXAfeFYHvEx6w
- jQWceaDVmo0YrqbnYFXOy40KmBUYh1VpGzMl/XZnz53PbH60+LcR229jgWpK/JtvrDER+SB9V
- QdhUpfrZ1Uye0gH1aAvIrjogBMsofObIebhIfQQOtrdRSKZey2Glzf6oOEF5jp6QtKOFgib9Y
- rJiDalWZ43UCMYGuo411FCBFtsmlzhqtV4hfmQQocqfcGh9f5Y2RlKQHrU1hCINNYl6OZBXo1
- si220=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Callers of prefix_filename() are responsible for freeing its result.
-Remember them and release them to appease leak checkers.
+Hi Junio,
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- diff-no-index.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+On Fri, 29 Jul 2022, Junio C Hamano wrote:
 
-diff --git a/diff-no-index.c b/diff-no-index.c
-index a3683d8a04..35809f26d7 100644
-=2D-- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -245,6 +245,7 @@ int diff_no_index(struct rev_info *revs,
- 	int i, no_index;
- 	int ret =3D 1;
- 	const char *paths[2];
-+	char *to_free[2] =3D { 0 };
- 	struct strbuf replacement =3D STRBUF_INIT;
- 	const char *prefix =3D revs->prefix;
- 	struct option no_index_options[] =3D {
-@@ -274,7 +275,7 @@ int diff_no_index(struct rev_info *revs,
- 			 */
- 			p =3D file_from_standard_input;
- 		else if (prefix)
--			p =3D prefix_filename(prefix, p);
-+			p =3D to_free[i] =3D prefix_filename(prefix, p);
- 		paths[i] =3D p;
- 	}
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > +	const char *argv[] =3D {
+> > +		"diff", "--no-index", NULL, NULL, NULL
+> > +	};
+>
+> Don't we want to have "--" before the two paths?
 
-@@ -308,6 +309,8 @@ int diff_no_index(struct rev_info *revs,
- 	ret =3D diff_result_code(&revs->diffopt, 0);
+Yes!
 
- out:
-+	for (i =3D 0; i < 2; i++)
-+		free(to_free[i]);
- 	strbuf_release(&replacement);
- 	return ret;
- }
-=2D-
-2.37.2
+> > +	if (!(f0 =3D !strcmp(argv[1], "-") ? stdin : fopen(argv[1], "r")))
+> > +		return error_errno("could not open '%s'", argv[1]);
+> > +	if (!(f1 =3D !strcmp(argv[2], "-") ? stdin : fopen(argv[2], "r"))) {
+> > +		fclose(f0);
+> > +		return error_errno("could not open '%s'", argv[2]);
+> > +	}
+>
+> It is tricky that you need to take "-" and treat it as the standard
+> input stream in either argv[1] or argv[2] (but not both).  If would
+> be a different story in an end-user facing program, but because this
+> is a test helper, feeding wrong input is developer's fault, and I do
+> not mind lack of attention to detail of error checking to make sure
+> we avoid comparing alternating lines of the standard input.
+
+No, you're right, I've added a guard that prevents `test-tool cmp - -`
+from failing in obscure ways.
+
+> > +	for (;;) {
+> > +		int r0 =3D strbuf_getline(&b0, f0);
+> > +		int r1 =3D strbuf_getline(&b1, f1);
+> > +
+> > +		if (r0 =3D=3D EOF) {
+> > +			fclose(f0);
+> > +			fclose(f1);
+> > +			strbuf_release(&b0);
+> > +			strbuf_release(&b1);
+> > +			if (r1 =3D=3D EOF)
+> > +				return 0;
+>
+> If both hit the EOF at the same time, we know they are the same, OK.
+>
+> > +cmp_failed:
+> > +			if (!run_diff(argv[1], argv[2]))
+>
+> If one of argv[] was "-", then this wouldn't work correctly, as the
+> other file is read from the beginning but the "-" side have consumed
+> the initial part of the input and we cannot unseek it.  This bug
+> needs to be fixed only if we expect a useful and reliable output
+> from the helper.
+
+Right. I've added a clause that says that we cannot show the diff because
+`stdin` has been consumed already.
+
+> But otherwise the idea is sound.  We compare them line by line,
+> using strbuf_getline() to ignore differences in CRLF and LF that
+> originates at 4d715ac0 (Windows: a test_cmp that is agnostic to
+> random LF <> CRLF conversions, 2013-10-26).  Only when we find the
+> input different, we use "git diff --no-index" to make the difference
+> (and unfortunately more, as it does not ignore CRLF <> LF
+> differences) visible.
+>
+> > +				die("Huh? 'diff --no-index %s %s' succeeded",
+> > +				    argv[1], argv[2]);
+>
+> Nice attention to (possibly irrelevant) detail here.  I would have
+> ignored the return value and reported "they are different" at this
+> point, though.  The line-by-line comparison we did was the
+> authoritative one, and "git diff --no-index" is merely used for
+> human readable output.
+>
+> In any case, "test-tool mingwcmp" would be a better name that
+> highlights the spirit of 4d715ac0 to ignore CRLF <> LF issues.  IOW,
+> it does a lot more than "cmp" replacement, and we shouldn't mislead
+> users/developers into thinking it is a plain "cmp" replacement.
+
+Fair point. The Unix tool `cmp` does not care about line endings at all,
+so when you come from a Unix background you will expect the same to be
+true for `test-tool cmp`.
+
+On the other hand, you will expect the same to be true for `test_cmp`,
+too, which is not the case, and the root cause of why I had to come up
+with 32ed3314c10 (t5351: avoid using `test_cmp` for binary data,
+2022-07-29).
+
+Having said that, I agree that the test tool name should reflect better
+what the subcommand does.
+
+I do dislike the proposed name `mingwcmp`. Not only because it is
+misleading, as the purpose is not to compare MINGW-specific files but
+instead the purpose is to compare text files (and, in fact, the tool works
+just fine on Linux and macOS, too). But also because it would contribute
+to just how much of a second-class citizen the MINGW-based build is in Git
+land: From choosing to implement large parts, including the entire test
+suite as well as the performance benchmarks, in POSIX scripts (which plays
+to Windows' weaknesses in a big way) to massively favoring spawned
+processes over multi-threading (which plays to Linux' strengths and to
+Windows' weaknesses), to a still-inherent assumption that the underlying
+filesystem is case-sensitive (think: branch names), to an implicit
+agreement in the core Git community that patch contributions need not take
+care of working well on Windows (but that that's the job "of Windows folk"
+instead). This is kind of at odds with the fact that we must assume that
+half of Git's users are Windows-based (we can only assume, based on
+surveys, because we successfully avoid any kind of even opt-in telemetry
+that would give us hard data). I definitely want to stay away from making
+that second-citizenry even worse.
+
+So I am going with the name `test-tool text-cmp` instead.
+
+Thank you for your review,
+Dscho
+
+>
+> Thanks.
+>
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index 7726d1da88a..220c259e796 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -1546,7 +1546,7 @@ case $uname_s in
+> >  	test_set_prereq SED_STRIPS_CR
+> >  	test_set_prereq GREP_STRIPS_CR
+> >  	test_set_prereq WINDOWS
+> > -	GIT_TEST_CMP=3Dmingw_test_cmp
+> > +	GIT_TEST_CMP=3D"test-tool cmp"
+> >  	;;
+> >  *CYGWIN*)
+> >  	test_set_prereq POSIXPERM
+> >
+> > base-commit: 23b219f8e3f2adfb0441e135f0a880e6124f766c
+>
