@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DB7CC54EE9
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 19:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E50E0C38145
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 19:31:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229668AbiIGT0q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 15:26:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41678 "EHLO
+        id S229686AbiIGTbe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 15:31:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbiIGT0o (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 15:26:44 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 183A947BA1
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 12:26:43 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id y136so10665903pfb.3
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 12:26:43 -0700 (PDT)
+        with ESMTP id S229569AbiIGTbc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 15:31:32 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BAEFBD2A1
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 12:31:31 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id fv3so9402310pjb.0
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 12:31:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=PdGpYNbmfugu1UoUBWPptR50syLOg5pJKfOSk7wmqdE=;
-        b=LhC/MIVeoeDyuWm30PdzLZldTDEe+1u7PT4b7H0nPtK7dSgbagMqKvlGssJY3AHxNm
-         cVJpzRkhvK4q4MgkFshTHdRa026x3Df6hd+L+uajPFs/90TFMFItkBA0/P3WQO3R9ZXH
-         YtTPnypUToz33e+bSJj92dITBpllKn/s1WtKZfNQyvp4AvH3WSFcl7yoGRoJh2dFZxGE
-         jj3kuos6WRdDA6gh2SoJKnQ/sw9ZsEDE1BQ0z7hhRgzouTzIUuOlhf/vx8wq/5kgPcd+
-         6u1pf/7D8rh4xriD4HUBWRvTbcGhAEJQJnqiSpp3t4sQnqM2YzFGg2M7IacgIHZVdRVW
-         CV9w==
+        bh=Rvx0J42ItWLpykR8fnITC52FQQs2Hsp+9mN5xs952y8=;
+        b=FlzX8sWr7UPmgTIKk/GP8vECoxobRaB7avM0+GCIDGjAHHcwMNPwf0UpxsR8w9hfC7
+         zZIumHhjFsy9+SpTmsLv9b/yDBstMmpv/MM5/1NEP14D2F5ygbA+rIxTT+HKwjhjRv2p
+         zvHbomBTa9r7NbxZCDqW5GAb8oRX/zMoRBO7pyNWaTP/jUtWVg32E0hjsDK3fuaomFkG
+         ESwl0MC2WeeWm7IxUCQ6W19VccKy4hQUL7+AVFgjr96excKRqKINQczbztCNguabCJtQ
+         O3+DkqcN/Xanudr5k9vmGd4IlDvI7WD312sug8GpM9ERoAhLHu1QVMXvhJ4XNAppZB73
+         EL+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date;
-        bh=PdGpYNbmfugu1UoUBWPptR50syLOg5pJKfOSk7wmqdE=;
-        b=YRToPKVzK/xk6yARNEx0GfZvNcFhJILGwFfm92RkqFpXpVNaODv4w9MFFbGV6bN4az
-         wyF4KNDmUkLPa63riNzbZAsgTzmhSUJ6FmgWHftQgpWLeH0ofcMXkMJkO/x6NmF2TDs1
-         eXRLMNmyNjcpYnk0mSFdKm53VI9SkT/ajewzBR1jLiyPRqxhHtqvL3LHObZs+X/40RMd
-         zYilg3HYmOtdYPLZXkOd85KHnnWcwH0osvn1udK+kGJTRAQRtRIgNjD3i1pEOzmtox8g
-         MZAjU1hzAW3nrFlCt0rXG+IYBKkY25RRjF1DojjAvIpCTXkxLrjT8n8ulDEwztHLH1x0
-         Qnuw==
-X-Gm-Message-State: ACgBeo0VmHWOR9/Qcn7RCJiBeWrAQqww4pA6Wg+jDAQoqmus3xDDyKu8
-        db5KfZaL4lom3Fy//tAjjHQ=
-X-Google-Smtp-Source: AA6agR5z6arj07Y7MYfHbIlzUZuCIjHo0ShkLVb53demgiB3ESJSHVl3kalk6zCL/dQ2N6AYxwBnrA==
-X-Received: by 2002:a65:6b95:0:b0:420:2cb1:68e5 with SMTP id d21-20020a656b95000000b004202cb168e5mr4584069pgw.220.1662578802301;
-        Wed, 07 Sep 2022 12:26:42 -0700 (PDT)
+        bh=Rvx0J42ItWLpykR8fnITC52FQQs2Hsp+9mN5xs952y8=;
+        b=OoC2JN4BaLzlrzr8ELM2d30eOr9eu08Fi30l73vWt8sYUVFNtG4da1FdpnWbuFUCLG
+         8eoUtJDO9jrxzr0vYXJ1jW7iHFEPD/DKHEEeY0TD/a/aUEEWXutfkq0cNvzwhAdRMWFp
+         QQOu0TEjcF9oHUzmPpPIMJJVh86wcY4OL2LZg4ypAhvNF8FGjRqh3B2pP0x+tFsWUMRg
+         EPeRaSG57nlRVpfTANKohke7zIJvMkYSHtnxbIdGzWHNnQgrIAlbAqjhys9NeLWw8Qre
+         gjmbKnvS1u6PlnNqzJP2zIsHhk7Q8adjTQ6IWgPZQgVfGR4WgO5Nl36+4R3vjVSx6QLR
+         c4WA==
+X-Gm-Message-State: ACgBeo1FOUv1uBr8f7osIHD4DOFOIUXXiRtqsrfucokfKvTcf2ofYIMk
+        BG7je8khH9qoW33ZU44oidE=
+X-Google-Smtp-Source: AA6agR5baHc3Bm25TmBqVr64+gQ1GjZ3wYFpnFwPwLW8pyCoK2Bja9NpK0FW6ZYA0amUPzpi74+KrQ==
+X-Received: by 2002:a17:902:e742:b0:176:dc6b:eecc with SMTP id p2-20020a170902e74200b00176dc6beeccmr5431093plf.104.1662579090955;
+        Wed, 07 Sep 2022 12:31:30 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id w3-20020a170902a70300b00172eb493487sm4446365plq.167.2022.09.07.12.26.41
+        by smtp.gmail.com with ESMTPSA id v126-20020a626184000000b00528c066678csm13039945pfb.72.2022.09.07.12.31.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 12:26:41 -0700 (PDT)
+        Wed, 07 Sep 2022 12:31:30 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
@@ -59,14 +59,13 @@ Cc:     =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>,
         =?utf-8?B?55+z5aWJ?= =?utf-8?B?5YW1?= <shifengbing@xiaomi.com>,
         =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
         =?utf-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
-Subject: Re: [PATCH 2/3] upload-pack: skip parse-object re-hashing of "want"
- objects
+Subject: Re: [PATCH 3/3] parse_object(): check commit-graph when skip_hash set
 References: <YxfQi4qg8uJHs7Gp@coredump.intra.peff.net>
-        <YxfSRkEiiP4TyZTM@coredump.intra.peff.net>
-Date:   Wed, 07 Sep 2022 12:26:41 -0700
-In-Reply-To: <YxfSRkEiiP4TyZTM@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 6 Sep 2022 19:05:42 -0400")
-Message-ID: <xmqq1qsnugsu.fsf@gitster.g>
+        <YxfScUATMQw9cB6m@coredump.intra.peff.net>
+Date:   Wed, 07 Sep 2022 12:31:30 -0700
+In-Reply-To: <YxfScUATMQw9cB6m@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 6 Sep 2022 19:06:25 -0400")
+Message-ID: <xmqqv8pzt20d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -76,20 +75,13 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> The exception for both is if --verify-objects is used. In that case,
-> we'll skip this optimization, and the new test makes sure we do this
-> correctly.
+> If the caller told us that they don't care about us checking the object
+> hash, then we're free to implement any optimizations that get us the
+> parsed value more quickly. An obvious one is to check the commit graph
+> before loading an object from disk. And in fact, both of the callers who
+> pass in this flag are already doing so before they call parse_object()!
+>
+> So we can simplify those callers, as well as any possible future ones,
+> by moving the logic into parse_object().
 
-I wondered if we want to test the change on the "upload-pack" side
-by going in to the swapped-commits repository, running upload-pack
-manually and seeing that it spews unusable output without failing,
-but it probably is not worth the effort.  We have plenty of tests
-that exercises upload-pack in "good" cases.  What might be a good
-test is to try fetching from swapped-commits repository and make
-sure that index-pack on the receiving end notices, but I suspect we
-already have such a "fetch/clone from a corrupt repository" test,
-in which case we do not have to add one.
-
-Thanks.
-
-
+Nicely done.
