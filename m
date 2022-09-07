@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C191ECAAD3
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 08:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0B67ECAAD3
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 08:27:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229964AbiIGI1d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 04:27:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40688 "EHLO
+        id S229896AbiIGI1f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 04:27:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229617AbiIGI1V (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 04:27:21 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC46FAB050
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 01:27:18 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id t14so11861466wrx.8
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 01:27:18 -0700 (PDT)
+        with ESMTP id S229884AbiIGI12 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 04:27:28 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFC33AB401
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 01:27:20 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id ay12so8310196wmb.1
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 01:27:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=twjDJdyDzycPS/CPAcocpRilY98QzrHLOJMcwTaIjBw=;
-        b=YUl+HQd8Eq3E4PTY/VYuNhvam5FiXqPfOzPcFKK2vrjz9cWU5KwDhqNFf56a+yucks
-         ggxxokqz4tv1QcIr4nigfCww+NYgAq4+YGW28IySaiVuAIzelG4FimWurkS7eldXUXXL
-         kCXv1oZQQxFHsIzB/ViAQdgAZUlDx8OqZLBOGK3wJ8eZfRJSeos3YWDfcR8qvQEsr6Da
-         MyYhx6BtmrW99CasQ5WLePAkuwPLNcPpdyxO5bGRnndYRR22S5lxH8IAZgc4tfkd2J/j
-         yUB36yhl0De7UYlts0/dt0tnBDT0aUJl2dB+Y0PjmBJZFeL351Ug0WBVPdq4Lvcuu2qJ
-         4YIg==
+        bh=IEU+nj59wmjbCHiON6xmWoLa/T5gI739UJqe4MhHj2M=;
+        b=qxZE2aWGWwvi/qSNTmlQUulVcaR/QbiPkt8NrrVyHFd4HrpDizmAe4yTtSX2P+CC3v
+         l6QuaTPRdJuAMQQOoUaY+1a//3E8Xouf0RNCUx0hwZoIJPgyOQz+R/SvlrQEYUab2oK1
+         QboOXnj/+8hzvc2rq0eal7ba5h98cPit+ZvOmnLsOEBzYFH5+L+e86MkKKsW96qc3U/3
+         QMO2j/tpC4wcnSA2iY+vilUbP4OEA3qs5QTQFsM8Q/Uj9/QSxYGjWJgGPnJCtNYANOpS
+         onLpxONc6VERIgkrrs0p3ivAiBratZdfV7F1Q58xlP7Ely6G9Sn3hktJ1wWILEfPejkq
+         5PHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=twjDJdyDzycPS/CPAcocpRilY98QzrHLOJMcwTaIjBw=;
-        b=DoVtOXj13T/9sveJqnXS0Dg1B5G42BUHKxD9nkVER3pqDpiXAffa1TilKyopRQ0fdn
-         bBfPfZIWMOGZXj+pMYZBfZ+WY7lHCfp1Ob+0O+XxmG4atOhIQdx0HHIVouRm6xdplbQz
-         AN3OYIy5EoN2eY1cAqS6+iivEfe1fiWLB7mKBEuXEI87TquTQX9ZbyYx0DJEZOtz5ABE
-         AV3Zu3IGpXs/+xN4HQ2c6hJ/tabp2Tv9T3ulNrbj5dmviPkkw7KsQAKC8XQ0SRtqK+YV
-         PIKGVGGlQ/tLithNP3KE0vFKFVNLDdnqUSROC7lczmCSNfpvXXBUxs17NlUB85KE4n3U
-         M7xg==
-X-Gm-Message-State: ACgBeo3npS5HWaOrbXuRRvdNrX4zA1LfAN/XdGtCwHzXedlAHJRLYZkm
-        Zx9XM3uTpAcLLxrwK06qqsG7Lty/o7uGNA==
-X-Google-Smtp-Source: AA6agR4GjJJp5ZraRw6Oj2ZxzAhpyvmx3YKyOI39PoPIT7GNietXZqGxBYOBbGuj63Vd1+SHMOc8Hg==
-X-Received: by 2002:a05:6000:713:b0:226:ea6c:2d7d with SMTP id bs19-20020a056000071300b00226ea6c2d7dmr1325404wrb.293.1662539237746;
-        Wed, 07 Sep 2022 01:27:17 -0700 (PDT)
+        bh=IEU+nj59wmjbCHiON6xmWoLa/T5gI739UJqe4MhHj2M=;
+        b=KnDioFY9NHCnBnqukebT3QZUIVhreDK6DH3wmDf/fSf5C7XqeB7pYxdiKURn6MM8EL
+         tk6uG7iLazr3qFU2YRF/X7jWpLi+VFamFEZGEFgDGOxqZ6AVWBTVtnPhRY8z9UIXVM3Z
+         w7Lzg6/k5Q0AD6vl9MQ3103Da0h9eArjuzkAkM5NnPKUv5QvdALTixG2R/zPg3rpLVEu
+         IgIiX+xHpGszsTMT8wdW33lXtEJIsXB3vcbmk4gpt74b26J9f/ABepAWSpuyRLbvHgFa
+         zuk01i1To6bfdVRD4dZL7LWT2knlON9tmKLrtXJPcyaBtYsQjxm4cUtQLgTXA14BJbi9
+         XSCg==
+X-Gm-Message-State: ACgBeo3RyRmiveGggD+Q2wwwHR5q6wNPWmYPI6gbfFz1Atbn4UHKbsAT
+        ZUbDvNolO6KxiJZmjxxk45A7HkSEYW+02w==
+X-Google-Smtp-Source: AA6agR6dHc35iETbBHrlRbMbQB6pzwOGwkYjxw2rVjehdxm+L2Zqba/AD58DRiiNloGBAuOUbDo/Yg==
+X-Received: by 2002:a05:600c:3d12:b0:3a5:f600:4fe9 with SMTP id bh18-20020a05600c3d1200b003a5f6004fe9mr16092683wmb.98.1662539238718;
+        Wed, 07 Sep 2022 01:27:18 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l6-20020a05600c4f0600b003a3170a7af9sm19532096wmq.4.2022.09.07.01.27.16
+        by smtp.gmail.com with ESMTPSA id l6-20020a05600c4f0600b003a3170a7af9sm19532096wmq.4.2022.09.07.01.27.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 01:27:16 -0700 (PDT)
+        Wed, 07 Sep 2022 01:27:18 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Matheus Tavares <matheus.bernardino@usp.br>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 6/9] difftool docs: de-duplicate configuration sections
-Date:   Wed,  7 Sep 2022 10:27:02 +0200
-Message-Id: <patch-v4-6.9-73e6804db13-20220907T082419Z-avarab@gmail.com>
+Subject: [PATCH v4 7/9] log docs: de-duplicate configuration sections
+Date:   Wed,  7 Sep 2022 10:27:03 +0200
+Message-Id: <patch-v4-7.9-6465a98ec0a-20220907T082419Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.3.1490.g9adf4224da0
 In-Reply-To: <cover-v4-0.9-00000000000-20220907T082419Z-avarab@gmail.com>
 References: <cover-v3-0.9-00000000000-20220831T083759Z-avarab@gmail.com> <cover-v4-0.9-00000000000-20220907T082419Z-avarab@gmail.com>
@@ -68,133 +68,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Include the "config/difftool.txt" file in "git-difftool.txt", and move
-the relevant part of git-difftool(1) configuration from
-"config/diff.txt" to config/difftool.txt".
-
-Doing this is slightly odd, as we usually discuss configuration in
-alphabetical order, but by doing it we're able to include the full set
-of configuration used by git-difftool(1) (and only that configuration)
-in its own documentation.
-
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config/diff.txt     | 15 ---------------
- Documentation/config/difftool.txt | 28 +++++++++++++++++++++++++---
- Documentation/git-difftool.txt    | 27 ++++-----------------------
- 3 files changed, 29 insertions(+), 41 deletions(-)
+ Documentation/config/log.txt |  4 ++++
+ Documentation/git-log.txt    | 30 ++----------------------------
+ 2 files changed, 6 insertions(+), 28 deletions(-)
 
-diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
-index 32f84838ac1..35a7bf86d77 100644
---- a/Documentation/config/diff.txt
-+++ b/Documentation/config/diff.txt
-@@ -178,21 +178,6 @@ diff.<driver>.cachetextconv::
- 	Set this option to true to make the diff driver cache the text
- 	conversion outputs.  See linkgit:gitattributes[5] for details.
- 
--diff.tool::
--	Controls which diff tool is used by linkgit:git-difftool[1].
--	This variable overrides the value configured in `merge.tool`.
--	The list below shows the valid built-in values.
--	Any other value is treated as a custom diff tool and requires
--	that a corresponding difftool.<tool>.cmd variable is defined.
--
--diff.guitool::
--	Controls which diff tool is used by linkgit:git-difftool[1] when
--	the -g/--gui flag is specified. This variable overrides the value
--	configured in `merge.guitool`. The list below shows the valid
--	built-in values. Any other value is treated as a custom diff tool
--	and requires that a corresponding difftool.<guitool>.cmd variable
--	is defined.
--
- include::../mergetools-diff.txt[]
- 
- diff.indentHeuristic::
-diff --git a/Documentation/config/difftool.txt b/Documentation/config/difftool.txt
-index 67625944804..a3f82112102 100644
---- a/Documentation/config/difftool.txt
-+++ b/Documentation/config/difftool.txt
-@@ -1,6 +1,17 @@
--difftool.<tool>.path::
--	Override the path for the given tool.  This is useful in case
--	your tool is not in the PATH.
-+diff.tool::
-+	Controls which diff tool is used by linkgit:git-difftool[1].
-+	This variable overrides the value configured in `merge.tool`.
-+	The list below shows the valid built-in values.
-+	Any other value is treated as a custom diff tool and requires
-+	that a corresponding difftool.<tool>.cmd variable is defined.
-+
-+diff.guitool::
-+	Controls which diff tool is used by linkgit:git-difftool[1] when
-+	the -g/--gui flag is specified. This variable overrides the value
-+	configured in `merge.guitool`. The list below shows the valid
-+	built-in values. Any other value is treated as a custom diff tool
-+	and requires that a corresponding difftool.<guitool>.cmd variable
-+	is defined.
- 
- difftool.<tool>.cmd::
- 	Specify the command to invoke the specified diff tool.
-@@ -9,6 +20,17 @@ difftool.<tool>.cmd::
- 	file containing the contents of the diff pre-image and 'REMOTE'
- 	is set to the name of the temporary file containing the contents
- 	of the diff post-image.
+diff --git a/Documentation/config/log.txt b/Documentation/config/log.txt
+index 5250ba45fb4..bc63bc3939c 100644
+--- a/Documentation/config/log.txt
++++ b/Documentation/config/log.txt
+@@ -7,6 +7,10 @@ log.date::
+ 	Set the default date-time mode for the 'log' command.
+ 	Setting a value for log.date is similar to using 'git log''s
+ 	`--date` option.  See linkgit:git-log[1] for details.
 ++
-+See the `--tool=<tool>` option in linkgit:git-difftool[1] for more details.
-+
-+difftool.<tool>.path::
-+	Override the path for the given tool.  This is useful in case
-+	your tool is not in the PATH.
-+
-+difftool.trustExitCode::
-+	Exit difftool if the invoked diff tool returns a non-zero exit status.
-++
-+See the `--trust-exit-code` option in linkgit:git-difftool[1] for more details.
++If the format is set to "auto:foo" and the pager is in use, format
++"foo" will be the used for the date format. Otherwise "default" will
++be used.
  
- difftool.prompt::
- 	Prompt before each invocation of the diff tool.
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index 143b0c49d73..9d14c3c9f09 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -113,33 +113,14 @@ instead.  `--no-symlinks` is the default on Windows.
+ log.decorate::
+ 	Print out the ref names of any commits that are shown by the log
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 410095e9a4f..2a66cf88807 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -209,36 +209,10 @@ i18n.logOutputEncoding::
+ 	Defaults to the value of `i18n.commitEncoding` if set, and UTF-8
+ 	otherwise.
  
- See linkgit:git-diff[1] for the full list of supported options.
- 
--CONFIG VARIABLES
------------------
-+CONFIGURATION
-+-------------
- 'git difftool' falls back to 'git mergetool' config variables when the
- difftool equivalents have not been defined.
- 
--diff.tool::
--	The default diff tool to use.
-+include::includes/cmd-config-section-rest.txt[]
- 
--diff.guitool::
--	The default diff tool to use when `--gui` is specified.
--
--difftool.<tool>.path::
--	Override the path for the given tool.  This is useful in case
--	your tool is not in the PATH.
--
--difftool.<tool>.cmd::
--	Specify the command to invoke the specified diff tool.
+-log.date::
+-	Default format for human-readable dates.  (Compare the
+-	`--date` option.)  Defaults to "default", which means to write
+-	dates like `Sat May 8 19:35:34 2010 -0500`.
 -+
--See the `--tool=<tool>` option above for more details.
+-If the format is set to "auto:foo" and the pager is in use, format
+-"foo" will be the used for the date format. Otherwise "default" will
+-be used.
 -
--difftool.prompt::
--	Prompt before each invocation of the diff tool.
+-log.follow::
+-	If `true`, `git log` will act as if the `--follow` option was used when
+-	a single <path> is given.  This has the same limitations as `--follow`,
+-	i.e. it cannot be used to follow multiple files and does not work well
+-	on non-linear history.
 -
--difftool.trustExitCode::
--	Exit difftool if the invoked diff tool returns a non-zero exit status.
--+
--See the `--trust-exit-code` option above for more details.
-+include::config/difftool.txt[]
+-log.showRoot::
+-	If `false`, `git log` and related commands will not treat the
+-	initial commit as a big creation event.  Any root commits in
+-	`git log -p` output would be shown without a diff attached.
+-	The default is `true`.
+-
+-log.showSignature::
+-	If `true`, `git log` and related commands will act as if the
+-	`--show-signature` option was passed to them.
+-
+-mailmap.*::
+-	See linkgit:git-shortlog[1].
+-
+ include::includes/cmd-config-section-rest.txt[]
  
- SEE ALSO
- --------
++include::config/log.txt[]
++
+ include::config/notes.txt[]
+ 
+ GIT
 -- 
 2.37.3.1490.g9adf4224da0
 
