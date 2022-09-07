@@ -2,84 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B85AC38145
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 11:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23433C38145
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 12:09:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229580AbiIGLwF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 07:52:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42564 "EHLO
+        id S229517AbiIGMJj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 08:09:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiIGLwE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 07:52:04 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39E0866117
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 04:52:01 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id b19so15641715ljf.8
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 04:52:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=RiuoAfZ1QilPlt3aiUs5UoS82NZ/IdGIXVRXZv1E/JM=;
-        b=TEitLy7NasB77pNADR7efoUHGJp9ukm6slkP1LVjlqvPHvu5EJG0lQFjm9lh5Ehb7l
-         BBuhh+2NYTob/DUb3SGFDymRo2dJm3VEvz+Ceo4nnK/clBz+psG5xmPTbLnKQ6jUI/rs
-         PGf/MV3l6RSK70GkoQ3vx5KTVoAmjXjuUvT49IhEz9t3XJ5ofiAsGNn7MnQfr+ejqtAo
-         XTyZlGtRxdm5lSkeshFiGfdQ/wPwzOc3mfUIXZ//kmtMdz24CFb8IbSVgBGq1Hj3rYEH
-         1Cqh/QiSOcSC+fgK5+bkZbmcoRr9Mfy7vwQES40+cUXklLbYsoBD/uSdaW0Z3KOhwJvz
-         CLuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=RiuoAfZ1QilPlt3aiUs5UoS82NZ/IdGIXVRXZv1E/JM=;
-        b=TCdqNG5BUH9VVfQaz7RwL46ho85HaVBrzWWvEWoXq6Oh+s/bfUGC6/5JzXbgqA9ogX
-         5CezcNW5bl4/2wcy1PaUBIE7uZ56aWszO5F8Yxx2uV80iMD6a8yFdPZOMb+qvP1fgH1b
-         XrtMPb3TQevYHNGm9A8z90AWjn/xe+tO7X0Xv7inaoWU9DQrxk4TOJp3OUxEmeLmNHyW
-         MiQmjvxsDNP08KDJA00CPtvECOPEwKSbUX2C/WVex8z3eB9zyRKLTr4BJPoiFVePCP4p
-         ZvT4SIF+13wiV2LgUkC/x4zZRJGnfi+zn1RRnlm08qwIoToDCqFNaj938HErdOUhg/Py
-         0dTA==
-X-Gm-Message-State: ACgBeo38oqbR4K7xbTd7QIKCAc3A4bzN+k1pyXqXO6qAdW09+y8S2nK8
-        eoAOy2L3v3mqkWOmMaYrOeH+7/2LxU4CDnzvhHaFaw==
-X-Google-Smtp-Source: AA6agR6y6ATvGT6bBmcwDFnr92v1mHi4OgtE0wiByJC4THk/2YJ66eH66UnUu665Wj8ldw2g64zwons94WwtWtjF1+I=
-X-Received: by 2002:a2e:9e50:0:b0:261:bbc4:249e with SMTP id
- g16-20020a2e9e50000000b00261bbc4249emr832954ljk.265.1662551519473; Wed, 07
- Sep 2022 04:51:59 -0700 (PDT)
+        with ESMTP id S229436AbiIGMJg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 08:09:36 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7899B167E0
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 05:09:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1662552568;
+        bh=67FudR13GbUZN3LgB5qiO88kjRCHRkLgdFtWGVfWLzA=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=SREayenk93G30BRI7g28bFV++7Dtt4pcyW8anBe2xuhepuSbjf9L1667K3682HcUJ
+         u/Hok69vebYsZyPe/Tgs37GX1gxU6IOkyGtmGoVvlWGwC9M+VIHMwt3siYB5/PIz83
+         Gdarv+HCKmip3+WVIsWvQXJRd/pH1hEZqAtun8S8=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([91.47.158.123]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1McIgY-1p3r6q12R2-00cohH; Wed, 07
+ Sep 2022 14:09:28 +0200
+Message-ID: <b21d2b60-428f-58ec-28b6-3c617b9f2e45@web.de>
+Date:   Wed, 7 Sep 2022 14:09:27 +0200
 MIME-Version: 1.0
-References: <cover-v3-0.9-00000000000-20220831T083759Z-avarab@gmail.com> <cover-v4-0.9-00000000000-20220907T082419Z-avarab@gmail.com>
-In-Reply-To: <cover-v4-0.9-00000000000-20220907T082419Z-avarab@gmail.com>
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-Date:   Wed, 7 Sep 2022 08:51:48 -0300
-Message-ID: <CAHd-oW71qvhG16YtMweA26SDCLKn+LHZe13njn18CD==9Ewbnw@mail.gmail.com>
-Subject: Re: [PATCH v4 0/9] docs: de-duplicate sections, add more
- CONFIGURATION sections
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.2.1
+Subject: Re: [PATCH] tests: replace mingw_test_cmp with a helper in C
+Content-Language: en-US
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+References: <pull.1309.git.1659106382128.gitgitgadget@gmail.com>
+ <xmqqwnbv7trp.fsf@gitster.g> <354qp59q-r4r3-1971-5o09-71q224911orp@tzk.qr>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <354qp59q-r4r3-1971-5o09-71q224911orp@tzk.qr>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:DEpV/j+F/iOKlQYiqylXMGQetfUHD38Z81TpdBglw9MN0sGvkGs
+ taSR4A30dq9il70uu0ArETimhTxktT34o7zlHDmQZTRrm/3VcESPKPV7YqxYWndX7TZFTlf
+ AUtQVDKstsGcqxUzcCRCnso4JqqpPlOBulSeoRJVS1N3WLZxY5p68IwotTQvYfLcZNaK5Va
+ m/b+GOzUvGNUyXolE52gg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:14XqvIBiydE=:t/OXzVEoKjXJAk3DX+Nptk
+ RlBPVmdQ5nzc1SWE75uOyuFrnnMRs2Hc7vgpM6zQboOM9mqR5GSEz11hTNVEw2yxMzNWmiPZM
+ aX+D2GGHUaWonBPbm5PGJZvtg3AOd99o7o7tEhk0grz0FYoL9akoBKqtVThTX2WLGARRFsvJb
+ t47bh16Xs7+H5UDWJxzs9tK0/PGdZZIYmx0oS12bFMVr1ZofUsz29e5orBidm0/RQ9WrYWNeZ
+ U8KEJunZD8CU4G5JPuRBU3XbJCp520cBqpuTcJCkfGXYid++WRzxGIOqNZtLN2hUJXCq0lnnT
+ 45gBka+rlar8gmEQNmzs0edkOOpYwvPKKEluk42AJZ2RA0W3892iIuXW4Qadds31bGf+ErtTC
+ r2ob1Cd+u8qqpTsQsccCGD7S8Ry+lxkRZRP6WAueLEjf+S5mTjrL8lcv3bgAeIht7PQO/Z2aN
+ ztMe3vGJcosu+PrGohfO8TAgpRiyRh7gIligVkz/GKcPv2RKKLfz6T9ApT3ixnLOdK5ncxXHJ
+ +T3S1X9pgPFfZWQMMVgQOfrz7MjFP3zQGuYLsD9+FWU1ClAH9xn10o13PxeNiJlF9cowL72Cr
+ 8CvkN8ZqyK6JZPznGRYfKntlrsp+UbPF+V+7LmVrpLiYQaKv+YctTBu34N6c125j8T229ViA6
+ 9kQn7S1Ip3tAJFIEdEM6C46BlSp1nzwX3llp95EPOn4VVRlUJwWIA0XejEo9XMSlSV2WYS5tN
+ k0jS36Mipfqwedqpd4RMscTfuuT8pRiVM3HgL3kVD6DvxXv8xeHUuOeAG9BPSrrlM17Uz5hvQ
+ ryOMX1XXCNJBlt9vTCewGm1tVKh6U9c0IIYs57m7WBKjkPMqymsPlEYDH7KTp8/zU08A9NZ3U
+ by3hZwp7tCaO8M1CanOkNouJnZs3QxCVrGSnx7pdGRSFipLQIFmxCcbRhbPQuaVk/yuSsu8AL
+ 7c/SGoMnGzkBdXQQMkM6J6CQzWrWW2bbCn5X3mHElHXwwuAKi/ZHKqDsM7SPyyDWxrOcKrmr7
+ W+FpCjaSq7bLPGr8f8wUbXBCyth8Uo36c0f4oIy9z2X8a7ZyN+456XKu0WFXH8o5JHPyD4pZn
+ 1+whklBfJcBFSANhucD5F2EYuV4qF8sGX1nUUxwDn3N8GjnT4ZZk3jukFEi2QibGfIJMbKsax
+ HU0AU=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 7, 2022 at 5:27 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
+Am 06.09.22 um 15:10 schrieb Johannes Schindelin:
+> Hi Junio,
 >
-> This series:
+> On Fri, 29 Jul 2022, Junio C Hamano wrote:
 >
->  * De-duplicates and combines configuration discussion that was split
->    or spread across Documentation/config/*.txt and
->    Documentation/git-*.txt, moving it to Documentation/config/*.txt.
+>> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+>> writes:
+>>
+>>> +	const char *argv[] =3D {
+>>> +		"diff", "--no-index", NULL, NULL, NULL
+>>> +	};
+>>
+>> Don't we want to have "--" before the two paths?
 >
->  * Includes that relevant Documentation/config/*.txt in the
->    Documentation/git-*.txt files.
+> Yes!
 >
->  * Introduces and uses included prose for those "CONFIGURATION"
->    sections in various Documentation/git-*.txt files, informing the
->    reader that what they see there is included from "git-config(1)".
->
-> This v4 addresses the feedback from Matheus Tavares on v3 (thanks for
-> the review!): A hunk belonged in 9/9, not 8/9 (init's config is used
-> by e.g. "clone" too). The end-state at the end of this series is
-> exactly the same.
+>>> +	if (!(f0 =3D !strcmp(argv[1], "-") ? stdin : fopen(argv[1], "r")))
+>>> +		return error_errno("could not open '%s'", argv[1]);
+>>> +	if (!(f1 =3D !strcmp(argv[2], "-") ? stdin : fopen(argv[2], "r"))) {
+>>> +		fclose(f0);
+>>> +		return error_errno("could not open '%s'", argv[2]);
+>>> +	}
+>>
+>> It is tricky that you need to take "-" and treat it as the standard
+>> input stream in either argv[1] or argv[2] (but not both).  If would
+>> be a different story in an end-user facing program, but because this
+>> is a test helper, feeding wrong input is developer's fault, and I do
+>> not mind lack of attention to detail of error checking to make sure
+>> we avoid comparing alternating lines of the standard input.
 
-This version LGTM. Thanks!
+"git diff --no-index - -" also doesn't complain, by the way.
+
+> No, you're right, I've added a guard that prevents `test-tool cmp - -`
+> from failing in obscure ways.
+>
+>>> +	for (;;) {
+>>> +		int r0 =3D strbuf_getline(&b0, f0);
+>>> +		int r1 =3D strbuf_getline(&b1, f1);
+>>> +
+>>> +		if (r0 =3D=3D EOF) {
+>>> +			fclose(f0);
+>>> +			fclose(f1);
+>>> +			strbuf_release(&b0);
+>>> +			strbuf_release(&b1);
+>>> +			if (r1 =3D=3D EOF)
+>>> +				return 0;
+>>
+>> If both hit the EOF at the same time, we know they are the same, OK.
+>>
+>>> +cmp_failed:
+>>> +			if (!run_diff(argv[1], argv[2]))
+>>
+>> If one of argv[] was "-", then this wouldn't work correctly, as the
+>> other file is read from the beginning but the "-" side have consumed
+>> the initial part of the input and we cannot unseek it.  This bug
+>> needs to be fixed only if we expect a useful and reliable output
+>> from the helper.
+>
+> Right. I've added a clause that says that we cannot show the diff becaus=
+e
+> `stdin` has been consumed already.
+>
+>> But otherwise the idea is sound.  We compare them line by line,
+>> using strbuf_getline() to ignore differences in CRLF and LF that
+>> originates at 4d715ac0 (Windows: a test_cmp that is agnostic to
+>> random LF <> CRLF conversions, 2013-10-26).  Only when we find the
+>> input different, we use "git diff --no-index" to make the difference
+>> (and unfortunately more, as it does not ignore CRLF <> LF
+>> differences) visible.
+
+Why not use "git diff --no-index --ignore-cr-at-eol"?  Do you even need
+to wrap it?
+
+Ren=C3=A9
+
