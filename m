@@ -2,149 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1482DECAAA1
-	for <git@archiver.kernel.org>; Tue,  6 Sep 2022 23:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 609FFECAAA1
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 02:11:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229627AbiIFX1D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Sep 2022 19:27:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59902 "EHLO
+        id S229717AbiIGCLZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Sep 2022 22:11:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbiIFX1C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2022 19:27:02 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1380A9410C
-        for <git@vger.kernel.org>; Tue,  6 Sep 2022 16:27:00 -0700 (PDT)
-Received: (qmail 19970 invoked by uid 109); 6 Sep 2022 23:27:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Sep 2022 23:27:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6824 invoked by uid 111); 6 Sep 2022 23:27:01 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 06 Sep 2022 19:27:01 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 6 Sep 2022 19:26:59 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Eric Wong <e@80x24.org>,
-        Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 06/18] chainlint.pl: validate test scripts in parallel
-Message-ID: <YxfXQ0IJjq/FT2Uh@coredump.intra.peff.net>
-References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
- <62fc652eb47a4df83d88a197e376f28dbbab3b52.1661992197.git.gitgitgadget@gmail.com>
- <20220906223537.M956576@dcvr>
- <CAPig+cSx661-HEr3JcAD5MuYfgHviGQ1cSAftkgw6gj2FgTQVg@mail.gmail.com>
+        with ESMTP id S229549AbiIGCLY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Sep 2022 22:11:24 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97094895FC
+        for <git@vger.kernel.org>; Tue,  6 Sep 2022 19:11:23 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id q63so12228339pga.9
+        for <git@vger.kernel.org>; Tue, 06 Sep 2022 19:11:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=FxPPDVOMtQ/8qtYP/R46s0jJ/Tz8uV3XTZ3G5J/st6s=;
+        b=OCeFlobqJ1vimb/D9lHirk1muZ8bMecHpAw1DPhwaWomCnF3qeibGYiWsGNWv28GYW
+         n2jyjiEw4QWEBw4D6cET3cNn2ipKb+pFyuALouwLZ4HO3oQJnXMEQxfQ1GCXTtd7jOFn
+         FxxN1q8dy8xqcIfsnVWwG4woOkGqPsyjqIHKVDchKx4q1yspe38qpCLsMPqwmcV758qZ
+         XyXvrksi/qECwmPBG0R7oz6mi+rHjHcTenFBPLk2eXScOPHK4cysb+go9jVL1uBhFs4V
+         HSeuVbF6TR0PgEOkCjN178zO9jRrxRcZcBo5LK5/8JRrRuwV2THHOg3WeJwFNWsWwaY6
+         BKgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=FxPPDVOMtQ/8qtYP/R46s0jJ/Tz8uV3XTZ3G5J/st6s=;
+        b=dYPb0zKb8o3oeqEou0k2CoZgtPbEkYEWpihrMDdOrND04EX5rV8uqKZDbdlKZF0jsv
+         FAySfjVTiqDMTxc7oISPdViO9skpxiQ/SrfZ0q/se0eHS8q8Gks+S0l/dPe4EEdmsUdH
+         Mo6EkCVfp9Ob17UU4lU9K3fTHOZOzMt2hZo6aLrXwOseeBA09FVKHm1F3H9EWUMoDJTz
+         2AcWXT6rqTz+a/DcYNvQD7wMgsWMhuTkOptghoAOlb+i6c9h89MPYJb9afazeP6RBGRc
+         ioQPRHhPzheVwiv3pDRTdQyJ7Wr39LGzO6tXZcEN+FbeJfzcBYlFpR6omsuceRFlfi+C
+         40fA==
+X-Gm-Message-State: ACgBeo0Iu3nPoa1R0J5FoG621EmH+KcfZODaeubX0Ew1Siyohj8DHdA1
+        KOc9iwYWxoE16tzmI3b1KBY=
+X-Google-Smtp-Source: AA6agR6ouWaEqDP4hIb5ieGSEJ2QcK723lC7cgVHIFp0tSE+Ya1PhdlebcEBkDXXtQFi59+LR6cm6A==
+X-Received: by 2002:a65:6e45:0:b0:42b:7e3b:754e with SMTP id be5-20020a656e45000000b0042b7e3b754emr1368062pgb.26.1662516683074;
+        Tue, 06 Sep 2022 19:11:23 -0700 (PDT)
+Received: from localhost ([113.172.46.62])
+        by smtp.gmail.com with ESMTPSA id j4-20020a63fc04000000b0040caab35e5bsm9306293pgi.89.2022.09.06.19.11.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Sep 2022 19:11:22 -0700 (PDT)
+Date:   Wed, 7 Sep 2022 09:11:20 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Lana Deere <lana.deere@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: 2.37.2 can't "git pull" but 2.18.0 can
+Message-ID: <Yxf9yETBi3k6Wasl@danh.dev>
+References: <CA+4x=b_07g6STT0nvma_gRhv=zdj+7TQx5SxKLUtuqONLwv=TQ@mail.gmail.com>
+ <YxKo2l5nBoOa9Jfa@coredump.intra.peff.net>
+ <CA+4x=b-GYMnZygHXOfNb3CdSRoxUeT80n=gSCLyfCA9WsB0wEw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cSx661-HEr3JcAD5MuYfgHviGQ1cSAftkgw6gj2FgTQVg@mail.gmail.com>
+In-Reply-To: <CA+4x=b-GYMnZygHXOfNb3CdSRoxUeT80n=gSCLyfCA9WsB0wEw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 06, 2022 at 06:52:26PM -0400, Eric Sunshine wrote:
-
-> On Tue, Sep 6, 2022 at 6:35 PM Eric Wong <e@80x24.org> wrote:
-> > Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> > > +unless ($Config{useithreads} && eval {
-> > > +     require threads; threads->import();
-> >
-> > Fwiw, the threads(3perl) manpage has this since 2014:
-> >
-> >        The use of interpreter-based threads in perl is officially discouraged.
+On 2022-09-06 15:37:45-0400, Lana Deere <lana.deere@gmail.com> wrote:
+> This is the final output from git bisect:
 > 
-> Thanks for pointing this out. I did see that, but as no better
-> alternative was offered, and since I did want this to work on Windows,
-> I went with it.
+> $ git bisect good
+> Bisecting: 0 revisions left to test after this (roughly 0 steps)
+> [d8d3d632f4165955da49032d50279c20cfbde2e5] hooks--update.sample: use
+> hash-agnostic zero OID
+> 
+> Does that offer any hint about what is going on?
 
-I did some timings the other night, and I found something quite curious
-with the thread stuff.
+It is still bisecting, can you continue to bisect until it says
+something like:
 
-Here's a hyperfine run of "make" in the t/ directory before any of your
-patches. It uses "prove" to do parallelism under the hood:
+	first bad commit is ...
 
-  Benchmark 1: make
-    Time (mean ± σ):     68.895 s ±  0.840 s    [User: 620.914 s, System: 428.498 s]
-    Range (min … max):   67.943 s … 69.531 s    3 runs
 
-So that gives us a baseline. Now the first thing I wondered is how bad
-it would be to just run chainlint.pl once per script. So I applied up to
-that patch:
+> 
+> Incidentally, some but not all of the pulls produced additional
+> output.  Maybe it's a clue?
+> 
+> $ ~/tmp/git/install/bin/git pull
+> warning: Pulling without specifying how to reconcile divergent branches is
+> discouraged. You can squelch this message by running one of the following
+> commands sometime before your next pull:
+> 
+>   git config pull.rebase false  # merge (the default strategy)
+>   git config pull.rebase true   # rebase
+>   git config pull.ff only       # fast-forward only
+> 
+> You can replace "git config" with "git config --global" to set a default
+> preference for all repositories. You can also pass --rebase, --no-rebase,
+> or --ff-only on the command line to override the configured default per
+> invocation.
 
-  Benchmark 1: make
-    Time (mean ± σ):     71.289 s ±  1.302 s    [User: 673.300 s, System: 417.912 s]
-    Range (min … max):   69.788 s … 72.120 s    3 runs
+This is a hint in some version of git for 2 modes of pull, you can
+ignore it.
 
-I was quite surprised that it made things slower! It's nice that we're
-only calling it once per script instead of once per test, but it seems
-the startup overhead of the script is really high.
-
-And since in this mode we're only feeding it one script at a time, I
-tried reverting the "chainlint.pl: validate test scripts in parallel"
-commit. And indeed, now things are much faster:
-
-  Benchmark 1: make
-    Time (mean ± σ):     61.544 s ±  3.364 s    [User: 556.486 s, System: 384.001 s]
-    Range (min … max):   57.660 s … 63.490 s    3 runs
-
-And you can see the same thing just running chainlint by itself:
-
-  $ time perl chainlint.pl /dev/null
-  real	0m0.069s
-  user	0m0.042s
-  sys	0m0.020s
-
-  $ git revert HEAD^{/validate.test.scripts.in.parallel}
-  $ time perl chainlint.pl /dev/null
-  real	0m0.014s
-  user	0m0.010s
-  sys	0m0.004s
-
-I didn't track down the source of the slowness. Maybe it's loading extra
-modules, or maybe it's opening /proc/cpuinfo, or maybe it's the thread
-setup. But it's a surprising slowdown.
-
-Now of course your intent is to do a single repo-wide invocation. And
-that is indeed a bit faster. Here it is without the parallel code:
-
-  Benchmark 1: make
-    Time (mean ± σ):     61.727 s ±  2.140 s    [User: 507.712 s, System: 377.753 s]
-    Range (min … max):   59.259 s … 63.074 s    3 runs
-
-The wall-clock time didn't improve much, but the CPU time did. Restoring
-the parallel code does improve the wall-clock time a bit, but at the
-cost of some extra CPU:
-
-  Benchmark 1: make
-    Time (mean ± σ):     59.029 s ±  2.851 s    [User: 515.690 s, System: 380.369 s]
-    Range (min … max):   55.736 s … 60.693 s    3 runs
-
-which makes sense. If I do a with/without of just "make test-chainlint",
-the parallelism is buying a few seconds of wall-clock:
-
-  Benchmark 1: make test-chainlint
-    Time (mean ± σ):     900.1 ms ± 102.9 ms    [User: 12049.8 ms, System: 79.7 ms]
-    Range (min … max):   704.2 ms … 994.4 ms    10 runs
-
-  Benchmark 1: make test-chainlint
-    Time (mean ± σ):      3.778 s ±  0.042 s    [User: 3.756 s, System: 0.023 s]
-    Range (min … max):    3.706 s …  3.833 s    10 runs
-
-I'm not sure what it all means. For Linux, I think I'd be just as happy
-with a single non-parallelized test-chainlint run for each file. But
-maybe on Windows the startup overhead is worse? OTOH, the whole test run
-is so much worse there. One process per script is not going to be that
-much in relative terms either way.
-
-And if we did cache the results and avoid extra invocations via "make",
-then we'd want all the parallelism to move to there anyway.
-
-Maybe that gives you more food for thought about whether perl's "use
-threads" is worth having.
-
--Peff
+-- 
+Danh
