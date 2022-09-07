@@ -2,71 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CADDC54EE9
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 20:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA24AC38145
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 20:26:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229522AbiIGUTU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 16:19:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59444 "EHLO
+        id S229563AbiIGU0C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 16:26:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230179AbiIGUTM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 16:19:12 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68A80C12C8
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 13:19:09 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id 65so5495621pfx.0
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 13:19:09 -0700 (PDT)
+        with ESMTP id S229445AbiIGU0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 16:26:01 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EC5CBC13A
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 13:26:00 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id e68so2698837pfe.1
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 13:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date;
-        bh=ucLWj0cyrlCW4Srl0V15W6kyTKuHuYFFMj0cKB7JZKg=;
-        b=mptsIrXkfwI9QU+sjqEJhzasTN6+N7o0/oiAuEJManz1uI4vD6Cvg8dSwjspTVaEkL
-         QmdA/qvEVpyIMn8MBGnw9LOfS+cdh0RpcWEQj/1exI/4jsO/AnHRqyUIJ9L1B2iwl0+X
-         r6GrCxRqCXLko2G53o/1NKn7PM9pM3nThKui1ekSRvFhnhoisiVv6tRc2XVIbGqbAkAl
-         E4ehVC127zZQ/e3XaVHxwj5glKSsLL4Em9tOI2BXhtUvVWCLB+pYNgpJ7DDkWD9sCk3A
-         jFHEE+iXIk+CMTfBnFn4RyB1WOf5aBfS+FgAZ9Z4+Xm8M6rMnQOqwypwZaMTss1TYprz
-         wEmA==
+        bh=NvkGPdNH6vmcYi4teLqI1SiT1T1qsw3A2enyY5hnjeQ=;
+        b=oeb6PTcfE1DFc2BtBwPaDOaABRvM6SzlZ3deIBcLeUQH+CvUJNoJOd8tLtswya1wN0
+         YhWyHaUm5q5qC+btZ+i/5GO8aJo5gsK5z7/SPejLISGf+B6bkK9B5vTevW15xDKC0fZM
+         tfAh6uKpdfwdn69t6RqYp3SzgV/lNJzKin+iTU9/dRATbAPq9o6mSSu47firUra/KN0Q
+         fKjIeP1X13t8GiwvXc4V1595mp58Uw7SXm+Mxh3I3GjPgxYO1uw8PaiKWoyiHANCffJk
+         JAuNuo+VqdFnlMoECMPTQaOjYIN+L4fG+ZkpW1mH6H9CgxtXd3eBldL3b5SSu92FAY5p
+         1x1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=ucLWj0cyrlCW4Srl0V15W6kyTKuHuYFFMj0cKB7JZKg=;
-        b=VA//3mL9quKvfUaSdwDnjXz16dkR+VfxQhR/TNSompo6yDRpG8+BEUgCRTt3ibuLLC
-         Dkyi1lxh2TDhO5eqrJKxVtICs5AsFUeY+4XNVWLpDK+wTYGrxI0fPPEYrqYxLBht6EYM
-         hyQewcExiyF2D/DIQLWoIpRQZruky2Bw4fLsbg4N4zQQZ6N+QxjXpkYqdSpBcTPyBNRk
-         4AxgRmpNNRBnbwLKcApjT2bAnToSuU2QkxjjuBD8LvHXl6h0R7My57H2XdAtgBZ0iU50
-         338IiL2YA+LU7ZMbC/3vaIR/aujrLyHv0EODmPXsBxMf8JJXEdN0jU4is+uiwsMJUmgt
-         ZKpg==
-X-Gm-Message-State: ACgBeo0NL87DdyrMS4zF1GJS7jJYJXQ2Xldgm8dxSHq/NzrjhZodd1U4
-        iy5v8y/Kr1Kyn5XDoMW83dc=
-X-Google-Smtp-Source: AA6agR59ENRvEDH7i2qSMsmlHDrERCkgmLtNsxWNfhx2rY4ECGlQqwIVEuVWEkvqoH8JHaBsV55FTQ==
-X-Received: by 2002:a05:6a00:21cc:b0:53d:debc:2ea1 with SMTP id t12-20020a056a0021cc00b0053ddebc2ea1mr5840270pfj.56.1662581948838;
-        Wed, 07 Sep 2022 13:19:08 -0700 (PDT)
+        bh=NvkGPdNH6vmcYi4teLqI1SiT1T1qsw3A2enyY5hnjeQ=;
+        b=PL9Atw1Fa5G5e9RuWbm0oq3AL/vzeA8iYTUhMRNHsPwllgkKP/ABEi3XAqJlGWHGT+
+         ZAQFrUOGWiH+XFFOMDAe6SRAg3nzF2/ztn1WwOOorFbN6dmIF6gKQ61nZUbvCAj8Hvvc
+         fG8k2HHUaL3n868YYAT/7SmwOCQmUoa1J4D2IVh2KQayuGxTYJ9p98E8nJA0tb11Dsiv
+         4RIgXy8IBiknEXFEWp8uRLstuC3eS+FbLsSxOnrRgURleBbmCY1EzXl985t6VFTvMqOJ
+         DYyAU2WP/Czdbn5MyhXxs/hE44+WbtgaWxmb5vXRBxlQrTK/xfLSPCyXp5nJ0YRMmiD2
+         hxWQ==
+X-Gm-Message-State: ACgBeo2PB+rwRYOTDIXDoM5U2sHdCwjbBcFok3icUI2v+JB6EGqU7B0a
+        skwcUEgbKd7RSG9qBdN3+FUC/J78cFg=
+X-Google-Smtp-Source: AA6agR6qiUrrjqQEISX6jIaG/DKVkRta//qMb6IJE6xPoqZQHLaHsg3Qbe6HfjCQr995gUzOJ0vLPA==
+X-Received: by 2002:a63:1e11:0:b0:41c:d233:31f8 with SMTP id e17-20020a631e11000000b0041cd23331f8mr4861643pge.228.1662582359898;
+        Wed, 07 Sep 2022 13:25:59 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id 205-20020a6217d6000000b0053818255880sm12903421pfx.193.2022.09.07.13.19.08
+        by smtp.gmail.com with ESMTPSA id 198-20020a6218cf000000b0053e6de11a38sm2321448pfy.81.2022.09.07.13.25.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 13:19:08 -0700 (PDT)
+        Wed, 07 Sep 2022 13:25:59 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 01/34] CodingGuidelines: update and clarify command-line
- conventions
-References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
-        <patch-01.34-b8cbd443987-20220902T092734Z-avarab@gmail.com>
-Date:   Wed, 07 Sep 2022 13:19:08 -0700
-In-Reply-To: <patch-01.34-b8cbd443987-20220902T092734Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 5 Sep
- 2022 10:26:12
-        +0200")
-Message-ID: <xmqqedwnszsz.fsf@gitster.g>
+To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] branch: refactor "edit_description" code path
+References: <pull.1346.git.1662388460.gitgitgadget@gmail.com>
+        <93b0b442-b277-66a6-3f5f-5a498593aa07@gmail.com>
+        <d2624238-048c-ac5b-1d45-e08051202c79@gmail.com>
+Date:   Wed, 07 Sep 2022 13:25:59 -0700
+In-Reply-To: <d2624238-048c-ac5b-1d45-e08051202c79@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+        message of "Wed, 7 Sep 2022 11:52:26 +0200")
+Message-ID: <xmqq7d2fszhk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -75,22 +70,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Rubén Justo <rjusto@gmail.com> writes:
 
-> + Use spacing around "|" token(s), but not on the inside of "[]()"
-> + tokens:
-> +   Do: [-q | --quiet]
-> +   Don't: [-q|--quiet]
+> Minor refactoring to reduce the number of returns in the switch case
+> handling the "edit_description" option, so the calls to strbuf_release
+> can also be reduced.  New resources to be added also do not need to be
+> released in multiple places.
+>
+> Signed-off-by: Rubén Justo <rjusto@gmail.com>
+> ---
+>  builtin/branch.c | 17 ++++++++---------
+>  1 file changed, 8 insertions(+), 9 deletions(-)
+>
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 55cd9a6e99..5229cb796f 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -614,7 +614,7 @@ static int edit_branch_description(const char *branch_name)
+>  	strbuf_reset(&buf);
+>  	if (launch_editor(edit_description(), &buf, NULL)) {
+>  		strbuf_release(&buf);
+> -		return -1;
+> +		return 1;
+>  	}
+>  	strbuf_stripspace(&buf, 1);
 
-It is unclear what "but not on ..." in the description and it is
-still unclear with the examples.  Does this mean
 
-	Don't: ( -q | --quiet )
+Our API convention is to signal a failure with negative return
+value.  Granted that this is not a general API but is merely a
+helper function in the implementation of a single command, it would
+be less confusing if you sticked to the convention.
 
-In other words, "on the inside of" above is meant to forbid spaces
-immediately after opening or before closing a [] or () pair?
+Unless there is a compelling reason not to, that is.
 
-Other than that, I think these are good guidelines to have.
+> @@ -791,6 +791,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+>  	} else if (edit_description) {
+>  		const char *branch_name;
+>  		struct strbuf branch_ref = STRBUF_INIT;
+> +		int ret = 0;
+>  
+>  		if (!argc) {
+>  			if (filter.detached)
+> @@ -803,19 +804,17 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+>  
+>  		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
+>  		if (!ref_exists(branch_ref.buf)) {
+> -			strbuf_release(&branch_ref);
+> -
+>  			if (!argc)
+> -				return error(_("No commit on branch '%s' yet."),
+> +				ret = error(_("No commit on branch '%s' yet."),
+>  					     branch_name);
+>  			else
+> -				return error(_("No branch named '%s'."),
+> +				ret = error(_("No branch named '%s'."),
+>  					     branch_name);
 
-Thanks.
+OK.  These are good uses of a new variable 'ret'.  Note that error()
+returns negative one.
+
+> -		}
+> -		strbuf_release(&branch_ref);
+> +		} else
+> +			ret = edit_branch_description(branch_name);
+>  
+> -		if (edit_branch_description(branch_name))
+> -			return 1;
+> +		strbuf_release(&branch_ref);
+> +		return ret;
+
+When editor failed, we leaked branch_ref strbuf, but we no longer
+do.
+
+Which is good.
+
+This makes cmd_branch() return -1 (when we see error() call) or 1
+(when edit_branch_description() fails and returns 1).  I would
+suggest to
+
+ * Fix the return value of edit_branch_description() so that it
+   signals a failure by returning -1
+
+ * cmd_branch() to return (or call exit() with) -ret, as ret has 0
+   when everything is peachy, and negative in any error code paths.
 
