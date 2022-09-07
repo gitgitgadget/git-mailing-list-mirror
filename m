@@ -2,127 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40B3FC54EE9
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 18:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24025C38145
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 18:20:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229489AbiIGSMS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 14:12:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46718 "EHLO
+        id S230230AbiIGSUi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 14:20:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbiIGSMM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 14:12:12 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39870C0B68
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 11:12:11 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id t11-20020a17090a510b00b001fac77e9d1fso19132003pjh.5
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 11:12:11 -0700 (PDT)
+        with ESMTP id S229989AbiIGSUf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 14:20:35 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 259489F8EC
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 11:20:34 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id b17so8452956wrq.3
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 11:20:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=j4ivq9gSNN/8MFV5I0975VDAS4XpjB5k6yMjJswMfys=;
-        b=XBhfFkvMPZN4sHDPFXCMk7mA9dO17zJW70Xbiu124kNrMwPWN5mWpcpoCi90bJQRHj
-         3/cYHwtaJkCvstjFySSYabQtNTvu4uShKNWwtDQmW8mkuabBt+1ox8s58/OrePq4H2dR
-         jTLl/a67mLnfnmNJ0TTSYQ63KiJbqR/hSyrv/IslFtHhL2r9mLaTjKEjYQXefdaSnQLV
-         DADbJ7MPlscSLYNUZvd24d0RRdZvdgKSvswP2yIPqtdqWFZ28szgQOnOO4xy5Db1G47K
-         OapyValxeb+Kyi5+1+3nY7uspbwaNXslcpuwZ58DeT2hjywYHAXhVIKtD250/kyCL2WE
-         PKug==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date;
+        bh=31ihJKYqotpiGZUWEMHD1e7J5hK7b4M7wyiAPyoQY/o=;
+        b=h9i+tWURPLCLVUZrq4SUBopcDZkmW3XysPtPGY8Ayvrfy+6GcEwFJwRnZhvdNvx2eF
+         9ZXogvaUYsd861x9dspo72/RtRnstwUKYczvNSNe7W5k4By9bDIt4o/9k2Pga2brf0/6
+         XrpsDWjzQR19jy0KxTj7OF8nI4avysWtDE95NaQzAvsgmxc4JVTAT5ld3UvJDE4a9Y8a
+         2Do5A3FzHLyRszffq4ZfojQRRziCsISKiRPvHZ59TTpdRN5BrdFvl9EshXdEkMjpc1nX
+         XNBbMhneyhcryZiM4dc14BYjCw5BFWc4lInp8JOl3mYy814rmTg+JPppjCbErpe5W4U8
+         +lYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=j4ivq9gSNN/8MFV5I0975VDAS4XpjB5k6yMjJswMfys=;
-        b=BUlQYN2Y1K1HeHW1YyIncyaejoRF0v0CIne4hWSFNKR1j2ZGfWK5pQQFbe/C5mXtpx
-         Y3MfFtM6dsCbZj4/L5L7Cqh+OhgQz2HkHh78msHkdobrM7SsXbRK50L9Coqyen7GVTUO
-         8fvgABpJpHj7xcRaEK9uNEJxavTJsRe2iqyhBXXmk2p2RCzolvSazdwYYEl3tWuObwut
-         0vKiw08cx/V8u2GtM5NyHQsHvR9Y9NwEz3BaLmqf/2cSPLyHcAnaBfg9FhGjVYWEYVA0
-         incY+XBg2Wkum5h0z8JPR48ZQZXBdoCVroiK2Jl4b6sKwllNCHTaM1+e9KWI98STgR+E
-         ZkFw==
-X-Gm-Message-State: ACgBeo3T3ODhZND2ylmrXXfKriqH5f8sQk1dG4m1c29LLB0ZEMmkSdXb
-        azyTqCyV/wrMknFhBBymZDU=
-X-Google-Smtp-Source: AA6agR6ytOMkklKIpHY+SY6jErXqkI43Ur89lxlK7CviYa9PNPN67q9OJ/iLctf7LiDK5QboK6YhYw==
-X-Received: by 2002:a17:90b:1b10:b0:200:934b:741f with SMTP id nu16-20020a17090b1b1000b00200934b741fmr5366113pjb.212.1662574330574;
-        Wed, 07 Sep 2022 11:12:10 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id l8-20020a170902f68800b00176b7dcf2c0sm6868054plg.240.2022.09.07.11.12.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 11:12:10 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 5/7] rebase: factor out branch_base calculation
-References: <pull.1323.git.1660576283.gitgitgadget@gmail.com>
-        <pull.1323.v2.git.1662561470.gitgitgadget@gmail.com>
-        <fc45b996d34af43f8e333f7c43a8b06489a1fda2.1662561470.git.gitgitgadget@gmail.com>
-Date:   Wed, 07 Sep 2022 11:12:09 -0700
-Message-ID: <xmqqo7vruk92.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=31ihJKYqotpiGZUWEMHD1e7J5hK7b4M7wyiAPyoQY/o=;
+        b=vpzZsy1eXVbcMIOZAl2W/Bmc0H15n0iTaKFVkttcWjMP0BhT2SDCBQLUaakY8qqVA/
+         ztID0vmCWMbwGyRIWGEjk+fwVVy4DIIkhYJqI6aXUc85cF93Cs96XidOsJNdF2gj0iFd
+         OuAHTNx/DabfoHKWSErEkS/4viZu7007cA1UCGir/+60fsm/j5cQeBGD568R43EFnjD9
+         FHMK+99x/Hi1T2XVbWsbRtkbgH6cQY6EYgPStm0VguqD25KfZcl6Jpin3DFTKIN3cG2A
+         S5RdfcMAXErDtyhMyh4oRY1Nv1lRsO70JsaVXBB+m9IrNEC2HDUOETgQ8VSroeUfyVN3
+         no4w==
+X-Gm-Message-State: ACgBeo2CrwPfnJugCEi5HALcdF3gcNnlhzmGs0tCRuR/hYzT8hyW4tbi
+        GI7VKNfR1ldGQ711e3iEi9WTDAy1Pt71NA==
+X-Google-Smtp-Source: AA6agR7H4C+aHPrutk2J2bpHmQ1A5fNqRlgul0+I3F0EG5jkByKBBZWeWlc9MKbgETpiYExC7jNWlA==
+X-Received: by 2002:a05:6000:1f1c:b0:228:bea6:f45a with SMTP id bv28-20020a0560001f1c00b00228bea6f45amr3044648wrb.297.1662574832547;
+        Wed, 07 Sep 2022 11:20:32 -0700 (PDT)
+Received: from [192.168.1.201] ([31.185.185.144])
+        by smtp.googlemail.com with ESMTPSA id m9-20020a05600c4f4900b003a84375d0d1sm29226350wmq.44.2022.09.07.11.20.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Sep 2022 11:20:32 -0700 (PDT)
+Message-ID: <435b2b8b-2577-0af4-6f69-b250f64cbdf8@gmail.com>
+Date:   Wed, 7 Sep 2022 19:20:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 1/2] patchbreak(), is_scissors_line(): work with a
+ buf/len pair
+Content-Language: en-US
+To:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org
+Cc:     gitster@pobox.com, avarab@gmail.com, l.s.r@web.de
+References: <cover.1662559356.git.matheus.bernardino@usp.br>
+ <99012733e440be15afc7fd45272e738c71b3ef27.1662559356.git.matheus.bernardino@usp.br>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <99012733e440be15afc7fd45272e738c71b3ef27.1662559356.git.matheus.bernardino@usp.br>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 07/09/2022 15:44, Matheus Tavares wrote:
+> From: René Scharfe <l.s.r@web.de>
+> 
+> The next patch will add calls to these two functions from code that
+> works with a char */size_t pair. So let's adapt the functions in
+> preparation.
 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index dd5e0e1feb6..b5c78ce1fb0 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -871,13 +871,9 @@ static int can_fast_forward(struct commit *onto, struct commit *upstream,
->  	struct commit_list *merge_bases = NULL;
->  	int res = 0;
->  
-> -	merge_bases = get_merge_bases(onto, head);
-> -	if (!merge_bases || merge_bases->next) {
-> -		oidcpy(branch_base, null_oid());
-> +	if (is_null_oid(branch_base))
->  		goto done;
+Reading this I wonder if we should add a starts_with_mem() function, 
+rather than having to pass pointers to buf and len to skip_prefix_mem().
 
-Naïvely, I would have expected the condition of branch_base being
-null to mean "the caller doesn't have branch base specified (like
-parsing --onto), so we would need to compute one" and this
-"branch_base is null, so leave without doing anything" looked
-confusing at first.
+Best Wishes
 
-After computing options.onto_name (given either with --onto or
-falling back to .upstream_name), we make sure branch_base is
-correctly filled, either from an explicit A...B notation or a single
-committish object name given and converted with a call to
-fill_branch_base().  And fill_branch_base() uses null object name as
-a signal that it punted due to multiple merge bases.
+Phillip
 
-> +static void fill_branch_base(struct rebase_options *options,
-> +			    struct object_id *branch_base)
-> +{
-> +	struct commit_list *merge_bases = NULL;
-> +
-> +	merge_bases = get_merge_bases(options->onto, options->orig_head);
-> +	if (!merge_bases || merge_bases->next)
-> +		oidcpy(branch_base, null_oid());
-> +	else
-> +		oidcpy(branch_base, &merge_bases->item->object.oid);
-> +
-> +	free_commit_list(merge_bases);
-> +}
+> ---
+>   mailinfo.c | 37 +++++++++++++++++++------------------
+>   1 file changed, 19 insertions(+), 18 deletions(-)
+> 
+> diff --git a/mailinfo.c b/mailinfo.c
+> index 9621ba62a3..f0a690b6e8 100644
+> --- a/mailinfo.c
+> +++ b/mailinfo.c
+> @@ -646,32 +646,30 @@ static void decode_transfer_encoding(struct mailinfo *mi, struct strbuf *line)
+>   	free(ret);
+>   }
+>   
+> -static inline int patchbreak(const struct strbuf *line)
+> +static inline int patchbreak(const char *buf, size_t len)
+>   {
+> -	size_t i;
+> -
+>   	/* Beginning of a "diff -" header? */
+> -	if (starts_with(line->buf, "diff -"))
+> +	if (skip_prefix_mem(buf, len, "diff -", &buf, &len))
+>   		return 1;
+>   
+>   	/* CVS "Index: " line? */
+> -	if (starts_with(line->buf, "Index: "))
+> +	if (skip_prefix_mem(buf, len, "Index: ", &buf, &len))
+>   		return 1;
+>   
+>   	/*
+>   	 * "--- <filename>" starts patches without headers
+>   	 * "---<sp>*" is a manual separator
+>   	 */
+> -	if (line->len < 4)
+> +	if (len < 4)
+>   		return 0;
+>   
+> -	if (starts_with(line->buf, "---")) {
+> +	if (skip_prefix_mem(buf, len, "---", &buf, &len)) {
+>   		/* space followed by a filename? */
+> -		if (line->buf[3] == ' ' && !isspace(line->buf[4]))
+> +		if (len > 1 && buf[0] == ' ' && !isspace(buf[1]))
+>   			return 1;
+>   		/* Just whitespace? */
+> -		for (i = 3; i < line->len; i++) {
+> -			unsigned char c = line->buf[i];
+> +		for (; len; buf++, len--) {
+> +			unsigned char c = buf[0];
+>   			if (c == '\n')
+>   				return 1;
+>   			if (!isspace(c))
+> @@ -682,14 +680,14 @@ static inline int patchbreak(const struct strbuf *line)
+>   	return 0;
+>   }
+>   
+> -static int is_scissors_line(const char *line)
+> +static int is_scissors_line(const char *line, size_t len)
+>   {
+>   	const char *c;
+>   	int scissors = 0, gap = 0;
+>   	const char *first_nonblank = NULL, *last_nonblank = NULL;
+>   	int visible, perforation = 0, in_perforation = 0;
+>   
+> -	for (c = line; *c; c++) {
+> +	for (c = line; len; c++, len--) {
+>   		if (isspace(*c)) {
+>   			if (in_perforation) {
+>   				perforation++;
+> @@ -705,12 +703,14 @@ static int is_scissors_line(const char *line)
+>   			perforation++;
+>   			continue;
+>   		}
+> -		if (starts_with(c, ">8") || starts_with(c, "8<") ||
+> -		    starts_with(c, ">%") || starts_with(c, "%<")) {
+> +		if (skip_prefix_mem(c, len, ">8", &c, &len) ||
+> +		    skip_prefix_mem(c, len, "8<", &c, &len) ||
+> +		    skip_prefix_mem(c, len, ">%", &c, &len) ||
+> +		    skip_prefix_mem(c, len, "%<", &c, &len)) {
+>   			in_perforation = 1;
+>   			perforation += 2;
+>   			scissors += 2;
+> -			c++;
+> +			c--, len++;
+>   			continue;
+>   		}
+>   		in_perforation = 0;
+> @@ -747,7 +747,8 @@ static int check_inbody_header(struct mailinfo *mi, const struct strbuf *line)
+>   {
+>   	if (mi->inbody_header_accum.len &&
+>   	    (line->buf[0] == ' ' || line->buf[0] == '\t')) {
+> -		if (mi->use_scissors && is_scissors_line(line->buf)) {
+> +		if (mi->use_scissors &&
+> +		    is_scissors_line(line->buf, line->len)) {
+>   			/*
+>   			 * This is a scissors line; do not consider this line
+>   			 * as a header continuation line.
+> @@ -808,7 +809,7 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
+>   	if (convert_to_utf8(mi, line, mi->charset.buf))
+>   		return 0; /* mi->input_error already set */
+>   
+> -	if (mi->use_scissors && is_scissors_line(line->buf)) {
+> +	if (mi->use_scissors && is_scissors_line(line->buf, line->len)) {
+>   		int i;
+>   
+>   		strbuf_setlen(&mi->log_message, 0);
+> @@ -826,7 +827,7 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
+>   		return 0;
+>   	}
+>   
+> -	if (patchbreak(line)) {
+> +	if (patchbreak(line->buf, line->len)) {
+>   		if (mi->message_id)
+>   			strbuf_addf(&mi->log_message,
+>   				    "Message-Id: %s\n", mi->message_id);
 
-So it is doing the same thing as the original, but unlike the
-original, it is not immediately obvious why "goto done" is the right
-thing to do here.  Perhaps it deserves a comment, e.g.
-
-	if (is_null_oid(branch_base))
-		goto done; /* fill_branch_base() already checked and punted */
-
-or something.
-
-Thanks.
