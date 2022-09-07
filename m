@@ -2,62 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FE5CC6FA8A
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 14:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8CE7C54EE9
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 14:47:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229775AbiIGOp4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 10:45:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46926 "EHLO
+        id S229865AbiIGOrP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 10:47:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229729AbiIGOpn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 10:45:43 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94F025C945
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 07:45:42 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id h22so10556249qtu.2
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 07:45:42 -0700 (PDT)
+        with ESMTP id S229905AbiIGOrI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 10:47:08 -0400
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6274599B6D
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 07:46:59 -0700 (PDT)
+Received: by mail-qt1-x82c.google.com with SMTP id h21so10564764qta.3
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 07:46:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=u3cK2vXy9HIxA+opK4poOm82ojwXKi4+Q2dhxcRvfnI=;
-        b=ahAM0YLuoDG/QWWXheJw1esIqTJG0dg2jjK55rbT4/gX+GLXqVm0wShzKYOzNAIuYl
-         hBVY/Ci1JV6fo12ZfXT3K/c9U6e3eTx6yTgSrh8vPa8BAWP3T91l7o8PviK5a86wYp8o
-         /5p9WP9MMgCETHU8K/aKpcGnCKAiUVEYuK+xm/dDOBxR9E/czylWylvQ3lNy/R736ilm
-         LfTwRewKHQ+yQ/yZKe0HJpFNWhWVsfk41vzin6SlHNnnPa9cgZ3ppZEfZXSRFDUV8/KX
-         tmjQ26XQx6ucqenxRO4JjrpgCUmrHtyrSWec/7fJxU2cJuuv4ZrlKsotFYN0L/1IZwnr
-         bojg==
+        bh=8yUJNSwQ2Uj9ZKSgC1yj+v5IOhv+rRY8cowjjsVM+OY=;
+        b=VKdj22CfRjIIm2vRl67L0YUjaTc8g5WgLLW+UbfFIt0Z08Ffti+x7dJx/kn7GyrFiA
+         pXq2JFnMCgCHnx1s+bFyjPb3soWQe/i3BKliBpoXvxHc6carlvCWAVo5gpAomQl8Z2gW
+         RctECi4P2x+rajVLSH03ZROldh+eWoThmJwtosOgWmvS4XOEFw8qT4bZBlSRBLrMdISb
+         lYcdkDIAWIjGnl2vKQDhhSZJ3hbuB9e2a2MELvls80LrOe90kgEgYlY2WIu2LbjOxRNl
+         zZ9wB+T7QchJyopYreB8NJZI6OyG0AnDXmwQXg6zSnyLINBjTvJCHRyyXkwuwZovuqzR
+         XLUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=u3cK2vXy9HIxA+opK4poOm82ojwXKi4+Q2dhxcRvfnI=;
-        b=aku2zQf4dVrr9Yb7bFU2ax/GTbwLhjbmcgaW4Dqz9Sg/Km2v5XNT8+2EUmwxcBQDzu
-         EWgC+CC0AVeh9iYrpqUvnqeQmAA/WgHfGUDQOeQCpSuejpZgx+7DfUtBBysUdDShZz3W
-         ys33AOrVhuydjoZoGJkOU7F2NiC4n3SEf5zbXc6BuXWk38lfCEwosl8PcAcVRthuyoZb
-         9elCnpIrJGtq3Qm0r5rndKC2Mjxl/v+8u4vmuEewZSQ6cJ/9KHVoHi9zmJ/6E6sbefpS
-         XZA7zLbPfF+69usIeQP+s4H1r/TLEPyhBe2gmZqAgBQ7ajbcJUd7R7yvxAOHXa38X+IB
-         j1yQ==
-X-Gm-Message-State: ACgBeo3XnPZdgB+tH+66C4lrnKZHVRBGst3wWzSIci26gHXL5omEw/m5
-        H2OSM/JfjAONfnb8Lb6HL4VD
-X-Google-Smtp-Source: AA6agR7rpzERjGbx0mVcqP0PTBZGvNKhF5aQdMicJ3zL4dqvNNgNkF127mEK6Yr9CWwHU2WnrIzAWA==
-X-Received: by 2002:ac8:5c8b:0:b0:344:7135:1392 with SMTP id r11-20020ac85c8b000000b0034471351392mr3633301qta.352.1662561941373;
-        Wed, 07 Sep 2022 07:45:41 -0700 (PDT)
+        bh=8yUJNSwQ2Uj9ZKSgC1yj+v5IOhv+rRY8cowjjsVM+OY=;
+        b=2LFlI7CBBQOzbbug38Mj4Uv9hVMoq5vIbEZAmh5JK9juQZd0nKPacvAmA9E1tVgLEV
+         Ua56jak6AIw9dMoeJ46J129nK3FxFaM01GbfweBNps0I4x2c1et83TBBb3Av+aW0j7Y/
+         ZPv2pTNWR6t/XdL6iELKxYa9wbH6Ye1oNB7u/wEOOzCSM8uLeOp6YNcOSoqiDHjZgOF3
+         cd4Y/MxKRsPplToArL9t0Qhf2BIViT5f4zsruFuXPMl/dqBuF+qhpeZuLZMmq4yFvesW
+         qEaeVHC7scqrM0oZU8D//SBPufGjG17gLoetDQT4CrHtpB5qh75+YLe+aYJV7tLq3maQ
+         zdIA==
+X-Gm-Message-State: ACgBeo1q+Aoav89BQUc850byzFyzwLAlCiRe2gVh+vMZRchhb5xgb6zM
+        g75XA8pXKY3Kbb+WgghunKoM
+X-Google-Smtp-Source: AA6agR71q7SPtJIkuPFDWH6BYAX4qMXc2sbOcMXxQNKgo0DdgbtBK22PJfJGYr11ejEPBX8Wyf5gFw==
+X-Received: by 2002:a05:622a:1653:b0:344:74d5:f6d8 with SMTP id y19-20020a05622a165300b0034474d5f6d8mr3429837qtj.689.1662562017297;
+        Wed, 07 Sep 2022 07:46:57 -0700 (PDT)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id c12-20020ac8518c000000b00342f4fc290esm12080728qtn.71.2022.09.07.07.45.40
+        by smtp.gmail.com with ESMTPSA id bj8-20020a05620a190800b006af10bd3635sm14174992qkb.57.2022.09.07.07.46.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Sep 2022 07:45:41 -0700 (PDT)
-Message-ID: <3f901613-72c6-b644-079a-f74e3024a8fe@github.com>
-Date:   Wed, 7 Sep 2022 10:45:39 -0400
+        Wed, 07 Sep 2022 07:46:56 -0700 (PDT)
+Message-ID: <60a47a3f-e4d5-2339-d79e-48e6a7d4a9f1@github.com>
+Date:   Wed, 7 Sep 2022 10:46:55 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH 2/3] upload-pack: skip parse-object re-hashing of "want"
- objects
+Subject: Re: [PATCH 3/3] parse_object(): check commit-graph when skip_hash set
 Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
 To:     Jeff King <peff@peff.net>,
         =?UTF-8?B?56iL5rSL?= <chengyang@xiaomi.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
@@ -67,82 +65,47 @@ Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         =?UTF-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
         =?UTF-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
 References: <YxfQi4qg8uJHs7Gp@coredump.intra.peff.net>
- <YxfSRkEiiP4TyZTM@coredump.intra.peff.net>
- <6018c526-4641-8374-8802-cfda5be330c3@github.com>
-In-Reply-To: <6018c526-4641-8374-8802-cfda5be330c3@github.com>
+ <YxfScUATMQw9cB6m@coredump.intra.peff.net>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <YxfScUATMQw9cB6m@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/7/2022 10:36 AM, Derrick Stolee wrote:
-> On 9/6/2022 7:05 PM, Jeff King wrote:
-
->> There is one thing to note, though: the
->> change in get_reference() affects not just pack-objects, but rev-list,
->> git-log, etc. We could use a flag to limit to index-pack here, but we
->> may already skip hash checks in this instance. For commits, we'd skip
->> anything we load via the commit-graph. And while before this commit we
->> would check a blob fed directly to rev-list on the command-line, we'd
->> skip checking that same blob if we found it by traversing a tree.
+On 9/6/2022 7:06 PM, Jeff King wrote:
+> If the caller told us that they don't care about us checking the object
+> hash, then we're free to implement any optimizations that get us the
+> parsed value more quickly. An obvious one is to check the commit graph
+> before loading an object from disk. And in fact, both of the callers who
+> pass in this flag are already doing so before they call parse_object()!
 > 
-> It's worth also mentioning that since you isolated the change to
-> get_reference(), it is only skipping the parse for the requested tips
-> of the revision walk. As we follow commits and trees to other objects
-> we do not use parse_object() but instead use the appropriate method
-> (parse_commit(), parse_tree(), and do not even parse blobs).
+> So we can simplify those callers, as well as any possible future ones,
+> by moving the logic into parse_object().
 
-After writing this, it was bothering me that 'rev-list --verify' should
-be checking for corruption throughout the history, not just at the tips.
+Nice!
+ 
+> There are two subtle things to note in the diff, but neither has any
+> impact in practice:
+> 
+>   - it seems least-surprising here to do the graph lookup on the
+>     git-replace'd oid, rather than the original. This is in theory a
+>     change of behavior from the earlier code, as neither caller did a
+>     replace lookup itself. But in practice it doesn't matter, as we
+>     disable the commit graph entirely if there are any replace refs.
 
-This is done via the condition in builtin/rev-list.c:finish_object():
+I can confirm that this is the case.
 
-static int finish_object(struct object *obj, const char *name, void *cb_data)
-{
-	struct rev_list_info *info = cb_data;
-	if (oid_object_info_extended(the_repository, &obj->oid, NULL, 0) < 0) {
-		finish_object__ma(obj);
-		return 1;
-	}
-	if (info->revs->verify_objects && !obj->parsed && obj->type != OBJ_COMMIT)
-		parse_object(the_repository, &obj->oid);
-	return 0;
-}
+>   - the caller in get_reference() passes the skip_hash flag only if
+>     revs->verify_objects isn't set, whereas it would look in the commit
+>     graph unconditionally. In practice this should not matter as we
+>     should disable the commit graph entirely when using verify_objects
+>     (and that was done recently in another patch).
+> 
+> So this should be a pure cleanup with no behavior change.
 
-So this call is the one that is used most-often by the rev-list command,
-but isn't necessary to update for the purpose of our desired speedup. This
-is another place where we would want to use read_object_file(). (It may even
-be the _only_ place, since finish_object() should be called even for the
-tip objects.)
+Excellent, thanks!
 
-In case you think it is valuable to ensure we test both cases ("tip" and
-"not tip") I modified your test to have a third commit and test two rev-list
-calls:
-
-# An actual bit corruption is more likely than swapped commits, but
-# this provides an easy way to have commits which don't match their purported
-# hashes, but which aren't so broken we can't read them at all.
-test_expect_success 'rev-list --verify-objects notices swapped commits' '
-	git init swapped-commits &&
-	(
-		cd swapped-commits &&
-		test_commit one &&
-		test_commit two &&
-		test_commit three &&
-		one_oid=$(git rev-parse HEAD) &&
-		two_oid=$(git rev-parse HEAD^) &&
-		one=.git/objects/$(test_oid_to_path $one_oid) &&
-		two=.git/objects/$(test_oid_to_path $two_oid) &&
-		mv $one tmp &&
-		mv $two $one &&
-		mv tmp $two &&
-		test_must_fail git rev-list --verify-objects HEAD &&
-		test_must_fail git rev-list --verify-objects HEAD^
-	)
-'
-
-But this is likely overkill.
-
-Thanks,
 -Stolee
+
