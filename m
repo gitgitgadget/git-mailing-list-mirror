@@ -2,69 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D328C6FA82
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 19:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD11EC54EE9
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 19:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229853AbiIGThL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 15:37:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58144 "EHLO
+        id S229811AbiIGTqA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 15:46:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbiIGThK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 15:37:10 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 997CDBCC02
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 12:37:09 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id 145so15653660pfw.4
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 12:37:09 -0700 (PDT)
+        with ESMTP id S229637AbiIGTp7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 15:45:59 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02BA39F75B
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 12:45:58 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id p1-20020a17090a2d8100b0020040a3f75eso10968071pjd.4
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 12:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date;
-        bh=4HKKO1TmoFlM1HQIZmrD9b49hW2WJXwaGVkC4VBN884=;
-        b=PtdqcVVHLGem6RzZ+LyNI9SP96zGTrLO2wDB2KTkOImJrdQyO50pqOrKMzqDmlU4R7
-         T2fgjeQFbhpvGxKAv1xhi6c9iM++yBJDIJpMjA0AFy2cGtq3vnMjJ2G3HlBg0/vWPgIP
-         ZXPB9HB79DDlA4TCndlJtSZZ8tAvb/K8tcPxwLc3m5Eo9KsUi5IOi3raOdh42wlkFtNo
-         Kc90DLhnl4y1rSkVEmLAqg9K9BikyzRLW3xbzzcWfzMV9KGb2NEcscn8jbDlQh7V5V9y
-         kIoXe0x7ZKAsKBU8GirPHIwbJOlUFr7BZ67VSKCrpQu1PiPSGCPxk+6CBJjfH5f+QWTx
-         82OA==
+        bh=mAYDyxkd2dXYQ8GETTcWWngGkSag7yll75SCE+bHG98=;
+        b=kgZYYh3OshDneTkM7YclTiHr6lF0fSFY3qMpsWzGmZmoPoit29gtHc4KYwcXfZwOwQ
+         ujqaXrDkL5Cwe1FTIpcm6r2TeiQ/zROqdG+cTd1td8RFgoNuCsvKI8Dz7j6hXtOA+Rsr
+         ydMcdr3mlDVhcO047hPVTZVwH0bhT9IBRxenosjWtLGSxxrynbAA68o7zc+QYa+02Y7S
+         Pd21HdAWu4nJ93hPadCHl91rvXEBYYt6nVvQfqg6+9MgCx6xJTyT9F4KrZSp6zHiHg3Y
+         UAarwYmQ8bfcdmAwNBGgcwOHApSWVxu+blDy/dBJjQ6wHaH+p8A6nTUUmrvxaxpHB27u
+         EvEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=4HKKO1TmoFlM1HQIZmrD9b49hW2WJXwaGVkC4VBN884=;
-        b=tuZDjZyqUt+3qmiAC5dIu+pwpnB3I56ia2z4Qa3cek/KNZhvHL0WXQswOBpCaZr3nD
-         47eDsd7HafTCdj4/m+YUbO/96HI6rUhGgmYpSAtpmMTmBD3f81XgtXFFMJ9uIuAJTJWt
-         z8wnbEYmzcVkKxKffC64KS7xYHp604qzMnQMssj1SDYuZyZU5lzRy9nvCJYXbrzUZSTY
-         31gVvM/yZ/bR4QKW/ogjbhCiu8KHh/tO9mBRFjiJadeoaWKC7D0MExj8iTUTk5L1/j72
-         1FCxGCQyJtgQ66rtMEoSSCztX6D/HzYsveigtPK7ki1ZTG/shbR4YjWPd2yWY9VeroXh
-         ctbA==
-X-Gm-Message-State: ACgBeo1TNOPIxN6bJmrI+ncH+56WIWtWZgLl9VX7MkQgTtzSPtcW8VCc
-        zWL7pQpVZ8dT9JoYvH/Hl/A=
-X-Google-Smtp-Source: AA6agR7ntOiyhlVwnIBAcjPtP1TkEmcjevregY+CtOHBHfIEEIUgQ4onu4xhTtlut7VtmAL3gQYdVw==
-X-Received: by 2002:a63:84c1:0:b0:434:b9db:b9d with SMTP id k184-20020a6384c1000000b00434b9db0b9dmr4748057pgd.397.1662579429051;
-        Wed, 07 Sep 2022 12:37:09 -0700 (PDT)
+        bh=mAYDyxkd2dXYQ8GETTcWWngGkSag7yll75SCE+bHG98=;
+        b=kcV7WoG7enMcySK/VjzVD3Tpd9HhDawr1CJE+KUNfhJPaOotIOWPwtAUBpjJQvvx82
+         335ItSSmfV9gEAYE1sxHdXBSAB7mMfBbAd1daVHDC3y2z8bc7pjejkmqHhHMMkOW36ZO
+         wYzY20tHFo0aK7OuZgnsPBJtUg/PKbTFfpMYIx6xRRbujPPBO+FNRocXIDYLyGsJHY/e
+         oh3XE/sIAn928rotYjRGLGygMksdZmrDr7i1QV+gP3R40QHllUHwrKdpeYaWd2BD6nH3
+         FpBOSGjH6CPw/ozpm2TtqZFpmt2Usaj7PaCmR1RQgFyX85SCGIL4L02yLSwe9HaZcbOd
+         g5qQ==
+X-Gm-Message-State: ACgBeo0zuK8fBBV0A9WlhP4Dsh0j0rquRCbgZXTwEltW3/gvpBhGBhSZ
+        mGBzQ8x78y/mpr08S5gv3/Q=
+X-Google-Smtp-Source: AA6agR5Hhk76RVammkxTKZRRqqli4pS3PCiWnfPI0uXVq1s+/RzG/vKfykrwitc+eEZNsFo+8tfwBQ==
+X-Received: by 2002:a17:903:248:b0:172:7520:db07 with SMTP id j8-20020a170903024800b001727520db07mr5102852plh.76.1662579957412;
+        Wed, 07 Sep 2022 12:45:57 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id 15-20020a63184f000000b00434abd19eeasm3989421pgy.78.2022.09.07.12.37.08
+        by smtp.gmail.com with ESMTPSA id n13-20020a170903110d00b0015e8d4eb26esm12822642plh.184.2022.09.07.12.45.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 12:37:08 -0700 (PDT)
+        Wed, 07 Sep 2022 12:45:56 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 3/2] diff-no-index: simplify argv index calculation
-References: <xmqqilm579hc.fsf@gitster.g> <xmqqilm51gn6.fsf@gitster.g>
-        <181c029b-8b36-4b04-30f9-97a3f252bfbc@web.de>
-        <xmqq8rmx1saz.fsf@gitster.g>
-        <9ea33608-3a6c-c0ef-9bb3-4bb535009aeb@web.de>
-Date:   Wed, 07 Sep 2022 12:37:08 -0700
-In-Reply-To: <9ea33608-3a6c-c0ef-9bb3-4bb535009aeb@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Wed, 7 Sep 2022 13:45:42 +0200")
-Message-ID: <xmqqr10nt1qz.fsf@gitster.g>
+Subject: Re: [PATCH v2 2/2] tests: replace mingw_test_cmp with a helper in C
+References: <pull.1309.git.1659106382128.gitgitgadget@gmail.com>
+        <pull.1309.v2.git.1662469859.gitgitgadget@gmail.com>
+        <1f5366f137967cbec30041b40eedd86ce5f6e953.1662469859.git.gitgitgadget@gmail.com>
+        <220907.86v8pzl6jz.gmgdl@evledraar.gmail.com>
+        <220907.86r10nl63s.gmgdl@evledraar.gmail.com>
+Date:   Wed, 07 Sep 2022 12:45:56 -0700
+In-Reply-To: <220907.86r10nl63s.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 07 Sep 2022 14:24:26 +0200")
+Message-ID: <xmqqillzt1cb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -73,45 +74,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> Since 16bb3d714d (diff --no-index: use parse_options() instead of
-> diff_opt_parse(), 2019-03-24) argc must be 2 if we reach the loop, i.e.
-> argc - 2 == 0.  Remove that inconsequential term.
->
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
-> Bonus patch "while at it", would have saved me from going "huh?".
-> Generated using -U8 for easier review.
+> But I think that re-raises the point René had in:
+> https://lore.kernel.org/git/b21d2b60-428f-58ec-28b6-3c617b9f2e45@web.de/
 
-All three patches made sense to me.  Thanks.
+As the primary point of no-index mode was to expose fancy options
+"git diff" has to comparisons of files outside version control,
+without having to go through the trouble of upstreaming changes to
+GNU diff, I do think "--ignore-cr-at-eol" should work fine with it,
+and René's idea sounds like the best implementation for the
+test-text-cmp helper command.
 
->
->  diff-no-index.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/diff-no-index.c b/diff-no-index.c
-> index a18f6c3c63..18edbdf4b5 100644
-> --- a/diff-no-index.c
-> +++ b/diff-no-index.c
-> @@ -262,17 +262,17 @@ int diff_no_index(struct rev_info *revs,
->  	if (argc != 2) {
->  		if (implicit_no_index)
->  			warning(_("Not a git repository. Use --no-index to "
->  				  "compare two paths outside a working tree"));
->  		usage_with_options(diff_no_index_usage, options);
->  	}
->  	FREE_AND_NULL(options);
->  	for (i = 0; i < 2; i++) {
-> -		const char *p = argv[argc - 2 + i];
-> +		const char *p = argv[i];
->  		if (!strcmp(p, "-"))
->  			/*
->  			 * stdin should be spelled as "-"; if you have
->  			 * path that is "-", spell it as "./-".
->  			 */
->  			p = file_from_standard_input;
->  		else if (prefix)
->  			p = to_free[i] = prefix_filename(prefix, p);
-> --
-> 2.37.2
+Thanks.
