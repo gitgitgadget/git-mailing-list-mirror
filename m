@@ -2,118 +2,219 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4C8AC38145
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 15:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73F64C54EE9
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 16:01:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229741AbiIGP5N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 11:57:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45672 "EHLO
+        id S230341AbiIGQBt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 12:01:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229629AbiIGP5G (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 11:57:06 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA1A897ECF
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 08:57:04 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id n17-20020a05600c501100b003a84bf9b68bso9797735wmr.3
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 08:57:04 -0700 (PDT)
+        with ESMTP id S230217AbiIGQAw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 12:00:52 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AAFB303DC
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 09:00:13 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id z14-20020a7bc7ce000000b003a5db0388a8so882202wmk.1
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 09:00:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=3Zh4Ps1Xn44Mo2EgWfojpHD6GwioPiuk32qKGLPi0+4=;
-        b=blg9Hd09mipuF3m8lHsIdmYHWgIWX8QyAYYgxGuENagOy/8/xSugkYz4SE8f+JBG6Y
-         aHjeVzFeSQr1Qy/XrWVkTqW9pai+V8xQ6GO4zHXGfJj0fIi2Q/DZVAHsQym81lG6OioP
-         Jj1rAC9CTOMKpA4xpzYnBdmCjgRf0Miytud1/BYRd9nQDic2cfsqyKn+XuzIwcb1HsBR
-         t22udMvB4e5YTDNIHuHb0iKv4e8iUMk8cO0aduYFYgaUKJlhiAg/YScnPUhSLc3vpL+c
-         dxoApt7gIl5tkKox9gM6JUJVvapCwxlcUJM6CNTGHXJ5i4uvrkKGDYGEyAKiUqm3eRsF
-         INqA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=v6JSphU54ZfAwvweQc/5y3dxamwewZzTAXtXIHX6w4w=;
+        b=B2WEocXsZGc7dR9b4Xe5rnxuYnnua8PmCnGUmKi6nLiD5XMeCBiguLm+yfH5sZXewk
+         cD/JiRj/EVuItirxROYIQ62Z2S7MsBO8AeeymEXDqXf9SuDa9uQoiWJN9DtC4xw1v/VY
+         uRA5NZVbhebBe4+IfifZeQp82r5eVup89NHDsWQAKz5wW8cif0Ha+wslEO8zqcYTpcHg
+         rg9bgwNb2yKuBaGx4KMMBvIXt50riZQX52GaVEzKx+JYml07PK7FLnUWJdPc8PjSlqwY
+         7xQ1/jBjrTJIB3hznsBEhPkrmTCfDXiB2U42Mie+nT/rdC4ntjvsAYAiABJhQJ5SgCAR
+         ryOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=3Zh4Ps1Xn44Mo2EgWfojpHD6GwioPiuk32qKGLPi0+4=;
-        b=tJFHPJI7lbkVCJwUWm3PfmwTd+Yf2Xzo3MlTL8f9ZwOo9XuPqdeIKcKnAVgD68EHvQ
-         4n4WJND0Z2rq8JsZrNl/CQlpXNLWJvk6V4Zxbj/b2rBMTbbU2xoi2AYktKph8ldrPvVJ
-         R64VCzdq9yW/MctdDd+Xvm6rEzYj4KljcaebLJ0yF5SXL0saGb4Ho5IkrR11K+mE/55J
-         swOpogD+3Ik3hbS+PJuy8HewazrjYW6CG5+zsKsh5/v16L4j2tHRmHE5czvPCBdBoAFb
-         ViT+Kl5qlDrINg+uaqsp6W4Z8H5C8uMs1Z5Kdsiza7OwhMgQ5GysVYN4V1LLxfLMVOuY
-         QJng==
-X-Gm-Message-State: ACgBeo3lLcc/k3ndT6MW5+byMOr+IO+MdX8fzNa0BBD65WZlOFytpD8K
-        n+fsroD4Vct0HrCxsLg06y996rHgNTFbNmcmI1B90QPdMOg=
-X-Google-Smtp-Source: AA6agR5+zG/KEYnTiJFJ9jbadg9hdc6aNuCuPjSfYW/2DQ/s2f3PYFE5t2gvm+W0uT60FgSuEh1naYGAdqzDQWmREDo=
-X-Received: by 2002:a7b:ca42:0:b0:3a6:9d:a444 with SMTP id m2-20020a7bca42000000b003a6009da444mr17502509wml.51.1662566223426;
- Wed, 07 Sep 2022 08:57:03 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=v6JSphU54ZfAwvweQc/5y3dxamwewZzTAXtXIHX6w4w=;
+        b=qIQECKAzqYvOftRP1+xM6tipSo0Ml1tJuZBI9cA7H//HsTqqsuOcASj7uNM2GRVRDT
+         6J/lB3kbqfhRXpWc8mwR6+PGwEZY9cRtwPO3nR+yYa3+kzsSTRkAY77q82jAQGs0BJ7t
+         ePwNFSHqVG4bHObt33bhXFBJvQJkdaB92pMWaTaBc5ln1MUXMcamyHDJI2ETBOsKChO6
+         1vVX+PLpEombsLzCLpfLqOpgB919bd+vHcAm6uDSyhr7GPDytJo75fPmTGCsBm+OgkgF
+         PjMYKK34I+g+Fe2kP5kfByLch4r7ihvYrOk+iZVfPrHYRu0ZjPc6yVKwG1aPp0AmknzK
+         DFSQ==
+X-Gm-Message-State: ACgBeo2fkl6Ao7buXm95uukJBckWLiLqSFu+0SOzZZ862zgjEU7ZmSdp
+        zg+IM/yzcnFZFnBe2o7PIte0H/24rbP+sZ+04GXFuNuWFFY=
+X-Google-Smtp-Source: AA6agR63w7+Ox2NQdqm1AQaIQvgvUfMNSoEoTJvHnBA4z98LKD2nX6kcnkEy/FahckZTXCHtL3oVS0goY4oUaFwbzx8=
+X-Received: by 2002:a1c:241:0:b0:3a6:655c:391b with SMTP id
+ 62-20020a1c0241000000b003a6655c391bmr17028199wmc.67.1662566411475; Wed, 07
+ Sep 2022 09:00:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <CA+4x=b_07g6STT0nvma_gRhv=zdj+7TQx5SxKLUtuqONLwv=TQ@mail.gmail.com>
- <YxKo2l5nBoOa9Jfa@coredump.intra.peff.net> <CA+4x=b-GYMnZygHXOfNb3CdSRoxUeT80n=gSCLyfCA9WsB0wEw@mail.gmail.com>
- <Yxf9yETBi3k6Wasl@danh.dev>
-In-Reply-To: <Yxf9yETBi3k6Wasl@danh.dev>
+ <YxJkn7K3zRm1u3Vn@tapette.crustytoothpaste.net> <CA+4x=b_KP4rMH-EDmVCD_4LHPiLx32J2OJC6Mm5xpQ-QUcSKuA@mail.gmail.com>
+ <s46p34qn-rq84-20q6-nr36-594sos6q5qq9@tzk.qr>
+In-Reply-To: <s46p34qn-rq84-20q6-nr36-594sos6q5qq9@tzk.qr>
 From:   Lana Deere <lana.deere@gmail.com>
-Date:   Wed, 7 Sep 2022 11:56:27 -0400
-Message-ID: <CA+4x=b9M+HRWdDx-Mr4q0NiRQESwJ5uEkOBL_nVPPPHhXs7i_g@mail.gmail.com>
+Date:   Wed, 7 Sep 2022 11:59:35 -0400
+Message-ID: <CA+4x=b8q0hjdT2ZtaPfLqvGjS72veWhiuWwZK6b1rsVEHoAOwA@mail.gmail.com>
 Subject: Re: 2.37.2 can't "git pull" but 2.18.0 can
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry, I was confused by the "0 left".  With one more besect it says
+As you guessed, the only line is "not-for-merge".
 
-9f489ac6bbb755fa4c83289e44cad12f3b765d69 is the first bad commit
+$ cat .git/FETCH_HEAD
+4a537c911d9b90f002b682badf9a9121f62622d7        not-for-merge   branch
+'master' of http://githost:7990/scm/dp/sw
 
-That appears to be
- [9f489ac6bbb755fa4c83289e44cad12f3b765d69] Merge branch 'dl/zero-oid-in-ho=
-oks'
+What does that mean?
 
 .. Lana (lana.deere@gmail.com)
 
-On Tue, Sep 6, 2022 at 10:11 PM =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh
-<congdanhqx@gmail.com> wrote:
+
+On Wed, Sep 7, 2022 at 8:59 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> On 2022-09-06 15:37:45-0400, Lana Deere <lana.deere@gmail.com> wrote:
-> > This is the final output from git bisect:
+> Hi Lana,
+>
+> as per usual, replies inline.
+>
+> On Tue, 6 Sep 2022, Lana Deere wrote:
+>
+> > The 'git ls-remote origin' command on both produces about 3600 lines
+> > of output which appears to consist of all the branches in our repo.
+> > The two outputs are identical according to diff.  Both include a
+> > single mention of the switch-to-qt5 branch,
 > >
-> > $ git bisect good
-> > Bisecting: 0 revisions left to test after this (roughly 0 steps)
-> > [d8d3d632f4165955da49032d50279c20cfbde2e5] hooks--update.sample: use
-> > hash-agnostic zero OID
+> > $ diff /tmp/ls-remote*
+> > [no output here]
+> > $ grep switch-to-qt5 /tmp/ls-remote.*
+> > /tmp/ls-remote.2.18:6a9363081d05c313ba6a6ac59183193f1340bb1f
+> > refs/heads/feature/switch-to-qt5
+> > /tmp/ls-remote.2.37:6a9363081d05c313ba6a6ac59183193f1340bb1f
+> > refs/heads/feature/switch-to-qt5
 > >
-> > Does that offer any hint about what is going on?
->
-> It is still bisecting, can you continue to bisect until it says
-> something like:
->
->         first bad commit is ...
->
->
+> > The 'git config -l' from both versions is almost the same - two lines
+> > have moved around.
+> > $ diff /tmp/config*
+> > 1,2d0
+> > < filter.lfs.required=true
+> > < filter.lfs.clean=git-lfs clean -- %f
+> > 4a3,4
+> > > filter.lfs.required=true
+> > > filter.lfs.clean=git-lfs clean -- %f
 > >
-> > Incidentally, some but not all of the pulls produced additional
-> > output.  Maybe it's a clue?
-> >
-> > $ ~/tmp/git/install/bin/git pull
-> > warning: Pulling without specifying how to reconcile divergent branches=
- is
-> > discouraged. You can squelch this message by running one of the followi=
-ng
-> > commands sometime before your next pull:
-> >
-> >   git config pull.rebase false  # merge (the default strategy)
-> >   git config pull.rebase true   # rebase
-> >   git config pull.ff only       # fast-forward only
-> >
-> > You can replace "git config" with "git config --global" to set a defaul=
-t
-> > preference for all repositories. You can also pass --rebase, --no-rebas=
-e,
-> > or --ff-only on the command line to override the configured default per
-> > invocation.
+> > $ cat /tmp/config.2.37
+> > filter.lfs.smudge=git-lfs smudge -- %f
+> > filter.lfs.process=git-lfs filter-process
+> > filter.lfs.required=true
+> > filter.lfs.clean=git-lfs clean -- %f
+> > user.name=Lana Deere
+> > user.email=lana.deere@gmail.com
+> > filter.lfs.clean=git-lfs clean -- %f
+> > filter.lfs.smudge=git-lfs smudge -- %f
+> > filter.lfs.process=git-lfs filter-process
+> > filter.lfs.required=true
+> > color.branch=false
+> > color.diff=false
+> > color.grep=false
+> > color.interactive=false
+> > color.pager=false
+> > color.showbranch=false
+> > color.status=false
+> > color.ui=false
+> > core.repositoryformatversion=0
+> > core.filemode=true
+> > core.bare=false
+> > core.logallrefupdates=true
+> > remote.origin.url=http://lana@githost:7990/scm/dp/sw.git
+> > remote.origin.fetch=+refs/heads/master:refs/remotes/origin/master
 >
-> This is a hint in some version of git for 2 modes of pull, you can
-> ignore it.
+> At first I thought that this would be the root cause:
+> `feature/switch-to-qt5` is not included in the refs to fetch.
 >
-> --
-> Danh
+> But then I added a test case for that specific scenario:
+>
+> -- snip --
+> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+> index 081808009b2..6e6ddeb7e63 100755
+> --- a/t/t5520-pull.sh
+> +++ b/t/t5520-pull.sh
+> @@ -218,6 +218,17 @@ test_expect_success 'fail if upstream branch does not exist' '
+>         test_cmp expect file
+>  '
+>
+> +test_expect_success 'fetch upstream branch even if refspec excludes it' '
+> +       git branch tirili &&
+> +       git branch tirili2 &&
+> +       git init -b tirili downstream &&
+> +       git -C downstream remote add -t tirili origin "file://$(pwd)/.git" &&
+> +       git -C downstream config branch.tirili.remote origin &&
+> +       git -C downstream config branch.tirili.merge refs/heads/tirili2 &&
+> +       git -C downstream pull 2>err &&
+> +       ! grep "configuration specifies to merge" err
+> +'
+> +
+>  test_expect_success 'fail if the index has unresolved entries' '
+>         git checkout -b third second^ &&
+>         test_when_finished "git checkout -f copy && git branch -D third" &&
+>
+> -- snap --
+>
+> And that test case passes!
+>
+> The reason is that we specifically add the ref that needs to be merged to
+> the list of refs to be fetched:
+> https://github.com/git/git/blob/v2.37.2/builtin/fetch.c#L605-L614
+>
+> Now, clearly it is not quite working as intended in your scenario. The
+> message you pasted is produced by the code in
+> https://github.com/git/git/blob/v2.37.2/builtin/pull.c#L421-L494, which is
+> only entered if there are no entries in `.git/FETCH_HEAD` except
+> `not-for-merge` ones.
+>
+> Lana, would you mind pasting the contents of `.git/FETCH_HEAD` just after
+> a failed `git pull`?
+>
+> Ciao,
+> Johannes
+>
+> > branch.master.remote=origin
+> > branch.master.merge=refs/heads/master
+> > branch.feature/switch-to-qt5.remote=origin
+> > branch.feature/switch-to-qt5.merge=refs/heads/feature/switch-to-qt5
+> >
+> >
+> > .. Lana (lana.deere@gmail.com)
+> >
+> > On Fri, Sep 2, 2022 at 4:16 PM brian m. carlson
+> > <sandals@crustytoothpaste.net> wrote:
+> > >
+> > > On 2022-09-02 at 19:27:55, Lana Deere wrote:
+> > > > I'm testing an upgrade to git 2.37.2 from the current version we're
+> > > > using of 2.18.0.  When I try to pull in my development tree, 2.37.2
+> > > > gives me an error but 2.18.0 things all is fine:
+> > > >
+> > > > $ /tools/linux-x86_64/git/2.37.2/bin/git pull
+> > > > Your configuration specifies to merge with the ref
+> > > > 'refs/heads/feature/switch-to-qt5'
+> > > > from the remote, but no such ref was fetched.
+> > > >
+> > > > $ /tools/linux-x86_64/git/2.18.0/bin/git pull
+> > > > From http://githost:7990/scm/dp/sw
+> > > >  * branch                  feature/switch-to-qt5 -> FETCH_HEAD
+> > > > Already up to date.
+> > > >
+> > > > Anyone have any ideas about this?  All I could find on google was a
+> > > > suggestion that the "no such ref" message indicates the remote branch
+> > > > was deleted, but that's not the case here.
+> > >
+> > > Can you provide the output of `git ls-remote origin` (assuming that's
+> > > the remote you're using) and `git config -l` (the latter with both
+> > > versions)?  I don't know of any reason why Git 2.37 should be broken in
+> > > this regard, but I suspect that there's a difference in configuration
+> > > between the two leading to this.
+> > > --
+> > > brian m. carlson (he/him or they/them)
+> > > Toronto, Ontario, CA
+> >
