@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D54D3C54EE9
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 18:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BCB2C54EE9
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 18:12:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229727AbiIGSMF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 14:12:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46600 "EHLO
+        id S229980AbiIGSMK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 14:12:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229616AbiIGSMD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 14:12:03 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A4EAC04CE
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 11:12:03 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id b144so10643387pfb.7
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 11:12:03 -0700 (PDT)
+        with ESMTP id S229514AbiIGSMH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 14:12:07 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B732C00D0
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 11:12:06 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id f24so15419093plr.1
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 11:12:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:date:references:subject:cc:to
          :from:sender:from:to:cc:subject:date;
-        bh=pnzSm9wGcyEa/37haldYAS0t8mUfFyZ/scg5v/O38mM=;
-        b=fAoEFH43ypuSu/3v2dYzqYp4nja530pOGumtb7GaVyqD2cGPp73d8sHyCdY5m3E5Kd
-         EVo3kx1b4u1z8Hunq7kNnCO0qYeqSdKipm2MTgEeHn7O6mUrew6YcMK1/T75Jthc6/qv
-         o9m/DfqW1yAamobpQh8kfmxGgAIcoZnUj49Pt/X+XS9/aWREdikvbU2z5Zj3Op4F7K+C
-         RuPq16d2UPiRntLqX+jBiSwKHNaf41v984jJemHCuAch3thtDIaWSH+H3qt8dT4oheel
-         vMlqHBCYqNzgOidq3aKcwVslfoSeX1VD+HwHvupOpLviP3CfBtG38NF+F4wBkHj6LrkP
-         /lDQ==
+        bh=AGxbOD3Y3VDBaWdkjtdpwcqZpjhpJtuuZ1OWqCOWCK8=;
+        b=JyiLiKmgjKEOJDj30x5bmr8c3JfBSrgciDGZToUA4OD4fQWOvOKWBKyegooxQGw2oA
+         m/vJ7r3dfZpOaBkUA7i3/cVz8TJuP94Vsr9CZbdtV9+e6/fw9YNtubTrsZaexLgpc4Ea
+         4zCMkLw2dL1t9C9nAhtBaKbnIn2xhNZWqxVL72Xgz0UAOKovC3mm5kXPMyky7YcYs14S
+         yRjL1aVNwp9q/9daNcMgz9eQP0Iftcthl0TZHbMsF8qn5qYtW4CCAAUAQampSYUG//CR
+         74+pQK2OvauIsv2PaqgafZNIA/BuwzRtYUcaC5wl8/oIUkESO42/iiKQ6QeqRxZHSbrr
+         PnVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:date:references:subject:cc:to
          :from:sender:x-gm-message-state:from:to:cc:subject:date;
-        bh=pnzSm9wGcyEa/37haldYAS0t8mUfFyZ/scg5v/O38mM=;
-        b=PaNBERAiEhdogqlVN7jJuPvKkdXQ9pkr9t4oEsyHI8Bf9h8C0X2o7U71J+Btf2aqsg
-         eiX0tWOhsqRNUWI4gvVMMBdZvCn0DuuPifhK9Fsf3N6Uy12Oe7zjKVxVxe4T1JQPZsNv
-         yyVrDqWOXJPWzXdK5UAO5aiZ95OktXZI+zjJ7INXdq1/JQZ+5349ykb/2282LJef75XT
-         kB2WVp568YdA9M/LxqFAfNQ9DK5FtNJX7I6EWFbKCbMTmdGvYYR5C+fc12Un/HGNj09r
-         UM5yiJPGZRu1mhjsYEZ2ROxjppvfXRhWzL/9u2XCmIzjRKkMBFx54IM918HQIzKUSAjR
-         wNvA==
-X-Gm-Message-State: ACgBeo1+lY9zKBKgm10KT9g2BnfRdOTkNjmmnntCzfmEMj3X9hZVhVOk
-        GXVEvsJZy/1cquSKRBDObW8=
-X-Google-Smtp-Source: AA6agR4qumuIOZWlihISLq40Qq//d6v3/E+XVRKWUUV47wGTY5bztDncEnszsV6F9b6mOCXvyub1LA==
-X-Received: by 2002:a05:6a00:a19:b0:535:49ee:da43 with SMTP id p25-20020a056a000a1900b0053549eeda43mr5110989pfh.53.1662574322412;
-        Wed, 07 Sep 2022 11:12:02 -0700 (PDT)
+        bh=AGxbOD3Y3VDBaWdkjtdpwcqZpjhpJtuuZ1OWqCOWCK8=;
+        b=g54mO8BDCyGlE/6fPOCCHr6s5jKtPMkeBNNH/Qs7AboGD4b1soyjd4p39p4fuSSdd2
+         qmMRuVML2rjGhrGIMGGe8ErP5gok2ZRUS/2IpE1vcEO1tvkVcvvGtOp/hMrSqLd4TtsI
+         /6P1CUDZkJPX/UohSh8TmYOlYrgr26T4vS1ldNzS75Ec/o3RydRDjgCv518tRDDiaW/N
+         i1eup17TC37H4n37qZLUQPekdiz6hfj/ZrJuQtgfqteF9DfHDZPUEQGOfxmfJFUF0yHD
+         kXk6uK41PTQX2yEV9GDXtCD+2Y6b3NrWXrcKaup+U0yAYknl0MK2tlgA3eJj6pyjlkc+
+         j4Sg==
+X-Gm-Message-State: ACgBeo2dmePg1Bmzw5f+QqWj+yOGmHEZsxL59VB79NbR7D3U+XbhQfPu
+        ZTqHbkN5CzPzzEGYYNQBbDY=
+X-Google-Smtp-Source: AA6agR5UPEvIGtcubymCzZL+z38mm/yqC6Kop8Em1vGxhNv1A7aNFu6IPsJxb67jUF/ZEQivOmC8wQ==
+X-Received: by 2002:a17:903:41c3:b0:176:b990:6c28 with SMTP id u3-20020a17090341c300b00176b9906c28mr5003101ple.94.1662574325421;
+        Wed, 07 Sep 2022 11:12:05 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id 184-20020a6215c1000000b0053e4baed9aesm3543625pfv.167.2022.09.07.11.12.01
+        by smtp.gmail.com with ESMTPSA id z6-20020a623306000000b005321340753fsm4467628pfz.103.2022.09.07.11.12.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 11:12:02 -0700 (PDT)
+        Wed, 07 Sep 2022 11:12:05 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
@@ -58,12 +58,12 @@ Cc:     git@vger.kernel.org,
         Elijah Newren <newren@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 1/7] t3416: tighten two tests
+Subject: Re: [PATCH v2 2/7] t3416: set $EDITOR in subshell
 References: <pull.1323.git.1660576283.gitgitgadget@gmail.com>
         <pull.1323.v2.git.1662561470.gitgitgadget@gmail.com>
-        <12fb0ac6d5d932f9a8685d803ed017c357182768.1662561470.git.gitgitgadget@gmail.com>
-Date:   Wed, 07 Sep 2022 11:12:01 -0700
-Message-ID: <xmqqbkrrvytq.fsf@gitster.g>
+        <d6f2f716c77cbd0a19b3b6032f69f6dd9b257e96.1662561470.git.gitgitgadget@gmail.com>
+Date:   Wed, 07 Sep 2022 11:12:04 -0700
+Message-ID: <xmqq5yhzvytn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -75,55 +75,17 @@ X-Mailing-List: git@vger.kernel.org
 
 > From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> Add a check for the correct error message to the tests that check we
-> require a single merge base so we can be sure the rebase failed for
-> the correct reason. Also rename the tests to reflect what they are
-> testing.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
+> As $EDITOR is exported, setting it in one test affects all subsequent
+> tests. Avoid this by always setting it in a subshell. Also remove a
+> couple of unnecessary call to set_fake_editor where the editor does
+> not change the todo list.
 
-It is very sensible to ensure that a test that is expected to fail
-does fail for the right reason, not by accident.  Looks good.
+True.
 
->  t/t3416-rebase-onto-threedots.sh | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/t/t3416-rebase-onto-threedots.sh b/t/t3416-rebase-onto-threedots.sh
-> index 3e04802cb00..dc67d2308f3 100755
-> --- a/t/t3416-rebase-onto-threedots.sh
-> +++ b/t/t3416-rebase-onto-threedots.sh
-> @@ -97,13 +97,14 @@ test_expect_success 'rebase -i --onto main...' '
->  	test_cmp expect actual
->  '
->  
-> -test_expect_success 'rebase -i --onto main...side' '
-> +test_expect_success 'rebase --onto main...side requires a single merge-base' '
->  	git reset --hard &&
->  	git checkout side &&
->  	git reset --hard K &&
->  
->  	set_fake_editor &&
-> -	test_must_fail git rebase -i --onto main...side J
-> +	test_must_fail git rebase -i --onto main...side J 2>err &&
-> +	grep "need exactly one merge base" err
->  '
->  
->  test_expect_success 'rebase --keep-base --onto incompatible' '
-> @@ -182,13 +183,14 @@ test_expect_success 'rebase -i --keep-base main topic from main' '
->  	test_cmp expect actual
->  '
->  
-> -test_expect_success 'rebase -i --keep-base main from side' '
-> +test_expect_success 'rebase --keep-base requires a single merge base' '
->  	git reset --hard &&
->  	git checkout side &&
->  	git reset --hard K &&
->  
->  	set_fake_editor &&
-> -	test_must_fail git rebase -i --keep-base main
-> +	test_must_fail git rebase -i --keep-base main 2>err &&
-> +	grep "need exactly one merge base with branch" err
->  '
->  
->  test_done
+The fact that we need to do this makes me wonder if we want a
+restore_editor (or a hardcoded "export EDITOR=:") that allows us not
+to go to a subshell, as going to a subshell has its downsides (e.g.
+we cannot use helpers that rely on being able to modify globals,
+like test_commit and test_when_finished), but for now this looks OK.
+
+Thanks.
