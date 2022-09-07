@@ -2,128 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD7D9C38145
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 14:05:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE0AEC38145
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 14:15:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229837AbiIGOFs convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 7 Sep 2022 10:05:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58416 "EHLO
+        id S229982AbiIGOPm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 10:15:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229657AbiIGOFq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 10:05:46 -0400
-Received: from bee.birch.relay.mailchannels.net (bee.birch.relay.mailchannels.net [23.83.209.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF7BA2E683
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 07:05:44 -0700 (PDT)
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id 382AD2A2524;
-        Wed,  7 Sep 2022 14:05:42 +0000 (UTC)
-Received: from cpanel-007-fra.hostingww.com (unknown [127.0.0.6])
-        (Authenticated sender: instrampxe0y3a)
-        by relay.mailchannels.net (Postfix) with ESMTPA id 121092A278C;
-        Wed,  7 Sep 2022 14:05:40 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1662559541; a=rsa-sha256;
-        cv=none;
-        b=CMR8iMudRk0eds6zq0WFMpKKsM9D4b7skKV4sMMb7MqH729aeuT/jc2TDUwUHmps2Iznrj
-        7TIz2ocHenYN1gkV0ETJP5+7KrKBjRGLilC4DTbsE9jXDsFKC7y6SP8ajmnvZWpV7BDkAl
-        Uqd+NqBpohGacJ5u084qfh9ajbECOt9Hn+rIJ0cHDsoRvVf3o5dMtN7ZnQsJcRm3AVFscn
-        9IQZgXIUH8jOrlykBzETv21PaVNqe5onkWuu+FDfqrP1CRwuq/NS4FPfvCK9FuvYXq7rpd
-        JzYzuLHIm1Of38bxWeoq+0us+emLIqT3iNtrZl3UUg3Opf3dAnZ5fTeOr/0hAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-        s=arc-2022; t=1662559541;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=nyvgNuF+QOl/Js+ewvdbiDox5P7rMh72aJV1DIJ1fyY=;
-        b=rPHm6NWqEQWHjMADq55ncFc9m2TigEHEcyMKEb9dEMp5I8g4sk7Na/uvGY5pKV9FAmiR0U
-        SJFwwJKFcvy+BsmIN5rY0ja4ikmXgeuDR0yvuNBUN17Pvu7mp99eahGiSpHHzb3Y+tcea4
-        Xd0QI4Wvsl0KFxDvjmeMjD9V59T7MTFmHfK5WypoSIumsEewQp7afq4cQk1yil4aFsI2z1
-        VMEAnRZnC6SX/tH5al39OTvG/K7d7mAzhAC9jpA7kNJukYzPER3NcGJTeNxcuCVaUJdsc1
-        MOHUMY1xcVSO4qzTDEPpBn/wftd0fqDVHK2zgg9SD22NpCDcOE9KXSXWw9AJzw==
-ARC-Authentication-Results: i=1;
-        rspamd-686945db84-gnv52;
-        auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MailChannels-Auth-Id: instrampxe0y3a
-X-Belong-Attack: 794c36d3413b817a_1662559541796_2314183292
-X-MC-Loop-Signature: 1662559541796:825400994
-X-MC-Ingress-Time: 1662559541795
-Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
- [3.69.87.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
-        by 100.124.238.66 (trex/6.7.1);
-        Wed, 07 Sep 2022 14:05:41 +0000
-Received: from p54b6d828.dip0.t-ipconnect.de ([84.182.216.40]:43222 helo=heisenberg.fritz.box)
-        by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.95)
-        (envelope-from <calestyo@scientia.org>)
-        id 1oVvgN-00030j-9U;
-        Wed, 07 Sep 2022 14:05:39 +0000
-Message-ID: <aeb235f7a914539ad50eff96479106f8c8ec8d48.camel@scientia.org>
-Subject: Re: status on security of embedded repos?
-From:   Christoph Anton Mitterer <calestyo@scientia.org>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Date:   Wed, 07 Sep 2022 16:05:33 +0200
-In-Reply-To: <4697o162-0pop-4715-150r-2317p0n69581@tzk.qr>
-References: <4e9ad5486e8a887f1e92cc4e401ca61be5f2bb9a.camel@scientia.org>
-          <6sq30r84-1s65-91n4-5qoq-23s9q433sno1@tzk.qr>
-         <c209dc21f6826bbb60d75450e6f7f9ff2258d18c.camel@scientia.org>
-         <4697o162-0pop-4715-150r-2317p0n69581@tzk.qr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-User-Agent: Evolution 3.45.3-2 
+        with ESMTP id S229837AbiIGOPk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 10:15:40 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60214624C
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 07:15:39 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id e195so11585635iof.1
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 07:15:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=oZvVD6q9hHb9PnW88/4Y8m6Ti3oVLllgbTyKBMj90sI=;
+        b=IjYCbIZInmgdmWHWO1gI+b9K27c4SxGVKGnBqoNQBfDCDoEFB5lVzCNdCJCXXcbVUz
+         +oXUIzlNxsW7F2OqCxhaLFikHiUqu3siDPTOsCJUQ5rveDQkdS/5+oEa0eA9qLYBuvwR
+         xN5afE81Qa1Ry9aecVoHnw0SBO87nhsCrOulSNoMMAySNs7vD8Y9J/IKb490j+cKHgBU
+         Af1jpy0S0+ncZi+JrEhZmwQ43WS6LUd5YxclW/SfBzAulVeko7gGHSsMhPlZX971X7I1
+         t7dhO4uqLurdT0SXp94pCuj5vr4NShirgv/gM9HbCBvev1+gTDrcQwZpmYB7wJ16wETd
+         lvog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=oZvVD6q9hHb9PnW88/4Y8m6Ti3oVLllgbTyKBMj90sI=;
+        b=7b77r43zvZTuYo0zYFDpjTtdQi9eKgN8bXaTmVAcrZZc4BKmqABAPFDVFff0mGsSYF
+         NBCgaxPL0X7v6mAQ3FiwY/zRZ8D+8P95cofXIS8kG7pVcDbb4UWYNySRPtb1Df1wmJVU
+         ceaBQCSHFImrtwHICygusR6M64oyFwoM03kEyYSleKD3jp+R1wpzcLoUFUS6pdnX0gxV
+         y07TdjwkLY60HC56FKZ+0Ej4N2PRGFQs12mdggRzcn5/OXulMi9QIxAr0YWkIsROo2CD
+         YMvRobo4vepnQSHwJCS9mW4yKhTC35N5l1skQSium5IJfx3D9/usAvwXZlJoTEsGbMRG
+         /9Ww==
+X-Gm-Message-State: ACgBeo3y+ckCt3B/RWpKRsC10S6MdEm/CjSmdeU/mOYvZkPGj/jsqSVL
+        UFOwODWLlmQSVzr5v06ahWQt
+X-Google-Smtp-Source: AA6agR7Xnqj0Kbv0EIwZtIPRzRswGbZf3MaYmaUhxUOD7Qimhs+lkhS1psLerJlXsZzHDobFRkUrJQ==
+X-Received: by 2002:a05:6602:2111:b0:688:4a2c:cc84 with SMTP id x17-20020a056602211100b006884a2ccc84mr1978091iox.137.1662560138800;
+        Wed, 07 Sep 2022 07:15:38 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id r15-20020a92d98f000000b002ead95306c1sm6453756iln.51.2022.09.07.07.15.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Sep 2022 07:15:38 -0700 (PDT)
+Message-ID: <f79b0ccd-3e36-f447-0dbb-6e40ad547c8d@github.com>
+Date:   Wed, 7 Sep 2022 10:15:37 -0400
 MIME-Version: 1.0
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AuthUser: calestyo@scientia.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH 1/3] parse_object(): allow skipping hash check
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?UTF-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
+        =?UTF-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>,
+        =?UTF-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>,
+        =?UTF-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
+        =?UTF-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
+References: <YxfQi4qg8uJHs7Gp@coredump.intra.peff.net>
+ <YxfRTubqh7aFvNJs@coredump.intra.peff.net>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <YxfRTubqh7aFvNJs@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Johannes.
+On 9/6/2022 7:01 PM, Jeff King wrote:
+> I'm sorry, I know the argument here is really hand-wavy. But I really
+> think this isn't making anything much less safe.
 
+I agree with you that this is the safest way to move forward here.
+ 
+> I was actually tempted to rip out the blob hash-check entirely by
+> default!  Anybody who really cares about checking the bits can do so
+> with read_object_file(). That's what fsck does, and we could pretty
+> easily convert "rev-list --verify-objects" to do so, too. So this is the
+> less extreme version of the patch. ;)
 
-On Tue, 2022-09-06 at 15:56 +0200, Johannes Schindelin wrote:
-> But libgit2 and JGit, two separate Git implementations that are in
-> wide
-> use, too, probably do not have support for this.
-> 
-> In other words, users of libgit2 & JGit will likely be unaffected by
-> setting `safe.bareRepository` and sill still need to take manual
-> precautions.
+A quick search shows many uses of parse_object() across the codebase.
+It would certainly be nice if they all suddenly got faster by avoiding
+this hashing, but I also suppose that most of the calls are using
+parse_object() only because they are unsure if they are parsing a
+commit or a tag and would never parse a large blob.
 
+I think this approach of making parse_object_with_flags() is the best
+way to incrementally approach things here. If we decide that we need
+the _with_flags() version specifically to avoid this hash check, then
+we could probably take the second approach: remove the hash check from
+parse_object() and swap the places that care to use read_object_file()
+instead. My guess is that in the long term there will be fewer swaps
+to read_object_file() than to parse_object_with_flags().
 
-> If you are using applications based on those projects, you might be
-> interested in porting support for `safe.bareRepository` to those
-> projects
-> and contribute the enhancement.
+However, this is a good first step to make progress without doing the
+time-consuming audit of every caller to parse_object().
 
-Well I'm not really in any way experienced with git's code ... so I'm
-rather just wearing a user hat.
-
-Wouldn't it make sense if someone really experienced within git
-development to kinda follow that up for other projects, too?
-Sure, it's other projects,... but still, the vulnerability seems rather
-critical and many people using git also use such things like libgit2
-(potentially even without knowing).
-
-I can however open a ticket over at libgit2, if that helps you.
-
-Also, even with default settings, git, AFAIU, would be still vulnerable
-for the majority of people (many of whom likely haven't even heard
-about the issue).
-
-
-> 
-> Yes, indeed, `.git` entries in Git's tree objects are forbidden.
-
-And I blindly assume that this is not only checked and forbidden when
-trying to commit, but also when cloning/fetching/etc.?!
-
-
-Thanks for your answers :-)
-Chris.
+Thanks,
+-Stolee
