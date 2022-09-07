@@ -2,129 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6E89ECAAD3
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 10:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 069CAC38145
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 11:20:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230405AbiIGKXY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 06:23:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55970 "EHLO
+        id S229540AbiIGLUF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 07:20:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230472AbiIGKXD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 06:23:03 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6C4543ED
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 03:21:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1662546059;
-        bh=Tz245xjHrOwXlhxvBPK2XB/R1UfIYi90UfkzipG1wYU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=SEKc+yyoHzjXkYLeuj9y51NaDvZ27hmLReD9T2AJ2Aghnb3vYJJoRrix5vo/4hvGN
-         py0vVLCpJHkeffErrtHAomrMS22u+SOl1flniqzWXqI0ScfCgZt5cevlcP6Hg8azUM
-         R7nNWi3K185GeMTVd2E92ebJMXCb9di5ryvSdwyo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MybGh-1pHVgc2xbB-00yzyH; Wed, 07
- Sep 2022 12:20:59 +0200
-Date:   Wed, 7 Sep 2022 12:20:58 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Lana Deere <lana.deere@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: 2.37.2 can't "git pull" but 2.18.0 can
-In-Reply-To: <CA+4x=b91W31eAnShPzVw1zta43OYwArsgW0EsU1-0vkOw+qGyA@mail.gmail.com>
-Message-ID: <329qn1s7-s61r-277p-2q6n-194438531393@tzk.qr>
-References: <CA+4x=b_07g6STT0nvma_gRhv=zdj+7TQx5SxKLUtuqONLwv=TQ@mail.gmail.com> <9676rprp-s6p4-o2r5-6s86-5939os5qn855@tzk.qr> <CA+4x=b91W31eAnShPzVw1zta43OYwArsgW0EsU1-0vkOw+qGyA@mail.gmail.com>
+        with ESMTP id S229489AbiIGLUD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 07:20:03 -0400
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6C8B4B0D3
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 04:20:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1662549594;
+        bh=WF7n9uCF8u35C2PgdseZnmcUwgAa7ojJyR2cC5AK1rs=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=fg2giBwcSRAykMGVMgf+LlppRHnKy7OoB8nkztPBQUcY6Kgl47g01Mjb1thZVedXH
+         LJF5wF+363gygDwT2qFI+RFdS8adFZ38IRDVmteVo5C7Iex1QwMA+nqlOAHZn9w0md
+         YUsignAjW3cT60i4gIx58cYe06KNJy7RCVT45m1I=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([91.47.158.123]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MRk4e-1ouWQa3LsQ-00TM6C; Wed, 07
+ Sep 2022 13:19:54 +0200
+Message-ID: <90d7af20-0563-3e09-f7dc-f69f8d473928@web.de>
+Date:   Wed, 7 Sep 2022 13:19:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Vmt90QrhgZWzMfGXrlbJPg6hXYIXlD38SUd/eqbxTolNFxbcdFn
- H9Tyb46qgms4EwkCcwxKVaGMmGvLhd37seXn9FD2lbB/a7R0RXXSvCY/z4hLRxGkkbaVMkD
- 9QJTjHPrcxZEytWjsmsmLOzrG/EMFORM45r5K+RLGl4b1LFwKD2SYlYlNngqQ8+4zFnXeCB
- OCGJaO73FfPg/2dm7PaFg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SZirQxPf3eI=:b/BaVeTFGN7y/GD4vgTXMJ
- RMvejRz3j84WSYo9DkEbQ0A9Sij/QjEQsjJOfdmZ6aFmsjwSHmeatTqTvLPanTqAC8opDviJD
- B8CvjBJKdd2FpU/+DGDL45T0rci1VbJGm8ubkHnls36rPcD7EzHqEZiPKnmeuMw5EvYhmA3HP
- YHaOjrfkiTY39rzpj+7E0l9Na10RLQ03MYZbHBZFz2MqjSbkSr1B974ECfaNVkD6styYzPGr+
- QT5NTFqNodViwUiv48DWiVi1qnheg3Q6zEUsHRzUCxATtDb3ddUBvFNxQar+eUThU+h3uTQZW
- +APTwHqhSO5sNKPRV51M32tOst8OKOCvNQX8Ht6VrqEm8kKJxAE7Mma/VctryXlp5biCAxXiZ
- PfIWV6So12SFi/zB8rLa500sE0kGsw6cTHY4Qn6Js8vG9TpNn5aRz3tskgP7/0f4+fRMj4yky
- O+1jxxoEazV3B4OfhfXCWjXfFNXd0gx8h10Z5l5C8UlMKTSjnLdxMx59S/hW6SIxOxpdpZSxj
- VKPhQP1KMozeP8hqd2GA1ERhZ5FI6+0FfGA6lGbci/ycJqaR0mWtiFzP0HXqP9p8pERH9uZz4
- qLXa+JFHMIdBqg1piCS2qEZn1QHIFscwcuXEfEFLHIyyq9Lc5hr/g4+7fKECLFh8R4mhAxN02
- +henheErSSrM+4PkZoI5a8Okn1f0iems/RwKNMhvfHUNo0DtEQo+CVOVaYWu7FM6dU71IfzJi
- KYZupG+kzCA+VBLTveWgIxhXlb6b/XpY2m5M29cAYJWp+uA4kNKWGXcRemVsReujg/BmWvI+Y
- c1HpbKBEuPNN93KOGP1Ri4bO5yez0YjDmpn3KBnqUOJ7R6C6GpNUf9teuXb/DgxT0O1ilxTeH
- +XTepRKrRkdegOrGXwmany59Prjq2dNxbbxYcXiAGeG282W97nyirB+4z5Ws2sh7bGs2hcOdO
- OQjqYzt4vFfizboIYo0MzZJpbnU9ubooeI+gM1f4FEDuBQuxy+TdUTspkk6GdU+9amoUaAzYk
- O/acXZvW1CZroJMcreP5JBZZSwbg/OhrgLszoKHibEiePTeDFutOQL7oXJ3oa8cWiyTVHgjF6
- CkRhI/Vyu+veDmpr+A9KY4DB3V6ID+QpX0GXlK+JZt1POmYKnIk9exoXPKUVGzRWmywIyChCx
- CKIZ0oZHN05sFTQ3WCBKyt+erH
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.2.1
+Subject: Re: [PATCH 2/2] diff-no-index: release prefixed filenames
+Content-Language: en-US
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <xmqqilm579hc.fsf@gitster.g> <xmqqilm51gn6.fsf@gitster.g>
+ <181c029b-8b36-4b04-30f9-97a3f252bfbc@web.de> <xmqq8rmx1saz.fsf@gitster.g>
+ <df5f8305-79d5-2c12-bdf0-961428c0bdd1@web.de>
+ <n575rrn9-5p4o-r40o-snsq-197p242q10p5@tzk.qr>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <n575rrn9-5p4o-r40o-snsq-197p242q10p5@tzk.qr>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:LvKSOSZuNMjWT9DBB47TPM4G4zhedsUMvVKeWzu1hCkJFqh7ttz
+ 6k3ko0gBQd+DoUIAErBh5gskHsXJXQDNhs7n0NigfRbf/qEaFj+F9/bjdzLh+UTuBRaWmnp
+ pqQ+Kv4wwszfNdApA88yC4S4NRRkyYUK4oMyghXpusnOYtiW4gHqfM+foJDUaD74ArrJjtr
+ 4dxZmTcXVgNPvlaqLC2ng==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dZEgivvp7nc=:6KZZNCUdLlYeybx84C4uG/
+ wGqq2aygBkYU//1ByeZ/lF/xivwmcUg1uH/G2KL3HQ9o6HLqIJ7g5i04O9sgWTBKTGE9ZdRzm
+ JFJph2eMeshTfzTkG1NqeUyC5izmUJxQOnvroDvZxa33i5E74WJa+zdzpm56UV6uBp7KRwzPQ
+ qDqqLTAE95wIElWaUUEdCLjcNkHk5sU70xdqXcFb3o3La0z7/p00WNgimpSA4fr4YfKhb1gkZ
+ X2iS7kUg5Rct3jSvNIr/6vLGTtmyE1m3Dy9FTmNlfasbJTMSsDgTg0LNSS0OdoxpRJ8EogUrG
+ v5zfZsuHulzAftK7wqnr/4G4Wtq/+vN0g8ZF6s3rR3DfQpI5bCMaSjTHlEEunmO3JAyComO7Y
+ Ry/STppOUmx0YaR/SGn78QszV64AST7HDdt1bT5DhmQevt0tJr84PtEVNa9tiAkC2G+KqCmmi
+ cJIjpeLbfHfBSKTpFg7Z2IwvI0xwFM8xzR9E6JLPDc/046sP8r4/hv/4oBFw5GbZNwkjtpM80
+ /zFQFG/LFRM3nXCzM7wPHlyNBlBCEAfS9H4cBVQCamnzM+vGKuUFFCRAYOLJvRzHDqAaK5sMF
+ mldzvFCtRFT/OReLKZCOyLUGc6h7TzF28l+GDkZD4slmOcDkGWtbhYrsw2qxDoBVDsl05V8uN
+ nmZZ6mHVCCGiXhy6v8kFLlIXCZoQfLTJTqrZwBjYgJjUHSqvvWG+C1+fYsu27ZTXG52FyAYR8
+ qtGvWdyfeYg8jJl1olHcEF3aUIkA+cZjOqVMkB8DzWxY1sCEJV3ghl905rSLmBjuDNj8kOSLZ
+ 5WYkhlgdqmTKTVN4gRTWvZnFI6HYpJJ8hUW+/WjaeDzQ96tlh3gh3Lp2YOggvZot1WG71U4re
+ uKPRfUqUIUBceIlU5OyDBQeTe8iifHHjnUIoWCKk3BKaoOVuePTjUhCKH/NI2zTljdnXIcVQN
+ r/vEFfuZcZOOfIL65Qv7jHBn0NRWtoCsb4pMbGcrkz0dITH1tpni8OUxxv/58Gpunuh96VTt0
+ xp6/kVM6YjderTI5BdEXBURdNO5tCz90GizxmmqQ5hITrvNnTeIKrOM4YZDGnBS3jPxPcov7X
+ Wz+kr8PEtc/uKJPRa2SJ3fENG4wACQqsN90IjHT9Kq/eqYEX5L81u8+cfsU4KK9+1I9Y/G3gF
+ 18byU=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Lana,
-
-Please find my reply inline.
-
-On Tue, 6 Sep 2022, Lana Deere wrote:
-
-> With --prune set, the 2.18.0 pull still works but the 2.37.2 pull
-> still fails.  There are several of us sharing this branch and we
-> aren't having any issues pushing or pulling with 2.18.0.
-
-Oh, so there _is_ a remote branch called `feature/switch-to-qt5`? What
-happens if you call `git pull origin feature/switch-to-qt5` explicitly?
-
-Ciao,
-Johannes
-
+Am 07.09.22 um 12:03 schrieb Johannes Schindelin:
+> Hi Ren=C3=A9,
 >
-> .. Lana (lana.deere@gmail.com)
+> On Tue, 6 Sep 2022, Ren=C3=A9 Scharfe wrote:
 >
+>> diff --git a/diff-no-index.c b/diff-no-index.c
+>> index a3683d8a04..35809f26d7 100644
+>> --- a/diff-no-index.c
+>> +++ b/diff-no-index.c
+>> @@ -245,6 +245,7 @@ int diff_no_index(struct rev_info *revs,
+>>  	int i, no_index;
+>>  	int ret =3D 1;
+>>  	const char *paths[2];
+>> +	char *to_free[2] =3D { 0 };
+>>  	struct strbuf replacement =3D STRBUF_INIT;
+>>  	const char *prefix =3D revs->prefix;
+>>  	struct option no_index_options[] =3D {
+>> @@ -274,7 +275,7 @@ int diff_no_index(struct rev_info *revs,
+>>  			 */
+>>  			p =3D file_from_standard_input;
+>>  		else if (prefix)
+>> -			p =3D prefix_filename(prefix, p);
+>> +			p =3D to_free[i] =3D prefix_filename(prefix, p);
+>>  		paths[i] =3D p;
+>>  	}
+>>
+>> @@ -308,6 +309,8 @@ int diff_no_index(struct rev_info *revs,
+>>  	ret =3D diff_result_code(&revs->diffopt, 0);
+>>
+>>  out:
+>> +	for (i =3D 0; i < 2; i++)
+>> +		free(to_free[i]);
 >
+> Heh. That's long-hand for
 >
-> On Mon, Sep 5, 2022 at 6:25 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > Hi Lana,
-> >
-> > On Fri, 2 Sep 2022, Lana Deere wrote:
-> >
-> > > I'm testing an upgrade to git 2.37.2 from the current version we're
-> > > using of 2.18.0.  When I try to pull in my development tree, 2.37.2
-> > > gives me an error but 2.18.0 things all is fine:
-> > >
-> > > $ /tools/linux-x86_64/git/2.37.2/bin/git pull
-> > > Your configuration specifies to merge with the ref
-> > > 'refs/heads/feature/switch-to-qt5'
-> > > from the remote, but no such ref was fetched.
-> >
-> > I bet this means that that `switch-to-qt5` branch was deleted on the
-> > remote side, in which case...
-> >
-> > > $ /tools/linux-x86_64/git/2.18.0/bin/git pull
-> > > From http://githost:7990/scm/dp/sw
-> > >  * branch                  feature/switch-to-qt5 -> FETCH_HEAD
-> > > Already up to date.
-> >
-> > ... Git would lie here and simply use the locally-cached version of th=
-e
-> > last successfully-fetched `switch-to-qt5` branch.
-> >
-> > To test this, you could pass the `--prune` option to `pull` (see
-> > https://git-scm.com/docs/git-pull#Documentation/git-pull.txt---prune f=
-or
-> > details), then try both pulls, and I bet _both_ will now fail.
-> >
-> > Ciao,
-> > Johannes
-> >
-> > > Anyone have any ideas about this?  All I could find on google was a
-> > > suggestion that the "no such ref" message indicates the remote branc=
-h
-> > > was deleted, but that's not the case here.
-> > >
-> > >
-> > > .. Lana (lana.deere@gmail.com)
-> > >
+> 	free(to_free[0]);
+> 	free(to_free[1]);
+
+Had that before, but it's repetitive and more importantly this loop
+matches the first one.
+
+> If you do want to have that loop, please replace the hard-coded 2 by
+> `ARRAY_SIZE(to_free)`.
+
+The two is hard-coded in other places explicitly as well and implied in
+fixup_paths().  The root cause is not any array size but the design
+decision to require exactly two things to compare.  A reader would need
+to know that.  We could sure use ARRAY_SIZE(paths) in the declaration
+of to_free and ARRAY_SIZE(to_free) in the loop to at least not add more
+instances of that magic number and make the code understandable without
+seeing the bigger picture.
+
+> Otherwise, both patches look fine to me.
 >
+> Thanks!
+> Dscho
+>
+>>  	strbuf_release(&replacement);
+>>  	return ret;
+>>  }
+>> --
+>> 2.37.2
+>>
