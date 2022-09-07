@@ -2,63 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88572C38145
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 10:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBF34C38145
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 10:06:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229962AbiIGKEH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 06:04:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40040 "EHLO
+        id S229787AbiIGKGx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 06:06:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229543AbiIGKEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 06:04:00 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FCDC1AF0A
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 03:03:58 -0700 (PDT)
+        with ESMTP id S229899AbiIGKGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 06:06:47 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8640E20BF0
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 03:06:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1662545033;
-        bh=tUUKfk2UXvPYc36BL6/UHmA4qZi1Cp4YE1VmRyJH5lw=;
+        s=badeba3b8450; t=1662545195;
+        bh=EjTAY6EtlVlNShlnC8WI7LsbtIdjyka6C5r/k8qvHEg=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Es1rAN/fg8qQC4mdt5DEAvqQt6fvN4GEHpyWnt4OEMFcp4WcjIoT03RxllvPE06lf
-         o4mdGk4Ix5bbfKO5s0Z0dcagggL9b/Ui5yd5S65qtV8ey6sI4NZRwPI9m/5PQhaHc7
-         kOm+fv1gbWND69OIctDhEKsbH46nrIoZ32M3rivc=
+        b=NZu/qGmvn4JFLsg5IVBVyP475rnBmpv1B865Kf7Vul6Ou436ZT501PaG9pvT4Fxu8
+         dX23Rz2oxgCqNh32HGSDtyfQN65c3T0uiGmL1zwPvA0kIL2bi7akHHKJay7KG7Ni57
+         DkUE70vGMf1VW/txbzFVw2ULjaFGGRo9I/NBjpwc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N2mBQ-1pUNzZ1Olo-0136nO; Wed, 07
- Sep 2022 12:03:53 +0200
-Date:   Wed, 7 Sep 2022 12:03:51 +0200 (CEST)
+Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MacSY-1p3Y4e3pWM-00c7Mr; Wed, 07
+ Sep 2022 12:06:35 +0200
+Date:   Wed, 7 Sep 2022 12:06:33 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-Subject: Re: [PATCH 2/2] diff-no-index: release prefixed filenames
-In-Reply-To: <df5f8305-79d5-2c12-bdf0-961428c0bdd1@web.de>
-Message-ID: <n575rrn9-5p4o-r40o-snsq-197p242q10p5@tzk.qr>
-References: <xmqqilm579hc.fsf@gitster.g> <xmqqilm51gn6.fsf@gitster.g> <181c029b-8b36-4b04-30f9-97a3f252bfbc@web.de> <xmqq8rmx1saz.fsf@gitster.g> <df5f8305-79d5-2c12-bdf0-961428c0bdd1@web.de>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] diff --no-index: unleak paths[] elements
+In-Reply-To: <220905.86zgfekrqq.gmgdl@evledraar.gmail.com>
+Message-ID: <36q9s463-rno9-9rs1-7qsq-5oqq23o30o0r@tzk.qr>
+References: <xmqqilm579hc.fsf@gitster.g> <xmqqilm51gn6.fsf@gitster.g> <01pn98p2-qppn-260p-8o80-n5483p41859o@tzk.qr> <220905.86zgfekrqq.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-754941380-1662545033=:189"
-X-Provags-ID: V03:K1:r8b9LYMGhN+WtmTNmUOs2N2jU8Op1t1tXYUCq3ibFVcxK1UWKNz
- vuJJjqvHIzHE482jH2wn8eDr3gG2tP7P6pjR+sEfGwTWrl8SxXWnu4guGYsDV5ORFzqOOK6
- MQRYyrs5QAryI6/tmkC7wnS95G61h6I/ix2ldUf0meCbiQ2DHKKlL5k2m/GuTiTRgSQ11xV
- 5Z+CKT4ee5Nw2FASQzS0g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:zDm38AbjoOg=:19+TTZiGKl5C8kX4lvId2T
- sKKwMjvbFP/t86scDXnJbQ0wH0ddhJzevAQkvGkcSBKHzPSyJS9R8dryANx+wi6nJy3glg12v
- 8LXKsGYGOobyjNrmaYx1aHf5qiWnSX3vv+KP+WFOk0PU2eaChq77U4kILXojyhmExUuZxy256
- qKwSesN5D+xKpiFNsUdTQJu1cauxAREADFoX45A1ROn7ioAs2nTU48xH0aaA4mAl61F2xUgji
- iQ1ie8jtQeAWSbJk/mwxuCI5tCZzUZoVUkJjX5iM8Gn+eYWSSu4sfU8umaGJdkRLKTU8ezPTy
- RMOPkX7WH6T+j8AGcc6snrfCnTm4cCDQrMvh2c+JqfQKrF/Yi+JjqSIgXaRIuTx+ZgnFhW8aE
- QYSeNMsGMi2SSv5b+pm1/hjlCC3j9zPvkyxeiCYsOtrsqXEa0dSte1k7igtINpyXiye29B25a
- BeeYTO+Zmr9I5jKLsWQewNWYux2sYYAQZjbnNTMGBBqLWEHA0+Lksp4+mQfoZ48iJInZq79+N
- 0LEKFmHSgXr2Uqo6kGjVvTXbl7+nD1L9FYOJbL3uhwo2VirVOZkH6X4kByOvM9VpFfRBVUxeD
- mSUU0AU+lafxZXWwHtKkOSVLT6BsCNgu0hqUz3aSZbPC4OY4i818zkRFHDmY4azY26UYmvXyD
- C06/UKbVKmssmfRG1CieZd8q5vwP3C20efdW+aT9D2z7wZN8qTFrrscbAxBAeD0ayEHCGFy00
- tVYL2p3Pq0qqAxySdaEP8JlLfIEKLaXSu9SIpqWvr7k4EFwbVZUuFEC6VR5oI9OL9c3IY+G7g
- KtYep5o8mx4MktbI2Y4iwk+ibfmSFLTqFyBZfhbvH0nIZt5NMKcrjqnntyZKZdXFSzML+ESiS
- dGM+Xp45t+z7XTzL9PTvCOt4iEvNwllDmyxPkLRcPVuJja+q5FPNdAhHMbwaBfijXC44Tor7N
- sS9c6oMiZZTvoNEqpmOmPfxGt+vMM19u+jbE2GDjQ0KuVMuj/EMlrPA3BAzMcxxMWKVbxtgug
- 4UakMah9b0vN/f+qXXasbcScVFdcVn0+064cFieG4tbv1enztcs7ZaIio9TKXjGsX4XxdBCj1
- tpEIYG06NoIbNsxUDRXOINAcU5CC6PpJLTOI4l6EU6VaWIf1MIWcTUMcW2AIbajmbKMHMPXE+
- N34fMdRUpZ6k0ZWFT2YePO311F
+Content-Type: multipart/mixed; boundary="8323328-158401198-1662545195=:189"
+X-Provags-ID: V03:K1:AI6wB+XjfSGverkfh8Sq3r3mV/c/K/WH9ooJlDLURZjFGClGT+6
+ ZnNyxaKlba+83oDiWMJlMNzo/gLejJWhyLei3oje/4nt/LJRhmuPT0gNUHBfykQv6wXiMe/
+ T0YYWkp/rby/dsQj8wrLqEDglgLd/Z9gm558IqXJ6z5Xz6KQCxvFC0CeAskm9BYHKOPAasK
+ EoUPywIKG+semWc39oPSA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:cYpxg/6vgB4=:dQIdx5D1bqAPMUFFMXJlWb
+ X5p/OqMVYLwfq04laQ4YP/Tf/6l1xDgjNScFkM2R4yULFkRbifxOzUX9uxijHvdCkue9E6Qsi
+ ByAvCSCKfedihnf0E06YZq1NSxQBRi6Sm6euviKU+ChZpK4aiCmMoOXaqDha6oHA7S4/lCcnb
+ 1wIaLYCaYUkoi2OmY4HY3n5mmsM8jV9il/gjEAEsAWR6aDz8WimeJxM2M5e6B07uhBkhnIRPO
+ 1r65lr8SB4zGSyD5Eaw4f/reMK4hY8xZ1dYBhxQUy4qWQ9XdBioDvhzEmOtWfLSLfD+MLwHUO
+ 1Nh4lRBZskohSngOdfWzEVBbeIEOxJ/2hDVfWAXPZOD6NQc+W2RUCPd1qmSdrJnBTetYjI7K7
+ yTwA6J6+PeBZwSg0Bul5vqEAWGlr/CLqct20KrRc8U6Ho8eeBCbl0iNVuCJsiwTxBElrVEEXc
+ Y0oFVUhEMVWtOH95+vvCQ4dGeamdjc3WoumWwhf0DyiZADz9sjF7IkmbBndfa7/H1hMySGz8Q
+ +zpgpUd0nbMChE0dDcbSlJiyEauBTTkd4Ilw9dieyiUgZJfWp7o4rd46Tu5XuyIlh9wcho8N4
+ PBuVvOZfVGqXRIvmw0/5BrScHIi5vnzeDASoAV07+pnSRn6EfmhkRjMSZrG6JWdnmqDyZeYx5
+ XRqkJfhxviKxpvg51GSLLNjak6ANHNAwxhxNmHHbqNnT/zjYnDozqcywTSET0JwubLa4it5kp
+ tA5yFJORjOBXyII/B2FYx7/+fThpqwt2lfu0JNO1ZiE1ygnfx/IxkpbKGBHOen/VyhFdiv+lq
+ e7Z51JNfTa0Yju5t2LyM0ar5557KER2QuBfdQA/jVHNqFkpJ4mxbAyj7lkFSLqwUtpdEyWXEd
+ ke2EIvp7N0tAjOXePboFOjioiZGmpQFO/kA86Z0Lp9hU+Kn+BGBz9+lGwlWOaDwT480k/SZj1
+ FyUlJ4EDnEeIb94WxFesWq7nuWITXkMCXhV0PqJ2kQC8LWpnpj5ufXB85VHCnje9iWfY0iKsn
+ LqcokBdcW97J0rJVXKglz+YoNBnK/vgtUskCnHicF50LksL8VdD0XfapFLMtSOTpbt+jrQiUY
+ X/s2Ec5bI3jit0sTd9EzdzjQbL56ksHGsuW6qayklph13Rx/+XpNkLxjC6zuE9YQN0J6PIIiq
+ 2nZGI+u2ECjbyVTZU5k8zJdv1b
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -66,60 +65,32 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-754941380-1662545033=:189
+--8323328-158401198-1662545195=:189
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Ren=C3=A9,
+Hi =C3=86var,
 
-On Tue, 6 Sep 2022, Ren=C3=A9 Scharfe wrote:
+On Mon, 5 Sep 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> diff --git a/diff-no-index.c b/diff-no-index.c
-> index a3683d8a04..35809f26d7 100644
-> --- a/diff-no-index.c
-> +++ b/diff-no-index.c
-> @@ -245,6 +245,7 @@ int diff_no_index(struct rev_info *revs,
->  	int i, no_index;
->  	int ret =3D 1;
->  	const char *paths[2];
-> +	char *to_free[2] =3D { 0 };
->  	struct strbuf replacement =3D STRBUF_INIT;
->  	const char *prefix =3D revs->prefix;
->  	struct option no_index_options[] =3D {
-> @@ -274,7 +275,7 @@ int diff_no_index(struct rev_info *revs,
->  			 */
->  			p =3D file_from_standard_input;
->  		else if (prefix)
-> -			p =3D prefix_filename(prefix, p);
-> +			p =3D to_free[i] =3D prefix_filename(prefix, p);
->  		paths[i] =3D p;
->  	}
+> On Mon, Sep 05 2022, Johannes Schindelin wrote:
 >
-> @@ -308,6 +309,8 @@ int diff_no_index(struct rev_info *revs,
->  	ret =3D diff_result_code(&revs->diffopt, 0);
+> [...]
+> > +	string_list_clear(&to_release, 1);
+> [...]
 >
->  out:
-> +	for (i =3D 0; i < 2; i++)
-> +		free(to_free[i]);
+>  * The free_util=3D1 in your code isn't needed/is a bug, we make no use =
+of
+>    "util" here, so it should be free_util=3D0
 
-Heh. That's long-hand for
+Calling it a bug is a bit strong, and misses the reason why I did it:
+future-proofing.
 
-	free(to_free[0]);
-	free(to_free[1]);
+In any case, Ren=C3=A9 took up Junio's ask and provided a new iteration th=
+at
+side-steps this concern altogether, therefore the point is now moot.
 
-If you do want to have that loop, please replace the hard-coded 2 by
-`ARRAY_SIZE(to_free)`.
+Ciao,
+Johannes
 
-Otherwise, both patches look fine to me.
-
-Thanks!
-Dscho
-
->  	strbuf_release(&replacement);
->  	return ret;
->  }
-> --
-> 2.37.2
->
-
---8323328-754941380-1662545033=:189--
+--8323328-158401198-1662545195=:189--
