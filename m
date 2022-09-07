@@ -2,70 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD11EC54EE9
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 19:46:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CADDC54EE9
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 20:19:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229811AbiIGTqA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 15:46:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42602 "EHLO
+        id S229522AbiIGUTU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 16:19:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbiIGTp7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 15:45:59 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02BA39F75B
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 12:45:58 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id p1-20020a17090a2d8100b0020040a3f75eso10968071pjd.4
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 12:45:57 -0700 (PDT)
+        with ESMTP id S230179AbiIGUTM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 16:19:12 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68A80C12C8
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 13:19:09 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id 65so5495621pfx.0
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 13:19:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date;
-        bh=mAYDyxkd2dXYQ8GETTcWWngGkSag7yll75SCE+bHG98=;
-        b=kgZYYh3OshDneTkM7YclTiHr6lF0fSFY3qMpsWzGmZmoPoit29gtHc4KYwcXfZwOwQ
-         ujqaXrDkL5Cwe1FTIpcm6r2TeiQ/zROqdG+cTd1td8RFgoNuCsvKI8Dz7j6hXtOA+Rsr
-         ydMcdr3mlDVhcO047hPVTZVwH0bhT9IBRxenosjWtLGSxxrynbAA68o7zc+QYa+02Y7S
-         Pd21HdAWu4nJ93hPadCHl91rvXEBYYt6nVvQfqg6+9MgCx6xJTyT9F4KrZSp6zHiHg3Y
-         UAarwYmQ8bfcdmAwNBGgcwOHApSWVxu+blDy/dBJjQ6wHaH+p8A6nTUUmrvxaxpHB27u
-         EvEQ==
+        bh=ucLWj0cyrlCW4Srl0V15W6kyTKuHuYFFMj0cKB7JZKg=;
+        b=mptsIrXkfwI9QU+sjqEJhzasTN6+N7o0/oiAuEJManz1uI4vD6Cvg8dSwjspTVaEkL
+         QmdA/qvEVpyIMn8MBGnw9LOfS+cdh0RpcWEQj/1exI/4jsO/AnHRqyUIJ9L1B2iwl0+X
+         r6GrCxRqCXLko2G53o/1NKn7PM9pM3nThKui1ekSRvFhnhoisiVv6tRc2XVIbGqbAkAl
+         E4ehVC127zZQ/e3XaVHxwj5glKSsLL4Em9tOI2BXhtUvVWCLB+pYNgpJ7DDkWD9sCk3A
+         jFHEE+iXIk+CMTfBnFn4RyB1WOf5aBfS+FgAZ9Z4+Xm8M6rMnQOqwypwZaMTss1TYprz
+         wEmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=mAYDyxkd2dXYQ8GETTcWWngGkSag7yll75SCE+bHG98=;
-        b=kcV7WoG7enMcySK/VjzVD3Tpd9HhDawr1CJE+KUNfhJPaOotIOWPwtAUBpjJQvvx82
-         335ItSSmfV9gEAYE1sxHdXBSAB7mMfBbAd1daVHDC3y2z8bc7pjejkmqHhHMMkOW36ZO
-         wYzY20tHFo0aK7OuZgnsPBJtUg/PKbTFfpMYIx6xRRbujPPBO+FNRocXIDYLyGsJHY/e
-         oh3XE/sIAn928rotYjRGLGygMksdZmrDr7i1QV+gP3R40QHllUHwrKdpeYaWd2BD6nH3
-         FpBOSGjH6CPw/ozpm2TtqZFpmt2Usaj7PaCmR1RQgFyX85SCGIL4L02yLSwe9HaZcbOd
-         g5qQ==
-X-Gm-Message-State: ACgBeo0zuK8fBBV0A9WlhP4Dsh0j0rquRCbgZXTwEltW3/gvpBhGBhSZ
-        mGBzQ8x78y/mpr08S5gv3/Q=
-X-Google-Smtp-Source: AA6agR5Hhk76RVammkxTKZRRqqli4pS3PCiWnfPI0uXVq1s+/RzG/vKfykrwitc+eEZNsFo+8tfwBQ==
-X-Received: by 2002:a17:903:248:b0:172:7520:db07 with SMTP id j8-20020a170903024800b001727520db07mr5102852plh.76.1662579957412;
-        Wed, 07 Sep 2022 12:45:57 -0700 (PDT)
+        bh=ucLWj0cyrlCW4Srl0V15W6kyTKuHuYFFMj0cKB7JZKg=;
+        b=VA//3mL9quKvfUaSdwDnjXz16dkR+VfxQhR/TNSompo6yDRpG8+BEUgCRTt3ibuLLC
+         Dkyi1lxh2TDhO5eqrJKxVtICs5AsFUeY+4XNVWLpDK+wTYGrxI0fPPEYrqYxLBht6EYM
+         hyQewcExiyF2D/DIQLWoIpRQZruky2Bw4fLsbg4N4zQQZ6N+QxjXpkYqdSpBcTPyBNRk
+         4AxgRmpNNRBnbwLKcApjT2bAnToSuU2QkxjjuBD8LvHXl6h0R7My57H2XdAtgBZ0iU50
+         338IiL2YA+LU7ZMbC/3vaIR/aujrLyHv0EODmPXsBxMf8JJXEdN0jU4is+uiwsMJUmgt
+         ZKpg==
+X-Gm-Message-State: ACgBeo0NL87DdyrMS4zF1GJS7jJYJXQ2Xldgm8dxSHq/NzrjhZodd1U4
+        iy5v8y/Kr1Kyn5XDoMW83dc=
+X-Google-Smtp-Source: AA6agR59ENRvEDH7i2qSMsmlHDrERCkgmLtNsxWNfhx2rY4ECGlQqwIVEuVWEkvqoH8JHaBsV55FTQ==
+X-Received: by 2002:a05:6a00:21cc:b0:53d:debc:2ea1 with SMTP id t12-20020a056a0021cc00b0053ddebc2ea1mr5840270pfj.56.1662581948838;
+        Wed, 07 Sep 2022 13:19:08 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id n13-20020a170903110d00b0015e8d4eb26esm12822642plh.184.2022.09.07.12.45.56
+        by smtp.gmail.com with ESMTPSA id 205-20020a6217d6000000b0053818255880sm12903421pfx.193.2022.09.07.13.19.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 12:45:56 -0700 (PDT)
+        Wed, 07 Sep 2022 13:19:08 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 2/2] tests: replace mingw_test_cmp with a helper in C
-References: <pull.1309.git.1659106382128.gitgitgadget@gmail.com>
-        <pull.1309.v2.git.1662469859.gitgitgadget@gmail.com>
-        <1f5366f137967cbec30041b40eedd86ce5f6e953.1662469859.git.gitgitgadget@gmail.com>
-        <220907.86v8pzl6jz.gmgdl@evledraar.gmail.com>
-        <220907.86r10nl63s.gmgdl@evledraar.gmail.com>
-Date:   Wed, 07 Sep 2022 12:45:56 -0700
-In-Reply-To: <220907.86r10nl63s.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 07 Sep 2022 14:24:26 +0200")
-Message-ID: <xmqqillzt1cb.fsf@gitster.g>
+Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH 01/34] CodingGuidelines: update and clarify command-line
+ conventions
+References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
+        <patch-01.34-b8cbd443987-20220902T092734Z-avarab@gmail.com>
+Date:   Wed, 07 Sep 2022 13:19:08 -0700
+In-Reply-To: <patch-01.34-b8cbd443987-20220902T092734Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 5 Sep
+ 2022 10:26:12
+        +0200")
+Message-ID: <xmqqedwnszsz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -74,16 +75,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> But I think that re-raises the point René had in:
-> https://lore.kernel.org/git/b21d2b60-428f-58ec-28b6-3c617b9f2e45@web.de/
+> + Use spacing around "|" token(s), but not on the inside of "[]()"
+> + tokens:
+> +   Do: [-q | --quiet]
+> +   Don't: [-q|--quiet]
 
-As the primary point of no-index mode was to expose fancy options
-"git diff" has to comparisons of files outside version control,
-without having to go through the trouble of upstreaming changes to
-GNU diff, I do think "--ignore-cr-at-eol" should work fine with it,
-and René's idea sounds like the best implementation for the
-test-text-cmp helper command.
+It is unclear what "but not on ..." in the description and it is
+still unclear with the examples.  Does this mean
+
+	Don't: ( -q | --quiet )
+
+In other words, "on the inside of" above is meant to forbid spaces
+immediately after opening or before closing a [] or () pair?
+
+Other than that, I think these are good guidelines to have.
 
 Thanks.
+
