@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4127BC54EE9
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 08:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D37CAECAAD3
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 08:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230078AbiIGI1g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 04:27:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40970 "EHLO
+        id S230104AbiIGI1i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 04:27:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229938AbiIGI13 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229864AbiIGI13 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 7 Sep 2022 04:27:29 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE815AB431
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 01:27:21 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id h1so8295977wmd.3
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 01:27:21 -0700 (PDT)
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C81B6AB4FB
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 01:27:22 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id z14-20020a7bc7ce000000b003a5db0388a8so331516wmk.1
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 01:27:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=WNUJeWwSoOrE/4m5pccXfSLDKCodvBiAErFRIS+lx0M=;
-        b=oUhO2h6zNV7INQHeK3hmbfZ8/K9iNyKcdTUQjs9qcxXDimMhOw8D47QHKKIhut36uw
-         2utXIvlo2os4mdtihAh5KAi/V1m8iVebj/DjsQWW0JPzggaoveOJcLluWi/GTTPESAR/
-         5vJndTtrDd9H9NPUhIaj5JWw2d9qhD+9KNB3712N+zTuBRoaez0NlhiXnoQxRtH7Fekf
-         q44hef4NkNSfJj+Rhdf2fBm5IZE/zYQboBV53LOrzgLvn2UfZTRbSj2m2LK+0gpoZKxn
-         KJfTss0+LHXs1c5Euqe2AyJ6kTe3RI3LLZ4koo8Cjh8B50qHGlZLw6XZEz3zmp8ZWS38
-         bHVA==
+        bh=ZvxZ/JISq8Fda5vvgs9fKX3Du4MVaRav5PtRnzxKqN8=;
+        b=HEb2zrXd0P1+rVmi2WJxrPtX1I7RKfgSWZxe2QxEGZk78bJ484YaokJwCNPCdbGBa7
+         SitPSBoj9Z+L5TM0bk2OPYIBiHakofs375jdyxHttsE9bQa4QprHIu9fVKyQSifx2Xgb
+         b+hJ85czV7ordtEpN7bY8I1WIvZmc+uPxOCFiC3hnDZFfnOGIS/NRTWXbnHOFATvqhXb
+         nMJcbcY0MO9mjSavVBM6CoeAAg6tFQqbD0qgCbIf1zDLg2XrlJXiX8/EDbwubx41/aNF
+         tEydxMSe5KxKFgGwTn2bTz6z/yVEVNW1N4GsS1wAqX9Ua9TExjR5PSIY3EUTecOB8Zhf
+         v7lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=WNUJeWwSoOrE/4m5pccXfSLDKCodvBiAErFRIS+lx0M=;
-        b=wxYLiILL/7UCXXaNorXFVuNUIg3OGBHjAZo9awGD+Mu26ze+MCD27l8RuBYIZCHEss
-         PC4g5JaOaDBGEBWTbEzxH3HyXV9AYV+9LuneADu6hJ46OLF0ZvDlwwnq9cp3qH76VT73
-         pthwW4BSd4ZgieBmwixJd9ycPx+KrjbrlsFB+XcEgF9XnvXQmGvUp1q1Hc1QA9Z3I1ao
-         uzYii4PMagTlj+HYpepUP3IyrlZ0xTaZNhUeJP9xvJPbC8HIvUx5yjs/SCHre8hxx9+u
-         uHp6GcD6lJZedDbmniyfbvlob839g6X6inoVuBnYbhGtpdOo/Z1/eNZpQPTngz1lsIV8
-         75dA==
-X-Gm-Message-State: ACgBeo2p/lN5mDxkrYkd3QIT6wCSwPH7EfOwjjH4DK6Ul7cB7na06TjD
-        9Q4Ve18fWKMyjt/BXCxkf8duPCW4WNjcBg==
-X-Google-Smtp-Source: AA6agR4M+YSqUGqKWCsV7mvhlgYl4LwCZ6QwkYAuY1IeIVZGYNk9hQ4GKmr232U728XZHDCFkignuA==
-X-Received: by 2002:a05:600c:22c7:b0:3a6:68e4:1e5f with SMTP id 7-20020a05600c22c700b003a668e41e5fmr1283928wmg.46.1662539239701;
-        Wed, 07 Sep 2022 01:27:19 -0700 (PDT)
+        bh=ZvxZ/JISq8Fda5vvgs9fKX3Du4MVaRav5PtRnzxKqN8=;
+        b=gebybw8mkOc0cQ9f9lvWXG3aICvcela5f+4CAnUe4X8F4VaqMwN3oMNGTk1yKYUN6u
+         50ZCNnPEmUGiVaaTO9cDPo1M2iD9JIwzfrWWTyQ1J6aILCxrtBX0yrA50Td6sw4beF2d
+         vI3m0Fx5NGLSoK9n5XxGyopOmuLdvfLvo21F28vOTltz81bJTmRakzePHLaIKE19FWxb
+         5NXk4cpso17JJGCP18BOidL0Tr2MWeGWE0ffOB2hvmpqPrVZiIXZ//1DGztN66tozChN
+         utVTMFbxIsjEEhX2hjXlpvgVkWEtjGlOWmuo5KoGALqHUztmJATOPGrEzkAGUJcl3xfn
+         epAw==
+X-Gm-Message-State: ACgBeo2Mndy4SZMjH7XkPSj7m68Pdn4QutN5txG1NXVew+kmD5FgcvEu
+        qms+iFARMI6dYqeyYVQeoY4BXAEIal85SQ==
+X-Google-Smtp-Source: AA6agR5zrQiGOa0xoG6Y7pLHb36OboEVIZkjp1K6kDdNkdLkz/nMepDuSTD3CEXM28r1TVimDtJQug==
+X-Received: by 2002:a05:600c:22c8:b0:3a5:c134:1f50 with SMTP id 8-20020a05600c22c800b003a5c1341f50mr16474749wmg.55.1662539240618;
+        Wed, 07 Sep 2022 01:27:20 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l6-20020a05600c4f0600b003a3170a7af9sm19532096wmq.4.2022.09.07.01.27.18
+        by smtp.gmail.com with ESMTPSA id l6-20020a05600c4f0600b003a3170a7af9sm19532096wmq.4.2022.09.07.01.27.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 01:27:18 -0700 (PDT)
+        Wed, 07 Sep 2022 01:27:19 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Matheus Tavares <matheus.bernardino@usp.br>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 8/9] docs: add CONFIGURATION sections that map to a built-in
-Date:   Wed,  7 Sep 2022 10:27:04 +0200
-Message-Id: <patch-v4-8.9-929fd693bdf-20220907T082419Z-avarab@gmail.com>
+Subject: [PATCH v4 9/9] docs: add CONFIGURATION sections that fuzzy map to built-ins
+Date:   Wed,  7 Sep 2022 10:27:05 +0200
+Message-Id: <patch-v4-9.9-738ee46512d-20220907T082419Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.37.3.1490.g9adf4224da0
 In-Reply-To: <cover-v4-0.9-00000000000-20220907T082419Z-avarab@gmail.com>
 References: <cover-v3-0.9-00000000000-20220831T083759Z-avarab@gmail.com> <cover-v4-0.9-00000000000-20220907T082419Z-avarab@gmail.com>
@@ -69,87 +69,85 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Add a CONFIGURATION section to the documentation of various built-ins,
-for those cases where the relevant config/NAME.txt describes
-configuration that is only used by the relevant built-in documented in
-git-NAME.txt. Subsequent commits will handle more complex cases.
+for those cases where the relevant config/NAME.txt doesn't map only to
+one git-NAME.txt. In particular:
+
+ * config/blame.txt: used by git-{blame,annotate}.txt. Since the
+   git-annotate(1) documentation refers to git-blame(1) don't add a
+   "CONFIGURATION" section to git-annotate(1), only to git-blame(1).
+
+ * config/checkout.txt: maps to both git-checkout.txt and
+   git-switch.txt (but nothing else).
+
+ * config/init.txt: should be included in git-init(1) and
+   git-clone(1).
+
+ * config/column.txt: We should ideally mention the relevant subset of
+   this in git-{branch,clean,status,tag}.txt, but let's punt on it for
+   now. We will when we eventually split these sort of files into
+   e.g. config/column.txt and
+   config/column/{branch,clean,status,tag}.txt, with the former
+   including the latter set.
+
+Things that are being left out, and why:
+
+ * config/{remote,remotes,credential}.txt: Configuration that affects
+   how we talk to remote repositories is harder to untangle. We'll need
+   to include some of this in git-{fetch,remote,push,ls-remote}.txt
+   etc., but some of those only use a small subset of these
+   options. Let's leave this for now.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-add.txt          | 7 +++++++
- Documentation/git-am.txt           | 7 +++++++
- Documentation/git-clean.txt        | 7 +++++++
- Documentation/git-clone.txt        | 7 +++++++
- Documentation/git-commit-graph.txt | 7 +++++++
- Documentation/git-commit.txt       | 4 ++++
- Documentation/git-fast-import.txt  | 7 +++++++
- Documentation/git-mailinfo.txt     | 7 +++++++
- Documentation/git-maintenance.txt  | 7 +++++++
- Documentation/git-push.txt         | 7 +++++++
- Documentation/git-revert.txt       | 7 +++++++
- Documentation/git-show-branch.txt  | 7 +++++++
- Documentation/git-stash.txt        | 7 +++++++
- 13 files changed, 88 insertions(+)
+ Documentation/git-blame.txt    | 6 ++++++
+ Documentation/git-branch.txt   | 4 ++++
+ Documentation/git-checkout.txt | 7 +++++++
+ Documentation/git-clone.txt    | 2 ++
+ Documentation/git-column.txt   | 7 +++++++
+ Documentation/git-diff.txt     | 7 +++++++
+ Documentation/git-fetch.txt    | 7 +++++++
+ Documentation/git-init.txt     | 7 +++++++
+ Documentation/git-switch.txt   | 7 +++++++
+ 9 files changed, 54 insertions(+)
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 9b37f356542..a030d33c6e7 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -433,6 +433,13 @@ they will make the patch impossible to apply:
- * deleting context or removal lines
- * modifying the contents of context or removal lines
+diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+index d7a46cc6744..4400a17330b 100644
+--- a/Documentation/git-blame.txt
++++ b/Documentation/git-blame.txt
+@@ -241,6 +241,12 @@ MAPPING AUTHORS
+ 
+ See linkgit:gitmailmap[5].
  
 +CONFIGURATION
 +-------------
 +
 +include::includes/cmd-config-section-all.txt[]
 +
-+include::config/add.txt[]
-+
++include::config/blame.txt[]
+ 
  SEE ALSO
  --------
- linkgit:git-status[1]
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 320da6c4f76..326276e51ce 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -258,6 +258,13 @@ This command can run `applypatch-msg`, `pre-applypatch`,
- and `post-applypatch` hooks.  See linkgit:githooks[5] for more
- information.
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index ae82378349d..12c5f84e3be 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -336,6 +336,10 @@ CONFIGURATION
+ `--list` is used or implied. The default is to use a pager.
+ See linkgit:git-config[1].
  
-+CONFIGURATION
-+-------------
++include::includes/cmd-config-section-rest.txt[]
 +
-+include::includes/cmd-config-section-all.txt[]
++include::config/branch.txt[]
 +
-+include::config/am.txt[]
-+
- SEE ALSO
+ EXAMPLES
  --------
- linkgit:git-apply[1].
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index a7f309dff5a..91742633fa8 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -133,6 +133,13 @@ help::
  
-   Show brief usage of interactive git-clean.
- 
-+CONFIGURATION
-+-------------
-+
-+include::includes/cmd-config-section-all.txt[]
-+
-+include::config/clean.txt[]
-+
- SEE ALSO
- --------
- linkgit:gitignore[5]
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index d032d971dd7..1c3d7017646 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -370,6 +370,13 @@ $ cd my-linux
- $ git clone --bare -l /home/proj/.git /pub/scm/proj.git
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 9f37e22e130..4cb9d555b4b 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -600,6 +600,13 @@ $ edit frotz
+ $ git add frotz
  ------------
  
 +CONFIGURATION
@@ -157,103 +155,65 @@ index d032d971dd7..1c3d7017646 100644
 +
 +include::includes/cmd-config-section-all.txt[]
 +
-+include::config/clone.txt[]
-+
- 
- GIT
- ---
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index 047decdb65b..36fe56c2c71 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -142,6 +142,13 @@ $ git show-ref -s | git commit-graph write --stdin-commits
- $ git rev-parse HEAD | git commit-graph write --stdin-commits --append
- ------------------------------------------------
- 
-+CONFIGURATION
-+-------------
-+
-+include::includes/cmd-config-section-all.txt[]
-+
-+include::config/commitgraph.txt[]
-+
- 
- FILE FORMAT
- -----------
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 6c60bf98f9f..225c6c9f2e5 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -557,6 +557,10 @@ The editor used to edit the commit log message will be chosen from the
- `VISUAL` environment variable, or the `EDITOR` environment variable (in that
- order).  See linkgit:git-var[1] for details.
- 
-+include::includes/cmd-config-section-rest.txt[]
-+
-+include::config/commit.txt[]
-+
- HOOKS
- -----
- This command can run `commit-msg`, `prepare-commit-msg`, `pre-commit`,
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index 39cfa05b28b..8b5dd6add00 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -1564,6 +1564,13 @@ operator can use this facility to peek at the objects and refs from an
- import in progress, at the cost of some added running time and worse
- compression.
- 
-+CONFIGURATION
-+-------------
-+
-+include::includes/cmd-config-section-all.txt[]
-+
-+include::config/fastimport.txt[]
++include::config/checkout.txt[]
 +
  SEE ALSO
  --------
- linkgit:git-fast-export[1]
-diff --git a/Documentation/git-mailinfo.txt b/Documentation/git-mailinfo.txt
-index 3fcfd965fde..28060283c70 100644
---- a/Documentation/git-mailinfo.txt
-+++ b/Documentation/git-mailinfo.txt
-@@ -115,6 +115,13 @@ If no such configuration option has been set, `warn` will be used.
- <patch>::
- 	The patch extracted from e-mail.
+ linkgit:git-switch[1],
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 1c3d7017646..d6434d262d6 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -375,6 +375,8 @@ CONFIGURATION
+ 
+ include::includes/cmd-config-section-all.txt[]
+ 
++include::config/init.txt[]
++
+ include::config/clone.txt[]
+ 
+ 
+diff --git a/Documentation/git-column.txt b/Documentation/git-column.txt
+index 6cea9ab4638..18431647a2d 100644
+--- a/Documentation/git-column.txt
++++ b/Documentation/git-column.txt
+@@ -74,6 +74,13 @@ v2.4.3  v2.4.4      v2.4.5      v2.4.6      v2.4.7
+ v2.4.8  v2.4.9
+ ------------
  
 +CONFIGURATION
 +-------------
 +
 +include::includes/cmd-config-section-all.txt[]
 +
-+include::config/mailinfo.txt[]
++include::config/column.txt[]
 +
  GIT
  ---
  Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index e56bad28c65..9c630efe19c 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -397,6 +397,13 @@ If you want to customize the background tasks, please rename the tasks
- so future calls to `git maintenance (start|stop)` do not overwrite your
- custom tasks.
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index 6236c75c9b8..85ae6d6d08a 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -213,6 +213,13 @@ $ git diff -R                          <2>
+     rewrites (very expensive).
+ <2> Output diff in reverse.
  
 +CONFIGURATION
 +-------------
 +
 +include::includes/cmd-config-section-all.txt[]
 +
-+include::config/maintenance.txt[]
++include::config/diff.txt[]
 +
- 
- GIT
- ---
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 2f25aa3a291..def7657ef9c 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -692,6 +692,13 @@ a `git gc` command on the origin repository.
+ SEE ALSO
+ --------
+ diff(1),
+diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+index e9d364669af..63d9569e164 100644
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -285,6 +285,13 @@ linkgit:git-gc[1]).
  
  include::transfer-data-leaks.txt[]
  
@@ -262,65 +222,47 @@ index 2f25aa3a291..def7657ef9c 100644
 +
 +include::includes/cmd-config-section-all.txt[]
 +
-+include::config/push.txt[]
++include::config/fetch.txt[]
++
+ BUGS
+ ----
+ Using --recurse-submodules can only fetch new commits in submodules that are
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index ad921fe782e..160dea1372c 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -169,6 +169,13 @@ $ git commit    <3>
+ <2> Add all existing files to the index.
+ <3> Record the pristine state as the first commit in the history.
+ 
++CONFIGURATION
++-------------
++
++include::includes/cmd-config-section-all.txt[]
++
++include::config/init.txt[]
 +
  GIT
  ---
  Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index 0105a54c1a5..5016755efb6 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -142,6 +142,13 @@ EXAMPLES
- 	changes. The revert only modifies the working tree and the
- 	index.
+diff --git a/Documentation/git-switch.txt b/Documentation/git-switch.txt
+index bbcbdceb459..c60fc9c138b 100644
+--- a/Documentation/git-switch.txt
++++ b/Documentation/git-switch.txt
+@@ -265,6 +265,13 @@ always create a new name for it (without switching away):
+ $ git switch -c good-surprises
+ ------------
  
 +CONFIGURATION
 +-------------
 +
 +include::includes/cmd-config-section-all.txt[]
 +
-+include::config/revert.txt[]
++include::config/checkout.txt[]
 +
  SEE ALSO
  --------
- linkgit:git-cherry-pick[1]
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index 5cc2fcefbab..e5ec6b467f9 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -199,6 +199,13 @@ shows 10 reflog entries going back from the tip as of 1 hour ago.
- Without `--list`, the output also shows how these tips are
- topologically related with each other.
- 
-+CONFIGURATION
-+-------------
-+
-+include::includes/cmd-config-section-all.txt[]
-+
-+include::config/showbranch.txt[]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 6e15f475257..c5d70918283 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -382,6 +382,13 @@ grep commit | cut -d\  -f3 |
- xargs git log --merges --no-walk --grep=WIP
- ----------------------------------------------------------------
- 
-+CONFIGURATION
-+-------------
-+
-+include::includes/cmd-config-section-all.txt[]
-+
-+include::config/stash.txt[]
-+
- 
- SEE ALSO
- --------
+ linkgit:git-checkout[1],
 -- 
 2.37.3.1490.g9adf4224da0
 
