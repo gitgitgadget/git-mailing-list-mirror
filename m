@@ -2,66 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 111B6C54EE9
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 21:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 713CAC38145
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 22:07:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230445AbiIGVzz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 17:55:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56188 "EHLO
+        id S229598AbiIGWH1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 18:07:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230424AbiIGVzt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 17:55:49 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1AB4A261A
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 14:55:37 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id d82so2312823pfd.10
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 14:55:37 -0700 (PDT)
+        with ESMTP id S229498AbiIGWH0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 18:07:26 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D375795AD3
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 15:07:23 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id d12so15929859plr.6
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 15:07:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=qlpyaKi+ygVZbhQNXSkFwqw5smzCIWv2D1wNLXFOwf0=;
-        b=WN4l0oIBL2tfMlELd4GCmG/84hNIfx/ZnUKfxGz/W2CtQA1prUW2lZUTRQD89hv4ON
-         bpV0qnuaxZkkFRCw3UpA0XU/Fzpuzb/Ru/t0EcJ4JtKf7K3nLvIE7XweYmexUJwt4MBd
-         t0vRDk7BbZ0Sb1EjE5vv6Ymf9ceS0FmJ+JZR3hxBm/4inf/615yp4UOQDDjNXb45fPUf
-         2RSqvXrcZyDkKOVd4nQdzF/dFRArcRVEo0zJlS9MNPzG+Ofu4NkETp9Ye+VhypaVURmK
-         nVsp7asM2NcTAMjmQ41Ne4eZhHwbmzqfnio9s8S/r0vA+tacU0TznqfQWqaPuCqTfpuy
-         u/lg==
+        bh=dnvo+8vJYoMruXbF5lmNk1tQfjvp201YNPNOmtmv6l0=;
+        b=lY65PNF4UoRIHP91DeNyoPDO8mPnUbvkkpuLmsPA9/31nNCdBjpMtqp4XhkmdFzlGq
+         PjMAu8CIT31M13tj9Th3QcRjndSkHzbobOoLh0vITMqqQ2XcsW0mZ3vSkkrCuPcCgrbv
+         6hZSfTmdjX/uBL3BAI47TdeM7KjdtXXD+PxPhMI4/SmgJ075Rbtw/A1PJ0fMDmNDClHR
+         eERPEsl7NnVI34h2Z1Ms21zMmPbLeG6V+yPhqB1W1Ksts0jP8RjxX7ihVY8VE4FLg6X2
+         VNOWQy55RtnQbRtZd0QAKNjr6sUukv56ucg8o/2pk0p/0rYKoV6KE9Y1ZTlw2hm5fW2j
+         VMCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date;
-        bh=qlpyaKi+ygVZbhQNXSkFwqw5smzCIWv2D1wNLXFOwf0=;
-        b=6yoXtagdvmO57lB/COrJjmK15iNGuJ7H465FUHq69Q4XKg9SMRyXr9XTzOVdmS42TL
-         FGtR2c0+y+l89dOaJ9ef8UOeBgwySHgsF+El2QCnHyU+7SipstACu+fyg3cBJB1/NIkd
-         k2wk95ei+tuNAHyjZ7ZbrFGnUSz4RJBqprcWpTSup0nIvOYoB341rE6AY17l05fcWzXo
-         a/MH/KGe3O1sdo4c7LJDy5pWsUCSN3LsjcRF9wbfB00Sm1MpmOsDMJ9X64zeX2gVK1GC
-         j51LhvG/JBase6ai/cXdyZ+XnSlSn9YsuxKWWvsD+5l+b/ljXx7NafG3lR7go5WzclDW
-         mElQ==
-X-Gm-Message-State: ACgBeo2tvQpBRSOB6Cc2rGMAb9fUWcZ9c4U74UWBuPXdm+VBRjTcx1nI
-        BB+S9VWxFpW9tn02n+RxCMA=
-X-Google-Smtp-Source: AA6agR74RV7y7PwJxvp45GFs5LbcL50idEasSVHLQ6pDv1hmhxxbAvUcWLpqGf61BiJpX7ChA6B1IQ==
-X-Received: by 2002:aa7:888d:0:b0:538:328b:2ffb with SMTP id z13-20020aa7888d000000b00538328b2ffbmr5806026pfe.82.1662587735993;
-        Wed, 07 Sep 2022 14:55:35 -0700 (PDT)
+        bh=dnvo+8vJYoMruXbF5lmNk1tQfjvp201YNPNOmtmv6l0=;
+        b=YJybv7wXgKcK6G/lFlW5Wn9rsG4S48iCvi3r1Lc/Cf/5i5c9rvywqc+DPv/c5COHtS
+         0SSOz7xBNdytMqUVXmLPsiZ0qhjwT38d7SnnI/GWBCS17aPbkE2mGXe/wvmLWncv8yS+
+         Jv4V0nSf6HI+FWzBAhxH7rkOz0zr7mpO76R3fWmgXMifekssxwo4qK1LbOWq3nBQOgpD
+         XFdpXGt5nQubtJKPNOf8cZ27sDIT/T7rApqccAxM0iGfZIBQBD5LEazZkhO/AbEpzNOQ
+         CSbtwnTn73bTFM23QIksUtAskRM9jGkL5rO7VuR2gjFbaMOnP0uEpu7u5csnS6/QWOEC
+         SZIA==
+X-Gm-Message-State: ACgBeo0hooiBhlXqrNeB9xAYuC7iMALe7qZhQIOW1NyeUd5msyc2/vQj
+        wjvj5rQQt96U+tDciDKfZQw=
+X-Google-Smtp-Source: AA6agR40FxRaL9gb2r8EgQD6GbJC0SdANesYZz8pXVcUozgYAGNM+UTZ/QqIOTDG3eF6PiTlpExC3g==
+X-Received: by 2002:a17:90b:1d01:b0:202:6634:996b with SMTP id on1-20020a17090b1d0100b002026634996bmr443691pjb.14.1662588443253;
+        Wed, 07 Sep 2022 15:07:23 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id p20-20020a170902e35400b001726ea1b716sm6806751plc.237.2022.09.07.14.55.35
+        by smtp.gmail.com with ESMTPSA id z4-20020a170902ccc400b00172c7a2c662sm12792420ple.48.2022.09.07.15.07.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 14:55:35 -0700 (PDT)
+        Wed, 07 Sep 2022 15:07:22 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     <rsbecker@nexbridge.com>
-Cc:     <git@vger.kernel.org>
-Subject: Re: [BUG] t1800: Fails for error text comparison
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
+        Xin7 Ma =?utf-8?B?6ams6ZGr?= <maxin7@xiaomi.com>,
+        =?utf-8?B?55+z5aWJ?= =?utf-8?B?5YW1?= <shifengbing@xiaomi.com>,
+        =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
+        =?utf-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
+Subject: Re: [PATCH 2/3] upload-pack: skip parse-object re-hashing of "want"
+ objects
 References: <YxfQi4qg8uJHs7Gp@coredump.intra.peff.net>
         <YxfSRkEiiP4TyZTM@coredump.intra.peff.net>
         <xmqq1qsnugsu.fsf@gitster.g>
         <YxkAxutS+B8//0WF@coredump.intra.peff.net>
-        <001201d8c2fb$3f1c51b0$bd54f510$@nexbridge.com>
-Date:   Wed, 07 Sep 2022 14:55:35 -0700
-In-Reply-To: <001201d8c2fb$3f1c51b0$bd54f510$@nexbridge.com>
-        (rsbecker@nexbridge.com's message of "Wed, 7 Sep 2022 16:48:49 -0400")
-Message-ID: <xmqqh71isvc8.fsf@gitster.g>
+        <YxkG3A30vNfu55Sx@coredump.intra.peff.net>
+Date:   Wed, 07 Sep 2022 15:07:22 -0700
+In-Reply-To: <YxkG3A30vNfu55Sx@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 7 Sep 2022 17:02:20 -0400")
+Message-ID: <xmqq8rmususl.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,50 +77,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-<rsbecker@nexbridge.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> I am finding an issue with t1800.16 failing as a result of a text compare:
+> Subject: [PATCH] t1060: check partial clone of misnamed blob
 >
-> -fatal: cannot run bad-hooks/test-hook: ...
-> +fatal: cannot exec 'bad-hooks/test-hook': Permission denied
+> A recent commit (upload-pack: skip parse-object re-hashing of "want"
+> objects, 2022-09-06) loosened the behavior of upload-pack so that it
+> does not verify the sha1 of objects it receives directly via "want"
+> requests. The existing corruption tests in t1060 aren't affected by
+> this: the corruptions are blobs reachable from commits, and the client
+> requests the commits.
 >
-> I don't think this is actually a failure condition but the message
-> text is platform and shell specific.
+> The more interesting case here is a partial clone, where the client will
+> directly ask for the corrupted blob when it does an on-demand fetch of
+> the filtered object. And that is not covered at all, so let's add a
+> test.
+>
+> It's important here that we use the "misnamed" corruption and not
+> "bit-error". The latter is sufficiently corrupted that upload-pack
+> cannot even figure out the type of the object, so it bails identically
+> both before and after the recent change. But with "misnamed", with the
+> hash-checks enabled it sees the problem (though the error messages are a
+> bit confusing because of the inability to create a "struct object" to
+> store the flags):
 
-Isn't this coming from piece of code in start_command()?
+Makes sense.
 
-		/*
-		 * Attempt to exec using the command and arguments starting at
-		 * argv.argv[1].  argv.argv[0] contains SHELL_PATH which will
-		 * be used in the event exec failed with ENOEXEC at which point
-		 * we will try to interpret the command using 'sh'.
-		 */
-		execve(argv.v[1], (char *const *) argv.v + 1,
-		       (char *const *) childenv);
-		if (errno == ENOEXEC)
-			execve(argv.v[0], (char *const *) argv.v,
-			       (char *const *) childenv);
+>   error: hash mismatch d95f3ad14dee633a758d2e331151e950dd13e4ed
+>   fatal: git upload-pack: not our ref d95f3ad14dee633a758d2e331151e950dd13e4ed
+>   fatal: remote error: upload-pack: not our ref d95f3ad14dee633a758d2e331151e950dd13e4ed
+>
+> After the change to skip the hash check, the server side happily sends
+> the bogus object, but the client correctly realizes that it did not get
+> the necessary data:
+>
+>   remote: Enumerating objects: 1, done.
+>   remote: Counting objects: 100% (1/1), done.
+>   remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
+>   Receiving objects: 100% (1/1), 49 bytes | 49.00 KiB/s, done.
+>   fatal: bad revision 'd95f3ad14dee633a758d2e331151e950dd13e4ed'
+>   error: [...]/misnamed did not send all necessary objects
+>
+> which is exactly what we expect to happen.
 
-		if (errno == ENOENT) {
-			if (cmd->silent_exec_failure)
-				child_die(CHILD_ERR_SILENT);
-			child_die(CHILD_ERR_ENOENT);
-		} else {
-			child_die(CHILD_ERR_ERRNO);
-		}
+Thanks.  Let's queue it on top.
 
-The test apparently expects CHILD_ERR_NOENT, which comes from
-child_err_spew()
-
-	case CHILD_ERR_ENOENT:
-		error_errno("cannot run %s", cmd->args.v[0]);
-		break;
-	case CHILD_ERR_SILENT:
-		break;
-	case CHILD_ERR_ERRNO:
-		error_errno("cannot exec '%s'", cmd->args.v[0]);
-		break;
-	}
-
-but somehow your system fails the execve() with something other than
-ENOENT.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/t1060-object-corruption.sh | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/t/t1060-object-corruption.sh b/t/t1060-object-corruption.sh
+> index 5b8e47e346..35261afc9d 100755
+> --- a/t/t1060-object-corruption.sh
+> +++ b/t/t1060-object-corruption.sh
+> @@ -139,4 +139,11 @@ test_expect_success 'internal tree objects are not "missing"' '
+>  	)
+>  '
+>  
+> +test_expect_success 'partial clone of corrupted repository' '
+> +	test_config -C misnamed uploadpack.allowFilter true &&
+> +	git clone --no-local --no-checkout --filter=blob:none \
+> +		misnamed corrupt-partial && \
+> +	test_must_fail git -C corrupt-partial checkout --force
+> +'
+> +
+>  test_done
