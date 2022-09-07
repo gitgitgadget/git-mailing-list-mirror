@@ -2,110 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CF22ECAAD5
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 02:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 730D1C38145
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 04:30:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229564AbiIGCTT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Sep 2022 22:19:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59492 "EHLO
+        id S229700AbiIGEav (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 00:30:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbiIGCTS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Sep 2022 22:19:18 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE156901B4
-        for <git@vger.kernel.org>; Tue,  6 Sep 2022 19:19:17 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id d12so13095028plr.6
-        for <git@vger.kernel.org>; Tue, 06 Sep 2022 19:19:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=MxkWwRIzA/Ld+uKsQtIBh8QQ9Ofu5rCb6fh3Rn/cKc0=;
-        b=XDYqG3TGuzhTEE5Rbuz782+4yEgnKFDsa5hYrmbayt010wMm5pnpNMsI8GqL8ktaLK
-         m7QGQUrwl6BqLg62FYN6RYQRPB6W/yJc+ZiahJIgZjU5Z+TU6j1fUfSf44Wbfn6Qj+mB
-         oo8ul+ejbi2oJuVZDyRD1Xs+e/QbM/S1DuV5jGhoMkmj9+tbk8TGhFD9J4NSw7fs9YuJ
-         KU62s0o6QzuNAESuRey0rGd6rrNnyYWdI2IllXvZ4WLt39Zob1poHXjfcBu5zE0y/Dq0
-         hpNQ+Vf8kBh0RaZw/gbnh0T0ypcIr4fBWPJGSV6o3BeuasOeRL0zoKbb6xFgpp0mKPox
-         mnPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=MxkWwRIzA/Ld+uKsQtIBh8QQ9Ofu5rCb6fh3Rn/cKc0=;
-        b=esfVaVe/QIlkJPIrWIy0R6naB8Etr3fCwMCTPwFrOfO+J5oP0g3JdFE1fdzkOTdhiS
-         13sL42csVXS6dd/DPcZnGuV+EMsSLwikucE6bm9GVswQIRq7ucLDo/Lj7Ugh0Vx6vF4B
-         tJTIk5xpjt/45KXt8O1IwNckAnsRLAUat5OgXgTZK2zeLcW9exGmBQ1EeccpfoJNdOrI
-         1kZmBSBsKo6Z4lLoqXRNW4aZn8mj6ZUpJplACZaaKnIioeNABRXHkwHzUQLUq+0fW70F
-         sutVp35+y5/rK+Rrdr1KUyZBW59Hi40Z2m3Iabxeg0ubiVS5rEUfrT1tJD2foVK7fJ3M
-         fwxg==
-X-Gm-Message-State: ACgBeo3/3My8KJDZ4ldruWUwAYAbV7+bLufNnjwFZi/ynnUwT4QvKgrs
-        sVbcyljPY27WlCd+TKoZc1DIhR1WlGg=
-X-Google-Smtp-Source: AA6agR76neINVSPmCA+aLiUqW8sc4nwuaER3pa1OfhXLt2G96Mb5kppB5AOnOM5sZe0UxSPk2541uA==
-X-Received: by 2002:a17:903:110e:b0:171:3afa:e68c with SMTP id n14-20020a170903110e00b001713afae68cmr1640628plh.12.1662517157319;
-        Tue, 06 Sep 2022 19:19:17 -0700 (PDT)
-Received: from localhost ([113.172.46.62])
-        by smtp.gmail.com with ESMTPSA id z8-20020a170902ccc800b00176ea6ce0efsm94742ple.109.2022.09.06.19.19.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Sep 2022 19:19:16 -0700 (PDT)
-Date:   Wed, 7 Sep 2022 09:19:14 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Felipe Oliveira Carvalho <felipekde@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Patches produced with format-patch under specific config aren't
- applicable
-Message-ID: <Yxf/opwDZb/dLp29@danh.dev>
-References: <CAOC8YXak_QfPgxc=JWvzpaPGe9ZnFhDnR-36PrMG16qXFkQmsw@mail.gmail.com>
+        with ESMTP id S229486AbiIGEat (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 00:30:49 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8067A832DC
+        for <git@vger.kernel.org>; Tue,  6 Sep 2022 21:30:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1662525041;
+        bh=CkEw3iyQXOi6lcnFcWS7ctZ27E4uPy1hbvTk2MsL9zM=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=Efvz7yOLx4sUaieuzsWiUXtlt6lW+bBdgbzDIY3RXryN5FZBE46b/6oIYKzThnSFY
+         8zJGLPyuZNceTn1/cgll2+tYQPWkqdbe9OV3OE59OApu2FXzNBBCick+DlL//lGvk/
+         Y/nMLOwzI/rXY/9h1NuDSp9Z9V/VvDLbFAPBt+tY=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N4eGT-1pXXbK15ip-011Ja0; Wed, 07
+ Sep 2022 06:30:41 +0200
+Date:   Wed, 7 Sep 2022 06:30:40 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, alexander.s.m@gmail.com,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v4 1/2] diff.c: When appropriate, use utf8_strwidth(),
+ part1
+Message-ID: <20220907043040.idqqivi3jt35jyst@tb-raspi4>
+References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
+ <20220903053931.15611-1-tboegi@web.de>
+ <xmqqv8q1zgzi.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CAOC8YXak_QfPgxc=JWvzpaPGe9ZnFhDnR-36PrMG16qXFkQmsw@mail.gmail.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqv8q1zgzi.fsf@gitster.g>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:CVxQs9KJu4N14mtB/OMxw8GT1MAdoXvV/lqoLZtUuWzfouDqNyw
+ RBErOJ/CIXbEl0Nx5vSR9mxR40b3tphk9ZcLbzfmRaOERzRn4x6a0biImmbbibsC0Ba4SY5
+ eVjON4yKcA1LnGXieV67T9pu0vtTgMz5XZrgDdc4cn+GMhH9sIiN12bYQIJ/x1SFiqqSCsN
+ abkplf51EIetv9tazIkYg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:iYLhgPcWC/s=:ErXgqrTSC8UGElN3fEPCpk
+ 3mAkw3jsyW+1f9Zt5fRPyVqmayybie4DQnv5FBy+HafS/5KCZblvI3iXQmppoksMSYumQ9+8G
+ +FERgQnqST0ckTGv5272YrX0ttrlCOwlHGanFUd2I+bNKFbvevb/gGN/AlrFe1K059zjRziAS
+ F1hOCOO9UwSwovufQgGwkyDg10yTypDF8aZYqE/T9cghwPcduMBQVf/i6DvBNSt0Dkitu3PDa
+ Is7W7g/oQmWWzCYES6g6R/vOSS2hLrTG+jhrhGe71aQ8qNYUY7o/E77SXDr9N+iGiLWQ7AuCr
+ H9H57Z+jwfGt6BhFnstfxoyQtQYHxQ/uWG10EMmtrk1OQCGTKxmKDFYzYh+GmjU3UHEiJHqEx
+ Y1CaOyc+DACORLv275auRbzgKjj2bVydwl7woTpxCcDJAfq3ZZ5WS8Cw+0SudWkRsgtCq/XjG
+ 2UiiY1iQK2tckHxiZHi+T8xDjElMs6mzHynyj4+c1uzn9yISWfvaSTc2W5OcR8SW6NvRHmZAM
+ PbJ21A/tMQlTxQQ/ah6mPL7fsiT6IV3tWVLQkY0sR4+kdyBCqSTGPrmZ5xnYrZCYl3P4cF+G9
+ Sm8ZOxFFlSv/4QMWweqRhiapamqsohh+tcNocqwwxgaZtK59HCPtT9nJdi2/et3nMkF2IwnbO
+ 1/Y8cDpd66auX5YXrRA3mPoSEvMVF112eEK1S3aQH2oTIohhsZZB83PICwarmJw1ZAaecN4kr
+ 16Sc/1fNut5mZEzZf4hmX2iFmTPNuRLDv13yo/D+UKz6N302CS19rHzc3mMpP5WhIccILpVIr
+ 9a5sF4voWwzag6z+fU5z9g1Y7dt/FYDklr0DWHk5YLANbtcGEvscF0qv5aqEsaONAc/rusCx0
+ qfx45P0iH2S+TMk/jX7i8pNv0cD99yAO8O1ltmlCZWigGL/Q93P7B9u0GkfOYZpo4HzJqHrzG
+ u6PGsxV4IEJ7MUUJIbm3d1CnT1VL8V6sGOBiRWZDZ2dCmxvjG4OVY9px3D4EvqroHN+RZPrhm
+ aLGJPTHyqiyKbEwQJXcQMPjaDpG1VifaAGNhHY2BLPG76LtIASyJBkvdRK8/4rVDjxoAd8JNw
+ ecT6XDJZQCZzCiFpCnFnxhfoD+hc9iZQSCrPtoaapMXjpvQez/5I2QOpwdUYTc1wUQjgJsZva
+ yBLs0=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-09-06 10:45:41-0300, Felipe Oliveira Carvalho <felipekde@gmail.com> wrote:
-> Patches produced with format-patch under specific config aren't applicable
-> 
-> Inbox
-> I have diff.noprefix=true on my ~/.gitconfig
-> 
->     [diff]
->         noprefix = true
-> 
-> I generate a .patch file from the last commit with
-> 
->     git format-patch HEAD^
-> 
-> Due to noprefix=true, I get this line in the patch file
-> 
->     diff --git src/filesystem/PhutilProcessQuery.php
-> src/filesystem/PhutilProcessQuery.php
-> 
-> instead of the default
-> 
->     diff --git a/src/filesystem/PhutilProcessQuery.php
-> b/src/filesystem/PhutilProcessQuery.php
-> 
-> So when I try to apply that patch, I get
-> 
->     $ git apply --check ./0001-my.patch
->     error: filesystem/PhutilProcessQuery.php: No such file or directory
-> 
-> In trying to remove the a/ and b/ that apply expects, it removes src/
-> from the path, then fails to find filesystem/PhutilProcessQuery.php.
-> 
-> As a mitigation, I'm setting diff.noprefix to false, but a more robust
-> solution would be for the format-patch command to ignore this setting
-> as patches are expected to work on repos configured by different
-> people.
+On Mon, Sep 05, 2022 at 01:46:57PM -0700, Junio C Hamano wrote:
+> tboegi@web.de writes:
+>
+> > From: Torsten B=F6gershausen <tboegi@web.de>
+> > Subject: Re: [PATCH v4 1/2] diff.c: When appropriate, use utf8_strwidt=
+h(), part1
+>
+> Given 2/2 does not share a similar title, "part1" sounds somewhat
+> strange.  In any case, 'when appropriate,' is probalby best unsaid,
+> as it is almost a given.  We won't deliberately use something that
+> is not appropriate on purpose anyway.  Even if we =3Dwere to keep that
+> word, downcase "When".
 
-You can use "-p0" with git-am or git-apply to apply such patches.
+Yes, agreed. In short: I will make a new patch the next weeks,
+in one commit (again). (That can take some days or weeks)
 
-There's a RFE in the past to add log.noprefix and/or format.noprefix
-but it seems noone interested enough to work on it [1]
+Thanks to Dscho for his patience with the strbuf() improvements.
+I think that I tried a "%*s" version, but couldn't get that to work.
 
-1: https://lore.kernel.org/git/xmqqr1auvs7m.fsf@gitster.g/
+> > Side note 2:
+> > Junio C Hamano suspects that there is probably more work to be done,
+> > in a separate commit:
+> > Code in diff.c::pprint_rename() that "abbreviates" overly long pathnam=
+es
+> > and "transforms" renames lines like
+> > "a/b/c -> a/B/c" into the shorter
+> > "a/{b->B}/c" form, and IIRC this is all byte based.
+>
+> I already said that I suspect {b->B} conversion is OK, so the side
+> note is probably more noise than being useful.
 
--- 
-Danh
+OK - the comment can be removed.
+
+I didn't know how to read this comment:
+>...but the former may chomp a single multi-byte letter in the middle,
+> which would need to be corrected as a part of this change.
+
+After diffing into the code some more times, I think that we don't
+chomp a single byte out of an UTF-8 sequence.
