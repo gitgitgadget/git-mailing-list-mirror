@@ -2,103 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B823AC38145
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 18:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09115C38145
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 18:36:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229668AbiIGSbs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 14:31:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49578 "EHLO
+        id S230040AbiIGSga (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 14:36:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229512AbiIGSbr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 14:31:47 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99A898A7D8
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 11:31:46 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id iw17so8801803plb.0
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 11:31:46 -0700 (PDT)
+        with ESMTP id S229616AbiIGSg2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 14:36:28 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BD03BCCC8
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 11:36:27 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id l65so15482441pfl.8
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 11:36:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date;
-        bh=Nk+mzw42CqbfKFpTP5YXWxNI6pUUa++jl41qkSuc2Fw=;
-        b=pg8gq8bEXSeD1y2mPU/wwqzcQZs5oG/IF4rGoZ2OdOGrrdb0DC+k0486muzgZOXzD2
-         rqch+Vk1ctjUXK1Gqs5NVeuGlZG9Smqt9LtS2/1B9xEKlj4DQHyjkd15gZaPNQJJUnzM
-         bUSvOiWYFf5cceCg2XwmZpjena+xZk3EocdpbbIWmhNvT0gv+9edHN1gzFOTbH2cdCkS
-         f8gjz19qeQZz+ToM0wkJsLS5TdlIhcxkm8aBm4rUdQ41ooCqkY1JVcLOG04QBwAuEifB
-         ZRYxDuHNom82MvYJRuUDqGkS2DwGq+FrZePm5dbpcb6PRT74KrCzdQ/5VqOgd1mGpXtF
-         bLWg==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date;
+        bh=49B9XlNy5E5tvM+NH2xL3KsuwCy/E3efph2owkRcwIY=;
+        b=Hish8vNBuYcl55lq4apLSHRLHX+/Fk8HWc6rLrPtrZUt0EbOhEcTAfIOJAv7R3PwUp
+         aKn9LIpsWIeSPDXG/19ROwW9nhPCNqmV4QCWag0JC2mO0FCCRGaGN8MAHiX4b8ei4rXb
+         1v5rpDVNyD2N4C7kAeduDNAXDf0eb6Ahk3AITrL+8+/qU3jkcfthkHfvqlgI3wjqmGIq
+         4YeSqVSRd9q2Aq04TmDhzL0HECC2hg/vfkxLle7Fx6FkTGbPEaPcN9kK5T9dM4a/8viF
+         6AH1kAKFLgiARXzLYA9Ev3vIATs0jn+P/komUvm4klE/1rigzqAscETyMj9LjelAQcpK
+         2UDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Nk+mzw42CqbfKFpTP5YXWxNI6pUUa++jl41qkSuc2Fw=;
-        b=sBRbJdpqpHOW3Ad6lpyecGf2YID8oNsinb7ZuczG8qdHj4RQ+qoTLupt+WR/HJAGTD
-         DaPbzvEoF4ob+Zxtp77VV5BedLVeemhRo+CwKccSnY5riBxZD8U7V0PszZD4BOz5Khuh
-         6Z5jdaSbodj9s/SUg/ItAPuSwiH/0SrFUarFKwQ+mbzv7omrTk9EY/+rW8DM+xN9qszt
-         Ur7SIepK9PDczznJ4YQZg9cY8E9APJ2+qPiRqXfAwrW4FQCtWaOCkuH5QIusBNvmGY2b
-         Au+fyRq5VgFsAn2QY/HqIcxx4hjxDHnFl1u0LVScSldStsSBkKtxEw4KJUs3bqGoS/9z
-         AXDg==
-X-Gm-Message-State: ACgBeo0j2L581JyDB7WX3ECErqeFbhCFn4PpCDqL2ECMPvv+WUDeswSG
-        O+iLVKJLhtkfIi7ek2Ek4bM=
-X-Google-Smtp-Source: AA6agR6NXgz2MIv2pKQ88O8xn2F1WpOhm4P1WSD95mhHwDGNrCvm2qQROupMi6tzF2yhYd3UBtOG5A==
-X-Received: by 2002:a17:90b:1c07:b0:200:9728:b8cd with SMTP id oc7-20020a17090b1c0700b002009728b8cdmr11630797pjb.139.1662575506031;
-        Wed, 07 Sep 2022 11:31:46 -0700 (PDT)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date;
+        bh=49B9XlNy5E5tvM+NH2xL3KsuwCy/E3efph2owkRcwIY=;
+        b=cH6+SdJiWCF4FBVhkfvRWvUUcrOQcktxpf+3miTS1o9F9H5jytBho/hw/+x9lzQDDN
+         r+C18KRvm5rxr6oIv1A5vAmh+By0Snirf6Uqf+lVPfbM2qU5qZLVzNtGlwbN7X6FlujY
+         a5QOCCTSKIxXz90sXhi3FwL3DVpfFhxOkGifJUaizIX9os/n0+LHhNionGCi/2s66RN6
+         LIF1QouZKwxZbf4ydR3rjxzeHx7NaouUaXxPjlKATaAA0L2jtaIfaSL7KpXsabNF2RTQ
+         OrsF6lgi2HNaYp5xgll1K4zDRwa5EKz+hpHj9IDLV6Ut5hCEPeIAco9vb0Q408RpnUqu
+         5xhg==
+X-Gm-Message-State: ACgBeo2djnpopfAVjvt3h973W8JEYxFAkxQrefv39TL3YHoZg9N6XecB
+        5sT1ImryFhWLFnTF7BO1SQc=
+X-Google-Smtp-Source: AA6agR69HaBPMBHQpR72dutS3BYpjSbUSixecZR+RCU9f+iDXG84f4NC9sjgD+L5E24dLhQHLW3N7A==
+X-Received: by 2002:a05:6a00:e8f:b0:536:c98e:8307 with SMTP id bo15-20020a056a000e8f00b00536c98e8307mr5121455pfb.73.1662575786430;
+        Wed, 07 Sep 2022 11:36:26 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id i4-20020a056a00004400b0053e5ebafd5csm2720971pfk.189.2022.09.07.11.31.45
+        by smtp.gmail.com with ESMTPSA id bj9-20020a056a02018900b0041bcd8f3958sm10885970pgb.44.2022.09.07.11.36.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 11:31:45 -0700 (PDT)
+        Wed, 07 Sep 2022 11:36:25 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org, alexander.s.m@gmail.com,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v4 1/2] diff.c: When appropriate, use utf8_strwidth(),
- part1
-References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
-        <20220903053931.15611-1-tboegi@web.de> <xmqqv8q1zgzi.fsf@gitster.g>
-        <20220907043040.idqqivi3jt35jyst@tb-raspi4>
-Date:   Wed, 07 Sep 2022 11:31:45 -0700
-In-Reply-To: <20220907043040.idqqivi3jt35jyst@tb-raspi4> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Wed, 7 Sep 2022 06:30:40
- +0200")
-Message-ID: <xmqqedwnujce.fsf@gitster.g>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
+        avarab@gmail.com, l.s.r@web.de
+Subject: Re: [PATCH v2 2/2] format-patch: warn if commit msg contains a
+ patch delimiter
+References: <cover.1662559356.git.matheus.bernardino@usp.br>
+        <a2c4514aa03657f3b1d822efe3dd630713287ee6.1662559356.git.matheus.bernardino@usp.br>
+        <4d750ff2-9df5-504f-9972-59b082000db0@gmail.com>
+Date:   Wed, 07 Sep 2022 11:36:25 -0700
+In-Reply-To: <4d750ff2-9df5-504f-9972-59b082000db0@gmail.com> (Phillip Wood's
+        message of "Wed, 7 Sep 2022 19:09:05 +0100")
+Message-ID: <xmqqa67buj4m.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten Bögershausen <tboegi@web.de> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
+> Hi Matheus
 >
-> OK - the comment can be removed.
+> On 07/09/2022 15:44, Matheus Tavares wrote:
+>> When applying a patch, `git am` looks for special delimiter strings
+>> (such as "---") to know where the message ends and the actual diff
+>> starts. If one of these strings appears in the commit message itself,
+>> `am` might get confused and fail to apply the patch properly. This has
+>> already caused inconveniences in the past [1][2]. To help avoid such
+>> problem, let's make `git format-patch` warn on commit messages
+>> containing one of the said strings.
 >
-> I didn't know how to read this comment:
->>...but the former may chomp a single multi-byte letter in the middle,
->> which would need to be corrected as a part of this change.
+> Thanks for working on this, having a warning for this is a useful
+> addition. If the user embeds a diff in their commit message then they
+> will receive three warnings
 >
-> After diffing into the code some more times, I think that we don't
-> chomp a single byte out of an UTF-8 sequence.
+> warning: commit message has a patch delimiter: 'diff --git a/file b/file'
+> warning: commit message has a patch delimiter: '--- file'
+> warning: git am might fail to apply this patch. Consider indenting the
+> offending lines.
+>
+> I guess it's helpful to show all the lines that are considered
+> delimiters but it gets quite noisy.
 
-When turning a/b/c vs a/B/c into a/{b->B}/c, two steps are involved.
-Take common prefix and suffix (in this case 'a' and 'c') and turn
-'b' vs 'B' into {b->B} is one step.  The other is what to do when
-prefix and suffix are long.  After turning aaaaa/b/c vs aaaaa/B/c
-into aaaaa/{b->B}/c, if the result is overly long, how we shorten
-the prefix (i.e. aaaaa) and the suffix?
+True.  I wonder if automatically indenting these lines is an option ;-)
 
-I knew the code that produces {b->B} honored '/' boundary, but I
-just did not remember offhand what diff.c::pprint_rename() did in
-its latter half, specifically, if it just chomped pfx and sfx as a
-sequence of bytes (which would have been wrong) or insisted that the
-common sequence search honors '/' boundary (which would be OK, as
-byte '/' will not appear in the middle of a single multi-byte UTF-8
-"letter").  I think iti s doing the latter, so it should be fine.
+>> +
+>> +	if (found_delimiter) {
+>> +		warning(_("git am might fail to apply this patch. "
+>> +			  "Consider indenting the offending lines."));
+>
+> The message says the patch might fail to apply, but isn't it
+> guaranteed to fail?
 
-
-
-Thanks.
+Worse is it may apply a wrong thing (i.e. an illustration patch in
+the proposed log message gets applied and committed with a truncated
+log message).
