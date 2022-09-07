@@ -2,86 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E50E0C38145
-	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 19:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D328C6FA82
+	for <git@archiver.kernel.org>; Wed,  7 Sep 2022 19:37:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229686AbiIGTbe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 15:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50294 "EHLO
+        id S229853AbiIGThL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 15:37:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229569AbiIGTbc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Sep 2022 15:31:32 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BAEFBD2A1
-        for <git@vger.kernel.org>; Wed,  7 Sep 2022 12:31:31 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id fv3so9402310pjb.0
-        for <git@vger.kernel.org>; Wed, 07 Sep 2022 12:31:31 -0700 (PDT)
+        with ESMTP id S229686AbiIGThK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Sep 2022 15:37:10 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 997CDBCC02
+        for <git@vger.kernel.org>; Wed,  7 Sep 2022 12:37:09 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id 145so15653660pfw.4
+        for <git@vger.kernel.org>; Wed, 07 Sep 2022 12:37:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=Rvx0J42ItWLpykR8fnITC52FQQs2Hsp+9mN5xs952y8=;
-        b=FlzX8sWr7UPmgTIKk/GP8vECoxobRaB7avM0+GCIDGjAHHcwMNPwf0UpxsR8w9hfC7
-         zZIumHhjFsy9+SpTmsLv9b/yDBstMmpv/MM5/1NEP14D2F5ygbA+rIxTT+HKwjhjRv2p
-         zvHbomBTa9r7NbxZCDqW5GAb8oRX/zMoRBO7pyNWaTP/jUtWVg32E0hjsDK3fuaomFkG
-         ESwl0MC2WeeWm7IxUCQ6W19VccKy4hQUL7+AVFgjr96excKRqKINQczbztCNguabCJtQ
-         O3+DkqcN/Xanudr5k9vmGd4IlDvI7WD312sug8GpM9ERoAhLHu1QVMXvhJ4XNAppZB73
-         EL+Q==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date;
+        bh=4HKKO1TmoFlM1HQIZmrD9b49hW2WJXwaGVkC4VBN884=;
+        b=PtdqcVVHLGem6RzZ+LyNI9SP96zGTrLO2wDB2KTkOImJrdQyO50pqOrKMzqDmlU4R7
+         T2fgjeQFbhpvGxKAv1xhi6c9iM++yBJDIJpMjA0AFy2cGtq3vnMjJ2G3HlBg0/vWPgIP
+         ZXPB9HB79DDlA4TCndlJtSZZ8tAvb/K8tcPxwLc3m5Eo9KsUi5IOi3raOdh42wlkFtNo
+         Kc90DLhnl4y1rSkVEmLAqg9K9BikyzRLW3xbzzcWfzMV9KGb2NEcscn8jbDlQh7V5V9y
+         kIoXe0x7ZKAsKBU8GirPHIwbJOlUFr7BZ67VSKCrpQu1PiPSGCPxk+6CBJjfH5f+QWTx
+         82OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=Rvx0J42ItWLpykR8fnITC52FQQs2Hsp+9mN5xs952y8=;
-        b=OoC2JN4BaLzlrzr8ELM2d30eOr9eu08Fi30l73vWt8sYUVFNtG4da1FdpnWbuFUCLG
-         8eoUtJDO9jrxzr0vYXJ1jW7iHFEPD/DKHEEeY0TD/a/aUEEWXutfkq0cNvzwhAdRMWFp
-         QQOu0TEjcF9oHUzmPpPIMJJVh86wcY4OL2LZg4ypAhvNF8FGjRqh3B2pP0x+tFsWUMRg
-         EPeRaSG57nlRVpfTANKohke7zIJvMkYSHtnxbIdGzWHNnQgrIAlbAqjhys9NeLWw8Qre
-         gjmbKnvS1u6PlnNqzJP2zIsHhk7Q8adjTQ6IWgPZQgVfGR4WgO5Nl36+4R3vjVSx6QLR
-         c4WA==
-X-Gm-Message-State: ACgBeo1FOUv1uBr8f7osIHD4DOFOIUXXiRtqsrfucokfKvTcf2ofYIMk
-        BG7je8khH9qoW33ZU44oidE=
-X-Google-Smtp-Source: AA6agR5baHc3Bm25TmBqVr64+gQ1GjZ3wYFpnFwPwLW8pyCoK2Bja9NpK0FW6ZYA0amUPzpi74+KrQ==
-X-Received: by 2002:a17:902:e742:b0:176:dc6b:eecc with SMTP id p2-20020a170902e74200b00176dc6beeccmr5431093plf.104.1662579090955;
-        Wed, 07 Sep 2022 12:31:30 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=4HKKO1TmoFlM1HQIZmrD9b49hW2WJXwaGVkC4VBN884=;
+        b=tuZDjZyqUt+3qmiAC5dIu+pwpnB3I56ia2z4Qa3cek/KNZhvHL0WXQswOBpCaZr3nD
+         47eDsd7HafTCdj4/m+YUbO/96HI6rUhGgmYpSAtpmMTmBD3f81XgtXFFMJ9uIuAJTJWt
+         z8wnbEYmzcVkKxKffC64KS7xYHp604qzMnQMssj1SDYuZyZU5lzRy9nvCJYXbrzUZSTY
+         31gVvM/yZ/bR4QKW/ogjbhCiu8KHh/tO9mBRFjiJadeoaWKC7D0MExj8iTUTk5L1/j72
+         1FCxGCQyJtgQ66rtMEoSSCztX6D/HzYsveigtPK7ki1ZTG/shbR4YjWPd2yWY9VeroXh
+         ctbA==
+X-Gm-Message-State: ACgBeo1TNOPIxN6bJmrI+ncH+56WIWtWZgLl9VX7MkQgTtzSPtcW8VCc
+        zWL7pQpVZ8dT9JoYvH/Hl/A=
+X-Google-Smtp-Source: AA6agR7ntOiyhlVwnIBAcjPtP1TkEmcjevregY+CtOHBHfIEEIUgQ4onu4xhTtlut7VtmAL3gQYdVw==
+X-Received: by 2002:a63:84c1:0:b0:434:b9db:b9d with SMTP id k184-20020a6384c1000000b00434b9db0b9dmr4748057pgd.397.1662579429051;
+        Wed, 07 Sep 2022 12:37:09 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id v126-20020a626184000000b00528c066678csm13039945pfb.72.2022.09.07.12.31.30
+        by smtp.gmail.com with ESMTPSA id 15-20020a63184f000000b00434abd19eeasm3989421pgy.78.2022.09.07.12.37.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 12:31:30 -0700 (PDT)
+        Wed, 07 Sep 2022 12:37:08 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
-        Xin7 Ma =?utf-8?B?6ams6ZGr?= <maxin7@xiaomi.com>,
-        =?utf-8?B?55+z5aWJ?= =?utf-8?B?5YW1?= <shifengbing@xiaomi.com>,
-        =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
-        =?utf-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
-Subject: Re: [PATCH 3/3] parse_object(): check commit-graph when skip_hash set
-References: <YxfQi4qg8uJHs7Gp@coredump.intra.peff.net>
-        <YxfScUATMQw9cB6m@coredump.intra.peff.net>
-Date:   Wed, 07 Sep 2022 12:31:30 -0700
-In-Reply-To: <YxfScUATMQw9cB6m@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 6 Sep 2022 19:06:25 -0400")
-Message-ID: <xmqqv8pzt20d.fsf@gitster.g>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 3/2] diff-no-index: simplify argv index calculation
+References: <xmqqilm579hc.fsf@gitster.g> <xmqqilm51gn6.fsf@gitster.g>
+        <181c029b-8b36-4b04-30f9-97a3f252bfbc@web.de>
+        <xmqq8rmx1saz.fsf@gitster.g>
+        <9ea33608-3a6c-c0ef-9bb3-4bb535009aeb@web.de>
+Date:   Wed, 07 Sep 2022 12:37:08 -0700
+In-Reply-To: <9ea33608-3a6c-c0ef-9bb3-4bb535009aeb@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Wed, 7 Sep 2022 13:45:42 +0200")
+Message-ID: <xmqqr10nt1qz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> If the caller told us that they don't care about us checking the object
-> hash, then we're free to implement any optimizations that get us the
-> parsed value more quickly. An obvious one is to check the commit graph
-> before loading an object from disk. And in fact, both of the callers who
-> pass in this flag are already doing so before they call parse_object()!
+> Since 16bb3d714d (diff --no-index: use parse_options() instead of
+> diff_opt_parse(), 2019-03-24) argc must be 2 if we reach the loop, i.e.
+> argc - 2 == 0.  Remove that inconsequential term.
 >
-> So we can simplify those callers, as well as any possible future ones,
-> by moving the logic into parse_object().
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+> Bonus patch "while at it", would have saved me from going "huh?".
+> Generated using -U8 for easier review.
 
-Nicely done.
+All three patches made sense to me.  Thanks.
+
+>
+>  diff-no-index.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/diff-no-index.c b/diff-no-index.c
+> index a18f6c3c63..18edbdf4b5 100644
+> --- a/diff-no-index.c
+> +++ b/diff-no-index.c
+> @@ -262,17 +262,17 @@ int diff_no_index(struct rev_info *revs,
+>  	if (argc != 2) {
+>  		if (implicit_no_index)
+>  			warning(_("Not a git repository. Use --no-index to "
+>  				  "compare two paths outside a working tree"));
+>  		usage_with_options(diff_no_index_usage, options);
+>  	}
+>  	FREE_AND_NULL(options);
+>  	for (i = 0; i < 2; i++) {
+> -		const char *p = argv[argc - 2 + i];
+> +		const char *p = argv[i];
+>  		if (!strcmp(p, "-"))
+>  			/*
+>  			 * stdin should be spelled as "-"; if you have
+>  			 * path that is "-", spell it as "./-".
+>  			 */
+>  			p = file_from_standard_input;
+>  		else if (prefix)
+>  			p = to_free[i] = prefix_filename(prefix, p);
+> --
+> 2.37.2
