@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88C33C54EE9
-	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 00:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D540C38145
+	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 00:19:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230173AbiIHATu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Sep 2022 20:19:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53304 "EHLO
+        id S230181AbiIHATx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Sep 2022 20:19:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230130AbiIHATo (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230140AbiIHATo (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 7 Sep 2022 20:19:44 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 241832C666
+Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E25BE2CDC7
         for <git@vger.kernel.org>; Wed,  7 Sep 2022 17:19:43 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-1278a61bd57so21647764fac.7
+Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-127ba06d03fso16618962fac.3
         for <git@vger.kernel.org>; Wed, 07 Sep 2022 17:19:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=jOtJ79aFd8RCKOpzHr11un7LMCyqar9A66DYrIrSupY=;
-        b=BR7Q4fNgT2aiFTZDfZFALMOIJ+SzCEqELwAMExedUYYrtU6KE/1QhhPlzkl/nBE17C
-         pr1HCFR+Zbd50I4bjHIRpECd04HWpyXetBGIN9JTlVvlxUmizjXbj5dNbVPGT59LRyhL
-         CACVQ1fIEb/S1vTyl/1e0EPEXHhbGeYCNbChVMgYA8D0vOWlxlerneBuVhcB3/5FjJI6
-         JYbJxzHBeCg1YEzyBuHaTRxLbKtID99UQ40Zz+fQsW2llfBqZZ/e0fXKDoLUDXYs9MnQ
-         Q+wIpczr+D/SVXMVYlLPZYPccR9dB1y4d/IuExoGDoRMxWmT2adb3qXkKCz00QJXJV0x
-         pOxA==
+        bh=QwxiLJLNI7zY6Q83FGkS3RkpwPiqHH+qBSBQqh0KA3U=;
+        b=O5HUIM3o6G/qEx1cIWKfxDUIF3eg7yv4xL0BEtyc2s9pWqgJgnzllG0lLI8h+NLf4B
+         SRIcAbgNZKCrJWgl5gd9Jd57Riz2PL3GOGQQ6YwSTdEYyzyUmvimjoFr8cc4Au15/PaN
+         CNu/HMrKY827HHNhhbWYPtmLvv+3CCELuFmi5pTXmV2LnpVRPjoC6jb2FHz6j7OQIhnV
+         E6DqQgwoe3i5wIv94BvrIjhS+wm62s+s+Pgylb7cPUZPL52lamukLvDhVF1ScjrBjL9F
+         XiBatPQr53hFCZ90VtCAMk6HgjOCdYzOLlAsCC3zbzFKz0W8RMsN4uOQw8AF9xr6zvmh
+         cjyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=jOtJ79aFd8RCKOpzHr11un7LMCyqar9A66DYrIrSupY=;
-        b=AuMiX4OKgQeJbIN5AHB4n5cF05Q5mpmf6dSMeibLAgNx783jNC43t3ac7XRBvsYTF7
-         OAUub8zAvdcZuk7AwW9P4clrKxRHPI6cZWrttQXdt3nWQOv+vYagXU82280mQJOyTXci
-         SPjTRX67c92bo9LKK/oXDqhnihZjdo09zXMcl2wD/kjHuazly2XcgJU+57gAATfr040N
-         SVTnYzQiZ2PFkVtvCudu57xa/CISpZmSyjO8BVKbfjkaHJ6q/KCaTAZv3Cf9bNeq7vvU
-         g6ie1/XZDrM5qL7LG3L9oxsnbot+z+MOnidDqqybKsG/ljjw81g6mrwunUrH4umdZoAp
-         r9vw==
-X-Gm-Message-State: ACgBeo3VxfPKaFWzBv130PXSYwDWXav/5QrsmPwXwyx68gI6Ydt86nEO
-        JSsa1kWpqjdH0MSeiIjFByw=
-X-Google-Smtp-Source: AA6agR4Q3fkNRwQbB5CDTCroHq4aqemlv9DM8t9J+MMVKDwODvL5jWAnXGD62tfDmYR+w0eTQo74ZA==
-X-Received: by 2002:a05:6870:3285:b0:11f:5465:4943 with SMTP id q5-20020a056870328500b0011f54654943mr534691oac.188.1662596382442;
-        Wed, 07 Sep 2022 17:19:42 -0700 (PDT)
+        bh=QwxiLJLNI7zY6Q83FGkS3RkpwPiqHH+qBSBQqh0KA3U=;
+        b=bvbI6L6kPfuSxjqzmnA9VSy2lBRNXhBBfcrRHOSBAt4rVFtU68mo8k4v5+N3em0jDU
+         w+Tv+YMw5xs4H22exrOLZCWX45u5g1fJGLyXNxD3jfajh47gi5rVkUqgVLwK70h/8y64
+         KT9Ls6jAHO6ughtFLRpJhhbemwP2LQRvn6ryfV3PwB+d8lUXC3GsgO+E8he0nJ8sWHm9
+         OXPIJ/zozxB57QjOwHJZPYYsn2uynjdWRGHIjPX/wimmJ0aP2wi/KPFv0WkUGG7SEFsl
+         mCYe38WN/PLUOECNo5SR2X80ArSJifmh8eZwJShhqQ4AjR3RVbiEWrXQzvm5o7tOWqks
+         VifQ==
+X-Gm-Message-State: ACgBeo0utJPYjj1yXgC8Li6qnJGJY4ZHLoNjhy0Kh+l5JUpK284I8gSh
+        H/AhC5wu67rFi2F/P250+QY=
+X-Google-Smtp-Source: AA6agR5oT3hyfvOzeXUWC/0Mij9VXsymP1ycW5hA/IVXXIBM1elPNCGYGbjIoulrNRCC5ldvmCQRtQ==
+X-Received: by 2002:a05:6870:f14a:b0:127:9b8d:7ef3 with SMTP id l10-20020a056870f14a00b001279b8d7ef3mr506501oac.200.1662596383311;
+        Wed, 07 Sep 2022 17:19:43 -0700 (PDT)
 Received: from ffyuanda.localdomain (99-110-131-145.lightspeed.irvnca.sbcglobal.net. [99.110.131.145])
-        by smtp.gmail.com with ESMTPSA id j95-20020a9d17e8000000b00638dd127f54sm7662091otj.1.2022.09.07.17.19.41
+        by smtp.gmail.com with ESMTPSA id j95-20020a9d17e8000000b00638dd127f54sm7662091otj.1.2022.09.07.17.19.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 17:19:42 -0700 (PDT)
+        Wed, 07 Sep 2022 17:19:43 -0700 (PDT)
 From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 To:     shaoxuan.yuan02@gmail.com
 Cc:     derrickstolee@github.com, vdye@github.com, git@vger.kernel.org,
         gitster@pobox.com
-Subject: [PATCH v5 1/3] builtin/grep.c: add --sparse option
-Date:   Wed,  7 Sep 2022 17:18:52 -0700
-Message-Id: <20220908001854.206789-2-shaoxuan.yuan02@gmail.com>
+Subject: [PATCH v5 2/3] builtin/grep.c: integrate with sparse index
+Date:   Wed,  7 Sep 2022 17:18:53 -0700
+Message-Id: <20220908001854.206789-3-shaoxuan.yuan02@gmail.com>
 X-Mailer: git-send-email 2.37.0
 In-Reply-To: <20220908001854.206789-1-shaoxuan.yuan02@gmail.com>
 References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
@@ -65,166 +65,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a --sparse option to `git-grep`.
+Turn on sparse index and remove ensure_full_index().
 
-When the '--cached' option is used with the 'git grep' command, the
-search is limited to the blobs found in the index, not in the worktree.
-If the user has enabled sparse-checkout, this might present more results
-than they would like, since the files outside of the sparse-checkout are
-unlikely to be important to them.
+Change it to only expand the index when using --sparse.
 
-Change the default behavior of 'git grep' to focus on the files within
-the sparse-checkout definition. To enable the previous behavior, add a
-'--sparse' option to 'git grep' that triggers the old behavior that
-inspects paths outside of the sparse-checkout definition when paired
-with the '--cached' option.
+The p2000 tests do not demonstrate a significant improvement,
+because the index read is a small portion of the full process
+time, compared to the blob parsing. The times below reflect the
+time spent in the "do_read_index" trace region as shown using
+GIT_TRACE2_PERF=1.
 
-Suggested-by: Victoria Dye <vdye@github.com>
-Helped-by: Derrick Stolee <derrickstolee@github.com>
+The tests demonstrate a ~99.4% execution time reduction for
+`git grep` using a sparse index.
+
+Test                                  HEAD~        HEAD
+-----------------------------------------------------------------------------
+git grep --cached bogus (full-v3)     0.019        0.018  (-5.2%)
+git grep --cached bogus (full-v4)     0.017        0.016  (-5.8%)
+git grep --cached bogus (sparse-v3)   0.29         0.0015 (-99.4%)
+git grep --cached bogus (sparse-v4)   0.30         0.0018 (-99.4%)
+
+Optional reading about performance test results
+-----------------------------------------------
+Notice that because `git-grep` needs to parse blobs in the index, the
+index reading time is minuscule comparing to the object parsing time.
+And because of this, the p2000 test results cannot clearly reflect the
+speedup for index reading: combining with the object parsing time,
+the aggregated time difference is extremely close between HEAD~1 and
+HEAD.
+
+Hence, the results presenting here are not directly extracted from the
+p2000 test results. Instead, to make the performance difference more
+visible, the test command is manually ran with GIT_TRACE2_PERF in the
+four repos (full-v3, sparse-v3, full-v4, sparse-v4). The numbers here
+are then extracted from the time difference between "region_enter" and
+"region_leave" of label "do_read_index".
+
 Helped-by: Victoria Dye <vdye@github.com>
+Helped-by: Derrick Stolee <derrickstolee@github.com>
 Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
 ---
- Documentation/git-grep.txt      |  5 ++++-
- builtin/grep.c                  | 10 +++++++++-
- t/t7817-grep-sparse-checkout.sh | 34 +++++++++++++++++++++++++++------
- 3 files changed, 41 insertions(+), 8 deletions(-)
+ builtin/grep.c                           | 10 ++++++++--
+ t/t1092-sparse-checkout-compatibility.sh | 18 ++++++++++++++++++
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index 58d944bd57..bdd3d5b8a6 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -28,7 +28,7 @@ SYNOPSIS
- 	   [-f <file>] [-e] <pattern>
- 	   [--and|--or|--not|(|)|-e <pattern>...]
- 	   [--recurse-submodules] [--parent-basename <basename>]
--	   [ [--[no-]exclude-standard] [--cached | --no-index | --untracked] | <tree>...]
-+	   [ [--[no-]exclude-standard] [--cached [--sparse] | --no-index | --untracked] | <tree>...]
- 	   [--] [<pathspec>...]
- 
- DESCRIPTION
-@@ -45,6 +45,9 @@ OPTIONS
- 	Instead of searching tracked files in the working tree, search
- 	blobs registered in the index file.
- 
-+--sparse::
-+	Use with --cached. Search outside of sparse-checkout definition.
-+
- --no-index::
- 	Search files in the current directory that is not managed by Git.
- 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index e6bcdf860c..12abd832fa 100644
+index 12abd832fa..a0b4dbc1dc 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -96,6 +96,8 @@ static pthread_cond_t cond_result;
+@@ -522,8 +522,9 @@ static int grep_cache(struct grep_opt *opt,
+ 	if (repo_read_index(repo) < 0)
+ 		die(_("index file corrupt"));
  
- static int skip_first_line;
- 
-+static int grep_sparse = 0;
+-	/* TODO: audit for interaction with sparse-index. */
+-	ensure_full_index(repo->index);
++	if (grep_sparse)
++		ensure_full_index(repo->index);
 +
- static void add_work(struct grep_opt *opt, struct grep_source *gs)
- {
- 	if (opt->binary != GREP_BINARY_TEXT)
-@@ -525,7 +527,11 @@ static int grep_cache(struct grep_opt *opt,
  	for (nr = 0; nr < repo->index->cache_nr; nr++) {
  		const struct cache_entry *ce = repo->index->cache[nr];
  
--		if (!cached && ce_skip_worktree(ce))
-+		/*
-+		 * Skip entries with SKIP_WORKTREE unless both --sparse and
-+		 * --cached are given.
-+		 */
-+		if (!(grep_sparse && cached) && ce_skip_worktree(ce))
- 			continue;
+@@ -992,6 +993,11 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			     PARSE_OPT_KEEP_DASHDASH |
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
  
- 		strbuf_setlen(&name, name_base_len);
-@@ -963,6 +969,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			   PARSE_OPT_NOCOMPLETE),
- 		OPT_INTEGER('m', "max-count", &opt.max_count,
- 			N_("maximum number of results per file")),
-+		OPT_BOOL(0, "sparse", &grep_sparse,
-+			 N_("search the contents of files outside the sparse-checkout definition")),
- 		OPT_END()
- 	};
- 	grep_prefix = prefix;
-diff --git a/t/t7817-grep-sparse-checkout.sh b/t/t7817-grep-sparse-checkout.sh
-index eb59564565..a9879cc980 100755
---- a/t/t7817-grep-sparse-checkout.sh
-+++ b/t/t7817-grep-sparse-checkout.sh
-@@ -118,13 +118,19 @@ test_expect_success 'grep searches unmerged file despite not matching sparsity p
- 	test_cmp expect actual
- '
- 
--test_expect_success 'grep --cached searches entries with the SKIP_WORKTREE bit' '
-+test_expect_success 'grep --cached and --sparse searches entries with the SKIP_WORKTREE bit' '
-+	cat >expect <<-EOF &&
-+	a:text
-+	EOF
-+	git grep --cached "text" >actual &&
-+	test_cmp expect actual &&
++	if (the_repository->gitdir) {
++		prepare_repo_settings(the_repository);
++		the_repository->settings.command_requires_full_index = 0;
++	}
 +
- 	cat >expect <<-EOF &&
- 	a:text
- 	b:text
- 	dir/c:text
- 	EOF
--	git grep --cached "text" >actual &&
-+	git grep --cached --sparse "text" >actual &&
- 	test_cmp expect actual
+ 	if (use_index && !startup_info->have_repository) {
+ 		int fallback = 0;
+ 		git_config_get_bool("grep.fallbacktonoindex", &fallback);
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 0302e36fd6..63becc3138 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -1972,4 +1972,22 @@ test_expect_success 'sparse index is not expanded: rm' '
+ 	ensure_not_expanded rm -r deep
  '
  
-@@ -143,7 +149,15 @@ test_expect_success 'grep --recurse-submodules honors sparse checkout in submodu
- 	test_cmp expect actual
- '
- 
--test_expect_success 'grep --recurse-submodules --cached searches entries with the SKIP_WORKTREE bit' '
-+test_expect_success 'grep --recurse-submodules --cached and --sparse searches entries with the SKIP_WORKTREE bit' '
-+	cat >expect <<-EOF &&
-+	a:text
-+	sub/B/b:text
-+	sub2/a:text
-+	EOF
-+	git grep --recurse-submodules --cached "text" >actual &&
-+	test_cmp expect actual &&
++test_expect_success 'grep with --sparse and --cached' '
++	init_repos &&
 +
- 	cat >expect <<-EOF &&
- 	a:text
- 	b:text
-@@ -152,7 +166,7 @@ test_expect_success 'grep --recurse-submodules --cached searches entries with th
- 	sub/B/b:text
- 	sub2/a:text
- 	EOF
--	git grep --recurse-submodules --cached "text" >actual &&
-+	git grep --recurse-submodules --cached --sparse "text" >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -166,7 +180,15 @@ test_expect_success 'working tree grep does not search the index with CE_VALID a
- 	test_cmp expect actual
- '
- 
--test_expect_success 'grep --cached searches index entries with both CE_VALID and SKIP_WORKTREE' '
-+test_expect_success 'grep --cached and --sparse searches index entries with both CE_VALID and SKIP_WORKTREE' '
-+	cat >expect <<-EOF &&
-+	a:text
-+	EOF
-+	test_when_finished "git update-index --no-assume-unchanged b" &&
-+	git update-index --assume-unchanged b &&
-+	git grep --cached text >actual &&
-+	test_cmp expect actual &&
++	test_all_match git grep --sparse --cached a &&
++	test_all_match git grep --sparse --cached a -- "folder1/*"
++'
 +
- 	cat >expect <<-EOF &&
- 	a:text
- 	b:text
-@@ -174,7 +196,7 @@ test_expect_success 'grep --cached searches index entries with both CE_VALID and
- 	EOF
- 	test_when_finished "git update-index --no-assume-unchanged b" &&
- 	git update-index --assume-unchanged b &&
--	git grep --cached text >actual &&
-+	git grep --cached --sparse text >actual &&
- 	test_cmp expect actual
- '
- 
++test_expect_success 'grep is not expanded' '
++	init_repos &&
++
++	ensure_not_expanded grep a &&
++	ensure_not_expanded grep a -- deep/* &&
++
++	# All files within the folder1/* pathspec are sparse,
++	# so this command does not find any matches
++	ensure_not_expanded ! grep a -- folder1/*
++'
++
+ test_done
 -- 
 2.37.0
 
