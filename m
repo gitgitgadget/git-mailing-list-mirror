@@ -2,87 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D3C8C54EE9
-	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 21:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D374C54EE9
+	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 21:09:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229914AbiIHVGq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Sep 2022 17:06:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47012 "EHLO
+        id S229771AbiIHVJM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Sep 2022 17:09:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229895AbiIHVGo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2022 17:06:44 -0400
-Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13C44F6BBB
-        for <git@vger.kernel.org>; Thu,  8 Sep 2022 14:06:44 -0700 (PDT)
-Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-127f5411b9cso16413203fac.4
-        for <git@vger.kernel.org>; Thu, 08 Sep 2022 14:06:44 -0700 (PDT)
+        with ESMTP id S229514AbiIHVJL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2022 17:09:11 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7177895ADC
+        for <git@vger.kernel.org>; Thu,  8 Sep 2022 14:09:10 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id pj10so8559834pjb.2
+        for <git@vger.kernel.org>; Thu, 08 Sep 2022 14:09:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=6rD4kEfrANTm6QACEHHV+Fz+Wr2evVsqSmWCVlHCd5I=;
-        b=Oezdy24OL26mTo+dMwdsX1gOIITWb+YMwhAp3+UAp8Up02CGqFFvfYVBeXF4rYHPxQ
-         /4q7zomGtKPj6Ey5a44grE+0TnXk2+kNRv+t1HCWRBII0KyDn8j6TFLeoT7IIXwys9sX
-         ucX3SkBSJKYlWZqpXbP/o3nldVJ+dxZqvCdNYhbFhDcRSLNd5SfvZ48NeWcmISJLpg9O
-         d+z2G2J0Wxp5hYtUVYCFgpUnKiPM4aUoPppj2Q0UD8bkWZ5TF/X6iOxTW/RgJXU0vEr8
-         BgsvN/L5Yp7i0L2euRbT+SxDPRduNart6YOjzKDWleJws/Yt3R6y5w7B4OXulrSMNbBH
-         OZJA==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date;
+        bh=OGoJ//QBapHaVwK+rTJs/dLEM0FFrBY73QrPejVGwZo=;
+        b=pnsyMqwCVIFetYRr6FpCwW9+OeHiMlh2uDeKvMVM0Xbr1HCt+Mw8itAmSWMOYuCOFi
+         29tRvfOCP9EIHUhLXX4ZRyVnpVdIGk4aTuwyc+SPSnWWJn8Vaj0apZ4J9BbTy/DsJ7/T
+         5gZ4aRsutpBcnjFL4jRSbdxmKRBrPMUcDE5nJUrd+2348aX1O7OK9vv1vapUcUU8cS6S
+         rnyElTjGBm/RNavAwUOHDvsa64ARkxTHH4Q3PggXQhQH32KJU9q1oG/EHuBbI5FA1rzZ
+         cEdWME4mLiZoLrm08X/RULc83RqWhKETlzGuJoX5WckITYOJX6X+FHzgxbK0lEqOCmn7
+         9Q4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=6rD4kEfrANTm6QACEHHV+Fz+Wr2evVsqSmWCVlHCd5I=;
-        b=xg2Kms64P9UqmKRP0je+jfBBI70lYJVUvRuR+xa2GlX1RZj5iexy8ruSenxU8KNSUV
-         ag6cZDMT3uZy2v2XfVWwfg7+fao6rudUmr9qoXv3DjGwLxP4G0CJDmSyYpFiUo90AW8g
-         9GZtrTgfPHhNT6v+uH54tCCLoLLj7EYPNY88zyagxWunsonhhXuOBNe9hV/uw+eu8fAu
-         ZLtfe+9m77n7XoDFnU2GmPEV9BwiB4g3Z9OkAm5d+B7eEjc4dfR+Wq++x3Nu+/OLmCN4
-         FbepS0DkkEjDAlh5O+zRclh+gWCX7dBgxCwhtQOemlKR5aqTOT11nKgexW0Wxk/B0MMJ
-         y+Zg==
-X-Gm-Message-State: ACgBeo3o3l/dBXAXZeiZSMpryUHWUKGLJJY9euc6gQejW4jw/8Zq9p94
-        7NS13voUyKw6eVX57XMbr+HhRfa2iYM=
-X-Google-Smtp-Source: AA6agR559zZQ6sz2mhI2rF/DJbbaLxflpHvmKchgZHI3JT0gaKDhOALNImKrHBBSz5/ziLLvp0GR+A==
-X-Received: by 2002:a05:6870:2482:b0:101:52cf:d099 with SMTP id s2-20020a056870248200b0010152cfd099mr3198496oaq.44.1662671203410;
-        Thu, 08 Sep 2022 14:06:43 -0700 (PDT)
-Received: from ?IPV6:2600:1700:5a60:7720:22:ee9f:44ce:2cf1? ([2600:1700:5a60:7720:22:ee9f:44ce:2cf1])
-        by smtp.gmail.com with ESMTPSA id m1-20020a05680806c100b00344cc0c4606sm7984033oih.58.2022.09.08.14.06.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 14:06:43 -0700 (PDT)
-Message-ID: <f7f54032-df51-87f1-dc14-02632ec37cb7@gmail.com>
-Date:   Thu, 8 Sep 2022 14:06:39 -0700
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date;
+        bh=OGoJ//QBapHaVwK+rTJs/dLEM0FFrBY73QrPejVGwZo=;
+        b=YpIYsrog6SZ9Ce+aFZQXzsam4DUcvSHbeNSohxpTNTZNgYo8ugugD2O78HVh+l/xEA
+         KeBlluWw4yIr3nccAVJIwOM1jNuTcmbU7JVUu1J/i1oMVKMnbEADoEafq7PJayZOY3Xo
+         TV0EGomYmCopbsAoEoTRo+ZDmdj1uUhFB6gG6I8Df/nS1a6pAFidcn1ibb5x9vjNXMrI
+         7euHsXmFzDXWl1H/na+R6Oobqz0M1rDcoO0Z0J/nupBtf8fn3AxcRVNAJZtole0qgt3P
+         SPZlrBxL/dh7k02+M8ezZg0imcqA8/3/RdhawrMZzQc7nSblDvSYxham/5Ch971sDgUc
+         IceA==
+X-Gm-Message-State: ACgBeo3osD54wgoQi6ydSGWeRF868ucUHDW90yXg1SXXxTeCP+V6R4V1
+        mtpabyZ8uGI3MeKj9h0ZTe8=
+X-Google-Smtp-Source: AA6agR6WotO7BjDE+AY/fyNmlc6/NRYoIJiiTL/rowdIMZdQBEm5WhNibFsC3GqYddBFFDP2R4jCyw==
+X-Received: by 2002:a17:902:f604:b0:172:75a4:33ea with SMTP id n4-20020a170902f60400b0017275a433eamr10470329plg.7.1662671349904;
+        Thu, 08 Sep 2022 14:09:09 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id jc3-20020a17090325c300b00174abcb02d6sm10596352plb.235.2022.09.08.14.09.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Sep 2022 14:09:09 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] tests: replace mingw_test_cmp with a helper in C
+References: <pull.1309.git.1659106382128.gitgitgadget@gmail.com>
+        <xmqqwnbv7trp.fsf@gitster.g>
+        <354qp59q-r4r3-1971-5o09-71q224911orp@tzk.qr>
+        <b21d2b60-428f-58ec-28b6-3c617b9f2e45@web.de>
+        <xmqq7d2fywvr.fsf@gitster.g>
+        <q044qs1r-n8p3-1617-so32-02s1r88186sp@tzk.qr>
+Date:   Thu, 08 Sep 2022 14:09:08 -0700
+In-Reply-To: <q044qs1r-n8p3-1617-so32-02s1r88186sp@tzk.qr> (Johannes
+        Schindelin's message of "Thu, 8 Sep 2022 22:54:40 +0200 (CEST)")
+Message-ID: <xmqqbkrpo9or.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v5 3/3] builtin/grep.c: walking tree instead of expanding
- index with --sparse
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Cc:     vdye@github.com, git@vger.kernel.org
-References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
- <20220908001854.206789-1-shaoxuan.yuan02@gmail.com>
- <20220908001854.206789-4-shaoxuan.yuan02@gmail.com>
- <xmqqczc5rblr.fsf@gitster.g>
- <093827ae-41ef-5f7c-7829-647536ce1305@github.com>
- <xmqqo7vpoaan.fsf@gitster.g>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-In-Reply-To: <xmqqo7vpoaan.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/8/2022 1:56 PM, Junio C Hamano wrote:
->> Shaoxuan's comment is attempting to list the reasons why submodules
->> do not currently work with sparse-index,
-> 
-> "do not currently work" in a sense that it produces wrong result, or
-> it just expands in-core index unnecessarily before applying pathspec
-> to produce the right result in an inefficient way?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-It's the latter situation. It expands the index inefficiently though,
-the results are correct. The other problem is that, there is no sparse
-directories in an expanded index, thus we cannot test how does the
-grep_tree() approach (introduced in the third patch) work within submodules.
+>> > Why not use "git diff --no-index --ignore-cr-at-eol"?  Do you even need
+>> > to wrap it?
+>>
+>> Hmph.  That surely sounds sensible if it works, and I offhand do not
+>> see why it shouldn't work.
+>
+> Is this a reversal of the stance you took in your reply in
+> https://lore.kernel.org/git/7vps7xrfxa.fsf@assigned-by-dhcp.cox.net/ to my
+> suggestion to replace `cmp` by `diff --no-index` (in that mail referred to
+> as patch [7/8])?
+
+cox.net?  It is a lifetime ago and the world has changed.  Hopefully
+that "diff --no-index" has matured a lot to earn more confidence by
+us than it had back then.
+
+> If I recall correctly, you clarified outside of that thread that "I do not
+> think it is a good enough reason to make the tests slower" was you being
+> concerned about employing the entire diff machinery instead of doing a
+> simple byte-for-byte comparison.
+
+Is it still relevant, now that we are talking about text-cmp that
+ignores cr-at-eol, to bring a random remark about byte-for-byte
+comparison from more than 10 years ago?
+
+> Just because it is easier to review a one-liner to switch from essentially
+> `cmp` to `git diff --no-index --ignore-cr-at-eol` does not mean that it is
+> reasonable: it would cause us to blast out that much more CO2, just for
+> our one-time convenience.
+
+Measurement, in tons per year, is needed, or please stop talking
+about CO2.  It is not that funny.
+
+Developer cycle time is easier to measure and more meaningful.  
+
+It would be much faster to run a byte-for-byte-with-ignore-cr-at-eol
+comparison than running "diff --no-index --ignore-cr-at-eol" on
+files with meaningful sizes.  But comparison between "expect" and
+"actual", which are typically at most several lines long?  Wouldn't
+the overhead to spawn a process dwarf everything else, especially on
+Windows, whether it is your byte-for-byte-with-ignore-cr-at-eol
+program or "git diff"?
+
+
