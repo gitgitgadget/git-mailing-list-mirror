@@ -2,114 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E848DC54EE9
-	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 18:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58DC2C54EE9
+	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 18:40:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230244AbiIHSUp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Sep 2022 14:20:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57370 "EHLO
+        id S232167AbiIHSki (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Sep 2022 14:40:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231822AbiIHSUk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2022 14:20:40 -0400
+        with ESMTP id S232173AbiIHSke (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2022 14:40:34 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A46EC2F91
-        for <git@vger.kernel.org>; Thu,  8 Sep 2022 11:20:39 -0700 (PDT)
-Received: (qmail 28287 invoked by uid 109); 8 Sep 2022 18:20:39 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0546CAC52
+        for <git@vger.kernel.org>; Thu,  8 Sep 2022 11:40:29 -0700 (PDT)
+Received: (qmail 28460 invoked by uid 109); 8 Sep 2022 18:40:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 08 Sep 2022 18:20:39 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 08 Sep 2022 18:40:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23350 invoked by uid 111); 8 Sep 2022 18:20:39 -0000
+Received: (qmail 23497 invoked by uid 111); 8 Sep 2022 18:40:29 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Sep 2022 14:20:39 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Sep 2022 14:40:29 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 8 Sep 2022 14:20:38 -0400
+Date:   Thu, 8 Sep 2022 14:40:28 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Lana Deere <lana.deere@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: 2.37.2 can't "git pull" but 2.18.0 can
-Message-ID: <Yxoydthiq0Hzzx4G@coredump.intra.peff.net>
-References: <CA+4x=b_07g6STT0nvma_gRhv=zdj+7TQx5SxKLUtuqONLwv=TQ@mail.gmail.com>
- <YxJkn7K3zRm1u3Vn@tapette.crustytoothpaste.net>
- <CA+4x=b_KP4rMH-EDmVCD_4LHPiLx32J2OJC6Mm5xpQ-QUcSKuA@mail.gmail.com>
- <s46p34qn-rq84-20q6-nr36-594sos6q5qq9@tzk.qr>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tests: opt "git --config-env" test out of SANITIZE=leak
+Message-ID: <Yxo3HIXYDxutU0wF@coredump.intra.peff.net>
+References: <Yxl91jfycCo7O7Pp@coredump.intra.peff.net>
+ <patch-1.1-fb2f0a660c0-20220908T153252Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <s46p34qn-rq84-20q6-nr36-594sos6q5qq9@tzk.qr>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-1.1-fb2f0a660c0-20220908T153252Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 07, 2022 at 02:59:08PM +0200, Johannes Schindelin wrote:
+On Thu, Sep 08, 2022 at 05:42:54PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> At first I thought that this would be the root cause:
-> `feature/switch-to-qt5` is not included in the refs to fetch.
+> This is arguably not a compiler issue or bug, as the very notion of a
+> variable being "in scope" as far as the leak checker is concerned is
+> fuzzy at best in the face of compiler optimizations.
 > 
-> But then I added a test case for that specific scenario:
-> 
-> -- snip --
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index 081808009b2..6e6ddeb7e63 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -218,6 +218,17 @@ test_expect_success 'fail if upstream branch does not exist' '
->  	test_cmp expect file
->  '
-> 
-> +test_expect_success 'fetch upstream branch even if refspec excludes it' '
-> +	git branch tirili &&
-> +	git branch tirili2 &&
-> +	git init -b tirili downstream &&
-> +	git -C downstream remote add -t tirili origin "file://$(pwd)/.git" &&
-> +	git -C downstream config branch.tirili.remote origin &&
-> +	git -C downstream config branch.tirili.merge refs/heads/tirili2 &&
-> +	git -C downstream pull 2>err &&
-> +	! grep "configuration specifies to merge" err
-> +'
-> +
->  test_expect_success 'fail if the index has unresolved entries' '
->  	git checkout -b third second^ &&
->  	test_when_finished "git checkout -f copy && git branch -D third" &&
-> 
-> -- snap --
-> 
-> And that test case passes!
-> 
-> The reason is that we specifically add the ref that needs to be merged to
-> the list of refs to be fetched:
-> https://github.com/git/git/blob/v2.37.2/builtin/fetch.c#L605-L614
+> A similar issue came up before related to the config.c code in
+> [2]. There the consensus seemed to be to avoid hacks in the C code to
+> work around these compiler edge cases. In this case however skipping
+> one test is easy enough. We can deal with these "!SANITIZE_LEAK"
+> issues later, when we have fewer overall leaks.
 
-I just sent another message with more details. But the reason this test
-passes is that "tirili" is a prefix of "tirili2". The v2 feature to
-limit advertisements works on string prefixes, so asking for "tirili"
-will let the server advertise both branches. Switching the first branch
-name like so:
+IMHO this is the wrong approach. It is playing whack-a-mole with
+individual false positives, when we know the root cause is compiler
+optimizations. We should be invoking the compiler in a way that gives us
+the most reliable result.
 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 6e6ddeb7e6..7e9ed436d3 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -219,12 +219,12 @@ test_expect_success 'fail if upstream branch does not exist' '
- '
- 
- test_expect_success 'fetch upstream branch even if refspec excludes it' '
--	git branch tirili &&
-+	git branch tirili1 &&
- 	git branch tirili2 &&
--	git init -b tirili downstream &&
--	git -C downstream remote add -t tirili origin "file://$(pwd)/.git" &&
--	git -C downstream config branch.tirili.remote origin &&
--	git -C downstream config branch.tirili.merge refs/heads/tirili2 &&
-+	git init -b tirili1 downstream &&
-+	git -C downstream remote add -t tirili1 origin "file://$(pwd)/.git" &&
-+	git -C downstream config branch.tirili1.remote origin &&
-+	git -C downstream config branch.tirili1.merge refs/heads/tirili2 &&
- 	git -C downstream pull 2>err &&
- 	! grep "configuration specifies to merge" err
- '
+In the long run, when all leaks are plugged, we'd want to ditch the
+whole SANITIZE_LEAK system anyway. So we are better off preventing false
+positives than trying to gloss over them.
 
-causes it to fail just like Lana's case.
+> > Maybe this is a known problem, but it was certainly surprising to me.
+> 
+> It is surprising, but it's a (at least to me) known "issue". See
+> e.g. https://lore.kernel.org/git/patch-v3-5.6-9a44204c4c9-20211022T175227Z-avarab@gmail.com/
+> for a previous discussion between us. I took the consensus there to be
+> that we shouldn't bend over backwards to worry about this.
+
+Thanks, I'd forgotten about that conversation. I stand by my comments
+there that we shouldn't be changing the code. But I really think just
+using -O0 for the leak-check is a better solution than trying to label
+false positives.
+
+> But I see this one slipped through because I locally changed my
+> default compiler from "clang" to "gcc" (again) a while ago, and thus
+> missed testing clang at higher optimization levels. Usually it's GCC
+> that's unhappy about this sort of thing.
+
+FWIW, I found this using clang-14, because the gcc on my system (12.2.0)
+does not seem to find actual leaks. It couldn't see any of the ones in
+t1060 that I fixed yesterday.
+
+> > But if you run this in a debugger, you'll find that under -O2 the "key"
+> > variable has been optimized out! So LSan is producing the wrong result
+> > due to the optimization. It doesn't know that "key" is conceptually
+> > still reachable.
+> > [...]
+> 
+> I don't know if we (or the compiler implementors) can call it the
+> "wrong" result. Just as some warnings only pop up depending on
+> optimization levels, this behavior also depends on it.
+
+I think it's different than the case of warnings. In those cases the
+optimizations let the compiler see more of what's going on in the code,
+which lets them find a warn-able offense that they wouldn't otherwise
+see (e.g., inlining a function lets the compiler see an invariant).
+Those are real problems in the code that -O0 simply doesn't catch.
+
+But this is different: there is no problem in the code. It is just that
+the optimization of removing the variable does not work well with how
+the leak-checker works. There is nothing we can do in the code to fix
+it; the C conceptual model of variable scoping is all we have to work
+with, and according to that, there is no leak. C's "as if" rule means
+that the compiler can change the program as long as the behavior is the
+same. And it is, from the perspective of the rest of the program. The
+issue is that the leak-checker is itself a sort of undefined behavior;
+it expects to poke at random parts of the stack at any moment and find a
+consistent state, which is not something a normal C program can do.
+
+> I've seen quite a few of these around die() codepaths. Presumably some
+> re-arranging/eliminaton of the code around that NORETURN codepath...
+
+The compiler probably does this kind of re-arranging and elimination all
+the time. The reason it comes up around die() is that it means we invoke
+the leak-checker mid-function. Even though the "key" variable here was
+eliminated, the compiler would need to arrange that the pointer value is
+_somewhere_ so that when we hit the end of the function we can call that
+free(). But when we exit in the middle, we end up doing the leak-check
+in a funny state.
+
+It may be that this is influenced by the NORETURN flag. Presumably "key"
+is held in a register, and the call to die(), knowing that it does not
+need to return, may choose not to preserve that register. So turning
+NORETURN into a noop _might_ help, but only because it's giving the
+optimizer less information to work with (and it might not if the
+optimizer can figure it out on its own via inline functions, for
+example). The root cause is the optimizer, so disabling it is the
+most complete fix.
 
 -Peff
