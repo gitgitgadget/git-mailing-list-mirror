@@ -2,118 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6831C38145
-	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 21:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51E29C54EE9
+	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 23:02:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230126AbiIHVpT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Sep 2022 17:45:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55174 "EHLO
+        id S229721AbiIHXCf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Sep 2022 19:02:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbiIHVpQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2022 17:45:16 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B55A52B60C
-        for <git@vger.kernel.org>; Thu,  8 Sep 2022 14:45:10 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id p18so19196230plr.8
-        for <git@vger.kernel.org>; Thu, 08 Sep 2022 14:45:10 -0700 (PDT)
+        with ESMTP id S229566AbiIHXCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2022 19:02:33 -0400
+Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DFF585FDA
+        for <git@vger.kernel.org>; Thu,  8 Sep 2022 16:02:33 -0700 (PDT)
+Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-11e9a7135easo48426052fac.6
+        for <git@vger.kernel.org>; Thu, 08 Sep 2022 16:02:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date;
-        bh=fXrYnfnGzPwIo3pfA+Nqv1giscPe533jjv7Y4M4TA6U=;
-        b=CHkpwULPJmYXOnMT/U8Qkau02wQTXUCrYC7LP3z7kXdJJRDnxr71G9hNU7w0tYzY7P
-         D5KjpCpke0rMFd+8IKpI7hDsxEMb58IQaYdDPKixhF3YJxO8eaxlsbJOUNAHplSF4t1b
-         X/AIgL/Dp0LSnmJtTB23We7tYACbwf/rHH8SoJVgJDonzVic2NZAgsnq+gyMG2PDwzuy
-         O9TunNTPOB+efpy+5HH/bhMOCIKcrwHIAUCBp7krALDKffeDsXBVp2fnZFTv7DuhN9Fh
-         +Pn9IZS/niyiZ+HB36kPyJdzxRJJHjkN1Sh8d6wB5XDkSZyYGdmrliHHYofoO9ZZPFIz
-         p6Lw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=rVt1Tunem9R9ATZ5WmVvLSmvqu+rolGDpmm/wZ0YAq4=;
+        b=hrjqWLq2b+BqtYzERDDDt10sMakbmeIJ77AED7gDJ1Ez0FDmOnaQ+23HNj6wUOB101
+         K7BMHKe+MG0S1KWyMPDB8i1RQGop44e3Kr8iVqwctsb7e1ge0G7SPXs+s3FWhnR2Xh1W
+         XIK6AEUFZnQEYS+SpnPdF5TeisN44+O73v/qvBluKyTeiwqwwEZD1+MTOttQixsDuCLS
+         0Z5uc6vqSW3rnNlY5Zh8/PDXdMxwo2nhIoQuO31EF9BTcNzbUWqXw/HBRTyKm4EBUx2a
+         cIW/f4BEVNezAxXAJHYiPeKoxfITqpe/MhAkscFhbGBclT2iB+IszAr8AVfcKFThxhFu
+         aq1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=fXrYnfnGzPwIo3pfA+Nqv1giscPe533jjv7Y4M4TA6U=;
-        b=l9CrxV448q4oi2jJMJWoG7VR3o+8lXiphpgFsfRh+96OfBpDZf4b5pmYtprF2Z7TOh
-         eX7MlCjI1BGqY8kz1kb3wfacqT/1aIM2sBJIQ3RRl9Hc6T4fuXxTDpIhhPi9UdBAccrV
-         mPa3S9nPawxnfwlB1dFmCpcW8NuuzhayFJi/BvR7XBtVb3Dv3DC7iPHSmK7RY8Gb2n3n
-         V+SqOSMKkrOBD+Ook1wy5syB1NzeYMo7mpOfj6T61oUYDTrPb7N+vgfZr7ox1F5OvRMD
-         0jicj9YNScunoYmxyw/6lzYOPs/rZw3RLXc/SvgAhJNgHqJzp9AUOCKVbMEv2X8QXL4j
-         gzPg==
-X-Gm-Message-State: ACgBeo3Mwkymte0ARjtdsfej3iWpFMsEQ7mg5hUjsoCXHPpsQ9nbwA5m
-        zbO7gtFCAeIqiXoiKbfc7FM=
-X-Google-Smtp-Source: AA6agR5VTE33nvAtboAkE936Y6O7QAt1NgUGFvf//JD27cFXTz2OFS4Scnz+9DcY2+gsf0tIZ+oQ/g==
-X-Received: by 2002:a17:902:bd84:b0:174:e086:c734 with SMTP id q4-20020a170902bd8400b00174e086c734mr10815006pls.46.1662673509280;
-        Thu, 08 Sep 2022 14:45:09 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id ij13-20020a170902ab4d00b0016eede528b4sm3208plb.61.2022.09.08.14.45.08
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=rVt1Tunem9R9ATZ5WmVvLSmvqu+rolGDpmm/wZ0YAq4=;
+        b=qXUKI4YIOUBEpWTyM9Rw2nxI/4mMK1LWtzsUOU69bCh0cEz0stmDCu0iDvCbNYUNPz
+         dJnikU/hABfQCEZtKbFHEkWLEWwNSR2VOB0Rh3alwJAfaNYCXwDKduspjRY2TLwpItSc
+         mjend4EGBHMl9jsxRJCegtO5LVe2AfAvFfSnz1LN2Awj7AN2PY8GcSEC/4psF8Vr946O
+         65k7emhOlvGcnwNcVry02wmW6Ciby/sc3FrM6kgUij9LMkVd7PkyzPoFuhBicTHEn/h+
+         wsrCck21GzNuNI2h8fncqYjmMqY4gn0pUbEbH7QVJSfREfteseq5VcQvxOKfH8/U7iNw
+         Lvdg==
+X-Gm-Message-State: ACgBeo3J6W5GyU5a3x0zHNvb6+kEXUxXsCVZgujSNNhLM+SKSCG/dLKy
+        vm5xNkMcsLIY/nLv6BQZjL6BJbnEID0=
+X-Google-Smtp-Source: AA6agR6pRpuXdya1jnxCM1cPMmm6bTyWJa0NYloPpiE9o/WQD1HGPGuFjLnhp8K5c8g3U5UE57YlaQ==
+X-Received: by 2002:a05:6870:560f:b0:127:7d57:9e2d with SMTP id m15-20020a056870560f00b001277d579e2dmr3282369oao.103.1662678152340;
+        Thu, 08 Sep 2022 16:02:32 -0700 (PDT)
+Received: from ffyuanda.localdomain (99-110-131-145.lightspeed.irvnca.sbcglobal.net. [99.110.131.145])
+        by smtp.gmail.com with ESMTPSA id n8-20020a056870e40800b0011d23ed5365sm222528oag.43.2022.09.08.16.02.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Sep 2022 14:45:08 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] branch: error codes for "edit_description"
-References: <pull.1346.git.1662388460.gitgitgadget@gmail.com>
-        <93b0b442-b277-66a6-3f5f-5a498593aa07@gmail.com>
-        <7abdb5a9-5707-7897-4196-8d2892beeb81@gmail.com>
-        <67253834-8bfa-c249-6594-6418d6ae6805@gmail.com>
-        <de06f80c-4778-7e43-3a88-d7aeae788e0d@gmail.com>
-Date:   Thu, 08 Sep 2022 14:45:08 -0700
-In-Reply-To: <de06f80c-4778-7e43-3a88-d7aeae788e0d@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-        message of "Thu, 8 Sep 2022 22:57:12 +0200")
-Message-ID: <xmqq7d2do80r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Thu, 08 Sep 2022 16:02:31 -0700 (PDT)
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+To:     git@vger.kernel.org, peff@peff.net
+Cc:     gitster@pobox.com, vdye@github.com, derrickstolee@github.com,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Subject: [PATCH] builtin/mv.c: fix possible segfault in add_slash()
+Date:   Thu,  8 Sep 2022 16:02:23 -0700
+Message-Id: <20220908230223.239970-1-shaoxuan.yuan02@gmail.com>
+X-Mailer: git-send-email 2.37.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rubén Justo <rjusto@gmail.com> writes:
+A possible segfault was introduced in c08830de41 (mv: check if
+<destination> is a SKIP_WORKTREE_DIR, 2022-08-09).
 
-> Stick to the convention of exit with 1 on error.  May break some
-> third party tool that expects -1 on "No branch named 'bla'" or
-> "No commit on branch 'bla' yet." errors.
->
-> Test added to avoid regresion on this behaviour.
-> ---
->
-> Junio, here is the patch for the change you suggested [1].  My concern is
-> this might break some third party tool or script.  If no one thinks this
-> is an issue, I can squash it with the patch I'm responding to.
->
->
-> [1] https://lore.kernel.org/git/xmqq7d2fszhk.fsf@gitster.g/
->
->  builtin/branch.c  | 6 +++---
->  t/t3200-branch.sh | 8 ++++++++
->  2 files changed, 11 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index b1f6519cd9..01b6364f58 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -810,11 +810,11 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->  			else
->  				ret = error(_("No branch named '%s'."),
->  					     branch_name);
-> -		} else if (edit_branch_description(branch_name))
-> -			ret = 1;
-> +		} else
-> +			ret = edit_branch_description(branch_name);
->  
->  		strbuf_release(&branch_ref);
-> -		return ret;
-> +		return -ret;
+When running t7001 with SANITIZE=address, problem appears when running:
 
-If edit_branch_description() returns -1 on failure, this would
-consistently exit with 1 on failure, so it does make sense.  
+	git mv path1/path2/ .
+or
+	git mv directory ../
+or
+	any <destination> that makes dest_path[0] an empty string.
 
-It is bad to exit with a value outside 0..255 for portability
-reasons, but we wrap exit() to chomp off the higher bits, so in
-practice it may be fine to exit(-1) but still the above is a good
-clean-up, I would think.
+The add_slash() call segfaults when dest_path[0] is an empty string,
+because it was accessing a null value in such case.
+
+Change add_slash() to check the path argument is a non-empty string
+before accessing its value.
+
+The purpose of add_slash() is adding a slash to the end of a string to
+construct a directory path. And, because adding a slash to an empty
+string is of no use here, and checking the string value without checking
+it is non-empty leads to segfault, we should make sure the length of the
+string is positive to solve both problems.
+
+Reported-by: Jeff King <peff@peff.net>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+---
+Reference: https://lore.kernel.org/git/YwdJRRuST2SP8ZT7@coredump.intra.peff.net/
+
+ builtin/mv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/mv.c b/builtin/mv.c
+index 2d64c1e80f..3413ad1c9b 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -71,7 +71,7 @@ static const char **internal_prefix_pathspec(const char *prefix,
+ static const char *add_slash(const char *path)
+ {
+ 	size_t len = strlen(path);
+-	if (path[len - 1] != '/') {
++	if (len && path[len - 1] != '/') {
+ 		char *with_slash = xmalloc(st_add(len, 2));
+ 		memcpy(with_slash, path, len);
+ 		with_slash[len++] = '/';
+
+base-commit: e71f9b1de6941c8b449d0c0e17e457f999664bc9
+-- 
+2.37.0
 
