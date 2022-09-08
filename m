@@ -2,93 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12F95ECAAD5
-	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 08:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA761ECAAD5
+	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 10:40:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231272AbiIHI75 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Sep 2022 04:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57116 "EHLO
+        id S229552AbiIHKkT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Sep 2022 06:40:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbiIHI7z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2022 04:59:55 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC424357EF
-        for <git@vger.kernel.org>; Thu,  8 Sep 2022 01:59:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1662627587;
-        bh=Qd6+5a8EgXoIvQuIpRIqSgzLCjqH0N8+vMsNSES+l10=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=nmgYeFSiXxcx9M3rfXwtx+Wf1sCVFLTZiS6IswRdWYdynzAN+ZixLxfiMpX1BdGF7
-         BI/y4V0PjJEGyURNcE8u1xIcHCfoSUhH/gp5IXmeIUASo8rC8cdUkNV5BOC/jlLh22
-         o03Dup+cNZqzVOfGT+33rT4RboSVDuPFJbQIn96o=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.25.52]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N6bD0-1pQlGX24zu-018LfN; Thu, 08
- Sep 2022 10:59:47 +0200
-Message-ID: <2d839209-21e2-b05c-125b-57a9c1dad1ea@web.de>
-Date:   Thu, 8 Sep 2022 10:59:46 +0200
+        with ESMTP id S230451AbiIHKj5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2022 06:39:57 -0400
+Received: from outboundhk.mxmail.xiaomi.com (outboundhk.mxmail.xiaomi.com [207.226.244.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 44CB01CF
+        for <git@vger.kernel.org>; Thu,  8 Sep 2022 03:39:43 -0700 (PDT)
+X-IronPort-AV: E=Sophos;i="5.93,299,1654531200"; 
+   d="scan'208";a="44069889"
+Received: from hk-mbx11.mioffice.cn (HELO xiaomi.com) ([10.56.21.121])
+  by outboundhk.mxmail.xiaomi.com with ESMTP; 08 Sep 2022 18:39:09 +0800
+Received: from yz-mbx11.mioffice.cn (10.237.88.131) by HK-MBX11.mioffice.cn
+ (10.56.21.121) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 8 Sep 2022
+ 18:39:09 +0800
+Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by yz-mbx11.mioffice.cn
+ (10.237.88.131) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Thu, 8 Sep 2022
+ 18:39:08 +0800
+Received: from BJ-MBX01.mioffice.cn ([fe80::1839:49c8:1d62:7218]) by
+ BJ-MBX01.mioffice.cn ([fe80::1839:49c8:1d62:7218%9]) with mapi id
+ 15.02.0986.029; Thu, 8 Sep 2022 18:39:08 +0800
+From:   =?gb2312?B?s8zR8w==?= <chengyang@xiaomi.com>
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+CC:     Derrick Stolee <derrickstolee@github.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?gb2312?B?us66xg==?= <hehao@xiaomi.com>,
+        =?gb2312?B?WGluNyBNYSDC7fbO?= <maxin7@xiaomi.com>,
+        =?gb2312?B?yq+37rH4?= <shifengbing@xiaomi.com>,
+        =?gb2312?B?t7K+/LvU?= <fanjunhui@xiaomi.com>,
+        =?gb2312?B?zfW6urv5?= <wanghanji@xiaomi.com>
+Subject: RE: [External Mail]Re: [PATCH 3/3] parse_object(): check commit-graph
+ when skip_hash set
+Thread-Topic: [External Mail]Re: [PATCH 3/3] parse_object(): check
+ commit-graph when skip_hash set
+Thread-Index: AQHYwvBwu0A4XHFy4ESZYWhyRLfYfa3VV+/w
+Date:   Thu, 8 Sep 2022 10:39:08 +0000
+Message-ID: <a87e9eaccf7849fc9eeb10ce7d373db0@xiaomi.com>
+References: <YxfQi4qg8uJHs7Gp@coredump.intra.peff.net>
+        <YxfScUATMQw9cB6m@coredump.intra.peff.net> <xmqqv8pzt20d.fsf@gitster.g>
+In-Reply-To: <xmqqv8pzt20d.fsf@gitster.g>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.237.8.11]
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.2.1
-Subject: Re: [PATCH] tests: replace mingw_test_cmp with a helper in C
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1309.git.1659106382128.gitgitgadget@gmail.com>
- <xmqqwnbv7trp.fsf@gitster.g> <354qp59q-r4r3-1971-5o09-71q224911orp@tzk.qr>
- <b21d2b60-428f-58ec-28b6-3c617b9f2e45@web.de> <xmqq7d2fywvr.fsf@gitster.g>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq7d2fywvr.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:7Be+Eqw1nSqL8LahEa2KT0HyfW0U6qwRy4VWMVYsFCjismsNfvW
- ydBWbzWAP9SAc7E5yUUoEGw7MVx56omgCFOJjUSDHZqVI9l1RoeGXriiHQEoPxsn5JvlOSs
- zWdP4SsHT2a0cQp9+PA1TxyFChyuT+WJJzkHy5/WOOYrZcPo1g22+Y/WhsfFDUD3fmJDoZ6
- VPtH7MfK0fVNr67pRy1/A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XI+xv4qeq+E=:vgZ5Uz7nsNTz+uLmTTgajh
- YQQDUbA201/LJJnlRQA1NM793cxNcI+HYZUQnFyFz3LFFi2hxuAszvX+EM7Pj11TltHCxHLbd
- 4Mp9wSRTGwaWIV6sAqvl/6Yd+fUo0E3C99Y4hDZ0KQPYgp2iQUBgwcyWjeE78NjX/xgC4C00M
- MUN+Sm3BGRs+aatFg/wYrIGuS6tv6L/ilHF5eDOWjVKB4SF4cIESXbZyE9Ex/B7rf52Vtmmc+
- gc8Dkc7O6GNooa7EBrJPwn/qII8b97gvL4bdQFrEL3/CoUkvzVFOB2hFVE5D0CEZt20+bfzvE
- pt5+rTfslrKfaTpqmtrqdruFkt33RgLdfizgQMQMX7I+TCzZ5jIbquUveExLuionLPeAAXXh3
- LWe/JvPLGJXSg42PPzNVeARTIUZC8KZjWnWlwRtNLBjT5OWVFicJyDugqSRb72YgAdM4LeNqW
- LLaDZ0fNP3X9Ig8+vR25fg/5axdZRZlIciV6KbFvM9yboYxCwozJs1sIQ9vAufjldcneP7Uff
- 2/bypg26Y75jKHw9+UWKerxkoHMddR7scwWXgcYpqDciNcSxM7yZRP8K6Rn8TEu4jGjk467Wa
- IjRz8pVdVamcD2G8V+Fsk7vG6Ge7dxZR12CndGPUIKdXdk93XHCsTX+E1K6L96uTo6S8im55s
- KBTK1k41WVBh/gvinTTM8Xqyv69Ered8Cd+iGPC68b/J3xxSsEURa8ajHh2m1nUKVJQ0sBAx4
- j9L27DMwZC4/BCE7mfwKgdvSrbJiOCbxSBevCpUSugseeqafgBMKwPvf+iiCcSfS060EK63BW
- fY61ETLAfzvA2wPXJCdqeZ5O+U9kLiDhFwGnoMmcIyU7BhHqrVyH8lp/eMQb73n8TETjs11Ot
- sd8tAEBEyOUi7Or4aMdMoX0YJi2TpZYOJdAK79kKrWrua8xVVtyqOJ7gma6FbAAWtjro4qX+b
- wi3QbQVfZz2W/CTA04E162SPCMUaam8sgF7/1R7WwZ3cgbBGqhRhqsJmQ8ZQrCzY/qO/n8X8S
- H9jtDICSMUEGETYfgUAk2ds/S0ZwoE1vNY1y8qtazjy8mnUir/7J8W9pyrD9/W0Q6Rbpw5Z5t
- WaCee0Lwqy8ekLhtEOXh6usuR/wpxb4z0zdJLDdbV5pVEqOY7JV2AyCLxOq/vKdM456pIke+s
- j6nMk=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 07.09.22 um 18:25 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->>>> But otherwise the idea is sound.  We compare them line by line,
->>>> using strbuf_getline() to ignore differences in CRLF and LF that
->>>> originates at 4d715ac0 (Windows: a test_cmp that is agnostic to
->>>> random LF <> CRLF conversions, 2013-10-26).  Only when we find the
->>>> input different, we use "git diff --no-index" to make the difference
->>>> (and unfortunately more, as it does not ignore CRLF <> LF
->>>> differences) visible.
->>
->> Why not use "git diff --no-index --ignore-cr-at-eol"?  Do you even need
->> to wrap it?
->
-> Hmph.  That surely sounds sensible if it works, and I offhand do not
-> see why it shouldn't work.
-
-Using git diff in test_cmp and using test_cmp to check if git diff works
-would become a cyclical dependency.  Only doing that on one platform
-limits the potential blind spot to platform-specific bugs, though.
-Enough to go wrapper-less?  Not sure.
-
-Ren=C3=A9
+PiBJZiB0aGUgY2FsbGVyIHRvbGQgdXMgdGhhdCB0aGV5IGRvbid0IGNhcmUgYWJvdXQgdXMgY2hl
+Y2tpbmcgdGhlDQo+IG9iamVjdCBoYXNoLCB0aGVuIHdlJ3JlIGZyZWUgdG8gaW1wbGVtZW50IGFu
+eSBvcHRpbWl6YXRpb25zIHRoYXQgZ2V0DQo+IHVzIHRoZSBwYXJzZWQgdmFsdWUgbW9yZSBxdWlj
+a2x5LiBBbiBvYnZpb3VzIG9uZSBpcyB0byBjaGVjayB0aGUNCj4gY29tbWl0IGdyYXBoIGJlZm9y
+ZSBsb2FkaW5nIGFuIG9iamVjdCBmcm9tIGRpc2suIEFuZCBpbiBmYWN0LCBib3RoIG9mDQo+IHRo
+ZSBjYWxsZXJzIHdobyBwYXNzIGluIHRoaXMgZmxhZyBhcmUgYWxyZWFkeSBkb2luZyBzbyBiZWZv
+cmUgdGhleSBjYWxsDQo+IHBhcnNlX29iamVjdCgpIQ0KDQo+IFNvIHdlIGNhbiBzaW1wbGlmeSB0
+aG9zZSBjYWxsZXJzLCBhcyB3ZWxsIGFzIGFueSBwb3NzaWJsZSBmdXR1cmUgb25lcywNCj4gYnkg
+bW92aW5nIHRoZSBsb2dpYyBpbnRvIHBhcnNlX29iamVjdCgpLg0KDQpJIG5lZWQgdG8gbWVudGlv
+biB0aGF0IHRoZXJlIGlzIHNlcmlvdXMgaXNzdWUgd2l0aCBjb21taXQtZ3JhcGggdG9nZXRoZXIg
+d2l0aCBwYXJ0aWFsLWNsb25lDQpodHRwczovL2xvcmUua2VybmVsLm9yZy9naXQvMjAyMjA3MDkw
+MDUyMjcuODI0MjMtMS1oYW54aW4uaHhAYnl0ZWRhbmNlLmNvbS8NCg0KU28gYWN0dWFsbHkgSSB0
+b2xkIG15IHVzZXJzIHRvIGRpc2FibGUgY29tbWl0LWdyYXBoIG1hbnVhbGx5DQojLyoqKioqKrG+
+08q8/rywxuS4vbz+uqzT0NChw9e5q8u+tcSxo8Pc0MXPoqOsvfbP3tPat6LLzbj4yc/D5rXY1rfW
+0MHQs/a1xLj2yMu78si61+mho7371rnIzrrOxuTL+8jL0tTIzrrO0M7Kvcq508OjqLD8wKi1q7K7
+z97T2sirsr+78rK/t9a12NC5wrahori01sahorvyyaK3oqOpsb7Tyrz+1tC1xNDFz6Kho8jnufvE
++rTtytXBy7G+08q8/qOsx+vE+sGivLS157uwu/LTyrz+zajWqreivP7Iy7Kiyb6z/bG+08q8/qOh
+IFRoaXMgZS1tYWlsIGFuZCBpdHMgYXR0YWNobWVudHMgY29udGFpbiBjb25maWRlbnRpYWwgaW5m
+b3JtYXRpb24gZnJvbSBYSUFPTUksIHdoaWNoIGlzIGludGVuZGVkIG9ubHkgZm9yIHRoZSBwZXJz
+b24gb3IgZW50aXR5IHdob3NlIGFkZHJlc3MgaXMgbGlzdGVkIGFib3ZlLiBBbnkgdXNlIG9mIHRo
+ZSBpbmZvcm1hdGlvbiBjb250YWluZWQgaGVyZWluIGluIGFueSB3YXkgKGluY2x1ZGluZywgYnV0
+IG5vdCBsaW1pdGVkIHRvLCB0b3RhbCBvciBwYXJ0aWFsIGRpc2Nsb3N1cmUsIHJlcHJvZHVjdGlv
+biwgb3IgZGlzc2VtaW5hdGlvbikgYnkgcGVyc29ucyBvdGhlciB0aGFuIHRoZSBpbnRlbmRlZCBy
+ZWNpcGllbnQocykgaXMgcHJvaGliaXRlZC4gSWYgeW91IHJlY2VpdmUgdGhpcyBlLW1haWwgaW4g
+ZXJyb3IsIHBsZWFzZSBub3RpZnkgdGhlIHNlbmRlciBieSBwaG9uZSBvciBlbWFpbCBpbW1lZGlh
+dGVseSBhbmQgZGVsZXRlIGl0ISoqKioqKi8jDQo=
