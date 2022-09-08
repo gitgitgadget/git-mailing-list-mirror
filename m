@@ -2,86 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B74F8C54EE9
-	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 20:55:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40B6DC38145
+	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 20:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229893AbiIHUzH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Sep 2022 16:55:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53838 "EHLO
+        id S229601AbiIHU4H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Sep 2022 16:56:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229907AbiIHUy4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2022 16:54:56 -0400
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA15E47BB4
-        for <git@vger.kernel.org>; Thu,  8 Sep 2022 13:54:53 -0700 (PDT)
-Received: by mail-il1-x136.google.com with SMTP id a9so9927206ilh.1
-        for <git@vger.kernel.org>; Thu, 08 Sep 2022 13:54:53 -0700 (PDT)
+        with ESMTP id S229494AbiIHU4F (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2022 16:56:05 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C42F4E6206
+        for <git@vger.kernel.org>; Thu,  8 Sep 2022 13:56:02 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id fv3so12848636pjb.0
+        for <git@vger.kernel.org>; Thu, 08 Sep 2022 13:56:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=nQGB71UzDomq8OKzxNQZTXFHTTo1Sp99Q3po4kNJLbg=;
-        b=N+Ekxxg7qvraokQtFPMfdj13GKSdlEGwmKi91ie6VRsZNQiaYFHucrZaW/8/nMb99i
-         RXdUe36YaDk2/Paj05LycfB25CCEAASf6rZ1jgtsXX4XRk9mFsK94EeCqgE+nML87hCl
-         AeZOUWhVge9sgcv9j3+SIVP4QrrHFzkCWY1AisisAFs6rtYgEzq+e1o7MqYdQPJiEhfC
-         UDo6zdgwKG+5fn7hLOGiBWUElGytF5Sq/qUgx4W+PUFWUSQ7eRAR089XwkXcQ4axmgGK
-         Y638hbcMUPzdr/JUmlWWevTofX1yD1Ns/aScgpwYFta8PCFErRRtujWiVacOBo2fYZgu
-         +l8A==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date;
+        bh=WpG0Ruj9Rs9Icx9M9a4YDVXZ/MPa2KwTGa0mH2fm4Rs=;
+        b=hmEPKOAE+a51VFyOdFpBhdCeYj18QTr/LVsaPPgslWR9saLzpI7ZPqukCqI5dPr0NF
+         RWd+lAJiEv28gMNkA/ro0EtyXWMTZ4WGF5Se+am5thRvsAq1EZfKRRKPz/0ktm1Hqfti
+         ao2yrvV4BAzIQqcPPbhuTdzl/vPzSRhKcS+fdyRcHE/9pmc5XG1ahxOKLd6CYQzQcxZz
+         B3qhCGmLNdXcCMVZ+fxl/J+ggExmu/51SRuS3QxvSNuRtDVZ56l1HSuFk8AHOQiirVxN
+         +C+mE3qaSfyurWnLvInqpSmOVzoDWI/bQ0E5GdEm07R1Ct/LQ5fURIL39xOkXmHlx8xo
+         Fd/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=nQGB71UzDomq8OKzxNQZTXFHTTo1Sp99Q3po4kNJLbg=;
-        b=4DLUy19wtRxp9PmE9C7LNTT9kpXz1mOb0/KF1/yr7VLOC9RZb/W//OcTfTRHunIPOk
-         /W7OpT2n/8EE1ctvFhstNG9mJ6SQuxro9gfe2ZwzCcFjytK88hC2GQX2tXRR0nJJnSQU
-         o0w5orsjHZASNMo+XOvAdhAtRi7ZYcBOFL8HJPscKPr6QpyPapNMNkc8Z7zp6fPij96t
-         Ozlt+yF1tuym99uhXOBp7YJOjT88w3bHgJsyLdJadO50kOHZFM7sEOTRY7bFUyTfnTy4
-         jK3mgiMYCV8iv10GMdrmwBAcyKrYJUn3V10W34mMLTWi6a1DiN4cH+HhbrUJYFYPocUx
-         Zn0w==
-X-Gm-Message-State: ACgBeo013DXVJsl0Ghtm7IvsgXXIwnaHkjGjt/uOoXY7KIzRCI4BVJ+/
-        bfOa/dVPUqzBUUswoCLOmi5Y
-X-Google-Smtp-Source: AA6agR4k80k4JyAx/veajV712bjoT8birbhlqx/DXkTlK9se/iyZCkPIwNS3JiE+eDMPv4NkyBxfDg==
-X-Received: by 2002:a05:6e02:6cc:b0:2f1:6cdf:6f59 with SMTP id p12-20020a056e0206cc00b002f16cdf6f59mr2589967ils.316.1662670492854;
-        Thu, 08 Sep 2022 13:54:52 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id f35-20020a0284a6000000b0035849fce643sm591577jai.133.2022.09.08.13.54.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Sep 2022 13:54:52 -0700 (PDT)
-Message-ID: <dade8c50-3456-3538-e151-a1deffbb1c1d@github.com>
-Date:   Thu, 8 Sep 2022 16:54:51 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH v2 0/9] scalar: integrate into core Git
-Content-Language: en-US
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        bh=WpG0Ruj9Rs9Icx9M9a4YDVXZ/MPa2KwTGa0mH2fm4Rs=;
+        b=dq5hKQxr2MclNcAOU6RKJUrTYJ3ROiyten/F/8jau4x6iqT7ZzoImtNUFgIkb4Myl/
+         0y35J7qt2DiqSAqKv9NO0KI7OWrIShQJbQ3DqvQawjn0JRV1ZpAWwV+SXYN+Zo6qVcUW
+         /PCVunzDHzKAtcfVR5jmjcLnnMmKDf8VdGYbW7fiQcwr0gyry8LOK2Gu3/68f0YLQxP0
+         b1CiA9GMj9MePMRNZ7n51Z0jBbz3LJTn8eK7yuSl8vZfzC3TmxHBTYABP/cQVynRAu7L
+         Y9xvp+ST5XShvYUy1jjPLT2X5U/4WXZP+mmpyJ8uW81HdFJ9OXdeCDow7NK56kmaLq0Y
+         IcOw==
+X-Gm-Message-State: ACgBeo25vzQBZKfpNXed8fufJa4IeAswoSEz3zxcfFzLLmBsRJYLBvw+
+        TC/5qMkZSws1OxJPKH5ek30=
+X-Google-Smtp-Source: AA6agR5b3DU1IeJ5pt/e/OjCwFZ1D1IZzklvyUsPnhB91JRb5hXmGPMDWQoaINQedIUxzIWn3ouD8g==
+X-Received: by 2002:a17:90b:3509:b0:1fb:35ed:6fd4 with SMTP id ls9-20020a17090b350900b001fb35ed6fd4mr6105273pjb.1.1662670561461;
+        Thu, 08 Sep 2022 13:56:01 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id c9-20020a170902d48900b00174d4fabe76sm15343979plg.214.2022.09.08.13.56.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Sep 2022 13:56:01 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, vdye@github.com,
         git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de, gitster@pobox.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Victoria Dye <vdye@github.com>
-References: <pull.1341.git.1661961746.gitgitgadget@gmail.com>
- <pull.1341.v2.git.1662134210.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1341.v2.git.1662134210.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v5 3/3] builtin/grep.c: walking tree instead of
+ expanding index with --sparse
+References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+        <20220908001854.206789-1-shaoxuan.yuan02@gmail.com>
+        <20220908001854.206789-4-shaoxuan.yuan02@gmail.com>
+        <xmqqczc5rblr.fsf@gitster.g>
+        <093827ae-41ef-5f7c-7829-647536ce1305@github.com>
+Date:   Thu, 08 Sep 2022 13:56:00 -0700
+In-Reply-To: <093827ae-41ef-5f7c-7829-647536ce1305@github.com> (Derrick
+        Stolee's message of "Thu, 8 Sep 2022 16:46:54 -0400")
+Message-ID: <xmqqo7vpoaan.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/2/2022 11:56 AM, Victoria Dye via GitGitGadget wrote:
-> This series completes the initial implementation of the Scalar command as a
-> core component of Git. For readers new to the topic of Scalar, the
-> roadmap/design doc [1] provides some background information including how
-> the project started & evolved, as well as its current intent & high-level
-> design.
+Derrick Stolee <derrickstolee@github.com> writes:
 
-I just took a read through this series, and everything seemed
-well justified and cleanly implemented. I built and installed
-this version of Scalar locally as a way to see that all the
-build steps worked as expected.
+> HOWEVER: it "doesn't matter" because the sparse index doesn't work
+> at all within a submodule. Specifically, if a super-repo does not
+> enable sparse-checkout, but the submodule _does_, then we don't
+> know how Git will behave currently. His reasonings go on to explain
+> why the situation is fraught:
+>
+> * command_requires_full_index is set in a builtin only for the
+>   top-level project, so when we traverse into a submodule, we don't
+>   re-check if the current builtin has integrated with sparse index
+>   and expand a sparse index to a full one.
 
-Thanks!
--Stolee
+Correct.  
+
+Is it sufficient to propagate the bit from the_repository->settings
+to repo->settings of the submodule, or is there more things needed
+to fix it?
+
+> * core_apply_sparse_checkout is a global not even associated with
+>   a repository struct. What happens when a super project is not
+>   sparse but a submodule is? Or vice-versa? I honestly don't know,
+>   and it will require testing to find out.
+
+Naïvely, I would think that we should just treat a non-sparse case
+as a mere specialization where the sparse cone covers everything,
+but there may be pitfalls.
+
+> Shaoxuan's comment is attempting to list the reasons why submodules
+> do not currently work with sparse-index,
+
+"do not currently work" in a sense that it produces wrong result, or
+it just expands in-core index unnecessarily before applying pathspec
+to produce the right result in an inefficient way?
+
+If it is "functionally broken", is there a simple way out to give us
+correct result even if it becomes less efficient?  Like "we scan the
+index and we see we have some submodules---so we disable the sparse
+handling"?
+
+> Victoria and I have noted this issue down and will try to find time
+> to investigate further, with a target of being able to actually
+> exercise this grep_tree() call within a sparse index in a submodule,
+> giving us full confidence that name_base_len is the correct value to
+> put in that parameter.
+
+OK.
