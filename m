@@ -2,121 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4CDCC54EE9
-	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 20:48:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB93FC54EE9
+	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 20:54:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229863AbiIHUsn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Sep 2022 16:48:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44208 "EHLO
+        id S229903AbiIHUyv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Sep 2022 16:54:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229867AbiIHUsl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2022 16:48:41 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8DF1EB2D5
-        for <git@vger.kernel.org>; Thu,  8 Sep 2022 13:48:39 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id 202so17840023pgc.8
-        for <git@vger.kernel.org>; Thu, 08 Sep 2022 13:48:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=YGmpNg1FvERVFo8hPF2xBj6ef2B25652e/UCMAXGfs8=;
-        b=JrcHHgtJoNXvXgDJTpw8/xAKa0VhOIcvVC7leFj3yH71PWhrK5E7h5sgfRvXNpZqiX
-         g3uF+QrGS0uFE6Rjg/JlDt7kQr8R1NTJFjonJAu+VvrUTZGvkoCQCRSL7yfxKjWDxtkg
-         JPx1r7zIjlM70zlBmrS0QW3zbWWt9sXLShNOkTdxwkMnbGGkrQ1ynpHVRq8dJ0MM26/P
-         RB8bLf/PzsjFdhuWJYeq7jw2MLLpPQz+lhFPmUsDZd8UtxdKKlVbRoQ3QQ39i/uAIDc9
-         gVzXL+Dkn3agTDdJqnDY5XvsMf+G5Cd8JnBGR1feJ0A6p3J/PM44FOPQyIET7BE26p9Y
-         x7vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=YGmpNg1FvERVFo8hPF2xBj6ef2B25652e/UCMAXGfs8=;
-        b=nEO8eR1okAKt3b2ppP+EbX3FQ4Icw4XLzXgY6xQS8QKRKKKcfznF/ahAq/drAaEyfs
-         RtiMJQbuDNPU0I8jfDV98y5qy1pAQfAUITr1gXFdDsDjLbT9u9Ym/+250xhTVXSiZipL
-         TtFhRbfkmJKoekfVHKRgFTDy3IlFSVqg32IYRHwLBQn5aykbvdMzDsD3CzFIPT3lc9tT
-         /ZzNXtrFJo25U1j8wxNQeeUOeBEMFAxsW/bEnK06px4EkZqRQ8D+rmIONWQ7ZthQBdMw
-         4S4+mDGw3AZ1vwivY6FrlVVutGDeSxXTjelvIaqrHtC1Bjawh6jVH5N4UyE/OIFyg51R
-         cfYw==
-X-Gm-Message-State: ACgBeo1/0XaNYYq7CZEI8QBXOPCZHYYkd6hT+sdg14QONvp+YfSGNmvw
-        n/Y6I5UB9oT9fl7zZXFm9Ks=
-X-Google-Smtp-Source: AA6agR7fTm1q8bNuQtl55ILsKZZ00nPmjkK8/9uJ8okkck1vkJHGYuW82tuiY/pXviDclG2ixQj6qA==
-X-Received: by 2002:a05:6a00:17a3:b0:540:97a3:f7a9 with SMTP id s35-20020a056a0017a300b0054097a3f7a9mr4169859pfg.12.1662670118954;
-        Thu, 08 Sep 2022 13:48:38 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id d16-20020a170902ced000b001753654d9c5sm15204297plg.95.2022.09.08.13.48.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Sep 2022 13:48:38 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Lana Deere <lana.deere@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] fetch: add branch.*.merge to default ref-prefix
- extension
-References: <YxpBMaIckimFJYEi@coredump.intra.peff.net>
-        <YxpB0dbFTKp5L94k@coredump.intra.peff.net>
-        <xmqq1qslpprv.fsf@gitster.g>
-Date:   Thu, 08 Sep 2022 13:48:38 -0700
-In-Reply-To: <xmqq1qslpprv.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        08 Sep 2022 13:36:20 -0700")
-Message-ID: <xmqqtu5hoamx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229836AbiIHUyp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2022 16:54:45 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 415892AE19
+        for <git@vger.kernel.org>; Thu,  8 Sep 2022 13:54:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1662670476;
+        bh=3yYZJe0JZbdp2Z3JFCp4JgByww5G2J3yfcER3L+cy6U=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=E/M6G0VRSafiVNpGxBoXY/GiTJ0f4ps9lpVhXO5trN//nRLWiKxCbbouENocxw2ij
+         vwOfuL9drukCFeprJKcLEzawJuLuHARLjUqgSaTiER5p4LxKgOchE0EV1PuticGO1m
+         BwQ6BDsZFZDeGl4IGJxSD3MsFPmchsOp7plH6Bt8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.220.106] ([213.196.212.69]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MgvvJ-1p0UdN2NDh-00hMej; Thu, 08
+ Sep 2022 22:54:36 +0200
+Date:   Thu, 8 Sep 2022 22:54:40 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] tests: replace mingw_test_cmp with a helper in C
+In-Reply-To: <xmqq7d2fywvr.fsf@gitster.g>
+Message-ID: <q044qs1r-n8p3-1617-so32-02s1r88186sp@tzk.qr>
+References: <pull.1309.git.1659106382128.gitgitgadget@gmail.com>        <xmqqwnbv7trp.fsf@gitster.g>        <354qp59q-r4r3-1971-5o09-71q224911orp@tzk.qr>        <b21d2b60-428f-58ec-28b6-3c617b9f2e45@web.de> <xmqq7d2fywvr.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-1741476505-1662670481=:189"
+X-Provags-ID: V03:K1:noNS/+Sgml0+vAD+6FfDs0AT0YspzIAPDoavAiuhS55Oyx0XCfR
+ HBV2tiV7aHbR6a+nBzhVqUHsKUwArExr4KckdHXaZV6ciVPecpfHHL1BZ5S6HVk4/U4KPz7
+ g3LVrAjVPEo2yiAGU1DuH5cRrQKZROopsTBpnCMODafsajkXZgcM2ulf/cHcPj4VxKDSggr
+ siHnyn4OvJd8ZyFPxoAdA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xS85s+jAFmY=:HDAigw6qrrATMGNO7vnwr5
+ CiY9Qwio6V+Sh1hlY1sOjHpf6p1Vv6Kiy/7QWfCqZ+yu9fyX1TsWnR04zK8qAJFRUQBYaJCnR
+ eel6Jsfk2DdTXbyYOB2XV8kkVQPKb6N2qnIv+iKLI5/wHDQbk4RS82mLJxDV7SBpSYv4p+s/U
+ hl1yeAaR8E25mCrDjJfqcFoTmZhVzn7IAbjOij+7zAFATxbplbV7y7vhygkl+ymlCRJ94yPmV
+ Du3Y2cPFqSqpbA6v4L7HcWpZTBUEvrceivusZ/4r4/wLsSRfw+lVNWJ3BsGreFWhYrMAU9H2l
+ KGzN89rq4ze/DlZp9J96z7zgjlbFZshFC+lsTIfnTJ5n6KTjsX3rByp7rks8AH4T53kOyRxaQ
+ eeSWR2rsEVL+pFMHVWJ4+6D6U8scZk1egbLR9BmsXMuE7YmyjYbxPKo+wTpnC5nC2AlqTmkOB
+ P5oDqxkqZHz23xHwxsm4yJ9DGqy+rXZCqwIDMLCGGvYHhGbr3DhijDXFrmGC8ZZCUyJA5OzCN
+ oQmknmf6n/Dlp2DjVnXfFkDIF2HY69iZNGfoj7bB0LzhaA08GBi9gXlvHgxpG3yJeKxO60Q7N
+ 6IftrZnNV9wNHUtFIDhDn7vb4NfIz4box9KAdjS9SYTBdNRPyg4CrPyGOoFJmaoHgJChF+uvP
+ 80MStj2uUjkubxDJzdDqGiAHyfhRxsS0wkPsDiwtG70QZScIh9vbhhMgklGlYEz945TG//Tcg
+ r/+Ei/+DpZH2a1p+5s7CEyPTFVjfZAX/376EhzAu/nDzcfovn+WCOQ9R2zXQ3pO7QpSG1jMz9
+ md/CnvfBe+bGAVtN/5boGz/WjiAvV7Q0UJjHgZr0MNMt//2B9R8UWk2iOQyjjghN3civfHulz
+ zU7g93iPaIonXyzXIgNm2uDXpVEEBrrpk1lJESdj7DpXhA3sV1EiZpEO0IesIL1hPIA5ryWkF
+ 4alnTZqXAEKu9T7CYUc2kcTOkj8Mh72uEX8mc0ppJxBsXESNfwPH9x1cdSahjNwVWvDf0SjCW
+ r2VaDY746OryWk7CMw1+cWvqpptkhTnFEZC0ay9LD8Rne5zfdiKuzBEe8v83B0OPUqW6cpr6O
+ Eo05Lm6uLD40qxSu3nGTttXGmELkFN21SUw/HByTmhwJsMzQt6xelHEncfdLn8FkwYrmbGSFw
+ RrOcJP903ZPYPQL82XwUT1uvPX
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> So, is strvec_push() a correct thing to use here?  ref_prefixes will
-> receive something like 'master' here, without 'refs/heads/master'
-> getting pushed, when "branch.*.merge = master"?  Given that the
-> advertisement restriction is merely an optimization, I wouldn't be
-> surprised if 'master' in .ref_prefixes strvec is further expanded
-> by an unnecessary extra call to expand_ref_prefix() later to cause
-> the server side to advertise refs/heads/master and refs/tags/master
-> etc., but it smells, eh, bad.
+--8323328-1741476505-1662670481=:189
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Junio,
+
+On Wed, 7 Sep 2022, Junio C Hamano wrote:
+
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >
->>  	if (tags == TAGS_SET || tags == TAGS_DEFAULT) {
->>  		must_list_refs = 1;
->> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
->> index 081808009b..0b72112fb1 100755
->> --- a/t/t5520-pull.sh
->> +++ b/t/t5520-pull.sh
->> @@ -218,6 +218,23 @@ test_expect_success 'fail if upstream branch does not exist' '
->>  	test_cmp expect file
->>  '
->>  
->> +test_expect_success 'fetch upstream branch even if refspec excludes it' '
->> +	# the branch names are not important here except that
->> +	# the first one must not be a prefix of the second,
->> +	# since otherwise the ref-prefix protocol extension
->> +	# would match both
->> +	git branch in-refspec HEAD^ &&
->> +	git branch not-in-refspec HEAD &&
->> +	git init -b in-refspec downstream &&
->> +	git -C downstream remote add -t in-refspec origin "file://$(pwd)/.git" &&
->> +	git -C downstream config branch.in-refspec.remote origin &&
->> +	git -C downstream config branch.in-refspec.merge refs/heads/not-in-refspec &&
+> > "git diff --no-index - -" also doesn't complain, by the way.
+>
+> True, but in this case hopefully it is worth to call it out, as both
+> this code that uses "diff --no-index" and "diff --no-index" itself
+> came from the same author ;-)
+>
+> I think "git diff --no-index - -" should just exit 0 after slurping
+> all its input (i.e. allow it to be placed downstream of a pipe
+> without blocking the upstream), but it is also fine to exit with 0
+> without reading a single byte from the standard input.  Of course
+> the latter is easier to implement ;-)
+>
+> >>> But otherwise the idea is sound.  We compare them line by line,
+> >>> using strbuf_getline() to ignore differences in CRLF and LF that
+> >>> originates at 4d715ac0 (Windows: a test_cmp that is agnostic to
+> >>> random LF <> CRLF conversions, 2013-10-26).  Only when we find the
+> >>> input different, we use "git diff --no-index" to make the difference
+> >>> (and unfortunately more, as it does not ignore CRLF <> LF
+> >>> differences) visible.
+> >
+> > Why not use "git diff --no-index --ignore-cr-at-eol"?  Do you even nee=
+d
+> > to wrap it?
+>
+> Hmph.  That surely sounds sensible if it works, and I offhand do not
+> see why it shouldn't work.
 
-Ah, OK, so the breakage may be the other way around.
+Is this a reversal of the stance you took in your reply in
+https://lore.kernel.org/git/7vps7xrfxa.fsf@assigned-by-dhcp.cox.net/ to my
+suggestion to replace `cmp` by `diff --no-index` (in that mail referred to
+as patch [7/8])?
 
-The new code assumes that branch.<name>.merge is a full refname, and
-strvec_push() is the right thing to do, when we add the knowledge
-that the current branch we are on by default merges with their
-refs/heads/frotz.  We just ask them to advertise refs/heads/frotz
-and they do not need to advertise refs/tags/frotz etc. let alone
-refs/tags/refs/heads/frotz so using expand_ref_prefix() here is
-wrong.
+If I recall correctly, you clarified outside of that thread that "I do not
+think it is a good enough reason to make the tests slower" was you being
+concerned about employing the entire diff machinery instead of doing a
+simple byte-for-byte comparison.
 
-It means that the patch claims that remote.c::branch_merge_matches()
-assume that branch->merge[i]->src may not be a full refname by
-calling refname_match() on it, which is incorrect and may need to be
-corrected.  But that is totally outside the scope of this fix.
+And while it is no longer _that_ simple a comparison (it now
+special-handles Carriage Returns), the speed and simplicity concern is
+still valid: `test-tool text-cmp` is vastly simpler (and provably faster)
+than `diff --no-index`.
 
-Thanks.
+Just because it is easier to review a one-liner to switch from essentially
+`cmp` to `git diff --no-index --ignore-cr-at-eol` does not mean that it is
+reasonable: it would cause us to blast out that much more CO2, just for
+our one-time convenience.
+
+Or for that matter, it would willfully slow down the `windows-test` jobs
+that already is mired by sloooow performance (mostly due to running a
+shell script-based test suite).
+
+Can you please let me make the Windows situation better rather than worse?
+
+Thank you,
+Dscho
+
+--8323328-1741476505-1662670481=:189--
