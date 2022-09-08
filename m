@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A499BC38145
-	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 07:39:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03D8DECAAD5
+	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 07:42:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231158AbiIHHjI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Sep 2022 03:39:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58886 "EHLO
+        id S230330AbiIHHmb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Sep 2022 03:42:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229572AbiIHHjF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2022 03:39:05 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5687ED51CF
-        for <git@vger.kernel.org>; Thu,  8 Sep 2022 00:39:04 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id nc14so36028032ejc.4
-        for <git@vger.kernel.org>; Thu, 08 Sep 2022 00:39:04 -0700 (PDT)
+        with ESMTP id S230239AbiIHHm0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2022 03:42:26 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E485D51C5
+        for <git@vger.kernel.org>; Thu,  8 Sep 2022 00:42:25 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id u6so22986685eda.12
+        for <git@vger.kernel.org>; Thu, 08 Sep 2022 00:42:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date;
-        bh=1kxtdsohUnm2s8c4JuH1ICTCXDmovCSdTbDTVIC5oEs=;
-        b=nv3tLPsfNobVUJrdb2s2hAMwKe7YtDlfAvB42RgIkN0eUBBmTolpxT1KhcLJCk/yk0
-         CW6SpTJQrAUdp0ycTj7FD/RhtE+Owfn039sgKyOuZi+oiFzIamEJyWS3QOK86aIwKEdI
-         yyamWMZlD3xOpB2RBZO87WH/ahF5lyDoW5tMQJGlwDYn/jQkpmZHy1ISjj31SW3i2q9+
-         OQsKsVHgwbl4IMPSBnKoxhT6RqieUV9NOq1JhA/bWApUNfuaF6GMCKESVPWqJ3VGCryy
-         nD1CGJU3WCtBVxTwshtl84eifTsOT5zKzallc5stkcVgna3gHHs6YAIqIPkUQW4O22dw
-         Nf3A==
+        bh=45P64uOUFZB3lj4DeJZQcG0g5no+F7hh1qzrb0qPyJY=;
+        b=RPDrs+KfFpw9mNCu9geODkfTVqHkHkOMWPMGfoDAoQDQLNbMxTdt+2JU+O8d+8nF4E
+         umxFWqF8p1eEv/4EHAxau13owxfCjYhpysmOKIGZpnxSeraLg3Bciq+eBw9y7QlJyuJ6
+         9DsqJD94fbNUnRu0RAAFG808+E/ZVde0dpGugcs3JYohx6T3bHpvHzGvfu35Hykr+qrr
+         knrtOleauTaOvLCNg5Kd+4OwHJwCyArvInTdXN0Gc9VgQ3JLgGIq8nLUQQIiZksJuwXW
+         gveWWb4uknZgtTzzk3Rg86SC91AK+abM20uOHzv2UcAH7AQEuJDCBYuZtddQ/MN1E7K3
+         DtLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=1kxtdsohUnm2s8c4JuH1ICTCXDmovCSdTbDTVIC5oEs=;
-        b=Pe0J9FbVn/zWlxka24LbTD2n5yzXOd5uiRvN5pCxoDq8ERPjJ9OjfWgySV+kF1cmPQ
-         Cm1GVC74852Rc53DUIOlsCZI3lZrXGKuGJdUQCL697+RjXySPd2B/ZokMdOEtKBZLTL5
-         ggCCwDXGDK9FFBWkGKJ1hKHqfeS6vjjZFQpwSLruMMHNGTLHNk+1UuJFewEfItTa+ckj
-         Vi1+kJaec8IpQCmckNmtK1cmUW7r31HMmTDy2f5jJFrqZ6CGg/xFYyOQd8jToxWUMduf
-         9a+G9urhIo2uCIXXmw2bJygEY/50iBI+aGLxOb5Gxq6hbfjs53YB3+gMPlipBC25tBZd
-         gGGw==
-X-Gm-Message-State: ACgBeo1n68ia7Tl2owB7EKt7+WcSrGAAK4+VuKRP+z1Er8VtJiyj2YAJ
-        /EPG735CblmdK3XgXIVCWS26KgOT5nbXhA==
-X-Google-Smtp-Source: AA6agR5yFeYrIGs8Yafa1e0mNzyBu3t0ebvDo92VXSkAZEp4wPWwvPXJCuD3gIt/7p+C+VEqp5/HTg==
-X-Received: by 2002:a17:907:7b93:b0:770:1d4f:4de9 with SMTP id ne19-20020a1709077b9300b007701d4f4de9mr5209490ejc.201.1662622742510;
-        Thu, 08 Sep 2022 00:39:02 -0700 (PDT)
+        bh=45P64uOUFZB3lj4DeJZQcG0g5no+F7hh1qzrb0qPyJY=;
+        b=EmyXjPAgTeQfAujwOkvd3IkiSCyLVwNpHx0mJNQ7eZOEDsahbwVmJPM++iz7970Wq0
+         1MoIYKRy7KLxJszI1kHYkHiVxVJuYYQRG+iGwAzfvDxwcr6wFLWnXBrXVPd8AfdrUdtk
+         Gd/mHMxYimvqNqkR3U76kPKftw5tUWz7mLtzh7VuPBmbVmFOhuPtEUZpP+0Gm70SCjd1
+         dB+omqnK2LddXggiaYTIhuHI1SmQlesKcvNj0XXetHi1DvXCiKLnEF7BubDyQZ5/L0WH
+         0msmr/mJNFnM3NpFJ0Qf8dcd6JvFk5LtTjW7IX+1iEFK72DaYx5dFLjYy7qqrFwLyzdd
+         zkKQ==
+X-Gm-Message-State: ACgBeo3wuBeteZW0kvNXkYMAEUvXE1Lweo2vUa55dLFc+mxjC6jYludq
+        yb4MJoM+6ANNve8LiHZKKx07owW6BJ1jbg==
+X-Google-Smtp-Source: AA6agR7Uw2MuJHKB/vUrQ9LpSVqH4UpT37dFCEJ6hMAWVYhHzyGeWvCNpl7aHw4Zz6sqsVUyLN771w==
+X-Received: by 2002:a05:6402:4150:b0:44a:ec16:def4 with SMTP id x16-20020a056402415000b0044aec16def4mr6082113eda.21.1662622943815;
+        Thu, 08 Sep 2022 00:42:23 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id kv24-20020a17090778d800b00773dbdd8205sm662448ejc.168.2022.09.08.00.39.01
+        by smtp.gmail.com with ESMTPSA id b5-20020aa7c6c5000000b00450206d9dfbsm745797eds.84.2022.09.08.00.42.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Sep 2022 00:39:01 -0700 (PDT)
+        Thu, 08 Sep 2022 00:42:22 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1oWC7p-001H7t-0Q;
-        Thu, 08 Sep 2022 09:39:01 +0200
+        id 1oWCB4-001HFR-0N;
+        Thu, 08 Sep 2022 09:42:22 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 5/5] cmake: increase time-out for a long-running test
-Date:   Thu, 08 Sep 2022 09:34:28 +0200
+Subject: Re: [PATCH v2 4/5] cmake: avoid editing t/test-lib.sh
+Date:   Thu, 08 Sep 2022 09:39:38 +0200
 References: <pull.1320.git.1660143750.gitgitgadget@gmail.com>
-        <pull.1320.v2.git.1661243463.gitgitgadget@gmail.com>
-        <6aaa675301cc56081d07974a0eb8662700fe96f8.1661243464.git.gitgitgadget@gmail.com>
+ <pull.1320.v2.git.1661243463.gitgitgadget@gmail.com>
+ <22473d6b8f3d4e4c482c27a4fb3b58705d4c93ca.1661243463.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <6aaa675301cc56081d07974a0eb8662700fe96f8.1661243464.git.gitgitgadget@gmail.com>
-Message-ID: <220908.86edwml3hm.gmgdl@evledraar.gmail.com>
+In-reply-to: <22473d6b8f3d4e4c482c27a4fb3b58705d4c93ca.1661243463.git.gitgitgadget@gmail.com>
+Message-ID: <220908.86a67al3c1.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,52 +74,106 @@ On Tue, Aug 23 2022, Johannes Schindelin via GitGitGadget wrote:
 
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> As suggested in
-> https://github.com/git-for-windows/git/issues/3966#issuecomment-1221264238,
-> t7112 can run for well over one hour, which seems to be the default
-> maximum run time at least when running CTest-based tests in Visual
-> Studio.
+> In 7f5397a07c6c (cmake: support for testing git when building out of the
+> source tree, 2020-06-26), we implemented support for running Git's test
+> scripts even after building Git in a different directory than the source
+> directory.
 >
-> Let's increase the time-out as a stop gap to unblock developers wishing
-> to run Git's test suite in Visual Studio.
+> The way we did this was to edit the file `t/test-lib.sh` to override
+> `GIT_BUILD_DIR` to point somewhere else than the parent of the `t/`
+> directory.
 >
-> Note: The actual run time is highly dependent on the circumstances. For
-> example, in Git's CI runs, the Windows-based tests typically take a bit
-> over 5 minutes to run. CI runs have the added benefit that Windows
-> Defender (the common anti-malware scanner on Windows) is turned off,
-> something many developers are not at liberty to do on their work
-> stations. When Defender is turned on, even on this developer's high-end
-> Ryzen system, t7112 takes over 15 minutes to run.
+> This is unideal because it always leaves a tracked file marked as
+> modified, and it is all too easy to commit that change by mistake.
+>
+> Let's change the strategy by teaching `t/test-lib.sh` to detect the
+> presence of a file called `GIT-BUILD-DIR` in the source directory. If it
+> exists, the contents are interpreted as the location to the _actual_
+> build directory. We then write this file as part of the CTest
+> definition.
+>
+> To support building Git via a regular `make` invocation after building
+> it using CMake, we ensure that the `GIT-BUILD-DIR` file is deleted (for
+> convenience, this is done as part of the Makefile rule that is already
+> run with every `make` invocation to ensure that `GIT-BUILD-OPTIONS` is
+> up to date).
 >
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  contrib/buildsystems/CMakeLists.txt | 4 ++++
->  1 file changed, 4 insertions(+)
+>  .gitignore                          |  1 +
+>  Makefile                            |  1 +
+>  contrib/buildsystems/CMakeLists.txt |  7 +------
+>  t/test-lib.sh                       | 11 ++++++++++-
+>  4 files changed, 13 insertions(+), 7 deletions(-)
 >
+> diff --git a/.gitignore b/.gitignore
+> index a4522157641..b72ddf09346 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -2,6 +2,7 @@
+>  /fuzz_corpora
+>  /fuzz-pack-headers
+>  /fuzz-pack-idx
+> +/GIT-BUILD-DIR
+>  /GIT-BUILD-OPTIONS
+>  /GIT-CFLAGS
+>  /GIT-LDFLAGS
+> diff --git a/Makefile b/Makefile
+> index 04d0fd1fe60..9347ed90da7 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -3028,6 +3028,7 @@ else
+>  	@echo RUNTIME_PREFIX=\'false\' >>$@+
+>  endif
+>  	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
+> +	@if test -f GIT-BUILD-DIR; then rm GIT-BUILD-DIR; fi
+>
+>  ### Detect Python interpreter path changes
+>  ifndef NO_PYTHON
 > diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-> index 29d7e236ae1..b1306f95256 100644
+> index fe606c179f7..29d7e236ae1 100644
 > --- a/contrib/buildsystems/CMakeLists.txt
 > +++ b/contrib/buildsystems/CMakeLists.txt
-> @@ -1088,4 +1088,8 @@ foreach(tsh ${test_scipts})
->  		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t)
->  endforeach()
->  
-> +# This test script takes an extremely long time and is known to time out even
-> +# on fast machines because it requires in excess of one hour to run
-> +set_tests_properties("${CMAKE_SOURCE_DIR}/t/t7112-reset-submodule.sh" PROPERTIES TIMEOUT 4000)
-> +
->  endif()#BUILD_TESTING
+> @@ -1067,14 +1067,9 @@ endif()
+>  #Make the tests work when building out of the source tree
+>  get_filename_component(CACHE_PATH ${CMAKE_CURRENT_LIST_DIR}/../../CMakeCache.txt ABSOLUTE)
+>  if(NOT ${CMAKE_BINARY_DIR}/CMakeCache.txt STREQUAL ${CACHE_PATH})
+> -	file(RELATIVE_PATH BUILD_DIR_RELATIVE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}/CMakeCache.txt)
+> -	string(REPLACE "/CMakeCache.txt" "" BUILD_DIR_RELATIVE ${BUILD_DIR_RELATIVE})
+>  	#Setting the build directory in test-lib.sh before running tests
+>  	file(WRITE ${CMAKE_BINARY_DIR}/CTestCustom.cmake
+> -		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh GIT_BUILD_DIR_REPL REGEX \"GIT_BUILD_DIR=(.*)\")\n"
+> -		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh content NEWLINE_CONSUME)\n"
+> -		"string(REPLACE \"\${GIT_BUILD_DIR_REPL}\" \"GIT_BUILD_DIR=\\\"$TEST_DIRECTORY/../${BUILD_DIR_RELATIVE}\\\"\" content \"\${content}\")\n"
+> -		"file(WRITE ${CMAKE_SOURCE_DIR}/t/test-lib.sh \${content})")
+> +		"file(WRITE ${CMAKE_SOURCE_DIR}/GIT-BUILD-DIR \"${CMAKE_BINARY_DIR}\")")
+>  	#misc copies
+>  	file(COPY ${CMAKE_SOURCE_DIR}/t/chainlint.sed DESTINATION ${CMAKE_BINARY_DIR}/t/)
+>  	file(COPY ${CMAKE_SOURCE_DIR}/po/is.po DESTINATION ${CMAKE_BINARY_DIR}/po/)
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 55857af601b..4468ac51f25 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -42,7 +42,16 @@ then
+>  	TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
+>  fi
+>  GIT_BUILD_DIR="${TEST_DIRECTORY%/t}"
+> -if test "$TEST_DIRECTORY" = "$GIT_BUILD_DIR"
+> +if test -f "$GIT_BUILD_DIR/GIT-BUILD-DIR"
+> +then
+> +	GIT_BUILD_DIR="$(cat "$GIT_BUILD_DIR/GIT-BUILD-DIR")" || exit 1
+> +	# On Windows, we must convert Windows paths lest they contain a colon
+> +	case "$(uname -s)" in
+> +	*MINGW*)
+> +		GIT_BUILD_DIR="$(cygpath -au "$GIT_BUILD_DIR")"
+> +		;;
+> +	esac
+> +elif test "$TEST_DIRECTORY" = "$GIT_BUILD_DIR"
+>  then
+>  	echo "PANIC: Running in a $TEST_DIRECTORY that doesn't end in '/t'?" >&2
+>  	exit 1
 
-I don't see per [1] that it would have any negative effect to just bump
-the timeout a lot more, and for all the tests.
-
-If we're running into 3600 seconds, then setting this to 4000 seconds
-seems to be a smal stopgap at best. That's just over a 10% increase, so
-if one person ran into it it 3600 someone with a slightly slower system
-should be running into the same still, or if we just add a few more
-tests to 7112 (or some other slow test).
-
-So why not set this ta 3600*10 or whatever for *all* of the test scripts
-instead of playing whack-a-mole?
-
-1. https://cmake.org/cmake/help/latest/prop_test/TIMEOUT.html
+As pointed out in the v1 this breaks the cmake<->make interaction in
+some scenarios, but from some brief testing there seemed to be an easy
+workaround which didn't suffer from that problem:
+https://lore.kernel.org/git/220811.86sfm3ov5z.gmgdl@evledraar.gmail.com/
