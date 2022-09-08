@@ -2,73 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A49B1C54EE9
-	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 18:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B6A5C54EE9
+	for <git@archiver.kernel.org>; Thu,  8 Sep 2022 19:23:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232238AbiIHSmZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Sep 2022 14:42:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45928 "EHLO
+        id S230425AbiIHTXj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Sep 2022 15:23:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232228AbiIHSmQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2022 14:42:16 -0400
+        with ESMTP id S231360AbiIHTXc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2022 15:23:32 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C186E9035
-        for <git@vger.kernel.org>; Thu,  8 Sep 2022 11:42:15 -0700 (PDT)
-Received: (qmail 28485 invoked by uid 109); 8 Sep 2022 18:42:14 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90DE025FF
+        for <git@vger.kernel.org>; Thu,  8 Sep 2022 12:23:31 -0700 (PDT)
+Received: (qmail 28587 invoked by uid 109); 8 Sep 2022 19:23:31 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 08 Sep 2022 18:42:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 08 Sep 2022 19:23:31 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23514 invoked by uid 111); 8 Sep 2022 18:42:14 -0000
+Received: (qmail 23801 invoked by uid 111); 8 Sep 2022 19:23:31 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Sep 2022 14:42:14 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Sep 2022 15:23:31 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 8 Sep 2022 14:42:13 -0400
+Date:   Thu, 8 Sep 2022 15:23:29 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
-        Xin7 Ma =?utf-8?B?6ams6ZGr?= <maxin7@xiaomi.com>,
-        =?utf-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>,
-        =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
-        =?utf-8?B?546L5rGJ5Z+6?= <wanghanji@xiaomi.com>
-Subject: Re: [External Mail]Re: [PATCH 3/3] parse_object(): check
- commit-graph when skip_hash set
-Message-ID: <Yxo3hXg7AwrqzQO8@coredump.intra.peff.net>
-References: <YxfQi4qg8uJHs7Gp@coredump.intra.peff.net>
- <YxfScUATMQw9cB6m@coredump.intra.peff.net>
- <xmqqv8pzt20d.fsf@gitster.g>
- <a87e9eaccf7849fc9eeb10ce7d373db0@xiaomi.com>
+To:     Lana Deere <lana.deere@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org
+Subject: [PATCH 0/2] v2 protocol can't "git pull" with restricted refspec
+Message-ID: <YxpBMaIckimFJYEi@coredump.intra.peff.net>
+References: <CA+4x=b_07g6STT0nvma_gRhv=zdj+7TQx5SxKLUtuqONLwv=TQ@mail.gmail.com>
+ <YxKo2l5nBoOa9Jfa@coredump.intra.peff.net>
+ <CA+4x=b-GYMnZygHXOfNb3CdSRoxUeT80n=gSCLyfCA9WsB0wEw@mail.gmail.com>
+ <Yxf9yETBi3k6Wasl@danh.dev>
+ <CA+4x=b9M+HRWdDx-Mr4q0NiRQESwJ5uEkOBL_nVPPPHhXs7i_g@mail.gmail.com>
+ <YxjhQ8xVI4YtA7xb@coredump.intra.peff.net>
+ <CA+4x=b9upd2uTihZK5hXDULkCz6y+CX-dS7p65Pfhn0zh0eMiA@mail.gmail.com>
+ <YxkI2zqCheqTv/wc@coredump.intra.peff.net>
+ <CA+4x=b-SqzGfeTu4c8akk3quYF7ORZ5jYCpey5221H8=+_PfRg@mail.gmail.com>
+ <Yxow7zrYF/xOijVr@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a87e9eaccf7849fc9eeb10ce7d373db0@xiaomi.com>
+In-Reply-To: <Yxow7zrYF/xOijVr@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 08, 2022 at 10:39:08AM +0000, 程洋 wrote:
+On Thu, Sep 08, 2022 at 02:14:07PM -0400, Jeff King wrote:
 
-> > If the caller told us that they don't care about us checking the
-> > object hash, then we're free to implement any optimizations that get
-> > us the parsed value more quickly. An obvious one is to check the
-> > commit graph before loading an object from disk. And in fact, both of
-> > the callers who pass in this flag are already doing so before they call
-> > parse_object()!
+> This is a bug which we should fix. But in the meantime the obvious
+> workaround is to expand the default refspec to cover both branches.
+> Obviously the default of fetching "refs/heads/*" would work, but if you
+> want to keep it limited for some reason, you can add the second branch
+> explicitly. In the example above, it would be:
 > 
-> > So we can simplify those callers, as well as any possible future ones,
-> > by moving the logic into parse_object().
-> 
-> I need to mention that there is serious issue with commit-graph together with partial-clone
-> https://lore.kernel.org/git/20220709005227.82423-1-hanxin.hx@bytedance.com/
+>   git config --add remote.origin.fetch +refs/heads/branch2:refs/remotes/origin/branch2
 
-Yes, though I don't think that changes anything with respect to my
-patches. The argument here is simply that if a caller is OK skipping the
-hash check, they are OK with using the commit graph, and vice versa.
-Until the bug in the linked thread is fixed, it is a good idea to
-disable the commit graph. But it does not change the intent of the
-calling code.
+And here's the patch to fix it. There was a small cleanup needed, hence
+the 2-patch series.
+
+  [1/2]: fetch: stop checking for NULL transport->remote in do_fetch()
+  [2/2]: fetch: add branch.*.merge to default ref-prefix extension
+
+ builtin/fetch.c | 18 +++++++++++++++---
+ t/t5520-pull.sh | 17 +++++++++++++++++
+ 2 files changed, 32 insertions(+), 3 deletions(-)
 
 -Peff
