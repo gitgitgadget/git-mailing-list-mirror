@@ -2,93 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E542ECAAD5
-	for <git@archiver.kernel.org>; Fri,  9 Sep 2022 01:08:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10C77ECAAD5
+	for <git@archiver.kernel.org>; Fri,  9 Sep 2022 02:18:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229794AbiIIBIg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Sep 2022 21:08:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50014 "EHLO
+        id S229974AbiIICSW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Sep 2022 22:18:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbiIIBIf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Sep 2022 21:08:35 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0444CB0B01
-        for <git@vger.kernel.org>; Thu,  8 Sep 2022 18:08:32 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id q21so236851lfo.0
-        for <git@vger.kernel.org>; Thu, 08 Sep 2022 18:08:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=IVZUikOK8kB7wRrPG2CEx0klt6JwEfBaO0E3ncJS6U8=;
-        b=rOf7gEzb9Fk9T3vGR1Tr19ZGkcUvd8W5pOUzzcE8CIZYLSNJajmulw7sOyZM12ZP+u
-         I9fQKDwJ826ShYnxekl8RS8iU7OWniWB8nr28mhdFbOOzOWOZkjYnC/x/alUKyMl4CAj
-         Dz4qM8ozb2zvj673URQtzhGJ5eDxFnCl4GDEXK8DxTSLnmFb4eMli/Rt23pCktHFncTZ
-         q5oGty7GSlbaADSbCD5AQNg4cNFcjjKLMGT8HBv+iFub4TeQVjOjLn+C7gspp9rLa0eq
-         z5dvBDFq2+295UvNq/MkpKx+nVx7k9q8V2pbVuwgcD075BLEnfev5B6zAcDbRor5cSbW
-         i2dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=IVZUikOK8kB7wRrPG2CEx0klt6JwEfBaO0E3ncJS6U8=;
-        b=fYt7jDOyCiGaYMGVlhcNiVw0Kgd28dcYZirgnO3omavwdNOfoK9bEq6IW61oo9LmbQ
-         lcnTLQfGdodxF6yG6sEgFnahaINomJxn+DYM0QD2Fy+G+a03LVFs/+Mc5I0D5Qb1B0Gz
-         YrSBmNztOhTMVR3b3tAUIOBl0mVHKSIOT6PHQuvEPXQ9TXX4ftnfApOjb4WgcVDA4SbK
-         VT1vulIuul/gUQ0fRRKgQ8UsNPgr21brxibE9EhjaWyeYBm8gkmDYBuFO8sq4YhA/Kch
-         c19o7avo88vqCi95KAOvixDFLKpLo5ziDwV7cl7k1OomfkVF3KO2R3dGgMyRdsga2ZDe
-         6xgQ==
-X-Gm-Message-State: ACgBeo3G16A5CTxupu/0AEqV8jdTC1u9eCChuFCzqU6xm1aCFYaId3SC
-        dG5Bc6r0TvP6QjxoUrEx374UiTCIsGX/UUZndkcbHx9gmigUhQ==
-X-Google-Smtp-Source: AA6agR4gtYTd86pcxIJ3Jl9I3vsG9BudCDcvIZZNW3kDlWz6ccihIrj5ERDL7gro3dpZ/QDg5EDaV3kiNapsJrHqbWo=
-X-Received: by 2002:a05:6512:3409:b0:48a:ef20:ddb with SMTP id
- i9-20020a056512340900b0048aef200ddbmr3914043lfr.597.1662685710265; Thu, 08
- Sep 2022 18:08:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1662559356.git.matheus.bernardino@usp.br>
- <a2c4514aa03657f3b1d822efe3dd630713287ee6.1662559356.git.matheus.bernardino@usp.br>
- <4d750ff2-9df5-504f-9972-59b082000db0@gmail.com> <xmqqa67buj4m.fsf@gitster.g>
-In-Reply-To: <xmqqa67buj4m.fsf@gitster.g>
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-Date:   Thu, 8 Sep 2022 22:08:19 -0300
-Message-ID: <CAHd-oW4Z-UbFWy=fj=L-CqiG9QP0x3ZLRg0icgK5Xgu=THd4Lw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] format-patch: warn if commit msg contains a patch delimiter
+        with ESMTP id S229660AbiIICSU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Sep 2022 22:18:20 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67F261582B
+        for <git@vger.kernel.org>; Thu,  8 Sep 2022 19:17:14 -0700 (PDT)
+Received: (qmail 29704 invoked by uid 109); 9 Sep 2022 02:17:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 09 Sep 2022 02:17:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27432 invoked by uid 111); 9 Sep 2022 02:17:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Sep 2022 22:17:11 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 8 Sep 2022 22:17:09 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-        avarab@gmail.com, l.s.r@web.de
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Lana Deere <lana.deere@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] fetch: add branch.*.merge to default ref-prefix
+ extension
+Message-ID: <YxqiJW4cSp4cBR22@coredump.intra.peff.net>
+References: <YxpBMaIckimFJYEi@coredump.intra.peff.net>
+ <YxpB0dbFTKp5L94k@coredump.intra.peff.net>
+ <xmqq1qslpprv.fsf@gitster.g>
+ <xmqqtu5hoamx.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtu5hoamx.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 7, 2022 at 3:36 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
-> > Hi Matheus
-> >
-> > Thanks for working on this, having a warning for this is a useful
-> > addition. If the user embeds a diff in their commit message then they
-> > will receive three warnings
-> >
-> > warning: commit message has a patch delimiter: 'diff --git a/file b/file'
-> > warning: commit message has a patch delimiter: '--- file'
-> > warning: git am might fail to apply this patch. Consider indenting the
-> > offending lines.
-> >
-> > I guess it's helpful to show all the lines that are considered
-> > delimiters but it gets quite noisy.
+On Thu, Sep 08, 2022 at 01:48:38PM -0700, Junio C Hamano wrote:
 
-Hmm, right :/ Perhaps we could avoid repeating the warning message:
+> The new code assumes that branch.<name>.merge is a full refname, and
+> strvec_push() is the right thing to do, when we add the knowledge
+> that the current branch we are on by default merges with their
+> refs/heads/frotz.  We just ask them to advertise refs/heads/frotz
+> and they do not need to advertise refs/tags/frotz etc. let alone
+> refs/tags/refs/heads/frotz so using expand_ref_prefix() here is
+> wrong.
 
-warning: commit message has a patch delimiter(s):
-diff --git a/file b/file
---- file
-....
-warning: git am might fail to apply this patch.
+Right. When I was writing the patch I had no inkling that branch.*.merge
+could ever be anything but a fully qualified ref. I don't think I've
+ever seen one that isn't, and the documentation is vague. It says:
 
-> True.  I wonder if automatically indenting these lines is an option ;-)
+  [...]The value is handled like the remote part of a refspec, and must match
+  a ref which is fetched from the remote[...]
 
-Makes sense. Perhaps under a config option? The difficult part would
-be for the scissors; just indenting it with whitespaces wouldn't
-suffice, right?
+I took "match" to mean a full string match. That text comes from
+b888d61c83 (Make fetch a builtin, 2007-09-10); before that it said "the
+value has exactly to match a remote part of one of the refspecs...".
+
+But documentation aside, if we've been allowing:
+
+  git config branch.master.merge master
+
+to work forever, then perhaps we need to continue to support it. I
+dunno.
+
+> It means that the patch claims that remote.c::branch_merge_matches()
+> assume that branch->merge[i]->src may not be a full refname by
+> calling refname_match() on it, which is incorrect and may need to be
+> corrected.  But that is totally outside the scope of this fix.
+
+I make no claims. ;) I just didn't even consider a non-qualified ref to
+be a possibility.
+
+The code in fetch's add_merge_config() that does branch_merge_matches()
+comes from 85682c1903 (Correct handling of branch.$name.merge in
+builtin-fetch, 2007-09-18), but I don't see any indication there that
+non-qualified refs were intended.
+
+So I could either way: non-qualified refs in branch.*.merge has always
+worked, and we should continue to support it. Or it was never intended
+to work, and we are not obligated to continue supporting random things.
+
+I do think "continue supporting" would probably just mean using
+expand_ref_prefix() here as you suggest. It does increase the size of
+our request, and the work the server has to do when it matches the
+prefixes (which is inherently linear on the number of prefixes we give
+it).
+
+One thing we could do, but my patch doesn't, is skip sending this prefix
+when it is a subset of the default refspec (i.e., in the default config
+refs/heads/foo is already part of refs/heads/, so there is no need to
+specify it separately). That doesn't really help if we expand the
+prefix, though. The default refspec doesn't include:
+
+  refs/remotes/refs/heads/foo/HEAD
+
+which is exactly the kind of thing we'd ask for. Maybe that is all
+premature optimization, though.
+
+-Peff
