@@ -2,125 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40C66C6FA82
-	for <git@archiver.kernel.org>; Fri,  9 Sep 2022 14:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FB33ECAAD3
+	for <git@archiver.kernel.org>; Fri,  9 Sep 2022 14:20:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230170AbiIIOOG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Sep 2022 10:14:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34694 "EHLO
+        id S229679AbiIIOUo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Sep 2022 10:20:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229778AbiIIOOF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2022 10:14:05 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47E2FA99F2
-        for <git@vger.kernel.org>; Fri,  9 Sep 2022 07:14:04 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id z18so1341293qts.7
-        for <git@vger.kernel.org>; Fri, 09 Sep 2022 07:14:04 -0700 (PDT)
+        with ESMTP id S230006AbiIIOUm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2022 10:20:42 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A93D386FE3
+        for <git@vger.kernel.org>; Fri,  9 Sep 2022 07:20:40 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id h22so1378196qtu.2
+        for <git@vger.kernel.org>; Fri, 09 Sep 2022 07:20:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=HQiHBxRaIaIMAqXLNMP+E12mHJT2XOObAK8TnHyWSUU=;
-        b=FBg2RWO5Jdqfh30gt1CyAF+q6tl8NElyDXAizfiQgrsPzji2lt+ySn40zX2fafluSF
-         FKLNJgDdev5JBYAM0rKyQXy1foYtoq3jmJJV8hynVBVuhsppU3Cm/ojOAKJEA4eCiqYp
-         jd8hpktj9NfEa9lRRIK8Mbd4Sat1ni+RAl8cUJsisqgUN8ZG1F9vvoPjY1Vz919Cp3Kn
-         zmyZl5rimtXP2bOll7yoEgza7NWULxoub+VXXLAm/ILCo27QA8Jh3SU0p6A8PqR4IkHX
-         FO/c6RE5q3asydIsed0u/XqxPlPipDolksaKvvzh7rkpLM/RJOp8d0nj+xhYeZdvHVU2
-         Jmhw==
+        bh=nguzpg1EW6utzC3o3u45YW7ZJ+Bh5YQtQhiZgqBmsHE=;
+        b=aR+Q5DcbfNpTdGi/rbm4zS8Urnh0gyTiRJ1xivK1RzXn1Nrpvi0lPTE8wwyV7SOtG4
+         V4ygSNJhQQk+Ig3lC1HhT4OzeIBMHJPCtq/6YL6gry8eXK7LT4RHEkdyE5+VcxRK/Njn
+         XdXe/QAmIan5tcr7j0TS8Sq3c0cdH7GOGvhKnahHrRoJbnKz2mP7DlREKKIGsLO5HuBO
+         I4IFzmmCDN6SzqlNaugR5e/nyB9JFlbu1VBRmiEy7cKzMfkXipUB+dOJZRvWyc8dQRpy
+         8nPapTsuJydA6v3nzAUqJLSgx8hbSNoLSnNfr/r7Om2ZX9McXMf4AuUlxbJ+IVyXqUbW
+         H1zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=HQiHBxRaIaIMAqXLNMP+E12mHJT2XOObAK8TnHyWSUU=;
-        b=f4aI+xsZk+4S9j6blXYr9SsM0PapSuPhUjfV0aHnDPyb73jpSx5KVMOZlPIQ3ABunH
-         PVttr9M2oDwup0gn0oa3jn7BpQs25ETWrwtIdSbhHuQ7A1tbFlpWlGHFIYpOzCtjCVn2
-         PiUtTc6x6/1Wdsx761lvmWkBSql12VwyUxbxl9EcfSbUoMWijmnR+Co+O3nY54yZBTq5
-         yoLQdlGXUBNmZbLhCkjb72B10iSuDzhr3bJO5alOTSIrVhjHShLddYyioCbXBlc8Opk+
-         wUCi7KukpBDYQINVju33zjTd/ZP1BhV6e1Uf9Be8t2Li5/asYHOXI6Df9o9qcGljBqi1
-         PJvQ==
-X-Gm-Message-State: ACgBeo1MrpPhLL+y6MTfu8/IseencCN6dyNYcrkLKLGdDgsURzJdp0kY
-        Tjh9bZnsAiKhV10W6h/uv8ZL
-X-Google-Smtp-Source: AA6agR6pdEFLZfZku8H4mzeQUsKae6D3wHp07oe1mex0vSook1ixlXngQRBkcf/ze5CUKm2Gjn5QDQ==
-X-Received: by 2002:ac8:5f4d:0:b0:344:7745:b1ad with SMTP id y13-20020ac85f4d000000b003447745b1admr12839382qta.169.1662732843372;
-        Fri, 09 Sep 2022 07:14:03 -0700 (PDT)
+        bh=nguzpg1EW6utzC3o3u45YW7ZJ+Bh5YQtQhiZgqBmsHE=;
+        b=uU9c91dHO4BWI0Sv8vuWVlXO4G6ns5UaXg+tgnujCV6h8Hk/opLnk/TA1nTyB9dqs7
+         SFJ8MRI33/+mhK6JsegoKXZS3RsgTY+On1N14ZXT9ZuH/H0podGQ2Q+nfgWuViRPjg+u
+         m6IGwAL0aHyJoCV416ont3BGULUWHslStkpOOLHKkejymLg6cAp+h3I2QsBG+/nConX1
+         LR0uH8fnsWawob4czh+3GdsV4WKMAV0muvcRBy9nQnUfxa8gGBsB4RLfXSZA5sq643Va
+         UeJhiudjlPykWs7WVJEHtMVov7Rbk4/noXWK01fz9WHW8KhFwZbwhpXFf1IFlXE6y/nX
+         6erg==
+X-Gm-Message-State: ACgBeo0St+CTZYcpl2jR2+0fqpx1+ysYWcH5+fX4ewQ6LJaIE/lD+aHU
+        lPbMA1NfsTxwJ5Bzg1bjozwLZ8z+X7ce
+X-Google-Smtp-Source: AA6agR50oA4Meo4ZFjle3rpbdUZs9bwQtvisUgmi3QIX0WillwEN1hS/pIngv3yvg2Vm0drBlkl6Ow==
+X-Received: by 2002:ac8:5b05:0:b0:343:3ce4:c34c with SMTP id m5-20020ac85b05000000b003433ce4c34cmr13067618qtw.233.1662733239775;
+        Fri, 09 Sep 2022 07:20:39 -0700 (PDT)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id bp11-20020a05622a1b8b00b0031f36cd1958sm479234qtb.81.2022.09.09.07.14.02
+        by smtp.gmail.com with ESMTPSA id f11-20020a05620a280b00b006bb7ccf6855sm556327qkp.76.2022.09.09.07.20.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Sep 2022 07:14:02 -0700 (PDT)
-Message-ID: <3cbfd1b4-7699-1301-042c-fdadea649066@github.com>
-Date:   Fri, 9 Sep 2022 10:14:00 -0400
+        Fri, 09 Sep 2022 07:20:39 -0700 (PDT)
+Message-ID: <15688f6a-4757-e201-9106-663899e35fec@github.com>
+Date:   Fri, 9 Sep 2022 10:20:37 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.0
-Subject: Re: [PATCH] builtin/mv.c: fix possible segfault in add_slash()
+Subject: Re: [PATCH 0/5] plugging some list-objects-filter leaks
 Content-Language: en-US
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org,
-        peff@peff.net
-Cc:     gitster@pobox.com, vdye@github.com
-References: <20220908230223.239970-1-shaoxuan.yuan02@gmail.com>
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <Yxl1BNQoy6Drf0Oe@coredump.intra.peff.net>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20220908230223.239970-1-shaoxuan.yuan02@gmail.com>
+In-Reply-To: <Yxl1BNQoy6Drf0Oe@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/8/2022 7:02 PM, Shaoxuan Yuan wrote:
-> A possible segfault was introduced in c08830de41 (mv: check if
-> <destination> is a SKIP_WORKTREE_DIR, 2022-08-09).
+On 9/8/2022 12:52 AM, Jeff King wrote:
+> The test I sent earlier in [1] fails the linux-leaks CI job, not because
+> it introduces new leaks, but just because it runs existing leaks in a
+> test marked as passing-leaks.
 > 
-> When running t7001 with SANITIZE=address, problem appears when running:
-> 
-> 	git mv path1/path2/ .
-> or
-> 	git mv directory ../
-> or
-> 	any <destination> that makes dest_path[0] an empty string.
-> 
-> The add_slash() call segfaults when dest_path[0] is an empty string,
-> because it was accessing a null value in such case.
+> Of course we can drop the passing flag, but I figured it would probably
+> be an easy fix. Famous last words. It turned into quite a rabbit hole of
+> actual leaks (albeit small and bounded per process) and some
+> questionable memory ownership semantics.
 
-It doesn't _always_ seg fault, since we have tests that cover this
-case. Adding this change will cause t7001-mv.sh to start failing
-in many places:
+Reading the patches, you make good arguments about the various trade-
+offs in these sticky places. I agree with you in all cases, mostly
+because the alternatives would not be any better unless we did a _lot_
+of work to rewrite a lot more code than these patches. Even then, the
+benefit is unclear.
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 2d64c1e80fe..8216680ad3c 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -71,6 +71,10 @@ static const char **internal_prefix_pathspec(const char *prefix,
- static const char *add_slash(const char *path)
- {
- 	size_t len = strlen(path);
-+
-+	if (!len)
-+		die("segfault?");
-+
- 	if (path[len - 1] != '/') {
- 		char *with_slash = xmalloc(st_add(len, 2));
- 		memcpy(with_slash, path, len);
+> Here's the series I came up with. I'm cc-ing Stolee as the last person
+> unfortunate enough to have touched this area. :)
 
-I suppose it is better to say "could segfault". Running the test
-under --valgrind also causes a failure. It covers both cases, "."
-and "../".
+Lucky me!
 
-This is all to say that there is some subtlety to the situation, which
-helps justify the lack of a new test case (the tests cover this case,
-but require extra steps to show a failure).
+These patches look good. Thanks!
 
-> Change add_slash() to check the path argument is a non-empty string
-> before accessing its value.
-> 
-> The purpose of add_slash() is adding a slash to the end of a string to
-> construct a directory path. And, because adding a slash to an empty
-> string is of no use here, and checking the string value without checking
-> it is non-empty leads to segfault, we should make sure the length of the
-> string is positive to solve both problems.
-
-I agree that the code change is correct.
-
-Thanks,
 -Stolee
