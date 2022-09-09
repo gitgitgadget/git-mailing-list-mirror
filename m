@@ -2,115 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF6C0ECAAD3
-	for <git@archiver.kernel.org>; Fri,  9 Sep 2022 05:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B476CECAAA1
+	for <git@archiver.kernel.org>; Fri,  9 Sep 2022 11:56:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229939AbiIIFXt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Sep 2022 01:23:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42178 "EHLO
+        id S231344AbiIIL4m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Sep 2022 07:56:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbiIIFXq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2022 01:23:46 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B173510F8F5
-        for <git@vger.kernel.org>; Thu,  8 Sep 2022 22:23:44 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id b21so769612plz.7
-        for <git@vger.kernel.org>; Thu, 08 Sep 2022 22:23:44 -0700 (PDT)
+        with ESMTP id S229771AbiIIL4l (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2022 07:56:41 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBD87135D7E
+        for <git@vger.kernel.org>; Fri,  9 Sep 2022 04:56:40 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id r18so3378632eja.11
+        for <git@vger.kernel.org>; Fri, 09 Sep 2022 04:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=yy5T3MDf0W/75zhRH2CwDWtAOLnBWYAEm/qwphXD6Go=;
-        b=brP6Mg6Nx63lvK31CsFIJuvqj3J4TS87NBP1VpCVbW4AgJtRhjGDL85K2IMcjmxbz5
-         C4UHiQ2X8JSzeHzc0UN4u90saE0zWb5p8bsYWHpy6YB2KouG3EH86ltYnWQlY4OKbKB7
-         BpuTo/S3dO7IcJjqecpGV8Cr8PosCwnRgouaZHRAcmkJSAL4E3+MpH3R0bwLwSlp2vKt
-         y52pJFLkmM/JiOsrXOVmDuJX/mTDkyA/bXXnemUcgAAw29QNQo+13FSihE95xS/sum5n
-         dHE6ri0X1TUnH8KxqnShB3+xD4N233Ip/ESmre6COM1UKCtB0AJnwoE6PtalFjraXHuG
-         7eUQ==
+        d=klerks.biz; s=google;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=0j3uXpLzKuOSiPuNDl7WRvdT5DBYqIkKdP5V9Louqus=;
+        b=HXaDtxmHi6rDYJTX1HjhkVUKz8iBY5TUvots3VHgt7zJVvfw65AX3CPcvbpKRCHUEW
+         2puDTPLlWHWSJ6zSMbSnv8h5dBZmTII+qQjXFNca6ss9R33xvHvJoPDiDcE+klLiBcqN
+         zgqdjrRKAjdX1ylJCwq6epfJ3AZ4dDqmcQ6AY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=yy5T3MDf0W/75zhRH2CwDWtAOLnBWYAEm/qwphXD6Go=;
-        b=evQsVxUshZPoWg/n0WjlcI4xJPHgivboOxEg+w9+RFryOu3b3Lc1RPBOvMyvaON2bx
-         h/5dXEyjb1Hfri6cCws8EqwPAPKHb5UCen0M6ge5iOBTVo2A55SpN3NcimUE2DRvBOWU
-         D39I8R7haQhb20bLRngv8CJor31uh7WMcqQtoZQ/2rGPplMDkmMTAWysVwr345Szp/Ig
-         x50eA8b9x1KE2aQjhcLSOOYI5Im79oQQ+QfkK80gqn5feXN9j3NWXEdu/XUXHIq9WUyT
-         lxXK2nimuunAvzuqT4oxRPJrtD9aaFgiwaXDT9hX3T+ezgqS168yTt0FQ97LnfsRftFn
-         9OuA==
-X-Gm-Message-State: ACgBeo2CLo2PGCS139+oU7tspWFErxEOCpzd3DNZhOxVNjinftJQMV+W
-        Grvexo4RIUtgsWaV5NXDSonxIyC6W5A=
-X-Google-Smtp-Source: AA6agR45f2Taz+R/6f8MKdmnazNDX5dOODjzl1jugiL5vnvLmaRx1juCcHANb/mFbt9LQzSAZxT0Sw==
-X-Received: by 2002:a17:90b:35cf:b0:202:6f3d:53a7 with SMTP id nb15-20020a17090b35cf00b002026f3d53a7mr5926586pjb.63.1662701024053;
-        Thu, 08 Sep 2022 22:23:44 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id u64-20020a626043000000b005366696b735sm610457pfb.77.2022.09.08.22.23.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Sep 2022 22:23:43 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Lana Deere <lana.deere@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] fetch: add branch.*.merge to default ref-prefix
- extension
-References: <YxpBMaIckimFJYEi@coredump.intra.peff.net>
-        <YxpB0dbFTKp5L94k@coredump.intra.peff.net>
-        <xmqq1qslpprv.fsf@gitster.g> <xmqqtu5hoamx.fsf@gitster.g>
-        <YxqiJW4cSp4cBR22@coredump.intra.peff.net>
-Date:   Thu, 08 Sep 2022 22:23:43 -0700
-In-Reply-To: <YxqiJW4cSp4cBR22@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 8 Sep 2022 22:17:09 -0400")
-Message-ID: <xmqqv8pxm880.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=0j3uXpLzKuOSiPuNDl7WRvdT5DBYqIkKdP5V9Louqus=;
+        b=2bpzv7iNcojZGcb4w/tzLXjL2KeHNGRz1R6muwDk2TiKKmbN1kkozgusxOFSs0E1o0
+         xwsto12cqLiHxsZ8TT5HkjrzyTEy4V6Z1n6TU+VsjfiCkfXXaa2iZGGtvjFxUXeT8+2K
+         xVuwcnKESrisIUG8JickLvvVBr+q2Sb0fBcVUn48QpZZxVPFNkrVTaGIqTzjcLDiRFpX
+         bzerNplUqeNR8Cv0Ub1jDrxTPlAEGi3Ykq0Q7muk3Le7+X/8etzMvjKdiSr0C8Xi0RZs
+         e4nOrbcdZktrOlRodxYZPKwNp8/1N2rgwmusXhi5KT4rKdXvzpGPZLFVhvP6c3owCFTY
+         6vIA==
+X-Gm-Message-State: ACgBeo2Va1zw9qcJlembAu7fyF8lxeLy08pu2+BCg9KECzynAatiC9mq
+        3dUY+QWqjBk4LI/BEDGRNei0f+tIwAEBS0JUvD/CZLw4b2o6W7Dh
+X-Google-Smtp-Source: AA6agR5Hrymjfv5A/OghnmJPo8nlAsgfA/d4b6p4Jeab8s5QPpiCHXwnbhajcWCKIYQ6i6ipUerhfkTJM08Tn8EC9kg=
+X-Received: by 2002:a17:907:2cd4:b0:73c:9fa8:3ddc with SMTP id
+ hg20-20020a1709072cd400b0073c9fa83ddcmr9459179ejc.40.1662724597125; Fri, 09
+ Sep 2022 04:56:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Fri, 9 Sep 2022 13:56:24 +0200
+Message-ID: <CAPMMpogZd_em4_Fdk0sNFqAXqH19VOVyw3WsNT2LHsQNOb0_rw@mail.gmail.com>
+Subject: git mergetool, merge.tool, merge.guitool and DISPLAY
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi folks,
 
-> The code in fetch's add_merge_config() that does branch_merge_matches()
-> comes from 85682c1903 (Correct handling of branch.$name.merge in
-> builtin-fetch, 2007-09-18), but I don't see any indication there that
-> non-qualified refs were intended.
->
-> So I could either way: non-qualified refs in branch.*.merge has always
-> worked, and we should continue to support it. Or it was never intended
-> to work, and we are not obligated to continue supporting random things.
+I've just become aware today of what *seems* like a very strange
+discrepancy or limitation in "git mergetool":
 
-Yeah, it looks like it was working by accident.  I do not care too
-deeply about folks who edit their configuration files to futz with
-branch.<name>.merge, and "checkout -t -b" and "branch -t" commands
-have been recording only full refs, so it is tempting to tighten
-branch_merge_matches() to only allow full refname.  The only thing
-that makes me hesitate to start writing code to do so is that some
-third-party tools might have taken advantage of the fact that using
-a branch-name was "working" by accident.
+When you use it without having configured a "merge.tool", it
+auto-selects the first available tool from a predefined list, which
+appears to be hardcoded in "git-mergetool--lib.sh", with some
+conditions around "$DISPLAY", "$GNOME_DESKTOP_SESSION_ID" and
+"${VISUAL:-$EDITOR}".
 
-> I do think "continue supporting" would probably just mean using
-> expand_ref_prefix() here as you suggest. It does increase the size of
-> our request, and the work the server has to do when it matches the
-> prefixes (which is inherently linear on the number of prefixes we give
-> it).
+In this "auto-selection" situation, no GUI-based merge tool will be
+offered/selected if you're not in a GUI session.
 
-Giving extra garbage to the set of prefixes does not hurt the
-correctness, but we didn't add the extra prefix for
-branch.<name>.merge before this fix, so not using
-expand_ref_prefix() is not breaking anybody who weren't broken
-before.  So I think it may be OK to support only the full refs at
-first.  It's just that folks who didn't have full refname as the
-value is not helped by our fix.
+When you configure your tools, you can configure "merge.tool" for the
+default, and "merge.guitool" for GUI contexts - so far so good, sounds
+consistent.
 
-If enough folks complain that they have handcrafted (or prepared by
-third-party tools) branch.<name>.merge that is not a full refname,
-we could switch to expand_ref_prefix() and as long as the refnames
-on the remote side is not ambiguous, things will still work
-correctly, but I'd prefer to keep it tight until we actually hear
-complaints.
+However, once you've configured these two settings, "git mergetool"
+will never select the GUI tool you've configured unless you very
+*explicitly* tell it to, by specifying the --gui argument. The
+sensible auto-selection based on "DISPLAY" disappears.
 
-Thanks.
+The upshot, as I understand it, is that the only way to get a GUI when
+I'm connected with an X session, and get a terminal-based mergetool
+when I'm not, without having to be aware and issue different commands,
+is to accept whatever tooling default order is hardcoded in
+"git-mergetool--lib.sh"
+
+Is this intentional / is there any logic here, or is this just
+unfortunate, a result of the auto-selection evolving more
+intelligently than the built-in explicit "--gui" selection, over
+time??
+
+If I wanted to improve this, what would be a more sensible approach?
+* Assume "--gui" if there is a DISPLAY and "--no-gui" has not been
+specified? (behavior change for some existing users)
+* Add a new configuration to enable such an "auto-gui respecting
+config" mode (no behavior change)
+
+(I have not looked into "git difftool", but I assume the same
+arguments and issues apply - if so an equivalent improvement would
+need to be made there of course)
+
+Thanks for any thoughts,
+Tao
