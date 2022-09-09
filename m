@@ -2,113 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8461ECAAD3
-	for <git@archiver.kernel.org>; Fri,  9 Sep 2022 17:24:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AB90ECAAA1
+	for <git@archiver.kernel.org>; Fri,  9 Sep 2022 17:33:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230226AbiIIRYg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Sep 2022 13:24:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52916 "EHLO
+        id S231490AbiIIRd2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Sep 2022 13:33:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbiIIRYd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2022 13:24:33 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ACD238A3
-        for <git@vger.kernel.org>; Fri,  9 Sep 2022 10:24:30 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id o2-20020a17090a9f8200b0020025a22208so5982277pjp.2
-        for <git@vger.kernel.org>; Fri, 09 Sep 2022 10:24:30 -0700 (PDT)
+        with ESMTP id S231406AbiIIRd1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2022 13:33:27 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88D4C130D38
+        for <git@vger.kernel.org>; Fri,  9 Sep 2022 10:33:26 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id bz13so4008444wrb.2
+        for <git@vger.kernel.org>; Fri, 09 Sep 2022 10:33:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=BxDWYfL0+gG5uPVV0gXsUFdxtXNVoPQ14iq4KsIg7ng=;
-        b=CnW7usC62KXcf3HSVrjI/ho/lYiiSfinuzsOlYAo+Tjc4LP5az69RO6aFiQmf+pr1/
-         srQh+0vxGxPUgE+tr7/1JE8kJzZP9NT2ornf9BcUo597MUlLPNyQtkaj1N2x8hkSTQ5c
-         zl58f2TM8Hf9u/ls2YXfTYdZ2bObmOBMJ+TVkgq3oP7W3gbqqnkR7ZiEOThNJzk9X2VL
-         y5Zyv13X8QhipG7RvK0H2deFEoteYwoMoF2wYV/UTL5ykc23GIRxmolHTPRNfAVTqRed
-         d8rT8cIgy/1POBrvO5hiIuFQpNHneyjOeWN4WGOp0IQtJy+/q3gi3LUcTngeJIA/jCsq
-         JDxg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=hoKlTsppxnCF1wEHd3OfcSSRdWNldnN1+JUp5X4ez3k=;
+        b=dbDtByZZoXWmeGUI+LolJyPhXbSXO8jz1oOvwKcL5u+olm1QsCSm7dohQqrAxEqCLy
+         5MS5+H2J/F8zaVGwnW5n6NhnYgrA+IKtI4d/IlBajJJkWTLdDbLG5XhQvfML+03pHJx6
+         3f0lkOZ7pvSLUGJ/9v1EOtHKxa3PH0JcLpCyme+lOzg5ojYtuo/ZE5JL2hHve6n51UmD
+         nAIwzack3gwqu4K7IfaVwzpVKo5b8U3N/bymZIiFX64X/ozcF65wd7ay9PPJxMDBGW1P
+         V/pAQ0CQp5hSQKZauOBatJUNTl3vzspnBV5eU5XBF/t7u/oZaAD1QyB0iqYFDCiSBw69
+         Mmqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=BxDWYfL0+gG5uPVV0gXsUFdxtXNVoPQ14iq4KsIg7ng=;
-        b=tK3fJ5/WjfJ9NPPx2+z85fn2M/kan1UFiwwcXLVgNcwov/UfitrbbDxw4+pUCkH1E2
-         Aord/F5Fro3waSck+YW5YlZgZqn9d/SAtezQN1jYJQvQAHt+BZDEMGA9QLn0rxe9Amy0
-         fngiA06DiAWvGvdlAB/jMpQMs/bOoHlj1ACPdbEh1zlMBYStKqBPnu+7qUgk/3fQHi4i
-         z34UmnaqhFrlGvWw48GtznUOmDppfLDPVMLqweoyNSG3twAES2Cj6eks3h3SBuWl0EmD
-         h4bitwzQvIDFYjg4hVrX5m5esokTxtNeDrzIqoFJlTHF2UJWOCGEMSTJjr1Aes1qw0xZ
-         l+tw==
-X-Gm-Message-State: ACgBeo3tyf5yuNs18RDgvvu0U4wolRMUAeLDkeTkEM0yYJo35Xz1Gu3a
-        2m0ieMETciPGrgdw8zhdEL8POriwZyM=
-X-Google-Smtp-Source: AA6agR4CI0EzI6CHHNZnHdk9vPKw7aH0JZ1BcABI9PvIxOnvV0rg8giJzSxa2tGZSDSVXWbabsF26Q==
-X-Received: by 2002:a17:90b:4a4f:b0:202:8d29:c188 with SMTP id lb15-20020a17090b4a4f00b002028d29c188mr3762503pjb.199.1662744269740;
-        Fri, 09 Sep 2022 10:24:29 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id g8-20020a635208000000b0040caab35e5bsm723777pgb.89.2022.09.09.10.24.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Sep 2022 10:24:29 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
-        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
-        Glen Choo <chooglen@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Teng Long <dyroneteng@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 1/9] bundle-uri: short-circuit capability parsing
-References: <pull.1333.git.1661181174.gitgitgadget@gmail.com>
-        <pull.1333.v2.git.1662734015.gitgitgadget@gmail.com>
-        <2ca431e6c377f42d70ea9ce0ac74058fc983ea2c.1662734015.git.gitgitgadget@gmail.com>
-Date:   Fri, 09 Sep 2022 10:24:29 -0700
-In-Reply-To: <2ca431e6c377f42d70ea9ce0ac74058fc983ea2c.1662734015.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Fri, 09 Sep 2022
-        14:33:27 +0000")
-Message-ID: <xmqqleqslauq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=hoKlTsppxnCF1wEHd3OfcSSRdWNldnN1+JUp5X4ez3k=;
+        b=yG2QGVosDAxuhbGzOCiY0YCLznWiz6ihNTAjUzm/6lYuJDYY79Z2kFyxAHZa9Pji/W
+         pXrolPEBAxqzrruRYGscK2kj964c+X2g0u3JzgfFKLZV264hRITkGo3NqYhofMJFWO4c
+         uPI9S+yhsSCvw68xO3RqXdskhAxzTyk3D5LXXSz7hvIDgsPLfoJrb3VGYu1kGX9PkuxX
+         VD426ViCw3wtUk8G9rUx/u+3BcHEBCOTb4AqPi7vY4bnp0gqlotEWaopko2H4PONfDDC
+         smKJei6Ytb2qW0Q6WNrPUuEoWHOIeUNnootT5L1KsfkFdkmQCyhGoS/TCROkEQEmVCLd
+         58NQ==
+X-Gm-Message-State: ACgBeo2OMeZXxPV298KTk/sRANTYlxjLRp5EFOb6fuKH7FJ9ymF7EsdA
+        lUBq7O/XE3Uub5B/1Egzj3y14TuWQZIegHuF9wmdQK7p
+X-Google-Smtp-Source: AA6agR5NViWW2CkJ6rMbI4ChcIqZM+MOkwwBjXeLFGZOGi0o2o5eIOECYfvYU+hA0PEBTLsfs2HZcYBHliWnISOg1sY=
+X-Received: by 2002:a5d:598c:0:b0:22a:47b1:d367 with SMTP id
+ n12-20020a5d598c000000b0022a47b1d367mr66076wri.612.1662744804964; Fri, 09 Sep
+ 2022 10:33:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CA+4x=b_07g6STT0nvma_gRhv=zdj+7TQx5SxKLUtuqONLwv=TQ@mail.gmail.com>
+ <YxKo2l5nBoOa9Jfa@coredump.intra.peff.net> <CA+4x=b-GYMnZygHXOfNb3CdSRoxUeT80n=gSCLyfCA9WsB0wEw@mail.gmail.com>
+ <Yxf9yETBi3k6Wasl@danh.dev> <CA+4x=b9M+HRWdDx-Mr4q0NiRQESwJ5uEkOBL_nVPPPHhXs7i_g@mail.gmail.com>
+ <YxjhQ8xVI4YtA7xb@coredump.intra.peff.net> <CA+4x=b9upd2uTihZK5hXDULkCz6y+CX-dS7p65Pfhn0zh0eMiA@mail.gmail.com>
+ <YxkI2zqCheqTv/wc@coredump.intra.peff.net> <CA+4x=b-SqzGfeTu4c8akk3quYF7ORZ5jYCpey5221H8=+_PfRg@mail.gmail.com>
+ <Yxow7zrYF/xOijVr@coredump.intra.peff.net>
+In-Reply-To: <Yxow7zrYF/xOijVr@coredump.intra.peff.net>
+From:   Lana Deere <lana.deere@gmail.com>
+Date:   Fri, 9 Sep 2022 13:32:49 -0400
+Message-ID: <CA+4x=b_eOO=ThnSkMARPXBH6cJLeuYPfF-PZNy4Vjpbk=BWQYw@mail.gmail.com>
+Subject: Re: 2.37.2 can't "git pull" but 2.18.0 can
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+I can use a workaround to continue testing 2.37.2, but I saw in a
+different mail that there has already been a patch for this problem.
+I'm guessing that will be in 2.37.4.  When would that be likely to be
+available?
 
-> From: Derrick Stolee <derrickstolee@github.com>
+Thanks for the quick patch, by the way.
+
+.. Lana (lana.deere@gmail.com)
+
+
+
+On Thu, Sep 8, 2022 at 2:14 PM Jeff King <peff@peff.net> wrote:
 >
-> When parsing the capability lines from the 'git remote-https' process,
-> we can stop reading the lines once we notice the 'get' capability.
+> On Thu, Sep 08, 2022 at 12:46:14PM -0400, Lana Deere wrote:
 >
-> Reported-by: Teng Long <dyroneteng@gmail.com>
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->  bundle-uri.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> > With an explicit -c protocol.version=0 on the 2.37.2 git command line,
+> > the pull is successful.  For what it's worth, the server git is still
+> > 2.18.0 in all of these cases.  Only the client side is being tested so
+> > far.  I will try to gather the packet traces and see if there's a
+> > problem sharing them.  Will this mailing list allow attachments?
 >
-> diff --git a/bundle-uri.c b/bundle-uri.c
-> index 4a8cc74ed05..7173ed065e9 100644
-> --- a/bundle-uri.c
-> +++ b/bundle-uri.c
-> @@ -56,8 +56,10 @@ static int download_https_uri_to_file(const char *file, const char *uri)
->  	while (!strbuf_getline(&line, child_out)) {
->  		if (!line.len)
->  			break;
-> -		if (!strcmp(line.buf, "get"))
-> +		if (!strcmp(line.buf, "get")) {
->  			found_get = 1;
-> +			break;
-> +		}
->  	}
-
-Hmph, is this safe to do?  Who is feeding child_out?  Aren't they
-get upset if we do not slurp what they write to us?  Are we
-expecting to read more from them after this part?  Aren't we get
-upset if we leave some other stuff when we read from child_out after
-we saw "get"?  If we respond to child_in without reading all from
-them, do we not get into a deadlock?
-
-Perhaps these are all silly questions, but the description above
-does not quite answer them.
-
->  	strbuf_release(&line);
+> You can send attachments to the list as long as the total mail size is
+> under 100kb. But to keep the list in the loop: Lana sent me the traces
+> off-list, because naturally they have a bunch of semi-private ref names.
+>
+> I was able to see the problem from the traces: the v2 protocol has an
+> extension to tell the server to limit the advertisement only to branches
+> we're interested in. And it does so based on the configured refspec. As
+> Dscho noted earlier in the thread, the upstream branch you want isn't in
+> the refspec. We try to add that branch explicitly to what we're
+> fetching, but I think that happens too late to affect the ref-prefix
+> limiting. So the server is asked not to advertise the ref, and from the
+> client's perspective, it looks like the branch does not exist on the
+> server.
+>
+> Here's a minimal reproduction:
+>
+>   # a server with two branches
+>   git init server
+>   (
+>     cd server
+>     git checkout -b branch1
+>     git commit --allow-empty -m foo
+>     git branch branch2
+>   )
+>
+>   # and a client which points its origin there,
+>   # and has local copies of both branches, tracking
+>   # the upstream versions
+>   git clone server client
+>   cd client
+>   git checkout branch1
+>   git checkout branch2
+>
+>   # but afterwards, the client narrows its refspec to only fetch branch1
+>   git config remote.origin.fetch +refs/heads/branch1:refs/remotes/origin/branch1
+>
+>   # pulling branch2 with v0 works
+>   git -c protocol.version=0 pull
+>
+>   # but does not with v2, because the ref-prefix extension tells the
+>   # server not to advertise anything outside of branch1
+>   git -c protocol.version=2 pull
+>
+> This is a bug which we should fix. But in the meantime the obvious
+> workaround is to expand the default refspec to cover both branches.
+> Obviously the default of fetching "refs/heads/*" would work, but if you
+> want to keep it limited for some reason, you can add the second branch
+> explicitly. In the example above, it would be:
+>
+>   git config --add remote.origin.fetch +refs/heads/branch2:refs/remotes/origin/branch2
+>
+> -Peff
