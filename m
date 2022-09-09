@@ -2,200 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AD1BECAAA1
-	for <git@archiver.kernel.org>; Fri,  9 Sep 2022 19:46:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93953ECAAD3
+	for <git@archiver.kernel.org>; Fri,  9 Sep 2022 19:47:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231694AbiIITq0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Sep 2022 15:46:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55286 "EHLO
+        id S232167AbiIITrq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Sep 2022 15:47:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231683AbiIITqB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2022 15:46:01 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FCAF14996E
-        for <git@vger.kernel.org>; Fri,  9 Sep 2022 12:42:41 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id s14-20020a17090a6e4e00b0020057c70943so6316600pjm.1
-        for <git@vger.kernel.org>; Fri, 09 Sep 2022 12:42:41 -0700 (PDT)
+        with ESMTP id S229486AbiIITrU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2022 15:47:20 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4634B883DA
+        for <git@vger.kernel.org>; Fri,  9 Sep 2022 12:45:05 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id v2-20020a056830090200b006397457afecso1705579ott.13
+        for <git@vger.kernel.org>; Fri, 09 Sep 2022 12:45:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=J3m5OkulZZtoydSfRv7J+aExCFIRFv34HlBS3i5nBpA=;
-        b=LWJCAhei0VxEvHqRwIatZVld5QHhMynhdot12Vz3nOikXInv7ldayf619JYmMtDbug
-         T+55j8SVGNwBhzV0eOipnEd8d3yZgH3EnMqeCYdjTn1nPLBPON8g1WsvndEit8Ld4Zg+
-         KvuYpS7AYvPhG6VbnyDGtp0RfawNeBPaFoA2OCnPVylt3k0y4/Q8iICVREjNvMvJa67r
-         4tSa2FjYpHQUwaFcODGUiH+B0qCBkPC+SGgtwseKQYQfn3iYOZWZDi6Z1wttWwbkfWGl
-         U7bU5ZEDHC+I/H0ukd3WDmJRBn1Cd4DjmbKv269aKO2BntDyz0GzKGSmSjOS++PVfS7f
-         VMpg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=4YL8imvrk/C+EZ/lfCpR2K/c/MZwHJ8jvgUSjLb21Dk=;
+        b=c3qA/fypL4MEjp1AzHxz160V/k0DiiVCFRoJ7r+9L3D3L95VvDhM5K5bhvfQwyGjGV
+         1NGGo8EhKOCwBGTdxNFRYHX5JqxnqNsO6FLk1nTAlolyvuFjVsM4uZuxbp9PMx9sU/k0
+         fZ5ZgVLMXsgUWTKDlGJhPkvGSUx55bqOpHWwN0zWn6VCQqmkUbHaBFTBr1AKy/ELL3id
+         BwWzpaHCSxJ0+WiiV16cFMm228GFVPeFvvA1grPxBZ/G4KnmiDGLE9CtXLHeLimhryiA
+         Edw/yte4VgV8jhCE5RWfccXIziBDrtVXR9JAADiHmrn6vQMGXmkk2YcUYql2C5lHWAeh
+         HLmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=J3m5OkulZZtoydSfRv7J+aExCFIRFv34HlBS3i5nBpA=;
-        b=Tgny7HLcr048VyFW7qKGu6kIQTFWBMWNVviUfwSoxqmTqrd2f96zq2EfK+5wnesYyW
-         /T0FoVJMTbisno3M5MDZ6NSk8SRNw8PBY6UAYbkw5bCI1n9v1K6PTQbw61PjAjtztnAw
-         +UPFIqWfbtMdWwIofYKatULNWzCe+JI6061jW90Mr4o7HEblX7up056TZh38/4op6C9k
-         zbP1C4KRjC5srxFG1uPJ/tHHv1hTTpFXoqUrZVPccGhq1nRbNP+bBNEZ+o6F7Aj8jqax
-         ETcROpyEAjVzO2E1AVgiqX4b3J4lDApCrHfPsXgG1en4HeKxxo0G0ZbS+kmBd2bOzxST
-         3zMg==
-X-Gm-Message-State: ACgBeo26Qd2nz+dOwmdxiL5a9DvkbRWag/+Awn1hiTKeZfOX3Z8kk2/F
-        ZaUTP2RpUc2yyT+5i6zdd43QKyFRCXw=
-X-Google-Smtp-Source: AA6agR7dVoIbkQXOJL4ERYtnODIBqKsASjbGxZpCMR1WxNV1EjyPh+DgBrs3VCrSj0m89lpv8kDsZA==
-X-Received: by 2002:a17:90a:e60c:b0:202:6ef8:4b52 with SMTP id j12-20020a17090ae60c00b002026ef84b52mr9382244pjy.236.1662752558217;
-        Fri, 09 Sep 2022 12:42:38 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id f13-20020a63e30d000000b00438806e0acbsm921692pgh.4.2022.09.09.12.42.37
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=4YL8imvrk/C+EZ/lfCpR2K/c/MZwHJ8jvgUSjLb21Dk=;
+        b=W5hu94/XJhFTCokcd2rTXbs3rHbiioQHrGC3JpLtMW3m0Jvt4hhosbEPbexOnRWx9B
+         P0oMNyzjvVbSzKthdmIrzT5M9LHvPi3AP5izZuSq+bblAerefmFoZHGcEgiI1sli0K5h
+         a3xWehJO8jk6+K2/5S1kiCuxFIxpDFxzRZZO4jPR1w6Xo+QwryzHMIpC0h1HIegxlm29
+         TAxj4qjthEdGtd81d0vD2JmkDtuxw8DCLdDGk7xps+2CBwVF9wlfZxGslmDc/QYNzvmU
+         N/veTaN0/WxUxe9eTI9UZLzNPuP1WLcXNpk8fgOPDXA4qdC6kufh0ILVf6FGyHQ9vxqy
+         1isg==
+X-Gm-Message-State: ACgBeo3Ox96U9Xlf/o9F2Dj0rKspCv7hxUA1kkHrEZyAlZ8eJNpmC9MZ
+        +0L+z16TsNUuxZFFjWHe6yQ=
+X-Google-Smtp-Source: AA6agR7toOZBhr64kvMt340Kgy3tLMHRBxpSbTt5d0NCddMVSyZJEcRrqJNMWJQbtYxL1CLtKll+ZQ==
+X-Received: by 2002:a05:6830:3910:b0:63b:2195:31a9 with SMTP id br16-20020a056830391000b0063b219531a9mr6075344otb.91.1662752704508;
+        Fri, 09 Sep 2022 12:45:04 -0700 (PDT)
+Received: from ffyuanda.localdomain (99-110-131-145.lightspeed.irvnca.sbcglobal.net. [99.110.131.145])
+        by smtp.gmail.com with ESMTPSA id d96-20020a9d2969000000b0065126423321sm107100otb.76.2022.09.09.12.45.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Sep 2022 12:42:37 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com,
-        Johannes.Schindelin@gmx.de, steadmon@google.com,
-        chooglen@google.com, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH] Documentation: add ReviewingGuidelines
-References: <pull.1348.git.1662747205235.gitgitgadget@gmail.com>
-Date:   Fri, 09 Sep 2022 12:42:37 -0700
-In-Reply-To: <pull.1348.git.1662747205235.gitgitgadget@gmail.com> (Victoria
-        Dye via GitGitGadget's message of "Fri, 09 Sep 2022 18:13:25 +0000")
-Message-ID: <xmqqwnacibbm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Fri, 09 Sep 2022 12:45:03 -0700 (PDT)
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+To:     shaoxuan.yuan02@gmail.com
+Cc:     derrickstolee@github.com, git@vger.kernel.org, gitster@pobox.com,
+        peff@peff.net, vdye@github.com
+Subject: [PATCH v2] builtin/mv.c: fix possible segfault in add_slash()
+Date:   Fri,  9 Sep 2022 12:44:58 -0700
+Message-Id: <20220909194458.264735-1-shaoxuan.yuan02@gmail.com>
+X-Mailer: git-send-email 2.37.0
+In-Reply-To: <20220908230223.239970-1-shaoxuan.yuan02@gmail.com>
+References: <20220908230223.239970-1-shaoxuan.yuan02@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
+A possible segfault was introduced in c08830de41 (mv: check if
+<destination> is a SKIP_WORKTREE_DIR, 2022-08-09).
 
-> From: Victoria Dye <vdye@github.com>
->
-> Add a reviewing guidelines document including advice and common terminology
-> used in Git mailing list reviews. The document is included in the
-> 'TECH_DOCS' list in order to include it in Git's published documentation.
->
-> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Helped-by: Derrick Stolee <derrickstolee@github.com>
-> Signed-off-by: Victoria Dye <vdye@github.com>
+When running t7001 with SANITIZE=address, problem appears when running:
 
-Thanks, all, for starting this.
+	git mv path1/path2/ .
+or
+	git mv directory ../
+or
+	any <destination> that makes dest_path[0] an empty string.
 
-> +Patches can also be searched manually in the mailing list archive using a query
-> +like `s:"PATCH" -s:"Re:"`. You can browse these results for topics relevant to
-> +your expertise or interest.
+The add_slash() call could segfault when dest_path[0] is an empty string,
+because it was accessing a null value in such case.
 
-It probably is a good idea to say "the 'lore.kernel.org' mailing
-list archive" somewhere here, as the queries may not work on other
-archives like marc.info/?l=git archive.
+Change add_slash() to check the path argument is a non-empty string
+before accessing its value. If the path is empty, return it as-is.
 
-> +If you've already contributed to Git, you may also be CC'd in another
-> +contributor's patch series. These are usually topics where the author feels that
-> +your attention is warranted; this may be due to prior contributions,
-> +demonstrated expertise, and/or interest in related topics. There is no
-> +requirement to review these series, but you may find them easier to review as a
-> +result of your preexisting background knowledge on the topic.
+Explanation:
 
-I think "your attention is warranted" is a good way to summarize,
-but the readers may want to know that the reason for Cc'ing ranges
-from "you may want to know that I am about to butcher the code you
-wrote earlier, which you might care about (so I am giving a notice
-so that you can stop me and offer a better alternative)" to "your
-reviewing would really help making this patch better".
+It's OK for add_slash() to return an empty string as-is. add_slash()
+converts its path argument to the prefix (for "folder1/file1",
+"folder1/" is the prefix we mean here) for the result path. The path
+argument is an empty string _iff_ the result path is analyzed to be at
+the top level (this normalization process is done earlier by
+internal_prefix_pathspec()).
 
-It is true that there is no requirement to review anything, but
-scratching each other's back, especially the reason for Cc'ing is to
-request help, is in the spirit of working on a piece of open source
-software.  That may be more important than knowing that they may be
-easier to review than others.
+Because the prefix for a top-level path is an empty string, thus
+add_slash() should return an empty path argument as-is, both for
+correctness and avoiding inappropriate memory access.
 
+Reported-by: Jeff King <peff@peff.net>
+Helped-by: Jeff King <peff@peff.net>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+---
+Range-diff against v1:
+1:  a5dccc030c ! 1:  82353f457d builtin/mv.c: fix possible segfault in add_slash()
+    @@ Commit message
+         or
+                 any <destination> that makes dest_path[0] an empty string.
+     
+    -    The add_slash() call segfaults when dest_path[0] is an empty string,
+    +    The add_slash() call could segfault when dest_path[0] is an empty string,
+         because it was accessing a null value in such case.
+     
+         Change add_slash() to check the path argument is a non-empty string
+    -    before accessing its value.
+    +    before accessing its value. If the path is empty, return it as-is.
+     
+    -    The purpose of add_slash() is adding a slash to the end of a string to
+    -    construct a directory path. And, because adding a slash to an empty
+    -    string is of no use here, and checking the string value without checking
+    -    it is non-empty leads to segfault, we should make sure the length of the
+    -    string is positive to solve both problems.
+    +    Explanation:
+    +
+    +    It's OK for add_slash() to return an empty string as-is. add_slash()
+    +    converts its path argument to the prefix (for "folder1/file1",
+    +    "folder1/" is the prefix we mean here) for the result path. The path
+    +    argument is an empty string _iff_ the result path is analyzed to be at
+    +    the top level (this normalization process is done earlier by
+    +    internal_prefix_pathspec()).
+    +
+    +    Because the prefix for a top-level path is an empty string, thus
+    +    add_slash() should return an empty path argument as-is, both for
+    +    correctness and avoiding inappropriate memory access.
+     
+         Reported-by: Jeff King <peff@peff.net>
+         Helped-by: Jeff King <peff@peff.net>
+    +    Helped-by: Junio C Hamano <gitster@pobox.com>
+    +    Helped-by: Derrick Stolee <derrickstolee@github.com>
+         Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+     
+      ## builtin/mv.c ##
 
-> +- If a patch is long, you can delete parts of it that are unrelated to your
-> +  review from the email reply. Make sure to leave enough context for readers to
-> +  understand your comments!
+ builtin/mv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-"you can" -> "it is encouraged to"
+diff --git a/builtin/mv.c b/builtin/mv.c
+index 2d64c1e80f..3413ad1c9b 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -71,7 +71,7 @@ static const char **internal_prefix_pathspec(const char *prefix,
+ static const char *add_slash(const char *path)
+ {
+ 	size_t len = strlen(path);
+-	if (path[len - 1] != '/') {
++	if (len && path[len - 1] != '/') {
+ 		char *with_slash = xmalloc(st_add(len, 2));
+ 		memcpy(with_slash, path, len);
+ 		with_slash[len++] = '/';
 
-> +- When pointing out an issue, try to include suggestions for how the author
-> +  could fix it. This not only helps the author to understand and fix the issue,
-> +  it also deepens and improves your understanding of the topic.
+base-commit: e71f9b1de6941c8b449d0c0e17e457f999664bc9
+-- 
+2.37.0
 
-Thanks for saying "try to".  Sometimes reviewers can tell something
-is wrong without being able to say what the alternative is that is
-right, but at least they should try before saying "that one is wrong"
-and stopping at it.
-
-> +- Reviews do not need to exclusively point out problems. Feel free to "think out
-> +  loud" in your review: describe how you read & understood a complex section of
-> +  a patch, ask a question about something that confused you, point out something
-> +  you found exceptionally well-written, etc. In particular, uplifting feedback
-> +  goes a long way towards encouraging contributors to participate more actively
-> +  in the Git community.
-
-Good piece of advice.  It also helps if the authors understood the
-above.  A review response to a patch may not necessarily point out
-the problems and they do not need to become defensive.
-
-> +- When providing a recommendation, be as clear as possible about whether you
-> +  consider it "blocking" (the code would be broken or otherwise made worse if an
-> +  issue isn't fixed) or "non-blocking" (the patch could be made better by taking
-> +  the recommendation, but acceptance of the series does not require it).
-> +  Non-blocking recommendations can be particularly ambiguous when they are
-> +  related to - but outside the scope of - a series ("nice-to-have"s), or when
-> +  they represent only stylistic differences between the author and reviewer.
-
-I hear that some communities take the "reviewer wins" approach to
-tiebreak the last one.  In any case, it is a good piece of advice to
-make sure which parts are "just thinking out aloud" and which parts
-are pointing out problems in the patch that need to be corrected in
-the next iteration.  The former may observe an existing problem in
-the code in context that may need to be addressed in the longer term
-but can be left out of the scope of the topic, and being clear about
-that is helpful to the author.
-
-> +- If you read and review a series but find nothing that warrants inline
-> +  commentary, reply to the series' cover letter to indicate that you've reviewed
-> +  the changes.
-
-I would prefer to see folks avoid doing this on the initial
-iteration of a topic, until/unless the reviewer has demonstrated
-proficiency in the affected area.  If everybody considers that you
-are one of the authorities of revision traversal and the patch
-series is about updating revision.c, then such a "I've reviewed and
-everything is so clean there is nothing to say" may be helpful, but
-it is hard to put a proper weight on such a statement by somebody
-whose understanding of the area is not well known.  
-
-It is a different story to give such a "looks good" on a second and
-subsequent iteration by a reviewer who commented on an earlier
-round, of course.
-
-> +Completing a review
-> +~~~~~~~~~~~~~~~~~~~
-> +Once each patch of a series is reviewed, the author (and/or other contributors)
-> +may discuss the review(s). This may result in no changes being applied, or the
-> +author will send a new version of their patch(es).
-> +
-> +After a series is rerolled in response to your or others' review, make sure to
-> +re-review the updates. If you are happy with the state of the patch series,
-> +explicitly indicate your approval (typically with a reply to the latest
-> +version's cover letter). Optionally, you can let the author know that they can
-> +add a "Reviewed-by: <you>" trailer to subsequent versions of their series.
-
-"to subsequent versions" -> "if they resubmit the reviewed patch verbatim".
-
-> +Finally, subsequent "What's cooking" emails may explicitly ask whether a
-> +reviewed topic is ready for merging to the `next` branch (typically phrased
-> +"Will merge to 'next'?"). You can help the maintainer and author by responding
-> +with a short description of the state of your (and others', if applicable)
-> +review.
-
-Thanks for mentioning this.  "We have reached the agreement that,
-while this and that have room for improvement, the patch is a strict
-improvement over the status quo, and should move forward, at <URL>"
-that points into the lore archive would be the most easy and clear.
-
-Everything else I did not quote from your patch looked good to me
-without any need to comment.
-
-Thanks.
