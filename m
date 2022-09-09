@@ -2,104 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36599ECAAD3
-	for <git@archiver.kernel.org>; Fri,  9 Sep 2022 17:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8461ECAAD3
+	for <git@archiver.kernel.org>; Fri,  9 Sep 2022 17:24:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230424AbiIIRMs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Sep 2022 13:12:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33318 "EHLO
+        id S230226AbiIIRYg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Sep 2022 13:24:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230306AbiIIRMp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Sep 2022 13:12:45 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88DC778591
-        for <git@vger.kernel.org>; Fri,  9 Sep 2022 10:12:44 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id a33-20020a630b61000000b00429d91cc649so1250688pgl.8
-        for <git@vger.kernel.org>; Fri, 09 Sep 2022 10:12:44 -0700 (PDT)
+        with ESMTP id S229791AbiIIRYd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Sep 2022 13:24:33 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ACD238A3
+        for <git@vger.kernel.org>; Fri,  9 Sep 2022 10:24:30 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id o2-20020a17090a9f8200b0020025a22208so5982277pjp.2
+        for <git@vger.kernel.org>; Fri, 09 Sep 2022 10:24:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date;
-        bh=AUpXece88N+SfQHqKnoV6xydUuI1nqQ+cJWorhp7Jvc=;
-        b=C5rkhwG0oxPUvdWh5eausGDhVjZdhBnwkaH6oEUBzDxA6bjxahWrUhHHqxoua7AM/A
-         6vgIUqpLzrooJsNApZiuaSmeI5i/i+81N24ZZ9cjWs9oCK4DYSjQY4UjhrqGSpL9zeIR
-         e+S6eefRzDXntYs9Wc9yHsBFEfDMR9KfW57EmIw3HSgwTi7WYaPIbV1QATd8NTI0Ou9e
-         g3gAZgRZhm8om0vgTlzWdf1Ao+qn1tOOWx+tFBuktDIi0FqPx3ztZagpBTRlItMTkP+q
-         ENsg0IOZDgNcyya+oG8GIptI7ZKQ0LCntep61o2iBvbjlM+S1LSMXYd5dNyBoca0lhCX
-         MQLg==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date;
+        bh=BxDWYfL0+gG5uPVV0gXsUFdxtXNVoPQ14iq4KsIg7ng=;
+        b=CnW7usC62KXcf3HSVrjI/ho/lYiiSfinuzsOlYAo+Tjc4LP5az69RO6aFiQmf+pr1/
+         srQh+0vxGxPUgE+tr7/1JE8kJzZP9NT2ornf9BcUo597MUlLPNyQtkaj1N2x8hkSTQ5c
+         zl58f2TM8Hf9u/ls2YXfTYdZ2bObmOBMJ+TVkgq3oP7W3gbqqnkR7ZiEOThNJzk9X2VL
+         y5Zyv13X8QhipG7RvK0H2deFEoteYwoMoF2wYV/UTL5ykc23GIRxmolHTPRNfAVTqRed
+         d8rT8cIgy/1POBrvO5hiIuFQpNHneyjOeWN4WGOp0IQtJy+/q3gi3LUcTngeJIA/jCsq
+         JDxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date;
-        bh=AUpXece88N+SfQHqKnoV6xydUuI1nqQ+cJWorhp7Jvc=;
-        b=ZQWftwSZbD6pFoDjwZHTg4kg5MCuGurH0ZfcfNdceHNiUNP3IQecJvllnMM619+htm
-         wPXjVLLDWAz5i64Kw0hkIw8LOJ1EKSFH7JuGSKgjUm5y+EJuqdcM+Rx9IbR+lElM64xV
-         C6RcGjhQhD0J0nm0ntFVqS7wfR4Rf4eO2DgyXU8qzhoVZrtuUeeFdYL8xeqZkwNS3dks
-         iGv7yT/bqfTeriWzZW1y+6XhM5IE8RHPpzWVWvxE32gZNxzAW5dNvkRqvha1CRn16YyR
-         qGWfvYuRehMXbu4yNKg0yzRHkPwTt7A58NSHBU0hB+6tJ+X7TVvGXcvSc79uV1Eha82/
-         qGLQ==
-X-Gm-Message-State: ACgBeo3ZKvgxXNJuBLA9pc4phu1cLUeyxM9umsIbBf8V/fmW2lMoiNlu
-        fjxTcCUxg+eMp3zSni8qvLyP1Povv36rUQ==
-X-Google-Smtp-Source: AA6agR7g36Qvnrr6oM29gBU5gIzGqvcPlt8d85KIVPvIlLBqAh83NkUZK0VMUO/fGpoUG8RAq03lKQS7dUoljg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:1995:b0:52d:5c39:3f61 with SMTP
- id d21-20020a056a00199500b0052d5c393f61mr15122574pfl.83.1662743564031; Fri,
- 09 Sep 2022 10:12:44 -0700 (PDT)
-Date:   Fri, 09 Sep 2022 10:12:42 -0700
-In-Reply-To: <xmqqbkromsfx.fsf@gitster.g>
-Mime-Version: 1.0
-References: <pull.1301.v2.git.1659122979.gitgitgadget@gmail.com>
- <pull.1301.v3.git.1659722323.gitgitgadget@gmail.com> <c249bface2a6dcd0355620f92579b42a6fa4ea58.1659722324.git.gitgitgadget@gmail.com>
- <kl6lr10l8t7y.fsf@chooglen-macbookpro.roam.corp.google.com>
- <42db9da3-3f69-1bf0-6d88-692e18eb74c1@github.com> <xmqqbkromsfx.fsf@gitster.g>
-Message-ID: <kl6lk06c8oad.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 07/11] log: add default decoration filter
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date;
+        bh=BxDWYfL0+gG5uPVV0gXsUFdxtXNVoPQ14iq4KsIg7ng=;
+        b=tK3fJ5/WjfJ9NPPx2+z85fn2M/kan1UFiwwcXLVgNcwov/UfitrbbDxw4+pUCkH1E2
+         Aord/F5Fro3waSck+YW5YlZgZqn9d/SAtezQN1jYJQvQAHt+BZDEMGA9QLn0rxe9Amy0
+         fngiA06DiAWvGvdlAB/jMpQMs/bOoHlj1ACPdbEh1zlMBYStKqBPnu+7qUgk/3fQHi4i
+         z34UmnaqhFrlGvWw48GtznUOmDppfLDPVMLqweoyNSG3twAES2Cj6eks3h3SBuWl0EmD
+         h4bitwzQvIDFYjg4hVrX5m5esokTxtNeDrzIqoFJlTHF2UJWOCGEMSTJjr1Aes1qw0xZ
+         l+tw==
+X-Gm-Message-State: ACgBeo3tyf5yuNs18RDgvvu0U4wolRMUAeLDkeTkEM0yYJo35Xz1Gu3a
+        2m0ieMETciPGrgdw8zhdEL8POriwZyM=
+X-Google-Smtp-Source: AA6agR4CI0EzI6CHHNZnHdk9vPKw7aH0JZ1BcABI9PvIxOnvV0rg8giJzSxa2tGZSDSVXWbabsF26Q==
+X-Received: by 2002:a17:90b:4a4f:b0:202:8d29:c188 with SMTP id lb15-20020a17090b4a4f00b002028d29c188mr3762503pjb.199.1662744269740;
+        Fri, 09 Sep 2022 10:24:29 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id g8-20020a635208000000b0040caab35e5bsm723777pgb.89.2022.09.09.10.24.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Sep 2022 10:24:29 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        Glen Choo <chooglen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Teng Long <dyroneteng@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
-        steadmon@google.com,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v2 1/9] bundle-uri: short-circuit capability parsing
+References: <pull.1333.git.1661181174.gitgitgadget@gmail.com>
+        <pull.1333.v2.git.1662734015.gitgitgadget@gmail.com>
+        <2ca431e6c377f42d70ea9ce0ac74058fc983ea2c.1662734015.git.gitgitgadget@gmail.com>
+Date:   Fri, 09 Sep 2022 10:24:29 -0700
+In-Reply-To: <2ca431e6c377f42d70ea9ce0ac74058fc983ea2c.1662734015.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Fri, 09 Sep 2022
+        14:33:27 +0000")
+Message-ID: <xmqqleqslauq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Derrick Stolee <derrickstolee@github.com> writes:
+> From: Derrick Stolee <derrickstolee@github.com>
 >
->> It was an intentional omission because the refs/bisect/* references
->> are not part of the color.decorate.<slot> category.
->>
->> Looking into it further, the bisect refs look pretty ugly (especially
->> the ones like "refs/bisect/good-<hash>").
->>
->> If you would like to include these in the default filter, then I
->> would recommend also adding a color.decorate.<slot> category for them
->> and possibly replace the "refs/bisect" with just "bisect". Alternatively,
->> you could take a hint from replace objects and just use an indicator
->> like "bisect good" or "bisect bad" instead of listing the full ref name.
+> When parsing the capability lines from the 'git remote-https' process,
+> we can stop reading the lines once we notice the 'get' capability.
 >
-> I suspect that the suggestion to use them for decoration is based on
-> the gut feeling: "People during their bisect session would want to
-> know which points they already examined and what their states are."
+> Reported-by: Teng Long <dyroneteng@gmail.com>
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  bundle-uri.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> But during bisection, there is a specific command to give them
-> exactly that information: "bisect visualize".  It is roughly
-> equilvalent to:
->
->     git log refs/bisect/bad \
-> 	$(git for-each-ref --format='^%(refname)' refs/bisect/good-\*
->
-> i.e. show the history surrounded by all the known-to-be-good commits
-> and the known-to-be-bad commit we currently are chasing.  Bad and good
-> commits are at the boundary you can tell them without decoration.
+> diff --git a/bundle-uri.c b/bundle-uri.c
+> index 4a8cc74ed05..7173ed065e9 100644
+> --- a/bundle-uri.c
+> +++ b/bundle-uri.c
+> @@ -56,8 +56,10 @@ static int download_https_uri_to_file(const char *file, const char *uri)
+>  	while (!strbuf_getline(&line, child_out)) {
+>  		if (!line.len)
+>  			break;
+> -		if (!strcmp(line.buf, "get"))
+> +		if (!strcmp(line.buf, "get")) {
+>  			found_get = 1;
+> +			break;
+> +		}
+>  	}
 
-Thanks, both. I think "bisect visualize" covers the use case I was
-thinking of (seeing the bisect result in the commit history), so
-omitting refs/bisect/* sounds fine. And if users are unhappy about the
-change, it seems simple enough to add it to the list.
+Hmph, is this safe to do?  Who is feeding child_out?  Aren't they
+get upset if we do not slurp what they write to us?  Are we
+expecting to read more from them after this part?  Aren't we get
+upset if we leave some other stuff when we read from child_out after
+we saw "get"?  If we respond to child_in without reading all from
+them, do we not get into a deadlock?
+
+Perhaps these are all silly questions, but the description above
+does not quite answer them.
+
+>  	strbuf_release(&line);
