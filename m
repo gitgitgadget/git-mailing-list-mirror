@@ -2,60 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 198BEECAAD3
-	for <git@archiver.kernel.org>; Sat, 10 Sep 2022 20:02:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65688C6FA83
+	for <git@archiver.kernel.org>; Sat, 10 Sep 2022 20:02:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229892AbiIJUCe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 10 Sep 2022 16:02:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44830 "EHLO
+        id S229986AbiIJUCg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Sep 2022 16:02:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229582AbiIJUCQ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230086AbiIJUCQ (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 10 Sep 2022 16:02:16 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57047BE37
-        for <git@vger.kernel.org>; Sat, 10 Sep 2022 13:00:37 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id n17-20020a05600c3b9100b003b3235574dbso4225056wms.2
-        for <git@vger.kernel.org>; Sat, 10 Sep 2022 13:00:37 -0700 (PDT)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D675476ED
+        for <git@vger.kernel.org>; Sat, 10 Sep 2022 13:00:39 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id k9so8871079wri.0
+        for <git@vger.kernel.org>; Sat, 10 Sep 2022 13:00:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=Hv/cPzF/fvyiQwf4EpBftGXrXXIIzkQVDoj6j7X7gus=;
-        b=KwTXV7/S1Krn3h+jEjsdSat9c7Mhr2m2eHJDFOHEuxOP15H509TCQO7lAQa0YGgY2F
-         99xsqpUEvxKXmQqWH5sTrosumEoBHExy0RgN/4FYjow0ZrFHKXi2jWKm5O+iAeJ21ATb
-         PuPIDl17RmWdHCLXUfP6AmDqJecLI0NbLneHdtoijd+SRcoXjKOYS4fOB53j1FoDfl9H
-         mY4NygCZ6fWUIllxmWnuSGVC/zF1Zlt3mDwP4RgLa4X0no0SqmcllZdZMkWAvXucMH6/
-         eI4bGRS9gH8eh4WJvcgMmfOnDDxqEqyKQmBzKrIHP46DhwWX0vGwzOXJbvuQAybD+JcN
-         YU8g==
+        bh=oFZbG9WkdiUYulw81PCz1BIFi8UiLOlwTp2wvCZ4/po=;
+        b=d3ayhQNAGc2iC/LpiV/I1Fcughsj/C9FA/NupCoMwxI8g9Y1+ml5UzQ/QFCyUEATSW
+         7FT3V+st98N3rXrfoNMUcslnSe8682lD8DUANbYzFwnPtJEO5HgXNsjZTc+dO+Wkpl0n
+         lFhwGTmaXJDjmLDUi3AE3vDFqjZ3SVbmIbb5BNCUBBxwHK5doi1XElviX9WWGkIKwmll
+         YD+9hh2AhBFf6oc2kc19d3PpWkKA71VuYR4ZXzIls3S5FJvz01TVByJkzwi1ectUPD0N
+         80qr/EdYtSbe/7kWM3EaHtrGuVkG6n5aCQIbIOfYOzqr+WxahssGXvR2iLuYoF+2cliJ
+         5JBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=Hv/cPzF/fvyiQwf4EpBftGXrXXIIzkQVDoj6j7X7gus=;
-        b=zklOc4nQHPc/exP9wNdVbK+x+THspjilO6IBhF1Xaj3YwU2MmQWXFiVHOqaNIV13/F
-         lBbUmm4oAV0iLLbeHK9YAbwJUDiG1opjDGE63FHyZKi3WNgQSnWdj/ZZ5mPI/GBwRi0E
-         i12Vtw5LZkQnAB/xS4DfTaIAdAEpwV02HGKWKA5TbJQnR1JqPq6IVDU8rzWb3WUJDg/L
-         R4KDKJl19JhFdCcJlz00k4gIpVsmuyCzQqKWlGlgzVu8pJ8AXEH5cGlgTNJqe9+kzU1h
-         nF4lT1uvxdobMgZhVlF1KY3YvFPJdgty8n7Tn6U3UcUpXHNT08EheeWwuBJE7xe2VnEM
-         E6Yw==
-X-Gm-Message-State: ACgBeo2Md2WeFOS+p2/9tiMywZGXBD2LUBvxIob3RK9JoTT/3RsskL5Y
-        kDA9HGMLZS/xxFYBJX7Xip3xD+Sbbq0=
-X-Google-Smtp-Source: AA6agR4YfB8g41Y6O10yTclgQlg9xPyFxyM7VczyDzVDNW8MH/nzNgEczYClBVJLi1ze/jxzkN1cKA==
-X-Received: by 2002:a05:600c:3b07:b0:3b3:3ec4:6ccb with SMTP id m7-20020a05600c3b0700b003b33ec46ccbmr7046634wms.69.1662840036285;
-        Sat, 10 Sep 2022 13:00:36 -0700 (PDT)
+        bh=oFZbG9WkdiUYulw81PCz1BIFi8UiLOlwTp2wvCZ4/po=;
+        b=ZEnPWW4ON1fM0Rck3j64MBhovKe8fjUreo3z+ksgoAMfCPzTQc9Q6PTmMoeFSa15pG
+         d1z+6JAJa3OPINzSUpXx3tTmw1QiRD94f74z4gspMjRYI+YAKTP9O34NaGFKe0fGrZyr
+         eLR6D3FNDvpda2vKVPK4OlU5G8Ehps+vLLgpxSEq3f3MV8BB4ymQLe5u3+hKDlHj6YX6
+         uIEk3I9jj8BP4wCNnZaWC9Oy5pdNlUPpAkPF27RgX1ZhISxSA3+iHMrgap/iNwp8Uux7
+         BDB/pXyTDqLxyhrXN0DsmMjutj0Aw1g9o2ycszIAdLtTCZrrq8oJr3Fe2jtFxpOBMRLL
+         8PCQ==
+X-Gm-Message-State: ACgBeo3I5G6pU8XfuKgiXIVaq6TqOqQoHQzP5vwgoihrSaXpsJ46z2vG
+        QMhVRvyIikcBT8ikmGq2BrUQ2hVLEMo=
+X-Google-Smtp-Source: AA6agR5SuJg/fdhJYC1OIOsJ+tFzVjiJwlW7CG8i2jD7HDSm5W7ezFa0v2xjDL77W+1X2eYePWrmOw==
+X-Received: by 2002:a05:6000:2cd:b0:22a:4831:dfd with SMTP id o13-20020a05600002cd00b0022a48310dfdmr2160392wry.706.1662840037278;
+        Sat, 10 Sep 2022 13:00:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t16-20020adfe110000000b00229b76f872asm4080059wrz.27.2022.09.10.13.00.35
+        by smtp.gmail.com with ESMTPSA id v8-20020a05600c12c800b003a844885f88sm4275091wmd.22.2022.09.10.13.00.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Sep 2022 13:00:35 -0700 (PDT)
-Message-Id: <28d08bcf80810f0453c9c9ff03d45dd0e5795961.1662840031.git.gitgitgadget@gmail.com>
+        Sat, 10 Sep 2022 13:00:36 -0700 (PDT)
+Message-Id: <ff54b6e0bb5347a0401a184a93e25c2550291de7.1662840031.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1326.v5.git.1662840031.gitgitgadget@gmail.com>
 References: <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
         <pull.1326.v5.git.1662840031.gitgitgadget@gmail.com>
 From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 10 Sep 2022 20:00:29 +0000
-Subject: [PATCH v5 2/4] fsmonitor: relocate socket file if .git directory is
- remote
+Date:   Sat, 10 Sep 2022 20:00:30 +0000
+Subject: [PATCH v5 3/4] fsmonitor: avoid socket location check if using hook
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,127 +74,108 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Eric DeCosta <edecosta@mathworks.com>
 
-If the .git directory is on a remote file system, create the socket
-file in 'fsmonitor.socketDir' if it is defined, else create it in $HOME.
+If monitoring is done via fsmonitor hook rather than IPC there is no
+need to check if the location of the Unix Domain socket (UDS) file is
+on a remote filesystem.
 
 Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
 ---
- Makefile                            |  1 +
- compat/fsmonitor/fsm-ipc-darwin.c   | 46 +++++++++++++++++++++++++++++
- compat/fsmonitor/fsm-ipc-win32.c    |  4 +++
- contrib/buildsystems/CMakeLists.txt |  2 ++
- fsmonitor-ipc.c                     |  2 --
- 5 files changed, 53 insertions(+), 2 deletions(-)
- create mode 100644 compat/fsmonitor/fsm-ipc-darwin.c
- create mode 100644 compat/fsmonitor/fsm-ipc-win32.c
+ compat/fsmonitor/fsm-settings-darwin.c | 10 ++++++----
+ compat/fsmonitor/fsm-settings-win32.c  |  2 +-
+ fsmonitor-settings.c                   |  8 ++++----
+ fsmonitor-settings.h                   |  2 +-
+ 4 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 265fc585286..cf9c51040a0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2037,6 +2037,7 @@ ifdef FSMONITOR_DAEMON_BACKEND
- 	COMPAT_CFLAGS += -DHAVE_FSMONITOR_DAEMON_BACKEND
- 	COMPAT_OBJS += compat/fsmonitor/fsm-listen-$(FSMONITOR_DAEMON_BACKEND).o
- 	COMPAT_OBJS += compat/fsmonitor/fsm-health-$(FSMONITOR_DAEMON_BACKEND).o
-+	COMPAT_OBJS += compat/fsmonitor/fsm-ipc-$(FSMONITOR_DAEMON_BACKEND).o
- endif
- 
- ifdef FSMONITOR_OS_SETTINGS
-diff --git a/compat/fsmonitor/fsm-ipc-darwin.c b/compat/fsmonitor/fsm-ipc-darwin.c
-new file mode 100644
-index 00000000000..afaca96dab9
---- /dev/null
-+++ b/compat/fsmonitor/fsm-ipc-darwin.c
-@@ -0,0 +1,46 @@
-+#include "cache.h"
-+#include "config.h"
-+#include "strbuf.h"
-+#include "fsmonitor.h"
-+#include "fsmonitor-ipc.h"
-+#include "fsmonitor-path-utils.h"
-+
-+static GIT_PATH_FUNC(fsmonitor_ipc__get_default_path, "fsmonitor--daemon.ipc")
-+
-+const char *fsmonitor_ipc__get_path(void)
-+{
-+	static const char *ipc_path;
-+	SHA_CTX sha1ctx;
-+	char *sock_dir;
-+	struct strbuf ipc_file = STRBUF_INIT;
-+	unsigned char hash[SHA_DIGEST_LENGTH];
-+
-+	if (ipc_path)
-+		return ipc_path;
-+
-+	ipc_path = fsmonitor_ipc__get_default_path();
-+
-+	/* By default the socket file is created in the .git directory */
-+	if (fsmonitor__is_fs_remote(ipc_path) < 1)
-+		return ipc_path;
-+
-+	SHA1_Init(&sha1ctx);
-+	SHA1_Update(&sha1ctx, the_repository->worktree, strlen(the_repository->worktree));
-+	SHA1_Final(hash, &sha1ctx);
-+
-+	repo_config_get_string(the_repository, "fsmonitor.socketdir", &sock_dir);
-+
-+	/* Create the socket file in either socketDir or $HOME */
-+	if (sock_dir && *sock_dir)
-+		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
-+					sock_dir, hash_to_hex(hash));
-+	else
-+		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
-+
-+	ipc_path = interpolate_path(ipc_file.buf, 1);
-+	if (!ipc_path)
-+		die(_("Invalid path: %s"), ipc_file.buf);
-+
-+	strbuf_release(&ipc_file);
-+	return ipc_path;
-+}
-diff --git a/compat/fsmonitor/fsm-ipc-win32.c b/compat/fsmonitor/fsm-ipc-win32.c
-new file mode 100644
-index 00000000000..769a88639f6
---- /dev/null
-+++ b/compat/fsmonitor/fsm-ipc-win32.c
-@@ -0,0 +1,4 @@
-+#include "cache.h"
-+#include "fsmonitor-ipc.h"
-+
-+GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor--daemon.ipc")
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index b88494bf59b..7e7b6b9a362 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -308,6 +308,7 @@ if(SUPPORTS_SIMPLE_IPC)
- 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-win32.c)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-health-win32.c)
-+		list(APPEND compat_SOURCES compat/fsmonitor/fsm-ipc-win32.c)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-path-utils-win32.c)
- 
- 		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
-@@ -316,6 +317,7 @@ if(SUPPORTS_SIMPLE_IPC)
- 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-darwin.c)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-health-darwin.c)
-+		list(APPEND compat_SOURCES compat/fsmonitor/fsm-ipc-darwin.c)
- 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-path-utils-darwin.c)
- 
- 		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
-diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
-index 789e7397baa..caad2e246a0 100644
---- a/fsmonitor-ipc.c
-+++ b/fsmonitor-ipc.c
-@@ -47,8 +47,6 @@ int fsmonitor_ipc__is_supported(void)
- 	return 1;
+diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
+index dba3ced6bb7..3463c71763e 100644
+--- a/compat/fsmonitor/fsm-settings-darwin.c
++++ b/compat/fsmonitor/fsm-settings-darwin.c
+@@ -49,13 +49,15 @@ static enum fsmonitor_reason check_uds_volume(struct repository *r)
+ 	return FSMONITOR_REASON_OK;
  }
  
--GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor--daemon.ipc")
--
- enum ipc_active_state fsmonitor_ipc__get_state(void)
+-enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
++enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc)
  {
- 	return ipc_get_active_state(fsmonitor_ipc__get_path());
+ 	enum fsmonitor_reason reason;
+ 
+-	reason = check_uds_volume(r);
+-	if (reason != FSMONITOR_REASON_OK)
+-		return reason;
++	if (ipc) {
++		reason = check_uds_volume(r);
++		if (reason != FSMONITOR_REASON_OK)
++			return reason;
++	}
+ 
+ 	return FSMONITOR_REASON_OK;
+ }
+diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
+index d88b06ae610..a8af31b71de 100644
+--- a/compat/fsmonitor/fsm-settings-win32.c
++++ b/compat/fsmonitor/fsm-settings-win32.c
+@@ -25,7 +25,7 @@ static enum fsmonitor_reason check_vfs4git(struct repository *r)
+ 	return FSMONITOR_REASON_OK;
+ }
+ 
+-enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
++enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc)
+ {
+ 	enum fsmonitor_reason reason;
+ 
+diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
+index d288cbad479..531a1b6f956 100644
+--- a/fsmonitor-settings.c
++++ b/fsmonitor-settings.c
+@@ -60,7 +60,7 @@ static enum fsmonitor_reason check_remote(struct repository *r)
+ }
+ #endif
+ 
+-static enum fsmonitor_reason check_for_incompatible(struct repository *r)
++static enum fsmonitor_reason check_for_incompatible(struct repository *r, int ipc)
+ {
+ 	if (!r->worktree) {
+ 		/*
+@@ -77,7 +77,7 @@ static enum fsmonitor_reason check_for_incompatible(struct repository *r)
+ 		reason = check_remote(r);
+ 		if (reason != FSMONITOR_REASON_OK)
+ 			return reason;
+-		reason = fsm_os__incompatible(r);
++		reason = fsm_os__incompatible(r, ipc);
+ 		if (reason != FSMONITOR_REASON_OK)
+ 			return reason;
+ 	}
+@@ -162,7 +162,7 @@ const char *fsm_settings__get_hook_path(struct repository *r)
+ 
+ void fsm_settings__set_ipc(struct repository *r)
+ {
+-	enum fsmonitor_reason reason = check_for_incompatible(r);
++	enum fsmonitor_reason reason = check_for_incompatible(r, 1);
+ 
+ 	if (reason != FSMONITOR_REASON_OK) {
+ 		fsm_settings__set_incompatible(r, reason);
+@@ -185,7 +185,7 @@ void fsm_settings__set_ipc(struct repository *r)
+ 
+ void fsm_settings__set_hook(struct repository *r, const char *path)
+ {
+-	enum fsmonitor_reason reason = check_for_incompatible(r);
++	enum fsmonitor_reason reason = check_for_incompatible(r, 0);
+ 
+ 	if (reason != FSMONITOR_REASON_OK) {
+ 		fsm_settings__set_incompatible(r, reason);
+diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
+index d9c2605197f..0721617b95a 100644
+--- a/fsmonitor-settings.h
++++ b/fsmonitor-settings.h
+@@ -48,7 +48,7 @@ struct fsmonitor_settings;
+  * fsm_os__* routines should considered private to fsm_settings__
+  * routines.
+  */
+-enum fsmonitor_reason fsm_os__incompatible(struct repository *r);
++enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc);
+ #endif /* HAVE_FSMONITOR_OS_SETTINGS */
+ 
+ #endif /* FSMONITOR_SETTINGS_H */
 -- 
 gitgitgadget
 
