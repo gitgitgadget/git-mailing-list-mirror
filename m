@@ -2,90 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9287ECAAA1
-	for <git@archiver.kernel.org>; Mon, 12 Sep 2022 05:52:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16086C6FA83
+	for <git@archiver.kernel.org>; Mon, 12 Sep 2022 10:02:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229565AbiILFwd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Sep 2022 01:52:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50148 "EHLO
+        id S229780AbiILKCU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Sep 2022 06:02:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbiILFwb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2022 01:52:31 -0400
-X-Greylist: delayed 424 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 11 Sep 2022 22:52:29 PDT
-Received: from mailproxy04.manitu.net (mailproxy04.manitu.net [IPv6:2a00:1828:1000:1109::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6C5E252A3
-        for <git@vger.kernel.org>; Sun, 11 Sep 2022 22:52:29 -0700 (PDT)
-Received: from localhost (p200300ef4f07e90026418cfffe37d02a.dip0.t-ipconnect.de [IPv6:2003:ef:4f07:e900:2641:8cff:fe37:d02a])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: u16723@rkita.de)
-        by mailproxy04.manitu.net (Postfix) with ESMTPSA id 9813A804E2;
-        Mon, 12 Sep 2022 07:45:21 +0200 (CEST)
-From:   Rene Kita <mail@rkta.de>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-Subject: [PATCH 1/2] blame: Make --show-name negatable
-Date:   Mon, 12 Sep 2022 07:45:14 +0200
-Message-Id: <20220912054515.29559-2-mail@rkta.de>
-X-Mailer: git-send-email 2.37.3.544.g5c9b9c0a4e
-In-Reply-To: <20220912054515.29559-1-mail@rkta.de>
-References: <20220912054515.29559-1-mail@rkta.de>
+        with ESMTP id S229572AbiILKCT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2022 06:02:19 -0400
+X-Greylist: delayed 298 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 12 Sep 2022 03:02:16 PDT
+Received: from mx.garz-fricke.com (mx.garz-fricke.com [213.23.127.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF5FF24BEF
+        for <git@vger.kernel.org>; Mon, 12 Sep 2022 03:02:16 -0700 (PDT)
+DKIM-Signature: v=1; c=relaxed/relaxed; d=garz-fricke.com; s=dkim-key-2022e; 
+ t=1662976635; bh=gQveJL1gW3Gv7vCQAwrPBnyZZLjJ4/HuRagtNAoUJHE=; h=
+ "Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id"; 
+ a=ed25519-sha256; b=
+ A1zttUHmCpWbKX5d2GkJMQ7R+NovMZhq047PKNf7jT6hO8q9IA6tiECkQcaaOgIMxPh1gKRD906wrlKqL4fbBg==
+DKIM-Signature: v=1; c=relaxed/relaxed; d=garz-fricke.com; s=dkim-key-2022r; 
+ t=1662976635; bh=gQveJL1gW3Gv7vCQAwrPBnyZZLjJ4/HuRagtNAoUJHE=; h=
+ "Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id"; 
+ a=rsa-sha256; b=
+ d7aGfOoVc+1oWlJJCFVd6HyRTk7laoymg7v0dkCwvapOE1+XoFvvpgCRFYZvCyHEYMWyP0ctpuk0qBm+6HnzWO3HguKKa+uXT68u0cjnc4Wbw0zKhD7D8+Q+A4Q+a6qXM1Izn8eFXbl2jr+BNGAfItUcFWQPidhpZDtjaSYqUZkw8V8JhdXrDuO6W9w9M7VHJkD5c+8iO96b4YCsiVSEZX7j8tygWDuv45jYyJgzvkH1HNDiINW6GRIhe8MY0c0JDmAhPl3MB0Z3b3JRS3qVvzQod0CzOaEr/BfKkTj2rug8jKbWfBeOnwU/akiaGXhoNsZwQAoSPz7sZEwEjGK4Fw==
+From:   Tim Jaacks <tim.jaacks@garz-fricke.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: git diff ^! syntax stopped working for stashes in Git 2.28
+Thread-Topic: git diff ^! syntax stopped working for stashes in Git 2.28
+Thread-Index: AdjGjge3NTS/nWtpQ9qUvItMO6utFQ==
+Date:   Mon, 12 Sep 2022 09:57:13 +0000
+Message-ID: <6f729c8c43c4409faf6a11a69791f45a@garz-fricke.com>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-bromium-msgid: efe62198-f463-4660-b444-6761d68f1a00
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Øystein Walle <oystwa@gmail.com>
-
-Signed-off-by: Øystein Walle <oystwa@gmail.com>
----
- builtin/blame.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index a9fe8cf7a6..cbaae91a8f 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -49,6 +49,7 @@ static int blank_boundary;
- static int incremental;
- static int xdl_opts;
- static int abbrev = -1;
-+static int show_name = -1;
- static int no_whole_file_rename;
- static int show_progress;
- static char repeated_meta_color[COLOR_MAXLEN];
-@@ -621,7 +622,8 @@ static void find_alignment(struct blame_scoreboard *sb, int *option)
- 		if (compute_auto_abbrev)
- 			auto_abbrev = update_auto_abbrev(auto_abbrev, suspect);
- 		if (strcmp(suspect->path, sb->path))
--			*option |= OUTPUT_SHOW_NAME;
-+			if (show_name == -1)
-+				*option |= OUTPUT_SHOW_NAME;
- 		num = strlen(suspect->path);
- 		if (longest_file < num)
- 			longest_file = num;
-@@ -867,7 +869,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "show-stats", &show_stats, N_("show work cost statistics")),
- 		OPT_BOOL(0, "progress", &show_progress, N_("force progress reporting")),
- 		OPT_BIT(0, "score-debug", &output_option, N_("show output score for blame entries"), OUTPUT_SHOW_SCORE),
--		OPT_BIT('f', "show-name", &output_option, N_("show original filename (Default: auto)"), OUTPUT_SHOW_NAME),
-+		OPT_BOOL('f', "show-name", &show_name, N_("show original filename (Default: auto)")),
- 		OPT_BIT('n', "show-number", &output_option, N_("show original linenumber (Default: off)"), OUTPUT_SHOW_NUMBER),
- 		OPT_BIT('p', "porcelain", &output_option, N_("show in a format designed for machine consumption"), OUTPUT_PORCELAIN),
- 		OPT_BIT(0, "line-porcelain", &output_option, N_("show porcelain format with per-line commit information"), OUTPUT_PORCELAIN|OUTPUT_LINE_PORCELAIN),
-@@ -943,6 +945,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	revs.diffopt.flags.follow_renames = 0;
- 	argc = parse_options_end(&ctx);
- 
-+	if (show_name == 1)
-+		output_option |= OUTPUT_SHOW_NAME;
-+
- 	prepare_repo_settings(the_repository);
- 	the_repository->settings.command_requires_full_index = 0;
- 
--- 
-2.37.3.544.g5c9b9c0a4e
+SGVsbG8sDQoNCkkgbm90aWNlZCB0aGF0IHRoZSBmb2xsb3dpbmcgc3ludGF4IHRvIHNob3cgdGhl
+IGNoYW5nZXMgb2YgYSBzdGFzaCBzdG9wcGVkIHdvcmtpbmcgaW4gR2l0IDIuMjg6DQoNCiAgZ2l0
+IGRpZmYgc3Rhc2hAezB9XiENCg0KSXQgc3RpbGwgd29ya3Mgb24gY29tbWl0cyBhbmQgSEVBRCwg
+dGhvdWdoOg0KDQogIGdpdCBkaWZmIGYyNzk4NGReIQ0KICBnaXQgZGlmZiBIRUFEXiENCg0KQW5k
+IGRpZmZpbmcgYWdhaW5zdCB0aGUgc3Rhc2gncyBwYXJlbnQgd29ya3MgYXMgd2VsbDoNCg0KICBn
+aXQgZGlmZiBzdGFzaEB7MH1eMSBzdGFzaEB7MH0NCg0KSSBhc3N1bWUgdGhpcyBpcyBhIGJ1Zy4g
+Q2FuIGFueWJvZHkgY29uZmlybSB0aGlzPyBJIHZlcmlmaWVkIHRoZSBiZWhhdmlvciBjaGFuZ2Ug
+dHJ5aW5nIGRpZmZlcmVudCBHaXQgdmVyc2lvbnMgdmlhIGRvY2tlcjoNCg0KICBkb2NrZXIgcnVu
+IC1pdCAtLXJtIC0tdXNlciAkKGlkIC11KTokKGlkIC1nKSAtdiAkSE9NRTokSE9NRTpydyAtdiAv
+ZXRjL3Bhc3N3ZDovZXRjL3Bhc3N3ZDpybyAtdiAvZXRjL2dyb3VwOi9ldGMvZ3JvdXA6cm8gLXYg
+JFBXRDokUFdEOnJ3IC13ICRQV0QgYml0bmFtaS9naXQ6Mi4yNy4wIGRpZmYgc3Rhc2hAezB9XiEN
+Cg0KV2l0aCB2Mi4yNy4wIHRoZSBhYm92ZSBzeW50YXggd29ya3MsIHdpdGggdjIuMjguMCBhbmQg
+bGF0ZXIgaXQgZG9lc24ndC4NCg0KS2luZCByZWdhcmRzLA0KVGltDQoNCi0tIA0KVGltIEphYWNr
+cw0KU09GVFdBUkUgREVWRUxPUEVSDQpTRUNPIE5vcnRoZXJuIEV1cm9wZSBHbWJIDQoNClNjaGxh
+Y2h0aG9mc3RyYXNzZSAyMA0KMjEwNzkgSGFtYnVyZw0KR2VybWFueQ0KVDogKzQ5IDQwIDc5MTg5
+OS0xODMNCkU6IHRpbS5qYWFja3NAc2Vjby5jb20NCg0KUmVnaXN0ZXI6IEFtdHNnZXJpY2h0IEhh
+bWJ1cmcsIEhSQiAxNDg4OTMNClJlcHJlc2VudGVkIGJ5OiBEaXJrIEZpbnN0ZWwsIE1hcmMtTWlj
+aGFlbCBCcmF1biwgTWFzc2ltbyBNYXVyaQ0KDQo=
 
