@@ -2,352 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C40C9C6FA83
-	for <git@archiver.kernel.org>; Mon, 12 Sep 2022 19:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E283C6FA82
+	for <git@archiver.kernel.org>; Mon, 12 Sep 2022 19:36:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230388AbiILTRj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Sep 2022 15:17:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39394 "EHLO
+        id S229528AbiILTgA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Sep 2022 15:36:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230293AbiILTRh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2022 15:17:37 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D797E286D9
-        for <git@vger.kernel.org>; Mon, 12 Sep 2022 12:17:31 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id d12so9503711plr.6
-        for <git@vger.kernel.org>; Mon, 12 Sep 2022 12:17:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=oSXP+R8kGICJCNqtqF6TqMQK2c5QJjpisRbmR5wYyk8=;
-        b=HIQgnxOOx9G69a3Z2nujrAwU5Wy8Tu96YCWWqsZJt/0EGp4MWjmd/qdRZ7D/iE6FiR
-         YZWuusp71ZJEhY622JDkdG0HkU7KuJLOB/p4u4lq25B2TrnnnDioZOEkMrn3BHEYkCzB
-         BfnpfC1ELhIHSPK89RPO44svrgdFtr3a+rLTonS9F4iP0/OOJ3WzC0RoO/LYEBkwSq6z
-         puIMKtaL4cnrO/3zXv+P5oF5qp7pZF2eYrgg/RvFGBSgLj0Fs6uHxZ+BeHIwnIX2wzJV
-         RVI/MY4cPKCmY6f27aYED+mHj9nq8GGicIKjxl/sJU3fuoNEw9Da1xwMnuD94XZNNCwl
-         OHsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=oSXP+R8kGICJCNqtqF6TqMQK2c5QJjpisRbmR5wYyk8=;
-        b=7zpOpXe0H8qihYEjGb6o9B46spgApgAxS6m4f+IiO9mACos6oKvmwKzkNOyrikyXA3
-         fqT1tqhLCFjKq8EUSqNfgxtCCeSHztXmGT0Tjay1qWslOmFspvCS7MS9cIcTQjFo4hcS
-         1C9ZL1t9AbCI/KERRlBdedCtuSedCXGIAtC6z8bqbA32+PpRjS/u8hYjS5ov+p9kZ87+
-         FnqI3XQ/igaYEkWHeJPTTgzL3hRxWwCKM51SOjKmJgn3xlGcvIo1fpWpFiLe26gaY/gl
-         XWppLwf/gno4cqkVro6LviGFv6r42efWXMETIJ5MfevWI4pygiRFYVvwikNS4jPDC9VF
-         6iKg==
-X-Gm-Message-State: ACgBeo11Ecv+9/Jg77u+5XF8FlFqA7Yn7RYoXxAbN5sCjhfotEAeKxlC
-        a8MdgJ/QWeIg41GYqeyruMI=
-X-Google-Smtp-Source: AA6agR5l81SbkiLNztIN3eQce/Nkq0KcC7YD5lgGoII3cS74nFGWuekhS71gEKPHrzWb7crLHUGG/g==
-X-Received: by 2002:a17:902:b681:b0:176:6471:8ee6 with SMTP id c1-20020a170902b68100b0017664718ee6mr28411055pls.8.1663010251116;
-        Mon, 12 Sep 2022 12:17:31 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id n25-20020a056a00213900b00540ffb28da0sm6042129pfj.91.2022.09.12.12.17.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Sep 2022 12:17:30 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH] refs: unify parse_worktree_ref() and ref_type()
-References: <pull.1325.git.git.1663002096207.gitgitgadget@gmail.com>
-Date:   Mon, 12 Sep 2022 12:17:30 -0700
-In-Reply-To: <pull.1325.git.git.1663002096207.gitgitgadget@gmail.com> (Han-Wen
-        Nienhuys via GitGitGadget's message of "Mon, 12 Sep 2022 17:01:35
-        +0000")
-Message-ID: <xmqq1qsge71x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229456AbiILTf7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2022 15:35:59 -0400
+Received: from us-smtp-delivery-120.mimecast.com (us-smtp-delivery-120.mimecast.com [170.10.129.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF6A643E5A
+        for <git@vger.kernel.org>; Mon, 12 Sep 2022 12:35:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mathworks.com;
+        s=mimecast20180117; t=1663011356;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=ecfu0ZWdqNVwMWaco/OiVJ5zfifW0+wd7SwPGb5ylF4=;
+        b=ilIvC9h04hE3WBTUFCJ8s7iSlfRlhykJgw4pVRq4E/xaNga7PA8LWf7jNxdhxHicvRXeEu
+        LZnSQYslz5bvdzObBy+4l+QvriQRGqOtslwHjtfJgMMy0cknE8yicUZyeihPQjoP173TBB
+        2hlYp2ZPRiShLAIygVyXfZyyejIrHAw=
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12lp2044.outbound.protection.outlook.com [104.47.66.44]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-651-402uHKX9PRiUVb23DFBy8A-1; Mon, 12 Sep 2022 15:35:54 -0400
+X-MC-Unique: 402uHKX9PRiUVb23DFBy8A-1
+Received: from BL0PR05MB5571.namprd05.prod.outlook.com (2603:10b6:208:2f::17)
+ by DM6PR05MB5193.namprd05.prod.outlook.com (2603:10b6:5:7c::26) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5632.12; Mon, 12 Sep
+ 2022 19:35:47 +0000
+Received: from BL0PR05MB5571.namprd05.prod.outlook.com
+ ([fe80::86c9:5cc7:6693:d9f7]) by BL0PR05MB5571.namprd05.prod.outlook.com
+ ([fe80::86c9:5cc7:6693:d9f7%6]) with mapi id 15.20.5632.011; Mon, 12 Sep 2022
+ 19:35:47 +0000
+From:   Eric DeCosta <edecosta@mathworks.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: RE: [PATCH v5 0/4] fsmonitor: option to allow fsmonitor to run
+ against network-mounted repos
+Thread-Topic: [PATCH v5 0/4] fsmonitor: option to allow fsmonitor to run
+ against network-mounted repos
+Thread-Index: AQHYxVABuJRuWLHEVEGz/Q5e4Ag7LK3b8A7jgABA0TA=
+Date:   Mon, 12 Sep 2022 19:35:47 +0000
+Message-ID: <BL0PR05MB55719667F736618C49B00EBFD9449@BL0PR05MB5571.namprd05.prod.outlook.com>
+References: <pull.1326.v4.git.1661962145.gitgitgadget@gmail.com>
+        <pull.1326.v5.git.1662840031.gitgitgadget@gmail.com>
+ <xmqqa674hagf.fsf@gitster.g>
+In-Reply-To: <xmqqa674hagf.fsf@gitster.g>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL0PR05MB5571:EE_|DM6PR05MB5193:EE_
+x-ms-office365-filtering-correlation-id: 01cea3f0-2a20-4327-2a31-08da94f5fdf3
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0
+x-microsoft-antispam-message-info: ydIqrx7aGLTYbYE7JUxckbk5MqAevakkt3REVdNfyhLR4hUbvezBb4P0oaA+ch1v8DgAlB+AA31VeT7vqVY7XVeaWGs6Gm90HiW21d4Yh2W77qzIUN+WeCQJbtK2+IjEUudpuuLvJWxTrPKhQ6yYkOC9HnYHNTVUKInShcWuOhlO772Fm3L8NArZIkheoSMAOw8LENlvp/VF5/v8r0cWsrfXJkQfBTxCBn+MQZbb1pJzt5H6CYvflLV0FgShe5gpM1fdtCU4j5+jCrDfmrdXSK2wE3vFx15wEuCw83Imi+xJPvmKtKgrF+WUam5OOSFkIBgQ4aDQVy+M2ChYsxNtHmvogylusUPHqEsU5RqexmJXLc7oJfawuNL5FDG3PILWtcZ5x6ZDHJbP/gCErQ4EZCDIndGlZtMb8u7ApyBJ0myXprYgJGOJ6XqEZD4guYcpKDRKxydKWvvNH5Jy6LvYhQrpRJxE5Q0ijLmVzibIGRfkeveW2Fa0edd6bTWmpNc+j/5wUqVnHSZHIMZPRWK9By77QqfyARIJM9p7XcT/W6qUGXSqUxMAezRQtdCVRrAwQiUQ0EGl7gcModFkboMWi3oCjtiWN03WqSSQ37oitWO2ErNxU1xsVDI8kfsPKs1tWAs/G9JBZbgi15IOBbEoDSA7M/NGKT4edguSSvaqK8bmkvPZBwSILO8fc1kfdlF9GKXKtn2mEwMu7EOqnctNoUoEwGN33o1K+/SpNx3gfMZpIH279CPHC5Nq/hAShOfek8QLQ9/vD2THLmrfcfaVBw==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR05MB5571.namprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(346002)(396003)(136003)(376002)(366004)(39860400002)(84040400005)(451199015)(54906003)(86362001)(316002)(41300700001)(186003)(83380400001)(33656002)(76116006)(122000001)(55016003)(38100700002)(38070700005)(110136005)(2906002)(4326008)(8936002)(52536014)(6506007)(66946007)(71200400001)(66446008)(66476007)(8676002)(64756008)(66556008)(26005)(9686003)(478600001)(7696005)(53546011)(5660300002);DIR:OUT;SFP:1101
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?DOmyAcKkE1d3thmaDsymmqJZbFK4wV38kC7tG0sRLPGhbZa/VBvVL0ZZtJ?=
+ =?iso-8859-1?Q?HLZXXs6i8RTl6DDNQw0MIBkTgYbRPkwnmHgNg5jx33+ezIWkn/bR2jMEV2?=
+ =?iso-8859-1?Q?TMwVCjn2t2fQNMkNL3DY/Z7w31/QMzj8rXeqN8Tny2wrJki8SC9G+zx73l?=
+ =?iso-8859-1?Q?PJvsVd0w0QQwaWsqWFLiq/x7hid5YRBNGseDx0aIH8oZeQcVyGLQtRkoln?=
+ =?iso-8859-1?Q?+XZpng1WPxfx1/jkEgP866z1ZpmLLVSBTgn9rw4O3TfKas5tMI7qLFSUyJ?=
+ =?iso-8859-1?Q?tuelKYwZlqAah7bapB/TdRF5DxmpO4SRQf7tHjXhWS/45C6cmwEchNpqcx?=
+ =?iso-8859-1?Q?zX6ggg6aWPy+NrZaEc9dBRPt/EyOJfBW2ZvesfkpWcnojMVCbXlAB9E7dF?=
+ =?iso-8859-1?Q?uCykXqKz+KhBgANohp1kcyZpFomJSkxTYOhgJpMmkuDVV2slb7wgmtT7fC?=
+ =?iso-8859-1?Q?Ho1HVYxq8XhfNF+p+2uqMpILgzXZMBCg6IqPFJ/tB0tDCvF0vynugHucLL?=
+ =?iso-8859-1?Q?jIKzBcMhKtK1sxwlc3vsnn4d2EXwJLcSo5nmFuzWMGuPAr2yDVUOqgYYq6?=
+ =?iso-8859-1?Q?6bAAowYOec5aGVyR+xl0/Np+FgbLrshQ6Xhb9UDkt3j9NqnmRTDD1ajZ+7?=
+ =?iso-8859-1?Q?Q6GCLWiiHeTcw4DuxVMbXtXx8jeVgaaFBBU9gsEmUDK/0O8XXTDvajR9U5?=
+ =?iso-8859-1?Q?grdPPrcMQdRzXAY4foF7lg49y9KuEC/TwWKF5ho1Stl3GGspaYK/Ai+lys?=
+ =?iso-8859-1?Q?NWlx4vgS4kkfmiJwD6BlQh5HeNRYgo1sUQr+pqhHt6XrbJ/LlGpRBFYRK8?=
+ =?iso-8859-1?Q?xPy62mOEinmIoBD6KurMkTe2Vfxa1jHjgOi/PF/xlEFhhmj0ZAborG7sPm?=
+ =?iso-8859-1?Q?koKaYPwybSdGERh+CwsKt0hAjUqCg2tVLjDmGXaE4qDeRXIB8/Zs4452ib?=
+ =?iso-8859-1?Q?Fk9/BkTBTVOHcGtYJVTolWV3AhnbjMoq9Djn+0VvMO0/n1hhO6j7QZNDCC?=
+ =?iso-8859-1?Q?qQfVM0iRqCE/WOzKNkIfqdp2QZjSfFEKVBSDFPXN5d6fgJ80n91DVZZW/C?=
+ =?iso-8859-1?Q?isij26hLiC9j7KbloJTvNCMQfTpU6/AcaJbHb3ZLNECZWiYtvP/I8q/ShF?=
+ =?iso-8859-1?Q?g6d0mukP50Y6y9L+xmQhaXKlHvw62vVAVDkcEV1UxBvhpw6Sib6C9H72Qr?=
+ =?iso-8859-1?Q?/qFbz7jyEWrE73b++Uo1kBbU/+byD5JyBuwK8IRTkcnjXEgngIG5Ae38+f?=
+ =?iso-8859-1?Q?vro7uzkPaUmTv6kDZZXgB07YZmculGNmls7Zme8XpXWF+wfUdZ2Sq72ldf?=
+ =?iso-8859-1?Q?d8dQXxi+XVa2/WVDU+OCW0tSr6sTMKOSRK/e7rH8QAqR8hdN/mQ8VH1ip/?=
+ =?iso-8859-1?Q?yWtPEAmUDfslvhddNxHMRz0zvAiZlBdx8MmG7M98A6c1YVj4Ng3J/eyr8n?=
+ =?iso-8859-1?Q?IZZg59A2o20qBILd9B4APz4NDiNrbVhIzHQVXMlbtR2AFkyA4DMME6vvxY?=
+ =?iso-8859-1?Q?2IGdmM2eZ1CrViIaTedYveRUemhuYGL6rqSRU7yIjCcePPLNjqDg5SauMf?=
+ =?iso-8859-1?Q?GET4EwL/A/wFGy32fJmNqrFjos0v6GmfDawpwQ2DjltbRxTXZbK+lgaZGS?=
+ =?iso-8859-1?Q?47eqD0e1Vq7hYVTlhLipPmzDY7S0ZOmOC2?=
 MIME-Version: 1.0
-Content-Type: text/plain
+X-OriginatorOrg: mathworks.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR05MB5193
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: mathworks.com
+Content-Language: en-US
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Han-Wen Nienhuys <hanwen@google.com>
->
-> The logic to handle worktree refs (worktrees/NAME/REF and
-> main-worktree/REF) existed in two places:
->
-> * ref_type() in refs.c
->
-> * parse_worktree_ref() in worktree.c
->
-> Collapse this logic together in one function parse_worktree_ref():
-> this avoids having to cross-check the result of parse_worktree_ref()
-> and ref_type().
-> ...
-> The files-backend must avoid packing refs/bisect/* and friends into
-> packed-refs, so expose is_per_worktree_ref() separately.
-
-A sensible goal.
-
-> diff --git a/builtin/reflog.c b/builtin/reflog.c
-> index 9407f835cb6..bd568d2d931 100644
-> --- a/builtin/reflog.c
-> +++ b/builtin/reflog.c
-> @@ -26,7 +26,8 @@ static int collect_reflog(const char *ref, const struct object_id *oid, int unus
->  	 * Avoid collecting the same shared ref multiple times because
->  	 * they are available via all worktrees.
->  	 */
-> -	if (!worktree->is_current && ref_type(ref) == REF_TYPE_NORMAL)
-> +	if (!worktree->is_current &&
-> +	    parse_worktree_ref(ref, NULL, NULL, NULL) == REF_WORKTREE_SHARED)
->  		return 0;
-
-We used to say "for a ref without anything magical" but now we say
-"for a ref that is not per worktree at all", and they mean the same
-thing.  OK.
-
->  	strbuf_worktree_ref(worktree, &newref, ref);
-> diff --git a/reflog.c b/reflog.c
-> index 47ba8620c56..0b8b767f97c 100644
-> --- a/reflog.c
-> +++ b/reflog.c
-> @@ -310,16 +310,9 @@ static int push_tip_to_list(const char *refname, const struct object_id *oid,
->  
->  static int is_head(const char *refname)
->  {
-> -	switch (ref_type(refname)) {
-> -	case REF_TYPE_OTHER_PSEUDOREF:
-> -	case REF_TYPE_MAIN_PSEUDOREF:
-> -		if (parse_worktree_ref(refname, NULL, NULL, &refname))
-> -			BUG("not a worktree ref: %s", refname);
-> -		break;
-> -	default:
-> -		break;
-> -	}
-> -	return !strcmp(refname, "HEAD");
-
-It used to do some sort of input validation with BUG() but it no
-longer does.  Intended?
-
-The new call to parse_worktree_ref() is only to strip the possible
-"main-worktree/" and/or "worktrees/$name/" names.
-
-> +	const char *stripped_refname;
-> +	parse_worktree_ref(refname, NULL, NULL, &stripped_refname);
-> +	return !strcmp(stripped_refname, "HEAD");
->  }
 
 
-> @@ -738,37 +738,60 @@ static int is_pseudoref_syntax(const char *refname)
->  			return 0;
->  	}
->  
-> +	/* HEAD is not a pseudoref, but it certainly uses the
-> +	 * pseudoref syntax. */
+> -----Original Message-----
+> From: Junio C Hamano <jch2355@gmail.com> On Behalf Of Junio C Hamano
+> Sent: Monday, September 12, 2022 11:36 AM
+> To: Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
+> Cc: git@vger.kernel.org; Jeff Hostetler <git@jeffhostetler.com>; Eric Sun=
+shine
+> <sunshine@sunshineco.com>; Torsten B=F6gershausen <tboegi@web.de>;
+> =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>; Ramsay Jones
+> <ramsay@ramsayjones.plus.com>; Johannes Schindelin
+> <Johannes.Schindelin@gmx.de>; Eric DeCosta <edecosta@mathworks.com>
+> Subject: Re: [PATCH v5 0/4] fsmonitor: option to allow fsmonitor to run
+> against network-mounted repos
+>=20
+> "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+> > Eric DeCosta (4):
+> >   fsmonitor: refactor filesystem checks to common interface
+> >   fsmonitor: relocate socket file if .git directory is remote
+> >   fsmonitor: avoid socket location check if using hook
+> >   fsmonitor: deal with synthetic firmlinks on macOS
+> >
+> >  Makefile                                 |   2 +
+> >  builtin/fsmonitor--daemon.c              |   8 ++
+> >  compat/fsmonitor/fsm-ipc-darwin.c        |  46 ++++++++
+> >  compat/fsmonitor/fsm-ipc-win32.c         |   4 +
+> >  compat/fsmonitor/fsm-listen-darwin.c     |   6 +-
+> >  compat/fsmonitor/fsm-path-utils-darwin.c | 131
+> > +++++++++++++++++++++++  compat/fsmonitor/fsm-path-utils-win32.c  |
+> 106 ++++++++++++++++++
+> >  compat/fsmonitor/fsm-settings-darwin.c   |  70 ++++--------
+> >  compat/fsmonitor/fsm-settings-win32.c    | 106 +-----------------
+> >  contrib/buildsystems/CMakeLists.txt      |   4 +
+> >  fsmonitor--daemon.h                      |   6 ++
+> >  fsmonitor-ipc.c                          |   2 -
+> >  fsmonitor-path-utils.h                   |  49 +++++++++
+> >  fsmonitor-settings.c                     |  58 +++++++++-
+> >  fsmonitor-settings.h                     |   2 +-
+> >  15 files changed, 441 insertions(+), 159 deletions(-)  create mode
+> > 100644 compat/fsmonitor/fsm-ipc-darwin.c  create mode 100644
+> > compat/fsmonitor/fsm-ipc-win32.c  create mode 100644
+> > compat/fsmonitor/fsm-path-utils-darwin.c
+> >  create mode 100644 compat/fsmonitor/fsm-path-utils-win32.c
+> >  create mode 100644 fsmonitor-path-utils.h
+> >
+> >
+> > base-commit: be1a02a17ede4082a86dfbfee0f54f345e8b43ac
+>=20
+> Another curious thing I need your help on.
+>=20
+> The cover letter says that this work is a follow-up to extend the previou=
+s
+> work for Windows, and I would have expected these patches to build on
+> 85dc0da6 (fsmonitor: option to allow fsmonitor to run against network-
+> mounted repos, 2022-08-11), which is not yet in
+> be1a02a1 (The seventeenth batch, 2022-09-01).
+>=20
+> What is going on?
+>=20
+> Thanks.
 
+I've been rolling that around in the back of my head over the last couple o=
+f days
+actually.  Initially I though the macOS changes were going to be independen=
+t of
+my earlier changes, but with all the refactoring that has occurred, that is=
+ no
+longer the case. I've rebased my current patch set on top of those earlier =
+changes.
+v6 will incorporate that, the review feedback that I've received so far and=
+ add doc
+for the new config options. I'll be sure to note all of this in the cover l=
+etter for v6.
 
-/*
- * Our multi-line comments have opening slash-aster
- * and closing aster-slash on their own line.
- */
+-Eric
 
-
-Not your fault but the fault of the original file contents and diff
-algorithms; the patch around here is simply unreadble because almost
-nothing in the preimage contributes to the result.  So I'll remove
-'-' lines first before commenting.
-
-> +enum ref_worktree_type parse_worktree_ref(const char *worktree_ref,
-> +					  const char **name, int *name_length,
-> +					  const char **ref)
-
-It is hard to see what's input and what's output.  You have comments
-in <refs.h> but the prototype uses different parameter names and
-they do not tell what is input and what is output, either.
-
->  {
-> +	const char *name_dummy;
-> +	int name_length_dummy;
-> +	const char *ref_dummy;
-
-Style: Have blank here between the end of decls and the beginning of statements.
-
-> +	if (!name)
-> +		name = &name_dummy;
-> +	if (!name_length)
-> +		name_length = &name_length_dummy;
-> +	if (!ref)
-> +		ref = &ref_dummy;
-
-I can guess from these that worktree_ref is the input and all three
-are to point at variables that receive optional output.  The patch
-author shouldn't make the code reader guess.
-
-> +	*ref = worktree_ref;
-> +	if (is_pseudoref_syntax(worktree_ref)) {
-> +		return REF_WORKTREE_CURRENT;
-> +	}
-
-Style: No braces around a single statement block.
-
-OK, given a worktree_ref, FETCH_HEAD, MERGE_HEAD, etc. are all valid
-only for the current worktree.
-
-> +	if (is_per_worktree_ref(worktree_ref)) {
-> +		return REF_WORKTREE_CURRENT;
-> +	}
-
-Also the ones that are within a certain known namespaces, like
-"refs/bisect/*".
-
-In the above two cases, name/name_length are undefined.  Presumably
-the caller behaves well enough not to peek into them unless it is
-told to by the returned value REF_WORKTREE_OTHER?
-
-> +	if (skip_prefix(worktree_ref, "main-worktree/", &worktree_ref)) {
-
-The special syntax "main-worktree/$their_ref".  We skip the prefix
-and then ...
-
-> +		if (!*worktree_ref)
-> +			return -1;
-
-Do we know if, or do we have control over, "enum ref_worktree_type"
-ends up being signed or unsigned?  I am not sure if the callers in
-this patch even pays attention to the error condition.
-
-> +		*name = NULL;
-> +		*name_length = 0;
-> +		*ref = worktree_ref;
-> +
-> +		if (parse_worktree_ref(*ref, NULL, NULL, NULL) ==
-> +		    REF_WORKTREE_CURRENT)
-> +			return REF_WORKTREE_MAIN;
-
-In "main-worktree/$their_ref", if $their_ref is the per worktree
-name, then it is a ref specific to the primary worktree.  
-
-It is not clear what *name and *name_length are trying to return to
-the caller here.
-
-Otherwise we fall through with worktree_ref that we have stripped
-main-worktree/ prefix, which means the original input
-
-	main-worktree/worktrees/foo/blah
-
-is now 
-
-	worktrees/foo/blah
-
-and the next skip_prefix() will see that it begins with "worktrees/".
-Of course, if the initial input were
-
-	worktrees/foo/blah
-
-then we wouldn't have skipped main-worktree/ prefix from it, and go
-to the next skip_prefix().  So from here on, we cannot tell which
-case the original input was.
-
-But that is OK.  Asking "give me the ref 'blah' in the worktree 'foo'"
-in the current worktree should yield the same answer to the question
-"give me the ref 'blah' in the worktree 'foo', as if I asked you to
-do so in the main worktree".
-
-> +	}
-> +	if (skip_prefix(worktree_ref, "worktrees/", &worktree_ref)) {
-> +		const char *slash = strchr(worktree_ref, '/');
-> +
-> +		if (!slash || slash == worktree_ref || !slash[1])
-> +			return -1;
-> +		*name = worktree_ref;
-> +		*name_length = slash - worktree_ref;
-> +		*ref = slash + 1;
-
-OK, name and name_length are giving the name of the worktree to the
-caller here.  But this is done even when we do not end up returning
-REF_WORKTREE_OTHER, which sounds eh, ugly.
-
-In any case, the part after worktrees/$worktreename/ is a per
-worktree name, then we say "that's a per-worktree ref that belongs
-to $worktreename" by returning _OTHER and with *name/*name_length.
-
-> +		if (parse_worktree_ref(*ref, NULL, NULL, NULL) ==
-> +		    REF_WORKTREE_CURRENT)
-> +			return REF_WORKTREE_OTHER;
-
-> +	}
-> +
-> +	return REF_WORKTREE_SHARED;
-
-And everything else is _SHARED.
-
-The logic sounds sane enough, but the name/name_length being
-sometimes undefined and sometimes cleared feels yucky to me. 
-
->  }
->  
->  long get_files_ref_lock_timeout_ms(void)
-> diff --git a/refs.h b/refs.h
-> index 23479c7ee09..9e40efc4787 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -825,15 +825,30 @@ int parse_hide_refs_config(const char *var, const char *value, const char *);
->   */
->  int ref_is_hidden(const char *, const char *);
->  
-> +/* Is this a per-worktree ref living in the refs/ namespace? */
-> +int is_per_worktree_ref(const char *refname);
-> +
-> +/* Describes how a refname relates to worktrees */
-> +enum ref_worktree_type {
-> +	REF_WORKTREE_CURRENT, /* implicitly per worktree, eg. HEAD or
-> +				 refs/bisect/SOMETHING */
-
-OK.
-
-> +	REF_WORKTREE_MAIN, /* explicitly in main worktree, eg.
-> +			      refs/main-worktree/HEAD */
-> +	REF_WORKTREE_OTHER, /* explicitly in named worktree, eg.
-> +			       refs/worktrees/bla/HEAD */
-
-Hmph.  Do we need refs/ prefix before main-worktree/ and
-worktrees/bla?  The code we reviewed above seemed to skip
-"main-worktree/" and "worktrees/" with the assumption that there
-will be no "refs/" prefix before them.  Probably just two typoes,
-as the comment before parse_worktree_ref() below also seems to
-assume that there is no refs/ before them.
-
-> +	REF_WORKTREE_SHARED, /* the default, eg. refs/heads/main */
->  };
->  
-> -enum ref_type ref_type(const char *refname);
-> +/* Parse a ref that possibly explicitly refers to a worktree ref
-> + * (ie. either REFNAME, main-worktree/REFNAME or
-> + * worktree/WORKTREE/REFNAME). If the name references a worktree
-> + * implicitly or explicitly, return what kind it was. The
-> + * worktree_name, worktree_name_length and refname argument maybe NULL.
-> + */
-
-Here is my attempt to clarify what the comment tries to explain.
-
-	/*
-	 * Parse maybe_worktree_ref (input) that possibly explicitly
-	 * refers to a worktree ref (i.e. REFNAME, main-worktree/REFNAME,
-	 * main-worktree/worktrees/WORKTREE/REFNAME, or
-	 * worktrees/WORKTREE/REFNAME).  Return what kind of ref
-         * (among the four kinds listed above) it is.
-         * 
-	 * The location pointed at by worktree_name and worktree_name_length
-	 * are modified to point to "WORKTREE" part of such an input string
-         * when the returned value is REF_WORKTREE_OTHER.
-	 * Otherwise they are undefined (they may still be smudged).
-	 *
-	 * refname is made to piont to REFNAME part of the input string in
-	 * all cases.
-	 *
-	 * These three output parameters are optional and NULL can
-	 * be given for them.
-	 */
-
-> +enum ref_worktree_type parse_worktree_ref(const char *maybe_worktree_ref,
-> +					  const char **worktree_name,
-> +					  int *worktree_name_length,
-> +					  const char **refname);
