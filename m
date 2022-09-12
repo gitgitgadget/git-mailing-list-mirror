@@ -2,95 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 562DCC6FA82
-	for <git@archiver.kernel.org>; Mon, 12 Sep 2022 23:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64EFAC6FA83
+	for <git@archiver.kernel.org>; Mon, 12 Sep 2022 23:55:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229760AbiILXR1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Sep 2022 19:17:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47752 "EHLO
+        id S229982AbiILXzH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Sep 2022 19:55:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbiILXR0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2022 19:17:26 -0400
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A59094D4E4
-        for <git@vger.kernel.org>; Mon, 12 Sep 2022 16:17:24 -0700 (PDT)
-Received: by mail-yb1-f175.google.com with SMTP id 198so10076551ybc.1
-        for <git@vger.kernel.org>; Mon, 12 Sep 2022 16:17:24 -0700 (PDT)
+        with ESMTP id S229778AbiILXzF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2022 19:55:05 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C24513F93
+        for <git@vger.kernel.org>; Mon, 12 Sep 2022 16:55:03 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id j6-20020a17090a694600b00200bba67dadso9686900pjm.5
+        for <git@vger.kernel.org>; Mon, 12 Sep 2022 16:55:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date;
+        bh=lzoS7d5effKKq5QcIwKHWovaa9Y7zf7U20zdL55qhDA=;
+        b=luXSdSMMajIBvuthnsCdC+Atk8Oj+gbjw8cCyEqFluefGWbujBi5AqSZGfDmswI2P5
+         +7Nt/W5NXGkktCPAztfcikqEZQ2w7rD3iS1cRqXkoNaPsnrWOFbB9y+OCKairw3rSF0h
+         KTz0r1VRoyfXUoQwk/kh4yuOWDy78B7MqU7EuIwZfCxLrvgcdR07xW18mx//ULaiLO6l
+         cg/Qe06jntcgFg7kUT6A73ATV5WBgRRa7QRijUGoydgeI36Br6qVTnQrhGuLRMJ1BvYf
+         jKZ0nCOmtlevp4ymj8sw+izMlwWGgHEf/opWF05ionE+5q9oOWT/hrI94vHjyT8LoNdR
+         3SOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=RNrJKIFUFT3kICGQ/MbOs043T3DlqVnEBJwsx7vml9c=;
-        b=nozG4QJoIW5HDvYZsCRaj1ZEe3/VS6X2lHoIBFnxKqox2oJZaMnnzqIN0NYPS7M4cQ
-         CM6itrwP9yTLfpsXrmNxIQPF+vLmkSc5BBZr3zssiOtfjHyMh8elafeoGWn3wTabETMp
-         cND9h1JMcTdV2eLH8P8bOgbUEk+MxxMNQ6ccV9bWUZxequfHomcgMo9ZuPPP3kgV3TTj
-         j0MQMZRArM7nl+0OylO5AX9L8x+3eD4RNFHpj0JC5eCIwBjlyfRyUGSlZMIZARct1rfF
-         7aaC/knE4R9dHgXAgI8XxMgXVdZ8T7BXg+3MqmeK60KzLtnmILUDoBQnlYJXfPv5VE33
-         ayZw==
-X-Gm-Message-State: ACgBeo1oJ1e+A/syITdY8cuwVlhMG++yLILTe/Qhv1EzPaChUckOjvn5
-        e2cgPfOh2WWUHjYSFuv0ZnH3uzjlhw9WfRZfOTY=
-X-Google-Smtp-Source: AA6agR6ET+VBWTZ/rA66Ncy0PFfzgxjLj5N/Ko0Jx8GT1+8EsBdIEvqsLNySC+Rv7hvVbUVqlLWzc+rsaaot3rxIwUQ=
-X-Received: by 2002:a25:86d1:0:b0:6ae:e2fc:9f90 with SMTP id
- y17-20020a2586d1000000b006aee2fc9f90mr9246284ybm.475.1663024643785; Mon, 12
- Sep 2022 16:17:23 -0700 (PDT)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date;
+        bh=lzoS7d5effKKq5QcIwKHWovaa9Y7zf7U20zdL55qhDA=;
+        b=Bf2z7/VmSApMUZz0Ey4NRRK7MtJxk3FeBXdQ5nJXCd6ZIhC7XqihUQUhZGbm+mQUYW
+         cWzK7H2E0JXNg/yAjLq+IZzXVpAnzQzK4W+Pbuq49svB+7Fpb65kV+ajYSv+9LkGhy9x
+         1L9FnDaHziF4rhyA03nUy6eV0KhxMeroTjr8XBAdJ1WNpE2jWN8VL2vkQUoU++O+aXIJ
+         HhHuRxI1cFuufEjwuSKaV50aP9QA2w73zyLzzjTgQ6VD34iXUq12jDaHzAbaW2GLe9fh
+         GOwA17Y/MnLiFDWKizJnhcd75C3H5M6dHtsKbB7fkvSJpQkOC58rLR4HYClcjZvdRhSU
+         YiQQ==
+X-Gm-Message-State: ACgBeo2S7lWKCfbwMv3VyPeu9dTUhN22zqhBR8lJ7EgBQBVfwlUxQg5Z
+        4o9xINF0dfhW8b5otXzD9zT8ySUbdfI=
+X-Google-Smtp-Source: AA6agR6g/9NCXAY0jL53hQeZvXiiAZgKUhmI83KCDQw2Y+tfUIZiRf00DJsWno5wvXgtarHDxEQp8w==
+X-Received: by 2002:a17:90a:d585:b0:1f4:f9a5:22a9 with SMTP id v5-20020a17090ad58500b001f4f9a522a9mr951783pju.49.1663026902692;
+        Mon, 12 Sep 2022 16:55:02 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id i7-20020a17090332c700b00170d34cf7f3sm6676089plr.257.2022.09.12.16.55.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Sep 2022 16:55:02 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] chainlint: colorize problem annotations and test
+ delimiters
+References: <pull.1324.git.git.1663023888412.gitgitgadget@gmail.com>
+Date:   Mon, 12 Sep 2022 16:55:01 -0700
+In-Reply-To: <pull.1324.git.git.1663023888412.gitgitgadget@gmail.com> (Eric
+        Sunshine via GitGitGadget's message of "Mon, 12 Sep 2022 23:04:48
+        +0000")
+Message-ID: <xmqqsfkwb12i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
- <Yx1x5lme2SGBjfia@coredump.intra.peff.net> <CAPig+cRJVn-mbA6-jOmNfDJtK_nX4ZTw+OcNShvvz8zcQYbCHQ@mail.gmail.com>
- <Yx4pg2t6JXR+lsd4@coredump.intra.peff.net>
-In-Reply-To: <Yx4pg2t6JXR+lsd4@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 12 Sep 2022 19:17:12 -0400
-Message-ID: <CAPig+cTmosgapa=iUir3-J9k3138DvecHkmX+0QeHJROeTCeeA@mail.gmail.com>
-Subject: Re: [PATCH 00/18] make test "linting" more comprehensive
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 11, 2022 at 2:31 PM Jeff King <peff@peff.net> wrote:
-> On Sun, Sep 11, 2022 at 03:01:41AM -0400, Eric Sunshine wrote:
-> > > I wonder if color output for "# chainlint" and "?!" annotations would
-> > > help, too. It looks like that may be tricky, though, because the
-> > > annotations re-parsed internally in some cases.
-> >
-> > I had the exact same thought about coloring the "# chainlint:" lines
-> > and "?!FOO?!" annotations, and how helpful that could be to anyone
-> > (not just newcomers). Aside from not having much free time these days,
-> > a big reason I didn't tackle it was because doing so properly probably
-> > means relying upon some third-party Perl module, and I intentionally
-> > wanted to keep the linter independent of add-on modules. Even without
-> > a "coloring" module of some sort, if Perl had a standard `curses`
-> > module (which it doesn't), then it would have been easy enough to ask
-> > `curses` for the proper color codes and apply them as needed. I'm
-> > old-school, so it doesn't appeal to me, but an alternative would be to
-> > assume it's safe to use ANSI color codes, but even that may have to be
-> > done carefully (i.e. checking TERM and accepting only some whitelisted
-> > entries, and worrying about about Windows consoles).
->
-> We're pretty happy to just use ANSI in the rest of Git, but there is a
-> complication on Windows. See compat/winansi.c where we decode those
-> internally into SetConsoleTextAttribute() calls.
->
-> I think we can live with it as-is for now and see how people react. If
-> lots of people are getting confused by the output, then that motivates
-> finding a solution. If not, then it's probably not worth the time.
+"Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Well, you nerd-sniped me anyhow. The result is at [1]. Following the
-example of t/test-lib.sh, it uses `tput` if available to avoid
-hardcoding color codes, and `tput` is invoked lazily, only if it
-detects problems in the tests, so a normal (non-problematic) run
-doesn't incur the overhead of shelling out to `tput`.
+> +	$checked =~ s/(\?![^?]+\?!)/$c->{bold}$c->{red}$1$c->{reset}/mg;
 
-My first attempt just assumed ANSI color codes, but then I discovered
-the precedence set by t/test-lib.sh of using `tput`, so I went with
-that (since I'm old-school). The ANSI-only version was, of course,
-much simpler.
+It may be just me, but coloring the whole "?!LOOP?!" in red feels a
+bit strange.  I would have expected more like
 
-[1]: https://lore.kernel.org/git/pull.1324.git.git.1663023888412.gitgitgadget@gmail.com/
+	if ($c->{color_in_use}) {
+		$checked =~ s/\?!([^?]+)\?!/$c->{bold}$c->{red}$1$c->{reset}/mg;
+	}
+
+IOW, switching between "?!LOOP?!" and "<BOLD><RED>LOOP<RESET>".
+
+But it may be just me.
+
+> +# Restore TERM if test framework set it to "dumb" so 'tput' will work; do this
+> +# outside of get_colors() since under 'ithreads' all threads use %ENV of main
+> +# thread and ignore %ENV changes in subthreads.
+> +$ENV{TERM} = $ENV{USER_TERM} if $ENV{USER_TERM};
+
+Sounds quite sensible.
+
