@@ -2,177 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F9F6C54EE9
-	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 23:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AD39ECAAD8
+	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 23:11:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229546AbiIMXAv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Sep 2022 19:00:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42162 "EHLO
+        id S229549AbiIMXLF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Sep 2022 19:11:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbiIMXAt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2022 19:00:49 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEBF16B161
-        for <git@vger.kernel.org>; Tue, 13 Sep 2022 16:00:46 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id c19so7747113qkm.7
-        for <git@vger.kernel.org>; Tue, 13 Sep 2022 16:00:46 -0700 (PDT)
+        with ESMTP id S229518AbiIMXLE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2022 19:11:04 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E0C470E43
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 16:11:02 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id c4so10937577iof.3
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 16:11:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :message-id:subject:to:from:date:from:to:cc:subject:date;
-        bh=V2ygG8CrwPY5yi9ybLVjqJRI/QSFULGJTuccAFeu1dM=;
-        b=zKTI6O6X/7kyki5nl9zYzOjExaPbcR4/Ae1aDababTBD4C6p0XUNnNooNIm6PnpTbz
-         fbeHXhMB97YouAQPHauLK9vj3IMIHHphfmwh5YUrn62QbitB3/NeDlxLcPD5nqu4RQEU
-         BRSb7FLe21oDQLFryd4LHUHcxcr4f/hJc6ml17qX/nnYnpvrKQrG1ajx3i8j6oojZ0le
-         uSLCEeQarcxAvI5VxPYvPSUnNr/dPegAPVcN9lqgQicV+Iq2hJKWsgHGXhXwSuB1BWjO
-         +vyOnB+rJBC+KvFj+t/ApvOk85m6Iz9bp+GWzA4Y1sasprtcWtXoI/QYtJxYsJ1Bp0ge
-         7IFA==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=MRu5ro1RRIYbq0McBKI8b6JtnuNNQMSAwr/z5r6oCAc=;
+        b=LItv3P02YSSzyqOU0a3FB0kgyzXsLTL24es8izXKNQEQAlfhvp5Wxpzsq1LgmIoKfy
+         dAJYkpEzkJfyEG0M2MwYR6FiuKCj7nn7MO9InU7Y0XrsEMK116z0eljFn3OWGag9UmBw
+         0D8z7d88hfOdGfEN+XtcTHo/iHFqtedo1savJuVzYCgNuhsMFz8sGjTzmHNR1f1YhpSI
+         yrWNgWOPyKzdbvip8bCX5xkqsQDEzIstVHQ5xKFwU73XBgkZ3Imv8urFTOIe6sEq7OeZ
+         paiNlRiJBwWbGZykHki89siH65tiTnDHkkGOITMfBKg+2x5bxMTsrt9yXg37s93d2ZoH
+         oaMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :message-id:subject:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=V2ygG8CrwPY5yi9ybLVjqJRI/QSFULGJTuccAFeu1dM=;
-        b=g8nS0ITxpdt2bQW9vnqvYtfbGudYYe78jyce9M2uAd7C93Yyqh8yaWZ/sl6/8OSm5I
-         RJlkkwKF9QRbs4beKS4c6plBs7fLKEVL2TOxlUNc1LWyS4oAcSL5aKi2I2M7aTsvXKWj
-         hbl8RY19ODqh0Z48Kck9WvHUGscIJzCFTPmxAgNcyFSn2wcpSElMzHni45DIK5efgL9J
-         v9G1WSQPQR1AupSsQZM1fFTSTvtm8EEHvPDoU5VmihzE/YuQ8kzxn8NPjAWe4gJUXKdn
-         p91B8UanuCRQgThx5yKuXEztxFqOqYIq3tex4WB8mJjj9ZlXWckGXh7RN6jTKT88neFc
-         MtyQ==
-X-Gm-Message-State: ACgBeo3/aE2cny+RayKFMV8aul2TwrXj07qQOGFs+WdAycIqgeHUvG+3
-        wKij+WAn/ei81ke6fINn0qASiwhqhvvCxg==
-X-Google-Smtp-Source: AA6agR6zkmpT75dliq/n0F1mjVYqCtPLalIzVeZQEnz1bhGxl4mzSQRQlu/geAuzU7gwDSY0umwl7g==
-X-Received: by 2002:ae9:ed43:0:b0:6cb:e245:2950 with SMTP id c64-20020ae9ed43000000b006cbe2452950mr19170136qkg.261.1663110045749;
-        Tue, 13 Sep 2022 16:00:45 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o22-20020a05620a2a1600b006b9bf03d9c6sm620837qkp.104.2022.09.13.16.00.45
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Sep 2022 16:00:45 -0700 (PDT)
-Date:   Tue, 13 Sep 2022 19:00:44 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Subject: Git / Software Freedom Conservancy status report (2022)
-Message-ID: <YyELnLai0jXsnt3W@nand.local>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=MRu5ro1RRIYbq0McBKI8b6JtnuNNQMSAwr/z5r6oCAc=;
+        b=7RDlkdYoVaVglprnk/ORnH1bWt15ri7Ya5cGrLgNeYKtlE5T63Q4C+YYIRvqG/q/TH
+         VXNc8w6P+CJzP2S396mfB8vJCnK1lPMKuMK9QwlO4a5oKGq0Gufr4xUCe6C1ffanZGBL
+         mUxa9oMIp3BPmx6Lk+SN0iOkaIHy/USQlcbJr3nrQR9HDzV2N55T5OddJ0G8j6nGaMPy
+         YvjH8LjpEPe2gW+DV/95ow1mZjB38751BV5mKundEsSY8uXNzzF2sqCG2it17dZvuAjL
+         ohXmGm+78Y2PVs4mBiGrvsri6QfK/1hsLgREvDR/Qyj12sGTPBNBDfYvx+UuIOo7EsBK
+         /DKw==
+X-Gm-Message-State: ACgBeo183W/KC6fSytfgFe8Ri3ahysppuB25VBpMvNgjLI3tN0FG2096
+        mAm0/U3fGGXE5mlJtX0iLbYO
+X-Google-Smtp-Source: AA6agR67sxKq1XK6/0bkEYuU3IUAia6XY9nw47NinJo3iU61YHwUyAnyMuiHzI86wWSW/SewhVl7yQ==
+X-Received: by 2002:a02:cc53:0:b0:35a:1885:92d2 with SMTP id i19-20020a02cc53000000b0035a188592d2mr8883029jaq.242.1663110662014;
+        Tue, 13 Sep 2022 16:11:02 -0700 (PDT)
+Received: from [10.71.3.213] ([12.148.187.67])
+        by smtp.gmail.com with ESMTPSA id q16-20020a056e02079000b002eb75fb01dbsm5718867ils.28.2022.09.13.16.11.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Sep 2022 16:11:01 -0700 (PDT)
+Message-ID: <5685773e-db83-6b92-ff42-0d51e6e6a22e@github.com>
+Date:   Tue, 13 Sep 2022 18:11:00 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.13.0
+Subject: Re: [PATCH] Documentation: add ReviewingGuidelines
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com,
+        Johannes.Schindelin@gmx.de, steadmon@google.com,
+        chooglen@google.com
+References: <pull.1348.git.1662747205235.gitgitgadget@gmail.com>
+ <xmqqr10f88jm.fsf@gitster.g>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <xmqqr10f88jm.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's been a few years since we had the last big update on the Git
-project's activities at Software Freedom Conservancy. So, we're long
-overdue for an update.
+Junio C Hamano wrote:
+> "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Victoria Dye <vdye@github.com>
+>>
+>> Add a reviewing guidelines document including advice and common terminology
+>> used in Git mailing list reviews. The document is included in the
+>> 'TECH_DOCS' list in order to include it in Git's published documentation.
+>>
+>> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> Helped-by: Derrick Stolee <derrickstolee@github.com>
+>> Signed-off-by: Victoria Dye <vdye@github.com>
+>> ---
+> 
+> I've commented on the text but haven't seen anybody else reviewing.
+> No interest?  Everybody silently happy?
 
-This email will serve as a report on the project's activities at
-Conservancy for the year 2022.
+My guess is that there aren't as many eyes on this as there might typically
+be because of Git Merge. In any case, I plan to re-roll based on your
+feedback [1] (ideally) by the end of the week if other reviews aren't sent
+in the meantime. 
 
-The previous report (from 2018, whose format I'll try to stick to here)
-can be found at:
+I'm hoping there's a bit more interest after Git Merge. With reviewing being
+such an integral part of contribution to Git, I'm really interested in
+hearing people's thoughts on what should/shouldn't be in this document.
 
-	https://lore.kernel.org/git/20180306231609.GA1632@sigill.intra.peff.net/
-
-# Background
-
-Git is a member project of the Software Freedom Conservancy. The Git
-project joined Conservancy in 2010 so Conservancy could help us manage
-our money and other assets, and provide legal representation for
-trademark matters. Conservancy doesn't hold any copyright on any of the
-project's code. Similarly, being a member project at Conservancy does
-not grant Conservancy any influence in the project's development. The
-technical direction that Git takes is up to us.
-
-Interested readers can take a look at a more full picture of what
-Conservancy does for the Git project at:
-
-  https://sfconservancy.org/projects/services/
-
-A "Project Leadership Committee" (PLC) represents the Git project at
-Conservancy. The PLC currently consists of Junio C Hamano, Christian
-Couder, Ævar Arnfjörð Bjarmason, and myself.
-
-# Financials
-
-The most recent data that I have a copy of is from the end of March,
-2022. So the numbers below aren't totally up-to-date, but they should be
-good enough to get a rough picture from.
-
-We have ~70k USD in our account, up ~40k from where we were at in 2018.
-Here are some top-level ledger numbers gathered since 2018-03-07 (the
-date of the last report). Note that this is all double-entry, so
-negative numbers are good.
-
-           $-45,962.81 Income:Git
-           $-43,590.05   Donations
-            $-2,332.22   Royalties
-               $-40.54   Currency Conversion
-             $5,512.23 Expenses:Git
-               $134.97   Bad Debt
-               $514.43   Banking Fees
-             $3,852.63   Conferences:Travel
-               $113.22     Per Diem
-                $12.88   Currency Conversion
-               $825.00   Filing Fees
-                $59.10   Hosting
-  --------------------
-           $-40,450.58
-
-Most of our money comes from donations. About 5% of it comes from
-royalties, most of which are from Amazon affiliate links on git-scm.com.
-Our royalty program with Packt Publishing (who publish Git-related
-books) ended in 2019, which accounts for the "Bad Debt" expenses. We
-give 10% of all incoming money to Conservancy's general fund (these
-numbers are after that 10%).
-
-We spent some money in 2019 and 2020 on sponsoring travel for to the
-Contributor Summit and Git Merge ($3,852.63, to be exact), but spent $0
-in 2021, since no Git Merge was held. This year we sponsored one GSoC
-student's travel to Git Merge, and I expect to continue this trend in
-the future.
-
-# Trademark
-
-We hold a trademark on the term "Git" in the space of software and
-version control. The report from 2017 has a good overview of the details
-there:
-
-	https://public-inbox.org/git/20170202024501.57hrw4657tsqerqq@sigill.intra.peff.net/
-
-In response to some discussions we had with folks at Conservancy,
-Christian brought a discussion to the list about rethinking the way we
-treat our trademark in the future, particularly with respect to
-enforcement.
-
-See his recent email to the list for more details there:
-
-	https://lore.kernel.org/git/CAP8UFD3WQ64FuXarugF+CJ_-5sFNBCnqPE0AEBK-Ka78ituKTg@mail.gmail.com/
-
-# Travel Budget Allocation
-
-Like I mentioned above, we sponsored travel for one GSoC student to
-attend Git Merge and the Contributor's Summit this year. The process has
-been somewhat ad-hoc, at least in the past, but the PLC formalized this
-process a little bit more rigidly in 2018. The report from that year has
-a good overview of the details.
-
-Similarly, that whole procedure is (still) open for comments and
-suggestions. Our main focus is to make it possible for new contributors
-(particularly ones who have participated in programs like GSoC and
-Outreachy) to attend Git Merge (and, specifically, the Contributor's
-Summit) where it wouldn't otherwise be possible.
-
-# Conclusion
-
-That's all for this year. I'm hoping to make this a somewhat more
-regular thing, or at least do it once a year (probably around the time
-of the Contributor's Summit, when most of the folks who will be
-interested in the details here will all be in the same room).
-
-I'm happy to answer any questions on the list, and I'll propose a
-session on it at the Contributor's Summit tomorrow, in case folks want
-to discuss this further in person.
-
-Thanks,
-Taylor
+[1] https://lore.kernel.org/git/xmqqwnacibbm.fsf@gitster.g/
