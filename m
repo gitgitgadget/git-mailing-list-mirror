@@ -2,198 +2,207 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D541C54EE9
-	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 17:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB870C54EE9
+	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 17:59:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232975AbiIMR0g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Sep 2022 13:26:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57160 "EHLO
+        id S231795AbiIMR7o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Sep 2022 13:59:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232972AbiIMR0J (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2022 13:26:09 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CC3B760C2
-        for <git@vger.kernel.org>; Tue, 13 Sep 2022 09:13:34 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id j12so12208192pfi.11
-        for <git@vger.kernel.org>; Tue, 13 Sep 2022 09:13:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=CorMA3AKIUQG3ICRhdrVVpHn3Kjco7gZU6gBcW3+njI=;
-        b=ahvLLfeARisZZUCPFY1/15iwOFJVhGBKRcpiBhneUmCGMlNWmzt0DOcaZ6rc1lcfIw
-         qKsD1QVDniLYhakmHoaS4Y9sxv2MiM2dZjFss/p3WevHWC9kLHJLKB9Tg9O0sItaWyZa
-         gqyh10vTPiUqrso+A6Hi12Ojbmnetohklk8jhEMe3+lOgYqCtHbOvUUjQfJPKuCPnCnt
-         UUI291Kiw3XC/dAttpfvPnC4HcSI6Hl4UDpn0kLROGMUuS8G0CYvdrCyZXVfOp3R6LhF
-         uR3BOSiOu0VedNvBgc2K4wTg0LldIRDyWONMdlS5Pl7xNpM86kMIGz62hQCNXf+OQwVu
-         iG8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=CorMA3AKIUQG3ICRhdrVVpHn3Kjco7gZU6gBcW3+njI=;
-        b=ty0s2zUJ4dhNe3nEeBO5KOm7QhbqEEuO+5c8qRqCEkkL6OX7wYOuk1JPeDsGt1Fly4
-         wdl4Ns8r/1KRX0HMq2vgm1+tX8/0ZDOgEBfhxkeojIKhhH9kF46M0btalnAZ9ImQRu9m
-         DN00Urf3DXav5i5l6FJZ8osagFodIDMcSHBRJfZuz+HZsLEyhn6SOe3VraMxClwLOtYA
-         TspCT82W0vIRWOvuJNDyVqaoqsPFtqRsLOVemhNsjPeN4CqfIK/2yqmSHHZK1flsSJp8
-         IoxQYQdrFlGj9oQNwqphPSjtdQBF+MG5+9f6mxP/pyH03w2bLjUksLln4eulfq/XbXQa
-         dNkQ==
-X-Gm-Message-State: ACgBeo30wEi4uXl8nm5ACaddDsh4xDGcML+qAF6NWO79x3tSeX0pbuXb
-        tMjb201t+tqlXq+YJ63cx1+lo7DKpN0=
-X-Google-Smtp-Source: AA6agR61yzehHMW2WbAHf1m1lj9p/x1PZ4f1FEBQ3dY8ENmmnpWb/Iei07JvmqNMxg8eF14Iu+rmWQ==
-X-Received: by 2002:a05:6a00:16d6:b0:53b:3e58:1c6f with SMTP id l22-20020a056a0016d600b0053b3e581c6fmr33582888pfc.7.1663085613289;
-        Tue, 13 Sep 2022 09:13:33 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id o187-20020a625ac4000000b00537e40747adsm8037699pfb.36.2022.09.13.09.13.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Sep 2022 09:13:32 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
+        with ESMTP id S231561AbiIMR7M (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2022 13:59:12 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA45B8B9A5
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 10:01:33 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3373E15CBF9;
+        Tue, 13 Sep 2022 13:01:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0eAqPknyESubR8m/XPnYmITTvrksX0urRrKFu9
+        a6pzU=; b=n1bOTKb0XzAPwy79mWWCLx4I/dG485dPYXw11rUWIvUfmVjREv0EPk
+        n8LXQJ/WV+ZRuAw7YXTzRlkrrkYWwZqiDqfmf/98QQrdxqKexzHIZ6iE/pN8Ps7T
+        lJneEo9FTGMMKtalD2bv8ANXfBnPDsOYI3W+vE8qqTn+f7K9+5RM0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2938D15CBF8;
+        Tue, 13 Sep 2022 13:01:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7276D15CBF7;
+        Tue, 13 Sep 2022 13:01:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Arthur Chan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Arthur Chan <arthur.chan@adalogics.com>
-Subject: Re: [PATCH] fuzz: add basic fuzz testing for git command
-References: <pull.1351.git.1663078962231.gitgitgadget@gmail.com>
-Date:   Tue, 13 Sep 2022 09:13:32 -0700
-In-Reply-To: <pull.1351.git.1663078962231.gitgitgadget@gmail.com> (Arthur Chan
-        via GitGitGadget's message of "Tue, 13 Sep 2022 14:22:42 +0000")
-Message-ID: <xmqqv8pr9rrn.fsf@gitster.g>
+To:     "Sun Chao via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Sun Chao <16657101987@163.com>,
+        Sun Chao <sunchao9@huawei.com>
+Subject: Re: [PATCH v5 1/5] hiderefs: add hide-refs hook to hide refs
+ dynamically
+References: <pull.1301.v4.git.git.1660575688.gitgitgadget@gmail.com>
+        <pull.1301.v5.git.git.1662735985.gitgitgadget@gmail.com>
+        <278bd185aec26285f8c00aca838f89e5f3877748.1662735985.git.gitgitgadget@gmail.com>
+Date:   Tue, 13 Sep 2022 10:01:28 -0700
+In-Reply-To: <278bd185aec26285f8c00aca838f89e5f3877748.1662735985.git.gitgitgadget@gmail.com>
+        (Sun Chao via GitGitGadget's message of "Fri, 09 Sep 2022 15:06:21
+        +0000")
+Message-ID: <xmqqedwf9pjr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: B5F72DF0-3385-11ED-86D3-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Arthur Chan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Sun Chao via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->  .gitignore        |   2 +
->  Makefile          |   2 +
->  fuzz-cmd-base.c   | 117 ++++++++++++++++++++++++++++++++++++++++++++++
->  fuzz-cmd-base.h   |  13 ++++++
->  fuzz-cmd-status.c |  68 +++++++++++++++++++++++++++
->  5 files changed, 202 insertions(+)
->  create mode 100644 fuzz-cmd-base.c
->  create mode 100644 fuzz-cmd-base.h
->  create mode 100644 fuzz-cmd-status.c
+> From: Sun Chao <sunchao9@huawei.com>
+>
+> Gerrit is implemented by JGit and is known as a centralized workflow system
+> which supports reference-level access control for repository. If we choose
+> to work in centralized workflow like what Gerrit provided, reference-level
+> access control is needed and we might add a reference filter hook
+> `hide-refs` to hide the private data.
 
-Just like we have t/ hierarchy for testing, if we plan to add more
-fuzz-* related things on top of what we already have (like those
-that can be seen in the context of this patch), I would prefer to
-see a creation of fuzz/ hierarchy and move existing stuff there as
-the first step before adding more.
+Please rewrite the above so that it does not sound like "Gerrit
+supports it, there are tons of users of Gerrit, we must support it,
+too".  If this feature is meaningful for us, even if Gerrit folks
+were deprecating and planning to remove the support of it, we would
+add it.  If it is not, even if Gerrit folks support it, we wouldn't.
 
-And more fuzzing is good, if we can afford it ;-)
-
-Thanks.
-
-Even though I am not taking this patch as-is, let's give a cursory
-look to make sure the future iteration can be more reviewable by
-pointing out various CodingGuidelines issues.
-
-> diff --git a/fuzz-cmd-base.c b/fuzz-cmd-base.c
-> new file mode 100644
-> index 00000000000..98f05c78372
-> --- /dev/null
-> +++ b/fuzz-cmd-base.c
-> @@ -0,0 +1,117 @@
-> +#include "cache.h"
-
-Good to have this as the first thing.
-
-> +#include "fuzz-cmd-base.h"
 > +
+> +		/*
+> +		 * the prefix 'hook:' means that the matched refs will be
+> +		 * checked by the hide-refs hook dynamically, we need to put
+> +		 * the 'ref' string to the hook_hide_refs list
+> +		 */
+
+I am not sure if this deserves a five-line comment.  We didn't need
+to have a comment that says "value without hook: means the matched
+refs will be hidden and we need to remember them in the hide_refs
+string_list" for over 10 years after all.
+
+> +		if (skip_prefix(value, "hook:", &value)) {
+> +			if (!strlen(value))
+> +				return error(_("missing value for '%s' after hook option"), var);
+
+I am not sure it is a good idea to special case an empty string,
+especially here at this point in the code flow.  There would be
+strings that cannot be a refname prefix (e.g. "foo..bar") and such a
+check is better done at the place where the accumuldated list of ref
+patterns are actually used.  If you are using prefix match, a value
+of an empty string here would be a very natural way to say "we pass
+all the refs through our hook".
+
+By the way, how does the negated entry work with this new one?  For
+static ones,
+
+	[transfer] hiderefs = !refs/heads/
+
+would hide everything other than refs/heads/ hierarchy, I suppose.
+Would we spell
+
+	[transfer] hiderefs = hook:!refs/heads/
+
+or
+
+	[transfer] hiderefs = !hook:refs/heads/
+
+to say "send everything outside the branches to hook"?  If the
+former, you'd also need to special case "!" the same way as you
+special case an empty string (in short, I am saying that the special
+case only for an empty string does not make much sense).
+
+How does this mechanism work with gitnamespaces (see "git config --help"
+and read on transfer.hideRerfs)?
+
+> +			hook = 1;
+> +		}
 > +
-> +/*
-> + * This function is used to randomize the content of a file with the
-> + * random data. The random data normally come from the fuzzing engine
-> + * LibFuzzer in order to create randomization of the git file worktree
-> + * and possibly messing up of certain git config file to fuzz different
-> + * git command execution logic.
-> + */
-> +void randomize_git_file(char *dir, char *name, char *data_chunk, int data_size) {
+>  		ref = xstrdup(value);
+>  		len = strlen(ref);
+>  		while (len && ref[len - 1] == '/')
+>  			ref[--len] = '\0';
+> -		if (!hide_refs) {
+> -			CALLOC_ARRAY(hide_refs, 1);
+> -			hide_refs->strdup_strings = 1;
+> +
+> +		if (hook) {
+> +			if (!hook_hide_refs) {
+> +				CALLOC_ARRAY(hook_hide_refs, 1);
+> +				hook_hide_refs->strdup_strings = 1;
+> +			}
+> +			string_list_append(hook_hide_refs, ref);
+> +		} else {
+> +			if (!hide_refs) {
+> +				CALLOC_ARRAY(hide_refs, 1);
+> +				hide_refs->strdup_strings = 1;
+> +			}
+> +			string_list_append(hide_refs, ref);
+>  		}
+> -		string_list_append(hide_refs, ref);
+>  	}
 
-Unlike other control structure with multiple statements in a block,
-the surrounding braces {} around function block sit on their own
-lines.  I.e.
+That's a somewhat duplicated code.  I wonder
 
-    void randomize_git_file(char *dir, char *name, char *data_chunk, int data_size)
-    {
+	/* no need for "hook" variable anymore */
+	struct string_list **refs_list= &hide_refs;
 
+	if (strip "hook:" prefix from value)
+		refs_list = &hook_hide_refs;
+		...
+	if (!*refs_list) {
+        	*refs_list = xcalloc(1, sizeof(*refs_list));
+		(*refs_list)->strdup_strings = 1;
+	}
+	string_list_append(*refs_list, ref);
+		
+would be a better organization.  I dunno.
 
-> +   char fname[256];
+> +
+> +	/*
+> +	 * Once hide-refs hook is invoked, Git need to do version negotiation,
+> +	 * with it, version number and process name ('uploadpack' or 'receive')
+> +	 * will send to it in pkt-line format, the proccess name is recorded
+> +	 * by hide_refs_section
+> +	 */
 
-In our codebase, tab-width is 8 and we indent with tabs.
+Grammar.
 
-Use <strbuf.h> and avoid snprintf(), e.g.
-
-	struct strbuf fname = STRBUF_INIT;
-	strbuf_addf(&fname, "%s/%s", dir, name);
-	... use fname.buf ...
-	strbuf_release(&fname);
-
-> +   FILE *fp;
+> +	if (hook && hide_refs_section.len == 0)
+> +		strbuf_addstr(&hide_refs_section, section);
 > +
 
-Good that you leave a blank between the end of decl and the
-beginning of the statements.
+I am not sure if this is correct at all, but because the 1/N patch
+has only code without documentation I cannot guess the intention.
 
-> +   snprintf(fname, 255, "%s/%s", dir, name);
-> +
-> +   fp = fopen(fname, "wb");
-> +   if (fp) {
-> +      fwrite(data_chunk, 1, data_size, fp);
-> +      fclose(fp);
-> +   }
-> +}
+The first conditional to parse the configuration variable name var
+tries to handle both generic transfer.hideRefs and direction
+specific {receive,uploadpack}.hideRefs and "section" at this point
+has "transfer", "receive" or "uploadpack", doesn't it?
 
-Why doesn't this care about errors at all?  Not even fopen errors?
+As this is a git_config() callback, when we have
 
-> +/*
-> + * This function is the variants of the above functions which takes
-> + * in a set of target files to be processed. These target file are
+	[receive] hiderefs = hook:refs/foo
+	[uploadpack] hiderefs = hook:refs/bar
+	[transfer] hiderefs = hook:refs/baz
 
-"... is a variant of the above function, which takes a set of ..."
+we would want to send refs/bar and refs/baz to the hook if we are a
+"uploadpack" process.  But because the above code records the first
+section we happen to see (which is "receive"), hide_refs_section has
+that value.  I am not sure how a code that later user that piece of
+information can behave any sensibly.  Does it say "We are a
+'uploadpack', but hide_refs_section says 'receive', so we should
+ignore what is in hook_hide_refs string list"?
 
-> + * passing to the above function one by one for content rewrite.
-> + */
-> +void randomize_git_files(char *dir, char *name_set[], int files_count, char *data, int size) {
-> +   int data_size = size / files_count;
-> +
-> +   for(int i=0; i<files_count; i++) {
-
-We do not yet officially allow variable decl for for() statement
-like this.  We'll start allowing it later this year but we are
-waiting for oddball platform/compiler folks to scream right now.
-
-IOW, we write the above more like so:
-
-	int data_size = size / files_count;
-	int i;
-
-        for (i = 0; i < files_count; i++) {
-
-Take also notice how we use whitespaces around non-unary operators.
-
-> +      char *data_chunk = malloc(data_size);
-> +      memcpy(data_chunk, data + (i * data_size), data_size);
-> +      randomize_git_file(dir, name_set[i], data_chunk, data_size);
-> +
-> +      free(data_chunk);
-> +   }
-
-As data_size does not change in this loop and the contents of
-data_chunk from each round is discardable, allocating once outside
-may make more sense.  Actually, as the called function makes only
-read-only accesses of data_chunk, I do not quite see why you need to
-make a copy in the first place.
-
-We do not use malloc() etc. directly out of the system; study wrapper.c
-and find xmalloc() and friends.
-
-What if size is not a multiple of files_count, by the way?
-
-I'll stop here as we already have plenty above (read: it is not "I
-didn't spot any problems in the patch after this point").
+I'll stop reading at this point for now, as it is not a good use of
+our time to review the implementation until we know the basic design
+is sound, which I do not quite see from what we saw up to this
+point.  It might have made sense if each string list element had the
+ref pattern to match as its value and stored extra info, like "is
+this negated?", "is this hook pattern or static?", "is this
+transfer, receive, or uploadpack?" in its .util member, for example.
 
 Thanks.
