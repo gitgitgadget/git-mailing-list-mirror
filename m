@@ -2,87 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0500C54EE9
-	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 17:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B122AC54EE9
+	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 17:12:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231349AbiIMRHC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Sep 2022 13:07:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41538 "EHLO
+        id S232598AbiIMRMZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Sep 2022 13:12:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232394AbiIMRG3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2022 13:06:29 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 396628E9B5
-        for <git@vger.kernel.org>; Tue, 13 Sep 2022 08:56:02 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id b21so12267222plz.7
-        for <git@vger.kernel.org>; Tue, 13 Sep 2022 08:56:02 -0700 (PDT)
+        with ESMTP id S232517AbiIMRLx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2022 13:11:53 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BA14A9C29
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 09:00:32 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id c11so8970831qtw.8
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 09:00:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=tFytja89/uDrnzy+i2+3g1GOTKrcQ4lGd3+G0jnk9LM=;
-        b=GtelzaMCaF/C7wCTi6ZYeaJu/w+hal5BtoQFw4p5YhG+3+MIuRJGr5Ih4Z/6ip+ZsX
-         fzeqZVc5Lt3aaseTKoxAG1BxwHVRWfxy8GNBZw7hiT6DoEehEEgV1oVy9rHO38EA/cYY
-         okdZtMre92uWycisSnzn0Je5eFNp2N+vYZq0xWCRUxOG+SEhPqr1XAq0fywCpDvVePq5
-         L7ZsvKoFpR5A3O+9mZM7hjdOe/odl/PwNzILukvRPx+7kiqsMQXnAYGVC0SHjSAsXgoH
-         ZOMW5cAiy7NfHqMoBJfLiKbRQ16UGN9b7hvLEjRZTtdkquK1MgI5sFIkq5I78y/o7+4s
-         3b8A==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date;
+        bh=bz+qyJqqIpnRN1V+IiS1nIcA0xmIBSdHFpPtw0Scud0=;
+        b=DSOJM3De2TLE0rNaPyr3fNXi/YqzTpuYZVNV0O0n+pNhKSgs98nUy6zvG+NbA9bIQw
+         hscGCFDPAQuDoiXRj9SQ43yPUNrZhGhONtO5v523X5yXMtikhKWCGN2Qt9afgaBm7dxb
+         rL613QxhiPEYQWcNtl+f2nl4IPtefqTrqAMA9gNyb5yygRJgMM4KkUuJd9Rez6hYmjxk
+         U7dBbSuLhjDpV3V9ErdpPYeEnMEG6MENXx1bXWHyJ6tRx5QNld+fKLo/JF9DorOjpiHz
+         x+2KBCkz1x6T8MskPG673RdsR2WgjwLa9L1le8A629gJww6VrVVh6Np1k60wi6eavJos
+         ZeKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=tFytja89/uDrnzy+i2+3g1GOTKrcQ4lGd3+G0jnk9LM=;
-        b=ltWlkhDYhE4Ft7mWmq4oa2J7AEEYdSNTKUjxx48FxugL5nDmnHMRrGMXhXL6Wh7+pR
-         OfKKU9E+NEa6ML5pZbmVlHBO2edRaSt+/cwnbQEKtY1J6zvTWN9HWN0JlNr9amTz2zPZ
-         +4uYtsJRkimzyco6EK9JAI0YWJgYv3abKSvD8+3XOqawOzuHdfO6yqqiG9sVTNasw45F
-         hMqmDQ5uSx+ZNRC+g8AurlrRdgKhnSVkZ1q27L7hM0Tz07Sw5V46jz9o8aYqHSBj/nzB
-         4cHS30guy0HHr8kINeWoyytXr7CVnnwZz4GRkbo32nV3m/z1bQX1Ln8Ys9XscXXlgsG+
-         EthQ==
-X-Gm-Message-State: ACgBeo3nEjOntHuPEhg/BhpBIFHV8Wun5/KPr1g6PnqEF1zwn42qcm3s
-        sh3ESrOaBP11dEusA2Jk3vQu0oCmxEE=
-X-Google-Smtp-Source: AA6agR7g+5RqgeeTZA5/gAGlM9jYEUCF8mpfA3UUbSQQlQpwucGzDmG7VnmZ/QoNGRJhKOdShu6p3w==
-X-Received: by 2002:a17:90b:17cc:b0:202:bccc:f552 with SMTP id me12-20020a17090b17cc00b00202bcccf552mr4720158pjb.154.1663084556629;
-        Tue, 13 Sep 2022 08:55:56 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id d3-20020a170903230300b00174abcb02d6sm8521423plh.235.2022.09.13.08.55.55
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=bz+qyJqqIpnRN1V+IiS1nIcA0xmIBSdHFpPtw0Scud0=;
+        b=RfCCwhXWpuBMag8AnvIJoJaJ0OaTCVo979fzMYq/rr+kmyTwIzMrbR/XTpBzkTFZI6
+         2wA4ftMFXUFbSmYG8DCdx/21YXbbedhuPk4xx8gIHmxRxHWlg1HgSbCgqG2XBODasMcb
+         2P7vmC+N0sJxCJTSfe1iXrXndo+anOB+7KaLRskA2x64tUm0VBgUB6cSVzfzHQ08NxeC
+         QzSzsDB4DjXY6hV1uwOrOM2Kl2iz5Xi3DVBg5U39c8QNdvqBJaSMEUpJgbRBZLiBOuEE
+         YKZhbnkPSA3Re6X7mHxrP/yE7JyO9TBC4rSZE9qslx1EenM2NJnl5L9fX6kZbElvu0G+
+         cO2A==
+X-Gm-Message-State: ACgBeo3GqM510QwGmcM+d0mB+qG+TlCC6I0RbFv64lbFQnYwu1B6cvqD
+        RINu+zuBIoaQhMKY9piHI+8hdHdlj2Q=
+X-Google-Smtp-Source: AA6agR5zslZ2oURZvWeu8msf5G1J3VJ2ETF0JQHU8PRuVB+Zxf29y8ii4HicCx5eVqX/uppgQGeizw==
+X-Received: by 2002:ac8:5856:0:b0:342:f8bf:3582 with SMTP id h22-20020ac85856000000b00342f8bf3582mr28267440qth.573.1663084818898;
+        Tue, 13 Sep 2022 09:00:18 -0700 (PDT)
+Received: from gmgdl ([50.225.1.251])
+        by smtp.gmail.com with ESMTPSA id z24-20020ac84558000000b0035ba4e53500sm8604340qtn.56.2022.09.13.09.00.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Sep 2022 08:55:56 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Conners <business@elijahpepe.com>
-Cc:     "git" <git@vger.kernel.org>, "hanwen" <hanwen@google.com>
-Subject: Re: [PATCH] reftable: pass pq_entry by address
-References: <183353220fe.d7826593472673.3445243727369286065@elijahpepe.com>
-Date:   Tue, 13 Sep 2022 08:55:55 -0700
-In-Reply-To: <183353220fe.d7826593472673.3445243727369286065@elijahpepe.com>
-        (Elijah Conners's message of "Mon, 12 Sep 2022 21:53:41 -0700")
-Message-ID: <xmqqbkrjb75g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Tue, 13 Sep 2022 09:00:18 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oY8Kf-000I9T-1X;
+        Tue, 13 Sep 2022 18:00:17 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Arthur Chan via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Arthur Chan <arthur.chan@adalogics.com>
+Subject: Re: [PATCH] fuzz: add basic fuzz testing for git command
+Date:   Tue, 13 Sep 2022 17:57:25 +0200
+References: <pull.1351.git.1663078962231.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <pull.1351.git.1663078962231.gitgitgadget@gmail.com>
+Message-ID: <220913.864jxb6z8u.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Conners <business@elijahpepe.com> writes:
 
-> In merged_iter_pqueue_add, the pq_entry parameter is passed by value,
-> although it exceeds 64 bytes.
+On Tue, Sep 13 2022, Arthur Chan via GitGitGadget wrote:
 
-Do we have any hard guidance like "do not pass an data item whose
-size is larger than 64 bytes" in our coding guidelines?  If not,
-make sure that the reference to 64 bytes does not look like one.
+> From: Arthur Chan <arthur.chan@adalogics.com>
+> [...]
 
-While this patch is not bad as a change, we are going to make a copy
-of the value with structure assignment at the leaf level, I am not
-sure how big a deal this is in practice.
+Just a quick comment. The coding style of this project is to:
 
-In any case, wouldn't it make sense to make the "we pass reference
-not because we want to let the callee modify the value, but because
-the callee deep in the callchain wants to copy the contents out of
-it" parameter a pointer to a constant?  I.e.
+> +void randomize_git_files(char *dir, char *name_set[], int files_count, char *data, int size) {
 
-    void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry *e)
+...try to wrap at 79 columns.
 
-Other than that, looking good.
+> +   int data_size = size / files_count;
+
+...and to use \t for indentation, not spaces.
+
+> +   for(int i=0; i<files_count; i++) {
+
+...and e.g. to use "for (", not "for(", spaces around "<" etc. We also
+tend to pre-declare "int" instead of putting it in "for" etc.
+
+> +void generate_random_file(char *data, int size) {
+
+Can we really not use the APIs we have already for this (maybe not due
+to the fuzz testing aspect of this...)
+
+> +   ret += system("git add TEMP-*-TEMP");
+> +   ret += system("git commit -m\"New Commit\"");
+
+(I have not looked deeply). We usually write *.sh tests in t/*.sh, can
+this really not be driven by that sort of infrastructure?
