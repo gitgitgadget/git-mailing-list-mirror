@@ -2,84 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75530C6FA83
-	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 00:28:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFBB9C6FA83
+	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 00:30:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229629AbiIMA24 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Sep 2022 20:28:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34632 "EHLO
+        id S230064AbiIMAaY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Sep 2022 20:30:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbiIMA2y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2022 20:28:54 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D6D11C909
-        for <git@vger.kernel.org>; Mon, 12 Sep 2022 17:28:52 -0700 (PDT)
-Received: (qmail 29475 invoked by uid 109); 13 Sep 2022 00:28:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 13 Sep 2022 00:28:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19710 invoked by uid 111); 13 Sep 2022 00:28:53 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 Sep 2022 20:28:53 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 12 Sep 2022 20:28:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Lana Deere <lana.deere@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, git@vger.kernel.org
-Subject: Re: 2.37.2 can't "git pull" but 2.18.0 can
-Message-ID: <Yx/Ow7EIi04CVWYE@coredump.intra.peff.net>
-References: <Yxf9yETBi3k6Wasl@danh.dev>
- <CA+4x=b9M+HRWdDx-Mr4q0NiRQESwJ5uEkOBL_nVPPPHhXs7i_g@mail.gmail.com>
- <YxjhQ8xVI4YtA7xb@coredump.intra.peff.net>
- <CA+4x=b9upd2uTihZK5hXDULkCz6y+CX-dS7p65Pfhn0zh0eMiA@mail.gmail.com>
- <YxkI2zqCheqTv/wc@coredump.intra.peff.net>
- <CA+4x=b-SqzGfeTu4c8akk3quYF7ORZ5jYCpey5221H8=+_PfRg@mail.gmail.com>
- <Yxow7zrYF/xOijVr@coredump.intra.peff.net>
- <CA+4x=b_eOO=ThnSkMARPXBH6cJLeuYPfF-PZNy4Vjpbk=BWQYw@mail.gmail.com>
- <xmqqr10kjtcu.fsf@gitster.g>
- <CA+4x=b8kqc=_osrghenGU96jGRGX=NKbpCjheRS4yjgom8t8og@mail.gmail.com>
+        with ESMTP id S230053AbiIMAaS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2022 20:30:18 -0400
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 616E02CCBA
+        for <git@vger.kernel.org>; Mon, 12 Sep 2022 17:30:14 -0700 (PDT)
+Received: by mail-yb1-f171.google.com with SMTP id p69so8622191yba.0
+        for <git@vger.kernel.org>; Mon, 12 Sep 2022 17:30:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=AYHovLzFuRStHvzIbxBoWQYKHOvxxvntIINgi7F3Hvw=;
+        b=rjicHld4qwH8xZGpO4Zoml4leSH+Ni7c6XtbiqToWe/SEmjeeAKmK2j/D0OY2l1q1g
+         JBHONxUolbWrIspyb6kaOs3XgnNjvAsqJRyjeCDixkdvrfERYj66oK76fmKuTpUr1XL0
+         QLJZ45Tifccll7jzRIhoTqqoVt/dSGWf5LdmRppLBKW4JBFRhvmnmVJqyvMfPQwqxjzk
+         oe+9jvYn/uMASM2jd4fmfVHIsfaW6fZa34QmeA49IdrgFvBHSNFbanu1zqL0tG+/0CgM
+         sGJuoFbDE0iMdZ5EyKB2MXw+x7Vb8dkhwnJWvMHpoZk+JYVhHPiG5URkD751lPgsG5xI
+         fajA==
+X-Gm-Message-State: ACgBeo183NtRZLX1Krd7uegYM4/4nJj/VJto4ObxTFzGBUzr8ImM1Sgh
+        Kt11VKeAlpWhhRXnVD4mOOybmjdO9rfqzYdwTPY22/yt6tQHVg==
+X-Google-Smtp-Source: AA6agR4GxsJqfshR32T8gkKe5KU8Fjz+mUv+A7wkFz4k62sl5IRSG4CuMO3t/PHgLCRuK7zOVTHfbPp8IWWhcqkb/PQ=
+X-Received: by 2002:a25:ef46:0:b0:6ae:c52c:7b9 with SMTP id
+ w6-20020a25ef46000000b006aec52c07b9mr9416545ybm.54.1663029012864; Mon, 12 Sep
+ 2022 17:30:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+4x=b8kqc=_osrghenGU96jGRGX=NKbpCjheRS4yjgom8t8og@mail.gmail.com>
+References: <pull.1324.git.git.1663023888412.gitgitgadget@gmail.com> <Yx/LpUglpjY5ZNas@coredump.intra.peff.net>
+In-Reply-To: <Yx/LpUglpjY5ZNas@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 12 Sep 2022 20:30:02 -0400
+Message-ID: <CAPig+cRTatQRS2MyOTfmz56UKqtz_x_Gk6j=rnYR-jTkM-CDdQ@mail.gmail.com>
+Subject: Re: [PATCH] chainlint: colorize problem annotations and test delimiters
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 12, 2022 at 10:58:53AM -0400, Lana Deere wrote:
+On Mon, Sep 12, 2022 at 8:15 PM Jeff King <peff@peff.net> wrote:
+> On Mon, Sep 12, 2022 at 11:04:48PM +0000, Eric Sunshine via GitGitGadget wrote:
+> > +my @NOCOLORS = (bold => '', reset => '', blue => '', green => '', red => '');
+> > +my %COLORS = ();
+> > +sub get_colors {
+> > +     return \%COLORS if %COLORS;
+> > +     if (exists($ENV{NO_COLOR}) ||
+> > +         system("tput sgr0 >/dev/null 2>&1") != 0 ||
+> > +         system("tput bold >/dev/null 2>&1") != 0 ||
+> > +         system("tput setaf 1 >/dev/null 2>&1") != 0) {
+> > +             %COLORS = @NOCOLORS;
+> > +             return \%COLORS;
+> > +     }
+> > +     %COLORS = (bold  => `tput bold`,
+> > +                reset => `tput sgr0`,
+> > +                blue  => `tput setaf 4`,
+> > +                green => `tput setaf 2`,
+> > +                red   => `tput setaf 1`);
+> > +     chomp(%COLORS);
+> > +     return \%COLORS;
+> > +}
+>
+> This is a lot of new processes. Should be OK in the run-once-for-all-tests
+> mode. It does make me wonder how much time regular test-lib.sh spends
+> doing these tput checks for every script (at least it's not every
+> snippet!).
 
-> Thanks for the info.  That sounds kind of like this fix, even if
-> accepted, would miss rc0 but would be not unlikely to make rc1.  Is
-> there any way to "watch" the issue so I can know which git release
-> gets the fix?  I would like to be an early adopter of that release
-> since I would want to test the change works for me.
+This is indeed a lot of new processes, but this color interrogation is
+done lazily, only if a problem is detected, so it should be zero-cost
+in the (hopefully) normal case of a lint-clean script.
 
-Thanks. Early testing, especially of release candidates, is very
-welcome. There's no tracking for a specific issue, but you can check the
-status of the commit. The fix has been merged to 'next' now, so the
-commit id will remain stable. You can periodically fetch any of the
-usual Git mirrors[1] and check:
+I had the exact same thought about the cost being paid by test-lib.sh
+making all those `tput` invocations.
 
-  git tag --contains 49ca2fba393fa277ab70253337c53c7831597c3a
+> It feels like we could build a color.sh snippet once and then include it
+> in each script. But maybe that is dumb, since you could in theory build
+> in one terminal and then run in another. Unlikely, but it shows that
+> file dependencies are a mismatch. I guess a better match would be
+> stuffing it into the environment before starting all of the tests.
 
-Likewise, you can see when it hits master with "git branch -a
---contains".
+That might be worth considering at some point.
 
-You can also see the progress of topics in Junio's "What's cooking"
-emails. If you're not a regular list reader, you can hit the recent ones
-here:
+> I ran this on my pre-fixup state where I had a half-dozen linter checks.
+> It's _so_ much more readable. Thanks for working on it.
 
-  https://lore.kernel.org/git/?q=f%3Ajunio+s%3Acooking
-
-Likewise, when -rc0, etc, are released, the release notes should mention
-(or not) this fix. You can see those announcements in the archive like
-this:
-
-  https://lore.kernel.org/git/?q=f%3Ajunio+t%3Avger+s%3Aannounce
-
--Peff
-
-[1] e.g., https://git.kernel.org/pub/scm/git/git.git/
+Good to hear.
