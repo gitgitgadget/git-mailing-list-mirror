@@ -2,86 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A498ECAAD8
-	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 21:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4991ECAAD8
+	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 21:59:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229489AbiIMVdt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Sep 2022 17:33:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56300 "EHLO
+        id S229683AbiIMV7P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Sep 2022 17:59:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbiIMVdr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2022 17:33:47 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A24461113
-        for <git@vger.kernel.org>; Tue, 13 Sep 2022 14:33:46 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 54107145A74;
-        Tue, 13 Sep 2022 17:33:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=NJEFBEkgJPGd
-        joqU72siX2UOLL0DMvPhCm9JLlqoyAI=; b=IPNuayBzcSrDbNg4CDf7wvhhrjZF
-        1l5gZO4UdvJHEhw3+sFsmRDvyRRYdhEDA5TQFzL5GTWm6Wh6nR3VP3sxwLdTgM6A
-        Bh4OHoaLXdaymuJILgrPa4NujOZ8y2GNjw6GuKKtEiRfMbur/iUE93fhTSQIcDD3
-        I4BJCfIMl2td6wk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4893A145A73;
-        Tue, 13 Sep 2022 17:33:45 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ACFDF145A72;
-        Tue, 13 Sep 2022 17:33:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH] t1800: correct test to handle Cygwin
-References: <20220901173942.abolcr4aa5gixncm@lucy.dinwoodie.org>
-        <4s7o04s9-3052-rqq6-584n-978p9758p580@tzk.qr>
-        <xmqqy1uusyez.fsf@gitster.g>
-        <CA+kUOa=DP6c417ZXXtxsJuyqJgpLZeAyr4URQPtMs0JhH1zVWQ@mail.gmail.com>
-Date:   Tue, 13 Sep 2022 14:33:43 -0700
-In-Reply-To: <CA+kUOa=DP6c417ZXXtxsJuyqJgpLZeAyr4URQPtMs0JhH1zVWQ@mail.gmail.com>
-        (Adam Dinwoodie's message of "Tue, 13 Sep 2022 22:08:10 +0100")
-Message-ID: <xmqq8rmn7ydk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229679AbiIMV7N (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2022 17:59:13 -0400
+X-Greylist: delayed 363 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 13 Sep 2022 14:59:10 PDT
+Received: from outbound8.mail.transip.nl (outbound8.mail.transip.nl [IPv6:2a01:7c8:7c9:ca11:136:144:136:8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F69C72B65
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 14:59:10 -0700 (PDT)
+Received: from submission12.mail.transip.nl (unknown [10.103.8.163])
+        by outbound8.mail.transip.nl (Postfix) with ESMTP id 4MRxzP3tqWzY75qJ
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 23:53:05 +0200 (CEST)
+Received: from [192.168.1.198] (5072ADBC.static.ziggozakelijk.nl [80.114.173.188])
+        by submission12.mail.transip.nl (Postfix) with ESMTPA id 4MRxzN5TgGz1BFfj
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 23:53:04 +0200 (CEST)
+Message-ID: <2e846a72-a4c6-2a5a-255a-15eee037f574@fwdekker.com>
+Date:   Tue, 13 Sep 2022 23:53:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: BE8700FA-33AB-11ED-B0FE-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.1
+Content-Language: en-US
+To:     git@vger.kernel.org
+From:   "Florine W. Dekker" <florine@fwdekker.com>
+Subject: Wildcards in mailmap to hide transgender people's deadnames
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: ClueGetter at submission12.mail.transip.nl
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=transip-a; d=fwdekker.com; t=1663105984; h=from:subject:to:date:
+ mime-version:content-type;
+ bh=aaESTikbGl1NbgOu9+exOdkdjfQHr6SOrAYzakLrDFg=;
+ b=GOWX888LFdn/Vy0WQ59/GLgz+qdmqc2cSvAMwwNW1P/ZDIyjZOGFHne+iRu+5hau7NFzv0
+ ml6hW3cClB7dFD+VTmjBs28nOre4QyzjRuV1dKO6JwuPxJPO8H5jEUv0kSmwgb0i2zbLm5
+ xIu9uh0PUxhSu4JswMcJrGlIHrm7PZLs0h2LK8RUA+vIzil9rNlG9exHjhV80NnRS82ayD
+ fdd0nXam6+ah5rVOkFDuBgUGaTKbityvKIp1P2iLC3PyNjWdzoP/fw936vBywcaoRbBrRH
+ vFB4jvsUeeJ0MJfuwQMCzrZmCeQ0cfTZy1Nreu8cVXZseaXEwVlJ1ofySefM6w==
+X-Report-Abuse-To: abuse@transip.nl
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adam Dinwoodie <adam@dinwoodie.org> writes:
+Hi! I would like to suggest that the mailmap feature accepts (a limited 
+form of) wildcards for matching email addresses, which helps transgender 
+users configure the mailmap to map their old name ("deadname") and email 
+to their new name and email without revealing the old info in the 
+mailmap config itself.
 
-> ... It makes sense
-> given the history of Git for Windows, but it's not a term many people
-> are likely to be familiar with unless they've already been playing
-> around with the MinGW/Cygwin environments, and I'm not sure that's a
-> useful prerequisite for folk to be able to contribute to Git. I'm not
-> sure what a better solution here might be; maybe retire "MINGW" and
-> redefine "WINDOWS" to take its place, with current uses of "WINDOWS"
-> being replaced with "WINDOWS || CYGWIN"?
+For example, consider a user who changed their name from Jane Doe to 
+John Doe, and their email from jane.doe@example.com to 
+john.doe@example.com. John wants to prevent others from learning their 
+old name, but sometimes it's not feasible to rewrite the entire history 
+of the repository (e.g. because there are thousands of commits, or 
+because this would mess up references between commits). In this case, 
+mailmap seems like a good way to prevent people from finding out the old 
+name by accident: Just add the line `John Doe <john.doe@example.com> 
+<jane.doe@example.com>` to the mailmap config. However, this has the 
+unfortunate effect that readers may now accidentally find John's old 
+name if they look at the mailmap config.
 
-It sounds more like "the world would've could've been a better place
-if we did X", which is too late.  As a non-Windows person, I think
-the current approach is OK that assumes that those who write and
-read to understand our tests can answer the question: "You're on
-Windows?  There are MINGW or CYGWIN, which one do you have?"
+I suggest that mailmap config files support wildcards in the email 
+address. This helps people who have changed their name to specify a 
+mapping without revealing their old name in the definition of this 
+mapping. Because the * symbol is valid in an email address, I suggest 
+the sequence \* to be the wildcard symbol, meaning "0 or more symbols". 
+This cannot be misinterpreted in an RFC5322-valid email address, because 
+this sequence is not legal in the domain part, is not legal in an 
+unquoted local part, and is not legal in a quoted local part unless 
+preceded by an unescaped backslash (that is, "jo\\*hn"@doe.com does not 
+contain a wildcard). In short, if mailmap encounters the sequence \* in 
+an email address, it should interpret the sequence as a wildcard if and 
+only if it is not directly preceded by an odd number of backslashes 
+regardless of whether the local part is quoted (so \* is a wildcard, \\* 
+is not, \\\* is, \\\\* is not).
 
->> As =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh pointed out, the TODO: c=
-omment may need to be
->> updated.  For future-proofing, perhaps "a more similar) error on all
->> platforms." would be appropriate.
->
-> I'll respin with some updated comments shortly=E2=80=A6
+Now, John can now add the following line to their mailmap config: `John 
+Doe <john.doe@example.com> <\*.doe@example.com>`, which does not reveal 
+their old name. Someone could always spend more effort to uncover the 
+name using more advanced tools, but the point of this feature is to 
+prevent accidental discovery of the name in cases where completely 
+hiding the name is not feasible.
 
-Thanks.
+If you have feedback or comments on this suggestion, please let me know.
+
+- Florine
+
+
