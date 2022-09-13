@@ -2,67 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 228EEC6FA82
-	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 09:08:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A681C54EE9
+	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 09:11:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231415AbiIMJIU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Sep 2022 05:08:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56100 "EHLO
+        id S231586AbiIMJLS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Sep 2022 05:11:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230331AbiIMJIS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2022 05:08:18 -0400
-Received: from mailproxy09.manitu.net (mailproxy09.manitu.net [217.11.48.32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C651550B0
-        for <git@vger.kernel.org>; Tue, 13 Sep 2022 02:08:17 -0700 (PDT)
-Received: from localhost (p200300ef4f07e90026418cfffe37d02a.dip0.t-ipconnect.de [IPv6:2003:ef:4f07:e900:2641:8cff:fe37:d02a])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: u16723@rkita.de)
-        by mailproxy09.manitu.net (Postfix) with ESMTPSA id 349EC1200084;
-        Tue, 13 Sep 2022 11:08:15 +0200 (CEST)
-Date:   Tue, 13 Sep 2022 11:08:14 +0200
-From:   Rene Kita <mail@rkta.de>
-To:     =?iso-8859-1?Q?=D8ystein?= Walle <oystwa@gmail.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] blame: Make --show-name negatable
-Message-ID: <YyBIfg06kBtuZCmL@t480>
-References: <xmqqsfkwftd0.fsf@gitster.g>
- <20220913085631.4031-1-walle@fryseskap.localdomain>
+        with ESMTP id S231579AbiIMJLQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2022 05:11:16 -0400
+Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C18D25A3DF
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 02:11:13 -0700 (PDT)
+Received: by mail-vs1-xe35.google.com with SMTP id h1so11671108vsr.11
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 02:11:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=dSkUxNfXBFTdzBZZfxHJEN9SW6Jv9Mn0thxv5toZBT8=;
+        b=qSs0aaePXAJWf3qWW0JU3WXmgJYWRd+Kd53cOqLe+0Z8mgqHAlr0o8ltt2yt53Ou/O
+         09wsrWTbCjY+mDtwDd2in9z7DT6PCoBUOwKEooKWDz9+Osgzj7a5dPiw9WR5hlphgC1g
+         DWitS6YUxeyLsXg9Sr+9yIibz7VhweP3AosawLSaYPADB0RMZMyIa1PelqLy3Lmx46Pq
+         lZkEVpYdh8fAHOgWOsx+YrReRkY1tHl06QWeLK6EIgXoy4ww8klIAEeFeRt/nL00EpS6
+         ACTB6FHGTOh9QRx04iyC+z1C6obxa2W0K+Zu1zqvgDUBZsbCa6pOG7H/Y1cu0//cMUhL
+         8wkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=dSkUxNfXBFTdzBZZfxHJEN9SW6Jv9Mn0thxv5toZBT8=;
+        b=7ASpAOk2OwW6trD3XHO6lxw+7vQ84+hR9cFKILjg0WLt7Vx+pJ5FAH8aCzsIbGxwlv
+         Tkb9V9RDQ03YxMYdhGq8HjPVP9YVgZW9t6oxa1mtRX2PdsI0Xkrl2JFFQo0DQUyy3IVN
+         FShtnoew/8LGBbP7e3fxbLbls1SsvpVWRYkJgRcM7vIWzabkeUDtLiztO5w0ylE/b1DH
+         rQjM1B62gSzKVal43A/LcEyG6pSzQz8WR5xpChJRtGTEQdLT72JGeAcHn+HU9VdObQgf
+         AuQHx5Ye74VR9IvHpvV8YeDGYxt1lhsSkV0bTg09RGeth74dZPrR+UxScD+GFCAkrX+9
+         UrcA==
+X-Gm-Message-State: ACgBeo2jRWHIlhmTHOEooW2GdoeHO690+ltuH3kPFWahqFTTTXtrxeV1
+        5IEFowE0Apt5UTxbnuAcO5p8TFOePUgzY+odRFnpMSBHNXo=
+X-Google-Smtp-Source: AA6agR5gYCUBLW0OUxImv9uJKyqHSSPfyN3ga+h6ITNIe/s67esvzp8h2gJWeysqJ/hW48zCvGYGbraPktrwOUqFxCA=
+X-Received: by 2002:a67:d906:0:b0:398:42b4:7e22 with SMTP id
+ t6-20020a67d906000000b0039842b47e22mr7244798vsj.31.1663060272099; Tue, 13 Sep
+ 2022 02:11:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220913085631.4031-1-walle@fryseskap.localdomain>
+References: <183353220fe.d7826593472673.3445243727369286065@elijahpepe.com>
+In-Reply-To: <183353220fe.d7826593472673.3445243727369286065@elijahpepe.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Tue, 13 Sep 2022 11:11:00 +0200
+Message-ID: <CAFQ2z_PATan--dz79j1MUHFCobegX8id=zMxGxk5ftzwK70bnw@mail.gmail.com>
+Subject: Re: [PATCH] reftable: pass pq_entry by address
+To:     Elijah Conners <business@elijahpepe.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 13, 2022 at 10:56:31AM +0200, Øystein Walle wrote:
-> Hi, Junio
-> 
-> > Not clear to this bystander what exactly is going on.  Is the patch
-> > Rene relayed is your rough attempt that was incomplete?
-> 
-> Correct! I am the nice IRC that was mentioned in the cover letter. My
-> improved patch is the one in the e-mail you responded to, apart from
-> GMail's text wrapping that was unaware of until now.
-
-That's my fault. I saw the corrected patch, but somehow used the old
-one. Sorry!
+On Tue, Sep 13, 2022 at 6:53 AM Elijah Conners <business@elijahpepe.com> wr=
+ote:
+>
+> In merged_iter_pqueue_add, the pq_entry parameter is passed by value,
+> although it exceeds 64 bytes.
 
 
-> > Thanks.  Let's see if we can have an cleaned-up version with tests,
-> > then.
-> 
-> I can send a corrected (and correctly formatted patch) for review,
-> optionally with the docs squashed in with Rene's permission.
+LGTM.
 
-Of course.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-> Maybe Rene would like to take a stab at writing tests? I am in the
-> process of moving house and my usual workstation is not exactly
-> online, so it'll be a while.
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-Yes, I can write a test. Will need to investigate, never worked with the
-code base.
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Liana Sebastian
