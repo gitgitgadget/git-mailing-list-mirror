@@ -2,49 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6785C54EE9
-	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 18:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC0DCECAAD8
+	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 18:40:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230226AbiIMSis (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Sep 2022 14:38:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50150 "EHLO
+        id S231643AbiIMSkW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Sep 2022 14:40:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231546AbiIMSiR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2022 14:38:17 -0400
-Received: from sender4-of-o54.zoho.com (sender4-of-o54.zoho.com [136.143.188.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45DFE659F4
-        for <git@vger.kernel.org>; Tue, 13 Sep 2022 11:03:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1663092231; cv=none; 
-        d=zohomail.com; s=zohoarc; 
-        b=R3Ouv1s3cstw23C8VTIRVp22ELzz0cwNd5Lh9rp6sQPe7yXubD2nH41gNCP+oreiXU/lq0GgfTTtTcdX2oFoyeZIH2q+AGwBLC5gLQquC9kvrIWsTggQY6ev2KoNL3SJXmyQsdmRWbEYofLkZOj6zE/QcGfi54LasukHIY2DXjA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-        t=1663092231; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
-        bh=r3JbfV9UQvkc3jziKt490JLxzHOcTbsd7dwEmLzuJzc=; 
-        b=W+svQ3wp20AgmDp2asL4dObSkC33Xa8X6e1uUK4o8Pso8M9RU4sQktWeHT542vxT2vzsojKZhLdnk11usrKFYmq3ZD0gh6U04oaKFWR97dxDyVJHT+JMqxbaXwOfeaEJFnkORLAVMmNvMb5frmHH8pm3yJOD2jZyfhOoW+y10So=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-        spf=pass  smtp.mailfrom=business@elijahpepe.com;
-        dmarc=pass header.from=<business@elijahpepe.com>
-Received: from mail.zoho.com by mx.zohomail.com
-        with SMTP id 1663092229142258.62982715368844; Tue, 13 Sep 2022 11:03:49 -0700 (PDT)
-Date:   Tue, 13 Sep 2022 11:03:49 -0700
-From:   Elijah Conners <business@elijahpepe.com>
-To:     "Han-Wen Nienhuys" <hanwen@google.com>
-Cc:     "Junio C Hamano" <gitster@pobox.com>, "git" <git@vger.kernel.org>
-Message-ID: <18338058407.117ce7158612837.8515739237320978792@elijahpepe.com>
-In-Reply-To: <CAFQ2z_OR8uLe3rs0r09a3fvSQUE2H4WQTquddUwEeahoiRWimA@mail.gmail.com>
-References: <183353220fe.d7826593472673.3445243727369286065@elijahpepe.com>
- <xmqqbkrjb75g.fsf@gitster.g> <18337ea407a.10c144c52599576.4708941661785569426@elijahpepe.com> <CAFQ2z_OR8uLe3rs0r09a3fvSQUE2H4WQTquddUwEeahoiRWimA@mail.gmail.com>
-Subject: Re: [PATCH] reftable: pass pq_entry by address
+        with ESMTP id S231574AbiIMSjr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2022 14:39:47 -0400
+Received: from blade-b3-vm-relay.servers.aueb.gr (blade-b3-vm-relay.servers.aueb.gr [195.251.255.106])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 397021103
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 11:09:25 -0700 (PDT)
+Received: from blade-a1-vm-smtp.servers.aueb.gr (blade-a1-vm-smtp.servers.aueb.gr [195.251.255.217])
+        by blade-b3-vm-relay.servers.aueb.gr (Postfix) with ESMTP id 0A2511E89;
+        Tue, 13 Sep 2022 21:09:23 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aueb.gr; s=201901;
+        t=1663092563; bh=5VJoJeV5mKR3CPUEjg7XdRH624l6+gnfSfHnW/A2HA8=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=Z1FjaawpGsfIWun5/AwyRBxvGU+vPFqRYtjB1EETvykpZjhJK81bC4xFjk3P9UN1E
+         ZLvkpYvn9Ci28SAq8Qn5kv0WzZIDgTyb7DPGjmFaR5+eH0VAF1ZfJZEFl0a9r83vBz
+         B/91u2Spr32MLiQFPDocorBIpgzCiGjrW4Y4Gl57NiJMcGXhF4sYG66DiU7sWmnAy3
+         E8YZ40qIfmej1LgOQRElvKYMN0Bi9DjtRxkQ7NcBroTZSBtc9nxizgBpEiiqk2XsE9
+         RCHlfmKEhN8mYz1x4oXLATJO5dlU3Mio7gfgPRXJ9Wks+cOa4cWMBQ+NI8CpcYchAy
+         pWS77sDgug76Q==
+Received: from [192.168.136.3] (ppp-94-66-129-2.home.otenet.gr [94.66.129.2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: dds)
+        by blade-a1-vm-smtp.servers.aueb.gr (Postfix) with ESMTPSA id 9D7AA698;
+        Tue, 13 Sep 2022 21:09:22 +0300 (EEST)
+Message-ID: <a8ba447f-d087-1c5e-0ce0-a9040ad080d1@aueb.gr>
+Date:   Tue, 13 Sep 2022 21:09:21 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH v4] grep: fix multibyte regex handling under macOS
+Content-Language: el
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        avarab@gmail.com
+References: <20220826085815.2771102-1-dds@aueb.gr>
+ <xmqqzgf389k9.fsf@gitster.g>
+From:   Diomidis Spinellis <dds@aueb.gr>
+Organization: Athens University of Economics and Business
+Phone:  +30 210 8203621
+In-Reply-To: <xmqqzgf389k9.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
- > it might be a bit slower, but "dangerous"? How so?
-In this context, dangerous is the wrong word, but in some cases large objects on the stack can cause stack overflows. In this case, slower is the right word here.
+On 13-Sep-22 20:32, Junio C Hamano wrote:
+>> +#include <locale.h>
+>>   #ifdef NEEDS_SYS_PARAM_H
+>>   #include <sys/param.h>
+>>   #endif
+> 
+> I'll let others more familiar with the locale support to comment on
+> these changes.  We are unconditionally including <locale.h> now;
+> platforms that lack <locale.h> could set NO_GETTEXT to work it
+> around before this change, but that will no longer work.
+> 
+> I do not know if thta is a practical downside to anybody, but it
+> could be a problem.
+> 
+> Perhaps cook this in 'next' and see if anybody screams?
+
+I was programming in C before locale.h was introduced, so its 
+availability was something that worried me as well.  I looked up whether 
+we could/should use a GNU autoconf macro to test for the locale.h 
+availability.  According to autoconf's documentation "All hosted 
+environments that are still of interest for portable code provide all of 
+the headers specified in ISO C90 (as amended in 1995): assert.h, [...] 
+locale.h [...], and wctype.h. Most programs can safely include these 
+headers unconditionally." [1]
+
+[1] https://www.gnu.org/software/autoconf/manual/autoconf-2.70/autoconf.html
