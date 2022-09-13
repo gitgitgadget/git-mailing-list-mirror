@@ -2,90 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DED50C6FA82
-	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 00:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75530C6FA83
+	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 00:28:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229852AbiIMAV3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Sep 2022 20:21:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57700 "EHLO
+        id S229629AbiIMA24 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Sep 2022 20:28:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbiIMAV2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Sep 2022 20:21:28 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E00446DA9
-        for <git@vger.kernel.org>; Mon, 12 Sep 2022 17:21:28 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id 78so9753127pgb.13
-        for <git@vger.kernel.org>; Mon, 12 Sep 2022 17:21:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date;
-        bh=xxOhVZqm4n21CB2u6z8kZI8mpeLdvv2dPzNbegQoNE0=;
-        b=Bqt4A2u1cc5IXq3nhSCguJxeYAGoVLwYiCtz1BINzcMboZ2oPLpv47xABq1wmspZZL
-         WEZ3mCl07dkXnPMN3LSjLQ9d8y0QrBneIhyCRTfzSVBT1un5YgOzxi49S9AaZpykmeTG
-         l9BfAaQ4c+iHPuNeZT6QQsBcJ7VE0ubrvw8uap4KGDEiJ33+EZBon6Q28rcfoi6xAv/d
-         akTHW0aI0yM54ju/jtSnQbOIn4gg4lo41jvkceaAcva+kgoRHo67la8EApR+3FWBr7Hh
-         wpRZQ64WzZbTHHJ4+BEibMXnVLRRaMpDo3c38IJFS/55znRP+zizxcWRd8LlzEEjNMB1
-         ehOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date;
-        bh=xxOhVZqm4n21CB2u6z8kZI8mpeLdvv2dPzNbegQoNE0=;
-        b=pfVFZjnRUnQDu7gkBpbv236n6MYnuGv5gC02MR54GKviohgV3a5zFMD92S3bWEJwqI
-         WYzMqbvnAjunbkye261RZJFL4ERMAqLaYAju7pJLRroOrKy4NC+Sm+2oqDGa7Wt0F4D7
-         H/0LbK5bDUGT5EJ0FNfKihC2V+3zu1sIjWdNlV2O+nzCC7U3sfYjGu0xJL1f9uQt6ghW
-         c9gnxD0337lP3RW6oU1tlECrB/FdRyZrvYbRK1JxkV8Srq8pnGkn6KdaKbSwVyoKeQRy
-         1DfBW89AxtPtrLc/6Mr9F07RgEC1YCfwKeqmTNLgMjtZ37RVRU+DCOuSSaVzQsXEc66m
-         tIow==
-X-Gm-Message-State: ACgBeo0UoGcMBVSfaArIuZ4oD6skW+y2td7X0vIckwK64TWtH56N1v1P
-        AaC8ElY9V0N06dxMM1gYBNw=
-X-Google-Smtp-Source: AA6agR7FoKE5vBCrmli93/CBy36djG56BoZNdc/ZT0p/1Uo7NvAEqUUbWf4ioRDlhvNKEMMwUxls4A==
-X-Received: by 2002:a05:6a00:1704:b0:53b:b450:a51d with SMTP id h4-20020a056a00170400b0053bb450a51dmr30191053pfc.79.1663028487340;
-        Mon, 12 Sep 2022 17:21:27 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id p9-20020a17090a348900b00200aff02e90sm5879039pjb.18.2022.09.12.17.21.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Sep 2022 17:21:26 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] chainlint: colorize problem annotations and test
- delimiters
-References: <pull.1324.git.git.1663023888412.gitgitgadget@gmail.com>
-        <xmqqsfkwb12i.fsf@gitster.g>
-        <CAPig+cTq3j5M7cz3T14h9U6e+H5PAu8JJ_Svq87W3WviwS6_qA@mail.gmail.com>
-Date:   Mon, 12 Sep 2022 17:21:26 -0700
-In-Reply-To: <CAPig+cTq3j5M7cz3T14h9U6e+H5PAu8JJ_Svq87W3WviwS6_qA@mail.gmail.com>
-        (Eric Sunshine's message of "Mon, 12 Sep 2022 20:14:27 -0400")
-Message-ID: <xmqqo7vkazuh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229528AbiIMA2y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Sep 2022 20:28:54 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D6D11C909
+        for <git@vger.kernel.org>; Mon, 12 Sep 2022 17:28:52 -0700 (PDT)
+Received: (qmail 29475 invoked by uid 109); 13 Sep 2022 00:28:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 13 Sep 2022 00:28:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19710 invoked by uid 111); 13 Sep 2022 00:28:53 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 Sep 2022 20:28:53 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 12 Sep 2022 20:28:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     Lana Deere <lana.deere@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org
+Subject: Re: 2.37.2 can't "git pull" but 2.18.0 can
+Message-ID: <Yx/Ow7EIi04CVWYE@coredump.intra.peff.net>
+References: <Yxf9yETBi3k6Wasl@danh.dev>
+ <CA+4x=b9M+HRWdDx-Mr4q0NiRQESwJ5uEkOBL_nVPPPHhXs7i_g@mail.gmail.com>
+ <YxjhQ8xVI4YtA7xb@coredump.intra.peff.net>
+ <CA+4x=b9upd2uTihZK5hXDULkCz6y+CX-dS7p65Pfhn0zh0eMiA@mail.gmail.com>
+ <YxkI2zqCheqTv/wc@coredump.intra.peff.net>
+ <CA+4x=b-SqzGfeTu4c8akk3quYF7ORZ5jYCpey5221H8=+_PfRg@mail.gmail.com>
+ <Yxow7zrYF/xOijVr@coredump.intra.peff.net>
+ <CA+4x=b_eOO=ThnSkMARPXBH6cJLeuYPfF-PZNy4Vjpbk=BWQYw@mail.gmail.com>
+ <xmqqr10kjtcu.fsf@gitster.g>
+ <CA+4x=b8kqc=_osrghenGU96jGRGX=NKbpCjheRS4yjgom8t8og@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+4x=b8kqc=_osrghenGU96jGRGX=NKbpCjheRS4yjgom8t8og@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Mon, Sep 12, 2022 at 10:58:53AM -0400, Lana Deere wrote:
 
-> (2) In practice, I found that even after coloring those annotations in
-> red, it was still easy for the eye to glide right over them in the
-> output without really noticing them. Switching it to bold red helped a
-> bit, but my eye still glided over them sometimes. One possible reason
-> that the eye was able to glide over them may be because the "?!FOO?!"
-> annotations are very short bits of text buried in the much larger and
-> textually noisy test body.
+> Thanks for the info.  That sounds kind of like this fix, even if
+> accepted, would miss rc0 but would be not unlikely to make rc1.  Is
+> there any way to "watch" the issue so I can know which git release
+> gets the fix?  I would like to be an early adopter of that release
+> since I would want to test the change works for me.
 
-Maybe partly because I work with black-ink-on-white-paper terminal
-setting, and maybe partly because my color perception is suboptimal,
-I learned to use "[diff.color] old = red reverse", because non-bold
-red letters do not stand out enough.  Perhaps you may want to try
-reverse output to see how well it makes them stand out for you.
+Thanks. Early testing, especially of release candidates, is very
+welcome. There's no tracking for a specific issue, but you can check the
+status of the commit. The fix has been merged to 'next' now, so the
+commit id will remain stable. You can periodically fetch any of the
+usual Git mirrors[1] and check:
 
-I do not think if configurability like "git diff" has is necessary;
-it would be overkill.  I personally do not mind more noise "?!"
-around the keyword, especially since these are only shown when there
-are problems detected.
+  git tag --contains 49ca2fba393fa277ab70253337c53c7831597c3a
+
+Likewise, you can see when it hits master with "git branch -a
+--contains".
+
+You can also see the progress of topics in Junio's "What's cooking"
+emails. If you're not a regular list reader, you can hit the recent ones
+here:
+
+  https://lore.kernel.org/git/?q=f%3Ajunio+s%3Acooking
+
+Likewise, when -rc0, etc, are released, the release notes should mention
+(or not) this fix. You can see those announcements in the archive like
+this:
+
+  https://lore.kernel.org/git/?q=f%3Ajunio+t%3Avger+s%3Aannounce
+
+-Peff
+
+[1] e.g., https://git.kernel.org/pub/scm/git/git.git/
