@@ -2,77 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FE38C54EE9
-	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 20:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93009ECAAD8
+	for <git@archiver.kernel.org>; Tue, 13 Sep 2022 21:08:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229627AbiIMUrC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Sep 2022 16:47:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56644 "EHLO
+        id S229625AbiIMVIq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Sep 2022 17:08:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiIMUrB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Sep 2022 16:47:01 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 236F6D101
-        for <git@vger.kernel.org>; Tue, 13 Sep 2022 13:47:00 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B51841A8768;
-        Tue, 13 Sep 2022 16:46:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=N5nWnLALEvK7ekntF9Xj0GpghYyFnFsl5Buc51
-        tiHIg=; b=Mk5KivIZ5agj3f4I711lY7oo7I08LKs84RBTdNY62BiTVzjg6UKjNS
-        o9JFepN3SoYRmbcNmTgeDLQnfh2M2r2tPU/Hn/N+2Il8SwSq5xrcA2EUQN5thKw5
-        G0BiBMWmRiKlC7ZZKN7MuuVntIWIMdXIL7z9SJTzQ+C/jZKy1T/sg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AE6271A8767;
-        Tue, 13 Sep 2022 16:46:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5A6D61A8766;
-        Tue, 13 Sep 2022 16:46:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] chainlint: colorize problem annotations and test
- delimiters
-References: <pull.1324.git.git.1663023888412.gitgitgadget@gmail.com>
-        <pull.1324.v2.git.git.1663041707260.gitgitgadget@gmail.com>
-        <YyDqycOlUYJO3332@coredump.intra.peff.net>
-Date:   Tue, 13 Sep 2022 13:46:55 -0700
-In-Reply-To: <YyDqycOlUYJO3332@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 13 Sep 2022 16:40:41 -0400")
-Message-ID: <xmqqfsgv80jk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229575AbiIMVIp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Sep 2022 17:08:45 -0400
+Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF2AA5FF68
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 14:08:44 -0700 (PDT)
+Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-127f5411b9cso35635710fac.4
+        for <git@vger.kernel.org>; Tue, 13 Sep 2022 14:08:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=+Q01JHM/gcUItMb7x495s30l+oauJCaNk76IAmmD9G0=;
+        b=QP4IY5ZPysMyd6B2T0tEeh3yT+4QbJNtCS1tf2LvQWqksh6hotx8CtmvHnHZ/Maj0q
+         m6PyNZ20KTTRTTCxiBOGodgH+INocXVEC3rBcWboFKgieI6Ck+w5e4grz1wLOpEX4lV9
+         EQ92y+9zROPtlKq1rpaVhj97zlXcnStHWDSyk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=+Q01JHM/gcUItMb7x495s30l+oauJCaNk76IAmmD9G0=;
+        b=QT7olyL9he5+rEOu/tyeXh2mOD8VA8TArMbNF755QHmlyaZYXKZGONUS3Y4kbPEC1y
+         I4T5BNX+N3rt8c78Ik9AjmPboJYSiRzOLZ8t4y+s0aTpHSMVKwtPpKSmchQp0wmt/fWm
+         tp+L6FeiqCEU9VmL7bzO5Lwbd/RNAk+eTHHrE+7o99phlC4kw/hAXMc3BF9xrAnKL/xI
+         9689foceMm7vfs8B+gAXYpFxPuWblF1DigmB5vERaZCw1u4ey24jDUDiscTv9uUoV/rT
+         orTqfTgC5K4y72yGhvabZyB5CbkAeptodai1dK29ZNbyiYqHipC31etQBWsSfqJ+SQ3L
+         6UyA==
+X-Gm-Message-State: ACgBeo1Q1dS4NkEkILJMhA23fGCrI6lJbHPz5Nvbz8MLpFdvKC0QPu/v
+        l5Vy7AE7d7H77hDhd7I+SRgdnzmUTgBsY53GjuwOyw==
+X-Google-Smtp-Source: AA6agR4JEncgX8YxvF2g/D9BssRV7zyuSgPoCzcvaPtBQeKxGRzvrrYgQl1iS1i55i9yLXlQu//vIq3JNEDjEMOFmGA=
+X-Received: by 2002:a54:4e97:0:b0:345:4cd0:20fd with SMTP id
+ c23-20020a544e97000000b003454cd020fdmr576188oiy.206.1663103324073; Tue, 13
+ Sep 2022 14:08:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 349FDE3A-33A5-11ED-9BD3-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+References: <20220901173942.abolcr4aa5gixncm@lucy.dinwoodie.org>
+ <4s7o04s9-3052-rqq6-584n-978p9758p580@tzk.qr> <xmqqy1uusyez.fsf@gitster.g>
+In-Reply-To: <xmqqy1uusyez.fsf@gitster.g>
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+Date:   Tue, 13 Sep 2022 22:08:10 +0100
+Message-ID: <CA+kUOa=DP6c417ZXXtxsJuyqJgpLZeAyr4URQPtMs0JhH1zVWQ@mail.gmail.com>
+Subject: Re: [PATCH] t1800: correct test to handle Cygwin
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Tue, Sep 13, 2022 at 04:01:47AM +0000, Eric Sunshine via GitGitGadget wrote:
+On Wed, 7 Sept 2022 at 21:49, Junio C Hamano <gitster@pobox.com> wrote:
 >
->>     Reverse video certainly makes the "?!FOO?!" annotations pop out and draw
->>     the reader's attention. I find that I don't have a strong preference
->>     between this version and v1 which merely used bold-red, but I suspect
->>     that v2 with its reverse video is probably the better approach.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> I find this one slightly uglier, but they are equally
-> attention-grabbing. And as I hope to rarely see them in the first place,
-> I am fine either way. :)
+> >> @@ -159,7 +159,7 @@ test_expect_success 'git hook run a hook with a ba=
+d shebang' '
+> >>      # TODO: We should emit the same (or at least a more similar)
+> >>      # error on Windows and !Windows. See the OS-specific code in
+> >>      # start_command()
+> >> -    if test_have_prereq !WINDOWS
+> >> +    if test_have_prereq !MINGW
+> >
+> > ... this to be `test_have_prereq !WINDOWS || test_have_prereq CYGWIN`
+> > instead.
+>
+> My understanding is that there are CYGWIN and MINGW prereqs that are
+> mutually exclusive (if you are on MINGW you cannot be on CYGWIN and
+> vice versa), and WINDOWS is a short-hand for "we are either on MINGW
+> or CYGWIN", and I am not sure if it clarifies anything to rewrite
+> "we do not want to be on MINGW to run these tests" to "anything non
+> Windows is fine, by the way, CYGWIN is also OK".
+>
+> If we are planning to add another variant that falls into umbrella
+> WINDOWS that is not CYGWIN, and that new variant falls short of the
+> requirement of the tests in this script just like MINGW does, then
+> the suggested rewrite does make quite a lot of sense.  There would
+> be not just two but more variants in Windows family, and if Cygwin
+> is the odd man out, then the rewritten one would convey that more
+> clearly.  But with only two, as long as everybody understands what
+> MINGW is, I think "this part does not work on MINGW" is more concise
+> and clear.
 
-Yup, I tend to think that reverse red is uglier and is more
-attention grabbing than bold red.  Let's stop here for now and let
-others paint it in other colors by introducing configuration knob or
-whatnot but outside the topic.
+This is definitely how I was thinking about things. I've no particular
+objection to taking some other approach, but until/unless there are a
+wider variety of Windows variants, it seems like doing so would cause
+more confusion, not less.
 
-> Thanks again for adding this.
+The only caveat is the "as long as everybody understands what MINGW
+is" part. This is well beyond the scope of this small patch, but I
+think "MINGW" is probably needlessly opaque these days. It makes sense
+given the history of Git for Windows, but it's not a term many people
+are likely to be familiar with unless they've already been playing
+around with the MinGW/Cygwin environments, and I'm not sure that's a
+useful prerequisite for folk to be able to contribute to Git. I'm not
+sure what a better solution here might be; maybe retire "MINGW" and
+redefine "WINDOWS" to take its place, with current uses of "WINDOWS"
+being replaced with "WINDOWS || CYGWIN"?
 
-That too.
+> As =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh pointed out, the TODO: comm=
+ent may need to be
+> updated.  For future-proofing, perhaps "a more similar) error on all
+> platforms." would be appropriate.
+
+I'll respin with some updated comments shortly=E2=80=A6
