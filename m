@@ -2,276 +2,195 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4622DECAAD3
-	for <git@archiver.kernel.org>; Wed, 14 Sep 2022 15:14:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EC64ECAAD3
+	for <git@archiver.kernel.org>; Wed, 14 Sep 2022 15:47:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbiINPOG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Sep 2022 11:14:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40702 "EHLO
+        id S230205AbiINPrO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Sep 2022 11:47:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230265AbiINPNn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2022 11:13:43 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 820657C18F
-        for <git@vger.kernel.org>; Wed, 14 Sep 2022 08:13:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1663168419; bh=CXRKa2oJvGjGrgypdiXW3/0uCNCHIjMexlYQ/Ro1cbI=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=l0eg2OOUgZYHf32Zwsag6fRHOtUM0rvYx9xiACAFmjqAqnK/3r2XtL3OZ+maQxWCm
-         mYeXTC3/AoG9JA/BSjQAPX6/IFSO2zvDGlF12TvhLaXHQFN2Kq5c8dQ8HWLdJrQXbY
-         wPZtC88joQ/DtRFpjJ4+wiZ0KKTesHRIxK/6oWgzg+KuFq46lNlH3RKmCPBvWS1sdJ
-         woX2BNSo68Jz5OCu2siAfDeTFbv62kS4R6W+F5No0y6hbfpaZM9jNJOsd4dWGjvNar
-         52Vj2SoWPKZnCcx56HO8Ir640aOoNEPt9DsmhCnqcdvotAG+iF+allwUt03ntNyUd7
-         7Nbf1qJN/gWgA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost.localdomain ([62.20.115.19]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MLRYf-1oqHoX3KbL-00IORy; Wed, 14
- Sep 2022 17:13:38 +0200
-From:   tboegi@web.de
-To:     git@vger.kernel.org, alexander.s.m@gmail.com,
-        Johannes.Schindelin@gmx.de
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v5 1/1] diff.c: When appropriate, use utf8_strwidth()
-Date:   Wed, 14 Sep 2022 17:13:33 +0200
-Message-Id: <20220914151333.3309-1-tboegi@web.de>
-X-Mailer: git-send-email 2.34.0
-In-Reply-To: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
-References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
+        with ESMTP id S229933AbiINPrJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2022 11:47:09 -0400
+Received: from us-smtp-delivery-120.mimecast.com (us-smtp-delivery-120.mimecast.com [170.10.129.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CE5362A81
+        for <git@vger.kernel.org>; Wed, 14 Sep 2022 08:47:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mathworks.com;
+        s=mimecast20180117; t=1663170427;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=m17wwJ7fQ4E8m58c2+thXJxRGHx8NDgg2uXCbQg2vLc=;
+        b=WZkL4r6tQW03xle1aCxR7t8lea8XITQ90rg0uwBkcMlAAEBkgv2XaPeFs7/+yYhWhGgx3x
+        QrNB3bIx99BTJpCGHkKlR7HahKhXiClwP0BS62Dbf384DwgHb0nFYYUp6Lv3V/WhS2Luwe
+        8ac4sjkz+CI359pB+Zer+TtxknvQ+mk=
+Received: from na01-obe.outbound.protection.outlook.com
+ (mail-eastusazlp17010009.outbound.protection.outlook.com [40.93.11.9]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-571-QvGMC4cNPB29mnNqnZMPEQ-2; Wed, 14 Sep 2022 11:47:05 -0400
+X-MC-Unique: QvGMC4cNPB29mnNqnZMPEQ-2
+Received: from BL0PR05MB5571.namprd05.prod.outlook.com (2603:10b6:208:2f::17)
+ by CO6PR05MB7506.namprd05.prod.outlook.com (2603:10b6:5:350::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5632.6; Wed, 14 Sep
+ 2022 15:47:03 +0000
+Received: from BL0PR05MB5571.namprd05.prod.outlook.com
+ ([fe80::86c9:5cc7:6693:d9f7]) by BL0PR05MB5571.namprd05.prod.outlook.com
+ ([fe80::86c9:5cc7:6693:d9f7%6]) with mapi id 15.20.5632.011; Wed, 14 Sep 2022
+ 15:47:03 +0000
+From:   Eric DeCosta <edecosta@mathworks.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: RE: [PATCH v6 3/6] fsmonitor: relocate socket file if .git directory
+ is remote
+Thread-Topic: [PATCH v6 3/6] fsmonitor: relocate socket file if .git directory
+ is remote
+Thread-Index: AQHYx69LJfEHlHcOIESkrZdTmuFekq3eGAYVgAD4u/A=
+Date:   Wed, 14 Sep 2022 15:47:03 +0000
+Message-ID: <BL0PR05MB557111B64B71717EA2D5CC91D9469@BL0PR05MB5571.namprd05.prod.outlook.com>
+References: <pull.1326.v5.git.1662840031.gitgitgadget@gmail.com>
+        <pull.1326.v6.git.1663100858.gitgitgadget@gmail.com>
+        <edef029a298a44ba59d19db53c2f7ba07e93aec6.1663100859.git.gitgitgadget@gmail.com>
+ <xmqqillq7pdi.fsf@gitster.g>
+In-Reply-To: <xmqqillq7pdi.fsf@gitster.g>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL0PR05MB5571:EE_|CO6PR05MB7506:EE_
+x-ms-office365-filtering-correlation-id: 6376b46e-01e1-48c0-d783-08da96685e6d
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0
+x-microsoft-antispam-message-info: yl94oXHy60FilQN//n7PMCo2n4YhBu2U0SRc2bC9shar+Mo5QL6q/ulhAhSS7J99BkvnZxHreqm+7I9wq91XZou9bh42k3yNTBNL06ELJ3qrn5207l0bRLKGWz5O7mAIfGFFq2DrYuQqwh+zO8kOTwghOR+VHmwhkH/eRlIBWXM2dmb7kNMWa9rhQ1eHvADvhuyOFRcDODita/IDxHN8hGe+IGUpA9Vdcf+OOOTH1jrqiOxsJoZQHD0XxPyRf0nu+pevbf25f8JiY434tJNLlAFLeXDzQ1mpION1breJ1TaPt4BV8inyXpcLynHwx0AYFP0eChfUJPvd/iP9A8XLMZgpXkEgmHBQYE+CnCEhqv/NkOtjbcu/vKALitPmTVWBS2ZcSJFBJKjM77iloDkqxW22Ym2Yah877Y2PhmLhsftc3QLtfQR4bO0namsJez16tWJZBszAyq/vI0K4dMGJshdwrr6bDJX/PF5Hi+AvT/VOij+JHHHI7ME65Mc4N4t/R++pSk1tL6ImCXe7i3OFyf/ZNIZ355Dizaz1zP4I2udc4npfFuH12HcZbqZFaMWeGqrbCkzDQK8sJcwocmyqV+aKFis/7Agq/S39qPL6ROoodUGc96sBrX5fqu06hJoPtNuD3UeVN67uoq27C0NPhkEfqk/XktlbpvioNB4X+lkHILeyoS0qY6nO+3JEwzITpklhXW3nWFh8DPVA2Qx0iZzdEUPUY1qz1i7j2xp/zWB0p9trxoFk4J/HGzetlK6b3wQDXvwK/zJ0nUpfYlx9p6KQfK11QjW3/8YdhlsRPfAltD/MsNOT7xPOTN/a+csxL0YAg6RXd1I5M439qS4mRPe86C0yOmZ9o8wFw2QEtCg=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR05MB5571.namprd05.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(136003)(39860400002)(376002)(396003)(366004)(346002)(451199015)(38100700002)(122000001)(478600001)(53546011)(2906002)(86362001)(6506007)(52536014)(55016003)(71200400001)(54906003)(64756008)(38070700005)(4326008)(76116006)(66946007)(41300700001)(33656002)(66446008)(26005)(66476007)(66556008)(5660300002)(83380400001)(66574015)(7696005)(186003)(9686003)(8676002)(8936002)(110136005)(316002)(142923001)(473944003)(414714003);DIR:OUT;SFP:1101
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ltf4UA0xkbmh1o9c2IH+C7+MzsC6xenyMsHbS1n/HIO7stjwE5yoSV6gA5?=
+ =?iso-8859-1?Q?en0mtI+dCz8mQm/enULw8coFY687RiU6Zo6yzxMkTYEZO6rzEn25sof0Bm?=
+ =?iso-8859-1?Q?cL7RGymZoCKLTGcggvmys+L1qoAzJnYUIhE6Ry4SxdikEnKBGUvvtmqyZs?=
+ =?iso-8859-1?Q?XL3ElMAze7olEysGrSHx6YHmldVBXN14ftp0PMaKF0nZTLW0v+ixaA1eZp?=
+ =?iso-8859-1?Q?smwGOWqhnys7mSq7Nire1AyAuVPYn0O2lBzqb88T0jKVpYO6HeEikgnUzz?=
+ =?iso-8859-1?Q?tGCNkRwmb2WabHhDelWd8xff9fWcRz///vFXv7Buyw7A/Vm1rIe7cB8zVV?=
+ =?iso-8859-1?Q?BvMSaunOvampYA+7ym/ggHGT6kP+EsgujkdfoXbWnboQFwd52fKlSMIg8K?=
+ =?iso-8859-1?Q?LcnGhwXJxc26CeWNDix5XKTr6FoLq9jx1ERChWAx/msRlc4y5U5Vxp/e0i?=
+ =?iso-8859-1?Q?RMqdPDpY9oYGSU9GodYloFPXU4LzJ256dtAiUh/SIK1QrfhuA5r0DSKKHl?=
+ =?iso-8859-1?Q?gIgNznHlkeIw1RoWZ4hmUYKNMWeEkLKiJQlIVEGvQYRV7q31oPmn2r1lQS?=
+ =?iso-8859-1?Q?cxqLoTi64geDpruvlINa+hieEFy+qKaCkX612CHH3FAZ/CeaGJzTih85PR?=
+ =?iso-8859-1?Q?LvuYN5x9X8W52MLhOp1+S2beaogV57IIfkpTSsHXzJqWN7M/qp5mx+7gkt?=
+ =?iso-8859-1?Q?JoOnw2Xkyd5deC2ArqIsOyW66ViRCu0nYMvA60abBlPVAOD5bh59OyPRfN?=
+ =?iso-8859-1?Q?yfTST+KocF2WpOpsP+RECJHBiwAQaiRVwo8rXg9Hz7tScvu6kXG45jTKnI?=
+ =?iso-8859-1?Q?tVr4KrlNDprGGKijxhpdLksC4lEDK0bN7K/2cOc1+gSGIKkp+fw+sP5o0p?=
+ =?iso-8859-1?Q?53INfY2EZgRBN9B4Xt6No6F9CZYVFB6+YucQMmmFe7Dnnnhx5qSM4/xvPr?=
+ =?iso-8859-1?Q?Ubw/9EOsZk/IcJn2ZrTxOc6KR8j5t+buGDb4HSDqqQTGt8rpRuC1Qxza0y?=
+ =?iso-8859-1?Q?oECJNhMKDYwX/GX+gipMxDQpkvO9sPBt3+IOFwOPBZDu5+Iz1hU+UJMGFZ?=
+ =?iso-8859-1?Q?4TCZegZ61gR6qXk3VsUxnBQMuT9PLM1830SAkGFxAtoLkCY3ilGf30dG5e?=
+ =?iso-8859-1?Q?bktA70hxUZOzxj236mlO7J1XVnbUGEeykTfMOcUFntVH7N2Ispne/jQdCp?=
+ =?iso-8859-1?Q?IwwIZOGwItJke5ha+y9JW0FuWTgcM/r3S3nEpZW1K0Qt8zct9TBCaaVsSr?=
+ =?iso-8859-1?Q?XtCQxb8QTv6TbhtOqy6XsOZSC1xr4zhhDt6mcHavgRT8DwmIaUPzhNa9Mb?=
+ =?iso-8859-1?Q?l8tImZ/R6+Dj1utN90tuJkckKUjSvTxFJSSm1CBKsaKB9r9PllfiArQOtA?=
+ =?iso-8859-1?Q?i0ea32ZoJUWOBjfuCyia9Yr+gZ8svezutSGXfEbippz+u2w+cD9eWzL7pl?=
+ =?iso-8859-1?Q?TXTPgdZHxHZgtOM69FjRUzhuFz/gtINthxycMUGWXY/2inrslLGl+N1FBS?=
+ =?iso-8859-1?Q?XeTFMNKGDr3BK+78TQPmeuVU2OLQE75Zzy2NYq+HxU3b26/3Q8ZMTCApEV?=
+ =?iso-8859-1?Q?pZ8MZBWxXmanGLRRoLbd1zSNhhT24LPeEalyoiMFcn0S7tItzobEh18PIN?=
+ =?iso-8859-1?Q?74SOhGbeKIc/9EY9Y2YqC1x3cqyG+f/85h?=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+X-OriginatorOrg: mathworks.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR05MB7506
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: mathworks.com
+Content-Language: en-US
+Content-Type: text/plain; charset=WINDOWS-1252
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:FNzIpcsifz82dMRvtmblMPRrnj/yEBEj/i77JK/dhjI/8zG+cH9
- B4qKaUtv01H3RsArK19wG0kDqVQTDC80wsDbXiqPtdeB6nTZ2nwc68n/HcDxmLi2XgSL9Fo
- 1Li06AEDzmoZEdJs2gz1JBOTB9k/4OEXB0B67IDtRfCpF/SDFsRbR3EiYiCPqU1RJ9Afjwd
- dMPB9AczGrAcv8m8ZhUEA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vbUB+HVSzg0=:yTfq3I34tJIlp+5rF91/Ox
- 4ilCnsvuk0e5j8neDRYMh8tfVSBu7R5hlgJg9n5YQ5IyWW8O5FFlxK/OUQnbYPX9txvdxbVsi
- 8wAladsQjf7K4Yzfyc32cNpxAr4gDRINYMjXVBaDyEnngERY9FA0pgS9bteghGATOG0DHmn49
- Mn5XuojuwRpNoru2zg4YiFo0C4ZyLFBJ38jTDwHbGFQBVvkbAx9mqh3cVdoO3j0lALiSqjpmr
- a7QfYdtypLtIS29jwnfm2FqJNbzx9UUtWi/5/4bYSRVbgAP2uCVAPWo7ZF+vsSJA6RLS9r6xg
- 2Z7p6u8skkxQ4AfK3RWTVeTaXsPCOxgb7EoladpB1sm7ngq3xQQH7GGRxl/VQn4+pupLlHi2q
- NmRtv30pkjcE6zb9loy8/bh6OnKVP7D60l4cF7+Oj1GwyhccFeo5Ip6sOWJed79GwqusS0Lua
- 54ODSLaRuo/Gr5TkV8DIui8aGk7CGdR5qFlKDxO+podVabjMd2BxBADHhK914ioxDkNkXoZDI
- JyzPpo5cWWTfkiEbnT0asMDcF4JMVbmrhdhNfZYsmBSNdVbPKDC9jfZ+FUa5uxIqPn1/W0BOP
- wH28u+kKoghBF7UPjUP7qf5DvlYDgsqus53yCqefRJqhwKoboBeFo6H+XqGsWcDpcW3AETWJW
- VwGNxLsN5kvyPw0daJeddsEcc+MBIQn0Y/YCjYqACOrYnxshyi0dyiPNNR862KIU2eix6o6zo
- TDShP6LKME96L2QBX82hGO9xKlGyFGSRZg8FSNLazEOlV88gJru6eiYqAywZ1cVzREbXqJFfk
- 2m1+po/dqurxDh5cl78hwSBFcHE5H2Wroc4ikDrzAkxG005HhYVdpt5gghmMLxtwBEBAE+NoS
- aLyXzo0nqcGB0lvCP33+00uMNW7Z4NCH0lZEUM8D4jRSRd5LU6gN9j8wysmtpkk73SYqq/8LI
- Q/aHq3WiBDqUcCKqZ5aF+cGsRfqntGkn081D14NZekCYu+qeqiemVXRa4TQwjC4ktCfPUAy2J
- ICk86dKhw980jFTW55vnW2/Q5vDeGGaEK/EIPQ+96r1ETcjso7HX+UjmEaQEIbe7BqJydyFsR
- pDR11C3Q7Igy6MMuzBietuxarU9SIHt4QRPB1gyrI0ApxRieift7SL/04OZTLmjmvA50nX00v
- g9sC4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-When unicode filenames (encoded in UTF-8) are used, the visible width
-on the screen is not the same as strlen().
 
-For example, `git log --stat` may produce an output like this:
+> -----Original Message-----
+> From: Junio C Hamano <gitster@pobox.com>
+> Sent: Tuesday, September 13, 2022 8:48 PM
+> To: Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
+> Cc: git@vger.kernel.org; Jeff Hostetler <git@jeffhostetler.com>; Eric Sun=
+shine
+> <sunshine@sunshineco.com>; Torsten B=F6gershausen <tboegi@web.de>;
+> =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>; Ramsay Jones
+> <ramsay@ramsayjones.plus.com>; Johannes Schindelin
+> <Johannes.Schindelin@gmx.de>; Eric DeCosta <edecosta@mathworks.com>
+> Subject: Re: [PATCH v6 3/6] fsmonitor: relocate socket file if .git direc=
+tory is
+> remote
+>=20
+> "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+> > +const char *fsmonitor_ipc__get_path(void) {
+>=20
+> Looks like a bit klunky API.  I would have expected it to take at least t=
+he path
+> to the worktree or a pointer to struct repository.
+>=20
+OK, I'll change it to take a pointer to struct repository.
 
-[snip the header]
+> > +=09static const char *ipc_path;
+> > +=09SHA_CTX sha1ctx;
+> > +=09char *sock_dir;
+> > +=09struct strbuf ipc_file =3D STRBUF_INIT;
+> > +=09unsigned char hash[SHA_DIGEST_LENGTH];
+> > +
+> > +=09if (ipc_path)
+> > +=09=09return ipc_path;
+> > +
+> > +=09ipc_path =3D fsmonitor_ipc__get_default_path();
+> > +
+> > +=09/* By default the socket file is created in the .git directory */
+> > +=09if (fsmonitor__is_fs_remote(ipc_path) < 1)
+> > +=09=09return ipc_path;
+> > +
+> > +=09SHA1_Init(&sha1ctx);
+> > +=09SHA1_Update(&sha1ctx, the_repository->worktree,
+> strlen(the_repository->worktree));
+> > +=09SHA1_Final(hash, &sha1ctx);
+>=20
+> I would not worry about SHA-1 hash collision for this use case, but would
+> worry more about .worktree possible being unique.
+>=20
+> Can the .worktree string be aliased for the same directory in some way (e=
+.g.
+> depending on the initialization sequence, can it be a full pathname, a re=
+lative
+> pathname, or can a pathname that looks like a full-pathname have symbolic
+> link component in it?) that ends up creating two or more socket for the s=
+ame
+> worktree?
+>=20
 
- Arger.txt  | 1 +
- =C3=84rger.txt | 1 +
- 2 files changed, 2 insertions(+)
+.worktree is set to the real path and since hardlinks are not allowed acros=
+s file systems, I think we are OK.
 
-A side note: the original report was about cyrillic filenames.
-After some investigations it turned out that
-a) This is not a problem with "ambiguous characters" in unicode
-b) The same problem exists for all unicode code points (so we
-  can use Latin based Umlauts for demonstrations below)
-
-The '=C3=84' takes the same space on the screen as the 'A'.
-But needs one more byte in memory, so the the `git log --stat` output
-for "Arger.txt" (!) gets mis-aligned:
-The maximum length is derived from "=C3=84rger.txt", 10 bytes in memory,
-9 positions on the screen. That is why "Arger.txt" gets one extra ' '
-for aligment, it needs 9 bytes in memory.
-If there was a file "=C3=96", it would be correctly aligned by chance,
-but "=C3=96h=C3=B6" would not.
-
-The solution is of course, to use utf8_strwidth() instead of strlen()
-when dealing with the width on screen.
-
-And then there is another problem, code like this:
-strbuf_addf(&out, "%-*s", len, name);
-(or using the underlying snprintf() function) does not align the
-buffer to a minimum of len measured in screen-width, but uses the
-memory count.
-
-One could be tempted to wish that snprintf() was UTF-8 aware.
-That doesn't seem to be the case anywhere (tested on Linux and Mac),
-probably snprintf() uses the "bytes in memory"/strlen() approach to be
-compatible with older versions and this will never change.
-
-The basic idea is to change code in diff.c like this
-strbuf_addf(&out, "%-*s", len, name);
-
-into something like this:
-int padding =3D len - utf8_strwidth(name);
-if (padding < 0)
-	padding =3D 0;
-strbuf_addf(&out, " %s%*s", name, padding, "");
-
-The real change is slighty bigger, as it, as well, integrates two calls
-of strbuf_addf() into one.
-
-Tests:
-Two things need to be tested:
- - The calculation of the maximum width
- - The calculation of padding
-
-The name "textfile" is changed into "t=C3=ABxtfil=C3=AB", both have a widt=
-h of 8.
-If strlen() was used, to get the maximum width, the shorter "binfile" woul=
-d
-have been mis-aligned:
- binfile    | [snip]
- t=C3=ABxtfil=C3=AB | [snip]
-
-If only "binfile" would be renamed into "binfil=C3=AB":
- binfil=C3=AB | [snip]
- textfile | [snip]
-
-In order to verify that the width is calculated correctly everywhere,
-"binfile" is renamed into "binfil=C3=AB", giving 1 bytes more in strlen()
-"t=C3=ABxtfile" is renamed into "t=C3=ABxtfil=C3=AB", 2 byte more in strle=
-n().
-
-The updated t4012-diff-binary.sh checks the correct aligment:
- binfil=C3=AB  | [snip]
- t=C3=ABxtfil=C3=AB | [snip]
-
-Reported-by: Alexander Meshcheryakov <alexander.s.m@gmail.com>
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-=2D--
- diff.c                 | 27 ++++++++++++++++-----------
- t/t4012-diff-binary.sh | 14 +++++++-------
- 2 files changed, 23 insertions(+), 18 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 974626a621..35b9da90fe 100644
-=2D-- a/diff.c
-+++ b/diff.c
-@@ -2620,7 +2620,7 @@ static void show_stats(struct diffstat_t *data, stru=
-ct diff_options *options)
- 			continue;
- 		}
- 		fill_print_name(file);
--		len =3D strlen(file->print_name);
-+		len =3D utf8_strwidth(file->print_name);
- 		if (max_len < len)
- 			max_len =3D len;
-
-@@ -2734,7 +2734,7 @@ static void show_stats(struct diffstat_t *data, stru=
-ct diff_options *options)
- 		char *name =3D file->print_name;
- 		uintmax_t added =3D file->added;
- 		uintmax_t deleted =3D file->deleted;
--		int name_len;
-+		int name_len, padding;
-
- 		if (!file->is_interesting && (added + deleted =3D=3D 0))
- 			continue;
-@@ -2743,7 +2743,7 @@ static void show_stats(struct diffstat_t *data, stru=
-ct diff_options *options)
- 		 * "scale" the filename
- 		 */
- 		len =3D name_width;
--		name_len =3D strlen(name);
-+		name_len =3D utf8_strwidth(name);
- 		if (name_width < name_len) {
- 			char *slash;
- 			prefix =3D "...";
-@@ -2753,10 +2753,14 @@ static void show_stats(struct diffstat_t *data, st=
-ruct diff_options *options)
- 			if (slash)
- 				name =3D slash;
- 		}
-+		padding =3D len - utf8_strwidth(name);
-+		if (padding < 0)
-+			padding =3D 0;
-
- 		if (file->is_binary) {
--			strbuf_addf(&out, " %s%-*s |", prefix, len, name);
--			strbuf_addf(&out, " %*s", number_width, "Bin");
-+			strbuf_addf(&out, " %s%s%*s | %*s",
-+				    prefix, name, padding, "",
-+				    number_width, "Bin");
- 			if (!added && !deleted) {
- 				strbuf_addch(&out, '\n');
- 				emit_diff_symbol(options, DIFF_SYMBOL_STATS_LINE,
-@@ -2776,8 +2780,9 @@ static void show_stats(struct diffstat_t *data, stru=
-ct diff_options *options)
- 			continue;
- 		}
- 		else if (file->is_unmerged) {
--			strbuf_addf(&out, " %s%-*s |", prefix, len, name);
--			strbuf_addstr(&out, " Unmerged\n");
-+			strbuf_addf(&out, " %s%s%*s | %*s",
-+				    prefix, name, padding, "",
-+				    number_width, "Unmerged");
- 			emit_diff_symbol(options, DIFF_SYMBOL_STATS_LINE,
- 					 out.buf, out.len, 0);
- 			strbuf_reset(&out);
-@@ -2803,10 +2808,10 @@ static void show_stats(struct diffstat_t *data, st=
-ruct diff_options *options)
- 				add =3D total - del;
- 			}
- 		}
--		strbuf_addf(&out, " %s%-*s |", prefix, len, name);
--		strbuf_addf(&out, " %*"PRIuMAX"%s",
--			number_width, added + deleted,
--			added + deleted ? " " : "");
-+		strbuf_addf(&out, " %s%s%*s | %*"PRIuMAX"%s",
-+			    prefix, name, padding, "",
-+			    number_width, added + deleted,
-+			    added + deleted ? " " : "");
- 		show_graph(&out, '+', add, add_c, reset);
- 		show_graph(&out, '-', del, del_c, reset);
- 		strbuf_addch(&out, '\n');
-diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
-index c509143c81..c64d9d2f40 100755
-=2D-- a/t/t4012-diff-binary.sh
-+++ b/t/t4012-diff-binary.sh
-@@ -113,20 +113,20 @@ test_expect_success 'diff --no-index with binary cre=
-ation' '
- '
-
- cat >expect <<EOF
-- binfile  |   Bin 0 -> 1026 bytes
-- textfile | 10000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++
-+ binfil=C3=AB  |   Bin 0 -> 1026 bytes
-+ t=C3=ABxtfil=C3=AB | 10000 +++++++++++++++++++++++++++++++++++++++++++++=
-++++++++++++++++
- EOF
-
- test_expect_success 'diff --stat with binary files and big change count' =
-'
--	printf "\01\00%1024d" 1 >binfile &&
--	git add binfile &&
-+	printf "\01\00%1024d" 1 >binfil=C3=AB &&
-+	git add binfil=C3=AB &&
- 	i=3D0 &&
- 	while test $i -lt 10000; do
- 		echo $i &&
- 		i=3D$(($i + 1)) || return 1
--	done >textfile &&
--	git add textfile &&
--	git diff --cached --stat binfile textfile >output &&
-+	done >t=C3=ABxtfil=C3=AB &&
-+	git add t=C3=ABxtfil=C3=AB &&
-+	git -c core.quotepath=3Dfalse diff --cached --stat binfil=C3=AB t=C3=ABx=
-tfil=C3=AB >output &&
- 	grep " | " output >actual &&
- 	test_cmp expect actual
- '
-=2D-
-2.34.0
+> > +=09repo_config_get_string(the_repository, "fsmonitor.socketdir",
+> > +&sock_dir);
+> > +
+> > +=09/* Create the socket file in either socketDir or $HOME */
+> > +=09if (sock_dir && *sock_dir)
+> > +=09=09strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
+> > +=09=09=09=09=09sock_dir, hash_to_hex(hash));
+> > +=09else
+> > +=09=09strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s",
+> hash_to_hex(hash));
+> > +
+> > +=09ipc_path =3D interpolate_path(ipc_file.buf, 1);
+> > +=09if (!ipc_path)
+> > +=09=09die(_("Invalid path: %s"), ipc_file.buf);
+> > +
+> > +=09strbuf_release(&ipc_file);
+> > +=09return ipc_path;
+> > +}
 
