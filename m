@@ -2,89 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B1DEC6FA86
-	for <git@archiver.kernel.org>; Wed, 14 Sep 2022 19:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1462C6FA82
+	for <git@archiver.kernel.org>; Wed, 14 Sep 2022 23:54:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbiINTbY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Sep 2022 15:31:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44422 "EHLO
+        id S229650AbiINXy4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Sep 2022 19:54:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229698AbiINTbU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2022 15:31:20 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2CEE857CB
-        for <git@vger.kernel.org>; Wed, 14 Sep 2022 12:31:18 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id s6so15587981lfo.7
-        for <git@vger.kernel.org>; Wed, 14 Sep 2022 12:31:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=5E/61Cn98Fl6nCBQNTD8VxesLFg633aWZ+2DTu9sp4c=;
-        b=CzpTkguaHiJR9RGYeANxyUZPkZaKDJGRrhTpupIMvg8Rx+OAaFKyNmoWLjTzqrYJa8
-         bgC+s3tzkEuWI1JhFJ/jv4a/GZVhQfQy7Pv2CVWrJrb13nrEjk1K2A016rtGRPXEtT69
-         wHBziRgYHK5jeEBvMObkdTWve6wtZ1hw8EPUlXCjGx918F9f+npuupy2vnB3ejwotBY6
-         B6madaLlh9LQKZF7oHMfU8dKBMOC4KwbnBCo3Jwv/+szQ1l3sGLUGgFDApMvirbzgPZO
-         vIsttnxO6kM5M2FlA+wrdWVQiDhBouh1cmJXlVRhr1Ll1b1Bjbp3hdZBOAn2OOi4ig9p
-         a1Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=5E/61Cn98Fl6nCBQNTD8VxesLFg633aWZ+2DTu9sp4c=;
-        b=K6XUo6+aLZCXAVhGMql5/MbqrjbHEvXMHvkFwp0SOJoO8FeDHPoWGXeWmo4YuAYUs+
-         z+Nv0NlrjZaFUglgizVH055LCT8M2O9lAJoIr/LCKifvq6x2PoI6BeTo5NErAAwQ3Y5F
-         HptDRr0UcsZz8Lxuh9yBnCHWG5G7HtqfjdjvDjr8GIeMasM7W+hzAOV2u5IlbG57mnIi
-         VRpY+jyrGKQBOJECs1mVeoTyuxbOKQD1o+2ggBqkWiCBpXw1+CpQkDINhBILqIHZI7tk
-         IzlycoQtxB9XXOa+58JDv/mbgduEgoT8wckdMwglNrdILDrnKIcOzF0GKQ1GWxY8cd4Q
-         2ROw==
-X-Gm-Message-State: ACrzQf1juoR00C8acZg9cssglGp02B4UE5x5Ppnm4a4JiQ3/BNE57GBU
-        bPpj8rqsC7Eg/2oXgaTW9Aw=
-X-Google-Smtp-Source: AMsMyM6PCkunPEKD/4Ts6m5OpI+iBmcUlzLSqiYPTF6lyerk/39PtfGsRQEJtchxxsOwqGRiJft0Mg==
-X-Received: by 2002:a05:6512:39c6:b0:49e:75e6:8d4f with SMTP id k6-20020a05651239c600b0049e75e68d4fmr461474lfu.34.1663183877001;
-        Wed, 14 Sep 2022 12:31:17 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id u3-20020a05651220c300b0048ad4c718f3sm2522305lfr.30.2022.09.14.12.31.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Sep 2022 12:31:16 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH 3/3] diff-merges: clarify log.diffMerges documentation
-Date:   Wed, 14 Sep 2022 22:31:02 +0300
-Message-Id: <20220914193102.5275-4-sorganov@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20220914193102.5275-1-sorganov@gmail.com>
-References: <20220914193102.5275-1-sorganov@gmail.com>
+        with ESMTP id S229542AbiINXyz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2022 19:54:55 -0400
+Received: from sender4-of-o54.zoho.com (sender4-of-o54.zoho.com [136.143.188.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E87917068
+        for <git@vger.kernel.org>; Wed, 14 Sep 2022 16:54:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1663199687; cv=none; 
+        d=zohomail.com; s=zohoarc; 
+        b=lkWpflOQrItS2yhOYP2a27K2pEaFIJJWuYSU2Q8IAbnkx7dsT70ja/knuSbH88CJkbWXX2SQ18h9C/ELZC97aEX1d8oEE/pGavv2LWcyZ5JxwjUmruj36iTC4IphcEbB8C4XI0vojgQAXGJzK1e06MkNZ02A/NTyJjjDmvfC1QY=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+        t=1663199687; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
+        bh=Ye2Z9e86adffDxoO1iSA7amA6CUKfJR55V6yRtX7ISQ=; 
+        b=Hc6hvutrPOrF9THeAVzxofRvkRshEFYtJKQNUxXJWH4WrNBml9CIEeCF1XOCQUNQ7+N3cngTvvyeTpcBnktl6lPMKOykgCKxf35QTw11PK8B0Ga5YJB/8FrQElzGfdZWmI4AW23U+6JmZh0WkhPDY0tIILOGufuT0M1qadjyKGI=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+        spf=pass  smtp.mailfrom=business@elijahpepe.com;
+        dmarc=pass header.from=<business@elijahpepe.com>
+Received: from mail.zoho.com by mx.zohomail.com
+        with SMTP id 1663199686163425.80595711399735; Wed, 14 Sep 2022 16:54:46 -0700 (PDT)
+Date:   Wed, 14 Sep 2022 16:54:46 -0700
+From:   Elijah Conners <business@elijahpepe.com>
+To:     "git" <git@vger.kernel.org>
+Cc:     "hanwen" <hanwen@google.com>, "Junio C Hamano" <gitster@pobox.com>
+Message-ID: <1833e6d2e00.103444050857631.1873200534809982162@elijahpepe.com>
+In-Reply-To: <183353220fe.d7826593472673.3445243727369286065@elijahpepe.com>
+References: <183353220fe.d7826593472673.3445243727369286065@elijahpepe.com>
+Subject: [PATCH] reftable: use const with the pq_entry param
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
+Signed-off-by: Elijah Conners <business@elijahpepe.com>
 ---
- Documentation/config/log.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ reftable/pq.c | 2 +-
+ reftable/pq.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config/log.txt b/Documentation/config/log.txt
-index 5250ba45fb4e..cbe34d759221 100644
---- a/Documentation/config/log.txt
-+++ b/Documentation/config/log.txt
-@@ -30,9 +30,9 @@ log.excludeDecoration::
- 	option.
+diff --git a/reftable/pq.c b/reftable/pq.c
+index 156f78a064..dcefeb793a 100644
+--- a/reftable/pq.c
++++ b/reftable/pq.c
+@@ -71,7 +71,7 @@ struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq)
+ 	return e;
+ }
  
- log.diffMerges::
--	Set default diff format to be used for merge commits. See
--	`--diff-merges` in linkgit:git-log[1] for details.
--	Defaults to `separate`.
-+	Set diff format to be used when `--diff-merges=on` is
-+	specified, see `--diff-merges` in linkgit:git-log[1] for
-+	details. Defaults to `separate`.
+-void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, struct pq_entry *e)
++void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry *e)
+ {
+ 	int i = 0;
  
- log.follow::
- 	If `true`, `git log` will act as if the `--follow` option was used when
+diff --git a/reftable/pq.h b/reftable/pq.h
+index e5e9234baf..e85bac9b52 100644
+--- a/reftable/pq.h
++++ b/reftable/pq.h
+@@ -26,7 +26,7 @@ struct pq_entry merged_iter_pqueue_top(struct merged_iter_pqueue pq);
+ int merged_iter_pqueue_is_empty(struct merged_iter_pqueue pq);
+ void merged_iter_pqueue_check(struct merged_iter_pqueue pq);
+ struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq);
+-void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, struct pq_entry *e);
++void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry *e);
+ void merged_iter_pqueue_release(struct merged_iter_pqueue *pq);
+ int pq_less(struct pq_entry *a, struct pq_entry *b);
+ 
 -- 
-2.25.1
+2.29.2.windows.2
+
+
 
