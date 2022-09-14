@@ -2,100 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0A49ECAAD3
-	for <git@archiver.kernel.org>; Wed, 14 Sep 2022 09:19:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13B84ECAAD8
+	for <git@archiver.kernel.org>; Wed, 14 Sep 2022 09:47:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229531AbiINJTK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Sep 2022 05:19:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56662 "EHLO
+        id S230373AbiINJrj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Sep 2022 05:47:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231585AbiINJSI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2022 05:18:08 -0400
-Received: from outbound8.mail.transip.nl (outbound8.mail.transip.nl [IPv6:2a01:7c8:7c9:ca11:136:144:136:8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F4157961B
-        for <git@vger.kernel.org>; Wed, 14 Sep 2022 02:08:53 -0700 (PDT)
-Received: from submission4.mail.transip.nl (unknown [10.103.8.155])
-        by outbound8.mail.transip.nl (Postfix) with ESMTP id 4MSDxj6LsJzY77CV;
-        Wed, 14 Sep 2022 11:07:37 +0200 (CEST)
-Received: from [192.168.1.198] (5072ADBC.static.ziggozakelijk.nl [80.114.173.188])
-        by submission4.mail.transip.nl (Postfix) with ESMTPA id 4MSDxh6CNTznTbV;
-        Wed, 14 Sep 2022 11:07:36 +0200 (CEST)
-Message-ID: <f13bc5aa-dadd-a895-eeca-79bd77c5363b@fwdekker.com>
-Date:   Wed, 14 Sep 2022 11:07:34 +0200
+        with ESMTP id S230367AbiINJrh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2022 05:47:37 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1419962AAC
+        for <git@vger.kernel.org>; Wed, 14 Sep 2022 02:47:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1663148853; bh=zBdn5FtF+EmGHs2nHUyIEaUivuGGl2bF3qR1aY6XIzU=;
+        h=X-UI-Sender-Class:Date:Subject:To:References:Cc:From:In-Reply-To;
+        b=v4tt/djA0tB52DGFrbrN54a0TFePfY0aa4tcUT0Izl1RYkMRkLSaeZrEsavJGEh4/
+         r7ujM9XNIqApvfjPs00MJPt3wISEtY9iEDZ7AE5CgJjvAvwcvaIli7J7iio4Pvvaj3
+         /z8B8QJqM6A/9qfiQ5CR8q7uUU8c8BUw+7JwnVYaouZ1n5m0QK3ipnFUbZ9zkEcc9g
+         lCiO0051usX87zwigmfNYaQIzJXBBQozsdC6Gf3htfyIWEkyplT8jfxiQPB4Y9E4Ba
+         o0klzb/VUpbdmtEuakxmORSWp/yMCivMIKUMdFZRmeOYi7Ceee2+v2E6RIZUMYPMfJ
+         O8qYC5ZBKG0Kg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.24.217]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MsaS7-1pRbwc2OEN-00tmvG; Wed, 14
+ Sep 2022 11:47:33 +0200
+Message-ID: <2463c4b9-313b-032f-9313-d1421f71f111@web.de>
+Date:   Wed, 14 Sep 2022 11:47:33 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.1
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>
-References: <2e846a72-a4c6-2a5a-255a-15eee037f574@fwdekker.com>
- <854127f2-55aa-5636-813d-d91b8a4cdcbc@web.de>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.2.2
+Subject: [PATCH] add -p: fix worktree patch mode prompts
 Content-Language: en-US
-From:   "Florine W. Dekker" <florine@fwdekker.com>
-Subject: Re: Wildcards in mailmap to hide transgender people's deadnames
-In-Reply-To: <854127f2-55aa-5636-813d-d91b8a4cdcbc@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: ClueGetter at submission4.mail.transip.nl
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=transip-a; d=fwdekker.com; t=1663146457; h=from:subject:to:cc:
- references:in-reply-to:date:mime-version:content-type;
- bh=cTiGOHtomoSdzkwpyVv9MrRQCji6gCAOQNvynTADMS4=;
- b=FhfNexQx46ZfmT/F2DVVaKFYGhqjhGr+3XAZIRJX/NEppsM8vsb1iOeUmOr2MMTAUN2fr9
- fUKXN5dt3TMW32i2PDwoeNqYryPBTG8cs2XqAqnCtu7Q4L5kYMeqDMwDT6yYymFMcQYk3W
- uB74qgTQRfMCTmqPIyBkcBUX3UHPz+MBAkExoecZGuSgGwAc2uogywTOJlIW8Q+oqhirJD
- 634XBZ8TcfZwZMfoJnkThm2MPCqMgTboN3UCJyoi5qAzxJfD+uH9YmkO+lfDHxBH0BJkyH
- DSUIHg8yCDyH4c65Ig3l6wORJZfBUYiDTDHS606AAY8YqqZSANDqiGTxU/VUAA==
-X-Report-Abuse-To: abuse@transip.nl
+To:     David Plumpton <david.plumpton@gmail.com>, git@vger.kernel.org
+References: <CAJXaddZwqGabdjmgc22eCYCdBw6nxcPbPfom26PwG3xvKEN93w@mail.gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CAJXaddZwqGabdjmgc22eCYCdBw6nxcPbPfom26PwG3xvKEN93w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:J6Qo6DjoZGFN6MBRl6VtDrNxTd8yOpfED74TSM/6os8b4iU+nZv
+ +R14yf2NW5uCjdjVHq1HKREmfxba2m4wo4glZ3OQbYBjiJEui0I8eDZ3lIU9ZZLcXILUNJm
+ plSmvvsYzSk/ZITaa6fbM8pNYP8n9/4w02p4pdcYRARgbBjpWujkPFKVEd1I9pSjcsHoT/B
+ cjmXhcSwUd7tmD16UOCiQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sdSzr0yxBXk=:1S1x72azoo3Xzgz9V9MCXU
+ hVgPH1457iXgnmPBDgy2hshcQ2KqqELfNf5Gn3t09DBhHGinZNmWeBkTtn6019MHL2M7lDusC
+ b/pWOsHc2Kn99P6I06UU1aC8oakygzsQQWAXqlsO6dcP/X727PTXHiZU2rJRROuO+K0Zy65Ph
+ +XhM/x9aBz7jU+p7+z349qMNzeBAFAi4bZf5kTx6M+Yv0qXqT6hhEyLZjZyZ4My0b/TCGkSJB
+ kcD0FpDUXmrfqGIroDJdF8kJBxG8nJLzbZvnZ5p7GXhMkC6X6WgPHC+OLdPc5UEruBDF9emmA
+ D2mgVcLPVxnwI/4+F0GfjojDaKYd1FZLbDYuIMy76U2pdY+G81gJnzb8qVqTc9izzqWLdNZ9o
+ 4NBaUNYjemwBqooHiFBtGwMchvPd2ltbmHv1So1cQBhWbWHIQef+jVmJnyeDMKeVjJs6epZBq
+ ZQvRHou3nZy2xmuwVOZcrq2uDd0mBa8SkDxkaBprHY3Q9uEIPyTVW5P4EX/q251v4I/3oqrQT
+ 8DEEZc+QIb0ej2UHGTU+BAbmQqbnia5xWR1Td3UZsI7gv7ip9h0Kiab+KQPj7NOoQi1/3iB+H
+ DPLszgzLhQ7CxNY7D3dJpFwy1s69h7NuvQ5bGnC2ZMkJMiTUMdHpBgmc/XuqST4A51IH3Xi3N
+ 1zrE7Ai5pDFqN42Gtc0eq5isVOZFMUy1aEBHmJR0+9aY0R3EK4R4DPMq9rg8GSkjmEOD57uW0
+ 7KzzvxSuNwXnIUokH3tsYnaXUaLPG2IOr9uasnJx6oGYSbOdrDwj8oEZTCH13Gf3lnsbGl4RO
+ nqtzKaA2UlPoyM47nH2/4neTUF0Q+gVeNFLb8XVZJtBE0INNMXMPonl729tkjXq3h9oX7RbfH
+ CniOd4DP6zprIF+qeEOPi0Bzcivt+G9g5GGXCEjqz4Sl298YoRyX1p+8zseuWM27ER5JouAVn
+ 8FJaS/3TMQ51Isg9PB4SCgU8NeOhotQ7M7PGzD3UjuFwgB+Y3jWRnn459xTv+1Y/JFEZxMa8M
+ JMF9bA2zlkylXKUWuUuU3fOKwACKPa/64zF1nTbxhb72pHfrscM0ixILH3J5COK2P59MmYOF5
+ madCJNsLyeEh2QDHste3rgHxziW0pV5h6gMoIf26UWec8CqvNvO99lBXPUST/uLU+sqJCRBfM
+ WjRuk=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14/09/2022 09:40, René Scharfe wrote:
-> Am 13.09.22 um 23:53 schrieb Florine W. Dekker:
->> Now, John can now add the following line to their mailmap config:
->> `John Doe <john.doe@example.com> <\*.doe@example.com>`, which does
->> not reveal their old name.
-> That would falsely attribute the work of possible future developers
-> ann.doe@example.com and bob.doe@example.com to John as well.
+cee6cb7300 (built-in add -p: implement the "worktree" patch modes,
+2019-12-21) added the worktree patch modes to the built-in add -p.
+Its commit message claims to be a port of 2f0896ec3ad4 (restore:
+support --patch, 2019-04-25), which did the same for the script
+git-add--interactive.perl.
 
-Good point. I assumed such false positives would be unlikely because I 
-was considering very-small-scale projects, but I agree that using 
-wildcards is not at all feasible for larger projects.
+The script mentioned only the worktree in its prompt messages in
+worktree mode, while the built-in mentions the worktree and also the
+index, even though the command doesn't actually affect the index.
 
-> Supporting hashed entries would allow for a more targeted obfuscation.
-> That was discussed a while ago:
-> https://lore.kernel.org/git/20210103211849.2691287-1-sandals@crustytoothpaste.net/
+2c8bd8471a (checkout -p: handle new files correctly, 2020-05-27)
+added new prompt messages for addition that also mention the index in
+worktree mode in the built-in, but not in the script.
 
-That was an interesting read. I agree with Ævar in that thread in that I 
-think URL encoding is sufficient. I think it meets Brian's use case of 
-never having to see the old name again, and my use case of obfuscating 
-it from accidental discovery by friendly collaborators. While a hash 
-certainly gives a stronger sense of security, I think it's a false sense 
-of security, because, as you note below, recovering old email addresses 
-from the tree is not much more trivial than reversing the encoding. And 
-either way, a sha256 hash can easily be inverted in a few days(?) using 
-a dictionary attack with email addresses from data breaches. As someone 
-who has changed her name, I would be content with using a simple URL 
-encoding.
+Correct these prompts to state that only the worktree will be affected.
 
->> Someone could always spend more effort to uncover the name using more
->> advanced tools, but the point of this feature is to prevent
->> accidental discovery of the name in cases where completely hiding the
->> name is not feasible.
-> Extracting old email addresses from a repository is easy by comparing
-> authors' email addresses without and with mailmap applied, no advanced
-> tools required.  Here's mine from Git's own repo:
->
->     $ git log --format='%ae %aE' |
->       awk '$1 != $2 && !a[$0] {a[$0] = 1; print}' |
->       grep -F l.s.r@web.de
->     rene.scharfe@lsrfire.ath.cx l.s.r@web.de
->
-> The same can be done with names (%an/%aN).
+Reported-by: David Plumpton <david.plumpton@gmail.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Patch created using --function-context for easier review.  Note that
+help_patch_text is already correct.
 
-You're absolutely right. With "advanced tools" I was referring to 
-anything more advanced than a plain `git log` ;-)
+ add-patch.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-- Florine
-
-
+diff --git a/add-patch.c b/add-patch.c
+index 29f9456df3..33ecd8398a 100644
+=2D-- a/add-patch.c
++++ b/add-patch.c
+@@ -188,22 +188,22 @@ static struct patch_mode patch_mode_checkout_nothead=
+ =3D {
+ static struct patch_mode patch_mode_worktree_head =3D {
+ 	.diff_cmd =3D { "diff-index", NULL },
+ 	.apply_args =3D { "-R", NULL },
+ 	.apply_check_args =3D { "-R", NULL },
+ 	.is_reverse =3D 1,
+ 	.prompt_mode =3D {
+-		N_("Discard mode change from index and worktree [y,n,q,a,d%s,?]? "),
+-		N_("Discard deletion from index and worktree [y,n,q,a,d%s,?]? "),
+-		N_("Discard addition from index and worktree [y,n,q,a,d%s,?]? "),
+-		N_("Discard this hunk from index and worktree [y,n,q,a,d%s,?]? "),
++		N_("Discard mode change from worktree [y,n,q,a,d%s,?]? "),
++		N_("Discard deletion from worktree [y,n,q,a,d%s,?]? "),
++		N_("Discard addition from worktree [y,n,q,a,d%s,?]? "),
++		N_("Discard this hunk from worktree [y,n,q,a,d%s,?]? "),
+ 	},
+ 	.edit_hunk_hint =3D N_("If the patch applies cleanly, the edited hunk "
+ 			     "will immediately be marked for discarding."),
+ 	.help_patch_text =3D
+ 		N_("y - discard this hunk from worktree\n"
+ 		   "n - do not discard this hunk from worktree\n"
+ 		   "q - quit; do not discard this hunk or any of the remaining "
+ 			"ones\n"
+ 		   "a - discard this hunk and all later hunks in the file\n"
+ 		   "d - do not discard this hunk or any of the later hunks in "
+ 			"the file\n"),
+ };
+@@ -211,21 +211,21 @@ static struct patch_mode patch_mode_worktree_head =
+=3D {
+ static struct patch_mode patch_mode_worktree_nothead =3D {
+ 	.diff_cmd =3D { "diff-index", "-R", NULL },
+ 	.apply_args =3D { NULL },
+ 	.apply_check_args =3D { NULL },
+ 	.prompt_mode =3D {
+-		N_("Apply mode change to index and worktree [y,n,q,a,d%s,?]? "),
+-		N_("Apply deletion to index and worktree [y,n,q,a,d%s,?]? "),
+-		N_("Apply addition to index and worktree [y,n,q,a,d%s,?]? "),
+-		N_("Apply this hunk to index and worktree [y,n,q,a,d%s,?]? "),
++		N_("Apply mode change to worktree [y,n,q,a,d%s,?]? "),
++		N_("Apply deletion to worktree [y,n,q,a,d%s,?]? "),
++		N_("Apply addition to worktree [y,n,q,a,d%s,?]? "),
++		N_("Apply this hunk to worktree [y,n,q,a,d%s,?]? "),
+ 	},
+ 	.edit_hunk_hint =3D N_("If the patch applies cleanly, the edited hunk "
+ 			     "will immediately be marked for applying."),
+ 	.help_patch_text =3D
+ 		N_("y - apply this hunk to worktree\n"
+ 		   "n - do not apply this hunk to worktree\n"
+ 		   "q - quit; do not apply this hunk or any of the remaining "
+ 			"ones\n"
+ 		   "a - apply this hunk and all later hunks in the file\n"
+ 		   "d - do not apply this hunk or any of the later hunks in "
+ 			"the file\n"),
+ };
+=2D-
+2.37.2
