@@ -2,154 +2,276 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13B84ECAAD8
-	for <git@archiver.kernel.org>; Wed, 14 Sep 2022 09:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4622DECAAD3
+	for <git@archiver.kernel.org>; Wed, 14 Sep 2022 15:14:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230373AbiINJrj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Sep 2022 05:47:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45714 "EHLO
+        id S229706AbiINPOG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Sep 2022 11:14:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230367AbiINJrh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2022 05:47:37 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1419962AAC
-        for <git@vger.kernel.org>; Wed, 14 Sep 2022 02:47:35 -0700 (PDT)
+        with ESMTP id S230265AbiINPNn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2022 11:13:43 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 820657C18F
+        for <git@vger.kernel.org>; Wed, 14 Sep 2022 08:13:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1663148853; bh=zBdn5FtF+EmGHs2nHUyIEaUivuGGl2bF3qR1aY6XIzU=;
-        h=X-UI-Sender-Class:Date:Subject:To:References:Cc:From:In-Reply-To;
-        b=v4tt/djA0tB52DGFrbrN54a0TFePfY0aa4tcUT0Izl1RYkMRkLSaeZrEsavJGEh4/
-         r7ujM9XNIqApvfjPs00MJPt3wISEtY9iEDZ7AE5CgJjvAvwcvaIli7J7iio4Pvvaj3
-         /z8B8QJqM6A/9qfiQ5CR8q7uUU8c8BUw+7JwnVYaouZ1n5m0QK3ipnFUbZ9zkEcc9g
-         lCiO0051usX87zwigmfNYaQIzJXBBQozsdC6Gf3htfyIWEkyplT8jfxiQPB4Y9E4Ba
-         o0klzb/VUpbdmtEuakxmORSWp/yMCivMIKUMdFZRmeOYi7Ceee2+v2E6RIZUMYPMfJ
-         O8qYC5ZBKG0Kg==
+        t=1663168419; bh=CXRKa2oJvGjGrgypdiXW3/0uCNCHIjMexlYQ/Ro1cbI=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=l0eg2OOUgZYHf32Zwsag6fRHOtUM0rvYx9xiACAFmjqAqnK/3r2XtL3OZ+maQxWCm
+         mYeXTC3/AoG9JA/BSjQAPX6/IFSO2zvDGlF12TvhLaXHQFN2Kq5c8dQ8HWLdJrQXbY
+         wPZtC88joQ/DtRFpjJ4+wiZ0KKTesHRIxK/6oWgzg+KuFq46lNlH3RKmCPBvWS1sdJ
+         woX2BNSo68Jz5OCu2siAfDeTFbv62kS4R6W+F5No0y6hbfpaZM9jNJOsd4dWGjvNar
+         52Vj2SoWPKZnCcx56HO8Ir640aOoNEPt9DsmhCnqcdvotAG+iF+allwUt03ntNyUd7
+         7Nbf1qJN/gWgA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.24.217]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MsaS7-1pRbwc2OEN-00tmvG; Wed, 14
- Sep 2022 11:47:33 +0200
-Message-ID: <2463c4b9-313b-032f-9313-d1421f71f111@web.de>
-Date:   Wed, 14 Sep 2022 11:47:33 +0200
+Received: from localhost.localdomain ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MLRYf-1oqHoX3KbL-00IORy; Wed, 14
+ Sep 2022 17:13:38 +0200
+From:   tboegi@web.de
+To:     git@vger.kernel.org, alexander.s.m@gmail.com,
+        Johannes.Schindelin@gmx.de
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v5 1/1] diff.c: When appropriate, use utf8_strwidth()
+Date:   Wed, 14 Sep 2022 17:13:33 +0200
+Message-Id: <20220914151333.3309-1-tboegi@web.de>
+X-Mailer: git-send-email 2.34.0
+In-Reply-To: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
+References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.2.2
-Subject: [PATCH] add -p: fix worktree patch mode prompts
-Content-Language: en-US
-To:     David Plumpton <david.plumpton@gmail.com>, git@vger.kernel.org
-References: <CAJXaddZwqGabdjmgc22eCYCdBw6nxcPbPfom26PwG3xvKEN93w@mail.gmail.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CAJXaddZwqGabdjmgc22eCYCdBw6nxcPbPfom26PwG3xvKEN93w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:J6Qo6DjoZGFN6MBRl6VtDrNxTd8yOpfED74TSM/6os8b4iU+nZv
- +R14yf2NW5uCjdjVHq1HKREmfxba2m4wo4glZ3OQbYBjiJEui0I8eDZ3lIU9ZZLcXILUNJm
- plSmvvsYzSk/ZITaa6fbM8pNYP8n9/4w02p4pdcYRARgbBjpWujkPFKVEd1I9pSjcsHoT/B
- cjmXhcSwUd7tmD16UOCiQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:sdSzr0yxBXk=:1S1x72azoo3Xzgz9V9MCXU
- hVgPH1457iXgnmPBDgy2hshcQ2KqqELfNf5Gn3t09DBhHGinZNmWeBkTtn6019MHL2M7lDusC
- b/pWOsHc2Kn99P6I06UU1aC8oakygzsQQWAXqlsO6dcP/X727PTXHiZU2rJRROuO+K0Zy65Ph
- +XhM/x9aBz7jU+p7+z349qMNzeBAFAi4bZf5kTx6M+Yv0qXqT6hhEyLZjZyZ4My0b/TCGkSJB
- kcD0FpDUXmrfqGIroDJdF8kJBxG8nJLzbZvnZ5p7GXhMkC6X6WgPHC+OLdPc5UEruBDF9emmA
- D2mgVcLPVxnwI/4+F0GfjojDaKYd1FZLbDYuIMy76U2pdY+G81gJnzb8qVqTc9izzqWLdNZ9o
- 4NBaUNYjemwBqooHiFBtGwMchvPd2ltbmHv1So1cQBhWbWHIQef+jVmJnyeDMKeVjJs6epZBq
- ZQvRHou3nZy2xmuwVOZcrq2uDd0mBa8SkDxkaBprHY3Q9uEIPyTVW5P4EX/q251v4I/3oqrQT
- 8DEEZc+QIb0ej2UHGTU+BAbmQqbnia5xWR1Td3UZsI7gv7ip9h0Kiab+KQPj7NOoQi1/3iB+H
- DPLszgzLhQ7CxNY7D3dJpFwy1s69h7NuvQ5bGnC2ZMkJMiTUMdHpBgmc/XuqST4A51IH3Xi3N
- 1zrE7Ai5pDFqN42Gtc0eq5isVOZFMUy1aEBHmJR0+9aY0R3EK4R4DPMq9rg8GSkjmEOD57uW0
- 7KzzvxSuNwXnIUokH3tsYnaXUaLPG2IOr9uasnJx6oGYSbOdrDwj8oEZTCH13Gf3lnsbGl4RO
- nqtzKaA2UlPoyM47nH2/4neTUF0Q+gVeNFLb8XVZJtBE0INNMXMPonl729tkjXq3h9oX7RbfH
- CniOd4DP6zprIF+qeEOPi0Bzcivt+G9g5GGXCEjqz4Sl298YoRyX1p+8zseuWM27ER5JouAVn
- 8FJaS/3TMQ51Isg9PB4SCgU8NeOhotQ7M7PGzD3UjuFwgB+Y3jWRnn459xTv+1Y/JFEZxMa8M
- JMF9bA2zlkylXKUWuUuU3fOKwACKPa/64zF1nTbxhb72pHfrscM0ixILH3J5COK2P59MmYOF5
- madCJNsLyeEh2QDHste3rgHxziW0pV5h6gMoIf26UWec8CqvNvO99lBXPUST/uLU+sqJCRBfM
- WjRuk=
+X-Provags-ID: V03:K1:FNzIpcsifz82dMRvtmblMPRrnj/yEBEj/i77JK/dhjI/8zG+cH9
+ B4qKaUtv01H3RsArK19wG0kDqVQTDC80wsDbXiqPtdeB6nTZ2nwc68n/HcDxmLi2XgSL9Fo
+ 1Li06AEDzmoZEdJs2gz1JBOTB9k/4OEXB0B67IDtRfCpF/SDFsRbR3EiYiCPqU1RJ9Afjwd
+ dMPB9AczGrAcv8m8ZhUEA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vbUB+HVSzg0=:yTfq3I34tJIlp+5rF91/Ox
+ 4ilCnsvuk0e5j8neDRYMh8tfVSBu7R5hlgJg9n5YQ5IyWW8O5FFlxK/OUQnbYPX9txvdxbVsi
+ 8wAladsQjf7K4Yzfyc32cNpxAr4gDRINYMjXVBaDyEnngERY9FA0pgS9bteghGATOG0DHmn49
+ Mn5XuojuwRpNoru2zg4YiFo0C4ZyLFBJ38jTDwHbGFQBVvkbAx9mqh3cVdoO3j0lALiSqjpmr
+ a7QfYdtypLtIS29jwnfm2FqJNbzx9UUtWi/5/4bYSRVbgAP2uCVAPWo7ZF+vsSJA6RLS9r6xg
+ 2Z7p6u8skkxQ4AfK3RWTVeTaXsPCOxgb7EoladpB1sm7ngq3xQQH7GGRxl/VQn4+pupLlHi2q
+ NmRtv30pkjcE6zb9loy8/bh6OnKVP7D60l4cF7+Oj1GwyhccFeo5Ip6sOWJed79GwqusS0Lua
+ 54ODSLaRuo/Gr5TkV8DIui8aGk7CGdR5qFlKDxO+podVabjMd2BxBADHhK914ioxDkNkXoZDI
+ JyzPpo5cWWTfkiEbnT0asMDcF4JMVbmrhdhNfZYsmBSNdVbPKDC9jfZ+FUa5uxIqPn1/W0BOP
+ wH28u+kKoghBF7UPjUP7qf5DvlYDgsqus53yCqefRJqhwKoboBeFo6H+XqGsWcDpcW3AETWJW
+ VwGNxLsN5kvyPw0daJeddsEcc+MBIQn0Y/YCjYqACOrYnxshyi0dyiPNNR862KIU2eix6o6zo
+ TDShP6LKME96L2QBX82hGO9xKlGyFGSRZg8FSNLazEOlV88gJru6eiYqAywZ1cVzREbXqJFfk
+ 2m1+po/dqurxDh5cl78hwSBFcHE5H2Wroc4ikDrzAkxG005HhYVdpt5gghmMLxtwBEBAE+NoS
+ aLyXzo0nqcGB0lvCP33+00uMNW7Z4NCH0lZEUM8D4jRSRd5LU6gN9j8wysmtpkk73SYqq/8LI
+ Q/aHq3WiBDqUcCKqZ5aF+cGsRfqntGkn081D14NZekCYu+qeqiemVXRa4TQwjC4ktCfPUAy2J
+ ICk86dKhw980jFTW55vnW2/Q5vDeGGaEK/EIPQ+96r1ETcjso7HX+UjmEaQEIbe7BqJydyFsR
+ pDR11C3Q7Igy6MMuzBietuxarU9SIHt4QRPB1gyrI0ApxRieift7SL/04OZTLmjmvA50nX00v
+ g9sC4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-cee6cb7300 (built-in add -p: implement the "worktree" patch modes,
-2019-12-21) added the worktree patch modes to the built-in add -p.
-Its commit message claims to be a port of 2f0896ec3ad4 (restore:
-support --patch, 2019-04-25), which did the same for the script
-git-add--interactive.perl.
+From: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-The script mentioned only the worktree in its prompt messages in
-worktree mode, while the built-in mentions the worktree and also the
-index, even though the command doesn't actually affect the index.
+When unicode filenames (encoded in UTF-8) are used, the visible width
+on the screen is not the same as strlen().
 
-2c8bd8471a (checkout -p: handle new files correctly, 2020-05-27)
-added new prompt messages for addition that also mention the index in
-worktree mode in the built-in, but not in the script.
+For example, `git log --stat` may produce an output like this:
 
-Correct these prompts to state that only the worktree will be affected.
+[snip the header]
 
-Reported-by: David Plumpton <david.plumpton@gmail.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+ Arger.txt  | 1 +
+ =C3=84rger.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+A side note: the original report was about cyrillic filenames.
+After some investigations it turned out that
+a) This is not a problem with "ambiguous characters" in unicode
+b) The same problem exists for all unicode code points (so we
+  can use Latin based Umlauts for demonstrations below)
+
+The '=C3=84' takes the same space on the screen as the 'A'.
+But needs one more byte in memory, so the the `git log --stat` output
+for "Arger.txt" (!) gets mis-aligned:
+The maximum length is derived from "=C3=84rger.txt", 10 bytes in memory,
+9 positions on the screen. That is why "Arger.txt" gets one extra ' '
+for aligment, it needs 9 bytes in memory.
+If there was a file "=C3=96", it would be correctly aligned by chance,
+but "=C3=96h=C3=B6" would not.
+
+The solution is of course, to use utf8_strwidth() instead of strlen()
+when dealing with the width on screen.
+
+And then there is another problem, code like this:
+strbuf_addf(&out, "%-*s", len, name);
+(or using the underlying snprintf() function) does not align the
+buffer to a minimum of len measured in screen-width, but uses the
+memory count.
+
+One could be tempted to wish that snprintf() was UTF-8 aware.
+That doesn't seem to be the case anywhere (tested on Linux and Mac),
+probably snprintf() uses the "bytes in memory"/strlen() approach to be
+compatible with older versions and this will never change.
+
+The basic idea is to change code in diff.c like this
+strbuf_addf(&out, "%-*s", len, name);
+
+into something like this:
+int padding =3D len - utf8_strwidth(name);
+if (padding < 0)
+	padding =3D 0;
+strbuf_addf(&out, " %s%*s", name, padding, "");
+
+The real change is slighty bigger, as it, as well, integrates two calls
+of strbuf_addf() into one.
+
+Tests:
+Two things need to be tested:
+ - The calculation of the maximum width
+ - The calculation of padding
+
+The name "textfile" is changed into "t=C3=ABxtfil=C3=AB", both have a widt=
+h of 8.
+If strlen() was used, to get the maximum width, the shorter "binfile" woul=
+d
+have been mis-aligned:
+ binfile    | [snip]
+ t=C3=ABxtfil=C3=AB | [snip]
+
+If only "binfile" would be renamed into "binfil=C3=AB":
+ binfil=C3=AB | [snip]
+ textfile | [snip]
+
+In order to verify that the width is calculated correctly everywhere,
+"binfile" is renamed into "binfil=C3=AB", giving 1 bytes more in strlen()
+"t=C3=ABxtfile" is renamed into "t=C3=ABxtfil=C3=AB", 2 byte more in strle=
+n().
+
+The updated t4012-diff-binary.sh checks the correct aligment:
+ binfil=C3=AB  | [snip]
+ t=C3=ABxtfil=C3=AB | [snip]
+
+Reported-by: Alexander Meshcheryakov <alexander.s.m@gmail.com>
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 =2D--
-Patch created using --function-context for easier review.  Note that
-help_patch_text is already correct.
+ diff.c                 | 27 ++++++++++++++++-----------
+ t/t4012-diff-binary.sh | 14 +++++++-------
+ 2 files changed, 23 insertions(+), 18 deletions(-)
 
- add-patch.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+diff --git a/diff.c b/diff.c
+index 974626a621..35b9da90fe 100644
+=2D-- a/diff.c
++++ b/diff.c
+@@ -2620,7 +2620,7 @@ static void show_stats(struct diffstat_t *data, stru=
+ct diff_options *options)
+ 			continue;
+ 		}
+ 		fill_print_name(file);
+-		len =3D strlen(file->print_name);
++		len =3D utf8_strwidth(file->print_name);
+ 		if (max_len < len)
+ 			max_len =3D len;
 
-diff --git a/add-patch.c b/add-patch.c
-index 29f9456df3..33ecd8398a 100644
-=2D-- a/add-patch.c
-+++ b/add-patch.c
-@@ -188,22 +188,22 @@ static struct patch_mode patch_mode_checkout_nothead=
- =3D {
- static struct patch_mode patch_mode_worktree_head =3D {
- 	.diff_cmd =3D { "diff-index", NULL },
- 	.apply_args =3D { "-R", NULL },
- 	.apply_check_args =3D { "-R", NULL },
- 	.is_reverse =3D 1,
- 	.prompt_mode =3D {
--		N_("Discard mode change from index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard deletion from index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard addition from index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard this hunk from index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard mode change from worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard deletion from worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard addition from worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard this hunk from worktree [y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint =3D N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for discarding."),
- 	.help_patch_text =3D
- 		N_("y - discard this hunk from worktree\n"
- 		   "n - do not discard this hunk from worktree\n"
- 		   "q - quit; do not discard this hunk or any of the remaining "
- 			"ones\n"
- 		   "a - discard this hunk and all later hunks in the file\n"
- 		   "d - do not discard this hunk or any of the later hunks in "
- 			"the file\n"),
- };
-@@ -211,21 +211,21 @@ static struct patch_mode patch_mode_worktree_head =
-=3D {
- static struct patch_mode patch_mode_worktree_nothead =3D {
- 	.diff_cmd =3D { "diff-index", "-R", NULL },
- 	.apply_args =3D { NULL },
- 	.apply_check_args =3D { NULL },
- 	.prompt_mode =3D {
--		N_("Apply mode change to index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply deletion to index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply addition to index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply this hunk to index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Apply mode change to worktree [y,n,q,a,d%s,?]? "),
-+		N_("Apply deletion to worktree [y,n,q,a,d%s,?]? "),
-+		N_("Apply addition to worktree [y,n,q,a,d%s,?]? "),
-+		N_("Apply this hunk to worktree [y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint =3D N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for applying."),
- 	.help_patch_text =3D
- 		N_("y - apply this hunk to worktree\n"
- 		   "n - do not apply this hunk to worktree\n"
- 		   "q - quit; do not apply this hunk or any of the remaining "
- 			"ones\n"
- 		   "a - apply this hunk and all later hunks in the file\n"
- 		   "d - do not apply this hunk or any of the later hunks in "
- 			"the file\n"),
- };
+@@ -2734,7 +2734,7 @@ static void show_stats(struct diffstat_t *data, stru=
+ct diff_options *options)
+ 		char *name =3D file->print_name;
+ 		uintmax_t added =3D file->added;
+ 		uintmax_t deleted =3D file->deleted;
+-		int name_len;
++		int name_len, padding;
+
+ 		if (!file->is_interesting && (added + deleted =3D=3D 0))
+ 			continue;
+@@ -2743,7 +2743,7 @@ static void show_stats(struct diffstat_t *data, stru=
+ct diff_options *options)
+ 		 * "scale" the filename
+ 		 */
+ 		len =3D name_width;
+-		name_len =3D strlen(name);
++		name_len =3D utf8_strwidth(name);
+ 		if (name_width < name_len) {
+ 			char *slash;
+ 			prefix =3D "...";
+@@ -2753,10 +2753,14 @@ static void show_stats(struct diffstat_t *data, st=
+ruct diff_options *options)
+ 			if (slash)
+ 				name =3D slash;
+ 		}
++		padding =3D len - utf8_strwidth(name);
++		if (padding < 0)
++			padding =3D 0;
+
+ 		if (file->is_binary) {
+-			strbuf_addf(&out, " %s%-*s |", prefix, len, name);
+-			strbuf_addf(&out, " %*s", number_width, "Bin");
++			strbuf_addf(&out, " %s%s%*s | %*s",
++				    prefix, name, padding, "",
++				    number_width, "Bin");
+ 			if (!added && !deleted) {
+ 				strbuf_addch(&out, '\n');
+ 				emit_diff_symbol(options, DIFF_SYMBOL_STATS_LINE,
+@@ -2776,8 +2780,9 @@ static void show_stats(struct diffstat_t *data, stru=
+ct diff_options *options)
+ 			continue;
+ 		}
+ 		else if (file->is_unmerged) {
+-			strbuf_addf(&out, " %s%-*s |", prefix, len, name);
+-			strbuf_addstr(&out, " Unmerged\n");
++			strbuf_addf(&out, " %s%s%*s | %*s",
++				    prefix, name, padding, "",
++				    number_width, "Unmerged");
+ 			emit_diff_symbol(options, DIFF_SYMBOL_STATS_LINE,
+ 					 out.buf, out.len, 0);
+ 			strbuf_reset(&out);
+@@ -2803,10 +2808,10 @@ static void show_stats(struct diffstat_t *data, st=
+ruct diff_options *options)
+ 				add =3D total - del;
+ 			}
+ 		}
+-		strbuf_addf(&out, " %s%-*s |", prefix, len, name);
+-		strbuf_addf(&out, " %*"PRIuMAX"%s",
+-			number_width, added + deleted,
+-			added + deleted ? " " : "");
++		strbuf_addf(&out, " %s%s%*s | %*"PRIuMAX"%s",
++			    prefix, name, padding, "",
++			    number_width, added + deleted,
++			    added + deleted ? " " : "");
+ 		show_graph(&out, '+', add, add_c, reset);
+ 		show_graph(&out, '-', del, del_c, reset);
+ 		strbuf_addch(&out, '\n');
+diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
+index c509143c81..c64d9d2f40 100755
+=2D-- a/t/t4012-diff-binary.sh
++++ b/t/t4012-diff-binary.sh
+@@ -113,20 +113,20 @@ test_expect_success 'diff --no-index with binary cre=
+ation' '
+ '
+
+ cat >expect <<EOF
+- binfile  |   Bin 0 -> 1026 bytes
+- textfile | 10000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++
++ binfil=C3=AB  |   Bin 0 -> 1026 bytes
++ t=C3=ABxtfil=C3=AB | 10000 +++++++++++++++++++++++++++++++++++++++++++++=
+++++++++++++++++
+ EOF
+
+ test_expect_success 'diff --stat with binary files and big change count' =
+'
+-	printf "\01\00%1024d" 1 >binfile &&
+-	git add binfile &&
++	printf "\01\00%1024d" 1 >binfil=C3=AB &&
++	git add binfil=C3=AB &&
+ 	i=3D0 &&
+ 	while test $i -lt 10000; do
+ 		echo $i &&
+ 		i=3D$(($i + 1)) || return 1
+-	done >textfile &&
+-	git add textfile &&
+-	git diff --cached --stat binfile textfile >output &&
++	done >t=C3=ABxtfil=C3=AB &&
++	git add t=C3=ABxtfil=C3=AB &&
++	git -c core.quotepath=3Dfalse diff --cached --stat binfil=C3=AB t=C3=ABx=
+tfil=C3=AB >output &&
+ 	grep " | " output >actual &&
+ 	test_cmp expect actual
+ '
 =2D-
-2.37.2
+2.34.0
+
