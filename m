@@ -2,111 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A25AECAAD3
-	for <git@archiver.kernel.org>; Thu, 15 Sep 2022 01:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77C84ECAAD8
+	for <git@archiver.kernel.org>; Thu, 15 Sep 2022 02:27:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230008AbiIOBrF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Sep 2022 21:47:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35390 "EHLO
+        id S229970AbiIOC1P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Sep 2022 22:27:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229701AbiIOBrD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2022 21:47:03 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B2F38E448
-        for <git@vger.kernel.org>; Wed, 14 Sep 2022 18:47:03 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id 130so25458070ybw.8
-        for <git@vger.kernel.org>; Wed, 14 Sep 2022 18:47:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date;
-        bh=nNwN6cZbnOW8sBCvdih+a/9zR+eSjldxjE038yTiin4=;
-        b=KxoMGWB0nrYOdKeDAj3oOnz0wIxIvuxh6vlbV3J0uvgBXdO/xVKRVbsEjMoa7CZVHH
-         ZE6Hz6X5hjWGzdoVN/l30Xvapc2xWsf7YZf6cqxv/7lIy4MR06bs8CjdYUBPkSCB4hu1
-         W9deU99NSA5oLFqT+uJ4dKHpwPMGAyNX2p+4fN30NugVfbLlfb3IavhIZkr6F+0OtnHu
-         /ha6nLya/Mqj+Oq9gTtUjEj8Yr33nEfNDwz+K2gaWiKiimCzALn8q/2jvcO0JMFSTE45
-         S9knbjS5BJm1eiPtEfFyfc0hdKrEl2mXUvIQenaDGvO8wpynZf8axNPNxsV5lLV3Fx4L
-         v8Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=nNwN6cZbnOW8sBCvdih+a/9zR+eSjldxjE038yTiin4=;
-        b=wTZac+Z3NDPwelVxQkMJxkOMqAwxjlbRuUi5ExnaEQm9CxoOZ6iT5I7ZlwKPJWG1S5
-         QUs0hzCr0M31Zbrh4fWJb6olRWJxLsQo5YJCRkNYBkEYR0R0IvV+BkjxcAbUPEvd/YMT
-         0p7FCSicB+tbqqZGnG/1Uw/3RxVaPuMHeBcmd2OAOmwPCH3r0DS6XYeaI5L9c0T928VD
-         gZQvRCqG9sWFbkcfSiYneto5PTtcAr3kARjkQ64rjv//o2U+5xWFpvYzlf6fyjmXi/bh
-         cS2ELzjVR/AxzurFUUrfqtQJhStZVLjprUsG1ncGaWH1KIClvONWaqc1iGITlWy1jADl
-         L93w==
-X-Gm-Message-State: ACgBeo2TSXn/Kd6ulo2wlZbZSan1dNJn1GzLoCf5BH9lfhXlJY+vEEyj
-        GJDPEnmtoEuFSeWmaBrUFyhNqriv1dhSbBIBhYGk2nQPzMGhXQ==
-X-Google-Smtp-Source: AA6agR7b12ZKa97BDoevS8n7W6O/u0BSNpx7KmStBCqzZVvqBNRpv96uv41+uFwYhdnumzDcyNBYW6je4E8v0jb41T4=
-X-Received: by 2002:a05:6902:1001:b0:67b:53f9:df37 with SMTP id
- w1-20020a056902100100b0067b53f9df37mr33899479ybt.240.1663206422162; Wed, 14
- Sep 2022 18:47:02 -0700 (PDT)
+        with ESMTP id S229779AbiIOC1O (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2022 22:27:14 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27D1340554
+        for <git@vger.kernel.org>; Wed, 14 Sep 2022 19:27:13 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 996781AB64E;
+        Wed, 14 Sep 2022 22:27:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=MSTKScAjE1jgvgglO/U9CfeeY
+        gvyxF2cHHTXQJ5gR8I=; b=JTS24okuvCVjc+kZIU/dfxyjBZnfLF9rDNLeiZJEh
+        K1WRHrkEGYtKcFnQeXxXHQjV/NhO82dJEXbtZCkrw4rJNJnwdSu4r42TkJwzHYsv
+        4DP+yUd2GNq3dzBjFQ4+Fp5dIwXkDxA5OHYBf9UHmR6uEbSUE5QhWeKAOixsAtoF
+        Wk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91B491AB64D;
+        Wed, 14 Sep 2022 22:27:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3E23A1AB64B;
+        Wed, 14 Sep 2022 22:27:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     David Plumpton <david.plumpton@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] add -p: fix worktree patch mode prompts
+References: <CAJXaddZwqGabdjmgc22eCYCdBw6nxcPbPfom26PwG3xvKEN93w@mail.gmail.com>
+        <2463c4b9-313b-032f-9313-d1421f71f111@web.de>
+Date:   Wed, 14 Sep 2022 19:27:07 -0700
+Message-ID: <xmqqy1ulpe2s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Brijesh Patel <bridgepatel@gmail.com>
-Date:   Thu, 15 Sep 2022 13:46:50 +1200
-Message-ID: <CACs=J2MLnawNF5mp19sCJAZADPenHjWVZvKW5rM1fwELHjqqyg@mail.gmail.com>
-Subject: BUG: Value for GIT_SSL_NO_VERIFY has no effect
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E6104850-349D-11ED-9D3A-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-It appears that any value assigned to GIT_SSL_NO_VERIFY (true or
-false) has no effect on the GIT operations. For testing purposes, we
-have created a host entry for github.com and mapped it to foo.com.
+> cee6cb7300 (built-in add -p: implement the "worktree" patch modes,
+> 2019-12-21) added the worktree patch modes to the built-in add -p.
+> Its commit message claims to be a port of 2f0896ec3ad4 (restore:
+> support --patch, 2019-04-25), which did the same for the script
+> git-add--interactive.perl.
+>
+> The script mentioned only the worktree in its prompt messages in
+> worktree mode, while the built-in mentions the worktree and also the
+> index, even though the command doesn't actually affect the index.
+>
+> 2c8bd8471a (checkout -p: handle new files correctly, 2020-05-27)
+> added new prompt messages for addition that also mention the index in
+> worktree mode in the built-in, but not in the script.
+>
+> Correct these prompts to state that only the worktree will be affected.
+>
+> Reported-by: David Plumpton <david.plumpton@gmail.com>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+> Patch created using --function-context for easier review.  Note that
+> help_patch_text is already correct.
 
-Step 1: Clone the repo with default configuration.
+Thanks, both of you.
 
-git clone https://foo.com/bridgepate/gs_auto_provision.git
-Cloning into 'gs_auto_provision'...
-fatal: unable to access
-'https://foo.com/bridgepate/gs_auto_provision.git/': SSL: certificate
-subject name (github.com) does not match target host name 'foo.com'
+Queued.
 
-As expected, the above fails with SSL certificate error.
 
-Step 2:  Clone with GIT_SSL_NO_VERIFY set to true
 
-GIT_SSL_NO_VERIFY=true git clone
-https://foo.com/bridgepate/gs_auto_provision.git
-Cloning into 'gs_auto_provision'...
-warning: redirecting to https://github.com/bridgepate/gs_auto_provision.git/
-remote: Enumerating objects: 244, done.
-remote: Counting objects: 100% (3/3), done.
-remote: Compressing objects: 100% (3/3), done.
-remote: Total 244 (delta 0), reused 1 (delta 0), pack-reused 241
-Receiving objects: 100% (244/244), 108.75 KiB | 611.00 KiB/s, done.
-Resolving deltas: 100% (131/131), done.
-
-The above works as expected.
-
-Step 3:  Clone with GIT_SSL_NO_VERIFY to false
-
-GIT_SSL_NO_VERIFY=false git clone
-https://foo.com/bridgepate/gs_auto_provision.git
-Cloning into 'gs_auto_provision'...
-warning: redirecting to https://github.com/bridgepate/gs_auto_provision.git/
-remote: Enumerating objects: 244, done.
-remote: Counting objects: 100% (3/3), done.
-remote: Compressing objects: 100% (3/3), done.
-remote: Total 244 (delta 0), reused 1 (delta 0), pack-reused 241
-Receiving objects: 100% (244/244), 108.75 KiB | 1.38 MiB/s, done.
-Resolving deltas: 100% (131/131), done.
-
-We expect the above to fail as we saw in step 1, but it succeeded.
-This shows that the value for this environment variable is ignored.
-
-Following is the platform details
-
-OS: Ubuntu 22.04.1 LTS
-GIT: git version 2.34.1
-
-Thanks in advance
-
-Brijesh Patel
+>
+>  add-patch.c | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+>
+> diff --git a/add-patch.c b/add-patch.c
+> index 29f9456df3..33ecd8398a 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -188,22 +188,22 @@ static struct patch_mode patch_mode_checkout_noth=
+ead =3D {
+>  static struct patch_mode patch_mode_worktree_head =3D {
+>  	.diff_cmd =3D { "diff-index", NULL },
+>  	.apply_args =3D { "-R", NULL },
+>  	.apply_check_args =3D { "-R", NULL },
+>  	.is_reverse =3D 1,
+>  	.prompt_mode =3D {
+> -		N_("Discard mode change from index and worktree [y,n,q,a,d%s,?]? "),
+> -		N_("Discard deletion from index and worktree [y,n,q,a,d%s,?]? "),
+> -		N_("Discard addition from index and worktree [y,n,q,a,d%s,?]? "),
+> -		N_("Discard this hunk from index and worktree [y,n,q,a,d%s,?]? "),
+> +		N_("Discard mode change from worktree [y,n,q,a,d%s,?]? "),
+> +		N_("Discard deletion from worktree [y,n,q,a,d%s,?]? "),
+> +		N_("Discard addition from worktree [y,n,q,a,d%s,?]? "),
+> +		N_("Discard this hunk from worktree [y,n,q,a,d%s,?]? "),
+>  	},
+>  	.edit_hunk_hint =3D N_("If the patch applies cleanly, the edited hunk=
+ "
+>  			     "will immediately be marked for discarding."),
+>  	.help_patch_text =3D
+>  		N_("y - discard this hunk from worktree\n"
+>  		   "n - do not discard this hunk from worktree\n"
+>  		   "q - quit; do not discard this hunk or any of the remaining "
+>  			"ones\n"
+>  		   "a - discard this hunk and all later hunks in the file\n"
+>  		   "d - do not discard this hunk or any of the later hunks in "
+>  			"the file\n"),
+>  };
+> @@ -211,21 +211,21 @@ static struct patch_mode patch_mode_worktree_head=
+ =3D {
+>  static struct patch_mode patch_mode_worktree_nothead =3D {
+>  	.diff_cmd =3D { "diff-index", "-R", NULL },
+>  	.apply_args =3D { NULL },
+>  	.apply_check_args =3D { NULL },
+>  	.prompt_mode =3D {
+> -		N_("Apply mode change to index and worktree [y,n,q,a,d%s,?]? "),
+> -		N_("Apply deletion to index and worktree [y,n,q,a,d%s,?]? "),
+> -		N_("Apply addition to index and worktree [y,n,q,a,d%s,?]? "),
+> -		N_("Apply this hunk to index and worktree [y,n,q,a,d%s,?]? "),
+> +		N_("Apply mode change to worktree [y,n,q,a,d%s,?]? "),
+> +		N_("Apply deletion to worktree [y,n,q,a,d%s,?]? "),
+> +		N_("Apply addition to worktree [y,n,q,a,d%s,?]? "),
+> +		N_("Apply this hunk to worktree [y,n,q,a,d%s,?]? "),
+>  	},
+>  	.edit_hunk_hint =3D N_("If the patch applies cleanly, the edited hunk=
+ "
+>  			     "will immediately be marked for applying."),
+>  	.help_patch_text =3D
+>  		N_("y - apply this hunk to worktree\n"
+>  		   "n - do not apply this hunk to worktree\n"
+>  		   "q - quit; do not apply this hunk or any of the remaining "
+>  			"ones\n"
+>  		   "a - apply this hunk and all later hunks in the file\n"
+>  		   "d - do not apply this hunk or any of the later hunks in "
+>  			"the file\n"),
+>  };
+> --
+> 2.37.2
