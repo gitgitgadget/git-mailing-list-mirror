@@ -2,134 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7D1AECAAD3
-	for <git@archiver.kernel.org>; Thu, 15 Sep 2022 05:08:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65296ECAAD3
+	for <git@archiver.kernel.org>; Thu, 15 Sep 2022 07:50:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229637AbiIOFIR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Sep 2022 01:08:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59926 "EHLO
+        id S229877AbiIOHt7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Sep 2022 03:49:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229635AbiIOFIP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2022 01:08:15 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E1DD57573
-        for <git@vger.kernel.org>; Wed, 14 Sep 2022 22:08:12 -0700 (PDT)
-Received: (qmail 8585 invoked by uid 109); 15 Sep 2022 05:08:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Sep 2022 05:08:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6561 invoked by uid 111); 15 Sep 2022 05:08:13 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Sep 2022 01:08:13 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 15 Sep 2022 00:08:10 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jacob Stopak <jacob@initialcommit.io>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Newbie contribution idea for 'git log --children': input
- requested
-Message-ID: <YyKzOk5AQBz1pmAh@coredump.intra.peff.net>
-References: <Yx5qjPhZ5AHkPHr7@MacBook-Pro-3.local>
- <xmqqillth1am.fsf@gitster.g>
+        with ESMTP id S229550AbiIOHt6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2022 03:49:58 -0400
+Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3172717585
+        for <git@vger.kernel.org>; Thu, 15 Sep 2022 00:49:57 -0700 (PDT)
+Received: by mail-ua1-x92d.google.com with SMTP id h22so3705712uab.5
+        for <git@vger.kernel.org>; Thu, 15 Sep 2022 00:49:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=mlJg8gVPQv+FSe9+0ecS8xpbF9xrOmL8Rq87fCAi8F8=;
+        b=ccSqjNngFR5DanSxfjyBHiz9/FsWCLyIijXXz/3mrjGJgwlYy30Ulmnwwh1qsF/qfm
+         xTkZZXOjC2A1yQAZAACE0SASWE1UcbYc6L2A35KJfrNcoZzV6z48nSWb0d6fQtPlg0Dq
+         p1k2rqycJ2XfCp3y/JL4fZhvgUm6WD1X6G2UNM/G1f7xcED0YkqPxD0nTRTvSG4AJuMY
+         +OhO7FOlkXzVebEo/4WyWfNi9h0iwbrhbFSwWfJAf6qMon05IAagXNTM2a3mt/f2ltWz
+         m8LNWC0xoiWpDz8SuFBfniB+HnMl0eFMhXVKSKpSxGFjN1UiyVUYZrS5Nc5AICZWuZW3
+         exsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=mlJg8gVPQv+FSe9+0ecS8xpbF9xrOmL8Rq87fCAi8F8=;
+        b=V+sP3uRIk7CQwHuly1BCApIISMhl17k+oGhDpH/qcAbv2wLbITDpBzNY7ZfHgIRD0b
+         7yRHvI1v5tfOLew8BNX8iU0Gty1lOM4LKwQGAVhAI0G43bolCdtH8xwTqKwyT7WlgIHC
+         sNmFmI3KNMBbbh4MWBnmXwr3TZk3emqosOvUr3+i8ZuFjF2oW7VRy5X47Ns+dC72dYqR
+         h3GtkNC7/iggfkw6odHvGfz2DNokqLtZHGV+GAZHnfkzTc22jwO4I7dAxUnm2tf5YJ28
+         ix7puL1TC47AfmAJUlp0/77sh3t2VqukfrV9fDGlfGMa6fL6rucIJYWj/uaCRdf9cp3Q
+         e7gg==
+X-Gm-Message-State: ACgBeo3XP3YR///54b1iitX8DOSrUAFZHhrweJRvJkJvu4U2xoGuHkZ4
+        6r3IS95cdxx9WTQNIOrYNkj5OvJGW27zpxGZZpnq906h3W8=
+X-Google-Smtp-Source: AA6agR5eCNey78pfKx4Nk6Uwreh1tCETsR3pLW3rfFgLi91PSYYtLlN2l/Iuaf82aZhTFEgvd8sLoOLpTV0W+wZfMc4=
+X-Received: by 2002:ab0:5711:0:b0:3b5:13e0:23b4 with SMTP id
+ s17-20020ab05711000000b003b513e023b4mr11467930uaa.101.1663228196212; Thu, 15
+ Sep 2022 00:49:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqillth1am.fsf@gitster.g>
+References: <183353220fe.d7826593472673.3445243727369286065@elijahpepe.com>
+ <xmqqbkrjb75g.fsf@gitster.g> <18337ea407a.10c144c52599576.4708941661785569426@elijahpepe.com>
+ <CAFQ2z_OR8uLe3rs0r09a3fvSQUE2H4WQTquddUwEeahoiRWimA@mail.gmail.com> <18338058407.117ce7158612837.8515739237320978792@elijahpepe.com>
+In-Reply-To: <18338058407.117ce7158612837.8515739237320978792@elijahpepe.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Thu, 15 Sep 2022 09:49:44 +0200
+Message-ID: <CAFQ2z_P0k-VQ0mj4RQquA1SJX8RyY+63s2U2pkEr80+B8O4YXQ@mail.gmail.com>
+Subject: Re: [PATCH] reftable: pass pq_entry by address
+To:     Elijah Conners <business@elijahpepe.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 11, 2022 at 05:41:21PM -0700, Junio C Hamano wrote:
+On Tue, Sep 13, 2022 at 8:03 PM Elijah Conners <business@elijahpepe.com> wr=
+ote:
+>
+> Han-Wen Nienhuys <hanwen@google.com> writes:
+>  > it might be a bit slower, but "dangerous"? How so?
+> In this context, dangerous is the wrong word, but in some cases large obj=
+ects on the stack can cause stack overflows. In this case, slower is the ri=
+ght word here.
 
-> > But I'm wondering if it could be addressed by simply adding a
-> > discrete check to see if any commits point to HEAD as a parent,
-> > (only when the --children option is used of course), and if so,
-> > populate those ids into the log message.
-> 
-> In a history where all commits and their parent-child relationship
-> can be enumerated and the links can be reversed in-core, it would be
-> trivial to implement.  The challenge is to make sure it works
-> without wasting unusably large resources to do so in a real world
-> project.  Having a commit-graph might help.
+I'll let you paint this bikeshed, but do note that the priority queue
+isn't actually optimal here, in a much bigger way. In the typical
+case, you'd have
 
-I talked a little with Jacob about this at the contributor summit. As
-I don't think I've ever used --children myself, I was curious about the
-use case. :)
+1. large base reftable (created by GC)
+2. small updates (created by individual ref updates)
 
-I think it is that one might want to do something like:
+When you're iterating, most of the iteration entries will come from
+the large base reftable, and only occasionally, you have to get
+entries from the small tables.
+In this scenario, the current code will insert entries from the large
+table into the priority queue, have it filter up to the top at cost
+log(number-of-tables), for each of the entries to be read.
 
-   git log --children $some_old_oid
+With the current online compaction, number-of-tables =3D
+log(number-of-refs), so at log(log(number-of-refs)) it's not a huge
+cost, but certainly larger than the cost of copying the entry once in
+the function.
 
-and get a better idea of what was going on around the commit, both
-before and after. And there I think that yeah, enumerating all available
-commits to build the reverse index would make sense.
+JGit has an optimization here where it tries to get the next entry
+from the table that previously provided the minimum entry. I didn't
+implement it for simplicity's sake, but if you care about performance,
+you might want to try your hand at that.
 
-I don't think it would be a strict fix for --children, though, for two
-reasons:
 
-  - the current --children is free-ish because we're marking the commits
-    as we traverse, so no extra parsing is required (just some storage
-    for the reverse index)
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-  - the semantics aren't quite the same. One obvious issue is that you
-    might care more about children reachable from your starting tips
-    than arbitrary (possibly unreachable) children in your object store.
-    But another is that --children implies parent rewriting, so it's not
-    a strict reversal of the parent-child links.
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-So we'd want to retain the existing --children, and this new mode might
-become --children=all or something.
+Registergericht und -nummer: Hamburg, HRB 86891
 
-Just sketching out an implementation, I think it is kind of similar to
-the "decorate" mechanism, where we build the commit->metadata mapping
-ahead of time, and then add output to the commits that we show. So we'd
-probably want to load it around the same time we call
-load_ref_decorations().
+Sitz der Gesellschaft: Hamburg
 
-The next question is: what do we put in it?
-
-One idea is to just reverse all the commits we know about. I.e., use
-for_each_loose_object() and for_each_packed_object(), similar to the way
-"cat-file --batch-all-objects" works. Use lookup_commit_in_graph() to
-use the commit-graph when we can, and check object types via
-oid_object_info() before trying to parse them (so we can avoid loading
-non-commits from disk entirely).
-
-But another idea is to do a _separate_ traversal in order to decide
-which commits to care about. Then we have to know which tips to start
-that traversal from, and we may end up with something similar to
---decorate-refs in terms of expressing that traversal. But I suspect the
-output here is more interesting to the user, because now you can ask
-just about reachable children, or children reachable from release tags,
-or from a specific branch, etc.
-
-So you could do something like:
-
-  git show --children=refs/heads/* $some_old_commit
-
-and see where we went from $some_old_commit that eventually ended up on
-a branch.
-
-But getting back to the original use case, which is about providing
-context for a commit: now we have the child commit id, but it's still a
-bit of a pain to actually see what it's in it.
-
-I usually solve this by doing a single traversal, and asking the pager
-to jump straight to the commit of interest, at which point I can scroll
-up and down to see the context. Like:
-
-  git log --color | less +/$some_old_commit
-
-I'm not 100% sure I understand the original use case. But if I do, and
-that solves it, I wonder if we could make it more ergonomic somehow.
-Likewise, I think using something like "tig" would be nice for viewing
-context, but AFAIK it does not have an option to jump to a specific
-commit. You can jump by line number, but it would be nice to be able to
-do:
-
-  tig --highlight=1234abcd
-
-and get a graph starting at HEAD, but jump immediately to the line for
-1234abcd.
-
--Peff
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Liana Sebastian
