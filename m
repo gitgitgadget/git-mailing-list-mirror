@@ -2,110 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5121ECAAD8
-	for <git@archiver.kernel.org>; Thu, 15 Sep 2022 02:57:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 947A0ECAAA1
+	for <git@archiver.kernel.org>; Thu, 15 Sep 2022 03:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229931AbiIOC50 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Sep 2022 22:57:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60380 "EHLO
+        id S230300AbiIODi5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Sep 2022 23:38:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229975AbiIOC5V (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2022 22:57:21 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86FCE90C53
-        for <git@vger.kernel.org>; Wed, 14 Sep 2022 19:57:18 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A19ED1AB79B;
-        Wed, 14 Sep 2022 22:57:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=HO+PTgPRs7tTdHu1m2u4wWDVPqvInSEJ9KmnaPKSXn8=; b=pACa
-        eVSbjc60QF/yBNrUF94grP//rtenoRSMtA258mvemJ2PsuXLtIOkLNzezp7o/Cns
-        FlXCCk+33Fl70fFnff1NLJBhln9hQ/7INMWi6Vy9XtlpIlbd8CyicG3nO7zPxsrx
-        Arrr4WUOYrfGM/+rJVF9zlL735DYOBRcTSeWCIc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9A2001AB799;
-        Wed, 14 Sep 2022 22:57:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 85D221AB796;
-        Wed, 14 Sep 2022 22:57:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v5 1/3] builtin/grep.c: add --sparse option
-References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
-        <20220908001854.206789-1-shaoxuan.yuan02@gmail.com>
-        <20220908001854.206789-2-shaoxuan.yuan02@gmail.com>
-        <CABPp-BF-z72=hY_Jf8h3g95s+wwZOsV_S=+dDNs_AVskQxoaTw@mail.gmail.com>
-Date:   Wed, 14 Sep 2022 19:57:11 -0700
-Message-ID: <xmqqh719pcoo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S230356AbiIODiT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Sep 2022 23:38:19 -0400
+Received: from sender4-of-o54.zoho.com (sender4-of-o54.zoho.com [136.143.188.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBD0692F70
+        for <git@vger.kernel.org>; Wed, 14 Sep 2022 20:37:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1663213054; cv=none; 
+        d=zohomail.com; s=zohoarc; 
+        b=KKOkj+U5w257qZn7F73y08pvRpqkdh3uOUqBZuCPM8xkWV0jwu18VllrE4VT8YIOL6IBqmOgPOUbgCOWfMeBuNYYEGX6/DOD+mcC0dTvJKwWwj0dtU2qtwxLqHHm8kNqzV4t2TaOAulbjDtNjVpp97ovG8Jpt0RVk7/l0aMnQaI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+        t=1663213054; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:MIME-Version:Message-ID:Subject:To; 
+        bh=RxHnYmT5v9bqm6WmfbujHt5DntoBIDWzvfRFDU9dtJY=; 
+        b=nCDmowteUnJc404oMIr2EITxXudqaB54rbzCktgZpazaa9lXVl9ku4i9x8AuS6dpdF2xpqSKl2BGItqHilQcpYxHjOjbkyyrym7Sk1h84NFTR/lL1K7kHr7VbXBbf4fSGOd/QoBVNW+K3lPyXPIVQC2PcYiM8+Pfwrl6hlnWKVI=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+        spf=pass  smtp.mailfrom=business@elijahpepe.com;
+        dmarc=pass header.from=<business@elijahpepe.com>
+Received: from mail.zoho.com by mx.zohomail.com
+        with SMTP id 1663213054171709.0585200489435; Wed, 14 Sep 2022 20:37:34 -0700 (PDT)
+Date:   Wed, 14 Sep 2022 20:37:34 -0700
+From:   Elijah Conners <business@elijahpepe.com>
+To:     "git" <git@vger.kernel.org>
+Cc:     "Junio C Hamano" <gitster@pobox.com>, "hanwen" <hanwen@google.com>
+Message-ID: <1833f3928cb.acf3c97d869879.7909589521159235166@elijahpepe.com>
+In-Reply-To: 
+Subject: [PATCH v2] reftable: use a pointer for pq_entry param
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 18E8F2AA-34A2-11ED-B780-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+The speed of the merged_iter_pqueue_add() can be improved by using a
+pointer to the pq_entry struct, which is 96 bytes. Since the pq_entry
+param is worked directly on the stack and does not currently have a
+pointer to it, the merged_iter_pqueue_add() function is slightly
+slower.
 
-> ... I think all those other commands probably deserve a mode where they
-> restrict output to the view associated with the user's cone.  I've
-> brought that up before[1].  I was skeptical of making it the default,
-> because it'd probably take a long time to implement it everywhere.
-> Slowly changing defaults of all commands over many git releases seems
-> like a poor strategy, but I'm afraid that's what it looks like we are
-> doing here.
->
-> I'm also worried that slowly changing the defaults without a
-> high-level plan will lead to users struggling to figure out what
-> flag(s) to pass.  Are we going to be stuck in a situation where users
-> have to remember that for a dense search, they use one flag for `grep
-> --cached`, a different one for  `grep [REVISION]`, no flag is needed
-> for `diff [REVISION]`, but yet a different flag is needed for `git
-> log`?
+References to pq_entry in reftable have typically included pointers,
+such as both of the params for pq_less().
 
-In short, the default should be "everywhere in tree, regardless of
-the current sparse-checkout settings", with commands opting into
-implementing "limit only to sparse-checkout settings" as an option,
-at least initially, with an eye to possibly flip the default later
-when all commands support that position but not before?
+Since we are working with pointers in the pq_entry param, as keenly
+pointed out, the pq_entry param has also been made into a const since
+the contents of the pq_entry param are copied and not manipulated.
 
-I think that is a reasonable position to take.  I lean towards the
-default of limiting the operations to inside sparse cone(s) for all
-subcommands when all subcommands learn to be capable to do so, but I
-also agree that using that default for only for subcommands that
-have learned to do, which will happen over time, would be way too
-confusing for our users.
+Signed-off-by: Elijah Conners <business@elijahpepe.com>
+---
+ reftable/merged.c  | 4 ++--
+ reftable/pq.c      | 4 ++--
+ reftable/pq.h      | 2 +-
+ reftable/pq_test.c | 2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-By the way, I briefly wondered if "limit to sparse-checkout setting"
-can be done by introducing a fake "attribute" and using the "attr"
-pathspec magic, but it may probably be a bad match, and separate
-option would be more appropriate.
+diff --git a/reftable/merged.c b/reftable/merged.c
+index 2a6efa110d..5ded470c08 100644
+--- a/reftable/merged.c
++++ b/reftable/merged.c
+@@ -36,7 +36,7 @@ static int merged_iter_init(struct merged_iter *mi)
+                                .rec = rec,
+                                .index = i,
+                        };
+-                       merged_iter_pqueue_add(&mi->pq, e);
++                       merged_iter_pqueue_add(&mi->pq, &e);
+                }
+        }
 
->> Change the default behavior of 'git grep' to focus on the files within
->> the sparse-checkout definition. To enable the previous behavior, add a
->> '--sparse' option to 'git grep' that triggers the old behavior that
->> inspects paths outside of the sparse-checkout definition when paired
->> with the '--cached' option.
->
-> I still think the flag name of `--sparse` is totally backwards and
-> highly confusing for the described behavior.
+@@ -71,7 +71,7 @@ static int merged_iter_advance_nonnull_subiter(struct merged_iter *mi,
+                return 0;
+        }
 
-Yeah, regardless of which between "--sparse" and "--no-sparse"
-should be the default, I am in 100% agreement that "--sparse"
-meaning "affect things both inside and outside the sparse cones" is
-totally backwards.
+-       merged_iter_pqueue_add(&mi->pq, e);
++       merged_iter_pqueue_add(&mi->pq, &e);
+        return 0;
+ }
 
-How strongly ingrained is this UI mistake?  I have a feeling that
-this may be something we still can undo and redo relatively easily,
-i.e. "--sparse" may be that "limit to sparse-checkout setting"
-option, not "--no-sparse".
+diff --git a/reftable/pq.c b/reftable/pq.c
+index 96ca6dd37b..dcefeb793a 100644
+--- a/reftable/pq.c
++++ b/reftable/pq.c
+@@ -71,7 +71,7 @@ struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq)
+        return e;
+ }
+
+-void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, struct pq_entry e)
++void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry *e)
+ {
+        int i = 0;
+
+@@ -81,7 +81,7 @@ void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, struct pq_entry e)
+                                            pq->cap * sizeof(struct pq_entry));
+        }
+
+-       pq->heap[pq->len++] = e;
++       pq->heap[pq->len++] = *e;
+        i = pq->len - 1;
+        while (i > 0) {
+                int j = (i - 1) / 2;
+diff --git a/reftable/pq.h b/reftable/pq.h
+index 56fc1b6d87..e85bac9b52 100644
+--- a/reftable/pq.h
++++ b/reftable/pq.h
+@@ -26,7 +26,7 @@ struct pq_entry merged_iter_pqueue_top(struct merged_iter_pqueue pq);
+ int merged_iter_pqueue_is_empty(struct merged_iter_pqueue pq);
+ void merged_iter_pqueue_check(struct merged_iter_pqueue pq);
+ struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq);
+-void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, struct pq_entry e);
++void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry *e);
+ void merged_iter_pqueue_release(struct merged_iter_pqueue *pq);
+ int pq_less(struct pq_entry *a, struct pq_entry *b);
+
+diff --git a/reftable/pq_test.c b/reftable/pq_test.c
+index 7de5e886f3..011b5c7502 100644
+--- a/reftable/pq_test.c
++++ b/reftable/pq_test.c
+@@ -46,7 +46,7 @@ static void test_pq(void)
+                                               .u.ref = {
+                                                       .refname = names[i],
+                                               } } };
+-               merged_iter_pqueue_add(&pq, e);
++               merged_iter_pqueue_add(&pq, &e);
+                merged_iter_pqueue_check(pq);
+                i = (i * 7) % N;
+        } while (i != 1);
+--
+2.29.2.windows.2
