@@ -2,137 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 947A0ECAAA1
-	for <git@archiver.kernel.org>; Thu, 15 Sep 2022 03:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7D1AECAAD3
+	for <git@archiver.kernel.org>; Thu, 15 Sep 2022 05:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230300AbiIODi5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Sep 2022 23:38:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53662 "EHLO
+        id S229637AbiIOFIR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Sep 2022 01:08:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230356AbiIODiT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Sep 2022 23:38:19 -0400
-Received: from sender4-of-o54.zoho.com (sender4-of-o54.zoho.com [136.143.188.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBD0692F70
-        for <git@vger.kernel.org>; Wed, 14 Sep 2022 20:37:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1663213054; cv=none; 
-        d=zohomail.com; s=zohoarc; 
-        b=KKOkj+U5w257qZn7F73y08pvRpqkdh3uOUqBZuCPM8xkWV0jwu18VllrE4VT8YIOL6IBqmOgPOUbgCOWfMeBuNYYEGX6/DOD+mcC0dTvJKwWwj0dtU2qtwxLqHHm8kNqzV4t2TaOAulbjDtNjVpp97ovG8Jpt0RVk7/l0aMnQaI=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-        t=1663213054; h=Content-Type:Content-Transfer-Encoding:Cc:Date:From:MIME-Version:Message-ID:Subject:To; 
-        bh=RxHnYmT5v9bqm6WmfbujHt5DntoBIDWzvfRFDU9dtJY=; 
-        b=nCDmowteUnJc404oMIr2EITxXudqaB54rbzCktgZpazaa9lXVl9ku4i9x8AuS6dpdF2xpqSKl2BGItqHilQcpYxHjOjbkyyrym7Sk1h84NFTR/lL1K7kHr7VbXBbf4fSGOd/QoBVNW+K3lPyXPIVQC2PcYiM8+Pfwrl6hlnWKVI=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-        spf=pass  smtp.mailfrom=business@elijahpepe.com;
-        dmarc=pass header.from=<business@elijahpepe.com>
-Received: from mail.zoho.com by mx.zohomail.com
-        with SMTP id 1663213054171709.0585200489435; Wed, 14 Sep 2022 20:37:34 -0700 (PDT)
-Date:   Wed, 14 Sep 2022 20:37:34 -0700
-From:   Elijah Conners <business@elijahpepe.com>
-To:     "git" <git@vger.kernel.org>
-Cc:     "Junio C Hamano" <gitster@pobox.com>, "hanwen" <hanwen@google.com>
-Message-ID: <1833f3928cb.acf3c97d869879.7909589521159235166@elijahpepe.com>
-In-Reply-To: 
-Subject: [PATCH v2] reftable: use a pointer for pq_entry param
+        with ESMTP id S229635AbiIOFIP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2022 01:08:15 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E1DD57573
+        for <git@vger.kernel.org>; Wed, 14 Sep 2022 22:08:12 -0700 (PDT)
+Received: (qmail 8585 invoked by uid 109); 15 Sep 2022 05:08:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 Sep 2022 05:08:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6561 invoked by uid 111); 15 Sep 2022 05:08:13 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.3)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 Sep 2022 01:08:13 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 15 Sep 2022 00:08:10 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jacob Stopak <jacob@initialcommit.io>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Newbie contribution idea for 'git log --children': input
+ requested
+Message-ID: <YyKzOk5AQBz1pmAh@coredump.intra.peff.net>
+References: <Yx5qjPhZ5AHkPHr7@MacBook-Pro-3.local>
+ <xmqqillth1am.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqillth1am.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The speed of the merged_iter_pqueue_add() can be improved by using a
-pointer to the pq_entry struct, which is 96 bytes. Since the pq_entry
-param is worked directly on the stack and does not currently have a
-pointer to it, the merged_iter_pqueue_add() function is slightly
-slower.
+On Sun, Sep 11, 2022 at 05:41:21PM -0700, Junio C Hamano wrote:
 
-References to pq_entry in reftable have typically included pointers,
-such as both of the params for pq_less().
+> > But I'm wondering if it could be addressed by simply adding a
+> > discrete check to see if any commits point to HEAD as a parent,
+> > (only when the --children option is used of course), and if so,
+> > populate those ids into the log message.
+> 
+> In a history where all commits and their parent-child relationship
+> can be enumerated and the links can be reversed in-core, it would be
+> trivial to implement.  The challenge is to make sure it works
+> without wasting unusably large resources to do so in a real world
+> project.  Having a commit-graph might help.
 
-Since we are working with pointers in the pq_entry param, as keenly
-pointed out, the pq_entry param has also been made into a const since
-the contents of the pq_entry param are copied and not manipulated.
+I talked a little with Jacob about this at the contributor summit. As
+I don't think I've ever used --children myself, I was curious about the
+use case. :)
 
-Signed-off-by: Elijah Conners <business@elijahpepe.com>
----
- reftable/merged.c  | 4 ++--
- reftable/pq.c      | 4 ++--
- reftable/pq.h      | 2 +-
- reftable/pq_test.c | 2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
+I think it is that one might want to do something like:
 
-diff --git a/reftable/merged.c b/reftable/merged.c
-index 2a6efa110d..5ded470c08 100644
---- a/reftable/merged.c
-+++ b/reftable/merged.c
-@@ -36,7 +36,7 @@ static int merged_iter_init(struct merged_iter *mi)
-                                .rec = rec,
-                                .index = i,
-                        };
--                       merged_iter_pqueue_add(&mi->pq, e);
-+                       merged_iter_pqueue_add(&mi->pq, &e);
-                }
-        }
+   git log --children $some_old_oid
 
-@@ -71,7 +71,7 @@ static int merged_iter_advance_nonnull_subiter(struct merged_iter *mi,
-                return 0;
-        }
+and get a better idea of what was going on around the commit, both
+before and after. And there I think that yeah, enumerating all available
+commits to build the reverse index would make sense.
 
--       merged_iter_pqueue_add(&mi->pq, e);
-+       merged_iter_pqueue_add(&mi->pq, &e);
-        return 0;
- }
+I don't think it would be a strict fix for --children, though, for two
+reasons:
 
-diff --git a/reftable/pq.c b/reftable/pq.c
-index 96ca6dd37b..dcefeb793a 100644
---- a/reftable/pq.c
-+++ b/reftable/pq.c
-@@ -71,7 +71,7 @@ struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq)
-        return e;
- }
+  - the current --children is free-ish because we're marking the commits
+    as we traverse, so no extra parsing is required (just some storage
+    for the reverse index)
 
--void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, struct pq_entry e)
-+void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry *e)
- {
-        int i = 0;
+  - the semantics aren't quite the same. One obvious issue is that you
+    might care more about children reachable from your starting tips
+    than arbitrary (possibly unreachable) children in your object store.
+    But another is that --children implies parent rewriting, so it's not
+    a strict reversal of the parent-child links.
 
-@@ -81,7 +81,7 @@ void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, struct pq_entry e)
-                                            pq->cap * sizeof(struct pq_entry));
-        }
+So we'd want to retain the existing --children, and this new mode might
+become --children=all or something.
 
--       pq->heap[pq->len++] = e;
-+       pq->heap[pq->len++] = *e;
-        i = pq->len - 1;
-        while (i > 0) {
-                int j = (i - 1) / 2;
-diff --git a/reftable/pq.h b/reftable/pq.h
-index 56fc1b6d87..e85bac9b52 100644
---- a/reftable/pq.h
-+++ b/reftable/pq.h
-@@ -26,7 +26,7 @@ struct pq_entry merged_iter_pqueue_top(struct merged_iter_pqueue pq);
- int merged_iter_pqueue_is_empty(struct merged_iter_pqueue pq);
- void merged_iter_pqueue_check(struct merged_iter_pqueue pq);
- struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq);
--void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, struct pq_entry e);
-+void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry *e);
- void merged_iter_pqueue_release(struct merged_iter_pqueue *pq);
- int pq_less(struct pq_entry *a, struct pq_entry *b);
+Just sketching out an implementation, I think it is kind of similar to
+the "decorate" mechanism, where we build the commit->metadata mapping
+ahead of time, and then add output to the commits that we show. So we'd
+probably want to load it around the same time we call
+load_ref_decorations().
 
-diff --git a/reftable/pq_test.c b/reftable/pq_test.c
-index 7de5e886f3..011b5c7502 100644
---- a/reftable/pq_test.c
-+++ b/reftable/pq_test.c
-@@ -46,7 +46,7 @@ static void test_pq(void)
-                                               .u.ref = {
-                                                       .refname = names[i],
-                                               } } };
--               merged_iter_pqueue_add(&pq, e);
-+               merged_iter_pqueue_add(&pq, &e);
-                merged_iter_pqueue_check(pq);
-                i = (i * 7) % N;
-        } while (i != 1);
---
-2.29.2.windows.2
+The next question is: what do we put in it?
+
+One idea is to just reverse all the commits we know about. I.e., use
+for_each_loose_object() and for_each_packed_object(), similar to the way
+"cat-file --batch-all-objects" works. Use lookup_commit_in_graph() to
+use the commit-graph when we can, and check object types via
+oid_object_info() before trying to parse them (so we can avoid loading
+non-commits from disk entirely).
+
+But another idea is to do a _separate_ traversal in order to decide
+which commits to care about. Then we have to know which tips to start
+that traversal from, and we may end up with something similar to
+--decorate-refs in terms of expressing that traversal. But I suspect the
+output here is more interesting to the user, because now you can ask
+just about reachable children, or children reachable from release tags,
+or from a specific branch, etc.
+
+So you could do something like:
+
+  git show --children=refs/heads/* $some_old_commit
+
+and see where we went from $some_old_commit that eventually ended up on
+a branch.
+
+But getting back to the original use case, which is about providing
+context for a commit: now we have the child commit id, but it's still a
+bit of a pain to actually see what it's in it.
+
+I usually solve this by doing a single traversal, and asking the pager
+to jump straight to the commit of interest, at which point I can scroll
+up and down to see the context. Like:
+
+  git log --color | less +/$some_old_commit
+
+I'm not 100% sure I understand the original use case. But if I do, and
+that solves it, I wonder if we could make it more ergonomic somehow.
+Likewise, I think using something like "tig" would be nice for viewing
+context, but AFAIK it does not have an option to jump to a specific
+commit. You can jump by line number, but it would be nice to be able to
+do:
+
+  tig --highlight=1234abcd
+
+and get a graph starting at HEAD, but jump immediately to the line for
+1234abcd.
+
+-Peff
