@@ -2,109 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65296ECAAD3
-	for <git@archiver.kernel.org>; Thu, 15 Sep 2022 07:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F938ECAAD3
+	for <git@archiver.kernel.org>; Thu, 15 Sep 2022 07:57:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229877AbiIOHt7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Sep 2022 03:49:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37956 "EHLO
+        id S230111AbiIOH5Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Sep 2022 03:57:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbiIOHt6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Sep 2022 03:49:58 -0400
-Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3172717585
-        for <git@vger.kernel.org>; Thu, 15 Sep 2022 00:49:57 -0700 (PDT)
-Received: by mail-ua1-x92d.google.com with SMTP id h22so3705712uab.5
-        for <git@vger.kernel.org>; Thu, 15 Sep 2022 00:49:57 -0700 (PDT)
+        with ESMTP id S229538AbiIOH5Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Sep 2022 03:57:24 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A57B9750C
+        for <git@vger.kernel.org>; Thu, 15 Sep 2022 00:57:22 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id l8so7939940wmi.2
+        for <git@vger.kernel.org>; Thu, 15 Sep 2022 00:57:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=mlJg8gVPQv+FSe9+0ecS8xpbF9xrOmL8Rq87fCAi8F8=;
-        b=ccSqjNngFR5DanSxfjyBHiz9/FsWCLyIijXXz/3mrjGJgwlYy30Ulmnwwh1qsF/qfm
-         xTkZZXOjC2A1yQAZAACE0SASWE1UcbYc6L2A35KJfrNcoZzV6z48nSWb0d6fQtPlg0Dq
-         p1k2rqycJ2XfCp3y/JL4fZhvgUm6WD1X6G2UNM/G1f7xcED0YkqPxD0nTRTvSG4AJuMY
-         +OhO7FOlkXzVebEo/4WyWfNi9h0iwbrhbFSwWfJAf6qMon05IAagXNTM2a3mt/f2ltWz
-         m8LNWC0xoiWpDz8SuFBfniB+HnMl0eFMhXVKSKpSxGFjN1UiyVUYZrS5Nc5AICZWuZW3
-         exsg==
+        d=dinwoodie.org; s=google;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
+        bh=TIXlXvo0D85lb/igp7x6w/DpGXvO7qH24wcvtLyDDRU=;
+        b=Y41ef7qWkufBYf0Qc+mJ+xvdPM9SL5TtVTHWn6c0pMAtXD5sTEAe53uqVq26ZMq3XV
+         WPCvEyCCayTMzLod5322Gr3nSyUTHtjHx0dOwKy/ISk/fs1C9GLEticSwkgQd7oOo7/3
+         0cp98GcKbF7KSCW2KuRI+dUq8mlOoRwvmoynQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=mlJg8gVPQv+FSe9+0ecS8xpbF9xrOmL8Rq87fCAi8F8=;
-        b=V+sP3uRIk7CQwHuly1BCApIISMhl17k+oGhDpH/qcAbv2wLbITDpBzNY7ZfHgIRD0b
-         7yRHvI1v5tfOLew8BNX8iU0Gty1lOM4LKwQGAVhAI0G43bolCdtH8xwTqKwyT7WlgIHC
-         sNmFmI3KNMBbbh4MWBnmXwr3TZk3emqosOvUr3+i8ZuFjF2oW7VRy5X47Ns+dC72dYqR
-         h3GtkNC7/iggfkw6odHvGfz2DNokqLtZHGV+GAZHnfkzTc22jwO4I7dAxUnm2tf5YJ28
-         ix7puL1TC47AfmAJUlp0/77sh3t2VqukfrV9fDGlfGMa6fL6rucIJYWj/uaCRdf9cp3Q
-         e7gg==
-X-Gm-Message-State: ACgBeo3XP3YR///54b1iitX8DOSrUAFZHhrweJRvJkJvu4U2xoGuHkZ4
-        6r3IS95cdxx9WTQNIOrYNkj5OvJGW27zpxGZZpnq906h3W8=
-X-Google-Smtp-Source: AA6agR5eCNey78pfKx4Nk6Uwreh1tCETsR3pLW3rfFgLi91PSYYtLlN2l/Iuaf82aZhTFEgvd8sLoOLpTV0W+wZfMc4=
-X-Received: by 2002:ab0:5711:0:b0:3b5:13e0:23b4 with SMTP id
- s17-20020ab05711000000b003b513e023b4mr11467930uaa.101.1663228196212; Thu, 15
- Sep 2022 00:49:56 -0700 (PDT)
+        bh=TIXlXvo0D85lb/igp7x6w/DpGXvO7qH24wcvtLyDDRU=;
+        b=ccQc/82uYZP6o1ESSeRm2rxYNSyFrf38skAImyPrL7N/6bEGun+mXK3MkG9fVUXVif
+         YTnvPULNz4Qwoetpu44cOIQsqDiaMSQBKG/HwBdtCLjmunSDSZ5rMx3tHTZhuaUjwhXu
+         kyfuRKbmeUnOSwMDX1zBzqXuZtyi2g4eSsSzGdmthWs4xauwpmJKCaWk8RDDayPlqxhq
+         yXT9b0BS/cDs+0zGrVXwowYVbbjcXQ8KV8qDYDa7pI5CSLxnl+wjrZTj6gvzVC1gKvF3
+         BuptYlyRR+iAFB3gukAVEnatK8QxXVV+qAVwGXnjaZ34BCO51EegyMh2NOD6PEtqpWQv
+         wk8g==
+X-Gm-Message-State: ACgBeo3h+pPyLeA9WXDh+ShuJkG/NL50mrt9ajumkHitW9i6Cl4UqETB
+        HTOtO7aEYwsWE9fldDlJsvclKXY/b2U8dKk1
+X-Google-Smtp-Source: AA6agR7T3q/Pk/7Ia3s/eqOYawxKK6iWmcdM2PlGqx4snefCzDs8QtN7OJ/Y90ME3xnVtn2J/ymCWQ==
+X-Received: by 2002:a05:600c:35c3:b0:3b4:a686:45c6 with SMTP id r3-20020a05600c35c300b003b4a68645c6mr3499236wmq.86.1663228640868;
+        Thu, 15 Sep 2022 00:57:20 -0700 (PDT)
+Received: from lucy.home (77.116.2.81.in-addr.arpa. [81.2.116.77])
+        by smtp.gmail.com with ESMTPSA id z9-20020adfd0c9000000b0022a839d053csm1664612wrh.98.2022.09.15.00.57.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Sep 2022 00:57:19 -0700 (PDT)
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>, Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com
+Subject: [PATCH v2] t1800: correct test to handle Cygwin
+Date:   Thu, 15 Sep 2022 08:57:17 +0100
+Message-Id: <20220915075717.425673-1-adam@dinwoodie.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220901173942.abolcr4aa5gixncm@lucy.dinwoodie.org>
+References: <20220901173942.abolcr4aa5gixncm@lucy.dinwoodie.org>
 MIME-Version: 1.0
-References: <183353220fe.d7826593472673.3445243727369286065@elijahpepe.com>
- <xmqqbkrjb75g.fsf@gitster.g> <18337ea407a.10c144c52599576.4708941661785569426@elijahpepe.com>
- <CAFQ2z_OR8uLe3rs0r09a3fvSQUE2H4WQTquddUwEeahoiRWimA@mail.gmail.com> <18338058407.117ce7158612837.8515739237320978792@elijahpepe.com>
-In-Reply-To: <18338058407.117ce7158612837.8515739237320978792@elijahpepe.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 15 Sep 2022 09:49:44 +0200
-Message-ID: <CAFQ2z_P0k-VQ0mj4RQquA1SJX8RyY+63s2U2pkEr80+B8O4YXQ@mail.gmail.com>
-Subject: Re: [PATCH] reftable: pass pq_entry by address
-To:     Elijah Conners <business@elijahpepe.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 13, 2022 at 8:03 PM Elijah Conners <business@elijahpepe.com> wr=
-ote:
->
-> Han-Wen Nienhuys <hanwen@google.com> writes:
->  > it might be a bit slower, but "dangerous"? How so?
-> In this context, dangerous is the wrong word, but in some cases large obj=
-ects on the stack can cause stack overflows. In this case, slower is the ri=
-ght word here.
+On Cygwin, when failing to spawn a process using start_command, Git
+outputs the same error as on Linux systems, rather than using the
+GIT_WINDOWS_NATIVE-specific error output.  The WINDOWS test prerequisite
+is set in both Cygwin and native Windows environments, which means it's
+not appropriate to use to anticipate the error output from
+start_command.  Instead, use the MINGW test prerequisite, which is only
+set for Git in native Windows environments, and not for Cygwin.
 
-I'll let you paint this bikeshed, but do note that the priority queue
-isn't actually optimal here, in a much bigger way. In the typical
-case, you'd have
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+Helped-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
 
-1. large base reftable (created by GC)
-2. small updates (created by individual ref updates)
+With apologies to folk receiving this multiple times; it looks like my
+SMTP setup was causing problems for some servers, and while the mails
+seemed to be arriving with me, they didn't seem to be appearing at
+https://public-inbox.org/git/?q=t1800
 
-When you're iterating, most of the iteration entries will come from
-the large base reftable, and only occasionally, you have to get
-entries from the small tables.
-In this scenario, the current code will insert entries from the large
-table into the priority queue, have it filter up to the top at cost
-log(number-of-tables), for each of the entries to be read.
+ t/t1800-hook.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-With the current online compaction, number-of-tables =3D
-log(number-of-refs), so at log(log(number-of-refs)) it's not a huge
-cost, but certainly larger than the cost of copying the entry once in
-the function.
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+index 64096adac7..43fcb7c0bf 100755
+--- a/t/t1800-hook.sh
++++ b/t/t1800-hook.sh
+@@ -157,9 +157,9 @@ test_expect_success 'git hook run a hook with a bad shebang' '
+ 	write_script bad-hooks/test-hook "/bad/path/no/spaces" </dev/null &&
+ 
+ 	# TODO: We should emit the same (or at least a more similar)
+-	# error on Windows and !Windows. See the OS-specific code in
+-	# start_command()
+-	if test_have_prereq !WINDOWS
++	# error on MINGW (essentially Git for Windows) and all other
++	# platforms.. See the OS-specific code in start_command()
++	if test_have_prereq !MINGW
+ 	then
+ 		cat >expect <<-\EOF
+ 		fatal: cannot run bad-hooks/test-hook: ...
+-- 
+2.34.1
 
-JGit has an optimization here where it tries to get the next entry
-from the table that previously provided the minimum entry. I didn't
-implement it for simplicity's sake, but if you care about performance,
-you might want to try your hand at that.
-
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Liana Sebastian
