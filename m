@@ -2,108 +2,179 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 499FBECAAD8
-	for <git@archiver.kernel.org>; Fri, 16 Sep 2022 13:05:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB39AC54EE9
+	for <git@archiver.kernel.org>; Fri, 16 Sep 2022 13:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231168AbiIPNFf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Sep 2022 09:05:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58412 "EHLO
+        id S229683AbiIPNi4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Sep 2022 09:38:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231154AbiIPNFe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2022 09:05:34 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCEEE8E0C8
-        for <git@vger.kernel.org>; Fri, 16 Sep 2022 06:05:32 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id g3so15036573wrq.13
-        for <git@vger.kernel.org>; Fri, 16 Sep 2022 06:05:32 -0700 (PDT)
+        with ESMTP id S231738AbiIPNiu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2022 09:38:50 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A18EFACA3E
+        for <git@vger.kernel.org>; Fri, 16 Sep 2022 06:38:49 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id f14so34682686lfg.5
+        for <git@vger.kernel.org>; Fri, 16 Sep 2022 06:38:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date;
-        bh=b1lMb5sKyKApjiiup+kIAEaa4o6/CbrcVDvfkYStmeE=;
-        b=QoJPXSCsCY63gfdrtfC8hvcFOXcvAdtBCh1pOii+hYacVG8oJlnTMByaSn3jKQNTqV
-         6KnjE0bXlgjFZexexGlBa9rGT8zWJOwATUDFxFsZTTMlnpNsx3U9iEfudF7Vd/uTfbCu
-         lspnc2kHYBuHkmzRvGyWENTkCyO9oaPrIoIeTHB8u0d0iM/krz85fb0OBhfPy63bkU3H
-         yr8V+vy3RqLN8NtbqRqHuephpfTKXTpVY93uIJgeXF5GKTK/348M0M06wYDC9ZJHFx0U
-         KweWBdhLGv3cJGlEyH0f79GU2lqdr6JkIiaM+bX93XuSsMdgk/Wxjsbu+M6kb+x8KVEG
-         8f3g==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date;
+        bh=G2uGG2rnwnjRFDJiHTq+EzJa3fjIPWz24mvmLaFTVP4=;
+        b=ipVS06UNU0mvsG5sn43f5SbCDB8PGEy99reRCFLwhZwp5tu0X1l8YJcUH8HG3aQnCA
+         gTmnYpVd9ar02uSB3z/1JuH06QSvpHiMSB08VKnvGEY73aULLLD9LuS/Hn+IJH/yHL5d
+         VzpdwLyEftaeVADXMvSHIiqB1qcRy9hSsjgpmNDSp96NU3ZiqFoYksOKkkLBrfXCx5+5
+         dECi276UzSOPJ1/D9VR5XL3EehUpZlGFJvp1BzWtDJesgqM4FRrl7d2W5JyBiyg/CR6W
+         7Df7oz6lNn4e60B1kUB00TRCNl2xejArhU/M1tU2HgNUGX0bGHAhf2ZG5SKysU7B6Hp8
+         0Qhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=b1lMb5sKyKApjiiup+kIAEaa4o6/CbrcVDvfkYStmeE=;
-        b=mvCgvwj/0DmMoOQj6S0jZ09dqrajA2XYY32aQR2Q1KNI9yE7zy8JduLMFL0bDrI/je
-         YVC/2/hJS/ETGTJygEVzMfTKW7CE3S6ZS8Tii/i6AeOb0XYeBNC76K+Sr7Q6qRrsqBr6
-         oPUIg2qYoBPdZyqkeLB9JhcyFgIKdRiv3hlSN+q1m+UbztkvkXMLzyb7VdpP4kmL0j0s
-         4eJIcI0TcwxW9es2f23EBSa6slG1U73o4obUTSOhX83BeA70BhdDHhureFwsrrxUiyvl
-         ONgJQZevulC+9OXi2qdclRiJInhG4e4BI94UXff4dQZDobVK3w8YSb3VAphxO5e6fr8v
-         jKhw==
-X-Gm-Message-State: ACrzQf0NFtor5Py7js4kdPOdO61tR1RaOFbF0+GovKcHQ8kkm8RyiPaD
-        /SKqlhbJsF4ff/CWQfm8ESuEipjsrEo=
-X-Google-Smtp-Source: AMsMyM4o8WzyKPK9wAsWY+x+Pwvxvm5Ek96Dabach+U4bTGSc9CSUFJcB0/7JL1I7POWJBABVNhHeg==
-X-Received: by 2002:a05:6000:184:b0:22a:cb6f:bb52 with SMTP id p4-20020a056000018400b0022acb6fbb52mr2735795wrx.500.1663333530789;
-        Fri, 16 Sep 2022 06:05:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e7-20020adfa747000000b0022878c0cc5esm4876590wrd.69.2022.09.16.06.05.29
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=G2uGG2rnwnjRFDJiHTq+EzJa3fjIPWz24mvmLaFTVP4=;
+        b=vKMW3teK+IM0p6b0Wv06DZCYk6g/zIi6ZIeftEniCEgxbi7F0LaKMllbdXAJR+Q+ct
+         Jgprbi51+TazFnkVNL8eenIlib6cWM4Na7Fg+ebI3eo/lLjrFXnLwhQTaA0/OokspMsD
+         hbk+iotl6oiPlyCFIIc4iTgsSiSN4vMvG1wna4pX3zriyvKX3jgT7LUQRLveTk8ZdwMx
+         Gxk31aduMeyDzbTothjJ+nOAErn47uO0DPosbs4gn2s2BvxUe9P21MJP6X64+YM5TKSO
+         SssKgTZZVud1NvASR+CNuUaGzo2KJf/vqYEW91/X2WNZdGnl2JMP7fNIZ0IElhbZp6sC
+         FLUw==
+X-Gm-Message-State: ACrzQf2PYrKXFa9cte6aMqzccfHONOVGUbNDxmLAXhmOdINbEQiFYcc1
+        cP3epGZalNCCwn0vuLU1kzHLwvF7b2I=
+X-Google-Smtp-Source: AMsMyM7gT4xMgRLG1GedirB15gaql+Hk9AR6R7YQF+P1c1anOb5624u3YZYioT5NG5bhgi6tbyHgJw==
+X-Received: by 2002:ac2:51b8:0:b0:497:ac71:736a with SMTP id f24-20020ac251b8000000b00497ac71736amr1808406lfk.510.1663335527435;
+        Fri, 16 Sep 2022 06:38:47 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id 7-20020ac25f07000000b00492e16b7ab3sm3497440lfq.94.2022.09.16.06.38.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Sep 2022 06:05:30 -0700 (PDT)
-Message-Id: <pull.1330.git.git.1663333529294.gitgitgadget@gmail.com>
-From:   "Fangyi Zhou via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 16 Sep 2022 13:05:29 +0000
-Subject: [PATCH] help: reword explanation line for developer interfaces
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Fri, 16 Sep 2022 06:38:46 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/3] diff-merges: cleanup set_diff_merges()
+References: <20220914193102.5275-1-sorganov@gmail.com>
+        <20220914193102.5275-3-sorganov@gmail.com>
+        <xmqq35csmkuq.fsf@gitster.g>
+Date:   Fri, 16 Sep 2022 16:38:45 +0300
+In-Reply-To: <xmqq35csmkuq.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        15 Sep 2022 13:41:17 -0700")
+Message-ID: <87pmfvjv6i.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Fangyi Zhou <me@fangyi.io>, Fangyi Zhou <me@fangyi.io>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Fangyi Zhou <me@fangyi.io>
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Fangyi Zhou <me@fangyi.io>
----
-    help: reword explanation line for developer interfaces
-    
-    Signed-off-by: Fangyi Zhou me@fangyi.io
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> Get rid of special-casing of 'suppress' in set_diff_merges(). Instead
+>> set 'merges_need_diff' flag correctly in every option handling
+>> function.
+>>
+>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+>> ---
+>>  diff-merges.c | 30 +++++++++++++++++++-----------
+>>  1 file changed, 19 insertions(+), 11 deletions(-)
+>
+> Looks OK to me.
+>
+> Everybody else says set_X() but set_none() has nothing to do ther
+> than calling suppress(), so the change does not really make a
+> functional difference (as you said in the cover letter).
+>
+> Is the idea that the original value in .merges_need_diff member does
+> not matter because in every case it is set to either 0 or 1?  Most
+> cases call common_setup() to set it to 1 like this here...
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1330%2Ffangyi-zhou%2Fhelp-doc-fix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1330/fangyi-zhou/help-doc-fix-v1
-Pull-Request: https://github.com/git/git/pull/1330
+Yes, exactly.
 
- help.c          | 2 +-
- t/t0012-help.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+>
+>> +static void common_setup(struct rev_info *revs)
+>> +{
+>> +	suppress(revs);
+>> +	revs->merges_need_diff = 1;
+>> +}
+>
+> ... but this does not touch (in other words, it does not explicitly
+> clear) it, ...
 
-diff --git a/help.c b/help.c
-index ec670d5f68b..d04542d8261 100644
---- a/help.c
-+++ b/help.c
-@@ -39,7 +39,7 @@ static struct category_description main_categories[] = {
- 	{ CAT_synchingrepositories, N_("Low-level Commands / Syncing Repositories") },
- 	{ CAT_purehelpers, N_("Low-level Commands / Internal Helpers") },
- 	{ CAT_userinterfaces, N_("User-facing repository, command and file interfaces") },
--	{ CAT_developerinterfaces, N_("Developer-facing file file formats, protocols and interfaces") },
-+	{ CAT_developerinterfaces, N_("Developer-facing file formats, protocols and other interfaces") },
- 	{ 0, NULL }
- };
- 
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index 4ed2f242eb2..dbfc5c82676 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -231,7 +231,7 @@ test_expect_success "'git help -a' section spacing" '
- 
- 	User-facing repository, command and file interfaces
- 
--	Developer-facing file file formats, protocols and interfaces
-+	Developer-facing file formats, protocols and other interfaces
- 	EOF
- 	test_cmp expect actual
- '
+>
+>> +static void set_none(struct rev_info *revs)
+>> +{
+>> +	suppress(revs);
+>> +}
+>
+>  ... so we still rely on somebody to set the .merges_need_diff
+> to 0 initially, right?
 
-base-commit: d3fa443f97e3a8d75b51341e2d5bac380b7422df
--- 
-gitgitgadget
+No, the suppress() does clear everything, .merges_need_diff included.
+The suppress() ensures every next diff-merges option on the command-line
+actually overwrites and correctly sets everything.
+
+>
+>> -
+>> -	/* NOTE: the merges_need_diff flag is cleared by func() call */
+>> -	if (func != suppress)
+>> -		revs->merges_need_diff = 1;
+>>  }
+>
+> It is very good to see this one go.
+
+Yep, that was a kludge that bothered me for a while indeed.
+
+>
+>>  /*
+>> @@ -115,6 +122,7 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
+>>  
+>>  	if (!suppress_m_parsing && !strcmp(arg, "-m")) {
+>>  		set_to_default(revs);
+>> +		revs->merges_need_diff = 0;
+>
+> I am wondering how this becomes necessary?  Is it because
+> set_to_default() would flip the member to 1 unconditionally, or
+> something?
+
+Yes, as all "native" -diff-merge= options set this bit to 1.
+
+> If it weren't for this hunk, the lossage of the previous
+> hunk is a very good clean-up, but if we need to do this, I cannot
+> shake the feeling that we mostly shifted the dirt around, without
+> really cleaning it?  I dunno.
+
+Yes, I believe it does cleanup things in both these places.
+
+The "-m" option indeed differs from the rest of the options in exactly
+this thing: it wants .merges_need_diff=0 to suppress output unless '-p'
+is given as well.
+
+The -c/--cc are in fact similar, but they don't need this line as they
+imply '-p' that in turn ignores .merges_need_diff, and generates output
+anyway, so -m code has:
+
+  revs->merges_need_diff = 0;
+
+whereas -c and --cc code both have:
+
+  revs->merges_imply_patch = 1;
+
+Thanks,
+-- Sergey Organov
+
+>
+>> @@ -125,7 +133,7 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
+>>  		set_remerge_diff(revs);
+>>  		revs->merges_imply_patch = 1;
+>>  	} else if (!strcmp(arg, "--no-diff-merges")) {
+>> -		suppress(revs);
+>> +		set_none(revs);
+>
+> We do not need to explicitly set .merges_need_diff to 0 here,
+> presumably because it is initialized to 0 and nobody touched it,
+> right?
+
+No, we rather do set it to 0 here, in suppress() called from set_none().
+
+Thanks,
+-- Sergey Organov
