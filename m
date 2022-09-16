@@ -2,101 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84E1CC54EE9
-	for <git@archiver.kernel.org>; Fri, 16 Sep 2022 12:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0519ECAAD8
+	for <git@archiver.kernel.org>; Fri, 16 Sep 2022 13:01:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229510AbiIPMu5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Sep 2022 08:50:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39342 "EHLO
+        id S231287AbiIPNBO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Sep 2022 09:01:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbiIPMuz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2022 08:50:55 -0400
-X-Greylist: delayed 487 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 16 Sep 2022 05:50:49 PDT
-Received: from smtp.tumbleweed.org.za (smtp.tumbleweed.org.za [IPv6:2001:470:c91e::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9777AA9C30
-        for <git@vger.kernel.org>; Fri, 16 Sep 2022 05:50:49 -0700 (PDT)
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple; d=rivera.za.net;
- i=@rivera.za.net; q=dns/txt; s=smtp-ed25519; t=1663332158; h=date :
- from : to : subject : message-id : mime-version : content-type : from;
- bh=WES/4qqqm3q2fdnvZ56NuFqlv6h6iiVld72czSX2azQ=;
- b=BiAbtFPHa7jiwqIKU1OXXTCcin5HlObKnSpDdD8f7ljr2TDRYJRsbRzKKCrxkA5KtLIIB
- OtEESeNpMbljrYzDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rivera.za.net;
- i=@rivera.za.net; q=dns/txt; s=smtp-rsa; t=1663332158; h=date : from :
- to : subject : message-id : mime-version : content-type : from;
- bh=WES/4qqqm3q2fdnvZ56NuFqlv6h6iiVld72czSX2azQ=;
- b=imC2CM7K5NCPXbwXDjqqJVUf6OnGoiA2kR7gBKAUcnMePNr7JjFykbq4xIwE7vTKXZEMc
- QeBqPCFrbRK+PW0Y2wWdx16rYoMAYDhHSL7pWpkDurhfcD3JVciUzvvSOsAXf1pjUX4XL1W
- G5QPihb7fqpAz0xNignBR929Mq0gcc3x+nZT4JGI5nwuLCHMyWqmw2NUm0Lc4k/mErpYelR
- 7C6RemUbCmP7DmwnSU5xiLsAnsvToy6oZZH3yAfqJf2tV2jikNyXHAhnJG1bhuD6QxZDxgb
- 6bgULN0RHPH/2tqunGsrKJeHDrg1Or62qKcOt/1f7/kRlQUiGuietRRtOS0Q==
-Received: from haydn.kardiogramm.net (102-65-159-205.dsl.web.africa [102.65.159.205])
-        by smtp.tumbleweed.org.za (Postfix) with ESMTPSA id 4918F40009
-        for <git@vger.kernel.org>; Fri, 16 Sep 2022 12:42:38 +0000 (UTC)
-Received: by haydn.kardiogramm.net (Postfix, from userid 1000)
-        id 353783B358AC; Fri, 16 Sep 2022 14:42:34 +0200 (SAST)
-Date:   Fri, 16 Sep 2022 14:42:34 +0200
-From:   Stefano Rivera <stefano@rivera.za.net>
-To:     git@vger.kernel.org
-Subject: git rebase crash: merge-ort.c:2622:
- apply_directory_rename_modifications: Assertion `ci->dirmask == 0' failed.
-Message-ID: <20220916124234.h57p67mwywzok23s@haydn.kardiogramm.net>
+        with ESMTP id S231280AbiIPNBN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2022 09:01:13 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C539CA3D74
+        for <git@vger.kernel.org>; Fri, 16 Sep 2022 06:01:11 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id x27so2239795lfu.0
+        for <git@vger.kernel.org>; Fri, 16 Sep 2022 06:01:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date;
+        bh=Wc/6lKOW2i61/TMh25ze4w4NEODR3HDGUcmTsYmmUsY=;
+        b=MoVjorFdL8BgbODTDTThdrAEL9JqK0cSpVuOeTMrFw4ZtRcNKeRcA0MV+V2SrrNNz8
+         JslwJ3eTrf4fGqKbLQgaJ501vUZHnp9LV1aGeVtKLZm+66kBlwa+VoWLslRV193Hy77n
+         gCU2X0maRvAWFY/yYQUwBQ9h4XeW3Fv8cZX5qaL32K7wbsTmBPs/5ux3J3odrTK2eUt+
+         m1cfxGPMQxtXVAlvhRTMTzTSUVbfGRJXWZgGUOWFaI05LVkX4cieYjWBNtBkChek5W9z
+         kLPqljU5J82gRi2cUavZ0VmIXg6n0B120LiTd+p5uEWCWMi9/Mn+sCTP2Tg4benCc/1i
+         xduw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=Wc/6lKOW2i61/TMh25ze4w4NEODR3HDGUcmTsYmmUsY=;
+        b=gqel0X2NdDv3WyLiJgTPMvL+T4h2NEaPj1i36Jc3WX+egAko+RSdiKJIXtO0nPc7aD
+         hYa6S6vKJRtuQO7RWFsFrrzp/32YCnvwEa9SAAl/cj+fD4BVbgh9vT29zABp0sUEbjXL
+         d7Rq79kgKRG2BJKXoi/W7DwWNmCY4I+zHC9eLuAp4K6TlzFoYLdpzayKbVWWsZw+SgDA
+         ocay3i27qRmJXxsEUL4m+QFjw920igOugqe4Wp2Dra6v+0sI3mii8+avtmzps/KxvTLG
+         Rl8d1rvAVvImGB50JUppyGuSOsNZDYfdcSJhoYbGP7Fcr8/D7endFPAVwN6fKgI7WGZm
+         u5/w==
+X-Gm-Message-State: ACrzQf1yzrmfaj+cQOuPMfFRptuGt1pzk2tAOgPAF+R3d3/mhvja/Ywu
+        wruGouHj83driiSSb990y37GNP28FPk=
+X-Google-Smtp-Source: AMsMyM7XTZfhbJc4vbySjbEbTrGOxoiVegavq7F8d+0WYzNlM/by8EX2Sptg4i1/CZHWg6nbWrIOVA==
+X-Received: by 2002:a05:6512:4024:b0:497:4db:6ad0 with SMTP id br36-20020a056512402400b0049704db6ad0mr1707102lfb.637.1663333269537;
+        Fri, 16 Sep 2022 06:01:09 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id o3-20020a2e7303000000b0026bca725cd0sm3657549ljc.39.2022.09.16.06.01.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Sep 2022 06:01:08 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] diff-merges: cleanup func_by_opt()
+References: <20220914193102.5275-1-sorganov@gmail.com>
+        <20220914193102.5275-2-sorganov@gmail.com>
+        <xmqqfsgsmq4j.fsf@gitster.g>
+Date:   Fri, 16 Sep 2022 16:01:07 +0300
+In-Reply-To: <xmqqfsgsmq4j.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        15 Sep 2022 11:47:24 -0700")
+Message-ID: <87wna3jwx8.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="c74pmcxmgbmb742k"
-Content-Disposition: inline
-User-Agent: NeoMutt/20220429
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---c74pmcxmgbmb742k
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> Get rid of unneeded "else" statements in func_by_opt().
+>
+> While it is true that loss of "else" will not change what the code
+> means, this change feels subjective and I'd say it falls into "once
+> committed, it is not worth the patch noise to go in and change"
+> category, not a "clean-up we should do".
 
-Hi, I got a crash in git-rebase, a failed assertion in merge-ort.c
+I agree the "else" vs "no else" is subjective, but the problem in fact
+is that the first "if", unlike the rest of them, already had no "else",
+making the code inconsistent. So the fix should either be adding one
+"else" to the first "if", or remove all of the "else". I chose the
+latter, to end up with less noisy code.
 
-$ git rebase renamed-parent
-git: merge-ort.c:2622: apply_directory_rename_modifications: Assertion `ci->dirmask == 0' failed.
+>
+> I haven't looked at diff-merges.c for quite a while, but I did.  I
+> notice that the code is barely commented on what each helper
+> function is supposed to do, etc., and very hard to follow.  The file
+> needs cleaning up in that area a lot more, I would say.
 
-I was rebasing a branch that replaced a directory with a symlink, onto a
-branch that renamed a parent directory of the modification.
+I believe each helper function does exactly what its name suggests, so
+no comments are needed. I hate to add comments that actually just say
+the same as function name, so I'd rathe consider to rename some
+functions instead should somebody point out to problematic ones.
 
-Reproducer script attached.
-
-Using --strategy=recursive avoids the crash, so it's a bug in ort.
-
-Not subscribed, please CC me in replies.
+That said, it seems Elijah Newren had not much trouble adding his
+--remerge-diff capability to the diff-merges code, so the code must be
+not that hard to follow even in its current state.
 
 Thanks,
-
-SR
-
-[System Info]
-git version:
-git version 2.38.0.rc0.373.g21cbab7515
-cpu: x86_64
-built from commit: 21cbab75150d71ca294e09180c59ee529ca53957
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.18.0-3-amd64 #1 SMP PREEMPT_DYNAMIC Debian 5.18.14-1 (2022-07-23) x86_64
-compiler info: gnuc: 12.2
-libc info: glibc: 2.34
-$SHELL (typically, interactive shell): /bin/bash
-
-[Enabled Hooks]
-
---c74pmcxmgbmb742k
-Content-Type: application/x-sh
-Content-Disposition: attachment; filename="reproduce.sh"
-Content-Transfer-Encoding: quoted-printable
-
-#!/bin/sh=0A=0Aset -eufx=0A=0A# rm -rf repo=0Agit init repo=0A=0Acd repo=0A=
-git checkout --orphan main=0Amkdir -p dir/subdir=0Aecho 1 > dir/subdir/file=
-=0Agit add dir=0Agit commit -m "Initial commit"=0Agit checkout -b renamed=
-=0Agit mv dir renamed-dir=0Agit commit -m "Rename directory"=0Agit checkout=
- main=0Agit rm -r dir/subdir=0Amkdir dir=0Aln -s /dev/null dir/subdir=0Agit=
- add dir/subdir=0Agit commit -m "Replace with symlink"=0Agit rebase renamed=
-=0A# succeeds:=0A# git rebase --strategy=3Drecursive renamed=0A
---c74pmcxmgbmb742k--
+-- Sergey Organov.
