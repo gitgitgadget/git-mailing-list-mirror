@@ -2,58 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B41D8ECAAD8
-	for <git@archiver.kernel.org>; Fri, 16 Sep 2022 19:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B360ECAAD8
+	for <git@archiver.kernel.org>; Fri, 16 Sep 2022 19:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbiIPTxl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Sep 2022 15:53:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44238 "EHLO
+        id S229838AbiIPTxp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Sep 2022 15:53:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbiIPTxj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2022 15:53:39 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02B98B6D79
-        for <git@vger.kernel.org>; Fri, 16 Sep 2022 12:53:38 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id v185-20020a1cacc2000000b003b42e4f278cso479124wme.5
-        for <git@vger.kernel.org>; Fri, 16 Sep 2022 12:53:37 -0700 (PDT)
+        with ESMTP id S229824AbiIPTxl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2022 15:53:41 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54DE8B72AA
+        for <git@vger.kernel.org>; Fri, 16 Sep 2022 12:53:39 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id n10so7072925wrw.12
+        for <git@vger.kernel.org>; Fri, 16 Sep 2022 12:53:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=iYGz0lPQuivWEdn6vTVmkIqVL/VYINzDQ0IEceItPLQ=;
-        b=MTRvMctHFAgby1cPFTd4uVpj1x0KXkM1CYD2Ey6XUWXkg2e3wUp14uC8WGlw56qniR
-         mRYzo4zmtgOQMxKya8PbTyQVUNsmNjyQC5QhpDVZbgaPs68ea/xk3qaIHgrFEFK6LZ2H
-         wfh8CMSYPmT/Z+NceASf2d9R5qvSgLpueYgjB7u7WH0SXVYr9+ZRy9DHDRnwpTScz0C4
-         6O6R0/njHjuJl7r69MUa5b8pZrzW34NpTjyrIRbzeiS95CAPjMFzgkq4SLo4WBre8NM/
-         hyA5nsg5Mu3btmkeUOamQapVpT7OpQpvXyZEcf2rWpilr8kcExEBuIAiENdv63jGRPlr
-         imUQ==
+        bh=tSI4wjNeIflA/knXfDoCVkgZBGpukIFoGspd8/vXmZ8=;
+        b=KKBjvtFiJH6Oz9hlG+A1NJMODIUXJq342AOH+JrN8hy/LFpI3AzuU3cH3+AM/2rRdj
+         CR8LnUnO7a85VPOCvXiHOEHQlAIWyNYptLNwADasSlmvpFr4lOcieISHBiWAS/c8rg1U
+         gt93lv1YoCRgKeHKtzKQ7egVmxga6cgT4iydE/Nayt2tLxFmNR+BwLSLw720gkI3W2WX
+         D5ChSdThJYicqXl0I74m6gXV7SBFRe1byLhpBUz+sa9TLQ3ZvdKvv8HoXpavjsxwuecQ
+         cnaL+ilFnJjN1kjTuSpwy7RRBn2tawdTAkeMe+HD6Q0Kwlw3F1Kw517uI4HCRgzQ19Oe
+         uijQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=iYGz0lPQuivWEdn6vTVmkIqVL/VYINzDQ0IEceItPLQ=;
-        b=EJNQbpiEqxvEZg5Esfm08R7hnG2tcoWES4xYKb106FellWqWjA/w7+1HMTQpcVQ7SH
-         hqqoeLZPUV6Tj077r0uaarSj6TshtFU0+lQblAdoApO5kn9XGGSgODaYdLV4a9EJqmmz
-         h5CPWiMFdJerL0DpSch1pILjw5gXsUlWnammRRIyc+1KQkSP6HoMuyQcQNAO3SSuk8UW
-         yUD6kfqVdz29FR8/mPz6+tv/ECm5iWLiBo6aZlB7BMi7U9DlomuqWuHUI0fEvDU9g8aD
-         TXUnokBgOFkZLLbf3qiNNzMCsC+rwBMt6wJpIf9L1eMc2qgZ9SlkdQNAmnT5varXR0vo
-         uZKQ==
-X-Gm-Message-State: ACrzQf0P8QuI483YrjGN9fXilZoQxux4YsEL4pfzOPAjWs0+WVYPGvbz
-        O1oJXhJAxkmME7CPJDJUuIEioMLvu4o=
-X-Google-Smtp-Source: AMsMyM77mmKzRFvNR/Q4iByaQPV6nPe/VHAN1T6mgNiPViHIQN6gAAfhdZcbzV8IIZr0PScdY0PKxQ==
-X-Received: by 2002:a7b:cb56:0:b0:3b3:4ad8:9e31 with SMTP id v22-20020a7bcb56000000b003b34ad89e31mr4489981wmj.87.1663358016203;
-        Fri, 16 Sep 2022 12:53:36 -0700 (PDT)
+        bh=tSI4wjNeIflA/knXfDoCVkgZBGpukIFoGspd8/vXmZ8=;
+        b=46A6VJYgGDHxRhZyAJyRNPQLjT7Cglhvr3gDc4zLIo+XTKLf6ck5A68MDkOlt2T8Ak
+         tNQmfGx4MZkFe0UgNTLL+Q0JjC15gt6lZAvXUz/NuS6aUwJS9LGjR1QFEM+Os4tsgEXe
+         8Aw75TmTS6BD1jmh8OeDhR8Do3sS0TNbASxYKGREoM1xoG+NTVWYmifD8NnB6s1isKQw
+         0wTWsy040x3Juw/OtVg0uc7dL10TKNgRiTzlm8pO1R5Nap8MoNokxcMNDlsrppyI6qVc
+         goQvjLx8v+X2gttzu+5s1BKEGZJrA5MPTEBKIPocZTxI7DqzLa7RJnlTtN8U034xy6mx
+         DP2A==
+X-Gm-Message-State: ACrzQf2R/ur0BKZJ7Q+ufv/0IcWio0mHhzy3e2PQnFNTqNpnV7+R+v59
+        HkAJPjsc8Mz5KcXmBx3aIOuhkuzYTP0=
+X-Google-Smtp-Source: AMsMyM7qCA6cwemqH7UI6B6tPNucoQhW4zGF3Mkfyn8K6f8xzrgyBdvHmP87idDgfPrrH0bpO40KzA==
+X-Received: by 2002:a5d:47c5:0:b0:22a:6ce9:3fb1 with SMTP id o5-20020a5d47c5000000b0022a6ce93fb1mr3769282wrc.666.1663358017350;
+        Fri, 16 Sep 2022 12:53:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z13-20020a5d4c8d000000b0021f131de6aesm5590770wrs.34.2022.09.16.12.53.35
+        by smtp.gmail.com with ESMTPSA id m5-20020a1ca305000000b003b27f644488sm3062670wme.29.2022.09.16.12.53.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Sep 2022 12:53:35 -0700 (PDT)
-Message-Id: <pull.1326.v7.git.1663358014.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1326.v6.git.1663100858.gitgitgadget@gmail.com>
+        Fri, 16 Sep 2022 12:53:36 -0700 (PDT)
+Message-Id: <155a689080658e1953fc4434016f746f371ba08a.1663358014.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1326.v7.git.1663358014.gitgitgadget@gmail.com>
 References: <pull.1326.v6.git.1663100858.gitgitgadget@gmail.com>
+        <pull.1326.v7.git.1663358014.gitgitgadget@gmail.com>
 From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 16 Sep 2022 19:53:28 +0000
-Subject: [PATCH v7 0/6] fsmonitor: option to allow fsmonitor to run against network-mounted repos
+Date:   Fri, 16 Sep 2022 19:53:29 +0000
+Subject: [PATCH v7 1/6] fsmonitor: refactor filesystem checks to common
+ interface
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,281 +67,655 @@ Cc:     Jeff Hostetler <git@jeffhostetler.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric DeCosta <edecosta@mathworks.com>,
         Eric DeCosta <edecosta@mathworks.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Follow-on to the work done to allow Windows to work against network-mounted
-repos for macOS.
+From: Eric DeCosta <edecosta@mathworks.com>
 
-Have macOS take advantage of the same configuration option,
-'fsmonitor.allowRemote' that was introduced for Windows. Setting this option
-to true will override the default behavior (erroring-out) when a
-network-mounted repo is detected by fsmonitor.
+Provide a common interface for getting basic filesystem information
+including filesystem type and whether the filesystem is remote.
 
-The added wrinkle being that the Unix domain socket (UDS) file used for IPC
-cannot be created in a network location; instead $HOME is used if the
-default location is on the network. The user may, optionally, set the
-'fsmonitor.socketDir' configuration option to a valid, local directory if
-$HOME itself is on the network or is simply not the desired location for the
-UDS file.
+Refactor existing code for getting basic filesystem info and detecting
+remote file systems to the new interface.
 
-An additional issue is that for mount points in the root directory, FSEvents
-does not report a path that matches the worktree directory due to the
-introduction of 'synthetic firmlinks'. fsmonitor must map the FSEvents paths
-to the worktree directory by interrogating the root filesystem for synthetic
-firmlinks and using that information to translate the path.
+Refactor filesystem checks to leverage new interface. For macOS,
+error-out if the Unix Domain socket (UDS) file is on a remote
+filesystem.
 
-v7 differs from v6:
-
- * incorporates code review feedback
-
-v6 differs from v5:
-
- * incorporates earlier, Windows-specific changes that have not made it back
-   yet to the master branch
- * incorporates code review feedback
- * adds documentation for 'fsmonitor.allowRemote' and 'fsmonitor.socketDir'
-
-v5 differs significantly from earlier versions:
-
- * redesign of handling 'fsmonitor.allowRemote' and 'fsmonitor.socketDir'
-   such that these options are no longer added to the settings data
-   structure but are rather read from config at point of use
- * refactoring of code for handling platform-specific file system checks via
-   a common interface to avoid platform #ifdef in IPC code and be in-model
-   with other platform-specific fsmonitor code
- * dealing with 'synthetic firmlinks' on macOS
-
-Eric DeCosta (6):
-  fsmonitor: refactor filesystem checks to common interface
-  fsmonitor: relocate socket file if .git directory is remote
-  fsmonitor: avoid socket location check if using hook
-  fsmonitor: deal with synthetic firmlinks on macOS
-  fsmonitor: deal with synthetic firmlinks on macOS
-  fsmonitor: add documentation for allowRemote and socketDir options
-
- Documentation/git-fsmonitor--daemon.txt  |  35 +++++
- Makefile                                 |   2 +
- builtin/fsmonitor--daemon.c              |  11 +-
- compat/fsmonitor/fsm-ipc-darwin.c        |  49 +++++++
- compat/fsmonitor/fsm-ipc-win32.c         |   9 ++
- compat/fsmonitor/fsm-listen-darwin.c     |   6 +-
- compat/fsmonitor/fsm-path-utils-darwin.c | 132 +++++++++++++++++
- compat/fsmonitor/fsm-path-utils-win32.c  | 145 +++++++++++++++++++
- compat/fsmonitor/fsm-settings-darwin.c   |  70 +++------
- compat/fsmonitor/fsm-settings-win32.c    | 174 +----------------------
- contrib/buildsystems/CMakeLists.txt      |   4 +
- fsmonitor--daemon.h                      |   6 +
- fsmonitor-ipc.c                          |  18 ++-
- fsmonitor-ipc.h                          |   4 +-
- fsmonitor-path-utils.h                   |  59 ++++++++
- fsmonitor-settings.c                     |  58 +++++++-
- fsmonitor-settings.h                     |   2 +-
- 17 files changed, 547 insertions(+), 237 deletions(-)
- create mode 100644 compat/fsmonitor/fsm-ipc-darwin.c
- create mode 100644 compat/fsmonitor/fsm-ipc-win32.c
+Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+---
+ Makefile                                 |   1 +
+ compat/fsmonitor/fsm-path-utils-darwin.c |  40 ++++++
+ compat/fsmonitor/fsm-path-utils-win32.c  | 128 +++++++++++++++++
+ compat/fsmonitor/fsm-settings-darwin.c   |  62 +++-----
+ compat/fsmonitor/fsm-settings-win32.c    | 172 +----------------------
+ contrib/buildsystems/CMakeLists.txt      |   2 +
+ fsmonitor-path-utils.h                   |  23 +++
+ fsmonitor-settings.c                     |  50 +++++++
+ 8 files changed, 263 insertions(+), 215 deletions(-)
  create mode 100644 compat/fsmonitor/fsm-path-utils-darwin.c
  create mode 100644 compat/fsmonitor/fsm-path-utils-win32.c
  create mode 100644 fsmonitor-path-utils.h
 
-
-base-commit: d3fa443f97e3a8d75b51341e2d5bac380b7422df
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1326%2Fedecosta-mw%2Ffsmonitor_macos-v7
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1326/edecosta-mw/fsmonitor_macos-v7
-Pull-Request: https://github.com/gitgitgadget/git/pull/1326
-
-Range-diff vs v6:
-
- 1:  3233c908c4a < -:  ----------- fsmonitor: option to allow fsmonitor to run against network-mounted repos
- 2:  d2a8fc6b707 = 1:  155a6890806 fsmonitor: refactor filesystem checks to common interface
- 3:  edef029a298 ! 2:  075340bd2a7 fsmonitor: relocate socket file if .git directory is remote
-     @@ Makefile: ifdef FSMONITOR_DAEMON_BACKEND
-       
-       ifdef FSMONITOR_OS_SETTINGS
-      
-     + ## builtin/fsmonitor--daemon.c ##
-     +@@ builtin/fsmonitor--daemon.c: static int fsmonitor_run_daemon(void)
-     + 	 * directory.)
-     + 	 */
-     + 	strbuf_init(&state.path_ipc, 0);
-     +-	strbuf_addstr(&state.path_ipc, absolute_path(fsmonitor_ipc__get_path()));
-     ++	strbuf_addstr(&state.path_ipc,
-     ++		absolute_path(fsmonitor_ipc__get_path(the_repository)));
-     + 
-     + 	/*
-     + 	 * Confirm that we can create platform-specific resources for the
-     +
-       ## compat/fsmonitor/fsm-ipc-darwin.c (new) ##
-      @@
-      +#include "cache.h"
-     @@ compat/fsmonitor/fsm-ipc-darwin.c (new)
-      +
-      +static GIT_PATH_FUNC(fsmonitor_ipc__get_default_path, "fsmonitor--daemon.ipc")
-      +
-     -+const char *fsmonitor_ipc__get_path(void)
-     ++const char *fsmonitor_ipc__get_path(struct repository *r)
-      +{
-      +	static const char *ipc_path;
-      +	SHA_CTX sha1ctx;
-     @@ compat/fsmonitor/fsm-ipc-darwin.c (new)
-      +	if (ipc_path)
-      +		return ipc_path;
-      +
-     ++	if (!r)
-     ++		r = the_repository;
-     ++
-      +	ipc_path = fsmonitor_ipc__get_default_path();
-      +
-      +	/* By default the socket file is created in the .git directory */
-     @@ compat/fsmonitor/fsm-ipc-darwin.c (new)
-      +		return ipc_path;
-      +
-      +	SHA1_Init(&sha1ctx);
-     -+	SHA1_Update(&sha1ctx, the_repository->worktree, strlen(the_repository->worktree));
-     ++	SHA1_Update(&sha1ctx, r->worktree, strlen(r->worktree));
-      +	SHA1_Final(hash, &sha1ctx);
-      +
-     -+	repo_config_get_string(the_repository, "fsmonitor.socketdir", &sock_dir);
-     ++	repo_config_get_string(r, "fsmonitor.socketdir", &sock_dir);
-      +
-      +	/* Create the socket file in either socketDir or $HOME */
-      +	if (sock_dir && *sock_dir)
-     @@ compat/fsmonitor/fsm-ipc-darwin.c (new)
-      
-       ## compat/fsmonitor/fsm-ipc-win32.c (new) ##
-      @@
-     -+#include "cache.h"
-     ++#include "config.h"
-      +#include "fsmonitor-ipc.h"
-      +
-     -+GIT_PATH_FUNC(fsmonitor_ipc__get_path, "fsmonitor--daemon.ipc")
-     ++const char *fsmonitor_ipc__get_path(struct repository *r) {
-     ++	static char *ret;
-     ++	if (!ret)
-     ++		ret = git_pathdup("fsmonitor--daemon.ipc");
-     ++	return ret;
-     ++}
-     + \ No newline at end of file
-     +
-     + ## compat/fsmonitor/fsm-settings-darwin.c ##
-     +@@
-     + static enum fsmonitor_reason check_uds_volume(struct repository *r)
-     + {
-     + 	struct fs_info fs;
-     +-	const char *ipc_path = fsmonitor_ipc__get_path();
-     ++	const char *ipc_path = fsmonitor_ipc__get_path(r);
-     + 	struct strbuf path = STRBUF_INIT;
-     + 	strbuf_add(&path, ipc_path, strlen(ipc_path));
-     + 
-      
-       ## contrib/buildsystems/CMakeLists.txt ##
-      @@ contrib/buildsystems/CMakeLists.txt: if(SUPPORTS_SIMPLE_IPC)
-     @@ contrib/buildsystems/CMakeLists.txt: if(SUPPORTS_SIMPLE_IPC)
-       		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
-      
-       ## fsmonitor-ipc.c ##
-     +@@ fsmonitor-ipc.c: int fsmonitor_ipc__is_supported(void)
-     + 	return 0;
-     + }
-     + 
-     +-const char *fsmonitor_ipc__get_path(void)
-     ++const char *fsmonitor_ipc__get_path(struct repository *r)
-     + {
-     + 	return NULL;
-     + }
-      @@ fsmonitor-ipc.c: int fsmonitor_ipc__is_supported(void)
-       	return 1;
-       }
-     @@ fsmonitor-ipc.c: int fsmonitor_ipc__is_supported(void)
-      -
-       enum ipc_active_state fsmonitor_ipc__get_state(void)
-       {
-     - 	return ipc_get_active_state(fsmonitor_ipc__get_path());
-     +-	return ipc_get_active_state(fsmonitor_ipc__get_path());
-     ++	return ipc_get_active_state(fsmonitor_ipc__get_path(the_repository));
-     + }
-     + 
-     + static int spawn_daemon(void)
-     +@@ fsmonitor-ipc.c: int fsmonitor_ipc__send_query(const char *since_token,
-     + 	trace2_data_string("fsm_client", NULL, "query/command", tok);
-     + 
-     + try_again:
-     +-	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
-     +-				       &connection);
-     ++	state = ipc_client_try_connect(fsmonitor_ipc__get_path(the_repository),
-     ++						&options, &connection);
-     + 
-     + 	switch (state) {
-     + 	case IPC_STATE__LISTENING:
-     +@@ fsmonitor-ipc.c: try_again:
-     + 
-     + 	case IPC_STATE__INVALID_PATH:
-     + 		ret = error(_("fsmonitor_ipc__send_query: invalid path '%s'"),
-     +-			    fsmonitor_ipc__get_path());
-     ++			    fsmonitor_ipc__get_path(the_repository));
-     + 		goto done;
-     + 
-     + 	case IPC_STATE__OTHER_ERROR:
-     + 	default:
-     + 		ret = error(_("fsmonitor_ipc__send_query: unspecified error on '%s'"),
-     +-			    fsmonitor_ipc__get_path());
-     ++			    fsmonitor_ipc__get_path(the_repository));
-     + 		goto done;
-     + 	}
-     + 
-     +@@ fsmonitor-ipc.c: int fsmonitor_ipc__send_command(const char *command,
-     + 	options.wait_if_busy = 1;
-     + 	options.wait_if_not_found = 0;
-     + 
-     +-	state = ipc_client_try_connect(fsmonitor_ipc__get_path(), &options,
-     +-				       &connection);
-     ++	state = ipc_client_try_connect(fsmonitor_ipc__get_path(the_repository),
-     ++						&options, &connection);
-     + 	if (state != IPC_STATE__LISTENING) {
-     + 		die(_("fsmonitor--daemon is not running"));
-     + 		return -1;
-     +
-     + ## fsmonitor-ipc.h ##
-     +@@
-     + 
-     + #include "simple-ipc.h"
-     + 
-     ++struct repository;
-     ++
-     + /*
-     +  * Returns true if built-in file system monitor daemon is defined
-     +  * for this platform.
-     +@@ fsmonitor-ipc.h: int fsmonitor_ipc__is_supported(void);
-     +  *
-     +  * Returns NULL if the daemon is not supported on this platform.
-     +  */
-     +-const char *fsmonitor_ipc__get_path(void);
-     ++const char *fsmonitor_ipc__get_path(struct repository *r);
-     + 
-     + /*
-     +  * Try to determine whether there is a `git-fsmonitor--daemon` process
- 4:  3428bcf8763 = 3:  5518d2f3e03 fsmonitor: avoid socket location check if using hook
- 5:  9c1f408ae6d ! 4:  3a9fe473cf4 fsmonitor: deal with synthetic firmlinks on macOS
-     @@ fsmonitor--daemon.h: struct fsmonitor_daemon_state {
-       };
-       
-       /*
-     -@@ fsmonitor--daemon.h: void fsmonitor_publish(struct fsmonitor_daemon_state *state,
-     -  */
-     - void fsmonitor_force_resync(struct fsmonitor_daemon_state *state);
-     - 
-     -+char *fsmonitor_resolve_alias(const char *path,
-     -+	struct alias_info *alias);
-     -+
-     - #endif /* HAVE_FSMONITOR_DAEMON_BACKEND */
-     - #endif /* FSMONITOR_DAEMON_H */
-      
-       ## fsmonitor-path-utils.h ##
-      @@
- -:  ----------- > 5:  4d00adb1deb fsmonitor: deal with synthetic firmlinks on macOS
- 6:  d2c95e34d3a = 6:  260591f5820 fsmonitor: add documentation for allowRemote and socketDir options
-
+diff --git a/Makefile b/Makefile
+index d9247ead45b..6e492a67547 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2039,6 +2039,7 @@ endif
+ ifdef FSMONITOR_OS_SETTINGS
+ 	COMPAT_CFLAGS += -DHAVE_FSMONITOR_OS_SETTINGS
+ 	COMPAT_OBJS += compat/fsmonitor/fsm-settings-$(FSMONITOR_OS_SETTINGS).o
++	COMPAT_OBJS += compat/fsmonitor/fsm-path-utils-$(FSMONITOR_OS_SETTINGS).o
+ endif
+ 
+ ifeq ($(TCLTK_PATH),)
+diff --git a/compat/fsmonitor/fsm-path-utils-darwin.c b/compat/fsmonitor/fsm-path-utils-darwin.c
+new file mode 100644
+index 00000000000..067cbe6990a
+--- /dev/null
++++ b/compat/fsmonitor/fsm-path-utils-darwin.c
+@@ -0,0 +1,40 @@
++#include "fsmonitor.h"
++#include "fsmonitor-path-utils.h"
++#include <sys/param.h>
++#include <sys/mount.h>
++
++int fsmonitor__get_fs_info(const char *path, struct fs_info *fs_info)
++{
++	struct statfs fs;
++	if (statfs(path, &fs) == -1) {
++		int saved_errno = errno;
++		trace_printf_key(&trace_fsmonitor, "statfs('%s') failed: %s",
++				 path, strerror(saved_errno));
++		errno = saved_errno;
++		return -1;
++	}
++
++	trace_printf_key(&trace_fsmonitor,
++			 "statfs('%s') [type 0x%08x][flags 0x%08x] '%s'",
++			 path, fs.f_type, fs.f_flags, fs.f_fstypename);
++
++	if (!(fs.f_flags & MNT_LOCAL))
++		fs_info->is_remote = 1;
++	else
++		fs_info->is_remote = 0;
++
++	fs_info->typename = fs.f_fstypename;
++
++	trace_printf_key(&trace_fsmonitor,
++				"'%s' is_remote: %d",
++				path, fs_info->is_remote);
++	return 0;
++}
++
++int fsmonitor__is_fs_remote(const char *path)
++{
++	struct fs_info fs;
++	if (fsmonitor__get_fs_info(path, &fs))
++		return -1;
++	return fs.is_remote;
++}
+diff --git a/compat/fsmonitor/fsm-path-utils-win32.c b/compat/fsmonitor/fsm-path-utils-win32.c
+new file mode 100644
+index 00000000000..a90b8f7925b
+--- /dev/null
++++ b/compat/fsmonitor/fsm-path-utils-win32.c
+@@ -0,0 +1,128 @@
++#include "cache.h"
++#include "fsmonitor.h"
++#include "fsmonitor-path-utils.h"
++
++/*
++ * Check remote working directory protocol.
++ *
++ * Return -1 if client machine cannot get remote protocol information.
++ */
++static int check_remote_protocol(wchar_t *wpath)
++{
++	HANDLE h;
++	FILE_REMOTE_PROTOCOL_INFO proto_info;
++
++	h = CreateFileW(wpath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
++			FILE_FLAG_BACKUP_SEMANTICS, NULL);
++
++	if (h == INVALID_HANDLE_VALUE) {
++		error(_("[GLE %ld] unable to open for read '%ls'"),
++		      GetLastError(), wpath);
++		return -1;
++	}
++
++	if (!GetFileInformationByHandleEx(h, FileRemoteProtocolInfo,
++		&proto_info, sizeof(proto_info))) {
++		error(_("[GLE %ld] unable to get protocol information for '%ls'"),
++		      GetLastError(), wpath);
++		CloseHandle(h);
++		return -1;
++	}
++
++	CloseHandle(h);
++
++	trace_printf_key(&trace_fsmonitor,
++				"check_remote_protocol('%ls') remote protocol %#8.8lx",
++				wpath, proto_info.Protocol);
++
++	return 0;
++}
++
++/*
++ * Notes for testing:
++ *
++ * (a) Windows allows a network share to be mapped to a drive letter.
++ *     (This is the normal method to access it.)
++ *
++ *     $ NET USE Z: \\server\share
++ *     $ git -C Z:/repo status
++ *
++ * (b) Windows allows a network share to be referenced WITHOUT mapping
++ *     it to drive letter.
++ *
++ *     $ NET USE \\server\share\dir
++ *     $ git -C //server/share/repo status
++ *
++ * (c) Windows allows "SUBST" to create a fake drive mapping to an
++ *     arbitrary path (which may be remote)
++ *
++ *     $ SUBST Q: Z:\repo
++ *     $ git -C Q:/ status
++ *
++ * (d) Windows allows a directory symlink to be created on a local
++ *     file system that points to a remote repo.
++ *
++ *     $ mklink /d ./link //server/share/repo
++ *     $ git -C ./link status
++ */
++int fsmonitor__get_fs_info(const char *path, struct fs_info *fs_info)
++{
++	wchar_t wpath[MAX_PATH];
++	wchar_t wfullpath[MAX_PATH];
++	size_t wlen;
++	UINT driveType;
++
++	/*
++	 * Do everything in wide chars because the drive letter might be
++	 * a multi-byte sequence.  See win32_has_dos_drive_prefix().
++	 */
++	if (xutftowcs_path(wpath, path) < 0) {
++		return -1;
++	}
++
++	/*
++	 * GetDriveTypeW() requires a final slash.  We assume that the
++	 * worktree pathname points to an actual directory.
++	 */
++	wlen = wcslen(wpath);
++	if (wpath[wlen - 1] != L'\\' && wpath[wlen - 1] != L'/') {
++		wpath[wlen++] = L'\\';
++		wpath[wlen] = 0;
++	}
++
++	/*
++	 * Normalize the path.  If nothing else, this converts forward
++	 * slashes to backslashes.  This is essential to get GetDriveTypeW()
++	 * correctly handle some UNC "\\server\share\..." paths.
++	 */
++	if (!GetFullPathNameW(wpath, MAX_PATH, wfullpath, NULL)) {
++		return -1;
++	}
++
++	driveType = GetDriveTypeW(wfullpath);
++	trace_printf_key(&trace_fsmonitor,
++			 "DriveType '%s' L'%ls' (%u)",
++			 path, wfullpath, driveType);
++
++	if (driveType == DRIVE_REMOTE) {
++		fs_info->is_remote = 1;
++		if (check_remote_protocol(wfullpath) < 0)
++			return -1;
++	} else {
++		fs_info->is_remote = 0;
++	}
++
++	trace_printf_key(&trace_fsmonitor,
++				"'%s' is_remote: %d",
++				path, fs_info->is_remote);
++
++	return 0;
++}
++
++int fsmonitor__is_fs_remote(const char *path)
++{
++	struct fs_info fs;
++	if (fsmonitor__get_fs_info(path, &fs))
++		return -1;
++	return fs.is_remote;
++}
+diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
+index efc732c0f31..dba3ced6bb7 100644
+--- a/compat/fsmonitor/fsm-settings-darwin.c
++++ b/compat/fsmonitor/fsm-settings-darwin.c
+@@ -1,32 +1,10 @@
+-#include "cache.h"
+ #include "config.h"
+-#include "repository.h"
+-#include "fsmonitor-settings.h"
+ #include "fsmonitor.h"
+-#include <sys/param.h>
+-#include <sys/mount.h>
++#include "fsmonitor-ipc.h"
++#include "fsmonitor-settings.h"
++#include "fsmonitor-path-utils.h"
+ 
+-/*
+- * [1] Remote working directories are problematic for FSMonitor.
+- *
+- * The underlying file system on the server machine and/or the remote
+- * mount type (NFS, SAMBA, etc.) dictates whether notification events
+- * are available at all to remote client machines.
+- *
+- * Kernel differences between the server and client machines also
+- * dictate the how (buffering, frequency, de-dup) the events are
+- * delivered to client machine processes.
+- *
+- * A client machine (such as a laptop) may choose to suspend/resume
+- * and it is unclear (without lots of testing) whether the watcher can
+- * resync after a resume.  We might be able to treat this as a normal
+- * "events were dropped by the kernel" event and do our normal "flush
+- * and resync" --or-- we might need to close the existing (zombie?)
+- * notification fd and create a new one.
+- *
+- * In theory, the above issues need to be addressed whether we are
+- * using the Hook or IPC API.
+- *
++ /*
+  * For the builtin FSMonitor, we create the Unix domain socket for the
+  * IPC in the .git directory.  If the working directory is remote,
+  * then the socket will be created on the remote file system.  This
+@@ -38,40 +16,34 @@
+  * be taken to ensure that $HOME is actually local and not a managed
+  * file share.)
+  *
+- * So (for now at least), mark remote working directories as
+- * incompatible.
+- *
+- *
+- * [2] FAT32 and NTFS working directories are problematic too.
++ * FAT32 and NTFS working directories are problematic too.
+  *
+  * The builtin FSMonitor uses a Unix domain socket in the .git
+  * directory for IPC.  These Windows drive formats do not support
+  * Unix domain sockets, so mark them as incompatible for the daemon.
+  *
+  */
+-static enum fsmonitor_reason check_volume(struct repository *r)
++static enum fsmonitor_reason check_uds_volume(struct repository *r)
+ {
+-	struct statfs fs;
++	struct fs_info fs;
++	const char *ipc_path = fsmonitor_ipc__get_path();
++	struct strbuf path = STRBUF_INIT;
++	strbuf_add(&path, ipc_path, strlen(ipc_path));
+ 
+-	if (statfs(r->worktree, &fs) == -1) {
+-		int saved_errno = errno;
+-		trace_printf_key(&trace_fsmonitor, "statfs('%s') failed: %s",
+-				 r->worktree, strerror(saved_errno));
+-		errno = saved_errno;
++	if (fsmonitor__get_fs_info(dirname(path.buf), &fs) == -1) {
++		strbuf_release(&path);
+ 		return FSMONITOR_REASON_ERROR;
+ 	}
+ 
+-	trace_printf_key(&trace_fsmonitor,
+-			 "statfs('%s') [type 0x%08x][flags 0x%08x] '%s'",
+-			 r->worktree, fs.f_type, fs.f_flags, fs.f_fstypename);
++	strbuf_release(&path);
+ 
+-	if (!(fs.f_flags & MNT_LOCAL))
++	if (fs.is_remote)
+ 		return FSMONITOR_REASON_REMOTE;
+ 
+-	if (!strcmp(fs.f_fstypename, "msdos")) /* aka FAT32 */
++	if (!strcmp(fs.typename, "msdos")) /* aka FAT32 */
+ 		return FSMONITOR_REASON_NOSOCKETS;
+ 
+-	if (!strcmp(fs.f_fstypename, "ntfs"))
++	if (!strcmp(fs.typename, "ntfs"))
+ 		return FSMONITOR_REASON_NOSOCKETS;
+ 
+ 	return FSMONITOR_REASON_OK;
+@@ -81,7 +53,7 @@ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
+ {
+ 	enum fsmonitor_reason reason;
+ 
+-	reason = check_volume(r);
++	reason = check_uds_volume(r);
+ 	if (reason != FSMONITOR_REASON_OK)
+ 		return reason;
+ 
+diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
+index e5ec5b0a9f7..d88b06ae610 100644
+--- a/compat/fsmonitor/fsm-settings-win32.c
++++ b/compat/fsmonitor/fsm-settings-win32.c
+@@ -1,8 +1,9 @@
+ #include "cache.h"
+ #include "config.h"
+ #include "repository.h"
+-#include "fsmonitor-settings.h"
+ #include "fsmonitor.h"
++#include "fsmonitor-settings.h"
++#include "fsmonitor-path-utils.h"
+ 
+ /*
+  * VFS for Git is incompatible with FSMonitor.
+@@ -24,171 +25,6 @@ static enum fsmonitor_reason check_vfs4git(struct repository *r)
+ 	return FSMONITOR_REASON_OK;
+ }
+ 
+-/*
+- * Check if monitoring remote working directories is allowed.
+- *
+- * By default, monitoring remote working directories is
+- * disabled.  Users may override this behavior in enviroments where
+- * they have proper support.
+- */
+-static int check_config_allowremote(struct repository *r)
+-{
+-	int allow;
+-
+-	if (!repo_config_get_bool(r, "fsmonitor.allowremote", &allow))
+-		return allow;
+-
+-	return -1; /* fsmonitor.allowremote not set */
+-}
+-
+-/*
+- * Check remote working directory protocol.
+- *
+- * Error if client machine cannot get remote protocol information.
+- */
+-static int check_remote_protocol(wchar_t *wpath)
+-{
+-	HANDLE h;
+-	FILE_REMOTE_PROTOCOL_INFO proto_info;
+-
+-	h = CreateFileW(wpath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
+-			FILE_FLAG_BACKUP_SEMANTICS, NULL);
+-
+-	if (h == INVALID_HANDLE_VALUE) {
+-		error(_("[GLE %ld] unable to open for read '%ls'"),
+-		      GetLastError(), wpath);
+-		return -1;
+-	}
+-
+-	if (!GetFileInformationByHandleEx(h, FileRemoteProtocolInfo,
+-		&proto_info, sizeof(proto_info))) {
+-		error(_("[GLE %ld] unable to get protocol information for '%ls'"),
+-		      GetLastError(), wpath);
+-		CloseHandle(h);
+-		return -1;
+-	}
+-
+-	CloseHandle(h);
+-
+-	trace_printf_key(&trace_fsmonitor,
+-				"check_remote_protocol('%ls') remote protocol %#8.8lx",
+-				wpath, proto_info.Protocol);
+-
+-	return 0;
+-}
+-
+-/*
+- * Remote working directories are problematic for FSMonitor.
+- *
+- * The underlying file system on the server machine and/or the remote
+- * mount type dictates whether notification events are available at
+- * all to remote client machines.
+- *
+- * Kernel differences between the server and client machines also
+- * dictate the how (buffering, frequency, de-dup) the events are
+- * delivered to client machine processes.
+- *
+- * A client machine (such as a laptop) may choose to suspend/resume
+- * and it is unclear (without lots of testing) whether the watcher can
+- * resync after a resume.  We might be able to treat this as a normal
+- * "events were dropped by the kernel" event and do our normal "flush
+- * and resync" --or-- we might need to close the existing (zombie?)
+- * notification fd and create a new one.
+- *
+- * In theory, the above issues need to be addressed whether we are
+- * using the Hook or IPC API.
+- *
+- * So (for now at least), mark remote working directories as
+- * incompatible.
+- *
+- * Notes for testing:
+- *
+- * (a) Windows allows a network share to be mapped to a drive letter.
+- *     (This is the normal method to access it.)
+- *
+- *     $ NET USE Z: \\server\share
+- *     $ git -C Z:/repo status
+- *
+- * (b) Windows allows a network share to be referenced WITHOUT mapping
+- *     it to drive letter.
+- *
+- *     $ NET USE \\server\share\dir
+- *     $ git -C //server/share/repo status
+- *
+- * (c) Windows allows "SUBST" to create a fake drive mapping to an
+- *     arbitrary path (which may be remote)
+- *
+- *     $ SUBST Q: Z:\repo
+- *     $ git -C Q:/ status
+- *
+- * (d) Windows allows a directory symlink to be created on a local
+- *     file system that points to a remote repo.
+- *
+- *     $ mklink /d ./link //server/share/repo
+- *     $ git -C ./link status
+- */
+-static enum fsmonitor_reason check_remote(struct repository *r)
+-{
+-	int ret;
+-	wchar_t wpath[MAX_PATH];
+-	wchar_t wfullpath[MAX_PATH];
+-	size_t wlen;
+-	UINT driveType;
+-
+-	/*
+-	 * Do everything in wide chars because the drive letter might be
+-	 * a multi-byte sequence.  See win32_has_dos_drive_prefix().
+-	 */
+-	if (xutftowcs_path(wpath, r->worktree) < 0)
+-		return FSMONITOR_REASON_ERROR;
+-
+-	/*
+-	 * GetDriveTypeW() requires a final slash.  We assume that the
+-	 * worktree pathname points to an actual directory.
+-	 */
+-	wlen = wcslen(wpath);
+-	if (wpath[wlen - 1] != L'\\' && wpath[wlen - 1] != L'/') {
+-		wpath[wlen++] = L'\\';
+-		wpath[wlen] = 0;
+-	}
+-
+-	/*
+-	 * Normalize the path.  If nothing else, this converts forward
+-	 * slashes to backslashes.  This is essential to get GetDriveTypeW()
+-	 * correctly handle some UNC "\\server\share\..." paths.
+-	 */
+-	if (!GetFullPathNameW(wpath, MAX_PATH, wfullpath, NULL))
+-		return FSMONITOR_REASON_ERROR;
+-
+-	driveType = GetDriveTypeW(wfullpath);
+-	trace_printf_key(&trace_fsmonitor,
+-			 "DriveType '%s' L'%ls' (%u)",
+-			 r->worktree, wfullpath, driveType);
+-
+-	if (driveType == DRIVE_REMOTE) {
+-		trace_printf_key(&trace_fsmonitor,
+-				 "check_remote('%s') true",
+-				 r->worktree);
+-
+-		ret = check_remote_protocol(wfullpath);
+-		if (ret < 0)
+-			return FSMONITOR_REASON_ERROR;
+-
+-		switch (check_config_allowremote(r)) {
+-		case 0: /* config overrides and disables */
+-			return FSMONITOR_REASON_REMOTE;
+-		case 1: /* config overrides and enables */
+-			return FSMONITOR_REASON_OK;
+-		default:
+-			break; /* config has no opinion */
+-		}
+-
+-		return FSMONITOR_REASON_REMOTE;
+-	}
+-
+-	return FSMONITOR_REASON_OK;
+-}
+-
+ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
+ {
+ 	enum fsmonitor_reason reason;
+@@ -197,9 +33,5 @@ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
+ 	if (reason != FSMONITOR_REASON_OK)
+ 		return reason;
+ 
+-	reason = check_remote(r);
+-	if (reason != FSMONITOR_REASON_OK)
+-		return reason;
+-
+ 	return FSMONITOR_REASON_OK;
+ }
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 2237109b57f..b88494bf59b 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -308,6 +308,7 @@ if(SUPPORTS_SIMPLE_IPC)
+ 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-win32.c)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-health-win32.c)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-path-utils-win32.c)
+ 
+ 		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-win32.c)
+@@ -315,6 +316,7 @@ if(SUPPORTS_SIMPLE_IPC)
+ 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-darwin.c)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-health-darwin.c)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-path-utils-darwin.c)
+ 
+ 		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-darwin.c)
+diff --git a/fsmonitor-path-utils.h b/fsmonitor-path-utils.h
+new file mode 100644
+index 00000000000..e48592887e7
+--- /dev/null
++++ b/fsmonitor-path-utils.h
+@@ -0,0 +1,23 @@
++#ifndef FSM_PATH_UTILS_H
++#define FSM_PATH_UTILS_H
++
++struct fs_info {
++	int is_remote;
++	char *typename;
++};
++
++/*
++ * Get some basic filesystem informtion for the given path
++ *
++ * Returns -1 on error, zero otherwise.
++ */
++int fsmonitor__get_fs_info(const char *path, struct fs_info *fs_info);
++
++/*
++ * Determines if the filesystem that path resides on is remote.
++ *
++ * Returns -1 on error, 0 if not remote, 1 if remote.
++ */
++int fsmonitor__is_fs_remote(const char *path);
++
++#endif
+diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
+index 464424a1e92..d288cbad479 100644
+--- a/fsmonitor-settings.c
++++ b/fsmonitor-settings.c
+@@ -2,6 +2,7 @@
+ #include "config.h"
+ #include "repository.h"
+ #include "fsmonitor-settings.h"
++#include "fsmonitor-path-utils.h"
+ 
+ /*
+  * We keep this structure defintion private and have getters
+@@ -13,6 +14,52 @@ struct fsmonitor_settings {
+ 	char *hook_path;
+ };
+ 
++/*
++ * Remote working directories are problematic for FSMonitor.
++ *
++ * The underlying file system on the server machine and/or the remote
++ * mount type dictates whether notification events are available at
++ * all to remote client machines.
++ *
++ * Kernel differences between the server and client machines also
++ * dictate the how (buffering, frequency, de-dup) the events are
++ * delivered to client machine processes.
++ *
++ * A client machine (such as a laptop) may choose to suspend/resume
++ * and it is unclear (without lots of testing) whether the watcher can
++ * resync after a resume.  We might be able to treat this as a normal
++ * "events were dropped by the kernel" event and do our normal "flush
++ * and resync" --or-- we might need to close the existing (zombie?)
++ * notification fd and create a new one.
++ *
++ * In theory, the above issues need to be addressed whether we are
++ * using the Hook or IPC API.
++ *
++ * So (for now at least), mark remote working directories as
++ * incompatible unless 'fsmonitor.allowRemote' is true.
++ *
++ */
++#ifdef HAVE_FSMONITOR_OS_SETTINGS
++static enum fsmonitor_reason check_remote(struct repository *r)
++{
++	int allow_remote = -1; /* -1 unset, 0 not allowed, 1 allowed */
++	int is_remote = fsmonitor__is_fs_remote(r->worktree);
++
++	switch (is_remote) {
++		case 0:
++			return FSMONITOR_REASON_OK;
++		case 1:
++			repo_config_get_bool(r, "fsmonitor.allowremote", &allow_remote);
++			if (allow_remote < 1)
++				return FSMONITOR_REASON_REMOTE;
++			else
++				return FSMONITOR_REASON_OK;
++		default:
++			return FSMONITOR_REASON_ERROR;
++	}
++}
++#endif
++
+ static enum fsmonitor_reason check_for_incompatible(struct repository *r)
+ {
+ 	if (!r->worktree) {
+@@ -27,6 +74,9 @@ static enum fsmonitor_reason check_for_incompatible(struct repository *r)
+ 	{
+ 		enum fsmonitor_reason reason;
+ 
++		reason = check_remote(r);
++		if (reason != FSMONITOR_REASON_OK)
++			return reason;
+ 		reason = fsm_os__incompatible(r);
+ 		if (reason != FSMONITOR_REASON_OK)
+ 			return reason;
 -- 
 gitgitgadget
+
