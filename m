@@ -2,166 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DEAFC54EE9
-	for <git@archiver.kernel.org>; Fri, 16 Sep 2022 07:25:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06683ECAAD8
+	for <git@archiver.kernel.org>; Fri, 16 Sep 2022 07:29:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230214AbiIPHZW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Sep 2022 03:25:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52364 "EHLO
+        id S230081AbiIPH3T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Sep 2022 03:29:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230302AbiIPHYm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2022 03:24:42 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CDBDA61C0
-        for <git@vger.kernel.org>; Fri, 16 Sep 2022 00:24:15 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id p1-20020a17090a2d8100b0020040a3f75eso19539170pjd.4
-        for <git@vger.kernel.org>; Fri, 16 Sep 2022 00:24:15 -0700 (PDT)
+        with ESMTP id S229933AbiIPH3S (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2022 03:29:18 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B1932ACC
+        for <git@vger.kernel.org>; Fri, 16 Sep 2022 00:29:16 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id lh5so5700995ejb.10
+        for <git@vger.kernel.org>; Fri, 16 Sep 2022 00:29:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=GinfZmClDHk2jh5mr7Z9838OtEIGKtqyFhAHbpPfB2w=;
-        b=hzZ2H4DuVP+e1PqSlZrIUImNBP/mNyP57V2hW4qouHWueSCUD7pwkUw//QGb7MjXCT
-         +sb/CSs7I/WN0y9DigjD85hCuBjx9CTNztSWT8MitnUC4P4oWsR7wpgNhWjRc/jHLh+2
-         OvXs+jA1iVHwPP/h+osmqOov063jkom0Z3l0jKn6XIm/WqcCk9PWhZaRHtD9QtK7R7rI
-         LEV3C82ov/vD0o08mhdla/9bgais+SmnVloyWhhoXR+VaQtsyr/1nwJUv/L0TPNoVp0i
-         O7ReRARvTGWupWPRk2DauOtXaIDuWRrp4Un0t1b3hHILFdbdv9/pzwilvL42x8iD4k1k
-         VRkA==
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=yOZNr56JJkwPjS1BUxgwQOtJ5MoTxlWCMr864yXAZZs=;
+        b=IyWQ+wPP4SsPaqmaD7gEHqndGw2Jlv6qY7q2A2Hhg/aEcrzDT6g3/ALxdBr9gUmQMx
+         lCiu40PNQWNIUfAahgx9zNujLTKWkOGjANR2qTuMLRMFRWZeU7HBTtDf49/gS2txY5lw
+         8gNp2C32t2c5QPfErPUnUQxjkVH82/sDOeRpL/LldMlMu5ER2E5jdL1LSKZcYNW/Y7j8
+         l0zs49hRUFXjlnOfrEbmOuwl4mPnyBZG8ConWPMp+r3YiXJOMPsANXgNKAUFENnD/V3P
+         lhhP9YzZ8MbRlvrdJIiZKpsqOtfBsR/GJUDKkZ4RRM+e3uvkkreUCrQbYuP0K7PtUxuz
+         5fAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=GinfZmClDHk2jh5mr7Z9838OtEIGKtqyFhAHbpPfB2w=;
-        b=CQuTUNcI21hXqM9Hc/iJppvrAkru+R1xUYQEPYNSxOpnDSUCADI0hoN+T0mDvO1g0e
-         bqBExM5/JBpNY/lmib5+jxo9Wb/HhAJbFR6wBSke56g2LXWqI2avdyGlCkqJ6X5R72if
-         mKmwpmdbGuk2OBvlGDMxQhnxy6fzPwB5rBd3ugfhKzNLZAly5N9HKjMHfnxVtQ1N1pF2
-         Dw/RIs/QFpsOig4XcFTTkj4aAlK3zXJyvgM1563G9S9qvyx5/YVyj/UALZAYwdjaWdxp
-         iHXAOa/yAIIX/tlbkKTOAe6hWk+nZvbU60p40N1AYDyH/3QM/eiB59S3WOllLBjBGrhV
-         ZPkA==
-X-Gm-Message-State: ACrzQf1+MuwasjpvfQxc7JCx1yW3GJ5Svlpnkx5+P1W0/O4ClhTyBA5j
-        y4yH14396lvwmKzSPTdWK/LKTS115bM=
-X-Google-Smtp-Source: AMsMyM6GtnhvSrCDWKroqmjQUIcoqXr/UuHRpLU9FBOAE459WcshDEnR526IRl9fOjkcH69X9NQy7g==
-X-Received: by 2002:a17:90b:1d05:b0:202:809c:2d52 with SMTP id on5-20020a17090b1d0500b00202809c2d52mr3961568pjb.215.1663313054187;
-        Fri, 16 Sep 2022 00:24:14 -0700 (PDT)
-Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id w187-20020a6282c4000000b0053e156e9475sm13584156pfd.182.2022.09.16.00.24.12
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Sep 2022 00:24:13 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git List <git@vger.kernel.org>,
-        Git l10n discussion group <git-l10n@googlegroups.com>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <dacs.git@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
-        Yi-Jyun Pan <pan93412@gmail.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Kickoff for Git 2.38.0 round #1
-Date:   Fri, 16 Sep 2022 15:23:59 +0800
-Message-Id: <20220916072359.13044-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=yOZNr56JJkwPjS1BUxgwQOtJ5MoTxlWCMr864yXAZZs=;
+        b=MlFuOBooow8llaEGAWxU9jXSJL2xVthkARHgkdZmWPDMKdOZMvVo/emiRXgB/KpOB0
+         XixoJ+Np7QLqynmMpTn2hIwbva7jv/ufr0k9gEUjnpLUBIQ2wLXyrtAOT/XHSQMqRumU
+         lHpRnWei20vyORKEffPE4Ub/7PpbChskQ34SvLf25sPLGeiO4ErlhnfyJ7cxRX5sq61Q
+         7IWD6dN/MWjmO6Rv6RI8Dinrpvj9kN9wZPma2YjA+91SYF5Dye9yh4azfsyuEFydR8Hp
+         v1NaNGpwFgpnSHUkE0VqWj5sCLvzI2rYhd3i8LDX7E+V1KchsraHjxlkItcaQ3cYbKkt
+         Vp9A==
+X-Gm-Message-State: ACrzQf1t9txT2hfti5/n654ypBY8C5KTIQDPxjSpfvY1fnL67YS14aRs
+        k9V+tbm6Wburbdj3Uq/HorqmcACpbAaswGaBDcV6efCizLZJcA==
+X-Google-Smtp-Source: AMsMyM67Iv+xKgPh5utwfqlqntOWrOpssfxim5kgTq3+pE4UiN0+vf9C5/Fb8ZrFmeOBokeVuwxyNvCZDnDgu04HaFM=
+X-Received: by 2002:a17:906:974d:b0:780:2c07:7617 with SMTP id
+ o13-20020a170906974d00b007802c077617mr2724383ejy.707.1663313354589; Fri, 16
+ Sep 2022 00:29:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   =?UTF-8?B?5ZGo5bCR5Z2k?= <zhoushaokunixx@gmail.com>
+Date:   Fri, 16 Sep 2022 15:29:03 +0800
+Message-ID: <CAGxGspHE2o5KgBWLF6cM56bWgbw8tDZwM+RuFmxGDZ+Vn466Bw@mail.gmail.com>
+Subject: git fetch --unshallow does not work as expected to remove all the
+ limitations imposed by shallow repositories
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Git v2.38.0-rc0 has been released, and it's time to start new round of
-git l10n.  This time there are 154 updated messages need to be translated
-since last release. Please send your pull request to the l10n coordinator's
-repository below before this update window closes on Sun, Oct 02, 2022. 
+I just can't figure out the effect of the command `git fetch --unshallow`.
 
-    https://github.com/git-l10n/git-po/
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-As of git 2.37, we (git l10n contributors) have a new l10n workflow. The
-following description of the new l10n workflow is from the "po/README.md"
-file.
+I downloaded a repo with a shallow clone. Then in my repo's $GIT_DIR,
+I get a file named 'shallow' which I found its description in website
+'https://git-scm.com/docs/shallow':
+> $GIT_DIR/shallow lists commit object names and tells Git to pretend as if they are root commits
+> (e.g. "git log" traversal stops after showing them; "git fsck" does not complain saying the commits listed on their "parent" lines do not exist).
+When I execute 'git fetch --depth=x' to fetch more history. There is
+no doubt that the $GIT_DIR/shallow file exists and lists some commit
+objects.
+All of the above steps act as expected.
+Next, as the doc of 'git fetch --unshallow' described in website
+'https://git-scm.com/docs/git-fetch#Documentation/git-fetch.txt---unshallow':
+> If the source repository is complete, convert a shallow repository to a complete one, removing all the limitations imposed by shallow repositories.
+> If the source repository is shallow, fetch as much as possible so that the current repository has the same history as the source repository.
+so I execute the command of 'git fetch --unshallow' in my repository
+to fetch all commit history.
+However, the strange thing is that the shallow file still exists in $GIT_DIR.
 
+What did you expect to happen? (Expected behavior)
+As the document says: "If the source repository is complete, convert a
+shallow repository to a complete one, removing all the limitations
+imposed by shallow repositories."
+So, I think the '$GIT_DIR/shallow' file will be deleted after
+executing 'git fetch --unshallow' which corresponds to 'removing all
+the limitations imposed by shallow repositories.'
 
-## The "po/git.pot" file is a generated file, no longer in the repository
+What happened instead? (Actual behavior)
+And when I execute 'git fetch --unshallow' again, the
+'$GIT_DIR/shallow' file is not removed.
+What's different between what you expected and what actually happened?
+The '$GIT_DIR/shallow' is whether it exists or not after executing
+'git fetch --unshallow'.
+In my developing application, I use the existence of the
+'$GIT_DIR/shallow' file to mark whether a repo's commit history is
+completely fetched from a remote source which is really important for
+me.
+I also tried adding the '--update-shallow' argument which all commands
+are 'git fetch --unshallow --update-shallow'. But the
+'$GIT_DIR/shallow' file still existed.
+But when I try 'git fetch --unshallow --update-shallow' again, the
+file will be removed.
+So for now, I just execute 'git fetch --unshallow --update-shallow',
+and check if '$GIT_DIR/shallow' exists.
+If not, the program will return.
+If it exists, I execute 'git fetch --unshallow --update-shallow' again
+to make sure the  '$GIT_DIR/shallow' file is deleted.
 
-The l10n coordinator does not need to generate the "po/git.pot" file every
-time to start a new l10n workflow, and there is no "po/git.pot" file at all.
+Anything else you want to add:
+Maybe it's a bug of 'git fetch'.
+If not, I will appreciate it if any guys can give me some ways to
+check whether the commit history of one repository which was shallowly
+cloned earlier is completely fetched.
+Thanks for your reply.
 
-Everyone can generate the "po/git.pot" file with the command below:
-
-    make po/git.pot
-
-But we can also forget about it. By updating our corresponding "po/XX.po"
-file, the "po/git.pot" file is automatically generated.
-
-
-## Update the "po/XX.po" file, and start to translate
-
-Before updating the "po/XX.po" file, l10n contributors should pull the latest
-commits from the master branch of "git.git". E.g.:
-
-    git pull --rebase git@github.com:git/git.git master
-
-Then update the cooresponding "po/XX.po" file using the following command:
-
-    make po-update PO_FILE=po/XX.po
-
-Translate the uptodate "po/XX.po" file, and create a new commit.
-
-
-## Refine your commits, send pull requests
-
-In the "po/XX.po" file, there are location lines in comments like below:
-
-    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
-    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
-    #: builtin/rebase.c:1671
-
-These comments with file locations are useful for l10n contributors to locate
-the context easily during translation. But these file locations introduce a
-lot of noise and will consume a lot of repository storage. Therefore, we
-should remove these file locations from the "po/XX.po" file.
-
-To remove file locations in the "po/XX.po" file, you can use one of the
-following two ways, but don't switch back and forth.
-
- * Keep the filenames, only remove locations (need gettext 0.19 and above):
-
-        msgcat --add-location=file po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
- * Remove both filenames and locations:
-
-        msgcat --no-location po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
-After squashing trivial commits and removing file locations in the "po/XX.po"
-file, send pull request to the l10n coordinator's repository below:
-
-    https://github.com/git-l10n/git-po/
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
 
-## Resolve errors found by the l10n CI pipeline for the pull request
+[System Info]
+git version:
+git version 2.36.1.windows.1
+cpu: x86_64
+built from commit: e2ff68a2d1426758c78d023f863bfa1e03cbc768
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Windows 10.0 19042
+compiler info: gnuc: 11.3
+libc info: no libc information available
+$SHELL (typically, interactive shell):
+E:\projects\ugit\ugit\dist\UGit-dev-win32-x64\resources\app\git\usr\bin\bash.exe
 
-A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
-help git l10n coordinator and git l10n contributors to check the conventions
-of git l10n contributions, and it is also used in GitHub actions as l10n CI
-pipeline to validate each pull request in the "git-l10n/git-po" repository.
-Please fix the issues found by the helper program.
 
-
-** Please note: The update window will close on Sun, Oct 02, 2022. **
-
-
---
-Jiang Xin
+[Enabled Hooks]
