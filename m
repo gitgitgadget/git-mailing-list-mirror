@@ -2,137 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 774E9ECAAA1
-	for <git@archiver.kernel.org>; Fri, 16 Sep 2022 21:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57475ECAAD8
+	for <git@archiver.kernel.org>; Fri, 16 Sep 2022 22:02:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229957AbiIPV4F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Sep 2022 17:56:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54598 "EHLO
+        id S229969AbiIPWCu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Sep 2022 18:02:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbiIPV4D (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2022 17:56:03 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6C9A26ADB
-        for <git@vger.kernel.org>; Fri, 16 Sep 2022 14:56:02 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1E4811BB1BD;
-        Fri, 16 Sep 2022 17:56:02 -0400 (EDT)
+        with ESMTP id S229587AbiIPWCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2022 18:02:49 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D6B7A74D
+        for <git@vger.kernel.org>; Fri, 16 Sep 2022 15:02:47 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2BE9E149CAA;
+        Fri, 16 Sep 2022 18:02:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:cc:cc:date:message-id:mime-version
-        :content-type; s=sasl; bh=FmT7wrEGgeYG6fwpOtmtDoqr1N29UlJfvw2yO7
-        cdrgQ=; b=pgrZ9kOKtofyQzdC5RWOeIwyVe3JzSzxKwPXFluOlAXbGU+csKJjKQ
-        VuizJZYAx0eXMWWgkSe3xzNUgPthmi8DkFeoJfn0Cb65YjNCmafSAmbRNl4y5q5w
-        kxanAw7kMwzgDlkvUsBcRanS2oo1mRtVuuvV8quHVZY18OySODVr4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 179D61BB1BC;
-        Fri, 16 Sep 2022 17:56:02 -0400 (EDT)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ZWobb1I4T/jNAqy07mUgG1RTK+jFRQUqmeR4WF
+        2Hf80=; b=jTdTIs6GuSKQ5MH7t0wLBi26kBboVSoxfcyH1m4K6lZ3U9VUdDdM7z
+        WvFu7HI3RvXRdbt1moHtpBwRe0AmzgqX7i/JSbN/Uh6fQBL22p9J3y1gTq5scjX0
+        vkTza1h45Ivg42Kgv4x2L2zHdVDrgmfsByqK9RZd2ScJdB6zZx4zE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 23374149CA9;
+        Fri, 16 Sep 2022 18:02:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AD0B31BB1BA;
-        Fri, 16 Sep 2022 17:55:58 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7D587149CA8;
+        Fri, 16 Sep 2022 18:02:46 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Arthur Chan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Arthur Chan <arthur.chan@adalogics.com>
-Subject: Re: [PATCH] fuzz: reorganise the path for existing oss-fuzz fuzzers
-References: <pull.1353.git.1663355009333.gitgitgadget@gmail.com>
-CC:     Josh Steadmon <steadmon@google.com>
-CC:     David Korczynski <david@adalogics.com>
-Date:   Fri, 16 Sep 2022 14:55:57 -0700
-Message-ID: <xmqqo7vff0gi.fsf@gitster.g>
+To:     Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        johncai86@gmail.com
+Subject: Re: [PATCH 1/3] doc/cat-file: allow --use-mailmap for --batch options
+References: <20220916205946.178925-1-siddharthasthana31@gmail.com>
+        <20220916205946.178925-2-siddharthasthana31@gmail.com>
+Date:   Fri, 16 Sep 2022 15:02:45 -0700
+In-Reply-To: <20220916205946.178925-2-siddharthasthana31@gmail.com> (Siddharth
+        Asthana's message of "Sat, 17 Sep 2022 02:29:44 +0530")
+Message-ID: <xmqqk063f056.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 58E3C29A-360A-11ED-83CC-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 4BF6059C-360B-11ED-A67D-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Arthur Chan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Siddharth Asthana <siddharthasthana31@gmail.com> writes:
 
-> From: Arthur Chan <arthur.chan@adalogics.com>
+> The command git cat-file can now use the mailmap mechanism to replace
+> idents with their canonical versions for commit and tag objects. There
+> are several options like `--batch`, `--batch-check` and
+> `--batch-command` that can be combined with `--use-mailmap`. But, the
+> documentation for `--batch`, `--batch-check` and `--batch-command`
+> doesn't say so. This patch fixes that documentation.
 >
-> This patch is aimed to provide a better organisation for oss-fuzz
-> fuzzers, allowing more fuzzers for the git project to be added
-> in a later development.
+> Mentored-by: Christian Couder's avatarChristian Couder <christian.couder@gmail.com>
+> Mentored-by: John Cai's avatarJohn Cai <johncai86@gmail.com>
+> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+> ---
+>  Documentation/git-cat-file.txt | 20 +++++++++-----------
+>  1 file changed, 9 insertions(+), 11 deletions(-)
 >
-> A new folder oss-fuzz has been created and existing fuzzers are
-> moved into the new folders. Makefile has been fixed accordingly.
+> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+> index ec30b5c574..5792f21a72 100644
+> --- a/Documentation/git-cat-file.txt
+> +++ b/Documentation/git-cat-file.txt
+> @@ -89,24 +89,22 @@ OPTIONS
+>  --batch::
+>  --batch=<format>::
+>  	Print object information and contents for each object provided
+> -	on stdin.  May not be combined with any other options or arguments
+> -	except `--textconv` or `--filters`, in which case the input lines
+> -	also need to specify the path, separated by whitespace.  See the
+> -	section `BATCH OUTPUT` below for details.
+> +	on stdin. May only be combined with `--use-mailmap`, `--textconv` or `--filters`.
+> +	In the case of `--textconv` or `--filters` the input lines also need to specify
+> +	the path, separated by whitespace. See the `BATCH OUTPUT` section below for details.
 
-"folder" -> "directory" everywhere.
+The above is not wrong per-se, but I suspect that phrasing it like
+so
 
->  Makefile                                            | 6 +++---
->  fuzz-commit-graph.c => oss-fuzz/fuzz-commit-graph.c | 0
->  fuzz-pack-headers.c => oss-fuzz/fuzz-pack-headers.c | 0
->  fuzz-pack-idx.c => oss-fuzz/fuzz-pack-idx.c         | 0
->  4 files changed, 3 insertions(+), 3 deletions(-)
->  rename fuzz-commit-graph.c => oss-fuzz/fuzz-commit-graph.c (100%)
->  rename fuzz-pack-headers.c => oss-fuzz/fuzz-pack-headers.c (100%)
->  rename fuzz-pack-idx.c => oss-fuzz/fuzz-pack-idx.c (100%)
+    * When used with `--textconv` or `--filters`, the input lines must
+      specify the path, separated by whitespace.
 
-It is curious that we do not have any changes to .gitignore
-patterns.
+    * When used with `--use-mailmap`, THIS HAPPENS.
 
-    $ git grep fuzz .gitignore Makefile
-    .gitignore:/fuzz-commit-graph
-    .gitignore:/fuzz_corpora
-    .gitignore:/fuzz-pack-headers
-    .gitignore:/fuzz-pack-idx
-    Makefile:FUZZ_OBJS += fuzz-commit-graph.o
-    Makefile:FUZZ_OBJS += fuzz-pack-headers.o
-    Makefile:FUZZ_OBJS += fuzz-pack-idx.o
-    Makefile:.PHONY: fuzz-objs
-    Makefile:fuzz-objs: $(FUZZ_OBJS)
-    Makefile:# Always build fuzz objects even if not testing, to prevent bit-rot.
-    Makefile:# Building fuzz targets generally requires a special set of compiler flags that
-    Makefile:#      CFLAGS="-fsanitize=fuzzer-no-link,address" \
-    Makefile:#      LIB_FUZZING_ENGINE="-fsanitize=fuzzer" \
-    Makefile:#      fuzz-all
-    Makefile:.PHONY: fuzz-all
-    Makefile:fuzz-all: $(FUZZ_PROGRAMS)
+    Cannot be used with any other options.
 
-I do not know what "fuzz_corpora" is, which step in build creates
-it, and why we do not have to bother removing it in "make clean",
-the last of which is not the fault of this patch, but I suspect that
-at least other three existing entries that name $(FUZZ_PROGRAMS)
-need to be updated, because ...
+would be easier to extend.  The same comment applies to the other
+two changes in this patch.
 
-> diff --git a/Makefile b/Makefile
-> index d9247ead45b..2d56aae7a1d 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -686,9 +686,9 @@ SCRIPTS = $(SCRIPT_SH_GEN) \
->  
->  ETAGS_TARGET = TAGS
->  
-> -FUZZ_OBJS += fuzz-commit-graph.o
-> -FUZZ_OBJS += fuzz-pack-headers.o
-> -FUZZ_OBJS += fuzz-pack-idx.o
-> +FUZZ_OBJS += oss-fuzz/fuzz-commit-graph.o
-> +FUZZ_OBJS += oss-fuzz/fuzz-pack-headers.o
-> +FUZZ_OBJS += oss-fuzz/fuzz-pack-idx.o
-
-... FUZZ_OBJS now live in the oss-fuzz/ directory, and Makefile has
-
-    FUZZ_PROGRAMS += $(patsubst %.o,%,$(FUZZ_OBJS))
-
-    $(FUZZ_PROGRAMS): all
-	$(QUIET_LINK)$(CXX) $(FUZZ_CXXFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) \
-		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
-
-neither of which has been touched by the patch, so presumably the
-executables are now created in the oss-fuzz/ directory as well, and
-they are what .gitignore should be listing, right?
-
-Also, compiling the exectuable files would not be the end of the
-story, right?  Do folks (like test script, makefile targets and CI
-recipes) who used to run ./fuzz-commit-graph need to be told that
-they now need to run oss-fuzz/fuzz-commit-graph instead?  They may
-not be inside my tree, but what's the best way to inform them?  Add
-entries to release notes (not asking you to add one immediately ---
-asking you to help formulating the plans).
+As you do not have any code that implements the behaviour of
+`--use-mailmap` at this point in the series yet, it might be nicer
+to restructure the existing text for existing options in a
+preliminary preparation patch, and then add the explanation and the
+implementation of `--use-mailmap` option in a separate patch.
 
 Thanks.
