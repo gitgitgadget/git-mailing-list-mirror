@@ -2,133 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60CEDECAAA1
-	for <git@archiver.kernel.org>; Sat, 17 Sep 2022 01:12:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A06BBECAAD3
+	for <git@archiver.kernel.org>; Sat, 17 Sep 2022 03:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229816AbiIQBMo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Sep 2022 21:12:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41478 "EHLO
+        id S229379AbiIQDe1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 16 Sep 2022 23:34:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbiIQBMb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Sep 2022 21:12:31 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6102A024C
-        for <git@vger.kernel.org>; Fri, 16 Sep 2022 18:12:29 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id l8so11727691wmi.2
-        for <git@vger.kernel.org>; Fri, 16 Sep 2022 18:12:29 -0700 (PDT)
+        with ESMTP id S229587AbiIQDeR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Sep 2022 23:34:17 -0400
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13D4A80505
+        for <git@vger.kernel.org>; Fri, 16 Sep 2022 20:34:15 -0700 (PDT)
+Received: by mail-qt1-x834.google.com with SMTP id a20so14674726qtw.10
+        for <git@vger.kernel.org>; Fri, 16 Sep 2022 20:34:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=025X2g9D0LRmHIXCb4ajLdQRUPyvqsq2+nEHj3JaJps=;
-        b=HBLLHxiC3WuqUv4KZJHL16tEcfEDKlZdqJoQU/ZvKe96Zo1WaqS4K9tngn7uF0LYpL
-         XsLwMdPhz+989LnhfROz44r7UqWVoqKt5T8R6UeClj9Ky4XM0imN9oPt9Hgtb2LugNof
-         fhdMqSzivYMjf26cnZQL4FsiOgfxzAvgluOoQZ/phhuWgCVIs2nOwguvqiTdYzWbdiyL
-         SaJPghft2liYyhLGPT5bViT8nYo131VvPNTw1hd92rTYhC+rLrhjjMreoQ9QcCw3Ts5+
-         1leuqM3zt9/TKA6vBgHgW41OXvcj+dH+3TLpZ8iFfx6GsyunVPnvHi3wQ4YP9JALm7GM
-         /LAg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=z3Kx9DYyzTaqPNDeS3iO2UtAOrcYwd+TN3LhVVibnYw=;
+        b=cRPmfS5CkI/CFRTN3jR7l5JAMTJtu3HSfcV6Sd3ZfCAoX8JHauO350+jfUlkpLtLx/
+         vL27UiGZsD/luXKxH4LitmSInME5CiR+svBxKUdM8O/58CYJjkiocKsKG/Q8zLKvZ+an
+         luoJwl+rP3MoL3kn6mTRrj3t+f/8HVzTXbKUdd4N1n++X04X32NUHE0l7F0c4i7fC5RI
+         Lz8VoixWWo2p07XhanSk9qgvYI1J+KF9bLLdzBre6ESfutBpYV/8Av0BV33PpGyOodY9
+         qv5v+va4VPcm5RMmAsopk69Rx92pj2GMbNDEdvE0LcoWT83dfCE5dKuZK/qeX4sqE3zS
+         6BmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=025X2g9D0LRmHIXCb4ajLdQRUPyvqsq2+nEHj3JaJps=;
-        b=VKZ5AQZrwBixA/5hvZANN+FjEbSfvjR5NWdqyCLzeswK2hvy054E4SYemlRwKSve0Y
-         JJZcPM3u3PzrCujMAWZDk8qiNZ5TGAT7cvtE0N0U5G6jpcQOIvlzpaEt3308MlmzF6kh
-         AVyLJnj9OGBdv1/p6L5NFDU3aRguT15KR87j2+dcBXVpWEN2K/pIV8yZaMsahiPd2DTD
-         /aw9sMHlDdB1XwkHX3QI8wmNqzXaDEKIU5aAt+ZQ5nc0JnnAJHOJ/gztbMd3kbM5gMHJ
-         NABFslflPv3dnSfiyQxvPNhSfW6fginQ35TyT8Ji+u5QcIcopljWcbuzyO/aeFPzYa67
-         WOwQ==
-X-Gm-Message-State: ACgBeo1uOcEX9HqfJx8gmKYFcXkEL/8A31XK4se2OguUNSg8BwJS1Xdh
-        F4PxWvTxmdvu9tgWmrCePcmQnTIJZsA=
-X-Google-Smtp-Source: AA6agR7a67AdiQCvQfp7gUyE7pxFXi8WuC2RjevlyPds44iB1crERtDkUkqRCobHaSLGVeTbYWkgJA==
-X-Received: by 2002:a1c:44d5:0:b0:3b4:9c41:439f with SMTP id r204-20020a1c44d5000000b003b49c41439fmr11731200wma.13.1663377148067;
-        Fri, 16 Sep 2022 18:12:28 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q6-20020a05600c46c600b003b4935f04aasm4127016wmo.10.2022.09.16.18.12.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Sep 2022 18:12:27 -0700 (PDT)
-Message-Id: <ddf4e3e6442b104447154b0a5d4954f274f4b5ef.1663377141.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1326.v8.git.1663377141.gitgitgadget@gmail.com>
-References: <pull.1326.v7.git.1663358014.gitgitgadget@gmail.com>
-        <pull.1326.v8.git.1663377141.gitgitgadget@gmail.com>
-From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 17 Sep 2022 01:12:21 +0000
-Subject: [PATCH v8 5/5] fsmonitor: add documentation for allowRemote and
- socketDir options
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=z3Kx9DYyzTaqPNDeS3iO2UtAOrcYwd+TN3LhVVibnYw=;
+        b=pTpKMGiZe7f+Bd8ugG5w5N9/wVGopN5WFmDPSZCNABhoVfeNv93AwX8+2AvocK5h8R
+         kl1BkQEBDNcnSJpsJBLkBsK2uXuoFsa75sk49amqKVUPAjmB5pfA8DeE1IWuJ+fWPxH9
+         geNFYJlu14h+FDeCwvVtonPCM4Qlc23oScroRilJMg1JJLiFG7ZlQu3L8+Bb2BweZDUI
+         DvGq/u0W2eeA+jYotkP5J2L1EwizzV4q3i8oRplfluaE6F4aM2WKnPejjAsmhZwMNtvF
+         epP2LAVZ7z4vkIBr/9dLCqdkfhPSrFiod4baraqT+xVyhH/B6Ezai6EBRKfLrCE7cBkU
+         rArg==
+X-Gm-Message-State: ACrzQf2cfzqGlLcAH2o78rAqb0dLmRauDSkSTcWfTxApZqH8M8HhPW0S
+        njq5gqxZP/a1031JBrWgGpjvHWqpgbQ=
+X-Google-Smtp-Source: AMsMyM4Ncftr+cI9mKIZVkQrxL6PWZJXRug5x5yoBnI/zSppxLUyGCs+WdMUaWS8kKSPpX++U8ID3w==
+X-Received: by 2002:a05:622a:1909:b0:344:9f41:9477 with SMTP id w9-20020a05622a190900b003449f419477mr7011743qtc.619.1663385654163;
+        Fri, 16 Sep 2022 20:34:14 -0700 (PDT)
+Received: from ?IPV6:2600:1700:5a60:7720:391f:afa1:7d4f:f031? ([2600:1700:5a60:7720:391f:afa1:7d4f:f031])
+        by smtp.gmail.com with ESMTPSA id l11-20020ac8148b000000b0035a691cec8esm6030582qtj.29.2022.09.16.20.34.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Sep 2022 20:34:13 -0700 (PDT)
+Message-ID: <fed3c401-6cba-c729-74a8-d0bf53e12699@gmail.com>
+Date:   Fri, 16 Sep 2022 20:34:11 -0700
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric DeCosta <edecosta@mathworks.com>,
-        Eric DeCosta <edecosta@mathworks.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH v5 1/3] builtin/grep.c: add --sparse option
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Victoria Dye <vdye@github.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+ <20220908001854.206789-1-shaoxuan.yuan02@gmail.com>
+ <20220908001854.206789-2-shaoxuan.yuan02@gmail.com>
+ <CABPp-BF-z72=hY_Jf8h3g95s+wwZOsV_S=+dDNs_AVskQxoaTw@mail.gmail.com>
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+In-Reply-To: <CABPp-BF-z72=hY_Jf8h3g95s+wwZOsV_S=+dDNs_AVskQxoaTw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Eric DeCosta <edecosta@mathworks.com>
+On 9/13/2022 11:08 PM, Elijah Newren wrote:
+> Hi Shaoxuan,
+> 
+> Please note that it's customary to cc folks who have commented on
+> previous versions of your patch series when you re-roll.
 
-Add documentation for 'fsmonitor.allowRemote' and 'fsmonitor.socketDir'.
-Call-out experimental nature of 'fsmonitor.allowRemote' and limited file
-system support for 'fsmonitor.socketDir'.
+Hi Elijah,
 
-Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
----
- Documentation/git-fsmonitor--daemon.txt | 35 +++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+Sorry for the delay, I didn't have my computer with me during Merge 2022
+and couldn't respond.
 
-diff --git a/Documentation/git-fsmonitor--daemon.txt b/Documentation/git-fsmonitor--daemon.txt
-index cc142fb8612..0adccd0eced 100644
---- a/Documentation/git-fsmonitor--daemon.txt
-+++ b/Documentation/git-fsmonitor--daemon.txt
-@@ -70,6 +70,41 @@ the change (as happening against the super repo).  However, the client
- will properly ignore these extra events, so performance may be affected
- but it will not cause an incorrect result.
- 
-+By default, the fsmonitor daemon refuses to work against network-mounted
-+repositories; this my be overridden by setting `fsmonitor.allowRemote` to
-+`true`. Note, however, that the fsmonitor daemon is not guaranteed to work
-+correctly with all network-mounted repositores and such use is considered
-+experimental.
-+
-+On Mac OS, the inter-process communication (IPC) between various Git
-+commands and the fsmonitor daemon is done via a Unix domain socket (UDS).
-+Usage of UDS requires the creation of a file which, by default, is created
-+in the .git directory.  If the fsmonitor daemon detects that the .git directory
-+is on a network-mounted file system, it will create the UDS file in $HOME.  If
-+$HOME itself is on a network-mounted file system or if $HOME is not the desired
-+location for the UDS file, 'fsmonitor.socketDir' may be set to any valid, local
-+directory on a file system with proper support.  Mac OS native file systems have
-+the required support.  File systems known to lack support include FAT32 and
-+NTFS.  Other file systems may or many not have the needed support; the fsmonitor
-+daemon is not guaranteed to work with these file systems and such use is
-+considered experimental.
-+
-+CONFIGURATION
-+-------------
-+When `core.fsmonitor` is set to `true` (see linkgit:git-config[1])
-+the fsmonitor daemon will pay attention to the following configuration
-+variables:
-+
-+fsmonitor.allowRemote::
-+	By default, the daemon refuses to work against network-mounted
-+	repositories. Setting `fsmonitor.allowRemote` to `true` overrides
-+	this behavior.
-+
-+fsmonitor.socketDir::
-+	This option is only used by the Mac OS implementation of the fsmonitor
-+	daemon.	If set, 'fsmonitor.socketDir' must be set to a valid, local
-+	directory on a file system that can support Unix domain sockets (UDS).
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
--- 
-gitgitgadget
+I'm sorry that I somehow lost you along the way :(
+
+> On Wed, Sep 7, 2022 at 5:28 PM Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> wrote:
+>>
+>> Add a --sparse option to `git-grep`.
+> 
+> It's awesome you're working on this.  Adding more of "behavior A"
+> (restricting querying commands to the sparse cone) is something I've
+> wanted for a long time.
+
+Thanks :)
+
+> I think most of your code is beneficial, but I do have some issues
+> with high level direction you were implementing, which may require
+> some tweaks...
+
+OK.
+
+>> When the '--cached' option is used with the 'git grep' command, the
+>> search is limited to the blobs found in the index, not in the worktree.
+>> If the user has enabled sparse-checkout, this might present more results
+>> than they would like, since the files outside of the sparse-checkout are
+>> unlikely to be important to them.
+> 
+> "files outside of the sparse-checkout are unlikely to be important to
+> [users]" is certainly an issue.  But it's *much* wider than this.
+> Beyond `grep --cached`, it also affects `grep REVISION`, `log`, `diff
+> [REVISION]`, and related things...perhaps even something like `blame`.
+
+Agree. Keep reading...
+
+> I think all those other commands probably deserve a mode where they
+> restrict output to the view associated with the user's cone.  I've
+
+Agree.
+
+> brought that up before[1].  I was skeptical of making it the default,
+> because it'd probably take a long time to implement it everywhere.
+> Slowly changing defaults of all commands over many git releases seems
+> like a poor strategy, but I'm afraid that's what it looks like we are
+> doing here.
+
+True.
+
+> I'm also worried that slowly changing the defaults without a
+> high-level plan will lead to users struggling to figure out what
+> flag(s) to pass.  Are we going to be stuck in a situation where users
+> have to remember that for a dense search, they use one flag for `grep
+> --cached`, a different one for  `grep [REVISION]`, no flag is needed
+> for `diff [REVISION]`, but yet a different flag is needed for `git
+> log`?
+
+I think the inconsistency is certainly unsettling.
+
+> I'm also curious whether there shouldn't be a config option for
+> something like this, so folks don't have to specify it with every
+> invocation.  In particular, while I certainly have users that want to
+> just query git for information about the part of the history they are
+> interested in, there are other users who are fully aware they are
+> working in a bigger repository and want to search for additional
+> things to add to their sparse-checkout and predominantly use grep for
+> things like that.  They have even documented that `git grep --cached
+> <TERM>` can be used in sparse-checkouts for this purpose...and have
+> been using that for a few years.  (I did warn them at the time that
+> there was a risk they'd have to change their command, but it's still
+> going to be a behavioral change they might not expect.)  Further, when
+> I brought up changing the behavior of commands during sparse-checkouts
+> to limit to files matching the sparsity paths in that old thread at
+> [1], Stolee was a bit skeptical of making that the default.  That
+> suggests, at least, that two independent groups of users would want to
+> use the non-sparse searching frequently, and frequently enough that
+> they'd appreciate a config option.
+
+A config option sounds good. Though I think
+
+1. If this option is for global behavior: users may better off turning
+off sparse-checkout if they want a config to do things densely everywhere.
+
+2. If this option is for a single subcommand (e.g. 'grep'): I don't have
+much thoughts here. It certainly can be nice for users who need to do
+non-sparse searching frequently. This design, if necessary, should
+belong to a patch where this config is added for every single subcommand?
+
+> I also brought up in that old thread that perhaps we want to avoid
+> adding a flag to every subcommand, and instead just having a
+> git-global flag for triggering this type of behavior.  (e.g. `git
+> --no-restrict grep --cached ...` or `git --dense grep --cached ...`).
+
+This looks more like the answer to me. It's a peace of mind for users if
+they don't have to worry about whether a subcommand is sparse-aware, and
+how may their behaviors differ. Though we still may need to update the
+actual behavior in each subcommand over an extended period of time
+(though may not be difficult?), which you mentioned above "seems like a
+poor strategy".
+
+> [1] https://lore.kernel.org/git/CABPp-BGJ_Nvi5TmgriD9Bh6eNXE2EDq2f8e8QKXAeYG3BxZafA@mail.gmail.com/
+> and the responses to that email>
+>> Change the default behavior of 'git grep' to focus on the files within
+>> the sparse-checkout definition. To enable the previous behavior, add a
+>> '--sparse' option to 'git grep' that triggers the old behavior that
+>> inspects paths outside of the sparse-checkout definition when paired
+>> with the '--cached' option.
+> 
+> I still think the flag name of `--sparse` is totally backwards and
+> highly confusing for the described behavior.  I missed Stolee's email
+> at the time (wasn't cc'ed) where he brought up that "--sparse" had
+> already been added to "git-add" and "git-rm", but in those cases the
+> commands aren't querying and I just don't see how they lead to the
+> same level of user confusion.  This one seems glaringly wrong to me
+> and both Junio and I flagged it on v1 when we first saw it.  (Perhaps
+> it also helps that for the add/rm cases, that a user is often given an
+> error message with the suggested flag to use, which just doesn't make
+> sense here either.)  If there is concern that this flag should be the
+> same as add and rm, then I think we need to do the backward
+> compatibility dance and fix add and rm by adding an alias over there
+> so that grep's flag won't be so confusing.
+
+I guess I'm using "--sparse" here because "add", "rm" and "mv" all imply
+that "when operating on a sparse path, ignores/warns unless '--sparse'
+is used". I take it as an analogy so "when searching a sparse path,
+ignores/warns unless '--sparse' is used". As the idea that "Git does
+*not* care sparse contents unless '--[no-]sparse' is specified" is sort
+of established through the implementations in "add", "rm", or "mv", I
+don't see a big problem using "--sparse" here.
+
+I *think*, as long as the users are informed that the default is to
+ignore things outside of the sparse-checkout definition, and they have
+to do something (using "--sparse" or a potential better name) to
+override the default, we are safe to use a name that is famous (i.e.
+"--sparse") even though its literal meaning is not perfectly descriptive.
+
+One outlier I do find confusing though, is the "--sparse" option from
+"git-ls-files". Without it, Git expands the index and show everything
+outside of sparse-checkout definition, which seems a bit controversial.
+
+...
+
+> 
+> I read over this patch and the other two patches.  Other than things
+> like variable names propagating the sparse/dense confusion, and the
+> high level goals already discussed, I didn't spot any other issues.
+
+Thanks,
+Shaoxuan
