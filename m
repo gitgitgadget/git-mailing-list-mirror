@@ -2,105 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02A00ECAAD8
-	for <git@archiver.kernel.org>; Sun, 18 Sep 2022 20:12:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 496E1ECAAD8
+	for <git@archiver.kernel.org>; Sun, 18 Sep 2022 23:08:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229505AbiIRUIj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Sep 2022 16:08:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40568 "EHLO
+        id S229676AbiIRXIX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Sep 2022 19:08:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbiIRUIi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Sep 2022 16:08:38 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60B7612AF7
-        for <git@vger.kernel.org>; Sun, 18 Sep 2022 13:08:35 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id p18so26132617plr.8
-        for <git@vger.kernel.org>; Sun, 18 Sep 2022 13:08:35 -0700 (PDT)
+        with ESMTP id S229453AbiIRXIW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Sep 2022 19:08:22 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8339A13E88
+        for <git@vger.kernel.org>; Sun, 18 Sep 2022 16:08:18 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id g3so23927935wrq.13
+        for <git@vger.kernel.org>; Sun, 18 Sep 2022 16:08:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=XGtosHaKVztlVOiiToDDKR5Z5dfWRdoqnKBPVghtiSo=;
-        b=gVzQFOFh6Z1h0vwcl6vvE/PlvUYyTJEBF/t41dHhq58NWfwGmdpNI3N1Kiuh/45dW4
-         SPYadp9K/RCqezr955HPDt+lrW9efHw/3CtSZnbvcbjaXIPHHiX7lN8bPnazqbankjmo
-         XExGDVQA05xui//9OTR9HfJUp/MTQoKRmQ9V4ilVzw2i+sAqDIa4xV7Ym0Rgp0e24e33
-         JPdqNM9fHc6rGYzDFC6WWk76OEawXFyYPJIch49PVG64JSgHb5wYQFeb5cbQgNq2cTrJ
-         b2b+r/GIcLemrvcYW+ttfcWcX1BOevb0vRcsfCc+xBsanEyOp+70vNrAq1N9Qtkgk9H+
-         uXXw==
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date;
+        bh=Wo+QroY1rufYL6sk89R5jqle/u5sS6IdYinUbF9cwA0=;
+        b=Kuz2iuWngyVr1bXI28yUwuEhEhhD4QctdXNf51K/ifqXJRv4BZFixuDP4rwhKyD4iX
+         PBFPh/5Fy8A23bj5iHWzJkZIpN2hNF5HTyU0V49ok4vIuHeF0v3rCBgUWNXeYKl//1Sf
+         OfoZ77cyvu7RIjMhyN5tj7G/rVzgF3UglWlz3o/D/ggW6sS4PzWQCT2B4hDizjo2xPfJ
+         G/4pLOulvJA+FQKcrq051KWYuki5qeE7F/OBU06evDYF4OOuvp22shAlUHmFf6CMEhRP
+         S/Xh4wvv652UqejwGYfrCY79tjrkYf6UHc6hQX2GOmutj9SG+/qCN2NQhYlvEvtBqOwI
+         5eeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=XGtosHaKVztlVOiiToDDKR5Z5dfWRdoqnKBPVghtiSo=;
-        b=pzDnjKkKzWGdnQZxdgPDFYsXP+NPEQ8mHNTD91gbYb30sqQvBCJIeRgoB4g+6Q7zqK
-         txXJlmfVGFHQEfAuYgpVoEcFikbsdEIYB1/z80NjtehRq6DTS889Q4FMA0D2xUM+FoGe
-         immiasXmf0sU0pxyGUj2Fjl18Q3NxYHUIaajvB682zX8Gs0iUiXTr7sZlcWaS3g3wHs1
-         KDVouD1013b2uyxMo6P+5elGQ8zQkIKx7lOh8DYI7vUjLWiGdx1+BrbkMIxyms/RZK8S
-         DT3Cichyk9fxgslEmCwQ9wLWgK5WHNBSDaJ0SHHRouRv6sy8G9X9VS8Fz6h43VoNovi3
-         4+4A==
-X-Gm-Message-State: ACrzQf1mbk1q2KOXLlz+QE9TWi2X/Zw8Q/N/NCrSD7OXoPKJUdqZSQNQ
-        /odXm6n0sEhkK4XQxYDzT39q
-X-Google-Smtp-Source: AMsMyM7cqSZBktr0TzJeh6EIrHYkQtQDsQT31Is5AHGcWApknVkS2Qop+nbt6i8XoURGyBdVRxrdtA==
-X-Received: by 2002:a17:90a:cc04:b0:200:b869:5ba4 with SMTP id b4-20020a17090acc0400b00200b8695ba4mr27623591pju.234.1663531714924;
-        Sun, 18 Sep 2022 13:08:34 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id w65-20020a623044000000b0054a1534516dsm7030436pfw.97.2022.09.18.13.08.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 18 Sep 2022 13:08:34 -0700 (PDT)
-Message-ID: <433bf552-db20-9989-92c5-ee625ce9337a@github.com>
-Date:   Sun, 18 Sep 2022 13:08:33 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.13.0
-Subject: Re: [PATCH] scalar: fix wrong shell hashbang
-Content-Language: en-US
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        ZheNing Hu <adlternative@gmail.com>
-References: <pull.1355.git.1663420281187.gitgitgadget@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <pull.1355.git.1663420281187.gitgitgadget@gmail.com>
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=Wo+QroY1rufYL6sk89R5jqle/u5sS6IdYinUbF9cwA0=;
+        b=3/CVWK7jX+ylSJWRoD0LWqDLGxFh0SePLzYvwx0Z+LiVKHWWzjRfBqpUwHe34+NqGu
+         eWiVcCOTjMohzQlLCtSAceU6F4ccfmUmPVMawKDVSXKBmEn6vFNKfz5ssvT6jcOzE5/m
+         8nIZcZG3qJmYvf2B0Dfip8l/k94o9VRcVSXEefNVsG3AxkHZBcnAlZMp9l1RuPNndzzr
+         KqLdHOJrPiQkRghZyINmDnhNoFWXuG01WUvlB9VlHL/K9IZ1DOl1OlswvAs2QefnCA+g
+         iIsGbJfATUQFcgsQG5kWrYeI/fCkrvlUcxX7/Wx31fppTbh0nxTWmlOeFwmEY+T4yl+x
+         dEpQ==
+X-Gm-Message-State: ACrzQf2e3YH3Bg9tc8xCS2y97P0wXMjsJYKNz4Iz+yEQWa+yDIo4VUfn
+        Qu6T9xfDF64SyLTHuIZgPJyfa5x+03c=
+X-Google-Smtp-Source: AMsMyM4RE9lJv7PhpFlHXArbXxQWnb51m2kj9vq3so41xxrAM3gAXOIf9r7tlgKrCAuXaNKVOoWwpQ==
+X-Received: by 2002:a05:6000:1251:b0:22a:e60f:c080 with SMTP id j17-20020a056000125100b0022ae60fc080mr5730433wrx.95.1663542496640;
+        Sun, 18 Sep 2022 16:08:16 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p9-20020adfcc89000000b0022af70874a1sm4730788wrj.36.2022.09.18.16.08.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Sep 2022 16:08:15 -0700 (PDT)
+Message-Id: <pull.1353.v3.git.1663542495094.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1353.v2.git.1663457311149.gitgitgadget@gmail.com>
+References: <pull.1353.v2.git.1663457311149.gitgitgadget@gmail.com>
+From:   "Arthur Chan via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 18 Sep 2022 23:08:14 +0000
+Subject: [PATCH v3] fuzz: reorganise the path for existing oss-fuzz fuzzers
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Arthur Chan <arthur.chan@adalogics.com>,
+        Arthur Chan <arthur.chan@adalogics.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu via GitGitGadget wrote:
-> From: ZheNing Hu <adlternative@gmail.com>
-> 
-> $SHELL_PATH_SQ haven't been set in scalar's Makefile,
-> bin-wrappers/scalar will begin with wrong hashbang "#!",
-> fix it by setting $SHELL_PATH and $SHELL_PATH_SQ in
-> scalar's Makefile.
-> 
-> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> ---
->     scalar: fix wrong shell hashbang
->     
->     The bin-wrappers/scalar seems like missing setting $SHELL_PATH_SQ which
->     lead to I can't execute bin-wrappers/scalar correctly, which output
->     error:
->     
->     zsh: exec format error: scalar
->     
->     (this bug will not turn out in bash)
->     
->     The bin-wrappers/scalar begin with wrong hashbang "#!", which cannot
->     figure out by zsh. So this patch want to fix this problem.
->     
->     v1: Setting $SHELL_PATH and $SHELL_PATH_SQ in scalar/Makefile.
-> 
+From: Arthur Chan <arthur.chan@adalogics.com>
 
-Thanks for finding this! However, while your patch fixes the error you've
-identified (I was able to recreate both the original issue and apply your
-patch to fix it), I believe it has already been fixed in 'next' by
-7b5c93c6c6 (scalar: include in standard Git build & installation,
-2022-09-02) (archive: [1]).
+This patch is aimed to provide a better organisation for oss-fuzz
+fuzzers, allowing more fuzzers for the git project to be added
+in later development.
 
-[1] https://lore.kernel.org/git/bc2092a7a7aae640b547bde8db0c0a26ce31278a.1662134210.git.gitgitgadget@gmail.com/
+A new direrctory oss-fuzz has been created and existing fuzzers are
+moved into the new directory. Makefile and .gitignore have been
+fixed accordingly.
+
+CC: Josh Steadmon <steadmon@google.com>
+CC: David Korczynski <david@adalogics.com>
+Signed-off-by: Arthur Chan <arthur.chan@adalogics.com>
+---
+    fuzz: reorganise the path for existing oss-fuzz fuzzers
+    
+    This patch is aimed to provide a better organisation for oss-fuzz
+    fuzzers, allowing more fuzzers for the git project to be added in later
+    development.
+    
+    A new directory oss-fuzz has been created and existing fuzzers are moved
+    into the new directory. Makefile and .gitignore have been fixed
+    accordingly.
+    
+    Fix wrong push for v2
+    
+    CC: Josh Steadmon steadmon@google.com CC: David Korczynski
+    david@adalogics.com Signed-off-by: Arthur Chan arthur.chan@adalogics.com
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1353%2Farthurscchan%2Frelocate-fuzzer-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1353/arthurscchan/relocate-fuzzer-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1353
+
+Range-diff vs v2:
+
+ 1:  c056429897a ! 1:  21714e583aa fuzz: reorganise the path for existing oss-fuzz fuzzers
+     @@ Commit message
+       ## .gitignore ##
+      @@
+      -/fuzz-commit-graph
+     --/fuzz_corpora
+     --/fuzz-pack-headers
+      +/oss-fuzz/fuzz-commit-graph
+     -+/oss-fuzz/fuzz_corpora
+     + /fuzz_corpora
+     +-/fuzz-pack-headers
+     +-/fuzz-pack-idx
+      +/oss-fuzz/fuzz-pack-headers
+     - /fuzz-pack-idx
+     ++/oss-fuzz/fuzz-pack-idx
+       /GIT-BUILD-OPTIONS
+       /GIT-CFLAGS
+     + /GIT-LDFLAGS
+      
+       ## Makefile ##
+      @@ Makefile: SCRIPTS = $(SCRIPT_SH_GEN) \
+
+
+ .gitignore                                          | 6 +++---
+ Makefile                                            | 6 +++---
+ fuzz-commit-graph.c => oss-fuzz/fuzz-commit-graph.c | 0
+ fuzz-pack-headers.c => oss-fuzz/fuzz-pack-headers.c | 0
+ fuzz-pack-idx.c => oss-fuzz/fuzz-pack-idx.c         | 0
+ 5 files changed, 6 insertions(+), 6 deletions(-)
+ rename fuzz-commit-graph.c => oss-fuzz/fuzz-commit-graph.c (100%)
+ rename fuzz-pack-headers.c => oss-fuzz/fuzz-pack-headers.c (100%)
+ rename fuzz-pack-idx.c => oss-fuzz/fuzz-pack-idx.c (100%)
+
+diff --git a/.gitignore b/.gitignore
+index 80b530bbed2..d11fa8297d2 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,7 +1,7 @@
+-/fuzz-commit-graph
++/oss-fuzz/fuzz-commit-graph
+ /fuzz_corpora
+-/fuzz-pack-headers
+-/fuzz-pack-idx
++/oss-fuzz/fuzz-pack-headers
++/oss-fuzz/fuzz-pack-idx
+ /GIT-BUILD-OPTIONS
+ /GIT-CFLAGS
+ /GIT-LDFLAGS
+diff --git a/Makefile b/Makefile
+index d9247ead45b..2d56aae7a1d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -686,9 +686,9 @@ SCRIPTS = $(SCRIPT_SH_GEN) \
+ 
+ ETAGS_TARGET = TAGS
+ 
+-FUZZ_OBJS += fuzz-commit-graph.o
+-FUZZ_OBJS += fuzz-pack-headers.o
+-FUZZ_OBJS += fuzz-pack-idx.o
++FUZZ_OBJS += oss-fuzz/fuzz-commit-graph.o
++FUZZ_OBJS += oss-fuzz/fuzz-pack-headers.o
++FUZZ_OBJS += oss-fuzz/fuzz-pack-idx.o
+ .PHONY: fuzz-objs
+ fuzz-objs: $(FUZZ_OBJS)
+ 
+diff --git a/fuzz-commit-graph.c b/oss-fuzz/fuzz-commit-graph.c
+similarity index 100%
+rename from fuzz-commit-graph.c
+rename to oss-fuzz/fuzz-commit-graph.c
+diff --git a/fuzz-pack-headers.c b/oss-fuzz/fuzz-pack-headers.c
+similarity index 100%
+rename from fuzz-pack-headers.c
+rename to oss-fuzz/fuzz-pack-headers.c
+diff --git a/fuzz-pack-idx.c b/oss-fuzz/fuzz-pack-idx.c
+similarity index 100%
+rename from fuzz-pack-idx.c
+rename to oss-fuzz/fuzz-pack-idx.c
+
+base-commit: d3fa443f97e3a8d75b51341e2d5bac380b7422df
+-- 
+gitgitgadget
