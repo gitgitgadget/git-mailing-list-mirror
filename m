@@ -2,83 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D23DECAAD8
-	for <git@archiver.kernel.org>; Sun, 18 Sep 2022 17:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EB97ECAAD8
+	for <git@archiver.kernel.org>; Sun, 18 Sep 2022 17:54:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229578AbiIRR1J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Sep 2022 13:27:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42378 "EHLO
+        id S229645AbiIRRyp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Sep 2022 13:54:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbiIRR1H (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Sep 2022 13:27:07 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE88C186C8
-        for <git@vger.kernel.org>; Sun, 18 Sep 2022 10:27:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1663522020; bh=EOPw11yu1Kv7HtImtZNEXceBgtXMWUeSkRoODf/1oCw=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=ffd5OW2h4JLcebKrkBNUV5NT3Hh0UG9fVb1sX9JeFAP92bfQCQKWBw93FUf2RmCy8
-         IJN9rGAd1kF7IfVkPY+VfkslFUhEohRzXRgDYEUed3Im1uoZbiVMRPjQ2Z6RA1H9K4
-         TkQwJaCP3lqdIhQ8ZIJbG7MUBja+RpTm1G4M4M2o0/tI66XdlSBZ+HzuS7Y6TjFJHj
-         wMGOXp7xYG4QVQcaKMU1PEJJ8+wmCWF6vZve45RyZlTqyK3R5N6X8pyGCsx8nyBf82
-         JiiQdImcDi21CpPkNX70qlYzdWBcuRVejcVb34yiJM0jR1GmUf8Se8Tw3XhwPL0uRo
-         2yGcOS//wl6pA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MzCEB-1pUORj1cgN-00w2AW; Sun, 18
- Sep 2022 19:27:00 +0200
-Date:   Sun, 18 Sep 2022 19:26:59 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2022, #04; Thu, 15)
-Message-ID: <20220918172659.mjkvdpryr3iaitys@tb-raspi4>
-References: <xmqq7d24kpck.fsf@gitster.g>
+        with ESMTP id S229578AbiIRRyl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Sep 2022 13:54:41 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BA0E6331
+        for <git@vger.kernel.org>; Sun, 18 Sep 2022 10:54:40 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id g12so18882473qts.1
+        for <git@vger.kernel.org>; Sun, 18 Sep 2022 10:54:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=Kha5LDdcm5ejes+KTJxAGq2im9KCD1GuCk+38FMppwQ=;
+        b=lXxpi5JGW5C/ok5XwhmYbg85YRGSsNKJXKpDoYr/W0TLx2POpaaUNT81GrscNzOpsO
+         u5Y7lolodcLqY13HvJWCt092qumo/u9wKjNCC9L0t1AA9nwSyoIVJcE5WtLBcOHuDnhK
+         K/YsMauJwmdRlrlyN1i1NHrdkHsi89iMjkVY8DnlOjiqHIJ4bMtKHi32ajRBXkScb1mc
+         sqjpArxQld120hvjewqGGg/CPrLbvyT9rodoWvX22sWuKqLb56DfLvgNI2vo3c6rWhZM
+         gG3zBV+2B42DJZ4mq1xwgbCiZ629JqHL9h9YWvpY/vgA4syu2DE0D7eK/j8icBtHMmYk
+         8NTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=Kha5LDdcm5ejes+KTJxAGq2im9KCD1GuCk+38FMppwQ=;
+        b=hStUrkjEHr4d0Rmuat6hhOavIU7HFQeUB0rfM0jkcYvkPgPkQ7KCuxMjRFmsud4KeS
+         6QTEbDRBe5V+7Pj6eFUhqPGHhQ2e4kBjc3a5LhJdDHL2rVrhUD37R0EDXgBBXK/Q3Mrg
+         NGeSz838kBZH8H0dInCazOJIzerDMSy6b9g0/HAT+hAAc2wpg8vuTpjpxH8XGE5xg5Yi
+         20Rj9DABbVSfhLSKBBhSsVZ4RGl4CcX2aXsEGy+04iswDQnL9WW9gUVABFWqWl+u/qWf
+         j/+ouYQMIU/+Pt4jcanPMOUkHDTxwjBh1uJv6Ktx4jVpcLC73N8r9LAz3Lb1d5moOyfH
+         ITQw==
+X-Gm-Message-State: ACrzQf397RfIKamxxX6HENyzojF6kjJU3RHlYUqMMv/iTAckR7T6QGK3
+        WqWCkHQkrQ+gU97dGWn74unZ9OntkOI=
+X-Google-Smtp-Source: AMsMyM4SzL/OUmxKK3Mn+AFe/bH23rZVK9xalHJaI0TZh1vnqqz/XrqfBx9GK/cACcBpV8tksSwVvw==
+X-Received: by 2002:a05:622a:4c:b0:343:5d26:562f with SMTP id y12-20020a05622a004c00b003435d26562fmr12229122qtw.613.1663523679314;
+        Sun, 18 Sep 2022 10:54:39 -0700 (PDT)
+Received: from gmail.com ([2607:fb90:a90f:5bc8:aa3f:6663:a6f:ae7e])
+        by smtp.gmail.com with ESMTPSA id y16-20020a05620a25d000b006bc0980db76sm9827713qko.126.2022.09.18.10.54.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Sep 2022 10:54:38 -0700 (PDT)
+Date:   Sun, 18 Sep 2022 12:54:17 -0500
+From:   Johannes Altmanninger <aclopte@gmail.com>
+To:     Erik Cervin Edin <erik@cervined.in>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] sequencer: avoid dropping fixup commit that targets self
+ via commit-ish
+Message-ID: <YydbSeX7g/ldeq8U@gmail.com>
+References: <YyZWDkZWAkS7q+Wf@gmail.com>
+ <20220918121053.880225-1-aclopte@gmail.com>
+ <CA+JQ7M8JX64M2m=+-NTnbRo64jy7_G=TYafj6UXv=R7UJo0vdQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq7d24kpck.fsf@gitster.g>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:L7QkBuhsAmVBHKDzozOWYepFeei9HY5TznOfv63GpxaSmHbahIm
- xEf61PRVYGC4Q6sfSa5/Jj+s4PzVKKvfbNm5n89a38ssPj7zMC7gI6BnEol5DBZd4oZB/zC
- BQtEY4aM7ThWajaOmCmuOCA0R3wEweijbh4nZa+QE0z9VaZKm8DXYjjrHIoRCW2ve7yYlMY
- UShU78zrd2ihVIWQnURnQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QcMBEFMEK+I=:UqeuzgY8FDDOy2UonMAohO
- 42tiMqqiGO5GwidaQ645o+8DpeVeeqk/EpacPomD7kbL/FUXqBNSXVrH1wSlzzjS4uBdhl7Uz
- rG3XpfB9xtFyHXoxYvtnaFcKRwheWRnXWU8UEE02rdVBGMLSEoyn8ikACFsCRxWh6S0SlTwNW
- pNlv0m1xECvQorsxtOS1+f/71bKlbSZiv32W70q6IhU41j/rh08cw0e+5s0QkOm83JrFq0Lhp
- MUzIpGx+hggc5meFZpayiwiTxluH8fuecsqQaJ7NlL4Uk6y3ldWbX18qK/OylBKOatGOagX+Q
- GT83roYma0/HOwntLHoy2vymVhf6Wj4JbVCPlYz9c62MKMd6KWXQWoMqptUDtcc6mOoHtmDsk
- CRiIRR9j+V/tZIh5BtHcr0hEsEY0l4TMbpYnNpGRt/+kw0D3iNoHXDGfXG1KtZ76idrdeQNSp
- C24rCJWslsEfBcdh4142qKxZNCsxuXw+QkkD8JtDK4Ru4RJD7ui+QvTy2BoHhJHYfP9xFQLVk
- BSVpF3tdN9hdKeS16/e13E3FvXEVj3F48cG7gIsGdeZ9ZyGGvyBq+qMDbUbfN6UGUdeS2POxZ
- C7ovSxd84cYZ2FoE90/e7EV1IIdZAgEoMmo/r/wB7K6UNKt2fxiXaLaKeTMLH9VcAJ813Vd36
- MP6Aj31NX7FNlrxGyI3hdxEYqeFWioH819Xom2Op8KCh/TLZJj4KicM4J7tfTnBa1cQFUWGPo
- +NegmCCcPAcShjokO7Jl57GqqlEt73MVwIC4fK0UeXfOGw+LIFBW3biDMS5eYU2gWbso9v4SZ
- +q1dnBJ7vhzWN+mA9Z1E3bTHoPK32CyJNzYPU4lJNVfc19NE9riTFbenFVnrp9HvObWmilluP
- VJEMB4EWATwiGUbyEjeqU3ShGB5Qz9PGqEB5DRYn4pl8urWRsm9PZnacxu92mJw3+tFTe2uVc
- GYd3SjWjzKNiCn/uM9VvV3JaOx3RZYH1bd/Qag9PavEoMQ3+bw1HLvxmLZmsGQuGgiXashCQD
- yllgWrBvw6xWHafAoY5AmauPBO/AMBhmaDaGFQ2LMMCjQ+clq/Ku7vxz9hi5NJPkTtQE7CQhD
- G5NHgvm7DxMK/4Jztg4/M+Dww2frEcGfwe1R/Ru9vxiQyFo9P6knHEr2GDsG+Wr5G6hroUMne
- dnv64=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CA+JQ7M8JX64M2m=+-NTnbRo64jy7_G=TYafj6UXv=R7UJo0vdQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> * tb/diffstat-with-utf8-strwidth (2022-09-14) 1 commit
->  - diff.c: use utf8_strwidth() to count display width
->
->  "git diff --stat" etc. were invented back when everything was ASCII
->  and strlen() was a way to measure the display width of a string;
->  adjust them to compute the display width assuming UTF-8 pathnames.
->
->  Expecting a reroll.
->  source: <20220914151333.3309-1-tboegi@web.de>
->
+On Sun, Sep 18, 2022 at 05:05:29PM +0200, Erik Cervin Edin wrote:
+> Thank you for the explanation!
+> 
+> On Sun, Sep 18, 2022 at 2:11 PM Johannes Altmanninger <aclopte@gmail.com> wrote:
+> >
+> > Commit 68d5d03bc4 (rebase: teach --autosquash to match on sha1 in
+> > addition to message, 2010-11-04) made --autosquash apply a commit
+> > with subject "fixup! 012345" to the first commit in the todo list
+> > whose OID starts with 012345. So far so good.
+> 
+> I wasn't aware such fixups were recognized.
 
-Just a question:
-Is the patch good "as is" ?
+Neither was I. I've repeatedly had issues where the message created by
+"commit --fixup" was ambiguous (user error I know) but I can change my tool
+to use OIDs for the cases when I squash them right away..
 
-Further developments need to go into different patches anyway.
-/Torsten
+> The only way to create
+> such fixups is manually, correct?
+
+I think so
