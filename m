@@ -2,74 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D6CAC54EE9
-	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 11:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30685C54EE9
+	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 11:17:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229997AbiISLF0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Sep 2022 07:05:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41586 "EHLO
+        id S229983AbiISLR3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Sep 2022 07:17:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229996AbiISLFY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2022 07:05:24 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 776F365FD
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 04:05:20 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a26so34847280ejc.4
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 04:05:20 -0700 (PDT)
+        with ESMTP id S229945AbiISLR1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2022 07:17:27 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CFA010556
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 04:17:26 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id x94so23441261ede.11
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 04:17:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date;
-        bh=wOX4bFhpQnC/yX4PfWXD+nMI3yER48ZHneQxSDxInQs=;
-        b=D9XirPzdq463FmHXuZE8eZ0dqVPZXNFW+ufTGlage8aAtb25cy6xZGKBcpP7ykQ5HB
-         wacPS44AXkBABhpdpsEprqYPuyT2i7a7y/b5bYjFt1F3zps+IBtyRBrf1cmaS6qe8W+i
-         xGFZi/9nN/IByiZs/wo4z31l/0wcescBB6tyPXdVj89VbqPZapvSaP4ZMOy74LNI6h4k
-         Wx+ntmbmj3UwNglxHTFJGBgGRd4Y5Zmgh4XCUSQa0hK88bW8rZr6q/tX+EvgHizo+U+P
-         pq0eaH/sYxMkdEgKZ9NyJvjeJmQWMvP5gXxoRhyGonr38dhKvXmKDDnOlikoGbrrucoI
-         st+A==
+        bh=20C3XsQHCFj9/FXQqN+YZ02QIZt0bt4j2MAemY6s9AY=;
+        b=RKo6NHC2U70jyqT3eolN98nWGmlMKF4xvHj+C/pIAsNwENtofD4iwug3KNdviKmNCt
+         l/o0vXhVb1QRFGtTDT0c1KQdRJc2ALn1h2/mAJak9dpVEPnHQdjrQwbtwbqtGzvTifQP
+         LtJk1LC1w3FxeGZTnQ5SWf4SIG8gez0jP7DQCikoG3tibH7aFfv30WTY4u65K5eizJJ7
+         22fdWqACEoW2lbea2bE6JKvbfCru3tUj+2/RI6Fhly5A672H3ghe1jAsgqqGfvmrr4ck
+         g9wtB0YPYhL9ol2sovWV41OQFpShrVzyx+F7yO6eeZW16BDtQRO0KuRWscSP2dP5bdVk
+         sJ6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=wOX4bFhpQnC/yX4PfWXD+nMI3yER48ZHneQxSDxInQs=;
-        b=ldG8tJxz0l3caUnL2WAXNpw9xBlK2+IzONGUR8rZEB8QdAo+jzMaFf/4m9yHvIrvTi
-         hpVXlHYrK63lH0itgoWPygMzWcwhoeE337rbSC8kTlX6I3r2EkZcObbPEEAetWjJGWyY
-         8ZjJqlVIt7zwDr7iTfbKLeH96ergs2xL0ds0h4Xy75o8pzCYFtPmAS4mJ7g9xauPKyqY
-         i2EuwKiR8svYNszJO+j/JxjqJw7VfJ93Y8aGxeb8YOw5U7FxJ18hzs1eEstK/LHDNsXx
-         jySbMgooiyVcxiU6Yp8H3KfOissjADP2FzD5glDxCCZ8ls6wvOEZ7Tb1Rwihn6O4bVlo
-         emog==
-X-Gm-Message-State: ACrzQf2HMyY/u64sU1O5g+5kYL2z+a6A0Emqzhva5xp6piHBJCJ2hT+d
-        g0CoBlmUBe5wsypgIkDRVaab9lsqR4o=
-X-Google-Smtp-Source: AMsMyM6LwBF+vi7FbKmPGHRpqECFpHsqly2N9sKeD5rY7rqe2PVXBv3V7I45UlIriEbNz9COQ5gSmg==
-X-Received: by 2002:a17:906:dac9:b0:780:ab6f:591f with SMTP id xi9-20020a170906dac900b00780ab6f591fmr10761532ejb.77.1663585518848;
-        Mon, 19 Sep 2022 04:05:18 -0700 (PDT)
+        bh=20C3XsQHCFj9/FXQqN+YZ02QIZt0bt4j2MAemY6s9AY=;
+        b=O2x0E3CUD2Ze15jIhYu72LiI+M0Ath4gWKAURdTa3nLTTO5iw2cR72zmfsBnwcLxEd
+         MRj1cerbN3qp8vFXdWwO+B2TqxfI7dvQCaf6j06J9XsUdO4tEc47d/gGAkjr+MTzKXXT
+         Y7B4rm4WdFlW/jInEFI1vSCSBH53rXhwL7OZqSJ3b1/tUgPvVd7pEGYJ7C5a60/7jFvi
+         mqWsRDCrfaViAFwKr7wEN1k7fgoxTtv1jgu1Reg22wa+l+V5HNMGHOGTHSs471KWolk5
+         3sLVaM1htrDN9KyrRcqkd/Nn8pPfYrG5zNaHHq3FhmLl6ToIevekP8Um5IuzJzn83VJv
+         mgzQ==
+X-Gm-Message-State: ACrzQf1s/txbyIi+l7fZE6seVtPDb6+YNBIoAb/pFT3KlpI1vXhGntJs
+        HDv9OcpeiO03feTEtpLlwic9D7bI/TI=
+X-Google-Smtp-Source: AMsMyM61j0Prgu0cCkfeSB/qKKzE0OMMtpiDt1VccyYQjKUpJDVAWhlEOTopJgIzN1tLQXEwbFETng==
+X-Received: by 2002:a05:6402:2549:b0:452:8292:b610 with SMTP id l9-20020a056402254900b004528292b610mr15090846edb.199.1663586244944;
+        Mon, 19 Sep 2022 04:17:24 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id q10-20020a1709063d4a00b0073c74bee6eesm15245356ejf.201.2022.09.19.04.05.18
+        by smtp.gmail.com with ESMTPSA id u13-20020a170906408d00b006fe0abb00f0sm15300970ejj.209.2022.09.19.04.17.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Sep 2022 04:05:18 -0700 (PDT)
+        Mon, 19 Sep 2022 04:17:24 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1oaEaT-000bUW-24;
-        Mon, 19 Sep 2022 13:05:17 +0200
+        id 1oaEmB-000bx5-23;
+        Mon, 19 Sep 2022 13:17:23 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v5 1/3] builtin/grep.c: add --sparse option
-Date:   Mon, 19 Sep 2022 13:03:44 +0200
-References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
-        <20220908001854.206789-1-shaoxuan.yuan02@gmail.com>
-        <20220908001854.206789-2-shaoxuan.yuan02@gmail.com>
-        <CABPp-BF-z72=hY_Jf8h3g95s+wwZOsV_S=+dDNs_AVskQxoaTw@mail.gmail.com>
-        <xmqqh719pcoo.fsf@gitster.g>
-        <CABPp-BEOVGfgmAMGCjP6Q3k-t=C1tL=f27buhiCiL-Wv0eDF_A@mail.gmail.com>
-        <cafcedba-96a2-cb85-d593-ef47c8c8397c@github.com>
+To:     Arthur Chan via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Arthur Chan <arthur.chan@adalogics.com>
+Subject: Re: [PATCH v3] fuzz: reorganise the path for existing oss-fuzz fuzzers
+Date:   Mon, 19 Sep 2022 13:10:04 +0200
+References: <pull.1353.v2.git.1663457311149.gitgitgadget@gmail.com>
+ <pull.1353.v3.git.1663542495094.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <cafcedba-96a2-cb85-d593-ef47c8c8397c@github.com>
-Message-ID: <220919.86v8pj62vm.gmgdl@evledraar.gmail.com>
+In-reply-to: <pull.1353.v3.git.1663542495094.gitgitgadget@gmail.com>
+Message-ID: <220919.86r10762bg.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -77,20 +68,50 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sun, Sep 18 2022, Victoria Dye wrote:
+On Sun, Sep 18 2022, Arthur Chan via GitGitGadget wrote:
 
-> Elijah, would you be interested in compiling your thoughts into a document
-> in 'Documentation/technical'? If not, Stolee or I could do it. If we could
-> settle on some guidelines (option names, behavior, etc.) for better
-> incorporating 'sparse-checkout' support into existing commands, it'd make
-> future sparse index work substantially easier for everyone involved.
+> From: Arthur Chan <arthur.chan@adalogics.com>
+>
+> This patch is aimed to provide a better organisation for oss-fuzz
+> fuzzers, allowing more fuzzers for the git project to be added
+> in later development.
 
-This sounds good. I'd just like to suggest that incorporating a table
-similar to the one I made for checkout/switch in would be useful for
-such documentation:
+I don't see any problem with this change per-se, but this rationale
+really doesn't explain anything in the end to the reader. How does just
+having x/y-*.c files rather than x-y-*.c allow for more fuzzers to be
+added? We could also add new fuzzers to the top-level now, why does this
+change help us to do so.
 
-	https://lore.kernel.org/git/211021.86wnm6l1ip.gmgdl@evledraar.gmail.com/
+I suspect the unstated reason is just "adding a lot more would make the
+top-level cluttered", or perhaps some design reason you hinted at in
+https://lore.kernel.org/git/2405897f-a774-e0d3-99bb-2185dcbb5432@adalogics.com/
+(but I haven't taken the time to fully understand).
 
-We ended up dropping the ball on that topic, but for cross-command UX I
-think it's a very useful way to present how a "meta option", or an
-option shared across many commands is expected to behave.
+So, I'm fine with this v3 as-is, but also wouldn't mind a v4 with an
+updated commit message to address the above confusion.
+
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -1,7 +1,7 @@
+> -/fuzz-commit-graph
+> +/oss-fuzz/fuzz-commit-graph
+>  /fuzz_corpora
+> -/fuzz-pack-headers
+> -/fuzz-pack-idx
+> +/oss-fuzz/fuzz-pack-headers
+> +/oss-fuzz/fuzz-pack-idx
+>  /GIT-BUILD-OPTIONS
+>  /GIT-CFLAGS
+>  /GIT-LDFLAGS
+
+Speaking of clutter, a much better change here IMO would be to create a
+/oss-fuzz/.gitignore file, and then move these there. For prior art see:
+
+	git ls-files '**/.gitignore'
+
+Even better (but I'm not sure how this is all used in the end), can we
+perhaps build those in a .gitignore'd oss-fuzz/.build/.
+
+But maybe not, and in any case that would be a larger change to the
+Makefile logic, so we can leave it for now, but I do think it makes
+sense to create a oss-fuzz/.gitignore in a v4.
