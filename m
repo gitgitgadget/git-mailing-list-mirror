@@ -2,91 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C37FECAAD3
-	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 14:14:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54205ECAAD3
+	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 14:28:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229779AbiISOO4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Sep 2022 10:14:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36228 "EHLO
+        id S229870AbiISO2m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Sep 2022 10:28:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229725AbiISOOw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2022 10:14:52 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CA9013D65
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 07:14:50 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id c24so6378321plo.3
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 07:14:50 -0700 (PDT)
+        with ESMTP id S229717AbiISO2k (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2022 10:28:40 -0400
+Received: from mail-vk1-xa29.google.com (mail-vk1-xa29.google.com [IPv6:2607:f8b0:4864:20::a29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772DF27B26
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 07:28:39 -0700 (PDT)
+Received: by mail-vk1-xa29.google.com with SMTP id k14so14185681vkk.0
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 07:28:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=Ecjyv8KxQCELnhy9B9uB5hXBdr2Aa9igHTohaZ/zU38=;
-        b=J4zDGnFnBuowcbsB0tkG4o4Mw1aMg9K4Lt6XxLdmRAv1OW+gUzd+piXO8jcwpKex3V
-         6cHqC/dzhPccIOCrGBFoWtHS5zUBxgPDKtKHBWianOsEitsIBhBw9rqhsfGE/TGbjdnp
-         Wi5M7C3dU1K8TX4ZiuxooKBFaQmBQmZB3NSTjvD50lUylYCP9VEPQc4YDZOYYSonKSCH
-         Ka1xNZ7El6OKRYj4Yc7ipPI2/xeBq6PLsRKKhHeh7RkP/F3viFml3RReLAHgALAsm3yh
-         ihY3sRpRLqi3z4INoDnZvWBQL4y8SOwA1BanBJtrLpmttM1dMdh0LXEHwh8xaGOYq+9+
-         zJ0Q==
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=gE3oWxnnXLLHTsR3mJhrRV69ZxS3O1Biyw7y99QvNoo=;
+        b=JSR8fm7tw9VrOAR0+s0jOKtvjZCxMwMg5sIFNqsP0jwDHw33DU/wg/jaEIhQshhp+d
+         zE9SDfZJJPr6VnNBKqGwqiv/hujRC83qeuIW13yL0wWjg9W5rye7DtTz79KDSOGyXCoA
+         mQC4a9gLRvOCnLny7QXLtQtWxftouDzrc3+4UnG3lc6eCcI8oulLcUd6QyrZNdFt3+Qj
+         hlCm9pK52Hp5IwzpUdrD63obx9XVleaTKCV+Bv7pi3gYIPgYOAL5rRX8XaSCEVZUTdy8
+         EF3bO5uQ/jZcWq2En3aLDGefgWrL0mI1XZWagj+T/bBJK9EbP8UHvMzEhad6qFnEQ1LA
+         TtCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=Ecjyv8KxQCELnhy9B9uB5hXBdr2Aa9igHTohaZ/zU38=;
-        b=4duSE/io0KRB4QJOMaGZ98nQsQlO9eigxT6cs8OLOiDGEOYGcWli+oHQPmrtXpZBim
-         tWyVQ+JNfW8TIXN+S5zuqXzrJ5l475yhI038aNr9rrG23bAlXMtFy9/QvHAlm8rDBdS0
-         lqHAUFwS87b+mnDST44lu9fz6KOCAPxhad7wTbLxbd5zDjSLSWCVgGjAlwKkNuz5tzpW
-         uZzMTMZAe0FRzEIP1CdM/JpXpyayOyxUfDfyTlwRqoLuTEZpnvKAvTyh/RNm9AWUOqrL
-         7fU6VSSXeoq0Vrvoc1OwLALl1TgoCc3ZxwW+GThhkYuWr5dwqsApr6zGReGWOxqnqlF2
-         okzA==
-X-Gm-Message-State: ACrzQf2TXpvjLfo4hrif2S49z9hnon8HG+evBCPEk91XCxhZb82ZrxhX
-        OmlsKYZfR5sTzWIaYK0NXGUwt7yRhG89Vlo8
-X-Google-Smtp-Source: AMsMyM6YVRQTmxO7fUAz36HNNwDeN4rWK12LrYsf+6RX4K/Tj0eC+zzZ5Hrqhz1dIVHlEQbLCwQCzg==
-X-Received: by 2002:a17:902:e744:b0:178:6d7b:6d08 with SMTP id p4-20020a170902e74400b001786d7b6d08mr13461971plf.128.1663596889400;
-        Mon, 19 Sep 2022 07:14:49 -0700 (PDT)
-Received: from localhost.localdomain ([202.120.234.246])
-        by smtp.googlemail.com with ESMTPSA id q6-20020aa79606000000b0052d432b4cc0sm20488622pfg.33.2022.09.19.07.14.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Sep 2022 07:14:48 -0700 (PDT)
-From:   Miaoqian Lin <linmq006@gmail.com>
-To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
-Cc:     linmq006@gmail.com
-Subject: [PATCH v2] commit-graph: Fix missing closedir in expire_commit_graphs
-Date:   Mon, 19 Sep 2022 18:14:40 +0400
-Message-Id: <20220919141441.5644-1-linmq006@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=gE3oWxnnXLLHTsR3mJhrRV69ZxS3O1Biyw7y99QvNoo=;
+        b=Fry27Ekoja/PAtbfgIIF7XYQQZPdNWrIsi6vZww6QYwf5i9GC5zsxFR5cnXcnBuuYh
+         7e9fRGRKlZxLWbrXVwbChiGP7QMB2UsdrF+PGVLiYr6sLTRmEpBLe2hHwI11QFv0Kihz
+         kbpp3PdYJSwJU2eT9aVrB2Qk74q5DC90g/JKzwPcOrCWzgba8vK40bOjb0hkVgmmuo3o
+         2fdA0le0g8fNOM3rAWf18wSwXSLaZXHknhCpaVGJkmjv/o9N10xIMEc7zoyOy+e2l1+4
+         S5eajIP3OVTVwCeFqvYaNjDHb8a7NsAKOk9KAjACFVZ1yHxOZ2y7SlXRPRs3LlnCnOGO
+         1CCA==
+X-Gm-Message-State: ACrzQf3UnrviXNyN/zDbGPxVChM3+T92XgWRiKyipPhxjw10HTbDcAA/
+        IjNMdvYhZdYY+BI42puPPD66YMWFAbF1wzQZC97kVw==
+X-Google-Smtp-Source: AMsMyM6pm8nz0k72B/6ClTpJ5niBs03JV5WyzzqoXVahZ3nNAYQb7BxmD0yD73ddUzP+o7U7t9ODpxDnH62ADebzAHo=
+X-Received: by 2002:a05:6122:250:b0:3a2:4919:98c3 with SMTP id
+ t16-20020a056122025000b003a2491998c3mr5847567vko.30.1663597718020; Mon, 19
+ Sep 2022 07:28:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.1325.git.git.1663002096207.gitgitgadget@gmail.com>
+ <xmqq1qsge71x.fsf@gitster.g> <xmqq35cwcpws.fsf@gitster.g> <xmqqillrb7qs.fsf@gitster.g>
+In-Reply-To: <xmqqillrb7qs.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 19 Sep 2022 16:28:25 +0200
+Message-ID: <CAFQ2z_PBWbdKgbaqLO6iXB8WEhG=CTjetrEgm7wHacDi_n8VHw@mail.gmail.com>
+Subject: Re: [PATCH] refs: unify parse_worktree_ref() and ref_type()
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function calls opendir() but missing the corresponding
-closedir() before exit the function.
-Add missing closedir() to fix it.
+On Tue, Sep 13, 2022 at 5:43 PM Junio C Hamano <gitster@pobox.com> wrote:
+> then a better approach would be to have a small helper
+> parse_local_worktree_ref() and make the primary one into something
+> like
+>...
 
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
----
-changes in v2:
-- add if (dir) before closedir(), as suggested by Derrick.
----
- commit-graph.c | 2 ++
- 1 file changed, 2 insertions(+)
+Thanks, good idea. I'm sending you a v2.
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 06f7d9e0b6af..a7d875593288 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2265,6 +2265,8 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
- 	}
- 
- out:
-+	if(dir)
-+		closedir(dir);
- 	strbuf_release(&path);
- }
- 
--- 
-2.25.1
-
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Liana Sebastian
