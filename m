@@ -2,95 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE323ECAAD3
-	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 12:31:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C37FECAAD3
+	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 14:14:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229675AbiISMbc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Sep 2022 08:31:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35822 "EHLO
+        id S229779AbiISOO4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Sep 2022 10:14:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbiISMbK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2022 08:31:10 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A0731706B
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 05:31:07 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 51796CA1251;
-        Mon, 19 Sep 2022 08:31:06 -0400 (EDT)
-Received: from jeffhost-mbp.local (addr-66.249.231.194.nptpop-cmts01-cable-sub.rdns-bnin.net [66.249.231.194])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id C975ECC8326;
-        Mon, 19 Sep 2022 08:31:05 -0400 (EDT)
-Subject: Re: [PATCH v7 2/6] fsmonitor: relocate socket file if .git directory
- is remote
-To:     Junio C Hamano <gitster@pobox.com>,
-        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric DeCosta <edecosta@mathworks.com>
-References: <pull.1326.v6.git.1663100858.gitgitgadget@gmail.com>
- <pull.1326.v7.git.1663358014.gitgitgadget@gmail.com>
- <075340bd2a713905d8bee4f53765dcbcba9a17c4.1663358014.git.gitgitgadget@gmail.com>
- <xmqqy1ujf5a9.fsf@gitster.g>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <5c50a3cf-c5ac-6b11-2548-8400e5574b32@jeffhostetler.com>
-Date:   Mon, 19 Sep 2022 08:31:04 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S229725AbiISOOw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2022 10:14:52 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CA9013D65
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 07:14:50 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id c24so6378321plo.3
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 07:14:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=Ecjyv8KxQCELnhy9B9uB5hXBdr2Aa9igHTohaZ/zU38=;
+        b=J4zDGnFnBuowcbsB0tkG4o4Mw1aMg9K4Lt6XxLdmRAv1OW+gUzd+piXO8jcwpKex3V
+         6cHqC/dzhPccIOCrGBFoWtHS5zUBxgPDKtKHBWianOsEitsIBhBw9rqhsfGE/TGbjdnp
+         Wi5M7C3dU1K8TX4ZiuxooKBFaQmBQmZB3NSTjvD50lUylYCP9VEPQc4YDZOYYSonKSCH
+         Ka1xNZ7El6OKRYj4Yc7ipPI2/xeBq6PLsRKKhHeh7RkP/F3viFml3RReLAHgALAsm3yh
+         ihY3sRpRLqi3z4INoDnZvWBQL4y8SOwA1BanBJtrLpmttM1dMdh0LXEHwh8xaGOYq+9+
+         zJ0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=Ecjyv8KxQCELnhy9B9uB5hXBdr2Aa9igHTohaZ/zU38=;
+        b=4duSE/io0KRB4QJOMaGZ98nQsQlO9eigxT6cs8OLOiDGEOYGcWli+oHQPmrtXpZBim
+         tWyVQ+JNfW8TIXN+S5zuqXzrJ5l475yhI038aNr9rrG23bAlXMtFy9/QvHAlm8rDBdS0
+         lqHAUFwS87b+mnDST44lu9fz6KOCAPxhad7wTbLxbd5zDjSLSWCVgGjAlwKkNuz5tzpW
+         uZzMTMZAe0FRzEIP1CdM/JpXpyayOyxUfDfyTlwRqoLuTEZpnvKAvTyh/RNm9AWUOqrL
+         7fU6VSSXeoq0Vrvoc1OwLALl1TgoCc3ZxwW+GThhkYuWr5dwqsApr6zGReGWOxqnqlF2
+         okzA==
+X-Gm-Message-State: ACrzQf2TXpvjLfo4hrif2S49z9hnon8HG+evBCPEk91XCxhZb82ZrxhX
+        OmlsKYZfR5sTzWIaYK0NXGUwt7yRhG89Vlo8
+X-Google-Smtp-Source: AMsMyM6YVRQTmxO7fUAz36HNNwDeN4rWK12LrYsf+6RX4K/Tj0eC+zzZ5Hrqhz1dIVHlEQbLCwQCzg==
+X-Received: by 2002:a17:902:e744:b0:178:6d7b:6d08 with SMTP id p4-20020a170902e74400b001786d7b6d08mr13461971plf.128.1663596889400;
+        Mon, 19 Sep 2022 07:14:49 -0700 (PDT)
+Received: from localhost.localdomain ([202.120.234.246])
+        by smtp.googlemail.com with ESMTPSA id q6-20020aa79606000000b0052d432b4cc0sm20488622pfg.33.2022.09.19.07.14.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Sep 2022 07:14:48 -0700 (PDT)
+From:   Miaoqian Lin <linmq006@gmail.com>
+To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
+Cc:     linmq006@gmail.com
+Subject: [PATCH v2] commit-graph: Fix missing closedir in expire_commit_graphs
+Date:   Mon, 19 Sep 2022 18:14:40 +0400
+Message-Id: <20220919141441.5644-1-linmq006@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <xmqqy1ujf5a9.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: mailmunge 3.09 on 209.68.5.199
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The function calls opendir() but missing the corresponding
+closedir() before exit the function.
+Add missing closedir() to fix it.
 
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+---
+changes in v2:
+- add if (dir) before closedir(), as suggested by Derrick.
+---
+ commit-graph.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-On 9/16/22 4:11 PM, Junio C Hamano wrote:
-> "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> +const char *fsmonitor_ipc__get_path(struct repository *r)
->> +{
->> +	static const char *ipc_path;
->> +	SHA_CTX sha1ctx;
->> +	char *sock_dir;
->> +	struct strbuf ipc_file = STRBUF_INIT;
->> +	unsigned char hash[SHA_DIGEST_LENGTH];
->> +
->> +	if (ipc_path)
->> +		return ipc_path;
->> +
->> +	if (!r)
->> +		r = the_repository;
-> 
-> I'd prefer not to see this "NULL means the_repository".  It would be
-> a different story if the caller does not necessarily have a ready
-> access to the_repository, but it is a global, so the caller can pass
-> the_repository and be more explicit.  Giving two ways to the caller
-> to express same thing is not a good idea.
-> 
-> Thanks.
-> 
-
-To be fair, I added several "if (!r) r = the_repository;" statements
-to the original public FSMonitor routines.  There were obscure cases
-where tests would sometimes randomly fail because "r" wasn't completely
-passed down via some hard to isolate call stack.  Offlist, AEvar told me
-that he managed to isolate it and has a fix.
-
-So eventually, we'll be able to get rid of all of these direct
-references to "the_repository" and properly assume that "r" is
-always passed down.
-
-But for now, I think we should let this stay for safety.
-
-Jeff
+diff --git a/commit-graph.c b/commit-graph.c
+index 06f7d9e0b6af..a7d875593288 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -2265,6 +2265,8 @@ static void expire_commit_graphs(struct write_commit_graph_context *ctx)
+ 	}
+ 
+ out:
++	if(dir)
++		closedir(dir);
+ 	strbuf_release(&path);
+ }
+ 
+-- 
+2.25.1
 
