@@ -2,86 +2,209 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA88FECAAD3
-	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 18:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AAC0ECAAA1
+	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 19:00:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229612AbiISStO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Sep 2022 14:49:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49172 "EHLO
+        id S229482AbiISTAk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Sep 2022 15:00:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbiISStM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2022 14:49:12 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9500A46D9E
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 11:49:11 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DC2BC14F1E5;
-        Mon, 19 Sep 2022 14:49:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3TIA+taDUKmNE/JSYd7nqt1QW4wGCZv1J6MLqU
-        X3HGY=; b=KSweCP2VnxAyvS4l08IU7goCzD3FjiFn3LmdHR1L8D+Cnz6o6wY8JD
-        XdSH6u0xn+Hpc2jidDBMEDfSbCvmngKkiV9bKAjtUEA+KblEgjm6kT2aQqKaHv4l
-        5LdxxdMGgOQ/PkHlj0O/CpyT4cIHYJCBgLE30TQ1gZYQrrBgPArOs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D480C14F1E4;
-        Mon, 19 Sep 2022 14:49:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3CB8C14F1E1;
-        Mon, 19 Sep 2022 14:49:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Force Charlie via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Force Charlie <charlieio@outlook.com>
-Subject: Re: [PATCH] unicode: update the width tables to Unicode 15
+        with ESMTP id S229582AbiISTAh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2022 15:00:37 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 877F519016
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 12:00:36 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id z6so651576wrq.1
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 12:00:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date;
+        bh=VkGE/28Ts2+IfsW9BnHXujKA9VztnYOwZwq9ogPi7vA=;
+        b=I7TvICGpEuj73vTUmcrk6e0sXvlNn0b3Gu14iE3LqERcodNOSeuBqbzEiDGwXbLq6P
+         Mmu9IlgRX0PXQgmO3a31vUZeY9XD0iBCySuiVa/ZSDcxyrRkB9YGU7MMOUJHGV7Sx+l5
+         f6kc2PSmKWwlnHVupRNx+W7Pw+fD0CJC2X1/CMsKUWcAxWEvxlURYu1DWpX0s5CF/T+l
+         tE6yIv7VXXKAlBnglPuiP2LSFgxC3T+gtEnIqyCu5jpYJ/PUOSyKGJWJVfZAAkxvKdiU
+         SVDvYhiUWraIzXuNQ+BqmDBX1c3SvrklJnGJMRaF58yR4QFZRROI+l3w4vShtYhT1hNH
+         opVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=VkGE/28Ts2+IfsW9BnHXujKA9VztnYOwZwq9ogPi7vA=;
+        b=55tkzrWXAEGegZGc1DLh4/N736ldn6rmlBlpbT5WlizYrpMy9co6HRezhvQZpAkA64
+         oVPqyzhywtkQc8o3WaFlN1SenUppcYrks5UdBAllQ2BAzCJH9cRcBEa3yt2BjsT7ANht
+         99CrQwIg9D2r4VPR/N2gcsG5+suxMi+cGeb7OQ8bUZ928RuxCaIfs9SWHO2aJ/DGNpwA
+         ApiQJtawwSx1Femsn49SyQRQIwIFG1oQ0MCGpLyB+JSr0OgzpmVjHJUEaWz74RCt7Q7/
+         P1CLQiXKc9AgpN55csDPfQCTGjGZoA9Wu4ZwKJCEhdA0HhG8kY6QZEgjx0ByVU0VyRIT
+         NZ9A==
+X-Gm-Message-State: ACrzQf26BngK4I2MtenxKqzUzZ9WppjWT4hT0l4lycjQhNckybNjyyBm
+        JWDs1nDD46SxcPfHN+H1fIMv2YO2mgc=
+X-Google-Smtp-Source: AMsMyM4Y5s4Y8tEheZObGJ6tYE7yY47VsBR2btA21oc/QOI+6FBJ1nUZHXcP79G32YJubDq/QZ6Exw==
+X-Received: by 2002:a05:6000:1564:b0:226:dece:5630 with SMTP id 4-20020a056000156400b00226dece5630mr12231127wrz.294.1663614034385;
+        Mon, 19 Sep 2022 12:00:34 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i7-20020a05600c354700b003b4cba4ef71sm9777256wmq.41.2022.09.19.12.00.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Sep 2022 12:00:33 -0700 (PDT)
+Message-Id: <pull.1333.v2.git.git.1663614033063.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1333.git.git.1663388320380.gitgitgadget@gmail.com>
 References: <pull.1333.git.git.1663388320380.gitgitgadget@gmail.com>
-        <xmqqo7vbb810.fsf@gitster.g>
-Date:   Mon, 19 Sep 2022 11:49:09 -0700
-In-Reply-To: <xmqqo7vbb810.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        19 Sep 2022 10:15:07 -0700")
-Message-ID: <xmqqczbr9p3u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+From:   "Force Charlie via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 19 Sep 2022 19:00:32 +0000
+Subject: [PATCH v2] unicode: update the width tables to Unicode 15
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BF5E30DA-384B-11ED-B6BB-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Cc:     Force Charlie <charlieio@outlook.com>,
+        Force Charlie <charlieio@outlook.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Force Charlie <charlieio@outlook.com>
 
-> "Force Charlie via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: Force Charlie <charlieio@outlook.com>
->>
->> Unicode 15 Released[0] and including several additional zero/double
->> width characters.
->>
->> [0] https://home.unicode.org/announcing-the-unicode-standard-version-15-0/
->>
->> Signed-off-by: Force Charlie <charlieio@outlook.com>
->> ---
-> Thanks.
->
-> Where are you getting the information to update these ranges from,
-> among 4489 new characters?  Is there a readily accessible URL that
-> is more suitable than the announcement of the whole collection?
+Unicode 15 Released[0] and including several additional zero/double
+width characters.
 
-Ah, it would probably is a good idea to say what you did to prepare
-this patch in this case, like:
+[0] https://home.unicode.org/announcing-the-unicode-standard-version-15-0/
 
-    Unicode 15 that was released recentry [0] includes several
-    additional zero/double width characters.
+unicode-width.h regenerated by contrib/update-unicode/update_unicode.sh
 
-    Update unicode-width.h table by cd'ing to contrib/update-unicode/
-    and running update_unicode.sh script there.
+Signed-off-by: Force Charlie <charlieio@outlook.com>
+---
+    unicode: update the width tables to Unicode 15
+    
+    Unicode 15 Released[0] and including several additional zero/double
+    width characters.
+    
+    [0]
+    https://home.unicode.org/announcing-the-unicode-standard-version-15-0/
+    
+    unicode-width.h regenerated by contrib/update-unicode/update_unicode.sh
 
-    [0] https://home.unicode.org/announcing-the-unicode-standard-version-15-0/
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1333%2Ffcharlie%2Fupdate-unicode-15-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1333/fcharlie/update-unicode-15-v2
+Pull-Request: https://github.com/git/git/pull/1333
 
-or something, I guess.
+Range-diff vs v1:
 
-Thanks.
+ 1:  02d214def81 ! 1:  462fc646917 unicode: update the width tables to Unicode 15
+     @@ Commit message
+      
+          [0] https://home.unicode.org/announcing-the-unicode-standard-version-15-0/
+      
+     +    unicode-width.h regenerated by contrib/update-unicode/update_unicode.sh
+     +
+          Signed-off-by: Force Charlie <charlieio@outlook.com>
+      
+       ## unicode-width.h ##
+
+
+ unicode-width.h | 33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
+
+diff --git a/unicode-width.h b/unicode-width.h
+index 97c851b27df..e15fb0455bb 100644
+--- a/unicode-width.h
++++ b/unicode-width.h
+@@ -94,7 +94,7 @@ static const struct interval zero_width[] = {
+ { 0x0E47, 0x0E4E },
+ { 0x0EB1, 0x0EB1 },
+ { 0x0EB4, 0x0EBC },
+-{ 0x0EC8, 0x0ECD },
++{ 0x0EC8, 0x0ECE },
+ { 0x0F18, 0x0F19 },
+ { 0x0F35, 0x0F35 },
+ { 0x0F37, 0x0F37 },
+@@ -228,6 +228,7 @@ static const struct interval zero_width[] = {
+ { 0x10AE5, 0x10AE6 },
+ { 0x10D24, 0x10D27 },
+ { 0x10EAB, 0x10EAC },
++{ 0x10EFD, 0x10EFF },
+ { 0x10F46, 0x10F50 },
+ { 0x10F82, 0x10F85 },
+ { 0x11001, 0x11001 },
+@@ -252,6 +253,7 @@ static const struct interval zero_width[] = {
+ { 0x11234, 0x11234 },
+ { 0x11236, 0x11237 },
+ { 0x1123E, 0x1123E },
++{ 0x11241, 0x11241 },
+ { 0x112DF, 0x112DF },
+ { 0x112E3, 0x112EA },
+ { 0x11300, 0x11301 },
+@@ -313,7 +315,12 @@ static const struct interval zero_width[] = {
+ { 0x11D95, 0x11D95 },
+ { 0x11D97, 0x11D97 },
+ { 0x11EF3, 0x11EF4 },
+-{ 0x13430, 0x13438 },
++{ 0x11F00, 0x11F01 },
++{ 0x11F36, 0x11F3A },
++{ 0x11F40, 0x11F40 },
++{ 0x11F42, 0x11F42 },
++{ 0x13430, 0x13440 },
++{ 0x13447, 0x13455 },
+ { 0x16AF0, 0x16AF4 },
+ { 0x16B30, 0x16B36 },
+ { 0x16F4F, 0x16F4F },
+@@ -339,9 +346,11 @@ static const struct interval zero_width[] = {
+ { 0x1E01B, 0x1E021 },
+ { 0x1E023, 0x1E024 },
+ { 0x1E026, 0x1E02A },
++{ 0x1E08F, 0x1E08F },
+ { 0x1E130, 0x1E136 },
+ { 0x1E2AE, 0x1E2AE },
+ { 0x1E2EC, 0x1E2EF },
++{ 0x1E4EC, 0x1E4EF },
+ { 0x1E8D0, 0x1E8D6 },
+ { 0x1E944, 0x1E94A },
+ { 0xE0001, 0xE0001 },
+@@ -417,7 +426,9 @@ static const struct interval double_width[] = {
+ { 0x1AFF5, 0x1AFFB },
+ { 0x1AFFD, 0x1AFFE },
+ { 0x1B000, 0x1B122 },
++{ 0x1B132, 0x1B132 },
+ { 0x1B150, 0x1B152 },
++{ 0x1B155, 0x1B155 },
+ { 0x1B164, 0x1B167 },
+ { 0x1B170, 0x1B2FB },
+ { 0x1F004, 0x1F004 },
+@@ -451,7 +462,7 @@ static const struct interval double_width[] = {
+ { 0x1F6CC, 0x1F6CC },
+ { 0x1F6D0, 0x1F6D2 },
+ { 0x1F6D5, 0x1F6D7 },
+-{ 0x1F6DD, 0x1F6DF },
++{ 0x1F6DC, 0x1F6DF },
+ { 0x1F6EB, 0x1F6EC },
+ { 0x1F6F4, 0x1F6FC },
+ { 0x1F7E0, 0x1F7EB },
+@@ -459,15 +470,13 @@ static const struct interval double_width[] = {
+ { 0x1F90C, 0x1F93A },
+ { 0x1F93C, 0x1F945 },
+ { 0x1F947, 0x1F9FF },
+-{ 0x1FA70, 0x1FA74 },
+-{ 0x1FA78, 0x1FA7C },
+-{ 0x1FA80, 0x1FA86 },
+-{ 0x1FA90, 0x1FAAC },
+-{ 0x1FAB0, 0x1FABA },
+-{ 0x1FAC0, 0x1FAC5 },
+-{ 0x1FAD0, 0x1FAD9 },
+-{ 0x1FAE0, 0x1FAE7 },
+-{ 0x1FAF0, 0x1FAF6 },
++{ 0x1FA70, 0x1FA7C },
++{ 0x1FA80, 0x1FA88 },
++{ 0x1FA90, 0x1FABD },
++{ 0x1FABF, 0x1FAC5 },
++{ 0x1FACE, 0x1FADB },
++{ 0x1FAE0, 0x1FAE8 },
++{ 0x1FAF0, 0x1FAF8 },
+ { 0x20000, 0x2FFFD },
+ { 0x30000, 0x3FFFD }
+ };
+
+base-commit: d3fa443f97e3a8d75b51341e2d5bac380b7422df
+-- 
+gitgitgadget
