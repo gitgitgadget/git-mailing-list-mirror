@@ -2,475 +2,369 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 865BFECAAD3
-	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 19:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED790ECAAD3
+	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 19:38:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbiISTMz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Sep 2022 15:12:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43382 "EHLO
+        id S229718AbiISTiD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Sep 2022 15:38:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiISTMy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2022 15:12:54 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E85826555
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 12:12:50 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id g3so584337wrq.13
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 12:12:50 -0700 (PDT)
+        with ESMTP id S229473AbiISTiC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2022 15:38:02 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89CE115A1A
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 12:38:00 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id t14so729367wrx.8
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 12:38:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=jIV2J5kFlSiV+Tv0V1X91gVwA+0hFmPEkKZ1/hZHaDQ=;
-        b=kw2Flo2Okocvcvo6FVIof8IA4qYAY7/A1MgVX2EiR93iAQTnI7OM72571D/StGzYTT
-         MZbiGGHV3N6xULMQ5zpMBbzNV7jMRhCt4xqMiDCSptjjgSBvis2aO0tNS5GZGuTAzG2a
-         1bLTCtSuBRp89b8GKGhYpsC7u0sgrxDldRtOIm2SMSX7RJI3+f/tAVrwjDNWhgrqb53/
-         GoX7LMbQibcWhG/ru8NNTAj7Yoa6HaNyi6O3wNVG3fnpwj3SsINLNFA5bpMoX3NZ7byS
-         updroFycwCwfHEasiecfjb01prmhBW+JSutlpd/cHQiBSI7X7PNwtumarS7YzJV30djz
-         KBqg==
+        bh=AHsuauBjGSxRMNuthPW5xE+SxBgQlG0mbrtL7YQn7k4=;
+        b=mxPhIqAAM2eDtOUanWdDCrGvkMcPgv5qUsV36VifeAJQM4NV0JkzheWupr5fX8yslQ
+         c5IAK9p8GezQD21cKIa++wmkgdTnF1jRg+DPfwot88AnktiBcpZ+ybiiZuG4bucsyMp/
+         0YBKzLeDCeYt3H5urGLk1G50umT+gLrUGPd2zF9zyr5atD5DdMgL//U3FEuy0MU0dgua
+         oJ4e+joK/1t4eF5moEjwTYK8IqNhIszfdLs7eOJ4F06slkqKPBqtjV4VxolMeKdKXkDE
+         dc134CcojVQt+dXC2Qp+LI94SqazioRKOfdWzpw4ikgnRo9OsZG4c/+oABBJl56wWBSg
+         mSfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=jIV2J5kFlSiV+Tv0V1X91gVwA+0hFmPEkKZ1/hZHaDQ=;
-        b=sSEO80uxD+xxIOcpA/qlE4YYZEj1sD7miwCUy4QkGMODs2IPszk1gcwyd790/K9GEV
-         d1swU9eVKjDjMceK5DVHqWrvOjOBuz142sdEfN/ATOylBB1BUpY4JApR2X1rMq2w+1xG
-         cEQiBQXipBULAe6BaY+48iJZaw+S5ccQDJ8mByD61YIUqfi/ayxnrus0JlVq2TmCwTmO
-         0XtSHOWrXvcrZRjfAm8pFEcUcWvmThzUAGAQh86/o9FwstHxrKNkca9916kG6knGQg7v
-         2Hd6Q4XmijvFj8gHc5XkE0SolqRb03DJfnCIuKEfD8Eac/TKy2vHbsQoI0Mbqvr7pWex
-         9nKA==
-X-Gm-Message-State: ACrzQf2H+ALdqjtwu/8HhVXknLB6RRe8X4w7meEayEMcjD+bhfmSW8vA
-        NbRZyaEPnwCi30rnR97hONOL3p2t3As=
-X-Google-Smtp-Source: AMsMyM5xmjLtVzpAN4RsYzed5jbRrZN89T5X/OZ8a4Gw2kCzZf/82Ptka6k9VWOD/uFCK42MChGJpw==
-X-Received: by 2002:a05:6000:387:b0:22a:3cae:93c4 with SMTP id u7-20020a056000038700b0022a3cae93c4mr12427292wrf.321.1663614768181;
-        Mon, 19 Sep 2022 12:12:48 -0700 (PDT)
+        bh=AHsuauBjGSxRMNuthPW5xE+SxBgQlG0mbrtL7YQn7k4=;
+        b=l8alL6IwrJfey38sApf1HXreuhvkdki1fjFxqmTDMcUuOITn3Q3+JqQOdbREh/SRf3
+         lyljZOYBpQ2Q7mg8Af+/dYSe9ODUKPruNHXnBZhhGNhf14zEmyX583Ezl1802zj1oRfD
+         UIE3aGr/EO47f6O+GvQkgVDCWVQg6m8VNQ/KchSShhAyyycUDqJxIKXmU0Vxk94irESt
+         pkyMTBQfPXzyehexSpEF1nAwZJP/E9mnBvQ9PDTsHMYQUUes0x8W9D5LUjRsnuYOH1HO
+         1FDoO3FdjEWo2+gG4G6jORsCTzJjafPuZr8MXF/JpJdYDGzFd9+LOGG69kY7rL5dg1ES
+         m3Wg==
+X-Gm-Message-State: ACrzQf373kFbyfWuGjDZntInkUMFh4YS5Y4cjqVL45051Ng3YPKoll2w
+        zPiZma44zoaJB4qx8tdxvIKMUuWuwWg=
+X-Google-Smtp-Source: AMsMyM5fJxgwGRAfnqVOyKfb21bAJVkTEZ6/7e6vOD7bs9bUXugZLu2zk3Rai8VYyydqEIIYf3S9YQ==
+X-Received: by 2002:adf:de8d:0:b0:22a:e4b5:6791 with SMTP id w13-20020adfde8d000000b0022ae4b56791mr9208060wrl.1.1663616278729;
+        Mon, 19 Sep 2022 12:37:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m6-20020a05600c4f4600b003b47581979bsm15962418wmq.33.2022.09.19.12.12.47
+        by smtp.gmail.com with ESMTPSA id 7-20020a05600c228700b003a604a29a34sm14572756wmf.35.2022.09.19.12.37.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Sep 2022 12:12:47 -0700 (PDT)
-Message-Id: <pull.1348.v2.git.1663614767058.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1348.git.1662747205235.gitgitgadget@gmail.com>
-References: <pull.1348.git.1662747205235.gitgitgadget@gmail.com>
-From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Sep 2022 19:12:46 +0000
-Subject: [PATCH v2] Documentation: add ReviewingGuidelines
+        Mon, 19 Sep 2022 12:37:58 -0700 (PDT)
+Message-Id: <pull.1326.v9.git.1663616277.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1326.v8.git.1663377141.gitgitgadget@gmail.com>
+References: <pull.1326.v8.git.1663377141.gitgitgadget@gmail.com>
+From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 19 Sep 2022 19:37:51 +0000
+Subject: [PATCH v9 0/6] fsmonitor: option to allow fsmonitor to run against network-mounted repos
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     derrickstolee@github.com, Johannes.Schindelin@gmx.de,
-        steadmon@google.com, chooglen@google.com, gitster@pobox.com,
-        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric DeCosta <edecosta@mathworks.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Victoria Dye <vdye@github.com>
+Follow-on to the work done to allow Windows to work against network-mounted
+repos for macOS.
 
-Add a reviewing guidelines document including advice and common terminology
-used in Git mailing list reviews. The document is included in the
-'TECH_DOCS' list in order to include it in Git's published documentation.
+Have macOS take advantage of the same configuration option,
+'fsmonitor.allowRemote' that was introduced for Windows. Setting this option
+to true will override the default behavior (erroring-out) when a
+network-mounted repo is detected by fsmonitor.
 
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Helped-by: Derrick Stolee <derrickstolee@github.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Josh Steadmon <steadmon@google.com>
-Signed-off-by: Victoria Dye <vdye@github.com>
----
-    Documentation: add ReviewingGuidelines
-    
-    This patch follows up on a discussion a few weeks ago in the Git IRC
-    standup [1], where it was mentioned that it would be nice to have
-    consistent definitions for common review terminology (like 'nit:'). The
-    "ReviewingGuidelines" document created here builds on that idea, as well
-    as past discussions around the idea of advice for reviewers (similar to
-    the guidelines for new contributors in MyFirstContribution [2]).
-    
-    The goal of this document is to clarify & standardize some of the more
-    niche concepts important to the Git project ("What's cooking" emails,
-    terminology), as well as provide general reviewing advice based on my
-    observations of effective reviews from others on the mailing list.
-    
-    One thing that's particularly important to me here is that the advice
-    presented here does not gatekeep or otherwise denigrate the personal
-    preferences or style of reviewers. With that in mind, one of the things
-    I'm looking for in reviews of this document is making sure that the tone
-    & content reflect that more positive/encouraging intent. And, of course,
-    I'm happy to hear what other tips & terminology people think would be
-    helpful to include!
-    
-    
-    Changes since V1
-    ================
-    
-     * Reorganized "Principles" section advice into "High-level guidance"
-       and "Performing your review" subsections.
-     * Dropped recommendation to comment on cover letter with "LGTM" if you
-       have no other recommendations (somewhat redundant with the
-       "Completing a review" section, and such comments don't tend to add
-       value except when coming from highly-experienced reviewers anyway).
-     * Added clarity & modified reasoning for why reviewing CC'd patches is
-       helpful.
-     * Miscellaneous other revisions recommended by [3].
-    
-    Thanks!
-    
-     * Victoria
-    
-    [1]
-    https://colabti.org/irclogger/irclogger_log/git-devel?date=2022-08-29#l53
-    [2] https://git-scm.com/docs/MyFirstContribution [3]
-    https://lore.kernel.org/git/xmqqwnacibbm.fsf@gitster.g/
+The added wrinkle being that the Unix domain socket (UDS) file used for IPC
+cannot be created in a network location; instead $HOME is used if the
+default location is on the network. The user may, optionally, set the
+'fsmonitor.socketDir' configuration option to a valid, local directory if
+$HOME itself is on the network or is simply not the desired location for the
+UDS file.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1348%2Fvdye%2Ffeature%2Freviewing-guidelines-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1348/vdye/feature/reviewing-guidelines-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1348
+An additional issue is that for mount points in the root directory, FSEvents
+does not report a path that matches the worktree directory due to the
+introduction of 'synthetic firmlinks'. fsmonitor must map the FSEvents paths
+to the worktree directory by interrogating the root filesystem for synthetic
+firmlinks and using that information to translate the path.
 
-Range-diff vs v1:
+v9 differs from v8:
 
- 1:  b2ed5641c24 ! 1:  7326058b23a Documentation: add ReviewingGuidelines
+ * incorporates code review feedback
+ * check for incompatibility before communicating with fsmonitor
+
+v8 differs from v7:
+
+ * incorporates code review feedback
+ * gets the rebase right
+
+v7 differs from v6:
+
+ * incorporates code review feedback
+
+v6 differs from v5:
+
+ * incorporates earlier, Windows-specific changes that have not made it back
+   yet to the master branch
+ * incorporates code review feedback
+ * adds documentation for 'fsmonitor.allowRemote' and 'fsmonitor.socketDir'
+
+v5 differs significantly from earlier versions:
+
+ * redesign of handling 'fsmonitor.allowRemote' and 'fsmonitor.socketDir'
+   such that these options are no longer added to the settings data
+   structure but are rather read from config at point of use
+ * refactoring of code for handling platform-specific file system checks via
+   a common interface to avoid platform #ifdef in IPC code and be in-model
+   with other platform-specific fsmonitor code
+ * dealing with 'synthetic firmlinks' on macOS
+
+Eric DeCosta (6):
+  fsmonitor: refactor filesystem checks to common interface
+  fsmonitor: relocate socket file if .git directory is remote
+  fsmonitor: avoid socket location check if using hook
+  fsmonitor: deal with synthetic firmlinks on macOS
+  fsmonitor: check for compatability before communicating with fsmonitor
+  fsmonitor: add documentation for allowRemote and socketDir options
+
+ Documentation/git-fsmonitor--daemon.txt  |  48 ++++++-
+ Makefile                                 |   2 +
+ builtin/fsmonitor--daemon.c              |  11 +-
+ compat/fsmonitor/fsm-ipc-darwin.c        |  48 +++++++
+ compat/fsmonitor/fsm-ipc-win32.c         |   9 ++
+ compat/fsmonitor/fsm-listen-darwin.c     |   6 +-
+ compat/fsmonitor/fsm-path-utils-darwin.c | 132 +++++++++++++++++
+ compat/fsmonitor/fsm-path-utils-win32.c  | 145 +++++++++++++++++++
+ compat/fsmonitor/fsm-settings-darwin.c   |  70 +++------
+ compat/fsmonitor/fsm-settings-win32.c    | 174 +----------------------
+ contrib/buildsystems/CMakeLists.txt      |   4 +
+ fsmonitor--daemon.h                      |   3 +
+ fsmonitor-ipc.c                          |  18 ++-
+ fsmonitor-ipc.h                          |   4 +-
+ fsmonitor-path-utils.h                   |  59 ++++++++
+ fsmonitor-settings.c                     |  60 +++++++-
+ fsmonitor-settings.h                     |   2 +-
+ fsmonitor.c                              |   4 +
+ 18 files changed, 559 insertions(+), 240 deletions(-)
+ create mode 100644 compat/fsmonitor/fsm-ipc-darwin.c
+ create mode 100644 compat/fsmonitor/fsm-ipc-win32.c
+ create mode 100644 compat/fsmonitor/fsm-path-utils-darwin.c
+ create mode 100644 compat/fsmonitor/fsm-path-utils-win32.c
+ create mode 100644 fsmonitor-path-utils.h
+
+
+base-commit: d3fa443f97e3a8d75b51341e2d5bac380b7422df
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1326%2Fedecosta-mw%2Ffsmonitor_macos-v9
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1326/edecosta-mw/fsmonitor_macos-v9
+Pull-Request: https://github.com/gitgitgadget/git/pull/1326
+
+Range-diff vs v8:
+
+ 1:  155a6890806 = 1:  155a6890806 fsmonitor: refactor filesystem checks to common interface
+ 2:  b5356497228 ! 2:  68709d788d5 fsmonitor: relocate socket file if .git directory is remote
+     @@ compat/fsmonitor/fsm-ipc-darwin.c (new)
+      +	repo_config_get_string(r, "fsmonitor.socketdir", &sock_dir);
+      +
+      +	/* Create the socket file in either socketDir or $HOME */
+     -+	if (sock_dir && *sock_dir)
+     ++	if (sock_dir && *sock_dir) {
+      +		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
+      +					sock_dir, hash_to_hex(hash));
+     -+	else
+     ++		free(sock_dir);
+     ++	} else {
+      +		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
+     ++	}
+      +
+      +	ipc_path = interpolate_path(ipc_file.buf, 1);
+      +	if (!ipc_path)
+ 3:  6719ca2b24d = 3:  6ddd922917a fsmonitor: avoid socket location check if using hook
+ 4:  d736cb8fa90 ! 4:  73afd9f3122 fsmonitor: deal with synthetic firmlinks on macOS
      @@ Commit message
       
-          Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-          Helped-by: Derrick Stolee <derrickstolee@github.com>
-     +    Helped-by: Junio C Hamano <gitster@pobox.com>
-     +    Helped-by: Josh Steadmon <steadmon@google.com>
-          Signed-off-by: Victoria Dye <vdye@github.com>
+          Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
       
-       ## Documentation/Makefile ##
-     @@ Documentation/ReviewingGuidelines.txt (new)
-      +latest "What's cooking in git.git" email
-      +(https://lore.kernel.org/git/xmqqilm1yp3m.fsf@gitster.g/[example]). The "What's
-      +cooking" emails & replies can be found using the query `s:"What's cooking"` on
-     -+the mailing list archive; alternatively, you can find the contents of the
-     -+"What's cooking" email tracked in `whats-cooking.txt` on the `todo` branch of
-     -+Git. Topics tagged with "Needs review" and those in the "[New Topics]" section
-     -+are typically those that would benefit the most from additional review.
-     ++the https://lore.kernel.org/git/[`lore.kernel.org` mailing list archive];
-     ++alternatively, you can find the contents of the "What's cooking" email tracked
-     ++in `whats-cooking.txt` on the `todo` branch of Git. Topics tagged with "Needs
-     ++review" and those in the "[New Topics]" section are typically those that would
-     ++benefit the most from additional review.
+     -    fsmonitor: deal with synthetic firmlinks on macOS
+     -
+     -    Starting with macOS 10.15 (Catalina), Apple introduced a new feature
+     -    called 'firmlinks' in order to separate the boot volume into two
+     -    volumes, one read-only and one writable but still present them to the
+     -    user as a single volume. Along with this change, Apple removed the
+     -    ability to create symlinks in the root directory and replaced them with
+     -    'synthetic firmlinks'. See 'man synthetic.conf'
+     -
+     -    When FSEevents reports the path of changed files, if the path involves
+     -    a synthetic firmlink, the path is reported from the point of the
+     -    synthetic firmlink and not the real path. For example:
+     -
+     -    Real path:
+     -    /System/Volumes/Data/network/working/directory/foo.txt
+     -
+     -    Synthetic firmlink:
+     -    /network -> /System/Volumes/Data/network
+     -
+     -    FSEvents path:
+     -    /network/working/directory/foo.txt
+     -
+     -    This causes the FSEvents path to not match against the worktree
+     -    directory.
+     -
+     -    There are several ways in which synthetic firmlinks can be created:
+     -    they can be defined in /etc/synthetic.conf, the automounter can create
+     -    them, and there may be other means. Simply reading /etc/synthetic.conf
+     -    is insufficient. No matter what process creates synthetic firmlinks,
+     -    they all get created in the root directory.
+     -
+     -    Therefore, in order to deal with synthetic firmlinks, the root directory
+     -    is scanned and the first possible synthetic firmink that, when resolved,
+     -    is a prefix of the worktree is used to map FSEvents paths to worktree
+     -    paths.
+     -
+     -    Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+     -
+     -    fsmonitor: deal with synthetic firmlinks on macOS
+     -
+     -    Starting with macOS 10.15 (Catalina), Apple introduced a new feature
+     -    called 'firmlinks' in order to separate the boot volume into two
+     -    volumes, one read-only and one writable but still present them to the
+     -    user as a single volume. Along with this change, Apple removed the
+     -    ability to create symlinks in the root directory and replaced them with
+     -    'synthetic firmlinks'. See 'man synthetic.conf'
+     -
+     -    When FSEevents reports the path of changed files, if the path involves
+     -    a synthetic firmlink, the path is reported from the point of the
+     -    synthetic firmlink and not the real path. For example:
+     -
+     -    Real path:
+     -    /System/Volumes/Data/network/working/directory/foo.txt
+     -
+     -    Synthetic firmlink:
+     -    /network -> /System/Volumes/Data/network
+     -
+     -    FSEvents path:
+     -    /network/working/directory/foo.txt
+     -
+     -    This causes the FSEvents path to not match against the worktree
+     -    directory.
+     -
+     -    There are several ways in which synthetic firmlinks can be created:
+     -    they can be defined in /etc/synthetic.conf, the automounter can create
+     -    them, and there may be other means. Simply reading /etc/synthetic.conf
+     -    is insufficient. No matter what process creates synthetic firmlinks,
+     -    they all get created in the root directory.
+     -
+     -    Therefore, in order to deal with synthetic firmlinks, the root directory
+     -    is scanned and the first possible synthetic firmink that, when resolved,
+     -    is a prefix of the worktree is used to map FSEvents paths to worktree
+     -    paths.
+     -
+     -    Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+     -
+       ## builtin/fsmonitor--daemon.c ##
+      @@
+       #include "parse-options.h"
+ -:  ----------- > 5:  02afeaa01be fsmonitor: check for compatability before communicating with fsmonitor
+ 5:  ddf4e3e6442 ! 6:  0e8ea28acc1 fsmonitor: add documentation for allowRemote and socketDir options
+     @@ Commit message
+          Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+      
+       ## Documentation/git-fsmonitor--daemon.txt ##
+     -@@ Documentation/git-fsmonitor--daemon.txt: the change (as happening against the super repo).  However, the client
+     +@@ Documentation/git-fsmonitor--daemon.txt: git-fsmonitor{litdd}daemon(1)
+     + 
+     + NAME
+     + ----
+     +-git-fsmonitor--daemon - A Built-in File System Monitor
+     ++git-fsmonitor--daemon - A Built-in Filesystem Monitor
+     + 
+     + SYNOPSIS
+     + --------
+     +@@ Documentation/git-fsmonitor--daemon.txt: DESCRIPTION
+     + -----------
+     + 
+     + A daemon to watch the working directory for file and directory
+     +-changes using platform-specific file system notification facilities.
+     ++changes using platform-specific filesystem notification facilities.
+     + 
+     + This daemon communicates directly with commands like `git status`
+     + using the link:technical/api-simple-ipc.html[simple IPC] interface
+     +@@ Documentation/git-fsmonitor--daemon.txt: CAVEATS
+     + -------
+     + 
+     + The fsmonitor daemon does not currently know about submodules and does
+     +-not know to filter out file system events that happen within a
+     ++not know to filter out filesystem events that happen within a
+     + submodule.  If fsmonitor daemon is watching a super repo and a file is
+     + modified within the working directory of a submodule, it will report
+     + the change (as happening against the super repo).  However, the client
+       will properly ignore these extra events, so performance may be affected
+       but it will not cause an incorrect result.
+       
+      +By default, the fsmonitor daemon refuses to work against network-mounted
+     -+repositories; this my be overridden by setting `fsmonitor.allowRemote` to
+     ++repositories; this may be overridden by setting `fsmonitor.allowRemote` to
+      +`true`. Note, however, that the fsmonitor daemon is not guaranteed to work
+     -+correctly with all network-mounted repositores and such use is considered
+     ++correctly with all network-mounted repositories and such use is considered
+      +experimental.
       +
-      +Patches can also be searched manually in the mailing list archive using a query
-      +like `s:"PATCH" -s:"Re:"`. You can browse these results for topics relevant to
-      +your expertise or interest.
-      +
-      +If you've already contributed to Git, you may also be CC'd in another
-     -+contributor's patch series. These are usually topics where the author feels that
-     -+your attention is warranted; this may be due to prior contributions,
-     -+demonstrated expertise, and/or interest in related topics. There is no
-     -+requirement to review these series, but you may find them easier to review as a
-     -+result of your preexisting background knowledge on the topic.
-     ++contributor's patch series. These are topics where the author feels that your
-     ++attention is warranted. This may be because their patch changes something you
-     ++wrote previously (making you a good judge of whether the new approach does or
-     ++doesn't work), or because you have the expertise to provide an exceptionally
-     ++helpful review. There is no requirement to review these patches but, in the
-     ++spirit of open source collaboration, you should strongly consider doing so.
-      +
-      +Reviewing patches
-      +~~~~~~~~~~~~~~~~~
-      +While every contributor takes their own approach to reviewing patches, here are
-     -+some general pieces of advice to make your reviews to be as clear and helpful as
-     -+possible.
-     -+
-     -+- Provide your review comments per-patch in a plaintext "Reply-All" email to the
-     -+  relevant patch. Comments should be made inline, immediately below the relevant
-     -+  section(s).
-     ++some general pieces of advice to make your reviews as clear and helpful as
-     ++possible. The advice is broken into two rough categories: high-level reviewing
-     ++guidance, and concrete tips for interacting with patches on the mailing list.
-      +
-     ++==== High-level guidance
-      +- Remember to review the content of commit messages for correctness and clarity,
-      +  in addition to the code change in the patch's diff. The commit message of a
-      +  patch should accurately and fully explain the code change being made in the
-      +  diff.
-      +
-     -+- You may find that the limited context provided in the patch diff is sometimes
-     -+  insufficient for a thorough review. In such cases, you can review patches in
-     -+  your local tree by either applying patches with linkgit:git-am[1] or checking
-     -+  out the associated branch from https://github.com/gitster/git once the series
-     -+  is tracked there.
-     -+
-     -+- Large, complicated patch diffs are sometimes unavoidable, such as when they
-     -+  refactor existing code. If you find such a patch difficult to parse, try
-     -+  reviewing the diff produced with the `--color-moved` and/or
-     -+  `--ignore-space-change` options.
-     -+
-      +- Reviewing test coverage is an important - but easy to overlook - component of
-      +  reviews. A patch's changes may be covered by existing tests, or new tests may
-      +  be introduced to exercise new behavior. Checking out a patch or series locally
-     @@ Documentation/ReviewingGuidelines.txt (new)
-      +  pass/fail behavior. You can use this information to verify proper coverage or
-      +  to suggest additional tests the author could add.
-      +
-     -+- If a patch is long, you can delete parts of it that are unrelated to your
-     -+  review from the email reply. Make sure to leave enough context for readers to
-     -+  understand your comments!
-     ++- When providing a recommendation, be as clear as possible about whether you
-     ++  consider it "blocking" (the code would be broken or otherwise made worse if an
-     ++  issue isn't fixed) or "non-blocking" (the patch could be made better by taking
-     ++  the recommendation, but acceptance of the series does not require it).
-     ++  Non-blocking recommendations can be particularly ambiguous when they are
-     ++  related to - but outside the scope of - a series ("nice-to-have"s), or when
-     ++  they represent only stylistic differences between the author and reviewer.
-      +
-     -+- When pointing out an issue, try to include suggestions for how the author
-     ++- When commenting on an issue, try to include suggestions for how the author
-      +  could fix it. This not only helps the author to understand and fix the issue,
-      +  it also deepens and improves your understanding of the topic.
-      +
-     @@ Documentation/ReviewingGuidelines.txt (new)
-      +  goes a long way towards encouraging contributors to participate more actively
-      +  in the Git community.
-      +
-     -+- When providing a recommendation, be as clear as possible about whether you
-     -+  consider it "blocking" (the code would be broken or otherwise made worse if an
-     -+  issue isn't fixed) or "non-blocking" (the patch could be made better by taking
-     -+  the recommendation, but acceptance of the series does not require it).
-     -+  Non-blocking recommendations can be particularly ambiguous when they are
-     -+  related to - but outside the scope of - a series ("nice-to-have"s), or when
-     -+  they represent only stylistic differences between the author and reviewer.
-     ++==== Performing your review
-     ++- Provide your review comments per-patch in a plaintext "Reply-All" email to the
-     ++  relevant patch. Comments should be made inline, immediately below the relevant
-     ++  section(s).
+      +On Mac OS, the inter-process communication (IPC) between various Git
+     -+commands and the fsmonitor daemon is done via a Unix domain socket (UDS).
+     -+Usage of UDS requires the creation of a file which, by default, is created
+     -+in the .git directory.  If the fsmonitor daemon detects that the .git directory
+     -+is on a network-mounted file system, it will create the UDS file in $HOME.  If
+     -+$HOME itself is on a network-mounted file system or if $HOME is not the desired
+     -+location for the UDS file, 'fsmonitor.socketDir' may be set to any valid, local
+     -+directory on a file system with proper support.  Mac OS native file systems have
+     -+the required support.  File systems known to lack support include FAT32 and
+     -+NTFS.  Other file systems may or many not have the needed support; the fsmonitor
+     -+daemon is not guaranteed to work with these file systems and such use is
+     -+considered experimental.
+     ++commands and the fsmonitor daemon is done via a Unix domain socket (UDS) -- a
+     ++special type of file -- which is supported by native Mac OS filesystems,
+     ++but not on network-mounted filesystems, NTFS, or FAT32.  Other filesystems
+     ++may or may not have the needed support; the fsmonitor daemon is not guaranteed
+     ++to work with these filesystems and such use is considered experimental.
      ++
-     ++- You may find that the limited context provided in the patch diff is sometimes
-     ++  insufficient for a thorough review. In such cases, you can review patches in
-     ++  your local tree by either applying patches with linkgit:git-am[1] or checking
-     ++  out the associated branch from https://github.com/gitster/git once the series
-     ++  is tracked there.
+     ++By default, the socket is created in the `.git` directory, however, if the
+     ++`.git` directory is on a network-mounted filesystem, it will be instead be
+     ++created at `$HOME/.git-fsmonitor-*` unless `$HOME` itself is on a
+     ++network-mounted filesystem in which case you must set the configuration
+     ++variable `fsmonitor.socketDir` to the path of a directory on a Mac OS native
+     ++filesystem in which to create the socket file.
      ++
-     ++- Large, complicated patch diffs are sometimes unavoidable, such as when they
-     ++  refactor existing code. If you find such a patch difficult to parse, try
-     ++  reviewing the diff produced with the `--color-moved` and/or
-     ++  `--ignore-space-change` options.
+     ++If none of the above directories (`.git`, `$HOME`, or `fsmonitor.socketDir`)
+     ++is on a native Mac OS file filesystem the fsmonitor daemon will report an
+     ++error that will cause the daemon and the currently running command to exit.
+      +
+      +CONFIGURATION
+      +-------------
      ++
-     ++- If a patch is long, you are encouraged to delete parts of it that are
-     ++  unrelated to your review from the email reply. Make sure to leave enough
-     ++  context for readers to understand your comments!
+      +When `core.fsmonitor` is set to `true` (see linkgit:git-config[1])
+      +the fsmonitor daemon will pay attention to the following configuration
+      +variables:
       +
-      +- If you cannot complete a full review of a series all at once, consider letting
-      +  the author know (on- or off-list) if/when you plan to review the rest of the
-      +  series.
+     -+fsmonitor.allowRemote::
+     ++`fsmonitor.allowRemote`::
+      +	By default, the daemon refuses to work against network-mounted
+      +	repositories. Setting `fsmonitor.allowRemote` to `true` overrides
+      +	this behavior.
       +
-     -+- If you read and review a series but find nothing that warrants inline
-     -+  commentary, reply to the series' cover letter to indicate that you've reviewed
-     -+  the changes.
-     -+
-      +Completing a review
-      +~~~~~~~~~~~~~~~~~~~
-      +Once each patch of a series is reviewed, the author (and/or other contributors)
-     @@ Documentation/ReviewingGuidelines.txt (new)
-      +re-review the updates. If you are happy with the state of the patch series,
-      +explicitly indicate your approval (typically with a reply to the latest
-      +version's cover letter). Optionally, you can let the author know that they can
-     -+add a "Reviewed-by: <you>" trailer to subsequent versions of their series.
-     ++add a "Reviewed-by: <you>" trailer if they resubmit the reviewed patch verbatim
-     ++in a later iteration of the series.
+     -+fsmonitor.socketDir::
+     -+	This option is only used by the Mac OS implementation of the fsmonitor
+     -+	daemon.	If set, 'fsmonitor.socketDir' must be set to a valid, local
+     -+	directory on a file system that can support Unix domain sockets (UDS).
+     ++`fsmonitor.socketDir`::
+     ++    This Mac OS-specific option, if set, specifies the directory in
+     ++    which to create the Unix domain socket used for communication
+     ++    between fsmonitor and various Git commands. The directory must
+     ++    reside on a native Mac OS filesystem as discussed above.
       +
-      +Finally, subsequent "What's cooking" emails may explicitly ask whether a
-      +reviewed topic is ready for merging to the `next` branch (typically phrased
-     -+"Will merge to 'next'?"). You can help the maintainer and author by responding
-     ++"Will merge to \'next\'?"). You can help the maintainer and author by responding
-      +with a short description of the state of your (and others', if applicable)
-     -+review.
-     ++review, including the links to the relevant thread(s).
-      +
-      +Terminology
-      +-----------
+       GIT
+       ---
 
-
- Documentation/Makefile                |   1 +
- Documentation/ReviewingGuidelines.txt | 162 ++++++++++++++++++++++++++
- 2 files changed, 163 insertions(+)
- create mode 100644 Documentation/ReviewingGuidelines.txt
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index bd6b6fcb930..d3a19df8bed 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -101,6 +101,7 @@ SP_ARTICLES += howto/coordinate-embargoed-releases
- API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
- SP_ARTICLES += $(API_DOCS)
- 
-+TECH_DOCS += ReviewingGuidelines
- TECH_DOCS += MyFirstContribution
- TECH_DOCS += MyFirstObjectWalk
- TECH_DOCS += SubmittingPatches
-diff --git a/Documentation/ReviewingGuidelines.txt b/Documentation/ReviewingGuidelines.txt
-new file mode 100644
-index 00000000000..0e323d54779
---- /dev/null
-+++ b/Documentation/ReviewingGuidelines.txt
-@@ -0,0 +1,162 @@
-+Reviewing Patches in the Git Project
-+====================================
-+
-+Introduction
-+------------
-+The Git development community is a widely distributed, diverse, ever-changing
-+group of individuals. Asynchronous communication via the Git mailing list poses
-+unique challenges when reviewing or discussing patches. This document contains
-+some guiding principles and helpful tools you can use to make your reviews both
-+more efficient for yourself and more effective for other contributors.
-+
-+Note that none of the recommendations here are binding or in any way a
-+requirement of participation in the Git community. They are provided as a
-+resource to supplement your skills as a contributor.
-+
-+Principles
-+----------
-+
-+Selecting patch(es) to review
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+If you are looking for a patch series in need of review, start by checking
-+latest "What's cooking in git.git" email
-+(https://lore.kernel.org/git/xmqqilm1yp3m.fsf@gitster.g/[example]). The "What's
-+cooking" emails & replies can be found using the query `s:"What's cooking"` on
-+the https://lore.kernel.org/git/[`lore.kernel.org` mailing list archive];
-+alternatively, you can find the contents of the "What's cooking" email tracked
-+in `whats-cooking.txt` on the `todo` branch of Git. Topics tagged with "Needs
-+review" and those in the "[New Topics]" section are typically those that would
-+benefit the most from additional review.
-+
-+Patches can also be searched manually in the mailing list archive using a query
-+like `s:"PATCH" -s:"Re:"`. You can browse these results for topics relevant to
-+your expertise or interest.
-+
-+If you've already contributed to Git, you may also be CC'd in another
-+contributor's patch series. These are topics where the author feels that your
-+attention is warranted. This may be because their patch changes something you
-+wrote previously (making you a good judge of whether the new approach does or
-+doesn't work), or because you have the expertise to provide an exceptionally
-+helpful review. There is no requirement to review these patches but, in the
-+spirit of open source collaboration, you should strongly consider doing so.
-+
-+Reviewing patches
-+~~~~~~~~~~~~~~~~~
-+While every contributor takes their own approach to reviewing patches, here are
-+some general pieces of advice to make your reviews as clear and helpful as
-+possible. The advice is broken into two rough categories: high-level reviewing
-+guidance, and concrete tips for interacting with patches on the mailing list.
-+
-+==== High-level guidance
-+- Remember to review the content of commit messages for correctness and clarity,
-+  in addition to the code change in the patch's diff. The commit message of a
-+  patch should accurately and fully explain the code change being made in the
-+  diff.
-+
-+- Reviewing test coverage is an important - but easy to overlook - component of
-+  reviews. A patch's changes may be covered by existing tests, or new tests may
-+  be introduced to exercise new behavior. Checking out a patch or series locally
-+  allows you to manually mutate lines of new & existing tests to verify expected
-+  pass/fail behavior. You can use this information to verify proper coverage or
-+  to suggest additional tests the author could add.
-+
-+- When providing a recommendation, be as clear as possible about whether you
-+  consider it "blocking" (the code would be broken or otherwise made worse if an
-+  issue isn't fixed) or "non-blocking" (the patch could be made better by taking
-+  the recommendation, but acceptance of the series does not require it).
-+  Non-blocking recommendations can be particularly ambiguous when they are
-+  related to - but outside the scope of - a series ("nice-to-have"s), or when
-+  they represent only stylistic differences between the author and reviewer.
-+
-+- When commenting on an issue, try to include suggestions for how the author
-+  could fix it. This not only helps the author to understand and fix the issue,
-+  it also deepens and improves your understanding of the topic.
-+
-+- Reviews do not need to exclusively point out problems. Feel free to "think out
-+  loud" in your review: describe how you read & understood a complex section of
-+  a patch, ask a question about something that confused you, point out something
-+  you found exceptionally well-written, etc. In particular, uplifting feedback
-+  goes a long way towards encouraging contributors to participate more actively
-+  in the Git community.
-+
-+==== Performing your review
-+- Provide your review comments per-patch in a plaintext "Reply-All" email to the
-+  relevant patch. Comments should be made inline, immediately below the relevant
-+  section(s).
-+
-+- You may find that the limited context provided in the patch diff is sometimes
-+  insufficient for a thorough review. In such cases, you can review patches in
-+  your local tree by either applying patches with linkgit:git-am[1] or checking
-+  out the associated branch from https://github.com/gitster/git once the series
-+  is tracked there.
-+
-+- Large, complicated patch diffs are sometimes unavoidable, such as when they
-+  refactor existing code. If you find such a patch difficult to parse, try
-+  reviewing the diff produced with the `--color-moved` and/or
-+  `--ignore-space-change` options.
-+
-+- If a patch is long, you are encouraged to delete parts of it that are
-+  unrelated to your review from the email reply. Make sure to leave enough
-+  context for readers to understand your comments!
-+
-+- If you cannot complete a full review of a series all at once, consider letting
-+  the author know (on- or off-list) if/when you plan to review the rest of the
-+  series.
-+
-+Completing a review
-+~~~~~~~~~~~~~~~~~~~
-+Once each patch of a series is reviewed, the author (and/or other contributors)
-+may discuss the review(s). This may result in no changes being applied, or the
-+author will send a new version of their patch(es).
-+
-+After a series is rerolled in response to your or others' review, make sure to
-+re-review the updates. If you are happy with the state of the patch series,
-+explicitly indicate your approval (typically with a reply to the latest
-+version's cover letter). Optionally, you can let the author know that they can
-+add a "Reviewed-by: <you>" trailer if they resubmit the reviewed patch verbatim
-+in a later iteration of the series.
-+
-+Finally, subsequent "What's cooking" emails may explicitly ask whether a
-+reviewed topic is ready for merging to the `next` branch (typically phrased
-+"Will merge to \'next\'?"). You can help the maintainer and author by responding
-+with a short description of the state of your (and others', if applicable)
-+review, including the links to the relevant thread(s).
-+
-+Terminology
-+-----------
-+nit: ::
-+	Denotes a small issue that should be fixed, such as a typographical error
-+	or mis-alignment of conditions in an `if()` statement.
-+
-+aside: ::
-+optional: ::
-+non-blocking: ::
-+	Indicates to the reader that the following comment should not block the
-+	acceptance of the patch or series. These are typically recommendations
-+	related to code organization & style, or musings about topics related to
-+	the patch in question, but beyond its scope.
-+
-+s/<before>/<after>/::
-+	Shorthand for "you wrote <before>, but I think you meant <after>," usually
-+	for misspellings or other typographical errors. The syntax is a reference
-+	to "substitute" command commonly found in Unix tools such as `ed`, `sed`,
-+	`vim`, and `perl`.
-+
-+cover letter::
-+	The "Patch 0" of a multi-patch series. This email describes the
-+	high-level intent and structure of the patch series to readers on the
-+	Git mailing list. It is also where the changelog notes and range-diff of
-+	subsequent versions are provided by the author.
-++
-+On single-patch submissions, cover letter content is typically not sent as a
-+separate email. Instead, it is inserted between the end of the patch's commit
-+message (after the `---`) and the beginning of the diff.
-+
-+#leftoverbits::
-+  Used by either an author or a reviewer to describe features or suggested
-+  changes that are out-of-scope of a given patch or series, but are relevant
-+  to the topic for the sake of discussion.
-+
-+See Also
-+--------
-+link:MyFirstContribution.html[MyFirstContribution]
-
-base-commit: 79f2338b3746d23454308648b2491e5beba4beff
 -- 
 gitgitgadget
