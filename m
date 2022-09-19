@@ -2,80 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D9B0ECAAD3
-	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 17:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9392ECAAA1
+	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 17:47:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229745AbiISRl2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Sep 2022 13:41:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55770 "EHLO
+        id S230294AbiISRrr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Sep 2022 13:47:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229727AbiISRl1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2022 13:41:27 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7B3D39B8B
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 10:41:26 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3D27C1CF136;
-        Mon, 19 Sep 2022 13:41:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gWQOWdqbuRoBu3Z+OmrrvJTTniDAoBSJCMIwOa
-        fIbWo=; b=MXn6WYJmxaOFTwQUxk0/+41bOWwfOknj8CI8FWIXWBC88qGAe+UDUb
-        Di+iFy0C/OLzJWJBPsYAxjgWDMvuaW1ootiDTpvB/MgKJEVf0Zi5YtTRJCY9C72c
-        WoJIUZxKmSZ1YpSBZnY/mmimE1V36/ApRBtDj/7kuC53dUCNbyzUc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 35E121CF135;
-        Mon, 19 Sep 2022 13:41:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9E55E1CF132;
-        Mon, 19 Sep 2022 13:41:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Miaoqian Lin <linmq006@gmail.com>, git@vger.kernel.org,
-        =?utf-8?Q?Re?= =?utf-8?Q?n=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v2] commit-graph: Fix missing closedir in
- expire_commit_graphs
-References: <20220919141441.5644-1-linmq006@gmail.com>
-        <4f1cf64e-2864-a979-6f75-d9d4148d57da@github.com>
-Date:   Mon, 19 Sep 2022 10:41:21 -0700
-In-Reply-To: <4f1cf64e-2864-a979-6f75-d9d4148d57da@github.com> (Derrick
-        Stolee's message of "Mon, 19 Sep 2022 11:04:46 -0400")
-Message-ID: <xmqq7d1zb6ta.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229944AbiISRro (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2022 13:47:44 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C492A3D5BD
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 10:47:42 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id e16so285564wrx.7
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 10:47:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date;
+        bh=rkaercVm3D13XqpypTynuv9PaPXClvP8nER7b0Vf/qM=;
+        b=mn7mJEhQeldWo2Oh69Yjt7cqDZsNvpjqiWvXUa+xH6Ot/Rjta/sJn2w4QzlYBAzfa7
+         bmVjeqJpKHQfuN34GKfUFU7hItTgb8IjWDjOzdMpDVWxgryQHvRCxVVE44yn+Op4mA+X
+         vNMZdWVkBe0uuGq5IiQQUodb6fbU4unC1I5+8a2pSXQzYUYYjJ+/F6Ko4Mr8cWQxmPvT
+         ara6IgR+3+/iFILFn27CRF+hH9ccOjbY2DE43tIGu7dpxFYLGmYLQak2LUO21pnhbVMX
+         UjHdF5acNw6ODLm7efjsXT92e9GLQtmcEOKghVTKkjcb8VI/fBfchcfYxIf8Vn0pLZWT
+         VD4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=rkaercVm3D13XqpypTynuv9PaPXClvP8nER7b0Vf/qM=;
+        b=ZD8wgKPukDtUBqcJtymcbJWNRyzhLfA7hR40fN8TXgyUva6V/iQH2VzUZo2Tpm9RUD
+         vT1/cB6IJx0l8nqL46y4vTNjsBtcz1lLFUxJ+qKK+NWfhEZqHtCactNAWXiiUQgboGLm
+         rw1Tk396XJo5WlSmht1BoQ7g2IFiOkEOSF5JZSeYZqEVBuSWmL/dRPGMU4jnpwGYwUXk
+         QFZI+ICtfEcpcKqXAIc+PGkSjlm22FL1BCpeEjhlm1ijOcpLpfn7dZbyXBVUWOnt89XM
+         tKiVMJRaVrrtRpuUEctK4ZuHEybZGc/7obT/laJw3upddVaQtUHmqy0vtqNzfSWWyZoT
+         vJfg==
+X-Gm-Message-State: ACrzQf2pG6GUIRh6txAkLVHDcKhN8bwQvnLl3TO2ixKRZ2Slo0XgJbOM
+        gRtPFOzmqGqQJA+GrX9arRI68IsexA4=
+X-Google-Smtp-Source: AMsMyM7AMFMBL32jNku6TVB2egSIGm6TA0CniumFiDyoOKZchNB1jEDxvtYiVRnnw8pgBxU6EnwXmA==
+X-Received: by 2002:adf:eec3:0:b0:22a:d159:456c with SMTP id a3-20020adfeec3000000b0022ad159456cmr11033148wrp.463.1663609661151;
+        Mon, 19 Sep 2022 10:47:41 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n4-20020a5d6b84000000b002286670bafasm14326070wrx.48.2022.09.19.10.47.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Sep 2022 10:47:40 -0700 (PDT)
+Message-Id: <pull.1357.git.1663609659.gitgitgadget@gmail.com>
+From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 19 Sep 2022 17:47:34 +0000
+Subject: [PATCH 0/5] [RFC] introduce Roaring bitmaps to Git
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 46E32B00-3842-11ED-B3BA-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+Git currently uses ewah bitmaps ( which are based on run-length encoding) to
+compress bitmaps. Ewah bitmaps stores bitmaps in the form of run-length
+words i.e. instead of storing each and every bit, it tries to find
+consecutive bits (having same value) and replace them with the value bit and
+the range upto which the bit is present. It is simple and efficient. But one
+downside of this approach is that we have to decompress the whole bitmap in
+order to find the bit of a certain position.
 
-> On 9/19/2022 10:14 AM, Miaoqian Lin wrote:
->> The function calls opendir() but missing the corresponding
->> closedir() before exit the function.
->> Add missing closedir() to fix it.
->
-> Thanks for the patch, Miaoqian.
->
-> I only have a very tiny nitpick with the line breaks in your
-> commit message. Either the "Add missing..." sentence should
-> start immediately after the previous sentence or have another
-> line break between the paragraphs. This shouldn't merit a
-> re-roll, but keep it in mind for future contributions.
->
->>  out:
->> +	if(dir)
->> +		closedir(dir);
->>  	strbuf_release(&path);
->>  }
->
-> This change looks correct to me. Thanks!
-> -Stolee
+For small (or medium sized) bitmaps, this is not an issue. But it can be an
+issue for large (or extra large) bitmaps. In that case roaring bitmaps are
+generally more efficient[1] than ewah itself. Some benchmarks suggests that
+roaring bitmaps give more performance benefits than ewah or any other
+similar compression technique.
 
-Thanks, both.  Looking good.
+This patch series is currently in RFC state and it aims to let Git use
+roaring bitmaps. As this is an RFC patch series (for now), the code are not
+fully accurate (i.e. some tests are failing). But it is backward-compatible
+(tests related to ewah bitmaps are passing). Some commit messages might need
+more explanation and some commits may need a split (specially the one that
+implement writing roaring bitmaps). Overall, the structure and code are near
+to ready to make the series a formal patch series.
+
+I am submitting it as an RFC (after discussions with mentors) because the
+GSoC coding period is about to end. I will continue to work on the patch
+series.
+
+Abhradeep Chakraborty (5):
+  reachability-bitmaps: add CRoaring library to Git
+  roaring.[ch]: apply Git specific changes to the roaring API
+  roaring: teach Git to write roaring bitmaps
+  roaring: introduce a new config option for roaring bitmaps
+  roaring: teach Git to read roaring bitmaps
+
+ Makefile                   |     3 +
+ bitmap.c                   |   225 +
+ bitmap.h                   |    33 +
+ builtin/diff.c             |    10 +-
+ builtin/multi-pack-index.c |     5 +
+ builtin/pack-objects.c     |    81 +-
+ ewah/bitmap.c              |    61 +-
+ ewah/ewok.h                |    37 +-
+ midx.c                     |     7 +
+ midx.h                     |     1 +
+ pack-bitmap-write.c        |   326 +-
+ pack-bitmap.c              |   969 +-
+ pack-bitmap.h              |    27 +-
+ roaring/roaring.c          | 20047 +++++++++++++++++++++++++++++++++++
+ roaring/roaring.h          |  1028 ++
+ t/t5310-pack-bitmaps.sh    |    79 +-
+ 16 files changed, 22490 insertions(+), 449 deletions(-)
+ create mode 100644 bitmap.c
+ create mode 100644 bitmap.h
+ create mode 100644 roaring/roaring.c
+ create mode 100644 roaring/roaring.h
+
+
+base-commit: d3fa443f97e3a8d75b51341e2d5bac380b7422df
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1357%2FAbhra303%2Froaring-bitmap-exp-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1357/Abhra303/roaring-bitmap-exp-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1357
+-- 
+gitgitgadget
