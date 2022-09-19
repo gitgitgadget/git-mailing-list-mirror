@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D374C6FA82
-	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 22:10:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB501C6FA82
+	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 22:15:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229684AbiISWKC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Sep 2022 18:10:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54198 "EHLO
+        id S229919AbiISWPt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Sep 2022 18:15:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbiISWKA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2022 18:10:00 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D13223BC7
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 15:09:59 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id d82so916609pfd.10
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 15:09:59 -0700 (PDT)
+        with ESMTP id S229879AbiISWPp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2022 18:15:45 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F674E869
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 15:15:36 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id 3so671062pga.1
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 15:15:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=dB5eyVmmARfSiY/NmswvBpUcW7KT07kupMdvgUodco0=;
-        b=T+npASf/6vlCe42g08KOJznpUwmW+bOOqvpIe4iBTaTRMRENLwBlnsHJk0jdNYBkhD
-         p0exfLh6e4ViAGdmrrgGjZVmWTy+msUIHG7QG9y9JHW9a+/VXWs7GsODLqymB6f1FCo9
-         9zNkoz8I0oF2KqEfh1rJPGnsi/TohNYwHl7ef68w/NvFeGfbA9pFS2IkvMaNa8ueeMvK
-         FPQ9rxgNVuE3mNo81N14bNP0KQcFsaNnu0NEZ0u16+jbQ//59v+GVgRMpanKSaH+sHFR
-         fmtAdMOZGxc6kCGEXFF0KMohzQLOHbKV6Ey5Yzfyw2LYAiJPBb2Z0m2FK3vPwnP680d/
-         ojgg==
+        bh=/J6vB60zhToC7vkPDdPETx+7hcSJLXOw2e6b630YcNg=;
+        b=Quy+u87Fwtjjy0BlaaRgeNOYxF8XzY4R4rUfT38YU/qgZjlR/qAf1wvQXUmyjy3Ln2
+         LtIKfm8Q0EMKI+8hZ8tfIHgXPXwnK4zsqD6TCLQoyJ4Uwjp5m7texyjdCtGJumxaIdVh
+         Zz/lHXv169a0lvptcdfPzWux6z2LLSzWDRgEGiZTaxSbsBFT4vhs+orZgWshO8iNHXM5
+         Qb4m5BDezbKx6fT97PXSfIS26Gwdc9z7xPLvRT+/ORg/K5zKdpwynxPvGbkQcfl8G2cs
+         xsdgKj/4h2SCBcmeSGpeyXq42cNs0Sh7z6X0NdaH7+sOrz6F9Cc1yK1Dj9x4lVXNeMv8
+         jjTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=dB5eyVmmARfSiY/NmswvBpUcW7KT07kupMdvgUodco0=;
-        b=YtWnJ6Pk7x3bguBXuMN6uhAewmTdZAqH8fWx37wRDvjtU64UxxLWJ4AuraFLkRWPxP
-         q+ccG/viA9yW9ZYxciE29xm9a5HF/joZgy2HNp58QeynDrOKVC3DagX9w9FKJAFBlAQs
-         w9pek6tW0yk+gWqc5K93RcRzyIowklYd0SKbJWMdgJe40Ic5H2JCmT+f2S/T/zVWdhXs
-         Eo+pjHAGmN3Fwgjt6WudDFOQdojK/OEa2Sq6iMTvx1/Hfk3xtaZ1tcAEHay5lXQPEpGd
-         RRaX9R/ifOQBx5oPkAowdpqhTd7uAfNBU+SUcrv0OtXpye1IuaUuKsjYzYtOl0eKoZ4k
-         /7Bg==
-X-Gm-Message-State: ACrzQf3VupxbVG/e2Lu6HyEwvVejy4OLpPNu8yV6v8iDDGhBUW7fYqA4
-        5XSbMjJX1OwHpXx+221zAWeS5GK3HayV
-X-Google-Smtp-Source: AMsMyM5BxO5Fy9n+AdqeIXq1PoKAJ824BgoL0Qw4oU4lqokKVhL0V4NJqbsvN1x7XUPshL8mU1U19Q==
-X-Received: by 2002:a65:6e0d:0:b0:42d:707c:94ee with SMTP id bd13-20020a656e0d000000b0042d707c94eemr17121972pgb.260.1663625399137;
-        Mon, 19 Sep 2022 15:09:59 -0700 (PDT)
+        bh=/J6vB60zhToC7vkPDdPETx+7hcSJLXOw2e6b630YcNg=;
+        b=qILDig1ENiI+PPoC1+NztVkgW0fScS7iVzKO+vtQcZQvX8hRDPr8awDvASFreCotWw
+         maG7+YSOCEnMFse/YXuzXcLkaVhyRi8vRYZoI3OH6O6tHx9jPAPaXKkvSY//j+ZU33St
+         wxKsYruxanLzSE+DegF2+/B+9uYBRmdTZIKLiPqSZShpxO6LFpYPvjvr8gbuu0DTLvfT
+         lENCHzRPkcmUnxjMYNzJPklFgQJnogztKO3IxxAPM+O4XYRBCZlBlAGMXPQ0SAG9/nfF
+         EY17LpQ/0jP3oli1JB+jUeFPfftkX/YxwdBRWcxsA5dDsflyIXvW8iA+nxUPv+brBUsL
+         aM/w==
+X-Gm-Message-State: ACrzQf0aMz0p9jqUohC4oxXoD7d52atOaMVuilrOABQYLcJtEt6Um8ec
+        JevwysnojCSe9sjevKYv1Hyg
+X-Google-Smtp-Source: AMsMyM58pxV//Sp6jZ+X01JNq0uLqta3Q/VZjLZmDnbzwdeA19KVLMwSa9F+/kEy7IzOAl2cMpMeng==
+X-Received: by 2002:a63:5620:0:b0:429:9ad7:b4f2 with SMTP id k32-20020a635620000000b004299ad7b4f2mr17161813pgb.162.1663625735763;
+        Mon, 19 Sep 2022 15:15:35 -0700 (PDT)
 Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id d2-20020a17090abf8200b00202d1745014sm7173213pjs.31.2022.09.19.15.09.58
+        by smtp.gmail.com with ESMTPSA id o9-20020a62cd09000000b0053e199aa99bsm20651307pfg.220.2022.09.19.15.15.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Sep 2022 15:09:58 -0700 (PDT)
-Message-ID: <b1c44436-92d1-067c-fb0a-be4049f3031b@github.com>
-Date:   Mon, 19 Sep 2022 15:09:56 -0700
+        Mon, 19 Sep 2022 15:15:35 -0700 (PDT)
+Message-ID: <af319ab4-2351-2d74-e0c7-6153f229d88c@github.com>
+Date:   Mon, 19 Sep 2022 15:15:33 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.13.0
-Subject: Re: [PATCH 07/34] doc SYNOPSIS & -h: fix incorrect alternates syntax
+Subject: Re: [PATCH 00/34] doc/UX: make txt & -h output more consistent
 Content-Language: en-US
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
@@ -63,9 +63,8 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         John Cai <johncai86@gmail.com>
 References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
- <patch-07.34-a070c97f29b-20220902T092734Z-avarab@gmail.com>
 From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <patch-07.34-a070c97f29b-20220902T092734Z-avarab@gmail.com>
+In-Reply-To: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -73,24 +72,130 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason wrote:
-> Fix the incorrect "[-o | --option <argument>]" syntax, which should be
-> "[(-o | --option) <argument>]", we were previously claiming that only
-> the long option accepted the "<argument>", which isn't what we meant.
+> We are currently wildly inconsistent in whether the SYNOPSIS in the
+> manual page matches the first line of the -h output, and as we add new
+> options we routinely forget to add them to one or the other (or both).
 > 
-> Unlike a preceding commit where this was fixed for commands which had
-
-nit: if you're referring to patch 10 [1], it wouldn't be a "preceding"
-commit. Otherwise, I'm not sure which commit you're referring to?
-
-In any case, I'd personally prefer that this patch is combined with patch 10
-anyway, since both fix the same underlying issue (just in different places).
-Neither patch is particularly large, and it would be nice to make (and
-review!) all of the "fix alternates syntax" changes at once.
-
-[1] https://lore.kernel.org/git/patch-10.34-965f6b3b3cb-20220902T092734Z-avarab@gmail.com/
-
-> inconsistent "-h" and *.txt, for "stash" it's been with us in both the
-> "-h" and *.txt since bd514cada4b (stash: introduce 'git stash store',
-> 2013-06-15).
+> Without a more complex approach it's hard to do something about the
+> "or both" case. But we can rather easily test whether the -h output
+> matches the *.txt version, and report differences.
 > 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> As this series shows that allows us to fix a lot of issues we've
+> effectively already "fixed", we just fixed them in one version, but
+> not the other.
+> 
+> We now have a test that checks that these are the same for all
+> built-ins. Out of 141 built-in commands we still have 58 cases that
+> differ at the end of this series, but that's a lot better than before.
+
+Thanks! Codifying these expectations into an automated check will be
+extremely helpful for avoiding easy-to-miss mistakes that could potentially
+confuse end users.
+
+> 
+> This series is 34 patches, but it's been structured in a way that
+> reviewers should be able to mostly trust the "doc txt & -h
+> consistency" commits already. In all of those cases we already have
+> the post-image in-tree, it's just in either the *.txt or -h version,
+> not both. All of the "doc txt & -h consistency" commits merely make
+> those consistent together.
+
+In general, I don't think it's wise to implicitly trust *any* patches, no
+matter how simple they appear. I know there are benefits to doing everything
+at once, but the volume and variety of these changes makes it difficult to
+review the series and *confidently* say we haven't introduced any
+regressions, missed any cases, or made the "wrong" decisions w.r.t changing
+either the .txt or -h documentation to make them consistent.
+
+After reading through this series a few times, it looks like it contains a
+mix of:
+
+* updated syntax guidance in CodingGuidelines
+* clear syntax or naming fixes (e.g., adding a missing "]" to a '-h' output,
+  "keyid" -> "key-id" for translation purposes)
+* internal refactoring
+* changing an error message's content
+* changing the listed options and/or usage in '-h' and/or the .txt SYNOPSIS
+* adding an option description in a .txt doc
+* adding the new test
+
+If I could offer a suggestion, my preference would be that you split the
+series into three parts: one with the straightforward, easier-to-review
+changes, another with the more substantial updates to user-facing
+docs/information (which might warrant more discussion, i.e. which options we
+should be showing for a command in the SYNOPSIS/-h), and the last catching
+any new inconsistencies & adding the test. That way, more involved
+discussion on some patches doesn't prevent *all* of them from being merged.
+
+I think the following patches would fit a "straightforward,
+easier-to-review" series:
+
+* Patch 1 (CodingGuidelines: update and clarify command-line conventions)
+* Patch 2 (builtin/bundle.c: use \t, not fix indentation 2-SP indentation)
+* Patch 3 (bundle: define subcommand -h in terms of command -h)
+* Patch 5 (doc SYNOPSIS: don't use ' for subcommands)
+* Patch 6 (doc SYNOPSIS: consistently use ' for commands)
+* Patch 7 (doc SYNOPSIS & -h: fix incorrect alternates syntax)
+* Patch 8 (built-ins: consistently add "\n" between "usage" and options)
+* Patch 9 (doc txt & -h consistency: word-wrap)
+* Patch 10 (doc txt & -h consistency: fix incorrect alternates syntax)
+* Patch 12 (doc txt & -h consistency: add missing "]" to bugreport "-h")
+* Patch 13 (doc txt & -h consistency: correct padding around "[]()")
+* Patch 14 (stash doc SYNOPSIS & -h: correct padding around "[]()")
+* Patch 15 (doc txt & -h consistency: use "<options>", not "<options>...")
+* Patch 16 (t/helper/test-proc-receive.c: use "<options>", not
+  "<options>...")
+* Patch 17 (doc txt & -h consistency: fix mismatching labels)
+* Patch 18 (doc txt & -h consistency: add or fix optional "--" syntax)
+
+(basically, 1-18, skipping patch 4 because it changes the content of an
+error message & patch 11 because it adds an option to the -h of 'cat-file')
+
+In terms of review, my only comment on those patches is that 7 & 10 could
+probably benefit from being squashed together [1]. Otherwise, with the
+changes you mentioned in response to Junio's feedback [2], I think that
+subset of the series would be ready to merge.
+
+I hope that helps!
+-Victoria
+
+[1] https://lore.kernel.org/git/b1c44436-92d1-067c-fb0a-be4049f3031b@github.com/
+[2] https://lore.kernel.org/git/220908.865yhyl31c.gmgdl@evledraar.gmail.com/
+
+> 
+> Ævar Arnfjörð Bjarmason (34):
+>   CodingGuidelines: update and clarify command-line conventions
+>   builtin/bundle.c: use \t, not fix indentation 2-SP indentation
+>   bundle: define subcommand -h in terms of command -h
+>   blame: use a more detailed usage_msg_optf() error on bad -L
+>   doc SYNOPSIS: don't use ' for subcommands
+>   doc SYNOPSIS: consistently use ' for commands
+>   doc SYNOPSIS & -h: fix incorrect alternates syntax
+>   built-ins: consistently add "\n" between "usage" and options
+>   doc txt & -h consistency: word-wrap
+>   doc txt & -h consistency: fix incorrect alternates syntax
+>   doc txt & -h consistency: add "-z" to cat-file "-h"
+>   doc txt & -h consistency: add missing "]" to bugreport "-h"
+>   doc txt & -h consistency: correct padding around "[]()"
+>   stash doc SYNOPSIS & -h: correct padding around "[]()"
+>   doc txt & -h consistency: use "<options>", not "<options>..."
+>   t/helper/test-proc-receive.c: use "<options>", not "<options>..."
+>   doc txt & -h consistency: fix mismatching labels
+>   doc txt & -h consistency: add or fix optional "--" syntax
+>   doc txt & -h consistency: make output order consistent
+>   doc txt & -h consistency: add missing options and labels
+>   doc txt & -h consistency: make "rerere" consistent
+>   doc txt & -h consistency: make "read-tree" consistent
+>   doc txt & -h consistency: make "bundle" consistent
+>   doc txt & -h consistency: use "git foo" form, not "git-foo"
+>   doc txt & -h consistency: add missing options
+>   doc txt & -h consistency: make "stash" consistent
+>   doc txt & -h consistency: make "annotate" consistent
+>   doc txt & -h consistency: use "[<label>...]" for "zero or more"
+>   doc txt & -h consistency: make "diff-tree" consistent
+>   doc txt & -h consistency: make "commit" consistent
+>   reflog doc: list real subcommands up-front
+>   worktree: define subcommand -h in terms of command -h
+>   doc txt & -h consistency: make "worktree" consistent
+>   tests: start asserting that *.txt SYNOPSIS matches -h output
+> 
