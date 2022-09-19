@@ -2,99 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCE34ECAAD3
-	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 19:58:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA446ECAAA1
+	for <git@archiver.kernel.org>; Mon, 19 Sep 2022 20:15:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229529AbiIST6N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Sep 2022 15:58:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56286 "EHLO
+        id S229733AbiISUPN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Sep 2022 16:15:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiIST6L (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2022 15:58:11 -0400
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDD1F43E54
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 12:58:10 -0700 (PDT)
-Received: by mail-yb1-f180.google.com with SMTP id e187so326366ybh.10
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 12:58:10 -0700 (PDT)
+        with ESMTP id S229656AbiISUPL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2022 16:15:11 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 798A124951
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 13:15:09 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id s90-20020a17090a2f6300b00203a685a1aaso343274pjd.1
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 13:15:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date;
+        bh=8fbGp5TEvlae/oZ7xY7bHgsXZ8/07owxwv0Tp81bYdY=;
+        b=R85xTw+DdpnSzQ392up9eGepUDeLvoX1l92P5HCBL04efxl3mGovEh0vZ9KnoV1X7c
+         aU1QCCoJDQids7mhVTXrVgRHJkRBDw/92VuJoyGlOWUwCj8hgivPUpPpnw2TJbDlQFCM
+         9C8nqPuWg2o6NTlwZx07H0HyiBFn5AJ/cTqSHZ8TsQzL4MSzg1yz7cTd/9xzs2qpwSOf
+         NUZZYSHsEoex76sGwCzVEUwqpVxidGM4Q0xFsuES2+1mXV6RpQCwyEI9WZQ0DDCexB1O
+         V57pXpmqGFy4OvQkbPg9R5OY+hA/ZJgYzQ4nfPPbmeXC4TQ9OnWqgw4IqfiJ4EMgfRbl
+         I2qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=y6OXTO1OSuIGyMRdF2UULdbqedGlC0Y5Iw5PTZJL8CA=;
-        b=2475ehPv3FviFQAnblSyXhs1vpYZLGh7vwK38rLRrWXHwJblSWtt2SHqs6viHl4CVW
-         yGnVZi637CZmAp/zyR5gd2jyehbDi9V0aOwQEiCn3x2qgaGXW1DGhYi/ypMKyINpqnAq
-         1JaJw6/fp+PWVwGGOfHtevjpdLGqLOkE7mNWHDKHb6X0mWjldPhN1YmVJhlgy52n0RvJ
-         60gkEm2LnJZYX3IgILy7w+Y2g8kPxLeB9HNBY1z6OxxXJTgJ/kCVl9s/jucZqWypTpxC
-         5rk/ygoGL3zcZ1vUVbid+DSKfH1YYRMLqFGmu0qJA6KC3tqYHYL63QfE5mdQu5vnrABr
-         WFrA==
-X-Gm-Message-State: ACrzQf1mOS7aJN3RJaQwhLf0JcNbFtUHH0OI0wlsEfe020LFVx8I0ijs
-        1g78vhfspIwnw0K4iSSsviHWblZ9QvmdnyZr70ZkEmZI67sHy9U9
-X-Google-Smtp-Source: AMsMyM5v+xLGKnCHCxl5INUMcJHy8TUMDVe1FUIWaReEdcDiGPuIykheDi7ynQeA9S/La7H2WFCl5MO/fpYjFcZaPMs=
-X-Received: by 2002:a25:d91:0:b0:6b4:2f1c:4b26 with SMTP id
- 139-20020a250d91000000b006b42f1c4b26mr3326647ybn.211.1663617489886; Mon, 19
- Sep 2022 12:58:09 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=8fbGp5TEvlae/oZ7xY7bHgsXZ8/07owxwv0Tp81bYdY=;
+        b=ZBY/s+0DCEzyHsYSDgHSAb6Vr/+c83a7q0w9gkZH35wJ7fqhLokm/usxxiHWsXl9gy
+         HBtM+HxbLlan9a5kvQZHxvd1ljrimi+Kwp2EntgpDa0L2sFnlpjwpMf7qNpvaUguJzv5
+         W8UHAS0UmxZzpLjLCpuKwHG/Pn7Xqm5OJ11OS/vk9Ad01J7Vzl6OrSvSwIAxt8ag2m+3
+         XY+bwGWZGgqa2Wer9Qk3Oj9EA+cpr1U54QsrblmM1ZKcd4zhR3mq0zhykxBi4WQ04IHP
+         eSf2gcsCCbS2gbeWQE1uizNWF03do7yvHf6kXk+e6yO6qiAq+OWCAoMbxZ8WnXuWHAA9
+         x6wg==
+X-Gm-Message-State: ACrzQf1ds0oY6zUaalWUZ5np0B9i6q0eyAvp00yAnMefVpFqhqjwUyEW
+        r4+02EXfWnOnwQyV9UkiLhVTQA==
+X-Google-Smtp-Source: AMsMyM5qYn2UdoS7isb06+YuGjnWurnQfebLjUMNGGBGzAN1g0sCdO1cNmrRLSaAQ48zzjVz7+RFuA==
+X-Received: by 2002:a17:902:f546:b0:177:ed6b:4696 with SMTP id h6-20020a170902f54600b00177ed6b4696mr1371695plf.171.1663618508904;
+        Mon, 19 Sep 2022 13:15:08 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:2256:74b3:e7d0:31fb])
+        by smtp.gmail.com with ESMTPSA id o6-20020a170902d4c600b0016b81679c1fsm21308919plg.216.2022.09.19.13.15.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Sep 2022 13:15:08 -0700 (PDT)
+Date:   Mon, 19 Sep 2022 13:15:02 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com,
+        Johannes.Schindelin@gmx.de, chooglen@google.com, gitster@pobox.com,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v2] Documentation: add ReviewingGuidelines
+Message-ID: <YyjNxlJEZ2WESP3C@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, derrickstolee@github.com,
+        Johannes.Schindelin@gmx.de, chooglen@google.com, gitster@pobox.com,
+        Victoria Dye <vdye@github.com>
+References: <pull.1348.git.1662747205235.gitgitgadget@gmail.com>
+ <pull.1348.v2.git.1663614767058.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <pull.1326.v8.git.1663377141.gitgitgadget@gmail.com>
- <pull.1326.v9.git.1663616277.gitgitgadget@gmail.com> <68709d788d531805d9328e16f53381fcd8d7bd5e.1663616277.git.gitgitgadget@gmail.com>
-In-Reply-To: <68709d788d531805d9328e16f53381fcd8d7bd5e.1663616277.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 19 Sep 2022 15:57:58 -0400
-Message-ID: <CAPig+cRzbXJ+npc29bXi4Jtmp9O+vhRF2wJQX6y4QFDVnzAkBg@mail.gmail.com>
-Subject: Re: [PATCH v9 2/6] fsmonitor: relocate socket file if .git directory
- is remote
-To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric DeCosta <edecosta@mathworks.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1348.v2.git.1663614767058.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 19, 2022 at 3:38 PM Eric DeCosta via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> If the .git directory is on a remote file system, create the socket
-> file in 'fsmonitor.socketDir' if it is defined, else create it in $HOME.
->
-> Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+On 2022.09.19 19:12, Victoria Dye via GitGitGadget wrote:
+> From: Victoria Dye <vdye@github.com>
+> 
+> Add a reviewing guidelines document including advice and common terminology
+> used in Git mailing list reviews. The document is included in the
+> 'TECH_DOCS' list in order to include it in Git's published documentation.
+> 
+> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Helped-by: Derrick Stolee <derrickstolee@github.com>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Helped-by: Josh Steadmon <steadmon@google.com>
+> Signed-off-by: Victoria Dye <vdye@github.com>
 > ---
-> diff --git a/compat/fsmonitor/fsm-ipc-darwin.c b/compat/fsmonitor/fsm-ipc-darwin.c
-> @@ -0,0 +1,48 @@
-> +const char *fsmonitor_ipc__get_path(struct repository *r)
-> +{
-> +       char *sock_dir;
-> +
-> +       repo_config_get_string(r, "fsmonitor.socketdir", &sock_dir);
-> +
-> +       /* Create the socket file in either socketDir or $HOME */
-> +       if (sock_dir && *sock_dir) {
-> +               strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
-> +                                       sock_dir, hash_to_hex(hash));
-> +               free(sock_dir);
-> +       } else {
-> +               strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
-> +       }
 
-This is still leaking `sock_dir`, isn't it, if
-repo_config_get_string() returns it as a zero-length string?
+Looks great, thanks!
 
-Probably want to move free() below the entire conditional.
-
-> diff --git a/compat/fsmonitor/fsm-ipc-win32.c b/compat/fsmonitor/fsm-ipc-win32.c
-> @@ -0,0 +1,9 @@
-> +#include "config.h"
-> +#include "fsmonitor-ipc.h"
-> +
-> +const char *fsmonitor_ipc__get_path(struct repository *r) {
-> +       static char *ret;
-> +       if (!ret)
-> +               ret = git_pathdup("fsmonitor--daemon.ipc");
-> +       return ret;
-> +}
-> \ No newline at end of file
-
-Still an incomplete line.
+Reviewed-by: Josh Steadmon <steadmon@google.com>
