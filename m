@@ -2,94 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FFB8C6FA82
-	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 21:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D621BC54EE9
+	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 22:00:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229993AbiITV7F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Sep 2022 17:59:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55618 "EHLO
+        id S229907AbiITWA0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Sep 2022 18:00:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229779AbiITV7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2022 17:59:03 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C80A6B675
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 14:59:03 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id y2so2736534qkl.11
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 14:59:03 -0700 (PDT)
+        with ESMTP id S229471AbiITWAX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2022 18:00:23 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9343F24F03
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 15:00:22 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id rt12so2038396pjb.1
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 15:00:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=IsiFaxX6q/Z1uEPmtqVyLEwZi23dewBjgyJ1ovOEWcY=;
-        b=sd0IdYcW/KB7DJLPh2FChitXey67fjSAIOG1c33S64j1DPj6dqW67utVTzo0Xck1kC
-         lO+mh2Pi3HgBquk6dYEs66bIT5DEzcwAdbsBnVBpK6ymdRu8oSQtda+xquWqqRGvB8TF
-         35z85O89mkd8+gOTGP6WPnpNgv7b59twkwX/B9iNav+mBvT6sWMPzm674hXjfNUB4uSo
-         BghhaOCUHI0b0INss1m1jr4FYy77YLLJQZVLg6Z9fTdB0vKz6tApq2CxTzLg78kM5/3w
-         WB4yTflzV/vO+LJJiKxJeWucLHyogR8m7/k0UyGei1FiudR/pCCkCtUaN40ZKq8WjpnC
-         MfSQ==
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=51X/YsUiUO+JyI7XodNJaKFUyMBiuW86+F6Je/u6C6E=;
+        b=NRGCmLsmX75M5ZPUXJeLyFXUCjlVPI9Dybef7LOTDFNVe5WXTdtA0yTYScS4L0UjCZ
+         Uo3zLuETQ2OVBC29yaGB5+5l3hPu3NH/8Ia+PJLeoZ/9bzg0Ze9CoFtcR9RLSTeX/kX0
+         fRbXyndUnbN30wRYC06THgp0TxTNVbyhvmcuk2OjsJ1P5kY6gqHfHcNJ7PzluBBvp+92
+         0qXw9dP+G97p2hLtE/fNMUkK9YdeYSap+JWAV6E+dTgZi5hMrPYNiH/XqRe7RQ+4rOVa
+         TuCSvYT+Nu0ahHVrapamLhl6tjCkQmoydA6MgDxQdcckAnMr2lYZLECsnbElH989w+VT
+         uydg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=IsiFaxX6q/Z1uEPmtqVyLEwZi23dewBjgyJ1ovOEWcY=;
-        b=ZmuS4Qyj7amWvIBmAcZnwGltVQRmbG6MuaDR3jD83aCCdt6Y0jHUROsZoG/TEPWzOj
-         q5XYjlic5YrgCapfPaqoLtlUN2yylmCcAL18HBN/Io2UMJVefz0fXpQj3x6SB4T99ep8
-         nHXhrzvq+PIlvA+9n46ITnm/dyzLnH/qKY0PDesfjQgUEu4eWaeh+Z2sAn1bh7fw46LX
-         SWfCTE/L00mpBX5/8IpXP0+Rw4x7WWaYy8Bd2wVoQdTGE4nHc//Sr3rYTDRU158O5UT7
-         low1y72GCv/p5PhwqSld0cG0JUlMVgzi7X+leNJu8eU9mQOdLv0d4nci0GHvI6GPEtlc
-         g7zA==
-X-Gm-Message-State: ACrzQf04/JCPgYi/hPK+B+11dOX4kv9zqWkSj1maJb9H+cm5xSYwrhrI
-        7LiW1jLTREgh/fAFRtQe7giVrw==
-X-Google-Smtp-Source: AMsMyM76tHkf0C1MZEI38NJfo+FakCZ9lPx3DK5bZF5qFt8UU5DKN48agfgsudQYQ5supBJFp/vL1g==
-X-Received: by 2002:a05:620a:240d:b0:6ce:7f55:1191 with SMTP id d13-20020a05620a240d00b006ce7f551191mr17653553qkn.644.1663711142240;
-        Tue, 20 Sep 2022 14:59:02 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id t15-20020a37aa0f000000b006cbc6e1478csm577419qke.57.2022.09.20.14.59.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Sep 2022 14:59:01 -0700 (PDT)
-Date:   Tue, 20 Sep 2022 17:59:00 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH 0/5] [RFC] introduce Roaring bitmaps to Git
-Message-ID: <Yyo3pMlGkw1TWLDQ@nand.local>
-References: <pull.1357.git.1663609659.gitgitgadget@gmail.com>
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=51X/YsUiUO+JyI7XodNJaKFUyMBiuW86+F6Je/u6C6E=;
+        b=pTzRC0dl1DhVJzk8tw2DpRPFxe5xf6mg/+YdM7esogpJm+zqtdvT+OEHLch+ZXBoMA
+         B48GB0QLYZ8NF0avxrMT04LzfLowOGLfzvL0DRaPVemoNJSW18go+5D0v194VhfzhF3i
+         QZQDbrIccCANcWY1ACGgUOCyIt/vUGFSIi4Ur3PHm202W4ZmjL0QOoRBnyFMtzLRXQ1A
+         3fwH6xUDKgmD352+KxAmJjfLJUuSnZ9PHTP0BHjugX7mbI4p/LdlFQfmxPpGZclBla0q
+         ZPVrZdG5rX5rYHR/EpFdzIoYhi+exw803OT4LDMJwWZad3vvzYy7mD1yrFm1Hvu/klxN
+         b91w==
+X-Gm-Message-State: ACrzQf3NbZ/iZCH8/oyDsh2AId6F/bJcv6+eWsg1DZrbO8zYi0oO9du9
+        3xyIR/7i26nGpD7E43zGaPdco+of+Z8x/NNU9RJ0PmQ3B8s=
+X-Google-Smtp-Source: AMsMyM4fz2Yiow/jUnKOnIydrYgcyqGkTcdEhBoDK+F7oUyvMyXm9DIW8BDoRwWXy4KZJJ7qCH0DrZMK3fz+hQiLfAQ=
+X-Received: by 2002:a17:90a:13c8:b0:200:17ca:f183 with SMTP id
+ s8-20020a17090a13c800b0020017caf183mr5934963pjf.104.1663711221469; Tue, 20
+ Sep 2022 15:00:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1357.git.1663609659.gitgitgadget@gmail.com>
+From:   Marcin Wisnicki <mwisnicki@gmail.com>
+Date:   Tue, 20 Sep 2022 18:00:11 -0400
+Message-ID: <CAC9GOO8Y+5pXWPSPhxFdugT66MZj1rKkZ1Td=frPTF8vo73Nhw@mail.gmail.com>
+Subject: Support SSL_CERT_DIR
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 19, 2022 at 05:47:34PM +0000, Abhradeep Chakraborty via GitGitGadget wrote:
-> This patch series is currently in RFC state and it aims to let Git use
-> roaring bitmaps. As this is an RFC patch series (for now), the code are not
-> fully accurate (i.e. some tests are failing). But it is backward-compatible
-> (tests related to ewah bitmaps are passing). Some commit messages might need
-> more explanation and some commits may need a split (specially the one that
-> implement writing roaring bitmaps). Overall, the structure and code are near
-> to ready to make the series a formal patch series.
+Is there any good reason why git ignores well established SSL_CERT_DIR
+and uses only git-specific GIT_SSL_CAPATH?
+Why not fallback to the standard variable if git one isn't set?
+IMHO current behavior is bad UX.
 
-Extremely exciting. Congratulations on all of your work so far. I'm
-hopeful that you'll continue working on this after GSoC is over (for
-those playing along at home, Abhradeep's coding period was extended by a
-couple of weeks).
-
-But even if you don't, this is a great artifact to leave around on the
-list for somebody else who is interested in this area to pick up in the
-future, and benefit from all of the work that you've done so far.
-
-I am still working through my post-Git Merge backlog, but I'm looking
-forward to reading these patches soon. I'm glad that other reviewers
-have already started to dive in :-).
-
-Well done!
-
-
-Thanks,
-Taylor
+Please CC, I'm not subscribed.
