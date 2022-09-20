@@ -2,117 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81792C54EE9
-	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 20:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C08B1C6FA82
+	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 20:11:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231178AbiITUGb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Sep 2022 16:06:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34768 "EHLO
+        id S231293AbiITUL5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Sep 2022 16:11:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229799AbiITUG3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2022 16:06:29 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 711C761724
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 13:06:28 -0700 (PDT)
-Received: (qmail 30929 invoked by uid 109); 20 Sep 2022 20:06:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 20 Sep 2022 20:06:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14433 invoked by uid 111); 20 Sep 2022 20:06:27 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 20 Sep 2022 16:06:27 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 20 Sep 2022 16:06:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, derrickstolee@github.com
-Subject: Re: [PATCH] midx.c: use `pack-objects --stdin-packs` when repacking
-Message-ID: <YyodQg5diyr/UYK1@coredump.intra.peff.net>
-References: <9195a9ecd11a19f2c7fb1c70136d2d13fa308010.1663639662.git.me@ttaylorr.com>
- <YyoUZb90HeJnOuAV@coredump.intra.peff.net>
- <YyoZM1V5S53dz6U6@nand.local>
+        with ESMTP id S229921AbiITULz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2022 16:11:55 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CABC072856
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 13:11:54 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id z13so5456754edb.13
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 13:11:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date;
+        bh=7tIOao6zwDa37OQo1F1PEyqu+RlWQE5beUvWAc4xzSw=;
+        b=ksxTuOpcwLokaFPgqgrdNviJUuULO0U3e4Bv75n3Nvr6Mjm8T4j7+Hz1vfoeAqRxP4
+         Kk+Pq2Qm7dyz9hbe+OxPFkiLH1e31YDb3Gj92B+tWOfSCT+r9Qva2FdSYW8jcODhsLbG
+         YmMxKghvfRVinTlJUiK6TwxHH+QaFxtkqICxFV/l/looXBjCrwivhJWhRPBFk2i0sl3K
+         2P3ao3/GQ+p59UeLr3KYvcM5mr6r2dyI+/FoD3hc7NZOLf4M9gS+Xv4dQOkaS8/EWm9M
+         C4Qx/OsHlz0dXTYeoih+ER8TMQ5yZgMRkV8eh38c3YVfERiTtpFQzHyx3agi7YzTNy8n
+         x0QA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=7tIOao6zwDa37OQo1F1PEyqu+RlWQE5beUvWAc4xzSw=;
+        b=Jz4o4E2LSrHbnOpc3HFnC03WORaS4C0UMYLUkBPp6RufUqepf0LY1KobB7u57cMhhl
+         hA8WdpCoi9XQi0NcaW6+sH8viVqIkLSass4UJd9isX+gxHZ69A8rF2ltsZDKjtK0++kS
+         C6nNqiKg9UlU+YfB5Px7KjOG3NMx4N4DVgEvk5Job+asIFmzmXuNrqU+ld+uCqVeEBew
+         o92re53cnVsFVCIlE2zXrnmZ2mzty2rY4Y1PKgyLqJ07Eln6Z6Fjchz/3vSsbK+rWBnk
+         rmed6iDL6E5u+aRE7oNREYzaoQXhJscs7ksplIXA7nXD2SzWnJSIhupv+zKGkRlYnQQh
+         o9tg==
+X-Gm-Message-State: ACrzQf30Kc0rFN/wN5Zwy5KF5OFaHAOggSKC38arGsiQi1eJKs0dkQyz
+        LRFyoAGMu1SUT+fs8xyFbG0=
+X-Google-Smtp-Source: AMsMyM4ZAcReGTFtqDPv06FMdUgE7mSD6PFBrIj0RJhpHlF9TNcroJE3BjKC2GG1P0s88kAjKYYpgA==
+X-Received: by 2002:a05:6402:180d:b0:453:bd1d:421c with SMTP id g13-20020a056402180d00b00453bd1d421cmr13872048edy.311.1663704713050;
+        Tue, 20 Sep 2022 13:11:53 -0700 (PDT)
+Received: from localhost (78-131-17-3.pool.digikabel.hu. [78.131.17.3])
+        by smtp.gmail.com with ESMTPSA id t22-20020a056402021600b00443d657d8a4sm396109edv.61.2022.09.20.13.11.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Sep 2022 13:11:52 -0700 (PDT)
+Date:   Tue, 20 Sep 2022 22:11:50 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] t/Makefile: remove 'test-results' on 'make clean'
+Message-ID: <20220920201150.GB1704@szeder.dev>
+References: <patch-v3-07.15-c7ea6dc013b-20220727T230800Z-avarab@gmail.com>
+ <20220920105407.4700-1-szeder.dev@gmail.com>
+ <YyoZsjf3FSxLuuKY@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YyoZM1V5S53dz6U6@nand.local>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YyoZsjf3FSxLuuKY@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 20, 2022 at 03:49:07PM -0400, Taylor Blau wrote:
-
-> > Is that true also of "multi-pack-index repack"? I guess it would depend
-> > on how you invoke it. I admit I don't think I've ever used it myself,
-> > since the new "repack --geometric --write-midx" approach matches my
-> > mental model. I'm not sure when you'd actually run the "multi-pack-index
-> > repack" command. But if you did it with --batch-size=0 (the default), I
-> > think we'd end up traversing every object in history.
+On Tue, Sep 20, 2022 at 03:51:14PM -0400, Jeff King wrote:
+> On Tue, Sep 20, 2022 at 12:54:07PM +0200, SZEDER Gábor wrote:
 > 
-> We could probably benefit from it, but only if there is a MIDX bitmap
-> around to begin with. For instance, you could first try and lookup each
-> object you're missing a namehash for and then read its value out of the
-> hashcache extension in the MIDX bitmap (assuming the MIDX bitmap exists,
-> and has a hashcache).
+> > The 't/test-results' directory and its contents are by-products of the
+> > test process, so 'make clean' should remove them, but, alas, this has
+> > been broken since ee65b194d (t/Makefile: don't remove test-results in
+> > "clean-except-prove-cache", 2022-07-28).
 > 
-> But if you don't have a MIDX bitmap, or it has a poor selection of
-> commits, then you're out of luck.
+> I don't have that commit.
 
-You could also use a pack bitmap if there is one (and it's one of the
-included packs). But yes, if you have neither, it's no help.
+Uh-oh.  Me neither :)
 
-Mostly I'm just concerned that this could have an outsized negative
-performance effect if you have a setup like:
+> I assume you mean fee65b194d, and what you
+> have here was a version before it hit 'next'.
 
-  - you have a gigantic repository, say that takes 15 minutes to do a
-    full "rev-list --objects" on (like linux.git with all its forks)
+Looking at the reflog, it seems that while rewording the commit
+message I inadvertently deleted the first character of the SHA1.
 
-  - most of that is in one big pack, but you acquire new packs
-    occasionally via pushes, etc
-
-  - doing "git repack --geometric" rolls up the new packs, nicely
-    traversing just the new objects
-
-  - doing "git multi-pack-index repack" before your patch is fast-ish.
-    It stuffs all the objects into a new pack. But after your patch, it
-    does that 15-minute traversal.
-
-But I don't know if that's even realistic, because I'm still wondering
-why somebody would run "git multi-pack-index repack" in the first place.
-And if they'd always do so with --batch-size anyway, which would
-mitigate this (because it gives a geometric-ish approach where we leave
-the huge pack untouched).
-
-If it is, then one thing to consider is tying the "do the extra
-traversal" feature to the presence / size of excluded packs. And
-possibly considering the presence of a bitmap to indicate that it's
-worth doing (assuming the optimization there is implemented).
-
-But that sounds like a lot of work to get right, and again, I'm not
-really sure of the benefit.
-
-> > The old code went in object order within the midx. Is this sorted by
-> > sha1, or the pack pseudo-order? If the former, then that will yield a
-> > different order of objects inside pack-objects (since it is seeing the
-> > packs in order of our m->pack_names array). I don't _think_ it matters,
-> > but I just wanted to double check.
+> > Add that missing cleanup command to 't/Makefile', and all sub-Makefiles
+> > touched by ee65b194d as well.
 > 
-> Good point. This ends up ordering the packs based on their SHA-1
-> checksum, and probably should stick to the pack mtimes instead.
+> Ditto here.
 > 
-> Unfortunately, we discard that information by the time we get to this
-> point in midx_repack(). We don't even have it written durably in the
-> MIDX, either, so we reconstruct it on-the-fly in
-> fill_included_packs_batch() (see the `QSORT()` call there with
-> `compare_by_mtime()`).
+> >  contrib/scalar/t/Makefile  | 1 +
+> >  contrib/subtree/t/Makefile | 1 +
+> >  t/Makefile                 | 1 +
 > 
-> I agree that it probably doesn't matter in practice, but it's worth
-> trying to match the existing behavior, at least.
-
-Yeah, sorting the packs by mtime might be sensible. I know in the final
-midx, we use object order to find the "preferred" pack. And you could
-iterate the objects here, passing along their de-duped pack name. But I
-don't think we have the objects here in that useful order; that is
-really the order of the midx's .rev file, IIRC, and this is probably the
-actual sha1 order.
-
--Peff
+> That patch itself looks sensible to me.
+> 
+> -Peff
