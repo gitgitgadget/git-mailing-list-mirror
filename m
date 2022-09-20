@@ -2,673 +2,291 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DBF6C54EE9
-	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 08:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8F5AC6FA8E
+	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 08:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231435AbiITI0D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Sep 2022 04:26:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47506 "EHLO
+        id S230220AbiITI3L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Sep 2022 04:29:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230225AbiITIZa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2022 04:25:30 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C19C965552
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 01:23:04 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id g3so2922510wrq.13
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 01:23:03 -0700 (PDT)
+        with ESMTP id S230322AbiITI2I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2022 04:28:08 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FDE76A4BF
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 01:26:31 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id e18so1324456wmq.3
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 01:26:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=RAsRaME0rS6blRDqVRLawMM3/n2QxQ5ecSc+Gp7peDE=;
-        b=MC5VAJQV1XdStFkzJzAYnOgFTed2yio7Z+uFQ0yYtpE5Za2thiXoDHHwwM5X56rCEU
-         1Vua8zAF9HbGItiw/R4chlSDguCYU3RUI+L+W3K16D64tm/dES9sCB8WVGYFf4G0H6DQ
-         IpK2h/vShIVMW5JJNNgdpavDzsmrT3+v1R6civ6MKNzwpzHDGkJzSsXE3YpGKbtHteUf
-         tCiYQJsngMxefV8n4qeVBPPL2UmaajcOXKgB7QTAVCfm6Sa8WQGfggJ/gk9grGMkgiGA
-         jcLaUBNk5S8YGaVOpmo5mkWBBOi9mX7ue+UsJ80aLkWc8YaXUv8w3lBg0y/j9BJQyWEO
-         uGRA==
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
+         :from:to:cc:subject:date;
+        bh=3wZvvZAD5oUiJUpoaDJMqPhdoZrRLq9vo+kCgYvAuMU=;
+        b=UBuVbxiL6+L3DoBkOkihlvORcS+VnCUex3noXqallUx2JDibxEAFwVEwyGPoYM1mpr
+         8YJgiycXbceiOv8K9uU72sweyllY2ZozAj5MDGAFUXAce3zznyfnlplnDxULdxe4zsSc
+         b9rO73nkyXe8nZlBbPfLc7RXQtHc8u/OYzmF+pBpVwuJS3i0KRAziqdU13Hy34j1C0Cy
+         6ykwlNpOL3r6zKY/dXrIwS42O7yIkAmXDf6nKDTdS+wk5Ivd8L6OZFYnrZ0uGxNoygMz
+         T69HRKMGdtta9klemzrCldTOQooSR9w/QCZzurd1KPCNiyuzPK8suTIOACyABw7uzjQ1
+         yOfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=RAsRaME0rS6blRDqVRLawMM3/n2QxQ5ecSc+Gp7peDE=;
-        b=nqCYp5EpXE01XJNk4ibd8s1avt1710FPN+ZRjlgPiktGIuJjF0Aw1ujEbwK7ELnIks
-         sVfOvuTpE/c9K4yrenmUX64e5B+QCk/U2dYauy6LzJj3fIuj5/VTrmfSXYbAjhz7Zg6U
-         PAU3PyX0xW54vMF7SstZrhH5j0aTtciQz0MHF0jXVp/s3WJAbkJqdIhTYC6Y1kTHQiRT
-         RaSDSFPZmeaA3cjxOm+s8pbcvnx+ebcCZSdk+ZGTDkTdWt+q2BPLV2WhbbPbyBYPbdum
-         aK4yzOvMn2uSMLwXkMDPvSQXatAIZIRTFJcJKMgPrxhiDAJsp3fn53ugGdZTNsKo1Hix
-         wKXA==
-X-Gm-Message-State: ACrzQf3cGdz76Si5Y1OepsFImSJ0UDEgCS8IcOxov33uuc/gUNyOyH+t
-        saATIz1JYmyFWyOjD1m412/1oDQsHg0=
-X-Google-Smtp-Source: AMsMyM5hvZOCs9mB164/VG5BzneDJh8UYbC/NHBpDGq7aW3Qa19IczcbIU/Na24ybzNp8xuHrpPLUA==
-X-Received: by 2002:a5d:444c:0:b0:22a:e6a2:c498 with SMTP id x12-20020a5d444c000000b0022ae6a2c498mr10086310wrr.531.1663662172096;
-        Tue, 20 Sep 2022 01:22:52 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a13-20020a05600c348d00b003a5ffec0b91sm1437984wmq.30.2022.09.20.01.22.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Sep 2022 01:22:51 -0700 (PDT)
-Message-Id: <c1274d6b834f89b58c5e1ee4cb08263e0b94c4f7.1663662167.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1301.v6.git.git.1663662167.gitgitgadget@gmail.com>
-References: <pull.1301.v5.git.git.1662735985.gitgitgadget@gmail.com>
-        <pull.1301.v6.git.git.1663662167.gitgitgadget@gmail.com>
-From:   "Sun Chao via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 20 Sep 2022 08:22:46 +0000
-Subject: [PATCH v6 4/5] test: add test cases for hide-refs hook
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=3wZvvZAD5oUiJUpoaDJMqPhdoZrRLq9vo+kCgYvAuMU=;
+        b=kDBQo29ifFYOgv7XfGr+nrI9gtjsLixTABHpPkuvcSaeMeRNiqRoHLVX36RbkRlNud
+         +YYj9AYmzg4fYwn5wWNW0AgMovAVbriOHqb9h/YlbrSOf4H18DCgFoBazSh0RqeqN83u
+         0nTU5tpClnJZpAMo1Cu5w8LnSkaIExxsxvXR2QyGYvrmzvm5Sya3XbmZrdOKc1DoyO46
+         6FvSNliNLNW7uFLa6ay4RwaU3CQeHb44UGT3nBZbCWf5tf3x780EJC6rsx3g2I+JIEE4
+         h8Ac6RcsjQcTlNvEkTdjopROSM3qS2xvfS7M3RAdAOBigqdpgWzPO1Wpmc6+o+dpCn2V
+         US+g==
+X-Gm-Message-State: ACrzQf3Wwpnc9bgk/pfwkBTQQL3goNQkaJQi0tU4ac3XSYmvB6yUorDH
+        7e3j385bHabIG7C3gOX4g1JnH17mfyVmsA==
+X-Google-Smtp-Source: AMsMyM6ZJIpao6Zon4fO1P9yEmwiPbEl0M9dofxypkaJ41i8jz5voccNCFxMW5PoExQS4BqbL1hXOQ==
+X-Received: by 2002:a05:600c:5028:b0:3a8:4349:153c with SMTP id n40-20020a05600c502800b003a84349153cmr1428606wmr.130.1663662388924;
+        Tue, 20 Sep 2022 01:26:28 -0700 (PDT)
+Received: from [192.168.1.74] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id h22-20020a05600c2cb600b003b4868eb71bsm18423635wmc.25.2022.09.20.01.26.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Sep 2022 01:26:28 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <8909c02d-3fd0-a0bb-ebc2-0a640febce53@dunelm.org.uk>
+Date:   Tue, 20 Sep 2022 09:26:27 +0100
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Sun Chao <16657101987@163.com>, Sun Chao <sunchao9@huawei.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] sequencer: avoid dropping fixup commit that targets
+ self via commit-ish
+To:     Johannes Altmanninger <aclopte@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Erik Cervin Edin <erik@cervined.in>, git@vger.kernel.org
+References: <xmqqleqfcoz3.fsf@gitster.g>
+ <20220920031140.1220220-1-aclopte@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20220920031140.1220220-1-aclopte@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sun Chao <sunchao9@huawei.com>
+Hi Johannes
 
-Add test cases for the new 'hide-refs' hook which is used to
-filter the references during the reference discovery phase.
+On 20/09/2022 04:11, Johannes Altmanninger wrote:
+> Commit 68d5d03bc4 (rebase: teach --autosquash to match on sha1 in
+> addition to message, 2010-11-04) taught autosquash to recognize
+> subjects like "fixup! 7a235b" where 7a235b is an OID-prefix. It
+> actually did more than advertised: 7a235b can be an arbitrary
+> commit-ish (as long as it's not trailed by spaces).
+> 
+> Accidental(?) use of this secret feature revealed a bug where we
+> would silently drop a fixup commit. The bug can also be triggered
+> when using an OID-prefix but that's unlikely in practice.
+> 
+> Given a commit with subject "fixup! main" that is the tip of the
+> branch "main". When computing the fixup target for this commit, we
+> find the commit itself. This is wrong because, by definition, a fixup
+> target must be an earlier commit in the todo list. We wrongly find
+> the current commit because we added it to the todo list prematurely.
+> Avoid these fixup-cycles by only adding the current commit after we
+> have finished finding its target.
 
-Signed-off-by: Sun Chao <sunchao9@huawei.com>
----
- Makefile                                      |   1 +
- t/helper/test-hide-refs.c                     | 107 +++++++++++++++++
- t/helper/test-tool.c                          |   1 +
- t/helper/test-tool.h                          |   1 +
- t/t1419-hide-refs-hook.sh                     | 111 ++++++++++++++++++
- t/t1419/abnormal-hide-refs-hook.sh            |  80 +++++++++++++
- t/t1419/common-functions.sh                   |  74 ++++++++++++
- ...test-0001-ls-remote-with-hide-refs-hook.sh |  43 +++++++
- ...st-0002-upload-pack-with-hide-refs-hook.sh |  45 +++++++
- ...t-0003-receive-pack-with-hide-refs-hook.sh |  40 +++++++
- 10 files changed, 503 insertions(+)
- create mode 100644 t/helper/test-hide-refs.c
- create mode 100755 t/t1419-hide-refs-hook.sh
- create mode 100644 t/t1419/abnormal-hide-refs-hook.sh
- create mode 100644 t/t1419/common-functions.sh
- create mode 100644 t/t1419/test-0001-ls-remote-with-hide-refs-hook.sh
- create mode 100644 t/t1419/test-0002-upload-pack-with-hide-refs-hook.sh
- create mode 100644 t/t1419/test-0003-receive-pack-with-hide-refs-hook.sh
+Thanks for working on this, the fix for the fixup self reference looks 
+good. It's unfortunate that the implementation is not stricter when 
+parsing "fixup! <oid>" but it is more or less consistent with the shell 
+version which used "git rev-parse $subject"[1]. We should think about 
+being stricter but this fix avoids on of the worst pitfalls of our lax 
+parsing.
 
-diff --git a/Makefile b/Makefile
-index 924b864ae83..c6793681b41 100644
---- a/Makefile
-+++ b/Makefile
-@@ -794,6 +794,7 @@ TEST_BUILTINS_OBJS += test-wildmatch.o
- TEST_BUILTINS_OBJS += test-windows-named-pipe.o
- TEST_BUILTINS_OBJS += test-write-cache.o
- TEST_BUILTINS_OBJS += test-xml-encode.o
-+TEST_BUILTINS_OBJS += test-hide-refs.o
- 
- # Do not add more tests here unless they have extra dependencies. Add
- # them in TEST_BUILTINS_OBJS above.
-diff --git a/t/helper/test-hide-refs.c b/t/helper/test-hide-refs.c
-new file mode 100644
-index 00000000000..751fc6213f3
---- /dev/null
-+++ b/t/helper/test-hide-refs.c
-@@ -0,0 +1,107 @@
-+#include "cache.h"
-+#include "hash.h"
-+#include "config.h"
-+#include "connect.h"
-+#include "parse-options.h"
-+#include "pkt-line.h"
-+#include "sigchain.h"
-+#include "test-tool.h"
-+
-+static const char *hide_refs_usage[] = {
-+	"test-tool hide-refs [<options>...]",
-+	NULL
-+};
-+
-+static int die_before_read_ref;
-+static int die_after_proc_ref;
-+static int version = 1;
-+static int hash_size = GIT_SHA1_HEXSZ;
-+static struct string_list hidelist = STRING_LIST_INIT_NODUP;
-+
-+static void hide_refs_verison(struct packet_reader *reader) {
-+	int server_version = 0;
-+
-+	for (;;) {
-+		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
-+			break;
-+
-+		if (reader->pktlen > 8 && starts_with(reader->line, "version=")) {
-+			server_version = atoi(reader->line+8);
-+			if (server_version != 1)
-+				die("bad protocol version: %d", server_version);
-+		}
-+	}
-+
-+	packet_write_fmt(1, "version=%d\n", version);
-+	packet_flush(1);
-+}
-+
-+static void hide_refs_proc(struct packet_reader *reader)
-+{
-+	const char *p;
-+	struct strbuf buf = STRBUF_INIT;
-+	enum packet_read_status status;
-+
-+	if (die_before_read_ref)
-+		die("die with the --die-before-read-ref option");
-+
-+	for (;;) {
-+		status = packet_reader_read(reader);
-+		if (status == PACKET_READ_EOF)
-+			exit(0);
-+
-+		if (status != PACKET_READ_NORMAL)
-+			break;
-+
-+		p = reader->line;
-+		strbuf_reset(&buf);
-+		strbuf_addstr(&buf, reader->line);
-+	}
-+
-+	p = strchr(buf.buf, ':');
-+	if (unsorted_string_list_has_string(&hidelist, p + 1)) {
-+		packet_write_fmt(1, "hide");
-+	}
-+
-+	if (die_after_proc_ref)
-+		die("die with the --die-after-proc-refs option");
-+
-+	packet_flush(1);
-+}
-+
-+int cmd__hide_refs(int argc, const char **argv) {
-+	int nongit_ok = 0;
-+	struct packet_reader reader;
-+	const char *value = NULL;
-+	struct option options[] = {
-+		OPT_BOOL(0, "die-before-read-ref", &die_before_read_ref,
-+			 "die when reading first reference"),
-+		OPT_BOOL(0, "die-after-proc-refs", &die_after_proc_ref,
-+			 "die after proc ref"),
-+		OPT_STRING_LIST('H', "hide", &hidelist, "refs-to-force-hidden",
-+				"refs that will be force hidden"),
-+		OPT_INTEGER('V', "version", &version,
-+			    "use this protocol version number"),
-+		OPT_END()
-+	};
-+
-+	setup_git_directory_gently(&nongit_ok);
-+
-+	argc = parse_options(argc, argv, "test-tools", options, hide_refs_usage, 0);
-+	if (argc > 0)
-+		usage_msg_opt("Too many arguments.", hide_refs_usage, options);
-+
-+	packet_reader_init(&reader, 0, NULL, 0, PACKET_READ_CHOMP_NEWLINE | PACKET_READ_GENTLE_ON_EOF);
-+
-+	if (!git_config_get_value("extensions.objectformat", &value)) {
-+		if (!strcmp(value, "sha256"))
-+			hash_size = GIT_SHA256_HEXSZ;
-+	}
-+
-+	hide_refs_verison(&reader);
-+	for (;;) {
-+		hide_refs_proc(&reader);
-+	}
-+
-+	return 0;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 80055886798..c5bd7f1f806 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -72,6 +72,7 @@ static struct test_cmd cmds[] = {
- 	{ "regex", cmd__regex },
- 	{ "repository", cmd__repository },
- 	{ "revision-walking", cmd__revision_walking },
-+	{ "hide-refs", cmd__hide_refs },
- 	{ "run-command", cmd__run_command },
- 	{ "scrap-cache-tree", cmd__scrap_cache_tree },
- 	{ "serve-v2", cmd__serve_v2 },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index a432cc77d92..cba8d3b093d 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -61,6 +61,7 @@ int cmd__reftable(int argc, const char **argv);
- int cmd__regex(int argc, const char **argv);
- int cmd__repository(int argc, const char **argv);
- int cmd__revision_walking(int argc, const char **argv);
-+int cmd__hide_refs(int argc, const char **argv);
- int cmd__run_command(int argc, const char **argv);
- int cmd__scrap_cache_tree(int argc, const char **argv);
- int cmd__serve_v2(int argc, const char **argv);
-diff --git a/t/t1419-hide-refs-hook.sh b/t/t1419-hide-refs-hook.sh
-new file mode 100755
-index 00000000000..81a8c36190b
---- /dev/null
-+++ b/t/t1419-hide-refs-hook.sh
-@@ -0,0 +1,111 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2022 Sun Chao
-+#
-+
-+test_description='Test hide-refs hook'
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/t1419/common-functions.sh
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+setup_test_repos () {
-+	test_expect_success "setup bare_repo and work_repo" '
-+		rm -rf bare_repo.git &&
-+		rm -rf work_repo &&
-+		git init --bare bare_repo.git &&
-+		git init work_repo &&
-+
-+		# create new commits and references
-+		create_commits_in work_repo A B C D &&
-+		(
-+			cd work_repo &&
-+			git config --local core.abbrev 7 &&
-+			git update-ref refs/heads/main $A &&
-+			git update-ref refs/heads/dev $B &&
-+			git update-ref refs/pull-requests/1/head $C &&
-+			git tag -m "v123" v123 $D &&
-+			git push ../bare_repo.git +refs/heads/*:refs/heads/* &&
-+			git push ../bare_repo.git +refs/tags/*:refs/tags/* &&
-+			git push ../bare_repo.git +refs/pull-requests/*:refs/pull-requests/*
-+		) &&
-+		TAG=$(git -C work_repo rev-parse v123) &&
-+
-+		# config transfer.hiderefs values with "hook:" prefix
-+		(
-+			git -C bare_repo.git config --local http.receivepack true &&
-+			git -C bare_repo.git config --add transfer.hiderefs hook:
-+		)
-+	'
-+}
-+
-+setup_httpd() {
-+	ROOT_PATH="$PWD"
-+	. "$TEST_DIRECTORY"/lib-gpg.sh
-+	. "$TEST_DIRECTORY"/lib-httpd.sh
-+	. "$TEST_DIRECTORY"/lib-terminal.sh
-+
-+	start_httpd
-+	set_askpass user@host pass@host
-+	setup_askpass_helper
-+}
-+
-+# Run test cases when hide-refs hook exit abnormally
-+run_tests_for_abnormal_hook() {
-+	GIT_TEST_PROTOCOL_VERSION=$1
-+	BAREREPO_GIT_DIR="$(pwd)/bare_repo.git"
-+
-+	for t in  "$TEST_DIRECTORY"/t1419/abnormal-*.sh
-+	do
-+		setup_test_repos
-+
-+		. "$t"
-+	done
-+}
-+
-+# Run test cases under local/HTTP protocol
-+run_tests_for_normal_hook() {
-+	for t in  "$TEST_DIRECTORY"/t1419/test-*.sh
-+	do
-+		setup_test_repos
-+		case $1 in
-+			http)
-+				PROTOCOL="HTTP protocol"
-+
-+				# bare_repo.git need move to httpd sever root path
-+				BAREREPO_GIT_DIR="$HTTPD_DOCUMENT_ROOT_PATH/bare_repo.git"
-+				rm -rf "$BAREREPO_GIT_DIR"
-+				mv bare_repo.git "$BAREREPO_GIT_DIR"
-+
-+				# setup the repository service URL address of http protocol
-+				BAREREPO_PREFIX="$HTTPD_URL"/smart
-+				BAREREPO_URL="$BAREREPO_PREFIX/bare_repo.git"
-+				;;
-+			local)
-+				PROTOCOL="builtin protocol"
-+				BAREREPO_GIT_DIR="$(pwd)/bare_repo.git"
-+
-+				# setup the repository service address of builtin protocol
-+				BAREREPO_PREFIX="$(pwd)"
-+				BAREREPO_URL="$BAREREPO_PREFIX/bare_repo.git"
-+				;;
-+		esac
-+
-+		GIT_TEST_PROTOCOL_VERSION=$2
-+		git -C work_repo remote add origin "$BAREREPO_URL"
-+
-+		. "$t"
-+	done
-+}
-+
-+setup_httpd
-+for protocol in 1 2
-+do
-+	run_tests_for_abnormal_hook $protocol
-+	run_tests_for_normal_hook local $protocol
-+	run_tests_for_normal_hook http $protocol
-+done
-+
-+test_done
-diff --git a/t/t1419/abnormal-hide-refs-hook.sh b/t/t1419/abnormal-hide-refs-hook.sh
-new file mode 100644
-index 00000000000..1ce768191c8
---- /dev/null
-+++ b/t/t1419/abnormal-hide-refs-hook.sh
-@@ -0,0 +1,80 @@
-+#!/bin/sh
-+
-+# The upstream repository (bare_repo.git) contains the configurations:
-+#
-+#	[transfer] hiderefs = hook:
-+#
-+# During the reference advertise phase the hide-refs hook will be invoked and all the refs will be checked by it,
-+# we should make sure Git works correctly in some special cases
-+
-+# If the hide-refs does not exist, Git should not invoke it and continue to advertise all the refs
-+test_expect_success "protocol $GIT_TEST_PROTOCOL_VERSION: advertise-refs while hide-refs hook not exists" '
-+	rm -f "$BAREREPO_GIT_DIR/hooks/hide-refs" &&
-+	git -c protocol.version=$GIT_TEST_PROTOCOL_VERSION upload-pack --advertise-refs "$BAREREPO_GIT_DIR" >out 2>&1 &&
-+	cat out | make_user_friendly_and_stable_output >actual &&
-+	format_and_save_expect <<-EOF &&
-+		<COMMIT-A> HEAD
-+		<COMMIT-B> refs/heads/dev
-+		<COMMIT-A> refs/heads/main
-+		<COMMIT-C> refs/pull-requests/1/head
-+		<COMMIT-TAG-v123> refs/tags/v123
-+		<COMMIT-D> refs/tags/v123^{}
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+# If the hide-refs hook run with incompatible version, Git should not invoke it and continue to advertise all the refs
-+test_expect_success "protocol $GIT_TEST_PROTOCOL_VERSION: advertise-refs while hide-refs hook run with incompatible version" '
-+	write_script "$BAREREPO_GIT_DIR/hooks/hide-refs" <<-EOF &&
-+		test-tool hide-refs --version=2
-+	EOF
-+	git -c protocol.version=$GIT_TEST_PROTOCOL_VERSION upload-pack --advertise-refs "$BAREREPO_GIT_DIR" >out 2>&1 &&
-+	cat out | make_user_friendly_and_stable_output >actual &&
-+	format_and_save_expect <<-EOF &&
-+		<COMMIT-A> HEAD
-+		<COMMIT-B> refs/heads/dev
-+		<COMMIT-A> refs/heads/main
-+		<COMMIT-C> refs/pull-requests/1/head
-+		<COMMIT-TAG-v123> refs/tags/v123
-+		<COMMIT-D> refs/tags/v123^{}
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+# If the hide-refs hook exit before processing any refs, Git should not die and continue to advertise all the refs
-+test_expect_success "protocol $GIT_TEST_PROTOCOL_VERSION: advertise-refs while hide-refs hook die before read ref" '
-+	write_script "$BAREREPO_GIT_DIR/hooks/hide-refs" <<-EOF &&
-+		test-tool hide-refs --die-before-read-ref
-+	EOF
-+	git -c protocol.version=$GIT_TEST_PROTOCOL_VERSION upload-pack --advertise-refs "$BAREREPO_GIT_DIR" >out 2>&1 &&
-+	cat out | make_user_friendly_and_stable_output | grep -v "^error:" >actual &&
-+	format_and_save_expect <<-EOF &&
-+		fatal: die with the --die-before-read-ref option
-+		<COMMIT-A> HEAD
-+		<COMMIT-B> refs/heads/dev
-+		<COMMIT-A> refs/heads/main
-+		<COMMIT-C> refs/pull-requests/1/head
-+		<COMMIT-TAG-v123> refs/tags/v123
-+		<COMMIT-D> refs/tags/v123^{}
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+# If the hide-refs hook exit abnormally, Git should not die and continue to advertise left refs
-+test_expect_success "protocol $GIT_TEST_PROTOCOL_VERSION: advertise-refs while hide-refs hook die after proc ref" '
-+	write_script "$BAREREPO_GIT_DIR/hooks/hide-refs" <<-EOF &&
-+		test-tool hide-refs --die-after-proc-refs
-+	EOF
-+	git -c protocol.version=$GIT_TEST_PROTOCOL_VERSION upload-pack --advertise-refs "$BAREREPO_GIT_DIR" >out 2>&1 &&
-+	cat out | make_user_friendly_and_stable_output | grep -v "^error:" >actual &&
-+	format_and_save_expect <<-EOF &&
-+		fatal: die with the --die-after-proc-refs option
-+		<COMMIT-A> HEAD
-+		<COMMIT-B> refs/heads/dev
-+		<COMMIT-A> refs/heads/main
-+		<COMMIT-C> refs/pull-requests/1/head
-+		<COMMIT-TAG-v123> refs/tags/v123
-+		<COMMIT-D> refs/tags/v123^{}
-+	EOF
-+	test_cmp expect actual
-+'
-diff --git a/t/t1419/common-functions.sh b/t/t1419/common-functions.sh
-new file mode 100644
-index 00000000000..7841241b038
---- /dev/null
-+++ b/t/t1419/common-functions.sh
-@@ -0,0 +1,74 @@
-+# Create commits in <repo> and assign each commit's oid to shell variables
-+# given in the arguments (A, B, and C). E.g.:
-+#
-+#     create_commits_in <repo> A B C
-+#
-+# NOTE: Never calling this function from a subshell since variable
-+# assignments will disappear when subshell exits.
-+create_commits_in () {
-+	repo="$1" && test -d "$repo" ||
-+	error "Repository $repo does not exist."
-+	shift &&
-+	while test $# -gt 0
-+	do
-+		name=$1 &&
-+		shift &&
-+		test_commit -C "$repo" --no-tag "$name" &&
-+		eval $name=$(git -C "$repo" rev-parse HEAD)
-+	done
-+}
-+
-+get_abbrev_oid () {
-+	oid=$1 &&
-+	suffix=${oid#???????} &&
-+	oid=${oid%$suffix} &&
-+	if test -n "$oid"
-+	then
-+		echo "$oid"
-+	else
-+		echo "undefined-oid"
-+	fi
-+}
-+
-+# Format the output of git-fetch, git-ls-remote and other commands to make a
-+# user-friendly and stable text.  We can easily prepare the expect text
-+# without having to worry about changes of the commit ID (full or abbrev.)
-+# of the output.  Single quotes are replaced with double quotes, because
-+# it is boring to prepare unquoted single quotes in expect text.
-+make_user_friendly_and_stable_output () {
-+	tr '\0' '@' | sed \
-+		-e "s/'/\"/g" \
-+		-e "s/@.*//g" \
-+		-e "s/$(get_abbrev_oid $A)[0-9a-f]*/<COMMIT-A>/g" \
-+		-e "s/$(get_abbrev_oid $B)[0-9a-f]*/<COMMIT-B>/g" \
-+		-e "s/$(get_abbrev_oid $C)[0-9a-f]*/<COMMIT-C>/g" \
-+		-e "s/$(get_abbrev_oid $D)[0-9a-f]*/<COMMIT-D>/g" \
-+		-e "s/$(get_abbrev_oid $TAG)[0-9a-f]*/<COMMIT-TAG-v123>/g" \
-+		-e "s/$ZERO_OID/<ZERO-OID>/g" \
-+		-e "s#$BAREREPO_PREFIX/bare_repo.git#<URL/of/bare_repo.git>#" \
-+		-e 's/^[0-9a-f]\{4\}//g'
-+
-+}
-+
-+filter_out_hide_refs_output() {
-+	make_user_friendly_and_stable_output | sed 's/^[0-9a-f]\{4\}//g'
-+}
-+
-+format_and_save_expect () {
-+	sed -e 's/^> //' -e 's/Z$//' >expect
-+}
-+
-+test_cmp_refs () {
-+	indir=
-+	if test "$1" = "-C"
-+	then
-+		shift
-+		indir="$1"
-+		shift
-+	fi
-+	indir=${indir:+"$indir"/}
-+	cat >show-ref.expect &&
-+	git ${indir:+ -C "$indir"} show-ref >show-ref.pristine &&
-+	make_user_friendly_and_stable_output <show-ref.pristine >show-ref.filtered &&
-+	test_cmp show-ref.expect show-ref.filtered
-+}
-diff --git a/t/t1419/test-0001-ls-remote-with-hide-refs-hook.sh b/t/t1419/test-0001-ls-remote-with-hide-refs-hook.sh
-new file mode 100644
-index 00000000000..3831521d345
---- /dev/null
-+++ b/t/t1419/test-0001-ls-remote-with-hide-refs-hook.sh
-@@ -0,0 +1,43 @@
-+#!/bin/sh
-+
-+# The upstream repository (bare_repo.git) contains the configurations:
-+#
-+#	[transfer] hiderefs = hook:
-+#
-+# During the reference advertise phase the hide-refs hook will be invoked and all the refs will be checked by it
-+
-+# Git will not advertise the refs that are hidden by the hide-refs hook
-+test_expect_success "$PROTOCOL (protocol: $GIT_TEST_PROTOCOL_VERSION): ls-remote while hide-refs hook hide part of refs" '
-+	write_script "$BAREREPO_GIT_DIR/hooks/hide-refs" <<-EOF &&
-+	test-tool hide-refs \
-+		-H "refs/pull-requests/1/head" \
-+		-H "refs/tags/v123"
-+	EOF
-+	git -c protocol.version=$GIT_TEST_PROTOCOL_VERSION ls-remote "$BAREREPO_URL" >out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	format_and_save_expect <<-EOF &&
-+		<COMMIT-A>	HEAD
-+		<COMMIT-B>	refs/heads/dev
-+		<COMMIT-A>	refs/heads/main
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+# The hide-ref hook should not change the default effects of '{transfer,uploadpack,receive}.hiderefs'
-+# configurations, if it hides no refs, the original hiderefs configurations should work
-+test_expect_success "$PROTOCOL (protocol: $GIT_TEST_PROTOCOL_VERSION): ls-remote while hide-refs hook hide no refs" '
-+	write_script "$BAREREPO_GIT_DIR/hooks/hide-refs" <<-EOF &&
-+		test-tool hide-refs
-+	EOF
-+	git -C "$BAREREPO_GIT_DIR" config --add transfer.hiderefs refs/heads/dev &&
-+	git -c protocol.version=$GIT_TEST_PROTOCOL_VERSION ls-remote "$BAREREPO_URL" >out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	format_and_save_expect <<-EOF &&
-+		<COMMIT-A>	HEAD
-+		<COMMIT-A>	refs/heads/main
-+		<COMMIT-C>	refs/pull-requests/1/head
-+		<COMMIT-TAG-v123>	refs/tags/v123
-+		<COMMIT-D>	refs/tags/v123^{}
-+	EOF
-+	test_cmp expect actual
-+'
-diff --git a/t/t1419/test-0002-upload-pack-with-hide-refs-hook.sh b/t/t1419/test-0002-upload-pack-with-hide-refs-hook.sh
-new file mode 100644
-index 00000000000..618a54e16a1
---- /dev/null
-+++ b/t/t1419/test-0002-upload-pack-with-hide-refs-hook.sh
-@@ -0,0 +1,45 @@
-+#!/bin/sh
-+
-+# The upstream repository (bare_repo.git) contains the configurations:
-+#
-+#	[transfer] hiderefs = hook:
-+#
-+# During the reference advertise phase the hide-refs hook will be invoked and all the refs will be checked by it
-+
-+# Git client can not fetch the refs that are hidden by the hide-refs hook
-+test_expect_success "$PROTOCOL (protocol: $GIT_TEST_PROTOCOL_VERSION): mirror clone while hide-refs hide part of refs" '
-+	rm -rf local.git &&
-+	write_script "$BAREREPO_GIT_DIR/hooks/hide-refs" <<-EOF &&
-+	test-tool hide-refs \
-+		-H "HEAD" \
-+		-H "refs/heads/dev" \
-+		-H "refs/heads/main"
-+	EOF
-+	git -c protocol.version=$GIT_TEST_PROTOCOL_VERSION clone --mirror "$BAREREPO_URL" local.git &&
-+	git -C local.git show-ref -d >out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	format_and_save_expect <<-EOF &&
-+		<COMMIT-C> refs/pull-requests/1/head
-+		<COMMIT-TAG-v123> refs/tags/v123
-+		<COMMIT-D> refs/tags/v123^{}
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+# If a ref is hidden by the hide-refs hook, its private commits (tip or non-tip) will be forced hidden
-+# to the client, and the client can not fetch such kind of commits even if the server set allowTipSHA1InWant
-+# or allowReachableSHA1InWant to true
-+test_expect_success "$PROTOCOL (protocol: $GIT_TEST_PROTOCOL_VERSION): fetch a commit which is hided by hide-refs hook" '
-+	rm -rf local.git &&
-+	write_script "$BAREREPO_GIT_DIR/hooks/hide-refs" <<-EOF &&
-+	test-tool hide-refs \
-+		-H "refs/heads/dev" \
-+		-H "refs/pull-requests/1/head" \
-+		-H "refs/tags/v123"
-+	EOF
-+	git -C "$BAREREPO_GIT_DIR" config uploadpack.allowTipSHA1InWant true &&
-+	git -C "$BAREREPO_GIT_DIR" config uploadpack.allowReachableSHA1InWant true &&
-+	git init local.git &&
-+	git -C local.git remote add origin "$BAREREPO_URL" &&
-+	test_must_fail git -C local.git -c protocol.version=$GIT_TEST_PROTOCOL_VERSION fetch "$BAREREPO_URL" $B
-+'
-diff --git a/t/t1419/test-0003-receive-pack-with-hide-refs-hook.sh b/t/t1419/test-0003-receive-pack-with-hide-refs-hook.sh
-new file mode 100644
-index 00000000000..11f0f255b31
---- /dev/null
-+++ b/t/t1419/test-0003-receive-pack-with-hide-refs-hook.sh
-@@ -0,0 +1,40 @@
-+#!/bin/sh
-+
-+# The upstream repository (bare_repo.git) contains the configurations:
-+#
-+#	[transfer] hiderefs = hook:
-+#
-+# During the reference advertise phase the hide-refs hook will be invoked and all the refs will be checked by it
-+
-+test_expect_success "$PROTOCOL (protocol: $GIT_TEST_PROTOCOL_VERSION): push to main while hide-refs hook does not hide it" '
-+	write_script "$BAREREPO_GIT_DIR/hooks/hide-refs" <<-EOF &&
-+		test-tool hide-refs
-+	EOF
-+	create_commits_in work_repo E &&
-+	git -c protocol.version=$GIT_TEST_PROTOCOL_VERSION -C work_repo push origin HEAD:main >out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >out.tmp &&
-+	sed "s/$(get_abbrev_oid $E)[0-9a-f]*/<COMMIT-E>/g" <out.tmp >actual &&
-+	format_and_save_expect <<-EOF &&
-+		To <URL/of/bare_repo.git>
-+		   <COMMIT-A>..<COMMIT-E>  HEAD -> main
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+# If hide-refs hook hide some ref, git push will be rejected
-+test_expect_success "$PROTOCOL (protocol: $GIT_TEST_PROTOCOL_VERSION): push to main while hide-refs hook hide it" '
-+	write_script "$BAREREPO_GIT_DIR/hooks/hide-refs" <<-EOF &&
-+	test-tool hide-refs \
-+		-H "refs/heads/main"
-+	EOF
-+	create_commits_in work_repo F &&
-+	test_must_fail git -c protocol.version=$GIT_TEST_PROTOCOL_VERSION -C work_repo push origin HEAD:main >out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >out.tmp &&
-+	sed "s/$(get_abbrev_oid $E)[0-9a-f]*/<COMMIT-E>/g" <out.tmp >actual &&
-+	format_and_save_expect <<-EOF &&
-+		To <URL/of/bare_repo.git>
-+		 ! [remote rejected] HEAD -> main (deny updating a hidden ref)
-+		error: failed to push some refs to "<URL/of/bare_repo.git>"
-+	EOF
-+	test_cmp expect actual
-+'
--- 
-gitgitgadget
+Best Wishes
 
+Phillip
+
+[1] With regard to the oid vs subject prefix issue, I think the shell 
+version chose to fixup the first commit that matched either the oid or 
+the subject. At least the C version is consistent in preferring an oid 
+match over a subject prefix match even if I wish it was the other way round.
+
+> Reported-by: Erik Cervin Edin <erik@cervined.in>
+> Signed-off-by: Johannes Altmanninger <aclopte@gmail.com>
+> ---
+>   sequencer.c                  |  4 ++--
+>   t/t3415-rebase-autosquash.sh | 26 ++++++++++++++++++++++++++
+>   2 files changed, 28 insertions(+), 2 deletions(-)
+> 
+> Changes to v1.
+> - Remove wrong assumptions from commit message. The commit message should
+>    be clearer now (though I didn't spend too much time on it).
+> - Drop one test because it's not related to the fix (and doesn't test anything
+>    I care about) and modify the other test so it requires the fix to pass.
+> 
+> 1:  cb2ee0e003 ! 1:  410ca51936 sequencer: avoid dropping fixup commit that targets self via commit-ish
+>      @@ Commit message
+>           sequencer: avoid dropping fixup commit that targets self via commit-ish
+>       
+>           Commit 68d5d03bc4 (rebase: teach --autosquash to match on sha1 in
+>      -    addition to message, 2010-11-04) made --autosquash apply a commit
+>      -    with subject "fixup! 012345" to the first commit in the todo list
+>      -    whose OID starts with 012345. So far so good.
+>      +    addition to message, 2010-11-04) taught autosquash to recognize
+>      +    subjects like "fixup! 7a235b" where 7a235b is an OID-prefix. It
+>      +    actually did more than advertised: 7a235b can be an arbitrary
+>      +    commit-ish (as long as it's not trailed by spaces).
+>       
+>      -    More recently, c44a4c650c (rebase -i: rearrange fixup/squash lines
+>      -    using the rebase--helper, 2017-07-14) reimplemented this logic in C
+>      -    and introduced two behavior changes.
+>      -    First, OID matches are given precedence over subject prefix
+>      -    matches.  Second, instead of prefix-matching OIDs, we use
+>      -    lookup_commit_reference_by_name().  This means that if 012345 is a
+>      -    branch name, we will apply the fixup commit to the tip of that branch
+>      -    (if that is present in the todo list).
+>      +    Accidental(?) use of this secret feature revealed a bug where we
+>      +    would silently drop a fixup commit. The bug can also be triggered
+>      +    when using an OID-prefix but that's unlikely in practice.
+>       
+>      -    Both behavior changes might be motivated by performance concerns
+>      -    (since the commit message mentions performance).  Looking through
+>      -    the todo list to find a commit that matches the given prefix can be
+>      -    more expensive than looking up an OID.  The runtime of the former is
+>      -    of O(n*m) where n is the size of the todo list and m is the length
+>      -    of a commit subject. However, if this is really a problem, we could
+>      -    easily make it O(m) by constructing a trie (prefix tree).
+>      -
+>      -    Demonstrate both behavior changes by adding two test cases for
+>      -    "fixup! foo" where foo is a commit-ish that is not an OID-prefix.
+>      -    Arguably, this feature is very weird.  If no one uses it we should
+>      -    consider removing it.
+>      -
+>      -    Regardless, there is one bad edge case to fix.  Let refspec "foo" point
+>      -    to a commit with the subject "fixup! foo". Since rebase --autosquash
+>      -    finds the fixup target via lookup_commit_reference_by_name(), the
+>      -    fixup target is the fixup commit itself. Obviously this can't work.
+>      -    We proceed with the broken invariant and drop the fixup commit
+>      -    entirely.
+>      -
+>      -    The self-fixup was only allowed because the fixup commit was already
+>      -    added to the preliminary todo list, which it shouldn't be.  Rather,
+>      -    we should first compute the fixup target and only then add the fixup
+>      -    commit to the todo list. Make it so, avoiding this error by design,
+>      -    and add a third test for this case.
+>      +    Given a commit with subject "fixup! main" that is the tip of the
+>      +    branch "main". When computing the fixup target for this commit, we
+>      +    find the commit itself. This is wrong because, by definition, a fixup
+>      +    target must be an earlier commit in the todo list. We wrongly find
+>      +    the current commit because we added it to the todo list prematurely.
+>      +    Avoid these fixup-cycles by only adding the current commit after we
+>      +    have finished finding its target.
+>       
+>           Reported-by: Erik Cervin Edin <erik@cervined.in>
+>      -    Signed-off-by: Johannes Altmanninger <aclopte@gmail.com>
+>      -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>       
+>        ## sequencer.c ##
+>       @@ sequencer.c: int todo_list_rearrange_squash(struct todo_list *todo_list)
+>      @@ t/t3415-rebase-autosquash.sh: test_expect_success 'auto squash that matches long
+>       +test_expect_success 'auto squash that matches regex' '
+>       +	git reset --hard base &&
+>       +	git commit --allow-empty -m "hay needle hay" &&
+>      -+	git commit --allow-empty -m "fixup! :/[n]eedle" &&
+>      ++	git commit --allow-empty -m "fixup! :/needle" &&
+>       +	GIT_SEQUENCE_EDITOR="cat >tmp" git rebase --autosquash -i HEAD^^ &&
+>      -+	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p}" tmp >actual &&
+>      ++	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p;}" tmp >actual &&
+>       +	cat <<-EOF >expect &&
+>       +	pick HASH hay needle hay # empty
+>      -+	fixup HASH fixup! :/[n]eedle # empty
+>      -+	EOF
+>      -+	test_cmp expect actual
+>      -+'
+>      -+
+>      -+test_expect_success 'auto squash of fixup commit that matches branch name' '
+>      -+	git reset --hard base &&
+>      -+	git commit --allow-empty -m "wip commit (just a prefix match so overshadowed by branch)" &&
+>      -+	git commit --allow-empty -m "tip of wip" &&
+>      -+	git branch wip &&
+>      -+	git commit --allow-empty -m "unrelated commit" &&
+>      -+	git commit --allow-empty -m "fixup! wip" &&
+>      -+	GIT_SEQUENCE_EDITOR="cat >tmp" git rebase --autosquash -i HEAD^^^^ &&
+>      -+	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p}" tmp >actual &&
+>      -+	cat <<-EOF >expect &&
+>      -+	pick HASH wip commit (just a prefix match so overshadowed by branch) # empty
+>      -+	pick HASH tip of wip # empty
+>      -+	fixup HASH fixup! wip # empty
+>      -+	pick HASH unrelated commit # empty
+>      ++	fixup HASH fixup! :/needle # empty
+>       +	EOF
+>       +	test_cmp expect actual
+>       +'
+>      @@ t/t3415-rebase-autosquash.sh: test_expect_success 'auto squash that matches long
+>       +	git commit --allow-empty -m "fixup! self-cycle" &&
+>       +	git branch self-cycle &&
+>       +	GIT_SEQUENCE_EDITOR="cat >tmp" git rebase --autosquash -i HEAD^^ &&
+>      -+	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p}" tmp >actual &&
+>      ++	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p;}" tmp >actual &&
+>       +	cat <<-EOF >expect &&
+>       +	pick HASH second commit
+>       +	pick HASH fixup! self-cycle # empty
+> 
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 484ca9aa50..777200a6dc 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -6287,8 +6287,6 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
+>   			return error(_("the script was already rearranged."));
+>   		}
+>   
+> -		*commit_todo_item_at(&commit_todo, item->commit) = item;
+> -
+>   		parse_commit(item->commit);
+>   		commit_buffer = logmsg_reencode(item->commit, NULL, "UTF-8");
+>   		find_commit_subject(commit_buffer, &subject);
+> @@ -6355,6 +6353,8 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
+>   					strhash(entry->subject));
+>   			hashmap_put(&subject2item, &entry->entry);
+>   		}
+> +
+> +		*commit_todo_item_at(&commit_todo, item->commit) = item;
+>   	}
+>   
+>   	if (rearranged) {
+> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+> index 78c27496d6..98af865268 100755
+> --- a/t/t3415-rebase-autosquash.sh
+> +++ b/t/t3415-rebase-autosquash.sh
+> @@ -232,6 +232,32 @@ test_expect_success 'auto squash that matches longer sha1' '
+>   	test_line_count = 1 actual
+>   '
+>   
+> +test_expect_success 'auto squash that matches regex' '
+> +	git reset --hard base &&
+> +	git commit --allow-empty -m "hay needle hay" &&
+> +	git commit --allow-empty -m "fixup! :/needle" &&
+> +	GIT_SEQUENCE_EDITOR="cat >tmp" git rebase --autosquash -i HEAD^^ &&
+> +	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p;}" tmp >actual &&
+> +	cat <<-EOF >expect &&
+> +	pick HASH hay needle hay # empty
+> +	fixup HASH fixup! :/needle # empty
+> +	EOF
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'auto squash of fixup commit that matches branch name which points back to fixup commit' '
+> +	git reset --hard base &&
+> +	git commit --allow-empty -m "fixup! self-cycle" &&
+> +	git branch self-cycle &&
+> +	GIT_SEQUENCE_EDITOR="cat >tmp" git rebase --autosquash -i HEAD^^ &&
+> +	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p;}" tmp >actual &&
+> +	cat <<-EOF >expect &&
+> +	pick HASH second commit
+> +	pick HASH fixup! self-cycle # empty
+> +	EOF
+> +	test_cmp expect actual
+> +'
+> +
+>   test_auto_commit_flags () {
+>   	git reset --hard base &&
+>   	echo 1 >file1 &&
