@@ -2,112 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35E0CC6FA82
-	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 00:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCDB2C6FA82
+	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 00:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229723AbiITAcH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Sep 2022 20:32:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35916 "EHLO
+        id S229659AbiITAnf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Sep 2022 20:43:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229647AbiITAcF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2022 20:32:05 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10BD7520A9
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 17:32:03 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 15DB55A1DF;
-        Tue, 20 Sep 2022 00:32:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1663633923;
-        bh=S4tgjF1Y4tdov47cN3ioOVqSqVCQBicMcyzmSKXoj2E=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=PfTwC2UMnqEE/aSmY64BylsA3sWbGtzCw1ID5/vXQHgkXii97l+RrcpRU+GtIZ1+7
-         cWGwu9YestkJRIGywcdgNGrGCSyr9x9uM8p7w0HMh+JsOdC5K8dYWFDY/rx2h81kyT
-         XtaZLd87v4Hu3FywY0+cRn31U5hxYJwKwMJezZA81dN8nRGQF9887Tyt95na3R0H/t
-         wLQfsX3+oGDZD7FHQGpMATb98izotNOXZs5zzikxdfkkwPmion/cYc8gbmavfju4Bq
-         GZFzJ7xq32wmTj/mCLXPUFO8S951W3YDDiZVlsPh7Mz2rtPHw3AySC1ZbVnQIh3yGW
-         DBsdFawPBIe2/2HVIBCMO1NdhtP9P5z2boWunh9eE1aRkHR+SH9VyeNAtm9RM35/Vm
-         k0i5Hj0CXJyEhFul7J2DG3VaijLbT7Ne04hCPJ3bQG4JoCXiygbkR25eS3u7bd2SL9
-         LKoqD5PWP+Qj7+yFyb85+6FNU+upzhyg7YC9T1q7hic72Rx4XS+
-Date:   Tue, 20 Sep 2022 00:32:01 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Florine W. Dekker" <florine@fwdekker.com>
-Cc:     demerphq <demerphq@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git <git@vger.kernel.org>
-Subject: Re: Wildcards in mailmap to hide transgender people's deadnames
-Message-ID: <YykKARz//2mENrRH@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Florine W. Dekker" <florine@fwdekker.com>,
-        demerphq <demerphq@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git <git@vger.kernel.org>
-References: <2e846a72-a4c6-2a5a-255a-15eee037f574@fwdekker.com>
- <854127f2-55aa-5636-813d-d91b8a4cdcbc@web.de>
- <CANgJU+Wt_yjv1phwiSUtLLZ=JKA9LvS=0UcBYNu+nxdJ_7d_Ew@mail.gmail.com>
- <045e7914-ab16-4d5e-ea9d-8e3c7c758fff@fwdekker.com>
+        with ESMTP id S229561AbiITAnd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2022 20:43:33 -0400
+Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A17052808
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 17:43:31 -0700 (PDT)
+Received: by mail-vs1-xe2a.google.com with SMTP id p4so1396529vsa.9
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 17:43:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=KIot9/ofDZflPsLVsrK6VhE5RdEDapppFzIjW1/cwWg=;
+        b=bGU+Mbuk589H0CHjZK4oGLfXy6wxYhuGuhAxr9B2AEO1ciIfJuUObhdKXmaOYqgp96
+         IgmOgtDfM+bTcqDa6QtCRokPkd/KGF4JmmfFQ0bRa8RXmpCGWwJbN04OtLELUd09kNdD
+         Q0tZM7kFVRQj8CSHkW5mhKhQzfKcILiTgWcIPF2bVza9u2K/qOdeis3DDeS2lWQsyyOv
+         BXUOHIvpkceHmamscNHa5eDfez3xhAlhb7AKZcTH9Ca0lSEYOCCWTqZRKGyg3VYUz0bz
+         dfPhl4XQM31OFZvDnf5MXIxPieensX/g0p3oGkJK2pEsPTUNRE6M8UFJSE5wn5Gi8SQx
+         7PMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=KIot9/ofDZflPsLVsrK6VhE5RdEDapppFzIjW1/cwWg=;
+        b=k/+XzE7Kv663F6C0u8OdlJwc62YgwAPKt/Pr1ntzHgxgPVCXOBsNqijmg3Prn07Lhp
+         cIKXIFnxpCr9EwIoXA8fNOzulgW1Y4x3H3UsD0RzGVj6E0lHHdfidNKi4fApeQ4C3hKh
+         klsJtQ24vXXjElgA2f2vLvsOjQhdguJsjJ5VKc+Chzx4twlEMofTMvDRBR2iYqrBMcBb
+         tkADb/OPKwgmo3r+DB7D9q6KNWomAj/LTbeBFlvxa6mGGOJu4HUyM3JW8E3OTCjDKfel
+         YInyuDw3Tf1Kq9XKv069IBXDwDyaDxzpfs05wXV8G9/uTKHXXNY83R9yBzbbYZ2aQ6Zg
+         2jvw==
+X-Gm-Message-State: ACrzQf3N/Enfaf0auIZVt/Qh9qWG2sGifqNY6lx/B+x5NqBSyGOY0jmE
+        XCfNMSH2HYBmEbY9oJMW7ye68oKIqHo8bQ6u5pY=
+X-Google-Smtp-Source: AMsMyM6V7vVQ9ntlUtVfQWEGy900M4A0KleYaxebCh5k6KjuLLiMowIzzzhieR7L0mvbOH2R7CGNcMFYXyh5Q/pdXhY=
+X-Received: by 2002:a67:ca9b:0:b0:398:4fc7:b09d with SMTP id
+ a27-20020a67ca9b000000b003984fc7b09dmr7454578vsl.12.1663634610304; Mon, 19
+ Sep 2022 17:43:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="A8+mvSYOsUPZxRZ8"
-Content-Disposition: inline
-In-Reply-To: <045e7914-ab16-4d5e-ea9d-8e3c7c758fff@fwdekker.com>
-User-Agent: Mutt/2.2.7 (2022-08-07)
+References: <pull.1348.git.1662747205235.gitgitgadget@gmail.com> <pull.1348.v2.git.1663614767058.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1348.v2.git.1663614767058.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 19 Sep 2022 17:43:15 -0700
+Message-ID: <CABPp-BEB_+YoKZ=U6NPc8J+KZyMSYRsom34CeqjxUCyw0=LEyg@mail.gmail.com>
+Subject: Re: [PATCH v2] Documentation: add ReviewingGuidelines
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Josh Steadmon <steadmon@google.com>,
+        Glen Choo <chooglen@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Sep 19, 2022 at 12:21 PM Victoria Dye via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+[...]
+> +==== Performing your review
+> +- Provide your review comments per-patch in a plaintext "Reply-All" email to the
+> +  relevant patch. Comments should be made inline, immediately below the relevant
+> +  section(s).
+> +
+> +- You may find that the limited context provided in the patch diff is sometimes
+> +  insufficient for a thorough review. In such cases, you can review patches in
+> +  your local tree by either applying patches with linkgit:git-am[1] or checking
+> +  out the associated branch from https://github.com/gitster/git once the series
+> +  is tracked there.
 
---A8+mvSYOsUPZxRZ8
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Lots of reviews also come with "Fetch-It-Via" instructions in the
+cover letter, making it really easy to grab.  Might be worth
+mentioning?
 
-On 2022-09-16 at 16:59:23, Florine W. Dekker wrote:
-> I understand what you mean, and agree that mailmap is just a workaround f=
-or
-> this issue, having been designed to unify a user's multiple identifiers,
-> rather than helping move on from a now-invalid identifier. Being complete=
-ly
-> new to this mailing list, however, I feel that solving the issues you rai=
-se
-> might be a might much for me to take on.
+Also, would it make sense for us to replace "applying" with
+"downloading and applying", perhaps mentioning `b4 am` for the
+downloading half?
 
-I agree this is a bigger, separate issue that we should address, but it
-shouldn't prevent us from doing what improvements we can to the mailmap.
+(I tend to use the Fetch-It-Via or wait for it to show up in
+gitster/git, but b4 is really nice for the other cases.)
 
-> Instead, for now, I'm interested to see what we can do with mailmap as a
-> workaround. I like the idea of using URL encoding, and would like to hear
-> others' opinions on doing so. I think it provides a social signal on its
-> obfuscated state, it prevents people from accidentally finding out, and is
-> easy and efficient to execute.
+> +- Large, complicated patch diffs are sometimes unavoidable, such as when they
+> +  refactor existing code. If you find such a patch difficult to parse, try
+> +  reviewing the diff produced with the `--color-moved` and/or
+> +  `--ignore-space-change` options.
 
-I think this would be a fine solution.  If folks think the hashed
-mailmap would be better, I can resend that, or if we like the
-URL-encoded option, that shouldn't be too difficult to implement.
+Similarly, Documentation refactorings or significant rewordings are
+sometimes easier to view with --color-words or --color-words=.
 
-I do appreciate you taking the time to bring this up since I think this
-is an important issue to address and it's come up a couple of times.  I
-hope that this time we can come up with some sort of improvement with
-the mailmap we're willing to take.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+[...]
+> +See Also
+> +--------
+> +link:MyFirstContribution.html[MyFirstContribution]
+>
+> base-commit: 79f2338b3746d23454308648b2491e5beba4beff
 
---A8+mvSYOsUPZxRZ8
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.39 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYykKAQAKCRB8DEliiIei
-gaWAAP9HjVKKC/ZDAV/zL9XEMIspRydCIRkOzAIzawNHUx8fhwEAvUoixm2BCLSt
-GSoCPmMfxQ5Jm7MoaoSYbFGYH5rJRQw=
-=0Vqd
------END PGP SIGNATURE-----
-
---A8+mvSYOsUPZxRZ8--
+I like this document!  I had a couple ideas that might or might not
+make sense to include in the document; it looks good to me either way.
