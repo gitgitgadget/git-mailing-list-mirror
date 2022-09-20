@@ -2,182 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C685C6FA82
-	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 20:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23750C54EE9
+	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 20:41:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230283AbiITUkd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Sep 2022 16:40:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40408 "EHLO
+        id S230200AbiITUlz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Sep 2022 16:41:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230221AbiITUkZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2022 16:40:25 -0400
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E8AC52099
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 13:40:24 -0700 (PDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id ml1so2966795qvb.1
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 13:40:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=zRop9O85ah/dqxRX2/6MueHbzVV9VlC2nSA7s8WXVts=;
-        b=7mJGXnTe8Kgj/cOOQbBkT09FCAV3lENnkxCyV2YZKHItm/dqjChZbIcD4SDTFDx8Rq
-         5Uk4vqy1SBh3GFx0jhpe8GX99c2X6dgZdcYk70pwSXERWsDrYoCG80icW0WXjzd3FzG3
-         se8+jgszRuo3yQ+/CiCA0LzmC0omQXnTCNvMh57KcRlNUOXFW2AAHQZhel0SDpzSjnOT
-         2H/Wfc0AophaUq1GN8zNZQ2Y8tGhjfYzqvfUUwBIg1pWZbptUPXupLbtAwILvK31ECQb
-         Yv1LLJtBB2E42+irS2kkEaDiG2VsdLdbWjOZSp7uvKANb4ov7XxAO2m+dkuuZv65ghPz
-         BOHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=zRop9O85ah/dqxRX2/6MueHbzVV9VlC2nSA7s8WXVts=;
-        b=NQyM9gP73AE0kl1K0ZdPhS8Y5QkfWuIaSdixugykH8u4ji8QZF4GJgGvhBD4ge87fj
-         54MspnU/u7nGHSDnd1yzxXBOS/GEW/+oqv9+LxzSFG3e81DEwZTfcSV+0KLib7QVQwtQ
-         i9BQNBxURfh718DfWKQRs4vwCDJCUdmwFP4P6mJ0zwRnLWot/DHCn0SWfwqL+VobgZ5w
-         8UlOvKt9UMaA8lBoAI0NEDEH/siIIz3WiVSq3y7IorTlZeJDMxNdZwR9QzOJp7EyxFYl
-         A8gyakAkoDdNTXiItGU2zjswvGcdWItbF5xkYG4/xo2Qi0URYp/I/9nsxnZ6Kyuh9JoN
-         JyIQ==
-X-Gm-Message-State: ACrzQf16k77wG+Ru5wAoneLno1uWatJztK+HxhVWSls6rjgCKpyNNR87
-        pTg8WOTMr2hfcDw/ePIgzhMHMfdrUHtSUA==
-X-Google-Smtp-Source: AMsMyM4x9sCLjBXQ4nJnSNUa49wOnCTY86jUlaAwMpFkeov/EO8+jFMRSzKzYWWXlM0FaBDlhuzEjw==
-X-Received: by 2002:ad4:4eee:0:b0:4ad:2663:a117 with SMTP id dv14-20020ad44eee000000b004ad2663a117mr14425503qvb.113.1663706423341;
-        Tue, 20 Sep 2022 13:40:23 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id h22-20020a05622a171600b0035ba366cc90sm490605qtk.15.2022.09.20.13.40.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Sep 2022 13:40:23 -0700 (PDT)
-Date:   Tue, 20 Sep 2022 16:40:22 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, derrickstolee@github.com, peff@peff.net
-Subject: [PATCH v2 3/3] midx.c: unify `include_pack` array into `pack_info`
- struct
-Message-ID: <81e9ccc3232f1a372adc9b06e2a93e9d9b26c80d.1663706401.git.me@ttaylorr.com>
-References: <YyokIf%2FSd7SYztKQ@nand.local>
- <cover.1663706401.git.me@ttaylorr.com>
+        with ESMTP id S229575AbiITUlx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2022 16:41:53 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81AB975490
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 13:41:52 -0700 (PDT)
+Received: (qmail 31130 invoked by uid 109); 20 Sep 2022 20:41:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 20 Sep 2022 20:41:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14830 invoked by uid 111); 20 Sep 2022 20:41:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 20 Sep 2022 16:41:52 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 20 Sep 2022 16:41:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     John Cai <johncai86@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [INVESTIGATION] why is fsck --connectivity-only so much more
+ expensive than rev-list --objects --all?
+Message-ID: <YyoljwDIn7PxRlC9@coredump.intra.peff.net>
+References: <9304B938-4A59-456B-B091-DBBCAA1823B2@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1663706401.git.me@ttaylorr.com>
+In-Reply-To: <9304B938-4A59-456B-B091-DBBCAA1823B2@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The MIDX repack code uses a separate byte-array to track which packs are
-"included" in the rollup. Now that an array of `repack_info` structs is
-available for the lifetime of the `midx_repack()` function, we can
-instead use a new bit in that struct's record instead of maintaining a
-separate array.
+On Tue, Sep 20, 2022 at 03:27:29PM -0400, John Cai wrote:
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- midx.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+> One observation is that `git-fsck` seems to use up alot more memory in calling
+> unpack_compressed_entry() than `git-rev-list` does.
 
-diff --git a/midx.c b/midx.c
-index 5fbf964bba..59db9162ea 100644
---- a/midx.c
-+++ b/midx.c
-@@ -1865,6 +1865,7 @@ struct repack_info {
- 	timestamp_t mtime;
- 	uint32_t referenced_objects;
- 	uint32_t pack_int_id;
-+	unsigned include : 1;
- };
+That just means it's data coming from a pack. The interesting parts are
+further up the stack, I think:
+
+> | | ->40.48% (826,445,820B) 0x2B2447: unpack_compressed_entry (packfile.c:1601)
+> | | | ->40.48% (826,445,820B) 0x2B46AB: unpack_entry (packfile.c:1768)
+> | | | | ->40.48% (826,445,820B) 0x2B4A23: cache_or_unpack_entry (packfile.c:1438)
+> | | | |   ->40.48% (826,445,820B) 0x2B4A23: packed_object_info (packfile.c:1516)
+> | | | |     ->40.48% (826,445,820B) 0x29EA83: do_oid_object_info_extended (object-file.c:1620)
+> | | | |       ->40.48% (826,445,820B) 0x29EBDB: oid_object_info_extended (object-file.c:1639)
+> | | | |         ->40.48% (826,445,820B) 0x29EDC3: read_object (object-file.c:1671)
+> | | | |           ->40.48% (826,445,820B) 0x29EE5B: read_object_file_extended (object-file.c:1714)
+> | | | |             ->40.12% (819,056,147B) 0x2143BB: repo_read_object_file (object-store.h:253)
+> | | | |             | ->40.12% (819,056,147B) 0x2143BB: repo_parse_commit_internal (commit.c:511)
+> | | | |             |   ->40.12% (819,056,147B) 0x2143BB: repo_parse_commit_internal (commit.c:495)
+> | | | |             |     ->40.12% (819,056,147B) 0x25A747: repo_parse_commit (commit.h:90)
+> | | | |             |       ->40.12% (819,056,147B) 0x25A747: fsck_walk_commit (fsck.c:355)
+
+OK, so we're holding onto commit buffers after parsing them. We probably
+should tell the parser not to do that. It's useful for git-log, etc,
+which are going to pretty-print the buffer, but not for this use. You
+can set the global save_commit_buffer to do that.
+
+> | | ->08.61% (175,870,114B) 0x2B9DC3: patch_delta (patch-delta.c:36)
+> | | | ->08.61% (175,870,114B) 0x2B42EB: unpack_entry (packfile.c:1829)
+> | | |   ->08.61% (175,870,114B) 0x2B4A23: cache_or_unpack_entry (packfile.c:1438)
+> | | |     ->08.61% (175,870,114B) 0x2B4A23: packed_object_info (packfile.c:1516)
+> | | |       ->08.61% (175,870,114B) 0x29EA83: do_oid_object_info_extended (object-file.c:1620)
+> | | |         ->08.61% (175,870,114B) 0x29EBDB: oid_object_info_extended (object-file.c:1639)
+> | | |           ->08.61% (175,870,114B) 0x29EDC3: read_object (object-file.c:1671)
+> | | |             ->08.61% (175,870,114B) 0x29EE5B: read_object_file_extended (object-file.c:1714)
+> | | |               ->04.52% (92,219,588B) 0x3461CB: repo_read_object_file (object-store.h:253)
+> | | |               | ->04.52% (92,219,588B) 0x3461CB: parse_tree_gently.part.0 (tree.c:132)
+> | | |               |   ->04.52% (92,219,588B) 0x25A4EB: parse_tree (tree.h:24)
+> | | |               |     ->04.52% (92,219,588B) 0x25A4EB: fsck_walk_tree (fsck.c:307)
+
+And this is data we've allocated for trees. It kind of looks like
+fsck_walk_tree() never bothers to clean up the trees it parses, leaving
+the buffers attached to the tree structs. But that can't be the case,
+because linux.git has something like 16GB of trees. These may be entries
+we keep in the internal delta cache, though it should be a bit smaller
+than what you have here (the default is 96MB; you can drop it with
+core.deltaBaseCacheLimit, but runtime may suffer).
+
+There's a call to free_tree_buffer() in builtin/fsck.c:traverse_one();
+that may be what ends up freeing things. It's been a while since I've
+traced through the call paths for fsck.
+
+> But, not having delved too deeply into the code, I wanted to ask the list if
+> anything jumps out as to why `git-fsck` consumes so much more memory than
+> `git-rev-list`--perhaps there is opportunity for improvement/optimization?
+
+The patch below improves my peak heap (as reported by massif) for "git
+fsck --connectivity-only" on linux.git from ~2GB to ~1GB.
+
+But in general, I think "rev-list" is a better tool for connectivity
+checks. One problem with fsck is that it tries to read the set of
+available objects up front, making it racy in a repository which is
+receiving pushes, or which may be repacked (e.g., if somebody makes a
+new object and references it, "fsck --connectivity-only" may fail to
+notice the new object but will see the updated ref, and think the ref is
+corrupt).
+
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index f7916f06ed..949073a00d 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -853,6 +853,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
  
- static int compare_by_mtime(const void *a_, const void *b_)
-@@ -1883,7 +1884,7 @@ static int compare_by_mtime(const void *a_, const void *b_)
+ 	errors_found = 0;
+ 	read_replace_refs = 0;
++	save_commit_buffer = 0;
  
- static int fill_included_packs_all(struct repository *r,
- 				   struct multi_pack_index *m,
--				   unsigned char *include_pack)
-+				   struct repack_info *pack_info)
- {
- 	uint32_t i, count = 0;
- 	int pack_kept_objects = 0;
-@@ -1896,7 +1897,7 @@ static int fill_included_packs_all(struct repository *r,
- 		if (!pack_kept_objects && m->packs[i]->pack_keep)
- 			continue;
+ 	argc = parse_options(argc, argv, prefix, fsck_opts, fsck_usage, 0);
  
--		include_pack[i] = 1;
-+		pack_info[i].include = 1;
- 		count++;
- 	}
- 
-@@ -1906,7 +1907,6 @@ static int fill_included_packs_all(struct repository *r,
- static int fill_included_packs_batch(struct repository *r,
- 				     struct multi_pack_index *m,
- 				     struct repack_info *pack_info,
--				     unsigned char *include_pack,
- 				     size_t batch_size)
- {
- 	uint32_t i, packs_to_repack;
-@@ -1918,8 +1918,8 @@ static int fill_included_packs_batch(struct repository *r,
- 	total_size = 0;
- 	packs_to_repack = 0;
- 	for (i = 0; total_size < batch_size && i < m->num_packs; i++) {
--		int pack_int_id = pack_info[i].pack_int_id;
--		struct packed_git *p = m->packs[pack_int_id];
-+		struct repack_info *info = &pack_info[i];
-+		struct packed_git *p = m->packs[info->pack_int_id];
- 		size_t expected_size;
- 
- 		if (!p)
-@@ -1938,7 +1938,8 @@ static int fill_included_packs_batch(struct repository *r,
- 
- 		packs_to_repack++;
- 		total_size += expected_size;
--		include_pack[pack_int_id] = 1;
-+
-+		info->include = 1;
- 	}
- 
- 	if (packs_to_repack < 2)
-@@ -1951,7 +1952,6 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- {
- 	int result = 0;
- 	uint32_t i;
--	unsigned char *include_pack;
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	FILE *cmd_in;
- 	struct strbuf base_name = STRBUF_INIT;
-@@ -1970,7 +1970,6 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 	if (!m)
- 		return 0;
- 
--	CALLOC_ARRAY(include_pack, m->num_packs);
- 	CALLOC_ARRAY(pack_info, m->num_packs);
- 
- 	for (i = 0; i < m->num_packs; i++) {
-@@ -1988,10 +1987,9 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 	QSORT(pack_info, m->num_packs, compare_by_mtime);
- 
- 	if (batch_size) {
--		if (fill_included_packs_batch(r, m, pack_info, include_pack,
--					      batch_size))
-+		if (fill_included_packs_batch(r, m, pack_info, batch_size))
- 			goto cleanup;
--	} else if (fill_included_packs_all(r, m, include_pack))
-+	} else if (fill_included_packs_all(r, m, pack_info))
- 		goto cleanup;
- 
- 	repo_config_get_bool(r, "repack.usedeltabaseoffset", &delta_base_offset);
-@@ -2035,7 +2033,7 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 		strbuf_strip_suffix(&scratch, ".idx");
- 		strbuf_addstr(&scratch, ".pack");
- 
--		fprintf(cmd_in, "%s%s\n", include_pack[info->pack_int_id] ? "" : "^", scratch.buf);
-+		fprintf(cmd_in, "%s%s\n", info->include ? "" : "^", scratch.buf);
- 	}
- 	fclose(cmd_in);
- 	strbuf_release(&scratch);
-@@ -2050,6 +2048,5 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 
- cleanup:
- 	free(pack_info);
--	free(include_pack);
- 	return result;
- }
--- 
-2.37.0.1.g1379af2e9d
+
+-Peff
