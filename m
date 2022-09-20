@@ -2,138 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E48BECAAD8
-	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 14:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2D0FC54EE9
+	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 15:10:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbiITO6n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Sep 2022 10:58:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34550 "EHLO
+        id S230107AbiITPJ6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Sep 2022 11:09:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230133AbiITO6m (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2022 10:58:42 -0400
-Received: from outbound6.mail.transip.nl (outbound6.mail.transip.nl [IPv6:2a01:7c8:7c9:ca11:136:144:136:128])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F27014F3B9
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 07:58:38 -0700 (PDT)
-Received: from submission13.mail.transip.nl (unknown [10.103.8.164])
-        by outbound6.mail.transip.nl (Postfix) with ESMTP id 4MX4Rw5hMkzwLHxN;
-        Tue, 20 Sep 2022 16:58:36 +0200 (CEST)
-Received: from [131.180.45.14] (x045014.tudelft.net [131.180.45.14])
-        by submission13.mail.transip.nl (Postfix) with ESMTPA id 4MX4Rv5qQBz1yFR;
-        Tue, 20 Sep 2022 16:58:35 +0200 (CEST)
-Message-ID: <2c29ca18-4b45-af44-5690-0b9804a81461@fwdekker.com>
-Date:   Tue, 20 Sep 2022 16:58:35 +0200
+        with ESMTP id S230187AbiITPJt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2022 11:09:49 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5575D11809
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 08:09:48 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id y3so6976649ejc.1
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 08:09:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=Z5t/1tdRNVdKl49mxozf+T1tFs69b0hkL/gxOTfg3m4=;
+        b=mgUW9tSuOyg3Dx9iqD0VeT3plLTzHDKeRh9S5cttAVl6WuE52FJJOhqVlfrfvyiBhT
+         R4ZX6IVh555CDldotF3gL2mHi+D9586zt6HAxdi5jSMP8hG05qc4cEWVJUG0JnjT9v6Y
+         +CzzhOXO5oqQMoRDRvZHOEF9m+bqI7YfvhSyIvBZi7MjfZrK1JRZYwSOq/+YtxfaWM+j
+         H+hhH47IvbGEEf41TBSIfUF86GsbeQ+iWGzL2GMnCPoipgefkNyIMnODv4pWt/EpDFwm
+         KauydUCYLkhhpdn4DO8Gr8qL1/2gs+WqdpNF+PH85Km1vvZZopkYwcXh6Wgy/nNFFmDt
+         /zIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=Z5t/1tdRNVdKl49mxozf+T1tFs69b0hkL/gxOTfg3m4=;
+        b=cz3j01+aJY+d5U13tfB202nkvBWa/VxF3F792H1e5rIDDOc84lDOTevKcEtTDReGrF
+         JbBmYRRfDyDbrdhvIAiDfD3H1GFBHztH3a/ZF1htPdz18jf6rDcPbqZZ7HjrAx7f5yik
+         M+cEDewvhcJQDJHUOo7LS7yPNeEwD9fJoxLmlX/DkyFEbcoHyTMVqR/KlMn4EHsvGj4s
+         TdVOUl8DDaYs71hUvM9jg8O6QnkgwarRQQcUTAhcs7WH4i2MPzJWPEL2Ydaxnpog5PwB
+         Uq5oXNNIFtn3dXsJuCOYAoEmOHDwj/tygOXqMJpbyZb9xBzkqms7v2u7sXNzd3nsUY/6
+         f7dA==
+X-Gm-Message-State: ACrzQf0Xt0FUpv6RJjPbg5iJK+4D9qg0a43XbxD2z+rKJDnXVlvmEQ1j
+        btGOQ8FxHV2WigEwykisHcaH5i4atujrLv7qx4g=
+X-Google-Smtp-Source: AMsMyM7Wm+XKWZUZgvYRk9pSIURyU3HCFpBzCIB11jPvYnS2tOjh/jPdcnoztjJaou3Z5Kly9uGihGk7UCQq87p3zUg=
+X-Received: by 2002:a17:906:eecb:b0:73c:5c85:142b with SMTP id
+ wu11-20020a170906eecb00b0073c5c85142bmr17362292ejb.433.1663686586652; Tue, 20
+ Sep 2022 08:09:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-References: <2e846a72-a4c6-2a5a-255a-15eee037f574@fwdekker.com>
- <854127f2-55aa-5636-813d-d91b8a4cdcbc@web.de>
- <f13bc5aa-dadd-a895-eeca-79bd77c5363b@fwdekker.com>
- <220919.86mtav60wi.gmgdl@evledraar.gmail.com>
- <YyiIkMcADVu+Qbht@tapette.crustytoothpaste.net>
- <220920.86edw65ngv.gmgdl@evledraar.gmail.com>
-Content-Language: en-GB
-From:   "Florine W. Dekker" <florine@fwdekker.com>
-Subject: Re: Wildcards in mailmap to hide transgender people's deadnames
-In-Reply-To: <220920.86edw65ngv.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: ClueGetter at submission13.mail.transip.nl
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=transip-a; d=fwdekker.com; t=1663685915; h=from:subject:to:cc:
- references:in-reply-to:date:mime-version:content-type;
- bh=GzWH91PG4jTwkEXXsCvHmPLv/CH/0vvdmA4XsHQrMe4=;
- b=FEjU9vmh9Br1kNjEwCTY96ny7EZNTVO1NJukcEu5O6foNLRz8rN2agtUtADPoxzYGHriBv
- lT8UibTdlvBYsF6mQtfo/vn0Lhg2HNs9o+HyaSOag8Pw+YsMtCxTROnBfuBd26lReM8IY7
- 6w9jRF3NPMgZ1Xs3xu2DQSuHOku1quMgOncAjyjSuHfcx9cmjGbcWpRJvaKoMybXSK+FQL
- hdRCmz3jp6YIZsvkj9O7XNAoJf+zFNsCeHMkRnHkA481a3quEqrzv+2A4nHiJWvbOUPCeB
- u7vNpdQNnXaXLGatz6G/JQ+G26L1QYwoOEgg1i64B1gME38qKbxrywF6eWBCfA==
-X-Report-Abuse-To: abuse@transip.nl
+References: <pull.1357.git.1663609659.gitgitgadget@gmail.com>
+ <38ec2360f4fbfe65fa2d9f1e9cfb7d4944d1714f.1663609659.git.gitgitgadget@gmail.com>
+ <b727c25c-469f-ca56-bbd6-82f82c762523@github.com> <xmqqr10781lx.fsf@gitster.g>
+ <990f84f9-fdd9-0d0a-4fc0-d0dbd19ee5a9@github.com>
+In-Reply-To: <990f84f9-fdd9-0d0a-4fc0-d0dbd19ee5a9@github.com>
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Date:   Tue, 20 Sep 2022 20:39:34 +0530
+Message-ID: <CAPOJW5yeg-+5F-Tabdt2PbmBg=qebF-7F38rFaGKJ7zROrSRqQ@mail.gmail.com>
+Subject: Re: [PATCH 2/5] roaring.[ch]: apply Git specific changes to the
+ roaring API
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Abhradeep Chakraborty via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaram <kaartic.sivaraam@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/09/2022 12:23, Ævar Arnfjörð Bjarmason wrote:
->> I'm happy to resurrect my SHA-256 hashed mailmap series if we're
->> all willing to agree to not implement trivial decoding features.
-> I'd think you'd want to be really clear about what that forward promise
-> would entail. E.g. I've sometimes wanted a way for "git log" to report
-> when it munges commits due to adding notes, re-encoding the data etc. If
-> someone submits that sort of feature should it always explicitly leave
-> out mailmap-related rewrites?
+On Tue, Sep 20, 2022 at 5:49 PM Derrick Stolee <derrickstolee@github.com> wrote:
 >
-> And even if it does, who do we think we're really helping in the end,
-> given the trivial way you could get that with an external "diff" with
-> the one-liner above?
-
-I think the most important thing here is that the mailmap should not 
-allow for even-more-trivial ways to discover old names than currently 
-already exist. I've thought more about what you said, Ævar, and now I'm 
-wary of a mailmap implementation that would entail having my old and new 
-information next to each other, even if encoded (doesn't matter if it's 
-URL-encoded or base64-encoded), because I think it's likely some 
-external data mining tool will decode the address and place them next to 
-each other, so that if you search for the email address in a search 
-engine you'll also see the other address. I think a hash encoding will 
-prevent these automated miners from doing that, since reversing a hash 
-is too much effort for an untargeted attack (right? if you disagree, how 
-about a salted hash?).
-
-Either way, I think any mailmap-based solution will allow the old and 
-new name to be linked to each other by an adversary, as you showed with 
-your neat one-liner. However, I think a (salted?) hash in the mailmap 
-will be sufficient for casual obfuscation where harassment is unlikely, 
-but the user wants to prevent accidental disclosure or plain linkage.
-
->> I also have an alternate proposal which I pitched to some folks at Git
->> Merge and which I just finished writing up that basically moves personal
->> names and emails out of commits, replacing them with opaque identifiers,
->> and using a constantly squashed mailmap commit in a special ref to store
->> the mapping.  This doesn't address changing identities in existing
->> commits, which as we've seen are nearly impossible to fix, but it does
->> address new ones.  I've sent it out at
->> https://lore.kernel.org/git/20220919145231.48245-1-sandals@crustytoothpaste.net/.
-> As I understand the difference in this scenario a hypothetical future
-> repo's Y commit's authorship would have been opaque in the first place
-> using this mechanism, and via your "refs/mailmap" you'd have mapped
-> Y=Bob.
+> On 9/19/2022 6:02 PM, Junio C Hamano wrote:
+> > Derrick Stolee <derrickstolee@github.com> writes:
+> >
+> >>>  int32_t array_container_write(const array_container_t *container, char *buf);
+> >>> +
+> >>> +int array_container_network_write(const array_container_t *container,
+> >>> +                             int (*write_fn) (void *, const void *, size_t),
+> >>> +                             void *data);
+> >>
+> >> Should we make write_fn a defined type? I'm not sure I've seen this
+> >> implicit type within a function declaration before.
+> >
+> > Unless we can point out why having a named type is a good idea
+> > (e.g. we add such a function pointer as a member of a struct, or we
+> > keep a variable of that type somewhere), I actually would prefer to
+> > do without them.
+> >
+> > Perhaps there are some more important reasons I am missing why we
+> > often come up with explicit types for callback function pointers in
+> > many parts of our API, but if there aren't, my preference actually
+> > is to lose them, not add more of them.
+> >
+> > Hmph.... could "a typedef can become a place to give definitive
+> > documentation for the class of callback functions" be a good reason
+> > why we would want one?  I dunno.
+> >
+> > In the posted patch, readers cannot tell what kind of three
+> > parameters they are supposed to give to write_fn().
 >
-> You then make a future X commit, and map X=Alice, and have a .mailmap
-> entry which mapped Y=X, but that entry would refer to the opaque value.
+> This is exactly my reasoning. Having a clear definition gives us an
+> opportunity to document what each parameter is for, even if it is
+> just a variable name.
+
+Agreed.
+
+> This anonymous type is used in multiple places, so it can be helpful
+> to know that the type is connected across call sites or a stack of
+> method calls.
 >
-> That certainly changes things in a fundamental way, and goes most or all
-> of the way to mitigating what I've been pointing out as a flaw in these
-> proposals.
->
-> I'd still be very much on the fence about whether we'd ever want to
-> recommend that to someone concerned with "harassment" and the like (as
-> opposed to a milder social preference), as all it would take to get to
-> that point is someone having a copy of the older "refs/mailmap" to
-> unmask the previous "Y".
+> In the unlikely event that we needed to modify this callback
+> signature, changing it in one place makes it clear that we cover
+> all connected uses instead of tracking all of these anonymous
+> functions across multiple methods.
 
-I first want to say that I really like your proposal, Brian! I didn't 
-think this subject would get the attention it did, but I'm happy it's 
-being picked up the way it is, and to see this lively discussion going 
-on between yall!
-
-And Ævar, you're right that having an older copy would allow one to 
-discover a mapping from the old to the new name. But this will happen in 
-any way we can conceivably implement this because the adversary can 
-always keep an old copy of the entire repo, clone the new one, and 
-compare the two logs. (You can probably come up with a neat one-liner, 
-but that's besides the point ;-).) I think that the most appropriate 
-threat model here is to assume that everyone who has accessed the repo 
-before the name change will notice the name change and will be able to 
-create a mapping. Instead, our goal should be to create a system that 
-ensures that people who first access the repo after the name change are 
-unable to find the old name at all. I think Brian's proposal achieves 
-this. This is analogous to the real world where people who knew me 
-before my transition will probably never (completely) forget my old 
-name, and it's useless to try to make that happen, but at least I can 
-prevent new people I meet from finding out the old name.
-
-- Florine
-
-
+Got it. Thanks!
