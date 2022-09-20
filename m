@@ -2,108 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCDB2C6FA82
-	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 00:43:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D7F8C6FA82
+	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 00:57:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229659AbiITAnf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Sep 2022 20:43:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46470 "EHLO
+        id S229496AbiITA5Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Sep 2022 20:57:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229561AbiITAnd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2022 20:43:33 -0400
-Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A17052808
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 17:43:31 -0700 (PDT)
-Received: by mail-vs1-xe2a.google.com with SMTP id p4so1396529vsa.9
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 17:43:31 -0700 (PDT)
+        with ESMTP id S229586AbiITA5X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2022 20:57:23 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D9E4A11C
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 17:57:21 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id c7so951998pgt.11
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 17:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=KIot9/ofDZflPsLVsrK6VhE5RdEDapppFzIjW1/cwWg=;
-        b=bGU+Mbuk589H0CHjZK4oGLfXy6wxYhuGuhAxr9B2AEO1ciIfJuUObhdKXmaOYqgp96
-         IgmOgtDfM+bTcqDa6QtCRokPkd/KGF4JmmfFQ0bRa8RXmpCGWwJbN04OtLELUd09kNdD
-         Q0tZM7kFVRQj8CSHkW5mhKhQzfKcILiTgWcIPF2bVza9u2K/qOdeis3DDeS2lWQsyyOv
-         BXUOHIvpkceHmamscNHa5eDfez3xhAlhb7AKZcTH9Ca0lSEYOCCWTqZRKGyg3VYUz0bz
-         dfPhl4XQM31OFZvDnf5MXIxPieensX/g0p3oGkJK2pEsPTUNRE6M8UFJSE5wn5Gi8SQx
-         7PMw==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=ZwMu9BLtHqfs1W9ijQxE/1rjIyffGOkOteg67bJ/Jak=;
+        b=dRiQL4s50o8LCuCTTRvlInCMTIDgOBfrIQ4/WPuhamAAYG3oM5HQ6Q9SH+exv3qEFi
+         pxj9BnTke0fGU4Cd+C0rOA5rvSM+pmOY0Le26sMLaEylJLdvzfRm9c21CA7BBBUB+CfL
+         EqS1HFQJ/8N++MNEvPETB955ATKH4/jV7xIFZ710vrMPVHBonViQLH43QV16GMFRyb90
+         17w3NCoi+rn5ztOjcDrsBZu5Ufn/UELwPG1mjoJ7lMbwtNuV5Ao5DXhOuLiDMkrTtYK+
+         sDA6ZCUySp57jm6vKKAnR/FpT446QO2T3dHPsgqbAA9nSMR7WyhtPnp4plzJwYsKZhQp
+         gYbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=KIot9/ofDZflPsLVsrK6VhE5RdEDapppFzIjW1/cwWg=;
-        b=k/+XzE7Kv663F6C0u8OdlJwc62YgwAPKt/Pr1ntzHgxgPVCXOBsNqijmg3Prn07Lhp
-         cIKXIFnxpCr9EwIoXA8fNOzulgW1Y4x3H3UsD0RzGVj6E0lHHdfidNKi4fApeQ4C3hKh
-         klsJtQ24vXXjElgA2f2vLvsOjQhdguJsjJ5VKc+Chzx4twlEMofTMvDRBR2iYqrBMcBb
-         tkADb/OPKwgmo3r+DB7D9q6KNWomAj/LTbeBFlvxa6mGGOJu4HUyM3JW8E3OTCjDKfel
-         YInyuDw3Tf1Kq9XKv069IBXDwDyaDxzpfs05wXV8G9/uTKHXXNY83R9yBzbbYZ2aQ6Zg
-         2jvw==
-X-Gm-Message-State: ACrzQf3N/Enfaf0auIZVt/Qh9qWG2sGifqNY6lx/B+x5NqBSyGOY0jmE
-        XCfNMSH2HYBmEbY9oJMW7ye68oKIqHo8bQ6u5pY=
-X-Google-Smtp-Source: AMsMyM6V7vVQ9ntlUtVfQWEGy900M4A0KleYaxebCh5k6KjuLLiMowIzzzhieR7L0mvbOH2R7CGNcMFYXyh5Q/pdXhY=
-X-Received: by 2002:a67:ca9b:0:b0:398:4fc7:b09d with SMTP id
- a27-20020a67ca9b000000b003984fc7b09dmr7454578vsl.12.1663634610304; Mon, 19
- Sep 2022 17:43:30 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=ZwMu9BLtHqfs1W9ijQxE/1rjIyffGOkOteg67bJ/Jak=;
+        b=Yp44wSwZqvYQjdhOi5ZvRgq9arc0cEeCZPvy3dwTcS03jjwgg/kuHTyToLypr50e4/
+         bXeTI1jkL15eZ3AT0jiqqaAxDCnCePVcVMX17Tm9765QJMWG0bGFxT7MXbJJowzevFb6
+         7oqbguv/EGsPDzW47DnwrezmF9nO0Adqppazw9yDl1fpy4R/byZIh6FaBSpTkyXM0Trp
+         uanalQq7Swi8zOyegT5a5xpFa9Tf3fb4PoBzAKQKRWMSwSxCbiWxOquJavO4EeEAOioH
+         kEYgxd1hIKd61TRqiwBWZbnI6N4YX74IhpArQdc9gdh2qRStlk1uCWsiNVx4MVtvVfT4
+         XAoA==
+X-Gm-Message-State: ACrzQf1jQ+kbcr5tTsoSRpVWCiXuKRdttvSgR3m/pYutmoErxF04HeLD
+        Ej7+794oz1Jftttb6Q9W2kKA
+X-Google-Smtp-Source: AMsMyM7K2lSoQKTnBo9DELp7gg1V047n0VEZiTFSoQk059sCRh+B2mmB59di71+PHTgCPpDr3hqQfw==
+X-Received: by 2002:a63:4f4f:0:b0:434:b9db:b9f with SMTP id p15-20020a634f4f000000b00434b9db0b9fmr18653940pgl.438.1663635440533;
+        Mon, 19 Sep 2022 17:57:20 -0700 (PDT)
+Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id u82-20020a627955000000b00528bd940390sm3790pfc.153.2022.09.19.17.57.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Sep 2022 17:57:20 -0700 (PDT)
+Message-ID: <07b35632-8e3c-fea1-0996-fb2e88ea6ba8@github.com>
+Date:   Mon, 19 Sep 2022 17:57:18 -0700
 MIME-Version: 1.0
-References: <pull.1348.git.1662747205235.gitgitgadget@gmail.com> <pull.1348.v2.git.1663614767058.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1348.v2.git.1663614767058.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 19 Sep 2022 17:43:15 -0700
-Message-ID: <CABPp-BEB_+YoKZ=U6NPc8J+KZyMSYRsom34CeqjxUCyw0=LEyg@mail.gmail.com>
-Subject: Re: [PATCH v2] Documentation: add ReviewingGuidelines
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Josh Steadmon <steadmon@google.com>,
-        Glen Choo <chooglen@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.13.0
+Subject: Re: [PATCH 00/34] doc/UX: make txt & -h output more consistent
+Content-Language: en-US
+From:   Victoria Dye <vdye@github.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        John Cai <johncai86@gmail.com>
+References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
+ <af319ab4-2351-2d74-e0c7-6153f229d88c@github.com>
+In-Reply-To: <af319ab4-2351-2d74-e0c7-6153f229d88c@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 19, 2022 at 12:21 PM Victoria Dye via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-[...]
-> +==== Performing your review
-> +- Provide your review comments per-patch in a plaintext "Reply-All" email to the
-> +  relevant patch. Comments should be made inline, immediately below the relevant
-> +  section(s).
-> +
-> +- You may find that the limited context provided in the patch diff is sometimes
-> +  insufficient for a thorough review. In such cases, you can review patches in
-> +  your local tree by either applying patches with linkgit:git-am[1] or checking
-> +  out the associated branch from https://github.com/gitster/git once the series
-> +  is tracked there.
+Victoria Dye wrote:
+> If I could offer a suggestion, my preference would be that you split the
+> series into three parts: one with the straightforward, easier-to-review
+> changes, another with the more substantial updates to user-facing
+> docs/information (which might warrant more discussion, i.e. which options we
+> should be showing for a command in the SYNOPSIS/-h), and the last catching
+> any new inconsistencies & adding the test. That way, more involved
+> discussion on some patches doesn't prevent *all* of them from being merged.
+> 
+> I think the following patches would fit a "straightforward,
+> easier-to-review" series:
+> 
+> * Patch 1 (CodingGuidelines: update and clarify command-line conventions)
+> * Patch 2 (builtin/bundle.c: use \t, not fix indentation 2-SP indentation)
+> * Patch 3 (bundle: define subcommand -h in terms of command -h)
+> * Patch 5 (doc SYNOPSIS: don't use ' for subcommands)
+> * Patch 6 (doc SYNOPSIS: consistently use ' for commands)
+> * Patch 7 (doc SYNOPSIS & -h: fix incorrect alternates syntax)
+> * Patch 8 (built-ins: consistently add "\n" between "usage" and options)
+> * Patch 9 (doc txt & -h consistency: word-wrap)
+> * Patch 10 (doc txt & -h consistency: fix incorrect alternates syntax)
+> * Patch 12 (doc txt & -h consistency: add missing "]" to bugreport "-h")
+> * Patch 13 (doc txt & -h consistency: correct padding around "[]()")
+> * Patch 14 (stash doc SYNOPSIS & -h: correct padding around "[]()")
+> * Patch 15 (doc txt & -h consistency: use "<options>", not "<options>...")
+> * Patch 16 (t/helper/test-proc-receive.c: use "<options>", not
+>   "<options>...")
+> * Patch 17 (doc txt & -h consistency: fix mismatching labels)
+> * Patch 18 (doc txt & -h consistency: add or fix optional "--" syntax)
+> 
+> (basically, 1-18, skipping patch 4 because it changes the content of an
+> error message & patch 11 because it adds an option to the -h of 'cat-file')
+> 
+> In terms of review, my only comment on those patches is that 7 & 10 could
+> probably benefit from being squashed together [1]. Otherwise, with the
+> changes you mentioned in response to Junio's feedback [2], I think that
+> subset of the series would be ready to merge.
+> 
 
-Lots of reviews also come with "Fetch-It-Via" instructions in the
-cover letter, making it really easy to grab.  Might be worth
-mentioning?
+I forgot to mention this in the previous message, but it's probably worth
+noting - regardless of whether or not you split the series, I am still
+planning to review the remaining patches you've submitted here (that is,
+everything *other than* what's in the list above, which I've already looked
+over/commented on). I likely won't get the chance until later this week at
+the earliest, though.
 
-Also, would it make sense for us to replace "applying" with
-"downloading and applying", perhaps mentioning `b4 am` for the
-downloading half?
-
-(I tend to use the Fetch-It-Via or wait for it to show up in
-gitster/git, but b4 is really nice for the other cases.)
-
-> +- Large, complicated patch diffs are sometimes unavoidable, such as when they
-> +  refactor existing code. If you find such a patch difficult to parse, try
-> +  reviewing the diff produced with the `--color-moved` and/or
-> +  `--ignore-space-change` options.
-
-Similarly, Documentation refactorings or significant rewordings are
-sometimes easier to view with --color-words or --color-words=.
-
-[...]
-> +See Also
-> +--------
-> +link:MyFirstContribution.html[MyFirstContribution]
->
-> base-commit: 79f2338b3746d23454308648b2491e5beba4beff
-
-I like this document!  I had a couple ideas that might or might not
-make sense to include in the document; it looks good to me either way.
+Thanks!
+-Victoria
