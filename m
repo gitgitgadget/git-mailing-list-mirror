@@ -2,291 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8F5AC6FA8E
-	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 08:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFF80ECAAD8
+	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 08:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230220AbiITI3L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Sep 2022 04:29:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45126 "EHLO
+        id S231482AbiITIkS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Sep 2022 04:40:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230322AbiITI2I (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2022 04:28:08 -0400
+        with ESMTP id S231434AbiITIjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2022 04:39:52 -0400
 Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FDE76A4BF
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 01:26:31 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id e18so1324456wmq.3
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 01:26:30 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8475D1144
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 01:38:56 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id o5so1366326wms.1
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 01:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
-         :from:to:cc:subject:date;
-        bh=3wZvvZAD5oUiJUpoaDJMqPhdoZrRLq9vo+kCgYvAuMU=;
-        b=UBuVbxiL6+L3DoBkOkihlvORcS+VnCUex3noXqallUx2JDibxEAFwVEwyGPoYM1mpr
-         8YJgiycXbceiOv8K9uU72sweyllY2ZozAj5MDGAFUXAce3zznyfnlplnDxULdxe4zsSc
-         b9rO73nkyXe8nZlBbPfLc7RXQtHc8u/OYzmF+pBpVwuJS3i0KRAziqdU13Hy34j1C0Cy
-         6ykwlNpOL3r6zKY/dXrIwS42O7yIkAmXDf6nKDTdS+wk5Ivd8L6OZFYnrZ0uGxNoygMz
-         T69HRKMGdtta9klemzrCldTOQooSR9w/QCZzurd1KPCNiyuzPK8suTIOACyABw7uzjQ1
-         yOfA==
+        h=content-transfer-encoding:in-reply-to:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date;
+        bh=HKfvkZVphmx55tXQIdckR4zx/Hz3mrU5+vK8DQLLNk0=;
+        b=RtddDEnn7ULU8xXYsa9aS3DQeaSZU0/nprMWvejXnMmWUNjJSHSxg51M0osi9IEWH/
+         ZQJEe/58/OYHZBbYojkovVWBt36Kyl9flBoGi3H7H69o+KD33ZbqG+/oUkJAPjnGpNfI
+         CMQKdT3VEZFc2ZpA5kBpoHcD3G/KNssgxgJKZYgusM9UK7yWHM/WgZvuH17P3uMxgP1F
+         yvTCOgULti9H2hqyEShvGFHhbDIQbmDOUh1eKXznlTRcXyZ+LWbi/m8/VXYKQjV02+7f
+         nBZ6EzSSSL45fMzLj5KfX+S0904M9JVmEA+TqA4tu1rMkA+SuLocGvoOKupikWhyo0m3
+         G6Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=3wZvvZAD5oUiJUpoaDJMqPhdoZrRLq9vo+kCgYvAuMU=;
-        b=kDBQo29ifFYOgv7XfGr+nrI9gtjsLixTABHpPkuvcSaeMeRNiqRoHLVX36RbkRlNud
-         +YYj9AYmzg4fYwn5wWNW0AgMovAVbriOHqb9h/YlbrSOf4H18DCgFoBazSh0RqeqN83u
-         0nTU5tpClnJZpAMo1Cu5w8LnSkaIExxsxvXR2QyGYvrmzvm5Sya3XbmZrdOKc1DoyO46
-         6FvSNliNLNW7uFLa6ay4RwaU3CQeHb44UGT3nBZbCWf5tf3x780EJC6rsx3g2I+JIEE4
-         h8Ac6RcsjQcTlNvEkTdjopROSM3qS2xvfS7M3RAdAOBigqdpgWzPO1Wpmc6+o+dpCn2V
-         US+g==
-X-Gm-Message-State: ACrzQf3Wwpnc9bgk/pfwkBTQQL3goNQkaJQi0tU4ac3XSYmvB6yUorDH
-        7e3j385bHabIG7C3gOX4g1JnH17mfyVmsA==
-X-Google-Smtp-Source: AMsMyM6ZJIpao6Zon4fO1P9yEmwiPbEl0M9dofxypkaJ41i8jz5voccNCFxMW5PoExQS4BqbL1hXOQ==
-X-Received: by 2002:a05:600c:5028:b0:3a8:4349:153c with SMTP id n40-20020a05600c502800b003a84349153cmr1428606wmr.130.1663662388924;
-        Tue, 20 Sep 2022 01:26:28 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=HKfvkZVphmx55tXQIdckR4zx/Hz3mrU5+vK8DQLLNk0=;
+        b=PGSgHbytl6Fqb8BJTKYTLY1MqjKO+h5YW+HVtFqBsEKN7ITfxuhpzHJbnWzDMkCpIK
+         uV+aJhYTh9MCYKwDZd6Xnr2QuJC8TSnkKU98T9Eo7Bw+hte6PGc0I0zgkxKRXllYP9nH
+         T7Rro9c9PeLVhujs57ytmZLc0qK0lgrWnTtZL78JK65qj2B2XL3LpfsnWLBJHm5R8n9+
+         Utb2MqAr0ARD7QFrPfynu0RJBExpkCfiYN0yu9WxxUdsT6qAstVkFT9RcxZcTS8XfENt
+         aOLjqKfCgn3DvemB43GW1Ql+yVhCEhdZrQeCUwS7MHMBvAmpLU7LR9qjVLLVREmNfLka
+         yTYA==
+X-Gm-Message-State: ACrzQf3vABgcqBIGVe15rD097XdPxznHGwYohjVvsSNNfdetbhg40/iZ
+        bIrBhegrzT4nJJcnAVe2OT8=
+X-Google-Smtp-Source: AMsMyM4ZFeCvCuRC3kUGRIf2cP5EC6abfmndN5jZEXiEqB/eckChMhRfa9A3DNs1OqQ6aplHkrMs1g==
+X-Received: by 2002:a05:600c:4f13:b0:3b4:9a07:efdb with SMTP id l19-20020a05600c4f1300b003b49a07efdbmr1477887wmq.94.1663663134967;
+        Tue, 20 Sep 2022 01:38:54 -0700 (PDT)
 Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id h22-20020a05600c2cb600b003b4868eb71bsm18423635wmc.25.2022.09.20.01.26.28
+        by smtp.gmail.com with ESMTPSA id q9-20020adff509000000b0022aeba020casm920188wro.83.2022.09.20.01.38.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Sep 2022 01:26:28 -0700 (PDT)
+        Tue, 20 Sep 2022 01:38:54 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <8909c02d-3fd0-a0bb-ebc2-0a640febce53@dunelm.org.uk>
-Date:   Tue, 20 Sep 2022 09:26:27 +0100
+Message-ID: <07e739b7-bb60-c23f-7077-2c8f8cc00b62@dunelm.org.uk>
+Date:   Tue, 20 Sep 2022 09:38:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.2
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] sequencer: avoid dropping fixup commit that targets
- self via commit-ish
-To:     Johannes Altmanninger <aclopte@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Erik Cervin Edin <erik@cervined.in>, git@vger.kernel.org
-References: <xmqqleqfcoz3.fsf@gitster.g>
- <20220920031140.1220220-1-aclopte@gmail.com>
+Subject: Re: Handling the Git trademark
 Content-Language: en-US
-In-Reply-To: <20220920031140.1220220-1-aclopte@gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>
+References: <CAP8UFD3WQ64FuXarugF+CJ_-5sFNBCnqPE0AEBK-Ka78ituKTg@mail.gmail.com>
+In-Reply-To: <CAP8UFD3WQ64FuXarugF+CJ_-5sFNBCnqPE0AEBK-Ka78ituKTg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes
+Hi Christian
 
-On 20/09/2022 04:11, Johannes Altmanninger wrote:
-> Commit 68d5d03bc4 (rebase: teach --autosquash to match on sha1 in
-> addition to message, 2010-11-04) taught autosquash to recognize
-> subjects like "fixup! 7a235b" where 7a235b is an OID-prefix. It
-> actually did more than advertised: 7a235b can be an arbitrary
-> commit-ish (as long as it's not trailed by spaces).
+On 13/09/2022 13:11, Christian Couder wrote:
+> Hi everyone,
 > 
-> Accidental(?) use of this secret feature revealed a bug where we
-> would silently drop a fixup commit. The bug can also be triggered
-> when using an OID-prefix but that's unlikely in practice.
+> The Git PLC (Project Leadership Committee) is responsible for handling
+> the "Git" trademark and the Git logo with help from the Software
+> Freedom Conservancy. And we would like at this point to report about
+> how we have been handling it, and to open the conversation about this
+> subject.
 > 
-> Given a commit with subject "fixup! main" that is the tip of the
-> branch "main". When computing the fixup target for this commit, we
-> find the commit itself. This is wrong because, by definition, a fixup
-> target must be an earlier commit in the todo list. We wrongly find
-> the current commit because we added it to the todo list prematurely.
-> Avoid these fixup-cycles by only adding the current commit after we
-> have finished finding its target.
+> We have a web page about our trademark policy on
+> https://git-scm.com/about/trademark. There, we list our guidelines for
+> others who would like to use our "Git" trademark. Unfortunately a
+> number of people don't respect our guidelines and use the trademark
+> without asking us first (sometimes in ways that we might not like).
+> 
+> If we don't enforce our trademark, there is a risk of us losing any
+> right to it. So far we have tried to enforce it, especially in cases
+> where people want to register a name based on it.
+> 
+> The issue we have with enforcing the Git trademark is that we don't
+> have much resources to enforce it. And in general we want to avoid
+> spending time and money enforcing our mark in all possible instances.
+> Legal discussions, going to court, etc can be very time and money
+> consuming, and we would prefer doing more productive things with our
+> resources instead.
+> 
+> So, as much as possible, we don't want to take legal action. For
+> example, we would much prefer to respond to a disagreeable use of our
+> mark by first contacting the party and asking politely for them to
+> change their use. Usually this is sufficient to deter infringing uses
+> of our mark.
+> 
+> We would be Ok if necessary to publicly say that for example one
+> company is using our trademark in a way we don't like. We think that
+> the threat of us doing that (if the company doesn't agree to change
+> the way they use it when we ask politely) is in most cases enough to
+> deter people from using it.
+> 
+> This way of handling issues has worked well so far. The reason we
+> think it works well, is that people think about the "Git" name as very
+> cool, and that's why they want to use it in their product or company
+> names. If the Git project would say that it doesn't like the way this
+> company is using the Git trademark, it would likely create some bad
+> buzz about that company and would go completely against their goal of
+> being perceived as cool.
+> 
+> Now we cannot be sure that this will always be enough to enforce it in
+> the future. We might have to go to court in some cases. Also we still
+> spend some time on this, so another possibility would be to stop
+> enforcing the trademark and the logo altogether.
+> 
+> We also would like to thank the Conservancy and the layers they have
+> hired for all the information, help, advice and guidance they have
+> provided on this.
+> 
+> Now we are open to your thoughts about this.
 
-Thanks for working on this, the fix for the fixup self reference looks 
-good. It's unfortunate that the implementation is not stricter when 
-parsing "fixup! <oid>" but it is more or less consistent with the shell 
-version which used "git rev-parse $subject"[1]. We should think about 
-being stricter but this fix avoids on of the worst pitfalls of our lax 
-parsing.
+Thanks for taking the time to start a discussion on this. My immediate 
+reaction is that it would be a shame to lose control of the trademark by 
+not enforcing it. If it is taking up too much of the leadership 
+committee's time perhaps we could consider asking for more volunteers to 
+handle some of the load. Would a few people volunteering a couple of 
+hours a month make a useful difference?
 
-Best Wishes
+One other thought is that there are a number of companies which use 
+"git" in their name that benefit indirectly from the git project 
+enforcing the trademark and thereby ensuring the name "git" is trusted. 
+If we were ever in the unfortunate position of having to take time 
+consuming (and presumably costly) legal action perhaps we could approach 
+them for support?
+
+Thank you to all the leadership committee for the time you spend 
+handling these administrative issues.
 
 Phillip
 
-[1] With regard to the oid vs subject prefix issue, I think the shell 
-version chose to fixup the first commit that matched either the oid or 
-the subject. At least the C version is consistent in preferring an oid 
-match over a subject prefix match even if I wish it was the other way round.
-
-> Reported-by: Erik Cervin Edin <erik@cervined.in>
-> Signed-off-by: Johannes Altmanninger <aclopte@gmail.com>
-> ---
->   sequencer.c                  |  4 ++--
->   t/t3415-rebase-autosquash.sh | 26 ++++++++++++++++++++++++++
->   2 files changed, 28 insertions(+), 2 deletions(-)
-> 
-> Changes to v1.
-> - Remove wrong assumptions from commit message. The commit message should
->    be clearer now (though I didn't spend too much time on it).
-> - Drop one test because it's not related to the fix (and doesn't test anything
->    I care about) and modify the other test so it requires the fix to pass.
-> 
-> 1:  cb2ee0e003 ! 1:  410ca51936 sequencer: avoid dropping fixup commit that targets self via commit-ish
->      @@ Commit message
->           sequencer: avoid dropping fixup commit that targets self via commit-ish
->       
->           Commit 68d5d03bc4 (rebase: teach --autosquash to match on sha1 in
->      -    addition to message, 2010-11-04) made --autosquash apply a commit
->      -    with subject "fixup! 012345" to the first commit in the todo list
->      -    whose OID starts with 012345. So far so good.
->      +    addition to message, 2010-11-04) taught autosquash to recognize
->      +    subjects like "fixup! 7a235b" where 7a235b is an OID-prefix. It
->      +    actually did more than advertised: 7a235b can be an arbitrary
->      +    commit-ish (as long as it's not trailed by spaces).
->       
->      -    More recently, c44a4c650c (rebase -i: rearrange fixup/squash lines
->      -    using the rebase--helper, 2017-07-14) reimplemented this logic in C
->      -    and introduced two behavior changes.
->      -    First, OID matches are given precedence over subject prefix
->      -    matches.  Second, instead of prefix-matching OIDs, we use
->      -    lookup_commit_reference_by_name().  This means that if 012345 is a
->      -    branch name, we will apply the fixup commit to the tip of that branch
->      -    (if that is present in the todo list).
->      +    Accidental(?) use of this secret feature revealed a bug where we
->      +    would silently drop a fixup commit. The bug can also be triggered
->      +    when using an OID-prefix but that's unlikely in practice.
->       
->      -    Both behavior changes might be motivated by performance concerns
->      -    (since the commit message mentions performance).  Looking through
->      -    the todo list to find a commit that matches the given prefix can be
->      -    more expensive than looking up an OID.  The runtime of the former is
->      -    of O(n*m) where n is the size of the todo list and m is the length
->      -    of a commit subject. However, if this is really a problem, we could
->      -    easily make it O(m) by constructing a trie (prefix tree).
->      -
->      -    Demonstrate both behavior changes by adding two test cases for
->      -    "fixup! foo" where foo is a commit-ish that is not an OID-prefix.
->      -    Arguably, this feature is very weird.  If no one uses it we should
->      -    consider removing it.
->      -
->      -    Regardless, there is one bad edge case to fix.  Let refspec "foo" point
->      -    to a commit with the subject "fixup! foo". Since rebase --autosquash
->      -    finds the fixup target via lookup_commit_reference_by_name(), the
->      -    fixup target is the fixup commit itself. Obviously this can't work.
->      -    We proceed with the broken invariant and drop the fixup commit
->      -    entirely.
->      -
->      -    The self-fixup was only allowed because the fixup commit was already
->      -    added to the preliminary todo list, which it shouldn't be.  Rather,
->      -    we should first compute the fixup target and only then add the fixup
->      -    commit to the todo list. Make it so, avoiding this error by design,
->      -    and add a third test for this case.
->      +    Given a commit with subject "fixup! main" that is the tip of the
->      +    branch "main". When computing the fixup target for this commit, we
->      +    find the commit itself. This is wrong because, by definition, a fixup
->      +    target must be an earlier commit in the todo list. We wrongly find
->      +    the current commit because we added it to the todo list prematurely.
->      +    Avoid these fixup-cycles by only adding the current commit after we
->      +    have finished finding its target.
->       
->           Reported-by: Erik Cervin Edin <erik@cervined.in>
->      -    Signed-off-by: Johannes Altmanninger <aclopte@gmail.com>
->      -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
->       
->        ## sequencer.c ##
->       @@ sequencer.c: int todo_list_rearrange_squash(struct todo_list *todo_list)
->      @@ t/t3415-rebase-autosquash.sh: test_expect_success 'auto squash that matches long
->       +test_expect_success 'auto squash that matches regex' '
->       +	git reset --hard base &&
->       +	git commit --allow-empty -m "hay needle hay" &&
->      -+	git commit --allow-empty -m "fixup! :/[n]eedle" &&
->      ++	git commit --allow-empty -m "fixup! :/needle" &&
->       +	GIT_SEQUENCE_EDITOR="cat >tmp" git rebase --autosquash -i HEAD^^ &&
->      -+	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p}" tmp >actual &&
->      ++	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p;}" tmp >actual &&
->       +	cat <<-EOF >expect &&
->       +	pick HASH hay needle hay # empty
->      -+	fixup HASH fixup! :/[n]eedle # empty
->      -+	EOF
->      -+	test_cmp expect actual
->      -+'
->      -+
->      -+test_expect_success 'auto squash of fixup commit that matches branch name' '
->      -+	git reset --hard base &&
->      -+	git commit --allow-empty -m "wip commit (just a prefix match so overshadowed by branch)" &&
->      -+	git commit --allow-empty -m "tip of wip" &&
->      -+	git branch wip &&
->      -+	git commit --allow-empty -m "unrelated commit" &&
->      -+	git commit --allow-empty -m "fixup! wip" &&
->      -+	GIT_SEQUENCE_EDITOR="cat >tmp" git rebase --autosquash -i HEAD^^^^ &&
->      -+	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p}" tmp >actual &&
->      -+	cat <<-EOF >expect &&
->      -+	pick HASH wip commit (just a prefix match so overshadowed by branch) # empty
->      -+	pick HASH tip of wip # empty
->      -+	fixup HASH fixup! wip # empty
->      -+	pick HASH unrelated commit # empty
->      ++	fixup HASH fixup! :/needle # empty
->       +	EOF
->       +	test_cmp expect actual
->       +'
->      @@ t/t3415-rebase-autosquash.sh: test_expect_success 'auto squash that matches long
->       +	git commit --allow-empty -m "fixup! self-cycle" &&
->       +	git branch self-cycle &&
->       +	GIT_SEQUENCE_EDITOR="cat >tmp" git rebase --autosquash -i HEAD^^ &&
->      -+	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p}" tmp >actual &&
->      ++	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p;}" tmp >actual &&
->       +	cat <<-EOF >expect &&
->       +	pick HASH second commit
->       +	pick HASH fixup! self-cycle # empty
-> 
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index 484ca9aa50..777200a6dc 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -6287,8 +6287,6 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
->   			return error(_("the script was already rearranged."));
->   		}
->   
-> -		*commit_todo_item_at(&commit_todo, item->commit) = item;
-> -
->   		parse_commit(item->commit);
->   		commit_buffer = logmsg_reencode(item->commit, NULL, "UTF-8");
->   		find_commit_subject(commit_buffer, &subject);
-> @@ -6355,6 +6353,8 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
->   					strhash(entry->subject));
->   			hashmap_put(&subject2item, &entry->entry);
->   		}
-> +
-> +		*commit_todo_item_at(&commit_todo, item->commit) = item;
->   	}
->   
->   	if (rearranged) {
-> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-> index 78c27496d6..98af865268 100755
-> --- a/t/t3415-rebase-autosquash.sh
-> +++ b/t/t3415-rebase-autosquash.sh
-> @@ -232,6 +232,32 @@ test_expect_success 'auto squash that matches longer sha1' '
->   	test_line_count = 1 actual
->   '
->   
-> +test_expect_success 'auto squash that matches regex' '
-> +	git reset --hard base &&
-> +	git commit --allow-empty -m "hay needle hay" &&
-> +	git commit --allow-empty -m "fixup! :/needle" &&
-> +	GIT_SEQUENCE_EDITOR="cat >tmp" git rebase --autosquash -i HEAD^^ &&
-> +	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p;}" tmp >actual &&
-> +	cat <<-EOF >expect &&
-> +	pick HASH hay needle hay # empty
-> +	fixup HASH fixup! :/needle # empty
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'auto squash of fixup commit that matches branch name which points back to fixup commit' '
-> +	git reset --hard base &&
-> +	git commit --allow-empty -m "fixup! self-cycle" &&
-> +	git branch self-cycle &&
-> +	GIT_SEQUENCE_EDITOR="cat >tmp" git rebase --autosquash -i HEAD^^ &&
-> +	sed -ne "/^[^#]/{s/[0-9a-f]\{7,\}/HASH/g;p;}" tmp >actual &&
-> +	cat <<-EOF >expect &&
-> +	pick HASH second commit
-> +	pick HASH fixup! self-cycle # empty
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
->   test_auto_commit_flags () {
->   	git reset --hard base &&
->   	echo 1 >file1 &&
+> Thanks,
+> Christian for the Git PLC
