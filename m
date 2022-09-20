@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24306C6FA82
-	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 01:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62F4BC54EE9
+	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 01:56:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230109AbiITBz7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Sep 2022 21:55:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50240 "EHLO
+        id S230122AbiITB4C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Sep 2022 21:56:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230051AbiITBzw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Sep 2022 21:55:52 -0400
-Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 002F649B7D
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 18:55:47 -0700 (PDT)
-Received: by mail-qv1-xf2d.google.com with SMTP id mi14so983156qvb.12
-        for <git@vger.kernel.org>; Mon, 19 Sep 2022 18:55:47 -0700 (PDT)
+        with ESMTP id S230073AbiITBzx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Sep 2022 21:55:53 -0400
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D224C607
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 18:55:49 -0700 (PDT)
+Received: by mail-qv1-xf34.google.com with SMTP id w4so1100166qvp.2
+        for <git@vger.kernel.org>; Mon, 19 Sep 2022 18:55:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=ZsdT1tZNAc0Jr35FLzyCRkzbD79iVHHjIKPyPxodyN4=;
-        b=hvLs9FatoJwGV4m+oAubf8aeg0XrBCwn4trnfVAx3TI58y1t2350YDmMIaB9GR993r
-         2h+lnNytX+SmegjZoTXS+dENgvdYUTrN25XRSPQQXuayP9SM1xi8PJABQ/wNOWlo2hJ/
-         QFd30X0KwbCNWooyc7oER2Yx08lzG3odHIzPWarf5O0rTaBzQAGOXboAwkl0Xael5bAe
-         1ZqtqVYMjm2+IMiImmMM7odIfBvAfJoYhieMqbfXYs9Q1qugGGEvcIqDXlH1zLcr9jDC
-         GZeamQUKp71xeC5rLbDXsjrpJdhjAPcq8nNEX6s3aDji6LTnzMdEctJnZKixZJUHx5Q3
-         1lfQ==
+        bh=9VnZ1xqn5CgXSJSttk+n6n1EwpuOhTpSW7cIXhcQGd0=;
+        b=MfcIRWYvNV+FRgUc6ufkVSgGaEFjsrsGq8qGpW4vZvrpNQlOswEDqDVdOEtglyp6KZ
+         R9/i1QHqk5tgTp4/N4Qtg7F6YlzmOdzbaVUM9dMWGc+NSU5P5QM5xAAAyw2KMRx7Qm89
+         LKB961yA0/Hxlqdovoiz0Bg/yGwA3Hnhm07NznjYd5MPRlDRitDIEaO4NmdgFBn63OQi
+         eYkzHGnysPgZmxc401gHGbBawTzpOPQQH9aYaDjqV4YjcKrpGH6gr/nUpCaF+hdo7Lsy
+         7K7ZBreSE6WRkGUDliOTHg+cufkfU4keaHeVhMrlTu0eGv3Ty5k1x6T04g7MNzp4iqak
+         7pvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=ZsdT1tZNAc0Jr35FLzyCRkzbD79iVHHjIKPyPxodyN4=;
-        b=XnaHqKIqDao5fdOBjrTxXOox4UAXnqvyIl870eMA4AO6Z1rf8nqqvqAbRlmG6RRPRR
-         5bkjIEXT+IAnHGOkmE9JAvZOZRE1mY5SN4ZQ6iH5bVJPFY46OBJn6K9USizFt42AkwmI
-         2O8XnZ2c/WhS4u9u7RoY4Ni5hREBolytKYv9PRLaHSAL75gJHalPlG7ZG+qYncfVQ5RV
-         H01cY/epAQpAxViDiJqKg3lBacpW0HJWlEBGYFDFuLJcL+V+9Iyn5mf081n3K7pzp4h4
-         Ss++RsrUBmTh5KzQsGNBroZPlTYQJyPlCwXUAjebQqGzClLYFBZwxuBuQ2kxNwhv8RNa
-         nSIA==
-X-Gm-Message-State: ACrzQf1ldVF/5+DK43kFV1SMNddOX11J/32kaanvQsVetuF1NFFaHQE3
-        OJHPHd/8NrLi9+7EvEZ8PYaEWHBkx6IhxQ==
-X-Google-Smtp-Source: AMsMyM44xxtAm6QJ36s39a77OsrLbESp5eMXCsc0mCtafR/zehCgOvLdunKz93/GLm0e4UrfmdqGZA==
-X-Received: by 2002:a0c:a950:0:b0:4aa:e2ac:922a with SMTP id z16-20020a0ca950000000b004aae2ac922amr17452624qva.119.1663638946634;
-        Mon, 19 Sep 2022 18:55:46 -0700 (PDT)
+        bh=9VnZ1xqn5CgXSJSttk+n6n1EwpuOhTpSW7cIXhcQGd0=;
+        b=qwqn62JdZo6uuPZKxhZzT4Xkoy8LLoFqGbzwDv/qcb6G5BHnGNU47c/VD/EwqJBfNw
+         Ynq+/9mNxJ++wIA7VmlwvsCuyGOz/GcIRdBxht/wvUKjH9LDnRp+hlCS6qBjbn1Klwj4
+         tAxkBFgPXWB3ItcpN7O3/FDPc53hMKcFqMzBJVQe3H8dPh3QOcdFKB5P8NZjbLTX5CfK
+         FCT3+kGHKkmxtXFB7QnS9zCW8PeXcanovIeIYCLRNf1IiFAJOa/ch5QPzKb76oerfwog
+         GjA4olYX7M8f0v0iUmBAz0eoz+fDINrCsnvErmGp1D8mASdztnTI6qe31LlCJZaHu6Mg
+         vqhQ==
+X-Gm-Message-State: ACrzQf3IdZxx72oKQkI6oUBLz27dXvWagnwSopUObf8bbjiEVL6X7P7K
+        O/+th3Wlf/TkVNIYMQ6x8kNj0WDwa3VLhg==
+X-Google-Smtp-Source: AMsMyM5Z0tSjcVjrCl4SDbfqzmOJVk7ZJnmllXb8UIRJakL0xZ2jln0zVsfMyD2g8APU3RnOTbSGhQ==
+X-Received: by 2002:a0c:a79a:0:b0:49f:583f:5292 with SMTP id v26-20020a0ca79a000000b0049f583f5292mr16951245qva.116.1663638949349;
+        Mon, 19 Sep 2022 18:55:49 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id s19-20020a05620a29d300b006ce515196a7sm111105qkp.8.2022.09.19.18.55.46
+        by smtp.gmail.com with ESMTPSA id u18-20020a37ab12000000b006ce7316f361sm42041qke.118.2022.09.19.18.55.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Sep 2022 18:55:46 -0700 (PDT)
-Date:   Mon, 19 Sep 2022 21:55:45 -0400
+        Mon, 19 Sep 2022 18:55:49 -0700 (PDT)
+Date:   Mon, 19 Sep 2022 21:55:48 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, derrickstolee@github.com,
         gregory.szorc@gmail.com
-Subject: [PATCH 3/7] midx.c: prevent `expire` from removing the cruft pack
-Message-ID: <3ae9903d2df491e291ab975c56ec78aa13d95655.1663638929.git.me@ttaylorr.com>
+Subject: [PATCH 4/7] midx.c: avoid cruft packs with `repack --batch-size=0`
+Message-ID: <b3a70d486e8c163d57f8d1d1f156ca0196ae6d45.1663638929.git.me@ttaylorr.com>
 References: <cover.1663638929.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -63,74 +63,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `expire` sub-command unlinks any packs that are (a) contained in the
-MIDX, but (b) have no objects referenced by the MIDX.
+The `repack` sub-command of the `git multi-pack-index` builtin creates a
+new pack aggregating smaller packs contained in the MIDX up to some
+given `--batch-size`.
 
-This sub-command ignores `.keep` packs, which remain on-disk even if
-they have no objects referenced by the MIDX. Cruft packs, however,
-aren't given the same treatment: if none of the objects contained in the
-cruft pack are selected from the cruft pack by the MIDX, then the cruft
-pack is eligible to be expired.
+When `--batch-size=0`, this instructs the MIDX builtin to repack
+everything contained in the MIDX into a single pack.
 
-This is less than desireable, since the cruft pack has important
-metadata about the individual object mtimes, which is useful to
-determine how quickly an object should age out of the repository when
-pruning.
+In similar spirit as a previous commit, it is undesirable to repack the
+contents of a cruft pack in this step. Teach `repack` to ignore any
+cruft pack(s) when `--batch-size=0` for the same reason(s).
 
-Ordinarily, we wouldn't expect the contents of a cruft pack to
-duplicated across non-cruft packs (and we'd expect to see the MIDX
-select all cruft objects from other sources even less often). But
-nonetheless, it is still possible to trick the `expire` sub-command into
-removing the `.mtimes` file in this circumstance.
-
-Teach the `expire` sub-command to ignore cruft packs in the same manner
-as it does `.keep` packs, in order to keep their metadata around, even
-when they are unreferenced by the MIDX.
+(The case of a non-zero `--batch-size` will be handled in a subsequent
+commit).
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-multi-pack-index.txt |  4 ++--
- midx.c                                 |  2 +-
- t/t5319-multi-pack-index.sh            | 30 ++++++++++++++++++++++++++
- 3 files changed, 33 insertions(+), 3 deletions(-)
+ midx.c                      |  2 ++
+ t/t5319-multi-pack-index.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index 11e6dc53e3..3696506eb3 100644
---- a/Documentation/git-multi-pack-index.txt
-+++ b/Documentation/git-multi-pack-index.txt
-@@ -72,8 +72,8 @@ verify::
- expire::
- 	Delete the pack-files that are tracked by the MIDX file, but
- 	have no objects referenced by the MIDX (with the exception of
--	`.keep` packs). Rewrite the MIDX file afterward to remove all
--	references to these pack-files.
-+	`.keep` packs and cruft packs). Rewrite the MIDX file afterward
-+	to remove all references to these pack-files.
- 
- repack::
- 	Create a new pack-file containing objects in small pack-files
 diff --git a/midx.c b/midx.c
-index c27d0e5f15..bff5b99933 100644
+index bff5b99933..05bcfc6f02 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -1839,7 +1839,7 @@ int expire_midx_packs(struct repository *r, const char *object_dir, unsigned fla
- 		if (prepare_midx_pack(r, m, i))
+@@ -1895,6 +1895,8 @@ static int fill_included_packs_all(struct repository *r,
  			continue;
- 
--		if (m->packs[i]->pack_keep)
-+		if (m->packs[i]->pack_keep || m->packs[i]->is_cruft)
+ 		if (!pack_kept_objects && m->packs[i]->pack_keep)
  			continue;
++		if (m->packs[i]->is_cruft)
++			continue;
  
- 		pack_name = xstrdup(m->packs[i]->pack_name);
+ 		include_pack[i] = 1;
+ 		count++;
 diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index afbe93f162..2d51b09680 100755
+index 2d51b09680..d967d92c20 100755
 --- a/t/t5319-multi-pack-index.sh
 +++ b/t/t5319-multi-pack-index.sh
-@@ -847,6 +847,36 @@ test_expect_success 'expire respects .keep files' '
+@@ -784,6 +784,29 @@ test_expect_success 'repack creates a new pack' '
  	)
  '
  
-+test_expect_success 'expiring unreferenced cruft pack retains pack' '
++test_expect_success 'repack (all) ignores cruft pack' '
 +	git init repo &&
 +	test_when_finished "rm -fr repo" &&
 +	(
@@ -138,31 +112,24 @@ index afbe93f162..2d51b09680 100755
 +
 +		test_commit base &&
 +		test_commit --no-tag unreachable &&
-+		unreachable=$(git rev-parse HEAD) &&
 +
 +		git reset --hard base &&
 +		git reflog expire --all --expire=all &&
 +		git repack --cruft -d &&
-+		mtimes="$(ls $objdir/pack/pack-*.mtimes)" &&
 +
-+		echo "base..$unreachable" >in &&
-+		pack="$(git pack-objects --revs --delta-base-offset \
-+			$objdir/pack/pack <in)" &&
++		git multi-pack-index write &&
 +
-+		# Preferring the contents of "$pack" will leave the
-+		# cruft pack unreferenced (ie., none of the objects
-+		# contained in the cruft pack will have their MIDX copy
-+		# selected from the cruft pack).
-+		git multi-pack-index write --preferred-pack="pack-$pack.pack" &&
-+		git multi-pack-index expire &&
++		find $objdir/pack | sort >before &&
++		git multi-pack-index repack --batch-size=0 &&
++		find $objdir/pack | sort >after &&
 +
-+		test_path_is_file "$mtimes"
++		test_cmp before after
 +	)
 +'
 +
- test_expect_success 'repack --batch-size=0 repacks everything' '
- 	cp -r dup dup2 &&
+ test_expect_success 'expire removes repacked packs' '
  	(
+ 		cd dup &&
 -- 
 2.37.0.1.g1379af2e9d
 
