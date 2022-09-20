@@ -2,124 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6EC4C54EE9
-	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 17:52:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC200C54EE9
+	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 17:54:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229990AbiITRwb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Sep 2022 13:52:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54140 "EHLO
+        id S230447AbiITRys (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Sep 2022 13:54:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229663AbiITRw3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2022 13:52:29 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57D1721E10
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 10:52:28 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5A16C1C6C77;
-        Tue, 20 Sep 2022 13:52:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=SVveWXwoM99eQsmK6zfZC2flM
-        0rpoS86rE+8SfI/3oA=; b=Yf6vD5wsncunH3hHh5OPWkSw1NMkB2qhWGI5CbPSP
-        HxGy/tJ6t3drIR1R8yNbc6GKUdLVAFx1R8vYn0RkzhTmBCAJ9kvtTjLu9Q0rKPOn
-        0ZU8cLoutUJGiR7Ij1OS7Yp8ay0x3vpfRGMQT53Vu0fgWupl3p3lAR+ruO125Hkv
-        HE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 528341C6C76;
-        Tue, 20 Sep 2022 13:52:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 137E81C6C75;
-        Tue, 20 Sep 2022 13:52:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/4] t: remove \{m,n\} from BRE grep usage
-References: <cover.1663688697.git.congdanhqx@gmail.com>
-        <752b12ef1e27d3b69d6aa3734309895082be7886.1663688697.git.congdanhqx@gmail.com>
-Date:   Tue, 20 Sep 2022 10:52:20 -0700
-Message-ID: <xmqq35cm6ii3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S230406AbiITRyq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2022 13:54:46 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D61A212A95
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 10:54:45 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id u6-20020a056830118600b006595e8f9f3fso2286945otq.1
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 10:54:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=/LMmEYadGznBNCipz+sutB2JBdrur0RVp/sP7DjI++s=;
+        b=K1SBtUVVGer4TyXse2/o1r4iOkrOKw0cb7C78cxelGmo0XgaIdBUHk+GiiV8+ThAOq
+         vDCQWwsoO6mrDahe5kgreYZF+Wv9d+e/IlJQr7tV2B2Bn9ZM3dHT3UgHhuNPndGfRZzi
+         HWCvWI6jEHJnkIKgbOGyWUtPBwiy7Hu+SD3+fmat4xhY9hiZeMrJLgfyXwo2XKY76SUc
+         GA4B2tYzwMqdkb29qbfPQNSyII187SwMJy1svMO+Ag+vZxTDJhXVA2bqf18fKa76IhEP
+         LWZ4adfiZfk4z8nQMnRz9upJN6R9vI712f3QZaC90M1XZE+VtQCyQouPYdsikKmZEOcW
+         Q1dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=/LMmEYadGznBNCipz+sutB2JBdrur0RVp/sP7DjI++s=;
+        b=3s9o5XuAS6lZjRPK9AWr2mVyMInBxCK/JaBzlGIVhCFeNZZEbgdH2N6ag3XX56PB13
+         htEzn83/zvlV9DbvPTebsr8WXuZuKBQtyzsg+aVIppSQA2NctFNPGU78JCfWaWy4JZzD
+         AULscGV1gxYc4j3G88uzm36TqvI5pX/MzzCC8luYyjQ7Wk3pakkoCACvjjd0485+DCZd
+         GHg/AcCHDhwntqtNm5W1a8PZjbVto3h+BsJentT9HT4fzjYMgLAHZqBWaLF3LRGlrQxx
+         g3mGr+9Q3OYLrBpRtAkse3OG9xjFtahcgS8lXINAtHQqCxqgP6ixv9/62Wg6IcdSNepY
+         C/ig==
+X-Gm-Message-State: ACrzQf3GLzNU2TjP2zsZWuvwfizdmAGnskGrufuJ6Em9xzJcpg92WwI9
+        2qSiLp2ZygIaosW3yUaQNSrSEyPW3bwVVszqya06pQXS
+X-Google-Smtp-Source: AMsMyM6ZGvViIZe7m9aRSSF6s/IvBSiJgwCVmBs4EoI6d7URjIirEobEAJXyHu3+cb95y7fHcYEOVjxipFSNDWn6kSQ=
+X-Received: by 2002:a05:6830:3707:b0:636:913f:2313 with SMTP id
+ bl7-20020a056830370700b00636913f2313mr10411921otb.290.1663696485081; Tue, 20
+ Sep 2022 10:54:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FA5A1CE6-390C-11ED-80B4-C2DA088D43B2-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20220920050632.326307-1-alexhenrie24@gmail.com> <84848326-5cd9-b5b9-2dcb-a6d49879f47b@github.com>
+In-Reply-To: <84848326-5cd9-b5b9-2dcb-a6d49879f47b@github.com>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Tue, 20 Sep 2022 11:54:33 -0600
+Message-ID: <CAMMLpeRJ=4ES6d7pRP1Y232GyLx-jhN-ktfVernXrDiJuAC+tQ@mail.gmail.com>
+Subject: Re: [PATCH] builtin/diagnose.c: don't translate the two mode values
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, vdye@github.com, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+On Tue, Sep 20, 2022 at 6:35 AM Derrick Stolee <derrickstolee@github.com> wrote:
+>
+> In diff.c, the descriptors exist in angle brackets, so the right thing
+> would be N_("<mode>"). This seems non-standard compared to most other
+> places.
 
-> \{m,n\} is a GNU extension to BRE, and it's forbidden by our
-> CodingGuidelines.
+I don't know which form is preferred in the code, but I did find that
+usage_argh adds the angle brackets if they are not already present:
 
-Is it?
+static int usage_argh(const struct option *opts, FILE *outfile)
+{
+    const char *s;
+    int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) ||
+        !opts->argh || !!strpbrk(opts->argh, "()<>[]|");
+    if (opts->flags & PARSE_OPT_OPTARG)
+        if (opts->long_name)
+            s = literal ? "[=%s]" : "[=<%s>]";
+        else
+            s = literal ? "[%s]" : "[<%s>]";
+    else
+        s = literal ? " %s" : " <%s>";
+    return utf8_fprintf(outfile, s, opts->argh ? _(opts->argh) : _("..."));
+}
 
-https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#=
-tag_09_03_06
+> Here is a similar stale translatable regex in diff.c:
+>
+>                 OPT_CALLBACK_F(0, "diff-filter", options, N_("[(A|C|D|M|R|T|U|X|B)...[*]]"),
+>                                N_("select files by diff type"),
+>
+> So if you are looking into these kinds of replacements, it might be
+> good to add instances like this. They are less important to the 2.38.0
+> release, though.
 
-says otherwise.  There may be some other GNU extensions to BRE that
-allows you to write ERE elements with different syntax, but I doubt
-this is one of them.  Perhaps you are thinking about "A\|B"
-alternation?  In ERE "A|B" is alternation, and GNU BRE allows "A\|B"
-but that is outside POSIX, IIUC.  "A\+" (1 or more of A) and "A\?"
-(0 or 1 of A) are the same way.
+Yeah, that one probably shouldn't be translatable either.
 
-We do say we don't use "\{m,n\}" in the guidelines, which was
-written more than 10 years ago that codifies the habit acquired
-while having to deal with regexp implementations of various UNIX
-variants like early SystemV and BSD4 from more than 20 years ago.
+> This long-winded email is all just to say that I've looked into the
+> standard way to handle this and agree that you are changing the code
+> to match our best practices.
 
-If we are using the syntax in many of our tests that everybody runs,
-that can be taken as a sign that those platforms who had problems
-with the syntax have died out, or at least to them Git does not
-matter.
+Thanks! I appreciate the feedback.
 
-So my prefererence is to
-
- - Allow \{m,n\} when it makes sense and codify it in the guidelines
-
- - Rewriting tests is fine if it makes the result easier to read,
-   but it shouldn't be done for the sole purpose of getting rid of
-   the \{m,n\} syntax.
-
- - As there are folks without GNU, until these GNU extensions for |,
-   +, and ? are adopted widely, keep forbidding their use in BRE.
-
->  test_expect_success 'git branch -M baz bam should add entries to .git/=
-logs/HEAD' '
->  	msg=3D"Branch: renamed refs/heads/baz to refs/heads/bam" &&
-> -	grep " 0\{40\}.*$msg$" .git/logs/HEAD &&
-> -	grep "^0\{40\}.*$msg$" .git/logs/HEAD
-> +	zero=3D"00000000" &&
-> +	zero=3D"$zero$zero$zero$zero$zero" &&
-> +	grep " $zero.*$msg$" .git/logs/HEAD &&
-> +	grep "^$zero.*$msg$" .git/logs/HEAD
->  '
-
-This is not good
-
->  test_expect_success 'git branch -M should leave orphaned HEAD alone' '
-> diff --git a/t/t3305-notes-fanout.sh b/t/t3305-notes-fanout.sh
-> index 22ffe5bcb9..aa3bb2e308 100755
-> --- a/t/t3305-notes-fanout.sh
-> +++ b/t/t3305-notes-fanout.sh
-> @@ -9,7 +9,7 @@ path_has_fanout() {
->  	path=3D$1 &&
->  	fanout=3D$2 &&
->  	after_last_slash=3D$(($(test_oid hexsz) - $fanout * 2)) &&
-> -	echo $path | grep -q "^\([0-9a-f]\{2\}/\)\{$fanout\}[0-9a-f]\{$after_=
-last_slash\}$"
-> +	echo $path | grep -q -E "^([0-9a-f][0-9a-f]/){$fanout}[0-9a-f]{$after=
-_last_slash}$"
-
-The use of -E makes it more readable and is good.  The innermost "a
-pair of hexdigits" that would repeat $fanout times may be easier to
-read if you keep the {2}, though.
-
+-Alex
