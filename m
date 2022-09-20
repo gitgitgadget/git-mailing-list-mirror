@@ -2,78 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8A9DC6FA82
-	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 20:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84709C6FA82
+	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 21:23:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229907AbiITU7J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Sep 2022 16:59:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56822 "EHLO
+        id S229881AbiITVX4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Sep 2022 17:23:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229588AbiITU7H (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2022 16:59:07 -0400
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9415869F77
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 13:59:06 -0700 (PDT)
-Received: by mail-qt1-x831.google.com with SMTP id f26so2703189qto.11
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 13:59:06 -0700 (PDT)
+        with ESMTP id S229437AbiITVXy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2022 17:23:54 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEDD872875
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 14:23:53 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id l14so3039237qvq.8
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 14:23:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=CCrP0zBmSe/ZEcW27Zmo2CIvwzyeWCNQhHHEvmII4IM=;
-        b=v5mIVEjbjAivbmdL/i0FH74pFTZNN6MrdTetJZuUcB/RDWULOle0sjjPbFd6oSkJaW
-         kPRY49Ege9iJ7qxHtT+XBosC5fLr98njertCgo1PhU96mE9expMW8maled8c7J6D17sX
-         ToF/RRx9blL9OYs/DaydHP+zdCpT1h9ofrwGH/S/m0F9yDmTMPSNk6z0PxRBjIuDUgwX
-         4ppdWNdmbLkwfd8oUXRSkrHUDlxLtEIOEhds60xXc0z77q10hpusMdqaqdXsHAq09BRQ
-         JBNPYc2HDHkWnVoblfaB7KP8mZZV8fA+6VB0KDOV5WbvySToIqRvz82fsG5/+Vy69ooo
-         PGVg==
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date;
+        bh=IDsUvwv8Q7/YsnHCfZIUe0DNgmEqCiIRidX5+j/yMdI=;
+        b=WclvSEc4SRm5ncJ5VPAqMAIkvej47aIWHiA/mA3YofDQBY1K55SMQcFH5WC8js59He
+         CsjcZySg3hwxZxlMmuBenQ/Xbw4by3xDPIWZsSD7Tn9wqFaGIBIbkeaqyIrTEA+ZoufK
+         uIMGacmhT4esewBWR6JJ5NnSzSx5U8NrNraXE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=CCrP0zBmSe/ZEcW27Zmo2CIvwzyeWCNQhHHEvmII4IM=;
-        b=zwyJGLvNXzMcdNl2S/8D0Qd7cOZxRFTtOnu2S/ZNuwbyC3VrFygNfEjkSSf5sW20bL
-         0DO9wCfuZgxpHCzMH4DnUAx+jJ8HwksheDUv6TrPAzrCYESwiTJ23UigdWZYDe2jj7ly
-         qbw+dvF3cSeby5EhXIwDEFrSPgf4Rt8Oy851sQ88VBv91GhkOVmTJPwPksFd7UNNEnzL
-         U8zvJdgJbpC1YkkuQpGBSGgwdmiwazct2793a0KC1qMQe9OuWYDxymW0CqQj3/hspfP8
-         brw+GpYxkzibSVNyDx55dGSBfpSczmbL8rXCtaTqaDuN9Of6ySMvMedVaFYsKavWr64H
-         V77Q==
-X-Gm-Message-State: ACrzQf2nMBqZ+L9aj2gJ5hWK8ctqsDYPM2+YJX3p2BR8zm0lXU9GlFTa
-        4QjJfZD9Y0u1efXaiCrNZ9Xp/Q==
-X-Google-Smtp-Source: AMsMyM7XL045XjV/JrcpbtCoADxSk+qJS1CvZNRmv6qWrNw+vNpRmBH5ADK5AozqkEPs+VwO323ggA==
-X-Received: by 2002:ac8:7d10:0:b0:35c:d519:545 with SMTP id g16-20020ac87d10000000b0035cd5190545mr17742363qtb.537.1663707545599;
-        Tue, 20 Sep 2022 13:59:05 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d1-20020a05620a240100b006ce16588056sm591105qkn.89.2022.09.20.13.59.05
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=IDsUvwv8Q7/YsnHCfZIUe0DNgmEqCiIRidX5+j/yMdI=;
+        b=JoNbGh2ZG0CCO2O7LES12w3pnrObZ+JMUK049blAeCR8yAN1N0kVqf3RK+wz1QEmWN
+         uymOhr+h1Qrj4HY1dhVNLh/Mij/J7aiE9sJXzOj6JTsgAyGkG082xOQ9T+vjwHixqXwE
+         DBPdU0WrVSwxk75qahSyYjd5U+tH5gX3rMhwL6KPJZ+2Zisd9zDL+v18TOsBhzRi8xEx
+         lJK1QfyvS4G141bOMMB15kxDfB9FvnKdD01K/vZUuaXedqtFcf2HmCE5WxHfg7GxWH7V
+         a0I8eTg6QZ0Hwu01LrbLHUJ5CVmlt3s/JnF2o2IODqxNdYLiTWyAXqyZ9o2pnodxZXoD
+         HzLQ==
+X-Gm-Message-State: ACrzQf3SG+INjzYGdHe3d0PArCbsjJRegymwigT/KXfTs2Re4SYcFz1t
+        U2mk6hnu30pzxsM4dlnduyV+SA==
+X-Google-Smtp-Source: AMsMyM5MbFnhY0J1NWN6Ao/7ybm6MhUjSRa1PoxjJmSTfWaJzV3Tv7EKULw0URbaNWSHYQThYS1IJQ==
+X-Received: by 2002:ad4:5ec5:0:b0:49c:cf39:d4d2 with SMTP id jm5-20020ad45ec5000000b0049ccf39d4d2mr20660666qvb.6.1663709032876;
+        Tue, 20 Sep 2022 14:23:52 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-33-142-113-79-147.dsl.bell.ca. [142.113.79.147])
+        by smtp.gmail.com with ESMTPSA id dt10-20020a05620a478a00b006ce3cffa2c8sm652384qkb.43.2022.09.20.14.23.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Sep 2022 13:59:05 -0700 (PDT)
-Date:   Tue, 20 Sep 2022 16:59:04 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org,
+        Tue, 20 Sep 2022 14:23:52 -0700 (PDT)
+Date:   Tue, 20 Sep 2022 17:23:50 -0400
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [BUG] seemingly-rare segfault in merge-tree
-Message-ID: <YyopmKNZU4WL2wrV@nand.local>
-References: <YyopQD+LvPucnz3w@nand.local>
+        Josh Steadmon <steadmon@google.com>,
+        Glen Choo <chooglen@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v2] Documentation: add ReviewingGuidelines
+Message-ID: <20220920212350.f5do44qqduhyp46u@meerkat.local>
+References: <pull.1348.git.1662747205235.gitgitgadget@gmail.com>
+ <pull.1348.v2.git.1663614767058.gitgitgadget@gmail.com>
+ <CABPp-BEB_+YoKZ=U6NPc8J+KZyMSYRsom34CeqjxUCyw0=LEyg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YyopQD+LvPucnz3w@nand.local>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BEB_+YoKZ=U6NPc8J+KZyMSYRsom34CeqjxUCyw0=LEyg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 20, 2022 at 04:57:36PM -0400, Taylor Blau wrote:
->   #1  0x000056234188aba3 in real_merge (prefix=0x0, branch2=<optimized out>,
->       branch1=<optimized out>, o=0x7ffd3fc4cd60) at builtin/merge-tree.c:528
->   528	builtin/merge-tree.c: No such file or directory.
+On Mon, Sep 19, 2022 at 05:43:15PM -0700, Elijah Newren wrote:
+> > +- You may find that the limited context provided in the patch diff is sometimes
+> > +  insufficient for a thorough review. In such cases, you can review patches in
+> > +  your local tree by either applying patches with linkgit:git-am[1] or checking
+> > +  out the associated branch from https://github.com/gitster/git once the series
+> > +  is tracked there.
+> 
+> Lots of reviews also come with "Fetch-It-Via" instructions in the
+> cover letter, making it really easy to grab.  Might be worth
+> mentioning?
+> 
+> Also, would it make sense for us to replace "applying" with
+> "downloading and applying", perhaps mentioning `b4 am` for the
+> downloading half?
 
-I should mention, of course, that this line is custom to GitHub's fork,
-and so doesn't match with the latest on `master`. Here's a link to the
-relevant call that matches up:
+B4 can also "convert" a patch series into a pull request using "shazam".
+E.g.:
 
-  https://github.com/git/git/blob/dda7228a83e2e9ff584bf6adbf55910565b41e14/builtin/merge-tree.c#L449
+    b4 shazam -H <msgid>
 
-Thanks,
-Taylor
+This will do some behind-the-scenes magic and give you a FETCH_HEAD that you
+can review, check out into a new branch, merge, etc.
+
+You can try this with this very thread, if you are inside the git's own repo:
+
+	$ b4 shazam -H pull.1348.git.1662747205235.gitgitgadget@gmail.com
+	Grabbing thread from lore.kernel.org/all/pull.1348.git.1662747205235.gitgitgadget%40gmail.com/t.mbox.gz
+	Checking for newer revisions on https://lore.kernel.org/all/
+	Analyzing 12 messages in the thread
+	Will use the latest revision: v2
+	You can pick other revisions using the -vN flag
+	Checking attestation on all messages, may take a moment...
+	---
+	  ✓ [PATCH v2] Documentation: add ReviewingGuidelines
+		+ Reviewed-by: Josh Steadmon <steadmon@google.com> (✓ DKIM/google.com)
+	  ---
+	  ✓ Signed: DKIM/gmail.com
+	---
+	Total patches: 1
+	---
+	Magic: Preparing a sparse worktree
+	---
+	Applying: Documentation: add ReviewingGuidelines
+	---
+	Fetching into FETCH_HEAD
+	You can now merge or checkout FETCH_HEAD
+	  e.g.: git merge --no-ff -F /home/user/work/git/git/.git/b4-cover --edit FETCH_HEAD --signoff
+
+> (I tend to use the Fetch-It-Via or wait for it to show up in
+> gitster/git, but b4 is really nice for the other cases.)
+
+Great to hear! :)
+
+-Konstantin
