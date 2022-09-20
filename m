@@ -2,245 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F5B6C6FA8E
-	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 14:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E48BECAAD8
+	for <git@archiver.kernel.org>; Tue, 20 Sep 2022 14:58:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231194AbiITOrI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Sep 2022 10:47:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49322 "EHLO
+        id S229617AbiITO6n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Sep 2022 10:58:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230477AbiITOqt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2022 10:46:49 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F1995853C
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 07:46:47 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id z13so4136553edb.13
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 07:46:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=W6flu7iABpZ56soqWXl6r1htuL8LpSzRPCrQIb62YME=;
-        b=lA9o5sWVf1vZepibGYTIa08f5fSxDkvXyklj381LzgfMKumqz10FvfxgHtwN305XOY
-         nDnfP0Fu+DsLqiR0Y4VRpm5ANc/t+UFozjM3rjkkUpWWS4XFaR0Vuvb6B2vVLHrAv9iy
-         J0ZJ7FH6Kgybb+RAFIHyx2NUcy3/jS2YUNdmNZRjepf9FjcMxAppwihfTPPFhfg7jTKk
-         Qy+UmJTdf+0o1KGGcR83ca1JLs97VPqVFzEPUIJSXpOuqO6ARn00VO1RHvUH7W3yy7kh
-         h3wxkFCeMPsQ7/LW1S0dG6XlffDkZzECdV3A+cdjvcSGaxs3/3ALf/37KSE8heKFKYws
-         p6Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=W6flu7iABpZ56soqWXl6r1htuL8LpSzRPCrQIb62YME=;
-        b=yhDdIci3L9UhD1ZBIVR6hYm+EVEXnh+Asv92kyov6q3xk677EPYDcU/xPuGxY3Bf1l
-         OzPyZ2mANLAMO97Y4tYbSeNt9hUIPaER/MW042zdpzrbJOOTmMd0mINqBOdrpU8pjZlt
-         0PqqXvR29lNcE9t0JuxK0GP9nYCn1tQVVju7spVWJr61T5ynDpCMBgHW3OMGDIxRDqeI
-         pe+i3Qd4zFsj/uAkI1JElvCECEYeozhD06l4WHGoHzgJhsFSAeBQJws+v63S55iFmqbr
-         cgDM12moDKQRWksohVD5Nfybk9/0rLc3Yk3PlbPjXnAUa88afNubBfphF30ZMj3KUi/q
-         f0ug==
-X-Gm-Message-State: ACrzQf2MVapbH5RVOUyzKd7ySs3nSyhjr4LWwDNWQD3ZV+SiZS/q7IFR
-        WKUIl9RpUAzmkQk2tRsEhSsQAG3lQ+XXIF6a3TA=
-X-Google-Smtp-Source: AMsMyM6LLiP0QHiwqMKyjGUybymmsb57q5Zys4hAyN4dl7SWLQB/6mrCfVHtWrQ9NDrYn16OPG2Q0d+U//bkPv2Er3w=
-X-Received: by 2002:a05:6402:26d3:b0:451:6ca9:bc5e with SMTP id
- x19-20020a05640226d300b004516ca9bc5emr20070255edd.325.1663685205878; Tue, 20
- Sep 2022 07:46:45 -0700 (PDT)
+        with ESMTP id S230133AbiITO6m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Sep 2022 10:58:42 -0400
+Received: from outbound6.mail.transip.nl (outbound6.mail.transip.nl [IPv6:2a01:7c8:7c9:ca11:136:144:136:128])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F27014F3B9
+        for <git@vger.kernel.org>; Tue, 20 Sep 2022 07:58:38 -0700 (PDT)
+Received: from submission13.mail.transip.nl (unknown [10.103.8.164])
+        by outbound6.mail.transip.nl (Postfix) with ESMTP id 4MX4Rw5hMkzwLHxN;
+        Tue, 20 Sep 2022 16:58:36 +0200 (CEST)
+Received: from [131.180.45.14] (x045014.tudelft.net [131.180.45.14])
+        by submission13.mail.transip.nl (Postfix) with ESMTPA id 4MX4Rv5qQBz1yFR;
+        Tue, 20 Sep 2022 16:58:35 +0200 (CEST)
+Message-ID: <2c29ca18-4b45-af44-5690-0b9804a81461@fwdekker.com>
+Date:   Tue, 20 Sep 2022 16:58:35 +0200
 MIME-Version: 1.0
-References: <pull.1357.git.1663609659.gitgitgadget@gmail.com>
- <38ec2360f4fbfe65fa2d9f1e9cfb7d4944d1714f.1663609659.git.gitgitgadget@gmail.com>
- <b727c25c-469f-ca56-bbd6-82f82c762523@github.com>
-In-Reply-To: <b727c25c-469f-ca56-bbd6-82f82c762523@github.com>
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Date:   Tue, 20 Sep 2022 20:16:33 +0530
-Message-ID: <CAPOJW5zxoaF2NWtNiYZT3ve_boR40yvg=-3WC7dkjy63a=tVjw@mail.gmail.com>
-Subject: Re: [PATCH 2/5] roaring.[ch]: apply Git specific changes to the
- roaring API
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+References: <2e846a72-a4c6-2a5a-255a-15eee037f574@fwdekker.com>
+ <854127f2-55aa-5636-813d-d91b8a4cdcbc@web.de>
+ <f13bc5aa-dadd-a895-eeca-79bd77c5363b@fwdekker.com>
+ <220919.86mtav60wi.gmgdl@evledraar.gmail.com>
+ <YyiIkMcADVu+Qbht@tapette.crustytoothpaste.net>
+ <220920.86edw65ngv.gmgdl@evledraar.gmail.com>
+Content-Language: en-GB
+From:   "Florine W. Dekker" <florine@fwdekker.com>
+Subject: Re: Wildcards in mailmap to hide transgender people's deadnames
+In-Reply-To: <220920.86edw65ngv.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: ClueGetter at submission13.mail.transip.nl
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=transip-a; d=fwdekker.com; t=1663685915; h=from:subject:to:cc:
+ references:in-reply-to:date:mime-version:content-type;
+ bh=GzWH91PG4jTwkEXXsCvHmPLv/CH/0vvdmA4XsHQrMe4=;
+ b=FEjU9vmh9Br1kNjEwCTY96ny7EZNTVO1NJukcEu5O6foNLRz8rN2agtUtADPoxzYGHriBv
+ lT8UibTdlvBYsF6mQtfo/vn0Lhg2HNs9o+HyaSOag8Pw+YsMtCxTROnBfuBd26lReM8IY7
+ 6w9jRF3NPMgZ1Xs3xu2DQSuHOku1quMgOncAjyjSuHfcx9cmjGbcWpRJvaKoMybXSK+FQL
+ hdRCmz3jp6YIZsvkj9O7XNAoJf+zFNsCeHMkRnHkA481a3quEqrzv+2A4nHiJWvbOUPCeB
+ u7vNpdQNnXaXLGatz6G/JQ+G26L1QYwoOEgg1i64B1gME38qKbxrywF6eWBCfA==
+X-Report-Abuse-To: abuse@transip.nl
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 20, 2022 at 12:03 AM Derrick Stolee
-<derrickstolee@github.com> wrote:
+On 20/09/2022 12:23, Ævar Arnfjörð Bjarmason wrote:
+>> I'm happy to resurrect my SHA-256 hashed mailmap series if we're
+>> all willing to agree to not implement trivial decoding features.
+> I'd think you'd want to be really clear about what that forward promise
+> would entail. E.g. I've sometimes wanted a way for "git log" to report
+> when it munges commits due to adding notes, re-encoding the data etc. If
+> someone submits that sort of feature should it always explicitly leave
+> out mailmap-related rewrites?
 >
-> On 9/19/2022 1:47 PM, Abhradeep Chakraborty via GitGitGadget wrote:
-> > From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-> >
-> > Though the Roaring library is introduced in previous commit, the library
-> > cannot be used as is. One reason is that the library doesn't support Big
-> > endian machines. Besides, Git specific file related functions does use
-> > `hashwrite()` (or similar). So there is a need to modify the library.
+> And even if it does, who do we think we're really helping in the end,
+> given the trivial way you could get that with an external "diff" with
+> the one-liner above?
+
+I think the most important thing here is that the mailmap should not 
+allow for even-more-trivial ways to discover old names than currently 
+already exist. I've thought more about what you said, Ævar, and now I'm 
+wary of a mailmap implementation that would entail having my old and new 
+information next to each other, even if encoded (doesn't matter if it's 
+URL-encoded or base64-encoded), because I think it's likely some 
+external data mining tool will decode the address and place them next to 
+each other, so that if you search for the email address in a search 
+engine you'll also see the other address. I think a hash encoding will 
+prevent these automated miners from doing that, since reversing a hash 
+is too much effort for an untargeted attack (right? if you disagree, how 
+about a salted hash?).
+
+Either way, I think any mailmap-based solution will allow the old and 
+new name to be linked to each other by an adversary, as you showed with 
+your neat one-liner. However, I think a (salted?) hash in the mailmap 
+will be sufficient for casual obfuscation where harassment is unlikely, 
+but the user wants to prevent accidental disclosure or plain linkage.
+
+>> I also have an alternate proposal which I pitched to some folks at Git
+>> Merge and which I just finished writing up that basically moves personal
+>> names and emails out of commits, replacing them with opaque identifiers,
+>> and using a constantly squashed mailmap commit in a special ref to store
+>> the mapping.  This doesn't address changing identities in existing
+>> commits, which as we've seen are nearly impossible to fix, but it does
+>> address new ones.  I've sent it out at
+>> https://lore.kernel.org/git/20220919145231.48245-1-sandals@crustytoothpaste.net/.
+> As I understand the difference in this scenario a hypothetical future
+> repo's Y commit's authorship would have been opaque in the first place
+> using this mechanism, and via your "refs/mailmap" you'd have mapped
+> Y=Bob.
 >
-> There are a few refactorings happening in this single patch, so it
-> might be good to split them out for easier spot-checking from the
-> reviewer's perspective. I'll try to list the ones I see.
-
-True, I will split this commit into two or three parts (as I mentioned
-in the cover letter). I forgot to commit changes one by one while
-implementing this part. That's why all changes are packed in one
-commit.
-
-> >  int32_t array_container_write(const array_container_t *container, char *buf);
-> > +
-> > +int array_container_network_write(const array_container_t *container,
-> > +                               int (*write_fn) (void *, const void *, size_t),
-> > +                               void *data);
+> You then make a future X commit, and map X=Alice, and have a .mailmap
+> entry which mapped Y=X, but that entry would refer to the opaque value.
 >
-> Should we make write_fn a defined type? I'm not sure I've seen this
-> implicit type within a function declaration before.
-
-I am not sure about that. This function is highly inspired by ewah's
-`ewah_serialize_to` function which also has the same kind of
-declaration. I have no problem if we make write_fn a defined type
-though.
-
-
-> >  /**
-> >   * Reads the instance from buf, outputs how many bytes were read.
-> >   * This is meant to be byte-by-byte compatible with the Java and Go versions of
-> > @@ -1801,6 +1805,9 @@ int32_t array_container_write(const array_container_t *container, char *buf);
-> >  int32_t array_container_read(int32_t cardinality, array_container_t *container,
-> >                               const char *buf);
-> >
-> > +int32_t array_container_network_read(int32_t cardinality, array_container_t *container,
-> > +                                  const char *buf);
-> > +
+> That certainly changes things in a fundamental way, and goes most or all
+> of the way to mitigating what I've been pointing out as a flaw in these
+> proposals.
 >
-> Both of these functions are creating new implementations instead
-> of modifying the existing implementations. Is there any reason
-> why we should keep both of these in perpetuity? They are likely
-> to drift if we do that.
+> I'd still be very much on the fence about whether we'd ever want to
+> recommend that to someone concerned with "harassment" and the like (as
+> opposed to a milder social preference), as all it would take to get to
+> that point is someone having a copy of the older "refs/mailmap" to
+> unmask the previous "Y".
 
-No, there is no reason behind this. I thought it might be a good idea
-to have the existing implementations. But it's just my thought.
+I first want to say that I really like your proposal, Brian! I didn't 
+think this subject would get the attention it did, but I'm happy it's 
+being picked up the way it is, and to see this lively discussion going 
+on between yall!
 
-> > +static int container_network_write(const container_t *c, uint8_t typecode,
-> > +                                int (*write_fn) (void *, const void *, size_t),
-> > +                                void *data)
-> > +{
-> > +     c = container_unwrap_shared(c, &typecode);
-> > +     switch (typecode) {
-> > +             case BITSET_CONTAINER_TYPE:
-> > +                     return bitset_container_network_write(const_CAST_bitset(c), write_fn, data);
-> > +             case ARRAY_CONTAINER_TYPE:
-> > +                     return array_container_network_write(const_CAST_array(c), write_fn, data);
-> > +             case RUN_CONTAINER_TYPE:
-> > +                     return run_container_network_write(const_CAST_run(c), write_fn, data);
-> > +     }
-> > +     assert(false);
-> > +     __builtin_unreachable();
-> > +     return 0;
-> > +}
-> > +
->
-> This similarly is a copy of an existing function. Instead we
-> should probably make all writers/readers expect network byte
-> order (for all multi-word integers).
+And Ævar, you're right that having an older copy would allow one to 
+discover a mapping from the old to the new name. But this will happen in 
+any way we can conceivably implement this because the adversary can 
+always keep an old copy of the entire repo, clone the new one, and 
+compare the two logs. (You can probably come up with a neat one-liner, 
+but that's besides the point ;-).) I think that the most appropriate 
+threat model here is to assume that everyone who has accessed the repo 
+before the name change will notice the name change and will be able to 
+create a mapping. Instead, our goal should be to create a system that 
+ensures that people who first access the repo after the name change are 
+unable to find the old name at all. I think Brian's proposal achieves 
+this. This is analogous to the real world where people who knew me 
+before my transition will probably never (completely) forget my old 
+name, and it's useless to try to make that happen, but at least I can 
+prevent new people I meet from finding out the old name.
 
-Ok, sure.
+- Florine
 
-> > +static size_t ra_portable_network_size_in_bytes(const roaring_array_t *ra)
-> > +{
-> > +     size_t count = ra_portable_network_header_size(ra);
-> > +
-> > +     for (int32_t k = 0; k < ra->size; ++k)
->
-> We have not loosened the restriction on defining iterator variables
-> within the for and instead would need this in the outer block. One
-> possible refactoring would be to move these definitions everywhere
-> within roaring.c.
 
-The problem I faced with roaring.c is that it doesn't follow any kind
-of style convention. E.g. in many functions, variables are declared in
-random positions (instead of initial lines). This is causing errors
-like "forbids mixed declarations and code", "git log --check failed"
-etc.
-
-> > @@ -8603,16 +8981,16 @@ extern inline void roaring_bitmap_remove_range(roaring_bitmap_t *r, uint64_t min
-> >  void roaring_bitmap_printf(const roaring_bitmap_t *r) {
-> >      const roaring_array_t *ra = &r->high_low_container;
-> >
-> > -    printf("{");
-> > +    fprintf(stderr, "{");
-> >      for (int i = 0; i < ra->size; ++i) {
-> >          container_printf_as_uint32_array(ra->containers[i], ra->typecodes[i],
-> >                                           ((uint32_t)ra->keys[i]) << 16);
-> >
-> >          if (i + 1 < ra->size) {
-> > -            printf(",");
-> > +            fprintf(stderr, ",");
-> >          }
-> >      }
-> > -    printf("}");
-> > +    fprintf(stderr, "}");
-> >  }
->
-> This change is confusing to me. I epxect the printf() to print to
-> stdout, and this might be used in a test helper or something. If
-> you really want this to go somewhere other than stdout, then the
-> method should be changed to take an arbitrary FILE*.
-
-I think it's better to undo the changes. I was using it for debugging.
-
->
-> > +void roaring_bitmap_free_safe(roaring_bitmap_t **r)
-> > +{
-> > +     if (*r) {
-> > +             roaring_bitmap_free((const roaring_bitmap_t *)*r);
-> > +             r = NULL;
->
-> I think you want "*r = NULL" here, if you are intending to free
-> and NULL the given address.
-
-Thanks for pointing this out!
-
-> This method seems separate from the network-byte-order changes.
-
-Yeah, I will split them in the next version.
-
-> > +size_t roaring_bitmap_network_portable_size_in_bytes(const roaring_bitmap_t *r)
-> > +{
-> > +     return ra_portable_network_size_in_bytes(&r->high_low_container);
-> > +}
->
-> Does network order change the potential size of the bitmap?
-
-Yeah, network order bitmap size is 4 byte shorter than its non-network
-ordered bitmap counterpart.
-
->
-> > +     size_t bytesread;
-> > +     bool is_ok = ra_portable_network_deserialize(&ans->high_low_container, buf, maxbytes, &bytesread);
->
-> Declare all variables before your logic. I think this will fail if
-> you run "make DEVELOPER=1".
->
-> > +     if(is_ok) assert(bytesread <= maxbytes);
->
-> nit: break lines for if bodies.
-
-I copied it from the original one and as I said before the coding
-styles are bad. Anyways, I will modify the original ones.
-
->
-> > +/**
-> > + * Frees the memory if exists
-> > + */
-> > +void roaring_bitmap_free_safe(roaring_bitmap_t **r);
->
-> And nullifies the pointer, don't forget!
-
-Oh, thanks!
-
-> In general, I think this change would be a lot smaller if you took
-> the existing implementation and inserted the proper ntohl() and
-> htonl() conversions. Git will never call the other versions, so
-> why keep them in the tree? Why require re-checking all of the format
-> logic here instead of only the places where we write multi-byte
-> words?
-
-Got it. Thanks :)
