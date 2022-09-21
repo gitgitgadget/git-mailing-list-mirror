@@ -2,128 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82520ECAAD8
-	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 15:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72209C6FA82
+	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 16:41:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230466AbiIUPnK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Sep 2022 11:43:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42854 "EHLO
+        id S229820AbiIUQlb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Sep 2022 12:41:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbiIUPm5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2022 11:42:57 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CBB0B7FC
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 08:42:55 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id r134so5358945iod.8
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 08:42:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=JsQXSNxzZLZuRJ282WEBJgwO0JhreIXQVJNc9JZhFm4=;
-        b=8Jh/mxEkEOR0XbXbkWELvzS94v5O1H7Cjnq5/4D4pQapNwQK58w9kGFk4lehpEMtl2
-         8zqt2ZievauGOt5F/aEPY/fIAlF0C29xjcypnQ8A1cJK1m3RPhaXvboJLeUH+w97T3rF
-         zFVyrHGPgE6RBFxL+0hdBCaarr/RFQGnKL9jAvTnGFubdQ/iDk0zPjesXQdseT7j9C6H
-         qttgK6RCR6LM4ad2b3Zb6dtcLprcE46geB23WQTHw2Fhsoh6RH8vkTnmYwQ9DxTh/ZpM
-         xGFXZsZY0aL2T7zHzL70cbKRX1xGz2u0XCjWywONcgsKeGog01I4lOeNOmWjRCu4KDIu
-         3gEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=JsQXSNxzZLZuRJ282WEBJgwO0JhreIXQVJNc9JZhFm4=;
-        b=UL0vuqDGB4RQuaF4fdJI6AeJPrZXKpt1+037vjmpQ1P22KGfSxOZMZ/+yC1R7mLfiD
-         opQGMnzZomUFsbFeeeHN6GJSC3zNxg5XztEHsXZo9rAOUHU9ivghera1fBsiUp7mxZsk
-         SIf6IfwqqetUjEafviuT9ImLcmaWc2w2h+0SSoGv8ysEQhn7zIZRpXRDJqZjuxecZjHK
-         kAe0AZebMhW1rA71GfvzUI+2Dn20Bxb4E4YUr0QjW1sCQNOgzwk2xmhgbxKn4m3YMeor
-         wonaADIYp7vG61KCUIBN0BDyzK5HN5RhQyVRY3hGev/466AQ1HuZ4CWW8tCJK8RpjAgk
-         Xg7w==
-X-Gm-Message-State: ACrzQf3lpIgi9/ZhsZ9sQgwWmbDgK4QlVNC4TfvLx9jpF/Fm6h9zS0Cb
-        g0wEd29grAawyQyQYC5QGi+3vQ==
-X-Google-Smtp-Source: AMsMyM7Lqr/bZ8ZGRfBXK6/JDYQ/UNyPzVGjH0ytMGy3cZvz8+amXyb3TbV+AEFIjprerrfRgy/6ng==
-X-Received: by 2002:a05:6638:16cf:b0:35a:576b:6e33 with SMTP id g15-20020a05663816cf00b0035a576b6e33mr12999790jat.159.1663774974792;
-        Wed, 21 Sep 2022 08:42:54 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x92-20020a0294e5000000b0035a6005bbdesm1145110jah.152.2022.09.21.08.42.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Sep 2022 08:42:54 -0700 (PDT)
-Date:   Wed, 21 Sep 2022 11:42:53 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] merge-tree: fix segmentation fault in read-only
- repositories
-Message-ID: <Yysw/YIxx/JRF4Ph@nand.local>
-References: <pull.1362.git.1663774248660.gitgitgadget@gmail.com>
+        with ESMTP id S230160AbiIUQlQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2022 12:41:16 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A3249F8D7
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 09:28:07 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C75AB1CD8B8;
+        Wed, 21 Sep 2022 12:28:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1L5OXsoRHPZ6ICofs75SQahDC5vVDjGtDBs3GZ
+        4Vkpc=; b=rDcNjH+CJj6jaRFSW0l1bLLQOiHjG5LEJE+mb14eXFHNL1YYxqz4vt
+        oy4gqeehPXLxwQffSm6a0F2sOHQpkNiiYd6ENGNJw1B2h+PL4AhKR54hZK7qud4N
+        VJpQHCs1QPdquNMIZfYNVAJwyi89U/zgNXN8e3Q5u6KVS4yu4vqAI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C14171CD8B7;
+        Wed, 21 Sep 2022 12:28:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6828B1CD8B6;
+        Wed, 21 Sep 2022 12:28:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Skrab Sah <skrab.sah@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: what if i use makeheader tool to generate c header file, it
+ would be accepted.
+References: <CA+J78MWhp3qmbBhhSoioJP+d5eh-iEd_vHZdTNB69o7EvvXWYQ@mail.gmail.com>
+        <220919.86zgev635z.gmgdl@evledraar.gmail.com>
+        <xmqqbkrbb6ua.fsf@gitster.g>
+        <CA+J78MWvOEbJY6+NcLFn0SJGMZn=N7QUMwc=Bta+uHicvD892w@mail.gmail.com>
+Date:   Wed, 21 Sep 2022 09:28:01 -0700
+In-Reply-To: <CA+J78MWvOEbJY6+NcLFn0SJGMZn=N7QUMwc=Bta+uHicvD892w@mail.gmail.com>
+        (Skrab Sah's message of "Tue, 20 Sep 2022 14:10:05 +0530")
+Message-ID: <xmqqpmfo66b2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1362.git.1663774248660.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5CF9CEF6-39CA-11ED-ABAF-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 21, 2022 at 03:30:48PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-> index ae5782917b9..25c7142a882 100644
-> --- a/builtin/merge-tree.c
-> +++ b/builtin/merge-tree.c
-> @@ -412,6 +412,7 @@ static int real_merge(struct merge_tree_options *o,
->  	struct commit_list *merge_bases = NULL;
->  	struct merge_options opt;
->  	struct merge_result result = { 0 };
-> +	const struct object_id *tree_oid;
->
->  	parent1 = get_merge_parent(branch1);
->  	if (!parent1)
-> @@ -446,7 +447,8 @@ static int real_merge(struct merge_tree_options *o,
->  	if (o->show_messages == -1)
->  		o->show_messages = !result.clean;
->
-> -	printf("%s%c", oid_to_hex(&result.tree->object.oid), line_termination);
-> +	tree_oid = result.tree ? &result.tree->object.oid : null_oid();
-> +	printf("%s%c", oid_to_hex(tree_oid), line_termination);
+Skrab Sah <skrab.sah@gmail.com> writes:
 
-My understanding is that we can get a clean result from
-merge_incore_recursive(), but still have failed to write the physical
-tree object out?
+> Let me elaborate to you, how and why I wanted to implement the
 
-In other words, the two sides *could* have been merged, but the actual
-result of doing that merge couldn't be written to disk (e.g., because
-the repository is read-only or some such)?
+No, I won't let you ;-), and that was the most important part you
+seem to have missed in the message you are responding to: we do not
+work with the handwaving.
 
-If so, then this approach makes sense, and I agree with your idea to
-use the all-zeros OID instead of the empty tree one. It would be
-nice(r?) if we could just abort this command earlier, since `merge-tree`
-promises that we'll write the result out as an object. So I don't think
-a non-zero exit before we have to print the resulting tree object would
-be unexpected.
+>     2. no need to declare anything in the header file, which is
+> time consuming and a headache for developers.
 
-But I don't have a strong feeling about it either way. So, if you want
-to proceed here and just emit the all-zeros OID, I think that is a fine
-approach.
+This alone is enough to convince me that this should not be done.
 
-> diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-> index 28ca5c38bb5..e56b1ba6e50 100755
-> --- a/t/t4301-merge-tree-write-tree.sh
-> +++ b/t/t4301-merge-tree-write-tree.sh
-> @@ -810,4 +810,12 @@ test_expect_success 'can override merge of unrelated histories' '
->  	test_cmp expect actual
->  '
->
-> +test_expect_success 'merge-ort fails gracefully in a read-only repository' '
-> +	git init --bare read-only &&
-> +	git push read-only side1 side2 &&
-> +	test_when_finished "chmod -R u+w read-only" &&
+Unless the tool can infer the intent while generating the headers
+and place comments describing why it exists and what it and its
+parameters mean next to the function definition it produces, that
+is, in which case I may be OK.  As developers become more and more
+experienced, they will invest more and more time in getting the
+interface right.  We shouldn't target developers who find the time
+to do so a waste and headache.
 
-Do we care about keeping this read-only repository around after the
-test is done? It seems odd to have a directory called "read-only" be
-user-writable. I'd probably just as soon replace this with:
-
-  test_when_finished "rm -fr read-only" &&
-
-Otherwise, this patch looks good. Thanks for working on it!
-
-Thanks,
-Taylor
+Thanks.
