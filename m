@@ -2,88 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BA8BECAAD8
-	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 17:35:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 563C2C6FA82
+	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 17:50:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229862AbiIURfU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Sep 2022 13:35:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33454 "EHLO
+        id S229762AbiIURuA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Sep 2022 13:50:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229794AbiIURfT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2022 13:35:19 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D396F844CC
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 10:35:16 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 19C24151D25;
-        Wed, 21 Sep 2022 13:35:16 -0400 (EDT)
+        with ESMTP id S229669AbiIURt6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2022 13:49:58 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81659248F9
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 10:49:55 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 85ADB1CE08E;
+        Wed, 21 Sep 2022 13:49:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6/vs4w7O/CR/g4xT4ko6mVEbWGTGgzSFNzjgZt
-        PguVM=; b=tzHs+QBm/4UnCmvyz6bAIbPLTI0RD/V7OikGiFydeg4cUejgoDJFg0
-        QO7dodPzpOECZPEX2Nwj9PzUW8C48FGEbmjpDykv87QL7wT15W8HDmB5S12v38GV
-        mNt4Rywl8cRfA6U6CjhiZ3OLn10K5gnz9aX9U03I7z26WUtXt9MaM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 12C7A151D24;
-        Wed, 21 Sep 2022 13:35:16 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=aba3OIjHELBb
+        LFNMK0z5YT4/lJ/g8tgOsff3/kgZDuY=; b=ZmdHQlqEk+dqzOeX3/m+XzoMlb3d
+        bFT5/lKBXtr8k+k+SvaameBV095EaJ9LVB5hkzNf2dnpQTFan0o6msdjkbQqSNxi
+        p7XX7PdwV0O0zve73mvGAiSbG8ClSlsGPehkniw0npJswu1vwq5kRbc8guutcxlD
+        1m4+HfVMeIMIZ2w=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7F83A1CE08D;
+        Wed, 21 Sep 2022 13:49:54 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6C4B3151D23;
-        Wed, 21 Sep 2022 13:35:15 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 164081CE08C;
+        Wed, 21 Sep 2022 13:49:50 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] gc: don't translate literal commands
-References: <20220920050725.326383-1-alexhenrie24@gmail.com>
-        <YyoPXmNGAvl6p+C2@coredump.intra.peff.net>
-Date:   Wed, 21 Sep 2022 10:35:14 -0700
-In-Reply-To: <YyoPXmNGAvl6p+C2@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 20 Sep 2022 15:07:10 -0400")
-Message-ID: <xmqqa66s4oml.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] t/Makefile: remove 'test-results' on 'make clean'
+References: <20220920105407.4700-1-szeder.dev@gmail.com>
+        <20220920201619.40972-1-szeder.dev@gmail.com>
+        <220921.865yhh5hx0.gmgdl@evledraar.gmail.com>
+Date:   Wed, 21 Sep 2022 10:49:48 -0700
+In-Reply-To: <220921.865yhh5hx0.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 21 Sep 2022 08:59:54 +0200")
+Message-ID: <xmqqzges39dv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C0D7DF9A-39D3-11ED-9E64-307A8E0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: CA2C6DD4-39D5-11ED-BDE8-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Mon, Sep 19, 2022 at 11:07:25PM -0600, Alex Henrie wrote:
+> On Tue, Sep 20 2022, SZEDER G=C3=A1bor wrote:
 >
->> These commands have no placeholders to be translated.
+>> The 't/test-results' directory and its contents are by-products of the
+>> test process, so 'make clean' should remove them, but, alas, this has
+>> been broken since fee65b194d (t/Makefile: don't remove test-results in
+>> "clean-except-prove-cache", 2022-07-28).
+>>
+>> The 'clean' target in 't/Makefile' was not directly responsible for
+>> removing the 'test-results' directory, but relied on its dependency
+>> 'clean-except-prove-cache' to do that [1].  ee65b194d broke this,
+>> because it only removed the 'rm -r test-results' command from the
+>> 'clean-except-prove-cache' target instead of moving it to the 'clean'
+>> target, resulting in stray 't/test-results' directories.
+>>
+>> Add that missing cleanup command to 't/Makefile', and to all
+>> sub-Makefiles touched by that commit as well.
+>>
+>> [1] 60f26f6348 (t/Makefile: retain cache t/.prove across prove runs,
+>>                 2012-05-02)
+>>
+>> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+>> ---
 >
-> I think this is the right thing to do, but your commit message made me
-> pause for a second. When you say "placeholders", I think you mean %s,
-> etc. And yes there aren't any here, but that is not the reason not to
-> translate. The reason not to translate is that the strings are commands
-> which are given to a machine.
-
-I had the same reaction.  The strings shown in the choices need to
-be given as spelled and there is no i18n there.
-
-
-> So maybe something like:
+> Thanks, and sorry about the breakage. I've looked this over carefully &
+> it fixes the edge-case you noted without making anything else that I
+> could spot worse.
 >
->   There are no human-readable parts of these strings; the command you
->   type is still "git maintenance" even in other languages.
+> In case it helps:
+>
+> 	Reviewed-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>
+> It's still a bit odd to have a "clean" that cleans up a thing it *might
+> have* generated, i.e. sometimes we create & use these via a Makefile
+> target, and sometimes by manually invoking test scripts.
 
-I think calling that "no human-readable" would probably give another
-confusion, though.
+I think this is perfectly fine, but we could also use "distclean"
+for cleaning up something that might have been created.
 
-The title uses a good phrase: "literal commands", so the latter half
-of your rewrite should be sufficient.
+Thanks, both.
 
-    The command you type is still "git maintenance" even in other
-    languages.
+Will queue.
 
-> Regardless, the patch looks good to me. Thanks for catching it.
-
-Yes.  Good finding.
-
-Will apply.
