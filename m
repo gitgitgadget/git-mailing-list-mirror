@@ -2,109 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A29ACC32771
-	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 07:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BECA2C32771
+	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 07:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230012AbiIUHCl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Sep 2022 03:02:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41038 "EHLO
+        id S231248AbiIUHxe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Sep 2022 03:53:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229992AbiIUHCj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2022 03:02:39 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C932B7E02B
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 00:02:38 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id lc7so11604280ejb.0
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 00:02:38 -0700 (PDT)
+        with ESMTP id S229687AbiIUHx3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2022 03:53:29 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB52886724
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 00:53:23 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id j12so5095949pfi.11
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 00:53:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date;
-        bh=BwPNQOrhXKnQEXtOPhXmINUORhP6BMCWyc5MrN+QGeU=;
-        b=IVYmLqJ1S5wJ4K1mhH1kI6pUMS0Qo7MwXWnDPrTy+hmJxUXGH9MQlfmcDR1Kr68pbq
-         cUeWXlwfrXdkqJLUreBb4rKMPgTOh/+rmGwuh9vKuH3V7/ttIR5bGxEjX4V4ueZOE+RE
-         59Ztob/Vc57xQ9AQHoqhOtwQTKHhU4qx50Z5kmXCX/ZWWI4VMNH3typwgUiUv4ZaurHr
-         GgtVs2GrE4gmVA98sYU0fqVep5/oS34FahOF10FbWrfp4/VMcU6grSzm8uOiS2NzQqwK
-         nqDjYTi24cSlGPPaBsy4QFVuAPryJgHk3JBIjZrtcoQJrXR8NS1ycVLLIx7C3RAbazwZ
-         Hx+A==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=FpfrbPTPRH80ikFsvwFTF0DbdWn8s4wMnpB694bjstA=;
+        b=QWiFFVev/yXENDY4+VuDsbH1GT+U4uGEUDTcn4fS3mWYyzCze+1pltJuVkODl9V9Nm
+         rPV4ujcGJmGIaMjtOiYvCxgB6YCEn79uVmkHqkqbcOuBcLZE/BYVAou0CoGtgbCJZCGH
+         BP0BFd8DJ2TsnE+xVnnQaQSkf5QB2PxfoCxEAWmxN9oGaUl4EPWD+kLxGza/zANCZJTK
+         /yjKM8WRtdRVkqa13Y+/TiEdrxy3Fv2vdfqX30OugUIkij4dsS8ZMEeHCyfcw9tJ7WOV
+         mw6DYZRLOPjduTeY5H5Qw0H5gQPvsLPMDmyBGBEndvjH2nd73yHffqWrjMnHChqA+NYX
+         nkwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=BwPNQOrhXKnQEXtOPhXmINUORhP6BMCWyc5MrN+QGeU=;
-        b=28TEWMYE9I/LW4x3339oszb9FWh2plXjfIUg0X7oXcqssJ5LQFAVEh7tOyK7L8hfEZ
-         330Cejnh+zcsxT8uZ1GL4THGoJgm0jSQeRjhNV6PEXPt+i0qtn6kxlijEB76p4NweOGn
-         rvHkEcM9BDGIgCAIg9zXVnFVEqw1RQpBELp0AobgS4AGWJV+pID8+Mnn98TMVHJWVYvK
-         bR9YK4mc8DsauH0sOtWAKBMo2ZJB53zk6a6z2gLQ5UyEWSI1hNxoFdosi+mQ0rQ+Rbiv
-         ObJ8jAFG53FD2zEQiRe1Gz/uAg8mjM4RPnIYrO/T9/Xi7+oqU5BcMBYJZC0auNii9gl2
-         dtwQ==
-X-Gm-Message-State: ACrzQf3k3CMYQ1oQUHKmgfcpdv1oKg84VSbcZUQ4ROXFkTIgHT7a7FLF
-        xv1wU3Nl/G7MxtNHlYpJekzyZICzmlY=
-X-Google-Smtp-Source: AMsMyM4LTuKcTiYdLcth0nBI77+SeA8+HXa9zr4sbvnltPZLxL8dZkT6N+so73GiqxBuaMBKlz8qtw==
-X-Received: by 2002:a17:907:1b1a:b0:74a:18f7:7f63 with SMTP id mp26-20020a1709071b1a00b0074a18f77f63mr21137016ejc.28.1663743757231;
-        Wed, 21 Sep 2022 00:02:37 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id e18-20020a1709061e9200b0076f0a723f6bsm899185ejj.58.2022.09.21.00.02.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Sep 2022 00:02:36 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oatkh-001nWx-21;
-        Wed, 21 Sep 2022 09:02:35 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] t/Makefile: remove 'test-results' on 'make clean'
-Date:   Wed, 21 Sep 2022 08:59:54 +0200
-References: <20220920105407.4700-1-szeder.dev@gmail.com>
- <20220920201619.40972-1-szeder.dev@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220920201619.40972-1-szeder.dev@gmail.com>
-Message-ID: <220921.865yhh5hx0.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=FpfrbPTPRH80ikFsvwFTF0DbdWn8s4wMnpB694bjstA=;
+        b=ATVUIsJ8y2UQnbXd+OzIpyQkOBODXTwubmkIMHGoIhqLF4k1B8obeZK0pGgmLoY1ok
+         AgwkDaQxZFPCXqWrOgWzz3UPlunKUPizMgGfbkrbiA8Uw37WPrCp5I9UfQx1LMCy8xdt
+         BVIVynJAwjfRxpG90rzjAesfCnwL9Tojpw8i9FTWmqlEOuHFfGJH9+vsI82b3mxZZXh4
+         5Ff02tNW85z1+hjYBJ2BalH7VjFyHa5y3rkH7pWgIPc02//teBe+hw6cd1p4SeZQpJWE
+         T03diy6bb/7VEl5Yhw4wQED70z6OWCrApcY1AXohVmjN+F75/5EtUl+JH+n4GKYxwo6/
+         +E8w==
+X-Gm-Message-State: ACrzQf36bhuhCQiD1CqW3KhWYOtTTvNwz9vxWSDL+aZSZuvg6O1LhypU
+        Mn0qq6Q+fNuuV2TsRhndBY1VBpG9jylF50EE4O0=
+X-Google-Smtp-Source: AMsMyM7EVBOP4HDx5acMY0NwHbtZniqV5jasjgGgMunftIfG9Eib9n4ByY6nrF9nkFFts4vx18dvQTyTG89oz2SkLxM=
+X-Received: by 2002:a63:982:0:b0:43b:e67b:988c with SMTP id
+ 124-20020a630982000000b0043be67b988cmr2132466pgj.35.1663746802856; Wed, 21
+ Sep 2022 00:53:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <CA+J78MWhp3qmbBhhSoioJP+d5eh-iEd_vHZdTNB69o7EvvXWYQ@mail.gmail.com>
+ <220919.86zgev635z.gmgdl@evledraar.gmail.com> <xmqqbkrbb6ua.fsf@gitster.g>
+ <CA+J78MWvOEbJY6+NcLFn0SJGMZn=N7QUMwc=Bta+uHicvD892w@mail.gmail.com> <220920.86illi5p6w.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220920.86illi5p6w.gmgdl@evledraar.gmail.com>
+From:   Skrab Sah <skrab.sah@gmail.com>
+Date:   Wed, 21 Sep 2022 13:23:11 +0530
+Message-ID: <CA+J78MUM=JiAF7R_8oV23OQ-LndJbRm4AUdPsgS4HT4SduFgiw@mail.gmail.com>
+Subject: Re: what if i use makeheader tool to generate c header file, it would
+ be accepted.
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+1. We would not commit the generated file.
+2. There are different ways we can install the makeheaders tool.
+3. Makefile will first generate the header file then other compilation.
+4. For API docs, there is one multi-line comment in the header file
+that we can put in at the top of the .c file and also it will
+automatically be copied in the .h file if we want.
+5. makeheaders tools is fast and small and it will not run always,
+only when its respective file is changed.
+6. As I showed you before, we have different approaches to handle
+different things so, it will be better to see in the patches.
 
-On Tue, Sep 20 2022, SZEDER G=C3=A1bor wrote:
+I think the patches will show you a better figure.
 
-> The 't/test-results' directory and its contents are by-products of the
-> test process, so 'make clean' should remove them, but, alas, this has
-> been broken since fee65b194d (t/Makefile: don't remove test-results in
-> "clean-except-prove-cache", 2022-07-28).
+for patches, in makefile we need to add some script for the makeheaders too=
+l.
+And the Makefile is too big and complicated to handle, it will consume time=
+.
+
+Is Makefile generated by another script?
+
+
+For patches, I need some time and your help.
+
+On Tue, 20 Sept 2022 at 15:43, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
 >
-> The 'clean' target in 't/Makefile' was not directly responsible for
-> removing the 'test-results' directory, but relied on its dependency
-> 'clean-except-prove-cache' to do that [1].  ee65b194d broke this,
-> because it only removed the 'rm -r test-results' command from the
-> 'clean-except-prove-cache' target instead of moving it to the 'clean'
-> target, resulting in stray 't/test-results' directories.
 >
-> Add that missing cleanup command to 't/Makefile', and to all
-> sub-Makefiles touched by that commit as well.
+> On Tue, Sep 20 2022, Skrab Sah wrote:
 >
-> [1] 60f26f6348 (t/Makefile: retain cache t/.prove across prove runs,
->                 2012-05-02)
+> > Let me elaborate to you, how and why I wanted to implement the
+> > makeheaders tool in the project.
+> >
+> > First of all, this program will automatically generate c header(.h)
+> > files for specified c source(.c) files, which will help the developer.
+> >
+> > Here the test shows how the tool can be implemented in different
+> > cases: https://github.com/skrab-sah/makeheaders-test
+> >
+> >
+> > pros:
+> >     1. it will slightly reduce the size of the project.
+> >     2. no need to declare anything in the header file, which is time
+> > consuming and a headache for developers.
 >
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
-
-Thanks, and sorry about the breakage. I've looked this over carefully &
-it fixes the edge-case you noted without making anything else that I
-could spot worse.
-
-In case it helps:
-
-	Reviewed-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-
-It's still a bit odd to have a "clean" that cleans up a thing it *might
-have* generated, i.e. sometimes we create & use these via a Makefile
-target, and sometimes by manually invoking test scripts.
-
-But any such issues far pre-date this fix (or my commit).
+> Sure, this all sound interesting in principle, and I think the answer is
+> definitely "we're not opposed in principle, but if you're interested
+> let's see patches".
+>
+> But whether this is worthwhile is something that really can't be
+> answered until someone (i.e. you) puts in the legwork of implementing
+> it.
+>
+> You'll then run into various trade-offs you'd have to make, and issues
+> you may not have forseen. Just some I can think of offhand:
+>
+>  * It's unclear if you mean that we'd commit the generated files or
+>    not. If "not" then our Makefile will need to learn to do two-stage
+>    compilation. I.e. we'd ship a copy of the makeheader tool, build
+>    that, build the headers, and then do our "real" build.
+>
+>    I happen to have an implementation of that "two-stage" compilation
+>    for entirely different reasons (being able to do configure/probes for
+>    our compilation), but *just* doing that is non-trivial.
+>
+>  * The way we document various APIs now is via manually curated header
+>    files, e.g. how would a strbuf.h look like in this model you're
+>    proposing?
+>
+>    Obviously we could move those comments to the *.c file, but right now
+>    we have a convention of implementation comments going in the *.c
+>    file, but the API docs going in the *.h.
+>
+>    We could tell them apart with "/*" v.s. "/**" comments, as we do
+>    now. But part of the point of having them in the *.h file is that you
+>    can easily skim the docs & APi definition. Putting the docs in the
+>    much bigger *.c file wouldn't be nice.
+>
+>  * We'd have another not-quite-compiler C-parser running on git.git,
+>    right now we basically have a dependency on spatch's parsing. See
+>    5cf88fd8b05 (git-compat-util.h: use "UNUSED", not "UNUSED(var)",
+>    2022-08-25).
+>
+>    Is this parser smart enough to handle all the edge cases? E.g. for
+>    KHASH_INIT() we define interfaces via a macro-indirection, so an
+>    auto-generated *.h needs to resolve the macros in the *.c file.
