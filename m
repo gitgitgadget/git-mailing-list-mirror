@@ -2,88 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3982ECAAD8
-	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 20:13:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2F2CECAAD8
+	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 20:59:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230358AbiIUUNP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Sep 2022 16:13:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58024 "EHLO
+        id S229873AbiIUU7y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Sep 2022 16:59:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230289AbiIUUNN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2022 16:13:13 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51316A405B
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 13:13:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1663791184;
-        bh=/k5/RWcJE8aPnqsrHsGqaW6TBKY4fB7EMQ5pE3gaAJ0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=fAfaAwwTFsIXvurNKPd0/W1v2GtQopTAzaF6wENGVQI4p+3opNVmxRkY76ImOvTnt
-         P3bwQ05qdOHq+Hro3VKVZ7Wc7h6G3B7zBUJehizM2NPC4npIMKRZBc4+TN+5MWyYlR
-         C6nlkaD4NAATjg0OUAHolAvzvPZgbZMqOr9XgP6Q=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.115.55] ([89.1.213.188]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MWRRZ-1olAAF2Agt-00XtlU; Wed, 21
- Sep 2022 22:13:04 +0200
-Date:   Wed, 21 Sep 2022 22:13:03 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] merge-tree: fix segmentation fault in read-only
- repositories
-In-Reply-To: <xmqqedw438bq.fsf@gitster.g>
-Message-ID: <p25141n2-p277-21o4-r8s3-4396491s41n8@tzk.qr>
-References: <pull.1362.git.1663774248660.gitgitgadget@gmail.com> <xmqqedw438bq.fsf@gitster.g>
+        with ESMTP id S230223AbiIUU7m (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2022 16:59:42 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 143CB2F3A2
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 13:59:38 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-3454e58fe53so78470047b3.2
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 13:59:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=skydio.com; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=eqHJtNkPLFQRS0tm2+YKNr3ARfIHD/xvYGIHox4ljFQ=;
+        b=MzAdc7ukqLWwNkUPQNjK6dCj8wraQPO4Pe1xF9AXx5U9PDUz6WQPWMNcJCfifKFlFR
+         CG7KU1LTPfq8XXW6icn6h/h4XJudrbG08fTeWteI6iaAme5quez92QnwK71nvUYHWP2E
+         DbQuNKi0RhugGuVA8mfMwSH03qWuz/xVi4rrPGbI3K785KL6X32JMew5j8yYHk2shxvS
+         fvZLcdlBR4X6H3E2YUn9WA30N+i9wfJmj9tvXxYEavMqU7ndMp976oRyQZ/vaSk359WX
+         dnco9RBNTAvEvmAK7YfVuGio2HQ0gAUKbEBrD9Z2GWfZc1YMbC3+AFmRmfgVoPYljlNw
+         uOlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=eqHJtNkPLFQRS0tm2+YKNr3ARfIHD/xvYGIHox4ljFQ=;
+        b=rKmdphdaz3g8361IBZW4LzrkSTY9Mf2VYyX3gfKHgsR8HMqyf9FCFGZTxkOT5rYapB
+         DLqWLCYWRxAqQ0w/QCBkGcYC7/oZwgjXwrvwQ6gJ2gkseoKln1lex4u0yKH8QwnlfEI7
+         YwFOl8F7N0GQFGlsGztG9RJd1Q3za5j4DVNV0UObxppTZdO+6XA0rRIACHCMj7sd6RR+
+         8uwZj+Lik9MhB91FzUyTNjhxjzH6jdaUqItG6LWfgDFwJRsQQdkkMTZY4hEcPPHbZQxN
+         K/hDlA9wU0faOdtkVVznSwFAZd4l1vT8IXG3OqXU3bgNn7NKcYL0aszN/Ev2yPzJa/fU
+         peuQ==
+X-Gm-Message-State: ACrzQf2WyJ7OcNPLT6fP3DwXtfwORk1F/ORkdCU1NhlTl2uIU00Z9SA7
+        P9hp/0NNKlCF2c7J+iIPbF4q2VUV/EHatMCh3fLUIw==
+X-Google-Smtp-Source: AMsMyM7LG9xc3ux5MN187DzPbStEdYy6VODYLKKCyXgPuqh2WB9COVxe6s0lXSN8phSbUXDvTylsgWhxXxsxIhYebsA=
+X-Received: by 2002:a0d:fac2:0:b0:349:f1d4:8b1e with SMTP id
+ k185-20020a0dfac2000000b00349f1d48b1emr158749ywf.456.1663793977592; Wed, 21
+ Sep 2022 13:59:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:jvsNViAKlaxgmHUu/OnmZBnlcpOvin6RJadq/diwnDktSjRJrpt
- uatv+zoyTXBUNtqk1u+PKiMjTSdV1dRNmD+9ZdnuzeC57M0ouCyXu/iRjih6Z1oiKGvT6dt
- 5Ue9zmwjKZceewq+uMPinvsbO4+itogJCCmwdp6tQ2SBXOtid6XDkXTnZgL6Gd3kG+0pp8q
- sojgju5IbXAv2oFobS3nQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:2tFHyPiUChY=:nGK1ERlkPnh0isgLwemxpJ
- KWl66swJ1ujVqcOkxKIfm2JSUD3exMMVAHYu1v6HOCqVwcIaiYdQQFtybPYKz8I4ditSdvc1Q
- f8o9XG7mGKGsViSytd6/iw1hI21w0rJRRMCx3aClIKYK7CZfEy4/9QD44mpcQdkiQbvWPdXDA
- Q8JxF54ufw3gVuM86L8Q/c1iska5sFUrQY3VkTcm+7Tg/wbjxPyYiWyUxM7h8L4oE84Q6VGkx
- LmoX0VbvR1TWjcU1yBNmSfskue6Vi9BtgBAqIVufIE6WCsoHKjgaoRWeBK4hWVwfI5Uz5tMF2
- lD4RNLQKqDbCvqIBx7nWnLFBDx7x6i8fG9UXavy3mxicUGC8069xMlLfMlp8XIe2P3bO85UEK
- eAepOEI6yGprzJi0vo9uYWyyS25Eq9IC5kgY4KOGau6Yh68PwtmQNO2YaIbLB7gmDdyhwURJP
- OC6UIhiqNHJUtNz0Au/UN4LYNYoqkJjcK4liDGledn5Il5qY3jMraAP7yW0IcFZm9W7snSEt0
- RWhNFQZ3D/uU4gfX40lqHzO09e5K5yhSLki+XXRDPVbQxSQIhpBdDWep9hzd3GnNSZqv/mzm8
- bLyrO+Vtapl+QFuL+hU9l7DNVBKo55U7SUevO4YrJOOVDGvaDz6JgkPYMjufZGDdkPjCrdhd3
- YgsaEDMlpl1cNQ8E65BqHfWHXhlxi26uDnVu1ZDIj85OsWl3QWhDRrMJpKPQCyBaWVSJSXBsO
- 37IeS5e7rAzyUYCEVDsgWcgIGyc4n8KPAGPzAyVeS1dG7/qFxtSSCtttJUZIliw+EaSn0mLlb
- j7xWwmtyMHBmw9f6P/2NAAsFJeCV8Z3lR1UZc+9yTzIRVAqloh1/jXQrplaBS9ldbtBgcVR/j
- 6S5KUYxLOXX0K/vjr3HELBVHJWVbz0LiwLLeRoIrY6HE8EjxWMRtBisbnT1/6p1Ld32du07af
- +A1qbAeiHBmC7S5BO0I9Zke45vQLlkvjyJWUKeNMApZQg9Ziyd7unSJ5BdwmR/jEwk+9/RaHz
- m+dAr0YaKsjQnisU2cMGujCqBDs12xbf0PTYasua4UkSPwhJC3q1mlMZOy6hugRsMM6N2Fs5T
- oXY8V/ZhQtwGKLCanWuX7FSqa6bzKtkyFGJGAEx28tAaK+L42AJZ1bRtfCPqx557fcJj+s97z
- VgoGuKlMAfiiCmJKX0LoHsgXlT
+References: <pull.1359.git.1663653505.gitgitgadget@gmail.com> <xmqqo7v81qsn.fsf@gitster.g>
+In-Reply-To: <xmqqo7v81qsn.fsf@gitster.g>
+From:   Jerry Zhang <jerry@skydio.com>
+Date:   Wed, 21 Sep 2022 13:59:26 -0700
+Message-ID: <CAMKO5CtS5c-Cd518hzoLszzX5bPDws-bByEcqfVpn7iJTvvOUw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] update internal patch-id to use "stable" algorithm
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jerry Zhang via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Wed, 21 Sep 2022, Junio C Hamano wrote:
-
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+On Wed, Sep 21, 2022 at 12:16 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> > +test_expect_success 'merge-ort fails gracefully in a read-only reposi=
-tory' '
-> > +	git init --bare read-only &&
-> > +	git push read-only side1 side2 &&
-> > +	test_when_finished "chmod -R u+w read-only" &&
-> > +	chmod -R a-w read-only &&
-> > +	test_must_fail git -C read-only merge-tree side1 side2
-> > +'
+> "Jerry Zhang via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Doesn't this test need a prerequisite to guard against those whose
-> filesystem lacks SANITY?
-
-Yes, of course!
-
-Thank you for the sanity check (pun intended!),
-Dscho
+> > Internal usage of patch-id in rebase / cherry-pick doesn't persist
+> > patch-ids, so there's no need to specifically invoke the unstable varia=
+nt.
+> >
+> > This allows the unstable logic to be cleaned up.
+>
+> While all of that may be true, two things are not explained.
+>
+>  * Why does "unstable" need to be "cleaned up"?  Is that too dirty
+>    in what way?
+>
+>  * If internal usage does not persist patch-ids generated by the
+>    machinery, why is it bad to be using the unstable variant?  A
+>    na=C3=AFve expectation would be to make sure you use stable one if you
+>    want a future recomputation to give you the same result, but the
+>    opposite does not have to be always true.
+>
+Fair questions. My broad view is that less code and fewer code paths
+is better for readability and testing. This isn't a massive impact but
+it's not theoretical either -- as seen in patch 1 in this series I
+caught a bug in stable + binary files because of this change.
+Previously stable patch ids were only used in "git format-patch" and
+so this corner case was missed, but this becomes less likely if rebase
++ cherry-pick + format-patch were all on the same scheme.
