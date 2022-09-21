@@ -2,92 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49130ECAAD8
-	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 15:31:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 335F3ECAAD8
+	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 15:35:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230062AbiIUPbu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Sep 2022 11:31:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50346 "EHLO
+        id S230342AbiIUPf3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Sep 2022 11:35:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229877AbiIUPb1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2022 11:31:27 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58C5B98D37
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 08:28:08 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id bj12so14377899ejb.13
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 08:28:08 -0700 (PDT)
+        with ESMTP id S232024AbiIUPeh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2022 11:34:37 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EC759C222
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 08:31:59 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id n40-20020a05600c3ba800b003b49aefc35fso3987731wms.5
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 08:31:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=YmBO2X1PnjhsEWlWtHR3kHkXYaBTShe38r4luyKa3B4=;
-        b=kiHjizs9OPgaOLkOPW+jUu4NQBjf9AfrEcUmySwz7H3ih4w6BsrIRCpG3EZKWUUeiE
-         MDsDd3NpO+mPB1TeRoLf+xzywej2qxb7zJ6edlBUeLfFzCnK99QUZ5+nvGmCcinmS2dz
-         3qDNrZ+hjPWUkBoVj0e1B5ENiv/o982oT6o5R2rNr35fm6+QEDrV7TjTTU/UffffpvUd
-         k5HegqE/u5y/esiaaIhAytuhfrVlAFcnAs/wcuiz9pqEnLLwhiXlWy5NY6hnD+HAu8FO
-         RiZjxFSpwAqlTuaUrV/Qrc/nDxmpzoQk4alqlbfE42oMamPYMKk6QeIxsTDexU34vtn+
-         kebw==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date;
+        bh=MabCfAzJk6F4sT/W3jKTzGUQFzPyLFyB/Yzr4hMqRlE=;
+        b=YeiamJNTBF45njL/0u4Sfh8wcINfblydN6CBBoDmKEgJ2vev1W8sfRDrgBpfLPcnir
+         USEaiB8d7DG1Cy5LqWbqZ1KTn2bIygKmVIBcMcZ2EHXNYL12XJiPOF1D19UkCORN23gN
+         RCv3+S6G/ffJASK9H48EWuoaPRj2HxNPH3HlIEkjQ2XBqGTlggKUeF69VSzi+7/xcf1x
+         jMAZVIzSB/u5KpVMCF/kLDjg7TyYOxHr9/TOIXoONMp44Cz9S3Slr+dbWwPf5C2YYvPD
+         eAW+iv+sOT/UpS0bJE/sg1Ofa1ct+Is42A89JSYWuNh+uugr0dERuet+/ZAZF2/l7F4Q
+         Lnpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=YmBO2X1PnjhsEWlWtHR3kHkXYaBTShe38r4luyKa3B4=;
-        b=o9BNc7nRZxJWq7MRxF+Jrcww3DMp+ZlEKaKcb1ArR7UkMmvAGB5Oj/sMeJHbf9NTnU
-         bUCEbJSFPPDouGfAT2SF89vxWVbpwTrh7GxCFSniTVIsOVCVC5w6WMzYUXXGIeNDAnHX
-         45UO0xElQ2yiky5S027LzEsuW3aqZn8h/no28pRIN9rc6XI8P6yGptfXp5JDYC5qAbr4
-         FpHLbPuSYI5PmIVy7hjaZ0Rat2KjNCpZgGyzQ57utYLhzt/01pwsMxAd5bfPYZaI3JS6
-         5hPwuFx11pG0mET1L76pz43Cl4NyL/P225jWV5mePNcr7xq5VESWXVDEVUgjTvsXkxnw
-         l3Cw==
-X-Gm-Message-State: ACrzQf1+IL5ASsGYsUmiChMoDO+ku7llta4l8LBKs0PjWHEw2w7PZxvx
-        GlDbpBmxx61EIMkyihgqu43FIYfkSTyuYB0Ppva+Kx7MTpU=
-X-Google-Smtp-Source: AMsMyM6TYhYHPXulnkKqRWgmlwh0uE0jQDm1eYCNX2cJrd9CsRbi/Jul7v0NWLOus7tpkpJsS77wrSJTGeHkBcvz6UU=
-X-Received: by 2002:a17:907:842:b0:731:3310:4187 with SMTP id
- ww2-20020a170907084200b0073133104187mr20283943ejb.578.1663774040946; Wed, 21
- Sep 2022 08:27:20 -0700 (PDT)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=MabCfAzJk6F4sT/W3jKTzGUQFzPyLFyB/Yzr4hMqRlE=;
+        b=XZkzzADS80rho03BYUdm/EU4+AoazBcnZnC7rI28HiDAQvAuUyK7SUdLasZvtVyviC
+         bLQlp0YJDqb4kkMq+kLRZH0vv+9KKUZqIPsSA4ZZeQ1VmmBmfqX46zXeKbO/acnVP7i9
+         T56b5vLKoFkqoYLgsE2wsesg04CyfmXpiqb5FnCss++a9qICPm/ZGNGI9U1EcbefJcHn
+         sClMaSUngKxCMOE7ADlE4anuU9RK4cMQe4X1t6aCo68jKBMwBJueRUcUQaeE7oFWouzk
+         4lv3dkoN9B+EOViiRCvFr7Gdma3VjnbTW2THdL70Y9rcixd9Ecmft9u8FCHC+EriDuoM
+         hDdg==
+X-Gm-Message-State: ACrzQf3fEpui/HKs1CiRGE8Vsce4IX5ctNwxNvlkiaSWGVUmah9cFS3u
+        srs3bNSwz2Q7jl25r/Eg/VpH8Z+spNY=
+X-Google-Smtp-Source: AMsMyM5wtHMgrXlYNyLutpgd2KKSygPbL8lgx7y5KW1/AHOYKmAKp3gRl9Zn+YW+BY9A/Etf5nX/cw==
+X-Received: by 2002:a05:600c:1f0d:b0:3b4:ba4d:272a with SMTP id bd13-20020a05600c1f0d00b003b4ba4d272amr6490309wmb.105.1663774249741;
+        Wed, 21 Sep 2022 08:30:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l30-20020a05600c1d1e00b003a601a1c2f7sm3655540wms.19.2022.09.21.08.30.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Sep 2022 08:30:49 -0700 (PDT)
+Message-Id: <pull.1362.git.1663774248660.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 21 Sep 2022 15:30:48 +0000
+Subject: [PATCH] merge-tree: fix segmentation fault in read-only repositories
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1357.git.1663609659.gitgitgadget@gmail.com> <Yyo3pMlGkw1TWLDQ@nand.local>
-In-Reply-To: <Yyo3pMlGkw1TWLDQ@nand.local>
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Date:   Wed, 21 Sep 2022 20:57:07 +0530
-Message-ID: <CAPOJW5zJ=5RiV+bVg_0pgJ=cZKV0TC0=RgRdH4r7D-D8Q9vnkw@mail.gmail.com>
-Subject: Re: [PATCH 0/5] [RFC] introduce Roaring bitmaps to Git
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 21, 2022 at 3:29 AM Taylor Blau <me@ttaylorr.com> wrote:
->
-> On Mon, Sep 19, 2022 at 05:47:34PM +0000, Abhradeep Chakraborty via GitGitGadget wrote:
-> > This patch series is currently in RFC state and it aims to let Git use
-> > roaring bitmaps. As this is an RFC patch series (for now), the code are not
-> > fully accurate (i.e. some tests are failing). But it is backward-compatible
-> > (tests related to ewah bitmaps are passing). Some commit messages might need
-> > more explanation and some commits may need a split (specially the one that
-> > implement writing roaring bitmaps). Overall, the structure and code are near
-> > to ready to make the series a formal patch series.
->
-> Extremely exciting. Congratulations on all of your work so far. I'm
-> hopeful that you'll continue working on this after GSoC is over (for
-> those playing along at home, Abhradeep's coding period was extended by a
-> couple of weeks).
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Yeah, I will continue (or better to say I am continuing) my work. I
-hope that I can submit the next version in the upcoming few days.
+Independent of the question whether we want `git merge-tree` to report a
+tree name even when it failed to write the tree objects in a read-only
+repository, there is no question that we should avoid a segmentation
+fault.
 
-Thanks for supporting and guiding me throughout the GSoC period. I
-have learned a lot of new things during this period.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    merge-tree: fix segmentation fault in read-only repositories
+    
+    Turns out that the segmentation fault reported by Taylor
+    [https://lore.kernel.org/git/YyopQD+LvPucnz3w@nand.local/] happened
+    while testing merge-ort in a read-only repository, and that the upstream
+    version of git merge-tree is as affected as GitHub's internal version.
+    
+    Note: I briefly considered using the OID of the_hash_algo->empty_tree
+    instead of null_oid() when no tree object could be constructed. However,
+    I have come to the conclusion that this could potentially cause its own
+    set of problems because it would relate to a valid tree object even if
+    we do not have any valid tree object to play with.
+    
+    Also note: The question I hinted at in the commit message, namely
+    whether or not to try harder to construct a tree object even if we
+    cannot write it out, maybe merits a longer discussion, one that I think
+    we should have after v2.38.0 is released, so as not to distract from
+    focusing on v2.38.0.
 
-> I am still working through my post-Git Merge backlog, but I'm looking
-> forward to reading these patches soon. I'm glad that other reviewers
-> have already started to dive in :-).
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1362%2Fdscho%2Fmerge-tree-in-read-only-repos-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1362/dscho/merge-tree-in-read-only-repos-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1362
 
-No problem, I am doing some improvements by this time.
-By the way, I am very excited to see the Youtube Git-Merge recordings ;)
+ builtin/merge-tree.c             | 4 +++-
+ t/t4301-merge-tree-write-tree.sh | 8 ++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-Thanks :)
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index ae5782917b9..25c7142a882 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -412,6 +412,7 @@ static int real_merge(struct merge_tree_options *o,
+ 	struct commit_list *merge_bases = NULL;
+ 	struct merge_options opt;
+ 	struct merge_result result = { 0 };
++	const struct object_id *tree_oid;
+ 
+ 	parent1 = get_merge_parent(branch1);
+ 	if (!parent1)
+@@ -446,7 +447,8 @@ static int real_merge(struct merge_tree_options *o,
+ 	if (o->show_messages == -1)
+ 		o->show_messages = !result.clean;
+ 
+-	printf("%s%c", oid_to_hex(&result.tree->object.oid), line_termination);
++	tree_oid = result.tree ? &result.tree->object.oid : null_oid();
++	printf("%s%c", oid_to_hex(tree_oid), line_termination);
+ 	if (!result.clean) {
+ 		struct string_list conflicted_files = STRING_LIST_INIT_NODUP;
+ 		const char *last = NULL;
+diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
+index 28ca5c38bb5..e56b1ba6e50 100755
+--- a/t/t4301-merge-tree-write-tree.sh
++++ b/t/t4301-merge-tree-write-tree.sh
+@@ -810,4 +810,12 @@ test_expect_success 'can override merge of unrelated histories' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'merge-ort fails gracefully in a read-only repository' '
++	git init --bare read-only &&
++	git push read-only side1 side2 &&
++	test_when_finished "chmod -R u+w read-only" &&
++	chmod -R a-w read-only &&
++	test_must_fail git -C read-only merge-tree side1 side2
++'
++
+ test_done
+
+base-commit: dda7228a83e2e9ff584bf6adbf55910565b41e14
+-- 
+gitgitgadget
