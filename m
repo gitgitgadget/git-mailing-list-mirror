@@ -2,90 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2F2CECAAD8
-	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 20:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43C8DC6FA82
+	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 21:13:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229873AbiIUU7y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Sep 2022 16:59:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55310 "EHLO
+        id S229687AbiIUVNY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Sep 2022 17:13:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230223AbiIUU7m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2022 16:59:42 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 143CB2F3A2
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 13:59:38 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-3454e58fe53so78470047b3.2
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 13:59:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=skydio.com; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=eqHJtNkPLFQRS0tm2+YKNr3ARfIHD/xvYGIHox4ljFQ=;
-        b=MzAdc7ukqLWwNkUPQNjK6dCj8wraQPO4Pe1xF9AXx5U9PDUz6WQPWMNcJCfifKFlFR
-         CG7KU1LTPfq8XXW6icn6h/h4XJudrbG08fTeWteI6iaAme5quez92QnwK71nvUYHWP2E
-         DbQuNKi0RhugGuVA8mfMwSH03qWuz/xVi4rrPGbI3K785KL6X32JMew5j8yYHk2shxvS
-         fvZLcdlBR4X6H3E2YUn9WA30N+i9wfJmj9tvXxYEavMqU7ndMp976oRyQZ/vaSk359WX
-         dnco9RBNTAvEvmAK7YfVuGio2HQ0gAUKbEBrD9Z2GWfZc1YMbC3+AFmRmfgVoPYljlNw
-         uOlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=eqHJtNkPLFQRS0tm2+YKNr3ARfIHD/xvYGIHox4ljFQ=;
-        b=rKmdphdaz3g8361IBZW4LzrkSTY9Mf2VYyX3gfKHgsR8HMqyf9FCFGZTxkOT5rYapB
-         DLqWLCYWRxAqQ0w/QCBkGcYC7/oZwgjXwrvwQ6gJ2gkseoKln1lex4u0yKH8QwnlfEI7
-         YwFOl8F7N0GQFGlsGztG9RJd1Q3za5j4DVNV0UObxppTZdO+6XA0rRIACHCMj7sd6RR+
-         8uwZj+Lik9MhB91FzUyTNjhxjzH6jdaUqItG6LWfgDFwJRsQQdkkMTZY4hEcPPHbZQxN
-         K/hDlA9wU0faOdtkVVznSwFAZd4l1vT8IXG3OqXU3bgNn7NKcYL0aszN/Ev2yPzJa/fU
-         peuQ==
-X-Gm-Message-State: ACrzQf2WyJ7OcNPLT6fP3DwXtfwORk1F/ORkdCU1NhlTl2uIU00Z9SA7
-        P9hp/0NNKlCF2c7J+iIPbF4q2VUV/EHatMCh3fLUIw==
-X-Google-Smtp-Source: AMsMyM7LG9xc3ux5MN187DzPbStEdYy6VODYLKKCyXgPuqh2WB9COVxe6s0lXSN8phSbUXDvTylsgWhxXxsxIhYebsA=
-X-Received: by 2002:a0d:fac2:0:b0:349:f1d4:8b1e with SMTP id
- k185-20020a0dfac2000000b00349f1d48b1emr158749ywf.456.1663793977592; Wed, 21
- Sep 2022 13:59:37 -0700 (PDT)
+        with ESMTP id S229555AbiIUVNX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2022 17:13:23 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AB5F5E557
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 14:13:19 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 4591F5A26C;
+        Wed, 21 Sep 2022 21:13:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1663794798;
+        bh=8EcJ3q/I2H02kqSuTmHnsJVL0k6gI1hLmMqHawnWyFA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=xidRlfptmT/2TKSD5cIDVc0WEesNBZZ+bzjQVwQX7jHQVy7AV7D+9Vl6KWrAadhbu
+         LsQct49Q3QQVch3T07aI2K7umRjWHuDEUH4KFyDu0DFUivD0dDplQYqXc4Z2byvgip
+         /DkWlW/IzYKduNlpwCmRVDNGih9vlENcz2ecM9qsOIbN0d90rqxXT7lRfGN4LDyVWL
+         WceSPTVX9gq7ZrsSbdalLVzSA7wTB2skaaw0hGuDNtf3Tavmv/0HHLsu71RY8b+NMg
+         hU9k9LzcdfWT3v7J/xM8DwW846tAEffQdvQItkNyl3c3wRmL5SLW6sCXpoKfoPCeR0
+         DIJnik3DSN1elkHaFLeXbUiRbMEtQxOEHR3i3VQIEGaIjWoYARjtyRJ1882WZc1oJ0
+         /iiC/Opk7waTF95h9QvsJX/TMrJ5fem9NRWUeA3EEjFn3KGsLBlL546TM/jiP44n1V
+         Xn9ZTV1fBBiX08WObSaeq4iohXomeU43lhFqdRYfIyFK/+ELGKI
+Date:   Wed, 21 Sep 2022 21:13:16 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jan Tosovsky <j.tosovsky@email.cz>
+Cc:     git@vger.kernel.org
+Subject: Re: Preserving credentials on authentication failures
+Message-ID: <Yyt+bAllVYJ9+SXa@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jan Tosovsky <j.tosovsky@email.cz>, git@vger.kernel.org
+References: <007401d8ccc6$ef8ebe50$ceac3af0$@email.cz>
 MIME-Version: 1.0
-References: <pull.1359.git.1663653505.gitgitgadget@gmail.com> <xmqqo7v81qsn.fsf@gitster.g>
-In-Reply-To: <xmqqo7v81qsn.fsf@gitster.g>
-From:   Jerry Zhang <jerry@skydio.com>
-Date:   Wed, 21 Sep 2022 13:59:26 -0700
-Message-ID: <CAMKO5CtS5c-Cd518hzoLszzX5bPDws-bByEcqfVpn7iJTvvOUw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] update internal patch-id to use "stable" algorithm
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jerry Zhang via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="06fD6Yo97Z4nViPp"
+Content-Disposition: inline
+In-Reply-To: <007401d8ccc6$ef8ebe50$ceac3af0$@email.cz>
+User-Agent: Mutt/2.2.7 (2022-08-07)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 21, 2022 at 12:16 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Jerry Zhang via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > Internal usage of patch-id in rebase / cherry-pick doesn't persist
-> > patch-ids, so there's no need to specifically invoke the unstable varia=
-nt.
-> >
-> > This allows the unstable logic to be cleaned up.
->
-> While all of that may be true, two things are not explained.
->
->  * Why does "unstable" need to be "cleaned up"?  Is that too dirty
->    in what way?
->
->  * If internal usage does not persist patch-ids generated by the
->    machinery, why is it bad to be using the unstable variant?  A
->    na=C3=AFve expectation would be to make sure you use stable one if you
->    want a future recomputation to give you the same result, but the
->    opposite does not have to be always true.
->
-Fair questions. My broad view is that less code and fewer code paths
-is better for readability and testing. This isn't a massive impact but
-it's not theoretical either -- as seen in patch 1 in this series I
-caught a bug in stable + binary files because of this change.
-Previously stable patch ids were only used in "git format-patch" and
-so this corner case was missed, but this becomes less likely if rebase
-+ cherry-pick + format-patch were all on the same scheme.
+
+--06fD6Yo97Z4nViPp
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2022-09-20 at 07:59:38, Jan Tosovsky wrote:
+> On my local Windows machine I maintain a credential store in the form of a
+> text file. But from time to time one of the entries disappears. I run
+> regularly some background jobs, cloning some stuff, and I suspect this
+> happens when the external authentication service is down temporarily. When
+> it is later resumed, I can't clone the repo anymore because of that delet=
+ed
+> entry.
+>=20
+> Is there any option to keep entries on authentication failures? Or is this
+> simply a bug? Or is there another reason why this happens?
+
+If you have a credential helper and the credentials retrieved from it
+cause the server to send a 401, then Git will erase the credentials and
+ask for new ones.  If your auth service is down, then the best thing for
+your Git server to do is return a 503 if service cannot be maintained.
+If it returns a 401 (which is not correct according to the RFC), then
+Git will clear the credentials.
+
+Git doesn't provide an option to preserve entries on authentication
+failure, but you could write a simple shell script that wraps your
+normal credential helper and ignores the "erase" command and use that
+instead in `credential.helper`.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--06fD6Yo97Z4nViPp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.39 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYyt+bAAKCRB8DEliiIei
+gXMZAQCkwrsm54daw6I187fLT2x0TIymQo4rg49sBQK4OEuMKgD+Jm02Q/wRAqze
+jZTVBl3ZgD/8tgLQbz6SaFOKXPevrQM=
+=6PkS
+-----END PGP SIGNATURE-----
+
+--06fD6Yo97Z4nViPp--
