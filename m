@@ -2,149 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BECA2C32771
-	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 07:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 472E6C32771
+	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 08:11:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231248AbiIUHxe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Sep 2022 03:53:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57164 "EHLO
+        id S229764AbiIUIL3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Sep 2022 04:11:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229687AbiIUHx3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2022 03:53:29 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB52886724
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 00:53:23 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id j12so5095949pfi.11
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 00:53:23 -0700 (PDT)
+        with ESMTP id S229736AbiIUIL2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2022 04:11:28 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DD8386FEE
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 01:11:26 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id q15-20020a17090a304f00b002002ac83485so5054263pjl.0
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 01:11:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=FpfrbPTPRH80ikFsvwFTF0DbdWn8s4wMnpB694bjstA=;
-        b=QWiFFVev/yXENDY4+VuDsbH1GT+U4uGEUDTcn4fS3mWYyzCze+1pltJuVkODl9V9Nm
-         rPV4ujcGJmGIaMjtOiYvCxgB6YCEn79uVmkHqkqbcOuBcLZE/BYVAou0CoGtgbCJZCGH
-         BP0BFd8DJ2TsnE+xVnnQaQSkf5QB2PxfoCxEAWmxN9oGaUl4EPWD+kLxGza/zANCZJTK
-         /yjKM8WRtdRVkqa13Y+/TiEdrxy3Fv2vdfqX30OugUIkij4dsS8ZMEeHCyfcw9tJ7WOV
-         mw6DYZRLOPjduTeY5H5Qw0H5gQPvsLPMDmyBGBEndvjH2nd73yHffqWrjMnHChqA+NYX
-         nkwg==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=SCt4ye3CVHSWoGm0Li0WZqpbcpItnzXLBdV04PgYQbI=;
+        b=EU5io+GVxjyQDbh1jLDE7E2z0LhEBvTT+gI2u2S+4U+ab5sNN7ldk3tEI8sR8uVWti
+         zayejWKp4YHqTEeQ/dmr5ACRS6rq9hEsyrfpvK+HbI37cTRdTPkiDIGzEZd8AJy1vlEV
+         FCqkv0IPUvV2EFN2Xdkg8Q3oO8X+UgDe0BAZGorcGbh6FFrMhZMT8OSNf84jpB/aN85z
+         U4EeZq0a550co0HXWTJ1vtXu03lYZnxDGeNkWv7OTwmDuMBGj5KraNK3JlMcKBC/XLAG
+         HjjcM8ecIj8IcRTNu0RV2jzvWv59rvTZNqZ6vpl+wUe3fR2wLRT2eVucZ5Qm+w01scVB
+         GURg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=FpfrbPTPRH80ikFsvwFTF0DbdWn8s4wMnpB694bjstA=;
-        b=ATVUIsJ8y2UQnbXd+OzIpyQkOBODXTwubmkIMHGoIhqLF4k1B8obeZK0pGgmLoY1ok
-         AgwkDaQxZFPCXqWrOgWzz3UPlunKUPizMgGfbkrbiA8Uw37WPrCp5I9UfQx1LMCy8xdt
-         BVIVynJAwjfRxpG90rzjAesfCnwL9Tojpw8i9FTWmqlEOuHFfGJH9+vsI82b3mxZZXh4
-         5Ff02tNW85z1+hjYBJ2BalH7VjFyHa5y3rkH7pWgIPc02//teBe+hw6cd1p4SeZQpJWE
-         T03diy6bb/7VEl5Yhw4wQED70z6OWCrApcY1AXohVmjN+F75/5EtUl+JH+n4GKYxwo6/
-         +E8w==
-X-Gm-Message-State: ACrzQf36bhuhCQiD1CqW3KhWYOtTTvNwz9vxWSDL+aZSZuvg6O1LhypU
-        Mn0qq6Q+fNuuV2TsRhndBY1VBpG9jylF50EE4O0=
-X-Google-Smtp-Source: AMsMyM7EVBOP4HDx5acMY0NwHbtZniqV5jasjgGgMunftIfG9Eib9n4ByY6nrF9nkFFts4vx18dvQTyTG89oz2SkLxM=
-X-Received: by 2002:a63:982:0:b0:43b:e67b:988c with SMTP id
- 124-20020a630982000000b0043be67b988cmr2132466pgj.35.1663746802856; Wed, 21
- Sep 2022 00:53:22 -0700 (PDT)
-MIME-Version: 1.0
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=SCt4ye3CVHSWoGm0Li0WZqpbcpItnzXLBdV04PgYQbI=;
+        b=GNNkCA5JPsiYHxsTH/DbRsmeaWc9YXSIFKQQf3ENC2ovw6vL7N6QLFZi40F9b49raJ
+         BCmIs9QLRFMvjAEl2aFyh2WvikroriIXNb8DyVh0jUQJJYg3sfh881nkziUSq1lL01cz
+         4WK19c5mgcoWJNT7zaN0ZeHMcf6UFtYS1yJL6UHzqdgbzpfkc9P+QsCbWNcLP2i5R3IH
+         3k5VgG4Sj4gZjvZI6dAK3pboro3Tq/aHNzqJlA2uoaNpgdvaOu3uGYg8Lkxxeo5ihR03
+         CRjrgNMN0noYa+SuF1dW0hq9Ztyq7qR34xL0sQVncyUwPwEL6TFeTRBP1fpomi0SZoDS
+         Si5g==
+X-Gm-Message-State: ACrzQf092eZDgcmee59EArCWJ7g0a6EzUkhZV+j6qq9kc2pDJUdd2y69
+        cvOz80rkQj+cocUR7AkP7H0=
+X-Google-Smtp-Source: AMsMyM4hX/ZgGJTS/CHszIjZzH4b+bJlfAb0R2MDNyeOgq9gEyPaEPMzN7e8u9cQ8FzLVwrUPTTMjA==
+X-Received: by 2002:a17:90b:1b07:b0:203:5860:b441 with SMTP id nu7-20020a17090b1b0700b002035860b441mr8155739pjb.103.1663747885957;
+        Wed, 21 Sep 2022 01:11:25 -0700 (PDT)
+Received: from localhost ([2001:ee0:5008:db00:84c8:158c:9494:ee57])
+        by smtp.gmail.com with ESMTPSA id w22-20020a1709027b9600b00177faf558b5sm1281106pll.250.2022.09.21.01.11.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Sep 2022 01:11:25 -0700 (PDT)
+Date:   Wed, 21 Sep 2022 15:11:22 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Skrab Sah <skrab.sah@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: what if i use makeheader tool to generate c header file, it
+ would be accepted.
+Message-ID: <YyrHKmNIoV70sATE@danh.dev>
 References: <CA+J78MWhp3qmbBhhSoioJP+d5eh-iEd_vHZdTNB69o7EvvXWYQ@mail.gmail.com>
- <220919.86zgev635z.gmgdl@evledraar.gmail.com> <xmqqbkrbb6ua.fsf@gitster.g>
- <CA+J78MWvOEbJY6+NcLFn0SJGMZn=N7QUMwc=Bta+uHicvD892w@mail.gmail.com> <220920.86illi5p6w.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220920.86illi5p6w.gmgdl@evledraar.gmail.com>
-From:   Skrab Sah <skrab.sah@gmail.com>
-Date:   Wed, 21 Sep 2022 13:23:11 +0530
-Message-ID: <CA+J78MUM=JiAF7R_8oV23OQ-LndJbRm4AUdPsgS4HT4SduFgiw@mail.gmail.com>
-Subject: Re: what if i use makeheader tool to generate c header file, it would
- be accepted.
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ <220919.86zgev635z.gmgdl@evledraar.gmail.com>
+ <xmqqbkrbb6ua.fsf@gitster.g>
+ <CA+J78MWvOEbJY6+NcLFn0SJGMZn=N7QUMwc=Bta+uHicvD892w@mail.gmail.com>
+ <220920.86illi5p6w.gmgdl@evledraar.gmail.com>
+ <CA+J78MUM=JiAF7R_8oV23OQ-LndJbRm4AUdPsgS4HT4SduFgiw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+J78MUM=JiAF7R_8oV23OQ-LndJbRm4AUdPsgS4HT4SduFgiw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-1. We would not commit the generated file.
-2. There are different ways we can install the makeheaders tool.
-3. Makefile will first generate the header file then other compilation.
-4. For API docs, there is one multi-line comment in the header file
-that we can put in at the top of the .c file and also it will
-automatically be copied in the .h file if we want.
-5. makeheaders tools is fast and small and it will not run always,
-only when its respective file is changed.
-6. As I showed you before, we have different approaches to handle
-different things so, it will be better to see in the patches.
+On 2022-09-21 13:23:11+0530, Skrab Sah <skrab.sah@gmail.com> wrote:
+> 1. We would not commit the generated file.
+> 2. There are different ways we can install the makeheaders tool.
+> 3. Makefile will first generate the header file then other compilation.
 
-I think the patches will show you a better figure.
+Without seeing the patches, here is my guess, you will make us only
+write source code in '*.c' and extract declaration from foo.c to foo.h
+And that will save us some time to write (and update) declaration in foo.h
 
-for patches, in makefile we need to add some script for the makeheaders too=
-l.
-And the Makefile is too big and complicated to handle, it will consume time=
-.
+However, whenever foo.c is updated, foo.h will need to be
+re-generated, thus all other users of foo.h will need to re-compiled.
+Thus, increase compilation time. We can work-around by write the
+output to foo.h+ and compare to foo.h, discard it if its content
+hasn't been changed. It still takes time to analyse foo.c and write to
+foo.h+
 
-Is Makefile generated by another script?
+In addition, I'm not sure where would you put the struct, enum,
+preprocessor declaration, and compat stuff.
 
+If my understanding is correct, it's not worth the effort, IMHO.
 
-For patches, I need some time and your help.
-
-On Tue, 20 Sept 2022 at 15:43, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
->
->
-> On Tue, Sep 20 2022, Skrab Sah wrote:
->
-> > Let me elaborate to you, how and why I wanted to implement the
-> > makeheaders tool in the project.
-> >
-> > First of all, this program will automatically generate c header(.h)
-> > files for specified c source(.c) files, which will help the developer.
-> >
-> > Here the test shows how the tool can be implemented in different
-> > cases: https://github.com/skrab-sah/makeheaders-test
-> >
-> >
-> > pros:
-> >     1. it will slightly reduce the size of the project.
-> >     2. no need to declare anything in the header file, which is time
-> > consuming and a headache for developers.
->
-> Sure, this all sound interesting in principle, and I think the answer is
-> definitely "we're not opposed in principle, but if you're interested
-> let's see patches".
->
-> But whether this is worthwhile is something that really can't be
-> answered until someone (i.e. you) puts in the legwork of implementing
-> it.
->
-> You'll then run into various trade-offs you'd have to make, and issues
-> you may not have forseen. Just some I can think of offhand:
->
->  * It's unclear if you mean that we'd commit the generated files or
->    not. If "not" then our Makefile will need to learn to do two-stage
->    compilation. I.e. we'd ship a copy of the makeheader tool, build
->    that, build the headers, and then do our "real" build.
->
->    I happen to have an implementation of that "two-stage" compilation
->    for entirely different reasons (being able to do configure/probes for
->    our compilation), but *just* doing that is non-trivial.
->
->  * The way we document various APIs now is via manually curated header
->    files, e.g. how would a strbuf.h look like in this model you're
->    proposing?
->
->    Obviously we could move those comments to the *.c file, but right now
->    we have a convention of implementation comments going in the *.c
->    file, but the API docs going in the *.h.
->
->    We could tell them apart with "/*" v.s. "/**" comments, as we do
->    now. But part of the point of having them in the *.h file is that you
->    can easily skim the docs & APi definition. Putting the docs in the
->    much bigger *.c file wouldn't be nice.
->
->  * We'd have another not-quite-compiler C-parser running on git.git,
->    right now we basically have a dependency on spatch's parsing. See
->    5cf88fd8b05 (git-compat-util.h: use "UNUSED", not "UNUSED(var)",
->    2022-08-25).
->
->    Is this parser smart enough to handle all the edge cases? E.g. for
->    KHASH_INIT() we define interfaces via a macro-indirection, so an
->    auto-generated *.h needs to resolve the macros in the *.c file.
+-- 
+Danh
