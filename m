@@ -2,130 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE154C6FA8E
-	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 01:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A29ACC32771
+	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 07:02:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231345AbiIUBsD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Sep 2022 21:48:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40000 "EHLO
+        id S230012AbiIUHCl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Sep 2022 03:02:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230408AbiIUBsC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Sep 2022 21:48:02 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 139A27C1AC
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 18:48:01 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id z20so5253116ljq.3
-        for <git@vger.kernel.org>; Tue, 20 Sep 2022 18:48:00 -0700 (PDT)
+        with ESMTP id S229992AbiIUHCj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2022 03:02:39 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C932B7E02B
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 00:02:38 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id lc7so11604280ejb.0
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 00:02:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=4KP/hQLjCsiLTEZvd3Ae0GLBfXY5NcogeI1FtOrXd00=;
-        b=FLy3THTVwrUL5cbHOBg0uOUwzX33VSpNqlNtV0r6WJAnLxfJiBxvWGksQcTQPwspaD
-         A1IuYsTfFemnPNKNrWZ03dHS8aTSX364i9IM3jcaCAz+oTuPHBCQseCDgDdL3XTDqd3Z
-         FLWx1/EjbXpDDWFi+REwWzcqJ/627/kyTBpaDwOSvnmZGj2x28wDqJakZ5e+v/VSLbrC
-         IaV1vaSB7LzARAIKF1oOPw1xawSXe4gtjkRnivW4UDjfxlVZ9yDXhJOwo+5KL49F0ZCf
-         pPgCEfFn2QLefqGyYtXH4J97yYIbUMFMEWUDNNeBBhdBXtNRKbbepfMmEmev9Lt2hPHT
-         SdXg==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date;
+        bh=BwPNQOrhXKnQEXtOPhXmINUORhP6BMCWyc5MrN+QGeU=;
+        b=IVYmLqJ1S5wJ4K1mhH1kI6pUMS0Qo7MwXWnDPrTy+hmJxUXGH9MQlfmcDR1Kr68pbq
+         cUeWXlwfrXdkqJLUreBb4rKMPgTOh/+rmGwuh9vKuH3V7/ttIR5bGxEjX4V4ueZOE+RE
+         59Ztob/Vc57xQ9AQHoqhOtwQTKHhU4qx50Z5kmXCX/ZWWI4VMNH3typwgUiUv4ZaurHr
+         GgtVs2GrE4gmVA98sYU0fqVep5/oS34FahOF10FbWrfp4/VMcU6grSzm8uOiS2NzQqwK
+         nqDjYTi24cSlGPPaBsy4QFVuAPryJgHk3JBIjZrtcoQJrXR8NS1ycVLLIx7C3RAbazwZ
+         Hx+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=4KP/hQLjCsiLTEZvd3Ae0GLBfXY5NcogeI1FtOrXd00=;
-        b=07rqmiIbyTs290qFg+f82aqqMZXGAVTVqb1K/+pPKhV59B8hLXFzZfcec4tpDp7TPg
-         fGhYDklh42RIQw9l2bU4mTUAceC6ACtpDB8vtzBvKwF92AS1t/eeoi1HIaoeHDCLXSlT
-         BMXSUDo8JqbIK/3h55mKOw6ZvPm9EOXC97LFrCRuK5BbtiMMo+iE7XmnELsOF/RrKGN6
-         RrNsrPIObxQo+uWTm6gK8UZpPaBHYdh6HjmA+5ZWLwa7BtazFSzc0gBE9HaNVBAm6Hgh
-         +u6a9fTZUzd7VPvJcCahqxKAQ6Hr4bXFeq0aQ2aEKFtm+BRjF69lKpU0S00nwQlnoZ1G
-         HG+A==
-X-Gm-Message-State: ACrzQf33hTes4Vt21HrSsmWGZjqzoXu/obCJTeF9CwPc/U5RniCW7e4k
-        lZqt1WbpyM0EWsXLGwIKsxjoypjyZJV99hoyuKE=
-X-Google-Smtp-Source: AMsMyM4mKfcOENleY+55XNQtfGE3EP5g6OKuThu73srFID2L+gC37tjPYcLW80050r90OKKGGy94aN8f2QVlls4SXt4=
-X-Received: by 2002:a2e:bd03:0:b0:261:8b4d:7c5c with SMTP id
- n3-20020a2ebd03000000b002618b4d7c5cmr8428302ljq.194.1663724879215; Tue, 20
- Sep 2022 18:47:59 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=BwPNQOrhXKnQEXtOPhXmINUORhP6BMCWyc5MrN+QGeU=;
+        b=28TEWMYE9I/LW4x3339oszb9FWh2plXjfIUg0X7oXcqssJ5LQFAVEh7tOyK7L8hfEZ
+         330Cejnh+zcsxT8uZ1GL4THGoJgm0jSQeRjhNV6PEXPt+i0qtn6kxlijEB76p4NweOGn
+         rvHkEcM9BDGIgCAIg9zXVnFVEqw1RQpBELp0AobgS4AGWJV+pID8+Mnn98TMVHJWVYvK
+         bR9YK4mc8DsauH0sOtWAKBMo2ZJB53zk6a6z2gLQ5UyEWSI1hNxoFdosi+mQ0rQ+Rbiv
+         ObJ8jAFG53FD2zEQiRe1Gz/uAg8mjM4RPnIYrO/T9/Xi7+oqU5BcMBYJZC0auNii9gl2
+         dtwQ==
+X-Gm-Message-State: ACrzQf3k3CMYQ1oQUHKmgfcpdv1oKg84VSbcZUQ4ROXFkTIgHT7a7FLF
+        xv1wU3Nl/G7MxtNHlYpJekzyZICzmlY=
+X-Google-Smtp-Source: AMsMyM4LTuKcTiYdLcth0nBI77+SeA8+HXa9zr4sbvnltPZLxL8dZkT6N+so73GiqxBuaMBKlz8qtw==
+X-Received: by 2002:a17:907:1b1a:b0:74a:18f7:7f63 with SMTP id mp26-20020a1709071b1a00b0074a18f77f63mr21137016ejc.28.1663743757231;
+        Wed, 21 Sep 2022 00:02:37 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id e18-20020a1709061e9200b0076f0a723f6bsm899185ejj.58.2022.09.21.00.02.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Sep 2022 00:02:36 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oatkh-001nWx-21;
+        Wed, 21 Sep 2022 09:02:35 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] t/Makefile: remove 'test-results' on 'make clean'
+Date:   Wed, 21 Sep 2022 08:59:54 +0200
+References: <20220920105407.4700-1-szeder.dev@gmail.com>
+ <20220920201619.40972-1-szeder.dev@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <20220920201619.40972-1-szeder.dev@gmail.com>
+Message-ID: <220921.865yhh5hx0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAOLTT8SHo66kGbvWr=+LQ9UVd1NHgqGGEYK2qq6==QgRCgLZqQ@mail.gmail.com>
-In-Reply-To: <CAOLTT8SHo66kGbvWr=+LQ9UVd1NHgqGGEYK2qq6==QgRCgLZqQ@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 20 Sep 2022 18:47:47 -0700
-Message-ID: <CABPp-BHFw_Qw3d=j3awFtm2OD8WFVHSRFqYzm5Z0WQNHf-ECpA@mail.gmail.com>
-Subject: Re: Question relate to collaboration on git monorepo
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 20, 2022 at 5:42 AM ZheNing Hu <adlternative@gmail.com> wrote:
+
+On Tue, Sep 20 2022, SZEDER G=C3=A1bor wrote:
+
+> The 't/test-results' directory and its contents are by-products of the
+> test process, so 'make clean' should remove them, but, alas, this has
+> been broken since fee65b194d (t/Makefile: don't remove test-results in
+> "clean-except-prove-cache", 2022-07-28).
 >
-> Hey, guys,
+> The 'clean' target in 't/Makefile' was not directly responsible for
+> removing the 'test-results' directory, but relied on its dependency
+> 'clean-except-prove-cache' to do that [1].  ee65b194d broke this,
+> because it only removed the 'rm -r test-results' command from the
+> 'clean-except-prove-cache' target instead of moving it to the 'clean'
+> target, resulting in stray 't/test-results' directories.
 >
-> If two users of git monorepo are working on different sub project
-> /project1 and /project2 by partial-clone and sparse-checkout ,
-> if user one push first, then user two want to push too, he must
-> pull some blob which pushed by user one.
+> Add that missing cleanup command to 't/Makefile', and to all
+> sub-Makefiles touched by that commit as well.
+>
+> [1] 60f26f6348 (t/Makefile: retain cache t/.prove across prove runs,
+>                 2012-05-02)
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> ---
 
-This is not true.  While user two must pull the new commit and any new
-trees pushed by user one (which will mean knowing the hashes of the
-new files), there is no need to download the actual content of the new
-files unless and until some git command is run that attempts to view
-the file's contents.
+Thanks, and sorry about the breakage. I've looked this over carefully &
+it fixes the edge-case you noted without making anything else that I
+could spot worse.
 
-> The large number of interruptions in git push may be another
-> problem, if thousands of probjects are in one monorepo, and
-> no one else has any code that would conflict with me in any way,
-> but I need pull everytime? Is there a way to make improvements
-> here?
+In case it helps:
 
-No, you only need to pull when attempting to push back to the server.
+	Reviewed-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 
-Further, if you're worried that the second push will fail, you could
-easily script it and put "pull --rebase && push" in a loop until it
-succeeds (I mean, you did say no one would have any conflicts).  In
-fact, you could just make that a common script distributed to your
-users and tell them to run that instead of "git push" if they don't
-want to worry about manually updating.
+It's still a bit odd to have a "clean" that cleans up a thing it *might
+have* generated, i.e. sometimes we create & use these via a Makefile
+target, and sometimes by manually invoking test scripts.
 
-Now, if you have thousands of nearly fully independent subprojects and
-lots of developers for each subproject and they all commit & push
-*very* frequently, I guess you might be able to eventually get to the
-scale where you are worried there will be so much contention that the
-script will take too long.  I'd be surprised if you got that far, but
-even if you did, you could easily adopt a lieutenant-like workflow
-(somewhat like the linux kernel, but even simpler given the
-independence of your projects).  In such a workflow, you'd let people
-in subprojects push to their subproject fork (instead of to the "main"
-or "central" repository), and the lieutenants of the subprojects then
-periodically push work from that subproject to the main project in
-batches.
-
-I don't really see much need here for improvements, myself.
-
-> Here's an example of how two users constrain each other when git push.
-
-Did you pay attention to warnings you got along the way?  In particular...
-
-> git clone --bare mono-repo
-
-You missed the following command right after your clone:
-
-   git -C mono-repo.git config uploadpack.allowFilter true
-
-> # user1
-> rm -rf m1
-> git clone --filter="blob:none" --no-checkout --no-local ./mono-repo.git m1
-
-Since you forgot to set the important config I mentioned above, your
-command here generates the following line of output, among others:
-
-    warning: filtering not recognized by server, ignoring
-
-This warning means you weren't testing partial clones, but regular
-full clones.  Perhaps that was the cause of your confusion?
+But any such issues far pre-date this fix (or my commit).
