@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B14EC6FA8E
-	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 13:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77E80C32771
+	for <git@archiver.kernel.org>; Wed, 21 Sep 2022 13:03:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229977AbiIUNDG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Sep 2022 09:03:06 -0400
+        id S229861AbiIUNDO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Sep 2022 09:03:14 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230019AbiIUNDD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Sep 2022 09:03:03 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94CCE8F956
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 06:03:01 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id a29so5847145pfk.5
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 06:03:01 -0700 (PDT)
+        with ESMTP id S230002AbiIUNDG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Sep 2022 09:03:06 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEAC49080B
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 06:03:04 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id u132so5844812pfc.6
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 06:03:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=JOhM6L6a5rOpyB763JJ/no8akw3RQlEzkmOCvtxvMlc=;
-        b=pvy6Tb1XPdoXEI2+omVf/FiV6RCm4DfW1DXXVsGQaQvjAkc2jEhf1fV5b55wh2bKHT
-         bQIfXih0O1BxZBbxI6oTUy4EVYHaS8mxsJ8/FIpyjArFPj13afeU4FXQPC3FYoeoS/Yg
-         mCh5yKVl+uF8IN1w9cxoPTCv7pI0sASEiyTUO9BwND0mZFz8Di/iyX1qObelU0VtVqQH
-         u3KIWGeMdJ/O57fJrnAFn7Vbfs+dfRAPxN/dPT4gDbL8B8mURVMhgykDBHPeUTEdAISi
-         aHVXP1scO3T7bDhmqTRNXxWBEhl49SZgc1uMvtj6ssVLh45D7CmlpM4t8tea3HPi3D8x
-         sulg==
+        bh=dMFWD51ubvbkQajL1AB0Wv6IsyzloFRQT1dqmJXelOY=;
+        b=A1tQ0+FfjXwLAIOfwIrUQss/MhfIHwhTnS4lGdW7sVYIoyJ+yYHknKtmzDnhR6ewdv
+         mgxaP0DV+dcSaoBG5FIX9le9dhUkGXyeePZ6xCD4uqh+ncvoLu3Po/h+St2tGncARz5j
+         mT6JKAjkPx2KEeVL1Na2jqTSFfy/03k2dV0kotg3L9a2gzU+0mF5m55FwYfZ7sN2AF46
+         dSYksKX7ExpQ3MU6NQkBMOQ2eBMHIXY6tq4Afxg8F7JdPHREbv1EZrka78lhE6g18DjO
+         /zzHSfzE9Z9TRmHapyKFmFcuMxZQ7x4FuL/0/BGbl3YkU+7k/OWrrTja2xLTb/CxjbCn
+         /TXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=JOhM6L6a5rOpyB763JJ/no8akw3RQlEzkmOCvtxvMlc=;
-        b=N7ZUduEqAKfgantoj1dVD7HZWmo4gdF9gPgZzQFq4cEalhuAsH4ztmXUAkMP6GlSeH
-         hRZqfSiC/uymT6d870biZLrchE5s3ddsHkTlTykkGO/bDGoD8QwS166myVdFsY3qwowI
-         51eDLz3rkjtDOs/jUFz7UPMhneL1cXSZY6rPsgPtA2qvCwfapelcJFqQZdJuhDqZ+74O
-         mcn7lWGduHoEWE5h4IgfKPxuiaCd/zhHqKIKZlihIxdrvsKHwIJ8ySrkWIsCRi5mxnGN
-         GFxqQGTiuLFZlsfm3pKvq8lGtMTyRme2oPgLbGOR6pNIFbIlYv9gIIRYodvkkYGpGchg
-         Kp2Q==
-X-Gm-Message-State: ACrzQf3hTo8XU6E2qnPEhs0FZzs0gkHEFujnMRJjrmoQ438JI2rwcMm8
-        sgCxH0odTDgp5mymaRR6KYBX5kxRF3E=
-X-Google-Smtp-Source: AMsMyM4YU+xPOjgfd9WvuJfy3rLNz4tvXzSVpmXxexVNywjLSr47BWGSEEOVa7ldVkE554Yq1B8HJQ==
-X-Received: by 2002:a05:6a00:114f:b0:528:2c7a:634c with SMTP id b15-20020a056a00114f00b005282c7a634cmr28928452pfm.41.1663765380527;
-        Wed, 21 Sep 2022 06:03:00 -0700 (PDT)
+        bh=dMFWD51ubvbkQajL1AB0Wv6IsyzloFRQT1dqmJXelOY=;
+        b=AYLbVx0brlLIt3NqZz0BK7kUd3FSdIucFnM3NS7i/LrG6qmLKQ255VgRqRVrJlfBdZ
+         On/kJFqBIlZS/Nr49x0M42wiO40Rgf30TAmIHYPsiP2hvmNrvbFIIDZk4nPT40n8b+Mw
+         12Lrdmg2ZyL96HyFmtZAIEqjL9mY//zGfoGUVZBbAeR/w0vO16pKYTlU2BSy9OD1Aq2w
+         b984sPY/8DM/vae4M4yiKFU7ccDwKnHgE89SrbBoBbNFYr89zh3PLBdzPY+wAzmb2m/8
+         /wojHyg5xvgrlKZzHWDIv/5nX/LbDPd9xMAW4VTwUSNcvsYmqZ8XjQOo1QSQ6rrvbRLF
+         iw9Q==
+X-Gm-Message-State: ACrzQf1uenW72zuk7RCMzYMwihVW1yXiy//GHl/Xn0hiJn363KzDc2cx
+        EY4efoa7YfHUYPuXnt9f0Wa50WpRmBE=
+X-Google-Smtp-Source: AMsMyM5POsAtnFnhyg2QYJ3UiN7pQ2xc/YgCJm7a1wnkyObzNwKbMBdFNP3c1005Cn5R49ICLBDmqw==
+X-Received: by 2002:a65:44c1:0:b0:428:ab8f:62dd with SMTP id g1-20020a6544c1000000b00428ab8f62ddmr24728004pgs.211.1663765383591;
+        Wed, 21 Sep 2022 06:03:03 -0700 (PDT)
 Received: from localhost.localdomain ([2001:ee0:5008:db00:84c8:158c:9494:ee57])
-        by smtp.gmail.com with ESMTPSA id i64-20020a625443000000b0053e5daf1a25sm2084332pfb.45.2022.09.21.06.02.57
+        by smtp.gmail.com with ESMTPSA id i64-20020a625443000000b0053e5daf1a25sm2084332pfb.45.2022.09.21.06.03.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Sep 2022 06:02:59 -0700 (PDT)
+        Wed, 21 Sep 2022 06:03:03 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?=
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/4] t: remove \{m,n\} from BRE grep usage
-Date:   Wed, 21 Sep 2022 20:02:30 +0700
-Message-Id: <ebaf6cec07e3a07c969c456e93aa9d4464f75548.1663765176.git.congdanhqx@gmail.com>
+Subject: [PATCH v2 3/4] t: convert egrep usage to "grep -E"
+Date:   Wed, 21 Sep 2022 20:02:31 +0700
+Message-Id: <b7c062960335d337ddce9be50d57aae1db03ca81.1663765176.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.38.0.rc0
 In-Reply-To: <cover.1663765176.git.congdanhqx@gmail.com>
 References: <cover.1663765176.git.congdanhqx@gmail.com>
@@ -69,114 +69,276 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The CodingGuidelines says we should avoid \{m,n\} in BRE usage.
-And their usages in our code base is limited, and subjectively
-hard to read.
+Despite POSIX states that:
 
-Replace them with ERE.
+> The old egrep and fgrep commands are likely to be supported for many
+> years to come as implementation extensions, allowing historical
+> applications to operate unmodified.
 
-Except for "0\{40\}" which would be changed to "$ZERO_OID",
-which is a better value for testing with:
-GIT_TEST_DEFAULT_HASH=sha256
+GNU grep 3.8 started to warn[1]:
+
+> The egrep and fgrep commands, which have been deprecated since
+> release 2.5.3 (2007), now warn that they are obsolescent and should
+> be replaced by grep -E and grep -F.
+
+Prepare for their removal in the future.
+
+[1]: https://lists.gnu.org/archive/html/info-gnu/2022-09/msg00001.html
 
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
+ t/perf/run                           |  4 ++--
+ t/t1304-default-acl.sh               |  4 ++--
+ t/t3702-add-edit.sh                  |  2 +-
+ t/t4014-format-patch.sh              |  8 ++++----
+ t/t5320-delta-islands.sh             |  2 +-
+ t/t7527-builtin-fsmonitor.sh         | 18 +++++++++---------
+ t/t7701-repack-unpack-unreachable.sh |  4 ++--
+ t/t9001-send-email.sh                |  8 ++++----
+ t/t9814-git-p4-rename.sh             |  2 +-
+ t/t9815-git-p4-submit-fail.sh        |  4 ++--
+ t/test-lib-functions.sh              |  2 +-
+ 11 files changed, 29 insertions(+), 29 deletions(-)
 
- Phillip Wood said:
- > \{m,n\} is valid in a posix BRE[1]. If we're already using it without
- > anyone
- > complaining I think it would be better to update CodingGuidlines to allow
- > it.
-
- Yes, I agree. However, I think our usage of \{m,n\} is limited.
- Let's skip the lifting for now.
-
- t/t3200-branch.sh             | 4 ++--
- t/t3305-notes-fanout.sh       | 2 +-
- t/t3404-rebase-interactive.sh | 6 +++---
- t/t5550-http-fetch-dumb.sh    | 2 +-
- t/t5702-protocol-v2.sh        | 2 +-
- 5 files changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 9723c2827c..b82cffc0b3 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -201,8 +201,8 @@ test_expect_success 'git branch -M baz bam should succeed when baz is checked ou
+diff --git a/t/perf/run b/t/perf/run
+index 33da4d2aba..34115edec3 100755
+--- a/t/perf/run
++++ b/t/perf/run
+@@ -232,10 +232,10 @@ then
+ 	)
+ elif test -n "$GIT_PERF_SUBSECTION"
+ then
+-	egrep "^$GIT_PERF_SUBSECTION\$" "$TEST_RESULTS_DIR"/run_subsections.names >/dev/null ||
++	grep -E "^$GIT_PERF_SUBSECTION\$" "$TEST_RESULTS_DIR"/run_subsections.names >/dev/null ||
+ 		die "subsection '$GIT_PERF_SUBSECTION' not found in '$GIT_PERF_CONFIG_FILE'"
  
- test_expect_success 'git branch -M baz bam should add entries to .git/logs/HEAD' '
- 	msg="Branch: renamed refs/heads/baz to refs/heads/bam" &&
--	grep " 0\{40\}.*$msg$" .git/logs/HEAD &&
--	grep "^0\{40\}.*$msg$" .git/logs/HEAD
-+	grep " $ZERO_OID.*$msg$" .git/logs/HEAD &&
-+	grep "^$ZERO_OID.*$msg$" .git/logs/HEAD
- '
- 
- test_expect_success 'git branch -M should leave orphaned HEAD alone' '
-diff --git a/t/t3305-notes-fanout.sh b/t/t3305-notes-fanout.sh
-index 22ffe5bcb9..1ec1fb6715 100755
---- a/t/t3305-notes-fanout.sh
-+++ b/t/t3305-notes-fanout.sh
-@@ -9,7 +9,7 @@ path_has_fanout() {
- 	path=$1 &&
- 	fanout=$2 &&
- 	after_last_slash=$(($(test_oid hexsz) - $fanout * 2)) &&
--	echo $path | grep -q "^\([0-9a-f]\{2\}/\)\{$fanout\}[0-9a-f]\{$after_last_slash\}$"
-+	echo $path | grep -q -E "^([0-9a-f]{2}/){$fanout}[0-9a-f]{$after_last_slash}$"
+-	egrep "^$GIT_PERF_SUBSECTION\$" "$TEST_RESULTS_DIR"/run_subsections.names | while read -r subsec
++	grep -E "^$GIT_PERF_SUBSECTION\$" "$TEST_RESULTS_DIR"/run_subsections.names | while read -r subsec
+ 	do
+ 		(
+ 			GIT_PERF_SUBSECTION="$subsec"
+diff --git a/t/t1304-default-acl.sh b/t/t1304-default-acl.sh
+index 335d3f3211..c69ae41306 100755
+--- a/t/t1304-default-acl.sh
++++ b/t/t1304-default-acl.sh
+@@ -18,7 +18,7 @@ test_expect_success 'checking for a working acl setup' '
+ 	if setfacl -m d:m:rwx -m u:root:rwx . &&
+ 	   getfacl . | grep user:root:rwx &&
+ 	   touch should-have-readable-acl &&
+-	   getfacl should-have-readable-acl | egrep "mask::?rw-"
++	   getfacl should-have-readable-acl | grep -E "mask::?rw-"
+ 	then
+ 		test_set_prereq SETFACL
+ 	fi
+@@ -34,7 +34,7 @@ check_perms_and_acl () {
+ 	getfacl "$1" > actual &&
+ 	grep -q "user:root:rwx" actual &&
+ 	grep -q "user:${LOGNAME}:rwx" actual &&
+-	egrep "mask::?r--" actual > /dev/null 2>&1 &&
++	grep -E "mask::?r--" actual > /dev/null 2>&1 &&
+ 	grep -q "group::---" actual || false
  }
  
- touched_one_note_with_fanout() {
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 688b01e3eb..4f5abb5ad2 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1244,9 +1244,9 @@ test_expect_success 'short commit ID collide' '
- 		test $colliding_id = "$(git rev-parse HEAD | cut -c 1-4)" &&
- 		grep "^pick $colliding_id " \
- 			.git/rebase-merge/git-rebase-todo.tmp &&
--		grep "^pick [0-9a-f]\{$hexsz\}" \
-+		grep -E "^pick [0-9a-f]{$hexsz}" \
- 			.git/rebase-merge/git-rebase-todo &&
--		grep "^pick [0-9a-f]\{$hexsz\}" \
-+		grep -E "^pick [0-9a-f]{$hexsz}" \
- 			.git/rebase-merge/git-rebase-todo.backup &&
- 		git rebase --continue
- 	) &&
-@@ -1261,7 +1261,7 @@ test_expect_success 'respect core.abbrev' '
- 		set_cat_todo_editor &&
- 		test_must_fail git rebase -i HEAD~4 >todo-list
- 	) &&
--	test 4 = $(grep -c "pick [0-9a-f]\{12,\}" todo-list)
-+	test 4 = $(grep -c -E "pick [0-9a-f]{12,}" todo-list)
+diff --git a/t/t3702-add-edit.sh b/t/t3702-add-edit.sh
+index a1801a8cbd..82bfb2fd2a 100755
+--- a/t/t3702-add-edit.sh
++++ b/t/t3702-add-edit.sh
+@@ -100,7 +100,7 @@ EOF
+ 
+ echo "#!$SHELL_PATH" >fake-editor.sh
+ cat >> fake-editor.sh <<\EOF
+-egrep -v '^index' "$1" >orig-patch &&
++grep -E -v '^index' "$1" >orig-patch &&
+ mv -f patch "$1"
+ EOF
+ 
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index ad5c029279..de1da4673d 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1457,7 +1457,7 @@ append_signoff()
+ 	C=$(git commit-tree HEAD^^{tree} -p HEAD) &&
+ 	git format-patch --stdout --signoff $C^..$C >append_signoff.patch &&
+ 	sed -n -e "1,/^---$/p" append_signoff.patch |
+-		egrep -n "^Subject|Sign|^$"
++		grep -E -n "^Subject|Sign|^$"
+ }
+ 
+ test_expect_success 'signoff: commit with no body' '
+@@ -2274,10 +2274,10 @@ test_expect_success 'format-patch --base with --attach' '
+ test_expect_success 'format-patch --attach cover-letter only is non-multipart' '
+ 	test_when_finished "rm -fr patches" &&
+ 	git format-patch -o patches --cover-letter --attach=mimemime --base=HEAD~ -1 &&
+-	! egrep "^--+mimemime" patches/0000*.patch &&
+-	egrep "^--+mimemime$" patches/0001*.patch >output &&
++	! grep -E "^--+mimemime" patches/0000*.patch &&
++	grep -E "^--+mimemime$" patches/0001*.patch >output &&
+ 	test_line_count = 2 output &&
+-	egrep "^--+mimemime--$" patches/0001*.patch >output &&
++	grep -E "^--+mimemime--$" patches/0001*.patch >output &&
+ 	test_line_count = 1 output
  '
  
- test_expect_success 'todo count' '
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index d7cf85ffea..8f182a3cbf 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -234,7 +234,7 @@ test_expect_success 'http-fetch --packfile' '
- 		--index-pack-arg=--keep \
- 		"$HTTPD_URL"/dumb/repo_pack.git/$p >out &&
+diff --git a/t/t5320-delta-islands.sh b/t/t5320-delta-islands.sh
+index 124d47603d..406363381f 100755
+--- a/t/t5320-delta-islands.sh
++++ b/t/t5320-delta-islands.sh
+@@ -134,7 +134,7 @@ test_expect_success 'island core places core objects first' '
+ 	    repack -adfi &&
+ 	git verify-pack -v .git/objects/pack/*.pack |
+ 	cut -d" " -f1 |
+-	egrep "$root|$two" >actual &&
++	grep -E "$root|$two" >actual &&
+ 	test_cmp expect actual
+ '
  
--	grep "^keep.[0-9a-f]\{16,\}$" out &&
-+	grep -E "^keep.[0-9a-f]{16,}$" out &&
- 	cut -c6- out >packhash &&
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 56c0dfffea..1746d30cf6 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -939,9 +939,9 @@ test_expect_success CASE_INSENSITIVE_FS 'case insensitive+preserving' '
+ 	# directories and files that we touched.  We may or may not get a
+ 	# trailing slash on modified directories.
+ 	#
+-	egrep "^event: abc/?$"       ./insensitive.trace &&
+-	egrep "^event: abc/def/?$"   ./insensitive.trace &&
+-	egrep "^event: abc/def/xyz$" ./insensitive.trace
++	grep -E "^event: abc/?$"       ./insensitive.trace &&
++	grep -E "^event: abc/def/?$"   ./insensitive.trace &&
++	grep -E "^event: abc/def/xyz$" ./insensitive.trace
+ '
  
- 	# Ensure that the expected files are generated
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 5d42a355a8..b33cd4afca 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -1001,7 +1001,7 @@ test_expect_success 'part of packfile response provided as URI' '
- 	do
- 		git verify-pack --object-format=$(test_oid algo) --verbose $idx >out &&
- 		{
--			grep "^[0-9a-f]\{16,\} " out || :
-+			grep -E "^[0-9a-f]{16,} " out || :
- 		} >out.objectlist &&
- 		if test_line_count = 1 out.objectlist
- 		then
+ # The variable "unicode_debug" is defined in the following library
+@@ -983,20 +983,20 @@ test_expect_success !UNICODE_COMPOSITION_SENSITIVE 'Unicode nfc/nfd' '
+ 	then
+ 		# We should have seen NFC event from OS.
+ 		# We should not have synthesized an NFD event.
+-		egrep    "^event: nfc/c_${utf8_nfc}/?$" ./unicode.trace &&
+-		egrep -v "^event: nfc/c_${utf8_nfd}/?$" ./unicode.trace
++		grep -E    "^event: nfc/c_${utf8_nfc}/?$" ./unicode.trace &&
++		grep -E -v "^event: nfc/c_${utf8_nfd}/?$" ./unicode.trace
+ 	else
+ 		# We should have seen NFD event from OS.
+ 		# We should have synthesized an NFC event.
+-		egrep "^event: nfc/c_${utf8_nfd}/?$" ./unicode.trace &&
+-		egrep "^event: nfc/c_${utf8_nfc}/?$" ./unicode.trace
++		grep -E "^event: nfc/c_${utf8_nfd}/?$" ./unicode.trace &&
++		grep -E "^event: nfc/c_${utf8_nfc}/?$" ./unicode.trace
+ 	fi &&
+ 
+ 	# We assume UNICODE_NFD_PRESERVED.
+ 	# We should have seen explicit NFD from OS.
+ 	# We should have synthesized an NFC event.
+-	egrep "^event: nfd/d_${utf8_nfd}/?$" ./unicode.trace &&
+-	egrep "^event: nfd/d_${utf8_nfc}/?$" ./unicode.trace
++	grep -E "^event: nfd/d_${utf8_nfd}/?$" ./unicode.trace &&
++	grep -E "^event: nfd/d_${utf8_nfc}/?$" ./unicode.trace
+ '
+ 
+ test_done
+diff --git a/t/t7701-repack-unpack-unreachable.sh b/t/t7701-repack-unpack-unreachable.sh
+index 937f89ee8c..b7ac4f598a 100755
+--- a/t/t7701-repack-unpack-unreachable.sh
++++ b/t/t7701-repack-unpack-unreachable.sh
+@@ -35,7 +35,7 @@ test_expect_success '-A with -d option leaves unreachable objects unpacked' '
+ 	git repack -A -d -l &&
+ 	# verify objects are packed in repository
+ 	test 3 = $(git verify-pack -v -- .git/objects/pack/*.idx |
+-		   egrep "^($fsha1|$csha1|$tsha1) " |
++		   grep -E "^($fsha1|$csha1|$tsha1) " |
+ 		   sort | uniq | wc -l) &&
+ 	git show $fsha1 &&
+ 	git show $csha1 &&
+@@ -49,7 +49,7 @@ test_expect_success '-A with -d option leaves unreachable objects unpacked' '
+ 	git repack -A -d -l &&
+ 	# verify objects are retained unpacked
+ 	test 0 = $(git verify-pack -v -- .git/objects/pack/*.idx |
+-		   egrep "^($fsha1|$csha1|$tsha1) " |
++		   grep -E "^($fsha1|$csha1|$tsha1) " |
+ 		   sort | uniq | wc -l) &&
+ 	git show $fsha1 &&
+ 	git show $csha1 &&
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 01c74b8b07..1130ef21b3 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1519,7 +1519,7 @@ test_expect_success $PREREQ 'asks about and fixes 8bit encodings' '
+ 	grep "do not declare a Content-Transfer-Encoding" stdout &&
+ 	grep email-using-8bit stdout &&
+ 	grep "Which 8bit encoding" stdout &&
+-	egrep "Content|MIME" msgtxt1 >actual &&
++	grep -E "Content|MIME" msgtxt1 >actual &&
+ 	test_cmp content-type-decl actual
+ '
+ 
+@@ -1530,7 +1530,7 @@ test_expect_success $PREREQ 'sendemail.8bitEncoding works' '
+ 	git send-email --from=author@example.com --to=nobody@example.com \
+ 			--smtp-server="$(pwd)/fake.sendmail" \
+ 			email-using-8bit >stdout &&
+-	egrep "Content|MIME" msgtxt1 >actual &&
++	grep -E "Content|MIME" msgtxt1 >actual &&
+ 	test_cmp content-type-decl actual
+ '
+ 
+@@ -1545,7 +1545,7 @@ test_expect_success $PREREQ 'sendemail.8bitEncoding in .git/config overrides --g
+ 	git send-email --from=author@example.com --to=nobody@example.com \
+ 			--smtp-server="$(pwd)/fake.sendmail" \
+ 			email-using-8bit >stdout &&
+-	egrep "Content|MIME" msgtxt1 >actual &&
++	grep -E "Content|MIME" msgtxt1 >actual &&
+ 	test_cmp content-type-decl actual
+ '
+ 
+@@ -1557,7 +1557,7 @@ test_expect_success $PREREQ '--8bit-encoding overrides sendemail.8bitEncoding' '
+ 			--smtp-server="$(pwd)/fake.sendmail" \
+ 			--8bit-encoding=UTF-8 \
+ 			email-using-8bit >stdout &&
+-	egrep "Content|MIME" msgtxt1 >actual &&
++	grep -E "Content|MIME" msgtxt1 >actual &&
+ 	test_cmp content-type-decl actual
+ '
+ 
+diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
+index 468767cbf4..2a9838f37f 100755
+--- a/t/t9814-git-p4-rename.sh
++++ b/t/t9814-git-p4-rename.sh
+@@ -216,7 +216,7 @@ test_expect_success 'detect copies' '
+ # variable exists, which allows admins to disable the "p4 move" command.
+ test_lazy_prereq P4D_HAVE_CONFIGURABLE_RUN_MOVE_ALLOW '
+ 	p4 configure show run.move.allow >out &&
+-	egrep ^run.move.allow: out
++	grep -E ^run.move.allow: out
+ '
+ 
+ # If move can be disabled, turn it off and test p4 move handling
+diff --git a/t/t9815-git-p4-submit-fail.sh b/t/t9815-git-p4-submit-fail.sh
+index 9779dc0d11..0ca9937de6 100755
+--- a/t/t9815-git-p4-submit-fail.sh
++++ b/t/t9815-git-p4-submit-fail.sh
+@@ -417,8 +417,8 @@ test_expect_success 'cleanup chmod after submit cancel' '
+ 		! p4 fstat -T action text &&
+ 		test_path_is_file text+x &&
+ 		! p4 fstat -T action text+x &&
+-		ls -l text | egrep ^-r-- &&
+-		ls -l text+x | egrep ^-r-x
++		ls -l text | grep -E ^-r-- &&
++		ls -l text+x | grep -E ^-r-x
+ 	)
+ '
+ 
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index c6479f24eb..527a714500 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -897,7 +897,7 @@ test_path_is_symlink () {
+ test_dir_is_empty () {
+ 	test "$#" -ne 1 && BUG "1 param"
+ 	test_path_is_dir "$1" &&
+-	if test -n "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
++	if test -n "$(ls -a1 "$1" | grep -E -v '^\.\.?$')"
+ 	then
+ 		echo "Directory '$1' is not empty, it contains:"
+ 		ls -la "$1"
 -- 
 2.38.0.rc0
 
