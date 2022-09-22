@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 308E1C6FA82
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 16:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D2E1C6FA8B
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 17:00:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230187AbiIVQ75 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 12:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48538 "EHLO
+        id S230319AbiIVQ77 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 12:59:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229941AbiIVQ7q (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230097AbiIVQ7q (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 22 Sep 2022 12:59:46 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD5213E8F
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 09:59:42 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id r7so16570345wrm.2
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 09:59:42 -0700 (PDT)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91E6624BE2
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 09:59:43 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id n15so9616828wrq.5
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 09:59:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=+Gm0KiPEcdtvw2UZkAcrYNiFoXQRkfYRnk7dWz7jZJA=;
-        b=C3JAjsAFkQRIS4ZlyO31OB1RbAvojAA6GkVBTfEt8/f1PHu8ezTRrti14OdxQ+9U69
-         zGpEkOvr7fvqb05/Zx/DeVzH3dqAvrLkcemXaEJO5fOrRnXTF9fbND+0hYe7qwo3fY7h
-         jaET5UBy9CwRIi90Ojy8q5Xffzww1mN3zEgtvWVEV2r34Z3zTuQPB3HWRFMvcO0OXShJ
-         VUbaJ4K3pxF/ceiXUGEiIhGCbpsGFPKzfbkVqtIWDavUzhIonUlsNGk8Cv1xlohDsaqk
-         WdGqsJ3UryPFwj+znljoCA6IMqeu2IYoy6g3+spxH/BKC4+cJxoMNsOKmmPMs0le7UDX
-         1Vaw==
+        bh=+f6YTqMKgo/XauQ5HVwJ9Cjt9MJOXkiqZPvZQkkmKdM=;
+        b=Z4kUYd9YXS24xg5hBNy70sx1ISgHDmZIjcNSMfRfmJJsZU5Mrg1ifWtes4eKeQdOU9
+         fo9suPLHj6ERqi1sm3rOVMS/a20TpGK63Y+zA5Gs7AC9dQXyIKx/tUP8UHIczw0YlRfF
+         xY0qDIjsCSX6tUnej4CfDz8WWVA2hugPta7/M1D3B3SLguUXL2aKbcX1g+Wm182S6guh
+         oR/n/stWBkzbLI5uztTQdHkidclMoSsU/omslCO/XIXcpM4yt7N5HZy11axh4UxTzj6x
+         nYFX5CamrzOEHlJjXG20VyDNrJ9S2c2x2LeE7ySJy0b8EaIs3kus8Ggv2zqfb2Nn7+GN
+         IFQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=+Gm0KiPEcdtvw2UZkAcrYNiFoXQRkfYRnk7dWz7jZJA=;
-        b=FMJOEMuxWxpfGJWe8O5YV+LZ0raKkxhIvwbLZnv4rO1CHpncA5st+elq+m2P8W7qF7
-         SMPRx8lb8UxO47r9XC5UM3VpM0JIfDlKeNV4qQUxYSqYXPPs0vytde0DHhwB0v7xCg57
-         +SBZ47PK3X5P1zhHkGZ0wE0DKyW6zpEkc0Av+nIwdOmyNieSabajFmlMpzxQdPoQgSpe
-         kaYlLZOd6GJx8nXXzr85UijeFT3+bC/JWpBWF8yobkCSKcrETeuP7Z6k8kpucaWFRfHE
-         vBO7EcWXP6JsowA5y8F4Kh9vkhw49Rqxi3aVSzEJG+MWGQ2CBBP/peDplgLNi6t1AbAp
-         b9sw==
-X-Gm-Message-State: ACrzQf3ZcnT4/bBbHRRUFPbtBRTri49lf3JifYRFJAYuklpP/bGRK/fm
-        glEjE82YFDS2y3ZnevkAJITpYcF0g8o=
-X-Google-Smtp-Source: AMsMyM7lXR4X/jxlDI340dN+TuZkxp8oWHSMVUx5ymsHF37cBcMGGGEhMSY7IZ9YpQdBb9B06Kd33w==
-X-Received: by 2002:adf:fd09:0:b0:22a:f514:d7b7 with SMTP id e9-20020adffd09000000b0022af514d7b7mr2643027wrr.430.1663865980585;
-        Thu, 22 Sep 2022 09:59:40 -0700 (PDT)
+        bh=+f6YTqMKgo/XauQ5HVwJ9Cjt9MJOXkiqZPvZQkkmKdM=;
+        b=brN50M+pjZ1VXSQx97rU8WIP7AM8PL+FRNuAhNi8QZObMQcmdx6dL/stgcpNudRFYz
+         6BjxjbTBn4ehPE/QKFbi4eZednyfEW9LndBUexMpSJieKasmQMegis2hVvWO2bjm9zMl
+         b2Z3LbvhH5tx+k4Uv/aWRVWD63LwZxRBhORuAapRYD53n3eAcGpCmceobN0Lp1p1MGni
+         elAYLnMdDTrcfpBtp96uDKnQN/PXMNJuCzUafev6kJ6V6OC65lRF5Wa+df39ZPYra8d2
+         aNYWfjoyh9hlbx6VnQSmEomF9935bXw0Hi+FxDqzQAew+mkgsnE47GJnwsaV6QNnIiaq
+         D2Kg==
+X-Gm-Message-State: ACrzQf0E0plrdnsXhwLXFUD+Dnxnbyd1CX3ZhN0EMuK9B9OREOBcXaS2
+        u9b6y0NtacDCU5RKi27GJ9V8WKXaNgI=
+X-Google-Smtp-Source: AMsMyM4w1LQfGJxQC25721Afl6HRd8XkLdL5MJ/UfoRl2cwk2NIu/ca0FJTrGxB4nahSBNtbpEREwg==
+X-Received: by 2002:a5d:5850:0:b0:22b:1ada:a0d1 with SMTP id i16-20020a5d5850000000b0022b1adaa0d1mr2680958wrf.313.1663865981890;
+        Thu, 22 Sep 2022 09:59:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q12-20020a7bce8c000000b003b5054c6cd2sm23039wmj.36.2022.09.22.09.59.38
+        by smtp.gmail.com with ESMTPSA id z21-20020a05600c0a1500b003b47a99d928sm63082wmp.18.2022.09.22.09.59.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Sep 2022 09:59:39 -0700 (PDT)
-Message-Id: <ae5c1bfc092e98b810757e752efd7cfde48a3809.1663865974.git.gitgitgadget@gmail.com>
+        Thu, 22 Sep 2022 09:59:41 -0700 (PDT)
+Message-Id: <2ece562a5952b5752de5040b17ec36076164c72f.1663865974.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1363.git.1663865974.gitgitgadget@gmail.com>
 References: <pull.1363.git.1663865974.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 22 Sep 2022 16:59:33 +0000
-Subject: [PATCH 2/3] netrc: ignore unknown lines (do not die)
+Date:   Thu, 22 Sep 2022 16:59:34 +0000
+Subject: [PATCH 3/3] osxkeychain: clarify that we ignore unknown lines
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,35 +68,32 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Contrary to the documentation on credential helpers, as well as the help
-text for git-credential-netrc itself, this helper will `die` when
-presented with an unknown property/attribute/token.
+Like in all the other credential helpers, the osxkeychain helper
+ignores unknown credential lines.
 
-Correct the behaviour here by skipping and ignoring any tokens that are
-unknown. This means all helpers in the tree are consistent and ignore
-any unknown credential properties/attributes.
+Add a comment (a la the other helpers) to make it clear and explicit
+that this is the desired behaviour.
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- contrib/credential/netrc/git-credential-netrc.perl | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ contrib/credential/osxkeychain/git-credential-osxkeychain.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/contrib/credential/netrc/git-credential-netrc.perl b/contrib/credential/netrc/git-credential-netrc.perl
-index bc57cc65884..9fb998ae090 100755
---- a/contrib/credential/netrc/git-credential-netrc.perl
-+++ b/contrib/credential/netrc/git-credential-netrc.perl
-@@ -356,7 +356,10 @@ sub read_credential_data_from_stdin {
- 		next unless m/^([^=]+)=(.+)/;
- 
- 		my ($token, $value) = ($1, $2);
--		die "Unknown search token $token" unless exists $q{$token};
-+
-+		# skip any unknown tokens
-+		next unless exists $q{$token};
-+
- 		$q{$token} = $value;
- 		log_debug("We were given search token $token and value $value");
+diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+index bf77748d602..e29cc28779d 100644
+--- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
++++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+@@ -159,6 +159,11 @@ static void read_credential(void)
+ 			username = xstrdup(v);
+ 		else if (!strcmp(buf, "password"))
+ 			password = xstrdup(v);
++		/*
++		 * Ignore other lines; we don't know what they mean, but
++		 * this future-proofs us when later versions of git do
++		 * learn new lines, and the helpers are updated to match.
++		 */
  	}
+ }
+ 
 -- 
 gitgitgadget
-
