@@ -2,413 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97B16C54EE9
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 23:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8566C54EE9
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 23:30:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230265AbiIVX03 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 19:26:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59128 "EHLO
+        id S230041AbiIVXaP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 19:30:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbiIVX01 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 19:26:27 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12DB510BB3D
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 16:26:26 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id 207so10660928pgc.7
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 16:26:26 -0700 (PDT)
+        with ESMTP id S229522AbiIVXaL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 19:30:11 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E44C92CDC8
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 16:30:08 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id b11-20020a170902d50b00b0017828988079so6983393plg.21
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 16:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=initialcommit-io.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=rsfIm759xZpL5nrs6Bgi1icEW4q/Eb9Jojx4CPdoj1U=;
-        b=buUiWc5wMBS13abqWgSHI2lP/gewfL4kPTIT8oOpCCmNg12Ck4BpQ9vlk7/KUUKUmr
-         W01jyOozR0U6vnE/JUWSb0056W4EvAS3Dc06Y9vHlz4fxkRFI0SfLUCoJCVqr7WEHcS4
-         IPST4Wh+XtXBu46Sqx7YR2ocXf3cgoBJ5vzw6alFHWrrmO56cNuWogSaxuEn6d3zWgeb
-         /JkfZ2+UK1pfPjCW7f9qei6MBBELfnA/Srb0N3R7yI16N3tbW0jpKyjeWWuPMYr7mnIL
-         WWd/jHafmpkN3YS+t6WtBep41qAPHsG404sMb9xtCBE9YhfOh92YVEEyMYI6OjWi4Sqj
-         YtXw==
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:date:from:to:cc:subject:date;
+        bh=97ADIcgiJmQYCEaRRA/E801VeGN35vo6JH11nRseEks=;
+        b=dmFSirsDXSHm54D9l0V5tmDKFPcCPVTRV36xykKyDgHL9IrG+6H1ACqD1njldcdXg6
+         7cCS+Ll9qaSQIYwMuY6vUcHGgWTwyp+7o3TqU+fxtm7Bp9RVnRKUsZbTs2TIgitYQO84
+         axmEgyOEhhv2dUzs7v2uPib03IKG7rmBWgQpkqMq/LVmSo0ovn0JPuaMkUyYpFGppm8o
+         IRL+PnSel69VDDpLMYX1DwkMhLD+52tIbPhVO+cnLNCc3abOGEKEXYbbbKxqTuFJNrQO
+         Ey81/m8uPf5362a4aCHIj/UVzzp6Ntns6ovgGSucN4n2YuPyeYLycI/CeFYVHaS0vrla
+         HwXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=rsfIm759xZpL5nrs6Bgi1icEW4q/Eb9Jojx4CPdoj1U=;
-        b=d59XZr/8EwCQN2+1sHpcNvfWXeatEHL/UZ3PyuNzBNaUvVmD6oyH6W0vbmWYlZM6cF
-         dRUGSpUeCdGc56HRYyOUgwYJSdfIGtBTjbvNaGbPrem6lQRIPgHRCgOyjb6YveDCR9vf
-         /7e5gJTHNNiDUU+1gSaVKzHMB6FaQOX4MNg7HQllKgohRbU3oNTyQamcaeLItK/gUt2h
-         1/vHQrSEnTQkgSgPwljEMoA6URnn2hBIReHvX/N3lF0wZswCz60ebsd2oJg7drzySp6F
-         5fy0z9xhHc+pybgf9Ha0nDDEQD8/zdc591dlRGYZeEzqNG+0K+mV568aVutLLyowGi25
-         3dyw==
-X-Gm-Message-State: ACrzQf1QjStdMO6yaMEhtcWYCkwq/4p/NiLBaT5pOoAeFxTtjmTeJwIk
-        Gfdh94wgDYRKtvQn1QacoKKyzQMqG0AxqSkD
-X-Google-Smtp-Source: AMsMyM4eBDYf2VvT+YESlrneUHA2PUhEk6AV5g3fvf6bFRbhR/TnjNoQOnMjjBt7M7fkWQSxgCX1+A==
-X-Received: by 2002:a63:9141:0:b0:43b:d645:e057 with SMTP id l62-20020a639141000000b0043bd645e057mr5047047pge.225.1663889184807;
-        Thu, 22 Sep 2022 16:26:24 -0700 (PDT)
-Received: from localhost.localdomain ([2600:8801:9c0a:f300:449a:6533:97b5:bdb6])
-        by smtp.gmail.com with ESMTPSA id 65-20020a621744000000b005289a50e4c2sm5048552pfx.23.2022.09.22.16.26.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Sep 2022 16:26:24 -0700 (PDT)
-From:   Jacob Stopak <jacob@initialcommit.io>
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=97ADIcgiJmQYCEaRRA/E801VeGN35vo6JH11nRseEks=;
+        b=niy+Vvo0j7+AUf4GZXa776XOjeDzcmvUAlcY2TDa5oFQsRQnldxJhGOmu/z/G3BWOT
+         XD4XiNo8JW0BTQsdyKF0szUMtQPuEbHMkSrVuXU2n20hkXLbMSOCIvuDFtso0CkASe8j
+         HrBZ1wQ2pKqVwqW1o/VFDF6Nuacsz9O5qJtbS71ESNgu4uGtJEDDnI1iLaiZjgJ0PkbJ
+         ZEOzZnq199s5FsibzEEU1FfLe2RZpgY1K/oBhoEKM6FFibge2Z7/M09E3M3rjgTl74iC
+         68OCQWKGtgcqAyT2w5iMECFI/jRq7bZABCdwlNt/B9BhwkrLCXUy5Y6H3toBEw+bSk6b
+         t8ww==
+X-Gm-Message-State: ACrzQf2fA42F/B5pqfDibayGYqQJyXXFwuBwhE/gLU3eRd0wb9qQkYUg
+        CqGeXqzPIGFAXSZnPKMv5+SZ81T/Neqmo9KnGDgnHDnRFPYnGmpvnVJuLZreRbNsDePUWPDRK8H
+        jeMUHlEkR7xumX8SAjID6cR/qmgBSiaThY0NDVQHQwktOoYY7KhdxsMeNN88iONxSWg==
+X-Google-Smtp-Source: AMsMyM65W/ma8r3RT+m+ODV2xEf/QtUy6I61cmJACugVVoqhdS55wEgXsOLFpCYdEHNHR4U3aFnQ/ubJu1DcQ44=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a05:6a00:1a0e:b0:547:1cf9:40e8 with SMTP
+ id g14-20020a056a001a0e00b005471cf940e8mr6059765pfv.82.1663889408346; Thu, 22
+ Sep 2022 16:30:08 -0700 (PDT)
+Date:   Thu, 22 Sep 2022 23:29:43 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.37.3.998.g577e59143f-goog
+Message-ID: <20220922232947.631309-1-calvinwan@google.com>
+Subject: [PATCH 0/4] submodule: parallelize status
+From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
-Cc:     Jacob Stopak <jacob@initialcommit.io>, martin.agren@gmail.com
-Subject: [RFC PATCH v2] shortlog: add group-by options for year and month
-Date:   Thu, 22 Sep 2022 16:25:36 -0700
-Message-Id: <20220922232536.40807-1-jacob@initialcommit.io>
-X-Mailer: git-send-email 2.37.3
-In-Reply-To: <20220922061824.16988-1-jacob@initialcommit.io>
-References: <20220922061824.16988-1-jacob@initialcommit.io>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Cc:     emilyshaffer@google.com, Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It can be useful to group commits using time-based attributes in
-addition to author/committer. Currently, this can somewhat be
-done using "git shortlog --since=x --until=y", however all commits
-will be displayed in that single time chunk, grouped by author.
+When running 'git status' in a superproject, git spawns a subprocess in
+series to run status for every submodule. For projects with many large
+submodules, parallelizing status subprocesses can significantly speed
+up the runtime for both cold and warm caches.
 
-However, much more versatile time groupings can be achieved by adding
-options to group by year or month. This can lead to more interesting
-commit summaries breaking down the commits an author made during each
-year or month, using something like:
+Here are some timing tests from running status on the Android Open
+Source Project (AOSP). My machine has an SSD and 48 cores.=20
+  Warm Cache:
+    git 2.37
+Time (mean =C2=B1 =CF=83):     17.685 s =C2=B1  2.040 s    [User: 5.041 s, =
+System: 22.799 s]
+Range (min =E2=80=A6 max):   16.168 s =E2=80=A6 22.804 s    10 runs
 
-"git shortlog --group=month --group=author --author=Stopak"
+    this patch (status.parallelSubmodules=3D1)
+Time (mean =C2=B1 =CF=83):     13.102 s =C2=B1  0.500 s    [User: 4.894 s, =
+System: 19.533 s]
+Range (min =E2=80=A6 max):   12.841 s =E2=80=A6 14.447 s    10 runs
 
-Shorthand flags added for month grouping are "-m" or "--month", and for
-year groupings are "-y" or "--year".
+    this patch (status.parallelSubmodules=3D5)
+Time (mean =C2=B1 =CF=83):      3.994 s =C2=B1  0.152 s    [User: 4.998 s, =
+System: 20.805 s]
+Range (min =E2=80=A6 max):    3.744 s =E2=80=A6  4.163 s    10 runs
 
-If grouped _only_ by month or year (ie no "--group=author" option),
-shortlog will group commits made by ALL authors during each time period.
+    this patch (status.parallelSubmodules=3D10)
+Time (mean =C2=B1 =CF=83):      3.445 s =C2=B1  0.085 s    [User: 5.151 s, =
+System: 20.208 s]
+Range (min =E2=80=A6 max):    3.319 s =E2=80=A6  3.586 s    10 runs
 
-It turns out that combining these with existing flags "-s" or "-n" or
-both leads to various useful grouped commit summaries which can be
-ordered chronologically (default) or based on number of commits during
-each time period (when the "-n" flag is added), as in:
+    this patch (status.parallelSubmodules=3D20)
+Time (mean =C2=B1 =CF=83):      3.626 s =C2=B1  0.109 s    [User: 5.087 s, =
+System: 20.366 s]
+Range (min =E2=80=A6 max):    3.438 s =E2=80=A6  3.763 s    10 runs
 
-"git shortlog -nsy"
+We can see that there are diminishing returns and even slightly worse
+performance after a certain number of max processes, but optimally
+there is a speed up factor of around 5.
 
-Furthermore, these new groupings can be combined with "--since" or
-"--until" to generate yearly or monthly groupings within those
-overarching time slices.
+  Cold Cache:
+    git 2.37
+      mean of 3 runs: 6m32s
+    this patch (status.parallelSubmodules=3D1)
+      mean of 3 runs: 5m34s
+    this patch (status.parallelSubmodules=3D5)
+      mean of 3 runs: 2m23s
+    this patch (status.parallelSubmodules=3D10)
+      mean of 3 runs: 2m45s
+    this patch (status.parallelSubmodules=3D20)
+      mean of 3 runs: 3m23s
 
-Note that (at least for now) using the year and month groupings
-are not supported when shortlog is reading from stdin, since the
-default log output for date might require some assumptions to reformat
-during parsing, mainly regarding the first 2 digits of the year.
+We can witness the same phenomenon as above and optimally there is a
+speed up factor of around 2.7.
 
-Since the year and/or month part used for grouping comes directly
-from each commit, and commits are already being parsed by the existing
-shortlog logic, I don't think adding these new flags should have a
-noticeable performance impact. The only added time should be to format
-the month or year into the shortlog messages. The ordering was already
-handled by the existing shortlog output logic.
+Patch 1 adds output piping to run_processes_parallel so the output
+from each submodule can be parsed. Patches 2 and 3 move preexisting
+functionality into separate functions and refactor code to prepare
+for patch 4 to implement parallelization.
 
-Signed-off-by: Jacob Stopak <jacob@initialcommit.io>
----
-Thx a lot for the feedback! Added v2 patch here.
+Future work: The reason why status is much slower on a cold cache vs
+warm cache is mainly due to refreshing the index. It is worth
+investigating whether this is entirely necessary.
 
-> I would actually skip using/testing `git help` and just go
-> straight for the rendered page using, e.g, something like ...
+Calvin Wan (4):
+  run-command: add pipe_output to run_processes_parallel
+  submodule: move status parsing into function
+  diff-lib: refactor functions
+  diff-lib: parallelize run_diff_files for submodules
 
-Cool I was able to use your steps to get the local man page working.
+ Documentation/config/status.txt |   6 +
+ add-interactive.c               |   2 +-
+ builtin/add.c                   |   4 +-
+ builtin/commit.c                |   6 +
+ builtin/diff-files.c            |   2 +-
+ builtin/diff.c                  |   2 +-
+ builtin/merge.c                 |   2 +-
+ builtin/stash.c                 |   2 +-
+ builtin/submodule--helper.c     |   4 +-
+ diff-lib.c                      | 120 +++++++++++++-----
+ diff.h                          |   2 +-
+ run-command.c                   |   6 +-
+ run-command.h                   |   9 ++
+ submodule.c                     | 213 +++++++++++++++++++++++++++-----
+ submodule.h                     |   9 ++
+ t/helper/test-run-command.c     |  31 ++++-
+ t/t0061-run-command.sh          |  26 ++++
+ wt-status.c                     |   6 +-
+ wt-status.h                     |   1 +
+ 19 files changed, 372 insertions(+), 81 deletions(-)
 
-> One of the nice things about `--group` is that we can potentially
-> have many groupings without having to carry correspondingly many `--option`s.
->
-> In particular, it might be wise to wait with implementing `-y` and `-m`
-> until we know that your new feature turns out to be so hugely successful
-> that people start craving `-m` as a short form for `--group=month`. ;-)
 
-Haha yes I might have gotten a bit excited with the shorthand flags, BUT
-let me give my pitch for why I think it makes sense to keep them :)
-
-Adding these new time-based groups makes it more likely that folks will
-specify multiple groups at once, (like pairing with "--group=author")
-which makes it painful to write "--group=..." over & over again,
-especially when running/editing the command many times.
-
-Also, having shorthands -y and -m pairs very nicely when using other
-shorthand flags -s, -n, and -c, for stuff like "git shortlog -nsy".
-
-To justify why the new year/month groups should have shorthand flags
-while "--group=trailer:value" does not, I'd say that the fact that
-trailer requires a custom value would make the shorthand version clunky,
-and it wouldn't fit in well with other shorthand options like -n or -s.
-Since year/month have no custom value, the flags make a bit more sense
-and would match up with how "-c, --committer" currently works.
-
-So overall the shorthand flags can be more convenient in several ways,
-which increases the odds folks will use the new feature often :D. Thoughts?
-
-> This trips up `-Werror=declaration-after-statement`. If you build with
-> `DEVELOPER=Yes`, you should see the same thing.
-
-Hm, I tried setting the DEVELOPER flag at the top of Makefile, and also
-passing as argument to "make DEVELOPER=Yes git-shortlog", but didn't see
-those warnings - I'm on a mac fwiw. Anyway I moved the statement after
-the declarations so I think it should be fixed.
-
-> I can easily imagine going even more granular with this
-> (`--group=week`?), but that can wait for some other time. :-)
-
-I'd love to add a week option in the future if this gets accepted...
-
-> BTW, I got this when `git am`-ing your patch: ...
-
-Fixed those pesky whitespace issues!
-
- Documentation/git-shortlog.txt | 10 ++++
- builtin/shortlog.c             | 83 ++++++++++++++++++++++++++++++----
- shortlog.h                     |  2 +
- t/t4201-shortlog.sh            | 42 +++++++++++++++++
- 4 files changed, 127 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
-index f64e77047b..ab68b287d8 100644
---- a/Documentation/git-shortlog.txt
-+++ b/Documentation/git-shortlog.txt
-@@ -54,6 +54,8 @@ OPTIONS
- --
-  - `author`, commits are grouped by author
-  - `committer`, commits are grouped by committer (the same as `-c`)
-+ - `month`, commits are grouped by month (the same as `-m`)
-+ - `year`, commits are grouped by year (the same as `-y`)
-  - `trailer:<field>`, the `<field>` is interpreted as a case-insensitive
-    commit message trailer (see linkgit:git-interpret-trailers[1]). For
-    example, if your project uses `Reviewed-by` trailers, you might want
-@@ -80,6 +82,14 @@ counts both authors and co-authors.
- --committer::
- 	This is an alias for `--group=committer`.
- 
-+-m::
-+--month::
-+	This is an alias for `--group=month`.
-+
-+-y::
-+--year::
-+	This is an alias for `--group=year`.
-+
- -w[<width>[,<indent1>[,<indent2>]]]::
- 	Linewrap the output by wrapping each line at `width`.  The first
- 	line of each entry is indented by `indent1` spaces, and the second
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 7a1e1fe7c0..1beba9b91c 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -133,6 +133,10 @@ static void read_from_stdin(struct shortlog *log)
- 		break;
- 	case SHORTLOG_GROUP_TRAILER:
- 		die(_("using --group=trailer with stdin is not supported"));
-+	case SHORTLOG_GROUP_YEAR:
-+		die(_("using --group=year with stdin is not supported"));
-+	case SHORTLOG_GROUP_MONTH:
-+		die(_("using --group=month with stdin is not supported"));
- 	default:
- 		BUG("unhandled shortlog group");
- 	}
-@@ -200,10 +204,28 @@ static void insert_records_from_trailers(struct shortlog *log,
- 	unuse_commit_buffer(commit, commit_buffer);
- }
- 
-+static void format_commit_date(struct commit *commit, struct strbuf *sb,
-+			       char *format, struct shortlog *log)
-+{
-+	time_t t = (time_t) commit->date;
-+	struct tm commit_date;
-+	localtime_r(&t, &commit_date);
-+
-+	if (log->groups & SHORTLOG_GROUP_MONTH) {
-+		strftime(sb->buf, strbuf_avail(sb), "%Y/%m", &commit_date);
-+		snprintf(sb->buf+7, strbuf_avail(sb), "%s", format);
-+	} else if (log->groups & SHORTLOG_GROUP_YEAR) {
-+		strftime(sb->buf, strbuf_avail(sb), "%Y", &commit_date);
-+		snprintf(sb->buf+4, strbuf_avail(sb), "%s", format);
-+	}
-+}
-+
- void shortlog_add_commit(struct shortlog *log, struct commit *commit)
- {
- 	struct strbuf ident = STRBUF_INIT;
- 	struct strbuf oneline = STRBUF_INIT;
-+	struct strbuf buffer;
-+
- 	struct strset dups = STRSET_INIT;
- 	struct pretty_print_context ctx = {0};
- 	const char *oneline_str;
-@@ -214,6 +236,8 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
- 	ctx.date_mode.type = DATE_NORMAL;
- 	ctx.output_encoding = get_log_output_encoding();
- 
-+	strbuf_init(&buffer, 100);
-+
- 	if (!log->summary) {
- 		if (log->user_format)
- 			pretty_print_commit(&ctx, commit, &oneline);
-@@ -222,20 +246,47 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
- 	}
- 	oneline_str = oneline.len ? oneline.buf : "<none>";
- 
--	if (log->groups & SHORTLOG_GROUP_AUTHOR) {
--		strbuf_reset(&ident);
-+	if ((log->groups & SHORTLOG_GROUP_MONTH) && (log->groups & SHORTLOG_GROUP_YEAR))
-+		log->groups ^= SHORTLOG_GROUP_YEAR;
-+
-+	if (((log->groups & SHORTLOG_GROUP_MONTH) || (log->groups & SHORTLOG_GROUP_YEAR))
-+	      && !HAS_MULTI_BITS(log->groups)) {
-+		format_commit_date(commit, &buffer, "", log);
- 		format_commit_message(commit,
--				      log->email ? "%aN <%aE>" : "%aN",
-+				      buffer.buf,
- 				      &ident, &ctx);
-+
-+		if (strset_add(&dups, ident.buf))
-+			insert_one_record(log, ident.buf, oneline_str);
-+	}
-+	if (log->groups & SHORTLOG_GROUP_AUTHOR) {
-+		strbuf_reset(&ident);
-+		if ((log->groups & SHORTLOG_GROUP_MONTH) || (log->groups & SHORTLOG_GROUP_YEAR)) {
-+			format_commit_date(commit, &buffer, log->email ? " %aN <%aE>" : " %aN", log);
-+			format_commit_message(commit,
-+					      buffer.buf,
-+					      &ident, &ctx);
-+		} else {
-+			format_commit_message(commit,
-+					      log->email ? "%aN <%aE>" : "%aN",
-+					      &ident, &ctx);
-+		}
- 		if (!HAS_MULTI_BITS(log->groups) ||
- 		    strset_add(&dups, ident.buf))
- 			insert_one_record(log, ident.buf, oneline_str);
- 	}
- 	if (log->groups & SHORTLOG_GROUP_COMMITTER) {
- 		strbuf_reset(&ident);
--		format_commit_message(commit,
--				      log->email ? "%cN <%cE>" : "%cN",
--				      &ident, &ctx);
-+		if ((log->groups & SHORTLOG_GROUP_MONTH) || (log->groups & SHORTLOG_GROUP_YEAR)) {
-+			format_commit_date(commit, &buffer, log->email ? " %cN <%cE>" : " %cN", log);
-+			format_commit_message(commit,
-+					      buffer.buf,
-+					      &ident, &ctx);
-+		} else {
-+			format_commit_message(commit,
-+					      log->email ? "%cN <%cE>" : "%cN",
-+					      &ident, &ctx);
-+		}
- 		if (!HAS_MULTI_BITS(log->groups) ||
- 		    strset_add(&dups, ident.buf))
- 			insert_one_record(log, ident.buf, oneline_str);
-@@ -247,6 +298,7 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
- 	strset_clear(&dups);
- 	strbuf_release(&ident);
- 	strbuf_release(&oneline);
-+	strbuf_release(&buffer);
- }
- 
- static void get_from_rev(struct rev_info *rev, struct shortlog *log)
-@@ -314,15 +366,20 @@ static int parse_group_option(const struct option *opt, const char *arg, int uns
- 	if (unset) {
- 		log->groups = 0;
- 		string_list_clear(&log->trailers, 0);
--	} else if (!strcasecmp(arg, "author"))
-+	} else if (!strcasecmp(arg, "author")) {
- 		log->groups |= SHORTLOG_GROUP_AUTHOR;
--	else if (!strcasecmp(arg, "committer"))
-+	} else if (!strcasecmp(arg, "committer")) {
- 		log->groups |= SHORTLOG_GROUP_COMMITTER;
--	else if (skip_prefix(arg, "trailer:", &field)) {
-+	} else if (skip_prefix(arg, "trailer:", &field)) {
- 		log->groups |= SHORTLOG_GROUP_TRAILER;
- 		string_list_append(&log->trailers, field);
--	} else
-+	} else if (!strcasecmp(arg, "month")) {
-+		log->groups |= SHORTLOG_GROUP_MONTH;
-+	} else if (!strcasecmp(arg, "year")) {
-+		log->groups |= SHORTLOG_GROUP_YEAR;
-+	} else {
- 		return error(_("unknown group type: %s"), arg);
-+	}
- 
- 	return 0;
- }
-@@ -363,6 +420,12 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
- 			&parse_wrap_args),
- 		OPT_CALLBACK(0, "group", &log, N_("field"),
- 			N_("group by field"), parse_group_option),
-+		OPT_BIT('m', "month", &log.groups,
-+			N_("group by month rather than author"),
-+			SHORTLOG_GROUP_MONTH),
-+		OPT_BIT('y', "year", &log.groups,
-+			N_("group by year rather than author"),
-+			SHORTLOG_GROUP_YEAR),
- 		OPT_END(),
- 	};
- 
-diff --git a/shortlog.h b/shortlog.h
-index 3f7e9aabca..45b5efb6dc 100644
---- a/shortlog.h
-+++ b/shortlog.h
-@@ -20,6 +20,8 @@ struct shortlog {
- 		SHORTLOG_GROUP_AUTHOR = (1 << 0),
- 		SHORTLOG_GROUP_COMMITTER = (1 << 1),
- 		SHORTLOG_GROUP_TRAILER = (1 << 2),
-+		SHORTLOG_GROUP_MONTH = (1 << 3),
-+		SHORTLOG_GROUP_YEAR = (1 << 4),
- 	} groups;
- 	struct string_list trailers;
- 
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index 3095b1b2ff..981f45f732 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -359,4 +359,46 @@ test_expect_success 'stdin with multiple groups reports error' '
- 	test_must_fail git shortlog --group=author --group=committer <log
- '
- 
-+test_expect_success '--group=year groups output by year' '
-+	git commit --allow-empty -m "git shortlog --group=year test" &&
-+	cat >expect <<-\EOF &&
-+	     1	2005
-+	EOF
-+	git shortlog -ns \
-+		--group=year \
-+		-1 HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'stdin with --group=year reports error' '
-+	test_must_fail git shortlog --group=year
-+'
-+
-+test_expect_success '--group=month groups output by month' '
-+	git commit --allow-empty -m "git shortlog --group=month test" &&
-+	cat >expect <<-\EOF &&
-+	     1	2005/04
-+	EOF
-+	git shortlog -ns \
-+		--group=month \
-+		-1 HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'stdin with --group=month reports error' '
-+	test_must_fail git shortlog --group=month
-+'
-+
-+test_expect_success '--group=month and --group=year defaults to month' '
-+	git commit --allow-empty -m "git shortlog --group=month --group=year test" &&
-+	cat >expect <<-\EOF &&
-+	     1	2005/04
-+	EOF
-+	git shortlog -ns \
-+		--group=month \
-+		--group=year \
-+		-1 HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.37.3
+base-commit: 5502f77b6944eda8e26813d8f542cffe7d110aea
+--=20
+2.37.3.998.g577e59143f-goog
 
