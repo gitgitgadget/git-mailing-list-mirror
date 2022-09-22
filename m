@@ -2,142 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03319C54EE9
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 11:23:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B9E0C54EE9
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 12:35:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231490AbiIVLXZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 07:23:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42878 "EHLO
+        id S231669AbiIVMfj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 08:35:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230482AbiIVLXX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 07:23:23 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B535E05FC
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 04:23:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1663845799;
-        bh=He39lDZYRUU14tRac59tAwUvbkqmpC3msSeYSlavYuo=;
-        h=X-UI-Sender-Class:From:To:Subject:Date;
-        b=HwJ1GJMDZGZ0YP3OhQVqKHrHLJyqQnmV3JQjjFCVVnx+CUTNQdSiasIUXYPgJPi6a
-         dAQ4TIkxMc3FSZyQup0r2k4E1wDmGcMLEA4oBhwdbhO15ismWgHGBnfxInG9dZoWUd
-         jBwcEQ0s9jhtdq396UDqCjFr63EPvImrIbV3z1jQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [176.72.143.73] ([176.72.143.73]) by web-mail.gmx.net
- (3c-app-mailcom-bs01.server.lan [172.19.170.58]) (via HTTP); Thu, 22 Sep
- 2022 13:23:19 +0200
+        with ESMTP id S231461AbiIVMfb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 08:35:31 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84B5DF3B4
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 05:35:24 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id d8so7525350iof.11
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 05:35:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=or5p3aIqBpX1JQbEl11xMgwS/W972RGeW94SJorCdTw=;
+        b=NXebWtw3dRvuFNp3aLhA16O/fnpwwJWy/0MfvAtlJ/+LuBkMyyOPZoWkUq/S41IPVc
+         6AWBUArVKo35qF1fQpnE4JcH6UO4tFq9MTBhiMdWIg3V1lp0eibJt+C444h8aW6tG+j7
+         KQzoU+AiYExOFKvK+U1hCBLCNwsma3mtk2IaXy5cPf9oMiEvSlqw0HB/Ow3rdbEzI1vQ
+         NC1uwcsByPB+dLdWMYrm8FjkJaKzy45dkqOsmf+nWv0wYPFxdsaATr3NUT4VHw0kgAe1
+         DYnBOOTxkL9JAVVzHuTFTSZpVZd5uYWJ6DZHwE3TokLKNOhvjWYM3a5ABQ+jchPkxLcZ
+         8zBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=or5p3aIqBpX1JQbEl11xMgwS/W972RGeW94SJorCdTw=;
+        b=X0pPopYYKCCPuTVriKDb+x2jkmE2JWeR4dXFIQQAMgnFtRh/4/GhuVLcnVWs+M1v6X
+         foBOw0EzKDB7PbIhS++TetaeNkcV7jjZBByP4Hkk8oAjSAzrIbaAxIXFJmWc9gAZ4i7k
+         0SrFjizaeuxb098XehkbUwPPiQ+QoPsqfqbx867RVXZP9DxO+NI+Wuz0l9knNnjoS4kl
+         3tzbqHxxwJ9pajwi/0ph0HYO4486qJEG3xUGaeZYi8aDJtLzN09jRF32TYCQpdD91Jxi
+         q9baLojAFgdhltq3wUluQrhNTnsYTzlCMF/lybiwq2Rtm6M/25Ogat1o8db5yG98DQQ0
+         cuUg==
+X-Gm-Message-State: ACrzQf2U+KDI6bDyGPTcI83BvzkiFVtPdUpJX91KV6/y8GcwdGAGi1cx
+        X6uVGXTdkKCyPQl9R9Bj2puEz8gLoCQ1
+X-Google-Smtp-Source: AMsMyM6RtaFlYxE31rzI5nUKY8Xywr+Uwb5YWvlBxr/D2wLt85gfzvMZAmp/JyCKgRfH2R2fSMOjKw==
+X-Received: by 2002:a5d:8a13:0:b0:69e:2133:4b38 with SMTP id w19-20020a5d8a13000000b0069e21334b38mr1408227iod.106.1663850123784;
+        Thu, 22 Sep 2022 05:35:23 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:e4c7:912a:7017:ed79? ([2600:1700:e72:80a0:e4c7:912a:7017:ed79])
+        by smtp.gmail.com with ESMTPSA id r10-20020a02b10a000000b003583d27d258sm2151085jah.105.2022.09.22.05.35.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Sep 2022 05:35:23 -0700 (PDT)
+Message-ID: <ff921c34-139a-9e2b-ca1f-d6f9f7213d1b@github.com>
+Date:   Thu, 22 Sep 2022 08:35:22 -0400
 MIME-Version: 1.0
-Message-ID: <trinity-15566df8-59d7-4597-b59d-2143ec978b12-1663845799823@3c-app-mailcom-bs01>
-From:   djvortex@gmx.com
-To:     git@vger.kernel.org
-Subject: Handling rebasing better
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: t9210-scalar.sh fails with SANITIZE=undefined
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc:     Victoria Dye <vdye@github.com>
+References: <YywzNTzd72tox8Z+@coredump.intra.peff.net>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <YywzNTzd72tox8Z+@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 22 Sep 2022 13:23:19 +0200
-Importance: normal
-Sensitivity: Normal
-X-Priority: 3
-X-Provags-ID: V03:K1:YOWAIGNs5DIX5r6unEKztxQhHDhuBalr/h+j5P9HKvNXLnaPPMYJvUEUD+6L9VBrPfo8Y
- XddqtQ0Uv5hTZhxu13V7VtRMUjLZptVjBDt2GDrfvcHSDrrto0cBPD18rxuHti4gYVb+9BIyZztO
- HhobteqQsxDDjIcKTZqdcJslm6qF+weWOtm4akH4MF910SQD3WNW4UCbNkxXlctxD2AW+Vw/PWDa
- 06p3bj3yFShYwiHkJSAiUxK7X2aghdfMLquTtgja/bB+0BJ2KoKf8+KRraHTEtaeZpvfZDn/Vizs
- Tw=
-X-UI-Out-Filterresults: notjunk:1;V03:K0:T5NgCrgq4bw=:RGNZGv3YuYike3ZrCDLmjo
- HnjNqaYQkH43Gy1eilCubiOtTTpzwsIH72ObEnhD83+qvQycVXp6WBUyAErme/c3gqXTqB/Uy
- StONDah7wMTdCe9SZqcy7pxLsVigVxK+2PMlkypVFLYfR+xHzFkSMLp1fzQy7FEPhdMBfXpct
- EdSuL0Ppfe9UpGney81kYc22CAaDBVvMEaPWy9pAp9mON3zFAIFt007hlOwtCXzlxrOqLDb7h
- tY4vG0YkF6h+FF9C1oC94UsfbbFtVAAT3WpDFzBRJP5k+B4v93KXrCwPhhviZJNz9hE3ybQeI
- l821mPW9nGsZZxV5EHRcCHHOuo+J38p+oYkSlU195LQNx+t+PUjbhHlVf0dt29L7D7QF+DYwK
- MRgZRZI9SUzNUO4nsUuHdfnnRxJdOpMOLCIHn6Utv28CRey32HCkv/atgwwg8cbjEVzjP04mi
- cVksXegxdnKhZo5mCkFOFvT7CVnenklPa9B6Q0b00txQyJa2bkVyE+NcMqeQphl845/qo4OcY
- f28QaKrrvc3KxDB+jpV2OXL7CsvQY2tUyd8f6SqFO4w1hhM0fgrU6t7WdPVxGCKYw64gaXf1f
- PVg07aiDXJ5TVIzx5d2o3K3IPTWKApQfiuTCUotzZpkhzmL7w/hT2bkrSWfxCK9iMcFXUAayr
- qyi+TJVcX6vB6jmJBoGP8FSJDHtZDda8PPciidoPH+Vn+pReXljFfxBOlnuYJ+DegI0VPfqvU
- eSKoLrXokitv7rN8MJIAKrVc8Mf76g0yQvMAH59QYCFy8oU9ezE46sFOnXDbrJXlst+3mREll
- ZWxqHFh
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello.
+On 9/22/2022 6:04 AM, Jeff King wrote:
+> Running t9210 with the tip of master triggers a problem with UBSan:
+> 
+>   $ make SANITIZE=undefined
+>   [...]
+>   $ cd t
+>   $ ./t9210-scalar.sh -v -i
+>   [...]
+>   read-cache.c:1886:46: runtime error: member access within misaligned address 0x7f7c09bf7055 for type 'struct ondisk_cache_entry', which requires 4 byte alignment
+>   0x7f7c09bf7055: note: pointer points here
+>   33 2e 74 00 63 2c 31  42 17 3f 49 72 63 2c 31  42 17 3f 49 72 00 00 fe  01 02 60 06 4d 00 00 81  a4
+>               ^
+> 
+> Now here's the interesting part. We do carefully read most of the data
+> out of the struct with get_be16(), which should handle alignment (we
+> have to do so because that on_disk_cache_entry is literally just a cast
+> from an mmap'd buffer). But the line in question is just:
+> 
+>   const uint16_t *flagsp = (const uint16_t *)(ondisk->data + hashsz);
+> 
+> It's not even reading anything, but just computing an offset within the
+> struct. I don't think that line in particular is to blame. If I use an
+> older version of Git that predates it on the same repo generated by
+> t9210, I get a similar error for a different line.
+> 
+> Another thing to note is that the command which fails isn't scalar
+> itself! It's just vanilla "git add -- loose.t". But it's curious that we
+> never saw this alignment problem before. I wonder if the scalar-cloned
+> repository has some index options turned on that trigger the issue.
+> 
+> I didn't dig further. It's obviously new in v2.38.0-rc1, but I'm not
+> sure it's a show-stopper. It _might_ have been there all along, and is
+> just now surfacing. Or it might be in an existing experimental feature
+> that just wasn't exercised enough in the tests. Or if it really is new
+> in scalar, then it will only hurt people using scalar, which didn't
+> exist before. So I don't think it's a regression in the strictest sense,
+> but it might be nice to get a more accurate understanding of the problem
+> before the release.
 
-I wouldn't be surprised if this very subject has already been endlessly di=
-scussed over the years, but nevertheless allow me to make a feature reques=
-t for git. (If this has already been discussed in the past, which I'm quit=
-e certain it has, I would like to hear the details so I can understand the=
- design decisions that have been made in this regard.)
+Interesting find!
 
-Rebasing is a rather curious feature of git in that it's both an extremely=
- common and normal operation done in many projects, and at the same time i=
-t's a very drastic measure that has the potential of badly messing up or e=
-ven breaking git commit histories (as any operation that changes history i=
-s), or at a very minimum cause a lot of work. Rebasing is extremely common=
- in many projects, so much so that there are many such projects where in f=
-act only fast-forward merges are allowed to the master branch (which is of=
-ten possible only by rebasing the branch to be merged onto the current mas=
-ter branch head).
+Here are the index-related settings that Scalar sets as of -rc1:
 
-On the other hand, rebasing, as any other operation that changes commit hi=
-story, has the potential of breaking things, or causing a ton of extra wor=
-k, when more than one developer has the same branch checked out (and thus =
-their local history diverges from the remote history).
+* core.preloadIndex=true
+* index.threads=true
+* index.version=4
 
-So, given how relatively common it is to use rebasing, and how carefully i=
-t should be used, it's a bit strange how poorly git seems to handle it. No=
-t in terms of doing the rebasing itself, but in terms of subsequent operat=
-ions done to the rebased branch.
+My gut feeling is that index.version=4 might be the culprit. I thought
+we tested GIT_TEST_INDEX_VERSION=4 in some CI modes, but apparently we
+do not. Do you get the same error in other tests with that environment
+variable?
 
-For starters, if your current branch has been pushed to the remote, and th=
-en you rebase it to something else, and then do a "git status", it will te=
-ll you that the local and remote histories have diverged... and then sugge=
-sts doing a "git pull"! Which is most definitely not what you want to do! =
-You just rebased the branch, you don't want to try to merge it with the ol=
-d branch history! (Developers who have not encountered this before may bec=
-ome really confused if they try the "git pull" and start getting tons of r=
-eally strange merge conflicts. The absolute worst thing they could then do=
- is try to "resolve" those conflicts, which is most definitely not what yo=
-u want to do! I don't know if there are situations where you actually *don=
-'t* get any merge conflicts and the two diverged histories just merge... c=
-reating a complete mess of a hybridized duplicated history.)
-
-I think that git should be aware of what has happened, in other words, tha=
-t the current local branch has been rebased to something else, and is now =
-a completely different history from the same branch in the remote, and exp=
-ress this clearly and suggest the correct thing (primarily to do a "git pu=
-sh -f").
-
-More importantly, I think git should handle better the situation where you=
- are trying to pull a rebased branch (which was rebased by someone else) o=
-nto your local original non-rebased one. Again, currently you'll just get =
-a huge bunch of weird merge conflicts (if you are lucky), and the worst th=
-ing you could do is try to "resolve" them, as that's precisely what you sh=
-ouldn't be doing.
-
-I understand that the branch history having changed on the remote can be a=
- nightmare to deal with, when you have a local non-rebased copy of it, esp=
-ecially if you have made new local commits to it. AFAIK there are no easy =
-clear-cut solutions to this, but one of them is to just write down the has=
-hes of your commits, reset to the remote branch, and then cherry-pick your=
- commits in chronological order (resolving any merge conflicts that may ha=
-ppen).
-
-The problem is that git isn't exactly helping here. I think that git shoul=
-d recognize the situation and give better suggestions on what to do. In ot=
-her words, if you are doing a "git pull" and the remote branch has been re=
-based, git should stop and tell clearly that this has happened, and sugges=
-t what to do. If it detects that the local branch is identical to the old =
-remote branch (that existed before the rebase), it could suggest a reset. =
-If it detects that there are new local commits on top of the old history, =
-it could make another suggestion on how to deal with it. It might also giv=
-e the (rather unsafe) option of doing the pull anyway, for example with so=
-mething like "git pull -f", with a huge warning.
-
-Perhaps git could even support the "reset-to-the-remote-history and then c=
-herry-pick your new local commits" directly, to help the developer in this=
- task (so that you don't need to write down any hashes and do all that man=
-ually). But even if this isn't really feasible, at least detecting the sit=
-uation and the clearer messages would help enormously.
-
-(I understand that the current design of git might not directly allow this=
- with just some code changes, and would perhaps require adding some kind o=
-f extra metadata. But would this be bad? It would certainly help developer=
-s handle rebases better.)
+Thanks,
+-Stolee
