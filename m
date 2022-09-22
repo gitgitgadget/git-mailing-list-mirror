@@ -2,78 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AA85ECAAD8
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 22:16:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53A48C54EE9
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 22:27:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229919AbiIVWQQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 18:16:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60996 "EHLO
+        id S229804AbiIVW1X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 18:27:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiIVWQP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 18:16:15 -0400
+        with ESMTP id S229449AbiIVW1V (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 18:27:21 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28F0596775
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 15:16:13 -0700 (PDT)
-Received: (qmail 9312 invoked by uid 109); 22 Sep 2022 22:16:13 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E34D4DF68A
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 15:27:20 -0700 (PDT)
+Received: (qmail 9389 invoked by uid 109); 22 Sep 2022 22:27:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 Sep 2022 22:16:13 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 Sep 2022 22:27:20 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8484 invoked by uid 111); 22 Sep 2022 22:16:13 -0000
+Received: (qmail 8569 invoked by uid 111); 22 Sep 2022 22:27:20 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 Sep 2022 18:16:13 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 Sep 2022 18:27:20 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 22 Sep 2022 18:16:12 -0400
+Date:   Thu, 22 Sep 2022 18:27:19 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Cai <johncai86@gmail.com>, git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 1/3] fsck: free tree buffers after walking unreachable
- objects
-Message-ID: <YyzerG/hXFCsI7Lt@coredump.intra.peff.net>
-References: <Yyw0PSVe3YTQGgRS@coredump.intra.peff.net>
- <Yyw031PqCyYlEqCX@coredump.intra.peff.net>
- <xmqqa66rz20q.fsf@gitster.g>
- <YyywSdrWO61Kza0e@coredump.intra.peff.net>
- <xmqq5yhfyztm.fsf@gitster.g>
+To:     Victoria Dye <vdye@github.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
+Subject: Re: t9210-scalar.sh fails with SANITIZE=undefined
+Message-ID: <YyzhR8CGu2CNQMfJ@coredump.intra.peff.net>
+References: <YywzNTzd72tox8Z+@coredump.intra.peff.net>
+ <ff921c34-139a-9e2b-ca1f-d6f9f7213d1b@github.com>
+ <Yyyzk3FVjmms7dkO@coredump.intra.peff.net>
+ <50c57a60-8346-6952-93d9-432a70ef74c5@github.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq5yhfyztm.fsf@gitster.g>
+In-Reply-To: <50c57a60-8346-6952-93d9-432a70ef74c5@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 22, 2022 at 12:27:33PM -0700, Junio C Hamano wrote:
+On Thu, Sep 22, 2022 at 03:09:52PM -0700, Victoria Dye wrote:
 
-> > As a side note, IMHO having tree->buffer at all is a mistake, because it
-> > leads to exactly this kind of confusion about when the buffer should be
-> > discarded. We'd be better off having all callers parse directly into a
-> > local buffer, and then clean up when they're done.
+> Other than allowing us to use a (non-packed) 'struct ondisk_cache_entry' to
+> parse the index entries, is there any reason why the on-disk index entries
+> should (or need to be) 4-byte aligned? If not, we could update how we read
+> the 'ondisk' index entry in 'create_from_disk()' to avoid the misalignment.
+
+I don't think so. And indeed, we already use get_be16(), etc, for most
+of the access (which is mostly there for endian-fixing, but also
+resolves alignment problems).
+
+> ------------------8<------------------8<------------------8<------------------
+> diff --git a/read-cache.c b/read-cache.c
+> index b09128b188..f132a3f256 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1875,7 +1875,7 @@ static int read_index_extension(struct index_state *istate,
+>  
+>  static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+>  					    unsigned int version,
+> -					    struct ondisk_cache_entry *ondisk,
+> +					    const char *ondisk,
+>  					    unsigned long *ent_size,
+>  					    const struct cache_entry *previous_ce)
+>  {
+> @@ -1883,7 +1883,7 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+>  	size_t len;
+>  	const char *name;
+>  	const unsigned hashsz = the_hash_algo->rawsz;
+> -	const uint16_t *flagsp = (const uint16_t *)(ondisk->data + hashsz);
+> +	const char *flagsp = ondisk + offsetof(struct ondisk_cache_entry, data) + hashsz;
+>  	unsigned int flags;
+>  	size_t copy_len = 0;
+>  	/*
+> ------------------>8------------------>8------------------>8------------------
 > 
-> Yeah, tree-walk.c users woud use tree_desc structure anyway, and
-> instead of having a moving pointer that points into a separate thing
-> (i.e. tree->buffer), it could have its own copy of the "whole buffer"
-> that can be used to free when it is done iterating over entries.
-> 
-> > .... But that's obviously a much bigger change.
-> 
-> Yup.
+> the do the same sort of conversion with the rest of the function. It's
+> certainly uglier than just using the 'struct ondisk_index_entry *' pointer,
+> but it should avoid the misaligned addressing error.
 
-I took a (very) brief stab at this, out of curiosity. The sticking point
-becomes obvious very quickly: how do we get the buffer to the caller? If
-you are calling parse_tree(), we can add new out-parameters to provide
-the buffer. But something like parse_object() is just returning an
-object struct, and we have to stuff anything we want to communicate to
-the caller inside the polymorphic struct which contains it.
+Yeah, I think that's probably the only reasonable solution. I thought
+ditching ondisk_cache_entry entirely (which is basically what this is
+doing) would be a tough sell, but a quick "grep" shows it really isn't
+used in all that many spots.
 
-We could split the concept of "parse" away from "get the buffer"
-entirely, but then we have a potential slowdown. The "parse" functions
-really want to open the object contents and check the hash (and removing
-that in the general case would probably break part of fsck, at least).
-So we'd end up inflating the object contents twice, which would probably
-have a measurable impact.
+I also wondered why other versions do not have a similar problem. After
+all, cache entries contain pathnames which are going to be of varying
+lengths. But this seems telling:
 
-I don't plan on digging any further on it for now, so this is just a
-note for future people who do. :)
+  $ git grep -m1 -B1 -A2 align_padding_size
+  read-cache.c-/* These are only used for v3 or lower */
+  read-cache.c:#define align_padding_size(size, len) ((size + (len) + 8) & ~7) - (size + len)
+  read-cache.c-#define align_flex_name(STRUCT,len) ((offsetof(struct STRUCT,data) + (len) + 8) & ~7)
+  read-cache.c-#define ondisk_cache_entry_size(len) align_flex_name(ondisk_cache_entry,len)
+
+So we actually pad the entries in earlier versions to align them, but
+don't in v4. I'm not sure if that was a conscious choice to save space,
+or an unintended consequence (though it is mentioned in the docs, I
+think that came after the code).
+
+That's probably all obvious to people who work with the index a lot.
+It's the one part of Git I've mostly managed to remain oblivious to. :)
 
 -Peff
