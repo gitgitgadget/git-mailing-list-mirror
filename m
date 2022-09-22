@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 997B5ECAAD8
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 23:30:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB301C6FA8B
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 23:30:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230064AbiIVXaQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 19:30:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34264 "EHLO
+        id S230308AbiIVXaT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 19:30:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229543AbiIVXaM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 19:30:12 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AAE575498
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 16:30:10 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id ev16-20020a17090aead000b00202cf672e74so5636334pjb.2
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 16:30:10 -0700 (PDT)
+        with ESMTP id S229892AbiIVXaO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 19:30:14 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F9E7D79B
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 16:30:12 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id oc9-20020a17090b1c0900b00202843f7057so4503281pjb.1
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 16:30:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date;
-        bh=vsXH8eS7uXf5Gge0xiJaLe4TwS8CdLF4whLMgHRoL84=;
-        b=gmJ367xKb0iWR+L81hZuPfWEmHkGKlpBTCwPQMaVPjol5S4akCISUeV3re7HhxxhxF
-         htdpqWLc33svYH2ajoz6QfFaKijw6U8Tj9meT+ThTM/CoBfGHoWPC406fXj+0BXbf72w
-         4tn5gbihuE5HiTLJabLbseOvbjrJQ9n5a/X84Nw3WL4cZfdui/U4AG7GYEfB/NfxacWk
-         sSsecetWElQ/5C5taLW84Gn7NkDkhBmFdPiNwgRNcPwqfQ2rN71MGwqBzeC3YoFKU8mh
-         0JDCVg8yC7qrhTQfZekd8C11x4tlwBmNr8QQe0GFqbv6ZoHFn1+pYtkXo/assE7w0qF/
-         7OQQ==
+        bh=C+q7h6iJb0NO0lIo4rCwR8P70towVnR8fUfasaCiejE=;
+        b=oAWLQf4Em08lRMCjAeiplcH8tQE6jSQVVB5TIdtnQ53xLcfP/tDH/8hpnzkKh4MaKO
+         EzlPQfXQfO48S4uc+/QdWnIUd/5sVxnwUjNOF+tRfhqsktSpX6iuIsfDy0q09L0cWzIR
+         kksajeYHbi+RGN98fxhj8aRLOmHYe+v8AwvHU9VM5rN5CHi2d7mLuZbl5Ut8pqtfX2t2
+         NaOH4lkp9yPThnoaOoOFdgVqUPmIj3O/rpHwOcBzAfSh3FbtdPtStwZTX8WrdCQulduj
+         f3j8MX2kWRA8wE6i2KB3pPvc3L2Cx1pdt21iHMJXpWfStrYGCAvPdzfq3xwcX3F4eFVG
+         GRug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date;
-        bh=vsXH8eS7uXf5Gge0xiJaLe4TwS8CdLF4whLMgHRoL84=;
-        b=Dstd342OoHtjBcCJz/1+gMFNefyg3SpSvNYc0VWySnsuoE5asWF3JklGJI0EAcmWxj
-         sBr7vgckKOLS/q2MU/0Z0qfqzC7qFNJn5Q5DlAXva6Bm/CO+HjHCkMZqLrhUsQRuaNl0
-         emtkRPgXbYvgWGrwopT74THQH45qWkkqIDNU9nkcVbDSdYtwHf2my3slMNUauiNtCSHz
-         U1suISpu0+d1wun1v0uwpKCj8s+0GZmI9AeY+9mSDwJ0PJ7LdJlKzYJxWSmJZMwa/Ld2
-         r9SaU/8XYfBYwrPvqpbNsVLDfBB/VcOuOPhsbzBDeokJMTofCTitKn56pxb9vlOg3dV/
-         tG4A==
-X-Gm-Message-State: ACrzQf2qCraAjyB6JWY3cxFVrVvHCyDnE/fN1oa3re+MSrqHkljDwHGy
-        6KA9KzsRP/28oHBuh6WCUC66fb2cJ176xw/RcotcE1usdoOVlpCfo8nUqeEy4Yjq/uNbdDhglov
-        xHI2Af/bLlmHnYgfo2XYV44EhBlvPms5P6gJchh5gZTKqwuhrO7xOo2Rb/mtect+rIg==
-X-Google-Smtp-Source: AMsMyM5ZPAjpg9h+oXLcrX+vUwqZMCLjOE83mynx3lX5GoqFzwRi8fGnEyfGJ5ChK4R+l9bWtPmiJtc83FHlHUQ=
+        bh=C+q7h6iJb0NO0lIo4rCwR8P70towVnR8fUfasaCiejE=;
+        b=ZSOAHbsm20LZPZeS0J5zUnOaCSgtoPVmqc1F6f/5aJLFoRetV67nl59nMDLIMlH0A5
+         aCBnpG8QWtVLOl1g7v8sSyDzm3MnfH9wf+LXgY89ecIE9lRe7K/AYn6DNjCH2zeyqX1/
+         lAn+2nbBGfJzyr2Suk7UJlj7SbZpYc++ZLQfgUKOMvvWOqcOiY1njk0yG1NU/y0oqkJg
+         aOJ7PNFAKAztgMtIlTdibfc3NmH3HnPlHdb3ocdHEXlWN0hq23aU7vPvKjtapWYOGtO5
+         1nbzKxwO/xfjj+whCjqHw3iNwqrXSLQReazgCfADi+zOsrjnJHpIzTktsbCJscDj0FW8
+         kX2g==
+X-Gm-Message-State: ACrzQf1TNdLBMqUEHYo0v/gL59c0k8h18hbP0x15r1CGiMFT2fwpLEde
+        CWxcBAYtr6kJbFEOuhe/IHgjxJLna3qjFB9/OcSQE8bhOZzlns6xAKkPj64ceWeUrUOrdZkGUVs
+        DNLIdWh053+Cy209s3tPUdKDgrG1xtLy+YlBo1Ls5Iu6hnqGKsxuebPnT95zx8Aa5iQ==
+X-Google-Smtp-Source: AMsMyM5sPd8XUtu71NdMHdlDa8WoSB9YJaPGBz8/NvPcWosKihUeuU0UaFcLUf/wdR1wQDz4lUncj1poVy7fLiU=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:aa7:8a49:0:b0:53e:6a9c:9a04 with SMTP id
- n9-20020aa78a49000000b0053e6a9c9a04mr6137035pfa.85.1663889409859; Thu, 22 Sep
- 2022 16:30:09 -0700 (PDT)
-Date:   Thu, 22 Sep 2022 23:29:44 +0000
+ (user=calvinwan job=sendgmr) by 2002:a17:90b:10a:b0:200:2849:235f with SMTP
+ id p10-20020a17090b010a00b002002849235fmr426801pjz.1.1663889411384; Thu, 22
+ Sep 2022 16:30:11 -0700 (PDT)
+Date:   Thu, 22 Sep 2022 23:29:45 +0000
 In-Reply-To: <20220922232947.631309-1-calvinwan@google.com>
 Mime-Version: 1.0
 References: <20220922232947.631309-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.37.3.998.g577e59143f-goog
-Message-ID: <20220922232947.631309-2-calvinwan@google.com>
-Subject: [PATCH 1/4] run-command: add pipe_output to run_processes_parallel
+Message-ID: <20220922232947.631309-3-calvinwan@google.com>
+Subject: [PATCH 2/4] submodule: move status parsing into function
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     emilyshaffer@google.com, Calvin Wan <calvinwan@google.com>
@@ -61,211 +61,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-run_processes_parallel periodically collects output from its child
-processes, prints it, and then resets the buffers for each child.
-Add run_processes_parallel_pipe_output variable so output can be
-collected and fed to task_finished. When set, the function referenced
-by task_finished should parse the output of each child process.
+A future patch requires the ability to parse the output of git
+status --porcelain=2. Move parsing code from is_submodule_modified to
+parse_status_porcelain.
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 ---
- run-command.c               |  6 +++++-
- run-command.h               |  9 +++++++++
- t/helper/test-run-command.c | 31 ++++++++++++++++++++++++++++---
- t/t0061-run-command.sh      | 26 ++++++++++++++++++++++++++
- 4 files changed, 68 insertions(+), 4 deletions(-)
+ submodule.c | 71 +++++++++++++++++++++++++++++------------------------
+ 1 file changed, 39 insertions(+), 32 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index 14f17830f5..893bc1d294 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1474,6 +1474,7 @@ enum child_state {
- };
- 
- int run_processes_parallel_ungroup;
-+int run_processes_parallel_pipe_output;
- struct parallel_processes {
- 	void *data;
- 
-@@ -1770,10 +1771,12 @@ int run_processes_parallel(int n,
- 	int output_timeout = 100;
- 	int spawn_cap = 4;
- 	int ungroup = run_processes_parallel_ungroup;
-+	int pipe_output = run_processes_parallel_pipe_output;
- 	struct parallel_processes pp;
- 
- 	/* unset for the next API user */
- 	run_processes_parallel_ungroup = 0;
-+	run_processes_parallel_pipe_output = 0;
- 
- 	pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb,
- 		ungroup);
-@@ -1800,7 +1803,8 @@ int run_processes_parallel(int n,
- 				pp.children[i].state = GIT_CP_WAIT_CLEANUP;
- 		} else {
- 			pp_buffer_stderr(&pp, output_timeout);
--			pp_output(&pp);
-+			if (!pipe_output)
-+				pp_output(&pp);
- 		}
- 		code = pp_collect_finished(&pp);
- 		if (code) {
-diff --git a/run-command.h b/run-command.h
-index 0e85e5846a..a5b1d63f49 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -483,8 +483,17 @@ typedef int (*task_finished_fn)(int result,
-  * "run_processes_parallel_ungroup" to "1" before invoking
-  * run_processes_parallel(), it will be set back to "0" as soon as the
-  * API reads that setting.
-+ * 
-+ * If the "pipe_output" option is specified, the output will be piped
-+ * to task_finished_fn in the "struct strbuf *out" variable. The output
-+ * will still be printed unless the callback resets the strbuf. The
-+ * "pipe_output" option can be enabled by setting the global
-+ * "run_processes_parallel_pipe_output" to "1" before invoking
-+ * run_processes_parallel(), it will be set back to "0" as soon as the
-+ * API reads that setting.
-  */
- extern int run_processes_parallel_ungroup;
-+extern int run_processes_parallel_pipe_output;
- int run_processes_parallel(int n,
- 			   get_next_task_fn,
- 			   start_failure_fn,
-diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index c9283b47af..030e533c6b 100644
---- a/t/helper/test-run-command.c
-+++ b/t/helper/test-run-command.c
-@@ -20,6 +20,7 @@
- #include "wildmatch.h"
- #include "gettext.h"
- 
-+static int pipe_output = 0;
- static int number_callbacks;
- static int parallel_next(struct child_process *cp,
- 			 struct strbuf *err,
-@@ -52,15 +53,32 @@ static int no_job(struct child_process *cp,
- 	return 0;
+diff --git a/submodule.c b/submodule.c
+index 3fa5db3ecd..91213ba83c 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1753,6 +1753,43 @@ static int commit_missing_in_sub(const struct object_id *oid, void *data)
+ 	return type != OBJ_COMMIT;
  }
  
-+static int task_finished_pipe_output(int result,
-+			 struct strbuf *err,
-+			 void *pp_cb,
-+			 void *pp_task_cb)
++static int parse_status_porcelain(char *buf, unsigned *dirty_submodule, int ignore_untracked)
 +{
-+	if (err && pipe_output) {
-+		fprintf(stderr, "%s", err->buf);
-+		strbuf_reset(err);
++	/* regular untracked files */
++	if (buf[0] == '?')
++		*dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
++
++	if (buf[0] == 'u' ||
++		buf[0] == '1' ||
++		buf[0] == '2') {
++		/* T = line type, XY = status, SSSS = submodule state */
++		if (strlen(buf) < strlen("T XY SSSS"))
++			BUG("invalid status --porcelain=2 line %s",
++				buf);
++
++		if (buf[5] == 'S' && buf[8] == 'U')
++			/* nested untracked file */
++			*dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
++
++		if (buf[0] == 'u' ||
++			buf[0] == '2' ||
++			memcmp(buf + 5, "S..U", 4))
++			/* other change */
++			*dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
++	}
++
++	if ((*dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
++		((*dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
++		ignore_untracked)) {
++		/*
++		* We're not interested in any further information from
++		* the child any more, neither output nor its exit code.
++		*/
++		return 1;
 +	}
 +	return 0;
 +}
 +
- static int task_finished(int result,
- 			 struct strbuf *err,
- 			 void *pp_cb,
- 			 void *pp_task_cb)
+ static int fetch_finish(int retvalue, struct strbuf *err,
+ 			void *cb, void *task_cb)
  {
--	if (err)
-+	if (err) {
- 		strbuf_addstr(err, "asking for a quick stop\n");
--	else
-+		if (pipe_output) {
-+			fprintf(stderr, "%s", err->buf);
-+			strbuf_reset(err);
-+		}
-+	} else {
- 		fprintf(stderr, "asking for a quick stop\n");
-+	}
- 	return 1;
- }
+@@ -1893,39 +1930,9 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
  
-@@ -423,13 +441,20 @@ int cmd__run_command(int argc, const char **argv)
- 		run_processes_parallel_ungroup = 1;
+ 	fp = xfdopen(cp.out, "r");
+ 	while (strbuf_getwholeline(&buf, fp, '\n') != EOF) {
+-		/* regular untracked files */
+-		if (buf.buf[0] == '?')
+-			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+-
+-		if (buf.buf[0] == 'u' ||
+-		    buf.buf[0] == '1' ||
+-		    buf.buf[0] == '2') {
+-			/* T = line type, XY = status, SSSS = submodule state */
+-			if (buf.len < strlen("T XY SSSS"))
+-				BUG("invalid status --porcelain=2 line %s",
+-				    buf.buf);
+-
+-			if (buf.buf[5] == 'S' && buf.buf[8] == 'U')
+-				/* nested untracked file */
+-				dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+-
+-			if (buf.buf[0] == 'u' ||
+-			    buf.buf[0] == '2' ||
+-			    memcmp(buf.buf + 5, "S..U", 4))
+-				/* other change */
+-				dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+-		}
+-
+-		if ((dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
+-		    ((dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
+-		     ignore_untracked)) {
+-			/*
+-			 * We're not interested in any further information from
+-			 * the child any more, neither output nor its exit code.
+-			 */
+-			ignore_cp_exit_code = 1;
++		ignore_cp_exit_code = parse_status_porcelain(buf.buf, &dirty_submodule, ignore_untracked);
++		if (ignore_cp_exit_code)
+ 			break;
+-		}
  	}
+ 	fclose(fp);
  
-+	if (!strcmp(argv[1], "--pipe-output")) {
-+		argv += 1;
-+		argc -= 1;
-+		run_processes_parallel_pipe_output = 1;
-+		pipe_output = 1;
-+	}
-+
- 	jobs = atoi(argv[2]);
- 	strvec_clear(&proc.args);
- 	strvec_pushv(&proc.args, (const char **)argv + 3);
- 
- 	if (!strcmp(argv[1], "run-command-parallel"))
- 		exit(run_processes_parallel(jobs, parallel_next,
--					    NULL, NULL, &proc));
-+					    NULL, task_finished_pipe_output, &proc));
- 
- 	if (!strcmp(argv[1], "run-command-abort"))
- 		exit(run_processes_parallel(jobs, parallel_next,
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 7b5423eebd..97ca942a74 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -140,6 +140,11 @@ test_expect_success 'run_command runs ungrouped in parallel with more jobs avail
- 	test_line_count = 4 err
- '
- 
-+test_expect_success 'run_command runs pipe_output in parallel with more jobs available than tasks' '
-+	test-tool run-command --pipe-output run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'run_command runs in parallel with as many jobs as tasks' '
- 	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
- 	test_cmp expect actual
-@@ -151,6 +156,11 @@ test_expect_success 'run_command runs ungrouped in parallel with as many jobs as
- 	test_line_count = 4 err
- '
- 
-+test_expect_success 'run_command runs pipe_output in parallel with as many jobs as tasks' '
-+	test-tool run-command --pipe-output run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'run_command runs in parallel with more tasks than jobs available' '
- 	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
- 	test_cmp expect actual
-@@ -162,6 +172,12 @@ test_expect_success 'run_command runs ungrouped in parallel with more tasks than
- 	test_line_count = 4 err
- '
- 
-+test_expect_success 'run_command runs pipe_output in parallel with more tasks than jobs available' '
-+	test-tool run-command --pipe-output run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+
- cat >expect <<-EOF
- preloaded output of a child
- asking for a quick stop
-@@ -182,6 +198,11 @@ test_expect_success 'run_command is asked to abort gracefully (ungroup)' '
- 	test_line_count = 6 err
- '
- 
-+test_expect_success 'run_command is asked to abort gracefully (pipe_output)' '
-+	test-tool run-command --pipe-output run-command-abort 3 false 2>actual &&
-+	test_cmp expect actual
-+'
-+
- cat >expect <<-EOF
- no further jobs available
- EOF
-@@ -197,6 +218,11 @@ test_expect_success 'run_command outputs (ungroup) ' '
- 	test_cmp expect err
- '
- 
-+test_expect_success 'run_command outputs (pipe_output) ' '
-+	test-tool run-command --pipe-output run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_trace () {
- 	expect="$1"
- 	shift
 -- 
 2.37.3.998.g577e59143f-goog
 
