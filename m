@@ -2,73 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36AB8C6FA82
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 19:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCEF8ECAAD8
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 19:46:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231761AbiIVTcQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 15:32:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50162 "EHLO
+        id S231459AbiIVTqs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 15:46:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231652AbiIVTcO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 15:32:14 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4CEF108085
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 12:32:13 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 534F51BBC75;
-        Thu, 22 Sep 2022 15:32:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IENTTcN43aLHcwANqJujUHCAOdHwErJpcwWHkS
-        2J5UE=; b=BgTOQjRhJo1OlEBIFl4bXUoF7HowTzlD34XAyLjW70uHflHTtOWvnd
-        FxBLZy5nnxRbT2pwd1EJlX6y+1TWjjpnLa+Qs2GbYYLXwz0GkT8LzVyWjxs45rjr
-        a+6vW27jhoIUQbA7aGI0871ZcmxLDkSMI4y7CzxRymD7tyruRYo1A=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4A2891BBC74;
-        Thu, 22 Sep 2022 15:32:13 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6C3741BBC72;
-        Thu, 22 Sep 2022 15:32:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Altmanninger <aclopte@gmail.com>
-Cc:     Erik Cervin Edin <erik@cervined.in>, git@vger.kernel.org
-Subject: Re: [PATCH v2] sequencer: avoid dropping fixup commit that targets
- self via commit-ish
-References: <xmqqleqfcoz3.fsf@gitster.g>
-        <20220920031140.1220220-1-aclopte@gmail.com>
-        <xmqqa66s36pt.fsf@gitster.g> <YyvdwbE6oCeNn035@gmail.com>
-Date:   Thu, 22 Sep 2022 12:32:03 -0700
-In-Reply-To: <YyvdwbE6oCeNn035@gmail.com> (Johannes Altmanninger's message of
-        "Wed, 21 Sep 2022 23:00:01 -0500")
-Message-ID: <xmqqpmfnxl1o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S232250AbiIVTqp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 15:46:45 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EBEE10B233
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 12:46:44 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id e205so8667527iof.1
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 12:46:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=XeiGPvyIN0rJFp2me95Y+Jpm7gZ9Lniil6HIOla8PsI=;
+        b=F1VqyV1cL1yPWaiUZiuDral1jrKHSpvjOHHnLjm2tgHCLa4cHdA2+LUMAzEP4m57jO
+         ONvQz9j5tATHtu4IY9U09a4YkRALVaNC5miHtoJpHOxZ51rN9jkDcuGNvgVFgmWkQezG
+         algJia9uOTC4NrviM7QSh1FWdSY8DktnQC9Uq9iUlIsyIGh8zvFWU/qg9phay5oS2A5Z
+         1+mB2HVPuatmWoPFLGWQXrae+qpEdvlUiM5olOl5PZ/Qeiv6OQtECco5yT+uL3q66ym0
+         O0qRziPLIU0uo8dmBVr253NbxNJweEIztUKPg2E6DJ3+WOVAF5lOfslyfwq5itCrJiOW
+         R5wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=XeiGPvyIN0rJFp2me95Y+Jpm7gZ9Lniil6HIOla8PsI=;
+        b=iEXoV1SQC8a/Nb7K2GgiAzQUUn9YrIPXASraa5CYgq7e4K9ZgP7C9Ddk1c0unpgLBI
+         Ebc8rZtleTyAVvzW0xFsSd2gT09YLPnfDZpFRtY4odi3s77Q3150UN2s3VRSSwjq9Sgg
+         UZSvD9ffZFMy1imJgPBNGRkDDA6Kgvb/NKbXiUIKie8GqUb3/5MTa6D0uJUTALElf5cQ
+         MZAdYo0mBmv0vR/A0Vb3z8SBdkVenUxD00Q/xUlQ1IfIjQekO0e1pu9mayp/9SAz6zqQ
+         obpDpRO/deIZOjElEVrjTfuZvlpM+5i93hVrGjc6fFdjUYJ7lACR51YAU9h8AKTuuzlQ
+         YuoA==
+X-Gm-Message-State: ACrzQf2c73xAam84FoJ5LFd+mKIw87TnQ7QPfDXOVsvHiRDJTlBT3NmV
+        oGC9WKitEvnPJxAQUAjf2xbgye3DpueF
+X-Google-Smtp-Source: AMsMyM4fIuRoPuhYBrW7uCOrck5fp0ftzu7yjrFYBcLkaMrwtIxjemy+XwUTFILy3m+CdFxTjwY7nQ==
+X-Received: by 2002:a05:6602:346:b0:6a2:8fcd:625c with SMTP id w6-20020a056602034600b006a28fcd625cmr2448162iou.3.1663876003666;
+        Thu, 22 Sep 2022 12:46:43 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:e4c7:912a:7017:ed79? ([2600:1700:e72:80a0:e4c7:912a:7017:ed79])
+        by smtp.gmail.com with ESMTPSA id c17-20020a92c8d1000000b002e939413e83sm2351780ilq.48.2022.09.22.12.46.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Sep 2022 12:46:43 -0700 (PDT)
+Message-ID: <748f4e1f-f2a3-872c-2ffd-643841c454dd@github.com>
+Date:   Thu, 22 Sep 2022 15:46:41 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3E230F18-3AAD-11ED-B94D-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH] maintenance: make unregister idempotent
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, vdye@github.com
+References: <pull.1358.git.1663635732095.gitgitgadget@gmail.com>
+ <xmqqpmfo4pc7.fsf@gitster.g>
+ <bc57439a-bddc-6c1a-a51d-11498d17c206@github.com>
+ <xmqqtu4zxl25.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqtu4zxl25.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Altmanninger <aclopte@gmail.com> writes:
+On 9/22/2022 3:31 PM, Junio C Hamano wrote:
+> Derrick Stolee <derrickstolee@github.com> writes:
+> 
+>>> I am not sure if this is a good idea.  What is the ultimate reason
+>>> why we want to allow running it blindly without knowing if it is
+>>> necessary?  Is it because there is no easy way to tell if unregister
+>>> is needed in the first place?
+>>
+>> We want to leave the internal details of what it means to be
+>> registered as hidden to the user. They could look for the repo in
+>> the global config, but that seems like a hassle when they just
+>> want to make sure they are not currently registered. 
+> 
+> OK, so there is no published officially sanctioned way to ask "is
+> this repository under maintenance's control and cron jobs run in
+> it?" or "give me the list of such repositories".  
+> 
+> Then I can see why you want to allow users to blindly run
+> "unregister", with or without "--force".
+> 
+> But doesn't it point at a more fundamental problem?  
+> 
+> Is there a reason why we want to hide the list of repositories
+> (enlistments?) from the users?
 
->> hint: Waiting for your editor to close the file...
->> Successfully rebased and updated refs/heads/main.
->> --- expect      2022-09-21 18:45:27.617530848 +0000
->> +++ actual      2022-09-21 18:45:27.613530478 +0000
->> @@ -1,2 +1,2 @@
->>  pick HASH hay needle hay # empty
->> -fixup HASH fixup! :/needle # empty
->> +pick HASH fixup! :/needle # empty
->> not ok 11 - auto squash that matches regex
->> 
->> That does not look very good X-<.
->
-> Sorry the v2 of this test case is very misleading, should probably drop this
-> test entirely.  It's been a long a day so I'll send v3 another day (if needed).
+I don't think we want to hide it, but we've never needed to present
+the list in a canonical way before. It's been sufficient to let
+users run 'git config --global --get-all maintenance.repo', assuming
+they know that config key is the important one.
 
-Thanks.
+Adding a 'git maintenance list-registered' or something would solve
+that problem, but I'm not sure it is a super high priority.
+
+Thanks,
+-Stolee
