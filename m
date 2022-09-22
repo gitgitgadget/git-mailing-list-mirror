@@ -2,80 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46F26C6FA82
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 05:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EE82C6FA90
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 06:18:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229519AbiIVF6v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 01:58:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52484 "EHLO
+        id S229919AbiIVGSI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 02:18:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229673AbiIVF6t (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 01:58:49 -0400
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3A82B4428
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 22:58:47 -0700 (PDT)
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-324ec5a9e97so87695037b3.7
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 22:58:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=nfeaAV5cfIeCokcbpcZIjCZtS8RrYwJMUlz2+UwFuqo=;
-        b=OMkAOl7DUKXwPZOsqPEduddSIlc3310cLaNUSgDz3tnk4LmrjHyxPN3xREBX9l/YYb
-         dBG9sHF17+LDZIoGKzM3kw+9g/NgeVo0OI4QCIoErMKJXLUFZ+nZ4Qz4Lfbc7QbJJrPD
-         uvmWO8ZeBqG31fnIz6Z/RPmUq9XuF/HKke96pEAPELMtR+Z9lr3kCzHURrDbBIZ8fkJX
-         K3StPRxkUjc6t7z+7YSxSO3TIN6tShWsLKfDTyesAEaKV2CaRx3XRjnECAO5SRNrhx5G
-         T2AQ+8sWxcHKgqqLNffjVV0mxDH+fRBAV9zfjXJ7epfOJWkFW5jvEyGDzN9Vom8N947O
-         eokA==
-X-Gm-Message-State: ACrzQf2khNOpux5PgfgaCNQnmweo00pFK3o19nCClF2U9Axa8FlvwL+v
-        cMQoE7bOjj0xPStlM5FzjRYNMw+NmqaNKP0wfJ7OnW03NtX0HfAQ
-X-Google-Smtp-Source: AMsMyM4BFI9jRQeC/MpnxgrlPHwAA4j+ikxT0WEG9nItjPd81dCYjiiyQGtqt64Pw0LHqh4KnUgYORAC0zpCrnUiztM=
-X-Received: by 2002:a0d:eb01:0:b0:348:6ee0:7a4 with SMTP id
- u1-20020a0deb01000000b003486ee007a4mr1636475ywe.493.1663826326880; Wed, 21
- Sep 2022 22:58:46 -0700 (PDT)
-MIME-Version: 1.0
-References: <YyvzIQL9H9aTYNch@coredump.intra.peff.net> <YyvzVdfQVdysvMp2@coredump.intra.peff.net>
-In-Reply-To: <YyvzVdfQVdysvMp2@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 22 Sep 2022 01:58:36 -0400
-Message-ID: <CAPig+cTEF=jBoW07_eLQ_BAWxULfWtehVa-JbJKpS+8rPenSiQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] clone: allow "--bare" with "-o"
-To:     Jeff King <peff@peff.net>
+        with ESMTP id S229899AbiIVGSF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 02:18:05 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 131E8B56CA
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 23:18:03 -0700 (PDT)
+Received: (qmail 4799 invoked by uid 109); 22 Sep 2022 06:18:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 Sep 2022 06:18:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30757 invoked by uid 111); 22 Sep 2022 06:18:04 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 Sep 2022 02:18:04 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 22 Sep 2022 02:18:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     "John A. Leuenhagen" <john@zlima12.com>,
         Junio C Hamano <gitster@pobox.com>,
         Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 1/2] clone: allow "--bare" with "-o"
+Message-ID: <Yyv+GjjauvvcX3M1@coredump.intra.peff.net>
+References: <YyvzIQL9H9aTYNch@coredump.intra.peff.net>
+ <YyvzVdfQVdysvMp2@coredump.intra.peff.net>
+ <CAPig+cTEF=jBoW07_eLQ_BAWxULfWtehVa-JbJKpS+8rPenSiQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cTEF=jBoW07_eLQ_BAWxULfWtehVa-JbJKpS+8rPenSiQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 22, 2022 at 1:33 AM Jeff King <peff@peff.net> wrote:
-> [...]
-> Let's allow the options to be used together, and switch the "forbid"
-> test in t5606 to check that we use the requested name. That test came
-> much later in 349cff76de (clone: add tests for --template and some
-> disallowed option pairs, 2020-09-29), and does not offer any logic
-> beyond "let's test what the code currently does".
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-> @@ -42,11 +42,12 @@ test_expect_success 'rejects invalid -o/--origin' '
-> +test_expect_success 'clone --bare -o' '
-> +       git clone -o foo --bare parent clone-bare-o &&
-> +       (cd parent && pwd) >expect &&
-> +       git -C clone-bare-o config remote.foo.url >actual &&
-> +       test_cmp expect actual
->  '
+On Thu, Sep 22, 2022 at 01:58:36AM -0400, Eric Sunshine wrote:
 
-Is this safe on Microsoft Windows? My understanding from t/README:
+> > diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+> > @@ -42,11 +42,12 @@ test_expect_success 'rejects invalid -o/--origin' '
+> > +test_expect_success 'clone --bare -o' '
+> > +       git clone -o foo --bare parent clone-bare-o &&
+> > +       (cd parent && pwd) >expect &&
+> > +       git -C clone-bare-o config remote.foo.url >actual &&
+> > +       test_cmp expect actual
+> >  '
+> 
+> Is this safe on Microsoft Windows? My understanding from t/README:
+> 
+>     When a test checks for an absolute path that a git command
+>     generated, construct the expected value using $(pwd) rather than
+>     $PWD, $TEST_DIRECTORY, or $TRASH_DIRECTORY. It makes a difference
+>     on Windows, where the shell (MSYS bash) mangles absolute path
+>     names. For details, see the commit message of 4114156ae9.
+> 
+> was that you should use $(pwd) rather than raw `pwd` when comparing
+> against a path generated by Git. Is there a gap in my understanding
+> here?
 
-    When a test checks for an absolute path that a git command
-    generated, construct the expected value using $(pwd) rather than
-    $PWD, $TEST_DIRECTORY, or $TRASH_DIRECTORY. It makes a difference
-    on Windows, where the shell (MSYS bash) mangles absolute path
-    names. For details, see the commit message of 4114156ae9.
+I think you might be mis-reading the advice here. It is saying to use
+the "pwd" program, rather than relying on the shell's $PWD variable. So
+$(pwd) and `pwd` are the same thing (and are what I'm using). The $() I
+think is just indicating that you'd do:
 
-was that you should use $(pwd) rather than raw `pwd` when comparing
-against a path generated by Git. Is there a gap in my understanding
-here?
+  foo=$(pwd)
+
+And yes, I think this is a case where using the right one is important
+(which is why I used the pwd program, and not $pwd in the test).
+
+Or am I missing something else?
+
+-Peff
