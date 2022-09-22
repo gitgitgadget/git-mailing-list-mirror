@@ -2,136 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A048C6FA82
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 15:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA276C54EE9
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 16:59:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231528AbiIVPq4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 11:46:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59844 "EHLO
+        id S229635AbiIVQ7o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 12:59:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231578AbiIVPqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 11:46:44 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 912AFB656B
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 08:46:42 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id x1so9159545plv.5
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 08:46:42 -0700 (PDT)
+        with ESMTP id S229705AbiIVQ7m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 12:59:42 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0714811C11
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 09:59:39 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id bq9so16556369wrb.4
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 09:59:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=1epnEgarVH4Q5g1YwqR9rKt/8ro/6t0gZQhugv2d7ik=;
-        b=ehQRrZwl3ywuNI4Kb0PlS8b9DHh4UUYuBeSpaXBJ+sIXFlDgxwTSW4PKufHWnInP1a
-         XinPlKjp3O2Tnt7/tpQp6O+VgavH4FUqSjn+ekIK/1h45y04JgB+GauW2/ptOzwTRtgt
-         tS1igh0JQvkJbHp+4E6ixar7qpKJXii2Eg/kTqqtHLcB43iSA8VTiV0J2t+9LAeGw0uO
-         HW8zFlbzJnv/vZGeG4crRYx9GQDRXubudZCggGX2C++3eOU2RRXW9eqmL1ceu7ESLqjb
-         9YTPRVHaAyeb4xr4ydwveokq7i51g+cAYtEGiQNLzMbnDtPWQ/eaSQ8mB8r/YPPoGCK6
-         FPQw==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date;
+        bh=6BrPt06sAu07VGC+0aVF6r+WRpdsi+kZQUBR422BF5w=;
+        b=Fm5zA8gHXv3gwSdEedQgbxV44Paqq8h6lFbcpJ8tiV49zlH0UhfqtT901f4uunkqh0
+         mS5PXgnbPsKW1ao5PbI9G/j8d4btizeWZNWuEJhthxT3P4ixR/xAiVJwZRHl6Lx34LnP
+         +VMLSnYH1H9IS9uiSp3GzSTKk1CHEcpfH4GchGbjW7r/Yv5Nz0t++Uuyq9BHdni06k09
+         X/2NQYDypNx+r6qx88A5WvcuFLjlscxvnkAThDyDf1qClq+vyMwSEP/lm0Pm9wR5cV6s
+         h2iZXU0ckNqbfjoRm2miQFFQSYGCZNRtboH6btuzpi7sNU94iJdMXyfNzJOiYf3sFW+2
+         cpag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=1epnEgarVH4Q5g1YwqR9rKt/8ro/6t0gZQhugv2d7ik=;
-        b=wqmXVtL1+v6z4PeDno4hBo+z5CpXBYpxOEomoj9J7pC7SQ6ZEBI3P1LA3exZJkvbLZ
-         0hDJ0oTVtREK4hJ+amALjbGpC0kJnhRwpJdEGC1pZM3rD6AAjyQV6xuuuTSUhsQr4bDd
-         MTJye54fX3cjoitYVAfQI81T/g2voZ+MHjnynKJnDbgKv25bWyK52pGTV0AbdhUMYhBw
-         OlMOpEitrllVF6ru23yiHytcEW0GgqqiAyPGPhM9eZcj2HZ9dBSFMMoGUs64KQSwHeF1
-         +1UuAyEbOsenJ2Ajm6LtoPWxug82ujPN1widPCHa2gwJaQDk3mE66b2RniVcC/UQNOnl
-         uUxg==
-X-Gm-Message-State: ACrzQf2ADndQVM9ob1rNz46Dod+pjOZSVtnCRYqPRAIX+wXCySeEyX3g
-        KljlYAO5dkxq9zF782fxB60I/BpzC+c6VUFBUVUfEH4g1IXz3g==
-X-Google-Smtp-Source: AMsMyM5bT4QdbsnI1+nUsL4QTRNBRJ8D4Vio6k+LblH6xBc+I9o4Eakbtus6XK4qvGuvZYC21jYZqa9rIkQ3gleIvgw=
-X-Received: by 2002:a17:903:32cc:b0:178:3d35:dfc4 with SMTP id
- i12-20020a17090332cc00b001783d35dfc4mr3966962plr.116.1663861602044; Thu, 22
- Sep 2022 08:46:42 -0700 (PDT)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=6BrPt06sAu07VGC+0aVF6r+WRpdsi+kZQUBR422BF5w=;
+        b=2FFG5g9/uccHJQ0qke1Zi637ye5cUfMm/WtFYEEFqikXSxN83rB44zIhbo2/Zsodqe
+         Hb8HUHJvrgSsqJ9z7o+DpV3JOJFY2PIPjmskVh5n8Qr4jEVqKWaWheug8qW7drcrEY/E
+         mYiv/KDWj3WtU032FjyM9VRUSmGj2uae45GrZVlR5oOEXh9kSjYGVJkR2unkS2L9h1aM
+         K0xCi9wyp+Tl+mhuxs6buO9Dm3LdaerPXqMqymdLokkDVtpSv0lp1T72pHLOjdum5VS5
+         jiUZgB9Sb5uPmBoaE7hLcxd8xY5SA1Y6XzwFr6SGBUmwkV5AXrx8c8We1NoqM85OeARx
+         n4Mw==
+X-Gm-Message-State: ACrzQf2WDrNm9B1IfcTBLjXXZlzM2aZyF57AzD8AAGl4hA8cI2N9rTy4
+        OZTITLCo6DWGsC3ITRk1QnUVPK/Z4y8=
+X-Google-Smtp-Source: AMsMyM5jZmpTLCUSf4xAPCM5eVYT0iW1sMe7p7Gi2unM5eKpBuZzs2kzX8TDpJMI5HDrGw/ORoA5qQ==
+X-Received: by 2002:a05:6000:81e:b0:228:a17f:92f0 with SMTP id bt30-20020a056000081e00b00228a17f92f0mr2765552wrb.31.1663865977056;
+        Thu, 22 Sep 2022 09:59:37 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n11-20020adfe34b000000b002252ec781f7sm5515486wrj.8.2022.09.22.09.59.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Sep 2022 09:59:35 -0700 (PDT)
+Message-Id: <pull.1363.git.1663865974.gitgitgadget@gmail.com>
+From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 22 Sep 2022 16:59:31 +0000
+Subject: [PATCH 0/3] Correct credential helper discrepancies handling input
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20220922061824.16988-1-jacob@initialcommit.io>
-In-Reply-To: <20220922061824.16988-1-jacob@initialcommit.io>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 22 Sep 2022 17:46:30 +0200
-Message-ID: <CAN0heSr8HFR1y+aZUjFaeY3y-9yn+nfyDrkxQh82punLnSonGg@mail.gmail.com>
-Subject: Re: [RFC PATCH] shortlog: add group-by options for year and month
-To:     Jacob Stopak <jacob@initialcommit.io>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     derrickstolee@github.com, mjcheetham@outlook.com,
+        Matthew John Cheetham <mjcheetham@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jacob,
+Whilst working in the credential helper and auth space I happened to notice
+that the behaviour of some of the credential helpers in contrib/credential/
+is not consistent.
 
-On Thu, 22 Sept 2022 at 09:48, Jacob Stopak <jacob@initialcommit.io> wrote:
->
-> Oh and third, for documentation, I updated "git-shortlog.txt", but
-> wasn't able to test "git help shortlog" locally and see the updates. Is
-> there a way to make that work locally or did I miss a step somewhere?
+Specifically both the git-credential-wincred and git-credential-netrc
+helpers die when they receive unknown credential property keys, which is
+contrary to the behaviour of all the other in-tree helpers including:
+git-credential-cache, -store, -libsecret, -gnome-keyring, -osxkeychain.
 
-I can think of two steps. You need to build the documentation (`make
-doc`). Look for "make doc" in INSTALL for some variants and
-dependencies. Then you need to convince `git help ...` to pick up your
-built docs. I would actually skip using/testing `git help` and just go
-straight for the rendered page using, e.g, something like
+Also update the git-credential-osxkeychain helper to include a comment
+making it's behaviour explicit in ignoring unknown keys, as per other
+helpers.
 
-  cd Documentation
-  make ./git-shortlog.{1,html}
-  man ./git-shortlog.1
-  a-browser ./git-shortlog.html
+Matthew John Cheetham (3):
+  wincred: ignore unknown lines (do not die)
+  netrc: ignore unknown lines (do not die)
+  osxkeychain: clarify that we ignore unknown lines
 
-Your docs render fine for me. Thanks for `backticking` for monospace.
+ contrib/credential/netrc/git-credential-netrc.perl         | 5 ++++-
+ .../credential/osxkeychain/git-credential-osxkeychain.c    | 5 +++++
+ contrib/credential/wincred/git-credential-wincred.c        | 7 +++++--
+ 3 files changed, 14 insertions(+), 3 deletions(-)
 
-> +-m::
-> +--month::
-> +       This is an alias for `--group=month`.
-> +
-> +-y::
-> +--year::
-> +       This is an alias for `--group=year`.
-> +
 
-Commit 2338c450b ("shortlog: add grouping option", 2020-09-27)
-introduced `--group` and redefined `-c`  and `--committer` to alias to
-that new thing. You could simply add a `--group` variant without
-actually adding `--year` and `--month`. One of the nice things about
-`--group` is that we can potentially have many groupings without having
-to carry correspondingly many `--option`s.
-
-In particular, it might be wise to wait with implementing `-y` and `-m`
-until we know that your new feature turns out to be so hugely successful
-that people start craving `-m` as a short form for `--group=month`. ;-)
-
-See commit 47beb37bc6 ("shortlog: match commit trailers with --group",
-2020-09-27) for some prior art of not adding a new `--option` for a new
-way of grouping.
-
->         struct strbuf ident = STRBUF_INIT;
->         struct strbuf oneline = STRBUF_INIT;
-> +       struct strbuf buffer;
-> +       strbuf_init(&buffer, 100);
-> +
->         struct strset dups = STRSET_INIT;
->         struct pretty_print_context ctx = {0};
-
-This trips up `-Werror=declaration-after-statement`. If you build with
-`DEVELOPER=Yes`, you should see the same thing.
-
-I played a little with this functionality and it's quite cute. I can
-easily imagine going even more granular with this (`--group=week`?), but
-that can wait for some other time. :-)
-
-BTW, I got this when `git am`-ing your patch:
-
-  Applying: shortlog: add group-by options for year and month
-  .git/rebase-apply/patch:82: space before tab in indent.
-                  strftime(sb->buf, strbuf_avail(sb), "%Y/%m", &commit_date);
-  .git/rebase-apply/patch:85: space before tab in indent.
-                  strftime(sb->buf, strbuf_avail(sb), "%Y", &commit_date);
-  .git/rebase-apply/patch:110: trailing whitespace.
-                  format_commit_message(commit,
-  .git/rebase-apply/patch:111: trailing whitespace, indent with spaces.
-                                        buffer.buf,
-  .git/rebase-apply/patch:112: indent with spaces.
-                                        &ident, &ctx);
-  warning: squelched 6 whitespace errors
-  warning: 11 lines add whitespace errors.
-
-Martin
+base-commit: dd3f6c4cae7e3b15ce984dce8593ff7569650e24
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1363%2Fmjcheetham%2Fcredhelper-fixes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1363/mjcheetham/credhelper-fixes-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1363
+-- 
+gitgitgadget
