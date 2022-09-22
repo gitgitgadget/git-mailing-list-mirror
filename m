@@ -2,80 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F39BAECAAD8
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 19:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0A1CC54EE9
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 19:31:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229865AbiIVT1q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 15:27:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45090 "EHLO
+        id S231316AbiIVTbw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 15:31:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229566AbiIVT1o (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 15:27:44 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A354F106F74
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 12:27:43 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1BEC91BBC31;
-        Thu, 22 Sep 2022 15:27:43 -0400 (EDT)
+        with ESMTP id S229864AbiIVTbu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 15:31:50 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA46D1075BB
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 12:31:49 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 04E2014A5C3;
+        Thu, 22 Sep 2022 15:31:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=byjL7+vNIwq2evXzXI9Sm9AO2c6cEgq0hz9+9s
-        H3BJ0=; b=J6s4Kj2cR8I2XoYL+zRSgakrEoSFjGaZ8RlAnMAPmXQoOwlpvGUsuW
-        VUg7xWOnaXudwhFO7cuF7w7yFvhuAKRkpaUy9V/YF+FAGrIOvi72777PuAmRCK2f
-        UalXKvtnxG49BTgSI70ei1OVU8tR3lJeImKI/uRvz4XFHR8F46rRc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 138331BBC30;
-        Thu, 22 Sep 2022 15:27:43 -0400 (EDT)
+        :content-type; s=sasl; bh=U1P+lrI60j5skD4Xcr2hCcEk7cX0O4mjoDYhyg
+        vsBgk=; b=oxVNE9N2yS/EKCPzvin/zN3RAYc2mlk2M84+fFuFOD7icqCa73zyha
+        pUY58e68v7R4eAFuxdn171HMCDP47M1TZGaE/tZMM8piU4BI2c/q6KLctWd0sWX7
+        or5oDy1vVMDI0kz5G4RbddIgAZd0rq0Z8NjEwssr8R5dTn8dAYaww=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EFF2A14A5C2;
+        Thu, 22 Sep 2022 15:31:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0A2491BBC2E;
-        Thu, 22 Sep 2022 15:27:35 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 53CF814A5C1;
+        Thu, 22 Sep 2022 15:31:47 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     John Cai <johncai86@gmail.com>, git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 1/3] fsck: free tree buffers after walking unreachable
- objects
-References: <Yyw0PSVe3YTQGgRS@coredump.intra.peff.net>
-        <Yyw031PqCyYlEqCX@coredump.intra.peff.net>
-        <xmqqa66rz20q.fsf@gitster.g>
-        <YyywSdrWO61Kza0e@coredump.intra.peff.net>
-Date:   Thu, 22 Sep 2022 12:27:33 -0700
-In-Reply-To: <YyywSdrWO61Kza0e@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 22 Sep 2022 14:58:17 -0400")
-Message-ID: <xmqq5yhfyztm.fsf@gitster.g>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, vdye@github.com
+Subject: Re: [PATCH] maintenance: make unregister idempotent
+References: <pull.1358.git.1663635732095.gitgitgadget@gmail.com>
+        <xmqqpmfo4pc7.fsf@gitster.g>
+        <bc57439a-bddc-6c1a-a51d-11498d17c206@github.com>
+Date:   Thu, 22 Sep 2022 12:31:46 -0700
+In-Reply-To: <bc57439a-bddc-6c1a-a51d-11498d17c206@github.com> (Derrick
+        Stolee's message of "Thu, 22 Sep 2022 08:37:47 -0400")
+Message-ID: <xmqqtu4zxl25.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9C5E7CA8-3AAC-11ED-9D97-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 32C13988-3AAD-11ED-978C-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Derrick Stolee <derrickstolee@github.com> writes:
 
-> I do think it is true that this is the final time we'd look at these
-> objects. But I don't think it would be a disaster if somebody did. The
-> free_tree_buffer() function clears the "parsed" flag on the struct. 
+>> I am not sure if this is a good idea.  What is the ultimate reason
+>> why we want to allow running it blindly without knowing if it is
+>> necessary?  Is it because there is no easy way to tell if unregister
+>> is needed in the first place?
+>
+> We want to leave the internal details of what it means to be
+> registered as hidden to the user. They could look for the repo in
+> the global config, but that seems like a hassle when they just
+> want to make sure they are not currently registered. 
 
-Ah, that is perfectly fine, then.  Thanks.
+OK, so there is no published officially sanctioned way to ask "is
+this repository under maintenance's control and cron jobs run in
+it?" or "give me the list of such repositories".  
 
-> As a side note, IMHO having tree->buffer at all is a mistake, because it
-> leads to exactly this kind of confusion about when the buffer should be
-> discarded. We'd be better off having all callers parse directly into a
-> local buffer, and then clean up when they're done.
+Then I can see why you want to allow users to blindly run
+"unregister", with or without "--force".
 
-Yeah, tree-walk.c users woud use tree_desc structure anyway, and
-instead of having a moving pointer that points into a separate thing
-(i.e. tree->buffer), it could have its own copy of the "whole buffer"
-that can be used to free when it is done iterating over entries.
+But doesn't it point at a more fundamental problem?  
 
-> .... But that's obviously a much bigger change.
+Is there a reason why we want to hide the list of repositories
+(enlistments?) from the users?
 
-Yup.
 
-Thanks.
