@@ -2,88 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AFF9ECAAD8
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 22:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B400C54EE9
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 22:10:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231462AbiIVWJb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 18:09:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52092 "EHLO
+        id S231499AbiIVWKE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 18:10:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230500AbiIVWJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 18:09:27 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1D491129E3
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 15:09:26 -0700 (PDT)
-Received: (qmail 9272 invoked by uid 109); 22 Sep 2022 22:09:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 Sep 2022 22:09:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8409 invoked by uid 111); 22 Sep 2022 22:09:26 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 Sep 2022 18:09:26 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 22 Sep 2022 18:09:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, derrickstolee@github.com,
-        mjcheetham@outlook.com,
-        Matthew John Cheetham <mjcheetham@github.com>
-Subject: Re: [PATCH 1/3] wincred: ignore unknown lines (do not die)
-Message-ID: <YyzdFBaiWgCJzMWX@coredump.intra.peff.net>
-References: <pull.1363.git.1663865974.gitgitgadget@gmail.com>
- <6426f9c3954866b3fd9259d1a58d2c41dc42e17f.1663865974.git.gitgitgadget@gmail.com>
- <xmqqbkr7xg28.fsf@gitster.g>
+        with ESMTP id S231359AbiIVWJz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 18:09:55 -0400
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 867195EDE5
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 15:09:54 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id d24so10098471pls.4
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 15:09:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=yyEQMarzqbs7EjvmM2T7UHCRda/cwMmIi+tI7QX70R4=;
+        b=IYujysb9gJxOtJ0PMKoVHhB9+bJnvOLxVNNEl0o+I4b3UqoUWsksP4ciwzKAKO+hV4
+         sJkrm+5ptJqIKQlsWzOaqwyWmkJCblGtYVXNrMLUuOjoJK33UhpsAl5lzwczKso9N44m
+         mQuTf3gH45RvliuNHtYV+Rq0397hPDHpaTJkYG6gWaN1CJ/q2J5zLt3bEhAGJ3ox1roL
+         oO9RbUR8csOU1buGS76xjcsI1SBN7RMgwkK0YzcNOly4zNzOu+nie8xrouucrmShgXrS
+         T0FEc0DKn5+MbSNpsdSnFF2vu0RSW34qkPbpiSeZESA/nLYpswSSsB9WVriHrN5zzX1Z
+         gg5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=yyEQMarzqbs7EjvmM2T7UHCRda/cwMmIi+tI7QX70R4=;
+        b=dym7XG+PeNO4dAn/WApRjfhZxd+BfOS08dEqLWsCcEy1tVVJSweJYCTmOTebwd7H2O
+         OBKGVfSafkqbitLMPzDLtQsBlKzQwOBsBvXZ6gZt+ZKs2wDcm23M/KhhxWWfKgjMydtJ
+         xzFAQYrNxtbqVgYF+cuWu2KrhKarNdAgAzRtFTpcWXARQQGUCEG3GWBqNvKvVe7qpHWT
+         a8NrWNdRiVUxT/CA0XPZB3J5uN69FJRAoPDwJ7KtVYgqkdUiVuGPEJWLffgaykzRZxc2
+         MdKSmJHR/JPKOafKiNGGHFhu06vRr4T1QT87yvXu8MtGPI4+0pQkFmkb5CDkXtAO7cow
+         n40Q==
+X-Gm-Message-State: ACrzQf01TYUNqpSLOUS0qcqZiyNPplt/taAGxD4EQT7MZRfPh7qgFKug
+        GqIMY/Zgdy7Kly2xjjUsRxe9RE/AH/Dg
+X-Google-Smtp-Source: AMsMyM4ocUX42cKxvEPIF5SsSozXmBwZf5pt+GgO7IRFLJmW3Uk+1vs07miXPBqp1KIn6bU1oQhUpQ==
+X-Received: by 2002:a17:902:f0d4:b0:176:988a:77fd with SMTP id v20-20020a170902f0d400b00176988a77fdmr5419069pla.25.1663884593991;
+        Thu, 22 Sep 2022 15:09:53 -0700 (PDT)
+Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id b14-20020a63340e000000b0043ba3d6ea3fsm4342567pga.54.2022.09.22.15.09.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Sep 2022 15:09:53 -0700 (PDT)
+Message-ID: <50c57a60-8346-6952-93d9-432a70ef74c5@github.com>
+Date:   Thu, 22 Sep 2022 15:09:52 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqbkr7xg28.fsf@gitster.g>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.13.0
+Subject: Re: t9210-scalar.sh fails with SANITIZE=undefined
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org
+References: <YywzNTzd72tox8Z+@coredump.intra.peff.net>
+ <ff921c34-139a-9e2b-ca1f-d6f9f7213d1b@github.com>
+ <Yyyzk3FVjmms7dkO@coredump.intra.peff.net>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <Yyyzk3FVjmms7dkO@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 22, 2022 at 02:19:43PM -0700, Junio C Hamano wrote:
-
-> > It is the expectation that credential helpers be liberal in what they
-> > accept and conservative in what they return, to allow for future growth
-> > and evolution of the protocol/interaction.
+Jeff King wrote:
+> On Thu, Sep 22, 2022 at 08:35:22AM -0400, Derrick Stolee wrote:
 > 
-> That is nice in principle, and the updated code below may work well
-> with existing "other side of the connection" (codepaths in "git"
-> that asks credential API to talk to the helpers), but I am not sure
-> if this is always a safe thing to do.
+>>> I didn't dig further. It's obviously new in v2.38.0-rc1, but I'm not
+>>> sure it's a show-stopper. It _might_ have been there all along, and is
+>>> just now surfacing. Or it might be in an existing experimental feature
+>>> that just wasn't exercised enough in the tests. Or if it really is new
+>>> in scalar, then it will only hurt people using scalar, which didn't
+>>> exist before. So I don't think it's a regression in the strictest sense,
+>>> but it might be nice to get a more accurate understanding of the problem
+>>> before the release.
+>>
+>> Interesting find!
+>>
+>> Here are the index-related settings that Scalar sets as of -rc1:
+>>
+>> * core.preloadIndex=true
+>> * index.threads=true
+>> * index.version=4
+>>
+>> My gut feeling is that index.version=4 might be the culprit. I thought
+>> we tested GIT_TEST_INDEX_VERSION=4 in some CI modes, but apparently we
+>> do not. Do you get the same error in other tests with that environment
+>> variable?
 > 
-> When we gain a new "command" in the protocol, if we just read it
-> without understanding it, would we open ourselves to a risk of
-> breaking the protocol communication, worst of which may be to
-> deadlock?  A new command, when received by a more recent helper that
-> understands how to react to it, may _require_ it to write more than
-> "username" and "password" back to "git" from get_credential(), for
-> example, but the helper with this patch alone, while not complaining
-> about seeing such a new and unknown command, would not know how to
-> compute and write that third thing other than "username" and
-> "password"---would the other side who issued that new command get
-> stuck waiting for us to return the third thing?  Worse yet, the new
-> command may expect us to read further in get_credential()
-> (e.g. maybe they will give us a challenge, which may need to be used
-> when yielding the "username" and "password" things), but because we
-> do not even know we need to read, their attempt to write to us may
-> get them stuck, and that is when we are expecting to write to them,
-> easily leading to a deadlock, no?
+> Yeah, that seems by far the most likely of those three. And indeed,
+> running with GIT_TEST_INDEX_VERSION=4 causes even t0000 to fail with the
+> same problem. A minimal reproduction in git.git is just:
+> 
+>   make SANITIZE=undefined
+>   git clone . tmp
+>   cd tmp
+>   rm .git/index
+>   export GIT_INDEX_VERSION=4
+>   ../git reset --hard ;# ok, writes v4 index
+>   ../git reset --hard ;# fails reading unaligned v4 index
+> 
+> So it seems like a problem with the v4 format in general. Which...yikes.
 
-This open-endedness was an intentional part of the original
-credential-helper design. Helpers are always "best effort", and it is OK
-if they ignore a request, or return a partial result. If the sending
-side really wants to extend the protocol in a way that the other side
-doesn't act at all (say, they "username" to be used _only_ if the helper
-also understands a new "foobar" key), then they should be adding the new
-fields as an atomic unit. I.e., "foobar", "foobar-userame", and so on.
-And then existing helpers which don't understand the new feature will
-just ignore it totally.
+Other than allowing us to use a (non-packed) 'struct ondisk_cache_entry' to
+parse the index entries, is there any reason why the on-disk index entries
+should (or need to be) 4-byte aligned? If not, we could update how we read
+the 'ondisk' index entry in 'create_from_disk()' to avoid the misalignment.
+E.g.:
 
-In practice, I think it's not that big a deal either way, because the
-setup of these helpers is under the control of the user. So if you
-really want to use "foobar" but a helper doesn't support it, then you'd
-just remove that helper from your config.
+------------------8<------------------8<------------------8<------------------
+diff --git a/read-cache.c b/read-cache.c
+index b09128b188..f132a3f256 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1875,7 +1875,7 @@ static int read_index_extension(struct index_state *istate,
+ 
+ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+ 					    unsigned int version,
+-					    struct ondisk_cache_entry *ondisk,
++					    const char *ondisk,
+ 					    unsigned long *ent_size,
+ 					    const struct cache_entry *previous_ce)
+ {
+@@ -1883,7 +1883,7 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+ 	size_t len;
+ 	const char *name;
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+-	const uint16_t *flagsp = (const uint16_t *)(ondisk->data + hashsz);
++	const char *flagsp = ondisk + offsetof(struct ondisk_cache_entry, data) + hashsz;
+ 	unsigned int flags;
+ 	size_t copy_len = 0;
+ 	/*
+------------------>8------------------>8------------------>8------------------
 
--Peff
+the do the same sort of conversion with the rest of the function. It's
+certainly uglier than just using the 'struct ondisk_index_entry *' pointer,
+but it should avoid the misaligned addressing error.
+
+> 
+> -Peff
+
