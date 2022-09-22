@@ -2,93 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DD4FC6FA86
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 10:17:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03319C54EE9
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 11:23:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229787AbiIVKRN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 06:17:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32920 "EHLO
+        id S231490AbiIVLXZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 07:23:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230133AbiIVKRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 06:17:07 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC2BBD8E3F
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 03:17:04 -0700 (PDT)
+        with ESMTP id S230482AbiIVLXX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 07:23:23 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B535E05FC
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 04:23:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1663841822;
-        bh=N7OQWkPhhSAjEKpAAlLsFNKcHuvZZ3WUfYsnA+Xxh6s=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=IQ+jzL4OOI3xHU4p1bE+pG7g2gjnqzvgoy008PfrXTufkCRNnHc81yQcCJ9g1iOFz
-         D8V/Y6uo3WetEN6CSQYgr2BRZm8eKBlHFxJvun0ejiweYqkR4VOoZH5JZgYV+IiPDF
-         LPNXDizQ98k7rtZxCsrDoXgkgm0SfFUJ7yUppPtw=
+        s=badeba3b8450; t=1663845799;
+        bh=He39lDZYRUU14tRac59tAwUvbkqmpC3msSeYSlavYuo=;
+        h=X-UI-Sender-Class:From:To:Subject:Date;
+        b=HwJ1GJMDZGZ0YP3OhQVqKHrHLJyqQnmV3JQjjFCVVnx+CUTNQdSiasIUXYPgJPi6a
+         dAQ4TIkxMc3FSZyQup0r2k4E1wDmGcMLEA4oBhwdbhO15ismWgHGBnfxInG9dZoWUd
+         jBwcEQ0s9jhtdq396UDqCjFr63EPvImrIbV3z1jQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from
- fv-az767-997.5kzmkpjakaaulcrpfkoga5aama.gx.internal.cloudapp.net
- ([52.165.40.246]) by mail.gmx.net (mrgmx005 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1MJmGZ-1or3vb1bNh-00KCSy; Thu, 22 Sep 2022 12:17:02 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.38.0-rc1
-Date:   Thu, 22 Sep 2022 10:16:59 +0000
-Message-Id: <20220922101659.4408-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.37.3
-Content-Type: text/plain; charset=UTF-8
+Received: from [176.72.143.73] ([176.72.143.73]) by web-mail.gmx.net
+ (3c-app-mailcom-bs01.server.lan [172.19.170.58]) (via HTTP); Thu, 22 Sep
+ 2022 13:23:19 +0200
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:SzORaS8KNr8kS2mECEi3vEz15NAbbYwhT84dVZxTOCTiM6tKaAc
- v2u92pqnf+3UOsfZ/QvZ2SCkCL+oBlU18JGpbDyveqtaTx2a00kpooUYcvgkAAh6ZXgvFoV
- QhilvrSH5tgDShl/zxB11x9ebB8EDOIDG2o0jHM9NAteEkukuvOScS9CzJ81eypKeaqlXfo
- B2aVu8MsNOareihdfmqVg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6WthYAqXtiw=:l2RTmwTlZQONnk+UUCZkM5
- KpvJpULqnwF5GFh/J104lZv07vUY2WDvU3mOgoYFdFVLsabIXbTbK6QRu8Rs1/qWzCr3NhefD
- sgYRO4K4mggkozokaUXzyviJn80+fdHsKm76PFjJMcbfrP8QwJyDShSMMfXPP5oDzcbrhiYI8
- hpwhMv4KIrLJRDcZBYk3FuJP7Mp/Z/+uWQZ6Wnu/b7sVooTxErnCvtH2xHsKzX77IfEB5bAmG
- JVOncwG3o3NDQpLs8LXUT/sYkm8QWJqg8Tm2ZC3hIHhb2sJsS6BZppX+sSXpDNHRlx4npCY+7
- syVbzCGgDv6IQ7joRQLjqBdaWpkKsGdX4ra0xufdNn2rcCnjpVWH8VGB2oSlRnF+E6AvDLG+a
- SYF+yVc4fqQnRgqSlvFbkrnw2FehPkgjjYFiD/fLybn4jqJS8zVSRTmuBzkjnBtKTQqLv5Rxm
- ovyq6OYBXEDxAetnBUT4OQDBuTRL0gch2IVjNQF8B+Wth7r7c9GlW0lRT79X70+snClHjR7M6
- SdC+99fdiNP2NY4LeaSRrTJCHKfFHymiQNVfU9CHAwpnqn94u5zIGi3tQY5yFPxLLpWWvrtQj
- He4uWSJmdUzzLibMopEofBH36HzzB/6XDLDtJde/Omkt1pU/SzYlQ7x6DrPMuRv50RMjp+B09
- hLxJxw/0YcIVHJArkLHlgK+K7qwPjSX+sGuP4J6abGSgOLnqQNf/Tobsq1VdwzVT98XYkjTDK
- Yx3SMXHBPCfiCrFxxVCkBVrmqBeaJbV1kWGEsOPtJi/1NyAKQuCqQAX2GLxyBirsrZD6jOpFc
- NYi2sPmLhBevuD1BluNZYfBec2KMqpzTGV0xJXZVsYx3Pw6JH1xFH27G+7KKX+Un88aTTJiOu
- XPpXHw3wwCw9AweK/YhCJYbzIQ+81/68WW2wiD1EzgnwQktZD6QfsMeMrzcbXlqhno7psmeYx
- Yg1O3ugrSqL8GNqu19aDXxd+U4beQ6pdk4efEkc02sqYCc8dHXc+CcH7IcwwKwc0g8sSl+sjz
- KKxTSJudcKZNPo8gQxlVobWgdwg/Jw4+lckY2zx9TnWfyxn1g1baWIuEAH/ttv0bbBbTVWRiQ
- eN823GG5o/Qq8IErb0s4mWCSFUbZcihP1/XMeQN3igt2D2MkB6H2fqEv6SpzUGV3z0d5DKt6O
- xZxAmouxIDiv+HzEFoQEewZNDp
+Message-ID: <trinity-15566df8-59d7-4597-b59d-2143ec978b12-1663845799823@3c-app-mailcom-bs01>
+From:   djvortex@gmx.com
+To:     git@vger.kernel.org
+Subject: Handling rebasing better
+Content-Type: text/plain; charset=UTF-8
+Date:   Thu, 22 Sep 2022 13:23:19 +0200
+Importance: normal
+Sensitivity: Normal
+X-Priority: 3
+X-Provags-ID: V03:K1:YOWAIGNs5DIX5r6unEKztxQhHDhuBalr/h+j5P9HKvNXLnaPPMYJvUEUD+6L9VBrPfo8Y
+ XddqtQ0Uv5hTZhxu13V7VtRMUjLZptVjBDt2GDrfvcHSDrrto0cBPD18rxuHti4gYVb+9BIyZztO
+ HhobteqQsxDDjIcKTZqdcJslm6qF+weWOtm4akH4MF910SQD3WNW4UCbNkxXlctxD2AW+Vw/PWDa
+ 06p3bj3yFShYwiHkJSAiUxK7X2aghdfMLquTtgja/bB+0BJ2KoKf8+KRraHTEtaeZpvfZDn/Vizs
+ Tw=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:T5NgCrgq4bw=:RGNZGv3YuYike3ZrCDLmjo
+ HnjNqaYQkH43Gy1eilCubiOtTTpzwsIH72ObEnhD83+qvQycVXp6WBUyAErme/c3gqXTqB/Uy
+ StONDah7wMTdCe9SZqcy7pxLsVigVxK+2PMlkypVFLYfR+xHzFkSMLp1fzQy7FEPhdMBfXpct
+ EdSuL0Ppfe9UpGney81kYc22CAaDBVvMEaPWy9pAp9mON3zFAIFt007hlOwtCXzlxrOqLDb7h
+ tY4vG0YkF6h+FF9C1oC94UsfbbFtVAAT3WpDFzBRJP5k+B4v93KXrCwPhhviZJNz9hE3ybQeI
+ l821mPW9nGsZZxV5EHRcCHHOuo+J38p+oYkSlU195LQNx+t+PUjbhHlVf0dt29L7D7QF+DYwK
+ MRgZRZI9SUzNUO4nsUuHdfnnRxJdOpMOLCIHn6Utv28CRey32HCkv/atgwwg8cbjEVzjP04mi
+ cVksXegxdnKhZo5mCkFOFvT7CVnenklPa9B6Q0b00txQyJa2bkVyE+NcMqeQphl845/qo4OcY
+ f28QaKrrvc3KxDB+jpV2OXL7CsvQY2tUyd8f6SqFO4w1hhM0fgrU6t7WdPVxGCKYw64gaXf1f
+ PVg07aiDXJ5TVIzx5d2o3K3IPTWKApQfiuTCUotzZpkhzmL7w/hT2bkrSWfxCK9iMcFXUAayr
+ qyi+TJVcX6vB6jmJBoGP8FSJDHtZDda8PPciidoPH+Vn+pReXljFfxBOlnuYJ+DegI0VPfqvU
+ eSKoLrXokitv7rN8MJIAKrVc8Mf76g0yQvMAH59QYCFy8oU9ezE46sFOnXDbrJXlst+3mREll
+ ZWxqHFh
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+Hello.
 
-I hereby announce that Git for Windows 2.38.0-rc1 is available from:
+I wouldn't be surprised if this very subject has already been endlessly di=
+scussed over the years, but nevertheless allow me to make a feature reques=
+t for git. (If this has already been discussed in the past, which I'm quit=
+e certain it has, I would like to hear the details so I can understand the=
+ design decisions that have been made in this regard.)
 
-    https://github.com/git-for-windows/git/releases/tag/v2.38.0-rc1.windows.1
+Rebasing is a rather curious feature of git in that it's both an extremely=
+ common and normal operation done in many projects, and at the same time i=
+t's a very drastic measure that has the potential of badly messing up or e=
+ven breaking git commit histories (as any operation that changes history i=
+s), or at a very minimum cause a lot of work. Rebasing is extremely common=
+ in many projects, so much so that there are many such projects where in f=
+act only fast-forward merges are allowed to the master branch (which is of=
+ten possible only by rebasing the branch to be merged onto the current mas=
+ter branch head).
 
-Changes since Git for Windows v2.37.3 (August 30th 2022)
+On the other hand, rebasing, as any other operation that changes commit hi=
+story, has the potential of breaking things, or causing a ton of extra wor=
+k, when more than one developer has the same branch checked out (and thus =
+their local history diverges from the remote history).
 
-New Features
+So, given how relatively common it is to use rebasing, and how carefully i=
+t should be used, it's a bit strange how poorly git seems to handle it. No=
+t in terms of doing the rebasing itself, but in terms of subsequent operat=
+ions done to the rebased branch.
 
-  * Comes with Git v2.38.0-rc1.
-  * Comes with cURL v7.85.0.
-  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
-    3.3.6.
-  * Comes with BusyBox v1.34.0.19688.985b51cf7.
+For starters, if your current branch has been pushed to the remote, and th=
+en you rebase it to something else, and then do a "git status", it will te=
+ll you that the local and remote histories have diverged... and then sugge=
+sts doing a "git pull"! Which is most definitely not what you want to do! =
+You just rebased the branch, you don't want to try to merge it with the ol=
+d branch history! (Developers who have not encountered this before may bec=
+ome really confused if they try the "git pull" and start getting tons of r=
+eally strange merge conflicts. The absolute worst thing they could then do=
+ is try to "resolve" those conflicts, which is most definitely not what yo=
+u want to do! I don't know if there are situations where you actually *don=
+'t* get any merge conflicts and the two diverged histories just merge... c=
+reating a complete mess of a hybridized duplicated history.)
 
-Git-2.38.0-rc1-64-bit.exe | 61316e3b35876ce2714e39fc98fbe41b9172d83b01c7eda934fdf41fb49b6d66
-Git-2.38.0-rc1-32-bit.exe | c733e9c8d2bfd262d80e714c14b30ca69a2ecb9087971d1ed56588f4a52d58f8
-PortableGit-2.38.0-rc1-64-bit.7z.exe | cd8f225dcdf5a2566c1a3f7315fda5d2ae5c6523fe13416eeb54ad523dbaa1f6
-PortableGit-2.38.0-rc1-32-bit.7z.exe | 31fcfac77eb024dad13ee07aa32e26bb974a6ddbb8cf7f6ce0b74f896e0a160f
-MinGit-2.38.0-rc1-64-bit.zip | cc70d60b980f0ff91abd314677a9395bf0d23d41499cea598013f5c2b2b3e6ff
-MinGit-2.38.0-rc1-32-bit.zip | 0630d138c400ad60936ef56097aee8c6e3ba014a1b892861a70b598c9282f536
-MinGit-2.38.0-rc1-busybox-64-bit.zip | 9c7fb24bf374019acb8ec2ea82db5309a37aadf44fc1de676e321d5dc34e7e3f
-MinGit-2.38.0-rc1-busybox-32-bit.zip | 5ab3297276491f7ff72890cee75a944f7ea4c96c3809dc9dc4e823649c429c28
-Git-2.38.0-rc1-64-bit.tar.bz2 | b1481cc5dbde1eec7051886cb9ddd778b3291f2e5b01c5d459686acc7183d0ae
-Git-2.38.0-rc1-32-bit.tar.bz2 | 7c5b404e65fa00bd34c2cb413a06524b2c5e14e8b3e8c2e8b91c55c28948d197
+I think that git should be aware of what has happened, in other words, tha=
+t the current local branch has been rebased to something else, and is now =
+a completely different history from the same branch in the remote, and exp=
+ress this clearly and suggest the correct thing (primarily to do a "git pu=
+sh -f").
 
-Ciao,
-Johannes
+More importantly, I think git should handle better the situation where you=
+ are trying to pull a rebased branch (which was rebased by someone else) o=
+nto your local original non-rebased one. Again, currently you'll just get =
+a huge bunch of weird merge conflicts (if you are lucky), and the worst th=
+ing you could do is try to "resolve" them, as that's precisely what you sh=
+ouldn't be doing.
+
+I understand that the branch history having changed on the remote can be a=
+ nightmare to deal with, when you have a local non-rebased copy of it, esp=
+ecially if you have made new local commits to it. AFAIK there are no easy =
+clear-cut solutions to this, but one of them is to just write down the has=
+hes of your commits, reset to the remote branch, and then cherry-pick your=
+ commits in chronological order (resolving any merge conflicts that may ha=
+ppen).
+
+The problem is that git isn't exactly helping here. I think that git shoul=
+d recognize the situation and give better suggestions on what to do. In ot=
+her words, if you are doing a "git pull" and the remote branch has been re=
+based, git should stop and tell clearly that this has happened, and sugges=
+t what to do. If it detects that the local branch is identical to the old =
+remote branch (that existed before the rebase), it could suggest a reset. =
+If it detects that there are new local commits on top of the old history, =
+it could make another suggestion on how to deal with it. It might also giv=
+e the (rather unsafe) option of doing the pull anyway, for example with so=
+mething like "git pull -f", with a huge warning.
+
+Perhaps git could even support the "reset-to-the-remote-history and then c=
+herry-pick your new local commits" directly, to help the developer in this=
+ task (so that you don't need to write down any hashes and do all that man=
+ually). But even if this isn't really feasible, at least detecting the sit=
+uation and the clearer messages would help enormously.
+
+(I understand that the current design of git might not directly allow this=
+ with just some code changes, and would perhaps require adding some kind o=
+f extra metadata. But would this be bad? It would certainly help developer=
+s handle rebases better.)
