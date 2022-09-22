@@ -2,94 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6337C54EE9
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 17:24:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A224FC54EE9
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 18:33:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231869AbiIVRYe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 13:24:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60916 "EHLO
+        id S232561AbiIVSdx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 14:33:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231946AbiIVRYU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 13:24:20 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9C39105D41
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 10:24:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1663867456;
-        bh=kxua2uLc++t8zSU1wIxvOpx4Q1C/c0TEJVlznE0vWHw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cECaG8ISnfY1L0uFTPXEQm6TKAcRz972EBab2TcqdQIe74X589kc0Xc27OSc2u5Rx
-         veKwYQIK7Trb5Mg/RSRlLaQUT4rwq6N4leLhnsFMe32lO1lVgziZnZQgY5o7tAJSZA
-         NW1r2T3GmDPPJVwbW8DjcmlLfaSpoCDVPAmJfoKI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.23.113.77] ([89.1.213.188]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Ml6qC-1oyPQS0ebM-00lR7q; Thu, 22
- Sep 2022 19:24:16 +0200
-Date:   Thu, 22 Sep 2022 19:24:14 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Elijah Newren <newren@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2] merge-tree: fix segmentation fault in read-only
- repositories
-In-Reply-To: <CABPp-BGUiDXxv8eQhKQXHcem3ke9e=Q99a_FDExZ5XZYUgir6A@mail.gmail.com>
-Message-ID: <322o3q9q-4559-63n5-9o56-q16463o3q7p6@tzk.qr>
-References: <pull.1362.git.1663774248660.gitgitgadget@gmail.com> <pull.1362.v2.git.1663798083240.gitgitgadget@gmail.com> <CABPp-BGUiDXxv8eQhKQXHcem3ke9e=Q99a_FDExZ5XZYUgir6A@mail.gmail.com>
+        with ESMTP id S231837AbiIVSd0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 14:33:26 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEF5D9A6A0
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 11:31:18 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id 138so8441788iou.9
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 11:31:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=hREkSeyEbH8RlsgTSsVLltG4+F17PxLk1PEUrurtdNw=;
+        b=LpRH9wa5wEYudJUcpOy1dJ6zkwRlb2EI/jzmtypnpgBPg9996QP/Qke9McffDm4uPi
+         yBqeT4yzFuw8OSIRtnbjR/XN38OYW8b54vE+wE7q/ULfJeZTRfb1zQiineMIqXYMNSaY
+         VdXxyaL1c2WxSCjanQtS1Mxln7xJL7tLYwovXdtzI5lwBpT67MmVFUjc1MdlzvbhydD9
+         36mTI8r7wyuCc/iNTjir2xU8Jl8QVRD0bjMemHmFJS2xOLBpe5XHdi7wIklAT/bp0DnP
+         UKls+j897jplNcZGyf5DP0zIDsL03xhYop0LJEMnic+UzYeJULgyt3boUsEcMxuo+JZu
+         HsWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=hREkSeyEbH8RlsgTSsVLltG4+F17PxLk1PEUrurtdNw=;
+        b=1ydn6vBt+PRJZ9h92vrAIbccil7WQYyt/6LoP/mmTPz0rqEGYWAzYmpgSn6Fidiu8p
+         lGQLuJXFJISOBQALlUOR5s8CoBEC+vydSSEbPyBKd7lW+CF64YENtRskF64dNs2etvWM
+         fekV55r8QGlWFtF6PwsncdxSC+FAhenwlXUoP8y5vCxfJ1z24Fyq6yuTw2dFeynLFuXk
+         ANB5P1alaz6VYQUzOCsicJ4RsJPoX4bwvh8MJnFh9bOpiIvP/jf2fElpjsls9c2meqg/
+         WJzWDPBJv8WhnCnR7Uhu59heeyOaeoVksrtzq3WExa7G/qk5fdJlIvSUMIO5Lo7k1v3a
+         FrJQ==
+X-Gm-Message-State: ACrzQf2rfLdbS6S2x+UeFgQTvYHVyHauzxsnm5b8oQFpv0QUp7dsH9TJ
+        9sajuImEf4uj0Vq+TWkVoh+6
+X-Google-Smtp-Source: AMsMyM5oQC1KoJXCeIupYJyTRZH3ijV6Lv8qgQDtcd2PXdFb0gyrsHCGV2gSd/6RAjrG7JKU4v+rZw==
+X-Received: by 2002:a05:6638:439a:b0:35b:1318:ac53 with SMTP id bo26-20020a056638439a00b0035b1318ac53mr2888860jab.74.1663871478324;
+        Thu, 22 Sep 2022 11:31:18 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:e4c7:912a:7017:ed79? ([2600:1700:e72:80a0:e4c7:912a:7017:ed79])
+        by smtp.gmail.com with ESMTPSA id h3-20020a92d843000000b002f4aa150479sm2280763ilq.9.2022.09.22.11.31.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Sep 2022 11:31:18 -0700 (PDT)
+Message-ID: <0e3bafd2-b331-96af-b379-f00a27909da6@github.com>
+Date:   Thu, 22 Sep 2022 14:31:16 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:zqKGsLXZBgb76uvR0io28n3AdaHVUPVDnTu7rB9QUrbhqXDq3a3
- Lufh0jLxNSUCSaxvm4UY3rdutHAR2O46zBoxE/FEzU2Czq4XNrIeu7jWhRMpxHeSQz52Z5x
- jDnJPZRmuWDmGSvSyrRrH1t/OZSR7c1kGt+tfuYox061Yy0xpQTb2XRbJXbue6HGZHHQH1h
- iqXZLd4s1ylEWf6/jd6zw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8EWJS+q+La4=:Xsr31OWdB9+85EtFJ7owov
- Y2Vff+s7GYSyJ33jmgPM8WWQ3Aq0uxCV4nh0Z1LixPUqc4Kfcu5Z13yylSfLZcCwrWXDxSmT8
- zW/22SyLjDSyqMWAHoo8gpVonM6IbI2bh69FMi18PLtpB33x4Dc/DxHDMJL0S32a6b6CYsf+s
- yqF3phic92SJ+bN6p5U0JTko5Fpb1KICp/A4sMR5MoReS2YL9cdMmDqIG3sxZfZsmsxhPTPvu
- BW1VxYizaPJWQeE7jM0SX1AfNBxDJsRiBgDkT3e1cpbgSEiem8HF2ryo6j0fMOYC5g6M8Jiht
- 4knHyI9ovByqVcG9RoNptFxNliwCVCqJuVNMYMBC2b6h0/p52Kf5m/10NeCq23JrdfBjiMeRQ
- UkLhmIVZMYiAP5Ki1NA5NP9ggTUH4i+kb8KGiwYA7gCz438xVY4PwWNoqtIJrmvKIItz3fba3
- p8+om8cVAxP5+7oowWA5La5hPRPfXMcqgFpOPyUXe+Cf5b+IQoyX7IwKBZmqpHNp1D1D4AwD9
- UrOE4YSDp7z++xGTWbH66mchC/saxDDSsj8E7e1gJuVJOwVKOihdHvtBTFosBuBErodpi+eL1
- L8pOp/HKi+yMLsdJx/9s5GhjHZyCBlGyiRMK7r4d7gLEi2JtQarYqaG5Uig4q/X9QrgcsYKMp
- 6CBg/NfJ2uk6ZiQsuE7oWsiLppYR9Ly0SJ+wLG+E8ZBSFRYc1xESx0Ulq7DzqpVXs2vymKqfu
- wBDc98/Lmg+KPKL9z0xz4t+CTzpuIP8B+XXIFnIxdJ4+A9MBZNPhT/pMczMfmCmkGsqWAJ2Wj
- HSXL0I87SG774zgp/3OFEcc7oT3Mo1UCssukKWUFKoGgLY9vCAZ3rdmVhB3aAfnyL7jEf1iuk
- IY7Me9o4pX21YyNCAHbYwWQjNYYAOm6ng0IM0KJzXt9OZjpQEaLmfc3PXKmeb6q/5AdgUm0eT
- ZJwMoFhqbrrT6jHPm66K33b4GW4xkFkvEmsnbeUVkSVzw7kdZHrCksTxRUEE3DE0uU04Mg0Yo
- MGId8JLQ3aWUug5p1lbyZL1y/rdGTRAj6DqQg5b/KA1nZPMz/Z2FzaeVW6jeWY5jbfl1aTN5e
- 8tMZhnqOVU+a54MmtNy5JCwmSa96nh9OQHEFK5WRAxWqZaH635twFl93xFLUEiuqzY2n+Php/
- gMjhetzv9LkDw63vT/1x/5pDM2
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH 0/3] Correct credential helper discrepancies handling
+ input
+Content-Language: en-US
+To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     mjcheetham@outlook.com,
+        Matthew John Cheetham <mjcheetham@github.com>
+References: <pull.1363.git.1663865974.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <pull.1363.git.1663865974.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+On 9/22/2022 12:59 PM, Matthew John Cheetham via GitGitGadget wrote:
+> Whilst working in the credential helper and auth space I happened to notice
+> that the behaviour of some of the credential helpers in contrib/credential/
+> is not consistent.
+> 
+> Specifically both the git-credential-wincred and git-credential-netrc
+> helpers die when they receive unknown credential property keys, which is
+> contrary to the behaviour of all the other in-tree helpers including:
+> git-credential-cache, -store, -libsecret, -gnome-keyring, -osxkeychain.
+> 
+> Also update the git-credential-osxkeychain helper to include a comment
+> making it's behaviour explicit in ignoring unknown keys, as per other
+> helpers.
 
-just quickly...
+Thanks for sending this patches separate from your earlier RFC. I
+think these patches speak for themselves and are good to go.
 
-On Wed, 21 Sep 2022, Elijah Newren wrote:
+Thanks,
+-Stolee
 
-> On Wed, Sep 21, 2022 at 3:08 PM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > @@ -473,7 +475,7 @@ static int real_merge(struct merge_tree_options *o=
-,
-> >                                               &result);
-> >         }
-> >         merge_finalize(&opt, &result);
-> > -       return !result.clean; /* result.clean < 0 handled above */
-> > +       return !result.tree || !result.clean; /* result.clean < 0 hand=
-led above */
->
-> Thinking out loud, should this logic be at the merge-ort.c level,
-
-You're right, of course. I have pushed up a tentative v3 that does it as
-you proposed, and it looks not half bad. I'll look a bit more deeply,
-still, but chances are that I'll submit this later today as v3 as-is.
-
-And then I will reply a bit more verbosely, either ;-)
-
-Ciao,
-Dscho
