@@ -2,91 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A224FC54EE9
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 18:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 671ACECAAD8
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 18:36:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232561AbiIVSdx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 14:33:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59104 "EHLO
+        id S230322AbiIVSgZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 14:36:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231837AbiIVSd0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 14:33:26 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEF5D9A6A0
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 11:31:18 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id 138so8441788iou.9
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 11:31:18 -0700 (PDT)
+        with ESMTP id S230293AbiIVSgX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 14:36:23 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A579A5C70
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 11:36:22 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id n10so16865351wrw.12
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 11:36:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=hREkSeyEbH8RlsgTSsVLltG4+F17PxLk1PEUrurtdNw=;
-        b=LpRH9wa5wEYudJUcpOy1dJ6zkwRlb2EI/jzmtypnpgBPg9996QP/Qke9McffDm4uPi
-         yBqeT4yzFuw8OSIRtnbjR/XN38OYW8b54vE+wE7q/ULfJeZTRfb1zQiineMIqXYMNSaY
-         VdXxyaL1c2WxSCjanQtS1Mxln7xJL7tLYwovXdtzI5lwBpT67MmVFUjc1MdlzvbhydD9
-         36mTI8r7wyuCc/iNTjir2xU8Jl8QVRD0bjMemHmFJS2xOLBpe5XHdi7wIklAT/bp0DnP
-         UKls+j897jplNcZGyf5DP0zIDsL03xhYop0LJEMnic+UzYeJULgyt3boUsEcMxuo+JZu
-         HsWw==
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=4Glx4LxX9Hn1QNiu9sQCqptrLaR9z9Q48EIVp5D1YGs=;
+        b=AQU/4kSagASBe+DRQXdHwcggkHowAr25sqaI19E/YmOei4u3ZMi7dQATYeyOfnvAbX
+         6eWZSRJhTh4r+pNJ8u2UzPWxIf+Lha3HnU71BZeKwwowZW7u3Af2mFCyBRuXjQGWFKeJ
+         gwSi1dEpKRJ+HuWksGr7x8uNoR8CN55hhmXvjkoqIiS9WimJXFACNKXbvCKfe7+57ZzS
+         kpmp4O08PR5/Q/Mlx73AsnyC7SbDRxHmP4IkhiXEOmPv3+CtSe3vmFrBxr+/Ai8wYTjS
+         x6DkFMmGOyKjZlazVct1kIIXdI6pyKXA9Qlujq7XMlMpMChmq3HQz6ZGZ1wX2TMzzkxy
+         03FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=hREkSeyEbH8RlsgTSsVLltG4+F17PxLk1PEUrurtdNw=;
-        b=1ydn6vBt+PRJZ9h92vrAIbccil7WQYyt/6LoP/mmTPz0rqEGYWAzYmpgSn6Fidiu8p
-         lGQLuJXFJISOBQALlUOR5s8CoBEC+vydSSEbPyBKd7lW+CF64YENtRskF64dNs2etvWM
-         fekV55r8QGlWFtF6PwsncdxSC+FAhenwlXUoP8y5vCxfJ1z24Fyq6yuTw2dFeynLFuXk
-         ANB5P1alaz6VYQUzOCsicJ4RsJPoX4bwvh8MJnFh9bOpiIvP/jf2fElpjsls9c2meqg/
-         WJzWDPBJv8WhnCnR7Uhu59heeyOaeoVksrtzq3WExa7G/qk5fdJlIvSUMIO5Lo7k1v3a
-         FrJQ==
-X-Gm-Message-State: ACrzQf2rfLdbS6S2x+UeFgQTvYHVyHauzxsnm5b8oQFpv0QUp7dsH9TJ
-        9sajuImEf4uj0Vq+TWkVoh+6
-X-Google-Smtp-Source: AMsMyM5oQC1KoJXCeIupYJyTRZH3ijV6Lv8qgQDtcd2PXdFb0gyrsHCGV2gSd/6RAjrG7JKU4v+rZw==
-X-Received: by 2002:a05:6638:439a:b0:35b:1318:ac53 with SMTP id bo26-20020a056638439a00b0035b1318ac53mr2888860jab.74.1663871478324;
-        Thu, 22 Sep 2022 11:31:18 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:e4c7:912a:7017:ed79? ([2600:1700:e72:80a0:e4c7:912a:7017:ed79])
-        by smtp.gmail.com with ESMTPSA id h3-20020a92d843000000b002f4aa150479sm2280763ilq.9.2022.09.22.11.31.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Sep 2022 11:31:18 -0700 (PDT)
-Message-ID: <0e3bafd2-b331-96af-b379-f00a27909da6@github.com>
-Date:   Thu, 22 Sep 2022 14:31:16 -0400
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=4Glx4LxX9Hn1QNiu9sQCqptrLaR9z9Q48EIVp5D1YGs=;
+        b=2BZzzW5shlXipkK8fV3e8MMaZT60ocryGtGE+qyiv43UlPvLHjEhkt5wYBq1MA4vW5
+         1hnPHYoW6NlUt9Evkd1xHbD/PhU0bI2dbDvry3CHyuXMQOcB+jcYCmEUkICJn1IgezX3
+         CImIxKwG7MekLcjkZ+P2Ro3XcXlL7uv+K0dls3/woG1MsRzOpcaMmm6/RFXa1f9WR2ri
+         LdVHnNfdlBV8P6zKaoczanIoUxx5aixKyZvltY4DnEThik0F/qvpWX9xK+AgoUwexqfH
+         39TrVo/K6iXjNg299FINu2DPpNEFUWQl7mU6dvT1an781Io3c5Cuwt6t1ISWS3cz3FCH
+         teSw==
+X-Gm-Message-State: ACrzQf0AfdcwcFx7Rjv4oyUUSxL5WUgy5sJedUkR6Tg9Yrrhfl+QR9sJ
+        R1zaIKhYHfmfzbuGSQhA9p09ppiDYI7qh7WC78z5qvrtJJk=
+X-Google-Smtp-Source: AMsMyM4r+NM/3Yetgw9LpMVsPWTohwxc6ir5dHeJE5C+oS9BGFPrHs2nOOC3dugnm0N3MIlxoXDLyJg9nyKQW3vC39s=
+X-Received: by 2002:a05:6000:1004:b0:22a:f5a7:747c with SMTP id
+ a4-20020a056000100400b0022af5a7747cmr3119470wrx.612.1663871780976; Thu, 22
+ Sep 2022 11:36:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH 0/3] Correct credential helper discrepancies handling
- input
-Content-Language: en-US
-To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     mjcheetham@outlook.com,
-        Matthew John Cheetham <mjcheetham@github.com>
-References: <pull.1363.git.1663865974.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1363.git.1663865974.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From:   Lana Deere <lana.deere@gmail.com>
+Date:   Thu, 22 Sep 2022 14:35:45 -0400
+Message-ID: <CA+4x=b-myNFKfN1n1jrU+wMYfXbA7VrnrKVi7vj9LU4E9wb_rw@mail.gmail.com>
+Subject: 2.38.0 rc1 and explicit openssl version
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/22/2022 12:59 PM, Matthew John Cheetham via GitGitGadget wrote:
-> Whilst working in the credential helper and auth space I happened to notice
-> that the behaviour of some of the credential helpers in contrib/credential/
-> is not consistent.
-> 
-> Specifically both the git-credential-wincred and git-credential-netrc
-> helpers die when they receive unknown credential property keys, which is
-> contrary to the behaviour of all the other in-tree helpers including:
-> git-credential-cache, -store, -libsecret, -gnome-keyring, -osxkeychain.
-> 
-> Also update the git-credential-osxkeychain helper to include a comment
-> making it's behaviour explicit in ignoring unknown keys, as per other
-> helpers.
+I built 2.38.0 rc1 from the tar file today.  One of the configure
+options I used was "--with-openssl=<path>/openssl/3.0.5".  As
+expected, configure reported
+    configure: Setting OPENSSLDIR to<path>/openssl/3.0.5
 
-Thanks for sending this patches separate from your earlier RFC. I
-think these patches speak for themselves and are good to go.
+When it got as far as linking git-imap-send, the link command pointed
+at the subdirectory "lib" within the openssl/3.0.5 installation.
+    gcc ... -o git-imap-send ...  -L<path>/openssl/3.0.5/lib ...
 
-Thanks,
--Stolee
+However, this version of openssl put the libraries into a "lib64"
+subdirerctory rather than into a "lib" subdirectory so the link
+failed.  An easy workaround is to put a symlink from lib64 to lib
+inside the openssl directory.  It would be nice, though, if the
+configure command could figure this out automatically.
 
+.. Lana (lana.deere@gmail.com)
