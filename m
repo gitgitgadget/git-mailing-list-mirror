@@ -2,90 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CF2EC6FA8B
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 06:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6CC8C6FA82
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 06:27:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230028AbiIVG1D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 02:27:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56476 "EHLO
+        id S229724AbiIVG1F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 02:27:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230143AbiIVG0k (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 02:26:40 -0400
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 080F8B6573
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 23:26:21 -0700 (PDT)
-Received: by mail-yb1-f176.google.com with SMTP id a67so11331839ybb.3
-        for <git@vger.kernel.org>; Wed, 21 Sep 2022 23:26:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=YfB3lMaYrQ2zmbZmkbN6rxA8wIlCfvhUyOv4sniup84=;
-        b=M10yjKjkp165XDjVzi2bGFG/eJAeY7ZM3pPTjiT6JNu+1wDLMau2HtDDtoLZr3AdS0
-         0EgWp9nw63bjGgIGKGWE0bsrqu6am5n94A6OisFy6AUTeQyI3nuNmkgH7d6Xza51i3xH
-         QrbMSS6u4SqO9C21Up/nFg89auhLfBMDq4BS8K+ERA4KfVqrEHjHGw+ik2sgnVvalPd7
-         /iIQt7Fdg/+qEr8uNi6ZZSkokmMsNxJ6sX6hDWEt+Arna0xRq9BPZwuLrd0hvdAPKX8w
-         VACNFt0uLygAPHW54u9gSgojYUe7jZtwwKP9EfTeMT3XQooUs1Ce6IXp9z4NG6PHedsx
-         uqeg==
-X-Gm-Message-State: ACrzQf0rp0WcEvvmCnQMqFak2h4XE7r95Ztj3/8eBf7l/+LGk19HOCSk
-        1bFyf46TWX4BinbvGmZTcpQe0UJP6rRWlot3dw2b3rKI4kwizYD6
-X-Google-Smtp-Source: AMsMyM7tC6zlHMQpQlkBpnptI+WoK4cIyvT1pmlTvOVHn5iGNr48zrIcyuhL502Fkdt2Rf+pAIv6K/w0xRW+mQ5Wewo=
-X-Received: by 2002:a05:6902:701:b0:6af:86d:b886 with SMTP id
- k1-20020a056902070100b006af086db886mr2071363ybt.419.1663827980602; Wed, 21
- Sep 2022 23:26:20 -0700 (PDT)
-MIME-Version: 1.0
-References: <YyvzIQL9H9aTYNch@coredump.intra.peff.net> <YyvzVdfQVdysvMp2@coredump.intra.peff.net>
- <CAPig+cTEF=jBoW07_eLQ_BAWxULfWtehVa-JbJKpS+8rPenSiQ@mail.gmail.com> <Yyv+GjjauvvcX3M1@coredump.intra.peff.net>
-In-Reply-To: <Yyv+GjjauvvcX3M1@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 22 Sep 2022 02:26:09 -0400
-Message-ID: <CAPig+cQxSwz2cZFLNwg_rJ==M5=pxMVvwgbDFV1r=v+rzbCuNg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] clone: allow "--bare" with "-o"
-To:     Jeff King <peff@peff.net>
+        with ESMTP id S230166AbiIVG0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 02:26:41 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34172AF0EF
+        for <git@vger.kernel.org>; Wed, 21 Sep 2022 23:26:23 -0700 (PDT)
+Received: (qmail 4846 invoked by uid 109); 22 Sep 2022 06:26:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 Sep 2022 06:26:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30869 invoked by uid 111); 22 Sep 2022 06:26:23 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 Sep 2022 02:26:23 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 22 Sep 2022 02:26:21 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     "John A. Leuenhagen" <john@zlima12.com>,
         Junio C Hamano <gitster@pobox.com>,
         Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 1/2] clone: allow "--bare" with "-o"
+Message-ID: <YywADT0aHRSoDeg3@coredump.intra.peff.net>
+References: <YyvzIQL9H9aTYNch@coredump.intra.peff.net>
+ <YyvzVdfQVdysvMp2@coredump.intra.peff.net>
+ <CAPig+cTEF=jBoW07_eLQ_BAWxULfWtehVa-JbJKpS+8rPenSiQ@mail.gmail.com>
+ <Yyv+GjjauvvcX3M1@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Yyv+GjjauvvcX3M1@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 22, 2022 at 2:18 AM Jeff King <peff@peff.net> wrote:
-> On Thu, Sep 22, 2022 at 01:58:36AM -0400, Eric Sunshine wrote:
-> > > +       (cd parent && pwd) >expect &&
-> > > +       git -C clone-bare-o config remote.foo.url >actual &&
-> > > +       test_cmp expect actual
-> >
-> > Is this safe on Microsoft Windows? My understanding from t/README:
-> >
-> >     When a test checks for an absolute path that a git command
-> >     generated, construct the expected value using $(pwd) rather than
-> >     $PWD, $TEST_DIRECTORY, or $TRASH_DIRECTORY. It makes a difference
-> >     on Windows, where the shell (MSYS bash) mangles absolute path
-> >     names. For details, see the commit message of 4114156ae9.
-> >
-> > was that you should use $(pwd) rather than raw `pwd` when comparing
-> > against a path generated by Git. Is there a gap in my understanding
-> > here?
->
-> I think you might be mis-reading the advice here. It is saying to use
-> the "pwd" program, rather than relying on the shell's $PWD variable. So
-> $(pwd) and `pwd` are the same thing (and are what I'm using). The $() I
-> think is just indicating that you'd do:
->
->   foo=$(pwd)
->
+On Thu, Sep 22, 2022 at 02:18:02AM -0400, Jeff King wrote:
+
 > And yes, I think this is a case where using the right one is important
 > (which is why I used the pwd program, and not $pwd in the test).
->
-> Or am I missing something else?
 
-I was thinking, in particular, about this snippet from t/test-lib.sh:
+Er, of course I meant all-caps $PWD in the final sentence. ;)
 
-    # git sees Windows-style pwd
-    pwd () {
-        builtin pwd -W
-    }
-
-If that's inherited by the subshell used in the test, then I suppose
-all is okay, though I think it would not be inherited.
+-Peff
