@@ -2,147 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A847C6FA8B
-	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 07:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80274C6FA82
+	for <git@archiver.kernel.org>; Thu, 22 Sep 2022 08:57:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230400AbiIVH1h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Sep 2022 03:27:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53136 "EHLO
+        id S230038AbiIVI5s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Sep 2022 04:57:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229728AbiIVH1f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Sep 2022 03:27:35 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 198BAC88A9
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 00:27:34 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id g3so13967429wrq.13
-        for <git@vger.kernel.org>; Thu, 22 Sep 2022 00:27:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date;
-        bh=f/xupWM/n1cwfYYsQDDOoGKBalX8Yb1Ujg38c4SeCEw=;
-        b=O1i6SHUKavu3WhOoFTfG/ZtOkMUx8fnc2lfHVV5EhYRAKCNtEIL6MEEJL8ZQAm31HO
-         kdjEHRHVONkXQ3s+IbGuC6lrr2fpYeZba75Lh7zOwyjKd/dc0k/LDaNuolV3ejXtXl+O
-         USN4Agegkl9PmT4j8K7mhCFuHA7/ewg3jZV3uffU0F3R7isvvhJto9PlIL4B6vQ+UFlO
-         oiD2Kh7Welc3v2ytUK+zRMsny9a4OvZAaAHSmKUTpb3rwbqJZWuCeszT5HXun5W285jH
-         GnCzEFHaX0k9C4y/wRC4KNCkFfq7qCrawbAJO/xLXAt43xPG0JQoRAfveIXANnctcJEd
-         Ncwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=f/xupWM/n1cwfYYsQDDOoGKBalX8Yb1Ujg38c4SeCEw=;
-        b=S1iHyVHRmSLW9KJ0rDcEmt7p2TLC7VRDscsNjbUQ2DvopyzgvYIMDC5UI7bo86br1W
-         lALAvIBd/tTLy0yZg2XA63SSSyiva9Ub44DciA5xqBKD7tjb1Jr46iUXdLasIQUKWX4R
-         AgIkhlaZcaPNYLFtnxMc+rjX9zpknFmcGVHYFMDJdE1yBWGVZebbdfBYkhWPtOSlAAiq
-         fwZcohlv3FsqB6ace2Gm/WXEZcdJOXAmUrOd1m40MUbIbvnc32FzlqAkSFUg0kRaXJ9O
-         6pN/q0B7LeFabwYt2K3CLG4dfkCsWtnzudiTZU98KT8YtyBEB5uqXqLGzWo6Sm+QUwCc
-         ZszA==
-X-Gm-Message-State: ACrzQf1ekQ0SxeelgCw4YuyToqeDcs+a5zxVtxHf9H06mv2jxRQ1dMbf
-        PYnkoDDYPqfLdL9jcyANNNFO352au8M=
-X-Google-Smtp-Source: AMsMyM7Vga5vH08TGa83ArWPR+/Vkndni21zPy8acXBkqwh91agcepjCMdHQNEIouHIQStuwbwJOSQ==
-X-Received: by 2002:adf:fa81:0:b0:224:f260:2523 with SMTP id h1-20020adffa81000000b00224f2602523mr1029740wrr.26.1663831652176;
-        Thu, 22 Sep 2022 00:27:32 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g14-20020a05600c4ece00b003b477532e66sm9066774wmq.2.2022.09.22.00.27.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Sep 2022 00:27:31 -0700 (PDT)
-Message-Id: <pull.1337.git.git.1663831649705.gitgitgadget@gmail.com>
-From:   "Alex via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 22 Sep 2022 07:27:29 +0000
-Subject: [PATCH] ci: restrict workflow's github token permissions
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229666AbiIVI5p (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Sep 2022 04:57:45 -0400
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2084.outbound.protection.outlook.com [40.107.237.84])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A048FD01E7
+        for <git@vger.kernel.org>; Thu, 22 Sep 2022 01:57:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=HyxWOmvqrSeh1Keq74RMQCCEkzY0xMCHnnTTJByamf0jvtZZF589d+1SmNlN9oF1KkLsikCuR6In5EeFBKscqjQUsIibrkkUFwOExciMarRUI25bmmqtkF1me5BGopvc3UksOocd8zHZQdMkfWkLukeMRHtTzi8XRwFgKxbMVsAcljCSAw1Orx032/u/6mYTaARVl4lKTtuW6SQCbtOW0X5P6z2o//HYQCrWetQIBuZgJEGy2tZahX3EJB+Iz9OXIRLqYhxWAQqyfZAx4GwosZgDTiDaxClDJzLS6A7VGvC/fViXnC/A3HKXpXEPHcL3xP57gSQOG8vW+1iwWMGwoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zMGFe6KkmuWldIKlWTW8w4VlXtLjomhiMdiqF9Y0u/U=;
+ b=k9WNeYV3Q7nq1y9905kHm2Ta+gjRFDlMcc3HuN8g/GgrpbwG3TR8Bf6zh/kqC8Fo/RST4VwpVZNyqEwIFqNQ1lbotzgT/yknvK86YLMDGPmgA5LXQLfY2Xj9foBnQxsqLJWR3bs6kleoxWOWl8JwfGedFLIVlaqjTOWkxlsIpVRCEDGx4ymmUYY1hNZ7hYIgeSb4C3d8U+fN3ZcI79HSgpVsbQ6k/6EOrExuStpIFOsd0AAmEWftgTR97nvQsfQmLMoRk2J5lxD4KX//P05U4Wjcb/CxHpk8IlIRMzeV1PVTMqCLV7wm7b/J0SFgMI9EE+lsadmwAdfguzJj+zZFyA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=netapp.com; dmarc=pass action=none header.from=netapp.com;
+ dkim=pass header.d=netapp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=netapp.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zMGFe6KkmuWldIKlWTW8w4VlXtLjomhiMdiqF9Y0u/U=;
+ b=Kk6eXGPvyM7t25GXezzNOaXuWlRLzcdubxkMXHnCUi7oqeqDDB7pb7qnaF6vbs+xFvVERj4P/GTeXQSMaa15ehi8O2CuiA/6SzEaEnSrY0wXUXpL/Ki81vf+FHlK5y2bNdV4jV+2PCnm4417b6xZYyYF6i9ezm8ZYVZdABykafHnLpuqxbm1ZZuWWYHtyCbYR1Zo86bDd3LBmN0AKzi5hq+Y5xvfGzNTewksTYlChxCqMUwdVF3NaupgEIgwgn1cVsXz3Vp0czRex5yEvy9XLhp548Bvlx9nks45pE2ftCMs/ZxKL+GVIKhCMFk5V49pwu6232YLrhZSzOaKDoCZeQ==
+Received: from BYAPR06MB5542.namprd06.prod.outlook.com (2603:10b6:a03:df::11)
+ by PH0PR06MB7591.namprd06.prod.outlook.com (2603:10b6:510:58::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5654.16; Thu, 22 Sep
+ 2022 08:57:41 +0000
+Received: from PH0PR06MB7639.namprd06.prod.outlook.com (2603:10b6:510:4e::18)
+ by BYAPR06MB5542.namprd06.prod.outlook.com (2603:10b6:a03:df::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5632.19; Thu, 22 Sep
+ 2022 08:57:10 +0000
+Received: from PH0PR06MB7639.namprd06.prod.outlook.com
+ ([fe80::b8e8:9340:e9ea:7f18]) by PH0PR06MB7639.namprd06.prod.outlook.com
+ ([fe80::b8e8:9340:e9ea:7f18%8]) with mapi id 15.20.5654.018; Thu, 22 Sep 2022
+ 08:57:10 +0000
+From:   "Scheffenegger, Richard" <Richard.Scheffenegger@netapp.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: git --archive
+Thread-Topic: git --archive
+Thread-Index: AdjOYUggigRgkiEITWKCyoo+Qa1cmQ==
+Date:   Thu, 22 Sep 2022 08:57:10 +0000
+Message-ID: <PH0PR06MB763962EB6321F85803C5CE2D864E9@PH0PR06MB7639.namprd06.prod.outlook.com>
+Accept-Language: de-AT, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-version: 11.6.600.2
+dlp-reaction: no-action
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=netapp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH0PR06MB7639:EE_|BYAPR06MB5542:EE_|PH0PR06MB7591:EE_
+x-ms-office365-filtering-correlation-id: 854d98e0-8a90-4e5e-ea04-08da9c786f70
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: HZ7PnDEy668aWqYOl/KFFLqE+cRKqYZ02rCVRf8xRnRND+2jkWF4Djh9WmoeDiusbk/IqBmED/7c5SWTXJD041aOFTBW+5pXd86E0IyrKS++zSP8CIb0pKIg7b+6h+g9jacO7v1UeqYQ9jN0KDCt5dBEG0ElXM62EGP0DO6B9kC2gvl9vS1KwR5MjqQTkepKNqgty0d4xnQKrtJ0xm353cpsOkGEKqAv6qbEYDrpVCFCjibAqCAQJZ/HvnA7xYoXT0/Stq8e40DDPKExJI9JOMUdED7IJQ+Y34YLY2BubW68QmnkoknQ5yIjLUwcBhttNig1nOCfbH2NdozKH/OSlSSh7jhFHebe/piwiZgPR0XeL3e8vmNTbMrZJvzbBAzjs5i+JZCVPnOGMpqVSE684aXdmsOCtN4+Z2l4unIv8JzojbhvmmcjlL4mdhNxIWK74p0TXR/VfKGhL37MkybBizaR3jquwXkkUwiqeq9kdIKYDpspvjoJjyebvvsZXDxg3w0bcDjbDb1GK2PDC0kOSzFW0uBwj9jXqU24JI0n1GHyg9V+RIwSBMiFNw+kAG2y5C83SI+S423jCy7dNWPYZFljcLxs3m5wIQgnjLl7aRwcGPonenXGC20TskZvhcRz2vpisiUdLdAv6nWrNr9xTX2zoGzjPrhndcDwkT5+o1fqk9cWPczFf8yaKVouKFsE1SoU5oTGDWWPzG8kb6TcCHiZesT0H8iXx/mqb5hjDCOgSIje6s+ZSV7gt+AGqrWlq65wr+dqq7Ooud0v6Ddp6w==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR06MB5542.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(136003)(366004)(396003)(39860400002)(346002)(451199015)(55016003)(2906002)(66556008)(122000001)(66476007)(8676002)(38100700002)(66446008)(26005)(316002)(66946007)(33656002)(52536014)(5660300002)(6916009)(83380400001)(86362001)(76116006)(186003)(9686003)(38070700005)(478600001)(6506007)(64756008)(8936002)(71200400001)(7696005)(41300700001);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?aHNtck9wYVByZ3Z0NlRscHF4UnA5UEo1M3JPQU0yNkhGa3JkVEp6eFRwUlN0?=
+ =?utf-8?B?UHJpbWhIZTliNEpFSVNJeWozOVlDZ1JQTk5VTTV1b25sZ2tPWVlBSmhjUlVa?=
+ =?utf-8?B?RC84Nno4T0pjWm5uTXUxMlNreXR4QnVrMVgwR0Y3UjY1bjhBVEh2YmQyNjhX?=
+ =?utf-8?B?ZFFKem5LdW14Y3YrRXBCczFMYzhPMkFxNU1KR1JPNVlZaFZGbm9ZTGFtUVFZ?=
+ =?utf-8?B?VXIrMG1PMnEzemwvdWVQUmd5MXF1ZFRTbmw5TldkTmxjd2VKTi9OYU02azlL?=
+ =?utf-8?B?aGlNUmZuc2pWSU9nVG5LY0N3N01UZHZvL2tWc1NUZURMUjRFajRKN3Qra3h3?=
+ =?utf-8?B?NzliOEFZbXZLMWxrcDFJTzNEZm5Pc0duRG1GVkdhNWN6WHNCOGdlOEZTZ05y?=
+ =?utf-8?B?dVNiNVEyQWNOc1Q0WXBWR2ovZFRrcjM1MHRnbE4yakluN0F3UG81T1ZuT3NT?=
+ =?utf-8?B?SFkxQW9nMFZVY1J6QmtaNFI0cjJZSmdSbzMxQ2pBbU1jYklOLzI0b2ZPZTdl?=
+ =?utf-8?B?MjdMc2gxbFo3K3lHMWRpcmJlUGJ0Q3hwNXJvVHFNZFFkMTRoU3FnVjAxdk8y?=
+ =?utf-8?B?NWxwak5neWJ0aUIwUlZvVUQ5azVwdE5Sd3JMbmZrMGdVcERSZ3hwcHgzMDFM?=
+ =?utf-8?B?SEtJY1BOTUQ2Q0RGV3NmQ2gxNlNaNzdpQ2tPUm1uZG9TeER6dkl4eFd6VGYr?=
+ =?utf-8?B?WEJaNGR4ZUhuSWZqVGRPZXUxOEY3VHRJQ1cxZU8vZkdFOVc5Y0tkK2FwZFF5?=
+ =?utf-8?B?OEhOdHFZeEtvVnByZVpKVWUxR1dwYVI0SGNKWEp0RC9IMmZVbENlbXR0Qno5?=
+ =?utf-8?B?Wi9WK2h6VEtxRnBFeWM3cjg2R2RUd25DWFZLMklnRXdQUGdHSnBqU3JLNVgw?=
+ =?utf-8?B?OUNxQmxlMUNrQm83d0JuUGZpY2syM2RnQmZXMDRZd2VQUXEwa2N6dHA0N0hE?=
+ =?utf-8?B?M2JQY0xSMjUxajk3ZUV0ZEJ5NzBJN2wybENXY0k4SS9ZaW5EcklMbGJNTTJR?=
+ =?utf-8?B?KzhES0VRN0dQaVNqd2ZydGxMTmg4SlpDSHBUZElWajcveVlvVTNvRHBOQTIy?=
+ =?utf-8?B?enk1OVllc28yNmw4SUpoa1I1c2tpLzN4cTZWd3JDQWRHcFgzM2E4ZktINWY2?=
+ =?utf-8?B?dHRac3VpWWJ1Sk52bFQzRGM1Y3R6Wm1lZ0Rpa0ltaE5scWtqUlVFc0dabzM5?=
+ =?utf-8?B?MnBKSldxSzhRZHpFTEhydlcrWFY0Qm40a3ZCQmVEb0k4cHpVSCtiZ2FuU3lx?=
+ =?utf-8?B?VnUveWFTbmlRSEQ4ZStmV3loOU05N2hXNjlsOXc3d0JMbWt1eGZHRlpDSERN?=
+ =?utf-8?B?Q0M1eURiU1hZR1d3NExSdWFFSnNMaWZ2WWt4UTBXK2JBNWdEc3VzN1A4c0Rv?=
+ =?utf-8?B?d0ZEVzJXNTRpZSs2bW10NlY3bGdPOFpsNFd4aWF1MzdZQ1NTN0VJYXBleFJw?=
+ =?utf-8?B?QmtMYjdUT0YwelZDY0dicnN2Y0VocVQ5NXJlVXJtRE4rM1lNY2tNN0FwYWxs?=
+ =?utf-8?B?UUM2K0NWeXRlTmtwcElpdVJlYm16OXBzODFIeDFvQVJoZEkvKzhYaWptdDN0?=
+ =?utf-8?B?c1d1Z2wrMk5vMVM2WnhRZTNkd2Y0MnlndG5IbW1xUDRNR25tZ0YwdEZYdmNm?=
+ =?utf-8?B?UmN0NjNlZGdjNXdTMUlDaHFROE9CWWFtNFlBZUd6N201RmJVRHkzZG1WYlc4?=
+ =?utf-8?B?cUN2b1RNSkJaKzhrT1NpdWhVQmRwYWZwY2NTKzRHWm9OVlZlM2p2d1JCVGVX?=
+ =?utf-8?B?c0I4SmU2UVZlaU41YVBaNDh4Y1hVN3JkVVMwRmhZSSt0ZjYyTlQzY0pmNk15?=
+ =?utf-8?B?elVDS2dqc1pneWdCbGxJS3Z6b2ljNlVWOVNJVE5IbllMY0NqdG11NXBNSEc2?=
+ =?utf-8?B?MUVSeVhBdEJTUWFGUFRFZUFLSGZOSnVub0xQT29YSDVRcEFmR3hJREszcVVJ?=
+ =?utf-8?B?SXRYUDF3VGZMYWdKTG5aKzZvT0lsRmRsUDVHamJ3bVNRaENQOVpRU2tLQ3Az?=
+ =?utf-8?B?T1RTMmVONTB2RTRjaThaOFdVQlZhc1JUUEQ3YUVaWG84VzY2MlRkajJnUFUy?=
+ =?utf-8?B?TllWZmRJNUV4UWcxYjJvS1JpV2pDdnhQRG5wNWh2MXo0eVlRS3hRSmJRNnZx?=
+ =?utf-8?Q?Deod8irPH/sjF5ag1aBUYATmp?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Alex <aleksandrosansan@gmail.com>,
-        sashashura <aleksandrosansan@gmail.com>
+X-OriginatorOrg: netapp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR06MB7639.namprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 854d98e0-8a90-4e5e-ea04-08da9c786f70
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Sep 2022 08:57:10.5401
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 4b0911a0-929b-4715-944b-c03745165b3a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 8WGBc16SaoyBs4eNgMOLDU0Vs3aHGTLTAoWUa6munURo8IBIh61v+JLCeTxeC/i3Af7Jy8K2JI39zoKJxo9MpA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR06MB7591
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: sashashura <aleksandrosansan@gmail.com>
-
-Currently the workflow runs with the following permissions:
-GITHUB_TOKEN Permissions
-  Actions: write
-  Checks: write
-  Contents: write
-  Deployments: write
-  Discussions: write
-  Issues: write
-  Metadata: read
-  Packages: write
-  Pages: write
-  PullRequests: write
-  RepositoryProjects: write
-  SecurityEvents: write
-  Statuses: write
-
-Signed-off-by: sashashura <aleksandrosansan@gmail.com>
----
-    ci: restrict workflow's github token permissions
-    
-    This PR adds explicit permissions section
-    [https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions]
-    to workflows. This is a security best practice because by default
-    workflows run with extended set of permissions
-    [https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token]
-    (except from on: pull_request from external forks
-    [https://securitylab.github.com/research/github-actions-preventing-pwn-requests/]).
-    By specifying any permission explicitly all others are set to none. By
-    using the principle of least privilege the damage a compromised workflow
-    can do (because of an injection
-    [https://securitylab.github.com/research/github-actions-untrusted-input/]
-    or compromised third party tool or action) is restricted. It is
-    recommended to have most strict permissions on the top level
-    [https://github.com/ossf/scorecard/blob/main/docs/checks.md#token-permissions]
-    and grant write permissions on job level
-    [https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs]
-    case by case.
-    
-    check-whitespace.yml is triggered by pull_request only and receives
-    restricted token already. l10n.yml has permissions on job level already.
-    So I didn't make any changes to them. In both cases it is possible to
-    add explicit global lever permissions just for consistency if you
-    prefer. Let me know.
-    
-    Currently
-    [https://github.com/git/git/actions/runs/3100948073/jobs/5021781329] the
-    workflow runs with the following permissions: GITHUB_TOKEN Permissions
-    Actions: write Checks: write Contents: write Deployments: write
-    Discussions: write Issues: write Metadata: read Packages: write Pages:
-    write PullRequests: write RepositoryProjects: write SecurityEvents:
-    write Statuses: write
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1337%2Fsashashura%2Fpatch-2-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1337/sashashura/patch-2-v1
-Pull-Request: https://github.com/git/git/pull/1337
-
- .github/workflows/main.yml | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 831f4df56c5..3ce9302c589 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -5,8 +5,14 @@ on: [push, pull_request]
- env:
-   DEVELOPER: 1
- 
-+permissions:
-+  contents: read
-+
- jobs:
-   ci-config:
-+    permissions:
-+      contents: read
-+      actions: read # for github.actions.getWorkflowRun
-     name: config
-     runs-on: ubuntu-latest
-     outputs:
-
-base-commit: dda7228a83e2e9ff584bf6adbf55910565b41e14
--- 
-gitgitgadget
+SGkgZ3JvdXAsDQoNClVubGVzcyBJ4oCZbSBtaXN0YWtlbiwgdGhlIHByb2NlZHVyZSB0byBjcmVh
+dGUgYSB6aXAgYXJjaGl2ZSByZWFkcyBsaWtlIGEgcmVjdXJzaXZlIGNvbGxlY3Rpb24gb2YgYWxs
+IHJlbGV2YW50IG9iamVjdHMsIGFuZCB0aGVuIHdyaXRpbmcgdGhlbSBvdXQgc2VxdWVudGlhbGx5
+LCBpbiBhIHNpbmdsZSB0aHJlYWQuIA0KDQpJcyB0aGlzIGFzc2Vzc21lbnQgY29ycmVjdD8NCg0K
+SSB3YXMgd29uZGVyaW5nIGlmIGEgaGlnaGx5IGNvbmN1cnJlbnQgZmV0Y2hpbmcgcGhhc2UgY291
+bGQgYmUgb3B0aW9uYWxseSBhZGRlZOKApg0KDQpCYWNrZ3JvdW5kIGlzIHRoZSBwcm9saWZlcmF0
+aW9uIG9mIGNvbGQgYXJjaGl2ZSAvIGhpZ2ggbGF0ZW5jeSBzdG9yYWdlIOKAkyB0cmF2ZXJzaW5n
+IGEgdHJlZSBpbiBhIHJlY3Vyc2l2ZSBtYW5uZXIsIHNpbmdsZSB0aHJlYWRlZCwgd2lsbCBhY2N1
+bXVsYXRlIHRoZSBtYXhpbXVtIGFtb3VudCBvZiB3YWxsY2xvY2sgdGltZTsgDQoNCkEgZmlyc3Qg
+aW1wcm92ZW1lbnQgY291bGQgYmUgdG8gcnVuIGFsbCB0aGUgcmVjdXJzaXZlIHRyYXZlcnNhbHMg
+aW4gYSBwYXJhbGxlbCAobXVsdGkgdGhyZWFkZWQpIHdheSDigJMgd2l0aCBkaXNwYXRjaGVkIHRo
+cmVhZHMgdG8gaXNzdWUgcHJlZmV0Y2ggcmVhZCBjYWxscyAodG8gd2FybSB1cCB0aGUgdmFyaW91
+cyBjYWNoZXMpLiBBbmQgaW4gYSBzZWNvbmQgcGhhc2UgdHJhdmVyc2UgdGhlIChub3cgd2FybWVk
+IHVwKSB0cmVlIHNpbmdsZS10aHJlYWRlZCwgYW5kIGFwcGVuZCB0aGUgb2JqZWN0cyB0byB0aGUg
+YXJjaGl2ZeKApg0KDQpTdWJzZXF1ZW50bHksIGlmIHN1ZmZpY2llbnQgbWVtb3J5IGNhbiBiZSBh
+bGxvY2F0ZWQsIHRoZSBhc3luY2hyb25vdXNseSBkaXNwYXRjaGVkIHJlYWRzIGNvdWxkIGJlIGZl
+dGNoZWQgaW4gbWVtb3J5LCBhbmQgYXMgc29vbiBhcyB0aGUgcmVhZHMgZm9yIHRoZSBuZXh0IGlu
+LW9yZGVyIG9iamVjdCBpcyBjb21wbGV0ZWQgKHRoZXNlIHJlYWRzIGluZGl2aWR1YWxseSBtYXkg
+bm90IGNvbXBsZXRlIGluLW9yZGVyKSwgYXBwZW5kIHRoZSBvYmplY3RzIHRvIHRoZSBhcmNoaXZl
+4oCmIA0KDQpCZXN0IHJlZ2FyZHMsDQoNClJpY2hhcmQgU2NoZWZmZW5lZ2dlcg0KDQo=
