@@ -2,73 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DB40C04A95
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 22:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83B77C04A95
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 22:07:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230113AbiIWWHC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 18:07:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40172 "EHLO
+        id S229657AbiIWWHM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 18:07:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229666AbiIWWHA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 18:07:00 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 151FA140AD
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 15:07:00 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9D9391B990D;
-        Fri, 23 Sep 2022 18:06:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Vrb9xkCr7mhlJ1sFqSmjwGWfN5aZQ3xMrRli8Q
-        iaCwM=; b=SX7eSobBtaOzXGTURGIz8B2wA7BqTlDRcwLDqKN8W2ze+IyYrOFSqi
-        QKryzMsC+tsK8idVrPkmS7QYAmFuFRfNc0X4PlMmO+B5KQQAlha/f/x9IgXReWca
-        lvYvusvURhlW1Sc9Fjg0CX9ELaEs6n7OyDTNHcoJ2oCtD5d0Jd8A4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 95EBE1B990C;
-        Fri, 23 Sep 2022 18:06:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E1CF41B990B;
-        Fri, 23 Sep 2022 18:06:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Stopak <jacob@initialcommit.io>, git@vger.kernel.org,
-        martin.agren@gmail.com
-Subject: Re: [RFC PATCH v2] shortlog: add group-by options for year and month
-References: <20220922061824.16988-1-jacob@initialcommit.io>
-        <20220922232536.40807-1-jacob@initialcommit.io>
-        <xmqqillevzeh.fsf@gitster.g>
-        <Yy4sIAHdvp6yRql+@coredump.intra.peff.net>
-Date:   Fri, 23 Sep 2022 15:06:54 -0700
-In-Reply-To: <Yy4sIAHdvp6yRql+@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 23 Sep 2022 17:58:56 -0400")
-Message-ID: <xmqqpmflsq2p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S231340AbiIWWHL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 18:07:11 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D232147F0E
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 15:07:10 -0700 (PDT)
+Received: (qmail 14728 invoked by uid 109); 23 Sep 2022 22:07:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 23 Sep 2022 22:07:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17451 invoked by uid 111); 23 Sep 2022 22:07:10 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 23 Sep 2022 18:07:10 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 23 Sep 2022 18:07:09 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] cmd-list.perl: fix identifying man sections
+Message-ID: <Yy4uDW9YjpleFUHW@coredump.intra.peff.net>
+References: <20220923070334.1970213-1-martin.agren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 09832C90-3B8C-11ED-9A26-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220923070334.1970213-1-martin.agren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Sep 23, 2022 at 09:03:34AM +0200, Martin Ågren wrote:
 
-> If you give up the regex thing, then that naturally falls out as
-> (imagining we learn about authordate as a placeholder):
->
->   git shortlog --group='%(authordate:format=%Y-%n) %an'
->
-> without having to implement multiple groupings as a specific feature
-> (which is both more code, but also has user-facing confusion about when
-> --group overrides versus appends). That also skips the question of which
-> --group-by-regex applies to which --group-by-value.
->
-> I do agree the regex thing is more flexible, but if we can't come up
-> with a case more compelling than subsystem matching, I'd just as soon
-> add %(subject:subsystem) or similar. :)
+> This makes our git(1) manpage look as follows:
+> 
+>   Main porcelain commands
+>        git-add(git)
+>            Add file contents to the index.
+> 
+>   [...]
+> 
+>        gitk(git)
+>            The Git repository browser.
+> 
+>        scalar(scalar)
+>            A tool for managing large Git repositories.
 
-;-)  I like that as a general direction.
+Good catch. The patch looks good (I was going to suggest ?:, but I see
+Ævar beat me to it).
+
+I wondered if we might have caught this in a more automatic way. The
+output of:
+
+  cd Documentation
+  ./doc-diff cc75e556a9^ cc75e556a9
+
+makes the problem apparent, but I don't fault reviewers for not running
+it. I rarely remember to do so. And in general you need a human looking
+at doc-diff output to know if it was the intended change or not.
+
+I wondered if it might be worth running
+
+  ./doc-diff v2.37.0 v2.38.0-rc1
+
+near a release to scan over all of the changes. But the diff is over
+8000 lines, and I admit my eyes glazed over before I got to the
+problematic hunks (even though I knew I was looking for them!). You can
+limit it a bit with --diff-filter=a, which drops new entries (which
+can't have regressed!), but it's still over 4000 lines.
+
+So I dunno. I think doc-diff is a potentially useful tool, but I'm not
+sure how to point the human attention at the right spot to find a bug.
+Maybe "given enough eyeballs, all bugs are shallow" is our best bet
+here. After all, it did find this bug before the release. :)
+
+-Peff
