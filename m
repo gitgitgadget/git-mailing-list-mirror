@@ -2,206 +2,231 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 022EAC6FA82
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 08:53:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F04BECAAD8
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 09:55:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231124AbiIWIxo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 04:53:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41802 "EHLO
+        id S231295AbiIWJzi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 05:55:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231371AbiIWIxb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 04:53:31 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68DB91284B2
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 01:53:28 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id x21so10002062edd.11
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 01:53:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date;
-        bh=0LOaEylyBLhhSR+i1T1tsY4tWM8IhIfDFF0Cp7IFySI=;
-        b=kvzJp4Hig1pC908dtAJiGWDF24IeYSjWG54Gug4bMZnz+Xgdfy4kUfwOTnGdc4kN99
-         OisJ4WmLExI/fNRarpYmjiuv0zT909yyiAjyjojnlESdH9KKkigx751ZHX+h43P/cbge
-         Xb/stkWCB0vEYrUKIooJCJKNZMGsZfTPTn6Fpd9ERBCGOr191VxRUt8lcEYzrsEi80R8
-         l+9k8jb5cFUHm+xooeCZ/N5Q2Bq6Hh0QZRUbI15pTU0RQTogPNP6BUXeqoTuJNBT272U
-         iAiKmsCcl1KdWtmtA+EySeb0n16BmiKxF/z7Ulx0ZML9nhn4l3JQbHyoLG7r/nGBDd0m
-         2ODA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=0LOaEylyBLhhSR+i1T1tsY4tWM8IhIfDFF0Cp7IFySI=;
-        b=GlC0I+Yjl9DzBhjq0KQ2svfIr85UaqJQQKtaalmKHxJ/nDeRasfUBAhSzIQvs2zfnY
-         CEyCuQ1xEE0UAfMNEVH3VjDyd/pPssglQmdkm45B5mPWzI41Y1Na8XFjWNE8KUCSk2Xn
-         tsqwlVVCYUOXsau77mUNnvajq0ZCtVi+J2DRiedpltpifTerfhw28gw6MMBAyko+rNcF
-         uXRM6pe6kwpcEXj1uFYfizKieJoBZrTjZXqM4HCo5zuHg6cdteMEbF2FepWhb+RlUrJ4
-         6v253QaL2Otnd6XXeczmdJ1RoV2TqeZp549orlYcA2j9vfMSfxjhHf+ajvEDhmfF3buI
-         zoCw==
-X-Gm-Message-State: ACrzQf1E0n355N4oxacl4lAYoyw+DGwLMV0Eu8+BPgO4ymb0Q4eO2+HH
-        pQZYJiY0g7l68RfcXhynuj3Uoun3OOE=
-X-Google-Smtp-Source: AMsMyM58e2kK4ia7RGijZ5EYku3HaYAmBMb2GFBKPjSQHgU/z0dGKzCNtz0y1FDfEDf8nLV8seRyHQ==
-X-Received: by 2002:a05:6402:d0b:b0:443:df38:9df with SMTP id eb11-20020a0564020d0b00b00443df3809dfmr7194107edb.9.1663923206528;
-        Fri, 23 Sep 2022 01:53:26 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id p14-20020a17090653ce00b007828150a2f1sm1116265ejo.36.2022.09.23.01.53.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Sep 2022 01:53:26 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1obeR3-003HPC-0s;
-        Fri, 23 Sep 2022 10:53:25 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v2] cmd-list.perl: fix identifying man sections
-Date:   Fri, 23 Sep 2022 10:37:33 +0200
-References: <220923.86wn9u4joo.gmgdl@evledraar.gmail.com>
- <20220923080733.1995862-1-martin.agren@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
-In-reply-to: <20220923080733.1995862-1-martin.agren@gmail.com>
-Message-ID: <220923.86fsgi4gl6.gmgdl@evledraar.gmail.com>
+        with ESMTP id S231819AbiIWJze (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 05:55:34 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45514E11B2
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 02:55:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1663926929;
+        bh=2fBRYnltrnZSRNkQDFCkm8Z61zc1ECUzFC7LxQsK3so=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=XtJwdwbhWj52QYABOdoYtAni2sKmMyQkrEi2q+wJQCxm7mzsTwP8lneXqc8HOwqa6
+         zSA8XcXD9ZUn2Anj4PEjps8ZniRqSYMQzItzekJ4heHDcjabFh6mrxIC4tlMZw0hae
+         aW1KTkiFkU7jsUFl645xoegVYIlx6y2JC7JUta/w=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.23.113.77] ([213.196.213.28]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N3siG-1pJd5d0VQO-00zoUH; Fri, 23
+ Sep 2022 11:55:29 +0200
+Date:   Fri, 23 Sep 2022 11:55:27 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Elijah Newren <newren@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3] merge-ort: fix segmentation fault in read-only
+ repositories
+In-Reply-To: <CABPp-BGizu+dq+8Hbqo5EjKFAWU_Ni9RwQ6p+4oUMLp0oamu7w@mail.gmail.com>
+Message-ID: <916o55op-qpqo-5o41-931s-8q54p7301sr2@tzk.qr>
+References: <pull.1362.v2.git.1663798083240.gitgitgadget@gmail.com> <pull.1362.v3.git.1663875999939.gitgitgadget@gmail.com> <CABPp-BGizu+dq+8Hbqo5EjKFAWU_Ni9RwQ6p+4oUMLp0oamu7w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:CZh1k7ss9CT85TfKADawKYXsvFyZF1vovQahjoKQPMZwKFVyxdR
+ kW0u1JcFjNo8KDnZPk5RuT1v3nrECZX0lW/lBHxZZzFY1qygvgiFLPPQ21IkEyOP0lsMH90
+ BHhSwR6/Mx2r2ZvTmcci5xprHGQ4iPygxCG+keTE1D/KlAkLFFwsPBQkORUWvy373Buqyjn
+ +s9C/5RQJY87OZ6C0jiug==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:CPUDTS5l5bA=:JJdCPx5wR9AZKHu3bXJYAy
+ 6BK4bW1GKYV9lBf8VZhYwJ/d1ueZNXfTQB6vhpGKGYWdCrw9COXpTohhEVVF/N/dxVNqTxBRo
+ gI9OYbj0DcuC3OTbCGVA5y+buwsHvMsaAjvZibX2lewItf3Psb2R+cKtzDsOWCSW0nWU63CKD
+ MXvTzP2YGyFXFMoeO99wd/1/SPMEbIo1IchCQq8YQqxJOXD8oisdJTZ3vYEd62NHXsVO2QRex
+ +9IZjpPMZqsYm+ul8U+p+9gT1Hp/b49VaaCKmtgqt5a5qoGm+WTee7ZTTXk+/sZNzyxmoD7U8
+ GrzW5SRVgmht9DGGQKOj64b/YHhIhcl717Y7RGpBxrZxUHWMf6l4GzVeMy6WREYCAsDOFU+sd
+ ZQzALdTNWQo99Lot+s2sha+EX54VGpwcMn8fO4KUgf/kJaCUNeq2iV4csij69M1D5XS7sSJC0
+ LNKGYjHh9DdIxzGvSAu+jcZBdFdm16vzxp7a8r4ifF8/CUbGOYsSpcYMzPuB4E6ZOjZUe1y/c
+ Gr7AH4UkwqrXEWyR55EjrWzyQtxD1WzCs85PFI7o7L9Vd2+qE8GGmxxm+pcjS9Smed/41/TyM
+ hKtDuS3AgBkDp1fukftz97i/pK5ccNFC+axiwjziX4jIp8b0qnaFCroXY9fdz3qdeLAvlI63Z
+ MheyJ0E8ueuIjPy2AEPoypUN9Nuh/IqoHjhRXZS499wCJwB8JOG/G+S9XrSM060DphOLEeJ20
+ abNTopy9tZOO2DbNcyVyZFoe/J181ddQmcmYwrXn/GIeo5Y6BdGSa0ttYeIUnvoVHzd2uhsbS
+ tbLSwxB4hhsuDEk2batUYdhrt65ZAzV2/Lornung2DtBdNO17Er18Z2x9zZlNS8lt0/kSejCQ
+ fEjxHnxuQn0AD8sVm1+aHHjo/flNuUL6C/2SoTtRYhK+tbocD550oFVeCBvdhpN8ZFqDHXjbM
+ eV0V17ANoV/sDChx8ToUfN5vgknnsTy7U0pURs6RVdlqzbQIY7WkcHorYsuuqofnryyAW6ubJ
+ ACXeGSm8Z5wnVhSlryFEElkVHP4oCPcyDc0cuZqTeOsT/59NwB73iTJYsgeFtRIRF69DZ34Tu
+ JJ4mYdMnOXxaR0M4g+FKWSsY6UL9p6w7IWIzVC2KiHOq5NvYYQy7ts6g4BBPc3Yv55qvKGheE
+ G2noYma7iguvctD5wJMvz8ACw8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Elijah,
 
-On Fri, Sep 23 2022, Martin =C3=85gren wrote:
+On Thu, 22 Sep 2022, Elijah Newren wrote:
 
-> We attribute each documentation text file to a man section by finding a
-> line in the file that looks like "gitfoo(<digit>)". Commit cc75e556a9
-> ("scalar: add to 'git help -a' command list", 2022-09-02) updated this
-> logic to look not only for "gitfoo" but also "scalarfoo". In doing so,
-> it forgot to account for the fact that after the updated regex has found
-> a match, the man section is no longer to be found in `$1` but now lives
-> in `$2`.
+> On Thu, Sep 22, 2022 at 12:46 PM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > diff --git a/merge-ort.c b/merge-ort.c
+> > index 99dcee2db8a..f654296220e 100644
+> > --- a/merge-ort.c
+> > +++ b/merge-ort.c
+> > @@ -3571,15 +3571,15 @@ static int tree_entry_order(const void *a_, co=
+nst void *b_)
+> >                                  b->string, strlen(b->string), bmi->re=
+sult.mode);
+> >  }
+> >
+> > -static void write_tree(struct object_id *result_oid,
+> > -                      struct string_list *versions,
+> > -                      unsigned int offset,
+> > -                      size_t hash_size)
+> > +static int write_tree(struct object_id *result_oid,
+> > +                     struct string_list *versions,
+> > +                     unsigned int offset,
+> > +                     size_t hash_size)
+> >  {
+> >         size_t maxlen =3D 0, extra;
+> >         unsigned int nr;
+> >         struct strbuf buf =3D STRBUF_INIT;
+> > -       int i;
+> > +       int i, ret;
+> >
+> >         assert(offset <=3D versions->nr);
+> >         nr =3D versions->nr - offset;
+> > @@ -3605,8 +3605,9 @@ static void write_tree(struct object_id *result_=
+oid,
+> >         }
+> >
+> >         /* Write this object file out, and record in result_oid */
+> > -       write_object_file(buf.buf, buf.len, OBJ_TREE, result_oid);
+> > +       ret =3D write_object_file(buf.buf, buf.len, OBJ_TREE, result_o=
+id);
 >
-> This makes our git(1) manpage look as follows:
+> This sent me into a bit of a hunt to try to figure out what the return
+> value of write_object_file() is.  I know it's non-zero on failure, but
+> don't know if it's always positive or always negative or possibly a
+> mix and how that maps to the idea of "clean_merge".  I gave up after a
+> few indirections, to be honest.
 >
->   Main porcelain commands
->        git-add(git)
->            Add file contents to the index.
+> Anyway, regardless of my inability to find the answer to the above
+> question, would this be a bit easier to read if we initialized ret to
+> 0 and then did something like
 >
->   [...]
+>     if (write_object_file(buf.buf, buf.len, OBJ_TREE, result_oid))
+>         ret =3D -1;
 >
->        gitk(git)
->            The Git repository browser.
->
->        scalar(scalar)
->            A tool for managing large Git repositories.
->
-> Restore the man sections by not capturing the (git|scalar) part of the
-> match into `$1`.
->
-> As noted by =C3=86var [1], we could even match any "foo" rather than just
-> "gitfoo" and "scalarfoo", but that's a larger change. For now, just fix
-> the regression in cc75e556a9.
+> ?
 
-Thanks for the quick turn-around, this looks good to me in this form.
+You're right, this is a better pattern to follow because it makes it
+easier to wrap your head around.
 
-> [1] https://lore.kernel.org/git/220923.86wn9u4joo.gmgdl@evledraar.gmail.c=
-om/#t
+> > [...]
+> > @@ -3769,8 +3770,9 @@ static void write_completed_directory(struct mer=
+ge_options *opt,
+> >                  */
+> >                 dir_info->is_null =3D 0;
+> >                 dir_info->result.mode =3D S_IFDIR;
+> > -               write_tree(&dir_info->result.oid, &info->versions, off=
+set,
+> > -                          opt->repo->hash_algo->rawsz);
+> > +               if (write_tree(&dir_info->result.oid, &info->versions,=
+ offset,
+> > +                              opt->repo->hash_algo->rawsz) < 0)
+> > +                       ret =3D -1;
 >
-> Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
-> ---
->  Thanks =C3=86var for having a look at v1.
+> This makes me wonder about write_tree() again.  What if its call to
+> write_object_file() returns a value greater than 0?  Is that possible?
+
+No, `write_object_file()` returns either 0 or -1, always. I followed all
+the code paths.
+
+Here is a tangent (feel free to skip over this lengthy analysis):
+
+These code paths include a _very, very_ misleading one. In
+`write_loose_object()` (which is called via the call chain
+`write_object_file()` -> `write_object_file_flags()` ->
+`write_object_file_flags()`), we call `finalize_object_file()`, see
+https://github.com/git/git/blob/v2.37.3/object-file.c#L2030). And in that
+`finalize_object_file()` function, we set `ret =3D errno;` in two places
+(https://github.com/git/git/blob/v2.37.3/object-file.c#L1833 and
+https://github.com/git/git/blob/v2.37.3/object-file.c#L1850).
+
+When I read that, I chased down what the conventions are for `errno`
+values. Now, while
+https://pubs.opengroup.org/onlinepubs/007908799/xsh/errno.h.html does not
+say anything about `errno` values being non-negative,
+https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/errno.h.html
+very much says:
+
+	Values for errno are now required to be distinct positive values
+	rather than non-zero values. This change is for alignment with the
+	ISO/IEC 9899:1999 standard.
+
+Terrible, right? If we set `ret =3D errno`, that means that we return
+something positive!
+
+I then even dug up the origins of the `ret =3D errno` statements. Turns ou=
+t
+that yours truly introduced the first of these `ret =3D errno` statements =
+in
+9e48b389990 (Work around missing hard links on FAT formatted media,
+2005-10-26). :facepalm:
+
+So why did I do such a thing? Well, back then, the `ret` value _already_
+contained an `errno`, thanks to calling `link_temp_to_file()`, which _did_
+return an `errno`. In fact, there was no code path in
+`move_temp_to_file()` (as the function was called back then) that would
+return -1, it always returned either 0 or an `errno`.
+
+And after coming so far, after one hour of analyzing, I finally, finally
+realized that there is no `return ret;` in that function. That function
+has a `ret` variable that is never returned _from_ that function, but it
+used to be returned _to_ that function, by the `link_temp_to_file()`
+function that does not even exist any longer.
+
+In my defense, this terribly misleading code was not even introduced by
+myself. It was introduced in 230f13225df (Create object subdirectories on
+demand, 2005-10-08).
+
+tl;dr all is good, `finalize_object_file()` returns 0 upon success, -1
+upon failure.
+
+> If it is, are those error cases or not?  About half the callers in the
+> code base that check the return value of write_object_file() check for a
+> non-zero value, the other half check for a value less than 0.
+
+And then there is `apply.c` where the return value isn't even checked at
+all most of the time.
+
+> And I can't find any documentation.  And it seemed like too much time
+> for me to figure out what its range of return values was.
 >
->  Documentation/cmd-list.perl | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> [...]
 >
-> diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-> index 9515a499a3..755a110bc4 100755
-> --- a/Documentation/cmd-list.perl
-> +++ b/Documentation/cmd-list.perl
-> @@ -10,7 +10,7 @@ sub format_one {
->  	$state =3D 0;
->  	open I, '<', "$name.txt" or die "No such file $name.txt";
->  	while (<I>) {
-> -		if (/^(git|scalar)[a-z0-9-]*\(([0-9])\)$/) {
-> +		if (/^(?:git|scalar)[a-z0-9-]*\(([0-9])\)$/) {
->  			$mansection =3D $1;
->  			next;
->  		}
+> Nice to see that it didn't take too much work to propagate the -1 value
+>from write_tree() up the hierarchy.  Nice work!
 
-Just for anyone doing future archaeology / digging into the "larger
-change": The reason I felt safe in removing the "git" matching entirely
-is because the larger context here is that we're parsing only the very
-start of the *.txt. I.e. we would not want this:
-=09
-	git(1)
-	=3D=3D=3D=3D=3D=3D
-=09
-	NAME
-	----
-	git - the stupid content tracker
-=09
+Thank you!
 
-        foo(2)
+> I think we've still got some separate problems related to propagating
+> the return value of the other write_object_file() call, from
+> handle_content_merge().  The direct call in that other case is okay, but
+> the higher levels at process_renames() and process_entry() seem to
+> fumble it.  Your fix for failed tree writes is still valid without
+> fixing the failed blob writes, and I'm happy to tackle the other half if
+> you'd prefer to hand it off.  But, if you'd like to tackle that half
+> too, you might see fewer error messages when it fails to write to the
+> read-only repository, since it'll fail early on the first blob write
+> instead of only failing when it gets around to trying to write a new
+> tree.
 
-To report Documentation/git.txt as being a "foo" in man section 2, but
-that will not happen because as soon as we see a "NAME" line followed by
-a "----" line we'll extract that one line of description, so even if our
-regex would have eagerly matched that "foo(2)" we won't see it.
+It'll be part of v4 ;-)
 
-Now, having written and looked at this with fresh eyes this would be an
-even better & more logical thing to do:
-=09
-	diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-	index 755a110bc48..0bc4c803a10 100755
-	--- a/Documentation/cmd-list.perl
-	+++ b/Documentation/cmd-list.perl
-	@@ -1,38 +1,38 @@
-	 #!/usr/bin/perl -w
-=09=20
-	 use File::Compare qw(compare);
-=09=20
-	 sub format_one {
-	 	my ($out, $nameattr) =3D @_;
-	 	my ($name, $attr) =3D @$nameattr;
-	 	my ($state, $description);
-	 	my $mansection;
-	 	$state =3D 0;
-	 	open I, '<', "$name.txt" or die "No such file $name.txt";
-	 	while (<I>) {
-	-		if (/^(?:git|scalar)[a-z0-9-]*\(([0-9])\)$/) {
-	+		if (/^\Q$name\E\(([0-9])\)$/) {
-	 			$mansection =3D $1;
-	 			next;
-	 		}
-	 		if (/^NAME$/) {
-	 			$state =3D 1;
-	 			next;
-	 		}
-	 		if ($state =3D=3D 1 && /^----$/) {
-	 			$state =3D 2;
-	 			next;
-	 		}
-	 		next if ($state !=3D 2);
-	 		chomp;
-	 		$description =3D $_;
-	 		last;
-	 	}
-	 	close I;
-	 	if (!defined $description) {
-	 		die "No description found in $name.txt";
-	 	}
-	 	if (my ($verify_name, $text) =3D ($description =3D~ /^($name) - (.*)/)) {
-	 		print $out "linkgit:$name\[$mansection\]::\n\t";
-	 		if ($attr =3D~ / deprecated /) {
-	 			print $out "(deprecated) ";
-	 		}
-
-It yields the exact same result as Martin's patch above according to the
-doc-diff, but as the -U25 context shows we already have a hard
-dependency on the "scalar -" part of the description line matching the
-name of the file ("scalar.txt") is something we should be doing.
-
-Anyway, this is more than good enough for now, thanks! There's also much
-bigger issues with the script, and we can leave that all aside from now
-(e.g. if it dies the Makefile doesn't report an error, ouch!).
+Ciao,
+Dscho
