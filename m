@@ -2,112 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DDBAC6FA82
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 07:03:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB674C6FA82
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 07:35:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230055AbiIWHDu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 03:03:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38706 "EHLO
+        id S230025AbiIWHfp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 03:35:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229730AbiIWHDt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 03:03:49 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71FA311ED4B
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 00:03:48 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id a3so18320409lfk.9
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 00:03:48 -0700 (PDT)
+        with ESMTP id S229535AbiIWHfo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 03:35:44 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D48C4128487
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 00:35:42 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id dv25so25994452ejb.12
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 00:35:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=0fgk0xTeAJhk1T3zj7bdRj3KPwWj2kVoqpTx43FNrlI=;
-        b=J0c5LsfiL0ZwT+DoMF6Zzl1bvYavq4WUoGf6gqjk2HR9AIKBKl2t5DCMqLGvXcwz0o
-         ALmJALrsv3uIT5ZNXzcdrLamRTf4/8isAmldxwFuN9sL5XIl2TbKX1E3non/b/27SNzd
-         SliMEwGPJQyIq2+PUljLtv5jkeT3kQiG9sjGI2mSdzKidmcovsQwvRvIRI43817MRtOB
-         880f0p/a6vYIMUaKDP5+MGXqD5aANDYQZBnxsfDBvdyOamKg+mS3T5opUYgODMZZQNFV
-         Pg4fNIgADFC3ICz62K2hHrThWl51L+ddpERuQPyTwSiUP8dhIw/cdNrxKRfhD5q2MCDK
-         azrw==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date;
+        bh=Rybn7PFyL53K0mO/8UvVxIWjK4KWGn0NRuskXcEmtLY=;
+        b=aZjakkIvEjrDDtjlsjr/hVxQ6jmIweeMw+o5A1hGt7fa9Aj88QAMtuuyouBJnoCwQQ
+         hcLmC0c/+UqOXj1eYM1uBwSI2/3mSaydvlg+CfLKoPrzqe71FalK1ttCWCauymSXts3v
+         52kHuMQAbGKOO1fYPAdTSvnq0hylee1iRxwCireZjAHYfQiX4JaiihBt+R95vbspD98O
+         a8dxkpUTn9Kr/Yath7BQubdWX0lgrUY3EcXe4Ttz7OuJlpJHtYoTWp5y4cV7phFIF/vT
+         /h9ksyT3F0HJ90Yu3Ft1vwJ290/3CXgx3sSq0Rk8U27LIijg8UwKex7wwag2dR0nVQSU
+         qoDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=0fgk0xTeAJhk1T3zj7bdRj3KPwWj2kVoqpTx43FNrlI=;
-        b=CsQoL+mpoIjaO8pAaCGgP1rAZdAQvObE0z3HZBCSxrgPnq8hW0q0R/tG+isDB7oOuV
-         nnCLdho8LgVI5wvJAFTVQEC1kgru7kMqo67GkUgwQWCNR2t+/vzpyUfiol1MR1qAuaER
-         aXjVf9J2XGIWRAFyFggyTF3OBUXJROPY3lhPk2yQuM+S+502UK7fA3Xlhmt+lKy6WZIp
-         osNabswd+FH1Vw2OHGqu9eXFpPVH7oBuoMXuYEdKXPDq9CRy0oK0dGJi9OxGKQzQSX0s
-         jvzvsfc4P0RWmMwQO1TTTocv71re753nKJOTpDJwaLBpiMupQ2NS/KzWvc2esSxFBcde
-         bJiQ==
-X-Gm-Message-State: ACrzQf0iKNcqrVP89So0B29/fGySzHYZ3WzugBYon0HTr6DYHCOAuX+f
-        gBtM+6yc/AqzuF+oRm1IS6AwEpxgwRY=
-X-Google-Smtp-Source: AMsMyM6upJAuLwksgTlymGsSiXi3fBMsoSgLZJc+1N/pN4qpP57Q2mAQq206YogeATWAWcXzoLtaUw==
-X-Received: by 2002:a05:6512:2a86:b0:49f:81ed:b28d with SMTP id dt6-20020a0565122a8600b0049f81edb28dmr2576123lfb.520.1663916626266;
-        Fri, 23 Sep 2022 00:03:46 -0700 (PDT)
-Received: from localhost.localdomain (81-233-167-126-no2216.tbcn.telia.com. [81.233.167.126])
-        by smtp.gmail.com with ESMTPSA id w2-20020ac25d42000000b00492eb7205b0sm1303943lfd.210.2022.09.23.00.03.44
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=Rybn7PFyL53K0mO/8UvVxIWjK4KWGn0NRuskXcEmtLY=;
+        b=aLLq2nAx0M+80WpIpdN0zBpYCDaHUMP9c26IrxgW+FoJ3Wd8Jf9QW0Gs1f4091hc9T
+         BmTlSs5DJzix/j7/MMX7IUp04/QXVuInNEppV5/xbG4eYwiIACBgITUs8Q5/inlWlZ/5
+         fbiTfqCZtZoI8SyxGlyF9jyGBbZB1YVtsBEIe9T6XA0iMCDExOe6nTsX62pNrQNJjWOa
+         O/vUkUmttYCYAWSHgQ3FpSjiiWBgA4VFJ5Ok/35nSsilUBI2U88zDbzENZ1rFWh5a2XD
+         DQd0XpjvCrVxQ+MxpXwnT7GzWQgrWrfc2mE2RHP8b5DaiIXiuLXOqMyknZAP1unZxN03
+         XTUg==
+X-Gm-Message-State: ACrzQf3DR2PdRcx/FN4XQo/Gj7PysbwL0fpAiRdWiXko8k3ry6g7SrIV
+        ILvHmv7ILCgyfQ5OTdTAq9Q=
+X-Google-Smtp-Source: AMsMyM4xbOj4rBsCOCbaPDxWrS1n1u7dJXQccYwMjfL1K5adHF5CITBZF6lyQLZhfM1MLIYqYftibw==
+X-Received: by 2002:a17:906:6a23:b0:782:e8:1b7d with SMTP id qw35-20020a1709066a2300b0078200e81b7dmr5901632ejc.127.1663918541184;
+        Fri, 23 Sep 2022 00:35:41 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id 6-20020a170906318600b0073dcdf9b0bcsm3768591ejy.17.2022.09.23.00.35.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Sep 2022 00:03:45 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Victoria Dye <vdye@github.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] cmd-list.perl: fix identifying man sections
-Date:   Fri, 23 Sep 2022 09:03:34 +0200
-Message-Id: <20220923070334.1970213-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.38.0.rc1.355.g7147cddc23
+        Fri, 23 Sep 2022 00:35:40 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1obdDn-003EnQ-2S;
+        Fri, 23 Sep 2022 09:35:39 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Skrab Sah <skrab.sah@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: what if i use makeheader tool to generate c header file, it would
+        be accepted.
+Date:   Fri, 23 Sep 2022 09:28:03 +0200
+References: <CA+J78MWhp3qmbBhhSoioJP+d5eh-iEd_vHZdTNB69o7EvvXWYQ@mail.gmail.com>
+        <220919.86zgev635z.gmgdl@evledraar.gmail.com>
+        <xmqqbkrbb6ua.fsf@gitster.g>
+        <CA+J78MWvOEbJY6+NcLFn0SJGMZn=N7QUMwc=Bta+uHicvD892w@mail.gmail.com>
+        <220920.86illi5p6w.gmgdl@evledraar.gmail.com>
+        <CA+J78MUM=JiAF7R_8oV23OQ-LndJbRm4AUdPsgS4HT4SduFgiw@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <CA+J78MUM=JiAF7R_8oV23OQ-LndJbRm4AUdPsgS4HT4SduFgiw@mail.gmail.com>
+Message-ID: <220923.861qs25yr8.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We attribute each documentation text file to a man section by finding a
-line in the file that looks like "gitfoo(<digit>)". Commit cc75e556a9
-("scalar: add to 'git help -a' command list", 2022-09-02) updated this
-logic to look not only for "gitfoo" but also "scalarfoo". In doing so,
-it forgot to account for the fact that after the updated regex has found
-a match, the man section is no longer to be found in `$1` but now lives
-in `$2`.
 
-This makes our git(1) manpage look as follows:
+On Wed, Sep 21 2022, Skrab Sah wrote:
 
-  Main porcelain commands
-       git-add(git)
-           Add file contents to the index.
+> [...]
+> Is Makefile generated by another script?
+> [...]
+> For patches, I need some time and your help.
 
-  [...]
+Aside from what Junio noted in another reply: I and others here are
+generally happy to help, but when you're proposing to entirely re-do how
+a part of our build process works, then you really should know the
+answers to not only the basics ("is the Makefile generated?"), but also
+the more complex interactions.
 
-       gitk(git)
-           The Git repository browser.
+If you're still interested I think there's good things to work on in
+this area, but starting smaller (e.g. my upthread iwyu suggestion, or
+similar) would be much better.
 
-       scalar(scalar)
-           A tool for managing large Git repositories.
+I.e. think about the practical benefits of a proposed big rewrite are,
+and whether there's ways to get some large portion of that in easier
+ways.
 
-Restore the man sections by grabbing the correct value out of the regex
-match.
-
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- This is a v2.38.0-rc1 regression.
-
- Documentation/cmd-list.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 9515a499a3..16451d81b8 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -11,7 +11,7 @@ sub format_one {
- 	open I, '<', "$name.txt" or die "No such file $name.txt";
- 	while (<I>) {
- 		if (/^(git|scalar)[a-z0-9-]*\(([0-9])\)$/) {
--			$mansection = $1;
-+			$mansection = $2;
- 			next;
- 		}
- 		if (/^NAME$/) {
--- 
-2.38.0.rc1.355.g7147cddc23
+> On Tue, 20 Sept 2022 at 15:43, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <av=
+arab@gmail.com> wrote:
+>>
+>>
+>> On Tue, Sep 20 2022, Skrab Sah wrote:
+>>
+>> > Let me elaborate to you, how and why I wanted to implement the
+>> > makeheaders tool in the project.
+>> >
+>> > First of all, this program will automatically generate c header(.h)
+>> > files for specified c source(.c) files, which will help the developer.
+>> >
+>> > Here the test shows how the tool can be implemented in different
+>> > cases: https://github.com/skrab-sah/makeheaders-test
+>> >
+>> >
+>> > pros:
+>> >     1. it will slightly reduce the size of the project.
+>> >     2. no need to declare anything in the header file, which is time
+>> > consuming and a headache for developers.
+>>
+>> Sure, this all sound interesting in principle, and I think the answer is
+>> definitely "we're not opposed in principle, but if you're interested
+>> let's see patches".
+>>
+>> But whether this is worthwhile is something that really can't be
+>> answered until someone (i.e. you) puts in the legwork of implementing
+>> it.
+>>
+>> You'll then run into various trade-offs you'd have to make, and issues
+>> you may not have forseen. Just some I can think of offhand:
+>>
+>>  * It's unclear if you mean that we'd commit the generated files or
+>>    not. If "not" then our Makefile will need to learn to do two-stage
+>>    compilation. I.e. we'd ship a copy of the makeheader tool, build
+>>    that, build the headers, and then do our "real" build.
+>>
+>>    I happen to have an implementation of that "two-stage" compilation
+>>    for entirely different reasons (being able to do configure/probes for
+>>    our compilation), but *just* doing that is non-trivial.
+>>
+>>  * The way we document various APIs now is via manually curated header
+>>    files, e.g. how would a strbuf.h look like in this model you're
+>>    proposing?
+>>
+>>    Obviously we could move those comments to the *.c file, but right now
+>>    we have a convention of implementation comments going in the *.c
+>>    file, but the API docs going in the *.h.
+>>
+>>    We could tell them apart with "/*" v.s. "/**" comments, as we do
+>>    now. But part of the point of having them in the *.h file is that you
+>>    can easily skim the docs & APi definition. Putting the docs in the
+>>    much bigger *.c file wouldn't be nice.
+>>
+>>  * We'd have another not-quite-compiler C-parser running on git.git,
+>>    right now we basically have a dependency on spatch's parsing. See
+>>    5cf88fd8b05 (git-compat-util.h: use "UNUSED", not "UNUSED(var)",
+>>    2022-08-25).
+>>
+>>    Is this parser smart enough to handle all the edge cases? E.g. for
+>>    KHASH_INIT() we define interfaces via a macro-indirection, so an
+>>    auto-generated *.h needs to resolve the macros in the *.c file.
 
