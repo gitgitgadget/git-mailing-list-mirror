@@ -2,95 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C6E9C6FA83
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 19:17:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 676CFC07E9D
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 19:36:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232427AbiIWTRq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 15:17:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34878 "EHLO
+        id S231576AbiIWTgD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 15:36:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbiIWTRp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 15:17:45 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C969112C68F
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 12:17:43 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id v128so677602ioe.12
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 12:17:43 -0700 (PDT)
+        with ESMTP id S231160AbiIWTgB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 15:36:01 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 155FF11CB2B
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 12:36:01 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id u132so1064551pfc.6
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 12:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=VLzV2iXPWSTfTVr4zJdlcGXvW2y6VVaVRLSs01Dtw28=;
-        b=sl4/XbleplZFSWvnF1YWPBQalT5nTkvb9JaLlmDKfh5giM1T6TW/hBpqfD4OHd4CrZ
-         NIMvkzzxbge9NSgOxaMNUE7Z7iGl4lZE1nl0bX1nlPcElDRID/26jwq3OQYByUhASNzK
-         lfcFUJlYdB+OdxhMOP+pRTlEcKBW1HD71+THoyYB3AJto21jPFIpW4Rgm6QBSOcRPGsl
-         axppWlWf3fKHFkQX1R4mfzaHJjnw9bmCsRh/UbiWXShrA1+P1w6e6dWHjzDMKacTd8FT
-         DRuDmA/tplkza2trj8XDonjry000iNvAG93rRzv4CNa2XbtMghLNBFYLJe1TkCO0pI/N
-         bpTQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=c1NHcHC8WRryyN3DqgOkP8chvKVLYsPQTEmq5gDgEhA=;
+        b=Qlsno4CsaGKFkjqTNgccFqNnZ9MPjP4sl8xgGX0SfFrHQZe3dPmKNsm6YD7LtWesXT
+         G5Mt6FAtdy3taUMsK+m5i4l3+eKqzo7QGAMWRZdQhM1ta+VydeoXl1H+5DT4XuYk99lA
+         QQQvgbblJFXv6OcGL5cXicIDxLlqF4Btca7qabL2+QOsIM77p5X/QwlF8plKb/WJYxDA
+         +VtVVp9L9IOvbCKl+3hZ9h1Tu4Ts6NS/5hGVTLE5k1qldoXlFAzdY72SNvR5LvXEgBEf
+         vEwABrCbxVwiwEDFL2N38UZwvkJpK9F5Yhl8kYCf+/9/Bh1cfv4kzMa3l7Ayk2IkJ+nH
+         SttQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=VLzV2iXPWSTfTVr4zJdlcGXvW2y6VVaVRLSs01Dtw28=;
-        b=sjJFxYPfBWFWgpiBbIeVm1jzHc8tPi+AiUbcD8zIn1OzqwqDLjnTT6wqeh39A38hSP
-         q3MfaoPhvit4Llyo6YWx28Mtu+LriKrmEHj3hPo8lJX2up+GMbCRedn5E6cv8Z2IjdX5
-         N2Ix5mlbKtPp3MzlOjXsc8ieJygZJ4CZeGgbjSdaHFuy0BitpsDrThoj/H4XvDZY2rV6
-         csZAJX7OdRx0cqMtjtkRp4YlSypiCKSVtUTkdee1XYaKWcNfB8LfTOPm0SdVzP/JOnBX
-         cS7WPh9CSF+C1LRFhTR5jnNMd7T8WupXlIz6XhTwSyWMKRPESI0ZHxIWBhG5BOKmiETE
-         tyYg==
-X-Gm-Message-State: ACrzQf2PfJdEu79VKplQVYQlqPanTowraZyrrcuzbjif9zKhDpm4QLke
-        qTAJRL+wkzA8ClCPJNrNeSjHPA==
-X-Google-Smtp-Source: AMsMyM7KZ9eDu2h7bae7yNxZx0jbfkco+fm/s278WgPUa3THz7V8h7CeEDe1uJ9XgvATLiB0tmjDFQ==
-X-Received: by 2002:a05:6638:35a1:b0:35a:6967:acbe with SMTP id v33-20020a05663835a100b0035a6967acbemr5634534jal.37.1663960662799;
-        Fri, 23 Sep 2022 12:17:42 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id i7-20020a056638380700b00349d2d52f6asm3709367jav.37.2022.09.23.12.17.42
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=c1NHcHC8WRryyN3DqgOkP8chvKVLYsPQTEmq5gDgEhA=;
+        b=0Uoe7b4R/jTPYlBIKOscEKwlvbnbJlkJ7qUIIGjN/ABLBbMaoHL+nAyI30ebgLVBTR
+         Gniao7tEwwco7IaIL8OrPd6Sq8fLunrEYZXTSDwIN34T5+Ho7igzYO1zzHd7bD7kJwp+
+         wBFkpA2obeUPp4koMxUScXzCFt+DihP8UVTac9VrDtCvXW2bAgE8VPUBW226PAOWb07h
+         Ap4VrwFsgTLbp42zBQtILYqRop0d04+1V5OiaZPPUoXDD0eeJPGD1zCE+uoPowXVn8uU
+         Y2QSq3wbucYlGsKmXMWp+cCHysc75caFXc3Cxn8GvpeAvS0zx2U4UbC+XGjOe+sqqC59
+         XTPw==
+X-Gm-Message-State: ACrzQf15YGZEcjSZZ0VGp0Lu0o1rjIr9DkNYPXmmqb6CUF6uYknrE5/X
+        pcZ0VbXs2kkvl6ivRxdTFx8lMBQQqKPlqg==
+X-Google-Smtp-Source: AMsMyM56rJTLnxt6n6JfN9UMHhDkT4UBo96XKVWw+3JFhyWVb1QOBW0C7ap2WUfgOY1Xl8HQdFW+zQ==
+X-Received: by 2002:a05:6a00:3492:b0:540:b30d:8396 with SMTP id cp18-20020a056a00349200b00540b30d8396mr10766089pfb.81.1663961759814;
+        Fri, 23 Sep 2022 12:35:59 -0700 (PDT)
+Received: from HB2.. ([2409:4081:9e0a:3b3c:eec2:b296:a7ef:6188])
+        by smtp.gmail.com with ESMTPSA id q9-20020a170902a3c900b00177e590df96sm6316181plb.118.2022.09.23.12.35.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Sep 2022 12:17:42 -0700 (PDT)
-Date:   Fri, 23 Sep 2022 15:17:41 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, git@jeffhostetler.com,
-        chakrabortyabhradeep79@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH] pack-bitmap: remove trace2 region from hot path
-Message-ID: <Yy4GVT8VZ4dOyGDy@nand.local>
-References: <pull.1365.git.1663938034607.gitgitgadget@gmail.com>
- <xmqq7d1uuh5f.fsf@gitster.g>
+        Fri, 23 Sep 2022 12:35:59 -0700 (PDT)
+From:   Siddharth Asthana <siddharthasthana31@gmail.com>
+To:     git@vger.kernel.org
+Cc:     christian.couder@gmail.com, gitster@pobox.com, johncai86@gmail.com,
+        Siddharth Asthana <siddharthasthana31@gmail.com>
+Subject: [PATCH] doc/cat-file: allow --use-mailmap for --batch options
+Date:   Sat, 24 Sep 2022 01:05:43 +0530
+Message-Id: <20220923193543.58635-1-siddharthasthana31@gmail.com>
+X-Mailer: git-send-email 2.38.0.rc1.3.g2cb248e00d.dirty
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7d1uuh5f.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 23, 2022 at 10:36:44AM -0700, Junio C Hamano wrote:
-> diff --git c/t/t5310-pack-bitmaps.sh w/t/t5310-pack-bitmaps.sh
-> index 7e50f8e765..2b1efc923b 100755
-> --- c/t/t5310-pack-bitmaps.sh
-> +++ w/t/t5310-pack-bitmaps.sh
-> @@ -455,7 +455,7 @@ test_expect_success 'verify writing bitmap lookup table when enabled' '
->  	grep "\"label\":\"writing_lookup_table\"" trace2
->  '
->
-> -test_expect_success 'lookup table is actually used to traverse objects' '
-> +: test_expect_success 'lookup table is actually used to traverse objects' '
->  	git repack -adb &&
->  	GIT_TRACE2_EVENT="$(pwd)/trace3" \
->  		git rev-list --use-bitmap-index --count --all &&
+The command git cat-file can now use the mailmap mechanism to replace
+idents with their canonical versions for commit and tag objects. There
+are several options like `--batch`, `--batch-check` and
+`--batch-command` that can be combined with `--use-mailmap`. But, the
+documentation for `--batch`, `--batch-check` and `--batch-command`
+doesn't say so. This patch fixes that documentation.
 
-Yeah, I would advocate for dropping this test entirely. That trace2
-marker is the only indication that is so obvious that we're using the
-lookup table to read bitmaps.
+Mentored-by: Christian Couder's avatarChristian Couder <christian.couder@gmail.com>
+Mentored-by: John Cai's avatarJohn Cai <johncai86@gmail.com>
+Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+---
+ Documentation/git-cat-file.txt | 44 ++++++++++++++++++++++++----------
+ 1 file changed, 31 insertions(+), 13 deletions(-)
 
-Perhaps the pack-bitmap helper could be taught to dump which extensions
-it sees, and then write a test based on that? Although that isn't really
-testing anything new, either, since we sometimes *notice* the extension
-but don't actually read anything based on it (e.g., when disabled).
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index ec30b5c574..3fdafc07ce 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -89,26 +89,44 @@ OPTIONS
+ --batch::
+ --batch=<format>::
+ 	Print object information and contents for each object provided
+-	on stdin.  May not be combined with any other options or arguments
+-	except `--textconv` or `--filters`, in which case the input lines
+-	also need to specify the path, separated by whitespace.  See the
+-	section `BATCH OUTPUT` below for details.
++	on stdin.
++
++	* When used with `--textconv` or `--filters`, the input lines
++	  must specify the path, separated by whitespace. See the section
++	  `BATCH OUTPUT` below for details.
++
++	* When used with `--use-mailmap`, the info command shows the size
++	  the object, if the idents recorded in it were the ones "corrected"
++	  by the mailmap mechanism.
++	  Cannot be used with any other options.
+ 
+ --batch-check::
+ --batch-check=<format>::
+-	Print object information for each object provided on stdin.  May
+-	not be combined with any other options or arguments except
+-	`--textconv` or `--filters`, in which case the input lines also
+-	need to specify the path, separated by whitespace.  See the
+-	section `BATCH OUTPUT` below for details.
++	Print object information for each object provided on stdin.
++
++	* When used with `--textconv` or `--filters`, the input lines must
++	 specify the path, separated by whitespace. See the section
++	 `BATCH OUTPUT` below for details.
++
++	* When used with `--use-mailmap`, the info command shows the size
++	  the object, if the idents recorded in it were the ones "corrected"
++	  by the mailmap mechanism.
++	  Cannot be used with any other options.
+ 
+ --batch-command::
+ --batch-command=<format>::
+ 	Enter a command mode that reads commands and arguments from stdin. May
+-	only be combined with `--buffer`, `--textconv` or `--filters`. In the
+-	case of `--textconv` or `--filters`, the input lines also need to specify
+-	the path, separated by whitespace. See the section `BATCH OUTPUT` below
+-	for details.
++	only be combined with `--buffer`, `--textconv`, `--use-mailmap` or
++	`--filters`.
++
++	* When used with `--textconv` or `--filters`, the input lines must
++	  specify the path, separated by whitespace. See the section
++	  `BATCH OUTPUT` below for details.
++
++	* When used with `--use-mailmap`, the info command shows the size the
++	  object, if the idents recorded in it were the ones "corrected" by the
++	  mailmap mechanism.
++
+ +
+ `--batch-command` recognizes the following commands:
+ +
+-- 
+2.38.0.rc1.3.g2cb248e00d.dirty
 
-So I'd be content just dropping this.
-
-Thanks,
-Taylor
