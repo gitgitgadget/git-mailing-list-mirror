@@ -2,378 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB695C04A95
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 18:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1034DC07E9D
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 18:56:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232438AbiIWS4E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 14:56:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34784 "EHLO
+        id S232926AbiIWS4H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 14:56:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232768AbiIWSzh (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232799AbiIWSzh (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 23 Sep 2022 14:55:37 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCD18B1F4
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 11:55:33 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id bq9so1326155wrb.4
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 11:55:33 -0700 (PDT)
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7FE9113B6F
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 11:55:34 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id x18so1303610wrm.7
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 11:55:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=F6GAX5eSktkNuwYWW73B6JM7dgfEDD6Xwiw7XxhHayM=;
-        b=V67Pnk66mt4UKfhOwyJDLsAzTIo/ADLIQa1g3FvuPXO69G6LzjyK7VzvCck+b4Wej4
-         jqpLWYHJEgMzoK7KS6OenyTKM7pFHYRD4rpqYEG+e5+QoyFykHjMy6TQL/e1Jqxhalqs
-         7yPOFEIU7tW5j+7U32fJm/cfzt1kn+nf7LV74KA8LWrnk6TEMDqnAa2YhPR1903LAQFo
-         LUsOvG//SBNY2OfV6aTBA+4D4KDjB2Orcp+wNBaCHu+pEB2kSkh5ToDqEIMw94/v4doo
-         VRqD7IW568DrmvxvmqsEijCSntrxNkzwNo12wq9Q28IRFntsWQNWxNaKVT/M3PuUorX3
-         USqQ==
+        bh=PEnkEJgdzOsvNDgHvHeAhPbE1UBAGiD24xm8FNDIjiU=;
+        b=cdeSRLLk3WwXR7IIYdLwd9pua2lxy0lFV6z5C6QVcP/tA/avKlS8nth0kmOYK5AleT
+         /xFruL0ijG+Pe1E61+usxsEymesQtdPTZHCYMxRG9ux9wJ0b5fuSSUTz7xVoD5cjAubg
+         +4U1+B0QeIygysKbSzdgD2tqAAcdm7AlrSa9H21ffrxosnaFVvGIlmGFBYolGr93F7Hs
+         Ejrb3aogEjHwze7tLWfG3LTc2v7ODYcClzvctQ2V/Ldvk5Q0UoASSC+SwWNqpGfhKUSe
+         feB9q1oUUMIDDv1ftTqOY14nTJL3m0vV4PUK2PRZbyTzSISLwM3KwERHOK0mYo+NALHZ
+         nZ+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=F6GAX5eSktkNuwYWW73B6JM7dgfEDD6Xwiw7XxhHayM=;
-        b=sulpcDFP+cAr8FkpqEtfLSwBTw2cKPxYGbHXh+aVqhzTTnYm9aZ7kQRp1NIxs9agLQ
-         VWJf7o3dlne1UeiMOTn5EbWeJ2cpLnf0iBHnNaxTnnMJj0ye+RdAXenqrnBiv7Mrrguy
-         4sL0LXNwPBASIsEr9ZCqXcMgbZRPDiPhGXub1npItTcupdGrDn4pcoo/NjlOKCnmNqpj
-         DDs9gkAeEMOEVutYlJCjY0h1XutI554csEYDyuW0tTNBaVPsy2MlVJnCTvE8fxrStQiQ
-         EcCjMyXAJ/cBSVeVIykFY7XVKw/QCsOGE2OEdyzXF9YBO3YX0EWarE1i/0guk/JW4Onp
-         9YAA==
-X-Gm-Message-State: ACrzQf1rBu/zTECNwhZqEdqHGs8PlX1ycuUCm1MH/+oF/HXyTBq8/1k0
-        VmYmkHaxA+RE8K0ja6qljuLmi/NIPB0=
-X-Google-Smtp-Source: AMsMyM6Wxbw6Aboc5X14NWHc9Fr6bxD+MiOtGLKovDwhk5U6qtuDJdYZBf8pfZ7q3msB9bUX89xBaQ==
-X-Received: by 2002:adf:db44:0:b0:22a:56eb:927f with SMTP id f4-20020adfdb44000000b0022a56eb927fmr6253545wrj.627.1663959331863;
-        Fri, 23 Sep 2022 11:55:31 -0700 (PDT)
+        bh=PEnkEJgdzOsvNDgHvHeAhPbE1UBAGiD24xm8FNDIjiU=;
+        b=BnljKOoy2q+3FVqwbTUTlyW0Dej3f20Gt9cO/z7S2qBwct1kKnqzjph3+sukft2jJh
+         wpeH00Snph1O58ZTcQVY6F6HoLoSD3p1MmW+fJcXrtzVPtN3SpDQSwPdFMNGZ0h4R5nD
+         mlMUDE25vF7VuILQQAdnI+WBeWsSrJzH0XLyEiY73/bzOTV0ZNgTS3okgPE04M5cE/JX
+         /dq9iGfA5OO4hgUe3ZPkeNkAFgP0ofCo+cImvWXLayWJe6OwMZcQo3tqJZXLp42vGNKk
+         Fsmqr34SAWRQ8LKgBwvfUatAmx8PGnqb8nU5bkuYFraXU6MPZxReQkVJT+D6K2UCuutz
+         oE1Q==
+X-Gm-Message-State: ACrzQf2cyCxVSa0NpW3uoEdvnTcpjgAzkzYu0IailNgRnofCVO1Wv0iG
+        F2FnmW8ClY9GeDfTML2VjwicZWJHaYo=
+X-Google-Smtp-Source: AMsMyM7Hnjg5Y2EOk8GpeQap3LTf0YAHjh/eVl8iEYz7E1HlwOy2D9mecuSDNh2jywK4XCbYmShgZg==
+X-Received: by 2002:a5d:5150:0:b0:22a:43a8:145b with SMTP id u16-20020a5d5150000000b0022a43a8145bmr6271634wrt.170.1663959333319;
+        Fri, 23 Sep 2022 11:55:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w10-20020a05600c474a00b003b4ac05a8a4sm4000046wmo.27.2022.09.23.11.55.31
+        by smtp.gmail.com with ESMTPSA id u7-20020a05600c4d0700b003b4e009deb2sm3432024wmp.41.2022.09.23.11.55.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Sep 2022 11:55:31 -0700 (PDT)
-Message-Id: <914028341842a4d57e02ec42a7426d3aa83640f9.1663959325.git.gitgitgadget@gmail.com>
+        Fri, 23 Sep 2022 11:55:32 -0700 (PDT)
+Message-Id: <d087d467e3fe3000eb19939c2bb5e5c0723fd908.1663959325.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1356.git.1663959324.gitgitgadget@gmail.com>
 References: <pull.1356.git.1663959324.gitgitgadget@gmail.com>
-From:   "Stefan Xenos via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 23 Sep 2022 18:55:21 +0000
-Subject: [PATCH 07/10] evolve: implement the git change command
+From:   "Chris Poucet via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 23 Sep 2022 18:55:23 +0000
+Subject: [PATCH 09/10] evolve: add delete command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Christophe Poucet <christophe.poucet@gmail.com>,
-        Stefan Xenos <sxenos@google.com>
+        Chris Poucet <poucet@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Stefan Xenos <sxenos@google.com>
+From: Chris Poucet <poucet@google.com>
 
-Implement the git change update command, which
-are sufficient for constructing change graphs.
+The delete command allows a user to delete one or more changes.
+This effectively deletes the corresponding /refs/metas/foo ref.
 
-For example, to create a new change (a stable name) that refers to HEAD:
-
-git change update -c HEAD
-
-To record a rebase or amend in the change graph:
-
-git change update -c <new_commit> -r <old_commit>
-
-To record a cherry-pick in the change graph:
-
-git change update -c <new_commit> -o <original_commit>
-
-Signed-off-by: Stefan Xenos <sxenos@google.com>
 Signed-off-by: Chris Poucet <poucet@google.com>
 ---
- .gitignore       |   1 +
- Makefile         |   1 +
- builtin.h        |   1 +
- builtin/change.c | 199 +++++++++++++++++++++++++++++++++++++++++++++++
- git.c            |   1 +
- ref-filter.c     |   2 +-
- ref-filter.h     |   4 +
- 7 files changed, 208 insertions(+), 1 deletion(-)
- create mode 100644 builtin/change.c
+ builtin/change.c | 82 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 80 insertions(+), 2 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index b3dcafcb331..a57fd8d8897 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -28,6 +28,7 @@
- /git-bugreport
- /git-bundle
- /git-cat-file
-+/git-change
- /git-check-attr
- /git-check-ignore
- /git-check-mailmap
-diff --git a/Makefile b/Makefile
-index 68082ef94c7..82f68f13d9f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1142,6 +1142,7 @@ BUILTIN_OBJS += builtin/branch.o
- BUILTIN_OBJS += builtin/bugreport.o
- BUILTIN_OBJS += builtin/bundle.o
- BUILTIN_OBJS += builtin/cat-file.o
-+BUILTIN_OBJS += builtin/change.o
- BUILTIN_OBJS += builtin/check-attr.o
- BUILTIN_OBJS += builtin/check-ignore.o
- BUILTIN_OBJS += builtin/check-mailmap.o
-diff --git a/builtin.h b/builtin.h
-index 8901a34d6bf..c10f20c972c 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -122,6 +122,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix);
- int cmd_bugreport(int argc, const char **argv, const char *prefix);
- int cmd_bundle(int argc, const char **argv, const char *prefix);
- int cmd_cat_file(int argc, const char **argv, const char *prefix);
-+int cmd_change(int argc, const char **argv, const char *prefix);
- int cmd_checkout(int argc, const char **argv, const char *prefix);
- int cmd_checkout__worker(int argc, const char **argv, const char *prefix);
- int cmd_checkout_index(int argc, const char **argv, const char *prefix);
 diff --git a/builtin/change.c b/builtin/change.c
-new file mode 100644
-index 00000000000..b0e29e87ec9
---- /dev/null
+index 67d708dc8de..07d029d82d5 100644
+--- a/builtin/change.c
 +++ b/builtin/change.c
-@@ -0,0 +1,199 @@
-+#include "builtin.h"
-+#include "ref-filter.h"
-+#include "parse-options.h"
-+#include "metacommit.h"
-+#include "change-table.h"
-+#include "config.h"
-+
-+static const char * const builtin_change_usage[] = {
-+	N_("git change update [--force] [--replace <treeish>...] [--origin <treesih>...] [--content <newtreeish>]"),
+@@ -4,10 +4,12 @@
+ #include "metacommit.h"
+ #include "change-table.h"
+ #include "config.h"
++#include "refs.h"
+ 
+ static const char * const builtin_change_usage[] = {
+ 	N_("git change list [<pattern>...]"),
+-	N_("git change update [--force] [--replace <treeish>...] [--origin <treesih>...] [--content <newtreeish>]"),
++	N_("git change update [--force] [--replace <treeish>...] [--origin <treeish>...] [--content <newtreeish>]"),
++	N_("git change delete <change-name>..."),
+ 	NULL
+ };
+ 
+@@ -17,7 +19,12 @@ static const char * const builtin_list_usage[] = {
+ };
+ 
+ static const char * const builtin_update_usage[] = {
+-	N_("git change update [--force] [--replace <treeish>...] [--origin <treesih>...] [--content <newtreeish>]"),
++	N_("git change update [--force] [--replace <treeish>...] [--origin <treeish>...] [--content <newtreeish>]"),
 +	NULL
 +};
 +
-+static const char * const builtin_update_usage[] = {
-+	N_("git change update [--force] [--replace <treeish>...] [--origin <treesih>...] [--content <newtreeish>]"),
-+	NULL
-+};
++static const char * const builtin_delete_usage[] = {
++	N_("git change delete <change-name>..."),
+ 	NULL
+ };
+ 
+@@ -238,6 +245,75 @@ static int change_update(int argc, const char **argv, const char* prefix)
+ 	return result;
+ }
+ 
++typedef int (*each_change_name_fn)(const char *name, const char *ref,
++				   const struct object_id *oid, void *cb_data);
 +
-+struct update_state {
-+	int options;
-+	const char* change;
-+	const char* content;
-+	struct string_list replace;
-+	struct string_list origin;
-+};
-+
-+static void init_update_state(struct update_state *state)
++static int for_each_change_name(const char **argv, each_change_name_fn fn,
++				void *cb_data)
 +{
-+	memset(state, 0, sizeof(*state));
-+	state->content = "HEAD";
-+	string_list_init_nodup(&state->replace);
-+	string_list_init_nodup(&state->origin);
-+}
++	const char **p;
++	struct strbuf ref = STRBUF_INIT;
++	int had_error = 0;
++	struct object_id oid;
 +
-+static void clear_update_state(struct update_state *state)
-+{
-+	string_list_clear(&state->replace, 0);
-+	string_list_clear(&state->origin, 0);
-+}
-+
-+static int update_option_parse_replace(const struct option *opt,
-+				       const char *arg, int unset)
-+{
-+	struct update_state *state = opt->value;
-+	string_list_append(&state->replace, arg);
-+	return 0;
-+}
-+
-+static int update_option_parse_origin(const struct option *opt,
-+				      const char *arg, int unset)
-+{
-+	struct update_state *state = opt->value;
-+	string_list_append(&state->origin, arg);
-+	return 0;
-+}
-+
-+static int resolve_commit(const char *committish, struct object_id *result)
-+{
-+	struct commit *commit;
-+	if (get_oid_committish(committish, result))
-+		die(_("Failed to resolve '%s' as a valid revision."), committish);
-+	commit = lookup_commit_reference(the_repository, result);
-+	if (!commit)
-+		die(_("Could not parse object '%s'."), committish);
-+	oidcpy(result, &commit->object.oid);
-+	return 0;
-+}
-+
-+static void resolve_commit_list(const struct string_list *commitsish_list,
-+	struct oid_array* result)
-+{
-+	int i;
-+	for (i = 0; i < commitsish_list->nr; i++) {
-+		struct string_list_item *item = &commitsish_list->items[i];
-+		struct object_id next;
-+		resolve_commit(item->string, &next);
-+		oid_array_append(result, &next);
++	for (p = argv; *p; p++) {
++		strbuf_reset(&ref);
++		/* Convenience functionality to avoid having to type `metas/` */
++		if (strncmp("metas/", *p, 5)) {
++			strbuf_addf(&ref, "refs/metas/%s", *p);
++		} else {
++			strbuf_addf(&ref, "refs/%s", *p);
++		}
++		if (read_ref(ref.buf, &oid)) {
++			error(_("change '%s' not found."), *p);
++			had_error = 1;
++			continue;
++		}
++		if (fn(*p, ref.buf, &oid, cb_data))
++			had_error = 1;
 +	}
++	strbuf_release(&ref);
++	return had_error;
 +}
 +
-+/*
-+ * Given the command-line options for the update command, fills in a
-+ * metacommit_data with the corresponding changes.
-+ */
-+static void get_metacommit_from_command_line(
-+	const struct update_state* commands, struct metacommit_data *result)
++static int collect_changes(const char *name, const char *ref,
++			   const struct object_id *oid, void *cb_data)
 +{
-+	resolve_commit(commands->content, &(result->content));
-+	resolve_commit_list(&(commands->replace), &(result->replace));
-+	resolve_commit_list(&(commands->origin), &(result->origin));
++	struct string_list *ref_list = cb_data;
++
++	string_list_append(ref_list, ref);
++	ref_list->items[ref_list->nr - 1].util = oiddup(oid);
++	return 0;
 +}
 +
-+static int perform_update(
-+	struct repository *repo,
-+	const struct update_state *state,
-+	struct strbuf *err)
-+{
-+	struct metacommit_data metacommit;
-+	struct change_table chtable;
-+	struct string_list changes;
-+	int ret;
-+	int i;
-+
-+	change_table_init(&chtable);
-+	change_table_add_all_visible(&chtable, repo);
-+	string_list_init_dup(&changes);
-+
-+	init_metacommit_data(&metacommit);
-+
-+	get_metacommit_from_command_line(state, &metacommit);
-+
-+	ret = record_metacommit_withresult(repo, &chtable, &metacommit,
-+		state->change, state->options, err, &changes);
-+
-+	for (i = 0; i < changes.nr; i++) {
-+		struct string_list_item *it = &changes.items[i];
-+
-+		const char* name = lstrip_ref_components(it->string, 1);
-+		if (!name)
-+			die(_("Failed to remove `refs/` from %s"), it->string);
-+
-+		if (it->util)
-+			fprintf(stdout, N_("Updated change %s\n"), name);
-+		else
-+			fprintf(stdout, N_("Created change %s\n"), name);
-+	}
-+
-+	string_list_clear(&changes, 0);
-+	change_table_clear(&chtable);
-+	clear_metacommit_data(&metacommit);
-+
-+	return ret;
-+}
-+
-+static int change_update(int argc, const char **argv, const char* prefix)
-+{
-+	int result;
-+	int force = 0;
-+	int newchange = 0;
-+	struct strbuf err = STRBUF_INIT;
-+	struct update_state state;
++static int change_delete(int argc, const char **argv, const char* prefix) {
++	int result = 0;
++	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
++	struct string_list_item *item;
 +	struct option options[] = {
-+		{ OPTION_CALLBACK, 'r', "replace", &state, N_("commit"),
-+			N_("marks the given commit as being obsolete"),
-+			0, update_option_parse_replace },
-+		{ OPTION_CALLBACK, 'o', "origin", &state, N_("commit"),
-+			N_("marks the given commit as being the origin of this commit"),
-+			0, update_option_parse_origin },
-+		OPT_BOOL('F', "force", &force,
-+			N_("overwrite an existing change of the same name")),
-+		OPT_STRING('c', "content", &state.content, N_("commit"),
-+				 N_("identifies the new content commit for the change")),
-+		OPT_STRING('g', "change", &state.change, N_("commit"),
-+				 N_("name of the change to update")),
-+		OPT_BOOL('n', "new", &newchange,
-+			N_("create a new change - do not append to any existing change")),
 +		OPT_END()
 +	};
 +
-+	init_update_state(&state);
++	argc = parse_options(argc, argv, prefix, options, builtin_delete_usage, 0);
 +
-+	argc = parse_options(argc, argv, prefix, options, builtin_update_usage, 0);
++	result = for_each_change_name(argv, collect_changes, (void *)&refs_to_delete);
++	if (delete_refs(NULL, &refs_to_delete, REF_NO_DEREF))
++		result = 1;
 +
-+	if (force) state.options |= UPDATE_OPTION_FORCE;
-+	if (newchange) state.options |= UPDATE_OPTION_NOAPPEND;
++	for_each_string_list_item(item, &refs_to_delete) {
++		const char *name = item->string;
++		struct object_id *oid = item->util;
++		if (!ref_exists(name))
++			printf(_("Deleted change '%s' (was %s)\n"),
++				item->string + 5,
++				find_unique_abbrev(oid, DEFAULT_ABBREV));
 +
-+	result = perform_update(the_repository, &state, &err);
-+
-+	if (result < 0) {
-+		error("%s", err.buf);
-+		strbuf_release(&err);
++		free(oid);
 +	}
-+
-+	clear_update_state(&state);
-+
++	string_list_clear(&refs_to_delete, 0);
 +	return result;
 +}
 +
-+int cmd_change(int argc, const char **argv, const char *prefix)
-+{
-+	/* No options permitted before subcommand currently */
-+	struct option options[] = {
-+		OPT_END()
-+	};
-+	int result = 1;
-+
-+	argc = parse_options(argc, argv, prefix, options, builtin_change_usage,
-+		PARSE_OPT_STOP_AT_NON_OPTION);
-+
-+	if (argc < 1)
-+		usage_with_options(builtin_change_usage, options);
-+	else if (!strcmp(argv[0], "update"))
-+		result = change_update(argc, argv, prefix);
-+	else {
-+		error(_("Unknown subcommand: %s"), argv[0]);
-+		usage_with_options(builtin_change_usage, options);
-+	}
-+
-+	return result ? 1 : 0;
-+}
-diff --git a/git.c b/git.c
-index da411c53822..837b1abc53b 100644
---- a/git.c
-+++ b/git.c
-@@ -498,6 +498,7 @@ static struct cmd_struct commands[] = {
- 	{ "bugreport", cmd_bugreport, RUN_SETUP_GENTLY },
- 	{ "bundle", cmd_bundle, RUN_SETUP_GENTLY },
- 	{ "cat-file", cmd_cat_file, RUN_SETUP },
-+	{ "change", cmd_change, RUN_SETUP},
- 	{ "check-attr", cmd_check_attr, RUN_SETUP },
- 	{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
- 	{ "check-mailmap", cmd_check_mailmap, RUN_SETUP },
-diff --git a/ref-filter.c b/ref-filter.c
-index 6a1789c623f..2d7a919d547 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1557,7 +1557,7 @@ static inline char *copy_advance(char *dst, const char *src)
- 	return dst;
- }
- 
--static const char *lstrip_ref_components(const char *refname, int len)
-+const char *lstrip_ref_components(const char *refname, int len)
+ int cmd_change(int argc, const char **argv, const char *prefix)
  {
- 	long remaining = len;
- 	const char *start = xstrdup(refname);
-diff --git a/ref-filter.h b/ref-filter.h
-index 064fbef8e50..7a7737e9552 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -145,4 +145,8 @@ struct ref_array_item *ref_array_push(struct ref_array *array,
- 				      const char *refname,
- 				      const struct object_id *oid);
- 
-+/* Strips `len` prefix components from the refname. */
-+const char *lstrip_ref_components(const char *refname, int len);
-+
-+
- #endif /*  REF_FILTER_H  */
+ 	/* No options permitted before subcommand currently */
+@@ -255,6 +331,8 @@ int cmd_change(int argc, const char **argv, const char *prefix)
+ 		result = change_list(argc, argv, prefix);
+ 	else if (!strcmp(argv[0], "update"))
+ 		result = change_update(argc, argv, prefix);
++	else if (!strcmp(argv[0], "delete"))
++		result = change_delete(argc, argv, prefix);
+ 	else {
+ 		error(_("Unknown subcommand: %s"), argv[0]);
+ 		usage_with_options(builtin_change_usage, options);
 -- 
 gitgitgadget
 
