@@ -2,169 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D4FBC07E9D
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 21:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A6D5C04A95
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 21:39:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232350AbiIWVTi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 17:19:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40184 "EHLO
+        id S232195AbiIWVjj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 17:39:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbiIWVTg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 17:19:36 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 768D12BF5
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 14:19:32 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id c24so1278878plo.3
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 14:19:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=initialcommit-io.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=O4UuZ368Jm75a4ZG4LftZnEZdtqdy93rx1V7VXbaLF0=;
-        b=eCaiDghyHo62nhBbTigSw1LiXI4xVJR9tjPoyuseMBsk2ojxw3hxr1qOndglTh9RpN
-         JXoyChWuL2KloPINgpydYbRGrS1cwtQ3nKeeVB9kpO/WI2GEGUrBZACP8zFnDpo+FUWS
-         Dc3bVbIkanl/Ti7jmTonKoE0FxSEkyGepLnoW1J9DdWjFeCKomvMnuPHZCFruAL58uT8
-         znu8nZbwiF2lM5qjMAqCk2Wntvq6oM/qp6xi435A5nUh7xxwDgHp+RgZk6sdreixbKFS
-         S+Uzpaw+8hvD2InWv4Ufv6cAb6belcSCizedTV7G+E0L7fENPzUh+cusH3lCCSlveWcp
-         nXWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=O4UuZ368Jm75a4ZG4LftZnEZdtqdy93rx1V7VXbaLF0=;
-        b=d5Z+vxrp9s25sgDbZ7rH0cuwKMWZma9s0RQ2OphgNLmWYTqTZ8DTCsXWavCr6DhJ7X
-         3R5cqBBRcqfRt2wPMgH5+nwH+CuXN9+Xmv+wYS0S0KImR8E6FaP56DNbCujS/pumCq0K
-         iAgo6O9nXPEFaxtYLZiNs2y1nFGUX+ygmCYNvpzca7al/hegBSsXZXAnlD2ceMhW1xVB
-         shTKzKfvpaG9DtAlV6YKlo2OFfRiaStrRCWG/NI6bK0YbgJTgMcFEJ825LsNaUc8aCIw
-         PucybPw1iUVfCA59yP9XI+iCR8SOw+lRWqPb8OpSbUN8Dvz/OCNzS1GZjFrQwUxuiHam
-         1bfQ==
-X-Gm-Message-State: ACrzQf3mx9k0e8vIR0PNnmJ5ctSw5zQlsmU20bDrHslF2Jq8QM038O2W
-        jtZ9xKSUFpPfFus/6sKeQMVwJJWvDZGE1Auv
-X-Google-Smtp-Source: AMsMyM73k+ofpSnOvWFf595R7Q+MTWqNxE/KY4EC7VzN7VTeqUj4UKJElubrJejJIMRfTT1uMb2Ekw==
-X-Received: by 2002:a17:90b:4f8e:b0:202:dd39:c04d with SMTP id qe14-20020a17090b4f8e00b00202dd39c04dmr12040640pjb.66.1663967971900;
-        Fri, 23 Sep 2022 14:19:31 -0700 (PDT)
-Received: from initialcommit.io ([2600:8801:9c0a:f300:449a:6533:97b5:bdb6])
-        by smtp.gmail.com with ESMTPSA id d6-20020a170903230600b00176d347e9a7sm6571938plh.233.2022.09.23.14.19.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Sep 2022 14:19:31 -0700 (PDT)
-Date:   Fri, 23 Sep 2022 14:19:28 -0700
-From:   Jacob Stopak <jacob@initialcommit.io>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, martin.agren@gmail.com
-Subject: Re: [RFC PATCH v2] shortlog: add group-by options for year and month
-Message-ID: <Yy4i4I15RjOy+sLm.jacob@initialcommit.io>
-References: <20220922061824.16988-1-jacob@initialcommit.io>
- <20220922232536.40807-1-jacob@initialcommit.io>
- <xmqqillevzeh.fsf@gitster.g>
+        with ESMTP id S230325AbiIWVjh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 17:39:37 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3CC306
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 14:39:29 -0700 (PDT)
+Received: (qmail 14666 invoked by uid 109); 23 Sep 2022 21:39:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 23 Sep 2022 21:39:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17204 invoked by uid 111); 23 Sep 2022 21:39:29 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 23 Sep 2022 17:39:29 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 23 Sep 2022 17:39:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH] read-cache: avoid misaligned reads in index v4
+Message-ID: <Yy4nkEnhuzt2iH+R@coredump.intra.peff.net>
+References: <pull.1366.git.1663962236069.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqillevzeh.fsf@gitster.g>
+In-Reply-To: <pull.1366.git.1663962236069.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 23, 2022 at 09:17:10AM -0700, Junio C Hamano wrote:
+On Fri, Sep 23, 2022 at 07:43:55PM +0000, Victoria Dye via GitGitGadget wrote:
 
-> It is unclear what timestamp is used, how a "month" is defined, etc.
-> As "git shortlog --since=2.years" cuts off based on the committer
-> timestamp, I would expect that the committer timestamps are used for
-> this grouping as well?
+> Avoid this error by reading fields directly from the 'char *' buffer, using
+> the 'offsetof' individual fields in 'struct ondisk_cache_entry'.
 
-It uses the "commit->date" member from the commit struct in commit.h,
-which I assumed was the committer timestamp, but I'll confirm that's
-what actually gets populated in there since I don't see a separate
-member for the author timestamp...
+Thanks for moving this forward. I agree this should fix the alignment
+problems, and I didn't see anything in the patch that would do the wrong
+thing. I do have some style/technique suggestions, though.
 
-> If I make a commit on the first day of the
-> month in my timezone, but that instant happens to be still on the
-> last day of the previous month in your timezone, which month would
-> your invocation of "git shortlog --group=month" would the commit be
-> attributed?  My month, or your month?
+> @@ -1883,7 +1883,7 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+>  	size_t len;
+>  	const char *name;
+>  	const unsigned hashsz = the_hash_algo->rawsz;
+> -	const uint16_t *flagsp = (const uint16_t *)(ondisk->data + hashsz);
+> +	const char *flagsp = ondisk + offsetof(struct ondisk_cache_entry, data) + hashsz;
 
-I need to look into how Git typically handles these timezone differences
-and will try to apply similar behavior for these time-based groupings.
+Now we use the "const char *" pointer instead of the cast to the
+ondisk_cache_entry struct, which is good, and is what fixes the
+alignment question.
 
-> Does it make sense to even say "group by month and year"?  I expect
-> that it would mean the same thing as "group by month", and if that
-> is the case, the command probably should error out or at least warn
-> if both are given.
+But we also convert flagsp from being a uint16_t into a byte pointer.
+I'm not sure if that's strictly necessary from an alignment perspective,
+as we'd dereference it only via get_be16(), which handles alignment and
+type conversion itself.
 
-Yes, "group by month and year" and "group by month" means the same
-thing the way I implemented. If both groups are supplied, it will
-just ignore the year group and group by month like you mentioned,
-by flipping off the YEAR bit as follows:
+I'd imagine the standard probably says that even forming such a pointer
+is illegal, so in that sense, it probably is undefined behavior. But I
+think it's one of those things that's OK in practice.
 
-if ((log->groups & SHORTLOG_GROUP_MONTH) &&
-    (log->groups & SHORTLOG_GROUP_YEAR))
-	log->groups ^= SHORTLOG_GROUP_YEAR;
+That might be splitting hairs, but if you kept it as a uint16_t pointer,
+then code like this:
 
-I can add a warning message to make this more clear to the user.
+> @@ -1901,15 +1901,15 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+>  
+>  	if (flags & CE_EXTENDED) {
+>  		int extended_flags;
+> -		extended_flags = get_be16(flagsp + 1) << 16;
+> +		extended_flags = get_be16(flagsp + sizeof(uint16_t)) << 16;
 
-> An alternative interpretation could be, when
-> told to "group by month", group the commits made in September 2022
-> into the same group as the group for commits made in September in
-> all other years, but I do not know how useful it would be.
+doesn't need to be changed. I don't know if it's that big a deal either
+way, though.
 
-In data analytics terms this is usually referred to as "month of year",
-and personally I see it less useful in Git's shortlog context because I
-envision more folks would find output useful for single or consecutive
-time periods. However, adding a "month of year" grouping could be useful
-to answer questions like "what periods throughout the year are contributors
-most active?". If we decide to add a "month of year" grouping option as
-well, it would be trivial to include.
- 
-> Not a suggestion to use a different implementation or add a new
-> feature on top of this --group-by-time-range idea, but I wonder if
-> it is a more flexible and generalizeable approach to say "formulate
-> this value given by the --format=<format> string, apply this regular
-> expression match, and group by the subexpression value".  E.g.
-> 
->     git shortlog \
-> 	--group-by-value="%cI" \
-> 	--group-by-regexp="^(\d{4}-\d{2})"
-> 
-> would "formulate the 'committer date in ISO format' value, and apply
-> the 'grab leading 4 digits followed by a dash followed by 2 digits'
-> regexp, and group by the matched part".
-> 
-> That's a better way to implement "group by month" internally, and
-> allow more flexibility.  If a project is well disciplined and its
-> commit titles follow the "<area>: <description>" convention, you
-> probably could do
-> 
->     git shortlog --no-merges \
-> 	--group-by-value="%s" \
-> 	--group-by-regexp="^([^:]+):"
-> 
-> and group by <area> each commit touches.  Of course, existing
-> --committer and --author can also be internally reimplemented using
-> the same mechanism.
+> @@ -1935,20 +1935,24 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+>  
+>  	ce = mem_pool__ce_alloc(ce_mem_pool, len);
+>  
+> -	ce->ce_stat_data.sd_ctime.sec = get_be32(&ondisk->ctime.sec);
+> [...]
+> +	ce->ce_stat_data.sd_ctime.sec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, ctime)
+> +							+ offsetof(struct cache_time, sec));
 
-At first look this sounds very flexible and appealing, and I would be 
-interested in exploring a refactor to this in the future. I think the
-rub is that supplying custom patterns wouldn't necessarily stack up
-neatly into good groups, which could lead to confusing results for the
-user in terms of both grouping and sorting. But like you mentioned
-it could be really cool if used judiciously for a consistent history
-like Git's. And the generalized re-implementation of the current
-shortlog groups would be a nice bonus.
+I had figured we'd be able to drop ondisk_cache_entry entirely. But here
+you're using it essentially as a template for a set of constants
+retrieved via offsetof().
 
-> > @@ -80,6 +82,14 @@ counts both authors and co-authors.
-> >  --committer::
-> >  	This is an alias for `--group=committer`.
-> >  
-> > +-m::
-> > +--month::
-> > +	This is an alias for `--group=month`.
-> > +
-> > +-y::
-> > +--year::
-> > +	This is an alias for `--group=year`.
-> > +
-> 
-> Let's not add this in the same patch.  I am fairly negative on
-> adding more, outside "--group".  Besides, we do not have a good
-> answer to those who want to group by week.  -w is already taken.
+That's OK from an alignment perspective. It does mean we'd be in trouble
+if a compiler ever decided to introduce padding into the struct. That's
+probably unlikely. We don't use __attribute__((packed)) because it's not
+portable, and our existing uses have generally been OK, because our
+data structures are organized around 8-byte alignment. We might have
+problems on a theoretical 128-bit processor or something.
 
-No worries - I'll remove the shorthand flags for v3.
+So I don't think this is a problem now, and unlikely to be in the near
+future. But another way to do it would just be an actual set of offsets
+(either #define or an enum). That maybe makes the intended use more
+obvious, and also prevents people from accidentally misusing the struct.
+I'm not sure if it's worth it for not.
+
+It is a bit of a pain to write. Either you have magic numbers, or you
+have to reference the offset and size of the previous entry:
+
+  #define ONDISK_CACHE_CTIME 0
+  #define ONDISK_CACHE_MTIME (ONDISK_CACHE_CTIME + sizeof(struct cache_time))
+  #define ONDISK_CACHE_DEV (ONDISK_CACHE_MTIME + sizeof(struct cache_time))
+
+Another strategy is to just parse left-to-right, advancing the byte
+pointer. Like:
+
+  ce->ce_state_data.sd_ctime.sec = get_be32(ondisk);
+  ondisk += sizeof(uint32_t);
+  ce->ce_state_data.sd_mtime.sec = get_be32(ondisk);
+  ondisk += sizeof(uint32_t);
+  ...etc...
+
+You can even stick that in a helper function that does the get_b32() and
+advances, so you know they're always done in sync. See pack-bitmap.c's
+read_be32(), etc. IMHO this produces a nice result because the reading
+code itself becomes the source of truth for the format.
+
+But one tricky thing there is if you want to parse out of order. And it
+does seem that we read the struct out of order in this case. But I don't
+think there's any reason we need to do so. Of course reordering the
+function would make the change much more invasive.
+
+So all that said, I'm OK with this approach as the minimal fix, and then
+we can think about further refactoring or cleanup on top.
+
+One final note, though:
+
+> +	ce->ce_stat_data.sd_mtime.sec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, mtime)
+> +							+ offsetof(struct cache_time, sec));
+
+Here (and elsewhere), you can assume that the offsetof() "sec" in
+cache_time is 0, for two reasons:
+
+  - I didn't look up chapter and verse, but I'm pretty sure the standard
+    does guarantee that the first field of a struct is at the beginning.
+
+  - If there's any padding, this whole scheme is hosed anyway, because
+    it means sizeof(cache_time) is bigger than we expect, which messes
+    up the offsetof() the entry after us (in this case sd_dev).
+
+So this can just be:
+
+  ce->ce_stat_data.sd_mtime.sec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, mtime));
+
+which is mercifully shorter.
+
+Assuming we dismiss the rest of what I said as not worth it for a
+minimal fix, I do think that simplification is worth rolling a v2.
+
+-Peff
+
+PS BTW, I mentioned earlier "can we just get rid of ondisk_cache_entry".
+   We also use it for the writing side, of course. That doesn't have
+   alignment issues, but it does have the same "I hope there's never any
+   padding" question. In an ideal world, it would be using the
+   equivalent put_be32(), but again, that's getting out of the "minimal
+   fix" territory.
