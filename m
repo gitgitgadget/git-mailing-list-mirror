@@ -2,97 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A225DC04A95
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 18:23:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC917C04A95
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 18:28:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231883AbiIWSXh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 14:23:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44240 "EHLO
+        id S232802AbiIWS2y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 14:28:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229525AbiIWSXe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 14:23:34 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A391113B51
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 11:23:33 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id d14so583971ilf.2
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 11:23:33 -0700 (PDT)
+        with ESMTP id S229514AbiIWS2w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 14:28:52 -0400
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6230123845
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 11:28:51 -0700 (PDT)
+Received: by mail-io1-xd2b.google.com with SMTP id p3so568436iof.13
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 11:28:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=hIM1zPveLMJfNx+WUM36orYsPxhag3MVNHMkcyd8XFs=;
-        b=iMMlgp8OxtI7pbLDYARfwkSFQu/QaWRbidfvVOi/2D0R6mRgRA30LjDaX704bxChMB
-         3BCXPNOPETTvHNTlE+YpfblD+z1Yb1h/oqyoC6bU/OOSC5I3UUzdkxAMWN+IfVlZk+4d
-         OsZzPDJJ7DoBwdbbMOKpHLIDW5cZxEx4ujvP42ut8JGpx7sJDc8ljJI5szOGO55JDx5t
-         YELaK5MaZLaKghN4v4bGgV6MGl6r0SI0SSPybiDdGoHRgaGeRZldqEiDhvs5V1kZ73xa
-         l+1yW7rj9b92wJCiOe4y8mUgWFkHpT4T8gwAhi7K6dvtR6y1q/63sXPpPSqmk0sLPIRT
-         irOw==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=WywelfVhfUnS50iBI3TfDpZ1jeaVoGwz3xL7+OiJLio=;
+        b=vGGQ77U+3qwuzZSyjUNAfb4AlF5yu8FoFuF1lJQpGxe5+TJeUsKc6ZgO5HfSobHGSH
+         bDTT6a3QnjXzv7SDmU6YJqqvws9Lvxnou71bjIOCENn4ni+3KwmzGdcOjaIlNLaBTgFw
+         TQ09+9Su8CvkGx3cPoNOLgbkpnDIzteAEpz4QVKECJaFc5o5cjB0PKCf/SWsIu1bOM8l
+         F3CecycXzc9744Hz6yAmiR7VzqHWS95IMVrn9tQ/eancpoJBIRNxZlUKnOSljlgkBnI+
+         zvG97D48UnyKbE53LZ7cO6zHQBA//RuegYz4UvLjH/2UOYfS8gB4khXemT/Oymi8aE64
+         aaOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=hIM1zPveLMJfNx+WUM36orYsPxhag3MVNHMkcyd8XFs=;
-        b=Q/ZfXXj0sGMKz33oNyP5x34RJAX+W9rqpV31zYJyM2MWXOAA2KE/S6h+OGLkp2kGK+
-         qhWW7TnsMjfqYLFErfcBkW4lcKfv8utRSEQocUxReTr/ZlAbo0tGLcpa7crv+uGTQlIX
-         1v5JYanOLm71RppvjJLuLecpANNLsSonDNVT8bH+g19i/YsE7RJtqAw8gP/ce9Z652+F
-         o8fdva78XVuapegeNYZ/LF4riGpVSe0YlENQIbnYwGO70vaonJEXKfALagWYUlMGaI9W
-         GVvkuMMxrk93p6+m17ugoWIhvD9b10IEfbIjz3i2RMJVROKRlyXKnhmda2h3dvnrmdQL
-         61TQ==
-X-Gm-Message-State: ACrzQf0XEnjE5OXRgAMmSSYyNLpNoE3ztYB+gLxYCAS0AIifp9Jzevt6
-        YQB8iwz49AYdLXy+lETY5oyx
-X-Google-Smtp-Source: AMsMyM5Vj/D4ladNefnpZQbvJKV7MDBJ3eUV+6I63GpLs6e/HP+tvsxNVojMqXeCb8tMMyhmx/MwUQ==
-X-Received: by 2002:a05:6e02:5c6:b0:2f5:5e35:1f9d with SMTP id l6-20020a056e0205c600b002f55e351f9dmr4515948ils.43.1663957412896;
-        Fri, 23 Sep 2022 11:23:32 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:f43f:f355:a5bb:115a? ([2600:1700:e72:80a0:f43f:f355:a5bb:115a])
-        by smtp.gmail.com with ESMTPSA id t8-20020a026408000000b0035a0d844e43sm3577131jac.159.2022.09.23.11.23.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Sep 2022 11:23:32 -0700 (PDT)
-Message-ID: <5172dbb7-61d1-7249-f9bb-d760e6f4450a@github.com>
-Date:   Fri, 23 Sep 2022 14:23:30 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=WywelfVhfUnS50iBI3TfDpZ1jeaVoGwz3xL7+OiJLio=;
+        b=DP6j2GPIxwi7QVMHjrsKrLNtNbe5w96fvP0ruABDjU2z0LLDuoPj4f5rzJzCeBvdIi
+         MgZBbAtS2oeOrdHYBwZSZ7EjAuI9wCQlgCLU4fk9e4hvBRxwQmHbapp1bKhPm7vA/FBG
+         2yv8Kuy7WK6FkfQW6FacqctAV+8wT1phTQcmMZu1e/P4N4WYIh+oADja72aRhRcx01oL
+         bimFbYDog/XHXvL8yF6g6+ymZXakdFL1JbBDX9VmFwOKkaEQql9oJgMqtdO/b4Nyo5c0
+         ihRKu0P101v+7WeC5X2QwhmUNBpSf1T7O+GUBNK4zSm1gAXhT3MyQMTois7TrHTG9qdx
+         hH+A==
+X-Gm-Message-State: ACrzQf12clMo2hLQvC0NWko2hA5LMaVgz82j2b07tRZv/f/SsF436XCT
+        a1X+IShPKUw9YxgZZpjV8eqv2A==
+X-Google-Smtp-Source: AMsMyM7cFVf/kBXVtpH6SEWqzSnW9rSrxFJYMTa+ysxHYSzIopg0Qu80G2HYbTfVF12kW+Z0u5HGJA==
+X-Received: by 2002:a02:93c7:0:b0:35a:3271:1c83 with SMTP id z65-20020a0293c7000000b0035a32711c83mr5536153jah.105.1663957731230;
+        Fri, 23 Sep 2022 11:28:51 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 125-20020a020a83000000b0035a216fc475sm3670848jaw.163.2022.09.23.11.28.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Sep 2022 11:28:50 -0700 (PDT)
+Date:   Fri, 23 Sep 2022 14:28:49 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        gitster@pobox.com, peff@peff.net
 Subject: Re: [PATCH v2 2/3] midx.c: use `pack-objects --stdin-packs` when
  repacking
-Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net
+Message-ID: <Yy364WAutGIdXCub@nand.local>
 References: <YyokIf%2FSd7SYztKQ@nand.local>
  <cover.1663706401.git.me@ttaylorr.com>
  <4218d9e08aba629d8f64b5a999f60d12e5d8785b.1663706401.git.me@ttaylorr.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <4218d9e08aba629d8f64b5a999f60d12e5d8785b.1663706401.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <5172dbb7-61d1-7249-f9bb-d760e6f4450a@github.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5172dbb7-61d1-7249-f9bb-d760e6f4450a@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/20/2022 4:40 PM, Taylor Blau wrote:
+On Fri, Sep 23, 2022 at 02:23:30PM -0400, Derrick Stolee wrote:
+> Do you know if there is any reason to do this explicitly? Does this
+> change the set of objects in any way (perhaps by not including
+> duplicates that are tracked in those other packs)?
 
-> +	for (i = 0; i < m->num_packs; i++) {
-> +		struct repack_info *info = &pack_info[i];
->  
-> -		if (!include_pack[pack_int_id])
-> -			continue;
+Yes. The "^" lines become excluded packs from the perspective of the
+follow-on reachability traversal to discover the namehashes. So as soon
+as we hit an object contained in one of the packs marked as excluded,
+we'll halt the traversal along that direction, since we know that we're
+not going to pick up any objects in those packs.
 
-...
-
-> +		fprintf(cmd_in, "%s%s\n", include_pack[info->pack_int_id] ? "" : "^", scratch.buf);
-
-Outside of how the object set is provided (a list of objects or a list of
-packs) it seems this is equivalent. The only difference is that we are
-writing a line for _every_ pack in the multi-pack-index, but we preface
-the line with "^" to say "not this pack".
-
-Do you know if there is any reason to do this explicitly? Does this
-change the set of objects in any way (perhaps by not including
-duplicates that are tracked in those other packs)?
-
-Personally, I would have kept the "if (...) continue;" pattern, so maybe
-you had a concrete idea why this approach is better.
+So you could omit them, and you'd get the same resulting pack, but it
+would take longer to generate since we wouldn't be stopping the
+follow-on traversal as early as possible.
 
 Thanks,
--Stolee
+Taylor
