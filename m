@@ -2,87 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C749CECAAD8
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 11:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13D63ECAAD8
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 13:00:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231237AbiIWLm7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 07:42:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54746 "EHLO
+        id S230448AbiIWNAp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 09:00:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231355AbiIWLmz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 07:42:55 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8263E9506
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 04:42:50 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id u69so6345pgd.2
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 04:42:50 -0700 (PDT)
+        with ESMTP id S230431AbiIWNAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 09:00:39 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2737F6843
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 06:00:37 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id k3-20020a05600c1c8300b003b4fa1a85f8so3127910wms.3
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 06:00:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=WHhKbMD9yw+nP4TmNo3DDFxE7nV5mYmbJBDnhxG31Nw=;
-        b=Ozv1DLzfGVhIBllhr3MP/gb2x65vyZGfEbqbYt6/zh79qfKEyj4gEAEY5+9WExNYUq
-         jtsksrGOV94SouBS4ox3QL3dZaTlI1X0TRMzW6jNEJVjMAEvfGJkfaxq/6qQIxu01MCx
-         tkkg/aQ9JY9LtSYeZ8KW1r2ymObnnj5T2vtbmzrEbTV5NFDcfdXxZ9NIssjF21RO3YI8
-         JVWv/ijROPBSdxNV904Vbsbc+H3UbYcJSLXE1wSXJy8tkbWcTOU4+ML9/1vstjfSsT6K
-         aIepj/T+2yF2pxwjtMf/dx08ZoxDB4OPRMBVA9ffZ6aJBMjb90arvYj3kCFz7P2OGPeO
-         fKwQ==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date;
+        bh=Jgp2bNssHrfkbEJW9ksKkgHq0gl+TL2jyTNSSiRYzS8=;
+        b=AwkHVKMIowS9Bn7HKMxRWke3e58RS7nxtDCrW4dNMroSeQN/opdWkZmydIJhA11g2G
+         DjB0wp/XgIRDv/GToZ4llS4KZYJc9p4N/1AGwAaJBBQC/wH8RbwjVELg/NclY3BPVzvr
+         HgwoM/H4+rpY8m8Sf1FW+Qyg5uEO5PP741E287d7PaKp1yLu/s+CV51T9WgQLumsWN7u
+         GGhl9u7bycz6Oy190MQkJHmBAcKTuzQiEzSzEKXFnqDrPdYldMWPFTMymjTToMHyyw0D
+         zRIO0q1dzb0zttb777CgYDHcvte+xGTdPYrIcouvvTcy9GfTKt1MBFZGGGbAXez0v0Qo
+         Ltlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=WHhKbMD9yw+nP4TmNo3DDFxE7nV5mYmbJBDnhxG31Nw=;
-        b=RKioENLdC6rzPOdUi2fSahOV6CNogATIZxEbwEg5+qQRbiPDg/nYZJGPJ9d1GBOvLf
-         aZoJIQnj6Vu2Rd06ouecmVFqAqE+Nn5ENJ44/kEy5j4KTumQWb0bnQl6Qdvd/VqDHE/n
-         kE2txePiDzexZBKdHLpZYdZ2ayYxBvcBdBSDZPR3iG51a1d3+SwqbiR9+adHvTi02OgX
-         h/H1P0NG6RcjXCP3X4/o+nMu0YMfTB2iaR4J93gRojuSLPewljaFW0wkH4Ze8ht9Pe3F
-         HakRRJKhCScaIETOs49cOhXiGMKZtWMT67u2Dqm5wgcxiaZqY4m9k7XDFElu6v/2vL4w
-         g/WA==
-X-Gm-Message-State: ACrzQf0GyKkzp8XG+GJgxca/bNwJsFQi/DsFSNbO1yNrkjCrVKz2MPeZ
-        Jog493IITyayaIS/sC9Dh2ayzBzByX08C8IU/0CwpVc7
-X-Google-Smtp-Source: AMsMyM6PmESt77KYZSHiKsznjckeXczyH3lR3qIauM8WN76d1CtEAuqoAFK6jZiRWBPLd/bCV0KdCyO8mJOIK+IzTMw=
-X-Received: by 2002:a63:6b04:0:b0:43c:1908:d9c with SMTP id
- g4-20020a636b04000000b0043c19080d9cmr6115036pgc.258.1663933369219; Fri, 23
- Sep 2022 04:42:49 -0700 (PDT)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date;
+        bh=Jgp2bNssHrfkbEJW9ksKkgHq0gl+TL2jyTNSSiRYzS8=;
+        b=21WCiWboZjEbruwDvvsPH1+XJ9eofmu1lk2nbGoxZ+jUD7mjnLGmPcCZRCLyaOPZsk
+         P2M9DKD7IGwmqLFd2qR5mTIBUPNLiLBoQ7fpotjtB/NFzIxuiVp5ZsoJ+9KYhT+KI2A4
+         Xi1rdKHhiL03e4/kAlqLB0RYycfj6+uYaIyvE2TXFyiG+0uh4IW41beaIdzRx3EfBrBm
+         ALunEF76nX3kZPM0W/bsHYtI5fAQozUIdJ2Fu/0js2suqO4GC6XrtMogachNMX2r1Mxk
+         Cj1v490gwyQ4plwWELPLFUBYQmSd0l9C9MCn2JUwoymLQwfMbeylruNK/GJt2vSYctrf
+         tx0g==
+X-Gm-Message-State: ACrzQf3lzuKQCDKzYhm25SaY+58GTGFj0KcNt/TogvxXVdLo4y75drDD
+        fdarMsu6138/Zik349xuy9CtvIcmvl8=
+X-Google-Smtp-Source: AMsMyM7Y2znUDsRNmNoGGOvrV36I0cxYDZZ7RRaneo1T0mmzBQ71yALKoJKQCMy5zgsFQTeksua/bg==
+X-Received: by 2002:a05:600c:3555:b0:3b4:c0fd:918e with SMTP id i21-20020a05600c355500b003b4c0fd918emr5726394wmq.61.1663938035917;
+        Fri, 23 Sep 2022 06:00:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e4-20020a05600c4e4400b003a682354f63sm2646690wmq.11.2022.09.23.06.00.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Sep 2022 06:00:35 -0700 (PDT)
+Message-Id: <pull.1365.git.1663938034607.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 23 Sep 2022 13:00:34 +0000
+Subject: [PATCH] pack-bitmap: remove trace2 region from hot path
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <220923.86wn9u4joo.gmgdl@evledraar.gmail.com> <20220923080733.1995862-1-martin.agren@gmail.com>
- <220923.86fsgi4gl6.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220923.86fsgi4gl6.gmgdl@evledraar.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 23 Sep 2022 13:42:37 +0200
-Message-ID: <CAN0heSrnN4Vjcj6KDG+DZkZ7_GWz5dex2Qq0To6CGVH7_zux4Q@mail.gmail.com>
-Subject: Re: [PATCH v2] cmd-list.perl: fix identifying man sections
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, git@jeffhostetler.com, me@ttaylorr.com,
+        chakrabortyabhradeep79@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 23 Sept 2022 at 10:53, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
->
-> Thanks for the quick turn-around, this looks good to me in this form.
+From: Derrick Stolee <derrickstolee@github.com>
 
-Thanks for reviewing.
+The trace2 region around the call to lazy_bitmap_for_commit() in
+bitmap_for_commit() was added in 28cd730680d (pack-bitmap: prepare to
+read lookup table extension, 2022-08-14). While adding trace2 regions is
+typically helpful for tracking performance, this method is called
+possibly thousands of times as a commit walk explores commit history
+looking for a matching bitmap. When trace2 output is enabled, this
+region is emitted many times and performance is throttled by that
+output.
 
-> Now, having written and looked at this with fresh eyes this would be an
-> even better & more logical thing to do:
+For now, remove these regions entirely.
 
->                 open I, '<', "$name.txt" or die "No such file $name.txt";
->                 while (<I>) {
->         -               if (/^(?:git|scalar)[a-z0-9-]*\(([0-9])\)$/) {
->         +               if (/^\Q$name\E\(([0-9])\)$/) {
->                                 $mansection =3D $1;
->                                 next;
->                         }
+This is a critical path, and it would be valuable to measure that the
+time spent in bitmap_for_commit() does not increase when using the
+commit lookup table. The best way to do that would be to use a mechanism
+that sums the time spent in a region and reports a single value at the
+end of the process. This technique was introduced but not merged by [1]
+so maybe this example presents some justification to revisit that
+approach.
 
-Right, we know what we want there, so this does look reasonable.
+[1] https://lore.kernel.org/git/pull.1099.v2.git.1640720202.gitgitgadget@gmail.com/
 
-> Anyway, this is more than good enough for now, thanks! There's also much
-> bigger issues with the script, and we can leave that all aside from now
-> (e.g. if it dies the Makefile doesn't report an error, ouch!).
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+    [For 2.38.0] pack-bitmap: remove trace2 region from hot path
+    
+    I noticed this while trying to backport the Abhradeep's lookup table
+    work into GitHub's fork. Something went wrong in that process, causing
+    this region to significantly slow down. It turns out that slow down does
+    not reproduce on current 'master', which is good. I must have missed
+    something while I was backporting.
+    
+    Regardless, the use of trace2_region_enter() here should be removed or
+    replaced. For the sake of 2.38.0, this simple removal is safe enough.
+    However, to really dig into what was happening I had to construct a
+    rebase [2] of Jeff's trace2 stopwatch work, then apply changes on top
+    [3] that could replace this region with trace2_timer_*() methods.
+    
+    [2]
+    https://github.com/git/git/compare/master...derrickstolee:trace2-stopwatch
+    [3]
+    https://github.com/derrickstolee/git/compare/trace2-stopwatch...bitmap-trace2
+    
+    As a separate discussion, it might be worth revisiting that stopwatch
+    work so we have it available as a tool when doing these kinds of
+    investigations.
+    
+    Thanks, -Stolee
 
-Martin
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1365%2Fderrickstolee%2Fbitmap-remove-trace2-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1365/derrickstolee/bitmap-remove-trace2-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1365
+
+ pack-bitmap.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 9a208abc1fd..13457dd77e5 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -830,10 +830,8 @@ struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
+ 		if (!bitmap_git->table_lookup)
+ 			return NULL;
+ 
+-		trace2_region_enter("pack-bitmap", "reading_lookup_table", the_repository);
+ 		/* NEEDSWORK: cache misses aren't recorded */
+ 		bitmap = lazy_bitmap_for_commit(bitmap_git, commit);
+-		trace2_region_leave("pack-bitmap", "reading_lookup_table", the_repository);
+ 		if (!bitmap)
+ 			return NULL;
+ 		return lookup_stored_bitmap(bitmap);
+
+base-commit: 1b3d6e17fe83eb6f79ffbac2f2c61bbf1eaef5f8
+-- 
+gitgitgadget
