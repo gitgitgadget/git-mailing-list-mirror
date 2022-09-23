@@ -2,92 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFA51C07E9D
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 19:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C6E9C6FA83
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 19:17:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232263AbiIWTFV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 15:05:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48748 "EHLO
+        id S232427AbiIWTRq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 15:17:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230449AbiIWTFQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 15:05:16 -0400
+        with ESMTP id S229520AbiIWTRp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 15:17:45 -0400
 Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56419D2D65
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 12:05:12 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id v128so650068ioe.12
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 12:05:12 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C969112C68F
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 12:17:43 -0700 (PDT)
+Received: by mail-io1-xd2b.google.com with SMTP id v128so677602ioe.12
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 12:17:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=Q4w8ap5CcmjvRvBeHai5V3R8dYKwBV40U7M2MRLYakU=;
-        b=e+WrhlgY8qJPdgWeDYl7XSid0bbKSmC6aiRRWwHEDyNs6hoygCikevn+ni52D2DTk0
-         z+ihRpQ08Fu80HDZsfvfyMi3HUspgcIiuUOT56PiGB1O7egpvIKdKvJ/WYXJPLAYE8LA
-         nvJg2s3sw4LEOIl3sOqShENB+SewC3l/9qDXNpN0ZkTKC7syXrKQqneavpXc+yY3Sfc8
-         TypaSnHDjKNIUni/txaDc1xorrgL/ZE/OCfvzv3Xnuaz11D/8BHyFHlAPuDHRRd1/ppI
-         Q88LZeJQ6doAxFnXLz67coSddWlPPodBJ/f/h2LIgilI8O5v5XXy7Q97TcXMfqaW6+cu
-         shNA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=VLzV2iXPWSTfTVr4zJdlcGXvW2y6VVaVRLSs01Dtw28=;
+        b=sl4/XbleplZFSWvnF1YWPBQalT5nTkvb9JaLlmDKfh5giM1T6TW/hBpqfD4OHd4CrZ
+         NIMvkzzxbge9NSgOxaMNUE7Z7iGl4lZE1nl0bX1nlPcElDRID/26jwq3OQYByUhASNzK
+         lfcFUJlYdB+OdxhMOP+pRTlEcKBW1HD71+THoyYB3AJto21jPFIpW4Rgm6QBSOcRPGsl
+         axppWlWf3fKHFkQX1R4mfzaHJjnw9bmCsRh/UbiWXShrA1+P1w6e6dWHjzDMKacTd8FT
+         DRuDmA/tplkza2trj8XDonjry000iNvAG93rRzv4CNa2XbtMghLNBFYLJe1TkCO0pI/N
+         bpTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Q4w8ap5CcmjvRvBeHai5V3R8dYKwBV40U7M2MRLYakU=;
-        b=s8nnZu7P8zxx5ilAYSgsSFEgMgazihaWaVbrGA6HoTjX4FXw0l5gCE6/9cdG3bTP4N
-         t2aNr2wYW+R7J81LvP09spqbnEjHvpZZ16J05GWDeewlLdULopVxzY0BEV9mz0Vts3kU
-         XyK7SbyCljLrBAeZlUDWpPzNfRFp2DAEquXwRZYMqh7QwmcvVyL5pAg/tLtnYWMcCZZi
-         Jrl1Dfb0hbjWu6hw8+6jaJqIShifKVRevzDcIx1khD7D/nWj+B4kfzdvJ56bVjqJfuAK
-         YqlRnZrLevYnO/fa+dWJut2d3AJt2EMDsdwaBPYTeQqIzmIay5kn58tLfDjIE/aH1fy1
-         EhLg==
-X-Gm-Message-State: ACrzQf3mcILGl+HBwb4z1fv40pNvtxAn4EtziJvkgexSv+qS1iansP56
-        SFBGSeUfkk1yXQW+1tHOOQAm
-X-Google-Smtp-Source: AMsMyM70aoz/5ZHUzLaDOWosyVlJRqGdQUtFYxVELzcyeLn96V18YgpP+OYaCfJbwTnnPeDvM8iSrw==
-X-Received: by 2002:a05:6638:1355:b0:35a:c5ff:5a32 with SMTP id u21-20020a056638135500b0035ac5ff5a32mr5561420jad.202.1663959911551;
-        Fri, 23 Sep 2022 12:05:11 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:f43f:f355:a5bb:115a? ([2600:1700:e72:80a0:f43f:f355:a5bb:115a])
-        by smtp.gmail.com with ESMTPSA id o70-20020a022249000000b003572ae30370sm3740504jao.145.2022.09.23.12.05.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Sep 2022 12:05:11 -0700 (PDT)
-Message-ID: <c8c42bd6-4aef-d310-b988-108bf74ebb96@github.com>
-Date:   Fri, 23 Sep 2022 15:05:08 -0400
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=VLzV2iXPWSTfTVr4zJdlcGXvW2y6VVaVRLSs01Dtw28=;
+        b=sjJFxYPfBWFWgpiBbIeVm1jzHc8tPi+AiUbcD8zIn1OzqwqDLjnTT6wqeh39A38hSP
+         q3MfaoPhvit4Llyo6YWx28Mtu+LriKrmEHj3hPo8lJX2up+GMbCRedn5E6cv8Z2IjdX5
+         N2Ix5mlbKtPp3MzlOjXsc8ieJygZJ4CZeGgbjSdaHFuy0BitpsDrThoj/H4XvDZY2rV6
+         csZAJX7OdRx0cqMtjtkRp4YlSypiCKSVtUTkdee1XYaKWcNfB8LfTOPm0SdVzP/JOnBX
+         cS7WPh9CSF+C1LRFhTR5jnNMd7T8WupXlIz6XhTwSyWMKRPESI0ZHxIWBhG5BOKmiETE
+         tyYg==
+X-Gm-Message-State: ACrzQf2PfJdEu79VKplQVYQlqPanTowraZyrrcuzbjif9zKhDpm4QLke
+        qTAJRL+wkzA8ClCPJNrNeSjHPA==
+X-Google-Smtp-Source: AMsMyM7KZ9eDu2h7bae7yNxZx0jbfkco+fm/s278WgPUa3THz7V8h7CeEDe1uJ9XgvATLiB0tmjDFQ==
+X-Received: by 2002:a05:6638:35a1:b0:35a:6967:acbe with SMTP id v33-20020a05663835a100b0035a6967acbemr5634534jal.37.1663960662799;
+        Fri, 23 Sep 2022 12:17:42 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id i7-20020a056638380700b00349d2d52f6asm3709367jav.37.2022.09.23.12.17.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Sep 2022 12:17:42 -0700 (PDT)
+Date:   Fri, 23 Sep 2022 15:17:41 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, git@jeffhostetler.com,
+        chakrabortyabhradeep79@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH] pack-bitmap: remove trace2 region from hot path
+Message-ID: <Yy4GVT8VZ4dOyGDy@nand.local>
+References: <pull.1365.git.1663938034607.gitgitgadget@gmail.com>
+ <xmqq7d1uuh5f.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v2 2/3] midx.c: use `pack-objects --stdin-packs` when
- repacking
-Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-References: <YyokIf%2FSd7SYztKQ@nand.local>
- <cover.1663706401.git.me@ttaylorr.com>
- <4218d9e08aba629d8f64b5a999f60d12e5d8785b.1663706401.git.me@ttaylorr.com>
- <5172dbb7-61d1-7249-f9bb-d760e6f4450a@github.com>
- <Yy364WAutGIdXCub@nand.local>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <Yy364WAutGIdXCub@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq7d1uuh5f.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/23/2022 2:28 PM, Taylor Blau wrote:
-> On Fri, Sep 23, 2022 at 02:23:30PM -0400, Derrick Stolee wrote:
->> Do you know if there is any reason to do this explicitly? Does this
->> change the set of objects in any way (perhaps by not including
->> duplicates that are tracked in those other packs)?
-> 
-> Yes. The "^" lines become excluded packs from the perspective of the
-> follow-on reachability traversal to discover the namehashes. So as soon
-> as we hit an object contained in one of the packs marked as excluded,
-> we'll halt the traversal along that direction, since we know that we're
-> not going to pick up any objects in those packs.
-> 
-> So you could omit them, and you'd get the same resulting pack, but it
-> would take longer to generate since we wouldn't be stopping the
-> follow-on traversal as early as possible.
+On Fri, Sep 23, 2022 at 10:36:44AM -0700, Junio C Hamano wrote:
+> diff --git c/t/t5310-pack-bitmaps.sh w/t/t5310-pack-bitmaps.sh
+> index 7e50f8e765..2b1efc923b 100755
+> --- c/t/t5310-pack-bitmaps.sh
+> +++ w/t/t5310-pack-bitmaps.sh
+> @@ -455,7 +455,7 @@ test_expect_success 'verify writing bitmap lookup table when enabled' '
+>  	grep "\"label\":\"writing_lookup_table\"" trace2
+>  '
+>
+> -test_expect_success 'lookup table is actually used to traverse objects' '
+> +: test_expect_success 'lookup table is actually used to traverse objects' '
+>  	git repack -adb &&
+>  	GIT_TRACE2_EVENT="$(pwd)/trace3" \
+>  		git rev-list --use-bitmap-index --count --all &&
 
-Excellent. Thanks for explaining that!
+Yeah, I would advocate for dropping this test entirely. That trace2
+marker is the only indication that is so obvious that we're using the
+lookup table to read bitmaps.
 
--Stolee
+Perhaps the pack-bitmap helper could be taught to dump which extensions
+it sees, and then write a test based on that? Although that isn't really
+testing anything new, either, since we sometimes *notice* the extension
+but don't actually read anything based on it (e.g., when disabled).
+
+So I'd be content just dropping this.
+
+Thanks,
+Taylor
