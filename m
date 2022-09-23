@@ -2,75 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F161BC6FA82
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 15:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4D7EECAAD8
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 16:01:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231282AbiIWPzi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 11:55:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38700 "EHLO
+        id S231207AbiIWQBQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 12:01:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229666AbiIWPzf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 11:55:35 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 438EC12C697
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 08:55:27 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E7E3142EBE;
-        Fri, 23 Sep 2022 11:55:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5o8Fjwjjc3SK82OCuSWGkT711vE9379cB4VjUV
-        VdoW0=; b=h+P68njy8qLv0ZTnpvPuZ4rpz1Nm/+BQzokcMYJEGJcvtbcss8qMMs
-        H0dipdlohW0HJCnjXHszxbHfB36rFz0DDyIpRhL3a5/Z43knc6mYkBKDVV+OhFqn
-        BcQDPc8mJetzR6IL8VTnD8N7VMFxQOr3s7HtX8ZS2RU1wzgHV5uKs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 96E92142EBD;
-        Fri, 23 Sep 2022 11:55:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EDE42142EBC;
-        Fri, 23 Sep 2022 11:55:25 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     git@vger.kernel.org, chakrabortyabhradeep79@gmail.com,
-        me@ttaylorr.com, kaartic.sivaraam@gmail.com
-Subject: Re: [PATCH] pack-bitmap: improve grammar of "xor chain" error message
-References: <20220922025158.415969-1-alexhenrie24@gmail.com>
-Date:   Fri, 23 Sep 2022 08:55:24 -0700
-In-Reply-To: <20220922025158.415969-1-alexhenrie24@gmail.com> (Alex Henrie's
-        message of "Wed, 21 Sep 2022 20:51:58 -0600")
-Message-ID: <xmqqv8pew0er.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S231610AbiIWQBK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 12:01:10 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CCC814769D
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 09:01:06 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id j6-20020a17090a694600b00200bba67dadso537954pjm.5
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 09:01:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=LVg6Z4V9NyntoWkw1qYIh5EX8Qg7IocyjZRMafINJlc=;
+        b=YievLT4BJ/7Qj8AZ5jDUZmAtMAQalQP2g9bVa3ANnOF3RyeSNrtZENm3+LGdenAYwP
+         8w6s7dbZRObEv0nxcsdH6lLpgcGD5ug5xrRDqOxugp764L6FwTphd0yFR+vKxjPG8iu+
+         SZ0DzNbtHjQJfNvamEL/U/K067fFr1YCDkoixDyZSxFOvzvsoY/9te8an1XSH5JtW0Vg
+         6ypg3xJmOZJcFWAHJASDYYl2gIsfwTOWJdA93HRByeSPf2TXXYCzweVkWPW6D16Qsg1s
+         QEbO/j0Ry20nVlN2HhEWvVLNACSC0uazCu4Y2Cranpz7O8yg0/WOMz3dmvA0h2/s7I1m
+         0zMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=LVg6Z4V9NyntoWkw1qYIh5EX8Qg7IocyjZRMafINJlc=;
+        b=b2KBBWuKY3Ckg+02PZ0QPC0MWAa1YOJSigccki0eVGY2TVNOqfp3V5G0v095aG/Av3
+         t9nF4nY7JglnzBjOHaRUf2dgt71JsXegnADVL9FXt1NK5lRrsp6Y8o5/tppMByxHzLf7
+         ar1lTkP1Z8k80CeHurYp+0/IrVFdCqdG+g2dNvLLKsr0j9ErsLytotFS/3t2iZ1vG0Gg
+         YPvj4oP1+MSgvJvEEwHyPOXop/V8eVYZw00YU6I3wjFMYBXKrO4KD7Ode6shetSfNdJZ
+         30yireWTwskIyK6FMy2lFX+4pv0CwbE4Col6QxSf6hm/aLVeuOuQD4ZYY2x/vuBaroas
+         LrxA==
+X-Gm-Message-State: ACrzQf1V4CzKnmu2QAXBE/1i6QylnV3fp6ooaZYuCI15+JmKh0Cq31s0
+        PoZ6gRrlvkhFODUyne29qLhA
+X-Google-Smtp-Source: AMsMyM6eA0ke3xGFxInMUcFr/MlsiOU8ErJhTna/9o2T6i3cpZ6KRloT9G1AwlYEhyQg2uYiEUWsuQ==
+X-Received: by 2002:a17:90b:4a91:b0:202:59ed:94d5 with SMTP id lp17-20020a17090b4a9100b0020259ed94d5mr10042932pjb.213.1663948865681;
+        Fri, 23 Sep 2022 09:01:05 -0700 (PDT)
+Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id n2-20020a170902d2c200b001715a939ac5sm6158696plc.295.2022.09.23.09.01.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Sep 2022 09:01:05 -0700 (PDT)
+Message-ID: <d5c8012b-ccfe-2562-b56c-71b24de900e2@github.com>
+Date:   Fri, 23 Sep 2022 09:01:03 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 23AB52FC-3B58-11ED-B51F-307A8E0A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.13.0
+Subject: Re: [PATCH v6 0/1] grep: integrate with sparse index
+Content-Language: en-US
+To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>, git@vger.kernel.org
+Cc:     derrickstolee@github.com, gitster@pobox.com, newren@gmail.com,
+        avarab@gmail.com
+References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+ <20220923041842.27817-1-shaoxuan.yuan02@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <20220923041842.27817-1-shaoxuan.yuan02@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+Shaoxuan Yuan wrote:
+> Integrate `git-grep` with sparse-index and test the performance
+> improvement.
+> 
+> Changes since v5
+> ----------------
+> 
+> * Drop the `--sparse` option patch and edit corresponding tests. 
+>   We can wait until a better name is decided to replace `--sparse`.
+> 
+> * Modify the commit message, especially get rid of the `--sparse`
+>   occurences.
+> 
 
-> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-> ---
->  pack-bitmap.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index 9a208abc1f..9d5205055a 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -723,7 +723,7 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
->  		ALLOC_GROW(xor_items, xor_items_nr + 1, xor_items_alloc);
->  
->  		if (xor_items_nr + 1 >= bitmap_git->entry_count) {
-> -			error(_("corrupt bitmap lookup table: xor chain exceed entry count"));
-> +			error(_("corrupt bitmap lookup table: xor chain exceeds entry count"));
+Thanks for the update! Everything in this patch is either part of the
+previous version's patch 3 or comes from the tests & sparse index enabling
+of the previous patch 2. The resulting patch enables the sparse index for
+all usage of '--cached', and avoids any user option changes. 
 
-Thanks.  This will affect the l10n team, and the change is obviously
-innocuous, so let's merge it down immediately to the 'master' branch
-to make the life of l10n team more predictable.
+All that to say, this version looks good to me!
 
+Thanks!
+- Victoria
