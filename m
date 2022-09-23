@@ -2,74 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A883C6FA82
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 16:30:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58EE6C6FA82
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 16:40:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232694AbiIWQal (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 12:30:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39274 "EHLO
+        id S230165AbiIWQk3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 12:40:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232791AbiIWQag (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 12:30:36 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5861A113B4A
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 09:30:35 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B43951ABAAD;
-        Fri, 23 Sep 2022 12:30:34 -0400 (EDT)
+        with ESMTP id S229765AbiIWQkZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 12:40:25 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E201966132
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 09:40:24 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5C44B1B78EF;
+        Fri, 23 Sep 2022 12:40:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yqH2pHjegR2wNfeXinsFrjjHE/4G6Ja/B9Nj8p
-        99Tt0=; b=nAYtZrGgk8vxyYY9vmixa/En9BdVEMQ9PZDBOlkLsqHNUt8AZMcLPJ
-        rWgTnnTSjYo7bg7am5QJWB2QjrHva1EXBy0pcNqSXONbvg9j2w7qhCn+boJ5ho/q
-        njyG430Tl3PYG7t/6Ope7CX3xGMhsulpmHfZAfWN9SDLgvr09db/w=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AC63E1ABAAB;
-        Fri, 23 Sep 2022 12:30:34 -0400 (EDT)
+        :content-type; s=sasl; bh=kWVRyyo7J1eS9jSTyMsQYs9ZGqDjV2DChDRx8W
+        pFvPk=; b=qRPFDB8USrmX88FIoeEYY5gUNwKtKyObJTr7j6q55XXIiU4iIFKuXo
+        2pXy5Ta3UFjoQFBtx3P8NWgWYzAOTyNgyBfaQopWvoCdtjUryWbS4eizoTCoPHO+
+        PPY/B0915OLBPIZBKBuhFJ4ImXJuXDA4PQtZP9JmT9sm6j0QzbZSY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 53FCB1B78EE;
+        Fri, 23 Sep 2022 12:40:24 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8B42D1ABAA9;
-        Fri, 23 Sep 2022 12:30:28 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 149D11B78EC;
+        Fri, 23 Sep 2022 12:40:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     "Scheffenegger, Richard" <Richard.Scheffenegger@netapp.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git --archive
-References: <PH0PR06MB763962EB6321F85803C5CE2D864E9@PH0PR06MB7639.namprd06.prod.outlook.com>
-        <xmqqleqbxj4h.fsf@gitster.g>
-        <PH0PR06MB7639720FB3A1611F4C96E52C864E9@PH0PR06MB7639.namprd06.prod.outlook.com>
-        <Yy0ChPPqZUwVFyAt@tapette.crustytoothpaste.net>
-Date:   Fri, 23 Sep 2022 09:30:27 -0700
-In-Reply-To: <Yy0ChPPqZUwVFyAt@tapette.crustytoothpaste.net> (brian
-        m. carlson's message of "Fri, 23 Sep 2022 00:49:08 +0000")
-Message-ID: <xmqqedw2vysc.fsf@gitster.g>
+To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com, vdye@github.com,
+        newren@gmail.com, avarab@gmail.com
+Subject: Re: [PATCH v6 1/1] builtin/grep.c: integrate with sparse index
+References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
+        <20220923041842.27817-1-shaoxuan.yuan02@gmail.com>
+        <20220923041842.27817-2-shaoxuan.yuan02@gmail.com>
+Date:   Fri, 23 Sep 2022 09:40:18 -0700
+In-Reply-To: <20220923041842.27817-2-shaoxuan.yuan02@gmail.com> (Shaoxuan
+        Yuan's message of "Thu, 22 Sep 2022 21:18:42 -0700")
+Message-ID: <xmqq7d1uvybx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 08E906B2-3B5D-11ED-B7A2-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 697B79F0-3B5E-11ED-A174-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> writes:
 
-> Maybe they can technically be stored in any order, but people don't want
-> git archive to produce non-deterministic archives...
-> ...  I feel like it would be very difficult to achieve the
-> speedups you want and still produce a deterministic archive.
+> - Command used for testing:
+>
+> 	git grep --cached bogus -- "f2/f1/f1/*"
+>
+> The reason for specifying a pathspec is that, if we don't specify a
+> pathspec, then grep_tree() will walk all the trees and blobs to find the
+> pattern, and the time consumed doing so is not too different from using
+> the original ensure_full_index() method, which also spends most of the
+> time walking trees. However, when a pathspec is specified, this latest
+> logic will only walk the area of trees enclosed by the pathspec, and the
+> time consumed is reasonably a lot less.
 
-I am not going to work on it myself, but I think the only possible
-parallelism would come from making the reading for F(n+1) and
-subsequent objects overlap writing of F(n), given a deterministic
-order of files in the resulting archive.  When we decide which file
-should come first, and learns that it is F(0), it probably comes the
-tree object of the root level, and it is very likely that we would
-already know what F(1) and F(2) are by that time, so it should be
-possible to dispatch reading and applying content filtering on F(1)
-and keeping the result in core, while we are still writing F(0) out.
+Good.  So without pathspec, we lazily populate the index and catch
+matches even from outside the sparse cone.  We punt to "implicitly"
+apply the sparse cone(s) as a pathspec that limits the hits to the
+paths in the sparse cone(s).
 
-Thanks.
+> That is, if we don't specify a pathspec, the performance difference [1]
+> is indistinguishable: both methods walk all the trees and take generally
+> same amount of time (even with the index construction time included for
+> ensure_full_index()).
+
+Good.
