@@ -2,168 +2,204 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A6D5C04A95
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 21:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB7BDC04A95
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 21:45:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232195AbiIWVjj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 17:39:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39616 "EHLO
+        id S232317AbiIWVpE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 17:45:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230325AbiIWVjh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 17:39:37 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3CC306
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 14:39:29 -0700 (PDT)
-Received: (qmail 14666 invoked by uid 109); 23 Sep 2022 21:39:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 23 Sep 2022 21:39:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17204 invoked by uid 111); 23 Sep 2022 21:39:29 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 23 Sep 2022 17:39:29 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 23 Sep 2022 17:39:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com,
-        Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH] read-cache: avoid misaligned reads in index v4
-Message-ID: <Yy4nkEnhuzt2iH+R@coredump.intra.peff.net>
-References: <pull.1366.git.1663962236069.gitgitgadget@gmail.com>
+        with ESMTP id S229511AbiIWVpD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 17:45:03 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE872857E3
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 14:45:00 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 57448153789;
+        Fri, 23 Sep 2022 17:44:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jl0Fcozpeg/6YBaH02KsIhvHDaJs3vezKXnNyo
+        2hOEg=; b=SfXz1wA8JAS1gdIQFOri2wUhc/oYqaLJPS+bA44ejZVhN4aIont5jc
+        +CbK30ZF/i8IepsBjBcAkob4sVrG+B0rXA8q0u6/tPmxr6VnB5dfOomoyx/Yp8bI
+        +xb6od6ZQF145miWmEloMiuv966HkePpfvnuReYAaXJyoB77qfNHc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E5FE153788;
+        Fri, 23 Sep 2022 17:44:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A9E78153787;
+        Fri, 23 Sep 2022 17:44:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com
+Subject: Re: [PATCH 4/4] diff-lib: parallelize run_diff_files for submodules
+References: <20220922232947.631309-1-calvinwan@google.com>
+        <20220922232947.631309-5-calvinwan@google.com>
+Date:   Fri, 23 Sep 2022 14:44:57 -0700
+In-Reply-To: <20220922232947.631309-5-calvinwan@google.com> (Calvin Wan's
+        message of "Thu, 22 Sep 2022 23:29:47 +0000")
+Message-ID: <xmqqy1u9sr3a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1366.git.1663962236069.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: F86230BC-3B88-11ED-8101-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 23, 2022 at 07:43:55PM +0000, Victoria Dye via GitGitGadget wrote:
+Calvin Wan <calvinwan@google.com> writes:
 
-> Avoid this error by reading fields directly from the 'char *' buffer, using
-> the 'offsetof' individual fields in 'struct ondisk_cache_entry'.
+> During the iteration of the index entries in run_diff_files, whenever
+> a submodule is found and needs its status checked, a subprocess is
+> spawned for it. Instead of spawning the subprocess immediately and
+> waiting for its completion to continue, hold onto all submodules and
+> relevant information in a list. Then use that list to create tasks for
+> run_processes_parallel. Finished subprocesses pipe their output to
+> status_finish which parses it and sets the relevant variables.
 
-Thanks for moving this forward. I agree this should fix the alignment
-problems, and I didn't see anything in the patch that would do the wrong
-thing. I do have some style/technique suggestions, though.
+Excellent---I like the idea very much.
 
-> @@ -1883,7 +1883,7 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
->  	size_t len;
->  	const char *name;
->  	const unsigned hashsz = the_hash_algo->rawsz;
-> -	const uint16_t *flagsp = (const uint16_t *)(ondisk->data + hashsz);
-> +	const char *flagsp = ondisk + offsetof(struct ondisk_cache_entry, data) + hashsz;
+You make it sound as if this is only for "git status", but shouldn't
+it benefit the usual "git diff" the same way when you have
+submodules that can be dirty?
 
-Now we use the "const char *" pointer instead of the cast to the
-ondisk_cache_entry struct, which is good, and is what fixes the
-alignment question.
+> Add config option status.parallelSubmodules to set the maximum number
+> of parallel jobs. 
 
-But we also convert flagsp from being a uint16_t into a byte pointer.
-I'm not sure if that's strictly necessary from an alignment perspective,
-as we'd dereference it only via get_be16(), which handles alignment and
-type conversion itself.
+Configuration is fine, but I am having a hard time justifying the
+addition of an extra parameter to run_diff_files().  It might be
+more palatable to give a new bit (default off) in the rev structure
+that tells it that it is OK to go into the "defer_submodule_status"
+mode, if we absolutely want to change the behaviour of
+run_diff_files() only for a single caller or something, but I doubt
+it should even be needed.
 
-I'd imagine the standard probably says that even forming such a pointer
-is illegal, so in that sense, it probably is undefined behavior. But I
-think it's one of those things that's OK in practice.
+I cannot think of a sane user interface that says "when
+run_diff_files() is invoked as an implementation detail of 'status',
+use this value, and when it is running for another command 'foo',
+use this other value".  How would a user decide to pick a different
+value for different commands?
 
-That might be splitting hairs, but if you kept it as a uint16_t pointer,
-then code like this:
+Letting a single configuration variable to decide the degree of
+parallelism inside run_diff_files() would be sufficient, and we
+shouldn't have to touch all the existing calling sites of
+run_diff_files() all over the place.  If you absolutely want to do
+this, I'd rather see the new member for the configuration variable
+not in wt_status but in rev_info.
 
-> @@ -1901,15 +1901,15 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+> +status.parallelSubmodules::
+> +	When linkgit:git-status[1] is run in a superproject with
+> +	submodules, a status subprocess is spawned for every submodule.
+> +	This option specifies the number of submodule status subprocesses
+> +	to run in parallel. If unset, it defaults to 1.
+
+As I said, I am not sure <cmd>.parallelSubmodules per command makes
+much sense.  "If unset, it defaults to" sounds a bit redundant (if
+it is explicitly set, the default value should not matter).
+
+> @@ -83,11 +88,20 @@ static int match_stat_with_submodule(struct diff_options *diffopt,
+>  		goto cleanup;
+>  	}
+>  	if (!diffopt->flags.ignore_dirty_submodules &&
+> -		(!changed || diffopt->flags.dirty_submodules))
+> +		(!changed || diffopt->flags.dirty_submodules)) {
+> +		if (defer_submodule_status && *defer_submodule_status) {
+> +			defer = 1;
+> +			*ignore_untracked_in_submodules =
+> +							diffopt->flags.ignore_untracked_in_submodules;
+> +		} else {
+>  			*dirty_submodule = is_submodule_modified(ce->name,
+>  							diffopt->flags.ignore_untracked_in_submodules);
+> +		}
+> +	}
+
+OK, so the caller can look at *defer
+
+>  cleanup:
+>  	diffopt->flags = orig_flags;
+> +	if (defer_submodule_status)
+> +		*defer_submodule_status = defer;
+>  	return changed;
+>  }
 >  
->  	if (flags & CE_EXTENDED) {
->  		int extended_flags;
-> -		extended_flags = get_be16(flagsp + 1) << 16;
-> +		extended_flags = get_be16(flagsp + sizeof(uint16_t)) << 16;
-
-doesn't need to be changed. I don't know if it's that big a deal either
-way, though.
-
-> @@ -1935,20 +1935,24 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+> @@ -117,7 +131,7 @@ static void finish_run_diff_files(struct rev_info *revs,
+>  			    ce->name, 0, dirty_submodule);
+>  }
 >  
->  	ce = mem_pool__ce_alloc(ce_mem_pool, len);
+> -int run_diff_files(struct rev_info *revs, unsigned int option)
+> +int run_diff_files(struct rev_info *revs, unsigned int option, int parallel_jobs)
+>  {
+>  	int entries, i;
+>  	int diff_unmerged_stage = revs->max_count;
+> @@ -125,6 +139,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+>  			      ? CE_MATCH_RACY_IS_DIRTY : 0);
+>  	uint64_t start = getnanotime();
+>  	struct index_state *istate = revs->diffopt.repo->index;
+> +	struct string_list submodules = STRING_LIST_INIT_NODUP;
 >  
-> -	ce->ce_stat_data.sd_ctime.sec = get_be32(&ondisk->ctime.sec);
-> [...]
-> +	ce->ce_stat_data.sd_ctime.sec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, ctime)
-> +							+ offsetof(struct cache_time, sec));
+>  	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
+>  
+> @@ -138,6 +153,9 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+>  		struct cache_entry *ce = istate->cache[i];
+>  		int changed;
+>  		unsigned dirty_submodule = 0;
+> +		int defer_submodule_status = revs && revs->repo &&
+> +							!strcmp(revs->repo->gitdir, ".git");
 
-I had figured we'd be able to drop ondisk_cache_entry entirely. But here
-you're using it essentially as a template for a set of constants
-retrieved via offsetof().
+What is this overly deeply indented comparison with ".git" doing?
+What are we checking and why?  Is that something we need to do for
+each and every active_cache[] entry, or isn't it constant over the
+loop?
 
-That's OK from an alignment perspective. It does mean we'd be in trouble
-if a compiler ever decided to introduce padding into the struct. That's
-probably unlikely. We don't use __attribute__((packed)) because it's not
-portable, and our existing uses have generally been OK, because our
-data structures are organized around 8-byte alignment. We might have
-problems on a theoretical 128-bit processor or something.
+> +		int ignore_untracked_in_submodules;
+>  
+>  		if (diff_can_quit_early(&revs->diffopt))
+>  			break;
+> @@ -269,11 +287,36 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+>  			}
+>  
+>  			changed = match_stat_with_submodule(&revs->diffopt, ce, &st,
+> +							ce_option, &dirty_submodule,
+> +							&defer_submodule_status,
+> +							&ignore_untracked_in_submodules);
+>  			newmode = ce_mode_from_stat(ce, st.st_mode);
+> +			if (defer_submodule_status) {
+> +				struct string_list_item *item =
+> +								string_list_append(&submodules, ce->name);
+> +				struct submodule_status_util *util = xmalloc(sizeof(*util));
+> +				util->changed = changed;
+> +				util->dirty_submodule = 0;
+> +				util->ignore_untracked = ignore_untracked_in_submodules;
+> +				util->newmode = newmode;
+> +				util->ce = ce;
+> +				item->util = util;
+> +				continue;
 
-So I don't think this is a problem now, and unlikely to be in the near
-future. But another way to do it would just be an actual set of offsets
-(either #define or an enum). That maybe makes the intended use more
-obvious, and also prevents people from accidentally misusing the struct.
-I'm not sure if it's worth it for not.
+This makes me wonder if defer_submodule_status should be a string
+list that receives the punted submodules---iow, don't these details
+belong to match_stat_with_submodule() rather than its caller here?
 
-It is a bit of a pain to write. Either you have magic numbers, or you
-have to reference the offset and size of the previous entry:
+Even better may be to start a new child task for the submodule here,
+letting it work while the parent process moves on to the next entry
+in the active_cache[].  I do not know if you thought about doing it
+that way.
 
-  #define ONDISK_CACHE_CTIME 0
-  #define ONDISK_CACHE_MTIME (ONDISK_CACHE_CTIME + sizeof(struct cache_time))
-  #define ONDISK_CACHE_DEV (ONDISK_CACHE_MTIME + sizeof(struct cache_time))
+I dunno.
 
-Another strategy is to just parse left-to-right, advancing the byte
-pointer. Like:
+> +			}
+>  		}
+>  		finish_run_diff_files(revs, ce, istate, changed, dirty_submodule, newmode);
+>  	}
+> +	if (submodules.nr > 0) {
+> +		if (get_submodules_status(revs->repo, &submodules,
+> +						parallel_jobs > 0 ? parallel_jobs : 1))
+> +			BUG("Submodule status failed");
+> +		for (int i = 0; i < submodules.nr; i++) {
 
-  ce->ce_state_data.sd_ctime.sec = get_be32(ondisk);
-  ondisk += sizeof(uint32_t);
-  ce->ce_state_data.sd_mtime.sec = get_be32(ondisk);
-  ondisk += sizeof(uint32_t);
-  ...etc...
-
-You can even stick that in a helper function that does the get_b32() and
-advances, so you know they're always done in sync. See pack-bitmap.c's
-read_be32(), etc. IMHO this produces a nice result because the reading
-code itself becomes the source of truth for the format.
-
-But one tricky thing there is if you want to parse out of order. And it
-does seem that we read the struct out of order in this case. But I don't
-think there's any reason we need to do so. Of course reordering the
-function would make the change much more invasive.
-
-So all that said, I'm OK with this approach as the minimal fix, and then
-we can think about further refactoring or cleanup on top.
-
-One final note, though:
-
-> +	ce->ce_stat_data.sd_mtime.sec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, mtime)
-> +							+ offsetof(struct cache_time, sec));
-
-Here (and elsewhere), you can assume that the offsetof() "sec" in
-cache_time is 0, for two reasons:
-
-  - I didn't look up chapter and verse, but I'm pretty sure the standard
-    does guarantee that the first field of a struct is at the beginning.
-
-  - If there's any padding, this whole scheme is hosed anyway, because
-    it means sizeof(cache_time) is bigger than we expect, which messes
-    up the offsetof() the entry after us (in this case sd_dev).
-
-So this can just be:
-
-  ce->ce_stat_data.sd_mtime.sec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, mtime));
-
-which is mercifully shorter.
-
-Assuming we dismiss the rest of what I said as not worth it for a
-minimal fix, I do think that simplification is worth rolling a v2.
-
--Peff
-
-PS BTW, I mentioned earlier "can we just get rid of ondisk_cache_entry".
-   We also use it for the writing side, of course. That doesn't have
-   alignment issues, but it does have the same "I hope there's never any
-   padding" question. In an ideal world, it would be using the
-   equivalent put_be32(), but again, that's getting out of the "minimal
-   fix" territory.
+We still do not allow "for (type var = init; ...)" if I am not
+mistaken.  Check the coding guidelines.
