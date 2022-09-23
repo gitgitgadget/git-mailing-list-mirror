@@ -2,131 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A720BC6FA8B
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 16:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A883C6FA82
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 16:30:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232694AbiIWQTB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 12:19:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42830 "EHLO
+        id S232694AbiIWQal (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 12:30:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232142AbiIWQS0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 12:18:26 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF7F714DAC3
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 09:17:21 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2F7BE1B763E;
-        Fri, 23 Sep 2022 12:17:16 -0400 (EDT)
+        with ESMTP id S232791AbiIWQag (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 12:30:36 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5861A113B4A
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 09:30:35 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B43951ABAAD;
+        Fri, 23 Sep 2022 12:30:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2EzjoL8+GdPF6n/Gb7ymGl5wtJMtbvgr26QJGE
-        bx6EQ=; b=DLJoI+Ot0vPn5HQO05JyGh/vxZ8+T4qOR02PTS/52cn5wWRXvMdem8
-        VuY1I+MzUZ/HHTr++nRFsGDHZesTIz94RFQbz0B6KSIlqRU/9tWVSKEqxUj2rbDA
-        ea9Y3Mvfaf8wCjG1kqrIPLlrmIF9E8YTdBZ96umcbW5SVsPTxb1Lk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 15DB81B763C;
-        Fri, 23 Sep 2022 12:17:16 -0400 (EDT)
+        :content-type; s=sasl; bh=yqH2pHjegR2wNfeXinsFrjjHE/4G6Ja/B9Nj8p
+        99Tt0=; b=nAYtZrGgk8vxyYY9vmixa/En9BdVEMQ9PZDBOlkLsqHNUt8AZMcLPJ
+        rWgTnnTSjYo7bg7am5QJWB2QjrHva1EXBy0pcNqSXONbvg9j2w7qhCn+boJ5ho/q
+        njyG430Tl3PYG7t/6Ope7CX3xGMhsulpmHfZAfWN9SDLgvr09db/w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AC63E1ABAAB;
+        Fri, 23 Sep 2022 12:30:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 89DB31B763B;
-        Fri, 23 Sep 2022 12:17:11 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8B42D1ABAA9;
+        Fri, 23 Sep 2022 12:30:28 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Stopak <jacob@initialcommit.io>
-Cc:     git@vger.kernel.org, martin.agren@gmail.com
-Subject: Re: [RFC PATCH v2] shortlog: add group-by options for year and month
-References: <20220922061824.16988-1-jacob@initialcommit.io>
-        <20220922232536.40807-1-jacob@initialcommit.io>
-Date:   Fri, 23 Sep 2022 09:17:10 -0700
-In-Reply-To: <20220922232536.40807-1-jacob@initialcommit.io> (Jacob Stopak's
-        message of "Thu, 22 Sep 2022 16:25:36 -0700")
-Message-ID: <xmqqillevzeh.fsf@gitster.g>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     "Scheffenegger, Richard" <Richard.Scheffenegger@netapp.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git --archive
+References: <PH0PR06MB763962EB6321F85803C5CE2D864E9@PH0PR06MB7639.namprd06.prod.outlook.com>
+        <xmqqleqbxj4h.fsf@gitster.g>
+        <PH0PR06MB7639720FB3A1611F4C96E52C864E9@PH0PR06MB7639.namprd06.prod.outlook.com>
+        <Yy0ChPPqZUwVFyAt@tapette.crustytoothpaste.net>
+Date:   Fri, 23 Sep 2022 09:30:27 -0700
+In-Reply-To: <Yy0ChPPqZUwVFyAt@tapette.crustytoothpaste.net> (brian
+        m. carlson's message of "Fri, 23 Sep 2022 00:49:08 +0000")
+Message-ID: <xmqqedw2vysc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2DDC03A4-3B5B-11ED-A64E-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 08E906B2-3B5D-11ED-B7A2-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Stopak <jacob@initialcommit.io> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> To justify why the new year/month groups should have shorthand flags
-> while "--group=trailer:value" does not, I'd say that the fact that
-> trailer requires a custom value would make the shorthand version clunky,
-> and it wouldn't fit in well with other shorthand options like -n or -s.
-> Since year/month have no custom value, the flags make a bit more sense
-> and would match up with how "-c, --committer" currently works.
+> Maybe they can technically be stored in any order, but people don't want
+> git archive to produce non-deterministic archives...
+> ...  I feel like it would be very difficult to achieve the
+> speedups you want and still produce a deterministic archive.
 
-It is an explanation why it is easier to implement and design --year
-etc., and does not justify why adding --year etc. is a good idea at
-all.  Let's not add the "aliases" in the same patch.
+I am not going to work on it myself, but I think the only possible
+parallelism would come from making the reading for F(n+1) and
+subsequent objects overlap writing of F(n), given a deterministic
+order of files in the resulting archive.  When we decide which file
+should come first, and learns that it is F(0), it probably comes the
+tree object of the root level, and it is very likely that we would
+already know what F(1) and F(2) are by that time, so it should be
+possible to dispatch reading and applying content filtering on F(1)
+and keeping the result in core, while we are still writing F(0) out.
 
->   - `author`, commits are grouped by author
->   - `committer`, commits are grouped by committer (the same as `-c`)
-> + - `month`, commits are grouped by month (the same as `-m`)
-> + - `year`, commits are grouped by year (the same as `-y`)
-
-It is unclear what timestamp is used, how a "month" is defined, etc.
-As "git shortlog --since=2.years" cuts off based on the committer
-timestamp, I would expect that the committer timestamps are used for
-this grouping as well?  If I make a commit on the first day of the
-month in my timezone, but that instant happens to be still on the
-last day of the previous month in your timezone, which month would
-your invocation of "git shortlog --group=month" would the commit be
-attributed?  My month, or your month?
-
-Does it make sense to even say "group by month and year"?  I expect
-that it would mean the same thing as "group by month", and if that
-is the case, the command probably should error out or at least warn
-if both are given.  An alternative interpretation could be, when
-told to "group by month", group the commits made in September 2022
-into the same group as the group for commits made in September in
-all other years, but I do not know how useful it would be.
-
-Not a suggestion to use a different implementation or add a new
-feature on top of this --group-by-time-range idea, but I wonder if
-it is a more flexible and generalizeable approach to say "formulate
-this value given by the --format=<format> string, apply this regular
-expression match, and group by the subexpression value".  E.g.
-
-    git shortlog \
-	--group-by-value="%cI" \
-	--group-by-regexp="^(\d{4}-\d{2})"
-
-would "formulate the 'committer date in ISO format' value, and apply
-the 'grab leading 4 digits followed by a dash followed by 2 digits'
-regexp, and group by the matched part".
-
-That's a better way to implement "group by month" internally, and
-allow more flexibility.  If a project is well disciplined and its
-commit titles follow the "<area>: <description>" convention, you
-probably could do
-
-    git shortlog --no-merges \
-	--group-by-value="%s" \
-	--group-by-regexp="^([^:]+):"
-
-and group by <area> each commit touches.  Of course, existing
---committer and --author can also be internally reimplemented using
-the same mechanism.
-
-> @@ -80,6 +82,14 @@ counts both authors and co-authors.
->  --committer::
->  	This is an alias for `--group=committer`.
->  
-> +-m::
-> +--month::
-> +	This is an alias for `--group=month`.
-> +
-> +-y::
-> +--year::
-> +	This is an alias for `--group=year`.
-> +
-
-Let's not add this in the same patch.  I am fairly negative on
-adding more, outside "--group".  Besides, we do not have a good
-answer to those who want to group by week.  -w is already taken.
+Thanks.
