@@ -2,113 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F808C04A95
-	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 18:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A225DC04A95
+	for <git@archiver.kernel.org>; Fri, 23 Sep 2022 18:23:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230207AbiIWSLc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 14:11:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57690 "EHLO
+        id S231883AbiIWSXh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Sep 2022 14:23:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229583AbiIWSLa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 14:11:30 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 886E0EE669
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 11:11:29 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id y141so568667iof.5
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 11:11:29 -0700 (PDT)
+        with ESMTP id S229525AbiIWSXe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Sep 2022 14:23:34 -0400
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A391113B51
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 11:23:33 -0700 (PDT)
+Received: by mail-il1-x130.google.com with SMTP id d14so583971ilf.2
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 11:23:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=5M1+2ILsQmenRVs2a6tJvQdQRWEHmTbQdfFONHNu+xY=;
-        b=MUoY3vQckpyY0SnoMQjVFWY3jzygHmAI38Hu5q11yvjZqJFVuiFWlXcGzPyMjBK2GR
-         9jcHqMeYmqStNExnVyuSHc5PbZVFGKQtUOry6AqePcbox39BIN5bpZsfWad5WMTos6rl
-         i9WGwaXM2erfh5xL+ru3bKhFB3irv1Il9CLH0T4gPu3K+nTf6W1FyVrpC0qOlx7ZGJz/
-         RigkXDcMMZZDMMC1oDhNXagKJRP2t96x6bPuGnOlAN6RaJVivvJqzree7TecY+Orh9jZ
-         eWj8eQRUJl6cQFaabzxpCIZKkLzfb80ZxSra7zFSs1FxuJtCIiCeTo7cC4UEJIIpvbXR
-         iRgg==
+        bh=hIM1zPveLMJfNx+WUM36orYsPxhag3MVNHMkcyd8XFs=;
+        b=iMMlgp8OxtI7pbLDYARfwkSFQu/QaWRbidfvVOi/2D0R6mRgRA30LjDaX704bxChMB
+         3BCXPNOPETTvHNTlE+YpfblD+z1Yb1h/oqyoC6bU/OOSC5I3UUzdkxAMWN+IfVlZk+4d
+         OsZzPDJJ7DoBwdbbMOKpHLIDW5cZxEx4ujvP42ut8JGpx7sJDc8ljJI5szOGO55JDx5t
+         YELaK5MaZLaKghN4v4bGgV6MGl6r0SI0SSPybiDdGoHRgaGeRZldqEiDhvs5V1kZ73xa
+         l+1yW7rj9b92wJCiOe4y8mUgWFkHpT4T8gwAhi7K6dvtR6y1q/63sXPpPSqmk0sLPIRT
+         irOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=5M1+2ILsQmenRVs2a6tJvQdQRWEHmTbQdfFONHNu+xY=;
-        b=k+Q7jn/t3n4SyNHogAX9V9JAbqwFFk44tChabYHgK47dpo8Lc5AP9YtCpSVz6N1G+f
-         KU9HBDGyZwlFIkiLfaz8plv5HlNo2VwjHKk4KcJh35pZh0Q70WlrwyMXSwi5hdwNMk4O
-         pdt4NMVwTrsgmEPojO0taw6dIZxu00V6E2jp+CdewIiXeDAaAgz4NsmeoECInPJJ48in
-         REeTAcC+EMYvNI8ceUfVOfr+0IMvyN93CqWP3b1oXqiou2OEWteNuT8Ap8rFB7RqlrSF
-         iKtIZjqtBYs8oiF5XzhTQNTzU8p0kFMeGdwSgkMOsx+3TGdaMmRq8GrqVl7zsn3CQFFH
-         zfuA==
-X-Gm-Message-State: ACrzQf2Dg0Kkw4VeCKUj3pqYWlUCKmsRk4qoYeFhJ34klHnhS4OdYIyX
-        EkxREKPSw+KgUkl4if60DL7s
-X-Google-Smtp-Source: AMsMyM7ToRYNAW06XxCDDC+gwBEoRnuirQPULRg91ygkVPTMnwCz1d/ecCosy86ef0lQrdrXXg4Dxw==
-X-Received: by 2002:a05:6638:35a1:b0:35a:6967:acbe with SMTP id v33-20020a05663835a100b0035a6967acbemr5484582jal.37.1663956688883;
-        Fri, 23 Sep 2022 11:11:28 -0700 (PDT)
+        bh=hIM1zPveLMJfNx+WUM36orYsPxhag3MVNHMkcyd8XFs=;
+        b=Q/ZfXXj0sGMKz33oNyP5x34RJAX+W9rqpV31zYJyM2MWXOAA2KE/S6h+OGLkp2kGK+
+         qhWW7TnsMjfqYLFErfcBkW4lcKfv8utRSEQocUxReTr/ZlAbo0tGLcpa7crv+uGTQlIX
+         1v5JYanOLm71RppvjJLuLecpANNLsSonDNVT8bH+g19i/YsE7RJtqAw8gP/ce9Z652+F
+         o8fdva78XVuapegeNYZ/LF4riGpVSe0YlENQIbnYwGO70vaonJEXKfALagWYUlMGaI9W
+         GVvkuMMxrk93p6+m17ugoWIhvD9b10IEfbIjz3i2RMJVROKRlyXKnhmda2h3dvnrmdQL
+         61TQ==
+X-Gm-Message-State: ACrzQf0XEnjE5OXRgAMmSSYyNLpNoE3ztYB+gLxYCAS0AIifp9Jzevt6
+        YQB8iwz49AYdLXy+lETY5oyx
+X-Google-Smtp-Source: AMsMyM5Vj/D4ladNefnpZQbvJKV7MDBJ3eUV+6I63GpLs6e/HP+tvsxNVojMqXeCb8tMMyhmx/MwUQ==
+X-Received: by 2002:a05:6e02:5c6:b0:2f5:5e35:1f9d with SMTP id l6-20020a056e0205c600b002f55e351f9dmr4515948ils.43.1663957412896;
+        Fri, 23 Sep 2022 11:23:32 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:f43f:f355:a5bb:115a? ([2600:1700:e72:80a0:f43f:f355:a5bb:115a])
-        by smtp.gmail.com with ESMTPSA id bm4-20020a05663842c400b0034294118e1bsm3641614jab.126.2022.09.23.11.11.27
+        by smtp.gmail.com with ESMTPSA id t8-20020a026408000000b0035a0d844e43sm3577131jac.159.2022.09.23.11.23.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Sep 2022 11:11:27 -0700 (PDT)
-Message-ID: <a86af661-cf58-a4e5-0214-a67d3a794d7e@github.com>
-Date:   Fri, 23 Sep 2022 14:11:25 -0400
+        Fri, 23 Sep 2022 11:23:32 -0700 (PDT)
+Message-ID: <5172dbb7-61d1-7249-f9bb-d760e6f4450a@github.com>
+Date:   Fri, 23 Sep 2022 14:23:30 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.1
-Subject: Re: Question relate to collaboration on git monorepo
+Subject: Re: [PATCH v2 2/3] midx.c: use `pack-objects --stdin-packs` when
+ repacking
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>
-References: <CAOLTT8SHo66kGbvWr=+LQ9UVd1NHgqGGEYK2qq6==QgRCgLZqQ@mail.gmail.com>
- <CAJoAoZnm8jE9rT+rrze-zP7KZNW=oCZjcrFWqjDssW3LzxrKPg@mail.gmail.com>
- <CAOLTT8TwdwfHCCv+x51++Aanf3tipMegfZiTKFbQtfh7b_EY0A@mail.gmail.com>
- <CABPp-BEBB1oqdVcXrWwMAdtb0TwHZvr-6KDa210j5ncw54Di_g@mail.gmail.com>
- <1c2f6cfe-a6db-c06e-5313-f5b31be42c8d@github.com>
- <xmqqzgeqw0sy.fsf@gitster.g>
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net
+References: <YyokIf%2FSd7SYztKQ@nand.local>
+ <cover.1663706401.git.me@ttaylorr.com>
+ <4218d9e08aba629d8f64b5a999f60d12e5d8785b.1663706401.git.me@ttaylorr.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqzgeqw0sy.fsf@gitster.g>
+In-Reply-To: <4218d9e08aba629d8f64b5a999f60d12e5d8785b.1663706401.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/23/2022 11:46 AM, Junio C Hamano wrote:
-> Derrick Stolee <derrickstolee@github.com> writes:
+On 9/20/2022 4:40 PM, Taylor Blau wrote:
 
->> This is an interesting find! I wonder how many people are hitting this
->> in the wild. Perhaps merge.stat should be added to the optional, but
->> recommended config options in scalar.c.
-> 
-> Hmph.  It somehow sounds like throwing the baby out with the
-> bathwater, doesn't it.
-> 
-> You are only interested in a few directories in the project.  You
-> pull from somebody else (or the central repository), and end up
-> getting updates to both inside and outside the areas of your
-> interest.
-> 
-> As a project gets larger and better modularized, does it become more
-> likely that such an update will happen more often?
-> 
-> I am very tempted to suggest that the diffstat after a merge in such
-> a project should use the sparse cone(s) as pathspec.  Disabling the
-> "what happened in this merge" report altogether is a way too blunt
-> instrument, isn't it?
+> +	for (i = 0; i < m->num_packs; i++) {
+> +		struct repack_info *info = &pack_info[i];
+>  
+> -		if (!include_pack[pack_int_id])
+> -			continue;
 
-You're right that having a sparse-checkout-scoped diffstat is likely
-to be interesting in the long term. It does require updating its
-format to describe "some paths outside the sparse-checkout changed,
-but we won't give you the full diffstat there".
+...
 
-Using something like the config to disable it in the short term
-would certainly hide the pain point, but you're right that we shouldn't
-stop there.
+> +		fprintf(cmd_in, "%s%s\n", include_pack[info->pack_int_id] ? "" : "^", scratch.buf);
+
+Outside of how the object set is provided (a list of objects or a list of
+packs) it seems this is equivalent. The only difference is that we are
+writing a line for _every_ pack in the multi-pack-index, but we preface
+the line with "^" to say "not this pack".
+
+Do you know if there is any reason to do this explicitly? Does this
+change the set of objects in any way (perhaps by not including
+duplicates that are tracked in those other packs)?
+
+Personally, I would have kept the "if (...) continue;" pattern, so maybe
+you had a concrete idea why this approach is better.
 
 Thanks,
 -Stolee
