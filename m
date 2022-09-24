@@ -2,103 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC71FC07E9D
-	for <git@archiver.kernel.org>; Sat, 24 Sep 2022 03:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD330C07E9D
+	for <git@archiver.kernel.org>; Sat, 24 Sep 2022 04:38:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233190AbiIXDiA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Sep 2022 23:38:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55132 "EHLO
+        id S233308AbiIXEih (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Sep 2022 00:38:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233207AbiIXDhp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Sep 2022 23:37:45 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04363139F4D
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 20:37:42 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 792E61B0310;
-        Fri, 23 Sep 2022 23:37:42 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-transfer-encoding;
-         s=sasl; bh=aZHFdu8c9M/N9+diyN2GlG4gmUEuDq1y5CotlYE1Ebg=; b=Zcku
-        HBFel/XEGJl11DwQkHojDth1CdzARLLTP3YLBB5URDPzDtxcW4akr7bDCzYQwTm/
-        SOB25p+skEbY1SWG4lvs2tswSaC6O/n+jNbPw90iICFMxV+GpUk5s/6QZR/wmiBR
-        kXrVtYEUvISCRE4Hoa6oKVD8z4PgETCbOiIZ39I=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 744D71B030F;
-        Fri, 23 Sep 2022 23:37:42 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Received: from morphine.teonanacatl.net (unknown [47.204.171.166])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CF3801B030E;
-        Fri, 23 Sep 2022 23:37:37 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-From:   Todd Zullinger <tmz@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: [filter-repo PATCH] fix links to git-fast-import
-Date:   Fri, 23 Sep 2022 23:37:08 -0400
-Message-Id: <20220924033708.2409170-1-tmz@pobox.com>
-X-Mailer: git-send-email 2.38.0.rc1
+        with ESMTP id S233212AbiIXEie (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Sep 2022 00:38:34 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA186153A69
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 21:38:33 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id go6so1756643pjb.2
+        for <git@vger.kernel.org>; Fri, 23 Sep 2022 21:38:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=initialcommit-io.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=fcxZx7bMFrtMfQQfoRRNEi7zzANgLdv+f6c24ajLdj0=;
+        b=LDTXDvzXBQw1yM6CrPAi9i05t4FQmMUBXtMTSM0YQXxe2k0w/2bIAaGQEW/0XRswhf
+         b2h21YhwmM2tSgMWrlwppJBg95HYB49iV2z+9b43YNdX6FDazEHVIGeQYlzqaMLEZzHL
+         /ZPtrxCk4EGvCi/lo0zYLBHMj0wskuNqJ5iDOeEoKjissJJrXUm+8UfZQnPkHkxruabc
+         hDfPqEpYMozl6BAj18MFFSspefmYhwqMFXRXU4uAP6I1dVMMX1UbX84lljq+uLcepfEb
+         NY2tMv20F8MBXQ6aPfsr1w5astF9FYMbLExOsQ8kz5v/490m3XMxjHLmJvtslV06z9va
+         lbHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=fcxZx7bMFrtMfQQfoRRNEi7zzANgLdv+f6c24ajLdj0=;
+        b=j/3S1qtB90+z6VAuXzKBt+R4jjXE/6KV5F5LuBsPy676a4F8X52rvXOC/bvQEYCBTW
+         5+UjaO7J6U2MYw3M3cddVLCWLUtdj1qNPxl4gIwj9OfEFpBJC5QBf5H2x/1Etqiz7a08
+         d7/2Vp77DhoIYqfAhVyBq5bYi+rxtb+7/xHUjJz7+ocvSX0x6e5xYsv2J78R19QZyqAa
+         +oucGjuOmaZ22Gkl9LTxBiIAM9YZf6coDVPAfKPtLxzuqNTD5xHfBs68tnHjnRbABNZ1
+         BUxF0KC09rABvZgeghgpnquK7v43T/XtIx2kMqThYXz3br3SGlXgArDpbL4iz/HhLOKx
+         ZV8A==
+X-Gm-Message-State: ACrzQf2+eeMSeNeQs+pykPWMzwdfWKO/DbEyZ7HcBBwbhDRmBnnufcHj
+        djOaE87P+FOPJrz7KTAONSj0Jg==
+X-Google-Smtp-Source: AMsMyM7Ub/H59tE/0EH0gViHly9tDhB4Z/XBsWbIcDq7irYTn3osAQYWGws96eblfyu6XB7f2BxIPw==
+X-Received: by 2002:a17:90b:3752:b0:200:b29b:f592 with SMTP id ne18-20020a17090b375200b00200b29bf592mr13119949pjb.81.1663994313205;
+        Fri, 23 Sep 2022 21:38:33 -0700 (PDT)
+Received: from initialcommit.io ([2600:8801:9c0a:f300:c0d2:33ae:9510:106d])
+        by smtp.gmail.com with ESMTPSA id lw4-20020a17090b180400b001df264610c4sm13285788pjb.0.2022.09.23.21.38.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Sep 2022 21:38:32 -0700 (PDT)
+Date:   Fri, 23 Sep 2022 21:38:29 -0700
+From:   Jacob Stopak <jacob@initialcommit.io>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        martin.agren@gmail.com
+Subject: Re: [RFC PATCH v2] shortlog: add group-by options for year and month
+Message-ID: <Yy6JxQz4ZxghQnG1.jacob@initialcommit.io>
+References: <20220922061824.16988-1-jacob@initialcommit.io>
+ <20220922232536.40807-1-jacob@initialcommit.io>
+ <xmqqillevzeh.fsf@gitster.g>
+ <Yy4sIAHdvp6yRql+@coredump.intra.peff.net>
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 3C577FEE-3BBA-11ED-8F5F-B31D44D1D7AA-09356542!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yy4sIAHdvp6yRql+@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The name of the html and man page for `git-fast-import` is missing the
-`git-` prefix.  Add it where appropriate.
+On Fri, Sep 23, 2022 at 05:58:56PM -0400, Jeff King wrote:
+> I don't think you even really need the regexp. If we respect --date,
+> then you should be able to ask for --date=format:%Y-%m.
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
-Hi Elijah,
+Hmm I tried passing in --date=format:... to my patched shortlog command
+along with setting some date placeholder like "... %cd ..." in the code,
+but it's not picking up on the format. Do you know how the date format
+can be wedged into the format_commit_message(...) "format" argument?
 
-I noticed the link to git-fast-import.html in git-filter-repo.html was
-missing the `git-` prefix.  The man page similarly lacked it when
-referencing it.
-
- html/git-filter-repo.html | 2 +-
- man1/git-filter-repo.1    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/html/git-filter-repo.html b/html/git-filter-repo.html
-index 3143fd9..5119fa2 100644
---- a/html/git-filter-repo.html
-+++ b/html/git-filter-repo.html
-@@ -2167,7 +2167,7 @@ that filter-repo uses bytestrings (see
- instead of strings.</p></div>
- <div class=3D"paragraph"><p>There are four callbacks that allow you to o=
-perate directly on raw
- objects that contain data that&#8217;s easy to write in
--<a href=3D"fast-import.html">fast-import(1)</a> format:</p></div>
-+<a href=3D"git-fast-import.html">git-fast-import(1)</a> format:</p></div=
+> Unfortunately there's no way to specify the format as part of the
+> placeholder. The for-each-ref formatter understands this, like:
+> 
+>   %(authordate:format:%Y-%m)
 >
- <div class=3D"listingblock">
- <div class=3D"content">
- <pre><code>--blob-callback
-diff --git a/man1/git-filter-repo.1 b/man1/git-filter-repo.1
-index 188fd2a..9f9bbfc 100644
---- a/man1/git-filter-repo.1
-+++ b/man1/git-filter-repo.1
-@@ -1512,7 +1512,7 @@ def foo_callback(foo):
- .sp
- Thus, you just need to make sure your \fIBODY\fR modifies and returns \f=
-Ifoo\fR appropriately\&. One important thing to note for all callbacks is=
- that filter\-repo uses bytestrings (see \m[blue]\fBhttps://docs\&.python=
-\&.org/3/library/stdtypes\&.html#bytes\fR\m[]) everywhere instead of stri=
-ngs\&.
- .sp
--There are four callbacks that allow you to operate directly on raw objec=
-ts that contain data that\(cqs easy to write in \fBfast-import\fR(1) form=
-at:
-+There are four callbacks that allow you to operate directly on raw objec=
-ts that contain data that\(cqs easy to write in \fBgit-fast-import\fR(1) =
-format:
- .sp
- .if n \{\
- .RS 4
---=20
-2.38.0.rc1
+> I wouldn't be opposed to teaching the git-log formatter something
+> similar.
 
+Oh that would solve my problem... Would it be a hefty effort to teach
+this to the git-log formatter?
+
+> But there's something else interesting going on in Jack's patch, which
+> is that he's not just introducing the date-sorting, but also that it's
+> used in conjunction with other sorting. So really the intended use is
+> something like:
+> 
+>   git shortlog --group:author --group:%Y-%m
+
+Yes I sort of stumbled on this and realized that this way I wouldn't have
+to touch the actual sorting or grouping functionality at all, which was
+already working properly. I just needed to reformat the shortlog message to
+include the year and/or month in a way that kept things consistent.
+
+> I think we'd want to allow the general form to be a series of groupings.
+> In the output from his patch it looks like:
+> 
+>   2022-09 Jeff King
+>      some commit message
+>      another commit message
+> 
+> I.e., the groups are collapsed into a single string, and unique strings
+> become their own groups (and are sorted in the usual way).
+> 
+> If you give up the regex thing, then that naturally falls out as
+> (imagining we learn about authordate as a placeholder):
+> 
+>   git shortlog --group='%(authordate:format=%Y-%n) %an'
+> 
+> without having to implement multiple groupings as a specific feature
+> (which is both more code, but also has user-facing confusion about when
+> --group overrides versus appends). That also skips the question of which
+> --group-by-regex applies to which --group-by-value.
+> 
+> I do agree the regex thing is more flexible, but if we can't come up
+> with a case more compelling than subsystem matching, I'd just as soon
+> add %(subject:subsystem) or similar. :)
+> 
+> -Peff
+
+I like this idea too. Since it requires a larger re-implementation,
+maybe I can pursue this going forward. I assume if we did this we would
+keep the existing group options like "--group=author" as shortcuts, and
+refactor them behind the scenes to use the new method. If so it may be
+useful to add my originally suggested options of "--group=year" and
+"--group=month" as well for convenient default time-based groupings.
+
+How do you feel about me submitting a v3 patch of my initial suggested
+implementation of new group options for year and month? Then going forward
+I can work on generalizing the grouping feature the way Peff suggested.
+
+-Jack
