@@ -2,137 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBEA7C07E9D
-	for <git@archiver.kernel.org>; Sat, 24 Sep 2022 13:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA80BC07E9D
+	for <git@archiver.kernel.org>; Sat, 24 Sep 2022 14:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbiIXNTf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Sep 2022 09:19:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58268 "EHLO
+        id S233575AbiIXOuO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Sep 2022 10:50:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229669AbiIXNTd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Sep 2022 09:19:33 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB6AD2F3AB
-        for <git@vger.kernel.org>; Sat, 24 Sep 2022 06:19:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1664025553; bh=khoKaZ9dKL2m/7Q5wenBUtoMs/aMGehI/5cRvLIODms=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=C+6A2eIG4K0mXu/c+v3z+OE9wImguQv229nNmS6xX8oJDGWBzNRxQiqCzdLpMlA9J
-         WziIb+UCP57SOMNBafb1C2oxmsQ2T1NnISskqHu3VFDvySskPXMcruENgr/HPSiQy5
-         70NUL/dDWrOKeOA2kvdgW0RZXDhC/TqphkcPfcbal32vzfbCJ0seCHQ9m7HH0ZqNY3
-         LLgY8SE2N0eb2qXJGgpQAmj/fkS6exMRt8zu/E8fKlJ75nkW1Zli1rX+ZK/O7zU31u
-         D7+yRLZlfxwXkA93WinSM9w+U5b35Fe7W15P2fZWW23p7RVQKibY/HmY/I61F4sv3v
-         BN3+QXYSP2KIg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.26.1]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MtyA2-1pPnP31sb6-00uZun; Sat, 24
- Sep 2022 15:19:13 +0200
-Message-ID: <712ffe78-c3e3-dacf-c3e3-f339385e9bb4@web.de>
-Date:   Sat, 24 Sep 2022 15:19:12 +0200
+        with ESMTP id S233426AbiIXOuN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Sep 2022 10:50:13 -0400
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B35E2AE13
+        for <git@vger.kernel.org>; Sat, 24 Sep 2022 07:50:11 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-3450990b0aeso26768377b3.12
+        for <git@vger.kernel.org>; Sat, 24 Sep 2022 07:50:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=D5s5/NbiJpMzHalFokhRjo8+U6AHJNOPTbU4lS1PGnE=;
+        b=QCVz+HrAVjw6kotwTMVol5COsKUgnYKaDFiy9opcQEoV5KEP0k9T20FLVe7Iyn9GXH
+         X+G4QiHBDEgkEIT9y23j/HHAVddHH/OOHv61k92/cTQYVb6RibI3kCNh6M/VfqaGM25r
+         NhacLCONu9oTlqM+KsTKJXc78KB8Z8n7vsRce4leZw4gSIDvdLOeMsJUX6ztV14JckPG
+         LKUYh1RjOG2ZXG7FSu+IwDtZJN6wfXcYhlJRN8wnxVFVbTx4nSXdWC1Zk5pkRQ9XJkqh
+         Ix4Bo02o1hF0SlrORJirWUXvpCeDNN+jlYRH6brH8MWCdV79m7230e/33TJjgL4dJ31E
+         gomw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=D5s5/NbiJpMzHalFokhRjo8+U6AHJNOPTbU4lS1PGnE=;
+        b=lgj8UZRzVMFvalj5a6soCQyv9Bfz0SZTvxSISa0d68RDu0NxDDofNf06U4BWCMOiYT
+         BTtXnk2meQ3Z3zQljH0y9hkYa+oLUk10xUYzVbobZIxjCkCJsu+YADG1oZKbEWnLiE/L
+         gLk2Tj+Dn2SBOGHaIlsn41jJBQ0zaU5EvqP2WYF9D3jvm2+HkHeV553S8xU/PxA2FppV
+         5syBmm7yrNECxRWwKh5RKEuG+NKawUAH1CxPceTJZoeS6gpCCxQksx5gH569Q7tCGYUw
+         Ouf6eRFT9CvGcTnkZn3UJJedrcGeQ33FURr7yZnUA3GUybNcw/fOEjlcs8jmvje3zbqQ
+         un3A==
+X-Gm-Message-State: ACrzQf2oZG+HwTHnKH9vcde5SeNRV5or/XEv2j7jQr//UGLe2ZWcqANM
+        D/XTYffSHJFkeu67P1m1uDe5dD37qA/JSXuq0Hpr5wQXkuSZfw==
+X-Google-Smtp-Source: AMsMyM5ccVf2M4F5q6LxG8iL+2h8qqOgix8iNpWHAYeA3740TqOyWdW/iGYmFXaEtJSGEf8hoDDWR5zynNbo3dPI1Fk=
+X-Received: by 2002:a81:7851:0:b0:349:5fac:b1ed with SMTP id
+ t78-20020a817851000000b003495facb1edmr13369660ywc.311.1664031010371; Sat, 24
+ Sep 2022 07:50:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.3.0
-Subject: Re: git --archive
-Content-Language: en-US
-To:     "Scheffenegger, Richard" <Richard.Scheffenegger@netapp.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-References: <PH0PR06MB763962EB6321F85803C5CE2D864E9@PH0PR06MB7639.namprd06.prod.outlook.com>
- <xmqqleqbxj4h.fsf@gitster.g>
- <PH0PR06MB7639720FB3A1611F4C96E52C864E9@PH0PR06MB7639.namprd06.prod.outlook.com>
- <Yy0ChPPqZUwVFyAt@tapette.crustytoothpaste.net> <xmqqedw2vysc.fsf@gitster.g>
- <8eb5131e-5ae1-79bd-df0c-bf0b2ec8583f@web.de>
- <PH0PR06MB7639DAA5CA112495E3EB43AB86509@PH0PR06MB7639.namprd06.prod.outlook.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <PH0PR06MB7639DAA5CA112495E3EB43AB86509@PH0PR06MB7639.namprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zPjh/eGT9L9kMtgoCwhmrcNxZzV+c3B7NaYEMdtyjgqnIn2xgYd
- TKdRgcVDcN7NHJLOVY8o/An/5yJpq8uDeW7HM70TQrG2O7Jr42ghr/18vl2XLoB9KEfspDK
- 6quyJHL0Ehp1SIcFmpHhWfj17+RRAv4fFafqoqhFAWhAGJfwmnLXnqoxtMruGq3KlMcEfh4
- 4qsuh4cG0FlPccNLtxpsA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QeLhiRGDRso=:gEM7lotIcVmHxZPV2aUnoB
- RPODeNZoZ6meFkCXboRVmVBTvZjC+2qdQxky/DGmJ9ebFh531Tx6wrBb2WV39aJEUXi7KieZJ
- p3SCk1qBbD5OM0xSqJdG4Sz5MNUO7UFTFbobiDh88CbznQWhCbs5BEGoW3JyYs44tcRMuDfh6
- qHkzR9go/gcHRKRldgMzEj1Rc1slAmkFIibDondJ8YvD4BHQ3H/M2mbCFV1tnJLXf3cbJiloB
- 3oqHjlkzukBv2Pksc5DThrqUfAGzwe7Nn9Z2jVSqvLhDHW41DAAWl1IqU8CgFA8Mr1Sphp6tX
- WXotbG9htiECOCpMcNsGOSbRc6kfP3uJSdlOutE4/LZK5ot/YOrNfTK9be/mdZ03j8/EvtLR4
- AOPTVgtOIzyV6z59yG1OWBx1F/FBNmXDnxBRsFK0a9b/jVNuvCmdrL3LrvK8KR9zJmM3UyEJ9
- UZmP34XNnVsWeXUnH7bjSPcy1itDY3jazDB5MlJYNtfKN+gJHt1cOzPpGrQvFqgNIvtP0rexn
- gsvtaep6MXdVH/pNGojT4M3sscdJg6NMefDNfQKI8uPiT6Qrmfi3VU/FtJ8xGtna09N3eHr/L
- NO19IEN//ahukdWcHnZ99bI9gOAuwTJb/u4nefucnFfyIZjt+++KFt2W3wKEgcUtXmyZpV24X
- kQpecpo+P1MzU8oh5x/WvjVVUkuJKEUk+hbW1VgECWgEu4YWvYEX5VkUq3cBTEb/TMm2+p2RC
- etax2C4S5n2FqopL3eP/tbvNARVEZivW3MW22jDDhQDggMaZc0ajsno/OFqHy661qGNaU4Hm9
- 08Fx/+p6v5nXIn9p3nBQ/qZBGwzd34kQSnkOPsZXZ1bovZfEDK/xaIblWy3BRDhK+iS0cDyEy
- 63CxGUlqRvqMTQdqfOqZ6XCFQ8T67KScNAe+6nbr9M5nFazxTyFF9CmcJcz4m4sru68EisSXU
- uehpgWx8IcEGD1ENMa9op5/exUElsDmNis/9TGGIKVsY2crLbID8Agq1Lcb/QVtloOfZ7+AQB
- 6f8zBUw8aUiBVhqdMN7NiZ6yaWlpym4aRUCMAHjYQNQY8CScLlH1S0dDCqNPwuYGPouKi6zfK
- 9+Ucu9vSjk7eyhS8FhtMzTv0xPsgZR7KupkinKxXWCMbe+JBWOzHWJeLwbYxbB/seBMnrYNEl
- efuzM=
+References: <20220923193543.58635-1-siddharthasthana31@gmail.com>
+In-Reply-To: <20220923193543.58635-1-siddharthasthana31@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 24 Sep 2022 16:49:59 +0200
+Message-ID: <CAP8UFD245ebv95f8bvN9YqPtv1c+Pa4xzAmY_mixs3nrdSdGvA@mail.gmail.com>
+Subject: Re: [PATCH] doc/cat-file: allow --use-mailmap for --batch options
+To:     Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, johncai86@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.09.22 um 13:34 schrieb Scheffenegger, Richard:
+On Fri, Sep 23, 2022 at 9:36 PM Siddharth Asthana
+<siddharthasthana31@gmail.com> wrote:
 >
->> If I/O latency instead of CPU usage is the limiting factor and
->> prefetching would help then starting git grep or git archive in the
->> background might work.  If the order of visited blobs needs to be
->> randomized then perhaps something like this would be better:
->>
->> git ls-tree -r HEAD | awk '{print $3}' | sort | git cat-file
->> --batch >/dev/null
+> The command git cat-file can now use the mailmap mechanism to replace
+> idents with their canonical versions for commit and tag objects. There
+> are several options like `--batch`, `--batch-check` and
+> `--batch-command` that can be combined with `--use-mailmap`. But, the
+> documentation for `--batch`, `--batch-check` and `--batch-command`
+> doesn't say so. This patch fixes that documentation.
 >
-> Isn't the 2nd git, receiving input from stdin, running
-> single-threaded?
+> Mentored-by: Christian Couder's avatarChristian Couder <christian.couder@gmail.com>
+> Mentored-by: John Cai's avatarJohn Cai <johncai86@gmail.com>
 
-Yes.
+As you told me separately, you should remove "Christian Couder's
+avatar" and "John Cai's avatar" from the above trailers.
 
-> Maybe
+> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+> ---
+
+Here after the line that contains only '---' and before the short
+stats below, you could write some small explanations about where this
+patch comes from.
+
+For example you could say that it was previously sent as the first
+patch of a a 3 patch series:
+
+https://lore.kernel.org/git/20220916205946.178925-2-siddharthasthana31@gmail.com/
+
+And you could tell what changes you made compared to the previous patch.
+
+>  Documentation/git-cat-file.txt | 44 ++++++++++++++++++++++++----------
+>  1 file changed, 31 insertions(+), 13 deletions(-)
 >
-> Git ls-tree -r HEAD | awk '{print $3}' | sort | split -d -l 100 -a 4
-> - splitted ; for i in $(ls splitted????) ; do "git cat-file --batch >
-> /dev/null &"; done; rm -f splitted????
->
-> To parallelize the reading of the objects?
+> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+> index ec30b5c574..3fdafc07ce 100644
+> --- a/Documentation/git-cat-file.txt
+> +++ b/Documentation/git-cat-file.txt
+> @@ -89,26 +89,44 @@ OPTIONS
+>  --batch::
+>  --batch=<format>::
+>         Print object information and contents for each object provided
+> -       on stdin.  May not be combined with any other options or arguments
+> -       except `--textconv` or `--filters`, in which case the input lines
+> -       also need to specify the path, separated by whitespace.  See the
+> -       section `BATCH OUTPUT` below for details.
+> +       on stdin.
+> +
+> +       * When used with `--textconv` or `--filters`, the input lines
+> +         must specify the path, separated by whitespace. See the section
+> +         `BATCH OUTPUT` below for details.
+> +
+> +       * When used with `--use-mailmap`, the info command shows the size
+> +         the object, if the idents recorded in it were the ones "corrected"
+> +         by the mailmap mechanism.
+> +         Cannot be used with any other options.
 
-Sure, but in a repository with 100000 files you'd end up with 1000
-parallel processes, which may be a few too many.  Splitting the list
-into similar-sized parts based on a given degree of parallelism is
-probably more practical.
+Have you checked the result of `git help cat-file` after `make instll-doc`?
 
-It could be done by relying on the randomness of the object IDs and
-partitioning by a sub-string.  Or perhaps using pseudo-random numbers
-is sufficient:
+Shouldn't you use something like the following instead for additional
+paragraphs inside some indented text:
 
-   git ls-tree -r HEAD |
-   awk '{print $3}' |
-   sort |
-   awk -v pieces=3D8 -v prefix=3Dfile '
-      {
-         piece =3D int(rand() * pieces)
-         filename =3D prefix piece
-         print $0 > filename
-      }'
++
+* When used with `--textconv` or `--filters`, the input lines
+must specify the path, separated by whitespace. See the section
+`BATCH OUTPUT` below for details.
++
 
-So how much does such a warmup help in your case?
+?
 
->> No idea how to randomize the order of tree object visits.
->
-> To heat up data caches, the order of objects visited is not relevant,
-> the order or IOs issued to the actual object is relevant.
+(Note that the + signs in what I suggest above should be actually
+added to the file and aren't what a diff displays in front of new
+lines.)
 
-What's the difference?
-
-NB: When I wrote "tree objects" I meant the type of objects from Git's
-object store (made up of packs and loose files) that represent
-sub-directories, and with "visit" I meant reading them to traverse the
-hierarchy of Git blobs and trees.
-
-Here's an idea after all: Using "git ls-tree" without "-r" and handling
-recursing in the prefetch script would allow traversing trees in a
-different order and even in parallel.  Not sure how to limit parallelism
-to a sane degree.
-
-Ren=C3=A9
+Also it's not very clear if "Cannot be used with any other options."
+is part of the last "* When ..." paragraph or not.
