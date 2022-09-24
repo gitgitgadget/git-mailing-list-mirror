@@ -2,137 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD330C07E9D
-	for <git@archiver.kernel.org>; Sat, 24 Sep 2022 04:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8159AC07E9D
+	for <git@archiver.kernel.org>; Sat, 24 Sep 2022 08:21:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233308AbiIXEih (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Sep 2022 00:38:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60542 "EHLO
+        id S233790AbiIXIVg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Sep 2022 04:21:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233212AbiIXEie (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Sep 2022 00:38:34 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA186153A69
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 21:38:33 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id go6so1756643pjb.2
-        for <git@vger.kernel.org>; Fri, 23 Sep 2022 21:38:33 -0700 (PDT)
+        with ESMTP id S233536AbiIXIVL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Sep 2022 04:21:11 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC9391004A
+        for <git@vger.kernel.org>; Sat, 24 Sep 2022 01:20:00 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id c24so2090617plo.3
+        for <git@vger.kernel.org>; Sat, 24 Sep 2022 01:20:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=initialcommit-io.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=fcxZx7bMFrtMfQQfoRRNEi7zzANgLdv+f6c24ajLdj0=;
-        b=LDTXDvzXBQw1yM6CrPAi9i05t4FQmMUBXtMTSM0YQXxe2k0w/2bIAaGQEW/0XRswhf
-         b2h21YhwmM2tSgMWrlwppJBg95HYB49iV2z+9b43YNdX6FDazEHVIGeQYlzqaMLEZzHL
-         /ZPtrxCk4EGvCi/lo0zYLBHMj0wskuNqJ5iDOeEoKjissJJrXUm+8UfZQnPkHkxruabc
-         hDfPqEpYMozl6BAj18MFFSspefmYhwqMFXRXU4uAP6I1dVMMX1UbX84lljq+uLcepfEb
-         NY2tMv20F8MBXQ6aPfsr1w5astF9FYMbLExOsQ8kz5v/490m3XMxjHLmJvtslV06z9va
-         lbHg==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=9Bc8shZUybw3f0TuqoKA465XdUfNOrAC4z91nA0FifM=;
+        b=UiOSg4EyjeRLwb3uj55xZBM+N22Ud7Q1G2CUF7iHY6yNBD1mjSxc8rM6VDFwYShA3E
+         N00l1RFjJ+0UZOlcsyUXY0Uon15GOkshJjtJaBQ9Y+g6AXOMAqZ7EkR/oAowzHEk3wtQ
+         9rCwz8eocoHU0WUcHZidD/6V5Rnvgsk6ahqof/pnhWwX38KmAhnIJ/7IT71V0LOTSbKD
+         FAN0IhT3yZXzNmnLVBQt2oKkx+eKMNYVwcivzAQQhW7YpKbxQRDm1W02i+5rPf8KR6SG
+         ClyU0gTINiCOtDWlWwVk7yk0Bv3Vx1x1iT+tBXVY3ncR0gkqpSTpurRcZGq0EI/dOW0a
+         dAPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=fcxZx7bMFrtMfQQfoRRNEi7zzANgLdv+f6c24ajLdj0=;
-        b=j/3S1qtB90+z6VAuXzKBt+R4jjXE/6KV5F5LuBsPy676a4F8X52rvXOC/bvQEYCBTW
-         5+UjaO7J6U2MYw3M3cddVLCWLUtdj1qNPxl4gIwj9OfEFpBJC5QBf5H2x/1Etqiz7a08
-         d7/2Vp77DhoIYqfAhVyBq5bYi+rxtb+7/xHUjJz7+ocvSX0x6e5xYsv2J78R19QZyqAa
-         +oucGjuOmaZ22Gkl9LTxBiIAM9YZf6coDVPAfKPtLxzuqNTD5xHfBs68tnHjnRbABNZ1
-         BUxF0KC09rABvZgeghgpnquK7v43T/XtIx2kMqThYXz3br3SGlXgArDpbL4iz/HhLOKx
-         ZV8A==
-X-Gm-Message-State: ACrzQf2+eeMSeNeQs+pykPWMzwdfWKO/DbEyZ7HcBBwbhDRmBnnufcHj
-        djOaE87P+FOPJrz7KTAONSj0Jg==
-X-Google-Smtp-Source: AMsMyM7Ub/H59tE/0EH0gViHly9tDhB4Z/XBsWbIcDq7irYTn3osAQYWGws96eblfyu6XB7f2BxIPw==
-X-Received: by 2002:a17:90b:3752:b0:200:b29b:f592 with SMTP id ne18-20020a17090b375200b00200b29bf592mr13119949pjb.81.1663994313205;
-        Fri, 23 Sep 2022 21:38:33 -0700 (PDT)
-Received: from initialcommit.io ([2600:8801:9c0a:f300:c0d2:33ae:9510:106d])
-        by smtp.gmail.com with ESMTPSA id lw4-20020a17090b180400b001df264610c4sm13285788pjb.0.2022.09.23.21.38.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Sep 2022 21:38:32 -0700 (PDT)
-Date:   Fri, 23 Sep 2022 21:38:29 -0700
-From:   Jacob Stopak <jacob@initialcommit.io>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        martin.agren@gmail.com
-Subject: Re: [RFC PATCH v2] shortlog: add group-by options for year and month
-Message-ID: <Yy6JxQz4ZxghQnG1.jacob@initialcommit.io>
-References: <20220922061824.16988-1-jacob@initialcommit.io>
- <20220922232536.40807-1-jacob@initialcommit.io>
- <xmqqillevzeh.fsf@gitster.g>
- <Yy4sIAHdvp6yRql+@coredump.intra.peff.net>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=9Bc8shZUybw3f0TuqoKA465XdUfNOrAC4z91nA0FifM=;
+        b=fl1rbP2EeInlLfp8A/tBBRlVvhcAzATfEAI/pPhose4MRKp7JVKzWE24FE5CM2q96L
+         Yp5OlqzcMk1YICOm9h8EanwKPV4xYJCn/QXDept/n3s3heMLinMHDwlH+YiVLFXFIQEJ
+         wuuSkpQ7wHptNGT+UmX+m+EzJcMcr33v08u9cYXrKdjlP7jomYE36o5AZT7iM9dNmxIM
+         vejQm13R4yIlLXsn6eVAkQbmtSPK4ykZj3j+jWRfLZ+pidXACjDATFo+sduVyjAbOn4Q
+         lq12vfgJ4BIs0+wmEu/2wQqZDHACkVP9PBevsk9lDWjjwP1z6wZUNddN0YRMcTfG/wAT
+         YR8A==
+X-Gm-Message-State: ACrzQf2IATzxEK5osO2I34ohI3DmMdZ52vs8bl6+kY3jOAoyJIX3Kdq/
+        YDjrRpZ7J3RRI8k9hlHTI/Q10Ui37UAqYwMbFTkkxOg9Ybk=
+X-Google-Smtp-Source: AMsMyM5Q5mycdXu/FzgFhOvsQqyRSH06m3KenwVhgOC09hQdINmHNkAIA9DBfrgNzRifZ4Ti30lqko1Jb6z/w3MDFqM=
+X-Received: by 2002:a17:902:ec86:b0:177:f35c:e118 with SMTP id
+ x6-20020a170902ec8600b00177f35ce118mr12026388plg.138.1664007599407; Sat, 24
+ Sep 2022 01:19:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yy4sIAHdvp6yRql+@coredump.intra.peff.net>
+References: <CA+J78MWhp3qmbBhhSoioJP+d5eh-iEd_vHZdTNB69o7EvvXWYQ@mail.gmail.com>
+ <220919.86zgev635z.gmgdl@evledraar.gmail.com> <xmqqbkrbb6ua.fsf@gitster.g>
+ <CA+J78MWvOEbJY6+NcLFn0SJGMZn=N7QUMwc=Bta+uHicvD892w@mail.gmail.com>
+ <220920.86illi5p6w.gmgdl@evledraar.gmail.com> <CA+J78MUM=JiAF7R_8oV23OQ-LndJbRm4AUdPsgS4HT4SduFgiw@mail.gmail.com>
+ <220923.861qs25yr8.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220923.861qs25yr8.gmgdl@evledraar.gmail.com>
+From:   Skrab Sah <skrab.sah@gmail.com>
+Date:   Sat, 24 Sep 2022 13:49:47 +0530
+Message-ID: <CA+J78MV2tanEUNBOdWdQ6xmXBoDnKzerox6GAvzDU+V5V0MHFA@mail.gmail.com>
+Subject: Re: what if i use makeheader tool to generate c header file, it would
+ be accepted.
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 23, 2022 at 05:58:56PM -0400, Jeff King wrote:
-> I don't think you even really need the regexp. If we respect --date,
-> then you should be able to ask for --date=format:%Y-%m.
+https://github.com/git/git/pull/1344
 
-Hmm I tried passing in --date=format:... to my patched shortlog command
-along with setting some date placeholder like "... %cd ..." in the code,
-but it's not picking up on the format. Do you know how the date format
-can be wedged into the format_commit_message(...) "format" argument?
+help me in solving this.
+my spec, debian x86_64.
 
-> Unfortunately there's no way to specify the format as part of the
-> placeholder. The for-each-ref formatter understands this, like:
-> 
->   %(authordate:format:%Y-%m)
+On Fri, 23 Sept 2022 at 13:05, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
 >
-> I wouldn't be opposed to teaching the git-log formatter something
-> similar.
-
-Oh that would solve my problem... Would it be a hefty effort to teach
-this to the git-log formatter?
-
-> But there's something else interesting going on in Jack's patch, which
-> is that he's not just introducing the date-sorting, but also that it's
-> used in conjunction with other sorting. So really the intended use is
-> something like:
-> 
->   git shortlog --group:author --group:%Y-%m
-
-Yes I sort of stumbled on this and realized that this way I wouldn't have
-to touch the actual sorting or grouping functionality at all, which was
-already working properly. I just needed to reformat the shortlog message to
-include the year and/or month in a way that kept things consistent.
-
-> I think we'd want to allow the general form to be a series of groupings.
-> In the output from his patch it looks like:
-> 
->   2022-09 Jeff King
->      some commit message
->      another commit message
-> 
-> I.e., the groups are collapsed into a single string, and unique strings
-> become their own groups (and are sorted in the usual way).
-> 
-> If you give up the regex thing, then that naturally falls out as
-> (imagining we learn about authordate as a placeholder):
-> 
->   git shortlog --group='%(authordate:format=%Y-%n) %an'
-> 
-> without having to implement multiple groupings as a specific feature
-> (which is both more code, but also has user-facing confusion about when
-> --group overrides versus appends). That also skips the question of which
-> --group-by-regex applies to which --group-by-value.
-> 
-> I do agree the regex thing is more flexible, but if we can't come up
-> with a case more compelling than subsystem matching, I'd just as soon
-> add %(subject:subsystem) or similar. :)
-> 
-> -Peff
-
-I like this idea too. Since it requires a larger re-implementation,
-maybe I can pursue this going forward. I assume if we did this we would
-keep the existing group options like "--group=author" as shortcuts, and
-refactor them behind the scenes to use the new method. If so it may be
-useful to add my originally suggested options of "--group=year" and
-"--group=month" as well for convenient default time-based groupings.
-
-How do you feel about me submitting a v3 patch of my initial suggested
-implementation of new group options for year and month? Then going forward
-I can work on generalizing the grouping feature the way Peff suggested.
-
--Jack
+>
+> On Wed, Sep 21 2022, Skrab Sah wrote:
+>
+> > [...]
+> > Is Makefile generated by another script?
+> > [...]
+> > For patches, I need some time and your help.
+>
+> Aside from what Junio noted in another reply: I and others here are
+> generally happy to help, but when you're proposing to entirely re-do how
+> a part of our build process works, then you really should know the
+> answers to not only the basics ("is the Makefile generated?"), but also
+> the more complex interactions.
+>
+> If you're still interested I think there's good things to work on in
+> this area, but starting smaller (e.g. my upthread iwyu suggestion, or
+> similar) would be much better.
+>
+> I.e. think about the practical benefits of a proposed big rewrite are,
+> and whether there's ways to get some large portion of that in easier
+> ways.
+>
+> > On Tue, 20 Sept 2022 at 15:43, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> >>
+> >>
+> >> On Tue, Sep 20 2022, Skrab Sah wrote:
+> >>
+> >> > Let me elaborate to you, how and why I wanted to implement the
+> >> > makeheaders tool in the project.
+> >> >
+> >> > First of all, this program will automatically generate c header(.h)
+> >> > files for specified c source(.c) files, which will help the develope=
+r.
+> >> >
+> >> > Here the test shows how the tool can be implemented in different
+> >> > cases: https://github.com/skrab-sah/makeheaders-test
+> >> >
+> >> >
+> >> > pros:
+> >> >     1. it will slightly reduce the size of the project.
+> >> >     2. no need to declare anything in the header file, which is time
+> >> > consuming and a headache for developers.
+> >>
+> >> Sure, this all sound interesting in principle, and I think the answer =
+is
+> >> definitely "we're not opposed in principle, but if you're interested
+> >> let's see patches".
+> >>
+> >> But whether this is worthwhile is something that really can't be
+> >> answered until someone (i.e. you) puts in the legwork of implementing
+> >> it.
+> >>
+> >> You'll then run into various trade-offs you'd have to make, and issues
+> >> you may not have forseen. Just some I can think of offhand:
+> >>
+> >>  * It's unclear if you mean that we'd commit the generated files or
+> >>    not. If "not" then our Makefile will need to learn to do two-stage
+> >>    compilation. I.e. we'd ship a copy of the makeheader tool, build
+> >>    that, build the headers, and then do our "real" build.
+> >>
+> >>    I happen to have an implementation of that "two-stage" compilation
+> >>    for entirely different reasons (being able to do configure/probes f=
+or
+> >>    our compilation), but *just* doing that is non-trivial.
+> >>
+> >>  * The way we document various APIs now is via manually curated header
+> >>    files, e.g. how would a strbuf.h look like in this model you're
+> >>    proposing?
+> >>
+> >>    Obviously we could move those comments to the *.c file, but right n=
+ow
+> >>    we have a convention of implementation comments going in the *.c
+> >>    file, but the API docs going in the *.h.
+> >>
+> >>    We could tell them apart with "/*" v.s. "/**" comments, as we do
+> >>    now. But part of the point of having them in the *.h file is that y=
+ou
+> >>    can easily skim the docs & APi definition. Putting the docs in the
+> >>    much bigger *.c file wouldn't be nice.
+> >>
+> >>  * We'd have another not-quite-compiler C-parser running on git.git,
+> >>    right now we basically have a dependency on spatch's parsing. See
+> >>    5cf88fd8b05 (git-compat-util.h: use "UNUSED", not "UNUSED(var)",
+> >>    2022-08-25).
+> >>
+> >>    Is this parser smart enough to handle all the edge cases? E.g. for
+> >>    KHASH_INIT() we define interfaces via a macro-indirection, so an
+> >>    auto-generated *.h needs to resolve the macros in the *.c file.
+>
