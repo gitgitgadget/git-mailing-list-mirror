@@ -2,92 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75AF4C32771
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 04:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4AB3C32771
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 06:59:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231521AbiIZEVx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 00:21:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50942 "EHLO
+        id S233627AbiIZG7w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 02:59:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229824AbiIZEVv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 00:21:51 -0400
-Received: from smtp.gentoo.org (smtp.gentoo.org [IPv6:2001:470:ea4a:1:5054:ff:fec7:86e4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 214381DA7B
-        for <git@vger.kernel.org>; Sun, 25 Sep 2022 21:21:49 -0700 (PDT)
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp.gentoo.org (Postfix) with ESMTPS id 42E1834110F
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 04:21:47 +0000 (UTC)
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
-        by grubbs.orbis-terrarum.net (Postfix) with ESMTP id A70922601C7
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 04:21:46 +0000 (UTC)
-Received: (qmail 28485 invoked by uid 10000); 26 Sep 2022 04:21:46 -0000
-Date:   Mon, 26 Sep 2022 04:21:46 +0000
-From:   "Robin H. Johnson" <robbat2@gentoo.org>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: git daemon inetd mode: need traffic statistics
-Message-ID: <robbat2-20220926T041714-401286569Z@orbis-terrarum.net>
+        with ESMTP id S233557AbiIZG7r (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 02:59:47 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33170D135
+        for <git@vger.kernel.org>; Sun, 25 Sep 2022 23:59:46 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id a80so5758010pfa.4
+        for <git@vger.kernel.org>; Sun, 25 Sep 2022 23:59:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=XS23GWNF6oSUuKNHooHaOoZvjZmFqwP7KU5aIHJT+5A=;
+        b=N3xumg+v+MDfLmqwJQDyw852919Qxupx6xIKexv4MdOhfVTtLKbKBmu9MnNW5sfENH
+         kmi3MIDsRlCUuKIR9b/NS0SCZM3MJB4XsTfxdJJq9kFx9h3YgB1bqquLUPvdGjSgHoPQ
+         M6VzbkE/413Qu1BTTVuIw09+6vRDXHujkhpWDM0hOMFH7672apWXqUDo+42l6bUjSrJB
+         spU7IOG0WvUJ83SofDxPk5rrnzsP2iQiV5q6qOK0IqgL2HBpCFhtmenWgBs1vvsYFMoC
+         Bytb7/z9sevay4u4rYzo0+Vm+us1SN+KB9NpLEBMqiPRA0qclb75mn7EKiUqwRd97XeC
+         SclA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=XS23GWNF6oSUuKNHooHaOoZvjZmFqwP7KU5aIHJT+5A=;
+        b=rNqROD93iNJXS5k8OCMnFutg+1Q0SUxaSDlglkXk6KFz8fa+DjkhWhbFjj2tY6dMHX
+         Fac6bfDVbulGPIAoZKf2SeHjm/MFMhWFSBlfNQELZNXO1jTdGV0j+ttrgehHhxn6dznH
+         VidbMfsoq6UzjhNv57ijEagR127wfGsG82MXfHfuDhRCs0Yx9RHJbGd/nxJQB+FSJ564
+         rSjze6sB3aj5mC5gG5NIE9GAB3QG7WbWYIS0O4LrLcAHHtIX8hoGACsC6EsG/ykA/+23
+         YaIX7MkgnZg7T8Xk1E+eaIpN6hhKjxsepmL7ruJaFchNznjGyOIpwBkv43uRjTB5xPq0
+         Gh4A==
+X-Gm-Message-State: ACrzQf2ilOnwqSrlNfKiX8C659FKrf7225yZAWTAgO7rj0L5euO5wpub
+        Vvks9SMAu/Vs7tASsG2cp2n1xBJRrigk3ucHaM0=
+X-Google-Smtp-Source: AMsMyM5ZYjXEzO0/HEqGayWA4fStOo9RSEsdOIEhvEPDuoRrikAWDKvLjI1tCpor6iQNo4h2mTI7o+lrMVqIGbOJIpw=
+X-Received: by 2002:a63:4384:0:b0:43a:18ce:f98a with SMTP id
+ q126-20020a634384000000b0043a18cef98amr18726033pga.273.1664175585713; Sun, 25
+ Sep 2022 23:59:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="3kO+JdfMhc0QNb6f"
-Content-Disposition: inline
+References: <6ff29e96-7f8d-c354-dced-b1b363e54467@gmail.com>
+In-Reply-To: <6ff29e96-7f8d-c354-dced-b1b363e54467@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Mon, 26 Sep 2022 08:59:34 +0200
+Message-ID: <CAN0heSra_LsBzYCNFh0cZOZ0pmk1Wb9RtNTLwi93UM=f-53Uxw@mail.gmail.com>
+Subject: Re: [PATCH] ref-filter.c: fix a leak in get_head_description
+To:     =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, 25 Sept 2022 at 00:53, Rub=C3=A9n Justo <rjusto@gmail.com> wrote:
+>
+> In 2708ce62d2 (branch: sort detached HEAD based on a flag, 2021-01-07) a
+> call to wt_status_state_free_buffers, responsible of freeing the
+> resources that could be allocated in the local struct wt_status_state
+> state, was eliminated.
+>
+> The call to wt_status_state_free_buffers was introduced in 962dd7ebc3
+> (wt-status: introduce wt_status_state_free_buffers(), 2020-09-27).  This
+> commit brings back that call in get_head_description.
 
---3kO+JdfMhc0QNb6f
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +       wt_status_state_free_buffers(&state);
+> +
+>         return strbuf_detach(&desc, NULL);
+>  }
 
-Has anybody got patchsets that let git-daemon send traffic data (to
-syslog) at the end of each request, about the peer, and how many bytes
-in each direction?
+Good catch, and excellent history digging. From the original submission
+[1] of the patch that dropped this call, I get the feeling that it was
+originally developed some time earlier. I suspect this call was then
+accidentally dropped in a rebase before submission.
 
-Hoping somebody has something useful to share that isn't coming up in my
-research.
+FWIW, this patch is
 
-Gentoo's seeing a big uptick in usage on the anonymous git daemons via
-xinetd (we do offer HTTP/HTTPS as well, but the growth is in http).
+Reviewed-by: Martin =C3=85gren <martin.agren@gmail.com>
 
-I know it's via the git/9418 protocol because the HTTP traffic is
-well-metered and hasn't grown, and the overall traffic to the hosts also
-grew. This is confirmed by using Netflow data, which tells me it's the
-Git port, and some of the IPs, but doesn't let me get which repo
-directly (And processing the netflow data is also painful).
+[1] https://lore.kernel.org/git/20210106100139.14651-1-avarab@gmail.com/
 
---=20
-Robin Hugh Johnson
-Gentoo Linux: Dev, Infra Lead, Foundation Treasurer
-E-Mail   : robbat2@gentoo.org
-GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
-GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
-
---3kO+JdfMhc0QNb6f
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iQKTBAABCgB9FiEEveu2pS8Vb98xaNkRGTlfI8WIJsQFAmMxKNhfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEJE
-RUJCNkE1MkYxNTZGREYzMTY4RDkxMTE5Mzk1RjIzQzU4ODI2QzQACgkQGTlfI8WI
-JsT81Q//aJGiNEmWeKVRlQVi0xkzfcbOuHecDxdL0zW/NFwC02Lna1aNXwsDcCvL
-TQ+sJP2TbY568c0c1tujUsAQYhmq6edGaaMiOqdmoJRnETMEG2rHw+QBdR7lZ8ZS
-4sBzqbCWp5WFTdN3vU/ZKdtNFZ5Hlr9Xx83z7Ia+btM3Fk+n6ZVRIcc1eUqfvCbh
-c6U69DbrgAwO2REo3weoEd8Kq55xpvtTrKvZCuHw6GcvdfAWOn8RUTpr1rjk/QBZ
-8nkbX8LH0Yq2Z/ywkaga44K4dRj+Ak45jO1sOIdSUXP7pvvCVlCXb1T6do+Ro1eM
-a9lNjCyj8IJOsxY0YSYxzZR6aWo/HEGx1I9rQC4mWtIMRXGF5vnUTMhhoewlU3AE
-YoVarnsRrGVY5dgHJpRJ0bBbvdtxRbTyYdxwrqvejJkaBHoznLYow+u0eQ7Gjx3N
-rT2BUjSvp27xTZ/daf4Je9uSw4Z2xRwqdXWkQpT7tPCh1NUeobuW2fnnKJ2Q93rG
-3g4eLsw/MPiN2ShrPbn2UOt8X5yajUEwmi8SRXT3ZtahvCplzAQz5XWXWK5a0wLu
-gWluE1MsIWP4QYglpacZ3vxJpnLpy/fDgJCu7JcimV8HKehqpAn3anEvyf9l6b0V
-RdRhMYbj2G8FtTPDvyUYplkbKMc6KXHAjeOSFqYUmRgvHY1+fvU=
-=H9cB
------END PGP SIGNATURE-----
-
---3kO+JdfMhc0QNb6f--
+Martin
