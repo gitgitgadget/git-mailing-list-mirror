@@ -2,101 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9EE4C6FA90
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 17:53:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3FB6C07E9D
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 17:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231190AbiIZRxx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 13:53:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33632 "EHLO
+        id S229815AbiIZRz1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 13:55:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231206AbiIZRxP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 13:53:15 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E3DB8E0D1
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:28:15 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 07532142DE7;
-        Mon, 26 Sep 2022 13:28:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/dcN8GFrzk+ZMmPKX6SS8JL7eoXYNa1jzJq/i9
-        gUTJY=; b=DIfeIRhXLOrXWj64a728I/eqI5ex3SxLDiUy5NFfWS+ohUHEOFrOBh
-        lcFseQgdVEBqgqK6gXm4WQtsJzCuo+KXARbehoa1nLRnGE4ADzlms3R3TNezqPT1
-        aytIxTuO14ixWAkGTUshJGACpyWY22QBF+TpJfHzGWO0e5oHwowyo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F21D4142DE6;
-        Mon, 26 Sep 2022 13:28:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6256D142DE5;
-        Mon, 26 Sep 2022 13:28:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com, vdye@github.com,
-        newren@gmail.com, avarab@gmail.com
-Subject: Re: [PATCH v6 1/1] builtin/grep.c: integrate with sparse index
-References: <20220817075633.217934-1-shaoxuan.yuan02@gmail.com>
-        <20220923041842.27817-1-shaoxuan.yuan02@gmail.com>
-        <20220923041842.27817-2-shaoxuan.yuan02@gmail.com>
-        <xmqqy1uauixc.fsf@gitster.g>
-Date:   Mon, 26 Sep 2022 10:28:13 -0700
-In-Reply-To: <xmqqy1uauixc.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        23 Sep 2022 09:58:23 -0700")
-Message-ID: <xmqq5yhaqc42.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229686AbiIZRyx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 13:54:53 -0400
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D00B1FCDC
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:31:17 -0700 (PDT)
+Received: by mail-yb1-xb33.google.com with SMTP id p69so9376395yba.0
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:31:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=5RMRnOMYmt9bm5IDNRQOT1f1mfq0rwx29PdALvLDYDo=;
+        b=eMEmtNWlbZ02HYZZOkIemoNCulO/5UPOGLqVvdnXFTbj0MzjXoBTonZKE7PEWrZexS
+         YHPW9KPwHyeuszj+WeCgelyiDDsw9OZtrUKxWXZ6pE1FIPWPQaAI3ULPQyvdF7heQukK
+         WCQPSU41m4f0K+FTONuGsVwkL62dOZddGAr/CfFADE8m3S794xuu0+WYWhB+mlSDAkc7
+         kDfQikPMmHj5aJhPLB/cDBhz9Fay8eSDzqDWItl2CoExYBFpPZMUeW886SiHHFNW0h9d
+         R/b2bDY0/ztD9Z4UEGcr205FNGtG9nntdpKnyOlgNxc8jUSF/Fuwq6z4hVpID+P85Zz+
+         YafQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=5RMRnOMYmt9bm5IDNRQOT1f1mfq0rwx29PdALvLDYDo=;
+        b=RPR8S7nUdvh1lk4T7lOKIP0JSD4QsL6pnUFkk5Yo5Dfrt4xlAOVjlW3fzaOapf4QMp
+         irmB31TYU/LaKS0MFuDf6zgYONmbfgHxLWSuri9OCVTjQgSRS6uTAyL2vOmKz29S3VkV
+         rkS+JpRPLlY8YPoTaPIEm09dzvly0TTHhUP/591NlNHVcxKs8SBO9Qp5rd4M/mlC6RGk
+         d1mlwWKeQ1ezly9lQwcQBdrmxC2ZK+xMm9VKps3slWaZWb92O0iNg09c5X8svpCMPttG
+         F1NZmBC5mt5HtnE1/91rytdvZj5KjT5m/ISpx9tlyHamYURnE0ZB516pCPDsV/GINYDd
+         9jTw==
+X-Gm-Message-State: ACrzQf2FPT3Nr56kbwkodbsc0uQDynOz0bkp/ifctjEZZQ1uvMVoC54A
+        AtvobhvQRMTw25FimuM4mH/vg0cpUTQKkGSOCebS3s2SJ7Y=
+X-Google-Smtp-Source: AMsMyM726Ktwk9tJDc3H1gcw6816ziCkQOQD15Em/senCXLyTHdJSin6yt7T88CJDKw1gxa3F36qyrSNQ2n8SVFNXTk=
+X-Received: by 2002:a25:37cb:0:b0:6b1:db19:83cf with SMTP id
+ e194-20020a2537cb000000b006b1db1983cfmr23121407yba.391.1664213476435; Mon, 26
+ Sep 2022 10:31:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 99F2CC0A-3DC0-11ED-BF88-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+References: <20220922232947.631309-1-calvinwan@google.com> <20220922232947.631309-2-calvinwan@google.com>
+ <xmqqy1u9uddc.fsf@gitster.g>
+In-Reply-To: <xmqqy1u9uddc.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Mon, 26 Sep 2022 10:31:05 -0700
+Message-ID: <CAFySSZA=tThoHdTY7+bMStvC=xeeyMiv4aVDYt-eNW2mQE10qg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] run-command: add pipe_output to run_processes_parallel
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+>  * Why are we configuring an API behaviour via a global variable in
+>    21st century?
 
-> Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> writes:
+I was mimicking how "ungroup" worked, but now that Avar mentions
+that pattern was for a quick regression fix, I can fix it to pass it in as a
+parameter.
+
+>  * The name "task_finished" is mentioned, but it is unclear what it
+>    is.  Is it one of the parameters to run_process_parallel()?
+
+It is one of the callback functions passed in as a parameter to
+run_process_paraller(). I'll go ahead and clarify that.
+
+>  * Is the effect of the new feature that task_finished callback is
+>    called with the output, in addition to the normal output?  I am
+>    not sure why it is called "pipe".  The task_finished callback may
+>    be free to fork a child and send the received output from the
+>    task to that child over the pipe, but that is what a client code
+>    could do and is inappropriate to base the name of the mechanism,
+>    isn't it?
+
+The output in task_finished callback, before pipe_output, either
+contains part of the output or the entire output of the child process,
+since the output is periodically collected into stderr and then reset.
+The intention of output I believe is for the caller to be able to add
+anything they would like to the end (this can be seen with functions
+like fetch_finished() in builtin/fetch.c). My intention with pipe_output
+is to guarantee that output contains the entire output of the child
+process so task_finished can utilize it.
+
 >
->> +test_expect_success 'grep with and --cached' '
+> > @@ -1770,10 +1771,12 @@ int run_processes_parallel(int n,
+> >       int output_timeout = 100;
+> >       int spawn_cap = 4;
+> >       int ungroup = run_processes_parallel_ungroup;
+> > +     int pipe_output = run_processes_parallel_pipe_output;
+> >       struct parallel_processes pp;
+> >
+> >       /* unset for the next API user */
+> >       run_processes_parallel_ungroup = 0;
+> > +     run_processes_parallel_pipe_output = 0;
+> >
+> >       pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb,
+> >               ungroup);
+> > @@ -1800,7 +1803,8 @@ int run_processes_parallel(int n,
+> >                               pp.children[i].state = GIT_CP_WAIT_CLEANUP;
+> >               } else {
+> >                       pp_buffer_stderr(&pp, output_timeout);
+> > -                     pp_output(&pp);
+> > +                     if (!pipe_output)
+> > +                             pp_output(&pp);
 >
-> "with and --cached"?  "with and without --cached" is probably a good
-> thing to test but you may need to add tests for "with" case, too?
-
-I meant "for WITHOUT case, too", but ...
-
->> +	init_repos &&
->> +
->> +	test_all_match git grep --cached a &&
->> +	test_all_match git grep --cached a -- "folder1/*"
->> +'
+> So, we do not send the output from the child to the regular output
+> channel when pipe_output is in effect.  OK.
 >
-> The above is very relevant for the purpose of ...
+> >               }
+> >               code = pp_collect_finished(&pp);
+> >               if (code) {
 >
->> -	/* TODO: audit for interaction with sparse-index. */
->> -	ensure_full_index(repo->index);
+> And no other code changes?  This is quite different from what I
+> expected from reading the proposed log message.
 >
-> ... auditing.  Run the command with a pathspec that specify areas
-> inside and outside the sparse cone(s) and ensure the result match
-> those in a non-sparse-index, with test_all_match().
+> Am I correct to say that under this new mode, we no longer flush any
+> output while the child task is running (due to the change in the
+> above hunk to omit calls to pp_output() during the run) and instead
+> keep accumulating in the strbuf, until the child task finishes, at
+> which time pp_collect_finished() will call task_finished callback.
 >
-> As to the lack of the tests WITHOUT "--cached", I suspect that it is
-> omitted because there is no checked-out copies to grep in, but I
-> suspect that it is papering over a buggy design.
+> Even though the callback usually consumes the last piece of the
+> output since the last pp_output() call made during the normal
+> execution of the run_processes_parallel() loop, because we omitted
+> these calls, we have full output from the child task accumulated in
+> the children[].err strbuf.  We may still not output .err for real,
+> as we may not be the output_owner, in which case we may only append
+> to .buffered_output member.
+>
+> I am puzzled simply because, if the above summary is correct, I do
+> not see how a word "pipe" have a chance to come into the picture.
 
-... in light of the recent "sparse-checkout.txt: ... directions"
-document patch by Elijah
+Ah I see what you mean here -- your summary is correct. Something
+like "buffer_output" would make much more sense.
 
-  http://lore.kernel.org/git/pull.1367.git.1664064588846.gitgitgadget@gmail.com/
+> I can sort of see that in this mode, we would end up buffering the
+> entire output from each child task into one strbuf each, and can
+> avoid stalling the child tasks waiting for their turn to see their
+> output pipes drained.  But is this a reasonable thing to do?  How do
+> we control the memory consumption to avoid having to spool unbounded
+> amount of output from child tasks in core, or do we have a good
+> reason to believe that we do not have to bother?
 
-I think I was quite mistaken.  The guiding principle should not be
-to pretend that the paths stubbed out with sparse checkout mechanism
-are unchanged from HEAD.  It should be to pretend that they do not
-exist and they never existed.
+You are correct that storing unbounded output doesn't seem like a good
+idea. One idea I have is to parse output during the periodic collection rather
+than waiting till the end. The other idea I had was to add another
+"git status --porcelain" option that would only output the necessary
+pieces of information so we wouldn't have to bother with worrying about
+unbounded output.
 
-So it is perfectly expected that the output with and without
-"--cached" are different.  The former (without an option to ignore
-paths outside the sparse checkout even for in-repository data)
-should find stuff from in-tree, while the latter should look for
-things only in the checked out files.
+Any other thoughts as to how I can workaround this?
+
+Thanks!
