@@ -2,101 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CB28C6FA82
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 16:38:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7574DC32771
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 16:39:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229515AbiIZQiv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 12:38:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46262 "EHLO
+        id S229730AbiIZQj2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 12:39:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229808AbiIZQia (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 12:38:30 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAED6130700
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 08:26:05 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id sb3so14827783ejb.9
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 08:26:05 -0700 (PDT)
+        with ESMTP id S229504AbiIZQit (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 12:38:49 -0400
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3A35132D50
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 08:26:18 -0700 (PDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-349c4310cf7so72433357b3.3
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 08:26:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date;
-        bh=UVWo9N5ApWFQNoThECwzfTpgw/vzxqIQ57Boclujs0I=;
-        b=QvJ84JFJf6SynobK5jUwlmHN4MjNuYdeKNWhNxI3Vpl5nPacSTaQ+jZn9ldleSNvib
-         02ewJin0HNq0nFUEHDGy9GLoUo2PFkpwMauKssiMyhullHPXB40vX476NmnlsOmCMCA5
-         fwSKqWLPcaPEzPR5WvxWfqmuICNXI/Wux3cZ+wn9+jv45NhlFte1amYkOZ+h5P4+K6nX
-         LhPDeA+ACURofXjS/p9jAb4u24wOatnJeBI2GKDVkGW/H3PRpLq9vyyMp/994I7eTbst
-         ByggP+6k4auPWb+Swz7NU4B4QoA9JHGCxfyASKjPlXpGwATWQ+OL5ep1dO3hIkW28dAf
-         XTdg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=Z1Y1hjEZpGUIk+boOBzN53M+d0fX4Aj71zDEvoFKD70=;
+        b=L62LC+J1SACXyUNXKtdtyki6iXhea+jJxX6b0YL/eOPw14/9PYx0Eve1Z8VjyO0u8b
+         WD9+bRHLKxpnY3nVw5Z1wVlscivvk1ldsc+68Pa0yVdHNrWP/tgaa4SNwatvMJJsFfZ/
+         pIRkcLvjGjXRpf8Y4zfaU6/jzEWaYwtRXqS1SAD+OOzhbGR4PC86LYMfrtJBP1jyjLbw
+         OfikkE86alS/g/uFun/+Gz4cJXNymRj3amRT0ezgHgXCIZ+Su8wBqipR5A0sf46dekbt
+         /jQS6l8iaftHeZryBvQTj4HULtoZ4XnCIzsWRmVq5iygGgzuD3vRii6DI78siQjjNuH9
+         TYIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=UVWo9N5ApWFQNoThECwzfTpgw/vzxqIQ57Boclujs0I=;
-        b=ag2lZ/yK2O0s/fZKOkqxm5yyuVNlyiYRy7wdL38zwFq6vE92imq6Dj1xx0YZUlAOMc
-         2wBPSz3ETt2M4m0bdgGuVTsF9LLd262cRv+yWITob4LdAdmU5T62/Qm+RNIWQKwLXDmP
-         NbjzPB1ygRn46qH9I0XL58ipdOVKLnW7BhHQj2+ylGJ1Qz4++4C/QHa7yADc82eivlNn
-         gFJ/12qALT1WsMjUA/p80/6djTpM5CX66B+cQfzxWGcCowwOClizo7eo23bWIH+UVFAE
-         H2oRwbbD20ts2/8bnFy+edMuWmw3KnpZIBoWYBf83Hc7LjvbRyT8DwNtc33HA9CTHNnb
-         dizw==
-X-Gm-Message-State: ACrzQf3aOlL5aKosk6GwI5GhjblGmmqCZQ73X0DzxMk8OhHwxVC2h+79
-        vfQM5AkIy0AtLjlKR9CwgT3saE5izY8=
-X-Google-Smtp-Source: AMsMyM7rD+foRWveF8yeqYa/jGeJ9HWJAN9PEtdqoKwdNJ4ooJbTgHJ+fqgTCSYVHFyS/zoHGMTixA==
-X-Received: by 2002:a17:906:974f:b0:780:4a3c:d179 with SMTP id o15-20020a170906974f00b007804a3cd179mr19093491ejy.289.1664205951833;
-        Mon, 26 Sep 2022 08:25:51 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id m2-20020a170906234200b0073d753759fasm8477064eja.172.2022.09.26.08.25.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 08:25:51 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ocpzS-000AIa-0y;
-        Mon, 26 Sep 2022 17:25:50 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH v12 5/6] fsmonitor: check for compatability before
- communicating with fsmonitor
-Date:   Mon, 26 Sep 2022 17:23:56 +0200
-References: <pull.1326.v11.git.1663798722.gitgitgadget@gmail.com>
- <pull.1326.v12.git.1664048782.gitgitgadget@gmail.com>
- <421d77775dc24e52ab26336a1a82ed0e7b15ff5a.1664048782.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <421d77775dc24e52ab26336a1a82ed0e7b15ff5a.1664048782.git.gitgitgadget@gmail.com>
-Message-ID: <220926.86v8payx6p.gmgdl@evledraar.gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=Z1Y1hjEZpGUIk+boOBzN53M+d0fX4Aj71zDEvoFKD70=;
+        b=ywQMPAOx4yuDaLix7IUVqpMtX3hDgaew7xXZq4HU3RZU9N1T5giByVn265/Uw9v6o/
+         ON1NiUYVVAwqvs2m8z1benbNsrqyZ0uTQHqJ8vc3I7kaMNq8EmgYWGwg+7DUmQM4weSb
+         T6b7NQoLiq5Y/q0P80N7QRNtTKRROeeytSQzgw5S8rpLuFW0hyMNh5Pk1HROyLsIW6J3
+         DAhdsVM1afLNKF4NJB1UetXrT4kc4f1J1QP91VTZ65jdxjYieCJ8y4unqPRD5ABHO2iN
+         gAToELNkU5dflOVbKg8wh4/76PFodEn5qQmv0/faxj+/K6nbQZJQOVC3jDpR/rs6boqr
+         9bsQ==
+X-Gm-Message-State: ACrzQf08pRSINUqCJIs/3Jxt8R7uGOlBS581I5VKPZluX1uTpIb5wHGN
+        ntwnpNQsmjSTcKh7KgieN++a7RJfAExNo/gXLSRbWBsQZHGXrw==
+X-Google-Smtp-Source: AMsMyM60cJA79nYocnqLY6NzUzXq4TSq80Q8cdG2Yr5nvLfftGy8/MT9Sx6eQNb9VRstqczT7oJIgOfQZcd/+uCX204=
+X-Received: by 2002:a81:6c01:0:b0:34d:2175:2027 with SMTP id
+ h1-20020a816c01000000b0034d21752027mr21205466ywc.157.1664205965963; Mon, 26
+ Sep 2022 08:26:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAP8UFD3WQ64FuXarugF+CJ_-5sFNBCnqPE0AEBK-Ka78ituKTg@mail.gmail.com>
+ <07e739b7-bb60-c23f-7077-2c8f8cc00b62@dunelm.org.uk>
+In-Reply-To: <07e739b7-bb60-c23f-7077-2c8f8cc00b62@dunelm.org.uk>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 26 Sep 2022 17:25:53 +0200
+Message-ID: <CAP8UFD3pZLiyDFZTDdMH-_D+d0zp7q0MfiOujf82ZhrLULJwHQ@mail.gmail.com>
+Subject: Re: Handling the Git trademark
+To:     phillip.wood@dunelm.org.uk
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Phillip,
 
-On Sat, Sep 24 2022, Eric DeCosta via GitGitGadget wrote:
+On Tue, Sep 20, 2022 at 10:38 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
 
-> From: Eric DeCosta <edecosta@mathworks.com>
-> [...]
-> @@ -281,9 +283,11 @@ char *fsm_settings__get_incompatible_msg(const struct repository *r,
->  		goto done;
->  
->  	case FSMONITOR_REASON_NOSOCKETS:
-> +		socket_dir = dirname((char *)fsmonitor_ipc__get_path(r));
->  		strbuf_addf(&msg,
-> -			    _("repository '%s' is incompatible with fsmonitor due to lack of Unix sockets"),
-> -			    r->worktree);
-> +			    _("socket directory '%s' is incompatible with fsmonitor due"
-> +				  " to lack of Unix sockets support"),
-> +			    socket_dir);
+> Thanks for taking the time to start a discussion on this. My immediate
+> reaction is that it would be a shame to lose control of the trademark by
+> not enforcing it.
 
-Could do with less "while at it" here. We are:
+Thanks for your opinion on this!
 
- * Wrapping the string, making the functional change(s) harder to spot.
- * replacing r->worktree with socket_dir
- * Adding " support" to the end of the string, and replacing "repository" with "socket directory" 
+> If it is taking up too much of the leadership
+> committee's time perhaps we could consider asking for more volunteers to
+> handle some of the load. Would a few people volunteering a couple of
+> hours a month make a useful difference?
 
-AFAICT the continuation of the string isn't indented in the way we
-usually do, i.e. to align with the opening ".
+Yeah, I think that would make a difference. Thanks for the suggestion!
 
+> One other thought is that there are a number of companies which use
+> "git" in their name that benefit indirectly from the git project
+> enforcing the trademark and thereby ensuring the name "git" is trusted.
+> If we were ever in the unfortunate position of having to take time
+> consuming (and presumably costly) legal action perhaps we could approach
+> them for support?
+
+Yeah, we have already thought about this, but we haven't needed such
+support yet.
+
+Best,
+Christian.
