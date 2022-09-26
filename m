@@ -2,107 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3047FC32771
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 17:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23D01C32771
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 18:07:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230022AbiIZR71 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 13:59:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48606 "EHLO
+        id S231372AbiIZSG6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 14:06:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230168AbiIZR7F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 13:59:05 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAC257C301
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:38:50 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3EB2414302A;
-        Mon, 26 Sep 2022 13:38:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vDk148RdHgx6DNYeC46R00NzRmFPb8bcFbq2hN
-        m8LNY=; b=g5Xl2dGzOlgXgOwBb53TYj+Knq1Qt7Jagno4u/agCN6iXu1ovYVmbD
-        fPqC3wxb9/sqOQAdZcJ+rbz6W4AvedRlBDTML5mnM3qFP1JWW2JBDkRW9d3UghZj
-        c7J22b/sEZMy8yBG0FJhV7TGlPD7VSSNOo40k6aTCfJu8XSEPoxZU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 35B3F143028;
-        Mon, 26 Sep 2022 13:38:50 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 90AB7143024;
-        Mon, 26 Sep 2022 13:38:49 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        ZheNing Hu <adlternative@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] sparse-checkout.txt: new document with sparse-checkout
- directions
-References: <pull.1367.git.1664064588846.gitgitgadget@gmail.com>
-Date:   Mon, 26 Sep 2022 10:38:48 -0700
-In-Reply-To: <pull.1367.git.1664064588846.gitgitgadget@gmail.com> (Elijah
-        Newren via GitGitGadget's message of "Sun, 25 Sep 2022 00:09:48
-        +0000")
-Message-ID: <xmqqwn9qox1z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S231326AbiIZSGe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 14:06:34 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 587C17FFA5
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:50:37 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-324ec5a9e97so76669507b3.7
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:50:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=9dtS0bjIEIOdhO5yJVhrX7v/djownadEE+WHj9kiDkA=;
+        b=Z7XDRP0wE4XDmrxlWPTf3/NOfcf+X9oEeRtoaJXnvBCt+T15y5HxKAZ8lPYDiLUtN8
+         EArg/Cvesjm0IdGkgJw1tW56ly5Zt90/KLUkH8ESPWSB7Jf7J9xpnnO+5oW/peOAKg1r
+         /AIvwu2cFMNbnfGzaSfqaNioC/vVrj32fEukWXCPOU0uJyTqx+gqNaF5sbXYW8wOW6n/
+         q8PpW+7iXqDFQxZMfSbH2I8cqvbborFu1eCDoSPoPqTJJoD78DnAacE3QXf+ljWHYiKB
+         kxx+zBmiCt1egMfi2xbSruM4xlnF0uDeJ1LYfvp7VZolLljxIukEw8XmfdXRpSF1Hng0
+         pklw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=9dtS0bjIEIOdhO5yJVhrX7v/djownadEE+WHj9kiDkA=;
+        b=H9wraNSFYLT/iPXtYKuwaT3LdCamLhHBjVY4CmiwYfml27nYmw7OOUHjvxhqS1UqUY
+         RaNtvQKierFHB57jRAH+5lfsFAuKyaLjamhxaRp8KupTt6TscNuHGP79EHRe4eXhHnm/
+         v7YNN/31GZ497JR4+y/vSA3rRlzgBIyjB02CA/R3H0T+g7C1oPNYZf8sNEeJbkULbg4x
+         2ffo45l7x4WFxjpQTzoVoz8Oh2haED3lFwMmHgzE2UPR7+3EtAqyMHLfYIIsdMcMgpFI
+         2re859dECwJDbHPRU5UJ/O+3pEys7HF4mvFW8Bs/1InqhkYyKN+YOXYyFovo3ASzh+l1
+         ufqQ==
+X-Gm-Message-State: ACrzQf3m4/wWvRnRdKjZnzppFWgEkMA2tZd+19M2qOZD0NPoD5aNCKVP
+        aY2fPgYUNakD1uI2ZdkMpAC/GcCfnqNssxw4vWnIPA==
+X-Google-Smtp-Source: AMsMyM4oTe+TIYiHstOGkIrrAkE9fqCKcGRwcw3bzN/uGeN2tdojrh9vb/Si/211zBzH0k3EWK9glUJZT/GOd0NTZ3U=
+X-Received: by 2002:a81:ae4d:0:b0:345:7bc1:8eaa with SMTP id
+ g13-20020a81ae4d000000b003457bc18eaamr21777962ywk.369.1664214636499; Mon, 26
+ Sep 2022 10:50:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 148D3922-3DC2-11ED-9B5C-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+References: <20220922232947.631309-1-calvinwan@google.com> <20220922232947.631309-5-calvinwan@google.com>
+ <220923.86o7v64ik0.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220923.86o7v64ik0.gmgdl@evledraar.gmail.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Mon, 26 Sep 2022 10:50:25 -0700
+Message-ID: <CAFySSZBf7iOkAMBJm3hAJHLA5cGMb0ZJj7xOfn8E3Tn7AU7ebg@mail.gmail.com>
+Subject: Re: [PATCH 4/4] diff-lib: parallelize run_diff_files for submodules
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> > +status.parallelSubmodules::
+> > +     When linkgit:git-status[1] is run in a superproject with
+> > +     submodules, a status subprocess is spawned for every submodule.
+> > +     This option specifies the number of submodule status subprocesses
+> > +     to run in parallel. If unset, it defaults to 1.
+>
+> Why do we default to 1, instead of e.g. grep.threads defaulting to the
+> "cores available"?
 
-> +    In the case of am and apply, those commands only operate on the
-> +    working tree, so they are kind of in the same boat as stash.
+In my cover letter, I noted that with too many processes, status starts to
+slow down (but is still better than the baseline). This is because the
+expensive part of status is IO, specifically reading objects from the index.
+Much of the speedup of this patch comes from taking advantage of the
+ability to do parallel reads on an SSD, rather than splitting up the work
+of status. However, this doesn't work with an HDD, so status may
+actually be slower than baseline with multiple processes since there is
+now scheduling/switching overhead.
 
-"apply" does not touch the HEAD but it can touch the index; when it
-operates with the "--cached" or the "--index" option, it should not
-be considered as a working-tree-only command.
+>
+> > +struct submodule_status_util {
+> > +     int changed, ignore_untracked;
+>
+> nit: we tend not to group by type, which also makes adding API docs
+> later easier.
+>
+> Except that we tend to do that if all the things are really boolean flags, which these are, so maybe:
+>
+>         unsigned int changed:1,
+>                      ignore_untracked:1;
+>
+> ?
 
-"am" is about recording what is in the patch as a commit.
-
-> +    Perhaps `git am` could run `git sparse-checkout reapply`
-> +    automatically afterward and move into a category more similar to
-> +    merge/rebase/cherry-pick, but it'd still be weird because it'd
-> +    vivify files besides just conflicted ones when there are conflicts.
-
-I do not particularly think it is so bad.
-
-How would we handle the case where the user modifies paths outside
-the sparse specification and makes a commit out of the result,
-without using "am"?  We should be consistent with that use case, i.e.
-
-    $ edit path/outside/sparse/specification
-    $ git add path/outside/sparse/specification
-    $ git commit
-
-Do we require some "Yes, I am aware that I need to widen my sparse
-specification to do this, because I am now stepping out of it, and I
-understand that my sparse specification becomes wider after doing
-this operation" confirmation with "add" or "commit"?  If not, then I
-think "am" should silently widen just like these commands.  If they
-do, then "am" should also require such an option.  Perhaps call it
-"--widen-sparse" or whatever.
-
-By the way, I like the term "sparse specification" very much, as
-we should worry about non-cone mode as well.  Please use it
-consistently in this document after getting a concensus that it
-is a good phrase to use from others---I saw some other words
-used after "sparse" elsewhere in this patch.
-
-> +    In the case of ls-files, `git ls-files -t` is often used to see what
-> +    is sparse and not, in which case restricting would not make sense.
-
-I suspect that leaving it tree-wide would allow scripters come up
-with Porcelains that restricts to the sparse specification more
-easily.
-
-Thanks.
+ack.
