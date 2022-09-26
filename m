@@ -2,73 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27589C07E9D
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 19:28:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86855C32771
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 19:31:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229749AbiIZT2B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 15:28:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43704 "EHLO
+        id S229575AbiIZTbs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 15:31:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229711AbiIZT2A (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 15:28:00 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C77F5AC47
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 12:27:59 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C1DB01C6A7A;
-        Mon, 26 Sep 2022 15:27:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HG8mWUfuFxbjxQHNIj95N3J1GHjtcTmvGvm3G9
-        5fj+4=; b=pTyNKH7OQyenUUeQ8K4izRo0HkQVc8M5oPuF9EkVRTvOA4xSn+XSYE
-        8scUyPkkzlHeW0Z5O4b5iyRPAs5sClvBKo3np3WKlkhL2wDP9X49TDHyWcrj39e1
-        lzdNlGE0CAhYJoPAvE5zRy/67MYBISVjGRJ42007BHaWBn1Id7Rto=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BA6581C6A79;
-        Mon, 26 Sep 2022 15:27:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 95E531C6A77;
-        Mon, 26 Sep 2022 15:27:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v3 3/3] gc: replace config subprocesses with API calls
-References: <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
-        <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
-        <260d7bee36e1af2f6a6a8791d293402e97a502e6.1664218087.git.gitgitgadget@gmail.com>
-Date:   Mon, 26 Sep 2022 12:27:53 -0700
-In-Reply-To: <260d7bee36e1af2f6a6a8791d293402e97a502e6.1664218087.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Mon, 26 Sep 2022
-        18:48:06 +0000")
-Message-ID: <xmqq35cendfq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229580AbiIZTbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 15:31:46 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 923AC80531
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 12:31:45 -0700 (PDT)
+Received: (qmail 27839 invoked by uid 109); 26 Sep 2022 19:31:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 26 Sep 2022 19:31:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11142 invoked by uid 111); 26 Sep 2022 19:31:45 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 26 Sep 2022 15:31:45 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 26 Sep 2022 15:31:44 -0400
+From:   Jeff King <peff@peff.net>
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH] read-cache: avoid misaligned reads in index v4
+Message-ID: <YzH+IPFBGleIsAUe@coredump.intra.peff.net>
+References: <pull.1366.git.1663962236069.gitgitgadget@gmail.com>
+ <Yy4nkEnhuzt2iH+R@coredump.intra.peff.net>
+ <YzH4rDpHXdeLURSN@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 51AFE1F6-3DD1-11ED-896D-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YzH4rDpHXdeLURSN@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Sep 26, 2022 at 03:08:28PM -0400, Jeff King wrote:
 
-> From: Derrick Stolee <derrickstolee@github.com>
->
-> The 'git maintenance [un]register' commands set or unset the multi-
-> valued maintenance.repo config key with the absolute path of the current
-> repository. These are set in the global config file.
+> So we either need to go out of order, or parse into a dummy ce_entry and
+> then memcpy the results into the heap-allocated one.
 
-OK.  This step is new but it looks reasonable.  
+Here's the "dummy" version. I did this mostly to satisfy my own
+curiosity, and am sharing so the effort isn't lost. If you are ready to
+move on from the topic, don't feel compelled to read or respond. :)
 
-Embarrassingly sadly, we open, rewrite, and close the configuration
-file for each of these "proper API calls", so the IO load is not
-reduced, even though we do not have to spawn extra processes ;-)
+I do find it a bit more straight-forward, but the extra copy is ugly,
+plus the "yuck" comment.
 
-All three patches queued.  Thanks.
+diff --git a/read-cache.c b/read-cache.c
+index d16eb97906..8773f833bb 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1875,17 +1875,19 @@ static int read_index_extension(struct index_state *istate,
+ 
+ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+ 					    unsigned int version,
+-					    const char *ondisk,
++					    const void *ondisk_map,
+ 					    unsigned long *ent_size,
+ 					    const struct cache_entry *previous_ce)
+ {
++	const unsigned char *ondisk = ondisk_map;
++	struct cache_entry pe; /* parsed entry; not sized to hold name */
+ 	struct cache_entry *ce;
+ 	size_t len;
+-	const char *name;
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+-	const char *flagsp = ondisk + offsetof(struct ondisk_cache_entry, data) + hashsz;
+ 	unsigned int flags;
+ 	size_t copy_len = 0;
++	size_t pos = 0;
++
+ 	/*
+ 	 * Adjacent cache entries tend to share the leading paths, so it makes
+ 	 * sense to only store the differences in later entries.  In the v4
+@@ -1895,24 +1897,35 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+ 	 */
+ 	int expand_name_field = version == 4;
+ 
+-	/* On-disk flags are just 16 bits */
+-	flags = get_be16(flagsp);
++	pe.ce_stat_data.sd_ctime.sec = read_be32(ondisk, &pos);
++	pe.ce_stat_data.sd_ctime.nsec = read_be32(ondisk, &pos);
++	pe.ce_stat_data.sd_mtime.sec = read_be32(ondisk, &pos);
++	pe.ce_stat_data.sd_mtime.nsec = read_be32(ondisk, &pos);
++	pe.ce_stat_data.sd_dev   = read_be32(ondisk, &pos);
++	pe.ce_stat_data.sd_ino   = read_be32(ondisk, &pos);
++	pe.ce_mode  = read_be32(ondisk, &pos);
++	pe.ce_stat_data.sd_uid   = read_be32(ondisk, &pos);
++	pe.ce_stat_data.sd_gid   = read_be32(ondisk, &pos);
++	pe.ce_stat_data.sd_size  = read_be32(ondisk, &pos);
++
++	oidread(&pe.oid, ondisk + pos);
++	pos += hashsz;
++
++	flags = read_be16(ondisk, &pos);
+ 	len = flags & CE_NAMEMASK;
+ 
+ 	if (flags & CE_EXTENDED) {
+ 		int extended_flags;
+-		extended_flags = get_be16(flagsp + sizeof(uint16_t)) << 16;
++		extended_flags = read_be16(ondisk, &pos) << 16;
+ 		/* We do not yet understand any bit out of CE_EXTENDED_FLAGS */
+ 		if (extended_flags & ~CE_EXTENDED_FLAGS)
+ 			die(_("unknown index entry format 0x%08x"), extended_flags);
+ 		flags |= extended_flags;
+-		name = (const char *)(flagsp + 2 * sizeof(uint16_t));
+ 	}
+-	else
+-		name = (const char *)(flagsp + sizeof(uint16_t));
++	pe.ce_flags = flags & ~CE_NAMEMASK;
+ 
+ 	if (expand_name_field) {
+-		const unsigned char *cp = (const unsigned char *)name;
++		const unsigned char *cp = ondisk + pos;
+ 		size_t strip_len, previous_len;
+ 
+ 		/* If we're at the beginning of a block, ignore the previous name */
+@@ -1924,43 +1937,29 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
+ 					previous_ce->name);
+ 			copy_len = previous_len - strip_len;
+ 		}
+-		name = (const char *)cp;
++		pos = cp - ondisk;
+ 	}
+ 
+ 	if (len == CE_NAMEMASK) {
+-		len = strlen(name);
++		len = strlen((const char *)ondisk + pos);
+ 		if (expand_name_field)
+ 			len += copy_len;
+ 	}
+ 
+ 	ce = mem_pool__ce_alloc(ce_mem_pool, len);
+-
+-	ce->ce_stat_data.sd_ctime.sec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, ctime)
+-							+ offsetof(struct cache_time, sec));
+-	ce->ce_stat_data.sd_mtime.sec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, mtime)
+-							+ offsetof(struct cache_time, sec));
+-	ce->ce_stat_data.sd_ctime.nsec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, ctime)
+-							 + offsetof(struct cache_time, nsec));
+-	ce->ce_stat_data.sd_mtime.nsec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, mtime)
+-							 + offsetof(struct cache_time, nsec));
+-	ce->ce_stat_data.sd_dev   = get_be32(ondisk + offsetof(struct ondisk_cache_entry, dev));
+-	ce->ce_stat_data.sd_ino   = get_be32(ondisk + offsetof(struct ondisk_cache_entry, ino));
+-	ce->ce_mode  = get_be32(ondisk + offsetof(struct ondisk_cache_entry, mode));
+-	ce->ce_stat_data.sd_uid   = get_be32(ondisk + offsetof(struct ondisk_cache_entry, uid));
+-	ce->ce_stat_data.sd_gid   = get_be32(ondisk + offsetof(struct ondisk_cache_entry, gid));
+-	ce->ce_stat_data.sd_size  = get_be32(ondisk + offsetof(struct ondisk_cache_entry, size));
+-	ce->ce_flags = flags & ~CE_NAMEMASK;
+-	ce->ce_namelen = len;
++	memcpy(ce, &pe, sizeof(pe));
+ 	ce->index = 0;
+-	oidread(&ce->oid, (const unsigned char *)ondisk + offsetof(struct ondisk_cache_entry, data));
++	ce->ce_namelen = len;
++	/* yuck, our memcpy overwrote this */
++	ce->mem_pool_allocated = 1;
+ 
+ 	if (expand_name_field) {
+ 		if (copy_len)
+ 			memcpy(ce->name, previous_ce->name, copy_len);
+-		memcpy(ce->name + copy_len, name, len + 1 - copy_len);
+-		*ent_size = (name - ((char *)ondisk)) + len + 1 - copy_len;
++		memcpy(ce->name + copy_len, ondisk + pos, len + 1 - copy_len);
++		*ent_size = pos + len + 1 - copy_len;
+ 	} else {
+-		memcpy(ce->name, name, len + 1);
++		memcpy(ce->name, ondisk + pos, len + 1);
+ 		*ent_size = ondisk_ce_size(ce);
+ 	}
+ 	return ce;
