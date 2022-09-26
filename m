@@ -2,63 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62734C6FA82
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 18:48:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B95D3C32771
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 18:48:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230221AbiIZSsR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 14:48:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49936 "EHLO
+        id S230313AbiIZSsS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 14:48:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229644AbiIZSsM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 14:48:12 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9AB083BEA
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 11:48:11 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id d12-20020a05600c3acc00b003b4c12e47f3so4204134wms.4
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 11:48:11 -0700 (PDT)
+        with ESMTP id S230108AbiIZSsN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 14:48:13 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69D6885FAE
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 11:48:12 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id ay36so5168829wmb.0
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 11:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=+wfgInJm6w/BE/avCK/39XOq++2Nf2TlMT5gggZ1o1U=;
-        b=RIkG8eegqeW0+Sv4+4HCXFwQlUStrKX1GD3/MUdK8XIGbCsZtioeSt32l27MuKo4NC
-         XxRermIu0wpx6+ZMWrI36TVCOHHVzzx+2oRelNyPd8URrd3pF3iO5Mpo91RbsPxwjKkt
-         v4s0l5L/OXdpWqNlMwgS2DtIPN4xUH0uwj3+lxnhamAsjk0TaZOGEmWkMUxX9VqpdZ+U
-         MNtbvXTh/8cy13D778s3ZHKVQsGEhZRSBLKYhAh+Jys+ei9sL0elORycmm+6s0MulEec
-         SLcWuEwhN/S4Inw4/M0GfSLw0dKOQXMGaN9aG8fToB1orSWRiipkx2+Zhjg1KlyE7ycA
-         oERg==
+        bh=gyEFp1wpGUPKtu8GOqPCM0jE9U/VthLkFkEkyL2do9g=;
+        b=hAmVppwhVg5zfzEzlwaVITo6R4vcrvzMLAZUs4tcLPRYNvIOUCsRBSuL3Gg0gflrud
+         6lJVdCUbiDAq3d0qnAZw0XBOBpo5meGTCWLCFG+kZkT+WryJRwC8StGi6nqCMIMO2LZt
+         K+2XiWTdKkQXRnrphs7Xvpe+QJ3HwDoJRtv3fOdIVF7a+15ei52rlR4DIWnNmFYkmALI
+         llob9KOJpuck5sBw1PPA+Ik1qMHTym/0o8a/v1FBJncFlvurvgLAeeo4BHtp0MWbtbIA
+         9zBzvb7oDS1H/6BAVAtA4WuO+9No5sItmmk79g6/zuwye41jCWc9aUcaK7/7VhDKCeYV
+         IqJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=+wfgInJm6w/BE/avCK/39XOq++2Nf2TlMT5gggZ1o1U=;
-        b=L3QhOkjGI8Ay/y1L9SOYw4BQOLkVl6osVJPJyjU8OU+gJ2JxN5+yH03qjajNC+NpNl
-         4da44MjuQcylefOZhchkhe3tAcus1+4eH8Hv5CxG8r0pVfPUXg2TYVQ4JOD+k3618tTV
-         CRDOTsDSBmEeg0SZWdkm7BdEhCbUifwIn5YpHV96LK+ZdFw7LW94HE2NvTMscXgZxkWs
-         lIqfouagOwTylAIZSRk0uyUO2P8H8hMIEBNXAN6VesdwX9nXuNC1mdgutJT3+D7Q/VRq
-         sWKzCTqVlOhwmNyTfjLMqMuCDS/FUhnA3W0gPxhQWxmGmSEUf9PxcVf/lkUBwm/+mAFe
-         BNLA==
-X-Gm-Message-State: ACrzQf22UhWqbcILJut0f0ClNGsKnqRm5WQn4tBAhghWItp+1p5vKMKP
-        ycnNe96Drd4ffc49eyKBXHV1mltZhQY=
-X-Google-Smtp-Source: AMsMyM7HFsnEo2y4Q+csY1572pmMa7R51+J1MgfqO+R49wSo6nDYaqicGyXU3iEUuo1dW/KMzbprFw==
-X-Received: by 2002:a05:600c:4e0f:b0:3b4:88bb:19cb with SMTP id b15-20020a05600c4e0f00b003b488bb19cbmr69476wmq.195.1664218089844;
-        Mon, 26 Sep 2022 11:48:09 -0700 (PDT)
+        bh=gyEFp1wpGUPKtu8GOqPCM0jE9U/VthLkFkEkyL2do9g=;
+        b=QoBQF8lWJJAr26BdIQGvP2RsSFks34rdQPJI72wyPFCHEt/zBwDtA57E7PcvfMMb9Q
+         Dv70kNNLYukzGXTKptLlsKKgitq+dSAai398TL1VautC/UL5AMy/tue80uoXsjpNzrTG
+         dEQ31kUi0P4Gf01wUgykMnhaRq/8xR8N2XJQzriQD17pupXb5nogFUL7VDcSDWqgguTS
+         d0l5joK61yd3kzijiwNyB/4AU40PCcEy/8QkgnvsWceBnZoU59NJ0TdsZNwtZccsdAag
+         q6rVkmA9xy7TDDIGywh6w2Xof/CVJaOozQU97lDvzu1of/mLMGYHp7Sd52WIu7JjxeIg
+         39SA==
+X-Gm-Message-State: ACrzQf1RQY2pzt0BLopoysSQsEJvxiCJeSbO+vYtE4tBkspdKW+HfJdh
+        cDdCqg1Str8OQMsGHsDTlQCNBLU9XO4=
+X-Google-Smtp-Source: AMsMyM7vcc8OO+6YxOJ6xyiwJtUubc1w/CsaGdM4ExE5DhUwjyS4X97qhvaVc9TuYuUhU/5lz4Ddzw==
+X-Received: by 2002:a05:600c:3d17:b0:3b4:adc7:976c with SMTP id bh23-20020a05600c3d1700b003b4adc7976cmr92595wmb.108.1664218090729;
+        Mon, 26 Sep 2022 11:48:10 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p37-20020a05600c1da500b003a3170a7af9sm12243614wms.4.2022.09.26.11.48.09
+        by smtp.gmail.com with ESMTPSA id s6-20020adfdb06000000b0022ae4f8395dsm14925674wri.96.2022.09.26.11.48.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 11:48:09 -0700 (PDT)
-Message-Id: <06d5ef3fc57e1961adb541274f6f9b99ab058b66.1664218087.git.gitgitgadget@gmail.com>
+        Mon, 26 Sep 2022 11:48:10 -0700 (PDT)
+Message-Id: <260d7bee36e1af2f6a6a8791d293402e97a502e6.1664218087.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
 References: <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
         <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 26 Sep 2022 18:48:05 +0000
-Subject: [PATCH v3 2/3] scalar: make 'unregister' idempotent
-Fcc:    Sent
+Date:   Mon, 26 Sep 2022 18:48:06 +0000
+Subject: [PATCH v3 3/3] gc: replace config subprocesses with API calls
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, vdye@github.com,
         SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
@@ -71,66 +71,151 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The 'scalar unregister' command removes a repository from the list of
-registered Scalar repositories and removes it from the list of
-repositories registered for background maintenance. If the repository
-was not already registered for background maintenance, then the command
-fails, even if the repository was still registered as a Scalar
-repository.
+The 'git maintenance [un]register' commands set or unset the multi-
+valued maintenance.repo config key with the absolute path of the current
+repository. These are set in the global config file.
 
-After using 'scalar clone' or 'scalar register', the repository would be
-enrolled in background maintenance since those commands run 'git
-maintenance start'. If the user runs 'git maintenance unregister' on
-that repository, then it is still in the list of repositories which get
-new config updates from 'scalar reconfigure'. The 'scalar unregister'
-command would fail since 'git maintenance unregister' would fail.
+Instead of calling a subcommand and creating a new process, create the
+proper API calls to git_config_set_multivar_in_file_gently(). It
+requires loading the filename for the global config file (and erroring
+out if now $HOME value is set). We also need to be careful about using
+CONFIG_REGEX_NONE when adding the value and using
+CONFIG_FLAGS_FIXED_VALUE when removing the value. In both cases, we
+check that the value already exists (this check already existed for
+'unregister').
 
-Further, the add_or_remove_enlistment() method in scalar.c already has
-this idempotent nature built in as an expectation since it returns zero
-when the scalar.repo list already has the proper containment of the
-repository.
+Also, remove the transparent translation of the error code from the
+config API to the exit code of 'git maintenance'. Instead, use die() to
+recover from failures at that level. In the case of 'unregister
+--force', allow the CONFIG_NOTHING_SET error code to be a success. This
+allows a possible race where another process removes the config value.
+The end result is that the config value is not set anymore, so we can
+treat this as a success.
 
-The previous change added the 'git maintenance unregister --force'
-option, so use it within 'scalar unregister' to make it idempotent.
-
+Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- scalar.c          | 5 ++++-
- t/t9210-scalar.sh | 5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ builtin/gc.c | 75 ++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 44 insertions(+), 31 deletions(-)
 
-diff --git a/scalar.c b/scalar.c
-index c5c1ce68919..6de9c0ee523 100644
---- a/scalar.c
-+++ b/scalar.c
-@@ -207,7 +207,10 @@ static int set_recommended_config(int reconfigure)
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 8d154586272..4c59235950d 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1470,11 +1470,12 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		OPT_END(),
+ 	};
+-	int rc;
++	int found = 0;
++	const char *key = "maintenance.repo";
+ 	char *config_value;
+-	struct child_process config_set = CHILD_PROCESS_INIT;
+-	struct child_process config_get = CHILD_PROCESS_INIT;
+ 	char *maintpath = get_maintpath();
++	struct string_list_item *item;
++	const struct string_list *list;
  
- static int toggle_maintenance(int enable)
- {
--	return run_git("maintenance", enable ? "start" : "unregister", NULL);
-+	return run_git("maintenance",
-+		       enable ? "start" : "unregister",
-+		       enable ? NULL : "--force",
-+		       NULL);
+ 	argc = parse_options(argc, argv, prefix, options,
+ 			     builtin_maintenance_register_usage, 0);
+@@ -1491,31 +1492,35 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
+ 	else
+ 		git_config_set("maintenance.strategy", "incremental");
+ 
+-	config_get.git_cmd = 1;
+-	strvec_pushl(&config_get.args, "config", "--global", "--get",
+-		     "--fixed-value", "maintenance.repo", maintpath, NULL);
+-	config_get.out = -1;
+-
+-	if (start_command(&config_get)) {
+-		rc = error(_("failed to run 'git config'"));
+-		goto done;
++	list = git_config_get_value_multi(key);
++	if (list) {
++		for_each_string_list_item(item, list) {
++			if (!strcmp(maintpath, item->string)) {
++				found = 1;
++				break;
++			}
++		}
+ 	}
+ 
+-	/* We already have this value in our config! */
+-	if (!finish_command(&config_get)) {
+-		rc = 0;
+-		goto done;
++	if (!found) {
++		int rc;
++		char *user_config, *xdg_config;
++		git_global_config(&user_config, &xdg_config);
++		if (!user_config)
++			die(_("$HOME not set"));
++		rc = git_config_set_multivar_in_file_gently(
++			user_config, "maintenance.repo", maintpath,
++			CONFIG_REGEX_NONE, 0);
++		free(user_config);
++		free(xdg_config);
++
++		if (rc)
++			die(_("unable to add '%s' value of '%s'"),
++			    key, maintpath);
+ 	}
+ 
+-	config_set.git_cmd = 1;
+-	strvec_pushl(&config_set.args, "config", "--add", "--global", "maintenance.repo",
+-		     maintpath, NULL);
+-
+-	rc = run_command(&config_set);
+-
+-done:
+ 	free(maintpath);
+-	return rc;
++	return 0;
  }
  
- static int add_or_remove_enlistment(int add)
-diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
-index 14ca575a214..be51a8bb7a4 100755
---- a/t/t9210-scalar.sh
-+++ b/t/t9210-scalar.sh
-@@ -116,7 +116,10 @@ test_expect_success 'scalar unregister' '
- 	test_must_fail git config --get --global --fixed-value \
- 		maintenance.repo "$(pwd)/vanish/src" &&
- 	scalar list >scalar.repos &&
--	! grep -F "$(pwd)/vanish/src" scalar.repos
-+	! grep -F "$(pwd)/vanish/src" scalar.repos &&
-+
-+	# scalar unregister should be idempotent
-+	scalar unregister vanish
- '
+ static char const * const builtin_maintenance_unregister_usage[] = {
+@@ -1533,8 +1538,6 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
+ 		OPT_END(),
+ 	};
+ 	const char *key = "maintenance.repo";
+-	int rc = 0;
+-	struct child_process config_unset = CHILD_PROCESS_INIT;
+ 	char *maintpath = get_maintpath();
+ 	int found = 0;
+ 	struct string_list_item *item;
+@@ -1554,17 +1557,27 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
+ 	}
  
- test_expect_success 'set up repository to clone' '
+ 	if (found) {
+-		config_unset.git_cmd = 1;
+-		strvec_pushl(&config_unset.args, "config", "--global", "--unset",
+-			     "--fixed-value", key, maintpath, NULL);
+-
+-		rc = run_command(&config_unset);
++		int rc;
++		char *user_config, *xdg_config;
++		git_global_config(&user_config, &xdg_config);
++		if (!user_config)
++			die(_("$HOME not set"));
++		rc = git_config_set_multivar_in_file_gently(
++			user_config, key, NULL, maintpath,
++			CONFIG_FLAGS_MULTI_REPLACE | CONFIG_FLAGS_FIXED_VALUE);
++		free(user_config);
++		free(xdg_config);
++
++		if (rc &&
++		    (!force || rc == CONFIG_NOTHING_SET))
++			die(_("unable to unset '%s' value of '%s'"),
++			    key, maintpath);
+ 	} else if (!force) {
+ 		die(_("repository '%s' is not registered"), maintpath);
+ 	}
+ 
+ 	free(maintpath);
+-	return rc;
++	return 0;
+ }
+ 
+ static const char *get_frequency(enum schedule_priority schedule)
 -- 
 gitgitgadget
-
