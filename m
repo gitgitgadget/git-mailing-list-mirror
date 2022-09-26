@@ -2,84 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77225C32771
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 17:58:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3047FC32771
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 17:59:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230523AbiIZR6V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 13:58:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38092 "EHLO
+        id S230022AbiIZR71 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 13:59:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231143AbiIZR5j (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 13:57:39 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F147B51
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:36:08 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id s14so9299848ybe.7
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:36:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=zbMz874QgGhWc7MDTCvw/trh5/3EwnMIpB7fH2irJVo=;
-        b=elf2NHpuLL9n2enBq/S/rVUvWVsvqq8DfSzNnRZWe8kWfL3H3JgaFgYQBM82WZC8A9
-         XNRKXWyxRE6M2ERNdcEQ1jJxTy2VpC7y760t0TnNOsAg65uCzjNc79SbR4TiAdKfFGyY
-         ofscVNL2e413kMTOmtD/scOCgbfMSTx2JFhM6YpTMFy0HliqP+EEMUefkVVvKzPHvZ+j
-         xHdZX5I1LHybfVyiEa+cJIBMX+fwoiPI/Ve8AeGQwL+gTGSIM1quuh4XOaVx/4fBCA4E
-         bnAnPQ+FSjZ6a6bvFR1kaVQP1ZKm76/UVXnum21lK+WWKi4sXgEmkyd+lHwlvlWijPuC
-         yziA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=zbMz874QgGhWc7MDTCvw/trh5/3EwnMIpB7fH2irJVo=;
-        b=smtIonQBv1u1GfduTRumf0l2CS/0xxCCNBAUnjCLOTAdLsRCGhcuye8OcwhXfT6AkP
-         52hwxWlQvZ3rUT9ZNcCIXwdYnuavJ0VsnauLTMXbQiRzlh9Lp3eDwNX0dH2jmeeTmAwI
-         a2zUJdgsk0blYBo8RKVmg6P3/1pqVo9D9ndqe8kFUM1UjzAfC/2CqjDgMAoZKA6zdkkV
-         F28yhZa6pCegUCKq5LXVsH5s1JBLL0TQMKioRYRREhN11a1XtomP0bW0ISZshCH9q/8G
-         j0B/EJcvB0DXZ6i351Ek25fxBfRqjuC0gydZypgBoZqngVgl8sOsbf33gUA0mA6Ws388
-         RREQ==
-X-Gm-Message-State: ACrzQf1WSEi3mLOw+0kilU92AxWCGdowAcMRp/Li4iRJ7eOyRsizn6bP
-        CRsVIFRluUw4fblG+3yXxscNtWnUrSmHefQz/9A/eg==
-X-Google-Smtp-Source: AMsMyM72w1IISb0MEkASsc+k18HV1nO2msT781GWgyFc1e84gbbqYy2enpDL8et/ty8UUypHFzaIuKAT5RSgqw5vvbE=
-X-Received: by 2002:a5b:5c4:0:b0:67b:89d6:cbf5 with SMTP id
- w4-20020a5b05c4000000b0067b89d6cbf5mr21641117ybp.286.1664213767464; Mon, 26
- Sep 2022 10:36:07 -0700 (PDT)
+        with ESMTP id S230168AbiIZR7F (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 13:59:05 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAC257C301
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:38:50 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3EB2414302A;
+        Mon, 26 Sep 2022 13:38:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vDk148RdHgx6DNYeC46R00NzRmFPb8bcFbq2hN
+        m8LNY=; b=g5Xl2dGzOlgXgOwBb53TYj+Knq1Qt7Jagno4u/agCN6iXu1ovYVmbD
+        fPqC3wxb9/sqOQAdZcJ+rbz6W4AvedRlBDTML5mnM3qFP1JWW2JBDkRW9d3UghZj
+        c7J22b/sEZMy8yBG0FJhV7TGlPD7VSSNOo40k6aTCfJu8XSEPoxZU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 35B3F143028;
+        Mon, 26 Sep 2022 13:38:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 90AB7143024;
+        Mon, 26 Sep 2022 13:38:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        ZheNing Hu <adlternative@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] sparse-checkout.txt: new document with sparse-checkout
+ directions
+References: <pull.1367.git.1664064588846.gitgitgadget@gmail.com>
+Date:   Mon, 26 Sep 2022 10:38:48 -0700
+In-Reply-To: <pull.1367.git.1664064588846.gitgitgadget@gmail.com> (Elijah
+        Newren via GitGitGadget's message of "Sun, 25 Sep 2022 00:09:48
+        +0000")
+Message-ID: <xmqqwn9qox1z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20220922232947.631309-1-calvinwan@google.com> <20220922232947.631309-4-calvinwan@google.com>
- <xmqqleq9u8u3.fsf@gitster.g>
-In-Reply-To: <xmqqleq9u8u3.fsf@gitster.g>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Mon, 26 Sep 2022 10:35:56 -0700
-Message-ID: <CAFySSZBxwMHOD0c7T5cF3kkcej3+c2i97u=2t4jZthSCvuEhDg@mail.gmail.com>
-Subject: Re: [PATCH 3/4] diff-lib: refactor functions
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, emilyshaffer@google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 148D3922-3DC2-11ED-9B5C-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Unlike the original, this always makes two needless structure
-> assignments for anything that is not a submodule.
->
-> Can we fix that regression before moving forward?
->
-> Even when ce_mode is a gitlink, if .ignore_submodules bit is set,
-> the two structure assignments between diffopt->flags and orig_flags
-> become necessary, so the original was already doing extra copies but
-> we do not have to make it worse.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-ack
+> +    In the case of am and apply, those commands only operate on the
+> +    working tree, so they are kind of in the same boat as stash.
 
-> Strange indentation.  It is unclear why this bottom 1/3 of the loop
-> body of run_diff_files() need to be a separate helper function,
-> while the top 2/3 does not.  The resulting loop (below) becomes very
-> hard to follow because the reader cannot tell when diff_change() is
-> called and when it is not.
->
-> Overall, I see this change detrimental to diff-lib API at this step
-> in the series.  Later steps may show something more rewarding than
-> the downsides we see here, hopefully.
+"apply" does not touch the HEAD but it can touch the index; when it
+operates with the "--cached" or the "--index" option, it should not
+be considered as a working-tree-only command.
 
-I'll see if I can come up with a way to rewrite this so it is less confusing.
-Alternatively, I could remove this refactor.
+"am" is about recording what is in the patch as a commit.
+
+> +    Perhaps `git am` could run `git sparse-checkout reapply`
+> +    automatically afterward and move into a category more similar to
+> +    merge/rebase/cherry-pick, but it'd still be weird because it'd
+> +    vivify files besides just conflicted ones when there are conflicts.
+
+I do not particularly think it is so bad.
+
+How would we handle the case where the user modifies paths outside
+the sparse specification and makes a commit out of the result,
+without using "am"?  We should be consistent with that use case, i.e.
+
+    $ edit path/outside/sparse/specification
+    $ git add path/outside/sparse/specification
+    $ git commit
+
+Do we require some "Yes, I am aware that I need to widen my sparse
+specification to do this, because I am now stepping out of it, and I
+understand that my sparse specification becomes wider after doing
+this operation" confirmation with "add" or "commit"?  If not, then I
+think "am" should silently widen just like these commands.  If they
+do, then "am" should also require such an option.  Perhaps call it
+"--widen-sparse" or whatever.
+
+By the way, I like the term "sparse specification" very much, as
+we should worry about non-cone mode as well.  Please use it
+consistently in this document after getting a concensus that it
+is a good phrase to use from others---I saw some other words
+used after "sparse" elsewhere in this patch.
+
+> +    In the case of ls-files, `git ls-files -t` is often used to see what
+> +    is sparse and not, in which case restricting would not make sense.
+
+I suspect that leaving it tree-wide would allow scripters come up
+with Porcelains that restricts to the sparse specification more
+easily.
+
+Thanks.
