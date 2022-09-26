@@ -2,91 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9278C32771
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 09:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C99B8C32771
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 09:13:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234380AbiIZJK1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 05:10:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45148 "EHLO
+        id S234707AbiIZJNr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 05:13:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234013AbiIZJKY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 05:10:24 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 817DF3335B
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 02:10:23 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id r134so4661550iod.8
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 02:10:23 -0700 (PDT)
+        with ESMTP id S234786AbiIZJNj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 05:13:39 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C18163DF31
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 02:13:37 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id z13so8031263edb.13
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 02:13:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=b3dioE5SOFiqrw2rIsrv1hTUCSel9ptmIsk0Fd4wDP4=;
-        b=SZDsliyRrrP/j6afw5jDBhSDmZ8OUlVQH8Iw+L+fZ2Xq75ZhaA+gTe/As0rvmSBQj5
-         BmqZKsLiWNa7D9+CLl+pA7mbipAzFHI0zqH02msm9mgtBU27vemO8/qvi3BHbL1GdsrY
-         RpmwfWnD0TQeDU0DZz5kQibRtP7J/ADI/Ngakh7mC8fTUkfJjgNgVaeMv5KBwG/hSozm
-         fS66+dfuUETKZDHeyNUTfRvF0MrYAisDTXd6ljoMot0j8cb+AGLOTXW3zLI3iCnKkPt/
-         FDSi1U8eURAS7Nu6JUz5NrfixcCI2Ra+gvRkpI22ZFdEz7HB2HqSkT7Fdb1xDyDyrFHg
-         M4SQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date;
+        bh=RM1AMTzzQh25eguqSTU9d1amCgdY2alZ60PDgw9RMPQ=;
+        b=KviUn/x9Kxk9QZV8IW6AtpfF0uYStRq8+D6LDUG0pfRnVQvc25woqMmqMIwhwa2b8o
+         UYKJcgjn8ff+RXwyYmXIw1lRt98R/pLe6/Mawu/lpbCPlEjZY0tzQSFBAUk1f+nMDZYi
+         T4WxW7d72+K8II7YXN7UH4UjLW6ybiIDzvVhMESAw5kfUCx8gfvGTNbUoDM+PxpqqenG
+         3LZhqevEEccx0NBgijObrvQEJKsO+gVYochSoCU843NVIxu+Frh99X9FGUYAUjNM/IIx
+         oNW5guqis2bmfRf64VGSp7lTDBM3UCiN/3SES32cwYvkwF+QTcp9ZSjifKIYgqBRXyK/
+         9m9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=b3dioE5SOFiqrw2rIsrv1hTUCSel9ptmIsk0Fd4wDP4=;
-        b=WoTCo1wgqZ8VsQ1z+HRPEpIrXrY0sfJX34V3qKAWtaOuKVF6RS+50idPnDWRCWn15V
-         GA8kNcAtMpmb/RAz3M731LSVM82YLjT5lbjm55MAlbQJQrVc6oz5WB2tiIEy8f0uJqa/
-         nW2cqVUzFis3yzv4Vg7AmshvgQIH+AnbGFosQGszymSJHrVwS8zv1QZD9vnw0fZstUd8
-         H5b07owZ4loeZi1Yus6C12sIVbajdZLEiySDobYoeWqBkZ8kbFcp7RBEN1y6lX5P8FAT
-         Mq9kWStU5chorPcZKZRWCIu6MlIK0zTxhtoLJwWA33B3DyycEVD9HgzfQrvYFEkZh3WQ
-         2ULw==
-X-Gm-Message-State: ACrzQf2sueWDv4k4iEMnVpb82QdMhZN139MzqOx9ZBXFPUqE11mhDYyX
-        n+F0kIYdlsDrcHD8mXwRMqL95I2DNGBd10gFr6On/Ev6nbo=
-X-Google-Smtp-Source: AMsMyM75HT+DeQe8qd+9vNhYAsIvJiOIgEfCdRzWyZ2dnXfcfVxb9fhUWejEG8e28yAhf9JEGf4LxrnCAjUlV4w942U=
-X-Received: by 2002:a05:6602:3421:b0:6a1:6b14:895b with SMTP id
- n33-20020a056602342100b006a16b14895bmr8820755ioz.24.1664183422721; Mon, 26
- Sep 2022 02:10:22 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=RM1AMTzzQh25eguqSTU9d1amCgdY2alZ60PDgw9RMPQ=;
+        b=tgFIJKm9Nm2q0xjvn0XsDGi9vGyQWjV8eKk6/u/nVh1mWKCyv1ULzqllykqvImrm0p
+         bRrsrxmveImuLxTv/ba9qyo4twDVXrCY4boOmeNGLrJMAZ8IGzDj+wxGytPQRNM88YUr
+         KT0r1cL8Hc7lJoPGpUNXxFoTAeyuq7JXRL/lMOvNfi8/X0sHixQMQS7bCfFN5HkjgphC
+         DKiK/0LfjUVXXV33xUIb8mj1iSSvj+7Ytte2LDr47iumW3HkuFDuj8kH4Ix15+d12GE7
+         ntYhY5Tg42NXpjetdbfGPUdgyHPo2TEdmO1rHXmYRZHLMbxWejlm2SbYXExZJgl1y5zm
+         4sBA==
+X-Gm-Message-State: ACrzQf0Z8hs4SnHtEhLOdTf3/7BrIC+D+S1t7uGFkM3z98WvDDEbLlOp
+        Nf17N7FAPyMsox3K2RYXl8TQYB1vIMI=
+X-Google-Smtp-Source: AMsMyM7zFNcgtJjF1ZgMdZC6Tht+NPeo1+JO/5kIonLWdnpzjijYFb0kBKZmaI3MSQu8/SGGbZGhSQ==
+X-Received: by 2002:a05:6402:3784:b0:453:9d2a:771b with SMTP id et4-20020a056402378400b004539d2a771bmr21409861edb.353.1664183616355;
+        Mon, 26 Sep 2022 02:13:36 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id kw12-20020a170907770c00b0076ff600bf2csm8038178ejc.63.2022.09.26.02.13.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Sep 2022 02:13:35 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ockBC-003nx6-2n;
+        Mon, 26 Sep 2022 11:13:34 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] t/Makefile: remove 'test-results' on 'make clean'
+Date:   Mon, 26 Sep 2022 11:08:55 +0200
+References: <20220920105407.4700-1-szeder.dev@gmail.com>
+ <20220920201619.40972-1-szeder.dev@gmail.com> <xmqqv8pg399k.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.7.12
+In-reply-to: <xmqqv8pg399k.fsf@gitster.g>
+Message-ID: <220926.86pmfi33cx.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1356.git.1663959324.gitgitgadget@gmail.com>
- <d087d467e3fe3000eb19939c2bb5e5c0723fd908.1663959325.git.gitgitgadget@gmail.com>
- <220926.86y1u634yy.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220926.86y1u634yy.gmgdl@evledraar.gmail.com>
-From:   Chris Poucet <poucet@google.com>
-Date:   Mon, 26 Sep 2022 11:10:11 +0200
-Message-ID: <CAN9+7XcvS92YU45qaBZjQ4i-g8uJOJQraXhViFQ2uJHDCAcSjg@mail.gmail.com>
-Subject: Re: [PATCH 09/10] evolve: add delete command
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 26, 2022 at 10:38 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Fri, Sep 23 2022, Chris Poucet via GitGitGadget wrote:
->
-> > From: Chris Poucet <poucet@google.com>
-> >  static const char * const builtin_change_usage[] =3D {
-> >       N_("git change list [<pattern>...]"),
-> > -     N_("git change update [--force] [--replace <treeish>...] [--origi=
-n <treesih>...] [--content <newtreeish>]"),
-> > +     N_("git change update [--force] [--replace <treeish>...] [--origi=
-n <treeish>...] [--content <newtreeish>]"),
->
-> Here you're just correcting a typo in an earlier commit, squash it into t=
-hat one instead.
 
-Done, thank you.
->
-> >  static const char * const builtin_update_usage[] =3D {
-> > -     N_("git change update [--force] [--replace <treeish>...] [--origi=
-n <treesih>...] [--content <newtreeish>]"),
-> > +     N_("git change update [--force] [--replace <treeish>...] [--origi=
-n <treeish>...] [--content <newtreeish>]"),
->
-> Ditto.
+On Wed, Sep 21 2022, Junio C Hamano wrote:
 
-Done, thank you.
+> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+>
+>> The 't/test-results' directory and its contents are by-products of the
+>> test process, so 'make clean' should remove them, but, alas, this has
+>> been broken since fee65b194d (t/Makefile: don't remove test-results in
+>> "clean-except-prove-cache", 2022-07-28).
+>
+> What I find more disturbing is this is part of "leak check" topic,
+> and I see no reason why we need to futz with "make clean" rule in
+> the makefile while extending SANITIZE=3Dleak support.  We really
+> should yell louder when we see topics that tries to do too much
+> "while at it" and reject them to minimize the risk of introducing
+> this kind of breakage.
+
+FWIW this wasn't a "while at it", it was critical to making another part
+of that topic work at all.
+
+It adds a "check" mode, which I use to check that the
+TEST_PASSES_SANITIZE_LEAK=3Dtrue markings are correct.
+
+Intrinsic to how that works (and [1] has more details) is that we "pass"
+all tests, when some of them really failed under SANITIZE=3Dleak. I.e. a
+failure of a test not opted in to TEST_PASSES_SANITIZE_LEAK=3Dtrue is
+considered OK.
+
+Without fee65b194d that combined with GIT_TEST_SANITIZE_LEAK_LOG=3Dtrue
+added in the same topic would make post-test leak analysis I do useless,
+because before fee65b194d the Makefile made the assumption that
+"test-results" directories were only need in case the tests failed.
+
+1. e92684e1a26 (test-lib: add a GIT_TEST_PASSING_SANITIZE_LEAK=3Dcheck
+   mode, 2022-07-28)
