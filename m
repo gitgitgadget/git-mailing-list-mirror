@@ -2,189 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 487F6C32771
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 15:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4469EC07E9D
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 16:19:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236287AbiIZPbE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 11:31:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45512 "EHLO
+        id S236556AbiIZQTN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 12:19:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236493AbiIZP0h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 11:26:37 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81D145D111
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 07:11:48 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id a20so4121221qtw.10
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 07:11:48 -0700 (PDT)
+        with ESMTP id S236807AbiIZQSq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 12:18:46 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1837CF34C9
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 08:08:03 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id rk17so1556776ejb.1
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 08:08:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=f5SFD7kvRjuMP7pTRBdJLPn1y1FQYYzo1Po0A3UmbhE=;
-        b=PXBYvy/CA8KngzABywWtsRsRFW2hq2KKxdCr5y+L7UuT+Fpras4RlctspTspMWEH87
-         4w1SHs5/24FEq0TffBJMnmz9kE0MnbKoCm/JWWOZ5hZvYbdviab7V/4/JgHaKrXClksa
-         zrgEjgL1SBvRCdi/GrIpbWWP2dQlMek5fKqj/zEU0v9wdghAb27iaKbJo5X/Kpu+bNkr
-         ORsNnk5vrVyHUQtZPrQzBLysbG6OEuLFIPAtGNJyp4g6vl2yKVg5U4vENoZsccQlZ5Jn
-         NT6APSXP616gR4+lJAuhbK9j46cG2gPyEm5sCdIUmp7VTpIjMU9RGMhcHxCrnXLmYDud
-         1vaA==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date;
+        bh=QbIm6Q4tDUXWgO6f0A/4NfQUpgrDy4NjXdNQcqpJ1i8=;
+        b=GiVMvu403bPklfaLmTfNb1HbVwJazXQ/iDZ2eKaRui9gXLpFx7phPEth2vdYsSy8sP
+         zMmifnhJThi522LmjPxuqlHexLMHyMewdQ1y22Ks8a1jTkJvzXYd6tj+kaDWCWZJ8oEF
+         MwI+yZEkw+KNjOl5OK6Z2HRbXj9y4Jm8lvTQLbjZw357VDPyrDXwrneU67fvZySiIxvZ
+         h6gxaPHA7DAfvXGYAqBrN3h3GGP7tyJKRoL3mTfl5LdAMwQCVeOlpQTfZibWytJtP9LW
+         CL+60BWvkcGxLjPmt/rfeP0VbeQk4Jz/+O2j0jleSZJrl7PHDsvMsRNPTxs2iL6dedhN
+         HN/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=f5SFD7kvRjuMP7pTRBdJLPn1y1FQYYzo1Po0A3UmbhE=;
-        b=Gn65Iw668t/nzkY4odG7BoLfjTjRmR7kCVN5k3k9mb57sFIL3Ni5uLzaBxP4SVh6Or
-         h9gsf/87bfx/kxvxqtmkHI2+0MMwauZN0sXNHYlCLZsOK6ULybNCOhzZPahh1euph6so
-         bvpaOBrqYQxmIAPIMgV5F+nZUS3JOuZnZAdUrcr42HU5lqwEEWtjKRwhSYuLQqwVaReu
-         mvOEZMbV9EdyTLpmbc1jROwOxUhy8kiCfMi8ZjbaOD7lQl7v6rolVHe0RhSsHyuzIGP+
-         bPH05COkpVDBNuZTr/QJCYfi1qslESsA+1K8XBqHdQf4J76qbKIyL1jyxDhd7O2jMgkD
-         lpjg==
-X-Gm-Message-State: ACrzQf3H5TiGWB/oFX3jJ10fd24VoPst9Ztc5ABqNtE0rtKZCeRnLJi/
-        5R4ES9+EaQ3GAjleG/GOvkY=
-X-Google-Smtp-Source: AMsMyM5ITt99U3aL4ZsRojDQ/5sT4B/K3uF0/+wgzDGqqCpm4xAFMoSTHmxGcS0NHH/B4j7TzS6RGw==
-X-Received: by 2002:a05:622a:1886:b0:35c:b9f5:cbcd with SMTP id v6-20020a05622a188600b0035cb9f5cbcdmr18107422qtc.290.1664201507529;
-        Mon, 26 Sep 2022 07:11:47 -0700 (PDT)
-Received: from [10.37.129.2] (pool-71-187-159-144.nwrknj.fios.verizon.net. [71.187.159.144])
-        by smtp.gmail.com with ESMTPSA id t6-20020a05622a01c600b0035bb84a4150sm11446540qtw.71.2022.09.26.07.11.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 26 Sep 2022 07:11:46 -0700 (PDT)
-From:   John Cai <johncai86@gmail.com>
-To:     Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH] doc/cat-file: allow --use-mailmap for --batch options
-Date:   Mon, 26 Sep 2022 10:11:45 -0400
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <750BA887-BECB-471D-8BB2-0B321778F376@gmail.com>
-In-Reply-To: <20220926091442.222876-1-siddharthasthana31@gmail.com>
-References: <20220923193543.58635-1-siddharthasthana31@gmail.com>
- <20220926091442.222876-1-siddharthasthana31@gmail.com>
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=QbIm6Q4tDUXWgO6f0A/4NfQUpgrDy4NjXdNQcqpJ1i8=;
+        b=OhM5dvaFyu6pkHBgIpXzSr2BpfWjApdizMKGGd0unEeN7Q9eaJzRZ6yBE5D52gACMg
+         lvvkWWhyNtJA9R49ZBsIOGMldFifWGWVFMcACe6f73YcyLBmBemSSl/ZqGzuSn8hRF8C
+         FVCwzUn2O+1rP0MLRunZKKdkLUGlmXMnudZk9FdXNTpPYQrOyobu3h7dI7aAmyaaHV0w
+         RE0NlILgTiy9CiBc8bUhLDLT/Vyy/yOTcdbaPVU9sdaAHOQ49GgyUu6TQ8hc7goV38Xa
+         REJEdxd+n6/XLVG6moP94DRcpDFY01EFS1Hg4HfNcW9+bTCewrmk+V7gitjnsrt19b/a
+         8q/g==
+X-Gm-Message-State: ACrzQf0QF378kFWkb9OCAGdb0ToO3qsI+poRBf4mZZ3NeKDxCVRDppz+
+        EHi/ppkv0D8w2DExUXWo6cMAFjqMV28=
+X-Google-Smtp-Source: AMsMyM5d9kw7yKaJsYh6TulZZW8XJ/O0//UOYQNXXER/Rgkd2SdjR0TBclTipo87l0gpaOMVaNhSug==
+X-Received: by 2002:a17:907:6d03:b0:782:abba:936c with SMTP id sa3-20020a1709076d0300b00782abba936cmr13708147ejc.758.1664204881050;
+        Mon, 26 Sep 2022 08:08:01 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id g18-20020aa7c592000000b00456eb245ca0sm5738288edq.27.2022.09.26.08.08.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Sep 2022 08:08:00 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ocpiB-0009eq-1o;
+        Mon, 26 Sep 2022 17:07:59 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com,
+        me@ttaylorr.com, chakrabortyabhradeep79@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2] pack-bitmap: remove trace2 region from hot path
+Date:   Mon, 26 Sep 2022 17:01:24 +0200
+References: <pull.1365.git.1663938034607.gitgitgadget@gmail.com>
+ <pull.1365.v2.git.1664198277250.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <pull.1365.v2.git.1664198277250.gitgitgadget@gmail.com>
+Message-ID: <220926.868rm618ds.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Siddarth,
 
-On 26 Sep 2022, at 5:14, Siddharth Asthana wrote:
+On Mon, Sep 26 2022, Derrick Stolee via GitGitGadget wrote:
 
-> The command git cat-file can now use the mailmap mechanism to replace
-> idents with their canonical versions for commit and tag objects. There
-> are several options like `--batch`, `--batch-check` and
-> `--batch-command` that can be combined with `--use-mailmap`. But, the
-> documentation for `--batch`, `--batch-check` and `--batch-command`
-> doesn't say so. This patch fixes that documentation.
+> From: Derrick Stolee <derrickstolee@github.com>
 >
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: John Cai <johncai86@gmail.com>
-> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
-> ---
+> The trace2 region around the call to lazy_bitmap_for_commit() in
+> bitmap_for_commit() was added in 28cd730680d (pack-bitmap: prepare to
+> read lookup table extension, 2022-08-14). While adding trace2 regions is
+> typically helpful for tracking performance, this method is called
+> possibly thousands of times as a commit walk explores commit history
+> looking for a matching bitmap. When trace2 output is enabled, this
+> region is emitted many times and performance is throttled by that
+> output.
 >
-> This patch was previously sent as the first patch of a 3 patch series f=
-or
-> adding the mailmap support in git cat-file options:
-> https://lore.kernel.org/git/20220916205946.178925-2-siddharthasthana31@=
-gmail.com/
+> For now, remove these regions entirely.
 >
-> Changes in v2:
-> - Fixed the names in trailers in the commit message
-> - Updated the documentation to clearly state that the `--batch-check`,
->   `--batch-command` and `--batch` options can only be used with
->   `--textconv`, `--filters` or `--use-mailmap`.
-> - Fixed formating
->
->  Documentation/git-cat-file.txt | 45 ++++++++++++++++++++++++----------=
+> This is a critical path, and it would be valuable to measure that the
+> time spent in bitmap_for_commit() does not increase when using the
+> commit lookup table. The best way to do that would be to use a mechanism
+> that sums the time spent in a region and reports a single value at the
+> end of the process. This technique was introduced but not merged by [1]
+> so maybe this example presents some justification to revisit that
+> approach.
 
->  1 file changed, 32 insertions(+), 13 deletions(-)
->
-> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-fil=
-e.txt
-> index ec30b5c574..2a8f050a29 100644
-> --- a/Documentation/git-cat-file.txt
-> +++ b/Documentation/git-cat-file.txt
-> @@ -89,26 +89,45 @@ OPTIONS
->  --batch::
->  --batch=3D<format>::
->  	Print object information and contents for each object provided
-> -	on stdin.  May not be combined with any other options or arguments
-> -	except `--textconv` or `--filters`, in which case the input lines
-> -	also need to specify the path, separated by whitespace.  See the
-> -	section `BATCH OUTPUT` below for details.
-> +	on stdin. May not be combined with any other options or arguments
-> +	except --textconv, --filters or --use-mailmap.
+Just getting rid of this seems like a good thing for now.
 
-except --textconv, --filters, or --use-mailmap.
+But aside: Yes, one way to mitigate this rather than removing the
+tracing would be to make it really fast.
 
-> +	+
-> +	* When used with `--textconv` or `--filters`, the input lines
-> +	  must specify the path, separated by whitespace. See the section
-> +	  `BATCH OUTPUT` below for details.
-> +	+
-> +	* When used with `--use-mailmap`, the info command shows the size
-> +	  the object, if the idents recorded in it were the ones "corrected"
-> +	  by the mailmap mechanism.
+But just skimming pack-bitmap.c do we really need trace2 at the
+granularity of a single commit? Looking at who calls bitmap_for_commit()
+wouldn't something like this sketch-out be much more useful?:
+	
+	diff --git a/pack-bitmap.c b/pack-bitmap.c
+	index 9d5205055a5..439aec220c7 100644
+	--- a/pack-bitmap.c
+	+++ b/pack-bitmap.c
+	@@ -830,10 +830,8 @@ struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
+	 		if (!bitmap_git->table_lookup)
+	 			return NULL;
+	 
+	-		trace2_region_enter("pack-bitmap", "reading_lookup_table", the_repository);
+	 		/* NEEDSWORK: cache misses aren't recorded */
+	 		bitmap = lazy_bitmap_for_commit(bitmap_git, commit);
+	-		trace2_region_leave("pack-bitmap", "reading_lookup_table", the_repository);
+	 		if (!bitmap)
+	 			return NULL;
+	 		return lookup_stored_bitmap(bitmap);
+	@@ -1042,6 +1040,7 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+	 	 * The ones without bitmaps in the index will be stored in the
+	 	 * `not_mapped_list` for further processing.
+	 	 */
+	+	/* begin trace2 find roots? */
+	 	while (roots) {
+	 		struct object *object = roots->item;
+	 		roots = roots->next;
+	@@ -1055,6 +1054,7 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+	 		object_list_insert(object, &not_mapped);
+	 	}
+	 
+	+	/* end trace2 find roots? */
+	 	/*
+	 	 * Best case scenario: We found bitmaps for all the roots,
+	 	 * so the resulting `or` bitmap has the full reachability analysis
+	@@ -1100,7 +1100,7 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+	 		incdata.base = base;
+	 		incdata.seen = seen;
+	 
+	-		revs->include_check = should_include;
+	+		revs->include_check = should_include; // Will call bitmap_for_commit()
+	 		revs->include_check_obj = should_include_obj;
+	 		revs->include_check_data = &incdata;
+	 
+	@@ -1110,9 +1110,11 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+	 		show_data.bitmap_git = bitmap_git;
+	 		show_data.base = base;
+	 
+	+		/* begin trace2 rev list? */
+	 		traverse_commit_list(revs,
+	 				     show_commit, show_object,
+	 				     &show_data);
+	+		/* end trace2 rev list? */
+	 
+	 		revs->include_check = NULL;
+	 		revs->include_check_obj = NULL;
+	
 
-When used with `--use-mailmap`, the info command shows the size
-the object if the identities recorded in it were replaced
-by the mailmap mechanism.
+This is *not* the same as stricking the tracing into
+bitmap_for_commit(), but do we really need the tracing that far inside
+our loop?
 
->
->  --batch-check::
->  --batch-check=3D<format>::
-> -	Print object information for each object provided on stdin.  May
-> -	not be combined with any other options or arguments except
-> -	`--textconv` or `--filters`, in which case the input lines also
-> -	need to specify the path, separated by whitespace.  See the
-> -	section `BATCH OUTPUT` below for details.
-> +	Print object information for each object provided on stdin. May not b=
-e
-> +	combined with any other options or arguments except --textconv, --fil=
-ters
-> +	or --use-mailmap.
-> +	+
-> +	* When used with `--textconv` or `--filters`, the input lines must
-> +	 specify the path, separated by whitespace. See the section
-> +	 `BATCH OUTPUT` below for details.
-> +	+
-> +	* When used with `--use-mailmap`, the info command shows the size
-> +	  the object, if the idents recorded in it were the ones "corrected"
-> +	  by the mailmap mechanism.
-
-Same as above
-
->  --batch-command::
->  --batch-command=3D<format>::
->  	Enter a command mode that reads commands and arguments from stdin. Ma=
-y
-> -	only be combined with `--buffer`, `--textconv` or `--filters`. In the=
-
-> -	case of `--textconv` or `--filters`, the input lines also need to spe=
-cify
-> -	the path, separated by whitespace. See the section `BATCH OUTPUT` bel=
-ow
-> -	for details.
-> +	only be combined with `--buffer`, `--textconv`, `--use-mailmap` or
-> +	`--filters`.
-> +	+
-> +	* When used with `--textconv` or `--filters`, the input lines must
-> +	  specify the path, separated by whitespace. See the section
-> +	  `BATCH OUTPUT` below for details.
-> +	+
-> +	* When used with `--use-mailmap`, the info command shows the size the=
-
-> +	  object, if the idents recorded in it were the ones "corrected" by t=
-he
-> +	  mailmap mechanism.
-
-Same as above
-
-> +
->  +
->  `--batch-command` recognizes the following commands:
->  +
-> -- =
-
-> 2.38.0.rc1.4.g29ac4cf309.dirty
-
-thanks!
