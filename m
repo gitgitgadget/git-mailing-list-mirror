@@ -2,125 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CABB7C07E9D
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 15:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46BC6C07E9D
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 15:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234577AbiIZPCZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 11:02:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56978 "EHLO
+        id S235122AbiIZPC1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 11:02:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235554AbiIZPBy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 11:01:54 -0400
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69A11B8663
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 06:32:16 -0700 (PDT)
-Received: by mail-il1-x12b.google.com with SMTP id i16so3527113ilq.0
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 06:32:16 -0700 (PDT)
+        with ESMTP id S235074AbiIZPCD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 11:02:03 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62CE417AB8
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 06:32:28 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id c30so7872845edn.2
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 06:32:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=0tgxJeGYg6V9RjoWoPhtFyKqT976BFSAj+zdPQCZQ44=;
-        b=Tp9t9/rOXvVsaapq2BKyhAAnbFAFZmHEizJf3ingRcccfmdkjGLbGv6haaagV0Whwi
-         7CWRv7MUHTEiVzsANDlXR5tNcX/m/s5koB8tvuUMIlVsREE3fYK7PCDnXhtBZ+vjZxyR
-         EeoFoghjM7rOnCMYRWPEv5VQDnVEgxdZ2Yy8JU+CvpFilLrJyd8d7P/8QeUhzkrzcN9S
-         uVDQCw0lqoMkP5FOQv8BIl7kekSNR5hKbCPWSv7CSDMdP2rk9EQUvXJzXJF6PDnKGgoj
-         Af+/00IHy29sUW45lsrpzRA4loi5ZYAwN/eKFVtSdxEc2kuBNIRyuF87smRgplTBHxok
-         AOgQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date;
+        bh=clQHlbkfB+gAV4P1YiE4slmNgQJ8Yf/DgZiouxL7YlQ=;
+        b=V/mYgVHtZaRx0VzcIf63YDw28KF0OFP83OEy6NCpZ+RQaelx+Mn1pZ3NJFK8Hi0C2G
+         xt2Km8jyKMEoCzPohh1hpApVw4uCn1Ih7YqksL9TbjxLgV77wV7DEIsR9hOSOC900yCV
+         F00uJI0tTWXrKZRbDYW2fFWoBoDH9Q06Lo66XiDArNmxg4agEwaCc4NVSgHxQojk8IAN
+         S0FP1m4atmzY3pEi7loPV6IPnb29Yj4rNYU2NTIqKVMXDrSmo4qbjDX84xhczzXab5Dz
+         qBX5p/Z+jFYQRrh5ljlc5fzEPgTT2sBrOBSfhRirHSuFDlNADeADUL604BXSbsHzkjZ2
+         LATQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=0tgxJeGYg6V9RjoWoPhtFyKqT976BFSAj+zdPQCZQ44=;
-        b=S1/0ZxtWjqGy8VHDqquxSjCb94mZanOm2FeN18yHjinjlaTmD9GfiSD8ROuNVnA4+V
-         SpDG47Z/5jDDo9AusvkGPuE4yhAPEiw1dAMlLSqLrCk3oxC5KD+BxpmaklmMtde5O2w3
-         ke50dMH5+M0z+6TEiSWyBZ2HywkRh/oJtyW/fdbPtt3SIgGtr89djX2ruaPV3b0YqumH
-         lWXF1bviVB5su55cOvUg/KrucFUvk5kD9Ivb7qE3t4IRw5j+2v1JFaxvZRADGySkHbDl
-         kJMnbnFBQC+GJVDJWfjAOSwCi17JNbwnJX4Vm3BzQlHD4/wM2aOKYD554+Cl3MfA4LRt
-         3HJA==
-X-Gm-Message-State: ACrzQf1b28oBGPKLdH3hmuCngeYBnhmYoAMz35q+FG+phT/z4TSp4AAZ
-        ae5+TDw2ngPpaCrFOZavpqguTFWcrpqR
-X-Google-Smtp-Source: AMsMyM6xzOTLutqlUL+DkM6D6ck+kUZoqm37SRQmq3BgQPWltUUmFstvBVzyEKpsg4Vvuu5T1Qxqrw==
-X-Received: by 2002:a92:6912:0:b0:2ea:fa2e:462d with SMTP id e18-20020a926912000000b002eafa2e462dmr10236505ilc.155.1664199136043;
-        Mon, 26 Sep 2022 06:32:16 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:6c7d:bb49:cfa:a946? ([2600:1700:e72:80a0:6c7d:bb49:cfa:a946])
-        by smtp.gmail.com with ESMTPSA id x4-20020a92de04000000b002f4e385252asm6418203ilm.39.2022.09.26.06.32.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Sep 2022 06:32:15 -0700 (PDT)
-Message-ID: <fc6739c3-2f7c-5dab-e4a2-8243deafde50@github.com>
-Date:   Mon, 26 Sep 2022 09:32:14 -0400
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=clQHlbkfB+gAV4P1YiE4slmNgQJ8Yf/DgZiouxL7YlQ=;
+        b=vGJPMC9KXKJLFmkKR7rclbUNJKuLu5soE7qYpLYAgtrT0hyvEOSH3DHhmaZy5etHLq
+         EDePKdfXsIkI8PcLDifCHa4vOLyP225GS1Ec8m5/l8KNHNU5hj58jZ5/k9nyPmF2T0Tv
+         oR3Fc+sebu0+W1fOE2/gsMUoi3jb2Ux7MjjuT20CGyFtplLtqJPaSZt5eOXYcP5Vu8wg
+         JaTtJO8RVJgc+eimS9RmF2f5gQbS5b/FA30RhumrV6w2Gmw+mkHtPIABop8Evrl9r9am
+         43MjF4F84ZBJ/HRXbEAjoWebXg4L/0FbuQ/W1YtW20ViJSxz9AE0kYlajne4Po2L9c/Y
+         dmEA==
+X-Gm-Message-State: ACrzQf2TPZIb+oKMakCJlA2ou9sVR0sCtvduAiF8nFC5vuTrqJKUGxic
+        r/YngOQCPJ7u3wg1MOuPkKtIS3uC+bI=
+X-Google-Smtp-Source: AMsMyM4pObxD7SGmfDD24xq8DvZ2hn1dnhjxNk87NIoOlbd0aKQdrMl9a2FAwUyt5nWENsjIwtkAXA==
+X-Received: by 2002:a50:ed05:0:b0:456:d6fe:d800 with SMTP id j5-20020a50ed05000000b00456d6fed800mr15547079eds.101.1664199146313;
+        Mon, 26 Sep 2022 06:32:26 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id p13-20020a056402044d00b00456d2721d93sm6421285edw.64.2022.09.26.06.32.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Sep 2022 06:32:25 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ocoDg-0005ww-36;
+        Mon, 26 Sep 2022 15:32:24 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
+        johncai86@gmail.com
+Subject: Re: [PATCH v2 1/2] cat-file: add mailmap support to -s option
+Date:   Mon, 26 Sep 2022 15:25:44 +0200
+References: <20220916205946.178925-1-siddharthasthana31@gmail.com>
+ <20220926105343.233296-1-siddharthasthana31@gmail.com>
+ <20220926105343.233296-2-siddharthasthana31@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <20220926105343.233296-2-siddharthasthana31@gmail.com>
+Message-ID: <220926.86h70u1ct3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v2 1/2] maintenance: add 'unregister --force'
-Content-Language: en-US
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, vdye@github.com
-References: <pull.1358.git.1663635732095.gitgitgadget@gmail.com>
- <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
- <69c74f52eefd906c38494759a02e137e4d7c01d8.1663853837.git.gitgitgadget@gmail.com>
- <20220923130832.GA1761@szeder.dev>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20220923130832.GA1761@szeder.dev>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/23/2022 9:08 AM, SZEDER Gábor wrote:
-> On Thu, Sep 22, 2022 at 01:37:16PM +0000, Derrick Stolee via GitGitGadget wrote:
->>  static int maintenance_unregister(int argc, const char **argv, const char *prefix)
->>  {
->> +	int force = 0;
->>  	struct option options[] = {
->> +		OPT_BOOL(0, "force", &force,
->> +			 N_("return success even if repository was not registered")),
-> 
-> This could be shortened a bit by using OPT__FORCE() instead of
-> OPT_BOOL().  OTOH, please make it a bit longer, and declare the option
-> with the PARSE_OPT_NOCOMPLETE flag to hide it from completion:
 
-Looks like I can do both like this:
+On Mon, Sep 26 2022, Siddharth Asthana wrote:
 
-		OPT__FORCE(&force,
-			   N_("return success even if repository was not registered"),
-			   PARSE_OPT_NOCOMPLETE),
+> Even though the cat-file command with `-s` option does not complain when
+> `--use-mailmap` option is given, the latter option is ignored. Compute
+> the size of the object after replacing the idents and report it instead.
+>
+> In order to make `-s` option honour the mailmap mechanism we have to
+> read the contents of the commit/tag object. Make use of the call to
+> `oid_object_info_extended()` to get the contents of the object and store
+> in `buf`. `buf` is later freed in the function.
+>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: John Cai <johncai86@gmail.com>
+> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+> ---
+>  Documentation/git-cat-file.txt |  4 +++-
+>  builtin/cat-file.c             | 13 +++++++++++++
+>  t/t4203-mailmap.sh             | 10 ++++++++++
+>  3 files changed, 26 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+> index ec30b5c574..594b6f2dfd 100644
+> --- a/Documentation/git-cat-file.txt
+> +++ b/Documentation/git-cat-file.txt
+> @@ -45,7 +45,9 @@ OPTIONS
+>  
+>  -s::
+>  	Instead of the content, show the object size identified by
+> -	`<object>`.
+> +	`<object>`. If used with `--use-mailmap` option, will show the
+> +	size of updated object after replacing idents using the mailmap
+> +	mechanism.
+>  
+>  -e::
+>  	Exit with zero status if `<object>` exists and is a valid
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index 989eee0bb4..9942b93867 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -132,8 +132,21 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+>  
+>  	case 's':
+>  		oi.sizep = &size;
+> +
+> +		if (use_mailmap) {
+> +			oi.typep = &type;
+> +			oi.contentp = (void**)&buf;
+> +		}
+> +
+>  		if (oid_object_info_extended(the_repository, &oid, &oi, flags) < 0)
+>  			die("git cat-file: could not get object info");
+> +
+> +		if (use_mailmap && (type == OBJ_COMMIT || type == OBJ_TAG)) {
 
->> @@ -1538,11 +1545,23 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
->>  		usage_with_options(builtin_maintenance_unregister_usage,
->>  				   options);
->>  
->> -	config_unset.git_cmd = 1;
->> -	strvec_pushl(&config_unset.args, "config", "--global", "--unset",
->> -		     "--fixed-value", "maintenance.repo", maintpath, NULL);
->> +	for_each_string_list_item(item, list) {
->> +		if (!strcmp(maintpath, item->string)) {
->> +			found = 1;
->> +			break;
->> +		}
->> +	}
->> +
->> +	if (found) {
->> +		config_unset.git_cmd = 1;
->> +		strvec_pushl(&config_unset.args, "config", "--global", "--unset",
->> +			     "--fixed-value", key, maintpath, NULL);
->> +
->> +		rc = run_command(&config_unset);
-> 
-> It seems a bit heavy-handed to fork() an extra git process just to
-> unset a config variable.  Wouldn't a properly parametrized
-> git_config_set_multivar_in_file_gently() call be sufficient?  Though
-> TBH I don't offhand know what those parameters should be, in
-> particular whether there is a convenient way to find out the path of
-> the global config file in order to pass it to this function.
-> 
-> (Not an issue with this patch, as the context shows that this has been
-> done with the extra process before; it just caught my eye.)
+Just following along here: We want to handle both tag printing and size
+computations. I.e. we happily search-replace the author in tag objects:
+	
+	$ git -P diff -- .mailmap
+	diff --git a/.mailmap b/.mailmap
+	index 07db36a9bb9..cace49e462b 100644
+	--- a/.mailmap
+	+++ b/.mailmap
+	@@ -125,7 +125,7 @@ Jonathan del Strother <jon.delStrother@bestbefore.tv> <maillist@steelskies.com>
+	 Josh Triplett <josh@joshtriplett.org> <josh@freedesktop.org>
+	 Josh Triplett <josh@joshtriplett.org> <josht@us.ibm.com>
+	 Julian Phillips <julian@quantumfyre.co.uk> <jp3@quantumfyre.co.uk>
+	-Junio C Hamano <gitster@pobox.com> <gitster@pobox.com>
+	+Foo <bar@baz.blah> Junio C Hamano <gitster@pobox.com>
+	 Junio C Hamano <gitster@pobox.com> <junio@hera.kernel.org>
+	 Junio C Hamano <gitster@pobox.com> <junio@kernel.org>
+	 Junio C Hamano <gitster@pobox.com> <junio@pobox.com>
+	$ ./git cat-file --use-mailmap tag v2.37.0 | head -n 4
+	object e4a4b31577c7419497ac30cebe30d755b97752c5
+	type commit
+	tag v2.37.0
+	tagger Foo <bar@baz.blah> 1656346695 -0700
 
-Thanks. I'll look into it.
+And we want the "-s" to match, okey, but... (continued below)
 
--Stolee
+> +			size_t s = size;
+> +			buf = replace_idents_using_mailmap(buf, &s);
+> +			size = cast_size_t_to_ulong(s);
+> +		}
+> +
+>  		printf("%"PRIuMAX"\n", (uintmax_t)size);
+>  		ret = 0;
+>  		goto cleanup;
+> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+> index cd1cab3e54..59513e7c57 100755
+> --- a/t/t4203-mailmap.sh
+> +++ b/t/t4203-mailmap.sh
+> @@ -1022,4 +1022,14 @@ test_expect_success '--mailmap enables mailmap in cat-file for annotated tag obj
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'git cat-file -s returns correct size with --use-mailmap' '
+> +	test_when_finished "rm .mailmap" &&
+> +	cat >.mailmap <<-EOF &&
+
+nit: use \ before EOF, no variables here.
+
+> +	C O Mitter <committer@example.com> Orig <orig@example.com>
+> +	EOF
+> +	echo "220" >expect &&
+
+nit: no need for "" quotes.
+
+> +	git cat-file --use-mailmap -s HEAD >actual &&
+
+I'd find this a bit easier to follow if acter setting up .mailmap we did
+something like (I didn't look up what the actual "234" value is):
+
+	>actual &&
+	git cat-file -s HEAD >actual &&
+	git cat-file -s --use-mailmap HEAD >>actual &&
+	cat >expect <<-\EOF
+        234
+        220
+	EOF
+
+We surely test that somewhere else, but it would be a bit more
+self-documenting, as the difference in sizes would correspond to the
+size of the address (or a multiple thereof, if it's used replaced N
+times).
+
+> +	test_cmp expect actual
+> +'
+
+...our test only checks the commit handling. Let's be a bit more
+defensive here & test both potential paths through that new "if".
