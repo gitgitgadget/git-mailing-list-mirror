@@ -2,650 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2952BC32771
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 20:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D68FEC6FA82
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 20:49:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230338AbiIZUJq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 16:09:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36854 "EHLO
+        id S229912AbiIZUt6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 16:49:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230471AbiIZUJW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 16:09:22 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D46F4A033F
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 13:09:02 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id q15-20020a17090a304f00b002002ac83485so8091559pjl.0
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 13:09:02 -0700 (PDT)
+        with ESMTP id S229458AbiIZUt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 16:49:56 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C67A1B787
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 13:49:53 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id d8so6232166iof.11
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 13:49:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date;
-        bh=gtFIFjB0KG+nFWzpWkESr5KFIznhcPGe3V23iQ/m/c4=;
-        b=F+TM0e/ix6DHcjePk4sbwMXRewa1ab46ytZ/uMAB+tC2F3NcIF311DZbiq+Aax3yB7
-         Sghooxg/PRDILN4NTJoJRwEPS0Vxqom/6py7Lkgi12tpt4hLL0A7E9k2uEUdxmbxYB85
-         URpOV8A+9daN5UHNSiVRuEaGf4tetXU2c23AEPOBYqZ7rYm0+qk7VEg4gPc+kQiesZco
-         5GmwI6ghK5QQyHn0AGKuhAn2s+ro7aIum2LoHQs9QRNbHtux1pYDF9COdVnIoCiazpNR
-         gLk/QJLTGdjaEssnKZISZpiedFVZZaSpBZOXsfE1xBe/1sFOQod3rEQKzyggZBhm0MKo
-         8zNQ==
+        bh=y2gNPgr8tprFBEAV+pByW9uX7xohgWElHJMjaT0GJ/4=;
+        b=QOmAp1aOk69kIQD3/ci/8SoPtqiq9xTm25qDJtwL0uAQlttUs1lPHcRP7kKnrvdFXF
+         QULU7zGbucjl1AFVvYUWYBGsUKy3VWiT0dicqI3JSGKNdWRgv+VtYXf9QmwXpLgQoSls
+         M5xlbxscEjQiPQ/PGdBUkluYN+hnTFt9w6N+i07FT5DsGmzjkzaJeIP71QQa/5CkSJCy
+         P5tid0uI1zVkpKLKoqtuBEPxQuBlRtNgXcERidjXvFoPd3n5RhudkYgMCKbNntKPoh4W
+         CzJsoehcxxoPyt4nO1pt2pOJ1byg9rIHOvM/DjD32fW630kpOtvNecLzTshx/PeG0Wd1
+         1qiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=gtFIFjB0KG+nFWzpWkESr5KFIznhcPGe3V23iQ/m/c4=;
-        b=s7MR0DtqOsGZSM9ytnfsMbYnJAWm64F7wOnHLgmu1cp2ujYxZUJFiIxORyJIzINVsx
-         ZyagDZLtYUbtHzD0LG125gVmuBvb8X50KdZKpJ+yWN1GeHSeSkHNHNbn/200KzM5a880
-         0AfUaDk87zldkmh6m+0NuaZKcKWWprzs30osvLrxO+SMizcdeVeth8NZvUXaVHUVbjqw
-         vWUUsL4gi5SSnPLVl1HjWmBO6g0993LlllYnc/xm3Iq7mJSnRSNbGLwJqtT4T3W3nDxo
-         vPGyRVOg2S1W/11jmCeGCEqneMs4Xlg5PRrqoE1UIHVDvo+Pg/sN56Ap54OuakEAl3hW
-         op6Q==
-X-Gm-Message-State: ACrzQf0dOi/c2dM5pYavV1cDiAIYHiMXdSdZMGrXINfhjZe2Cjh6SEE9
-        mXNIEB2WApJYSIWVHE9Gt+q0
-X-Google-Smtp-Source: AMsMyM49Ov9QiziKu1YRuUahdKrHBhMw+SpzY9GdIeZBZU7X4B5Ek74QwiSp7Brk2Alw7tPl863SLQ==
-X-Received: by 2002:a17:902:ce8f:b0:178:703f:68bb with SMTP id f15-20020a170902ce8f00b00178703f68bbmr23637322plg.7.1664222941896;
-        Mon, 26 Sep 2022 13:09:01 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id o64-20020a625a43000000b0053e9d14e51asm12825889pfb.98.2022.09.26.13.09.00
+        bh=y2gNPgr8tprFBEAV+pByW9uX7xohgWElHJMjaT0GJ/4=;
+        b=7F1nECXWUl4q4+b3H+l1/Rww/7GMMZukNUYYH1eHHJXWyCRPW52mtqAx9TXTmeM0dA
+         rChMTFiQhrfvV2q92nlhVlX5Odr0M5iraw3AB/G/YTU23t7U2rxGaCJLb8neyXUDp1JY
+         dZJtQkikNk3I8TodYBQxO/wNBlVmlNa6aCQ2Wlu9dtV+dOo1T2c+igYXGc9PI4tumT85
+         8ZOvBvJa2GjhuXfE9371UUksGCgw5AjtWKxapOZJIs+dYWUhnWAbkWNV/amJS1pgxuyu
+         TsFcDU2jffo7HwFB6iFVqK3aYwAvqfwMTwK1eUUEJ+bTqCWkuPMVyIob53pfPhkzakwX
+         Fdig==
+X-Gm-Message-State: ACrzQf1XIyM0YfT+laRzraiAZj9zPcKrCsCU7DuAvU1m1rJJvFPxf7gd
+        ElJRoJ8dozO/nJxcNhJ9TR0lWiq1/A0O
+X-Google-Smtp-Source: AMsMyM4ocybTKg+D8NDT20vGXJoFW8alBe0EIoeVF+i63Ac64YnTdFLMmvS+g9vxGvrTYYl75P7/yw==
+X-Received: by 2002:a05:6638:1655:b0:35a:6ee2:402d with SMTP id a21-20020a056638165500b0035a6ee2402dmr12703088jat.138.1664225392948;
+        Mon, 26 Sep 2022 13:49:52 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:4177:874e:9632:3b2a? ([2600:1700:e72:80a0:4177:874e:9632:3b2a])
+        by smtp.gmail.com with ESMTPSA id q4-20020a02a984000000b0034e9ceed07csm7534947jam.88.2022.09.26.13.49.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Sep 2022 13:09:01 -0700 (PDT)
-Message-ID: <a89413b5-464b-2d54-5b8c-4502392afde8@github.com>
-Date:   Mon, 26 Sep 2022 13:08:59 -0700
+        Mon, 26 Sep 2022 13:49:52 -0700 (PDT)
+Message-ID: <03f26dc6-85c7-1ce9-67d6-b4325e9e6d52@github.com>
+Date:   Mon, 26 Sep 2022 16:49:50 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.13.0
-Subject: Re: [PATCH] sparse-checkout.txt: new document with sparse-checkout
- directions
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v3 1/3] maintenance: add 'unregister --force'
 Content-Language: en-US
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        ZheNing Hu <adlternative@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1367.git.1664064588846.gitgitgadget@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <pull.1367.git.1664064588846.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
+ <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
+ <8a8bffaec89e55da0c5bcac2f04331e0d4e69790.1664218087.git.gitgitgadget@gmail.com>
+ <xmqq7d1qndn7.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqq7d1qndn7.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
+On 9/26/2022 3:23 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
-> Once upon a time, Matheus wrote some patches to make
->    git grep [--cached | <REVISION>] ...
-> restrict its output to the sparsity specification when working in a
-> sparse checkout[1].  That effort got derailed by two things:
+>> @@ -11,7 +11,7 @@ SYNOPSIS
+>>  [verse]
+>>  'git maintenance' run [<options>]
+>>  'git maintenance' start [--scheduler=<scheduler>]
+>> -'git maintenance' (stop|register|unregister)
+>> +'git maintenance' (stop|register|unregister) [<options>]
 > 
->   (1) The --sparse-index work just beginning which we wanted to avoid
->       creating conflicts for
->   (2) Never deciding on flag and config names and planned high level
->       behavior for all commands.
-> 
-> More recently, Shaoxuan implemented a more limited form of Matheus'
-> patches that only affected --cached, using a different flag name,
-> but also changing the default behavior in line with what Matheus did.
-> This again highlighted the fact that we never decided on command line
-> flag names, config option names, and the big picture path forward.
-> 
-> The --sparse-index work has been mostly complete (or at least released
-> into production even if some small edges remain) for quite some time
-> now.  We have also had several discussions on flag and config names,
-> though we never came to solid conclusions.  Stolee once upon a time
-> suggested putting all these into some document in
-> Documentation/technical[3], which Victoria recently also requested[4].
-> I'm behind the times, but here's a patch attempting to finally do that.
+> An unrelated tangent, but should register complain when given in a
+> repository that is already registered as well?  Just being curious.
 
-Thank you so much for writing this!
+Let's leave that as a #leftoverbits and perhaps as something to
+consider next to something like 'git maintenance list' to list the
+currently-registered repositories.
 
-> diff --git a/Documentation/technical/sparse-checkout.txt b/Documentation/technical/sparse-checkout.txt
-> new file mode 100644
-> index 00000000000..b213b2b3f35
-> --- /dev/null
-> +++ b/Documentation/technical/sparse-checkout.txt
-> @@ -0,0 +1,670 @@
-> +Table of contents:
-> +
-> +  * Purpose of sparse-checkouts
-> +  * Desired behavior
-> +  * Subcommand-dependent defaults
-> +  * Implementation Questions
-> +  * Implementation Goals/Plans
-> +  * Known bugs
-> +  * Reference Emails
-> +
-> +
-> +=== Purpose of sparse-checkouts ===
-> +
-> +sparse-checkouts exist to allow users to work with a subset of their
-> +files.
-> +
-> +The idea is simple enough, but there are two different high-level
-> +usecases which affect how some Git subcommands should behave.  Further,
-> +even if we only considered one of those usecases, sparse-checkouts
-> +modify different subcommands in over a half dozen different ways.  Let's
-> +start by considering the high level usecases in this section:
-> +
-> +  A) Users are _only_ interested in the sparse portion of the repo
-> +
-> +  B) Users want a sparse working tree, but are working in a larger whole
-
-Both of these use cases make sense to me! Two thoughts/comments:
-
-1. This could be a "me" problem, but I regularly struggle with "sparse"
-   having different meanings in similar contexts. For example, a "sparse
-   directory" is one *with* 'SKIP_WORKTREE' applied vs. "the sparse portion
-   of the repo"  here refers to the files *without* 'SKIP_WORKTREE' applied.
-   A quick note/section outlining some standard terminology would be
-   immensely helpful.
-2. One detail I'd like this document to clarify is the similarity/difference
-   between "in the sparse portion of the repo" and "does not have
-   'SKIP_WORKTREE' applied." In a well-behaved sparse-checkout, these are
-   one in the same. However, if a user removes 'SKIP_WORKTREE' from a file
-   (either with 'update-index' or by checking it out on disk), commands
-   *sometimes* treat it as inside the sparse checkout (e.g., 'git status'),
-   and some treat it as outside (e.g., 'git add'). Technically, I think it
-   comes down to whether a command uses sparse patterns + 'SKIP_WORKTREE' to
-   determine sparsity vs. just 'SKIP_WORKTREE', but the varying behavior
-   feels inconsistent as an end user. 
-
-> +
-> +=== Desired behavior ===
-> +
-> +As noted in the previous section, despite the simple idea of just
-> +working with a subset of files, there are a range of different
-> +behavioral changes that need to be made to different subcommands to work
-> +well with such a feature.  See [1,2,3,4,5,6,7,8,9,10] for various
-> +examples.  In particular, at [2], we saw that mere composition of other
-> +commands that individually worked correctly in a sparse-checkout context
-> +did not imply that the higher level command would work correctly; it
-> +sometimes requires further tweaks.  So, understanding these differences
-> +can be beneficial.
-> +
-> +* Commands behaving the same regardless of high-level use-case
-> +
-> +  * commands that only look at files within the sparsity specification
-> +
-> +      * status
-> +      * diff (without --cached or REVISION arguments)
-> +      * grep (without --cached or REVISION arguments)
-
-'status' and 'diff' currently show information about untracked files outside
-the working tree (since, not being in the index, they don't have a
-'SKIP_WORKTREE' to use). Should that change with the proposed '--restrict'
-option?
-
-> +
-> +  * commands that restore files to the working tree that match sparsity patterns, and
-> +    remove unmodified files that don't match those patterns:
-> +
-> +      * switch
-> +      * checkout (the switch-like half)
-> +      * read-tree
-> +      * reset --hard
-> +
-> +      * `restore` & the restore-like half of `checkout` SHOULD be in this above
-> +	category, but are buggy (see the "Known bugs" section below)
-
-These commands do behave differently if there are *modified* files outside
-the sparsity patterns:
-
-- 'switch', 'checkout' (switch-like), and 'read-tree -m' block the operation
-  & advise on how to clean up the modified files to re-align with the
-  sparsity patterns.
-- 'reset --hard' silently drops the modified file and resets the
-  'SKIP_WORKTREE' bit on the corresponding index entry.
-
-With the exception of 'reset --hard' (aggressively and unconditionally
-cleaning the worktree & index is an important aspect of the command, IMO),
-I'd personally like to see commands in this category align with the behavior
-of 'switch' where they don't already. Regardless of what we decide, though,
-I think it's probably worth documenting the "modified outside of sparsity
-patterns" case.
-
-Also, 'read-tree' (no args) doesn't apply the 'SKIP_WORKTREE' bit to *any*
-of the entries it reads into the index. Having all of your files suddenly
-appear "deleted" probably isn't desired behavior, so it might be a good
-candidate for the "Known bugs" section. 
-
-> +
-> +  * commands that write conflicted files to the working tree, but otherwise will
-> +    omit writing files that do not match the sparsity patterns:
-> +
-> +      * merge
-> +      * rebase
-> +      * cherry-pick
-> +      * revert
-> +
-> +    Note that this somewhat depends upon the merge strategy being used:
-> +      * `ort` behaves as described above
-> +      * `recursive` tries to not vivify files unnecessarily, but does sometimes
-> +	vivify files without conflicts.
-> +      * `octopus` and `resolve` will always vivify any file changed in the merge
-> +	relative to the first parent, which is rather suboptimal.
-> +
-> +  * commands that always ignore sparsity since commits must be full-tree
-> +
-> +      * archive
-> +      * bundle
-> +      * commit
-> +      * format-patch
-> +      * fast-export
-> +      * fast-import
-> +      * commit-tree
-> +
-> +  * commands that write any modified file to the working tree (conflicted or not,
-> +    and whether those paths match sparsity patterns or not):
-> +
-> +      * stash
-> +
-> +      * am/apply probably should be in the above category, but need to be fixed to
-> +	auto-vivify instead of failing
-> +
-> +* Commands that differ for behavior A vs. behavior B:
-> +
-> +  * commands that make modifications:
-
-nit: "make modifications" -> "make modifications to the index"? 
-
-> +      * add
-> +      * rm
-> +      * mv
-> +
-> +  * commands that query history
-> +      * diff (with --cached or REVISION arguments)
-> +      * grep (with --cached or REVISION arguments)
-> +      * show (when given commit arguments)
-> +      * bisect
-> +      * blame
-> +	* and annotate
-> +      * log
-> +	* and variants: shortlog, gitk, show-branch, whatchanged
-> +
-> +* Comands I don't know how to classify
-> +
-> +  * ls-files
-> +
-> +    Shows all tracked files by default, and with an option can show
-> +    sparse directory entries instead of expanding them.  Should there be
-> +    a way to restrict to just the non SKIP_WORKTREE files?
-
-Yes, I think "restricting to just non SKIP_WORKTREE files" would be what a
-'--restrict' option would do. The existing '--sparse' flag really is
-independent of the sparse patterns altogether - it just toggles whether
-sparse directories are shown as-is or expanded. Given your analysis so far,
-'--sparse' should probably be renamed to something that reflects its unique
-behavior ('--no-expand-sparse-directories'? I'm sure someone more creative
-than me could come up with a better name ;) ).
-
-So, disregarding the special sparse index behavior, I think 'ls-files' fits
-neatly in the "commands that query history" section.
-
-> +
-> +    Note that `git ls-files -t` is often used to see what is sparse and
-> +    what is not, which only works with a non-restricted assumption.
-> +
-> +  * checkout-index
-> +
-> +    should it be like `checkout` and pay attention to sparsity paths, or
-> +    be considered special and write to working tree anyway?  The
-> +    interaction with --prefix, and the use of specifically named files
-> +    (rather than globs) makes me wonder.
-
-IMO, it should still pay attention to sparsity paths, even with '--prefix'.
-My interpretation would be that '--restrict' tells it how to *read* the
-index when determining what to write to disk - even with '--prefix', then,
-it'd only write files matching the sparsity patterns. In that case, it seems
-to fit alongside 'switch', 'restore', etc. in "commands that restore files
-to the working tree that match sparsity patterns." 
-
-> +
-> +  * update-index
-> +
-> +    The --[no-]ignore-skip-worktree-entries default is totally bogus,
-> +    but otherwise this command seems okay?  Not sure what category it
-> +    would go under, though.
-
-I'd probably call this a "makes modifications" command (like 'git add', 'git
-rm', etc.), since it adds/removes/modifies items in the index (either their
-content or their flags).
-
-> +
-> +  * range-diff
-> +
-> +    Is this like `log` or `format-patch`?
-> +
-> +  * cherry
-> +
-> +    See range-diff
-> +
-> +  * plumbing -- diff-files, diff-index, diff-tree, ls-tree, rev-list
-> +
-> +    should these be tweaked or always operate full-tree?
-
-For these (and the other plumbing/plumbing-ish commands you have listed:
-'checkout-index', 'update-index', 'read-tree'), I'd lean towards making them
-respect the sparsity patterns consistently with the porcelain layer. Part of
-that is because the line between "plumbing" and "porcelain" is sometimes
-fuzzy (like with 'read-tree'?), so having _very_ different behavior around
-that boundary would probably be confusing. The other part is that I think
-plumbing-based scripts would still fit one of your "A" or "B" user
-archetypes, so full-tree behavior might not be desired anyway.
-
-> +=== Subcommand-dependent defaults ===
-> +
-> +Note that we have different defaults (for the desired behavior, not just
-> +the current implementation) depending on the command:
-> +
-> +  * Commands defaulting to --restrict:
-> +    * status
-> +    * diff (without --cached or REVISION arguments)
-> +    * grep (without --cached or REVISION arguments)
-> +    * switch
-> +    * checkout (the switch-like half)
-> +    * read-tree
-> +    * reset (--hard)
-> +    * restore/checkout
-> +    * checkout-index
-> +
-> +    This behavior makes sense; these interact with the working tree.
-> +
-> +  * Commands defaulting to --restrict-unless-conflicts
-> +    * merge
-> +    * rebase
-> +    * cherry-pick
-> +    * revert
-> +
-> +    These also interact with the working tree, but require slightly different
-> +    behavior so that conflicts can be resolved.
-> +
-> +  * Commands defaulting to --no-restrict
-> +    * archive
-> +    * bundle
-> +    * commit
-> +    * format-patch
-> +    * fast-export
-> +    * fast-import
-> +    * commit-tree
-> +
-> +    * ls-files
-
-In line with what I wrote earlier, I think 'ls-files' would belong wherever
-other "commands that query history" go (looks like "Commands whose default
-for --restrict vs. --no-restrict should vary").
-
-> +    * stash
-> +    * am
-> +    * apply
-> +
-> +    These have completely different defaults and perhaps deserve the most detailed
-> +    explanation:
-> +
-> +    In the case of commands in the first group (format-patch,
-> +    fast-export, bundle, archive, etc.), these are commands for
-> +    communicating history, which will be broken if they restrict to a
-> +    subset of the repository.  As such, they operate on full paths and
-> +    have no `--restrict` option for overriding.  Some of these commands may
-> +    take paths for manually restricting what is exported, but it needs to
-> +    be very explicit.
-> +
-> +    In the case of stash, it needs to vivify files to avoid losing the
-> +    user's changes.
-> +
-> +    In the case of am and apply, those commands only operate on the
-> +    working tree, so they are kind of in the same boat as stash.
-> +    Perhaps `git am` could run `git sparse-checkout reapply`
-> +    automatically afterward and move into a category more similar to
-> +    merge/rebase/cherry-pick, but it'd still be weird because it'd
-> +    vivify files besides just conflicted ones when there are conflicts.
-> +
-> +    In the case of ls-files, `git ls-files -t` is often used to see what
-> +    is sparse and not, in which case restricting would not make sense.
-> +    Also, ls-files has traditionally been used to get a list of "all
-> +    tracked files", which would suggest not restricting.  But it's
-> +    slightly funny, because sparse-checkouts essentially split tracked
-> +    files into two categories -- those in the sparse specification and
-> +    those outside -- and how does the user specify which of those two
-> +    types of tracked files they want?
-> +
-> +  * Commands defaulting to --restrict-but-warn (although Behavior A vs. Behavior B
-> +    may affect how verbose the warnings are):
-> +    * add
-> +    * rm
-> +    * mv
-
-I was going to say that, if you consider 'update-index' part of the same
-category as 'git add', it would belong here. However, the "but warn" part
-seems a little weird with a mostly-plumbing command like 'update-index'. 
-
-> +
-> +    The defaults here perhaps make sense since they are nearly --restrict, but
-> +    actually using --restrict could cause user confusion if users specify a
-> +    specific filename, so they warn by default.  That logic may sound like
-> +    --no-restrict should be the default, but that's prone to even bigger confusion:
-> +      * `git add <somefile>` if honored and outside the sparse cone, can result in
-> +	the file randomly disappearing later when some subsequent command is run
-> +	(since various commands automatically clean up unmodified files outside
-> +	the sparsity specification).
-> +      * `git rm '*.jpg'` could very negatively surprise users if it deletes files
-> +	outside the range of the user's interest.  Much better to operate on the
-> +	sparsity specification and give the user warnings if other files could have
-> +	matched.
-> +      * `git mv` has similar surprises when moving into or out of the cone, so
-> +	best to restrict and throw warnings if restriction might affect the result.
-> +
-> +    There may be a difference in here between behavior A and behavior B.
-> +    For behavior A, we probably only want to warn if there were no
-> +    suitable matches for files in the sparsity specification, whereas
-> +    for behavior B, we may want to warn even if there are valid files to
-> +    operate on if the result would have been different under
-> +    `--no-restrict`.
-
-I'm a bit confused why '--restrict-but-warn' needs to be separate from
-'--restrict'. Couldn't the '--restrict' behavior for 'add'/'rm'/'mv' just be
-what you described above, since behavior is set on a per-command (or
-per-category) basis?
-
-Also, I might be mistaken, but isn't the current behavior more like
-'--restrict', in that it returns an error code & advisory message if it
-tries to add files outside the sparse patterns? If this is already okay to
-users, what's the benefit of relaxing the error to a warning?
-
-Otherwise, I'm on board with the difference between behaviors A & B (i.e.,
-"some files must be in the sparse-checkout to avoid a warning/error" vs.
-"all files must be in the sparse-checkout to avoid a warning/error").
-
-> +
-> +  * Commands whose default for --restrict vs. --no-restrict should vary depending
-> +    on Behavior A or Behavior B
-> +    * diff (with --cached or REVISION arguments)
-> +    * grep (with --cached or REVISION arguments)
-> +    * show (when given commit arguments)
-> +    * bisect
-> +    * blame
-> +      * and annotate
-> +    * log
-> +      * and variants: shortlog, gitk, show-branch, whatchanged
-> +
-> +    For now, we default to behavior B for these, which want a default of
-> +    --no-restrict.
-> +
-> +    Note that two of these commands -- diff and grep -- also appeared in
-> +    a different list with a default of --restrict, but only when limited
-> +    to searching the working tree.  The working tree vs. history
-> +    distinction is fundamental in how behavior B operates, so this is
-> +    expected.
-> +
-> +    --restrict may make more sense as the long term default for
-> +    these[12], but that's a fair amount of work to implement, and it'd
-> +    be very problematic for behavior B users.  Making it the default
-> +    now, and then slowly implementing that default in various
-> +    subcommands over multiple releases would mean that behavior B users
-> +    would need to learn to slowly add additional flags to their
-> +    commands, depending on git version, to get the behavior they want.
-> +    That gradual switchover would be painful, so we should avoid it at
-> +    least until it's fully implemented.
-
-I think transitioning to '--restrict' by default is a good plan - as far as
-I can tell, user A types seem more common than user B types, and
-'--restrict' creates a more consistent experience. 
-
-Maybe '--restrict' could be made the default earlier in 'scalar' (which
-already sets up a cone-mode sparse-checkout by default)? We'd still
-gradually move towards making the option a global default, but 'scalar'
-might get it some early exposure with users that'd benefit the most from it.
-
-> +
-> +
-> +=== Implementation Questions ===
-> +
-> +  * Does the name --[no-]restrict sound good to others?  Are there better options?
-> +    * Names in use, or appearing in patches, or previously suggested:
-> +      * --sparse/--dense
-> +      * --ignore-skip-worktree-bits
-> +      * --ignore-skip-worktree-entries
-> +      * --ignore-sparsity
-> +      * --[no-]restrict-to-sparse-paths
-> +      * --full-tree/--sparse-tree
-> +      * --[no-]restrict
-> +    * Rationale making me lean slightly towards --[no-]restrict:
-> +      * We want a name that works for many commands, so we need a name that
-> +	does not conflict
-> +      * --[no-]restrict isn't overly long and seems relatively explanatory
-> +      * `--sparse`, as used in add/rm/mv, is totally backwards for
-> +	grep/log/etc.  Changing the meaning of `--sparse` for these
-> +	commands would fix the backwardness, but possibly break existing
-> +	scripts.  Using a new name pairing would allow us to treat
-> +	`--sparse` in these commands as a deprecated alias.
-> +      * There is a different `--sparse`/`--dense` pair for commands using
-> +	revision machinery, so using that naming might cause confusion
-> +      * There is also a `--sparse` in both pack-objects and show-branch, which
-> +	don't conflict but do suggest that `--sparse` is overloaded
-> +      * The name --ignore-skip-worktree-bits is a double negative, is
-> +	quite a mouthful, refers to an implementation detail that many
-> +	users may not be familiar with, and we'd need a negation for it
-> +	which would probably be even more ridiculously long.  (But we
-> +	can make --ignore-skip-worktree-bits a deprecated alias for
-> +	--no-restrict.)
-
-I think '--[no-]restrict' is a good choice - it doesn't have the ambiguity
-of '--sparse' or the so-verbose-it's-confusing nature of
-'--ignore-skip-worktree-(bits|entries)'. My only concern would be with the
-fact that '--[no-]restrict' doesn't clearly indicate its relationship to
-sparse-checkout, but a longer name (like
-'--[no-]restrict-to-sparse-checkout') would be cumbersome, not worth it for
-the little bit of extra info a user would get.
-
-> +
-> +  * Should --[no-]restrict be a git global option, or added as options to each
-> +    relevant command?  (Does that make sense given the multitude of different
-> +    default behaviors we have for different options?)
-
-That's an interesting idea! I'd be fine either way, there are pros and cons
-to each. E.g., it feels a little weird putting the option before the command
-('git --no-restrict add' vs. 'git add --no-restrict'), but the option does
-apply to nearly every command (and it's easier to describe/document from a
-Git-wide perspective than a per-command perspective).
-
-> +
-> +  * If a config option is added (core.restrictToSparsity?) what should
-> +    the values and description be?  There's a risk of confusion, because
-> +    we only want this config option to affect the history-querying
-> +    commands (log/diff/grep) and maybe the path-modifying worktree
-> +    commands (add/rm/mv), but certainly not most the others.  Previous config
-> +    suggestion here: [13]
-
-For values, maybe 'strict' (for behavior A/'--restrict' across the board),
-'loose' (for behavior B), 'off'/'none' (for '--no-restrict' across the
-board)? For the description, it could outline each of the use cases and
-highlight notable command behavior differences? Kind of like what you
-already have in [13].
-
-> +
-> +  * Should --sparse in ls-files be made an alias for --restrict?
-> +    `--restrict` is certainly a near synonym in cone-mode, but even then
-> +    it's not quite the same.  In non-cone mode, ls-files' `--sparse`
-> +    option has no effect, and in cone-mode it still shows the sparse
-> +    directory entries which are technically outside the sparsity
-> +    specification.
-
-I don't think so (for the reasons I mentioned earlier - tl;dr --sparse and
---restrict are conceptually quite different, and functionally independent).
-I do think '--sparse' should be renamed as part of the "Implementation
-Goals/Plans", though.
-
-> +
-> +  * Should --ignore-skip-worktree-bits in checkout-index, checkout, and
-> +    restore be made deprecated aliases for --no-restrict?  (They have the
-> +    same meaning.)
-> +
-> +  * Should --ignore-skip-worktree-entries in update-index be made a
-> +    deprecated alias for --no-restrict?  (Or, better yet, should the
-> +    option just be nuked from orbit after flipping the default, since
-> +    the reverse option is never wanted and the sole purpose of this
-> +    option was to turn off a bug?)
-
-That's an interesting bit of history! I tend to think of 'update-index' as
-"plumbing add/rm", so I think there's still a benefit to having a
-'--restrict' mode.
-
-In any case, if I'm reading this correctly, these two options are subtly
-different than what's proposed for '--restrict', since IIRC they don't take
-into account the sparse patterns at all (only operating based on
-'SKIP_WORKTREE'). If '--restrict' will involve also using the sparse
-patterns, the behavior would change. I'm happy with doing that (I think the
-change would be beneficial), but it should probably be explicitly noted
-either here or whenever those commands are updated.
-
-> +
-> +  * sparse-checkout: once behavior A is fully implemented, should we
-> +    take an interim measure to easy people into switching the default?
-
-nit: s/easy/ease/
-
-> +    Namely, if folks are not already in a sparse checkout, then require
-> +    `sparse-checkout init/set` to take a `--[no-]restrict` flag (which
-> +    would set core.restrictToSparse according to the setting given), and
-> +    throw an error if the flag is not provided?  That error would be a
-> +    great place to warn folks that the default may change in the future,
-> +    and get them used to specifying what they want so that the eventual
-> +    default switch is seamless for them.
-
-Sounds like a good approach to me! It avoids needing to constantly
-re-specify '--[no-]restrict' on every 'sparse-checkout set' (because it sets
-the config), and also provides visibility to users. 
-
-> +
-> +  * clone: should we provide some mechanism for tying partial clones and
-> +    sparse checkouts together better.  Maybe an option
-> +	--sparse=dir1,dir2,...,dirN
-> +    which:
-> +       * Does initial fetch with `--filter=blob:none`
-> +       * Does the `sparse-checkout set --cone dir1 dir2 ... dirN` thing
-> +       * Runs a `git rev-list --objects --all -- dir1 dir2 ... dirN` to
-> +	 fault in the missing blobs within the sparse
-> +	 specification...except that rev-list needs some kind of options
-> +	 to also get files from leading directories too.
-> +       * Sets --restrict mode to allow focusing on the cone of interest
-> +	 (and to permit disconnected development)
-
-Similar to the '--restrict' default, this could also be a good fit for
-'scalar clone'.
-
-> +
-> +
-> +=== Implementation Goals/Plans ===
-
-The rest of this (+the "Known bugs" section) all look good to me.
-
-Thanks again for writing this document, I really appreciate the time &
-effort you put into it! It'll serve as a clear reference for work on
-sparse-checkout going forward, and ultimately make sparse-checkout usage a
-much better experience for users.
-
-> base-commit: 1b3d6e17fe83eb6f79ffbac2f2c61bbf1eaef5f8
-
+Thanks,
+-Stolee
