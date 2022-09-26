@@ -2,125 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 399F3C32771
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 18:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8D8DC07E9D
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 18:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231454AbiIZSox (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 14:44:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56058 "EHLO
+        id S230079AbiIZSsM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 14:48:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231244AbiIZSoc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 14:44:32 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2174D91D17
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 11:43:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1664217790; bh=QMK44NtWBnAOchkHF0hNH0qC1rFgAyOGxd7VkxepJqg=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=Vt9OeBwGSUXbFci2m0+/Lpj1qLXfjZvg6jfmPLW2qKubJP9GFATf5XKCUEjmAYLGu
-         GhFjpeAe1FDZK/bubn6ssds9PMKtmHk85gpUNCVAwL9vIrNDccMaQvJNpBXRTq9sJZ
-         W8PmhN+QQZT04QywGCa12SLsWB7N6xtHn9OLuEO/0cUYSyWoYDg8jHQHDd1Nww31sk
-         8HYNu4z/NSaI9LPR8uwEXcUkVq1nC1Z5TIYngcv49KOXgCLCt6+2wmYG9AVDhH80dO
-         sSF6P1JDbOBb2hqL1tbQCy0C4KX9UXyqAROfkT+sYLRIZDwCcBujj+cmKMY3ObKlHP
-         s8aRLOFmp2GhQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MODiX-1orw2h0HKz-00OJvR; Mon, 26
- Sep 2022 20:43:10 +0200
-Date:   Mon, 26 Sep 2022 20:43:08 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, alexander.s.m@gmail.com,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v5 1/1] diff.c: When appropriate, use utf8_strwidth()
-Message-ID: <20220926184308.5oaaoopod36igq6i@tb-raspi4>
-References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
- <20220914151333.3309-1-tboegi@web.de>
- <xmqqpmfx52qj.fsf@gitster.g>
+        with ESMTP id S229922AbiIZSsL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 14:48:11 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E952780527
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 11:48:09 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id bk15so3871080wrb.13
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 11:48:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date;
+        bh=paFM5VXeBU5RdTUdf17vN2cG3ZmaabSUyVD6JMdJ484=;
+        b=GuAbICcDe2AX5aw5nnylLXkxcAubdukh+82IHFoVrorViKADuhtQY0V0JFb+u5d6nT
+         LoFy6LP68gtZvBBPMZKi8UyV5Ja0Wl+RIEKuGu02M1FVNQW+b4t5jr7cqEnKvb+FVuZZ
+         q1sdBeK50dCZv44nouCNKPaDV3ercuogY9dv3cwrLRRFqNkocbEIjodAiiegge3MnV+X
+         DfdmulbzG8jRKVMvjOBqylIiBZg7MlUvU48YLGg/hbExM2NIs8KAT8QZE/YC8mrE9yWp
+         aacpaQMh2wbSJOGbUJxIXJfpaaG3B9S+/IV6XCZOEVXmSpTMGxvT62K4gArXZfkZJJlD
+         PIKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=paFM5VXeBU5RdTUdf17vN2cG3ZmaabSUyVD6JMdJ484=;
+        b=VaR0cJSrj9qvpFZl8vYt7htSwvc6uMh+mcfyTDER29RHHV52gG564ekwJqZThT690J
+         AI8jh6rPZHJAHSRcyRsF0MkElJm8BXmRBWLhBCRrBJIODaxbzleCVWLEB4nnZf1f1ToZ
+         YrwTmff1PPh4+ZpVN+gRMBhzQU9EMaAISfZZf26ROaApEAxP24qSf0WUCYMUu6lcp2Pj
+         rX9++Eq8RyDrv5OORYBCZx+UJMILbITbERPrzuw83/tVWvN9u3uq3W8OgEHszFUqKI/0
+         /rE5oXE2/Vr5pqVZVt2u1HF8+XxDQ5HALNPnKX0wNs0vUNlJLeTWpHtNQpihb7/cvg3T
+         Cd8A==
+X-Gm-Message-State: ACrzQf1t1LoZdbDR5DrvMpR6Q4N4yt726hTA0dbU1Vfv7eU1X6K7OAH9
+        wwU2GUSGHGeabKIQZI4WSrIUnXURr3A=
+X-Google-Smtp-Source: AMsMyM7UpxkjuF1zkB7OnYk6fHUXUS+W+oeSN67doJVIYIHylzR8FSCNlaSLWTi/7kuSfsCCOITSUQ==
+X-Received: by 2002:a05:6000:1ac7:b0:22a:906d:3577 with SMTP id i7-20020a0560001ac700b0022a906d3577mr14970288wry.33.1664218088069;
+        Mon, 26 Sep 2022 11:48:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w9-20020a5d5449000000b0022ca921dc67sm2564639wrv.88.2022.09.26.11.48.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Sep 2022 11:48:07 -0700 (PDT)
+Message-Id: <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
+References: <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 26 Sep 2022 18:48:03 +0000
+Subject: [PATCH v3 0/3] scalar: make unregister idempotent
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqpmfx52qj.fsf@gitster.g>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:4TmHZ4/HuieZCBsK/Zz40/tPubVUZka07KbUSbFWvjkB7NUJzrR
- VZzcoHW5dL/lq+LoHw6y/V/vWSHI+5qhG+qHBEMD9397qvC1l46de2kGC3IZsbfQWPXEMU/
- 7xeCJvsTsAc5CPopeGi2MDa/nm49v5Z/dJWWm7L5FESQDJcvAWuizN73ILkeMrpeOIRxoFV
- MKtzsUFmeqRewz1bvSpkA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:S6ushWoKdI0=:NJsXFEwoLsnNPoN1hMplkF
- vGfJ07gvGMPoe3rohpFHJx0G1XBlhEyd3iZdtwg8ppwcDTOPs0CMGtNKhjIx4GuyNPuIs4rB7
- Qr6qdCgclr7K66LBylgtQGuxhYD4c01EMLwgF81HdrrNFkhbGNmI4RJtLO52mv1fOlNmFFw/U
- 7EBkSCadfucy1IN2HPxmJvghDD+aTxO6V6j/FAavs4MPvxtHBDbsJLzTtoCTIul+ECjDn44Ms
- kSEtn1AWEUkyOAjVb0f+2J8k7ZpvibDag8YuOejySb0nnTdBp+/ocm/GomB3ltSyCt+2LZqTJ
- aOJqZI1tUBTNIZ5xV7WMSTt0WFTYbud/90vQ78/gkJbhxCIvxI9fbAgsBOaSxj6wffWq6lrRI
- 4N8NBzk24D9A9YLPL4yVw38KIMDjvLjmrZKhRDA5/FysogZpJGPaw8cI/jSep5+FwCwg26l3J
- 9YelZQntnXVx0GPJuClQvpJ+jNocvJuKsmHS5vApdjDeAza36VZeL7aL+LIWrpnAeoDak9KG5
- 4wZyo/RyKMNykhhpFbxylAVXe9m/JvzaSUvzqeHaf0ysKp1xuJpOmMCEheNRw9icefekp5fB6
- 7JAtIQ4ZDzkzjRyA0k0vFa57W4FDG61Y6Sj0/lNB5gZHPT5w9RSmHBAKergp41r6pU4VD/RkE
- yLeAtiOiKTqGvXNO5+8vo+FI/U+V5WGrOJ8m3gAM1+2fk5fRjFz7dMaw/tJEjes4aDcFdzY03
- oDSyVBFu+CFMCh3a3go01wy7Ojxvnm91OKgy2rmZnsLxRbgDsxejPbZgFfY6vesIZ08Seaf5A
- 0wCiU+yo0blUQ5LBwdzbCT5lGy41PCN5IP4BNIqQayZZxOfUziYUTJ/KbcjwlxXBFYPBKB3TM
- f9rb2w7D0YYAJ67awDYqhW5kI+8DXX9nTwbQbPZ2+nFzVcdQ0ykwsJZJLHuYy5O8NRFvtK3+x
- +hhha5H1C9x3fywoKuU8IfuZKIXTUOukLyx+w1xmx8WxespnUnt8UriKnTpjqXHMGfBpu/lhZ
- rsJq9hi62FDyVQDfg8A3NZWKBHJYAFvYMSrGShxKmVhYTzt1WeYHCmlwc497NUCAivA/zpaRq
- TcnaNp5NuDWlkNMgYRE+bJamqOYuslHoTYxB2+r+igQ6LyC9JAzlXlDWGrorxDKm9ImJUjd5x
- NqeIk=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, vdye@github.com,
+        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 14, 2022 at 09:40:04AM -0700, Junio C Hamano wrote:
+I noticed this while we were updating the microsoft/git fork to include
+v2.38.0-rc0. I don't think 'git maintenance unregister' was idempotent
+before, but instead some change in 'scalar unregister' led to it relying on
+the return code of 'git maintenance unregister'. Our functional tests expect
+'scalar unregister' to be idempotent, and I think that's a good pattern for
+'git maintenance unregister', so I'm fixing it at that layer.
 
-[]
+Despite finding this during the 2.38.0-rc0 integration, this isn't critical
+to the release.
 
-> I think I spotted two remaining "bugs" that are left unfixed with
-> this patch..
->
-> There is "stat_width is -1 (auto)" case, which reads like so:
->
-> 	if (options->stat_width =3D=3D -1)
-> 		width =3D term_columns() - strlen(line_prefix);
-> 	else
-> 		width =3D options->stat_width ? options->stat_width : 80;
->
-> Here line_prefix eventually comes from the "git log --graph" and
-> shows the colored graph segments on the same output line as the
-> diffstat.
->
-> This patch is probably not making anything worse, but by leaving it
-> strlen(), it is likely overcounting the width of it.  We can
-> presumably use utf8_strnwidth() that can optionally be told to be
-> aware of the ANSI color sequence to count its width correctly to fix
-> it.
+Perhaps an argument could be made that "failure means it wasn't registered
+before", but I think that isn't terribly helpful.
 
-[]
-> This is the other remaining bug.
-
-[]
-
-> I think the remainder of the patch I did not quote looked quite
-> straight-forward and correct.
->
-> Thanks for working on this topic.
-
-How should we proceed here ?
-This patch fixes one, and only one, reported bug,
-which is now verfied by a test case using unicode instead of ASCII.
-Fixing additional bugs in diff.c (or anywhere else) had never been
-part of this.
-
-Things that needs more fixing and cleanups had been layed out as the
-result of a review, that is good.
-
-"git log --graph" was mentioned.
-Do we have test cases, that test this ?
-How easy are they converted into unicode instead of ASCII ?
-
-I am not even sure, if I ever used "git log --graph" myself.
-Digging further here, is somewhat out of my scope.
-At least for the moment.
+Our functional tests are running the unregister subcommand to disable
+maintenance in order to run tests on the object store (such as running
+maintenance commands in the foreground and checking the object store
+afterwards). This is a form of automation using 'unregister' as a check that
+maintenance will not run at the same time, and it doesn't care if
+maintenance was already disabled. I can imagine other scripting scenarios
+wanting that kind of guarantee.
 
 
+Updates in v3
+=============
+
+ * The --force option now uses OPT_FORCE and is hidden from autocomplete.
+ * A new commit is added that removes the use of Git subprocesses in favor
+   of git_config_set_multivar_in_file_gently().
 
 
+Updates in v2
+=============
 
+ * This is now a two-patch series.
+ * I rebased onto v2.38.0-rc1 for two reasons: Scalar is now merged, and the
+   usage for 'git maintenance unregister' removed its translation markers.
+ * Instead of making git maintenance unregister idempotent, add a --force
+   option for those who do not want to require that the repository is
+   already registered.
+ * Make scalar unregister idempotent, with reasons argued in patch 2.
+
+Thanks, -Stolee
+
+Derrick Stolee (3):
+  maintenance: add 'unregister --force'
+  scalar: make 'unregister' idempotent
+  gc: replace config subprocesses with API calls
+
+ Documentation/git-maintenance.txt |  6 +-
+ builtin/gc.c                      | 95 +++++++++++++++++++++----------
+ scalar.c                          |  5 +-
+ t/t7900-maintenance.sh            |  6 +-
+ t/t9210-scalar.sh                 |  5 +-
+ 5 files changed, 82 insertions(+), 35 deletions(-)
+
+
+base-commit: 1b3d6e17fe83eb6f79ffbac2f2c61bbf1eaef5f8
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1358%2Fderrickstolee%2Fmaintenance-unregister-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1358/derrickstolee/maintenance-unregister-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1358
+
+Range-diff vs v2:
+
+ 1:  69c74f52eef ! 1:  8a8bffaec89 maintenance: add 'unregister --force'
+     @@ builtin/gc.c: done:
+       {
+      +	int force = 0;
+       	struct option options[] = {
+     -+		OPT_BOOL(0, "force", &force,
+     -+			 N_("return success even if repository was not registered")),
+     ++		OPT__FORCE(&force,
+     ++			   N_("return success even if repository was not registered"),
+     ++			   PARSE_OPT_NOCOMPLETE),
+       		OPT_END(),
+       	};
+      -	int rc;
+ 2:  f5d8d6e4901 = 2:  06d5ef3fc57 scalar: make 'unregister' idempotent
+ -:  ----------- > 3:  260d7bee36e gc: replace config subprocesses with API calls
+
+-- 
+gitgitgadget
