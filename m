@@ -2,196 +2,197 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BE9EC32771
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 16:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D870C6FA8E
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 16:59:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229876AbiIZQrv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 12:47:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34462 "EHLO
+        id S230136AbiIZQ7p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 12:59:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbiIZQrb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 12:47:31 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BC2D147CE6
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 08:39:13 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id 129so5468853pgc.5
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 08:39:13 -0700 (PDT)
+        with ESMTP id S230123AbiIZQ7V (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 12:59:21 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A4965600A
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 08:58:36 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id sd10so15109653ejc.2
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 08:58:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=dGQga51Mj2SJztaVeYCdpC19hx9ls7obOqXs7awT7uc=;
-        b=DNR2ddE55I72shxAPV8h1b/1bCeaeeoCat/YOhye5j2S3UGNR1WN/9178OAz45yYOS
-         2E3eKw00ZG1vrkgDrgSTeSdtmXIYba/q8pDB5P8S16w6fYnJHX8dUwfUWxrM4JyWU+rG
-         MennC7J29M8IteylU3L5t5SMOn6ppjWcsUFaFv1IGK1Iiv0U70vF8utcCyJbsSntRwVj
-         vAgpgyQnKqzFGOtuW+OktXfq+tUKKNFNXhdXQWy1FalxB2xoJdR53J5Q4GIfneKqEOOV
-         KJWo9YUib1kCIxRIJM9vKiEJU6XntIncyjbgs4fmmIHNorgf1O1EkMHjCMQSuSiSGdA3
-         l9Ow==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date;
+        bh=3w2vdd5wdJ3GOdx+/xvt/KM/ZtdHOXG3kULNGNqNQFU=;
+        b=BUWxB9KKoFVaEdE2/m/sHuQjvaJdHAtk+w4rC/fs6gBE/36KaYoPaIMz23IhKlWRXa
+         Fk1BfFQvAyndOx4LvQpULvnwQNdtERVtHqCTO5UC/fOu5SAiRiw/tWe/1l/EOnYaI+u9
+         bnjwk2xvRASJcDusteBcVobXh0QoenoyQ62Lwcdm45OOmkHLdml7BJOOcLCOItUJSMmd
+         DfqkGPfoh8NoQ42ryPt0A30IIwbxLncX4B5Md8PSan9A8mDx8rgDCZe8C/Gks63AR95+
+         Qi45toGT1bEAIYbQ0+yAr1+CiiMQwMpce/8Vrwwmk9UPgA88uTkgpJiWVIThl0kNnC+n
+         pp6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=dGQga51Mj2SJztaVeYCdpC19hx9ls7obOqXs7awT7uc=;
-        b=Z5324+Pwkgow9i2tnEo526kyxtuU5tJIHNxWCtu8N9Ip/7WFHkwNPHyxbJdgSrQH49
-         VFC010mbT7AlJ3IhyUel4da9KV79cLHUg0QeyQun8pksy0Lo7JgdANZKDDkLujYxIti4
-         T3yHj5FPu3J4nlnvDxPZZjiMHu8yXPDsb3uTuNAEqspt6BvQsTPF1V+CdrYTEYw34WKT
-         7i7w1AnSYuqnmU8ywlLB1187DYAznjrK0JCqOtms7aMuZjZLLE03tSz8Lvn0NQOEgPVb
-         8BGf9qUx/Q1pNx9hWthJiu7wELDfm13xHG3ik0JTB0zYv8Bb9akzu3HrVxxEwm9KjPdq
-         As4Q==
-X-Gm-Message-State: ACrzQf3o3fT41YPVco5nNhTWoX0t7DYXyXrk6pPhjBnPFy+zk2qb+b+1
-        L5yOlnV5GAkS/rO5Tb3HzuFm
-X-Google-Smtp-Source: AMsMyM4PY1ajxCLVM6YdDiz8aRRxKP9ZVNF51lb1BET0cxkNo0XLm3RyGIGCq6V4E3TGVVJXkMdkqA==
-X-Received: by 2002:a63:81c3:0:b0:43c:e1de:eea7 with SMTP id t186-20020a6381c3000000b0043ce1deeea7mr1135042pgd.103.1664206752686;
-        Mon, 26 Sep 2022 08:39:12 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id c37-20020a631c65000000b0043949b480a8sm10759004pgm.29.2022.09.26.08.39.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Sep 2022 08:39:12 -0700 (PDT)
-Message-ID: <e5954e90-6b5c-46a6-0842-b3d7d1e06b33@github.com>
-Date:   Mon, 26 Sep 2022 08:39:10 -0700
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=3w2vdd5wdJ3GOdx+/xvt/KM/ZtdHOXG3kULNGNqNQFU=;
+        b=PmiKLn0FhRJ+M39aKbs++7i+R+08Db7F7eNAnKtvO22DDAiNg0/Ohv7O4ag0YeM9zc
+         KLEVmBvMvmmym10r5JHRzQXx21DKnqXBUm7CALFyfmUg8oXMGLPuBhxECsLGk+KY3MEN
+         /nOUBVpuBU8ZCkIApQ+Sbu4sd1Cr5GYMuuE5Gwr0t2Zmk0PE6KcDgiHHfJ8e5NEwrrWt
+         gzl8ea55bKcPMsbpQMW8I2HTFat1qKcz+YJc94YCuk+ckmazEfk/fe/cYtbZd5AgRoFz
+         Tfw7IvpggGdMuh69QZ63pdZ7rO4e/7ro785xCj/ZO9Wv0uDNEVzCaETUljD/9hLATjtF
+         jR5w==
+X-Gm-Message-State: ACrzQf1mLedRLSXClVu6Dc6Tw3XCxLiXOKxMZhZHGDBEVNVNoCxyNpsQ
+        yhNC7PkkyWeGrNeDKvwMRPerbsasGds=
+X-Google-Smtp-Source: AMsMyM6C6zV3+JBJ4zxHqybeOPPr29PsT3nU3i4Fs86KHO8P+yAOytcQLH4rqb11Q49IY09VhdEZvw==
+X-Received: by 2002:a17:907:3f99:b0:782:4605:530e with SMTP id hr25-20020a1709073f9900b007824605530emr19408400ejc.108.1664207915041;
+        Mon, 26 Sep 2022 08:58:35 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id b13-20020a170906708d00b00734bfab4d59sm8642830ejk.170.2022.09.26.08.58.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Sep 2022 08:58:33 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ocqV6-000BR2-2b;
+        Mon, 26 Sep 2022 17:58:32 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, vdye@github.com
+Subject: Re: [PATCH v2 1/2] maintenance: add 'unregister --force'
+Date:   Mon, 26 Sep 2022 17:39:50 +0200
+References: <pull.1358.git.1663635732095.gitgitgadget@gmail.com>
+ <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
+ <69c74f52eefd906c38494759a02e137e4d7c01d8.1663853837.git.gitgitgadget@gmail.com>
+ <20220923130832.GA1761@szeder.dev>
+ <fc6739c3-2f7c-5dab-e4a2-8243deafde50@github.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <fc6739c3-2f7c-5dab-e4a2-8243deafde50@github.com>
+Message-ID: <220926.86mtamyvo7.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.13.0
-Subject: Re: [PATCH] read-cache: avoid misaligned reads in index v4
-Content-Language: en-US
-To:     Jeff King <peff@peff.net>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com, gitster@pobox.com
-References: <pull.1366.git.1663962236069.gitgitgadget@gmail.com>
- <Yy4nkEnhuzt2iH+R@coredump.intra.peff.net>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <Yy4nkEnhuzt2iH+R@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Fri, Sep 23, 2022 at 07:43:55PM +0000, Victoria Dye via GitGitGadget wrote:
->> @@ -1883,7 +1883,7 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
->>  	size_t len;
->>  	const char *name;
->>  	const unsigned hashsz = the_hash_algo->rawsz;
->> -	const uint16_t *flagsp = (const uint16_t *)(ondisk->data + hashsz);
->> +	const char *flagsp = ondisk + offsetof(struct ondisk_cache_entry, data) + hashsz;
-> 
-> Now we use the "const char *" pointer instead of the cast to the
-> ondisk_cache_entry struct, which is good, and is what fixes the
-> alignment question.
-> 
-> But we also convert flagsp from being a uint16_t into a byte pointer.
-> I'm not sure if that's strictly necessary from an alignment perspective,
-> as we'd dereference it only via get_be16(), which handles alignment and
-> type conversion itself.
-> 
-> I'd imagine the standard probably says that even forming such a pointer
-> is illegal, so in that sense, it probably is undefined behavior. But I
-> think it's one of those things that's OK in practice.
 
-Yep, per the C standard §6.3.2.3 #7 [1]:
+On Mon, Sep 26 2022, Derrick Stolee wrote:
 
-  A pointer to an object or incomplete type may be converted to a pointer to
-  a different object or incomplete type. If the resulting pointer is not
-  correctly aligned for the pointed-to type, the behavior is undefined.
+> On 9/23/2022 9:08 AM, SZEDER G=C3=A1bor wrote:
+>> On Thu, Sep 22, 2022 at 01:37:16PM +0000, Derrick Stolee via GitGitGadge=
+t wrote:
+>>>  static int maintenance_unregister(int argc, const char **argv, const c=
+har *prefix)
+>>>  {
+>>> +	int force =3D 0;
+>>>  	struct option options[] =3D {
+>>> +		OPT_BOOL(0, "force", &force,
+>>> +			 N_("return success even if repository was not registered")),
+>>=20
+>> This could be shortened a bit by using OPT__FORCE() instead of
+>> OPT_BOOL().  OTOH, please make it a bit longer, and declare the option
+>> with the PARSE_OPT_NOCOMPLETE flag to hide it from completion:
+>
+> Looks like I can do both like this:
+>
+> 		OPT__FORCE(&force,
+> 			   N_("return success even if repository was not registered"),
+> 			   PARSE_OPT_NOCOMPLETE),
 
-To your point, it is probably fine in practice, but I'd lean towards
-sticking with a 'char *' to play it safe.
+I don't think PARSE_OPT_NOCOMPLETE is appropriate here. Yes we use it
+for most of --force, but in some non-destructive cases (e.g. "add") we
+don't.
 
-[1] https://www.open-std.org/JTC1/SC22/WG14/www/docs/n1256.pdf
+This seems to be such a case, we'll destroy no data or do anything
+irrecoverable. It's really just a
+--do-not-be-so-anal-about-your-exit-code option.
 
->> @@ -1935,20 +1935,24 @@ static struct cache_entry *create_from_disk(struct mem_pool *ce_mem_pool,
->>  
->>  	ce = mem_pool__ce_alloc(ce_mem_pool, len);
->>  
->> -	ce->ce_stat_data.sd_ctime.sec = get_be32(&ondisk->ctime.sec);
->> [...]
->> +	ce->ce_stat_data.sd_ctime.sec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, ctime)
->> +							+ offsetof(struct cache_time, sec));
-> 
-> I had figured we'd be able to drop ondisk_cache_entry entirely. But here
-> you're using it essentially as a template for a set of constants
-> retrieved via offsetof().
-> 
-> That's OK from an alignment perspective. It does mean we'd be in trouble
-> if a compiler ever decided to introduce padding into the struct. That's
-> probably unlikely. We don't use __attribute__((packed)) because it's not
-> portable, and our existing uses have generally been OK, because our
-> data structures are organized around 8-byte alignment. We might have
-> problems on a theoretical 128-bit processor or something.
+I'm guessing that you wanted to be able to error check this more
+strictly in some cases. For "git remote" I post-hoc filled in this
+use-case by exiting with a code of 2 on missing remotes on e.g. "git
+remote remove", see: 9144ba4cf52 (remote: add meaningful exit code on
+missing/existing, 2020-10-27).
 
-In addition to portability, using '__attribute__((packed))' could hurt
-performance (and, in a large index, that might have a noticeable effect).
+In this case we would return exit code 5 for this in most case before,
+as we wouldn't be able to find the key, wouldn't we? I.e. the return
+value from "git config". Seems so:
+=09
+	$ GIT_TRACE=3D1 git maintenance unregister; echo $?
+	17:48:59.984529 exec-cmd.c:90           trace: resolved executable path fr=
+om procfs: /home/avar/local/bin/git
+	17:48:59.984566 exec-cmd.c:237          trace: resolved executable dir: /h=
+ome/avar/local/bin
+	17:48:59.986795 git.c:509               trace: built-in: git maintenance u=
+nregister
+	17:48:59.986817 run-command.c:654       trace: run_command: git config --g=
+lobal --unset --fixed-value maintenance.repo /home/avar/g/git
+	17:48:59.987532 exec-cmd.c:90           trace: resolved executable path fr=
+om procfs: /home/avar/local/bin/git
+	17:48:59.987561 exec-cmd.c:237          trace: resolved executable dir: /h=
+ome/avar/local/bin
+	17:48:59.988733 git.c:509               trace: built-in: git config --glob=
+al --unset --fixed-value maintenance.repo /home/avar/g/git
+	5
 
-As for dropping 'ondisk_cache_entry()', I didn't want to drop it only from
-the "read" operation (and use something like the "parse left-to-right"
-strategy below) while leaving it in "write." And, as you mentioned later,
-changing 'ce_write_entry()' is a lot more invasive than what's already in
-this patch and possibly out-of-scope.
+Maybe we want to just define an exit code here too? I think doing so is
+a better interface, the user can then pipe the STDERR to /dev/null
+themselves (or equivalent).
 
-> Another strategy is to just parse left-to-right, advancing the byte
-> pointer. Like:
-> 
->   ce->ce_state_data.sd_ctime.sec = get_be32(ondisk);
->   ondisk += sizeof(uint32_t);
->   ce->ce_state_data.sd_mtime.sec = get_be32(ondisk);
->   ondisk += sizeof(uint32_t);
->   ...etc...
-> 
-> You can even stick that in a helper function that does the get_b32() and
-> advances, so you know they're always done in sync. See pack-bitmap.c's
-> read_be32(), etc. IMHO this produces a nice result because the reading
-> code itself becomes the source of truth for the format.
-> 
+Aside from anything else, I think this would be much clearer if it were
+split up so that:
 
-...
+ * We first test what we do now without --force, which is clearly
+   untested and undocumented (you are adding tests for it here
+   while-at-it)
 
-> One final note, though:
-> 
->> +	ce->ce_stat_data.sd_mtime.sec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, mtime)
->> +							+ offsetof(struct cache_time, sec));
-> 
-> Here (and elsewhere), you can assume that the offsetof() "sec" in
-> cache_time is 0, for two reasons:
-> 
->   - I didn't look up chapter and verse, but I'm pretty sure the standard
->     does guarantee that the first field of a struct is at the beginning.
-> 
->   - If there's any padding, this whole scheme is hosed anyway, because
->     it means sizeof(cache_time) is bigger than we expect, which messes
->     up the offsetof() the entry after us (in this case sd_dev).
-> 
-> So this can just be:
-> 
->   ce->ce_stat_data.sd_mtime.sec = get_be32(ondisk + offsetof(struct ondisk_cache_entry, mtime));
-> 
-> which is mercifully shorter.
-> 
-> Assuming we dismiss the rest of what I said as not worth it for a
-> minimal fix, I do think that simplification is worth rolling a v2.
+ * This commit, which adds a --force.
 
-That makes sense from a technical perspective, but I included the starting
-entry offset for readability reasons. It might be confusing to someone
-unfamiliar with C struct memory alignment to see every other 'get_be32'
-refer to the exact entry it's reading via the 'offsetof()', but have that
-information absent only for a few entries. And, the double 'offsetof()'
-would still be used by the 'mtime.nsec'/'ctime.nsec' fields anyway.
+Also:
 
-In any case, if this patch is intended to be a short-lived change on the way
-to a more complete refactor and/or I'm being overzealous on the readability,
-I'd be happy to change it. :) 
+> @@ -1538,11 +1545,23 @@ static int maintenance_unregister(int argc, const=
+ char **argv, const char *prefi
+>  		usage_with_options(builtin_maintenance_unregister_usage,
+>  				   options);
+>=20=20
+> -	config_unset.git_cmd =3D 1;
+> -	strvec_pushl(&config_unset.args, "config", "--global", "--unset",
+> -		     "--fixed-value", "maintenance.repo", maintpath, NULL);
+> +	for_each_string_list_item(item, list) {
+> +		if (!strcmp(maintpath, item->string)) {
+> +			found =3D 1;
+> +			break;
+> +		}
+> +	}
 
-Thanks!
+This code now has a race condition it didn't before. Before we just did
+a "git config --unset" which would have locked the config file, so if we
+didn't have a key we'd return 5.
 
-> 
-> -Peff
-> 
-> PS BTW, I mentioned earlier "can we just get rid of ondisk_cache_entry".
->    We also use it for the writing side, of course. That doesn't have
->    alignment issues, but it does have the same "I hope there's never any
->    padding" question. In an ideal world, it would be using the
->    equivalent put_be32(), but again, that's getting out of the "minimal
->    fix" territory.
+> +	if (found) {
 
+But here we looked for the key *earlier*, so in that window we could
+have raced and had the key again, so ....
+
+> +		config_unset.git_cmd =3D 1;
+> +		strvec_pushl(&config_unset.args, "config", "--global", "--unset",
+> +			     "--fixed-value", key, maintpath, NULL);
+> +
+> +		rc =3D run_command(&config_unset);
+> +	} else if (!force) {
+
+...found would not be true, and if you you didn't have --force...
+
+> +		die(_("repository '%s' is not registered"), maintpath);
+> +	}
+>=20=20
+> -	rc =3D run_command(&config_unset);
+
+...this removal would cause us to still have the key in the end, no? I.e.:
+
+ 1. We check if the key is there
+ 2. Another process LOCKS config
+ 3. Another process SETS the key
+ 4. Another process UNLOCKS config
+ 5. We act with the assumption that the key isn't set
+
+Maybe it's not racy, or it doesn't matter.
