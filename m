@@ -2,110 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77EE6C6FA83
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 14:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99CCDC6FA86
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 14:52:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233570AbiIZOtN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 10:49:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59428 "EHLO
+        id S235322AbiIZOwW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 10:52:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235188AbiIZOr4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 10:47:56 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ECB045041
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 06:13:52 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id x18so10150060wrm.7
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 06:13:52 -0700 (PDT)
+        with ESMTP id S234655AbiIZOvs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 10:51:48 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E202B4A2
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 06:18:00 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id e18so4472998wmq.3
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 06:18:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date;
-        bh=5QU4lzq4QANV8wholwTsG7ZStwuESs5qEuwwTHeAAUM=;
-        b=H6M76RD+2OhCntem33V8EFyd5nzCBqfZq2N68i8t8q0WuNcTvpo5IidkifrHtUAyBL
-         114m6Xsc/uAx4MkvkBQ5R+5DEIywq7+SG7WMNBkOoV/Ax1cI9oSLNUwxlkMZ0nJo0+QT
-         fU0ZAwyOZILs9p9iZA1pBi2sAqIoRj9rnpaKmNLSR0tUuNsnUeOO6fwZyRC/b/89N++y
-         RIFoGLq9lwDeNMa2OBtuv/pjSqj60azqL3yfBcFjlPad5UzOgm1asNqyjokXTVUbBaY6
-         +2ve6AgZrU7b6W4eH0HGa4z72FXYh0da/j3kCmy+GElUpo26mIUF5m0uHyHdmZfjz7I2
-         XKfw==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date;
+        bh=8R3f1ta3fPoakv/GS0c/4AKqJvEr726yGlYyMuNC3us=;
+        b=jp18K+gMOiUqPToiuRKC7msM1v83+EPbAoclv8TgCNgPtytAdxFA1DUk7lAmQLYRYf
+         pd0ciYj+3udZj+gkIYI9k16IMg3vGfhVpMKxRRZavfh2RoGF1oPENbacxyvyBIAR9MhH
+         83xuxrEbyRqedrUOAZrGgSw9U6hDrlMbSWfbKtABgJTQieE4WKkNecfxrRvC9Mfn5vlq
+         6kGIhSa4MmDOFld3EMmMebkl2luIwxkMCx4Y720fEKYA75vYGKV86jol75kmwAQDpSjA
+         q3su1LpiBLIvQL0jsYGGDvDjEterIvdf5YdZH9iOhrCI8Vl6n8xp4On4FZeCAERbb0L8
+         TqZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=5QU4lzq4QANV8wholwTsG7ZStwuESs5qEuwwTHeAAUM=;
-        b=zh/PZMYjmCCCJ9aEwCHhXUKUzK8eiYgHdlP5q3pAQCrGk7yEwSVzGYgkS3pIuAwJ0i
-         uR4XV/xRVhwbbXwayXfiVV3aNxHh0danMjR+UhTQZbmwkyk/nBBUBCwoEc18oeZJY5T2
-         0W3r/bWiFfJ6s0/98L1BqQWLJk7EsWzLCi7wsWEpctIeOiRs33GiqIt5cUyJcPaPKZd1
-         mhfxZ02g1qb6vGucjhJtqc6/GffD4+pabUmGS68xELl67l559flRanapA2zZsM3ZV0ox
-         dibMH87k0qy3d6mEC7A922y9lFRVnHmk1NtAoRgMqYQIFqnU0pqpGd0VAVjaHs1i6ods
-         6LAg==
-X-Gm-Message-State: ACrzQf2ki/ONYXiwpoyUz5r0HfptmAiHcZxgy4lVW9Cabsp+4VgFOG+s
-        2r5k5JR8x10J2Z4goHocN2Q=
-X-Google-Smtp-Source: AMsMyM4uVagGmHYKiYdS7VcA98nYgDzPVHdDhdnCDwwDtw4OG2wS9K9ih33qObAeYJV2HAjIi0TuaA==
-X-Received: by 2002:a5d:4c4c:0:b0:22a:35bd:84a9 with SMTP id n12-20020a5d4c4c000000b0022a35bd84a9mr12690073wrt.103.1664198031084;
-        Mon, 26 Sep 2022 06:13:51 -0700 (PDT)
-Received: from [192.168.1.81] ([31.185.185.144])
-        by smtp.googlemail.com with ESMTPSA id j16-20020adfea50000000b00228dbf15072sm14410876wrn.62.2022.09.26.06.13.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Sep 2022 06:13:50 -0700 (PDT)
-Message-ID: <fc291c07-55e9-64f8-1251-20bd2422024d@gmail.com>
-Date:   Mon, 26 Sep 2022 14:13:50 +0100
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=8R3f1ta3fPoakv/GS0c/4AKqJvEr726yGlYyMuNC3us=;
+        b=ApQjiJmCiguAur5eXGhodqYjvGRoQbbMjiCoBROePNGFhb9BusKY/4/qInhF3Dr966
+         GeeAV9nh9ICbJ4nynVLA2/AkrBiNBZnVivlht69ARCwcHJFFRc4mhoXqA4obQo+g4ZHG
+         d2pzmAVpGbRdk3K+XZVr8GLv7unbHQ3Ol9D7kMfsAT85h8CgObhKUrQjaXn9Ybf7tvyO
+         5O5nxnr9X3yEHJvg8dJsJ1nwKOPJZbyqyxzmaBf4l3GS3AJnyGrclAiACsq7Ce3u7SAF
+         Z2daJ+NbNUwAd/7TV1RzEtswmAYZWjNqCR6/oKVHkgg5V7LExiPdsPZGfqnDbfCqJ71k
+         IgqQ==
+X-Gm-Message-State: ACrzQf0RAG7sZC8seFtyXi8BI2iN7jlt2yA33XOAQLz178J4Rs3bMQSZ
+        COeb0MGhMslt4GojqRqTkFdvYJ1S6e4=
+X-Google-Smtp-Source: AMsMyM6YAtJqhQ1lqtxs5kKO4O33j1HWOnuGbvGYVJJHVz4TCTK3zLvRkh8Y1vCDqIohdnYr6myqnQ==
+X-Received: by 2002:a05:600c:1f18:b0:3b4:c4ae:f666 with SMTP id bd24-20020a05600c1f1800b003b4c4aef666mr22106613wmb.88.1664198278676;
+        Mon, 26 Sep 2022 06:17:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o41-20020a05600c512900b003a5c244fc13sm11482056wms.2.2022.09.26.06.17.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Sep 2022 06:17:58 -0700 (PDT)
+Message-Id: <pull.1365.v2.git.1664198277250.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1365.git.1663938034607.gitgitgadget@gmail.com>
+References: <pull.1365.git.1663938034607.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 26 Sep 2022 13:17:57 +0000
+Subject: [PATCH v2] pack-bitmap: remove trace2 region from hot path
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 03/10] ref-filter: add the metas namespace to ref-filter
-Content-Language: en-US
-To:     Chris Poucet via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Christophe Poucet <christophe.poucet@gmail.com>,
-        Chris Poucet <poucet@google.com>
-References: <pull.1356.git.1663959324.gitgitgadget@gmail.com>
- <54e559967df55ca314e629b65927a88c7f804a98.1663959324.git.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <54e559967df55ca314e629b65927a88c7f804a98.1663959324.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, git@jeffhostetler.com, me@ttaylorr.com,
+        chakrabortyabhradeep79@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Chris
+From: Derrick Stolee <derrickstolee@github.com>
 
-On 23/09/2022 19:55, Chris Poucet via GitGitGadget wrote:
-> From: Chris Poucet <poucet@google.com>
-> 
-> The metas namespace will contain refs for changes in progress. Add
-> support for searching this namespace.
+The trace2 region around the call to lazy_bitmap_for_commit() in
+bitmap_for_commit() was added in 28cd730680d (pack-bitmap: prepare to
+read lookup table extension, 2022-08-14). While adding trace2 regions is
+typically helpful for tracking performance, this method is called
+possibly thousands of times as a commit walk explores commit history
+looking for a matching bitmap. When trace2 output is enabled, this
+region is emitted many times and performance is throttled by that
+output.
 
-I assume this is to save having to write "refs/metas/" when we want to 
-search for meta commits?
+For now, remove these regions entirely.
 
-> Signed-off-by: Chris Poucet <poucet@google.com>
-> --- > diff --git a/ref-filter.h b/ref-filter.h
-> index aa0eea4ecf5..064fbef8e50 100644
-> --- a/ref-filter.h
-> +++ b/ref-filter.h
-> @@ -17,8 +17,10 @@
->   #define FILTER_REFS_BRANCHES       0x0004
->   #define FILTER_REFS_REMOTES        0x0008
->   #define FILTER_REFS_OTHERS         0x0010
-> +#define FILTER_REFS_CHANGES        0x0040
+This is a critical path, and it would be valuable to measure that the
+time spent in bitmap_for_commit() does not increase when using the
+commit lookup table. The best way to do that would be to use a mechanism
+that sums the time spent in a region and reports a single value at the
+end of the process. This technique was introduced but not merged by [1]
+so maybe this example presents some justification to revisit that
+approach.
 
-It would be nice to keep FILTER_REFS_OTHERS at the end I think (we don't 
-need to worry about abi compatibility), also what happened to 0x0020?
+[1] https://lore.kernel.org/git/pull.1099.v2.git.1640720202.gitgitgadget@gmail.com/
 
-Best Wishes
+To help with the 'git blame' output in this region, add a comment that
+warns against adding a trace2 region. Delete a test from t5310 that used
+that trace output to check that this lookup optimization was activated.
+To create this kind of test again in the future, the stopwatch traces
+mentioned earlier could be used as a signal that we activated this code
+path.
 
-Phillip
+Helpedy-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+    [For 2.38.0] pack-bitmap: remove trace2 region from hot path
+    
+    I noticed this while trying to backport the Abhradeep's lookup table
+    work into GitHub's fork. Something went wrong in that process, causing
+    this region to significantly slow down. It turns out that slow down does
+    not reproduce on current 'master', which is good. I must have missed
+    something while I was backporting.
+    
+    Regardless, the use of trace2_region_enter() here should be removed or
+    replaced. For the sake of 2.38.0, this simple removal is safe enough.
+    However, to really dig into what was happening I had to construct a
+    rebase [2] of Jeff's trace2 stopwatch work, then apply changes on top
+    [3] that could replace this region with trace2_timer_*() methods.
+    
+    [2]
+    https://github.com/git/git/compare/master...derrickstolee:trace2-stopwatch
+    [3]
+    https://github.com/derrickstolee/git/compare/trace2-stopwatch...bitmap-trace2
+    
+    As a separate discussion, it might be worth revisiting that stopwatch
+    work so we have it available as a tool when doing these kinds of
+    investigations.
+    
+    
+    Updates in v2
+    =============
+    
+     * I removed the test that was checking for trace2 regions. In [3], I
+       played around with using trace2_counter() to replace that check, so
+       we could reinstate the test without the performance drop from using
+       repeated trace2_region() calls.
+     * I squashed in Junio's comment change.
+    
+    Thanks, -Stolee
 
->   #define FILTER_REFS_ALL            (FILTER_REFS_TAGS | FILTER_REFS_BRANCHES | \
-> -				    FILTER_REFS_REMOTES | FILTER_REFS_OTHERS)
-> +				    FILTER_REFS_REMOTES | FILTER_REFS_OTHERS | \
-> +				    FILTER_REFS_CHANGES)
->   #define FILTER_REFS_DETACHED_HEAD  0x0020
->   #define FILTER_REFS_KIND_MASK      (FILTER_REFS_ALL | FILTER_REFS_DETACHED_HEAD)
->   
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1365%2Fderrickstolee%2Fbitmap-remove-trace2-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1365/derrickstolee/bitmap-remove-trace2-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1365
+
+Range-diff vs v1:
+
+ 1:  987827eaf90 ! 1:  8ef63c9e32f pack-bitmap: remove trace2 region from hot path
+     @@ Commit message
+      
+          [1] https://lore.kernel.org/git/pull.1099.v2.git.1640720202.gitgitgadget@gmail.com/
+      
+     +    To help with the 'git blame' output in this region, add a comment that
+     +    warns against adding a trace2 region. Delete a test from t5310 that used
+     +    that trace output to check that this lookup optimization was activated.
+     +    To create this kind of test again in the future, the stopwatch traces
+     +    mentioned earlier could be used as a signal that we activated this code
+     +    path.
+     +
+     +    Helpedy-by: Junio C Hamano <gitster@pobox.com>
+          Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+      
+       ## pack-bitmap.c ##
+     @@ pack-bitmap.c: struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap
+       			return NULL;
+       
+      -		trace2_region_enter("pack-bitmap", "reading_lookup_table", the_repository);
+     ++		/* this is a fairly hot codepath - no trace2_region please */
+       		/* NEEDSWORK: cache misses aren't recorded */
+       		bitmap = lazy_bitmap_for_commit(bitmap_git, commit);
+      -		trace2_region_leave("pack-bitmap", "reading_lookup_table", the_repository);
+       		if (!bitmap)
+       			return NULL;
+       		return lookup_stored_bitmap(bitmap);
+     +
+     + ## t/t5310-pack-bitmaps.sh ##
+     +@@ t/t5310-pack-bitmaps.sh: test_expect_success 'verify writing bitmap lookup table when enabled' '
+     + 	grep "\"label\":\"writing_lookup_table\"" trace2
+     + '
+     + 
+     +-test_expect_success 'lookup table is actually used to traverse objects' '
+     +-	git repack -adb &&
+     +-	GIT_TRACE2_EVENT="$(pwd)/trace3" \
+     +-		git rev-list --use-bitmap-index --count --all &&
+     +-	grep "\"label\":\"reading_lookup_table\"" trace3
+     +-'
+     +-
+     + test_expect_success 'truncated bitmap fails gracefully (lookup table)' '
+     + 	test_config pack.writebitmaphashcache false &&
+     + 	git repack -adb &&
 
 
+ pack-bitmap.c           | 3 +--
+ t/t5310-pack-bitmaps.sh | 7 -------
+ 2 files changed, 1 insertion(+), 9 deletions(-)
+
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 9a208abc1fd..a2bbbbd811d 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -830,10 +830,9 @@ struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
+ 		if (!bitmap_git->table_lookup)
+ 			return NULL;
+ 
+-		trace2_region_enter("pack-bitmap", "reading_lookup_table", the_repository);
++		/* this is a fairly hot codepath - no trace2_region please */
+ 		/* NEEDSWORK: cache misses aren't recorded */
+ 		bitmap = lazy_bitmap_for_commit(bitmap_git, commit);
+-		trace2_region_leave("pack-bitmap", "reading_lookup_table", the_repository);
+ 		if (!bitmap)
+ 			return NULL;
+ 		return lookup_stored_bitmap(bitmap);
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 7e50f8e7653..6d693eef82f 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -455,13 +455,6 @@ test_expect_success 'verify writing bitmap lookup table when enabled' '
+ 	grep "\"label\":\"writing_lookup_table\"" trace2
+ '
+ 
+-test_expect_success 'lookup table is actually used to traverse objects' '
+-	git repack -adb &&
+-	GIT_TRACE2_EVENT="$(pwd)/trace3" \
+-		git rev-list --use-bitmap-index --count --all &&
+-	grep "\"label\":\"reading_lookup_table\"" trace3
+-'
+-
+ test_expect_success 'truncated bitmap fails gracefully (lookup table)' '
+ 	test_config pack.writebitmaphashcache false &&
+ 	git repack -adb &&
+
+base-commit: 1b3d6e17fe83eb6f79ffbac2f2c61bbf1eaef5f8
+-- 
+gitgitgadget
