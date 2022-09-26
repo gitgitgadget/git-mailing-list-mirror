@@ -2,160 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3FB6C07E9D
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 17:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39765C07E9D
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 17:55:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229815AbiIZRz1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 13:55:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36806 "EHLO
+        id S229802AbiIZRzk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 13:55:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbiIZRyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 13:54:53 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D00B1FCDC
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:31:17 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id p69so9376395yba.0
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:31:17 -0700 (PDT)
+        with ESMTP id S229602AbiIZRzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 13:55:06 -0400
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB53B2A42E
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:31:50 -0700 (PDT)
+Received: by mail-il1-x12b.google.com with SMTP id l4so3903537ilq.3
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:31:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=5RMRnOMYmt9bm5IDNRQOT1f1mfq0rwx29PdALvLDYDo=;
-        b=eMEmtNWlbZ02HYZZOkIemoNCulO/5UPOGLqVvdnXFTbj0MzjXoBTonZKE7PEWrZexS
-         YHPW9KPwHyeuszj+WeCgelyiDDsw9OZtrUKxWXZ6pE1FIPWPQaAI3ULPQyvdF7heQukK
-         WCQPSU41m4f0K+FTONuGsVwkL62dOZddGAr/CfFADE8m3S794xuu0+WYWhB+mlSDAkc7
-         kDfQikPMmHj5aJhPLB/cDBhz9Fay8eSDzqDWItl2CoExYBFpPZMUeW886SiHHFNW0h9d
-         R/b2bDY0/ztD9Z4UEGcr205FNGtG9nntdpKnyOlgNxc8jUSF/Fuwq6z4hVpID+P85Zz+
-         YafQ==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=DtQiROiZyq6ZKEPJhNT9JWW//bfgNdvSM5ok1FNrZFk=;
+        b=jawi/7DkAonVogASBBhbvUubmVnfHUzGqs8wCn0MgQIyT5wx+Zp0dNbykX6o5yaZbf
+         V+uZElWH20U1dphfguTMmZvp1ILcsNaKjIMoqJtLTkVQB//1bWvzRw2dX+ZrjbXvK+vp
+         yFBgFSbsY6ueueTlxxEWB6Kesmh5wi+nIbFwbytWcM0HNIjhQupS0yWxC75KhqLPwF5r
+         s6XqXlcLvqBzq+iV02A5PvCk6F2wO5MNIdtqVoYekNh8TB+znrcsuedY39cOdT/KPOq0
+         huwgrvRVPOYRD7JAgOID8WsUooNXqsaPexDYGzB19EiE+095ihhnxyUSifua9ewK4VTr
+         DesA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=5RMRnOMYmt9bm5IDNRQOT1f1mfq0rwx29PdALvLDYDo=;
-        b=RPR8S7nUdvh1lk4T7lOKIP0JSD4QsL6pnUFkk5Yo5Dfrt4xlAOVjlW3fzaOapf4QMp
-         irmB31TYU/LaKS0MFuDf6zgYONmbfgHxLWSuri9OCVTjQgSRS6uTAyL2vOmKz29S3VkV
-         rkS+JpRPLlY8YPoTaPIEm09dzvly0TTHhUP/591NlNHVcxKs8SBO9Qp5rd4M/mlC6RGk
-         d1mlwWKeQ1ezly9lQwcQBdrmxC2ZK+xMm9VKps3slWaZWb92O0iNg09c5X8svpCMPttG
-         F1NZmBC5mt5HtnE1/91rytdvZj5KjT5m/ISpx9tlyHamYURnE0ZB516pCPDsV/GINYDd
-         9jTw==
-X-Gm-Message-State: ACrzQf2FPT3Nr56kbwkodbsc0uQDynOz0bkp/ifctjEZZQ1uvMVoC54A
-        AtvobhvQRMTw25FimuM4mH/vg0cpUTQKkGSOCebS3s2SJ7Y=
-X-Google-Smtp-Source: AMsMyM726Ktwk9tJDc3H1gcw6816ziCkQOQD15Em/senCXLyTHdJSin6yt7T88CJDKw1gxa3F36qyrSNQ2n8SVFNXTk=
-X-Received: by 2002:a25:37cb:0:b0:6b1:db19:83cf with SMTP id
- e194-20020a2537cb000000b006b1db1983cfmr23121407yba.391.1664213476435; Mon, 26
- Sep 2022 10:31:16 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=DtQiROiZyq6ZKEPJhNT9JWW//bfgNdvSM5ok1FNrZFk=;
+        b=DZWZSn0AGkRtYVBXdcqjF0Vx9YC+wC20Z7PcszEg79+dR1I2rEX6a1KFVGQ4hbM3h6
+         rtS4FnqF3cPS3PKu18pnv5uZTu/MsVkU6rGRhpESQBU1Fr2Wm5zxRZ+Qp5R7wwn75hm7
+         2vSq2imwxXMhWI38BO+7AI9UMfT3X9QCM3dwF7AWEByCaQaC3aMIAWixzpTYiNMJgwbQ
+         T5b+YwF3bPpBlzWxJxxtr3OA138qv1Dte2Vb7xDLBSUfkUHAxF2+elZE+sfNlh5t8t8K
+         oI6G6eBO46BFjb/ZM3rlbjuaS7n1zF+Hr3x85f7a68QuRjXurtiADCu/RCuC3G05PSUk
+         OwMQ==
+X-Gm-Message-State: ACrzQf0iUxfY/cGdPXU/2qzIKIIt4hWbRT4bqhuWJ5lvuZMwfz+lXqPj
+        tstTyK3FBpJNdtvYJaQid3e4
+X-Google-Smtp-Source: AMsMyM4+8Oe56vUOfCKp1LbRMl8Ejq9b369CKfz0bjlqLwBkv8wa6XYV64FjCUG0U42bPOwjgcSdHQ==
+X-Received: by 2002:a92:cd12:0:b0:2f5:6748:d549 with SMTP id z18-20020a92cd12000000b002f56748d549mr9693406iln.222.1664213509992;
+        Mon, 26 Sep 2022 10:31:49 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:4177:874e:9632:3b2a? ([2600:1700:e72:80a0:4177:874e:9632:3b2a])
+        by smtp.gmail.com with ESMTPSA id k20-20020a023354000000b0034c12270863sm7301240jak.80.2022.09.26.10.31.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Sep 2022 10:31:49 -0700 (PDT)
+Message-ID: <e1aab606-fdde-e10f-ed00-2af67bbfec27@github.com>
+Date:   Mon, 26 Sep 2022 13:31:47 -0400
 MIME-Version: 1.0
-References: <20220922232947.631309-1-calvinwan@google.com> <20220922232947.631309-2-calvinwan@google.com>
- <xmqqy1u9uddc.fsf@gitster.g>
-In-Reply-To: <xmqqy1u9uddc.fsf@gitster.g>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Mon, 26 Sep 2022 10:31:05 -0700
-Message-ID: <CAFySSZA=tThoHdTY7+bMStvC=xeeyMiv4aVDYt-eNW2mQE10qg@mail.gmail.com>
-Subject: Re: [PATCH 1/4] run-command: add pipe_output to run_processes_parallel
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, emilyshaffer@google.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v2] pack-bitmap: remove trace2 region from hot path
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, git@jeffhostetler.com,
+        me@ttaylorr.com, chakrabortyabhradeep79@gmail.com
+References: <pull.1365.git.1663938034607.gitgitgadget@gmail.com>
+ <pull.1365.v2.git.1664198277250.gitgitgadget@gmail.com>
+ <220926.868rm618ds.gmgdl@evledraar.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <220926.868rm618ds.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->  * Why are we configuring an API behaviour via a global variable in
->    21st century?
+On 9/26/2022 11:01 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Sep 26 2022, Derrick Stolee via GitGitGadget wrote:
+> 
+>> This is a critical path, and it would be valuable to measure that the
+>> time spent in bitmap_for_commit() does not increase when using the
+>> commit lookup table. The best way to do that would be to use a mechanism
+>> that sums the time spent in a region and reports a single value at the
+>> end of the process. This technique was introduced but not merged by [1]
+>> so maybe this example presents some justification to revisit that
+>> approach.
+> 
+> Just getting rid of this seems like a good thing for now.
+> 
+> But aside: Yes, one way to mitigate this rather than removing the
+> tracing would be to make it really fast.
+> 
+> But just skimming pack-bitmap.c do we really need trace2 at the
+> granularity of a single commit? Looking at who calls bitmap_for_commit()
+> wouldn't something like this sketch-out be much more useful?:
 
-I was mimicking how "ungroup" worked, but now that Avar mentions
-that pattern was for a quick regression fix, I can fix it to pass it in as a
-parameter.
+The point of it being where it was to check that we hit the path
+custom to the commit lookup extension, hence the test that is removed.
 
->  * The name "task_finished" is mentioned, but it is unclear what it
->    is.  Is it one of the parameters to run_process_parallel()?
+You are proposing a different region entirely, meant to measure the
+cost of the entire walk. Maybe that's valuable, but not critical to
+this topic.
 
-It is one of the callback functions passed in as a parameter to
-run_process_paraller(). I'll go ahead and clarify that.
+If you're proposing the high-level traces as an alternative to my
+prototype using the trace2 timers, then I'll point out that the timer
+approach allows us to determine how much time is being spent checking
+for bitmaps versus walking commits, which the regions you provided don't.
 
->  * Is the effect of the new feature that task_finished callback is
->    called with the output, in addition to the normal output?  I am
->    not sure why it is called "pipe".  The task_finished callback may
->    be free to fork a child and send the received output from the
->    task to that child over the pipe, but that is what a client code
->    could do and is inappropriate to base the name of the mechanism,
->    isn't it?
-
-The output in task_finished callback, before pipe_output, either
-contains part of the output or the entire output of the child process,
-since the output is periodically collected into stderr and then reset.
-The intention of output I believe is for the caller to be able to add
-anything they would like to the end (this can be seen with functions
-like fetch_finished() in builtin/fetch.c). My intention with pipe_output
-is to guarantee that output contains the entire output of the child
-process so task_finished can utilize it.
-
->
-> > @@ -1770,10 +1771,12 @@ int run_processes_parallel(int n,
-> >       int output_timeout = 100;
-> >       int spawn_cap = 4;
-> >       int ungroup = run_processes_parallel_ungroup;
-> > +     int pipe_output = run_processes_parallel_pipe_output;
-> >       struct parallel_processes pp;
-> >
-> >       /* unset for the next API user */
-> >       run_processes_parallel_ungroup = 0;
-> > +     run_processes_parallel_pipe_output = 0;
-> >
-> >       pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb,
-> >               ungroup);
-> > @@ -1800,7 +1803,8 @@ int run_processes_parallel(int n,
-> >                               pp.children[i].state = GIT_CP_WAIT_CLEANUP;
-> >               } else {
-> >                       pp_buffer_stderr(&pp, output_timeout);
-> > -                     pp_output(&pp);
-> > +                     if (!pipe_output)
-> > +                             pp_output(&pp);
->
-> So, we do not send the output from the child to the regular output
-> channel when pipe_output is in effect.  OK.
->
-> >               }
-> >               code = pp_collect_finished(&pp);
-> >               if (code) {
->
-> And no other code changes?  This is quite different from what I
-> expected from reading the proposed log message.
->
-> Am I correct to say that under this new mode, we no longer flush any
-> output while the child task is running (due to the change in the
-> above hunk to omit calls to pp_output() during the run) and instead
-> keep accumulating in the strbuf, until the child task finishes, at
-> which time pp_collect_finished() will call task_finished callback.
->
-> Even though the callback usually consumes the last piece of the
-> output since the last pp_output() call made during the normal
-> execution of the run_processes_parallel() loop, because we omitted
-> these calls, we have full output from the child task accumulated in
-> the children[].err strbuf.  We may still not output .err for real,
-> as we may not be the output_owner, in which case we may only append
-> to .buffered_output member.
->
-> I am puzzled simply because, if the above summary is correct, I do
-> not see how a word "pipe" have a chance to come into the picture.
-
-Ah I see what you mean here -- your summary is correct. Something
-like "buffer_output" would make much more sense.
-
-> I can sort of see that in this mode, we would end up buffering the
-> entire output from each child task into one strbuf each, and can
-> avoid stalling the child tasks waiting for their turn to see their
-> output pipes drained.  But is this a reasonable thing to do?  How do
-> we control the memory consumption to avoid having to spool unbounded
-> amount of output from child tasks in core, or do we have a good
-> reason to believe that we do not have to bother?
-
-You are correct that storing unbounded output doesn't seem like a good
-idea. One idea I have is to parse output during the periodic collection rather
-than waiting till the end. The other idea I had was to add another
-"git status --porcelain" option that would only output the necessary
-pieces of information so we wouldn't have to bother with worrying about
-unbounded output.
-
-Any other thoughts as to how I can workaround this?
-
-Thanks!
+Thanks,
+-Stolee
