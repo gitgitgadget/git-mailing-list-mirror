@@ -2,149 +2,200 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8D8DC07E9D
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 18:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A76C0C07E9D
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 18:48:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230079AbiIZSsM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 14:48:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49896 "EHLO
+        id S230047AbiIZSsO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 14:48:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229922AbiIZSsL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 14:48:11 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E952780527
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 11:48:09 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id bk15so3871080wrb.13
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 11:48:09 -0700 (PDT)
+        with ESMTP id S229946AbiIZSsM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 14:48:12 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96BFA81B3C
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 11:48:10 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id n15so11636425wrq.5
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 11:48:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=paFM5VXeBU5RdTUdf17vN2cG3ZmaabSUyVD6JMdJ484=;
-        b=GuAbICcDe2AX5aw5nnylLXkxcAubdukh+82IHFoVrorViKADuhtQY0V0JFb+u5d6nT
-         LoFy6LP68gtZvBBPMZKi8UyV5Ja0Wl+RIEKuGu02M1FVNQW+b4t5jr7cqEnKvb+FVuZZ
-         q1sdBeK50dCZv44nouCNKPaDV3ercuogY9dv3cwrLRRFqNkocbEIjodAiiegge3MnV+X
-         DfdmulbzG8jRKVMvjOBqylIiBZg7MlUvU48YLGg/hbExM2NIs8KAT8QZE/YC8mrE9yWp
-         aacpaQMh2wbSJOGbUJxIXJfpaaG3B9S+/IV6XCZOEVXmSpTMGxvT62K4gArXZfkZJJlD
-         PIKw==
+        bh=jTKp4RKYn+tH2YLQGwe/N+MirQNNQQfITUxeOLh2eR8=;
+        b=EV7/oJGQZpLhXvyA4hM+eOu4M3bjyd/4sRRtpBitHWUZgMJOLcPgyOMDllTrjQV3dg
+         2hVQpkmLL1WZJfoQQXXPPdNqGeCxD2wGACmud+2eFCNGLCyxZgK1aB+BohlcIHYXeoE8
+         g9TzC7KZ1VaVXVbCcqqlPqeYqpQjtc0OU+dzdFWi+6xJQLY6k6dPOPj4hcSEZq2DighU
+         QAOPaqnu7Im1qjvvht9VAV7soalln0Uqd3yFXrVPTw1ZtJJ0XRb/xu3oJTQ1QiGtaA1/
+         HxNYK3qsG8zYXJC8Gkcaa+SXq5VaQzNe6lfbErdg94v5XSaszmCitYl19z7nG0hK/Lrd
+         /4KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=paFM5VXeBU5RdTUdf17vN2cG3ZmaabSUyVD6JMdJ484=;
-        b=VaR0cJSrj9qvpFZl8vYt7htSwvc6uMh+mcfyTDER29RHHV52gG564ekwJqZThT690J
-         AI8jh6rPZHJAHSRcyRsF0MkElJm8BXmRBWLhBCRrBJIODaxbzleCVWLEB4nnZf1f1ToZ
-         YrwTmff1PPh4+ZpVN+gRMBhzQU9EMaAISfZZf26ROaApEAxP24qSf0WUCYMUu6lcp2Pj
-         rX9++Eq8RyDrv5OORYBCZx+UJMILbITbERPrzuw83/tVWvN9u3uq3W8OgEHszFUqKI/0
-         /rE5oXE2/Vr5pqVZVt2u1HF8+XxDQ5HALNPnKX0wNs0vUNlJLeTWpHtNQpihb7/cvg3T
-         Cd8A==
-X-Gm-Message-State: ACrzQf1t1LoZdbDR5DrvMpR6Q4N4yt726hTA0dbU1Vfv7eU1X6K7OAH9
-        wwU2GUSGHGeabKIQZI4WSrIUnXURr3A=
-X-Google-Smtp-Source: AMsMyM7UpxkjuF1zkB7OnYk6fHUXUS+W+oeSN67doJVIYIHylzR8FSCNlaSLWTi/7kuSfsCCOITSUQ==
-X-Received: by 2002:a05:6000:1ac7:b0:22a:906d:3577 with SMTP id i7-20020a0560001ac700b0022a906d3577mr14970288wry.33.1664218088069;
+        bh=jTKp4RKYn+tH2YLQGwe/N+MirQNNQQfITUxeOLh2eR8=;
+        b=6v/rCugkEMvxtLjZRen4Drs+HYAFBgwGy2dRG3ia678WwjH8nCI4gruASm37ag466c
+         oaNeIrwS7xd+84Rl7uEOZD7UIgLjksib6CCTk67UaCMLDgcPVQio+Y9OOULC1Ll82e51
+         hi5eM85zbLD3N2m40xSwjC+9B4kYZgTalatCCpzKD6c4FroEOdsCX4X/vxLJRmie0mLv
+         Y9neaKpLUJYMpxnK5CaFRyIwtKpJRq4FQvnm01YoUBisPBHtgIbWMnPDciNVIbHKzDpd
+         tqMw1jN6INpeLrn3sV1D+PZYvL7xKEXnX/BmmqpVvPwn5ykodmHib5Sxq8nTExs0N74m
+         ySoA==
+X-Gm-Message-State: ACrzQf0InvotyefUH+wmcOB+y/m1ey77o0yQeOI7IpnNKttGe6EsZ38R
+        Pqqj/8Sw8ijIitisWkTgHWQi7bN5vWg=
+X-Google-Smtp-Source: AMsMyM6WyDqliqFghpA3EGRF1h2xQeIcNtTQRUGoris1UY16i7ChQx5IuWbuSjRQbFGz98jW21ELTQ==
+X-Received: by 2002:a5d:5c06:0:b0:22a:7b52:cda6 with SMTP id cc6-20020a5d5c06000000b0022a7b52cda6mr14056571wrb.485.1664218088896;
         Mon, 26 Sep 2022 11:48:08 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w9-20020a5d5449000000b0022ca921dc67sm2564639wrv.88.2022.09.26.11.48.07
+        by smtp.gmail.com with ESMTPSA id e4-20020a05600c4e4400b003a682354f63sm12215217wmq.11.2022.09.26.11.48.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Sep 2022 11:48:07 -0700 (PDT)
-Message-Id: <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
+        Mon, 26 Sep 2022 11:48:08 -0700 (PDT)
+Message-Id: <8a8bffaec89e55da0c5bcac2f04331e0d4e69790.1664218087.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
 References: <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
+        <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 26 Sep 2022 18:48:03 +0000
-Subject: [PATCH v3 0/3] scalar: make unregister idempotent
-MIME-Version: 1.0
+Date:   Mon, 26 Sep 2022 18:48:04 +0000
+Subject: [PATCH v3 1/3] maintenance: add 'unregister --force'
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, vdye@github.com,
         SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>
+        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I noticed this while we were updating the microsoft/git fork to include
-v2.38.0-rc0. I don't think 'git maintenance unregister' was idempotent
-before, but instead some change in 'scalar unregister' led to it relying on
-the return code of 'git maintenance unregister'. Our functional tests expect
-'scalar unregister' to be idempotent, and I think that's a good pattern for
-'git maintenance unregister', so I'm fixing it at that layer.
+From: Derrick Stolee <derrickstolee@github.com>
 
-Despite finding this during the 2.38.0-rc0 integration, this isn't critical
-to the release.
+The 'git maintenance unregister' subcommand has a step that removes the
+current repository from the multi-valued maitenance.repo config key.
+This fails if the repository is not listed in that key. This makes
+running 'git maintenance unregister' twice result in a failure in the
+second instance.
 
-Perhaps an argument could be made that "failure means it wasn't registered
-before", but I think that isn't terribly helpful.
+This failure exit code is helpful, but its message is not. Add a new
+die() message that explicitly calls out the failure due to the
+repository not being registered.
 
-Our functional tests are running the unregister subcommand to disable
-maintenance in order to run tests on the object store (such as running
-maintenance commands in the foreground and checking the object store
-afterwards). This is a form of automation using 'unregister' as a check that
-maintenance will not run at the same time, and it doesn't care if
-maintenance was already disabled. I can imagine other scripting scenarios
-wanting that kind of guarantee.
+In some cases, users may want to run 'git maintenance unregister' just
+to make sure that background jobs will not start on this repository, but
+they do not want to check to see if it is registered first. Add a new
+'--force' option that will siltently succeed if the repository is not
+already registered.
 
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ Documentation/git-maintenance.txt |  6 +++++-
+ builtin/gc.c                      | 32 +++++++++++++++++++++++++------
+ t/t7900-maintenance.sh            |  6 +++++-
+ 3 files changed, 36 insertions(+), 8 deletions(-)
 
-Updates in v3
-=============
-
- * The --force option now uses OPT_FORCE and is hidden from autocomplete.
- * A new commit is added that removes the use of Git subprocesses in favor
-   of git_config_set_multivar_in_file_gently().
-
-
-Updates in v2
-=============
-
- * This is now a two-patch series.
- * I rebased onto v2.38.0-rc1 for two reasons: Scalar is now merged, and the
-   usage for 'git maintenance unregister' removed its translation markers.
- * Instead of making git maintenance unregister idempotent, add a --force
-   option for those who do not want to require that the repository is
-   already registered.
- * Make scalar unregister idempotent, with reasons argued in patch 2.
-
-Thanks, -Stolee
-
-Derrick Stolee (3):
-  maintenance: add 'unregister --force'
-  scalar: make 'unregister' idempotent
-  gc: replace config subprocesses with API calls
-
- Documentation/git-maintenance.txt |  6 +-
- builtin/gc.c                      | 95 +++++++++++++++++++++----------
- scalar.c                          |  5 +-
- t/t7900-maintenance.sh            |  6 +-
- t/t9210-scalar.sh                 |  5 +-
- 5 files changed, 82 insertions(+), 35 deletions(-)
-
-
-base-commit: 1b3d6e17fe83eb6f79ffbac2f2c61bbf1eaef5f8
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1358%2Fderrickstolee%2Fmaintenance-unregister-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1358/derrickstolee/maintenance-unregister-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1358
-
-Range-diff vs v2:
-
- 1:  69c74f52eef ! 1:  8a8bffaec89 maintenance: add 'unregister --force'
-     @@ builtin/gc.c: done:
-       {
-      +	int force = 0;
-       	struct option options[] = {
-     -+		OPT_BOOL(0, "force", &force,
-     -+			 N_("return success even if repository was not registered")),
-     ++		OPT__FORCE(&force,
-     ++			   N_("return success even if repository was not registered"),
-     ++			   PARSE_OPT_NOCOMPLETE),
-       		OPT_END(),
-       	};
-      -	int rc;
- 2:  f5d8d6e4901 = 2:  06d5ef3fc57 scalar: make 'unregister' idempotent
- -:  ----------- > 3:  260d7bee36e gc: replace config subprocesses with API calls
-
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index 9c630efe19c..bb888690e4d 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git maintenance' run [<options>]
+ 'git maintenance' start [--scheduler=<scheduler>]
+-'git maintenance' (stop|register|unregister)
++'git maintenance' (stop|register|unregister) [<options>]
+ 
+ 
+ DESCRIPTION
+@@ -79,6 +79,10 @@ unregister::
+ 	Remove the current repository from background maintenance. This
+ 	only removes the repository from the configured list. It does not
+ 	stop the background maintenance processes from running.
+++
++The `unregister` subcommand will report an error if the current repository
++is not already registered. Use the `--force` option to return success even
++when the current repository is not registered.
+ 
+ TASKS
+ -----
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 2753bd15a5e..8d154586272 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1519,18 +1519,26 @@ done:
+ }
+ 
+ static char const * const builtin_maintenance_unregister_usage[] = {
+-	"git maintenance unregister",
++	"git maintenance unregister [--force]",
+ 	NULL
+ };
+ 
+ static int maintenance_unregister(int argc, const char **argv, const char *prefix)
+ {
++	int force = 0;
+ 	struct option options[] = {
++		OPT__FORCE(&force,
++			   N_("return success even if repository was not registered"),
++			   PARSE_OPT_NOCOMPLETE),
+ 		OPT_END(),
+ 	};
+-	int rc;
++	const char *key = "maintenance.repo";
++	int rc = 0;
+ 	struct child_process config_unset = CHILD_PROCESS_INIT;
+ 	char *maintpath = get_maintpath();
++	int found = 0;
++	struct string_list_item *item;
++	const struct string_list *list = git_config_get_value_multi(key);
+ 
+ 	argc = parse_options(argc, argv, prefix, options,
+ 			     builtin_maintenance_unregister_usage, 0);
+@@ -1538,11 +1546,23 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
+ 		usage_with_options(builtin_maintenance_unregister_usage,
+ 				   options);
+ 
+-	config_unset.git_cmd = 1;
+-	strvec_pushl(&config_unset.args, "config", "--global", "--unset",
+-		     "--fixed-value", "maintenance.repo", maintpath, NULL);
++	for_each_string_list_item(item, list) {
++		if (!strcmp(maintpath, item->string)) {
++			found = 1;
++			break;
++		}
++	}
++
++	if (found) {
++		config_unset.git_cmd = 1;
++		strvec_pushl(&config_unset.args, "config", "--global", "--unset",
++			     "--fixed-value", key, maintpath, NULL);
++
++		rc = run_command(&config_unset);
++	} else if (!force) {
++		die(_("repository '%s' is not registered"), maintpath);
++	}
+ 
+-	rc = run_command(&config_unset);
+ 	free(maintpath);
+ 	return rc;
+ }
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 2724a44fe3e..cfe3236567a 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -493,7 +493,11 @@ test_expect_success 'register and unregister' '
+ 
+ 	git maintenance unregister &&
+ 	git config --global --get-all maintenance.repo >actual &&
+-	test_cmp before actual
++	test_cmp before actual &&
++
++	test_must_fail git maintenance unregister 2>err &&
++	grep "is not registered" err &&
++	git maintenance unregister --force
+ '
+ 
+ test_expect_success !MINGW 'register and unregister with regex metacharacters' '
 -- 
 gitgitgadget
+
