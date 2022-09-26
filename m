@@ -2,138 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2218C07E9D
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 19:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF42CC07E9D
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 19:17:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229909AbiIZTNu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 15:13:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52604 "EHLO
+        id S229696AbiIZTRM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 15:17:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229626AbiIZTNt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 15:13:49 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6650997516
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 12:13:48 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id cc5so11724809wrb.6
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 12:13:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date;
-        bh=Ls0bmk7ACvPi5iSJKEJ2rZEoy4HUrC6WQLnHZkOjQYg=;
-        b=ieEEtc+y6UrMbC1E3cSZHJAaLtCZ/krGJc8Yhe/tRfqoFrAPAe0saMdSl7Ew8rvKHl
-         xTsU3TGq04WZIxzJKcqFDh3yKS755e51fspWUvixLbkBLmSvK9iqDnr1hoDaRc6DXdab
-         8orREnL49yT3Ow/cBfD3DUbWqB40j98BfRqnxzLw4SBa4vYONXId9Wx1SsYL248c3l65
-         I4z2CN4ee43ve0TR80nggxtgAUFncE1aj2E0xJpS+1QhHzIRvwXQPASVuwbraHO02hj9
-         qV56AKtdCcs1XL/ry3x2o2PJ0fpOzbLIoWry/er+N/UDg50+ngUfjR8lIV9UhGZ+exUU
-         d5Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=Ls0bmk7ACvPi5iSJKEJ2rZEoy4HUrC6WQLnHZkOjQYg=;
-        b=VrQk2yeKkPFl2CvprS7jaK4srF/12qed0BFmSaLC52ob0ssgZHsi+oZHum7k4noeb4
-         vCp29dUmJu/cPCSqKTlxacbKV3kKjS2RqjHQisysmNxPgr3o4nxcPbfRxOH9in40mECj
-         VYTwnc8mMARYBYapF0/SDkvHyEUGlCFFd8uELcNsIZVdUbDJkuRj+7737+owXqMexAjU
-         UYKXLwRWhyzfzao6ySrQFdtQtEeAdW3Atbq/NX4hXSaxn+BBwPDNzjahtweVswLZs8R5
-         45Hem4XUgtC1A77TY+KZC0oi9pWfuTUXGEhwRHSpa12y4DHqGJZsIpS8EZaxBm/x3683
-         Mzxw==
-X-Gm-Message-State: ACrzQf1AW21k5OwP+KRuYCdvLKWeD6nMGhRpbOhhtFqUIQ5QFyTafmyQ
-        ix35GrkHz5iZALneyzQf4Vm1MIZ/Mhg=
-X-Google-Smtp-Source: AMsMyM7TZNIBqRtW9Cg8zz5IfHfYcEabjm3pDefwZrkqUDlR85ZbnLgMcI2ZAZtNLYT+FhDozodCPQ==
-X-Received: by 2002:a5d:6f0d:0:b0:229:a479:989e with SMTP id ay13-20020a5d6f0d000000b00229a479989emr13862293wrb.158.1664219626826;
-        Mon, 26 Sep 2022 12:13:46 -0700 (PDT)
-Received: from [192.168.2.52] (5.83-213-116.dynamic.clientes.euskaltel.es. [83.213.116.5])
-        by smtp.gmail.com with ESMTPSA id i11-20020a5d584b000000b0022add371ed2sm16438861wrf.55.2022.09.26.12.13.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Sep 2022 12:13:46 -0700 (PDT)
-Subject: Re: [PATCH] ref-filter.c: fix a leak in get_head_description
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-References: <6ff29e96-7f8d-c354-dced-b1b363e54467@gmail.com>
- <220926.86bkr24kjw.gmgdl@evledraar.gmail.com>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <8288e9e7-dbea-a5de-c05e-5a22a6a853f6@gmail.com>
-Date:   Mon, 26 Sep 2022 21:13:45 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        with ESMTP id S229959AbiIZTRI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 15:17:08 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9ACF9A690
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 12:17:06 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 002BA1CD17C;
+        Mon, 26 Sep 2022 15:17:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=T0RMPXRa0L/A
+        g4Lk9se2pp7P4dVTbOsMgEqrPw+m2u0=; b=fbKdFCTxi17vYsQ7CnAgfAltrHUP
+        8WYnjBy39WOGZUcf9Md1/A/R35B+P8q/HPIsSc9zPvA3Z5Re5QjzwDHJe8TW8cLz
+        tynvXZyua+VGk4rR9EaVbCS+tSezGIpg41PV6wo9YTwIVKRc7G4mKaTqwWnN1C/W
+        xCM4q8alANEA3NQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EDA6A1CD17B;
+        Mon, 26 Sep 2022 15:17:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2DEE81CD17A;
+        Mon, 26 Sep 2022 15:17:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, vdye@github.com
+Subject: Re: [PATCH v2 1/2] maintenance: add 'unregister --force'
+References: <pull.1358.git.1663635732095.gitgitgadget@gmail.com>
+        <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
+        <69c74f52eefd906c38494759a02e137e4d7c01d8.1663853837.git.gitgitgadget@gmail.com>
+        <20220923130832.GA1761@szeder.dev>
+        <fc6739c3-2f7c-5dab-e4a2-8243deafde50@github.com>
+        <220926.86mtamyvo7.gmgdl@evledraar.gmail.com>
+        <22a767da-5ae0-5a8f-d5f4-f2c5cc217be4@github.com>
+Date:   Mon, 26 Sep 2022 12:17:00 -0700
+In-Reply-To: <22a767da-5ae0-5a8f-d5f4-f2c5cc217be4@github.com> (Derrick
+        Stolee's message of "Mon, 26 Sep 2022 13:25:51 -0400")
+Message-ID: <xmqqbkr2ndxv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <220926.86bkr24kjw.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-Pobox-Relay-ID: CCCF6EC6-3DCF-11ED-B52B-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 26/9/22 10:14, Ævar Arnfjörð Bjarmason wrote:
-> 
-> Thanks, this looks good to me. FWIW I have a local (still unsubmitted)
-> series of leak fixes across the tree which fixed this leak, that commit
-> is presented below as a "I've already been running with this for a
-> while" data point.
+Derrick Stolee <derrickstolee@github.com> writes:
 
-That call in die_if_some_operation_in_progress is a good addition to this fix.
-I haven't found a happy path that leaks there yet, but it is calling for it
-anyway.  And the commit message looks good to me too.  So you can add to that
-patch, if you want:
+> On 9/26/2022 11:39 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> On Mon, Sep 26 2022, Derrick Stolee wrote:
+>>=20
+>>> On 9/23/2022 9:08 AM, SZEDER G=C3=A1bor wrote:
+>>>> On Thu, Sep 22, 2022 at 01:37:16PM +0000, Derrick Stolee via GitGitG=
+adget wrote:
+>>>>>  static int maintenance_unregister(int argc, const char **argv, con=
+st char *prefix)
+>>>>>  {
+>>>>> +	int force =3D 0;
+>>>>>  	struct option options[] =3D {
+>>>>> +		OPT_BOOL(0, "force", &force,
+>>>>> +			 N_("return success even if repository was not registered")),
+>>>>
+>>>> This could be shortened a bit by using OPT__FORCE() instead of
+>>>> OPT_BOOL().  OTOH, please make it a bit longer, and declare the opti=
+on
+>>>> with the PARSE_OPT_NOCOMPLETE flag to hide it from completion:
+>>>
+>>> Looks like I can do both like this:
+>>>
+>>> 		OPT__FORCE(&force,
+>>> 			   N_("return success even if repository was not registered"),
+>>> 			   PARSE_OPT_NOCOMPLETE),
+>>=20
+>> I don't think PARSE_OPT_NOCOMPLETE is appropriate here. Yes we use it
+>> for most of --force, but in some non-destructive cases (e.g. "add") we
+>> don't.
+>>=20
+>> This seems to be such a case, we'll destroy no data or do anything
+>> irrecoverable. It's really just a
+>> --do-not-be-so-anal-about-your-exit-code option.
+>
+> I agree, so I wasn't completely sold on PARSE_OPT_NOCOMPLETE. I'll use
+> your vote to not add that option.
 
-Reviewed-by: Rubén Justo <rjusto@gmail.com>
+I am perfectly OK with that.  Given that "git reset --hard" is not
+given nocomplete option, I do not see much point in "destructive
+ones are not completed" guideline in practice anyway.  After all,
+"add --force" would be destructively removing the object name
+recorded for the path previously.
 
-
-Thanks Martin for your review!
-
-Un saludo.
-
-> 
-> Thanks!
-> 
-> -- >8 --
-> Subject: [PATCH] wt-status API users: use wt_status_state_free_buffers(), fix
->  leaks
-> 
-> Fix a memory that was accidentally introduced in ref-filter.c in
-> 2708ce62d21 (branch: sort detached HEAD based on a flag, 2021-01-07),
-> and one that's been present in builtin/checkout.c since
-> c45f0f525de (switch: reject if some operation is in progress,
-> 2019-03-29).
-> 
-> In both cases we should be using the wt_status_state_free_buffers()
-> API introduced in 962dd7ebc3e (wt-status: introduce
-> wt_status_state_free_buffers(), 2020-09-27).
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  builtin/checkout.c | 2 ++
->  ref-filter.c       | 2 ++
->  2 files changed, 4 insertions(+)
-> 
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 54373424403..549c3d17a1a 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -1469,6 +1469,8 @@ static void die_if_some_operation_in_progress(void)
->  		      "or \"git worktree add\"."));
->  	if (state.bisect_in_progress)
->  		warning(_("you are switching branch while bisecting"));
-> +
-> +	wt_status_state_free_buffers(&state);
->  }
->  
->  static int checkout_branch(struct checkout_opts *opts,
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 45908d4bdfc..81278ec3cf7 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -1722,6 +1722,8 @@ char *get_head_description(void)
->  	} else
->  		strbuf_addstr(&desc, _("(no branch)"));
->  
-> +	wt_status_state_free_buffers(&state);
-> +
->  	return strbuf_detach(&desc, NULL);
->  }
-> 
+Thanks for carefully thinking the UI remifications through.
