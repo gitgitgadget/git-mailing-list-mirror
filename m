@@ -2,109 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF42CC07E9D
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 19:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C5A5C32771
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 19:22:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229696AbiIZTRM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 15:17:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59514 "EHLO
+        id S229532AbiIZTWT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 15:22:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229959AbiIZTRI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 15:17:08 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9ACF9A690
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 12:17:06 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 002BA1CD17C;
-        Mon, 26 Sep 2022 15:17:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=T0RMPXRa0L/A
-        g4Lk9se2pp7P4dVTbOsMgEqrPw+m2u0=; b=fbKdFCTxi17vYsQ7CnAgfAltrHUP
-        8WYnjBy39WOGZUcf9Md1/A/R35B+P8q/HPIsSc9zPvA3Z5Re5QjzwDHJe8TW8cLz
-        tynvXZyua+VGk4rR9EaVbCS+tSezGIpg41PV6wo9YTwIVKRc7G4mKaTqwWnN1C/W
-        xCM4q8alANEA3NQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EDA6A1CD17B;
-        Mon, 26 Sep 2022 15:17:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2DEE81CD17A;
-        Mon, 26 Sep 2022 15:17:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, vdye@github.com
-Subject: Re: [PATCH v2 1/2] maintenance: add 'unregister --force'
-References: <pull.1358.git.1663635732095.gitgitgadget@gmail.com>
-        <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
-        <69c74f52eefd906c38494759a02e137e4d7c01d8.1663853837.git.gitgitgadget@gmail.com>
-        <20220923130832.GA1761@szeder.dev>
-        <fc6739c3-2f7c-5dab-e4a2-8243deafde50@github.com>
-        <220926.86mtamyvo7.gmgdl@evledraar.gmail.com>
-        <22a767da-5ae0-5a8f-d5f4-f2c5cc217be4@github.com>
-Date:   Mon, 26 Sep 2022 12:17:00 -0700
-In-Reply-To: <22a767da-5ae0-5a8f-d5f4-f2c5cc217be4@github.com> (Derrick
-        Stolee's message of "Mon, 26 Sep 2022 13:25:51 -0400")
-Message-ID: <xmqqbkr2ndxv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229509AbiIZTWR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 15:22:17 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 060F36B173
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 12:22:17 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-3321c2a8d4cso79278687b3.5
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 12:22:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=erEpEN9/sGmWKDGXo28uz7QE6wb3hu52Bc9TE8tb/Os=;
+        b=EMdMxAyMqX0VKJ7GEPC6jFCZhV+wMtlJIDUhGQW6UmDuCiRwfVP17f1zkQId15qfoL
+         zzHNtmSpsKaQ8/C7UAQeucZzXIvXYYyVJFXnR77I9thwx3DrnPFZWahZHc3R+nO1F7fH
+         V3mDd3wBLUpUwfV6o+udJCOk/dp0sCBK6lZA9Ol+/W+qBR/AyPV/C1ovvGpxoLUWfwFO
+         qbYoBe40ZEep8JlV2Hc/wr2flozJtWkwyephGanLNhmE8uHtj/C3wfhXx4+BDs5CM2m7
+         vtQDNnMj2Ex6472rOUj6E6nGvBLtcWyGZ/4AcqseZ4TdWzvKeM7pjxsvINPqe0qnYDn8
+         QsKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=erEpEN9/sGmWKDGXo28uz7QE6wb3hu52Bc9TE8tb/Os=;
+        b=hsmg+DaXSHQY6rHcz1SmP/KVcGY3AG1MRZR6Lx2NFsympACb499MOP2jJhilapDmrC
+         +BBpMKF1w+ZVtjP1Aa469oz+GGgDV7F2NmQ7RVi2flLVPz1B6FwTqY50+z5m37AP0Z0l
+         j29y2wxiHQ9qfEJUl5/WYpjliRXBkFn1r3tyAtQ7DfoVvQ9Dvv0wvsZznOFzlz4XAVtM
+         Do4vsnRTRGKbPw/PsO/ScJ/pwHhUt3QEOjoze6uQWQMvGBfAyggpG+Oq7sN7Rka072t9
+         9+Cyr/gWWnLQXOGO+KuO4np4119zSG7UaMFQ4b7C+fm/FrQI+Q6i8/gmO92tawgXJL2Z
+         epaQ==
+X-Gm-Message-State: ACrzQf2kuJb+cBiSnX+2wck/rMODLN5ozuWTYAeonnLrLRngxce2tHUE
+        c/OjJifb2Nn6QUTiIY0FlQvWugEIL9kwCtPAIupkXA==
+X-Google-Smtp-Source: AMsMyM4uuUjYI+4UcYgKLESKs9ccujDgwmoenmjRPWtCerdlWKLas6eu5cOKOjTCB7VS4++1gUdozV8qirDYbnJCrS8=
+X-Received: by 2002:a81:7346:0:b0:34d:8987:26e6 with SMTP id
+ o67-20020a817346000000b0034d898726e6mr22724186ywc.379.1664220136148; Mon, 26
+ Sep 2022 12:22:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CCCF6EC6-3DCF-11ED-B52B-C2DA088D43B2-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20220922232947.631309-1-calvinwan@google.com> <20220922232947.631309-5-calvinwan@google.com>
+ <88b194d9-7c78-c12e-1c29-95f768db7772@gmail.com>
+In-Reply-To: <88b194d9-7c78-c12e-1c29-95f768db7772@gmail.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Mon, 26 Sep 2022 12:22:05 -0700
+Message-ID: <CAFySSZAM4Ae2AoBMj1BLdpdaNkfTQkFdT--QBc6T=4VcrcnJDQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] diff-lib: parallelize run_diff_files for submodules
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, emilyshaffer@google.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+> I suspect in the future we may want to parallelize other commands for
+> submodules in which case a more general name such as submodules.threads
+> might be a better choice. The speed up in the cover letter is
+> impressive, could this be safely enabled by default?
 
-> On 9/26/2022 11:39 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Mon, Sep 26 2022, Derrick Stolee wrote:
->>=20
->>> On 9/23/2022 9:08 AM, SZEDER G=C3=A1bor wrote:
->>>> On Thu, Sep 22, 2022 at 01:37:16PM +0000, Derrick Stolee via GitGitG=
-adget wrote:
->>>>>  static int maintenance_unregister(int argc, const char **argv, con=
-st char *prefix)
->>>>>  {
->>>>> +	int force =3D 0;
->>>>>  	struct option options[] =3D {
->>>>> +		OPT_BOOL(0, "force", &force,
->>>>> +			 N_("return success even if repository was not registered")),
->>>>
->>>> This could be shortened a bit by using OPT__FORCE() instead of
->>>> OPT_BOOL().  OTOH, please make it a bit longer, and declare the opti=
-on
->>>> with the PARSE_OPT_NOCOMPLETE flag to hide it from completion:
->>>
->>> Looks like I can do both like this:
->>>
->>> 		OPT__FORCE(&force,
->>> 			   N_("return success even if repository was not registered"),
->>> 			   PARSE_OPT_NOCOMPLETE),
->>=20
->> I don't think PARSE_OPT_NOCOMPLETE is appropriate here. Yes we use it
->> for most of --force, but in some non-destructive cases (e.g. "add") we
->> don't.
->>=20
->> This seems to be such a case, we'll destroy no data or do anything
->> irrecoverable. It's really just a
->> --do-not-be-so-anal-about-your-exit-code option.
+Unfortunately not. To reiterate the answer I gave to Avar:
+In my cover letter, I noted that with too many processes, status starts to
+slow down (but is still better than the baseline). This is because the
+expensive part of status is IO, specifically reading objects from the index.
+Much of the speedup of this patch comes from taking advantage of the
+ability to do parallel reads on an SSD, rather than splitting up the work
+of status. However, this doesn't work with an HDD, so status may
+actually be slower than baseline with multiple processes since there is
+now scheduling/switching overhead.
+
 >
-> I agree, so I wasn't completely sold on PARSE_OPT_NOCOMPLETE. I'll use
-> your vote to not add that option.
+> > index fcf9c85947..c5147a7952 100644
+> > --- a/builtin/commit.c
+> > +++ b/builtin/commit.c
+> > @@ -1468,6 +1468,12 @@ static int git_status_config(const char *k, const char *v, void *cb)
+> >               s->detect_rename = git_config_rename(k, v);
+> >               return 0;
+> >       }
+> > +     if (!strcmp(k, "status.parallelsubmodules")) {
+> > +             s->parallel_jobs_submodules = git_config_int(k, v);
+> > +             if (s->parallel_jobs_submodules < 0)
+> > +                     die(_("status.parallelsubmodules cannot be negative"));
+>
+> What does a value of zero mean?
 
-I am perfectly OK with that.  Given that "git reset --hard" is not
-given nocomplete option, I do not see much point in "destructive
-ones are not completed" guideline in practice anyway.  After all,
-"add --force" would be destructively removing the object name
-recorded for the path previously.
+Looking at my code I set it to 1 if it's zero, but I should update the logic to
+something more reasonable as Junio suggested.
 
-Thanks for carefully thinking the UI remifications through.
+>
+> > diff --git a/diff-lib.c b/diff-lib.c
+> > index 2e148b79e6..ec745755fc 100644
+> > --- a/diff-lib.c
+> > +++ b/diff-lib.c
+>
+> > -int run_diff_files(struct rev_info *revs, unsigned int option)
+> > +int run_diff_files(struct rev_info *revs, unsigned int option, int parallel_jobs)
+>
+> Another possibility would be to add a member to struct diff_opts, rather
+> than changing the function signature here, I'm wondering what the trade
+> offs of the two approaches are. Also seeing all the callers from other
+> commands being changed made me wonder if they would benefit from
+> parallelizing submodules as well. There aren't any tests - could we use
+> GIT_TRACE2 to check that we are running the submodule diffs in parallel?
+
+Adding the option to rev_info seems like the best way forward. I neglected to
+write tests for this patch since the parallelism comes from
+run_processes_parallel() which already has tests for that. But maybe it is a
+good idea to also add a test with GIT_TRACE2 for a sanity check.
+
+Thanks!
