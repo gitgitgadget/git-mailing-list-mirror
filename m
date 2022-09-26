@@ -2,146 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E44FEC6FA82
-	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 17:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BE4AC07E9D
+	for <git@archiver.kernel.org>; Mon, 26 Sep 2022 17:38:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230381AbiIZRhe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Sep 2022 13:37:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50524 "EHLO
+        id S230519AbiIZRiO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Sep 2022 13:38:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230519AbiIZRhI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Sep 2022 13:37:08 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC56817E12
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 09:59:20 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 198so9211359ybc.1
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 09:59:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=c+RnJg+YBli6p8sNuDposTuZckavN4QWRM6jD719bZY=;
-        b=N1bNpJljxgmWrOkj6p8VOExQ0Kij0r+R3p3R45fRIc5mVUuTuL9zPT4c4m4+JMwOvu
-         uaDTsmgZfr/mKmRj0VTO8ueQ3HQKYz7xmUF/lGYfH8x+54EtsWm74B2xv77bNSczLweb
-         BXBZKDS/CuIM0+iaX/HNLqccz/LbAsYCAsVww2C0F/s2Be7FjRPGy3wLlx/oCZpKSLsW
-         YnU8oMCT4GZwwHzt4yqWFpStNFHWGdYcMwZELgVFrgqEtHYMV+PJau7/vY0vuoazQaBA
-         xo1ZAYhUCK2tiFkn23og3ACgQdbtaTIZosAf1HQ38+agt8YI2cNeRO4fPC92KlVZ6W0n
-         22Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=c+RnJg+YBli6p8sNuDposTuZckavN4QWRM6jD719bZY=;
-        b=OOi87abM8COfqBpPwu4QAkh6sXlIXWTzPIPKc/qoUsVlftZRMBXhQGo1NEzU2OFqFx
-         biW7i0YJQZP5PsEzn9yCc3wThxtdTxkuKIKEGojItQcjyQRzAJvTUqv7xmsubcSihw82
-         hgKFJbxl1RHV1FAjDwVkHRGAzc/LFYKQAgj6AKwCdvmsQYTVhQ/euCo3r0iwFYF1JYwO
-         jdsgRAJxjo9XNji9MUyAxhZ70af9K7n686OSvwS5nEwe4gGxCW4ZHwzEM8Hp/v3CFrh+
-         hom4mCpQIow9CTr6Kq2yKitxayO/An6KJtZaAa8lPTHByNQ7qyWEHPdMFT6Nk11w1XR5
-         Vh9A==
-X-Gm-Message-State: ACrzQf38jH59im57ZBw8zvJnxzPFL9hPjgoZwNQjD+ytR/ZP/16HIYz0
-        d9oP3f7YoNKgJRMqzLvauXWD32KZ6vEP6aJrx57DNTMT0W4=
-X-Google-Smtp-Source: AMsMyM65atck8NSqUvSGVuJukP+9gLyobARmahC59Y1AJTtt2Bj3ejnjZufNECXrRdRzbMvZdNAAvNKBsaw++oNKaZI=
-X-Received: by 2002:a5b:48d:0:b0:6a1:881a:5d73 with SMTP id
- n13-20020a5b048d000000b006a1881a5d73mr22391845ybp.510.1664211559867; Mon, 26
- Sep 2022 09:59:19 -0700 (PDT)
+        with ESMTP id S230501AbiIZRhu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Sep 2022 13:37:50 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6142A87697
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 10:00:11 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 05CE7142A96;
+        Mon, 26 Sep 2022 13:00:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=qKPhsyhJRZwY
+        zp/IXldHskhewaO5RA4cpGV9CaX4SMo=; b=XR1VNlAvS5Wnx1MfKmb8LFSH5XAn
+        UWPBao6Xehxt1V5HOoTcwLukFMWanCK57a93e0/JDWJv9epVMIPwhDaSBPjBeKbT
+        0LtRofa0FXE5AKQsbrYNm/otkaq0ARqaUsORfeaZjWWQihlfEh2Wxtu5lMbrIXDX
+        Igiitg5xfHYKzWc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E97BE142A93;
+        Mon, 26 Sep 2022 13:00:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 32B9F142A80;
+        Mon, 26 Sep 2022 13:00:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Claus Fischer <claus.fischer@clausfischer.com>
+Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: Scriptable mode for git bisect
+References: <Yy4c6/jHupgThj7j@clausfischer.com> <Yy5g80OtVG4op8L1@danh.dev>
+        <xmqqwn9srb9e.fsf@gitster.g>
+        <69B998A9-0E3E-45F0-8733-F2A3F11625A5@clausfischer.com>
+        <Yy+n7/NolP5rCpwX@danh.dev>
+        <C9CD178B-7A21-4F89-9D74-7CBD68DBF0C2@clausfischer.com>
+Date:   Mon, 26 Sep 2022 10:00:02 -0700
+In-Reply-To: <C9CD178B-7A21-4F89-9D74-7CBD68DBF0C2@clausfischer.com> (Claus
+        Fischer's message of "Sun, 25 Sep 2022 14:42:43 +0200")
+Message-ID: <xmqqo7v2qdf1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20220922232947.631309-1-calvinwan@google.com> <20220922232947.631309-2-calvinwan@google.com>
- <220923.86sfki4ize.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220923.86sfki4ize.gmgdl@evledraar.gmail.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Mon, 26 Sep 2022 09:59:08 -0700
-Message-ID: <CAFySSZB=bPWpK25Gwtm06cOyupGeUYo6qLC4PWPwaS2pNn22hA@mail.gmail.com>
-Subject: Re: [PATCH 1/4] run-command: add pipe_output to run_processes_parallel
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, emilyshaffer@google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: AA840E8E-3DBC-11ED-868A-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> An earlier version of that series simply changed the API to pass an
-> "opts" struct instead:
-> https://lore.kernel.org/git/patch-v2-2.8-5f0a6e9925f-20220518T195858Z-avarab@gmail.com/
->
-> I really should have submitted those post-release cleanup patches
-> already, and I'm not sure whether the right thing at this point is to
-> take this & do the cleanup for "ungroup" *and* this new argument later.
->
-> But maybe you're interested in cherry-picking & adjusting the relevant
-> part of that series for this one? I.e. we're not in some post-release
-> regression hurry, so rather than extending the use of this odd interface
-> we could (and maybe should) just fix how we're doing it first.
+Claus Fischer <claus.fischer@clausfischer.com> writes:
 
-I'll go ahead and give this a try. I was also a little bit surprised that
-"ungroup" was set this way, but didn't realize it was for a quick fix.
+> Oh thank you, I didn=E2=80=99t know that / didn=E2=80=99t grasp that wh=
+ile reading (apparently too fast) your previous mails.
+>
+> That is way nicer.
+>
+> Thank you.
+>
+> Claus
 
->
-> On the implementation:
->
-> > + * If the "pipe_output" option is specified, the output will be piped
-> > + * to task_finished_fn in the "struct strbuf *out" variable. The output
-> > + * will still be printed unless the callback resets the strbuf. The
-> > + * "pipe_output" option can be enabled by setting the global
-> > + * "run_processes_parallel_pipe_output" to "1" before invoking
-> > + * run_processes_parallel(), it will be set back to "0" as soon as the
-> > + * API reads that setting.
->
-> ...okey, but...
->
-> > +static int task_finished_pipe_output(int result,
-> > +                      struct strbuf *err,
-> > +                      void *pp_cb,
-> > +                      void *pp_task_cb)
-> > +{
-> > +     if (err && pipe_output) {
-> > +             fprintf(stderr, "%s", err->buf);
-> > +             strbuf_reset(err);
->
-> ...my memory's hazy, and I haven't re-logged in any detail, but is it
-> really the API interface here that the "output" callback function is
-> responsible for resetting the strbuf that the API gives to it?
->
-> That seems backwards to me, and e.g. a look at "start_failure" shows
-> that we strbuf_reset() the "err".
->
-> What's the point of doing it in the API consumer? If it doesn't do it
-> we'll presumably keep accumulating output. Is there a use-case for that?
->
-> Or perhaps it's not needed & this is really just misleading boilerplate?
+Now I am puzzled by your earlier response in the thread, e.g.
 
-Ultimately it is not needed -- I added it as an example to showcase that
-the output is correctly being piped to "task_finished_pipe_output". The
-reset is necessary in this case to prevent the output from being printed
-twice. I'm not sure how exactly else I would go about testing "pipe_output".
+  https://lore.kernel.org/git/E10623C2-FF73-4E5B-AD28-C255B02F3B0F@clausf=
+ischer.com/
 
->
-> > @@ -140,6 +140,11 @@ test_expect_success 'run_command runs ungrouped in parallel with more jobs avail
-> >       test_line_count = 4 err
-> >  '
-> >
-> > +test_expect_success 'run_command runs pipe_output in parallel with more jobs available than tasks' '
-> > +     test-tool run-command --pipe-output run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-> > +     test_cmp expect actual
-> > +'
-> > +
->
-> Like the global argument, the copy/pasting for "ungroup" was mostly a
-> matter of expediency.
->
-> But at least in that case we have a different assertion (test_cmp
-> v.s. test_line_count).
->
-> But here this test case seems to be exactly the same as for the
-> "vanilla" version.
->
-> So can't we make this some:
->
->         for opt in '' '--pipe-output'
->         do
->                 test_expect_success ...
->         done
->
-> ?
+In any case, it is good to see that your issue has been solved.
 
-Yes we can -- but I may need to rethink how instead I should be testing
-this option?
