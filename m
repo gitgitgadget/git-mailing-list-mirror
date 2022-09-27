@@ -2,131 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23E0DC6FA83
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 13:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1B27C07E9D
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 13:57:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231971AbiI0Nz6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 09:55:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54586 "EHLO
+        id S232180AbiI0N5H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 09:57:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231366AbiI0Nzy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 09:55:54 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9EE7B2D81
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 06:55:52 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id r134so7771602iod.8
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 06:55:52 -0700 (PDT)
+        with ESMTP id S231906AbiI0N5F (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 09:57:05 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4525313F2A6
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 06:57:04 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id fn7-20020a05600c688700b003b4fb113b86so5523448wmb.0
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 06:57:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=mKOK9XziAoTKHq5SPBTojsSr75SYZeDRp2r9wKG9J1U=;
-        b=KD7OxdgJ2kZ42Hccx5yzNIdlYzkU9zUT8upFTMDSNaiIB6Yb9UNDysoQg2BGwpq2lv
-         5VPcPKmGr8tnarvTzEVdPw6j8klNaOCs4pTxCXgJm1Zgpi3yZsX2dLteDZAsftNVuBBN
-         lRzv9YtJ09ORffC6TiFP2uu1Oyg717C1h1NR/2rvvALDWq/2Aj1MNDcrrd9TAbzEjbgI
-         Fp8Ktirz3enLKJ4olP+dVahLopi2ZaKraANODcy572zGIo+TsG4iLCCEg6cmA4u4Tucg
-         Mb58ZitVoWMAHmQcit12b94WorcJW/Aniwj3jV0gqPuKQe7dUnAnZsoiqUlZsH2rKn3d
-         /vYw==
+        d=gmail.com; s=20210112;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date;
+        bh=vvlPW+uVrgU2Ek71aQDEtfMZ+aBwmfBeDFV4qfU9SRg=;
+        b=ldrLCQvteQcDxCmb/ADFVOJSrTlwvpxN5QKGrGfZCwRsLhnGj34BugewrUHGkYB6K/
+         5nMLX2bIXimAgwbCRh/wFCTvJPtzXd9ecf44HnEXw9pPped/jCbudkAAnFKz7jKLZBPb
+         p9lMULBO6QYXgt66R+hs/BDRmZreYqlAvxSU6NKLNl1CQom84l4R7uE6ANTO1cX8r+ZY
+         5Ex8Jr44qpc/hqXfTmfk9mBTG9HGsi0bXoMH5OfLsc1A2WdK+tr5+x5ytHYg38wlnmIA
+         5JhDqjoVgiw7I1LWbGwJncqRYLr8CQPMRtjpxk6+fPS1Wf1IUTOKzofpxeyW9zoe0Kh7
+         HAbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=mKOK9XziAoTKHq5SPBTojsSr75SYZeDRp2r9wKG9J1U=;
-        b=faRtNUjdNlXcuRNkr396L7tBvHQn7qHDDIm9q7K/KH5nQleMawg+wa35g0IJMkz9wy
-         nuhBr3jQ9R3P9vx2UI9ri1Vq+5oKuaTW/KVE60cGB7MLshdnV9y0fCde53a8ZuI9wYd7
-         CzpTXZDv2wqBlUgUkfPXSa3wJHITaWLXECFYecvmbMdzpxsRhsAIG+XLacPjEK3gvY0z
-         2JQx8KlO8mTrHr4eMSNmqGQQOnUqSNnf8666FwTi78JhO3gLCat9gwdaGGNhcM+V2rjV
-         aABhRzJ6PC0DyCJiV2xszLjX4ku7PAHKA/22VTopYAYsKrLlEx39mewP954ezQGfUZY+
-         Nz7w==
-X-Gm-Message-State: ACrzQf3GMA6hN9zDxh6EwL2bZ2vXXoiBY3KraIxuCDBvUVTalJ2LypFa
-        M9QHh2BcB+UAQChjO1oCcxtsP20HKpDM
-X-Google-Smtp-Source: AMsMyM7lx/RM2k68NNZSF3DFgeXZvgRRzqNym/SmL+Q/B7bJ+RS7Fh4Bph5izAKiRj136juuhhnm4Q==
-X-Received: by 2002:a05:6638:3828:b0:35a:415e:fb8f with SMTP id i40-20020a056638382800b0035a415efb8fmr15013665jav.71.1664286952293;
-        Tue, 27 Sep 2022 06:55:52 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:6d75:31c0:4041:5d27? ([2600:1700:e72:80a0:6d75:31c0:4041:5d27])
-        by smtp.gmail.com with ESMTPSA id e14-20020a02860e000000b00349ba0d1137sm652115jai.24.2022.09.27.06.55.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Sep 2022 06:55:51 -0700 (PDT)
-Message-ID: <30b43cee-e7fb-067f-8a84-ff1fef5444db@github.com>
-Date:   Tue, 27 Sep 2022 09:55:50 -0400
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=vvlPW+uVrgU2Ek71aQDEtfMZ+aBwmfBeDFV4qfU9SRg=;
+        b=AEuBO4XxF3+vY5IROdkIhrIhbPM8YElgJmVwSRO+IX8XIHpgd6DrUbDMA4LNLzgBxK
+         5KjMlZmww89SWKcvcwDV08rpjRkM5NyP/mjn7Xcjtvbfki4VBEFa3YK1lt+Je+wDqPxn
+         9gLXggFn4N6UqOETI1JZT5rGliqAc+PGdPGu1wmZMLm3yMZyAw3QQuF5qka2Uk9w/M37
+         vfwRqFxOLJk4t7OjbHf8GHfQkvD3SMsDeKa3Dqzr2BH0Xab997IShdzWxjweXl7H/nc+
+         OSOcrbzZT/zsjNuOP9wiG6bcxbA7adzeptTJ8Ub9uLsVa9Ibrs/gapdEEiwgUhiBm++r
+         yP4w==
+X-Gm-Message-State: ACrzQf0KngGNliWIG6XYkvtdsYgUFtbSYudWAu7CetkXIvXtdWQBjJhK
+        vXne0smvX2t+lRPdNKEPhSHW7bSQchI=
+X-Google-Smtp-Source: AMsMyM4NTp+fVXfMHznYFXHhIT1jN0y4M2r/hLzKVV7bqenwlflMwZmkApHGR5t4Dx1YjDDPfosaVA==
+X-Received: by 2002:a05:600c:41c3:b0:3b4:9668:655a with SMTP id t3-20020a05600c41c300b003b49668655amr2832510wmh.36.1664287022426;
+        Tue, 27 Sep 2022 06:57:02 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bg42-20020a05600c3caa00b003a5f4fccd4asm15172032wmb.35.2022.09.27.06.57.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Sep 2022 06:57:01 -0700 (PDT)
+Message-Id: <pull.1358.v4.git.1664287021.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
+References: <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 27 Sep 2022 13:56:57 +0000
+Subject: [PATCH v4 0/4] scalar: make unregister idempotent
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v3 1/3] maintenance: add 'unregister --force'
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, vdye@github.com,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
- <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
- <8a8bffaec89e55da0c5bcac2f04331e0d4e69790.1664218087.git.gitgitgadget@gmail.com>
- <xmqqa66lby1w.fsf@gitster.g>
- <b1e6f118-046c-42f8-01a8-2543e792685a@github.com>
- <63aa68fb-c215-a79f-e3c6-1c1a489220e2@github.com>
- <220927.86a66lylk5.gmgdl@evledraar.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <220927.86a66lylk5.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, vdye@github.com,
+        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/27/2022 9:36 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Tue, Sep 27 2022, Derrick Stolee wrote:
->> Of course, there is a reason why we don't check for NULL here,
->> and it's because -Werror=address complains when we use a non-pointer
->> value in the macro:
->>
->> string-list.h:146:28: error: the address of ‘friendly_ref_names’ will always evaluate as ‘true’ [-Werror=address]
->>   146 |         for (item = (list) ? (list)->items : NULL;      \
->>       |
->>
->> I tried searching for a way to suppress this error in a particular
->> case like this (perhaps using something like an attribute?), but I
->> couldn't find anything.
-> 
-> We discussed this exact issue just a few months ago, see:
-> https://lore.kernel.org/git/220614.86czfcytlz.gmgdl@evledraar.gmail.com/
+I noticed this while we were updating the microsoft/git fork to include
+v2.38.0-rc0. I don't think 'git maintenance unregister' was idempotent
+before, but instead some change in 'scalar unregister' led to it relying on
+the return code of 'git maintenance unregister'. Our functional tests expect
+'scalar unregister' to be idempotent, and I think that's a good pattern for
+'git maintenance unregister', so I'm fixing it at that layer.
 
-Thanks for finding this thread. I knew it was vaguely familiar.
- 
-> In general I don't think we should be teaching
-> for_each_string_list_item() to handle NULL.
-> 
-> Instead most callers that need to deal with a "NULL" list should
-> probably just use a list that's never NULL. See:
-> https://lore.kernel.org/git/220616.86bkuswuh5.gmgdl@evledraar.gmail.com/
-> 
-> In this case however it seems perfectly reasonable to return a valid
-> pointer or NULL, and the function documents as much:
-> 	
-> 	/**
-> 	 * Finds and returns the value list, sorted in order of increasing priority
-> 	 * for the configuration variable `key`. When the configuration variable
-> 	 * `key` is not found, returns NULL. The caller should not free or modify
-> 	 * the returned pointer, as it is owned by the cache.
-> 	 */
-> 	const struct string_list *git_config_get_value_multi(const char *key);
+Despite finding this during the 2.38.0-rc0 integration, this isn't critical
+to the release.
 
-It documents that it will never return an empty list, and instead will
-return NULL. There are several places that check that condition explicitly.
-Converting them is not terribly hard, though, and I'll send an RFC soon
-that performs that conversion.
+Perhaps an argument could be made that "failure means it wasn't registered
+before", but I think that isn't terribly helpful.
 
-> This also gives the reader & compiler more information to e.g. eliminate
-> dead code. You're calling maintpath() unconditionally, but if you have
-> no config & the user provided --force we'll never end up using it, so we
-> can avoid allocating it in the first place.
+Our functional tests are running the unregister subcommand to disable
+maintenance in order to run tests on the object store (such as running
+maintenance commands in the foreground and checking the object store
+afterwards). This is a form of automation using 'unregister' as a check that
+maintenance will not run at the same time, and it doesn't care if
+maintenance was already disabled. I can imagine other scripting scenarios
+wanting that kind of guarantee.
 
-While you're correct that we could avoid that allocation, it makes the
-code look terrible and hard to reason about, so I won't make that change.
 
-Thanks,
--Stolee
-  
+Updates in v4
+=============
+
+ * The previous version would segfault if 'git maintenance unregister' was
+   called with an empty 'maintenance.repo' config list. This scenario is
+   fixed and tested.
+ * Part of the issue is that for_each_string_list_item() cannot handle a
+   NULL value. The macro can't be made smarter without failing
+   -Werror=address issues, so for now I added a patch that adds a warning to
+   its doc comment.
+
+
+Updates in v3
+=============
+
+ * The --force option now uses OPT_FORCE and is hidden from autocomplete.
+ * A new commit is added that removes the use of Git subprocesses in favor
+   of git_config_set_multivar_in_file_gently().
+
+
+Updates in v2
+=============
+
+ * This is now a two-patch series.
+ * I rebased onto v2.38.0-rc1 for two reasons: Scalar is now merged, and the
+   usage for 'git maintenance unregister' removed its translation markers.
+ * Instead of making git maintenance unregister idempotent, add a --force
+   option for those who do not want to require that the repository is
+   already registered.
+ * Make scalar unregister idempotent, with reasons argued in patch 2.
+
+Thanks, -Stolee
+
+Derrick Stolee (4):
+  maintenance: add 'unregister --force'
+  scalar: make 'unregister' idempotent
+  gc: replace config subprocesses with API calls
+  string-list: document iterator behavior on NULL input
+
+ Documentation/git-maintenance.txt |  6 +-
+ builtin/gc.c                      | 98 +++++++++++++++++++++----------
+ scalar.c                          |  5 +-
+ string-list.h                     |  7 ++-
+ t/t7900-maintenance.sh            | 11 +++-
+ t/t9210-scalar.sh                 |  5 +-
+ 6 files changed, 96 insertions(+), 36 deletions(-)
+
+
+base-commit: 1b3d6e17fe83eb6f79ffbac2f2c61bbf1eaef5f8
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1358%2Fderrickstolee%2Fmaintenance-unregister-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1358/derrickstolee/maintenance-unregister-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1358
+
+Range-diff vs v3:
+
+ 1:  8a8bffaec89 ! 1:  c3301e21109 maintenance: add 'unregister --force'
+     @@ Commit message
+          '--force' option that will siltently succeed if the repository is not
+          already registered.
+      
+     +    Also add an extra test of 'git maintenance unregister' at a point where
+     +    there are no registered repositories. This should fail without --force.
+     +
+          Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+      
+       ## Documentation/git-maintenance.txt ##
+     @@ builtin/gc.c: done:
+       	char *maintpath = get_maintpath();
+      +	int found = 0;
+      +	struct string_list_item *item;
+     -+	const struct string_list *list = git_config_get_value_multi(key);
+     ++	const struct string_list *list;
+       
+       	argc = parse_options(argc, argv, prefix, options,
+       			     builtin_maintenance_unregister_usage, 0);
+     @@ builtin/gc.c: static int maintenance_unregister(int argc, const char **argv, con
+      -	config_unset.git_cmd = 1;
+      -	strvec_pushl(&config_unset.args, "config", "--global", "--unset",
+      -		     "--fixed-value", "maintenance.repo", maintpath, NULL);
+     -+	for_each_string_list_item(item, list) {
+     -+		if (!strcmp(maintpath, item->string)) {
+     -+			found = 1;
+     -+			break;
+     ++	list = git_config_get_value_multi(key);
+     ++	if (list) {
+     ++		for_each_string_list_item(item, list) {
+     ++			if (!strcmp(maintpath, item->string)) {
+     ++				found = 1;
+     ++				break;
+     ++			}
+      +		}
+      +	}
+      +
+     @@ builtin/gc.c: static int maintenance_unregister(int argc, const char **argv, con
+       }
+      
+       ## t/t7900-maintenance.sh ##
+     +@@ t/t7900-maintenance.sh: test_expect_success 'maintenance.strategy inheritance' '
+     + 
+     + test_expect_success 'register and unregister' '
+     + 	test_when_finished git config --global --unset-all maintenance.repo &&
+     ++
+     ++	test_must_fail git maintenance unregister 2>err &&
+     ++	grep "is not registered" err &&
+     ++	git maintenance unregister --force &&
+     ++
+     + 	git config --global --add maintenance.repo /existing1 &&
+     + 	git config --global --add maintenance.repo /existing2 &&
+     + 	git config --global --get-all maintenance.repo >before &&
+      @@ t/t7900-maintenance.sh: test_expect_success 'register and unregister' '
+       
+       	git maintenance unregister &&
+ 2:  06d5ef3fc57 = 2:  a768c326c0f scalar: make 'unregister' idempotent
+ 3:  260d7bee36e = 3:  5aa9cc1d6b9 gc: replace config subprocesses with API calls
+ -:  ----------- > 4:  73a262cdca4 string-list: document iterator behavior on NULL input
+
+-- 
+gitgitgadget
