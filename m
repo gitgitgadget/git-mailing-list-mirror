@@ -2,97 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D8ECC07E9D
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 22:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5159EC07E9D
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 22:56:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229841AbiI0WtE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 18:49:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33296 "EHLO
+        id S231881AbiI0W4r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 18:56:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229538AbiI0WtC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 18:49:02 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19F9EB56FF
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 15:49:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1664318938;
-        bh=w+lwbr6LiXrpPrrRbv22V4Xl9jdJ7R1OrocOjvyg5sw=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=Sh/BqD+eQguNt6Wk5DYO4T6ZWB2dXuNC95d5EXhoWoQCaR9A5z2NoDutF+pnsBxZn
-         MVnlHEfhrGm6xezzA6UvJLvnevvZVtTRRMB5YGoVu/MgGvPjywQSnuoi6w2oZqAJ+l
-         65jNCR0p8tz87z3fV7SLORpyPOY+qKqHL3Y5fWOY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from fv-az71-629.54gadnqkfkfezo4rfhga4mummb.dx.internal.cloudapp.net
- ([20.237.228.24]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MeCpb-1pCuz70iBj-00bIz6; Wed, 28 Sep 2022 00:48:58 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.38.0-rc2
-Date:   Tue, 27 Sep 2022 22:48:54 +0000
-Message-Id: <20220927224855.4682-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.37.3
-Content-Type: text/plain; charset=UTF-8
+        with ESMTP id S231519AbiI0W4e (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 18:56:34 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F2F27E038
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 15:56:33 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id u24so395010edb.11
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 15:56:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=OjWcOgpWH3RIXKd7SSKk77wjtYj0beKlkfmrpnkOHL4=;
+        b=BOVi8xplta/wmaUcfJSL9QPjpAGNJdW+19Snjz9ZrubmZKmHNQJDFen0BaTnzCoQ7K
+         2qdcf/bE5TS1pYFxj9hr3ez2KzAal7rGhJKSHdPidu/ooSyM+ScA1WEkrGXcvJvcHpyd
+         golrPGFjtkLV9cnDO4YemjWVpVPLvXJsrSze5KLmFMHD+3TC5LAIL5TwpcBqr2PJZPEe
+         mp0eFlDbgdUJk+i5xoRxni46f9iiF8u7SDoR46jFSSME+uanNqaqV29s0uHTszy9kD+f
+         dURvJOWBSKLrn1aLQQP4MNNt+d3E6C0wQOvN/Twhp1DBRkWphJq7GvQAhJpixmFyx8gw
+         Rhfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=OjWcOgpWH3RIXKd7SSKk77wjtYj0beKlkfmrpnkOHL4=;
+        b=1zCXc6CqPIRDWtOP1b11jHNq/FqvOS+hSIvmRoK9efNquaxjHCLViCfUI5Hx7v/Ha4
+         mIvG7ldntvMG84kPM6ZsbHUkzZrWEt/sA2JcFwyfmx9LrDQ3XzOY+qDNwIjBLg4r0s9A
+         1/IOwC9ZKIqAjOPA6AqnotmpaEtk7L6lnFy5XoRsLGAOZVGDjirVorhObaoplRmRAFhw
+         +Zvru//nu0xcidJ3ZEibnCNc3lNkbk4/DdLLhDkxy3EyOoFHU0uRGpx+WBsFm44N1fcm
+         N0O2FEx+HZf70vBEyxEDf7l0GZYrKAoaMNT9hKQ+CEqL1Ze1Co4VuhYBpUhfHkU1H0o7
+         q2/Q==
+X-Gm-Message-State: ACrzQf3ITMaW6Z7UM/KatnL1Pnf9fWFjry0w7hFsFC7my8VVOvUjFJ+n
+        3s8eIvasBEwT4dZ9ukcCB1dqrzANm7LOYcX9eCYniA==
+X-Google-Smtp-Source: AMsMyM6GiNtQcZuMm1wmBkPnaAuWQY/TRsax885ZwyP4ck452TKF3MidtPAuyiRPlgImi9EvAJHBKygw2krn2MN8lWg=
+X-Received: by 2002:a05:6402:2201:b0:44f:443e:2a78 with SMTP id
+ cq1-20020a056402220100b0044f443e2a78mr29685123edb.76.1664319391595; Tue, 27
+ Sep 2022 15:56:31 -0700 (PDT)
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:sZANF5ClhemX/Q0bP+eupFmh5akgL0zpbAxzzvEKgH51qBlhB+G
- Cw1/oslRfaLV3Sl2846gafVexXczfGm5zBG/+QP83sOnbZApzB/EiHPt07jAdfyQMc7RH0w
- dlujpsvyjDGK5atf9pkzXETUy9ANiwvP80+udTvi8gu0ckLkQ6ehV5AqELoG65Knmh59+8+
- ZibiNUo7/rcyxC7kX9XJw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:kZMGHSZJuiI=:qrl5NqrlrWSOAztLqVnDx5
- ElZzi2korn8W0om8Q+8PxMu9Tw23x2lG051I/e1NM8gL583fVTxUUGsSXFywCPvPb8iW2Ra3C
- 8g0JsmsX6ZeGBSbZ36HF6St3rmaA1U6s4pFoemWiRJdYVjCLldg9OLHejsrwTqx9Dw4VVv6M0
- BUiTL7UL+0j5ewPbNdpAddWug3c2CCYVMIC0Z28nFVhjp5s1DBLeDxKfmT50VlL9qgM7FvIcB
- 5hUsqqQZOWOcdM9K/5VWr1BBv8I5HhmVrX9XNUcGiTMLmxV2pm/Y2vaCB20PF7mRYWydRRtyH
- AFzzk6z8u9fYlnPDaUcf+NXAIyjtmr8Hudp9jhErRs+c0xzyk0CZ+ArHeos8X/AtdqrH64Zay
- H23kOkKoiU/FnJZUhnHDQLKNsoKjPvIWBkBwjkk5V/u0sUjRleilBpAukYCqrDn925BOwdfMg
- lvAWKP8R+aCZmQB1RoHafjAAONK75JdlqkPduovO/2a8Iwej84agv3Lm50QWOT9KIcOB8SNi+
- lPRr0pidrtrjHx5cPagR2TUNe4YDp/aMrfD3tGoF09utdJRCnnq1tgGC01DyixDx+Dm3O9aG2
- BCPR96UsVolptmLu2XO16ZTqQ6gP1lMYB/cvDte+biOng3IJu8gL956zxdEstR9uzUrwi6lmh
- 7ed4ICDa7/TFNrRO9YRCDR4SMjx0gf7wKtf5bQO0N7W9ZaJtSBUwYH5J2e9xRCXiq6urwsljr
- j7bcuPN7Px+HrqzmQ/yBGrpEQnN10i1vNBUhGj/hH+NGuhrWdegYEcFFmijxTX43NOKls1jQ3
- bst3oArJKFx/Wg7+QIkXUJX+i3GN86htjJ40rN/OwCzq1ObN/m+QhnkyMm3OWh3aO2oMqH7eR
- q14AhNvahgluOmWoYSmhGsKh6S3kORbNPgYY8qm4Kwc2JBfI4haMSZGK/6vxieNFNSDGm3XQA
- JBhzw/faYBHlHar5FHG7T9xzyncRc6V3/6zB9EytfJkrduGOjdI832KB2+ar5/fM8Dp9JEQXP
- aRgcBvRbadiWA2OG2z5jRn7N/LancTMS2GbeD7vGb1HZUEql905U8hCHlVNcJtqm7XG58EEzf
- KFdwPscOmASUsT0sZd2P43pTt4RpcOHewec2BmxmvNsu6KDwVcrNFWeNhjA0esNrXELIbAVay
- faSkcghU+LoAczDdR568Z8XBBv
+References: <pull.1345.git.1662071998812.gitgitgadget@gmail.com> <xmqqa67h8zac.fsf@gitster.g>
+In-Reply-To: <xmqqa67h8zac.fsf@gitster.g>
+From:   Julia Ramer <prplr@github.com>
+Date:   Tue, 27 Sep 2022 15:56:20 -0700
+Message-ID: <CADq8SzUUoi6=6ggxkeTUf2y0WmeAMMjuq8_OCej0smF7OabPiQ@mail.gmail.com>
+Subject: Re: [PATCH] embargoed releases: also describe the git-security list
+ and the process
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Julia Ramer via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, git-security@googlegroups.com,
+        Julia Ramer <gitprplr@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+Taking these responses one by one:
 
-I hereby announce that Git for Windows 2.38.0-rc2 is available from:
+All of Junio's edits and call-outs are reasonable and I'll incorporate
+them into the next version.
 
-    https://github.com/git-for-windows/git/releases/tag/v2.38.0-rc2.windows.1
+Julia
+(she/her)
 
-Changes since Git for Windows v2.37.3 (August 30th 2022)
-
-New Features
-
-  * Comes with Git v2.38.0-rc2.
-  * Comes with cURL v7.85.0.
-  * Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
-    3.3.6.
-  * Comes with BusyBox v1.34.0.19688.985b51cf7.
-  * The scalar command is now included. Scalar is a helper to
-    automatically configure your (large) Git repositories to take
-    advantage of the latest and greatest features. Note: If you work
-    with repositories hosted on Azure Repos, use Microsoft's fork of
-    Git for the best user experience.
-
-Git-2.38.0-rc2-64-bit.exe | 0119ba61071b45fb6e6c647473192c1513db568e43310cba8150e842cc526ef9
-Git-2.38.0-rc2-32-bit.exe | cd5735be6047512cd3d52fcc7d152930d28c6e1d89245273d4cf1594e03c2211
-PortableGit-2.38.0-rc2-64-bit.7z.exe | 5abe7fbcf30d028f9cfbc0bb9bdf418f04afe06f2131cca5bc5ca5b8823d8c5b
-PortableGit-2.38.0-rc2-32-bit.7z.exe | 718b21123565d4bd0676ffd8bf74a5ef736b12e489c600d37285fada29b30e0e
-MinGit-2.38.0-rc2-64-bit.zip | c9005c8c48c30d93aaa2d401d2902bdce5cdebd1bb21f3207dac6d3cf5fff913
-MinGit-2.38.0-rc2-32-bit.zip | ace20517a2cd2e7940e79438c439010cb43ba95bd0170facd8bd72148e20f1ff
-MinGit-2.38.0-rc2-busybox-64-bit.zip | 64e5cac970b6b08ce10237fffce1a666fae46ab87896032ee996c6f3b6c94710
-MinGit-2.38.0-rc2-busybox-32-bit.zip | 659c0d517dc312e42ccd3941c59e61989003173706ba13fbf9d11a02537f9a4d
-Git-2.38.0-rc2-64-bit.tar.bz2 | f12622455408dc4febf8b7c8666ac7a30c0794697e13f71bd6c3df227aa1e22c
-Git-2.38.0-rc2-32-bit.tar.bz2 | 86388c90c6eaf46ea420d5969ef2d3c08b4bed3629136904daf0a129ab91cbf9
-
-Ciao,
-Johannes
+On Fri, Sep 2, 2022 at 10:24 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Julia Ramer via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Julia Ramer <gitprplr@gmail.com>
+> >
+> > With the recent turnover on the git-security list, questions came up how
+> > things are usually run. Rather than answering questions individually,
+> > extend Git's existing documentation about security vulnerabilities to
+> > describe the git-security mailing list, how things are run on that list,
+> > and what to expect throughout the process from the time a security bug
+> > is reported all the way to the time when a fix is released.
+>
+> Thanks for writing this down.
+>
+> > +- Once the review has settled and everyone involved in the review agrees that
+> > +  the patches are ready, the Git maintainer determines a release date as well
+>
+> s/maintainer determines/& and others determine/ or "stakeholders
+> discuss and agree on".  You might want to mention that the schedule
+> for disclosure and release tend to be constrained by so called patch
+> Tuesday, which is the least flexible among various binary packagers.
+>
+> > +- Subsequently, branches with the fixes are pushed to private repositories that
+> > +  are owned by the Git project, with tightly controlled access.
+> > +
+> > +- The tags are created by the Git maintainer and pushed to the same
+> > +  repositories.
+>
+> Between this point in time when the tags are prepared and release
+> materials are made available to packagers and ...
+>
+> > +- Less than a week before the release, a mail with the relevant information is
+> > +  sent to <distros@vs.openwall.org> (see below), a list used to pre-announce embargoed
+> > +  releases of open source projects to the stakeholders of all major Linux
+> > +  distributions. This includes a Git bundle of the tagged version(s), but no
+> > +  further specifics of the vulnerability.
+>
+> ... the time when we start to disclose to a bit wider audience, is
+> when binary packagers are expected to prepare updates for their
+> users.  So ...
+>
+> > +
+> > +- Public communication is then prepared in advance of the release date. This
+> > +  includes blog posts and mails to the Git and Git for Windows mailing lists.
+>
+> ... the following two bullet items are better written before the
+> "Less than a week before...".
+>
+> > +- The Git for Windows maintainer prepares the corresponding release artifacts,
+> > +  based on the tags created that have been prepared by the Git maintainer.
+> > +
+> > +- Git for Windows release artifacts are made available under embargo to
+> > +  stakeholders via a mail to the `git-security` list.
+>
+> It also is probably a good idea to avoid singling out GfW too much.
+> Folks who package Git for macOS, BSD, Debian etc. are all expected
+> to work on the same timeline.
+>
+> > +- On the day of the release, at around 10am Pacific Time, the Git maintainer
+> > +  pushes the tag and the `master` branch to the public repository, then sends
+> > +  out an announcement mail.
+>
+> OK.  Thanks for being explicit about 10am Pacific.
+>
+> > +- Once the tag is pushed, the Git for Windows maintainer publishes the
+> > +  corresponding tag and creates a GitHub Release with the associated release
+> > +  artifacts (Git for Windows installer, Portable Git, MinGit, etc).
+> > +
+> > +- Git for Windows release is then announced via a mail to the public Git and
+> > +  Git for Windows mailing lists as well as via a tweet.
+>
+> Ditto for various distro packagers.
+>
+> > +- A mail to <oss-security@lists.openwall.org> (see below for details) is sent as a
+> > +  follow-up to the <distros@vs.openwall.org> one, describing the vulnerability in
+> > +  detail, often including a proof of concept of an exploit.
+> > +
+> > +Note: The Git project makes no guarantees about timelines, but aims to keep
+> > +embargoes reasonably short in the interest of keeping Git's users safe.
+>
+> ;-)
+>
+> --
+> You received this message because you are subscribed to the Google Groups "Git Security" group.
+> To unsubscribe from this group and stop receiving emails from it, send an email to git-security+unsubscribe@googlegroups.com.
+> To view this discussion on the web visit https://groups.google.com/d/msgid/git-security/xmqqa67h8zac.fsf%40gitster.g.
