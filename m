@@ -2,140 +2,179 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4313C6FA82
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 11:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 847F2C6FA83
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 11:44:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231946AbiI0Li0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 07:38:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42528 "EHLO
+        id S231674AbiI0Lom (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 07:44:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229951AbiI0LiY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 07:38:24 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62CC114AD7F
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 04:38:20 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-13189cd5789so1114548fac.11
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 04:38:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=1vSerMz8oe70MGwXd2pYy4CUqGTn5vndS/AonQ0o884=;
-        b=aHMnyKPNYj3bdRnmMSR0a9aDzCAtrSEEV92M0QVxPl45eeDqTyPk1gCDd+TQi3YZHH
-         nyTOnuEpo1P5p+KJuR8o6VOgx0OgxD5RcYlWqKBfKcNts/RBop4XzItbHrw40ZmnEGJ+
-         /MhJPdsyMQLNo0lcnSFyrrvfOUoemnzZDO5gAEYlgFKSR7NiM/W/87MJRAMcTeZ4Faf7
-         bmKrYu1sqYkX/A4kY65RyjPr3DZz2JIPqJQ43o27FVV4OaedQVCKvEHiufvIIsV3hem6
-         y8YGQgf6OuQ0aRXOsV79SxU2AElPKeoDp4xgVuSYh3sAAwcMVjeUcEdU1NqL2cZHByDY
-         SlsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=1vSerMz8oe70MGwXd2pYy4CUqGTn5vndS/AonQ0o884=;
-        b=Yxy6xK/gJvcRnD0LTzkVavvcdlZAKkEwdlR/x3xTFRa67HIGBc4wv5xMEs5FRGO8iq
-         G2YzqIrcIKjREtT+j0ZjQ/V1vGmQnZW/8LFIyJoNDSOqxKryrLKmv0tqNziaEDZR4B4r
-         9ulceinYK/1z8owMaD+G2uM8DQLATOoVoeQNFpvgz3EjiwtH+LuNt6pU3IlZ9LWFqVBi
-         8k3jSi8Lqlgocc2sGojHZGijjwFqPuU/TiinBK84YZz//e2QQTcBTVV1OAzKLsj0F+sJ
-         W+tXcchi3N0CJUtz7JS0a2/pqTgqPo6awuFoIexPVBEOJqp3Mmi0wzWs4i88FyDTCYlm
-         EHDQ==
-X-Gm-Message-State: ACrzQf1VdYWfi7GwvBT7lJcyn+l5npCbtEGNoaOl3Nd+4vk33J1yvoez
-        iTAxvzgvPOjEzKGRDufqOUlo
-X-Google-Smtp-Source: AMsMyM7VNndAGQalKYe0rhQFXZ2mEWV+YCvb49nAkUXSIC1dLvTBgU3gyCkH+fGbgDEB7Cj50LyIQw==
-X-Received: by 2002:a05:6870:248a:b0:131:8e5d:1bb4 with SMTP id s10-20020a056870248a00b001318e5d1bb4mr539491oaq.261.1664278699549;
-        Tue, 27 Sep 2022 04:38:19 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:6d75:31c0:4041:5d27? ([2600:1700:e72:80a0:6d75:31c0:4041:5d27])
-        by smtp.gmail.com with ESMTPSA id z21-20020a0568301db500b00638ef9bb847sm506661oti.79.2022.09.27.04.38.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Sep 2022 04:38:19 -0700 (PDT)
-Message-ID: <b1e6f118-046c-42f8-01a8-2543e792685a@github.com>
-Date:   Tue, 27 Sep 2022 07:38:17 -0400
+        with ESMTP id S231756AbiI0Loj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 07:44:39 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E1DA277
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 04:44:37 -0700 (PDT)
+Received: (qmail 30981 invoked by uid 109); 27 Sep 2022 11:44:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Sep 2022 11:44:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18189 invoked by uid 111); 27 Sep 2022 11:44:35 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Sep 2022 07:44:35 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 27 Sep 2022 07:44:35 -0400
+From:   Jeff King <peff@peff.net>
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH] tmp-objdir: do not opendir() when handling a signal
+Message-ID: <YzLiI1HZeBszsIJq@coredump.intra.peff.net>
+References: <pull.1348.git.git.1664236383785.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v3 1/3] maintenance: add 'unregister --force'
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.1358.v2.git.1663853837.gitgitgadget@gmail.com>
- <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
- <8a8bffaec89e55da0c5bcac2f04331e0d4e69790.1664218087.git.gitgitgadget@gmail.com>
- <xmqqa66lby1w.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqa66lby1w.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1348.git.git.1664236383785.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/26/2022 5:55 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Sep 26, 2022 at 11:53:03PM +0000, John Cai via GitGitGadget wrote:
+
+> One place we call tmp_objdir_create() is in git-receive-pack, where
+> we create a temporary quarantine directory "incoming". Incoming
+> objects will be written to this directory before they get moved to
+> the object directory.
 > 
->> @@ -1538,11 +1546,23 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
->>  		usage_with_options(builtin_maintenance_unregister_usage,
->>  				   options);
->>  
->> -	config_unset.git_cmd = 1;
->> -	strvec_pushl(&config_unset.args, "config", "--global", "--unset",
->> -		     "--fixed-value", "maintenance.repo", maintpath, NULL);
->> +	for_each_string_list_item(item, list) {
->> +		if (!strcmp(maintpath, item->string)) {
->> +			found = 1;
->> +			break;
->> +		}
->> +	}
+> We have observed this code leading to a deadlock:
 > 
-> Just out of curiosity, I ran this in a fresh repository and got a
-> segfault.
+> 	Thread 1 (Thread 0x7f621ba0b200 (LWP 326305)):
+> 	#0  __lll_lock_wait_private (futex=futex@entry=0x7f621bbf8b80
+> 		<main_arena>) at ./lowlevellock.c:35
+> 	#1  0x00007f621baa635b in __GI___libc_malloc
+> 		(bytes=bytes@entry=32816) at malloc.c:3064
+> 	#2  0x00007f621bae9f49 in __alloc_dir (statp=0x7fff2ea7ed60,
+> 		flags=0, close_fd=true, fd=5)
+> 		at ../sysdeps/posix/opendir.c:118
+> 	#3  opendir_tail (fd=5) at ../sysdeps/posix/opendir.c:69
+> 	#4  __opendir (name=<optimized out>)
+> 		at ../sysdeps/posix/opendir.c:92
+> 	#5  0x0000557c19c77de1 in remove_dir_recurse ()
+> 	#6  0x0000557c19d81a4f in remove_tmp_objdir_on_signal ()
+> 	#7  <signal handler called>
 
-Yikes! Thanks for catching. I think there was another instance in
-the 'register' code that I caught by tests, but I appreciate you
-catching this one.
+Yuck. Your analysis looks right, and certainly opendir() can't really
+work without allocating memory for the pointer-to-DIR.
 
->  An attached patch obviously fixes it, but I am wondering
-> if a better "fix" is to teach for_each_string_list_item() that it is
-> perfectly reasonable to see a NULL passed to it as the list, which
-> is a mere special case that the caller has a string list with 0
-> items on it.
-> 
-> Thoughts?
+> To prevent this, add a flag REMOVE_DIR_SIGNAL that allows
+> remove_dir_recurse() to know that a signal is being handled and avoid
+> calling opendir(3). One implication of this change is that when
+> signal handling, the temporary directory may not get cleaned up
+> properly.
 
-I agree that for_each_string_list_item() could handle NULL lists
-better, especially because it looks like a method and hides some
-details. Plus, wrapping the for-ish loop with an if statement is
-particularly ugly.
+It's not really "may not" here, is it? It will never get cleaned up on a
+signal now. I don't think remove_dir_recursively() will try to rmdir()
+in this case. But even if it did, we'll always have a "pack"
+subdirectory (minus the small race before we've created it).
 
-I think this might be more confusing that
-git_configset_get_value_multi() can return a NULL list instead of
-an empty list. It boils down to this diff:
+That's unfortunate, but I don't think we really have a portable
+alternative. We can't keep an exact list of files to be deleted, because
+some of them will be created by sub-processes. We could perhaps exec a
+helper that does the deletion, but that seems like a race and
+portability nightmare. On Linux, we could probably use open() and
+getdents64() to traverse, but obviously that won't work everywhere. It
+_might_ be worth having some kind of compat/ wrapper here, to let
+supported systems do as good a job as they can. But it's not like there
+aren't already cases where we might leave the tmp-objdir directory
+around (say, SIGKILL), so this is really just extending the existing
+problem to more signals.
 
-diff --git a/config.c b/config.c
-index cbb5a3bab74..39cc0534170 100644
---- a/config.c
-+++ b/config.c
-@@ -2416,8 +2416,9 @@ int git_configset_get_value(struct config_set *cs, const char *key, const char *
+I was going to suggest we should do a better job of cleaning up these
+directories via git-gc. But it looks like b3cecf49ea (tmp-objdir: new
+API for creating temporary writable databases, 2021-12-06) changed the
+default name such that a regular git-gc should do so. So I think we're
+covered there.
+
+The main case we care about is normal exit when index-pack or a hook
+sees an error, in which case we should still be cleaning up via the
+atexit() handler.
+
+So I think your patch is going in the right direction, but...
+
+>  static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
+>  {
+> -	DIR *dir;
+> +	DIR *dir = NULL;
+>  	struct dirent *e;
+>  	int ret = 0, original_len = path->len, len, kept_down = 0;
+>  	int only_empty = (flag & REMOVE_DIR_EMPTY_ONLY);
+> @@ -3261,7 +3261,10 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
+>  	}
+>  
+>  	flag &= ~REMOVE_DIR_KEEP_TOPLEVEL;
+> -	dir = opendir(path->buf);
+> +
+> +	if ((flag & REMOVE_DIR_SIGNAL) == 0)
+> +		dir = opendir(path->buf);
+> +
+>  	if (!dir) {
+>  		if (errno == ENOENT)
+>  			return keep_toplevel ? -1 : 0;
+
+We skip calling opendir() entirely, so "dir" will still be NULL. But we
+immediately start looking at errno, which will have some undefined value
+(based on some previous syscall).
+
+If we set "errno" to "EACCES" in this case, then we'd at least hit the
+rmdir() below:
+
+         if (!dir) {
+                  if (errno == ENOENT)
+                          return keep_toplevel ? -1 : 0;
+                  else if (errno == EACCES && !keep_toplevel)
+                          /*
+                           * An empty dir could be removable even if it
+                           * is unreadable:
+                           */
+                          return rmdir(path->buf);
+                  else
+                          return -1;
+          }
+
+but we know it won't really do anything for our proposed caller, since
+it will have files inside the directory that need to be removed before
+rmdir() can work.
+
+Moreover, if you were to combine REMOVE_DIR_SIGNAL with
+REMOVE_DIR_KEEP_NESTED_GIT, I suspect that the call to
+resolve_gitlink_ref() would end up with similar deadlocks. Obviously
+nobody is proposing to do that, but it is a pitfall in the API.
+
+So all of that makes me think we should not add a new flag here, but
+instead just avoid calling the function entirely from
+tmp_objdir_destroy_1().
+
+But then we can observe that tmp_objdir_destroy_1() is basically doing
+nothing if on_signal is set. So there is really no point in setting up
+the signal handler at all. We should just set up the atexit() handler.
+I.e., something like:
+
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index a8be92bca1..10549e95db 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -169,7 +169,6 @@ struct tmp_objdir *tmp_objdir_create(const char *prefix)
+ 	the_tmp_objdir = t;
+ 	if (!installed_handlers) {
+ 		atexit(remove_tmp_objdir);
+-		sigchain_push_common(remove_tmp_objdir_on_signal);
+ 		installed_handlers++;
+ 	}
  
- const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key)
- {
-+	static struct string_list empty_list = STRING_LIST_INIT_NODUP;
- 	struct config_set_element *e = configset_find_element(cs, key);
--	return e ? &e->value_list : NULL;
-+	return e ? &e->value_list : &empty_list;
- }
- 
- int git_configset_get_string(struct config_set *cs, const char *key, char **dest)
 
-However, this change causes a lot of cascading failures that
-are probably not worth tracking down.
+with the commit message explaining that we can't do the cleanup in a
+portable and signal-safe way, so we just punt on the whole concept.
 
-I'll get a patch put together that changes the behavior of
-for_each_string_list_item() and adds the missing 'unregister' test
-so we can avoid this problem.
+There's also some minor cleanup we could do elsewhere to drop the
+"on_signal" argument (which can come as part of the same patch, or on
+top).
 
-Thanks,
--Stolee
+-Peff
