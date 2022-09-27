@@ -2,163 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7431C54EE9
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 16:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5CAAC6FA82
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 16:20:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233025AbiI0QKc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 12:10:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32922 "EHLO
+        id S231993AbiI0QUx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 12:20:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231739AbiI0QKJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 12:10:09 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A874D1C6110
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 09:08:32 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id r10-20020a1c440a000000b003b494ffc00bso1610594wma.0
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 09:08:32 -0700 (PDT)
+        with ESMTP id S231453AbiI0QUt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 12:20:49 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81E1EAE873
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 09:20:48 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id lc7so21910309ejb.0
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 09:20:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date;
-        bh=lPMPN7MMbnCmpTxxioUDWegml6JRmoGtpiKZuMxOc7c=;
-        b=gnWBwqAlt0nWazLwKTnm0w9CNmT/FenvxfAKKetTo3vikkOakFe0sbd4OBRMMHMIPu
-         0c0+0nZG7Hf7Pdyl6PbiDtzVb/JiVa/QBa6TcAvn3sPll2u5xBXgdO8v+womkpE6eE6r
-         lSDn/XUJzDlXuka8/m73jHFq3B8u+yVtMWcsB3hORqeQ6hiSp0ycd2JTt+9F4lbsw3XH
-         9/tKHHWyfxM52xZAtda+5NyuN8Joh3fLDIy9/cthl8TpQSu2PgVvzS6p+3dFpvFzawOx
-         Let0/X9kbmnRuhlQSYvWyWze+IMAj0sz5OpDealXAN3JA+UfGLTOk455MqPjNnqLwkty
-         SxJg==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date;
+        bh=jAhURmnhTYmEIJDuvGXoRZYmIs2V0EgQI4nYnG3/csQ=;
+        b=cUyPXqsjmUYssWLSGl+AMlQssjwrmXctXLFn1yqop23ilWrw0P6xEmGtY4fgPzz/ao
+         mtA/QSvCVgEA/pvoVowfZdgz/bUSmZioZOMNeS2t0Mrhd6j7IWm5JW29+SXqToPff21e
+         chSVU/p2AJBltwo4ybJnzuZjvIrzzVl0hsU7EpA/gzGCz7Afika4BscCVkjYtBZyBFZ4
+         uCkH/Af7YvAaOMfQwMrxl3djo0gMUkyIOH5Fs79UbJgHHF5SZ09BjrrfYbAH8Gj5Wi4H
+         NXKg17fyAeYiLLdTRLnpgZuh/zd/y3En6j1TFJxmfDFm4+uUStb9Y4F8COtrJdxmQ8yY
+         4cAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=lPMPN7MMbnCmpTxxioUDWegml6JRmoGtpiKZuMxOc7c=;
-        b=pRYx/DbwnT4PTOUFxKvx1zKphIkeRabfGke//q1FtsCrIKw/QeOV02iZKcC7sZW7h0
-         wird1ZH0I5C9ssngvp4BGvShNgpaMAQzodbwSNkPcJOZ5IbnQAlnRjYeobXc5MzICtRS
-         oIUSWI43jBCgHP9TL0BSpSpCQJQMvbFaQUzLYVrLjoD/mczVz5RqKN98cFafwhFRp8Jw
-         Z0DtjpS4I4wWu079u6xA9CW4yVNOhRv4wpYQXIJClTNxfYOumUSaOKVEkipCXNbw1TQf
-         cUaaXY/z7oPuP1G4no/MbXIeQPiQLA07oZy9Hs05t/6ekdybT55jikuLK1ETJZHHltr2
-         efMA==
-X-Gm-Message-State: ACrzQf1pfXTTj6+DOznr2mF1gdBIQLM0BKJx63P2jKTGFyy6ydyUE+cm
-        V0vRtZd1vWjnFXfIhZjZeLVF9pyWWDM=
-X-Google-Smtp-Source: AMsMyM5TJ6M4Zg3GYnpJcjZ68wTeTb8IdCwXSyZGvZpuDebOPQhvblFeLugx/8nEyioSgBaKM7ylAw==
-X-Received: by 2002:a05:600c:21c2:b0:3b4:7272:bfd3 with SMTP id x2-20020a05600c21c200b003b47272bfd3mr3226736wmj.148.1664294910068;
-        Tue, 27 Sep 2022 09:08:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v11-20020a05600c444b00b003b4c979e6bcsm15181166wmn.10.2022.09.27.09.08.29
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=jAhURmnhTYmEIJDuvGXoRZYmIs2V0EgQI4nYnG3/csQ=;
+        b=fMOV2dXG4MsDcvcEbnYb+8tToizk3hWivN5wrCX4PLV3bSY70TsK8THHn9DaKe1XQT
+         oFz7kTSmcU2+HFepfhTMEnjMm5NiIH1A72Y3aF3a9UHKmmkmGpC/lv7dztL8I8xTUTX5
+         BYm9rE/i/PQYTiAkB52V7UwegrJYQqW5pU4PeulO5rh8Sn+CA/kxf4fSIZykzaszTISe
+         xP+8KLcqGJ1H0IUsuDz2MzjdZpJ75ev3WwqtxJT6NheYKNqk2Z5NdrhJQgrltKqbC2YQ
+         bwBSd70I46A834teIyTJdmDiWNHKT/NRv8tlFM2/NwykCKKK0Mv4l7NwjFFHYP3evNVH
+         qJyw==
+X-Gm-Message-State: ACrzQf3aRfKdNaKR8gpK8xCDURhrMkoa+8pgArQgby8RZVpGzHsL5Oop
+        wjKCpUItrdWDO436PG8er8g=
+X-Google-Smtp-Source: AMsMyM6WCVeKgQM4SMhlWGKQ9Vo2IGyoXuy/Iv6JnG8RiNGf8mnIIS0MO8gJf57f8IiXfaE0mwxE7w==
+X-Received: by 2002:a17:907:75f7:b0:77b:4579:2aee with SMTP id jz23-20020a17090775f700b0077b45792aeemr23229352ejc.529.1664295646931;
+        Tue, 27 Sep 2022 09:20:46 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id i28-20020a0564020f1c00b0044e7d69091asm1534084eda.85.2022.09.27.09.20.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Sep 2022 09:08:29 -0700 (PDT)
-Message-Id: <pull.1345.git.git.1664294909011.gitgitgadget@gmail.com>
-From:   "skrab-sah via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 27 Sep 2022 16:08:28 +0000
-Subject: [PATCH] abspath.h is created.
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 27 Sep 2022 09:20:46 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1odDK9-000SEC-1f;
+        Tue, 27 Sep 2022 18:20:45 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 3/5] config: add BUG() statement instead of possible
+ segfault
+Date:   Tue, 27 Sep 2022 18:17:40 +0200
+References: <pull.1369.git.1664287711.gitgitgadget@gmail.com>
+ <f277a7a429db8f54fa06dd1965d62ec491e6d84b.1664287711.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <f277a7a429db8f54fa06dd1965d62ec491e6d84b.1664287711.git.gitgitgadget@gmail.com>
+Message-ID: <220927.86wn9oyejm.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     skrab-sah <skrab.sah@gmail.com>, skrab-sah <skrab.sah@gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: skrab-sah <skrab.sah@gmail.com>
 
-replaced declaration of abspath.c from cache.h to abspath.h.
-abspath.h is  generated by using makeheaders tool.
+On Tue, Sep 27 2022, Derrick Stolee via GitGitGadget wrote:
 
-Signed-off-by: skrab-sah <skrab.sah@gmail.com>
----
-    abspath.h file is generated by makeheaders tool
-    
-     1. we don't need to commit the file.
-     2. added routin for abspath.c in Makefile.
+> From: Derrick Stolee <derrickstolee@github.com>
+>
+> The git_die_config() method calls git_config_get_value_multi() but
+> immediately navigates to its first value without checking if the result
+> is NULL or empty. Callers should only call git_die_config() if there is
+> at least one value for the given 'key', but such a mistaken use might
+> slip through. It would be better to show a BUG() statement than a
+> possible segfault.
+>
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  config.c | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/config.c b/config.c
+> index bf89afbdab0..0c41606c7d4 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -2833,8 +2833,13 @@ void git_die_config(const char *key, const char *err, ...)
+>  		va_end(params);
+>  	}
+>  	values = git_config_get_value_multi(key);
+> -	kv_info = values->items[values->nr - 1].util;
+> -	git_die_config_linenr(key, kv_info->filename, kv_info->linenr);
+> +
+> +	if (values && values->nr) {
+> +		kv_info = values->items[values->nr - 1].util;
+> +		git_die_config_linenr(key, kv_info->filename, kv_info->linenr);
+> +	} else {
+> +		BUG("expected a non-empty list of values");
+> +	}
+>  }
+>  
+>  /*
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1345%2Fskrab-sah%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1345/skrab-sah/master-v1
-Pull-Request: https://github.com/git/git/pull/1345
+AFAIKT the intent of the current code on "master" is that this will only
+get called if the likes of git_configset_get_string() returns < 0, not
+if it returns > 0.
 
- abspath.c | 10 ++++++++++
- abspath.h |  9 +++++++++
- cache.h   | 21 +--------------------
- 3 files changed, 20 insertions(+), 20 deletions(-)
- create mode 100644 abspath.h
+So isn't the combination of your 1/5 and this 3/5 now conflating these
+two conditions? See e.g. repo_config_get_string_tmp() and when it would
+call git_die_config().
 
-diff --git a/abspath.c b/abspath.c
-index 39e06b58486..1c163bbe651 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -262,6 +262,16 @@ char *absolute_pathdup(const char *path)
- 	return strbuf_detach(&sb, NULL);
- }
- 
-+/*
-+ * Concatenate "prefix" (if len is non-zero) and "path", with no
-+ * connecting characters (so "prefix" should end with a "/").
-+ * Unlike prefix_path, this should be used if the named file does
-+ * not have to interact with index entry; i.e. name of a random file
-+ * on the filesystem.
-+ *
-+ * The return value is always a newly allocated string (even if the
-+ * prefix was empty).
-+ */
- char *prefix_filename(const char *pfx, const char *arg)
- {
- 	struct strbuf path = STRBUF_INIT;
-diff --git a/abspath.h b/abspath.h
-new file mode 100644
-index 00000000000..edebc3a53ba
---- /dev/null
-+++ b/abspath.h
-@@ -0,0 +1,9 @@
-+/* This file was automatically generated.  Do not edit! */
-+#undef INTERFACE
-+char *prefix_filename(const char *pfx,const char *arg);
-+char *absolute_pathdup(const char *path);
-+const char *absolute_path(const char *path);
-+char *real_pathdup(const char *path,int die_on_error);
-+char *strbuf_realpath_forgiving(struct strbuf *resolved,const char *path,int die_on_error);
-+char *strbuf_realpath(struct strbuf *resolved,const char *path,int die_on_error);
-+int is_directory(const char *path);
-diff --git a/cache.h b/cache.h
-index 26ed03bd6de..e226dbcc7d5 100644
---- a/cache.h
-+++ b/cache.h
-@@ -646,18 +646,6 @@ const char *setup_git_directory(void);
- char *prefix_path(const char *prefix, int len, const char *path);
- char *prefix_path_gently(const char *prefix, int len, int *remaining, const char *path);
- 
--/*
-- * Concatenate "prefix" (if len is non-zero) and "path", with no
-- * connecting characters (so "prefix" should end with a "/").
-- * Unlike prefix_path, this should be used if the named file does
-- * not have to interact with index entry; i.e. name of a random file
-- * on the filesystem.
-- *
-- * The return value is always a newly allocated string (even if the
-- * prefix was empty).
-- */
--char *prefix_filename(const char *prefix, const char *path);
--
- int check_filename(const char *prefix, const char *name);
- void verify_filename(const char *prefix,
- 		     const char *name,
-@@ -1299,14 +1287,7 @@ static inline int is_absolute_path(const char *path)
- {
- 	return is_dir_sep(path[0]) || has_dos_drive_prefix(path);
- }
--int is_directory(const char *);
--char *strbuf_realpath(struct strbuf *resolved, const char *path,
--		      int die_on_error);
--char *strbuf_realpath_forgiving(struct strbuf *resolved, const char *path,
--				int die_on_error);
--char *real_pathdup(const char *path, int die_on_error);
--const char *absolute_path(const char *path);
--char *absolute_pathdup(const char *path);
-+#include "abspath.h"
- const char *remove_leading_path(const char *in, const char *prefix);
- const char *relative_path(const char *in, const char *prefix, struct strbuf *sb);
- int normalize_path_copy_len(char *dst, const char *src, int *prefix_len);
+I.e. isn't the whole point of git_die_config() to print an error message
+about a configuration *value* that we've parsed out of the config?
 
-base-commit: 4fd6c5e44459e6444c2cd93383660134c95aabd1
--- 
-gitgitgadget
+If e.g. the key itself is bad we'll get a -1, but in this case it seems
+we would have a BUG(), but it's not that we "expected a non-empty list
+of values", but that the state of the world changed between our previous
+configset invocation, no?
