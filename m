@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51B90C07E9D
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 20:57:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CCE6C07E9D
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 20:57:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232540AbiI0U5u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 16:57:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58078 "EHLO
+        id S232557AbiI0U5w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 16:57:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229966AbiI0U5l (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 16:57:41 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 602111B34B6
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 13:57:40 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id i203-20020a1c3bd4000000b003b3df9a5ecbso10189565wma.1
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 13:57:40 -0700 (PDT)
+        with ESMTP id S232160AbiI0U5n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 16:57:43 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51D56149D2F
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 13:57:41 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id x18so16799314wrm.7
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 13:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=Sn7vsF8saTSOV85OIZnrqZlKAyOg5t4JuZwq78TkGgc=;
-        b=MhCHcKKG6FXt86rhAKICt50HbWAYArkoQlUvmTeezWRVUCEtehjHWtd0XGxuBDS2AO
-         fWSjnHMPlfiJj2FZ1aWhJW0MgZxJ75Gqh0zX+TRD8TzzTyxT6uzlj0Ueg/jGivHFetmK
-         Lhi5PF3BNfsPmy+InlTBHxCOx05nR60lQ0W6WBn53OI0uKav9cTCOuDbuuE03u2D0B2u
-         BbigPviyfWBp3ipZFu9mV97XrkDIJhV59khijKi+ikG/fDw3Xett7WW30pUoM6SsfyUc
-         EXKLgwVJYFikvUhX4MuU3xz6XXffslXR2nIjXLhahOEU/0ZVyj5u6dzyhFXXEyPvWv0h
-         V9nQ==
+        bh=yzfz98q2dztrByC52f9hrlPrszlAs4lsv0IDlH5j8u8=;
+        b=imeBIeGR3HapbmDlzJt62qnxIIuUlruyY1IPMse+G6T3BtdVx73RRHfzY4vavoxt2R
+         GQ1HDfo4tGpM5JXtFvQ6xEhCB68jcrWvAUJq90fqanMwpr5dLj5SMoLAL5mkaP/IZadq
+         qz2mcOmSNAQTPG5S/K2+X0P6lt2rmwJaNLJ8cmKacCBVZeOkukySfyGx64LlDHHxS+x3
+         VuLxtUVOebAo6T+RZ5Nn+1k+4SdvBbfvQPPU8z+6DTVH0b5599Q7j5w/ZUXQF06duCTy
+         Zpz9ngvXi5pgqnXTsL+rp7XpKmH7bSz6RtqNU/gSWBIXLXV2KHSq18PZ6NxdX0AJUprP
+         AOdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=Sn7vsF8saTSOV85OIZnrqZlKAyOg5t4JuZwq78TkGgc=;
-        b=lOo526d4jQZvS0WS877HlKylX7U109KYX7YPweyXAAhpdu5TTtpsDJVROllYOR54aS
-         +DouNZdKMCByAxuHIHixgKdoUeNMjv8lrGlZGyP0XyDOV5oes18Ekj/VfCVtKBMkulL7
-         PinwOZ6QLO5KRuaT35askM/BZYrQYhCvnqJgORmFnDqRNmQ8sPl3OQwd3cg53D/7SzMd
-         uHhOAQWtoF0P0fFiiTzLQ56NR+U6f+PAGopj5OqmCpxkgquoBnTvseUELyW2JREpNPu1
-         svVUZWsJDPvBKYp62MOKlO/7xJZrsG+oD0V8Ff/NhiMWkMYmXtAryZPPQN/XgkcLMxjd
-         tjzQ==
-X-Gm-Message-State: ACrzQf0cx0gCTQ1lem2eSymT5HrODcD301N+HP3qrh5VZmyNVROAETSF
-        qDQw68olZfMjtNOJtLbF5q3cHzJsbs8=
-X-Google-Smtp-Source: AMsMyM4ku7w/rAPL9ntJnmrmmGK1vP/uhAfHLQcwNAyo9qtIbR2wxZT06vUZ8/DlgHhei4rc2uiZ7A==
-X-Received: by 2002:a1c:7213:0:b0:3b3:4065:66cc with SMTP id n19-20020a1c7213000000b003b3406566ccmr4179291wmc.184.1664312258724;
-        Tue, 27 Sep 2022 13:57:38 -0700 (PDT)
+        bh=yzfz98q2dztrByC52f9hrlPrszlAs4lsv0IDlH5j8u8=;
+        b=NDe3JAZwcA09/IEUiRHwBJ9etJFK3NZpNcFUR96d/9AGr5XJi5V/4bZuhy9GDFqMWG
+         qDxFBeVUQDQ2xL0a5ywR6lfvuOkqdYZz0NdMj4iYCjZXp5Tue/EERWdzrUPV44fcjNvC
+         44z0M/1LGQqEFZCpxSlqBe5UwYV+ekE8lHr4+v4K5GazPJSJ5JHhiHFGz1a6afeebUQT
+         uHoiAuyqTX5+R3+BscNUsNJsdPVIizMig4VHw+guE2zAqnPmGeL6a8mvfQUZ16vTFEqH
+         4kFus8onEFi44f6G7ASR1U+ZhzfEugA9wSzokVsVRsIOTAoyoDyRNWUc/wPzhyz7rjC/
+         NvSw==
+X-Gm-Message-State: ACrzQf3GOuSH510/hdA5VVpBB4EYkFwQ7/gG4fJ3HpevcH1OhlU3aube
+        cWCRGmH0zalRidis39LwTfY/bWdUzQg=
+X-Google-Smtp-Source: AMsMyM4oE01UwMmqXh/HKGdCEY4HtKrpcSO0TvCBpoKt0N8lExhR1SGApM3TBl3/B+aPrRC3pqN6Jg==
+X-Received: by 2002:adf:9dd0:0:b0:22c:3fe0:42ef with SMTP id q16-20020adf9dd0000000b0022c3fe042efmr14693224wre.348.1664312259609;
+        Tue, 27 Sep 2022 13:57:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h4-20020a05600c498400b003b4935f04a4sm3140429wmp.5.2022.09.27.13.57.37
+        by smtp.gmail.com with ESMTPSA id i1-20020adfa501000000b0022a2f4fa042sm2628316wrb.103.2022.09.27.13.57.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Sep 2022 13:57:38 -0700 (PDT)
-Message-Id: <7987d0c1f33da7cdd62f2ffbaccd1cda281a7305.1664312254.git.gitgitgadget@gmail.com>
+        Tue, 27 Sep 2022 13:57:39 -0700 (PDT)
+Message-Id: <324eb5acd856f6a8122a5239f9fa1a9a8ecc9ee3.1664312254.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1326.v13.git.1664312253.gitgitgadget@gmail.com>
 References: <pull.1326.v12.git.1664048782.gitgitgadget@gmail.com>
         <pull.1326.v13.git.1664312253.gitgitgadget@gmail.com>
 From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 27 Sep 2022 20:57:30 +0000
-Subject: [PATCH v13 3/6] fsmonitor: avoid socket location check if using hook
+Date:   Tue, 27 Sep 2022 20:57:31 +0000
+Subject: [PATCH v13 4/6] fsmonitor: deal with synthetic firmlinks on macOS
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,108 +74,363 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Eric DeCosta <edecosta@mathworks.com>
 
-If monitoring is done via fsmonitor hook rather than IPC there is no
-need to check if the location of the Unix Domain socket (UDS) file is
-on a remote filesystem.
+Starting with macOS 10.15 (Catalina), Apple introduced a new feature
+called 'firmlinks' in order to separate the boot volume into two
+volumes, one read-only and one writable but still present them to the
+user as a single volume. Along with this change, Apple removed the
+ability to create symlinks in the root directory and replaced them with
+'synthetic firmlinks'. See 'man synthetic.conf'
+
+When FSEevents reports the path of changed files, if the path involves
+a synthetic firmlink, the path is reported from the point of the
+synthetic firmlink and not the real path. For example:
+
+Real path:
+/System/Volumes/Data/network/working/directory/foo.txt
+
+Synthetic firmlink:
+/network -> /System/Volumes/Data/network
+
+FSEvents path:
+/network/working/directory/foo.txt
+
+This causes the FSEvents path to not match against the worktree
+directory.
+
+There are several ways in which synthetic firmlinks can be created:
+they can be defined in /etc/synthetic.conf, the automounter can create
+them, and there may be other means. Simply reading /etc/synthetic.conf
+is insufficient. No matter what process creates synthetic firmlinks,
+they all get created in the root directory.
+
+Therefore, in order to deal with synthetic firmlinks, the root directory
+is scanned and the first possible synthetic firmink that, when resolved,
+is a prefix of the worktree is used to map FSEvents paths to worktree
+paths.
 
 Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
 ---
- compat/fsmonitor/fsm-settings-darwin.c | 10 ++++++----
- compat/fsmonitor/fsm-settings-win32.c  |  2 +-
- fsmonitor-settings.c                   |  8 ++++----
- fsmonitor-settings.h                   |  2 +-
- 4 files changed, 12 insertions(+), 10 deletions(-)
+ builtin/fsmonitor--daemon.c              | 10 +++
+ compat/fsmonitor/fsm-listen-darwin.c     | 14 +++-
+ compat/fsmonitor/fsm-path-utils-darwin.c | 93 ++++++++++++++++++++++++
+ compat/fsmonitor/fsm-path-utils-win32.c  | 17 +++++
+ fsmonitor--daemon.h                      |  3 +
+ fsmonitor-path-utils.h                   | 36 ++++++++-
+ 6 files changed, 170 insertions(+), 3 deletions(-)
 
-diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
-index 681d8bf963e..40da2d3b533 100644
---- a/compat/fsmonitor/fsm-settings-darwin.c
-+++ b/compat/fsmonitor/fsm-settings-darwin.c
-@@ -49,13 +49,15 @@ static enum fsmonitor_reason check_uds_volume(struct repository *r)
- 	return FSMONITOR_REASON_OK;
- }
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index 0123fc33ed2..d5056a97a06 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -3,6 +3,7 @@
+ #include "parse-options.h"
+ #include "fsmonitor.h"
+ #include "fsmonitor-ipc.h"
++#include "fsmonitor-path-utils.h"
+ #include "compat/fsmonitor/fsm-health.h"
+ #include "compat/fsmonitor/fsm-listen.h"
+ #include "fsmonitor--daemon.h"
+@@ -1282,6 +1283,13 @@ static int fsmonitor_run_daemon(void)
+ 	strbuf_addstr(&state.path_worktree_watch, absolute_path(get_git_work_tree()));
+ 	state.nr_paths_watching = 1;
  
--enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
-+enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc)
- {
- 	enum fsmonitor_reason reason;
- 
--	reason = check_uds_volume(r);
--	if (reason != FSMONITOR_REASON_OK)
--		return reason;
-+	if (ipc) {
-+		reason = check_uds_volume(r);
-+		if (reason != FSMONITOR_REASON_OK)
-+			return reason;
++	strbuf_init(&state.alias.alias, 0);
++	strbuf_init(&state.alias.points_to, 0);
++	if (fsmonitor__get_alias(state.path_worktree_watch.buf, &state.alias)) {
++		err = error(_("could not get worktree alias"));
++		goto done;
 +	}
++
+ 	/*
+ 	 * We create and delete cookie files somewhere inside the .git
+ 	 * directory to help us keep sync with the file system.  If
+@@ -1391,6 +1399,8 @@ done:
+ 	strbuf_release(&state.path_gitdir_watch);
+ 	strbuf_release(&state.path_cookie_prefix);
+ 	strbuf_release(&state.path_ipc);
++	strbuf_release(&state.alias.alias);
++	strbuf_release(&state.alias.points_to);
  
- 	return FSMONITOR_REASON_OK;
+ 	return err;
  }
-diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
-index d88b06ae610..a8af31b71de 100644
---- a/compat/fsmonitor/fsm-settings-win32.c
-+++ b/compat/fsmonitor/fsm-settings-win32.c
-@@ -25,7 +25,7 @@ static enum fsmonitor_reason check_vfs4git(struct repository *r)
- 	return FSMONITOR_REASON_OK;
- }
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index 8e208e8289e..daeee4e465c 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -26,6 +26,7 @@
+ #include "fsmonitor.h"
+ #include "fsm-listen.h"
+ #include "fsmonitor--daemon.h"
++#include "fsmonitor-path-utils.h"
  
--enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
-+enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc)
+ struct fsm_listen_data
  {
- 	enum fsmonitor_reason reason;
+@@ -198,8 +199,9 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
+ 	const char *path_k;
+ 	const char *slash;
+-	int k;
++	char *resolved = NULL;
+ 	struct strbuf tmp = STRBUF_INIT;
++	int k;
  
-diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
-index d288cbad479..531a1b6f956 100644
---- a/fsmonitor-settings.c
-+++ b/fsmonitor-settings.c
-@@ -60,7 +60,7 @@ static enum fsmonitor_reason check_remote(struct repository *r)
- }
- #endif
- 
--static enum fsmonitor_reason check_for_incompatible(struct repository *r)
-+static enum fsmonitor_reason check_for_incompatible(struct repository *r, int ipc)
- {
- 	if (!r->worktree) {
+ 	/*
+ 	 * Build a list of all filesystem changes into a private/local
+@@ -209,7 +211,12 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
  		/*
-@@ -77,7 +77,7 @@ static enum fsmonitor_reason check_for_incompatible(struct repository *r)
- 		reason = check_remote(r);
- 		if (reason != FSMONITOR_REASON_OK)
- 			return reason;
--		reason = fsm_os__incompatible(r);
-+		reason = fsm_os__incompatible(r, ipc);
- 		if (reason != FSMONITOR_REASON_OK)
- 			return reason;
+ 		 * On Mac, we receive an array of absolute paths.
+ 		 */
+-		path_k = paths[k];
++		free(resolved);
++		resolved = fsmonitor__resolve_alias(paths[k], &state->alias);
++		if (resolved)
++			path_k = resolved;
++		else
++			path_k = paths[k];
+ 
+ 		/*
+ 		 * If you want to debug FSEvents, log them to GIT_TRACE_FSMONITOR.
+@@ -238,6 +245,7 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 			fsmonitor_force_resync(state);
+ 			fsmonitor_batch__free_list(batch);
+ 			string_list_clear(&cookie_list, 0);
++			batch = NULL;
+ 
+ 			/*
+ 			 * We assume that any events that we received
+@@ -360,12 +368,14 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 		}
  	}
-@@ -162,7 +162,7 @@ const char *fsm_settings__get_hook_path(struct repository *r)
  
- void fsm_settings__set_ipc(struct repository *r)
- {
--	enum fsmonitor_reason reason = check_for_incompatible(r);
-+	enum fsmonitor_reason reason = check_for_incompatible(r, 1);
++	free(resolved);
+ 	fsmonitor_publish(state, batch, &cookie_list);
+ 	string_list_clear(&cookie_list, 0);
+ 	strbuf_release(&tmp);
+ 	return;
  
- 	if (reason != FSMONITOR_REASON_OK) {
- 		fsm_settings__set_incompatible(r, reason);
-@@ -185,7 +185,7 @@ void fsm_settings__set_ipc(struct repository *r)
+ force_shutdown:
++	free(resolved);
+ 	fsmonitor_batch__free_list(batch);
+ 	string_list_clear(&cookie_list, 0);
  
- void fsm_settings__set_hook(struct repository *r, const char *path)
- {
--	enum fsmonitor_reason reason = check_for_incompatible(r);
-+	enum fsmonitor_reason reason = check_for_incompatible(r, 0);
+diff --git a/compat/fsmonitor/fsm-path-utils-darwin.c b/compat/fsmonitor/fsm-path-utils-darwin.c
+index 067cbe6990a..931c9318572 100644
+--- a/compat/fsmonitor/fsm-path-utils-darwin.c
++++ b/compat/fsmonitor/fsm-path-utils-darwin.c
+@@ -1,5 +1,8 @@
+ #include "fsmonitor.h"
+ #include "fsmonitor-path-utils.h"
++#include <dirent.h>
++#include <errno.h>
++#include <fcntl.h>
+ #include <sys/param.h>
+ #include <sys/mount.h>
  
- 	if (reason != FSMONITOR_REASON_OK) {
- 		fsm_settings__set_incompatible(r, reason);
-diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
-index d9c2605197f..0721617b95a 100644
---- a/fsmonitor-settings.h
-+++ b/fsmonitor-settings.h
-@@ -48,7 +48,7 @@ struct fsmonitor_settings;
-  * fsm_os__* routines should considered private to fsm_settings__
-  * routines.
+@@ -38,3 +41,93 @@ int fsmonitor__is_fs_remote(const char *path)
+ 		return -1;
+ 	return fs.is_remote;
+ }
++
++/*
++ * Scan the root directory for synthetic firmlinks that when resolved
++ * are a prefix of the path, stopping at the first one found.
++ *
++ * Some information about firmlinks and synthetic firmlinks:
++ * https://eclecticlight.co/2020/01/23/catalina-boot-volumes/
++ *
++ * macOS no longer allows symlinks in the root directory; any link found
++ * there is therefore a synthetic firmlink.
++ *
++ * If this function gets called often, will want to cache all the firmlink
++ * information, but for now there is only one caller of this function.
++ *
++ * If there is more than one alias for the path, that is another
++ * matter altogether.
++ */
++int fsmonitor__get_alias(const char *path, struct alias_info *info)
++{
++	DIR *dir;
++	int read;
++	int retval = -1;
++	struct dirent *de;
++	struct strbuf alias;
++	struct strbuf points_to;
++
++	dir = opendir("/");
++	if (!dir) {
++		error_errno("opendir('/') failed");
++		return -1;
++	}
++
++	strbuf_init(&alias, 256);
++
++	/* no way of knowing what the link will resolve to, so MAXPATHLEN */
++	strbuf_init(&points_to, MAXPATHLEN);
++
++	while ((de = readdir(dir)) != NULL) {
++		strbuf_reset(&alias);
++		strbuf_addch(&alias, '/');
++		strbuf_add(&alias, de->d_name, strlen(de->d_name));
++
++		read = readlink(alias.buf, points_to.buf, MAXPATHLEN);
++		if (read > 0) {
++			strbuf_setlen(&points_to, read);
++			if ((!strncmp(points_to.buf, path, points_to.len))
++				&& path[points_to.len] == '/') {
++				strbuf_addbuf(&info->alias, &alias);
++				strbuf_addbuf(&info->points_to, &points_to);
++				trace_printf_key(&trace_fsmonitor,
++					"Found alias for '%s' : '%s' -> '%s'",
++					path, info->alias.buf, info->points_to.buf);
++				retval = 0;
++				goto done;
++			}
++		} else if (!read) {
++			BUG("readlink returned 0");
++		} else if (errno != EINVAL) { /* Something other than not a link */
++			error_errno("readlink('%s') failed", alias.buf);
++			goto done;
++		}
++	}
++	retval = 0; /* no alias */
++
++done:
++	if (closedir(dir) < 0)
++		warning_errno("closedir('/') failed");
++	strbuf_release(&alias);
++	strbuf_release(&points_to);
++	return retval;
++}
++
++char *fsmonitor__resolve_alias(const char *path,
++	const struct alias_info *info)
++{
++	if (!info->alias.len)
++		return NULL;
++
++	if ((!strncmp(info->alias.buf, path, info->alias.len))
++		&& path[info->alias.len] == '/') {
++		struct strbuf tmp = STRBUF_INIT;
++		const char *remainder = path + info->alias.len;
++
++		strbuf_addbuf(&tmp, &info->points_to);
++		strbuf_add(&tmp, remainder, strlen(remainder));
++		return strbuf_detach(&tmp, NULL);
++	}
++
++	return NULL;
++}
+diff --git a/compat/fsmonitor/fsm-path-utils-win32.c b/compat/fsmonitor/fsm-path-utils-win32.c
+index a90b8f7925b..0d95bbb416f 100644
+--- a/compat/fsmonitor/fsm-path-utils-win32.c
++++ b/compat/fsmonitor/fsm-path-utils-win32.c
+@@ -126,3 +126,20 @@ int fsmonitor__is_fs_remote(const char *path)
+ 		return -1;
+ 	return fs.is_remote;
+ }
++
++/*
++ * No-op for now.
++ */
++int fsmonitor__get_alias(const char *path, struct alias_info *info)
++{
++	return 0;
++}
++
++/*
++ * No-op for now.
++ */
++char *fsmonitor__resolve_alias(const char *path,
++	const struct alias_info *info)
++{
++	return NULL;
++}
+diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
+index 2102a5c9ff5..e24838f9a86 100644
+--- a/fsmonitor--daemon.h
++++ b/fsmonitor--daemon.h
+@@ -8,6 +8,7 @@
+ #include "run-command.h"
+ #include "simple-ipc.h"
+ #include "thread-utils.h"
++#include "fsmonitor-path-utils.h"
+ 
+ struct fsmonitor_batch;
+ struct fsmonitor_token_data;
+@@ -43,6 +44,7 @@ struct fsmonitor_daemon_state {
+ 
+ 	struct strbuf path_worktree_watch;
+ 	struct strbuf path_gitdir_watch;
++	struct alias_info alias;
+ 	int nr_paths_watching;
+ 
+ 	struct fsmonitor_token_data *current_token_data;
+@@ -59,6 +61,7 @@ struct fsmonitor_daemon_state {
+ 
+ 	struct ipc_server_data *ipc_server_data;
+ 	struct strbuf path_ipc;
++
+ };
+ 
+ /*
+diff --git a/fsmonitor-path-utils.h b/fsmonitor-path-utils.h
+index e48592887e7..2624798d2c7 100644
+--- a/fsmonitor-path-utils.h
++++ b/fsmonitor-path-utils.h
+@@ -1,13 +1,21 @@
+ #ifndef FSM_PATH_UTILS_H
+ #define FSM_PATH_UTILS_H
+ 
++#include "strbuf.h"
++
++struct alias_info
++{
++	struct strbuf alias;
++	struct strbuf points_to;
++};
++
+ struct fs_info {
+ 	int is_remote;
+ 	char *typename;
+ };
+ 
+ /*
+- * Get some basic filesystem informtion for the given path
++ * Get some basic filesystem information for the given path
+  *
+  * Returns -1 on error, zero otherwise.
   */
--enum fsmonitor_reason fsm_os__incompatible(struct repository *r);
-+enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc);
- #endif /* HAVE_FSMONITOR_OS_SETTINGS */
+@@ -20,4 +28,30 @@ int fsmonitor__get_fs_info(const char *path, struct fs_info *fs_info);
+  */
+ int fsmonitor__is_fs_remote(const char *path);
  
- #endif /* FSMONITOR_SETTINGS_H */
++/*
++ * Get the alias in given path, if any.
++ *
++ * Sets alias to the first alias that matches any part of the path.
++ *
++ * If an alias is found, info.alias and info.points_to are set to the
++ * found mapping.
++ *
++ * Returns -1 on error, 0 otherwise.
++ *
++ * The caller owns the storage that is occupied by info.alias and
++ * info.points_to and is responsible for releasing it.
++ */
++int fsmonitor__get_alias(const char *path, struct alias_info *info);
++
++/*
++ * Resolve the path against the given alias.
++ *
++ * Returns the resolved path if there is one, NULL otherwise.
++ *
++ * The caller owns the storage that the returned string occupies and
++ * is responsible for releasing it.
++ */
++char *fsmonitor__resolve_alias(const char *path,
++	const struct alias_info *info);
++
+ #endif
 -- 
 gitgitgadget
 
