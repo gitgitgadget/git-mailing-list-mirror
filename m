@@ -2,56 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CD25C6FA90
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 08:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10E1CC6FA90
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 08:15:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230451AbiI0IMI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 04:12:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43882 "EHLO
+        id S230495AbiI0IPU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 04:15:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231218AbiI0ILF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 04:11:05 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B8388A7E4
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 01:05:46 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id b24so10031796ljk.6
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 01:05:46 -0700 (PDT)
+        with ESMTP id S230450AbiI0IOy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 04:14:54 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12665B5A55
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 01:11:43 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id x29so10089959ljq.2
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 01:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=gVoRVI1+4xQDZaW0GjNqau8BrJDb2ZC3pIEcXBkiAIQ=;
-        b=aBhz1F2X7dg6JvrP814Nw0wN98kzdagm2fcycFHdS/72i2Ks9fz5aU1aSVSt+jkjb+
-         Es5a9z+383gmMG8pt0XUlYROcgA6tVxLSMQhzwGAgixa/jtAI8ajaWBw5VF3tlBF1rEz
-         6O8xrtQffTu84i3kgcERJffosXFH7w3vgH6hmKg2IT8E6y0AzwrZru9pBb5i0wt6Sbyo
-         /99k6GEhxGzAlGOCsM2xjeqOHDPCCqWN7IzgRe07kg0AGFONR2SaA4DuF6iSZ1m8HGiO
-         VvY+MzpWpoQM44JIPMODdLdW/0fO/ZeiiGq+/oKMsXXEDpttZDeNP5VAs/2+EPsUjmop
-         udWQ==
+        bh=Y0dPMGzi5iW2yObMBsK3tuU1w8GlA6uVwkUWQEn3Bbg=;
+        b=qX/vGYa2xNr96OuY+Bf8La6eEbP8ERlAHw2KCJbmj7KPGaGPp160szZc2OCC+YdTnT
+         PA0psR35C+aiGnVUPip8Li25EVyp6LgMQ//Y/PaYyLtIy//KA18Yk2wMyDG0ECZ3pcz8
+         JBoAoC2XYYkck4m8Ob6xOYS44yFCywqhpz64oKoN2Pu8RO9+jCBfPxTvi+lInQ2k9Nqd
+         EYyE4vw2ph6JsmgQWtyma1HP0iXLcTfZnaMjCam/kTLhZyGS49SspMr5bYBmUJcrJoM0
+         LuLyzIMTGRtaldHstjknjVUP0pxHypVthh1Gyezn3Jlg5xf2NhNDsMgk55cz2VMAqj8Z
+         8yQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=gVoRVI1+4xQDZaW0GjNqau8BrJDb2ZC3pIEcXBkiAIQ=;
-        b=oTzRl19AQdYW0oDLaLlImC4c++1lHRoQSGDuxI+890+alM7Pwd4QxVxCGUenwp4K7t
-         jOFMUTMsZp4OKQWGe4OVMKss4M05BpAnKZozjP39fIQxw/BERaB6lt8wCRzJOetQ1dDz
-         kTcLGo9GbJ4RoBLRqiWnOCZlaBpA6zuiduxZM52pLoamUEkc5NyRgNutoCUUh77Ds0fk
-         uTCAUjXjFuOj5A3C5VxM0RWe8RCPePFSDTCvr4oNQTDwcVP4bHgkTMEzqA7H/MY0ZlkJ
-         skiPHsfcQdvYUqRMpj/aclK1k9pz8iH9AFP+YaOZ0K/PWziexyheIQybEvOLk5ayblLU
-         Nh/w==
-X-Gm-Message-State: ACrzQf0g9d8sin/jSdOYEVHzdnHtMzAWQZQSHw45If5pNNQhPeUeleCu
-        iB65j8WJt6585wDBRVkBfAhwQOt2ja7P5RKgum0=
-X-Google-Smtp-Source: AMsMyM4WWD1S2C3U3jrPZlcuJkTPtfIDCcnl+egbm3JJy7ab73imyRb3oRUsj4A2VzxlgHcG4mDWQT+mRpGT/WoBdOs=
-X-Received: by 2002:a05:651c:903:b0:26c:2f7f:c037 with SMTP id
- e3-20020a05651c090300b0026c2f7fc037mr9843614ljq.325.1664265944514; Tue, 27
- Sep 2022 01:05:44 -0700 (PDT)
+        bh=Y0dPMGzi5iW2yObMBsK3tuU1w8GlA6uVwkUWQEn3Bbg=;
+        b=TdJy0Owcly2zzjo0s0odcdSiQ5Z8vxVEmGqoFD4yn3vTZUbEycDNJL7GUVHdnDNwmt
+         l6NIjqh9San6/1PWZvOTiYVZqk39TGv9+gP25s7axgVKZbOh6y4tEGGP3YGNjJWsw+97
+         JhzqS4Xw6RRIlUAEv98jOQmhlYTVV6CBq4lHVsVR8iJ11Z1LuMyMNIVRGtTfmhVhy4F7
+         XQlqgUCFuFIOP6FGG88C9IYPUe0uX3qn/swRmbcLmA0RMfKmdO/MW6BeT+xQYKPl2N5a
+         useZQeL+StxEkjYl27xSJE2bVO+DMFuroheiDQ4wM8gee47NhVs3eRJD7ONDzi/Z/7et
+         XlPA==
+X-Gm-Message-State: ACrzQf1e0axf8lGu7+bzymLXHc1/bIpzxgV4FZkIWAUDseUMdHr+fDLe
+        hrsdL6luZ4PRGPr6NbulGaZp2X6yGkn+mBqR3qU40EVS
+X-Google-Smtp-Source: AMsMyM6o/CaoV07ra63HZr8eG7E1Lc/ykfy8+YERGkjLQTpE2Gs268/MXF5+0VSGOkOHng15xu/2kNeOfPeiZOj4EKw=
+X-Received: by 2002:a2e:8054:0:b0:26d:9549:b460 with SMTP id
+ p20-20020a2e8054000000b0026d9549b460mr3955814ljg.194.1664266294280; Tue, 27
+ Sep 2022 01:11:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1362.v3.git.1663875999939.gitgitgadget@gmail.com>
- <pull.1362.v4.git.1664229348.gitgitgadget@gmail.com> <087207ae0b0932fcec9aa25e97bbe9227eff81cb.1664229348.git.gitgitgadget@gmail.com>
-In-Reply-To: <087207ae0b0932fcec9aa25e97bbe9227eff81cb.1664229348.git.gitgitgadget@gmail.com>
+References: <pull.1362.v3.git.1663875999939.gitgitgadget@gmail.com> <pull.1362.v4.git.1664229348.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1362.v4.git.1664229348.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 27 Sep 2022 01:05:32 -0700
-Message-ID: <CABPp-BHau2qwoxj121H-cpjTPPCpfxjMpmhya0mV79qyvkpQ+g@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] merge-ort: return early when failing to write a blob
+Date:   Tue, 27 Sep 2022 01:11:22 -0700
+Message-ID: <CABPp-BGJueKtcdvzGWH_ZK6yeA6r3457ue5Uub9_gdU5M-WmvQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/2] merge-tree: fix segmentation fault in read-only repositories
 To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Taylor Blau <me@ttaylorr.com>,
@@ -64,167 +63,28 @@ X-Mailing-List: git@vger.kernel.org
 On Mon, Sep 26, 2022 at 2:55 PM Johannes Schindelin via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 >
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Turns out that the segmentation fault reported by Taylor
+> [https://lore.kernel.org/git/YyopQD+LvPucnz3w@nand.local/] happened while
+> testing merge-ort in a read-only repository, and that the upstream version
+> of git merge-tree is as affected as GitHub's internal version.
 >
-> In the previous commit, we fixed a segmentation fault when a tree object
-> could not be written.
+> Changes since v3:
 >
-> However, before the tree object is written, `merge-ort` wants to write
-> out a blob object (except in cases where the merge results in a blob
-> that already exists in the database). And this can fail, too, but we
-> ignore that write failure so far.
->
-> Since we will always write out a new tree object in addition to the blob
-> (and if the blob did not exist in the database yet, we can be certain
-> that the tree object did not exist yet), the merge will _still_ fail at
-> that point, but it does unnecessary work by continuing after the blob
-> could not be written.
+>  * I now consistently use the pattern int ret = 0; ... if (...) ret = -1.
+>  * I added a commit to properly propagate write failures through the
+>    handle_content_merge() call path, even if it is not really critical (it
+>    just fails sooner, but the merge would have failed just the same without
+>    this patch).
 
-I don't think this is quite true.  I've had a number of users come to
-me with "messed up git repositories" where I eventually discover that
-users just randomly add "sudo" to some of their commands because when
-things don't work, sometimes "sudo" fixes it.  That means they've
-created stuff in their .git directory which may be owned by root,
-perhaps even some of the .git/objects/XX directories.  However, they
-may have other .git/objects/XX directories owned by their normal user.
+I'm a little unsure about the commit message of patch 2, as I
+commented on, but the code all looks good to me.  I don't think the
+comment in the commit message matters too much; whether your commit
+message addresses the weird case I mentioned, I feel the code handles
+it just fine.  So I'll leave it up to you to decide whether to tweak
+the commit message or not.  Anyway, after you decide on that, feel
+free to apply my
 
-If just some .git/objects/XX directories are owned by root and not
-others, then it may be when users run git commands as themselves that
-some things can be written to the object database but not others.  In
-particular, it could be that writing blob objects fail, but writing a
-tree object which references those blobs succeeds.
+Reviewed-by: Elijah Newren <newren@gmail.com>
 
-> Let's pay close attention and error out early if the blob could not be
-> written. This reduces the error output of t4301.25 ("merge-ort fails
-> gracefully in a read-only repository") from:
->
->         error: insufficient permission for adding an object to repository database ./objects
->         error: error: Unable to add numbers to database
->         error: insufficient permission for adding an object to repository database ./objects
->         error: error: Unable to add greeting to database
->         error: insufficient permission for adding an object to repository database ./objects
->         fatal: failure to merge
->
-> to:
->
->         error: insufficient permission for adding an object to repository database ./objects
->         error: error: Unable to add numbers to database
->         fatal: failure to merge
->
-> Note: This patch adjusts two variable declarations from `unsigned` to
-> `int` because their purpose is to hold the return value of
-> `handle_content_merge()`, which is of type `int`. The existing users of
-> those variables are only interested whether that variable is zero or
-> non-zero, therefore this type change does not affect the existing code.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  merge-ort.c | 28 +++++++++++++++++++---------
->  1 file changed, 19 insertions(+), 9 deletions(-)
->
-> diff --git a/merge-ort.c b/merge-ort.c
-> index f3bdce1041a..e5f41cce481 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -2807,6 +2807,8 @@ static int process_renames(struct merge_options *opt,
->                                                            pathnames,
->                                                            1 + 2 * opt->priv->call_depth,
->                                                            &merged);
-> +                       if (clean_merge < 0)
-> +                               return -1;
->                         if (!clean_merge &&
->                             merged.mode == side1->stages[1].mode &&
->                             oideq(&merged.oid, &side1->stages[1].oid))
-> @@ -2916,7 +2918,7 @@ static int process_renames(struct merge_options *opt,
->                         struct version_info merged;
->
->                         struct conflict_info *base, *side1, *side2;
-> -                       unsigned clean;
-> +                       int clean;
->
->                         pathnames[0] = oldpath;
->                         pathnames[other_source_index] = oldpath;
-> @@ -2937,6 +2939,8 @@ static int process_renames(struct merge_options *opt,
->                                                      pathnames,
->                                                      1 + 2 * opt->priv->call_depth,
->                                                      &merged);
-> +                       if (clean < 0)
-> +                               return -1;
->
->                         memcpy(&newinfo->stages[target_index], &merged,
->                                sizeof(merged));
-> @@ -3806,10 +3810,10 @@ static int write_completed_directory(struct merge_options *opt,
->  }
->
->  /* Per entry merge function */
-> -static void process_entry(struct merge_options *opt,
-> -                         const char *path,
-> -                         struct conflict_info *ci,
-> -                         struct directory_versions *dir_metadata)
-> +static int process_entry(struct merge_options *opt,
-> +                        const char *path,
-> +                        struct conflict_info *ci,
-> +                        struct directory_versions *dir_metadata)
->  {
->         int df_file_index = 0;
->
-> @@ -3823,7 +3827,7 @@ static void process_entry(struct merge_options *opt,
->                 record_entry_for_tree(dir_metadata, path, &ci->merged);
->                 if (ci->filemask == 0)
->                         /* nothing else to handle */
-> -                       return;
-> +                       return 0;
->                 assert(ci->df_conflict);
->         }
->
-> @@ -3870,7 +3874,7 @@ static void process_entry(struct merge_options *opt,
->                  */
->                 if (ci->filemask == 1) {
->                         ci->filemask = 0;
-> -                       return;
-> +                       return 0;
->                 }
->
->                 /*
-> @@ -4065,7 +4069,7 @@ static void process_entry(struct merge_options *opt,
->         } else if (ci->filemask >= 6) {
->                 /* Need a two-way or three-way content merge */
->                 struct version_info merged_file;
-> -               unsigned clean_merge;
-> +               int clean_merge;
->                 struct version_info *o = &ci->stages[0];
->                 struct version_info *a = &ci->stages[1];
->                 struct version_info *b = &ci->stages[2];
-> @@ -4074,6 +4078,8 @@ static void process_entry(struct merge_options *opt,
->                                                    ci->pathnames,
->                                                    opt->priv->call_depth * 2,
->                                                    &merged_file);
-> +               if (clean_merge < 0)
-> +                       return -1;
->                 ci->merged.clean = clean_merge &&
->                                    !ci->df_conflict && !ci->path_conflict;
->                 ci->merged.result.mode = merged_file.mode;
-> @@ -4169,6 +4175,7 @@ static void process_entry(struct merge_options *opt,
->
->         /* Record metadata for ci->merged in dir_metadata */
->         record_entry_for_tree(dir_metadata, path, &ci->merged);
-> +       return 0;
->  }
->
->  static void prefetch_for_content_merges(struct merge_options *opt,
-> @@ -4285,7 +4292,10 @@ static int process_entries(struct merge_options *opt,
->                         record_entry_for_tree(&dir_metadata, path, mi);
->                 else {
->                         struct conflict_info *ci = (struct conflict_info *)mi;
-> -                       process_entry(opt, path, ci, &dir_metadata);
-> +                       if (process_entry(opt, path, ci, &dir_metadata) < 0) {
-> +                               ret = -1;
-> +                               goto cleanup;
-> +                       };
->                 }
->         }
->         trace2_region_leave("merge", "processing", opt->repo);
-> --
-> gitgitgadget
-
-Patch looks good to me, though.
+Thanks for investigating, for tracking down all the return codes and
+how to propagate them, and getting it all fixed up!
