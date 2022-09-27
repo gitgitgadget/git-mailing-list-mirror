@@ -2,97 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73819C07E9D
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 04:45:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C42EFC07E9D
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 06:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229768AbiI0Epj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 00:45:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37566 "EHLO
+        id S229608AbiI0GAI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 02:00:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbiI0Eph (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 00:45:37 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B391CA9246
-        for <git@vger.kernel.org>; Mon, 26 Sep 2022 21:45:36 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3BA8C1C9AEA;
-        Tue, 27 Sep 2022 00:45:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=z4ZCldtOn9spH/Kbxjcb3nlPrutycM/1tFWoSu
-        Q7GnA=; b=ovgUAT7HX58nD8dy4MMCouP4x5vjVazNtAj+gyVLhLHFKkVAWKHxXO
-        yloA11WqfeyQ8+J7Wd34hlkWecJycI7ugk+qiCuIs6SivJtYmhDGMiCvq51vDkna
-        fAI5WVWUcO8pCrHNVjFhpnA4YUo9aXoilE6K9ffAOrhs+IPY41hyE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 267E01C9AE9;
-        Tue, 27 Sep 2022 00:45:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A8DF81C9AE8;
-        Tue, 27 Sep 2022 00:45:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, emilyshaffer@google.com
-Subject: Re: [PATCH 1/4] run-command: add pipe_output to run_processes_parallel
-References: <20220922232947.631309-1-calvinwan@google.com>
-        <20220922232947.631309-2-calvinwan@google.com>
-        <xmqqy1u9uddc.fsf@gitster.g>
-        <CAFySSZA=tThoHdTY7+bMStvC=xeeyMiv4aVDYt-eNW2mQE10qg@mail.gmail.com>
-Date:   Mon, 26 Sep 2022 21:45:31 -0700
-In-Reply-To: <CAFySSZA=tThoHdTY7+bMStvC=xeeyMiv4aVDYt-eNW2mQE10qg@mail.gmail.com>
-        (Calvin Wan's message of "Mon, 26 Sep 2022 10:31:05 -0700")
-Message-ID: <xmqqpmfh8lxw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229449AbiI0GAH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 02:00:07 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 545AEE02F
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 23:00:06 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id a5-20020a17090aa50500b002008eeb040eso537766pjq.1
+        for <git@vger.kernel.org>; Mon, 26 Sep 2022 23:00:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=+7BJeJMbwvQkSM72OOV0m34gU6ugKEUzryv6VmGCyNc=;
+        b=InPco4y31PUTLgeX/qOBHzOUqneq7OTNoyr8B+RIjFm5TXti8Gfod3clHHVi/YY5me
+         X0h1QZ3de39ORn5y51jbI2L3W6MwTAVLqiJHlHhBcUcmzK5aTwU31NiDHngWrkktz9nN
+         zPvL0i7laxnud3c84HU3u2OmEiJJ3FqTKh0Wr1B4IdZa5jF/NK6YZSVep3f/a56Qn7Zk
+         PXPzroJQDMcFyCmQSBe6+TfWZtoOVMjpQYp2n8auLWTe+kepI70YFt/lbPneCaPu7XU2
+         Ti+64u5QblgCBayDoES4/FNouBN74FybZ/S6ND3XpW+s8AhuyFTcgrCv5XJMXkwWU0IA
+         s55g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=+7BJeJMbwvQkSM72OOV0m34gU6ugKEUzryv6VmGCyNc=;
+        b=cuZUPXs5SNchM7uNnC0Y11Ers9ovZuz2tOPIGxqVrVgTi13xqsFfIUYgYrOOQ6HLev
+         kNcpr6OpKrPmZ/lCSIho+0ges++Giewd5NbOzfRvwmFmbG5iAe/E1LvY3/0SfMo3qe9A
+         d6qfy7Yn17ifWCisNvJa5Rr/+UOIjehlG0YPaYT5/uCtq0sgkSYaTx626ERrV/4/ghEV
+         cIR16P9AOyjTgTHU1bhCyH9fs/1Qj9XH+gOJ9PMztfwlQD8SlWPaGxAGcMSxgp2JoEJy
+         cba7vFZ66GVYDP5yXlXuTLev/Q5cq6u0SuelaWzGQwRNXlOP5exDm6/LvLE+eyvViEV1
+         QpYA==
+X-Gm-Message-State: ACrzQf1esBrVG/rZ7Bgmp9Qb9oDwEUzJXK1McT6CgbRTlqotWRM1pnvr
+        2v+qRRNLF+SXwJO5HKrwV05SCwZyovBXVyS/nA8=
+X-Google-Smtp-Source: AMsMyM6jkqmTSqmtWFmuJWF0WHyI4XX/t3fJz/n1L/xAu+VO6a5FpXa/yKY9JlRS3DqzDn1bh1mf4Q4xZSkh+RbStwU=
+X-Received: by 2002:a17:903:32cc:b0:178:3d35:dfc4 with SMTP id
+ i12-20020a17090332cc00b001783d35dfc4mr26220249plr.116.1664258405843; Mon, 26
+ Sep 2022 23:00:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 384159AE-3E1F-11ED-A5DB-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+References: <6ff29e96-7f8d-c354-dced-b1b363e54467@gmail.com>
+ <CAN0heSra_LsBzYCNFh0cZOZ0pmk1Wb9RtNTLwi93UM=f-53Uxw@mail.gmail.com> <xmqqfsgene5i.fsf@gitster.g>
+In-Reply-To: <xmqqfsgene5i.fsf@gitster.g>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 27 Sep 2022 07:59:52 +0200
+Message-ID: <CAN0heSr0V+coALLaUkN2Su-xQ-xRpWuMz0TMr5kYpO0n6LNbaw@mail.gmail.com>
+Subject: Re: [PATCH] ref-filter.c: fix a leak in get_head_description
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan <calvinwan@google.com> writes:
-
-> You are correct that storing unbounded output doesn't seem like a good
-> idea. One idea I have is to parse output during the periodic collection rather
-> than waiting till the end. The other idea I had was to add another
-> "git status --porcelain" option that would only output the necessary
-> pieces of information so we wouldn't have to bother with worrying about
-> unbounded output.
+On Mon, 26 Sept 2022 at 21:12, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Any other thoughts as to how I can workaround this?
+> Thanks, all.  Will queue lest I forget, but I presume this is not
+> release critical?
 
-I wonder if you can arrange not to let them make unbounded progress?
+Correct. This regressed already in v2.30.1 and v2.31.0 after the leak
+was originally plugged in v2.29.0. So almost all recentish releases have
+this minor leak. I'm not even sure it's possible for a single git
+process to hit this leak more than once today.
 
-In order to run diff-files with path A B C D E ... where B and D are
-submodules and others are not submodules, you do not have to run and
-finish comparison for B and D before you can do the comparison for
-other paths, in order to preserve the proper output order.  You can
-start child task for B and D and arrange so that they will run for
-any other submodules, and then you
-
- - run comparison for A.  The child task for B and D may be running
-   and starting to talk back to you, in which case their write may
-   get stuck waiting for you to read from them, but that is OK, as
-   you will read from them shortly.
-
- - wait for the child task for B.  This is done by reading from the
-   pipe connected to it and waiting for its death synchronously.
-   The child task for D is still running and may be making progress,
-   but you are not obligated to read its output to the end.  You can
-   postpone reading to conserve memory and it will fill the pipe and
-   stall automatically.  Then accept the result for B.
-
- - run comparison for C.
-
- - wait for the child task for D.  You may have some data read
-   already while dealing with B, but you may still have some reading
-   to do at this point.  Let it finish synchronously.
-
- - run comparison for E.
-
-etc., perhaps?
-
+Martin
