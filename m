@@ -2,102 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82D07C6FA90
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 09:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6E44C07E9D
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 10:55:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231828AbiI0JUM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 05:20:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46248 "EHLO
+        id S231623AbiI0Kzz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 06:55:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231822AbiI0JTw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 05:19:52 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C9DACF4A8
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 02:18:48 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id t14so13983538wrx.8
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 02:18:47 -0700 (PDT)
+        with ESMTP id S231634AbiI0Kzw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 06:55:52 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 192CB1707F
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 03:55:49 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id b35so12737937edf.0
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 03:55:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date;
-        bh=NAXJfeY/lcbLr986IN3dKMS48fjBQPWDKDLjGpjx+gc=;
-        b=o9LCqoQrUWFNxMAtEnd7d5RRNMSVdxBjTlWo9QUDpN9TlwZoNr8v7UjNLebEzkBgbH
-         VYBuVA6PqpUl2vxqa/IFjf2Zg5uvUe9SafuoU41k26CUn8gVPiwhMJpkDX90cRm49Yxm
-         E0Sz345jHgrXIlCE//ZQlpIr3nk91zD25bfbIIdy9f36fyd6GWHNMrop2xzgpavDikvB
-         uYUJV0kVpnCQ3lc4zRj9JFwWnGF0CXaSLy1F06a/TYvqDeUKWeKhYHSm3bG/6cW/kEzL
-         oxmvW2s/7fqW6Z7Oo375hEoLZzculTMI1Ch3xXL4QWM4C3RydvXJwgrBOqliAW9m7lKC
-         s5GQ==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date;
+        bh=HwvMZYkyMOJR1Dub7IrgmZv0Reo/e1G3mmikQQMpC8U=;
+        b=IkFhLRvSGhKDwyzaBiNou3y6TtX79nOiEu+hhOS8dXaW2d6uEd6BTj6Vwlw5IyeXcc
+         mwabIdcQUnSoWpgjx1lgt5wdeq+S87WiqQZmjfIWUw/y+EIsPF4/iYdkmSqLptTbHYZ9
+         BuAaY160fzu/Zv+bMBxsHdc19/UikA4kBcSdDe0uj7s9yUvG/yTRi7NnMl9LP7E31jOk
+         D8aohfOtFAcaKm7GTDP7fzjZF6km6mLxcrGjpeFEoJyI4TpUhvP1Tnc76daHvaF5HC0t
+         mWjuiFknFwDbZ3mzw81W7tgDofUOVCezuurVbe7ZScY66InmleDoVq35a8LUWKy78PZ2
+         H4Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=NAXJfeY/lcbLr986IN3dKMS48fjBQPWDKDLjGpjx+gc=;
-        b=xGeIqxTRqo2gxw1dfE9KIYWGKQ9KS+N7ccKY5XSrVJiTNlOvNawUzKX2z7QhIrcyz0
-         /UdTrSK7s6alZVvbu26bfU/34LYtLiso2xuc9Enf5BxNSVfBRHhIKTAJKaRRCZ+vRJTL
-         Vm+2RdRCvB+ywvA7Fo4wGXbNEgjCngHBRyNcu+/6HbmyFHf/wT1+1LiHzjKEvEZsR85o
-         41P5iWzWeiV+V5OwaiBcrwbwKwW/AxWBYCAqVpq+fR2F6zOeYngQoS8eBCuQgShGRBDU
-         pSIovHSWzEDYl3TPp8ymEVSbVMWdhCz+hGo54YGY4YIJc5rogpTpOk5YHr0bfi9uvB/3
-         leXg==
-X-Gm-Message-State: ACrzQf2eXwect8KkqexHWsWcLNImvyxx9dlwece261KUqCUVU/7vfrSN
-        5N2/H6rLrjqrPnJVUXGf2WnHU6nANE+ceg==
-X-Google-Smtp-Source: AMsMyM4oWkz/h308QGLQqsZuq/v5Sg0VfqiGG7H9g8nbDlrG9F8szLm2ek+QuFj7U79U/JW5wjpgqQ==
-X-Received: by 2002:a5d:59c3:0:b0:22a:4463:5a3a with SMTP id v3-20020a5d59c3000000b0022a44635a3amr15485652wry.123.1664270316130;
-        Tue, 27 Sep 2022 02:18:36 -0700 (PDT)
-Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id e4-20020a05600c4e4400b003a682354f63sm13929356wmq.11.2022.09.27.02.18.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Sep 2022 02:18:35 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <99c45b89-364f-4f77-7c1b-26231cc7455e@dunelm.org.uk>
-Date:   Tue, 27 Sep 2022 10:18:32 +0100
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=HwvMZYkyMOJR1Dub7IrgmZv0Reo/e1G3mmikQQMpC8U=;
+        b=vP/lS9EbHxNIVrc2GeCaY5R/Z0TwfBxZN5xC2KK6MlApDT9o/wwunCW6WhpCBKezhP
+         Jfz1qdGF6gYk9Gnz9GblyHRR9STzglCRWSlBNvmPU8F6UuG11OzdB+WHT++Clb6RjLfz
+         uqI+fTxPBtjs2IG2V3u1dxMgpIw3XuTgapAFyF6oOLQ0Eu94alrjhaSXZO4Y7uPuyGuw
+         DCsvRo6vZ5PkkA91wPEkNCZNVHu522j3/gCJBPuzYs9YcINdLclOMyFimy0TqjKlnkRa
+         WrZyhZpSH0FGS5Ga8v4UYB8ALuqwqSWrFm4RECaBbFpreFUtUYfR7Lc/Xq/EuBs0Ac7r
+         n0Iw==
+X-Gm-Message-State: ACrzQf3ll2vQCAezGPT2eHTH4Er6VVijwCtnmG8Wrv//VkWK9UytlMGg
+        Wf3aOwo+yBVwDuWBNZF0IcCgOYmT590=
+X-Google-Smtp-Source: AMsMyM56KwdQad3cSkbJpdFQNGTULHabv58l67MwvXpZYLfxC2pq2EXkzaOSPONxN980AWDe4o1bRA==
+X-Received: by 2002:a05:6402:4493:b0:451:141d:3231 with SMTP id er19-20020a056402449300b00451141d3231mr26744629edb.318.1664276147615;
+        Tue, 27 Sep 2022 03:55:47 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id ky21-20020a170907779500b0073ae9ba9ba8sm637476ejc.3.2022.09.27.03.55.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Sep 2022 03:55:46 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1od8Fd-000JT9-37;
+        Tue, 27 Sep 2022 12:55:45 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com
+Subject: Re: [PATCH 1/4] run-command: add pipe_output to run_processes_parallel
+Date:   Tue, 27 Sep 2022 12:52:34 +0200
+References: <20220922232947.631309-1-calvinwan@google.com>
+ <20220922232947.631309-2-calvinwan@google.com>
+ <220923.86sfki4ize.gmgdl@evledraar.gmail.com>
+ <CAFySSZB=bPWpK25Gwtm06cOyupGeUYo6qLC4PWPwaS2pNn22hA@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <CAFySSZB=bPWpK25Gwtm06cOyupGeUYo6qLC4PWPwaS2pNn22hA@mail.gmail.com>
+Message-ID: <220927.86edvxytla.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] tmp-objdir: do not opendir() when handling a signal
-Content-Language: en-US
-To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     John Cai <johncai86@gmail.com>
-References: <pull.1348.git.git.1664236383785.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1348.git.git.1664236383785.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi John
 
-On 27/09/2022 00:53, John Cai via GitGitGadget wrote:
-> From: John Cai <johncai86@gmail.com>
-> 
-> In the tmp-objdir api, tmp_objdir_create will create a temporary
-> directory but also register signal handlers responsible for removing
-> the directory's contents and the directory itself. However, the
-> function responsible for recursively removing the contents and
-> directory, remove_dir_recurse() calls opendir(3) and closedir(3).
-> This can be problematic because these functions allocate and free
-> memory, which are not async-signal-safe functions. This can lead to
-> deadlocks.
+On Mon, Sep 26 2022, Calvin Wan wrote:
 
-> --- a/dir.h
-> +++ b/dir.h
-> @@ -498,6 +498,9 @@ int get_sparse_checkout_patterns(struct pattern_list *pl);
->   /* Remove the_original_cwd too */
->   #define REMOVE_DIR_PURGE_ORIGINAL_CWD 0x08
->   
-> +/* Indicates a signal is being handled */
-> +#define REMOVE_DIR_SIGNAL 0x16
+>> On the implementation:
+>>
+>> > + * If the "pipe_output" option is specified, the output will be piped
+>> > + * to task_finished_fn in the "struct strbuf *out" variable. The output
+>> > + * will still be printed unless the callback resets the strbuf. The
+>> > + * "pipe_output" option can be enabled by setting the global
+>> > + * "run_processes_parallel_pipe_output" to "1" before invoking
+>> > + * run_processes_parallel(), it will be set back to "0" as soon as the
+>> > + * API reads that setting.
+>>
+>> ...okey, but...
+>>
+>> > +static int task_finished_pipe_output(int result,
+>> > +                      struct strbuf *err,
+>> > +                      void *pp_cb,
+>> > +                      void *pp_task_cb)
+>> > +{
+>> > +     if (err && pipe_output) {
+>> > +             fprintf(stderr, "%s", err->buf);
+>> > +             strbuf_reset(err);
+>>
+>> ...my memory's hazy, and I haven't re-logged in any detail, but is it
+>> really the API interface here that the "output" callback function is
+>> responsible for resetting the strbuf that the API gives to it?
+>>
+>> That seems backwards to me, and e.g. a look at "start_failure" shows
+>> that we strbuf_reset() the "err".
+>>
+>> What's the point of doing it in the API consumer? If it doesn't do it
+>> we'll presumably keep accumulating output. Is there a use-case for that?
+>>
+>> Or perhaps it's not needed & this is really just misleading boilerplate?
+>
+> Ultimately it is not needed -- I added it as an example to showcase that
+> the output is correctly being piped to "task_finished_pipe_output". The
+> reset is necessary in this case to prevent the output from being printed
+> twice. I'm not sure how exactly else I would go about testing "pipe_output".
 
-This is setting the bits for REMOVE_DIR_KEEP_NESTED_GIT and 
-REMOVE_DIR_KEEP_TOPLEVEL is that intentional? (it looks like you've 
-doubled 8 to 16 to get the next free bit but used a hex constant, the 
-earlier constants use decimal)
+If that's the intent then having that reset there seems to me to be
+doing the exact opposite of what you want.
 
-Best Wishes
+If the API is broken and passing the output along twice without clearing
+it in-between the two calls your strbuf_reset() would be sweeping that
+issue under the rug, that API brokenness would be "repaired" by your
+test.
 
-Phillip
+Whereas if you remove the strbuf_reset() it should behave as it does
+now, and if it doesn't the API itself is broken, i.e. after calling the
+callback it should be resetting the buffer.
