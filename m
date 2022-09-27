@@ -2,185 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24999C07E9D
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 19:32:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FCFDC54EE9
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 19:33:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231286AbiI0TcT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 15:32:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58546 "EHLO
+        id S230214AbiI0TdU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 15:33:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231292AbiI0TcR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 15:32:17 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3D993057B
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 12:32:16 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id v2so13667144edc.7
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 12:32:16 -0700 (PDT)
+        with ESMTP id S229862AbiI0TdS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 15:33:18 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4070851434;
+        Tue, 27 Sep 2022 12:33:17 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id t14so16506502wrx.8;
+        Tue, 27 Sep 2022 12:33:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date;
-        bh=qgx/3tyU15xQ+bxaFEW8g7f7AerRsg1+jE2K9cjXCzA=;
-        b=b6wr7UisV3h5XTqNM9KJc4YJ+jqfd9e0GvbO48uOIFGMpFgomzAkiMi566tR3nlV4j
-         CK4PPIU8Nciv6p2oKO448aZ5XZDlOGEkZmQZdtFYyTQd2Dy1lIRwd33+ue4Hp/xKqr0O
-         WU7+WlQ6IPAE7Lj+FyUir+LOBq9IeJ3NU/15GOp39SSwqRdUzepANLRmTa/QgtLT4gVx
-         U91Iao3dbfbliryKlfWC6HDWpGQ3Tm9HTiK9+sVp6fRYSKDNLf9O7taBOLgthyZRYmQo
-         sB/IYLOWZJIo4z7TE1IPOehd5r+7e0229888ZH2TkududO6ET0Q/Q72dL7TE3JyzQyPT
-         aAew==
+        h=in-reply-to:references:to:from:content-language:subject:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date;
+        bh=vTIAuy/pa4XjJdvf82pbunRZKX6pu4mEiYP8cYonrLI=;
+        b=hqg68fZrvHLo+tfFRvVBRtWoAjXTxh6E1rTsgoXDe/qvuW8j5VG2cjWsEN5AqtrxMp
+         qCxB5X0mjYuSHEZgysQICLlTYWYWTriTBjs3eB5WpG9q36meUnjAxE3cqCESH810/jB9
+         o31iO0edwiym6fxZO58fImat3DK/zkvyBmJ/qKSX2KVMnMPUKfeOqTQLOBWvEmCSRxIF
+         FA2rIoPAfCtgE37yl7OzeiUheRR6RlRqYzSaajGAqAmph+fRmHNMX390XKLUc7l+iyjj
+         XFhTC9N2mZFAs5fMXQ3MnM51j3fQxf+xapcGI6tv5oLybkVgVXua3ZTYo0MUi9gm1WD/
+         dwIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=qgx/3tyU15xQ+bxaFEW8g7f7AerRsg1+jE2K9cjXCzA=;
-        b=kptGdABnE0TjWYDm5wRISXQ+KlQQeyftajucjVvRB2GNYXPmjCjTn9sOUGdA/I4Hbf
-         NyIPGfalIVFNgjxrz7x74LvZYIX35nzYUJlVXTahbHDLMVG58++KYLq8kJJgFlvdCxxd
-         M3XEd+cE6gxDBfh7JGibneFT7uAfO8xAdk88mJEZcu29YRCd9gZIT0vE5byCggM9DHps
-         nXvjTwcIwr41U3FKPmg35P9L8xHGJ4EnUus6AurmQjPAOcesXVmdulEP6KyPa2zGKJgP
-         oJgN53YMDYXnUzGrjNj7ULcXMw7VXWU+jVtFlDnmaQlzxnJwbnOp+s7NwSxEINgWv6VG
-         eVSQ==
-X-Gm-Message-State: ACrzQf26nVYOscmFCqNs3jZOyalY8sk15cW+utis10hAH6y8NmKwlyPn
-        yHhntKMdc6v8xC/spQbGwtY=
-X-Google-Smtp-Source: AMsMyM4kXEsLQG+d7TIsk9P15fLrBRaEZaFLEh4TYWywk//cby8a707kTiwC/DlBhQomsDW6DP3szA==
-X-Received: by 2002:a05:6402:493:b0:445:b5f0:7a0f with SMTP id k19-20020a056402049300b00445b5f07a0fmr28845202edv.120.1664307135082;
-        Tue, 27 Sep 2022 12:32:15 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id y4-20020aa7d504000000b00456d2721d93sm1759079edq.64.2022.09.27.12.32.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Sep 2022 12:32:14 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1odGJR-000X2h-2K;
-        Tue, 27 Sep 2022 21:32:13 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 4/5] config: return an empty list, not NULL
-Date:   Tue, 27 Sep 2022 21:18:48 +0200
-References: <pull.1369.git.1664287711.gitgitgadget@gmail.com>
- <396343ce7dd17f86bbbc66197c6f0b4012caf445.1664287711.git.gitgitgadget@gmail.com>
- <220927.86sfkcyebf.gmgdl@evledraar.gmail.com>
- <b85d8a43-6640-aa9c-3103-0c3d43c2a479@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <b85d8a43-6640-aa9c-3103-0c3d43c2a479@github.com>
-Message-ID: <220927.86k05oy5oi.gmgdl@evledraar.gmail.com>
+        h=in-reply-to:references:to:from:content-language:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date;
+        bh=vTIAuy/pa4XjJdvf82pbunRZKX6pu4mEiYP8cYonrLI=;
+        b=W4FpouVKCamMBSaiZTEWCfRWB/YpeWwD/1CoH19uoo6YsD3sHexsCSnytWGGcdfKK8
+         e8gc+jk46z5SuqlwOPKmFAFICD/lDSoaE0sUPHFGR86bUedittUpOd+hAn1vc0TOWl54
+         Qn7icAm/94djOStxIf6itmgzxv515HhTuBpJ8bhcUYHy6+t62+nOpFR7nSlyNlYcKD9I
+         jkfV+RZiggSHFSGkVc0MLcF367Ek3PyI73ju3Y2S+/dGPBjJhBGviK2E36Ka8YvpgdWv
+         ruhXzmEfmVvj8Uyan72Umeks9n2BDiROBCZg+vVlwsLVsReAMcX3mrU4ez6zWhK9B3xH
+         ZEKw==
+X-Gm-Message-State: ACrzQf3kRwJMJk2YU6BvNsh0H4gwb8ohfGDaDERFYfptkoqaD+QtSUc3
+        FuGpEIXXGHi2MR2H7fWDgVM=
+X-Google-Smtp-Source: AMsMyM4PmknA24pz3sYkZy7ykN3et3CnAo4X3II9wI5OrnwJdIPQ5KVZA8vi3K4J7fmW7f0l7kTmkg==
+X-Received: by 2002:adf:e109:0:b0:225:4ca5:80d5 with SMTP id t9-20020adfe109000000b002254ca580d5mr17621940wrz.465.1664307195680;
+        Tue, 27 Sep 2022 12:33:15 -0700 (PDT)
+Received: from [192.168.43.80] ([31.221.140.113])
+        by smtp.gmail.com with ESMTPSA id ba11-20020a0560001c0b00b0022a9246c853sm2509351wrb.41.2022.09.27.12.33.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Sep 2022 12:33:15 -0700 (PDT)
+Message-ID: <242f444d-9846-1a13-d901-9ad503dce605@gmail.com>
+Date:   Tue, 27 Sep 2022 21:33:05 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: readpassphrase(3) in glibc, and agetpass() (Was: Is getpass(3)
+ really obsolete?)
+Content-Language: en-US
+From:   Alex Colomar <alx.manpages@gmail.com>
+To:     Zack Weinberg <zack@owlfolio.org>,
+        Theo de Raadt <deraadt@openbsd.org>, rsbecker@nexbridge.com,
+        'linux-man' <linux-man@vger.kernel.org>, tech@openbsd.org,
+        Florian Weimer <libc-alpha@sourceware.org>, git@vger.kernel.org
+References: <a0371f24-d8d3-07d9-83a3-00a4bf22c0f5@gmail.com>
+ <73ac38a2-c287-4cc1-4e9c-0f9766ac4c0c@gmail.com>
+ <00d501d7ccbe$0169c340$043d49c0$@nexbridge.com>
+ <63238.1635515736@cvs.openbsd.org>
+ <6d8642e9-71f7-4a83-9791-880d04f67d17@www.fastmail.com>
+ <c8287618-30c4-f14b-8ad7-898fee99d944@gmail.com>
+In-Reply-To: <c8287618-30c4-f14b-8ad7-898fee99d944@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------AXFuaZZQ7EVxwY5joCy9kNgO"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------AXFuaZZQ7EVxwY5joCy9kNgO
+Content-Type: multipart/mixed; boundary="------------jqR07irMUADwmW0E4W0rIOr8";
+ protected-headers="v1"
+From: Alex Colomar <alx.manpages@gmail.com>
+To: Zack Weinberg <zack@owlfolio.org>, Theo de Raadt <deraadt@openbsd.org>,
+ rsbecker@nexbridge.com, 'linux-man' <linux-man@vger.kernel.org>,
+ tech@openbsd.org, Florian Weimer <libc-alpha@sourceware.org>,
+ git@vger.kernel.org
+Message-ID: <242f444d-9846-1a13-d901-9ad503dce605@gmail.com>
+Subject: Re: readpassphrase(3) in glibc, and agetpass() (Was: Is getpass(3)
+ really obsolete?)
+References: <a0371f24-d8d3-07d9-83a3-00a4bf22c0f5@gmail.com>
+ <73ac38a2-c287-4cc1-4e9c-0f9766ac4c0c@gmail.com>
+ <00d501d7ccbe$0169c340$043d49c0$@nexbridge.com>
+ <63238.1635515736@cvs.openbsd.org>
+ <6d8642e9-71f7-4a83-9791-880d04f67d17@www.fastmail.com>
+ <c8287618-30c4-f14b-8ad7-898fee99d944@gmail.com>
+In-Reply-To: <c8287618-30c4-f14b-8ad7-898fee99d944@gmail.com>
 
-On Tue, Sep 27 2022, Derrick Stolee wrote:
+--------------jqR07irMUADwmW0E4W0rIOr8
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-> On 9/27/2022 12:21 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Tue, Sep 27 2022, Derrick Stolee via GitGitGadget wrote:
->
->>>  /**
->>>   * Finds and returns the value list, sorted in order of increasing pri=
-ority
->>>   * for the configuration variable `key`. When the configuration variab=
-le
->>> - * `key` is not found, returns NULL. The caller should not free or mod=
-ify
->>> - * the returned pointer, as it is owned by the cache.
->>> + * `key` is not found, returns an empty list. The caller should not fr=
-ee or
->>> + * modify the returned pointer, as it is owned by the cache.
->>>   */
->>>  const struct string_list *git_config_get_value_multi(const char *key);
->>=20
->> Aside from the "DWIM API" aspect of this (which I don't mind) I think
->> this is really taking the low-level function in the wrong direction, and
->> that we should just add a new simple wrapper instead.
->>=20
->> I.e. both the pre-image API docs & this series gloss over the fact that
->> we'd not just return NULL here if the config wasn't there, but also if
->> git_config_parse_key() failed.
->>=20
->> So it seems to me that a better direction would be starting with
->> something like the WIP below (which doesn't compile the whole code, I
->> stopped at config.[ch] and pack-bitmap.c). I.e. the same "int" return
->> and "dest" pattern that most other things in the config API have.
->
-> Do you have an example where a caller would benefit from this
-> distinction? Without such an example, I don't think it is worth
-> creating such a huge change for purity's sake alone.
+T24gOS8yNy8yMiAyMToxOSwgQWxlamFuZHJvIENvbG9tYXIgd3JvdGU6DQouLi4NCj4gDQo+
+IFRoZSBwcm90b3R5cGVzIGZvciB0aGUgZnVuY3Rpb24gYW5kIHRoZSBjbGVhbi11cCBhcmU6
+DQo+IA0KPiBgYGANCj4gdm9pZCBlcmFzZV9wYXNzKGNoYXIgKnApOw0KPiBbW2dudTo6bWFs
+bG9jKGVyYXNlX3Bhc3MpXV0gY2hhciAqc2hkd19nZXRwYXNzKGNvbnN0IGNoYXIgKnByb21w
+dCk7DQoNCkkgZWRpdGVkIHRoZSBmdW5jdGlvbiBuYW1lIGZvciB0aGUgZW1haWwsIGFuZCBm
+b3Jnb3QgdG8gZml4IGl0IGhlcmUgOikNCg0Kcy9zaGR3Xy9hLw0KDQpDaGVlcnMsDQoNCkFs
+ZXgNCg0KDQotLSANCjxodHRwOi8vd3d3LmFsZWphbmRyby1jb2xvbWFyLmVzLz4NCg0K
 
-Not initially, I started poking at this because the CL/series/commits
-says that we don't care about the case of non-existing keys, without
-being clear as to why we want to conflate that with other errors we
-might get from this API.
+--------------jqR07irMUADwmW0E4W0rIOr8--
 
-But after some digging I found:
+--------------AXFuaZZQ7EVxwY5joCy9kNgO
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-	$ for k in a a.b. "'x.y"; do ./git for-each-repo --config=3D$k;  echo $?; =
-done
-	error: key does not contain a section: a
-	0
-	error: key does not contain variable name: a.b.
-	0
-	error: invalid key: 'x.y
-	0
-=09
-I.e. the repo_config_get_value_multi() you added in for-each-repo
-doesn't distinguish between bad keys and non-existing keys, and returns
-0 even though it printed an "error".
+-----BEGIN PGP SIGNATURE-----
 
-> I'm pretty happy that the diff for this series is an overall
-> reduction in code, while also not being too large in the interim:
->
->  12 files changed, 39 insertions(+), 57 deletions(-)
->
-> If all callers that use the *_multi() methods would only use the
-> wrapper, then what is the point of doing the low-level manipulations?
+iQIzBAEBCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmMzT/EACgkQnowa+77/
+2zI6bA//eo4H4zX8a5arnmgXLjbH9MjSPq2XWgm/+cNr3ZVhujIbZstVygo3C81X
+8Fdu2QG18725kurn14ljIzPgACnrVQEGf07I9ql8PjXAsjPs9eSMuXEj+vaqf/Of
+XjzPf3ymAaaDl5wzLWP5h4USYt4iLK2KFCRAwcj5HJ6sc3M+y15/p+b1YKvlvCHR
+AwzgE0GfoPT7DVu/snMJuRPA6N01B1on/VeU9T8xHHCAs+TMuZPe8n/3GerQn0U0
+mp4UG88p5uwhC8Vn7CqiW2EPvmtUcTaRkvb3uH4Lmy+kq8MVLmGm+PPmGfaQ0o2G
+d9fR+sjTJxS4/9xp94CoEqWxEGJ62QNGhLg0MW3khE982TgAvbQKI4tmRhRz5kuk
+6tcc62gy2LwI5gL2PNUeog1TnUErgzHwUl6fSCq0AYj8VYt0zEDNgWMjoKGNYszD
+2qEZiQYZtPJ/hx4sr11IfDjsDt/LmMtmITvPtNZBaQ610ST3kdx8MiOPw7zPzpIe
+8TqC3IRGCx521kpVUrCH1UsWWbPTxhdp/cTFGluOnUEq6+mAQreOfB9hMxr09OF6
+ZckpT48UGQbZlossWxRNIp8TNb/L85g2SPqetrS/DldblzG9N30wQ+H+Ids6vF15
+sSINxhJROOZXzQehy9uHPZmuscRKwVbpaD1rnruNaXOlq2w3IiE=
+=y+Oz
+-----END PGP SIGNATURE-----
 
-I hacked up something that's at least RFC-quality based on this
-approach, but CI is running etc., so not submitting it
-now:
-
-	https://github.com/git/git/compare/master...avar:git:avar/have-git_configs=
-et_get_value-use-dest-and-int-pattern
-
-I think the resulting diff is more idiomatic API use, i.e. you ended up
-with:
-
-	        /* submodule.active is set */
-	        sl =3D repo_config_get_value_multi(repo, "submodule.active");
-	-       if (sl) {
-	+       if (sl && sl->nr) {
-
-But I ended up doing:
-
-	        /* submodule.active is set */
-	-       sl =3D repo_config_get_value_multi(repo, "submodule.active");
-	-       if (sl) {
-	+       if (!repo_config_get_const_value_multi(repo, "submodule.active", &=
-sl)) {
-
-Note the "const" in the function name, i.e. there's wrappers that handle
-the case where we have a hardcoded key name, in which case we can BUG()
-out if we'd return < 0, so all we have left is just "does key exist".
-
-In any case, I'm all for having some simple wrapper for the common cases.
-
-But I didn't find a single case where we actually needed this "never
-give me a non-NULL list" behavior, it could just be generalized to
-"let's have the API tell us if the key exist".
-
-If you use the non-"const" API you can distinguish the err < 0 case, so
-for-each-repo can now error out appropriately:
-
-	$ ./git for-each-repo --config=3Da; echo $?
-	error: key does not contain a section: a
-	fatal: got bad config --config=3Da
-=09
-	usage: git for-each-repo --config=3D<config> <command-args>
-=09
-	    --config <config>     config key storing a list of repository paths
-=09
-	129
+--------------AXFuaZZQ7EVxwY5joCy9kNgO--
