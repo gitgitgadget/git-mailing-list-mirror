@@ -2,100 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D8F7C54EE9
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 19:35:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D6DDC54EE9
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 19:38:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231726AbiI0Tfa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 15:35:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38288 "EHLO
+        id S231899AbiI0Ti2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 15:38:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229907AbiI0Tf0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 15:35:26 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B4DABCB6
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 12:35:25 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id x92so1397155ede.9
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 12:35:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date;
-        bh=3H+ne5f+CVeoehge6UgQOpGl/5sPuOTFPca4WKzShYE=;
-        b=OIwWVT+2zue3GP42PRBT9a+wQr1anJEgHDJoo0acmyIoH4+5O8WkJID9+SqNW7KuC4
-         Tc6N0PGWGmw6EQgLrwWCwvg+YjRijqal974flBmtTH+MQ+cp4sLZ1L6y9pXRe0YOXmMM
-         yqrwJakERz+tu9iVkK8Q6hENnEIUJ/pcfQwy2bO0bY2aBqp7f9Tu3vU/8p3DjelYAnmM
-         83DW3hw99TOLl1RBPxV6UQw0FhhpBxgZ0lpJnguqhFDiPeuL2LwBJtx0ZCB/xY0cotsY
-         5Ia7QixAXwrjoYkOMLBVuXuZ7So5AehKsDQePj0NOLH5xEwJa/uxy81ffAcL7qh/LJmT
-         bl5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=3H+ne5f+CVeoehge6UgQOpGl/5sPuOTFPca4WKzShYE=;
-        b=OyAWBA+P07YOGENYYBenkdlLhjVvPLKrzk42WfA7YyvmTWDrGEeQxay4mKE0i2MZp+
-         v0X3s4LAgfi0qsOKpV7JYVA0iaK1e69e+gJL51koItmhvTex3F0VZJv8Me5Rl08wsrDu
-         9tEfes6gwXzJH2I3D25k91gx7l2g+qRhIHLaTD86NwW4KmSko0Wyy3Bn1OaHlVJkcOG1
-         05J8rURT9eLjjPz6DN6QlUoSPEk7EYOkfJrskZT4W3HHTlSq+Qg6JyH5vPO/ScmEsZLe
-         9VC+Z5JQ3v4+PVr2jXa4Y62mgGaGVHgQbdIhBOK+q/4wJhgunCBGDKKbFHQuZyuTAXip
-         nr4w==
-X-Gm-Message-State: ACrzQf3nsi/z1sW3ZPaocuhrHOTV1YiqQo3pnNIvi9kB3FRY7zXFlk1e
-        i5+Kmbk7/Cs6LclYZgz0Y8o=
-X-Google-Smtp-Source: AMsMyM67oM46bidwzBkU4vSxR17GUiQrnQIa/ad/2K4ik4nbipHPzcqWy1+F66uZx0IgJZE7/uSMgQ==
-X-Received: by 2002:a05:6402:2554:b0:450:28d2:2152 with SMTP id l20-20020a056402255400b0045028d22152mr29842506edb.303.1664307323765;
-        Tue, 27 Sep 2022 12:35:23 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id 17-20020a170906211100b00741383c1c5bsm1224162ejt.196.2022.09.27.12.35.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Sep 2022 12:35:22 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1odGMU-000XCC-0a;
-        Tue, 27 Sep 2022 21:35:22 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        emilyshaffer@google.com
-Subject: Re: [PATCH 1/4] run-command: add pipe_output to run_processes_parallel
-Date:   Tue, 27 Sep 2022 21:34:22 +0200
-References: <20220922232947.631309-1-calvinwan@google.com>
- <20220922232947.631309-2-calvinwan@google.com>
- <xmqqy1u9uddc.fsf@gitster.g>
- <CAFySSZA=tThoHdTY7+bMStvC=xeeyMiv4aVDYt-eNW2mQE10qg@mail.gmail.com>
- <220927.86ill9yymv.gmgdl@evledraar.gmail.com>
- <CAFySSZBSAW=zea8UoMiaQkf8rdJUBGHDYZQFkPLW7mRSciS-FA@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <CAFySSZBSAW=zea8UoMiaQkf8rdJUBGHDYZQFkPLW7mRSciS-FA@mail.gmail.com>
-Message-ID: <220927.86fsgcy5j9.gmgdl@evledraar.gmail.com>
+        with ESMTP id S230214AbiI0Ti1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 15:38:27 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F36F15311A
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 12:38:26 -0700 (PDT)
+Received: (qmail 377 invoked by uid 109); 27 Sep 2022 19:38:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Sep 2022 19:38:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21537 invoked by uid 111); 27 Sep 2022 19:38:27 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Sep 2022 15:38:27 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 27 Sep 2022 15:38:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2] tmp-objdir: skip clean up when handling a signal
+Message-ID: <YzNRMbaM40i/6tPa@coredump.intra.peff.net>
+References: <pull.1348.git.git.1664236383785.gitgitgadget@gmail.com>
+ <pull.1348.v2.git.git.1664306341425.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1348.v2.git.git.1664306341425.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Sep 27, 2022 at 07:19:01PM +0000, John Cai via GitGitGadget wrote:
 
-On Tue, Sep 27 2022, Calvin Wan wrote:
+> Since we can't do the cleanup in a portable and signal-safe way, skip
+> the cleanup when we're handling a signal.
 
->> I don't know if you started this work or not, but I had a WIP rebase of
->> those on-list patches lying around in my tree, which I'm rebasing on
->> "master" currently.
->>
->> Some of it's a bit tricky with the in-tree activity since then, I'll
->> send them in when they're ready, maybe you already did your own rebasing
->> of them, or maybe it helps & you'd like to base a re-submission on top
->> of them.
->
-> I have not started on this part yet. Do you have an estimate as to when
-> you're planning on submitting your rebase?
+Thanks, this looks fine to me, though I think there are a few extra
+cleanup opportunities that could be squashed in:
 
-I hacked this up today, it passes CI at least:
-
-	https://github.com/git/git/compare/master...avar:avar/hook-run-process-parallel-tty-regression-2-argument-passing
-
-> I'm also considering not using
-> my pipe_output option and going a different route since there is the
-> issue of dealing with potentially unbounded output.
-
-Okey, if it's not blocking a re-submission of yours then I'll definitely
-wait until after the RC to submit the above, at least, but if you'd like
-it earlier...
-
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index 5d5f15f6d7..2fb0ec8317 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -18,7 +18,7 @@ struct tmp_objdir {
+ 
+ /*
+  * Allow only one tmp_objdir at a time in a running process, which simplifies
+- * our signal/atexit cleanup routines.  It's doubtful callers will ever need
++ * our atexit cleanup routine.  It's doubtful callers will ever need
+  * more than one, and we can expand later if so.  You can have many such
+  * tmp_objdirs simultaneously in many processes, of course.
+  */
+@@ -31,7 +31,7 @@ static void tmp_objdir_free(struct tmp_objdir *t)
+ 	free(t);
+ }
+ 
+-static int tmp_objdir_destroy_1(struct tmp_objdir *t)
++static int tmp_objdir_destroy(struct tmp_objdir *t)
+ {
+ 	int err;
+ 
+@@ -44,23 +44,13 @@ static int tmp_objdir_destroy_1(struct tmp_objdir *t)
+ 	if (t->prev_odb)
+ 		restore_primary_odb(t->prev_odb, t->path.buf);
+ 
+-	/*
+-	 * This may use malloc via strbuf_grow(), but we should
+-	 * have pre-grown t->path sufficiently so that this
+-	 * doesn't happen in practice.
+-	 */
+ 	err = remove_dir_recursively(&t->path, 0);
+ 
+ 	tmp_objdir_free(t);
+ 
+ 	return err;
+ }
+ 
+-int tmp_objdir_destroy(struct tmp_objdir *t)
+-{
+-	return tmp_objdir_destroy_1(t);
+-}
+-
+ static void remove_tmp_objdir(void)
+ {
+ 	tmp_objdir_destroy(the_tmp_objdir);
+@@ -139,14 +129,6 @@ struct tmp_objdir *tmp_objdir_create(const char *prefix)
+ 	 */
+ 	strbuf_addf(&t->path, "%s/tmp_objdir-%s-XXXXXX", get_object_directory(), prefix);
+ 
+-	/*
+-	 * Grow the strbuf beyond any filename we expect to be placed in it.
+-	 * If tmp_objdir_destroy() is called by a signal handler, then
+-	 * we should be able to use the strbuf to remove files without
+-	 * having to call malloc.
+-	 */
+-	strbuf_grow(&t->path, 1024);
+-
+ 	if (!mkdtemp(t->path.buf)) {
+ 		/* free, not destroy, as we never touched the filesystem */
+ 		tmp_objdir_free(t);
