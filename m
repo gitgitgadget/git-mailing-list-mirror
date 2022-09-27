@@ -2,147 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF045C54EE9
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 22:12:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FA16C54EE9
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 22:24:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230315AbiI0WMq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 18:12:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56810 "EHLO
+        id S229862AbiI0WYw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 18:24:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229885AbiI0WMm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 18:12:42 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D25C810963B
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 15:12:40 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id h62-20020a636c41000000b0043cc1874c79so3194009pgc.5
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 15:12:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date;
-        bh=ORXlNCBbtZ7cl2JoqVvtSvS+OM74e4IRJJLbj/ovKnQ=;
-        b=NTc1FplZoX9W3PAwUnxTLjaRIMzFCYaLcBClNJi2uOas7ToEp7qSjox1Pyn3HANMyI
-         Yeym86EaNQzuFCJrlChZ/+591/Wk9Kxy/0aexoDyDkC/bBkWOzgezZ087b7Aocz7Uoe5
-         a6MOrgnqOw3DgF3V1vBK9/fBcqHDVvnN9CnXjgCJ1KusGBOFtvJqhOJdfQhPZejijVDS
-         gfXtrn0FcMY3YHQ2tPeDuTrZQBGBnhRbq5qqf8jRwHxcmEfbbE4fltVmrJLMerr2UpAq
-         OYYHdkmfAnybr4tpjFR25RlvP3+7+coDlLPeOqQcgAqiVuKz9+B14k3z2QxFCNosmBhB
-         Wt8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date;
-        bh=ORXlNCBbtZ7cl2JoqVvtSvS+OM74e4IRJJLbj/ovKnQ=;
-        b=INB0JEicFvXAPIyasdRWuaKtFBO0F+5J31K2chHa62KK0D5HXNVpv0bPw+0eHrwlIF
-         1ZrABb3B0XvVsdKf5T31njDY6tiZx3w+8dIW9+qD92+EvSfblmKALKiECM3sieFQn/n0
-         v4vX0d7jYcrFoN+TTyN7uX0Aj6DTKp+GCA0A62DTSh/sJ0jbyWQGyvK/Fjxq/82cA4yV
-         Wm2SLKiFuBAvyWhs7vzQ0FE9meAIYKYYjKuURlcFxuvUzfsiXfdlNmeJFp8FE7ILWjpL
-         3hkcY3ACYP9VSCtT5VOTjLD5udI1ffg5GcBFYIm3jPIJr2g0x5J3+rr5FGfy1Cql9lga
-         BeDg==
-X-Gm-Message-State: ACrzQf2/CgNhWui8QeTD9ffKvilTd4dSEjmIuqz0jEp6QNRdoVgOOBgE
-        EFvLo8d12D7VYJk7puMKrUYqvXmg1jTY6hgVOOL9ciOajJr8CG2IGWWrRvN01dT1vehPONfDFUQ
-        YMGWsdtCg6xVInJ6U6DJec4rqUNCFhKRA5euC0jdoMfijPszCFhb7Fov386LaLdluij7aoWE/Il
-        u8
-X-Google-Smtp-Source: AMsMyM5BkeiENwgQ9HIk1RfvmFLs2StZA8axqtHK7jkK2tcWZuwPl82ZkotfZCRzp1/SLMjHDE9v3QciWJY+95MkSHP5
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:aa7:95a2:0:b0:541:123f:bcac with
- SMTP id a2-20020aa795a2000000b00541123fbcacmr31747517pfk.52.1664316760248;
- Tue, 27 Sep 2022 15:12:40 -0700 (PDT)
-Date:   Tue, 27 Sep 2022 15:12:30 -0700
-In-Reply-To: <cover.1664316642.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <cover.1664316642.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.37.3.998.g577e59143f-goog
-Message-ID: <7f6412eb8ce0c47a7645b89fab171a212353f8b2.1664316642.git.jonathantanmy@google.com>
-Subject: [PATCH 2/2] promisor-remote: die upon failing fetch
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229567AbiI0WYt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 18:24:49 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB4F09877E
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 15:24:47 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6CB351CF324;
+        Tue, 27 Sep 2022 18:24:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=GkVMM3cUe8hQ
+        zHsi6ER/EnAtX3mEzkKES86ilLXC9Vw=; b=hbTxLdr+uNHL3tYnQ13qlkBgTLWX
+        cmTiz00ogL9/xjZGlzHFIrIu07EJrL+6tCRz+GGgegQgRPrK0rbDGfLPYVJPZujH
+        XGI0B5RLV/M/QbVjtH08Rd1fdRpRpj0D1HzsfcHYYgkkrF0t3KMZKrb0IwwErgqv
+        +Ds+1ndV/IvIh6Y=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 581F81CF323;
+        Tue, 27 Sep 2022 18:24:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C9B041CF322;
+        Tue, 27 Sep 2022 18:24:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] branch: description for non-existent branch errors
+References: <c333cc4b-12a1-82b6-0961-1c42080dad15@gmail.com>
+        <858edf12-67b1-5e2c-dd2e-3eb476530803@gmail.com>
+        <xmqqleq6ovh4.fsf@gitster.g>
+        <26a5cbe2-d821-e7f6-e56f-4ad90ef2cf2d@gmail.com>
+Date:   Tue, 27 Sep 2022 15:24:41 -0700
+In-Reply-To: <26a5cbe2-d821-e7f6-e56f-4ad90ef2cf2d@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+        message of "Tue, 27 Sep 2022 01:35:13 +0200")
+Message-ID: <xmqqedvw1mmu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2F166E34-3EB3-11ED-92DD-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a partial clone, an attempt to read a missing object results in an
-attempt to fetch that single object. In order to avoid multiple
-sequential fetches, which would occur when multiple objects are missing
-(which is the typical case), some commands have been taught to prefetch
-in a batch: such a command would, in a partial clone, notice that
-several objects that it will eventually need are missing, and call
-promisor_remote_get_direct() with all such objects at once.
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-When this batch prefetch fails, these commands fall back to the
-sequential fetches. But at $DAYJOB we have noticed that this results in
-a bad user experience: a command would take unexpectedly long to finish
-if the batch prefetch would fail for some intermittent reason, but all
-subsequent fetches would work. It would be a better user experience for
-such a command would just fail.
+> I pointed out in the first mail of this thread, there is already a patc=
+h in
+> 'seen' that touches builtin/branch.c [1].  I would like to keep the pat=
+ches
+> separated, but I don't know how to proceed: make the change from 'seen'=
+, keep
+> it from 'master'... Maybe you can give me some guidance in this.
 
-Therefore, make it a fatal error if the prefetch fails and at least one
-object being fetched is known to be a promisor object. (The latter
-criterion is to make sure that we are not misleading the user that such
-an object would be present from the promisor remote. For example, a
-missing object may be a result of repository corruption and not because
-it is expectedly missing due to the repository being a partial clone.)
+I do not see much problem in keeping them separated.  My trial merge
+of the result of applying this patch on top of 'master', with the
+other topic that has the "branch description for nth prior checkout"
+patch does show a minor textual conflict, but the resolution does
+not look too bad.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- object-file.c     |  4 ----
- promisor-remote.c | 11 ++++++++++-
- 2 files changed, 10 insertions(+), 5 deletions(-)
+Check near the topic branch of 'seen' after I push out today's
+integration result in a few hours and see if they look reasonable.
 
-diff --git a/object-file.c b/object-file.c
-index 5b270f046d..5e30960234 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1599,10 +1599,6 @@ static int do_oid_object_info_extended(struct repository *r,
- 		if (fetch_if_missing && repo_has_promisor_remote(r) &&
- 		    !already_retried &&
- 		    !(flags & OBJECT_INFO_SKIP_FETCH_OBJECT)) {
--			/*
--			 * TODO Investigate checking promisor_remote_get_direct()
--			 * TODO return value and stopping on error here.
--			 */
- 			promisor_remote_get_direct(r, real, 1);
- 			already_retried = 1;
- 			continue;
-diff --git a/promisor-remote.c b/promisor-remote.c
-index 8b4d650b4c..faa7612941 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -4,6 +4,7 @@
- #include "config.h"
- #include "transport.h"
- #include "strvec.h"
-+#include "packfile.h"
- 
- struct promisor_remote_config {
- 	struct promisor_remote *promisors;
-@@ -238,6 +239,7 @@ void promisor_remote_get_direct(struct repository *repo,
- 	struct object_id *remaining_oids = (struct object_id *)oids;
- 	int remaining_nr = oid_nr;
- 	int to_free = 0;
-+	int i;
- 
- 	if (oid_nr == 0)
- 		return;
-@@ -255,9 +257,16 @@ void promisor_remote_get_direct(struct repository *repo,
- 				continue;
- 			}
- 		}
--		break;
-+		goto all_fetched;
-+	}
-+
-+	for (i = 0; i < remaining_nr; i++) {
-+		if (is_promisor_object(&remaining_oids[i]))
-+			die(_("could not fetch %s from promisor remote"),
-+			    oid_to_hex(&remaining_oids[i]));
- 	}
- 
-+all_fetched:
- 	if (to_free)
- 		free(remaining_oids);
- }
--- 
-2.37.3.998.g577e59143f-goog
+Thanks.
 
+
+diff --cc builtin/branch.c
+index 5ca35064f3,13d1f028da..2b3884ce61
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@@ -810,19 -807,18 +814,18 @@@ int cmd_branch(int argc, const char **a
+ =20
+  		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
+  		if (!ref_exists(branch_ref.buf)) {
+- 			strbuf_release(&branch_ref);
+-=20
+ -			if (!argc)
+ +			if (!argc || !strcmp(head, branch_name))
+- 				return error(_("No commit on branch '%s' yet."),
++ 				ret =3D error(_("No commit on branch '%s' yet."),
+  					     branch_name);
+  			else
+- 				return error(_("No branch named '%s'."),
++ 				ret =3D error(_("No branch named '%s'."),
+  					     branch_name);
+- 		}
+- 		strbuf_release(&branch_ref);
++ 		} else
++ 			ret =3D edit_branch_description(branch_name);
+ =20
+- 		if (edit_branch_description(branch_name))
+- 			return 1;
++ 		strbuf_release(&branch_ref);
++ 		strbuf_release(&buf);
++ 		return -ret;
+  	} else if (copy) {
+  		if (!argc)
+  			die(_("branch name required"));
