@@ -2,111 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04341C07E9D
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 14:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9D5DC54EE9
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 14:26:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231533AbiI0OTD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 10:19:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52102 "EHLO
+        id S231513AbiI0O0A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 10:26:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229889AbiI0OTB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 10:19:01 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30388EF082
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 07:19:00 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id z6so15277570wrq.1
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 07:19:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date;
-        bh=/Tf/TSkBvyUSJPHBIexYrArrrHHkTnHX9V7hIsBAzLQ=;
-        b=cQR8O8l7TD/4t5iuBBE5g/XOU5437KuFXQhn35b7Cs59DIJVMbrb4xaHBqBnxijJZk
-         k0wake0y21LMQh8hkSnJVEqzaRVf530NhcEKzXbe0nfUm6BlnzG/Sn9N3OMZD8xBVDce
-         zINJO4z0nV7+ojDVb1+UlLjLBxR2OkedxACUvyB4DSb9XaR7Gd5fIvA3YLsdzPYkCAQp
-         un+roUjzCfLspAdzeTXocIexBDnnFOQro3iEBKDUqOM+qvpke1MgSa4LTtnhQfIxhFh/
-         gAMmOqyJyHUevF5HgCqljYgRuUJy44pGYQcWTPC2gAths4EhJtg6L8jn9psLjMoBigFc
-         agyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=/Tf/TSkBvyUSJPHBIexYrArrrHHkTnHX9V7hIsBAzLQ=;
-        b=H04N9ZtPQsGHQVkgFXNpffFIvSWhald0HhApTz/jPfTUp3cBwEOZNLRyNuJ6abpAfu
-         qlfrNcogtOrz9FuJABddjSzCJn51qRU+67lMaScoJOROezX0dCUE4OjKC5i1v6eckQdq
-         Zci3CoeUxfbMNqny4SFbsMHg23wfc253N995+t305jr06CAQHkxvcr+uNJtycIlBa3Z9
-         faN1gD88akcxE/+JDT+a62Spop2PtrykuqmZqUjdIfLuAHrsQ6bQ2Yj7ZVsgf4st4rB0
-         qVUR7iGeATMgEvL45Sr/jnf7+NuRcroszj7xBwEpSkCXMjFVx7wnlCv+a9SsBvE6lnYY
-         tSvA==
-X-Gm-Message-State: ACrzQf1p/1SghvovaghXC3/V35LtnONmABlFTGQAsQK3QGNVpTVeVuKE
-        7Li2+jQkh43aYIvqrwGlv5ZWajrrLB5HqA==
-X-Google-Smtp-Source: AMsMyM6QQMjBAlI0BPjemMsouSdidabDi+wI2SY2qqx18RnXap5lyXVo3pDQx1eB+mRWTK/sY1dZew==
-X-Received: by 2002:a05:6000:144a:b0:229:b76f:86f9 with SMTP id v10-20020a056000144a00b00229b76f86f9mr17421410wrx.613.1664288338645;
-        Tue, 27 Sep 2022 07:18:58 -0700 (PDT)
-Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id p16-20020adfe610000000b00225239d9265sm2029164wrm.74.2022.09.27.07.18.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Sep 2022 07:18:58 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <7c310e1a-1011-c426-fe64-7be21b69052c@dunelm.org.uk>
-Date:   Tue, 27 Sep 2022 15:18:57 +0100
+        with ESMTP id S231533AbiI0OZz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 10:25:55 -0400
+Received: from outboundhk.mxmail.xiaomi.com (outboundhk.mxmail.xiaomi.com [118.143.206.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 0BDBD1BE84
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 07:25:49 -0700 (PDT)
+X-IronPort-AV: E=Sophos;i="5.93,349,1654531200"; 
+   d="scan'208";a="31970080"
+Received: from hk-mbx01.mioffice.cn (HELO xiaomi.com) ([10.56.8.121])
+  by outboundhk.mxmail.xiaomi.com with ESMTP; 27 Sep 2022 22:25:48 +0800
+Received: from BJ-MBX17.mioffice.cn (10.237.8.137) by HK-MBX01.mioffice.cn
+ (10.56.8.121) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 27 Sep
+ 2022 22:25:47 +0800
+Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by BJ-MBX17.mioffice.cn
+ (10.237.8.137) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.29; Tue, 27 Sep
+ 2022 22:25:47 +0800
+Received: from BJ-MBX01.mioffice.cn ([fe80::1839:49c8:1d62:7218]) by
+ BJ-MBX01.mioffice.cn ([fe80::1839:49c8:1d62:7218%9]) with mapi id
+ 15.02.0986.029; Tue, 27 Sep 2022 22:25:47 +0800
+From:   =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+To:     Carlo Arenas <carenas@gmail.com>, Han Xin <hanxin.hx@bytedance.com>
+CC:     "bagasdotme@gmail.com" <bagasdotme@gmail.com>,
+        "derrickstolee@github.com" <derrickstolee@github.com>,
+        =?utf-8?B?5Yeh5Yab6L6J?= <fanjunhui@xiaomi.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?utf-8?B?5L2V5rWp?= <hehao@xiaomi.com>,
+        "lilinchao@oschina.cn" <lilinchao@oschina.cn>,
+        =?utf-8?B?WGluNyBNYSDpqazpkas=?= <maxin7@xiaomi.com>,
+        =?utf-8?B?55+z5aWJ5YW1?= <shifengbing@xiaomi.com>
+Subject: RE: possible bug with commit-graph causing git to fork bomb (was Re:
+ [External Mail]Re: Git fork process infinitely and never stop)
+Thread-Topic: possible bug with commit-graph causing git to fork bomb (was Re:
+ [External Mail]Re: Git fork process infinitely and never stop)
+Thread-Index: AQHYkyqfW8rRbTmyTUC0VnyKJLR31610r+CAgABhBoCAfr6ugA==
+Date:   Tue, 27 Sep 2022 14:25:46 +0000
+Message-ID: <09cbcb88fb6643ad9d43ffc8f41eb360@xiaomi.com>
+References: <20220709002658.vt34nnzhxefg72d3@Carlos-MacBook-Pro-2.local>
+ <20220709005227.82423-1-hanxin.hx@bytedance.com>
+ <CAPUEspiP=U+pBYm3tx1wPc46He=5WKkdFYCr-58a-UfhAD+PUg@mail.gmail.com>
+In-Reply-To: <CAPUEspiP=U+pBYm3tx1wPc46He=5WKkdFYCr-58a-UfhAD+PUg@mail.gmail.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.237.8.11]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 05/10] evolve: add the change-table structure
-Content-Language: en-US
-To:     Stefan Xenos via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Christophe Poucet <christophe.poucet@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.1356.git.1663959324.gitgitgadget@gmail.com>
- <2b3a00a6702eb8fb12e45b833ca74155939588ef.1663959325.git.gitgitgadget@gmail.com>
- <3c61e0b3-5526-f42e-48a7-c4465d06ccb3@dunelm.org.uk>
-In-Reply-To: <3c61e0b3-5526-f42e-48a7-c4465d06ccb3@dunelm.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27/09/2022 14:27, Phillip Wood wrote:
->> +    /**
->> +     * Determine the object id for the latest content commit for each 
->> change.
->> +     * Fetch the commit at the head of each change ref. If it's a 
->> normal commit,
->> +     * that's the commit we want. If it's a metacommit, locate its 
->> content parent
->> +     * and use that.
->> +     */
->> +
->> +    for (i = 0; i < matching_refs.nr; i++) {
->> +        struct ref_array_item *item = matching_refs.items[i];
->> +        struct commit *commit = item->commit;
->> +
->> +        commit = lookup_commit_reference_gently(repo, 
->> &item->objectname, 1);
-> 
-> We're assigning commit twice - why do we need to look it up if 
-> filter_refs returns it?
-
-I think we want to look it up to check that item->objectname is a 
-commit. item->commit is not filled unless we specify the verbose flag 
-and I'm not sure what the implications of setting that are. If we get an 
-objectname that does not name a commit we should call BUG() as suggested 
-below.
-
-> There are a number of places where we call 
-> lookup_commit_reference_gently(..., 1) to silence the warning if the 
-> objectname does not dereference to a commit. It is not clear to me that 
-> we want to hide those errors. Indeed I think we should be doing
-> 
->          commit = lookup_commit_reference(repo, oid)
->          if (!commit)
->              BUG("commit missing ...")
-> 
-> unless there is a good reason that the lookup can fail.
+SSBmb3VuZCBhbm90aGVyIGZvcmsgYm9tYiB3aXRoIHBhcnRpYWwtY2xvbmUgYnV0IG5vdCByZWxh
+dGVkIHRvIGNvbW1pdEdyYXBoDQoNCkhlcmUgaXMgdGhlIHZpZGVvOiBodHRwczovL3lvdXR1LmJl
+LzNYdW40UFFOUUM0DQoNCkFuZCBoZXJlIGlzIHRoZSB0cmVlIGNvbW1hbmQsIEdJVF9UUkVBQ0Uy
+IGFuZCBHSVRfVFJBQ0VfUEFDS0VUIGxvZw0KaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUv
+ZC8xbUo0LVVjQTh5dGRqcllMN0s2WHhDdHh5cy1EUlJUcWQvdmlldz91c3A9c2hhcmluZw0KaHR0
+cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUvZC8xck9sc2thcDVsMloxTjZMbmFCZ0xoVy1HX1VG
+OHp4M1ovdmlldz91c3A9c2hhcmluZw0KaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUvZC8x
+empJN0NtNGFYdjNmaFBOM0ZfY3dZMTVVYS1wNG5jRmwvdmlldz91c3A9c2hhcmluZw0KDQpJIHN0
+aWxsIGhhdmUgdGhlIHNjZW5lIHdoaWNoIGNhbiByZXByb2R1Y2UgdGhpcyBidWcuIElmIHRoZXJl
+IGlzIHNvbWV0aGluZyBlbHNlIEkgY2FuIHByb3ZpZGUsIGZlZWwgZnJlZSB0byBhc2sNCg0KPg0K
+PiBPbiBGcmksIEp1bCA4LCAyMDIyIGF0IDU6NTIgUE0gSGFuIFhpbiA8aGFueGluLmh4QGJ5dGVk
+YW5jZS5jb20+IHdyb3RlOg0KPiA+DQo+ID4gPiA+IFRvIGJlIGEgc3VwcGxlbWVudC4NCj4gPiA+
+ID4gSWYgSSBkZWxldGUgLmdpdC9vYmplY3RzL2luZm8vY29tbWl0LWdyYXBoLCAgZXZlcnl0aGlu
+ZyB3b3JrcyB3ZWxsDQo+ID4gPiA+IEFzIHdlbGwgYXMgZmV0Y2ggd2l0aCBgLWMgY29yZS5jb21t
+aXRHcmFwaD1mYWxzZWANCj4gPiA+DQo+ID4gPiBUaGlzIHdvdWxkIHNlZW0gdG8gaW5kaWNhdGUg
+dGhhdCBzb21ldGhpbmcgaW4gdGhlIHJlcG9zaXRvcnkgbWlnaHQNCj4gPiA+IGJlIHRyaWdnZXJl
+ZCBieSB0aGUgY29tbWl0LWdyYXBoIGNvZGUuDQo+ID4gPg0KPiA+ID4gPiBpZiBJIGV4ZWN1dGUg
+YGdpdCBmZXRjaCAtLWZpbHRlcj1ibG9iOm5vbmUgLS1xdWlldCAtLXByb2dyZXNzIG1pdWkgLS1w
+cnVuZSAtDQo+IC10YWdzICtyZWZzL2hlYWRzLyo6cmVmcy9yZW1vdGVzL21pdWkvKiArcmVmcy9o
+ZWFkcy9taXVpMTMtcy10aG9yLQ0KPiB2ZW5kb3Itc3RhYmxlOnJlZnMvcmVtb3Rlcy9taXVpL21p
+dWkxMy1zLXRob3ItdmVuZG9yLXN0YWJsZWAgIG9uIHZlcnNpb24NCj4gMi4yNS4xLiBJdCBqdXN0
+IHRocm93IGVycm9yIHJhdGhlciB0aGFuIGluZmluaXRlIGxvb3AsIGxpa2UgdGhpcyB5b3V0dWJl
+IHZpZGVvDQo+ICJodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXF2WVR2VlJFMEZVJmZl
+YXR1cmU9eW91dHUuYmUiDQo+ID4gPg0KPiA+ID4gbWF5YmUgYSByZWdyZXNzaW9uPw0KPiA+ID4N
+Cj4gPiA+IENhcmxvDQo+ID4NCj4gPiBJIGxvb2tzIGxpa2UgdGhlIHNhbWUgaXNzdWUgSSByZXBv
+cnRlZCBpbiBbMV0sIGFuZCB3ZSBjYW4gc2VlIHRoZQ0KPiA+IGZpeHVwIGluIFsyXS4NCj4gPg0K
+PiA+IDEuDQo+ID4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvZ2l0LzIwMjIwNjEyMTYxNzA3LjIx
+ODA3LTEtY2hpeXV0aWFueWlAZ21haWwuYw0KPiA+IG9tLyAyLg0KPiA+IGh0dHBzOi8vbG9yZS5r
+ZXJuZWwub3JnL2dpdC9jb3Zlci4xNjU2NTkzMjc5LmdpdC5oYW54aW4uaHhAYnl0ZWRhbmNlLmMN
+Cj4gPiBvbS8NCj4NCj4gSW5kZWVkOyBhbmQgaXQgaXMgYWxyZWFkeSBpbnRlZ3JhdGVkIHRocm91
+Z2ggaHgvbG9va3VwLWNvbW1pdC1pbi1ncmFwaC1maXgNCj4gYW5kIG1lcmdlZCBhbGwgdGhlIHdh
+eSB0byAibmV4dCIsIHdoaWNoIHdvdWxkIGxpa2VseSBiZWNvbWUgMi4zOCBzb21ldGltZQ0KPiBz
+b29uLg0KPg0KPiDnqIvmtIssDQo+DQo+IGlmIHlvdSBjb3VsZCBidWlsZCBhIG5ldyBnaXQgdmVy
+c2lvbiBiYXNlZCBvbiBuZXh0IGFuZCBjb25maXJtIGl0IHNvbHZlcyB5b3VyDQo+IHByb2JsZW0s
+IGl0IHdvdWxkIGhlbHAgdXMgYWxsLg0KPg0KPiBBbHRlcm5hdGl2ZSBjYW4gZ2V0IHRoYXQgc2lu
+Z2xlICJvbmUgbGluZSIgcGF0Y2hbMV0gYW5kIGludGVncmF0ZSBpdCBvbiB0b3Agb2YNCj4gdGhl
+IGdpdCB2ZXJzaW9uIHlvdSBhcmUgdXNpbmcuDQo+DQo+IENhcmxvDQo+DQo+IFsxXQ0KPiBodHRw
+czovL2xvcmUua2VybmVsLm9yZy9naXQvOTZkNGJiNzE1MDVkODdlZDUwMWMwNThiYmQ4OWJmYzEz
+ZDA4YjI0YS4xDQo+IDY1NjU5MzI3OS5naXQuaGFueGluLmh4QGJ5dGVkYW5jZS5jb20vDQojLyoq
+KioqKuacrOmCruS7tuWPiuWFtumZhOS7tuWQq+acieWwj+exs+WFrOWPuOeahOS/neWvhuS/oeaB
+r++8jOS7hemZkOS6juWPkemAgee7meS4iumdouWcsOWdgOS4reWIl+WHuueahOS4quS6uuaIlue+
+pOe7hOOAguemgeatouS7u+S9leWFtuS7luS6uuS7peS7u+S9leW9ouW8j+S9v+eUqO+8iOWMheaL
+rOS9huS4jemZkOS6juWFqOmDqOaIlumDqOWIhuWcsOazhOmcsuOAgeWkjeWItuOAgeaIluaVo+WP
+ke+8ieacrOmCruS7tuS4reeahOS/oeaBr+OAguWmguaenOaCqOmUmeaUtuS6huacrOmCruS7tu+8
+jOivt+aCqOeri+WNs+eUteivneaIlumCruS7tumAmuefpeWPkeS7tuS6uuW5tuWIoOmZpOacrOmC
+ruS7tu+8gSBUaGlzIGUtbWFpbCBhbmQgaXRzIGF0dGFjaG1lbnRzIGNvbnRhaW4gY29uZmlkZW50
+aWFsIGluZm9ybWF0aW9uIGZyb20gWElBT01JLCB3aGljaCBpcyBpbnRlbmRlZCBvbmx5IGZvciB0
+aGUgcGVyc29uIG9yIGVudGl0eSB3aG9zZSBhZGRyZXNzIGlzIGxpc3RlZCBhYm92ZS4gQW55IHVz
+ZSBvZiB0aGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGhlcmVpbiBpbiBhbnkgd2F5IChpbmNsdWRp
+bmcsIGJ1dCBub3QgbGltaXRlZCB0bywgdG90YWwgb3IgcGFydGlhbCBkaXNjbG9zdXJlLCByZXBy
+b2R1Y3Rpb24sIG9yIGRpc3NlbWluYXRpb24pIGJ5IHBlcnNvbnMgb3RoZXIgdGhhbiB0aGUgaW50
+ZW5kZWQgcmVjaXBpZW50KHMpIGlzIHByb2hpYml0ZWQuIElmIHlvdSByZWNlaXZlIHRoaXMgZS1t
+YWlsIGluIGVycm9yLCBwbGVhc2Ugbm90aWZ5IHRoZSBzZW5kZXIgYnkgcGhvbmUgb3IgZW1haWwg
+aW1tZWRpYXRlbHkgYW5kIGRlbGV0ZSBpdCEqKioqKiovIw0K
