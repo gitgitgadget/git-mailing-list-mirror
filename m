@@ -2,107 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ACA1C07E9D
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 16:40:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E9DCC6FA83
+	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 16:42:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232778AbiI0QkF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 12:40:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53184 "EHLO
+        id S232943AbiI0Qmz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 12:42:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232730AbiI0QkC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 12:40:02 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CBA11D303
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 09:39:58 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D29E913BE2E;
-        Tue, 27 Sep 2022 12:39:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DC9vmibQxPrp3KNckp7EsZeeGu2pvktv8EDa4b
-        80UO4=; b=yMtpiR5oQVgvdAchSaNy43+T4VNZMElNtvjYg7I+TuLV1kypBv0931
-        xkdmhjn2sJG52tGEVsoJzxLbaIWS2S03Wj+vv504uZdhzLu82mZ9r3W3BIKDbqsG
-        Md2tHlGsZb2YM5FFuLNyTYDmHWRkc0CQJH5LV6PtOmXGjT7sRoQAg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C79AF13BE2D;
-        Tue, 27 Sep 2022 12:39:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2F39A13BE2B;
-        Tue, 27 Sep 2022 12:39:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v4 4/4] string-list: document iterator behavior on NULL
- input
-References: <pull.1358.v3.git.1664218087.gitgitgadget@gmail.com>
-        <pull.1358.v4.git.1664287021.gitgitgadget@gmail.com>
-        <73a262cdca46a45aeeda6f47ea3357aaeb937e7b.1664287021.git.gitgitgadget@gmail.com>
-Date:   Tue, 27 Sep 2022 09:39:56 -0700
-In-Reply-To: <73a262cdca46a45aeeda6f47ea3357aaeb937e7b.1664287021.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Tue, 27 Sep 2022
-        13:57:01 +0000")
-Message-ID: <xmqqmtak7ov7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S233088AbiI0Qmg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 12:42:36 -0400
+Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6C111E05F0
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 09:42:35 -0700 (PDT)
+Received: by mail-il1-x131.google.com with SMTP id l4so5396816ilq.3
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 09:42:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=ljlnMZcD8DEkKkwrMvTo7dQFUndpImVptAOHJJ8TgIA=;
+        b=jQzMolFHzb3p3q5NPvROI8PMoSAHG5sSdl41e5j9nbnpu3x/JsdFGz0jS9e9qGJZ8R
+         cfRFPsY6DEDbixGZr9F6PlEg7LTWxbOYLxs9bWSlpY+Qh+NaLlB2w7mUd8SijreW4nYV
+         BjL4ILzTQJ0TCBWQQAlggrM6Q44pYwcCI1vaiCd4Z761X74Pt0dSSi9yOJdeJxyLjLUA
+         NL4E7rShkJbfgLJjRzQ03aalK315LsQZ/C0ByBbJ5IkETd8X/SaIsCQafjjCsILSlyCp
+         wa5t0ZBsWjsbQhTlKRfGJsH8un1jtr2KYkB/iMuiOm9++A2AG4/Bx7jCR8i6uDutrztf
+         6p/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=ljlnMZcD8DEkKkwrMvTo7dQFUndpImVptAOHJJ8TgIA=;
+        b=7xhP0U5EB1tR4PcNMRIVbCwzPHwEW+MB+NCtVEs4ipKq35Q/DjlEEjjgpDrh5JC1NW
+         J0D7cD31Svw5VSP3QHDFRgWRrUGVPo7zSmSM1+whEYmCYSNL32yPfINtkDj104oU563U
+         v78ZG3pIboudFdj/Q3354nKExXSk+Oxf3NkjrO6Vy8/QN7Xq0tYM/LJXscaVt6ScMocA
+         VsmE9lgV8FH/euSmpFLB1w5M4U5dYdSpWhx3+iKT1xpmekvOZXlR0SFKBPUA72Cx1gUA
+         e+aLzy9U0TrYciH86jTwV4AUGtvluiBskYMseOdY6lu3+F6l/IuEyWDIeeKiIG55xMaa
+         KtRQ==
+X-Gm-Message-State: ACrzQf2jg+6dh82q7WzD4yIkfeYIDTw6weREZnsLPhqSX/pC4S8/pOMP
+        cgtrwDcwcawbtCaNvdm6faJB
+X-Google-Smtp-Source: AMsMyM7+1KNFBaMS0VsCyt/HGGIDJPYFYw6RisvUsWdzANCTCH9Gv4GV6lNIRXviGi4yr9ISjcmOhQ==
+X-Received: by 2002:a92:8704:0:b0:2e0:ddf6:6390 with SMTP id m4-20020a928704000000b002e0ddf66390mr12912497ild.16.1664296955245;
+        Tue, 27 Sep 2022 09:42:35 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:6d75:31c0:4041:5d27? ([2600:1700:e72:80a0:6d75:31c0:4041:5d27])
+        by smtp.gmail.com with ESMTPSA id g6-20020a05663810e600b00349fb9b1abesm791356jae.106.2022.09.27.09.42.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Sep 2022 09:42:34 -0700 (PDT)
+Message-ID: <ea32aef1-2899-abae-0192-75d672b69302@github.com>
+Date:   Tue, 27 Sep 2022 12:42:33 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 057DE834-3E83-11ED-8142-307A8E0A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH] sparse-checkout.txt: new document with sparse-checkout
+ directions
+Content-Language: en-US
+To:     Victoria Dye <vdye@github.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        ZheNing Hu <adlternative@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.1367.git.1664064588846.gitgitgadget@gmail.com>
+ <a89413b5-464b-2d54-5b8c-4502392afde8@github.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <a89413b5-464b-2d54-5b8c-4502392afde8@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 9/26/2022 4:08 PM, Victoria Dye wrote:
+> Elijah Newren via GitGitGadget wrote:
+>> +=== Purpose of sparse-checkouts ===
+>> +
+>> +sparse-checkouts exist to allow users to work with a subset of their
+>> +files.
+>> +
+>> +The idea is simple enough, but there are two different high-level
+>> +usecases which affect how some Git subcommands should behave.  Further,
+>> +even if we only considered one of those usecases, sparse-checkouts
+>> +modify different subcommands in over a half dozen different ways.  Let's
+>> +start by considering the high level usecases in this section:
+>> +
+>> +  A) Users are _only_ interested in the sparse portion of the repo
+>> +
+>> +  B) Users want a sparse working tree, but are working in a larger whole
+> 
+> Both of these use cases make sense to me! Two thoughts/comments:
+> 
+> 1. This could be a "me" problem, but I regularly struggle with "sparse"
+>    having different meanings in similar contexts. For example, a "sparse
+>    directory" is one *with* 'SKIP_WORKTREE' applied vs. "the sparse portion
+>    of the repo"  here refers to the files *without* 'SKIP_WORKTREE' applied.
+>    A quick note/section outlining some standard terminology would be
+>    immensely helpful.
 
-> From: Derrick Stolee <derrickstolee@github.com>
->
-> The for_each_string_list_item() macro takes a string_list and
-> automatically constructs a for loop to iterate over its contents. This
-> macro will segfault if the list is non-NULL.
->
-> We cannot change the macro to be careful around NULL values because
-> there are many callers that use the address of a local variable, which
-> will never be NULL and will cause compile errors with -Werror=address.
->
-> For now, leave a documentation comment to try to avoid mistakes in the
-> future where a caller does not check for a NULL list.
->
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->  string-list.h | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
+This difference is absolutely my fault, and maybe we should consider
+fixing this problem by renaming sparse directories something else.
+Perhaps "skipped directory" would be a better name?
 
-For exactly the -Werror=address reason, any other way that checks
-list for NULL-ness cannot be done here (other than with Peff's
-inline helper that returns the first item or NULL), which is a bit
-of shame but this is totally outside the topic, and an additional
-comment is a good thing to have here.
-
-Thanks.  All four patches look reasonable.  Will queue (but after I
-make sure I can tag and push out -rc2 today).
-
-
-> diff --git a/string-list.h b/string-list.h
-> index d5a744e1438..c7b0d5d0008 100644
-> --- a/string-list.h
-> +++ b/string-list.h
-> @@ -141,7 +141,12 @@ void string_list_clear_func(struct string_list *list, string_list_clear_func_t c
->  int for_each_string_list(struct string_list *list,
->  			 string_list_each_func_t func, void *cb_data);
->  
-> -/** Iterate over each item, as a macro. */
-> +/**
-> + * Iterate over each item, as a macro.
-> + *
-> + * Be sure that 'list' is non-NULL. The macro cannot perform NULL
-> + * checks due to -Werror=address errors.
-> + */
->  #define for_each_string_list_item(item,list)            \
->  	for (item = (list)->items;                      \
->  	     item && item < (list)->items + (list)->nr; \
+Thanks,
+-Stolee
