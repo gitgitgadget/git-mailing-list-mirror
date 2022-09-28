@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0471EC04A95
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 08:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C856C04A95
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 08:40:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233445AbiI1IkN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 04:40:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51272 "EHLO
+        id S233511AbiI1IkP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 04:40:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233227AbiI1Ijn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 04:39:43 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5888222A6
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:39:41 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id bk15so10871263wrb.13
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:39:41 -0700 (PDT)
+        with ESMTP id S230305AbiI1Ijr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 04:39:47 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17CBD3C8F8
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:39:45 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id l18so6626471wrw.9
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:39:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=KFPD0Zh+O2ETtHnUrvkGHpwYBSO22ale6ykO8UgJ0as=;
-        b=mVQuhpNwVz1W8r7XWk8GhCVs5R+F4cbeRur42rw5lfs4L3ZEdik6j8wFAyNZzb68T9
-         v+RTrR06IbT2IWvQOX4AH7jH4n6ieXZznppqEP0hHZ2vzBGbwg+CEySgTWZoIURTCBIo
-         /UhlqWi5CG9tVDAh7g4zX4cR0gfStVkq4jt/dh5vXq9533yRNNkO4osGtQnC5wsnLnlA
-         WPrv+Lrx10YgkfB+yHar8+WQZwAU8to3FvbVHPafsiYEMB7kd7AocjdSM8JcZg7kdWa2
-         YWcdxSJlbessvRVNyjgd71anl5wPxWGnpLvAO6mkPZhzL4cqZjpCl0oT8REjhW+f70Ie
-         nBYA==
+        bh=q/3U2PD5WKtKpuBIywAli+A65RuyT1WCNkczvOjAbYk=;
+        b=dpCUG52dvjJSCzfDn1teZ0nFkqgBnRt70kXgd9PuG1qmkrD5INBvRzSlBcC+YqEbSV
+         jU7B8j0rE7oDQvhMX/GKA3RKl/TyTOzgUcFujbFGtw0QmFMTfvOJCUPj6z1SxNJWGv3R
+         qiRN3PtzH6+1VRCWyZ+0SWztJB+a/wST0/ie0s1yZy6LeUvd81enMcTdp5elXFoEBjyu
+         zdt0ibeTlPuOgvDCnvytThwfqIMNmt8rCwaRN5p6UB8tpOsm0vxjeRZ54zkbiQ4DkTOa
+         hKJdcrzaUFlwo7FV5+YYJSUZcd4vV9e+TjwY6CRqWYKtljjJLtOQi0HWKRp8E4yNmAjY
+         YxpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=KFPD0Zh+O2ETtHnUrvkGHpwYBSO22ale6ykO8UgJ0as=;
-        b=Wd33C5mgG/LuIN7130H393/rlHjQFUGtFoZh6oxc7PTMqxCM/1jnEKJywaVRP/s35f
-         aW6iKvWt26ht2jFFx2I3b47roa9yuauXV/PD0CNYOzpfZKs9h4FdJBvwc4wHLG1T4kMI
-         i7qiFFfCclI6mune2kO1QCKEK7zhre0bJXXbzOUKjqbbOMSDNfMe+g+VHkCm1IsUUmnB
-         ySRk8woHNgilF6aPzpzM9k2Y+6EvC/R+B5UGfbSDjLSHqT098XVI4lMlbph3wdFz1Nw9
-         Eu13OY1pofMP0UrYLOW4cLqd9XAghYF0zUse7p2Y3ncbX0hJKdlnqjNyHgkAG93BxXu/
-         kLrg==
-X-Gm-Message-State: ACrzQf0d9mB+nsfhj1AmpHu0UYCusKj1UsAwxW7SyQuJK/NMb8uVLpRo
-        N9m0lTskqehxxLmP+kZ3+c7oJrIF555yUg==
-X-Google-Smtp-Source: AMsMyM4ws/Ku+ajabHUiyC5zeppAUJ8R+RXxQRaBR2fIh5TCsg2EWU6zqQ2ql0P0XYA9Xt6RWWJMPw==
-X-Received: by 2002:adf:ee84:0:b0:22c:c87d:1a14 with SMTP id b4-20020adfee84000000b0022cc87d1a14mr1133862wro.639.1664354380002;
-        Wed, 28 Sep 2022 01:39:40 -0700 (PDT)
+        bh=q/3U2PD5WKtKpuBIywAli+A65RuyT1WCNkczvOjAbYk=;
+        b=NTWtrrbwyQzzEJCAzKISbfjOxUvuu9wW4V4sufO/843QR+ceWRcwtKAmcOqauUGq0S
+         nsIeTilpg4RST1g16yVf80gQPfRHjdGIne0BTbXjC6TEdRuwwEkOvuwqoHWpxWy5FX0o
+         q+0lvrJyRNUUZFRXweAlohFbyEpBAS3vLGStrIFJOlmUTNvOtXzomqul0BfVKzPtFo3Y
+         /gqW2O5YV+qUwvNJ9dZfvMwKWIy2E2G4tEeAjEu7vcRw6h3GkQvifwB3YEQb+AimmJLc
+         SMrQNLJuUEJ2qu6ifVaZE51ZPqdE7ekWbFyFcuMeHVtY5i3oUA516n248E6l/tZGR/Y5
+         8K9w==
+X-Gm-Message-State: ACrzQf3kfo1FlosljHUVUoEYhqzHY/FZcUbrrmfiZqw00b5xKBNCBFsp
+        yJPtAzIw5MIIPj6peSZTfXI94c7ktN6wRA==
+X-Google-Smtp-Source: AMsMyM61o4p/XMoJr3lLDW5k/Rn6U4ebi4s+cZMp1Q9Ktrl3BxBdzzq5Cc6+m5fPzq/Lx5our2IbjQ==
+X-Received: by 2002:a05:6000:15c7:b0:22a:f70b:490 with SMTP id y7-20020a05600015c700b0022af70b0490mr18996603wry.489.1664354383207;
+        Wed, 28 Sep 2022 01:39:43 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 26-20020a05600c229a00b003b31fc77407sm1075026wmf.30.2022.09.28.01.39.39
+        by smtp.gmail.com with ESMTPSA id 26-20020a05600c229a00b003b31fc77407sm1075026wmf.30.2022.09.28.01.39.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 01:39:39 -0700 (PDT)
+        Wed, 28 Sep 2022 01:39:42 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
         John Cai <johncai86@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 04/35] blame: use a more detailed usage_msg_optf() error on bad -L
-Date:   Wed, 28 Sep 2022 10:38:59 +0200
-Message-Id: <patch-v2-04.35-707cf48a900-20220928T082458Z-avarab@gmail.com>
+Subject: [PATCH v2 07/35] doc SYNOPSIS & -h: fix incorrect alternates syntax
+Date:   Wed, 28 Sep 2022 10:39:02 +0200
+Message-Id: <patch-v2-07.35-3531d531a3f-20220928T082458Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.rc1.925.gb61c5ccd7da
 In-Reply-To: <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
 References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com> <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
@@ -71,37 +71,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve the error message emitted when there's a bad -L argument, and
-do so using the parse-options.c flavor of "usage()", instead of using
-the non-parse-options.c usage() function. This was the last user of
-usage() in this file.
+Fix the incorrect "[-o | --option <argument>]" syntax, which should be
+"[(-o | --option) <argument>]", we were previously claiming that only
+the long option accepted the "<argument>", which isn't what we meant.
+
+This issue has been with us in both the "-h" and *.txt versions since
+bd514cada4b (stash: introduce 'git stash store', 2013-06-15).
+
+There are also issues with the alternates syntax for "bugreport" and
+"diagnose", but in those cases only for one of *.c or *.txt, not
+both. Those issues will be fixed in a subsequent "consistency" commit.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/blame.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ Documentation/git-stash.txt | 6 +++---
+ builtin/stash.c             | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index a9fe8cf7a68..8ec59fa2096 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1108,12 +1108,13 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	anchor = 1;
- 	range_set_init(&ranges, range_list.nr);
- 	for (range_i = 0; range_i < range_list.nr; ++range_i) {
-+		const char *arg = range_list.items[range_i].string;
- 		long bottom, top;
--		if (parse_range_arg(range_list.items[range_i].string,
--				    nth_line_cb, &sb, lno, anchor,
-+		if (parse_range_arg(arg, nth_line_cb, &sb, lno, anchor,
- 				    &bottom, &top, sb.path,
- 				    the_repository->index))
--			usage(blame_usage);
-+			usage_msg_optf(_("failed to parse -L argument '%s'"),
-+				       blame_opt_usage, options, arg);
- 		if ((!lno && (top || bottom)) || lno < bottom)
- 			die(Q_("file %s has only %lu line",
- 			       "file %s has only %lu lines",
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index c5d70918283..4856f452511 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -14,12 +14,12 @@ SYNOPSIS
+ 'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
+ 'git stash' branch <branchname> [<stash>]
+ 'git stash' [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]
+-	     [-u|--include-untracked] [-a|--all] [-m|--message <message>]
++	     [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]
+ 	     [--pathspec-from-file=<file> [--pathspec-file-nul]]
+ 	     [--] [<pathspec>...]]
+ 'git stash' clear
+ 'git stash' create [<message>]
+-'git stash' store [-m|--message <message>] [-q|--quiet] <commit>
++'git stash' store [(-m|--message) <message>] [-q|--quiet] <commit>
+ 
+ DESCRIPTION
+ -----------
+@@ -47,7 +47,7 @@ stash index (e.g. the integer `n` is equivalent to `stash@{n}`).
+ COMMANDS
+ --------
+ 
+-push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [-m|--message <message>] [--pathspec-from-file=<file> [--pathspec-file-nul]] [--] [<pathspec>...]::
++push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [(-m|--message) <message>] [--pathspec-from-file=<file> [--pathspec-file-nul]] [--] [<pathspec>...]::
+ 
+ 	Save your local modifications to a new 'stash entry' and roll them
+ 	back to HEAD (in the working tree and in the index).
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 2274aae2556..51d40efaac7 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -29,7 +29,7 @@ static const char * const git_stash_usage[] = {
+ 	N_("git stash branch <branchname> [<stash>]"),
+ 	"git stash clear",
+ 	N_("git stash [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
+-	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
++	   "          [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]\n"
+ 	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
+ 	   "          [--] [<pathspec>...]]"),
+ 	N_("git stash save [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
+@@ -73,13 +73,13 @@ static const char * const git_stash_clear_usage[] = {
+ };
+ 
+ static const char * const git_stash_store_usage[] = {
+-	N_("git stash store [-m|--message <message>] [-q|--quiet] <commit>"),
++	N_("git stash store [(-m|--message) <message>] [-q|--quiet] <commit>"),
+ 	NULL
+ };
+ 
+ static const char * const git_stash_push_usage[] = {
+ 	N_("git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
+-	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
++	   "          [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]\n"
+ 	   "          [--] [<pathspec>...]]"),
+ 	NULL
+ };
 -- 
 2.38.0.rc1.925.gb61c5ccd7da
 
