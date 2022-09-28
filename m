@@ -2,223 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 586A3C04A95
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 07:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F8F3C04A95
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 07:51:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233850AbiI1Hrw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 03:47:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33244 "EHLO
+        id S233921AbiI1Hvn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 03:51:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233821AbiI1Hra (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 03:47:30 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D9D91B913E
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 00:44:01 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id rk17so12143943ejb.1
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 00:44:01 -0700 (PDT)
+        with ESMTP id S233817AbiI1HvS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 03:51:18 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A944D1893AE
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 00:50:07 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id q17so13400858lji.11
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 00:50:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=9AntiJsr8eSt6Ew1m0l/SVmzWAM5AiB1shIKnslJxzA=;
-        b=UO8H5GHfAkhif7hOihjOqWrEY6htBLsWBoMQYkT4rysMYMq2mtPv5XH5vtzB5T9qcW
-         GGQQXi3G8kLCQmzadOIv56FUeZN/7kzjPCMF7fcl8oSQlhbj1AG5ZZC/W3pjj4IUfufg
-         COH+R9vaMItQlmVChe3qz9r6RUN206qYkU1mmTv4LGUK+qBFznVBlNxbxCN4wzEDEWfD
-         qK85VMW5zJGbtYWLPQ9YJ0yywn4zrwFxraaR7V//CxmkrB6yOe4uxZSgJK2k/tvEdOd7
-         F7jyepD8wEbOz34WLJiEpXSrV0VTmuWS4wHdH5kud5k6vWqKUH1qoDUgeQfD/nKtc6+/
-         NRDA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=+cCy5xdHN1hhZGfwI6ABX9yd+Himq/uZPdYfM5ly8JM=;
+        b=WMPXNZtwOijgCN1oirUlM3oU9rrqHoYS2Q9uVmbrx25REmdpWXDPOyMHHzjb1822/J
+         FXEvQ0AqJA9AooB9o1vSOGJoEoTdJazdSKg106tYW08nyz+y6PN1IwOY4p22ZldT2qi7
+         Elu3m2v1m5eGlhhwSV37Kp/5yFD35EXu8SkYVD4autnb4lk4BtWUifNcpZ5+tyoUu6Ws
+         ehLPhUSpKkrikwz7eSxBiDK1nZaYthdSlpCzKzKmkfiY+S6wWJH84okcxhpC3a8NhHk2
+         sKOHNgo2fs3USVGVUb/Hj/5CNyqLHh6HtUfz1zdjNrTEx7JTGYZBGCoiNBHMIlTacaEl
+         iIag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=9AntiJsr8eSt6Ew1m0l/SVmzWAM5AiB1shIKnslJxzA=;
-        b=sMA6xjimTHtYmXy2jv7+RywxH0CIUs+HcxGJgQR7OQpaJl4UMSW4EybtEJbLkQXIp2
-         4fLamCFLBlDscA0JDHXzhf+D4ZgB72lEZEb2q4KUPy9urzXqP4Rl7TSapMzd9RG21hHD
-         IfJRfkYdNWD07CIPghkja9IiFR6RgNDpwDf+nAazZgHOXwoGVAOlyOng9jqsghsVQWxs
-         aY5HBERDStWkoGMZ3d4Z21KirmKdI3Kfobrs4pKgiQ4GByuWKZCpvNxxzwLmG4DqiLuI
-         x0Q6JVB+yma3/3YnxXEKmxSCN3x1VpzK/id0bjbhB6kBP73btFL2lDYJ5hbsdckvVsOD
-         5e7A==
-X-Gm-Message-State: ACrzQf0W7z1yHHOzSPIjl7oq/Neq3pliFEK9DqQ5tbnwbz0JJUJhR7Gp
-        j8ncu8FWsRaDoo4LLxbVrHjVAyXx4uM=
-X-Google-Smtp-Source: AMsMyM48W2qrQF/wK54Duyxhz3wQkVOxwpakL/lnwi1GAVudaUw7a0/0zNa9rfCIDTPFrnb+SNAkEQ==
-X-Received: by 2002:a5d:6a04:0:b0:22c:c250:7222 with SMTP id m4-20020a5d6a04000000b0022cc2507222mr4006391wru.352.1664350165319;
-        Wed, 28 Sep 2022 00:29:25 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k9-20020a5d6289000000b00226dfac0149sm3378124wru.114.2022.09.28.00.29.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 00:29:24 -0700 (PDT)
-Message-Id: <bfc71a2d8adfbf9b899a47d469fe2343e4703ff7.1664350162.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1362.v5.git.1664350162.gitgitgadget@gmail.com>
-References: <pull.1362.v4.git.1664229348.gitgitgadget@gmail.com>
-        <pull.1362.v5.git.1664350162.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 28 Sep 2022 07:29:22 +0000
-Subject: [PATCH v5 2/2] merge-ort: return early when failing to write a blob
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=+cCy5xdHN1hhZGfwI6ABX9yd+Himq/uZPdYfM5ly8JM=;
+        b=DOS0eB3luDgp619L4MBsQqz+2u4oMtEA0TPLXH3hYHvVpae2xwJbRgilL6ioCSjuG2
+         vhsJPv8B833SKABHdl4uuXVlP0vmEIBrxYgtfzyzaqVRVkrh9Ioen4D9Bi/oWyRBWQiu
+         GMJydNuu5Xp8AOVkTLzUR/Nu4d0gh3QqS35f6Cyxp4Xl/JCoCES7Els/bHpsca/AtPoD
+         UNJuQ99x/wB+arLhDdk8ofNi5n38XTafARoTYdaURS0tduVfLTVBz1hOC/aCRawueL6p
+         pMBxC9cQcGRvQCfHfDhQZw7cGBHrRVOq25fFPfUZX0BHIKu6pK5EOb2RCUbwQw6Oii1w
+         VPeA==
+X-Gm-Message-State: ACrzQf1dCxNEMEklybN36oLeqqDbSSKwM1LXGeWuP9W4aMH5PnfDGd3T
+        s8he4eM/hZn0HKCECnLjqRPrmrFNrZKjU+LD7r4=
+X-Google-Smtp-Source: AMsMyM5djLCqwDIK3KoAL0yLbH5Z1w5JwRnX1+EeH8xdJYPA70t8WyYdHwOVRfGuSDVIp1PNr9gNrtvWH6deJP0dAFI=
+X-Received: by 2002:a2e:7804:0:b0:26c:463c:493c with SMTP id
+ t4-20020a2e7804000000b0026c463c493cmr11735075ljc.521.1664351405159; Wed, 28
+ Sep 2022 00:50:05 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1367.git.1664064588846.gitgitgadget@gmail.com> <xmqqczbg9613.fsf@gitster.g>
+In-Reply-To: <xmqqczbg9613.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 28 Sep 2022 00:49:53 -0700
+Message-ID: <CABPp-BF1+3Ze46H6DpnYv5eHLFSnB7Scszu0HdqFj1VRYBarWQ@mail.gmail.com>
+Subject: Re: [PATCH] sparse-checkout.txt: new document with sparse-checkout directions
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        ZheNing Hu <adlternative@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, Sep 27, 2022 at 8:44 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > +  * Does the name --[no-]restrict sound good to others?  Are there better options?
+>
+> Everybody in this thread are interested in sparse checkout, which
+> unfortunately blinds them from the fact that "restrict to", "limit
+> to", "focus on", etc. need not to be limited to the sparse checkout
+> feature.  We must have something that hints that the option is about
+> the sparse checkout feature.
+>
+> As to the verbs, I do not mind "restrict to".  Other good ones I do
+> not mind choosing are "limit to" and "focus on".  They would equally
+> convey the same thing in this context.  And the object for these
+> verb phrases are the area of interest, those paths without the
+> skip-worktree bit, the paths outside the sparse cone(s).
+>
+> Or we could go the other way.  We are excluding those paths with the
+> skip-worktree bit, so "exclude" and "ignore" are natural candidates.
 
-In the previous commit, we fixed a segmentation fault when a tree object
-could not be written.
+If you're thinking about plain "exclude", that's already a flag in
+'apply', 'am', 'clean', and 'ls-files'.
 
-However, before the tree object is written, `merge-ort` wants to write
-out a blob object (except in cases where the merge results in a blob
-that already exists in the database). And this can fail, too, but we
-ignore that write failure so far.
+Also, if you want these words alone, then they also seem to lack hints
+that the option is about the sparse checkout feature.  Expand them a
+bit, perhaps?  "--ignore-sparsity"?
+"--exclude-sparse-checkout-restrictions"?
 
-Let's pay close attention and error out early if the blob could not be
-written. This reduces the error output of t4301.25 ("merge-ort fails
-gracefully in a read-only repository") from:
+Assuming we are worried about needing "--no-" variants, wouldn't the
+risk of a "--no-ignore-sparsity" be worse than a "--no-restrict" in
+terms of awkwardness, given the double negative?
 
-	error: insufficient permission for adding an object to repository database ./objects
-	error: error: Unable to add numbers to database
-	error: insufficient permission for adding an object to repository database ./objects
-	error: error: Unable to add greeting to database
-	error: insufficient permission for adding an object to repository database ./objects
-	fatal: failure to merge
+> These two classes are good if the "restrict" behaviour will never be
+> the default.  When it is the default, the option often used will
+> become "--no-restrict", which is awkward.
+>
+>         Personally I am slightly in favor of "focus on" (i.e.
+>         "--focus" vs "--unfocus") as that meshes well with the
+>         concept of "the areas of the working tree paths that I am
+>         interested in right now", which may already hint that the
+>         option is about the sparse checkout feature (i.e. "I am
+>         focusing on these areas right now") and can stay short.  But
+>         this is just one person's opinion.
 
-to:
+I'll add --focus/--unfocus to the list.  --unfocus seems a bit more
+awkward to me than --no-restrict, but that might just be me.  If
+others really liked it, I'd be fine with it.
 
-	error: insufficient permission for adding an object to repository database ./objects
-	error: error: Unable to add numbers to database
-	fatal: failure to merge
-
-This is _not_ just a cosmetic change: Even though one might assume that
-the operation would have failed anyway at the point when the new tree
-object is written (and the corresponding tree object _will_ be new if it
-contains a blob that is new), but that is not so: As pointed out by
-Elijah Newren, when Git has previously been allowed to add loose objects
-via `sudo` calls, it is very possible that the blob object cannot be
-written (because the corresponding `.git/objects/??/` directory may be
-owned by `root`) but the tree object can be written (because the
-corresponding objects directory is owned by the current user). This
-would result in a corrupt repository because it is missing the blob
-object, and with this here patch we prevent that.
-
-Note: This patch adjusts two variable declarations from `unsigned` to
-`int` because their purpose is to hold the return value of
-`handle_content_merge()`, which is of type `int`. The existing users of
-those variables are only interested whether that variable is zero or
-non-zero, therefore this type change does not affect the existing code.
-
-Reviewed-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- merge-ort.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
-
-diff --git a/merge-ort.c b/merge-ort.c
-index f3bdce1041a..e5f41cce481 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -2807,6 +2807,8 @@ static int process_renames(struct merge_options *opt,
- 							   pathnames,
- 							   1 + 2 * opt->priv->call_depth,
- 							   &merged);
-+			if (clean_merge < 0)
-+				return -1;
- 			if (!clean_merge &&
- 			    merged.mode == side1->stages[1].mode &&
- 			    oideq(&merged.oid, &side1->stages[1].oid))
-@@ -2916,7 +2918,7 @@ static int process_renames(struct merge_options *opt,
- 			struct version_info merged;
- 
- 			struct conflict_info *base, *side1, *side2;
--			unsigned clean;
-+			int clean;
- 
- 			pathnames[0] = oldpath;
- 			pathnames[other_source_index] = oldpath;
-@@ -2937,6 +2939,8 @@ static int process_renames(struct merge_options *opt,
- 						     pathnames,
- 						     1 + 2 * opt->priv->call_depth,
- 						     &merged);
-+			if (clean < 0)
-+				return -1;
- 
- 			memcpy(&newinfo->stages[target_index], &merged,
- 			       sizeof(merged));
-@@ -3806,10 +3810,10 @@ static int write_completed_directory(struct merge_options *opt,
- }
- 
- /* Per entry merge function */
--static void process_entry(struct merge_options *opt,
--			  const char *path,
--			  struct conflict_info *ci,
--			  struct directory_versions *dir_metadata)
-+static int process_entry(struct merge_options *opt,
-+			 const char *path,
-+			 struct conflict_info *ci,
-+			 struct directory_versions *dir_metadata)
- {
- 	int df_file_index = 0;
- 
-@@ -3823,7 +3827,7 @@ static void process_entry(struct merge_options *opt,
- 		record_entry_for_tree(dir_metadata, path, &ci->merged);
- 		if (ci->filemask == 0)
- 			/* nothing else to handle */
--			return;
-+			return 0;
- 		assert(ci->df_conflict);
- 	}
- 
-@@ -3870,7 +3874,7 @@ static void process_entry(struct merge_options *opt,
- 		 */
- 		if (ci->filemask == 1) {
- 			ci->filemask = 0;
--			return;
-+			return 0;
- 		}
- 
- 		/*
-@@ -4065,7 +4069,7 @@ static void process_entry(struct merge_options *opt,
- 	} else if (ci->filemask >= 6) {
- 		/* Need a two-way or three-way content merge */
- 		struct version_info merged_file;
--		unsigned clean_merge;
-+		int clean_merge;
- 		struct version_info *o = &ci->stages[0];
- 		struct version_info *a = &ci->stages[1];
- 		struct version_info *b = &ci->stages[2];
-@@ -4074,6 +4078,8 @@ static void process_entry(struct merge_options *opt,
- 						   ci->pathnames,
- 						   opt->priv->call_depth * 2,
- 						   &merged_file);
-+		if (clean_merge < 0)
-+			return -1;
- 		ci->merged.clean = clean_merge &&
- 				   !ci->df_conflict && !ci->path_conflict;
- 		ci->merged.result.mode = merged_file.mode;
-@@ -4169,6 +4175,7 @@ static void process_entry(struct merge_options *opt,
- 
- 	/* Record metadata for ci->merged in dir_metadata */
- 	record_entry_for_tree(dir_metadata, path, &ci->merged);
-+	return 0;
- }
- 
- static void prefetch_for_content_merges(struct merge_options *opt,
-@@ -4285,7 +4292,10 @@ static int process_entries(struct merge_options *opt,
- 			record_entry_for_tree(&dir_metadata, path, mi);
- 		else {
- 			struct conflict_info *ci = (struct conflict_info *)mi;
--			process_entry(opt, path, ci, &dir_metadata);
-+			if (process_entry(opt, path, ci, &dir_metadata) < 0) {
-+				ret = -1;
-+				goto cleanup;
-+			};
- 		}
- 	}
- 	trace2_region_leave("merge", "processing", opt->repo);
--- 
-gitgitgadget
+Right now, I'm leaning a bit more towards Stolee's
+--scope={sparse,all} (or maybe --scope={sparse,dense}?)
