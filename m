@@ -2,88 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D66E1C04A95
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 17:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81529C04A95
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 17:43:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234600AbiI1Rlt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 13:41:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50116 "EHLO
+        id S234611AbiI1Rna (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 13:43:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234473AbiI1Rlr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 13:41:47 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29FB719C37
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 10:41:47 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C36A31B631B;
-        Wed, 28 Sep 2022 13:41:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=6DyUIRXd3lOF
-        TvCLX3N+i6s+FSCNPAiGMF02+7uRHGQ=; b=aUcaWDSuRcPVG1b3drCsLg4qVFcx
-        X1cp3X3D3CngIGOulRsXdjwdt6+RWHXCbv9TdCoFQtXjwSgPfA872ZamTvP83Mdm
-        AjAezxliAOxog5Jp83TRJ+Ekpc1MpTAVBz3d3IbnD2lFaXzD3inIeyFGvl7HNujY
-        FSXDPz9zh3qoMAA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BD5C81B631A;
-        Wed, 28 Sep 2022 13:41:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 528FE1B6319;
-        Wed, 28 Sep 2022 13:41:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Victoria Dye <vdye@github.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: vd/fix-unaligned-read-index-v4, was Re: What's cooking in
- git.git (Sep 2022, #08; Tue, 27)
-References: <xmqqtu4s1q1m.fsf@gitster.g>
-        <be8f11f2-c4ad-0542-066b-3bbc99a16dae@github.com>
-        <YzPLBN09zzlTdNgc@coredump.intra.peff.net>
-        <xmqqv8p7xxi3.fsf@gitster.g>
-        <220928.86h70rwhxh.gmgdl@evledraar.gmail.com>
-Date:   Wed, 28 Sep 2022 10:41:40 -0700
-In-Reply-To: <220928.86h70rwhxh.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 28 Sep 2022 19:01:59 +0200")
-Message-ID: <xmqqa66jv1kb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CFBE8DFC-3F54-11ED-98DE-C2DA088D43B2-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S234278AbiI1Rn2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 13:43:28 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70510E5FAC
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 10:43:27 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id n18-20020a056a000d5200b0053e16046751so7739363pfv.7
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 10:43:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date;
+        bh=VFFgD1tzJbb5s0AJcN9YeV1ec8EFSupiakoo3Kjycyo=;
+        b=tYLUf+pExcJBjF0oBlqSsabjSuzX0skPY6coPNnhYeFkyhBN1ZdlZU/K26cfq3viUs
+         WioMsm0wXb2Irbg4TQyaFwSfl49GYI9ucyuOVgNt9vfb2+fK5ltTC80X+tRqL/Gu+lKE
+         KxD4UACF7RkRd7CQC1uL4NFx6Wt/BONYS6YQswxjbYAq/ykfL5sg3Rpy/2HOaqPCxHdp
+         u7RC4hxQR0P6DtvHTe+6nBKeGC2vjQBi8+eGHpLdWzI0JPGieBoFdDu+dU4K+pxYv5vc
+         fb5R02xlr5Wf1haidslDKeo+pw4Q3BZvv/DwJypv/DV7x9Pc1rX/x+PtBy3oknrVpiss
+         fQTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date;
+        bh=VFFgD1tzJbb5s0AJcN9YeV1ec8EFSupiakoo3Kjycyo=;
+        b=UkFMaDDGmA+/BZDGpdyO5jNPWPll2G6QreTjCRWXEFdXD+wgbVdEoklCkggtNm9NAA
+         LG+Uv2hW4/au+QXTm9uC4W/zQepxvhJorDAyv4ewHhrXIrvNo7NnqjW2pR98Vgubr3ST
+         dDK2nP1Njk/IxkHgRP8aI01DJB+YGWYGeXNzUZchrTf5EZWBQ4uPotNkvVyGkxbwjL3+
+         4EtgRbpb9L0CoUyBnqWrRbmoueTiniaUyMxdZlS9FHyxNYpQm/mz8F+vLHI71n4wq5uB
+         gxnSZjGu2zaA1jX/KBJ7L7l2lib7QOlgtq15KkTiRHvpKB+0gSUROA12ot/62tdv8OKG
+         CBDw==
+X-Gm-Message-State: ACrzQf2GmmqCbZX85igA6n02X5rQJiLgMk3UmJyPwZTv9l/1PYymbYV/
+        z7hYYfEyxNaJ4s0Eb9GULZa1UMLgM+tfvA==
+X-Google-Smtp-Source: AMsMyM6mkrZLgHTMWnvRqAMvqR1S+Sgu++JIL+a3MB1VVfCTGGdQMy9adPquQ7L/hjlouT3MftSOlNqqId4pRQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:903:1ce:b0:178:80f1:c4c7 with SMTP id
+ e14-20020a17090301ce00b0017880f1c4c7mr909001plh.27.1664387006877; Wed, 28 Sep
+ 2022 10:43:26 -0700 (PDT)
+Date:   Wed, 28 Sep 2022 10:43:18 -0700
+In-Reply-To: <7f6412eb8ce0c47a7645b89fab171a212353f8b2.1664316642.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1664316642.git.jonathantanmy@google.com> <7f6412eb8ce0c47a7645b89fab171a212353f8b2.1664316642.git.jonathantanmy@google.com>
+Message-ID: <kl6l8rm3mm2x.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH 2/2] promisor-remote: die upon failing fetch
+From:   Glen Choo <chooglen@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+No real comments on the code - I'm not familiar enough with it, but it
+seems really simple anyway.
 
-> On Wed, Sep 28 2022, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->>
->>> ... I have no objection to adding more comments, but I am
->>> happy enough without them (like Junio, it may be that I'm overly
->>> familiar with how I expect our get_be() functions to handle alignment=
-).
->>> ...
->>> So it's mostly just a minor annoyance for running the tests; we're
->>> probably better not to change any code, even trivially, this late in =
-the
->>> release cycle.
->>
->> Yup.  I never planned to merge the topic to 'master'.  The finishing
->> touch I expected was to help Phillip and friends with a bit of
->> explanation in the log message, and then it would be ready to wait
->> in 'next' for the next cycle.
->
-> In the interim are we interested in a minimal patch to the specific
-> scalar test that's finding this under SANITIZE=3Dundefined, as running
-> un-cleanly will be new in this release?
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Yes, it is a new minor annoyance that is better left this late in
-the cycle.
+> When this batch prefetch fails, these commands fall back to the
+> sequential fetches. But at $DAYJOB we have noticed that this results in
+> a bad user experience: a command would take unexpectedly long to finish
+> if the batch prefetch would fail for some intermittent reason, but all
+> subsequent fetches would work. It would be a better user experience for
+> such a command would just fail.
+
+I'm not certain that this fail-fast approach is always a better user
+experience:
+
+- I could imagine that for a small-enough set of objects (say, a very
+  restrictive set of sparse specifications), one-by-one fetching would be
+  good enough.
+- Even if one-by-one fetching isn't fast, I'd imagine that each
+  individual fetch is more likely to succeed than a batch prefetch, and
+  as a user, I would prefer to ^C an operation that takes longer than I
+  expected than to have retry the repeatedly.
+
+Here are some other arguments that you didn't mention, but I find more
+convincing:
+
+- Running prefetch in a non-interactive process (e.g. running a job in
+  CI) and the user would prefer to fail fast than to have the job run
+  longer than expected, e.g. they could script retries manually
+  (although, maybe we should do that ourselves).
+
+- Fetching might be subject to a quota, which will be exhausted by
+  one-by-one fetching.
+
+As such, it _might_ make sense to make this behavior configurable, since
+we may sometimes want it and sometimes not.
