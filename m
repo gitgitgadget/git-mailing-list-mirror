@@ -2,79 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE35FC32771
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 07:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DCFCC6FA82
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 07:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233560AbiI1HeR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 03:34:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47242 "EHLO
+        id S233642AbiI1HkA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 03:40:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233501AbiI1HeO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 03:34:14 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 375ACF276A
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 00:33:58 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id 8-20020a17090a0b8800b00205d8564b11so947596pjr.5
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 00:33:58 -0700 (PDT)
+        with ESMTP id S233644AbiI1Hj0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 03:39:26 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D36D3112641
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 00:37:19 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id i203-20020a1c3bd4000000b003b3df9a5ecbso619464wma.1
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 00:37:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=MmpmmRDMD/2kHytPcHHvW+yjgmDMHiObyjZ7q01Vv88=;
-        b=WE1BxyxiI6VvgYbGd85o2ROdrT2vfvooW2IvOmVbwzSTbfDiPgKEsOzjzvX0wuyevP
-         q/lg2B8KkXL1y86+09irP10Ulkle7TaYhiAvm3LA6UVU4BV/Sj8fS/q43LATRg28s5A9
-         s/4bNOKUb6am00Mp8u/FzosbGapsWt//9d2rJ07Tes5GwRjgvRAc830Qb5GItHn/NVu1
-         GR5PFtir16GRuKu2bo6DiBWhCTpcZqB4rX3GpD6ICjegyBaTXHgqGs0Wtt95exdrCJVK
-         hL6ySbU6/RUyb3yjgvTtH2cd6avvv5N3sGmeEtert921w7U6RQz7FVPWxRpNdebyHGjh
-         cVUg==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date;
+        bh=gccyVjD1Z0dM7h10jEoIJH/5YYP0NWBkacor6R91m8c=;
+        b=HbDgo+iboGjfIAJlUPpy10iVVtpYGmq5Vswl5Wp37zCyReR6RbCE8Urm5+Cz3EbcyM
+         zEay0AqopszajYntDYAnBlFH/9FpwgXhd7M4XuRjpwDKdAFe9qyO/qk5O2zwN14Ojy8T
+         OkuvD6IS5PBvbCbTdVtPuwt+yltJh/4Txy3n2/UYO412j5eEs7NDImVUZWjdNvhahBF9
+         ZkHUK+2kEJpDnKyYboEh47kJYUqcadYsLBQxuapwuh+oK6l+wSM7ypmhe5a+G8Yhcwja
+         uB/kuG0vDdzomsX9ejLaPvhRIw15shxJkW6hDKF46jj/pp8KKQ7CAwqVmXo+lnjk5ICo
+         57kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=MmpmmRDMD/2kHytPcHHvW+yjgmDMHiObyjZ7q01Vv88=;
-        b=SJKtBAQk43WgcPQwLmb9H7pCnLF6PZzQacSn+gI61LxPv7GwZZlMT8Z5drS8VNurFi
-         TULmTeA/tHgMkQeu7TynC2GEGHhzU21vpAj5poEibrjTLCCJI3gJ5Mtg3YHycu+GevCo
-         QJX8z1qsKZaYm6oW8Atls0qI2S3wMLwZhBfbea8c6oQvqeOkA9HNjahFFIy2I8Ee0JT1
-         Wa4HdtXC7jUufy5yOUGoZydo4mq9kWbY8vwhuecqadfEsGlziKAV6R8K5Ww9OBKSxib4
-         VuhqYBdTkZR6/3wNuOr6a8C/VHCgPqcT3eknax1dhd/0kus3nR5wtZLt93q8qZrUXLdy
-         EKEQ==
-X-Gm-Message-State: ACrzQf1iVLTMW9P/5wGK5pKrSNaW869sd1Bw/ar+jIi0adxYyBnUHc79
-        nzg37/QFTVBw7XHgJ2di0Grz4rarYH+O08DqqxA=
-X-Google-Smtp-Source: AMsMyM6rtJMcS0UEHa+aG9YZd2oW9TMn1GJViTpHoVtW5BixnVuqIuyW8X4oHE/eA5gdGJmtzxK+u5kaqWOpz+qx44k=
-X-Received: by 2002:a17:902:b907:b0:178:9d11:c978 with SMTP id
- bf7-20020a170902b90700b001789d11c978mr31072076plb.90.1664350353386; Wed, 28
- Sep 2022 00:32:33 -0700 (PDT)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=gccyVjD1Z0dM7h10jEoIJH/5YYP0NWBkacor6R91m8c=;
+        b=E48NPBA0xJOyDKcz5AhX5D/J8cdD/stNEwe2hT7jeBj60gtaa2wD5+A9a4E1jGQBtm
+         WkgkI/qAw5/vmQejIbgbOTKcde+puiUKHuF4sJ8FRXdlol88KhwooR6vKQjrDXOQ/+oI
+         LHfd5Z49baBtlKaaxsbKrYUujHHROIo0uOqlA+ohE4UAMi3OI80acBqH+x5IGLo/1KwA
+         VS4UUNETPxpJiOQR3YdNMGNjSTiIffUyiAtU/lOCV1rb6CddsrITW0zKfpweDDEaX6Lz
+         jCkZHllJk0tbXty729EkDD+KDJNBJG2NsrbVWcnJoN6QVjt7bTh4pOEyzOuhtFOx5rWK
+         5idw==
+X-Gm-Message-State: ACrzQf0iCFV9ag5/sET8JmZ63ErYSVQaj3pM+0fefxVZjXstnJGoml/y
+        L81xz8Plr6BjSiYhgOTVSG6tFfVVOVE=
+X-Google-Smtp-Source: AMsMyM5j3Q9kz/lCch3DlHT7R6ynoJiLrHG56sztH9M1Fsat997orjv25H4kZ3I1682bqcr1uyeR7g==
+X-Received: by 2002:a1c:ed11:0:b0:3b4:d3e1:bec with SMTP id l17-20020a1ced11000000b003b4d3e10becmr5615459wmh.196.1664350163244;
+        Wed, 28 Sep 2022 00:29:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o21-20020a05600c4fd500b003a5537bb2besm975968wmq.25.2022.09.28.00.29.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Sep 2022 00:29:22 -0700 (PDT)
+Message-Id: <pull.1362.v5.git.1664350162.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1362.v4.git.1664229348.gitgitgadget@gmail.com>
+References: <pull.1362.v4.git.1664229348.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 28 Sep 2022 07:29:20 +0000
+Subject: [PATCH v5 0/2] merge-tree: fix segmentation fault in read-only repositories
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1345.git.git.1664294909011.gitgitgadget@gmail.com> <xmqq8rm41gbp.fsf@gitster.g>
-In-Reply-To: <xmqq8rm41gbp.fsf@gitster.g>
-From:   Skrab Sah <skrab.sah@gmail.com>
-Date:   Wed, 28 Sep 2022 13:02:22 +0530
-Message-ID: <CA+J78MXbXG4M1w50EAM8t0VkYP_saCt9O90jFKad3+cB+RCZ-Q@mail.gmail.com>
-Subject: Re: [PATCH] abspath.h is created.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     skrab-sah via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What is wrong here and what should i do to make it correct.
+Turns out that the segmentation fault reported by Taylor
+[https://lore.kernel.org/git/YyopQD+LvPucnz3w@nand.local/] happened while
+testing merge-ort in a read-only repository, and that the upstream version
+of git merge-tree is as affected as GitHub's internal version.
 
-On Wed, 28 Sept 2022 at 06:11, Junio C Hamano <gitster@pobox.com> wrote:
->
-> "skrab-sah via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > diff --git a/abspath.h b/abspath.h
-> > new file mode 100644
-> > index 00000000000..edebc3a53ba
-> > --- /dev/null
-> > +++ b/abspath.h
-> > @@ -0,0 +1,9 @@
-> > +/*  This file was automatically generated.  Do not edit! */
->
-> No thanks.
->
-> I suspect this change is taking us in a wrong direction.  People
-> grep for function and struct declarations in <*.h> files and expect
-> to find the associated comments.
+Changes since v4:
+
+ * Corrected the commit message that claimed that the second patch was not
+   fixing a real bug but just avoided unnecessary work. As pointed out by
+   Elijah, there are scenarios where this second patch fixes a very real
+   bug.
+ * Added Elijah's "Reviewed-by" footer.
+
+Changes since v3:
+
+ * I now consistently use the pattern int ret = 0; ... if (...) ret = -1.
+ * I added a commit to properly propagate write failures through the
+   handle_content_merge() call path, even if it is not really critical (it
+   just fails sooner, but the merge would have failed just the same without
+   this patch).
+
+Changes since v2:
+
+ * Completely changed the approach by no longer touching
+   builtin/merge-tree.c but instead fixing the underlying merge-ort layer:
+   we no longer ignore the return value of write_tree() and
+   write_object_file().
+
+Changes since v1:
+
+ * Using the SANITY prereq now
+ * If the merge was aborted due to a write error, exit with a non-zero code
+   even if the (potentially partial) merge is clean
+ * The test case now also verifies that the git merge-tree command fails in
+   a read-only repository even if the merge would have succeeded
+
+Johannes Schindelin (2):
+  merge-ort: fix segmentation fault in read-only repositories
+  merge-ort: return early when failing to write a blob
+
+ merge-ort.c                      | 94 ++++++++++++++++++++------------
+ t/t4301-merge-tree-write-tree.sh |  9 +++
+ 2 files changed, 69 insertions(+), 34 deletions(-)
+
+
+base-commit: dda7228a83e2e9ff584bf6adbf55910565b41e14
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1362%2Fdscho%2Fmerge-tree-in-read-only-repos-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1362/dscho/merge-tree-in-read-only-repos-v5
+Pull-Request: https://github.com/gitgitgadget/git/pull/1362
+
+Range-diff vs v4:
+
+ 1:  ab6df092eba ! 1:  63be9f9f717 merge-ort: fix segmentation fault in read-only repositories
+     @@ Commit message
+          Let's stop ignoring the return value of `write_object_file()` and
+          `write_tree()` and set `clean = -1` in the error case.
+      
+     +    Reviewed-by: Elijah Newren <newren@gmail.com>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## merge-ort.c ##
+ 2:  087207ae0b0 ! 2:  bfc71a2d8ad merge-ort: return early when failing to write a blob
+     @@ Commit message
+          that already exists in the database). And this can fail, too, but we
+          ignore that write failure so far.
+      
+     -    Since we will always write out a new tree object in addition to the blob
+     -    (and if the blob did not exist in the database yet, we can be certain
+     -    that the tree object did not exist yet), the merge will _still_ fail at
+     -    that point, but it does unnecessary work by continuing after the blob
+     -    could not be written.
+     -
+          Let's pay close attention and error out early if the blob could not be
+          written. This reduces the error output of t4301.25 ("merge-ort fails
+          gracefully in a read-only repository") from:
+     @@ Commit message
+                  error: error: Unable to add numbers to database
+                  fatal: failure to merge
+      
+     +    This is _not_ just a cosmetic change: Even though one might assume that
+     +    the operation would have failed anyway at the point when the new tree
+     +    object is written (and the corresponding tree object _will_ be new if it
+     +    contains a blob that is new), but that is not so: As pointed out by
+     +    Elijah Newren, when Git has previously been allowed to add loose objects
+     +    via `sudo` calls, it is very possible that the blob object cannot be
+     +    written (because the corresponding `.git/objects/??/` directory may be
+     +    owned by `root`) but the tree object can be written (because the
+     +    corresponding objects directory is owned by the current user). This
+     +    would result in a corrupt repository because it is missing the blob
+     +    object, and with this here patch we prevent that.
+     +
+          Note: This patch adjusts two variable declarations from `unsigned` to
+          `int` because their purpose is to hold the return value of
+          `handle_content_merge()`, which is of type `int`. The existing users of
+          those variables are only interested whether that variable is zero or
+          non-zero, therefore this type change does not affect the existing code.
+      
+     +    Reviewed-by: Elijah Newren <newren@gmail.com>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## merge-ort.c ##
+
+-- 
+gitgitgadget
