@@ -2,96 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81529C04A95
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 17:43:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50747C32771
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 17:51:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234611AbiI1Rna (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 13:43:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50872 "EHLO
+        id S234695AbiI1RvH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 13:51:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234278AbiI1Rn2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 13:43:28 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70510E5FAC
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 10:43:27 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id n18-20020a056a000d5200b0053e16046751so7739363pfv.7
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 10:43:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date;
-        bh=VFFgD1tzJbb5s0AJcN9YeV1ec8EFSupiakoo3Kjycyo=;
-        b=tYLUf+pExcJBjF0oBlqSsabjSuzX0skPY6coPNnhYeFkyhBN1ZdlZU/K26cfq3viUs
-         WioMsm0wXb2Irbg4TQyaFwSfl49GYI9ucyuOVgNt9vfb2+fK5ltTC80X+tRqL/Gu+lKE
-         KxD4UACF7RkRd7CQC1uL4NFx6Wt/BONYS6YQswxjbYAq/ykfL5sg3Rpy/2HOaqPCxHdp
-         u7RC4hxQR0P6DtvHTe+6nBKeGC2vjQBi8+eGHpLdWzI0JPGieBoFdDu+dU4K+pxYv5vc
-         fb5R02xlr5Wf1haidslDKeo+pw4Q3BZvv/DwJypv/DV7x9Pc1rX/x+PtBy3oknrVpiss
-         fQTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date;
-        bh=VFFgD1tzJbb5s0AJcN9YeV1ec8EFSupiakoo3Kjycyo=;
-        b=UkFMaDDGmA+/BZDGpdyO5jNPWPll2G6QreTjCRWXEFdXD+wgbVdEoklCkggtNm9NAA
-         LG+Uv2hW4/au+QXTm9uC4W/zQepxvhJorDAyv4ewHhrXIrvNo7NnqjW2pR98Vgubr3ST
-         dDK2nP1Njk/IxkHgRP8aI01DJB+YGWYGeXNzUZchrTf5EZWBQ4uPotNkvVyGkxbwjL3+
-         4EtgRbpb9L0CoUyBnqWrRbmoueTiniaUyMxdZlS9FHyxNYpQm/mz8F+vLHI71n4wq5uB
-         gxnSZjGu2zaA1jX/KBJ7L7l2lib7QOlgtq15KkTiRHvpKB+0gSUROA12ot/62tdv8OKG
-         CBDw==
-X-Gm-Message-State: ACrzQf2GmmqCbZX85igA6n02X5rQJiLgMk3UmJyPwZTv9l/1PYymbYV/
-        z7hYYfEyxNaJ4s0Eb9GULZa1UMLgM+tfvA==
-X-Google-Smtp-Source: AMsMyM6mkrZLgHTMWnvRqAMvqR1S+Sgu++JIL+a3MB1VVfCTGGdQMy9adPquQ7L/hjlouT3MftSOlNqqId4pRQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:903:1ce:b0:178:80f1:c4c7 with SMTP id
- e14-20020a17090301ce00b0017880f1c4c7mr909001plh.27.1664387006877; Wed, 28 Sep
- 2022 10:43:26 -0700 (PDT)
-Date:   Wed, 28 Sep 2022 10:43:18 -0700
-In-Reply-To: <7f6412eb8ce0c47a7645b89fab171a212353f8b2.1664316642.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <cover.1664316642.git.jonathantanmy@google.com> <7f6412eb8ce0c47a7645b89fab171a212353f8b2.1664316642.git.jonathantanmy@google.com>
-Message-ID: <kl6l8rm3mm2x.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 2/2] promisor-remote: die upon failing fetch
-From:   Glen Choo <chooglen@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S232792AbiI1RvD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 13:51:03 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 169B2D07B5
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 10:51:00 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B3150145C42;
+        Wed, 28 Sep 2022 13:50:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=sJx+cdh1DYJQv05GYLvWnsTmA
+        gVcy8cWYne6/n25hRY=; b=I45SzLzLkKbOsxy7EydL66GlBbeb/Y6mpUP7y6NPM
+        MV6yQtq07opjMAtIXLqbokO6SOcwa/yC3Wjbyi8Zc5LAvTrhvULJbu43Ywwvtm4U
+        1DnK90Z3PlBRXJ9GJy/C/k+gSY0+TAbHmDTMewOeEjFAFtdLfmW0h1xblxJJRbMg
+        bI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AA9EF145C41;
+        Wed, 28 Sep 2022 13:50:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1FB16145C40;
+        Wed, 28 Sep 2022 13:50:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] branch: description for non-existent branch errors
+References: <c333cc4b-12a1-82b6-0961-1c42080dad15@gmail.com>
+        <858edf12-67b1-5e2c-dd2e-3eb476530803@gmail.com>
+        <xmqqleq6ovh4.fsf@gitster.g>
+        <26a5cbe2-d821-e7f6-e56f-4ad90ef2cf2d@gmail.com>
+        <xmqqedvw1mmu.fsf@gitster.g>
+Date:   Wed, 28 Sep 2022 10:50:58 -0700
+Message-ID: <xmqqzgejtmkd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1C36DA08-3F56-11ED-AE83-307A8E0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-No real comments on the code - I'm not familiar enough with it, but it
-seems really simple anyway.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+> Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+>
+>> I pointed out in the first mail of this thread, there is already a pat=
+ch in
+>> 'seen' that touches builtin/branch.c [1].  I would like to keep the pa=
+tches
+>> separated, but I don't know how to proceed: make the change from 'seen=
+', keep
+>> it from 'master'... Maybe you can give me some guidance in this.
+>
+> I do not see much problem in keeping them separated.  My trial merge
+> of the result of applying this patch on top of 'master', with the
+> other topic that has the "branch description for nth prior checkout"
+> patch does show a minor textual conflict, but the resolution does
+> not look too bad.
+>
+> Check near the topic branch of 'seen' after I push out today's
+> integration result in a few hours and see if they look reasonable.
+>
+> Thanks.
 
-> When this batch prefetch fails, these commands fall back to the
-> sequential fetches. But at $DAYJOB we have noticed that this results in
-> a bad user experience: a command would take unexpectedly long to finish
-> if the batch prefetch would fail for some intermittent reason, but all
-> subsequent fetches would work. It would be a better user experience for
-> such a command would just fail.
+Ah, I forgot to mention.  As to the error messages that begin with a
+capital letter, to be consistent with violating messages that are
+already there in builtin/branch.c, let's keep them as they are in
+your patch.  We can and should clean them up later, perhaps soon
+after the patch under discussion matures, but I agree with you that
+it can be left outside the scope of this patch.
 
-I'm not certain that this fail-fast approach is always a better user
-experience:
+But stepping back a bit, in the longer term, we might want to change
+the behaviour of "git branch --edit-description", at least when no
+branch is specified on the command line and we are on an unborn
+branch.  It is merely the matter of setting a variable in the
+configuration file, so there may not be a strong reason to forbid
 
-- I could imagine that for a small-enough set of objects (say, a very
-  restrictive set of sparse specifications), one-by-one fetching would be
-  good enough.
-- Even if one-by-one fetching isn't fast, I'd imagine that each
-  individual fetch is more likely to succeed than a batch prefetch, and
-  as a user, I would prefer to ^C an operation that takes longer than I
-  expected than to have retry the repeatedly.
+    $ git init trash
+    $ cd trash
+    $ git branch --edit-description
+    $ git commit --allow-empty -m initial
 
-Here are some other arguments that you didn't mention, but I find more
-convincing:
+while allowing the same sequence with the last two commands reversed.
 
-- Running prefetch in a non-interactive process (e.g. running a job in
-  CI) and the user would prefer to fail fast than to have the job run
-  longer than expected, e.g. they could script retries manually
-  (although, maybe we should do that ourselves).
+After all, renaming a branch with "branch -m" does not to require an
+existing ref that points at a commit, i.e.
 
-- Fetching might be subject to a quota, which will be exhausted by
-  one-by-one fetching.
+    $ git init -b master trash
+    $ cd trash
+    $ git config branch.master.description "describes master"
+    $ git branch -m master main
 
-As such, it _might_ make sense to make this behavior configurable, since
-we may sometimes want it and sometimes not.
+does work fine and you end up with branch.main.description at the
+end.
