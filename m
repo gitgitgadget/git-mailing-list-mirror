@@ -2,105 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4295FC54EE9
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 01:52:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 768CDC54EE9
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 02:41:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231496AbiI1BwI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 21:52:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41826 "EHLO
+        id S232196AbiI1ClI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 22:41:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231502AbiI1BwG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 21:52:06 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B1F41EF613
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 18:52:05 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id a5-20020a17090aa50500b002008eeb040eso2334804pjq.1
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 18:52:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=nO6XasrQ1rXmLhAPCzVFkn75bVGfShghT78cLTEvkM8=;
-        b=OoT3AR/1XksGFSZNVVdg03ux3XZHwadcohWaamJBdLECuzf7Guwe9pHBfjWBE8MhLh
-         zNaE0/WR6FFTmAv3cFosUl3ObMjAnYvJ/9GmbHQsuQeHf39KOz4KbgTPR3aaAvjFI6FL
-         e6wVpYryknCrFpEyyxxadWItlid0kc//J7j6iJG9nfaBbx5x4sPw93DI2y22PjSJEPKe
-         xCK8xLHfHihURqap+ZnU9TEzhKt4+X35huWhh8aE1TOp0Nzps2+gW8m0QfbuvLVKn4xg
-         kay0yHK0gUGD0nK9d1KBV0yvh6EFlHSMhcM1OhT9mxzfW+dGEsoMBf/E67xdytcrg2z8
-         oH9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=nO6XasrQ1rXmLhAPCzVFkn75bVGfShghT78cLTEvkM8=;
-        b=mDarXNy1dhBeFGpZ62WnqLIJ/aSSXxLr0AevitqmIXiSPVr373KnmhePV4hqkxqm7l
-         x3FHvkveHAXpw4pzBvilroIJBHLxbFSkP2N6DXLJ2MCVVsn5oUQaEY8neFtBwv618tAZ
-         rESaLwiNx6uQvgWAE+vNmbAwPQQfp7f0+VQabOixmjQCl1mamxUIG8hgKcxXuWQWxjCo
-         JbVh04wb4wVzzeZX53JEwIq2jUl6d6U6lbpYlODQs/xo+plr8ZZ7x1CbuSU9MOoFeq8i
-         GoddIJWkD4ddeE/9ZtEPc0w42gjZ4UIPND8fSB/ZvYSq4eaLvfK4jRbQRCZbWPRo0B1L
-         Jtow==
-X-Gm-Message-State: ACrzQf2ei6WtHJDnP1pRX3zyu8RlRpvXl4IJCsjT0rhI9qMZzw+P3Lte
-        1CwEriwsQngt9TIUvdf9bquiJyIJWF38
-X-Google-Smtp-Source: AMsMyM7yebQPp77wgKYaEBHGj6Jm7VaOK8RvWhAmvBP1WerXk5Wl6GtVjYwgVuEfuaYbayJwcrHG0Q==
-X-Received: by 2002:a17:90a:b00b:b0:203:a6de:5b0f with SMTP id x11-20020a17090ab00b00b00203a6de5b0fmr7559522pjq.134.1664329924606;
-        Tue, 27 Sep 2022 18:52:04 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id c3-20020a170902d48300b0017870f471f6sm2238282plg.226.2022.09.27.18.52.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Sep 2022 18:52:04 -0700 (PDT)
-Message-ID: <be8f11f2-c4ad-0542-066b-3bbc99a16dae@github.com>
-Date:   Tue, 27 Sep 2022 18:52:02 -0700
+        with ESMTP id S229940AbiI1ClG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 22:41:06 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FA17105D6C
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 19:41:04 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5090D1A0A20;
+        Tue, 27 Sep 2022 22:41:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=LsW2IuBEP8ycSjBgHhX98fIWZjKLdNJFFuiRbmOci/A=; b=vgyC
+        TKw0r9Hsjtum4G0KBi0wgyw/rJLsAsvJSlEUvzd1BQYJgkFJYF7tKu74Sxm2Dj6p
+        SenkpO9Kc5J4xcH7HzyI8nmG1kKka2dmb8cLuvaTuYRNYpKWQbKqfnHwqmXqDCVv
+        8xZoOUOAP7vXyHjUsze3RSxsRTSlrh+kbpIpsSg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 489AB1A0A1F;
+        Tue, 27 Sep 2022 22:41:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2CA581A0A1C;
+        Tue, 27 Sep 2022 22:40:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 0/5] [RFC] config API: return empty list, not NULL
+References: <pull.1369.git.1664287711.gitgitgadget@gmail.com>
+Date:   Tue, 27 Sep 2022 19:40:58 -0700
+Message-ID: <xmqq35cc1arp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.13.1
-Subject: Re: What's cooking in git.git (Sep 2022, #08; Tue, 27)
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood123@gmail.com>
-References: <xmqqtu4s1q1m.fsf@gitster.g>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <xmqqtu4s1q1m.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: FC1C1532-3ED6-11ED-A5A2-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> * vd/fix-unaligned-read-index-v4 (2022-09-23) 1 commit
->  - read-cache: avoid misaligned reads in index v4
-> 
->  The codepath that reads from the index v4 had unaligned memory
->  accesses, which has been corrected.
-> 
->  Expecting a reroll.
->  cf. <Yy4nkEnhuzt2iH+R@coredump.intra.peff.net>
->  cf. <bb3a2470-7ff5-e4a6-040a-96e0e3833978@gmail.com>
->  source: <pull.1366.git.1663962236069.gitgitgadget@gmail.com>
-> 
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-How drastic an update were you expecting for this re-roll? To keep the fix
-minimal (that is, focused on 'create_from_disk()'), I was planning to just
-add some comments explaining the implementation (in response to [1]). If the
-goal is to get this merged quickly, I'd want to avoid a larger refactor
-(suggested in [2] & [3]), since doing so would either make the
-implementations of "read from disk" ('create_from_disk()') and "write to
-disk" ('copy_cache_entry_to_ondisk()') different/difficult to compare, or
-would involve a more invasive refactor to update both functions [4].
+> This work changes the behavior of asking for a multi-valued config key to
+> return an empty list instead of a NULL value. This simplifies the handling
+> of the result and is safer for development in the future.
+>
+> This is based on v4 of my unregister series [1]
+>
+> [1]
+> https://lore.kernel.org/git/pull.1358.v4.git.1664287021.gitgitgadget@gmail.com/
+>
+> This idea came about due to a bug in the git maintenance unregister work
+> where the result from git_config_get_value_multi() was sent directly to
+> for_each_string_list_item() without checking for a NULL value first.
+>
+> I'm sending this as an RFC mostly because I'm not 100% sure this shift is
+> worth the refactoring pain and effort. I personally think getting an empty
+> list is a safer choice, but I can also understand if someone has a different
+> opinion.
 
-However, if there's no time pressure (after all, this bug has existed since
-the introduction of index v4!), I'm happy to do that refactor. It would
-expand the series to 2 or 3 patches, but should address all of the
-suggestions made so far and make the code overall a bit clearer.
+Thanks.
 
-Let me know what you think!
+I actually am in favor of the idea that a NULL can be passed around
+to signal the lack of a string_list (or the lack of a instance of
+any "collection" type), and the current code is structured as such,
+and it gives us extra flexibility.  Of course, we need to see if
+that extra flexibility is worth it.
 
-Thanks,
-- Victoria
+With a colleciton col, "if (col && col->nr)" checks if we have
+something to work on.  But a code like this (which is a longhand for
+the for_each_string_list_item() issue we just reencountered):
 
-[1] https://lore.kernel.org/git/bb3a2470-7ff5-e4a6-040a-96e0e3833978@gmail.com/
-[2] https://lore.kernel.org/git/Yy4nkEnhuzt2iH+R@coredump.intra.peff.net/
-[3] https://lore.kernel.org/git/YzH+IPFBGleIsAUe@coredump.intra.peff.net/
-[4] https://lore.kernel.org/git/e5954e90-6b5c-46a6-0842-b3d7d1e06b33@github.com/
+    col = git_get_some_collection(...);
+    if (!col)
+	return; /* no collection */
+    if (!col->nr)
+	git_add_to_some_collection(col, the default item);
+    for (i = 0; i < col->nr; i++)
+	do things on col.stuff[i];
+
+can react differently to cases where we have an empty collection
+and where we do not have any collection to begin with.  
+
+The other side of the coin is that it would make it harder to treat
+the lack of collection itself and the collection being empty the
+same way.  The above code might need to become
+
+    col = git_get_some_collection(...);
+    if (!col)
+	col = git_get_empty_collection();
+    if (!col->nr)
+	git_add_to_some_collection(col, the default item);
+    for (i = 0; i < col->nr; i++)
+	do things on col.stuff[i];
+
+but if the "get the collection" thing returns an empty collection
+when there is actually no collection, we can lose two lines from
+there.
+
+Between these two positions, I am in favor of the flexibility that
+we can use NULL to signal the lack of collection, not a presence of
+a collection with zero items, as it feels conceptually cleaner.
+
+Counting the hunks in [2/5] and [5/5], it seems that "when no
+variable with given key is defined, we return an empty set" makes us
+to have more code in 7 places in [PATCH 2/5], while allowing us to
+lose code in 10 places in [PATCH 5/5].
