@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFAB4C04A95
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 08:41:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2A2CC6FA82
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 08:41:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233658AbiI1IlV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 04:41:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57932 "EHLO
+        id S233659AbiI1IlY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 04:41:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233378AbiI1IkG (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233385AbiI1IkG (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 28 Sep 2022 04:40:06 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 203E6804B8
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E8CF7EFEE
         for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:40:01 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id m4so4293216wrr.5
+Received: by mail-wm1-x32d.google.com with SMTP id n35-20020a05600c502300b003b4924c6868so1926151wmr.1
         for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:40:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=y5P/SySPrrYrCDcjKcb8fK9DDb5wI4+qyfqOIaUXUNQ=;
-        b=kL7aflbIOjwQNE1Dpv71cyBC1ON00F2A69yQQQsO9GnoSNpftboKVX9S52aLFvqlQw
-         0f7Ioy9oN2gBgYxYLUm1zxhDQgInJi+RuoDsVbCq2w5UiHVG6rAZ+QVLWb8ZyeZQUME3
-         xGz9mbZiQ2OeiIBOT/vOlwn7uA+ColjJjxD8BPn2Nrur4WQVegvaHYtHEzacFPhfIcfp
-         ZSdmUfTwhyF7+5U0OOMDEFeeH4pDYntB0hR3hEqXEtnrTINU7uqTcE7ZsGkdwnACAErS
-         VhaFe0DIJHtzTrMu7+N9TPeX98j7cA1dvhmi4C6wsNuogsh3snDZ1p1+gTkTwkts/RwL
-         SaBg==
+        bh=iS4aofdSIzdS9pVJZ4hp637Rx6OQqW6J/SQPZPLugME=;
+        b=mqYQieDJedM156pfgPQbs1EIeZPJy11uOWXcOWWWOoYX+i9g8sAuU/90gugvHcuNtz
+         4skwZq/vxAo7tuWSy3AJRfOZ935Ui+QyAMZwszvOZdKHQtQvpmJCGj2wMNXeMG9rQP7n
+         IdV6WNujEJIkwuEY8DgfFmlH+blWQbEHGTo/NCmEMlZsq8/EjWHtN66F4UUvpFoK9ZAv
+         Tcmu0WcitmKuj/AzSRl/dnq+0f0+v1JledMnip9pU6i8n+Q+smpCaZrDYHzpdKc8Nmqi
+         FaUskrpIZDauhBJZEFKYzc2oe0snx0w9wV35fMbWDXpX62FNhtyJOZq9CDx0EkEoZaqM
+         ndAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=y5P/SySPrrYrCDcjKcb8fK9DDb5wI4+qyfqOIaUXUNQ=;
-        b=Ikxt/fEGVh7n7yHHwCO5IWt7X7gRYfaJCZwxXbJnX0e3B2GYYFZ84ZPcLlQaCsM3Ty
-         y9mV1UZJyIUyjJSO13MuiiwGBIHLD3l2zwzDxgnXQruM6H+Ae8EVKhreMFJTF/ZKeBhF
-         QJoU5yPMF5JF+KDHYOlasfdeg2DyOEwLHgU08p1gSTxCdY3qzLr646Ahy+dU+JgnCBth
-         ziG12f6N574UzEYsSG/p+H0r4gfsSzL2j8qkZ0O0lPnh2asFDYT9QO4exkBVzQXgNZOU
-         YLm8rf3sVRa8oK2iQbbjvZXqzcRt6iaKyv2mJ1qsaSLd1FO2aJbMK45TfsCOkMpb53Bp
-         opDA==
-X-Gm-Message-State: ACrzQf2qJGYhhyuSM6G/5JStIQk5/szvSPnU194rIf3C6ItNzXkmNl0l
-        W+2jbrU6QnyipAcIistqYWLwtt07Kmn99Q==
-X-Google-Smtp-Source: AMsMyM5mh7/DL8+kZ3RcVwlGZhl2hhQe3CRWiq6h6L7qIBc4nXDruNk1MFrxoySSGupGu7J749T14g==
-X-Received: by 2002:a05:6000:178a:b0:22b:87b:c995 with SMTP id e10-20020a056000178a00b0022b087bc995mr20362482wrg.715.1664354400365;
-        Wed, 28 Sep 2022 01:40:00 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 26-20020a05600c229a00b003b31fc77407sm1075026wmf.30.2022.09.28.01.39.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=iS4aofdSIzdS9pVJZ4hp637Rx6OQqW6J/SQPZPLugME=;
+        b=np4KLbsQYpvLOlAo85M8iIKsI6N5J+L1+Un8tib/YG3JrPCbStleKfv2mHl6JAfZrp
+         T2gFYGStrrn5eFvb5dfoXXL+m8/eM3/gW0K0qZBmsgcZcvWBj2Nsr3S3fi637PPOY4P5
+         7OAJXljatHhvdRBjlZ6oJIkFBrGU8Y0xn1fcxhXByHiFqeJ/qLkFW4okUczxSV74zzcA
+         05EHOOxyZN7qOLNp/AVNoxShPMiOuP2J67Xy3hipAsZKXO2ct6A7pcZHc8DSvB46pNEP
+         tnijZk+czlRuGE6mOsT3KvoKaOU1zeK/4MhAMf1gBUAVdXcD1WcFdnnvCFll84lLCPxi
+         Ervg==
+X-Gm-Message-State: ACrzQf1zrBxJw+UC3Vw5XE3lukJXWcMRz28CwhQFfsD6Sbtx+RTv7LMU
+        c1EqVN2L0YkXN36SKV4cSHJSum/WPyxl1A==
+X-Google-Smtp-Source: AMsMyM4D3yRM97r+o9e0A/cQ6EwwDoHn0EzCoPL1XzfEjdVe6m9aFwfkD+BbFhnOg1S1DTLOxFXI9Q==
+X-Received: by 2002:a05:600c:1d26:b0:3b4:a677:ccc9 with SMTP id l38-20020a05600c1d2600b003b4a677ccc9mr5774178wms.121.1664354399310;
         Wed, 28 Sep 2022 01:39:59 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id 26-20020a05600c229a00b003b31fc77407sm1075026wmf.30.2022.09.28.01.39.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Sep 2022 01:39:58 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
         John Cai <johncai86@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 23/35] doc txt & -h consistency: make "bundle" consistent
-Date:   Wed, 28 Sep 2022 10:39:18 +0200
-Message-Id: <patch-v2-23.35-a6a43d0b3fd-20220928T082458Z-avarab@gmail.com>
+Subject: [PATCH v2 22/35] doc txt & -h consistency: make "read-tree" consistent
+Date:   Wed, 28 Sep 2022 10:39:17 +0200
+Message-Id: <patch-v2-22.35-fde75be474a-20220928T082458Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.rc1.925.gb61c5ccd7da
 In-Reply-To: <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
 References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com> <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
@@ -71,37 +71,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend the -h output to match that of the *.txt output, the differences
-were fairly small. In the case of "[<options>]" we only have a few of
-them, so let's exhaustively list them as in the *.txt.
+The C version was right to use "()" in place of "[]", let's update
+the *.txt version accordingly, and furthermore list the *.c options in
+the same order as the *.txt.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/bundle.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ Documentation/git-read-tree.txt | 2 +-
+ builtin/read-tree.c             | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 1b08700bf9e..544c78a5f3a 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -12,13 +12,14 @@
-  */
+diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
+index b9bfdc0a319..7567955bad8 100644
+--- a/Documentation/git-read-tree.txt
++++ b/Documentation/git-read-tree.txt
+@@ -9,7 +9,7 @@ git-read-tree - Reads tree information into the index
+ SYNOPSIS
+ --------
+ [verse]
+-'git read-tree' [[-m [--trivial] [--aggressive] | --reset | --prefix=<prefix>]
++'git read-tree' [(-m [--trivial] [--aggressive] | --reset | --prefix=<prefix>)
+ 		[-u | -i]] [--index-output=<file>] [--no-sparse-checkout]
+ 		(--empty | <tree-ish1> [<tree-ish2> [<tree-ish3>]])
  
- #define BUILTIN_BUNDLE_CREATE_USAGE \
--	N_("git bundle create [<options>] <file> <git-rev-list args>")
-+	N_("git bundle create [-q | --quiet | --progress | --all-progress] [--all-progress-implied]\n" \
-+	   "                  [--version=<version>] <file> <git-rev-list-args>")
- #define BUILTIN_BUNDLE_VERIFY_USAGE \
--	N_("git bundle verify [<options>] <file>")
-+	N_("git bundle verify [-q | --quiet] <file>")
- #define BUILTIN_BUNDLE_LIST_HEADS_USAGE \
- 	N_("git bundle list-heads <file> [<refname>...]")
- #define BUILTIN_BUNDLE_UNBUNDLE_USAGE \
--	N_("git bundle unbundle <file> [<refname>...]")
-+	N_("git bundle unbundle [--progress] <file> [<refname>...]")
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index b3a389e1b1f..f4cbe460b97 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -39,7 +39,7 @@ static int list_tree(struct object_id *oid)
  
- static char const * const builtin_bundle_usage[] = {
- 	BUILTIN_BUNDLE_CREATE_USAGE,
+ static const char * const read_tree_usage[] = {
+ 	N_("git read-tree [(-m [--trivial] [--aggressive] | --reset | --prefix=<prefix>)\n"
+-	   "              [-u | -i]] [--no-sparse-checkout] [--index-output=<file>]\n"
++	   "              [-u | -i]] [--index-output=<file>] [--no-sparse-checkout]\n"
+ 	   "              (--empty | <tree-ish1> [<tree-ish2> [<tree-ish3>]])"),
+ 	NULL
+ };
 -- 
 2.38.0.rc1.925.gb61c5ccd7da
 
