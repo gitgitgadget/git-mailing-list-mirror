@@ -2,83 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C9E9C04A95
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 22:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 379C7C04A95
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 23:04:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233818AbiI1WVK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 18:21:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37242 "EHLO
+        id S232784AbiI1XE3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 19:04:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233749AbiI1WVH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 18:21:07 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D50DEFA59
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 15:21:03 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7151C1B831E;
-        Wed, 28 Sep 2022 18:21:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=I4vddjhGZ0tHju1b+qwmf+Vq3AEK+arF2z4LHNyhzpQ=; b=Z0dQ
-        PK7+jN78OIH6LJSC2mSh1zFr65eX8HVMfNaw1DMfX1DPNTTo3rPuKdQvefApLYiT
-        mdA5vyn/kz4tp9dhu99Yj7kewH79D4OzgbtDgPaAw2o5UBbcapp4SiVtrqsfqH0g
-        3ES9FN8imuUblhFq4d4pw/dAXeVP82HufZQ6Log=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 692231B831D;
-        Wed, 28 Sep 2022 18:21:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 31BC71B831B;
-        Wed, 28 Sep 2022 18:20:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Stefan Xenos via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Christophe Poucet <christophe.poucet@gmail.com>
-Subject: Re: [PATCH 01/10] technical doc: add a design doc for the evolve
- command
-References: <pull.1356.git.1663959324.gitgitgadget@gmail.com>
-        <a0cf68f8ba2adefae4fceeab0d438d05e355e695.1663959324.git.gitgitgadget@gmail.com>
-Date:   Wed, 28 Sep 2022 15:20:58 -0700
-Message-ID: <xmqqedvvqgxh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S233015AbiI1XE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 19:04:27 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 014F51191A6
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 16:04:24 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id r7so21965994wrm.2
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 16:04:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject:from:to:cc
+         :subject:date;
+        bh=107snoycC7BohFGY9nym+2RPy3jFoxu6hAj0qYjesgE=;
+        b=L193FhfQ/P8GKe05wcFu5X22LsP5xgEe1jV4ue8bnVABnrN4GGUOpvnzchiRO03+fE
+         h3D4tHslRTHjt2/1FSJH4BRnfIxtm/y/8MwPmKQ/FnJXuMDfVsOnrq6BOSgpnWjHDEfG
+         3V2NSEUkYcbZTQB08uScOh/4aajFWj7nzT7sU3cDTLa5jYo1jnYfBUMTwSdTtZ4Z77Ki
+         cJ6InN0fRtYKmjgSoEMPvnhi2Zuh6lHjEV9dmQgEAhBQO7pvdtK5nl6UwOzIliC6/IrY
+         XsSA1X68M+k1sECxo/X8/Y4k/mW9M7MmGBpToFHQaZAd4rdWDvE4BDDqIl1dbLDkvv6+
+         tRoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=107snoycC7BohFGY9nym+2RPy3jFoxu6hAj0qYjesgE=;
+        b=pWIH1rlWFBWykMdwGBaBnsx8I9PYgBeKgf0sdphx0h9bzifwWvb+ErhU4jNeRUuilS
+         CnwH/vIkn4qZ8YqoT9Fz3+OaUSTOLF2674+ZcgcZpbRZ4DxaYZMo6A5UROKS9hYnhdSG
+         KVyoDm+mNlzS4QMBChVNpa8/wFs5Escur9B0D5gXn0Rq9LHHthCjGLcWqZxQQu0vf9bd
+         P8gneBzyFLxbl3YYW1jTjeQevhUBdqaM+z9ARO3THbB3jNiCL9CxNQG7eTdjyNukzVLi
+         CzxQpxClxZ1DBCYws7nZsGkW7d1oreEVqWE8t8xKDIERKVV9StR2b8/5BnK8FDGqUy8q
+         dDtg==
+X-Gm-Message-State: ACrzQf17gbMqflJ5tMlve6IRN16iWQFzmF1tG3Q/iIQ2RAWw0KfFjpD0
+        W/t5aM1SyHPXZLpV+uO+GqBWc4NgXqo=
+X-Google-Smtp-Source: AMsMyM6P1N3mMrKBxnT0qO/GVOZryUXGHNksjtuXZnz5lesrg55EdiwMl/0tGF+E66ExkS42+r+HGg==
+X-Received: by 2002:a5d:64e4:0:b0:22a:4997:c13c with SMTP id g4-20020a5d64e4000000b0022a4997c13cmr86977wri.621.1664406263325;
+        Wed, 28 Sep 2022 16:04:23 -0700 (PDT)
+Received: from [192.168.2.52] (5.83-213-116.dynamic.clientes.euskaltel.es. [83.213.116.5])
+        by smtp.gmail.com with ESMTPSA id e16-20020a05600c2dd000b003b47e8a5d22sm2998280wmh.23.2022.09.28.16.04.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Sep 2022 16:04:22 -0700 (PDT)
+Subject: Re: [PATCH] branch: do not fail a no-op --edit-desc
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqczbftina.fsf@gitster.g>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <1faa5c44-1a59-7a60-d29b-c4d4e8d0bf92@gmail.com>
+Date:   Thu, 29 Sep 2022 01:04:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D4360E06-3F7B-11ED-A67D-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+In-Reply-To: <xmqqczbftina.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Stefan Xenos via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 28/9/22 21:15, Junio C Hamano wrote:
+> In a repository on a branch without branch description, try running
 
-> +Rebase
-> +------
-> +In general the rebase command is treated as a modify command. When a change is
-> +rebased, the new commit replaces the original.
+On a branch without description, ..
+
+> The simpler solution of course introduces TOCTOU, but you are
+
+Nice to introduce a term that can generate curiosity.
+
+> fooling yourself in your own repository.  Not overwriting the branch
+> description on the same branch you added in another window, while
+> you had this other editor open, may even be a feature ;-)
+
+Not overwriting if there was no description in the first place, otherwise
+will clear.. ¿?
+
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/branch.c  | 6 ++++--
+>  t/t3200-branch.sh | 3 +++
+>  2 files changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git c/builtin/branch.c w/builtin/branch.c
+> index 5d00d0b8d3..dcd847158a 100644
+> --- c/builtin/branch.c
+> +++ w/builtin/branch.c
+> @@ -604,10 +604,11 @@ static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
+>  
+>  static int edit_branch_description(const char *branch_name)
+>  {
+> +	int exists;
+>  	struct strbuf buf = STRBUF_INIT;
+>  	struct strbuf name = STRBUF_INIT;
+>  
+> -	read_branch_desc(&buf, branch_name);
+> +	exists = !read_branch_desc(&buf, branch_name);
+>  	if (!buf.len || buf.buf[buf.len-1] != '\n')
+>  		strbuf_addch(&buf, '\n');
+>  	strbuf_commented_addf(&buf,
+> @@ -624,7 +625,8 @@ static int edit_branch_description(const char *branch_name)
+>  	strbuf_stripspace(&buf, 1);
+>  
+>  	strbuf_addf(&name, "branch.%s.description", branch_name);
+> -	git_config_set(name.buf, buf.len ? buf.buf : NULL);
+> +	if (buf.len || exists)
+> +		git_config_set(name.buf, buf.len ? buf.buf : NULL);
+>  	strbuf_release(&name);
+>  	strbuf_release(&buf);
+>  
+> diff --git c/t/t3200-branch.sh w/t/t3200-branch.sh
+> index 9723c2827c..5f72fd7453 100755
+> --- c/t/t3200-branch.sh
+> +++ w/t/t3200-branch.sh
+> @@ -1381,6 +1381,9 @@ test_expect_success 'branch --delete --force removes dangling branch' '
+>  '
+>  
+>  test_expect_success 'use --edit-description' '
+> +	EDITOR=: git branch --edit-description &&
+> +	test_must_fail git config branch.main.description &&
 > +
-> +Rebase --abort is special. Its intent is to restore git to the state it had
-> +prior to running rebase. It should move back any changes to point to the refs
-> +they had prior to running rebase and delete any new changes that were created as
-> +part of the rebase. To achieve this, rebase will save the state of all changes
-> +in refs/metas prior to running rebase and will restore the entire namespace
-> +after rebase completes (deleting any newly-created changes). Newly-created
-> +metacommits are left in place, but will have no effect until garbage collected
-> +since metacommits are only used if they are reachable from refs/metas.
+>  	write_script editor <<-\EOF &&
+>  		echo "New contents" >"$1"
+>  	EOF
+> 
 
-One thing that makes me nervous is how well your analysis capture
-"unusual" but still reasonable ways to use these commands, as the
-workflows of people are quite different.
+The change looks fine and removes a confusing error. Good.
 
-For example, I almost never do "git checkout topic && git rebase
-origin"; instead I would do "git checkout topic && git rebase origin
-HEAD^0" to first make a detached HEAD out of the topic, in order to
-have two copies explicitly available to be compared after "rebase"
-finishes.  After doing so and get satisfied by the result of
-comparison between topic and HEAD, I may do "git checkout -B topic"
-to update.  Would that leave exactly the same set of metacommits as
-the case where I didn't do the "first rebase the detached HEAD and
-then update the bracnh for real" and instead "rebase the topic"
-directly?
+Thanks.
