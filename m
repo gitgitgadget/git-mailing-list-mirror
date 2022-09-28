@@ -2,147 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD7CEC32771
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 20:18:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2890C04A95
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 20:27:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233399AbiI1USM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 16:18:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57798 "EHLO
+        id S233613AbiI1U1k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 16:27:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232959AbiI1USL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 16:18:11 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BB586D9DA
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 13:18:10 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id u24so4044523edb.11
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 13:18:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date;
-        bh=TJDMypBJV4cibsbzMZQSrlYTgZctknPNJxSvkHzH09I=;
-        b=PqgfEOV47OGnaT1O8s6G70C34O+ihmKyODfzSM2lBGLS8btyy/yOIwcknTTG5RcVE4
-         bhllJoUL7K0Ej+03yp2aHDSBRUqGVZZq5Ad8TmhearUawy6nCKuR0fmCs7pUvnSgSbXt
-         nIqONhU90hDNGrmwkoOL7gS1AlwbSz5ChjP6hRDnw5CIsqctzrSHMxdKImUB027BV4nf
-         XHWH/0F+loSUtfG0vrb5eynBsxfD3htPROd3Ke0tZ5BDSnRs6wip/GgxzfE802sI0U8R
-         7l4w0/dPMXfAfsipBavKvsxI1pObQfQV+IW2M4T9IMH+tiD6IZFp6Bfia0ccjajTEv3c
-         Waxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=TJDMypBJV4cibsbzMZQSrlYTgZctknPNJxSvkHzH09I=;
-        b=5/X8E8tjNhDNCpPvsSgT8yLY1l4ApKq0hWAC3z1LtlVeky8ZU601jZlxP/EtuGpS06
-         xOcUCejA73CDh16rCdW2lDOz6ks73eA62IlNVaLHgfXkpjSHcXz4LdlnLtAl+tZdeuHh
-         CmBQFTG+ee1zVT0pclrVnE8UA1/4znVa81/jA4a/DXcq4SRGu4NXYSW2uDTzBv6ksG4g
-         8rk+Mzh1XS4qJ8UffEzXoq6hQ+9wepCRM82jLW2R0XHTtkresIhHy5LnrS5+A8BLSy40
-         9eiNJeWTbqjj4UzXNwoceVzIAOAtrwIZLhNPUWLH54bmBNQLkVr8uvzERtQEn3fH7X8h
-         sfKw==
-X-Gm-Message-State: ACrzQf2MP7q+MfCVBR9Fa0Fwqbh9y8Be3bVFmrUjaZt2GidRXTjWQ9Up
-        mDO2tcVG7pITT5FmS29MlmVOZ7aC2IUbcQ==
-X-Google-Smtp-Source: AMsMyM5VKGyrXu4gaYZsRrv3T70r8YgIWMBjsVZuwnnxpRL4J5Wt/Wf7bOZxvZF0GcOrXSIE77aaUQ==
-X-Received: by 2002:a05:6402:3988:b0:44e:6f08:ddfb with SMTP id fk8-20020a056402398800b0044e6f08ddfbmr34558179edb.89.1664396289045;
-        Wed, 28 Sep 2022 13:18:09 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id a20-20020a1709063e9400b0078175601630sm2871830ejj.79.2022.09.28.13.18.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 13:18:08 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oddVP-00164E-1Z;
-        Wed, 28 Sep 2022 22:18:07 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S232246AbiI1U1j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 16:27:39 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51C78A9C36
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 13:27:38 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A0A201B77BB;
+        Wed, 28 Sep 2022 16:27:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=9MWl8NETEb42
+        kVvqbPs0KUnKwbHDBmm6OJT0jmnbdck=; b=WT4Byvk8HfMCw8hcBRcmIRX5h218
+        dv8wvXfpfagPG4AyGASiCvCiFmJsyaHvW7gOSkseTZQCABPzScVGzNY1Qc3iw3I2
+        chN8oLegtyVC6CgfS5p1OIQY7tEmle+Ncws341w463MSDOb0b3dzVgUOxj580JAi
+        VOYCqxixbWUArUk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9850B1B77BA;
+        Wed, 28 Sep 2022 16:27:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 485A71B77B3;
+        Wed, 28 Sep 2022 16:27:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
         Taylor Blau <me@ttaylorr.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2 00/35] doc/UX: make txt & -h output more consistent
-Date:   Wed, 28 Sep 2022 22:10:33 +0200
+Subject: Re: [PATCH v2 34/35] tests: start asserting that *.txt SYNOPSIS
+ matches -h output
 References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
- <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
- <xmqqk05ntlye.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <xmqqk05ntlye.fsf@gitster.g>
-Message-ID: <220928.864jwrw8w0.gmgdl@evledraar.gmail.com>
+        <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
+        <patch-v2-34.35-aef2b7356dc-20220928T082458Z-avarab@gmail.com>
+Date:   Wed, 28 Sep 2022 13:27:33 -0700
+In-Reply-To: <patch-v2-34.35-aef2b7356dc-20220928T082458Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 28 Sep
+ 2022 10:39:29
+        +0200")
+Message-ID: <xmqq7d1ns0qy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FC2BB466-3F6B-11ED-98AE-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On Wed, Sep 28 2022, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+> There's been a lot of incremental effort to make the SYNOPSIS output
+> in our documentation consistent with the -h output,
+> e.g. cbe485298bf (git reflog [expire|delete]: make -h output
+> consistent with SYNOPSIS, 2022-03-17) is one recent example, but that
+> effort has been an uphill battle due to the lack of regression
+> testing.
 >
->> Victoria: I decided not to go for your suggestion of trimming this
->> series down in [1]. Reasons:
->>
->>  * It would take me time I don't have to spend on this, as some of it
->>    isn't easy to cleanly re-arrange. E.g. the later "make consistent"
->>    commits rely on earlier whitespace/basic syntax fixes.
+> This adds such regression testing, we can parse out the SYNOPSIS
+> output with "sed", and is turns out it's relatively easy to normalize
+> it and the "-h" output to match on another.
 >
-> A devil's advocate question.  If even the original author feels it
-> does not deserve his or her time to clean up the series, how does it
-> possibly deserve reviewers' time to review such a series?
+> We now ensure that we won't have regressions when it comes to the list
+> of commands in "expect_help_to_match_txt" below, and in subsequent
+> commits we'll make more of them consistent.
 
-So, I'm clearly doing a bad job of explaining this (and I'm not saying
-I'm not also lazy!), but with the latter part of that I meant that I
-took pains to optimize this for overall reviewer time.
+Call that file as such, not a plain "list".  It might be useful to
+have it in Documentation/ or somewhere outside the test script so
+that people who work on making the match know where to look, as you
+are updating CodingGuidelines for this change anyway.
 
-I.e. at the start of the series (made up example, but it'll suffice) we
-might have stuff like this:
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -634,7 +634,8 @@ Writing Documentation:
+> =20
+>   A few commented examples follow to provide reference when writing or
+>   modifying command usage strings and synopsis sections in the manual
+> - pages:
+> + pages. The two should match, see t/t0450-txt-doc-vs-help.sh for
+> + (partial) regression testing.
 
-	*.txt usage: (foo|bar) <file>
-	-h usage:    (foo | bar ) <dir>
+> +test_expect_success 'setup: list of txt v.s. help is sorted' '
+> +	sort -u list >list.sorted &&
+> +	if ! test_cmp list list.sorted
+> +	then
+> +		BUG "please keep the command list sorted"
+> +	fi
+> +'
 
-The start of this series fixes a bunch of misc issues like whitespace
-issues, so we can e.g. turn that into:
+If the list becomes an external file, we probably could add a
+"recommended pre-commit hook" for developers to reduce mistakes,
+protecting us even from developers who forgets to run tests.
 
-	*.txt usage: (foo | bar) <file>
-	-h usage:    (foo | bar) <dir>
+Or even a "clean" filter that automatically sorts, specified via the
+attribute for that file, but that wouldn't protect us from careless
+developers who are unlikely to enable the filter X-<.
 
-At *that* point I can include the s/dir/file/ change on one side in a
-"doc txt & -h consistency" commit, and end up with, say:
+> +while read builtin
+> +do
+> +...
+> +done <builtins
 
-	*.txt usage: (foo | bar) <file>
-	-h usage:    (foo | bar) <file>
+Fun!
 
-So, I can say for the "doc txt & -h consistency" that we had the "(foo |
-bar) <file>" version in-tree already, but that's only the case if you'll
-buy the earlier whitespace-only change.
 
-I think that's easier to reason about & review than a bunch of "here I'm
-changing the label, and some whitespace issues, and blah blah".
-
-I.e. the reviewer only has to pay attention to the first change being a
-whitespace-only change, and can then be assured that post-whitespace
-change we're just changing one side to be consistent with the other.
-
-We then test that consistency at the end of the series.
-
->>  * A major advantage of reviewing this in one go is that the 34-35/35
->>    tests at the end are asserting everything that came before
->>    it.
->
-> Yes, but it does not assert anything about the other patches not
-> doing unrelated things while at it.  So tests cannot be blindly
-> trusted (in other words you have to be also trustworthy, if the
-> reviewers are expected to swallow this huge series uninspected).
->
-> I'll give it a read-over when I find time.  Thanks for working on
-> it.
-
-Right, I didn't mean to say that these could be blindly trusted, just
-that the series was working towards splitting up little fixes like
-whatespace fixes, and at *that point* the reader should be assured that
-one side of the commits with "doc txt & -h consistency" in the subject
-is in-tree already.
-
-Of course that at the minimum needs a review for *which side* we should
-pick :)
