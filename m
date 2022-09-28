@@ -2,84 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31834C32771
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 05:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80049C04A95
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 05:45:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232160AbiI1FmS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 01:42:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60660 "EHLO
+        id S232554AbiI1Fp4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 01:45:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230185AbiI1FmQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 01:42:16 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30A90FE671
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 22:42:15 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id a10so13231687ljq.0
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 22:42:15 -0700 (PDT)
+        with ESMTP id S232443AbiI1Fpw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 01:45:52 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F2C674E32
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 22:45:51 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id x92so2692119ede.9
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 22:45:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=Zs9+hbGUW96eERlzcuPafzXgvREqWAEevqiugLi0UI8=;
-        b=ojCMLvjzK+l7E4X8hrwNp/kbSHubCGVeu0kFJzXg3YUS1XJBMNGgzs5gagVYiij5iO
-         dg9nD+yecmTM1/Yjsq8lVssQBExF4+TW3QLFyKzBGlkpFboa2tjG4R+04vL6/codW6jM
-         aeZF6xFQGEBWTSlHPrwRQdi7xGEPhMD4nuqQ7MUNYng9uvyeU6PE4TSewOuAExNPXi9u
-         DtUvMCoA7mEUhFHJi++G1qkAD9hIREGRRn6R5qSUPQHSAyNiqbNTeuxJUmhG6mByns95
-         KZT1qWJMvL4+ZLnjONEEUURf6Vr72WpEZ1RvApOlIPpQah2v5GnjORj+VkkCBCljm06E
-         Gqdw==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date;
+        bh=f1M0gLFmF06Neg6q38OHsd7RuNg4Q1BLsgeOKNlgqXw=;
+        b=ZbwTDvVhShrZO5qE9oUweDbEaDIDlgTo8RjSjfw3aIIFDTULgp9h3V/k0JJLdBOpIm
+         ulfmT90LhXTPt7WvzXXAnJVg/RaD+AIzrZJ0LIjd9FLiJu8mTfFDavXxdO6l0ymjnQ0w
+         j2hVvkS1P5XaIqm5/XkVcdNaLpCi5oIdU0fqKsRFKjRWJTBi07/b5M8RaPx8tE+IOmPy
+         0xYdZ/Ufg/bTFgxSbeSEGqiC49rJN4ClgWaWYLlIP1dADVd3tWtYponFGzVorqfyaLYQ
+         4lZhP2Z2QmUPy9HD0w/zsFAVKOcxs/FZWeZssc8tVyCbg/RSyUiS1lGG0KsSNgAdqmPo
+         gNXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=Zs9+hbGUW96eERlzcuPafzXgvREqWAEevqiugLi0UI8=;
-        b=pIu3FGpBDWsVmC+iPZDOo/0sUu8TuTVG9B9cFFAzXBZMMtH9tQ0A+eS7DjyDqAW94i
-         9AcuUb5E7BLN7s+EHt+mNr0D6y/WEFeqMOM5xQ5y2J7kWYkXCBe77Jrmg11HQ6OW9+Ff
-         WhvCTrJmeSc2f6UdCzihklkNhpkEZfOf9xNVl6Iesw8q5fjfEoSpYq9tvdRRHgaTUmgk
-         aJJ0X3lIkKXlR/GhrzzsjDTE0ZgNtOopJxaGIFXMHaQlelV+WP8TPZY/5ziTJYbeUT9S
-         v9l5yuvvzujnpA3zdQQZ2pBOSxTcfyYvGeBfmqfPF/NaHSvyXxBH9cvGj4191RvtQhnj
-         dgPw==
-X-Gm-Message-State: ACrzQf2gFIEdN0dLBcuJa1IURUvHXX7wEq59/NJbeIxuFKIpg+1bDVVb
-        54Sw9J/zCBDVY8u4ldG8xqlwE8siLozpFwH/aIzrhh1j
-X-Google-Smtp-Source: AMsMyM4Ngzb+0wxi/dSot+ka8tvsem9g0qYA6LX1rtL+KGC6fSBAWMqGU/wySc+iU2qDBZ3jhVQCHv8NxTRmXEGFUII=
-X-Received: by 2002:a2e:921a:0:b0:26c:1166:6666 with SMTP id
- k26-20020a2e921a000000b0026c11666666mr11266679ljg.128.1664343733569; Tue, 27
- Sep 2022 22:42:13 -0700 (PDT)
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=f1M0gLFmF06Neg6q38OHsd7RuNg4Q1BLsgeOKNlgqXw=;
+        b=6Mt4UeeKSthoD972nR5NkYEKVm718ssplxwuvgzJqgG0AdC+0QwgUfbv3ShBFelP63
+         6nBY1kl+iXnnEnQDjzxgvkc2Zi5K2zfle3hop4sJpX5ZdQiv/gIiqgzeyVmI8tQhv28b
+         fI0ovVUp2EsELOd/pRJax8jOTnMlWuNSJdnY0YG+5YZmQuTEL3eKXjlZgNz6h1QK/ycf
+         vESeUAOao4kEt1vud1mh5ETWJ22SRuLFcwy2PKy8qsYoeXjJsdMGCGg6qMmwKA5ajXG8
+         FXTVtsvuw+IAko1zfQyHYBUrIH1ZFWmLSmedxyQaMr8KfzsP4eR9AMC11U1ayVjp9rqz
+         ABUg==
+X-Gm-Message-State: ACrzQf0on+cAebedsduPGQQ2T9lZ7SR7kfaJRjd1sLj/JGRmE63HCOAy
+        6EmTFwPQKHs1K2O0Zqo64JY=
+X-Google-Smtp-Source: AMsMyM5NI2+6l7yNnVog9rKzrV/3NEZgNToMssvccZOxx5qM8oE49UZxYyOEJQpsiow/Mn/iusfdsw==
+X-Received: by 2002:a05:6402:28ca:b0:43b:5235:f325 with SMTP id ef10-20020a05640228ca00b0043b5235f325mr31204380edb.320.1664343949503;
+        Tue, 27 Sep 2022 22:45:49 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id c17-20020aa7c751000000b0044ee91129f9sm2626266eds.70.2022.09.27.22.45.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Sep 2022 22:45:48 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1odPtE-000neE-0A;
+        Wed, 28 Sep 2022 07:45:48 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        emilyshaffer@google.com
+Subject: Re: [PATCH 1/4] run-command: add pipe_output to run_processes_parallel
+Date:   Wed, 28 Sep 2022 07:40:02 +0200
+References: <20220922232947.631309-1-calvinwan@google.com>
+        <20220922232947.631309-2-calvinwan@google.com>
+        <xmqqy1u9uddc.fsf@gitster.g>
+        <CAFySSZA=tThoHdTY7+bMStvC=xeeyMiv4aVDYt-eNW2mQE10qg@mail.gmail.com>
+        <220927.86ill9yymv.gmgdl@evledraar.gmail.com>
+        <CAFySSZBSAW=zea8UoMiaQkf8rdJUBGHDYZQFkPLW7mRSciS-FA@mail.gmail.com>
+        <220927.86fsgcy5j9.gmgdl@evledraar.gmail.com>
+        <CAFySSZB3hp2WWk0bL77FBR91ueJ1eJFtuVCoyE-ooVT77Vo_vw@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <CAFySSZB3hp2WWk0bL77FBR91ueJ1eJFtuVCoyE-ooVT77Vo_vw@mail.gmail.com>
+Message-ID: <220928.86bkr0xd9w.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1367.git.1664064588846.gitgitgadget@gmail.com>
- <a89413b5-464b-2d54-5b8c-4502392afde8@github.com> <ea32aef1-2899-abae-0192-75d672b69302@github.com>
-In-Reply-To: <ea32aef1-2899-abae-0192-75d672b69302@github.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 27 Sep 2022 22:42:02 -0700
-Message-ID: <CABPp-BHSPp6sMaxh5ZAxCn+FpLQtcc=9HDtbint1J4VkX2U-iA@mail.gmail.com>
-Subject: Re: [PATCH] sparse-checkout.txt: new document with sparse-checkout directions
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Victoria Dye <vdye@github.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        ZheNing Hu <adlternative@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 27, 2022 at 9:42 AM Derrick Stolee <derrickstolee@github.com> wrote:
+
+On Tue, Sep 27 2022, Calvin Wan wrote:
+
+>> Okey, if it's not blocking a re-submission of yours then I'll definitely
+>> wait until after the RC to submit the above, at least, but if you'd like
+>> it earlier...
 >
-> On 9/26/2022 4:08 PM, Victoria Dye wrote:
-[...]
-> > 1. This could be a "me" problem, but I regularly struggle with "sparse"
-> >    having different meanings in similar contexts. For example, a "sparse
-> >    directory" is one *with* 'SKIP_WORKTREE' applied vs. "the sparse portion
-> >    of the repo"  here refers to the files *without* 'SKIP_WORKTREE' applied.
-> >    A quick note/section outlining some standard terminology would be
-> >    immensely helpful.
->
-> This difference is absolutely my fault, and maybe we should consider
-> fixing this problem by renaming sparse directories something else.
+> I just tested a solution where I add pipe_output_fn to
+> parallel_processes instead of having it as a variable. Not only does
+> it work but it also solves my unbounded output problem, so this is
+> no longer blocked resubmission.
 
-Hey now, don't reviewers also get some of the "credit"?  ;-)
+You mean the internal "struct parallel_processes"? How do you get the
+parameter there, presumably by passing it to
+run_processes_parallel{,_tr2}() as a new parameter?
 
-> Perhaps "skipped directory" would be a better name?
+The reason for why the "ungroup" wasn't added as a parameter at the time
+was to avoid the churn of changing every single caller of the API.
 
-Sounds reasonable to me.
+But it should really be a "parameter", and doing it via a struct means
+adding such parameters doesn't need to change every single caller.
+
+Then we have outstanding WIP patches for the hook.[ch] API which needed
+to add two other parameters...
+
+So I think first ripping off the band-aid of making it painless to
+extend the interface is the right thing to do, unless I've missed some
+way of doing it that you've just discovered...
+
+
+
+
