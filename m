@@ -2,89 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2ADFC32771
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 15:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45AD4C32771
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 15:42:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232396AbiI1Pjw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 11:39:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60980 "EHLO
+        id S233785AbiI1Pmf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 11:42:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234331AbiI1Pjj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 11:39:39 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89BCF6361
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 08:39:37 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id y141so10462636iof.5
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 08:39:37 -0700 (PDT)
+        with ESMTP id S233659AbiI1Pmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 11:42:32 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB8356CD01
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 08:42:31 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id z13so17743909edb.13
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 08:42:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=cY3N/diy/kKVSPhN8o3+mN2YRd8fVIwA46RXLRS/bMs=;
-        b=0f/d0w3MOef+K3VCyzBOtmGtsTlsCIEKRhI2W76kvUnXf18Gan1frqDKrqKI9Y+o4n
-         rwWvKnnf8HSKknxAiUO23f9wlSn6w6YuM+hQPchRS8gPLu4yCrS2XzYOCD0bL1boq4xF
-         B1DKgtXVcPtPtW4I2Ov4BOQqAbRuTjnOMmnbcWUBIRflSEyrBRlyEDShoUpPKPBhg8Mt
-         lUGJMNjEztdhgPhJQCtxCX6L26I+VcaDdBDZxf+P3QmcL7fzK16lrFfIMk2IndaJJfjx
-         n5ARUyjf18U76r+07FUctKbriouT1ULKOY1/7nKyUP0rDj8AA0iAgaQtKlgQKm4duIBT
-         XJRA==
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date;
+        bh=j0n58hU82Hp3RHRRu+VI21GcuKDg6Tufc+67mRgp1eo=;
+        b=aip+MT4XpYuFQiOTDMm4Q4OKTGG/07ROYzrWX4/AAC2mERw8dvf+zc8DTzAAC+pqVp
+         YI7c5ynp2uMGDdocEJ+VjVMSBnByoSTfX3jj+nYI+95trMxxgFWuc26z0j/CHfR2I5Ua
+         u+9masn9BMtC1XjZiCDk/62eUh/sm4jdUhiOgBqCCJxk0QAbuIIpdcO9+yo913CbhGWp
+         pXRgkPYx3uEZfZ7gr0499BrqR1xj2bA+7GkWfrU/E4+QQmeRh76xTZ5sdQLDJY7bVQtM
+         vouf0G/7one/D898JzuATYcLIqVHmrJ/BsgZZHSb3kdi024C57qnUCqXke8rP3f+FV/k
+         O2NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=cY3N/diy/kKVSPhN8o3+mN2YRd8fVIwA46RXLRS/bMs=;
-        b=XKPvABtlFaflWcgFJeFEZoOsFoRGYptTMUAUS2zMfk2qb8BRU9YwQPM3kqdG+bGdbf
-         cq9VaBdLY/eniYLhNdTVs88pnXrOcIV6Dr/HHuNLAa7JvJZr4l7m+SdT/JJVByW9gklv
-         F7eENKJjMsTbrFTiK9uSKhGWU9fNWi7RubONJcLE4t6fvrLRahbQNUaqcpb4wzz+QXGx
-         gBhlm+VyFoCJv3fk1Xqnj9bzlkcEFGW/5hH4aRPzjmoolH1UptkHCKmk4ilCpKWJ9+Mp
-         jvizV/H54rsulwDK1q+1qnW96pUjzbLV5CFoH6xqWtCsPKiT86ZZcY518qddAkZkxfki
-         30fQ==
-X-Gm-Message-State: ACrzQf2uzJxIV5IF6/pZXcP77SWRt4esvqL3UfskArDdgKTgidUzxLLa
-        IXSR1uwo55EYetcG7QW01hjPvMcxPvaenw==
-X-Google-Smtp-Source: AMsMyM6XSozgj2yj/jQcH283jC0w+J7yoAxhdumuzNN/99xUTXLIXn9zYwceuTOXwTk+Ou4qx8Z26Q==
-X-Received: by 2002:a05:6638:2686:b0:35a:413a:b7a0 with SMTP id o6-20020a056638268600b0035a413ab7a0mr17282197jat.224.1664379576958;
-        Wed, 28 Sep 2022 08:39:36 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o17-20020a056638125100b0035678e2e175sm1859343jas.50.2022.09.28.08.39.36
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=j0n58hU82Hp3RHRRu+VI21GcuKDg6Tufc+67mRgp1eo=;
+        b=g3kEpO6Mjbz2Jn5wv31uw4eafmTjmIpqxlXCiyNZv9uUKrABp5cVR/nXa2qA4ILi1s
+         +owbwrY3bBK7zO3V8djD3K8OWmeDrasjoZhm/ELnbzJtwR+8mXVa42iQGCcoqhapnLur
+         YN0snjAwXwzikjZscxYwEo9lOtouVJhdZAIch5pPrTc3sGoaUICIi8Rg8mb5RPaDtKWA
+         PHWQT8O+npMLRzVOZTtEqJJS0KVe7c0T0rqMEjZKLU8IT1VStvJ6Dmgd5C11WW3Ok7yE
+         ypQKtG/cBmw9oJqhVaHEWp1UmMeK9AyrJTm9lP/a+ZX3ujXNh2L0MVd0mnhQSx2stBGB
+         RMww==
+X-Gm-Message-State: ACrzQf1m1ezfB8E7tavQgE161VUi5mEUO7OIp9Mlm7vzxF3vYwuknY6d
+        zC7N25ai81MGnlW7RbXCxz+RKVWqJcwT2A==
+X-Google-Smtp-Source: AMsMyM7JnwzvmcUig9EmTJZMvp85gaitqZSXcxXSSm0Nh9yx+fhKj3qwZTIkMDaCr9xi7+OTblbXfw==
+X-Received: by 2002:a05:6402:909:b0:435:a8b:5232 with SMTP id g9-20020a056402090900b004350a8b5232mr34093597edz.240.1664379749741;
+        Wed, 28 Sep 2022 08:42:29 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id vs1-20020a170907138100b0077fc446aaf6sm2507313ejb.202.2022.09.28.08.42.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 08:39:36 -0700 (PDT)
-Date:   Wed, 28 Sep 2022 11:39:35 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Skrab Sah <skrab.sah@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        skrab-sah via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] abspath.h is created.
-Message-ID: <YzRqt2rxdhfG9CdX@nand.local>
-References: <pull.1345.git.git.1664294909011.gitgitgadget@gmail.com>
- <xmqq8rm41gbp.fsf@gitster.g>
- <CA+J78MXbXG4M1w50EAM8t0VkYP_saCt9O90jFKad3+cB+RCZ-Q@mail.gmail.com>
+        Wed, 28 Sep 2022 08:42:29 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1odZCe-0011uj-0x;
+        Wed, 28 Sep 2022 17:42:28 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v3] tmp-objdir: skip clean up when handling a signal
+Date:   Wed, 28 Sep 2022 17:38:21 +0200
+References: <pull.1348.v2.git.git.1664306341425.gitgitgadget@gmail.com>
+ <pull.1348.v3.git.git.1664376956780.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <pull.1348.v3.git.git.1664376956780.gitgitgadget@gmail.com>
+Message-ID: <220928.86leq3wlnf.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+J78MXbXG4M1w50EAM8t0VkYP_saCt9O90jFKad3+cB+RCZ-Q@mail.gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Skrab,
 
-On Wed, Sep 28, 2022 at 01:02:22PM +0530, Skrab Sah wrote:
-> What is wrong here and what should i do to make it correct.
+On Wed, Sep 28 2022, John Cai via GitGitGadget wrote:
 
-I suspect that Junio's concern is that it appears the tool you're using
-to auto-generate these .h files moves the comments away from the
-declaration and into the header.
+> From: John Cai <johncai86@gmail.com>
 
-I imagine that such a change would be improved if:
+This looks good! Just a clarifying question/comment:
 
-  - You kept the comment attached to the function declaration (and
-    ensured that it was present in the header file).
+> Since we can't do the cleanup in a portable and signal-safe way, skip
+> the cleanup when we're handling a signal.
+>
+> This means that when signal handling, the temporary directory may not
+> get cleaned up properly. This is mitigated by b3cecf49ea (tmp-objdir: new
+> API for creating temporary writable databases, 2021-12-06) which changed
+> the default name and allows gc to clean up these temporary directories.
 
-  - And we dropped the "this file is auto-generated by ..." comment,
-    since I don't imagine that folks will be interested in adding a new
-    tool to the development toolchain.
+I think this still doesn't cover the common case of the "atexit" handler
+saving the day, as Jeff King pointed out in v1:
 
-Thanks.
+	https://lore.kernel.org/git/YzLiI1HZeBszsIJq@coredump.intra.peff.net/
 
-
-Taylor
+I think it's fine to have this proceed as-is (although if you're doing a
+v4 anyway, maybe we want to update tho commit message). I.e. is it
+correct that we'll now only skip this if we get a signal, *and* it's a
+fatal signal, or we otherwise die/exit/abort/whatever before we can get
+to our atexit() handler?
