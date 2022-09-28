@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8B69C32771
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 08:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B977DC04A95
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 08:42:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233671AbiI1Ilk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 04:41:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58456 "EHLO
+        id S233437AbiI1ImJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 04:42:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233418AbiI1IkM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 04:40:12 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F7C24456F
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:40:04 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id ay36so8079789wmb.0
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:40:04 -0700 (PDT)
+        with ESMTP id S233463AbiI1IkO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 04:40:14 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9D65A407F
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:40:10 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id s14so18714270wro.0
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:40:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=OzcVrCVWRNHXd88dUB1FARHe7D4lQQBbEHCKsB51pXc=;
-        b=AkxJSN+wGog9jc8NzoSDgPnrDhNnuHURTbfXBAXreYolWxZfw5UHoHSZQyncURZm1d
-         5Toe9FaQgdXFWelsEd9Bvp7Jnh7js+AQ77Hh7L31KDbpmSgq4CUt3wWEx5v4b6FhRHw8
-         +xz7kMp0kql/yVkwL2uAUAB76BEx+dttnugwrAtRd4OSfKXU3FpX4WLGfLnp4DFvnU9b
-         6KSBOl/k8jqyIXpeZUijg12mF1mCcSHhVf7mgo+/RvMDfkZpWzPhYlM1Czdk2Y3SNCD9
-         uLg5esc6eoy3TMXx4liEsqP4YcrrIvofPUp+p3HzT7tucM14KEAj1zxUYJC1zjfzCNT+
-         YzKw==
+        bh=5SRmslHy2wprv4kLuHbQFIp6EEnfQY4wokviAS9ZVTw=;
+        b=oXXe78v2Al3w2Jb6+ZCwc8aXmdxuNQayg/FaPXXiDsl7XsEUFQBDl4KWTS5Gq7v/Up
+         BbAHURo00/A+Ty18f7l8zDrw5ScGIcjtMT9encagy+5OQkqSwT9fWYIP4qAHipVvfj+p
+         gbpHmwBGNmy3nkHDqF1gB8LP5wI3+4uLeA0I7gzMlXwx9QSF9qf5s1eseVK262DG7s4H
+         NDd+uOfOwIJGzrTjhyFer5G8RxPu3BL/zDspYmufq06td2VVbChmqtPV2doBH+LSaubQ
+         WScB5CXw2fz4H4Pia+Q8grQg3jBOLkwNcAvL0g7mVAiB7YU0mMCvgMKR3d74qgpbpB15
+         vOCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=OzcVrCVWRNHXd88dUB1FARHe7D4lQQBbEHCKsB51pXc=;
-        b=vxdS6lM32swUtLGvRYMssbbbu55qR4r5D/ivxxkD+2samRwXHuFvO0NmJd7vLDh0cK
-         pLKmw+ui50JuXNhHz8iEmScFybk1Hw6JMecesxA8sF+QW/GXHRSa5/UqlesdQb7im4IC
-         5u410nQODuC2iAYfkRwLok3uAhaf/9nAMDdDAxYCyZRQe5ZuGA0q2KSFxuE9uSaTRPM/
-         ErKdVLPQnAa8fQe5O+PDZd+M8CsIpwbtg7ireewQfkHPrystpsyPGC7o8dLcvXb0gSJ8
-         V9TWfS6xdHSQRS3ZqjE5aZxY14xE3HD8DrJvcuI2aTUv6xfyk24pCIDFuLTB5RU5uLnb
-         LXIQ==
-X-Gm-Message-State: ACrzQf0uYJsrO8OlqJVOEGAtmG4ThRkaWOq8CyzgMxQQSS7MiMzH1K6q
-        rrjSvSe1XSyEhsMQSNv+EeqzqwSbua4khg==
-X-Google-Smtp-Source: AMsMyM7GVYkIHwn98gYsY8ownVBlDT6M31GxQP5X39stXjhUYZIMtS0YG4GTOciG9Y34N23w65rxyA==
-X-Received: by 2002:a05:600c:1d83:b0:3b4:c0db:8683 with SMTP id p3-20020a05600c1d8300b003b4c0db8683mr5825774wms.102.1664354402531;
-        Wed, 28 Sep 2022 01:40:02 -0700 (PDT)
+        bh=5SRmslHy2wprv4kLuHbQFIp6EEnfQY4wokviAS9ZVTw=;
+        b=WKgvy20At1/Wkz14k12qIBShFwxmMvfsS1lslewwSq6pmtbGLBXOfdwsCluFkxxSsA
+         XuwzQm3uhHUj0TvJaaBWwVevgetPXXEYyeFjEMk2vNDKfRMI1EglopKVTjHitQbs3XBM
+         InZEB3kub7DAl/aSkwV5xzzzhBhj7D9b9h+4nnlcwtTmJMMStgwPFErY4uPvYt9xqoD7
+         iAJOnUO31AAKTPjuHYygNUUbSKGLTUhKlVNA4LddU3Ah/TiXG7F8ekYNwfmKdHrQFvMo
+         V/DrZao0lNvBgh3GTaKI43g1pysVpIzI5GI1nz0LEYsFu6z97NxveDbRkVZKbIgD15D3
+         Up9A==
+X-Gm-Message-State: ACrzQf32I94MIbvffhAXQZLh7P1Bme6k5Z6b4oR607hDsdgxMZsd+8JT
+        rZdh0r+lptLpBpZ77d3/BrMlf8dx4wZJ+A==
+X-Google-Smtp-Source: AMsMyM6c+NSotQ2SWbQB+JkcDRem9mGjL+9Ap2l1lrqsAFZLkBoFNDKaddud8qY0GOfQOctcEiyUZw==
+X-Received: by 2002:adf:cd10:0:b0:22c:a109:f51d with SMTP id w16-20020adfcd10000000b0022ca109f51dmr10591899wrm.238.1664354409285;
+        Wed, 28 Sep 2022 01:40:09 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 26-20020a05600c229a00b003b31fc77407sm1075026wmf.30.2022.09.28.01.40.01
+        by smtp.gmail.com with ESMTPSA id 26-20020a05600c229a00b003b31fc77407sm1075026wmf.30.2022.09.28.01.40.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 01:40:01 -0700 (PDT)
+        Wed, 28 Sep 2022 01:40:08 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
         John Cai <johncai86@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 25/35] doc txt & -h consistency: add missing options
-Date:   Wed, 28 Sep 2022 10:39:20 +0200
-Message-Id: <patch-v2-25.35-a4d75ea691c-20220928T082458Z-avarab@gmail.com>
+Subject: [PATCH v2 31/35] reflog doc: list real subcommands up-front
+Date:   Wed, 28 Sep 2022 10:39:26 +0200
+Message-Id: <patch-v2-31.35-61a3c002690-20220928T082458Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.rc1.925.gb61c5ccd7da
 In-Reply-To: <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
 References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com> <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
@@ -71,143 +71,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change those built-in commands that were attempting to exhaustively
-the options in the "-h" output to actually do so, and always
-have *.txt documentation know about the exhaustive list of options.
-
-Let's also fix the documentation and -h output for those built-in
-commands where the *.txt and -h output was a mismatch of missing
-options on both sides.
+Change the "git reflog" documentation to exhaustively list the
+subcommands it accepts in the SYNOPSIS, as opposed to leaving that for
+a "[verse]" in the DESCRIPTION section. This documentation style was
+added in cf39f54efc6 (git reflog show, 2007-02-08), but isn't how
+other commands which take subcommands are documented.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-commit-graph.txt       | 5 ++++-
- Documentation/git-interpret-trailers.txt | 5 +++--
- builtin/commit-tree.c                    | 1 +
- builtin/fsck.c                           | 5 ++++-
- builtin/hash-object.c                    | 5 +++--
- builtin/init-db.c                        | 2 ++
- builtin/interpret-trailers.c             | 2 +-
- builtin/rm.c                             | 4 +++-
- 8 files changed, 21 insertions(+), 8 deletions(-)
+ Documentation/git-reflog.txt | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index 36fe56c2c71..82175ae62a1 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -10,7 +10,10 @@ SYNOPSIS
- --------
- [verse]
- 'git commit-graph verify' [--object-dir <dir>] [--shallow] [--[no-]progress]
--'git commit-graph write' <options> [--object-dir <dir>] [--[no-]progress]
-+'git commit-graph write' [--object-dir <dir>] [--append]
-+			[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits]
-+			[--changed-paths] [--[no-]max-new-filters <n>] [--[no-]progress]
-+			<split options>
+diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
+index 0537d4645be..ec64cbff4c6 100644
+--- a/Documentation/git-reflog.txt
++++ b/Documentation/git-reflog.txt
+@@ -8,14 +8,6 @@ git-reflog - Manage reflog information
  
- 
- DESCRIPTION
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 6d6197cd0a4..22ff3a603e0 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -8,8 +8,9 @@ git-interpret-trailers - Add or parse structured information in commit messages
  SYNOPSIS
  --------
+-[verse]
+-'git reflog' <subcommand> <options>
+-
+-DESCRIPTION
+------------
+-The command takes various subcommands, and different options
+-depending on the subcommand:
+-
  [verse]
--'git interpret-trailers' [<options>] [(--trailer <token>[(=|:)<value>])...] [<file>...]
--'git interpret-trailers' [<options>] [--parse] [<file>...]
-+'git interpret-trailers' [--in-place] [--trim-empty]
-+			[(--trailer <token>[(=|:)<value>])...]
-+			[--parse] [<file>...]
+ 'git reflog' [show] [<log-options>] [<ref>]
+ 'git reflog expire' [--expire=<time>] [--expire-unreachable=<time>]
+@@ -25,6 +17,10 @@ depending on the subcommand:
+ 	[--dry-run | -n] [--verbose] <ref>@{<specifier>}...
+ 'git reflog exists' <ref>
  
- DESCRIPTION
- -----------
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index e4b85d29d56..cc8d584be2f 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -15,6 +15,7 @@
- #include "parse-options.h"
++DESCRIPTION
++-----------
++This command manages the information recorded in the reflogs.
++
+ Reference logs, or "reflogs", record when the tips of branches and
+ other references were updated in the local repository. Reflogs are
+ useful in various Git commands, to specify the old value of a
+@@ -33,7 +29,8 @@ moves ago", `master@{one.week.ago}` means "where master used to point
+ to one week ago in this local repository", and so on. See
+ linkgit:gitrevisions[7] for more details.
  
- static const char * const commit_tree_usage[] = {
-+	N_("git commit-tree <tree> [(-p <parent>)...]"),
- 	N_("git commit-tree [(-p <parent>)...] [-S[<keyid>]] [(-m <message>)...]\n"
- 	   "                [(-F <file>)...] <tree>"),
- 	NULL
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index f7916f06ed5..ef273321d0b 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -821,7 +821,10 @@ static int mark_packed_for_connectivity(const struct object_id *oid,
- }
+-This command manages the information recorded in the reflogs.
++The command takes various subcommands, and different options
++depending on the subcommand:
  
- static char const * const fsck_usage[] = {
--	N_("git fsck [<options>] [<object>...]"),
-+	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
-+	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
-+	   "         [--[no-]dangling] [--[no-]progress] [--connectivity-only]\n"
-+	   "         [--[no-]name-objects] [<object>...]"),
- 	NULL
- };
- 
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index fbae878c2b9..11c3dfe0441 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -80,8 +80,9 @@ static void hash_stdin_paths(const char *type, int no_filters, unsigned flags,
- int cmd_hash_object(int argc, const char **argv, const char *prefix)
- {
- 	static const char * const hash_object_usage[] = {
--		N_("git hash-object [-t <type>] [-w] [--path=<file> | --no-filters] [--stdin] [--] <file>..."),
--		"git hash-object  --stdin-paths",
-+		N_("git hash-object [-t <type>] [-w] [--path=<file>|--no-filters]\n"
-+		   "                [--stdin [--literally]] [--] <file>..."),
-+		N_("git hash-object [-t <type>] [-w] --stdin-paths [--no-filters]"),
- 		NULL
- 	};
- 	const char *type = blob_type;
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 08ba006d55e..dcaaf102eaf 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -516,6 +516,8 @@ static int shared_callback(const struct option *opt, const char *arg, int unset)
- 
- static const char *const init_db_usage[] = {
- 	N_("git init [-q | --quiet] [--bare] [--template=<template-directory>]\n"
-+	   "         [--separate-git-dir <git-dir>] [--object-format=<format>]\n"
-+	   "         [-b <branch-name> | --initial-branch=<branch-name>]\n"
- 	   "         [--shared[=<permissions>]] [<directory>]"),
- 	NULL
- };
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 4cf0cf265dc..e58627c72a9 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -15,7 +15,7 @@
- static const char * const git_interpret_trailers_usage[] = {
- 	N_("git interpret-trailers [--in-place] [--trim-empty]\n"
- 	   "                       [(--trailer <token>[(=|:)<value>])...]\n"
--	   "                       [<file>...]"),
-+	   "                       [--parse] [<file>...]"),
- 	NULL
- };
- 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index b6ba859fe42..f0d025a4e23 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -17,7 +17,9 @@
- #include "pathspec.h"
- 
- static const char * const builtin_rm_usage[] = {
--	N_("git rm [<options>] [--] <file>..."),
-+	N_("git rm [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch]\n"
-+	   "       [--quiet] [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
-+	   "       [--] [<pathspec>...]"),
- 	NULL
- };
- 
+ The "show" subcommand (which is also the default, in the absence of
+ any subcommands) shows the log of the reference provided in the
 -- 
 2.38.0.rc1.925.gb61c5ccd7da
 
