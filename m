@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F6E4C32771
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 08:41:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFAB4C04A95
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 08:41:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233644AbiI1IlQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 04:41:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57872 "EHLO
+        id S233658AbiI1IlV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 04:41:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233371AbiI1IkF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 04:40:05 -0400
+        with ESMTP id S233378AbiI1IkG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 04:40:06 -0400
 Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE1E57DF6C
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:40:00 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id bk15so10872358wrb.13
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:39:59 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 203E6804B8
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:40:01 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id m4so4293216wrr.5
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 01:40:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=DzdByMJaRee6JGxwM+aKTxKYsrYmKzjUL3zWlOyMhCk=;
-        b=H1o4MfoNJ07jPYJT+ZyjrxTcsj88hx8hwOgoTJqVIGyzKS/tVZ7Dgyi+wA+R8HGsA9
-         N+ObataMyX9mRUfagzN7Ij4CgeNVIdx5Q5CF+SwpFLuB/BVyf6MLQiy40u86ayyvS8Gl
-         OzMvyyDnyJxyuC+zQJJYEnvrRYPakwAYD7Ne5KbcyyHo90TW+3Vmaz06B74aWcxORAh+
-         7C+YBluHbfHz925g5dihNB3fF2feiDY2L4ILK4sC8lLr0tIlLKku7paAPnGq4oO8mios
-         v6n3lau6o2TPsCE5zW1shAHH04Fp/trpNwNhhEw8Zuf4k2UC+ToTR5EBAh3Zya5uplK+
-         EmBQ==
+        bh=y5P/SySPrrYrCDcjKcb8fK9DDb5wI4+qyfqOIaUXUNQ=;
+        b=kL7aflbIOjwQNE1Dpv71cyBC1ON00F2A69yQQQsO9GnoSNpftboKVX9S52aLFvqlQw
+         0f7Ioy9oN2gBgYxYLUm1zxhDQgInJi+RuoDsVbCq2w5UiHVG6rAZ+QVLWb8ZyeZQUME3
+         xGz9mbZiQ2OeiIBOT/vOlwn7uA+ColjJjxD8BPn2Nrur4WQVegvaHYtHEzacFPhfIcfp
+         ZSdmUfTwhyF7+5U0OOMDEFeeH4pDYntB0hR3hEqXEtnrTINU7uqTcE7ZsGkdwnACAErS
+         VhaFe0DIJHtzTrMu7+N9TPeX98j7cA1dvhmi4C6wsNuogsh3snDZ1p1+gTkTwkts/RwL
+         SaBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=DzdByMJaRee6JGxwM+aKTxKYsrYmKzjUL3zWlOyMhCk=;
-        b=snrjwDw2OH3+2HzDQSVwfhqjbYN/oSQ5i3yFSGT37jach58t0jRjY9um+Rl5z9Z/NE
-         6t+5Zb4SyB0HVVhii3glF0JBDPoFMoQzm4kjgNspVpCUoNuhcTfvVpcGwlwXgHBb3msc
-         diE+rad0kBw8/rdIgPUimW8jUBngdy3tISm6SmqKtZzu4L3ASjnkVwWXKBV7WTB5y800
-         GfgRr3mohFtZJpatzOADV21bSSxxk59JYEnW3rFyUV8w3ZQg0CyJ8pgR9RAHmtlczYpl
-         /YdtIoVolFGP6u+k0Ut0h1ZBB9F2ZvYe4ky14b1/hvjHAUaBlGF8juK5RUWHQ8ynVO96
-         WyEQ==
-X-Gm-Message-State: ACrzQf3g8W/BUWtLAzTMRo7PFUyq1jC5moDfm0dry6yrh5430SzR+Z6p
-        dgcUc0vzIzLmPxASUEm2Y3n9ypWTRK480w==
-X-Google-Smtp-Source: AMsMyM4DJ6r25GhdKYoY6mEoC7OrwQrCO0sTHi6wVIJsx+v9voA5llRRNslasrRi8hRn3yj6GzPd5w==
-X-Received: by 2002:adf:db03:0:b0:22a:dd80:4b45 with SMTP id s3-20020adfdb03000000b0022add804b45mr19188133wri.111.1664354398159;
-        Wed, 28 Sep 2022 01:39:58 -0700 (PDT)
+        bh=y5P/SySPrrYrCDcjKcb8fK9DDb5wI4+qyfqOIaUXUNQ=;
+        b=Ikxt/fEGVh7n7yHHwCO5IWt7X7gRYfaJCZwxXbJnX0e3B2GYYFZ84ZPcLlQaCsM3Ty
+         y9mV1UZJyIUyjJSO13MuiiwGBIHLD3l2zwzDxgnXQruM6H+Ae8EVKhreMFJTF/ZKeBhF
+         QJoU5yPMF5JF+KDHYOlasfdeg2DyOEwLHgU08p1gSTxCdY3qzLr646Ahy+dU+JgnCBth
+         ziG12f6N574UzEYsSG/p+H0r4gfsSzL2j8qkZ0O0lPnh2asFDYT9QO4exkBVzQXgNZOU
+         YLm8rf3sVRa8oK2iQbbjvZXqzcRt6iaKyv2mJ1qsaSLd1FO2aJbMK45TfsCOkMpb53Bp
+         opDA==
+X-Gm-Message-State: ACrzQf2qJGYhhyuSM6G/5JStIQk5/szvSPnU194rIf3C6ItNzXkmNl0l
+        W+2jbrU6QnyipAcIistqYWLwtt07Kmn99Q==
+X-Google-Smtp-Source: AMsMyM5mh7/DL8+kZ3RcVwlGZhl2hhQe3CRWiq6h6L7qIBc4nXDruNk1MFrxoySSGupGu7J749T14g==
+X-Received: by 2002:a05:6000:178a:b0:22b:87b:c995 with SMTP id e10-20020a056000178a00b0022b087bc995mr20362482wrg.715.1664354400365;
+        Wed, 28 Sep 2022 01:40:00 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 26-20020a05600c229a00b003b31fc77407sm1075026wmf.30.2022.09.28.01.39.57
+        by smtp.gmail.com with ESMTPSA id 26-20020a05600c229a00b003b31fc77407sm1075026wmf.30.2022.09.28.01.39.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 01:39:57 -0700 (PDT)
+        Wed, 28 Sep 2022 01:39:59 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
         John Cai <johncai86@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 21/35] doc txt & -h consistency: make "rerere" consistent
-Date:   Wed, 28 Sep 2022 10:39:16 +0200
-Message-Id: <patch-v2-21.35-5785ed1d667-20220928T082458Z-avarab@gmail.com>
+Subject: [PATCH v2 23/35] doc txt & -h consistency: make "bundle" consistent
+Date:   Wed, 28 Sep 2022 10:39:18 +0200
+Message-Id: <patch-v2-23.35-a6a43d0b3fd-20220928T082458Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.rc1.925.gb61c5ccd7da
 In-Reply-To: <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
 References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com> <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
@@ -71,42 +71,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For "rerere" say "pathspec" consistently, and list the subcommands in
-the order that they're discussed in the "COMMANDS" section of the
-documentation.
+Amend the -h output to match that of the *.txt output, the differences
+were fairly small. In the case of "[<options>]" we only have a few of
+them, so let's exhaustively list them as in the *.txt.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-rerere.txt | 2 +-
- builtin/rerere.c             | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ builtin/bundle.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere.txt
-index 9d0e6f53e7e..992b469270c 100644
---- a/Documentation/git-rerere.txt
-+++ b/Documentation/git-rerere.txt
-@@ -8,7 +8,7 @@ git-rerere - Reuse recorded resolution of conflicted merges
- SYNOPSIS
- --------
- [verse]
--'git rerere' [clear | forget <pathspec> | diff | remaining | status | gc]
-+'git rerere' [clear | forget <pathspec>... | diff | status | remaining | gc]
+diff --git a/builtin/bundle.c b/builtin/bundle.c
+index 1b08700bf9e..544c78a5f3a 100644
+--- a/builtin/bundle.c
++++ b/builtin/bundle.c
+@@ -12,13 +12,14 @@
+  */
  
- DESCRIPTION
- -----------
-diff --git a/builtin/rerere.c b/builtin/rerere.c
-index 12570537d37..8b7392d5b44 100644
---- a/builtin/rerere.c
-+++ b/builtin/rerere.c
-@@ -10,7 +10,7 @@
- #include "pathspec.h"
+ #define BUILTIN_BUNDLE_CREATE_USAGE \
+-	N_("git bundle create [<options>] <file> <git-rev-list args>")
++	N_("git bundle create [-q | --quiet | --progress | --all-progress] [--all-progress-implied]\n" \
++	   "                  [--version=<version>] <file> <git-rev-list-args>")
+ #define BUILTIN_BUNDLE_VERIFY_USAGE \
+-	N_("git bundle verify [<options>] <file>")
++	N_("git bundle verify [-q | --quiet] <file>")
+ #define BUILTIN_BUNDLE_LIST_HEADS_USAGE \
+ 	N_("git bundle list-heads <file> [<refname>...]")
+ #define BUILTIN_BUNDLE_UNBUNDLE_USAGE \
+-	N_("git bundle unbundle <file> [<refname>...]")
++	N_("git bundle unbundle [--progress] <file> [<refname>...]")
  
- static const char * const rerere_usage[] = {
--	N_("git rerere [clear | forget <pathspec>... | status | remaining | diff | gc]"),
-+	N_("git rerere [clear | forget <pathspec>... | diff | status | remaining | gc]"),
- 	NULL,
- };
- 
+ static char const * const builtin_bundle_usage[] = {
+ 	BUILTIN_BUNDLE_CREATE_USAGE,
 -- 
 2.38.0.rc1.925.gb61c5ccd7da
 
