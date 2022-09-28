@@ -2,157 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5159EC07E9D
-	for <git@archiver.kernel.org>; Tue, 27 Sep 2022 22:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74D4CC07E9D
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 00:22:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231881AbiI0W4r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Sep 2022 18:56:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49312 "EHLO
+        id S232933AbiI1AWc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Sep 2022 20:22:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231519AbiI0W4e (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Sep 2022 18:56:34 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F2F27E038
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 15:56:33 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id u24so395010edb.11
-        for <git@vger.kernel.org>; Tue, 27 Sep 2022 15:56:32 -0700 (PDT)
+        with ESMTP id S232726AbiI1AWB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Sep 2022 20:22:01 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0F3E1138F2
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 17:21:56 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id b23so11083035pfp.9
+        for <git@vger.kernel.org>; Tue, 27 Sep 2022 17:21:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=OjWcOgpWH3RIXKd7SSKk77wjtYj0beKlkfmrpnkOHL4=;
-        b=BOVi8xplta/wmaUcfJSL9QPjpAGNJdW+19Snjz9ZrubmZKmHNQJDFen0BaTnzCoQ7K
-         2qdcf/bE5TS1pYFxj9hr3ez2KzAal7rGhJKSHdPidu/ooSyM+ScA1WEkrGXcvJvcHpyd
-         golrPGFjtkLV9cnDO4YemjWVpVPLvXJsrSze5KLmFMHD+3TC5LAIL5TwpcBqr2PJZPEe
-         mp0eFlDbgdUJk+i5xoRxni46f9iiF8u7SDoR46jFSSME+uanNqaqV29s0uHTszy9kD+f
-         dURvJOWBSKLrn1aLQQP4MNNt+d3E6C0wQOvN/Twhp1DBRkWphJq7GvQAhJpixmFyx8gw
-         Rhfw==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date;
+        bh=tbQuk/lfA9+iWRNhe7fB0o3BjvsxGV4dyVO2WvAKcgg=;
+        b=mjwCfozRU6ovILin3SInWlfkBP8sByRFZvf0qbVIjZUPrr6BALLTyyf4qk8WPv0Wcl
+         nTdMK2QA929vJhAePlCZZjzT0XH+oCqD7EMNmm5PeNDoTuTWRaE3E8iY5G5XjWpCmlY5
+         eAJ2vjS4F3ww9cR3gD4gYb7PL5MB9SHr5CG9Zjczv04Dr3IORqzn8ZEUEJyV89YrJ33Q
+         qzQugZt73MSS78GKn/7PAHm1acVwAQOFsFWr92MuIw6qBtfNYfPTJTC20jH8j2dE9D93
+         yFrm3KvBGUQ5HLsq3YaOVPzcNSKuo3MlDUrqiNTUFs4ivSeirZVlx2aKukaMSNKg3EEy
+         NFIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=OjWcOgpWH3RIXKd7SSKk77wjtYj0beKlkfmrpnkOHL4=;
-        b=1zCXc6CqPIRDWtOP1b11jHNq/FqvOS+hSIvmRoK9efNquaxjHCLViCfUI5Hx7v/Ha4
-         mIvG7ldntvMG84kPM6ZsbHUkzZrWEt/sA2JcFwyfmx9LrDQ3XzOY+qDNwIjBLg4r0s9A
-         1/IOwC9ZKIqAjOPA6AqnotmpaEtk7L6lnFy5XoRsLGAOZVGDjirVorhObaoplRmRAFhw
-         +Zvru//nu0xcidJ3ZEibnCNc3lNkbk4/DdLLhDkxy3EyOoFHU0uRGpx+WBsFm44N1fcm
-         N0O2FEx+HZf70vBEyxEDf7l0GZYrKAoaMNT9hKQ+CEqL1Ze1Co4VuhYBpUhfHkU1H0o7
-         q2/Q==
-X-Gm-Message-State: ACrzQf3ITMaW6Z7UM/KatnL1Pnf9fWFjry0w7hFsFC7my8VVOvUjFJ+n
-        3s8eIvasBEwT4dZ9ukcCB1dqrzANm7LOYcX9eCYniA==
-X-Google-Smtp-Source: AMsMyM6GiNtQcZuMm1wmBkPnaAuWQY/TRsax885ZwyP4ck452TKF3MidtPAuyiRPlgImi9EvAJHBKygw2krn2MN8lWg=
-X-Received: by 2002:a05:6402:2201:b0:44f:443e:2a78 with SMTP id
- cq1-20020a056402220100b0044f443e2a78mr29685123edb.76.1664319391595; Tue, 27
- Sep 2022 15:56:31 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date;
+        bh=tbQuk/lfA9+iWRNhe7fB0o3BjvsxGV4dyVO2WvAKcgg=;
+        b=LThbdhzFgE8olBf1JeiTVHIian5UFTqxdFqluTUtlZTvqf8xLk1n1LEZ7fxi/aXmF+
+         wv82oEFvY4EzdyfWdur3VrdzLh7l0bDGWU8ATnQuN+kj3yB4IyVKTMWycAeJfunSWRPA
+         Kr2K97zGKM14PsvfoV9T0a35N/cdjuP3m7//H5OCISqVYJFlaJDK3XmmQ1QO/TpY2ztS
+         SglnANPURtS72knD9jfWZxQ970iQZaQdU5epJhR3nLMmQMlw6mVgEyzPTCddITcI2/z6
+         /nFo75uSNpWTXHyXNOLISOx8P8V8D65Lh++CbiuDsqAWRW91MmWrHIA2lgXnG0QrR6Gy
+         4TXw==
+X-Gm-Message-State: ACrzQf2vZ71TJYVYVwSX37BEqy2QmlvJoxqOsmNaTCZVHu5D1cy6bMR3
+        7dDuOopVVCtSCUqup/S+uyqCMrIwe74=
+X-Google-Smtp-Source: AMsMyM5103WRKNW7OcAAIIDa/042PiJ4AWh2ob5vWm4cZKSwjtVUX2ewxvs226NXCwYa4GC7mSQ3AQ==
+X-Received: by 2002:a05:6a00:114c:b0:528:2c7a:6302 with SMTP id b12-20020a056a00114c00b005282c7a6302mr31935835pfm.37.1664324515035;
+        Tue, 27 Sep 2022 17:21:55 -0700 (PDT)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id d128-20020a623686000000b0053e66f57334sm2404553pfa.112.2022.09.27.17.21.53
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 27 Sep 2022 17:21:54 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>,
+        Git l10n discussion group <git-l10n@googlegroups.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
+        Yi-Jyun Pan <pan93412@gmail.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.38.0 round #3
+Date:   Wed, 28 Sep 2022 08:21:51 +0800
+Message-Id: <20220928002151.15377-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 MIME-Version: 1.0
-References: <pull.1345.git.1662071998812.gitgitgadget@gmail.com> <xmqqa67h8zac.fsf@gitster.g>
-In-Reply-To: <xmqqa67h8zac.fsf@gitster.g>
-From:   Julia Ramer <prplr@github.com>
-Date:   Tue, 27 Sep 2022 15:56:20 -0700
-Message-ID: <CADq8SzUUoi6=6ggxkeTUf2y0WmeAMMjuq8_OCej0smF7OabPiQ@mail.gmail.com>
-Subject: Re: [PATCH] embargoed releases: also describe the git-security list
- and the process
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Julia Ramer via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, git-security@googlegroups.com,
-        Julia Ramer <gitprplr@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taking these responses one by one:
+Hi,
 
-All of Junio's edits and call-outs are reasonable and I'll incorporate
-them into the next version.
+Another new translatable message was found in the just-released Git
+v2.38.0-rc2. Let's start a new round of git l10n. Please send your
+pull request to the l10n coordinator's repository below before this
+update window closes on Sun, Oct 02, 2022. 
 
-Julia
-(she/her)
+    https://github.com/git-l10n/git-po/
 
-On Fri, Sep 2, 2022 at 10:24 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Julia Ramer via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Julia Ramer <gitprplr@gmail.com>
-> >
-> > With the recent turnover on the git-security list, questions came up how
-> > things are usually run. Rather than answering questions individually,
-> > extend Git's existing documentation about security vulnerabilities to
-> > describe the git-security mailing list, how things are run on that list,
-> > and what to expect throughout the process from the time a security bug
-> > is reported all the way to the time when a fix is released.
->
-> Thanks for writing this down.
->
-> > +- Once the review has settled and everyone involved in the review agrees that
-> > +  the patches are ready, the Git maintainer determines a release date as well
->
-> s/maintainer determines/& and others determine/ or "stakeholders
-> discuss and agree on".  You might want to mention that the schedule
-> for disclosure and release tend to be constrained by so called patch
-> Tuesday, which is the least flexible among various binary packagers.
->
-> > +- Subsequently, branches with the fixes are pushed to private repositories that
-> > +  are owned by the Git project, with tightly controlled access.
-> > +
-> > +- The tags are created by the Git maintainer and pushed to the same
-> > +  repositories.
->
-> Between this point in time when the tags are prepared and release
-> materials are made available to packagers and ...
->
-> > +- Less than a week before the release, a mail with the relevant information is
-> > +  sent to <distros@vs.openwall.org> (see below), a list used to pre-announce embargoed
-> > +  releases of open source projects to the stakeholders of all major Linux
-> > +  distributions. This includes a Git bundle of the tagged version(s), but no
-> > +  further specifics of the vulnerability.
->
-> ... the time when we start to disclose to a bit wider audience, is
-> when binary packagers are expected to prepare updates for their
-> users.  So ...
->
-> > +
-> > +- Public communication is then prepared in advance of the release date. This
-> > +  includes blog posts and mails to the Git and Git for Windows mailing lists.
->
-> ... the following two bullet items are better written before the
-> "Less than a week before...".
->
-> > +- The Git for Windows maintainer prepares the corresponding release artifacts,
-> > +  based on the tags created that have been prepared by the Git maintainer.
-> > +
-> > +- Git for Windows release artifacts are made available under embargo to
-> > +  stakeholders via a mail to the `git-security` list.
->
-> It also is probably a good idea to avoid singling out GfW too much.
-> Folks who package Git for macOS, BSD, Debian etc. are all expected
-> to work on the same timeline.
->
-> > +- On the day of the release, at around 10am Pacific Time, the Git maintainer
-> > +  pushes the tag and the `master` branch to the public repository, then sends
-> > +  out an announcement mail.
->
-> OK.  Thanks for being explicit about 10am Pacific.
->
-> > +- Once the tag is pushed, the Git for Windows maintainer publishes the
-> > +  corresponding tag and creates a GitHub Release with the associated release
-> > +  artifacts (Git for Windows installer, Portable Git, MinGit, etc).
-> > +
-> > +- Git for Windows release is then announced via a mail to the public Git and
-> > +  Git for Windows mailing lists as well as via a tweet.
->
-> Ditto for various distro packagers.
->
-> > +- A mail to <oss-security@lists.openwall.org> (see below for details) is sent as a
-> > +  follow-up to the <distros@vs.openwall.org> one, describing the vulnerability in
-> > +  detail, often including a proof of concept of an exploit.
-> > +
-> > +Note: The Git project makes no guarantees about timelines, but aims to keep
-> > +embargoes reasonably short in the interest of keeping Git's users safe.
->
-> ;-)
->
-> --
-> You received this message because you are subscribed to the Google Groups "Git Security" group.
-> To unsubscribe from this group and stop receiving emails from it, send an email to git-security+unsubscribe@googlegroups.com.
-> To view this discussion on the web visit https://groups.google.com/d/msgid/git-security/xmqqa67h8zac.fsf%40gitster.g.
+As of git 2.37, we (git l10n contributors) have a new l10n workflow. The
+following description of the new l10n workflow is from the "po/README.md"
+file.
+
+
+## The "po/git.pot" file is a generated file, no longer in the repository
+
+The l10n coordinator does not need to generate the "po/git.pot" file every
+time to start a new l10n workflow, and there is no "po/git.pot" file at all.
+
+Everyone can generate the "po/git.pot" file with the command below:
+
+    make po/git.pot
+
+But we can also forget about it. By updating our corresponding "po/XX.po"
+file, the "po/git.pot" file is automatically generated.
+
+
+## Update the "po/XX.po" file, and start to translate
+
+Before updating the "po/XX.po" file, l10n contributors should pull the latest
+commits from the master branch of "git.git". E.g.:
+
+    git pull --rebase git@github.com:git/git.git master
+
+Then update the cooresponding "po/XX.po" file using the following command:
+
+    make po-update PO_FILE=po/XX.po
+
+Translate the uptodate "po/XX.po" file, and create a new commit.
+
+
+## Refine your commits, send pull requests
+
+In the "po/XX.po" file, there are location lines in comments like below:
+
+    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
+    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
+    #: builtin/rebase.c:1671
+
+These comments with file locations are useful for l10n contributors to locate
+the context easily during translation. But these file locations introduce a
+lot of noise and will consume a lot of repository storage. Therefore, we
+should remove these file locations from the "po/XX.po" file.
+
+To remove file locations in the "po/XX.po" file, you can use one of the
+following two ways, but don't switch back and forth.
+
+ * Keep the filenames, only remove locations (need gettext 0.19 and above):
+
+        msgcat --add-location=file po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
+
+ * Remove both filenames and locations:
+
+        msgcat --no-location po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
+
+After squashing trivial commits and removing file locations in the "po/XX.po"
+file, send pull request to the l10n coordinator's repository below:
+
+    https://github.com/git-l10n/git-po/
+
+
+## Resolve errors found by the l10n CI pipeline for the pull request
+
+A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
+help git l10n coordinator and git l10n contributors to check the conventions
+of git l10n contributions, and it is also used in GitHub actions as l10n CI
+pipeline to validate each pull request in the "git-l10n/git-po" repository.
+Please fix the issues found by the helper program.
+
+
+** Please note: The update window will close on Sun, Oct 02, 2022. **
+
+
+--
+Jiang Xin
