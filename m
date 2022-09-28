@@ -2,188 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD394C32771
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 20:12:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD7CEC32771
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 20:18:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234352AbiI1UMo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 16:12:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51108 "EHLO
+        id S233399AbiI1USM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 16:18:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233585AbiI1UMY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 16:12:24 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB008A2860
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 13:12:21 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id cc5so21463046wrb.6
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 13:12:21 -0700 (PDT)
+        with ESMTP id S232959AbiI1USL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 16:18:11 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BB586D9DA
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 13:18:10 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id u24so4044523edb.11
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 13:18:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=NZZ/jRI252DzMeVq+3yot+76+uTRZX0nJIDrWhlOFuE=;
-        b=hyM7fq/Am70DmNavvxWH5jzLzA4IwFqTpE/IeYrInrgxZvWVA7/TxA+AJQ497VNuzs
-         Pi0vw8LbMXUECNwUg6AcD32QGvW45nF3+D4db0Lyv5TzEDW+8hmgQpgvf/VKKYbPi9lw
-         vAPnBQGz94BnpDpuUt88CWl05JLh5OrG4E3o7kRzLtga1zEQQETDBYUUoiGvzyWatrqd
-         LraVFyjguPIUdGiuxpVx0pWMVTxYxCLqj0ryF968cgh/7eufRhZlExKFVceY8Ggt+H2v
-         k3G+k00pb/KXzEsswGXFk7ErljjCHOQd9WrNmfDf84DWkjWssEBld014vPAEWxofpoTb
-         P5rQ==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date;
+        bh=TJDMypBJV4cibsbzMZQSrlYTgZctknPNJxSvkHzH09I=;
+        b=PqgfEOV47OGnaT1O8s6G70C34O+ihmKyODfzSM2lBGLS8btyy/yOIwcknTTG5RcVE4
+         bhllJoUL7K0Ej+03yp2aHDSBRUqGVZZq5Ad8TmhearUawy6nCKuR0fmCs7pUvnSgSbXt
+         nIqONhU90hDNGrmwkoOL7gS1AlwbSz5ChjP6hRDnw5CIsqctzrSHMxdKImUB027BV4nf
+         XHWH/0F+loSUtfG0vrb5eynBsxfD3htPROd3Ke0tZ5BDSnRs6wip/GgxzfE802sI0U8R
+         7l4w0/dPMXfAfsipBavKvsxI1pObQfQV+IW2M4T9IMH+tiD6IZFp6Bfia0ccjajTEv3c
+         Waxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=NZZ/jRI252DzMeVq+3yot+76+uTRZX0nJIDrWhlOFuE=;
-        b=UrqsWI2iX64jNuts+gqcnkuSmFp/Df8tWaarD3SEGIJJrndzL5yxGA32/qI7EnzTGK
-         GO1cGgUcEVqE/DZcGyGrc20TOM6P0v4aS8sqDom10fMUPc7SDvss2xHukhPeOmNVKZIo
-         dYel6nJpqX5tM+NWyGe8P6D+aybUvfmGaQmA0xlJ3jgjsj3EZRXxJaxgOdRHoagpzDHZ
-         dwfUkeBSRAeV5TviAAFinbGj6VvOjXE/7JtFiz6j+rb17SsiU/KEkUyQWGao9168gpUz
-         f55yFYdXkaPNgY2EjgXChYDiVyiwKccU3IPHrVb/fpqkpAOMpb/QVmSyf8vMiJCRawMZ
-         Td8g==
-X-Gm-Message-State: ACrzQf2onKZVNNvmHWo2EAXft6XOLfEj2aT3Vl5yE3d1URduUh7jGH/S
-        780fStdZhzXpj2NzS3ZE+64U36TUg30=
-X-Google-Smtp-Source: AMsMyM5UbZ0Lq28FIIa11Zhfg5j9cAryT+bL8uNt0FCzeWlINPX9lcfoTnXJpbQX3l6+JBVbOpf4xQ==
-X-Received: by 2002:a05:6000:1446:b0:22b:968:446 with SMTP id v6-20020a056000144600b0022b09680446mr21520282wrx.493.1664395939770;
-        Wed, 28 Sep 2022 13:12:19 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o2-20020adfeac2000000b00228c375d81bsm5111319wrn.2.2022.09.28.13.12.18
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=TJDMypBJV4cibsbzMZQSrlYTgZctknPNJxSvkHzH09I=;
+        b=5/X8E8tjNhDNCpPvsSgT8yLY1l4ApKq0hWAC3z1LtlVeky8ZU601jZlxP/EtuGpS06
+         xOcUCejA73CDh16rCdW2lDOz6ks73eA62IlNVaLHgfXkpjSHcXz4LdlnLtAl+tZdeuHh
+         CmBQFTG+ee1zVT0pclrVnE8UA1/4znVa81/jA4a/DXcq4SRGu4NXYSW2uDTzBv6ksG4g
+         8rk+Mzh1XS4qJ8UffEzXoq6hQ+9wepCRM82jLW2R0XHTtkresIhHy5LnrS5+A8BLSy40
+         9eiNJeWTbqjj4UzXNwoceVzIAOAtrwIZLhNPUWLH54bmBNQLkVr8uvzERtQEn3fH7X8h
+         sfKw==
+X-Gm-Message-State: ACrzQf2MP7q+MfCVBR9Fa0Fwqbh9y8Be3bVFmrUjaZt2GidRXTjWQ9Up
+        mDO2tcVG7pITT5FmS29MlmVOZ7aC2IUbcQ==
+X-Google-Smtp-Source: AMsMyM5VKGyrXu4gaYZsRrv3T70r8YgIWMBjsVZuwnnxpRL4J5Wt/Wf7bOZxvZF0GcOrXSIE77aaUQ==
+X-Received: by 2002:a05:6402:3988:b0:44e:6f08:ddfb with SMTP id fk8-20020a056402398800b0044e6f08ddfbmr34558179edb.89.1664396289045;
+        Wed, 28 Sep 2022 13:18:09 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id a20-20020a1709063e9400b0078175601630sm2871830ejj.79.2022.09.28.13.18.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 13:12:19 -0700 (PDT)
-Message-Id: <ed14fbd009eae5f67524e5aba99d0a917f29ae7f.1664395931.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1326.v14.git.1664395931.gitgitgadget@gmail.com>
-References: <pull.1326.v13.git.1664312253.gitgitgadget@gmail.com>
-        <pull.1326.v14.git.1664395931.gitgitgadget@gmail.com>
-From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 28 Sep 2022 20:12:11 +0000
-Subject: [PATCH v14 6/6] fsmonitor: add documentation for allowRemote and
- socketDir options
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 28 Sep 2022 13:18:08 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oddVP-00164E-1Z;
+        Wed, 28 Sep 2022 22:18:07 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 00/35] doc/UX: make txt & -h output more consistent
+Date:   Wed, 28 Sep 2022 22:10:33 +0200
+References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
+ <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
+ <xmqqk05ntlye.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <xmqqk05ntlye.fsf@gitster.g>
+Message-ID: <220928.864jwrw8w0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric DeCosta <edecosta@mathworks.com>,
-        Eric DeCosta <edecosta@mathworks.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Eric DeCosta <edecosta@mathworks.com>
 
-Add documentation for 'fsmonitor.allowRemote' and 'fsmonitor.socketDir'.
-Call-out experimental nature of 'fsmonitor.allowRemote' and limited
-filesystem support for 'fsmonitor.socketDir'.
+On Wed, Sep 28 2022, Junio C Hamano wrote:
 
-Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
----
- Documentation/config.txt                   |  2 ++
- Documentation/config/fsmonitor--daemon.txt | 11 +++++++
- Documentation/git-fsmonitor--daemon.txt    | 37 ++++++++++++++++++++--
- 3 files changed, 47 insertions(+), 3 deletions(-)
- create mode 100644 Documentation/config/fsmonitor--daemon.txt
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> Victoria: I decided not to go for your suggestion of trimming this
+>> series down in [1]. Reasons:
+>>
+>>  * It would take me time I don't have to spend on this, as some of it
+>>    isn't easy to cleanly re-arrange. E.g. the later "make consistent"
+>>    commits rely on earlier whitespace/basic syntax fixes.
+>
+> A devil's advocate question.  If even the original author feels it
+> does not deserve his or her time to clean up the series, how does it
+> possibly deserve reviewers' time to review such a series?
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5b5b9765699..1e205831656 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -423,6 +423,8 @@ include::config/filter.txt[]
- 
- include::config/fsck.txt[]
- 
-+include::config/fsmonitor--daemon.txt[]
-+
- include::config/gc.txt[]
- 
- include::config/gitcvs.txt[]
-diff --git a/Documentation/config/fsmonitor--daemon.txt b/Documentation/config/fsmonitor--daemon.txt
-new file mode 100644
-index 00000000000..c225c6c9e74
---- /dev/null
-+++ b/Documentation/config/fsmonitor--daemon.txt
-@@ -0,0 +1,11 @@
-+fsmonitor.allowRemote::
-+    By default, the fsmonitor daemon refuses to work against network-mounted
-+    repositories. Setting `fsmonitor.allowRemote` to `true` overrides this
-+    behavior.  Only respected when `core.fsmonitor` is set to `true`.
-+
-+fsmonitor.socketDir::
-+    This Mac OS-specific option, if set, specifies the directory in
-+    which to create the Unix domain socket used for communication
-+    between the fsmonitor daemon and various Git commands. The directory must
-+    reside on a native Mac OS filesystem.  Only respected when `core.fsmonitor`
-+    is set to `true`.
-diff --git a/Documentation/git-fsmonitor--daemon.txt b/Documentation/git-fsmonitor--daemon.txt
-index cc142fb8612..8238eadb0e1 100644
---- a/Documentation/git-fsmonitor--daemon.txt
-+++ b/Documentation/git-fsmonitor--daemon.txt
-@@ -3,7 +3,7 @@ git-fsmonitor{litdd}daemon(1)
- 
- NAME
- ----
--git-fsmonitor--daemon - A Built-in File System Monitor
-+git-fsmonitor--daemon - A Built-in Filesystem Monitor
- 
- SYNOPSIS
- --------
-@@ -17,7 +17,7 @@ DESCRIPTION
- -----------
- 
- A daemon to watch the working directory for file and directory
--changes using platform-specific file system notification facilities.
-+changes using platform-specific filesystem notification facilities.
- 
- This daemon communicates directly with commands like `git status`
- using the link:technical/api-simple-ipc.html[simple IPC] interface
-@@ -63,13 +63,44 @@ CAVEATS
- -------
- 
- The fsmonitor daemon does not currently know about submodules and does
--not know to filter out file system events that happen within a
-+not know to filter out filesystem events that happen within a
- submodule.  If fsmonitor daemon is watching a super repo and a file is
- modified within the working directory of a submodule, it will report
- the change (as happening against the super repo).  However, the client
- will properly ignore these extra events, so performance may be affected
- but it will not cause an incorrect result.
- 
-+By default, the fsmonitor daemon refuses to work against network-mounted
-+repositories; this may be overridden by setting `fsmonitor.allowRemote` to
-+`true`. Note, however, that the fsmonitor daemon is not guaranteed to work
-+correctly with all network-mounted repositories and such use is considered
-+experimental.
-+
-+On Mac OS, the inter-process communication (IPC) between various Git
-+commands and the fsmonitor daemon is done via a Unix domain socket (UDS) -- a
-+special type of file -- which is supported by native Mac OS filesystems,
-+but not on network-mounted filesystems, NTFS, or FAT32.  Other filesystems
-+may or may not have the needed support; the fsmonitor daemon is not guaranteed
-+to work with these filesystems and such use is considered experimental.
-+
-+By default, the socket is created in the `.git` directory, however, if the
-+`.git` directory is on a network-mounted filesystem, it will be instead be
-+created at `$HOME/.git-fsmonitor-*` unless `$HOME` itself is on a
-+network-mounted filesystem in which case you must set the configuration
-+variable `fsmonitor.socketDir` to the path of a directory on a Mac OS native
-+filesystem in which to create the socket file.
-+
-+If none of the above directories (`.git`, `$HOME`, or `fsmonitor.socketDir`)
-+is on a native Mac OS file filesystem the fsmonitor daemon will report an
-+error that will cause the daemon and the currently running command to exit.
-+
-+CONFIGURATION
-+-------------
-+
-+include::includes/cmd-config-section-all.txt[]
-+
-+include::config/fsmonitor--daemon.txt[]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
--- 
-gitgitgadget
+So, I'm clearly doing a bad job of explaining this (and I'm not saying
+I'm not also lazy!), but with the latter part of that I meant that I
+took pains to optimize this for overall reviewer time.
+
+I.e. at the start of the series (made up example, but it'll suffice) we
+might have stuff like this:
+
+	*.txt usage: (foo|bar) <file>
+	-h usage:    (foo | bar ) <dir>
+
+The start of this series fixes a bunch of misc issues like whitespace
+issues, so we can e.g. turn that into:
+
+	*.txt usage: (foo | bar) <file>
+	-h usage:    (foo | bar) <dir>
+
+At *that* point I can include the s/dir/file/ change on one side in a
+"doc txt & -h consistency" commit, and end up with, say:
+
+	*.txt usage: (foo | bar) <file>
+	-h usage:    (foo | bar) <file>
+
+So, I can say for the "doc txt & -h consistency" that we had the "(foo |
+bar) <file>" version in-tree already, but that's only the case if you'll
+buy the earlier whitespace-only change.
+
+I think that's easier to reason about & review than a bunch of "here I'm
+changing the label, and some whitespace issues, and blah blah".
+
+I.e. the reviewer only has to pay attention to the first change being a
+whitespace-only change, and can then be assured that post-whitespace
+change we're just changing one side to be consistent with the other.
+
+We then test that consistency at the end of the series.
+
+>>  * A major advantage of reviewing this in one go is that the 34-35/35
+>>    tests at the end are asserting everything that came before
+>>    it.
+>
+> Yes, but it does not assert anything about the other patches not
+> doing unrelated things while at it.  So tests cannot be blindly
+> trusted (in other words you have to be also trustworthy, if the
+> reviewers are expected to swallow this huge series uninspected).
+>
+> I'll give it a read-over when I find time.  Thanks for working on
+> it.
+
+Right, I didn't mean to say that these could be blindly trusted, just
+that the series was working towards splitting up little fixes like
+whatespace fixes, and at *that point* the reader should be assured that
+one side of the commits with "doc txt & -h consistency" in the subject
+is in-tree already.
+
+Of course that at the minimum needs a review for *which side* we should
+pick :)
