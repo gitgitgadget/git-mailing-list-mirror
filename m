@@ -2,160 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2DF5C04A95
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 18:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A268C04A95
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 19:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233695AbiI1Si0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 14:38:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37446 "EHLO
+        id S232180AbiI1TPm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 15:15:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230340AbiI1SiZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 14:38:25 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9595C3120F
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 11:38:23 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id 64so2293807iov.13
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 11:38:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=mhRCG9v6qTJsxktWlfp4FuGDKyuER0TEKAhinIk9uh8=;
-        b=HoKsbPIRjFw7xneB1HDz8u11cBZRzdccqJJPvz1zheqAqlHpPl6w6QUx211f7fSJe+
-         W+leQwn4AU2/3bZ3AMmXJ3OyTqQLaJD5B7NgPe63kPEZ4DiM5JlujqADwt13UAafisG+
-         kjv1Rj4qEd1wcBw413fBMoBiX4wgqpnN5NvAjZFZSljSfAXhdxWf0GPFUGzUAc5pfTzc
-         W8FcfggBL0twa0JRTxTp9XyPManrcAqJXeSnpzEwM+9aFFd81Y9+eFL7cSKepsnEX2Fs
-         FHLzd0li50kix6nkKHr0ZbUlw5xWmjZfwhXMGsYgjQhms2+ThKxcCD1R8QTeF8hipOMj
-         uTJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=mhRCG9v6qTJsxktWlfp4FuGDKyuER0TEKAhinIk9uh8=;
-        b=3xZ+PktQeCC0AZpxCqkAad2QnvN9KbP2U9FAh/A8VsBK8JqBzGyG3o9AuDHNP/90Tc
-         4QdzXYIjhYdzMlndIofuacH6ZwM+tkP1xOX2RqU+0SqBG3Y8FKDSnyJAVZZgrBGd3WOe
-         F/Wx3hx5urKpeamBwQSst1TmNrOq/aQWzPDVpxDJqMFZHfr1HNmSaxbywUURNyMOtNb8
-         JV3FcXzop9KBvB5qdUp0nWH8IVkfst0cPRj1/dJRq6BO+Mi3taDaDiQOSBGaYTR34dZ7
-         rrHgFdrormMsEKSvaRaOk8myG6NYxGsKR/B2vXJanstMtfCmrS6qQApQW+knwA5ovfcK
-         ivHQ==
-X-Gm-Message-State: ACrzQf0Cc4v3h2whWbjCAR2jmM46dq4NHboUZWxm6bV5HRRnhVsZ523g
-        LzY8EpyzyZ6nYEl75ULVlPFo
-X-Google-Smtp-Source: AMsMyM6ePYTtWkppNVKNxHhcgOOn6+YKQ3f1vKKyTWv1nXmLquCBIBw37pB+/6IFIiBNrUu0y1jVFw==
-X-Received: by 2002:a05:6638:370d:b0:35a:91f0:e358 with SMTP id k13-20020a056638370d00b0035a91f0e358mr17393748jav.84.1664390302948;
-        Wed, 28 Sep 2022 11:38:22 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:e862:ab6a:f799:c583? ([2600:1700:e72:80a0:e862:ab6a:f799:c583])
-        by smtp.gmail.com with ESMTPSA id y41-20020a02952c000000b0035672327fe5sm2061813jah.149.2022.09.28.11.38.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Sep 2022 11:38:22 -0700 (PDT)
-Message-ID: <35f6d380-f7a5-558d-1cfc-f5eb6ea6c818@github.com>
-Date:   Wed, 28 Sep 2022 14:38:21 -0400
+        with ESMTP id S233190AbiI1TPl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 15:15:41 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32C84AE222
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 12:15:40 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F19E814662E;
+        Wed, 28 Sep 2022 15:15:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:cc:date:message-id:mime-version:content-type; s=sasl;
+         bh=E5CaZCbBELKVZ+X8HQ6ke9MJB2GLbzLfg1feGuOe76Y=; b=twdprbWRvJjj
+        a2xr/TQHkDzPUJcw8BSCzmsqDIxfJf8r/fvYb6f6HWO55Dg2EbMorRPxHtmVfPC1
+        4D2xfVyQ11Dj8NhFk7PExblp2KKyRtmV2T40PUTD++iGRkOpvOfPcSGREo65QEpy
+        ahmskHIV3TROvRPZdzicg35T/Y6peiI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E86A914662D;
+        Wed, 28 Sep 2022 15:15:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5584714662C;
+        Wed, 28 Sep 2022 15:15:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] branch: do not fail a no-op --edit-desc
+cc:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Date:   Wed, 28 Sep 2022 12:15:37 -0700
+Message-ID: <xmqqczbftina.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH 0/5] [RFC] config API: return empty list, not NULL
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.1369.git.1664287711.gitgitgadget@gmail.com>
- <xmqq35cc1arp.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqq35cc1arp.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: EFAB256E-3F61-11ED-A697-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/27/2022 10:40 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> This work changes the behavior of asking for a multi-valued config key to
->> return an empty list instead of a NULL value. This simplifies the handling
->> of the result and is safer for development in the future.
->>
->> This is based on v4 of my unregister series [1]
->>
->> [1]
->> https://lore.kernel.org/git/pull.1358.v4.git.1664287021.gitgitgadget@gmail.com/
->>
->> This idea came about due to a bug in the git maintenance unregister work
->> where the result from git_config_get_value_multi() was sent directly to
->> for_each_string_list_item() without checking for a NULL value first.
->>
->> I'm sending this as an RFC mostly because I'm not 100% sure this shift is
->> worth the refactoring pain and effort. I personally think getting an empty
->> list is a safer choice, but I can also understand if someone has a different
->> opinion.
-> 
-> Thanks.
-> 
-> I actually am in favor of the idea that a NULL can be passed around
-> to signal the lack of a string_list (or the lack of a instance of
-> any "collection" type), and the current code is structured as such,
-> and it gives us extra flexibility.  Of course, we need to see if
-> that extra flexibility is worth it.
-> 
-> With a colleciton col, "if (col && col->nr)" checks if we have
-> something to work on.  But a code like this (which is a longhand for
-> the for_each_string_list_item() issue we just reencountered):
-> 
->     col = git_get_some_collection(...);
->     if (!col)
-> 	return; /* no collection */
->     if (!col->nr)
-> 	git_add_to_some_collection(col, the default item);
->     for (i = 0; i < col->nr; i++)
-> 	do things on col.stuff[i];
-> 
-> can react differently to cases where we have an empty collection
-> and where we do not have any collection to begin with.  
-> 
-> The other side of the coin is that it would make it harder to treat
-> the lack of collection itself and the collection being empty the
-> same way.  The above code might need to become
-> 
->     col = git_get_some_collection(...);
->     if (!col)
-> 	col = git_get_empty_collection();
->     if (!col->nr)
-> 	git_add_to_some_collection(col, the default item);
->     for (i = 0; i < col->nr; i++)
-> 	do things on col.stuff[i];
-> 
-> but if the "get the collection" thing returns an empty collection
-> when there is actually no collection, we can lose two lines from
-> there.
+In a repository on a branch without branch description, try running
+"git branch --edit-description" and then exit the editor after
+emptying the edit buffer, which is the way to tell the command that
+you changed your mind and you do not want the description after all.
 
-I'm all for conveying more information when possible, but how can
-the config API provide a distinction between an empty list and a
-NULL list? The only thing I can think about is a case where the
-empty value clears the list and no new values are added, such as
+The command should just happily oblige, adding no branch description
+for the current branch, and exit successfully.  But it fails to do
+so:
 
-	[bogus "key"]
-		item = one
-		item = two
-		item =
+    $ git init -b main
+    $ git commit --allow-empty -m commit
+    $ GIT_EDITOR=: git branch --edit-description
+    fatal: could not unset 'branch.main.description'
 
-With this, the key exists in the config file, but the multi-valued
-list is empty. Is that an important distinction? I don't think so.
+The end result is OK in that the configuration variable does not
+exist in the resulting repository, but we should do better.
 
-> Between these two positions, I am in favor of the flexibility that
-> we can use NULL to signal the lack of collection, not a presence of
-> a collection with zero items, as it feels conceptually cleaner.
-> 
-> Counting the hunks in [2/5] and [5/5], it seems that "when no
-> variable with given key is defined, we return an empty set" makes us
-> to have more code in 7 places in [PATCH 2/5], while allowing us to
-> lose code in 10 places in [PATCH 5/5].
+One way to solve this is to replace the git_config_set() call that
+is also used to unset the variable when the edited buffer is empty
+with git_config_set_gently(), so that we do not consider it an error
+that we fail to unset something that does not exist in the first
+place.
 
-Outside of the "if (sl && sl->nr) {" that I forgot to convert into
-"if (sl->nr) {" in patch 5, all of those 7 places that have "more code"
-end up with only that extra "->nr". The code looks uglier temporarily
-in patch 2 to create the compatibility mode so patch 4 can change only
-the config API without test failures.
+But there is even a simpler way, which is to take advantage of the
+fact that we _know_ if the variable existed in the first place.  If
+we know we didn't have description, and if we are asked not to have
+a description by the editor, we can just return doing nothing.
 
-Thanks,
--Stolee
+The simpler solution of course introduces TOCTOU, but you are
+fooling yourself in your own repository.  Not overwriting the branch
+description on the same branch you added in another window, while
+you had this other editor open, may even be a feature ;-)
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/branch.c  | 6 ++++--
+ t/t3200-branch.sh | 3 +++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git c/builtin/branch.c w/builtin/branch.c
+index 5d00d0b8d3..dcd847158a 100644
+--- c/builtin/branch.c
++++ w/builtin/branch.c
+@@ -604,10 +604,11 @@ static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
+ 
+ static int edit_branch_description(const char *branch_name)
+ {
++	int exists;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct strbuf name = STRBUF_INIT;
+ 
+-	read_branch_desc(&buf, branch_name);
++	exists = !read_branch_desc(&buf, branch_name);
+ 	if (!buf.len || buf.buf[buf.len-1] != '\n')
+ 		strbuf_addch(&buf, '\n');
+ 	strbuf_commented_addf(&buf,
+@@ -624,7 +625,8 @@ static int edit_branch_description(const char *branch_name)
+ 	strbuf_stripspace(&buf, 1);
+ 
+ 	strbuf_addf(&name, "branch.%s.description", branch_name);
+-	git_config_set(name.buf, buf.len ? buf.buf : NULL);
++	if (buf.len || exists)
++		git_config_set(name.buf, buf.len ? buf.buf : NULL);
+ 	strbuf_release(&name);
+ 	strbuf_release(&buf);
+ 
+diff --git c/t/t3200-branch.sh w/t/t3200-branch.sh
+index 9723c2827c..5f72fd7453 100755
+--- c/t/t3200-branch.sh
++++ w/t/t3200-branch.sh
+@@ -1381,6 +1381,9 @@ test_expect_success 'branch --delete --force removes dangling branch' '
+ '
+ 
+ test_expect_success 'use --edit-description' '
++	EDITOR=: git branch --edit-description &&
++	test_must_fail git config branch.main.description &&
++
+ 	write_script editor <<-\EOF &&
+ 		echo "New contents" >"$1"
+ 	EOF
