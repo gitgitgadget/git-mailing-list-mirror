@@ -2,90 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7FA0C32771
-	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 17:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DDD0C04A95
+	for <git@archiver.kernel.org>; Wed, 28 Sep 2022 17:34:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232989AbiI1R3y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 13:29:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46748 "EHLO
+        id S234100AbiI1Rel (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Sep 2022 13:34:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233544AbiI1R3t (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 13:29:49 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AD4F101E3
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 10:29:44 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0512145987;
-        Wed, 28 Sep 2022 13:29:42 -0400 (EDT)
+        with ESMTP id S233252AbiI1Rej (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 13:34:39 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72DEEBB1
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 10:34:34 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B251415472A;
+        Wed, 28 Sep 2022 13:34:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=7ueEPbsGTHiE
-        ZlooTZ6D/mIi9CTmqZoZyMbzrF3D/Ww=; b=Fp6J3ZsIf+dUtfSbiadIAOrXgQRj
-        RnvpENLZsJb434BKLgPqWFFMq/PE48qkhOSmIwG7IiDRyhnZ+9uSIY3WCt/7m234
-        8NED75WFO82a6sadoWSr3P/KGGoVuh9++h6r77Hm5cfyiSAl2o7iFDyO1cLU8v3/
-        CbVOCRilAEYO+Eo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97779145986;
-        Wed, 28 Sep 2022 13:29:42 -0400 (EDT)
+        :content-type; s=sasl; bh=Kmo8lMtPldtXzdN1Qq/v7Dic6lIWoVXjlEes8d
+        +3x5E=; b=e+MPYeWDTHzW2sUyMhu1wab9fQjW3NsMxtiX5lXXghbERvJ7oj+Fqj
+        KopJUrt5AEq1J5tZsiCP/79fHElTOCJNSs00F/iy56IsBfc06vmKSqLJPNgbnS54
+        d33LflGFnPfRzIje+7yiwmrxXDbuRDmIjgk8TWLdJNgXCvJ2zMu/4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A7CD5154729;
+        Wed, 28 Sep 2022 13:34:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0E9E7145985;
-        Wed, 28 Sep 2022 13:29:41 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1D7A4154728;
+        Wed, 28 Sep 2022 13:34:33 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2 01/35] CodingGuidelines: update and clarify
- command-line conventions
-References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
-        <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
-        <patch-v2-01.35-aecd3ff41f2-20220928T082458Z-avarab@gmail.com>
-Date:   Wed, 28 Sep 2022 10:29:41 -0700
-In-Reply-To: <patch-v2-01.35-aecd3ff41f2-20220928T082458Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 28 Sep
- 2022 10:38:56
-        +0200")
-Message-ID: <xmqqpmffv24a.fsf@gitster.g>
+To:     "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, derrickstolee@github.com,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v2] read-cache: avoid misaligned reads in index v4
+References: <pull.1366.git.1663962236069.gitgitgadget@gmail.com>
+        <pull.1366.v2.git.1664385541084.gitgitgadget@gmail.com>
+Date:   Wed, 28 Sep 2022 10:34:32 -0700
+In-Reply-To: <pull.1366.v2.git.1664385541084.gitgitgadget@gmail.com> (Victoria
+        Dye via GitGitGadget's message of "Wed, 28 Sep 2022 17:19:00 +0000")
+Message-ID: <xmqqleq3v1w7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2305CFFE-3F53-11ED-86D7-307A8E0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D082C1E6-3F53-11ED-864D-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->   Optional parts are enclosed in square brackets:
-> -   [<extra>]
-> -   (Zero or one <extra>.)
-> +   [<file>...]
-> +   (Zero or more of <file>.)
+> +	/*
+> +	 * NEEDSWORK: using 'offsetof()' is cumbersome and should be replaced
+> +	 * with something more akin to 'load_bitmap_entries_v1()'s use of
+> +	 * 'read_be16'/'read_be32'. For consistency with the corresponding
+> +	 * ondisk entry write function ('copy_cache_entry_to_ondisk()'), this
+> +	 * should be done at the same time as removing references to
+> +	 * 'ondisk_cache_entry' there.
+> +	 */
 
-OK.
+Sounds sensible.  Will replace and merge down to 'next'--- it will
+most likely be part of the first batch in the next cycle.
 
-> + Use spacing around "|" token(s), but not immediately after opening or
-> + before closing a [] or () pair:
-> +   Do: [-q | --quiet]
-> +   Don't: [-q|--quiet]
-> +
-> + Don't use spacing around "|" tokens when they're used to seperate the
-> + alternate arguments of an option:
-> +    Do: --track[=3D(direct|inherit)]
-> +    Don't: --track[=3D(direct | inherit)]
-> +
-
-Hmph, that sounds inconsistent; I would have expected the same use
-(or omission) of space around the vertical bar.  But if that is the
-prevailing style, I won't complain about writing it down.
-
-Thanks.
+Thanks, all.
 
