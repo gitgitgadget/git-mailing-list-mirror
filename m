@@ -2,47 +2,46 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67E62C32771
-	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 03:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32DBFC07E9D
+	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 04:37:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234078AbiI2DFI convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 28 Sep 2022 23:05:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53538 "EHLO
+        id S234713AbiI2EhA convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 29 Sep 2022 00:37:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233492AbiI2DFE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 23:05:04 -0400
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B777CDFA5
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 20:05:00 -0700 (PDT)
-Received: by mail-yb1-f175.google.com with SMTP id u64so30855ybb.1
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 20:05:00 -0700 (PDT)
+        with ESMTP id S230015AbiI2Eg6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2022 00:36:58 -0400
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1C5127CBA
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 21:36:57 -0700 (PDT)
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-324ec5a9e97so3114517b3.7
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 21:36:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=omuIpT2SB5en2XkgnVBOksu57vcg48uVUkAUrlvOfdg=;
-        b=LFojlbk6FIIztfx3PjTVqX0a0LZ83IgsrPZMjoOGS+9sdGNUuIrk8CVOhQ2F5o4i1F
-         BfYyPnGEVwV1syYgvNqdPqCge3A0n+3fXVoGca9PtnZp2eb1LZpbc2Z5k4p4EvEr3c4D
-         EsXVSMl7vSx4linB3B5frsftjLy0EASuNKhAAisjBZclyv3ZbLsVxxULeuGFWBOcxTzh
-         yd67JXxyrTT9lbPyJWM7UTTZGmu6aB3TXYqW36hRxk2KlnE7Dy46jlmzOWk/Jin7gMKe
-         nzb6vzPtSwdw2BCKOpMw33mK/2x7/8ITcJcPPzQGfqGUjAX2KLUZKNwGeJx9pSYNmbtz
-         ul3A==
-X-Gm-Message-State: ACrzQf3slBWfQlX891wVwz+9TY728gWHN9XXlSjbFD7EWOtFWfAeJ498
-        N4qGythTwLrcuw4N8a8qGiGIZnMGqXzaWhzghmpEDC2kldOIWQ==
-X-Google-Smtp-Source: AMsMyM7ktyYT1BcUKPj3iYXu8EnBrTmBea1YozZG1C9YENHUw2Cg7z6ltT51KrnY82VyzpWTWpHSPbz9cq5q/J/PG5E=
-X-Received: by 2002:a25:d457:0:b0:6bc:92dd:9462 with SMTP id
- m84-20020a25d457000000b006bc92dd9462mr1167295ybf.326.1664420699826; Wed, 28
- Sep 2022 20:04:59 -0700 (PDT)
+        bh=uRm6vxYRjRiP618e2g0dP6hjxkPfkxL8WFDIs+CYN78=;
+        b=K0RAbZNPUc36W2iKO3D0gQ0laeNRgzREt7nj2altnvlx8NDNfEH5oRMVZHEIqydtOc
+         g/VRZbZ8dBvv1vserN3vvH5KHz/r6SCGn0IaHKiR0yT4+tpVMMtPDDEaJ+LV6g9zDB+6
+         o5FC4TyK+408+XrBHlTfuo50g5sh0jDiU55nfxqG6n0mnB+fGrEU0FGFwEtCib7ZH2h6
+         z5QJz22IMW72dLJY7RLOgz58xd1OFuSWWB2ULRQkN+H95ffFf3NPkXBTYkgrNf3J483s
+         71O4t86Ne53X8ioQVRSoLNwLT4RYVUAJUC+q7STJsDY5pue3w9FU90N7FaKSIXDEzh5a
+         5Frg==
+X-Gm-Message-State: ACrzQf0pYAAzm9JETfggOWSCfopyAYuymyRF6isvLbXFJ8m3JPPgLdNk
+        M+M5CgULacyH/aRcotMA89yCC5va2sTH0GO0NGI=
+X-Google-Smtp-Source: AMsMyM5fvoi0q/3wIsx8dfgitkDihit8aNRkZZyzEtIGPsCKYVHXrz2c+bEe4bqEKixSkezWgifotxnl/AMOAZvVYro=
+X-Received: by 2002:a0d:d2c1:0:b0:33e:e1f4:4bb0 with SMTP id
+ u184-20020a0dd2c1000000b0033ee1f44bb0mr1338544ywd.234.1664426216473; Wed, 28
+ Sep 2022 21:36:56 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
- <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com> <patch-v2-20.35-1c2bc223c5d-20220928T082458Z-avarab@gmail.com>
-In-Reply-To: <patch-v2-20.35-1c2bc223c5d-20220928T082458Z-avarab@gmail.com>
+ <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com> <patch-v2-25.35-a4d75ea691c-20220928T082458Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-25.35-a4d75ea691c-20220928T082458Z-avarab@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 28 Sep 2022 23:04:49 -0400
-Message-ID: <CAPig+cS01QEcAvr0yqhdhGc8MtvHMofKOHSeJZy2yFqq0Oqo8Q@mail.gmail.com>
-Subject: Re: [PATCH v2 20/35] doc txt & -h consistency: add missing options
- and labels
+Date:   Thu, 29 Sep 2022 00:36:45 -0400
+Message-ID: <CAPig+cSwokKApLJi6xHVUs1JZGJkjdxd0wkLT1Hqsr9UpPN-JQ@mail.gmail.com>
+Subject: Re: [PATCH v2 25/35] doc txt & -h consistency: add missing options
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Victoria Dye <vdye@github.com>, Taylor Blau <me@ttaylorr.com>,
@@ -55,62 +54,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 28, 2022 at 4:43 AM Ævar Arnfjörð Bjarmason
+On Wed, Sep 28, 2022 at 4:45 AM Ævar Arnfjörð Bjarmason
 <avarab@gmail.com> wrote:
-> Fix various issues of SYNOPSIS and -h output syntax where:
+> Change those built-in commands that were attempting to exhaustively
+> the options in the "-h" output to actually do so, and always
+
+s/exhaustively/exhaustively list/
+
+> have *.txt documentation know about the exhaustive list of options.
 >
->  * Options such as --force were missing entirely
->  * ...or the short option, such as -f
->
->  * We said "opts" or "options", but could instead enumerate
->    the (small) set of supported options
->
->  * argument labels were missing entirely (ls-remote)
->
->  * How we referred to an argument was inconsistent between the two,
->    e.g. <pack> v.s. <pack>.idx.
+> Let's also fix the documentation and -h output for those built-in
+> commands where the *.txt and -h output was a mismatch of missing
+> options on both sides.
 >
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
+> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
+>  'git commit-graph verify' [--object-dir <dir>] [--shallow] [--[no-]progress]
+> -'git commit-graph write' <options> [--object-dir <dir>] [--[no-]progress]
+> +'git commit-graph write' [--object-dir <dir>] [--append]
+> +                       [--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits]
 
-A few minor comments (probably not worth a re-roll)...
+Should there be spaces around the vertical bars per [14/35]?
 
-> diff --git a/builtin/help.c b/builtin/help.c
-> @@ -88,7 +88,7 @@ static struct option builtin_help_options[] = {
->  static const char * const builtin_help_usage[] = {
-> -       "git help [-a|--all] [--[no-]verbose]] [--[no-]external-commands] [--[no-]aliases]",
-> +       "git help [-a|--all] [--[no-]verbose] [--[no-]external-commands] [--[no-]aliases]",
+    [--split[=<strategy>]] [--reachable | --stdin-packs | --stdin-commits]
 
-This is merely removing an extra "]", thus should it instead be
-bundled along with [12/35] (after generalizing the commit message of
-[12/35] a bit)?
+> +                       [--changed-paths] [--[no-]max-new-filters <n>] [--[no-]progress]
+> +                       <split options>
+> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+> -'git interpret-trailers' [<options>] [(--trailer <token>[(=|:)<value>])...] [<file>...]
+> -'git interpret-trailers' [<options>] [--parse] [<file>...]
+> +'git interpret-trailers' [--in-place] [--trim-empty]
+> +                       [(--trailer <token>[(=|:)<value>])...]
+> +                       [--parse] [<file>...]
 
-> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-> @@ -20,6 +20,7 @@ static const char * const send_pack_usage[] = {
->            "              [--verbose] [--thin] [--atomic]\n"
-> +          "              [--[no-]signed|--signed=(true|false|if-asked)]\n"
+This changes the interpretation from two distinct operating modes to a
+single mode. I had to go study the git-interpret-trailers
+documentation to convince myself that the revised synopsis is correct
+and matches the implementation, and that the old documented dual-mode
+behavior was misleading. This probably should have been mentioned in
+the commit message, or this change could have been split out to its
+own patch (not that I'm advocating making this series even longer).
 
-Should there be spaces around the leftmost vertical bar per [14/35]?
+> diff --git a/builtin/hash-object.c b/builtin/hash-object.c
+>  int cmd_hash_object(int argc, const char **argv, const char *prefix)
+>  {
+>         static const char * const hash_object_usage[] = {
+> -               N_("git hash-object [-t <type>] [-w] [--path=<file> | --no-filters] [--stdin] [--] <file>..."),
+> -               "git hash-object  --stdin-paths",
+> +               N_("git hash-object [-t <type>] [-w] [--path=<file>|--no-filters]\n"
+> +                  "                [--stdin [--literally]] [--] <file>..."),
+> +               N_("git hash-object [-t <type>] [-w] --stdin-paths [--no-filters]"),
 
-    [--[no-]signed | --signed=(true|false|if-asked)]
-
-> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> @@ -20,7 +20,7 @@
->  static char const * const builtin_sparse_checkout_usage[] = {
-> -       N_("git sparse-checkout (init | list | set | add | reapply | disable) <options>"),
-> +       N_("git sparse-checkout (init | list | set | add | reapply | disable) [<options>]"),
-
-Does this change belong in [15/35] where you also add "[" and "]"
-around "<options>" for the 'mv' command? Citing [15/35]:
-
-    In the case of "mv" let's add the missing "[]" to indicate that these
-    are optional.
-
-> diff --git a/builtin/verify-pack.c b/builtin/verify-pack.c
-> @@ -56,7 +56,7 @@ static int verify_one_pack(const char *path, unsigned int flags, const char *has
->  static const char * const verify_pack_usage[] = {
-> -       N_("git verify-pack [-v | --verbose] [-s | --stat-only] <pack>..."),
-> +       N_("git verify-pack [-v | --verbose] [-s | --stat-only] [--] <pack>.idx..."),
-
-Part of this change makes sense in this patch, but doesn't the "[--]"
-part belong in [18/35]?
+This removes spaces around vertical bars, which seems to contradict
+[14/35] (unless I'm misunderstanding [14/35]).
