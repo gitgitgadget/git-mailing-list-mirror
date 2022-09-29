@@ -2,86 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02B4DC4332F
-	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 20:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71BC8C433FE
+	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 21:49:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbiI2UwZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Sep 2022 16:52:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41960 "EHLO
+        id S229941AbiI2VtT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Sep 2022 17:49:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229763AbiI2UwW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2022 16:52:22 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67A2A177377
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 13:52:21 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id 203so3000377ybc.10
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 13:52:21 -0700 (PDT)
+        with ESMTP id S229668AbiI2VtN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2022 17:49:13 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE11A130715
+        for <git@vger.kernel.org>; Thu, 29 Sep 2022 14:49:11 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id q8-20020a632a08000000b0043cab9c7de9so1663127pgq.3
+        for <git@vger.kernel.org>; Thu, 29 Sep 2022 14:49:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=fBblR2NuvxYP786tnkxG4oDd0YissiE4uXMobDEVOy0=;
-        b=ZW1JhzMA2ssHC0PlobYQJdFEZbOVGwqIUX6oSO0jMD/lDRoJSeASlFtkQYOmmSlouZ
-         Vz5PWX3mYcvayUwbp42uav81p+MbNQZkL6ru+SG5haFwg6Fjftg02dQ/xJGNTN5knaoO
-         OsFaGKwfqvLdBTsAE8T3UzFs/lSzwGpvpYU0q/hTYhKeF60/c+2ffkeczyPi/ioCavYw
-         hvDgCL/OE3ZnAQNFai2trhHUi1Xn/BZo8qlSesA23BK8eexKqnomzajcOX9UBnlyfGSz
-         k4vdjHAnywA7QRV40HedfxMs2xew1O3bPkEfHsu78a/78guPLmoikRXNqGO4XeXuB2r9
-         /51w==
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=lX15tIFF9ySTTtNXwQkaAHhTZjpq+klhNY3ybUHdpsQ=;
+        b=pP1xtJ7pcTfY4XedqA3XVuTD0Rb8OM4XVYNerQvaaaopGmyFA/U9T6rOwDU/Wclpc4
+         oeGIbNbDGbREuXp2pHwdQnLrPB9lQAjC9VB4/Aw7ynwBg6AAwfTDRFOX5Uk+yVBqUd0Q
+         3B3qBZDYZ1ADpUZgiAHCSYQWSZtASRZdxwHHQw5+POKCrpMJS/Tsg2O4DXNFQq5yvHWu
+         NJhL4H7Fiuz9jYQS6l0YQh5fpkEQnlq+D/qqJfPKqX2h/ukxYXTrEmC9wUPtCAKSgSc+
+         EgoTkwpu+MpKElN3/S/bYQLU/TO9yiOxHNRT6djjn6ujDkhF82Zy46BWe5RELfXgCTmH
+         fuwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=fBblR2NuvxYP786tnkxG4oDd0YissiE4uXMobDEVOy0=;
-        b=VBqr07i5G+J7R6XPUqhHIt3mAHTZ0iUivS7T2BP8ncL63e37Py38IAaiXIk2OXXJub
-         gruKxAMceBus7wlcw3y8Qez1GeQYSdqGxSn23JkXpAq4j3VfGi3r0ltG3a4Kj4W06JVJ
-         sz7YQUKTONT9xuMkgtG8ZBmyqBuO0j3virvXEd24+DbWBUlCyp4VVPZ0YEp22gwcT9jA
-         AeWoj2QXt2EwasPG8qPGxO+OOipp7ZFAU/SH7cWOc+999L0czMn85wufOlRiVPWUunJL
-         CR4VwgOnnwZ3A88n6acOd7KhnhqyFmVUQ2kFvr4Jt+/1jZdeJdRnSDQ+1DyEaU9foHtX
-         wzJg==
-X-Gm-Message-State: ACrzQf0v+wI/pqCgPzmUqbtFUtKy63gx23g/r8LcYwtunWonJb58k8Ik
-        mCS9XKmn/kYUPT8wfHNqeJTdqOjMRs6dOhx7izanDH5eKbo=
-X-Google-Smtp-Source: AMsMyM6c3paDWKou1rP8uK9ssjWpAZFIt/j52Kk6oS/oXNI+CXU95xPYfIpMq/ZIaTU/c3eImKrvQkHMkiumHJNExuQ=
-X-Received: by 2002:a25:a42a:0:b0:6a9:82d4:147 with SMTP id
- f39-20020a25a42a000000b006a982d40147mr5364055ybi.417.1664484740575; Thu, 29
- Sep 2022 13:52:20 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220922232947.631309-1-calvinwan@google.com> <20220922232947.631309-2-calvinwan@google.com>
- <xmqqy1u9uddc.fsf@gitster.g> <CAFySSZA=tThoHdTY7+bMStvC=xeeyMiv4aVDYt-eNW2mQE10qg@mail.gmail.com>
- <220927.86ill9yymv.gmgdl@evledraar.gmail.com> <CAFySSZBSAW=zea8UoMiaQkf8rdJUBGHDYZQFkPLW7mRSciS-FA@mail.gmail.com>
- <220927.86fsgcy5j9.gmgdl@evledraar.gmail.com> <CAFySSZB3hp2WWk0bL77FBR91ueJ1eJFtuVCoyE-ooVT77Vo_vw@mail.gmail.com>
- <220928.86bkr0xd9w.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220928.86bkr0xd9w.gmgdl@evledraar.gmail.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Thu, 29 Sep 2022 13:52:09 -0700
-Message-ID: <CAFySSZDF_nxGJCjhi38nb5R3jtPBVqZbMCqKxmTagUqCbwx7rw@mail.gmail.com>
-Subject: Re: [PATCH 1/4] run-command: add pipe_output to run_processes_parallel
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        emilyshaffer@google.com
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lX15tIFF9ySTTtNXwQkaAHhTZjpq+klhNY3ybUHdpsQ=;
+        b=uQebHE65To6GjmXQyWlS0GVYDViBR71iVqg3a/hgiREy9kW7PIHd7gOV1Skmx6IYFL
+         coWtUofH6VcXoNlpqfmvP9SEUcC889+uU2Wxp3qkCy0/YaKIWAhgMKXe+MVBi250OgSt
+         04j/T2XiW5bEf6Tt5ZhiY54wyolboPHZ620SenDcBo+0W11hk+hGkBDkk8umNBzUwKyt
+         XfuafC24dtenkUF1UXoooEmYnHzEwu5IC8YpydAAktUTlrSRXMq2ztj2VcP7rSIuzhaX
+         P+VDqRK/tA9IGtVmpk+w1zOCd4J6KJjEQVOHddNeO0w21PURwlrAC972QZw/+8NhV3g9
+         bIaw==
+X-Gm-Message-State: ACrzQf2q40ZlVlYII0kLQaCuPIiatgAJmDvwsRc5bxvBJ7e6TR5jSGim
+        TB2jNPKW9u873JiEQiTCufJuu8MUNf1mfiprEipm
+X-Google-Smtp-Source: AMsMyM5owq6twlbj7G9FjvR6EXhXzpdXqCETf/XvVSZ+ey8E88i5hIMjAm2S9bO4TBe0W+xfy/ue/Uy7dbz7D2RlUOeD
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a63:df10:0:b0:43b:e82f:e01c with
+ SMTP id u16-20020a63df10000000b0043be82fe01cmr4720246pgg.19.1664488151341;
+ Thu, 29 Sep 2022 14:49:11 -0700 (PDT)
+Date:   Thu, 29 Sep 2022 14:49:06 -0700
+In-Reply-To: <70daef66833744fb8b870f431af8201222c7a2ba.1662734015.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.38.0.rc1.362.ged0d419d3c-goog
+Message-ID: <20220929214906.1437133-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v2 4/9] bundle-uri: create base key-value pair parsing
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        Glen Choo <chooglen@google.com>,
+        Teng Long <dyroneteng@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> You mean the internal "struct parallel_processes"? How do you get the
-> parameter there, presumably by passing it to
-> run_processes_parallel{,_tr2}() as a new parameter?
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> @@ -65,6 +66,81 @@ int for_all_bundles_in_list(struct bundle_list *list,
+>  	return 0;
+>  }
+>  
+> +/**
+> + * Given a key-value pair, update the state of the given bundle list.
+> + * Returns 0 if the key-value pair is understood. Returns 1 if the key
+> + * is not understood or the value is malformed.
+> + */
+> +MAYBE_UNUSED
+> +static int bundle_list_update(const char *key, const char *value,
+> +			      struct bundle_list *list)
+> +{
+[snip]
+> +	if (parse_config_key(key, "bundle", &subsection, &subsection_len, &subkey))
+> +		return -1;
 
-Yea I added it as a new parameter...
-
-> The reason for why the "ungroup" wasn't added as a parameter at the time
-> was to avoid the churn of changing every single caller of the API.
->
-> But it should really be a "parameter", and doing it via a struct means
-> adding such parameters doesn't need to change every single caller.
->
-> Then we have outstanding WIP patches for the hook.[ch] API which needed
-> to add two other parameters...
->
-> So I think first ripping off the band-aid of making it painless to
-> extend the interface is the right thing to do, unless I've missed some
-> way of doing it that you've just discovered...
-
-In that case my patch does depend on yours for resubmission, so
-it sounds like if I want to quickly resubmit then I should cherry-pick
-the relevant commits from your WIP branch.
+The comment at the top should say -1 instead of 1.
