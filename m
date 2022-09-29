@@ -2,314 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B9D2C433FE
-	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 19:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7B4CC433F5
+	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 20:14:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229600AbiI2T5c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Sep 2022 15:57:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43822 "EHLO
+        id S229598AbiI2UO2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Sep 2022 16:14:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbiI2T5b (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2022 15:57:31 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90E3C1ED6C1
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 12:57:29 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id r62-20020a252b41000000b006af00577c42so2029956ybr.10
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 12:57:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Cv3e6bZrqeTmkYwdAIin4HLSpTbN9T77Oz/B4YS/kIc=;
-        b=XnKqb7A13awwFHAS0HN7iqNW5im7OY+IwPGpukRl097i1EU6+lk4S55T8+cvLNMbF2
-         UhrCaCh7B7Jz+GYC0irNljkHkKATXURdl+svh6cw5r9p+YjfynjXiQQ2Mfeol6vgIBTU
-         F5ot7WsCyft7y2pdIN32casGgCxdWHSABbV1ttw+dTlo6dkqtwkKQCLPJcxs7yzoa8WT
-         U2msxLyclNOtPyjSRT/fgkYBovvGvmGVw1mLFRcpt4gZx5cAofuY9nB1hx9rE88Y3UoK
-         lE4YnZHs/bgdYhKrzT5mylKkb9TDQyV+2I6hnLo0X3NU1fxFcHx6KBynmz5hVMX5S0MF
-         Hkkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Cv3e6bZrqeTmkYwdAIin4HLSpTbN9T77Oz/B4YS/kIc=;
-        b=PjzXj3hrNEUEk8PPg+grk5W+oLMOAZQKox1WcaulF9EOFLHqKoAx/zu6fWQzoJCk5V
-         cngvPjpDHWF2eeG3QqREYac+agBSt1kuM7AGPpR9WcGuJa6rkIVjRWNUiNazsT24FDnp
-         K9kK8sFh4fuj88BkkQ4cNklOAiZXgWkmXc+TNQd7rOOmifS8MrVO+hOJ6wUz6kr39vUM
-         acXiOgjiuqQSW5r78AbI7xIExpo1LRqzZxiCJ3qwnky+NUdt+tfjqvcxsmixcbMZ6Uaf
-         M2cKNWRP5mzFPk2HO4FuhrkR2or6/94aFdhjtVcaAkPJfBsY8gUk/8fGmOuH2zwJGci3
-         x8IA==
-X-Gm-Message-State: ACrzQf3RKmaSEpH/qGsh3dOPAOYCcucU6EChvSeYyLwIJy1mKf11/1Wn
-        UGksXHJX+4jb4+pIK12H1T3wpcP36aqm74atlAwA
-X-Google-Smtp-Source: AMsMyM7/cythaskGAogBtwJrDlpRqFOzwpv8DkyLUqeCIK7CXjdjSM6Qbm10klzgu0cDaq86NelRhE/C+V/5pijDRHKN
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a0d:d806:0:b0:355:ea3e:cf69 with
- SMTP id a6-20020a0dd806000000b00355ea3ecf69mr1225098ywe.127.1664481448823;
- Thu, 29 Sep 2022 12:57:28 -0700 (PDT)
-Date:   Thu, 29 Sep 2022 12:57:24 -0700
-In-Reply-To: <a0cf68f8ba2adefae4fceeab0d438d05e355e695.1663959324.git.gitgitgadget@gmail.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.38.0.rc1.362.ged0d419d3c-goog
-Message-ID: <20220929195725.1420647-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 01/10] technical doc: add a design doc for the evolve command
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Stefan Xenos via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Christophe Poucet <christophe.poucet@gmail.com>,
-        Stefan Xenos <sxenos@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229488AbiI2UO1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2022 16:14:27 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 970451FD887
+        for <git@vger.kernel.org>; Thu, 29 Sep 2022 13:14:26 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D2CFF1537B5;
+        Thu, 29 Sep 2022 16:14:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=V2AW8EJwC3a6QsbCf2sUOBqLZ1gohZ79EtwWQK
+        4TAxY=; b=YkuVFuz13Oy7t27EWsKlyigxX7NW3Kd+cKJjlY6qlf5HVvGUWGvA9E
+        9bbVOL4ibCJy/zTrAeY8koRXh8IlL3ZI0z3kjrTR+vC3u4kXrBjq6XMvonJ+pfEz
+        2MCWyZV6f2nN6mzwcATZLIf2AXlXItc+6is74dBhbTQH03Di8KgS0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CAF961537B4;
+        Thu, 29 Sep 2022 16:14:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 430DC1537B3;
+        Thu, 29 Sep 2022 16:14:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] promisor-remote: die upon failing fetch
+References: <cover.1664316642.git.jonathantanmy@google.com>
+        <7f6412eb8ce0c47a7645b89fab171a212353f8b2.1664316642.git.jonathantanmy@google.com>
+Date:   Thu, 29 Sep 2022 13:14:22 -0700
+In-Reply-To: <7f6412eb8ce0c47a7645b89fab171a212353f8b2.1664316642.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Tue, 27 Sep 2022 15:12:30 -0700")
+Message-ID: <xmqqh70qndk1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4F18F130-4033-11ED-A766-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Stefan Xenos via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> +Background
-> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> +Imagine you have three sequential changes up for review and you receive =
-feedback
-> +that requires editing all three changes. We'll define the word "change"
-> +formally later, but for the moment let's say that a change is a work-in-=
-progress
-> +whose final version will be submitted as a commit in the future.
-[snip]
-> +Part of making the "evolve" command work involves tracking the edits to =
-a commit
-> +over time, which is why we need an change graph.=20
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Reading later, I thought that a "change" is a connected subset of
-elements in the set of metacommits, so a "change" is already a graph.
-I'll mentally substitute "the concept of a change" for "an [sic] change
-graph" for now - hopefully that's correct.
+> diff --git a/object-file.c b/object-file.c
+> index 5b270f046d..5e30960234 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1599,10 +1599,6 @@ static int do_oid_object_info_extended(struct repository *r,
+>  		if (fetch_if_missing && repo_has_promisor_remote(r) &&
+>  		    !already_retried &&
+>  		    !(flags & OBJECT_INFO_SKIP_FETCH_OBJECT)) {
+> -			/*
+> -			 * TODO Investigate checking promisor_remote_get_direct()
+> -			 * TODO return value and stopping on error here.
+> -			 */
+>  			promisor_remote_get_direct(r, real, 1);
+>  			already_retried = 1;
+>  			continue;
+> diff --git a/promisor-remote.c b/promisor-remote.c
+> index 8b4d650b4c..faa7612941 100644
+> --- a/promisor-remote.c
+> +++ b/promisor-remote.c
+> @@ -4,6 +4,7 @@
+>  #include "config.h"
+>  #include "transport.h"
+>  #include "strvec.h"
+> +#include "packfile.h"
+>  
+>  struct promisor_remote_config {
+>  	struct promisor_remote *promisors;
+> @@ -238,6 +239,7 @@ void promisor_remote_get_direct(struct repository *repo,
+>  	struct object_id *remaining_oids = (struct object_id *)oids;
+>  	int remaining_nr = oid_nr;
+>  	int to_free = 0;
+> +	int i;
+>  
+>  	if (oid_nr == 0)
+>  		return;
+> @@ -255,9 +257,16 @@ void promisor_remote_get_direct(struct repository *repo,
+>  				continue;
+>  			}
+>  		}
+> -		break;
+> +		goto all_fetched;
 
-> +- It can be used as part of other high-level commands that combine or sp=
-lit
-> +  changes.
+OK.  So when fetch_object() says it got everything we asked it to
+give, there is no behaviour change.  But if invocations of
+fetch_objects() on all promisor remotes end unsuccessfully, we see
+if some are supposed to be available from the promisor remote and
+die.
 
-Is the current concept of a change suitable for combining and splitting?
-There is divergence, but that seems like a commit being modified in 2
-different ways, not a commit being split into 2.
+An obvious alternative would be to do without the previous step, and
+instead tighten the callers to react to error return, and then from
+the new code, return a different error return value to allow the
+caller to tell what kind of breakage it got.  But this extra die()
+with more sloppy callers would probably work just fine in practice.
 
-> +Goals
-> +-----
-[snip]
-> +P0. A commit can be obsoleted by more than one replacement (called diver=
-gence).
-> +P0. Users must be able to resolve divergence (convergence).
-
-Is divergence important? It seems to me that both the internals and the
-UX could be simplified if we don't allow divergence, and systems like
-Gerrit don't have it either (as far as I know, in Gerrit, all commits
-bearing the same Change-Id just form a sequence in the order that they
-were pushed to the server, with no branching).
-
-> +Overview
-> +=3D=3D=3D=3D=3D=3D=3D=3D
-> +We introduce the notion of =E2=80=9Cmeta-commits=E2=80=9D which describe=
- how one commit was
-> +created from other commits. A branch of meta-commits is known as a chang=
-e.
-
-"Branch" here is confusing. Do you mean a connected set of meta-commits?
-
-("Branch" has a specific meaning in Git - a ref of the form
-refs/heads/??. If you mean that refs of the form refs/metas/?? point to
-changes in a 1:1 manner, then the term "ref" is appropriate.)
-
-> +Example usage
-> +-------------
-> +# First create three dependent changes
-> +$ echo foo>bar.txt && git add .
-> +$ git commit -m "This is a test"
-> +created change metas/this_is_a_test
-> +$ echo foo2>bar2.txt && git add .
-> +$ git commit -m "This is also a test"
-> +created change metas/this_is_also_a_test
-> +$ echo foo3>bar3.txt && git add .
-> +$ git commit -m "More testing"
-> +created change metas/more_testing
+> +	}
 > +
-> +# List all our changes in progress
-> +$ git change list
-> +metas/this_is_a_test
-> +metas/this_is_also_a_test
-> +* metas/more_testing
-> +metas/some_change_already_merged_upstream
-> +
-> +# Now modify the earliest change, using its stable name
-> +$ git reset --hard metas/this_is_a_test
-> +$ echo morefoo>>bar.txt && git add . && git commit --amend --no-edit
-
-So up to here, I thought that we would have 2 refs metas/this_is_a_test2
-and metas/this_is_a_test, with the latter's commit being one of the
-parents of the former's commit. (This is because we presumably need to
-be able to represent the situation in which the user checks out the
-original "This is a test" commit and modifies it, so we still need to
-hang on to the metas/this_is_a_test.)
-
-> +# Use git-evolve to fix up any dependent changes
-> +$ git evolve
-> +rebasing metas/this_is_also_a_test onto metas/this_is_a_test
-> +rebasing metas/more_testing onto metas/this_is_also_a_test
-> +Done
-
-So I'm surprised that there's no mention of this_is_a_test2 here. In
-addition, linearizing a change like this doesn't seem to be described in
-this document.
-
-Having said that, I don't think that linearizing changes is important to
-the goals of this "evolve" concept, so maybe one thing we can do is to
-not support it at all.
-
-Fast-forward...
-
-> +# Fetch the latest code from origin/master and use git-evolve
-> +# to rebase all dependent changes.
-> +$ git fetch origin master
-> +$ git evolve origin/master
-> +deleting metas/some_change_already_merged_upstream
-> +rebasing metas/this_is_a_test onto origin/master
-> +rebasing metas/this_is_also_a_test onto metas/this_is_a_test
-> +rebasing metas/more_testing onto metas/this_is_also_a_test
-> +rebasing metas/unrelated_change onto origin/master
-> +Conflict detected! Resolve it and then use git evolve --continue to resu=
-me.
-> +
-> +# Sort out the conflict
-> +$ git mergetool
-> +$ git evolve origin/master
-> +Done
-
-This is what I expected from the evolve mechanism, so that's great :-)
-
-The conflict resolution needs to be discussed further, though. It is
-superficially similar to rebase, but with rebase, the ref being rebased
-is only rewritten at the end of the process, so it is always possible to
-abort halfway. Here, multiple refs are written during the process, so it
-is not as easy to abort.
-
-> +Parent-type
-> +-----------
-> +The =E2=80=9Cparent-type=E2=80=9D field in the commit header identifies =
-a commit as a
-> +meta-commit and indicates the meaning for each of its parents. It is nev=
-er
-> +present for normal commits. It contains a space-deliminated list of enum=
- values
-> +whose order matches the order of the parents. Possible parent types are:
-> +
-> +- c: (content) the content parent identifies the commit that this meta-c=
-ommit is
-> +  describing.
-> +- r: (replaced) indicates that this parent is made obsolete by the conte=
-nt
-> +  parent.
-> +- o: (origin) indicates that the content parent was generated by cherry-=
-picking
-> +  this parent.
-> +- a: (abandoned) used in place of a content parent for abandoned changes=
-. Points
-> +  to the final content commit for the change at the time it was abandone=
-d.
-
-How would the "o" parent be useful to the user?
-
-> +Changes
-> +-------
-[snip]
-> +Changes are also stored in the refs/hiddenmetas namespace. Hiddenmetas h=
-olds
-> +metadata for historical changes that are not currently in progress by th=
-e user.
-> +Commands like filter-branch and other bulk import commands create metada=
-ta in
-> +this namespace.
-> +
-> +Note that the changes in hiddenmetas get special treatment in several wa=
-ys:
-> +
-> +- They are not cleaned up automatically once merged, since it is expecte=
-d that
-> +  they refer to historical changes.
-> +- User commands that modify changes don't append to these changes as the=
-y would
-> +  to a change in refs/metas.
-> +- They are not displayed when the user lists their local changes.
-
-The presence of refs/hiddenmetas further muddies the already unclear
-lifecycle of meta-commits and their refs. Non-hidden meta-commits get
-cleaned up when their latest commit appears upstream, so they may get
-deleted when the user doesn't expect it (especially if the user is
-using, say, a prefetch mechanism that downloads refs at night). We're
-adding to this a class of refs that don't get cleaned up at all.
-
-Besides the disk space taken by the meta-commits, having more refs
-typically reduces performance e.g. because all refs generally take part
-in packfile negotiation during fetching. (And they probably should
-continue with this behavior because sharing meta-commits is one of the
-features we want.) So I think that having a clear cleanup strategy is a
-good idea, and permanent archiving probably shouldn't be it.
-
-> +Change creation
-> +---------------
-> +Changes are created automatically whenever the user runs a command like =
-=E2=80=9Ccommit=E2=80=9D
-> +that has the semantics of creating a new change. They also move forward
-> +automatically even if they=E2=80=99re not checked out. For example, when=
-ever the user
-> +runs a command like =E2=80=9Ccommit --amend=E2=80=9D that modifies a com=
-mit, all branches in
-> +refs/metas that pointed to the old commit move forward to point to its
-> +replacement instead.
-
-What happens in the following?
-
-  $ echo "hello" >hello.txt
-  $ git add hello.txt
-  $ git commit -m "hello"
-  $ git tag hello
-  $ echo "one" >hello.txt
-  $ git commit -a --amend # this updates refs/metas/hello
-  $ git checkout hello
-  $ echo "one" >hello.txt
-  $ git commit -a --amend # does this update refs/metas/hello too?
-
-> +Sharing changes
-> +---------------
-> +Change histories are shared by pushing or fetching meta-commits and chan=
-ge
-> +branches. This provides users with a lot of control of what to share and
-> +repository implementations with control over what to retain.
-> +
-> +Users that only want to share the content of a commit can do so by pushi=
-ng the
-> +commit itself as they currently would. Users that want to share an edit =
-history
-> +for the commit can push its change, which would point to a meta-commit r=
-ather
-> +than the commit itself if there is any history to share. Note that multi=
-ple
-> +changes can refer to the same commits, so it=E2=80=99s possible to const=
-ruct and push a
-> +different history for the same commit in order to remove sensitive or ir=
-relevant
-> +intermediate states.
-
-It looks difficult to remove such intermediate states, but maybe that
-doesn't have to be dealt with in the initial design.
-
-> +Checkout
-> +--------
-> +Running checkout on a change by name has the same effect as checking out=
- a
-> +detached head pointing to the latest commit on that change-branch. There=
- is no
-> +need to ever have HEAD point to a change since changes always move forwa=
-rd when
-> +necessary, no matter what branch the user has checked out
-> +
-> +Meta-commits themselves cannot be checked out by their hash.
-
-This is the same behavior as for annotated tags, but I guess we can't
-use them because those can only have one referent.
+> +	for (i = 0; i < remaining_nr; i++) {
+> +		if (is_promisor_object(&remaining_oids[i]))
+> +			die(_("could not fetch %s from promisor remote"),
+> +			    oid_to_hex(&remaining_oids[i]));
+>  	}
+>  
+> +all_fetched:
+>  	if (to_free)
+>  		free(remaining_oids);
+>  }
