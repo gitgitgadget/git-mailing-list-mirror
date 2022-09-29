@@ -2,68 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F4BFC433FE
-	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 20:15:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02B4DC4332F
+	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 20:52:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbiI2UPU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Sep 2022 16:15:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52780 "EHLO
+        id S229772AbiI2UwZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Sep 2022 16:52:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbiI2UPS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2022 16:15:18 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 020E65F225
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 13:15:16 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3D5E613914A;
-        Thu, 29 Sep 2022 16:15:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yWeUc39ZjMHndO1KISZLSp8nN/AOOcV4P1WY2L
-        gEY3g=; b=F5obPY/8EkmVc/VkDUiKvnXYw6rP1Oay5rLQaPwEdwsnCQ6Qw0cfAX
-        feP1fAnA4aqlvwtLKmkAzbdXKNrUtvGQtJ1js5o36Uxyu03s/AbkOVvxbok/xIa/
-        DTzW9RKPQ2zYW2VZBKoeyX2ungnd74dtLN2RAm6FkIEbu2zQpN7pE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 34E98139147;
-        Thu, 29 Sep 2022 16:15:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 82A20139146;
-        Thu, 29 Sep 2022 16:15:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Fail early when partial clone prefetch fails
-References: <cover.1664316642.git.jonathantanmy@google.com>
-Date:   Thu, 29 Sep 2022 13:15:14 -0700
-In-Reply-To: <cover.1664316642.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Tue, 27 Sep 2022 15:12:28 -0700")
-Message-ID: <xmqqczbendil.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229763AbiI2UwW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2022 16:52:22 -0400
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67A2A177377
+        for <git@vger.kernel.org>; Thu, 29 Sep 2022 13:52:21 -0700 (PDT)
+Received: by mail-yb1-xb2f.google.com with SMTP id 203so3000377ybc.10
+        for <git@vger.kernel.org>; Thu, 29 Sep 2022 13:52:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=fBblR2NuvxYP786tnkxG4oDd0YissiE4uXMobDEVOy0=;
+        b=ZW1JhzMA2ssHC0PlobYQJdFEZbOVGwqIUX6oSO0jMD/lDRoJSeASlFtkQYOmmSlouZ
+         Vz5PWX3mYcvayUwbp42uav81p+MbNQZkL6ru+SG5haFwg6Fjftg02dQ/xJGNTN5knaoO
+         OsFaGKwfqvLdBTsAE8T3UzFs/lSzwGpvpYU0q/hTYhKeF60/c+2ffkeczyPi/ioCavYw
+         hvDgCL/OE3ZnAQNFai2trhHUi1Xn/BZo8qlSesA23BK8eexKqnomzajcOX9UBnlyfGSz
+         k4vdjHAnywA7QRV40HedfxMs2xew1O3bPkEfHsu78a/78guPLmoikRXNqGO4XeXuB2r9
+         /51w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=fBblR2NuvxYP786tnkxG4oDd0YissiE4uXMobDEVOy0=;
+        b=VBqr07i5G+J7R6XPUqhHIt3mAHTZ0iUivS7T2BP8ncL63e37Py38IAaiXIk2OXXJub
+         gruKxAMceBus7wlcw3y8Qez1GeQYSdqGxSn23JkXpAq4j3VfGi3r0ltG3a4Kj4W06JVJ
+         sz7YQUKTONT9xuMkgtG8ZBmyqBuO0j3virvXEd24+DbWBUlCyp4VVPZ0YEp22gwcT9jA
+         AeWoj2QXt2EwasPG8qPGxO+OOipp7ZFAU/SH7cWOc+999L0czMn85wufOlRiVPWUunJL
+         CR4VwgOnnwZ3A88n6acOd7KhnhqyFmVUQ2kFvr4Jt+/1jZdeJdRnSDQ+1DyEaU9foHtX
+         wzJg==
+X-Gm-Message-State: ACrzQf0v+wI/pqCgPzmUqbtFUtKy63gx23g/r8LcYwtunWonJb58k8Ik
+        mCS9XKmn/kYUPT8wfHNqeJTdqOjMRs6dOhx7izanDH5eKbo=
+X-Google-Smtp-Source: AMsMyM6c3paDWKou1rP8uK9ssjWpAZFIt/j52Kk6oS/oXNI+CXU95xPYfIpMq/ZIaTU/c3eImKrvQkHMkiumHJNExuQ=
+X-Received: by 2002:a25:a42a:0:b0:6a9:82d4:147 with SMTP id
+ f39-20020a25a42a000000b006a982d40147mr5364055ybi.417.1664484740575; Thu, 29
+ Sep 2022 13:52:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6E3FA6C6-4033-11ED-BE4D-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+References: <20220922232947.631309-1-calvinwan@google.com> <20220922232947.631309-2-calvinwan@google.com>
+ <xmqqy1u9uddc.fsf@gitster.g> <CAFySSZA=tThoHdTY7+bMStvC=xeeyMiv4aVDYt-eNW2mQE10qg@mail.gmail.com>
+ <220927.86ill9yymv.gmgdl@evledraar.gmail.com> <CAFySSZBSAW=zea8UoMiaQkf8rdJUBGHDYZQFkPLW7mRSciS-FA@mail.gmail.com>
+ <220927.86fsgcy5j9.gmgdl@evledraar.gmail.com> <CAFySSZB3hp2WWk0bL77FBR91ueJ1eJFtuVCoyE-ooVT77Vo_vw@mail.gmail.com>
+ <220928.86bkr0xd9w.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220928.86bkr0xd9w.gmgdl@evledraar.gmail.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Thu, 29 Sep 2022 13:52:09 -0700
+Message-ID: <CAFySSZDF_nxGJCjhi38nb5R3jtPBVqZbMCqKxmTagUqCbwx7rw@mail.gmail.com>
+Subject: Re: [PATCH 1/4] run-command: add pipe_output to run_processes_parallel
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        emilyshaffer@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+> You mean the internal "struct parallel_processes"? How do you get the
+> parameter there, presumably by passing it to
+> run_processes_parallel{,_tr2}() as a new parameter?
 
-> This fixes something we noticed at $DAYJOB, when a partial clone
-> prefetch intermittently fails but all subsequent fetches work. More
-> details are in patch 2's commit message.
->
-> Jonathan Tan (2):
->   promisor-remote: remove a return value
->   promisor-remote: die upon failing fetch
->
->  object-file.c     |  4 ----
->  promisor-remote.c | 23 ++++++++++++++---------
->  promisor-remote.h | 11 +++++------
->  3 files changed, 19 insertions(+), 19 deletions(-)
+Yea I added it as a new parameter...
 
-No changes to t/ directory?
+> The reason for why the "ungroup" wasn't added as a parameter at the time
+> was to avoid the churn of changing every single caller of the API.
+>
+> But it should really be a "parameter", and doing it via a struct means
+> adding such parameters doesn't need to change every single caller.
+>
+> Then we have outstanding WIP patches for the hook.[ch] API which needed
+> to add two other parameters...
+>
+> So I think first ripping off the band-aid of making it painless to
+> extend the interface is the right thing to do, unless I've missed some
+> way of doing it that you've just discovered...
+
+In that case my patch does depend on yours for resubmission, so
+it sounds like if I want to quickly resubmit then I should cherry-pick
+the relevant commits from your WIP branch.
