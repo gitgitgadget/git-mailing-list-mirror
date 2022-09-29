@@ -2,72 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 865CCC433F5
-	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 11:27:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58936C433FE
+	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 15:29:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234289AbiI2L1U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Sep 2022 07:27:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37286 "EHLO
+        id S235918AbiI2P31 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Sep 2022 11:29:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232298AbiI2L1R (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2022 07:27:17 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB6B14D4BA
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 04:27:16 -0700 (PDT)
-Received: (qmail 10981 invoked by uid 109); 29 Sep 2022 11:27:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 29 Sep 2022 11:27:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9624 invoked by uid 111); 29 Sep 2022 11:27:15 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 29 Sep 2022 07:27:15 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 29 Sep 2022 07:27:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 2/3] read-cache: read on-disk entries in byte order
-Message-ID: <YzWBEoRkCmbUkIs8@coredump.intra.peff.net>
-References: <YzPLBN09zzlTdNgc@coredump.intra.peff.net>
- <YzPLuizoOlDuPu4G@coredump.intra.peff.net>
+        with ESMTP id S235899AbiI2P3S (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2022 11:29:18 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32D7515D66E
+        for <git@vger.kernel.org>; Thu, 29 Sep 2022 08:29:15 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 019E615EA47;
+        Thu, 29 Sep 2022 11:29:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Dc5BfgM8lf2Iv+XHgjAWM5Oadr81rSyQVjuCxN
+        w0hbc=; b=QqZDw+rNA2l6uLIH/ncURuIt6REKlg8n6X+iuUIYuGA+sb4v3ZiZJ8
+        8/BUH9vDD+foFXOa/kSQCQPSXUBN+aezE8WT/TGo7iiPiJ/5Y3tWcfCecYo2/bO3
+        E5wlrIQp7zhqduzvDqiAtBcgk80DFJQl9TfUwUM1mNtXIUPImPOdE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED32D15EA46;
+        Thu, 29 Sep 2022 11:29:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6426715EA43;
+        Thu, 29 Sep 2022 11:29:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: [PATCH] test-lib: have SANITIZE=leak imply TEST_NO_MALLOC_CHECK
+References: <patch-1.1-e31681731b7-20220928T095041Z-avarab@gmail.com>
+        <a013246a-777c-acf8-d2c1-3bf9b78aa9e8@dunelm.org.uk>
+Date:   Thu, 29 Sep 2022 08:29:13 -0700
+In-Reply-To: <a013246a-777c-acf8-d2c1-3bf9b78aa9e8@dunelm.org.uk> (Phillip
+        Wood's message of "Thu, 29 Sep 2022 10:09:58 +0100")
+Message-ID: <xmqqill6p5bq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YzPLuizoOlDuPu4G@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 796BD952-400B-11ED-9339-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 28, 2022 at 12:21:15AM -0400, Jeff King wrote:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> The downside is that we're copying the data an extra time. It's not very
-> much data, and it's all fixed size, so the compiler should be able to do
-> a reasonable job of optimizing here. But I didn't time the potential
-> impact.
+> Oh so the LD_PRELOAD breaks both sanitizers but only one of them complains
+>
+>>   # Add libc MALLOC and MALLOC_PERTURB test only if we are not executing
+>> -# the test with valgrind and have not compiled with SANITIZE=address.
+>> +# the test with valgrind and have not compiled with conflict SANITIZE
+>> +# options.
+>>   if test -n "$valgrind" ||
+>> +   test -n "$SANITIZE_LEAK" ||
+>>      test -n "$SANITIZE_ADDRESS" ||
+>>      test -n "$TEST_NO_MALLOC_CHECK"
+>
+> The indentation is dodgy, also it would be nice to keep these in
+> alphabetical order. Other than that this looks like a sensible fix.
 
-I timed this using "test-tool read-cache". It's kind of an artificial
-benchmark, but it does isolate the code we're touching here. The results
-are...not good. Here's the time to read the index of linux.git 1000
-times, before and after this reordering patch:
+Thanks, both.
 
-  Benchmark 1: ./test-tool.old read-cache 1000
-    Time (mean ± σ):      2.870 s ±  0.073 s    [User: 2.555 s, System: 0.315 s]
-    Range (min … max):    2.789 s …  3.001 s    10 runs
-  
-  Benchmark 2: ./test-tool.new read-cache 1000
-    Time (mean ± σ):      3.180 s ±  0.080 s    [User: 2.849 s, System: 0.331 s]
-    Range (min … max):    3.092 s …  3.297 s    10 runs
-  
-  Summary
-    './test-tool.old read-cache 1000' ran
-      1.11 ± 0.04 times faster than './test-tool.new read-cache 1000'
+Will re-queue with a local fix-up for the indentation.  As to the
+ordering, I usually prefer to have new ones appended to the last
+unless there are other reasons, and "keep them sorted" is such a
+reason, so I may do so as well while at it.
 
-I think that's probably the nail in the coffin for my proposed approach.
-To be fair, it's only .3ms extra for a normal program which reads the
-index once. That's not that big in absolute numbers. But there are
-larger index files in the wild. And the improvement in simplicity and
-readability is simply not that great.
 
--Peff
+
