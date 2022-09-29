@@ -2,124 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ABFDC433FE
-	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 21:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BB4DC433F5
+	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 21:58:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229944AbiI2Vt4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Sep 2022 17:49:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35342 "EHLO
+        id S229532AbiI2V6N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Sep 2022 17:58:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229668AbiI2Vty (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2022 17:49:54 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86AF6476FB
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 14:49:53 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id bk15so4086762wrb.13
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 14:49:53 -0700 (PDT)
+        with ESMTP id S229482AbiI2V6M (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2022 17:58:12 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB1C414F811
+        for <git@vger.kernel.org>; Thu, 29 Sep 2022 14:58:11 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id n1-20020a170902f60100b00179c0a5c51fso1820676plg.7
+        for <git@vger.kernel.org>; Thu, 29 Sep 2022 14:58:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:to:subject:from:to:cc
-         :subject:date;
-        bh=sSqR+IeCFf9O8uu1IghqtNUGsbD8hScZs0b/qTQnouQ=;
-        b=jG6G4XFOU8amdWyDDfEgqQbfWR/Q0aXbZ9jH+RGjWzcRr9Vwi84kgH+g9sWStfCHYw
-         LBqGrjQWHXkF2FLU8esRzcJuaZh07ta1x3afaikylnUDbQyvw/E6DfoaHHUEvXvkxmSE
-         yxcHurFSrkT/DCkasKRXJkYvvSNv0kr33SrPcCcIpNn4FifLmYrc5pWjVAG7eFYT8Jz2
-         +g+jh0ntv664811X71D1YzE2y2iyf+GgCmGnJar+dHmkmelCJA/oeNB8hYrrKkQn82pY
-         OMORRlLhPbJqdIDAbtq6Pv3CzsfpGx0t+tb+Pb1Or1wmF+014h1sDbiIuxDBUMOAymPY
-         OsWg==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=bNJVmGuycnpUTrbk2mZ7qWFTvJYs0/4vpATsaQymfNw=;
+        b=L3YXCzmsUJ8KXkqJ/3Jl6vnyJlhWpcKee+2tcjjiMSxa3Peotsq0kUKxvTjekYr4lN
+         02hSZ/KCIMLJnmGBM+a3Yd9yI5sJxj/TAVRncnQV65fQ7xaAe0Asfs6Hr8sr8N+DT10C
+         qBfCUhFaeXlB9p3Drgbony9iNUBqCjwXM1gMnv0mAA3mydHLZURg2KxRBt26E+yCcbpu
+         OloHQUkeQL/phf4266y1UAJPANYoRNH0JLlwhd2idcx44f2WQDueMzQRRTzpBRZVT2bT
+         i4eNsc/ZiVnBQ229wK/udQkHVgmmdrlyB/cTlZCOPpvPiwrseSuzq62SJjwOkFFbb3WG
+         6dBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:to:subject
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=sSqR+IeCFf9O8uu1IghqtNUGsbD8hScZs0b/qTQnouQ=;
-        b=cM7g/QNxa2PVadWS/SqW4dfvHUG9h7mxVg/ffomGz/WuH47Mt35WLC/hYn4x8e3nHr
-         jjMkjEDMEibMrEMBX7u3aYy7pueofvTOSqnJJSdb2hf6O2abQnNSHsLpxh+fozBruAH6
-         WYY4Py3lfS08hQNbclRsHr6hjOUuUwNhZ8PxY2HTdsVhfpllC66nkWIKQe3zFw/g6QNQ
-         +fu4W6SnLQ2v0XDZeqD8bQtZzK1wk6iYWAUnXoZGxCBYmSzBkbQJlQmR+nQVDnW52avi
-         xIuawHRA4wiVzGgLfvIGxvzRKkwD42MZ4fsf3CQfOW5w0JxF6W8qH/W29A6TZeqlzSoU
-         d/pg==
-X-Gm-Message-State: ACrzQf0uqbGr6LEbfTGByyFjtSRCzvyiZ0nIbY5RXZFtGYtoJGI2qa1Z
-        3RVSxlgV8MBTUMLPVvsVeCMOjXJMKTKa0w==
-X-Google-Smtp-Source: AMsMyM7K9lco4R42RMpZNipWavbLQI3YGNK4aAIgOe6X3ogKNz3nazEbYvZrxd0eWDaOi1w8ltVqKg==
-X-Received: by 2002:adf:f18c:0:b0:22c:df1c:92cd with SMTP id h12-20020adff18c000000b0022cdf1c92cdmr1136744wro.52.1664488191976;
-        Thu, 29 Sep 2022 14:49:51 -0700 (PDT)
-Received: from [192.168.2.52] (5.83-213-116.dynamic.clientes.euskaltel.es. [83.213.116.5])
-        by smtp.gmail.com with ESMTPSA id t20-20020a05600c199400b003b4fe03c881sm5352815wmq.48.2022.09.29.14.49.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Sep 2022 14:49:51 -0700 (PDT)
-Subject: Re: [PATCH] branch: do not fail a no-op --edit-desc
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqczbftina.fsf@gitster.g>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <ba8a503b-76e2-5de9-1082-3b4c6ecd0cc3@gmail.com>
-Date:   Thu, 29 Sep 2022 23:49:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <xmqqczbftina.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bNJVmGuycnpUTrbk2mZ7qWFTvJYs0/4vpATsaQymfNw=;
+        b=lSy1OX3MRURYMo9wEXgIxr3KPKG8TJ8UcW8fntZKK0iDajm48PCD4On0Uhz9BAbKIb
+         GDptCdEXyPgEIcrb3wIR/SPlPS4J3kQx+0GsX2ibhQzJ9T/URwg+d9AiKPWIcmpY9jUF
+         lqNbvnLoakZ7EUlXiVuyeAG5Ri0kW6m4Cb4JEp8jwaCi0TZOJHLo1ms7biCSq74gYCV5
+         SlVBpd3wYocXPErx97OlYcsYPgPidz6hchCeFrTO551B9WpQFdExJzFPBAb6H/0p4es1
+         icPQ2QJO+cMraIWnHd7zM8tL+VGubxb+q5gb332cZU/+2Jo6CnUNNUzMxNZ/TronrI5E
+         fXFA==
+X-Gm-Message-State: ACrzQf12nCvgW2owuWZ29Xv9dSuVKtwYwWtAOip80tVYNzlFYkmyGVQb
+        gdMqQHlKpXZvkWlzkdqMXpaVIIGps9UkMzY8dJDg
+X-Google-Smtp-Source: AMsMyM7Cggr5Q1MlYFTk4HXddKAQg8uKLbEOscrFMeuRLuuDejsD2+5+B9GERXTWwB8cd20XaQs/MsWJ367CY0YjItU9
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:c986:b0:205:f08c:a82b with
+ SMTP id w6-20020a17090ac98600b00205f08ca82bmr51056pjt.1.1664488691142; Thu,
+ 29 Sep 2022 14:58:11 -0700 (PDT)
+Date:   Thu, 29 Sep 2022 14:58:08 -0700
+In-Reply-To: <a6ab8f7c69925b5dfd95f3e4c83c6ccd4d2dfee3.1662734015.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.38.0.rc1.362.ged0d419d3c-goog
+Message-ID: <20220929215808.1438418-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v2 9/9] bundle-uri: fetch a list of bundles
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        Glen Choo <chooglen@google.com>,
+        Teng Long <dyroneteng@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let me try again, I think my review was not good :-)
-
-On 28/9/22 21:15, Junio C Hamano wrote:
-> In a repository on a branch without branch description, try running
-
-It is a bit confusing the construction "a repository on a branch
-without branch description" as "branch" have "repository" inherent.
-So "On a branch without description.." holds the same meaning with less
-distracting words.
-
-> The simpler solution of course introduces TOCTOU, but you are
-
-I like that the message introduces an appropriate term that also can
-be a trigger for some to learn something without distracting others.
-Instead of just using: "BUG"
-
-> fooling yourself in your own repository.  Not overwriting the branch
-> description on the same branch you added in another window, while
-> you had this other editor open, may even be a feature ;-)
-
-But.. do we want to implement this this way? Maybe we will have to
-implement on purpose this feature in some future refactorization?
-
-And.. the message does not make it clear the situation: if there is
-a previous description, will clear; if not, will keep.
-
->  test_expect_success 'use --edit-description' '
-> +	EDITOR=: git branch --edit-description &&
-> +	test_must_fail git config branch.main.description &&
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> +static int download_bundle_to_file(struct remote_bundle_info *bundle, void *data)
+> +{
+> +	int res;
+> +	struct bundle_list_context *ctx = data;
 > +
->  	write_script editor <<-\EOF &&
->  		echo "New contents" >"$1"
->  	EOF
-> 
+> +	if (ctx->mode == BUNDLE_MODE_ANY && ctx->count)
+> +		return 0;
+> +
+> +	res = fetch_bundle_uri_internal(ctx->r, bundle, ctx->depth + 1, ctx->list);
+> +
+> +	/*
+> +	 * Only increment count if the download succeeded. If our mode is
+> +	 * BUNDLE_MODE_ANY, then we will want to try other URIs in the
+> +	 * list in case they work instead.
+> +	 */
+> +	if (!res)
+> +		ctx->count++;
+> +	return res;
+> +}
 
-If we want that feature, should we test for it? (do not take
-the snippet as tested...):
+So this returns nonzero if a download fails...
 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index d5a1fc1375..aa5ee14bae 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1393,6 +1393,16 @@ test_expect_success 'use --edit-description' '
-        EOF
-        EDITOR=./editor git branch --edit-description &&
-        echo "New contents" >expect &&
-+       write_script editor <<-\EOF &&
-+               if [ -z "$NA" ]; then
-+                       NA=description GIT_EDITOR=./$0 git branch --edit-description
-+               fi
-+               echo $NA >$1
-+       EOF
-+       EDITOR=./editor git branch --edit-description &&
-+       test_must_fail git config branch.main.description &&
-+       EDITOR=./editor git branch --edit-description &&
-+       git config branch.main.description &&
-        test_cmp expect EDITOR_OUTPUT
+> +static int download_bundle_list(struct repository *r,
+> +				struct bundle_list *local_list,
+> +				struct bundle_list *global_list,
+> +				int depth)
+> +{
+> +	struct bundle_list_context ctx = {
+> +		.r = r,
+> +		.list = global_list,
+> +		.depth = depth + 1,
+> +		.mode = local_list->mode,
+> +	};
+> +
+> +	return for_all_bundles_in_list(local_list, download_bundle_to_file, &ctx);
+> +}
+
+...and for_all_bundles_in_list does not proceed with the rest of the
+loop if any callback invocation returns nonzero. Don't we need to
+continue retrying the others if the mode is ANY?
+
+> +static int attempt_unbundle(struct remote_bundle_info *info, void *data)
+> +{
+> +	struct attempt_unbundle_context *ctx = data;
+> +
+> +	if (info->unbundled || !unbundle_from_file(ctx->r, info->file)) {
+> +		ctx->success_count++;
+> +		info->unbundled = 1;
+> +	} else {
+> +		ctx->failure_count++;
+> +	}
+> +
+> +	return 0;
+> +}
+
+Do we need to handle the case in which a file is missing but it's
+expected because the mode is ANY and another file was successfully
+downloaded?
+
+> +static int unbundle_all_bundles(struct repository *r,
+> +				struct bundle_list *list)
+> +{
+> +	int last_success_count = -1;
+> +	struct attempt_unbundle_context ctx = {
+> +		.r = r,
+> +	};
+> +
+> +	/*
+> +	 * Iterate through all bundles looking for ones that can
+> +	 * successfully unbundle. If any succeed, then perhaps another
+> +	 * will succeed in the next attempt.
+> +	 */
+> +	while (last_success_count < ctx.success_count) {
+> +		last_success_count = ctx.success_count;
+> +
+> +		ctx.success_count = 0;
+> +		ctx.failure_count = 0;
+> +		for_all_bundles_in_list(list, attempt_unbundle, &ctx);
+
+I think it would have been clearer if the invocation to
+for_all_bundles_in_list were to stop early if a bundle has been
+successfully unbundled, and then you can just run this loop n times,
+instead of needing to reset the success count each time in order to
+check that the latest count is more than the prior one. But this works
+too.
+
+[snip tests]
+
+I see that there are ALL tests, but could we have an ANY test as well?
