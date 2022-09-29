@@ -2,88 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20CD2C04A95
-	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 01:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67E62C32771
+	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 03:05:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234403AbiI2B4Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Sep 2022 21:56:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42228 "EHLO
+        id S234078AbiI2DFI convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 28 Sep 2022 23:05:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234569AbiI2B4I (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Sep 2022 21:56:08 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F017FBF72
-        for <git@vger.kernel.org>; Wed, 28 Sep 2022 18:56:07 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 82F7B1B9846;
-        Wed, 28 Sep 2022 21:56:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZMJppkLdkety
-        V7T8Cfpby6NnT0zoh1uzBLaNlTEG8UI=; b=fVOA/Iwj4w9h0CGnNSVrsrPgnvRE
-        iCbTz2L/2nZt9/djAYuq2cud8L6T6a7nk/OxmNbCMRRiega6l09tsYz5UT7WgAL+
-        U/XdpZH+9kVwx4LxybCUC5AeE3noiNYAHG2gRw6XcWrgaFnnR2HDIhTiHSnki89/
-        xlm1x6e9YbtQZzY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7BFA01B9845;
-        Wed, 28 Sep 2022 21:56:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 31E741B9844;
-        Wed, 28 Sep 2022 21:56:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] branch: description for non-existent branch errors
-References: <c333cc4b-12a1-82b6-0961-1c42080dad15@gmail.com>
-        <858edf12-67b1-5e2c-dd2e-3eb476530803@gmail.com>
-        <xmqqleq6ovh4.fsf@gitster.g>
-        <26a5cbe2-d821-e7f6-e56f-4ad90ef2cf2d@gmail.com>
-        <xmqqedvw1mmu.fsf@gitster.g> <xmqqzgejtmkd.fsf@gitster.g>
-        <a55cf3b7-218d-3c8b-ae1c-c09d49caeda8@gmail.com>
-Date:   Wed, 28 Sep 2022 18:56:03 -0700
-In-Reply-To: <a55cf3b7-218d-3c8b-ae1c-c09d49caeda8@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-        message of "Thu, 29 Sep 2022 01:59:35 +0200")
-Message-ID: <xmqqmtajosek.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S233492AbiI2DFE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Sep 2022 23:05:04 -0400
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B777CDFA5
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 20:05:00 -0700 (PDT)
+Received: by mail-yb1-f175.google.com with SMTP id u64so30855ybb.1
+        for <git@vger.kernel.org>; Wed, 28 Sep 2022 20:05:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=omuIpT2SB5en2XkgnVBOksu57vcg48uVUkAUrlvOfdg=;
+        b=LFojlbk6FIIztfx3PjTVqX0a0LZ83IgsrPZMjoOGS+9sdGNUuIrk8CVOhQ2F5o4i1F
+         BfYyPnGEVwV1syYgvNqdPqCge3A0n+3fXVoGca9PtnZp2eb1LZpbc2Z5k4p4EvEr3c4D
+         EsXVSMl7vSx4linB3B5frsftjLy0EASuNKhAAisjBZclyv3ZbLsVxxULeuGFWBOcxTzh
+         yd67JXxyrTT9lbPyJWM7UTTZGmu6aB3TXYqW36hRxk2KlnE7Dy46jlmzOWk/Jin7gMKe
+         nzb6vzPtSwdw2BCKOpMw33mK/2x7/8ITcJcPPzQGfqGUjAX2KLUZKNwGeJx9pSYNmbtz
+         ul3A==
+X-Gm-Message-State: ACrzQf3slBWfQlX891wVwz+9TY728gWHN9XXlSjbFD7EWOtFWfAeJ498
+        N4qGythTwLrcuw4N8a8qGiGIZnMGqXzaWhzghmpEDC2kldOIWQ==
+X-Google-Smtp-Source: AMsMyM7ktyYT1BcUKPj3iYXu8EnBrTmBea1YozZG1C9YENHUw2Cg7z6ltT51KrnY82VyzpWTWpHSPbz9cq5q/J/PG5E=
+X-Received: by 2002:a25:d457:0:b0:6bc:92dd:9462 with SMTP id
+ m84-20020a25d457000000b006bc92dd9462mr1167295ybf.326.1664420699826; Wed, 28
+ Sep 2022 20:04:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E030C93A-3F99-11ED-BD61-C2DA088D43B2-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <cover-00.34-00000000000-20220902T092734Z-avarab@gmail.com>
+ <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com> <patch-v2-20.35-1c2bc223c5d-20220928T082458Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-20.35-1c2bc223c5d-20220928T082458Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 28 Sep 2022 23:04:49 -0400
+Message-ID: <CAPig+cS01QEcAvr0yqhdhGc8MtvHMofKOHSeJZy2yFqq0Oqo8Q@mail.gmail.com>
+Subject: Re: [PATCH v2 20/35] doc txt & -h consistency: add missing options
+ and labels
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Victoria Dye <vdye@github.com>, Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+On Wed, Sep 28, 2022 at 4:43 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> Fix various issues of SYNOPSIS and -h output syntax where:
+>
+>  * Options such as --force were missing entirely
+>  * ...or the short option, such as -f
+>
+>  * We said "opts" or "options", but could instead enumerate
+>    the (small) set of supported options
+>
+>  * argument labels were missing entirely (ls-remote)
+>
+>  * How we referred to an argument was inconsistent between the two,
+>    e.g. <pack> v.s. <pack>.idx.
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
 
-> Those changes I think are worth doing along with the fix for the leak
-> of 'static const char *head'.
+A few minor comments (probably not worth a re-roll)...
 
-Let's not grow the scope of the topic forever.  It will increase the
-chance of new mistakes and throw us into endless iterations.
+> diff --git a/builtin/help.c b/builtin/help.c
+> @@ -88,7 +88,7 @@ static struct option builtin_help_options[] = {
+>  static const char * const builtin_help_usage[] = {
+> -       "git help [-a|--all] [--[no-]verbose]] [--[no-]external-commands] [--[no-]aliases]",
+> +       "git help [-a|--all] [--[no-]verbose] [--[no-]external-commands] [--[no-]aliases]",
 
-I think the posted patch plus tests for the new behaviour (i.e. no
-longer we give a misleading error message) is a good stopping point.
+This is merely removing an extra "]", thus should it instead be
+bundled along with [12/35] (after generalizing the commit message of
+[12/35] a bit)?
 
-Extending the behaviour to allow some of these operations that
-currently fail on an unborn branch may or may not make sense, and
-that should be discussed separately, possibly for each option.
-After the dust from the current one settles.
+> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+> @@ -20,6 +20,7 @@ static const char * const send_pack_usage[] = {
+>            "              [--verbose] [--thin] [--atomic]\n"
+> +          "              [--[no-]signed|--signed=(true|false|if-asked)]\n"
 
-Personally, I do not think a "static const char *" variable that
-holds onto an allocated piece of memory smaller than 1kB is
-something we should worry about.  Leak checkers should also be smart
-enough not to warn about such a variable, shouldn't they?
+Should there be spaces around the leftmost vertical bar per [14/35]?
 
-> And then the error descriptions.  Not just the capitalization but
-> some similar but different messages too.
+    [--[no-]signed | --signed=(true|false|if-asked)]
 
-Yup, and that is probably a separate patch after all of the above
-settles.
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> @@ -20,7 +20,7 @@
+>  static char const * const builtin_sparse_checkout_usage[] = {
+> -       N_("git sparse-checkout (init | list | set | add | reapply | disable) <options>"),
+> +       N_("git sparse-checkout (init | list | set | add | reapply | disable) [<options>]"),
 
-Thanks.
+Does this change belong in [15/35] where you also add "[" and "]"
+around "<options>" for the 'mv' command? Citing [15/35]:
+
+    In the case of "mv" let's add the missing "[]" to indicate that these
+    are optional.
+
+> diff --git a/builtin/verify-pack.c b/builtin/verify-pack.c
+> @@ -56,7 +56,7 @@ static int verify_one_pack(const char *path, unsigned int flags, const char *has
+>  static const char * const verify_pack_usage[] = {
+> -       N_("git verify-pack [-v | --verbose] [-s | --stat-only] <pack>..."),
+> +       N_("git verify-pack [-v | --verbose] [-s | --stat-only] [--] <pack>.idx..."),
+
+Part of this change makes sense in this patch, but doesn't the "[--]"
+part belong in [18/35]?
