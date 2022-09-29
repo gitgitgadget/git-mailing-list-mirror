@@ -2,105 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D4D7C433F5
-	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 19:17:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29B44C433F5
+	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 19:19:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229810AbiI2TRY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Sep 2022 15:17:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41172 "EHLO
+        id S229730AbiI2TTg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Sep 2022 15:19:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229635AbiI2TRV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2022 15:17:21 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 788F3125D8C
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 12:17:08 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id p202so1680021iod.6
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 12:17:08 -0700 (PDT)
+        with ESMTP id S229574AbiI2TTe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2022 15:19:34 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F4013F5A
+        for <git@vger.kernel.org>; Thu, 29 Sep 2022 12:19:31 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id e205so1692065iof.1
+        for <git@vger.kernel.org>; Thu, 29 Sep 2022 12:19:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date;
-        bh=or0U66T5ssNmUiU+iL1sdLuaBz1mc9AeCmCDyNbtyrw=;
-        b=Ri5A4EoJR52+cDqU+IQdpW612tAs8EavTP4R2Ug3yr4C3WzuX93TqCr9wydMfAEhP/
-         IbOdGL9gyZLovaHyVuLzWhAc+aWn5lSMmhCFYNrFyuk1wutDShT1MKD9rZ7+OyG9ex/v
-         TtfIEQwswwI7/Q+Uh1/3gDb1h74rEUdTYpAwe4m3KNhcqNCmIQrjzZjBceRoLUD4lK1F
-         gAXcGOa8KjpsWXHUCPO9KIWNYgJsiPNq/voPWKCKh03czez96rYiAmt1WR1N6x/6AQRV
-         ly6yaPz81qO06bhymEjZ2pvatmGZBg3wX0+U5Fi+YCykYX93ZVYie1hPTpG3KZTX8xhO
-         vMjA==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date:from:to:cc
+         :subject:date;
+        bh=iq/w41in/GpCsaq+WxKb31XO2Z73lLZKqpokQshyNhw=;
+        b=Oz9PGlwA/BqtTeg8c0QAnWKp3cjlk7KzI9BNb914eTeQWJW9RdmDEluZ8inBAKhUbY
+         uamIirBkdcgD+wWUogL6q+UjoZAkHJc4P0wbtoqYPIliLE/OJgMyEsZuzB5cwQ8VlLML
+         iUPHTZO6BAqEOqnJxCySCO8vhFd9bWsscjLGXvtlXfarfRS6i3qGVldE7sNGNMvc5BJS
+         ZWEOVf3Tu9Bkbu7+rok7mg+tHbe6gCjpD4mu0TulYZWtGPXddjXfQdA7MKv4lXumG09w
+         lSQ77YDKReJa1rr9frdmyOYJaTLI9waHEqkIW0NrBnmhxtKkFnMCpFbWRcLbVyY/zjEc
+         Lofw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=or0U66T5ssNmUiU+iL1sdLuaBz1mc9AeCmCDyNbtyrw=;
-        b=zte2lVLLuGRksHRLjr5fi8aFBRWYz+fhrSNlbnzwTKoJpB7hj3457UM7iO8+Tku/vY
-         bG6CKR91hq+FLDvy0BWW31vO/MLUJQx4rBQKKocQXJEB+j9KIbl0KLmjo86iHQBOf8Om
-         uLcFGESMh01D2mfGSq7eyrFPiVhAtpZfgB3TXL5qrsBp3t7i7jQzeikZOTqKZOa9quJd
-         CX9cCbFPe1GcZu5nbf1ipeOIHYIjAXLTA0gi4VCRixWfKj4uqTnEDsu0AOKNsm/Cmipc
-         SPPL27C1MW9thklZrkoUjCCVqQ+8oQ1b9zfuyKMyswFLJwjou/PvCprv+CbKMltjSoEa
-         X0Jg==
-X-Gm-Message-State: ACrzQf1kzH25clhtaXkYaKpui24KNg3Qf2NBsEJ5xdps7FNKczy2zFzr
-        lrzmTzzIa6c3DxzUnp5XhVipyTVL2Iuujg==
-X-Google-Smtp-Source: AMsMyM4YYZPFAR5S0dTSf1KH/DqyhABQt5scTJDbyes+AS7tExygPqFBIBeR2vzyyULbcTkU8UBwrQ==
-X-Received: by 2002:a05:6638:1396:b0:357:148d:8705 with SMTP id w22-20020a056638139600b00357148d8705mr2545077jad.61.1664479026860;
-        Thu, 29 Sep 2022 12:17:06 -0700 (PDT)
+        bh=iq/w41in/GpCsaq+WxKb31XO2Z73lLZKqpokQshyNhw=;
+        b=2oiQMTCJlYf+QeCHKBq0yZkZYHfWKAZ+NTvOAjKQP1p8zlM6tG/D5xqBycclySARS2
+         N4hy6M+GBWMednCJWlmlL5EvhuvNXB4OR+j9FGsR//UAIC/ZNL/kn8feKLr64TwsL4V1
+         PDpsQdA/f47yxJA/1TRG9breGBkQIvBCI1g9WqnIqHvcP92E9uaZwfbfGCCZVZHN4QNV
+         gZ1g3qtb6SN2NVoRALQX3vs4hBuqtEO+HcI6Y9oBJ1fbqPe96+MLJbshZlqTgUBiw1/t
+         lK2iLD/y3EegoZKy71kOHs2LEL2cKr+URBZOPLCxiV8uc0q2MGqh+nj4iwQTqoMLc2or
+         BBMg==
+X-Gm-Message-State: ACrzQf2AlI+YuCEJIjKeqhO7Ejhbft8mrMGXDvcz+xMu9rpdoFBTT64s
+        0f2FtLkOJop8XNyBSv/tmN07nuqACUX50Q==
+X-Google-Smtp-Source: AMsMyM6njvlMgQb0QGsZLUYYiEnYE5rJ4TByKSyl2Vu5ndR2CVJXPnp44KBzOh+c6kZEg0Jpz0ySjA==
+X-Received: by 2002:a6b:670b:0:b0:6a0:d9db:5ae5 with SMTP id b11-20020a6b670b000000b006a0d9db5ae5mr2186393ioc.62.1664479171237;
+        Thu, 29 Sep 2022 12:19:31 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a23-20020a056638005700b0034af3f3f9c0sm76865jap.118.2022.09.29.12.17.06
+        by smtp.gmail.com with ESMTPSA id m20-20020a0566022e9400b00688eee7588asm123891iow.32.2022.09.29.12.19.30
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Sep 2022 12:17:06 -0700 (PDT)
-Date:   Thu, 29 Sep 2022 15:17:05 -0400
+        Thu, 29 Sep 2022 12:19:30 -0700 (PDT)
+Date:   Thu, 29 Sep 2022 15:19:30 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Subject: Notes from the Git Contributor's Summit, 2022
-Message-ID: <YzXvMRc6X60kjVeY@nand.local>
+Subject: [TOPIC 1/8] Bundle URIs
+Message-ID: <YzXvwv/zK5AjhVvV@nand.local>
+References: <YzXvMRc6X60kjVeY@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YzXvMRc6X60kjVeY@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It was wonderful to see everybody in person again a couple of weeks ago
-at Git Merge :-).
+# Bundle URIs (Stolee)
 
-Now that things have begun to settle after the conference, I polished up
-the notes that were taken during the Contributor's Summit to share on
-the list.
-
-The notes are available in Google Docs, too, for folks who prefer to
-view them there are the following link:
-
-    https://docs.google.com/document/d/1gVGZtkCLF3CWPt3xQnIJUy8XP702zGSxvOPk1r-6_8s
-
-At the Contributor's Summit, we discussed the following topics:
-
-  - Bundle URIs (12 votes)
-  - State of sha256 transition (8 votes)
-  - Timeline: Deleting merge-recursive, remapping 'recursive' to 'ort' (8 votes)
-  - git clone --filter=commit:0 (8 votes)
-  - Managing ever growing pack index sizes on servers (8 votes)
-  - The next year of bitmap work (5 votes)
-  - Server side merges and rebases (& new rebase/cherry-pick UI?) (7 votes)
-  - State of sparsity developments and future plans (7 votes)
-  - Ideas for speeding up object connectivity checks in git-receive-pack (6 votes)
-  - Alternative ways to write to VFS-backed worktrees (6 votes)
-  - How to run git securely in shared services (6 votes)
-
-The list of all topics proposed (and the number of votes they received)
-are here:
-
-    https://docs.google.com/spreadsheets/d/1QhkUkYvqtGJtN7ViiTmrfcP3s0cXgqyAIACRD5Q24Mg
-
-Some topics were combined together and others didn't have a note-taker,
-but the vast majority did.
-
-I'll send the broken-out notes for each topic that did have a note-taker
-in a response to this message for posterity, and so folks can continue
-the discussion on the list.
-
-(As an aside, if you have any feedback about how the Contributor's
-Summit went, please feel free to share it with me off-list, as we are
-already starting to put together plans for next year's Git Merge :-)).
-
-Thanks,
-Taylor
+- Unlike packfile URIs, includes refs, does not need to be delta-ed
+	against what server sends
+- Doc checked into Documentation/technical
+- URI can be provided by user at CLI or advertised by server
+- Most users won't experience anything if they git-clone, but it will
+	only benefit the git hosting providers. It will allow them to offload
+	data to CDNs, being closer to the client.
+- With bundle files you can download them and start of from there and
+	fetch the objects you're missing in a regular manner.
+- Jrnieder: Packfile URIs and Bundle URIs are trying to achieve the same
+	thing.  How can we duplicate efforts? E.g. how can we prevent the
+	client from leaking information to a possibly untrusted server?
+- Stolee: Are you want to provide a way to provide authentication?
+- Jrnieder: Analogy to the web - you don't want to leak information to
+	websites you don't trust. The security model is pretty complicated, we
+	don't want to replicate things like same origin policies.
+- Stolee: So, e.g. the server provides a hash of the content expected at
+	the bundle URI and the client can verify? We wanted to explicitly
+	avoid that because we don't want the server and bundle provider to
+	need to know anything about each other.
+- Jrnieder: Compare to packfile URIS - Packfile URIs are only advertised
+	for the server, so the security model is mostly the same as a
+		"regular" fetch/clone
+- Jonathantanmy: Another difference: the objects in bundles must be
+	associated with refs, you can't just have e.g. large objects.
+	Packfiles can contain arbitrary objects.
+- Stolee: Let's talk about the security model more on the mailing list
+- Ævar: We're also open for a breakout session on this topic
