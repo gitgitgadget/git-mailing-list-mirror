@@ -2,93 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C0AEC433FE
-	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 15:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4846C433FE
+	for <git@archiver.kernel.org>; Thu, 29 Sep 2022 17:18:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235629AbiI2PwM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Sep 2022 11:52:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52620 "EHLO
+        id S234683AbiI2RSS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Sep 2022 13:18:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234352AbiI2PwL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Sep 2022 11:52:11 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A82D513571A
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 08:52:10 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-333a4a5d495so18585887b3.10
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 08:52:10 -0700 (PDT)
+        with ESMTP id S235273AbiI2RSQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Sep 2022 13:18:16 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4D141C6A56
+        for <git@vger.kernel.org>; Thu, 29 Sep 2022 10:18:15 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id d10so2013626pfh.6
+        for <git@vger.kernel.org>; Thu, 29 Sep 2022 10:18:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date;
-        bh=ym3sccCN+F6GlV4Qlu/7kqkXhp9ms5no9JN0TAxEr60=;
-        b=NjlBeArhU2Y7EnOOQHRnn8ykQbhZ0K2+d108N54e+wAWHrxsObmx0jV0STAoSNO6SM
-         ffx/whQpVZkmj27sZ6bW8HS1xozTlSkj7Wo5qgwwCi7lMmKVRoooJFQ+b7bIkVo0P5C+
-         CCCpQ1W4HxUHpNcT+hM32RGuS1QH7hS6/vfZj7Ze8Wyi9QB01QF1agLrWuIsbXtd6u4L
-         DSDbm7/sYMFfKpvwfVC87TH4+mjYYAOIScvbrbBmG8Ii0IMOSjM5KFQWKjsW6x7js/pC
-         EorL7+u1Rf5CNWUFShCsYcwA2QESQplvxuhr5KYcHw1pk/7yEKwzB4pg5S+4Wjr4lIHF
-         smag==
+        d=google.com; s=20210112;
+        h=content-disposition:mime-version:mail-followup-to:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=ULNGb9tTnDq7AKi7M3dLNiZZYNkelCgD96pUcBVLyoM=;
+        b=IRDbPH7efBGH9aU6ANrf0yVh1NGUm5ouE32+dXEKkylZm4U/1pHXPaNTDt676TDZrk
+         9dUPH7/gJG7A6RQtczpH2ohtzLZO/9x8SfA2kQewWbFXtgFrt1Z+SsXpCTO6V7jHhoav
+         6UiDo5Q4Vu8sBluifgViOoe01zRFjuKZxYcjegEQVf02c+Fs/ol3OV1SeBP7eGiUXQy3
+         iSktgBtfKrvvXnD1azTOkyjC6vfY3aYPrB0HJDYttO4icQHkSzXhG680xQQ06OD0aMK3
+         XicYBlXKWZ2FKdQa86/tdA1vUgGiubVVloE4OV/CFCpVeKPMydbp8plq2Ln3E7u1BujG
+         clNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=ym3sccCN+F6GlV4Qlu/7kqkXhp9ms5no9JN0TAxEr60=;
-        b=6/EUZ9fnEXtuSh5PpRlvSRXgPHKAjAkhFimW0jlGV16BJMVGaGczYWVdZ2PtRrC1FT
-         NygryvVECizBcLzSye/p3hOJTl9D/XQ3vqMdB8Lt1DagfNTljZgkZfbq9MVzavSVyfX6
-         /DBvTx45C1FSmqQgPJz7Ljr97tLTrLlMnno/aqnTel35rgOjUl6KmMOpVQo9Vc8Kvl1n
-         VLO49nwhnDd/o0qO6bN2Eo2e3ez59wHOKt5l+mSQ2YJC6rrTQ3LadseDki3OSo1yjW4b
-         nff2cUR3cxK9DfteHt65YO9eTq9s6I2MdTHh7t/PqK9d12xhWI9pZlW/7qU7ZybI84Zd
-         MwIw==
-X-Gm-Message-State: ACrzQf0Ty3S4sOE3coMREDFhRf0nDp5g1bM9XkKatnbmRfWw0hxLRjbO
-        pLWvmWX+lfDxUCL2atTJTU2rjZqIAqVfjnugAeoEICYPPBeWVQ==
-X-Google-Smtp-Source: AMsMyM6/pXAkpguZHTTbKCw1ee6NZjbftcBkAckcAOHp0ft7j+ueeLxlTdq04e+oHHiQ06uQymamMxIytj9LkoBFl/M=
-X-Received: by 2002:a0d:f886:0:b0:34d:3ea:1adc with SMTP id
- i128-20020a0df886000000b0034d03ea1adcmr4144769ywf.130.1664466729662; Thu, 29
- Sep 2022 08:52:09 -0700 (PDT)
+        h=content-disposition:mime-version:mail-followup-to:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=ULNGb9tTnDq7AKi7M3dLNiZZYNkelCgD96pUcBVLyoM=;
+        b=B9h8AzurXu8vV91Xi1H/Jf0E6Zc62hlbguc7ur3EgFhiYoX11qbF2B9ovEOE5rwend
+         s+ZEMgqS4j7QzdVvlyQiP65CgaTcfqGXJMuAxNHAlWO20f7qUmxeDjrmHtfN4dF4Cb2D
+         h7XmWm/7eXWZG0G/ui6GI5KkCGAk9WQI/x359qwm/Dh2WWYCq7+FUqmNN9B7AJPlCLBH
+         ZR6XSdAHwm+rQSB+6M4TFGzw17TZSsc7iUgvqU6eMPzGF1byriqazso6C+48xY+cH7Ag
+         sSe11PNnfSa8Gyp9NM7Eb7hdiVwFwRsk764TtvDupyHF8TmOLZ+93qtJtLWIWhOmY0Pv
+         bisg==
+X-Gm-Message-State: ACrzQf3oSxgNP0BaLkO4hrt7e+EDlmeU1JnaR0toHgYITq2zWROc7KTs
+        eesZJXmc136uF3eXiQlZPBbHEU/bpMJ9Qw==
+X-Google-Smtp-Source: AMsMyM4Q3ZuANQ6357HssYfGkrNCZriv6Cn/19sahWTtlINf6yAiIfaMMZ8VMYhO5RrNACNiu+6B7g==
+X-Received: by 2002:a05:6a00:acc:b0:530:e79e:fc27 with SMTP id c12-20020a056a000acc00b00530e79efc27mr4531001pfl.61.1664471894944;
+        Thu, 29 Sep 2022 10:18:14 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:a5e3:efb7:4e1c:4a5c])
+        by smtp.gmail.com with ESMTPSA id c188-20020a624ec5000000b00537b8deef41sm6437791pfb.136.2022.09.29.10.18.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Sep 2022 10:18:14 -0700 (PDT)
+Date:   Thu, 29 Sep 2022 10:18:05 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, derrickstolee@github.com,
+        arthur.chan@adalogics.com, david@adalogics.com
+Subject: Away from the list for a while
+Message-ID: <YzXTTVPcpRimOke5@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, derrickstolee@github.com,
+        arthur.chan@adalogics.com, david@adalogics.com
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 29 Sep 2022 17:51:58 +0200
-Message-ID: <CAP8UFD2pG7f5-9eywHE4ziz7OKLZ_A9AnNnQEQvdvOTYvsdP+A@mail.gmail.com>
-Subject: Draft of Git Rev News edition 91
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Tim Hockin <thockin@google.com>,
-        Bruno Brito <bruno@git-tower.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+Hi all,
 
-A draft of a new Git Rev News edition is available here:
+Apologies to those folks (CCed) who are waiting on reviews from me. Due
+to family health reasons, I'm going to be away from the list for
+probably the rest of 2022 and part of 2023. We are expecting twins who
+unfortunately seem determined to arrive quite ahead of schedule, so this
+situation will be taking all of my attention for the next several months.
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-91.md
+Thanks for your understanding, and apologies again that I didn't get
+your reviews finished in time.
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
 
-  https://github.com/git/git.github.io/issues/598
-
-You can also reply to this email.
-
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
-
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Kaartic and I plan to publish this edition on Saturday
-October 1st.
-
-Thanks,
-Christian.
+-Josh
