@@ -2,188 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D036C433FE
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 16:24:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA751C433FE
+	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 16:45:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232077AbiI3QYC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 12:24:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43132 "EHLO
+        id S231821AbiI3Qpy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 12:45:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231970AbiI3QX7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 12:23:59 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C18C6129FEA
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 09:23:58 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id y8so6638929edc.10
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 09:23:58 -0700 (PDT)
+        with ESMTP id S231515AbiI3Qpw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 12:45:52 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B658510AB1D
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 09:45:50 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id rk17so10220974ejb.1
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 09:45:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=zKUAf1WyUftUgmC8FSYyWlKYMJFTRynE63L38JCYMGw=;
-        b=UkRvPKlwM57Y6ZgR9h8YqORagM056tvJkckMCFcFJfvePIIfm7tXlIOSIIw51cCu6m
-         TttRf3cTst0yXW7j3efSFBfz9fVwEyn4+oS9Cm7jlPfpC5XUQuMVB7pBUI132cOID8my
-         boDi5VIG45NdbFq3LGHUmSfPIHlaRgqwvM96dkl2OvuPzaIPmCh3GrX045GbxPzTJuE/
-         zzpog1AUQAIomu2QLtnD2tMj3cvwz4ou+QmkAQ3dYxwalJBFKZKGyl3lGKcr3C7KOg9d
-         9UtC1f/hIS81YpQx9yyJcZjS/8gUL4ncrGp9GUo2/SojLqKPXwgIl7rMdeQiMUTI/je5
-         tWvQ==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date;
+        bh=OMFgN4TAVZsGBlv9a052cf+dCw3ri1MRofNKO6O1qao=;
+        b=iONwTiXOKEEUAao/3MPJGPsNqqeP/I1j/RhhXay7LjPDbfSmRl6z0GAPf/S7mpmObR
+         ld8du1W9hCsXmiewcgYGkI5nhGD8wijuGc/ryAYYANS1/A6W5T5zbLL6UssQknnQZlIp
+         VhcczCKBu8yhA5vrEVPLh6RU2B0KZF4q0ZlYGmC0KaxcKGA6oBfgGfD4AEzTkgKIQZbY
+         lDwgdNxL7I6FRfJMevvvPrywCwWa+8owgoMbIbhwnWj6gfM7Cv3iqx382F9lzjzqoAmv
+         qvH+JnFcyQhkK7DEtVV1+j5uML5oe5xUAotXHwTGrIAO7YIbShXUdoZRDe2DPySUkjTx
+         CCmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=zKUAf1WyUftUgmC8FSYyWlKYMJFTRynE63L38JCYMGw=;
-        b=tX7Ioy3xBIGrfYYzVXewePza9ft9TiuB3/Uh4FTZC6quZauU3MUMTFj59r/1NRCDA2
-         UXa+AxC7QBTuqWBpSa2XuJ/fjvKqxgIaS7OJrEsskJ4oxr8KweCBWsuL/yt60H83o7A0
-         KGvzrWgi2zxWoZyQqcNTU6M5Xth1Fchf7HQnVFYcfnV8eFrZjjh6jxMLWjf7zzEwLP9y
-         y56nDqpX3+Ztld7PFid8bnyO2DncHqo0pymk7NiCDk02Cs+xEHCcthNv51BxpDfOZAKM
-         YhxPVUaJNCeRt8HadN0mqbJYQSmOuImB/ZhzfUfwcP//1FuVq3evh6Z21wJoNEmwoEZT
-         UExQ==
-X-Gm-Message-State: ACrzQf3AqyUXvDFEZJD6XxcnbnW1C9/4iwRFmgRZpPF0/kRQWOhxFBBV
-        wW3HCpNGGKiy/qmvGzRVE1OR4vVdfpnun9jGLfckDizXRZn7Hw==
-X-Google-Smtp-Source: AMsMyM6y1+4G5J01udoUjWLzbMXP1bQtHI93p4KXSo7Mbc4JTiRdY3nRoGxq7M8ziVYvtxQZjBBuVWkqsClh2tq99mU=
-X-Received: by 2002:a05:6402:26d3:b0:451:6ca9:bc5e with SMTP id
- x19-20020a05640226d300b004516ca9bc5emr8307637edd.325.1664555037171; Fri, 30
- Sep 2022 09:23:57 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=OMFgN4TAVZsGBlv9a052cf+dCw3ri1MRofNKO6O1qao=;
+        b=tU3uzZyhOtaSnviCOQT4bq2XDl8E97N1Vr1/hrO8lGUABwtYBwaLhQ08UFm0JxP16j
+         59rT4Ve/ifygA0ZFwsm1w2SKAYDgkHGZd6NnG8mCaz1X0/s1QApPezmu5KOjNs73KrA/
+         NTeo29ET4UXe10W2tsETDVTI8cO9BtyqiRKtOE19IgktUsC9qPUZHv17+nLcvEBw1RQ1
+         LfGYjifjhf5ibCa5vVg6XkJkO+7ARpK1M0qWH8qJsBSHcBfdOVij6f7VQfaiKJh+enXB
+         +id2d02sAAoUke5QCNUKZaPWFuzekhMtzMs/tyUdFVaEBAEQYRTJ1ysRJbNAJfs3ekRc
+         quaA==
+X-Gm-Message-State: ACrzQf2cb2bSjHh9W3MhDQjj2G6FM/H2mSt5Mh8VB0aA8ufaAmETBaye
+        89qFqs4xlI0hhASIA7uxG/8=
+X-Google-Smtp-Source: AMsMyM6kVuiNqbquqdI4cdMrXA69eXU0Wdi8NmXT6iTnSfyUxFE1UPAFc6+H4MNipu79MJD2RKWfoA==
+X-Received: by 2002:a17:907:d9e:b0:782:28a4:8ced with SMTP id go30-20020a1709070d9e00b0078228a48cedmr6909234ejc.542.1664556349172;
+        Fri, 30 Sep 2022 09:45:49 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id z34-20020a509e25000000b0045393e56488sm2028186ede.58.2022.09.30.09.45.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Sep 2022 09:45:48 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oeJ90-001ldj-1y;
+        Fri, 30 Sep 2022 18:45:46 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] sequencer: duplicate the result of
+ resolve_ref_unsafe()
+Date:   Fri, 30 Sep 2022 18:45:12 +0200
+References: <20220930140948.80367-1-szeder.dev@gmail.com>
+ <20220930140948.80367-6-szeder.dev@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <20220930140948.80367-6-szeder.dev@gmail.com>
+Message-ID: <220930.86mtagvmit.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1357.git.1663609659.gitgitgadget@gmail.com>
- <4364224f9bddc8f1e40875ebc540b28225317176.1663609659.git.gitgitgadget@gmail.com>
- <xmqqczbdl6wl.fsf@gitster.g>
-In-Reply-To: <xmqqczbdl6wl.fsf@gitster.g>
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Date:   Fri, 30 Sep 2022 21:53:45 +0530
-Message-ID: <CAPOJW5yxRETdVk014gQYFud9_Nrt+OQGSVNQ8Pw2wDEMMFMm1Q@mail.gmail.com>
-Subject: Re: [PATCH 3/5] roaring: teach Git to write roaring bitmaps
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 30, 2022 at 11:51 AM Junio C Hamano <gitster@pobox.com> wrote:
+
+On Fri, Sep 30 2022, SZEDER G=C3=A1bor wrote:
+
+> When 'git rebase -i --update-refs' generates the todo list for the
+> rebased commit range, an 'update-ref' instruction is inserted for each
+> ref that points to one of those commits, except for the rebased branch
+> (because at the end of the rebase it will be updated anyway) and any
+> refs that are checked out in a worktree; for the latter a "Ref <ref>
+> checked out at '<worktree>'" comment is added.  One of these comments
+> can be missing under some circumstances: if the oldest commit with a
+> ref pointing to it has multiple refs pointing to it, and at least one
+> of those refs is checked out in a worktree, and one of them (but not
+> the first) is checked out in the worktree associated with the last
+> directory entry in '.git/worktrees'.
 >
-> "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-> >
-> > Roaring bitmaps are said to be more efficient (most of the time) than
-> > ewah bitmaps. So Git might gain some optimization if it support roaring
-> > bitmaps. As Roaring library has all the changes it needed to implement
-> > roaring bitmaps in Git, Git can learn to write roaring bitmaps. However,
-> > all the changes are backward-compatible.
-> >
-> > Teach Git to write roaring bitmaps.
->
-> That is way underexplained.   At least cover what the plans are, so
-> that readers do not have to ask these questions:
->
->  * When is the choice of bitmap type is made?  Is it fixed at
->    repository initialization time and once chosen other kinds cannot
->    be used?
->
->  * Is the bitmap file self describing?  How does a reader know
->    between ewah and roaring codepaths to use to read a given bitmap
->    file?  Is there enough room for extending the set of bitmap
->    formats, or we cannot add other formats easily?
+> The culprit is the add_decorations_to_list() function, which calls
+> resolve_ref_unsafe() to figure out the refname of the rebased branch.
+> However, resolve_ref_unsafe() can (and in this case does) return a
+> pointer to a static buffer.  Alas, add_decorations_to_list() holds on
+> that static buffer until the end of the function, using its contents
+> to compare refnames with the rebased branch, while it also calls a
+> function that invokes refs_resolve_ref_unsafe() internally [1], and
+> which overwrites the content of that static buffer, and messes up
+> subsequent refname comparisons.
 
-Hey Junio,
+Good catch...
 
-First of all, sorry that the next version is taking so much time to
-land. We have a festival ("Durga Puja"; it is the biggest festival for
-Bengalis) going on here now. So I am not that active.
+> Use xstrdup_or_null() to keep a copy of resolve_ref_unsafe()'s return
+> value for the duration of add_decorations_to_list().
 
-I will explain briefly in the next version.
+...and this makes sense...
 
->
-> Do you really need the global variable that holds the bitmap type?
->
-> Wouldn't it be easier to write code that needs to deal with both
-> types (e.g. in a repository with existing ewah bitmap, you want to
-> do a repack and index the result using the roaring bitmap) if you
-> passed the type through the callchain as a parameter?
+>  	const struct name_decoration *decoration =3D get_name_decoration(&commi=
+t->object);
+> -	const char *head_ref =3D resolve_ref_unsafe("HEAD",
+> +	const char *head_ref =3D xstrdup_or_null(resolve_ref_unsafe("HEAD",
 
-I didn't want to go for "passing the type through the callchain as a
-parameter" because that would cause changes to every affected function
-definition. I found the "global variable" approach simpler for this
-reason. Here we have to initialize the type once and the affected
-functions will work accordingly.
+...but let's change this to a "char *" then...
 
-If you like the "callchain" approach, I have no problem to implement it.
+>  						  RESOLVE_REF_READING,
+>  						  NULL,
+> -						  NULL);
+> +						  NULL));
+>=20=20
+>  	while (decoration) {
+>  		struct todo_item *item;
+> @@ -5965,6 +5965,7 @@ static int add_decorations_to_list(const struct com=
+mit *commit,
+>  		decoration =3D decoration->next;
+>  	}
+>=20=20
+> +	free((char *)head_ref);
 
-> It may be that the codepath that reads from an existing bitmap file
-> says "ah, the file given to us seems to be in format X (either EWAH
-> or ROARING or perhaps something else), so let's call bitmap_init(X)
-> to obtain the in-core data structure to deal with that file".  When
-> that happens, you may probably need to have two cases in the default:
-> arm of this switch statement, i.e. one to diagnose a BUG() to pass
-> an uninitialized bitmap type to the codepath, and the other to
-> diagnose a runtime error() to have read a bitmap file whose format
-> this version of Git does not understand.
-
-Ok, understood. Thanks.
-
-> These repetitive patterns makes me wonder if void *bitmap
-> is a good type to be passing around.  Shouldn't it be a struct with
-> its first member being a bitmap_type, and another member being what
-> these functions are passing to the underlying bitmap format specific
-> functions as "bitmap"?  E.g.
->
->     void bitmap_unset(struct bitmap *bm, uint32_t i)
->     {
->         switch (bm->type) {
->         case EWAH:
->                 ewah_bitmap_remove(bm->u.ewah, i);
->                 break;
->         ...
-
-Good idea! Thanks.
-
-> > +
-> > +enum bitmap_type {
-> > +     INIT_BITMAP_TYPE = 0,
->
-> "UNINITIALIZED_BITMAP_TYPE", probably.
-
-Ok.
-
-> > +void *roaring_or_ewah_bitmap_init(void);
->
-> I would strongly suggest reconsider these names.  What if you later
-> want to add the third variant?  roaring_or_ewah_or_xyzzy_bitmap_init()?
->
-> Instead just use the most generic name, like "bitmap_init", perhaps
-> something along the lines of ...
->
->     struct bitmap {
->         enum bitmap_type type;
->         union {
->             struct ewah_bitmap *ewah;
->             struct roaring_bitmap *roaring;
->         } u;
->     };
->
->     struct bitmap *bitmap_new(enum bitmap_type type)
->     {
->         struct bitmap *bm = xmalloc(sizeof(*bm));
->
->         bm->type = type;
->         switch (bm->type) {
->         case EWAH:
->             bm->u.ewah = ewah_new();
->             break;
->         case ROARING:
->             bm->u.roaring = roaring_bitmap_create();
->             break;
->         default:
->             die(_("unknown bitmap type %d"), (int)type);
->         }
->         return bm;
->     }
-
-Got it. It seems a better option than the current one.
-
-Thanks )
+...so we don't need this cast...?
