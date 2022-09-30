@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDEF1C433F5
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 18:11:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E116C433F5
+	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 18:11:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232211AbiI3SLx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 14:11:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34538 "EHLO
+        id S232317AbiI3SLz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 14:11:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232073AbiI3SK6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 14:10:58 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 608F91F2D7
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:09:43 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 130-20020a1c0288000000b003b494ffc00bso4970188wmc.0
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:09:43 -0700 (PDT)
+        with ESMTP id S232252AbiI3SLB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 14:11:01 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14F02B257
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:09:45 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id fn7-20020a05600c688700b003b4fb113b86so2618214wmb.0
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:09:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=bI0GL1I8bjM0L0NqUSqLYYoGd8fyMu9aucIW12tryos=;
-        b=o2bqRHUi1GHAgDQ/FlIh3+WFwA87z6p8IoLNZYR1wViPy4TqdSUbMIzUgSXLOzjvp+
-         Yj6FPyczBLAtTyZCK3wscuEBH1Q/jSZPLme3qTceKCpUoEBVRWmjYJ+Ogi826Cg2M5pv
-         dQWyrRQkW3t3oFtvwhnusdy37Gc3iM5FUAhMmTFzMx+1Htg4RGyO8OVcZylZNfUJMzig
-         Jvfri1nXQuVqGcAbp5MPixfs2XxXnNH6+beKEu39ftXgKiC00sIuIwVeWLMzR3rlBqEK
-         HvVtofx/AD86athh+25FhdhKJnYaFWTtAtPS5WJj5pp8MhjWiFHogQc1dzOyKYiJrLgu
-         DF4g==
+        bh=ATY170yQD8dqtN+/uOXCLrSfdU/i5/QrOyX5VN/4Tgg=;
+        b=Yt/t6z7een7u1rR3pUpn+DdfcnIC7mh46k5bQALPzNudfS+3Yl5OcHhtFyYC/5v7jd
+         M+I3DWS+q9tR6ESqYuBMWA0dd5ravEmU/PwmLeqfqiLaimQurS2mVVkZtzBXJrQePPbQ
+         yCxC0w1On2w9rVPs9RaMj24FEiqSFHExCmt8rZ7ecjqCeLf626OfxbUztdGAFurwFIw9
+         YC5660YN9rjRil0I55jUHGPgPTVinJHwC40+XLjzJbc3Ho9vMbrxu8Xtj0cXBnoQT8/Y
+         zqaeGTo+3oW/DLRI6rckdA1MWS3lAf0zJISLu7Lhh+lWmqXiBRdMzfGUdaqcKpijfoEw
+         xNpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=bI0GL1I8bjM0L0NqUSqLYYoGd8fyMu9aucIW12tryos=;
-        b=JsDXk0O7ye+D2iomjybrWKCk6qqO3Pds0RatpWumut5EFlpZxoaOwfWigHpM28+iHj
-         KVUswvGx9ipRxYErIk2MY1r1dFUqNMqs96pfBuMshcjZYQxJCcJ++QmGjSrEWT9cMVyX
-         WiSD7PCSbHP6qoaT7e2LQeH3Emd9fmEBU1M8D5GSBbqs8kR2OE4xODZUr/QX0swGSYHV
-         QvUKoRWX0nioRb/7i/LA90RxGrtTkMZM90+X3kjj+whNtteuBfcCHnMvkgN0LHxsfxLg
-         B9Z954iVioQHe2BFgmGKXgztjIiXmvtm88CWLZMvbjIQh8vuaPnVuZSelfgfxfw9QHTx
-         7QdA==
-X-Gm-Message-State: ACrzQf1uJXTsjBL7lmJZp4JEto7kW0aUcWs5rTGMZfrs426SlxyR6lcV
-        FCyyUsWFVtnO/ffpFgtoT6k1HUUUj9j0tA==
-X-Google-Smtp-Source: AMsMyM51plkQrWZxecHvFWqF+cleeBxqpJFW4YTmZvEPSxmxbz0PUtehasvmFa5RaNIwO0sUWffD0A==
-X-Received: by 2002:a05:600c:3ba0:b0:3b4:8ad0:6c with SMTP id n32-20020a05600c3ba000b003b48ad0006cmr14836397wms.186.1664561381315;
-        Fri, 30 Sep 2022 11:09:41 -0700 (PDT)
+        bh=ATY170yQD8dqtN+/uOXCLrSfdU/i5/QrOyX5VN/4Tgg=;
+        b=HwxzoMrujd9CjTWAoGOzCzdsL3kPB+r4NqIbXf3zVsnVLbeTy17hzhZJHAGF6u4O5B
+         KikdJnaM1IFeBD63cKMFp+WuUlZy044h4y/zdhhQs9JhKDUqCqoKdwTnvApWfOo6vZHu
+         Ki8aIysjAna3Ig5mEGMpFBJ7yEznmx7nqyIi60IG61Kgl37z2Q8rYf7usE1AShFvikr7
+         AqqBKhYOgBTFKR2yawreyoQgXzicsxiOnd7FCePn52wbqGuPklJz9v19fDIxuUtDFTsg
+         fl+XcQoz4B73UKKZAduqRvvb5ZzI6avIa76+UuJoTvGQ23n445w0k2zJVBHwnq6QGQLH
+         B+CQ==
+X-Gm-Message-State: ACrzQf278+1aCIzhMUNABw2dFZonH5dTnQyTjZNoOdTSGvr3PoLy30D4
+        hF+3RroAfMG7hVPWtAO1mMTJBJBv3Y2MyQ==
+X-Google-Smtp-Source: AMsMyM6e5qB02RBjMXM3xarNUh0u6DNbhT6OcrvgNC5gRVe6EmaYHr5F+aTKYBdJKf5bJhk4AL0glA==
+X-Received: by 2002:a7b:c8d6:0:b0:3b4:868b:afc3 with SMTP id f22-20020a7bc8d6000000b003b4868bafc3mr14628815wml.66.1664561383104;
+        Fri, 30 Sep 2022 11:09:43 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h9-20020a1c2109000000b003b4fac020c8sm7102703wmh.16.2022.09.30.11.09.36
+        by smtp.gmail.com with ESMTPSA id h9-20020a1c2109000000b003b4fac020c8sm7102703wmh.16.2022.09.30.11.09.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 11:09:39 -0700 (PDT)
+        Fri, 30 Sep 2022 11:09:41 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 27/36] doc txt & -h consistency: make "stash" consistent
-Date:   Fri, 30 Sep 2022 20:07:50 +0200
-Message-Id: <patch-v3-27.36-ac959d0cfc1-20220930T180415Z-avarab@gmail.com>
+Subject: [PATCH v3 28/36] doc txt & -h consistency: make "annotate" consistent
+Date:   Fri, 30 Sep 2022 20:07:51 +0200
+Message-Id: <patch-v3-28.36-f617375ea9e-20220930T180415Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.rc2.935.g6b421ae1592
 In-Reply-To: <cover-v3-00.36-00000000000-20220930T180414Z-avarab@gmail.com>
 References: <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com> <cover-v3-00.36-00000000000-20220930T180414Z-avarab@gmail.com>
@@ -72,165 +72,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend both the -h output and *.txt to match one another. In this case
-the *.txt didn't list the "save" subcommand, and the "-h" was
-similarly missing some commands.
-
-Let's also convert the *.c code to use a macro definition, similar to
-that used in preceding commits. This avoids duplication.
+The cmd_blame() already detected whether it was processing "blame" or
+"annotate", but it didn't adjust its usage output accordingly. Let's
+do that.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-stash.txt |  5 ++-
- builtin/stash.c             | 73 ++++++++++++++++++++++++-------------
- 2 files changed, 52 insertions(+), 26 deletions(-)
+ Documentation/git-annotate.txt |  2 +-
+ builtin/blame.c                | 21 +++++++++++++++------
+ 2 files changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index ea16d2eae7c..f4bb6114d91 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -11,12 +11,15 @@ SYNOPSIS
- 'git stash' list [<log-options>]
- 'git stash' show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>]
- 'git stash' drop [-q | --quiet] [<stash>]
--'git stash' (pop | apply) [--index] [-q | --quiet] [<stash>]
-+'git stash' pop [--index] [-q | --quiet] [<stash>]
-+'git stash' apply [--index] [-q | --quiet] [<stash>]
- 'git stash' branch <branchname> [<stash>]
- 'git stash' [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
- 	     [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]
- 	     [--pathspec-from-file=<file> [--pathspec-file-nul]]
- 	     [--] [<pathspec>...]]
-+'git stash' save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
-+	     [-u | --include-untracked] [-a | --all] [<message>]
- 'git stash' clear
- 'git stash' create [<message>]
- 'git stash' store [(-m | --message) <message>] [-q | --quiet] <commit>
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 83c9591ea6d..bb5485b4095 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -21,72 +21,95 @@
+diff --git a/Documentation/git-annotate.txt b/Documentation/git-annotate.txt
+index e44a831339d..5ae8aabe0f8 100644
+--- a/Documentation/git-annotate.txt
++++ b/Documentation/git-annotate.txt
+@@ -8,7 +8,7 @@ git-annotate - Annotate file lines with commit information
+ SYNOPSIS
+ --------
+ [verse]
+-'git annotate' [<options>] <file> [<revision>]
++'git annotate' [<options>] [<rev-opts>] [<rev>] [--] <file>
  
- #define INCLUDE_ALL_FILES 2
+ DESCRIPTION
+ -----------
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 8ec59fa2096..be9e091a86b 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -30,6 +30,7 @@
+ #include "tag.h"
  
-+#define BUILTIN_STASH_LIST_USAGE \
-+	N_("git stash list [<log-options>]")
-+#define BUILTIN_STASH_SHOW_USAGE \
-+	N_("git stash show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>]")
-+#define BUILTIN_STASH_DROP_USAGE \
-+	N_("git stash drop [-q | --quiet] [<stash>]")
-+#define BUILTIN_STASH_POP_USAGE \
-+	N_("git stash pop [--index] [-q | --quiet] [<stash>]")
-+#define BUILTIN_STASH_APPLY_USAGE \
-+	N_("git stash apply [--index] [-q | --quiet] [<stash>]")
-+#define BUILTIN_STASH_BRANCH_USAGE \
-+	N_("git stash branch <branchname> [<stash>]")
-+#define BUILTIN_STASH_STORE_USAGE \
-+	N_("git stash store [(-m | --message) <message>] [-q | --quiet] <commit>")
-+#define BUILTIN_STASH_PUSH_USAGE \
-+	N_("git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
-+	   "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n" \
-+	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n" \
-+	   "          [--] [<pathspec>...]]")
-+#define BUILTIN_STASH_SAVE_USAGE \
-+	N_("git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
-+	   "          [-u | --include-untracked] [-a | --all] [<message>]")
-+#define BUILTIN_STASH_CREATE_USAGE \
-+	N_("git stash create [<message>]")
-+#define BUILTIN_STASH_CLEAR_USAGE \
-+	"git stash clear"
+ static char blame_usage[] = N_("git blame [<options>] [<rev-opts>] [<rev>] [--] <file>");
++static char annotate_usage[] = N_("git annotate [<options>] [<rev-opts>] [<rev>] [--] <file>");
+ 
+ static const char *blame_opt_usage[] = {
+ 	blame_usage,
+@@ -38,6 +39,13 @@ static const char *blame_opt_usage[] = {
+ 	NULL
+ };
+ 
++static const char *annotate_opt_usage[] = {
++	annotate_usage,
++	"",
++	N_("<rev-opts> are documented in git-rev-list(1)"),
++	NULL
++};
 +
- static const char * const git_stash_usage[] = {
--	N_("git stash list [<log-options>]"),
--	N_("git stash show [<options>] [<stash>]"),
--	N_("git stash drop [-q | --quiet] [<stash>]"),
--	N_("git stash (pop | apply) [--index] [-q | --quiet] [<stash>]"),
--	N_("git stash branch <branchname> [<stash>]"),
--	"git stash clear",
--	N_("git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n"
--	   "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n"
--	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
--	   "          [--] [<pathspec>...]]"),
--	N_("git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n"
--	   "          [-u | --include-untracked] [-a | --all] [<message>]"),
-+	BUILTIN_STASH_LIST_USAGE,
-+	BUILTIN_STASH_SHOW_USAGE,
-+	BUILTIN_STASH_DROP_USAGE,
-+	BUILTIN_STASH_POP_USAGE,
-+	BUILTIN_STASH_APPLY_USAGE,
-+	BUILTIN_STASH_BRANCH_USAGE,
-+	BUILTIN_STASH_PUSH_USAGE,
-+	BUILTIN_STASH_SAVE_USAGE,
-+	BUILTIN_STASH_CLEAR_USAGE,
-+	BUILTIN_STASH_CREATE_USAGE,
-+	BUILTIN_STASH_STORE_USAGE,
- 	NULL
- };
+ static int longest_file;
+ static int longest_author;
+ static int max_orig_digits;
+@@ -899,6 +907,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	long anchor;
+ 	const int hexsz = the_hash_algo->hexsz;
+ 	long num_lines = 0;
++	const char **usage = cmd_is_annotate ? annotate_opt_usage : blame_opt_usage;
  
- static const char * const git_stash_list_usage[] = {
--	N_("git stash list [<options>]"),
-+	BUILTIN_STASH_LIST_USAGE,
- 	NULL
- };
- 
- static const char * const git_stash_show_usage[] = {
--	N_("git stash show [<options>] [<stash>]"),
-+	BUILTIN_STASH_SHOW_USAGE,
- 	NULL
- };
- 
- static const char * const git_stash_drop_usage[] = {
--	N_("git stash drop [-q | --quiet] [<stash>]"),
-+	BUILTIN_STASH_DROP_USAGE,
- 	NULL
- };
- 
- static const char * const git_stash_pop_usage[] = {
--	N_("git stash pop [--index] [-q | --quiet] [<stash>]"),
-+	BUILTIN_STASH_POP_USAGE,
- 	NULL
- };
- 
- static const char * const git_stash_apply_usage[] = {
--	N_("git stash apply [--index] [-q | --quiet] [<stash>]"),
-+	BUILTIN_STASH_APPLY_USAGE,
- 	NULL
- };
- 
- static const char * const git_stash_branch_usage[] = {
--	N_("git stash branch <branchname> [<stash>]"),
-+	BUILTIN_STASH_BRANCH_USAGE,
- 	NULL
- };
- 
- static const char * const git_stash_clear_usage[] = {
--	"git stash clear",
-+	BUILTIN_STASH_CLEAR_USAGE,
- 	NULL
- };
- 
- static const char * const git_stash_store_usage[] = {
--	N_("git stash store [(-m | --message) <message>] [-q | --quiet] <commit>"),
-+	BUILTIN_STASH_STORE_USAGE,
- 	NULL
- };
- 
- static const char * const git_stash_push_usage[] = {
--	N_("git stash [push [-p | --patch] [-k | --[no-]keep-index] [-q | --quiet]\n"
--	   "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n"
--	   "          [--] [<pathspec>...]]"),
-+	BUILTIN_STASH_PUSH_USAGE,
- 	NULL
- };
- 
- static const char * const git_stash_save_usage[] = {
--	N_("git stash save [-p | --patch] [-k | --[no-]keep-index] [-q | --quiet]\n"
--	   "               [-u | --include-untracked] [-a | --all] [<message>]"),
-+	BUILTIN_STASH_SAVE_USAGE,
- 	NULL
- };
- 
+ 	setup_default_color_by_age();
+ 	git_config(git_blame_config, &output_option);
+@@ -914,7 +923,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	parse_options_start(&ctx, argc, argv, prefix, options,
+ 			    PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_ARGV0);
+ 	for (;;) {
+-		switch (parse_options_step(&ctx, options, blame_opt_usage)) {
++		switch (parse_options_step(&ctx, options, usage)) {
+ 		case PARSE_OPT_NON_OPTION:
+ 		case PARSE_OPT_UNKNOWN:
+ 			break;
+@@ -934,7 +943,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 			ctx.argv[0] = "--children";
+ 			reverse = 1;
+ 		}
+-		parse_revision_opt(&revs, &ctx, options, blame_opt_usage);
++		parse_revision_opt(&revs, &ctx, options, usage);
+ 	}
+ parse_done:
+ 	revision_opts_finish(&revs);
+@@ -1040,7 +1049,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 		switch (argc - dashdash_pos - 1) {
+ 		case 2: /* (1b) */
+ 			if (argc != 4)
+-				usage_with_options(blame_opt_usage, options);
++				usage_with_options(usage, options);
+ 			/* reorder for the new way: <rev> -- <path> */
+ 			argv[1] = argv[3];
+ 			argv[3] = argv[2];
+@@ -1051,11 +1060,11 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 			argv[argc] = NULL;
+ 			break;
+ 		default:
+-			usage_with_options(blame_opt_usage, options);
++			usage_with_options(usage, options);
+ 		}
+ 	} else {
+ 		if (argc < 2)
+-			usage_with_options(blame_opt_usage, options);
++			usage_with_options(usage, options);
+ 		if (argc == 3 && is_a_rev(argv[argc - 1])) { /* (2b) */
+ 			path = add_prefix(prefix, argv[1]);
+ 			argv[1] = argv[2];
+@@ -1114,7 +1123,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 				    &bottom, &top, sb.path,
+ 				    the_repository->index))
+ 			usage_msg_optf(_("failed to parse -L argument '%s'"),
+-				       blame_opt_usage, options, arg);
++				       usage, options, arg);
+ 		if ((!lno && (top || bottom)) || lno < bottom)
+ 			die(Q_("file %s has only %lu line",
+ 			       "file %s has only %lu lines",
 -- 
 2.38.0.rc2.935.g6b421ae1592
 
