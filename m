@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0BE9C433FE
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 18:08:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D3F3C433F5
+	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 18:09:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231872AbiI3SIv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 14:08:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33330 "EHLO
+        id S231922AbiI3SJG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 14:09:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232024AbiI3SIe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 14:08:34 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 686831E555E
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:08:31 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id f11so5349082wrm.6
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:08:31 -0700 (PDT)
+        with ESMTP id S231853AbiI3SIq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 14:08:46 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B7021E5579
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:08:34 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id j7so2634792wrr.3
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:08:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=iy7dR8/Abr3dhe7BRag2bClwykGSjjDANdsGXG+aadI=;
-        b=po7xcakNDOzAhmnllfiG2ZKKzAcphWwg6vRuj+9Z2qFsZgBuuwlfUYT0zHvAtqPwmq
-         tqXrR/w8YiMFA1RN2k0mj33DhU07V75d9LQPD8AFRvnEKsNcYVe7Ub1EVRvmH4l4yi9/
-         a0oX5FDCJAr+4D+XkKlM9B/wKHS4eT2aFcZ8/MJTDYoXeHlve60gU8RbWfDx5DmYjZP1
-         w1F4Ym5lhwR3jUtSasDytiQcDcST5DR289EGs7ZKTGCIjGZLHTvMtdC3/ygUYUVJTZPS
-         lAOJ5FIy6nqKN5a2OhUo5MnC13LO3NWDTcMEUcYV2UsUqLApsfIhni0anakgJv4VzEWo
-         qGkg==
+        bh=8AFcCBHhUJYsfjEDK50sIGNjw9UoStgal+Zl/DaOTtM=;
+        b=gtGL6NzNOnHNlmKCTXbOOZx/4WzPu0nKo5zoFt73adSQ/4dWcEQnkTI/bvBSN/gKEq
+         Q0tBNCYdwbgx0aww8I9dXEXAWg7AK5sc4ci+mJa/TuJdwbUMkOThj9wOsfrVchKWzWKq
+         zrQZyrOQ1McPtsYGSE440SVqtbLcTABVxk8bX7OsNLNJdZ9yaB+dcSBNolu1Mub7VP5j
+         r2IMy+fzLmgpT4PweGOazpeZAR9/WUURGaiuJqyiefzs0OSVsbeXB9vU6wrTjbaMiH+A
+         xI4BcDA/YETascyJerrlbhVyGbBqbJOz4H0egpDYIi9BE5K9+2Za1GqNgYVkoLtoQ5+P
+         XAQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=iy7dR8/Abr3dhe7BRag2bClwykGSjjDANdsGXG+aadI=;
-        b=6O3XJFjivARtVF1vcUnE70JnEw7Gz99Y2iPtxwcdEAKZ+81+nugN5GeDQ2bygNDSBo
-         U0LlaI7j+3H88jPI+VEPqs1hFQIGSXRTYSpQwxd5Mu2dUjrEhqILyQZp8k5px+asCGWL
-         2Zvb76TyFAvpYIJ7TN+Nm1eq8URrqD/3hPKupoaw2YpAaW7f1d9LTIVE+MR4psz+dNzv
-         fUUcrZJUUpFrzWJ8i7aLW+X6Og71hlO/EW+1M3fC/PJfcPMD6SQlqHn5i2NZ0v842bEN
-         FICYVmGHif88KMzUMacD06qFIoWhbvI93juIC8YjhKtGtzddeazcC6nd0VobMbn2Z99N
-         2JFQ==
-X-Gm-Message-State: ACrzQf2d3tO/tYSLpVRboh2zfw5I/pgW3EyL9KFNFrXQJa+8NI1Tbbwf
-        oBh0YuYsccx3kS5GcD8tYFWZDa25C7gIvQ==
-X-Google-Smtp-Source: AMsMyM6EDcsP0Xzzc5OxmAUSZfuYPXrtqHXkSY+RdcCtx4QjXT4PzfU3Q/Sl80bvd7MuRkpAKnc9nA==
-X-Received: by 2002:a05:6000:1cc:b0:22a:e8c6:9f57 with SMTP id t12-20020a05600001cc00b0022ae8c69f57mr6353664wrx.527.1664561309389;
-        Fri, 30 Sep 2022 11:08:29 -0700 (PDT)
+        bh=8AFcCBHhUJYsfjEDK50sIGNjw9UoStgal+Zl/DaOTtM=;
+        b=nvwiPqx/dUdhYsKhCjTVarig+uO/V8efF15T2RcmQWTPF213ozAKgjZA29CS/hZnBk
+         V+Nr1JJpNJQkvhkX1HoYVHqvV42eVRdjsJr2j4AZJEY3m33sHWIQqIyuwpEtiTFIPzrN
+         Np0sMrvxYIco7PX+GTb/ZgxkKQUnV3AyCufv9rajBUzzY6sggC/ZFRi72IHvimvoDxPP
+         fAdrh7XmCQxIlhbyR/6KcLWZEjd7B7DrTWf/2AoaOKwXz3BGapcJ9oUquNgr0KqhRZQk
+         7avRfw8ZgvRREtAI3uDufDuqgA+74SgtKrwLaqGPm3WYd1FOedZXoVyTkGHcC3IwLhpY
+         wIbA==
+X-Gm-Message-State: ACrzQf220ISeEIGascxZtArRf/bKu0uT5T4XzJGS8pUChSpUMV89lzcY
+        bKkCVuvUO3TMShjA6NtDYE4OqLqmseptXA==
+X-Google-Smtp-Source: AMsMyM4JAjoFoojMdEjeBrlZ9e9vucqaqXi6cBGHiB5NAWPDt6xyEiyQGCCKzVGYbGJKfpzIQAqTyw==
+X-Received: by 2002:a5d:6da1:0:b0:22b:773:a99b with SMTP id u1-20020a5d6da1000000b0022b0773a99bmr6406603wrs.600.1664561312964;
+        Fri, 30 Sep 2022 11:08:32 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h9-20020a1c2109000000b003b4fac020c8sm7102703wmh.16.2022.09.30.11.08.25
+        by smtp.gmail.com with ESMTPSA id h9-20020a1c2109000000b003b4fac020c8sm7102703wmh.16.2022.09.30.11.08.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 11:08:27 -0700 (PDT)
+        Fri, 30 Sep 2022 11:08:30 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 06/36] doc SYNOPSIS: consistently use ' for commands
-Date:   Fri, 30 Sep 2022 20:07:29 +0200
-Message-Id: <patch-v3-06.36-b0ae035500c-20220930T180415Z-avarab@gmail.com>
+Subject: [PATCH v3 07/36] doc SYNOPSIS & -h: fix incorrect alternates syntax
+Date:   Fri, 30 Sep 2022 20:07:30 +0200
+Message-Id: <patch-v3-07.36-829bdf58499-20220930T180415Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.rc2.935.g6b421ae1592
 In-Reply-To: <cover-v3-00.36-00000000000-20220930T180414Z-avarab@gmail.com>
 References: <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com> <cover-v3-00.36-00000000000-20220930T180414Z-avarab@gmail.com>
@@ -72,41 +72,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Most of our commands use ''-quotation only for the name of the command
-itself, and not its (optional) arguments. Let's do the same for these.
+Fix the incorrect "[-o | --option <argument>]" syntax, which should be
+"[(-o | --option) <argument>]", we were previously claiming that only
+the long option accepted the "<argument>", which isn't what we meant.
+
+This issue has been with us in both the "-h" and *.txt versions since
+bd514cada4b (stash: introduce 'git stash store', 2013-06-15).
+
+There are also issues with the alternates syntax for "bugreport" and
+"diagnose", but in those cases only for one of *.c or *.txt, not
+both. Those issues will be fixed in a subsequent "consistency" commit.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-fast-export.txt     | 2 +-
- Documentation/git-sparse-checkout.txt | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ Documentation/git-stash.txt | 6 +++---
+ builtin/stash.c             | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-index 1978dbdc6ad..4643ddbe68f 100644
---- a/Documentation/git-fast-export.txt
-+++ b/Documentation/git-fast-export.txt
-@@ -9,7 +9,7 @@ git-fast-export - Git data exporter
- SYNOPSIS
- --------
- [verse]
--'git fast-export [<options>]' | 'git fast-import'
-+'git fast-export' [<options>] | 'git fast-import'
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index c5d70918283..4856f452511 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -14,12 +14,12 @@ SYNOPSIS
+ 'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
+ 'git stash' branch <branchname> [<stash>]
+ 'git stash' [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]
+-	     [-u|--include-untracked] [-a|--all] [-m|--message <message>]
++	     [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]
+ 	     [--pathspec-from-file=<file> [--pathspec-file-nul]]
+ 	     [--] [<pathspec>...]]
+ 'git stash' clear
+ 'git stash' create [<message>]
+-'git stash' store [-m|--message <message>] [-q|--quiet] <commit>
++'git stash' store [(-m|--message) <message>] [-q|--quiet] <commit>
  
  DESCRIPTION
  -----------
-diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-index 3776705bf53..872436d7426 100644
---- a/Documentation/git-sparse-checkout.txt
-+++ b/Documentation/git-sparse-checkout.txt
-@@ -9,7 +9,7 @@ git-sparse-checkout - Reduce your working tree to a subset of tracked files
- SYNOPSIS
+@@ -47,7 +47,7 @@ stash index (e.g. the integer `n` is equivalent to `stash@{n}`).
+ COMMANDS
  --------
- [verse]
--'git sparse-checkout <subcommand> [<options>]'
-+'git sparse-checkout' <subcommand> [<options>]
  
+-push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [-m|--message <message>] [--pathspec-from-file=<file> [--pathspec-file-nul]] [--] [<pathspec>...]::
++push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [(-m|--message) <message>] [--pathspec-from-file=<file> [--pathspec-file-nul]] [--] [<pathspec>...]::
  
- DESCRIPTION
+ 	Save your local modifications to a new 'stash entry' and roll them
+ 	back to HEAD (in the working tree and in the index).
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 2274aae2556..51d40efaac7 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -29,7 +29,7 @@ static const char * const git_stash_usage[] = {
+ 	N_("git stash branch <branchname> [<stash>]"),
+ 	"git stash clear",
+ 	N_("git stash [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
+-	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
++	   "          [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]\n"
+ 	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
+ 	   "          [--] [<pathspec>...]]"),
+ 	N_("git stash save [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
+@@ -73,13 +73,13 @@ static const char * const git_stash_clear_usage[] = {
+ };
+ 
+ static const char * const git_stash_store_usage[] = {
+-	N_("git stash store [-m|--message <message>] [-q|--quiet] <commit>"),
++	N_("git stash store [(-m|--message) <message>] [-q|--quiet] <commit>"),
+ 	NULL
+ };
+ 
+ static const char * const git_stash_push_usage[] = {
+ 	N_("git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
+-	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
++	   "          [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]\n"
+ 	   "          [--] [<pathspec>...]]"),
+ 	NULL
+ };
 -- 
 2.38.0.rc2.935.g6b421ae1592
 
