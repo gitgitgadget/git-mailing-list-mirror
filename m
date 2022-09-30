@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38AE1C433F5
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 11:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E73F8C4332F
+	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 11:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231495AbiI3Lgl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 07:36:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57486 "EHLO
+        id S231710AbiI3Lgm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 07:36:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231467AbiI3Lfs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 07:35:48 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB55613EEBE
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 04:28:32 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id f11so3713686wrm.6
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 04:28:32 -0700 (PDT)
+        with ESMTP id S231470AbiI3Lft (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 07:35:49 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C41E413DDAF
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 04:28:29 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id z13-20020a7bc7cd000000b003b5054c6f9bso4865579wmk.2
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 04:28:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=q9wxY/IQpQ6zUbVdQPRFb3NEzFZr3yNJjIeo3t7oiTs=;
-        b=DmNoMatMir0wu/0tBq+uNlJ3Nrc2oV7ZBQwogIUu1l3yNo6XR9OWVnzh/pJ5FEJ03Q
-         ux+OPfnAfIYy7ANxWGp8u+lEMWSZY1/7rjF70TnbYmYTneCVphVdpNxhkWx2oMWrPUU9
-         NlOFL6ySlxUrEzqyWPp/mFPVu684ag5DiH/BcmydctIUvr01nQBHD8KIK21PlxsVm+Rq
-         Qto8mFFRp1KPsn3MT5NGRdEaokbIA8ESmI/t+6ZM3WLfL7G7ca56/jdhfPti7RUJy1N+
-         1p2rxM7Asv50D6oEpz206mmGpUyW2y8ltwEFnMRlHx2nZs+QKe4oLT96rAIJblM8plHF
-         0cug==
+        bh=gUZy4XxJKLC/vFO7dhaMUDkuz3vAtT8JCz9hHmDiKN0=;
+        b=FJB/jDrPTgaijuWU6eOln2PBVqtaJ0AaQ1ydzuxuzkcQjv54uSChNzTAuJtQG3LuM1
+         gVD3OR4AboGAUTClX4qcU0Ww+Ugzts/Cf6fHf1ZwSuq/05Ptq2fhRXHc7APog+BBnmGm
+         Wo+YFCfrwHl8lC92JTdIAyJRogXHaTbh9Dan7rYeAQ35mBXKyogKQ6a4+iD0Gz5cIvtg
+         XGjTwiYO8XqR18yZp9CQMyS7CeB1SXJKiePfFISSQmSxqzDN3vkZkpFk680xx910Ln/G
+         TgB6kD6yTIm//aSQkcRz8v7YjQ770L+vkx+c20d911jRoURQW0NuiforNIU4hFzFw3ku
+         k+gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=q9wxY/IQpQ6zUbVdQPRFb3NEzFZr3yNJjIeo3t7oiTs=;
-        b=uMAU4VVJsvsabkiHEZyceYepxaP+UvFWo5HPWH2VFeJxvF9OkxSdAZbjPCCzBw78N7
-         +FNHDdyJj2ePfMRy1CEE27RH6mSU6ovUDSMtH8F3wDPfeJOQWszpKzKGZ/vgK6JvcCPm
-         DE/0nUj8UNVn+qWF90NA54JdDKTJCa9xsppaPA4OvhPlcj7CJ4k9+qkrdQBEVcTtMIPt
-         RwLV1p/FiC9NhzhvO5bFRL8EkPPluaukVGVNhsvGKQwgG2L76w/KNPB9GJZfAo6ZFdih
-         XFU4wvxl3DkjYnTj5QDKDWYDWXFeCHQyJiS/csIBma5V7JQbeTWNKSA+hO31nVVyBeO1
-         gdxg==
-X-Gm-Message-State: ACrzQf1r8bOlPYxuTkghsRCOT/0lz/ARHgPE39wlWSKAhuuotSuoMcf+
-        7OYLf75RcWWmLC1nU04gCEU+dWCSC2XLvA==
-X-Google-Smtp-Source: AMsMyM6zzjrxCkjxnFuIu0Ih5/+xwGIhIXG8WiZbtIYIAuEqIIv8ZWfLEoyN2GggFI8gn8I1I8JkAQ==
-X-Received: by 2002:a05:6000:887:b0:21e:24a0:f302 with SMTP id ca7-20020a056000088700b0021e24a0f302mr5272923wrb.466.1664537310404;
-        Fri, 30 Sep 2022 04:28:30 -0700 (PDT)
+        bh=gUZy4XxJKLC/vFO7dhaMUDkuz3vAtT8JCz9hHmDiKN0=;
+        b=cR/WcOs8YWt4wxnwyYdxcOss5Xie6a8ygrlbXLDvcd9WJLNeA3kEAloPVymDoWG3Mw
+         bdfuPoBV2aRXG9Ete7buQp16ecjRrEacpvDiEmzc/hR2C+uDErwftoTc4dGNtmG3MnvM
+         Gql/bkTuisA5tXV2wwsJ34LnusB1xZKJlYfGyBd2TbutSNNkbkDIDCSPbA/Ha+AJk6je
+         8QEHKB4h+ttcNWWzBuw30KeQFp89a3kCnsWoY5+4MOtf/tiY3GnT/vsv4I9AHxdHx/kM
+         Y1KHZZanUFCvSTimAxwd6YgdNlm54OJhLhI/pFNMggzxX+Pz5yFbeHgfV6RvJDLQUH8k
+         uyfA==
+X-Gm-Message-State: ACrzQf3dBgg6YRBpaPR5gNxLR6FH+yzo8q824qp4NiikDDmfMArAkrNS
+        Mw11MYpYYjRVpEYPH9p25SyfGGa8snMYFA==
+X-Google-Smtp-Source: AMsMyM5Dc3I6on5tAZIwRRUmSzln8Vl4JU4Bgo2R0RA1p8HUcfVpQlqdwS3N251Xwt4fPxjUmElVTQ==
+X-Received: by 2002:a05:600c:4ec8:b0:3b4:bdc6:9b3d with SMTP id g8-20020a05600c4ec800b003b4bdc69b3dmr13719998wmq.181.1664537307005;
+        Fri, 30 Sep 2022 04:28:27 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l19-20020a5d5273000000b00228dbf15072sm1760799wrc.62.2022.09.30.04.28.29
+        by smtp.gmail.com with ESMTPSA id l19-20020a5d5273000000b00228dbf15072sm1760799wrc.62.2022.09.30.04.28.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 04:28:29 -0700 (PDT)
+        Fri, 30 Sep 2022 04:28:26 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 13/15] run-command API: move *_tr2() users to "run_processes_parallel()"
-Date:   Fri, 30 Sep 2022 13:28:10 +0200
-Message-Id: <patch-13.15-37d194a338f-20220930T111343Z-avarab@gmail.com>
+Subject: [PATCH 10/15] run-command API: add nascent "struct run_process_parallel_opts"
+Date:   Fri, 30 Sep 2022 13:28:07 +0200
+Message-Id: <patch-10.15-613ccb85fa2-20220930T111343Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.rc2.935.g6b421ae1592
 In-Reply-To: <cover-00.15-00000000000-20220930T111343Z-avarab@gmail.com>
 References: <cover-00.15-00000000000-20220930T111343Z-avarab@gmail.com>
@@ -69,169 +69,176 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Have the users of the "run_processes_parallel_tr2()" function use
-"run_processes_parallel()" instead. In preceding commits the latter
-was refactored to take a "struct run_process_parallel_opts" argument,
-since the only reason for "run_processes_parallel_tr2()" to exist was
-to take arguments that are now a part of that struct we can do away
-with it.
+As noted in fd3aaf53f71 (run-command: add an "ungroup" option to
+run_process_parallel(), 2022-06-07) which added the "ungroup" passing
+it to "run_process_parallel()" via the global
+"run_processes_parallel_ungroup" variable was a compromise to get the
+smallest possible regression fix for "maint" at the time.
 
-See ee4512ed481 (trace2: create new combined trace facility,
-2019-02-22) for the addition of the "*_tr2()" variant of the function,
-it was used by every caller except "t/helper/test-run-command.c"..
+This follow-up to that is a start at passing that parameter and others
+via a new "struct run_process_parallel_opts", as the earlier
+version[1] of what became fd3aaf53f71 did.
+
+For now we're only changing how data is passed internally to
+"run-command.c", i.e. from "run_process_parallel()" to
+pp_init(). Subsequent commits will change "run_processes_parallel()"
+itself, as well as the "run_processes_parallel_tr2()" wrapper
+function.
+
+1. https://lore.kernel.org/git/cover-v2-0.8-00000000000-20220518T195858Z-avarab@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/fetch.c             | 18 ++++++++++++------
- builtin/submodule--helper.c | 16 ++++++++++++----
- run-command.c               | 21 ---------------------
- run-command.h               |  3 ---
- submodule.c                 | 18 ++++++++++++------
- 5 files changed, 36 insertions(+), 40 deletions(-)
+ run-command.c | 38 ++++++++++++++++++++++----------------
+ run-command.h | 44 +++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 63 insertions(+), 19 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 82f1da14ec1..a4eea27cdae 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1953,15 +1953,21 @@ static int fetch_multiple(struct string_list *list, int max_children)
- 
- 	if (max_children != 1 && list->nr != 1) {
- 		struct parallel_fetch_state state = { argv.v, list, 0, 0 };
-+		const struct run_process_parallel_opts opts = {
-+			.tr2_category = "fetch",
-+			.tr2_label = "parallel/fetch",
-+
-+			.jobs = max_children,
-+
-+			.get_next_task = &fetch_next_remote,
-+			.start_failure = &fetch_failed_to_start,
-+			.task_finished = &fetch_finished,
-+			.data = &state,
-+		};
- 
- 		strvec_push(&argv, "--end-of-options");
--		run_processes_parallel_tr2(max_children,
--					   &fetch_next_remote,
--					   &fetch_failed_to_start,
--					   &fetch_finished,
--					   &state,
--					   "fetch", "parallel/fetch");
- 
-+		run_processes_parallel(&opts);
- 		result = state.result;
- 	} else
- 		for (i = 0; i < list->nr; i++) {
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 0b4acb442b2..cd34d021b70 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2567,12 +2567,20 @@ static int update_submodules(struct update_data *update_data)
- {
- 	int i, ret = 0;
- 	struct submodule_update_clone suc = SUBMODULE_UPDATE_CLONE_INIT;
-+	const struct run_process_parallel_opts opts = {
-+		.tr2_category = "submodule",
-+		.tr2_label = "parallel/update",
-+
-+		.jobs = update_data->max_jobs,
-+
-+		.get_next_task = update_clone_get_next_task,
-+		.start_failure = update_clone_start_failure,
-+		.task_finished = update_clone_task_finished,
-+		.data = &suc,
-+	};
- 
- 	suc.update_data = update_data;
--	run_processes_parallel_tr2(suc.update_data->max_jobs, update_clone_get_next_task,
--				   update_clone_start_failure,
--				   update_clone_task_finished, &suc, "submodule",
--				   "parallel/update");
-+	run_processes_parallel(&opts);
- 
- 	/*
- 	 * We saved the output and put it out all at once now.
 diff --git a/run-command.c b/run-command.c
-index cdbba15a0ba..1d5a500ecce 100644
+index 31a856f8b9a..f82fc7f1515 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -1838,27 +1838,6 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
- 		trace2_region_leave(tr2_category, tr2_label, NULL);
+@@ -1563,21 +1563,21 @@ static void handle_children_on_signal(int signo)
  }
  
--void run_processes_parallel_tr2(unsigned int jobs, get_next_task_fn get_next_task,
--				start_failure_fn start_failure,
--				task_finished_fn task_finished, void *pp_cb,
--				const char *tr2_category, const char *tr2_label)
--{
--	const struct run_process_parallel_opts opts = {
--		.tr2_category = tr2_category,
--		.tr2_label = tr2_label,
--
--		.jobs = jobs,
--
--		.get_next_task = get_next_task,
--		.start_failure = start_failure,
--		.task_finished = task_finished,
--
--		.data = pp_cb,
--	};
--
--	run_processes_parallel(&opts);
--}
--
- int run_auto_maintenance(int quiet)
+ static void pp_init(struct parallel_processes *pp,
+-		    unsigned int jobs,
+-		    get_next_task_fn get_next_task,
+-		    start_failure_fn start_failure,
+-		    task_finished_fn task_finished,
+-		    void *data, int ungroup)
++		    const struct run_process_parallel_opts *opts)
  {
- 	int enabled;
-diff --git a/run-command.h b/run-command.h
-index 0f1d4081dcd..075bd9b9de4 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -528,9 +528,6 @@ struct run_process_parallel_opts
-  * conditions due to writing in parallel to stdout and stderr.
-  */
- void run_processes_parallel(const struct run_process_parallel_opts *opts);
--void run_processes_parallel_tr2(unsigned int jobs, get_next_task_fn, start_failure_fn,
--				task_finished_fn, void *pp_cb,
--				const char *tr2_category, const char *tr2_label);
+ 	unsigned int i;
++	void *data = opts->data;
++	get_next_task_fn get_next_task = opts->get_next_task;
++	start_failure_fn start_failure = opts->start_failure;
++	task_finished_fn task_finished = opts->task_finished;
  
- /**
-  * Convenience function which prepares env for a command to be run in a
-diff --git a/submodule.c b/submodule.c
-index bf7a2c79183..72b295b87b7 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1819,6 +1819,17 @@ int fetch_submodules(struct repository *r,
- {
- 	int i;
- 	struct submodule_parallel_fetch spf = SPF_INIT;
+-	if (!jobs)
++	if (!opts->jobs)
+ 		BUG("you must provide a non-zero number of jobs!");
+ 
+-	pp->max_processes = jobs;
++	pp->max_processes = opts->jobs;
+ 
+ 	trace_printf("run_processes_parallel: preparing to run up to %d tasks",
+-		     jobs);
++		     opts->jobs);
+ 
+ 	pp->data = data;
+ 	if (!get_next_task)
+@@ -1590,12 +1590,12 @@ static void pp_init(struct parallel_processes *pp,
+ 	pp->nr_processes = 0;
+ 	pp->output_owner = 0;
+ 	pp->shutdown = 0;
+-	pp->ungroup = ungroup;
+-	CALLOC_ARRAY(pp->children, jobs);
++	pp->ungroup = opts->ungroup;
++	CALLOC_ARRAY(pp->children, opts->jobs);
+ 	if (!pp->ungroup)
+-		CALLOC_ARRAY(pp->pfd, jobs);
++		CALLOC_ARRAY(pp->pfd, opts->jobs);
+ 
+-	for (i = 0; i < jobs; i++) {
++	for (i = 0; i < opts->jobs; i++) {
+ 		strbuf_init(&pp->children[i].err, 0);
+ 		child_process_init(&pp->children[i].process);
+ 		if (pp->pfd) {
+@@ -1793,14 +1793,20 @@ void run_processes_parallel(unsigned int jobs,
+ 	int i, code;
+ 	int output_timeout = 100;
+ 	int spawn_cap = 4;
+-	int ungroup = run_processes_parallel_ungroup;
+ 	struct parallel_processes pp = PARALLEL_PROCESSES_INIT;
 +	const struct run_process_parallel_opts opts = {
-+		.tr2_category = "submodule",
-+		.tr2_label = "parallel/fetch",
-+
-+		.jobs = max_parallel_jobs,
-+
-+		.get_next_task = get_next_submodule,
-+		.start_failure = fetch_start_failure,
-+		.task_finished = fetch_finish,
-+		.data = &spf,
++		.jobs = jobs,
++		.get_next_task = get_next_task,
++		.start_failure = start_failure,
++		.task_finished = task_finished,
++		.ungroup = run_processes_parallel_ungroup,
++		.data = pp_cb,
 +	};
  
- 	spf.r = r;
- 	spf.command_line_option = command_line_option;
-@@ -1840,12 +1851,7 @@ int fetch_submodules(struct repository *r,
+ 	/* unset for the next API user */
+ 	run_processes_parallel_ungroup = 0;
  
- 	calculate_changed_submodule_paths(r, &spf.changed_submodule_names);
- 	string_list_sort(&spf.changed_submodule_names);
--	run_processes_parallel_tr2(max_parallel_jobs,
--				   get_next_submodule,
--				   fetch_start_failure,
--				   fetch_finish,
--				   &spf,
--				   "submodule", "parallel/fetch");
-+	run_processes_parallel(&opts);
+-	pp_init(&pp, jobs, get_next_task, start_failure, task_finished, pp_cb,
+-		ungroup);
++	pp_init(&pp, &opts);
+ 	while (1) {
+ 		for (i = 0;
+ 		    i < spawn_cap && !pp.shutdown &&
+@@ -1817,7 +1823,7 @@ void run_processes_parallel(unsigned int jobs,
+ 		}
+ 		if (!pp.nr_processes)
+ 			break;
+-		if (ungroup) {
++		if (opts.ungroup) {
+ 			int i;
  
- 	if (spf.submodules_with_errors.len > 0)
- 		fprintf(stderr, _("Errors during submodule fetch:\n%s"),
+ 			for (i = 0; i < pp.max_processes; i++)
+diff --git a/run-command.h b/run-command.h
+index 4502bdc64dc..210fb9e8bc4 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -458,6 +458,47 @@ typedef int (*task_finished_fn)(int result,
+ 				void *pp_cb,
+ 				void *pp_task_cb);
+ 
++/**
++ * Option used by run_processes_parallel(), { 0 }-initialized means no
++ * options.
++ */
++struct run_process_parallel_opts
++{
++	/**
++	 * jobs: see 'jobs' in run_processes_parallel() below.
++	 */
++	int jobs;
++
++	/**
++	 * ungroup: see 'ungroup' in run_processes_parallel() below.
++	 */
++	unsigned int ungroup:1;
++
++	/**
++	 * get_next_task: See get_next_task_fn() above. This must be
++	 * specified.
++	 */
++	get_next_task_fn get_next_task;
++
++	/**
++	 * start_failure: See start_failure_fn() above. This can be
++	 * NULL to omit any special handling.
++	 */
++	start_failure_fn start_failure;
++
++	/**
++	 * task_finished: See task_finished_fn() above. This can be
++	 * NULL to omit any special handling.
++	 */
++	task_finished_fn task_finished;
++
++	/**
++	 * data: user data, will be passed as "pp_cb" to the callback
++	 * parameters.
++	 */
++	void *data;
++};
++
+ /**
+  * Runs up to 'jobs' processes at the same time. Whenever a process can be
+  * started, the callback get_next_task_fn is called to obtain the data
+@@ -467,9 +508,6 @@ typedef int (*task_finished_fn)(int result,
+  * (both stdout and stderr) is routed to stderr in a manner that output
+  * from different tasks does not interleave (but see "ungroup" below).
+  *
+- * start_failure_fn and task_finished_fn can be NULL to omit any
+- * special handling.
+- *
+  * If the "ungroup" option isn't specified, the API will set the
+  * "stdout_to_stderr" parameter in "struct child_process" and provide
+  * the callbacks with a "struct strbuf *out" parameter to write output
 -- 
 2.38.0.rc2.935.g6b421ae1592
 
