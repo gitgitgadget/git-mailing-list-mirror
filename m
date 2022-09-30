@@ -2,167 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36497C433FE
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 17:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7540FC433F5
+	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 17:23:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231318AbiI3RXU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 13:23:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54760 "EHLO
+        id S231616AbiI3RXe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 13:23:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbiI3RXR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 13:23:17 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A302037D
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 10:23:16 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id dv25so10375708ejb.12
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 10:23:16 -0700 (PDT)
+        with ESMTP id S231368AbiI3RXc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 13:23:32 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E513A1C2F99
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 10:23:29 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id d14so2522822ilf.2
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 10:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date;
-        bh=Mp6A0sfmGDI9Bv876qG+10W/oX/wLSlqnvRJ38S+lsQ=;
-        b=i2BB9DY5FV8+x0+bbWani/ISdNfu9WQkWo1gOybNDMQ7JyZveFnr5jxmuAGevGum44
-         HytcB44cdwNKy5TL6QX/o9sR2IVXnDxI+ojuK5dBJoUkLS4V+9YhfeSDEiOPSlO/T08F
-         MUyRda4FJVEXHXMJ14LrSW8oKu6x3xel8Kwjs/0EARfAF84L7dhs+D+FNoGyzId2jK8R
-         VynYEFokbRV/E+E5ZL/5V8IdHKe3wqjkSVxEUSyedTryOSy8oLQRhLkwhIYsCJL1Faox
-         kafku/znlxDEE6ZOjzR/7uHLNya9Z0H1JYPdsZm/WB5Iy66P58bKtwBG/b0umg4iQ8Ys
-         vKfA==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=1PvZEmSlCayhKy/k3yjdRYW39dcVoyfovt9BDW4ZGEQ=;
+        b=CXTxQYQwQGiCYMQu7eknb5Y8lCZHDNe8WYfhDnaG8me3WQXoKBft7cUvVHRxJrbZ35
+         RfpN6NFK8pV+Y4HJ8ZX6LE+6Ok2xLubVm5qW9vAOF2S9zikeHjqJawYGIpMr4Nw9n1ym
+         Dq0rnWxg/Fs91kvUTJV2Z5aRfeoFFXXuK8bhfgZkJp85PC2Qop0xCwoBbWSISKJY+Z7a
+         15teZrINeTaIOmP8KH9AS/4iBvqO/PKnLJPVDYrxNwOkbikGmraRYZWASDW8YkipMXdc
+         WaJl6blHABi5q3EMCUuCbr6hEseVlgBzLXAPEvX+rqOgI9mYSNbULalhT1H79paifeKr
+         R+/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=Mp6A0sfmGDI9Bv876qG+10W/oX/wLSlqnvRJ38S+lsQ=;
-        b=74yoSEn9SZhaWoFt7DE2FzX7iRvcuVL1oq6vOXVorMcuWwq2WIXY4I3gOglMaChRu9
-         sl08HhdWIMR/JWPnrADSCWXhA/L+ccBPt8Ez3y6wGaJFnOZNOPpdy4153DqPaDYCIXBb
-         gBB5ryJcBCr4Zi/nt0kJc7onin0+mPqWP6ZdMdhciyAm9eLGbWLlto/iddBLog6E4hHv
-         5w7yH4+OPn86Zvq4LpvlEM3V/BB8wr6NxuCPCnDF7aZT7wl6oE923MEw3bQn5YyXmcnB
-         SkDn94Wisv7JFkJif/1qUmzW4ciG0VPKLWPTyNXIwIRZADeNieTYO3iG/4+AOmzTYfIF
-         G0Jw==
-X-Gm-Message-State: ACrzQf3Fh28hxGXVuEv2Y8dnwAjV+c8D1he1CKoeqf1qWgNWH7xbrrsX
-        O+ZMH7ok6rL14hTYeK1cJfw=
-X-Google-Smtp-Source: AMsMyM5uw9W3/745+D/pJ/YJuzI+y0wKFYyxgJ5Gq4m3gUdQcpFv3e7vAsoRpdYierwm9Yve7FPdKA==
-X-Received: by 2002:a17:907:2bd8:b0:770:77f2:b7af with SMTP id gv24-20020a1709072bd800b0077077f2b7afmr7097298ejc.545.1664558595005;
-        Fri, 30 Sep 2022 10:23:15 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id ek12-20020a056402370c00b004587f9d3ce8sm1553309edb.56.2022.09.30.10.23.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 10:23:14 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oeJjF-001mhi-0p;
-        Fri, 30 Sep 2022 19:23:13 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] sequencer: fail early if invalid ref is given to
- 'update-ref' instruction
-Date:   Fri, 30 Sep 2022 19:09:04 +0200
-References: <20220930140948.80367-1-szeder.dev@gmail.com>
- <20220930140948.80367-7-szeder.dev@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20220930140948.80367-7-szeder.dev@gmail.com>
-Message-ID: <220930.86a66gvkse.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=1PvZEmSlCayhKy/k3yjdRYW39dcVoyfovt9BDW4ZGEQ=;
+        b=R5pxn3S2vxpKqT9euXQzAw38kraYliwPGJL9Xq+mG1ioy3oKM8r5EUrPAt/eJCqZB6
+         UIfoUf7RFthUagLqgr7AIfE3p/KGp9nYry3DO4wDRdqRSE38RvBWGIUkCbhPWWqmL7BR
+         WIr+zE/fVf1O/0Cd3KzbI6p+G9IdIDaZdz3Z8kQfzV3ZlzoL5gsGXrgpqmENFXtCgFHG
+         pIhQmMwKzCi6elMyuAgcjAUg+YPNa2wId9DyJ57olBXxPm167LbTbgV5xe1N0PNZzfnz
+         krqTY7TQRhM0kxtOv9v0cZcNB1EWtTQYC5ln1ORl4CoW6CTvRJCC+J6iW4rbMoeEjDdk
+         M4Cw==
+X-Gm-Message-State: ACrzQf0sNlOpxaOoYwecTLQEN02Mqcrl06eXY/H+i6pFqT3RhyWQWiqe
+        dTusd3NTDgrnOfvRK6RYllaKkNab8b0t
+X-Google-Smtp-Source: AMsMyM73G9k7Lh8bbK1KMloOF3U1sZlIX32ajNKgHO/emtJxldja8OUleqaRDGeaqKuq7FJ1IRzlVQ==
+X-Received: by 2002:a05:6e02:168f:b0:2f8:3d20:ea6 with SMTP id f15-20020a056e02168f00b002f83d200ea6mr4524594ila.322.1664558608712;
+        Fri, 30 Sep 2022 10:23:28 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:8c53:a5aa:3322:e297? ([2600:1700:e72:80a0:8c53:a5aa:3322:e297])
+        by smtp.gmail.com with ESMTPSA id q12-20020a02a98c000000b003566d1abeabsm1128943jam.5.2022.09.30.10.23.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Sep 2022 10:23:28 -0700 (PDT)
+Message-ID: <1711157b-8f04-008b-1672-f1fbac3c3e81@github.com>
+Date:   Fri, 30 Sep 2022 13:23:27 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH 5/6] sequencer: duplicate the result of
+ resolve_ref_unsafe()
+Content-Language: en-US
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <20220930140948.80367-1-szeder.dev@gmail.com>
+ <20220930140948.80367-6-szeder.dev@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <20220930140948.80367-6-szeder.dev@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 9/30/2022 10:09 AM, SZEDER Gábor wrote:
+> When 'git rebase -i --update-refs' generates the todo list for the
+> rebased commit range, an 'update-ref' instruction is inserted for each
+> ref that points to one of those commits, except for the rebased branch
+> (because at the end of the rebase it will be updated anyway) and any
+> refs that are checked out in a worktree; for the latter a "Ref <ref>
+> checked out at '<worktree>'" comment is added.  One of these comments
+> can be missing under some circumstances: if the oldest commit with a
+> ref pointing to it has multiple refs pointing to it, and at least one
+> of those refs is checked out in a worktree, and one of them (but not
+> the first) is checked out in the worktree associated with the last
+> directory entry in '.git/worktrees'.
+> 
+> The culprit is the add_decorations_to_list() function, which calls
+> resolve_ref_unsafe() to figure out the refname of the rebased branch.
+> However, resolve_ref_unsafe() can (and in this case does) return a
+> pointer to a static buffer.  Alas, add_decorations_to_list() holds on
+> that static buffer until the end of the function, using its contents
+> to compare refnames with the rebased branch, while it also calls a
+> function that invokes refs_resolve_ref_unsafe() internally [1], and
+> which overwrites the content of that static buffer, and messes up
+> subsequent refname comparisons.
 
-On Fri, Sep 30 2022, SZEDER G=C3=A1bor wrote:
+Good catch!
 
-> +	if (item->command =3D=3D TODO_UPDATE_REF) {
-> +		struct strbuf ref =3D STRBUF_INIT;
-> +		int ret =3D 0;
-> +
-> +		item->commit =3D NULL;
-> +		item->arg_offset =3D bol - buf;
-> +		item->arg_len =3D (int)(eol - bol);
-> +
-> +		strbuf_add(&ref, bol, item->arg_len);
+> -	const char *head_ref = resolve_ref_unsafe("HEAD",
+> +	const char *head_ref = xstrdup_or_null(resolve_ref_unsafe("HEAD",
+>  						  RESOLVE_REF_READING,
+>  						  NULL,
+> -						  NULL);
+> +						  NULL));
 
-Just a nit and maybe not worth it, but we've done this allocation dance
-just because..
+Moving to a 'char *' matches our typical pattern of "I am responsible
+for freeing this or passing that responsibility to someone else."
 
-> +		if (!starts_with(ref.buf, "refs/") ||
-> +		    check_refname_format(ref.buf, 0))
+> +test_expect_success 'what should I call this?!' '
 
-...there isn't such a thing as checkn_refname_format() taking a "size_t
-len" or whatever.
+Perhaps 'with multiple refs, correctly report worktree' ?
 
-So maybe not worth it, but if we do the equivalent of:
-=09
-	static checkn_refname_format(const char *refname, size_t len, unsigned int=
- flags)
-	{
-	        struct strbuf ref =3D STRBUF_INIT;
-	        int ret;
-=09
-		strbuf_add(&ref, refname, len);
-	        ret =3D check_refname_format(ref,buf, flags);
-	        strbuf_release(&ref);
-=09
-		return ret;
-	}
-
-This caller could just (untested):
-
-	if (!starts_with(bol, "refs/") ||
-	    checkn_refname_format(bol, eol - bol, 0))
-		return error(_("...%.*s", item->arg_len, bol));
-
-Which saves us the copy in case the "starts_with" test is all we need.
-
-Even without such a helper, maybe:
-
-	int bad;
-
-        [...]
-	bad =3D (!starts_with(ref.buf, "refs/") ||
-               check_refname_format(ref.buf, 0));
-        strbuf_release(&buf);
-        if (bad)
-		return error(_("...%.*s", item->arg_len, bol));
-	return 0;
-
-Would make it clearer that the strbuf is just for the use of
-check_refname_format().
-
-What you have already is also fine, this just sent me down a rabbit hole
-of re-learning that most of the string duplication we do for
-check_refname_format() could be avoided if it was slightly less stupid,
-i.e. accepted a "len" and "prefix" (i.e. "pretend your refname argument
-started with 'refs/heads/'", or whatever).
-
-> +			ret =3D error(_("invalid ref for update-ref instruction: %s"), ref.bu=
-f);
-> +
-> +		strbuf_release(&ref);
-> +		return ret;
-> +	}
-> +
->  	end_of_object_name =3D (char *) bol + strcspn(bol, " \t\n");
->  	saved =3D *end_of_object_name;
->  	*end_of_object_name =3D '\0';
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 2e081b3914..b97f1e8b31 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1964,6 +1964,34 @@ test_expect_success 'respect user edits to update-=
-ref steps' '
->  	test_cmp_rev HEAD refs/heads/no-conflict-branch
->  '
->=20=20
-> +test_expect_success 'update-refs with invalid refs' '
-> +	cat >fake-todo-4 <<-EOF &&
-> +	update-ref refs/heads/foo..bar
-> +	update-ref refs/heads/foo.lock
-> +	update-ref foo
-> +	update-ref foo/bar
-> +	pick $(git rev-parse HEAD)
-
-Another potentially hidden segfault/exit code for "git"
+Thanks,
+-Stolee
