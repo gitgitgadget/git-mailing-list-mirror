@@ -2,104 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31BFCC433FE
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 21:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D9B8C433FE
+	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 21:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232346AbiI3VqW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 17:46:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34672 "EHLO
+        id S232327AbiI3VuO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 17:50:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231745AbiI3VqU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 17:46:20 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86DB638A1F
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 14:46:19 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C79E4145226;
-        Fri, 30 Sep 2022 17:46:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=kj6qgoc68WTs
-        CoMQb5Yf/zotQfymwsCwSKGNbS82mVo=; b=gbw//j5hR8rBcf4cK0Evkd6RapIe
-        A7HzoHB6SlvIhuDDfbqR78G0QkL6pCNCXUcQ6OcFv0U4wGaMFaGbR3/bHWAdpzug
-        /cWT2drO72wcWSN+VvUJnbueHHge3hOCbauz/0Y+MPoaqrI140WyD1awXgWaP0CV
-        nRpGfjZe/ZBpPao=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BE69D145225;
-        Fri, 30 Sep 2022 17:46:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 37489145224;
-        Fri, 30 Sep 2022 17:46:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        John Cai <johncai86@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 17/36] t/helper/test-proc-receive.c: use "<options>",
- not "<options>..."
-References: <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
-        <cover-v3-00.36-00000000000-20220930T180414Z-avarab@gmail.com>
-        <patch-v3-17.36-041aa64f3c7-20220930T180415Z-avarab@gmail.com>
-Date:   Fri, 30 Sep 2022 14:46:16 -0700
-In-Reply-To: <patch-v3-17.36-041aa64f3c7-20220930T180415Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 30 Sep
- 2022 20:07:40
-        +0200")
-Message-ID: <xmqqedvs8riv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 50ADE66E-4109-11ED-9708-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S232512AbiI3VuJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 17:50:09 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 247A037F99
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 14:50:04 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id r126-20020a632b84000000b004393806c06eso3516949pgr.4
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 14:50:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=a3gsMTzBPwLbvG9qhU06yAnAf3mNr1bnRDFKzIAXR5M=;
+        b=FFybL3jSXiLIjf1yAZec5qpsCWeGOkJMwyJo3f9CPRkmnhjax8FQ9aSMmAzJuIF7ti
+         VGV+aWC1H6jcRh7qrC7hnuIsddCJmqpGtaUqmcKHX9BNa54O3FCFXw2tAVj001g2SKdH
+         EltwRVCR+EWC19DYeucjGwOupJl6YvmOi/UzcTdv7m5o6rrS15IwPiKDZJWd6MDeN5Tt
+         1E5NWNDct8yWUUcvOxYYW3UQTOh/Bb1unU9XYCqUpokTUeqx2IJjW5z4KYJd+M9f7AEL
+         lX/qJLD5QiUdeaES2QHRkdj9Bna79SlnCzKN+PgNDFbZTql4kTIsyh7NID90iAlSEjye
+         Mv7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a3gsMTzBPwLbvG9qhU06yAnAf3mNr1bnRDFKzIAXR5M=;
+        b=vaoCnCkm7LTWd31S8EOq9pYGS6XahGnQFCl/tWDyHgQxH68u/dZPezzGi7yAJ4PdPH
+         W0/N+mGTGh/Gn7Ujlu4U/M/CRow8AkNV1XFoAhZb5F90AvT7gFtCTFuqdv5CH9ewvv7n
+         RxIJWDTlrLpfRVgAlOC4A1VcoOqf491+UVH1RpPhk7LOPmdWiq9m1uVPmrgehvWOzhCO
+         ERUYNEsgUw69NjRsfMozp2+FYF1HbyZJswwXiA9ANSjqda83K2AUN1oGHqIDeu2IEsIM
+         mwhg1gbEJ8KFsLXB7XbI4omCqeCKA5wPEiY7YYx/E5pZ/mcFrBzqUN/ByGD4T+AMnbKu
+         hWYQ==
+X-Gm-Message-State: ACrzQf0OrVaTP3SdXbw3kQ39yLutdrAIVpwN/oFNM3tW+axVzKLAEoqb
+        m5M2HHVLI1lkd4kvUw6JcprQvllg5nrB8/rb1WMY
+X-Google-Smtp-Source: AMsMyM4L7RhV8MFd0WmTMwl/IYVCsb7dbuc3SNknOpcR2xUiNTwwCfdOo6Tg2IfBWiuGfzuNSB8g5ichrcC9FyGL2TfO
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:8215:b0:178:6946:a282 with
+ SMTP id x21-20020a170902821500b001786946a282mr10985967pln.162.1664574603693;
+ Fri, 30 Sep 2022 14:50:03 -0700 (PDT)
+Date:   Fri, 30 Sep 2022 14:50:00 -0700
+In-Reply-To: <xmqqczbendil.fsf@gitster.g>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.38.0.rc1.362.ged0d419d3c-goog
+Message-ID: <20220930215000.2079107-1-jonathantanmy@google.com>
+Subject: Re: [PATCH 0/2] Fail early when partial clone prefetch fails
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+> No changes to t/ directory?
 
-> As in a preceding commit use "<options>", not "<options>...", in this
-> case there is no *.txt version, but let's fix this one too while we're
-> at it.
-
-I do not quite understand why these need to be separate steps.  Some
-may be supposed to have the same description in the code (help text)
-and in the text (doc source), and among them, some may have both
-code and text wrong, and some others may have only code wrong, and
-even some others only text wrong.  It appears to me that you are
-throwing the first one (both wrong) into a single category, and the
-latter two (only one wrong) into a separate "not consistent"
-category, which does not make much sense to me.
-
-The end result of this step is good.  It is just seeing the split is
-somewhat distracting while reviewing.
-
-Thanks.
-
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  t/helper/test-proc-receive.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/helper/test-proc-receive.c b/t/helper/test-proc-receive.=
-c
-> index cc08506cf0b..a4b305f4947 100644
-> --- a/t/helper/test-proc-receive.c
-> +++ b/t/helper/test-proc-receive.c
-> @@ -6,7 +6,7 @@
->  #include "test-tool.h"
-> =20
->  static const char *proc_receive_usage[] =3D {
-> -	"test-tool proc-receive [<options>...]",
-> +	"test-tool proc-receive [<options>]",
->  	NULL
->  };
+Hmm...any test you would like to see in particular? Here, we just fail
+with a specific error message when any sort of fetching from the
+promisor remote due to a lookup of a missing object.
