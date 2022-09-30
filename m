@@ -2,255 +2,273 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE0E2C433FE
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 06:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 440CBC433F5
+	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 09:10:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230093AbiI3GVD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 02:21:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38684 "EHLO
+        id S231279AbiI3JJ7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 05:09:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229896AbiI3GVC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 02:21:02 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC50051A2A
-        for <git@vger.kernel.org>; Thu, 29 Sep 2022 23:21:00 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BDB2B157B00;
-        Fri, 30 Sep 2022 02:20:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=m6m2yQZ6fu4lQd2fxVh+fEw6v+PgVxU4Kl5XPy6tJzk=; b=UWDh
-        g/HZJ2NS9q0ED2uxjNt3OgfPRpk40cY7DUjogpeHzIRNOwq6ESDOUZ4TnMHOpKDd
-        28Wy7lLHK+wGTjOuyxCHaKqlmiB7dpwQjvfd3AE7PxrgILohGoupmuJG6Y9ALuws
-        baA272WnnYVkblJ7n0gvH/mbeEQ3yx7lB9QWsBw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B43CD157AFF;
-        Fri, 30 Sep 2022 02:20:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 25A4F157AFD;
-        Fri, 30 Sep 2022 02:20:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH 3/5] roaring: teach Git to write roaring bitmaps
-References: <pull.1357.git.1663609659.gitgitgadget@gmail.com>
-        <4364224f9bddc8f1e40875ebc540b28225317176.1663609659.git.gitgitgadget@gmail.com>
-Date:   Thu, 29 Sep 2022 23:20:58 -0700
-Message-ID: <xmqqczbdl6wl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229780AbiI3JJz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 05:09:55 -0400
+Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com [IPv6:2607:f8b0:4864:20::929])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE2942D1FC
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 02:09:53 -0700 (PDT)
+Received: by mail-ua1-x929.google.com with SMTP id b7so1474864uas.2
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 02:09:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=z/jx6yyXsnWQethcbXVThvEADOXwFvRlwemDwvRi2NI=;
+        b=oycrvNibeh/H62CGc47cr/bD8ZajzCwq2h0nz8eg9+kPK8JLJ5GPL1ekr4fh985vbT
+         iOLK9zusiVSJL7EZT9gd7LVf295w4Wyy7cjCneNsE8J/6X2zvJbiWFALbwXHHHMcGE7K
+         PUWEywI+g142EYTpr4CSNT/otIzoNeE0rpgrIyFyIPhkBw0gL8JZ/OoUQaVEdegGFOWI
+         eUZiIMhRajd0IjtgjTrvuNblyP6ir4qFEulWStOoP306hNCHrDjcU3A1u+eTNWPC2s6a
+         vbl3g1z7BzoQQg6foHk9Xmz4CDVNn5pQk5MdDIda84R/MBk27CwXNyRCNye1v0gicAGe
+         9c4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=z/jx6yyXsnWQethcbXVThvEADOXwFvRlwemDwvRi2NI=;
+        b=o7Au3mMoIe6z4rLEjuY2FSOQuHhLvprrgQ2+6l2SPrDz3X0vC0UgCzlDCjV+rRoQeA
+         GhowyMvSlHOf6k6QjzLwdf6f7ti3db/2Lxvq8r2yHq5Z5v1XEoCYaw/4NHlvBbCzSQGP
+         coREyeKQLRKgogLYTAPRxFtceG9Lm1D5TjzAs0YRsu3fHSx8rzGDjYuVMT9VmZDbSpBy
+         o/Hv00907kpSZkDxDYi9MgLGSAV3eMm04Icht408vOB20XrQ/lt2nKpBI9DICHJLVp4e
+         ojXBNgJkx7md84F1MLrDK57nOq0XJVq8ciTiETjZwLXviwg6PpcmH5Hu0Jlax6Yl3NxQ
+         DViA==
+X-Gm-Message-State: ACrzQf3czjcmDbTF9Do5RLBds1OtSfvWIDhMkQ3V06k+YWCR+4BeVk8Z
+        maSQzQbCMWlyV2OAlmPFOzPvHe0Re60VOJ0ZOIc=
+X-Google-Smtp-Source: AMsMyM4s9qKCeiND0HQZGjsgylbn8eGifdk3LZTy03QkiCsqPxuMeMhwcdtTZnIi/3Y5lKqk9Z64xBLUtjPHLUmFE3A=
+X-Received: by 2002:ab0:802:0:b0:3d5:9cc8:3578 with SMTP id
+ a2-20020ab00802000000b003d59cc83578mr1866004uaf.33.1664528992453; Fri, 30 Sep
+ 2022 02:09:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0CBC1AEC-4088-11ED-8FA1-307A8E0A682E-77302942!pb-smtp2.pobox.com
+References: <pull.1367.git.1664064588846.gitgitgadget@gmail.com> <07a25d48-e364-0d9b-6ffa-41a5984eb5db@github.com>
+In-Reply-To: <07a25d48-e364-0d9b-6ffa-41a5984eb5db@github.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Fri, 30 Sep 2022 17:09:40 +0800
+Message-ID: <CAOLTT8SyszDCSsDbCMqsQLtXSyLOKMKNn9qRZRKSjAVVQB=jLQ@mail.gmail.com>
+Subject: Re: [PATCH] sparse-checkout.txt: new document with sparse-checkout directions
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Victoria Dye <vdye@github.com>,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Derrick Stolee <derrickstolee@github.com> =E4=BA=8E2022=E5=B9=B49=E6=9C=882=
+8=E6=97=A5=E5=91=A8=E4=B8=89 00:36=E5=86=99=E9=81=93=EF=BC=9A
 >
-> Roaring bitmaps are said to be more efficient (most of the time) than
-> ewah bitmaps. So Git might gain some optimization if it support roaring
-> bitmaps. As Roaring library has all the changes it needed to implement
-> roaring bitmaps in Git, Git can learn to write roaring bitmaps. However,
-> all the changes are backward-compatible.
+> > +Some of these users also arrive at this usecase from wanting to use
+> > +partial clones together with sparse checkouts and do disconnected
+> > +development.  Not only do these users generally not care about other
+> > +parts of the repository, but consider it a blocker for Git commands to
+> > +try to operate on those.  If commands attempt to access paths in histo=
+ry
+> > +outside the sparsity specification, then the partial clone will attemp=
+t
+> > +to download additional blobs on demand, fail, and then fail the user's
+> > +command.  (This may be unavoidable in some cases, e.g. when `git merge=
+`
+> > +has non-trivial changes to reconcile outside the sparsity path, but we
+> > +should limit how often users are forced to connect to the network.)
 >
-> Teach Git to write roaring bitmaps.
-
-That is way underexplained.   At least cover what the plans are, so
-that readers do not have to ask these questions:
-
- * When is the choice of bitmap type is made?  Is it fixed at
-   repository initialization time and once chosen other kinds cannot
-   be used?
-
- * Is the bitmap file self describing?  How does a reader know
-   between ewah and roaring codepaths to use to read a given bitmap
-   file?  Is there enough room for extending the set of bitmap
-   formats, or we cannot add other formats easily?
-
-> Mentored-by: Taylor Blau <me@ttaylorr.com>
-> Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-> Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-> ---
->  Makefile                |   1 +
->  bitmap.c                | 225 +++++++++++++++++++++++++++
->  bitmap.h                |  33 ++++
->  builtin/diff.c          |  10 +-
->  ewah/bitmap.c           |  61 +++++---
->  ewah/ewok.h             |  37 ++---
->  pack-bitmap-write.c     | 326 ++++++++++++++++++++++++++++++----------
->  pack-bitmap.c           | 114 +++++++-------
->  pack-bitmap.h           |  22 ++-
->  t/t5310-pack-bitmaps.sh |  17 +++
->  10 files changed, 664 insertions(+), 182 deletions(-)
->  create mode 100644 bitmap.c
->  create mode 100644 bitmap.h
+> This idea pairs well with a feature I've been meaning to build:
+> 'git sparse-checkout backfill' would download all historical blobs
+> within the sparse-checkout definition. This is possible with rev-list,
+> but I want to investigate grouping blobs by path and making requests in
+> batches, hopefully allowing better deltification and ability to recover
+> from network disconnections. That makes this idea of "staying within
+> your sparse-checkout means no missing object downloads" even more likely.
 >
-> diff --git a/Makefile b/Makefile
-> index e9537951105..9ca19b3ca8d 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -900,6 +900,7 @@ LIB_OBJS += archive.o
->  LIB_OBJS += attr.o
->  LIB_OBJS += base85.o
->  LIB_OBJS += bisect.o
-> +LIB_OBJS += bitmap.o
->  LIB_OBJS += blame.o
->  LIB_OBJS += blob.o
->  LIB_OBJS += bloom.o
-> diff --git a/bitmap.c b/bitmap.c
-> new file mode 100644
-> index 00000000000..7d547eb9f53
-> --- /dev/null
-> +++ b/bitmap.c
-> @@ -0,0 +1,225 @@
-> +#include "bitmap.h"
-> +#include "cache.h"
-> +
-> +static enum bitmap_type bitmap_type = INIT_BITMAP_TYPE;
 
-"INIT" is a strange name for "UNINITIALIZED".  Especially ...
+I think this is very useful: if I use sparse-checkout + partial-clone,
+plugins like
+git blame in vscode (or other IDE) will be invalidated, or require a
+lot of network
+overhead to download the missing blobs, so this git sparse-checkout backfil=
+l
+looks like a promising solution to that problem.
 
-> +void *roaring_or_ewah_bitmap_init(void)
-> +{
-> +	switch (bitmap_type)
-> +	{
+> > +People might also end up wanting behavior B due to complex inter-proje=
+ct
+> > +dependencies.  The initial attempts to use sparse-checkouts usually
+> > +involve the directories you are directly interested in plus what those
+> > +directories depend upon within your repository.  But there's a monkey
+> > +wrench here: if you have integration tests, they invert the hierarchy:
+> > +to run integration tests, you need not only what you are interested in
+> > +and its dependencies, you also need everything that depends upon what
+> > +you are interested in or that depends upon one of your
+> > +dependencies...AND you need all the dependencies of that expanded grou=
+p.
+> > +That can easily change your sparse-checkout into a nearly dense one.
+>
+> In my experience, the downstream dependencies are checked via builds in
+> the cloud, though that doesn't help if they are source dependencies and
+> you make a breaking change to an API interface. This kind of problem is
+> absolutely one of system architecture and I don't know what Git can do
+> other than to acknowledge it and recommend good patterns.
+>
+> In a properly-organized project, 95% of engineers in the project can have
+> a small sparse-checkout, then 5% work on the common core that has these
+> downstream dependencies and require a large sparse-checkout definition.
+> There's nothing Git can do to help those engineers that do cross-tree
+> work.
+>
 
-(Style)
+This feels like it's because your project code is stable enough, but at oth=
+er
+companies I think many of the project dependencies are subject to frequent
+changes.
 
-> +	case EWAH:
-> +		return ewah_new();
-> +	case ROARING:
-> +		return roaring_bitmap_create();
-> +	default:
+> > +      * `git mv` has similar surprises when moving into or out of the =
+cone, so
+> > +     best to restrict and throw warnings if restriction might affect t=
+he result.
+> > +
+> > +    There may be a difference in here between behavior A and behavior =
+B.
+> > +    For behavior A, we probably only want to warn if there were no
+> > +    suitable matches for files in the sparsity specification, whereas
+> > +    for behavior B, we may want to warn even if there are valid files =
+to
+> > +    operate on if the result would have been different under
+> > +    `--no-restrict`.
+>
+> I think in behavior B, users who actually want to modify things tree-wide=
+ will
+> actually increase their sparse-checkout definition to include those files=
+ so
+> they can validate what they are doing.
+>
 
-... here, you use it to mean exactly that.
+Agree.
 
-> +		error(_("bitmap type not initialized\n"));
-> +		return NULL;
+> > +=3D=3D=3D Implementation Questions =3D=3D=3D
+> > +
+> > +  * Does the name --[no-]restrict sound good to others?  Are there bet=
+ter options?
+> > +    * Names in use, or appearing in patches, or previously suggested:
+> > +      * --sparse/--dense
+> > +      * --ignore-skip-worktree-bits
+> > +      * --ignore-skip-worktree-entries
+> > +      * --ignore-sparsity
+> > +      * --[no-]restrict-to-sparse-paths
+> > +      * --full-tree/--sparse-tree
+> > +      * --[no-]restrict
+>
+> I like the simplicity of --[no-]restrict, and my only worry is that it
+> doesn't immediately link to what it is restricting.
+>
+> Perhaps something like "scope" would describe the set of things we care
+> about, but use a text mode:
+>
+>         --scope=3Dsparse  (--restrict)
+>         --scope=3Dall     (--no-restrict)
+>
+> But I'm notoriously bad at naming things.
+>
+> > +  * Should --[no-]restrict be a git global option, or added as options=
+ to each
+> > +    relevant command?  (Does that make sense given the multitude of di=
+fferent
+> > +    default behaviors we have for different options?)
+>
+> If we can make it a global option, that would be great, then update
+> the commands to behave under that mode as we go.
+>
+> If that doesn't work, then adding the consistent option across commands
+> would be helpful. It might be good to make a OPT_RESTRICT macro (much
+> like OPT__VERBOSE, OPT__QUIET, and similar macros.
+>
+> > +  * Should --sparse in ls-files be made an alias for --restrict?
+> > +    `--restrict` is certainly a near synonym in cone-mode, but even th=
+en
+> > +    it's not quite the same.  In non-cone mode, ls-files' `--sparse`
+> > +    option has no effect, and in cone-mode it still shows the sparse
+> > +    directory entries which are technically outside the sparsity
+> > +    specification.
+>
+> We should definitely replace the --sparse option(s) with whatever we
+> choose here. For ls-files, we have the issue that we are reporting
+> what is in the index, and in non-cone-mode the index cannot be sparse.
+>
+> Now, maybe we change what the ls-files mode does under --restrict and
+> only have it report the paths within the sparse-checkout and not even
+> show the results for sparse directory entries. The --no-restrict would
+> then expand a sparse-index to show only paths again.
+>
 
-Do you really need the global variable that holds the bitmap type?
+> > +    Namely, if folks are not already in a sparse checkout, then requir=
+e
+> > +    `sparse-checkout init/set` to take a `--[no-]restrict` flag (which
+> > +    would set core.restrictToSparse according to the setting given), a=
+nd
+> > +    throw an error if the flag is not provided?  That error would be a
+> > +    great place to warn folks that the default may change in the futur=
+e,
+> > +    and get them used to specifying what they want so that the eventua=
+l
+> > +    default switch is seamless for them.
+>
+> I don't like using the same option name (--[no-]restrict) for something
+> that sets a config option to keep that behavior permanently. Different
+> names that make it clearer could be:
+>
+>         --enable-restrict-mode
+>         --set-scope=3D(sparse|all)
+>
 
-Wouldn't it be easier to write code that needs to deal with both
-types (e.g. in a repository with existing ewah bitmap, you want to
-do a repack and index the result using the roaring bitmap) if you
-passed the type through the callchain as a parameter?
+The name sounds clear enough. I had a idea that add some configuration like=
+:
 
-It may be that the codepath that reads from an existing bitmap file
-says "ah, the file given to us seems to be in format X (either EWAH
-or ROARING or perhaps something else), so let's call bitmap_init(X)
-to obtain the in-core data structure to deal with that file".  When
-that happens, you may probably need to have two cases in the default:
-arm of this switch statement, i.e. one to diagnose a BUG() to pass
-an uninitialized bitmap type to the codepath, and the other to
-diagnose a runtime error() to have read a bitmap file whose format
-this version of Git does not understand.
+scope.<cmd>.mode=3Dsparse|all
 
-> +void *roaring_or_raw_bitmap_copy(void *bitmap)
-> +{
-> +	switch (bitmap_type)
-> +	{
-> +	case EWAH:
-> ...
-> +int roaring_or_ewah_bitmap_set(void *bitmap, uint32_t i)
-> +{
-> +	switch (bitmap_type) {
-> +	case EWAH:
-> +...
-> +void roaring_or_raw_bitmap_set(void *bitmap, uint32_t i)
-> +{
-> +	switch (bitmap_type)
-> +	{
-> +	case EWAH:
-> +...
-> +void roaring_or_raw_bitmap_unset(void *bitmap, uint32_t i)
-> +{
-> +	switch (bitmap_type)
-> +	{
-> +	case EWAH:
-> +...
+and then let scalar help users set some default configs...
 
-These repetitive patterns makes me wonder if void *bitmap
-is a good type to be passing around.  Shouldn't it be a struct with
-its first member being a bitmap_type, and another member being what
-these functions are passing to the underlying bitmap format specific
-functions as "bitmap"?  E.g.
+> > +  * clone: should we provide some mechanism for tying partial clones a=
+nd
+> > +    sparse checkouts together better.  Maybe an option
+> > +     --sparse=3Ddir1,dir2,...,dirN
+> > +    which:
+> > +       * Does initial fetch with `--filter=3Dblob:none`
+> > +       * Does the `sparse-checkout set --cone dir1 dir2 ... dirN` thin=
+g
+> > +       * Runs a `git rev-list --objects --all -- dir1 dir2 ... dirN` t=
+o
+> > +      fault in the missing blobs within the sparse
+> > +      specification...except that rev-list needs some kind of options
+> > +      to also get files from leading directories too.
+> > +       * Sets --restrict mode to allow focusing on the cone of interes=
+t
+> > +      (and to permit disconnected development)
+>
+> As mentioned, I think we should have the option to backfill the blobs in
+> the sparse-checkout definition, but 'git clone' should not do this by
+> default. It's something that can be launched in the background, maybe, bu=
+t
+> not a blocking operation on being able to use the repository.
+>
+> 'scalar clone' is an excellent testing bed for these kinds of things,
+> like setting the --restrict mode by default.
+>
 
-    void bitmap_unset(struct bitmap *bm, uint32_t i)
-    {
-	switch (bm->type) {
-	case EWAH:
-		ewah_bitmap_remove(bm->u.ewah, i);
-		break;
-	...
+This sounds interesting and would like to see scalar support them!
 
+> Hopefully my responses aren't too far off-base. I'll go read the rest of
+> the discussion now that I've contributed my thoughts on the doc.
+>
+> Thanks,
+> -Stolee
 
-> \ No newline at end of file
-
-Careful.
-
-> diff --git a/bitmap.h b/bitmap.h
-> new file mode 100644
-> index 00000000000..d75400922cc
-> --- /dev/null
-> +++ b/bitmap.h
-> @@ -0,0 +1,33 @@
-> +#ifndef __BITMAP_H__
-> +#define __BITMAP_H__
-> +
-> +
-> +#include "git-compat-util.h"
-> +#include "ewah/ewok.h"
-> +#include "roaring/roaring.h"
-> +
-> +enum bitmap_type {
-> +	INIT_BITMAP_TYPE = 0,
-
-"UNINITIALIZED_BITMAP_TYPE", probably.
-
-> +void *roaring_or_ewah_bitmap_init(void);
-
-I would strongly suggest reconsider these names.  What if you later
-want to add the third variant?  roaring_or_ewah_or_xyzzy_bitmap_init()?
-
-Instead just use the most generic name, like "bitmap_init", perhaps
-something along the lines of ...
-
-    struct bitmap {
-	enum bitmap_type type;
-	union {
-	    struct ewah_bitmap *ewah;
-	    struct roaring_bitmap *roaring;
-	} u;	
-    };
-
-    struct bitmap *bitmap_new(enum bitmap_type type)
-    {
-	struct bitmap *bm = xmalloc(sizeof(*bm));
-
-	bm->type = type;
-	switch (bm->type) {
-	case EWAH:
-	    bm->u.ewah = ewah_new();
-	    break;
-	case ROARING:
-	    bm->u.roaring = roaring_bitmap_create();
-	    break;
-        default:
-	    die(_("unknown bitmap type %d"), (int)type);
-	}
-	return bm;
-    }
-
-I dunno.
-
+Thanks,
+--
+ZheNing Hu
