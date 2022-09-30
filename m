@@ -2,109 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2220C433FE
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 18:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32BF2C433FE
+	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 18:06:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230517AbiI3SBW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 14:01:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45612 "EHLO
+        id S231517AbiI3SGd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 14:06:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229912AbiI3SBU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 14:01:20 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D86A71A0D32
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:01:18 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id u21so2793264edi.9
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:01:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date;
-        bh=KmwVD5qNGw79gzZdwFoHXxa5f/9VfSveYWTXOHh1qAU=;
-        b=GAjO0XZobWTvJJKqYNeGmVruREuuDxQxnsfuCjmV4UtUkyyM27+97DevpcUYkjSGaZ
-         TZj+jvxwrF195VqclRa36CCOTl6PtqckQwOiQwUum0MzOVrov9EhCJaIdIJvP1zQFftN
-         /dMdW3j6OjtBAORtdrbTbFBgAMRupvS03L8CAW4NM7yMQFb247B7yaw1QdAsXD5fs+7m
-         u7PGHswbDg/wXaDNOY0EkoBDHTFBSqh4MgJb6dYbMR5dROd0fYc93JGflXviXddnj0aC
-         vzMZ6/8DBobq7Nc4Dp/QtUO3BBFsP574MwXP/HyRT/s7zdoOGg3O82LwqXyw/CQVH00v
-         arLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=KmwVD5qNGw79gzZdwFoHXxa5f/9VfSveYWTXOHh1qAU=;
-        b=N9jXlZL2XDselF8f8RipwmQnxzaPiVq6+VjTRa34stwTvUdHoYmgzw3BFsY44xKFyg
-         2q0atwupMiEP/QeI5TphlZZqnVKIZ+YFMRKhv46GCGR8gE6OvMBWF+E9wITkmypw6zwt
-         c8LfoyXdmPxvBm8UcBKxvXTuEVPImvwJNT2vbTWJYhyEEshMulTXXX4hKBRmzVwX4x2n
-         TXt/FugBO7vGJJXThvmFMft9RqxX9w7nxOgXYKozUJ4oz3SrYTlnFnx1Hl59o51m1PGk
-         tra5Sh0zpsxCK/pLCqit9Au2Gm1aaJaktS6ZbBwV+WKmdtwXfVj5KuPMKOAXNwOWb/Qg
-         vkqg==
-X-Gm-Message-State: ACrzQf0bulSWg6V1cbQ/VkMEMxGZuaBfdp6ULLHgFgJk1KzsUSiukPV4
-        3eIrYuQgEnSUeJ8SHoVdeAbB5VASpVUQOw==
-X-Google-Smtp-Source: AMsMyM7cBnATYeUg9+AMLI7+K0amDd8lOFzfJGLmKrRJGRT/k9gLAZe62nmt3mpOzOS9ADJlZ1PU0A==
-X-Received: by 2002:a05:6402:1911:b0:451:6e0b:7eee with SMTP id e17-20020a056402191100b004516e0b7eeemr8889904edz.170.1664560877313;
-        Fri, 30 Sep 2022 11:01:17 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id c20-20020a1709060fd400b0078167cb4536sm1485279ejk.118.2022.09.30.11.01.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 11:01:16 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oeKK1-001nio-1C;
-        Fri, 30 Sep 2022 20:01:13 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] branch: do not fail a no-op --edit-desc
-Date:   Fri, 30 Sep 2022 19:58:03 +0200
+        with ESMTP id S230469AbiI3SGa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 14:06:30 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8034A33373
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:06:27 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C76B1436CD;
+        Fri, 30 Sep 2022 14:06:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=djaRCCR8A/iEvT4og7c2/1i0k
+        aXjp3QRMlGjVnntraU=; b=MPh6HKQasOOP8QzEungl3Lntm9Xf5qWASdYH2bR6t
+        EMuJTQLLe5OUNDHTaXVK5cJQDWYAPkmD79Z3cVJpR0Wp137j5SbFoi3m9ANBNcIy
+        xbvHBscMib57PaHCox9pgGSg1js0igyOvKqNbE/x5Mtn4NHY2I1eGdl+jIYNX4GK
+        nw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 53F641436CC;
+        Fri, 30 Sep 2022 14:06:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 98BB81436CB;
+        Fri, 30 Sep 2022 14:06:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH v3] branch: do not fail a no-op --edit-desc
 References: <xmqqczbftina.fsf@gitster.g> <xmqq8rm1mz1d.fsf@gitster.g>
- <220930.86v8p5updv.gmgdl@evledraar.gmail.com> <xmqq7d1klrua.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <xmqq7d1klrua.fsf@gitster.g>
-Message-ID: <220930.861qrsvj12.gmgdl@evledraar.gmail.com>
+Date:   Fri, 30 Sep 2022 11:06:22 -0700
+Message-ID: <xmqqmtagka8x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 9815F718-40EA-11ED-B723-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Imagine running "git branch --edit-description" while on a branch
+without the branch description, and then exit the editor after
+emptying the edit buffer, which is the way to tell the command that
+you changed your mind and you do not want the description after all.
 
-On Fri, Sep 30 2022, Junio C Hamano wrote:
+The command should just happily oblige, adding no branch description
+for the current branch, and exit successfully.  But it fails to do
+so:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->>> The end result is OK in that the configuration variable does not
->>> exist in the resulting repository, but we should do better, by using
->>> git_config_set_gently() and ignoring only the specific error that is
->>> returned when removing a missing configuration variable.
->> ...
->> I was curious to follow up on your suggestion in your 3rd paragraph, so
->> I tried implementing this in the config API, results below, if you're
->> interested in it assume my SOB.
->
-> Did I make any suggestion?  I am assuming that what I left in the
-> quote above is the paragraph you are referring to, and that is not a
-> suggestion but a description of what the patch did, so I am puzzled.
+    $ git init -b main
+    $ git commit --allow-empty -m commit
+    $ GIT_EDITOR=3D: git branch --edit-description
+    fatal: could not unset 'branch.main.description'
 
-I think I just misread "by using git_config_set_gently() and ignoring
-only the specific error that is returned when removing a missing
-configuration variable." as "an alternative of this might do this via
-the config API"...
+The end result is OK in that the configuration variable does not
+exist in the resulting repository, but we should do better.  If we
+know we didn't have a description, and if we are asked not to have a
+description by the editor, we can just return doing nothing.
 
->> But, having done that I discovered that your code here has a bug,
->> admittedly a pretty obscure one. The CONFIG_NOTHING_SET flag on "set"
->> doesn't mean "nothing to set, because it's there already", it means
->> "either <that>, or the key is multi-value and I'm bailing out".
->
-> Ah, OK, so in short, _gently() is still unusable to use for that.  I
-> guess it means that the approach taken by v1 would be a better
-> solution, then.
+This of course introduces TOCTOU.  If you add a branch description
+to the same branch from another window, while you had the editor
+open to edit the description, and then exit the editor without
+writing anything there, we'd end up not removing the description you
+added in the other window.  But you are fooling yourself in your own
+repository at that point, and if it hurts, you'd be better off not
+doing so ;-).
 
-As you noted it's got a TOCTOU instead, so we might wipe away good
-config entirely.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * =C3=86var reports that CONFIG_NOTHING_SET is not a usable error status
+   for this purpose, unfortunately.  So let's go back to the approach
+   taken by the initial implementation, but with the proposed log
+   message clarified.
 
-I think between the two I'd go with v2, bugs and all, it's pretty
-unlikely that someone has two "description" entries.
+ builtin/branch.c  | 6 ++++--
+ t/t3200-branch.sh | 3 +++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 8c0b428104..ae08147572 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -576,10 +576,11 @@ static GIT_PATH_FUNC(edit_description, "EDIT_DESCRI=
+PTION")
+=20
+ static int edit_branch_description(const char *branch_name)
+ {
++	int exists;
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	struct strbuf name =3D STRBUF_INIT;
+=20
+-	read_branch_desc(&buf, branch_name);
++	exists =3D !read_branch_desc(&buf, branch_name);
+ 	if (!buf.len || buf.buf[buf.len-1] !=3D '\n')
+ 		strbuf_addch(&buf, '\n');
+ 	strbuf_commented_addf(&buf,
+@@ -596,7 +597,8 @@ static int edit_branch_description(const char *branch=
+_name)
+ 	strbuf_stripspace(&buf, 1);
+=20
+ 	strbuf_addf(&name, "branch.%s.description", branch_name);
+-	git_config_set(name.buf, buf.len ? buf.buf : NULL);
++	if (buf.len || exists)
++		git_config_set(name.buf, buf.len ? buf.buf : NULL);
+ 	strbuf_release(&name);
+ 	strbuf_release(&buf);
+=20
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 3ec3e1d730..30dff9e712 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1268,6 +1268,9 @@ test_expect_success 'attempt to delete a branch mer=
+ged to its base' '
+ '
+=20
+ test_expect_success 'use --edit-description' '
++	EDITOR=3D: git branch --edit-description &&
++	test_must_fail git config branch.main.description &&
++
+ 	write_script editor <<-\EOF &&
+ 		echo "New contents" >"$1"
+ 	EOF
+--=20
+2.38.0-rc2-134-gd449533db0
 
