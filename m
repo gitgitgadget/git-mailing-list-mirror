@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 293AFC433F5
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 18:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDEF1C433F5
+	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 18:11:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231922AbiI3SLg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 14:11:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34264 "EHLO
+        id S232211AbiI3SLx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 14:11:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231861AbiI3SKx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 14:10:53 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F12FD3D
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:09:37 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id b4so1034599wrs.1
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:09:37 -0700 (PDT)
+        with ESMTP id S232073AbiI3SK6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 14:10:58 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 608F91F2D7
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:09:43 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 130-20020a1c0288000000b003b494ffc00bso4970188wmc.0
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 11:09:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=xm2PUQAUtcYD7IeMAkl43mdCM2aa93A2uhqW4Sw/Lp0=;
-        b=ey0pBFJ5p2Pm8KCFl5UDKjFYs7r6Nav0u+FY1WaVqyyXQLk6cMiPmyxIyLeSFGoQWH
-         fMTvcd09rpmO3kh78GdIdRlgRhFamWJ8QDsfEg6NqP8rmkf289meg7A3o+kCCPBwSxJ3
-         FDFyyZlHRVzRby8KKb0SCFpO0cluHdpfnH+O8u3ZIWkwemcFrve1Qyh9RByAHWgrhUC5
-         fNE2GObehLD8Ha+6sjqThTvZfsAQiM+0YkkNUEwPWKdsZOjRymzYCZQwQT49AJyfYIbl
-         buWawfhfmbaImtlMwRX2IHeyxgfA03xegGh21rPAWxkKgFtM1/kOuL6IwtcCzrt9O1X3
-         JS6A==
+        bh=bI0GL1I8bjM0L0NqUSqLYYoGd8fyMu9aucIW12tryos=;
+        b=o2bqRHUi1GHAgDQ/FlIh3+WFwA87z6p8IoLNZYR1wViPy4TqdSUbMIzUgSXLOzjvp+
+         Yj6FPyczBLAtTyZCK3wscuEBH1Q/jSZPLme3qTceKCpUoEBVRWmjYJ+Ogi826Cg2M5pv
+         dQWyrRQkW3t3oFtvwhnusdy37Gc3iM5FUAhMmTFzMx+1Htg4RGyO8OVcZylZNfUJMzig
+         Jvfri1nXQuVqGcAbp5MPixfs2XxXnNH6+beKEu39ftXgKiC00sIuIwVeWLMzR3rlBqEK
+         HvVtofx/AD86athh+25FhdhKJnYaFWTtAtPS5WJj5pp8MhjWiFHogQc1dzOyKYiJrLgu
+         DF4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=xm2PUQAUtcYD7IeMAkl43mdCM2aa93A2uhqW4Sw/Lp0=;
-        b=1XPcl/fBerzG1YmM0IUV8ig8KEbzwcNbvidXFY7ECyFzVGLDH/T3q8gbjwUDPgc6CW
-         6gwohMhf7gehl3U9KV0eoPMYbPwoLWTtj6uwIQSpG7tatQOjac4tVCvLsuNGjreggU1A
-         jEM43TPQj5A7FPz9HmkAGEYSsDUmtQXKXTW9++27UGonjL4eOk9sGsFrXfW2kGZ24eCq
-         FfiTNI4KA6YVt2mpAD0N9uHUWmNrLbr7P85CxPfoeSXLXVkFqK4EMzbXKgnFyX2UMxkl
-         vKwr4BQNtWccBeGzHBjFWpgdZOAz5okjTJYEoGvmr0qdOMk+9YwPqar5exHswmXBaVAN
-         6fLQ==
-X-Gm-Message-State: ACrzQf3CvG0OJkbnZ6S8hhP3I23DB7fRSLcutyQnlMYP58ETXaKB/FSO
-        j13MBD34JayqP83+VCx5sn90TIlAEVQU2Q==
-X-Google-Smtp-Source: AMsMyM6rgW3Sed4iY4dGdqiZbG32enwRqcrc+W6B1Cd4mkWZBL3Zj7aND994akLt0Z2Vz8fHIsodpA==
-X-Received: by 2002:adf:a555:0:b0:22c:dd2a:41b3 with SMTP id j21-20020adfa555000000b0022cdd2a41b3mr4455845wrb.366.1664561376201;
-        Fri, 30 Sep 2022 11:09:36 -0700 (PDT)
+        bh=bI0GL1I8bjM0L0NqUSqLYYoGd8fyMu9aucIW12tryos=;
+        b=JsDXk0O7ye+D2iomjybrWKCk6qqO3Pds0RatpWumut5EFlpZxoaOwfWigHpM28+iHj
+         KVUswvGx9ipRxYErIk2MY1r1dFUqNMqs96pfBuMshcjZYQxJCcJ++QmGjSrEWT9cMVyX
+         WiSD7PCSbHP6qoaT7e2LQeH3Emd9fmEBU1M8D5GSBbqs8kR2OE4xODZUr/QX0swGSYHV
+         QvUKoRWX0nioRb/7i/LA90RxGrtTkMZM90+X3kjj+whNtteuBfcCHnMvkgN0LHxsfxLg
+         B9Z954iVioQHe2BFgmGKXgztjIiXmvtm88CWLZMvbjIQh8vuaPnVuZSelfgfxfw9QHTx
+         7QdA==
+X-Gm-Message-State: ACrzQf1uJXTsjBL7lmJZp4JEto7kW0aUcWs5rTGMZfrs426SlxyR6lcV
+        FCyyUsWFVtnO/ffpFgtoT6k1HUUUj9j0tA==
+X-Google-Smtp-Source: AMsMyM51plkQrWZxecHvFWqF+cleeBxqpJFW4YTmZvEPSxmxbz0PUtehasvmFa5RaNIwO0sUWffD0A==
+X-Received: by 2002:a05:600c:3ba0:b0:3b4:8ad0:6c with SMTP id n32-20020a05600c3ba000b003b48ad0006cmr14836397wms.186.1664561381315;
+        Fri, 30 Sep 2022 11:09:41 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id h9-20020a1c2109000000b003b4fac020c8sm7102703wmh.16.2022.09.30.11.09.34
+        by smtp.gmail.com with ESMTPSA id h9-20020a1c2109000000b003b4fac020c8sm7102703wmh.16.2022.09.30.11.09.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 11:09:34 -0700 (PDT)
+        Fri, 30 Sep 2022 11:09:39 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 26/36] doc txt & -h consistency: add missing options
-Date:   Fri, 30 Sep 2022 20:07:49 +0200
-Message-Id: <patch-v3-26.36-d57635b2707-20220930T180415Z-avarab@gmail.com>
+Subject: [PATCH v3 27/36] doc txt & -h consistency: make "stash" consistent
+Date:   Fri, 30 Sep 2022 20:07:50 +0200
+Message-Id: <patch-v3-27.36-ac959d0cfc1-20220930T180415Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.rc2.935.g6b421ae1592
 In-Reply-To: <cover-v3-00.36-00000000000-20220930T180414Z-avarab@gmail.com>
 References: <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com> <cover-v3-00.36-00000000000-20220930T180414Z-avarab@gmail.com>
@@ -72,144 +72,162 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change those built-in commands that were attempting to exhaustively
-list the options in the "-h" output to actually do so, and always
-have *.txt documentation know about the exhaustive list of options.
+Amend both the -h output and *.txt to match one another. In this case
+the *.txt didn't list the "save" subcommand, and the "-h" was
+similarly missing some commands.
 
-Let's also fix the documentation and -h output for those built-in
-commands where the *.txt and -h output was a mismatch of missing
-options on both sides.
-
-In the case of "interpret-trailers" fixing the missing options reveals
-that the *.txt version was implicitly claiming that the command had
-two operating modes, which a look at the -h version (and studying the
-documentation) will show is not the case.
+Let's also convert the *.c code to use a macro definition, similar to
+that used in preceding commits. This avoids duplication.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-commit-graph.txt       | 5 ++++-
- Documentation/git-interpret-trailers.txt | 5 +++--
- builtin/commit-tree.c                    | 1 +
- builtin/fsck.c                           | 5 ++++-
- builtin/hash-object.c                    | 4 ++--
- builtin/init-db.c                        | 2 ++
- builtin/interpret-trailers.c             | 2 +-
- builtin/rm.c                             | 4 +++-
- 8 files changed, 20 insertions(+), 8 deletions(-)
+ Documentation/git-stash.txt |  5 ++-
+ builtin/stash.c             | 73 ++++++++++++++++++++++++-------------
+ 2 files changed, 52 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index 36fe56c2c71..c8dbceba014 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -10,7 +10,10 @@ SYNOPSIS
- --------
- [verse]
- 'git commit-graph verify' [--object-dir <dir>] [--shallow] [--[no-]progress]
--'git commit-graph write' <options> [--object-dir <dir>] [--[no-]progress]
-+'git commit-graph write' [--object-dir <dir>] [--append]
-+			[--split[=<strategy>]] [--reachable | --stdin-packs | --stdin-commits]
-+			[--changed-paths] [--[no-]max-new-filters <n>] [--[no-]progress]
-+			<split options>
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index ea16d2eae7c..f4bb6114d91 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -11,12 +11,15 @@ SYNOPSIS
+ 'git stash' list [<log-options>]
+ 'git stash' show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>]
+ 'git stash' drop [-q | --quiet] [<stash>]
+-'git stash' (pop | apply) [--index] [-q | --quiet] [<stash>]
++'git stash' pop [--index] [-q | --quiet] [<stash>]
++'git stash' apply [--index] [-q | --quiet] [<stash>]
+ 'git stash' branch <branchname> [<stash>]
+ 'git stash' [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
+ 	     [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]
+ 	     [--pathspec-from-file=<file> [--pathspec-file-nul]]
+ 	     [--] [<pathspec>...]]
++'git stash' save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
++	     [-u | --include-untracked] [-a | --all] [<message>]
+ 'git stash' clear
+ 'git stash' create [<message>]
+ 'git stash' store [(-m | --message) <message>] [-q | --quiet] <commit>
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 83c9591ea6d..bb5485b4095 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -21,72 +21,95 @@
  
+ #define INCLUDE_ALL_FILES 2
  
- DESCRIPTION
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 6d6197cd0a4..22ff3a603e0 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -8,8 +8,9 @@ git-interpret-trailers - Add or parse structured information in commit messages
- SYNOPSIS
- --------
- [verse]
--'git interpret-trailers' [<options>] [(--trailer <token>[(=|:)<value>])...] [<file>...]
--'git interpret-trailers' [<options>] [--parse] [<file>...]
-+'git interpret-trailers' [--in-place] [--trim-empty]
-+			[(--trailer <token>[(=|:)<value>])...]
-+			[--parse] [<file>...]
- 
- DESCRIPTION
- -----------
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index e4b85d29d56..cc8d584be2f 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -15,6 +15,7 @@
- #include "parse-options.h"
- 
- static const char * const commit_tree_usage[] = {
-+	N_("git commit-tree <tree> [(-p <parent>)...]"),
- 	N_("git commit-tree [(-p <parent>)...] [-S[<keyid>]] [(-m <message>)...]\n"
- 	   "                [(-F <file>)...] <tree>"),
- 	NULL
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index f7916f06ed5..ef273321d0b 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -821,7 +821,10 @@ static int mark_packed_for_connectivity(const struct object_id *oid,
- }
- 
- static char const * const fsck_usage[] = {
--	N_("git fsck [<options>] [<object>...]"),
-+	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
-+	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
-+	   "         [--[no-]dangling] [--[no-]progress] [--connectivity-only]\n"
-+	   "         [--[no-]name-objects] [<object>...]"),
- 	NULL
- };
- 
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index f7c16802f0c..b5063815020 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -81,8 +81,8 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- {
- 	static const char * const hash_object_usage[] = {
- 		N_("git hash-object [-t <type>] [-w] [--path=<file> | --no-filters]\n"
--		   "                [--stdin] [--] <file>..."),
--		"git hash-object  --stdin-paths",
-+		   "                [--stdin [--literally]] [--] <file>..."),
-+		N_("git hash-object [-t <type>] [-w] --stdin-paths [--no-filters]"),
- 		NULL
- 	};
- 	const char *type = blob_type;
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 08ba006d55e..dcaaf102eaf 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -516,6 +516,8 @@ static int shared_callback(const struct option *opt, const char *arg, int unset)
- 
- static const char *const init_db_usage[] = {
- 	N_("git init [-q | --quiet] [--bare] [--template=<template-directory>]\n"
-+	   "         [--separate-git-dir <git-dir>] [--object-format=<format>]\n"
-+	   "         [-b <branch-name> | --initial-branch=<branch-name>]\n"
- 	   "         [--shared[=<permissions>]] [<directory>]"),
- 	NULL
- };
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 4cf0cf265dc..e58627c72a9 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -15,7 +15,7 @@
- static const char * const git_interpret_trailers_usage[] = {
- 	N_("git interpret-trailers [--in-place] [--trim-empty]\n"
- 	   "                       [(--trailer <token>[(=|:)<value>])...]\n"
--	   "                       [<file>...]"),
-+	   "                       [--parse] [<file>...]"),
++#define BUILTIN_STASH_LIST_USAGE \
++	N_("git stash list [<log-options>]")
++#define BUILTIN_STASH_SHOW_USAGE \
++	N_("git stash show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>]")
++#define BUILTIN_STASH_DROP_USAGE \
++	N_("git stash drop [-q | --quiet] [<stash>]")
++#define BUILTIN_STASH_POP_USAGE \
++	N_("git stash pop [--index] [-q | --quiet] [<stash>]")
++#define BUILTIN_STASH_APPLY_USAGE \
++	N_("git stash apply [--index] [-q | --quiet] [<stash>]")
++#define BUILTIN_STASH_BRANCH_USAGE \
++	N_("git stash branch <branchname> [<stash>]")
++#define BUILTIN_STASH_STORE_USAGE \
++	N_("git stash store [(-m | --message) <message>] [-q | --quiet] <commit>")
++#define BUILTIN_STASH_PUSH_USAGE \
++	N_("git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
++	   "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n" \
++	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n" \
++	   "          [--] [<pathspec>...]]")
++#define BUILTIN_STASH_SAVE_USAGE \
++	N_("git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n" \
++	   "          [-u | --include-untracked] [-a | --all] [<message>]")
++#define BUILTIN_STASH_CREATE_USAGE \
++	N_("git stash create [<message>]")
++#define BUILTIN_STASH_CLEAR_USAGE \
++	"git stash clear"
++
+ static const char * const git_stash_usage[] = {
+-	N_("git stash list [<log-options>]"),
+-	N_("git stash show [<options>] [<stash>]"),
+-	N_("git stash drop [-q | --quiet] [<stash>]"),
+-	N_("git stash (pop | apply) [--index] [-q | --quiet] [<stash>]"),
+-	N_("git stash branch <branchname> [<stash>]"),
+-	"git stash clear",
+-	N_("git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n"
+-	   "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n"
+-	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
+-	   "          [--] [<pathspec>...]]"),
+-	N_("git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n"
+-	   "          [-u | --include-untracked] [-a | --all] [<message>]"),
++	BUILTIN_STASH_LIST_USAGE,
++	BUILTIN_STASH_SHOW_USAGE,
++	BUILTIN_STASH_DROP_USAGE,
++	BUILTIN_STASH_POP_USAGE,
++	BUILTIN_STASH_APPLY_USAGE,
++	BUILTIN_STASH_BRANCH_USAGE,
++	BUILTIN_STASH_PUSH_USAGE,
++	BUILTIN_STASH_SAVE_USAGE,
++	BUILTIN_STASH_CLEAR_USAGE,
++	BUILTIN_STASH_CREATE_USAGE,
++	BUILTIN_STASH_STORE_USAGE,
  	NULL
  };
  
-diff --git a/builtin/rm.c b/builtin/rm.c
-index b6ba859fe42..f0d025a4e23 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -17,7 +17,9 @@
- #include "pathspec.h"
+ static const char * const git_stash_list_usage[] = {
+-	N_("git stash list [<options>]"),
++	BUILTIN_STASH_LIST_USAGE,
+ 	NULL
+ };
  
- static const char * const builtin_rm_usage[] = {
--	N_("git rm [<options>] [--] <file>..."),
-+	N_("git rm [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch]\n"
-+	   "       [--quiet] [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
-+	   "       [--] [<pathspec>...]"),
+ static const char * const git_stash_show_usage[] = {
+-	N_("git stash show [<options>] [<stash>]"),
++	BUILTIN_STASH_SHOW_USAGE,
+ 	NULL
+ };
+ 
+ static const char * const git_stash_drop_usage[] = {
+-	N_("git stash drop [-q | --quiet] [<stash>]"),
++	BUILTIN_STASH_DROP_USAGE,
+ 	NULL
+ };
+ 
+ static const char * const git_stash_pop_usage[] = {
+-	N_("git stash pop [--index] [-q | --quiet] [<stash>]"),
++	BUILTIN_STASH_POP_USAGE,
+ 	NULL
+ };
+ 
+ static const char * const git_stash_apply_usage[] = {
+-	N_("git stash apply [--index] [-q | --quiet] [<stash>]"),
++	BUILTIN_STASH_APPLY_USAGE,
+ 	NULL
+ };
+ 
+ static const char * const git_stash_branch_usage[] = {
+-	N_("git stash branch <branchname> [<stash>]"),
++	BUILTIN_STASH_BRANCH_USAGE,
+ 	NULL
+ };
+ 
+ static const char * const git_stash_clear_usage[] = {
+-	"git stash clear",
++	BUILTIN_STASH_CLEAR_USAGE,
+ 	NULL
+ };
+ 
+ static const char * const git_stash_store_usage[] = {
+-	N_("git stash store [(-m | --message) <message>] [-q | --quiet] <commit>"),
++	BUILTIN_STASH_STORE_USAGE,
+ 	NULL
+ };
+ 
+ static const char * const git_stash_push_usage[] = {
+-	N_("git stash [push [-p | --patch] [-k | --[no-]keep-index] [-q | --quiet]\n"
+-	   "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n"
+-	   "          [--] [<pathspec>...]]"),
++	BUILTIN_STASH_PUSH_USAGE,
+ 	NULL
+ };
+ 
+ static const char * const git_stash_save_usage[] = {
+-	N_("git stash save [-p | --patch] [-k | --[no-]keep-index] [-q | --quiet]\n"
+-	   "               [-u | --include-untracked] [-a | --all] [<message>]"),
++	BUILTIN_STASH_SAVE_USAGE,
  	NULL
  };
  
