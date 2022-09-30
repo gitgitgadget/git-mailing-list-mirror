@@ -2,86 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 232B5C433FE
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 12:05:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06AEEC433FE
+	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 12:36:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231260AbiI3MFL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 08:05:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35186 "EHLO
+        id S230257AbiI3Mgs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 08:36:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbiI3MFJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 08:05:09 -0400
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00BB140560
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 05:05:03 -0700 (PDT)
-Received: by mail-qt1-x830.google.com with SMTP id s18so2487841qtx.6
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 05:05:03 -0700 (PDT)
+        with ESMTP id S229462AbiI3Mgq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 08:36:46 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D32D9A3461
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 05:36:45 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id c9so5062659ybf.5
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 05:36:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=TOH3SFxsq99ryuoBYMG/dgzAWr3bjKjm0pEf89WfH6M=;
-        b=ZCciX9tnlRctkuQeMzsGPzjEqUEeYxZB0OLoJC85Q6FlQ5ypHrpAgmubc1oeoOt00H
-         /R989zxKWLhJp1WYyilaKTebuYWLkzskRp7d8cc6xcmeyRPqJSJmt6dQyM+Kf7kOTsd3
-         ZUehoby4wg636ueCuzd7GVeLKIa3GQjvveNIA=
+        bh=vL/J7nSyLUzYzzOtXEeKdVDQfae5dxckAE65yEn6SLU=;
+        b=YxOf0yAJU0BnVN5C02NydiLQtOfiRRrkNr5NtJEzkk2qCnIeKhxJIqgGzgXwwuA7zD
+         IyOX6JU0hEl/QcpM3Mqop2YPfPGh8/99V/8tEImnjeesmRw4U7opVxs4VfFpUIYAdFCv
+         eRKDGkMxQEFjNVAwpQ3Dyiz8sDdE0xF8TxUUMwfOy1r3vLArjsG4Aj4tO1uy1sc/dW1p
+         it95cff2CURLWuPMj+mzRD6jEY0cpX5wKAM6eruYcDXvpu76yzYIfyob5ShHnWxQ53BU
+         /isb/M3Ptqe74WcVw6ddKGtW9VqHgNMwyzYJy9vL4iL0d88lcZlTsqd+qRvWsQrRRJUj
+         xGfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=TOH3SFxsq99ryuoBYMG/dgzAWr3bjKjm0pEf89WfH6M=;
-        b=rRE8kgzUW/87m7v5F+pV2nsCMH9hLBV9nzjclWETnwgzdXCibAls2zmlLJa9QXIrSs
-         y4gGGJOPdQsSMRVWQfsGka2E16149ZRjvMNqxPnQ5QCKB52DIy1P8/Uqq0rP1+rG8kDs
-         eMGJHGSKA+FBXqRj8EuK9oWRFZLrvND8IwvvCbd+tuBPKZP2XcPEsCQjTiegPn5DyXv4
-         ylzNg9B+4chjl+9IwWnbxv7dvZf2ftCaabPlIX0N3yph14yaIl4j5UNbg7j7xg8I/p85
-         cZX95Jxm6/2mzgfH5M/GrFIrqZVrGtX9IBGcxAp7QGZKYZzFyM93NFz0YYv5zd9UTOm2
-         +7ug==
-X-Gm-Message-State: ACrzQf1O3iKXrgkb8JGLenbLe6CyQfbpSGxMLX7d7/87skKtqVhgC7kG
-        UMPBg8bQOxoyy/vSVZK6TOOBR5BcJWL1ZLjM/l2Fdc0wRnJSzEUA
-X-Google-Smtp-Source: AMsMyM4d9pEAJxBt8EUW584T0kLy2bVJ42mlCJb6Z3EUlUklRWG9DC0z3hrFXJSvKSY4CckRzFFXkeqY3UJXcFFNAYk=
-X-Received: by 2002:a05:622a:1904:b0:35c:c657:14e4 with SMTP id
- w4-20020a05622a190400b0035cc65714e4mr6349137qtc.65.1664539502448; Fri, 30 Sep
- 2022 05:05:02 -0700 (PDT)
+        bh=vL/J7nSyLUzYzzOtXEeKdVDQfae5dxckAE65yEn6SLU=;
+        b=pX17YHs1HEsk9kcZYfcwrkGk6Psw+nPQ5gQxFUMdMcvm0ZMkaQOEXKsiTpExB54NuV
+         4SYHA1Kl2Wks7ow45YQTLME/cf/24XV8DC7JqJ3ngG+012SjfALNMhzomLs5eNEr1nZW
+         72POuoMawyFhhqaab8yJhFR6SYnZ9pLKzEHP3w1lNqbSYBUFwoNsowEGY2PvZyMnbTM3
+         TVTdv4+si8bRzW1DsI48TxK7FjoC2mswzgVsY1slVARbtf1imUXaHNck20xB2TQ8zxAd
+         Vw6W3iYVXj0QCiGQwL+i3Re/RjQMQF79dQ6pI8OEo+6xZvdFTHxzf8ChP10Z15vL24yK
+         YjWA==
+X-Gm-Message-State: ACrzQf3UCcO3H7gzdnHjwkXlUn3OaxtoTW+M4Pf0icaP3EUx3107/IJt
+        c1J5atGrQMzz0RhJoumM8Fpxf7VedNwc3j04DpI=
+X-Google-Smtp-Source: AMsMyM79+AcaM4c5yAHU8gI0L3DwzfOFHqYfTjjR582tuBgVem7mtDxk9P9ic77gl4SKkiePhNaNPi9TDpf+AFyUpZ0=
+X-Received: by 2002:a25:4441:0:b0:6ba:51bf:5ce3 with SMTP id
+ r62-20020a254441000000b006ba51bf5ce3mr8282370yba.494.1664541405023; Fri, 30
+ Sep 2022 05:36:45 -0700 (PDT)
 MIME-Version: 1.0
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Fri, 30 Sep 2022 14:04:50 +0200
-Message-ID: <CAPMMpogcnwJDUazw82OB0DvdgvNS6hpUN9Qs69ppTFb1QFbLSg@mail.gmail.com>
-Subject: icase pathspec magic support in ls-tree
-To:     git <git@vger.kernel.org>
+References: <CAP8UFD2pG7f5-9eywHE4ziz7OKLZ_A9AnNnQEQvdvOTYvsdP+A@mail.gmail.com>
+ <YzY7XWHyI8waS1vd@nand.local>
+In-Reply-To: <YzY7XWHyI8waS1vd@nand.local>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 30 Sep 2022 14:36:33 +0200
+Message-ID: <CAP8UFD0XfV0sm=CWMGZreUmiMp-VvnzwH7kHk0GwaOq6TfH9dA@mail.gmail.com>
+Subject: Re: Draft of Git Rev News edition 91
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Tim Hockin <thockin@google.com>,
+        Bruno Brito <bruno@git-tower.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi folks,
+On Fri, Sep 30, 2022 at 2:42 AM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> On Thu, Sep 29, 2022 at 05:51:58PM +0200, Christian Couder wrote:
+> > You can also reply to this email.
+>
+> Your email reminded me to send the notes we all took during the
+> Contributor's Summit a couple of weeks ago. I did that today beginning
+> in this thread:
+>
+>   https://lore.kernel.org/git/YzXvMRc6X60kjVeY@nand.local/
 
-I just found out today both that icase magic exists (awesome!), and
-that it isn't supported in ls-tree (boo).
+Great, thanks!
 
-As far as I can tell, getting it supported would be the only way to
-*efficiently* prevent caseless-duplicate files from being created in a
-repo, in an "update" hook: I'd want to call ls-tree on the new head
-commit for the branch, passing in an icase pathspec for all the files
-being added since the previous state - and then sort and uniq.
+> You may want to squash in a link to that in your article, since it
+> mentions the notes hopefully making their way to the list soon.
 
-Of course, for entirely new branches I'd have to do a full check of
-the tree, and for very large changes that might be the fastest/best
-thing to do anyway, rather than creating a silly-sized pathspec - but
-checking the full tree costs me about 1 second, a price that I'm loath
-to pay for everyday commit verifications of a handful of files, vs a
-200,000-file full tree.
+Done.
 
-I tried changing ls-tree "naively" to just permit the icase magic,
-without any logic changes, and found at least one case where it
-doesn't work: when combining wildcards with case-insensitivity, like
-an icased "T/*" patchspec in the git repo; ls-files finds all the
-tests, and a naively updated ls-tree does not.
+> Thanks for preparing these, as always :-). This was a delightful read.
 
-I think I see the last person to update this was Nguy=E1=BB=85n Th=C3=A1i N=
-g=E1=BB=8Dc Duy
-in 2013, giving a hint as to what would need to be done to make this
-be supported; is this an area anyone else might be looking at at the
-moment?
-
-Thanks,
-Tao
+Thanks for all your work to organize the Git Merge and the Contributor's Summit!
