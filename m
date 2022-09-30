@@ -2,118 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B185AC433FE
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 17:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36497C433FE
+	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 17:23:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230415AbiI3RSg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 13:18:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45484 "EHLO
+        id S231318AbiI3RXU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 13:23:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231827AbiI3RSd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 13:18:33 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 804781C2F86
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 10:18:32 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id y189so1934185iof.5
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 10:18:32 -0700 (PDT)
+        with ESMTP id S229522AbiI3RXR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 13:23:17 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A302037D
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 10:23:16 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id dv25so10375708ejb.12
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 10:23:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=q2Mso9g16cnG6q7DwxJpvoiCzDnhyBHVwzySqGbqs1c=;
-        b=MSQh34LNE/Tv2FZll7Jc5kVR9m0MqmEk8+3FyBtc7MGxrOdU3MtrxyWlx+sFXk9ahs
-         0sBv9DQn7NaqMOXnw5RYpX37a3uE3CFTEuHdAj5Cund4jJC63VAwGFygeXffZWluls7/
-         tnHEOxLvqlpMbPzFn4Q6lr7iMuONoJr2v46xocAy4T7c8vUMLHUVc1sznP757kJynXxA
-         kNwbVexoXNBgSWEB+uahGkbRRz2ALU4hTAtsqGRFyzInnBBvBuj+SwI9BfFlj19sCGbx
-         1/QrNJDa2JmuXY0CSAchKIMy/theLUPyZnRqmNnjLTBiOuPlkaqENiI6Ugp/L1SWGC0U
-         59vQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date;
+        bh=Mp6A0sfmGDI9Bv876qG+10W/oX/wLSlqnvRJ38S+lsQ=;
+        b=i2BB9DY5FV8+x0+bbWani/ISdNfu9WQkWo1gOybNDMQ7JyZveFnr5jxmuAGevGum44
+         HytcB44cdwNKy5TL6QX/o9sR2IVXnDxI+ojuK5dBJoUkLS4V+9YhfeSDEiOPSlO/T08F
+         MUyRda4FJVEXHXMJ14LrSW8oKu6x3xel8Kwjs/0EARfAF84L7dhs+D+FNoGyzId2jK8R
+         VynYEFokbRV/E+E5ZL/5V8IdHKe3wqjkSVxEUSyedTryOSy8oLQRhLkwhIYsCJL1Faox
+         kafku/znlxDEE6ZOjzR/7uHLNya9Z0H1JYPdsZm/WB5Iy66P58bKtwBG/b0umg4iQ8Ys
+         vKfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=q2Mso9g16cnG6q7DwxJpvoiCzDnhyBHVwzySqGbqs1c=;
-        b=IL4sc3EbpUvH9/KKYIgtn5TGlcF/oiFene8eWydue1gEwqjdVpM+fXegX+pm8ORg6U
-         EC/A+r77s2HsuAlT8VjukHwa3bmrIJ6ze7vW6X91BMNBycRyqsmgL5e6OI2iFv2/N/3F
-         tL2A9RqqwxEEwVkY+Fwt8/2v0/N7tqHZNezxdmjvMbAGNHihUUn4tmt6yF3X6BSetv9k
-         psz+YY5wMe2bvZ28EzxgnsvdgiRVAuPuyjjUayabjid8xM2zY85OvSVC8RoFW/TKAxsG
-         rX523kwWKPfulzK9Z9nVH6oDPLR3pTHedu/XgDcpdbM69lqLOdZoI3CRe3Ngctvi/adM
-         zuGA==
-X-Gm-Message-State: ACrzQf1M7UIVYbatg9lu0RZuU2LwYID7YtFbni9eW9YcEd2W/KqawSAM
-        p0WLtqcD4CZ8lxCQiLNqFK1D
-X-Google-Smtp-Source: AMsMyM7ubCE+jheJJYSCowKj7OOJ2XRvNcxUXeK0oWOaP/OMmE4gm1UUrZjzI+wYHJSP4qb2/0+Nuw==
-X-Received: by 2002:a05:6602:491:b0:672:18ce:8189 with SMTP id y17-20020a056602049100b0067218ce8189mr4451447iov.170.1664558311810;
-        Fri, 30 Sep 2022 10:18:31 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:8c53:a5aa:3322:e297? ([2600:1700:e72:80a0:8c53:a5aa:3322:e297])
-        by smtp.gmail.com with ESMTPSA id o3-20020a92c043000000b002f1378de8d5sm1116849ilf.40.2022.09.30.10.18.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Sep 2022 10:18:31 -0700 (PDT)
-Message-ID: <fc887b02-191e-912a-bd15-1dc882ddf9dc@github.com>
-Date:   Fri, 30 Sep 2022 13:18:30 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH 4/6] sequencer: avoid empty lines after 'update-ref'
- instructions
-Content-Language: en-US
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=Mp6A0sfmGDI9Bv876qG+10W/oX/wLSlqnvRJ38S+lsQ=;
+        b=74yoSEn9SZhaWoFt7DE2FzX7iRvcuVL1oq6vOXVorMcuWwq2WIXY4I3gOglMaChRu9
+         sl08HhdWIMR/JWPnrADSCWXhA/L+ccBPt8Ez3y6wGaJFnOZNOPpdy4153DqPaDYCIXBb
+         gBB5ryJcBCr4Zi/nt0kJc7onin0+mPqWP6ZdMdhciyAm9eLGbWLlto/iddBLog6E4hHv
+         5w7yH4+OPn86Zvq4LpvlEM3V/BB8wr6NxuCPCnDF7aZT7wl6oE923MEw3bQn5YyXmcnB
+         SkDn94Wisv7JFkJif/1qUmzW4ciG0VPKLWPTyNXIwIRZADeNieTYO3iG/4+AOmzTYfIF
+         G0Jw==
+X-Gm-Message-State: ACrzQf3Fh28hxGXVuEv2Y8dnwAjV+c8D1he1CKoeqf1qWgNWH7xbrrsX
+        O+ZMH7ok6rL14hTYeK1cJfw=
+X-Google-Smtp-Source: AMsMyM5uw9W3/745+D/pJ/YJuzI+y0wKFYyxgJ5Gq4m3gUdQcpFv3e7vAsoRpdYierwm9Yve7FPdKA==
+X-Received: by 2002:a17:907:2bd8:b0:770:77f2:b7af with SMTP id gv24-20020a1709072bd800b0077077f2b7afmr7097298ejc.545.1664558595005;
+        Fri, 30 Sep 2022 10:23:15 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id ek12-20020a056402370c00b004587f9d3ce8sm1553309edb.56.2022.09.30.10.23.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Sep 2022 10:23:14 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oeJjF-001mhi-0p;
+        Fri, 30 Sep 2022 19:23:13 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/6] sequencer: fail early if invalid ref is given to
+ 'update-ref' instruction
+Date:   Fri, 30 Sep 2022 19:09:04 +0200
 References: <20220930140948.80367-1-szeder.dev@gmail.com>
- <20220930140948.80367-5-szeder.dev@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20220930140948.80367-5-szeder.dev@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ <20220930140948.80367-7-szeder.dev@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <20220930140948.80367-7-szeder.dev@gmail.com>
+Message-ID: <220930.86a66gvkse.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/30/2022 10:09 AM, SZEDER Gábor wrote:
-> When the sequencer generates a todo list for 'git rebase
-> --update-refs', it always inserts an empty line after each
-> 'update-ref' instruction and after each comment line about checked out
-> refs.  These empty lines are unnecessary, distracting, and waste
-> valuable vertical screen real estate, especially when multiple refs
-> point to the same commit:
-> 
->   pick 29a79f8 two
->   pick 74bf293 three
->   # Ref refs/heads/branch3 checked out at '/tmp/test/WT'
-> 
->   update-ref refs/heads/branch2
-> 
->   update-ref refs/heads/branch1
-> 
->   pick 5f59b82 four
-> 
-> Eliminate those empty lines.
 
-After this change, I think the end result is this:
+On Fri, Sep 30 2022, SZEDER G=C3=A1bor wrote:
 
-  pick 29a79f8 two
-  pick 74bf293 three
-  # Ref refs/heads/branch3 checked out at '/tmp/test/WT'
-  update-ref refs/heads/branch2
-  update-ref refs/heads/branch1
-  pick 5f59b82 four
+> +	if (item->command =3D=3D TODO_UPDATE_REF) {
+> +		struct strbuf ref =3D STRBUF_INIT;
+> +		int ret =3D 0;
+> +
+> +		item->commit =3D NULL;
+> +		item->arg_offset =3D bol - buf;
+> +		item->arg_len =3D (int)(eol - bol);
+> +
+> +		strbuf_add(&ref, bol, item->arg_len);
 
-Specifically, there is no whitespace break between the last
-'update-ref' command and the next 'pick' command. Since the
-'update-ref' commands likely correspond to chunks of changes,
-it would be nice to still have that whitespace remain. I
-agree that the whitespace between the comments and previous
-'update-ref' commands is wasteful, but I'd rather leave the
-wasteful (and usually rare) whitespace than lose the helpful
-whitespace.
+Just a nit and maybe not worth it, but we've done this allocation dance
+just because..
 
-There is precedent for this kind of whitespace when using
-'--rebase-merges'.
+> +		if (!starts_with(ref.buf, "refs/") ||
+> +		    check_refname_format(ref.buf, 0))
 
-If you can find a nice way to add a line of whitespace between
-these lines and the next instruction type, then I fully
-support this change.
+...there isn't such a thing as checkn_refname_format() taking a "size_t
+len" or whatever.
 
-Thanks,
--Stolee
+So maybe not worth it, but if we do the equivalent of:
+=09
+	static checkn_refname_format(const char *refname, size_t len, unsigned int=
+ flags)
+	{
+	        struct strbuf ref =3D STRBUF_INIT;
+	        int ret;
+=09
+		strbuf_add(&ref, refname, len);
+	        ret =3D check_refname_format(ref,buf, flags);
+	        strbuf_release(&ref);
+=09
+		return ret;
+	}
+
+This caller could just (untested):
+
+	if (!starts_with(bol, "refs/") ||
+	    checkn_refname_format(bol, eol - bol, 0))
+		return error(_("...%.*s", item->arg_len, bol));
+
+Which saves us the copy in case the "starts_with" test is all we need.
+
+Even without such a helper, maybe:
+
+	int bad;
+
+        [...]
+	bad =3D (!starts_with(ref.buf, "refs/") ||
+               check_refname_format(ref.buf, 0));
+        strbuf_release(&buf);
+        if (bad)
+		return error(_("...%.*s", item->arg_len, bol));
+	return 0;
+
+Would make it clearer that the strbuf is just for the use of
+check_refname_format().
+
+What you have already is also fine, this just sent me down a rabbit hole
+of re-learning that most of the string duplication we do for
+check_refname_format() could be avoided if it was slightly less stupid,
+i.e. accepted a "len" and "prefix" (i.e. "pretend your refname argument
+started with 'refs/heads/'", or whatever).
+
+> +			ret =3D error(_("invalid ref for update-ref instruction: %s"), ref.bu=
+f);
+> +
+> +		strbuf_release(&ref);
+> +		return ret;
+> +	}
+> +
+>  	end_of_object_name =3D (char *) bol + strcspn(bol, " \t\n");
+>  	saved =3D *end_of_object_name;
+>  	*end_of_object_name =3D '\0';
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 2e081b3914..b97f1e8b31 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1964,6 +1964,34 @@ test_expect_success 'respect user edits to update-=
+ref steps' '
+>  	test_cmp_rev HEAD refs/heads/no-conflict-branch
+>  '
+>=20=20
+> +test_expect_success 'update-refs with invalid refs' '
+> +	cat >fake-todo-4 <<-EOF &&
+> +	update-ref refs/heads/foo..bar
+> +	update-ref refs/heads/foo.lock
+> +	update-ref foo
+> +	update-ref foo/bar
+> +	pick $(git rev-parse HEAD)
+
+Another potentially hidden segfault/exit code for "git"
