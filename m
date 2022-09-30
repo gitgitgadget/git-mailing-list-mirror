@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 727BBC433FE
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 14:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72244C433F5
+	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 14:10:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231860AbiI3OKq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 10:10:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42736 "EHLO
+        id S231864AbiI3OKs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 10:10:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231797AbiI3OKZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 10:10:25 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81EC1A220C
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 07:10:23 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id x18so7071102wrm.7
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 07:10:23 -0700 (PDT)
+        with ESMTP id S231804AbiI3OK2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 10:10:28 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56735CAF87
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 07:10:24 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id j7so1667854wrr.3
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 07:10:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=xByOeG/pDvr/M8WXGQBjFg1YyFNoMZlxWf7hMxqxGq8=;
-        b=KBp2JSEttirDtpnTPdTu256UZLRXTkaDQJwEqpT4x2UZAMInwqTKO8gR6B701/TLQW
-         BEH+HZcSe6KcBYRD7Njgz3c0dMTHotGgXf9dWM45OfrcWtbfFkXiRIQQYL/BZidOF42t
-         Ok0aSRWRTcOVr/Ntveoct8eznx6dhhykZiZRUA5TL3nVqFWWdoIcx1+J2v5ZzRX/8Kpm
-         +cZgwc6GehSEXQeWASFnsGkJhY/nTT/zrRQ6M5O/iYjuJiWi+d7EJcgjLIx4ugK0VMZV
-         EdYGR6rwhttyHxV4TE8BEvCgKUWiVVDDvEUTrw1TzC+H/0fzr7aARO28j0cNYMhxd/6Q
-         H8Rg==
+        bh=pd2X3R7Nek7xE0g0dMmlDRUaoS7VcCCH7AxUkTamsJA=;
+        b=UhPXaEq/oABozKiH5e86vaD7KMq0RZwzHxK95/cs/QYkh2j2ymMpmuv/R8uIfH2SRK
+         OIHtjLCpozpYd8ZjB0WHNYFFfwY7zUuwSYY2oXF1SdShPyKCuWpjKDMxBnyIo6lWUtBP
+         e96Gp8jDfLx61JyLxBTAnCwtikouNWzlByDG4VcC4UEbkAVbbf4+0uy0z/I52vZu9mG8
+         gCY70rFt6JH4L9qB6XcyzHoQdHvM+Cdx5zFO0m3xfMYloZ2F6CsPk5/s06PBiIPBT6FE
+         pf+ioufL+zish1eoWxrpIbmQV7VG73PwtfFSnLfAEJGExGvLbksSmETKWaQVVUxX+UTW
+         aC8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=xByOeG/pDvr/M8WXGQBjFg1YyFNoMZlxWf7hMxqxGq8=;
-        b=XpvJuF+t0C4MLeab8lD/VX6WOgFe3hTolEjAIcN0y9bAmw4L96dX8eul0caWNlSbgQ
-         nH5k3YSEugJQk0vjR/vYDzincm4/0cOggR7NoCoHCE0oQlOPL2zSHX8aX2InFd/Qym5B
-         3lAz2xbnQ9QLb1aRD+QIMwwE2KWJbOIgYFARL3xWpKv3eJHbCeVBYLZ3mZf6JqlUIybM
-         cbTkTdZlp1mX8s54DoomHB929RiLwOgONSpo+hsULPKCpI1kI58m4YStjlpxsKimwU1s
-         XW1bUjNei8nPjvfL+DhtI24JA1/yPemkmOki8phUchqkfxW76pY4pmkwGTQtiqYUz/Zv
-         d9hA==
-X-Gm-Message-State: ACrzQf3X2qzyMPM6fVAlR8SNiaIePoS0UHsdW7M935DwwtUrg/cEWx5B
-        wkk1bx5ePjpu5zjx6Y7adY777C2xXyE=
-X-Google-Smtp-Source: AMsMyM6gmjfE/vDVLu0pYHjB5WBW9unMALlMLo9plzMjxSUMEKw6Do6+eKA4muhOrP9pdbs4cVyLsw==
-X-Received: by 2002:a5d:6dc3:0:b0:22a:bcc3:21c6 with SMTP id d3-20020a5d6dc3000000b0022abcc321c6mr6228736wrz.450.1664547021993;
-        Fri, 30 Sep 2022 07:10:21 -0700 (PDT)
+        bh=pd2X3R7Nek7xE0g0dMmlDRUaoS7VcCCH7AxUkTamsJA=;
+        b=HO/zPO7PomlgK+0XW4UkMumLdkualx7Z9dNeFsMWe5+4eKBqfCm8kiKFAfaTKjoWr7
+         aZQdoh10blSJEsZ0xt26/7upeSNCE4URwaGLzFMj3h6drW67VnJMS3eW/ZbUNaop1HGR
+         qRC/MIP+NJx6GHdpAlgbDBWw8BbSvUh1k0MxkG3HmxfmL2iQGIGhApg5FjLXz35a0DzB
+         R65YDgyc3MbnekYOhLyfoR2QCMw3VtFRX4DSYuCAeOQe2k/aAtHEqqfzvu3w5NDX6Xxx
+         cidPiq5kEIUhaMWcA//BAZaAzzbEXv2cp9JO/GfE9rxDXOLPZyklEZl1R7GtPKg1m82N
+         ssjA==
+X-Gm-Message-State: ACrzQf30BNlqzrGwy4ncVenbEsrzM+dSxwolDsHKILTfJJOee/DWCUvL
+        0Cdytg80M+i4vqiCgiG69sxuI3beVOU=
+X-Google-Smtp-Source: AMsMyM52gtq5GOsPcl89vKx8j+9NrvqkZcoq1Vi21vMjiryholPOb5dUF6Gk61o1WmDz7ducpBHEAw==
+X-Received: by 2002:a05:6000:1d8b:b0:22a:c046:946d with SMTP id bk11-20020a0560001d8b00b0022ac046946dmr5968413wrb.249.1664547023579;
+        Fri, 30 Sep 2022 07:10:23 -0700 (PDT)
 Received: from localhost (94-21-37-194.pool.digikabel.hu. [94.21.37.194])
-        by smtp.gmail.com with ESMTPSA id l13-20020a5d4bcd000000b00226dba960b4sm2154299wrt.3.2022.09.30.07.10.21
+        by smtp.gmail.com with ESMTPSA id q30-20020adfab1e000000b00228dff8d975sm2029006wrc.109.2022.09.30.07.10.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Sep 2022 07:10:21 -0700 (PDT)
+        Fri, 30 Sep 2022 07:10:23 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 5/6] sequencer: duplicate the result of resolve_ref_unsafe()
-Date:   Fri, 30 Sep 2022 16:09:47 +0200
-Message-Id: <20220930140948.80367-6-szeder.dev@gmail.com>
+Subject: [PATCH 6/6] sequencer: fail early if invalid ref is given to 'update-ref' instruction
+Date:   Fri, 30 Sep 2022 16:09:48 +0200
+Message-Id: <20220930140948.80367-7-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.38.0.rc2.542.g9b62912f7f
 In-Reply-To: <20220930140948.80367-1-szeder.dev@gmail.com>
 References: <20220930140948.80367-1-szeder.dev@gmail.com>
@@ -66,120 +66,115 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When 'git rebase -i --update-refs' generates the todo list for the
-rebased commit range, an 'update-ref' instruction is inserted for each
-ref that points to one of those commits, except for the rebased branch
-(because at the end of the rebase it will be updated anyway) and any
-refs that are checked out in a worktree; for the latter a "Ref <ref>
-checked out at '<worktree>'" comment is added.  One of these comments
-can be missing under some circumstances: if the oldest commit with a
-ref pointing to it has multiple refs pointing to it, and at least one
-of those refs is checked out in a worktree, and one of them (but not
-the first) is checked out in the worktree associated with the last
-directory entry in '.git/worktrees'.
+Users can add their own 'update-ref <ref>' instructions to the rebase
+todo list, which also gives them the possibility to specify an invalid
+ref as argument.  Now, while git does catch any invalid ref and errors
+out, it does so at the very end of the rebase process, when the
+invalid ref causes the transaction updating all involved refs to fail,
+leaving users on their own to figure out where each of those refs
+should point now and to update them themselves.
 
-The culprit is the add_decorations_to_list() function, which calls
-resolve_ref_unsafe() to figure out the refname of the rebased branch.
-However, resolve_ref_unsafe() can (and in this case does) return a
-pointer to a static buffer.  Alas, add_decorations_to_list() holds on
-that static buffer until the end of the function, using its contents
-to compare refnames with the rebased branch, while it also calls a
-function that invokes refs_resolve_ref_unsafe() internally [1], and
-which overwrites the content of that static buffer, and messes up
-subsequent refname comparisons.
+Let's do better, and catch invalid refs early on by calling
+check_refname_format() for the argument of each 'update-ref'
+instruction while parsing the todo file.  This way 'git rebase' would
+error out right after the user finished editing the todo file, and
+would show the same generic advice to rectify the situation that is
+shown e.g.  after an unknown instruction or a missing argument for a
+'pick' instruction, etc.
 
-Use xstrdup_or_null() to keep a copy of resolve_ref_unsafe()'s return
-value for the duration of add_decorations_to_list().
-
-[1] #0  refs_resolve_ref_unsafe (refs=0x555555a23d00,
-        refname=0x555555928523 "HEAD", resolve_flags=0, oid=0x555555a23c78,
-        flags=0x7fffffffc0cc) at refs.c:1781
-    #1  0x000055555587a1d9 in add_head_info (wt=0x555555a23c50) at worktree.c:33
-    #2  0x000055555587a446 in get_linked_worktree (id=0x555555a19c43 "WorkTree")
-        at worktree.c:91
-    #3  0x000055555587a628 in get_worktrees () at worktree.c:135
-    #4  0x00005555556a7676 in prepare_checked_out_branches () at branch.c:385
-    #5  0x00005555556a7a76 in branch_checked_out (
-        refname=0x555555a12e9c "refs/heads/branch2") at branch.c:446
-    #6  0x0000555555824f55 in add_decorations_to_list (commit=0x5555559efd08,
-        ctx=0x7fffffffc3e0) at sequencer.c:5946
+Furthermore, require that all refs given to 'update-ref' instructions
+live under the "refs/" hierarchy.  The argument of the 'update-ref'
+instruction is treated as a fully qualified ref, so if the todo list
+were to contain the 'update-ref foo' instruction, then 'git rebase'
+would happily create the ref file '.git/foo' containing the
+appropriate object id.  This is most likely not what the user wanted
+and will cause confusion.  I assume it's much more probable that some
+users simply forgot about the "refs/heads/" prefix than that they have
+a use-case for using 'git rebase' to create/update a ref outside the
+"refs/" hierarchy.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- sequencer.c                   |  5 +++--
- t/t3404-rebase-interactive.sh | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+), 2 deletions(-)
+ sequencer.c                   | 19 ++++++++++++++++++-
+ t/t3404-rebase-interactive.sh | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+), 1 deletion(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index fba92c90b1..f1732f88f3 100644
+index f1732f88f3..ababfa6352 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -5917,10 +5917,10 @@ static int add_decorations_to_list(const struct commit *commit,
- 				   struct todo_add_branch_context *ctx)
- {
- 	const struct name_decoration *decoration = get_name_decoration(&commit->object);
--	const char *head_ref = resolve_ref_unsafe("HEAD",
-+	const char *head_ref = xstrdup_or_null(resolve_ref_unsafe("HEAD",
- 						  RESOLVE_REF_READING,
- 						  NULL,
--						  NULL);
-+						  NULL));
+@@ -2522,7 +2522,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+ 			     command_to_string(item->command));
  
- 	while (decoration) {
- 		struct todo_item *item;
-@@ -5965,6 +5965,7 @@ static int add_decorations_to_list(const struct commit *commit,
- 		decoration = decoration->next;
+ 	if (item->command == TODO_EXEC || item->command == TODO_LABEL ||
+-	    item->command == TODO_RESET || item->command == TODO_UPDATE_REF) {
++	    item->command == TODO_RESET) {
+ 		item->commit = NULL;
+ 		item->arg_offset = bol - buf;
+ 		item->arg_len = (int)(eol - bol);
+@@ -2556,6 +2556,23 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+ 		}
  	}
  
-+	free((char *)head_ref);
- 	return 0;
- }
- 
++	if (item->command == TODO_UPDATE_REF) {
++		struct strbuf ref = STRBUF_INIT;
++		int ret = 0;
++
++		item->commit = NULL;
++		item->arg_offset = bol - buf;
++		item->arg_len = (int)(eol - bol);
++
++		strbuf_add(&ref, bol, item->arg_len);
++		if (!starts_with(ref.buf, "refs/") ||
++		    check_refname_format(ref.buf, 0))
++			ret = error(_("invalid ref for update-ref instruction: %s"), ref.buf);
++
++		strbuf_release(&ref);
++		return ret;
++	}
++
+ 	end_of_object_name = (char *) bol + strcspn(bol, " \t\n");
+ 	saved = *end_of_object_name;
+ 	*end_of_object_name = '\0';
 diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 7f0df58628..2e081b3914 100755
+index 2e081b3914..b97f1e8b31 100755
 --- a/t/t3404-rebase-interactive.sh
 +++ b/t/t3404-rebase-interactive.sh
-@@ -2016,6 +2016,40 @@ test_expect_success REFFILES '--update-refs: check failed ref update' '
- 	test_cmp expect err.trimmed
+@@ -1964,6 +1964,34 @@ test_expect_success 'respect user edits to update-ref steps' '
+ 	test_cmp_rev HEAD refs/heads/no-conflict-branch
  '
  
-+test_expect_success 'what should I call this?!' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
++test_expect_success 'update-refs with invalid refs' '
++	cat >fake-todo-4 <<-EOF &&
++	update-ref refs/heads/foo..bar
++	update-ref refs/heads/foo.lock
++	update-ref foo
++	update-ref foo/bar
++	pick $(git rev-parse HEAD)
++	EOF
++	cat >expect.err <<-EOF &&
++	error: invalid ref for update-ref instruction: refs/heads/foo..bar
++	error: invalid line 1: update-ref refs/heads/foo..bar
++	error: invalid ref for update-ref instruction: refs/heads/foo.lock
++	error: invalid line 2: update-ref refs/heads/foo.lock
++	error: invalid ref for update-ref instruction: foo
++	error: invalid line 3: update-ref foo
++	error: invalid ref for update-ref instruction: foo/bar
++	error: invalid line 4: update-ref foo/bar
++	You can fix this with ${SQ}git rebase --edit-todo${SQ} and then run ${SQ}git rebase --continue${SQ}.
++	Or you can abort the rebase with ${SQ}git rebase --abort${SQ}.
++	EOF
++	test_when_finished "test_might_fail git rebase --abort" &&
 +	(
-+		cd repo &&
-+		test_commit_bulk --message="%s" 4 &&
-+		git branch branch1 HEAD^ &&
-+		git branch branch2 HEAD^ &&
-+		git branch branch3 HEAD^ &&
-+
-+		git worktree add WorkTree branch2 &&
-+		git worktree list --porcelain >out &&
-+		wtpath=$(sed -n -e "s%^worktree \(.*/WorkTree\)%\1%p" out) &&
-+
-+		cat >expect <<-EOF &&
-+		pick $(git log -1 --format=%h HEAD^^) 2
-+		pick $(git log -1 --format=%h HEAD^) 3
-+		update-ref refs/heads/branch3
-+		# Ref refs/heads/branch2 checked out at $SQ$wtpath$SQ
-+		update-ref refs/heads/branch1
-+		pick $(git log -1 --format=%h HEAD) 4
-+		EOF
-+
-+		write_script fake-editor.sh <<-\EOF &&
-+		sed -n -e "/^$/q;p" "$1"
-+		exit 1
-+		EOF
-+		test_set_editor "$(pwd)/fake-editor.sh" &&
-+		test_must_fail git rebase -i --update-refs HEAD^^^ >actual &&
-+
-+		test_cmp expect actual
-+	)
++		set_replace_editor fake-todo-4 &&
++		test_must_fail git rebase -i HEAD^ 2>err
++	) &&
++	test_cmp expect.err err
 +'
 +
- # This must be the last test in this file
- test_expect_success '$EDITOR and friends are unchanged' '
- 	test_editor_unchanged
+ test_expect_success REFFILES '--update-refs: check failed ref update' '
+ 	git checkout -B update-refs-error no-conflict-branch &&
+ 	git branch -f base HEAD~4 &&
 -- 
 2.38.0.rc2.542.g9b62912f7f
 
