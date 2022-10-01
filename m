@@ -2,119 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46779C433F5
-	for <git@archiver.kernel.org>; Sat,  1 Oct 2022 01:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBEE9C433F5
+	for <git@archiver.kernel.org>; Sat,  1 Oct 2022 09:15:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233067AbiJABNU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 21:13:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33822 "EHLO
+        id S229530AbiJAJP3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Oct 2022 05:15:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232772AbiJABMv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 21:12:51 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66F92B7CD
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 18:09:05 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B93A715ED97;
-        Fri, 30 Sep 2022 21:09:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=783qU95wnumVeSw146w85hLjW
-        zR98WgJhf9UdTMjHeY=; b=x4hSQCwtFImsVkEgQ3jqjXj16zST+lNxNvGQtDy1+
-        Iz91h4S9XM12Ysu+7tkkmQHH4H45CCteWEeNML1B6dQ0eX6Hatyfp1wcx29V4ezW
-        EVzxEC+DR7wbdruGEScn/e2QJ5w07zksAoz/Dmw61of7mKvyU4Xljbri8+46oJwV
-        +w=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD95215ED96;
-        Fri, 30 Sep 2022 21:09:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0066215ED95;
-        Fri, 30 Sep 2022 21:09:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        John Cai <johncai86@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 11/36] doc txt & -h consistency: fix incorrect
- alternates syntax
-References: <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
-        <cover-v3-00.36-00000000000-20220930T180414Z-avarab@gmail.com>
-        <patch-v3-11.36-7794c3d6ef5-20220930T180415Z-avarab@gmail.com>
-Date:   Fri, 30 Sep 2022 18:09:02 -0700
-Message-ID: <xmqqy1u05p01.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229544AbiJAJPW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Oct 2022 05:15:22 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D247F47B3
+        for <git@vger.kernel.org>; Sat,  1 Oct 2022 02:15:19 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id j7so4773042wrr.3
+        for <git@vger.kernel.org>; Sat, 01 Oct 2022 02:15:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date;
+        bh=q/+DGIwOfg5IXRrUPEkEomIr8AtZGjwTEaaXiND7APE=;
+        b=H8cued2ccwcJs0nJJr9tvWQVk34hA2yDmjL9w3FMfFpM5LrbW0VxT1t9SxIAir2R+T
+         a6Bdz2V22Z9pMzCdLktuMIRfbG26Za+8c8nrLN4nIOiqzHSNeXs24LwTW/fg1U+CynmS
+         usjwPRGOfGhbS/cax5RF+vanlhjeTJUn2tE1/OKVaX0nP304fzphN/SMNAi4Igb0Kn4Q
+         dyM3f1q4/Tc9Vz5RTprex30RQUGbHK/UVIxBDIkuIdYhVKeCPz4kqUYSbfZXawnv1Lkz
+         yOQMhfY9jTtEYhSUz18KaCh+EqpBGLuQAsn7nWvJwH21/oCm71PM8McI0DWydUfm0/Bo
+         1Pew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=q/+DGIwOfg5IXRrUPEkEomIr8AtZGjwTEaaXiND7APE=;
+        b=sXo2mYuGg+wwVyNzWTCUeQyWbocID85ehEOIpqaaRsw6RIyd1LaKyL/jvpE8FS83eh
+         bQkqYzRSoINDnFRjC1rfvH3XYqTU+kj4PPd6RtX9ocRCrLKjC+fWfBayLesjmPnOOS+E
+         tMwkAuJq9r4QwC2fctKRG5KHh51Zptrhc0UPeE9U2KnTRmrAB3pGH5RtL0pioK2YZnNy
+         9rgn+YYA5aHzFEpPq9ZwJtXWsD6vNKFdxS6Okk4L5Jcw+eGv827CpGZf5EkUU5F3lynP
+         ixIGTdrh369OjeFH4IY1bFAhPepGAoHzwfGhR+1kuJVEaLn589hdwVsqIefFHxWCros+
+         BhLQ==
+X-Gm-Message-State: ACrzQf1KT2lNGNXvDdz+hTm4f6arOMOycY9mOTLrRIfjYlFCKHQ1wzje
+        g+lfvefRCRfss8CPvnkaCtc7njOearQ=
+X-Google-Smtp-Source: AMsMyM7pGPdfN2Vv31w9BI8uiWn/U0mjeDHUdNapt25lZfe0wCavTaSh7QGfs8ZMm+YEhqFI6+jnog==
+X-Received: by 2002:a5d:47c3:0:b0:22b:ac9:92e with SMTP id o3-20020a5d47c3000000b0022b0ac9092emr8566070wrc.376.1664615717641;
+        Sat, 01 Oct 2022 02:15:17 -0700 (PDT)
+Received: from [192.168.2.52] (5.83-213-116.dynamic.clientes.euskaltel.es. [83.213.116.5])
+        by smtp.gmail.com with ESMTPSA id z2-20020a05600c0a0200b003b48dac344esm10398513wmp.43.2022.10.01.02.15.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 01 Oct 2022 02:15:17 -0700 (PDT)
+Subject: Re: [PATCH] branch: do not fail a no-op --edit-desc
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <xmqqczbftina.fsf@gitster.g>
+ <ba8a503b-76e2-5de9-1082-3b4c6ecd0cc3@gmail.com> <xmqq7d1lom12.fsf@gitster.g>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <c354947a-06d6-3852-6afe-bd560dd34d6e@gmail.com>
+Date:   Sat, 1 Oct 2022 11:15:14 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <xmqq7d1lom12.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A40C60B2-4125-11ED-B43E-307A8E0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Let me add, to my other reply to this..
 
-> Fix the incorrect "[-o | --option <argument>]" syntax, which should be
-> "[(-o | --option) <argument>]", we were previously claiming that only
-> the long option accepted the "<argument>", which isn't what we meant.
->
-> This syntax issue for "bugreport" originated in
-> 238b439d698 (bugreport: add tool to generate debugging info,
-> 2020-04-16), and for "diagnose" in 6783fd3cef0 (builtin/diagnose.c:
-> create 'git diagnose' builtin, 2022-08-12), which copied and adjusted
-> "bugreport" documentation and code.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  builtin/bugreport.c | 2 +-
->  builtin/diagnose.c  | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+On 30/9/22 0:26, Junio C Hamano wrote:
 
-I think we saw exactly the same pattern in an earlier step.  If the
-patches in this series are split along the type of fix, then these
-two and the other patch fall into the same category.  Another way to
-organize is to split per file boundary, but I think these two paths
-are fixed up for different problem in later steps.  I think split
-along the type of fix makes much more sense, if we can, than split
-per file, so I am almost OK with the current organization (probably
-with this squashed into that earlier step).
+>> But.. do we want to implement this this way? Maybe we will have to
+>> implement on purpose this feature in some future refactorization?
+> 
+> Absolutely.  It is simpler and there is not much downside.
 
-> diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-> index faa268f3cfb..23170113cc8 100644
-> --- a/builtin/bugreport.c
-> +++ b/builtin/bugreport.c
-> @@ -60,7 +60,7 @@ static void get_populated_hooks(struct strbuf *hook_i=
-nfo, int nongit)
->  }
-> =20
->  static const char * const bugreport_usage[] =3D {
-> -	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format=
->]\n"
-> +	N_("git bugreport [(-o|--output-directory) <file>] [(-s|--suffix) <fo=
-rmat>]\n"
->  	   "              [--diagnose[=3D<mode>]"),
->  	NULL
->  };
-> diff --git a/builtin/diagnose.c b/builtin/diagnose.c
-> index 28c394a62a5..474de9ec647 100644
-> --- a/builtin/diagnose.c
-> +++ b/builtin/diagnose.c
-> @@ -3,7 +3,7 @@
->  #include "diagnose.h"
-> =20
->  static const char * const diagnose_usage[] =3D {
-> -	N_("git diagnose [-o|--output-directory <path>] [-s|--suffix <format>=
-]\n"
-> +	N_("git diagnose [(-o|--output-directory) <path>] [(-s|--suffix) <for=
-mat>]\n"
->  	   "             [--mode=3D<mode>]"),
->  	NULL
->  };
+Once I realize this is porcelain, I strongly agree with this.
+
+The TOCTOU might be resolved, perhaps outside the scope of this patch,
+warning the user or not allowing two concurrent editions.
+
+Maybe... :-) even I would dig deeper in the TOCTOU, avoiding the call
+to git_config_set if no change has been made to the branch description.
+
+Anyway, as it is, it's good, imo. Simple and resolves a confuse error
+removing it.  Nice.
+
+> The official stance is "if it hurts, do not do it then".  The side
+> discussion about TOCTOU was to see how much hurt we are making the
+> user responsible for, and explaining that it is not that much.
+> 
