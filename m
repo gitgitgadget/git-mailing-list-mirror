@@ -2,91 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFF0DC43219
-	for <git@archiver.kernel.org>; Fri, 30 Sep 2022 23:24:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46779C433F5
+	for <git@archiver.kernel.org>; Sat,  1 Oct 2022 01:13:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231358AbiI3XYC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Sep 2022 19:24:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47058 "EHLO
+        id S233067AbiJABNU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Sep 2022 21:13:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231686AbiI3XYB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Sep 2022 19:24:01 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91677138F28
-        for <git@vger.kernel.org>; Fri, 30 Sep 2022 16:24:00 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B2C31145D68;
-        Fri, 30 Sep 2022 19:23:59 -0400 (EDT)
+        with ESMTP id S232772AbiJABMv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Sep 2022 21:12:51 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66F92B7CD
+        for <git@vger.kernel.org>; Fri, 30 Sep 2022 18:09:05 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B93A715ED97;
+        Fri, 30 Sep 2022 21:09:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=NVcHe/wwiU9A
-        9i6yXFBjbujeeBVLMM9xu1DmOENlaUM=; b=Cd4vSa4Fj43MQP9yjnXKYCqVNwkS
-        KQ1ClC0BsW+GN10yHcwyfVEtMQ3Kn1zz7gAmWhT37h55z0BVXJxfQLIc0I4Ya7aT
-        jUWbJ0xWEzxBz+uh0FkrWpRwJ6b3Ru1aIClQlHyTXbriKxIdMxd8p2/gFWBJA/8g
-        169VIpDxlOZmv7g=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A92EC145D67;
-        Fri, 30 Sep 2022 19:23:59 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=783qU95wnumVeSw146w85hLjW
+        zR98WgJhf9UdTMjHeY=; b=x4hSQCwtFImsVkEgQ3jqjXj16zST+lNxNvGQtDy1+
+        Iz91h4S9XM12Ysu+7tkkmQHH4H45CCteWEeNML1B6dQ0eX6Hatyfp1wcx29V4ezW
+        EVzxEC+DR7wbdruGEScn/e2QJ5w07zksAoz/Dmw61of7mKvyU4Xljbri8+46oJwV
+        +w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD95215ED96;
+        Fri, 30 Sep 2022 21:09:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 177CF145D64;
-        Fri, 30 Sep 2022 19:23:59 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0066215ED95;
+        Fri, 30 Sep 2022 21:09:03 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com,
-        philipoakley@iee.email, johncai86@gmail.com
-Subject: Re: [PATCH v5 0/6] cat-file: add --batch-command remote-object-info
- command
-References: <20220502170904.2770649-1-calvinwan@google.com>
-        <20220728230210.2952731-1-calvinwan@google.com>
-Date:   Fri, 30 Sep 2022 16:23:58 -0700
-In-Reply-To: <20220728230210.2952731-1-calvinwan@google.com> (Calvin Wan's
-        message of "Thu, 28 Jul 2022 23:02:04 +0000")
-Message-ID: <xmqqedvs78fl.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 11/36] doc txt & -h consistency: fix incorrect
+ alternates syntax
+References: <cover-v2-00.35-00000000000-20220928T082458Z-avarab@gmail.com>
+        <cover-v3-00.36-00000000000-20220930T180414Z-avarab@gmail.com>
+        <patch-v3-11.36-7794c3d6ef5-20220930T180415Z-avarab@gmail.com>
+Date:   Fri, 30 Sep 2022 18:09:02 -0700
+Message-ID: <xmqqy1u05p01.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F607DBB2-4116-11ED-986C-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A40C60B2-4125-11ED-B43E-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan <calvinwan@google.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Sometimes it is useful to get information about an object without havin=
-g
-> to download it completely. The server logic has already been implemente=
-d
-> as =E2=80=9Ca2ba162cda (object-info: support for retrieving object info=
-,
-> 2021-04-20)=E2=80=9D. This patch implements the client option for it.
+> Fix the incorrect "[-o | --option <argument>]" syntax, which should be
+> "[(-o | --option) <argument>]", we were previously claiming that only
+> the long option accepted the "<argument>", which isn't what we meant.
 >
-> Add `--object-info` option to `cat-file --batch-command`. This option
-> allows the client to make an object-info command request to a server
-> that supports protocol v2. If the server is v2, but does not allow for
-> the object-info command request, the entire object is fetched and the
-> relevant object info is returned.
+> This syntax issue for "bugreport" originated in
+> 238b439d698 (bugreport: add tool to generate debugging info,
+> 2020-04-16), and for "diagnose" in 6783fd3cef0 (builtin/diagnose.c:
+> create 'git diagnose' builtin, 2022-08-12), which copied and adjusted
+> "bugreport" documentation and code.
 >
-> =3D=3D=3D Changes since v4 =3D=3D=3D
->  - Instead of making 2 rounds trips to determine whether the server can
->    handle the client object-info request, the server now advertises the
->    features it can send back so the client can immediately fallback to
->    fetch if any feature is not supported
->  - Fixed nits and clarified some documentation/commit messages
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
-> Helped-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  builtin/bugreport.c | 2 +-
+>  builtin/diagnose.c  | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 
-FWIW, this one seems to make t1006 fail under SANITIZE=3Daddress, i.e.
+I think we saw exactly the same pattern in an earlier step.  If the
+patches in this series are split along the type of fix, then these
+two and the other patch fall into the same category.  Another way to
+organize is to split per file boundary, but I think these two paths
+are fixed up for different problem in later steps.  I think split
+along the type of fix makes much more sense, if we can, than split
+per file, so I am almost OK with the current organization (probably
+with this squashed into that earlier step).
 
-    $ SANITIZE=3Daddress make test
-
-I thought it would be better to report this before you send out v6
-after the release.
-
-Thanks.
+> diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+> index faa268f3cfb..23170113cc8 100644
+> --- a/builtin/bugreport.c
+> +++ b/builtin/bugreport.c
+> @@ -60,7 +60,7 @@ static void get_populated_hooks(struct strbuf *hook_i=
+nfo, int nongit)
+>  }
+> =20
+>  static const char * const bugreport_usage[] =3D {
+> -	N_("git bugreport [-o|--output-directory <file>] [-s|--suffix <format=
+>]\n"
+> +	N_("git bugreport [(-o|--output-directory) <file>] [(-s|--suffix) <fo=
+rmat>]\n"
+>  	   "              [--diagnose[=3D<mode>]"),
+>  	NULL
+>  };
+> diff --git a/builtin/diagnose.c b/builtin/diagnose.c
+> index 28c394a62a5..474de9ec647 100644
+> --- a/builtin/diagnose.c
+> +++ b/builtin/diagnose.c
+> @@ -3,7 +3,7 @@
+>  #include "diagnose.h"
+> =20
+>  static const char * const diagnose_usage[] =3D {
+> -	N_("git diagnose [-o|--output-directory <path>] [-s|--suffix <format>=
+]\n"
+> +	N_("git diagnose [(-o|--output-directory) <path>] [(-s|--suffix) <for=
+mat>]\n"
+>  	   "             [--mode=3D<mode>]"),
+>  	NULL
+>  };
