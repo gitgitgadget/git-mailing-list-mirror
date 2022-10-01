@@ -2,78 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 984A8C433F5
-	for <git@archiver.kernel.org>; Sat,  1 Oct 2022 12:43:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6DC0C433FE
+	for <git@archiver.kernel.org>; Sat,  1 Oct 2022 16:31:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229504AbiJAMnf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Oct 2022 08:43:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60028 "EHLO
+        id S229727AbiJAQbR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Oct 2022 12:31:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbiJAMnd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Oct 2022 08:43:33 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79576D2D61
-        for <git@vger.kernel.org>; Sat,  1 Oct 2022 05:43:32 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id i6so6488400pfb.2
-        for <git@vger.kernel.org>; Sat, 01 Oct 2022 05:43:32 -0700 (PDT)
+        with ESMTP id S229681AbiJAQbN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Oct 2022 12:31:13 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C1D2E69A
+        for <git@vger.kernel.org>; Sat,  1 Oct 2022 09:31:09 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id bq9so11128660wrb.4
+        for <git@vger.kernel.org>; Sat, 01 Oct 2022 09:31:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date;
-        bh=yNRwBL4xp6qMEqyGKO1mB2xiZmWzItmaJSSizCwLI98=;
-        b=EConWNGFcj7q/9fXVfx0yB8HNk8gIqH8JgYzfBMqULOCXNSRKqm0v2OpmS4t9V//gN
-         SNKXFyctbFxP6pSJDbXW4bWpv3FOWj0TKFiGsB2t9JpoqOCHrEpPWKIDMvd8B5mLjEMQ
-         3wYo4EklGUn6OLKM9mRIqHQnovcjyHCbMC73mYecyJf9scqN0UEBHHwLQ0pyk8qVp37s
-         G8gmHdHHPTN6L17WbystAvx4qt1rTz5CpLoFjaZ4KCZQtbFOIFd3uc8GXhxV7shyya4t
-         6sbb8U8HpAXZff66T+l4jGjA2gmHG3obaNVeCoGKzxcqdhrIR8J+R486EZtJj6nYajmO
-         USaw==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date;
+        bh=bZF62pkAFiBq1mB6tq/5aYQ2LEK5CoIjHW7uFba7VjQ=;
+        b=FyliModkficTr+JpOzjDs/PCqsFDO6WQMjLa9w3vc6ajn1bOGOSBDMn11slG+kPMMG
+         Il0bntcWhvTmpx/wF6fXAU/+vvvMvC37kwg9T8ILAgRCXiAea8JbAEQK2nhVNDVGDNKW
+         xXHuzMpr8hbSxZhmTgbgecDFnG6cK9xTuNrSmXy4OBHKoPEu278RcjlNO1o48j49C4uI
+         VtlDzbey5SP+d5S0pKB51IhFbUelX7DxRPsynfm49zXUOLPsLy+ABwAwLDMfEwrkGDSR
+         VJLGo62/QQsciLl0HEACc/E9yatOpMfSWOXGrHwxZOFm/YwppAyIqqq4SF5LHn9pICIa
+         e5+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date;
-        bh=yNRwBL4xp6qMEqyGKO1mB2xiZmWzItmaJSSizCwLI98=;
-        b=VjeQF8poA7uMaW+RZY7NfGKwLr1nlaS255bzu9y1SaQRkLcn12lsYxZuVFqQbvFkGK
-         6RH+w5QUwW51ZwJmZBKi7T8cVfUpsRhE338sZe/7F/Y/YXJVud6y+DKIUIqfUe9QRS2U
-         gDwR3rwmjvuLaKuLE/839+ePN3KK+OPbxfN6Bc2LShLqJSiOJw2U6iOd8n9WUp5k/IPj
-         KIJekFlS5OGFtn0WDL+GQz0peE54rJ3hyVLGMqyktadCDtZykn7wSG7fjv1KhtaGanAz
-         fJMkHFZRj41yRtpPPNqnQU5Z8ifFdX1D1daw9AI4y5lekZx1tMj69oTnxM4HIeh9Ds2v
-         bQmQ==
-X-Gm-Message-State: ACrzQf3pa29Rn2OFxPsOf4c+bj7ATiB5i8+cnx/SrLq8LBX9Yk8C3mbr
-        XD9WKpDBClCxzRcqv4MXCXvrYlrGO35CZg==
-X-Google-Smtp-Source: AMsMyM4acrH3+JFbErW1joAulec0GyKejRYT0g7aqNntd4HpkshApl+3APQ7RmMJ2QeT0oODckRB8A==
-X-Received: by 2002:a63:2162:0:b0:43c:96b:e5a8 with SMTP id s34-20020a632162000000b0043c096be5a8mr11292719pgm.143.1664628211869;
-        Sat, 01 Oct 2022 05:43:31 -0700 (PDT)
-Received: from [192.168.43.80] (subs02-180-214-232-9.three.co.id. [180.214.232.9])
-        by smtp.gmail.com with ESMTPSA id ja4-20020a170902efc400b0016ed8af2ec0sm1652836plb.29.2022.10.01.05.43.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Oct 2022 05:43:31 -0700 (PDT)
-Message-ID: <f34912ab-5d1b-6dfb-e079-0e7b135ebe14@gmail.com>
-Date:   Sat, 1 Oct 2022 19:43:27 +0700
+        bh=bZF62pkAFiBq1mB6tq/5aYQ2LEK5CoIjHW7uFba7VjQ=;
+        b=WJZynK18z4rRA+zUrvWnPBIVLuSQclPv+2fGzFuEcs8V2UImZmIRrc2Kp1W4Zw/r3k
+         HsHe4HGuvax8Qk8946AYJBfzoeh7v1932Gmm3AVLP3yGT2vH0vrJLzDE+kzyuLXcgR5r
+         Y6k1dWlwSGOG/0vUP2lL+ibNwEHT+KCzdNhCfSvYZOWjJ9OP/P0qTAQQFejYI9XsTPVo
+         EH+3hD4cG4MWF8biEgmGOiyalws/GVsCXK8TW1foquMO7YPKkXeweAy+UxE+p4oI6I4o
+         IHfqb25jF7KnEs4Vq3IFrCqiRVMHr752lkjr9ACJvu/J48Umg6g+6At36rM2nbHSgpQL
+         b63Q==
+X-Gm-Message-State: ACrzQf3lHV4sphnmuo3+zt8Rc3MCimVFyAovRvv0D0VARAkynBoDf/nO
+        cZDGMUBCSx/XOW0CZCekjVY=
+X-Google-Smtp-Source: AMsMyM7k48d/eJ7MiVewTHVhvLGCU+wMhe2zTqOA/tkl3EC2/c7uX0vzZ8ZYXe03z0K1C+hGfaESJA==
+X-Received: by 2002:a5d:64c4:0:b0:228:e143:ddb8 with SMTP id f4-20020a5d64c4000000b00228e143ddb8mr8660573wri.148.1664641867646;
+        Sat, 01 Oct 2022 09:31:07 -0700 (PDT)
+Received: from localhost (94-21-37-194.pool.digikabel.hu. [94.21.37.194])
+        by smtp.gmail.com with ESMTPSA id c6-20020a5d4146000000b0022a403954c3sm5581746wrq.42.2022.10.01.09.31.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Oct 2022 09:31:07 -0700 (PDT)
+Date:   Sat, 1 Oct 2022 18:31:05 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] rebase --update-refs: smooth out some rough edges
+Message-ID: <20221001163105.GA7659@szeder.dev>
+References: <20220930140948.80367-1-szeder.dev@gmail.com>
+ <05c5076b-eb78-5381-4eba-863a84190755@github.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v2] branch: description for non-existent branch errors
-Content-Language: en-US
-To:     =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>,
-        git@vger.kernel.org
-References: <c333cc4b-12a1-82b6-0961-1c42080dad15@gmail.com>
- <930ff836-a5c4-0e85-517d-39645f00cd31@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <930ff836-a5c4-0e85-517d-39645f00cd31@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <05c5076b-eb78-5381-4eba-863a84190755@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/1/22 05:47, Rubén Justo wrote:
-> This commit makes the error descriptions for those branch operations
-> with unborn or non-existent branches, more informative.
-> 
+On Fri, Sep 30, 2022 at 01:29:58PM -0400, Derrick Stolee wrote:
+> On 9/30/2022 10:09 AM, SZEDER Gábor wrote:
+> > A couple of cleanups and fixes to a new 'git rebase --update-refs' feature
+> > introduced in the current release cycle.
 
-s/This commit makes/Make/
+> Junio: I don't think any of this needs to rush into v2.38.0, since
+> they are mostly cosmetic changes and helping users get out of bad
+> situations.
 
--- 
-An old man doll... just what I always wanted! - Clara
+I do think that we shouldn't have a release where an 'update-ref'
+instruction can update anything outside the refs/ hierarchy, so we
+don't have to worry about potential backwards incompatibility when we
+restrict it later or add DWIMery.
+
+
