@@ -2,82 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6DC0C433FE
-	for <git@archiver.kernel.org>; Sat,  1 Oct 2022 16:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22D0CC43219
+	for <git@archiver.kernel.org>; Sat,  1 Oct 2022 16:54:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229727AbiJAQbR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Oct 2022 12:31:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33972 "EHLO
+        id S229612AbiJAQyG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Oct 2022 12:54:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbiJAQbN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Oct 2022 12:31:13 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C1D2E69A
-        for <git@vger.kernel.org>; Sat,  1 Oct 2022 09:31:09 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id bq9so11128660wrb.4
-        for <git@vger.kernel.org>; Sat, 01 Oct 2022 09:31:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date;
-        bh=bZF62pkAFiBq1mB6tq/5aYQ2LEK5CoIjHW7uFba7VjQ=;
-        b=FyliModkficTr+JpOzjDs/PCqsFDO6WQMjLa9w3vc6ajn1bOGOSBDMn11slG+kPMMG
-         Il0bntcWhvTmpx/wF6fXAU/+vvvMvC37kwg9T8ILAgRCXiAea8JbAEQK2nhVNDVGDNKW
-         xXHuzMpr8hbSxZhmTgbgecDFnG6cK9xTuNrSmXy4OBHKoPEu278RcjlNO1o48j49C4uI
-         VtlDzbey5SP+d5S0pKB51IhFbUelX7DxRPsynfm49zXUOLPsLy+ABwAwLDMfEwrkGDSR
-         VJLGo62/QQsciLl0HEACc/E9yatOpMfSWOXGrHwxZOFm/YwppAyIqqq4SF5LHn9pICIa
-         e5+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=bZF62pkAFiBq1mB6tq/5aYQ2LEK5CoIjHW7uFba7VjQ=;
-        b=WJZynK18z4rRA+zUrvWnPBIVLuSQclPv+2fGzFuEcs8V2UImZmIRrc2Kp1W4Zw/r3k
-         HsHe4HGuvax8Qk8946AYJBfzoeh7v1932Gmm3AVLP3yGT2vH0vrJLzDE+kzyuLXcgR5r
-         Y6k1dWlwSGOG/0vUP2lL+ibNwEHT+KCzdNhCfSvYZOWjJ9OP/P0qTAQQFejYI9XsTPVo
-         EH+3hD4cG4MWF8biEgmGOiyalws/GVsCXK8TW1foquMO7YPKkXeweAy+UxE+p4oI6I4o
-         IHfqb25jF7KnEs4Vq3IFrCqiRVMHr752lkjr9ACJvu/J48Umg6g+6At36rM2nbHSgpQL
-         b63Q==
-X-Gm-Message-State: ACrzQf3lHV4sphnmuo3+zt8Rc3MCimVFyAovRvv0D0VARAkynBoDf/nO
-        cZDGMUBCSx/XOW0CZCekjVY=
-X-Google-Smtp-Source: AMsMyM7k48d/eJ7MiVewTHVhvLGCU+wMhe2zTqOA/tkl3EC2/c7uX0vzZ8ZYXe03z0K1C+hGfaESJA==
-X-Received: by 2002:a5d:64c4:0:b0:228:e143:ddb8 with SMTP id f4-20020a5d64c4000000b00228e143ddb8mr8660573wri.148.1664641867646;
-        Sat, 01 Oct 2022 09:31:07 -0700 (PDT)
-Received: from localhost (94-21-37-194.pool.digikabel.hu. [94.21.37.194])
-        by smtp.gmail.com with ESMTPSA id c6-20020a5d4146000000b0022a403954c3sm5581746wrq.42.2022.10.01.09.31.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Oct 2022 09:31:07 -0700 (PDT)
-Date:   Sat, 1 Oct 2022 18:31:05 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S229550AbiJAQxw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Oct 2022 12:53:52 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02AD5111A
+        for <git@vger.kernel.org>; Sat,  1 Oct 2022 09:53:50 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3D7A143EAD;
+        Sat,  1 Oct 2022 12:53:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=+yhcbpxgZi5c
+        /RhYubNp/axm5CDc6VRSjWy/hwWxzVs=; b=DmpyYnSq/NarFpEgIyR775q9z7Ur
+        sAj4lqJ9zrCYY2k8oN6fnPUf6uDzSy4RuEcBzdTGmZOVoRJCZzjVSSe8KURaC/zR
+        jKFiPnVuUHiAK3+E44dMOLK8lwEoiWlnc0l6X2vHc/Gb0FzjxSfxncKTcI3CX71W
+        aaU38YDfcvcqEE4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EBB3F143EAC;
+        Sat,  1 Oct 2022 12:53:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 61BFF143EAB;
+        Sat,  1 Oct 2022 12:53:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
 Subject: Re: [PATCH 0/6] rebase --update-refs: smooth out some rough edges
-Message-ID: <20221001163105.GA7659@szeder.dev>
 References: <20220930140948.80367-1-szeder.dev@gmail.com>
- <05c5076b-eb78-5381-4eba-863a84190755@github.com>
+        <05c5076b-eb78-5381-4eba-863a84190755@github.com>
+        <20221001163105.GA7659@szeder.dev>
+Date:   Sat, 01 Oct 2022 09:53:48 -0700
+In-Reply-To: <20221001163105.GA7659@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Sat, 1 Oct 2022 18:31:05 +0200")
+Message-ID: <xmqqsfk75vtv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <05c5076b-eb78-5381-4eba-863a84190755@github.com>
+X-Pobox-Relay-ID: 9F2D1DB4-41A9-11ED-AE97-307A8E0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 30, 2022 at 01:29:58PM -0400, Derrick Stolee wrote:
-> On 9/30/2022 10:09 AM, SZEDER Gábor wrote:
-> > A couple of cleanups and fixes to a new 'git rebase --update-refs' feature
-> > introduced in the current release cycle.
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-> Junio: I don't think any of this needs to rush into v2.38.0, since
-> they are mostly cosmetic changes and helping users get out of bad
-> situations.
+> On Fri, Sep 30, 2022 at 01:29:58PM -0400, Derrick Stolee wrote:
+>> On 9/30/2022 10:09 AM, SZEDER G=C3=A1bor wrote:
+>> > A couple of cleanups and fixes to a new 'git rebase --update-refs' f=
+eature
+>> > introduced in the current release cycle.
+>
+>> Junio: I don't think any of this needs to rush into v2.38.0, since
+>> they are mostly cosmetic changes and helping users get out of bad
+>> situations.
+>
+> I do think that we shouldn't have a release where an 'update-ref'
+> instruction can update anything outside the refs/ hierarchy, so we
+> don't have to worry about potential backwards incompatibility when we
+> restrict it later or add DWIMery.
+The thing is, the changes we did relative to v2.37 in order to have
+the update-refs feature had some time to cook to show to those who
+use pre-release versions that even with these changes, the other
+parts of the system, especially "rebase", weren't negatively
+affected with unintended bugs, at least in the use cases they have.
+This 6-patch series right off the press that are _intended_ to touch
+only the update-refs feature had none.  It simply is too late in the
+cycle.
 
-I do think that we shouldn't have a release where an 'update-ref'
-instruction can update anything outside the refs/ hierarchy, so we
-don't have to worry about potential backwards incompatibility when we
-restrict it later or add DWIMery.
+So I doubt that it is safer to ship the release with them than
+without.  They could be in the zero-th batch in the next cycle,
+though.
 
-
+Thanks.
