@@ -2,93 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBEE9C433F5
-	for <git@archiver.kernel.org>; Sat,  1 Oct 2022 09:15:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00C91C433F5
+	for <git@archiver.kernel.org>; Sat,  1 Oct 2022 10:23:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229530AbiJAJP3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Oct 2022 05:15:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56338 "EHLO
+        id S229573AbiJAKXy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Oct 2022 06:23:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbiJAJPW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Oct 2022 05:15:22 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D247F47B3
-        for <git@vger.kernel.org>; Sat,  1 Oct 2022 02:15:19 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id j7so4773042wrr.3
-        for <git@vger.kernel.org>; Sat, 01 Oct 2022 02:15:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date;
-        bh=q/+DGIwOfg5IXRrUPEkEomIr8AtZGjwTEaaXiND7APE=;
-        b=H8cued2ccwcJs0nJJr9tvWQVk34hA2yDmjL9w3FMfFpM5LrbW0VxT1t9SxIAir2R+T
-         a6Bdz2V22Z9pMzCdLktuMIRfbG26Za+8c8nrLN4nIOiqzHSNeXs24LwTW/fg1U+CynmS
-         usjwPRGOfGhbS/cax5RF+vanlhjeTJUn2tE1/OKVaX0nP304fzphN/SMNAi4Igb0Kn4Q
-         dyM3f1q4/Tc9Vz5RTprex30RQUGbHK/UVIxBDIkuIdYhVKeCPz4kqUYSbfZXawnv1Lkz
-         yOQMhfY9jTtEYhSUz18KaCh+EqpBGLuQAsn7nWvJwH21/oCm71PM8McI0DWydUfm0/Bo
-         1Pew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=q/+DGIwOfg5IXRrUPEkEomIr8AtZGjwTEaaXiND7APE=;
-        b=sXo2mYuGg+wwVyNzWTCUeQyWbocID85ehEOIpqaaRsw6RIyd1LaKyL/jvpE8FS83eh
-         bQkqYzRSoINDnFRjC1rfvH3XYqTU+kj4PPd6RtX9ocRCrLKjC+fWfBayLesjmPnOOS+E
-         tMwkAuJq9r4QwC2fctKRG5KHh51Zptrhc0UPeE9U2KnTRmrAB3pGH5RtL0pioK2YZnNy
-         9rgn+YYA5aHzFEpPq9ZwJtXWsD6vNKFdxS6Okk4L5Jcw+eGv827CpGZf5EkUU5F3lynP
-         ixIGTdrh369OjeFH4IY1bFAhPepGAoHzwfGhR+1kuJVEaLn589hdwVsqIefFHxWCros+
-         BhLQ==
-X-Gm-Message-State: ACrzQf1KT2lNGNXvDdz+hTm4f6arOMOycY9mOTLrRIfjYlFCKHQ1wzje
-        g+lfvefRCRfss8CPvnkaCtc7njOearQ=
-X-Google-Smtp-Source: AMsMyM7pGPdfN2Vv31w9BI8uiWn/U0mjeDHUdNapt25lZfe0wCavTaSh7QGfs8ZMm+YEhqFI6+jnog==
-X-Received: by 2002:a5d:47c3:0:b0:22b:ac9:92e with SMTP id o3-20020a5d47c3000000b0022b0ac9092emr8566070wrc.376.1664615717641;
-        Sat, 01 Oct 2022 02:15:17 -0700 (PDT)
-Received: from [192.168.2.52] (5.83-213-116.dynamic.clientes.euskaltel.es. [83.213.116.5])
-        by smtp.gmail.com with ESMTPSA id z2-20020a05600c0a0200b003b48dac344esm10398513wmp.43.2022.10.01.02.15.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Oct 2022 02:15:17 -0700 (PDT)
-Subject: Re: [PATCH] branch: do not fail a no-op --edit-desc
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <xmqqczbftina.fsf@gitster.g>
- <ba8a503b-76e2-5de9-1082-3b4c6ecd0cc3@gmail.com> <xmqq7d1lom12.fsf@gitster.g>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <c354947a-06d6-3852-6afe-bd560dd34d6e@gmail.com>
-Date:   Sat, 1 Oct 2022 11:15:14 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        with ESMTP id S229567AbiJAKXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Oct 2022 06:23:53 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0808314250F
+        for <git@vger.kernel.org>; Sat,  1 Oct 2022 03:23:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1664619823; bh=mMaQWAXN2reZizCn/5XRKnRk2r4L9QzMJ+4HlcgcI5A=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=DxjY9q4vsQWC73DRSHOhdRdXrpVrM2aPftFIP1eJVuMzQNaa7vt7KdRFypxE14WwK
+         HeZF1WrIm9K8dPN/kWDHWH24o5YggWMduvv0oIJWYP28Ay9JToJM6VkOrFnpZu2og4
+         x7JSR5Ms4dzl1Ry8q1zyV6OZfl0H5zJ3o/ie1qLLiDaSzPBuppTlKo/7VjSk3JUAfi
+         cH/P0Gbhp0AzANQww54HjXN12RlSyUfVSqEgWwC7tUZVXHgkehQJOY0J7RplBRFOqd
+         ZLs3rMmoa0Zri8J6jRI+HZG8G/LufbWqB7C3ODKwI+K8aoKwtpoTWubnyhPT1e5efR
+         2/D7L2oHpNmcg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.26.45]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MFJjP-1oPTUc24wj-00FS7W; Sat, 01
+ Oct 2022 12:23:43 +0200
+Message-ID: <16c49d20-cafc-4b48-3c6b-e11c74c29abb@web.de>
+Date:   Sat, 1 Oct 2022 12:23:42 +0200
 MIME-Version: 1.0
-In-Reply-To: <xmqq7d1lom12.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.3.1
+Subject: [PATCH v3 0/3] diff: support ^! for merges
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Tim Jaacks <tim.jaacks@garz-fricke.com>,
+        Chris Torek <chris.torek@gmail.com>
+References: <ba6eea28-fb3a-b376-2529-351727c02f1a@web.de>
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <ba6eea28-fb3a-b376-2529-351727c02f1a@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:PXV1xaBcW3ZCBK7ixSNcjfkxRtZkXkc3xjtIpTqSybW6alFNCMh
+ N/onV5QhDHKHJSeFBm1EVoIiNnklqLJ4KYEi3lxuj8hkrigWLLx+aYhmtxq0kP8a2x2OnTH
+ VS7Gw1KT0+MQsntiCRw5PCRw90izqgyS8mvAr0PGjXBPuswWd2Ls/4djA80QWkBiT2kDJhN
+ QLylwHvGYa6LB+5N5vS+w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jaKuCu70gVo=:1QGnBx/mios6mH7A3eIapK
+ S1K/FucWr4XkigXuHxCilM1fVbibzRnNShNIcKXGtN9k/5MYbdwGWHW1LTCklpG2A1YV6UTFl
+ ulQeh+NMTOIQ/vCbRS2RKrLJ1iQ01d/Iy70YJ7zixmJQQnOq7gYGIJFUju/+GfBybPoLcPZZu
+ DiaggMZ7+d/PeQWJ6lQK1ZVvBkox0lZUqLP4vSUrd+xUyIT/IXq3YcDIfF47P4NPoEPG69Y3M
+ h7PwH5LAU61nf9cJL/SSrMEGtpiZQ1y7l35C3vwKirtmM5zjutPEMlLvYKFpLpA1dWOKzyYfB
+ w9htbzaId545lR+dk8T5p15pNJz8s9c7qrvjnnFtuLpGpWoaYdJyuqeT/d34pHfiq2qItucjY
+ z4G9KcJU49QwQjq583T9ashhvUtxvqT2MVOQz57fIZutVPQIRghjI8CNxfE1zMn4mh1GHSm59
+ MYRLQLVfdxAdwhz1o9XUXTTBxLwhRolCzpnpX6FbHYfihWe/lkyVyvIPzXW2BNxY+yIz75xbE
+ AVUhDFG/WMdd1jsZU7uazxZxclxw0a5doBk0SyNYOBB1Nz7B/7CmKPHRHF+n6Yt2zdTFhQ7h9
+ J7MA8KYeHo+BJftL/pkjVvYKbfP18c5jLpKR8yt6O9AAS3CVNozhpyNpqv/lg8rVfmOqh4dsb
+ 2tPKd8BaWDTcyYzG0Zmz7NcJICpnTZiIlAMFPNwZ9lwF8Rhd8QhKLmoSpsKo4gszSDd7zM1uK
+ WETiKGKdiGHPc8DA5mQOe7pAEOT7XPkuPauPhrqQKeMV8NenXxSW1SmnI216AUK6jAJiMlMF4
+ 3bEjoTUv636w4yTqguDOAYZzhvQRRnjDOV1OJemn/hn/90QqimSieL8mrtjw9HHWS0ujsuOgF
+ N7BzGiZC0JkDt2xFIawhNk6imEGpM52Qt6dMw6c8MRnsHIkoAUcZL4L+Fad0YYRpdCLKDcMEm
+ CfGcJdLi5Xk9LVMwmbTogQ3sENfi8oeTwDAEpxTM23K7UVerGuv5qCm+rtXRSxotaT1nFg3/+
+ IiU7+uZeC6/VPUOOljz6LobnwWHVVRIPdmEa1Ju/i3LNkAg+mrtomKZmu2NPzq6VGz5tO8fM+
+ JSPHpEg0xwvr/SN2nWIqxTr8sF8+LLRAOx35FR9ozkq8gDM+TdMfOrFwfv1RNGXH0HXt1Be7j
+ JSt6Y=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let me add, to my other reply to this..
+Changes between v1 [1] and v2 [2]:
+- Single patch, local fix, leave revision.c alone.
 
-On 30/9/22 0:26, Junio C Hamano wrote:
+Changes since v2 [2]:
+- Patch 1 (unrelated cleanup) is back, requested by Chris.
+- New patch 2 to remove a broken promise from documentation.
+- Move the first_non_parent tracking code to after add_object_array()
+  and add a comment, both to (hopefully) improve readability.
+- Mention ^! in the documentation of git diff.
 
->> But.. do we want to implement this this way? Maybe we will have to
->> implement on purpose this feature in some future refactorization?
-> 
-> Absolutely.  It is simpler and there is not much downside.
+  revision: use strtol_i() for exclude_parent
+  revisions.txt: unspecify order of resolved parts of ^!
+  diff: support ^! for merges
 
-Once I realize this is porcelain, I strongly agree with this.
+[1] https://lore.kernel.org/git/ba6eea28-fb3a-b376-2529-351727c02f1a@web.d=
+e/
+[2] https://lore.kernel.org/git/29d50baa-1923-38e1-6ecb-73840376d28e@web.d=
+e/
 
-The TOCTOU might be resolved, perhaps outside the scope of this patch,
-warning the user or not allowing two concurrent editions.
+ Documentation/git-diff.txt  |  8 ++++----
+ Documentation/revisions.txt |  2 +-
+ builtin/diff.c              | 23 ++++++++++++++++++-----
+ revision.c                  |  5 ++---
+ t/t4038-diff-combined.sh    | 10 ++++++++++
+ 5 files changed, 35 insertions(+), 13 deletions(-)
 
-Maybe... :-) even I would dig deeper in the TOCTOU, avoiding the call
-to git_config_set if no change has been made to the branch description.
-
-Anyway, as it is, it's good, imo. Simple and resolves a confuse error
-removing it.  Nice.
-
-> The official stance is "if it hurts, do not do it then".  The side
-> discussion about TOCTOU was to see how much hurt we are making the
-> user responsible for, and explaining that it is not that much.
-> 
+=2D-
+2.37.3
