@@ -2,89 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAD76C433FE
-	for <git@archiver.kernel.org>; Sun,  2 Oct 2022 19:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1A0EC433FE
+	for <git@archiver.kernel.org>; Sun,  2 Oct 2022 21:28:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230082AbiJBTLV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Oct 2022 15:11:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60350 "EHLO
+        id S229516AbiJBV2c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Oct 2022 17:28:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbiJBTLT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Oct 2022 15:11:19 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361EF3A483
-        for <git@vger.kernel.org>; Sun,  2 Oct 2022 12:11:19 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 7B98E5A0E6;
-        Sun,  2 Oct 2022 19:11:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1664737878;
-        bh=bBs/xGmvtkBTySO3wbiCGDXRU7mw7sZxP7CDdc+FGek=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=wmGNsv3Gaceis+E640R6UTA+MbNcKpT3okTw0iTjT6eBFCL5PBC6OclA+D2Pl7qOI
-         aTc3Xq+EvHCdkDvfWx6WS2ZTsjp5IU9hhav8cxwEpp6M6AQTujsRwsL5X9T2QCCZFH
-         vex1exxPGPxH18U9cQXE2CC1+/D5e3TZnFN5dZafEuMlwapDQuFc/NJ/Ur5p0Sc5Ph
-         LPzaPLXpsluJKAXNlI0FeqyHG2/DLZCwOO9XEl/LFX3TlcUg0nv1hr/tYLW8mo+tJk
-         2eLEEbmq2rW3N34xq059ATmMOzLiNOSjwzGDjlw2pkw1bEseGeNlvvN68zXGdj/0PR
-         Dv5DGTaWbaCgpX97XF33sDBdalFc9Xi+eWbBw2fDJIlpCLIeqvWkAEvu+ipGlqNv1U
-         QwnVgNpeLts2KgJ+EwAupQnF4PEZMZfcHiK4KM20IF4tbsqx7kf7bsRUI9Tj7UIEtc
-         JpYNpbi4MUS+BUL7EFBQmZDlh9nbgkG8+yW6fIV75hh6sOctj+Q
-Date:   Sun, 2 Oct 2022 19:11:17 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jouke Witteveen <j.witteveen@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] send-email docs: Remove mention of discontinued gmail
- feature
-Message-ID: <YzniVamA97XuwAPr@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jouke Witteveen <j.witteveen@gmail.com>, git@vger.kernel.org
-References: <20221001104609.18453-1-j.witteveen@gmail.com>
+        with ESMTP id S229518AbiJBV2a (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Oct 2022 17:28:30 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D50D367BC
+        for <git@vger.kernel.org>; Sun,  2 Oct 2022 14:28:30 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id e18so5941889wmq.3
+        for <git@vger.kernel.org>; Sun, 02 Oct 2022 14:28:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject:from:to:cc
+         :subject:date;
+        bh=jlQR3SAHRfdn0DZED1rBcJS0QhP/bqt++3XlNTL4p2w=;
+        b=VSuZMPfserYYh6nvEBuxFNacw6eFZPSRx1jM5P6oLvRyVZij/hlbR0+miTZ9Iqtgqg
+         tYjWvSPpPyTjVCh7m5mcP0ysrohRkgcm+At1TXldhq3i3JiCdeGxgz3iIytd+DfFxFs1
+         KDBuc5sIF4Od790m06MCU21FBmVkAwCczVPUQ9ZhLDl219mu2CRWeQBZrKb9WpAbBwf+
+         THndV4uripalgBx3paqhQxw4qRlcVWOcC63m9NXeMpXxp5rzx64kHHPXf4t/C8nlJHVH
+         n4Ex4OWJh2apZRcl/3Plyn8zCQoOF4etG/JqIoVOkYs3XQTRO8b84j7uviI5P3E2OGWh
+         eDlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=jlQR3SAHRfdn0DZED1rBcJS0QhP/bqt++3XlNTL4p2w=;
+        b=rbig89Q4ZmMu0skwLraVZbB+OEYWbtDoQieSaowdDm8PKFbCTlsT+YdpdaQkkJEDpB
+         1tAunFcaB0cVW7g6FIlmByefA1rYcoq6YEryMgrS4r2XSPxwKp256BgnZAXbLwM0XWtt
+         gzySwokbO+m1yUmNdWAXsab+3cLiMDd6hnM1FuM/I2NRe9C4tOvEWYqsM2CpOvWh1tk6
+         9ntFiECRR3JSIIoL1bzQIF6BzAopBbcpas7KEvh8qnh2Zm8QDNfEkj89xTGfuM+FmoEb
+         vNbFbQT3dQZvZ6F/lR+aF52mKE6tFBPbwMSREeVp2xAdxaBfaAlsciuJY6wpwCUpyx+s
+         /mow==
+X-Gm-Message-State: ACrzQf2hj6Z3/Jd94sjtRsSI7K1jS4YuO90dl9hJKma5kicMF6ZpwRvM
+        byxNxlGkMPO7Eh2YnwTJ9U01stBLqmY=
+X-Google-Smtp-Source: AMsMyM4JWsBbocslIfk6lQIWN3fcH5HhiCuDJVZOWsqSGl9PHWYI2UtJKzssePsRXZQ2T++N/+czyA==
+X-Received: by 2002:a05:600c:1c8e:b0:3b4:9247:7ecc with SMTP id k14-20020a05600c1c8e00b003b492477eccmr5176116wms.40.1664746108514;
+        Sun, 02 Oct 2022 14:28:28 -0700 (PDT)
+Received: from [192.168.2.52] (5.83-213-116.dynamic.clientes.euskaltel.es. [83.213.116.5])
+        by smtp.gmail.com with ESMTPSA id l9-20020a056000022900b0022b315b4649sm7889062wrz.26.2022.10.02.14.28.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 02 Oct 2022 14:28:28 -0700 (PDT)
+Subject: Re: [PATCH v2] branch: description for non-existent branch errors
+To:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
+References: <c333cc4b-12a1-82b6-0961-1c42080dad15@gmail.com>
+ <930ff836-a5c4-0e85-517d-39645f00cd31@gmail.com>
+ <f34912ab-5d1b-6dfb-e079-0e7b135ebe14@gmail.com>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <a1cddefd-d555-05a0-a817-c8b10254fd9f@gmail.com>
+Date:   Sun, 2 Oct 2022 23:28:27 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="BVlt0OU5KLML3XQy"
-Content-Disposition: inline
-In-Reply-To: <20221001104609.18453-1-j.witteveen@gmail.com>
-User-Agent: Mutt/2.2.7 (2022-08-07)
+In-Reply-To: <f34912ab-5d1b-6dfb-e079-0e7b135ebe14@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 1/10/22 14:43, Bagas Sanjaya wrote:
+> On 10/1/22 05:47, Rubén Justo wrote:
+>> This commit makes the error descriptions for those branch operations
+>> with unborn or non-existent branches, more informative.
+>>
+> 
+> s/This commit makes/Make/
+> 
 
---BVlt0OU5KLML3XQy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2022-10-01 at 10:46:09, Jouke Witteveen wrote:
-> Support for "less secure apps" ended May 30, 2022.
->=20
-> This effectively reverts 155067a (git-send-email.txt: mention less secure
-> app access with Gmail, 2021-01-08).
-
-This seems reasonable and correct.  I remember reading that Google will
-likely require 2FA for all users in the future, so at some point, we may
-end up removing the "If you have multi-factor authentication=E2=80=A6" clau=
-se as
-well.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---BVlt0OU5KLML3XQy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.39 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYzniVQAKCRB8DEliiIei
-gSzIAQCm5PTMS8fdczak2dWkGDcV70SP2Ksn/jqOsbQmt3g3NwD/ZCBOqh2Ru1yD
-yeLnXCK9ipL+p+I91pegg/qhfGKnUgs=
-=+54v
------END PGP SIGNATURE-----
-
---BVlt0OU5KLML3XQy--
+Thanks
