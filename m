@@ -2,31 +2,30 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DAA4C433F5
-	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 21:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 884A7C433F5
+	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 21:43:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229479AbiJCVit (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Oct 2022 17:38:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43388 "EHLO
+        id S229535AbiJCVnA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Oct 2022 17:43:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229998AbiJCViP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2022 17:38:15 -0400
-X-Greylist: delayed 914 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 03 Oct 2022 14:37:04 PDT
+        with ESMTP id S229514AbiJCVm7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2022 17:42:59 -0400
 Received: from cloudinwales.com (unknown [IPv6:2a01:4f9:2a:f94::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1532D26F3
-        for <git@vger.kernel.org>; Mon,  3 Oct 2022 14:37:03 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CC10140D8
+        for <git@vger.kernel.org>; Mon,  3 Oct 2022 14:42:57 -0700 (PDT)
 Received: by cloudinwales.com (Postfix, from userid 10014)
-        id 9978A3CC178E; Mon,  3 Oct 2022 22:30:04 +0200 (CEST)
+        id 5EC543CC0483; Mon,  3 Oct 2022 22:35:00 +0200 (CEST)
 To:     git@vger.kernel.org
 Subject: Special Offer @ 5% Fixed Interest Rate*
 X-PHP-Originating-Script: 10014:rnl1OKZ2taB.php
-Date:   Mon, 3 Oct 2022 20:30:04 +0000
+Date:   Mon, 3 Oct 2022 20:34:59 +0000
 From:   RCS Finance <rcs@rcsloans.co.za>
 Reply-To: info@rcsonline.co.za
-Message-ID: <9aa79606456f29fd0d1786bb84681a57@www.clarendon-homes.co.uk>
+Message-ID: <975e85b601a42a947379f26a5595a8af@www.clarendon-homes.co.uk>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
-        boundary="b1_9aa79606456f29fd0d1786bb84681a57"
+        boundary="b1_975e85b601a42a947379f26a5595a8af"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -34,7 +33,7 @@ X-Mailing-List: git@vger.kernel.org
 
 This is a multi-part message in MIME format.
 
---b1_9aa79606456f29fd0d1786bb84681a57
+--b1_975e85b601a42a947379f26a5595a8af
 Content-Type: text/plain; charset=us-ascii
 
 To Whom It May Concern:
@@ -49,7 +48,7 @@ We offer Personal Loans, Business Loans, Home Loans and Debt Consolidation loans
 RCS GROUP
 
 
---b1_9aa79606456f29fd0d1786bb84681a57
+--b1_975e85b601a42a947379f26a5595a8af
 Content-Type: application/octet-stream; name="RCS_FINANCE 5% (fixed).pdf"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="RCS_FINANCE 5% (fixed).pdf"
@@ -2537,5 +2536,5 @@ QUY2Q0MwN0U2Q0VDQ0I0MT48N0NDRkQwQkUzNTk5MTU0QkFGNkNDMDdFNkNFQ0NCNDE+XSAvUHJl
 diAxMzM5MDgvWFJlZlN0bSAxMzI5NDc+Pg0Kc3RhcnR4cmVmDQoxNDEyMjgNCiUlRU9G
 
 
---b1_9aa79606456f29fd0d1786bb84681a57--
+--b1_975e85b601a42a947379f26a5595a8af--
 
