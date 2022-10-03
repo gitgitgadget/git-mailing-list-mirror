@@ -2,107 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92CE3C433F5
-	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 15:28:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8A89C433FE
+	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 15:44:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230154AbiJCP2X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Oct 2022 11:28:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53354 "EHLO
+        id S229548AbiJCPoA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Oct 2022 11:44:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230149AbiJCP2U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2022 11:28:20 -0400
-Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E9262716D
-        for <git@vger.kernel.org>; Mon,  3 Oct 2022 08:28:19 -0700 (PDT)
-Received: by mail-oo1-xc2b.google.com with SMTP id z9-20020a4a4909000000b0047651b95fbdso6961459ooa.5
-        for <git@vger.kernel.org>; Mon, 03 Oct 2022 08:28:19 -0700 (PDT)
+        with ESMTP id S229451AbiJCPn7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2022 11:43:59 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A8701C43F
+        for <git@vger.kernel.org>; Mon,  3 Oct 2022 08:43:58 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id b7so9736910wrq.9
+        for <git@vger.kernel.org>; Mon, 03 Oct 2022 08:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date;
-        bh=tE+fGYzUjruqwKpdBvGrlDefOADj6Q/h8LUqhA+UThU=;
-        b=quF625fYBEWCLEkCglr1Q1QXCJwnW9SZ/auw1B6ClEoj5KJOryCsMTwPHrTHzqBefP
-         UE21NBMnKA2PtMGhibEYmeUvNwYvibTOid7Sd4iCd6kVZEvOkWo8zfXLyjayyS3z8HEl
-         fviitEyPZy3Z/h6wu+r2VITjOSRIcD1GgVQQrcNAK3dT95HhAq3vNyA2VcaDbgPIiidx
-         cJcB7WB9r8Bqa5SuwreB6FOoJSddAPD2uhKCMo52ygar8n7BRLxJbZmhRTCNrPT50xBH
-         oEPUCQm7fLBchbYZKO3Vk/kFKliiVsC8LY4vAJnRJyNFLXQSyOgP4D/56SxSAt6P8QDc
-         qLsQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=J0kVaDldsTuCM+fkd1xAO3x+W+toLSQBbFVuyeXXlS4=;
+        b=SWaZLaiOc3P9ZCtVPpgvLEZtnjOvejzwjsJ9NfwDg7ks5d7fqy9KOfDHPFIOljM/bG
+         w6nK120QxliV2VIHrELg1EBlCvGDGP27EyTZ7c15zAuJiFUc+pv0Xe92re1znnr6Fm/a
+         rAQ0w6/F1JiZbZKx2SpSTi5wnJ6K1LAPzPRszCHvLfm4B8e1o46w+NViRlIOR9uKaYFX
+         fNhqXHDPFGFEGM1ZhVFj6liJqJZnME8xC5gFK7AjlsfEt11AR28mUp+ydPwDoNSHUmMm
+         WhbyoN7AABYmLQnBYA4+wu9BGXdH6xHf4ZtnLL/oyxJlJp8dHOHZ5PGvnWYnGoBeJihi
+         cOfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=tE+fGYzUjruqwKpdBvGrlDefOADj6Q/h8LUqhA+UThU=;
-        b=1/+jYv/mlWhBKTc5mAarxIj9xIJcfk1AvqOyZzvstiLpR0XsFMeECpviKCnlh/5G9h
-         VnJf08Eb+cVSd2rlyOSqbpcUw4ze+M36nFerBsh2N2I6qaDvIKv6mDRyn2RjK8ZUNZ2q
-         fvuls0dizF2U0yQ/k2KLlMi5uApVfPIikOPATReAAK9zwbCKYH/qznv458Pk4ahyHLGL
-         b8TFc/bEucbLJCdeDKPX4iOACbMzXeM8ZjUghoLrkv1MBjOPmH+T9gpuKwRW1QBp4PQ+
-         sJBUwO3uUJrW+7V5kHcke5Wm/hAxZkWRJFnhzWIS+AnfYRHCpuxtKxVMfiL6fcAcHWPG
-         ELoA==
-X-Gm-Message-State: ACrzQf05263H/l1FB/YlefH2p1ICkjREgVJGIC29QkaitrKTT6DRGQvp
-        RFTdCXx87Xn3jjPgolxiFmF4FlT7uO4OrRua0KyhlQkc4X5/wA==
-X-Google-Smtp-Source: AMsMyM4Ff65yfL7UMlcq4vb5lLzwZCUAui6fD4Iid2ddzLy8jIinM5mAPTUzucJP5eRsQ1OlyFvWg3ufUYydKfc8TR4=
-X-Received: by 2002:a05:6830:610b:b0:65b:eb36:6336 with SMTP id
- ca11-20020a056830610b00b0065beb366336mr8031413otb.131.1664810898123; Mon, 03
- Oct 2022 08:28:18 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=J0kVaDldsTuCM+fkd1xAO3x+W+toLSQBbFVuyeXXlS4=;
+        b=WZ0sq+lDIiupzFrM7KgHK3tTS4l/Xp9zf3QxhVrlrbmjNwJlLE63MI/Nj1FThpxEQt
+         dQhqgFETJNBMrLW+Zsq+kmrtcck8o9kDIwT9EOnDdWPuA7YJCm3GYSl2OFlm/5v0i6Gk
+         FfpDIksZvrzkHNxHLdCTDrPiJBsNrZBG0gQ5De6RA3ClBq8SCyvZWmp+Tj88h7c462ul
+         kJq3ahYLayNiMkJ7v/e19LhHnpuzYf76C1UFF7Pv8QRj9khUK5FHAYKiYFcIWtFgHnrM
+         2NJVKMjyvPu4aku7vNX32XYD/9ttppKXZjyVGxG2sgr6HtDyXTmdEZwbvtLSVyZMby7M
+         1Tmg==
+X-Gm-Message-State: ACrzQf3I7YdycxyLPb7HzLPBEuUnTW+S39CSmDPlOwzAgjWexTI5iULz
+        SRUIpnushrT7d+kwpvYY2jE=
+X-Google-Smtp-Source: AMsMyM7Ok1oI08VOOd6oA1rPW55Uk9/iklCzoTTlsfJKG7ylVANscNGiRyzc7XP+KiuvvPR03RFCXQ==
+X-Received: by 2002:a05:6000:1a8f:b0:228:e3c3:679 with SMTP id f15-20020a0560001a8f00b00228e3c30679mr13302007wry.281.1664811836752;
+        Mon, 03 Oct 2022 08:43:56 -0700 (PDT)
+Received: from localhost (78-131-14-129.pool.digikabel.hu. [78.131.14.129])
+        by smtp.gmail.com with ESMTPSA id l18-20020a05600c2cd200b003a63a3b55c3sm17934495wmc.14.2022.10.03.08.43.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Oct 2022 08:43:56 -0700 (PDT)
+Date:   Mon, 3 Oct 2022 17:43:54 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Tim Jaacks <timjaacks@posteo.de>
+Cc:     git@vger.kernel.org
+Subject: Re: Bash completion for git aliases containing nested subcommands
+Message-ID: <20221003154354.GC7659@szeder.dev>
+References: <em8d7ca854-51a3-4cb5-aaf9-30ed37b4194b@acer-switch-tim>
+ <20221003142437.GB7659@szeder.dev>
+ <1839e62f930.285a.8a94aeaa49923dfb9a7d55a303990d0a@posteo.de>
 MIME-Version: 1.0
-From:   Alastair Douglas <alastair.douglas@gmail.com>
-Date:   Mon, 3 Oct 2022 16:28:06 +0100
-Message-ID: <CADTs3HEn8JQzfWGP-rq_BBLvwGD163=c2i_7vFK17g+wAVec+Q@mail.gmail.com>
-Subject: Bug report
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1839e62f930.285a.8a94aeaa49923dfb9a7d55a303990d0a@posteo.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have found no solution to the issue below. Apologies if it has
-already been addressed.
+On Mon, Oct 03, 2022 at 03:07:10PM +0000, Tim Jaacks wrote:
+> Hi Gabor,
+> 
+> thanks a lot for your detailed reply! I tried that and it works, thank you.
+> 
+> Just another small follow-up question, out of curiosity: I noticed that zsh
+> handles the alias completion correctly out of the box (using the exact same
+> gitconfig file). I don't have any dedicated zsh completion file, just
+> installed zsh via apt. Do you know why and how zsh handles this differently?
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+There are not only one but two Zsh completion scripts for Git:
 
-Have an existing git config with rebase = preserve
+  - Ours, which is essentially a wrapper around our Bash completion
+    script, so it shouldn't work for your alias, and it has to be
+    installed manually, so I doubt that this is what you tried.
 
-What did you expect to happen? (Expected behaviour)
+  - One that's shipped with Zsh, with all the bells and whistles that
+    Zsh's completion system offers.  It's not maintained by the Git
+    project, and I have no idea how it works, but I guess it works
+    sufficiently differently to make your use case work.
 
-Merges to be preserved when rebasing, without a warning about an option I am
-not using.
-
-What happened instead? (Actual behaviour)
-
-I received a warning as though I had used the option on the command line:
-
-warning: git rebase --preserve-merges is deprecated. Use
---rebase-merges instead.
-
-I didn't do that, so I can't follow the advice. There appears to be no
-alternative config setting for the new option.
-
-What's different between what you expected and what actually happened?
-
-I expected rebase=preserve to now use --rebase-merges instead of
---preserve-merges, or for a new config setting to be made available to use
---rebase-merges. Ideally the first, because the semantics are clear.
-
-Anything else you want to add:
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.34.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.15.0-47-generic #51-Ubuntu SMP Thu Aug 11 07:51:15 UTC
-2022 x86_64
-compiler info: gnuc: 11.2
-libc info: glibc: 2.35
-$SHELL (typically, interactive shell): /usr/bin/zsh
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
