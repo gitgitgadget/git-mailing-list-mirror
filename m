@@ -2,129 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94BE6C4332F
-	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 16:13:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 877EFC433F5
+	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 16:31:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbiJCQNm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Oct 2022 12:13:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53330 "EHLO
+        id S229587AbiJCQbi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Oct 2022 12:31:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229758AbiJCQNj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2022 12:13:39 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD3F131ED4
-        for <git@vger.kernel.org>; Mon,  3 Oct 2022 09:13:37 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id 129so10061744pgc.5
-        for <git@vger.kernel.org>; Mon, 03 Oct 2022 09:13:37 -0700 (PDT)
+        with ESMTP id S229574AbiJCQbg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2022 12:31:36 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A369357C8
+        for <git@vger.kernel.org>; Mon,  3 Oct 2022 09:31:35 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id d1-20020a17090a6a4100b002095b319b9aso9878449pjm.0
+        for <git@vger.kernel.org>; Mon, 03 Oct 2022 09:31:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sQFaDKrdUsUOmtnBIuB2jNCVxauFtatTAdj65hbfzPw=;
-        b=KrCtyYVyWpc5Rsr464IkZNg3+C6Z8Vpr1mWjuVCQsiYEEYJrWUplTjpwLIRCd/aNst
-         K4OXc4seAqBxe8G03h0QFpD6HwgLndpTIrvI8+UJB9JZ3FUZV1TDqJaZR30EXq9C2oIU
-         jGEC9EPSm5yPGRQiAiXk7iRpFLevCVYmA3rtUAd4MUUcINSLBiLPS3tzJo3c3O2sgt6+
-         atVa8X0yvwzczsjTkMQibKYide/+yNmp3MgWFOMuOcOI+EQhhCbBnXivvAnfSj6DnKaa
-         a1v5cmPVN5xH7D+vz0wPGeYyU0qkiAnJAM+B9QXtc6NNDVhCg2f0Hf0vSc/OC9UDZh6t
-         QO3A==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CpO4n6op3f9fwUnmU2xnaGRMThy61ZphEZUkbwATQ/4=;
+        b=MU8uSflFKXGINSqIct4im0UXGIRMj0UVIjBbBkd/3B0QhNokmG0jDpGUFdPU/ykSTF
+         MNsDnxAM/rH4gBrQ8Oci5BAts3CCQ9J4MrU/pZDQBB2PXhN0TU2A9diNSdgMhnHsmjD/
+         qzDSewaiSmFAKvOem3RaY8LB2I80m6rKeZiNoEHgo5+i5X7R14iARlsNtpDjVdf4bphi
+         B82AChSg6LKOzl8hTi6dEn85X9DuJcIvBx3a5zcxBrqH5hsxwiKKN+TvzwZK5aJvxQS6
+         CWCAeQFcBzScXyVNl7M5A7yZ0dbeHsaDP/GMaSeEfpB3hMuKdDUVdE2dx5UyejbilFS1
+         bSGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=sQFaDKrdUsUOmtnBIuB2jNCVxauFtatTAdj65hbfzPw=;
-        b=DLlNCnYunLxtqJKdS9bDw19xwmdv0nOehPQ66NdcrbvrjPSiR4gsgx3OaA9Pv/6TJ1
-         WxuXkHOckYsbJB/tVILsIFCCNVppq7qYMDgOPozJR1wuprcDLsRXDXz1xAKKCsMnsi78
-         /Lj01tjcOum65zsHnUZPPmmY8IMTzTLvxDWOF/2JykqVJYruNaihIbw7utGJtCarmydU
-         dFkxHU4pICd0Zqu8rD+WaKFWoX3yaashzGiMrnfpTo9oDol8QmDW42wN/ab1x1yW20Ue
-         TMIhQsvTDo/qVaLAv9GW1FnANPURjdogc6T7hd5KdpvI9cdboGnKHIB8VdkdSCN/yTS+
-         bnoA==
-X-Gm-Message-State: ACrzQf3SZjnphZntkVS5U6AALlhYOudl0WO0ypUeux3OOfr64dqJbJ+o
-        dwvooyofJJdJpICpFj2sSlY=
-X-Google-Smtp-Source: AMsMyM7cjsHwKL9EjwsjSeao8pUoYQjZUOQaAFFklW0MvGj3EweeJApKqm9Lr+XMbRL71bAAENmRVw==
-X-Received: by 2002:a05:6a00:1412:b0:557:d887:2025 with SMTP id l18-20020a056a00141200b00557d8872025mr23010570pfu.39.1664813617071;
-        Mon, 03 Oct 2022 09:13:37 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CpO4n6op3f9fwUnmU2xnaGRMThy61ZphEZUkbwATQ/4=;
+        b=d6EWkLc5wIad6ZeNB2Tjb/JO2nEegTX9oqxsAniA2VczW6xDa8xiAH8mAXdMfQh/z/
+         Us/WOitwWalLaxTEcHN/fsSGEjk5fMA30AyhtAbVux8yYSx72b/h6T2ZlGix3vwsuX3A
+         RiNXoSa5TdJ2HlP38o9ITOi10C77wlG+SFsqnOvU5fI/wO0sonr3P2F40+eNdxDq4zsZ
+         OZ5gKu48ydwY+byIudbJdw3r0P3Jj2Bz8Nbxt0VAEjo25F/XTAhZD+9Y9dAUs+PrWlmI
+         /mjwAL7JHmkoEJQeu/T+5/S1A+pZdc+Qx6mv0ZKlLSGAA32ql/YAkkd2muNiBiAmMryK
+         JBqA==
+X-Gm-Message-State: ACrzQf0IMv0DvVsmZMB7uvV//PGpTJPIvYD1ossB1/CIWy7MFscnHRDz
+        1eE1sd05uXP1CbWQGzBN8i0=
+X-Google-Smtp-Source: AMsMyM6AgJIOCoJUwDApkVyBKto4oOrMDPRHFYgkzEwxiiVD3LM5rPovEnE+IGXrWlAOBLLPjIKPOw==
+X-Received: by 2002:a17:902:7607:b0:17c:6c3b:20cd with SMTP id k7-20020a170902760700b0017c6c3b20cdmr17071863pll.44.1664814694494;
+        Mon, 03 Oct 2022 09:31:34 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id c13-20020a170903234d00b0017d12d86901sm5805968plh.187.2022.10.03.09.13.36
+        by smtp.gmail.com with ESMTPSA id z13-20020a63330d000000b00434651f9a96sm6665492pgz.15.2022.10.03.09.31.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Oct 2022 09:13:36 -0700 (PDT)
+        Mon, 03 Oct 2022 09:31:33 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Fabian Stelzer <fs@gigacodes.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] ssh signing: return an error when signature cannot be read
-References: <pull.1371.git.1664789075343.gitgitgadget@gmail.com>
-Date:   Mon, 03 Oct 2022 09:13:36 -0700
-In-Reply-To: <pull.1371.git.1664789075343.gitgitgadget@gmail.com> (Phillip
-        Wood via GitGitGadget's message of "Mon, 03 Oct 2022 09:24:35 +0000")
-Message-ID: <xmqq1qroyjf3.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] git-reflog.txt: add an EXAMPLES section
+References: <20221003084654.183966-1-gitter.spiros@gmail.com>
+        <221003.86o7uttfxg.gmgdl@evledraar.gmail.com>
+Date:   Mon, 03 Oct 2022 09:31:33 -0700
+In-Reply-To: <221003.86o7uttfxg.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 03 Oct 2022 11:20:05 +0200")
+Message-ID: <xmqqfsg4x40q.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> On Mon, Oct 03 2022, Elia Pinto wrote:
 >
-> If the signature file cannot be read we print an error message but do
-> not return an error to the caller. In practice it seems unlikely that
-> the file would be unreadable if the call to ssh-keygen succeeds. If we
-> cannot read the file it may be missing so ignore any errors from
-> unlink() when we try to remove it.
+>> This commit adds an "EXAMPLES" section to the git reflog man page.
+>> This new section currently provides examples of using git reflog
+>> with branches, for which doubts often exist. In this commit we also
+>> add a "SEE ALSO" section which refers to further information
+>> on git commands or documentation referenced in the git reflog man page.
+>
+> I think it can be valuable to have an EXAMPLES section, but:
+> ...
+> Most of this really just seems to be duplicating "SPECIFYING REVISIONS",
+> and some of it such as "show with timestamp" is ambiguous/misleading.
 
-OK.  Not removing may help diagnose what the problem is, but going
-that route needs to add code to report what file is deliberately
-left for inspection.  I do not know how valuable that would be to
-help human debuggers --- the user presumably have the original
-material (e.g. a signed tag object) anyway, and the human debugger
-probably needs to have access to both the original material and what
-is fed to the gpg-interface API.  If they are chasing a reproducible
-bug, the latter should be recreatable by the human debugger from the
-former, so removing would not hurt the debuggability that much.
+It would become immediately clear what these phrases want to say,
+when the reader runs "git reflog @{0}" and "git reflog @{now}" while
+reading the document.  I am not sure if the description is ambiguous
+or misleading to those who haven't seen any reflog output, especially
+the timestamped ones.  Perhaps some sample output in the documentation
+would help, do you think?
 
-On the other hand, we can still report if the reason we cannot
-remove is not ENOENT, though.
+    $ git reflog -2 HEAD@{now}
+    ce17cbfa2b HEAD@{Mon Oct 3 09:07:30 2022 -0700}: checkout: moving...
+    ce17cbfa2b HEAD@{Mon Oct 3 09:07:14 2022 -0700}: am: ssh signing...
+    $ git reflog -2 HEAD@{0}
+    ce17cbfa2b HEAD@{0}: checkout: moving...
+    ce17cbfa2b HEAD@{1}: am: ssh signing...
 
-Thanks.
+I would freely admit that this is one of my least favourite part of
+Git UI that allows what comes inside @{} as parameter to "git
+reflog" affect both the starting point (e.g. @{2.days} omits the
+activities of the past 48 hours) and the format of the output.  The
+taste of the design is bad, but it is what we ended up with.
 
+>> +SEE ALSO
+>> +--------
+>> +linkgit:gitrevisions[7],
+>> +linkgit:git-log[1]
 >
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->     ssh signing: return an error when signature cannot be read
->     
->     This patch is based on maint. In the longer term the code could be
->     simplified by using pipes rather than tempfiles as we do for gpg.
->     ssh-keygen has supported reading the data to be signed from stdin and
->     writing the signature to stdout since it introduced signing.
+> Likewise "SEE ALSO" sections can be really valuable, but they're really
+> for "now that you've read the above, maybe this is also useful". It's
+> not a "SEE STUFF YOU SAW BEFORE" :)
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1371%2Fphillipwood%2Fssh-signing-return-error-on-missing-signature-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1371/phillipwood/ssh-signing-return-error-on-missing-signature-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1371
->
->  gpg-interface.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> index 947b58ad4da..d352bc286b6 100644
-> --- a/gpg-interface.c
-> +++ b/gpg-interface.c
-> @@ -1043,9 +1043,11 @@ static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
->  	strbuf_addbuf(&ssh_signature_filename, &buffer_file->filename);
->  	strbuf_addstr(&ssh_signature_filename, ".sig");
->  	if (strbuf_read_file(signature, ssh_signature_filename.buf, 0) < 0) {
-> -		error_errno(
-> +		ret = error_errno(
->  			_("failed reading ssh signing data buffer from '%s'"),
->  			ssh_signature_filename.buf);
-> +		unlink(ssh_signature_filename.buf);
-> +		goto out;
->  	}
->  	unlink_or_warn(ssh_signature_filename.buf);
->  
->
-> base-commit: a0feb8611d4c0b2b5d954efe4e98207f62223436
+> In this case we link to these in the first and third paragraphs of the
+> DESCRIPTION section (respectively), since explaining the revision syntax
+> etc. is really core to understanding how this command works.
+
+I do not know about that.
+
+Only the part of the revision syntax that refers to the tip of a ref
+works as input for "git reflog".  IOW, "git reflog seen^2~4" does
+not work.  I do not think the knowledge of revision syntax helps
+understanding how to operate the command that much because of the
+above.  I agree with you that it is dubious if it is a good idea to
+list gitrevisions[7] here, but for an entirely different reason.
+
+On the other hand, git-log[1] might not be a bad thing to refer to,
+in order to learn that you can say something like
+
+    git reflog --pretty=short --stat @{now}
+
+Thanks for a review.
+
