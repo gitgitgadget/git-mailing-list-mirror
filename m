@@ -2,79 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1A0EC433FE
-	for <git@archiver.kernel.org>; Sun,  2 Oct 2022 21:28:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 716A9C433F5
+	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 06:39:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229516AbiJBV2c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Oct 2022 17:28:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47740 "EHLO
+        id S229657AbiJCGjy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Oct 2022 02:39:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbiJBV2a (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Oct 2022 17:28:30 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D50D367BC
-        for <git@vger.kernel.org>; Sun,  2 Oct 2022 14:28:30 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id e18so5941889wmq.3
-        for <git@vger.kernel.org>; Sun, 02 Oct 2022 14:28:30 -0700 (PDT)
+        with ESMTP id S229635AbiJCGjt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2022 02:39:49 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 177D5B29
+        for <git@vger.kernel.org>; Sun,  2 Oct 2022 23:39:35 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id z97so13176602ede.8
+        for <git@vger.kernel.org>; Sun, 02 Oct 2022 23:39:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:to:subject:from:to:cc
-         :subject:date;
-        bh=jlQR3SAHRfdn0DZED1rBcJS0QhP/bqt++3XlNTL4p2w=;
-        b=VSuZMPfserYYh6nvEBuxFNacw6eFZPSRx1jM5P6oLvRyVZij/hlbR0+miTZ9Iqtgqg
-         tYjWvSPpPyTjVCh7m5mcP0ysrohRkgcm+At1TXldhq3i3JiCdeGxgz3iIytd+DfFxFs1
-         KDBuc5sIF4Od790m06MCU21FBmVkAwCczVPUQ9ZhLDl219mu2CRWeQBZrKb9WpAbBwf+
-         THndV4uripalgBx3paqhQxw4qRlcVWOcC63m9NXeMpXxp5rzx64kHHPXf4t/C8nlJHVH
-         n4Ex4OWJh2apZRcl/3Plyn8zCQoOF4etG/JqIoVOkYs3XQTRO8b84j7uviI5P3E2OGWh
-         eDlg==
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=xtKDH+Lt5P1CG0SBYVllDGw+zamrw0L6hqnsWVqpiRc=;
+        b=htH8BcvUfWlkNwVaXwSplNyAFlMZ+FkMkWhwH2AJlD7GugQHjWxJZ83+COg7RR/K3S
+         SogBIHGpU8E4KQKiqPSJZwrVWZLp2OrlTg923auvjkdGuKZNPPe0iPz20fnDDRL4vudZ
+         AaC17jM0KD5X+GNh8A+SnaB89seMZg+B3oX7XCRMD9jrqsswZjaUU81zq9vlqvoSsxeZ
+         tYlvX3ybKrzfZ0pKFqzSF5eb2RmkxTdNxcdIgrbuHF1uaKmnNfWY1K8pCsMEl3OHbFx0
+         Q4Icxps9F4vlje/Pz4cX9jtP9dCz0dFLLPHCTBATQ8xagxJIMvOkUkUoWZLy3ANoMS+w
+         qaoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:to:subject
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=jlQR3SAHRfdn0DZED1rBcJS0QhP/bqt++3XlNTL4p2w=;
-        b=rbig89Q4ZmMu0skwLraVZbB+OEYWbtDoQieSaowdDm8PKFbCTlsT+YdpdaQkkJEDpB
-         1tAunFcaB0cVW7g6FIlmByefA1rYcoq6YEryMgrS4r2XSPxwKp256BgnZAXbLwM0XWtt
-         gzySwokbO+m1yUmNdWAXsab+3cLiMDd6hnM1FuM/I2NRe9C4tOvEWYqsM2CpOvWh1tk6
-         9ntFiECRR3JSIIoL1bzQIF6BzAopBbcpas7KEvh8qnh2Zm8QDNfEkj89xTGfuM+FmoEb
-         vNbFbQT3dQZvZ6F/lR+aF52mKE6tFBPbwMSREeVp2xAdxaBfaAlsciuJY6wpwCUpyx+s
-         /mow==
-X-Gm-Message-State: ACrzQf2hj6Z3/Jd94sjtRsSI7K1jS4YuO90dl9hJKma5kicMF6ZpwRvM
-        byxNxlGkMPO7Eh2YnwTJ9U01stBLqmY=
-X-Google-Smtp-Source: AMsMyM4JWsBbocslIfk6lQIWN3fcH5HhiCuDJVZOWsqSGl9PHWYI2UtJKzssePsRXZQ2T++N/+czyA==
-X-Received: by 2002:a05:600c:1c8e:b0:3b4:9247:7ecc with SMTP id k14-20020a05600c1c8e00b003b492477eccmr5176116wms.40.1664746108514;
-        Sun, 02 Oct 2022 14:28:28 -0700 (PDT)
-Received: from [192.168.2.52] (5.83-213-116.dynamic.clientes.euskaltel.es. [83.213.116.5])
-        by smtp.gmail.com with ESMTPSA id l9-20020a056000022900b0022b315b4649sm7889062wrz.26.2022.10.02.14.28.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Oct 2022 14:28:28 -0700 (PDT)
-Subject: Re: [PATCH v2] branch: description for non-existent branch errors
-To:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
-References: <c333cc4b-12a1-82b6-0961-1c42080dad15@gmail.com>
- <930ff836-a5c4-0e85-517d-39645f00cd31@gmail.com>
- <f34912ab-5d1b-6dfb-e079-0e7b135ebe14@gmail.com>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <a1cddefd-d555-05a0-a817-c8b10254fd9f@gmail.com>
-Date:   Sun, 2 Oct 2022 23:28:27 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=xtKDH+Lt5P1CG0SBYVllDGw+zamrw0L6hqnsWVqpiRc=;
+        b=7sFtp8DtoRYlJFXnct5GcJ7pSu1vRKCjx65rxlQq6V9kwuXZM2HKv9xLRWbxMm9b2k
+         tmtPAirfE4KbcVlBzSImcR0Aonver/cLg3aO5OCehGQ1pYN9GbQGlJWhFbOTyAUgp2oa
+         +DqsnIXsv+I8BY+5WlFS5VP+LgBQnZuhV+vmGjzNZvTTjOZHM1FJy4cFZYU+k/erVCFk
+         1uGTBy452t2Q4+m07WoazHxRav6vDOXzxGwZgjxssIeMtus4S4s7qFIyH88BEQdo+4Z9
+         MhvBMecoXtcGZUNfRNAryfHmgb9v5nkOs6T4HnUembZW4watYQx0OUNnmMd5OeMxm3SG
+         Tp8A==
+X-Gm-Message-State: ACrzQf1Vtrhkmc09ueM0nxnq+vuxjK+s3VBfyAWMvW/X1rNlFaZLVUFH
+        l19jqgKX9UN5gqH5AQ2ufRfd7D/i3Nj/JOxvzoJMj2rwoIk=
+X-Google-Smtp-Source: AMsMyM6zo096OUtzPbpVU1cdNnoBErXBYpkItlYfwstZVehROHPnreyZm1mxpPwl39Tt8qfpmc2fY2GFNTQHUVpCAe0=
+X-Received: by 2002:a05:6402:4446:b0:457:eebd:fe52 with SMTP id
+ o6-20020a056402444600b00457eebdfe52mr17350127edb.234.1664779173096; Sun, 02
+ Oct 2022 23:39:33 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <f34912ab-5d1b-6dfb-e079-0e7b135ebe14@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+From:   "Michael V. Scovetta" <michael.scovetta@gmail.com>
+Date:   Sun, 2 Oct 2022 23:39:16 -0700
+Message-ID: <CADG3Mza_QU+ceTUsMYxJ3PzsEqi8M98oOBAzzz0GHRJ-F7vkpA@mail.gmail.com>
+Subject: Bug Report: Duplicate condition in read_author_script (sequencer.c)
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/10/22 14:43, Bagas Sanjaya wrote:
-> On 10/1/22 05:47, Rubén Justo wrote:
->> This commit makes the error descriptions for those branch operations
->> with unborn or non-existent branches, more informative.
->>
-> 
-> s/This commit makes/Make/
-> 
+Hello!
+I noticed a duplicate condition in the read_author_script function
+defined in sequencer.c. I reported this initially to the security
+mailing list, but folks there thought it was unlikely to be
+interesting from a security perspective, and advised me to report it
+here.
 
-Thanks
+In commit 2a7d63a2, sequencer.c:912 looks like:
+912  if (name_i == -2)
+913      error(_("missing 'GIT_AUTHOR_NAME'"));
+914  if (email_i == -2)
+915      error(_("missing 'GIT_AUTHOR_EMAIL'"));
+916  if (date_i == -2)
+917      error(_("missing 'GIT_AUTHOR_DATE'"));
+918  if (date_i < 0 || email_i < 0 || date_i < 0 || err)    <-- date_i
+is referenced here twice
+919      goto finish;
+
+I'm fairly sure that line 918 should be:
+918  if (name_i < 0 || email_i < 0 || date_i < 0 || err)
+
+I haven't validated this, but I suspect that if
+`rebase-merge/author-script` contained two GIT_AUTHOR_NAME fields,
+then name_i would be set to -1 (by the error function), but control
+wouldn't flow to finish, but instead to line 920 ( *name =
+kv.items[name_i].util; ) where it would attempt to access memory
+slightly outside of items' memory space.
+
+I haven't been able to actually trigger the bug, but strongly suspect
+I'm just not familiar enough with how rebasing works under the covers.
+
+I can dig into this deeper if you'd like, but it looks like an obvious
+typo or copy/paste error. Is this something that a maintainer would be
+able to take from here?
+
+Thanks so much!!
+
+Mike
