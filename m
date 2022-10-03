@@ -2,135 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FB0FC433FE
-	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 15:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92CE3C433F5
+	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 15:28:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229717AbiJCPMH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Oct 2022 11:12:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35496 "EHLO
+        id S230154AbiJCP2X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Oct 2022 11:28:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbiJCPME (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2022 11:12:04 -0400
-Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 007C06315
-        for <git@vger.kernel.org>; Mon,  3 Oct 2022 08:12:02 -0700 (PDT)
-Received: from submission (posteo.de [185.67.36.169]) 
-        by mout01.posteo.de (Postfix) with ESMTPS id 5E63C240026
-        for <git@vger.kernel.org>; Mon,  3 Oct 2022 17:12:01 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-        t=1664809921; bh=qb70iE1IGoXTfRMqEvgnfGTGN8Dq3hqOsqNDRxfRFo0=;
-        h=From:To:CC:Date:Subject:From;
-        b=fAhN/Hn0UlzRBZmQbA4Vmysedk+VaIOoDrUxFplGg0SPF7eLbOktvDh/dBp+FL20a
-         AdRvmVYcV/Mr5f39zXIgProD6f3hMdkeFnEu4VEKOZPLEHE2zOnApMURu6BPMEpl2j
-         puCi1lDjwiTnQ9pl+kJIttS9bPnWrm+lzam2+8CKEVDydf3tvoY6RiPKkCrieCS7B7
-         3yCU2fcpaMshGm2TlZXQAzE6fIDRuR6vgJscnA/RiqHR61Jg6wtz5Hr+E88lGU8JIW
-         vLmHfU1bpzSR6A59BEQ6ka+v6/I/VOGlGGkrA3bxUdCxhghgQFaoR9tILIiKQgKXdD
-         b39XHFYiqe/Mw==
-Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 4Mh47N4bbmz9rxd;
-        Mon,  3 Oct 2022 17:12:00 +0200 (CEST)
-From:   Tim Jaacks <timjaacks@posteo.de>
-To:     =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder.dev@gmail.com>
-CC:     <git@vger.kernel.org>
-Date:   Mon, 03 Oct 2022 15:11:59 +0000
-Message-ID: <1839e676218.285a.8a94aeaa49923dfb9a7d55a303990d0a@posteo.de>
-In-Reply-To: <1839e62f930.285a.8a94aeaa49923dfb9a7d55a303990d0a@posteo.de>
-References: <em8d7ca854-51a3-4cb5-aaf9-30ed37b4194b@acer-switch-tim>
- <20221003142437.GB7659@szeder.dev>
- <1839e62f930.285a.8a94aeaa49923dfb9a7d55a303990d0a@posteo.de>
-Subject: Re: Bash completion for git aliases containing nested subcommands
+        with ESMTP id S230149AbiJCP2U (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2022 11:28:20 -0400
+Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E9262716D
+        for <git@vger.kernel.org>; Mon,  3 Oct 2022 08:28:19 -0700 (PDT)
+Received: by mail-oo1-xc2b.google.com with SMTP id z9-20020a4a4909000000b0047651b95fbdso6961459ooa.5
+        for <git@vger.kernel.org>; Mon, 03 Oct 2022 08:28:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=tE+fGYzUjruqwKpdBvGrlDefOADj6Q/h8LUqhA+UThU=;
+        b=quF625fYBEWCLEkCglr1Q1QXCJwnW9SZ/auw1B6ClEoj5KJOryCsMTwPHrTHzqBefP
+         UE21NBMnKA2PtMGhibEYmeUvNwYvibTOid7Sd4iCd6kVZEvOkWo8zfXLyjayyS3z8HEl
+         fviitEyPZy3Z/h6wu+r2VITjOSRIcD1GgVQQrcNAK3dT95HhAq3vNyA2VcaDbgPIiidx
+         cJcB7WB9r8Bqa5SuwreB6FOoJSddAPD2uhKCMo52ygar8n7BRLxJbZmhRTCNrPT50xBH
+         oEPUCQm7fLBchbYZKO3Vk/kFKliiVsC8LY4vAJnRJyNFLXQSyOgP4D/56SxSAt6P8QDc
+         qLsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=tE+fGYzUjruqwKpdBvGrlDefOADj6Q/h8LUqhA+UThU=;
+        b=1/+jYv/mlWhBKTc5mAarxIj9xIJcfk1AvqOyZzvstiLpR0XsFMeECpviKCnlh/5G9h
+         VnJf08Eb+cVSd2rlyOSqbpcUw4ze+M36nFerBsh2N2I6qaDvIKv6mDRyn2RjK8ZUNZ2q
+         fvuls0dizF2U0yQ/k2KLlMi5uApVfPIikOPATReAAK9zwbCKYH/qznv458Pk4ahyHLGL
+         b8TFc/bEucbLJCdeDKPX4iOACbMzXeM8ZjUghoLrkv1MBjOPmH+T9gpuKwRW1QBp4PQ+
+         sJBUwO3uUJrW+7V5kHcke5Wm/hAxZkWRJFnhzWIS+AnfYRHCpuxtKxVMfiL6fcAcHWPG
+         ELoA==
+X-Gm-Message-State: ACrzQf05263H/l1FB/YlefH2p1ICkjREgVJGIC29QkaitrKTT6DRGQvp
+        RFTdCXx87Xn3jjPgolxiFmF4FlT7uO4OrRua0KyhlQkc4X5/wA==
+X-Google-Smtp-Source: AMsMyM4Ff65yfL7UMlcq4vb5lLzwZCUAui6fD4Iid2ddzLy8jIinM5mAPTUzucJP5eRsQ1OlyFvWg3ufUYydKfc8TR4=
+X-Received: by 2002:a05:6830:610b:b0:65b:eb36:6336 with SMTP id
+ ca11-20020a056830610b00b0065beb366336mr8031413otb.131.1664810898123; Mon, 03
+ Oct 2022 08:28:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
+From:   Alastair Douglas <alastair.douglas@gmail.com>
+Date:   Mon, 3 Oct 2022 16:28:06 +0100
+Message-ID: <CADTs3HEn8JQzfWGP-rq_BBLvwGD163=c2i_7vFK17g+wAVec+Q@mail.gmail.com>
+Subject: Bug report
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Gabor,
+I have found no solution to the issue below. Apologies if it has
+already been addressed.
 
-thanks a lot for your detailed reply! I tried that and it works, thank you.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Just another small follow-up question, out of curiosity: I noticed that zsh 
-handles the alias completion correctly out of the box (using the exact same 
-gitconfig file). I don't have any dedicated zsh completion file, just 
-installed zsh via apt. Do you know why and how zsh handles this differently?
+Have an existing git config with rebase = preserve
 
-Kind regards,
-Tim
+What did you expect to happen? (Expected behaviour)
 
-Am 3. Oktober 2022 16:24:41 schrieb SZEDER Gábor <szeder.dev@gmail.com>:
+Merges to be preserved when rebasing, without a warning about an option I am
+not using.
 
-> On Mon, Oct 03, 2022 at 11:45:51AM +0000, Tim Jaacks wrote:
->> Hello everyone,
->>
->> I have set up the following alias in my .gitconfig file:
->>
->> [alias]
->> ss = stash show
->>
->> Unfortunately bash completion does not work correctly on this alias. When I
->> type "git ss <TAB>", I get:
->>
->> $ git ss <TAB>
->> apply clear drop pop show
->> branch create list push
->>
->> Which is obviously the completion for "git stash" instead of "git stash
->> show".
->>
->> With the original command I get the list of available stashes:
->>
->> $ git stash show <TAB>
->> stash@{0} stash@{1}
->>
->> Is there a way to get the completion on the alias behave like on the
->> original command?
->
-> In general: no.  Our Bash completion script is organized as one
-> _git_cmd() function for each git supported command.  If a command has
-> subcommands, then its completion function looks for any of its
-> subcommands amond the words on the command line, and takes the
-> appropriate action, which is usually executing a particular arm of a
-> case statement.  The two main issues are that in case of such an alias
-> there is no subcommand ("show") on the command line, and there is no
-> dedicated function to handle only the completion for 'git stash show'.
->
-> However, it is possible to make completion work for your particular
-> alias by using our completion script's extension mechanism that allows
-> users to specify completion functions to their own git commands.  If
-> you type 'git foo <TAB>' and there is a _git_foo() function in your
-> shell's environment, then the completion script will invoke that
-> function to perform completion; this works not only for commands but
-> for aliases as well.  So for your alias you only need to "borrow" all
-> the "show"-subcommand-specific case arms from _git_stash() and place
-> them in a _git_ss() function, e.g. like this:
->
-> _git_ss () {
-> case "$cur" in
-> --*)
-> __gitcomp_builtin stash_show "$__git_diff_common_options"
-> ;;
-> *)
-> __gitcomp_nl "$(__git stash list | sed -n -e 's/:.*//p')"
-> ;;
-> esac
-> }
->
-> Add it to your ~/.bashrc, or to a separate file that you source from
-> your .bashrc;  If you use bash-completion, then you don't even have to
-> touch you .bashrc: save that function to a file 'git-ss' (dash, not
-> underscore!) in one of the directories scanned by bash-completion
-> ($BASH_COMPLETION_USER_DIR, ~/.local/share/bash-completion/completions
-> or its XDG_DATA_HOME-equivalent) and it will be auto-loaded as needed.
->
-> This approach should work just as well for any other similar "command
-> subcommand" alias that you might have; with the downside that you'll
-> have to write all these functions yourself.
->
->> I am on Ubuntu 20.04 and using the distro's default git completions.
->>
->> Kind regards,
->> Tim
+What happened instead? (Actual behaviour)
+
+I received a warning as though I had used the option on the command line:
+
+warning: git rebase --preserve-merges is deprecated. Use
+--rebase-merges instead.
+
+I didn't do that, so I can't follow the advice. There appears to be no
+alternative config setting for the new option.
+
+What's different between what you expected and what actually happened?
+
+I expected rebase=preserve to now use --rebase-merges instead of
+--preserve-merges, or for a new config setting to be made available to use
+--rebase-merges. Ideally the first, because the semantics are clear.
+
+Anything else you want to add:
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
 
+[System Info]
+git version:
+git version 2.34.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.15.0-47-generic #51-Ubuntu SMP Thu Aug 11 07:51:15 UTC
+2022 x86_64
+compiler info: gnuc: 11.2
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /usr/bin/zsh
 
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
