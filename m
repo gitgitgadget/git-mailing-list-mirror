@@ -2,80 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51D87C433FE
-	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 13:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABB29C433FE
+	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 13:41:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229910AbiJCNHl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Oct 2022 09:07:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52194 "EHLO
+        id S229441AbiJCNlq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Oct 2022 09:41:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbiJCNHj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2022 09:07:39 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF38E31EC4
-        for <git@vger.kernel.org>; Mon,  3 Oct 2022 06:07:38 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id e11-20020a17090a77cb00b00205edbfd646so15262342pjs.1
-        for <git@vger.kernel.org>; Mon, 03 Oct 2022 06:07:38 -0700 (PDT)
+        with ESMTP id S229702AbiJCNlo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2022 09:41:44 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B569043E46
+        for <git@vger.kernel.org>; Mon,  3 Oct 2022 06:41:42 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id 126so13073366ybw.3
+        for <git@vger.kernel.org>; Mon, 03 Oct 2022 06:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SdDy0hQPU/ODc0S8y4JrE3dtFFfapnmDg7IeDkvhQyo=;
-        b=hyxK+Y/QiZvdTQEW/pHPMEvqc7uLyc9f0bXnfecWjjBuKBrgpINVBpM4fl+UA4g8FW
-         Zx2boF0ST45LQ0kYqeU4SHc9srQGvYKJqmB88GEyNAhNt+PLEXl4h2QVbeFaJN8z9YUJ
-         TSwGlM4P+DI+k7vQn/LAlDGXkuKf9XY1MUIo9V1IP4gIuxl7McJNZ9/4eqw4YapPVHyj
-         2McVwMYWpY9EZ//Cfl355znrMW+//OKrwoJy6BwORLkTB64XNWiGqPw8nO8tkORV452Z
-         xD539XFIcHNEIE2BtDcl1UBBHN5bD0FKKRDUuInhLxMwDwxBp1mKHALIog01KCRnqb2i
-         ehmg==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=b1qcaRchgrUtrninTF+StwHDkxeedoXMG5LP6IO3u94=;
+        b=nYtzXlgHikvjGWpHrI2vlyuVLImOgeAcTA4J24EXN4XlFF6NEOCV+gpEbnKppf3C3D
+         8cmeJB3VsyKULh5mjjimwBKoxa72FgB4YGj9JNN2F2OJnaWqtRtT+EJ/GQXkXO3W0o/g
+         LzUWCSM2WdUJaqLdpaL45oGXagasg1iaZ/lA8gUxebQ6CikZeevMHWohoOlTa/x98lEY
+         8eEuOWftXPqEYIoI1QWDNPIynRe+hBMHGd/60M5BSKcLpmgtdGKOry0ldtKfMzs6Uj+r
+         PnxiLdO0QrbYCpgdJWjEbQcHDJpRMbWWLRmTaoiJn/yE9vovLW73OUQUzN7mUO/XZ/6n
+         duog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SdDy0hQPU/ODc0S8y4JrE3dtFFfapnmDg7IeDkvhQyo=;
-        b=xjVprvffoxWi9c7xz8U6lwqEqUVmzU2Ex4Jzofr27GDo5+bgtzhYiAAGeoaD2e/Ue+
-         1rHD1hrEcy7SDfStEQ0m3oM/PjA53YyGnYQ2/ks43i1enDKqHjRgKIaRRmL21b3gr37F
-         VcjUJDQ+CLpxfO0bTZvlSP//PEdWqaOwWJU4nQ4umyYh3fu3aTQtaM0wwgveiKcDfshs
-         noNHqhKu4f0p6a7szvMRehs2wMNPE9pAbh0Eb2I9lwR+xNso6CRTxEfXqDtFdvTDiXg5
-         wU8oVQ4kUyGLdMoU5aC6ZESrSaPE35JnpOUYnCtRVbNmHoZwpjv10ZiQF6BlLZp+5KL0
-         keEw==
-X-Gm-Message-State: ACrzQf2k9jBgfBs7k40mZ87PqzHXwzfqK785ruciaPlGKCqVwZLchRyP
-        bNzHYp+zwA70A+q106GZThY=
-X-Google-Smtp-Source: AMsMyM49WtWZc0uACKZh6Upcn3DKzDvm92rtd4gQ+dz9RCt2GVWOWlco9b1f7k3TFIc/1yL11J8y/Q==
-X-Received: by 2002:a17:903:2286:b0:178:349b:d21c with SMTP id b6-20020a170903228600b00178349bd21cmr21985669plh.71.1664802458388;
-        Mon, 03 Oct 2022 06:07:38 -0700 (PDT)
-Received: from [192.168.43.80] (subs09a-223-255-225-71.three.co.id. [223.255.225.71])
-        by smtp.gmail.com with ESMTPSA id j16-20020a170902da9000b00176c6738d13sm7201817plx.169.2022.10.03.06.07.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Oct 2022 06:07:37 -0700 (PDT)
-Message-ID: <da2c8d2f-eefa-1681-b1f2-93c7865c300c@gmail.com>
-Date:   Mon, 3 Oct 2022 20:07:33 +0700
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=b1qcaRchgrUtrninTF+StwHDkxeedoXMG5LP6IO3u94=;
+        b=IoJ3ETeO/V/+WfeHY9kGHMPV8p3jGi3bvpNflP0yJwuufscXDKzoRD6igzkqssZCzD
+         aP8akhR162/whD3VU6vkrmmNkEhR8MTsl+SUijYMKd0uuYm91IV3W11gxTTTZ4MpwJk0
+         GjBZeXHyjZkP1bdjO0al60l58v3IlMvpnxssf3vgVIDmub02DPeEvyb0Z1JGn7hweHoP
+         UZARPMMLzoQu04hatajEO0VCH1Xz21pMrdVboEAb2KlTB58oP4JN0d6Cndn51pCRFoi2
+         USXIaQTD+PZv0n0FwESKBhb6NZLbFEJNa+xOrLHvbUbfAz0NFZVB19NyeefGNJTKwj8d
+         CEAg==
+X-Gm-Message-State: ACrzQf2CCnUfVthK95WpQyU2MTzmNgi/GRAKKKwUI+QAhz+cG6gvRkcr
+        HJNOpdVMqECU0y9GO1TFH6soZgZxWX6cnghWkZBFYX4QtA0vSQ==
+X-Google-Smtp-Source: AMsMyM5MVTI9KQBTywMLdViQzMmd6O0ChnrmcPNbeamQmPyEonu6wxHarKz9TDxf8W6madRVkTqPhCqNQQZsmdV5p+s=
+X-Received: by 2002:a25:dacf:0:b0:6bd:bad1:2885 with SMTP id
+ n198-20020a25dacf000000b006bdbad12885mr4474648ybf.120.1664804501896; Mon, 03
+ Oct 2022 06:41:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH] git-reflog.txt: add an EXAMPLES section
-Content-Language: en-US
-To:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-References: <20221003084654.183966-1-gitter.spiros@gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <20221003084654.183966-1-gitter.spiros@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <CAP8UFD0_TLWTHpjwxgqAjBLpvBo5BntvpwRLqXrndYosEj7tHw@mail.gmail.com>
+In-Reply-To: <CAP8UFD0_TLWTHpjwxgqAjBLpvBo5BntvpwRLqXrndYosEj7tHw@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Mon, 3 Oct 2022 21:41:30 +0800
+Message-ID: <CAOLTT8S+VcbnEehSo7Cinff4aC-LLu6FJ45ny+82a=FFKQVxwg@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git Rev News edition 91
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        lwn@lwn.net, Glen Choo <chooglen@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Luca Milanesio <luca.milanesio@gmail.com>,
+        Bruno Brito <bruno@git-tower.com>, Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Tim Hockin <thockin@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/3/22 15:46, Elia Pinto wrote:
-> This commit adds an "EXAMPLES" section to the git reflog man page.
-> This new section currently provides examples of using git reflog
-> with branches, for which doubts often exist. In this commit we also
-> add a "SEE ALSO" section which refers to further information
-> on git commands or documentation referenced in the git reflog man page.
-> 
+Christian Couder <christian.couder@gmail.com> =E4=BA=8E2022=E5=B9=B410=E6=
+=9C=882=E6=97=A5=E5=91=A8=E6=97=A5 04:45=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Hi everyone,
+>
+> The 91st edition of Git Rev News is now published:
+>
+>   https://git.github.io/rev_news/2022/09/30/edition-91/
+>
+> Thanks a lot to Peff (Jeff King), Bruno Brito and Luca Milanesio who
+> helped this month!
+>
+> Enjoy,
+> Christian, Jakub, Markus and Kaartic.
+>
+> PS: An issue for the next edition is already opened and contributions
+> are welcome:
+>
+>   https://github.com/git/git.github.io/issues/602
 
-Better say "Add git-reflog usage examples to the man page."
-Also, shouldn't "SEE ALSO" additions be split from this patch?
+Hi, Christian,
 
--- 
-An old man doll... just what I always wanted! - Clara
+Is there any videos about Git Merge Meeting 2022?
+
+Thanks,
+--
+ZheNing Hu
