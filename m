@@ -2,180 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B84DC433FE
-	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 09:00:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29E37C433F5
+	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 09:00:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230418AbiJCI75 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Oct 2022 04:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50916 "EHLO
+        id S230274AbiJCJAe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Oct 2022 05:00:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230232AbiJCI7b (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2022 04:59:31 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D91BE62E4
-        for <git@vger.kernel.org>; Mon,  3 Oct 2022 01:45:07 -0700 (PDT)
-Received: (qmail 30378 invoked by uid 109); 3 Oct 2022 08:45:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 03 Oct 2022 08:45:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21703 invoked by uid 111); 3 Oct 2022 08:45:08 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 Oct 2022 04:45:08 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 3 Oct 2022 04:45:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     "Michael V. Scovetta" <michael.scovetta@gmail.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: [PATCH] sequencer: detect author name errors in read_author_script()
-Message-ID: <YzqhEcTDwMwa8dQX@coredump.intra.peff.net>
-References: <CADG3Mza_QU+ceTUsMYxJ3PzsEqi8M98oOBAzzz0GHRJ-F7vkpA@mail.gmail.com>
+        with ESMTP id S230232AbiJCJAJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2022 05:00:09 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE4191903C
+        for <git@vger.kernel.org>; Mon,  3 Oct 2022 01:47:08 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id x59so3588901ede.7
+        for <git@vger.kernel.org>; Mon, 03 Oct 2022 01:47:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YKBjqpmsMKp1twREckUexojqIPpu7pEy4Nds3rF9KUg=;
+        b=Hfd4QSjRTqArxfvjocRB1EIEN48HZbG39f8R1P6N0MGy/M9v60VZ9nflX8Yle7pZS1
+         LM0dt1tu374o4y58dTbWtHuHgx7svzLzDNp5Na0/UD9lSFlvwTGoPW/XMrtlryH1zpq6
+         nuCQYXH6oWfN51Xd5k8RTxk8aNgCmcpb9/8283C3gWl/39fRXs0gSFQsd+9nOO64FCmY
+         5Exqvei/tnqruqXzlXOVBHIOxWfSgvfC7aeY38jUG/6Xqx/X+t4PCz91RcNDg2ovqWS+
+         nHmL8fhr82NLvnDOiV2hw9d/0Bxnw8ItJoKz4FQMJwXwqHlXn118kYWpAWtErAJB5chr
+         QIbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YKBjqpmsMKp1twREckUexojqIPpu7pEy4Nds3rF9KUg=;
+        b=yiQ8+pDGZcPlyvgTBFw/pHMWBHcTYY+EvBcUC15AqSsuzPiFNO/bIEm9boxp/eg++l
+         D0M7M4Nk4hORQYvlCqNLWc7vX3daAk1ZQ8QO2DhF8d90Ng5wKp6643PnN6ybaarWLvQQ
+         o+fDGWy7uzrhLoeP6eYNo/WX7//46xhysGpUFPLjbX2YZ1+1yQn6UR/QIiM/rwA1+wzp
+         v+LomLiMAmWY9fglmUOoOmw7oMit3tWhKP8Tjm2g1WL33CoTbUWMopM83+JNVGuPE+Xa
+         B/QYE/m+JleTqTixx6Q/Cs1pQuBc9apFcVmmSZ15xHOEMDx2bXS9cUCCuW87hzIBIicT
+         KaMQ==
+X-Gm-Message-State: ACrzQf0KXg8SnA3fXKAI8UiIm1m0QFhV0TOd/u2brCGz57CgKROuuCeq
+        4Cok0/WqwFzoOifCpLSttFcg1k0xRaI=
+X-Google-Smtp-Source: AMsMyM6JKF0i5t1DJqS5bll8ikcidXvqoinOObccyCf1tj4ujR7yC+1INDrRlXPEH34SscjMXu3yAg==
+X-Received: by 2002:a50:9510:0:b0:453:dded:60e with SMTP id u16-20020a509510000000b00453dded060emr17898319eda.204.1664786826981;
+        Mon, 03 Oct 2022 01:47:06 -0700 (PDT)
+Received: from fedora35.example.com.example.com ([31.191.121.158])
+        by smtp.gmail.com with ESMTPSA id x11-20020aa7d38b000000b00456e6e64047sm6907526edq.94.2022.10.03.01.47.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Oct 2022 01:47:06 -0700 (PDT)
+From:   Elia Pinto <gitter.spiros@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] git-reflog.txt: add an EXAMPLES section
+Date:   Mon,  3 Oct 2022 08:46:54 +0000
+Message-Id: <20221003084654.183966-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CADG3Mza_QU+ceTUsMYxJ3PzsEqi8M98oOBAzzz0GHRJ-F7vkpA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 02, 2022 at 11:39:16PM -0700, Michael V. Scovetta wrote:
+This commit adds an "EXAMPLES" section to the git reflog man page.
+This new section currently provides examples of using git reflog
+with branches, for which doubts often exist. In this commit we also
+add a "SEE ALSO" section which refers to further information
+on git commands or documentation referenced in the git reflog man page.
 
-> In commit 2a7d63a2, sequencer.c:912 looks like:
-> 912  if (name_i == -2)
-> 913      error(_("missing 'GIT_AUTHOR_NAME'"));
-> 914  if (email_i == -2)
-> 915      error(_("missing 'GIT_AUTHOR_EMAIL'"));
-> 916  if (date_i == -2)
-> 917      error(_("missing 'GIT_AUTHOR_DATE'"));
-> 918  if (date_i < 0 || email_i < 0 || date_i < 0 || err)    <-- date_i
-> is referenced here twice
-> 919      goto finish;
-> 
-> I'm fairly sure that line 918 should be:
-> 918  if (name_i < 0 || email_i < 0 || date_i < 0 || err)
-
-Agreed, but +cc Phillip as the original author.
-
-> I haven't validated this, but I suspect that if
-> `rebase-merge/author-script` contained two GIT_AUTHOR_NAME fields,
-> then name_i would be set to -1 (by the error function), but control
-> wouldn't flow to finish, but instead to line 920 ( *name =
-> kv.items[name_i].util; ) where it would attempt to access memory
-> slightly outside of items' memory space.
-
-Correct. It also happens if GIT_AUTHOR_NAME is missing.
-
-> I haven't been able to actually trigger the bug, but strongly suspect
-> I'm just not familiar enough with how rebasing works under the covers.
-
-It's a little tricky, because we avoid writing and reading the
-author-script file unless necessary. An easy way to need it is to break
-with a conflict (which writes it), and then resume with "git rebase
---continue" (which reads it back while committing).
-
-Here's a patch to fix it. Thanks for your report!
-
--- >8 --
-Subject: sequencer: detect author name errors in read_author_script()
-
-As we parse the author-script file, we check for missing or duplicate
-lines for GIT_AUTHOR_NAME, etc. But after reading the whole file, our
-final error conditional checks "date_i" twice and "name_i" not at all.
-This not only leads to us failing to abort, but we may do an
-out-of-bounds read on the string_list array.
-
-The bug goes back to 442c36bd08 (am: improve author-script error
-reporting, 2018-10-31), though the code was soon after moved to this
-spot by bcd33ec25f (add read_author_script() to libgit, 2018-10-31).
-It was presmably just a typo in 442c36bd08.
-
-We'll add test coverage for all the error cases here, though only the
-GIT_AUTHOR_NAME ones fail (even in a vanilla build they to segfault
-consistently, but certainly with SANITIZE=address).
-
-Reported-by: Michael V. Scovetta <michael.scovetta@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
-The tests kind of feel like overkill, as this is such a specific
-condition and I doubt we'd regress to have the same bug twice. But it
-was nice at least to confirm the bug and the fix now.
+ Documentation/git-reflog.txt | 42 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
- sequencer.c                    |  2 +-
- t/t3438-rebase-broken-files.sh | 53 ++++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+), 1 deletion(-)
- create mode 100755 t/t3438-rebase-broken-files.sh
-
-diff --git a/sequencer.c b/sequencer.c
-index d26ede83c4..83e0425b04 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -915,7 +915,7 @@ int read_author_script(const char *path, char **name, char **email, char **date,
- 		error(_("missing 'GIT_AUTHOR_EMAIL'"));
- 	if (date_i == -2)
- 		error(_("missing 'GIT_AUTHOR_DATE'"));
--	if (date_i < 0 || email_i < 0 || date_i < 0 || err)
-+	if (name_i < 0 || email_i < 0 || date_i < 0 || err)
- 		goto finish;
- 	*name = kv.items[name_i].util;
- 	*email = kv.items[email_i].util;
-diff --git a/t/t3438-rebase-broken-files.sh b/t/t3438-rebase-broken-files.sh
-new file mode 100755
-index 0000000000..e68aac4b36
---- /dev/null
-+++ b/t/t3438-rebase-broken-files.sh
-@@ -0,0 +1,53 @@
-+#!/bin/sh
+diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
+index 70791b9fd8..5bbd5958fe 100644
+--- a/Documentation/git-reflog.txt
++++ b/Documentation/git-reflog.txt
+@@ -96,6 +96,48 @@ them.
+ --verbose::
+ 	Print extra information on screen.
+ 
++EXAMPLES
++--------
 +
-+test_description='rebase behavior when on-disk files are broken'
-+. ./test-lib.sh
++`git reflog`::
++	Lists entries of reflog of HEAD, starting at `HEAD@{0}`.
 +
-+test_expect_success 'set up conflicting branches' '
-+	test_commit base file &&
-+	git checkout -b branch1 &&
-+	test_commit one file &&
-+	git checkout -b branch2 HEAD^ &&
-+	test_commit two file
-+'
++`git reflog HEAD`::
++	The same.
 +
-+check_broken_author () {
-+	title=$1; shift
-+	script=$1; shift
++`git reflog show HEAD`::
++	The same.
 +
-+	test_expect_success "$title" '
-+		# create conflicted state
-+		test_when_finished "git rebase --abort" &&
-+		git checkout -B tmp branch2 &&
-+		test_must_fail git rebase branch1 &&
++`git reflog HEAD@{4}`::
++	The same, starting at the 4th prior value of HEAD.
 +
-+		# break author-script
-+		'"$script"' &&
++`git reflog master`::
++	Lists entries of reflog of `master`.
 +
-+		# resolving notices broken author-script
-+		echo resolved >file &&
-+		git add file &&
-+		test_must_fail git rebase --continue
-+	'
-+}
++`git reflog master@{0}`::
++	The same.
 +
-+for item in NAME EMAIL DATE
-+do
-+	check_broken_author "detect missing GIT_AUTHOR_$item" '
-+		grep -v $item .git/rebase-merge/author-script >tmp &&
-+		mv tmp .git/rebase-merge/author-script'
-+done
++`git reflog master@{now}`::
++	The same, show with timestamp.
 +
-+for item in NAME EMAIL DATE
-+do
-+	check_broken_author "detect duplicate GIT_AUTHOR_$item" '
-+		grep -i $item .git/rebase-merge/author-script >tmp &&
-+		cat tmp >>.git/rebase-merge/author-script'
-+done
++`git reflog master@{4.minutes}`::
++	The same, starting at master, 4 minutes ago.
 +
-+check_broken_author 'unknown key in author-script' '
-+	echo "GIT_AUTHOR_BOGUS=${SQ}whatever${SQ}" \
-+		>>.git/rebase-merge/author-script'
++For the branch that is currently checked out, you can omit the name
++when you use any of the @{..} notation, so
 +
++`git reflog @{0}`
 +
-+test_done
++`git reflog @{now}`
++
++are often the easiest ways to view what you did on the current
++branch
++
++SEE ALSO
++--------
++linkgit:gitrevisions[7],
++linkgit:git-log[1]
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 -- 
-2.38.0.rc2.657.gc449b89570
+2.37.3
 
