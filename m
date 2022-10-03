@@ -2,114 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98DB4C433F5
-	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 22:06:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21538C433F5
+	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 22:28:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229650AbiJCWGH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Oct 2022 18:06:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41856 "EHLO
+        id S229676AbiJCW2J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Oct 2022 18:28:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbiJCWGF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2022 18:06:05 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49411DEB8
-        for <git@vger.kernel.org>; Mon,  3 Oct 2022 15:06:01 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id cb7-20020a056a00430700b00561b86e0265so649830pfb.13
-        for <git@vger.kernel.org>; Mon, 03 Oct 2022 15:06:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date;
-        bh=T0JERAkoNRWVTnmUrdu4PVqMmX9fLM4QP4RTL7clVME=;
-        b=m9vNVx6inWPV67DBQypouf3Wlw/+46K9+D7wqQPFSuYzrYbyCIP/ZE3RfWMbqKhw2V
-         pBZP534nHKKdRgJPbC4+E4aZCLwTdhaoXp6wRG5dlFZsp71F3BR3Moikood2OfRTlGET
-         GJByXYPco6haUgHrAJH2ndce8kqL8YmXxZ/Z2/V4Iun/jcDNp+qOI2fJK6qWS7+MAYhZ
-         35ih1DnKCcUG9OdPnXyMeW8E3spq70/5RfvuCNdS8aQ0/CDcBvf6SZPnd01dpSCo33vT
-         4gYsGh22sYXRZOR5qtNaFD/UucH9H08TJl7vni6xkNDttaKUBCrj+sKVAOBl6FKHN7aa
-         A5aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=T0JERAkoNRWVTnmUrdu4PVqMmX9fLM4QP4RTL7clVME=;
-        b=dtsEL4fYNYwUa18nh0mRnKJAdPYrtkVwUDltK2IisL9vFxPg+j8S4VNLgbYcKsP2H3
-         Q3hvezM7WJjkMuuAXbUpJmsKLiHJiAKg/GesFw1gEGPhdKvh+JIFZZoqA0eEGF9/N1WQ
-         fbd04gkiW4F0KCogqINxBO59LJzRxQ7ifckctUhIUjaeKqW9kVbdxQIYCc2ror0pk1ej
-         2taIuRFJckow3diT1vdGh60zK0uCsC3LeJ42e0s5FDHxo3UelfmGrA+IiTfP1U7TvJkZ
-         kbD0Tz7RholvDUf/xIIilO9Mau0lf8tGke0BWH6/VduBKuGNF/NDnBjazYEntywGdVDv
-         +MIQ==
-X-Gm-Message-State: ACrzQf2hoSux9o9D/GbLUbztwqS0r+V3U+j+korq0cRcjcqm6l360CEe
-        PCMgkPIdwsCkcaTNXIYpnCafaE0Z/lH9oMAeiYtukLgXFZJG1bdVFDyWVkxJBsy/J2ZkeJxrmMp
-        c8XG/7chkoFMZ0KZeafZK7XygYwls3pvJGBCRqk4oqNW9R5geQVcA+d6QZ4GfNOI=
-X-Google-Smtp-Source: AMsMyM4eMkYA6hQ1Xb0dIieqwaGQU3438UVzyqz76vIiNxFkD54jwO9Yh3q7cRN4DmQe1HKUvW2QTbigQfp7uA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:903:186:b0:178:3af4:87b3 with SMTP id
- z6-20020a170903018600b001783af487b3mr24030204plg.117.1664834760716; Mon, 03
- Oct 2022 15:06:00 -0700 (PDT)
-Date:   Mon, 03 Oct 2022 15:05:52 -0700
-Mime-Version: 1.0
-Message-ID: <kl6l35c4mukf.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Bug report: `git restore --source --staged` deals poorly with sparse-checkout
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org, vdye@github.com,
-        Derrick Stolee <derrickstolee@github.com>
-Cc:     martinvonz@google.com
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229910AbiJCW1b (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2022 18:27:31 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 456A35E66E
+        for <git@vger.kernel.org>; Mon,  3 Oct 2022 15:24:14 -0700 (PDT)
+Received: (qmail 742 invoked by uid 109); 3 Oct 2022 22:24:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 03 Oct 2022 22:24:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29882 invoked by uid 111); 3 Oct 2022 22:24:14 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 Oct 2022 18:24:14 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 3 Oct 2022 18:24:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Tim Jaacks <timjaacks@posteo.de>, git@vger.kernel.org
+Subject: Re: Bash completion for git aliases containing nested subcommands
+Message-ID: <YzthDLdqeQx6bEcj@coredump.intra.peff.net>
+References: <em8d7ca854-51a3-4cb5-aaf9-30ed37b4194b@acer-switch-tim>
+ <20221003142437.GB7659@szeder.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221003142437.GB7659@szeder.dev>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Filing a `git bugreport` on behalf of a user at $DAYJOB. I'm also pretty
-surprised by this behavior, perhaps someone who knows more could shed
-some light?
+On Mon, Oct 03, 2022 at 04:24:37PM +0200, SZEDER Gábor wrote:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+> > Is there a way to get the completion on the alias behave like on the
+> > original command?
+> 
+> In general: no.  Our Bash completion script is organized as one
+> _git_cmd() function for each git supported command.  If a command has
+> subcommands, then its completion function looks for any of its
+> subcommands amond the words on the command line, and takes the
+> appropriate action, which is usually executing a particular arm of a
+> case statement.  The two main issues are that in case of such an alias
+> there is no subcommand ("show") on the command line, and there is no
+> dedicated function to handle only the completion for 'git stash show'.
 
-  git clone git@github.com:git/git.git . &&
-  git sparse-checkout set t &&
-  git restore --source v2.38.0-rc1 --staged Documentation &&
-  git status
+It feels like this ought to be able to work, for the same reason that
+"git stash show <TAB>" works. In the non-aliased case, we call into
+_git_stash(), and it sees that "show" is already there on the command
+line. But in the aliased case, we know "show" is part of the alias but
+throw away that information completely, and never feed it to
+_git_stash() at all.
 
-What did you expect to happen? (Expected behavior)
+I think we could do something like the patch below, though I suspect
+there are some dragons with more complicated aliases. I wonder if
+__git_aliased_command() needs to be more careful with distinguishing
+pure-git-command aliases from the complexity of "!" aliases. Or maybe
+the alias stuff is all best-effort enough that this doesn't make
+anything worse.
 
-I expected to see staged changes only, since I restored only paths
-outside of my sparse spec (which was t/, plus the implicit root
-directory).
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index ba5c395d2d..f68bfcbf05 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1148,10 +1148,13 @@ __git_aliased_command ()
+ 		cur=
+ 
+ 		for word in $cmdline; do
++			if test -n "$cur"; then
++				expansion_words+=("$word")
++				continue
++			fi
+ 			case "$word" in
+ 			\!gitk|gitk)
+ 				cur="gitk"
+-				break
+ 				;;
+ 			\!*)	: shell command alias ;;
+ 			-*)	: option ;;
+@@ -1163,14 +1166,13 @@ __git_aliased_command ()
+ 			\'*)	: skip opening quote after sh -c ;;
+ 			*)
+ 				cur="$word"
+-				break
+ 			esac
+ 		done
+ 	done
+ 
+ 	cur=$last
+ 	if [[ "$cur" != "$1" ]]; then
+-		echo "$cur"
++		expansion=$cur
+ 	fi
+ }
+ 
+@@ -3507,9 +3509,13 @@ __git_main ()
+ 
+ 	__git_complete_command "$command" && return
+ 
+-	local expansion=$(__git_aliased_command "$command")
++	# __git_aliased_command now writes to these
++	local expansion
++	local expansion_words
++	__git_aliased_command "$command"
+ 	if [ -n "$expansion" ]; then
+-		words[1]=$expansion
++		words=("${words[0]}" "$expansion" "${expansion_words[@]}" "${words[@]:2}")
++		cword=$((cword + ${#expansion_words[@]}))
+ 		__git_complete_command "$expansion"
+ 	fi
+ }
 
-What happened instead? (Actual behavior)
+By the way, you'll notice that the splice into "words" happens right
+at words[1]. That matches the earlier code that just touches words[1].
+But I suspect that isn't right. If we're completing "git -p foo", for
+example, then the command is at word[2]. I don't know if this causes any
+bugs, since we get to the right completion function based on $expansion,
+not any value in $words. But presumably it should be __git_cmd_idx?
 
-I saw a staged modification (Documentation/cmd-list.perl) and the same
-file reported as deleted in the working copy. Specifically,
-
-  $ git status
-
-  On branch master
-  Your branch is up to date with 'origin/master'.
-
-  You are in a sparse checkout with 64% of tracked files present.
-
-  Changes to be committed:
-    (use "git restore --staged <file>..." to unstage)
-          modified:   Documentation/cmd-list.perl
-
-  Changes not staged for commit:
-    (use "git add/rm <file>..." to update what will be committed)
-    (use "git restore <file>..." to discard changes in working directory)
-          deleted:    Documentation/cmd-list.perl
-
-What's different between what you expected and what actually happened?
-
-git status should not have said that the file was deleted in the
-working copy
-
-[System Info]
-git version: git version 2.37.3.998.g577e59143f-goog
-cpu: x86_64 no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.17.11-1rodete2-amd64 #1 SMP PREEMPT Debian
-5.17.11-1rodete2 (2022-06-09) x86_64
-compiler info: gnuc: 12.2
-libc info: glibc: 2.33
-$SHELL (typically, interactive shell): /bin/bash
+-Peff
