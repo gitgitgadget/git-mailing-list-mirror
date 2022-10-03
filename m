@@ -2,66 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86FB7C433FE
-	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 16:34:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A8BDC433FE
+	for <git@archiver.kernel.org>; Mon,  3 Oct 2022 16:36:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229703AbiJCQea (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Oct 2022 12:34:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32988 "EHLO
+        id S229914AbiJCQg1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Oct 2022 12:36:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229561AbiJCQe2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Oct 2022 12:34:28 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCD632018D
-        for <git@vger.kernel.org>; Mon,  3 Oct 2022 09:34:27 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id f140so5394390pfa.1
-        for <git@vger.kernel.org>; Mon, 03 Oct 2022 09:34:27 -0700 (PDT)
+        with ESMTP id S229827AbiJCQgY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Oct 2022 12:36:24 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 649B625C52
+        for <git@vger.kernel.org>; Mon,  3 Oct 2022 09:36:20 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id h8-20020a17090a054800b00205ccbae31eso15771085pjf.5
+        for <git@vger.kernel.org>; Mon, 03 Oct 2022 09:36:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HhjTTQ8TzOulejjZwCf7g5XSQRubL6GA5DYbUiA4Y4Q=;
-        b=TLkEENt2JEE7PMfY16ZbQ1DiVUvjk+m/TeT7gD0CAhQ7MW92iNaYBzJjdSUq68LhRr
-         Zdnn6CU8C+kRV+oJrt5E41e5yxfY9CPzEX78Q8D0Ox4VV7ZCKtXkskkARB9idl/wGEzq
-         tZeNHg1/k6AHLuJP7lx7bS531qm/Pg4lCSBmYa+Pumb9xjXFLbAtGbULLRtS1yFG73hV
-         v8AxOjZYH7EzTC78aY7e6M2bw/5syr7cgLd+TqNXXCVGHFUNlpXRWnD4mnYjpBAkhImK
-         bpouTq3OOo8dTf3TW5QyrccfP+X3wsoBHBloNz8u3AmAw/al1WLcFzYgpM0UpLI3908M
-         /4Ww==
+        bh=gd2daFZosSSi7uwPQxchyVWszdTWOnF1ZbKDZ5vkBog=;
+        b=pmY3avnC8s3S6EL844fpovOyd2UaWnTdWdXPeZM399kRha87Rirj4W2XScK3fLGLMG
+         6sd+8Z8yvFIR6hVKlnijBYldMyiiW8J/WotxHTZOCqxRGa95phdZcgAjA50qgTv5mip6
+         FzB24eu+v66mwa+jS/nyJc1VAY3bX0C2Ogi1K77ueHK4OkUmX5XVScDp4HXNFMEBsyOF
+         E+611d1Ao2ZybuIxk5yaSl8IFLYlMgky5QRtGqhwYXCuCnraSX0WidUOX6zay+qGywiF
+         y8CEKKXWSz6sQE2nEGaUjPYTmYTDPpZptQkz/m258FXzvjdwyIxB3yjiSQgvulH9NP4A
+         2niw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=HhjTTQ8TzOulejjZwCf7g5XSQRubL6GA5DYbUiA4Y4Q=;
-        b=e9S231ZObUadcpH8+SBcriAkiYep/OS9n8J9RrtMPAtcYmM5qXU7qwV9n6AUGf1m2Q
-         v/JyXhP6Q0q8yzVSlS4lNe4oXi1lfnlLlq+vaBrnS8KAjFF9L0OTcjN6tFFjuuRxAH3X
-         vbiNAC4Htm2SmpsSSCemukJQqHb13Z0vbKtzMIdzZwSFURxZwumEW4RjvCP+sxM17+iZ
-         Lcan/Q6CZq4nLOEiVodwYCdKMe22Vc9F6irVRFH8A/HWsQarPIJhgZSw+/PyCOeG7WkM
-         IRLZzEnHd4wiWduc9pr016/lqQpw9e5/DRJIcsE7/uoBbo2qOBd8KPVMj/pXParstJyV
-         +r3g==
-X-Gm-Message-State: ACrzQf2Q+A/AE7X6zb2SVZhctuz22hQM2HMJM3fah/rFY9WSdyiaknfr
-        b8486h418ZMbKGKIv59ufSo=
-X-Google-Smtp-Source: AMsMyM5s7DdC281bzMwYmZjbVPyyqqlaSnsT4ICj2D22a3S2pgNk0gSr6IAYjcGY+vidG4g5XRDhaQ==
-X-Received: by 2002:a05:6a00:298a:b0:55f:e8ca:f257 with SMTP id cj10-20020a056a00298a00b0055fe8caf257mr11298930pfb.75.1664814867304;
-        Mon, 03 Oct 2022 09:34:27 -0700 (PDT)
+        bh=gd2daFZosSSi7uwPQxchyVWszdTWOnF1ZbKDZ5vkBog=;
+        b=MC5rboi8EnosT4i7xH7xWOuMZQPna/Er6rjN81kPY71quQcLGWsA8/y5OvaRjgXbeX
+         QPNyBUK+a/WrjeIAqrvWKHipPISPOPwpx4Bt73V9Q4cYV7JtTa/saB23da3JWd7pAmha
+         UoUh7bNF+iyeWgGJh1S6/wCXeVxE1wwINICSfcVChy0Nar9xy01jaUvdV2g1fYpaTDZp
+         O841ZIzaTlXXe++WtmztL1O9OrqwuLQ/5rhaQ8CKJYMwTrKQfySYDgCoq9p2IkmgC+IF
+         n+Up1T4Ed3oCJIE95E6rHp9OvlP4MTSLhD0DHV5sUAuMR8jBIMIHIg6gO6ZASGl3CQ/8
+         Ls/A==
+X-Gm-Message-State: ACrzQf0+2cy3K5/EjMUMR/JKbciPbkn+1IIkmwhs+DSNBu9kLNrxrlyi
+        cALwYbSus6QgQBvMjlSivfM=
+X-Google-Smtp-Source: AMsMyM7bFI0jBgIm9Hu3bFVK0sD0xtn6WEzbMH+H+vecDV2YinRfb+qW8Ncxu+eZcjty1TfaiaHC+w==
+X-Received: by 2002:a17:90b:3510:b0:202:f18c:fdb6 with SMTP id ls16-20020a17090b351000b00202f18cfdb6mr13022924pjb.122.1664814979474;
+        Mon, 03 Oct 2022 09:36:19 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id cu23-20020a17090afa9700b0020a750c6979sm4355626pjb.34.2022.10.03.09.34.26
+        by smtp.gmail.com with ESMTPSA id q14-20020a63750e000000b004468cb97c01sm4667884pgc.56.2022.10.03.09.36.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Oct 2022 09:34:26 -0700 (PDT)
+        Mon, 03 Oct 2022 09:36:19 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Michael V. Scovetta" <michael.scovetta@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: [PATCH] sequencer: detect author name errors in
- read_author_script()
-References: <CADG3Mza_QU+ceTUsMYxJ3PzsEqi8M98oOBAzzz0GHRJ-F7vkpA@mail.gmail.com>
-        <YzqhEcTDwMwa8dQX@coredump.intra.peff.net>
-Date:   Mon, 03 Oct 2022 09:34:26 -0700
-In-Reply-To: <YzqhEcTDwMwa8dQX@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 3 Oct 2022 04:45:05 -0400")
-Message-ID: <xmqq8rlwx3vx.fsf@gitster.g>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] git-reflog.txt: add an EXAMPLES section
+References: <20221003084654.183966-1-gitter.spiros@gmail.com>
+        <da2c8d2f-eefa-1681-b1f2-93c7865c300c@gmail.com>
+Date:   Mon, 03 Oct 2022 09:36:18 -0700
+In-Reply-To: <da2c8d2f-eefa-1681-b1f2-93c7865c300c@gmail.com> (Bagas Sanjaya's
+        message of "Mon, 3 Oct 2022 20:07:33 +0700")
+Message-ID: <xmqq4jwkx3st.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,43 +67,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-> On Sun, Oct 02, 2022 at 11:39:16PM -0700, Michael V. Scovetta wrote:
->
->> In commit 2a7d63a2, sequencer.c:912 looks like:
->> 912  if (name_i == -2)
->> 913      error(_("missing 'GIT_AUTHOR_NAME'"));
->> 914  if (email_i == -2)
->> 915      error(_("missing 'GIT_AUTHOR_EMAIL'"));
->> 916  if (date_i == -2)
->> 917      error(_("missing 'GIT_AUTHOR_DATE'"));
->> 918  if (date_i < 0 || email_i < 0 || date_i < 0 || err)    <-- date_i
->> is referenced here twice
->> 919      goto finish;
+> On 10/3/22 15:46, Elia Pinto wrote:
+>> This commit adds an "EXAMPLES" section to the git reflog man page.
+>> This new section currently provides examples of using git reflog
+>> with branches, for which doubts often exist. In this commit we also
+>> add a "SEE ALSO" section which refers to further information
+>> on git commands or documentation referenced in the git reflog man page.
 >> 
->> I'm fairly sure that line 918 should be:
->> 918  if (name_i < 0 || email_i < 0 || date_i < 0 || err)
 >
-> Agreed, but +cc Phillip as the original author.
->
->> I haven't validated this, but I suspect that if
->> `rebase-merge/author-script` contained two GIT_AUTHOR_NAME fields,
->> then name_i would be set to -1 (by the error function), but control
->> wouldn't flow to finish, but instead to line 920 ( *name =
->> kv.items[name_i].util; ) where it would attempt to access memory
->> slightly outside of items' memory space.
->
-> Correct. It also happens if GIT_AUTHOR_NAME is missing.
->
->> I haven't been able to actually trigger the bug, but strongly suspect
->> I'm just not familiar enough with how rebasing works under the covers.
->
-> It's a little tricky, because we avoid writing and reading the
-> author-script file unless necessary. An easy way to need it is to break
-> with a conflict (which writes it), and then resume with "git rebase
-> --continue" (which reads it back while committing).
->
-> Here's a patch to fix it. Thanks for your report!
+> Better say "Add git-reflog usage examples to the man page."
 
-And thanks for your fix ;-)
+Thanks, indeed.
+
+> Also, shouldn't "SEE ALSO" additions be split from this patch?
+
+I think they are better together.  The overall theme is to help
+readers of that one documentation page, and 80% of the effort of
+this step is spent on adding an EXAMPLES section, while the rest
+goes to SEE ALSO.
+
+Thanks.
