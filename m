@@ -2,64 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EB47C433FE
-	for <git@archiver.kernel.org>; Tue,  4 Oct 2022 12:34:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DBDEC4332F
+	for <git@archiver.kernel.org>; Tue,  4 Oct 2022 12:34:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229836AbiJDMel (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Oct 2022 08:34:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45528 "EHLO
+        id S229852AbiJDMen (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Oct 2022 08:34:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229789AbiJDMea (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229703AbiJDMea (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 4 Oct 2022 08:34:30 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2396B32A99
-        for <git@vger.kernel.org>; Tue,  4 Oct 2022 05:34:29 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id bu30so1211845wrb.8
-        for <git@vger.kernel.org>; Tue, 04 Oct 2022 05:34:29 -0700 (PDT)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB2705A175
+        for <git@vger.kernel.org>; Tue,  4 Oct 2022 05:34:28 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id bu30so1211804wrb.8
+        for <git@vger.kernel.org>; Tue, 04 Oct 2022 05:34:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=fnuvRU/s4CwFnk6H9aTDmG6Z/zW4bmJU9S4El1WdLLY=;
-        b=IouwFGY730Vi465uljFJ64cZCgmdEAh1cuo1pwddSSpMEXMxgMLBlGqR2nuM8CAOR5
-         IIqZDBP9rELadzAWFeB3eHhivT55gxCpAquh7wtIN0TGVyNbu36arWDyDbw+3iRTy50X
-         JHYR6J67lrnKDLiHE9jd4qQgMvsRxcicXHmchIfOVBzknbc//t1LO/IQlQHrLyYm8GJr
-         ArvawAF7mKjOUH9OwtRKLzLG11r49OAk5VSjHNOqNawUBOrWNuqKwnpSmoRILZ/Wgmdw
-         nVEz8q/bZiHqX6vge1nRm+DoIHskdTSCEHn3pilGO9QqN374+w/uz44tqOemhjN4MJxm
-         WbYA==
+        bh=0hj8uYxEbb7O8YWYr7EtPuF6YNvQZhm/4XCGYE1+v8Y=;
+        b=IUZ/bUGDEOe6HDbFlC5WnqaLqL8TempQtRlixosgN4qWBriYmlr6swq9I/NsK1weAQ
+         vu4/KS1q0GrZ8BhoXTYs2MCTW9LV54BbVtLpwlkazMDIV3Khlcrv+FhqFFFpsmw9XNGr
+         v30x0M8aLf7ezFTOThIGD8bT90X5iE1M1Cf9GCpgDe5h9lzpFTvxYn5uurz+RwLN/HUY
+         LXgcykg/eNDFer8j8nFpKdASTVl03tapL/L5zaQ2eViDPevsZpgv0DGSd8Hi/QOV0R+c
+         aEZ2TXG45j7Riv5/9rrMQ5smC+gZBXpbtIyQING4Z3jvf9hz9tykOE+dpKTVhGyl+gUV
+         zJEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=fnuvRU/s4CwFnk6H9aTDmG6Z/zW4bmJU9S4El1WdLLY=;
-        b=ybval/sdTWDiDtl+L4rx0aTzq9BuV6v/Me99SRQBMHOqa+3hioDaFl3QO4EKa8qWSz
-         7crDm9o8ofNe8ewGdH1LiHmHlHkN007oONjj3amS6anf4cssA+r8a/ZVYKu9DGGCgTY0
-         TcM9SGplbKNCOh2NRlQhUHA9w7ZppbIpGnG+PlPa50QTROZqwXcUhPQkZCoA/n2VWBI4
-         jEw+lJu/mAXuOBfikkCKvib0SsJpjUIfJomKvkFhmJEH1wFzBx2afunguZh/4FgMuOAN
-         8wTF3tQllO8L3zvgmr5pK3xjyDMDwfiYxotOy5PQ/r4X/ZSWgS9Wlwb2hLU8ktG8wtpo
-         AEfw==
-X-Gm-Message-State: ACrzQf3l16Hae9Zmyo9nnVqS/h+w8hFlFUfsv0N3+ZjWp6udsWi2SAJo
-        THcVPpvwvAkE8IsbR2vg2io3YRdYR8w=
-X-Google-Smtp-Source: AMsMyM6oldM4Y+hFl+r6qcPgttoT5/6cnj9/G3SVCYNqnRO+lbEIiAn7Eh+ZcOd4quK4JkMtB4S4cg==
-X-Received: by 2002:a5d:5403:0:b0:22e:34f2:81c1 with SMTP id g3-20020a5d5403000000b0022e34f281c1mr7617776wrv.346.1664886867439;
-        Tue, 04 Oct 2022 05:34:27 -0700 (PDT)
+        bh=0hj8uYxEbb7O8YWYr7EtPuF6YNvQZhm/4XCGYE1+v8Y=;
+        b=yIWBtGOh8lg5CHsOmaN9GOHKmVBO/UdCNnUqEMq+WTFoXAuT7onlei2+rDuAhshRBD
+         U1UWFXnWXisIgr4yksfBRd34O11eMeOTApRC2pLGL+0Dsp5aTDc55Jhx9fEnG0ennsZ3
+         /lwfvvepqhvKRWyPRdq1/0F8Ca2PS886rn1WI/q6q/2uYArhEfb2XCzp69EJ10QpwPhn
+         gCZykKdbZvZoKdLJAUZIlx5Y+F2a/I/GVZX2rfme5NN25T5efKWEc1E2N0PB08F0rL5r
+         ZmXZRiuUyhuW+k/WOVThJDXB05dp02Mr8NMu2GrWRB+tYp3bWtFylMrSxKMYlJQIXqLY
+         gLmA==
+X-Gm-Message-State: ACrzQf1BneXFs0I+tysr6ne+30JMd5BYVNZpYZAS5FDHs2R/4yJ3IhHE
+        htmQe361YI8dGHgdlXdVfEDqZ0js1W4=
+X-Google-Smtp-Source: AMsMyM67LjIDgRoVFwQ/R30L0LW04yJFsW46pUJVPEsVlww6bZnGxTq/ARVXYRTbEOdVLGdVJqTT+g==
+X-Received: by 2002:a5d:6d82:0:b0:22b:b9f:d7fb with SMTP id l2-20020a5d6d82000000b0022b0b9fd7fbmr15754340wrs.580.1664886866583;
+        Tue, 04 Oct 2022 05:34:26 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c13-20020adfed8d000000b0022dc6e76bbdsm11844958wro.46.2022.10.04.05.34.26
+        by smtp.gmail.com with ESMTPSA id b1-20020a5d45c1000000b0022ac119fcc5sm12366503wrs.60.2022.10.04.05.34.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 04 Oct 2022 05:34:26 -0700 (PDT)
-Message-Id: <cd915d57f3bced015dc154572612d4dd221d1618.1664886860.git.gitgitgadget@gmail.com>
+Message-Id: <430e01cd2a4127a17c4bfc1b0db7209964736de8.1664886860.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1333.v3.git.1664886860.gitgitgadget@gmail.com>
 References: <pull.1333.v2.git.1662734015.gitgitgadget@gmail.com>
         <pull.1333.v3.git.1664886860.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Tue, 04 Oct 2022 12:34:15 +0000
-Subject: [PATCH v3 4/9] bundle-uri: create "key=value" line parsing
-MIME-Version: 1.0
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 04 Oct 2022 12:34:14 +0000
+Subject: [PATCH v3 3/9] bundle-uri: create base key-value pair parsing
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
         avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
@@ -67,94 +66,219 @@ Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
         Jonathan Tan <jonathantanmy@google.com>,
         Teng Long <dyroneteng@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
- <avarab@gmail.com>
+From: Derrick Stolee <derrickstolee@github.com>
 
-When advertising a bundle list over Git's protocol v2, we will use
-packet lines. Each line will be of the form "key=value" representing a
-bundle list. Connect the API necessary for Git's transport to the
-key-value pair parsing created in the previous change.
+There will be two primary ways to advertise a bundle list: as a list of
+packet lines in Git's protocol v2 and as a config file served from a
+bundle URI. Both of these fundamentally use a list of key-value pairs.
+We will use the same set of key-value pairs across these formats.
 
-We are not currently implementing this protocol v2 functionality, but
-instead preparing to expose this parsing to be unit-testable.
+Create a new bundle_list_update() method that is currently unusued, but
+will be used in the next change. It inspects each key to see if it is
+understood and then applies it to the given bundle_list. Here are the
+keys that we teach Git to understand:
 
-Co-authored-by: Derrick Stolee <derrickstolee@github.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+* bundle.version: This value should be an integer. Git currently
+  understands only version 1 and will ignore the list if the version is
+  any other value. This version can be increased in the future if we
+  need to add new keys that Git should not ignore. We can add new
+  "heuristic" keys without incrementing the version.
+
+* bundle.mode: This value should be one of "all" or "any". If this
+  mode is not understood, then Git will ignore the list. This mode
+  indicates whether Git needs all of the bundle list items to make a
+  complete view of the content or if any single item is sufficient.
+
+The rest of the keys use a bundle identifier "<id>" as part of the key
+name. Keys using the same "<id>" describe a single bundle list item.
+
+* bundle.<id>.uri: This stores the URI of the bundle item. This
+  currently is expected to be an absolute URI, but will be relaxed to be
+  a relative URI in the future.
+
+While parsing, return an error if a URI key is repeated, since we can
+make that restriction with bundle lists.
+
+Make the git_parse_int() method global so we can parse the integer
+version value carefully.
+
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- bundle-uri.c | 27 ++++++++++++++++++++++++++-
- bundle-uri.h | 12 ++++++++++++
- 2 files changed, 38 insertions(+), 1 deletion(-)
+ Documentation/config.txt        |  2 +
+ Documentation/config/bundle.txt | 24 +++++++++++
+ bundle-uri.c                    | 76 +++++++++++++++++++++++++++++++++
+ config.c                        |  2 +-
+ config.h                        |  1 +
+ 5 files changed, 104 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/config/bundle.txt
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e376d547ce0..4280af6992e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -387,6 +387,8 @@ include::config/branch.txt[]
+ 
+ include::config/browser.txt[]
+ 
++include::config/bundle.txt[]
++
+ include::config/checkout.txt[]
+ 
+ include::config/clean.txt[]
+diff --git a/Documentation/config/bundle.txt b/Documentation/config/bundle.txt
+new file mode 100644
+index 00000000000..daa21eb674a
+--- /dev/null
++++ b/Documentation/config/bundle.txt
+@@ -0,0 +1,24 @@
++bundle.*::
++	The `bundle.*` keys may appear in a bundle list file found via the
++	`git clone --bundle-uri` option. These keys currently have no effect
++	if placed in a repository config file, though this will change in the
++	future. See link:technical/bundle-uri.html[the bundle URI design
++	document] for more details.
++
++bundle.version::
++	This integer value advertises the version of the bundle list format
++	used by the bundle list. Currently, the only accepted value is `1`.
++
++bundle.mode::
++	This string value should be either `all` or `any`. This value describes
++	whether all of the advertised bundles are required to unbundle a
++	complete understanding of the bundled information (`all`) or if any one
++	of the listed bundle URIs is sufficient (`any`).
++
++bundle.<id>.*::
++	The `bundle.<id>.*` keys are used to describe a single item in the
++	bundle list, grouped under `<id>` for identification purposes.
++
++bundle.<id>.uri::
++	This string value defines the URI by which Git can reach the contents
++	of this `<id>`. This URI may be a bundle file or another bundle list.
 diff --git a/bundle-uri.c b/bundle-uri.c
-index 0bc59dd9c34..372e6fac5cf 100644
+index f9a8db221bc..0bc59dd9c34 100644
 --- a/bundle-uri.c
 +++ b/bundle-uri.c
-@@ -71,7 +71,6 @@ int for_all_bundles_in_list(struct bundle_list *list,
-  * Returns 0 if the key-value pair is understood. Returns -1 if the key
-  * is not understood or the value is malformed.
-  */
--MAYBE_UNUSED
- static int bundle_list_update(const char *key, const char *value,
- 			      struct bundle_list *list)
- {
-@@ -306,3 +305,29 @@ cleanup:
- 	free(filename);
- 	return result;
+@@ -6,6 +6,7 @@
+ #include "run-command.h"
+ #include "hashmap.h"
+ #include "pkt-line.h"
++#include "config.h"
+ 
+ static int compare_bundles(const void *hashmap_cmp_fn_data,
+ 			   const struct hashmap_entry *he1,
+@@ -65,6 +66,81 @@ int for_all_bundles_in_list(struct bundle_list *list,
+ 	return 0;
  }
-+
-+/**
-+ * General API for {transport,connect}.c etc.
-+ */
-+int bundle_uri_parse_line(struct bundle_list *list, const char *line)
-+{
-+	int result;
-+	const char *equals;
-+	struct strbuf key = STRBUF_INIT;
-+
-+	if (!strlen(line))
-+		return error(_("bundle-uri: got an empty line"));
-+
-+	equals = strchr(line, '=');
-+
-+	if (!equals)
-+		return error(_("bundle-uri: line is not of the form 'key=value'"));
-+	if (line == equals || !*(equals + 1))
-+		return error(_("bundle-uri: line has empty key or value"));
-+
-+	strbuf_add(&key, line, equals - line);
-+	result = bundle_list_update(key.buf, equals + 1, list);
-+	strbuf_release(&key);
-+
-+	return result;
-+}
-diff --git a/bundle-uri.h b/bundle-uri.h
-index ff7e3fd3fb2..90583461929 100644
---- a/bundle-uri.h
-+++ b/bundle-uri.h
-@@ -67,4 +67,16 @@ int for_all_bundles_in_list(struct bundle_list *list,
-  */
- int fetch_bundle_uri(struct repository *r, const char *uri);
  
 +/**
-+ * General API for {transport,connect}.c etc.
++ * Given a key-value pair, update the state of the given bundle list.
++ * Returns 0 if the key-value pair is understood. Returns -1 if the key
++ * is not understood or the value is malformed.
 + */
++MAYBE_UNUSED
++static int bundle_list_update(const char *key, const char *value,
++			      struct bundle_list *list)
++{
++	struct strbuf id = STRBUF_INIT;
++	struct remote_bundle_info lookup = REMOTE_BUNDLE_INFO_INIT;
++	struct remote_bundle_info *bundle;
++	const char *subsection, *subkey;
++	size_t subsection_len;
 +
-+/**
-+ * Parse a "key=value" packet line from the bundle-uri verb.
-+ *
-+ * Returns 0 on success and non-zero on error.
-+ */
-+int bundle_uri_parse_line(struct bundle_list *list,
-+			  const char *line);
++	if (parse_config_key(key, "bundle", &subsection, &subsection_len, &subkey))
++		return -1;
 +
- #endif
++	if (!subsection_len) {
++		if (!strcmp(subkey, "version")) {
++			int version;
++			if (!git_parse_int(value, &version))
++				return -1;
++			if (version != 1)
++				return -1;
++
++			list->version = version;
++			return 0;
++		}
++
++		if (!strcmp(subkey, "mode")) {
++			if (!strcmp(value, "all"))
++				list->mode = BUNDLE_MODE_ALL;
++			else if (!strcmp(value, "any"))
++				list->mode = BUNDLE_MODE_ANY;
++			else
++				return -1;
++			return 0;
++		}
++
++		/* Ignore other unknown global keys. */
++		return 0;
++	}
++
++	strbuf_add(&id, subsection, subsection_len);
++
++	/*
++	 * Check for an existing bundle with this <id>, or create one
++	 * if necessary.
++	 */
++	lookup.id = id.buf;
++	hashmap_entry_init(&lookup.ent, strhash(lookup.id));
++	if (!(bundle = hashmap_get_entry(&list->bundles, &lookup, ent, NULL))) {
++		CALLOC_ARRAY(bundle, 1);
++		bundle->id = strbuf_detach(&id, NULL);
++		hashmap_entry_init(&bundle->ent, strhash(bundle->id));
++		hashmap_add(&list->bundles, &bundle->ent);
++	}
++	strbuf_release(&id);
++
++	if (!strcmp(subkey, "uri")) {
++		if (bundle->uri)
++			return -1;
++		bundle->uri = xstrdup(value);
++		return 0;
++	}
++
++	/*
++	 * At this point, we ignore any information that we don't
++	 * understand, assuming it to be hints for a heuristic the client
++	 * does not currently understand.
++	 */
++	return 0;
++}
++
+ static char *find_temp_filename(void)
+ {
+ 	int fd;
+diff --git a/config.c b/config.c
+index 015bec360f5..e93101249f6 100644
+--- a/config.c
++++ b/config.c
+@@ -1214,7 +1214,7 @@ static int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max)
+ 	return 0;
+ }
+ 
+-static int git_parse_int(const char *value, int *ret)
++int git_parse_int(const char *value, int *ret)
+ {
+ 	intmax_t tmp;
+ 	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(int)))
+diff --git a/config.h b/config.h
+index ca994d77147..ef9eade6414 100644
+--- a/config.h
++++ b/config.h
+@@ -206,6 +206,7 @@ int config_with_options(config_fn_t fn, void *,
+ 
+ int git_parse_ssize_t(const char *, ssize_t *);
+ int git_parse_ulong(const char *, unsigned long *);
++int git_parse_int(const char *value, int *ret);
+ 
+ /**
+  * Same as `git_config_bool`, except that it returns -1 on error rather
 -- 
 gitgitgadget
 
