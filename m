@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C93FEC433FE
-	for <git@archiver.kernel.org>; Tue,  4 Oct 2022 13:25:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDF52C433F5
+	for <git@archiver.kernel.org>; Tue,  4 Oct 2022 13:25:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230288AbiJDNY7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Oct 2022 09:24:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34638 "EHLO
+        id S230362AbiJDNZA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Oct 2022 09:25:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230269AbiJDNYS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2022 09:24:18 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7654F543F2
-        for <git@vger.kernel.org>; Tue,  4 Oct 2022 06:24:09 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id r3-20020a05600c35c300b003b4b5f6c6bdso7523978wmq.2
-        for <git@vger.kernel.org>; Tue, 04 Oct 2022 06:24:09 -0700 (PDT)
+        with ESMTP id S230166AbiJDNYX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2022 09:24:23 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED8C8520A7
+        for <git@vger.kernel.org>; Tue,  4 Oct 2022 06:24:10 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id c11so21315215wrp.11
+        for <git@vger.kernel.org>; Tue, 04 Oct 2022 06:24:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5CHvxH0qZuEdSUBG4ySRLzQc8EiPn10JbIU/YFpUGd8=;
-        b=bMDl3sG+7uDU18EIAcgo8UYDzO/ZpfdYTFDDr9tWuOLlE1HbUlaQl7anUlgawF8Huh
-         ksH3ORihTTN6beRDqWKs8z9oXiYqBHDJV+3DYXN9iJ49kizHA+j6XwwsPxONWmdEzV+K
-         dNz/W2KdhW6QuQIF9dwHo6wqVqleOe3kmD4UbxBGA48fhtNZe7kCJy/LIDTC6EzyuVaD
-         slrrME7qPPug/wwfDq1yuSOh8gz24agjqlsQMy7AhLig5A85wQFUxxBMZuT+y/KlErnU
-         itq1BXgqTtBulret5nOOEt70LHQhX3gmn4OXyu7Sdn/n4Svg9vkfy9wT45d0FRDyHFSG
-         9Vxg==
+        bh=X5e7xmhKSSgoAZccKa8db+ctFhlOMHRmpx7zbzu6EtM=;
+        b=WYCyk3i9dEvdJpU79eBWQhd89baWoNkhFS6esWckEzMIn7LiGfeFwa4JgXcVe5Z1wo
+         HiRAhj+wdPfVfBcA6V8eXZIh9EtWvwlsuMgsxPWogo6abg5HDJBwHKI14cTQjN3054XA
+         9OWp20JoI/MxmykpP+1gjGHefL+Od4pgOm1B3M5ujl/JvVWDVBOHFMqnI9t1yc4KtUCv
+         91XiypiRNpDGsOj9DKi/4a7NRWs8e/ntQEOQuvnANdcdRMYlk9502k0fZEont6c0jY1D
+         3mvH4WWYO5o+JIAzXVYohb5STfM08SbGR4atCfE7L3ONeYdTyTAScEuFe7y8x0B+DmOe
+         kvjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5CHvxH0qZuEdSUBG4ySRLzQc8EiPn10JbIU/YFpUGd8=;
-        b=3tkxgt/muY6Qs6hfbt5FcHHKRClcxJlrQOH5/vw29W/GIW2GCbq7cJ6vEabK3GXYqm
-         vVZRYIg3r/M4twH44/GW7HZ9LDN3sj+W5jLC/s209BcsrR2wYWfcFVH1HqTzSTykTmDq
-         QpYdeLlC6jyseXlEhtheQyO07BfXhk0yY2EUiZq68PjXp4DhiQOb2NQMIC/5EXjrJAGs
-         HwS+EyCvk2OEWwhCJ/Vm9aDQ0kUhHrlA9aX2KPSMWOzTk2bpaWbiByOB9RC9MK43ghCq
-         sE5pa4yKVDAdHyGZC1VKwnf019/cyNRO0wJUTjuXjNQAx/RNfVYcyr53EkEyfRAiY6g+
-         RXfA==
-X-Gm-Message-State: ACrzQf0Bzt6XdPbbIuMle0xoKl02QO8eS91vMfvICPj087qZgaq65bMu
-        9c/rhZPYWgOb3v41Xyqi1FAaNE3VwaplIQ==
-X-Google-Smtp-Source: AMsMyM5/tXOGCOvyW2JddhWyIR6BVssCxErKO/ed60XBmrRVld0R+++r/QrHMrmSvfrJpq9btMy0YA==
-X-Received: by 2002:a05:600c:216:b0:3b4:874c:61e6 with SMTP id 22-20020a05600c021600b003b4874c61e6mr10514478wmi.116.1664889847573;
-        Tue, 04 Oct 2022 06:24:07 -0700 (PDT)
+        bh=X5e7xmhKSSgoAZccKa8db+ctFhlOMHRmpx7zbzu6EtM=;
+        b=nkjfJWxv4PerZhduijcpBHG5OEDQR6pWJU3cVBcK99KY8qsymkS9q5WcKQ0EuxyslA
+         NO21OpvtQxvcQalWnTmLYzf6yVKCSjeYU7NyTUekJrcobwKT48g2x+vPbL1orBnqFsuC
+         5Ujj9nm+mZogSfVib+D3fhVqT52NCXh/JECbgJ+6E7H8x/TagaE/eaT+ChbvZPLWOhZh
+         5Xqvm1q7d5GQT7bwYwAnjH1iTOY526FjmOsgRWit9Ax7D3ZBDieOmy14ALrxlwa+B4Ju
+         HBkel5VbkeY9l0iJU4IfBSv1+rTL/rUqrTqBAW1OiWzLcO3iyK/4CjH6g8czDLtH6NEl
+         PyUg==
+X-Gm-Message-State: ACrzQf38DeSDkgwBJGYFn2QAJRMn1wmVeI/khjgBVIEyNhIHn0fbYzoB
+        2czmcybOsukMy0t8/+i9kcjb8ySVrdVUAA==
+X-Google-Smtp-Source: AMsMyM6cuYX+3FTExzOeXPOuHr89NLCIpW/Q2ym+opdoJjMt/iFsShCfxRtDl+QUpdDs7A56hpWmFg==
+X-Received: by 2002:a05:6000:1541:b0:22a:3b77:6ef4 with SMTP id 1-20020a056000154100b0022a3b776ef4mr16148205wry.303.1664889848963;
+        Tue, 04 Oct 2022 06:24:08 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id t187-20020a1c46c4000000b003b4a699ce8esm19666022wma.6.2022.10.04.06.24.06
+        by smtp.gmail.com with ESMTPSA id t187-20020a1c46c4000000b003b4a699ce8esm19666022wma.6.2022.10.04.06.24.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Oct 2022 06:24:06 -0700 (PDT)
+        Tue, 04 Oct 2022 06:24:08 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 13/34] stash doc SYNOPSIS & -h: correct padding around "[]()"
-Date:   Tue,  4 Oct 2022 15:23:27 +0200
-Message-Id: <patch-v4-13.34-b568189532f-20221004T132211Z-avarab@gmail.com>
+Subject: [PATCH v4 14/34] doc txt & -h consistency: use "<options>", not "<options>..."
+Date:   Tue,  4 Oct 2022 15:23:28 +0200
+Message-Id: <patch-v4-14.34-e5cb5c91b82-20221004T132211Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.rc2.935.g6b421ae1592
 In-Reply-To: <cover-v4-00.34-00000000000-20221004T132211Z-avarab@gmail.com>
 References: <cover-v3-00.36-00000000000-20220930T180414Z-avarab@gmail.com> <cover-v4-00.34-00000000000-20221004T132211Z-avarab@gmail.com>
@@ -73,116 +73,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The whitespace padding of alternatives should be of the form "[-f |
---force]" not "[-f|--force]". Likewise we should not have padding
-before the first option, so "(--all | <pack-filename>...)" is correct,
-not "( --all | <pack-filename>... )".
+It's arguably more correct to say "[<option>...]" than either of these
+forms, but the vast majority of our documentation uses the
+"[<options>]" form to indicate an arbitrary number of options, let's
+do the same in these cases, which were the odd ones out.
+
+In the case of "mv" and "sparse-checkout" let's add the missing "[]"
+to indicate that these are optional.
+
+In the case of "t/helper/test-proc-receive.c" there is no *.txt
+version, making it the only hunk in this commit that's not a "doc txt
+& -h consistency" change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-stash.txt | 12 ++++++------
- builtin/stash.c             | 28 ++++++++++++++--------------
- 2 files changed, 20 insertions(+), 20 deletions(-)
+ Documentation/git-mv.txt     | 2 +-
+ Documentation/git-status.txt | 2 +-
+ builtin/pack-objects.c       | 4 ++--
+ builtin/sparse-checkout.c    | 2 +-
+ t/helper/test-proc-receive.c | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 4856f452511..ea16d2eae7c 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -9,17 +9,17 @@ SYNOPSIS
+diff --git a/Documentation/git-mv.txt b/Documentation/git-mv.txt
+index 79449bf98fe..972a055fbd8 100644
+--- a/Documentation/git-mv.txt
++++ b/Documentation/git-mv.txt
+@@ -9,7 +9,7 @@ git-mv - Move or rename a file, a directory, or a symlink
+ SYNOPSIS
  --------
  [verse]
- 'git stash' list [<log-options>]
--'git stash' show [-u|--include-untracked|--only-untracked] [<diff-options>] [<stash>]
--'git stash' drop [-q|--quiet] [<stash>]
--'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
-+'git stash' show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>]
-+'git stash' drop [-q | --quiet] [<stash>]
-+'git stash' (pop | apply) [--index] [-q | --quiet] [<stash>]
- 'git stash' branch <branchname> [<stash>]
--'git stash' [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]
--	     [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]
-+'git stash' [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
-+	     [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]
- 	     [--pathspec-from-file=<file> [--pathspec-file-nul]]
- 	     [--] [<pathspec>...]]
- 'git stash' clear
- 'git stash' create [<message>]
--'git stash' store [(-m|--message) <message>] [-q|--quiet] <commit>
-+'git stash' store [(-m | --message) <message>] [-q | --quiet] <commit>
+-'git mv' <options>... <args>...
++'git mv' [<options>] <args>...
  
  DESCRIPTION
  -----------
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 51d40efaac7..d91cf5fd3e1 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -24,16 +24,16 @@
- static const char * const git_stash_usage[] = {
- 	N_("git stash list [<options>]"),
- 	N_("git stash show [<options>] [<stash>]"),
--	N_("git stash drop [-q|--quiet] [<stash>]"),
--	N_("git stash ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
-+	N_("git stash drop [-q | --quiet] [<stash>]"),
-+	N_("git stash (pop | apply) [--index] [-q | --quiet] [<stash>]"),
- 	N_("git stash branch <branchname> [<stash>]"),
- 	"git stash clear",
--	N_("git stash [push [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
--	   "          [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]\n"
-+	N_("git stash [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n"
-+	   "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n"
- 	   "          [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
- 	   "          [--] [<pathspec>...]]"),
--	N_("git stash save [-p|--patch] [-S|--staged] [-k|--[no-]keep-index] [-q|--quiet]\n"
--	   "          [-u|--include-untracked] [-a|--all] [<message>]"),
-+	N_("git stash save [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]\n"
-+	   "          [-u | --include-untracked] [-a | --all] [<message>]"),
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 54a4b29b473..5e438a7fdc1 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -9,7 +9,7 @@ git-status - Show the working tree status
+ SYNOPSIS
+ --------
+ [verse]
+-'git status' [<options>...] [--] [<pathspec>...]
++'git status' [<options>] [--] [<pathspec>...]
+ 
+ DESCRIPTION
+ -----------
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 3658c05cafc..573d0b20b76 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -180,8 +180,8 @@ static inline void oe_set_delta_size(struct packing_data *pack,
+ #define SET_DELTA_SIBLING(obj, val) oe_set_delta_sibling(&to_pack, obj, val)
+ 
+ static const char *pack_usage[] = {
+-	N_("git pack-objects --stdout [<options>...] [< <ref-list> | < <object-list>]"),
+-	N_("git pack-objects [<options>...] <base-name> [< <ref-list> | < <object-list>]"),
++	N_("git pack-objects --stdout [<options>] [< <ref-list> | < <object-list>]"),
++	N_("git pack-objects [<options>] <base-name> [< <ref-list> | < <object-list>]"),
  	NULL
  };
  
-@@ -48,17 +48,17 @@ static const char * const git_stash_show_usage[] = {
- };
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index aac0f708e42..58a22503f04 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -20,7 +20,7 @@
+ static const char *empty_base = "";
  
- static const char * const git_stash_drop_usage[] = {
--	N_("git stash drop [-q|--quiet] [<stash>]"),
-+	N_("git stash drop [-q | --quiet] [<stash>]"),
+ static char const * const builtin_sparse_checkout_usage[] = {
+-	N_("git sparse-checkout (init | list | set | add | reapply | disable) <options>"),
++	N_("git sparse-checkout (init | list | set | add | reapply | disable) [<options>]"),
  	NULL
  };
  
- static const char * const git_stash_pop_usage[] = {
--	N_("git stash pop [--index] [-q|--quiet] [<stash>]"),
-+	N_("git stash pop [--index] [-q | --quiet] [<stash>]"),
- 	NULL
- };
+diff --git a/t/helper/test-proc-receive.c b/t/helper/test-proc-receive.c
+index cc08506cf0b..a4b305f4947 100644
+--- a/t/helper/test-proc-receive.c
++++ b/t/helper/test-proc-receive.c
+@@ -6,7 +6,7 @@
+ #include "test-tool.h"
  
- static const char * const git_stash_apply_usage[] = {
--	N_("git stash apply [--index] [-q|--quiet] [<stash>]"),
-+	N_("git stash apply [--index] [-q | --quiet] [<stash>]"),
- 	NULL
- };
- 
-@@ -73,20 +73,20 @@ static const char * const git_stash_clear_usage[] = {
- };
- 
- static const char * const git_stash_store_usage[] = {
--	N_("git stash store [(-m|--message) <message>] [-q|--quiet] <commit>"),
-+	N_("git stash store [(-m | --message) <message>] [-q | --quiet] <commit>"),
- 	NULL
- };
- 
- static const char * const git_stash_push_usage[] = {
--	N_("git stash [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
--	   "          [-u|--include-untracked] [-a|--all] [(-m|--message) <message>]\n"
-+	N_("git stash [push [-p | --patch] [-k | --[no-]keep-index] [-q | --quiet]\n"
-+	   "          [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]\n"
- 	   "          [--] [<pathspec>...]]"),
- 	NULL
- };
- 
- static const char * const git_stash_save_usage[] = {
--	N_("git stash save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
--	   "               [-u|--include-untracked] [-a|--all] [<message>]"),
-+	N_("git stash save [-p | --patch] [-k | --[no-]keep-index] [-q | --quiet]\n"
-+	   "               [-u | --include-untracked] [-a | --all] [<message>]"),
+ static const char *proc_receive_usage[] = {
+-	"test-tool proc-receive [<options>...]",
++	"test-tool proc-receive [<options>]",
  	NULL
  };
  
