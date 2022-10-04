@@ -2,135 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FBC0C433FE
-	for <git@archiver.kernel.org>; Tue,  4 Oct 2022 21:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3E83C433F5
+	for <git@archiver.kernel.org>; Tue,  4 Oct 2022 21:13:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbiJDVNv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Oct 2022 17:13:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40580 "EHLO
+        id S229655AbiJDVN5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Oct 2022 17:13:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229613AbiJDVNu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2022 17:13:50 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 785A9659F6
-        for <git@vger.kernel.org>; Tue,  4 Oct 2022 14:13:49 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id e8-20020a5b0cc8000000b006bca0fa3ab6so14211235ybr.0
-        for <git@vger.kernel.org>; Tue, 04 Oct 2022 14:13:49 -0700 (PDT)
+        with ESMTP id S229613AbiJDVNx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2022 17:13:53 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1CAC696E5
+        for <git@vger.kernel.org>; Tue,  4 Oct 2022 14:13:52 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id h1-20020a62b401000000b0056161cd284fso4535892pfn.16
+        for <git@vger.kernel.org>; Tue, 04 Oct 2022 14:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ThXkwHYDsdEKFNDPSfPlR8mcVoXy4sz2Z5suO/mKgI0=;
-        b=U1kNevaqFBUIeuwQPUJvheN6F+x9BHGv+olu2jwASK0FgLLwBCBL2VXxf1KqVzpb2K
-         wgRHm74yJZiTzeGwtrWGBZYtGcdFsfvsLpDBqhl5Om60MTET5QRyZsjVAGCXV4D9UxwJ
-         noyoMs1xNwJ/MDjI6b6xZaWtSKbzfREvDQOc6OZkomb1QUK9Bghpjnw86ojo/q990BfT
-         B3oPLgSfSYYDqv3ls6kQ5XuAsp8StXDVMxdUZsG0k2F+FSCTqeOaZhNAMTAcusWkTH4l
-         dPPVIwSndAkNpYdMGCpVF+5/15iOVBiOGe/aE1kt43dbg9bMZbLetb02XCO8BNFB+LZJ
-         OfPA==
+        bh=dQUalwW7Eaesvmmhsqau3NzxbJY5laxHnzD0HXJnfVk=;
+        b=Z35LQ+ouMI/iRaaBSELILr5mJTrzaoIfHI/+TevTpRC2Z5o7DY27UPlsUIRPNVFNDL
+         nPpBQDkHEneimWVmygtzPxShm1k40dSKLE0k+S73Hj2mnINvfE4jgb8URAS09zN5ueIp
+         +BF17QOwuuZ/pUS30OoA1u5yw6sGng3Bpw2Z6VY7ZhNZHKY26/UQQcFFboe5O2aaqN6D
+         QMAm4gi4J9EyItg0fo/mb3UCBhkFctMdwPRcl2ldekKrOrQTopIoOhBQUKI9H78YPGgI
+         5xQ/1iTtiS0vcA0OCmbtiGd3phQ1wgbX9yCrEpsNYFcbFlxFc/iEHUcYUHpfIzou1IO6
+         o/Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ThXkwHYDsdEKFNDPSfPlR8mcVoXy4sz2Z5suO/mKgI0=;
-        b=6iMndyk1g1acO33wXTWyc5QIYQyQKo5hqcTnd1j9GMxWnq6+7UY8QEmE1IJENOkRpM
-         Sub+7clYcR5Jzke1xvSbEsERrXsxM6XD2ue/zBIdN/+hzY0HRsJ090GK5gVtnE6J8rkg
-         NmwMRiy/gLNinM50t7fqYePbiF+CEm/XMA9ek2oJ6z9VA4nojYGS4LUVqb6IdxFcgIVP
-         k/0Df2DNVAe1ZFp4Z8pgKt08whTD/nwuN/lXtNSmQr173fA5LC2Vun5MWh0RlSdqNuW5
-         uT/PNno6KDa16rbXVM3RCvFqckQBQOKOZVMIoM6wUCJyL6y1xcQDvWT0+O+42hGKhXLW
-         srrQ==
-X-Gm-Message-State: ACrzQf0W0FYe0N2aUxOSbPpf3THpAK1QPQe4eK50/vwbPBPwPwlt4HBC
-        0dq/T24qWeNpVq2O6ME4Fy84B0k73yggqRRrqE2Hzjk9dKsXud9qPdXsHGr7VNuEwqgdDEidU4T
-        Rx0KTNINUZwahDhla0Iv4SX9P09NzhFVYQhIhZLgJXwqa4Dh1Oj0sBF1wf3CH9yRJxADGycmMjo
-        xY
-X-Google-Smtp-Source: AMsMyM5y0e7Z/WnxnIXx/tnw60oq9dVM0mISp3JwbyoNuKzrQdh3bkae2fSWwxSO89xuSNSMJVfBDH/k824EPkfYKO0H
+        bh=dQUalwW7Eaesvmmhsqau3NzxbJY5laxHnzD0HXJnfVk=;
+        b=OJ37uflzIijizwl1j3V8SJ3UPokWsNO5GYOpngN7P+M3hLWL2q1qS1MJko/s//3jvg
+         dhgEOEEai75buVoP18G7lUv7Rs8+lVWN6CqJXxViZn3egijGVN+3mdbiAr+G1DwqTU6k
+         ACqKxA35my7uDGjFFVVzkvbPyzVzQ9bv2ECG5/cALSwGPyTV7g+mO3szLa9LWKCsTESK
+         /NFztRuOWEPsi/m+zPbFXD/d4mkGxk7PVc4aPupz2LHTl32/KCL25mDYeKciFlyUJ2TF
+         Cw85fKhLn4COmxXtGfIOHwNoyyg/LiAHb1A2BQHf3tz58s8BQAV5b1Zp07btQ3iIxK1c
+         yyrg==
+X-Gm-Message-State: ACrzQf3bVZTRbTnHP+y/kJspKONnAeb2yKD4VJM4JuEQDX0lVMNVlWuN
+        pgfOkBsxybsSGCR0GRdoRCkTT9Lwp326q939gREtTVOBRajBpTx4wi+2Ac9p/62WZIvfdB1Z8mG
+        SgUmO818Hnde5BRNDV6sT6eDVCiL3g6cBLNNxibYzOdITy0+9+pp3lvxAyYZVfHSllhh/kWZ0Yf
+        9M
+X-Google-Smtp-Source: AMsMyM7TiteYg+q6jPFuDIT1HSHl23tYjtSACr1c1jgs8Z8MeISTMoVIyqUJJvUeUWO0wGDVLIAxUYEeXL1bLJQ7m+KK
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a0d:de83:0:b0:337:c0bf:12ee with
- SMTP id h125-20020a0dde83000000b00337c0bf12eemr25772378ywe.289.1664918028716;
- Tue, 04 Oct 2022 14:13:48 -0700 (PDT)
-Date:   Tue,  4 Oct 2022 14:13:39 -0700
-In-Reply-To: <cover.1664316642.git.jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:cd06:b0:203:ae0e:6a21 with
+ SMTP id d6-20020a17090acd0600b00203ae0e6a21mr409601pju.0.1664918031064; Tue,
+ 04 Oct 2022 14:13:51 -0700 (PDT)
+Date:   Tue,  4 Oct 2022 14:13:40 -0700
+In-Reply-To: <cover.1664917853.git.jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <cover.1664316642.git.jonathantanmy@google.com>
+References: <cover.1664316642.git.jonathantanmy@google.com> <cover.1664917853.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.38.0.rc1.362.ged0d419d3c-goog
-Message-ID: <cover.1664917853.git.jonathantanmy@google.com>
-Subject: [PATCH v2 0/2] Fail early when partial clone prefetch fails
+Message-ID: <207332c2dff047866a298ba7f72f043a009702f3.1664917853.git.jonathantanmy@google.com>
+Subject: [PATCH v2 1/2] promisor-remote: remove a return value
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks everyone for your comments. I don't think that there is a test 
-for when a lazy fetch fails, for some reason, so I added one.
+No caller of promisor_remote_get_direct() is checking its return value,
+so remove it.
 
-Jonathan Tan (2):
-  promisor-remote: remove a return value
-  promisor-remote: die upon failing fetch
+Not checking the return value means that the user would not know
+whether the failure of reading an object is due to the promisor remote
+not supplying the object or because of local repository corruption, but
+this will be fixed in a subsequent patch.
 
- object-file.c            |  4 ----
- promisor-remote.c        | 23 ++++++++++++++---------
- promisor-remote.h        | 11 +++++------
- t/t0410-partial-clone.sh | 14 ++++++++++++++
- 4 files changed, 33 insertions(+), 19 deletions(-)
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ promisor-remote.c | 12 ++++--------
+ promisor-remote.h | 11 +++++------
+ 2 files changed, 9 insertions(+), 14 deletions(-)
 
-Range-diff against v1:
-1:  fdb35bc9a6 ! 1:  207332c2df promisor-remote: remove a return value
-    @@ Commit message
-         No caller of promisor_remote_get_direct() is checking its return value,
-         so remove it.
-     
-    +    Not checking the return value means that the user would not know
-    +    whether the failure of reading an object is due to the promisor remote
-    +    not supplying the object or because of local repository corruption, but
-    +    this will be fixed in a subsequent patch.
-    +
-         Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-         Signed-off-by: Junio C Hamano <gitster@pobox.com>
-     
-2:  06a649b01a ! 2:  9bbf130c2c promisor-remote: die upon failing fetch
-    @@ Commit message
-         When this batch prefetch fails, these commands fall back to the
-         sequential fetches. But at $DAYJOB we have noticed that this results in
-         a bad user experience: a command would take unexpectedly long to finish
-    -    if the batch prefetch would fail for some intermittent reason, but all
-    -    subsequent fetches would work. It would be a better user experience for
-    -    such a command would just fail.
-    +    (and possibly use up a lot of bandwidth) if the batch prefetch would
-    +    fail for some intermittent reason, but all subsequent fetches would
-    +    work. It would be a better user experience for such a command would
-    +    just fail.
-     
-         Therefore, make it a fatal error if the prefetch fails and at least one
-         object being fetched is known to be a promisor object. (The latter
-    @@ promisor-remote.c: void promisor_remote_get_direct(struct repository *repo,
-      	if (to_free)
-      		free(remaining_oids);
-      }
-    +
-    + ## t/t0410-partial-clone.sh ##
-    +@@ t/t0410-partial-clone.sh: test_expect_success 'fetching of missing objects' '
-    + 	grep "$HASH" out
-    + '
-    + 
-    ++test_expect_success 'fetching of a promised object that promisor remote no longer has' '
-    ++	rm -f err &&
-    ++	test_create_repo unreliable-server &&
-    ++	git -C unreliable-server config uploadpack.allowanysha1inwant 1 &&
-    ++	git -C unreliable-server config uploadpack.allowfilter 1 &&
-    ++	test_commit -C unreliable-server foo &&
-    ++
-    ++	git clone --filter=blob:none --no-checkout "file://$(pwd)/unreliable-server" unreliable-client &&
-    ++
-    ++	rm -rf unreliable-server/.git/objects/* &&
-    ++	test_must_fail git -C unreliable-client checkout HEAD 2>err &&
-    ++	grep "could not fetch.*from promisor remote" err
-    ++'
-    ++
-    + test_expect_success 'fetching of missing objects works with ref-in-want enabled' '
-    + 	# ref-in-want requires protocol version 2
-    + 	git -C server config protocol.version 2 &&
+diff --git a/promisor-remote.c b/promisor-remote.c
+index 68f46f5ec7..8b4d650b4c 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -230,18 +230,17 @@ static int remove_fetched_oids(struct repository *repo,
+ 	return remaining_nr;
+ }
+ 
+-int promisor_remote_get_direct(struct repository *repo,
+-			       const struct object_id *oids,
+-			       int oid_nr)
++void promisor_remote_get_direct(struct repository *repo,
++				const struct object_id *oids,
++				int oid_nr)
+ {
+ 	struct promisor_remote *r;
+ 	struct object_id *remaining_oids = (struct object_id *)oids;
+ 	int remaining_nr = oid_nr;
+ 	int to_free = 0;
+-	int res = -1;
+ 
+ 	if (oid_nr == 0)
+-		return 0;
++		return;
+ 
+ 	promisor_remote_init(repo);
+ 
+@@ -256,12 +255,9 @@ int promisor_remote_get_direct(struct repository *repo,
+ 				continue;
+ 			}
+ 		}
+-		res = 0;
+ 		break;
+ 	}
+ 
+ 	if (to_free)
+ 		free(remaining_oids);
+-
+-	return res;
+ }
+diff --git a/promisor-remote.h b/promisor-remote.h
+index edc45ab0f5..df36eb08ef 100644
+--- a/promisor-remote.h
++++ b/promisor-remote.h
+@@ -39,13 +39,12 @@ static inline int has_promisor_remote(void)
+ 
+ /*
+  * Fetches all requested objects from all promisor remotes, trying them one at
+- * a time until all objects are fetched. Returns 0 upon success, and non-zero
+- * otherwise.
++ * a time until all objects are fetched.
+  *
+- * If oid_nr is 0, this function returns 0 (success) immediately.
++ * If oid_nr is 0, this function returns immediately.
+  */
+-int promisor_remote_get_direct(struct repository *repo,
+-			       const struct object_id *oids,
+-			       int oid_nr);
++void promisor_remote_get_direct(struct repository *repo,
++				const struct object_id *oids,
++				int oid_nr);
+ 
+ #endif /* PROMISOR_REMOTE_H */
 -- 
 2.38.0.rc1.362.ged0d419d3c-goog
 
