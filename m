@@ -2,63 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8895EC433FE
-	for <git@archiver.kernel.org>; Tue,  4 Oct 2022 12:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EB47C433FE
+	for <git@archiver.kernel.org>; Tue,  4 Oct 2022 12:34:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229792AbiJDMec (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Oct 2022 08:34:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45480 "EHLO
+        id S229836AbiJDMel (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Oct 2022 08:34:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbiJDMe2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2022 08:34:28 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F04732A99
-        for <git@vger.kernel.org>; Tue,  4 Oct 2022 05:34:27 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id i83-20020a1c3b56000000b003bd44dc526fso701170wma.3
-        for <git@vger.kernel.org>; Tue, 04 Oct 2022 05:34:27 -0700 (PDT)
+        with ESMTP id S229789AbiJDMea (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2022 08:34:30 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2396B32A99
+        for <git@vger.kernel.org>; Tue,  4 Oct 2022 05:34:29 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id bu30so1211845wrb.8
+        for <git@vger.kernel.org>; Tue, 04 Oct 2022 05:34:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=0yrgCoeY0AokBCk/7CF7non/FPEu/1rHXlEpUZhWD/s=;
-        b=HTrYvlSwyDVXkK6h1sW0K54Gvn2lnumnt7TRi4bv2tPBakLey/qKpB4SNGUu6Oom9T
-         /IskL1d2Ko7PslHkrBHE9mvJPRKCpMEMcuzpiMZdgz8XX5kzgWrTXRz+o1jt/Cz4RnL1
-         MQjZLj1QWZZKldYETvsWzOfmxqhOSBEae6eyZgWuD2ipwup+jvl2NdjJOIv9og5irTvV
-         6KrbbUZgezBEG+GGws87WMn9PHKLU1b/pihpKB3VEv2xnmpy0xk+yNtjb1jcX0nqDuD4
-         TZsq8EjjiWPwKYDxLdD1yhz7qQRNcUZvdj+CtvIvHrZdPcoZ/JR0MGDvQFkal6SE1p9a
-         aUeA==
+        bh=fnuvRU/s4CwFnk6H9aTDmG6Z/zW4bmJU9S4El1WdLLY=;
+        b=IouwFGY730Vi465uljFJ64cZCgmdEAh1cuo1pwddSSpMEXMxgMLBlGqR2nuM8CAOR5
+         IIqZDBP9rELadzAWFeB3eHhivT55gxCpAquh7wtIN0TGVyNbu36arWDyDbw+3iRTy50X
+         JHYR6J67lrnKDLiHE9jd4qQgMvsRxcicXHmchIfOVBzknbc//t1LO/IQlQHrLyYm8GJr
+         ArvawAF7mKjOUH9OwtRKLzLG11r49OAk5VSjHNOqNawUBOrWNuqKwnpSmoRILZ/Wgmdw
+         nVEz8q/bZiHqX6vge1nRm+DoIHskdTSCEHn3pilGO9QqN374+w/uz44tqOemhjN4MJxm
+         WbYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=0yrgCoeY0AokBCk/7CF7non/FPEu/1rHXlEpUZhWD/s=;
-        b=eh20rTBCz16D2j0lQK4Rwn9x3uJ5eJrmI1DAOtWG4tgXSZPTMht6ip7/5AdnP9uBls
-         66ffuQ67JWYpTFrijxDUAPexfUf7E5au1g5NIKYQt7Cz6eHPm9TWJhduk5mNCVdschKg
-         rXwXHjv7CW+DbtHKs+iaPVYogwUvuatY+2k6cPa7KQu4JKG+4uUXHxZP1ZJmHhlelonU
-         meTb8PuAeg0Pxx6X5E7AzC/fBJiVoXmjnE0rZewB6AluiUairCRadlFd/0K0LaiDc4fS
-         E2DKzaII5jc9BwKD8+yvzm4FHggkgfxWL7LN8IkA3TUT3fVrElTv6Ut1ziv2rs7rHZp7
-         M6ew==
-X-Gm-Message-State: ACrzQf2LWM/AAGR2yACN8Rc1gjNxwA8UBdJjJw+5KNNG9Pt/FZ47NWmF
-        YRH8GX+WKZN9lr1dO+1XaeKO2yJrb/k=
-X-Google-Smtp-Source: AMsMyM5AFCZbfbvkhfuumOgUv9926ytRT+tbfT6QAKFYfNv0XWXiWPVjD2kegfZ4jawzn93RMO8OCA==
-X-Received: by 2002:a05:600c:4e0a:b0:3b4:91fe:80e3 with SMTP id b10-20020a05600c4e0a00b003b491fe80e3mr10024900wmq.91.1664886865488;
-        Tue, 04 Oct 2022 05:34:25 -0700 (PDT)
+        bh=fnuvRU/s4CwFnk6H9aTDmG6Z/zW4bmJU9S4El1WdLLY=;
+        b=ybval/sdTWDiDtl+L4rx0aTzq9BuV6v/Me99SRQBMHOqa+3hioDaFl3QO4EKa8qWSz
+         7crDm9o8ofNe8ewGdH1LiHmHlHkN007oONjj3amS6anf4cssA+r8a/ZVYKu9DGGCgTY0
+         TcM9SGplbKNCOh2NRlQhUHA9w7ZppbIpGnG+PlPa50QTROZqwXcUhPQkZCoA/n2VWBI4
+         jEw+lJu/mAXuOBfikkCKvib0SsJpjUIfJomKvkFhmJEH1wFzBx2afunguZh/4FgMuOAN
+         8wTF3tQllO8L3zvgmr5pK3xjyDMDwfiYxotOy5PQ/r4X/ZSWgS9Wlwb2hLU8ktG8wtpo
+         AEfw==
+X-Gm-Message-State: ACrzQf3l16Hae9Zmyo9nnVqS/h+w8hFlFUfsv0N3+ZjWp6udsWi2SAJo
+        THcVPpvwvAkE8IsbR2vg2io3YRdYR8w=
+X-Google-Smtp-Source: AMsMyM6oldM4Y+hFl+r6qcPgttoT5/6cnj9/G3SVCYNqnRO+lbEIiAn7Eh+ZcOd4quK4JkMtB4S4cg==
+X-Received: by 2002:a5d:5403:0:b0:22e:34f2:81c1 with SMTP id g3-20020a5d5403000000b0022e34f281c1mr7617776wrv.346.1664886867439;
+        Tue, 04 Oct 2022 05:34:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id fc10-20020a05600c524a00b003b435c41103sm28589642wmb.0.2022.10.04.05.34.24
+        by smtp.gmail.com with ESMTPSA id c13-20020adfed8d000000b0022dc6e76bbdsm11844958wro.46.2022.10.04.05.34.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Oct 2022 05:34:24 -0700 (PDT)
-Message-Id: <f0c4457951ca5d052d10f401497917cddcbe2aa4.1664886860.git.gitgitgadget@gmail.com>
+        Tue, 04 Oct 2022 05:34:26 -0700 (PDT)
+Message-Id: <cd915d57f3bced015dc154572612d4dd221d1618.1664886860.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1333.v3.git.1664886860.gitgitgadget@gmail.com>
 References: <pull.1333.v2.git.1662734015.gitgitgadget@gmail.com>
         <pull.1333.v3.git.1664886860.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 04 Oct 2022 12:34:13 +0000
-Subject: [PATCH v3 2/9] bundle-uri: create bundle_list struct and helpers
-Fcc:    Sent
+From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Tue, 04 Oct 2022 12:34:15 +0000
+Subject: [PATCH v3 4/9] bundle-uri: create "key=value" line parsing
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
         avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
@@ -66,193 +67,94 @@ Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
         Jonathan Tan <jonathantanmy@google.com>,
         Teng Long <dyroneteng@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
+ <avarab@gmail.com>
 
-It will likely be rare where a user uses a single bundle URI and expects
-that URI to point to a bundle. Instead, that URI will likely be a list
-of bundles provided in some format. Alternatively, the Git server could
-advertise a list of bundles.
+When advertising a bundle list over Git's protocol v2, we will use
+packet lines. Each line will be of the form "key=value" representing a
+bundle list. Connect the API necessary for Git's transport to the
+key-value pair parsing created in the previous change.
 
-In anticipation of these two ways of advertising multiple bundles,
-create a data structure that represents such a list. This will be
-populated using a common API, but for now focus on what data can be
-represented.
+We are not currently implementing this protocol v2 functionality, but
+instead preparing to expose this parsing to be unit-testable.
 
-Each list contains a number of remote_bundle_info structs. These contain
-an 'id' that is used to uniquely identify them in the list, and also a
-'uri' that contains the location of its data. Finally, there is a strbuf
-containing the filename used when Git downloads the contents to disk.
-
-The list itself stores these remote_bundle_info structs in a hashtable
-using 'id' as the key. The order of the structs in the input is
-considered unimportant, but future modifications to the format and these
-data structures will place ordering possibilities on the set. The list
-also has a few "global" properties, including the version (used when
-parsing the list) and the mode. The mode is one of these two options:
-
-1. BUNDLE_MODE_ALL: all listed URIs are intended to be combined
-   together. The client should download all of the advertised data to
-   have a complete copy of the data.
-
-2. BUNDLE_MODE_ANY: any one listed item is sufficient to have a complete
-   copy of the data. The client can choose arbitrarily from these
-   options. In the future, the client may use pings to find the closest
-   URI among geodistributed replicas, or use some other heuristic
-   information added to the format.
-
-This API is currently unused, but will soon be expanded with parsing
-logic and then be consumed by the bundle URI download logic.
-
+Co-authored-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- bundle-uri.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- bundle-uri.h | 56 ++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 116 insertions(+)
+ bundle-uri.c | 27 ++++++++++++++++++++++++++-
+ bundle-uri.h | 12 ++++++++++++
+ 2 files changed, 38 insertions(+), 1 deletion(-)
 
 diff --git a/bundle-uri.c b/bundle-uri.c
-index 8b2f4e08c9c..f9a8db221bc 100644
+index 0bc59dd9c34..372e6fac5cf 100644
 --- a/bundle-uri.c
 +++ b/bundle-uri.c
-@@ -4,6 +4,66 @@
- #include "object-store.h"
- #include "refs.h"
- #include "run-command.h"
-+#include "hashmap.h"
-+#include "pkt-line.h"
-+
-+static int compare_bundles(const void *hashmap_cmp_fn_data,
-+			   const struct hashmap_entry *he1,
-+			   const struct hashmap_entry *he2,
-+			   const void *id)
-+{
-+	const struct remote_bundle_info *e1 =
-+		container_of(he1, const struct remote_bundle_info, ent);
-+	const struct remote_bundle_info *e2 =
-+		container_of(he2, const struct remote_bundle_info, ent);
-+
-+	return strcmp(e1->id, id ? (const char *)id : e2->id);
-+}
-+
-+void init_bundle_list(struct bundle_list *list)
-+{
-+	memset(list, 0, sizeof(*list));
-+
-+	/* Implied defaults. */
-+	list->mode = BUNDLE_MODE_ALL;
-+	list->version = 1;
-+
-+	hashmap_init(&list->bundles, compare_bundles, NULL, 0);
-+}
-+
-+static int clear_remote_bundle_info(struct remote_bundle_info *bundle,
-+				    void *data)
-+{
-+	FREE_AND_NULL(bundle->id);
-+	FREE_AND_NULL(bundle->uri);
-+	return 0;
-+}
-+
-+void clear_bundle_list(struct bundle_list *list)
-+{
-+	if (!list)
-+		return;
-+
-+	for_all_bundles_in_list(list, clear_remote_bundle_info, NULL);
-+	hashmap_clear_and_free(&list->bundles, struct remote_bundle_info, ent);
-+}
-+
-+int for_all_bundles_in_list(struct bundle_list *list,
-+			    bundle_iterator iter,
-+			    void *data)
-+{
-+	struct remote_bundle_info *info;
-+	struct hashmap_iter i;
-+
-+	hashmap_for_each_entry(&list->bundles, &i, info, ent) {
-+		int result = iter(info, data);
-+
-+		if (result)
-+			return result;
-+	}
-+
-+	return 0;
-+}
- 
- static char *find_temp_filename(void)
+@@ -71,7 +71,6 @@ int for_all_bundles_in_list(struct bundle_list *list,
+  * Returns 0 if the key-value pair is understood. Returns -1 if the key
+  * is not understood or the value is malformed.
+  */
+-MAYBE_UNUSED
+ static int bundle_list_update(const char *key, const char *value,
+ 			      struct bundle_list *list)
  {
+@@ -306,3 +305,29 @@ cleanup:
+ 	free(filename);
+ 	return result;
+ }
++
++/**
++ * General API for {transport,connect}.c etc.
++ */
++int bundle_uri_parse_line(struct bundle_list *list, const char *line)
++{
++	int result;
++	const char *equals;
++	struct strbuf key = STRBUF_INIT;
++
++	if (!strlen(line))
++		return error(_("bundle-uri: got an empty line"));
++
++	equals = strchr(line, '=');
++
++	if (!equals)
++		return error(_("bundle-uri: line is not of the form 'key=value'"));
++	if (line == equals || !*(equals + 1))
++		return error(_("bundle-uri: line has empty key or value"));
++
++	strbuf_add(&key, line, equals - line);
++	result = bundle_list_update(key.buf, equals + 1, list);
++	strbuf_release(&key);
++
++	return result;
++}
 diff --git a/bundle-uri.h b/bundle-uri.h
-index 8a152f1ef14..ff7e3fd3fb2 100644
+index ff7e3fd3fb2..90583461929 100644
 --- a/bundle-uri.h
 +++ b/bundle-uri.h
-@@ -1,7 +1,63 @@
- #ifndef BUNDLE_URI_H
- #define BUNDLE_URI_H
+@@ -67,4 +67,16 @@ int for_all_bundles_in_list(struct bundle_list *list,
+  */
+ int fetch_bundle_uri(struct repository *r, const char *uri);
  
-+#include "hashmap.h"
-+#include "strbuf.h"
-+
- struct repository;
-+struct string_list;
++/**
++ * General API for {transport,connect}.c etc.
++ */
 +
 +/**
-+ * The remote_bundle_info struct contains information for a single bundle
-+ * URI. This may be initialized simply by a given URI or might have
-+ * additional metadata associated with it if the bundle was advertised by
-+ * a bundle list.
++ * Parse a "key=value" packet line from the bundle-uri verb.
++ *
++ * Returns 0 on success and non-zero on error.
 + */
-+struct remote_bundle_info {
-+	struct hashmap_entry ent;
++int bundle_uri_parse_line(struct bundle_list *list,
++			  const char *line);
 +
-+	/**
-+	 * The 'id' is a name given to the bundle for reference
-+	 * by other bundle infos.
-+	 */
-+	char *id;
-+
-+	/**
-+	 * The 'uri' is the location of the remote bundle so
-+	 * it can be downloaded on-demand. This will be NULL
-+	 * if there was no table of contents.
-+	 */
-+	char *uri;
-+};
-+
-+#define REMOTE_BUNDLE_INFO_INIT { 0 }
-+
-+enum bundle_list_mode {
-+	BUNDLE_MODE_NONE = 0,
-+	BUNDLE_MODE_ALL,
-+	BUNDLE_MODE_ANY
-+};
-+
-+/**
-+ * A bundle_list contains an unordered set of remote_bundle_info structs,
-+ * as well as information about the bundle listing, such as version and
-+ * mode.
-+ */
-+struct bundle_list {
-+	int version;
-+	enum bundle_list_mode mode;
-+	struct hashmap bundles;
-+};
-+
-+void init_bundle_list(struct bundle_list *list);
-+void clear_bundle_list(struct bundle_list *list);
-+
-+typedef int (*bundle_iterator)(struct remote_bundle_info *bundle,
-+			       void *data);
-+
-+int for_all_bundles_in_list(struct bundle_list *list,
-+			    bundle_iterator iter,
-+			    void *data);
- 
- /**
-  * Fetch data from the given 'uri' and unbundle the bundle data found
+ #endif
 -- 
 gitgitgadget
 
