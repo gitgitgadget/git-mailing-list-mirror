@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3247C4332F
-	for <git@archiver.kernel.org>; Tue,  4 Oct 2022 16:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E270BC433F5
+	for <git@archiver.kernel.org>; Tue,  4 Oct 2022 16:20:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229934AbiJDQUX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Oct 2022 12:20:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53914 "EHLO
+        id S230034AbiJDQUa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Oct 2022 12:20:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229817AbiJDQUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229538AbiJDQUQ (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 4 Oct 2022 12:20:16 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3311B32BAB
-        for <git@vger.kernel.org>; Tue,  4 Oct 2022 09:20:13 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id z13-20020a7bc7cd000000b003b5054c6f9bso11159108wmk.2
-        for <git@vger.kernel.org>; Tue, 04 Oct 2022 09:20:13 -0700 (PDT)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE2193AB1B
+        for <git@vger.kernel.org>; Tue,  4 Oct 2022 09:20:14 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id i83-20020a1c3b56000000b003bd44dc526fso1112227wma.3
+        for <git@vger.kernel.org>; Tue, 04 Oct 2022 09:20:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=iACA4FL6FLxqM8Gf+IfWNEBZzWlEQwVqQ42PnqkGRwo=;
-        b=ZFIwGsmqR9olVk0VfDrwkQhlfwOi8vpZHACeeMNWWHG40FMCmYWu5DOO+F0spDCFup
-         rf8aUvykunVB6kupVZA/OUmagAm1gCxOpKY2cjBHUi5fI5Ri77LxhfTNUDRfoluYTr13
-         ZMwHjx4lnD1m9xeOgnEONMqMGLw0pVlFE0k1b1HptopId5J5E2De2aNlHlbTehj7k6KT
-         vjK4JKRDv+wTv24BqrZY9bdlK9nwmln+rGzDPG8bpa0/puoESQtCw/4BQxqmAhqQR+rP
-         toXm9O4geDHvzcC07vPNVLZkgE3Af8V2QTvKBa2UGu1zBbhvk+W+bOQ8iUagYfJIwmyY
-         kb4Q==
+        bh=hxtLIS/x5S5M+vKHrv/OI64Re4gc9i3o/wSBOO+OBuM=;
+        b=EaZLuDGZR6VgYoB442BmRdmzdNucG+0akCxMRTZd477eVvExLKypeQ1tWgL5PDpC3c
+         ujXrhhDJC/zjegHDAAW6fHAVnDDnoX6bxASJfxoKHigtfpfYGm5tkifqNgKuo34e62o4
+         tJmD8W8foE1CEUKw6V42OdJVxZoXQh+vLlDrv0BZB08/nSNafdxApudx1yBNhGlvV51s
+         YKbUsiXLNokuqV658iHO1mSjmv2eQTyrL771uYemARWQ4gi7sj0+hXfPWmpWKRmtQMTd
+         bTx65JCKf/zMCG+3RkbW5WYfLKo8VrQBklWFoJ7n6Zvzv5AFFToRBhYM0qpkg2+jLhaq
+         q3Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=iACA4FL6FLxqM8Gf+IfWNEBZzWlEQwVqQ42PnqkGRwo=;
-        b=0a+ewA4tvtQphN1HePITLI4LoNaG72b9U1/aiFkMEwY/H7Dxo9TVrrLRIMLp/8Q/DH
-         OncpaUnxEVL+IZnXpJFELZfoTjBHyOHv9U6d6FjuEXbiyPd9IrdvLWZcm/HYPre49K3X
-         J8hGHDUmP+vGXba77tPf9YrMAuDfQWcqf8ErB/BMamuoPy3OUfxLB2o9GSgQ4DFO+sQ3
-         9T8fgzRgi7+CO9OXJoRRcPylYtu2DiYlxqeSFQS80YNE9WG0c7mQrAlieJ+PCQGkLY0O
-         KooZbhaqnQ7I7vbVDCWtLPd8MUrYlxU+2pmsH8tzYZVwv2pLFF9uVY8Rmh7RiJ109MTM
-         yJzw==
-X-Gm-Message-State: ACrzQf1+RVsE4PhrtcDuGZMM66QKlm8uzMYCFeRMdaXMIgIxBcvPcrns
-        wgrEoxtFX9poudM41Mccjz0iehfFs6g=
-X-Google-Smtp-Source: AMsMyM5lE5U4UKtxEBFtDLd2cKzmA0Weg85s4Yst2aiFoMOHDDFEHD+CsSMVSY/2gHdoFqWPkLhEtw==
-X-Received: by 2002:a05:600c:500d:b0:3b5:234:d7e9 with SMTP id n13-20020a05600c500d00b003b50234d7e9mr388332wmr.57.1664900411993;
-        Tue, 04 Oct 2022 09:20:11 -0700 (PDT)
+        bh=hxtLIS/x5S5M+vKHrv/OI64Re4gc9i3o/wSBOO+OBuM=;
+        b=jawXEfmdTcvIGtyd67CKkm2tA444Q/nTVo+bNZlW/RD/JEP8gD6UuDJvH+neOnPZFO
+         EQovINqQKnZcLuIaDvzPBwBCfzX7JsfawqnViSFkxkdycZlDxAk0Hlrzpyjgu0qX0okI
+         uQILKMNPdTtBw15tiQjsqUa8u1i/ByP94GCrIE4MfcKWUAmgDDyL0/oNrMP4dYskD7p3
+         hiTZpZvxvPoZhDVPPzXFdAaQqH4xcV3495pVr3N15Gldsyv17VzQ066ly8PEsm3Z2XCm
+         TB5J83rCTXCXRAR4x7i8SCfhcXTT1YKgSvpOmkCJz4k8v/uN9f6uqx2NMxZ0fJqDxYGQ
+         e9hg==
+X-Gm-Message-State: ACrzQf2lGe0iTUYsAEC/oLqv2niJYyMOf62r0a4pAP930mUTROlgh0Bv
+        NsmzUfZ2AhH4HJuOP9xecyAW4VCmD64=
+X-Google-Smtp-Source: AMsMyM4zM2OB5r2Wf0M2GLXGny0w7dThC8MKP6v+Bvkox2SGSrx8p9uS0iulaqMiC9v2P2G7dHiXiA==
+X-Received: by 2002:a05:600c:4186:b0:3b4:a660:1d29 with SMTP id p6-20020a05600c418600b003b4a6601d29mr405996wmh.120.1664900412828;
+        Tue, 04 Oct 2022 09:20:12 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x12-20020a05600c2d0c00b003b51369fbbbsm20288761wmf.4.2022.10.04.09.20.11
+        by smtp.gmail.com with ESMTPSA id a14-20020adfed0e000000b002258235bda3sm12694559wro.61.2022.10.04.09.20.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Oct 2022 09:20:11 -0700 (PDT)
-Message-Id: <7123886a804bfd5bfac1f0fd6deb907e1635d0e5.1664900407.git.gitgitgadget@gmail.com>
+        Tue, 04 Oct 2022 09:20:12 -0700 (PDT)
+Message-Id: <82f1672e180afcd876505a4354bd9952f70db49e.1664900407.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1373.git.1664900407.gitgitgadget@gmail.com>
 References: <pull.1373.git.1664900407.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 04 Oct 2022 16:20:02 +0000
-Subject: [PATCH 4/9] tr2tls: clarify TLS terminology
+Date:   Tue, 04 Oct 2022 16:20:03 +0000
+Subject: [PATCH 5/9] trace2: rename trace2 thread_name argument as name_hint
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,184 +67,151 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Reduce or eliminate use of the term "TLS" in the Trace2 code.
+Rename the `thread_name` argument in `tr2tls_create_self()`
+and `trace2_thread_start()` to be `name_hint` to make it clear
+that the passed argument is a hint that will be used to create
+the actual `struct tr2tls_thread_ctx.thread_name` variable.
 
-The term "TLS" has two popular meanings: "thread-local storage" and
-"transport layer security".  In the Trace2 source, the term is associated
-with the former.  There was concern on the mailing list about it refering
-to the latter.
+This should make it clearer in the API that the trace2 layer
+does not borrow the caller's string pointer/buffer, but rather
+that it will use that hint in formatting the actual thread's
+name.  Previous discussion on the mailing list indicated that
+there was confusion about this point.
 
-Update the source and documentation to eliminate the use of the "TLS" term
-or replace it with the phrase "thread-local storage" to reduce ambiguity.
+This commit does not change how the `thread_name` field is
+allocated or stored within the `tr2tls_thread_ctx` structure.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Documentation/technical/api-trace2.txt |  8 ++++----
- trace2.c                               |  2 +-
- trace2.h                               | 10 +++++-----
- trace2/tr2_tls.c                       |  6 +++---
- trace2/tr2_tls.h                       | 18 +++++++++++-------
- 5 files changed, 24 insertions(+), 20 deletions(-)
+ Documentation/technical/api-trace2.txt |  2 +-
+ trace2.c                               |  6 +++---
+ trace2.h                               | 11 ++++++-----
+ trace2/tr2_tls.c                       |  4 ++--
+ trace2/tr2_tls.h                       | 17 ++++++++++-------
+ 5 files changed, 22 insertions(+), 18 deletions(-)
 
 diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index 2afa28bb5aa..431d424f9d5 100644
+index 431d424f9d5..4fe2d6992ab 100644
 --- a/Documentation/technical/api-trace2.txt
 +++ b/Documentation/technical/api-trace2.txt
-@@ -685,8 +685,8 @@ The "exec_id" field is a command-unique id and is only useful if the
+@@ -209,7 +209,7 @@ e.g: `void trace2_child_start(struct child_process *cmd)`.
  
- `"thread_start"`::
- 	This event is generated when a thread is started.  It is
--	generated from *within* the new thread's thread-proc (for TLS
--	reasons).
-+	generated from *within* the new thread's thread-proc (because
-+	it needs to access data in the thread's thread-local storage).
- +
- ------------
- {
-@@ -698,7 +698,7 @@ The "exec_id" field is a command-unique id and is only useful if the
+ These messages are concerned with Git thread usage.
  
- `"thread_exit"`::
- 	This event is generated when a thread exits.  It is generated
--	from *within* the thread's thread-proc (for TLS reasons).
-+	from *within* the thread's thread-proc.
- +
- ------------
- {
-@@ -1206,7 +1206,7 @@ worked on 508 items at offset 2032.  Thread "th04" worked on 508 items
- at offset 508.
- +
- This example also shows that thread names are assigned in a racy manner
--as each thread starts and allocates TLS storage.
-+as each thread starts.
+-e.g: `void trace2_thread_start(const char *thread_name)`.
++e.g: `void trace2_thread_start(const char *name_hint)`.
  
- Config (def param) Events::
+ === Region and Data Messages
  
 diff --git a/trace2.c b/trace2.c
-index 0c0a11e07d5..c1244e45ace 100644
+index c1244e45ace..c8e5acced2a 100644
 --- a/trace2.c
 +++ b/trace2.c
-@@ -52,7 +52,7 @@ static struct tr2_tgt *tr2_tgt_builtins[] =
-  * Force (rather than lazily) initialize any of the requested
-  * builtin TRACE2 targets at startup (and before we've seen an
-  * actual TRACE2 event call) so we can see if we need to setup
-- * the TR2 and TLS machinery.
-+ * private data structures and thread-local storage.
-  *
-  * Return the number of builtin targets enabled.
-  */
+@@ -466,7 +466,7 @@ void trace2_exec_result_fl(const char *file, int line, int exec_id, int code)
+ 				file, line, us_elapsed_absolute, exec_id, code);
+ }
+ 
+-void trace2_thread_start_fl(const char *file, int line, const char *thread_name)
++void trace2_thread_start_fl(const char *file, int line, const char *name_hint)
+ {
+ 	struct tr2_tgt *tgt_j;
+ 	int j;
+@@ -488,14 +488,14 @@ void trace2_thread_start_fl(const char *file, int line, const char *thread_name)
+ 		 */
+ 		trace2_region_enter_printf_fl(file, line, NULL, NULL, NULL,
+ 					      "thread-proc on main: %s",
+-					      thread_name);
++					      name_hint);
+ 		return;
+ 	}
+ 
+ 	us_now = getnanotime() / 1000;
+ 	us_elapsed_absolute = tr2tls_absolute_elapsed(us_now);
+ 
+-	tr2tls_create_self(thread_name, us_now);
++	tr2tls_create_self(name_hint, us_now);
+ 
+ 	for_each_wanted_builtin (j, tgt_j)
+ 		if (tgt_j->pfn_thread_start_fl)
 diff --git a/trace2.h b/trace2.h
-index 88d906ea830..af3c11694cc 100644
+index af3c11694cc..fe39dcb5849 100644
 --- a/trace2.h
 +++ b/trace2.h
-@@ -73,8 +73,7 @@ void trace2_initialize_clock(void);
- /*
-  * Initialize TRACE2 tracing facility if any of the builtin TRACE2
-  * targets are enabled in the system config or the environment.
-- * This includes setting up the Trace2 thread local storage (TLS).
-- * Emits a 'version' message containing the version of git
-+ * This emits a 'version' message containing the version of git
-  * and the Trace2 protocol.
+@@ -304,14 +304,15 @@ void trace2_exec_result_fl(const char *file, int line, int exec_id, int code);
+  * thread-proc to allow the thread to create its own thread-local
+  * storage.
   *
-  * This function should be called from `main()` as early as possible in
-@@ -302,7 +301,8 @@ void trace2_exec_result_fl(const char *file, int line, int exec_id, int code);
+- * Thread names should be descriptive, like "preload_index".
+- * Thread names will be decorated with an instance number automatically.
++ * The thread name hint should be descriptive, like "preload_index" or
++ * taken from the thread-proc function.  A unique thread name will be
++ * created from the hint and the thread id automatically.
+  */
+ void trace2_thread_start_fl(const char *file, int line,
+-			    const char *thread_name);
++			    const char *name_hint);
  
- /*
-  * Emit a 'thread_start' event.  This must be called from inside the
-- * thread-proc to set up the trace2 TLS data for the thread.
-+ * thread-proc to allow the thread to create its own thread-local
-+ * storage.
-  *
-  * Thread names should be descriptive, like "preload_index".
-  * Thread names will be decorated with an instance number automatically.
-@@ -315,8 +315,8 @@ void trace2_thread_start_fl(const char *file, int line,
+-#define trace2_thread_start(thread_name) \
+-	trace2_thread_start_fl(__FILE__, __LINE__, (thread_name))
++#define trace2_thread_start(name_hint) \
++	trace2_thread_start_fl(__FILE__, __LINE__, (name_hint))
  
  /*
   * Emit a 'thread_exit' event.  This must be called from inside the
-- * thread-proc to report thread-specific data and cleanup TLS data
-- * for the thread.
-+ * thread-proc so that the thread can access and clean up its
-+ * thread-local storage.
-  */
- void trace2_thread_exit_fl(const char *file, int line);
- 
 diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
-index 7da94aba522..8d2182fbdbb 100644
+index 8d2182fbdbb..39b41fd2487 100644
 --- a/trace2/tr2_tls.c
 +++ b/trace2/tr2_tls.c
-@@ -69,9 +69,9 @@ struct tr2tls_thread_ctx *tr2tls_get_self(void)
- 	ctx = pthread_getspecific(tr2tls_key);
+@@ -31,7 +31,7 @@ void tr2tls_start_process_clock(void)
+ 	tr2tls_us_start_process = getnanotime() / 1000;
+ }
  
- 	/*
--	 * If the thread-proc did not call trace2_thread_start(), we won't
--	 * have any TLS data associated with the current thread.  Fix it
--	 * here and silently continue.
-+	 * If the current thread's thread-proc did not call
-+	 * trace2_thread_start(), then the thread will not have any
-+	 * thread-local storage.  Create it now and silently continue.
- 	 */
- 	if (!ctx)
- 		ctx = tr2tls_create_self("unknown", getnanotime() / 1000);
+-struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
++struct tr2tls_thread_ctx *tr2tls_create_self(const char *name_hint,
+ 					     uint64_t us_thread_start)
+ {
+ 	struct tr2tls_thread_ctx *ctx = xcalloc(1, sizeof(*ctx));
+@@ -50,7 +50,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
+ 	strbuf_init(&ctx->thread_name, 0);
+ 	if (ctx->thread_id)
+ 		strbuf_addf(&ctx->thread_name, "th%02d:", ctx->thread_id);
+-	strbuf_addstr(&ctx->thread_name, thread_name);
++	strbuf_addstr(&ctx->thread_name, name_hint);
+ 	if (ctx->thread_name.len > TR2_MAX_THREAD_NAME)
+ 		strbuf_setlen(&ctx->thread_name, TR2_MAX_THREAD_NAME);
+ 
 diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
-index a90bd639d48..1297509fd23 100644
+index 1297509fd23..f1ee58305d6 100644
 --- a/trace2/tr2_tls.h
 +++ b/trace2/tr2_tls.h
-@@ -3,6 +3,12 @@
- 
- #include "strbuf.h"
- 
-+/*
-+ * Notice: the term "TLS" refers to "thread-local storage" in the
-+ * Trace2 source files.  This usage is borrowed from GCC and Windows.
-+ * There is NO relation to "transport layer security".
-+ */
-+
+@@ -25,17 +25,20 @@ struct tr2tls_thread_ctx {
  /*
-  * Arbitry limit for thread names for column alignment.
-  */
-@@ -17,9 +23,7 @@ struct tr2tls_thread_ctx {
- };
- 
- /*
-- * Create TLS data for the current thread.  This gives us a place to
-- * put per-thread data, such as thread start time, function nesting
-- * and a per-thread label for our messages.
-+ * Create thread-local storage for the current thread.
+  * Create thread-local storage for the current thread.
   *
-  * We assume the first thread is "main".  Other threads are given
-  * non-zero thread-ids to help distinguish messages from concurrent
-@@ -35,7 +39,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
+- * We assume the first thread is "main".  Other threads are given
+- * non-zero thread-ids to help distinguish messages from concurrent
+- * threads.
+- *
+- * Truncate the thread name if necessary to help with column alignment
+- * in printf-style messages.
++ * The first thread in the process will have:
++ *     { .thread_id=0, .thread_name="main" }
++ * Subsequent threads are given a non-zero thread_id and a thread_name
++ * constructed from the id and a "name hint" (which is usually based
++ * upon the name of the thread-proc function).  For example:
++ *     { .thread_id=10, .thread_name="th10fsm-listen" }
++ * This helps to identify and distinguish messages from concurrent threads.
++ * The ctx.thread_name field is truncated if necessary to help with column
++ * alignment in printf-style messages.
+  *
+  * In this and all following functions the term "self" refers to the
+  * current thread.
+  */
+-struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
++struct tr2tls_thread_ctx *tr2tls_create_self(const char *name_hint,
  					     uint64_t us_thread_start);
  
  /*
-- * Get our TLS data.
-+ * Get the thread-local storage pointer of the current thread.
-  */
- struct tr2tls_thread_ctx *tr2tls_get_self(void);
- 
-@@ -45,7 +49,7 @@ struct tr2tls_thread_ctx *tr2tls_get_self(void);
- int tr2tls_is_main_thread(void);
- 
- /*
-- * Free our TLS data.
-+ * Free the current thread's thread-local storage.
-  */
- void tr2tls_unset_self(void);
- 
-@@ -81,12 +85,12 @@ uint64_t tr2tls_region_elasped_self(uint64_t us);
- uint64_t tr2tls_absolute_elapsed(uint64_t us);
- 
- /*
-- * Initialize the tr2 TLS system.
-+ * Initialize thread-local storage for Trace2.
-  */
- void tr2tls_init(void);
- 
- /*
-- * Free all tr2 TLS resources.
-+ * Free all Trace2 thread-local storage resources.
-  */
- void tr2tls_release(void);
- 
 -- 
 gitgitgadget
 
