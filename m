@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E55AC433F5
-	for <git@archiver.kernel.org>; Tue,  4 Oct 2022 16:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5649EC433FE
+	for <git@archiver.kernel.org>; Tue,  4 Oct 2022 16:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229909AbiJDQUT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Oct 2022 12:20:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53760 "EHLO
+        id S229919AbiJDQUV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Oct 2022 12:20:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229841AbiJDQUN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Oct 2022 12:20:13 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DF7537F85
+        with ESMTP id S229854AbiJDQUO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Oct 2022 12:20:14 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA92039B98
         for <git@vger.kernel.org>; Tue,  4 Oct 2022 09:20:12 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id y23-20020a1c4b17000000b003bd336914f9so1125594wma.4
+Received: by mail-wm1-x329.google.com with SMTP id n40-20020a05600c3ba800b003b49aefc35fso7851069wms.5
         for <git@vger.kernel.org>; Tue, 04 Oct 2022 09:20:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=Q470/AW/fzJLALcfpXWcJESIG0LEmZ5xOneOpJj2PFw=;
-        b=bYTJGzIUw9tXFBBGxGIaB88Vl2asNXVjFP6edy3XY5ymWi/QNP/xlskUBYB05MUD7M
-         LzTiRzaomIKZSGLYBjsChxA9B5E/chGutz7P8SXIOp9Y+XQMn/cPTaSA8tVAwAm9MYBZ
-         qkE34sLTAWSI2eZSrNn2P/W0Co1Y5m01yYyaUZD3lFM3o+x90wxp8pxUT0rhhNZguJLI
-         pPIXABQakvXkfIog1tLZSn132dHQSD3c1AFyyjv0kbTS96ke+sbTz3D7fV98nGqNFTPe
-         JscZbbEr6twABm8f3P6PlCA6nHZ/Z7fjWwrwpd2CrfXebEzQ+C3xxykFISi7YTieflTN
-         Bfsg==
+        bh=cTLoZaZ6n+Wz/7kdysCOtNZST9K2cELlvFYvnhYh5CM=;
+        b=LYq0eRkPslL1DEq8nRE/qK0V3HPizLXAwQPceq0Zkz5eZrQuIEfFYDrDNsfes8BziY
+         S1n0/Z7gXrIe7RDZlDw28/rsBhwBcGrt7ob5AThMed4by3J142gv7+0dPit+50rhlNiZ
+         y30FoRj9fg1W/DqKjwiYjls6WJUziNRKtQ8k99MkT3yls2Pd+JmJUQTQZNDhdW9bgFI8
+         NOd95iYmSXwoL9ylNmZOXO3AxgWSGaoY8B7hurLnQTQekgXbtRXn+5Vpgdv6gW3hpwkp
+         BbikAhdSeJt4kr8G/4LAsB4YvpRLbGnw/TAHCFss6PuoXM7r7AtmFaOOondzw549AnJv
+         RiQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date;
-        bh=Q470/AW/fzJLALcfpXWcJESIG0LEmZ5xOneOpJj2PFw=;
-        b=NVfKdUy9rCwj9ca0rkXdW043Fw/W3wpatPd271P2dc6pilwTjwkC3W3sjYBvrhLEvL
-         /z8tI81kWjDcOm7soJ+Pm3C6tC8Jc2ky7E0nYOqX55vJuLlqTov0b67uQ4/6EslPXDqJ
-         25vo2fTO55KsBDcSi52J2Ug26k23RdkOXCuHW5QViqPFiwtUQxKyG2bAlPMX3Cedm/0D
-         xyM60GGP7P6tDesvXFxYrRgVMFd4eW4lUWjRtYjc1WlK0hbDNA0RhiIs06ztC/NVMZgq
-         JD+CJjrXPioDRl4E4GABwMeAqNjzLb+rGYWyy+/HnnFNissG9AHUr5XTv2TIZd7CECUh
-         3Uag==
-X-Gm-Message-State: ACrzQf0D6tafgyqLbhZ0plTdk8yqDju0XZnZKAT1zKFcQDeRfsrot7g3
-        xQHYYb955eTzaS3LQMOJrMmf8jwzWnE=
-X-Google-Smtp-Source: AMsMyM7P1XgbO3ektuOo+HC7homgkN4oTc68USXJ09sirktuAd+aUQFIyruFPLs9Debf+6GhEj3xTQ==
-X-Received: by 2002:a7b:c845:0:b0:3b5:5e45:b266 with SMTP id c5-20020a7bc845000000b003b55e45b266mr409172wml.82.1664900410542;
-        Tue, 04 Oct 2022 09:20:10 -0700 (PDT)
+        bh=cTLoZaZ6n+Wz/7kdysCOtNZST9K2cELlvFYvnhYh5CM=;
+        b=7n2ufiLyFJq1QO+C9H7GQ4gkvmJ7goewGy3HmVxsMm3Rx0Cb6G2fUqBcyx+TgKgIBS
+         a0wZNdwFww6bZ67HCdOH06vnPC4mXLSIuIWOIe1iMZDgtpOrMBd03WKca0zPzriJQx0V
+         N3N9lYTqY3kM4W/vbHL62fLhupypeKTZqRJ/hGR22b+gPgQC2ZMSpNCLSLhMTXxs0jwF
+         ixUODSpwlMwMjKQUPrBXbokRfKlm2zgZDZuvnn1RTt19xH8r3m9rTWTja1NdPvFPO6Xe
+         yDiFk39Py1Qvyhm0SZcRfEeK5JAZ05IPQrB4/OM7DQzYCByLpUngG5ov6/U39bG9CKRy
+         iEhw==
+X-Gm-Message-State: ACrzQf3/pgk0f8NB6VowWwb3WlsfZSXCb7VDdfhNy2WY0Ml3SK5qsniH
+        WBX2wQT03DoTLUoGL+81wTGV6pwbiBc=
+X-Google-Smtp-Source: AMsMyM7iADQVLv0izopCNftr8GHKPOWDUSvsHx6YLaAHnM888P/8Gk0qa5WoO4NGWk/kEm7nihJIfA==
+X-Received: by 2002:a05:600c:4352:b0:3b4:84c0:2006 with SMTP id r18-20020a05600c435200b003b484c02006mr372730wme.205.1664900411240;
+        Tue, 04 Oct 2022 09:20:11 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l4-20020a7bc444000000b003b339438733sm14722702wmi.19.2022.10.04.09.20.09
+        by smtp.gmail.com with ESMTPSA id n41-20020a05600c3ba900b003b3401f1e24sm2247326wms.28.2022.10.04.09.20.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 04 Oct 2022 09:20:10 -0700 (PDT)
-Message-Id: <43c41f7035d6f5d1f34d847da833ba8f5a6a13be.1664900407.git.gitgitgadget@gmail.com>
+Message-Id: <73704b6f66055fbaf8c11696be9f579c06b471dd.1664900407.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1373.git.1664900407.gitgitgadget@gmail.com>
 References: <pull.1373.git.1664900407.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 04 Oct 2022 16:20:00 +0000
-Subject: [PATCH 2/9] builtin/unpack-objects.c: fix compiler warning on MacOS
- with clang 11.0.0
+Date:   Tue, 04 Oct 2022 16:20:01 +0000
+Subject: [PATCH 3/9] trace2: use size_t alloc,nr_open_regions in
+ tr2tls_thread_ctx
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,24 +68,29 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
+Use "size_t" rather than "int" for the "alloc" and "nr_open_regions"
+fields in the "tr2tls_thread_ctx".  These are used by ALLOC_GROW().
+
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/unpack-objects.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ trace2/tr2_tls.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 43789b8ef29..4b16f1592ba 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -385,7 +385,7 @@ static const void *feed_input_zstream(struct input_stream *in_stream,
+diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
+index b1e327a928e..a90bd639d48 100644
+--- a/trace2/tr2_tls.h
++++ b/trace2/tr2_tls.h
+@@ -11,8 +11,8 @@
+ struct tr2tls_thread_ctx {
+ 	struct strbuf thread_name;
+ 	uint64_t *array_us_start;
+-	int alloc;
+-	int nr_open_regions; /* plays role of "nr" in ALLOC_GROW */
++	size_t alloc;
++	size_t nr_open_regions; /* plays role of "nr" in ALLOC_GROW */
+ 	int thread_id;
+ };
  
- static void stream_blob(unsigned long size, unsigned nr)
- {
--	git_zstream zstream = { 0 };
-+	git_zstream zstream = { { 0 } };
- 	struct input_zstream_data data = { 0 };
- 	struct input_stream in_stream = {
- 		.read = feed_input_zstream,
 -- 
 gitgitgadget
 
