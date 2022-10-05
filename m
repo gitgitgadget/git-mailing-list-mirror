@@ -2,105 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 824E2C433F5
-	for <git@archiver.kernel.org>; Wed,  5 Oct 2022 19:23:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99195C433F5
+	for <git@archiver.kernel.org>; Wed,  5 Oct 2022 19:34:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230167AbiJETXo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Oct 2022 15:23:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43812 "EHLO
+        id S230071AbiJETe5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Oct 2022 15:34:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231343AbiJETXX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2022 15:23:23 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96D1080E80
-        for <git@vger.kernel.org>; Wed,  5 Oct 2022 12:23:07 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id 10so12645930pli.0
-        for <git@vger.kernel.org>; Wed, 05 Oct 2022 12:23:07 -0700 (PDT)
+        with ESMTP id S231640AbiJETej (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2022 15:34:39 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 946D9CE5
+        for <git@vger.kernel.org>; Wed,  5 Oct 2022 12:34:35 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id o9-20020a17090a0a0900b0020ad4e758b3so2817780pjo.4
+        for <git@vger.kernel.org>; Wed, 05 Oct 2022 12:34:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sKYEIYOWrRKXhpHKL66v87WIB2GVYJEtyRNZaTKr5So=;
-        b=p/1MyKnv4qLpLby+U7rdUX4d3nAgitJHrs04v5SRevDMvyQ/OHvijcHPEsNkKr+ErP
-         RIfGj6z/seFJiiwKdQJqHXkfqiwXuW/f5X+8nkRnNwTxciwK4NBYvwhe32QuGQAPWjuG
-         BH+ahHiceSKhrvjiXePFxKDlN9rFCEZ08/eaKn7476meZREzPOdPrkq95Lgt7200AGDL
-         rA3e5YCoaz+uH5FYMuf1Ahj9fpbW7JFdPld3wkq3lxiRCGgJ5QGIJmISjYMrwK63yNo5
-         B3HpLEBIp5TqjAVu7YRNwv0gVAl8QIGjLF0cKLqm14oAF4igkrPb9zhc03FufHgwXIoc
-         XyfA==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ysvTuIgGUUQeeFQH7tiwVAJE4WOPi4wo+ze9hsZII5w=;
+        b=jeja0KDHqYYL084yxQEzkzNjOgOx7IYx7MTZEWLRRL95G37hoUjDMNgn0m5SEA3xei
+         2FCx6fseM0ABetalE/p7ifc+SlF6am8Jm5i29MRbAUzUbSUClZe1o/fEai3ht3F1NG16
+         ffX1b8/4I1fO1xVI9Y01mJNCrGQTuLbv8S9kSQ9VkhE7e4vktc5k5ktcF740Hha1IYp3
+         lwuV4D1OD/FuC4Sap76FtaSNrk/FZf6qAK1RkB/zLLWAWIbcVgRCrHczZOhzrEfrFzMA
+         Ym0XQObKGX1q0ognIC9uBZBgCHZR57jL0y/pMsYLyg1YyxVcuNUUiSZqgHDtA/8fK2ph
+         7xKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=sKYEIYOWrRKXhpHKL66v87WIB2GVYJEtyRNZaTKr5So=;
-        b=OtmxSdV+8KGoWSroUDiqFzL8T/sG3NtW/WhCXgQM2ntmaZi4DKzRf3pWy1omtZFdKG
-         NS68BdZFUMJ9V5Ao/XG2UZSRyP0SBavAQWYNs0YoBBmZ/xJG3IhxOL/hzpvwcLO2vXGX
-         6XUhPP5N+JSZAbh7RW7rsNpCxAT63USmjdKLEeiXoBGQUzkK6ZviaKr03SQith8aqD2u
-         Q8q+jmOnFDrtU//R6meQdzETYKAEL5mREnK5UGB74O0moOH3qN8bPfKQXcAHkOQuER74
-         cnE6hZ0wy+ppHxpWdVPozWztvbno5iUm9DAvVzTvIwZNk1rT07Yw+3icNgScqGfYxY6C
-         1qaQ==
-X-Gm-Message-State: ACrzQf1ovvD48AMxIa/kXcufES0VBJ4wiCCTpvyKp6bNwkkfr7ePLvMK
-        RMPS3ZDFIfq3JpDzzV+NajA3bOXLL8g=
-X-Google-Smtp-Source: AMsMyM65GC6v4qngeeKgqUW7r83mJIuADgaDAHr/S+ig8xOX86xqmm2jI+lEDmABWM6nIJ8PrRVjeA==
-X-Received: by 2002:a17:902:da8a:b0:179:e022:5f6 with SMTP id j10-20020a170902da8a00b00179e02205f6mr1182134plx.80.1664997786999;
-        Wed, 05 Oct 2022 12:23:06 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ysvTuIgGUUQeeFQH7tiwVAJE4WOPi4wo+ze9hsZII5w=;
+        b=sH6L6z+qFeddlLBYJccph7xCkt6fcChBRUREuXukNdSY5rrnFmivw9cKSiqzToc3al
+         i6lPDHnI2XzH8A/3DTnvyKsXunIt3VpXLp2HKHT4pwMqEgpV+UVLVaMU8uZV2il6qubF
+         1tmHl7jmcr8zHS75DFVjw+quo7brz+fgLRpnSptuw5XwcZWUpZsjjINAzGdPkgkswpjI
+         KaNvfhb1ZGh8nIm9W1/Z1IkadxiBxSfZr6+GhkcqzNw5zRANj4UHhcIQ9fFBaHiQmt0h
+         HBbZhb1o7q9vVvn99fRmMtnmfwKvADU16cbOxRgoBMlMCN7vl9610BM46RIvxbtCKE0b
+         FeOw==
+X-Gm-Message-State: ACrzQf1K/SuGyVuDZmR1BysO7uOOomB1opyICZTG+zE7B1OEG6hJ0x28
+        RvEh+uO77hsjCCQC01oROdg=
+X-Google-Smtp-Source: AMsMyM5Q9jgkQOq5MnmBlUXtiAab0QoJlV+Hfw00d5CIjsiJqS/BbqOTrO9JlgJu0Vk0cY3nON2Pmg==
+X-Received: by 2002:a17:90b:4d12:b0:20a:6307:54cf with SMTP id mw18-20020a17090b4d1200b0020a630754cfmr6573751pjb.171.1664998474305;
+        Wed, 05 Oct 2022 12:34:34 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id s33-20020a17090a69a400b0020aacde1964sm1469164pjj.32.2022.10.05.12.23.06
+        by smtp.gmail.com with ESMTPSA id b15-20020a170903228f00b00176acd80f69sm10898601plh.102.2022.10.05.12.34.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Oct 2022 12:23:06 -0700 (PDT)
+        Wed, 05 Oct 2022 12:34:33 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Noah Betzen via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Noah Betzen <noah@nezteb.net>
-Subject: Re: [PATCH] Fix minor typo in mergetool.txt: 'overwriten' ->
- 'overwritten'
-References: <pull.1350.git.git.1664844924663.gitgitgadget@gmail.com>
-Date:   Wed, 05 Oct 2022 12:23:05 -0700
-In-Reply-To: <pull.1350.git.git.1664844924663.gitgitgadget@gmail.com> (Noah
-        Betzen via GitGitGadget's message of "Tue, 04 Oct 2022 00:55:24
-        +0000")
-Message-ID: <xmqqh70ioz1i.fsf@gitster.g>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     darkdragon <darkdragon-001@web.de>, git@vger.kernel.org
+Subject: Re: Install-prefix when building should not be hardcoded
+References: <CAAOCJVAML0axQXbYZncT945SuG3-GfmDtDQ4_8cnkQmF_SZtHw@mail.gmail.com>
+        <YzvnadnAYce0dIpi@danh.dev>
+Date:   Wed, 05 Oct 2022 12:34:33 -0700
+In-Reply-To: <YzvnadnAYce0dIpi@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcuG6p24g?=
+ =?utf-8?B?Q8O0bmc=?= Danh"'s message of
+        "Tue, 4 Oct 2022 14:57:29 +0700")
+Message-ID: <xmqqczb6oyie.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Noah Betzen via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Đoàn Trần Công Danh  <congdanhqx@gmail.com> writes:
 
-> From: Noah Betzen <noah@nezteb.net>
+> On 2022-10-04 09:38:24+0200, darkdragon <darkdragon-001@web.de> wrote:
+>> Even though in Makefile, it is stated that git will figure out
+>> gitexecdir at runtime based on the path to the executable, there are
+>> many output files where $(prefix) will be hardcoded. Even git
+>> --exec-path will print out $(compile_prefix)/libexec/git-core instead
+>> of using run_prefix.
 >
-> Signed-off-by: Noah Betzen <noah@nezteb.net>
-> ---
->     Fix minor typo in mergetool.txt
->     
->     I only learned of mergetool.hideResolved today, and while reading the
->     docs I noticed a tiny typo, so I figured I'd fix it.
+> I'm not sure about this part.
 
-Thanks.  Will apply.
-
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1350%2FNezteb%2Fpatch-1-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1350/Nezteb/patch-1-v1
-> Pull-Request: https://github.com/git/git/pull/1350
->
->  Documentation/config/mergetool.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
-> index 90b38097002..e779a122d8a 100644
-> --- a/Documentation/config/mergetool.txt
-> +++ b/Documentation/config/mergetool.txt
-> @@ -59,7 +59,7 @@ mergetool.hideResolved::
->  	possible and write the 'MERGED' file containing conflict markers around
->  	any conflicts that it cannot resolve; 'LOCAL' and 'REMOTE' normally
->  	represent the versions of the file from before Git's conflict
-> -	resolution. This flag causes 'LOCAL' and 'REMOTE' to be overwriten so
-> +	resolution. This flag causes 'LOCAL' and 'REMOTE' to be overwritten so
->  	that only the unresolved conflicts are presented to the merge tool. Can
->  	be configured per-tool via the `mergetool.<tool>.hideResolved`
->  	configuration variable. Defaults to `false`.
->
-> base-commit: bcd6bc478adc4951d57ec597c44b12ee74bc88fb
+Perhaps it is related to the use of RUNTIME_PREFIX (which I don't
+use myself)?
