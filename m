@@ -2,108 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F0D4C433FE
-	for <git@archiver.kernel.org>; Wed,  5 Oct 2022 11:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 708FFC433F5
+	for <git@archiver.kernel.org>; Wed,  5 Oct 2022 11:23:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229764AbiJELJx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Oct 2022 07:09:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33460 "EHLO
+        id S229586AbiJELXj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Oct 2022 07:23:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229623AbiJELJv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2022 07:09:51 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AFCAD139
-        for <git@vger.kernel.org>; Wed,  5 Oct 2022 04:09:45 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id f11so22782953wrm.6
-        for <git@vger.kernel.org>; Wed, 05 Oct 2022 04:09:45 -0700 (PDT)
+        with ESMTP id S229498AbiJELXh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2022 07:23:37 -0400
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B205D11D
+        for <git@vger.kernel.org>; Wed,  5 Oct 2022 04:23:32 -0700 (PDT)
+Received: by mail-oo1-xc29.google.com with SMTP id m11-20020a4aab8b000000b00476743c0743so10586488oon.10
+        for <git@vger.kernel.org>; Wed, 05 Oct 2022 04:23:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date;
-        bh=LdORsUfvvM/rUMDBN8Fw7a1JPS2qwxoAPYgJT5NLI9Y=;
-        b=MbJDxqh1I4t4DL7ZbJghXsBWCQ9rIAhAudT+EK2yvuNyVoYAwWluEzkrPmj1iZSTD0
-         zJqLn5ups77ldJYa95UBLr80tIPHhd8UVmWVTD2FU1HOtfetI70lBaGxuBaNQuQ2VkqM
-         H+E+YhIiREl2OoIZZ8ZYedJ7fO+U1k8R9o684jbhZEwcYiTPNBVUosUh8u9uJBkNA9YJ
-         N/G0/Ek3bxVOgLLOXIL0WZIXXRYhz4qj0x9QihEQchl9IEeIkjSG+C7gwp/x7piaHfTs
-         ZTJAFH0lnqBTKnixR/vJPM9MGK8VDoow5vbCMaJw6xhLyP0bvHUQ73K11D35mLt2B0CA
-         kd+A==
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=xsFQSECkaSVHO6QnVgheSIsSft2MnJvvnGlesMPbOYA=;
+        b=qdtxXyGFDH3tRyZkzyMvesPphIYIYtItvh2f4BdORR5OjC/4o5Udgb8vnSWRGfuv0p
+         3FtpLL5suWwrmWzqoF8/okoJDhe9cTpRO8/S/G+VcCUwbk7HkECeVJ5Sja/yH0O9VyNW
+         pWxmSFYS1akiq41tOb+9zEK3UZdBqTPq715uJ2+jh71hIEmekI1HpMPT874ouqsyizAz
+         miHiNjsI2MBLoeKnC0sel7Ew864JLgwcWsfvoveKfjPvLKf0gSu96y3iY/rCo0Vj0UuX
+         8sylY1SBjOqkFr+WlBFkBg89uGOcZ3z9n7+2RVi/Oj+IikslbHDxKw/r+W1E4vfW+Tzr
+         t8Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date;
-        bh=LdORsUfvvM/rUMDBN8Fw7a1JPS2qwxoAPYgJT5NLI9Y=;
-        b=mK19qperDYI8WFrJQdY6pfxUzXdNBVZoMwxs3jXVXt3M8fUKjpHHN6eUOMjMIMWJ8n
-         ZmfUTWJy5XC6TT4Csu7UhhlYhqpv6owfRWunUmPHe226PtkHCOEUPXXx2gQYQVqQ7iAA
-         CmcDenRjvVrPyev4ncXRQ8wJW1TwKKL4kT09Y7CkOlc7TmQ7AMRTJPb1rz3bxd7x3PMj
-         zD5QsmhUD1dhhgUsfgbmUYdCehxsT0DtvtqyYUNeDJv8pWYXfb+UbhJAHzzo4+BoaRO1
-         O4SgUiVTfyW9YI38HLW3tROMt5OZjgTHI0pUv0P/CetAfysvkASEjm3LmySe7SRlD4yW
-         C1uQ==
-X-Gm-Message-State: ACrzQf1zWX9awzyTHjANtvtdOFKf7E+QTvSyQXo9mZZqiP4iw0QhwCHi
-        Wv5NS7Z2bZec8XUK8cMEhb4=
-X-Google-Smtp-Source: AMsMyM7/NunME+cDXD0vXbMM4vDb2P857J73SOkrb1jkV7F4rFbFnPmJCA2j2TTsDonYXeZlCFgNiA==
-X-Received: by 2002:a5d:6483:0:b0:22e:4804:8be4 with SMTP id o3-20020a5d6483000000b0022e48048be4mr6751835wri.528.1664968183874;
-        Wed, 05 Oct 2022 04:09:43 -0700 (PDT)
-Received: from [192.168.1.81] ([31.185.185.144])
-        by smtp.googlemail.com with ESMTPSA id fn8-20020a05600c688800b003a8434530bbsm1610984wmb.13.2022.10.05.04.09.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Oct 2022 04:09:43 -0700 (PDT)
-Message-ID: <a2e2bf70-95cc-41ee-c129-ef2f2e38fe79@gmail.com>
-Date:   Wed, 5 Oct 2022 12:09:42 +0100
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=xsFQSECkaSVHO6QnVgheSIsSft2MnJvvnGlesMPbOYA=;
+        b=oa8hwiZzhN/blUoAzPlZ3asTrfJ5R7+1wx2rmKDfMQ8VdCzXQCPSXkdPy16YZvWPrj
+         L1C5LgIVCitXsOyyusXh/WTvYtqeP1iuWxwORKjiQKsp6TSG+/n7GGQR8pCEzQbzVzQs
+         9kmFjzR62ZD8AtXTN+EtyJyaG6YoJ9eVEsaWf8KjdfpOHqZ781J5i6/z4siCyEpqROFN
+         CmOMwYWICppbthHYmGHTsyVm+VWEhJRzhC463TBLpI90HCnxJuhvlCRtKpcjgZTL5s1j
+         nVYF0l+ux2uwmZejRaoRm1QeRf3NXvPjSYBK5ZvnjZhxTQp9gtHbFk001X/a5ER6KCY0
+         PVTQ==
+X-Gm-Message-State: ACrzQf1xL6rJfYAnOKaRUQL1w9jfKkrb8W5YrHgm7mmP1q3dV4sCyjlJ
+        IYOWFJnrpXJdosKNax5AL3vWPV4VlF6mATxxrRka9GCcyDD/Rx8i
+X-Google-Smtp-Source: AMsMyM5eeFLW9e2AGu0+bt7b4o9GkxnXSHvfGC957Ia3IxQUSKF6XzkohLqGqfjynvp+ZLdNSpX05KNM4ER2s7jHYEo=
+X-Received: by 2002:a4a:9645:0:b0:476:a4e2:8cbc with SMTP id
+ r5-20020a4a9645000000b00476a4e28cbcmr11040494ooi.74.1664969011297; Wed, 05
+ Oct 2022 04:23:31 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 06/10] evolve: add support for writing metacommits
-Content-Language: en-US
-To:     Chris P <christophe.poucet@gmail.com>, phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christophe Poucet <poucet@google.com>
-References: <pull.1356.git.1663959324.gitgitgadget@gmail.com>
- <56c6770997bbdb1b3b87c2c410dd7f158b03f2d6.1663959325.git.gitgitgadget@gmail.com>
- <a7ddab8a-ddd6-a8bf-496d-4ce7757d89cf@dunelm.org.uk>
- <CAN84kKke+vSQ18wNM7h6BvTF9XBtSH96L0_qNOFn+V3fj2yNhg@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAN84kKke+vSQ18wNM7h6BvTF9XBtSH96L0_qNOFn+V3fj2yNhg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From:   Alireza <rezaxm@gmail.com>
+Date:   Wed, 5 Oct 2022 14:53:00 +0330
+Message-ID: <CAD9n_qiXZ9xDkJsG0mMmYoVpM8LXrZB+nyjHK_vSsRT3FgjAqw@mail.gmail.com>
+Subject: Request for a "connected mode" -- server-side command execution
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Chris
+There are a few mechanisms already to improve perf in big repositories
+but they all need a change in usage flow. I had this idea for a while
+now and I'd appreciate your feedback on it.
 
-On 05/10/2022 10:40, Chris P wrote:
->>> +/**
->>> + * Produces the final form of a metacommit based on the current change refs.
->>> + */
->>> +static void resolve_metacommit(
->>> +     struct repository* repo,
->>> +     struct change_table* active_changes,
->>> +     const struct metacommit_data *to_resolve,
->>
->> [testing my understanding] This is the metacommit we want to update
-> 
-> Maybe you can help me find a bug.  If you run `git-change update`
-> twice without changing commits, it prints that it created a second
-> one, but then if you `git-change list` it doesn't show that last one
-> because it doesn't create an extra one if there's already a change
-> pointing at HEAD.
+The "connected mode" essentially means to run all git commands on the
+server and only download relevant stuff locally. To demonstrate the
+usage flow:
 
-That's something I thought that we should add a test for but didn't get 
-round to. I'll have a look and get back to you
+git clone --connected <url> # new repo
+git config fetch.connected true # existing repo
 
-> Also, thanks for all the comments, it's helping my understanding too.
-> In general do you want all these comments added to the code?
+From there, git is to decide whether or not a command should be sent
+to the server. For instance, if all required refs are present locally,
+it's run on the machine, otherwise it's sent to the server, collecting
+the result and possibly a minimum set of new objects. From the user's
+perspective, all commands are run on the latest revision without an
+explicit (possibly extensive) fetch.
 
-Not unless you think the code needs them (from what I remember it is 
-already fairly well commented), they're just me thinking out loud as I 
-read the code.
+This would make a --connected clone implicitly shallow, but new data
+can be downloaded on demand. User flow is not changed in any other
+ways.
 
-I'm going to be offline for the rest of the day, I'll catch up with the 
-rest of your comments tomorrow or Friday.
-
-Phillip
-
+Thanks,
