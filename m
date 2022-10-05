@@ -2,107 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A592C433FE
-	for <git@archiver.kernel.org>; Wed,  5 Oct 2022 22:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3AE7C433F5
+	for <git@archiver.kernel.org>; Wed,  5 Oct 2022 22:20:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229506AbiJEWTp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Oct 2022 18:19:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52372 "EHLO
+        id S229550AbiJEWUH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Oct 2022 18:20:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229526AbiJEWTn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2022 18:19:43 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E5015598
-        for <git@vger.kernel.org>; Wed,  5 Oct 2022 15:19:42 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id t6-20020a25b706000000b006b38040b6f7so185436ybj.6
-        for <git@vger.kernel.org>; Wed, 05 Oct 2022 15:19:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=913s0jmDq9uljYYFBV+yP+LA3c8M8SVL66r9H8pPa6w=;
-        b=YGeJ5mbKClBywH8s4l5dxvvdB4GsIEggjczt/lbDOHqv3qPH6gnxKWnk7wVTuDvvGx
-         NPmE+mwUd7mq8m/Nb6puodbVBIIffTXuw/rrxCBwmECxmPsEHlqBlICl+HNNGZnpiuUw
-         344CqV6DGI66U7+v6DypDvrQBApwsJOFlqOpFkp0QuRz/D6kQLku1R/trtljwe1vl3aB
-         Gh0Y56Zfds/nZgFELEavCB2PhGbyqPS+KofSL7lmGW5naIGuz7lHPAS6LovkPMna+Ul6
-         4sKTQ+GhP08qgCe5W0HFmYE6NIZ/OMR8VsrPhV0dUvvufO/he715dxc1CjZ/uu1AU4Sq
-         cVEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=913s0jmDq9uljYYFBV+yP+LA3c8M8SVL66r9H8pPa6w=;
-        b=fUDpz7UhfWh0GVnqtFiWp6ePBk8rzCMGzbswFJ9Z6MfnPspi7bK8Ob9RqRyFNUgkA5
-         ydYMI29eSG9vq4KzGjF+T9QicIxDLy5KcMOw5KizdIFpu5BOYYyHlmvx4Vkvtmr1D3GB
-         QxtY6q4dlCfFXDS7g7AIqeGz+tONEgaJh2cBetIqr7lrWOMmwdDt83Y7tWniOjhTsxoA
-         06n234VLYogmdrq9e4oghjCENt94FKVppJsP/sKP+J4GKW/CZAAlyb/xi+xN5rbdt4Yh
-         eUCZ7cBmGelZhSFVW1xnqZH8HuTZg2yRmiPueL46efB4wuCK7Y5fCAU4zLV4lGEIjh0T
-         JwfQ==
-X-Gm-Message-State: ACrzQf3oPpMclDNAczBg5Y3TUwyqTbqkNaYWFuh+wDvSjAounXdrgBIP
-        /vR+hoKzau8VWKWpcu9MEr8d2tCUoyJIg4MSuWqjbNoVugozJRE0FG6CaVrDxzHIlUYHUirQ/Jq
-        uB7QtReey6r1xI/RVFvalJBlJidwYj8K2BGSjc2PV45640I3OZn8bf3j31ZaY
-X-Google-Smtp-Source: AMsMyM6u6LhyP8hIgMSg1R01lmXfG2htF7fe2jGtlesoIpexjXLyvam5qtx+kFUMYXN5k+p46EsJtGShcc9V
-X-Received: from nayru.cam.corp.google.com ([2620:15c:93:a:530e:7923:ce28:a4d1])
- (user=asedeno job=sendgmr) by 2002:a05:6902:212:b0:6b3:b370:44c9 with SMTP id
- j18-20020a056902021200b006b3b37044c9mr2027298ybs.440.1665008381679; Wed, 05
- Oct 2022 15:19:41 -0700 (PDT)
-Date:   Wed,  5 Oct 2022 18:19:28 -0400
-In-Reply-To: <xmqqilkynd91.fsf@gitster.g>
-Mime-Version: 1.0
-References: <xmqqilkynd91.fsf@gitster.g>
-X-Mailer: git-send-email 2.38.0.rc1.362.ged0d419d3c-goog
-Message-ID: <20221005221928.703750-1-asedeno@google.com>
-Subject: [PATCH] git-compat-util.h: GCC deprecated message arg only in GCC 4.5+
-From:   "=?UTF-8?q?Aleajndro=20R=20Sede=C3=B1o?=" <asedeno@google.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "=?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?=" <asedeno@mit.edu>,
-        "=?UTF-8?q?Alejandro=20R=20Sede=C3=B1o?=" <asedeno@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229544AbiJEWUE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2022 18:20:04 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D203C6471
+        for <git@vger.kernel.org>; Wed,  5 Oct 2022 15:20:02 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id AC01D5A111;
+        Wed,  5 Oct 2022 22:20:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1665008401;
+        bh=E/weNGGSmvXZrPf5xwoUrMRP3OC4Q+rQUBjW+pQyks8=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=GuEkqX5fZzNBajaVLWXVevaHSNnqxxykw9AUfDCTjSlRaGAu1HuYxIYbys5JxTfjh
+         nBTl1+QtxPIcDbN3SlNiwHDKBg/jtLUYFkH1gKJsecwHDkP2cGLHOt+Pkb3PGe4oF6
+         mPXVsgptD+JxIcWgvCrdOazLB+Qy3FSgGUBSZHZM18zI+cvxNF5Q0CG+xAzJYkFmyK
+         Ij14wRX0F2V1h1pfuB+ONUHKdIcqeFLcIv+lI+gW/ryszmQxiKe3NGlIk0ByCLgEUO
+         Ox+8ch3wdOuqswDaW3pJsIJzcZnxYm859l7Xf0z8S39j6yUBqoQj97+QAL+zd6DEOq
+         5qPM/BckiANDTBLgolVA04IEcPwa8/fgkGCZxRLvYGQJZ12V6pOwQA2d9cxsZ6gn7D
+         dl/yTes1gGIcr+GJMk9VDWmlnXU1BkfR0Tkz4ieRpr8Xg65GY+es7C6MC0aMmyRemE
+         vKEukzQiUsVFI/T9DfPY//roEtId40/ggJyyVRKCtQDQJoTCoxa
+Date:   Wed, 5 Oct 2022 22:19:59 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Alireza <rezaxm@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Request for a "connected mode" -- server-side command execution
+Message-ID: <Yz4DDxe6oGCOH0hI@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Alireza <rezaxm@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <CAD9n_qiXZ9xDkJsG0mMmYoVpM8LXrZB+nyjHK_vSsRT3FgjAqw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="NodVax3604eiBBu4"
+Content-Disposition: inline
+In-Reply-To: <CAD9n_qiXZ9xDkJsG0mMmYoVpM8LXrZB+nyjHK_vSsRT3FgjAqw@mail.gmail.com>
+User-Agent: Mutt/2.2.7 (2022-08-07)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
 
-From: https://gcc.gnu.org/gcc-4.5/changes.html
+--NodVax3604eiBBu4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> The deprecated attribute now takes an optional string argument, for
-> example, __attribute__((deprecated("text string"))), that will be
-> printed together with the deprecation warning.
+On 2022-10-05 at 11:23:00, Alireza wrote:
+> There are a few mechanisms already to improve perf in big repositories
+> but they all need a change in usage flow. I had this idea for a while
+> now and I'd appreciate your feedback on it.
+>=20
+> The "connected mode" essentially means to run all git commands on the
+> server and only download relevant stuff locally. To demonstrate the
+> usage flow:
+>=20
+> git clone --connected <url> # new repo
+> git config fetch.connected true # existing repo
+>=20
+> From there, git is to decide whether or not a command should be sent
+> to the server. For instance, if all required refs are present locally,
+> it's run on the machine, otherwise it's sent to the server, collecting
+> the result and possibly a minimum set of new objects. From the user's
+> perspective, all commands are run on the latest revision without an
+> explicit (possibly extensive) fetch.
+>=20
+> This would make a --connected clone implicitly shallow, but new data
+> can be downloaded on demand. User flow is not changed in any other
+> ways.
 
-While GCC 4.5 is already 12 years old, git checks for even older
-versions in places. Let's not needlessly break older compilers when
-a small and simple fix is readily available.
+I think you may be interested in partial clone (e.g., a clone with
+`--filter=3Dblob:none`), which can download the commits and trees but not
+the blobs for a repository.  The blobs are then automatically downloaded
+=66rom the remote on demand.
 
-Signed-off-by: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
-Signed-off-by: Alejandro R Sede=C3=B1o <asedeno@google.com>
----
- git-compat-util.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+There are other partial clone filters, but that particular one is the
+most common and the best supported.  Note that in this case, the history
+is complete and the repository is not shallow; only the blobs are
+missing.
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index b90b64718e..045b47f83a 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -189,9 +189,12 @@ struct strbuf;
- #define _NETBSD_SOURCE 1
- #define _SGI_SOURCE 1
-=20
--#if defined(__GNUC__)
-+#if GIT_GNUC_PREREQ(4, 5)
- #define UNUSED __attribute__((unused)) \
- 	__attribute__((deprecated ("parameter declared as UNUSED")))
-+#elif defined(__GNUC__)
-+#define UNUSED __attribute__((unused)) \
-+	__attribute__((deprecated))
- #else
- #define UNUSED
- #endif
+As for performing the work on the server side, I feel like that is
+unlikely to happen, since it's very hard to account for the security
+concerns running arbitrary commands as well as the potential unbounded
+computational cost.  Therefore, it's not likely that most providers
+would implement a feature if it were added.
 --=20
-2.38.0.rc1.362.ged0d419d3c-goog
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
+--NodVax3604eiBBu4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.39 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYz4DDwAKCRB8DEliiIei
+gYlcAPkB0Jg9GVMT4QEldNMH0MmQHSgufMjxs7hZCPurWH9FBgEAwcQ/IQisFMRN
+0mVqWF4YkmZWJrjwIyLbv4AQJ21aug0=
+=X5mu
+-----END PGP SIGNATURE-----
+
+--NodVax3604eiBBu4--
