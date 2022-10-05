@@ -2,100 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66BADC433F5
-	for <git@archiver.kernel.org>; Wed,  5 Oct 2022 13:09:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 922C8C433FE
+	for <git@archiver.kernel.org>; Wed,  5 Oct 2022 13:15:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229495AbiJENJH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Oct 2022 09:09:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51940 "EHLO
+        id S229710AbiJENPj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Oct 2022 09:15:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229780AbiJENJE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2022 09:09:04 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FF7550718
-        for <git@vger.kernel.org>; Wed,  5 Oct 2022 06:09:03 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id r17so729eja.7
-        for <git@vger.kernel.org>; Wed, 05 Oct 2022 06:09:03 -0700 (PDT)
+        with ESMTP id S229882AbiJENPa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2022 09:15:30 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B8A979624
+        for <git@vger.kernel.org>; Wed,  5 Oct 2022 06:15:27 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id b2so35395767eja.6
+        for <git@vger.kernel.org>; Wed, 05 Oct 2022 06:15:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dUI1DHTldYaNmkxO40VtkjEvr1U6rqk9EC7U9PjRIXI=;
-        b=p4k5Wn2zlDzbxExfbWxvu0ZDRhPmaKocfv39RRA9e22x8QqJ484mT/+MPoMWI6mD/i
-         eOxZDhSy2w65b6a4V65skBvzLOHfHoqbQ3AT0l+j+oOQV9h3xK1AecT7cRxACqkaJKr1
-         10L9wTOUChNtuOlZCMj6GP4j+En1zZHrrDIFDb27HGugZMdjersgFX26nXQ4KpZpVqYa
-         YQWkGfYeLJ2heSxKnTHfRNFPp8bt0TpFqTi9iNMDjp35N4WgqGaihrOvuz7tLVsPUVVf
-         jl9rboPHlC/divEwC9vSEskpcOydWlr0BlSrwbg4ii5eefGl9q4S6FdJYLr1vojIh3Fu
-         zaFA==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=K8JYNga8seyP+EsudE/9dDh2Mx1x4J3/JQdxaiHFWho=;
+        b=c5Ded9czuHHjiCO1zmlyJJqwGOFpw9iU6b0quUp93ESUgYzjkyNgrY8jVzZlZhLgiN
+         kbfF3EzuqNXHmZhMUPwo2ZGir/V+ptj5pu2uMQctrUazFh0cGxURPafP0/2GIpiDUO0j
+         wwWCo0It2rLt/26VS+c8eLJHSl3qYdrFYzRYeIlGQJQSBcMwmWWnXu9yIplDp8THDiuv
+         vs3ea0ZBPbuwnD18zRBUHHlByoqw2ncvCv+nsj+HJlGPhsX61Rb/QfUaykpdoM2s389B
+         W43bkHMJ+ywonJetPRDwt1q0magZPjLXNNhS+MWk1wJI7DynS6aD0h9QYTNqdphHgrMl
+         CJ/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dUI1DHTldYaNmkxO40VtkjEvr1U6rqk9EC7U9PjRIXI=;
-        b=bjOIQzpqPMVawrGn3wIzVP2idXwyrMctECjj/gdOfUMAv66C1Uj4SdPo1IPK+oo0LA
-         EaON8HdM1Hd2yeHRMPpggV0A4DlnJ270cj7XcySZvHOET5+1xzzO6i//hoadK4P1hYyl
-         oCsnO7ol1Q0nnUkT4MqoIYxLN58f/jOj0wIH/IoKCp+7KphAM9Q4854gyMf8KlVyDhpf
-         bLgh9N0FbsLIkFwFAybxOTCu81uAfz7lfZuxKebb0UivEFwwKqL574u4x6TTB1E7gLA6
-         lnVqmjzEFJm/9eACzPODRLjGHYvZJqVzxYBe0fKeQleEt92/Ti17iIv7bpaUFk36iWYc
-         v5uQ==
-X-Gm-Message-State: ACrzQf2aBJ1R98nJHkpM4xGmoFIc7DWeZwHKlHpUX86PWARUTZkNX5qe
-        IrwFD4eEhd0KhzK/VEJ5wrw=
-X-Google-Smtp-Source: AMsMyM4tsVkFfw06Sm3D8DGWcN85W+fhsVI7S5jy3CyOjiikGLjkpciJkojWuo1hunDbyJPQ6gSSNg==
-X-Received: by 2002:a17:906:8449:b0:78b:74c1:ca32 with SMTP id e9-20020a170906844900b0078b74c1ca32mr11985351ejy.46.1664975326492;
-        Wed, 05 Oct 2022 06:08:46 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=K8JYNga8seyP+EsudE/9dDh2Mx1x4J3/JQdxaiHFWho=;
+        b=3LTysfZpYogVN/4CjJE6vLUQxEnPwCp4A2w0LSKKzd+G7oivYUwStnK8fLv7CoTBPt
+         G2B1AjYe/ojIOtpbzZrYAdAj1oTAqtrVYW/4yVlqsFfagOojsWZBKafV1n+4aHERFC9c
+         Adcxc8ISqMMCtyiKJT6DUe3JEUVsKRsO7Lz5flqAcW5qHFEF6Jv3El4MJaHuZ4pbbuJ2
+         I0Qo02xlXcALClJ5XrqrnFmOd6sLBnpLDuXB0Z3apoun6rvWl3eF7Kx7cVjlxgYKKX5i
+         xa4VqXFCqdgxjTf82QH2JsxDk557E3HpSdTbpn35YXNE0uhTgX8zcdihMYV3iVRzHwRU
+         1izQ==
+X-Gm-Message-State: ACrzQf336+efhOAmSuj1eDxw05zR4i0qbPChjmCbyPjjMFV4XPpxQ0n4
+        G/hTZ8dhQCjFur7FEHsCNBh7lzZ1fiIT1Q==
+X-Google-Smtp-Source: AMsMyM7gRmqBV9opWiq979rig9y562XQDB0WeUp1OgCvSlcKrbYNUGa7agvBoYdBqGdKRwG8z6jaqg==
+X-Received: by 2002:a17:907:762f:b0:78d:22d2:b396 with SMTP id jy15-20020a170907762f00b0078d22d2b396mr4144597ejc.684.1664975725903;
+        Wed, 05 Oct 2022 06:15:25 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id g2-20020a17090604c200b0073d7bef38e3sm8574403eja.45.2022.10.05.06.08.45
+        by smtp.gmail.com with ESMTPSA id lb20-20020a170907785400b0078907275a44sm7405118ejc.42.2022.10.05.06.15.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Oct 2022 06:08:45 -0700 (PDT)
+        Wed, 05 Oct 2022 06:15:24 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1og48i-002YIC-1p;
-        Wed, 05 Oct 2022 15:08:44 +0200
+        id 1og4F9-002YX0-1a;
+        Wed, 05 Oct 2022 15:15:23 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 0/9] Trace2 timers and counters and some cleanup
-Date:   Wed, 05 Oct 2022 15:04:33 +0200
-References: <pull.1373.git.1664900407.gitgitgadget@gmail.com>
+To:     Jeremy Lin <jeremy.lin@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] git-compat-util.h: fix build on gcc 4.4.x and earlier
+Date:   Wed, 05 Oct 2022 15:14:51 +0200
+References: <20221005090650.3172-1-jeremy.lin@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <pull.1373.git.1664900407.gitgitgadget@gmail.com>
-Message-ID: <221005.86tu4is9ib.gmgdl@evledraar.gmail.com>
+In-reply-to: <20221005090650.3172-1-jeremy.lin@gmail.com>
+Message-ID: <221005.86pmf6s978.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Oct 04 2022, Jeff Hostetler via GitGitGadget wrote:
+On Wed, Oct 05 2022, Jeremy Lin wrote:
 
-> This patch series add stopwatch timers and global counters to the trace2
-> logging facility. It also does a little housecleaning.
+> Commit 9ff7eb8c88 uses the `deprecated` attribute to display a warning
+> message when something that is supposed to be unused is actually used.
+> However, `deprecated` only supports messages starting in gcc 4.5.0, so
+> earlier versions of gcc end up bailing out with a message like
 >
-> This is basically a rewrite of the series that I submitted back in December
-> 2021: [1] and [2]. Hopefully, it addresses all of the concerns raised back
-> then and does it in a way that avoids the issues that stalled that effort.
+>   error: wrong number of arguments specified for =E2=80=98deprecated=E2=
+=80=99 attribute
 >
-> First we start with a few housecleaning commits:
+> This commit removes the use of the `deprecated` attribute for gcc 4.4.x
+> and earlier. As this is just a diagnostic feature for developers, and
+> presumably very few people are developing on such old systems anyway,
+> this change shouldn't really impact anyone.
 >
->  * The first 2 commits are unrelated to this effort, but were required to
->    get the existing code to compile on my Mac with Clang 11.0.0 with
->    DEVELOPER=1. Those can be dropped if there is a better way to do this.
+> Signed-off-by: Jeremy Lin <jeremy.lin@gmail.com>
+> ---
+>  git-compat-util.h | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index b90b64718e..9e2969edd6 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -190,8 +190,13 @@ struct strbuf;
+>  #define _SGI_SOURCE 1
+>=20=20
+>  #if defined(__GNUC__)
+> -#define UNUSED __attribute__((unused)) \
+> +/* The `deprecated` attribute only accepts a message starting in gcc 4.5=
+.0. */
+> +# if (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__) >=
+=3D 40500
+> +#  define UNUSED __attribute__((unused)) \
+>  	__attribute__((deprecated ("parameter declared as UNUSED")))
+> +# else
+> +#  define UNUSED __attribute__((unused))
+> +# endif
+>  #else
+>  #define UNUSED
+>  #endif
 
-This seems like a good thing to have, but there's no subsequent changes
-to those two files on this topic, so is this just a "to get it building
-on my laptop..." stashed-on?
-
-I think if so it makes sense to split these up, and as feeback on 1-2/9:
-Let's note what compiler/version & what warning we got, the details
-there for anyone to dig this up later are missing, i.e. if we ever want
-to remove the workaround syntax.
-
->  * The 3rd commit is in response a concern about using int rather than
->    size_t for nr and alloc in an ALLOC_GROW() in existing trace2 code.
-
-This small bit of cleanup also could perhaps be submitted separately?
-It's unclear (and I read the concern in the initial thread) if this is
-required by anything that follows.
-
+There's an earlier discussion & patch at
+https://lore.kernel.org/git/20221003212318.3092010-1-asedeno@google.com/
