@@ -2,84 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99195C433F5
-	for <git@archiver.kernel.org>; Wed,  5 Oct 2022 19:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 778F5C433F5
+	for <git@archiver.kernel.org>; Wed,  5 Oct 2022 19:39:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230071AbiJETe5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Oct 2022 15:34:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58440 "EHLO
+        id S230204AbiJETjy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Oct 2022 15:39:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231640AbiJETej (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2022 15:34:39 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 946D9CE5
-        for <git@vger.kernel.org>; Wed,  5 Oct 2022 12:34:35 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id o9-20020a17090a0a0900b0020ad4e758b3so2817780pjo.4
-        for <git@vger.kernel.org>; Wed, 05 Oct 2022 12:34:35 -0700 (PDT)
+        with ESMTP id S230359AbiJETjr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2022 15:39:47 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F01AB7F2
+        for <git@vger.kernel.org>; Wed,  5 Oct 2022 12:39:46 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id i6so16745895pfb.2
+        for <git@vger.kernel.org>; Wed, 05 Oct 2022 12:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ysvTuIgGUUQeeFQH7tiwVAJE4WOPi4wo+ze9hsZII5w=;
-        b=jeja0KDHqYYL084yxQEzkzNjOgOx7IYx7MTZEWLRRL95G37hoUjDMNgn0m5SEA3xei
-         2FCx6fseM0ABetalE/p7ifc+SlF6am8Jm5i29MRbAUzUbSUClZe1o/fEai3ht3F1NG16
-         ffX1b8/4I1fO1xVI9Y01mJNCrGQTuLbv8S9kSQ9VkhE7e4vktc5k5ktcF740Hha1IYp3
-         lwuV4D1OD/FuC4Sap76FtaSNrk/FZf6qAK1RkB/zLLWAWIbcVgRCrHczZOhzrEfrFzMA
-         Ym0XQObKGX1q0ognIC9uBZBgCHZR57jL0y/pMsYLyg1YyxVcuNUUiSZqgHDtA/8fK2ph
-         7xKw==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=No18RgNp6av7FsmgNL2KKZ5cdlltSWr0t2kwWdQ7mIA=;
+        b=Cpv8cPMQl1Ngrj+CoqOpbBwljf3LuiNUIo3375ABJk0OkWUnPfOA74+Av73y0rdrYc
+         8K3w9FheMZPT78ZXxFtPqcovJzwBYpN/yyjoY0agkSFyfZks8bluR+MQK51cT8k4HCVk
+         FiKl3keA21UFm29hILDbrayvwpRlGApNynWHAijFqG1QoAuiYYi2N5S96JpoVPh7y7c/
+         RhT0zu9thWmRkgtoZ610Xlnya0KiI7EbvAlrXUl56Xgdn3AVQZjJIOO6sKKLdWRp0TaL
+         3HiwRhsbAJxc3WtAZcWeI9nKKs+ARqCjl3AZdi8UyogYPMDiBB8IxBBC/F4XZ8f4sYUj
+         WEiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ysvTuIgGUUQeeFQH7tiwVAJE4WOPi4wo+ze9hsZII5w=;
-        b=sH6L6z+qFeddlLBYJccph7xCkt6fcChBRUREuXukNdSY5rrnFmivw9cKSiqzToc3al
-         i6lPDHnI2XzH8A/3DTnvyKsXunIt3VpXLp2HKHT4pwMqEgpV+UVLVaMU8uZV2il6qubF
-         1tmHl7jmcr8zHS75DFVjw+quo7brz+fgLRpnSptuw5XwcZWUpZsjjINAzGdPkgkswpjI
-         KaNvfhb1ZGh8nIm9W1/Z1IkadxiBxSfZr6+GhkcqzNw5zRANj4UHhcIQ9fFBaHiQmt0h
-         HBbZhb1o7q9vVvn99fRmMtnmfwKvADU16cbOxRgoBMlMCN7vl9610BM46RIvxbtCKE0b
-         FeOw==
-X-Gm-Message-State: ACrzQf1K/SuGyVuDZmR1BysO7uOOomB1opyICZTG+zE7B1OEG6hJ0x28
-        RvEh+uO77hsjCCQC01oROdg=
-X-Google-Smtp-Source: AMsMyM5Q9jgkQOq5MnmBlUXtiAab0QoJlV+Hfw00d5CIjsiJqS/BbqOTrO9JlgJu0Vk0cY3nON2Pmg==
-X-Received: by 2002:a17:90b:4d12:b0:20a:6307:54cf with SMTP id mw18-20020a17090b4d1200b0020a630754cfmr6573751pjb.171.1664998474305;
-        Wed, 05 Oct 2022 12:34:34 -0700 (PDT)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=No18RgNp6av7FsmgNL2KKZ5cdlltSWr0t2kwWdQ7mIA=;
+        b=nq2+6cMM+mLBcrKwhtuIVVQIvitWGtFoajRCpOKmgPEKSvrW7Fj9o+t3Aa3CZyrWk9
+         v944aEOSSblAU+GIJtawOtbHPozDXrgiFBob1rATlEreiIleEAIIjRy81vCOkjYJ/kpE
+         RsXBniJzn1bgvS3NRf8qT+Tir0i3O3pOST3ldQWFpj/XoLEGvnKbPIpaYRS0t8tSXRWU
+         PbtPFyji5rqNFHqjb+jMmxDi6h4yNq/iOurb5cNlXAJFph4ZC2or+NE7+hkn0VEE6I85
+         Mw10D7BVY076Ab3FYAFY/VuY0B36UlHCRrq23TNGomrtol5PYoADGbQmv4VZJrGcMl2e
+         0qmQ==
+X-Gm-Message-State: ACrzQf27pMT4CmZ92X28nZCMATXqEG8rl3NPunAenVtkco837HS/xSJz
+        bsaBsv4zgxIUadCBPmQUbc4=
+X-Google-Smtp-Source: AMsMyM6jOrxXOJrIphq/pJ/ZcgXnkS5S97NTKXMZ8WEmYBJI/eo8/L1LoLXtPXTK3c2j/BUjIFcvWQ==
+X-Received: by 2002:a05:6a00:328b:b0:53e:816a:ee5a with SMTP id ck11-20020a056a00328b00b0053e816aee5amr1232900pfb.71.1664998785489;
+        Wed, 05 Oct 2022 12:39:45 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id b15-20020a170903228f00b00176acd80f69sm10898601plh.102.2022.10.05.12.34.33
+        by smtp.gmail.com with ESMTPSA id q6-20020aa79606000000b0055fb19e27a8sm8881123pfg.121.2022.10.05.12.39.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Oct 2022 12:34:33 -0700 (PDT)
+        Wed, 05 Oct 2022 12:39:44 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     darkdragon <darkdragon-001@web.de>, git@vger.kernel.org
-Subject: Re: Install-prefix when building should not be hardcoded
-References: <CAAOCJVAML0axQXbYZncT945SuG3-GfmDtDQ4_8cnkQmF_SZtHw@mail.gmail.com>
-        <YzvnadnAYce0dIpi@danh.dev>
-Date:   Wed, 05 Oct 2022 12:34:33 -0700
-In-Reply-To: <YzvnadnAYce0dIpi@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcuG6p24g?=
- =?utf-8?B?Q8O0bmc=?= Danh"'s message of
-        "Tue, 4 Oct 2022 14:57:29 +0700")
-Message-ID: <xmqqczb6oyie.fsf@gitster.g>
+To:     Chris Torek <chris.torek@gmail.com>
+Cc:     Sean Allred <allred.sean@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: Using git-update-index to add existing tree objects at other paths
+References: <87o7ur1wi9.fsf@gmail.com>
+        <CAPx1GvfsRipG0qgDmMMoU+WCWCEyr4ayJteYWAy+EoJOoaNQXg@mail.gmail.com>
+Date:   Wed, 05 Oct 2022 12:39:44 -0700
+In-Reply-To: <CAPx1GvfsRipG0qgDmMMoU+WCWCEyr4ayJteYWAy+EoJOoaNQXg@mail.gmail.com>
+        (Chris Torek's message of "Tue, 4 Oct 2022 08:10:25 -0700")
+Message-ID: <xmqq8rluoy9r.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Đoàn Trần Công Danh  <congdanhqx@gmail.com> writes:
+Chris Torek <chris.torek@gmail.com> writes:
 
-> On 2022-10-04 09:38:24+0200, darkdragon <darkdragon-001@web.de> wrote:
->> Even though in Makefile, it is stated that git will figure out
->> gitexecdir at runtime based on the path to the executable, there are
->> many output files where $(prefix) will be hardcoded. Even git
->> --exec-path will print out $(compile_prefix)/libexec/git-core instead
->> of using run_prefix.
+> On Tue, Oct 4, 2022 at 7:43 AM Sean Allred <allred.sean@gmail.com> wrote:
+>> ... but the following does not work:
+>>
+>>     $ cat | git update-index --index-info
+>>     040000 tree TREEID1 PATH1
 >
-> I'm not sure about this part.
+> The index is not designed to hold tree objects (at least not at this level),
+> and update-index should be fed only the full path names of files, symbolic
+> links (mode 120000), or gitlinks (mode 160000).
 
-Perhaps it is related to the use of RUNTIME_PREFIX (which I don't
-use myself)?
+Correct.
+
+With the ongoing "sparse-index" work, it may not be an entirely
+unreasonable idea to extend the "update-index" command to allow
+it adding a tree entry there (after removing the entries that are
+for anything that fall inside that directory), but we are not there
+yet, in the sense that we haven't even discussed if doing it at this
+level is a reasonable thing to do.
