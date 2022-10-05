@@ -2,111 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F28A7C433F5
-	for <git@archiver.kernel.org>; Wed,  5 Oct 2022 19:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9470CC433F5
+	for <git@archiver.kernel.org>; Wed,  5 Oct 2022 20:00:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230483AbiJETu6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Oct 2022 15:50:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50974 "EHLO
+        id S230078AbiJEUAS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Oct 2022 16:00:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230178AbiJETu4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Oct 2022 15:50:56 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 067EF80F7E
-        for <git@vger.kernel.org>; Wed,  5 Oct 2022 12:50:55 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id w191so7308245pfc.5
-        for <git@vger.kernel.org>; Wed, 05 Oct 2022 12:50:55 -0700 (PDT)
+        with ESMTP id S229722AbiJEUAP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Oct 2022 16:00:15 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6292C15823
+        for <git@vger.kernel.org>; Wed,  5 Oct 2022 13:00:14 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id n40-20020a05600c3ba800b003b49aefc35fso1612164wms.5
+        for <git@vger.kernel.org>; Wed, 05 Oct 2022 13:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Gsnyo76ByuCEpcZAHN+vbyoPAdWNcObe+yAbihFPkJI=;
-        b=TwktiBzyutze4cc1Sl9pkbVk7A3+9zpFlo1BJqgxjCr4aOF0idixuasRXuLezi/KSp
-         N0jIwT/Y7IgGnlknX1XBT4jgjpBhEbtrnA5M9hy7ViY+XgnAKXrv/q3X6bAOjcFxroDm
-         /bAVRu8XaypMht61LB9/Q3YziIOv8q7xGIyQl8ZT8ENY8q0LaN/YLm+TLwe5xeSWp1zs
-         tB8a7WOxDVNEPtDl0splTm8uBp7rrlaOZSlpQsGBmrTyi7qqYhphnYAozo2YE1DlVIxm
-         EBKLLhMqut/144cAfzHZYzCTe2z67mZC1Ujl/9A2WfpcSJ2zX85Ro0FS7Z2ZhQ3cNq3n
-         ypNw==
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=yRZpwVztAB8o4JNx/0XrspnbC5SLgnL6aLZUvlZMPEg=;
+        b=l4cxbdJKhuaryOsIKPlSj3uwXZNP2IwRMrWoLePjoOqXnR6g0BkfdJC31Iy0Ao4G6p
+         S0ClI234G+djooLm7uJgQv5Ua9EIrBnwj8d1l+1oHloR2WzkLgyoJEs+Zioicp7wYNBJ
+         jEPwtia0ULX/u360g7Z3N7nDlq2slvwivszbe2fzb7HwvDgLQNLdBa4hQrY4mbMRdQST
+         EGqgkSMUy8LjMuL4WwLsBt3mTEs0prSAkksqbB2hIAuMYYUMgL1hpapNIVCr6xkbJBRF
+         zoxNez1p4uFQjR44YwUPcM3gz5jc7mWYunCpErDNTgMNN8DHW+WhqI9ymZL179PUaFO7
+         oHfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gsnyo76ByuCEpcZAHN+vbyoPAdWNcObe+yAbihFPkJI=;
-        b=zFc837dTlNok36A5EQXOt8MDcqwfMAJjrrD1Z5ngVTdNQ81F8K0/h7tkdXSKO+jVIu
-         ajXdOhGG7NJFNW4QYYJ0CK8eu9jHLw4kj0QIA1/sPY+BihqJv2oYjYhbEYPfA38rIvqa
-         0ThE/+Ug3ukaX3tz3a6PhbOddPkbnvCziNlLu18VjUPFctUjotCQ8u/vCTurn/6hIdIV
-         Rar4znQb2Ibw15X+CZKkdf7q9Sgq/f8v98Aw5rn2h5lqnYrZ7lEMD7DclLbE57iEj2GK
-         x8/uQkFAaPiMIAFHSLzFHX0PJLnAUi/z055dio1rJ3iqv70EBoVYFpBaHHjNuiKkeTLn
-         oETA==
-X-Gm-Message-State: ACrzQf3E5iPXQ3v2LuhwlXYPQARPZoBXNCCWrPf2RYw+iMoV0jZRma4V
-        lPc+h9AmdVVhGSRvd/2m7b6vmSfsEiA=
-X-Google-Smtp-Source: AMsMyM5/kvZWaYM1hgdCBYVe4z9cgAGSPyaalAYIlWP1XUxJri+JRGaN19JRhnE4ScsTI2Fn77IHNQ==
-X-Received: by 2002:a63:2215:0:b0:43b:e00f:7c7b with SMTP id i21-20020a632215000000b0043be00f7c7bmr1210852pgi.511.1664999454456;
-        Wed, 05 Oct 2022 12:50:54 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id v6-20020a17090ad58600b001fba4716f11sm1483057pju.22.2022.10.05.12.50.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Oct 2022 12:50:53 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t/lib-httpd: pass LANG to Apache
-References: <3b370f7b-df84-0629-d334-aa9dfbca1c05@web.de>
-Date:   Wed, 05 Oct 2022 12:50:53 -0700
-In-Reply-To: <3b370f7b-df84-0629-d334-aa9dfbca1c05@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Tue, 4 Oct 2022 19:42:39 +0200")
-Message-ID: <xmqqtu4inj6q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=yRZpwVztAB8o4JNx/0XrspnbC5SLgnL6aLZUvlZMPEg=;
+        b=Evi7kVBRkSWWqCBeuEzEEiA1ShtrKVlHe0ignoKb/e+eGQ9EqDGjfMUHsXTQbnQbWx
+         E+G8pz0MPqugRhxj0Fx2P0k6zY5VywnMDiWHYOmS2ODWC9pVE0RL1YkpeJUQYAvYNjNw
+         X9sAfLSuiWyyappXW44HXlOqQTPCxYPzbt8zFMN1dYSIaglCq479ptkHN6OmcmxaHAOQ
+         nQrye58f88HHvW9fFbU2GsANlTHkfr30Hyqc4GEnbZ1PDmo7j6aRGfwu6sQVF9kMAxMB
+         6tZQXLpOZxzX+fJF01/i1uiq6yDc5CLntBibcZT7xadCBi9lfypsyOIhBAH78Cv7dnC9
+         qW+Q==
+X-Gm-Message-State: ACrzQf1u2kw6hpRZuvVJRWqGPimpYt20vfu4LW5sIT/9O6OuZGrvOIKQ
+        KfmspTnqBK8WueZmueU+mirBvPw4MAbUUNfsgK2qMg==
+X-Google-Smtp-Source: AMsMyM6Znmpuik6wYea0p6D7WvvPKiANoqkkE2JNmoWLt7DhtD0b+6l9vdFpMopP0vKq2WTwJ20MNhNscNLxwKBcrQU=
+X-Received: by 2002:a05:600c:4ece:b0:3b4:a79c:1333 with SMTP id
+ g14-20020a05600c4ece00b003b4a79c1333mr761938wmq.49.1665000012518; Wed, 05 Oct
+ 2022 13:00:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <kl6l35c4mukf.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <54ee4a2a-1937-8640-9297-8ad1516596cc@github.com> <CAESOdVAh68HoQoyicfZn4XbjGfiRFCu1zFQmUjMcSAg3tUzr4Q@mail.gmail.com>
+ <96c4f52e-bc66-f4ee-f4f6-d22da579858e@github.com> <CAESOdVByucFm=yJn2yL1mwKGqey7tHXH4A-JM-yP125Ok+_Q+g@mail.gmail.com>
+ <CABPp-BH5_=Tq9DM6iAfG3+DuzEE7dR-H8rhP34x-A5FQhLO+bg@mail.gmail.com>
+In-Reply-To: <CABPp-BH5_=Tq9DM6iAfG3+DuzEE7dR-H8rhP34x-A5FQhLO+bg@mail.gmail.com>
+From:   Martin von Zweigbergk <martinvonz@google.com>
+Date:   Wed, 5 Oct 2022 13:00:00 -0700
+Message-ID: <CAESOdVDt7SU=OJhF0mgyZ=B3sncB49aML8oOzKTKAnmGO5BaVQ@mail.gmail.com>
+Subject: Re: Bug report: `git restore --source --staged` deals poorly with sparse-checkout
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Victoria Dye <vdye@github.com>, Glen Choo <chooglen@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
-
-> t5411 starts a web server with no explicit language setting, so it uses
-> the system default.  Ten of its tests expect it to return error messages
-> containing the prefix "fatal: ", emitted by die().  This prefix can be
-> localized since a1fd2cf8cd (i18n: mark message helpers prefix for
-> translation, 2022-06-21), however.  As a result these ten tests break
-> for me on a system with LANG="de_DE.UTF-8" because the web server sends
-> localized messages with "Schwerwiegend: " instead of "fatal: ".
+On Wed, Oct 5, 2022 at 12:51 AM Elijah Newren <newren@gmail.com> wrote:
 >
-> Fix these tests by passing LANG to the web server, which is set to "C"
-> by t/test-lib.sh, to get untranslated messages on both sides.
-
-It is a good thing to do, but we seem to be extra conservative and
-set both LC_ALL=C LANG=C (presumably by following the habit acquired
-back when locale support were being introduced to various systems
-with different degree, which way predates Git itself) and export
-them in the main part of the test framework.
-
-Shouldn't we be doing the same here?
-
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
->  t/lib-httpd/apache.conf | 1 +
->  1 file changed, 1 insertion(+)
+> On Tue, Oct 4, 2022 at 9:53 PM Martin von Zweigbergk
+> <martinvonz@google.com> wrote:
+> >
+> > On Tue, Oct 4, 2022 at 1:35 PM Victoria Dye <vdye@github.com> wrote:
+> > >
+> > > Martin von Zweigbergk wrote:
+> > > >> On Tue, Oct 4, 2022 at 9:34 AM Victoria Dye <vdye@github.com <mailto:vdye@github.com>> wrote:
+> > > >>
+> [...]
+> > > >> Thanks for reporting this! There are a few confusing things going on with
+> > > >> 'restore' here.
+> > > >>
+> > > >> First is that the out-of-cone was even restored in the first place.
+> > > >>
+> > > >
+> > > > I was actually happy that the out-of-cone paths were restored. I ran that
+> > > > command as an experiment while reading Elijah's doc because I was curious
+> > > > what would happen. The reason I think it should restore out-of-cone paths is
+> > > > so you can do `git restore --staged --source <some commit> && git commit -m
+> > > > "restore to old commit"` without caring about the sparse spec.
+> > >
+> > > Conversely, that's behavior a user *wouldn't* want if they want to keep
+> > > their sparse cone intact (not to mention the performance impact of checking
+> > > out the entire worktree). I think it does more harm to those users than it
+> > > would benefit the ones that want to checkout out-of-cone files.
+> > >
+> > > The use-case you're describing should be served by the
+> > > '--ignore-skip-worktree-bits' option (not the most intuitive name,
+> > > unfortunately). Luckily, there's an increasing desire to improve the naming
+> > > of sparse-related options, so the UX situation should improve in the future.
+> >
+> > I realized after sending my previous email that I might have a
+> > different view of what
+> > sparse checkout is about. To me, it seems like it should be just a performance
+> > optimization. That's why I feel like commands should behave the same way with
+> > or without a sparse spec (unless that proposed `--restrict` flag is passed). I
+> > understand if that's just not feasible. Sorry about the noise in that case :)
 >
-> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-> index 497b9b9d92..1e2295a7cb 100644
-> --- a/t/lib-httpd/apache.conf
-> +++ b/t/lib-httpd/apache.conf
-> @@ -80,6 +80,7 @@ PassEnv LSAN_OPTIONS
->  PassEnv GIT_TRACE
->  PassEnv GIT_CONFIG_NOSYSTEM
->  PassEnv GIT_TEST_SIDEBAND_ALL
-> +PassEnv LANG
+> The problem I see with that definition is that I'm not even sure what
+> that means.  Behaving the same way with or without a sparse
+> specification at the extreme means that switching branches should
+> populate all the files in that branch...meaning a dense checkout.
+> That kind of defeats the point.  So, I'm sure you don't mean that they
+> behave the same in all cases...but where do you draw the line?
+
+I agree with you and Stolee that there are two different cases: some
+people use sparse checkouts to restrict what they see (behavior A), and
+some people use it just as a performance optimization (behavior B). So I
+suspect we roughly agree about what should happen if you pass
+`--restrict` (or if that becomes the default so you don't actually need to
+pass it). My arguments were about the `--no-restrict` case. Sorry, I
+should have made that clear.
+
+I also agree that having a way to make commands restrict to certain paths
+by default is useful, and I agree that tying that set of paths to the current
+worktree's sparse spec makes sense.
+
+I'll answer the questions below for the `--no-restrict` case
+(behavior B).
+
 >
->  Alias /dumb/ www/
->  Alias /auth/dumb/ www/auth/dumb/
-> --
-> 2.37.3
+> Is it just switch/checkout & `reset --hard` that avoid reading and
+> writing outside the sparse specification?
+>
+> Should diff & status ignore files outside the sparse specification
+> even if users wrote to such files?  A "performance optimization" might
+> suggest we should, but would users get confused?
+
+I think they should be included (again, in the `--no-restrict` case).
+
+>
+> What about merge/rebase/cherry-pick/revert?  Should those write
+> additional files to the working tree or avoid it?  What about if there
+> are conflicts outside the sparse specification?
+
+I think they should avoid it, but since the user will need to resolve
+that conflict anyway, I can see it makes sense to write them to disk
+if there are conflicts.
+
+>
+> And if extra files get written outside the sparse specification, are
+> there ways for this to get "cleaned up" where after resolving
+> conflicts or changes we can again remove the file from the working
+> tree?
+
+I've never really used `git sparse-checkout` (until I read your doc),
+but isn't that what `git sparse-checkout reapply` is for?
+
+>
+> What about `git grep PATTERN`?  That's documented to search the
+> tracked files in the working tree.  But should that include the files
+> that would have been there were it not for the "performance
+> optimization" of not checking them out?  (Similarly, what about `git
+> grep --cached PATTERN` or `git grep PATTERN REVISION`?)  I mean, if
+> these commands should behave the same regardless of sparse
+> specification, then you should search those other files, right?  But
+> isn't that a nasty performance penalty if the user has a
+> sparse/partial clone since Git will have to do many network operations
+> to get additional blobs in order to search them?  Is that really
+> wanted?
+
+I think it's consistent to search them with `--no-restrict` (but not
+with `--restrict`, of course).
+
+>
+> What about `git rm '*.png'` to remove all the tracked png files from
+> my working tree.  Should that also remove all the files that would
+> have been there were it not for the "performance optimization"?  Will
+> that result in very negative surprises for those with a "I want to
+> concentrate on just this subset of files" mental model?
+
+Same here.
+
+>
+> What about `git worktree add`?  Should the sparse specification be the
+> same for all worktrees?  Be per-worktree?  Should it default to dense?
+>  To just top-level sparse?  To the same sparsity as the worktree you
+> were in when you created a new one?
+
+That's an interesting case. If someone does `git worktree add` and expects
+all files to be available in the working copy, they might be surprised, yes.
+I think that's a much smaller risk than
+`git restore --source HEAD^ --staged && git commit -m 'undo changes'` being
+partial, however.
