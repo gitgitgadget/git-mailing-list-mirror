@@ -2,124 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FD91C433F5
-	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 07:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6126BC4332F
+	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 07:53:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230272AbiJFHeD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Oct 2022 03:34:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53014 "EHLO
+        id S230438AbiJFHxy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Oct 2022 03:53:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230311AbiJFHdk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2022 03:33:40 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED2A18E473
-        for <git@vger.kernel.org>; Thu,  6 Oct 2022 00:33:39 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id bj12so2534172ejb.13
-        for <git@vger.kernel.org>; Thu, 06 Oct 2022 00:33:39 -0700 (PDT)
+        with ESMTP id S230428AbiJFHxe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2022 03:53:34 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C112A8FD6C
+        for <git@vger.kernel.org>; Thu,  6 Oct 2022 00:53:32 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id bs18so1303339ljb.1
+        for <git@vger.kernel.org>; Thu, 06 Oct 2022 00:53:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pLHstapuo48NbtzswAiVVXzbYLh/kHykVIsTEQh8XKM=;
-        b=NGbD85gJQrzj/syuCk4Z6dnAhZB89wWepWveGNIBbguyy2+wCdg6WCum+dW2TToAw+
-         oNKLEFxwzmedOTDuphYC65Lnvd3mg9pOebGe6ZuXETRIrHsRpG+sj82EqA64D4WOdakz
-         +Bm0Q2i3PB8MSAPUUmIAB1FZcBWIpIJxwExQV7NZMojCcYg9tZuJqAkKDq5Ux5eLP97w
-         RT8pq7jQwKjKs4jbXGVtLdu4oFoR5515B72Ok788iXdjkwIVwUFrJEfFdYMZQtyP9Sj+
-         jmM08YwE5nzGSmuRfjFltOy0Z7ZUwKWPcJuYHCO/mm3DHOxAJ1sI2omvpZBVyVxzh55n
-         7BIQ==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=ZIZ4BbLE3qZqyhnVaPpX/v1u+SbOkbjOa0hHCn6HJps=;
+        b=VA1LRR5pjf63ncSQaZGvue2hU9lDb7dalB83nJCUVgiTJqkX5s3VxVMAEgvh1YWeOR
+         6MEyAxGPYHNoXAqjJZbwROgWAyVZirHC4FcrGSsg0unyIro8/IoPJ/qMNFVgHFfprUjd
+         GnPlLAvVmDgujG1WKoRAOxPNaGIYfOsaDHOUPNtZzB15Mf+KxZiQzNqCV6JOakl/gsbG
+         HTtl5MiK9ij0jmd3isTl+7oUaoUYEtaibCpuGypeVQvLfNfRiareA0uDwB368suHxaMd
+         LABmAOa7hoKHV1hegcskgzcDAEPe2rPP8H+U/jtw+d+7FOAfCBzx5AhyiSx3wK3ipRi4
+         NA+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pLHstapuo48NbtzswAiVVXzbYLh/kHykVIsTEQh8XKM=;
-        b=oLwyoFc8hbWoPW6Y/hYB9CHwwFSGp64vr+7uf2MujDz2IEihDPiIfkx7HgCPswtw2K
-         YusMyNzFonP7p23ldfgaasRKowOhA25Ay0nkH86m733ZQG7L2we4z7dgjezAOAE2gYPQ
-         6G0QI10MazaI5kcujbTv8dw2rSLGVin3g9CxgtKF37dquM6kag1Lm4FOC5Ed2DWZm7hp
-         qYC5wZ/gFx7No3Qqn3rFzhIWyRCAdaQpiWh6fG9qWOxKV6LGF66jxitx9qDNr0jPkN0h
-         kiz0agSt6V8w2vqy8Wun56802f2+0rIMvQjB6fiorhJ3i24Tm2O0AOHf/Wy8WboYHOb3
-         V+Aw==
-X-Gm-Message-State: ACrzQf2nlo/ZaNuU4N8z6XgAylR6ajd/rf3p3OolMgjaOvTL+GG1jmca
-        keuf+nYB7rQ1lhx5lNXFnYo=
-X-Google-Smtp-Source: AMsMyM48Yytb+81E9vA22L0LxGAo8kKTrZVMz2DiO8HyxDAYabp4ky/NRWGG44LmSdRdi22N6gU90w==
-X-Received: by 2002:a17:906:4bd3:b0:731:3bdf:b95c with SMTP id x19-20020a1709064bd300b007313bdfb95cmr2883396ejv.677.1665041618352;
-        Thu, 06 Oct 2022 00:33:38 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id w23-20020a50fa97000000b00456d2721d93sm2644386edr.64.2022.10.06.00.33.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 00:33:37 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ogLNx-002fuy-0H;
-        Thu, 06 Oct 2022 09:33:37 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Aleajndro R =?utf-8?Q?Sede=C3=B1o?= <asedeno@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?Q?Alejandro_R=2E_Sede?= =?utf-8?Q?=C3=B1o?= 
-        <asedeno@mit.edu>
-Subject: Re: [PATCH] git-compat-util.h: GCC deprecated message arg only in
- GCC 4.5+
-Date:   Thu, 06 Oct 2022 09:31:45 +0200
-References: <xmqqilkynd91.fsf@gitster.g>
- <20221005221928.703750-1-asedeno@google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20221005221928.703750-1-asedeno@google.com>
-Message-ID: <221006.86h70hs8xb.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=ZIZ4BbLE3qZqyhnVaPpX/v1u+SbOkbjOa0hHCn6HJps=;
+        b=ZPEIysVjf2F/h9YTGAS6KZUWkc/0totTrkhjnJqdxjXf1Rgha5TJezdav6zGdLeu5A
+         elvTNSjgUQdts0RSsSi5TW8BouZEPpC6HajH/5lBG92MQnoOszc8LrF46GYqDWVn7N8T
+         g4fwWbh4aGaro9gDHMUDcCqoEmNaESg3J5GUjprqdnvuS3vnkHDO1QmLjtj9PJuVO+rE
+         vbn55ep2BLAnhsmm0uLtWLc/3LWEcicIX8RPDyFLb1IGua63aVqquKw5CtBoAk9ehEX3
+         thsqyjma8lvN4boXRoFDYbYGJtRmyZXx8RRu54ekZ2wMxwKRcf3SugnEiyRDadyIMCUs
+         nwLg==
+X-Gm-Message-State: ACrzQf0Ba7AgcnWQJE1xiShF6CjdaD+LidgVTDNjhhTPw5nLYiRe45v6
+        PepJyF2bc0EGN5QXVGz0d6IvHBOG/A4u7m5bxro=
+X-Google-Smtp-Source: AMsMyM65Zn69wiuuSEKfcjEPQYp9T/FoVGrR8p4a0twcIBC065/UpmPI89CPLb+pKu3WWW5w696Mn+PYlqisaXSp6rM=
+X-Received: by 2002:a2e:2205:0:b0:26c:2423:a508 with SMTP id
+ i5-20020a2e2205000000b0026c2423a508mr1278264lji.163.1665042810976; Thu, 06
+ Oct 2022 00:53:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <pull.1367.git.1664064588846.gitgitgadget@gmail.com>
+ <07a25d48-e364-0d9b-6ffa-41a5984eb5db@github.com> <CABPp-BEjVv1ASdQhXGh6KuDfPt_nhZpRO_Q0i1pCqrV2wVQ9yQ@mail.gmail.com>
+ <CAOLTT8T7V0oYpS5XMWbhRi75z7cSVTcWsK76BdwGXAYYh=skPQ@mail.gmail.com>
+In-Reply-To: <CAOLTT8T7V0oYpS5XMWbhRi75z7cSVTcWsK76BdwGXAYYh=skPQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 6 Oct 2022 00:53:18 -0700
+Message-ID: <CABPp-BFwiMrgm+_sO6TsLUj77r_krgzYEWZanbyx2Fnn4rM8tg@mail.gmail.com>
+Subject: Re: [PATCH] sparse-checkout.txt: new document with sparse-checkout directions
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Oct 05 2022, Aleajndro R Sede=C3=B1o wrote:
-
-> From: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
+On Fri, Sep 30, 2022 at 2:54 AM ZheNing Hu <adlternative@gmail.com> wrote:
 >
-> From: https://gcc.gnu.org/gcc-4.5/changes.html
+> I am not sure if these ideas are feasible.
 >
->> The deprecated attribute now takes an optional string argument, for
->> example, __attribute__((deprecated("text string"))), that will be
->> printed together with the deprecation warning.
+> Elijah Newren <newren@gmail.com> =E4=BA=8E2022=E5=B9=B49=E6=9C=8828=E6=97=
+=A5=E5=91=A8=E4=B8=89 13:38=E5=86=99=E9=81=93=EF=BC=9A
+> >
+[...]
+> > > There's nothing Git can do to help those engineers that do cross-tree
+> > > work.
+> >
+> > I'm going to partially disagree with this, in part because of our
+> > experience with many inter-module dependencies that evolve over time.
+> > Folks can start on a certain module and begin refactoring.  Being
+> > aware that their changes will affect other areas of the code, the can
+> > do a search (e.g. "git grep --cached ..." to find cases outside their
+> > current sparse checkout), and then selectively unsparsify to get the
+> > relevant few dozen (or maybe even few hundred) modules added.  They
+> > aren't switching to a dense checkout, just a less sparse one.  When
+> > they are done, they may narrow their sparse specification again.  We
+> > have a number of users doing cross-tree work who are using
+> > sparse-checkouts, and who find it productive and say it still speeds
+> > up their local build/test cycles.
+> >
+> > So, I'd say that ensuring Git supports behavior B well in
+> > sparse-checkouts, is something Git can do to help out both some of the
+> > engineers doing cross-tree work, and some of the engineers that are
+> > doing cross-tree testing.
+> >
+> > (For full disclosure, we also have users doing cross-tree work using
+> > regular dense checkouts and I agree there's not a lot we can do to
+> > help them.)
+> >
 >
-> While GCC 4.5 is already 12 years old, git checks for even older
-> versions in places. Let's not needlessly break older compilers when
-> a small and simple fix is readily available.
->
-> Signed-off-by: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
-> Signed-off-by: Alejandro R Sede=C3=B1o <asedeno@google.com>
-> ---
->  git-compat-util.h | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index b90b64718e..045b47f83a 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -189,9 +189,12 @@ struct strbuf;
->  #define _NETBSD_SOURCE 1
->  #define _SGI_SOURCE 1
->=20=20
-> -#if defined(__GNUC__)
-> +#if GIT_GNUC_PREREQ(4, 5)
->  #define UNUSED __attribute__((unused)) \
->  	__attribute__((deprecated ("parameter declared as UNUSED")))
-> +#elif defined(__GNUC__)
-> +#define UNUSED __attribute__((unused)) \
-> +	__attribute__((deprecated))
->  #else
->  #define UNUSED
->  #endif
+> Let me guess where the cross tree users using sparse-checkout are
+> getting their revenue from:
 
-This LGTM, thanks a lot for that fix & fixing this (minor) breakage of
-mine.
+Is "revenue" perhaps a case of auto-correct choosing the wrong word?
 
-I did test on an older GCC myself, and then (in lieu of logging into an
-ancient system I have access to) scoured the release notes of gcc, and
-discovered that "deprecated" was older than anything we cared about.
+> 1. they don't have to download the entire repository of blobs at once
+> 2. their working tree can be easily resized.
+> 3. they could have something like sparse-index to optimize the performanc=
+e
+> of git commands.
 
-But I obviously missed that while the feature had been there for a
-longer time, it didn't take this parameter until GCC 4.5, sorry!
+These correspond to partial clone, sparse-checkout, and sparse-index.
+I think these 3 features and the various work done to support them,
+plus submodule (which is a different kind of solution) are the
+features Git provides to work with repository subsets.  Some
+repositories (especially the big monorepos like the Microsoft ones)
+will benefit from using all three of these features.  Others might
+only want to use one or two of them.
+
+As an example, the repository where we first applied sparse-checkouts
+to (and which had the complicated dependencies) does not use partial
+clones or a sparse-index.   While partial clone and sparse-index might
+help a little, the .git directory for a full clone is merely 2G, and
+there are less than 100K entries in the index.  However,
+sparse-checkout helps out a lot.
+
+> But it's still worth worrying about the size of the git repository blobs,
+> even if it's just only blobs in mono-repo's HEAD, that may also be too bi=
+g
+> for the user's local area to handle.
+>
+> Perhaps it would make more sense to place this integration testing work o=
+n
+> a remote server.
+>
+> I am not sure if these ideas are feasible:
+>
+> 1. mount the large git repo on the server to local.
+> 2. just ssh to a remote server to run integration tests.
+> 3. use an external tool to run integration tests on the remote server.
+
+Are you suggesting #1 as a way for just handling the git history, or
+also for handling the worktree with some kind of virtual file system
+where not all files are actually written locally?  If you're only
+talking about the history, then you're kind of going on a tangent
+unrelated to this document.  If you're talking about worktrees and
+virtual file systems, then Git proper doesn't have anything of the
+sort currently.  There are at least two solutions in this space --
+Microsoft's Git-VFS (which I think they are phasing out) and Google's
+similar virtual file system -- but I'm not currently particularly
+interested in either one.
+
+#3 is precisely what we did first (except "*a* remote server" rather
+than "*the* remote server").  I think I called it out in the email
+you're responding to; it's often good enough for many people.
+However, sometimes those tests fail and people want to run locally so
+it's easier to inspect.  Or they just want to be able to run locally
+anyway.  So, while #3 helped, it wasn't good enough.
+
+#2 is also something we did.  Using tools like Coder or GitHub
+codespaces or other offerings in that area, you can provide developers
+a nice beefy box with good network connectivity to the main Git
+repository, on which they can do development and running of tests.
+Then developers can connect to such machines from a variety of
+different external locations.  Works great for some people...but build
+times and ability of IDEs to handle the code base are still an issue,
+so doing smarter things with sparse-checkouts is still important.
+And, even if #2 works for some people, others still want to develop
+and run integration tests on their (beefy) laptops.
+
+All three of these, as far as I can tell, are just things that
+individual teams setup and aren't anything that would affect Git's
+development one way or another.
+
+
+However, I'll note that while we internally definitely did two of the
+three things you suggested here, it wasn't a complete enough solution
+for us and sparse-checkout adoption was still pretty minimal at that
+point.  So, we went back to our sparse-checkouts and asked how we
+could modify the build system to allow us to not check out the in-tree
+dependencies of the things we are tweaking, but still get a correct
+build and allow us to run tests.  Once we got that working, we finally
+really unlocked the value of sparse checkouts for us (both improving
+things for developers on laptops, and for developers on the
+development box in the cloud).  It went from very few folks using
+sparse checkouts with that repository, to being the default and
+recommended usage at that point.
+
+While the build changes were internal things we did, I think that the
+underlying usage scenario matters to Git development because it helps
+inform how sparse-checkout can be used.  In particular, it suggests
+why some sparse-checkout users may be interested in finding results
+for files that do not match their sparse-checkout patterns -- in-tree
+dependencies may not necessarily be checked out, but those are related
+enough to the code that developers are working on, that developers are
+still potentially interested in using e.g. "git grep" or "git log -p"
+to find out information about code or changes in those other areas.
+(And, of course, developers are also potentially interested in finding
+out what other code depends on what they are changing, but I suspect
+folks were already aware of that usecase.)  It's certainly not the
+only usecase, but it's an additional one that I didn't think was quite
+reflected in Stolee's description of why users would want searches to
+turn up results for files not found in their working tree.
+
+> > > The only thing I can think about is that the diffstat might want to s=
+how
+> > > the stats for the conflicted files, in which case that's an important
+> > > perspective on the distinction from --restrict.
+> >
+> > We only show the diffstat on a successful merge, so there's no
+> > diffstat to show if there are any conflicted files.
+> >
+>
+> Sorry, I have some questions here: how does git merge know there are
+> no conflicts without downloading the blobs?
+
+Not sure how that's related to the above, but to answer your question:
+
+Sometimes merge has to download blobs to know if there are conflicts
+or not.  But only sometimes.  Since tree objects have the hashes of
+the blobs, having the tree objects is sufficient to determine which
+side(s) of history modified each path.
+
+If both sides of history modified the same file, then you *might* have
+conflicts, and you indeed need the blobs to verify.  But if only one
+side of history modified a file and the other left it alone, then
+there is no conflict.
