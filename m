@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8221C433F5
-	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 17:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54906C433FE
+	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 17:16:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbiJFRQq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Oct 2022 13:16:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58138 "EHLO
+        id S229936AbiJFRQs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Oct 2022 13:16:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229479AbiJFRQp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2022 13:16:45 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6FCE2F00F
-        for <git@vger.kernel.org>; Thu,  6 Oct 2022 10:16:44 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id f193so2481325pgc.0
-        for <git@vger.kernel.org>; Thu, 06 Oct 2022 10:16:44 -0700 (PDT)
+        with ESMTP id S229484AbiJFRQq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2022 13:16:46 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C656DB48AC
+        for <git@vger.kernel.org>; Thu,  6 Oct 2022 10:16:45 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id gf8so2268263pjb.5
+        for <git@vger.kernel.org>; Thu, 06 Oct 2022 10:16:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:date:references:subject:cc:to
          :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=UjKdWEHCFGI9iwV0ZeD9Q91eEQ+5J1ohguxu+9vFzyk=;
-        b=AZJ+R5rkWyNu+es0jTNJlNdnGPlHjiRYFcCi0kkdGeo2cD8dai8phTsWbMxKF6qDZ5
-         vQs5m93lF9J92aGYysaDhL3Qo3Vfzj84xLQ7DBZBirXuOFCYVAkkyp9e3e70gV3V7rhw
-         xXC8BhDVMjAFa5CF8CP0aryrnIy9yMogru+JldoRwkCPtks8WhbddvFgd/K9Noxp1mnU
-         cfkngpL/XzgyBN5qZ1GOHTZSiGH5dOuLapunBHoDBnSXVQtYl6ZN1ZPm0EkeuzVam8b9
-         sS3zuv1U3kcfJrWhZzH+i0TXzOkNQfCONOdeZEaSAQ8Ct9vEY3PCj2uHzkJAUb6zBuyD
-         D8fw==
+        bh=9+Ln5VqDaRnJuPM5Rs6MZmKiEpCS3r1kjAJ04j0gvQQ=;
+        b=qR0kfwEC0jZ7esNr94uLQJMeLs27/YKt8S2Yk3oZnJm2Rqqe2vt54LxaZdSGUbClit
+         1m5VL+7p+MNFZnppx7Lpe289A0ryyp3JpMLUPHk417T5WjEEn0+EIBfPPLB1Y0zHZCy/
+         Th8n9jzimAjlwNYsOmsteHiyhAdVsupl15n+wozJ+Soxu4Mv0T6aSJZSZxDbHou9fPtP
+         Erd7oP0uqTGac0MVrVE4YNd0+Q9CKE4nO5FA06MnB4qRr6q4wvUCcV2p70mrOqF1dUge
+         uNYuXzpRmgfa2M/QrG6qz0g7qxVNK1MNgs+3TDXo6wzVLj/soflNYBWug0kftbwRmjEj
+         yHMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:date:references:subject:cc:to
          :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UjKdWEHCFGI9iwV0ZeD9Q91eEQ+5J1ohguxu+9vFzyk=;
-        b=a+xp5sp59i5c2Vw7uaGzQTlQlnpZChur1BLTIHrp46mHvIKc1D5NnPeyotmXO7/5hm
-         SR4dIh2Vz2a+svIQ7p6lmOH+4kUkNXB+9NoEDn0GFoDzvP9F5iClPPecJOsiiLsz4bLg
-         qYwxoaizG+1WN849wrlP/NIJ6lcKMyGMBuqkF2R6PGj3zNslBtYZ5mp4b4Bk4FdapOJC
-         9zPuKJTFYX7h2PmFn39NpCyWzcU3s+LYHt5B/yyyU/NMJyO8C8TsDUCQ++mfM5zc3xeQ
-         2wkLKxG0hMo0v1BrsrVpw4pRVchblcj6vev6+amP5igKBmbSRY48VuctDpy2HJKaNs5s
-         Ggww==
-X-Gm-Message-State: ACrzQf3RyJxNGodRMCfbeggO5j5lMVDLfxI5bjW9pZ4RCrmkai1zx2qC
-        nQcHc7V4v2YNZKDtIZ+MN4A=
-X-Google-Smtp-Source: AMsMyM5P7eQPfpDP4RnM9skHcXYQnME+TMgBtDBvdY0E7gHLJo7PqxzTvWbpYPM0I3jDLXuYqpgEiQ==
-X-Received: by 2002:a63:4c5f:0:b0:439:49b4:809f with SMTP id m31-20020a634c5f000000b0043949b4809fmr732330pgl.382.1665076604184;
-        Thu, 06 Oct 2022 10:16:44 -0700 (PDT)
+        bh=9+Ln5VqDaRnJuPM5Rs6MZmKiEpCS3r1kjAJ04j0gvQQ=;
+        b=ziZYSVsE8MHMs6xdNY9oRSqIpFq6vcJOLRWFR7JXbHlcEaOsecxpfl4UblZeo1dQ2W
+         r+HPKKAPmXP2eJWF4jNl6craQJvX5g3pmqvA3nWLtj/EjYBWxNMH7k4tDVjNjoLEkrmn
+         cfM4hR9L02sWeAGCCkDbi6QtsLj0A5E/BIjFB7fjzVrPn75GCls99pFMFzG2sjPyj+vl
+         g6fJqh0h8rujpfDux1Ww3NAiZTCbcbWIb4abugrVdCGZtKx8PsUTa+N8Xh7jMJWv6IKj
+         AB5S4tqEdViRz5U52RD3dRH+RPHNrRJJnHi7F8xyXOW1BjMDp9L75H/LEbmE5R17JPpG
+         3p0Q==
+X-Gm-Message-State: ACrzQf0l3UvTKDxmFE9LolD6l3PasFxpAUFVOwgyoNaxsWENXVKUV82F
+        ea5QR+S/blWmC6J9GbslqRM=
+X-Google-Smtp-Source: AMsMyM6El8ZgWPzIhAjntJkx2Bpx5RJ1VoHOHl2YT+eTRJrhthn6w5Laf23ReqgT0nq2FgFGjWwO8w==
+X-Received: by 2002:a17:903:40cb:b0:17f:6e08:6eac with SMTP id t11-20020a17090340cb00b0017f6e086eacmr490413pld.80.1665076605141;
+        Thu, 06 Oct 2022 10:16:45 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id 72-20020a62194b000000b005627470944dsm1836780pfz.189.2022.10.06.10.16.43
+        by smtp.gmail.com with ESMTPSA id b1-20020a17090a100100b002005fcd2cb4sm3186385pja.2.2022.10.06.10.16.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 10:16:43 -0700 (PDT)
+        Thu, 06 Oct 2022 10:16:44 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "dsal3389 via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, dsal3389 <dsal3389@gmail.com>
-Subject: Re: [PATCH 1/2] python file more pytonic, adjust "if" and "for"
+Subject: Re: [PATCH 2/2] removed else statement
 References: <pull.1355.git.git.1665056747.gitgitgadget@gmail.com>
-        <71da6f53a44cd3390d122ff2c0446824313e5101.1665056747.git.gitgitgadget@gmail.com>
-Date:   Thu, 06 Oct 2022 10:16:43 -0700
-Message-ID: <xmqqh70glvno.fsf@gitster.g>
+        <c107ad9f6ff2d5e00134eb1348f24737774edbac.1665056747.git.gitgitgadget@gmail.com>
+Date:   Thu, 06 Oct 2022 10:16:44 -0700
+Message-ID: <xmqqbkqolvnn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,79 +68,43 @@ X-Mailing-List: git@vger.kernel.org
 
 > From: dsal3389 <dsal3389@gmail.com>
 >
-> L371
-> redesign few lines to get rid of the "else" statement
->
-> L404
-> moved the if statement below another if statement that
-> checks if it should exit the code, only if it doesnt need to,
-> then we can iterate the for loop and decode the text
->
-> Changes to be committed:
-> 	modified:   git-p4.py
+> there is no need for the else statement if we can do it more
+> elegantly with a signle if statement we no "else"
 
-Compare this with the commits by others in "git log --no-merges"
-output of this project.
+Some people seem to use subjective words like "elegantly" but they
+weaken your justification.  You are better off avoiding them.
 
-> Signed-off-by: Daniel Sonbolian <dsal3389@gmail.com>
+As to the change in the patch, I do find it easier to read to have a
+check for an error condition whose body unconditionally exits first,
+and then the special casing of "version" and "help" as part of the
+preparation for the "normal codepath".
 
-Please have this on the in-body "From:" line we see above.  I think
-GitGitGadget takes it from the author of the commit object it sends
-out, so you may have to go back to your branch and fix them with
-"rebase -i".
+    Side note: yes, you can steal from the last paragraph when you
+    are redoing the justfication of this patch.
 
-> ---
->  git-p4.py | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index d26a980e5ac..0ba5115fa2e 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -368,10 +368,9 @@ def read_pipe(c, ignore_error=False, raw=False, *k, **kw):
->         """
->      retcode, out, err = read_pipe_full(c, *k, **kw)
->      if retcode != 0:
-> -        if ignore_error:
-> -            out = ""
-> -        else:
-> +        if not ignore_error:
->              die('Command failed: {}\nError: {}'.format(' '.join(c), err))
-> +        out = ""
+Thanks.
 
-I think the code with or without the patch is about the same
-complexity, but people tend to have harder time understanding logic
-that involves double negation, so I can imagine that some readers
-may find the code with the patch harder to understand.  In any case,
-the difference falls into the "it is minor enough that once it is
-written in one way, it is not worth the churn to rewrite it in the
-other way" category.
-
-> @@ -400,10 +399,10 @@ def read_pipe_lines(c, raw=False, *k, **kw):
->      p = subprocess.Popen(c, stdout=subprocess.PIPE, *k, **kw)
->      pipe = p.stdout
->      lines = pipe.readlines()
-> -    if not raw:
-> -        lines = [decode_text_stream(line) for line in lines]
->      if pipe.close() or p.wait():
->          die('Command failed: {}'.format(' '.join(c)))
-> +    if not raw:
-> +        lines = [decode_text_stream(line) for line in lines]
->      return lines
-
-This is in the same "the difference is minor enough that once it is
-written in one way, it is not worth the churn to rewrite it in the
-other way" category.  Your reasoning might be that massaging of the
-lines is only needed when we do not die() and it is more efficient
-to check and die first, but that is optimizing for the wrong case.
-The code should not die in its normal operation and there is no
-point optimizing for an error code path.
-
-One thing that might deserve benchmarking and optimizing here is if
-we can do better than reading everything in lines array and holding
-onto the original until decoding the whole thing at once at the end
-of input.  If converting each line and appending the result as it is
-read from the pipe turns out to be more efficient, it may be an
-optimization worth considering, as it is optimizaing for the normal
-case.
-
+> -	if (argc > 0) {
+> -		if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0]))
+> -			argv[0] = "version";
+> -		else if (!strcmp("--help", argv[0]) || !strcmp("-h", argv[0]))
+> -			argv[0] = "help";
+> -	} else {
+> +
+> +	if (argc <= 0) {
+>  		/* The user didn't specify a command; give them help */
+>  		commit_pager_choice();
+>  		printf(_("usage: %s\n\n"), git_usage_string);
+> @@ -907,6 +903,12 @@ int cmd_main(int argc, const char **argv)
+>  		printf("\n%s\n", _(git_more_info_string));
+>  		exit(1);
+>  	}
+> +
+> +	if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0]))
+> +		argv[0] = "version";
+> +	else if (!strcmp("--help", argv[0]) || !strcmp("-h", argv[0]))
+> +		argv[0] = "help";
+> +
+>  	cmd = argv[0];
+>  
+>  	/*
