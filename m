@@ -2,89 +2,222 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E36EAC433FE
-	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 18:13:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C05A4C433F5
+	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 18:27:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231816AbiJFSNH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Oct 2022 14:13:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60756 "EHLO
+        id S231819AbiJFS1n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Oct 2022 14:27:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231596AbiJFSNC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2022 14:13:02 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FF72FF23A
-        for <git@vger.kernel.org>; Thu,  6 Oct 2022 11:13:01 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id g23so1496537qtu.2
-        for <git@vger.kernel.org>; Thu, 06 Oct 2022 11:13:01 -0700 (PDT)
+        with ESMTP id S229496AbiJFS1l (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2022 14:27:41 -0400
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71249B275A
+        for <git@vger.kernel.org>; Thu,  6 Oct 2022 11:27:40 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id i9so1738778qvo.0
+        for <git@vger.kernel.org>; Thu, 06 Oct 2022 11:27:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=PbXz9Kb13okYZ+HTGXgO7GufpYDPU+F+kUljZUzrtz0=;
-        b=P0JEOwRZUgNjfMqOmOpTxQG7jL/iAmMiKUfN434HU3ywnnS3a9sD1MqimEcNIcJdw/
-         UEO3KzBjCcaMLd/vkLC9wvtnTnG1jbQz44Z+qORFuHxzf67B7sh9IMqhZiR1F67zJPVM
-         5+bMRICdaDA1vQxDJALpM+kiPppMoQHkTe6HoxIXd53rDDaRrQgtu7xV1nnGceHMAz5W
-         CwdjJno9vaF9V4gMt+tg+hQWqlijvrZ6gT+zjaEMTnuNNzZCqMpB4U0yzwE9Bom82CUw
-         H7uDg9U2p75td3HvXiyy0UGAPCTJhgZp/6Kf9ZdZPyVUgxVMO6ePkyEmxzuTVp+7Jfen
-         YnpQ==
+        bh=GuHImz7U4Z/Wqd0xqnP7LyjnYtSh6toTtYFZYk8E2Cg=;
+        b=fG1X7/ugAOB7XkZ67J9m22G5OIcIE9ic1tpOtc651lZXJcLs2AYXiRrv3r1PZzeyuX
+         eqY/+AlUoC8JoWh2RbWHhi5wifocAuA1f9qGY5FZe+fXBxENojAU6MVCg9JZMigfpy9N
+         piHtl/8c/z0VuE++5sthhBYi2UQbjkxpz//4N7HsFqUgQFTPrWKgKAQDeSHgxuckYLH5
+         V5iy0rGpNJoWeXU/LwcdZIkJSnEiyLLeCN5XtLJKQ9+5yqOfDMr9nMfBTAQ3PFXP7Z2+
+         qYl0beeYtggZQC6dqPKmVhnBZZ5E5fcDK4lPrd4P9Uh0mZNighz1GNpfF2r5OWGRu6gl
+         iF6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PbXz9Kb13okYZ+HTGXgO7GufpYDPU+F+kUljZUzrtz0=;
-        b=BoJAlI1gmMM/NMWXh+JRIHbIYWrARXnYoVjDMswm8RIRQUB9HxRl9kuKp7NrYBI6kD
-         c5vgDOOAxurIV/VVokoBMD/3aX+ZZMoVQ7CAwRa93Jdg+KcjbX7zdz+BDR8CO+P5U4D/
-         yQbHtdf765Pyx6gvEa/arRrQgJK5jvm9eBEx9/G+J7+A/oYxV149UEUDk03LNgkxd42c
-         a9YgyTcIhalq5uZ69Bh+fUYnm6iFm/uqaF8DoY3yA5sTpXH4YgNeyC3A5BebkEQs77BW
-         6ZeZe4nJ23BYGMlEonkREuaFKvvwXNfGIl49e/Bg4bSDcI+v5mJiy3eF7oISchRZnSpG
-         0/Pg==
-X-Gm-Message-State: ACrzQf2xOQQ6NNGXQsxWKkRHrUlnOAgakp4FGJdu1xiMXs1teHTJSyyk
-        H5+QVX6MiLLX/AAwlZHTlSmDn2lK+b4l
-X-Google-Smtp-Source: AMsMyM4z0UCVKOn8u2oxpJrdY4iV6aFDDAzDOK1z2P4LJ60GELoBL0YGkK5q+ZONogGMfLr/1Y1GHg==
-X-Received: by 2002:a05:622a:4c8:b0:392:8097:eec0 with SMTP id q8-20020a05622a04c800b003928097eec0mr1294253qtx.186.1665079980663;
-        Thu, 06 Oct 2022 11:13:00 -0700 (PDT)
+        bh=GuHImz7U4Z/Wqd0xqnP7LyjnYtSh6toTtYFZYk8E2Cg=;
+        b=XODvu3IYpF/RA5TGq0DZIYdEGbxewdM/26hCPr5l7NwNXQNPlQfcNHCAzxYZEVDP9d
+         tO92c6tUgh/dNlhdq3mhEOmr4oVKIvSc2O1stJI45RTlqYnTf2dd14YPBYFQufRPp4fi
+         A8MQVMui+ot9iLuUvgFP4woHns2es2+ceofIb+SPfyLP/KK8DbJcepJsXJaTdCNPRSte
+         +3bfX82zYRQ7FUCHhdgTU8mmBj19gv5/g/+9AlLgPgFPZ0X/5vIaYXgZP63WGWw7oR9a
+         CJuB3cPYk/7k5oDlETp1ofTfhpXjPTnVrXvAYUUb1K9zspTSR/uocDd+grwan7hElKBH
+         hogw==
+X-Gm-Message-State: ACrzQf2bVbNtuAZZpaGAvnmW4xdW/MmwJT9G/7a1I6erRnYSzndO6BIS
+        8uh5RaSBRtRCHvPK3UxCAkdL
+X-Google-Smtp-Source: AMsMyM6yMif70MQdMRjdDzf1KtjUDKXqADHDCNs1U0pR1KafuFn98HTU6ZOftuRIWidKLKWiOvD7LA==
+X-Received: by 2002:a0c:9c8b:0:b0:4b1:ac82:5c50 with SMTP id i11-20020a0c9c8b000000b004b1ac825c50mr995834qvf.15.1665080859471;
+        Thu, 06 Oct 2022 11:27:39 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:2185:e582:857d:e0db? ([2600:1700:e72:80a0:2185:e582:857d:e0db])
-        by smtp.gmail.com with ESMTPSA id u4-20020a37ab04000000b006e26c6db902sm5215394qke.53.2022.10.06.11.12.59
+        by smtp.gmail.com with ESMTPSA id f14-20020ac8014e000000b0034355a352d1sm169354qtg.92.2022.10.06.11.27.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Oct 2022 11:12:59 -0700 (PDT)
-Message-ID: <c9534d61-a0ad-2e9a-1504-d5f69eee7e17@github.com>
-Date:   Thu, 6 Oct 2022 14:12:59 -0400
+        Thu, 06 Oct 2022 11:27:37 -0700 (PDT)
+Message-ID: <66eaae96-7b6a-ca87-fee5-e185a560744a@github.com>
+Date:   Thu, 6 Oct 2022 14:27:35 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.13.1
-Subject: Re: [PATCH 0/9] Trace2 timers and counters and some cleanup
+Subject: Re: [PATCH] sparse-checkout.txt: new document with sparse-checkout
+ directions
 Content-Language: en-US
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1373.git.1664900407.gitgitgadget@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        ZheNing Hu <adlternative@gmail.com>
+References: <pull.1367.git.1664064588846.gitgitgadget@gmail.com>
+ <07a25d48-e364-0d9b-6ffa-41a5984eb5db@github.com>
+ <CABPp-BEjVv1ASdQhXGh6KuDfPt_nhZpRO_Q0i1pCqrV2wVQ9yQ@mail.gmail.com>
+ <5d926706-6ca3-ce07-f8f2-771fe126450b@github.com>
+ <CABPp-BGoJqtx_=p+GfqAhgs+4Zic1mcbs6pkMKy7QAnxTwB4AA@mail.gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1373.git.1664900407.gitgitgadget@gmail.com>
+In-Reply-To: <CABPp-BGoJqtx_=p+GfqAhgs+4Zic1mcbs6pkMKy7QAnxTwB4AA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/4/22 12:19 PM, Jeff Hostetler via GitGitGadget wrote:
-> This patch series add stopwatch timers and global counters to the trace2
-> logging facility. It also does a little housecleaning.
+On 10/6/22 3:10 AM, Elijah Newren wrote:
+> On Wed, Sep 28, 2022 at 6:22 AM Derrick Stolee <derrickstolee@github.com> wrote:
+>>
+>> On 9/28/22 1:38 AM, Elijah Newren wrote:
+>>> On Tue, Sep 27, 2022 at 9:36 AM Derrick Stolee <derrickstolee@github.com> wrote:
+>>>>
+>>>> On 9/24/2022 8:09 PM, Elijah Newren via GitGitGadget wrote:
+>>>>> From: Elijah Newren <newren@gmail.com>
+>>>>
+> [...]
+>>>>> +  * Commands whose default for --restrict vs. --no-restrict should vary depending
+>>>>> +    on Behavior A or Behavior B
+>>>>> +    * diff (with --cached or REVISION arguments)
+>>>>> +    * grep (with --cached or REVISION arguments)
+>>>>> +    * show (when given commit arguments)
+>>>>> +    * bisect
+>>>>> +    * blame
+>>>>> +      * and annotate
+>>>>> +    * log
+>>>>> +      * and variants: shortlog, gitk, show-branch, whatchanged
+>>>>> +
+>>>>> +    For now, we default to behavior B for these, which want a default of
+>>>>> +    --no-restrict.
+>>>>
+>>>> I do feel pretty strongly that we'll want a --no-restrict default here
+>>>> because otherwise we will present confusion. I'm not even sure if we would
+>>>> want to make this available via a config setting, but likely a config
+>>>> setting makes sense in the long term.
+>>>
+>>> You've got me slightly confused.  You did say the same thing a long time ago:
+>>>
+>>>     "But I also want to avoid doing this as a default or even behind a
+>>> config setting."[A]
+>>>
+>>> BUT, when Shaoxuan proposed making --restrict/--focus the default for
+>>> one of these commands, you seemed to be on board[B].
+>>
+>> I'm specifically talking about 'git log'. I think that having that be
+>> in a restricted mode is extremely dangerous and will only confuse users.
+>> This includes 'git show' (with commit arguments) and 'git bisect', I
+>> think.
 > 
-> This is basically a rewrite of the series that I submitted back in December
-> 2021: [1] and [2]. Hopefully, it addresses all of the concerns raised back
-> then and does it in a way that avoids the issues that stalled that effort.
+> Thanks, that helps me understand your position better.
+> 
+> I'm curious if, due to the length of the document and this thread,
+> you're just skimming past the idea I mentioned of showing a warning at
+> the beginning of `diff`, `log`, or `show` output when restricting
+> based on config or defaults.  Without such a warning, I agree that
+> restricting might be confusing at times, but I think such a warning
+> may be sufficient to address the concerns around partial/incomplete
+> results.  The one command that this warning idea doesn't help with is
+> `grep` since it cannot safely be applied there, which potentially
+> leaves `grep` giving confusing results when users pass either
+> `--cached` or revisions, but you seem to not be concerned about that.
 
-Thanks for working on this again. As I mentioned earlier [3], this
-would be really helpful when doing performance investigations. I
-also plan to insert some timers and counters as a follow-up when
-this series stabilizes.
+I'm not convinced that warnings are enough for some cases, especially
+for output that is fed to a pager. Do the warnings stick around in
+the pager? I'm not sure.
 
-[3] https://lore.kernel.org/git/pull.1365.git.1663938034607.gitgitgadget@gmail.com/
+> I'm also curious if the problem partially stems from the fact that
+> with `git log` there is no way to control revision limiting and diff
+> generation paths independently.  If there was a way to make `git log
+> -p` continue showing the regular list of commits but restrict which
+> paths were shown in the diffs, and we made the --scope-sparse handling
+> do this so that only diffs were limited but not the revisions
+> traversed/printed, would that help address your concerns?
 
-I was unable to find further improvements than the ones you
-already acknowledged for your v2.
+My biggest issue is with the idea of simplifying the commit history
+based on the sparse-checkout path definitions. The '-p' option having
+a diff scoped to the sparse-checkout paths would be fine.
+
+>> The rest, (diff, grep, blame) are worktree-focused, so having a restrict
+>> mode by default makes sense to me.
+> 
+> I was specifically calling out diff & grep when passed revision
+> arguments, which are definitely *not* worktree-focused operations.
+
+You're right. I'm not using the right terminology. They _are_
+operations on a single tree, where path scopes make sense.
+
+> Also, blame incorporates a component of changes from the worktree, but
+> it's mostly about history (and one or more -C's make it check other
+> paths as well).
+
+Since each input is a specific file path, I'm not sure we need
+anything here except perhaps a warning that they are requesting
+a file outside the sparse-checkout definition (if even that).
+
+>>> Anyway...I will note that without a configurable option to give these
+>>> commands a behavior of `--restrict`, I think you make working in
+>>> disconnected partial clones practically impossible.  I want to be able
+>>> to do "git log -p", "git diff REV1 REV2", and "git grep TERM REV" in
+>>> disconnected partial clones, and I've wanted that kind of capability
+>>> for well over a decade[H].  So, don't be surprised if I keep bringing
+>>> up a config option of some sort for these commands.  :-)
+>>
+>> Now, if we're talking about "don't download extra objects" as a goal,
+>> then we're thinking about things not just related to sparse-checkout
+>> but even history within the sparse-checkout. Even if we make the
+>> 'backfill' command something that users could run, there isn't a
+>> guarantee that users will want to have even that much data downloaded.
+>> We would need a way to say "yes, I ran 'git blame' on this path in my
+>> sparse-checkout, but please don't just fail if you can't get new objects,
+>> instead inform me that the results are incomplete."
+>>
+>> I think the sparse-checkout boundary is a good way to minimize the
+>> number of objects downloaded by these commands, but to actually
+>> remove the need for downloads at all we need a way to gracefully
+>> return partial results.
+> 
+> There may be some merits to a partial clone with shallow blob history,
+> but I've never really been all that interested in it. ......
+> But you've got me curious.  You seem to be suggesting that partial
+> results are okay if the user is informed.  I have suggested making
+> diff-with-revisions, log -p, etc. show a warning that results may be
+> incomplete when restricting them to the sparse checkout based on
+> config.  So, aren't you suggesting that my proposal is safe after all?
+
+I think the following things are true:
+
+1. It's really important to keep the current partial clone default of
+   only downloading blobs on-demand. Even with a limited sparse-checkout,
+   it's rare that users will need every version of every file in that
+   sparse-checkout, and they may not want that tax on their local storage.
+
+2. Adding an opt-in backfill for a sparse-checkout definition will
+   prevent most on-demand downloads (although it might want to be
+   integrated into 'git fetch' behind an option to be really sure that
+   state continues in the future).
+
+3. Updating Git features to scope down to sparse-checkout will prevent
+   many of the remaining on-demand downloads.
+
+4. To be _absolutely sure_ that on-demand downloads don't happen, we
+   need an extra mode for Git and new ways of reporting partial results.
+   Without this mode, Git commands fail when triggering an on-demand
+   download and the network is unavailable.
+
+So, I'm saying that (4) is a direction that we could go. It also seems
+extremely difficult to do, so we should do (2) & (3) first, which will
+get us 99% of the way there.
 
 Thanks,
 -Stolee
