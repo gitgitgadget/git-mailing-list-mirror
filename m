@@ -2,230 +2,269 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A68E7C433F5
-	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 20:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9762FC433FE
+	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 20:53:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232310AbiJFUs6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Oct 2022 16:48:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49062 "EHLO
+        id S232250AbiJFUx3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Oct 2022 16:53:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232392AbiJFUsb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2022 16:48:31 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F49E1429B9
-        for <git@vger.kernel.org>; Thu,  6 Oct 2022 13:47:38 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id b2so7214493eja.6
-        for <git@vger.kernel.org>; Thu, 06 Oct 2022 13:47:38 -0700 (PDT)
+        with ESMTP id S230527AbiJFUx2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2022 16:53:28 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C904DE0C5
+        for <git@vger.kernel.org>; Thu,  6 Oct 2022 13:53:26 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id e13-20020a17090ab38d00b0020b06ff019aso2016650pjr.0
+        for <git@vger.kernel.org>; Thu, 06 Oct 2022 13:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=l9A5qEnQMxc8ijBRDZ5g5J7vCajPe3kb4d0oWsVIxoA=;
-        b=Yyc3QLUfhyGXiHN6GbkYHVuP4F2+YGKBirfe2Y7MVvUEXkmkHbI8basBTztn/ayDko
-         Cqg5K26PPTQb/eIIPaITRqxEbM98bPuwf/yrhWQA4Z1exgZbiatI03LKx486OSfHTjfI
-         8116K1T89sGupiCEWfbUbcEWkkeTAZsIk+P3H5Fbli5lxtagRN8I7T4WfnwczxhiAQGI
-         1zxoxvpRZYE3ZVz0Hin9oJiP01F386g6NxlmE7Wy4cUeYh1T8n9eO8OBoEM/GrZbzrDe
-         fNoII+alshtDAvq2L+vulAcKFoDWwH4/n3yQ30P8wrMsPei4UXZCLfIeTeU2OqEZRXrY
-         WQ0Q==
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lN6rcMaQsTqG0NXrdgE8BVDKiQ2lY/HLEpvaS45O/lM=;
+        b=OGbHU4IpUF/2AHfns6JvL32Pd94tncW8l4DXhKin00oAEUEr70C9BcW1X2vYvbGr7L
+         E3AnJtHMpHuyYdVeYEkcXgM18mDNTRtdNMbSIDaYZW4DpGrEGhM8eAmcmhbgRcFoqz2R
+         +cje5+lUrnJ3RcUhvy8x4xLTiDylJx44yw6ZsCq7sSNzMXVHKR7/9fgKOs+MxlonMODo
+         V2/u4DpXSGjOUASKPsr64v0TEhDql5cPgSSL0wdZFqYbTFS97IhIWYT6QfiJjWQeBDt+
+         trQJDq5QZaOeQAe05rGYuTWyAQECxXfyrq281/DvHsrIsTMqfxiCHW/6OK5/8RL9ZGcb
+         fPxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=l9A5qEnQMxc8ijBRDZ5g5J7vCajPe3kb4d0oWsVIxoA=;
-        b=x7NEo0J3pknzFId4lnNQW7mhsgQZcKzEzBZHV160gv1iCb+FKb30GpwbCzr0NAUZZU
-         aLqBkB+wiG1irl76X8fmG6oP9cmN86SfSKBBGhgr+5j1p/VzFGG1cKNbEqawMFcVNXQE
-         2ZWxwHzparrJIkjyEqa7UrASrN+PvcEdLp87JKZHU7965Nc8gzM138BtBWCzqdcDyXgG
-         /PVTp2pYjZp3fFPfvfKOTxuaLUO+RC7bRARXJt/oqbRwAM9II17KZuuyobZxBpvNhKeg
-         HpxXB2Fi6P03FLZ9xyIbcX2SqY4dzJVOmsQ/Qa9sUeWrrD/8yWOLzr/amchoelqtT1kR
-         2AAg==
-X-Gm-Message-State: ACrzQf2NXoIR1iAGhTIRRonY9e2AzFp3CpiopynxXCMdEq3uxgQsNKIP
-        wuaEc+2OAR/AOZJoHDnkQkc=
-X-Google-Smtp-Source: AMsMyM4ez/yd+qyxgDDPzN4/tPQAy+Fo3mA41odlAdBTwbf7genrj62JwD5gfDmyRHs+i5JDo+snzg==
-X-Received: by 2002:a17:907:a052:b0:78d:21b4:3898 with SMTP id gz18-20020a170907a05200b0078d21b43898mr1370243ejc.764.1665089256637;
-        Thu, 06 Oct 2022 13:47:36 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id xf13-20020a17090731cd00b00730b3bdd8d7sm160334ejb.179.2022.10.06.13.47.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 13:47:36 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ogXmJ-0034Uf-0R;
-        Thu, 06 Oct 2022 22:47:35 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 1/3] [RFC] tests: add test_todo() to mark known breakages
-Date:   Thu, 06 Oct 2022 22:33:04 +0200
-References: <pull.1374.git.1665068476.gitgitgadget@gmail.com>
- <472d05111a38276192e30f454f42aa39df51d604.1665068476.git.gitgitgadget@gmail.com>
- <221006.868rltrltu.gmgdl@evledraar.gmail.com>
- <7306b890-641f-2c45-f610-2aa0361d6066@dunelm.org.uk>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <7306b890-641f-2c45-f610-2aa0361d6066@dunelm.org.uk>
-Message-ID: <221006.86mta8r860.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=lN6rcMaQsTqG0NXrdgE8BVDKiQ2lY/HLEpvaS45O/lM=;
+        b=5NWn2NoJ4hzebiNfLaLCVyn3HM4ywFzSj1SpFsEAEp3F5U0bGJXKKXSqgsoJm9Gxkn
+         MlNaDAhJAHK6B+e2bdjs2UPqm1VVLXxw/RISgiVO/hppxootjBebTiwhqyuvbbmfaA/y
+         xxEa7spUaxPtiJIRKfruCscebtQmumgCS7FIqaKXeav55aT0leU8gzVc1pBTbn1uSLf9
+         zbC3mSSv4Ol6bcfvFb7zU7do6Wv5cZXBrv0yKvaGofufJpYyBe+nl8T0WWcplf42rNab
+         C+aOWHfVgw7oPB1vaTnrcENIaslw7SKdGmDB/47lED3VUR/PTP8JbAXbfjaNZT5R6yUk
+         l8lA==
+X-Gm-Message-State: ACrzQf30n7JpoDNSEzg/aJowJUBZAy6D+vaiD3nRQ2lUnQC5l5SP74bW
+        JSFOp+gkEnYa1MIBx/O50GN13cwXFqIAwg==
+X-Google-Smtp-Source: AMsMyM6f9B+TpEoLudTg3Pby7JUW+KHxkC90BBlV2Vk/4C037YdM62iY5VSlmvh61Yszn6wEXyRHv7+0lyX1dg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90b:188b:b0:20a:8fc8:60b8 with SMTP
+ id mn11-20020a17090b188b00b0020a8fc860b8mr12579817pjb.37.1665089605765; Thu,
+ 06 Oct 2022 13:53:25 -0700 (PDT)
+Date:   Thu, 06 Oct 2022 13:53:16 -0700
+In-Reply-To: <CAN9+7XcYFa+Y9jsJSEmQhf29TUZADoz8=SzcNbjCH8ewqYriYg@mail.gmail.com>
+Mime-Version: 1.0
+References: <pull.1356.git.1663959324.gitgitgadget@gmail.com>
+ <pull.1356.v2.git.1664981957.gitgitgadget@gmail.com> <a5eb93254191b7ae9c17ce52e056955c669ea007.1664981958.git.gitgitgadget@gmail.com>
+ <CAN9+7XcYFa+Y9jsJSEmQhf29TUZADoz8=SzcNbjCH8ewqYriYg@mail.gmail.com>
+Message-ID: <kl6ltu4gwu6b.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2 01/10] technical doc: add a design doc for the evolve command
+From:   Glen Choo <chooglen@google.com>
+To:     Chris Poucet <poucet@google.com>,
+        Stefan Xenos via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jerry Zhang <jerry@skydio.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Christophe Poucet <christophe.poucet@gmail.com>,
+        vdye@github.com, Junio C Hamano <jch@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Oct 06 2022, Phillip Wood wrote:
+Hi Chris!
 
-> Hi =C3=86var
+Chris Poucet <poucet@google.com> writes:
+
+> One thing that is not clear to me is whether this is the desired
+> direction. I took at look at the git review notes but it was hard to
+> get a sense of where people are at.
+
+I'm really sorry, I meant to get back to this sooner with the takeaways
+from Review Club. Hopefully this will still be useful.
+
+You can find the Review Club notes here:
+
+  https://docs.google.com/document/d/14L8BAumGTpsXpjDY8VzZ4rRtpAjuGrFSRqn3s=
+tCuS_w/edit?pli=3D1
+
+> Would love input on the design.
+
+Others have given a lot of input on the design, so instead, I'll focus
+mostly on how to make the doc better on the mailing list.
+
 >
-> On 06/10/2022 16:36, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Thu, Oct 06 2022, Phillip Wood via GitGitGadget wrote:
->>=20
->>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>>
->>> test_todo() is built upon test_expect_failure() but accepts commands
->>> starting with test_* in addition to git. As our test_* assertions use
->>> BUG() to signal usage errors any such error will not be hidden by
->>> test_todo().
->> I think they will, unless I'm missing something. E.g. try out:
->
-> It's talking about BUG() in test-lib.sh, not the C function. For example
->
-> test_path_is_file () {
-> 	test "$#" -ne 1 && BUG "1 param"
-> 	if ! test -f "$1"
-> 	then
-> 		echo "File $1 doesn't exist"
-> 		false
-> 	fi
-> }
->
-> So a test containing "test_todo test_path_is_file a b" should fail as
-> BUG calls exit rather than returning non-zero (I should probably test=20
-> that in 0000-basic.sh)
+> On Wed, Oct 5, 2022 at 4:59 PM Stefan Xenos via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Stefan Xenos <sxenos@google.com>
+>>
+>> This document describes what a change graph for
+>> git would look like, the behavior of the evolve command,
+>> and the changes planned for other commands.
+>>
+>> It was originally proposed in 2018, see
+>> https://public-inbox.org/git/20181115005546.212538-1-sxenos@google.com/
 
-Ah, anyway, I think getting that to behave correctly is *the* thing any
-less sucky test_expect_failure replacement needs to get right, i.e. to
-handle BUG() (in C code), abort(), SANITIZE=3Dundefined (and friends, all
-of whom abort()), segfaults etc.
+This doc is quite well-thought-out and surprisingly readable despite its
+length. That said, it is a lot to review in one sitting, and a reviewer
+might get easily fatigued. I suspect that reviewers will find it hard to
+keep up with the discussion if they have to review the entire doc on
+every iteration.
 
->> 	diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
->> 	index 80e76a4695e..1be895abba6 100755
->> 	--- a/t/t0210-trace2-normal.sh
->> 	+++ b/t/t0210-trace2-normal.sh
->> 	@@ -170,7 +170,7 @@ test_expect_success 'BUG messages are written to tr=
-ace2' '
->>=20=09
->> 	 test_expect_success 'bug messages with BUG_if_bug() are written to tra=
-ce2' '
->> 	 	test_when_finished "rm trace.normal actual expect" &&
->> 	-	test_expect_code 99 env GIT_TRACE2=3D"$(pwd)/trace.normal" \
->> 	+	test_todo env GIT_TRACE2=3D"$(pwd)/trace.normal" \
->> 	 		test-tool trace2 008bug 2>err &&
->> 	 	cat >expect <<-\EOF &&
->> 	 	a bug message
->> I.e. in our tests you need to look out for exit code 99, not the
->> usual
->> abort().
->> I have local patches to fix this, previously submitted as an RFC
->> here:
->> https://lore.kernel.org/git/RFC-cover-0.3-00000000000-20220525T234908Z-a=
-varab@gmail.com/
->> I just rebased that & CI is currently running, I'll see how it does:
->> https://github.com/avar/git/tree/avar/usage-do-not-abort-on-BUG-to-get-t=
-race2-event-2
->> When I merged your patches here with that topic yours started doing
->> the
->> right thing in this case, i.e. a "test_todo" that would get a BUG()"
->> would be reported as a failure.
->>=20
->>> +	test_true () {
->>> +		true
->>> +	}
->>> +	test_expect_success "pretend we have fixed a test_todo breakage" \
->>> +		"test_todo test_true"
->> "Why the indirection", until I realized that it's because you're
->> working
->> around the whitelist of commands that we have, i.e. we allow 'git' and
->> 'test-tool', but not 'grep' or whatever.
->> I'm of the opinion that we should just drop that limitation
->> altogether,
->> which is shown to be pretty silly in this case. I.e. at some point we
->> listed "test_*" as "this invokes a git binary", but a lot of our test_*
->> commands don't, including this one.
->
-> test_expect_failure does not allow test_* are you thinking of test-tool?
+As Victoria suggested in Review Club, it might be helpful to split up
+the design over multiple patches to make feedback more focused. I think
+this will make it easier for you (and others) to get a sense of how we
+feel about each part of the design. e.g. here's one way to split up the
+doc:
 
-I'm talking about test_todo, and the reason for that "test_true" being
-needed is because test_must_fail_acceptable is picky, but we could also
-(I just adjusted that one test):
-=09
-	diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-	index 52362ad3dd3..921e0401eb5 100755
-	--- a/t/t0000-basic.sh
-	+++ b/t/t0000-basic.sh
-	@@ -143,11 +143,8 @@ test_expect_success 'subtest: a passing TODO test' '
-=09=20
-	 test_expect_success 'subtest: a failing test_todo' '
-	 	write_and_run_sub_test_lib_test failing-test-todo <<-\EOF &&
-	-	test_false () {
-	-		false
-	-	}
-	 	test_expect_success "passing test" "true"
-	-	test_expect_success "known todo" "test_todo test_false"
-	+	test_expect_success "known todo" "test_todo false"
-	 	test_done
-	 	EOF
-	 	check_sub_test_lib_test failing-test-todo <<-\EOF
-	diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-	index 8978709b231..9300eaa2c62 100644
-	--- a/t/test-lib-functions.sh
-	+++ b/t/test-lib-functions.sh
-	@@ -1034,6 +1034,11 @@ test_must_fail_acceptable () {
-	 		done
-	 	fi
-=09=20
-	+	if test "$name" =3D "todo"
-	+	then
-	+		return 0
-	+	fi
-	+
-	 	case "$1" in
-	 	git|__git*|test-tool|test_terminal)
-	 		return 0
-	@@ -1050,10 +1055,6 @@ test_must_fail_acceptable () {
-	 		fi
-	 		return 1
-	 		;;
-	-	test_*)
-	-		test "$name" =3D "todo"
-	-		return $?
-	-		;;
-	 	*)
-	 		return 1
-	 		;;
-=09
+- Motivation, Background, High level idea of how a user would use this.=20
 
->> So in general I think we should just allow any command in
->> "test_must_fail" et al, and just catch in code review if someone uses
->> "test_must_fail grep" as opposed to "! grep".
->
-> That is not going to scale well
+  (Roughly corresponding to the sections "Objective", "Status",
+  "Background", "Goals", "Similar technologies", "Semi-related work")
 
-Well, you're throwing the scaling out the window by whitelisting test_*
-in your 1/3 :)
+- Local change tracking, Changes to existing commands, Meta-commits
 
-I don't think we really need it, but *the* reason it's there is to
-distinguish things that run our own C code from things that don't, and a
-lot of test_* helpers don't.
+  (The parts about the data format and their implications for GC,
+  negotiation, etc. Maybe include the `change` subcommand if it helps
+  reviewers visualize the impact.)
 
-So if you want to pursue making this correct per the current intent it
-should really use the current whitelist to decide whether or not to pass
-things through the "should we change the exit code if it's a signal,
-segfault etc?" part.
+- How evolve works, e.g. convergence, divergence, merge base finding.
+  CLI
 
-Otherwise you should just negate it or whatever, as the "test_todo" I
-showed in
-https://lore.kernel.org/git/221006.86v8owr986.gmgdl@evledraar.gmail.com/
-does. I.e. we shouldn't be detecting an abort() in /bin/false and the
-like.
+- Sharing changes
+
+Besides the design, here other sections that I would find useful:
+
+- Glossary. I thought that terms like "change", "change branch" and
+  "change graph" were underdefined. This would also be a useful
+  reference during the implementation phase.
+
+- Implementation Plan (you can find examples in
+  Documentation/technical/bundle-uri.txt and
+  Documentation/technical/sparse-index.txt). Making the concrete next
+  steps visible has numerous benefits:
+  - Reviewers of future patches know what problem is being tackled and
+    value is being delivered.
+  - The list gains confidence that the author can deliver the work being
+    promised.
+  - The shared direction makes it easier for others to contribute
+    patches.
+
+- Open questions (e.g. "Implementation questions" in [1]). It would be
+  useful to know what questions can be answered later instead of right
+  now. Also, since you are not the original author, perhaps you also
+  have questions about the design that you want answered by reviewers.
+  I also wouldn't mind this being in the cover letter or "---" section.
+
+[1] https://lore.kernel.org/git/pull.1367.git.1664064588846.gitgitgadget@gm=
+ail.com
+
+As mentioned earlier, I'll comment only very lightly on the design.
+
+>> +Similar technologies
+>> +--------------------
+
+I'd personally love to see "git evolve". If it helps to consider some
+other tools, I use the following tools that implement similar workflows:
+
+- git-branchless [2] features anonymous heads, obsolescence tracking,=20
+  history manipulations and "git evolve". Having used this for a while,
+  I'm of the opnion that having any of these features without the
+  others is still very useful, and implementing them in phases=20
+  will still deliver value without having to complete all of the work
+  (granted, each of these features is incrementally dependent on the
+  others).
+
+  Case in point: I don't use the "evolve" equivalent of git-branchless
+  (IIRC "restack); being able to see obsolescence and manually
+  manipulating history is good enough for me.
+
+- Jujutsu [3] also features anonymous heads, obsolescence tracking and
+  advanced history manipulations. Instead of "evolve", descendents of an
+  obsolete commit are automatically rebased on the obsoleting commit.
+
+[2] https://github.com/arxanas/git-branchless
+[3] https://github.com/martinvonz/jj
+
+>> +Changes
+>> +-------
+>> +A branch of meta-commits describes how a commit was produced and what p=
+revious
+>> +commits it is based on. It is also an identifier for a thing the user i=
+s
+>> +currently working on. We refer to such a meta-branch as a change.
+>> +
+>> +Local changes are stored in the new refs/metas namespace. Remote change=
+s are
+>> +stored in the refs/remote/<remotename>/metas namespace.
+
+I find this terminology of "changes" and "metas" more confusing than
+necessary. A glossary would help, but it might be even better to also
+use an appropriate ref namespace. "refs/changes/" is an obvious
+candidate, though I assume this wasn't mentioned because Gerrit uses
+that namespace extensively.
+
+Maybe `refs/changelists`, `refs/change-requests`, `refs/proposals`? Idk.
+
+>> +Sharing changes
+>> +---------------
+>> +Change histories are shared by pushing or fetching meta-commits and cha=
+nge
+>> +branches. This provides users with a lot of control of what to share an=
+d
+>> +repository implementations with control over what to retain.
+>> +
+>> +Users that only want to share the content of a commit can do so by push=
+ing the
+>> +commit itself as they currently would. Users that want to share an edit=
+ history
+>> +for the commit can push its change, which would point to a meta-commit =
+rather
+>> +than the commit itself if there is any history to share. Note that mult=
+iple
+>> +changes can refer to the same commits, so it=E2=80=99s possible to cons=
+truct and push a
+>> +different history for the same commit in order to remove sensitive or i=
+rrelevant
+>> +intermediate states.
+
+I would not like to see the ability to share all intermediate states
+with the server because this increases the risk of unintentional
+disclosure by a lot.
+
+How exactly we could tweak this can be an open discussion for later.
+Some examples I can think of:
+  - Asking the user to go through the obsolescence log and manually
+    prune revisions (sounds too onerous for users IMO).
+  - Push a truncated history consisting of only the latest version and
+    commits that the server already knows (somewhat similar to Gerrit).
+
+>> +Evolve
+>> +------
+>> +The evolve command performs the correct sequence of rebases such that n=
+o change
+>> +has an obsolete parent. The syntax looks like this:
+>> +
+>> +git evolve [upstream=E2=80=A6]
+>> +
+>> +It takes an optional list of upstream branches. All changes whose paren=
+t shows
+>> +up in the history of one of the upstream branches will be rebased onto =
+the
+>> +upstream branch before resolving obsolete parents.
+>> +
+
+This CLI is an example of something that can be reviewed largely
+independently of the implementing data structures.
+
+>> +Merge
+>> +-----
+>> +
+>> +To select between these two behaviors, merge gets new =E2=80=9C--amend=
+=E2=80=9D and =E2=80=9C--noamend=E2=80=9D
+>> +options which select between the =E2=80=9Ccreate=E2=80=9D and =E2=80=9C=
+modify=E2=80=9D behaviors respectively,
+>> +with noamend being the default.
+
+Ditto.
+
