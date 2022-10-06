@@ -2,139 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13947C433FE
-	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 16:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA3FC433FE
+	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 16:21:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231499AbiJFQOP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Oct 2022 12:14:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34270 "EHLO
+        id S230141AbiJFQVA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Oct 2022 12:21:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229610AbiJFQON (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2022 12:14:13 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD44CACA2E
-        for <git@vger.kernel.org>; Thu,  6 Oct 2022 09:14:12 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id 67so2444388pfz.12
-        for <git@vger.kernel.org>; Thu, 06 Oct 2022 09:14:12 -0700 (PDT)
+        with ESMTP id S231345AbiJFQU5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2022 12:20:57 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB9B0A50D8
+        for <git@vger.kernel.org>; Thu,  6 Oct 2022 09:20:53 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id 3so954329pfw.4
+        for <git@vger.kernel.org>; Thu, 06 Oct 2022 09:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hztEnYiZBsn+SrkWz5DnQSB1NakjzXnuFTx1NFUe+fk=;
-        b=Rfvq+uDdLPRXGfo6jQqimkn/MpO1Esnk6EmKnbPDZGJ0VBC1jxXv4hLiRNN9qDi/xX
-         Xb1e+2nMQg1jvifvYvPV0W3qisvPEZnmWU7Sk3Ra+Vqv0d6V9s0odtFbyJ8GHXRrN0Gv
-         mkal5ilzEp31CWigaTY+/9tdw8tLqqCv4ztFCuVAv5ol8Bbk8na479GsyiK3uQUf3HAT
-         a6OwTZQo3HdQuYAjawtIn+4F8pfYqMsICT0+C11oGdRiuJSu9E/LAluw4Q8MzQgxAO1u
-         EOyAAJ9IzdRWVp0FV2Gr0p9FSqpf+UiYgJcufp1QB3k8o115hi1O5k7Jyf9zWx0UBp83
-         a6Ow==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UiEGbHCb1g/+RU+nfWcBhUdO5ISxYOahqOxk4/FG4m0=;
+        b=c1YMjyeFK1/WURjaI7TuMJxnGdYlbvoYAKvLCwU6++7BpoW1mJ4MesVsX7ecE8vGJf
+         0XHIqnP40Jl/qklyUrOthMW+NJmSNqpqdfsn0pMcBwAj73EcvSoylYA5Cf6yjhF3O8e9
+         rPqA1jYaZJs3wMAh4ELeIYADclYsJCQhmEXtLlQ51MRDaFRV7fICqiuszx7yJYOX6QQf
+         V7HZ89YVuPU7CVVrGOlGsWc7u/MuMtJeeSxR7/rWxMXFrWItT0mi1FfpTkIniI+BP/Zm
+         AgMf4tW+P4i/ToM6YICI3FJEsnn6Sr13HFr4ywjwcqFI50HZjQjTAbcdmQJiMTLjgOyH
+         qj1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hztEnYiZBsn+SrkWz5DnQSB1NakjzXnuFTx1NFUe+fk=;
-        b=up5orsIOQFI3LExEbzGvHyI2w4MhO5K2BeXTxsooCN7Vuu+4vKq9y10krp3GWG60cz
-         0m4mYUNGt0isoZmx6SAgm5U2T4hzooLcOiGcL74+mtPJUW5I5E5bkdCxq55tiLiW0lE5
-         S5ewXJQKG9z4Lz895RDEWwWGIugipSfBdarpfOLAKs8mHWLaT3RE3EJsY1k+j/6lESap
-         4vVf95WVbo01rvmSthLtSlyuZ5fcDbGzDq0L3NCE0SWu75H9G1ZbXDx+9QsA89SzN8Hi
-         j8eVwgvUZxZTgLfHp8i1yiRfF0aezyNpjrC9AaN7cgFV9Gb1yqsK8MKKao1Ybhzdeei+
-         ZRCw==
-X-Gm-Message-State: ACrzQf0JcZVvJTNmJuLENHpmQdVUHrC0BKw6N1tSasQXYhKiwbyiVk42
-        CTS4E6KjvjSI2+LmVKulHNLt
-X-Google-Smtp-Source: AMsMyM79XW/C4Ikuzna+EugLf31aHh0quHNVdqpOMlycX7JyuIJlAMO3P5uTOb0SZ+8qYfuEhS+wxA==
-X-Received: by 2002:a63:4721:0:b0:440:2960:407 with SMTP id u33-20020a634721000000b0044029600407mr487139pga.621.1665072852174;
-        Thu, 06 Oct 2022 09:14:12 -0700 (PDT)
-Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id l8-20020a170903244800b0017f5c7d3931sm7502079pls.282.2022.10.06.09.14.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Oct 2022 09:14:11 -0700 (PDT)
-Message-ID: <44d2f602-a299-3bd0-1624-cfdddb6dcda7@github.com>
-Date:   Thu, 6 Oct 2022 09:14:10 -0700
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=UiEGbHCb1g/+RU+nfWcBhUdO5ISxYOahqOxk4/FG4m0=;
+        b=14xm2yGDpmrizBIEvRYdaKcdIfRLeKX/hyS+dBu+dz+EVTJUvx51JktX5RWe8MgTHq
+         Mz3qZE1HvMrcVeqkUUZMIkOXo6IiJLBUQlsS926NNdNR2NRC/gRwjxW1+ubro/KLpf/8
+         /ySD87KntLT5YasYiFetxUSPNZsGgFAVLlMszqNRGZ2pelWyaw+6OANS9ophv4R12fWj
+         0R5Y6VHI77Frj1nd1wA3sF4SMY79MbxKfbtVvS+mBPBbFNTcT37pku5ucEwjVIXIQmxH
+         Bs/ljebsXao0/SZ9s8/2gN7F41XLs6CNpwIRWSmuqNr05jBP3xBiDDUp90/esyr/dME8
+         FO5A==
+X-Gm-Message-State: ACrzQf3qrcYw/4A2Y+I+t/87Qy7APTH5N/lWCJ4E9AEfGVLtUjfpmaec
+        TpJzgdhNPuJDCt2mOwfr9bcxzh5WJps=
+X-Google-Smtp-Source: AMsMyM5xREnYsmKvsfVSy53zDaZSsvz3JVmp5gDiNM3glTL+rMcpZLXrmB/5XgGGhjo7llNeh1d1Sw==
+X-Received: by 2002:a63:f556:0:b0:44e:12bf:2dd8 with SMTP id e22-20020a63f556000000b0044e12bf2dd8mr566118pgk.400.1665073252522;
+        Thu, 06 Oct 2022 09:20:52 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id y1-20020a62ce01000000b00562496395besm3209014pfg.170.2022.10.06.09.20.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Oct 2022 09:20:51 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH] t/lib-httpd: pass LANG to Apache
+References: <3b370f7b-df84-0629-d334-aa9dfbca1c05@web.de>
+        <xmqqtu4inj6q.fsf@gitster.g>
+        <Yz31Lv+97z9p/0TK@coredump.intra.peff.net>
+Date:   Thu, 06 Oct 2022 09:20:51 -0700
+In-Reply-To: <Yz31Lv+97z9p/0TK@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 5 Oct 2022 17:20:46 -0400")
+Message-ID: <xmqqy1tsnct8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.13.1
-Subject: Re: [PATCH 2/2] removed else statement
-Content-Language: en-US
-To:     dsal3389 via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     dsal3389 <dsal3389@gmail.com>
-References: <pull.1355.git.git.1665056747.gitgitgadget@gmail.com>
- <c107ad9f6ff2d5e00134eb1348f24737774edbac.1665056747.git.gitgitgadget@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <c107ad9f6ff2d5e00134eb1348f24737774edbac.1665056747.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-dsal3389 via GitGitGadget wrote:
-> From: dsal3389 <dsal3389@gmail.com>
-> 
-> there is no need for the else statement if we can do it more
-> elegantly with a signle if statement we no "else"
+Jeff King <peff@peff.net> writes:
 
-Similar recommendations on the commit message as in the previous patch [1]:
+>> Shouldn't we be doing the same here?
+>
+> I think setting both probably is overkill. But if we are going to set
+> one, the important one is LC_ALL. It overrides specific LC_* variables,
+> which in turn override LANG. So just setting LANG would get confused if
+> LC_MESSAGES were set, for example.
+>
+> That said, there probably is no downside to passing through both, so we
+> might as well do so.
 
-- title should be prefixed with 'git.c:'
-- title & message should use the imperative mood (e.g. "remove else
-  statement" instead of "removed else statement")
-- please fix typos
-    - s/there/There
-    - s/signle/single
-    - s/we/with(?)
+Yup.  I suspect that the habit dates back to before LC_* was widespread
+and some platforms needed LANG.  On modern systems that understand i18n
+and do not need to set NO_GETTEXT, forcing LC_ALL should be sufficient.
 
-[1] https://lore.kernel.org/git/66d1bcaf-64c8-13c2-ba7a-98715de3617b@github.com/
+> Other than that, the patch is obviously the right thing to be doing. I'm
+> surprised it took this long for it to be a problem. ;)
 
-> 
-> Signed-off-by: Daniel Sonbolian <dsal3389@gmail.com>
-> ---
->  git.c | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
-> 
-> diff --git a/git.c b/git.c
-> index da411c53822..340ec8bcb31 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -894,12 +894,8 @@ int cmd_main(int argc, const char **argv)
->  	argv++;
->  	argc--;
->  	handle_options(&argv, &argc, NULL);
-> -	if (argc > 0) {
-> -		if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0]))
-> -			argv[0] = "version";
-> -		else if (!strcmp("--help", argv[0]) || !strcmp("-h", argv[0]))
-> -			argv[0] = "help";
-> -	} else {
-> +
-> +	if (argc <= 0) {
-
-nit: argc is always >= 0 [2], so a more appropriate condition would be:
-
-    if (!argc)
-
-There are lots of examples of that '!argc' conditional in Git, but none of
-the 'argc <= 0' pattern, so it's probably best to match convention here.
-
-Otherwise, the rest of this diff looks good.
-
-[2] https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf, §5.1.2.2.1 #2
-
->  		/* The user didn't specify a command; give them help */
->  		commit_pager_choice();
->  		printf(_("usage: %s\n\n"), git_usage_string);
-> @@ -907,6 +903,12 @@ int cmd_main(int argc, const char **argv)
->  		printf("\n%s\n", _(git_more_info_string));
->  		exit(1);
->  	}
-> +
-> +	if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0]))
-> +		argv[0] = "version";
-> +	else if (!strcmp("--help", argv[0]) || !strcmp("-h", argv[0]))
-> +		argv[0] = "help";
-> +
->  	cmd = argv[0];
->  
->  	/*
-
+Thanks.
