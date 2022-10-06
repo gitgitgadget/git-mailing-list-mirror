@@ -2,60 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D69F8C433F5
-	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 17:06:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8221C433F5
+	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 17:16:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230046AbiJFRGr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Oct 2022 13:06:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42118 "EHLO
+        id S229734AbiJFRQq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Oct 2022 13:16:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229527AbiJFRGp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2022 13:06:45 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A28669E2DC
-        for <git@vger.kernel.org>; Thu,  6 Oct 2022 10:06:44 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id v10-20020a17090a634a00b00205e48cf845so4885241pjs.4
-        for <git@vger.kernel.org>; Thu, 06 Oct 2022 10:06:44 -0700 (PDT)
+        with ESMTP id S229479AbiJFRQp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2022 13:16:45 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6FCE2F00F
+        for <git@vger.kernel.org>; Thu,  6 Oct 2022 10:16:44 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id f193so2481325pgc.0
+        for <git@vger.kernel.org>; Thu, 06 Oct 2022 10:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:date:references:subject:cc:to
          :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=dFMKetTQak6j0VDLAYHg/12/6zA58JOcb5v51W00XJk=;
-        b=RQj1GwnNPN5Sxzyj4HcRlcbTD1z+P70IA9hQkCdKqzPZoTAROtPoedEQVokFhrWxbh
-         SA87c75xGePxE0X7Uaz/tkPJaZQqrbH1qWXOfMQwzj+/aUUNsGP3M095rsd5bIo1AyZ3
-         6Kaj7e7t2oSaMYMU67mAYSSB9w1Ooodcd9eYYXd5U0IHbYVtZUO2yzWI99D7qSdE4jig
-         lYt+PGank1SG5IFexEEheZFI1g1S2ukAPrEprd15vZAH6ApjQoBUyZDAjEMALj5OOSmp
-         m6ubfwiJeUKuUuVM52egtWfob54hjCmDT0K2V1NwpjUHnjmnrmY+8Mfapf1jFcVa7f2k
-         N+ag==
+        bh=UjKdWEHCFGI9iwV0ZeD9Q91eEQ+5J1ohguxu+9vFzyk=;
+        b=AZJ+R5rkWyNu+es0jTNJlNdnGPlHjiRYFcCi0kkdGeo2cD8dai8phTsWbMxKF6qDZ5
+         vQs5m93lF9J92aGYysaDhL3Qo3Vfzj84xLQ7DBZBirXuOFCYVAkkyp9e3e70gV3V7rhw
+         xXC8BhDVMjAFa5CF8CP0aryrnIy9yMogru+JldoRwkCPtks8WhbddvFgd/K9Noxp1mnU
+         cfkngpL/XzgyBN5qZ1GOHTZSiGH5dOuLapunBHoDBnSXVQtYl6ZN1ZPm0EkeuzVam8b9
+         sS3zuv1U3kcfJrWhZzH+i0TXzOkNQfCONOdeZEaSAQ8Ct9vEY3PCj2uHzkJAUb6zBuyD
+         D8fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:date:references:subject:cc:to
          :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dFMKetTQak6j0VDLAYHg/12/6zA58JOcb5v51W00XJk=;
-        b=2ahCX4iG12H4VTE79moWywtK45hhlr9jYDt9UBAMNaDwDTqQDMOmEsmgIxJC3VRqN9
-         DjTinzQIaoZFLEQUlbUT0OojUaIDkQwcC6Ky7dSFXRM3WNjUKPqBIgXCA6XMaygLrcY4
-         TIKzCtroABIlQK99uAeAo4ChyyqmoAPA9BsOQrGMDVzvNQ0u2gTRNtyW7uoY7TySZw/7
-         lVoDkGWU+J0uMxBWZzlILvizDuzXeJboGeRjXAOtV/dU2/2YPY28Sd4jhT6Yn7+bUOpd
-         QBVAvJ1ZQFyg5ld5wBkrPsTOp/LDcSUJifd5wsEQ2dp4tXeYwyLRUMsrDShZ+PMfvusX
-         qKfw==
-X-Gm-Message-State: ACrzQf1GCb7l94aqBzcVBdXP/gwjdAKskG7u9QxnEZw/cjps05zt8zSd
-        e1UHTMxOCqXG04dzaAUUn00=
-X-Google-Smtp-Source: AMsMyM6l0cf0OHXhMDmZRObfznFUKA4RVAvKMVG1NjR8XS7+s7Ilbm7ztUVAhiPKxMdwU6ZDA+3OFg==
-X-Received: by 2002:a17:90a:930b:b0:20b:a5d:35d6 with SMTP id p11-20020a17090a930b00b0020b0a5d35d6mr4243801pjo.146.1665076004095;
-        Thu, 06 Oct 2022 10:06:44 -0700 (PDT)
+        bh=UjKdWEHCFGI9iwV0ZeD9Q91eEQ+5J1ohguxu+9vFzyk=;
+        b=a+xp5sp59i5c2Vw7uaGzQTlQlnpZChur1BLTIHrp46mHvIKc1D5NnPeyotmXO7/5hm
+         SR4dIh2Vz2a+svIQ7p6lmOH+4kUkNXB+9NoEDn0GFoDzvP9F5iClPPecJOsiiLsz4bLg
+         qYwxoaizG+1WN849wrlP/NIJ6lcKMyGMBuqkF2R6PGj3zNslBtYZ5mp4b4Bk4FdapOJC
+         9zPuKJTFYX7h2PmFn39NpCyWzcU3s+LYHt5B/yyyU/NMJyO8C8TsDUCQ++mfM5zc3xeQ
+         2wkLKxG0hMo0v1BrsrVpw4pRVchblcj6vev6+amP5igKBmbSRY48VuctDpy2HJKaNs5s
+         Ggww==
+X-Gm-Message-State: ACrzQf3RyJxNGodRMCfbeggO5j5lMVDLfxI5bjW9pZ4RCrmkai1zx2qC
+        nQcHc7V4v2YNZKDtIZ+MN4A=
+X-Google-Smtp-Source: AMsMyM5P7eQPfpDP4RnM9skHcXYQnME+TMgBtDBvdY0E7gHLJo7PqxzTvWbpYPM0I3jDLXuYqpgEiQ==
+X-Received: by 2002:a63:4c5f:0:b0:439:49b4:809f with SMTP id m31-20020a634c5f000000b0043949b4809fmr732330pgl.382.1665076604184;
+        Thu, 06 Oct 2022 10:16:44 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id 205-20020a6216d6000000b005613220346asm372987pfw.205.2022.10.06.10.06.43
+        by smtp.gmail.com with ESMTPSA id 72-20020a62194b000000b005627470944dsm1836780pfz.189.2022.10.06.10.16.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 10:06:43 -0700 (PDT)
+        Thu, 06 Oct 2022 10:16:43 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "dsal3389 via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, dsal3389 <dsal3389@gmail.com>
-Subject: Re: [PATCH 0/2] Minor Refactors: remove useless else
+Subject: Re: [PATCH 1/2] python file more pytonic, adjust "if" and "for"
 References: <pull.1355.git.git.1665056747.gitgitgadget@gmail.com>
-Date:   Thu, 06 Oct 2022 10:06:43 -0700
-Message-ID: <xmqqmta8lw4c.fsf@gitster.g>
+        <71da6f53a44cd3390d122ff2c0446824313e5101.1665056747.git.gitgitgadget@gmail.com>
+Date:   Thu, 06 Oct 2022 10:16:43 -0700
+Message-ID: <xmqqh70glvno.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,39 +66,81 @@ X-Mailing-List: git@vger.kernel.org
 
 "dsal3389 via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> git.c removed redundant else statement - it is redundant because all we
-> actually need is to check if there are no arguments, the program print
-> helpful information to the screen and exit, we don't need the else for that
+> From: dsal3389 <dsal3389@gmail.com>
 >
-> git-p4.py L371 - remove redundant else statement - same as git.c (made sure
-> not to repeat what was already done on #1349
-> [https://github.com/git/git/pull/1349]) git-p4.py L404 - minor, there is no
-> need to decode the output and iterate over the variable if we may exit
+> L371
+> redesign few lines to get rid of the "else" statement
 >
-> dsal3389 (2):
->   python file more pytonic, adjust "if" and "for"
->   removed else statement
+> L404
+> moved the if statement below another if statement that
+> checks if it should exit the code, only if it doesnt need to,
+> then we can iterate the for loop and decode the text
 >
->  git-p4.py |  9 ++++-----
->  git.c     | 14 ++++++++------
->  2 files changed, 12 insertions(+), 11 deletions(-)
+> Changes to be committed:
+> 	modified:   git-p4.py
 
-Welcome to the Git development community.
+Compare this with the commits by others in "git log --no-merges"
+output of this project.
 
-A few general suggestions.
+> Signed-off-by: Daniel Sonbolian <dsal3389@gmail.com>
 
- * Familiarlize yourself with Documentation/CodingGuidelines and
-   Documentation/SubmittingPatches.
+Please have this on the in-body "From:" line we see above.  I think
+GitGitGadget takes it from the author of the commit object it sends
+out, so you may have to go back to your branch and fix them with
+"rebase -i".
 
- * See how commits in the project are explained in their log
-   messages in "git shortlog --no-merges -n100" (for how their
-   titles are written to help distinguish them among many other
-   commits) and "git log --no-merges -n100" (for how they explain
-   why making their changes is a good idea and helps the project).
+> ---
+>  git-p4.py | 9 ++++-----
+>  1 file changed, 4 insertions(+), 5 deletions(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index d26a980e5ac..0ba5115fa2e 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -368,10 +368,9 @@ def read_pipe(c, ignore_error=False, raw=False, *k, **kw):
+>         """
+>      retcode, out, err = read_pipe_full(c, *k, **kw)
+>      if retcode != 0:
+> -        if ignore_error:
+> -            out = ""
+> -        else:
+> +        if not ignore_error:
+>              die('Command failed: {}\nError: {}'.format(' '.join(c), err))
+> +        out = ""
 
- * Make sure the name and the e-mail used as the author of your
-   commits match the name and the e-mail on the Signed-off-by: line
-   in them.
+I think the code with or without the patch is about the same
+complexity, but people tend to have harder time understanding logic
+that involves double negation, so I can imagine that some readers
+may find the code with the patch harder to understand.  In any case,
+the difference falls into the "it is minor enough that once it is
+written in one way, it is not worth the churn to rewrite it in the
+other way" category.
 
- * Spell check before sending things out to the public list.
+> @@ -400,10 +399,10 @@ def read_pipe_lines(c, raw=False, *k, **kw):
+>      p = subprocess.Popen(c, stdout=subprocess.PIPE, *k, **kw)
+>      pipe = p.stdout
+>      lines = pipe.readlines()
+> -    if not raw:
+> -        lines = [decode_text_stream(line) for line in lines]
+>      if pipe.close() or p.wait():
+>          die('Command failed: {}'.format(' '.join(c)))
+> +    if not raw:
+> +        lines = [decode_text_stream(line) for line in lines]
+>      return lines
+
+This is in the same "the difference is minor enough that once it is
+written in one way, it is not worth the churn to rewrite it in the
+other way" category.  Your reasoning might be that massaging of the
+lines is only needed when we do not die() and it is more efficient
+to check and die first, but that is optimizing for the wrong case.
+The code should not die in its normal operation and there is no
+point optimizing for an error code path.
+
+One thing that might deserve benchmarking and optimizing here is if
+we can do better than reading everything in lines array and holding
+onto the original until decoding the whole thing at once at the end
+of input.  If converting each line and appending the result as it is
+read from the pipe turns out to be more efficient, it may be an
+optimization worth considering, as it is optimizaing for the normal
+case.
 
