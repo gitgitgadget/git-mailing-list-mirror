@@ -2,238 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D1F6C433F5
-	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 04:20:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27B5DC433F5
+	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 07:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229832AbiJFEUw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Oct 2022 00:20:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40532 "EHLO
+        id S230052AbiJFHK0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Oct 2022 03:10:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbiJFEUt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2022 00:20:49 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD35222B07
-        for <git@vger.kernel.org>; Wed,  5 Oct 2022 21:20:47 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id s10so858603ljp.5
-        for <git@vger.kernel.org>; Wed, 05 Oct 2022 21:20:47 -0700 (PDT)
+        with ESMTP id S229642AbiJFHKZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2022 03:10:25 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0F5831EE1
+        for <git@vger.kernel.org>; Thu,  6 Oct 2022 00:10:23 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id a10so1231336ljq.0
+        for <git@vger.kernel.org>; Thu, 06 Oct 2022 00:10:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=i27s61RMXD6LqsIuErJAOc0RcoQpu5KRmZlMlPtZjbQ=;
-        b=LTSti/3gI//dCiylcFtpjm7FMxnAjMbI8SPpfpqUn4Ivr8DIVXSY455Y5jmf/rl6J3
-         FS+sTyzGirmGqSrcYTC+mM2PB1MYacWhc8CLZt/z0Of01AuIc4120nogl/0e9iMsHmiH
-         iPIIvemfg/N/0qxLKIGGuBzzWmvWHQcDPv6ZHFLv94FWpSJLy8nvFLXA2nQy+jcQu4ay
-         3BJN2qVJm5aDpEh1UtxY25JOySCifBxDNcCw1ek0MI/IMiS7PJK2D7yQKNZKbwLsV96E
-         HoG+kkHPcXWe7NZE5HYtO0hzH8KOxITcEAoTe21oMv3jvkQcuzxtcC+HCGauJoxiMwOM
-         vM9w==
+        bh=wERr5OhHSQLBqaOEqNMN8fu9ogQGn/4q4rW5mOipONQ=;
+        b=iZszmVLlkI8yB6/iYYJ5aSrQ3+WEFZV1j2V1B7O8vXALZ4vcgak/ZRW7HKecvKJ40N
+         fg8dK837AJCbZRhU4GkScfTqHQTogv0dllhiEmWGMCeDaWSfWerXSoPg1t4r9Wfs/Lql
+         +FdjJa+pT8GPkhcG7CkC2fycLLmMA/x26iIGdtklHUKvuwReHJzPP7rNePN6BdOU7CaJ
+         LAEGjA4wZXflK5y9MhmJfsLfyreeUAAMk2HAIS5G2zpwoV+ceJPHTAPRoHZura8Vt3zc
+         dZ0MWGbiC3HlSmDR/RCMK7BDty8nVGZSwxM+mb6X8+Qo/djCAnSarMq80DryRlH3Y5CE
+         leNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=i27s61RMXD6LqsIuErJAOc0RcoQpu5KRmZlMlPtZjbQ=;
-        b=vxBtoZD0KH92mePML5z2bTfrxvRf0Lsyj5Tjk9QsmW+k+EEA7Ls8qHO7fRL9gOWVKx
-         woNoOFkaM4qEAQhzpAmJV93hKpZGQSrEJV3b3aNRGkxhiq8T98O3EkiZvYC9mvoxi4Vq
-         WehWM6ChyyV8YAj6MClaLofJ9nU5itJXXnnUMJxin4OAR8p09pWOrJdrCYiXVrr0od5o
-         ZNYitPbdVOs2e4mtIcOXGrLF6cOjzDuOaUdeuQlpiZVgr+9HI6zdit4bYzkaMtRahimY
-         +rGKogrlduMqZLTxbxMS9zIb4aSQh/3V8WDDqIPxyp0d38wkk3DP4wY455QYQUnrv6wx
-         Vo/w==
-X-Gm-Message-State: ACrzQf0si3qL09RDYoi6ZWvqNg4kSG72sEjQBjMdw00+486wKrySNIJR
-        V/wip7fE4IQaalfnv9+pZ8kPxDYjOIcV8nSNtJo=
-X-Google-Smtp-Source: AMsMyM6je+fiRRAZneZZgt2LL8Nxf8KeTE5Ztx5owWdERNFAavEr+YMX71B8ATh6pzihebLqqX5i7IteX+uB8Cwe9c4=
+        bh=wERr5OhHSQLBqaOEqNMN8fu9ogQGn/4q4rW5mOipONQ=;
+        b=kCUzLxTQvQgJV+1xl2BulhHUWRsDdx9EDF6LzZ7OnbmMn+6MM1edptv4pOi/64xutC
+         Lb0toa9Z19CsPpX0CKe1P2sw/m6ZUwiZpvtvTA2WgE0tNCKeqrVCeD5QGdWgm9ZISdJf
+         XiUaA/G3OkryFzVnNl1RKU1tgYl/wO+DRBep4Ij6Ewssk2fJZQNX5mJlZLJPrU0SKgTc
+         dgK16wWNTwnFTFsOcOzxwX5v6ujc9vKAQm7dS/EmA12m6hNcn22yr1Bj4zSYycsjYYF6
+         qGrBRqnhsjbhCdOgwuJMHX8ds232YXabvYGiTTBlY6EtgSy11U7IWQeuu60PEIRf8fax
+         Asgg==
+X-Gm-Message-State: ACrzQf1q6jOL5K7VYYdLBDR7dR5RjYYam08/SlWFPITnZIiO0TK28qSw
+        P02/nsx5F7k0HlHU/qcdaxADJkohE3E6vKOI20Y=
+X-Google-Smtp-Source: AMsMyM5O8m5JOFxfxhMetnNOupnTXg/vVfrll4LQaKdgmjIPLSJCFcpky6nnDZuwP3qV/9id2ykqz1M8sfReLNU1B9Y=
 X-Received: by 2002:a2e:7804:0:b0:26c:463c:493c with SMTP id
- t4-20020a2e7804000000b0026c463c493cmr1037538ljc.521.1665030045794; Wed, 05
- Oct 2022 21:20:45 -0700 (PDT)
+ t4-20020a2e7804000000b0026c463c493cmr1247256ljc.521.1665040221807; Thu, 06
+ Oct 2022 00:10:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <kl6l35c4mukf.fsf@chooglen-macbookpro.roam.corp.google.com>
- <54ee4a2a-1937-8640-9297-8ad1516596cc@github.com> <CAESOdVAh68HoQoyicfZn4XbjGfiRFCu1zFQmUjMcSAg3tUzr4Q@mail.gmail.com>
- <96c4f52e-bc66-f4ee-f4f6-d22da579858e@github.com> <CAESOdVByucFm=yJn2yL1mwKGqey7tHXH4A-JM-yP125Ok+_Q+g@mail.gmail.com>
- <CABPp-BH5_=Tq9DM6iAfG3+DuzEE7dR-H8rhP34x-A5FQhLO+bg@mail.gmail.com> <CAESOdVDt7SU=OJhF0mgyZ=B3sncB49aML8oOzKTKAnmGO5BaVQ@mail.gmail.com>
-In-Reply-To: <CAESOdVDt7SU=OJhF0mgyZ=B3sncB49aML8oOzKTKAnmGO5BaVQ@mail.gmail.com>
+References: <pull.1367.git.1664064588846.gitgitgadget@gmail.com>
+ <07a25d48-e364-0d9b-6ffa-41a5984eb5db@github.com> <CABPp-BEjVv1ASdQhXGh6KuDfPt_nhZpRO_Q0i1pCqrV2wVQ9yQ@mail.gmail.com>
+ <5d926706-6ca3-ce07-f8f2-771fe126450b@github.com>
+In-Reply-To: <5d926706-6ca3-ce07-f8f2-771fe126450b@github.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 5 Oct 2022 21:20:33 -0700
-Message-ID: <CABPp-BE12gaeWEWnqc589N+kJwqq796K5KJOHDiGduvOmQ36Gw@mail.gmail.com>
-Subject: Re: Bug report: `git restore --source --staged` deals poorly with sparse-checkout
-To:     Martin von Zweigbergk <martinvonz@google.com>
-Cc:     Victoria Dye <vdye@github.com>, Glen Choo <chooglen@google.com>,
+Date:   Thu, 6 Oct 2022 00:10:09 -0700
+Message-ID: <CABPp-BGoJqtx_=p+GfqAhgs+4Zic1mcbs6pkMKy7QAnxTwB4AA@mail.gmail.com>
+Subject: Re: [PATCH] sparse-checkout.txt: new document with sparse-checkout directions
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>
+        Victoria Dye <vdye@github.com>,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        ZheNing Hu <adlternative@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 5, 2022 at 1:00 PM Martin von Zweigbergk
-<martinvonz@google.com> wrote:
+On Wed, Sep 28, 2022 at 6:22 AM Derrick Stolee <derrickstolee@github.com> wrote:
 >
-> On Wed, Oct 5, 2022 at 12:51 AM Elijah Newren <newren@gmail.com> wrote:
-> >
+> On 9/28/22 1:38 AM, Elijah Newren wrote:
+> > On Tue, Sep 27, 2022 at 9:36 AM Derrick Stolee <derrickstolee@github.com> wrote:
+> >>
+> >> On 9/24/2022 8:09 PM, Elijah Newren via GitGitGadget wrote:
+> >>> From: Elijah Newren <newren@gmail.com>
+> >>
 [...]
-> I agree with you and Stolee that there are two different cases: some
-> people use sparse checkouts to restrict what they see (behavior A), and
-> some people use it just as a performance optimization (behavior B). So I
-> suspect we roughly agree about what should happen if you pass
-> `--restrict` (or if that becomes the default so you don't actually need to
-> pass it). My arguments were about the `--no-restrict` case. Sorry, I
-> should have made that clear.
+> >>> +  * Commands whose default for --restrict vs. --no-restrict should vary depending
+> >>> +    on Behavior A or Behavior B
+> >>> +    * diff (with --cached or REVISION arguments)
+> >>> +    * grep (with --cached or REVISION arguments)
+> >>> +    * show (when given commit arguments)
+> >>> +    * bisect
+> >>> +    * blame
+> >>> +      * and annotate
+> >>> +    * log
+> >>> +      * and variants: shortlog, gitk, show-branch, whatchanged
+> >>> +
+> >>> +    For now, we default to behavior B for these, which want a default of
+> >>> +    --no-restrict.
+> >>
+> >> I do feel pretty strongly that we'll want a --no-restrict default here
+> >> because otherwise we will present confusion. I'm not even sure if we would
+> >> want to make this available via a config setting, but likely a config
+> >> setting makes sense in the long term.
+> >
+> > You've got me slightly confused.  You did say the same thing a long time ago:
+> >
+> >     "But I also want to avoid doing this as a default or even behind a
+> > config setting."[A]
+> >
+> > BUT, when Shaoxuan proposed making --restrict/--focus the default for
+> > one of these commands, you seemed to be on board[B].
 >
-> I also agree that having a way to make commands restrict to certain paths
-> by default is useful, and I agree that tying that set of paths to the current
-> worktree's sparse spec makes sense.
->
-> I'll answer the questions below for the `--no-restrict` case
-> (behavior B).
+> I'm specifically talking about 'git log'. I think that having that be
+> in a restricted mode is extremely dangerous and will only confuse users.
+> This includes 'git show' (with commit arguments) and 'git bisect', I
+> think.
 
-I don't think your usecase matches behavior B.  I think we should
-label your VFS usecase as behavior C and define it separately.  More
-on that below...
+Thanks, that helps me understand your position better.
+
+I'm curious if, due to the length of the document and this thread,
+you're just skimming past the idea I mentioned of showing a warning at
+the beginning of `diff`, `log`, or `show` output when restricting
+based on config or defaults.  Without such a warning, I agree that
+restricting might be confusing at times, but I think such a warning
+may be sufficient to address the concerns around partial/incomplete
+results.  The one command that this warning idea doesn't help with is
+`grep` since it cannot safely be applied there, which potentially
+leaves `grep` giving confusing results when users pass either
+`--cached` or revisions, but you seem to not be concerned about that.
+
+I'm also curious if the problem partially stems from the fact that
+with `git log` there is no way to control revision limiting and diff
+generation paths independently.  If there was a way to make `git log
+-p` continue showing the regular list of commits but restrict which
+paths were shown in the diffs, and we made the --scope-sparse handling
+do this so that only diffs were limited but not the revisions
+traversed/printed, would that help address your concerns?
+
+> The rest, (diff, grep, blame) are worktree-focused, so having a restrict
+> mode by default makes sense to me.
+
+I was specifically calling out diff & grep when passed revision
+arguments, which are definitely *not* worktree-focused operations.
+
+Also, blame incorporates a component of changes from the worktree, but
+it's mostly about history (and one or more -C's make it check other
+paths as well).
 
 [...]
-> > What about merge/rebase/cherry-pick/revert?  Should those write
-> > additional files to the working tree or avoid it?  What about if there
-> > are conflicts outside the sparse specification?
+> I think the biggest point is that the implications of behavior A
+> saying "I don't care about any changes outside of my sparse-checkout"
+> leading to changed history are unappealing to me. After removing that
+> kind of feature from consideration, I don't see any difference
+> between the behaviors.
+
+Indeed, the differences between the behaviors is (mostly?) about
+history queries, be it `git grep --cached`, `git grep REV`, `git diff
+REV1 REV2`, `git log -p`, etc.
+
+And I understand it's unappealing to you, but I haven't seen an
+alternative solution to disconnected development in partial clones.
+Nor have I seen an alternate plan for users who want to really focus
+on their small subset of the repository.
+
+So, maybe you don't want to use a configuration knob and always want a
+certain default, but I very much want a knob.
+
+> > Anyway...I will note that without a configurable option to give these
+> > commands a behavior of `--restrict`, I think you make working in
+> > disconnected partial clones practically impossible.  I want to be able
+> > to do "git log -p", "git diff REV1 REV2", and "git grep TERM REV" in
+> > disconnected partial clones, and I've wanted that kind of capability
+> > for well over a decade[H].  So, don't be surprised if I keep bringing
+> > up a config option of some sort for these commands.  :-)
 >
-> I think they should avoid it, but since the user will need to resolve
-> that conflict anyway, I can see it makes sense to write them to disk
-> if there are conflicts.
+> Now, if we're talking about "don't download extra objects" as a goal,
+> then we're thinking about things not just related to sparse-checkout
+> but even history within the sparse-checkout. Even if we make the
+> 'backfill' command something that users could run, there isn't a
+> guarantee that users will want to have even that much data downloaded.
+> We would need a way to say "yes, I ran 'git blame' on this path in my
+> sparse-checkout, but please don't just fail if you can't get new objects,
+> instead inform me that the results are incomplete."
 >
-> >
-> > And if extra files get written outside the sparse specification, are
-> > there ways for this to get "cleaned up" where after resolving
-> > conflicts or changes we can again remove the file from the working
-> > tree?
+> I think the sparse-checkout boundary is a good way to minimize the
+> number of objects downloaded by these commands, but to actually
+> remove the need for downloads at all we need a way to gracefully
+> return partial results.
+
+There may be some merits to a partial clone with shallow blob history,
+but I've never really been all that interested in it.  I know that
+partial clones only really implement that kind of feature, but I've
+always wanted a full-depth sparse clone instead.  I tried to create
+that alternate reality[H], but didn't get the time to push it very
+far, and in the meantime others came along and implemented both
+shallow clones and partial clones.  I still want my thing, but at this
+point rather than introduce a new kind of clone, it makes more sense
+for me to reuse the existing partial clone framework and extend it --
+especially since it more gracefully handles cases where additional
+data outside user-specified sparsity is needed (such as for merges).
+
+[H] https://lore.kernel.org/git/1283645647-1891-1-git-send-email-newren@gmail.com/
+
+But you've got me curious.  You seem to be suggesting that partial
+results are okay if the user is informed.  I have suggested making
+diff-with-revisions, log -p, etc. show a warning that results may be
+incomplete when restricting them to the sparse checkout based on
+config.  So, aren't you suggesting that my proposal is safe after all?
+
+Anyway, if someone wants to implement something like you suggest here,
+while I might not use it, it sounds reasonable to me.  It'd probably
+fit in as yet another config setting.  Then, for history queries, our
+config would select the default between --scope=all (for behavior B
+folks), --scope=sparse (for the behavior A folks) and
+--scope=sparse-and-already-downloaded (the behavior you suggest above,
+though it probably needs a better name).  Also, it sounds to me like
+implementing --scope=sparse would be a step along the path to
+implementing what you are suggesting here, if I'm understanding you
+correctly.  (Also, this idea makes me like your --scope= naming even
+more, because it's awkward to add a third option to
+--restrict/--no-restrict.)
+
+> > I figured we'd have one or two places where all of us had some
+> > disagreements on the big picture, but more and more I'm finding we
+> > aren't even always thinking about the problems the same (e.g. the 3+
+> > different solutions to the `am` issues).  All the more reason that a
+> > document like this is important for us to discuss these details and
+> > work out a plan.
 >
-> I've never really used `git sparse-checkout` (until I read your doc),
-> but isn't that what `git sparse-checkout reapply` is for?
+> With such a massive doc and an ambitious plan, we are bound to have
+> misunderstandings and seem to self-contradict here and there. This
+> discussion is helping to drive clarity, and I appreciate all of your
+> work to drive towards mutual understanding.
 
-While that command is available for users that want to manually clean
-things up proactively, my suspicion is that it is used very rarely --
-especially now that we have the present-despite-skipped class of
-issues fixed.  I suspect nearly all cleaning up is actually done as an
-implicit side-effect of calls to unpack_trees(), which would affect
-commands such `switch`, the switch-like portion of `checkout`, `reset
---hard`, `merge`, `rebase`, and many others.
-
-All of these commands have two types of implicit clean-up they do as
-part of their operation (which could be thought of as a
-post-processing step): (1) marking *unmodified* files outside the
-sparsity patterns as SKIP_WORKTREE in the index and removing them from
-the working tree, and (2) taking files which match the sparsity
-patterns which were previously SKIP_WORKTREE and flip them to
-!SKIP_WORKTREE and restore them to the working tree.  I've got a few
-examples of what this clean up looks like over at:
-https://lore.kernel.org/git/CABPp-BHGrxLPu_S3y2zG-U6uo0rM5TYYEREZa2A=e=d9VZb2PA@mail.gmail.com/
-
-I have no idea how this cleanup affects the VFS usecase; it's very
-focused towards "sparse checkout means many files should NOT be
-present in the working tree" which may be at odds with how the VFS
-stuff is intended to behave.  But it's also been part of
-sparse-checkout behavior the longest; for well over a decade now.
-
-> > What about `git grep PATTERN`?  That's documented to search the
-> > tracked files in the working tree.  But should that include the files
-> > that would have been there were it not for the "performance
-> > optimization" of not checking them out?  (Similarly, what about `git
-> > grep --cached PATTERN` or `git grep PATTERN REVISION`?)  I mean, if
-> > these commands should behave the same regardless of sparse
-> > specification, then you should search those other files, right?  But
-> > isn't that a nasty performance penalty if the user has a
-> > sparse/partial clone since Git will have to do many network operations
-> > to get additional blobs in order to search them?  Is that really
-> > wanted?
->
-> I think it's consistent to search them with `--no-restrict` (but not
-> with `--restrict`, of course).
->
-> > What about `git rm '*.png'` to remove all the tracked png files from
-> > my working tree.  Should that also remove all the files that would
-> > have been there were it not for the "performance optimization"?  Will
-> > that result in very negative surprises for those with a "I want to
-> > concentrate on just this subset of files" mental model?
->
-> Same here.
->
-> >
-> > What about `git worktree add`?  Should the sparse specification be the
-> > same for all worktrees?  Be per-worktree?  Should it default to dense?
-> >  To just top-level sparse?  To the same sparsity as the worktree you
-> > were in when you created a new one?
->
-> That's an interesting case. If someone does `git worktree add` and expects
-> all files to be available in the working copy, they might be surprised, yes.
-> I think that's a much smaller risk than
-> `git restore --source HEAD^ --staged && git commit -m 'undo changes'` being
-> partial, however.
-
-After you described the VFS usecase, I was guessing you'd answer how
-you did for most of these commands.  Most of your answers do not match
-the answers I'd expect for behavior B, which seems to me to support my
-suspicion that you've got a third usecase.
-
-In particular, I think the difference between Behavior B and your
-usecase hinges on the expectation for the working tree:
-   Behavior B: Files outside the sparse specification are NOT present
-in the working tree.
-   Behavior C (your usecase): Files outside the sparse specification
-ARE "present" in the working tree, but Git doesn't have to put them
-there (they'll be lazily put into place by something else, and the VFS
-will ensure that users don't ever notice them actually missing, so far
-all intents and purposes, the files are present).
-
-In particular, that difference is perhaps most notable with `git grep`
-(without --cached or REVISION flags); such a command is supposed to
-search the worktree.  For Behavior B, files outside the sparse
-specification are NOT present in the working tree, and hence those
-files should NOT be searched.  For your usecase, as you highlight
-above, you view all files as present in the working tree (even if Git
-isn't the thing writing those files to the working tree and even if
-they aren't technically present until you query whether they are
-there), so all those files SHOULD be searched.
-
-This difference about the "presence" of files has other knock-on
-effects too.  Under Behavior B, users get used to working on just a
-subset of files.  Thus `git rm '*.jpg'` or `git restore --source HEAD^
--- '*.md'` should NOT overwrite files outside the sparse specification
-(but an error should be shown if the pathspec doesn't match anything,
-and that error should point out how users can affect other files
-outside the sparse specification).  Under your usecase, users are
-always working on the full set of files and all of them can be viewed
-in their working copy (as enforced by the filesystem intercepting any
-attempts to view or edit files and suddenly magically materializing
-them when users look) -- so users in your usecase are not expecting to
-be working on a subset of files, and thus those commands would operate
-tree-wide.
-
-Similarly, under Behavior B, `git add outside/of/cone/path` should
-throw an error.  If it doesn't, some future command will silently
-remove the file from the working copy, which may confuse the user;
-they are getting themselves into an erroneous state.  Users are
-pointed to an override flag they can use if they want to accept the
-consequences.  Under your usecase, since ALL files are always
-"present" (but not materialized until an attempt to access is made),
-that same command would be expected to run without an override and
-with no error or warning.
-
-Related to the above, under Behavior B, `git status` should probably
-report the existence of any untracked files that do not match the
-sparsity patterns as an erroneous condition (because why wait until
-git-add to throw an error; let the user know early).  Under your
-usecase, we wouldn't.
-
-
-You might think I'm describing Behavior A above, but only because
-Behavior A and Behavior B overlap on worktree-related operations.  The
-primary difference between Behavior A and Behavior B is with behavior
-of history-related operations.  Behavior B says "the working tree is
-sparse, but history is dense; if I do a query on older revisions of
-history (grep/diff/log/etc.) then give me results across all paths",
-whereas Behavior A says "I only care about this subset of files, both
-for the working tree and for history.  Unless I override,
-grep/diff/etc. on history should restrict all output to files within
-the sparse specification.
-
-One potential way to (over)simplify this would be:
-    Behavior A: `--scope=sparse` for both worktree and history operations
-    Behavior B: `--scope=sparse` for worktree operations,
-`--scope=all` for history operations
-    Behavior C: `--scope=all` for both worktree and history operations
+Thanks for taking the time to read through it and respond in detail!
