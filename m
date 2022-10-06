@@ -2,804 +2,238 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F361DC433FE
-	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 04:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D1F6C433F5
+	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 04:20:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229815AbiJFEE0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Oct 2022 00:04:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47550 "EHLO
+        id S229832AbiJFEUw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Oct 2022 00:20:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbiJFEEW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2022 00:04:22 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AABD1FCD4
-        for <git@vger.kernel.org>; Wed,  5 Oct 2022 21:04:19 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id j4so1016496lfk.0
-        for <git@vger.kernel.org>; Wed, 05 Oct 2022 21:04:19 -0700 (PDT)
+        with ESMTP id S229555AbiJFEUt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2022 00:20:49 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD35222B07
+        for <git@vger.kernel.org>; Wed,  5 Oct 2022 21:20:47 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id s10so858603ljp.5
+        for <git@vger.kernel.org>; Wed, 05 Oct 2022 21:20:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date;
-        bh=D7UpqHqMPjW6jLJmKIPG+baDS83zpL8EYeSFeiH25aE=;
-        b=YPR/fpJagXeqaLwqH59cOoZC4OaCv2XLklU2yPpCtbTpRf8eo+vG7AUA2kenIBEF2e
-         wg9dkzS4Scdz1+AKJlgAbbVy6YJonZazQiagH4SZoBz7NC830moyuSOoEL1/pjyW0Uxw
-         5jzWNVRWZO5e8kojrd5UXKLhM3higt0whoyLUZJ7oO2P3ZK0hqhjtmbtH6U7PBTzExhe
-         bdOI9nerOqDbYXu+3r+eE39rv70raOGZq2M+X31K1CnfkYxFdCWkng0VzRFrR+usnoO4
-         zvS719CNjJdK0JgWuxpNwViFKUg+pturuoM162GhDDuY/r58p7NzFSushELBQHKSjoOp
-         yjAQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=i27s61RMXD6LqsIuErJAOc0RcoQpu5KRmZlMlPtZjbQ=;
+        b=LTSti/3gI//dCiylcFtpjm7FMxnAjMbI8SPpfpqUn4Ivr8DIVXSY455Y5jmf/rl6J3
+         FS+sTyzGirmGqSrcYTC+mM2PB1MYacWhc8CLZt/z0Of01AuIc4120nogl/0e9iMsHmiH
+         iPIIvemfg/N/0qxLKIGGuBzzWmvWHQcDPv6ZHFLv94FWpSJLy8nvFLXA2nQy+jcQu4ay
+         3BJN2qVJm5aDpEh1UtxY25JOySCifBxDNcCw1ek0MI/IMiS7PJK2D7yQKNZKbwLsV96E
+         HoG+kkHPcXWe7NZE5HYtO0hzH8KOxITcEAoTe21oMv3jvkQcuzxtcC+HCGauJoxiMwOM
+         vM9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=D7UpqHqMPjW6jLJmKIPG+baDS83zpL8EYeSFeiH25aE=;
-        b=owqAN6iPAJEqXIXfLEhErXPxsDn4lkEtaJrbQC2HPYauX9/LBSwZfVNtFMIxEusFUe
-         hyN0JOO+JqFOjMpSklEiXMRUvLRBAR+uaQIbmt2l6itsWzVZVQmqOvq5Pkh2HE2/HcJl
-         gGRB7ufJRsz2Nc1vCqPFjgMFKqBFgvAs2yJ3fi3F0iIW/vg1hiv0a6StXLdcY+k0rkr+
-         tntGuhcUufsSKu3YDKPdKSsPSNBnyqnJQ0qEdsTfv5XrULw0XIufEflxM5RC24K7vGfo
-         amU6nVrIVmQUyuaGytfczjnzKaqscieU0q8LKaLhK4rT89kobVPrxCysFKRyfbqovfIu
-         fQjg==
-X-Gm-Message-State: ACrzQf2wsPXAbCrf8VZXD4K+Ht332vyw1oQaVnnoC36Z9af72mXX6Xgg
-        /BBtnrpCCQikXRgwanGHXspEgTtYHoVMvUcw4i8=
-X-Google-Smtp-Source: AMsMyM5r5q9FLmvBQirtt5MHqxJvVjyDpwesAcTQGih0W5uZ+chkiUlP6e8waS2QAybka3z9/q7uHGs4JPEfC85cYLk=
-X-Received: by 2002:a05:6512:b82:b0:4a0:5970:115c with SMTP id
- b2-20020a0565120b8200b004a05970115cmr1165307lfv.531.1665029057240; Wed, 05
- Oct 2022 21:04:17 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=i27s61RMXD6LqsIuErJAOc0RcoQpu5KRmZlMlPtZjbQ=;
+        b=vxBtoZD0KH92mePML5z2bTfrxvRf0Lsyj5Tjk9QsmW+k+EEA7Ls8qHO7fRL9gOWVKx
+         woNoOFkaM4qEAQhzpAmJV93hKpZGQSrEJV3b3aNRGkxhiq8T98O3EkiZvYC9mvoxi4Vq
+         WehWM6ChyyV8YAj6MClaLofJ9nU5itJXXnnUMJxin4OAR8p09pWOrJdrCYiXVrr0od5o
+         ZNYitPbdVOs2e4mtIcOXGrLF6cOjzDuOaUdeuQlpiZVgr+9HI6zdit4bYzkaMtRahimY
+         +rGKogrlduMqZLTxbxMS9zIb4aSQh/3V8WDDqIPxyp0d38wkk3DP4wY455QYQUnrv6wx
+         Vo/w==
+X-Gm-Message-State: ACrzQf0si3qL09RDYoi6ZWvqNg4kSG72sEjQBjMdw00+486wKrySNIJR
+        V/wip7fE4IQaalfnv9+pZ8kPxDYjOIcV8nSNtJo=
+X-Google-Smtp-Source: AMsMyM6je+fiRRAZneZZgt2LL8Nxf8KeTE5Ztx5owWdERNFAavEr+YMX71B8ATh6pzihebLqqX5i7IteX+uB8Cwe9c4=
+X-Received: by 2002:a2e:7804:0:b0:26c:463c:493c with SMTP id
+ t4-20020a2e7804000000b0026c463c493cmr1037538ljc.521.1665030045794; Wed, 05
+ Oct 2022 21:20:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20221005213633.7070-1-markus.heidelberg@web.de>
-In-Reply-To: <20221005213633.7070-1-markus.heidelberg@web.de>
+References: <kl6l35c4mukf.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <54ee4a2a-1937-8640-9297-8ad1516596cc@github.com> <CAESOdVAh68HoQoyicfZn4XbjGfiRFCu1zFQmUjMcSAg3tUzr4Q@mail.gmail.com>
+ <96c4f52e-bc66-f4ee-f4f6-d22da579858e@github.com> <CAESOdVByucFm=yJn2yL1mwKGqey7tHXH4A-JM-yP125Ok+_Q+g@mail.gmail.com>
+ <CABPp-BH5_=Tq9DM6iAfG3+DuzEE7dR-H8rhP34x-A5FQhLO+bg@mail.gmail.com> <CAESOdVDt7SU=OJhF0mgyZ=B3sncB49aML8oOzKTKAnmGO5BaVQ@mail.gmail.com>
+In-Reply-To: <CAESOdVDt7SU=OJhF0mgyZ=B3sncB49aML8oOzKTKAnmGO5BaVQ@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 5 Oct 2022 21:04:05 -0700
-Message-ID: <CABPp-BEyemFxeCG-bmyiugfzCqZp=XbOJKVWrepjeTf9G5yHgQ@mail.gmail.com>
-Subject: Re: [filter-repo PATCH] contrib: new tool to convert svn:externals to
- Git submodules
-To:     Markus Heidelberg <markus.heidelberg@web.de>
-Cc:     git@vger.kernel.org
+Date:   Wed, 5 Oct 2022 21:20:33 -0700
+Message-ID: <CABPp-BE12gaeWEWnqc589N+kJwqq796K5KJOHDiGduvOmQ36Gw@mail.gmail.com>
+Subject: Re: Bug report: `git restore --source --staged` deals poorly with sparse-checkout
+To:     Martin von Zweigbergk <martinvonz@google.com>
+Cc:     Victoria Dye <vdye@github.com>, Glen Choo <chooglen@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 5, 2022 at 2:37 PM Markus Heidelberg
-<markus.heidelberg@web.de> wrote:
+On Wed, Oct 5, 2022 at 1:00 PM Martin von Zweigbergk
+<martinvonz@google.com> wrote:
 >
-> This is meant to be a post-processing step after SVN-to-Git conversion
-> by SubGit (https://subgit.com/), which creates a ".gitsvnextmodules"
-> file that we will use for svn:externals conversion.
+> On Wed, Oct 5, 2022 at 12:51 AM Elijah Newren <newren@gmail.com> wrote:
+> >
+[...]
+> I agree with you and Stolee that there are two different cases: some
+> people use sparse checkouts to restrict what they see (behavior A), and
+> some people use it just as a performance optimization (behavior B). So I
+> suspect we roughly agree about what should happen if you pass
+> `--restrict` (or if that becomes the default so you don't actually need to
+> pass it). My arguments were about the `--no-restrict` case. Sorry, I
+> should have made that clear.
 >
-> Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
-> ---
+> I also agree that having a way to make commands restrict to certain paths
+> by default is useful, and I agree that tying that set of paths to the current
+> worktree's sparse spec makes sense.
 >
-> The SVN-to-Git mapping file format might have to be changed in the
-> future when implementing other features, don't know yet. At least I
-> wanted to publish this script now that the basics work. Maybe there are
-> even some other late-adopters for whose this script might still be
-> useful.
->
-> I'm eager for hints where descriptions/comments are confusing or
-> incomplete.
->
-> This script was already used for migration of an SVN repository in our
-> company.
->
-> Relates to https://github.com/newren/git-filter-repo/issues/14
+> I'll answer the questions below for the `--no-restrict` case
+> (behavior B).
 
-Cool, thanks!  It's been a _long_ time since I've used subversion, and
-I never used subversion externals, so there's not a lot of sanity
-checking I can do.  Re-reading my comments on that issue from nearly
-three years ago it looks like I dug in a little bit, just enough to
-give some getting started pointers, but I don't even remember writing
-those comments nor what I found.  I can verify it sounds like my
-writing, and I hope my comments helped.
+I don't think your usecase matches behavior B.  I think we should
+label your VFS usecase as behavior C and define it separately.  More
+on that below...
 
-Anyway, I did give a quick glance over the script, and it seems
-reasonable from a high-level.  As I commented in the issue, it seems
-like a nice addition to the contrib examples.  So, I've included it.
-Thanks!
+[...]
+> > What about merge/rebase/cherry-pick/revert?  Should those write
+> > additional files to the working tree or avoid it?  What about if there
+> > are conflicts outside the sparse specification?
+>
+> I think they should avoid it, but since the user will need to resolve
+> that conflict anyway, I can see it makes sense to write them to disk
+> if there are conflicts.
+>
+> >
+> > And if extra files get written outside the sparse specification, are
+> > there ways for this to get "cleaned up" where after resolving
+> > conflicts or changes we can again remove the file from the working
+> > tree?
+>
+> I've never really used `git sparse-checkout` (until I read your doc),
+> but isn't that what `git sparse-checkout reapply` is for?
 
+While that command is available for users that want to manually clean
+things up proactively, my suspicion is that it is used very rarely --
+especially now that we have the present-despite-skipped class of
+issues fixed.  I suspect nearly all cleaning up is actually done as an
+implicit side-effect of calls to unpack_trees(), which would affect
+commands such `switch`, the switch-like portion of `checkout`, `reset
+--hard`, `merge`, `rebase`, and many others.
+
+All of these commands have two types of implicit clean-up they do as
+part of their operation (which could be thought of as a
+post-processing step): (1) marking *unmodified* files outside the
+sparsity patterns as SKIP_WORKTREE in the index and removing them from
+the working tree, and (2) taking files which match the sparsity
+patterns which were previously SKIP_WORKTREE and flip them to
+!SKIP_WORKTREE and restore them to the working tree.  I've got a few
+examples of what this clean up looks like over at:
+https://lore.kernel.org/git/CABPp-BHGrxLPu_S3y2zG-U6uo0rM5TYYEREZa2A=e=d9VZb2PA@mail.gmail.com/
+
+I have no idea how this cleanup affects the VFS usecase; it's very
+focused towards "sparse checkout means many files should NOT be
+present in the working tree" which may be at odds with how the VFS
+stuff is intended to behave.  But it's also been part of
+sparse-checkout behavior the longest; for well over a decade now.
+
+> > What about `git grep PATTERN`?  That's documented to search the
+> > tracked files in the working tree.  But should that include the files
+> > that would have been there were it not for the "performance
+> > optimization" of not checking them out?  (Similarly, what about `git
+> > grep --cached PATTERN` or `git grep PATTERN REVISION`?)  I mean, if
+> > these commands should behave the same regardless of sparse
+> > specification, then you should search those other files, right?  But
+> > isn't that a nasty performance penalty if the user has a
+> > sparse/partial clone since Git will have to do many network operations
+> > to get additional blobs in order to search them?  Is that really
+> > wanted?
 >
->  contrib/filter-repo-demos/README.md           |   1 +
->  .../filter-repo-demos/convert-svnexternals    | 587 ++++++++++++++++++
->  2 files changed, 588 insertions(+)
->  create mode 100644 contrib/filter-repo-demos/convert-svnexternals
+> I think it's consistent to search them with `--no-restrict` (but not
+> with `--restrict`, of course).
 >
-> diff --git a/contrib/filter-repo-demos/README.md b/contrib/filter-repo-de=
-mos/README.md
-> index ef021b1..9612428 100644
-> --- a/contrib/filter-repo-demos/README.md
-> +++ b/contrib/filter-repo-demos/README.md
-> @@ -16,6 +16,7 @@ lint-history         |Run some lint command on all non-=
-binary files in history.
->  clean-ignore         |Delete files from history which match current giti=
-gnore rules.
->  filter-lamely (or filter&#8209;branch&#8209;ish) |A nearly bug compatibl=
-e re-implementation of filter-branch (the git testsuite passes using it ins=
-tead of filter-branch), with some performance tricks to make it several tim=
-es faster (though it's still glacially slow compared to filter-repo).
->  bfg-ish              |A re-implementation of most of BFG Repo Cleaner, w=
-ith new features and bug fixes.
-> +convert-svnexternals |Insert Git submodules according to SVN externals.
+> > What about `git rm '*.png'` to remove all the tracked png files from
+> > my working tree.  Should that also remove all the files that would
+> > have been there were it not for the "performance optimization"?  Will
+> > that result in very negative surprises for those with a "I want to
+> > concentrate on just this subset of files" mental model?
 >
->  ## Purpose
+> Same here.
 >
-> diff --git a/contrib/filter-repo-demos/convert-svnexternals b/contrib/fil=
-ter-repo-demos/convert-svnexternals
-> new file mode 100644
-> index 0000000..0c81507
-> --- /dev/null
-> +++ b/contrib/filter-repo-demos/convert-svnexternals
-> @@ -0,0 +1,587 @@
-> +#!/usr/bin/env python3
-> +
-> +"""
-> +This is a program that will insert Git submodules according to SVN exter=
-nals
-> +definitions (svn:externals properties) from the original Subversion repo=
-sitory
-> +throughout the history.
-> +
-> +Information about the externals is obtained from the ".gitsvnextmodules"=
- file
-> +created during SVN-to-Git conversion by SubGit (https://subgit.com/). It=
-s
-> +config option "translate.externals=3Dtrue" had to be used therefore.
-> +
-> +Actual modifications:
-> +- Insert gitlinks (mode 160000) into the tree.
-> +- Add .gitmodules file with relevant sections.
-> +- Remove sections converted to submodules from .gitsvnextmodules file
-> +  and delete it if empty.
-> +
-> +.gitsvnextmodules example:
-> +[submodule "somedir/extdir"]
-> +       path =3D somedir/extdir
-> +       owner =3D somedir
-> +       url =3D https://svn.example.com/somesvnrepo/trunk
-> +       revision =3D 1234
-> +       branch =3D /
-> +       fetch =3D :refs/remotes/git-svn
-> +       remote =3D svn
-> +       type =3D dir
-> +
-> +Resulting addition in "somedir" tree (cat-file pretty-print format):
-> +160000 commit 1234123412341234123412341234123412341234 extdir
-> +
-> +Resulting .gitmodules entry:
-> +[submodule "somedir/extdir"]
-> +       path =3D somedir/extdir
-> +       url =3D https://git.example.com/somegitrepo.git
-> +
-> +SVN-to-Git mapping file:
-> +Can be created from SubGit's "refs/svn/map".
-> +One line per mapping in following format:
-> +<svn url> TAB <svn rev> TAB <git url> TAB <git commit> TAB <state>
-> +- Leading '#' can be used for comments.
-> +- <svn url> must not contain a trailing slash.
-> +- <state> has to be "commit" to be usable, but can be "missing" if <git =
-commit>
-> +  does not exist in the repository anymore. Adopted from git-cat-file ou=
-tput.
-> +Example:
-> +https://svn.example.com/somesvnrepo/trunk      1234    https://git.examp=
-le.com/somegitrepo.git 1234123412341234123412341234123412341234        comm=
-it
-> +
-> +Features:
-> +- Repeatedly added/removed externals will be handled properly.
-> +- Externals replaced by directly added files and vice versa will be hand=
-led
-> +  properly.
-> +
-> +Caveats:
-> +- This script must NOT be run repeatedly. A second invocation would lead=
- to a
-> +  different result in case the externals could only be converted partial=
-ly.
-> +- Inconsistent SVN repositories (with failing checkout) not handled, i.e=
-.
-> +  - normal directory and external with the same path
-> +  - external path not existing for the given revision
-> +- No attention was paid to non-ASCII and special characters in gitlink p=
-aths,
-> +  might cause problems.
-> +- There is no error handling for mandatory options missing in .gitsvnext=
-modules
-> +  file. The script would crash in case of such buggy files, but that sho=
-uldn't
-> +  happen in practice.
-> +
-> +TODO:
-> +- Add external files directly.
-> +- Alternatively add external directories directly instead of using a sub=
-module.
-> +"""
-> +
-> +"""
-> +Please see the
-> +  ***** API BACKWARD COMPATIBILITY CAVEAT *****
-> +near the top of git-filter-repo.
-> +"""
-> +
-> +import argparse
-> +import os
-> +import sys
-> +import shutil
-> +import subprocess
-> +import configparser
-> +from urllib.parse import urlsplit
-> +
-> +try:
-> +  import git_filter_repo as fr
-> +except ImportError:
-> +  raise SystemExit("Error: Couldn't find git_filter_repo.py.  Did you fo=
-rget to make a symlink to git-filter-repo named git_filter_repo.py or did y=
-ou forget to put the latter in your PYTHONPATH?")
-> +
-> +svn_root_url =3D ""
-> +svn_git_mappings =3D []
-> +
-> +def parse_args():
-> +  """
-> +  Parse and return arguments for this script.
-> +
-> +  Also do some argument sanity checks and adaptions.
-> +  """
-> +  parser =3D argparse.ArgumentParser(
-> +      description=3D"Add Git submodules according to svn:externals from =
-.gitsvnextmodules. "
-> +                  "As preparation for this conversion process, an analys=
-is can be performed.")
-> +
-> +  parser.add_argument('--force', '-f', action=3D'store_true',
-> +      help=3D"Rewrite repository history even if the current repo does n=
-ot "
-> +           "look like a fresh clone.")
-> +  parser.add_argument('--refs', nargs=3D'+',
-> +      help=3D"Limit history rewriting to the specified refs. Option is d=
-irectly "
-> +           "forwarded to git-filter-repo, see there for details and cave=
-ats. "
-> +           "Use for debugging purposes only!")
-> +  parser.add_argument('--svn-root-url',
-> +      help=3D"Root URL of the corresponding SVN repository, "
-> +           "needed for conversion of relative to absolute external URLs.=
-")
-> +
-> +  analysis =3D parser.add_argument_group(title=3D"Analysis")
-> +  analysis.add_argument('--analyze', action=3D'store_true',
-> +      help=3D"Analyze repository history and create auxiliary files for =
-conversion process.")
-> +  analysis.add_argument('--report-dir', type=3Dos.fsencode,
-> +      help=3D"Directory to write report, defaults to GIT_DIR/filter-repo=
-/svnexternals, "
-> +           "refuses to run if exists, --force delete existing dir first.=
-")
-> +
-> +  conversion =3D parser.add_argument_group(title=3D"Conversion")
-> +  conversion.add_argument('--svn-git-mapfiles', type=3Dos.fsencode, narg=
-s=3D'+', metavar=3D'MAPFILE',
-> +      help=3D"Files with SVN-to-Git revision mappings for SVN externals =
-conversion.")
-> +
-> +  args =3D parser.parse_args()
-> +
-> +  if args.analyze and args.svn_git_mapfiles:
-> +    raise SystemExit("Error: --svn-git-mapfiles makes no sense with --an=
-alyze.")
-> +
-> +  if not args.analyze and not args.svn_git_mapfiles:
-> +    raise SystemExit("Error: --svn-git-mapfiles is required for the conv=
-ersion process.")
-> +
-> +  return args
-> +
-> +def read_mappings(mapfiles):
-> +  """
-> +  Read files with SVN-to-Git mappings and return a list of mappings from=
- it.
-> +  """
-> +  mappings =3D []
-> +  for mapfile in mapfiles:
-> +    with open(mapfile, "rb") as f:
-> +      for line in f:
-> +        line =3D line.rstrip(b'\r\n')
-> +
-> +        # Skip blank and comment lines
-> +        if not line or line.startswith(b'#'):
-> +          continue
-> +
-> +        # Convert to string for use with configparser later
-> +        line =3D line.decode()
-> +
-> +        # Parse the line
-> +        fields =3D line.split('\t', 4)
-> +        mapping =3D {'svn_url': fields[0],
-> +                   'svn_rev': int(fields[1]),
-> +                   'git_url': fields[2],
-> +                   'git_commit': fields[3],
-> +                   'state': fields[4]}
-> +
-> +        mappings.append(mapping)
-> +  return mappings
-> +
-> +cat_file_process =3D None
-> +def parse_config(blob_id):
-> +  """
-> +  Create a configparser object for a .gitsvnextmodules/.gitmodules file =
-from
-> +  its blob ID.
-> +  """
-> +  parsed_config =3D configparser.ConfigParser()
-> +
-> +  if blob_id is not None:
-> +    # Get the blob contents
-> +    cat_file_process.stdin.write(blob_id + b'\n')
-> +    cat_file_process.stdin.flush()
-> +    objhash, objtype, objsize =3D cat_file_process.stdout.readline().spl=
-it()
-> +    contents_plus_newline =3D cat_file_process.stdout.read(int(objsize)+=
-1)
-> +
-> +    # Parse it
-> +    parsed_config.read_string(contents_plus_newline.decode())
-> +
-> +  return parsed_config
-> +
-> +def create_blob(parsed_config):
-> +  """
-> +  Create a filter-repo blob object from a .gitsvnextmodules/.gitmodules
-> +  configparser object according to Git config style.
-> +  """
-> +  lines =3D []
-> +  for sec in parsed_config.sections():
-> +    lines.append("[" + sec + "]\n")
-> +    for opt in parsed_config.options(sec):
-> +      lines.append("\t" + opt + " =3D " + parsed_config[sec][opt] + "\n"=
-)
-> +
-> +  return fr.Blob(''.join(lines).encode())
-> +
-> +def get_git_url(svn_url):
-> +  """
-> +  Get the Git URL for a corresponding SVN URL.
-> +  """
-> +  for entry in svn_git_mappings:
-> +    if entry['svn_url'] =3D=3D svn_url:
-> +      return entry['git_url']
-> +  else:
-> +    return None
-> +
-> +def get_git_commit_hash(svn_url, svn_rev):
-> +  """
-> +  Get the Git commit hash for its corresponding SVN URL+revision.
-> +
-> +  The mapping is not restricted to the exact revision, but also uses the=
- next
-> +  lower revision found. Needed when the revision was set to that of the =
-root
-> +  URL instead of to that of the specific subdirectory (e.g. trunk). Tort=
-oiseSVN
-> +  behaves so when setting the external to HEAD.
-> +  """
-> +  ent =3D None
-> +  rev =3D 0
-> +
-> +  for entry in svn_git_mappings:
-> +    if (entry['svn_url'] =3D=3D svn_url
-> +          and entry['svn_rev'] <=3D svn_rev
-> +          and entry['svn_rev'] > rev):
-> +      ent =3D entry
-> +      rev =3D entry['svn_rev']
-> +
-> +  if ent is not None and ent['state'] =3D=3D "commit":
-> +    return ent['git_commit']
-> +  else:
-> +    return None
-> +
-> +def get_absolute_svn_url(svnext_url, svn_root_url):
-> +  """
-> +  Convert a relative svn:externals URL to an absolute one.
-> +
-> +  If the format is unsupported, return the URL unchanged with success=3D=
-False.
-> +  If no root URL is given or the URL is absolute already, return it unch=
-anged.
-> +
-> +  In all cases, even if returned "unchanged", trailing slashes are remov=
-ed.
-> +  """
-> +  # Remove trailing slash(es)
-> +  svnext_url =3D svnext_url.rstrip("/")
-> +  svn_root_url =3D svn_root_url.rstrip("/")
-> +
-> +  # Normalize URLs in relative format
-> +  svn_root_parsed =3D urlsplit(svn_root_url)
-> +  if svnext_url.startswith(("../", "^/../")): # unsupported
-> +    return (False, svnext_url)
-> +  elif not svn_root_url:
-> +    pass # unchanged
-> +  elif svnext_url.startswith("^/"):
-> +    svnext_url =3D svn_root_url + svnext_url[1:]
-> +  elif svnext_url.startswith("//"):
-> +    svnext_url =3D svn_root_parsed.scheme + ":" + svnext_url
-> +  elif svnext_url.startswith("/"):
-> +    svnext_url =3D svn_root_parsed.scheme + "://" + svn_root_parsed.netl=
-oc + svnext_url
-> +
-> +  return True, svnext_url
-> +
-> +def add_submodule_tree_entry(commit, parsed_config, section):
-> +  """
-> +  Add a submodule entry to the tree of a Git commit.
-> +
-> +  SVN externals information obtained from parsed .gitsvnextmodules file.
-> +  """
-> +  # Skip type=3Dfile (SVN file external), not possible as submodule
-> +  if parsed_config[section]['type'] !=3D 'dir':
-> +    return False
-> +
-> +  success, svn_url =3D get_absolute_svn_url(parsed_config[section]['url'=
-], svn_root_url)
-> +  # Skip unsupported URL format
-> +  if not success:
-> +    return False
-> +
-> +  # Get SVN revision
-> +  if parsed_config.has_option(section, 'revision'):
-> +    svn_rev =3D int(parsed_config[section]['revision'])
-> +  else:
-> +    # TODO: revision has to be guessed according to commit timestamp, sk=
-ip for now
-> +    return False
-> +
-> +  # SVN url+revision mapping to Git commit
-> +  git_hash =3D get_git_commit_hash(svn_url, svn_rev)
-> +  # Skip missing or unusable mapping
-> +  if git_hash is None:
-> +    return False
-> +  git_hash =3D git_hash.encode()
-> +
-> +  dirname =3D parsed_config[section]['path'].encode()
-> +
-> +  # Add gitlink to tree
-> +  commit.file_changes.append(fr.FileChange(b'M', dirname, git_hash, b'16=
-0000'))
-> +
-> +  return True
-> +
-> +def get_commit_map_path():
-> +  """
-> +  Return path to commit-map file.
-> +  """
-> +  git_dir =3D fr.GitUtils.determine_git_dir(b'.')
-> +  return os.path.join(git_dir, b'filter-repo', b'commit-map')
-> +
-> +def parse_commit_map(commit_map_file):
-> +  """
-> +  Parse commit-map file and return a dictionary.
-> +  """
-> +  parsed_map =3D {}
-> +  with open(commit_map_file, "rb") as f:
-> +    for line in f:
-> +      line =3D line.rstrip(b'\r\n')
-> +
-> +      # Skip blank lines
-> +      if not line:
-> +        continue
-> +
-> +      # Store old/new commits, also the "old"/"new" header in the first =
-line
-> +      old, new =3D line.split()
-> +      parsed_map[old] =3D new
-> +  return parsed_map
-> +
-> +def merge_commit_maps(old_commit_map, new_commit_map):
-> +  """
-> +  Merge old and new commit-map by omitting intermediate commits.
-> +
-> +  Return the merged dictionary.
-> +  """
-> +  merged_map =3D {}
-> +  for (key, old_val) in old_commit_map.items():
-> +    new_val =3D new_commit_map[old_val] if old_val in new_commit_map els=
-e old_val
-> +    merged_map[key] =3D new_val
-> +  return merged_map
-> +
-> +def write_commit_map(commit_map, commit_map_file):
-> +  """
-> +  Write commit-map dictionary to file.
-> +  """
-> +  with open(commit_map_file, 'wb') as f:
-> +    for (old, new) in commit_map.items():
-> +      f.write(b'%-40s %s\n' % (old, new))
-> +
-> +def create_report_dir(args):
-> +  """
-> +  Create the directory for analysis report.
-> +  """
-> +  if args.report_dir:
-> +    reportdir =3D args.report_dir
-> +  else:
-> +    git_dir =3D fr.GitUtils.determine_git_dir(b'.')
-> +
-> +  # Create the report directory as necessary
-> +    results_tmp_dir =3D os.path.join(git_dir, b'filter-repo')
-> +    if not os.path.isdir(results_tmp_dir):
-> +      os.mkdir(results_tmp_dir)
-> +    reportdir =3D os.path.join(results_tmp_dir, b'svnexternals')
-> +
-> +  if os.path.isdir(reportdir):
-> +    if args.force:
-> +      sys.stdout.write("Warning: Removing recursively: \"%s\"" % fr.deco=
-de(reportdir))
-> +      shutil.rmtree(reportdir)
-> +    else:
-> +      sys.stdout.write("Error: dir already exists (use --force to delete=
-): \"%s\"\n" % fr.decode(reportdir))
-> +      sys.exit(1)
-> +
-> +  os.mkdir(reportdir)
-> +
-> +  return reportdir
-> +
-> +analysis =3D {'dir_ext_orig': [],
-> +            'dir_ext_abs': [],
-> +            'file_ext_orig': [],
-> +            'file_ext_abs': []}
-> +def write_analysis(reportdir):
-> +  """
-> +  Prepare analysis and write it to files in report directory.
-> +  """
-> +  analysis['dir_ext_orig'].sort()
-> +  analysis['dir_ext_abs'].sort()
-> +  analysis['file_ext_orig'].sort()
-> +  analysis['file_ext_abs'].sort()
-> +
-> +  sys.stdout.write("Writing reports to %s..." % fr.decode(reportdir))
-> +  sys.stdout.flush()
-> +
-> +  with open(os.path.join(reportdir, b"dir-externals-original.txt"), 'wb'=
-) as f:
-> +    for url in analysis['dir_ext_orig']:
-> +      f.write(("%s\n" % url).encode())
-> +
-> +  with open(os.path.join(reportdir, b"dir-externals-absolute.txt"), 'wb'=
-) as f:
-> +    for url in analysis['dir_ext_abs']:
-> +      f.write(("%s\n" % url).encode())
-> +
-> +  with open(os.path.join(reportdir, b"file-externals-original.txt"), 'wb=
-') as f:
-> +    for url in analysis['file_ext_orig']:
-> +      f.write(("%s\n" % url).encode())
-> +
-> +  with open(os.path.join(reportdir, b"file-externals-absolute.txt"), 'wb=
-') as f:
-> +    for url in analysis['file_ext_abs']:
-> +      f.write(("%s\n" % url).encode())
-> +
-> +  sys.stdout.write("done.\n")
-> +
-> +def analyze_externals(commit, metadata):
-> +  """
-> +  Generate/extend analysis of SVN externals for a Git commit.
-> +
-> +  Used as filter-repo commit callback.
-> +  """
-> +  for change in commit.file_changes:
-> +    if change.filename =3D=3D b'.gitsvnextmodules' and change.type =3D=
-=3D b'M':
-> +      gitsvnextmodules =3D parse_config(change.blob_id)
-> +
-> +      for sec in gitsvnextmodules.sections():
-> +        url =3D gitsvnextmodules[sec]['url']
-> +        success, abs_url =3D get_absolute_svn_url(url, svn_root_url)
-> +
-> +        # List of svn:externals URLs, also add the URL to the absolute l=
-ist if
-> +        # conversion was not successful
-> +        if gitsvnextmodules[sec]['type'] =3D=3D 'dir':
-> +          if url not in analysis['dir_ext_orig']:
-> +            analysis['dir_ext_orig'].append(url)
-> +          if abs_url not in analysis['dir_ext_abs']:
-> +            analysis['dir_ext_abs'].append(abs_url)
-> +        else:
-> +          if url not in analysis['file_ext_orig']:
-> +            analysis['file_ext_orig'].append(url)
-> +          if abs_url not in analysis['file_ext_abs']:
-> +            analysis['file_ext_abs'].append(abs_url)
-> +
-> +def insert_submodules(commit, metadata):
-> +  """
-> +  Insert submodules for a Git commit.
-> +
-> +  Used as filter-repo commit callback.
-> +
-> +  Since .gitsvnextmodules just contains the svn:externals state for the =
-given
-> +  commit, we cannot derive specific changes from that file.
-> +  So we can only add/modify the gitlinks according to .gitsvnextmodules
-> +  (without knowing whether adding a new or modifying an existing or even
-> +  "modifying" an unchanged submodule, but none of that really matters).
-> +  We do not have information about deleted externals, those will be hand=
-led in
-> +  a separate filter run afterwards.
-> +
-> +  The .gitmodules file however will already be correct in this function =
-because
-> +  we don't need to know about specific changes to add, modify or delete =
-it.
-> +  """
-> +  for change in commit.file_changes:
-> +    if change.filename =3D=3D b'.gitsvnextmodules' and change.type in (b=
-'M', b'D'):
-> +      gitsvnextmodules =3D parse_config(change.blob_id)
-> +      gitmodules =3D configparser.ConfigParser()
-> +
-> +      # Add gitlinks to the tree and prepare .gitmodules file content
-> +      for sec in gitsvnextmodules.sections():
-> +        if add_submodule_tree_entry(commit, gitsvnextmodules, sec):
-> +          # Gitlink added
-> +          # -> Add this entry to .gitmodules as well
-> +
-> +          # Create the section name string manually, do not rely on
-> +          # .gitsvnextmodules to always use the proper section name.
-> +          sec_name =3D 'submodule "' + gitsvnextmodules[sec]['path'] + '=
-"'
-> +          gitmodules[sec_name] =3D {}
-> +
-> +          # submodule.<name>.path
-> +          gitmodules[sec_name]['path'] =3D gitsvnextmodules[sec]['path']
-> +
-> +          # submodule.<name>.url
-> +          success, svn_url =3D get_absolute_svn_url(gitsvnextmodules[sec=
-]['url'], svn_root_url)
-> +          git_url =3D get_git_url(svn_url)
-> +          if git_url is not None:
-> +            gitmodules[sec_name]['url'] =3D git_url
-> +          else:
-> +            # Abort, but this will not happen in practice, catched in
-> +            # add_submodule_tree_entry() via get_git_commit_hash() alrea=
-dy.
-> +            raise SystemExit("Error: No Git URL found in mapping althoug=
-h a commit hash could be found.")
-> +
-> +      # Write blob and adapt tree for .gitmodules
-> +      if gitmodules.sections():
-> +        # Create a blob object from the content and add it to the tree.
-> +        blob =3D create_blob(gitmodules)
-> +        filter.insert(blob)
-> +        commit.file_changes.append(fr.FileChange(b'M', b'.gitmodules', b=
-lob.id, b'100644'))
-> +      else:
-> +        # Delete the file, even if a "git rm" of all submodules keeps it=
- empty.
-> +        commit.file_changes.append(fr.FileChange(b'D', b'.gitmodules'))
-> +
-> +def delete_submodules(commit, metadata):
-> +  """
-> +  Delete submodules from a Git commit.
-> +
-> +  Used as filter-repo commit callback.
-> +
-> +  Delete all submodules (inserted in the previous filter run) without an=
- entry
-> +  in .gitsvnextmodules, these were real deletions of externals, which co=
-uldn't
-> +  be detected before.
-> +  Only the tree entries have to be removed because the .gitmodules file =
-is
-> +  already in correct state from previous filter run.
-> +  """
-> +  for change in commit.file_changes:
-> +    if change.filename =3D=3D b'.gitsvnextmodules' and change.type in (b=
-'M', b'D'):
-> +      gitsvnextmodules =3D parse_config(change.blob_id)
-> +
-> +      # Search for all submodules in the tree
-> +      output =3D subprocess.check_output('git ls-tree -d -r -z'.split() =
-+ [commit.original_id])
-> +      for line in output.split(b'\x00'):
-> +        if not line:
-> +          continue
-> +        mode_objtype_objid, dirname =3D line.split(b'\t', 1)
-> +        mode, objtype, objid =3D mode_objtype_objid.split(b' ')
-> +        if mode =3D=3D b'160000' and objtype =3D=3D b'commit':
-> +          # Submodule found
-> +          # -> Delete it if there is no corresponding entry in
-> +          #    .gitsvnextmodules, keep/reinsert it otherwise
-> +          for sec in gitsvnextmodules.sections():
-> +            if gitsvnextmodules[sec]['path'].encode() =3D=3D dirname:
-> +              # Reinsert it, might have been deleted in previous commits
-> +              if add_submodule_tree_entry(commit, gitsvnextmodules, sec)=
-:
-> +                # And remove the config section because this external ha=
-s been
-> +                # converted
-> +                gitsvnextmodules.remove_section(sec)
-> +                break
-> +          else:
-> +            # Delete it
-> +            commit.file_changes.append(fr.FileChange(b'D', dirname))
-> +
-> +      # Rewrite .gitsvnextmodules to contain the unhandled externals onl=
-y,
-> +      # delete it if empty (all externals converted).
-> +      if gitsvnextmodules.sections():
-> +        # Create a blob object from the content and replace the original=
- one.
-> +        blob =3D create_blob(gitsvnextmodules)
-> +        filter.insert(blob)
-> +        change.blob_id =3D blob.id
-> +      else:
-> +        if change.type =3D=3D b'M':
-> +          # File became empty, delete it
-> +          commit.file_changes.append(fr.FileChange(b'D', b'.gitsvnextmod=
-ules'))
-> +          break # avoid endless for loop
-> +        #else:
-> +          # File was empty already, delete command already present in st=
-ream
-> +
-> +my_args =3D parse_args()
-> +
-> +# Use passed URL without trailing slash(es)
-> +if my_args.svn_root_url:
-> +  svn_root_url =3D my_args.svn_root_url.rstrip("/")
-> +
-> +# Arguments forwarded to filter-repo
-> +extra_args =3D []
-> +if my_args.force:
-> +  extra_args =3D ['--force']
-> +if my_args.refs:
-> +  extra_args +=3D ['--refs'] + my_args.refs
-> +
-> +cat_file_process =3D subprocess.Popen(['git', 'cat-file', '--batch'],
-> +                                    stdin =3D subprocess.PIPE,
-> +                                    stdout =3D subprocess.PIPE)
-> +if my_args.analyze:
-> +  # Analysis
-> +  reportdir =3D create_report_dir(my_args)
-> +
-> +  fr_args =3D fr.FilteringOptions.parse_args(['--dry-run']
-> +                                           + extra_args)
-> +  filter =3D fr.RepoFilter(fr_args, commit_callback=3Danalyze_externals)
-> +  filter.run()
-> +
-> +  write_analysis(reportdir)
-> +else:
-> +  # Conversion
-> +  svn_git_mappings =3D read_mappings(my_args.svn_git_mapfiles)
-> +
-> +  # There are no references to commit hashes in commit messages because =
-this
-> +  # script runs on a Git repository converted from a Subversion reposito=
-ry.
-> +  fr_args =3D fr.FilteringOptions.parse_args(['--preserve-commit-hashes'=
-,
-> +                                            '--preserve-commit-encoding'=
-,
-> +                                            '--replace-refs', 'update-no=
--add']
-> +                                           + extra_args)
-> +  filter =3D fr.RepoFilter(fr_args, commit_callback=3Dinsert_submodules)
-> +  filter.run()
-> +
-> +  # Store commit-map after first run
-> +  first_commit_map =3D parse_commit_map(get_commit_map_path())
-> +
-> +  filter =3D fr.RepoFilter(fr_args, commit_callback=3Ddelete_submodules)
-> +  filter.run()
-> +
-> +  # Update commit-map after second run, based on original IDs
-> +  second_commit_map =3D parse_commit_map(get_commit_map_path())
-> +  merged_commit_map =3D merge_commit_maps(first_commit_map, second_commi=
-t_map)
-> +  write_commit_map(merged_commit_map, get_commit_map_path())
-> +
-> +cat_file_process.stdin.close()
-> +cat_file_process.wait()
-> --
-> 2.37.3
+> >
+> > What about `git worktree add`?  Should the sparse specification be the
+> > same for all worktrees?  Be per-worktree?  Should it default to dense?
+> >  To just top-level sparse?  To the same sparsity as the worktree you
+> > were in when you created a new one?
+>
+> That's an interesting case. If someone does `git worktree add` and expects
+> all files to be available in the working copy, they might be surprised, yes.
+> I think that's a much smaller risk than
+> `git restore --source HEAD^ --staged && git commit -m 'undo changes'` being
+> partial, however.
+
+After you described the VFS usecase, I was guessing you'd answer how
+you did for most of these commands.  Most of your answers do not match
+the answers I'd expect for behavior B, which seems to me to support my
+suspicion that you've got a third usecase.
+
+In particular, I think the difference between Behavior B and your
+usecase hinges on the expectation for the working tree:
+   Behavior B: Files outside the sparse specification are NOT present
+in the working tree.
+   Behavior C (your usecase): Files outside the sparse specification
+ARE "present" in the working tree, but Git doesn't have to put them
+there (they'll be lazily put into place by something else, and the VFS
+will ensure that users don't ever notice them actually missing, so far
+all intents and purposes, the files are present).
+
+In particular, that difference is perhaps most notable with `git grep`
+(without --cached or REVISION flags); such a command is supposed to
+search the worktree.  For Behavior B, files outside the sparse
+specification are NOT present in the working tree, and hence those
+files should NOT be searched.  For your usecase, as you highlight
+above, you view all files as present in the working tree (even if Git
+isn't the thing writing those files to the working tree and even if
+they aren't technically present until you query whether they are
+there), so all those files SHOULD be searched.
+
+This difference about the "presence" of files has other knock-on
+effects too.  Under Behavior B, users get used to working on just a
+subset of files.  Thus `git rm '*.jpg'` or `git restore --source HEAD^
+-- '*.md'` should NOT overwrite files outside the sparse specification
+(but an error should be shown if the pathspec doesn't match anything,
+and that error should point out how users can affect other files
+outside the sparse specification).  Under your usecase, users are
+always working on the full set of files and all of them can be viewed
+in their working copy (as enforced by the filesystem intercepting any
+attempts to view or edit files and suddenly magically materializing
+them when users look) -- so users in your usecase are not expecting to
+be working on a subset of files, and thus those commands would operate
+tree-wide.
+
+Similarly, under Behavior B, `git add outside/of/cone/path` should
+throw an error.  If it doesn't, some future command will silently
+remove the file from the working copy, which may confuse the user;
+they are getting themselves into an erroneous state.  Users are
+pointed to an override flag they can use if they want to accept the
+consequences.  Under your usecase, since ALL files are always
+"present" (but not materialized until an attempt to access is made),
+that same command would be expected to run without an override and
+with no error or warning.
+
+Related to the above, under Behavior B, `git status` should probably
+report the existence of any untracked files that do not match the
+sparsity patterns as an erroneous condition (because why wait until
+git-add to throw an error; let the user know early).  Under your
+usecase, we wouldn't.
+
+
+You might think I'm describing Behavior A above, but only because
+Behavior A and Behavior B overlap on worktree-related operations.  The
+primary difference between Behavior A and Behavior B is with behavior
+of history-related operations.  Behavior B says "the working tree is
+sparse, but history is dense; if I do a query on older revisions of
+history (grep/diff/log/etc.) then give me results across all paths",
+whereas Behavior A says "I only care about this subset of files, both
+for the working tree and for history.  Unless I override,
+grep/diff/etc. on history should restrict all output to files within
+the sparse specification.
+
+One potential way to (over)simplify this would be:
+    Behavior A: `--scope=sparse` for both worktree and history operations
+    Behavior B: `--scope=sparse` for worktree operations,
+`--scope=all` for history operations
+    Behavior C: `--scope=all` for both worktree and history operations
