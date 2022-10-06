@@ -2,190 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4998C433F5
-	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 16:10:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13947C433FE
+	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 16:14:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229955AbiJFQKM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Oct 2022 12:10:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59184 "EHLO
+        id S231499AbiJFQOP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Oct 2022 12:14:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230070AbiJFQKK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2022 12:10:10 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1722205E7
-        for <git@vger.kernel.org>; Thu,  6 Oct 2022 09:10:08 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id w18so3438039wro.7
-        for <git@vger.kernel.org>; Thu, 06 Oct 2022 09:10:08 -0700 (PDT)
+        with ESMTP id S229610AbiJFQON (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2022 12:14:13 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD44CACA2E
+        for <git@vger.kernel.org>; Thu,  6 Oct 2022 09:14:12 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id 67so2444388pfz.12
+        for <git@vger.kernel.org>; Thu, 06 Oct 2022 09:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ltVYeFv2E0JQHrqashkmibYEQNYzx4hGr8JBivPCX9U=;
-        b=GPIZY4VHGIHsoEMbSIBPjoo+rcLrRKEWGNyd25JYf2kPyMEFsRCg2T7wjwy7kgrEQW
-         TZ/zhVG4pr1b9vWZ8Qhh5p8N6jN/UxY9tY3kqgD9eN7SrFrEtVw5qEaB5drUoReJSSLj
-         piFuVejv/e3h3+oOWOat5EpPDzvLGsqIQgH++q5AMlfdfnEEGl03zsD45tEY2SNSWkCA
-         iuCGlqTiMirWIvuYnrVj1u2g6GY7nqD45FE9ggsFEy6vchQk6Hc7zsoQvc6hSVHCQ+VG
-         UNcRPFRxZZjhdkiONC3ZBCUrszRxLFl8A8FdQyxj3pC1GLg12s7ToG5VSb1KimxQKJFu
-         SErQ==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hztEnYiZBsn+SrkWz5DnQSB1NakjzXnuFTx1NFUe+fk=;
+        b=Rfvq+uDdLPRXGfo6jQqimkn/MpO1Esnk6EmKnbPDZGJ0VBC1jxXv4hLiRNN9qDi/xX
+         Xb1e+2nMQg1jvifvYvPV0W3qisvPEZnmWU7Sk3Ra+Vqv0d6V9s0odtFbyJ8GHXRrN0Gv
+         mkal5ilzEp31CWigaTY+/9tdw8tLqqCv4ztFCuVAv5ol8Bbk8na479GsyiK3uQUf3HAT
+         a6OwTZQo3HdQuYAjawtIn+4F8pfYqMsICT0+C11oGdRiuJSu9E/LAluw4Q8MzQgxAO1u
+         EOyAAJ9IzdRWVp0FV2Gr0p9FSqpf+UiYgJcufp1QB3k8o115hi1O5k7Jyf9zWx0UBp83
+         a6Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ltVYeFv2E0JQHrqashkmibYEQNYzx4hGr8JBivPCX9U=;
-        b=jUCsGRKqigyvZEtX19wp7D6dLfS7ln1oox1iN1rpcqWp0ArXCVdeHJ6+EGkGwnV6bB
-         L1Zqdt7Q0bhAESRCTJoEUnst+aNPxtS8H/CKI4lG3akF5jjyu2ErRXzrUVr7IIBN5W2F
-         VhhH79El9OyrhwFIyruyocgRX1eef89EHgQB/fUXtYUpcAs3tUWmlD8H8MTs6R5uzgSY
-         rS7aJH/U/bcbfmKJX5veKyAMwkeCdUufBZXU8V0LR5FoeR3UhaHgmviG9KMiawszrCeX
-         R4uBWEbk7rzsl3l9Dg8EviWRFTzrz9ToaaEdEtpYyIPcajC356dYOxCGZcdR0f8qsB5O
-         AZvQ==
-X-Gm-Message-State: ACrzQf0/bB5h5trg0eO6oo+zcICGsM1cxGdbhXPMCko6qZz+lv4yLDHJ
-        ZOXJWxBMOBd7jT4Ru/+QdsLA15HLCPY=
-X-Google-Smtp-Source: AMsMyM4gL5pE2zm3ztUH2JGkP6YRp0gCETNmaPiJob83rvEiUoYiG+rVpT4dsjqY16x2AYH0ZLVhXQ==
-X-Received: by 2002:adf:f90e:0:b0:22e:3dd5:f724 with SMTP id b14-20020adff90e000000b0022e3dd5f724mr459383wrr.83.1665072606890;
-        Thu, 06 Oct 2022 09:10:06 -0700 (PDT)
-Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id iv14-20020a05600c548e00b003b4c40378casm6023102wmb.39.2022.10.06.09.10.06
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hztEnYiZBsn+SrkWz5DnQSB1NakjzXnuFTx1NFUe+fk=;
+        b=up5orsIOQFI3LExEbzGvHyI2w4MhO5K2BeXTxsooCN7Vuu+4vKq9y10krp3GWG60cz
+         0m4mYUNGt0isoZmx6SAgm5U2T4hzooLcOiGcL74+mtPJUW5I5E5bkdCxq55tiLiW0lE5
+         S5ewXJQKG9z4Lz895RDEWwWGIugipSfBdarpfOLAKs8mHWLaT3RE3EJsY1k+j/6lESap
+         4vVf95WVbo01rvmSthLtSlyuZ5fcDbGzDq0L3NCE0SWu75H9G1ZbXDx+9QsA89SzN8Hi
+         j8eVwgvUZxZTgLfHp8i1yiRfF0aezyNpjrC9AaN7cgFV9Gb1yqsK8MKKao1Ybhzdeei+
+         ZRCw==
+X-Gm-Message-State: ACrzQf0JcZVvJTNmJuLENHpmQdVUHrC0BKw6N1tSasQXYhKiwbyiVk42
+        CTS4E6KjvjSI2+LmVKulHNLt
+X-Google-Smtp-Source: AMsMyM79XW/C4Ikuzna+EugLf31aHh0quHNVdqpOMlycX7JyuIJlAMO3P5uTOb0SZ+8qYfuEhS+wxA==
+X-Received: by 2002:a63:4721:0:b0:440:2960:407 with SMTP id u33-20020a634721000000b0044029600407mr487139pga.621.1665072852174;
+        Thu, 06 Oct 2022 09:14:12 -0700 (PDT)
+Received: from [192.168.0.104] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id l8-20020a170903244800b0017f5c7d3931sm7502079pls.282.2022.10.06.09.14.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Oct 2022 09:10:06 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <7306b890-641f-2c45-f610-2aa0361d6066@dunelm.org.uk>
-Date:   Thu, 6 Oct 2022 17:10:05 +0100
+        Thu, 06 Oct 2022 09:14:11 -0700 (PDT)
+Message-ID: <44d2f602-a299-3bd0-1624-cfdddb6dcda7@github.com>
+Date:   Thu, 6 Oct 2022 09:14:10 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/3] [RFC] tests: add test_todo() to mark known breakages
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.13.1
+Subject: Re: [PATCH 2/2] removed else statement
 Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-References: <pull.1374.git.1665068476.gitgitgadget@gmail.com>
- <472d05111a38276192e30f454f42aa39df51d604.1665068476.git.gitgitgadget@gmail.com>
- <221006.868rltrltu.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221006.868rltrltu.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     dsal3389 via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     dsal3389 <dsal3389@gmail.com>
+References: <pull.1355.git.git.1665056747.gitgitgadget@gmail.com>
+ <c107ad9f6ff2d5e00134eb1348f24737774edbac.1665056747.git.gitgitgadget@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <c107ad9f6ff2d5e00134eb1348f24737774edbac.1665056747.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
-
-On 06/10/2022 16:36, Ævar Arnfjörð Bjarmason wrote:
+dsal3389 via GitGitGadget wrote:
+> From: dsal3389 <dsal3389@gmail.com>
 > 
-> On Thu, Oct 06 2022, Phillip Wood via GitGitGadget wrote:
+> there is no need for the else statement if we can do it more
+> elegantly with a signle if statement we no "else"
+
+Similar recommendations on the commit message as in the previous patch [1]:
+
+- title should be prefixed with 'git.c:'
+- title & message should use the imperative mood (e.g. "remove else
+  statement" instead of "removed else statement")
+- please fix typos
+    - s/there/There
+    - s/signle/single
+    - s/we/with(?)
+
+[1] https://lore.kernel.org/git/66d1bcaf-64c8-13c2-ba7a-98715de3617b@github.com/
+
 > 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
- >>
->> test_todo() is built upon test_expect_failure() but accepts commands
->> starting with test_* in addition to git. As our test_* assertions use
->> BUG() to signal usage errors any such error will not be hidden by
->> test_todo().
+> Signed-off-by: Daniel Sonbolian <dsal3389@gmail.com>
+> ---
+>  git.c | 14 ++++++++------
+>  1 file changed, 8 insertions(+), 6 deletions(-)
 > 
-> I think they will, unless I'm missing something. E.g. try out:
+> diff --git a/git.c b/git.c
+> index da411c53822..340ec8bcb31 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -894,12 +894,8 @@ int cmd_main(int argc, const char **argv)
+>  	argv++;
+>  	argc--;
+>  	handle_options(&argv, &argc, NULL);
+> -	if (argc > 0) {
+> -		if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0]))
+> -			argv[0] = "version";
+> -		else if (!strcmp("--help", argv[0]) || !strcmp("-h", argv[0]))
+> -			argv[0] = "help";
+> -	} else {
+> +
+> +	if (argc <= 0) {
 
-It's talking about BUG() in test-lib.sh, not the C function. For example
+nit: argc is always >= 0 [2], so a more appropriate condition would be:
 
-test_path_is_file () {
-	test "$#" -ne 1 && BUG "1 param"
-	if ! test -f "$1"
-	then
-		echo "File $1 doesn't exist"
-		false
-	fi
-}
+    if (!argc)
 
-So a test containing "test_todo test_path_is_file a b" should fail as 
-BUG calls exit rather than returning non-zero (I should probably test 
-that in 0000-basic.sh)
+There are lots of examples of that '!argc' conditional in Git, but none of
+the 'argc <= 0' pattern, so it's probably best to match convention here.
 
-> 	diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
-> 	index 80e76a4695e..1be895abba6 100755
-> 	--- a/t/t0210-trace2-normal.sh
-> 	+++ b/t/t0210-trace2-normal.sh
-> 	@@ -170,7 +170,7 @@ test_expect_success 'BUG messages are written to trace2' '
-> 	
-> 	 test_expect_success 'bug messages with BUG_if_bug() are written to trace2' '
-> 	 	test_when_finished "rm trace.normal actual expect" &&
-> 	-	test_expect_code 99 env GIT_TRACE2="$(pwd)/trace.normal" \
-> 	+	test_todo env GIT_TRACE2="$(pwd)/trace.normal" \
-> 	 		test-tool trace2 008bug 2>err &&
-> 	 	cat >expect <<-\EOF &&
-> 	 	a bug message
-> 
-> I.e. in our tests you need to look out for exit code 99, not the usual
-> abort().
-> 
-> I have local patches to fix this, previously submitted as an RFC here:
-> https://lore.kernel.org/git/RFC-cover-0.3-00000000000-20220525T234908Z-avarab@gmail.com/
-> 
-> I just rebased that & CI is currently running, I'll see how it does:
-> https://github.com/avar/git/tree/avar/usage-do-not-abort-on-BUG-to-get-trace2-event-2
-> 
-> When I merged your patches here with that topic yours started doing the
-> right thing in this case, i.e. a "test_todo" that would get a BUG()"
-> would be reported as a failure.
-> 
->> +	test_true () {
->> +		true
->> +	}
->> +	test_expect_success "pretend we have fixed a test_todo breakage" \
->> +		"test_todo test_true"
-> 
-> "Why the indirection", until I realized that it's because you're working
-> around the whitelist of commands that we have, i.e. we allow 'git' and
-> 'test-tool', but not 'grep' or whatever.
-> 
-> I'm of the opinion that we should just drop that limitation altogether,
-> which is shown to be pretty silly in this case. I.e. at some point we
-> listed "test_*" as "this invokes a git binary", but a lot of our test_*
-> commands don't, including this one.
+Otherwise, the rest of this diff looks good.
 
-test_expect_failure does not allow test_* are you thinking of test-tool?
+[2] https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf, §5.1.2.2.1 #2
 
-> So in general I think we should just allow any command in
-> "test_must_fail" et al, and just catch in code review if someone uses
-> "test_must_fail grep" as opposed to "! grep".
+>  		/* The user didn't specify a command; give them help */
+>  		commit_pager_choice();
+>  		printf(_("usage: %s\n\n"), git_usage_string);
+> @@ -907,6 +903,12 @@ int cmd_main(int argc, const char **argv)
+>  		printf("\n%s\n", _(git_more_info_string));
+>  		exit(1);
+>  	}
+> +
+> +	if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0]))
+> +		argv[0] = "version";
+> +	else if (!strcmp("--help", argv[0]) || !strcmp("-h", argv[0]))
+> +		argv[0] = "help";
+> +
+>  	cmd = argv[0];
+>  
+>  	/*
 
-That is not going to scale well
-
-> But for the particular case of "test_todo" doing so seems like pointless
-> work, if we think we're going to miss this sort of thing in review in
-> general, then surely that's not a concern if we're going to very
-> prominently mark tests as TODO tests, given how the test of the output
-> shows them?
-
- >[...]
->>   test_might_fail () {
->> -	test_must_fail ok=success "$@" 2>&7
->> +	test_must_fail_helper might_fail ok=success "$@" 2>&7
->>   } 7>&2 2>&4
->>   
->>   # Similar to test_must_fail and test_might_fail, but check that a
-> 
-> I remember finding it annoying that "test_might_fail" is misreported
-> from test_must_fail_acceptable as being called "test_must_fail", so this
-> refactoring is very welcome.
-> 
-> But can you please split this into its own commit? I.e. that improvement
-> can stand on its own, i.e. just a change that has "test_must_fail" and
-> "test_might_fail" reporting their correct name.
- >
-> Then this commit can follow, and then you'll just need to add (for this part) >
-> 	test_must_fail_helper todo "$@" 2>&7
-> 
-> And it'll make the resulting diff much smaller & easier to follow.
-
-Sure, I should also improve the error message in
-
- >> +		echo >&7 "test_$test_must_fail_name_: only 'git' is allowed: $*"
-
-for test_todo.
-
-Best Wishes
-
-Phillip
