@@ -2,109 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C2A0C433F5
-	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 11:46:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E13DFC433F5
+	for <git@archiver.kernel.org>; Thu,  6 Oct 2022 12:16:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230003AbiJFLp6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Oct 2022 07:45:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42134 "EHLO
+        id S230104AbiJFMQ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Oct 2022 08:16:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229844AbiJFLpz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2022 07:45:55 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C1BA95ACF
-        for <git@vger.kernel.org>; Thu,  6 Oct 2022 04:45:52 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id n12so2283526wrp.10
-        for <git@vger.kernel.org>; Thu, 06 Oct 2022 04:45:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date;
-        bh=uCQrv50mAuZZ9s3wHo2DOGPPJxWRIjDqcqblPolZMR0=;
-        b=FBOXf7BtUbDiwU6HKEoxXh4jsHjvqdLKX0+6hhY439xuPjtrCXzJDt0zN0uKoQ5YlO
-         yJGYlCqx9ypP7p6Isnc7AD8u5UUPUme7tg4Q/6CTKSB+vbwwV2ryOhXkRW95V8Suzxei
-         OzDO44hpHAeZlELxunJpSeksFmbhBhgZ7m6YQzPsyxlUgN0xbR3AafkeiRycqdDOXdbJ
-         5RvnuF4p2x3yeQVRPaPrEkLNWDG69+sIXtfD+Zyo6wh2Ax3LYcu+5uoXizV1IigdnaIs
-         EYOxBgmiWaEcyCpjCnbW/Y3LWhMTjwhVSYxrFA0gC3RD9hqCrxowEihFLlAlPpEgo2MC
-         S6HQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=uCQrv50mAuZZ9s3wHo2DOGPPJxWRIjDqcqblPolZMR0=;
-        b=ZBRG0xjGayxPkJXWkzhOLXyZA36QTtKc/haiWrqr2aVyTj1zaDvvpn/yTRZTWUOBoQ
-         Qk0T0b2NJatVJFq67sJnaCaaMkzUl9GWLGIpGjKAH5czK7b5mNe0H3YIuIx/gd1Zayg7
-         n24Jw1CGeyOTe0YwTlC8Ypz3y4hiy7VCR/wiVWBOAOjy04td2v08sGSGKOvMR+F0nMKS
-         HHslzYJYzRr02KpdWW15OiUlcuhAFR37Lqfnw5bndk50JyOo/k2LrMheF2o2mDuFRjSC
-         U7izFWXpQA8LSLAsMmRDJ9xrv1cKdzem84AmPo2o3C+Emp5CTptXXJgj22RiLkG/712o
-         PSYw==
-X-Gm-Message-State: ACrzQf1WLBl9DVI5Bx4j0E5GP8zhzY2hgogmHBqgU783jWUnLMxyDzVI
-        Is+uSfjabDoAJA2Wg4AEU8j9f2fjX0M=
-X-Google-Smtp-Source: AMsMyM4obb5DI7sbNEvPFjGiSYJCjkPS14K+0DDsX0CDXNLN6U5aMIrv98r0SvElVGfm8Q9BinPMyw==
-X-Received: by 2002:a5d:404b:0:b0:22e:331e:1cba with SMTP id w11-20020a5d404b000000b0022e331e1cbamr2785198wrp.488.1665056750527;
-        Thu, 06 Oct 2022 04:45:50 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k19-20020a05600c1c9300b003c1b492daa4sm2068395wms.36.2022.10.06.04.45.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 04:45:49 -0700 (PDT)
-Message-Id: <c107ad9f6ff2d5e00134eb1348f24737774edbac.1665056747.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1355.git.git.1665056747.gitgitgadget@gmail.com>
-References: <pull.1355.git.git.1665056747.gitgitgadget@gmail.com>
-From:   "dsal3389 via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 06 Oct 2022 11:45:47 +0000
-Subject: [PATCH 2/2] removed else statement
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S230165AbiJFMQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2022 08:16:26 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A6F79AFFA
+        for <git@vger.kernel.org>; Thu,  6 Oct 2022 05:16:25 -0700 (PDT)
+Received: (qmail 11852 invoked by uid 109); 6 Oct 2022 12:16:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 06 Oct 2022 12:16:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25505 invoked by uid 111); 6 Oct 2022 12:16:24 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 06 Oct 2022 08:16:24 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 6 Oct 2022 08:16:24 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Aleajndro R =?utf-8?Q?Sede=C3=B1o?= <asedeno@google.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] git-compat-util.h: GCC deprecated only takes a message
+ in GCC 4.5+
+Message-ID: <Yz7HGAThrOcPdmjm@coredump.intra.peff.net>
+References: <20221003212318.3092010-1-asedeno@google.com>
+ <YzthTugwy+eaIUxr@tapette.crustytoothpaste.net>
+ <CAOO-Oz2WnodBnw86mi2GZ+jLGoGy_saX=kCpwPdm2xohDO1s_Q@mail.gmail.com>
+ <Yz2afjRezq5oGN4g@coredump.intra.peff.net>
+ <221006.86lepts927.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     dsal3389 <dsal3389@gmail.com>, dsal3389 <dsal3389@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221006.86lepts927.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: dsal3389 <dsal3389@gmail.com>
+On Thu, Oct 06, 2022 at 09:29:11AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-there is no need for the else statement if we can do it more
-elegantly with a signle if statement we no "else"
+> > This will cause some mild hardships, as later patches will need to
+> > #define UNUSED in other spots, as well, in order to get full coverage of
+> > the code base (I have written those annotation patches, but they're not
+> > applied upstream yet).
+> 
+> Sorry about any trouble in having to rebase those on UNUSED.
 
-Signed-off-by: Daniel Sonbolian <dsal3389@gmail.com>
----
- git.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+That part was not too bad, and is already done.
 
-diff --git a/git.c b/git.c
-index da411c53822..340ec8bcb31 100644
---- a/git.c
-+++ b/git.c
-@@ -894,12 +894,8 @@ int cmd_main(int argc, const char **argv)
- 	argv++;
- 	argc--;
- 	handle_options(&argv, &argc, NULL);
--	if (argc > 0) {
--		if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0]))
--			argv[0] = "version";
--		else if (!strcmp("--help", argv[0]) || !strcmp("-h", argv[0]))
--			argv[0] = "help";
--	} else {
-+
-+	if (argc <= 0) {
- 		/* The user didn't specify a command; give them help */
- 		commit_pager_choice();
- 		printf(_("usage: %s\n\n"), git_usage_string);
-@@ -907,6 +903,12 @@ int cmd_main(int argc, const char **argv)
- 		printf("\n%s\n", _(git_more_info_string));
- 		exit(1);
- 	}
-+
-+	if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0]))
-+		argv[0] = "version";
-+	else if (!strcmp("--help", argv[0]) || !strcmp("-h", argv[0]))
-+		argv[0] = "help";
-+
- 	cmd = argv[0];
- 
- 	/*
--- 
-gitgitgadget
+The trickiest part is that the headers get included in odd orders, and
+if the macros don't match, the compiler will complain (this has to do
+with compat/ headers which don't necessarily start by including
+git-compat-util.h).
+
+But if the definition gets much more complicated, then it's probably
+worth pulling it out rather than repeating it.
+
+> If you're taking requests it would be really useful to prioritize
+> changes to shared headers and the like, e.g. DEVOPTS=extra-all on pretty
+> much any file will start with:
+> 	
+> 	git-compat-util.h: In function ‘precompose_argv_prefix’:
+> 	git-compat-util.h:313:54: error: unused parameter ‘argc’ [-Werror=unused-parameter]
+> 	  313 | static inline const char *precompose_argv_prefix(int argc, const char **argv, const char *prefix)
+> 	      |                                                  ~~~~^~~~
+> 	git-compat-util.h:313:73: error: unused parameter ‘argv’ [-Werror=unused-parameter]
+> 	  313 | static inline const char *precompose_argv_prefix(int argc, const char **argv, const char *prefix)
+> 	      |                                                            ~~~~~~~~~~~~~^~~~
+> 	git-compat-util.h: In function ‘git_has_dos_drive_prefix’:
+> 	git-compat-util.h:423:56: error: unused parameter ‘path’ [-Werror=unused-parameter]
+> 	  423 | static inline int git_has_dos_drive_prefix(const char *path)
+> 	      |                                            ~~~~~~~~~~~~^~~~
+> 	git-compat-util.h: In function ‘git_skip_dos_drive_prefix’:
+> 	git-compat-util.h:431:52: error: unused parameter ‘path’ [-Werror=unused-parameter]
+> 	  431 | static inline int git_skip_dos_drive_prefix(char **path)
+
+Yeah, those are near the top of my list. I have a group classified as
+"trivial": functions which are compat placeholders and have no body.
+I'll be mostly offline for about a week, but I hope to send another
+round of unused-mark patches when I get back. (Of course it is not
+really useful until _all_ of the patches are there anyway).
+
+-Peff
