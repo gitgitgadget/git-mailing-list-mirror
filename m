@@ -2,67 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FCEEC433FE
-	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 11:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F043C433F5
+	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 11:12:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229579AbiJGLJM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Oct 2022 07:09:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51700 "EHLO
+        id S229629AbiJGLMJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Oct 2022 07:12:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229516AbiJGLJK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2022 07:09:10 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3AF7634A
-        for <git@vger.kernel.org>; Fri,  7 Oct 2022 04:09:09 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id kg6so10513204ejc.9
-        for <git@vger.kernel.org>; Fri, 07 Oct 2022 04:09:09 -0700 (PDT)
+        with ESMTP id S229579AbiJGLMI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2022 07:12:08 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB5FA2207
+        for <git@vger.kernel.org>; Fri,  7 Oct 2022 04:12:06 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id z3so5563296edc.10
+        for <git@vger.kernel.org>; Fri, 07 Oct 2022 04:12:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=A3xp3XWOy5OrMXrvJygxwUrnuFPHnvIOdNtVPDQWIp0=;
-        b=p6qNJpLSCaJ9okzdAj4CEH7lHaYfMQg+k5OZ1ES/EYqFks0CwvHA0WW3eb07M21nwO
-         tYDHILfOCvfr1N7l4M7FNdIgI7i1J42nt3QIPN2FogIY69T57pmcqvbt6Nkhjyj9bRGd
-         9StyUUltkvbXltreMbDarYyswCB99gGhSx+S74njMWOWj5H8wV/bKow90W4xQBbzzdOm
-         sbFIW2+8yUA9mf1tPV/Gupkudn1rvmju6jwWlsVJAx0jOPl5OmRTwmaiVwnziOvlBSmp
-         DlDi6Va7MbOY3HHKU2mEY3CMGqB54a7ezqHvDyvAAFTZAuTNujgnZ3vRAE5iPaJ1oWYy
-         MHNg==
+        bh=u/+HPdT+d8YLmXNqPzDBh1DvyFo9AUZ2OnskkQh1gkM=;
+        b=aKM7Ijru/RqnkIv1q5B7/JFHsn9Fx1IaRGU2hrE4t1IAU6w7WBR/KWqVHbQMMtY66m
+         ItgnUIEVeOl2BCRM1EHaBERERdxydagdfzGeOtZo/487NvmLbWZbgHCdMfYlQO7eWAVO
+         kYZrN71GKqNPoVS+R6n+R7oa/yEyvg47c0CedM4pYrkMe0yd8MJ/Kv3dRaiBeKwJBXYr
+         jvfH/g2EPUBVL80X0B1bO3d0VfScSzVYi+Ls4skjkurXdrigUVd9R5Bco0UVq4MrFpd+
+         avyjvnXGoP6SMiD/RAwYDKEr8qlUB64Gq7jpgj2643mbxFOX+OlzKWixc0douYoniO76
+         MaYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=A3xp3XWOy5OrMXrvJygxwUrnuFPHnvIOdNtVPDQWIp0=;
-        b=6metZ6KdN73ASKcTUIRuXeEozNU+kYjHJeH4MLXkRuH87CGw8/aNdj4F7Shl7pohfa
-         ggQr2ygQwbO11bbWQOkxD0PKRqfSBGEwZPeSXW0wCybH83UA0mWLbHj7lwK95xc8xes5
-         MmDRyuKYRfUF5rY6j5+XxIy4qp57/PTK0et1JBxMPfOgY15IQ11Cb4bWfiCFb8OM3Iu/
-         nOg8PI11f5ZsVjfLLxeE+oE19W/xpuh4y2i2+JBkuIjtBEj+SlcBfrh/TlzA9CdmvO3p
-         aFDLv8sXfuIdLYvvrzs7mUAPu3ujZ59IwXPAkZX1mW2fnXbX4LICZEvTrj9Lq7RpqptG
-         svmQ==
-X-Gm-Message-State: ACrzQf2w2cHh2xbaA5ZnOQ6kOCzyPWvkNJpobWdmCbv0rtdPQLayK2m8
-        XIfqZx9qRpnr6wPimrDgggY=
-X-Google-Smtp-Source: AMsMyM7QwYZZfODKzUtlx3LDDxn6LLkwN0V/8nPmdIuRpK1K1VcI9cFSWOx3XFzyngRfL+pXF2hqJQ==
-X-Received: by 2002:a17:907:320c:b0:741:1e55:7a69 with SMTP id xg12-20020a170907320c00b007411e557a69mr3680632ejb.740.1665140948197;
-        Fri, 07 Oct 2022 04:09:08 -0700 (PDT)
+        bh=u/+HPdT+d8YLmXNqPzDBh1DvyFo9AUZ2OnskkQh1gkM=;
+        b=cYoKyl/kVQQolC6MsH58LLyt+RqgQqgg/2n833KtjylFFgH8PqX+IGXIa4ytJz+P7M
+         1eJnOuW7099xJeGVBpH0+VIIRk3il8JWQRUnaTJmFnm1yToH0Tdouirig/aA+/UfRryl
+         abLJ8RlOZXF2jIh7m+7/J9QJ9aqNu9wc+S2mQmPo05E2ClWcFsdZjEjf2GOw8Mf40BFs
+         6utY82MZSJHz8i9Ftzx60AnY3tHbMFDfb/63IFsrlO+vyfBoqVc1cW9aIYD3NRiBOmHG
+         WZe5nb0LAuI9ASUFnPzS6jlXjJt2TTeevw7IA7ANBsdim/wrfNPhBNN8aQv5905nbj/z
+         0ByA==
+X-Gm-Message-State: ACrzQf3FtgglmMbs+9awdPe6ZK84CrhlTmWpl7lplDEeF4Gm1AWX6eHs
+        dwe4iwtJBFlA36xEMK4g6UM=
+X-Google-Smtp-Source: AMsMyM4uFe+SvYX5HoKGAEjOp/m067Du4UOWcXMeoUxrGVsn2LkDAUE5m5LKmK37DLnZ4pOaLZq5Uw==
+X-Received: by 2002:a05:6402:5162:b0:457:6ef2:df3 with SMTP id d2-20020a056402516200b004576ef20df3mr4073363ede.128.1665141125378;
+        Fri, 07 Oct 2022 04:12:05 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id o11-20020a056402038b00b0045467008dd0sm1252573edv.35.2022.10.07.04.09.06
+        by smtp.gmail.com with ESMTPSA id nb36-20020a1709071ca400b007820bb9350fsm1037390ejc.206.2022.10.07.04.12.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Oct 2022 04:09:07 -0700 (PDT)
+        Fri, 07 Oct 2022 04:12:04 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1oglE2-003OMA-0j;
-        Fri, 07 Oct 2022 13:09:06 +0200
+        id 1oglGt-003OTE-2e;
+        Fri, 07 Oct 2022 13:12:03 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 0/2] Fix syntax errors under clang 11.0.0 on MacOS
-Date:   Fri, 07 Oct 2022 13:02:39 +0200
-References: <pull.1375.git.1665085395.gitgitgadget@gmail.com>
+To:     "Michael S. Tsirkin" <mst@redhat.com>
+Cc:     git@vger.kernel.org
+Subject: Re: sudmodule.<name>.recurse ignored
+Date:   Fri, 07 Oct 2022 13:09:39 +0200
+References: <20221007060713-mutt-send-email-mst@kernel.org>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <pull.1375.git.1665085395.gitgitgadget@gmail.com>
-Message-ID: <221007.861qrjriul.gmgdl@evledraar.gmail.com>
+In-reply-to: <20221007060713-mutt-send-email-mst@kernel.org>
+Message-ID: <221007.86wn9bq458.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -71,63 +70,70 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Oct 06 2022, Jeff Hostetler via GitGitGadget wrote:
+On Fri, Oct 07 2022, Michael S. Tsirkin wrote:
 
-> This patch series fixes three syntax errors that caused compiler errors w=
-ith
-> clang 11.0.0 on MacOS. I've included the error/warning messages in the
-> commit messages. The offending statements did compile successfully under
-> clang 14.0.0 on MacOS, so I have to assume that this usage is newer than
-> what clang 11 supports.
+> THE CONFIGURATION OF SUBMODULES
+>        Submodule operations can be configured using the following mechani=
+sms (from highest to lowest precedence):
 >
-> I originally sent these changes in my "Trace2 timers and cleanup and some
-> cleanup" series on Tuesday, but pulled them into a separate series based =
-on
-> feedback. I'll omit them from the trace2 series in the next version.
+>        =E2=80=A2   The command line for those commands that support takin=
+g submodules as part of their pathspecs. Most commands have a boolean
+>            flag --recurse-submodules which specify whether to recurse int=
+o submodules. Examples are grep and checkout. Some commands
+>            take enums, such as fetch and push, where you can specify how =
+submodules are affected.
+>
+>        =E2=80=A2   The configuration inside the submodule. This includes =
+$GIT_DIR/config in the submodule, but also settings in the tree such
+>            as a .gitattributes or .gitignore files that specify behavior =
+of commands inside the submodule.
+>
+>            For example an effect from the submodule=E2=80=99s .gitignore =
+file would be observed when you run git status
+>            --ignore-submodules=3Dnone in the superproject. This collects =
+information from the submodule=E2=80=99s working directory by running
+>            status in the submodule while paying attention to the .gitigno=
+re file of the submodule.
+>
+>            The submodule=E2=80=99s $GIT_DIR/config file would come into p=
+lay when running git push --recurse-submodules=3Dcheck in the
+>            superproject, as this would check if the submodule has any cha=
+nges not published to any remote. The remotes are configured
+>            in the submodule as usual in the $GIT_DIR/config file.
+>
+>        =E2=80=A2   The configuration file $GIT_DIR/config in the superpro=
+ject. Git only recurses into active submodules (see "ACTIVE
+>            SUBMODULES" section below).
+>
+>            If the submodule is not yet initialized, then the configuratio=
+n inside the submodule does not exist yet, so where to obtain
+>            the submodule from is configured here for example.
+>
+>        =E2=80=A2   The .gitmodules file inside the superproject. A projec=
+t usually uses this file to suggest defaults for the upstream
+>            collection of repositories for the mapping that is required be=
+tween a submodule=E2=80=99s name and its path.
+>
+>            This file mainly serves as the mapping between the name and pa=
+th of submodules in the superproject, such that the
+>            submodule=E2=80=99s Git directory can be located.
+>
+>            If the submodule has never been initialized, this is the only =
+place where submodule configuration is found. It serves as
+>            the last fallback to specify where to obtain the submodule fro=
+m.
+>
+>
+> However, when we are talking about the recurse attribute, it is
+> not taken from .gitmodules - only command line and .git/config seem
+> to be consulted.
+> Is this a bug or a feature?
 
-The expanded commit messages really help, thanks :)
+It's a (security) feature. We have had disussions[1] about how to safely
+read in-repo config, but we are very far away from that becoming a
+reality (if it ever happens).
 
-So, to summarize, these don't fix compiler errors, but warnings, but of
-course they're errors with DEVELOPER=3D1.
+If we read this from the .gitmodules the repo could change how you
+interact with your submodules.
 
-We already squash these for an older GCC, per the discussion at [1]. I
-think we should just replace this series with something like (untested
-on OSX, but it's just copy/pasting a template above it).
-=09
-	diff --git a/config.mak.dev b/config.mak.dev
-	index 4fa19d361b7..9b7bccd154c 100644
-	--- a/config.mak.dev
-	+++ b/config.mak.dev
-	@@ -69,6 +69,14 @@ DEVELOPER_CFLAGS +=3D -Wno-missing-braces
-	 endif
-	 endif
-=09=20
-	+ifeq ($(uname_S),Darwin)
-	+ifneq ($(filter clang10,$(COMPILER_FEATURES)),)
-	+ifeq ($(filter clang11,$(COMPILER_FEATURES)),)
-	+DEVELOPER_CFLAGS +=3D -Wno-missing-braces
-	+endif
-	+endif
-	+endif
-	+
-	 # https://bugzilla.redhat.com/show_bug.cgi?id=3D2075786
-	 ifneq ($(filter gcc12,$(COMPILER_FEATURES)),)
-	 DEVELOPER_CFLAGS +=3D -Wno-error=3Dstringop-overread
-=09
-Or, we can just say that for a <=3D clang v13 we'll use
--Wno-missing-braces, per:
-
- * The comment from Ren=C3=A9 at
-   http://lore.kernel.org/git/36cd156b-edb2-062c-9422-bf39aad39a6d@web.de
-   that older vanilla clang is affected.
-
- * You having tested Apple clang v14, but not clang v12..v13.
-
-I.e. to emit the whole uname_S bit.
-
-I think it's not important that we try really hard to opt a given
-compiler into some maximum set of warnings, we generally want to catch
-most things here. As long as some compiler (particularly if it's in CI)
-still covers these we should be good.
-
-1. https://lore.kernel.org/git/220712.864jzm65mk.gmgdl@evledraar.gmail.com/
+1. https://lore.kernel.org/git/YzXwZQbM69eNJfm7@nand.local/
