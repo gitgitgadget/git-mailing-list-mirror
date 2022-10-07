@@ -2,166 +2,283 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9715C433F5
-	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 00:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA8A1C433FE
+	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 01:10:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231844AbiJGAsP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Oct 2022 20:48:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37298 "EHLO
+        id S231489AbiJGBKQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Oct 2022 21:10:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231786AbiJGAsM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Oct 2022 20:48:12 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00255BCBA4
-        for <git@vger.kernel.org>; Thu,  6 Oct 2022 17:48:10 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id t10-20020a17090a4e4a00b0020af4bcae10so3317692pjl.3
-        for <git@vger.kernel.org>; Thu, 06 Oct 2022 17:48:10 -0700 (PDT)
+        with ESMTP id S229906AbiJGBKO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Oct 2022 21:10:14 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 776B13FA30
+        for <git@vger.kernel.org>; Thu,  6 Oct 2022 18:10:11 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id t4so2016974wmj.5
+        for <git@vger.kernel.org>; Thu, 06 Oct 2022 18:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=initialcommit-io.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DR/zBcmOkP5QmiR36PI5V+HxdLlbgRjxen+ZReTrJMk=;
-        b=DY3G+/J+kSutPF9fO0iurhQYQ2zVSZN4OJrQAZ5O9keHN0YTTXQodtTq2//igQFETj
-         LlYLXPjodLGIGoqiJH59q/3TOcF5npEqNA+PKh0zvqo4h6gwyqv2Vv2SUYgdENi4ligv
-         kpKjuiqRhpXJ1aPHdeYELho+qBWQEVQsg9Z+JTK97U1BCKq1FkS9njH2cFtG+ALwCpTO
-         9JMgRQzKyAWxhc7imfjA8N0srjsdwakVoeTOh1s/s6AndNgRBAwu9itTud//4pXlSmxC
-         4xt0qq7eS6w0nzNfDoOWGuOeek14+X7nxAmETXyKMykYGDmB2jcsrwboKHoB63wwAfvX
-         OdCQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aUJ6gA3GrVElkb5+LPIfGlF7hIXeFnZybW4AEOtzqjk=;
+        b=nX8K3MJZvzg6a2cDm2Q9S7uLsPWuNDubQMmIHmyPxRTHfxnRJzwYRz7YQV8Up9HShi
+         F+la7dd6nWt0/O8+0kqzaQRoP1zL/rwgHgHRcv7iVEG0n7avumH8jW8Rre3RhPEP9R5r
+         xCoz8jn5Tte3s1+/6PIJ3tJgmHTFU8AglXA2f4/SIVGXk7NEh2AbhufZz3WKn+PhfMm+
+         HcmOWBmRokwArEiZ9zr9pczzT28wV26M5HFd3KCUQbSsTh9wSesQmPJRv8x1s0v6MSJQ
+         C4Ywg+fi8lmKrG4Pip/d8n8TYw8FfbJ+X/9K3+M+t2rtaUQagAYgDarW8peFwHVC8mCL
+         ek1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DR/zBcmOkP5QmiR36PI5V+HxdLlbgRjxen+ZReTrJMk=;
-        b=iIF2PjmigXFDTyBZtl/nJkQg5Eo4yk4E+S2SZggBz9VVa4JGuxb/OzhO7KP15RuwaE
-         9XVME0fxCVLxc7Hftmr0iY64Nnx3HmVltbrDIw+A9e0YaOqg+PvpJfxw6JiUF/ak85It
-         7X4ami+An7e/YTUvPqWcEeM0lkarvN3k1xkFU3/LOmla7JkcZxpo+gvzvP+UKKwRHaYQ
-         VhPUX90XZeMlEMGQRfyNKF41xS3wmage+WAFRc3ahd84OcjpZDvLYFGUC2Gy5iRRHApg
-         ppHXtjKkIEvfRAEGysmxxjwNnB0ytoe5eUkhedZlgIrATCy5iczi4Zr/21RkIWdRe9Kc
-         Fb5w==
-X-Gm-Message-State: ACrzQf2tCPvnk9WFTml7DeuspRnuByIVaHJXP/Ub469HW06yFViXN1Wo
-        jka5zvrA4GQLuUPuu3DG5k6K9Prg9SLUfNQ9
-X-Google-Smtp-Source: AMsMyM5fzLA3hKfMChkLSgJJIghrH7FO0dHWS6djwJ393Xs00Y+9o7j6//+RBi++60cMG1dfaeaTCA==
-X-Received: by 2002:a17:902:e80f:b0:17f:8408:cc4f with SMTP id u15-20020a170902e80f00b0017f8408cc4fmr2128473plg.127.1665103690429;
-        Thu, 06 Oct 2022 17:48:10 -0700 (PDT)
-Received: from initialcommit.io ([2600:8801:9c0a:f300:e1a1:5f6f:bdce:54e1])
-        by smtp.gmail.com with ESMTPSA id u186-20020a6260c3000000b00561c6a4c1b0sm231481pfb.176.2022.10.06.17.48.09
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aUJ6gA3GrVElkb5+LPIfGlF7hIXeFnZybW4AEOtzqjk=;
+        b=CU25cKrsl7/j/9XSeWGJrpZXujbIZXaU2OPSWtDZth35CTysT2clm9tk/9JtyfJhQd
+         he9W791ZbfcLZxLFXS5A4oggRJvxZLLC/g3ehanbkaxQdulvHJkHmY29yuijUojhRvIt
+         9eTJt2PGRPArfS0NfFdiZj4V/0Yn+FS1osKaKkmMJEFb1HhQgA+GxWRCe3FksBGpsvwT
+         xIgEmo7jxtHTLWPzGOEYTyS3bL3bNmf9hFB6s4++BI5GFJjPSMjL8DM7CX4Qad3qARHX
+         5WsY1ZS2VOxF9CKe+/0vVmeEvJ+i7U2mDcC4lrkFNP47H9UTlw7ker3QUFuHCUA4ogr8
+         i7PA==
+X-Gm-Message-State: ACrzQf1aDncVIWmlDHrqvJKKI6UJOeTMOQqD7xlx3ArOIjIk9YAlw8nn
+        Uh1DXXBhFBW5EcfPHMkwjgaxZkY7iVo=
+X-Google-Smtp-Source: AMsMyM5yinaouEthvfZJzm9AObh+BSXDMXmMIaRFkrgDYrpXnOOmxndARJb+huuzuduf+Qv2d8FfSQ==
+X-Received: by 2002:a05:600c:3512:b0:3b4:bcde:26ad with SMTP id h18-20020a05600c351200b003b4bcde26admr8953745wmq.164.1665105009517;
+        Thu, 06 Oct 2022 18:10:09 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id v7-20020a5d59c7000000b0022e3978fd07sm690169wry.39.2022.10.06.18.10.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Oct 2022 17:48:09 -0700 (PDT)
-Date:   Thu, 6 Oct 2022 17:48:06 -0700
-From:   Jacob Stopak <jacob@initialcommit.io>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org, martin.agren@gmail.com
-Subject: Re: [RFC PATCH v2] shortlog: add group-by options for year and month
-Message-ID: <Yz93RjrJ00A5QvNe.jacob@initialcommit.io>
-References: <20220922061824.16988-1-jacob@initialcommit.io>
- <20220922232536.40807-1-jacob@initialcommit.io>
- <xmqqillevzeh.fsf@gitster.g>
- <Yy4sIAHdvp6yRql+@coredump.intra.peff.net>
- <Yz36eFeGyQ3ha1pw@nand.local>
- <Yz4EsT8noIoygk9b@coredump.intra.peff.net>
+        Thu, 06 Oct 2022 18:10:08 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC PATCH] trace2 API: don't save a copy of constant "thread_name"
+Date:   Fri,  7 Oct 2022 03:10:06 +0200
+Message-Id: <RFC-patch-1.1-8563d017137-20221007T010829Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.38.0.971.ge79ff6d20e7
+In-Reply-To: <xmqqr0zkipva.fsf@gitster.g>
+References: <xmqqr0zkipva.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yz4EsT8noIoygk9b@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 05, 2022 at 06:26:57PM -0400, Jeff King wrote:
-> On Wed, Oct 05, 2022 at 05:43:20PM -0400, Taylor Blau wrote:
-> 
-> > This caught my attention, so I wanted to see how hard it would be to
-> > implement. It actually is quite straightforward, and gets us most of the
-> > way to being able to get the same functionality as in Jacob's patch
-> > (minus being able to do the for-each-ref-style sub-selectors, like
-> > `%(authordate:format=%Y-%m)`).
+Since ee4512ed481 (trace2: create new combined trace facility,
+2019-02-22) the "thread_name" member of "struct tr2tls_thread_ctx" has
+been copied from the caller, but those callers have always passed a
+constant string:
 
-Thanks Taylor!! This looks awesome and helped me understand how the pretty
-context stuff works. I was able to apply your patch locally and test,
-and plan to continue working off of this :D. Like Peff mentioned seems to
-be a few usage details to hammer out.
+	$ git -P grep '^\s*trace2_thread_start\('
+	Documentation/technical/api-trace2.txt: trace2_thread_start("preload_thread");
+	builtin/fsmonitor--daemon.c:    trace2_thread_start("fsm-health");
+	builtin/fsmonitor--daemon.c:    trace2_thread_start("fsm-listen");
+	compat/simple-ipc/ipc-unix-socket.c:    trace2_thread_start("ipc-worker");
+	compat/simple-ipc/ipc-unix-socket.c:    trace2_thread_start("ipc-accept");
+	compat/simple-ipc/ipc-win32.c:  trace2_thread_start("ipc-server");
+	t/helper/test-fsmonitor-client.c:       trace2_thread_start("hammer");
+	t/helper/test-simple-ipc.c:     trace2_thread_start("multiple");
 
-> The date thing I think can be done with --date; I just sent a sketch in
-> another part of the thread.
+This isn't needed for optimization, but apparently[1] there's been
+some confusion about the non-const-ness of the previous "struct
+strbuf".
 
-Peff - I applied your --date sketch onto Taylor's patch and it worked first try.
+Using the caller's string here makes this more straightforward, as
+it's now clear that we're not dynamically constructing these. It's
+also what the progress API does with its "title" string.
 
-> So here you're allowing multiple pretty options. But really, once we
-> allow the user an arbitrary format, is there any reason for them to do:
-> 
->   git shortlog --group=%an --group=%ad
-> 
-> versus just:
-> 
->   git shortlog --group='%an %ad'
-> 
-> ?
+Since we know we're hardcoding these thread names let's BUG() out when
+we see that the length of the name plus the length of the prefix would
+exceed the maximum length for the "perf" format.
 
-Yes I can't think of an advantage of having multiple custom-formatted group
-fields. Also see my note on this below related to your comment on specifying
-multiple groups.
+1. https://lore.kernel.org/git/82f1672e180afcd876505a4354bd9952f70db49e.1664900407.git.gitgitgadget@gmail.com/
 
-> >  void shortlog_add_commit(struct shortlog *log, struct commit *commit)
-> >  {
-> >  	struct strbuf ident = STRBUF_INIT;
-> > @@ -243,6 +266,8 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
-> >  	if (log->groups & SHORTLOG_GROUP_TRAILER) {
-> >  		insert_records_from_trailers(log, &dups, commit, &ctx, oneline_str);
-> >  	}
-> > +	if (log->groups & SHORTLOG_GROUP_PRETTY)
-> > +		insert_record_from_pretty(log, &dups, commit, &ctx, oneline_str);
-> 
-> I was puzzled at first that this was a bitwise check. But I forgot that
-> we added support for --group options already, in 63d24fa0b0 (shortlog:
-> allow multiple groups to be specified, 2020-09-27).
-> 
-> So a plan like:
-> 
->   git shortlog --group=author --group=date
-> 
-> (as in the original patch in this thread) doesn't quite work, I think.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-My first patch addressed this by specifically handling cases where the new
-grouping options were passed in-tandem with existing options, and making sure
-only a single shortlog group was generated. But if we're generalizing the custom
-group format then it might be unecessary to even allow the custom group in tandem
-with most other options (like 'author' and 'committer'), since those options can be
-included in the custom group format. The trailer option might be an exception, but
-that could possibly just be handled as a special case.
+On Thu, Oct 06 2022, Junio C Hamano wrote:
 
-> We probably want to insist that the format contains a "%" sign, and/or
-> git it a keyword like "format:". Otherwise a typo like:
-> 
->   git shortlog --format=autor
-> 
-> stops being an error we detect, and just returns nonsense results
-> (every commit has the same ident).
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>> So, we don't need to strdup() and store that "preload_thread" anywhere.
+>> It's already a constant string we have hardcoded in the program. We just
+>> need to save a pointer to it.
+>
+> That sounds even simpler.
 
-Small aside: I like how Taylor re-used the --group option for the custom format.
-IMO it hammers home that this is a grouping option and not just formatting or
-filtering which can be confusing to users sometimes when doing data analytics.
+A cleaned up version of the test code I had on top of "master", RFC
+because I may still be missing some context here. E.g. maybe there's a
+plan to dynamically construct these thread names?
 
-But your points here all still apply. Maybe detecting a "%" sign can be the way
-that git identifies the custom format being passed in. In conjuction with the %
-identifiers, this would still enable users to add in some arbitrary constant label
-like --group='Year: %cd' --date='%Y', without affecting the grouped/sorted results
-since all entries would then include the "Years: " prefix (or postfix or however
-they decide to write it).
+ json-writer.c          | 17 +++++++++++++++++
+ json-writer.h          |  4 ++++
+ trace2/tr2_tgt_event.c |  2 +-
+ trace2/tr2_tgt_perf.c  | 10 +++++++---
+ trace2/tr2_tls.c       | 14 +++++---------
+ trace2/tr2_tls.h       |  9 +++++++--
+ 6 files changed, 41 insertions(+), 15 deletions(-)
 
-The one case that should probably be handled is when no % sign is used and no other
-matching flags like --author or --committer are either, because currently that will
-just group all commits under 1 nonsensical group name like "autor" as you mentioned.
+diff --git a/json-writer.c b/json-writer.c
+index f1cfd8fa8c6..569a75bee51 100644
+--- a/json-writer.c
++++ b/json-writer.c
+@@ -161,6 +161,23 @@ void jw_object_string(struct json_writer *jw, const char *key, const char *value
+ 	append_quoted_string(&jw->json, value);
+ }
+ 
++void jw_strbuf_add_thread_name(struct strbuf *sb, const char *thread_name,
++			       int thread_id)
++{
++	if (thread_id)
++		strbuf_addf(sb, "th%02d:", thread_id);
++	strbuf_addstr(sb, thread_name);
++}
++
++void jw_object_string_thread(struct json_writer *jw, const char *thread_name,
++			     int thread_id)
++{
++	object_common(jw, "thread");
++	strbuf_addch(&jw->json, '"');
++	jw_strbuf_add_thread_name(&jw->json, thread_name, thread_id);
++	strbuf_addch(&jw->json, '"');
++}
++
+ void jw_object_intmax(struct json_writer *jw, const char *key, intmax_t value)
+ {
+ 	object_common(jw, key);
+diff --git a/json-writer.h b/json-writer.h
+index 209355e0f12..269c203b119 100644
+--- a/json-writer.h
++++ b/json-writer.h
+@@ -75,6 +75,10 @@ void jw_release(struct json_writer *jw);
+ void jw_object_begin(struct json_writer *jw, int pretty);
+ void jw_array_begin(struct json_writer *jw, int pretty);
+ 
++void jw_strbuf_add_thread_name(struct strbuf *buf, const char *thread_name,
++			       int thread_id);
++void jw_object_string_thread(struct json_writer *jw, const char *thread_name,
++			     int thread_id);
+ void jw_object_string(struct json_writer *jw, const char *key,
+ 		      const char *value);
+ void jw_object_intmax(struct json_writer *jw, const char *key, intmax_t value);
+diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+index 37a3163be12..1308cf05df4 100644
+--- a/trace2/tr2_tgt_event.c
++++ b/trace2/tr2_tgt_event.c
+@@ -90,7 +90,7 @@ static void event_fmt_prepare(const char *event_name, const char *file,
+ 
+ 	jw_object_string(jw, "event", event_name);
+ 	jw_object_string(jw, "sid", tr2_sid_get());
+-	jw_object_string(jw, "thread", ctx->thread_name.buf);
++	jw_object_string_thread(jw, ctx->thread_name, ctx->thread_id);
+ 
+ 	/*
+ 	 * In brief mode, only emit <time> on these 2 event types.
+diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+index 8cb792488c8..ab21277eb36 100644
+--- a/trace2/tr2_tgt_perf.c
++++ b/trace2/tr2_tgt_perf.c
+@@ -69,6 +69,8 @@ static void perf_fmt_prepare(const char *event_name,
+ 			     const char *category, struct strbuf *buf)
+ {
+ 	int len;
++	size_t oldlen;
++	int padlen;
+ 
+ 	strbuf_setlen(buf, 0);
+ 
+@@ -107,9 +109,11 @@ static void perf_fmt_prepare(const char *event_name,
+ 	}
+ 
+ 	strbuf_addf(buf, "d%d | ", tr2_sid_depth());
+-	strbuf_addf(buf, "%-*s | %-*s | ", TR2_MAX_THREAD_NAME,
+-		    ctx->thread_name.buf, TR2FMT_PERF_MAX_EVENT_NAME,
+-		    event_name);
++	oldlen = buf->len;
++	jw_strbuf_add_thread_name(buf, ctx->thread_name, ctx->thread_id);
++	padlen = TR2_MAX_THREAD_NAME - (buf->len - oldlen);;
++	strbuf_addf(buf, "%-*s | %-*s | ", padlen, "",
++		    TR2FMT_PERF_MAX_EVENT_NAME, event_name);
+ 
+ 	len = buf->len + TR2FMT_PERF_REPO_WIDTH;
+ 	if (repo)
+diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
+index 7da94aba522..aa9aeb67fca 100644
+--- a/trace2/tr2_tls.c
++++ b/trace2/tr2_tls.c
+@@ -36,6 +36,9 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
+ {
+ 	struct tr2tls_thread_ctx *ctx = xcalloc(1, sizeof(*ctx));
+ 
++	if (strlen(thread_name) + TR2_MAX_THREAD_NAME_PREFIX > TR2_MAX_THREAD_NAME)
++		BUG("too long thread name '%s'", thread_name);
++
+ 	/*
+ 	 * Implicitly "tr2tls_push_self()" to capture the thread's start
+ 	 * time in array_us_start[0].  For the main thread this gives us the
+@@ -45,15 +48,9 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
+ 	ctx->array_us_start = (uint64_t *)xcalloc(ctx->alloc, sizeof(uint64_t));
+ 	ctx->array_us_start[ctx->nr_open_regions++] = us_thread_start;
+ 
++	ctx->thread_name = thread_name;
+ 	ctx->thread_id = tr2tls_locked_increment(&tr2_next_thread_id);
+ 
+-	strbuf_init(&ctx->thread_name, 0);
+-	if (ctx->thread_id)
+-		strbuf_addf(&ctx->thread_name, "th%02d:", ctx->thread_id);
+-	strbuf_addstr(&ctx->thread_name, thread_name);
+-	if (ctx->thread_name.len > TR2_MAX_THREAD_NAME)
+-		strbuf_setlen(&ctx->thread_name, TR2_MAX_THREAD_NAME);
+-
+ 	pthread_setspecific(tr2tls_key, ctx);
+ 
+ 	return ctx;
+@@ -95,7 +92,6 @@ void tr2tls_unset_self(void)
+ 
+ 	pthread_setspecific(tr2tls_key, NULL);
+ 
+-	strbuf_release(&ctx->thread_name);
+ 	free(ctx->array_us_start);
+ 	free(ctx);
+ }
+@@ -113,7 +109,7 @@ void tr2tls_pop_self(void)
+ 	struct tr2tls_thread_ctx *ctx = tr2tls_get_self();
+ 
+ 	if (!ctx->nr_open_regions)
+-		BUG("no open regions in thread '%s'", ctx->thread_name.buf);
++		BUG("no open regions in thread '%s'", ctx->thread_name);
+ 
+ 	ctx->nr_open_regions--;
+ }
+diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
+index b1e327a928e..f600eb22551 100644
+--- a/trace2/tr2_tls.h
++++ b/trace2/tr2_tls.h
+@@ -4,12 +4,17 @@
+ #include "strbuf.h"
+ 
+ /*
+- * Arbitry limit for thread names for column alignment.
++ * Arbitry limit for thread names for column alignment. The overall
++ * max length is TR2_MAX_THREAD_NAME, and the
++ * TR2_MAX_THREAD_NAME_PREFIX is the length of the formatted
++ * '"th%02d:", ctx->thread_id' prefix which is added when "thread_id >
++ * 0".
+  */
++#define TR2_MAX_THREAD_NAME_PREFIX (5)
+ #define TR2_MAX_THREAD_NAME (24)
+ 
+ struct tr2tls_thread_ctx {
+-	struct strbuf thread_name;
++	const char *thread_name;
+ 	uint64_t *array_us_start;
+ 	int alloc;
+ 	int nr_open_regions; /* plays role of "nr" in ALLOC_GROW */
+-- 
+2.38.0.971.ge79ff6d20e7
 
-> I think you'd want to detect SHORTLOG_GROUP_PRETTY in the
-> read_from_stdin() path, too. And probably just die() with "not
-> supported", like we do for trailers.
-
-Glad you said this because I applied this in my original patch with the explicit
---year and --month groups. Didn't seem to be an obvious use-case with the stdin 
-even though my original year and month values could possibly be read from the git
-log output supplied as stdin. But for a generalized group format seems even more
-far-fetched to try and make it jive with the stdin version of the command.
-
--Jack
