@@ -2,109 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98631C433F5
-	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 20:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03B62C433F5
+	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 21:04:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbiJGU4G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Oct 2022 16:56:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58630 "EHLO
+        id S229737AbiJGVEi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Oct 2022 17:04:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbiJGU4F (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2022 16:56:05 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B907CCC822
-        for <git@vger.kernel.org>; Fri,  7 Oct 2022 13:56:03 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 94EEACA124E;
-        Fri,  7 Oct 2022 16:56:02 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 47EE2CC833E;
-        Fri,  7 Oct 2022 16:56:02 -0400 (EDT)
-Subject: Re: [PATCH 0/2] Fix syntax errors under clang 11.0.0 on MacOS
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1375.git.1665085395.gitgitgadget@gmail.com>
- <0f67ca77-f17f-d844-e689-ca9a9bdf7993@jeffhostetler.com>
- <xmqqpmf3frr5.fsf@gitster.g> <ec920650-4334-a6f2-6d6f-241899dd79ec@web.de>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <58d3ef47-2196-4f59-692a-fc86dfbc1252@jeffhostetler.com>
-Date:   Fri, 7 Oct 2022 16:56:01 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
-MIME-Version: 1.0
-In-Reply-To: <ec920650-4334-a6f2-6d6f-241899dd79ec@web.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: mailmunge 3.09 on 209.68.5.199
+        with ESMTP id S229563AbiJGVEg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2022 17:04:36 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97A732F2
+        for <git@vger.kernel.org>; Fri,  7 Oct 2022 14:04:34 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id j3-20020a170902da8300b001782a6fbc87so3941746plx.5
+        for <git@vger.kernel.org>; Fri, 07 Oct 2022 14:04:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Bm8DaORcS3pa7sY2cQ5zEk36ljPCzu09ede8Mwa70ps=;
+        b=nquueH+SeUqeiy1dlraJxBl6NXLX8XoRFjQB8U/+hrNbpAPqGSl7V/ApnGTgE5L9wR
+         f/sLD2fl6zohFEPbrT5T6VEmsOB1vzUqG2A+3vh7/bpvmq8cNnGSWkeQ5z8fSo1LIOGI
+         NRmKrVKEhYYz36TYxSPI3PROHaiFBlPBaeh4tvrLYajcnBhWM6xOTQu/UwWbWPEVgB9j
+         l/w5gJPWEtsqP5jvMXnx3iW5g7gcBXOXVPPZV8D7xLgFE2T3GF102YKi3zIRNN0Y5VVC
+         gJRc3zQMcVkMPFTeQXh7R51Lo6U2PUGPfqb0v5QcR1XtxGUQDl5P+WmD/h5mudlFrapI
+         atcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Bm8DaORcS3pa7sY2cQ5zEk36ljPCzu09ede8Mwa70ps=;
+        b=8NM/laIOlxOT/xMaZFezvUI1EygNcoIpkWzIBTgIlqrC2JabceIIF1ZHQNyYqAMYnx
+         a7gDMfZ4CiWyrGUMVZq/e2+g2rq/bZQku42nqJwv0m9ONPEa+cpBpzZrppCkWTMEHD/K
+         FthaBtAZkSzXdZg+c3pU9aR4UyPNHM9AMmkXQn9zKzNmmJNR8rbpiERaVGrvohIltk/F
+         qWh61//0aCPwyN7KvuLXGfqWHfRa8kZY7DyL7C0rnOOPqY8alHDDZqMIGcMcwwfYWwSh
+         a6Pe5kcPARGMzm1VU79V7pzXo087iME+B/lqlIryiXzlE3GUT/tFANNU2eqFOwVFjUDq
+         +/Cg==
+X-Gm-Message-State: ACrzQf03WD6/pEsdugph+9h3JB/WbS4XWj0d2uN8BnfC2yYwUqCszYwL
+        H8brtptLUtoMNkTd1QhoRCPqA/gIz85FNg==
+X-Google-Smtp-Source: AMsMyM5AH1cHTokNOlfgMge0KBcUB3DmpVWIW1CMtSqkCeI0/yb6c38yQWpjKuyRYVNR8nljyOF6L2ki63b5TA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:da81:b0:178:2663:dc8d with SMTP
+ id j1-20020a170902da8100b001782663dc8dmr6676141plx.49.1665176673718; Fri, 07
+ Oct 2022 14:04:33 -0700 (PDT)
+Date:   Fri, 07 Oct 2022 14:04:25 -0700
+In-Reply-To: <20221007085334-mutt-send-email-mst@kernel.org>
+Mime-Version: 1.0
+References: <20221007060713-mutt-send-email-mst@kernel.org>
+ <221007.86wn9bq458.gmgdl@evledraar.gmail.com> <20221007085334-mutt-send-email-mst@kernel.org>
+Message-ID: <kl6lpmf3wdk6.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: sudmodule.<name>.recurse ignored
+From:   Glen Choo <chooglen@google.com>
+To:     "Michael S. Tsirkin" <mst@redhat.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason" 
+        <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
+> On Fri, Oct 07, 2022 at 01:09:39PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>=20
+>> On Fri, Oct 07 2022, Michael S. Tsirkin wrote:
+>>=20
+>> > THE CONFIGURATION OF SUBMODULES
+>> >        Submodule operations can be configured using the following mech=
+anisms (from highest to lowest precedence):
+>> >
+>> >        =E2=80=A2   The command line for those commands that support ta=
+king submodules as part of their pathspecs. Most commands have a boolean
+>> >            flag --recurse-submodules which specify whether to recurse =
+into submodules. Examples are grep and checkout. Some commands
+>> >            take enums, such as fetch and push, where you can specify h=
+ow submodules are affected.
+>> >
+>> >        =E2=80=A2   The configuration inside the submodule. This includ=
+es $GIT_DIR/config in the submodule, but also settings in the tree such
+>> >            as a .gitattributes or .gitignore files that specify behavi=
+or of commands inside the submodule.
+>> >
+>> >            For example an effect from the submodule=E2=80=99s .gitigno=
+re file would be observed when you run git status
+>> >            --ignore-submodules=3Dnone in the superproject. This collec=
+ts information from the submodule=E2=80=99s working directory by running
+>> >            status in the submodule while paying attention to the .giti=
+gnore file of the submodule.
+>> >
+>> >            The submodule=E2=80=99s $GIT_DIR/config file would come int=
+o play when running git push --recurse-submodules=3Dcheck in the
+>> >            superproject, as this would check if the submodule has any =
+changes not published to any remote. The remotes are configured
+>> >            in the submodule as usual in the $GIT_DIR/config file.
+>> >
+>> >        =E2=80=A2   The configuration file $GIT_DIR/config in the super=
+project. Git only recurses into active submodules (see "ACTIVE
+>> >            SUBMODULES" section below).
+>> >
+>> >            If the submodule is not yet initialized, then the configura=
+tion inside the submodule does not exist yet, so where to obtain
+>> >            the submodule from is configured here for example.
+>> >
+>> >        =E2=80=A2   The .gitmodules file inside the superproject. A pro=
+ject usually uses this file to suggest defaults for the upstream
+>> >            collection of repositories for the mapping that is required=
+ between a submodule=E2=80=99s name and its path.
+>> >
+>> >            This file mainly serves as the mapping between the name and=
+ path of submodules in the superproject, such that the
+>> >            submodule=E2=80=99s Git directory can be located.
+>> >
+>> >            If the submodule has never been initialized, this is the on=
+ly place where submodule configuration is found. It serves as
+>> >            the last fallback to specify where to obtain the submodule =
+from.
+>> >
+>> >
+>> > However, when we are talking about the recurse attribute, it is
+>> > not taken from .gitmodules - only command line and .git/config seem
+>> > to be consulted.
+>> > Is this a bug or a feature?
+>>=20
+>> It's a (security) feature. We have had disussions[1] about how to safely
+>> read in-repo config, but we are very far away from that becoming a
+>> reality (if it ever happens).
+>>=20
+>> If we read this from the .gitmodules the repo could change how you
+>> interact with your submodules.
+>>=20
+>> 1. https://lore.kernel.org/git/YzXwZQbM69eNJfm7@nand.local/
+>
+> Hmm. Well we have a bunch of attributes there. Why this one? What did I m=
+iss?
 
-On 10/7/22 4:28 PM, René Scharfe wrote:
-> Am 07.10.22 um 19:49 schrieb Junio C Hamano:
->>
->> My preference is to flip the -Wno-missing-braces bit in
->> config.mak.uname only for folks who use the version of clang on
->> macOS when that clang claims to be clang11 (my understanding of
->> René's experiment[*] is that versions of (real) clang 9 or newer
->> perfectly well understand that {0} is an accpetable way to specify
->> zero initialization for any structure, with possible nesting).
->>
->> [Reference]
->>
->> * https://lore.kernel.org/git/36cd156b-edb2-062c-9422-bf39aad39a6d@web.de/
-> 
-> Wikipedia has a map that says Apple calls the LLVM clang 8 (i.e. the
-> real one) "11.0.0" and clang 9 "11.0.3":
-> 
-> https://en.wikipedia.org/wiki/Xcode#Xcode_11.0_-_14.x_(since_SwiftUI_framework)_2
-> 
-> Perhaps like this?  (No sign-off because I'm not comfortable with that
-> make function syntax, but feel free to steal salvageable parts.)
-> 
-> diff --git a/config.mak.dev b/config.mak.dev
-> index 4fa19d361b..4d59c9044f 100644
-> --- a/config.mak.dev
-> +++ b/config.mak.dev
-> @@ -69,6 +69,14 @@ DEVELOPER_CFLAGS += -Wno-missing-braces
->   endif
->   endif
-> 
-> +# LLVM clang older than 9 and Apple clang older than 12 complain
-> +# about initializing a struct-within-a-struct using just "{ 0 }"
-> +ifneq ($(filter clang1,$(COMPILER_FEATURES)),)
-> +ifeq ($(filter $(if $(filter Darwin,$(uname_S)),clang12,clang9),$(COMPILER_FEATURES)),)
-> +DEVELOPER_CFLAGS += -Wno-missing-braces
-> +endif
-> +endif
-> +
+I couldn't find the `submodule.<name>.recurse` you referenced in your
+email subject, so I'll assume we're talking about `submodule.recurse`
+here. A simple reason would be that `submodule.recurse` is not specific
+to a single submodule so it does not come from .gitmodules. .gitmodules
+is a way of providing metadata for that submodules need to work
+correctly, e.g.:
 
-So if I understand you correctly, Apple clang 11 is broken
-and Apple clang 12 is good.
+- where to get the submodule from during a fetch/clone, e.g.
+  `submodule.<name>.url`, `submodule.<name>.branch`
+- information needed for submodules to work correctly, e.g.
+  `submodule.<name>.path`
+- default config that gets populated in .git/config via `git submodule
+  init`, e.g. `submodule.<name>.update`,
+  `submodule.<name>.fetchRecurseSubmodules`
 
-I was getting ready to send (as soon as the CI finished)
-the following a simple to add the -Wno... for clang 11 and
-below on Darwin.
+With respect to config, the general stance is that .gitmodules is meant
+to provide defaults for .git/config and _not_ to be read directly (see
+=C3=86var's answer). There are some very limited cases where config is read
+directly from .gitmodules, but that approach is very frowned upon and
+it's unlikely that we'll add more of them in the future.
 
-+ifeq ($(uname_S),Darwin)
-+# Older versions of Apple clang complain about initializing a
-+# struct-within-a-struct using just "{0}" rather than "{{0}}".
-+# More recent versions do not.  This error is considered a
-+# false-positive and not worth fixing, so just disable it.
-+ifeq ($(filter clang12,$(COMPILER_FEATURES)),)
-+DEVELOPER_CFLAGS += -Wno-missing-braces
-+endif
-+endif
-
-I'm not sure I understand all of what your suggestion does.
-
-Jeff
-
+>
+> --=20
+> MST
