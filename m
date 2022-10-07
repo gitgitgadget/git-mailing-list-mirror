@@ -2,107 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2F29C433F5
-	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 14:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0B80C433FE
+	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 14:38:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229717AbiJGOYw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Oct 2022 10:24:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60816 "EHLO
+        id S229745AbiJGOiM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Oct 2022 10:38:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229693AbiJGOYu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2022 10:24:50 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B137914D20
-        for <git@vger.kernel.org>; Fri,  7 Oct 2022 07:24:47 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id j21so745830qkk.9
-        for <git@vger.kernel.org>; Fri, 07 Oct 2022 07:24:47 -0700 (PDT)
+        with ESMTP id S229713AbiJGOiL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2022 10:38:11 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 259871204FB
+        for <git@vger.kernel.org>; Fri,  7 Oct 2022 07:38:10 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id p26-20020a7bcc9a000000b003c384e59047so750798wma.4
+        for <git@vger.kernel.org>; Fri, 07 Oct 2022 07:38:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Bq6U8IFQgEn9wEPvf8WPG42tdmMMcXRp1DDFXEF+NUA=;
-        b=MBXYaAs3Y9MUXNAkIIsWI4oarkPpSSTGwnqmD+5BOP1EgEnOOKW80pqGX4XgLgX5CY
-         L6JeMQqH5OL6ugc9f6svbwl+DQ1cemjBkcX3KzNzb7P+rkU+POhNBtNcom+p/Ash3oLX
-         uORuWr4Lm9GHWUUQ+T3zGYAHJ+dwNKyQzF1fpJX/mSqGJYc6Pjrpr7NboO9PfBAyE/3d
-         lpDK3dviRzyYs1RfuOSlE2Ny8PLZElT8pQMVNQqDxM4SegnJIxNjgE2txZlueEmb5kBU
-         6HbDn7rs9nh+dqRczqcNC2VfEEi4rEeb/QMmoSJKwE0Kx6uyIxKCVj3eHEHvTIWwsQjD
-         bjzw==
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xSymgYDjIgl3c3Vb02LE4tZC4Nd4DdI9q1jBdD30K5w=;
+        b=BN4iDY0mURCg6+XtOpCWGvfw80mG238hV2rvoXXxOFv6Q6NYX7HtSp1EH86hZTWQ59
+         mVL5AzULCQtYjUPVpc2AzhXCkrs2MiZkNl0CV6GUELkz/2/fEeWq0SBHWSUtE2naQOZI
+         DcRHQEKNYT9Xzh7ni18FOwmvn1g0ML6xgiqdW5fiZ+z/9RICSdyvv2eiD2H/c8zqD3Q4
+         Gx1V6h3zjwXM3IIfqRg1aY//SKcwHaSxYAQWxsNIGnvhvzXhQCMYz4OjFoni2U3t9u6m
+         H/xX3dysLyPVtDishIvEtv6TzdDLZNaoesL6JMrbZqNohxYmWk9P0NvLprUnoWBsbnex
+         bg0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Bq6U8IFQgEn9wEPvf8WPG42tdmMMcXRp1DDFXEF+NUA=;
-        b=BpFTdHlemHA1t7lcqUSkIjKXusZZrPEhtETa+slUBBfMtKxkjQIksePezoCi7UgbmS
-         XsbBN31Nh0jXaC2Vr7105akjYKuhfnvlx9c1DT2xUh9HXGPXuBMMUT8sbQlA8V/xXYnr
-         A9pMKD3hPFqP9MLEtndS+ShORlpqC6u5UhBJdMDhMbmhNMC8QaFlN4z6IeejqycfpfkY
-         sjp5JuchoWid5zJbY8Ee/519M/d4+t7hjgiCvLXqArMOugIPnN74Z+uFq26p1LaNiptL
-         2ubyvqhGtQ7nJokJw801twbm2nr1QhwLtXu3OLHA2Ua79lUNxf1TS6Db/YJfO5LiOXQQ
-         1pEg==
-X-Gm-Message-State: ACrzQf0NtfY5OdTigzuux17YlHXeH1wHrerRlq1AXc0Xnps4tlCmyQ+2
-        THLEIkPUraKCSNVB+mPWYb15FIjsIMsm
-X-Google-Smtp-Source: AMsMyM66QX9s42yr2F3ktFVye33729zy3qe/hUv8me/C+09aP1XQD85mtItGawT05BMCC9EyxgKUfA==
-X-Received: by 2002:a05:620a:800d:b0:6ce:6f69:d629 with SMTP id ee13-20020a05620a800d00b006ce6f69d629mr3724890qkb.594.1665152686824;
-        Fri, 07 Oct 2022 07:24:46 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:2185:e582:857d:e0db? ([2600:1700:e72:80a0:2185:e582:857d:e0db])
-        by smtp.gmail.com with ESMTPSA id ay11-20020a05620a178b00b006bb78d095c5sm2009130qkb.79.2022.10.07.07.24.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Oct 2022 07:24:45 -0700 (PDT)
-Message-ID: <ae9de8dd-d1e6-2898-90cb-2a6593aa8f3a@github.com>
-Date:   Fri, 7 Oct 2022 10:24:44 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.13.1
-Subject: Re: [feature request] resume capability for users in enemies of
- Internet countries
-Content-Language: en-US
-To:     Philip Oakley <philipoakley@iee.email>, Eric Wong <e@80x24.org>,
-        =?UTF-8?Q?Michal_Such=c3=a1nek?= <msuchanek@suse.de>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, m <mahg361@gmail.com>,
-        git@vger.kernel.org
-References: <6e4a08d2-5d72-29fd-6917-11f0a74e9314@gmail.com>
- <83814bcb-1d72-07bf-32d1-d05db6cc6481@gmail.com>
- <20221007071459.GM28810@kitsune.suse.cz> <20221007072606.M704368@dcvr>
- <8e11ecf0-735a-a104-a3d1-8324fbd76862@iee.email>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <8e11ecf0-735a-a104-a3d1-8324fbd76862@iee.email>
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xSymgYDjIgl3c3Vb02LE4tZC4Nd4DdI9q1jBdD30K5w=;
+        b=VDKqtlzR5vNdKCz7j0fsNFHnzekRN8uPDY4Yb284NxJ+0IC2FJZJLB5xpPMPblAkI1
+         kqp52X4oTOQlD4US4AQHxPq8+uC2okLBpURYdKlYZGqLS2CYRqOPACcfxJpwzxGRIm+Z
+         nQ9suncYUN9+vWPP8z9PvJaGgdo57sOPA4PFfInz9nimn3hlHJ9z4i7RADZk/kRtNv2S
+         KjZJq+jXtP8crGHhqxrbPwQnxFBqWcPL2i7R3jz+96EFWBtvD8EPb+5WcCfblAinTrJO
+         JavezuHokoAuHqPfDIdPnZA0eLcSd0LwDjtrVBGRdvjniVRyiF6QHK6LlFfdYklrI5hB
+         HSKg==
+X-Gm-Message-State: ACrzQf31gW/Gcke8ASBWXGIqkOFLoId53qPjam7+5wd732ekmIqYOebM
+        qmAv8n31rF1gWp55dpgjvb76tCqjcjI=
+X-Google-Smtp-Source: AMsMyM4Tlj8/OOsPEOycndYJb+L1WSTvfp0OMParNbLNw8M66Cg1pIWjz7iAU/gZoCCptwKJTpa0aA==
+X-Received: by 2002:a05:600c:1caa:b0:3a8:4066:981d with SMTP id k42-20020a05600c1caa00b003a84066981dmr10747908wms.54.1665153488411;
+        Fri, 07 Oct 2022 07:38:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bs14-20020a056000070e00b0022a297950cesm2226330wrb.23.2022.10.07.07.38.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Oct 2022 07:38:07 -0700 (PDT)
+Message-Id: <pull.1355.v2.git.git.1665153486.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1355.git.git.1665056747.gitgitgadget@gmail.com>
+References: <pull.1355.git.git.1665056747.gitgitgadget@gmail.com>
+From:   "Daniel Sonbolian via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 07 Oct 2022 14:38:04 +0000
+Subject: [PATCH v2 0/2] git.c: improve readability | git-p4: minor optimization
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Daniel Sonbolian <dsal3389@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/7/22 6:03 AM, Philip Oakley wrote:
-> On 07/10/2022 08:26, Eric Wong wrote:
+git.c - made the code more readable in cmd_main by moving the spacial casing
+for "version" and "help" as part of the regular code path
 
->> Perhaps GIT_SMART_HTTP=0 and having dumb clones not throwaway
->> incomplete xfers would be more transparent to hosters, but dumb
->> HTTP tends to be slow even on good connections.
-> 
-> There is work going on by Stollee (cc'd) on Bundle-URIs that look to
-> split up repository serving into bite sized chunk, so may be worth
-> looking at.
-> https://lore.kernel.org/git/pull.1248.v4.git.1660050761.gitgitgadget@gmail.com/
-> : [PATCH v4 0/2] bundle URIs: design doc
-> 
-> Also discussed at the recent Contributor's Summit
-> https://lore.kernel.org/git/YzXvwv%2FzK5AjhVvV@nand.local/ : [TOPIC 1/8]
-> Bundle URIs
+git-p4.py - minor optimization in read_pipe_lines by first checking for
+errors, then reading data and/or decoding it from the pip stream
 
-Thanks, Philip.
+Daniel Sonbolian (2):
+  git-p4: minor optimization in read_pip_lines
+  git.c: improve code readability in cmd_main
 
-The bundle URIs feature should make it possible to help here.
+ git-p4.py | 10 +++++++---
+ git.c     | 14 ++++++++------
+ 2 files changed, 15 insertions(+), 9 deletions(-)
 
-One is that we could break the clone into smaller pieces, but
-I think that most bundle providers will still have at least
-one bundle with "most" of the repo. The real payoff is that
-we should be able to have resumable downloads for those
-bundles (pending some implementation details, but I'm waiting
-for the rest of the series to land first).
 
-Of course, this all depends on the host providing bundles and
-advertising them, but we will get to that when we can.
+base-commit: bcd6bc478adc4951d57ec597c44b12ee74bc88fb
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1355%2Fdsal3389%2Frm-useless-else-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1355/dsal3389/rm-useless-else-v2
+Pull-Request: https://github.com/git/git/pull/1355
 
-Thanks,
--Stolee
+Range-diff vs v1:
+
+ 1:  71da6f53a44 ! 1:  dd81a2cadec python file more pytonic, adjust "if" and "for"
+     @@
+       ## Metadata ##
+     -Author: dsal3389 <dsal3389@gmail.com>
+     +Author: Daniel Sonbolian <dsal3389@gmail.com>
+      
+       ## Commit message ##
+     -    python file more pytonic, adjust "if" and "for"
+     +    git-p4: minor optimization in read_pip_lines
+      
+     -    L371
+     -    redesign few lines to get rid of the "else" statement
+     -
+     -    L404
+     -    moved the if statement below another if statement that
+     -    checks if it should exit the code, only if it doesnt need to,
+     -    then we can iterate the for loop and decode the text
+     -
+     -    Changes to be committed:
+     -            modified:   git-p4.py
+     +    checking for an error condition before reading and/or decoding
+     +    lines from the pip stream to avoid unnecessary computation
+      
+          Signed-off-by: Daniel Sonbolian <dsal3389@gmail.com>
+      
+       ## git-p4.py ##
+     -@@ git-p4.py: def read_pipe(c, ignore_error=False, raw=False, *k, **kw):
+     -        """
+     -     retcode, out, err = read_pipe_full(c, *k, **kw)
+     -     if retcode != 0:
+     --        if ignore_error:
+     --            out = ""
+     --        else:
+     -+        if not ignore_error:
+     -             die('Command failed: {}\nError: {}'.format(' '.join(c), err))
+     -+        out = ""
+     -     if not raw:
+     -         out = decode_text_stream(out)
+     -     return out
+      @@ git-p4.py: def read_pipe_lines(c, raw=False, *k, **kw):
+     + 
+           p = subprocess.Popen(c, stdout=subprocess.PIPE, *k, **kw)
+           pipe = p.stdout
+     ++
+     ++    if p.wait():
+     ++        die('Command failed: {}'.format(' '.join(c)))
+     ++
+           lines = pipe.readlines()
+     --    if not raw:
+     ++    pipe.close()
+     ++
+     +     if not raw:
+      -        lines = [decode_text_stream(line) for line in lines]
+     -     if pipe.close() or p.wait():
+     -         die('Command failed: {}'.format(' '.join(c)))
+     -+    if not raw:
+     -+        lines = [decode_text_stream(line) for line in lines]
+     +-    if pipe.close() or p.wait():
+     +-        die('Command failed: {}'.format(' '.join(c)))
+     ++        return [decode_text_stream(line) for line in lines]
+           return lines
+       
+       
+ 2:  c107ad9f6ff ! 2:  7fe59688018 removed else statement
+     @@
+       ## Metadata ##
+     -Author: dsal3389 <dsal3389@gmail.com>
+     +Author: Daniel Sonbolian <dsal3389@gmail.com>
+      
+       ## Commit message ##
+     -    removed else statement
+     +    git.c: improve code readability in cmd_main
+      
+     -    there is no need for the else statement if we can do it more
+     -    elegantly with a signle if statement we no "else"
+     +    checking for an error condition whose body unconditionally exists first,
+     +    and then the special casing of "version" and "help" as part of the
+     +    preparation for the "normal codepath", making the code simpler to read
+      
+          Signed-off-by: Daniel Sonbolian <dsal3389@gmail.com>
+      
+
+-- 
+gitgitgadget
