@@ -2,110 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A898EC433FE
-	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 09:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 407ABC433F5
+	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 09:24:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229656AbiJGJCO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Oct 2022 05:02:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45560 "EHLO
+        id S229738AbiJGJYS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Oct 2022 05:24:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229581AbiJGJCM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2022 05:02:12 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 757FAD57C3
-        for <git@vger.kernel.org>; Fri,  7 Oct 2022 02:02:11 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 1D9E15A116;
-        Fri,  7 Oct 2022 09:02:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1665133330;
-        bh=2C9h/WDwRtTnYDeyRHUBHYGIkgU5LaSt3K9L2ZucgpQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Qu1QILS5xv5PrstLUnVrdwjsbbsd6UhkJEKGRF6DervcwHgNCL0MOhXvDWoRV1lrk
-         QtzyrQzGsbfDIZeWw42pI6p1/OF+xJ5qEvIwRcENsiPcXb1eN/65WfRTK4AED6zyI3
-         6GbEYivf9EpklCPyPcsNW0EDzhm+/cDWCOQQgV5ApZvkNAudPLnc7Y5QdMLS+NMT2g
-         AWj4DWDvcFEuCoNxy1Y5UtTnQcVJvK0vHYipnJTRB2ikxFWUfTXpOtINPlzHpbgB0c
-         wqwi5kaWiM73LttA4sYEqD1VFtzdeJncPxYPANCnkhjX6teEP0nesLscj9/dQVNVzq
-         x7TPNqV0xwsOzHlwWoYeX6NZ6Sue+jIPxPWnwoPu1fzviQAURid7btW3oH0XUxxpp4
-         ySgy61U+7hZGM96ihXp8WiWHGoNLmp+QVC9N7QipHNHmMJDSIBoPlv8PQFmszPsXzm
-         8VxtuQFmwiwqAdZFuPRIZxSysXAvhzRZMP1psdIkgqWTdP9kFqJ
-Date:   Fri, 7 Oct 2022 09:02:07 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Git List <git@vger.kernel.org>, Andreas Krey <a.krey@gmx.de>
-Subject: Re: Idea: Git Bundle V3 capability @HEAD=ref/heads/<name>
-Message-ID: <Yz/rAHYi8JKylHqy@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Git List <git@vger.kernel.org>, Andreas Krey <a.krey@gmx.de>
-References: <8d88ba68-4585-634b-1fe0-61c3465fa682@iee.email>
- <037901f1-1649-1485-a853-9783b9d43b31@iee.email>
+        with ESMTP id S229757AbiJGJYO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2022 05:24:14 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D882DCD5D0
+        for <git@vger.kernel.org>; Fri,  7 Oct 2022 02:24:13 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id b7so6352425wrq.9
+        for <git@vger.kernel.org>; Fri, 07 Oct 2022 02:24:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1hfA8pHWoJNkL0cS6p/pkj5HmN9seY0rqk5uHHwNuow=;
+        b=T+qtF/cN4OWGNASaOlniaQeVrqArTstc9hGOKwkw2VuZvcJ4+mnSJMsQ24iCrbsLtB
+         B6FElf62I9AVJY2OgXQTxP7TqI3y5+HTRCGRX4f6VwWMwq2DFcXkamsRBCut87AL8r74
+         X46/cWXWdTS0TU3ZuGzIqKCkwz4k9SFBF1yHybqFyHmSUN7iPRH/A91fIkDjLHZV3Svt
+         BGgeqbLOa3tulcKUMW09nKcc58Ufb+Y315JhRoEF9Yg/nt+ueJ8JKIPE2WNWqGheTGvR
+         mzQ2pK1kFXg5RhKlAqiPJPiTuJnGvo5/h1liDgkFzi8KWljXEudliI0AXCjmmKRNQ/3s
+         zTpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1hfA8pHWoJNkL0cS6p/pkj5HmN9seY0rqk5uHHwNuow=;
+        b=0kJ+0lV1p0jpiTTrds13FywsoqkE8ayzUhzUWE/i0oVmnN3557LgloeFVnzeIT6qxe
+         so1Y2I+Yax7Q1NPrqAtNYaHjcXMg4fGTCzhO+r6ScJ9CLXVOToQX2P6PhN9VvrZtfh0s
+         BHJO0YI2ECG87gCX/D6a2WvpuXRq3v1lXcz8hoFasQRkjI7OWVmlIOvmLU3pCccom3Zn
+         Zz+xSSurFPbDsZKXbFI1TSPMvio+UL83P8r6IOOpraS2GxRqSwAHN7XTDZEehykBgEnl
+         dqfWlBHGqqcFC551hsTiQRFt+9RHKWdclRKIVjWzFAbAGgF/CU5RpiQKE7KoR1K81wUl
+         F9ow==
+X-Gm-Message-State: ACrzQf1zj35YR5DyejXB4+j/cp/Uiybad+fE0B/7e9DP9NDr2EvL0cdN
+        gdb5i0bFf3f7TPYbwcFy3pqFsn68H6I=
+X-Google-Smtp-Source: AMsMyM7kU8YXB3SXg+RC1RC8rf4EZddtQC/r7pZ42EngahH2u1SfJxW7Aj8lhFmwuXB6GK5vtUs7/Q==
+X-Received: by 2002:a5d:650f:0:b0:22e:6597:fdd0 with SMTP id x15-20020a5d650f000000b0022e6597fdd0mr2434142wru.127.1665134652340;
+        Fri, 07 Oct 2022 02:24:12 -0700 (PDT)
+Received: from [192.168.1.74] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id o5-20020adfe805000000b00228cd9f6349sm1492743wrm.106.2022.10.07.02.24.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Oct 2022 02:24:11 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <9f3216e5-1397-2d91-19dc-47e8165783a6@dunelm.org.uk>
+Date:   Fri, 7 Oct 2022 10:24:10 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="x/QZ91xNmHayZimz"
-Content-Disposition: inline
-In-Reply-To: <037901f1-1649-1485-a853-9783b9d43b31@iee.email>
-User-Agent: Mutt/2.2.7 (2022-08-07)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 05/15] run-command tests: use "return", not "exit"
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+References: <cover-00.15-00000000000-20220930T111343Z-avarab@gmail.com>
+ <patch-05.15-4ebbf6207fe-20220930T111343Z-avarab@gmail.com>
+In-Reply-To: <patch-05.15-4ebbf6207fe-20220930T111343Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Ævar
 
---x/QZ91xNmHayZimz
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 30/09/2022 12:28, Ævar Arnfjörð Bjarmason wrote:
+> Change the "run-command" test helper to "return" instead of calling
+> "exit", see 338abb0f045 (builtins + test helpers: use return instead of exit() in cmd_*, 2021-06-08)
+> 
+> Because we'd previously gotten past the SANITIZE=leak check by using
+> exit() here we need to move to "goto cleanup" pattern. See
+> fdc8f79f1f1 (leak tests: run various "test-tool" tests in t00*.sh
+> SANITIZE=leak, 2021-10-12) for prior art. for when this code was opted
+> into the "linux-leaks" job.
 
-On 2022-10-06 at 15:55:49, Philip Oakley wrote:
-> In brian's recent work on V3 bundles [1, et al] I spotted a potential
-> idea for resolving the long standing problem that the bundle code may
-> need to guess at which ref HEAD was pointed [2, et al] at when there
-> were two branches that pointed at the same HEAD oid.
->=20
-> The basic idea is to utilise the new 'capabilities' field to pass the
-> particular ref that is HEAD using a 'HEAD' capability
-> i.e. sending the capability =C2=A0=C2=A0 @HEAD=3Dref/heads/<name>
->=20
-> It's inclusion in the header wouldn't change the pack in any way, and
-> would resolve the guessing problem.
->=20
-> It would be optional for those that don't want to explictly export the
-> HEAD ref's name, and could be also protected by requiring that HEAD is
-> listed in the pack, and maybe that the ref it points to is also
-> included, and maybe further that there is an alternate ambigous ref liste=
-d.
->=20
-> The idea of the HEAD capability could also be extended to the transport
-> layer, as well as this bundle sneaker-net layer.
->=20
-> Are there reasons why it couldn't work before I put it on my list of idea=
-s?
+That commit just adds some TEST_PASSES_SANITIZE_LEAK=true lines, it's 
+not nothing to do with "goto cleanup", I don't think we need to 
+reference any prior art, just explain why we need to add the cleanup 
+which you already do.
 
-I think this is a great idea.  I might suggest
-"symref=3DHEAD:refs/heads/<name>" simply because it allows us to specify
-more than one symref if we feel like it in the future, but otherwise I
-have no objections.
+>   	if (!strcmp(argv[1], "run-command-parallel")) {
+> -		exit(run_processes_parallel(jobs, parallel_next,
+> -					    NULL, NULL, &proc));
+> +		run_processes_parallel(jobs, parallel_next, NULL, NULL,
+> +				       &proc);
 
-I'm glad someone's finding my v3 bundle work more generally useful.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+There is no explanation of why it is safe to discard the return value 
+here. The answer is in the next commit message, but needs to be 
+mentioned here as well.
 
---x/QZ91xNmHayZimz
-Content-Type: application/pgp-signature; name="signature.asc"
+Best Wishes
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.39 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYz/rDwAKCRB8DEliiIei
-gZ/3AQCdDeqjlDW5rS7pKIiC41cKC6GcEq3OJ2FASmE03AFJTgD/SkBRTOLmjkDC
-3tSex3QvhO8tE9W0LrTSVMysZCAQIgU=
-=ElKY
------END PGP SIGNATURE-----
-
---x/QZ91xNmHayZimz--
+Phillip
