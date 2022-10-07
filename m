@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57811C433F5
-	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 09:30:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FAC6C433FE
+	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 09:30:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229785AbiJGJaw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Oct 2022 05:30:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40570 "EHLO
+        id S229826AbiJGJaz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Oct 2022 05:30:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229740AbiJGJaq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2022 05:30:46 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22A5AE31BF
-        for <git@vger.kernel.org>; Fri,  7 Oct 2022 02:30:45 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id bk15so6347660wrb.13
-        for <git@vger.kernel.org>; Fri, 07 Oct 2022 02:30:45 -0700 (PDT)
+        with ESMTP id S229777AbiJGJat (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2022 05:30:49 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F8E7B8C3F
+        for <git@vger.kernel.org>; Fri,  7 Oct 2022 02:30:47 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id bv10so2821714wrb.4
+        for <git@vger.kernel.org>; Fri, 07 Oct 2022 02:30:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XCm3WGvF9XGA2N853MNnGYeBD9JeHf6YfnlCoEZFwns=;
-        b=msBD+9U0KG9WgWAQdgA0tw/nyRZoC8CiZDKqxEihxFaBooholBO5PuYVaPrbuudvQU
-         YXNZtg69Lo/U+M17ias+l8PJSIiYbUvyv56DLJLS/DMO5VrINw0C0YxaXAD3wlxznsDn
-         +rL8QdMrdOXS3u3mBy5uRXiCJ4hT2/MwSgjDS9pD9bDGuEjLduMbbQTfzCP81cBoYry8
-         Wkk+PC+Obh9DH71i7ArYsyN+22/prO4SpIB9St56Mj4SaVqA1JucYBtHaHlOEcs2AeDc
-         vzLj/pXPLRpyn/gB6zbopP2m2nC6WVx6hbP4zKLxq9tGeA7CyFxi82a9XmrN/NEg5IBE
-         ISWw==
+        bh=AWhK8WmwG6YLEC7geu3uZt3J3/uCWguqCGeUj6zNVLo=;
+        b=jOJWAtdg2zbU59f+yo9FoMIWovFmefFtxgRO85NVqSAy1LPOsvFiUQWZWK4xEXO2bU
+         4jAvyPu8aDqZ1vhW/2YaKr9uAmasw/OJHHge1Smt+5Xa/Cq+wPtoaY2BG0Ju3oXBUB2u
+         dk4SvJqf2ciU6mjXm+EuufGgViapGuR6Xmp3hk8QdUL6yMQOo95aomR5Ni5bDMWX8b7r
+         jLvPiah73csn2oqoE599QRU8RtNdlGxNC44i+F2BTmueT+4PSmKIRQuhhhFGa1WR5+Oq
+         8sgmQ1sIgVL3n+DOwzRCNN5tcJwDsKKQ/L4NhPm/Nl+XZetm36pP1La7+OtxkeheljiG
+         HBnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XCm3WGvF9XGA2N853MNnGYeBD9JeHf6YfnlCoEZFwns=;
-        b=Ga7eJrnljh27D/5MGjIbFIxyPe7bBW+O6OWqk6BK7fLVtCxvxUPaF03BfS2Aqr33r0
-         FfM17AyY2TR9oT80b3vFwCp9c3h7rxohq5zsj0lAy3VHCMf6QfrtQa64DwzUvgR0us1w
-         8DodIg6caeMUHLvTVZ/mufesmWzW3QOegRdfvOnl4hU1K9CDmIQs7NT7mWedSqIQeZPq
-         acPeiCSRbXyavvCROnjTCeYyLd1CxNeCP/Aj7dST7C74huA1ad00UPFcQ0FCaQBBSyw0
-         rRpbhbsVLcfVwbqVNFmyINPL+fxNp+Bhoq9oU90AqxJqB3Q9piyP9o/dl/wC3uMWDWUc
-         03tw==
-X-Gm-Message-State: ACrzQf0+5dOHLJFRSjm+5wRN2zgYNrcn2ghSqSZstzB/dJ7zkUrIeDkq
-        44HMYN7GhD1olyW5un2aFXdeGJ55N4QG1g==
-X-Google-Smtp-Source: AMsMyM5PsJ+D/S7Sl4n1a7v0OpmEjTK6uZcMlmd+LhXdO30Ce4tnDD5sSow5HIheSJ3F+x9WAc2XFw==
-X-Received: by 2002:a05:6000:18ad:b0:22a:f7b5:16f8 with SMTP id b13-20020a05600018ad00b0022af7b516f8mr2572208wri.305.1665135043227;
-        Fri, 07 Oct 2022 02:30:43 -0700 (PDT)
+        bh=AWhK8WmwG6YLEC7geu3uZt3J3/uCWguqCGeUj6zNVLo=;
+        b=FJiDOA67OIiNk+JUnBvK8LS5py5mgIRq0Upl/n2m75BVOLeKSIWskwpmo6ON1ahh+B
+         EuJ308eMjO2nxeeZY7Plos93mVsmlsqlpJDKmFCrxtMNRxjrWA9cdT9QlLYuOaf22ukY
+         MYas1JQP4GVSzjQSoVeAyZp/shlOs2pFw/hctqei9ggqoTDIJKaRkdU/Z5OiqX6I4Xro
+         6OOSD1/6eKbAxFn9dkGRuCNiucvDdyK1p7+gMGdapIXNUFIOrTNEMSY5ZlKg7af0e9et
+         a/IZDeZNtWjPhmXFswQWpLeg2JTwJjSD5kWILOJhNaU6H2NkQtcNEPQbO1iFIxmwtzgH
+         CcOQ==
+X-Gm-Message-State: ACrzQf0MYWLnT3p45v319zBvETXHSxDTzxd4nVY9kW1ZiKidN74AIoqq
+        dTRLi0tqcZdVRoZSgCdJa/ianMHdmBeohQ==
+X-Google-Smtp-Source: AMsMyM7uuI8zvC6vsRvBa0eYvxNmoEcEAZ0wPar+vpSNVnh/v3kt3JAl6uysp5yazLiMWkol7XmGLA==
+X-Received: by 2002:a5d:558f:0:b0:22e:2fac:d550 with SMTP id i15-20020a5d558f000000b0022e2facd550mr2683421wrv.652.1665135045807;
+        Fri, 07 Oct 2022 02:30:45 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o18-20020a1c7512000000b003b492753826sm1634945wmc.43.2022.10.07.02.30.41
+        by smtp.gmail.com with ESMTPSA id o18-20020a1c7512000000b003b492753826sm1634945wmc.43.2022.10.07.02.30.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Oct 2022 02:30:42 -0700 (PDT)
+        Fri, 07 Oct 2022 02:30:43 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/5] CodingGuidelines: mention dynamic C99 initializer elements
-Date:   Fri,  7 Oct 2022 11:30:31 +0200
-Message-Id: <patch-2.5-343ec223dff-20221007T092505Z-avarab@gmail.com>
+Subject: [PATCH 3/5] CodingGuidelines: allow declaring variables in for loops
+Date:   Fri,  7 Oct 2022 11:30:32 +0200
+Message-Id: <patch-3.5-80afc246666-20221007T092505Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.971.ge79ff6d20e7
 In-Reply-To: <cover-0.5-00000000000-20221007T092505Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20221007T092505Z-avarab@gmail.com>
@@ -70,51 +70,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The first use of variables in initializer elements appears to have
-been 2b6854c863a (Cleanup variables in cat-file, 2007-04-21) released
-with v1.5.2.
+Since 44ba10d6712 (revision: use C99 declaration of variable in for()
+loop, 2021-11-14) released with v2.35.0 we've had a variable declared
+with in a for loop.
 
-Some of those caused portability issues, and e.g. that "cat-file" use
-was changed in 66dbfd55e38 (Rewrite dynamic structure initializations
-to runtime assignment, 2010-05-14) which went out with v1.7.2.
+Since then we've had inadvertent follow-ups to that with at least
+cb2607759e2 (merge-ort: store more specific conflict information,
+2022-06-18) released with v2.38.0.
 
-But curiously 66dbfd55e38 missed some of them, e.g. an archive.c use
-added in d5f53d6d6f2 (archive: complain about path specs that don't
-match anything, 2009-12-12), and another one in merge-index.c (later
-builtin/merge-index.c) in 0077138cd9d (Simplify some instances of
-run_command() by using run_command_v_opt()., 2009-06-08).
+As November 2022 is within the window of this upcoming release let's
+update the guideline to allow this, and revert the recent
+6983f4e3b20 (test-parse-options.c: don't use for loop initial
+declaration, 2022-09-05).
 
-As far as I can tell there's been no point since 2b6854c863a in 2007
-where a compiler that didn't support this has been able to compile
-git. Presumably 66dbfd55e38 was an attempt to make headway with wider
-portability that ultimately wasn't completed.
-
-In any case, we are thoroughly reliant on this syntax at this point,
-so let's update the guidelines, see
-https://lore.kernel.org/git/xmqqy1tunjgp.fsf@gitster.g/ for the
-initial discussion.
+It's better to update the guidelines than to have back & forth churn
+like that, we clearly don't have portability issues related to this
+syntax.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/CodingGuidelines | 5 +++++
- 1 file changed, 5 insertions(+)
+ Documentation/CodingGuidelines | 10 ++--------
+ revision.c                     |  7 -------
+ t/helper/test-parse-options.c  |  3 +--
+ 3 files changed, 3 insertions(+), 17 deletions(-)
 
 diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 386ca0a0d22..8afda28cfce 100644
+index 8afda28cfce..f9affc4050a 100644
 --- a/Documentation/CodingGuidelines
 +++ b/Documentation/CodingGuidelines
-@@ -213,6 +213,11 @@ For C programs:
-    compilers we target have only partial support for it. These are
-    considered safe to use:
+@@ -232,18 +232,12 @@ For C programs:
+    . since early 2021 with 765dc168882, we have been using variadic
+      macros, mostly for printf-like trace and debug macros.
  
-+   . since around 2007 with 2b6854c863a, we have been using
-+     initializer elements which are not computable at load time. E.g.:
-+
-+	const char *args[] = {"constant", variable, NULL};
-+
-    . since early 2012 with e1327023ea, we have been using an enum
-      definition whose last element is followed by a comma.  This, like
-      an array initializer that ends with a trailing comma, can be used
+-   These used to be forbidden, but we have not heard any breakage
+-   report, and they are assumed to be safe.
++   . since late 2021 with 44ba10d6, we have had variables declared in
++     the for loop "for (int i = 0; i < 10; i++)".
+ 
+  - Variables have to be declared at the beginning of the block, before
+    the first statement (i.e. -Wdeclaration-after-statement).
+ 
+- - Declaring a variable in the for loop "for (int i = 0; i < 10; i++)"
+-   is still not allowed in this codebase.  We are in the process of
+-   allowing it by waiting to see that 44ba10d6 (revision: use C99
+-   declaration of variable in for() loop, 2021-11-14) does not get
+-   complaints.  Let's revisit this around November 2022.
+-
+  - NULL pointers shall be written as NULL, not as 0.
+ 
+  - When declaring pointers, the star sides with the variable
+diff --git a/revision.c b/revision.c
+index 36e31942cee..8f2623b3b5a 100644
+--- a/revision.c
++++ b/revision.c
+@@ -47,13 +47,6 @@ static inline int want_ancestry(const struct rev_info *revs);
+ void show_object_with_name(FILE *out, struct object *obj, const char *name)
+ {
+ 	fprintf(out, "%s ", oid_to_hex(&obj->oid));
+-	/*
+-	 * This "for (const char *p = ..." is made as a first step towards
+-	 * making use of such declarations elsewhere in our codebase.  If
+-	 * it causes compilation problems on your platform, please report
+-	 * it to the Git mailing list at git@vger.kernel.org. In the meantime,
+-	 * adding -std=gnu99 to CFLAGS may help if you are with older GCC.
+-	 */
+ 	for (const char *p = name; *p && *p != '\n'; p++)
+ 		fputc(*p, out);
+ 	fputc('\n', out);
+diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
+index 506835521a4..f8a62d892d9 100644
+--- a/t/helper/test-parse-options.c
++++ b/t/helper/test-parse-options.c
+@@ -195,8 +195,7 @@ int cmd__parse_options(int argc, const char **argv)
+ 
+ static void print_args(int argc, const char **argv)
+ {
+-	int i;
+-	for (i = 0; i < argc; i++)
++	for (int i = 0; i < argc; i++)
+ 		printf("arg %02d: %s\n", i, argv[i]);
+ }
+ 
 -- 
 2.38.0.971.ge79ff6d20e7
 
