@@ -2,79 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B5C4C433F5
-	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 07:26:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46BB8C433F5
+	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 08:17:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229746AbiJGH0P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Oct 2022 03:26:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60412 "EHLO
+        id S229620AbiJGIRx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Oct 2022 04:17:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229872AbiJGH0M (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2022 03:26:12 -0400
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6CCFC0695
-        for <git@vger.kernel.org>; Fri,  7 Oct 2022 00:26:07 -0700 (PDT)
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id BE75B1F403;
-        Fri,  7 Oct 2022 07:26:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-        s=selector1; t=1665127566;
-        bh=+c0J+TIbVyLrabg1cTV3BTOnZMRWI4scQUhY2x18eFk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=2f582ya9k0rG31CNoPnhRGQHmtOm93CwuNKmxzUuIQBZnoPPuSIBvavW8kY0H31ZA
-         sxCbJCK2sHGZy31ZXA/ewBdfNh1bkRqYglOm/+6CzbpsAjH5O31id6iUER3SF2t61M
-         Pon0bzOeXdFmGtU6zp8KnFQ8h3NpalRGEqBCpjC8=
-Date:   Fri, 7 Oct 2022 07:26:06 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, m <mahg361@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [feature request] resume capability for users in enemies of
- Internet countries
-Message-ID: <20221007072606.M704368@dcvr>
-References: <6e4a08d2-5d72-29fd-6917-11f0a74e9314@gmail.com>
- <83814bcb-1d72-07bf-32d1-d05db6cc6481@gmail.com>
- <20221007071459.GM28810@kitsune.suse.cz>
+        with ESMTP id S229454AbiJGIRw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2022 04:17:52 -0400
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 921499D521
+        for <git@vger.kernel.org>; Fri,  7 Oct 2022 01:17:51 -0700 (PDT)
+Received: by mail-ed1-f44.google.com with SMTP id s30so6015837eds.1
+        for <git@vger.kernel.org>; Fri, 07 Oct 2022 01:17:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RdI2pCjK7H4BZ45kPk6jInLxlFWizMlCrGmKGtFeAUE=;
+        b=MUwKvjF8dZCfXIEGe9Gw/rhnLJDB9F7kEFquJ8wx6HJkvWi0vs/amZ2m0hpvJwgoKv
+         JHE+b9Bk1frA/eBeTWFAM7l7XM4hNPsJqAJLbtXTsXoqVIAD1Z/9WvYlq8HndHxu8lou
+         kJOd4RvrcnKCyP2lSDCfSdxayoL47+ofkQ/zrvpHqxuR/yyEm0/jz1ajZnSySnI79pM5
+         YVn4i7lVjTDYMlrWcyamsesiF/iqlfbxSNAYsJ/fFNNYhlbvjOoJ4V7WAtgiXBOvPWB+
+         /wS0zrjRsfXVTaTZc5PtdY+ANkSjryCjMRvsyWoKbLPNMjOj5taiR3gDrQJpgVpoYtR7
+         WiLw==
+X-Gm-Message-State: ACrzQf1w4PM69eUVzdAAEgxs/f2qyb5K4MW3S+T0o1CbQrSJmxolwQNQ
+        /JrBVWyUTzzEpmGFRkOcdMS1SEc8qbaEaSHpRKLJl9em+cU=
+X-Google-Smtp-Source: AMsMyM4pJkfu9jOrrox4aXlbSrM3QbVqqfB1NXXRgq3cZwoljuboMUWHmn2KvWB592jCwKTnqezitZT0N0eAFALYvZs=
+X-Received: by 2002:a05:6402:3786:b0:451:24da:f8c9 with SMTP id
+ et6-20020a056402378600b0045124daf8c9mr3475666edb.250.1665130669938; Fri, 07
+ Oct 2022 01:17:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221007071459.GM28810@kitsune.suse.cz>
+References: <CAApTLm9DJW6zARsbJOCEcahkuLHA23tCF=rJ1Vy0J+kufBfTGA@mail.gmail.com>
+In-Reply-To: <CAApTLm9DJW6zARsbJOCEcahkuLHA23tCF=rJ1Vy0J+kufBfTGA@mail.gmail.com>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Fri, 7 Oct 2022 10:17:13 +0200
+Message-ID: <CA+JQ7M8c97GvNH6kXhjpF2BU=-5xFdcfaeLqtwBXX3nQn_J80w@mail.gmail.com>
+Subject: Re: A possibly mistake on the "Git Commands - Setup and Config page"
+To:     ddady <ddady1@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michal Suchánek <msuchanek@suse.de> wrote:
-> On Fri, Oct 07, 2022 at 08:44:09AM +0700, Bagas Sanjaya wrote:
-> > On 10/7/22 01:01, m wrote:
-> > > In my country government make connections unstable on purpose. Please add resume capability for commands like git clone
-> > > 
-> > 
-> > Bandwidth issue?
-> > 
-> Bandwidth is one thing but the other thing is that git network
-> operations require that the whole operation succeeds in one go.
-> 
-> If your connectivity is bad to the point that the TCP connection breaks
-> you have downloaded a bunch of data that is AFAIK just thrown away when
-> you retry.
-> 
-> It is difficult to know if that data would be useful in the future, and
-> you cannot meaningfully 'resume' because the remote state might have
-> changed in the meantine as well.
-> 
-> Further, this whole fetch operation is using a heuristic to fetch some
-> data in the hope that it will be enough to reconstruct the history that
-> is requested, and this has been wrong in some cases, too. Not very
-> precise and reproducible hence hard to 'resume' as well.
-> 
-> Let's say that the git networking has been developed at and tuned for
-> the 'first world' Internet, and may be problematic to use in net-wise
-> backwater areas. And it would require non-trivial effort to change.
+On Fri, Oct 7, 2022 at 8:12 AM ddady <ddady1@gmail.com> wrote:
+>
+> Hi,
+>
+> If i'm not mistaken, the path of configuring Notepad++ as default text
+> editor 64 bit version is: "C:\ProgramFiles\Notepad++\notepad++.exe"
 
-Increased adoption of bundles would help, since `wget -c' and such
-would work nicely, but that puts the burden on hosts for extra storage.
+Curiously, if you look in the progit2 repository it appears it's
+always been this path. This can be confirmed running
+  git log -p --grep 'Notepad++'
+in the progit2 repository. Perhaps the + characters are being eaten up
+in the generation of the HTML? I haven't been able to try and confirm.
 
-Perhaps GIT_SMART_HTTP=0 and having dumb clones not throwaway
-incomplete xfers would be more transparent to hosters, but dumb
-HTTP tends to be slow even on good connections.
+This is issue is probably more appropriately reported in the progit2 repository
+https://github.com/progit/progit2/issues
