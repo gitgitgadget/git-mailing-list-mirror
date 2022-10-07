@@ -2,53 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE851C433FE
-	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 09:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEBACC433F5
+	for <git@archiver.kernel.org>; Fri,  7 Oct 2022 09:30:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229757AbiJGJat (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Oct 2022 05:30:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40564 "EHLO
+        id S229761AbiJGJau (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Oct 2022 05:30:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229744AbiJGJaq (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229738AbiJGJaq (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 7 Oct 2022 05:30:46 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70D79D57E9
-        for <git@vger.kernel.org>; Fri,  7 Oct 2022 02:30:43 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id bv10so2821372wrb.4
-        for <git@vger.kernel.org>; Fri, 07 Oct 2022 02:30:43 -0700 (PDT)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F158C895A
+        for <git@vger.kernel.org>; Fri,  7 Oct 2022 02:30:42 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id bk15so6347445wrb.13
+        for <git@vger.kernel.org>; Fri, 07 Oct 2022 02:30:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1OBWqNhgnPEHTpjKB6QRdb9j9B3rt64J0IqiiBl3Ogk=;
-        b=eNt5sA+G7kiXb/SDPjIwIue98sFZLHHp0fwPh0KmF36CPzf/BopyWlPAktB4TftBOc
-         ieUo6d8qUeAtvU7G2HmTKyCtKKRfGgc7E+NVWk39IB2SN6gJplB7sqTsQLmym/Q0P6HC
-         deVoR47nda72JNf9+KnyEv5iAd5zjaIYjSMMfEeU94vi3J+H+yyg5ZcA5qcjVnJfixnr
-         JA18LcV6FC1PrCWM+aG8nsj2ykzGWPxWoLuWh63sFg6w7lHOvzjImn9AZ2Qes/JU0ROA
-         qXwqTGjapA71CZxk32qwlOUq6eqjOenkBMUhGC+ZjkpKHl9QB0msXillK8HBmHzxslIz
-         LjwQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=f9WjX/xmnbVTdmLJNu1Vf/sERJxZN9SwHNST8iHd/JA=;
+        b=FKLIdRSYGJNc0uP7df6JzpcfiQAPa3S9JDKKnET3yMtOXjoXmGEru7ZyV6KybRer1c
+         UZYWup/l7be2lm84eiinuKdJgHLPd0sqh8iwi6GKRrr7UmAGSXdiq6H5F3K3iNOWqB8G
+         ffFiobQtPmQmgQyPCPbhcnrcdyagzwuonmh/wbf7vcND9YZg43LorhLpd5e/SjQGQ+HW
+         +z8rsdyIICsskgqAc9ZHQCg308uKSWSu0xfkBiKgJP8h5OK7F2PCCgewCC7sIQL9z4J6
+         6gZO+n+o3A/vXC/emcDPBuu3Mbk24btD5GC1/yNuo6aPrXn86ZWkVTreF9pixi0h/fO4
+         H8eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1OBWqNhgnPEHTpjKB6QRdb9j9B3rt64J0IqiiBl3Ogk=;
-        b=NDr47qj1XOMVynq8vd5/I9/OYu+SntzSqHkAHhZ2g71E+yXo9enFUuNFXUp8Z5rZbQ
-         JoNY2uRphrFFzZ554FMMhLICG7bgdRr8E0jGgCXBrOWLmg7FdzyO3p7+c6wc2mHmzL4X
-         KfMUBahTVDTlnb6PCwji9rfaAWUrmVpKCB71V3w38jrOOz5dgxL3ANR95rjKqRPaYr3/
-         tOWdRY9y9JxCdTcCdBADHQqsKGQ0zXdLpUL+SKltvBJ3hDUSQs5wQ8JuOYM/bRYbU1Nt
-         iImig8Mq4m80Auj23b7V7sujqKMg9ZIdWFujLgoI0/RC1iBokmiOk8BjW2M8OsprM94R
-         0WjQ==
-X-Gm-Message-State: ACrzQf37NHdnpmm7asuXd0J2tFd0uTfhGJb5raWFBficcxHXqgBazc9N
-        vac5QprGrRnwEM19mf96V/e/knGwR+6feg==
-X-Google-Smtp-Source: AMsMyM5FdOQutmjJhYMXs2SLgp0evFEGDNWciP0ycX0pu0IibK5179h8pSEqkkj150k1mZhMRFLayw==
-X-Received: by 2002:a05:6000:1568:b0:22e:6691:57aa with SMTP id 8-20020a056000156800b0022e669157aamr2476509wrz.708.1665135041453;
-        Fri, 07 Oct 2022 02:30:41 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o18-20020a1c7512000000b003b492753826sm1634945wmc.43.2022.10.07.02.30.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f9WjX/xmnbVTdmLJNu1Vf/sERJxZN9SwHNST8iHd/JA=;
+        b=HT6uSZ1xQxgFPCxQAigikdCwI24fpxUY7v5HOLEkK+lbjZuNATKieVmQV00pbCCkiM
+         xxpEscNnGhJxHrXQTKz57Y8RBiIkJeN/AM7v4+4o2nhjtPMCnd/Mm9k2itWMglvQvy9F
+         XHOc93uFiTZ0GtjypPC18Tkn+vXP1A/+9S8Qbu05NeXEnge+3xFo1Afc/MCe6thpOk9x
+         54zzZKqOsWIedRALGGe9kAgXQ0iHzFVpdU7YnKy93IIPSzf3ZTf/sywrWkV3nvMWdRgp
+         pshtubq05u+6GppWNnClgu8uwp92Qt1QoCVJNwiFunkYKlOMy644P+swzNjEigIo/mam
+         58Dw==
+X-Gm-Message-State: ACrzQf3bfey6myux8MoAWunNNlEDmqGmvb1Gvg4RZPxWRAoRGYfnZ1O/
+        ecr+GbUgorYiZAeuOvvm7TNJ3ewq0hvsVA==
+X-Google-Smtp-Source: AMsMyM6jFAccQ88PNWGxWSy7SgevLbyQUwgVrygeg6kvDlNKF4K3B6oezLQM3Qaf9ez9Fz91uOrofA==
+X-Received: by 2002:adf:d4cd:0:b0:22c:dc00:7f99 with SMTP id w13-20020adfd4cd000000b0022cdc007f99mr2604050wrk.260.1665135040203;
         Fri, 07 Oct 2022 02:30:40 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id o18-20020a1c7512000000b003b492753826sm1634945wmc.43.2022.10.07.02.30.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Oct 2022 02:30:39 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,12 +56,10 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/5] CodingGuidelines: update for C99
-Date:   Fri,  7 Oct 2022 11:30:30 +0200
-Message-Id: <patch-1.5-5ea53989486-20221007T092505Z-avarab@gmail.com>
+Subject: [PATCH 0/5] CodingGuidelines: various C99 updates
+Date:   Fri,  7 Oct 2022 11:30:29 +0200
+Message-Id: <cover-0.5-00000000000-20221007T092505Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.971.ge79ff6d20e7
-In-Reply-To: <cover-0.5-00000000000-20221007T092505Z-avarab@gmail.com>
-References: <cover-0.5-00000000000-20221007T092505Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,41 +67,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 7bc341e21b5 (git-compat-util: add a test balloon for C99
-support, 2021-12-01) we've had a hard dependency on C99, but the prose
-in CodingGuidelines was written under the assumption that we were
-using C89 with a few C99 features.
+This series:
 
-As the updated prose notes we'd still like to hold off on novel C99
-features, but let's make it clear that we target that C version, and
-then enumerate new C99 features that are safe to use.
+ * Rephrases CodingGuidelines so that we note we're on C99, and then
+   lists exceptions and features we use. The previous prose assumed
+   C89 by default.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/CodingGuidelines | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+   We still explicitly avoid opening the "feel free to use an C99
+   feature" floodgates.
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 9fca21cc5f9..386ca0a0d22 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -204,10 +204,14 @@ For C programs:
-    by e.g. "echo DEVELOPER=1 >>config.mak".
- 
-  - We try to support a wide range of C compilers to compile Git with,
--   including old ones.  You should not use features from newer C
-+   including old ones.  As of Git v2.35.0 Git requires C99 (we check
-+   "__STDC_VERSION__"). You should not use features from a newer C
-    standard, even if your compiler groks them.
- 
--   There are a few exceptions to this guideline:
-+   New C99 features have been phased in gradually, if something's new
-+   in C99 but not used yet don't assume that it's safe to use, some
-+   compilers we target have only partial support for it. These are
-+   considered safe to use:
- 
-    . since early 2012 with e1327023ea, we have been using an enum
-      definition whose last element is followed by a comma.  This, like
+ * Mentions that you can use dynamic C99 initializer elements. See the
+   recent discussion at
+   https://lore.kernel.org/git/221006.86a668r5mf.gmgdl@evledraar.gmail.com/
+
+ * Allows us to use "for (int i". I didn't set out to (slightly) jump
+   the gun on this, but just pulling the trigger around ~20 days early
+   makes it easier to ...
+
+ * ...add the natural follow-up section of C99 features you explicitly
+   shouldn't be using yet, to which I added the two cases I could
+   remember (in 4-5/5).
+
+Ævar Arnfjörð Bjarmason (5):
+  CodingGuidelines: update for C99
+  CodingGuidelines: mention dynamic C99 initializer elements
+  CodingGuidelines: allow declaring variables in for loops
+  CodingGuidelines: mention C99 features we can't use
+  CodingGuidelines: recommend against unportable C99 struct syntax
+
+ Documentation/CodingGuidelines | 34 ++++++++++++++++++++++++----------
+ revision.c                     |  7 -------
+ t/helper/test-parse-options.c  |  3 +--
+ 3 files changed, 25 insertions(+), 19 deletions(-)
+
 -- 
 2.38.0.971.ge79ff6d20e7
 
