@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3A25C433F5
-	for <git@archiver.kernel.org>; Sat,  8 Oct 2022 00:35:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D0B8C433F5
+	for <git@archiver.kernel.org>; Sat,  8 Oct 2022 00:39:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229493AbiJHAfJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Oct 2022 20:35:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57308 "EHLO
+        id S229648AbiJHAju (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Oct 2022 20:39:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbiJHAfH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Oct 2022 20:35:07 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AE3A2F391
-        for <git@vger.kernel.org>; Fri,  7 Oct 2022 17:35:06 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id fn7-20020a05600c688700b003b4fb113b86so3423700wmb.0
-        for <git@vger.kernel.org>; Fri, 07 Oct 2022 17:35:06 -0700 (PDT)
+        with ESMTP id S229459AbiJHAjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Oct 2022 20:39:48 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6376A13DCF
+        for <git@vger.kernel.org>; Fri,  7 Oct 2022 17:39:46 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id fn7-20020a05600c688700b003b4fb113b86so3427068wmb.0
+        for <git@vger.kernel.org>; Fri, 07 Oct 2022 17:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
+         :user-agent:date:message-id:cc:references:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1WZ0pnRprRHUfhU1B0R2tdozbhNW7bNv4wF9a1dIN4I=;
-        b=giBN13iEfYU+WqWDqo2DFoXO3ewa4KNfR9V59wQW8fy3fl/CDeQjkqwb5gWHuIrURt
-         oHitxOqsLRnP+XrCfp0FZ1yUzvKGo7i+NCoaXX+PQx15v017z8HsMSBZuYGqsB55N0df
-         0NHHGOLjjial3klHvF0t3YwCDfo8Ed5DB1+JFgzPV+BZ4g0RbrB+KIP6nT3NsKGUhaUK
-         jV/oSw94cK6EhZ+hPsRnfwPkQJquw4imU2fHa6cgxSJ5hmHeJUWxwNs+oMPNYyUFWuWy
-         gYqUshIodqT5fa/dw5mY3KkHPX4OeEcIdSGap5QZuuH7bsoVoICCgzThddf2HXzUnNF7
-         VciA==
+        bh=SmNk+xpbmlAzrxDPj28G+vHDQzbK106pW/fctijDXMc=;
+        b=gWlrzysHmBWe46cT5mZ0V21OTeDRX9XqrA1YK+gFGzzUvujL7yVf3IcndZ0BBDkFJq
+         GNL4kKXsyxvvXp0W3fZPDYDVKjphZxcC9qWM8Qm1DTs2Sq7S8wOMKoKEW+Qpzqse1eh0
+         U8yO8hwDiIi59FnqgcbAgrTcbhrfg2tvJBYCOz0qcWtbOU587Y/XVDvAcStDIYQt2QBP
+         ufJXrOLT8FIYaLyuVCjOkr3AeJbIQ/NOKSaL/l5XsaNMHqInKYUJk4CYbvDNq9tFEUIo
+         /8mBPcI4a8I91E1INXl/Sd6lE2rAx+lVFRj+W8tIwIVEB13E+oEZquOppnwuEJScDjud
+         R1uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:references:cc:to:from:subject
+         :user-agent:date:message-id:cc:references:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1WZ0pnRprRHUfhU1B0R2tdozbhNW7bNv4wF9a1dIN4I=;
-        b=3oSojtt6S4RAuaFkgKj6Tf39ZYlvcF43tPZJIGdQpTj4jCL5WYY8WZs4zLEytqALSF
-         k3rYm16Fl/4gufh1RLLDeRLll4Ut3AJZhQjFhNAy+sL3Ven96ROhbNXJawdvQZG1gfqM
-         tmHbnkuXYZ06PP/VsnK7Btg/YEqqiNxos+uCfomnbtpgw3kZYdRaRLtvvvQJWzt+mmpV
-         boBmRV6NS7+3P0o0BbfuZ75N5xuwyWq8rqCL95aLN1AzoF40X2HD/9+IHdR/DOF0hzw0
-         5s+BSCb8cRrVea5IF8NMw1g0L0VBfzcy9OVil6XtIudiIIisdWwzyGvWXzCPG2nt3vPe
-         EdZg==
-X-Gm-Message-State: ACrzQf34B90eTBvMB6eOf6RrtZnEjI0Voz3uadorI1U4cbCeTuKBgZpT
-        Fal1lVjAZy8679aEcRbFBIE=
-X-Google-Smtp-Source: AMsMyM6idDvQ2aH6uIcIwvMe9suGFAOrIyt2ljzK8FprSk6LHA42ylkOD0N9pNvywLgcRgHZ0bWpBg==
-X-Received: by 2002:a05:600c:2b88:b0:3b4:8680:165b with SMTP id j8-20020a05600c2b8800b003b48680165bmr12638437wmc.113.1665189304526;
-        Fri, 07 Oct 2022 17:35:04 -0700 (PDT)
+        bh=SmNk+xpbmlAzrxDPj28G+vHDQzbK106pW/fctijDXMc=;
+        b=WRl/rHaWIcwFRNQkwpYEVu1zQDReV8CEhkca2H0Y3c8Wun6EJ5S0/XeZkaKV6F91IE
+         SnNXjn/KGKijzgGbx8sCYBMTUqwlWjzdJZfANBOlxnJEZXqxokcQ5NQSEfkYic2G7B9o
+         j6Va209spHfsPpHW15NiDkulDrQXsJ4Dq0xTYXXOuIJg7waNz617T5y4IqyX2M5xbgV8
+         HvZoFZohGeTJXAl9vkgLYnSVHCHzVQ89/IuhSiBHqyOMnW1dfOVG6KGMToVlIsdpd4Ky
+         uE/8GGG3FCLyYhO/LKqCPM+TbQirKr5SfwF3IyXFAzxstvgEIUDunnKfSuyGo9aLTHc3
+         DCRQ==
+X-Gm-Message-State: ACrzQf3ox6ZvbYP4sb2aWiW/+IWDPiIrnsU0yTg325D/MEg2aI32GjOE
+        2ay+Fr5kg04+twuAJbscjk8=
+X-Google-Smtp-Source: AMsMyM55k9WQ4rii6d2MZRXrIXDOM76QjEDqcstqmFVddjqPtlHpDT/CB+ewC0mgPUW5sqj0MDBxFQ==
+X-Received: by 2002:a05:600c:1909:b0:3b4:aa30:40df with SMTP id j9-20020a05600c190900b003b4aa3040dfmr12045138wmq.205.1665189584765;
+        Fri, 07 Oct 2022 17:39:44 -0700 (PDT)
 Received: from [192.168.2.52] (138.83-213-116.dynamic.clientes.euskaltel.es. [83.213.116.138])
-        by smtp.gmail.com with ESMTPSA id q6-20020a05600c46c600b003c3c2df83ddsm2000625wmo.26.2022.10.07.17.35.03
+        by smtp.gmail.com with ESMTPSA id e1-20020a5d5941000000b0022af865810esm3179814wri.75.2022.10.07.17.39.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Oct 2022 17:35:04 -0700 (PDT)
-Subject: Re: [PATCH v2] wt-status: using of wt_status_state_free_buffers
+        Fri, 07 Oct 2022 17:39:44 -0700 (PDT)
+Subject: [PATCH v3] branch: description for non-existent branch errors
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+References: <c333cc4b-12a1-82b6-0961-1c42080dad15@gmail.com>
+ <930ff836-a5c4-0e85-517d-39645f00cd31@gmail.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-References: <6ff29e96-7f8d-c354-dced-b1b363e54467@gmail.com>
-Message-ID: <b6be0af4-8b47-d89d-13fe-a307c0e96797@gmail.com>
-Date:   Sat, 8 Oct 2022 02:35:02 +0200
+Message-ID: <8d627a2c-923f-181f-a03b-15f370c4dd0f@gmail.com>
+Date:   Sat, 8 Oct 2022 02:39:43 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <6ff29e96-7f8d-c354-dced-b1b363e54467@gmail.com>
+In-Reply-To: <930ff836-a5c4-0e85-517d-39645f00cd31@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -69,133 +69,178 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 2708ce62d2 (branch: sort detached HEAD based on a flag, 2021-01-07) a
-call to wt_status_state_free_buffers, responsible of freeing the
-resources that could be allocated in the local struct wt_status_state
-state, was eliminated.
+When the repository does not yet have commits, some errors describe that
+there is no branch:
 
-That introduced a leak that occurs with "branch list" in a detached HEAD
-state.  The number of leaks depends on the references to "refname" in
---sort and --format.  With defaults, 3 are leaked: default sort is by
-"refname" and default format needs two references of "refname":
-%(refname:lstrip=2) and %(refname:rstrip-2).
+    $ git init -b first
 
-This doesn't leak:
-    $ git branch --sort objectname --format '%(objectname)'
+    $ git branch --edit-description first
+    error: No branch named 'first'.
 
-This leak once:
-    $ git branch --sort refname --format '%(refname)'
+    $ git branch --set-upstream-to=upstream
+    fatal: branch 'first' does not exist
 
-This leak twice:
-    $ git branch --sort refname --format '%(refname:lstrip=2)'
+    $ git branch -c second
+    error: refname refs/heads/first not found
+    fatal: Branch copy failed
 
-Note that each different "atom" is only resolved once (see ref-filter.c).
+That "first" branch is unborn but to say it doesn't exists is confusing.
 
-The call to wt_status_state_free_buffers was introduced in 962dd7ebc3
-(wt-status: introduce wt_status_state_free_buffers(), 2020-09-27).
-Bring back that call in get_head_description.
+Options "-c" (copy) and "-m" (rename) show the same error when the
+origin branch doesn't exists:
 
-Ævar Arnfjörð pointed out [1] that a similar leak is present in
-builtin/checkout.c:die_if_some_operation_in_progress(void), since
-c45f0f525de (switch: reject if some operation is in progress,
-2019-03-29).  The leak occurs once with "switch" while bisecting.
+    $ git branch -c non-existent-branch second
+    error: refname refs/heads/non-existent-branch not found
+    fatal: Branch copy failed
 
-Lets call to wc_status_state_free_buffers() there too.
+    $ git branch -m non-existent-branch second
+    error: refname refs/heads/non-existent-branch not found
+    fatal: Branch rename failed
 
-[1] 220926.86bkr24kjw.gmgdl@evledraar.gmail.com
+Note that "--edit-description" without an explicit argument is already
+considering the _empty repository_ circumstance in its error.  Also note
+that "-m" on the initial branch it is an allowed operation.
+
+Make the error descriptions for those branch operations with unborn or
+non-existent branches, more informative.
+
+This is the result of the change:
+
+    $ git init -b first
+
+    $ git branch --edit-description first
+    error: No commit on branch 'first' yet.
+
+    $ git branch --set-upstream-to=upstream
+    fatal: No commit on branch 'first' yet.
+
+    $ git branch -c second
+    fatal: No commit on branch 'first' yet.
+
+    $ git branch [-c/-m] non-existent-branch second
+    fatal: No branch named 'non-existent-branch'.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
-
-Changes since v1:
-	- Add details about the leak
-	- Fix the leak in builtin/checkout.c
-
-
 Range-diff:
-1:  86b7803955 ! 1:  3fa1ddbb30 ref-filter.c: fix a leak in get_head_description
+1:  d8c3242b31 ! 1:  180435ff15 branch: description for non-existent branch errors
     @@ Commit message
-         resources that could be allocated in the local struct wt_status_state
-         state, was eliminated.
+         considering the _empty repository_ circumstance in its error.  Also note
+         that "-m" on the initial branch it is an allowed operation.
      
-    +    That introduced a leak that occurs with "branch list" in a detached HEAD
-    +    state.  The number of leaks depends on the references to "refname" in
-    +    --sort and --format.  With defaults, 3 are leaked: default sort is by
-    +    "refname" and default format needs two references of "refname",
-    +    %(refname:lstrip=2) and %(refname:rstrip-2).
-    +
-    +    This doesn't leak:
-    +        $ git branch --sort objectname --format '%(objectname)'
-    +
-    +    This leak once:
-    +        $ git branch --sort refname --format '%(refname)'
-    +
-    +    This leak twice:
-    +        $ git branch --sort refname --format '%(refname:lstrip=2)'
-    +
-    +    Note that each different "atom" is only resolved once (see ref-filter.c).
-    +
-         The call to wt_status_state_free_buffers was introduced in 962dd7ebc3
-    -    (wt-status: introduce wt_status_state_free_buffers(), 2020-09-27).  This
-    -    commit brings back that call in get_head_description.
-    +    (wt-status: introduce wt_status_state_free_buffers(), 2020-09-27).
-    +    Bring back that call in get_head_description.
-    +
-    +    Ævar Arnfjörð pointed out [1] that a similar leak is present in
-    +    builtin/checkout.c:die_if_some_operation_in_progress(void), since
-    +    c45f0f525de (switch: reject if some operation is in progress,
-    +    2019-03-29).  The leak ocurrs once with checkout while bisecting.
-    +
-    +    Lets call to wc_status_state_free_buffers() there too.
-    +
-    +    [1] 220926.86bkr24kjw.gmgdl@evledraar.gmail.com
+    -    This commit makes the error descriptions for those branch operations
+    -    with unborn or non-existent branches, more informative.
+    +    Make the error descriptions for those branch operations with unborn or
+    +    non-existent branches, more informative.
      
-         Signed-off-by: Rubén Justo <rjusto@gmail.com>
+         This is the result of the change:
      
-    + ## builtin/checkout.c ##
-    +@@ builtin/checkout.c: static void die_if_some_operation_in_progress(void)
-    + 		      "or \"git worktree add\"."));
-    + 	if (state.bisect_in_progress)
-    + 		warning(_("you are switching branch while bisecting"));
-    ++
-    ++	wt_status_state_free_buffers(&state);
-    + }
-    + 
-    + static int checkout_branch(struct checkout_opts *opts,
-    +
-      ## ref-filter.c ##
-     @@ ref-filter.c: char *get_head_description(void)
-      	} else
 
- builtin/checkout.c | 2 ++
- ref-filter.c       | 2 ++
- 2 files changed, 4 insertions(+)
+ builtin/branch.c       | 14 +++++++++++--
+ t/t3202-show-branch.sh | 46 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 2a132392fb..659dd5c430 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1470,6 +1470,8 @@ static void die_if_some_operation_in_progress(void)
- 		      "or \"git worktree add\"."));
- 	if (state.bisect_in_progress)
- 		warning(_("you are switching branch while bisecting"));
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 55cd9a6e99..499ebec99e 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -538,6 +538,13 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 			die(_("Invalid branch name: '%s'"), oldname);
+ 	}
+ 
++	if ((copy || strcmp(head, oldname)) && !ref_exists(oldref.buf)) {
++		if (copy && !strcmp(head, oldname))
++			die(_("No commit on branch '%s' yet."), oldname);
++		else
++			die(_("No branch named '%s'."), oldname);
++	}
 +
-+	wt_status_state_free_buffers(&state);
- }
+ 	/*
+ 	 * A command like "git branch -M currentbranch currentbranch" cannot
+ 	 * cause the worktree to become inconsistent with HEAD, so allow it.
+@@ -805,7 +812,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if (!ref_exists(branch_ref.buf)) {
+ 			strbuf_release(&branch_ref);
  
- static int checkout_branch(struct checkout_opts *opts,
-diff --git a/ref-filter.c b/ref-filter.c
-index fd1cb14b0f..914908fac5 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1722,6 +1722,8 @@ char *get_head_description(void)
- 	} else
- 		strbuf_addstr(&desc, _("(no branch)"));
+-			if (!argc)
++			if (!argc || !strcmp(head, branch_name))
+ 				return error(_("No commit on branch '%s' yet."),
+ 					     branch_name);
+ 			else
+@@ -848,8 +855,11 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 			die(_("no such branch '%s'"), argv[0]);
+ 		}
  
-+	wt_status_state_free_buffers(&state);
+-		if (!ref_exists(branch->refname))
++		if (!ref_exists(branch->refname)) {
++			if (!argc || !strcmp(head, branch->name))
++				die(_("No commit on branch '%s' yet."), branch->name);
+ 			die(_("branch '%s' does not exist"), branch->name);
++		}
+ 
+ 		dwim_and_setup_tracking(the_repository, branch->name,
+ 					new_upstream, BRANCH_TRACK_OVERRIDE,
+diff --git a/t/t3202-show-branch.sh b/t/t3202-show-branch.sh
+index f2b9199007..ea7cfd1951 100755
+--- a/t/t3202-show-branch.sh
++++ b/t/t3202-show-branch.sh
+@@ -7,6 +7,28 @@ test_description='test show-branch'
+ # arbitrary reference time: 2009-08-30 19:20:00
+ GIT_TEST_DATE_NOW=1251660000; export GIT_TEST_DATE_NOW
+ 
++test_expect_success 'error descriptions on empty repository' '
++	current=$(git branch --show-current) &&
++	cat >expect <<-EOF &&
++	error: No commit on branch '\''$current'\'' yet.
++	EOF
++	test_must_fail git branch --edit-description 2>actual &&
++	test_cmp expect actual &&
++	test_must_fail git branch --edit-description $current 2>actual &&
++	test_cmp expect actual
++'
 +
- 	return strbuf_detach(&desc, NULL);
- }
++test_expect_success 'fatal descriptions on empty repository' '
++	current=$(git branch --show-current) &&
++	cat >expect <<-EOF &&
++	fatal: No commit on branch '\''$current'\'' yet.
++	EOF
++	test_must_fail git branch --set-upstream-to=non-existent 2>actual &&
++	test_cmp expect actual &&
++	test_must_fail git branch -c new-branch 2>actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'setup' '
+ 	test_commit initial &&
+ 	for i in $(test_seq 1 10)
+@@ -175,4 +197,28 @@ done <<\EOF
+ --reflog --current
+ EOF
  
++test_expect_success 'error descriptions on non-existent branch' '
++	cat >expect <<-EOF &&
++	error: No branch named '\''non-existent'\'.'
++	EOF
++	test_must_fail git branch --edit-description non-existent 2>actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'fatal descriptions on non-existent branch' '
++	cat >expect <<-EOF &&
++	fatal: branch '\''non-existent'\'' does not exist
++	EOF
++	test_must_fail git branch --set-upstream-to=non-existent non-existent 2>actual &&
++	test_cmp expect actual &&
++
++	cat >expect <<-EOF &&
++	fatal: No branch named '\''non-existent'\''.
++	EOF
++	test_must_fail git branch -c non-existent new-branch 2>actual &&
++	test_cmp expect actual &&
++	test_must_fail git branch -m non-existent new-branch 2>actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.32.0
