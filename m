@@ -2,150 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C082BC433FE
-	for <git@archiver.kernel.org>; Sat,  8 Oct 2022 16:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2A37C433F5
+	for <git@archiver.kernel.org>; Sat,  8 Oct 2022 17:11:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229619AbiJHQVm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Oct 2022 12:21:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35420 "EHLO
+        id S229606AbiJHRLR convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 8 Oct 2022 13:11:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbiJHQVl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Oct 2022 12:21:41 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6BA426545
-        for <git@vger.kernel.org>; Sat,  8 Oct 2022 09:21:40 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id a10so11246974wrm.12
-        for <git@vger.kernel.org>; Sat, 08 Oct 2022 09:21:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2pAGqhzFfM99zXS1E6hr/wOQJhiVjZXGMAC++Oq9mGE=;
-        b=DpaddbP1F1FG/GMBN3ceUzvgsEwvh8LUIy8/afi0D1SwX5wrel7kXGKPPU06sFKhrn
-         SXuo08uzn4/HqoSliGl54c94mBGIfivfHO0EOYfLVtX6iYBSOutEKJoWxslLnozNBou1
-         Kg8eyq342mqYVpXGD5+C8vt5G9101/xwnOh1nCR3tFSuU0TF9AQzmztwcmncWsPuLtob
-         WRK/dGZ4LB1sRaDl26OX8xhLdJEumaDyXnn8yf9QPsbdfe2p5LlsJIQlXaSdgfC+JMkP
-         M3l4OxUNkNtZ9tg8iYvJDTjGwmfJd1WfJ4R3DpFFo2vgf2KeyIAlGVqSL/lTiCPanwSt
-         Pm2w==
+        with ESMTP id S229688AbiJHRLO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Oct 2022 13:11:14 -0400
+Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF6FF4620F
+        for <git@vger.kernel.org>; Sat,  8 Oct 2022 10:11:11 -0700 (PDT)
+Received: by mail-io1-f42.google.com with SMTP id y4so1183621iof.3
+        for <git@vger.kernel.org>; Sat, 08 Oct 2022 10:11:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2pAGqhzFfM99zXS1E6hr/wOQJhiVjZXGMAC++Oq9mGE=;
-        b=crhn8sVFZ74X0sXQ/wLf8wW+Kppso3cpoQVu7O7LQm78qCCO6R80z5yg/a/a1MN95Y
-         TbCXdvqjJ9b3ScOP9zf0RZ3c9eGZarNrVqs2L0565A1syamHXAGG/u36Z5oWdB2aSD0L
-         VgPREOYgojHKDbam8RCHSgpEJ6Prvepui6NM8G2Ni726tj2FAMbtl67MAew9cma5H4xX
-         H807pse4LDD0ZK/SUh1Ky8F0/v04Yc903YNozfvxoDtlTbGABhPVdgCCKWwmXUyB2GFs
-         pptBGctZRPqH195slYjryBSjKAC7S6IvA6beMd1lzLcOlCc8OgbbHbk11BLaGzzlCXEK
-         MemQ==
-X-Gm-Message-State: ACrzQf3aCdDTzhBLQGD8T314wHZcCTz13ISxnJ7bgGMDigr8fveRBOhc
-        EAmiLZN1f0J68b2V/YNvOqaVMoz5j6k=
-X-Google-Smtp-Source: AMsMyM7o1rkNN3v0CqOrsQhUSQgcABl3TEw1foxJ+cEndGMk8Km4G8cTYSVnb+BLi0uKe4VEfoRVgA==
-X-Received: by 2002:a05:6000:1882:b0:22a:f7a2:736a with SMTP id a2-20020a056000188200b0022af7a2736amr6584686wri.691.1665246098966;
-        Sat, 08 Oct 2022 09:21:38 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j4-20020a05600c1c0400b003c5490ed8a6sm796735wms.8.2022.10.08.09.21.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Oct 2022 09:21:38 -0700 (PDT)
-Message-Id: <pull.1355.v3.git.git.1665246097190.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1355.v2.git.git.1665153486.gitgitgadget@gmail.com>
-References: <pull.1355.v2.git.git.1665153486.gitgitgadget@gmail.com>
-From:   "Daniel Sonbolian via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 08 Oct 2022 16:21:37 +0000
-Subject: [PATCH v3] git.c: improve code readability in cmd_main
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=IWOogsSpt4vkSae+6CUOEDRy7ecHJJx9SpZJGQVCh+U=;
+        b=SCqensRPA0DMTBK2fwHj450NwEnLNi67gMAetFZsrBk5shsrtWWxQTX4UXW2Fz3WKg
+         V5v72XbKCmOJWbdgpU6gno1ZyO4rEKi19wSk86vTUkCOBJzrcErJpIazO4hI+gKugROt
+         DLudM1y/xhYxYJLeiS8AnCsNe1gofU+U2DTXYVS7SCI1I4KhEdIveJZTF65UhVk6pJec
+         aXlHVTKJEJzX/4Q1zzxKL9d7JXbKtjzWw/wLy9WvMR+BDIkm7Kfk07iIe/yc1zwUidPh
+         4/RLlllicPaV7Wm138uXFI55wLLWwJKhKWwhzxp61W/9gyYtrNCEsAKljxgeki1Fwboz
+         l0BQ==
+X-Gm-Message-State: ACrzQf0nCDocjLmcYM32il2SwKIGx0knLbbdIHzUzt8exVTPyCdz+ACf
+        twtfHdintzI7j6pldxVXKdmC3lhZVQmrsW15m0I=
+X-Google-Smtp-Source: AMsMyM47n+4METeel+5DgDDN7rf2kjdVISYFcqeNG+uZzLwI3p1i9wnR4D2HaEzBHXaJxWbG7Xq3zvdFo8K0L2RJMdw=
+X-Received: by 2002:a05:6638:4495:b0:363:1e09:57e5 with SMTP id
+ bv21-20020a056638449500b003631e0957e5mr5280473jab.177.1665249070794; Sat, 08
+ Oct 2022 10:11:10 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Daniel Sonbolian <dsal3389@gmail.com>,
-        Daniel Sonbolian <dsal3389@gmail.com>
+References: <pull.1346.git.1662388460.gitgitgadget@gmail.com>
+ <93b0b442-b277-66a6-3f5f-5a498593aa07@gmail.com> <7abdb5a9-5707-7897-4196-8d2892beeb81@gmail.com>
+ <2e164aea-7dd8-5018-474a-01643553ea49@gmail.com> <CAPig+cSX9jSPc_fJc0tuiER1-AqnbFGOk0r1tXEkv9gycVH-CA@mail.gmail.com>
+ <f24837e9-7873-c34c-bd78-8ae3be0fc97a@gmail.com> <CAPig+cSn29Fq4ywC9zXoJYRVG8KUEhHuDdwEUSioFMUVs+S-ow@mail.gmail.com>
+ <a7aca891-dd37-7e5e-61fc-8012fec18ae9@gmail.com>
+In-Reply-To: <a7aca891-dd37-7e5e-61fc-8012fec18ae9@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 8 Oct 2022 13:10:59 -0400
+Message-ID: <CAPig+cRxy5C+CqUOzmhe16j+hssxsygha3huVga8tLJ+imM4Hw@mail.gmail.com>
+Subject: Re: [PATCH v4] branch: support for shortcuts like @{-1}, completed
+To:     =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Daniel Sonbolian <dsal3389@gmail.com>
+On Sat, Oct 8, 2022 at 5:12 AM Rubén Justo <rjusto@gmail.com> wrote:
+> On 8/10/22 9:23, Eric Sunshine wrote:
+> > On Sat, Oct 8, 2022 at 3:07 AM Rubén Justo <rjusto@gmail.com> wrote:
+> >> Oops. Thank you! I'll reroll back to using "git stripspace".
+> >
+> > `git stripspace` is perhaps unnecessarily heavyweight. Lightweight
+> > alternatives would include:
+> >
+> >     printf "Branch description\n\n" >expect &&
+> >     [...]
+>
+> Yeah, I thought about that.  What convinced me to use "git stripspace" was
+> that maybe that '\n' tail could be removed sometime from the description
+> setting and this will be fine with that.  I haven't found any reason for
+> that '\n' and it bugs me a little seeing it in the config :-)
 
-Checking for an error condition whose body unconditionally exists first,
-and then the special casing of "version" and "help" as part of the
-preparation for the "normal codepath", making the code simpler to read.
+That reasoning occurred to me, as well, and I'd have no objection to
+git-stripspace if that's the motivation for using it. I don't feel
+strongly one way or the other, and my previous email was intended
+primarily to point out the lightweight alternatives in case you hadn't
+considered them. Feel free to use git-stripspace if you feel it is the
+more appropriate choice.
 
-Signed-off-by: Daniel Sonbolian <dsal3389@gmail.com>
----
-    git.c: improve readability in cmd_main
-    
-    made the code more readable in cmd_main by moving the spacial casing for
-    "version" and "help" as part of the regular code path
+> But I agree with you about the unnecessarily heavyweight, though all
+> involves a new process, probably echo, cat or printf are lightweight than
+> another instance of git for that.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1355%2Fdsal3389%2Frm-useless-else-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1355/dsal3389/rm-useless-else-v3
-Pull-Request: https://github.com/git/git/pull/1355
+In most shells, `printf`, `echo`, `cat` are builtins, so no extra
+processes are involved (and `test_write_lines` is a shell function
+built atop `printf`). As a matter of personal preference, given the
+lightweight options, I find that `printf "...\n\n"` shows the
+intention of the code most plainly (but if you go with git-stripspace,
+then `echo` would be an idiomatic way to create the "expect" file).
 
-Range-diff vs v2:
+> All of this involves two files and that is how it is done almost everywhere
+> except in some places where it looks like an 'older way' (test_i18ngrep) of
+> doing it.  Is there any reason to do it this way and not using variables,
+> process substitution,..?
 
- 1:  dd81a2cadec < -:  ----------- git-p4: minor optimization in read_pip_lines
- 2:  7fe59688018 ! 1:  664974f71d4 git.c: improve code readability in cmd_main
-     @@ Metadata
-       ## Commit message ##
-          git.c: improve code readability in cmd_main
-      
-     -    checking for an error condition whose body unconditionally exists first,
-     +    Checking for an error condition whose body unconditionally exists first,
-          and then the special casing of "version" and "help" as part of the
-     -    preparation for the "normal codepath", making the code simpler to read
-     +    preparation for the "normal codepath", making the code simpler to read.
-      
-          Signed-off-by: Daniel Sonbolian <dsal3389@gmail.com>
-      
-     @@ git.c: int cmd_main(int argc, const char **argv)
-      -			argv[0] = "help";
-      -	} else {
-      +
-     -+	if (argc <= 0) {
-     ++	if (!argc) {
-       		/* The user didn't specify a command; give them help */
-       		commit_pager_choice();
-       		printf(_("usage: %s\n\n"), git_usage_string);
+An invocation such as:
 
+    test $(git foo) = $(git bar) &&
 
- git.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+throws away the exit-code from the two commands, which means we'd miss
+if one or the other (or both) crashed, especially if the crash was
+after the command produced the correct output. These days we try to
+avoid losing the exit command of Git commands. It's possible to avoid
+losing the exit-code by using variables:
 
-diff --git a/git.c b/git.c
-index da411c53822..ee7758dcb0e 100644
---- a/git.c
-+++ b/git.c
-@@ -894,12 +894,8 @@ int cmd_main(int argc, const char **argv)
- 	argv++;
- 	argc--;
- 	handle_options(&argv, &argc, NULL);
--	if (argc > 0) {
--		if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0]))
--			argv[0] = "version";
--		else if (!strcmp("--help", argv[0]) || !strcmp("-h", argv[0]))
--			argv[0] = "help";
--	} else {
-+
-+	if (!argc) {
- 		/* The user didn't specify a command; give them help */
- 		commit_pager_choice();
- 		printf(_("usage: %s\n\n"), git_usage_string);
-@@ -907,6 +903,12 @@ int cmd_main(int argc, const char **argv)
- 		printf("\n%s\n", _(git_more_info_string));
- 		exit(1);
- 	}
-+
-+	if (!strcmp("--version", argv[0]) || !strcmp("-v", argv[0]))
-+		argv[0] = "version";
-+	else if (!strcmp("--help", argv[0]) || !strcmp("-h", argv[0]))
-+		argv[0] = "help";
-+
- 	cmd = argv[0];
- 
- 	/*
+    expect=$(git foo) &&
+    actual=$(git bar) &&
+    test "$expect" = "$actual" &&
 
-base-commit: bcd6bc478adc4951d57ec597c44b12ee74bc88fb
--- 
-gitgitgadget
+but, if the expected and actual output don't match, you don't learn
+much (other than that they failed). You could address that by showing
+a message saying what failed:
+
+    expect=... &&
+    actual=... &&
+    if test "$expect" != "$actual"
+    then
+        echo "expect not match actual"
+        # maybe emit $expect and $actual too
+    fi
+
+However, `test_cmp` gives you that behavior for free, and it emits a
+helpful "diff" upon failure, so these days we usually go with
+`test_cmp`.
+
+> Anyway I'll switch to one of your suggestions, as it is definitely easier
+> to read, understand and therefore change if needed.
+
+It's fine to use git-stripspace if you feel it's more appropriate for
+the situation.
