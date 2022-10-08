@@ -2,119 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E12E9C433F5
-	for <git@archiver.kernel.org>; Sat,  8 Oct 2022 09:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E208C433F5
+	for <git@archiver.kernel.org>; Sat,  8 Oct 2022 09:37:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229658AbiJHJM2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Oct 2022 05:12:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55592 "EHLO
+        id S229553AbiJHJhG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Oct 2022 05:37:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229479AbiJHJM1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Oct 2022 05:12:27 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4640F4D259
-        for <git@vger.kernel.org>; Sat,  8 Oct 2022 02:12:26 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id j16so10338660wrh.5
-        for <git@vger.kernel.org>; Sat, 08 Oct 2022 02:12:26 -0700 (PDT)
+        with ESMTP id S229379AbiJHJhF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Oct 2022 05:37:05 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C05D28735
+        for <git@vger.kernel.org>; Sat,  8 Oct 2022 02:37:04 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id q10-20020a17090a304a00b0020b1d5f6975so5541080pjl.0
+        for <git@vger.kernel.org>; Sat, 08 Oct 2022 02:37:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=J+MWjW+8rEG9MzBDJzUB0ZBQWu54/h3KY0auy4S3dGI=;
-        b=GupXWgwEU4xlIsAWfC9wO8nqgKP7+2SqPy2AfJcOPv7qvsuo+OIklyEq17YKE+rPp4
-         6v3Q47D6w4WU3Y05ikUNiU0Cq+2nY17nEZsJpd7nd0ykqUN/L2ma1L33ryYIJrKAwL4d
-         feX2LSwLRQQHJY3SW89Evps8bV+91D/qrKWjdXU6SKCM2IQ8pppJp+j1+AicL7xMJiED
-         ahQadK7goxe1UfGMwcIWcTvublC8WyoRvgYP0RAz0KZc6Ybhb9R2/aTcU0WjHW6BsNgP
-         ucbfnl005dM/ClJuzw1oC9kSxxGhaTTtKQhL9j9TQ1GH/Y+IofyESDbgIJkTwHE+4yPC
-         48pw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=w+Vqf62EXtkch5clvLrHSqkd1o/G48XCJKNYvJIJI7A=;
+        b=dlSuLRfRWhc9ni75ZcUg4bsTRrwLKybb+KUcffvwX5DJ12Vror/Ade/41DxDclthHV
+         EtBwzRvgzT0IVc5Zjvors/EIfPOcVWWYgyP20gpuD62hAs47MB5wk554pgiZRqLC5wJe
+         CdnrOE95ZwzEyWfVzF7v7V0H1KhiEEvbbleJ8amNHRl8GqTaqlDxtc6YUZi+d/wJTzGY
+         CxsJ0gDhNzmJKZtc93EEBY7f6sK3MGD6Lq5Fr7lp3bWpu7a9I2XTrtT1OzCWszU/GWrZ
+         eSXCXEXayU694tXAg+tV0LWSb80VfBg9zjsSNNpV4WeMbWQMkqxBKcknUv6gsQfCQfER
+         Yg9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J+MWjW+8rEG9MzBDJzUB0ZBQWu54/h3KY0auy4S3dGI=;
-        b=jltWZ//3750HGI0awLp1o00dSoT++TuHlMhiN1xIwJ9G4Ff7thZXH8tAB76toVdm0E
-         HIWbsjMTLZNlp/gRHBnvQ4BEgTDCiB5Dp5MLfbJ9OD9nfjaWRWgjsslDmp8SIvgSLTZx
-         CRJbWxcGJBHm2EGVuaEZEdTWu2fTlra5mMdqxk35B+imEw4SsOWjv0F6gHz86NtbTN7F
-         CTSXH7e5Vbd0GRtuegCLEx8qfFhJpkyUPukD0fMwXPupv0LCpsUx0AupEFrInFnTL3dv
-         8XasT2AuJTA3qFiG2ruGXGOVd+OToD17yRfkiEa1sKKA0m5O/BnXAaGA+0a+pC4RHSsR
-         DJ2A==
-X-Gm-Message-State: ACrzQf2rdYpKd6AXiu1xQ9PeXqnVqgRoUyiu3S5pIe4w4bffOF8dMeL9
-        MlhnY9wsQxRB84PUrlpGrx0=
-X-Google-Smtp-Source: AMsMyM6YqjL/gasOAMHWc45yRc7ZYkQcj59IRoIiyRKTZUKc6k0tX9z2fupcGQRhPPGhtj4YvPuIkw==
-X-Received: by 2002:adf:fcc6:0:b0:22e:3ab7:e170 with SMTP id f6-20020adffcc6000000b0022e3ab7e170mr5448393wrs.263.1665220344818;
-        Sat, 08 Oct 2022 02:12:24 -0700 (PDT)
-Received: from [192.168.2.52] (138.83-213-116.dynamic.clientes.euskaltel.es. [83.213.116.138])
-        by smtp.gmail.com with ESMTPSA id w8-20020adfee48000000b002205a5de337sm3949399wro.102.2022.10.08.02.12.24
+        bh=w+Vqf62EXtkch5clvLrHSqkd1o/G48XCJKNYvJIJI7A=;
+        b=tWGdYzLWmLz5/aX10nty9KlQvA8y/M/QVu6/oSMPXtywtVqFGx89CubGwlCE046ath
+         sRZyzY8zEgWXuL+9GiMBz3TQE45puJeZREntHqYWf3fa18zlxuoeN8O8mMeKEtDDgzn6
+         Xsk+3T92CpmsCIO2OXJ1I06LxbB54ula2YloWUiKqKyxmZtA3CSPgbBZfADeCfD7w+od
+         rj0VOGpVE8OvuZ+v7vp7mjGOWZY3MGSyaJhtF53Pt+P2KwihG0/yFWEqBMBQ84tfhKYW
+         D5wjLKU0eIJWmi3d8LwUNdwFYU3NSPMQP73XcOcecHB/PTrNTopB9dDDlV2H6lPT3AhX
+         rSEw==
+X-Gm-Message-State: ACrzQf2fMSCCtzqzTPeD+4XNW3CWSumK2P8427WKh1wV6KmevlKIM4vF
+        qGOnh329zvjrlsA6+T/c4uQhVfY9fTU=
+X-Google-Smtp-Source: AMsMyM7V09dOQ/c+CqC8ydken1NhNt+wkjld0kSUqUFBkE0OhbTdVzwDD+COuF31u0qktH4BLBYN5g==
+X-Received: by 2002:a17:90b:1c11:b0:20c:d721:8813 with SMTP id oc17-20020a17090b1c1100b0020cd7218813mr1806200pjb.244.1665221823437;
+        Sat, 08 Oct 2022 02:37:03 -0700 (PDT)
+Received: from [192.168.43.80] (subs32-116-206-28-18.three.co.id. [116.206.28.18])
+        by smtp.gmail.com with ESMTPSA id y2-20020aa79e02000000b005604c1a0fbcsm3059406pfq.74.2022.10.08.02.37.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Oct 2022 02:12:24 -0700 (PDT)
-Subject: Re: [PATCH v4] branch: support for shortcuts like @{-1}, completed
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <pull.1346.git.1662388460.gitgitgadget@gmail.com>
- <93b0b442-b277-66a6-3f5f-5a498593aa07@gmail.com>
- <7abdb5a9-5707-7897-4196-8d2892beeb81@gmail.com>
- <2e164aea-7dd8-5018-474a-01643553ea49@gmail.com>
- <CAPig+cSX9jSPc_fJc0tuiER1-AqnbFGOk0r1tXEkv9gycVH-CA@mail.gmail.com>
- <f24837e9-7873-c34c-bd78-8ae3be0fc97a@gmail.com>
- <CAPig+cSn29Fq4ywC9zXoJYRVG8KUEhHuDdwEUSioFMUVs+S-ow@mail.gmail.com>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <a7aca891-dd37-7e5e-61fc-8012fec18ae9@gmail.com>
-Date:   Sat, 8 Oct 2022 11:12:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Sat, 08 Oct 2022 02:37:03 -0700 (PDT)
+Message-ID: <0b44cdca-3115-e09e-70c8-6f56101c3d9c@gmail.com>
+Date:   Sat, 8 Oct 2022 16:37:00 +0700
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cSn29Fq4ywC9zXoJYRVG8KUEhHuDdwEUSioFMUVs+S-ow@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v2] symbolic-ref: teach "--[no-]recurse" option
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>
+References: <xmqqleprcn08.fsf@gitster.g> <xmqqsfjzaq78.fsf@gitster.g>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <xmqqsfjzaq78.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/10/22 9:23, Eric Sunshine wrote:
-> On Sat, Oct 8, 2022 at 3:07 AM Rubén Justo <rjusto@gmail.com> wrote:
->> On 8/10/22 5:17, Eric Sunshine wrote:
->>> On Fri, Oct 7, 2022 at 9:36 PM Rubén Justo <rjusto@gmail.com> wrote:
->>>> +       echo "Branch description\n" >expect &&
->>>
->>> Is the intention here with the embedded "\n" that `echo` should emit
->>> two newlines? If so, interpreting "\n" specially is not POSIX behavior
->>> for `echo`, thus we probably don't want to rely upon it.
->>
->> Oops. Thank you! I'll reroll back to using "git stripspace".
+On 10/8/22 11:34, Junio C Hamano wrote:
+> Suppose you are managing many maintenance tracks in your project,
+> and some of the more recent ones are maint-2.36 and maint-2.37.
+> Further imagine that your project recently tagged the official 2.38
+> release, which means you would need to start maint-2.38 track soon,
+> by doing:
 > 
-> `git stripspace` is perhaps unnecessarily heavyweight. Lightweight
-> alternatives would include:
+>   $ git checkout -b maint-2.38 v2.38.0^0
+>   $ git branch --list 'maint-2.3[6-9]'
+>   * maint-2.38
+>     maint-2.36
+>     maint-2.37
 > 
->     printf "Branch description\n\n" >expect &&
+> So far, so good.  But it also is reasonable to want not to have to
+> worry about which maintenance track is the latest, by pointing a
+> more generic-sounding 'maint' branch at it, by doing:
 > 
->     test_write_lines "Branch description" "" >expect &&
+>   $ git symbolic-ref refs/heads/maint refs/heads/maint-2.38
 > 
->     { echo "Branch description" && echo; } >expect &&
+> which would allow you to say "whichever it is, check out the latest
+> maintenance track", by doing:
 > 
->     cat >expect <<-\EOF &&
->     Branch description
+>   $ git checkout maint
+>   $ git branch --show-current
+>   maint-2.38
 > 
->     EOF
+> It is arguably better to say that we are on 'maint-2.38' rather than
+> on 'maint', and "git merge/pull" would record "into maint-2.38" and
+> not "into maint", so I think what we have is a good behaviour.
+> 
+> One thing that is slightly irritating, however, is that I do not
+> think there is a good way (other than "cat .git/HEAD") to learn that
+> you checked out 'maint' to get into that state.  Just like the output
+> of "git branch --show-current" shows above, "git symbolic-ref HEAD"
+> would report 'refs/heads/maint-2.38', bypassing the intermediate
+> symbolic ref at 'refs/heads/maint' that is pointed at by HEAD.
+> 
+> The internal resolve_ref() API already has the necessary support for
+> stopping after resolving a single level of a symbolic-ref, and we
+> can expose it by adding a "--[no-]recurse" option to the command.
 > 
 
-Yeah, I thought about that.  What convinced me to use "git stripspace" was
-that maybe that '\n' tail could be removed sometime from the description
-setting and this will be fine with that.  I haven't found any reason for
-that '\n' and it bugs me a little seeing it in the config :-)
+The example case above is from recent Git releases, right?
 
-But I agree with you about the unnecessarily heavyweight, though all
-involves a new process, probably echo, cat or printf are lightweight than
-another instance of git for that.
+I think the wording should instead use generalized version numbers.
+For example the still maintained release tracks are X.Y-1 and X.Y,
+but now X+1 have been tagged, which creates X+1.Y track.
 
-All of this involves two files and that is how it is done almost everywhere
-except in some places where it looks like an 'older way' (test_i18ngrep) of
-doing it.  Is there any reason to do it this way and not using variables,
-process substitution,..?
+Thanks.
 
-Anyway I'll switch to one of your suggestions, as it is definitely easier
-to read, understand and therefore change if needed.
-
-Thanks!
+-- 
+An old man doll... just what I always wanted! - Clara
