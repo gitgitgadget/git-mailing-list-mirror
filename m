@@ -2,80 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57540C4332F
-	for <git@archiver.kernel.org>; Sun,  9 Oct 2022 05:12:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A601C433FE
+	for <git@archiver.kernel.org>; Sun,  9 Oct 2022 05:32:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229669AbiJIFFa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Oct 2022 01:05:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37598 "EHLO
+        id S229814AbiJIFTs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Oct 2022 01:19:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229602AbiJIFF1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2022 01:05:27 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64ED02B1A5
-        for <git@vger.kernel.org>; Sat,  8 Oct 2022 22:05:26 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7BF22151AEC;
-        Sun,  9 Oct 2022 01:05:25 -0400 (EDT)
+        with ESMTP id S229773AbiJIFTp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2022 01:19:45 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48E1B63A0
+        for <git@vger.kernel.org>; Sat,  8 Oct 2022 22:19:42 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 895221C1361;
+        Sun,  9 Oct 2022 01:19:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ioitVyGjKurr
-        Y67Bxb8mAiO/cbDWYQDokSdPGdHBs64=; b=gNFRYduRE/+cchmy256rxhqOmfNQ
-        rRb71ebPBQpFf5dN7Fmi7i0WZGSzbINk0F8FhWH+lhlFi7dvaplMjdI4znksspej
-        TC6bUMoq+PIKNy9iQqewuCOQn35m4kECWtsd3vh2y2/QE7EO1NLTVPbEgFw54xyi
-        aeR/mITyxya5mYE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 747C7151AE9;
-        Sun,  9 Oct 2022 01:05:25 -0400 (EDT)
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=LRWnEPHBv4R/ZAsIf+LbVtoqa
+        b/amMuy1oMzvr0usUQ=; b=ceSvbV3YpTFEmq5aZCSFhrPFc1otqjwV3qYL9oy1a
+        CV3sT9Qj+ugLPCqV2TFXReNJhcYg70glbCF9cvyODua2WxgchRsNmLRTA1OII/uI
+        zNaHmVe0eEnUVGql1tyQUevFxr9eEM13/b/p/y0przbZFHBXjcQJmESb8YE+I6gg
+        NY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7872B1C1360;
+        Sun,  9 Oct 2022 01:19:40 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DC2BE151AE8;
-        Sun,  9 Oct 2022 01:05:24 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A59921C135F;
+        Sun,  9 Oct 2022 01:19:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v3] branch: description for non-existent branch errors
-References: <c333cc4b-12a1-82b6-0961-1c42080dad15@gmail.com>
-        <930ff836-a5c4-0e85-517d-39645f00cd31@gmail.com>
-        <8d627a2c-923f-181f-a03b-15f370c4dd0f@gmail.com>
-        <CAPig+cT+Yeh95p-2PgMDYz+_AxeEA72i-zLuQu11QEyWAt8kiA@mail.gmail.com>
-        <7a332503-d267-6d2c-c2bd-d072411ca408@gmail.com>
-Date:   Sat, 08 Oct 2022 22:05:23 -0700
-In-Reply-To: <7a332503-d267-6d2c-c2bd-d072411ca408@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-        message of "Sat, 8 Oct 2022 10:54:12 +0200")
-Message-ID: <xmqq4jwda8oc.fsf@gitster.g>
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 0/2] Fix syntax errors under clang 11.0.0 on MacOS
+References: <pull.1375.git.1665085395.gitgitgadget@gmail.com>
+        <0f67ca77-f17f-d844-e689-ca9a9bdf7993@jeffhostetler.com>
+        <xmqqpmf3frr5.fsf@gitster.g>
+        <ec920650-4334-a6f2-6d6f-241899dd79ec@web.de>
+        <58d3ef47-2196-4f59-692a-fc86dfbc1252@jeffhostetler.com>
+        <xmqqtu4fco9d.fsf@gitster.g>
+        <CAPig+cS=k80JdCBAHbSqcOUBc=iGDetoT3u84oRj2CKpFs7CGg@mail.gmail.com>
+        <a8b83ff1-97b6-e2d2-91c7-ace597013368@web.de>
+Date:   Sat, 08 Oct 2022 22:19:36 -0700
+Message-ID: <xmqqr0zh8tg7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FBD36B86-478F-11ED-B3A1-307A8E0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: F81EC8DA-4791-11ED-8E7A-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> Thanks, I didn't know about $SQ.
+> Am 08.10.22 um 05:46 schrieb Eric Sunshine:
+>> On Fri, Oct 7, 2022 at 5:36 PM Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>>> I do agree that one is dense, but aims for the same thing, and a bit
+>>> more.  It might be easier to read if written in longhand, but ...
+>>>
+>>> ifeq ($(uname_s),Darwin)
+>>> ifeq ($(filter clang12,$(COMPILER_FEATURES)),)
+>>> DEVELOPER_CFLAGS +=3D -Wno-missing-braces
+>>> endif
+>>> else
+>>> ifeq ($(filter clang9,$(COMPILER_FEATURES)),)
+>>> DEVELOPER_CFLAGS +=3D -Wno-missing-braces
+>>> endif
+>>> endif
+>>>
+>>> ... we'd need to repeat ourselves, so...
+>>
+>> The repetition is a very minor downside. The big benefit of this
+>> version is that it's easy to understand at-a-glance, unlike the
+>> "dense" version with its high cognitive load.
 >
-> 	'\''$current'\'' vs $SQ$current$SQ vs ${SQ}$current${SQ}
+> It's certainly easier.
 >
-> I also find ugly that escaping, but I think is harder to read and
-> error prone to use $SQ here.. :-/
+> It triggers for any compiler that is not clang, though, which is
+> a bit much.
 
-The ONLY case when $SQ shines is when the string that comes inside
-the single-quote pair begins with a non-alnum.  $SQ$current$SQ is
-semi-readable, but if the string begins with an alnum, then you'd be
-forced to say ${SQ}current${SQ} (the first one must be inside braces
-because you do not want to refer to a variable whose name is
-SQcurrent, the second one wants to be inside braces for symmetry),
-which is ugly.
-
-The rhythm of '\'' is not so bad, once you get used to seeing them.
-${SQ}...${SQ} is a bit too loud.
+Yeah, of course you are right.  In my "here is a translation to
+human-language" I did explain what "clang1" was doing in your
+version, but of course, I forgot all about it when writing the above
+variant.
