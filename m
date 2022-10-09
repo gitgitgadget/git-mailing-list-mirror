@@ -2,59 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A06BBC433F5
-	for <git@archiver.kernel.org>; Sun,  9 Oct 2022 14:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E63E7C433FE
+	for <git@archiver.kernel.org>; Sun,  9 Oct 2022 14:37:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230200AbiJIOh4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Oct 2022 10:37:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46754 "EHLO
+        id S230211AbiJIOh6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Oct 2022 10:37:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229974AbiJIOhp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Oct 2022 10:37:45 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 354CB275CD
-        for <git@vger.kernel.org>; Sun,  9 Oct 2022 07:37:44 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id p26-20020a7bcc9a000000b003c384e59047so3070621wma.4
-        for <git@vger.kernel.org>; Sun, 09 Oct 2022 07:37:44 -0700 (PDT)
+        with ESMTP id S230133AbiJIOhr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Oct 2022 10:37:47 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90A0E27DC4
+        for <git@vger.kernel.org>; Sun,  9 Oct 2022 07:37:46 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id n12so13626608wrp.10
+        for <git@vger.kernel.org>; Sun, 09 Oct 2022 07:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Wcm8qpzJovNixZr4FfekgJCx0i3cU8b+4aQdred0fgg=;
-        b=N5La4ECgEAxOCg0Zv3uKZ7ZvCUTn6B6O9EWA/TKFL0dOaMzFhVd4SuXwJT7UkkCybr
-         Wtdu+en6FSCjiMYRO4Ivx/o1oSmWVINTTRL3BFbgFqhuPQgXXxugW0ylyRxxdPI06AYH
-         hYA9EZR9yw48y9xCQSf7cDA5ALeMXoLqwbzZJUV7FoMNl8TP9BYWimCX9+TpqC29h70x
-         bu9PXz1tHqcJXzQhRy/EqhdIU8+CCPtz2NYH5DgNuAUB5yJkIL4MjHK3lZOhSfSxfq33
-         nLwCGjEAuhYbRQFzdf14URpRf70zftL0Tjg0CoVW2JJSBxCbi2sqtZCE18bhs+SgS1Yz
-         0r1g==
+        bh=bGtbzq+IH2Ws4ChKWDCxefvQxY0NorgXVM+ffiB3Qi0=;
+        b=NaDrKYXI+dfK9/UpD3fJuxYb+prZXK9pmL3/a+bvCb/PBPwtJGkgYCa+Z4BPmh3rxu
+         I4nD5bRL1eulfnlXERfqdnfsFREBXuVfGiCK+J7F7vnvfU+tFH1/cJaULhlO7hQfz867
+         KdRuJZ/XuxINqCBtAxedxHImRmuYpUIC7yrV4pNuBB9+Uw9CTIpKJFZKiTChq+YIiuUz
+         ghwAAab+qVAV479mKBl/RTW87GsBlpw+GiXasKNi/tHc+IrMINtfY5wEOG1XALe4PX2o
+         BdZqePixTW+GKo8Xy23aeZkkb57nRTpuCJ7WOOiL6MZTsSOCqRzwX6VlbWp+5ZYmhBQ/
+         bpiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Wcm8qpzJovNixZr4FfekgJCx0i3cU8b+4aQdred0fgg=;
-        b=NsF3vaBk6ZVunvslU8n7XvBEsEPppuj1n0XxxCyGiF7KU44IQoLhRlVUsQdicw+Heh
-         trdKSg3evpojxyJj6R8lzj2ELXCAMLa/PBUSU4JZlbDpCJav64lKNV4aXTvIdc5M3OWn
-         Qgz3azpOQ4pfV9ha29qs4P5c6OSOTsuovdeN+NfWOyoVE5NWzwqKLb4ZyXniZMzgvndt
-         KLwJmFUA0K4mKBiFkO5nfaFHGmtZ3ROR0sShqzbDktTpscBDZjyO4gFSGYnNbQFdlUkr
-         qCaHPOO9dh3sVfLnpTUNHGU9SVrUN5nqTvgKOKZth2x5r/6CpI5HWpNb6SG4RACRtUeJ
-         PBTQ==
-X-Gm-Message-State: ACrzQf2aPUrCnxF8hUp/MqEesLEKclgJsPrcwMAYHdKW62c5U0zKgSpU
-        SIdGUtHkh/t7jtB2e644esk7d1+jbMI=
-X-Google-Smtp-Source: AMsMyM4PDjcsfmsU9HLCclj5h/aLzUxd7tWF14CqdGo5dw2XnIZm6HGoS/x3dOX5byJICnne2BsUIQ==
-X-Received: by 2002:a05:600c:d5:b0:3c0:fba1:d2b9 with SMTP id u21-20020a05600c00d500b003c0fba1d2b9mr9650228wmm.108.1665326262544;
-        Sun, 09 Oct 2022 07:37:42 -0700 (PDT)
+        bh=bGtbzq+IH2Ws4ChKWDCxefvQxY0NorgXVM+ffiB3Qi0=;
+        b=tL0hBmOnxiai9BRsDAbGdJjF5cuY/xomXQMxjh5EAGuBzCL+stqkUpQliSFyc+yGNg
+         RpVxDoIINEcQtqAZQBJFkvUX/yYkw1GGdGMPCBNvXQdLzmThg9PDzjqBnaP6/NHbVV1V
+         57EzL784U0g8YS38QITX+s6IEe1nLCxttQOAFxn0VllBIGwC1+kp6Kc4icKOt5e/1oeJ
+         zVyCO0ajvNEaSUQHenS3nGhLXs17ufJzTPgo6X4vHFzYZAFk1hxI4vNseZoibrcUJHgj
+         7rZIyOQGpWAFjIwsfOmPDniTBlXS13LT0wgUDVY2Ca1PfAdN1iZqvzWzcXEx4FOGWSk5
+         +J2w==
+X-Gm-Message-State: ACrzQf2ryhNHnZS8W1Vfm3C9MZF4MqoOUpFUXFuE5+Rzq5lsclSUUQ7y
+        4AkHyCocg+VDVlOwqakJ5MmPWeZzoFo=
+X-Google-Smtp-Source: AMsMyM7obxphVuQcLKvjmzF/mXvV6goDjAeKI9rZvj57Pt/29UIlVJcSOiK8rOSC52MHalc1D0FvMg==
+X-Received: by 2002:a05:6000:112:b0:22e:58ce:40d4 with SMTP id o18-20020a056000011200b0022e58ce40d4mr9011898wrx.193.1665326264392;
+        Sun, 09 Oct 2022 07:37:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o18-20020a1c7512000000b003b492753826sm7631593wmc.43.2022.10.09.07.37.41
+        by smtp.gmail.com with ESMTPSA id bi10-20020a05600c3d8a00b003b47ff307e1sm7709442wmb.31.2022.10.09.07.37.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Oct 2022 07:37:42 -0700 (PDT)
-Message-Id: <c5e8b6cfe5da269d27d3f171ccedd119a6db4840.1665326258.git.gitgitgadget@gmail.com>
+        Sun, 09 Oct 2022 07:37:43 -0700 (PDT)
+Message-Id: <fa974bfd5ef8f24d259ec31663ee18b65d96d83c.1665326258.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
 References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
 From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 09 Oct 2022 14:37:29 +0000
-Subject: [PATCH 03/12] fsmonitor: avoid socket location check if using hook
+Date:   Sun, 09 Oct 2022 14:37:31 +0000
+Subject: [PATCH 05/12] fsmonitor: check for compatability before communicating
+ with fsmonitor
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,108 +69,92 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Eric DeCosta <edecosta@mathworks.com>
 
-If monitoring is done via fsmonitor hook rather than IPC there is no
-need to check if the location of the Unix Domain socket (UDS) file is
-on a remote filesystem.
+If fsmonitor is not in a compatible state, warn with an appropriate message.
 
 Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
 ---
- compat/fsmonitor/fsm-settings-darwin.c | 10 ++++++----
- compat/fsmonitor/fsm-settings-win32.c  |  2 +-
- fsmonitor-settings.c                   |  8 ++++----
- fsmonitor-settings.h                   |  2 +-
- 4 files changed, 12 insertions(+), 10 deletions(-)
+ fsmonitor-settings.c | 10 +++++++---
+ fsmonitor-settings.h |  2 +-
+ fsmonitor.c          |  7 +++++++
+ 3 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
-index 7241c4c22c9..6abbc7af3ab 100644
---- a/compat/fsmonitor/fsm-settings-darwin.c
-+++ b/compat/fsmonitor/fsm-settings-darwin.c
-@@ -48,13 +48,15 @@ static enum fsmonitor_reason check_uds_volume(struct repository *r)
- 	return FSMONITOR_REASON_OK;
- }
- 
--enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
-+enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc)
- {
- 	enum fsmonitor_reason reason;
- 
--	reason = check_uds_volume(r);
--	if (reason != FSMONITOR_REASON_OK)
--		return reason;
-+	if (ipc) {
-+		reason = check_uds_volume(r);
-+		if (reason != FSMONITOR_REASON_OK)
-+			return reason;
-+	}
- 
- 	return FSMONITOR_REASON_OK;
- }
-diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
-index d88b06ae610..a8af31b71de 100644
---- a/compat/fsmonitor/fsm-settings-win32.c
-+++ b/compat/fsmonitor/fsm-settings-win32.c
-@@ -25,7 +25,7 @@ static enum fsmonitor_reason check_vfs4git(struct repository *r)
- 	return FSMONITOR_REASON_OK;
- }
- 
--enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
-+enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc)
- {
- 	enum fsmonitor_reason reason;
- 
 diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
-index d288cbad479..531a1b6f956 100644
+index 531a1b6f956..ee63a97dc51 100644
 --- a/fsmonitor-settings.c
 +++ b/fsmonitor-settings.c
-@@ -60,7 +60,7 @@ static enum fsmonitor_reason check_remote(struct repository *r)
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "config.h"
+ #include "repository.h"
++#include "fsmonitor-ipc.h"
+ #include "fsmonitor-settings.h"
+ #include "fsmonitor-path-utils.h"
+ 
+@@ -242,10 +243,11 @@ enum fsmonitor_reason fsm_settings__get_reason(struct repository *r)
+ 	return r->settings.fsmonitor->reason;
  }
- #endif
  
--static enum fsmonitor_reason check_for_incompatible(struct repository *r)
-+static enum fsmonitor_reason check_for_incompatible(struct repository *r, int ipc)
+-char *fsm_settings__get_incompatible_msg(const struct repository *r,
++char *fsm_settings__get_incompatible_msg(struct repository *r,
+ 					 enum fsmonitor_reason reason)
  {
- 	if (!r->worktree) {
- 		/*
-@@ -77,7 +77,7 @@ static enum fsmonitor_reason check_for_incompatible(struct repository *r)
- 		reason = check_remote(r);
- 		if (reason != FSMONITOR_REASON_OK)
- 			return reason;
--		reason = fsm_os__incompatible(r);
-+		reason = fsm_os__incompatible(r, ipc);
- 		if (reason != FSMONITOR_REASON_OK)
- 			return reason;
+ 	struct strbuf msg = STRBUF_INIT;
++	const char *socket_dir;
+ 
+ 	switch (reason) {
+ 	case FSMONITOR_REASON_UNTESTED:
+@@ -281,9 +283,11 @@ char *fsm_settings__get_incompatible_msg(const struct repository *r,
+ 		goto done;
+ 
+ 	case FSMONITOR_REASON_NOSOCKETS:
++		socket_dir = dirname((char *)fsmonitor_ipc__get_path(r));
+ 		strbuf_addf(&msg,
+-			    _("repository '%s' is incompatible with fsmonitor due to lack of Unix sockets"),
+-			    r->worktree);
++			    _("socket directory '%s' is incompatible with fsmonitor due"
++			      " to lack of Unix sockets support"),
++			    socket_dir);
+ 		goto done;
  	}
-@@ -162,7 +162,7 @@ const char *fsm_settings__get_hook_path(struct repository *r)
  
- void fsm_settings__set_ipc(struct repository *r)
- {
--	enum fsmonitor_reason reason = check_for_incompatible(r);
-+	enum fsmonitor_reason reason = check_for_incompatible(r, 1);
- 
- 	if (reason != FSMONITOR_REASON_OK) {
- 		fsm_settings__set_incompatible(r, reason);
-@@ -185,7 +185,7 @@ void fsm_settings__set_ipc(struct repository *r)
- 
- void fsm_settings__set_hook(struct repository *r, const char *path)
- {
--	enum fsmonitor_reason reason = check_for_incompatible(r);
-+	enum fsmonitor_reason reason = check_for_incompatible(r, 0);
- 
- 	if (reason != FSMONITOR_REASON_OK) {
- 		fsm_settings__set_incompatible(r, reason);
 diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
-index d9c2605197f..0721617b95a 100644
+index 0721617b95a..ab02e3995ee 100644
 --- a/fsmonitor-settings.h
 +++ b/fsmonitor-settings.h
-@@ -48,7 +48,7 @@ struct fsmonitor_settings;
-  * fsm_os__* routines should considered private to fsm_settings__
-  * routines.
-  */
--enum fsmonitor_reason fsm_os__incompatible(struct repository *r);
-+enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc);
- #endif /* HAVE_FSMONITOR_OS_SETTINGS */
+@@ -33,7 +33,7 @@ enum fsmonitor_mode fsm_settings__get_mode(struct repository *r);
+ const char *fsm_settings__get_hook_path(struct repository *r);
  
- #endif /* FSMONITOR_SETTINGS_H */
+ enum fsmonitor_reason fsm_settings__get_reason(struct repository *r);
+-char *fsm_settings__get_incompatible_msg(const struct repository *r,
++char *fsm_settings__get_incompatible_msg(struct repository *r,
+ 					 enum fsmonitor_reason reason);
+ 
+ struct fsmonitor_settings;
+diff --git a/fsmonitor.c b/fsmonitor.c
+index 57d6a483bee..540736b39fd 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -295,6 +295,7 @@ static int fsmonitor_force_update_threshold = 100;
+ 
+ void refresh_fsmonitor(struct index_state *istate)
+ {
++	static int warn_once = 0;
+ 	struct strbuf query_result = STRBUF_INIT;
+ 	int query_success = 0, hook_version = -1;
+ 	size_t bol = 0; /* beginning of line */
+@@ -305,6 +306,12 @@ void refresh_fsmonitor(struct index_state *istate)
+ 	int is_trivial = 0;
+ 	struct repository *r = istate->repo ? istate->repo : the_repository;
+ 	enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
++	enum fsmonitor_reason reason = fsm_settings__get_reason(r);
++
++	if (!warn_once && reason > FSMONITOR_REASON_OK) {
++		warn_once = 1;
++		warning("%s", fsm_settings__get_incompatible_msg(r, reason));
++	}
+ 
+ 	if (fsm_mode <= FSMONITOR_MODE_DISABLED ||
+ 	    istate->fsmonitor_has_run_once)
 -- 
 gitgitgadget
 
