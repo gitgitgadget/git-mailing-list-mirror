@@ -2,112 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D9B1C433F5
-	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 12:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67DE6C433FE
+	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 14:33:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231352AbiJJMTG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 08:19:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60124 "EHLO
+        id S229820AbiJJOd4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 10:33:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230344AbiJJMTE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 08:19:04 -0400
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CD8918B3B
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 05:19:03 -0700 (PDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id h10so6987708qvq.7
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 05:19:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=b0jqAxQakVDOXuh7MczrB3hQOlk+IxCer+e1ipeLtSM=;
-        b=cS4bNQbc3+7Dikp/6X8J+XTCWN2HoUYuAVwylJ1jRCF8kc9JMCZL/k5ObNM9jR6xF1
-         YYW+VlgXqIkfS92OmwchNhIp0/INQCFs2+QPZWNufcZ/6y94RuK33YxVI3w3kbPHCX/Z
-         O8KwSb2ih/IzLqYPnw/tE2QCn8bXOODTKkpZLVpRd0W61F1GNZOlAvRhwsA+enG4gZ1i
-         ROeCSMLQzuDDPliz24vWuMBZfQk0lPhJyIoL2PMGTArU5sPX/E/HiLBwhYQd4hZimxS1
-         HYlyolnfvkpcHSZk0xC7IqVLjTFR2XvIbjcwXGyjcQ2h0wk7mBZW4yoxODeqVOLFtcs7
-         ijCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=b0jqAxQakVDOXuh7MczrB3hQOlk+IxCer+e1ipeLtSM=;
-        b=arrsJey8edoqHXX5PyKRP/vIxb43YUwy/dTGJg/0Xu3USYqzLoFo+coghGiUziQnnL
-         uE6M1o3FvZBIeabT1f/vlCU5SNCLpFJSDIUtfcguIhnC1onIHBmUqrf2OJiUgLpiWRYN
-         7MYKLkCrln89aekAsZX18On/2TLhFIKQdTdUXXaODqmgo6037rYC5pXMIWRMVqAh3Lpv
-         wLGyfwoVERLYSbffQWWnFR0eHmWLCR5TNOo2u7ShJf6ggWgfkaqScvCw13tErCCKq6yz
-         lf5Ljp9iXyM40/aJrH7taJftc9ixPfGAjw+bfCJSz0RiTPH23nRxlsGHHYG+I0IS37PK
-         pqzQ==
-X-Gm-Message-State: ACrzQf0Dm9TwB8TsUTKdgt+lSR+eUCuOybM5QTsopYErooafV/w+zT7n
-        JqiIKOE0wakGOgNQJtdXBVurTk1PvfPTVv4SskIWd4KE/qyaLg==
-X-Google-Smtp-Source: AMsMyM73JM1dmjHnCoWjyPeNSA/pZ5Y36dP9lWYxNa3IlL4BvztuV1clX05u1zzadHLZS6zm0lsKwVQvUnbmUPpP91c=
-X-Received: by 2002:a0c:f445:0:b0:4b1:b0c9:a334 with SMTP id
- h5-20020a0cf445000000b004b1b0c9a334mr14332494qvm.131.1665404342216; Mon, 10
- Oct 2022 05:19:02 -0700 (PDT)
+        with ESMTP id S229469AbiJJOdz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 10:33:55 -0400
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CF745FDE8
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 07:33:54 -0700 (PDT)
+Date:   Mon, 10 Oct 2022 14:33:41 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail3; t=1665412430; x=1665671630;
+        bh=fEzYj2weo14VDzvk1FU1ECCEK+AzNtfWfAeHZzGJVsM=;
+        h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID;
+        b=QwOJi2SLmBUkvd7pY/vGF1C/ZIW2x12V0iSEsSVfTashsUgAgkf7hp97yB2XMhRjB
+         zBILSrDESmfNpjpTTGke3l5iCPhMumIc6a4AUwSHfcrUEdrjJP8dmbys3dGATHvzhE
+         /B7PxW4Pou8EkI+jCEdgZEuVtcWt5eXW15xVaYicoSKeBQiw1bFKXMdk/pLaxMxD0S
+         OIiiOnKdsP1npTiOx1asfJ1qMCzgHEf+iggRW6Igkp7TET5D0RqqbHFiJSrkM4GuQl
+         kydMbfxY5kiEt6pcL3wvgoaCc0pBPN/eyX1z6bSdaoBppwK7Ta5ah6r09ZrzAbmMjT
+         Jew0UJNQApC8w==
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   orygaw <orygaw@protonmail.com>
+Subject: Git BUG 2.37.3 and 2.38.0
+Message-ID: <o2ijhZAUIi7nPTwQmsJfpvPIEeLbhvn1AP8rhW2hCNbC380Z2ogDHzZigqJsHI6RwphsIZR3OSJSy-wYvyWv5un632tKynHKFLFPLPEDH2g=@protonmail.com>
+Feedback-ID: 57245731:user:proton
 MIME-Version: 1.0
-References: <CA+PPyiEvfkqZYq6uESMt3QYnfMDZDmPbGiQ5Qkeb77rtLV5Aug@mail.gmail.com>
- <CAP8UFD1o5qxSvbV05DK_J=zbU=D_+HS0Q2ufEFSQVaBoWw_7Ow@mail.gmail.com>
-In-Reply-To: <CAP8UFD1o5qxSvbV05DK_J=zbU=D_+HS0Q2ufEFSQVaBoWw_7Ow@mail.gmail.com>
-From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Date:   Mon, 10 Oct 2022 15:18:50 +0300
-Message-ID: <CA+PPyiF5KK6p7rv57YL_wsDO+WPifoRp1oe0F-6mo5NxLAwDWw@mail.gmail.com>
-Subject: Re: [Outreachy] internship contribution
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Hariom verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I see most of the articles are UNIX based, does it mean that I should
-have a UNIX based operating system in order to contribute?
-Currently, I have windows installed 11 on my PC
+Hello,=20
 
-On Mon, Oct 10, 2022 at 11:19 AM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi Wilberforce,
->
-> On Sun, Oct 9, 2022 at 6:46 AM NSENGIYUMVA WILBERFORCE
-> <nsengiyumvawilberforce@gmail.com> wrote:
-> >
-> > Hi, I am Nsengiyumva Wilberforce From Uganda. I am happy that my first
-> > application for outreachy internship was accepted.
-> >
-> > When I read about Git in the project list, I got interested and I will
-> > be glad to be hooked into this community and get my hands dirty in
-> > contributions. I am eager to learn new things from my mentor and the
-> > entire community.
-> >
-> > I will be glad to hear from the community on some tips on how to get
-> > started with contribution.
-> >
-> > And more so would like to get in touch with the my mentor
->
-> As you also sent me a private message, I already replied privately.
-> But for the public record and maybe other applicants for an Outreachy
-> internship who might be interested in working on Git, we have
-> information about how to get started contributing on the following
-> pages:
->
-> - https://git.github.io/Hacking-Git/
-> - https://git.github.io/General-Microproject-Information/
->
-> About microproject ideas, we haven't set up a specific page yet for
-> this Outreachy round. Maybe we will do it but you shouldn't count on
-> it. You can still take a look at the pages for the previous GSoC or
-> Outreachy rounds like:
->
-> - https://git.github.io/SoC-2022-Microprojects/
-> - https://git.github.io/Outreachy-23-Microprojects/
-> - https://git.github.io/SoC-2020-Microprojects/
->
-> You will see that some ideas are quite generic and we propose them
-> over and over as they are still valid.
->
-> You are welcome to ask specific questions (publicly is preferred so
-> that others can benefit).
->
-> Thanks again for your interest in working on Git,
-> Christian.
+
+I found a bug with GIT with version 2.37.3 and 2.38.0
+
+My system FreeBSD 13.0-RELEASE-p11:
+
+command:
+
+git log -1 --invert-grep
+
+
+* thread #1, name =3D 'git', stop reason =3D signal SIGSEGV: invalid addres=
+s (fault address: 0x0)
+  * frame #0: 0x00000000004fe580 git`free_pattern_expr(x=3D0x00000000000000=
+00) at grep.c:755:13
+    frame #1: 0x00000000004fe501 git`free_grep_patterns(opt=3D0x00007ffffff=
+fdc20) at grep.c:795:2
+    frame #2: 0x00000000005edd16 git`release_revisions(revs=3D0x00007ffffff=
+fda58) at revision.c:3030:2
+    frame #3: 0x00000000003826c8 git`cmd_log_deinit(ret=3D0, rev=3D0x00007f=
+ffffffda58) at log.c:353:2
+    frame #4: 0x00000000003845ae git`cmd_log(argc=3D3, argv=3D0x00007ffffff=
+fe960, prefix=3D0x0000000000000000) at log.c:883:9
+    frame #5: 0x00000000002f8e8c git`run_builtin(p=3D0x00000000006a4b58, ar=
+gc=3D3, argv=3D0x00007fffffffe960) at git.c:466:11
+    frame #6: 0x00000000002f7783 git`handle_builtin(argc=3D3, argv=3D0x0000=
+7fffffffe960) at git.c:721:3
+    frame #7: 0x00000000002f87c6 git`run_argv(argcp=3D0x00007fffffffe8a4, a=
+rgv=3D0x00007fffffffe898) at git.c:788:4
+    frame #8: 0x00000000002f7521 git`cmd_main(argc=3D3, argv=3D0x00007fffff=
+ffe960) at git.c:921:19
+    frame #9: 0x000000000042b53a git`main(argc=3D4, argv=3D0x00007fffffffe9=
+58) at common-main.c:56:11
+    frame #10: 0x00000000002f6dd0 git`_start(ap=3D<unavailable>, cleanup=3D=
+<unavailable>) at crt1_c.c:75:7
+
