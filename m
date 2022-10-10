@@ -2,486 +2,258 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D30AC433FE
-	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 16:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10DA3C433FE
+	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 16:04:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229548AbiJJQE0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 12:04:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43312 "EHLO
+        id S229655AbiJJQEf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 12:04:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbiJJQEZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 12:04:25 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B606DAE6
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 09:04:22 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id a3so17773697wrt.0
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 09:04:22 -0700 (PDT)
+        with ESMTP id S229557AbiJJQE2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 12:04:28 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECA597268C
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 09:04:25 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id j7so17727956wrr.3
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 09:04:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ii8BFOLHHzSwwZYr3pME3vNkOebH+ksMuYqnY3MjhmA=;
-        b=MFblgIqCPjPnz7uc7fW2mOoNKxoXvtSGH7FZOJkqXgmnX3rvkdIzt3kRa0BWemzngS
-         Z71rxD3wmfz+jnkxoUhSwg3g1+hhWZ8K0ozX3Q8I5iyhxHgyFZsk54YKUfqr+pDFNFhe
-         k2JBZePIjFbnu1WDlt8Let0h19XDpIh9GpD7Q+r/1q+WTqHDYk+/BfIoxaBlSuhh52jy
-         eAvTrI1uQCF1pRdHbOhU3nzuVK0dkezXiwLJpOoMqdu+l4irROHOSW2/DDeS/OA1Vxnj
-         08p7im+GRBoVXR8en+e1b+EQtAFcVbZtiJvl4vBZPRVOn0bYY1m2qKurtD+mjEt9eMW3
-         BmaA==
+        bh=0yrgCoeY0AokBCk/7CF7non/FPEu/1rHXlEpUZhWD/s=;
+        b=jL7Qc3kyGyqNzUXh7ZGVXQVcUF3UuUmxkpokmMoDhQht9VtiFL5LlIIYLrFMgu+ezn
+         wEpNbcWljkQKyeKdoCnwiXBkuXVA4AmlHWXlPRvGnjJuUuoxHvWtlWhlL+ceSu4PdtJZ
+         dlPBk46iKIq3jJ5yiQSeMubaBwDW1Rjh0dOIOgzc3jcdADAZtiSfskmh3Im48SCDp8t9
+         hPeZfiY7t3crCx+YnIOo92MWETjNx9KphMb/Wb68/zdNyfGwGAKSwruiEe6z9B0BGg9r
+         2NwK78SKJET6u0HXIyGaMOySy4x7blgisPKg3V5PWlpfuYJ8Rat3J3u6q6s3s5ahwibN
+         xgUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ii8BFOLHHzSwwZYr3pME3vNkOebH+ksMuYqnY3MjhmA=;
-        b=1XYJJ7jwJIa1Cb0HDDFOMU6TgnV/p4QHCAusoptkjZm0a+gYpcWlrsCaHwX6mQWoea
-         uohbGaruIcAQt7/yX4ozZx/gLAa23T8R6d7fCf/y5BmClYGn3XP2HNWTvu1rccCQAZu2
-         cdgmmxaw5lL5YFHnbp7T72aCoeVl7WTvlmmiupIRZn7GJXiW/VmvPNNmUg2OJ3cLVMbx
-         T6yg4us4lBR+Xm1Me+KpnTEKzLQyrxIDR6CRCK4DzpprRJfTI4uY+JyccJxf6+ocIMHD
-         ARJLJG9hnk9nf6coSw0VkZ+hJrTcXSX7KQdbnDKpSlw63odHSSgGAMz9g7Dtd4NyOIQJ
-         P0aA==
-X-Gm-Message-State: ACrzQf2ecKTV+EagSTuV+vMhXpOQWcjWe15gLKlQD5kKe+VrPQMsBXww
-        2fWKxDrHno7Sq9Gf3BMoumv45l9Tcdg=
-X-Google-Smtp-Source: AMsMyM4SDRi8dT4PxafZo09oYddJ9AqKfgHmB2aMJcH8a6E7RSGdbJKlHNjj5KTHAXkbidcqGXhMtQ==
-X-Received: by 2002:adf:e8cb:0:b0:22c:d929:e82d with SMTP id k11-20020adfe8cb000000b0022cd929e82dmr11935159wrn.224.1665417860845;
-        Mon, 10 Oct 2022 09:04:20 -0700 (PDT)
+        bh=0yrgCoeY0AokBCk/7CF7non/FPEu/1rHXlEpUZhWD/s=;
+        b=GGFayWOS7yVgvVgOdnB1IjkX1FoOLIWJO/cLlgZ4I0F4QYGmiv/uEQ2D4lQftJC9iY
+         49AQhq8KYgAQKYXDfMn+i0RFoPqZOUgf9Tm1ANcvQNj767hXA5UYWf24AUb7kSQviQ5O
+         wilWYTmdPol+5vG2bLppsX1P4/bAFAuByfARFSff56wgKQIAyPLCYw0hkPF5kzSzVCy9
+         ZDskWUARp6GO/hz/21kVAn08SQ/Sco+3QXoWcSjRMMTBQVOg0V8RW9442MTX1asjLh3h
+         n4N/fSsFn7MWT3tRQGSz/st5L0S19rlVRltPke+O0CnEpKrWWlXgDNtv94pT2oGC2rFL
+         D7Yg==
+X-Gm-Message-State: ACrzQf3JRaWZI4TIUeb1a6ZFGLzlfomIaKSRoVhtuX7qUaAkWMp2tvw3
+        OVJMnozzf/g8WGlDHI+hZo4uQCDVMI8=
+X-Google-Smtp-Source: AMsMyM73CMP32tw/Mz4HhGnFljQyLKn7f0h9vwVgtqJhxlB4z13gBG0SEDy/quOWj3++XlHYygFayw==
+X-Received: by 2002:a5d:6901:0:b0:22f:b097:7de6 with SMTP id t1-20020a5d6901000000b0022fb0977de6mr7147408wru.373.1665417863807;
+        Mon, 10 Oct 2022 09:04:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f11-20020a05600c154b00b003a3442f1229sm18194977wmg.29.2022.10.10.09.04.20
+        by smtp.gmail.com with ESMTPSA id v24-20020a1cf718000000b003a6125562e1sm10125981wmh.46.2022.10.10.09.04.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Oct 2022 09:04:20 -0700 (PDT)
-Message-Id: <pull.1333.v4.git.1665417859.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1333.v3.git.1664886860.gitgitgadget@gmail.com>
+        Mon, 10 Oct 2022 09:04:22 -0700 (PDT)
+Message-Id: <f0c4457951ca5d052d10f401497917cddcbe2aa4.1665417859.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1333.v4.git.1665417859.gitgitgadget@gmail.com>
 References: <pull.1333.v3.git.1664886860.gitgitgadget@gmail.com>
+        <pull.1333.v4.git.1665417859.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 10 Oct 2022 16:04:08 +0000
-Subject: [PATCH v4 00/11] Bundle URIs III: Parse and download from bundle lists
-MIME-Version: 1.0
+Date:   Mon, 10 Oct 2022 16:04:10 +0000
+Subject: [PATCH v4 02/11] bundle-uri: create bundle_list struct and helpers
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
         avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
         Glen Choo <chooglen@google.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Teng Long <dyroneteng@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the third series building the bundle URI feature. It is built on top
-of ds/bundle-uri-clone, which introduced 'git clone --bundle-uri=' where is
-a URI to a bundle file. This series adds the capability of downloading and
-parsing a bundle list and then downloading the URIs in that list.
+From: Derrick Stolee <derrickstolee@github.com>
 
-The core functionality of bundle lists is implemented by creating data
-structures from a list of key-value pairs. These pairs can come from a
-plain-text file in Git config format, but in the future, we will support the
-list being supplied by packet lines over Git's protocol v2 in the
-'bundle-uri' command (reserved for the next series).
+It will likely be rare where a user uses a single bundle URI and expects
+that URI to point to a bundle. Instead, that URI will likely be a list
+of bundles provided in some format. Alternatively, the Git server could
+advertise a list of bundles.
 
-The patches are organized in this way (updated for v4):
+In anticipation of these two ways of advertising multiple bundles,
+create a data structure that represents such a list. This will be
+populated using a common API, but for now focus on what data can be
+represented.
 
- 1. Patch 1 is a cleanup from the previous part. This allows us to simplify
-    our bundle list data structure slightly.
+Each list contains a number of remote_bundle_info structs. These contain
+an 'id' that is used to uniquely identify them in the list, and also a
+'uri' that contains the location of its data. Finally, there is a strbuf
+containing the filename used when Git downloads the contents to disk.
 
- 2. Patches 2-3 create the bundle list data structures and the logic for
-    populating the list from key-value pairs.
+The list itself stores these remote_bundle_info structs in a hashtable
+using 'id' as the key. The order of the structs in the input is
+considered unimportant, but future modifications to the format and these
+data structures will place ordering possibilities on the set. The list
+also has a few "global" properties, including the version (used when
+parsing the list) and the mode. The mode is one of these two options:
 
- 3. Patches 4-5 teach Git to parse "key=value" lines to construct a bundle
-    list. Add unit tests that ensure this logic constructs lists correctly.
-    These patches are adapted from Ævar's RFC [1] and were previously seen
-    in my combined RFC [2].
+1. BUNDLE_MODE_ALL: all listed URIs are intended to be combined
+   together. The client should download all of the advertised data to
+   have a complete copy of the data.
 
- 4. Patch 6 teaches Git to parse Git config files into bundle lists.
+2. BUNDLE_MODE_ANY: any one listed item is sufficient to have a complete
+   copy of the data. The client can choose arbitrarily from these
+   options. In the future, the client may use pings to find the closest
+   URI among geodistributed replicas, or use some other heuristic
+   information added to the format.
 
- 5. Patches 7-9 implement the ability to download a bundle list and
-    recursively download the contained bundles (and possibly the bundle
-    lists within). This is limited by a constant depth to avoid issues with
-    cycles or otherwise incorrectly configured bundle lists. We also need to
-    be careful when verifying the bundles due to ref caches, so some flags
-    are added to unbundle() and verify_bundle().
+This API is currently unused, but will soon be expanded with parsing
+logic and then be consumed by the bundle URI download logic.
 
- 6. Patches 10-11 suppress unhelpful warnings from user visibility.
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ bundle-uri.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ bundle-uri.h | 56 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 116 insertions(+)
 
-[1]
-https://lore.kernel.org/git/RFC-cover-v2-00.36-00000000000-20220418T165545Z-avarab@gmail.com/
-
-[2]
-https://lore.kernel.org/git/pull.1234.git.1653072042.gitgitgadget@gmail.com/
-
-At the end of this series, users can bootstrap clones using 'git clone
---bundle-uri= ' where points to a bundle list instead of a single bundle
-file.
-
-As outlined in the design document [1], the next steps after this are:
-
- 1. Implement the protocol v2 verb, re-using the bundle list logic from (2).
-    Use this to auto-discover bundle URIs during 'git clone' (behind a
-    config option). [2]
- 2. Implement the 'creationToken' heuristic, allowing incremental 'git
-    fetch' commands to download a bundle list from a configured URI, and
-    only download bundles that are new based on the creation token values.
-    [3]
-
-I have prepared some of this work as pull requests on my personal fork so
-curious readers can look ahead to where we are going:
-
-[3]
-https://lore.kernel.org/git/pull.1248.v3.git.1658757188.gitgitgadget@gmail.com
-
-[4] https://github.com/derrickstolee/git/pull/21
-
-[5] https://github.com/derrickstolee/git/pull/22
-
-
-Updates in v4
-=============
-
- * Properly updated the patch outline.
-
- * Jonathan Tan asked for more tests, and this revealed some interesting
-   behaviors which I have now either fixed or made explicit:
-   
-   1. In "all" mode, we try to download and apply all bundles. Do not fail
-      if a single bundle download fails.
-   2. Previously, not all bundles were being applied, and this was noticed
-      by the added checks for the refs/bundles/* refs at the end of the
-      tests. This revealed the need for removing the reachability walk from
-      verify_bundle() since the written refs/bundles/* refs were not being
-      picked up by the loose ref cache. Since removing the reachability walk
-      seemed like the faster (for users) option, I went that direction.
-   3. While running those tests and examining the output carefully, I
-      noticed several error messages related to missing prerequisites due to
-      attempting unbundling in a random order. This doesn't appear in the
-      later creationToken version, so I hadn't noticed it at the tip of my
-      local work. These messages are removed with a new quiet mode for
-      verify_bundle().
-
-
-Updates in v3
-=============
-
- * Fixed a comment about a return value of -1.
- * Fixed and tested scenario where early URIs fail in "any" mode and Git
-   should try the rest of the list.
- * Instead of using 'success_count' and 'failure_count', use the iterator
-   return value to terminate the "all" mode loop early.
-
-
-Updates in v2
-=============
-
-Thank you to all of the voices who chimed in on the previous version. I'm
-sorry it took so long for me to get a new version.
-
- * I've done a rather thorough overhaul to minimize how often later patches
-   rewrite portions of earlier patches.
-
- * We no longer use a strbuf in struct remote_bundle_info. Instead, use a
-   'char *' and only in the patch where it is first used.
-
- * The config documentation is more clearly indicating that the bundle.*
-   section has no effect in the repository config (at the moment, which will
-   change in the next series).
-
- * The bundle.version value is now parsed using git_parse_int().
-
- * The config key is now parsed using parse_config_key().
-
- * Commit messages clarify more about the context of the change in the
-   bigger picture of the bundle URI effort.
-
- * Some printf()s are correctly changed to fprintf()s.
-
- * The test helper CLI is unified across the two modes. They both take a
-   filename now.
-
- * The count of downloaded bundles is now only updated after a successful
-   download, allowing the "any" mode to keep trying after a failure.
-
-Thanks,
-
- * Stolee
-
-Derrick Stolee (9):
-  bundle-uri: use plain string in find_temp_filename()
-  bundle-uri: create bundle_list struct and helpers
-  bundle-uri: create base key-value pair parsing
-  bundle-uri: parse bundle list in config format
-  bundle-uri: limit recursion depth for bundle lists
-  bundle: add flags to verify_bundle(), skip walk
-  bundle-uri: fetch a list of bundles
-  bundle-uri: quiet failed unbundlings
-  bundle-uri: suppress stderr from remote-https
-
-Ævar Arnfjörð Bjarmason (2):
-  bundle-uri: create "key=value" line parsing
-  bundle-uri: unit test "key=value" parsing
-
- Documentation/config.txt        |   2 +
- Documentation/config/bundle.txt |  24 ++
- Makefile                        |   1 +
- builtin/bundle.c                |   5 +-
- bundle-uri.c                    | 458 ++++++++++++++++++++++++++++++--
- bundle-uri.h                    |  93 +++++++
- bundle.c                        |  22 +-
- bundle.h                        |  16 +-
- config.c                        |   2 +-
- config.h                        |   1 +
- t/helper/test-bundle-uri.c      |  95 +++++++
- t/helper/test-tool.c            |   1 +
- t/helper/test-tool.h            |   1 +
- t/t5558-clone-bundle-uri.sh     | 275 +++++++++++++++++++
- t/t5750-bundle-uri-parse.sh     | 171 ++++++++++++
- t/test-lib-functions.sh         |  11 +
- transport.c                     |   2 +-
- 17 files changed, 1149 insertions(+), 31 deletions(-)
- create mode 100644 Documentation/config/bundle.txt
- create mode 100644 t/helper/test-bundle-uri.c
- create mode 100755 t/t5750-bundle-uri-parse.sh
-
-
-base-commit: e21e663cd1942df29979d3e01f7eacb532727bb7
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1333%2Fderrickstolee%2Fbundle-redo%2Flist-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1333/derrickstolee/bundle-redo/list-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/1333
-
-Range-diff vs v3:
-
-  1:  48beccb0f5e =  1:  48beccb0f5e bundle-uri: use plain string in find_temp_filename()
-  2:  f0c4457951c =  2:  f0c4457951c bundle-uri: create bundle_list struct and helpers
-  3:  430e01cd2a4 =  3:  430e01cd2a4 bundle-uri: create base key-value pair parsing
-  4:  cd915d57f3b =  4:  cd915d57f3b bundle-uri: create "key=value" line parsing
-  5:  4d8cac67f66 =  5:  4d8cac67f66 bundle-uri: unit test "key=value" parsing
-  6:  0ecae3a44b3 =  6:  0ecae3a44b3 bundle-uri: parse bundle list in config format
-  7:  7e6b32313b0 =  7:  7e6b32313b0 bundle-uri: limit recursion depth for bundle lists
-  -:  ----------- >  8:  83f2cd893a4 bundle: add flags to verify_bundle(), skip walk
-  8:  46799648b4c !  9:  6b9c764c6b3 bundle-uri: fetch a list of bundles
-     @@ bundle-uri.c: static int unbundle_from_file(struct repository *r, const char *fi
-      +		ctx->count++;
-      +
-      +	/*
-     -+	 * In BUNDLE_MODE_ANY, we need to continue iterating until we find
-     -+	 * a bundle that works, so do not signal a failure here.
-     ++	 * To be opportunistic as possible, we continue iterating and
-     ++	 * download as many bundles as we can, so we can apply the ones
-     ++	 * that work, even in BUNDLE_MODE_ALL mode.
-      +	 */
-     -+	return ctx->mode == BUNDLE_MODE_ANY ? 0 : res;
-     ++	return 0;
-      +}
-      +
-      +static int download_bundle_list(struct repository *r,
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with file:// bundle' '
-      +
-      +	git clone --bundle-uri="file://$(pwd)/bundle-list" clone-from clone-list-file &&
-      +	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-     -+	git -C clone-list-file cat-file --batch-check <oids
-     ++	git -C clone-list-file cat-file --batch-check <oids &&
-     ++
-     ++	git -C clone-list-file for-each-ref --format="%(refname)" >refs &&
-     ++	grep "refs/bundles/" refs >actual &&
-     ++	cat >expect <<-\EOF &&
-     ++	refs/bundles/base
-     ++	refs/bundles/left
-     ++	refs/bundles/merge
-     ++	refs/bundles/right
-     ++	EOF
-     ++	test_cmp expect actual
-     ++'
-     ++
-     ++test_expect_success 'clone bundle list (file, all mode, some failures)' '
-     ++	cat >bundle-list <<-EOF &&
-     ++	[bundle]
-     ++		version = 1
-     ++		mode = all
-     ++
-     ++	# Does not exist. Should be skipped.
-     ++	[bundle "bundle-0"]
-     ++		uri = file://$(pwd)/clone-from/bundle-0.bundle
-     ++
-     ++	[bundle "bundle-1"]
-     ++		uri = file://$(pwd)/clone-from/bundle-1.bundle
-     ++
-     ++	[bundle "bundle-2"]
-     ++		uri = file://$(pwd)/clone-from/bundle-2.bundle
-     ++
-     ++	# No bundle-3 means bundle-4 will not apply.
-     ++
-     ++	[bundle "bundle-4"]
-     ++		uri = file://$(pwd)/clone-from/bundle-4.bundle
-     ++
-     ++	# Does not exist. Should be skipped.
-     ++	[bundle "bundle-5"]
-     ++		uri = file://$(pwd)/clone-from/bundle-5.bundle
-     ++	EOF
-     ++
-     ++	GIT_TRACE2_PERF=1 \
-     ++	git clone --bundle-uri="file://$(pwd)/bundle-list" clone-from clone-all-some &&
-     ++	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-     ++	git -C clone-all-some cat-file --batch-check <oids &&
-     ++
-     ++	git -C clone-all-some for-each-ref --format="%(refname)" >refs &&
-     ++	grep "refs/bundles/" refs >actual &&
-     ++	cat >expect <<-\EOF &&
-     ++	refs/bundles/base
-     ++	refs/bundles/left
-     ++	EOF
-     ++	test_cmp expect actual
-     ++'
-     ++
-     ++test_expect_success 'clone bundle list (file, all mode, all failures)' '
-     ++	cat >bundle-list <<-EOF &&
-     ++	[bundle]
-     ++		version = 1
-     ++		mode = all
-     ++
-     ++	# Does not exist. Should be skipped.
-     ++	[bundle "bundle-0"]
-     ++		uri = file://$(pwd)/clone-from/bundle-0.bundle
-     ++
-     ++	# Does not exist. Should be skipped.
-     ++	[bundle "bundle-5"]
-     ++		uri = file://$(pwd)/clone-from/bundle-5.bundle
-     ++	EOF
-     ++
-     ++	git clone --bundle-uri="file://$(pwd)/bundle-list" clone-from clone-all-fail &&
-     ++	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-     ++	git -C clone-all-fail cat-file --batch-check <oids &&
-     ++
-     ++	git -C clone-all-fail for-each-ref --format="%(refname)" >refs &&
-     ++	! grep "refs/bundles/" refs
-      +'
-      +
-      +test_expect_success 'clone bundle list (file, any mode)' '
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with file:// bundle' '
-      +
-      +	# Does not exist. Should be skipped.
-      +	[bundle "bundle-0"]
-     -+		uri = $HTTPD_URL/bundle-0.bundle
-     ++		uri = file://$(pwd)/clone-from/bundle-0.bundle
-      +
-      +	[bundle "bundle-1"]
-     -+		uri = $HTTPD_URL/bundle-1.bundle
-     ++		uri = file://$(pwd)/clone-from/bundle-1.bundle
-      +
-      +	# Does not exist. Should be skipped.
-      +	[bundle "bundle-5"]
-     -+		uri = $HTTPD_URL/bundle-5.bundle
-     ++		uri = file://$(pwd)/clone-from/bundle-5.bundle
-      +	EOF
-      +
-      +	git clone --bundle-uri="file://$(pwd)/bundle-list" clone-from clone-any-file &&
-      +	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-     -+	git -C clone-any-file cat-file --batch-check <oids
-     ++	git -C clone-any-file cat-file --batch-check <oids &&
-     ++
-     ++	git -C clone-any-file for-each-ref --format="%(refname)" >refs &&
-     ++	grep "refs/bundles/" refs >actual &&
-     ++	cat >expect <<-\EOF &&
-     ++	refs/bundles/base
-     ++	EOF
-     ++	test_cmp expect actual
-     ++'
-     ++
-     ++test_expect_success 'clone bundle list (file, any mode, all failures)' '
-     ++	cat >bundle-list <<-EOF &&
-     ++	[bundle]
-     ++		version = 1
-     ++		mode = any
-     ++
-     ++	# Does not exist. Should be skipped.
-     ++	[bundle "bundle-0"]
-     ++		uri = $HTTPD_URL/bundle-0.bundle
-     ++
-     ++	# Does not exist. Should be skipped.
-     ++	[bundle "bundle-5"]
-     ++		uri = $HTTPD_URL/bundle-5.bundle
-     ++	EOF
-     ++
-     ++	git clone --bundle-uri="file://$(pwd)/bundle-list" clone-from clone-any-fail &&
-     ++	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-     ++	git -C clone-any-fail cat-file --batch-check <oids &&
-     ++
-     ++	git -C clone-any-fail for-each-ref --format="%(refname)" >refs &&
-     ++	! grep "refs/bundles/" refs
-      +'
-      +
-       #########################################################################
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone HTTP bundle' '
-      +
-      +	git clone --bundle-uri="$HTTPD_URL/bundle-list" clone-from clone-any-http &&
-      +	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-     -+	git -C clone-any-http cat-file --batch-check <oids
-     ++	git -C clone-any-http cat-file --batch-check <oids &&
-     ++
-     ++	git -C clone-list-file for-each-ref --format="%(refname)" >refs &&
-     ++	grep "refs/bundles/" refs >actual &&
-     ++	cat >expect <<-\EOF &&
-     ++	refs/bundles/base
-     ++	refs/bundles/left
-     ++	refs/bundles/merge
-     ++	refs/bundles/right
-     ++	EOF
-     ++	test_cmp expect actual
-      +'
-      +
-       # Do not add tests here unless they use the HTTP server, as they will
-  -:  ----------- > 10:  1cae3096624 bundle-uri: quiet failed unbundlings
-  9:  d84544859e4 ! 11:  52a575f8a69 bundle-uri: suppress stderr from remote-https
-     @@ bundle-uri.c: static int download_https_uri_to_file(const char *file, const char
-       
-      
-       ## t/t5558-clone-bundle-uri.sh ##
-     -@@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any mode)' '
-     +@@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, all mode, some failures)' '
-     + 	git clone --bundle-uri="file://$(pwd)/bundle-list" \
-     + 		clone-from clone-all-some 2>err &&
-     + 	! grep "Repository lacks these prerequisite commits" err &&
-     ++	! grep "fatal" err &&
-     ++	grep "warning: failed to download bundle from URI" err &&
-     + 
-     + 	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-     + 	git -C clone-all-some cat-file --batch-check <oids &&
-     +@@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, all mode, all failures)' '
-     + 	git clone --bundle-uri="file://$(pwd)/bundle-list" \
-     + 		clone-from clone-all-fail 2>err &&
-     + 	! grep "Repository lacks these prerequisite commits" err &&
-     ++	! grep "fatal" err &&
-     ++	grep "warning: failed to download bundle from URI" err &&
-     + 
-     + 	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-     + 	git -C clone-all-fail cat-file --batch-check <oids &&
-     +@@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (file, any mode, all failures)' '
-       		uri = $HTTPD_URL/bundle-5.bundle
-       	EOF
-       
-     --	git clone --bundle-uri="file://$(pwd)/bundle-list" clone-from clone-any-file &&
-     +-	git clone --bundle-uri="file://$(pwd)/bundle-list" clone-from clone-any-fail &&
-      +	git clone --bundle-uri="file://$(pwd)/bundle-list" \
-     -+		clone-from clone-any-file 2>err &&
-     ++		clone-from clone-any-fail 2>err &&
-      +	! grep "fatal" err &&
-      +	grep "warning: failed to download bundle from URI" err &&
-      +
-       	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-     - 	git -C clone-any-file cat-file --batch-check <oids
-     - '
-     + 	git -C clone-any-fail cat-file --batch-check <oids &&
-     + 
-      @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (HTTP, any mode)' '
-       		uri = $HTTPD_URL/bundle-5.bundle
-       	EOF
-     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone bundle list (HTTP, any m
-      +	grep "warning: failed to download bundle from URI" err &&
-      +
-       	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-     - 	git -C clone-any-http cat-file --batch-check <oids
-     - '
-     + 	git -C clone-any-http cat-file --batch-check <oids &&
-     + 
-
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 8b2f4e08c9c..f9a8db221bc 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -4,6 +4,66 @@
+ #include "object-store.h"
+ #include "refs.h"
+ #include "run-command.h"
++#include "hashmap.h"
++#include "pkt-line.h"
++
++static int compare_bundles(const void *hashmap_cmp_fn_data,
++			   const struct hashmap_entry *he1,
++			   const struct hashmap_entry *he2,
++			   const void *id)
++{
++	const struct remote_bundle_info *e1 =
++		container_of(he1, const struct remote_bundle_info, ent);
++	const struct remote_bundle_info *e2 =
++		container_of(he2, const struct remote_bundle_info, ent);
++
++	return strcmp(e1->id, id ? (const char *)id : e2->id);
++}
++
++void init_bundle_list(struct bundle_list *list)
++{
++	memset(list, 0, sizeof(*list));
++
++	/* Implied defaults. */
++	list->mode = BUNDLE_MODE_ALL;
++	list->version = 1;
++
++	hashmap_init(&list->bundles, compare_bundles, NULL, 0);
++}
++
++static int clear_remote_bundle_info(struct remote_bundle_info *bundle,
++				    void *data)
++{
++	FREE_AND_NULL(bundle->id);
++	FREE_AND_NULL(bundle->uri);
++	return 0;
++}
++
++void clear_bundle_list(struct bundle_list *list)
++{
++	if (!list)
++		return;
++
++	for_all_bundles_in_list(list, clear_remote_bundle_info, NULL);
++	hashmap_clear_and_free(&list->bundles, struct remote_bundle_info, ent);
++}
++
++int for_all_bundles_in_list(struct bundle_list *list,
++			    bundle_iterator iter,
++			    void *data)
++{
++	struct remote_bundle_info *info;
++	struct hashmap_iter i;
++
++	hashmap_for_each_entry(&list->bundles, &i, info, ent) {
++		int result = iter(info, data);
++
++		if (result)
++			return result;
++	}
++
++	return 0;
++}
+ 
+ static char *find_temp_filename(void)
+ {
+diff --git a/bundle-uri.h b/bundle-uri.h
+index 8a152f1ef14..ff7e3fd3fb2 100644
+--- a/bundle-uri.h
++++ b/bundle-uri.h
+@@ -1,7 +1,63 @@
+ #ifndef BUNDLE_URI_H
+ #define BUNDLE_URI_H
+ 
++#include "hashmap.h"
++#include "strbuf.h"
++
+ struct repository;
++struct string_list;
++
++/**
++ * The remote_bundle_info struct contains information for a single bundle
++ * URI. This may be initialized simply by a given URI or might have
++ * additional metadata associated with it if the bundle was advertised by
++ * a bundle list.
++ */
++struct remote_bundle_info {
++	struct hashmap_entry ent;
++
++	/**
++	 * The 'id' is a name given to the bundle for reference
++	 * by other bundle infos.
++	 */
++	char *id;
++
++	/**
++	 * The 'uri' is the location of the remote bundle so
++	 * it can be downloaded on-demand. This will be NULL
++	 * if there was no table of contents.
++	 */
++	char *uri;
++};
++
++#define REMOTE_BUNDLE_INFO_INIT { 0 }
++
++enum bundle_list_mode {
++	BUNDLE_MODE_NONE = 0,
++	BUNDLE_MODE_ALL,
++	BUNDLE_MODE_ANY
++};
++
++/**
++ * A bundle_list contains an unordered set of remote_bundle_info structs,
++ * as well as information about the bundle listing, such as version and
++ * mode.
++ */
++struct bundle_list {
++	int version;
++	enum bundle_list_mode mode;
++	struct hashmap bundles;
++};
++
++void init_bundle_list(struct bundle_list *list);
++void clear_bundle_list(struct bundle_list *list);
++
++typedef int (*bundle_iterator)(struct remote_bundle_info *bundle,
++			       void *data);
++
++int for_all_bundles_in_list(struct bundle_list *list,
++			    bundle_iterator iter,
++			    void *data);
+ 
+ /**
+  * Fetch data from the given 'uri' and unbundle the bundle data found
 -- 
 gitgitgadget
+
