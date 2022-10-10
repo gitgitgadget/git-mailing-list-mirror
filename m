@@ -2,101 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E727EC433F5
-	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 18:17:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 811E7C433FE
+	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 18:22:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbiJJSRn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 14:17:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56554 "EHLO
+        id S229770AbiJJSWY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 14:22:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbiJJSRl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 14:17:41 -0400
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A945F6D56D
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 11:17:40 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id s7so3200946qkj.1
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 11:17:40 -0700 (PDT)
+        with ESMTP id S229530AbiJJSWW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 14:22:22 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C494D1DA63
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 11:22:21 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id q196so2812596iod.8
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 11:22:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4YlkMQ67yx/5bUx8A+aC7KpsH1boG2isDTy8I+XHTpU=;
-        b=VI1XQv7NMyeTe6HsAoVjDu0YxkrI4ggGpPXwcLSNw+Yhwp7I//WUdF6+7bcDlQ6QL+
-         22mRf+3zmggXjL3Z01oHk5/FU7BThP9iVxoUjs8bmXgAKyiQfERIQYr/+L/ppEEVN2Yu
-         r3IwViVBmSFxCFEHtxsab6+APFRB4MorYJKgCdeP5p+wvHZ8oK+nZpV8vUTvIEy4eGjh
-         STkOR4GuMz+FxHe6ih5M5wfDx3FiBPJMz+tWr1UJ8Hr4/O6ez6J/TfGq8hsVZm42CbR0
-         FgWn5oJ/ULT0CE7l6gcnymuDfSXKLcbCCzTevvxk0FDa8UR33TbEu6T3tEvdq9y+7yFo
-         rnkw==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yXCoBEoDVFlF9UG2fU9i/CnAZ4mNvYQ28xfPDlZh9UU=;
+        b=grpUGITFVaN/0cG+EHtmmxQRI5skA+2+ffZGWd5OF7ovoUb5bXRzAzj/yMlGrUe11+
+         NZBkr5ZX5gO1JSZZ2xkQG1KkD6jiRHShR/C6Qk0eCMKkKQDco1d3GeB+HL6MuPY7m7vo
+         RaOifNNOi27HJfn/JKvi+MKgi1yrws0T8OvnXNW62eeCDym8BGeoD8cqMb7QcWzKnjoj
+         00bvWncVYVn1oeQ/SslbfStJaGI4yaCHb8NCAaaG1sa2QZygfdE2J6IikDTB3ypppBkp
+         UXPGe/vAzsj3XbRYzK4VE+WocD0x4keB6MtG1ieGRvd/XAKWQe9o+nnD8JErAtL5Nfb9
+         Hp/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4YlkMQ67yx/5bUx8A+aC7KpsH1boG2isDTy8I+XHTpU=;
-        b=X5G0yWZDdxcNCmL+NmCM5XpeLvnckY5F0YBPG4H+uNCSNyy6ClPAQ6YTKSl9Diq6LV
-         WJfz3IUFttdt8aQVz9y8RTMNzSoANaR8Dgjf4Ou5pfqhgMsb/8g/dZ2IDsjtorD/7HrD
-         bPuv9IFYnRWYP7ya8lJVrHtimfU4TtLxNyXNEprP7h2quosBHaoVWtHz71JcxO5yhRNY
-         fj+RwvNAo4vZV5mStYNMzQ/FXB2s2aVhBrbhH6cocibQbYuMD5bOdJkOPx0CrPZrB3jg
-         GYEC6Vaz0YNPQ3KXK1Zgpv4kMqc+noNgKVHWWJoWxnL3lLWgxApkccMM3EaEmd/KKvWX
-         1MRQ==
-X-Gm-Message-State: ACrzQf27uRDC7r9vO8y9bWO4ZUoHRJgNNGjIKOP+SxRFRgYmQj7WyZ7N
-        fWxBju7pEAYu41QHRx4ZrtJWhh6YyOnHimKbibU=
-X-Google-Smtp-Source: AMsMyM6Ama/RjPY75h3uFTH2x0ydhPNNvNtBkPqolWJsQHa7W2E/MXmeHpOh9DZqeaHrDlrYcjDxShAk/B13bPPZ3Z4=
-X-Received: by 2002:a05:620a:4388:b0:6ce:4068:754 with SMTP id
- a8-20020a05620a438800b006ce40680754mr13321127qkp.369.1665425859746; Mon, 10
- Oct 2022 11:17:39 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yXCoBEoDVFlF9UG2fU9i/CnAZ4mNvYQ28xfPDlZh9UU=;
+        b=Bb3VAlFD+6/TEAbbjZBAlRmZfFC4sXTzYiJfa+PvIvktkNHSTVRT6d4nYazR6Wi7r9
+         lmL/n5cKL9Y1D1PIPGzZgQS7GVLN5OooqsAVG/Cz0QEIoAeeoCzHgBVovxYGtiGQ8jo8
+         V8apvV4VrYiq321ZGwJ2VAQEX4rKxDoRg+oFJooECLv5xxcCFpUErrgm46hd8uK9QT8b
+         wkYBcWAAExoc1PaS6ZmRrUMtlBmRGRliuHl1jmRFHG8yEmH48K32JgB1G9UsQ2I5UxW4
+         KOAwCgZXUoFfzdIbLX8Xe+eJ6AuvcPq2Fz/gXnGEuna/lkE9NfJdMtHlWoA1d0hH6wgC
+         pwdQ==
+X-Gm-Message-State: ACrzQf1rifWYh7Iucohh4+3DsGc+fmmh9ETS2p23ufrS9oFi0anv4bro
+        OywLWPC3bSqrxzuoDR8Jixd0
+X-Google-Smtp-Source: AMsMyM6F5M6lxaY09j5hYoXlivZ7EqNTCv1naJKCnPQ2nVepAK/UZA0cUMJBakK9AY8lmqduAReRrA==
+X-Received: by 2002:a05:6638:2501:b0:35a:3675:fe2c with SMTP id v1-20020a056638250100b0035a3675fe2cmr10867678jat.35.1665426141219;
+        Mon, 10 Oct 2022 11:22:21 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:2102:4070:cf6:fed2? ([2600:1700:e72:80a0:2102:4070:cf6:fed2])
+        by smtp.gmail.com with ESMTPSA id s3-20020a92c5c3000000b002f9a7dc2e1fsm4099908ilt.53.2022.10.10.11.22.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Oct 2022 11:22:20 -0700 (PDT)
+Message-ID: <ae8a98d9-eec1-cdcd-67a3-695aaca7f5ae@github.com>
+Date:   Mon, 10 Oct 2022 14:22:19 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [Outreachy] internship contribution
+Content-Language: en-US
+To:     NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>,
+        Luna Jernberg <droidbittin@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Hariom verma <hariom18599@gmail.com>
 References: <CA+PPyiEvfkqZYq6uESMt3QYnfMDZDmPbGiQ5Qkeb77rtLV5Aug@mail.gmail.com>
  <CAP8UFD1o5qxSvbV05DK_J=zbU=D_+HS0Q2ufEFSQVaBoWw_7Ow@mail.gmail.com>
  <CA+PPyiF5KK6p7rv57YL_wsDO+WPifoRp1oe0F-6mo5NxLAwDWw@mail.gmail.com>
  <CAP8UFD26PY-53vZNZJzCRNiqaVB4fd=AvBtVuvMQP9p8Oqj82Q@mail.gmail.com>
- <9fcfc8b0-772d-08c3-595b-5a5a139d7ecd@github.com> <CADo9pHgcfwV53ooyM8Dh5jVO2rxO-tUHeLovd7HYLdTSOkNtyA@mail.gmail.com>
-In-Reply-To: <CADo9pHgcfwV53ooyM8Dh5jVO2rxO-tUHeLovd7HYLdTSOkNtyA@mail.gmail.com>
-From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Date:   Mon, 10 Oct 2022 21:17:28 +0300
-Message-ID: <CA+PPyiH8EPWpTuOJg1hSthFP1xBxurjN7J0J00g6xvFi_vbcYw@mail.gmail.com>
-Subject: Re: [Outreachy] internship contribution
-To:     Luna Jernberg <droidbittin@gmail.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git@vger.kernel.org, Hariom verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+ <9fcfc8b0-772d-08c3-595b-5a5a139d7ecd@github.com>
+ <CADo9pHgcfwV53ooyM8Dh5jVO2rxO-tUHeLovd7HYLdTSOkNtyA@mail.gmail.com>
+ <CA+PPyiH8EPWpTuOJg1hSthFP1xBxurjN7J0J00g6xvFi_vbcYw@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CA+PPyiH8EPWpTuOJg1hSthFP1xBxurjN7J0J00g6xvFi_vbcYw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-thank you all for your suggestions, let me see what is easy for me
+On 10/10/2022 2:17 PM, NSENGIYUMVA WILBERFORCE wrote:
+> thank you all for your suggestions, let me see what is easy for me
+> 
+> On Mon, Oct 10, 2022 at 7:58 PM Luna Jernberg <droidbittin@gmail.com> wrote:
+>>
+>> Maybe WSL can be used?: https://learn.microsoft.com/en-us/windows/wsl/install
 
-On Mon, Oct 10, 2022 at 7:58 PM Luna Jernberg <droidbittin@gmail.com> wrote:
->
-> Maybe WSL can be used?: https://learn.microsoft.com/en-us/windows/wsl/install
->
-> On Mon, Oct 10, 2022 at 6:55 PM Derrick Stolee <derrickstolee@github.com> wrote:
-> >
-> > On 10/10/2022 12:22 PM, Christian Couder wrote:
-> > > On Mon, Oct 10, 2022 at 2:19 PM NSENGIYUMVA WILBERFORCE
-> > > <nsengiyumvawilberforce@gmail.com> wrote:
-> > >>
-> > >> I see most of the articles are UNIX based, does it mean that I should
-> > >> have a UNIX based operating system in order to contribute?
-> > >> Currently, I have windows installed 11 on my PC
-> > >
-> > > You can install a Linux virtual machine on your PC and develop in this
-> > > virtual machine, or you can install the Git for Windows SDK from:
-> > >
-> > > https://gitforwindows.org/#contribute
-> > >
-> > > It might be best to install both development environments. I will not
-> > > be able to help you much with development environment issues if you
-> > > develop on Windows, but if it works for you, that could be Ok,
-> > > especially if you use GitGitGadget too.
-> >
-> > The git-for-windows/git fork has some information that is helpful
-> > for developing Git on a Windows machine [1]. This also includes
-> > details about recommending a Linux VM with Windows' Hyper-V system
-> > because compiling and testing Git is so much faster on Linux.
-> >
-> > [1] https://github.com/git-for-windows/git/blob/main/CONTRIBUTING.md
-> >
-> > Good luck!
-> > -Stolee
+If you do go the WSL route, then please share your learnings by updating the
+contributing doc either in git-for-windows/git [1] or here on the mailing list.
+
+[1] https://github.com/git-for-windows/git/blob/main/CONTRIBUTING.md
+
+Thanks,
+-Stolee
