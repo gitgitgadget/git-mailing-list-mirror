@@ -2,83 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A35BC433F5
-	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 07:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7713FC433F5
+	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 07:50:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232568AbiJJHuv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 03:50:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38722 "EHLO
+        id S232012AbiJJHuy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 03:50:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231532AbiJJHuS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 03:50:18 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C200610A4
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 00:48:59 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id r8-20020a1c4408000000b003c47d5fd475so2784734wma.3
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 00:48:59 -0700 (PDT)
+        with ESMTP id S231908AbiJJHuW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 03:50:22 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57BCC1ADA2
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 00:49:02 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id n12so15713315wrp.10
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 00:49:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=0ebk2jtT+t0Pcnz5SHnj39LoLCSKvsKw/eRmmQF9rys=;
-        b=OsVAWPXjhs1tOxgfH/ZtW/Xou/d0tLyb6zPANq/ai2e3IT4etNMDegDq+4EKzBVtyB
-         Y/VOlqPFtAu4e/zE0+I6m5yHkDeS+mVl3pQpT7I0lhh3l3c0sDfFIzriXNLpFBjRg3IA
-         H3rd8yLdLodOqR73nXdTxhi+shEyTmwRrtJUef1gJHN+9+yWgIw9zl4+eVjXkkFiCRZL
-         gBbvPYJhEH04S0xUohfDS44H+U57mTOIP3nexx+nFsx8EjwYEzlDom2w1PlsU/cdbkXC
-         Sv9g7e1HZW1ZB6iYlhyZ6EuEZlqnClPohH4JwPpePVOSMnZRe6Bvw0GqgmEzbV/WfmqK
-         qOZg==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=utoctwKJ7I0PE3KvdqHgelNY8CWmwBxOTvdAgkDvdW4=;
+        b=idKzhHoGvM1D+lveMnYj3cvRHXN73mpctOjc7tXcCnmMIh/FyzIQ4cRFnb03utgFjB
+         rrL3DI0vhSZo6ZD446T7IgEwds0xM360oOMGwYIXu09A0zEhyXFRSElC1oeBAO2i9V1K
+         sS2hJQD1/+mNeQUFAk6s0HioNKS1ug2/kBpEvJXlw6nRl1jnchAfo5Lyixj5RrjAiZll
+         10PEKmn+y4Q7GSuAPAIOWk4mSPUQCdQp1/HNz6G3Er7GduRQE3r4lv0z3tEh583r84NI
+         vszts4/WQ5AqSDrRzqjh9pzmRhMbsIcneZeK4COlf4t/VDgMBE1PEDmlXoexs3Se6Tfy
+         6i9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0ebk2jtT+t0Pcnz5SHnj39LoLCSKvsKw/eRmmQF9rys=;
-        b=cq12oRKgQV19iSi4AyKmNeIwJ8WDE4QNuvSLKsKUnPi3/vTJ3K1FYEAJn6g4lPVciD
-         E4WsjnC3MwvMZ0NmWGb991j1RBNSMUl9UatOR7HoCSTbyefdWBESkDsdyKlvR7bq7f4h
-         PUC6+ccjMD+n35FZv5Or6xIJgPFOWoTH4ZRlP9lmxo7Zv0XDdzZtfivMxIG2cnC4VA0l
-         2VtDLLjWTyG9gnGZBPAXZKmSe4e9vAjlLNmaRvPQmjRP5lYXU2cUkhzHjdvjY/pzG+vq
-         JqvK5mOtwvDTWaHSi9AXqM5GL1e+h5/lUBgaWJfXz5f7U/p2IijM0hzbvFaL0ZW7yXFb
-         Kfag==
-X-Gm-Message-State: ACrzQf0HsFLtSBunhWjNwIURtsL9dOxF2QYq+5HyofaUyY1jcF/wa8Mr
-        Cs3XgeaaNiV2l/Zy02ZBXaQuPrQvBG4=
-X-Google-Smtp-Source: AMsMyM7l16Ha4KPRIIyBS6d9OVbX2cbPVjI69MjpaydWG+QrWgu7Ia6aBwU3+zTih8OUHP0CBgNMzg==
-X-Received: by 2002:a05:600c:4e44:b0:3b4:bed2:4f5e with SMTP id e4-20020a05600c4e4400b003b4bed24f5emr19242732wmq.193.1665388138154;
-        Mon, 10 Oct 2022 00:48:58 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=utoctwKJ7I0PE3KvdqHgelNY8CWmwBxOTvdAgkDvdW4=;
+        b=Z+j7LgEx+Lm4Sqr2t+8Z1cuLbBHNOuveQaza58IA2NpODK3CzYOGSYBoZcguS1mBj/
+         ksITltP+hSoCM1smS7msvaaTA/FZqY5ZI485ZL3S5xA2NfC0KsLj1IIhQJvvcyc3sRZN
+         Tn6a7MzSh/2AFTASyhaWdnOCwL69B3y0nIyQY/cEeGxR4mAHZ+XLDIsNNDVLThRdmFMH
+         jcZiP0JgAsD+jykBoHlvx0SPnFl9zanqFilUyNJEhGAh38QRH7taA5Y8nA471LyA7wfe
+         l4LTzaet9iwEVteuyEYYiesLW1b0FiEoI2dGMVXcQsknZJEUNvw9OsPLyumyApUlOIIH
+         aQ5g==
+X-Gm-Message-State: ACrzQf1yACLetqXNCnJkx1vIsa5UK5G17dlZisabBsaRbfJjjsa47opp
+        AK0IOVCvgVOaZNQNuIusKaAVq0+TvsY=
+X-Google-Smtp-Source: AMsMyM4A+f698/UnfrYFwSr04bfm/Nx+9+62pLKfBbqqjugr4ilFOhAXmaEvxR9bpxTKVbb4al5jZg==
+X-Received: by 2002:adf:fdcf:0:b0:22e:3ef3:1d28 with SMTP id i15-20020adffdcf000000b0022e3ef31d28mr10993891wrs.331.1665388140366;
+        Mon, 10 Oct 2022 00:49:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m4-20020adfe0c4000000b0022cdf2179b2sm8335408wri.68.2022.10.10.00.48.57
+        by smtp.gmail.com with ESMTPSA id w9-20020a5d6809000000b0022aeba020casm8201846wru.83.2022.10.10.00.48.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Oct 2022 00:48:57 -0700 (PDT)
-Message-Id: <pull.1354.git.git.1665388136.gitgitgadget@gmail.com>
+        Mon, 10 Oct 2022 00:48:59 -0700 (PDT)
+Message-Id: <4ee163b9a2c4c657e649159ae6c83b13613028f3.1665388136.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1354.git.git.1665388136.gitgitgadget@gmail.com>
+References: <pull.1354.git.git.1665388136.gitgitgadget@gmail.com>
 From:   "Oscar Dominguez via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 10 Oct 2022 07:48:54 +0000
-Subject: [PATCH 0/2] ci(main): upgrade actions/checkout to v3
+Date:   Mon, 10 Oct 2022 07:48:56 +0000
+Subject: [PATCH 2/2] ci(main): linux32 uses actions/checkout@v2
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Oscar Dominguez <dominguez.celada@gmail.com>
+Cc:     Oscar Dominguez <dominguez.celada@gmail.com>,
+        Oscar Dominguez <dominguez.celada@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Oscar Dominguez <dominguez.celada@gmail.com>
 
-Description
-===========
+to prevent issue tracked in https://github.com/actions/checkout/issues/560
 
-Upgrades actions/checkout to v3 in .github/workflows/main.yml
+Signed-off-by: Oscar Dominguez <dominguez.celada@gmail.com>
+---
+ .github/workflows/main.yml | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Oscar Dominguez (2):
-  ci(main): upgrade actions/checkout to v3
-  ci(main): linux32 uses actions/checkout@v2
-
- .github/workflows/main.yml | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
-
-
-base-commit: bcd6bc478adc4951d57ec597c44b12ee74bc88fb
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1354%2Foscard0m%2Fpatch-1-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1354/oscard0m/patch-1-v1
-Pull-Request: https://github.com/git/git/pull/1354
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 8dc9d938159..4eb5042f0d6 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -281,17 +281,20 @@ jobs:
+         vector:
+         - jobname: linux-musl
+           image: alpine
++          checkout_version: 3
+         - jobname: linux32
+           os: ubuntu32
+           image: daald/ubuntu32:xenial
++          checkout_version: 2
+         - jobname: pedantic
+           image: fedora
++          checkout_version: 3
+     env:
+       jobname: ${{matrix.vector.jobname}}
+     runs-on: ubuntu-latest
+     container: ${{matrix.vector.image}}
+     steps:
+-    - uses: actions/checkout@v3
++    - uses: actions/checkout@${{matrix.vector.checkout_version}}
+     - run: ci/install-docker-dependencies.sh
+     - run: ci/run-build-and-tests.sh
+     - name: print test failures
 -- 
 gitgitgadget
