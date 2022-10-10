@@ -2,99 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1457FC433FE
-	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 18:58:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3E45C433F5
+	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 19:00:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbiJJS6f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 14:58:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51242 "EHLO
+        id S229573AbiJJTAj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 15:00:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229799AbiJJS6a (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 14:58:30 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C82220EC
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 11:58:29 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 30E97143342;
-        Mon, 10 Oct 2022 14:58:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/FnZR7Im1EpMtguNE+w84CnLqzvdr78XyA3vDl
-        tUMTQ=; b=DLPpMLvZSOEdycoXOoSff7+BXs+CgFCA0iohJZhgP68Iedf6XZGeev
-        dk9dXXg8tIw6gHIcRndV22AY6Tw8MWJQkXtDwpeUjsOS3hrYWztvCAP1LbOeA6tW
-        6no0/KSoPpBl9zskaoke8UhtSwry/nOHnJW6Mf4mZ5PD5aH5vK++A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 20FC4143341;
-        Mon, 10 Oct 2022 14:58:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 85262143340;
-        Mon, 10 Oct 2022 14:58:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Daniel Sonbolian via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Daniel Sonbolian <dsal3389@gmail.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: Re: [PATCH] git.c: fix, stop passing options after --help
-References: <pull.1357.git.git.1665418677535.gitgitgadget@gmail.com>
-Date:   Mon, 10 Oct 2022 11:58:27 -0700
-In-Reply-To: <pull.1357.git.git.1665418677535.gitgitgadget@gmail.com> (Daniel
-        Sonbolian via GitGitGadget's message of "Mon, 10 Oct 2022 16:17:57
-        +0000")
-Message-ID: <xmqq35bv33qk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229458AbiJJTAh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 15:00:37 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB38D6BD49
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 12:00:36 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id o65so9162912iof.4
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 12:00:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=7zG7lE/G0sSWedadfu9uHcYu3K+lUw6l1KsEPMnqy2M=;
+        b=kK43Y0YKGzF9PlqAKgDHcW0lDJptvd7F5T2D568k+I00iyE1nVwzzef01L8rQXwrmf
+         Jm1lD7kjT+ZDQNqvJfTKaJtgJfa4wyp2DH9hfuK89N3b9gjZaQWgpa7efAf21DgtS0Om
+         yv1BrvxnoJhTME1ZUegMgMQgjWz0FNX7uf5KjUG7FJ2q0QdEl+OKtPMSa1APsTo4Pqa/
+         MPMrkb9HmM0uzlQ0ToRocB0GwxzwUBMZwWbiwHlvpWdqjxF+ICSsU8BkjW8Ql/SodRV1
+         1ACkW05hIVZ8WTTgMOfrvqcOhitCnh8+I6U/FkaCMXchPP8AhYrMUme+8UyvSU4Sh8nP
+         Lqdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7zG7lE/G0sSWedadfu9uHcYu3K+lUw6l1KsEPMnqy2M=;
+        b=uKoJzslx/vBdbprtKnbYKPnPcSuzl0GlOY8WknaaeKPtbf3CN9Gog4CotP1D8vXPH9
+         KwGWPuvw3XbJ3ZFAS8n4sqZ+QVblNwIKCrtUC84MBQTVWbMSrT5ztpr60tV77A7uNq+e
+         tmbVM3EHxjxeXrdBRxbqBhY1ZqJ8o1SxM05ojMolcCm7VKoqpRlUPMe0DTws/Oit2ZU9
+         ckGjDqjYjsmZjDC9iVHEjIus5mbKAVTRC6kjK/YswtUOaU33zjtr51lOYERoRBm/l0aK
+         Pu1mtyWmq3xV5BF019mE8tP9oF6W3nCdO2KBNXWZX8GkaPj6lmn9BUHGfJAVWUyp3Lnr
+         z0Pw==
+X-Gm-Message-State: ACrzQf0ozcJL2UyNco2c1Kti+C8uhdE9hdxLDc71b4leNmkn1/iW1RaO
+        5v5A4QzXWeC5H+BOJhSatsvM/xF7dmYa9V27
+X-Google-Smtp-Source: AMsMyM7TIPwiHtMZLWVzikp0SrRzi5HuUelJFuszucqBuMVGOxkq++HiZs5d6As/LXSdF3kMBvzMxQ==
+X-Received: by 2002:a05:6638:2612:b0:35a:337a:8a4c with SMTP id m18-20020a056638261200b0035a337a8a4cmr11118046jat.269.1665428436019;
+        Mon, 10 Oct 2022 12:00:36 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id g1-20020a028501000000b003566ff0eb13sm4237728jai.34.2022.10.10.12.00.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Oct 2022 12:00:35 -0700 (PDT)
+Date:   Mon, 10 Oct 2022 15:00:34 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        orygaw <orygaw@protonmail.com>, rsbecker@nexbridge.com,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] log: require --grep for --invert-grep and --all-match,
+ fix segfault
+Message-ID: <Y0Rr0sQ91C/SgmBJ@nand.local>
+References: <o2ijhZAUIi7nPTwQmsJfpvPIEeLbhvn1AP8rhW2hCNbC380Z2ogDHzZigqJsHI6RwphsIZR3OSJSy-wYvyWv5un632tKynHKFLFPLPEDH2g=@protonmail.com>
+ <patch-1.1-f4b90799fce-20221010T165711Z-avarab@gmail.com>
+ <xmqq7d174m6a.fsf@gitster.g>
+ <xmqq35bv4lns.fsf@gitster.g>
+ <221010.86o7ujpl44.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 86CFC228-48CD-11ED-BB0F-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221010.86o7ujpl44.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Daniel Sonbolian via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Daniel Sonbolian <dsal3389@gmail.com>
+On Mon, Oct 10, 2022 at 08:48:25PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> The rationale for changing it this way is that the documentaion says:
 >
-> Since commit c6b6d9f7d8a when passing --help option
+> 	--all-match::
+> 	        Limit the commits output to ones that match all given `--grep`,
+> 	        instead of ones that match at least one.
+> 	--invert-grep::
+> 	        Limit the commits output to ones with log message that do not
+> 	        match the pattern specified with `--grep=<pattern>`.
 
-When referring to an old work, use
+This does feel a little academic, but to me the documentation seems to
+suggest that `--all-match` or `--invert-grep` should both support the
+absence of a `--grep` argument.
 
-    $(git show -s --pretty=reference $that_commit)
+At least in `--invert-grep`, my reading is "the pattern specified with
+`--grep=<pattern>` [...if any]".
 
-I suspect that 2c6b6d9f (help: make option --help open man pages
-only for Git commands, 2016-08-26) is what you meant (the author
-CC'ed).
+In any case, the behavior has been as such for long enough that it feels
+like our documentation needs to be changed, and not the behavior itself.
+On the other hand, I have a hard time imagining that many/any people
+care about this particular behavior.
 
-> to a Git command, we try to open that command man page, we
-> do it for both commands and concepts, it is done by
-> converting the entered command to a help command
-> for the given Git command, for example:
->
-> 	"git commit --help -i" into "git help --exclude-guides commit -i"
->
-> But the options after --help option are also
-> passed to the new command (-i option from the example)
-
-"new command" meaning the "git help" command?
-
-> which can lead to unexpected output, because the
-> help command will try to execute those extra options.
-
-Meaning "git commit --help -i" becomes "git help ... commit -i", and
-because the command line parser of "git help" accepts dashed options
-after "commit", it works just like "git help ... -i commit" does?
-
-It is a request to read the help information for "git commit" using
-the "--info" backend, right?  Similarly, "git commit --help -m"
-would do the manpage and "git commit --help -w" would show the
-manpage in the browser?
-
-It sounds like a sensible behaviour to me (even though relying on
-the behaviour of "git help" that takes dashed options after "commit"
-makes me feel somewhat dirty).  So ...
-
-> This fixed by building the argv statically, meaning
-
-... I am not sure what you are fixing.  Puzzled...
+Thanks,
+Taylor
