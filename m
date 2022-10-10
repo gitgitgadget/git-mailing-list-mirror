@@ -2,93 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58C25C433FE
-	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 21:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57BA0C433F5
+	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 23:12:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229599AbiJJV6f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 17:58:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39002 "EHLO
+        id S230028AbiJJXMM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 19:12:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbiJJV6d (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 17:58:33 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1A0E647DE
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 14:58:31 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BB76C1BFD83;
-        Mon, 10 Oct 2022 17:58:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ndrfwt8Ev26l
-        kCcsctXqx2iBI9+rYPdg3g4ViUowZjk=; b=tmIpWDK2wJNKQPJzZr5fwp+MyzEa
-        /jyG3xI+ikLO0t2mz+cNgh4IaLaeKm2j1dTXze3/Th7buDRlq0Cz8ON+FW5ePZgY
-        jy6PmqkHfZZVp9g8EGwXD3D+Vb+OSf3i6P+sMBVJEpSW6Cypyakfv8+CdfToy3de
-        XsdtoAT/TjzyAbI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B408B1BFD82;
-        Mon, 10 Oct 2022 17:58:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EE0991BFD81;
-        Mon, 10 Oct 2022 17:58:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org, alexander.s.m@gmail.com,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v5 1/1] diff.c: When appropriate, use utf8_strwidth()
-References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
-        <20220914151333.3309-1-tboegi@web.de> <xmqqpmfx52qj.fsf@gitster.g>
-        <20220926184308.5oaaoopod36igq6i@tb-raspi4>
-Date:   Mon, 10 Oct 2022 14:58:26 -0700
-In-Reply-To: <20220926184308.5oaaoopod36igq6i@tb-raspi4> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Mon, 26 Sep 2022 20:43:08
- +0200")
-Message-ID: <xmqq35bv1gu5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: ABC5B27C-48E6-11ED-ADAF-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+        with ESMTP id S230124AbiJJXLf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 19:11:35 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C280B4362A
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 16:10:00 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id g28so11961173pfk.8
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 16:10:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=phusion.nl; s=google;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=x6PSgl9SaLsxNMd9rvRQBz9HLflN16Jvdf7RjunVRQ8=;
+        b=hK4bIG8o3v6Rl/fzF5dwFov294Qi/iD8962+nzGbLQ9YokEfSncTDWpwYNLdDoNQtz
+         Y28hCB1qRA/OUwakpBgellsYkqsJH6pzZm2d7De0PLE/C2azHIKihaz+lIAxvjsbaNpk
+         yxUp/EXpeNir5R6vPIt1UeCinc+gkyiNju0Fk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=x6PSgl9SaLsxNMd9rvRQBz9HLflN16Jvdf7RjunVRQ8=;
+        b=hKpMQHFSLkSqSecqZFMUVIFTC4U5RZPtd4sdQ36Rs8qvgaaGcGa6751TfFSxn8rNJx
+         E4OBie9XuAaNKtAmNqzhHScT5E4zfgQkj1uon9J81LZeNvFK+EQsJcKSvTO5PzwImUy+
+         +sWX2ZyCoqYdBDBBOXs39pnZH8ak83euc2M1PhyGkOkTS6eqWAWjc1SVA8T/eWRcMj89
+         AWrdBGKg8CbfCfUOGyvr4FL1MLdA4gxszxuVRn1CjprPVelOwWUMa0EkpOZt1D2pydrf
+         T6QGDjeD7jZ4jyv7DDziSP2+nZ2bAXsLAYOAp12eRhLrxKf5LJ+wS1kXR2EOoVCLVd45
+         Gtfg==
+X-Gm-Message-State: ACrzQf2QghHt3jgrW6qEdj0St15vta1OxjpYi2UmCQMkfrQuIpEhb/Gd
+        jMc+Pp7/7cXPb5ueZwGWZK9JCeQwQeZpTQ==
+X-Google-Smtp-Source: AMsMyM4i5WmusKBZ+0ZeBGzI8I9NrCYoQ2ps1npvHqcc+5uKFGjXo97HAR4EY63bwi7A1jzYGrT/Pw==
+X-Received: by 2002:a62:5252:0:b0:562:eef6:402f with SMTP id g79-20020a625252000000b00562eef6402fmr15072966pfb.79.1665443380157;
+        Mon, 10 Oct 2022 16:09:40 -0700 (PDT)
+Received: from smtpclient.apple (node-1w7jra24832z1e321nmelzhxs.ipv6.telus.net. [2001:56a:f4e2:cf01:dc91:df7b:1244:9290])
+        by smtp.gmail.com with ESMTPSA id u11-20020a170903124b00b00176dd41320dsm7206587plh.119.2022.10.10.16.09.38
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 10 Oct 2022 16:09:39 -0700 (PDT)
+From:   Camden Narzt <camden@phusion.nl>
+Content-Type: text/plain;
+        charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Subject: Git bug report
+Message-Id: <7E47933A-00E7-4FD0-9A4E-4AE4EC0D34C9@phusion.nl>
+Date:   Mon, 10 Oct 2022 17:09:38 -0600
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> On Wed, Sep 14, 2022 at 09:40:04AM -0700, Junio C Hamano wrote:
->
-> []
->
->> I think I spotted two remaining "bugs" that are left unfixed with
->> this patch..
->> ...
-> How should we proceed here ?
-> This patch fixes one, and only one, reported bug,
+Enabled core.fsmonitor in ~/.gitconfig
 
-But then two more were reported in the message you are responding
-to, and they stem from the same underlying logic bug where byte
-count and display columns are mixed interchangeably.
+What did you expect to happen? (Expected behavior)
 
-> "git log --graph" was mentioned.
-> Do we have test cases, that test this ?
-> How easy are they converted into unicode instead of ASCII ?
+Faster git status, or at the very least not slower.
 
-The graph stuff pushes your "start of line" to the right, making the
-available screen real estate narrower.  I do not think in the
-current code we need to worry about unicode vs ascii (IIRC, we stick
-to ASCII graphics while drawing lines), but we do need to take into
-account the fact that ANSI COLOR escape sequences have non-zero byte
-count while occupying zero display columns.
+What happened instead? (Actual behavior)
 
-The other bug about the code that finds which / to use to abbreviate
-a long pathname on diffstat lines does involve byte vs column that
-comes from unicode.  From the bug description in the message you are
-responding to, if we have a directory name whose display columns and
-byte count are significantly different, the end result by chopping
-with the current code would end up wider than it should be, which
-sounds like a recipe to cook up a test case to me.
+Significantly slower git status.
 
+What's different between what you expected and what actually happened?
+
+With the fsmonitor git status takes like 2-8s when normally it's under =
+1s, I expected it to be faster than normal.
+
+Anything else you want to add:
+
+I've tried apple's git (used to generate this report) and the one from =
+homebrew (2.38.0). The repo doesn=E2=80=99t seem to matter much, some =
+are a bit faster than others, but they=E2=80=99re all really slow.
+
+I tried to track down the slowness using trace2.perfTarget and from that =
+it seemed to spend a lot of time doing fsync.
+
+
+
+
+[System Info]
+git version:
+git version 2.37.0 (Apple Git-136)
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Darwin 21.6.0 Darwin Kernel Version 21.6.0: Mon Aug 22 20:17:10 =
+PDT 2022; root:xnu-8020.140.49~2/RELEASE_X86_64 x86_64
+compiler info: clang: 14.0.0 (clang-1400.0.29.201)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /usr/local/bin/bash
+
+
+[Enabled Hooks]=
