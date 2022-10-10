@@ -2,87 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F22DC433F5
-	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 16:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2512DC433FE
+	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 16:57:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbiJJQzn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 12:55:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42056 "EHLO
+        id S229879AbiJJQ5x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 12:57:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229616AbiJJQzm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 12:55:42 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C2EB1D666
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 09:55:41 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4EC19142556;
-        Mon, 10 Oct 2022 12:55:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ACwMV7icfdwL
-        GXd7HF/awv1KmhXNNRajxmD4A5pr4ng=; b=BmJ6hAsZdTWgwm89NiGN7VBrRGZI
-        HBfmThlCVNkjOr2pxiXo11KuYu+sCVzE01Ve3RaFFojDUf6CC0AzVW2li652h36z
-        j+M81wizcX58/53Z645czw9TlZ2ZYjCdkL8CmsNypRJxChCdAcp1p8yPBf5/yhJA
-        3EBZSMDjw5D13xY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 46A56142555;
-        Mon, 10 Oct 2022 12:55:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AAC50142554;
-        Mon, 10 Oct 2022 12:55:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5] branch: support for shortcuts like @{-1}, completed
-References: <pull.1346.git.1662388460.gitgitgadget@gmail.com>
-        <93b0b442-b277-66a6-3f5f-5a498593aa07@gmail.com>
-        <7abdb5a9-5707-7897-4196-8d2892beeb81@gmail.com>
-        <2e164aea-7dd8-5018-474a-01643553ea49@gmail.com>
-        <de200fa0-379d-c1ce-8446-9e4292d0b66a@gmail.com>
-        <xmqqa6647qx2.fsf@gitster.g>
-        <dacb1f40-2765-5978-1131-f78ba919e6e6@gmail.com>
-        <xmqq4jwc5x7y.fsf@gitster.g>
-        <bf4a45cb-2f44-88bd-e12e-98ca31d5bbd4@gmail.com>
-Date:   Mon, 10 Oct 2022 09:55:38 -0700
-In-Reply-To: <bf4a45cb-2f44-88bd-e12e-98ca31d5bbd4@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-        message of "Mon, 10 Oct 2022 08:05:26 +0200")
-Message-ID: <xmqqzge34nzp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229870AbiJJQ5u (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 12:57:50 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F0195A2D5
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 09:57:48 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id bv10so14362909wrb.4
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 09:57:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YadAueWz+VItvd8irIOHxvzpwMHq/yNk+a4uavoavIs=;
+        b=Whssk1mmWbh0I5MAL8OnSi518a/+xKxln1FGU4N2x62UbXmdRH2iOBZq6Ph7qgmOGp
+         g+Rq0lBsr+yn547I4+XVIkYZ/NBtjz5v/fwKjK5OW5kPT3e3s2BpSJtkhReV3qGEQCfp
+         HrLh8LZguMfwEVmJK0LX78f4MjDVz6d8rK9K7o7YnJ/9WQoo5t8qqAuBi+Ed9LF9pwJK
+         BFLiS/YWehYlfBCd7MvJYUNEt9QtouYzbcmFQyXSrpHE3R7o8ApRBQk9VzPu6MqffJD2
+         MZBjTck8lGCXig7oMp6ogUmoBXSDkAT4G132ghdHk3YIBoqzsZb5F4UCTV82a8iYucxy
+         umjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YadAueWz+VItvd8irIOHxvzpwMHq/yNk+a4uavoavIs=;
+        b=f9q/uUhaSH6wVpNGtMzamhxNJ8DgiPoDhd5fnNPZdzEI7mHzp5T9w5lGLLusReCEf8
+         /cNZQriDdUbL/pRCc/9Ulng2tgvrBG32DTtf8vFW9Y4I2UAr+Q43PXkDTi99keaFwDWy
+         4ndEcc2PDLqgtwHvtZwRQV/QRcBpSdnZ2Dp/CKGUg4Te8m9C5xg1Maq/LFT4Xb5poM7W
+         KBnZjMKYV/pDyw41GJPd8XaSsnUiZIU62901aVS0dkPd0s3MRv0R0AqbPQk2IjCLsQyr
+         ijbTdiFoPp7J84Cj8rHuNtlZaLskC4DJw2L0/WZeIQif3bDrmtRP/mUfDthb09zY73rQ
+         6gtg==
+X-Gm-Message-State: ACrzQf3MdBq9HWyVfCRpEjVMROKMiChxjrVa//ThZoNZbgTc0PLqlsro
+        07ouV4GOhuvQvKJ85Aab49mpK+mGBAs=
+X-Google-Smtp-Source: AMsMyM6RPG2kQePD57IYBliFTMsKMZGGfJStpNbMJtyirLNtNy2UnxYaVVGLjDq9i9Nxo2MNe1TtxA==
+X-Received: by 2002:a5d:428c:0:b0:22e:5d4e:c71e with SMTP id k12-20020a5d428c000000b0022e5d4ec71emr11863026wrq.19.1665421066223;
+        Mon, 10 Oct 2022 09:57:46 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id a13-20020adff7cd000000b0022a403954c3sm9314496wrq.42.2022.10.10.09.57.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Oct 2022 09:57:45 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, orygaw <orygaw@protonmail.com>,
+        rsbecker@nexbridge.com, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] log: require --grep for --invert-grep and --all-match, fix segfault
+Date:   Mon, 10 Oct 2022 18:57:42 +0200
+Message-Id: <patch-1.1-f4b90799fce-20221010T165711Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.38.0.971.ge79ff6d20e7
+In-Reply-To: <o2ijhZAUIi7nPTwQmsJfpvPIEeLbhvn1AP8rhW2hCNbC380Z2ogDHzZigqJsHI6RwphsIZR3OSJSy-wYvyWv5un632tKynHKFLFPLPEDH2g=@protonmail.com>
+References: <o2ijhZAUIi7nPTwQmsJfpvPIEeLbhvn1AP8rhW2hCNbC380Z2ogDHzZigqJsHI6RwphsIZR3OSJSy-wYvyWv5un632tKynHKFLFPLPEDH2g=@protonmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5EA37544-48BC-11ED-BF34-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Neither the "--invert-grep" option added in [1] nor the earlier
+"--all-match" option added in [2] were intended to be used
+stand-alone.
 
->> If we have a big common clean-up after each operation, then, falling
->> through in the success case might be good, but that is not what I am
->> seeing here.  So...
->>=20
->
-> I would like to see some kind of free(head) in a clean-up to not get
-> distracted with that.  Not a proper leak though and the leak checkers
-> does not refer to that as leak.  So not important.  We can go with the
-> unconditional return and let the dust settle.
+But due to how the built-in and the revision API interacted those
+options without the corresponding --grep would be ignored.
 
-"head" is not leaking, as a pointer to it is head in a location that
-is still in scope (namely, a file-scope global variable) when the
-program exits.
+Then in f41fb662f57 (revisions API: have release_revisions() release
+"grep_filter", 2022-04-13) this turned into a segfault, as we'd
+attempt to free() the non-existing --grep patterns.
 
-In fact, the only thing the code before or after this patch does
-after leaving this top-level if/elseif/else cascade is to return 0
-and doing nothing else.  Inserting free(head) would be an unneeded
-distraction for human developers (doing such a patch, reviewing, and
-even worse, having to read the resulting code in the coming years)
-and waste of computer resources (exiting the process will reclaim
-such a piece of memory just fine).
+Arguably it makes more sense to add this check to
+compile_grep_patterns(), since it's possible to use the C API in the
+same way and trigger this segfault. But in practice the revision.c API
+is the only user of "no_body_match", and by placing the check here we
+can more sensibly emit a message that assumes that the user used
+"--invert-grep" without "--grep".
+
+1. 22dfa8a23de (log: teach --invert-grep option, 2015-01-12)
+2. 0ab7befa31d (grep --all-match, 2006-09-27)
+
+Reported-by: orygaw <orygaw@protonmail.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ revision.c      | 6 ++++++
+ t/t4202-log.sh  | 4 ++++
+ t/t7810-grep.sh | 4 ++++
+ 3 files changed, 14 insertions(+)
+
+diff --git a/revision.c b/revision.c
+index 36e31942cee..a55ead48448 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2986,6 +2986,12 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 		die(_("options '%s' and '%s' cannot be used together"), "--no-walk", "--graph");
+ 	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
+ 		die(_("the option '%s' requires '%s'"), "--grep-reflog", "--walk-reflogs");
++	if (!revs->grep_filter.pattern_expression) {
++		if (revs->grep_filter.no_body_match)
++			die(_("the option '%s' requires '%s'"), "--invert-grep", "--grep");
++		if (revs->grep_filter.all_match)
++			die(_("the option '%s' requires '%s'"), "--all-match", "--grep");
++	}
+ 
+ 	if (revs->line_level_traverse &&
+ 	    (revs->diffopt.output_format & ~(DIFF_FORMAT_PATCH | DIFF_FORMAT_NO_OUTPUT)))
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index cc15cb4ff62..298678fb7c8 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -249,6 +249,10 @@ test_expect_success 'log --grep' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'log --invert-grep usage' '
++	test_expect_code 128 git log --invert-grep
++'
++
+ cat > expect << EOF
+ second
+ initial
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 8eded6ab274..6dd750349e1 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -914,6 +914,10 @@ test_expect_success 'log with multiple --grep uses union' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'log --all-match usage' '
++	test_expect_code 128 git log --all-match
++'
++
+ test_expect_success 'log --all-match with multiple --grep uses intersection' '
+ 	git log --all-match --grep=i --grep=r --format=%s >actual &&
+ 	{
+-- 
+2.38.0.971.ge79ff6d20e7
 
