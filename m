@@ -2,149 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2512DC433FE
-	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 16:57:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C3A6C433F5
+	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 16:58:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229879AbiJJQ5x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 12:57:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43952 "EHLO
+        id S229887AbiJJQ62 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 12:58:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229870AbiJJQ5u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 12:57:50 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F0195A2D5
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 09:57:48 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id bv10so14362909wrb.4
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 09:57:48 -0700 (PDT)
+        with ESMTP id S229907AbiJJQ6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 12:58:22 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE8C1748D0
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 09:58:02 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id s206so10756907pgs.3
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 09:58:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YadAueWz+VItvd8irIOHxvzpwMHq/yNk+a4uavoavIs=;
-        b=Whssk1mmWbh0I5MAL8OnSi518a/+xKxln1FGU4N2x62UbXmdRH2iOBZq6Ph7qgmOGp
-         g+Rq0lBsr+yn547I4+XVIkYZ/NBtjz5v/fwKjK5OW5kPT3e3s2BpSJtkhReV3qGEQCfp
-         HrLh8LZguMfwEVmJK0LX78f4MjDVz6d8rK9K7o7YnJ/9WQoo5t8qqAuBi+Ed9LF9pwJK
-         BFLiS/YWehYlfBCd7MvJYUNEt9QtouYzbcmFQyXSrpHE3R7o8ApRBQk9VzPu6MqffJD2
-         MZBjTck8lGCXig7oMp6ogUmoBXSDkAT4G132ghdHk3YIBoqzsZb5F4UCTV82a8iYucxy
-         umjg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=WLbdUfM3GI+AVfPy0LtIHpWZEbobXTWNmN8YZuks1e0=;
+        b=qHztPfU+QHkoojh1mS1Nn3yT04Bbsz6LOiddK/FBqMlLnKG3+KUg1a6dW0ECyo6bQN
+         PY4xxrLLQVmO25duxlwDGCFaWRuzj6fBP2ooScaI0aErJg5Ef37MCbCAu+vIOkEPSzO0
+         wvldCEubra7n9b6R6lrTnxq8tohNF9T9ZGKQWnJMPOLqiAuFQFwjvrt3w6nObdQ1RxzZ
+         A6TzN46EeRwIH9l2WJmX48EGhrxJwLvLaMteHj8BsNqPOIpvmRuxSOVhF2L5/F3ae4g5
+         0b0mlh6hSQamw49UcFEFC80P7p0r6pyDV2Fiddyjy6pFRXea62Ubxp0MuExPOUPv8LWY
+         u4QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YadAueWz+VItvd8irIOHxvzpwMHq/yNk+a4uavoavIs=;
-        b=f9q/uUhaSH6wVpNGtMzamhxNJ8DgiPoDhd5fnNPZdzEI7mHzp5T9w5lGLLusReCEf8
-         /cNZQriDdUbL/pRCc/9Ulng2tgvrBG32DTtf8vFW9Y4I2UAr+Q43PXkDTi99keaFwDWy
-         4ndEcc2PDLqgtwHvtZwRQV/QRcBpSdnZ2Dp/CKGUg4Te8m9C5xg1Maq/LFT4Xb5poM7W
-         KBnZjMKYV/pDyw41GJPd8XaSsnUiZIU62901aVS0dkPd0s3MRv0R0AqbPQk2IjCLsQyr
-         ijbTdiFoPp7J84Cj8rHuNtlZaLskC4DJw2L0/WZeIQif3bDrmtRP/mUfDthb09zY73rQ
-         6gtg==
-X-Gm-Message-State: ACrzQf3MdBq9HWyVfCRpEjVMROKMiChxjrVa//ThZoNZbgTc0PLqlsro
-        07ouV4GOhuvQvKJ85Aab49mpK+mGBAs=
-X-Google-Smtp-Source: AMsMyM6RPG2kQePD57IYBliFTMsKMZGGfJStpNbMJtyirLNtNy2UnxYaVVGLjDq9i9Nxo2MNe1TtxA==
-X-Received: by 2002:a5d:428c:0:b0:22e:5d4e:c71e with SMTP id k12-20020a5d428c000000b0022e5d4ec71emr11863026wrq.19.1665421066223;
-        Mon, 10 Oct 2022 09:57:46 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id a13-20020adff7cd000000b0022a403954c3sm9314496wrq.42.2022.10.10.09.57.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Oct 2022 09:57:45 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, orygaw <orygaw@protonmail.com>,
-        rsbecker@nexbridge.com, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] log: require --grep for --invert-grep and --all-match, fix segfault
-Date:   Mon, 10 Oct 2022 18:57:42 +0200
-Message-Id: <patch-1.1-f4b90799fce-20221010T165711Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.971.ge79ff6d20e7
-In-Reply-To: <o2ijhZAUIi7nPTwQmsJfpvPIEeLbhvn1AP8rhW2hCNbC380Z2ogDHzZigqJsHI6RwphsIZR3OSJSy-wYvyWv5un632tKynHKFLFPLPEDH2g=@protonmail.com>
-References: <o2ijhZAUIi7nPTwQmsJfpvPIEeLbhvn1AP8rhW2hCNbC380Z2ogDHzZigqJsHI6RwphsIZR3OSJSy-wYvyWv5un632tKynHKFLFPLPEDH2g=@protonmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WLbdUfM3GI+AVfPy0LtIHpWZEbobXTWNmN8YZuks1e0=;
+        b=D2+hSb+emjqVklNkenGJ/h5+t1mG3nEQYrt9pQiYAvuBAfWi1kuRGX2FNUAy5j772V
+         um3b1ihK97eqIHVfkWf7b96J2iyRBIgWSYOqegBINetom23P7mNVBDK3reZ6w0hCUnTu
+         5EHVNY0ZyXZY6zveGyZA3pFhcrdyw3zLwBvmUj8ZiK6D0ePeVyAb1K7+OEfQkOTBEvy/
+         /eh7+WG8w04wAB+U2V7oq2P+umyvSSIAdPa/N3vM+Tj5x9bvvTPRLyiOI8pEUWtM+Ve7
+         6h5MXrqSFaYtooBrB1+UYhGUUAs9YJeB34S2KXggEvrKbANTIfKC3M4xnhMrqfhv9gkB
+         3xUQ==
+X-Gm-Message-State: ACrzQf1QtcikFGMm+jyxnZg1tpzJMNnapegDmYtq91ea5FQPzHTJ8rfP
+        QnoKTFXtWfByK3Fmc1ANmsisngIoHEeUjIXobzU1skC3NBKk/RY6
+X-Google-Smtp-Source: AMsMyM7lulMs7um6/dDJ5GCO/WNYkLtWQctqNkN0HROTba6lfc89R4gdOpX0pgAWtI7hNiM3S5dzBZkEfNFqSkbbhkQ=
+X-Received: by 2002:a63:fc66:0:b0:44d:75a0:a727 with SMTP id
+ r38-20020a63fc66000000b0044d75a0a727mr17185843pgk.589.1665421082184; Mon, 10
+ Oct 2022 09:58:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CA+PPyiEvfkqZYq6uESMt3QYnfMDZDmPbGiQ5Qkeb77rtLV5Aug@mail.gmail.com>
+ <CAP8UFD1o5qxSvbV05DK_J=zbU=D_+HS0Q2ufEFSQVaBoWw_7Ow@mail.gmail.com>
+ <CA+PPyiF5KK6p7rv57YL_wsDO+WPifoRp1oe0F-6mo5NxLAwDWw@mail.gmail.com>
+ <CAP8UFD26PY-53vZNZJzCRNiqaVB4fd=AvBtVuvMQP9p8Oqj82Q@mail.gmail.com> <9fcfc8b0-772d-08c3-595b-5a5a139d7ecd@github.com>
+In-Reply-To: <9fcfc8b0-772d-08c3-595b-5a5a139d7ecd@github.com>
+From:   Luna Jernberg <droidbittin@gmail.com>
+Date:   Mon, 10 Oct 2022 18:57:33 +0200
+Message-ID: <CADo9pHgcfwV53ooyM8Dh5jVO2rxO-tUHeLovd7HYLdTSOkNtyA@mail.gmail.com>
+Subject: Re: [Outreachy] internship contribution
+To:     Derrick Stolee <derrickstolee@github.com>,
+        Luna Jernberg <droidbittin@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>,
+        git@vger.kernel.org, Hariom verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Neither the "--invert-grep" option added in [1] nor the earlier
-"--all-match" option added in [2] were intended to be used
-stand-alone.
+Maybe WSL can be used?: https://learn.microsoft.com/en-us/windows/wsl/install
 
-But due to how the built-in and the revision API interacted those
-options without the corresponding --grep would be ignored.
-
-Then in f41fb662f57 (revisions API: have release_revisions() release
-"grep_filter", 2022-04-13) this turned into a segfault, as we'd
-attempt to free() the non-existing --grep patterns.
-
-Arguably it makes more sense to add this check to
-compile_grep_patterns(), since it's possible to use the C API in the
-same way and trigger this segfault. But in practice the revision.c API
-is the only user of "no_body_match", and by placing the check here we
-can more sensibly emit a message that assumes that the user used
-"--invert-grep" without "--grep".
-
-1. 22dfa8a23de (log: teach --invert-grep option, 2015-01-12)
-2. 0ab7befa31d (grep --all-match, 2006-09-27)
-
-Reported-by: orygaw <orygaw@protonmail.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- revision.c      | 6 ++++++
- t/t4202-log.sh  | 4 ++++
- t/t7810-grep.sh | 4 ++++
- 3 files changed, 14 insertions(+)
-
-diff --git a/revision.c b/revision.c
-index 36e31942cee..a55ead48448 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2986,6 +2986,12 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 		die(_("options '%s' and '%s' cannot be used together"), "--no-walk", "--graph");
- 	if (!revs->reflog_info && revs->grep_filter.use_reflog_filter)
- 		die(_("the option '%s' requires '%s'"), "--grep-reflog", "--walk-reflogs");
-+	if (!revs->grep_filter.pattern_expression) {
-+		if (revs->grep_filter.no_body_match)
-+			die(_("the option '%s' requires '%s'"), "--invert-grep", "--grep");
-+		if (revs->grep_filter.all_match)
-+			die(_("the option '%s' requires '%s'"), "--all-match", "--grep");
-+	}
- 
- 	if (revs->line_level_traverse &&
- 	    (revs->diffopt.output_format & ~(DIFF_FORMAT_PATCH | DIFF_FORMAT_NO_OUTPUT)))
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index cc15cb4ff62..298678fb7c8 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -249,6 +249,10 @@ test_expect_success 'log --grep' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'log --invert-grep usage' '
-+	test_expect_code 128 git log --invert-grep
-+'
-+
- cat > expect << EOF
- second
- initial
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 8eded6ab274..6dd750349e1 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -914,6 +914,10 @@ test_expect_success 'log with multiple --grep uses union' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'log --all-match usage' '
-+	test_expect_code 128 git log --all-match
-+'
-+
- test_expect_success 'log --all-match with multiple --grep uses intersection' '
- 	git log --all-match --grep=i --grep=r --format=%s >actual &&
- 	{
--- 
-2.38.0.971.ge79ff6d20e7
-
+On Mon, Oct 10, 2022 at 6:55 PM Derrick Stolee <derrickstolee@github.com> wrote:
+>
+> On 10/10/2022 12:22 PM, Christian Couder wrote:
+> > On Mon, Oct 10, 2022 at 2:19 PM NSENGIYUMVA WILBERFORCE
+> > <nsengiyumvawilberforce@gmail.com> wrote:
+> >>
+> >> I see most of the articles are UNIX based, does it mean that I should
+> >> have a UNIX based operating system in order to contribute?
+> >> Currently, I have windows installed 11 on my PC
+> >
+> > You can install a Linux virtual machine on your PC and develop in this
+> > virtual machine, or you can install the Git for Windows SDK from:
+> >
+> > https://gitforwindows.org/#contribute
+> >
+> > It might be best to install both development environments. I will not
+> > be able to help you much with development environment issues if you
+> > develop on Windows, but if it works for you, that could be Ok,
+> > especially if you use GitGitGadget too.
+>
+> The git-for-windows/git fork has some information that is helpful
+> for developing Git on a Windows machine [1]. This also includes
+> details about recommending a Linux VM with Windows' Hyper-V system
+> because compiling and testing Git is so much faster on Linux.
+>
+> [1] https://github.com/git-for-windows/git/blob/main/CONTRIBUTING.md
+>
+> Good luck!
+> -Stolee
