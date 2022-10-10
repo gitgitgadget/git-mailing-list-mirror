@@ -2,97 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3E45C433F5
-	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 19:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B43CC433FE
+	for <git@archiver.kernel.org>; Mon, 10 Oct 2022 19:06:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbiJJTAj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 15:00:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57566 "EHLO
+        id S229985AbiJJTG2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 15:06:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbiJJTAh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 15:00:37 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB38D6BD49
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 12:00:36 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id o65so9162912iof.4
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 12:00:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=7zG7lE/G0sSWedadfu9uHcYu3K+lUw6l1KsEPMnqy2M=;
-        b=kK43Y0YKGzF9PlqAKgDHcW0lDJptvd7F5T2D568k+I00iyE1nVwzzef01L8rQXwrmf
-         Jm1lD7kjT+ZDQNqvJfTKaJtgJfa4wyp2DH9hfuK89N3b9gjZaQWgpa7efAf21DgtS0Om
-         yv1BrvxnoJhTME1ZUegMgMQgjWz0FNX7uf5KjUG7FJ2q0QdEl+OKtPMSa1APsTo4Pqa/
-         MPMrkb9HmM0uzlQ0ToRocB0GwxzwUBMZwWbiwHlvpWdqjxF+ICSsU8BkjW8Ql/SodRV1
-         1ACkW05hIVZ8WTTgMOfrvqcOhitCnh8+I6U/FkaCMXchPP8AhYrMUme+8UyvSU4Sh8nP
-         Lqdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7zG7lE/G0sSWedadfu9uHcYu3K+lUw6l1KsEPMnqy2M=;
-        b=uKoJzslx/vBdbprtKnbYKPnPcSuzl0GlOY8WknaaeKPtbf3CN9Gog4CotP1D8vXPH9
-         KwGWPuvw3XbJ3ZFAS8n4sqZ+QVblNwIKCrtUC84MBQTVWbMSrT5ztpr60tV77A7uNq+e
-         tmbVM3EHxjxeXrdBRxbqBhY1ZqJ8o1SxM05ojMolcCm7VKoqpRlUPMe0DTws/Oit2ZU9
-         ckGjDqjYjsmZjDC9iVHEjIus5mbKAVTRC6kjK/YswtUOaU33zjtr51lOYERoRBm/l0aK
-         Pu1mtyWmq3xV5BF019mE8tP9oF6W3nCdO2KBNXWZX8GkaPj6lmn9BUHGfJAVWUyp3Lnr
-         z0Pw==
-X-Gm-Message-State: ACrzQf0ozcJL2UyNco2c1Kti+C8uhdE9hdxLDc71b4leNmkn1/iW1RaO
-        5v5A4QzXWeC5H+BOJhSatsvM/xF7dmYa9V27
-X-Google-Smtp-Source: AMsMyM7TIPwiHtMZLWVzikp0SrRzi5HuUelJFuszucqBuMVGOxkq++HiZs5d6As/LXSdF3kMBvzMxQ==
-X-Received: by 2002:a05:6638:2612:b0:35a:337a:8a4c with SMTP id m18-20020a056638261200b0035a337a8a4cmr11118046jat.269.1665428436019;
-        Mon, 10 Oct 2022 12:00:36 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g1-20020a028501000000b003566ff0eb13sm4237728jai.34.2022.10.10.12.00.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Oct 2022 12:00:35 -0700 (PDT)
-Date:   Mon, 10 Oct 2022 15:00:34 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        orygaw <orygaw@protonmail.com>, rsbecker@nexbridge.com,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] log: require --grep for --invert-grep and --all-match,
- fix segfault
-Message-ID: <Y0Rr0sQ91C/SgmBJ@nand.local>
-References: <o2ijhZAUIi7nPTwQmsJfpvPIEeLbhvn1AP8rhW2hCNbC380Z2ogDHzZigqJsHI6RwphsIZR3OSJSy-wYvyWv5un632tKynHKFLFPLPEDH2g=@protonmail.com>
- <patch-1.1-f4b90799fce-20221010T165711Z-avarab@gmail.com>
- <xmqq7d174m6a.fsf@gitster.g>
- <xmqq35bv4lns.fsf@gitster.g>
- <221010.86o7ujpl44.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229987AbiJJTGG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 15:06:06 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5B4A75FDC
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 12:05:44 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 7B1D3CA1246;
+        Mon, 10 Oct 2022 15:05:43 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 3E2EECC833C;
+        Mon, 10 Oct 2022 15:05:43 -0400 (EDT)
+Subject: Re: [RFC PATCH] trace2 API: don't save a copy of constant
+ "thread_name"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+References: <xmqqr0zkipva.fsf@gitster.g>
+ <RFC-patch-1.1-8563d017137-20221007T010829Z-avarab@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <cb9f8321-d9e6-6f80-a590-a9ad49c7f557@jeffhostetler.com>
+Date:   Mon, 10 Oct 2022 15:05:42 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.0; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <RFC-patch-1.1-8563d017137-20221007T010829Z-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <221010.86o7ujpl44.gmgdl@evledraar.gmail.com>
+X-Scanned-By: mailmunge 3.09 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 10, 2022 at 08:48:25PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> The rationale for changing it this way is that the documentaion says:
->
-> 	--all-match::
-> 	        Limit the commits output to ones that match all given `--grep`,
-> 	        instead of ones that match at least one.
-> 	--invert-grep::
-> 	        Limit the commits output to ones with log message that do not
-> 	        match the pattern specified with `--grep=<pattern>`.
 
-This does feel a little academic, but to me the documentation seems to
-suggest that `--all-match` or `--invert-grep` should both support the
-absence of a `--grep` argument.
 
-At least in `--invert-grep`, my reading is "the pattern specified with
-`--grep=<pattern>` [...if any]".
+On 10/6/22 9:10 PM, Ævar Arnfjörð Bjarmason wrote:
+> Since ee4512ed481 (trace2: create new combined trace facility,
+> 2019-02-22) the "thread_name" member of "struct tr2tls_thread_ctx" has
+> been copied from the caller, but those callers have always passed a
+> constant string:
+> 
+> 	$ git -P grep '^\s*trace2_thread_start\('
+> 	Documentation/technical/api-trace2.txt: trace2_thread_start("preload_thread");
+> 	builtin/fsmonitor--daemon.c:    trace2_thread_start("fsm-health");
+> 	builtin/fsmonitor--daemon.c:    trace2_thread_start("fsm-listen");
+> 	compat/simple-ipc/ipc-unix-socket.c:    trace2_thread_start("ipc-worker");
+> 	compat/simple-ipc/ipc-unix-socket.c:    trace2_thread_start("ipc-accept");
+> 	compat/simple-ipc/ipc-win32.c:  trace2_thread_start("ipc-server");
+> 	t/helper/test-fsmonitor-client.c:       trace2_thread_start("hammer");
+> 	t/helper/test-simple-ipc.c:     trace2_thread_start("multiple");
+> 
+> This isn't needed for optimization, but apparently[1] there's been
+> some confusion about the non-const-ness of the previous "struct
+> strbuf".
+> 
+> Using the caller's string here makes this more straightforward, as
+> it's now clear that we're not dynamically constructing these. It's
+> also what the progress API does with its "title" string.
+> 
+> Since we know we're hardcoding these thread names let's BUG() out when
+> we see that the length of the name plus the length of the prefix would
+> exceed the maximum length for the "perf" format.
+> 
+> 1. https://lore.kernel.org/git/82f1672e180afcd876505a4354bd9952f70db49e.1664900407.git.gitgitgadget@gmail.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-In any case, the behavior has been as such for long enough that it feels
-like our documentation needs to be changed, and not the behavior itself.
-On the other hand, I have a hard time imagining that many/any people
-care about this particular behavior.
+PLEASE DON'T DO THIS.
 
-Thanks,
-Taylor
+If you don't like my patch, fine.  Let's discuss it.  But DON'T submit
+a new one to replace it.  Or worse, try to inject it into the middle
+of an existing series.
+
+
+Yes, current callers are passing a string literal and thread-start
+could take a "const char*" to it, but there is no way to guarantee
+that that is safe if someone decides to dynamically construct their
+thread-name and pass it in (since we don't know the lifetime of that
+pointer).  So it is safer to copy it into the thread context so that
+it can be used by later trace messages.
+
+
+[...]
+> +void jw_strbuf_add_thread_name(struct strbuf *buf, const char *thread_name,
+> +			       int thread_id);
+> +void jw_object_string_thread(struct json_writer *jw, const char *thread_name,
+> +			     int thread_id);
+
+This violates a separation of concerns.  json-writer is ONLY concerned
+with formatting valid JSON from basic data types.  It does not know
+about threads or thread contexts.
+
+`js_strbuf_add_thread_name()` also violates the json-writer conventions
+-- that it takes a "struct json_writer *" pointer.  There is nothing
+about JSON here.
+
+You might write a helper (inside of tr2_tgt_event.c) that formats a
+thread-name from the id and hint, but that is specific to the Event
+target -- not to JSON, nor the JSON writer.
+
+But then again, why make every trace message from every target format
+that "th%0d:%s" when we could save some time and format it in the
+thread-start and just USE it.
+
+
+[...]
+> @@ -107,9 +109,11 @@ static void perf_fmt_prepare(const char *event_name,
+>   	}
+>   
+>   	strbuf_addf(buf, "d%d | ", tr2_sid_depth());
+> -	strbuf_addf(buf, "%-*s | %-*s | ", TR2_MAX_THREAD_NAME,
+> -		    ctx->thread_name.buf, TR2FMT_PERF_MAX_EVENT_NAME,
+> -		    event_name);
+> +	oldlen = buf->len;
+> +	jw_strbuf_add_thread_name(buf, ctx->thread_name, ctx->thread_id);
+
+This stands out as very wrong.  The _Perf target does not use JSON
+at all, yet here we are calling a jw_ routine.  Again, that code is
+in the wrong place.
+
+
+I'm going to clip the rest of this commit, since the above invalidates
+it.
+
+Jeff
