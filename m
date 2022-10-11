@@ -2,95 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA2DAC433FE
-	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 03:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8322EC433FE
+	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 05:21:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229791AbiJKDQL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 23:16:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36246 "EHLO
+        id S229537AbiJKFVs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Oct 2022 01:21:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229776AbiJKDQJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 23:16:09 -0400
-X-Greylist: delayed 568 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 10 Oct 2022 20:16:04 PDT
-Received: from box.elsiehupp.com (box.elsiehupp.com [104.131.30.57])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F0A174DC7
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 20:16:03 -0700 (PDT)
-Received: from authenticated-user (box.elsiehupp.com [104.131.30.57])
+        with ESMTP id S229526AbiJKFVr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2022 01:21:47 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FCA07E305
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 22:21:45 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9602F1C2370;
+        Tue, 11 Oct 2022 01:21:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=avdgaVUOKu+h4mGBB6HThOBYfm1FVoTcR7Rk6x
+        cVr14=; b=YS9Ng8fjUBEWHKqRjuZF3Bef8R9i9HyBIBjXAczeOeSOCI1gR/rEkJ
+        enoSjqbDLvKrawCMPdylrwX44lxwVUcxRdPos7GbM/3ueGFbqG5ncieXqXwKSESI
+        4qOfEIL5Zfrz5VUZwcNiUzKrTMRp+Wf5n9nueKSlkxNVY1jER7/pU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8DC471C236F;
+        Tue, 11 Oct 2022 01:21:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by box.elsiehupp.com (Postfix) with ESMTPSA id 4457AFC07B
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 23:06:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=elsiehupp.com;
-        s=mail; t=1665457593;
-        bh=HSC2jRCdtBd3/p4qrtLJjtj9RD3CbCm32XA2yVujiuc=;
-        h=From:Subject:Date:To:From;
-        b=DDuA5ULJETzGvdg7EzwtmlyHxJ2PuL6wX12HybrpqQFueKd2mldg7n5230hLIDVlj
-         RJT3c6l8tsSyBUAqqstp6lJU5IxIN/FNIL0qkK2M77JE+tEXwG7KHqD/QOk3yxkMF5
-         jbyW96VwK14StIRCyuGl3zhfZ+wdF0XJoqRknohiT9RUjpJv1Ya1oedx6dYOcVyUha
-         oGhnxP8BlvRhEGyPbAWkNgpv/ftGYDLFL1O0I6s6iQrhw7intYRDLJY53v8kqi9r5d
-         5Ex92mYx4EvHOb3xUNJGHewGCCIhQ8Ub5ZiXUTUo5QfcK56oHIubTFnVyxVff8OICC
-         dK/G0IQAyH1XQ==
-From:   Elsie Hupp <git@elsiehupp.com>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0
-Subject: Multiple --global config workspaces?
-Message-Id: <C4E3A512-2E2C-4EA5-9F2E-3662BCF0F165@elsiehupp.com>
-Date:   Mon, 10 Oct 2022 23:06:32 -0400
-To:     git@vger.kernel.org
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C81D81C236E;
+        Tue, 11 Oct 2022 01:21:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Eric DeCosta <edecosta@mathworks.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2022, #03; Mon, 10)
+References: <xmqqlepnz1vu.fsf@gitster.g>
+        <Y0S7/jA5tNeoQ2Hm@coredump.intra.peff.net>
+Date:   Mon, 10 Oct 2022 22:21:40 -0700
+In-Reply-To: <Y0S7/jA5tNeoQ2Hm@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 10 Oct 2022 20:42:38 -0400")
+Message-ID: <xmqqczazx7dn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 96F0288A-4924-11ED-ADE2-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Git Mailing List,
+Jeff King <peff@peff.net> writes:
 
-The way I personally use Git has a slight inconvenience: as far as I can =
-tell, there is no way to define multiple git config --global workspaces =
-in a single Unix account.=20
+> There's a tiny leak in this one. Here's a fix that can go on top.
+>
+> -- >8 --
+> Subject: [PATCH] fsmonitor: fix leak of warning message
+>
+> The fsm_settings__get_incompatible_msg() function returns an allocated
+> string.  So we can't pass its result directly to warning(); we must hold
+> on to the pointer and free it to avoid a leak.
+>
+> The leak here is small and fixed size, but Coverity complained, and
+> presumably SANITIZE=leaks would eventually.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  fsmonitor.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 
-I structure my cloned repositories based on the remote host, e.g.:
+Is there anybody else who is reading Coverity reports, I wonder.
+This one is a clear positive.
 
-~/Repositories/github/cloned-repository-name
-~/Repositories/gitlab/other-cloned-repository-name
+Thanks.
 
-=E2=80=A6and I sign my git commits for each remote host using an email =
-address and signing key specific to that host.
-
-I imagine many people have similar arrangements for the purpose of =
-separating, say, work projects from personal projects.
-
-Before I started using this workspace arrangement, I was able to do the =
-following:
-
-$ git config --global user.name "Elsie Hupp"
-$ git config --global user.email "elsiehupp@example.com"
-
-However, now that I use different signing identities for different =
-remote hosts, I have to set up my Git identity every single time I clone =
-a repository, and this repetitiveness is the slight inconvenience I =
-refer to above.
-
-What might possibly help in this situation could be if I could have the =
-global ~/.gitconfig somehow delegate to separate .gitconfig files in =
-each of the workspace folders I have set up, e.g.:
-
-~/Repositories/github/.gitconfig
-~/Repositories/gitlab/.gitconfig
-
-=E2=80=A6and then have git config --global in, e.g., =
-~/Repositories/github/cloned-repository-name apply to all cloned =
-repositories in ~/Repositories/github but not to cloned repositories in =
-~/Repositories/gitlab.
-
-(Obviously there are other ways this could be implemented, but this is =
-the one that immediately came to mind.)
-
-How feasible would it be to implement multiple --global config =
-workspaces with functionality along these lines? And what other =
-considerations and issues might there be with doing so?
-
-Anyway, thank you for your time and attention.
-
-Sincerely,
-Elsie Hupp=
+> diff --git a/fsmonitor.c b/fsmonitor.c
+> index 540736b39f..08af00c738 100644
+> --- a/fsmonitor.c
+> +++ b/fsmonitor.c
+> @@ -309,8 +309,10 @@ void refresh_fsmonitor(struct index_state *istate)
+>  	enum fsmonitor_reason reason = fsm_settings__get_reason(r);
+>  
+>  	if (!warn_once && reason > FSMONITOR_REASON_OK) {
+> +		char *msg = fsm_settings__get_incompatible_msg(r, reason);
+>  		warn_once = 1;
+> -		warning("%s", fsm_settings__get_incompatible_msg(r, reason));
+> +		warning("%s", msg);
+> +		free(msg);
+>  	}
+>  
+>  	if (fsm_mode <= FSMONITOR_MODE_DISABLED ||
