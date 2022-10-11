@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0A42C4332F
-	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 00:34:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35968C433F5
+	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 00:34:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229695AbiJKAeK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 20:34:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44564 "EHLO
+        id S229697AbiJKAeX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 20:34:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbiJKAeG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 20:34:06 -0400
+        with ESMTP id S229677AbiJKAeJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 20:34:09 -0400
 Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13DA361723
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 17:34:05 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id a2so6409910iln.13
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 17:34:05 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2372880E8C
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 17:34:07 -0700 (PDT)
+Received: by mail-il1-x12e.google.com with SMTP id a2so6409966iln.13
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 17:34:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=P9P8zBi5V64Fajqxnrctl6pwpjn/IaczFaAmlsO8RT8=;
-        b=CiQf9eSY1y8Gfd93YZkemqx+KfslUNKKNRQnJotCIcTNFZpI/attsRkUUryI53G/rQ
-         uRslMGeVhZEE1PIUZ5o+GiaEa93qpC0s/HmjSPb44C/1ntjgor5ZYqifGwIozhOCoclB
-         SdZIoHnP/RK2vQE0u7QclN3xVY9qXwKxPpRDbt7FpTUgNAmfiIVhWPI1EEcbYwprymaO
-         QAxBSNzCo+noxNGeNa31XKgMBs8yiM5RW/f8dt5TOJrHTXB4y8XYZRFJiRdGRhLv8Ymv
-         cky278LnyJ/XsqtaMTsHWsVIEN4VvnFiwF3veZbZ5Q/4SeN8drQ1sxqteux3tR28ItbP
-         MAWA==
+        bh=oewU+Aj9bd7zcbDhSwe7FMeW0onZ/E8bpCZvaVtMCso=;
+        b=xR96KNYVO78+Wa8TLFK6enHNdb/crZ3dAReix9oItAr0KZfVMcrLolMo3UMoqngwta
+         +LE8rUQXqESUfF1iYvpdczWQ5NrbocXdmdc9EeQ2G+1t2wcRICByf2ZV6kIVDIZHuvJo
+         hy/Ddljb3V4LleGAz97K6kKrkVLIERoC/Y3FKeBAie+9PPCRSECY/pIEQYWFFDJtTATH
+         C4VJjZIldJWanBUB5VUf+MFfuAxb0dStVFOKSKVYvVw3wXWHUOrNkuBw8sNXHolpoDKx
+         cky+7bISoOST66tFCAH4fjx1gT++JnahnWq0A123H9YfwggT8AvupucG6YqgJXQmlndJ
+         pWfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=P9P8zBi5V64Fajqxnrctl6pwpjn/IaczFaAmlsO8RT8=;
-        b=ea39R8IpQTW5iTWYNB18ujoqGMPH3fPMf49lgPrHYjLZc0C+bpv47YN7ZU07IxTZHd
-         ANZVKUuHXonPN+8dqkVlwVxUJQDygL7tiTOKexpcEt8hnlsCtals8i4L7PHMwY1XpdzF
-         LxOLZXPjpBXwlX9/RusPyNMJNz1mj8XNXBM1QEPp1eIW9BSrRNs8HE1A6gsDCdOfsI3f
-         tJQAMnND5iRHvO+1y+das+Gztpd8RHwOU1tI+ebWnytnfPEzhff9AG5jXEpk6ThbHIpu
-         Jg09uAEpw/2DoTjvWSsxIyqa3hbb+r/bKRhp4XZ5EgR0LKe50YyRCdCtqaHtLDJzY0fN
-         p0tA==
-X-Gm-Message-State: ACrzQf347wNCSxMsO5dkvJ6pmBO/yAFOZqyhf0lENGxaVbgxrXZSUfan
-        lwWmPBmqXtcHW8/L6TzUS4l51FH3z/VYqr+7
-X-Google-Smtp-Source: AMsMyM5zokAYz/aOO7VnfYTu62B5SNnuBYYp9F3gYZ1KBP0QojvXIfnwvg1G5g6lmg/e4lKBtg/A2w==
-X-Received: by 2002:a92:c247:0:b0:2fa:16d1:9cc0 with SMTP id k7-20020a92c247000000b002fa16d19cc0mr10079352ilo.293.1665448444139;
-        Mon, 10 Oct 2022 17:34:04 -0700 (PDT)
+        bh=oewU+Aj9bd7zcbDhSwe7FMeW0onZ/E8bpCZvaVtMCso=;
+        b=smTGqZkoU+pUAnU63iERAtPLGMhJD8kDhfbpS5QEzbLrEBqbTOhIhKMhzBtqqBcYri
+         OeJRGFyAyGCLKTLIzEebbVzNuj7zvffWmhJYu25keULnRM8zoKY20A3//23S+PQlLtGV
+         zhNAbuVwRHAll5pi2yCiivQlRVtO1GGH58ofI+3ddz6HzpgRC40oKXI33pVGItO33yoG
+         IZV4AWULWROmoMGQ/dPU3eP/5ibiXUVEoOql12neRCjhzf+0Q9D1dIVu7Akk7jwTpCHI
+         fF1kLTzMkDML4IfI04z5WxhR8FkZ/Dg13hUFWSabvvy56DQp5o2TTwnTtbzBmS4ylZnk
+         GItg==
+X-Gm-Message-State: ACrzQf0V9GpXemTALnswoxLQMD0cqxhWyr07fKqTaGLIz8Nk34MpPu+7
+        nOS4Z6XhZzIgnoRWmu5ItWpjZCs2nX7TOI9K
+X-Google-Smtp-Source: AMsMyM6eZ5EvIu/NR2Ec2jiZ8ki3GA3MKButtVaDIoGGrVPAweFGnO/BCp0QQLpgo3C9F/X2uz77Zg==
+X-Received: by 2002:a92:d34c:0:b0:2f8:d52d:4049 with SMTP id a12-20020a92d34c000000b002f8d52d4049mr10534614ilh.53.1665448447107;
+        Mon, 10 Oct 2022 17:34:07 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x12-20020a92dc4c000000b002fc681a6ad8sm662502ilq.78.2022.10.10.17.34.03
+        by smtp.gmail.com with ESMTPSA id k8-20020a6b4008000000b0067fb21ad9c3sm4787972ioa.22.2022.10.10.17.34.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Oct 2022 17:34:03 -0700 (PDT)
-Date:   Mon, 10 Oct 2022 20:34:02 -0400
+        Mon, 10 Oct 2022 17:34:06 -0700 (PDT)
+Date:   Mon, 10 Oct 2022 20:34:05 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     jacob@initialcommit.io, peff@peff.net, gitster@pobox.com
-Subject: [PATCH 1/7] Documentation: extract date-options.txt
-Message-ID: <eaec59daa178c205a59b779c63e411316d8180ed.1665448437.git.me@ttaylorr.com>
+Subject: [PATCH 2/7] shortlog: accept `--date`-related options
+Message-ID: <b587b8ea4ab593806b9fb6d1db8751591991455b.1665448437.git.me@ttaylorr.com>
 References: <cover.1665448437.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -63,173 +63,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A future commit will want to include `--date`-related options in the
-documentation for `git-shortlog(1)`, but without some of the additional
-baggage in the usual rev-list-options.txt.
+From: Jeff King <peff@peff.net>
 
-Extract those options to a separate file in Documentation and include it
-from its original source in rev-list-options.txt.
+Prepare for the future patch which will introduce arbitrary pretty
+formats via the `--group` argument.
 
-This patch does not modify the contents of the `--date`-options section
-of Documentation/rev-list-options.txt.
+To allow additional customizability (for example, to support something
+like `git shortlog -s --group='%aD' --date='format:%Y-%m' ...` (which
+groups commits by the datestring 'YYYY-mm' according to author date), we
+must store off the `--date` parsed from calling `parse_revision_opt()`.
 
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/date-options.txt     | 66 +++++++++++++++++++++++++++++
- Documentation/rev-list-options.txt | 67 +-----------------------------
- 2 files changed, 67 insertions(+), 66 deletions(-)
- create mode 100644 Documentation/date-options.txt
+ Documentation/git-shortlog.txt | 2 ++
+ builtin/shortlog.c             | 3 ++-
+ shortlog.h                     | 2 ++
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/date-options.txt b/Documentation/date-options.txt
-new file mode 100644
-index 0000000000..65896e4b95
---- /dev/null
-+++ b/Documentation/date-options.txt
-@@ -0,0 +1,66 @@
-+--relative-date::
-+	Synonym for `--date=relative`.
-+
-+--date=<format>::
-+	Only takes effect for dates shown in human-readable format, such
-+	as when using `--pretty`. `log.date` config variable sets a default
-+	value for the log command's `--date` option. By default, dates
-+	are shown in the original time zone (either committer's or
-+	author's). If `-local` is appended to the format (e.g.,
-+	`iso-local`), the user's local time zone is used instead.
-++
-+--
-+`--date=relative` shows dates relative to the current time,
-+e.g. ``2 hours ago''. The `-local` option has no effect for
-+`--date=relative`.
-+
-+`--date=local` is an alias for `--date=default-local`.
-+
-+`--date=iso` (or `--date=iso8601`) shows timestamps in a ISO 8601-like format.
-+The differences to the strict ISO 8601 format are:
-+
-+	- a space instead of the `T` date/time delimiter
-+	- a space between time and time zone
-+	- no colon between hours and minutes of the time zone
-+
-+`--date=iso-strict` (or `--date=iso8601-strict`) shows timestamps in strict
-+ISO 8601 format.
-+
-+`--date=rfc` (or `--date=rfc2822`) shows timestamps in RFC 2822
-+format, often found in email messages.
-+
-+`--date=short` shows only the date, but not the time, in `YYYY-MM-DD` format.
-+
-+`--date=raw` shows the date as seconds since the epoch (1970-01-01
-+00:00:00 UTC), followed by a space, and then the timezone as an offset
-+from UTC (a `+` or `-` with four digits; the first two are hours, and
-+the second two are minutes). I.e., as if the timestamp were formatted
-+with `strftime("%s %z")`).
-+Note that the `-local` option does not affect the seconds-since-epoch
-+value (which is always measured in UTC), but does switch the accompanying
-+timezone value.
-+
-+`--date=human` shows the timezone if the timezone does not match the
-+current time-zone, and doesn't print the whole date if that matches
-+(ie skip printing year for dates that are "this year", but also skip
-+the whole date itself if it's in the last few days and we can just say
-+what weekday it was).  For older dates the hour and minute is also
-+omitted.
-+
-+`--date=unix` shows the date as a Unix epoch timestamp (seconds since
-+1970).  As with `--raw`, this is always in UTC and therefore `-local`
-+has no effect.
-+
-+`--date=format:...` feeds the format `...` to your system `strftime`,
-+except for %s, %z, and %Z, which are handled internally.
-+Use `--date=format:%c` to show the date in your system locale's
-+preferred format.  See the `strftime` manual for a complete list of
-+format placeholders. When using `-local`, the correct syntax is
-+`--date=format-local:...`.
-+
-+`--date=default` is the default format, and is similar to
-+`--date=rfc2822`, with a few exceptions:
-+--
-+	- there is no comma after the day-of-week
-+
-+	- the time zone is omitted when the local time zone is used
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 1837509566..1cb91dfb9c 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -1033,72 +1033,7 @@ endif::git-rev-list[]
+diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
+index f64e77047b..4982ceee21 100644
+--- a/Documentation/git-shortlog.txt
++++ b/Documentation/git-shortlog.txt
+@@ -108,6 +108,8 @@ options or the revision range, when confusion arises.
+ :git-shortlog: 1
+ include::rev-list-options.txt[]
  
- include::pretty-options.txt[]
- 
----relative-date::
--	Synonym for `--date=relative`.
--
----date=<format>::
--	Only takes effect for dates shown in human-readable format, such
--	as when using `--pretty`. `log.date` config variable sets a default
--	value for the log command's `--date` option. By default, dates
--	are shown in the original time zone (either committer's or
--	author's). If `-local` is appended to the format (e.g.,
--	`iso-local`), the user's local time zone is used instead.
--+
----
--`--date=relative` shows dates relative to the current time,
--e.g. ``2 hours ago''. The `-local` option has no effect for
--`--date=relative`.
--
--`--date=local` is an alias for `--date=default-local`.
--
--`--date=iso` (or `--date=iso8601`) shows timestamps in a ISO 8601-like format.
--The differences to the strict ISO 8601 format are:
--
--	- a space instead of the `T` date/time delimiter
--	- a space between time and time zone
--	- no colon between hours and minutes of the time zone
--
--`--date=iso-strict` (or `--date=iso8601-strict`) shows timestamps in strict
--ISO 8601 format.
--
--`--date=rfc` (or `--date=rfc2822`) shows timestamps in RFC 2822
--format, often found in email messages.
--
--`--date=short` shows only the date, but not the time, in `YYYY-MM-DD` format.
--
--`--date=raw` shows the date as seconds since the epoch (1970-01-01
--00:00:00 UTC), followed by a space, and then the timezone as an offset
--from UTC (a `+` or `-` with four digits; the first two are hours, and
--the second two are minutes). I.e., as if the timestamp were formatted
--with `strftime("%s %z")`).
--Note that the `-local` option does not affect the seconds-since-epoch
--value (which is always measured in UTC), but does switch the accompanying
--timezone value.
--
--`--date=human` shows the timezone if the timezone does not match the
--current time-zone, and doesn't print the whole date if that matches
--(ie skip printing year for dates that are "this year", but also skip
--the whole date itself if it's in the last few days and we can just say
--what weekday it was).  For older dates the hour and minute is also
--omitted.
--
--`--date=unix` shows the date as a Unix epoch timestamp (seconds since
--1970).  As with `--raw`, this is always in UTC and therefore `-local`
--has no effect.
--
--`--date=format:...` feeds the format `...` to your system `strftime`,
--except for %s, %z, and %Z, which are handled internally.
--Use `--date=format:%c` to show the date in your system locale's
--preferred format.  See the `strftime` manual for a complete list of
--format placeholders. When using `-local`, the correct syntax is
--`--date=format-local:...`.
--
--`--date=default` is the default format, and is similar to
--`--date=rfc2822`, with a few exceptions:
----
--	- there is no comma after the day-of-week
--
--	- the time zone is omitted when the local time zone is used
 +include::date-options.txt[]
++
+ MAPPING AUTHORS
+ ---------------
  
- ifdef::git-rev-list[]
- --header::
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 7a1e1fe7c0..53c379a51d 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -211,7 +211,7 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
+ 	ctx.fmt = CMIT_FMT_USERFORMAT;
+ 	ctx.abbrev = log->abbrev;
+ 	ctx.print_email_subject = 1;
+-	ctx.date_mode.type = DATE_NORMAL;
++	ctx.date_mode = log->date_mode;
+ 	ctx.output_encoding = get_log_output_encoding();
+ 
+ 	if (!log->summary) {
+@@ -407,6 +407,7 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+ 	log.user_format = rev.commit_format == CMIT_FMT_USERFORMAT;
+ 	log.abbrev = rev.abbrev;
+ 	log.file = rev.diffopt.file;
++	log.date_mode = rev.date_mode;
+ 
+ 	if (!log.groups)
+ 		log.groups = SHORTLOG_GROUP_AUTHOR;
+diff --git a/shortlog.h b/shortlog.h
+index 3f7e9aabca..dc388dd459 100644
+--- a/shortlog.h
++++ b/shortlog.h
+@@ -2,6 +2,7 @@
+ #define SHORTLOG_H
+ 
+ #include "string-list.h"
++#include "date.h"
+ 
+ struct commit;
+ 
+@@ -15,6 +16,7 @@ struct shortlog {
+ 	int in2;
+ 	int user_format;
+ 	int abbrev;
++	struct date_mode date_mode;
+ 
+ 	enum {
+ 		SHORTLOG_GROUP_AUTHOR = (1 << 0),
 -- 
 2.37.0.1.g1379af2e9d
 
