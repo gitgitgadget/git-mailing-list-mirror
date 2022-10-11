@@ -2,295 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48EDBC433FE
-	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 18:15:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02FE8C433F5
+	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 18:41:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229665AbiJKSPQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Oct 2022 14:15:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48456 "EHLO
+        id S229764AbiJKSl5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Oct 2022 14:41:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbiJKSPO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2022 14:15:14 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2FE41ADB2
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 11:15:10 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id k2so33261296ejr.2
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 11:15:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ckqIr9sQnUgzz/v7DHFmRNxv4u+2BHbidKmehYitUAo=;
-        b=Ay9tB3MNSJLB74E5WUQHlEf2XJSw8vDWe39cun3wOeU2TzJVYvwdx/VKWiWYvJ06gk
-         e0RAk9QyUbSGNgBUyHV5NSCPZe4YVUPqeNuKYhfSh/h0ID0I9217k/fO5hZJ60Wbfoyr
-         /d0X4P93I7DuY6UdfdyzUYa4DuARfNvjogpABGy/kwx8HrDz43+5yUT8zIJ1/ngrrAj/
-         ehLEWcm+neUI6+5CpmytF4ENBXnnL16z3kgfDTye5F6XEgqLvV1mU75pZMonUMgHsWVE
-         hm9nWctDMR40vh/b1x9fkJbjXyjwPYEw3H0lNXNlIei1CJFicxO4yx26y0tDpSfj1zyG
-         ek9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ckqIr9sQnUgzz/v7DHFmRNxv4u+2BHbidKmehYitUAo=;
-        b=n1cqzcTFe72f0AsxuYyERUIMUWBoq1g4oEkjkDHCZ3eMxnTF8Lm/EX0yuJoR6LSMxJ
-         5z1GDAVhUf8qBfp3HKQRu71n87Bi4ABdAW4bVxMa8H48PbGkQQtRA/v7Uqkl2yUovZ3E
-         ugXOWO0Ph+RkMziFQKKc6qx7qSvBHpv656bAT/2hFyxOf9WXWxIGcmavfoolCulC3ISa
-         MkdxgNAjkqqrgeJIXHybdYcVsRQoG0JzLRq+G19xx7y+DMqrsAiiTFYnuDdSu84i/7/0
-         vkQfkYsfiLIdXM1tjiJIEcpxvucuOa82WA+nI57tQG5fBjWtSB/zl5y6yzLXVphzBHzs
-         J1ug==
-X-Gm-Message-State: ACrzQf0JtHTxNsCnxJJ5N5YF5dTMFC5TocpO6spHIRzzmW4Skle+Gl2J
-        0b+FxiD0Z/8tNHkel08duUE=
-X-Google-Smtp-Source: AMsMyM66jbGj9/KSXs0S6EvJqVKKkLYpajFJ3O5JFAHMpaL1QdL25PPOvwEwtu3Xkf5ZrHtWwxo+Cg==
-X-Received: by 2002:a17:906:5dcc:b0:78d:e77d:e66f with SMTP id p12-20020a1709065dcc00b0078de77de66fmr2460144ejv.102.1665512109050;
-        Tue, 11 Oct 2022 11:15:09 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id z22-20020a05640235d600b0045393e56488sm9813970edc.58.2022.10.11.11.15.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Oct 2022 11:15:07 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oiJmU-0044Z7-1B;
-        Tue, 11 Oct 2022 20:15:06 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v2] bisect--helper: plug strvec leak
-Date:   Tue, 11 Oct 2022 20:13:20 +0200
-References: <5c6a4c30-d454-51b6-ec57-9af036b9c4e0@web.de>
- <221005.8635c2u3k5.gmgdl@evledraar.gmail.com> <xmqqy1tunjgp.fsf@gitster.g>
- <221006.86a668r5mf.gmgdl@evledraar.gmail.com> <xmqqk05cipq8.fsf@gitster.g>
- <1965b54b-122a-c965-f886-1a7dd6afbfb4@web.de>
- <Y0TXTl0gSBOFQa9B@coredump.intra.peff.net> <xmqq35buykz1.fsf@gitster.g>
- <Y0VtkmNwjKcXcemP@coredump.intra.peff.net> <xmqqpmeyuvxt.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <xmqqpmeyuvxt.fsf@gitster.g>
-Message-ID: <221011.86czayns5x.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        with ESMTP id S229799AbiJKSlz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2022 14:41:55 -0400
+Received: from box.elsiehupp.com (box.elsiehupp.com [104.131.30.57])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBAF87CB48
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 11:41:54 -0700 (PDT)
+Received: from authenticated-user (box.elsiehupp.com [104.131.30.57])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.elsiehupp.com (Postfix) with ESMTPSA id B895DFC346;
+        Tue, 11 Oct 2022 14:41:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=elsiehupp.com;
+        s=mail; t=1665513713;
+        bh=AhfymJ8oOnTA5hl3T/ccMrhAIZySXMS7W7zbjeAbDk4=;
+        h=From:Subject:Date:References:To:In-Reply-To:From;
+        b=gx54BgA1+2ht/dq3ujRYCcsO6NlRkjUi+ETtaQZ9ehR6G/IUmMp0dsBiEBJkYBR3K
+         wyK04LahJZlXYwshZy7aH1y6rvWx3OSUO5x7MTfNLLo78y6HIobruU9pRMmqpEfRWJ
+         MdY68Q7CPrg3WxFmkTgQxsYSuhgWkCoc5OT6t7tWRPc1tCRxKHH60l2kGy6S+cd4gA
+         gu1D6m7sXVmBbCsMxVpTfqdmYKEjLGEWpIZP9Fi98Ce111NFgpnFSG2MOhO76uT9OK
+         JENtuF9aZa33vo4AEqhwL/m4hvjfrPj5S36TkDoAvw8Z0gR7nkpbkDDQWm749F+wJJ
+         huhNZdJImQZZQ==
+From:   Elsie Hupp <git@elsiehupp.com>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+Subject: Re: Multiple --global config workspaces?
+Date:   Tue, 11 Oct 2022 14:41:53 -0400
+References: <C4E3A512-2E2C-4EA5-9F2E-3662BCF0F165@elsiehupp.com>
+ <xmqqwn96x61t.fsf@gitster.g> <Y0Vr/4IeA236nxzF@coredump.intra.peff.net>
+ <03B277AB-DE33-443D-AC9C-FAB7A2F93AB3@elsiehupp.com>
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        reto@labrat.space, philipoakley@iee.email, git@vger.kernel.org
+In-Reply-To: <03B277AB-DE33-443D-AC9C-FAB7A2F93AB3@elsiehupp.com>
+Message-Id: <909C9446-F04D-4037-B12D-C97A68EC5AB3@elsiehupp.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I just opened an issue on the =E2=80=9CGit Book=E2=80=9D repository =
+suggesting the addition of a section discussing [includeIf], if anyone =
+here would like to comment there:
 
-On Tue, Oct 11 2022, Junio C Hamano wrote:
+https://github.com/progit/progit2/issues/1801
 
-> Jeff King <peff@peff.net> writes:
->
->> The bug I'm worried about it is in a human writing the list of strings
->> and forgetting the NULL, so there we are losing the (admittedly minor)
->> protection.
->
-> I expect that this story will repeat itself, especially given that
-> we asserted that it is OK to initialize such an array with variable
-> reference recently in this thread.
->
-> Here are a couple that I found with a quick eyeballing of the output
-> of "git grep -e 'run_command_v_opt([^,]*\.v,' \*.c" command.
->
->
->
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index ed8d44bb6a..c93345bc75 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -651,9 +651,8 @@ static void update_head(const struct ref *our, const struct ref *remote,
->  
->  static int git_sparse_checkout_init(const char *repo)
->  {
-> -	struct strvec argv = STRVEC_INIT;
->  	int result = 0;
-> -	strvec_pushl(&argv, "-C", repo, "sparse-checkout", "set", NULL);
-> +	const char *argv[] = { "-C", repo, "sparse-checkout", "set", NULL };
->  
->  	/*
->  	 * We must apply the setting in the current process
-> @@ -661,12 +660,11 @@ static int git_sparse_checkout_init(const char *repo)
->  	 */
->  	core_apply_sparse_checkout = 1;
->  
-> -	if (run_command_v_opt(argv.v, RUN_GIT_CMD)) {
-> +	if (run_command_v_opt(argv, RUN_GIT_CMD)) {
->  		error(_("failed to initialize sparse-checkout"));
->  		result = 1;
->  	}
->  
-> -	strvec_clear(&argv);
->  	return result;
->  }
->  
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 0a0ca8b7c4..d261bc652f 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -384,24 +384,20 @@ static void reset_hard(const struct object_id *oid, int verbose)
->  static void restore_state(const struct object_id *head,
->  			  const struct object_id *stash)
->  {
-> -	struct strvec args = STRVEC_INIT;
-> -
->  	reset_hard(head, 1);
->  
-> -	if (is_null_oid(stash))
-> -		goto refresh_cache;
-> -
-> -	strvec_pushl(&args, "stash", "apply", "--index", "--quiet", NULL);
-> -	strvec_push(&args, oid_to_hex(stash));
-> +	if (!is_null_oid(stash)) {
-> +		const char *argv[] = {
-> +			"stash", "apply", "--index", "--quiet", oid_to_hex(stash), NULL
-> +		};
->  
-> -	/*
-> -	 * It is OK to ignore error here, for example when there was
-> -	 * nothing to restore.
-> -	 */
-> -	run_command_v_opt(args.v, RUN_GIT_CMD);
-> -	strvec_clear(&args);
-> +		/*
-> +		 * It is OK to ignore error here, for example when there was
-> +		 * nothing to restore.
-> +		 */
-> +		run_command_v_opt(argv, RUN_GIT_CMD);
-> +	}
->  
-> -refresh_cache:
->  	if (discard_cache() < 0 || read_cache() < 0)
->  		die(_("could not read index"));
->  }
+> On Oct 11, 2022, at 12:55 PM, Elsie Hupp <git@elsiehupp.com> wrote:
+>=20
+> Hi Junio, Reto, Jeff, Philip, et al,
+>=20
+> Cool, thanks!
+>=20
+> I was using the =E2=80=9CGit Book=E2=80=9D documentation, not the =
+manpage, since (a) the =E2=80=9CGit Book=E2=80=9D is more user-friendly, =
+and (b) it=E2=80=99s higher on the DuckDuckGo results for =E2=80=9Cgit =
+config", i.e.:
+>=20
+> https://www.git-scm.com/book/en/v2/Customizing-Git-Git-Configuration
+>=20
+> Even then, I don=E2=80=99t see includeIf in the first two web-based =
+versions of the manpage for the DuckDuckGo query "man git-config":
+>=20
+> https://linux.die.net/man/1/git-config
+> https://manpages.org/git-config
+>=20
+> Though includeIf does appear in the manpage on my local system, as =
+well as in the web-based Arch manpage (which is the fifth result):
+>=20
+> https://man.archlinux.org/man/git-config.1
+>=20
+> And includeIf does appear in the official documentation (which is the =
+first DuckDuckGo result for "man git-config=E2=80=9D=E2=80=94I much =
+prefer web mirrors to using man in the terminal):
+>=20
+> https://git-scm.com/docs/git-config#_conditional_includes
+>=20
+> So in summary it seems like a big part the issue I had is that the =
+documentation for conditional includes has somewhat lacking SEO, i.e. if =
+someone is familiar with the --global config keywords and googles that, =
+they are unlikely to find the section for conditional includes. And, =
+additionally, conditional includes are a new enough feature that they =
+don=E2=80=99t appear in the higher-ranking web-based manpages, neither =
+of which display the version of Git they pertain to. (Maybe someone =
+could poke them about this, but I=E2=80=99m not sure the best way of =
+doing so.)
+>=20
+> As an aside, looking through the full documentation I see that I can =
+also do:
+>=20
+> [includeIf "hasconfig:remote.*.url:https://github.com/**=E2=80=9D] =
+path =3D ./Repositories/github/.gitconfig
+> [includeIf "hasconfig:remote.*.url:https://gitlab.com/**=E2=80=9D] =
+path =3D  ./Repositories/gitlab/.gitconfig
+>=20
+> And, conveniently, [includeIf "gitdir:github/=E2=80=9C] also expands =
+to [includeIf =E2=80=9Cgitdir:**/github/=E2=80=9C], so I don=E2=80=99t =
+have to specify [includeIf "gitdir:~/Repositories/github/=E2=80=9C]. =
+(I=E2=80=99m not sure how to represent the trailing slash in bash =
+syntax, but it helps, too!)
+>=20
+> Something more consistent with my initial use case might be a =
+hypothetical feature like the following (apologies for dubious syntax):
+>=20
+> [user "gitdir:github/"]
+> 	email =3D "elsiehupp.github@example.com"
+>=20
+> Or something like:
+>=20
+> if "gitdir:gitlab/" email =3D "elsiehupp.gitlab@example.com=E2=80=9D
+>=20
+> In other words, part of the discoverability issue is that I wasn=E2=80=99=
+t looking for a conditional _include_ so much as a conditional statement =
+more generally.
+>=20
+> I also tried:
+>=20
+> [include] path =3D $GIT_COMMON_DIR/../.gitconfig
+>=20
+> =E2=80=A6only to discover that $GIT_COMMON_DIR is not set =
+automatically. Is there some way of automatically describing a path =
+relative to any given cloned Git repository?
+>=20
+> And I tried the following to no avail (despite both paths resolving =
+when using cat):
+>=20
+> [includeIf "gitdir:github/"] path =3D ./**/github/.gitconfig
+>=20
+> [includeIf "gitdir:github/"] path =3D ./*/github/.gitconfig
+>=20
+> So it would be nice if in addition to being able to use bash wildcards =
+in [includeIf =E2=80=9Cgitdir=E2=80=9D] one could use bash wildcards in =
+inclusion paths, as well.
+>=20
+> I guess for the time being what I=E2=80=99ll stick with is this:
+>=20
+> [includeIf "gitdir:github/"] path =3D ./Repositories/github/.gitconfig
+> [includeIf "gitdir:gitlab/"] path =3D ./Repositories/gitlab/.gitconfig
+>=20
+> Best,
+> Elsie Hupp
 
-I was experimenting with implementing a run_command_opt_l() earlier
-which would give us the safety Jeff notes. The relevant end-state for
-these two files is (there's more conversions, and I manually edited the
-diff to remove an unrelated change):
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index ed8d44bb6ab..8dc986b5196 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -651,23 +651,18 @@ static void update_head(const struct ref *our, const struct ref *remote,
- 
- static int git_sparse_checkout_init(const char *repo)
- {
--	struct strvec argv = STRVEC_INIT;
--	int result = 0;
--	strvec_pushl(&argv, "-C", repo, "sparse-checkout", "set", NULL);
--
- 	/*
- 	 * We must apply the setting in the current process
- 	 * for the later checkout to use the sparse-checkout file.
- 	 */
- 	core_apply_sparse_checkout = 1;
- 
--	if (run_command_v_opt(argv.v, RUN_GIT_CMD)) {
-+	if (run_command_opt_l(RUN_GIT_CMD, "-C", repo, "sparse-checkout",
-+			      "set", NULL)) {
- 		error(_("failed to initialize sparse-checkout"));
--		result = 1;
-+		return 1;
- 	}
--
--	strvec_clear(&argv);
--	return result;
-+	return 0;
- }
- 
-@@ -862,11 +856,11 @@ static void write_refspec_config(const char *src_ref_prefix,
- 
- static void dissociate_from_references(void)
- {
--	static const char* argv[] = { "repack", "-a", "-d", NULL };
- 	char *alternates = git_pathdup("objects/info/alternates");
- 
- 	if (!access(alternates, F_OK)) {
--		if (run_command_v_opt(argv, RUN_GIT_CMD|RUN_COMMAND_NO_STDIN))
-+		if (run_command_opt_l(RUN_GIT_CMD|RUN_COMMAND_NO_STDIN,
-+				      "repack",  "-a", "-d", NULL))
- 			die(_("cannot repack to clean up"));
- 		if (unlink(alternates) && errno != ENOENT)
- 			die_errno(_("cannot unlink temporary alternates file"));
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 5900b81729d..9c08de57113 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -345,60 +345,34 @@ static int save_state(struct object_id *stash)
- 	return rc;
- }
- 
--static void read_empty(const struct object_id *oid, int verbose)
-+static void read_empty(const struct object_id *oid)
- {
--	int i = 0;
--	const char *args[7];
--
--	args[i++] = "read-tree";
--	if (verbose)
--		args[i++] = "-v";
--	args[i++] = "-m";
--	args[i++] = "-u";
--	args[i++] = empty_tree_oid_hex();
--	args[i++] = oid_to_hex(oid);
--	args[i] = NULL;
--
--	if (run_command_v_opt(args, RUN_GIT_CMD))
-+	if (run_command_opt_l(RUN_GIT_CMD, "read-tree", "-m", "-u",
-+			      empty_tree_oid_hex(), oid_to_hex(oid), NULL))
- 		die(_("read-tree failed"));
- }
- 
--static void reset_hard(const struct object_id *oid, int verbose)
-+static void reset_hard(const struct object_id *oid)
- {
--	int i = 0;
--	const char *args[6];
--
--	args[i++] = "read-tree";
--	if (verbose)
--		args[i++] = "-v";
--	args[i++] = "--reset";
--	args[i++] = "-u";
--	args[i++] = oid_to_hex(oid);
--	args[i] = NULL;
--
--	if (run_command_v_opt(args, RUN_GIT_CMD))
-+	if (run_command_opt_l(RUN_GIT_CMD, "read-tree", "-v", "--reset", "-u",
-+			      oid_to_hex(oid), NULL))
- 		die(_("read-tree failed"));
- }
- 
- static void restore_state(const struct object_id *head,
- 			  const struct object_id *stash)
- {
--	struct strvec args = STRVEC_INIT;
--
--	reset_hard(head, 1);
-+	reset_hard(head);
- 
- 	if (is_null_oid(stash))
- 		goto refresh_cache;
- 
--	strvec_pushl(&args, "stash", "apply", "--index", "--quiet", NULL);
--	strvec_push(&args, oid_to_hex(stash));
--
- 	/*
- 	 * It is OK to ignore error here, for example when there was
- 	 * nothing to restore.
- 	 */
--	run_command_v_opt(args.v, RUN_GIT_CMD);
--	strvec_clear(&args);
-+	run_command_opt_l(RUN_GIT_CMD, "stash", "apply", "--index", "--quiet",
-+			  oid_to_hex(stash), NULL);
- 
- refresh_cache:
- 	if (discard_cache() < 0 || read_cache() < 0)
-@@ -1470,7 +1444,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 					       check_trust_level);
- 
- 		remote_head_oid = &remoteheads->item->object.oid;
--		read_empty(remote_head_oid, 0);
-+		read_empty(remote_head_oid);
- 		update_ref("initial pull", "HEAD", remote_head_oid, NULL, 0,
- 			   UPDATE_REFS_DIE_ON_ERR);
- 		goto done;
