@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 427C5C4332F
-	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 23:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CF20C4332F
+	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 23:26:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229633AbiJKX0f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Oct 2022 19:26:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58402 "EHLO
+        id S229699AbiJKX0l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Oct 2022 19:26:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229627AbiJKX0e (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2022 19:26:34 -0400
+        with ESMTP id S229627AbiJKX0g (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2022 19:26:36 -0400
 Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A4C86F27F
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 16:26:33 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id q62-20020a17090a17c400b0020d334fbe19so208434pja.0
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 16:26:33 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F157C6F27F
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 16:26:34 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id z24-20020a17090abd9800b0020d43dcc8c3so218001pjr.9
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 16:26:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GBf67QctDHdO8OijIMWU7F0vySW5T0Zas2xcFHPJo7o=;
-        b=MZnBaGRS0w5LWAAYQ6QT4fNWso78H6sp45GXO/l6Ozfu3AMjcoLuFSsZP/UKogRpJ1
-         PafLdWthNHCUclWUFObqKcH7nVaQASxCZLaZdekSp1EJryAAa9g77Zey7RvC6FFGTv/W
-         ds4LzfJToHni0csmFGv29vbvupoPA71+JdN2XD5ncRzqARvpS01LBjDLb1I/bgtNuBki
-         5QS0Yp+VP3MuLhye5Gr8rSh7A90duwgPxQN7RL6LyVHEbHGbZbCQWHapQhkkje0UwaRU
-         QjR6yT4juZE1KCQygbbgubKUhQhXNX0zuX1jtAl66IgRp5y45doKD5UHI20dekW9tWZW
-         r5CQ==
+        bh=im4HlctZZKrR9Un2oLKgHczK0bYCIv5ClqJwS46AMOM=;
+        b=caWc/XnvV2KgFs+aiywJd7vKS0ysHRDqA9A8366T0kZOOsq2Huuebkd0c2CttYFxtI
+         +PwkoAWwzGWSeovYyk439oq6W1kXPDFu1twb4zyCKG0MoYbsc0kg0KlmmYZ3fDp8Mv0E
+         0ub8szAb22T+wTH7e5nIPXWq7i2XnbQkybODMY8HwXMhdQ5X8IUg/prQ/aFFyc/32Nob
+         j+BxcskQYr3oMaHAgUk6Ir3KJP3EKZPrWe6TbPA5xlLixLeaXBjkNbBtVXhZArAvcHBf
+         7V3dBl8ViCihY/AsTD6nDGPsMkbdoJe1EpwohH5QSpIUq6HvzBbdA1tMNub7aev44yHg
+         i2sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GBf67QctDHdO8OijIMWU7F0vySW5T0Zas2xcFHPJo7o=;
-        b=gpdIZaFJ7YQJxUd7TTnsLfIMY5iSGDKbaYsuC5JyhX/EqIzIpEBqlOjumjDzFqIN+D
-         a45RwzBfv+2RgInjpbqa8lGg2ilbS86sWG5QRjTiSoneHVcfkE0q/cqdNR7o3fReWa/r
-         Dn2onpHgYLjPsr7zlOFl0Q8Dj0CxX8bD7ynEQ7sRNVsJq4vm3LhVeL2dj5rKVWjU4yS/
-         aHomoPNY/cS3qHQcZ2gzP6OqsOLYhprPMY8hhCtxcvBNDJ31QsB2e0fsScDBHgK42sy6
-         ve1KN02E08aGnF0aGKg2oPRzQgTkQFMvsB92bYfMcMvAtK3ZzjHqzNdF8GgeKiSzYfyR
-         UsxQ==
-X-Gm-Message-State: ACrzQf2mHKaXmthvVFRiLGDMxwNUKga9P0oxVPc/ym13IZW1w0w4JgdZ
-        qkq/7cL9qhWUVvFWv+iptJjubdy5RSiJGbIzmTvSm9i2RBcjeNXCCJa/e8ykjtUcuU0mchpwozj
-        z0eM46OTgGxh1WFuCs6qZfsyLjeTT2Wukpp4r1h/8BGMvJCxKzq0+nba3VWwKP8qOnA==
-X-Google-Smtp-Source: AMsMyM6p/JY4ZMW8ElJAvkpA6rWXRcbqyM3NaPNmDxkvKjdjPcRUc0tG7ko/GW0MzIzR6pQ+EGp5r0wsZ2poANk=
+        bh=im4HlctZZKrR9Un2oLKgHczK0bYCIv5ClqJwS46AMOM=;
+        b=IVGGLLi8xIIEBrw5ABY49aDnlBZo1Si2DXu7USEn4VCXaT3aGRcOO8l6qKNdpQkHA1
+         4A/Tc7UD62xXDQw6gwUA27klysyNDvcTLOUg1qwHQkZBg+Mal3Lp/0T2Xq13lkqi/Ryo
+         orpFxyEAmdswu3/lHzZIRe4u9PLEGouzZ8XDYqShZheEyShcnTSRr/ATuTunKjnBgDaP
+         wipX/SCu9zfkX/LZbBp99OI5RCvOrkREetj/HG2wYS869djwy1n1y6A/wVEP/6bDjSHn
+         UEf+AxX7gpmBYxNPn9b1BtxSH1RuE630ZiWaPFAcL/Eu3qSxTavf1XwuzDkhrP97Y8J7
+         0QUA==
+X-Gm-Message-State: ACrzQf01o8jeIi9imIyBN1aDLJ94c9RnIftHTtlas721ZOYBVYDQ9Tlg
+        tGpl3/1wRi5tu8/2bXfIuKnN1NKCbUtSNVG8YUQI4VeHQOLSb4BWSp+Wqsyr1KlaFF6vYt0NMRr
+        kVSev413gxob7hstj8ge/XWURqFJmwTNoejukVkGelImMOq6wco+6slmgwJOC2s07LA==
+X-Google-Smtp-Source: AMsMyM5W6ySAfFyKWOJjqBA5hCpnVVHcJUyIOP0CIa/TDT9tlimiISpzunsonNIQk5NHgszltYXZzP/CsmrPad4=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a05:6a00:891:b0:565:85a7:a6e with SMTP
- id q17-20020a056a00089100b0056585a70a6emr3042509pfj.21.1665530792985; Tue, 11
- Oct 2022 16:26:32 -0700 (PDT)
-Date:   Tue, 11 Oct 2022 23:26:02 +0000
+ (user=calvinwan job=sendgmr) by 2002:a17:90b:4c02:b0:20a:7d26:149 with SMTP
+ id na2-20020a17090b4c0200b0020a7d260149mr1822820pjb.134.1665530794534; Tue,
+ 11 Oct 2022 16:26:34 -0700 (PDT)
+Date:   Tue, 11 Oct 2022 23:26:03 +0000
 In-Reply-To: <https://lore.kernel.org/git/20220922232947.631309-1-calvinwan@google.com/>
 Mime-Version: 1.0
 References: <https://lore.kernel.org/git/20220922232947.631309-1-calvinwan@google.com/>
 X-Mailer: git-send-email 2.38.0.rc1.362.ged0d419d3c-goog
-Message-ID: <20221011232604.839941-3-calvinwan@google.com>
-Subject: [PATCH v2 2/4] submodule: move status parsing into function
+Message-ID: <20221011232604.839941-4-calvinwan@google.com>
+Subject: [PATCH v2 3/4] diff-lib: refactor match_stat_with_submodule
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, emilyshaffer@google.com,
@@ -62,104 +62,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A future patch requires the ability to parse the output of git
-status --porcelain=2. Move parsing code from is_submodule_modified to
-parse_status_porcelain.
+Flatten out the if statements in match_stat_with_submodule so the
+logic is more readable and easier for future patches to add to.
+orig_flags didn't need to be set if the cache entry wasn't a
+GITLINK so defer setting it.
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 ---
- submodule.c | 71 +++++++++++++++++++++++++++++------------------------
- 1 file changed, 39 insertions(+), 32 deletions(-)
+ diff-lib.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index 72b295b87b..a3410ed8f0 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1864,6 +1864,43 @@ int fetch_submodules(struct repository *r,
- 	return spf.result;
- }
- 
-+static int parse_status_porcelain(char *buf, unsigned *dirty_submodule, int ignore_untracked)
-+{
-+	/* regular untracked files */
-+	if (buf[0] == '?')
-+		*dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
-+
-+	if (buf[0] == 'u' ||
-+		buf[0] == '1' ||
-+		buf[0] == '2') {
-+		/* T = line type, XY = status, SSSS = submodule state */
-+		if (strlen(buf) < strlen("T XY SSSS"))
-+			BUG("invalid status --porcelain=2 line %s",
-+				buf);
-+
-+		if (buf[5] == 'S' && buf[8] == 'U')
-+			/* nested untracked file */
-+			*dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
-+
-+		if (buf[0] == 'u' ||
-+			buf[0] == '2' ||
-+			memcmp(buf + 5, "S..U", 4))
-+			/* other change */
-+			*dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
-+	}
-+
-+	if ((*dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
-+		((*dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
-+		ignore_untracked)) {
-+		/*
-+		* We're not interested in any further information from
-+		* the child any more, neither output nor its exit code.
-+		*/
-+		return 1;
-+	}
-+	return 0;
-+}
-+
- unsigned is_submodule_modified(const char *path, int ignore_untracked)
+diff --git a/diff-lib.c b/diff-lib.c
+index 2edea41a23..e249322141 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -73,18 +73,25 @@ static int match_stat_with_submodule(struct diff_options *diffopt,
+ 				     unsigned *dirty_submodule)
  {
- 	struct child_process cp = CHILD_PROCESS_INIT;
-@@ -1900,39 +1937,9 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
- 
- 	fp = xfdopen(cp.out, "r");
- 	while (strbuf_getwholeline(&buf, fp, '\n') != EOF) {
--		/* regular untracked files */
--		if (buf.buf[0] == '?')
--			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
--
--		if (buf.buf[0] == 'u' ||
--		    buf.buf[0] == '1' ||
--		    buf.buf[0] == '2') {
--			/* T = line type, XY = status, SSSS = submodule state */
--			if (buf.len < strlen("T XY SSSS"))
--				BUG("invalid status --porcelain=2 line %s",
--				    buf.buf);
--
--			if (buf.buf[5] == 'S' && buf.buf[8] == 'U')
--				/* nested untracked file */
--				dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
--
--			if (buf.buf[0] == 'u' ||
--			    buf.buf[0] == '2' ||
--			    memcmp(buf.buf + 5, "S..U", 4))
--				/* other change */
--				dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
--		}
--
--		if ((dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
--		    ((dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
--		     ignore_untracked)) {
--			/*
--			 * We're not interested in any further information from
--			 * the child any more, neither output nor its exit code.
--			 */
--			ignore_cp_exit_code = 1;
-+		ignore_cp_exit_code = parse_status_porcelain(buf.buf, &dirty_submodule, ignore_untracked);
-+		if (ignore_cp_exit_code)
- 			break;
--		}
- 	}
- 	fclose(fp);
+ 	int changed = ie_match_stat(diffopt->repo->index, ce, st, ce_option);
+-	if (S_ISGITLINK(ce->ce_mode)) {
+-		struct diff_flags orig_flags = diffopt->flags;
+-		if (!diffopt->flags.override_submodule_config)
+-			set_diffopt_flags_from_submodule_config(diffopt, ce->name);
+-		if (diffopt->flags.ignore_submodules)
+-			changed = 0;
+-		else if (!diffopt->flags.ignore_dirty_submodules &&
++	struct diff_flags orig_flags;
++
++	if (!S_ISGITLINK(ce->ce_mode))
++		goto ret;
++
++	orig_flags = diffopt->flags;
++	if (!diffopt->flags.override_submodule_config)
++		set_diffopt_flags_from_submodule_config(diffopt, ce->name);
++	if (diffopt->flags.ignore_submodules) {
++		changed = 0;
++		goto cleanup;
++	}
++	if (!diffopt->flags.ignore_dirty_submodules &&
+ 			 (!changed || diffopt->flags.dirty_submodules))
+-			*dirty_submodule = is_submodule_modified(ce->name,
+-								 diffopt->flags.ignore_untracked_in_submodules);
++		*dirty_submodule = is_submodule_modified(ce->name,
++					diffopt->flags.ignore_untracked_in_submodules);
++cleanup:
+ 		diffopt->flags = orig_flags;
+-	}
++ret:
+ 	return changed;
+ }
  
 -- 
 2.38.0.rc1.362.ged0d419d3c-goog
