@@ -2,149 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02FE8C433F5
-	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 18:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E72D9C433F5
+	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 19:04:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229764AbiJKSl5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Oct 2022 14:41:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46346 "EHLO
+        id S229832AbiJKTEb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Oct 2022 15:04:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229799AbiJKSlz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2022 14:41:55 -0400
-Received: from box.elsiehupp.com (box.elsiehupp.com [104.131.30.57])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBAF87CB48
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 11:41:54 -0700 (PDT)
-Received: from authenticated-user (box.elsiehupp.com [104.131.30.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by box.elsiehupp.com (Postfix) with ESMTPSA id B895DFC346;
-        Tue, 11 Oct 2022 14:41:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=elsiehupp.com;
-        s=mail; t=1665513713;
-        bh=AhfymJ8oOnTA5hl3T/ccMrhAIZySXMS7W7zbjeAbDk4=;
-        h=From:Subject:Date:References:To:In-Reply-To:From;
-        b=gx54BgA1+2ht/dq3ujRYCcsO6NlRkjUi+ETtaQZ9ehR6G/IUmMp0dsBiEBJkYBR3K
-         wyK04LahJZlXYwshZy7aH1y6rvWx3OSUO5x7MTfNLLo78y6HIobruU9pRMmqpEfRWJ
-         MdY68Q7CPrg3WxFmkTgQxsYSuhgWkCoc5OT6t7tWRPc1tCRxKHH60l2kGy6S+cd4gA
-         gu1D6m7sXVmBbCsMxVpTfqdmYKEjLGEWpIZP9Fi98Ce111NFgpnFSG2MOhO76uT9OK
-         JENtuF9aZa33vo4AEqhwL/m4hvjfrPj5S36TkDoAvw8Z0gR7nkpbkDDQWm749F+wJJ
-         huhNZdJImQZZQ==
-From:   Elsie Hupp <git@elsiehupp.com>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0
-Subject: Re: Multiple --global config workspaces?
-Date:   Tue, 11 Oct 2022 14:41:53 -0400
-References: <C4E3A512-2E2C-4EA5-9F2E-3662BCF0F165@elsiehupp.com>
- <xmqqwn96x61t.fsf@gitster.g> <Y0Vr/4IeA236nxzF@coredump.intra.peff.net>
- <03B277AB-DE33-443D-AC9C-FAB7A2F93AB3@elsiehupp.com>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        reto@labrat.space, philipoakley@iee.email, git@vger.kernel.org
-In-Reply-To: <03B277AB-DE33-443D-AC9C-FAB7A2F93AB3@elsiehupp.com>
-Message-Id: <909C9446-F04D-4037-B12D-C97A68EC5AB3@elsiehupp.com>
+        with ESMTP id S229757AbiJKTE3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2022 15:04:29 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E408C82D35
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 12:04:28 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id a17so7667080ilq.1
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 12:04:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=C8NzaQf/EAkhubz8de6VInm0Qao3bcwMm5qi4XdeJCs=;
+        b=B1aBXBz4tkTL/xYimvQG/QudyMrQyW7IyCVmPhJItMA2OqmoOZ51fchF3P6CWvEKzL
+         VQH8AnOwD0X8xmCnWOBcAty+TZKdQ60W7vVw7YT1Z6LfLvmrMtyw0ZgmXTOkdWinoVVg
+         5fgBRkSA/TszC5zZHbD55BvQUlAeELrRJ3ysVe2ltZsFoBhNWRH9Q90Tja/fbFGzGZQw
+         evbYIgjOpAWop+YE2rjSoV/pEPr+j+QMc9GvbPQviJeqOHX1ndeI8cb4yRlEWud+Cms9
+         v77eQ816aU0/XHpnRO3BNDSXf8DTFv0hG/uipRyHwDouAaIHkkF0uRUDdg+32Xs0HUzZ
+         6Aag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C8NzaQf/EAkhubz8de6VInm0Qao3bcwMm5qi4XdeJCs=;
+        b=iLBUEwNfE68i38HvIUaDBuWJt6mc9cZXKttjvwUwX7GIy9l3zbUKISdyN+k9DJDeSo
+         do2pyjkqL8lobhRnIFRFFrV+ew8MOVuBIbHBY/GJHaN/oWHWn/EgLFdRIP7hf3PAxvhH
+         jr/7dTETxEiwfcOD54tg10TJ3MGwSvja7GqyDavRYGZiPcdro2+WiP71C+gAhu9o5TTo
+         W49CLnt+4/31y11cNgpLMfRxjhtXx2LpNfAeFufrkIH9KzZgxkgu5uyr7OpA178fktz4
+         Hr5aYVmf9wNjhMbADIw+jclftBJPBQKQOq8Y4Sh9nJ0bGWaLRtMv75XggjKubiNTzlx3
+         ClLQ==
+X-Gm-Message-State: ACrzQf2K0bEcY5APTN9q/yqPCnsSPilOjgAISkTfkjQze1EzU16QO9Ws
+        LUJVe47Iq4uEsRi4KpmJXVr+
+X-Google-Smtp-Source: AMsMyM6/xjP3iA6UAax82ruQIpzxtasMm66+VuU7Ob+a6aox5KdXJ2SIYFc2yrk3LgsDou8EqkSzhQ==
+X-Received: by 2002:a92:3652:0:b0:2df:4133:787 with SMTP id d18-20020a923652000000b002df41330787mr12976693ilf.39.1665515068228;
+        Tue, 11 Oct 2022 12:04:28 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:e093:47bc:eb8e:6fc7? ([2600:1700:e72:80a0:e093:47bc:eb8e:6fc7])
+        by smtp.gmail.com with ESMTPSA id o42-20020a02742a000000b0035a9b0050easm5477281jac.18.2022.10.11.12.04.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Oct 2022 12:04:27 -0700 (PDT)
+Message-ID: <d85704ef-97e8-57aa-9711-01d00b74d36e@github.com>
+Date:   Tue, 11 Oct 2022 15:04:26 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v4 08/11] bundle: add flags to verify_bundle(), skip walk
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        Glen Choo <chooglen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Teng Long <dyroneteng@gmail.com>
+References: <pull.1333.v3.git.1664886860.gitgitgadget@gmail.com>
+ <pull.1333.v4.git.1665417859.gitgitgadget@gmail.com>
+ <83f2cd893a4c47c947a93fe99d202d67f540e963.1665417859.git.gitgitgadget@gmail.com>
+ <xmqqbkqj4mj7.fsf@gitster.g>
+ <08877824-b454-df37-1819-edee34919f95@github.com>
+ <xmqqk05734kr.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqk05734kr.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I just opened an issue on the =E2=80=9CGit Book=E2=80=9D repository =
-suggesting the addition of a section discussing [includeIf], if anyone =
-here would like to comment there:
+On 10/10/2022 2:40 PM, Junio C Hamano wrote:
+> Derrick Stolee <derrickstolee@github.com> writes:
+> 
+>> I've been going over the refs code multiple times today trying to
+>> fix this "real" culprit, with no luck. I can share this interesting
+>> point:
+>>
+>>  * The initial loop over the bundles tries to apply each, but the
+>>    prerequisite objects are not present so we never reach the revision
+>>    walk. A refs/bundle/* ref is added via update_ref().
+>>
+>>  * The second loop over the bundles tries to apply each, but the only
+>>    bundle with its prerequisites present also finds the commits as
+>>    reachable (this must be where the loose ref cache is populated).
+>>    Then, a refs/bundle/* ref is added via update_ref().
+>>
+>>  * The third loop over the bundles finds a bundle whose prerequisites
+>>    are present, but verify_bundle() rejected it because those commits
+>>    were not seen from any ref.
+>>
+>> Other than identifying that issue, I was unable to track down exactly
+>> what is happening here or offer a fix. I had considered inserting
+>> more cache frees deep in the refs code, but I wasn't sure what effect
+>> that would have across the wider system.
+> 
+> OK.  That certainly is understandable.
+> 
+> As a comment in the proposed log message that BUNDLE_SKIP_REACHABLE
+> bit is a band aid papering over a problem we punted in this series,
+> to guide future developers, I think what you wrote is sufficient.
+> We do not want them to think that skipping the check is our
+> preferred longer term solution and add their own hack to keep
+> skipping the check when they resolve "the real culprit".
 
-https://github.com/progit/progit2/issues/1801
+I have discovered the real culprit, and my expectation was incorrect
+about the loose ref cache. The key issue was that I was looking at
+this loop:
 
-> On Oct 11, 2022, at 12:55 PM, Elsie Hupp <git@elsiehupp.com> wrote:
->=20
-> Hi Junio, Reto, Jeff, Philip, et al,
->=20
-> Cool, thanks!
->=20
-> I was using the =E2=80=9CGit Book=E2=80=9D documentation, not the =
-manpage, since (a) the =E2=80=9CGit Book=E2=80=9D is more user-friendly, =
-and (b) it=E2=80=99s higher on the DuckDuckGo results for =E2=80=9Cgit =
-config", i.e.:
->=20
-> https://www.git-scm.com/book/en/v2/Customizing-Git-Git-Configuration
->=20
-> Even then, I don=E2=80=99t see includeIf in the first two web-based =
-versions of the manpage for the DuckDuckGo query "man git-config":
->=20
-> https://linux.die.net/man/1/git-config
-> https://manpages.org/git-config
->=20
-> Though includeIf does appear in the manpage on my local system, as =
-well as in the web-based Arch manpage (which is the fifth result):
->=20
-> https://man.archlinux.org/man/git-config.1
->=20
-> And includeIf does appear in the official documentation (which is the =
-first DuckDuckGo result for "man git-config=E2=80=9D=E2=80=94I much =
-prefer web mirrors to using man in the terminal):
->=20
-> https://git-scm.com/docs/git-config#_conditional_includes
->=20
-> So in summary it seems like a big part the issue I had is that the =
-documentation for conditional includes has somewhat lacking SEO, i.e. if =
-someone is familiar with the --global config keywords and googles that, =
-they are unlikely to find the section for conditional includes. And, =
-additionally, conditional includes are a new enough feature that they =
-don=E2=80=99t appear in the higher-ranking web-based manpages, neither =
-of which display the version of Git they pertain to. (Maybe someone =
-could poke them about this, but I=E2=80=99m not sure the best way of =
-doing so.)
->=20
-> As an aside, looking through the full documentation I see that I can =
-also do:
->=20
-> [includeIf "hasconfig:remote.*.url:https://github.com/**=E2=80=9D] =
-path =3D ./Repositories/github/.gitconfig
-> [includeIf "hasconfig:remote.*.url:https://gitlab.com/**=E2=80=9D] =
-path =3D  ./Repositories/gitlab/.gitconfig
->=20
-> And, conveniently, [includeIf "gitdir:github/=E2=80=9C] also expands =
-to [includeIf =E2=80=9Cgitdir:**/github/=E2=80=9C], so I don=E2=80=99t =
-have to specify [includeIf "gitdir:~/Repositories/github/=E2=80=9C]. =
-(I=E2=80=99m not sure how to represent the trailing slash in bash =
-syntax, but it helps, too!)
->=20
-> Something more consistent with my initial use case might be a =
-hypothetical feature like the following (apologies for dubious syntax):
->=20
-> [user "gitdir:github/"]
-> 	email =3D "elsiehupp.github@example.com"
->=20
-> Or something like:
->=20
-> if "gitdir:gitlab/" email =3D "elsiehupp.gitlab@example.com=E2=80=9D
->=20
-> In other words, part of the discoverability issue is that I wasn=E2=80=99=
-t looking for a conditional _include_ so much as a conditional statement =
-more generally.
->=20
-> I also tried:
->=20
-> [include] path =3D $GIT_COMMON_DIR/../.gitconfig
->=20
-> =E2=80=A6only to discover that $GIT_COMMON_DIR is not set =
-automatically. Is there some way of automatically describing a path =
-relative to any given cloned Git repository?
->=20
-> And I tried the following to no avail (despite both paths resolving =
-when using cat):
->=20
-> [includeIf "gitdir:github/"] path =3D ./**/github/.gitconfig
->=20
-> [includeIf "gitdir:github/"] path =3D ./*/github/.gitconfig
->=20
-> So it would be nice if in addition to being able to use bash wildcards =
-in [includeIf =E2=80=9Cgitdir=E2=80=9D] one could use bash wildcards in =
-inclusion paths, as well.
->=20
-> I guess for the time being what I=E2=80=99ll stick with is this:
->=20
-> [includeIf "gitdir:github/"] path =3D ./Repositories/github/.gitconfig
-> [includeIf "gitdir:gitlab/"] path =3D ./Repositories/gitlab/.gitconfig
->=20
-> Best,
-> Elsie Hupp
+	i = req_nr;
+	while (i && (commit = get_revision(&revs)))
+		if (commit->object.flags & PREREQ_MARK)
+			i--;
 
+and noticing that only one commit was being visited. I was not 
+seeing the actually-important commit. But it wasn't the revision
+walk's fault. The loop was terminating because "i" was reaching
+zero!
+
+It turns out that verify_bundles() is not clearing the PREREQ_MARK
+flag, so multiple runs would incorrectly hit this short-circuit
+and terminate the walk early.
+
+I'll replace this patch with the correct fix soon.
+
+Thanks,
+-Stolee
