@@ -2,87 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EF83C433FE
-	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 01:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A726C433F5
+	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 01:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230135AbiJKB22 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 21:28:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34792 "EHLO
+        id S229895AbiJKBfI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 21:35:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230125AbiJKB20 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 21:28:26 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0344A1402F
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 18:28:25 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id 8so6483310ilj.4
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 18:28:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fs6ZcwpYar4Lwegtdmtf9+4/UiliCbGuvVdHwL9HOJY=;
-        b=svh1QxhUXcqSMHgrXqm1yXvUoXNVHJ3IygX5mklwfzyAxj8DVYJqPPfG/bgJcGd1F6
-         2QOIueKZqynWpyoJuIZVuRMHqX+dRAg8d9ltBB1kbO3J8g6/UTxti8QuDT30HdgBFnsu
-         ntPUylvdx/dh3n75hsHJmw5Nkpt0sI1UabgRXMidTDg5H4IEKy6Pn0uwglgXWObtBX/p
-         0hj8zv+j15tMBa0F69zjDC/iotsBnK3f9oBwWIKWZAv2XJNLSAdIMLrE4utEnwsOCcFY
-         8ajfWjqja7S3fVa+l1M6tjrJn/D3U1UAB0rbPSmck1NW2YyOsJmRDK9NqoLj1pKSM0Bv
-         vKTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Fs6ZcwpYar4Lwegtdmtf9+4/UiliCbGuvVdHwL9HOJY=;
-        b=qokULXIk1HrlIwNWHj895+AAposjY3Yz/1KBIEfs+AY9Vv3tleJAsB8XCKN1HQRuxf
-         w6ZjrCLvM228Ayi6kWcSN9lZ2nSZTP0fDdp1fGuQhlHlvYub5EMw6FkjplXt5rl8K77j
-         WKerGdO1YMSDccq4hGyzR+1VZP3ZOLKWNuapm+UYnryx/hykbbta+CzTvpuwxy0nBZlY
-         Gi7Qf9C1QZ8rEghBHvR8RUyGIhDLrnoN4l9LwGTk4diwD4uB4b56xiRzcyeDvgbxwqPe
-         8ogEgYvE4/L8aGRvTjPfLndaGljNbOYLiQuk7r0Mb8CUIJlSZUaIy/PuFVdsvgyHq7iz
-         /Dkw==
-X-Gm-Message-State: ACrzQf25yHKsV2ZwWmbdhICRfDh/jJtZhIHR0ECHA8DUN22hGkNIvTIX
-        KP7jP4T6CrYqBqPr/WfuvcyWnA==
-X-Google-Smtp-Source: AMsMyM4pgN6YrrnIyZgTqeVv6e0ayBHRRQT8Ic3Z96FnsdBYHvZO4XVWIwLhtlHZeUr3igNZJkthuQ==
-X-Received: by 2002:a05:6e02:1447:b0:2fa:27f2:fb44 with SMTP id p7-20020a056e02144700b002fa27f2fb44mr10428264ilo.128.1665451705361;
-        Mon, 10 Oct 2022 18:28:25 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g18-20020a056e02131200b002eb3b43cd63sm4449095ilr.18.2022.10.10.18.28.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Oct 2022 18:28:25 -0700 (PDT)
-Date:   Mon, 10 Oct 2022 21:28:24 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
+        with ESMTP id S231307AbiJKBeq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 21:34:46 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 434A09588
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 18:34:43 -0700 (PDT)
+Received: (qmail 29962 invoked by uid 109); 11 Oct 2022 01:34:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Oct 2022 01:34:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16222 invoked by uid 111); 11 Oct 2022 01:34:44 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 10 Oct 2022 21:34:44 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 10 Oct 2022 21:34:42 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, jacob@initialcommit.io, gitster@pobox.com
-Subject: Re: [PATCH 4/7] shortlog: support arbitrary commit format `--group`s
-Message-ID: <Y0TGuFDhoG1Nu6ND@nand.local>
+Subject: Re: [PATCH 5/7] shortlog: implement `--group=author` in terms of
+ `--group=<format>`
+Message-ID: <Y0TIMlrrifYKuBnR@coredump.intra.peff.net>
 References: <cover.1665448437.git.me@ttaylorr.com>
- <6f38990cc2ea8460ce37437e0770784d9b712dab.1665448437.git.me@ttaylorr.com>
- <Y0TDDvzeCxIMFbG5@coredump.intra.peff.net>
- <Y0TF0M6UzLS9r6iM@nand.local>
+ <55a6ef7bc0082818fa51a0915c43002ede5c449f.1665448437.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y0TF0M6UzLS9r6iM@nand.local>
+In-Reply-To: <55a6ef7bc0082818fa51a0915c43002ede5c449f.1665448437.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 10, 2022 at 09:24:32PM -0400, Taylor Blau wrote:
-> > Makes sense. Two other tests that might be worth including:
-> >
-> >   - "shortlog --group=bogus" generates an error (we might already have
-> >     such a test; I didn't check)
->
-> We didn't have such a test before, so adding one is a good call, thanks!
+On Mon, Oct 10, 2022 at 08:34:15PM -0400, Taylor Blau wrote:
 
-Just writing back to say that this was a really good suggestion, since
-it caught my mistake in writing:
+> Instead of handling SHORTLOG_GROUP_AUTHOR separately, reimplement it as
+> a special case of the new `--group=<format>` mode, where the author mode
+> is a shorthand for `--group='%aN <%aE>'.
 
-    } else if (strchrnul(arg, '%')) {
+OK, this should be a nice cleanup.
 
-since we'll always get back a non-NULL answer from calling `strchrnul`
-instead of `strchr`.
+> diff --git a/builtin/log.c b/builtin/log.c
+> index ee19dc5d45..6b77e520b5 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1334,6 +1334,7 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
+>  	log.in2 = 4;
+>  	log.file = rev->diffopt.file;
+>  	log.groups = SHORTLOG_GROUP_AUTHOR;
+> +	shortlog_init_group(&log);
+>  	for (i = 0; i < nr; i++)
+>  		shortlog_add_commit(&log, list[i]);
 
-Thanks ;-).
+In another caller you drop the assignment of log.groups, since
+shortlog_init_group() already does so if log.groups is 0 (which it will
+be, since shortlog_init() will zero-initialize).
 
-Thanks,
-Taylor
+Should we do the same here? Or maybe leaving it is more obvious. It
+would be more obvious still if we made the helper take the type, like:
+
+  shortlog_init_group(&log, SHORTLOG_GROUP_AUTHOR);
+
+But I guess that is not accurate, as we'd eventually use this in
+shortlog.c to turn _any_ bits we've accumulated in log.group into their
+correct formats.
+
+I think the name of the helper function puzzled me a bit. It is really
+"finish up any setup for the shortlog struct". We could lazily do it in
+shortlog_add_commit(), but that's pretty subtle. But could we maybe call
+it:
+
+  shortlog_finish_setup();
+
+or something? I dunno. I might be nit-picking, but I actually had to
+scratch my head quite a bit to understand what was going on here.
+
+> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+> index f708d96558..aac8c7afa4 100644
+> --- a/builtin/shortlog.c
+> +++ b/builtin/shortlog.c
+> @@ -245,15 +245,6 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
+>  	}
+>  	oneline_str = oneline.len ? oneline.buf : "<none>";
+>  
+> -	if (log->groups & SHORTLOG_GROUP_AUTHOR) {
+> -		strbuf_reset(&ident);
+> -		format_commit_message(commit,
+> -				      log->email ? "%aN <%aE>" : "%aN",
+> -				      &ident, &ctx);
+> -		if (!HAS_MULTI_BITS(log->groups) ||
+> -		    strset_add(&dups, ident.buf))
+> -			insert_one_record(log, ident.buf, oneline_str);
+> -	}
+
+This loses the HAS_MULTI_BITS() optimization. The idea there is that if
+you have a single group-by that can't produce multiple outputs, then
+there's no need to do duplicate detection.
+
+The equivalent in an all-formats world is something like:
+
+  log.format.nr > 1 && !log.trailers.nr
+
+(because trailers are special in that one trailer key can produce
+multiple idents for a single commit).
+
+> +void shortlog_init_group(struct shortlog *log)
+> +{
+> +	if (!log->groups)
+> +		log->groups = SHORTLOG_GROUP_AUTHOR;
+> +
+> +	if (log->groups & SHORTLOG_GROUP_AUTHOR)
+> +		string_list_append(&log->format,
+> +				   log->email ? "%aN <%aE>" : "%aN");
+> +}
+
+Regardless of the naming suggestion I made, I think things would be more
+obvious if this top conditional remained in cmd_shortlog(). And then the
+explicit assignment of "log.group" in make_cover_letter() would remain.
+
+> @@ -439,8 +440,8 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+>  	log.file = rev.diffopt.file;
+>  	log.date_mode = rev.date_mode;
+>  
+> -	if (!log.groups)
+> -		log.groups = SHORTLOG_GROUP_AUTHOR;
+> +	shortlog_init_group(&log);
+> +
+>  	string_list_sort(&log.trailers);
+
+Now that we have a "finish the shortlog init" function, probably this
+trailer sort should go into it, too. The current caller doesn't need it,
+but it removes on more gotcha from using the shortlog API.
+
+-Peff
