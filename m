@@ -2,130 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D6C5C433F5
-	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 00:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C88CC433F5
+	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 00:22:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbiJKAVn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 20:21:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54424 "EHLO
+        id S229456AbiJKAW5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 20:22:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbiJKAVl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 20:21:41 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 166A6357F9
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 17:21:41 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 54DA115F756;
-        Mon, 10 Oct 2022 20:21:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=59hANjvhi6D/bnh7ZfxFetq8UR63RYAXOhFesx
-        28K1U=; b=bVhVp66b4mPJQ1WsI4dybpJnXvi/O4J5kTozXxKmcBA9lzbPpz7M/0
-        1LsRpk03aYB73y6xTtntFoc6Iv+zOe9VjyCh9RJy0IqGf9iz14NCR5qrmr3TZlAo
-        Sbd9hd62d9+oNqiNUx/QheBYIXGyNOhCNaSPJY1tMMAVJKhhPzaII=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4D84615F755;
-        Mon, 10 Oct 2022 20:21:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BB8FB15F752;
-        Mon, 10 Oct 2022 20:21:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>
-Subject: [PATCH v2] ci: add address and undefined sanitizer tasks
-References: <xmqq8rlo62ih.fsf@gitster.g>
-Date:   Mon, 10 Oct 2022 17:21:38 -0700
-In-Reply-To: <xmqq8rlo62ih.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
-        09 Oct 2022 15:44:22 -0700")
-Message-ID: <xmqqpmezxl9p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229451AbiJKAW4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 20:22:56 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDCF07FFA0
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 17:22:54 -0700 (PDT)
+Received: (qmail 29700 invoked by uid 109); 11 Oct 2022 00:22:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Oct 2022 00:22:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15141 invoked by uid 111); 11 Oct 2022 00:22:54 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 10 Oct 2022 20:22:54 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 10 Oct 2022 20:22:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Aleajndro R =?utf-8?Q?Sede=C3=B1o?= <asedeno@google.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] git-compat-util.h: GCC deprecated only takes a message
+ in GCC 4.5+
+Message-ID: <Y0S3XDToBqnMr4/m@coredump.intra.peff.net>
+References: <20221003212318.3092010-1-asedeno@google.com>
+ <YzthTugwy+eaIUxr@tapette.crustytoothpaste.net>
+ <CAOO-Oz2WnodBnw86mi2GZ+jLGoGy_saX=kCpwPdm2xohDO1s_Q@mail.gmail.com>
+ <Yz2afjRezq5oGN4g@coredump.intra.peff.net>
+ <221006.86lepts927.gmgdl@evledraar.gmail.com>
+ <Yz7HGAThrOcPdmjm@coredump.intra.peff.net>
+ <221006.86edvkr6cc.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: ACE180BE-48FA-11ED-8811-307A8E0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221006.86edvkr6cc.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The signal of "passed with asan, but not ubsan" (or vice versa) is
-not that useful in practice, run both santizers in a single task.
+On Thu, Oct 06, 2022 at 11:15:16PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-Range-diff against v1:
-1:  04a9dc5439 ! 1:  cbf0d80ab1 ci: add address and undefined sanitizer tasks
-    @@ Metadata
-      ## Commit message ##
-         ci: add address and undefined sanitizer tasks
-     
-    +    The signal of "passed with asan, but not ubsan" (or vice versa) is
-    +    not that useful in practice, run both santizers in a single task.
-    +
-    +    Helped-by: Jeff King <peff@peff.net>
-         Signed-off-by: Junio C Hamano <gitster@pobox.com>
-     
-      ## .github/workflows/main.yml ##
-    @@ .github/workflows/main.yml: jobs:
-                - jobname: linux-leaks
-                  cc: gcc
-                  pool: ubuntu-latest
-    -+          - jobname: linux-address
-    -+            cc: gcc
-    -+            pool: ubuntu-latest
-    -+          - jobname: linux-undefined
-    ++          - jobname: linux-sanitize
-     +            cc: gcc
-     +            pool: ubuntu-latest
-          env:
-    @@ ci/lib.sh: linux-leaks)
-      	export GIT_TEST_PASSING_SANITIZE_LEAK=true
-      	export GIT_TEST_SANITIZE_LEAK_LOG=true
-      	;;
-    -+linux-address | linux-undefined)
-    -+	export SANITIZE=${jobname#linux-}
-    ++linux-sanitize)
-    ++	export SANITIZE=address,undefined
-     +	;;
-      esac
-      
+> > But if the definition gets much more complicated, then it's probably
+> > worth pulling it out rather than repeating it.
+> 
+> Yeah, I've dealt with that pain before in other contexts. It would be
+> great to have a git-compiler-compat.h with just the various
+> __attribute__ stuff split off from git-compat-util.h.
 
- .github/workflows/main.yml | 3 +++
- ci/lib.sh                  | 3 +++
- 2 files changed, 6 insertions(+)
+I was going to just have unused.h, since I'd worry that piling too much
+stuff into it will eventually hit a place where some compat/ code is
+unhappy. But I'd also be OK to _start_ with the UNUSED definition, but
+call it git-compiler-compat or something, and then people can migrate
+things as they choose to test them.
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 831f4df56c..92d27db0b9 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -251,6 +251,9 @@ jobs:
-           - jobname: linux-leaks
-             cc: gcc
-             pool: ubuntu-latest
-+          - jobname: linux-sanitize
-+            cc: gcc
-+            pool: ubuntu-latest
-     env:
-       CC: ${{matrix.vector.cc}}
-       CC_PACKAGE: ${{matrix.vector.cc_package}}
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 1b0cc2b57d..c9c4982e21 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -278,6 +278,9 @@ linux-leaks)
- 	export GIT_TEST_PASSING_SANITIZE_LEAK=true
- 	export GIT_TEST_SANITIZE_LEAK_LOG=true
- 	;;
-+linux-sanitize)
-+	export SANITIZE=address,undefined
-+	;;
- esac
- 
- MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
--- 
-2.38.0-146-gaff07b31d7
+> 	+TEST_BUILTINS_OBJS_NO_UNUSED += test-ctype.o
 
+I'd rather not go that route. I already have an UNUSED-clean code base,
+and once that is all merged we shouldn't need any of that complexity. In
+the meantime, yes, people introduce new cases, but I am fixing those as
+they do (and have been for a few years now).
+
+-Peff
