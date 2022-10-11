@@ -2,118 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CAF4C433FE
-	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 20:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21D10C433FE
+	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 21:16:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229604AbiJKUlt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Oct 2022 16:41:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58990 "EHLO
+        id S229617AbiJKVQO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Oct 2022 17:16:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbiJKUls (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2022 16:41:48 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BF3118E1C
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 13:41:46 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 377245A12A;
-        Tue, 11 Oct 2022 20:41:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1665520906;
-        bh=OQD7FjuRKGMB4iPlvjO/xl6hJ0VVLvt6f59E5EmDi/I=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=02aWaJ84SH0P6xm52L3xcV3T6snaSycCzkYFemkRCFu/y24Kt+STm/nbOyGHpvZO3
-         eF6O1wvrfUlH8v50PD9cdSwjjgfCGHXpYXBCmnkbe7PHqFZYMOUoTpLgIoSC9J5ZYl
-         CKcaJjpchOhcSEpiiGDhHiOwu8B9QaGj4ASBLFBgUK9ptOgw09WitiCy1CTkZocL9Q
-         AN/1Gn/f77VdWFe2MMMF9zLiE5/0q5S9pHdqRMiApuBeZk1cQTSQhIspS/mbEB6Vb8
-         SR6z+24dOqiCsUklpd5xy5/LAip++eJm8DlShlLcv5x9vI+Lu/s1sxwa1kh27JJpEq
-         q2mUhIyQ4eATO8cqkkPKLoj2T3F8Mx/dniIB/olhM3Y4zSvNfR5De4JtUgc3Bp3F0u
-         +KlBTpQ9KUye5xtlpStutYibTM/lf3xD3mYIyRFGKoqO/MkjkHcvIkWx3YQQNu8InY
-         QIB9AzoivW2WeE+0Nl6iNNeDgJVqecMmD3hRZJ3YKdu0IdOEvat
-Date:   Tue, 11 Oct 2022 20:41:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Nicolas Graves <ngraves@ngraves.fr>
-Cc:     git@vger.kernel.org, Cuckoo Aidan <aidancuckoo@gmail.com>
-Subject: Re: Error / feature-request: Signing git commits with SSH hardware
- key
-Message-ID: <Y0XVCDu9o3xDnt81@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Nicolas Graves <ngraves@ngraves.fr>, git@vger.kernel.org,
-        Cuckoo Aidan <aidancuckoo@gmail.com>
-References: <875ygqw7p8.fsf@ngraves.fr>
+        with ESMTP id S229456AbiJKVQN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2022 17:16:13 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4F094AD47
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 14:16:11 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id t186so12441567yba.12
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 14:16:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=z6EIlo0o4lkbAIgBjYokhf/9dCty+KF7CbdpprAHoqA=;
+        b=aufwPTmpZAWpoS6JTTM1FSupYEOsihN0V+AQsQ7HZ9bDfWxjLhDlj3U3/vggMaqhQh
+         wrpu5pPC/98rIxLj/z0/j7DTXk/QctUViJDjAyBDnnUDTnl3zfk+HLai28hTjrKFOpni
+         n5RW5AlCq+ij8tW958FfE2OSzgouQQvY9w8rjPyOMcJrIV+zvulq3/j0AcaonOqP3XeV
+         NY7oRrtEfzjwwxDUPoswfOLp9GTjyFONnm+MxU7ZPtopFNV0ncxT7y+n8K5xJbA8H5oU
+         IA3B4K5uCheb9oQOQa/4CxwaRnOB4cZNICXvb7FK2l4jsEfTs4uq4T7c6r0a+RD5ULbn
+         vw2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z6EIlo0o4lkbAIgBjYokhf/9dCty+KF7CbdpprAHoqA=;
+        b=X9LjH8Fz3aK0TgastVSgc9IXQxO/0ClfwLOtinkm7GRoQCYzrwmSd+hRmVD74kOK7I
+         q1KpudAYT778AGhmGgT+zynt93VxvKctFInATSlCN9BkEsHYHkyoxbqQpdHeaOrA6rUw
+         jeCrBpDwKPSVdgOy7/dG6rg98QVO+Ty06bOp9skP9QW2uM2ZBDxca4AFpfkd7i3RpBb+
+         GCO1vBRNPty++e8xKPtcAF3AiW4IqjvupUbWUBuLOMKN/OS9weEK1bWKGk9K8Egx6shQ
+         ZBtxGhD1Gu5lLfjWZvyehogb7Q3Im+9c5CtEe1DStCm4oGTYs3ZQlFxRnK63V8qGykOO
+         iNDg==
+X-Gm-Message-State: ACrzQf0IauocyMkbq9FuFH1iMCfydj3CtbLRWFzhHm13RNgSZxWn9fsB
+        ZmAes+sPhAn+K8QqIosY0ifXZ6Xq+RUp2IAPT40=
+X-Google-Smtp-Source: AMsMyM6GBk9F3+wHAZdWLjHSgCMhtWfoBJHF3Fz6dJ3SnpY21QYNs2obOslyvyHA7E8WMgoE4DFHf+fCZdDCI548vYA=
+X-Received: by 2002:a25:3a02:0:b0:6bb:fce3:7b06 with SMTP id
+ h2-20020a253a02000000b006bbfce37b06mr25305507yba.89.1665522970777; Tue, 11
+ Oct 2022 14:16:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="NN4VLzKn/auyOW4j"
-Content-Disposition: inline
-In-Reply-To: <875ygqw7p8.fsf@ngraves.fr>
-User-Agent: Mutt/2.2.7 (2022-08-07)
+References: <CA+P7+xrnAXceHJbBYV8Z9Ay9xbkzpiX3P0wXLwN7jfnifW2OBQ@mail.gmail.com>
+ <kl6lzgeblap2.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6lzgeblap2.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 11 Oct 2022 14:15:59 -0700
+Message-ID: <CA+P7+xq3NGGTq2U2Di9ZTBO3buqeEMb2smC=v78V9Subt2cDMw@mail.gmail.com>
+Subject: Re: issue with submodules using origin remote unexpectadly
+To:     Glen Choo <chooglen@google.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Oct 4, 2022 at 11:12 AM Glen Choo <chooglen@google.com> wrote:
+>
+> Hi Jacob! Thanks for the report!
+>
 
---NN4VLzKn/auyOW4j
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for responding!
 
-On 2022-10-11 at 18:12:19, Nicolas Graves wrote:
->=20
-> Hi!
+> I think we'd need a bit more info, specifically:
+>
+> - How did you rename the remote?
+> - What command is doing the submodule fetch?
+>
 
-Hey,
+I am doing a git pull --rebase in the superproject, and I renamed the
+remote in the submodule using git remote rename.
 
-> I noticed git commit signing works well with ssh-ed25519 keys, but does
-> fail with sk-ssh-ed25519@openssh.com SSH hardware keys (with can be
-> used to clone / post to github for instance).
+> Or, if you could include a reproduction script, that would be really
+> helpful :)
+>
 
-I was surprised to hear that, so I just tested on my Debian amd64/sid
-system, and I was able to sign and verify using an
-sk-ssh-ed25519@openssh.com SSH key using my YubiKey 5C.  I do believe it
-does work, although when the signature occurs, there's no notice that
-it's waiting for user interaction, so you just have to look at the
-lights to determine that the touch is needed.
+I'm not sure how to do this, because it is only an intermittent
+failure. I suspect it has to do with when the submodule actually needs
+to update.
 
-Could you maybe mention what version of OpenSSH you're using and on what
-platform?  I used 9.0p1, and as I mentioned, it's Linux.  The output
-looks like so:
+Perhaps I can come up with something though. If I can, I'll send it as
+a new test.
 
-  $ git verify-commit --raw HEAD
-  Good "git" signature for sandals@crustytoothpaste.net with ED25519-SK key=
- SHA256:PNxAWB7cxxxrCTbgsdoDq71o3rCm9O7Er4q+0YrEAdM
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+> > Hi,
+> >
+> > I've been running into an issue with submodules trying to fetch using
+> > "origin" even though the submodule does not have a remote by that
+> > name. (I recently switched the submodule remote name)
+>
+> How did you rename the remote? e.g. did you run `git remote rename`, or
+> did you rename it manually? I'll come back to why this might be
+> important...
+>
 
-Specifically, what error message or other indications of failure do you
-see when you try to sign?
+I renamed it using git remote rename.
 
-> I also noticed a similar error in a previous mail from Cuckoo Aidan
-> <aidancuckoo@gmail.com>, but he doesn't say which type of key he
-> used. In any case, would that be possible to include the info about
-> which type of keys cannot be used to commit in the github guide
-> https://docs.github.com/en/authentication/managing-commit-signature-verif=
-ication/telling-git-about-your-signing-key#telling-git-about-your-ssh-key) ?
+> >
+> > remote: Enumerating objects: 210, done.
+> > remote: Counting objects: 100% (207/207), done.
+> > remote: Compressing objects: 100% (54/54), done.
+> > remote: Total 210 (delta 123), reused 197 (delta 119), pack-reused 3
+> > Receiving objects: 100% (210/210), 107.20 KiB | 4.29 MiB/s, done.
+> > Resolving deltas: 100% (123/123), completed with 48 local objects.
+> > From <redacted>
+> > ...
+> > Fetching submodule submodule
+> > From <redacted>
+> >    85e0da7533d9..80cc886f1187  <redacted>
+> > Fetching submodule submodule2
+> > fatal: 'origin' does not appear to be a git repository
+> > fatal: Could not read from remote repository.
+> >
+> > Please make sure you have the correct access rights
+> > and the repository exists.
+> > Errors during submodule fetch:
+> >         submodule2
+>
+> I assume this is `git fetch` running in the superproject?
+>
 
-We don't control the GitHub documentation, since we're independent of
-GitHub.  If there's incorrect information, you'd need to contact GitHub.
-However, as I mentioned above, I do believe this works at least in some
-cases.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Its git pull --rebase, but I suppose as part of this it will run
+something equivalent to git fetch?
 
---NN4VLzKn/auyOW4j
-Content-Type: application/pgp-signature; name="signature.asc"
+> > I thought at first there might be some configuration value in the
+> > parent that is selecting origin, but I can 't find one. I also thought
+> > maybe its some sort of defaulting to origin but I looked through
+> > submodule code and didn't find one.
+> >
+> > Is it just that submodule code is not resilient against changing the
+> > default remote name away from origin?
+>
+> Yes, in a sense, though I'm not sure if this is the source of your
+> problems.
+>
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.39 (GNU/Linux)
+Hmm.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY0XVBwAKCRB8DEliiIei
-gUWWAP0VXCfJUf2nWjrYAQvFPc9SP/1pwh2Xw9sai9LS+4CFngEAwpXsjMn1lXsb
-hL+IQ3OrJ2+ioHKJj0MlmOZE47GC4wA=
-=rrJS
------END PGP SIGNATURE-----
+> When fetching with `git fetch`, submodules are fetched without
+> specifying the remote name, which means Git guesses which remote you
+> want to fetch from, which is documented at
+> https://git-scm.com/docs/git-fetch. I believe (I haven't reread this
+> very closely) this is, in order:
+>
+> - The remote of your branch, i.e. the value of the config value
+>   `branch.<name>.remote`
 
---NN4VLzKn/auyOW4j--
+So basically if its checked out to a branch it will fetch from the
+remote of that branch, but...
+
+> - origin
+>
+
+It defaults to origin, so if you have the usual "checked out as a
+detached head" style of submodule, it can't find the remote branch.
+
+> This is why `git remote rename` matters, because `git remote rename`
+> will also rename `branch.<name>.remote`. If you have a branch checked
+> out in your submodule, you might want to double-check your .git/config.
+>
+
+I do not have a branch checked out, I have it checked out as detached
+head, as is the usual style for "git submodule update" would do.
+
+> But... I'll mention another wrinkle for completeness' sake (though I
+> don't think it applies to you). If you fetch using `git submodule
+> update`, the submodule is fetched using a _named_ remote, specifically:
+>
+> - If the superproject has a branch checked out, it uses the name of the
+>   superproject branch's remote.
+
+Right, so that explains why I can re-run git submodule update after a
+git pull --rebase and it works.
+
+In theory wouldn't it make more sense to use the remote based on the
+URL of the .gitmodules file?
+
+> - If the superproject does not have a branch checked out, it uses
+>   "origin".
+>
+
+I suppose one option would be to make this configurable. I started
+using "upstream" as the default remote name for most of my
+repositories when I began working with forks a lot more.
+
+> >
+> > Thanks,
+> > Jake
