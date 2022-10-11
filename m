@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73CCAC433F5
-	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 00:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CAA7C433FE
+	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 00:35:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229903AbiJKAer (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Oct 2022 20:34:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44700 "EHLO
+        id S229779AbiJKAfB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Oct 2022 20:35:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229742AbiJKAef (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Oct 2022 20:34:35 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894438276C
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 17:34:18 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id q11so6422214ilj.10
-        for <git@vger.kernel.org>; Mon, 10 Oct 2022 17:34:17 -0700 (PDT)
+        with ESMTP id S229780AbiJKAem (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Oct 2022 20:34:42 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF1B680EB6
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 17:34:24 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id p16so3996634iod.6
+        for <git@vger.kernel.org>; Mon, 10 Oct 2022 17:34:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dH4RXaQleMV4vqAcnl0TrkuOgGtF9qxGWMubhk/2cLQ=;
-        b=udEjzCPAaipXMq9+VWZ9WxyiY9nDAxdVKNPP1K0yxf21Wd1m35E+Gx2c2Dxy/yE1q8
-         kYLzZbh6aXvugNfIzJtDgsFY3PFIVuoANQmM5Jon34ui4rAL1nriPqTiIyFpTyuBOUfl
-         jNlroOPjcI5tY6y6e54vR5MQ2CFef8aGcupQXrL9KoxX+LY9qoo5csIh84XGCyYJDn2d
-         57TrSFXk9XfW4tQ4/LG+QuTSIId5ctYPeyLYdNzSYy+7B3eurcTni4mk2kZIqfMPVdSC
-         5WTLVTJyc7Nj7xKXhD9PP2jL0q9Drs1W2/8FR7GonM6znJd5Grw5VvIeb3fe1XE3ZB0s
-         GYig==
+        bh=lstkDFq4jfz2nw9TugaLNsUmK6wX8r1Og41n5T4pgV0=;
+        b=QhYFB7Dd8YC+8dj9dmVolt8ZFazsdZLFEGIkIwrPs36cZ/QxoIjUr5W6NlNeLpB6bq
+         1G7IZyDE0opCCikfSL6we3Pi5EEW1UY948ilgl+sT+TBjkJPNLSkmuropZYi8TEqsZ+1
+         cXQwpPuNdAbSO3kLppkil3mf1L0Yth9CNicszGOTeKZPyDJ16NDRdjXvkIUlNiRIIQMw
+         1lBbfthpHz2wnN+faEW355kRdkx5qQBtdSweCvSp1zLulWwTe+9FftYQ7LTseEt2YtNA
+         OEANq8i2nnwnpackwbf+GFGaUuaj3/OtYS8Kah66scrlLsORcYe0KUhmnhnbYsRtBkQR
+         q/Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dH4RXaQleMV4vqAcnl0TrkuOgGtF9qxGWMubhk/2cLQ=;
-        b=lj/BFjpiilY3cw42zldNntB3IIoQK5FX2DmXdgBsLiqJgPVqy8dPrURZhLa12co0g+
-         q3t0kFJjDLcsRzLl8FRWyJeaclfGUBXxGk1gjGLTK26sgEdhMbj2fB8wH8ygsLONGiiE
-         QotHVI07p/RigrD1MMoad2y7ibfSVaSQFcRhyqlyBt9UyupsBN1M9f98Q7g9XgjcyEQh
-         BJyALnuxzeum4U7FKDQH6pDweM4IHPHKcXnVvleJYlJ/HttkK/JM1NVSX1Nsms5ys5SQ
-         YrEHFwHitfs78n6MmLKjYCfM6VwDNlS3pslKRtfm5oQBB1J8FvhA0Gy0sBOwLfGyMYL3
-         ifSw==
-X-Gm-Message-State: ACrzQf349kBjdpPrb7SeiwfnWLwaDRsmcGoOFoDIWxjo5uEjxFCNBJo6
-        gt1lnhbXSEJN2EyBxA5waVcwFWLKlQKqTjan
-X-Google-Smtp-Source: AMsMyM4puycx+sJMO7XP3DTAf2iMWestYKrKFKwDXzRiXK3PZxGOeQouamqBw9fYWhfi1BY2Ny6osQ==
-X-Received: by 2002:a05:6e02:15c9:b0:2da:c33e:49c7 with SMTP id q9-20020a056e0215c900b002dac33e49c7mr10420762ilu.26.1665448456457;
-        Mon, 10 Oct 2022 17:34:16 -0700 (PDT)
+        bh=lstkDFq4jfz2nw9TugaLNsUmK6wX8r1Og41n5T4pgV0=;
+        b=pedyBv6s6PSlSuddbH9OHjjk0FzCIw8gYTLWHA8hCZu0yYHYCTikAOphFeojAPMpuR
+         v9mEPmXjeEsm0V0668fmwB9ZTWW+V1Hsby5cPOwWdSy2XTA1K83rwOSLfGNzbmU2ueoy
+         KYGCrpR53HJ5mtMaLRAprvaG99THld01mR3nXx/JC/6KIvXbVJFKR6NIleitUnE09G6y
+         jIashv+qAu1pQRH6HUI0M7D7v2AIQQBZ4y/ARjTkZrTTqlz+wlS8cxHwVn8f5WKeMIWY
+         IO4BQMvd5Osjq/nX3Lgxgww1faeFU/zlZ3jwG5szlkWlJv6X46oUgdvA5KklnXTG0bQp
+         BoDg==
+X-Gm-Message-State: ACrzQf14tfM6KGSHcTJkPssF0LOjeIkATZucqxVRuzQA4x8UPKRebQp9
+        bpFnJ9sEUyCvL/LpcyZ6W9o23rJfBY8E0qP5
+X-Google-Smtp-Source: AMsMyM679dARYVJBNYOJfZZ9340gBHC7HtVVMhRA3O/ejzyrF8ce7vbS+92amfd4RGLWka0LMw9Rsw==
+X-Received: by 2002:a5d:9411:0:b0:6a7:f7ec:6dd8 with SMTP id v17-20020a5d9411000000b006a7f7ec6dd8mr9596025ion.44.1665448462765;
+        Mon, 10 Oct 2022 17:34:22 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r14-20020a02aa0e000000b0036357c6a65bsm4562833jam.118.2022.10.10.17.34.15
+        by smtp.gmail.com with ESMTPSA id v15-20020a056602058f00b006bbe7f012b9sm3307514iox.8.2022.10.10.17.34.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Oct 2022 17:34:15 -0700 (PDT)
-Date:   Mon, 10 Oct 2022 20:34:15 -0400
+        Mon, 10 Oct 2022 17:34:22 -0700 (PDT)
+Date:   Mon, 10 Oct 2022 20:34:21 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     jacob@initialcommit.io, peff@peff.net, gitster@pobox.com
-Subject: [PATCH 5/7] shortlog: implement `--group=author` in terms of
+Subject: [PATCH 7/7] shortlog: implement `--group=trailer` in terms of
  `--group=<format>`
-Message-ID: <55a6ef7bc0082818fa51a0915c43002ede5c449f.1665448437.git.me@ttaylorr.com>
+Message-ID: <02adc297e7661cbc25302b9f5659d2356b8b5008.1665448437.git.me@ttaylorr.com>
 References: <cover.1665448437.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -64,93 +64,165 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of handling SHORTLOG_GROUP_AUTHOR separately, reimplement it as
-a special case of the new `--group=<format>` mode, where the author mode
-is a shorthand for `--group='%aN <%aE>'.
+In the same spirit as the previous commit, reimplement
+`--group=trailer:<key>` as a special case of `--group=<format>`, too.
 
-Note that we still need to keep the SHORTLOG_GROUP_AUTHOR enum since it
-has a different meaning in `read_from_stdin()`, where it is still used
-for a different purpose.
+Unsurprisingly, this reimplementation is a little bit more complicated
+than the previous two. The complexity stems from having to enumerate
+each of the trailers one-by-one, as well as delegating control to
+`parse_ident()` to handle whether or not to show an individual's email.
+
+To enumerate each trailer in a commit, we set the separator used in the
+pretty format to be a NUL byte. This hack allows us to treat the strbuf
+from `format_commit_message()` as an array of strings.
+
+Since this handling is unique to the `--group:trailer` mode, use `util`
+bit in the `string_list_entry` to signal which `<format>`s came from
+`--group:trailer` arguments (and thus need special treatment).
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/log.c      |  1 +
- builtin/shortlog.c | 23 ++++++++++++-----------
- shortlog.h         |  1 +
- 3 files changed, 14 insertions(+), 11 deletions(-)
+ builtin/shortlog.c | 66 ++++++++++++++++++----------------------------
+ shortlog.h         |  1 -
+ 2 files changed, 25 insertions(+), 42 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index ee19dc5d45..6b77e520b5 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1334,6 +1334,7 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
- 	log.in2 = 4;
- 	log.file = rev->diffopt.file;
- 	log.groups = SHORTLOG_GROUP_AUTHOR;
-+	shortlog_init_group(&log);
- 	for (i = 0; i < nr; i++)
- 		shortlog_add_commit(&log, list[i]);
- 
 diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index f708d96558..aac8c7afa4 100644
+index b46df179fe..e8cf727342 100644
 --- a/builtin/shortlog.c
 +++ b/builtin/shortlog.c
-@@ -245,15 +245,6 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
+@@ -162,44 +162,30 @@ static void read_from_stdin(struct shortlog *log)
+ 	strbuf_release(&oneline);
+ }
+ 
+-static void insert_records_from_trailers(struct shortlog *log,
+-					 struct strset *dups,
+-					 struct commit *commit,
+-					 struct pretty_print_context *ctx,
+-					 const char *oneline)
++static void insert_records_from_trailer(struct shortlog *log,
++					struct strset *dups,
++					struct strbuf *buf,
++					struct pretty_print_context *ctx,
++					const char *oneline)
+ {
+-	struct trailer_iterator iter;
+-	const char *commit_buffer, *body;
+-	struct strbuf ident = STRBUF_INIT;
++	struct strbuf ibuf = STRBUF_INIT;
++	char *bol = buf->buf;
++	char *value;
+ 
+-	/*
+-	 * Using format_commit_message("%B") would be simpler here, but
+-	 * this saves us copying the message.
+-	 */
+-	commit_buffer = logmsg_reencode(commit, NULL, ctx->output_encoding);
+-	body = strstr(commit_buffer, "\n\n");
+-	if (!body)
+-		return;
++	while (bol < buf->buf + buf->len) {
++		strbuf_reset(&ibuf);
+ 
+-	trailer_iterator_init(&iter, body);
+-	while (trailer_iterator_advance(&iter)) {
+-		const char *value = iter.val.buf;
++		value = bol;
++		if (!parse_ident(log, &ibuf, bol))
++			value = ibuf.buf;
+ 
+-		if (!string_list_has_string(&log->trailers, iter.key.buf))
+-			continue;
++		if (strset_add(dups, value))
++			insert_one_record(log, value, oneline);
+ 
+-		strbuf_reset(&ident);
+-		if (!parse_ident(log, &ident, value))
+-			value = ident.buf;
+-
+-		if (!strset_add(dups, value))
+-			continue;
+-		insert_one_record(log, value, oneline);
++		bol += strlen(bol) + 1;
+ 	}
+-	trailer_iterator_release(&iter);
+ 
+-	strbuf_release(&ident);
+-	unuse_commit_buffer(commit, commit_buffer);
++	strbuf_release(&ibuf);
+ }
+ 
+ static void insert_records_from_format(struct shortlog *log,
+@@ -216,7 +202,10 @@ static void insert_records_from_format(struct shortlog *log,
+ 
+ 		format_commit_message(commit, item->string, &buf, ctx);
+ 
+-		if (strset_add(dups, buf.buf))
++		if (item->util)
++			insert_records_from_trailer(log, dups, &buf, ctx,
++						    oneline);
++		else if (strset_add(dups, buf.buf))
+ 			insert_one_record(log, buf.buf, oneline);
+ 	}
+ 
+@@ -244,9 +233,6 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
  	}
  	oneline_str = oneline.len ? oneline.buf : "<none>";
  
--	if (log->groups & SHORTLOG_GROUP_AUTHOR) {
--		strbuf_reset(&ident);
--		format_commit_message(commit,
--				      log->email ? "%aN <%aE>" : "%aN",
--				      &ident, &ctx);
--		if (!HAS_MULTI_BITS(log->groups) ||
--		    strset_add(&dups, ident.buf))
--			insert_one_record(log, ident.buf, oneline_str);
+-	if (log->groups & SHORTLOG_GROUP_TRAILER) {
+-		insert_records_from_trailers(log, &dups, commit, &ctx, oneline_str);
 -	}
- 	if (log->groups & SHORTLOG_GROUP_COMMITTER) {
- 		strbuf_reset(&ident);
- 		format_commit_message(commit,
-@@ -372,6 +363,16 @@ void shortlog_init(struct shortlog *log)
+ 	insert_records_from_format(log, &dups, commit, &ctx, oneline_str);
+ 
+ 	strset_clear(&dups);
+@@ -317,15 +303,17 @@ static int parse_group_option(const struct option *opt, const char *arg, int uns
+ 
+ 	if (unset) {
+ 		log->groups = 0;
+-		string_list_clear(&log->trailers, 0);
+ 		string_list_clear(&log->format, 0);
+ 	} else if (!strcasecmp(arg, "author"))
+ 		log->groups |= SHORTLOG_GROUP_AUTHOR;
+ 	else if (!strcasecmp(arg, "committer"))
+ 		log->groups |= SHORTLOG_GROUP_COMMITTER;
+ 	else if (skip_prefix(arg, "trailer:", &field)) {
++		struct strbuf buf = STRBUF_INIT;
+ 		log->groups |= SHORTLOG_GROUP_TRAILER;
+-		string_list_append(&log->trailers, field);
++		strbuf_addf(&buf, "%%(trailers:key=%s,valueonly=true,separator=%%x00)", field);
++		string_list_append(&log->format, buf.buf)->util = (void*)1;
++		strbuf_release(&buf);
+ 	} else if (strchrnul(arg, '%')) {
+ 		log->groups |= SHORTLOG_GROUP_FORMAT;
+ 		string_list_append(&log->format, arg);
+@@ -347,8 +335,6 @@ void shortlog_init(struct shortlog *log)
+ 	log->wrap = DEFAULT_WRAPLEN;
+ 	log->in1 = DEFAULT_INDENT1;
+ 	log->in2 = DEFAULT_INDENT2;
+-	log->trailers.strdup_strings = 1;
+-	log->trailers.cmp = strcasecmp;
  	log->format.strdup_strings = 1;
  }
  
-+void shortlog_init_group(struct shortlog *log)
-+{
-+	if (!log->groups)
-+		log->groups = SHORTLOG_GROUP_AUTHOR;
-+
-+	if (log->groups & SHORTLOG_GROUP_AUTHOR)
-+		string_list_append(&log->format,
-+				   log->email ? "%aN <%aE>" : "%aN");
-+}
-+
- int cmd_shortlog(int argc, const char **argv, const char *prefix)
- {
- 	struct shortlog log = { STRING_LIST_INIT_NODUP };
-@@ -439,8 +440,8 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
- 	log.file = rev.diffopt.file;
- 	log.date_mode = rev.date_mode;
+@@ -434,8 +420,6 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
  
--	if (!log.groups)
--		log.groups = SHORTLOG_GROUP_AUTHOR;
-+	shortlog_init_group(&log);
-+
- 	string_list_sort(&log.trailers);
+ 	shortlog_init_group(&log);
  
+-	string_list_sort(&log.trailers);
+-
  	/* assume HEAD if from a tty */
+ 	if (!nongit && !rev.pending.nr && isatty(0))
+ 		add_head_to_pending(&rev);
 diff --git a/shortlog.h b/shortlog.h
-index 4850a8c30f..e52f001fb7 100644
+index e52f001fb7..ac844394a8 100644
 --- a/shortlog.h
 +++ b/shortlog.h
-@@ -33,6 +33,7 @@ struct shortlog {
- };
+@@ -24,7 +24,6 @@ struct shortlog {
+ 		SHORTLOG_GROUP_TRAILER = (1 << 2),
+ 		SHORTLOG_GROUP_FORMAT = (1 << 3),
+ 	} groups;
+-	struct string_list trailers;
+ 	struct string_list format;
  
- void shortlog_init(struct shortlog *log);
-+void shortlog_init_group(struct shortlog *log);
- 
- void shortlog_add_commit(struct shortlog *log, struct commit *commit);
- 
+ 	int email;
 -- 
 2.37.0.1.g1379af2e9d
-
