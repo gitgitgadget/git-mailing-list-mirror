@@ -2,115 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39E7FC433FE
-	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 15:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52754C433FE
+	for <git@archiver.kernel.org>; Tue, 11 Oct 2022 15:51:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230202AbiJKPrZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Oct 2022 11:47:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49372 "EHLO
+        id S231195AbiJKPvY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Oct 2022 11:51:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230166AbiJKPrG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2022 11:47:06 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 352091FCCE
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 08:38:59 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id u10so22235697wrq.2
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 08:38:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JJ0VZnsPe/3fSun+wOhSbLRg2Zt79nsRV808vB8Y77g=;
-        b=SYH7fFuq/yDtImPotuJPlD3ZfiMIYFClWFu1xvGlgrXHbR9ECC4D5zL42rVOG8JjdS
-         m0YHynmw1xbiODG8/Se8g4gH7vI8MEaT2OdLo6Zl1lNx4vLI8wlxdKk8NYpXWBbfah1r
-         XZ0/EyoMYSvQxTAxq2tNSxsIQ3VfoRVMNjIFdeLtAV4jLPzAlM2m+5qcxRSkYVTSU6PI
-         +KYKxTFq9+tMVmmyZDzf49K9MZYvWSpN1HiEHVlcP+Er8lEQGo6S49MjwScd3lyHxcuE
-         1Blvt58U+KzH1D+dhcSO42uO/14oSOgJ786VtUdVS2FSDXD+799Jj6UXpvaFP+kCYLr7
-         DWyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JJ0VZnsPe/3fSun+wOhSbLRg2Zt79nsRV808vB8Y77g=;
-        b=P2NqvxH7r+XlimcMYQb0Vxz7Xf8zS69GH/IaeVvkbfByW60B5xKH4vzgv3IV/AjJOo
-         zYgJKSBpAT6mEuO3MMTpoRDIfU/pzQHuuECh34kXc7U0PG0ofFdfdHqajkiqGD+D6EBn
-         pp3mO0ibStWf+nkpB38JDMBXV0qzAtKE5LGl5fCKlF8i8KKistSB8s9X44oWuVfdsEHi
-         DvZFRiKeiEQQoKBlwZrBwiJBqjrVB7MEIXcQRPA6uzFVNK3gdTxuqk0cqLaDh3ncHtVv
-         fL3hX6WsTRHju1x7Z+cCFNSzBXunhAjyhPC5Xk1pmR9BySPwRT8/GbuBeE4NlJHVN1Ky
-         wpJA==
-X-Gm-Message-State: ACrzQf3yiuRaEZFyfP645RBVxL/alDJZroZTuEbnuuO0N91Xiyiht4js
-        tjDxS3ci+EgeQvXgNhjwBi/GMqXjYIc=
-X-Google-Smtp-Source: AMsMyM6GRgCVLfSp6OtNBwoE5WJHAexMUpPgMfcNSB9idM/cgKwUx4FyHHdvXFEsgdfNwz1mdsfaxw==
-X-Received: by 2002:a5d:4f10:0:b0:231:1c7b:e42 with SMTP id c16-20020a5d4f10000000b002311c7b0e42mr4717198wru.568.1665502737435;
-        Tue, 11 Oct 2022 08:38:57 -0700 (PDT)
-Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id v9-20020adfe4c9000000b0022cc895cc11sm11139235wrm.104.2022.10.11.08.38.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Oct 2022 08:38:57 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <a7d32371-4224-aa2a-4b7c-5631798ff710@dunelm.org.uk>
-Date:   Tue, 11 Oct 2022 16:38:55 +0100
+        with ESMTP id S231265AbiJKPup (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2022 11:50:45 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A93ACE0C7
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 08:46:38 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD8DB14AEDC;
+        Tue, 11 Oct 2022 11:46:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=q54qhFv6W2OD
+        un1zxlKEthKyxJpUAL8UVuXpXIvgegs=; b=tMhTQCjBJUQ11Pt8mlNQqaQIvB+j
+        t+2o6qouB10qg/hIjy4TmKtBO15rj07vGHgVVixitc+6zgY9U9frONrv2cTmaoKa
+        317FAZr2R6wQLid1KKUQL9r+xpLmKwn23ZgNXTM5gULcA78UeBmoGx5ysDQgAEZo
+        GXXcfdQy3abUCww=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B333C14AEDB;
+        Tue, 11 Oct 2022 11:46:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C41B14AED9;
+        Tue, 11 Oct 2022 11:46:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, orygaw <orygaw@protonmail.com>,
+        rsbecker@nexbridge.com, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2] grep.c: remove "extended" in favor of
+ "pattern_expression", fix segfault
+References: <patch-1.1-f4b90799fce-20221010T165711Z-avarab@gmail.com>
+        <patch-v2-1.1-6ad7627706f-20221011T094715Z-avarab@gmail.com>
+Date:   Tue, 11 Oct 2022 08:46:35 -0700
+In-Reply-To: <patch-v2-1.1-6ad7627706f-20221011T094715Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 11 Oct
+ 2022 11:48:45
+        +0200")
+Message-ID: <xmqqczayweg4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] t3435: remove redundant test case
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.1379.git.1665395106351.gitgitgadget@gmail.com>
- <xmqqpmez4no5.fsf@gitster.g>
-In-Reply-To: <xmqqpmez4no5.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E3D772F0-497B-11ED-BB18-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On 10/10/2022 18:02, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> rebase --preserve-merges no longer exists so there is no point in
->> carrying this failing test case.
-> 
-> Looks good.
-> 
-> I can imagine that you noticed that it was failing for a wrong
-> reason, perhaps as part of your test-todo topic?
+>  grep.c         | 15 +++++++--------
+>  grep.h         |  1 -
+>  t/t4202-log.sh |  9 +++++++++
+>  3 files changed, 16 insertions(+), 9 deletions(-)
+>
+> diff --git a/grep.c b/grep.c
+> index 52a894c9890..06eed694936 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -708,6 +708,7 @@ void compile_grep_patterns(struct grep_opt *opt)
+>  {
+>  	struct grep_pat *p;
+>  	struct grep_expr *header_expr =3D prep_header_patterns(opt);
+> +	int extended =3D 0;
+> =20
+>  	for (p =3D opt->pattern_list; p; p =3D p->next) {
+>  		switch (p->token) {
+> @@ -717,14 +718,14 @@ void compile_grep_patterns(struct grep_opt *opt)
+>  			compile_regexp(p, opt);
+>  			break;
+>  		default:
+> -			opt->extended =3D 1;
+> +			extended =3D 1;
+>  			break;
+>  		}
+>  	}
+> =20
+>  	if (opt->all_match || opt->no_body_match || header_expr)
+> -		opt->extended =3D 1;
+> -	else if (!opt->extended)
+> +		extended =3D 1;
+> +	else if (!extended)
+>  		return;
 
-Yes I noticed it when I was looking for tests to convert to test-todo.
+Nice. I like this change to make "!!opt->pattern_expression" the
+authoritative source of truth for opt->extended by getting rid of
+the latter.  This function did need to have a handy way to tell "do
+we need to populate pattern_expression?" while going over the list
+and also use of some features forced us to do so no matter how
+simple the patterns on the list are, but after doing so and
+populating the pattern_expression, there was no reason to keep it
+around by having it as a member in the opt structure.
 
-Best Wishes
+> @@ -790,7 +791,7 @@ void free_grep_patterns(struct grep_opt *opt)
+>  		free(p);
+>  	}
+> =20
+> -	if (!opt->extended)
+> +	if (!opt->pattern_expression)
+>  		return;
+>  	free_pattern_expr(opt->pattern_expression);
+>  }
+> @@ -971,8 +972,6 @@ static int match_expr_eval(struct grep_opt *opt, st=
+ruct grep_expr *x,
+>  {
+>  	int h =3D 0;
+> =20
+> -	if (!x)
+> -		die("Not a valid grep expression");
+>  	switch (x->node) {
+>  	case GREP_NODE_TRUE:
+>  		h =3D 1;
+> @@ -1052,7 +1051,7 @@ static int match_line(struct grep_opt *opt,
+>  	struct grep_pat *p;
+>  	int hit =3D 0;
+> =20
+> -	if (opt->extended)
+> +	if (opt->pattern_expression)
+>  		return match_expr(opt, bol, eol, ctx, col, icol,
+>  				  collect_hits);
+> =20
+> @@ -1370,7 +1369,7 @@ static int should_lookahead(struct grep_opt *opt)
+>  {
+>  	struct grep_pat *p;
+> =20
+> -	if (opt->extended)
+> +	if (opt->pattern_expression)
+>  		return 0; /* punt for too complex stuff */
+>  	if (opt->invert)
+>  		return 0;
 
-Phillip
+And the necessary change for users is surprisingly small.
 
->> diff --git a/t/t3435-rebase-gpg-sign.sh b/t/t3435-rebase-gpg-sign.sh
->> index 5f8ba2c7399..6aa2aeb628d 100755
->> --- a/t/t3435-rebase-gpg-sign.sh
->> +++ b/t/t3435-rebase-gpg-sign.sh
->> @@ -64,14 +64,6 @@ test_rebase_gpg_sign ! true  -i --no-gpg-sign
->>   test_rebase_gpg_sign ! true  -i --gpg-sign --no-gpg-sign
->>   test_rebase_gpg_sign   false -i --no-gpg-sign --gpg-sign
->>   
->> -test_expect_failure 'rebase -p --no-gpg-sign override commit.gpgsign' '
->> -	test_when_finished "git clean -f" &&
->> -	git reset --hard merged &&
->> -	git config commit.gpgsign true &&
->> -	git rebase -p --no-gpg-sign --onto=one fork-point main &&
->> -	test_must_fail git verify-commit HEAD
->> -'
->> -
->>   test_expect_success 'rebase -r, merge strategy, --gpg-sign will sign commit' '
->>   	git reset --hard merged &&
->>   	test_unconfig commit.gpgsign &&
->>
->> base-commit: 3dcec76d9df911ed8321007b1d197c1a206dc164
+> diff --git a/grep.h b/grep.h
+> index bdcadce61b8..6075f997e68 100644
+> --- a/grep.h
+> +++ b/grep.h
+> @@ -151,7 +151,6 @@ struct grep_opt {
+>  #define GREP_BINARY_TEXT	2
+>  	int binary;
+>  	int allow_textconv;
+> -	int extended;
+>  	int use_reflog_filter;
+>  	int relative;
+>  	int pathname;
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index cc15cb4ff62..2ce2b41174d 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -249,6 +249,15 @@ test_expect_success 'log --grep' '
+>  	test_cmp expect actual
+>  '
+> =20
+> +for noop_opt in --invert-grep --all-match
+> +do
+> +	test_expect_success "log $noop_opt without --grep is a NOOP" '
+> +		git log >expect &&
+> +		git log $noop_opt >actual &&
+> +		test_cmp expect actual
+> +	'
+> +done
+
+OK.
+
+Thanks, will queue.
