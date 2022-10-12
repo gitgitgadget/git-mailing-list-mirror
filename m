@@ -2,230 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 041DDC433FE
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 00:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3CB9C433FE
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 00:40:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229577AbiJLAOE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Oct 2022 20:14:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49998 "EHLO
+        id S229452AbiJLAkp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Oct 2022 20:40:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbiJLAOD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2022 20:14:03 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0C0160488
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 17:14:01 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-360871745b0so81915917b3.3
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 17:14:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=AkbRYWeIzaj6e/izI4E+2jPNcWP4kFILCT7HSYGcfbY=;
-        b=oHXemAlWQWRCLOqRQog2E/ygkxjQ7XYXlDSzCfTVm3CkEOJxOGi5ihnOf2bis6uIRE
-         lORnpRBzk1+LrKzMmEvux5R8WFUAlL8y6u2MrvNvIVYRm6gxUmxfsfMW2VVIFOisiu3Q
-         eERJKGxKwFnHhy6P6BgKURiU/lZoEKJWjGpRDp+J562V0ZJEmDRUJN4JNi3FW+hTOs2X
-         WOOH0zFH0V8XUBX1N8ZWT6lNCZpbMuzJ/vkETuedPaAUXiTz6UDQ1qW5UpnFe2yZJqRr
-         nMhpjXfO+EyidQjzC2Pp0tHBcVD2wQx2sLK63FUFUnYpV5Mr3rhJaHZRaklqSiN7jDPA
-         Osmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AkbRYWeIzaj6e/izI4E+2jPNcWP4kFILCT7HSYGcfbY=;
-        b=dzZl2IBWVfF7MiyEu29xga/al5jKt/cfj3OU/RUvvA3uUJDCw/DQYv1Z/XpdmTPRrg
-         PAbcx/qinAQ3Ty7Hb5o00ZvLRUW6O4duWOIedh6SOIKen5sBMvkr6Auv0oiDePhfU9xd
-         Tq9uIu0jjjh/4tcb+rx8ybgFvZ0GgHgN7jxmGTcYj3bPPVESS6fGaE+GLxdmoR70zdqi
-         F8msKks86bACxhfJWdp5q8JTCpKrDDzk+/w3QKjSAeSQalt4vqmmtX70AxnCByM5jxKV
-         ovK4tIfjyhNJ8m/Z3pE/CrZo8s1OIgN69CLN+NG26uEKSPwfrd35U9PfKNdrBBbmy0XN
-         HbEA==
-X-Gm-Message-State: ACrzQf2dyh6/5jiO0DasUGRvkKoaqVDcLZ3B07oyfsG1wCizEg08B4x5
-        RDIweDtma2SibQ9DgcfS/DyYLoUptNKO3OVyTrA=
-X-Google-Smtp-Source: AMsMyM5cvephc9LoCuChJtuDbEu1I2g8D6Qb+NuF+dZudXpDGy+Wob0w87UfAh6bhaF5r8suwBT8M0k6bv5Dwkp/4GU=
-X-Received: by 2002:a0d:c0c1:0:b0:348:fec3:7aeb with SMTP id
- b184-20020a0dc0c1000000b00348fec37aebmr23848491ywd.145.1665533640986; Tue, 11
- Oct 2022 17:14:00 -0700 (PDT)
+        with ESMTP id S229451AbiJLAkn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2022 20:40:43 -0400
+X-Greylist: delayed 429 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 11 Oct 2022 17:40:41 PDT
+Received: from pukcab.korelogic.com (unknown [139.138.148.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D27E772B48
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 17:40:41 -0700 (PDT)
+Received: from mail.korelogic.com (mail.korelogic.com [205.134.174.164])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+         client-signature RSA-PSS (2048 bits) client-digest SHA256)
+        (Client CN "mail.korelogic.com", Issuer "Sectigo RSA Domain Validation Secure Server CA" (not verified))
+        by pukcab.korelogic.com (Postfix) with ESMTPS id 440EF2B200C2
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 20:33:31 -0400 (EDT)
+Received: from localhost (localhost [127.0.0.1]) by mail.korelogic.com with ESMTPSA id AD4C91EE0299 for <git@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=korelogic.com;
+        s=mail; t=1665534808;
+        bh=eV/fKrm8MHYj6yRbGic7aNmq5uvuFNL13dghphcE8NA=;
+        h=Date:From:To:Subject:Reply-To;
+        b=EJndUk0iSQP9o0N/qPQs74d2p1iU0PPkjfaFzr+U6U8Q85Xk3sUFUQugdGXvJy7KX
+         e27/qW8qmzbmsJtNGIDJ4hOVfsk6TyJmrt90+7L/B7rCp2DpWn8ptCdRxbdcxXyvDB
+         LwuLhZfESS/yrsR7vDsZ8MU61uxbATmfvC63prO8=
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.103.7 at mail.korelogic.com
+Date:   Tue, 11 Oct 2022 18:33:26 -0600
+From:   Hank Leininger <hlein@korelogic.com>
+To:     git@vger.kernel.org
+Subject: bug in Git.pm handling unsafe repos
+Message-ID: <20221011182607.f1113fff-9333-427d-ba45-741a78fa6040@korelogic.com>
+Reply-To: Hank Leininger <hlein@korelogic.com>
 MIME-Version: 1.0
-References: <CA+P7+xrnAXceHJbBYV8Z9Ay9xbkzpiX3P0wXLwN7jfnifW2OBQ@mail.gmail.com>
- <kl6lzgeblap2.fsf@chooglen-macbookpro.roam.corp.google.com>
- <CA+P7+xq3NGGTq2U2Di9ZTBO3buqeEMb2smC=v78V9Subt2cDMw@mail.gmail.com> <kl6lilkq0zpr.fsf@chooglen-macbookpro.roam.corp.google.com>
-In-Reply-To: <kl6lilkq0zpr.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 11 Oct 2022 17:13:50 -0700
-Message-ID: <CA+P7+xqf_Q35C0VT8A-zCRf46zSbXHhH5EhTo2vLvTJ9B6jyow@mail.gmail.com>
-Subject: Re: issue with submodules using origin remote unexpectadly
-To:     Glen Choo <chooglen@google.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="+J6BTSpRSC5conaE"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 11, 2022 at 3:20 PM Glen Choo <chooglen@google.com> wrote:
->
-> Jacob Keller <jacob.keller@gmail.com> writes:
->
-> > On Tue, Oct 4, 2022 at 11:12 AM Glen Choo <chooglen@google.com> wrote:
-> >>
-> >> Hi Jacob! Thanks for the report!
-> >>
-> >
-> > Thanks for responding!
->
-> :)
->
-> >> Or, if you could include a reproduction script, that would be really
-> >> helpful :)
-> >>
-> >
-> > I'm not sure how to do this, because it is only an intermittent
-> > failure. I suspect it has to do with when the submodule actually needs
-> > to update.
-> >
-> > Perhaps I can come up with something though. If I can, I'll send it as
-> > a new test.
->
-> That would be greatly appreciated, thanks!
->
-> If you find code pointers useful,
->
-> - builtin/submodule--helper.c:fetch_in_submodule() contains the logic
->   for fetching during "git submodule update"
->
-> - submodule.c:fetch_submodules() contains the logic for fetching during
->   "git fetch --recurse-submodules" (which is invoked by "git pull
->   --recurse-submodules").
->
 
-I was able to get a test highlighting the failure. It shows the case
-of a single remote working but adding another remote causes it to fail
-as it falls back to the 'origin'.
+--+J6BTSpRSC5conaE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->
-> >> >
-> >> > remote: Enumerating objects: 210, done.
-> >> > remote: Counting objects: 100% (207/207), done.
-> >> > remote: Compressing objects: 100% (54/54), done.
-> >> > remote: Total 210 (delta 123), reused 197 (delta 119), pack-reused 3
-> >> > Receiving objects: 100% (210/210), 107.20 KiB | 4.29 MiB/s, done.
-> >> > Resolving deltas: 100% (123/123), completed with 48 local objects.
-> >> > From <redacted>
-> >> > ...
-> >> > Fetching submodule submodule
-> >> > From <redacted>
-> >> >    85e0da7533d9..80cc886f1187  <redacted>
-> >> > Fetching submodule submodule2
-> >> > fatal: 'origin' does not appear to be a git repository
-> >> > fatal: Could not read from remote repository.
-> >> >
-> >> > Please make sure you have the correct access rights
-> >> > and the repository exists.
-> >> > Errors during submodule fetch:
-> >> >         submodule2
-> >>
-> >> I assume this is `git fetch` running in the superproject?
-> >>
-> >
-> > Its git pull --rebase, but I suppose as part of this it will run
-> > something equivalent to git fetch?
->
-> Unfortunately, this doesn't narrow it down much because "git pull
-> --recurse-submodules" runs _both_ "git fetch --recurse-submodules" _and_
-> "git submodule update [--rebase]" ;) Without more context, it's not
-> clear which of those is failing.
->
+Git.pm dies with a syntax error rather than a meaningful message when
+told to open a repo that the new logic deems unsafe.
 
-It's definitely "git fetch --recurse-submodules", the new test should show this.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> >> When fetching with `git fetch`, submodules are fetched without
-> >> specifying the remote name, which means Git guesses which remote you
-> >> want to fetch from, which is documented at
-> >> https://git-scm.com/docs/git-fetch. I believe (I haven't reread this
-> >> very closely) this is, in order:
-> >>
-> >> - The remote of your branch, i.e. the value of the config value
-> >>   `branch.<name>.remote`
-> >
-> > So basically if its checked out to a branch it will fetch from the
-> > remote of that branch, but...
-> >
-> >> - origin
-> >>
-> >
-> > It defaults to origin, so if you have the usual "checked out as a
-> > detached head" style of submodule, it can't find the remote branch.
->
-> Yes, this sounds about right. I was quite certain that we only default
-> to "origin", but I observe that "git fetch" doesn't fail if there is
-> only one remote and it is not named "origin". Perhaps I'm mistaken, or I
-> simply couldn't track down that logic.
->
+Create a bare repo as a different user, without registering it as "safe".
+Then attempt to open that repo using the perl Git.pm module:
 
-We definitely default to the single/lone remote, I have two tests, one
-which shows the single remote working and another which shows the
-additional remote causing the failure.
+  patsy@foo ~/tmp/test-repo-bare.git $ id
+  uid=3D986(patsy) gid=3D986(patsy) groups=3D986(patsy)
+  patsy@foo ~/tmp/test-repo-bare.git $ ls -la
+  total 36
+  drwxrwxr-x  6 hlein hlein 4096 Oct 11 17:02 .
+  drwxrwx--- 12 patsy hlein 4096 Oct 11 17:04 ..
+  -rw-rw-r--  1 hlein hlein   23 Oct 11 17:02 HEAD
+  -rw-rw-r--  1 hlein hlein   66 Oct 11 17:02 config
+  -rw-rw-r--  1 hlein hlein   73 Oct 11 17:02 description
+  drwxrwxr-x  2 hlein hlein 4096 Oct 11 17:02 hooks
+  drwxrwxr-x  2 hlein hlein 4096 Oct 11 17:02 info
+  drwxrwxr-x  4 hlein hlein 4096 Oct 11 17:02 objects
+  drwxrwxr-x  4 hlein hlein 4096 Oct 11 17:02 refs
 
-> >> But... I'll mention another wrinkle for completeness' sake (though I
-> >> don't think it applies to you). If you fetch using `git submodule
-> >> update`, the submodule is fetched using a _named_ remote, specifically:
-> >>
-> >> - If the superproject has a branch checked out, it uses the name of the
-> >>   superproject branch's remote.
-> >
-> > Right, so that explains why I can re-run git submodule update after a
-> > git pull --rebase and it works.
-> >
-> > In theory wouldn't it make more sense to use the remote based on the
-> > URL of the .gitmodules file?
->
-> Ah, yes that's one possibility we (the folks working on an improved
-> Submodules UX) have considered. Another would be to teach submodules to
-> actually use branches correctly and to use the remotes of the branches.
->
+  patsy@foo ~/tmp/test-repo-bare.git $ perl -MGit -e 'my $repo =3D Git->rep=
+ository'
+  Can't use string ("/home/patsy/tmp/test-repo-bare.g"...) as a HASH ref wh=
+ile "strict refs" in use at /usr/lib64/perl5/vendor_perl/5.36/Error.pm line=
+ 234.
 
-Yes, if we can have it checkout on a branch and just rewind that
-branch to match the expected commit instead of having it in a detached
-state, things would be much easier. I recall work being done on this
-years ago, but it is quite a thorny problem.
+What did you expect to happen? (Expected behavior)
 
-> In general, the project tries not to respect config coming directly from
-> .gitmodules (c.f. [1]), but I agree that there's a lot of room for
-> improvement.
->
+A meaningful error because the repo is not safe to open, similar to what
+'git status' produces:
 
-Right. I think I'd rather go with a config option inside the
-.git/config [submodule] section. I don't think gitmodules itself needs
-to know this, just that the parent project could be informed of what
-remote to default to when fetching inside the submodule. That or
-somehow unify the git submodule update code with the recursive
-fetching?
+  patsy@foo ~/tmp/test-repo-bare.git $ git status
+  fatal: detected dubious ownership in repository at '/home/patsy/tmp/test-=
+repo-bare.git'
+  ...
 
-> [1] https://lore.kernel.org/git/xmqq35bze3rr.fsf@gitster.g
->
-> >> - If the superproject does not have a branch checked out, it uses
-> >>   "origin".
-> >>
-> >
-> > I suppose one option would be to make this configurable. I started
-> > using "upstream" as the default remote name for most of my
-> > repositories when I began working with forks a lot more.
->
-> My hope is that the work I mentioned earlier makes this code obsolete
-> and nobody ever has to configure this ;)
->
+What happened instead? (Actual behavior)
 
-Yea. I definitely like the idea of using branches instead of a
-detached head state.
+  Can't use string ("/home/patsy/tmp/test-repo-bare.g"...) as a HASH ref wh=
+ile "strict refs" in use at /usr/lib64/perl5/vendor_perl/5.36/Error.pm line=
+ 234.=20
 
-I think for now I can avoid this by just disabling recursive fetch in
-my config, which at least gets around the problem well enough.
+What's different between what you expected and what actually happened?
 
-Another alternative I thought was maybe "try to fetch every remote"
-instead of trying to fetch only a single remote?
+Perl syntax error when trying to generate the meaningful error.
 
-> >
-> >> >
-> >> > Thanks,
-> >> > Jake
+Anything else you want to add:
+
+Opening a "safe" repo (owned by the user, or marked safe in gitconfig)
+of course does not error, which is as expected.
+
+It seems that this call at Git.pm line 181:
+
+  try {  =20
+    $dir =3D $search->command_oneline(['rev-parse', '--git-dir'],
+                                    STDERR =3D> 0);
+  } catch Git::Error::Command with {
+    $dir =3D undef;
+  };
+
+=2E..discards errors so that it just moves on to the next test, but in
+this case what it discards would be new and interesting:
+
+  [pid  1448] write(2, "fatal: detected dubious ownershi"..., 212) =3D 212
+
+=2E..which is the first chance to catch the problem. It doesn't die right
+away; I suspect this just sends the logic down a previously untested path.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.38.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.10.mumble
+compiler info: gnuc: 11.3
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
+
+Thanks,
+
+--=20
+
+Hank Leininger <hlein@korelogic.com>
+9606 3BF9 B593 4CBC E31A  A384 6200 F6E3 781E 3DD7
+
+--+J6BTSpRSC5conaE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEElgY7+bWTTLzjGqOEYgD243gePdcFAmNGC1YACgkQYgD243ge
+Pdc9eQ//fMdfdTMv55d6vjivdui+hMTrD/xPrGj+pxEZPxh622woI0F1WSX8ujNW
+gTR+mJnksfP0XJVOqqO4OyJHMvAaTeZzQxwEuwmVJzGWglu6lOzgpnlejJ1kkhzD
+32+rID5AL5gCnpQsssbnYG1kVDEoSdVFfO6oX2AXlF7BMa8HZ/DV/TCcpFcSC6cD
+VsaRwDM7hSiPgNZtWFZ1Yqx76ovArMjcIhXnCLRk+7u5uLWc2LagBJLXkL0LceG7
+/sY/WFCbOw0h848yW07/T2ui402AgwHfjuhLC6qzEsGMnimsnnJ9sOA0AZ5iX+io
+XAwD9y4hc9ixq1IW2mOS90PSLd7j/bBSFKJ+ifdk+lKgJI33xdZK8pw3SilE2qF+
+f9voEPVwb8dZCuXToHzWzvxk0oPl2VAUOdA2qR3MOYLV2epJEc9cDMoAOoQd0qde
+8WXyBD/uu4U5N0MSJoRnonHr3SSF742efu/UhjbHHDAzyjWwNmAyBu9YML9oWADB
+bzw+Uu0zJsHFCiAH6HqCsaY9JDHXn4xggQ/cImE9vUbhFtfWrGLJVju2Uxhu3/+b
+lA5kyEU3apVD3rL9Jhnb4YUcLxRc/t5brJESDlx03ANLDNBs8F2jcYXisHT6qBF6
+VBcJJ+oE738aEYJIMmwTBU61OobTax2JuabLjFMUp2GXAkCsil8=
+=VHah
+-----END PGP SIGNATURE-----
+
+--+J6BTSpRSC5conaE--
