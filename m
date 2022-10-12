@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C64DAC4332F
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 09:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAACFC433FE
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 09:02:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229940AbiJLJCN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 05:02:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33676 "EHLO
+        id S229827AbiJLJCQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 05:02:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229711AbiJLJBw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 05:01:52 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B034BA24C
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:01:44 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id iv17so10046496wmb.4
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:01:44 -0700 (PDT)
+        with ESMTP id S229691AbiJLJCI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 05:02:08 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4860273308
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:01:46 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id u10so25265161wrq.2
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bUdYd+/n3y2i5wi6BAUzfJxEHaBcqp9427yq15owIfc=;
-        b=etQAnybuDERheBEJY7GdCzQO+XkFXeZY5O+AG3dFqRDvYYVAAo7BnPf8MnrLNFcgWy
-         bZ3Z3aRCtt53lpYbHpw55whYMpvOMExKcGQTYih9hi7ZjaKap3q7l+R+A1Nm+GERlTWs
-         FlfzTl462GJxdK9l+AzNvETldvKK2vsWnWNE1CXe+eWX52bt35T8U9Vxorma9lfOn0uR
-         Je7fyPOMQrqSTKZzCH3qFzaKVtoLRorSJ+tyd7ZDA9qXyPZmkRJN2BXrMoyveR+x3jty
-         Uk/9Oyr0AP3fkAjQ0Z1+Gb80JrDdLSWtJKgcOSrskgWDWbMLFxT9QyglRnBi4rmeypz/
-         wWww==
+        bh=wMJ0ei29o3W92b760+HvZkT6k/ZhX31NK+F7yQCZdt4=;
+        b=pMPwnSIPSehnr7teV5g6COSm71kTnvhlFvNrMJzCZmYXm2wMX5gR8qNd1uKQ3h2iMC
+         uaRXOGW3AibF5YwBcI5TPIXJB4tBYIuBgsUocPTBAq2VZSDePWBOLjpJXo2Efg9kTF5L
+         uh7NzUM5lL1G8GKn5Dgf7Ew8r5Eu0AlEriPbBKCX9z6rlB6tCcdqthcSUxqkEuEpeIXR
+         1SPilxGr7n6IzGZVYAOwauI736yojYUKaaM/Ss+qaW7SAr1HIxMDDkbXC/Zh0YVXT2UG
+         SrrMHo6djZx8H9RKQp6I6lIR7US9mYAsAptpfJm3QyVBKLuhLsXt+oLBLmgsXJnnH61p
+         m6zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bUdYd+/n3y2i5wi6BAUzfJxEHaBcqp9427yq15owIfc=;
-        b=sXcC6hyELCg8IvN7SqiNLzUpIBsMVyrOw7yNyY3kxbL5i/ipN1ssD9rzpzBYBdO5Yy
-         g5pe/H+Ddm6wfSqDbP/kEDgXwgYQZvuVEWnDdHnglI6DSHXGmSKDnKbQOAGXQKESx7nw
-         ksRZ/VZmbe/Y2xd5GXQm+WUq2aCtklN1j4VOU3OAO/kMO3wV7Ft1Cu7BDsrujthJCsqo
-         QJLhogGgiqMtaJKm642Ca4tQqrTnuNSFYP9MeWLLdRclYtxsw7+QNcyjZBYdqUrr+Xo6
-         LJvAuWlAO9qv+UnklWW4UVeVbQbi+V725Qb/0ydgy52vJm548JdFHNY3teDX5QjSj9/A
-         FB/w==
-X-Gm-Message-State: ACrzQf02Jc4bkNB5ELWfC6opZRPg1Ip6w8mVEBgjoGF1FHkalKtY2la+
-        y/sEQNAMqGyEJPrtyehNU3wRqjyPa7bukw==
-X-Google-Smtp-Source: AMsMyM6PTkSHgzsdVX9Pk5WSzMDL+LYUE7KiK+aT57aqDmCqWbRlVHo8NiQGdxhQXqeuSAxNjQBdYg==
-X-Received: by 2002:a7b:cd14:0:b0:3c6:bf44:770d with SMTP id f20-20020a7bcd14000000b003c6bf44770dmr2013607wmj.35.1665565302330;
-        Wed, 12 Oct 2022 02:01:42 -0700 (PDT)
+        bh=wMJ0ei29o3W92b760+HvZkT6k/ZhX31NK+F7yQCZdt4=;
+        b=SGzUSMehgZ2UiDhXYbdePOw/aQFRTmVnaRKiGhIbyf60hznQlB8ccAErdDNYTHqT4F
+         0ymjLY2u8jdlLQVVc+Y96Qx0Na+nC1TA6gqaMjlc4ZSX4pzKlFd+osKaoT6wkL/7iWr4
+         W9f0rD5myb0QEHXubdg8ETQS6glsIVcev95TgfTOhNkdjDeDhqtKiEGuTRwRyWIbbs+s
+         RCTK9WhL80h6GVf3LWwFcltA/bQO2fl3cGnaJEHK+00Z/byGzdekdZEUdABeOH8wwdPo
+         syv4j2w6DzuELv5FL/FdvBNcaas6jkY5gj3/suLthUOZJUWsa2+e1yTAfNQm8ruc2lXY
+         z3FQ==
+X-Gm-Message-State: ACrzQf32j4IzU8lIqAs/Ct2hFDPKD/eRhgigRUS75kvgVmPjhVrJf/fe
+        42qdVjwkxZEXXHrBP80SvkNqFsBywQtaHA==
+X-Google-Smtp-Source: AMsMyM5qRGxoACb8UU0ZguBU1MOUrl3g7G0dWCIHMeh5gSTe8TUMBTbpZdaD30p1nOiBJERY+hNxmA==
+X-Received: by 2002:adf:efc5:0:b0:22e:4a6:2d5b with SMTP id i5-20020adfefc5000000b0022e04a62d5bmr17879037wrp.293.1665565303966;
+        Wed, 12 Oct 2022 02:01:43 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b1-20020a05600c4e0100b003a3170a7af9sm1280362wmq.4.2022.10.12.02.01.40
+        by smtp.gmail.com with ESMTPSA id b1-20020a05600c4e0100b003a3170a7af9sm1280362wmq.4.2022.10.12.02.01.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 02:01:41 -0700 (PDT)
+        Wed, 12 Oct 2022 02:01:42 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 05/22] run-command API: have "run_processes_parallel{,_tr2}()" return void
-Date:   Wed, 12 Oct 2022 11:01:13 +0200
-Message-Id: <patch-v2-05.22-5e09dc68fd9-20221012T084850Z-avarab@gmail.com>
+Subject: [PATCH v2 06/22] run-command tests: use "return", not "exit"
+Date:   Wed, 12 Oct 2022 11:01:14 +0200
+Message-Id: <patch-v2-06.22-e4e91dbbf9e-20221012T084850Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.971.ge79ff6d20e7
 In-Reply-To: <cover-v2-00.22-00000000000-20221012T084850Z-avarab@gmail.com>
 References: <cover-00.15-00000000000-20220930T111343Z-avarab@gmail.com> <cover-v2-00.22-00000000000-20221012T084850Z-avarab@gmail.com>
@@ -71,179 +71,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the "run_processes_parallel{,_tr2}()" functions to return void,
-instead of int. Ever since c553c72eed6 (run-command: add an
-asynchronous parallel child processor, 2015-12-15) they have
-unconditionally returned 0.
+Change the "run-command" test helper to "return" instead of calling
+"exit", see 338abb0f045 (builtins + test helpers: use return instead
+of exit() in cmd_*, 2021-06-08)
 
-To get a "real" return value out of this function the caller needs to
-get it via the "task_finished_fn" callback, see the example in hook.c
-added in 96e7225b310 (hook: add 'run' subcommand, 2021-12-22).
-
-So the "result = " and "if (!result)" code added to "builtin/fetch.c"
-d54dea77dba (fetch: let --jobs=<n> parallelize --multiple, too,
-2019-10-05) has always been redundant, we always took that "if"
-path. Likewise the "ret =" in "t/helper/test-run-command.c" added in
-be5d88e1128 (test-tool run-command: learn to run (parts of) the
-testsuite, 2019-10-04) wasn't used, instead we got the return value
-from the "if (suite.failed.nr > 0)" block seen in the context.
-
-Subsequent commits will alter this API interface, getting rid of this
-always-zero return value makes it easier to understand those changes.
+Because we'd previously gotten past the SANITIZE=leak check by using
+exit() here we need to move to "goto cleanup" pattern.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/fetch.c             | 17 ++++++++---------
- run-command.c               | 27 +++++++++++----------------
- run-command.h               | 16 ++++++++--------
- t/helper/test-run-command.c | 16 ++++++++--------
- 4 files changed, 35 insertions(+), 41 deletions(-)
+ t/helper/test-run-command.c | 33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index a0fca93bb6a..78043fb67ef 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1953,15 +1953,14 @@ static int fetch_multiple(struct string_list *list, int max_children)
- 		struct parallel_fetch_state state = { argv.v, list, 0, 0 };
- 
- 		strvec_push(&argv, "--end-of-options");
--		result = run_processes_parallel_tr2(max_children,
--						    &fetch_next_remote,
--						    &fetch_failed_to_start,
--						    &fetch_finished,
--						    &state,
--						    "fetch", "parallel/fetch");
--
--		if (!result)
--			result = state.result;
-+		run_processes_parallel_tr2(max_children,
-+					   &fetch_next_remote,
-+					   &fetch_failed_to_start,
-+					   &fetch_finished,
-+					   &state,
-+					   "fetch", "parallel/fetch");
-+
-+		result = state.result;
- 	} else
- 		for (i = 0; i < list->nr; i++) {
- 			const char *name = list->items[i].string;
-diff --git a/run-command.c b/run-command.c
-index 5ec3a46dccf..642e6b6e057 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1783,11 +1783,11 @@ static int pp_collect_finished(struct parallel_processes *pp)
- 	return result;
- }
- 
--int run_processes_parallel(int n,
--			   get_next_task_fn get_next_task,
--			   start_failure_fn start_failure,
--			   task_finished_fn task_finished,
--			   void *pp_cb)
-+void run_processes_parallel(int n,
-+			    get_next_task_fn get_next_task,
-+			    start_failure_fn start_failure,
-+			    task_finished_fn task_finished,
-+			    void *pp_cb)
- {
- 	int i, code;
- 	int output_timeout = 100;
-@@ -1834,25 +1834,20 @@ int run_processes_parallel(int n,
- 	}
- 
- 	pp_cleanup(&pp);
--	return 0;
- }
- 
--int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
--			       start_failure_fn start_failure,
--			       task_finished_fn task_finished, void *pp_cb,
--			       const char *tr2_category, const char *tr2_label)
-+void run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
-+				start_failure_fn start_failure,
-+				task_finished_fn task_finished, void *pp_cb,
-+				const char *tr2_category, const char *tr2_label)
- {
--	int result;
--
- 	trace2_region_enter_printf(tr2_category, tr2_label, NULL, "max:%d",
- 				   ((n < 1) ? online_cpus() : n));
- 
--	result = run_processes_parallel(n, get_next_task, start_failure,
--					task_finished, pp_cb);
-+	run_processes_parallel(n, get_next_task, start_failure,
-+			       task_finished, pp_cb);
- 
- 	trace2_region_leave(tr2_category, tr2_label, NULL);
--
--	return result;
- }
- 
- int run_auto_maintenance(int quiet)
-diff --git a/run-command.h b/run-command.h
-index 0e85e5846a5..e76a1b6b5b3 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -485,14 +485,14 @@ typedef int (*task_finished_fn)(int result,
-  * API reads that setting.
-  */
- extern int run_processes_parallel_ungroup;
--int run_processes_parallel(int n,
--			   get_next_task_fn,
--			   start_failure_fn,
--			   task_finished_fn,
--			   void *pp_cb);
--int run_processes_parallel_tr2(int n, get_next_task_fn, start_failure_fn,
--			       task_finished_fn, void *pp_cb,
--			       const char *tr2_category, const char *tr2_label);
-+void run_processes_parallel(int n,
-+			    get_next_task_fn,
-+			    start_failure_fn,
-+			    task_finished_fn,
-+			    void *pp_cb);
-+void run_processes_parallel_tr2(int n, get_next_task_fn, start_failure_fn,
-+				task_finished_fn, void *pp_cb,
-+				const char *tr2_category, const char *tr2_label);
- 
- /**
-  * Convenience function which prepares env for a command to be run in a
 diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index 390fa4fb724..30c474f3243 100644
+index 30c474f3243..ee509aefa2f 100644
 --- a/t/helper/test-run-command.c
 +++ b/t/helper/test-run-command.c
-@@ -192,8 +192,8 @@ static int testsuite(int argc, const char **argv)
- 	fprintf(stderr, "Running %"PRIuMAX" tests (%d at a time)\n",
- 		(uintmax_t)suite.tests.nr, max_jobs);
+@@ -381,13 +381,14 @@ int cmd__run_command(int argc, const char **argv)
+ {
+ 	struct child_process proc = CHILD_PROCESS_INIT;
+ 	int jobs;
++	int ret;
  
--	ret = run_processes_parallel(max_jobs, next_test, test_failed,
--				     test_finished, &suite);
-+	run_processes_parallel(max_jobs, next_test, test_failed,
-+			       test_finished, &suite);
+ 	if (argc > 1 && !strcmp(argv[1], "testsuite"))
+-		exit(testsuite(argc - 1, argv + 1));
++		return testsuite(argc - 1, argv + 1);
+ 	if (!strcmp(argv[1], "inherited-handle"))
+-		exit(inherit_handle(argv[0]));
++		return inherit_handle(argv[0]);
+ 	if (!strcmp(argv[1], "inherited-handle-child"))
+-		exit(inherit_handle_child());
++		return inherit_handle_child();
  
- 	if (suite.failed.nr > 0) {
- 		ret = 1;
-@@ -428,16 +428,16 @@ int cmd__run_command(int argc, const char **argv)
- 	strvec_pushv(&proc.args, (const char **)argv + 3);
+ 	if (argc >= 2 && !strcmp(argv[1], "quote-stress-test"))
+ 		return !!quote_stress_test(argc - 1, argv + 1);
+@@ -404,18 +405,24 @@ int cmd__run_command(int argc, const char **argv)
+ 		argv += 2;
+ 		argc -= 2;
+ 	}
+-	if (argc < 3)
+-		return 1;
++	if (argc < 3) {
++		ret = 1;
++		goto cleanup;
++	}
+ 	strvec_pushv(&proc.args, (const char **)argv + 2);
  
- 	if (!strcmp(argv[1], "run-command-parallel")) {
--		exit(run_processes_parallel(jobs, parallel_next,
--					    NULL, NULL, &proc));
-+		run_processes_parallel(jobs, parallel_next, NULL, NULL, &proc);
- 	} else if (!strcmp(argv[1], "run-command-abort")) {
--		exit(run_processes_parallel(jobs, parallel_next,
--					    NULL, task_finished, &proc));
-+		run_processes_parallel(jobs, parallel_next, NULL,
-+				       task_finished, &proc);
- 	} else if (!strcmp(argv[1], "run-command-no-jobs")) {
--		exit(run_processes_parallel(jobs, no_job,
--					    NULL, task_finished, &proc));
-+		run_processes_parallel(jobs, no_job, NULL, task_finished,
-+				       &proc);
- 	} else {
- 		fprintf(stderr, "check usage\n");
+ 	if (!strcmp(argv[1], "start-command-ENOENT")) {
+-		if (start_command(&proc) < 0 && errno == ENOENT)
+-			return 0;
++		if (start_command(&proc) < 0 && errno == ENOENT) {
++			ret = 0;
++			goto cleanup;
++		}
+ 		fprintf(stderr, "FAIL %s\n", argv[1]);
  		return 1;
  	}
-+	exit(0);
+-	if (!strcmp(argv[1], "run-command"))
+-		exit(run_command(&proc));
++	if (!strcmp(argv[1], "run-command")) {
++		ret = run_command(&proc);
++		goto cleanup;
++	}
+ 
+ 	if (!strcmp(argv[1], "--ungroup")) {
+ 		argv += 1;
+@@ -436,8 +443,12 @@ int cmd__run_command(int argc, const char **argv)
+ 		run_processes_parallel(jobs, no_job, NULL, task_finished,
+ 				       &proc);
+ 	} else {
++		ret = 1;
+ 		fprintf(stderr, "check usage\n");
+-		return 1;
++		goto cleanup;
+ 	}
+-	exit(0);
++	ret = 0;
++cleanup:
++	child_process_clear(&proc);
++	return ret;
  }
 -- 
 2.38.0.971.ge79ff6d20e7
