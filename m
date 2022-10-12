@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA74EC433FE
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 21:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95F4EC4332F
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 21:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229698AbiJLVED (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 17:04:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57938 "EHLO
+        id S229732AbiJLVEF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 17:04:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbiJLVDg (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229806AbiJLVDg (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 12 Oct 2022 17:03:36 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6CF01ADA3
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 14:03:29 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id b4so27972203wrs.1
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 14:03:29 -0700 (PDT)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E42C1F9EA
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 14:03:31 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id b4so27972289wrs.1
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 14:03:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Isce64CBtmUTAta7eZ83mkGxGAFgMqp1/1yVHncBawI=;
-        b=ZRKdNHBypH5MivIWGtcILgxcFK/lhHF65WbW9p2dDJ6CcpIWI9rLtVG7nsroN/ULyw
-         x7Q7uo/6HlP+pgCyDFdCAKkiwhnxrV/SMnhSj6UkDGMCVfgGKDNWWTTmfO1pkPB6/8nG
-         Ynngp9Ek5vHRspfGUkrlpxO7o5ejWGhY+Nd69bFS9S1gudR0ISpOKQlpbTUuFAsi3F/Z
-         uBOK8495CsjLfMGVOW+cpN2gCeyG6UcmXnwvItPPNB76TTOveAAnxPbY7mqZmWUOI8tz
-         H+uejGz1v9hjE3GkNsNWfQBvjq9qWX2yOgPbebLkRIG8XDOnPPMlMDiaJK/afEQ76aRt
-         j00A==
+        bh=Qk22E+xafbfAv9PII0Hbn8O45XXGlAeR5o5RzT+CbaA=;
+        b=lWzEj7ZCK4MisbBK7FErhvRAeRCBPTyKw21JXwaW7HCwp6OmEEvXiKT4P2xYo585A/
+         woX82ZRvdqD9h2FLJ8aeHaUKfxMamp3ruxZOxc8YILs6dst5z5BKZACoPtivqoQT6KOk
+         619vVtTdgAyI3FPI93KRoEkD2dpIEMdD7mscEUYkeXQxNclOpt4XjcSNf9z+DSYH7Bfg
+         /7XMXQk7D0+1d16dgPJj6ECwTov/uSYpLlrt38F/sgSen9hSBjxCVh723FVcooPjeaoR
+         6wAlUz29jbZGd5Jc7GpeC1EizkooEn3LWLnz8MzoxKJgfxNu7SaAKhzNpipXjPWrBXFv
+         4Xvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Isce64CBtmUTAta7eZ83mkGxGAFgMqp1/1yVHncBawI=;
-        b=XT2LnCdj0sRFkpcG14Abdtj+VfmIvrFUAtHtQ7VIlY7xVU1evI54kGf0YoohJRnEIa
-         5PaNS4O3yN6opHXn1C3VBtml2vuXOPROzwFHIa8wGCISPnUGnSW+XSQ5TwebYTY1CYI0
-         Gg4JP2tbpuL58nLaVw0wSjvODDMraxvBEioo3WFiX3lcmWk9v6ZOPjHOF4lOfF62qYWn
-         dzynDnzj7PV9ytZqPUvPHpokM6Z5Kdgi7n2WRZtE/fQwtj9x9jFkwGvgw4KOOxJS34FO
-         MZyBxqxpCu+oLwWggJfRRL0ZJv4+SyeBdCHcHl6HV31F4XQrLG4N80ra4s9I7cLwdf4S
-         ejUg==
-X-Gm-Message-State: ACrzQf2jxc9d8LefzXS8s4UwTR/vwGvWKx6EvHcfEGD5SuNqzHoOdSgg
-        36POUGrlbQJQo9U+Bj5DE9HSBHw+FIujlw==
-X-Google-Smtp-Source: AMsMyM64yVkzI7nIH95f2BnqKTEUrPCz/VFjn0rtApHoEKJDc7LuGlHH/ZziV/ufuXUfQNZ7bpX4sQ==
-X-Received: by 2002:a5d:456b:0:b0:230:9e5b:c64c with SMTP id a11-20020a5d456b000000b002309e5bc64cmr10757241wrc.211.1665608607369;
-        Wed, 12 Oct 2022 14:03:27 -0700 (PDT)
+        bh=Qk22E+xafbfAv9PII0Hbn8O45XXGlAeR5o5RzT+CbaA=;
+        b=aa15lz+YHk0a/kU0hULBZRnVjQOME3uWFts70/OHm3feZ/6lx6QloRSLaPG2NkXfQT
+         afKgDrbTmh2BLq8piv2y9he10LxE+EcIsIJOy2AtD3V2GjNvUuIE4cmoDn8ihKCL+jpP
+         Rkw000Cjxpte2l+sAvx58CgPUBy/bJXl6ZkwGDIZwoh1zVtxDbdVYaisEm10ysbkUFg0
+         9sMikM9kU+nwaQdylhhciYkZ5hphqSAnS9naifbWfv7ZQiJUXGoE8DX1Ws3mZNOUku5x
+         H28euCs1pXlmWHEoO+4FuoIi7MZkYZpiPTRdky2ZbuLEf0P+v2s4HUAc2Fpw71vyt2d9
+         UktQ==
+X-Gm-Message-State: ACrzQf0L63pTiFz7ByDKoOkYa6Hm0u+oeZmhdj/hv4t2M4DRLBzg2nAh
+        7vrAC/DaYj7Fe2bO9LnNGmLFA0V6R4GUvA==
+X-Google-Smtp-Source: AMsMyM6rNV7lDZyUtck3JGPHyMvLuJnyrtvKzMsNbeEONUWa2XsoDRVnG9bUApv6psGsiGT3Vd+1xg==
+X-Received: by 2002:a5d:6508:0:b0:22e:1af4:57f9 with SMTP id x8-20020a5d6508000000b0022e1af457f9mr19097920wru.539.1665608608794;
+        Wed, 12 Oct 2022 14:03:28 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b6-20020adff246000000b00228a6ce17b4sm550079wrp.37.2022.10.12.14.03.24
+        by smtp.gmail.com with ESMTPSA id b6-20020adff246000000b00228a6ce17b4sm550079wrp.37.2022.10.12.14.03.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 14:03:25 -0700 (PDT)
+        Wed, 12 Oct 2022 14:03:27 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 05/15] run-command API: don't fall back on online_cpus()
-Date:   Wed, 12 Oct 2022 23:02:24 +0200
-Message-Id: <patch-v3-05.15-e230701dff6-20221012T205712Z-avarab@gmail.com>
+Subject: [PATCH v3 06/15] run-command.c: use designated init for pp_init(), add "const"
+Date:   Wed, 12 Oct 2022 23:02:25 +0200
+Message-Id: <patch-v3-06.15-df2ca5dd097-20221012T205712Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.971.ge79ff6d20e7
 In-Reply-To: <cover-v3-00.15-00000000000-20221012T205712Z-avarab@gmail.com>
 References: <cover-v2-00.22-00000000000-20221012T084850Z-avarab@gmail.com> <cover-v3-00.15-00000000000-20221012T205712Z-avarab@gmail.com>
@@ -71,103 +71,122 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a "jobs = 0" is passed let's BUG() out rather than fall back on
-online_cpus(). The default behavior was added when this API was
-implemented in c553c72eed6 (run-command: add an asynchronous parallel
-child processor, 2015-12-15).
+Use a designated initializer to initialize those parts of pp_init()
+that don't need any conditionals for their initialization, this sets
+us on a path to pp_init() itself into mostly a validation and
+allocation function.
 
-Most of our code in-tree that scales up to "online_cpus()" by default
-calls that function by itself. Keeping this default behavior just for
-the sake of two callers means that we'd need to maintain this one spot
-where we're second-guessing the config passed down into pp_init().
+Since we're doing that we can add "const" to some of the members of
+the "struct parallel_processes", which helps to clarify and
+self-document this code. E.g. we never alter the "data" pointer we
+pass t user callbacks, nor (after the preceding change to stop
+invoking online_cpus()) do we change "max_processes", the same goes
+for the "ungroup" option.
 
-The preceding commit has an overview of the API callers that passed
-"jobs = 0". There were only two of them (actually three, but they
-resolved to these two config parsing codepaths).
+We can also do away with a call to strbuf_init() in favor of macro
+initialization, and to rely on other fields being NULL'd or zero'd.
 
-The "fetch.parallel" caller already had a test for the
-"fetch.parallel=0" case added in 0353c688189 (fetch: do not run a
-redundant fetch from submodule, 2022-05-16), but there was no such
-test for "submodule.fetchJobs". Let's add one here.
+Making members of a struct "const" rather that the pointer to the
+struct itself is usually painful, as e.g. it precludes us from
+incrementally setting up the structure. In this case we only set it up
+with the assignment in run_process_parallel() and pp_init(), and don't
+pass the struct pointer around as "const", so making individual
+members "const" is worth the potential hassle for extra safety.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/fetch.c             | 2 ++
- run-command.c               | 7 +++----
- submodule-config.c          | 2 ++
- t/t5526-fetch-submodules.sh | 8 +++++++-
- 4 files changed, 14 insertions(+), 5 deletions(-)
+ run-command.c | 34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 78043fb67ef..82f1da14ec1 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -122,6 +122,8 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
- 		fetch_parallel_config = git_config_int(k, v);
- 		if (fetch_parallel_config < 0)
- 			die(_("fetch.parallel cannot be negative"));
-+		if (!fetch_parallel_config)
-+			fetch_parallel_config = online_cpus();
- 		return 0;
- 	}
- 
 diff --git a/run-command.c b/run-command.c
-index 14a6e38e804..14ea409375a 100644
+index 14ea409375a..b69deb1cc53 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -1564,8 +1564,8 @@ static void pp_init(struct parallel_processes *pp,
- 		    task_finished_fn task_finished,
- 		    void *data, int ungroup)
- {
--	if (n < 1)
--		n = online_cpus();
-+	if (!n)
-+		BUG("you must provide a non-zero number of processes!");
+@@ -1498,9 +1498,9 @@ enum child_state {
  
- 	pp->max_processes = n;
+ int run_processes_parallel_ungroup;
+ struct parallel_processes {
+-	void *data;
++	void *const data;
  
-@@ -1835,8 +1835,7 @@ void run_processes_parallel_tr2(size_t n, get_next_task_fn get_next_task,
- 				task_finished_fn task_finished, void *pp_cb,
- 				const char *tr2_category, const char *tr2_label)
- {
--	trace2_region_enter_printf(tr2_category, tr2_label, NULL, "max:%d",
--				   ((n < 1) ? online_cpus() : n));
-+	trace2_region_enter_printf(tr2_category, tr2_label, NULL, "max:%d", n);
+-	size_t max_processes;
++	const size_t max_processes;
+ 	size_t nr_processes;
  
- 	run_processes_parallel(n, get_next_task, start_failure,
- 			       task_finished, pp_cb);
-diff --git a/submodule-config.c b/submodule-config.c
-index cd7ee236a12..4dc61b3a78a 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -303,6 +303,8 @@ int parse_submodule_fetchjobs(const char *var, const char *value)
- 	int fetchjobs = git_config_int(var, value);
- 	if (fetchjobs < 0)
- 		die(_("negative values not allowed for submodule.fetchJobs"));
-+	if (!fetchjobs)
-+		fetchjobs = online_cpus();
- 	return fetchjobs;
+ 	get_next_task_fn get_next_task;
+@@ -1520,7 +1520,7 @@ struct parallel_processes {
+ 	struct pollfd *pfd;
+ 
+ 	unsigned shutdown : 1;
+-	unsigned ungroup : 1;
++	const unsigned ungroup : 1;
+ 
+ 	size_t output_owner;
+ 	struct strbuf buffered_output; /* of finished children */
+@@ -1558,21 +1558,18 @@ static void handle_children_on_signal(int signo)
  }
  
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index a301b56db89..a5f494dfcfb 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -714,7 +714,13 @@ test_expect_success 'fetching submodules respects parallel settings' '
- 		GIT_TRACE=$(pwd)/trace.out git fetch &&
- 		grep "8 tasks" trace.out &&
- 		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 9 &&
--		grep "9 tasks" trace.out
-+		grep "9 tasks" trace.out &&
-+		>trace.out &&
+ static void pp_init(struct parallel_processes *pp,
+-		    size_t n,
+ 		    get_next_task_fn get_next_task,
+ 		    start_failure_fn start_failure,
+-		    task_finished_fn task_finished,
+-		    void *data, int ungroup)
++		    task_finished_fn task_finished)
+ {
++	const size_t n = pp->max_processes;
 +
-+		GIT_TRACE=$(pwd)/trace.out git -c submodule.fetchJobs=0 fetch &&
-+		grep "preparing to run up to [0-9]* tasks" trace.out &&
-+		! grep "up to 0 tasks" trace.out &&
-+		>trace.out
- 	)
- '
+ 	if (!n)
+ 		BUG("you must provide a non-zero number of processes!");
  
+-	pp->max_processes = n;
+-
+ 	trace_printf("run_processes_parallel: preparing to run up to %"PRIuMAX" tasks",
+ 		     (uintmax_t)n);
+ 
+-	pp->data = data;
+ 	if (!get_next_task)
+ 		BUG("you need to specify a get_next_task function");
+ 	pp->get_next_task = get_next_task;
+@@ -1580,16 +1577,9 @@ static void pp_init(struct parallel_processes *pp,
+ 	pp->start_failure = start_failure ? start_failure : default_start_failure;
+ 	pp->task_finished = task_finished ? task_finished : default_task_finished;
+ 
+-	pp->nr_processes = 0;
+-	pp->output_owner = 0;
+-	pp->shutdown = 0;
+-	pp->ungroup = ungroup;
+ 	CALLOC_ARRAY(pp->children, n);
+-	if (pp->ungroup)
+-		pp->pfd = NULL;
+-	else
++	if (!pp->ungroup)
+ 		CALLOC_ARRAY(pp->pfd, n);
+-	strbuf_init(&pp->buffered_output, 0);
+ 
+ 	for (size_t i = 0; i < n; i++) {
+ 		strbuf_init(&pp->children[i].err, 0);
+@@ -1789,13 +1779,17 @@ void run_processes_parallel(size_t n,
+ 	int output_timeout = 100;
+ 	int spawn_cap = 4;
+ 	int ungroup = run_processes_parallel_ungroup;
+-	struct parallel_processes pp;
++	struct parallel_processes pp = {
++		.max_processes = n,
++		.data = pp_cb,
++		.buffered_output = STRBUF_INIT,
++		.ungroup = ungroup,
++	};
+ 
+ 	/* unset for the next API user */
+ 	run_processes_parallel_ungroup = 0;
+ 
+-	pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb,
+-		ungroup);
++	pp_init(&pp, get_next_task, start_failure, task_finished);
+ 	while (1) {
+ 		for (i = 0;
+ 		    i < spawn_cap && !pp.shutdown &&
 -- 
 2.38.0.971.ge79ff6d20e7
 
