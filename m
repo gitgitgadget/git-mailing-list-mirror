@@ -2,107 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0080FC4332F
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 13:23:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18480C433FE
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 13:31:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229891AbiJLNXw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 09:23:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47706 "EHLO
+        id S229962AbiJLNbR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 09:31:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229976AbiJLNXs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 09:23:48 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5A406D57C
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 06:23:44 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id b4so26236015wrs.1
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 06:23:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=nMBXPHu2BQh0g/Dr62BFyeieMs4MvxABQixadjuYiz8=;
-        b=GS3sb5zM1GckaPL+zVPbSoXw3e8yLQBf1AwftsPisU+c4Q+TOS5hc/mfo3GWGGUPCj
-         e33+0nDqLPPDgsHq5fyHqOBzONYQlRCIp1+9py6vzO/NJUYX8WLwjRjv3zljoF3VGQop
-         cOe8TLqkVZC5enDb9SizkO6yL/bUPIVvbLNSlI6lyRNHnG83PtHhM5d4Dj/VygHHfbj2
-         gYnAmVNxG7llCqgoSmQ7ocgh62se7849ShuNEKICLUZeEvX7CFTbP+zRAwXGInu9lGXW
-         L0C0SSvy8UAEUl0TFUQAYRaavKtnPcbu3BcIseEUgKJscFn/qgQcyQZIs6djwvYuw7W9
-         sdsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nMBXPHu2BQh0g/Dr62BFyeieMs4MvxABQixadjuYiz8=;
-        b=XBOiqF83/80wCnf++3u4LFICcHJafehxK7LK6APlBd9+l/bBd/70LuK+SrzuJhhK/9
-         QqzlKpCosqin+w8MkqwgmpfmN5pYX+78MZUP+WggIw0oR7FWDInfzIoC9UW3EAsM4QFm
-         LwoL0riilwyy1RnlemcEIhnAAk7fRFR5soQ6Z+UyII1ltyqzDDtMAbs/4TV4WkHjc6VJ
-         Jeye6eMYjblRxIra9mqyoGZmeDUhEQ/w8Zj3wTkOgaKRmOFhFz4lisIWB+026tzCmbQX
-         pQKe1DDATWuVLZkf5NNPOcxuHU9P3sANah4cXS+MEH2xouv4VsLsdCpmHvTBFh8fR++9
-         uhNw==
-X-Gm-Message-State: ACrzQf08qQ3+Bcl86a8TAo9+Vsubj/hqTQDvwVVIeZiFasbK0SEp8L/c
-        1dsly+lijT7p/rQ5lT8ykWU=
-X-Google-Smtp-Source: AMsMyM71oh1RFUqgR4iwk4GdPHkWtCS+Zc2oQ0wKm8Rl24GbxdR4T82xUW6sCwC06v7sXxRYM6jGIA==
-X-Received: by 2002:a5d:5585:0:b0:22d:f0cd:e3b9 with SMTP id i5-20020a5d5585000000b0022df0cde3b9mr17835417wrv.347.1665581022890;
-        Wed, 12 Oct 2022 06:23:42 -0700 (PDT)
-Received: from [192.168.1.81] ([31.185.185.144])
-        by smtp.googlemail.com with ESMTPSA id g17-20020a05600c4ed100b003b4ac05a8a4sm2469979wmq.27.2022.10.12.06.23.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Oct 2022 06:23:42 -0700 (PDT)
-Message-ID: <9b5346b6-157e-b323-1d49-19322793d05d@gmail.com>
-Date:   Wed, 12 Oct 2022 14:23:41 +0100
+        with ESMTP id S229563AbiJLNbP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 09:31:15 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8B44814C9
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 06:31:11 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id B3EADCA1255;
+        Wed, 12 Oct 2022 09:31:10 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 7AA94CC831A;
+        Wed, 12 Oct 2022 09:31:10 -0400 (EDT)
+Subject: Re: [RFC PATCH] trace2 API: don't save a copy of constant
+ "thread_name"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+References: <xmqqr0zkipva.fsf@gitster.g>
+ <RFC-patch-1.1-8563d017137-20221007T010829Z-avarab@gmail.com>
+ <xmqqo7uoh1q0.fsf@gitster.g> <221007.865ygvrjs7.gmgdl@evledraar.gmail.com>
+ <afc73d87-b2d9-72e9-1be5-156f37102747@jeffhostetler.com>
+ <221011.86h70ao4g6.gmgdl@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <e138b178-99d9-e537-2cb1-c240962a35f2@jeffhostetler.com>
+Date:   Wed, 12 Oct 2022 09:31:09 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.0; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 13/22] run-command API: make
- run_process_parallel{,_tr2}() thin wrappers
+In-Reply-To: <221011.86h70ao4g6.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-References: <cover-00.15-00000000000-20220930T111343Z-avarab@gmail.com>
- <cover-v2-00.22-00000000000-20221012T084850Z-avarab@gmail.com>
- <patch-v2-13.22-01e894bed90-20221012T084850Z-avarab@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <patch-v2-13.22-01e894bed90-20221012T084850Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Scanned-By: mailmunge 3.09 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/10/2022 10:01, Ævar Arnfjörð Bjarmason wrote:
-> -	const struct run_process_parallel_opts opts = {
-> -		.processes = processes,
-> -
-> -		.get_next_task = get_next_task,
-> -		.start_failure = start_failure,
-> -		.task_finished = task_finished,
-> -
-> -		.ungroup = run_processes_parallel_ungroup,
-> -	};
+
+
+On 10/11/22 9:31 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Oct 10 2022, Jeff Hostetler wrote:
+> 
+>> On 10/7/22 6:03 AM, Ævar Arnfjörð Bjarmason wrote:
+>>> On Thu, Oct 06 2022, Junio C Hamano wrote:
+>>>
+>>>> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+>>>>
+>>>>> A cleaned up version of the test code I had on top of "master", RFC
+>>>>> because I may still be missing some context here. E.g. maybe there's a
+>>>>> plan to dynamically construct these thread names?
+>>>>
 [...]
-> +	const struct run_process_parallel_opts opts = {
-> +		.processes = processes,
-> +		.ungroup = run_processes_parallel_ungroup,
-> +
-> +		.get_next_task = get_next_task,
-> +		.start_failure = start_failure,
-> +		.task_finished = task_finished,
-> +	};
-> +
-> +	run_processes_parallel_1(&opts, pp_cb);
->   }
 
-I complained before that this is moving things around that you added in 
-the last commit, but not only are you moving the designated initializer 
-added in the last commit you are rearranging it.
+> I left more extensive commentary in the side-thread in
+> https://lore.kernel.org/git/221011.86lepmo5dn.gmgdl@evledraar.gmail.com/,
+> just a quick reply here.
+> 
+>> WRT optimizing memory usage.  We're talking about ~25 byte buffer
+>> per thread.  Most commands execute in 1 thread -- if they read the
+>> index they may have ~10 threads (depending on the size of the index
+>> and if preload-index is enabled).  So, I don't think we really need
+>> to optimize this.  Threading is used extensively in fsmonitor-daemon,
+>> but it creates a fixed thread-pool at startup, so it may have ~12
+>> threads.  Again, not worth optimizing for the thread-name field.
+> 
+> Yes, I agree it's not worth optimizing.
+> 
+> The reason for commenting on this part is that it isn't clear to me why
+> your proposed patch then isn't doing the more obvious "it's not worth
+> optimizing" pattern, per Junio's [1] comment on the initial version.
+> 
+> The "flex array" method is seemingly taking pains to reduce the runtime
+> memory use of these by embedding this string in the space reserved for
+> the struct.
+> 
+> So it's just meant as a question for you & the proposed patch.
 
-Best Wishes
+I think we're converging on some common understanding (and I
+think we've gone around on this topic more than enough).  :-)
 
-Phillip
+I really was just trying to get rid of the strbuf and make it
+a fixed string -- I chose a flex-array rather than just detaching
+the buffer from a local in the thread-start code.  I should have
+done the latter.  I saw the flex-array as a fixed-size object
+that can't be replaced or extended (without recreating the
+thread-local storage) -- yes, people could overwrite existing
+bytes in-place in the flex-array, but who does that??
+
+
+I understood what you were asking (illustrated in your RFC).
+That is, I understood the "what/how" you wanted to do to refactor /
+redesign the field, but I couldn't understand the "why".  That
+is, why you've taken such interest in this field (and such
+a relatively unimportant change).  We've spent nearly a week
+discussing it and we both agree that the optimization that I
+didn't suggest isn't worth doing.  (I'm paraphrasing slightly.) :-)
+
+So, rather than continuing with the back-n-forth, let me skip
+over the remaining questions in this thread and prepare a re-roll.
+Hopefully, I can simplify and more clearly explain the method to
+my madness and we can move on.
+
+
+>> Now, if you want to optimize over all trace2 events (a completely
+>> different topic), you could create a large scratch strbuf buffer in
+>> each thread context and use it so that we don't have to malloc/free
+>> during each trace message.  That might be worth while.
+> 
+> *nod*
+
+I'll make a note to revisit this idea in a future series.
+
+Thanks
+Jeff
 
