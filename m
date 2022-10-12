@@ -2,61 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E41D5C433FE
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 18:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D948C43217
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 18:52:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229980AbiJLSwp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 14:52:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58346 "EHLO
+        id S229975AbiJLSwr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 14:52:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229956AbiJLSwi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 14:52:38 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0AB9240A9
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 11:52:36 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id j7so27542536wrr.3
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 11:52:36 -0700 (PDT)
+        with ESMTP id S229716AbiJLSwl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 14:52:41 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CD5CF41AB
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 11:52:39 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id r3-20020a05600c35c300b003b4b5f6c6bdso1794964wmq.2
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 11:52:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eBYrCTm6sONYh2JzDxn3XUEMeP9cTr+K0XsOM99+7bc=;
-        b=eqomppaclg8GvRuX5I6qMr9PObfalnG7n/gm3Vg6BLssYLwxicco0+q6JhMxxFngKc
-         G0GJXaQESe+XGXHufnS8gpwyO2yD26i9F+JYH6YN0g1h7SaKBwE8VgYgZGf84DuiuvVA
-         C+lRpIrg5QcDVNQ4hYW2RcFFbjueWr13dlNKGPVYLZJKqTwZrMnFQu//k69WxlB3n7wx
-         7WxHqxZIqoLYI1O07IuUbRKB/WuWSM+SjpiIOeDLRguuHaNjFvs3fCJFJrZJpvoYmMJq
-         1xTGATyDZrd5B9G7tTL0a/ID3Bd8037OPdgDACCVVgxCkV7By3Vl6ewcpA5QdrnkxrLa
-         RqYQ==
+        bh=49A0L1wMbmU0RvsqsmDPtIsptTiM40AWpEgBd9ZjT4Y=;
+        b=KKeexWcNgUF568UqXPP+tTcB6yz6PpTYmaLfd37mffj18HSz6DiJ2ykK9AZGPi3g+q
+         bBC8REXZq0W0if4Q34i+YrYyj+4pB4qMKcRYYY22X79EJbGasrivz2r/hxsj67VUeWEl
+         bc61u3fKg5mz1vyDWVuYCWQD3alV/EIBut+Tq29rOr5vl0sryHSNvM3VnCvzVHfhtVOE
+         vder7neB4w8QmVah/f/pBVIPcfeg6WdeVKf8+zoVuO/TqxatXluojF5mwNoo1Gq1XebS
+         2LrEu/JJPz0FKLHBDm+crWYZp0V0dLLteWOO7QypVhThUCQcP5YPhzBDMda+YwcgaS3S
+         VrFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eBYrCTm6sONYh2JzDxn3XUEMeP9cTr+K0XsOM99+7bc=;
-        b=uO0SKKB8V6+Ad4jC5+9CbC8E+odQWWnurXm21XXz3tsOLzHtvyahh/7anujr0dYSka
-         ywilt3TRoVtFYYbYdD4hM1JtZVjpjRH6JPBpGoyEIq9XcPoZWAsEdVquCOccgC22IivX
-         LILRs/vAYDKLBUxIGfg20crQ291FnSQF005GLq13AQom7TMAcpTjDq39YchCeCHhi5fX
-         Ek2gWEKoezrbhpAfRFQwX6vTQ4GLPQzzKZKYRB2bNolgaL3cecK3DPGGDax7SvSpcXPI
-         jJ9RCbQCvJJSIN/Js2GjeacRd2z/QLNGbgtsErSZxCUmwdyyMW33b529bfo50FB3TbOs
-         ZQLw==
-X-Gm-Message-State: ACrzQf3bi6kVaypQBm8yp6idH/wA53f/qOdTt7x/khb5G8kts7UeJyxn
-        Qve7jNnUtguVSkQw/7ocPayhEsWp3CY=
-X-Google-Smtp-Source: AMsMyM4WNQD1D+daoCmC/u4eXbZ5hoD5uvOnC39gJgAQpymADJEQRVFuYbyqtiNcSC4gZm8VypkAHA==
-X-Received: by 2002:adf:f501:0:b0:22c:cbea:240a with SMTP id q1-20020adff501000000b0022ccbea240amr19436213wro.78.1665600756255;
-        Wed, 12 Oct 2022 11:52:36 -0700 (PDT)
+        bh=49A0L1wMbmU0RvsqsmDPtIsptTiM40AWpEgBd9ZjT4Y=;
+        b=YBVGmVq7evxcEtqvpMD+qlTb61GhXPNOOsOSHUa+ER6bFWSW7rwRusclmMjqAfUYAV
+         NHQLNl9hyA3Ay5cYf9PzlsqQ4wFfLd0my0yknN8ACoHrnfZJhVvsQuYaBwEFb6qwGhcI
+         bsqhgHABQ4bWijO2yVkFRfOMSQv0PwDcQ5VKYS+7WcC1sLg6672XKRfLFg6MTuwkqJmm
+         6VQcmtTaHilFHrp3wwSohiMh3FDoUQ1dhndsdqmZb6pHvVFYc/+A/bD5uPdlC0fWf+ok
+         FnnCNHbwVYNd1BWXtsUlGQWAOlcYFqo63xU+ATfbQDCoiMvOAIB5wJ+H6wFYVOAuDnQ2
+         cDHQ==
+X-Gm-Message-State: ACrzQf1+rnWeyEvQjCuWJYOvxqgQ0zsH5XPtK1vQgAs22TGx9yY51Xtf
+        WcWAD6l0IoY6dREQ3wfq3QrazfYGIPY=
+X-Google-Smtp-Source: AMsMyM4pGa2Rwm/aTWa4H3Nc99AYuHDr/3FZFLqlW1zIPQDkf30cAdUrWDtmlg890vfNI6NWCtEFBA==
+X-Received: by 2002:a1c:3b41:0:b0:3bd:9167:c51e with SMTP id i62-20020a1c3b41000000b003bd9167c51emr3747563wma.102.1665600757446;
+        Wed, 12 Oct 2022 11:52:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id az12-20020a05600c600c00b003a62052053csm2929327wmb.18.2022.10.12.11.52.35
+        by smtp.gmail.com with ESMTPSA id k13-20020a05600c0b4d00b003bf3fe1d0c4sm2432310wmr.22.2022.10.12.11.52.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 11:52:35 -0700 (PDT)
-Message-Id: <637b422b8606b3b6d954e6a1959aae450507cdfa.1665600750.git.gitgitgadget@gmail.com>
+        Wed, 12 Oct 2022 11:52:36 -0700 (PDT)
+Message-Id: <4bf78e356e23c947b8328a91ba435a357cd51f43.1665600750.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1373.v2.git.1665600750.gitgitgadget@gmail.com>
 References: <pull.1373.git.1664900407.gitgitgadget@gmail.com>
         <pull.1373.v2.git.1665600750.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 12 Oct 2022 18:52:27 +0000
-Subject: [PATCH v2 4/7] trace2: rename the thread_name argument to
- trace2_thread_start
+Date:   Wed, 12 Oct 2022 18:52:28 +0000
+Subject: [PATCH v2 5/7] trace2: convert ctx.thread_name from strbuf to pointer
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,134 +72,111 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Rename the `thread_name` argument in `tr2tls_create_self()` and
-`trace2_thread_start()` to be `thread_base_name` to make it clearer
-that the passed argument is a component used in the construction of
-the actual `struct tr2tls_thread_ctx.thread_name` variable.
+Convert the `tr2tls_thread_ctx.thread_name` field from a `strbuf`
+to a "const char*" pointer.
 
-The base name will be used along with the thread id to create a
-unique thread name.
-
-This commit does not change how the `thread_name` field is
-allocated or stored within the `tr2tls_thread_ctx` structure.
+The `thread_name` field is a constant string that is constructed when
+the context is created.  Using a (non-const) `strbuf` structure for it
+caused some confusion in the past because it implied that someone
+could rename a thread after it was created.  That usage was not
+intended.  Change it to a const pointer to make the intent more clear.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- trace2.c         |  6 +++---
- trace2.h         | 11 ++++++-----
- trace2/tr2_tls.c |  4 ++--
- trace2/tr2_tls.h | 17 ++++++++++-------
- 4 files changed, 21 insertions(+), 17 deletions(-)
+ trace2/tr2_tgt_event.c |  2 +-
+ trace2/tr2_tgt_perf.c  |  2 +-
+ trace2/tr2_tls.c       | 16 +++++++++-------
+ trace2/tr2_tls.h       |  2 +-
+ 4 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/trace2.c b/trace2.c
-index c1244e45ace..165264dc79a 100644
---- a/trace2.c
-+++ b/trace2.c
-@@ -466,7 +466,7 @@ void trace2_exec_result_fl(const char *file, int line, int exec_id, int code)
- 				file, line, us_elapsed_absolute, exec_id, code);
- }
+diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
+index 37a3163be12..52f9356c695 100644
+--- a/trace2/tr2_tgt_event.c
++++ b/trace2/tr2_tgt_event.c
+@@ -90,7 +90,7 @@ static void event_fmt_prepare(const char *event_name, const char *file,
  
--void trace2_thread_start_fl(const char *file, int line, const char *thread_name)
-+void trace2_thread_start_fl(const char *file, int line, const char *thread_base_name)
- {
- 	struct tr2_tgt *tgt_j;
- 	int j;
-@@ -488,14 +488,14 @@ void trace2_thread_start_fl(const char *file, int line, const char *thread_name)
- 		 */
- 		trace2_region_enter_printf_fl(file, line, NULL, NULL, NULL,
- 					      "thread-proc on main: %s",
--					      thread_name);
-+					      thread_base_name);
- 		return;
- 	}
+ 	jw_object_string(jw, "event", event_name);
+ 	jw_object_string(jw, "sid", tr2_sid_get());
+-	jw_object_string(jw, "thread", ctx->thread_name.buf);
++	jw_object_string(jw, "thread", ctx->thread_name);
  
- 	us_now = getnanotime() / 1000;
- 	us_elapsed_absolute = tr2tls_absolute_elapsed(us_now);
+ 	/*
+ 	 * In brief mode, only emit <time> on these 2 event types.
+diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+index 8cb792488c8..59ca58f862d 100644
+--- a/trace2/tr2_tgt_perf.c
++++ b/trace2/tr2_tgt_perf.c
+@@ -108,7 +108,7 @@ static void perf_fmt_prepare(const char *event_name,
  
--	tr2tls_create_self(thread_name, us_now);
-+	tr2tls_create_self(thread_base_name, us_now);
+ 	strbuf_addf(buf, "d%d | ", tr2_sid_depth());
+ 	strbuf_addf(buf, "%-*s | %-*s | ", TR2_MAX_THREAD_NAME,
+-		    ctx->thread_name.buf, TR2FMT_PERF_MAX_EVENT_NAME,
++		    ctx->thread_name, TR2FMT_PERF_MAX_EVENT_NAME,
+ 		    event_name);
  
- 	for_each_wanted_builtin (j, tgt_j)
- 		if (tgt_j->pfn_thread_start_fl)
-diff --git a/trace2.h b/trace2.h
-index af3c11694cc..74cdb1354f7 100644
---- a/trace2.h
-+++ b/trace2.h
-@@ -304,14 +304,15 @@ void trace2_exec_result_fl(const char *file, int line, int exec_id, int code);
-  * thread-proc to allow the thread to create its own thread-local
-  * storage.
-  *
-- * Thread names should be descriptive, like "preload_index".
-- * Thread names will be decorated with an instance number automatically.
-+ * The thread base name should be descriptive, like "preload_index" or
-+ * taken from the thread-proc function.  A unique thread name will be
-+ * created from the given base name and the thread id automatically.
-  */
- void trace2_thread_start_fl(const char *file, int line,
--			    const char *thread_name);
-+			    const char *thread_base_name);
- 
--#define trace2_thread_start(thread_name) \
--	trace2_thread_start_fl(__FILE__, __LINE__, (thread_name))
-+#define trace2_thread_start(thread_base_name) \
-+	trace2_thread_start_fl(__FILE__, __LINE__, (thread_base_name))
- 
- /*
-  * Emit a 'thread_exit' event.  This must be called from inside the
+ 	len = buf->len + TR2FMT_PERF_REPO_WIDTH;
 diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
-index 8d2182fbdbb..4f7c516ecb6 100644
+index 4f7c516ecb6..3a67532aae4 100644
 --- a/trace2/tr2_tls.c
 +++ b/trace2/tr2_tls.c
-@@ -31,7 +31,7 @@ void tr2tls_start_process_clock(void)
- 	tr2tls_us_start_process = getnanotime() / 1000;
- }
- 
--struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
-+struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_base_name,
+@@ -35,6 +35,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_base_name,
  					     uint64_t us_thread_start)
  {
  	struct tr2tls_thread_ctx *ctx = xcalloc(1, sizeof(*ctx));
-@@ -50,7 +50,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
- 	strbuf_init(&ctx->thread_name, 0);
- 	if (ctx->thread_id)
- 		strbuf_addf(&ctx->thread_name, "th%02d:", ctx->thread_id);
--	strbuf_addstr(&ctx->thread_name, thread_name);
-+	strbuf_addstr(&ctx->thread_name, thread_base_name);
- 	if (ctx->thread_name.len > TR2_MAX_THREAD_NAME)
- 		strbuf_setlen(&ctx->thread_name, TR2_MAX_THREAD_NAME);
++	struct strbuf buf = STRBUF_INIT;
  
+ 	/*
+ 	 * Implicitly "tr2tls_push_self()" to capture the thread's start
+@@ -47,12 +48,13 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_base_name,
+ 
+ 	ctx->thread_id = tr2tls_locked_increment(&tr2_next_thread_id);
+ 
+-	strbuf_init(&ctx->thread_name, 0);
++	strbuf_init(&buf, 0);
+ 	if (ctx->thread_id)
+-		strbuf_addf(&ctx->thread_name, "th%02d:", ctx->thread_id);
+-	strbuf_addstr(&ctx->thread_name, thread_base_name);
+-	if (ctx->thread_name.len > TR2_MAX_THREAD_NAME)
+-		strbuf_setlen(&ctx->thread_name, TR2_MAX_THREAD_NAME);
++		strbuf_addf(&buf, "th%02d:", ctx->thread_id);
++	strbuf_addstr(&buf, thread_base_name);
++	if (buf.len > TR2_MAX_THREAD_NAME)
++		strbuf_setlen(&buf, TR2_MAX_THREAD_NAME);
++	ctx->thread_name = strbuf_detach(&buf, NULL);
+ 
+ 	pthread_setspecific(tr2tls_key, ctx);
+ 
+@@ -95,7 +97,7 @@ void tr2tls_unset_self(void)
+ 
+ 	pthread_setspecific(tr2tls_key, NULL);
+ 
+-	strbuf_release(&ctx->thread_name);
++	free((char *)ctx->thread_name);
+ 	free(ctx->array_us_start);
+ 	free(ctx);
+ }
+@@ -113,7 +115,7 @@ void tr2tls_pop_self(void)
+ 	struct tr2tls_thread_ctx *ctx = tr2tls_get_self();
+ 
+ 	if (!ctx->nr_open_regions)
+-		BUG("no open regions in thread '%s'", ctx->thread_name.buf);
++		BUG("no open regions in thread '%s'", ctx->thread_name);
+ 
+ 	ctx->nr_open_regions--;
+ }
 diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
-index 1297509fd23..7d1f03a2ea6 100644
+index 7d1f03a2ea6..e17cc462f87 100644
 --- a/trace2/tr2_tls.h
 +++ b/trace2/tr2_tls.h
-@@ -25,17 +25,20 @@ struct tr2tls_thread_ctx {
- /*
-  * Create thread-local storage for the current thread.
-  *
-- * We assume the first thread is "main".  Other threads are given
-- * non-zero thread-ids to help distinguish messages from concurrent
-- * threads.
-- *
-- * Truncate the thread name if necessary to help with column alignment
-- * in printf-style messages.
-+ * The first thread in the process will have:
-+ *     { .thread_id=0, .thread_name="main" }
-+ * Subsequent threads are given a non-zero thread_id and a thread_name
-+ * constructed from the id and a thread base name (which is usually just
-+ * the name of the thread-proc function).  For example:
-+ *     { .thread_id=10, .thread_name="th10fsm-listen" }
-+ * This helps to identify and distinguish messages from concurrent threads.
-+ * The ctx.thread_name field is truncated if necessary to help with column
-+ * alignment in printf-style messages.
-  *
-  * In this and all following functions the term "self" refers to the
-  * current thread.
-  */
--struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
-+struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_base_name,
- 					     uint64_t us_thread_start);
+@@ -15,7 +15,7 @@
+ #define TR2_MAX_THREAD_NAME (24)
  
- /*
+ struct tr2tls_thread_ctx {
+-	struct strbuf thread_name;
++	const char *thread_name;
+ 	uint64_t *array_us_start;
+ 	size_t alloc;
+ 	size_t nr_open_regions; /* plays role of "nr" in ALLOC_GROW */
 -- 
 gitgitgadget
 
