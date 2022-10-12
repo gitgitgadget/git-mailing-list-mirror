@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FA5AC4332F
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 12:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 539E8C4332F
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 12:53:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbiJLMx1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 08:53:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38390 "EHLO
+        id S229806AbiJLMxb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 08:53:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229755AbiJLMxN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 08:53:13 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 972F1C97C4
+        with ESMTP id S229754AbiJLMxM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 08:53:12 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87C28C823F
         for <git@vger.kernel.org>; Wed, 12 Oct 2022 05:52:57 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id bv10so22543698wrb.4
+Received: by mail-wm1-x32a.google.com with SMTP id bg9-20020a05600c3c8900b003bf249616b0so1150860wmb.3
         for <git@vger.kernel.org>; Wed, 12 Oct 2022 05:52:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2n1oOEOH54xL4jFO2BgRG4PT6/KCIkQNTgOeWChEVmg=;
-        b=qH4TBTwYjWep+19ldgpjTTDaQohHOGAWVpCnvNAAe1lfhR8yHzILM+E+KsvvEBeW+1
-         Xf0ttCtHWqn7j210xBywiogxXgKdBVLmmjUXL6ZrMIrsGrnBOqMPqUWz3EfdeAqAOQNq
-         BXIBf4NUCLhN5q+Cxv65JsJtMBe5kyDKWUEWJsZX9UTAjmBeuJo0iF+aH0PIIB8vHsB4
-         IMGlhmrdK1OxrAdfPzanyyerI9nDkAJhdVwm9r5x/h/tfal14mesX5EP2myYzP9kJsYe
-         ynPP4rPcaIVat2x6prNYNymUi2IQilXd/Fpp6DAvGbRog+HR74Aq4t9xSl5GY59PdbdH
-         UHWg==
+        bh=GP2j5/Hfsewkj2oC+Yr4l+5lEuk6HhreKDodb/i3CSg=;
+        b=A5A6xZv0ermae83JAo4JUUy0/p8V2qXlXOCHMUT7SGffTj0iurd19ajaPDvaYG4Q9o
+         0ahPmywvUyWi5zQT9Uz4URHuSlDNHi+C6qWJmM0mY8m+TVxI57XOnjVk8siB+VBZQ4zW
+         iZ0EnRDtD8cpNs2Q2YYZfHB3QRlKfGT3Qvn5C/zUrSqoZHaAH6Vf8aw3gg9loo03sGmO
+         MUmf0jsej9vXtiO48KhYV8UZ4o3N6QR+fU1q91/jlsssQKdiH2Ib4MSjAIBF48lgmRSS
+         8Vu5gq0dUWfcAr79xn+7gguVz8NERrhx6LDcJsAs/U4MJwJaUFQA7kniCRS7qt/29Dex
+         2lww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2n1oOEOH54xL4jFO2BgRG4PT6/KCIkQNTgOeWChEVmg=;
-        b=pf8gvEx3m8zhoELTclKQH+wdzk1IkiqayoAaKpX0yZ+c0FN00OPGkFcAsF9/N0Ithk
-         kc0lzu6nxhJgKs4v7WAWEVmhNvg7LQar/bpRdMdL/mgYIws0g60BXzpijJFJckTPq1UN
-         xNfG09qjOoqGekalQNkT8Yp6bCXV3lllSGp3fAfSnHCdRQb/MuNnG/lx0E3xSqE5UbfI
-         9WPLEup/i0rI2EBcbNUDbt7i2l9xStzQ6JjmNOITnAlsVQRD44a1JYtVqsDb3pXxyiiN
-         Wbjna1lEbZhyOPvypU5hXKJWkh4+Dfa8bgW+QPSjluoD/JWlrlqUxHhbmj8Gq8Ehc3mQ
-         laMw==
-X-Gm-Message-State: ACrzQf1xF3JPn5DdsCvImxxMQ9iOlUP3MLi58gyumOetrO9nIMuuy58a
-        ecwjd1FjTa4/fPTH+mP+iJR7vSab9Ss=
-X-Google-Smtp-Source: AMsMyM5+Wp9s8yJn/3Ri2eS5L1xfwmBGChLWZpZYKCReuquVB0F4yzg4wJjCG2jst3Xa3DBIwmNUlg==
-X-Received: by 2002:a05:6000:2c1:b0:22e:7507:a182 with SMTP id o1-20020a05600002c100b0022e7507a182mr18032972wry.550.1665579176909;
-        Wed, 12 Oct 2022 05:52:56 -0700 (PDT)
+        bh=GP2j5/Hfsewkj2oC+Yr4l+5lEuk6HhreKDodb/i3CSg=;
+        b=QdyYZHFA94DfNJaBEfOE341aJMNsoQGsHP/it9WhzzuwT1itHYGStgGxSqNodut98h
+         PaXWIpYYaE0jas3KlRBIz9F/n1yNSiiL3YFJ5Jwt9P+urh9N8fz40PLF0D8TqmaQPx3M
+         y/i3PhpF081rKJts+PnDeCKrwrUxbfOwS4KakFFAEFW3LYu3MlTcIEWfmHAz+7RTFyjU
+         FeYGBwMxpCVmHiiyRQGMNY9vrvrgg2Xb9wutPUnzAzrZL4iaVXiJ+cqbVK3ToAn93L1Z
+         a1QUWAXaW+cJKjzd498dpmB+rOKKWdNwyoC8zWPH0xX0wUXM+mMym9/I3cjcANeWyGjF
+         tLyw==
+X-Gm-Message-State: ACrzQf2wKoMgOb8zmd2/RWBlAwslDvkfgzTDKl8FcL1cvbVMi+Ri7+0C
+        RVjJlMHQd2wlTa4Py7gZ6uI6i/B6vL4=
+X-Google-Smtp-Source: AMsMyM5P5UX7+d7UXi9Gskbv4CQOiVGwau4+saJXHmBo6CXLpIDwYf953ttWDWTd36fO9Qp+zVlq7A==
+X-Received: by 2002:a05:600c:214f:b0:3c6:ce02:8a68 with SMTP id v15-20020a05600c214f00b003c6ce028a68mr2739907wml.187.1665579175807;
+        Wed, 12 Oct 2022 05:52:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p17-20020a5d4591000000b0022e32f4c06asm13388473wrq.11.2022.10.12.05.52.56
+        by smtp.gmail.com with ESMTPSA id p22-20020a05600c065600b003c6c2ff7f25sm1641298wmm.15.2022.10.12.05.52.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 05:52:56 -0700 (PDT)
-Message-Id: <5729ff2af4bb56a68624b7942b8afa67601adb43.1665579160.git.gitgitgadget@gmail.com>
+        Wed, 12 Oct 2022 05:52:55 -0700 (PDT)
+Message-Id: <2e0bfa834f14e1f4f66adf36d4326e5f1c2c9c20.1665579160.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1333.v5.git.1665579160.gitgitgadget@gmail.com>
 References: <pull.1333.v4.git.1665417859.gitgitgadget@gmail.com>
         <pull.1333.v5.git.1665579160.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 12 Oct 2022 12:52:39 +0000
-Subject: [PATCH v5 12/12] bundle-uri: suppress stderr from remote-https
+Date:   Wed, 12 Oct 2022 12:52:38 +0000
+Subject: [PATCH v5 11/12] bundle-uri: quiet failed unbundlings
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,84 +74,161 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-When downloading bundles from a git-remote-https subprocess, the bundle
-URI logic wants to be opportunistic and download as much as possible and
-work with what did succeed. This is particularly important in the "any"
-mode, where any single bundle success will work.
+When downloading a list of bundles in "all" mode, Git has no
+understanding of the dependencies between the bundles. Git attempts to
+unbundle the bundles in some order, but some may not pass the
+verify_bundle() step because of missing prerequisites. This is passed as
+error messages to the user, even when they eventually succeed in later
+attempts after their dependent bundles are unbundled.
 
-If the URI is not available, the git-remote-https process will die()
-with a "fatal:" error message, even though that error is not actually
-fatal to the super process. Since stderr is passed through, it looks
-like a fatal error to the user.
+Add a new VERIFY_BUNDLE_QUIET flag to verify_bundle() that avoids the
+error messages from the missing prerequisite commits. The method still
+returns the number of missing prerequisit commits, allowing callers to
+unbundle() to notice that the bundle failed to apply.
 
-Suppress stderr to avoid these errors from bubbling to the surface. The
-bundle URI API adds its own warning() messages on these failures.
+Use this flag in bundle-uri.c and test that the messages go away for
+'git clone --bundle-uri' commands.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- bundle-uri.c                |  1 +
- t/t5558-clone-bundle-uri.sh | 16 ++++++++++++++--
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ builtin/bundle.c            |  2 +-
+ bundle-uri.c                |  3 ++-
+ bundle.c                    | 10 ++++++++--
+ bundle.h                    |  1 +
+ t/t5558-clone-bundle-uri.sh | 25 ++++++++++++++++++++-----
+ 5 files changed, 32 insertions(+), 9 deletions(-)
 
+diff --git a/builtin/bundle.c b/builtin/bundle.c
+index 7d983a238f0..fd4586b09e0 100644
+--- a/builtin/bundle.c
++++ b/builtin/bundle.c
+@@ -120,7 +120,7 @@ static int cmd_bundle_verify(int argc, const char **argv, const char *prefix) {
+ 	}
+ 	close(bundle_fd);
+ 	if (verify_bundle(the_repository, &header,
+-			  quiet ? 0 : VERIFY_BUNDLE_VERBOSE)) {
++			  quiet ? VERIFY_BUNDLE_QUIET : VERIFY_BUNDLE_VERBOSE)) {
+ 		ret = 1;
+ 		goto cleanup;
+ 	}
 diff --git a/bundle-uri.c b/bundle-uri.c
-index d872acf5ab0..79a914f961b 100644
+index d9060be707e..d872acf5ab0 100644
 --- a/bundle-uri.c
 +++ b/bundle-uri.c
-@@ -230,6 +230,7 @@ static int download_https_uri_to_file(const char *file, const char *uri)
- 	int found_get = 0;
+@@ -308,7 +308,8 @@ static int unbundle_from_file(struct repository *r, const char *file)
+ 	 * a reachable ref pointing to the new tips, which will reach
+ 	 * the prerequisite commits.
+ 	 */
+-	if ((result = unbundle(r, &header, bundle_fd, NULL, 0)))
++	if ((result = unbundle(r, &header, bundle_fd, NULL,
++			       VERIFY_BUNDLE_QUIET)))
+ 		return 1;
  
- 	strvec_pushl(&cp.args, "git-remote-https", uri, NULL);
-+	cp.err = -1;
- 	cp.in = -1;
- 	cp.out = -1;
+ 	/*
+diff --git a/bundle.c b/bundle.c
+index 1f6a7f782e1..4ef7256aa11 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -216,7 +216,10 @@ int verify_bundle(struct repository *r,
+ 			add_pending_object(&revs, o, name);
+ 			continue;
+ 		}
+-		if (++ret == 1)
++		ret++;
++		if (flags & VERIFY_BUNDLE_QUIET)
++			continue;
++		if (ret == 1)
+ 			error("%s", message);
+ 		error("%s %s", oid_to_hex(oid), name);
+ 	}
+@@ -243,7 +246,10 @@ int verify_bundle(struct repository *r,
+ 		assert(o); /* otherwise we'd have returned early */
+ 		if (o->flags & SHOWN)
+ 			continue;
+-		if (++ret == 1)
++		ret++;
++		if (flags & VERIFY_BUNDLE_QUIET)
++			continue;
++		if (ret == 1)
+ 			error("%s", message);
+ 		error("%s %s", oid_to_hex(oid), name);
+ 	}
+diff --git a/bundle.h b/bundle.h
+index 6652e819981..575c34245d1 100644
+--- a/bundle.h
++++ b/bundle.h
+@@ -32,6 +32,7 @@ int create_bundle(struct repository *r, const char *path,
  
+ enum verify_bundle_flags {
+ 	VERIFY_BUNDLE_VERBOSE = (1 << 0),
++	VERIFY_BUNDLE_QUIET = (1 << 1),
+ };
+ 
+ int verify_bundle(struct repository *r, struct bundle_header *header,
 diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-index 9b159078386..9155f31fa2c 100755
+index a86dc04f528..9b159078386 100755
 --- a/t/t5558-clone-bundle-uri.sh
 +++ b/t/t5558-clone-bundle-uri.sh
-@@ -147,6 +147,8 @@ test_expect_success 'clone bundle list (file, all mode, some failures)' '
- 	git clone --bundle-uri="file://$(pwd)/bundle-list" \
- 		clone-from clone-all-some 2>err &&
- 	! grep "Repository lacks these prerequisite commits" err &&
-+	! grep "fatal" err &&
-+	grep "warning: failed to download bundle from URI" err &&
+@@ -99,7 +99,10 @@ test_expect_success 'clone bundle list (file, no heuristic)' '
+ 		uri = file://$(pwd)/clone-from/bundle-4.bundle
+ 	EOF
  
+-	git clone --bundle-uri="file://$(pwd)/bundle-list" clone-from clone-list-file &&
++	git clone --bundle-uri="file://$(pwd)/bundle-list" \
++		clone-from clone-list-file 2>err &&
++	! grep "Repository lacks these prerequisite commits" err &&
++
+ 	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
+ 	git -C clone-list-file cat-file --batch-check <oids &&
+ 
+@@ -141,7 +144,10 @@ test_expect_success 'clone bundle list (file, all mode, some failures)' '
+ 	EOF
+ 
+ 	GIT_TRACE2_PERF=1 \
+-	git clone --bundle-uri="file://$(pwd)/bundle-list" clone-from clone-all-some &&
++	git clone --bundle-uri="file://$(pwd)/bundle-list" \
++		clone-from clone-all-some 2>err &&
++	! grep "Repository lacks these prerequisite commits" err &&
++
  	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
  	git -C clone-all-some cat-file --batch-check <oids &&
-@@ -178,6 +180,8 @@ test_expect_success 'clone bundle list (file, all mode, all failures)' '
- 	git clone --bundle-uri="file://$(pwd)/bundle-list" \
- 		clone-from clone-all-fail 2>err &&
- 	! grep "Repository lacks these prerequisite commits" err &&
-+	! grep "fatal" err &&
-+	grep "warning: failed to download bundle from URI" err &&
  
+@@ -169,7 +175,10 @@ test_expect_success 'clone bundle list (file, all mode, all failures)' '
+ 		uri = file://$(pwd)/clone-from/bundle-5.bundle
+ 	EOF
+ 
+-	git clone --bundle-uri="file://$(pwd)/bundle-list" clone-from clone-all-fail &&
++	git clone --bundle-uri="file://$(pwd)/bundle-list" \
++		clone-from clone-all-fail 2>err &&
++	! grep "Repository lacks these prerequisite commits" err &&
++
  	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
  	git -C clone-all-fail cat-file --batch-check <oids &&
-@@ -234,7 +238,11 @@ test_expect_success 'clone bundle list (file, any mode, all failures)' '
- 		uri = $HTTPD_URL/bundle-5.bundle
+ 
+@@ -195,7 +204,10 @@ test_expect_success 'clone bundle list (file, any mode)' '
+ 		uri = file://$(pwd)/clone-from/bundle-5.bundle
  	EOF
  
--	git clone --bundle-uri="file://$(pwd)/bundle-list" clone-from clone-any-fail &&
+-	git clone --bundle-uri="file://$(pwd)/bundle-list" clone-from clone-any-file &&
 +	git clone --bundle-uri="file://$(pwd)/bundle-list" \
-+		clone-from clone-any-fail 2>err &&
-+	! grep "fatal" err &&
-+	grep "warning: failed to download bundle from URI" err &&
++		clone-from clone-any-file 2>err &&
++	! grep "Repository lacks these prerequisite commits" err &&
 +
  	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
- 	git -C clone-any-fail cat-file --batch-check <oids &&
+ 	git -C clone-any-file cat-file --batch-check <oids &&
  
-@@ -323,7 +331,11 @@ test_expect_success 'clone bundle list (HTTP, any mode)' '
- 		uri = $HTTPD_URL/bundle-5.bundle
+@@ -284,7 +296,10 @@ test_expect_success 'clone bundle list (HTTP, no heuristic)' '
+ 		uri = $HTTPD_URL/bundle-4.bundle
  	EOF
  
--	git clone --bundle-uri="$HTTPD_URL/bundle-list" clone-from clone-any-http &&
+-	git clone --bundle-uri="$HTTPD_URL/bundle-list" clone-from clone-list-http &&
 +	git clone --bundle-uri="$HTTPD_URL/bundle-list" \
-+		clone-from clone-any-http 2>err &&
-+	! grep "fatal" err &&
-+	grep "warning: failed to download bundle from URI" err &&
++		clone-from clone-list-http  2>err &&
++	! grep "Repository lacks these prerequisite commits" err &&
 +
  	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
- 	git -C clone-any-http cat-file --batch-check <oids &&
- 
+ 	git -C clone-list-http cat-file --batch-check <oids
+ '
 -- 
 gitgitgadget
+
