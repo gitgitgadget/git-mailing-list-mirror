@@ -2,90 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89194C433FE
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 15:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C93BAC4332F
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 15:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229820AbiJLPHU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 11:07:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48932 "EHLO
+        id S229487AbiJLPLA convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 12 Oct 2022 11:11:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229726AbiJLPHR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 11:07:17 -0400
-Received: from wilbur.contactoffice.com (wilbur.contactoffice.com [212.3.242.68])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48370AA349
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 08:07:16 -0700 (PDT)
-Received: from smtpauth2.co-bxl (smtpauth2.co-bxl [10.2.0.24])
-        by wilbur.contactoffice.com (Postfix) with ESMTP id 9104F3717;
-        Wed, 12 Oct 2022 17:07:14 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1665587234;
-        s=20220911-jt8y; d=wired4ever.net; i=sndanailov@wired4ever.net;
-        h=From:Cc:Date:Message-Id:MIME-Version:Content-Transfer-Encoding;
-        l=2104; bh=zFSiyIbcDcXmTd7gRX3PMXjsue6Q9BMBGJs8RLMFNXU=;
-        b=haFe9MGV43T3JzkbZ4lPzO4fae9b908s7jK1B1y5QC4NwDrhe7ak2MFaih1sK1Ln
-        R1wV7x2RRX9FdmsvQWUBNMV/0zqy4DLIqzuF5hY75LD8Y5glGufXJJzCLD3PtyaxB6c
-        SEP7i5o7yq4/f/vn6uZ/BF9Sz10V4uyHvT1yU/ftCKc6SfVbSbmdQi9KOkh+m13q4lM
-        5az81URNuCRIr+BL6Szls32pQsfbgqcQQ6X6uYGI9YkE6+TvVmREoZpADGfJNLypqpG
-        xtSO1kpHu48xWrw7JddTTehIZfeXtVa6OsW3CnO3NU/XBPB6n+U9AG6QOo8Y6CeIwl9
-        SjeRpUnKiA==
-Received: by smtp.mailfence.com with ESMTPSA ; Wed, 12 Oct 2022 17:06:46 +0200 (CEST)
-From:   sndanailov@wired4ever.net
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, sandals@crustytoothpaste.net, aaron@schrab.com,
-        philipoakley@iee.email, Sotir Danailov <sndanailov@wired4ever.net>
-Subject: [PATCH v3] docs: git-send-email: difference between ssl and tls smtp-encryption
-Date:   Wed, 12 Oct 2022 17:06:19 +0200
-Message-Id: <20221012150619.12877-1-sndanailov@wired4ever.net>
-X-Mailer: git-send-email 2.37.3
+        with ESMTP id S229819AbiJLPK6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 11:10:58 -0400
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 158A021B0
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 08:10:58 -0700 (PDT)
+Received: by mail-ed1-f43.google.com with SMTP id s30so24931679eds.1
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 08:10:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IYdcLKfBDTP6v/TOJ5Of9pmRW2RZTJokAhRd7MDjmMY=;
+        b=GY/UFOx5QuM/4I4w/t99hMU8FrantgWy6Tfo93t4emhE6p3uZugJ+vPSVQpDXlPHQu
+         nDL3GuS2wbH/UFaY9AceqWdt5+Cx+2w/W+BQ0bKtTzjLbs/xyqbjTctnlbZx1bIXqWEh
+         ZuFjB+bvE7Ve3Mc2CaoT4Sgjl/XIbOaZ8GC2TbG0PWDa7f3Jf7QH1Hk4dwOOPlQJZ3Al
+         QcUNluNrOgRQq+rWsWjGrQ6Dtn2qwy+LDoyojqMYC8zOX/tc3/LdFaGSO3Puzmc57KaN
+         habDUQXpWe2MuNSO5eOYoZNBYfvtY79bnwoAdPPhdkjyBpZA7UKwav49aB1DU6/PJ4Gy
+         G7Zg==
+X-Gm-Message-State: ACrzQf2zkEVlSQCo8ZAD+vnAcjFgD3BHiY5hblmvD/jcEpYYnN4XWl2H
+        6MMeetVZ6ZkN0g7qup0WejbbExREYUnNAjgRXbJw+9/G
+X-Google-Smtp-Source: AMsMyM7fXB21Rz0H8pqx1G8vu2ow+NlxP1XMERegw1DKim6XGcugV/aEbmoJCYiXx1559qFw/GK+o0uDCkd14i1QKNg=
+X-Received: by 2002:a05:6402:35d4:b0:459:348d:a7ac with SMTP id
+ z20-20020a05640235d400b00459348da7acmr28729083edc.149.1665587456539; Wed, 12
+ Oct 2022 08:10:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ContactOffice-Account: com:378009619
+References: <CA+JQ7M-CN0UnHQDDDVz0kPcU1AcoL9+WFOeR8eiw_B=Yiyc-CA@mail.gmail.com>
+ <221012.86mta1mmli.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221012.86mta1mmli.gmgdl@evledraar.gmail.com>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Wed, 12 Oct 2022 17:10:46 +0200
+Message-ID: <CA+JQ7M-y9d=c3GbpAs+Y4qtimtVs9oQ6BU1YL8nmFmF=rZxKag@mail.gmail.com>
+Subject: Re: [BUG] git fetch fetches tags matching negative refspec
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sotir Danailov <sndanailov@wired4ever.net>
+On Wed, Oct 12, 2022 at 11:13 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> I.e. it got stuff you asked for, but also tags pointing at the main
+> history, --no-tags will stop that, at which point you can *also* fetch
+> tags, just with the refspec.
+I tried but
+  git fetch --no-tags
+with negative refspec did not fetch any tags.
+  git fetch --tags
+does.
 
-New explanation for the difference between these values.
-It's hard to understand what they do based only on the names.
-New description of used default ports.
+I'm going to set
+  git config remote.origin.tagopt --tags
+and then that's going to do what I want.
 
-Signed-off-by: Sotir Danailov <sndanailov@wired4ever.net>
----
-Changes since v1: Expanded explanation, covering more terms.
-Link to v1: https://public-inbox.org/git/20221010172859.13832-1-sndanailov@wired4ever.net/
+Thank you for pointing me in the right direction and giving clarity.
 
-Changes since v2: Added a description of what the option actually does.
-Link to v2: https://public-inbox.org/git/20221011164927.1516-1-sndanailov@wired4ever.net/
-
- Documentation/git-send-email.txt | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 3290043053..765b2df853 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -178,9 +178,18 @@ Sending
- 	for `sendmail` in `/usr/sbin`, `/usr/lib` and $PATH.
- 
- --smtp-encryption=<encryption>::
--	Specify the encryption to use, either 'ssl' or 'tls'.  Any other
--	value reverts to plain SMTP.  Default is the value of
--	`sendemail.smtpEncryption`.
-+	Specify in what way encrypting begins for the SMTP connection.
-+	Valid values are 'ssl' and 'tls'. Any other value reverts to plain
-+	(unencrypted) SMTP, which defaults to port 25.
-+	Despite the names, both values will use the same newer version of TLS,
-+	but for historic reasons have these names. 'ssl' refers to "implicit"
-+	encryption (sometimes called SMTPS), that uses port 465 by default.
-+	'tls' refers to "explicit" encryption (often known as STARTTLS),
-+	that uses port 25 by default. Other ports might be used by the SMTP
-+	server, which are not the default. Commonly found alternative port for
-+	'tls' and unencrypted is 587. You need to check your provider's
-+	documentation or your server configuration to make sure
-+	for your own case. Default is the value of `sendemail.smtpEncryption`.
- 
- --smtp-domain=<FQDN>::
- 	Specifies the Fully Qualified Domain Name (FQDN) used in the
--- 
-2.37.3
-
+> I haven't had time to try this, but I believe this isn't a bug, it's
+> just that you didn't supply --no-tags.
+I guess then everything works as expected but maybe the documentation
+regarding this could be improved.
