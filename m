@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F728C4332F
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 12:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 168DEC43217
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 12:53:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229880AbiJLMxO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 08:53:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38088 "EHLO
+        id S229780AbiJLMxP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 08:53:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229798AbiJLMxB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 08:53:01 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8BB7C90CA
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 05:52:51 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id e18so10362339wmq.3
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 05:52:51 -0700 (PDT)
+        with ESMTP id S229811AbiJLMxC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 08:53:02 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A31CC90E9
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 05:52:53 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id j16so26090220wrh.5
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 05:52:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=23xdSrTs1L8KeO1BbMKQpiLa02wLnB63jG2LCHd+drg=;
-        b=Mh1upTGl8hKWsUGZaGg18wabFmu94bEM50gED2oG8Dcb1IyHeQmME5PloPUe5qJLnc
-         zHsiQ1vDZTZ+PYU7c1oZ6jR/FoycG5LMAcWPRoRyc3+rtHcln6qrlhEhCgEkIOJndcwA
-         OY4LVsdU+Tj8xf00zaelZmpm5XUbHlrSMCf+hi90FwV/3dN0FVm+IfndihseMI3Uloma
-         Ld18CoChnkNGxBz0K6f+NAm8l19rzty1d34xFudjgDIJ3Mt+N0VuEZsIjEGSR7zj59eH
-         +ymKXVOXxWhOthT33+yyCyjnDtfDkv+KeEnnULMlPlDtQYyBprNIziv5Bb1esi3sVkqN
-         ALWQ==
+        bh=fMNeldL6yVM+YKrj7w8lZD7yCcA2s/qR6KN4/yWumMc=;
+        b=QwZQTfszRDPUbIs7iIb1XmhJe5Qz5zcW6LY7FtmmLC80U2OZIjLTKh64Doju6hcj7d
+         5tRUDsi8LwSTzE1Ol8wQTAay3czxr6U+AyItr85Qz75WfMia05hnO9/I4ay4M1xyCNut
+         8Xzhl8C/RmhsLkVQpqE1lh2t6hRYHG97ndv0kZGzsYHufjZqgxs78pJrtqvC4vVSEtLs
+         I1Vc50JI+s5EDkO01m21to0zcpviKSy/8EZXbvrksoMv9cqMdf1Zfupm4mwtnFAbVMUl
+         nDwO8RVtD8ndThOld86XrmoJWId3XlnOW00llrBlQlMoImL+2DQs3TdN7BijdeMtbKj2
+         SwDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=23xdSrTs1L8KeO1BbMKQpiLa02wLnB63jG2LCHd+drg=;
-        b=yQsTi/jXukKdZumiSln/A7yuvhDHxK6oifhCMmZHaL8C5X9YFtTPkyYw6smUxZakMV
-         LSXmsGgWySsMVPudIpZ2+aIh3gXuU37pFZX8jrKOyof5TgqN9UU2Ut3GUZl8L1S118C9
-         JxBoyB+LBiAyxJRA2v9+0MvkkMliPsaUuh2bXc6iS7+MVKeF9rkUCZ0gsyqCfYHUZNKF
-         CZqzAUUmlkWu8naavLm19C8PN/Kss8I0wuGhH5WUN0J+b85l7OMAwkKaQ8Xl2adrlpHu
-         ClKDZYRUvw6kMG1G9CqIxj/phGGaMUZLqPzKU38FTo1MNtTA9bHZ+Svu4Q68WP2T4h9K
-         Glrg==
-X-Gm-Message-State: ACrzQf2RQm212JQowrkZ94lNEHJUdcydR+HZNCx4IsQDFALe7S7GunJs
-        RVg5NBK+B/uvHb5ZKBvC1E9CSn2vSfY=
-X-Google-Smtp-Source: AMsMyM4J7WuZw+SH+CuCiD3hizlmRPAipTx/7SIyWeUIvYTdW76nGf211ULlkopHHd9YqiIvqVrIbQ==
-X-Received: by 2002:a05:600c:4f13:b0:3b4:9a07:efdb with SMTP id l19-20020a05600c4f1300b003b49a07efdbmr2671532wmq.94.1665579169545;
-        Wed, 12 Oct 2022 05:52:49 -0700 (PDT)
+        bh=fMNeldL6yVM+YKrj7w8lZD7yCcA2s/qR6KN4/yWumMc=;
+        b=MIwC+KXcMrz2yRsdXQaI69LJptn/i8AWfbHiO0efBAlq4oqMCq2c1YFndY4jKDiDer
+         AlGNRJ4kPKKQzGMOWClYp28Z+ze7UUYycbZuOneXJ09jLlIWRIpkY96AptkTIhJJDvEE
+         /XJ2YUymFmPlbdRVvirRkW1w20O9cpipSaQuEl6YKoQj8N/M52/QaJIsEfdtr3KxW4kl
+         d8pJLNFNrBYNyz3g7WB+iJHmVEbj3hDyjvcM01eZMBdWc1O+sjzdsA9dzQ0BzAZnFiho
+         3F4BQ6VomkrJsQyTQhQWHx3N4HwSCYEWBncQOhK/x0O50P8isZiuUoICv9dnM3bejlaJ
+         nPPg==
+X-Gm-Message-State: ACrzQf0lgU985zlqRPcPUe0i2KUHjg3UEM64exhjdjV/Flo7xrzyWT39
+        lrjFjVnA/+4bvpr0Vqxubpcil43D60M=
+X-Google-Smtp-Source: AMsMyM5xiLAcEMuMobC/wf4+eLHUR2VBLUU+lrQflUh1+whlMujcQoNOBZrMRxAPS6Hivc9kHxwHdw==
+X-Received: by 2002:adf:dd8d:0:b0:22e:4675:86c9 with SMTP id x13-20020adfdd8d000000b0022e467586c9mr17394136wrl.643.1665579170982;
+        Wed, 12 Oct 2022 05:52:50 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ba6-20020a0560001c0600b0022e57e66824sm17347643wrb.99.2022.10.12.05.52.48
+        by smtp.gmail.com with ESMTPSA id h11-20020a05600c314b00b003c6d896a17dsm599087wmo.32.2022.10.12.05.52.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 05:52:48 -0700 (PDT)
-Message-Id: <0ecae3a44b360fbb03a52b73536f83c457a6668d.1665579160.git.gitgitgadget@gmail.com>
+        Wed, 12 Oct 2022 05:52:50 -0700 (PDT)
+Message-Id: <7e6b32313b0f1922c0d0bfd104a288b8606306ec.1665579160.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1333.v5.git.1665579160.gitgitgadget@gmail.com>
 References: <pull.1333.v4.git.1665417859.gitgitgadget@gmail.com>
         <pull.1333.v5.git.1665579160.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 12 Oct 2022 12:52:33 +0000
-Subject: [PATCH v5 06/12] bundle-uri: parse bundle list in config format
+Date:   Wed, 12 Oct 2022 12:52:34 +0000
+Subject: [PATCH v5 07/12] bundle-uri: limit recursion depth for bundle lists
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,245 +74,65 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-When a bundle provider wants to operate independently from a Git remote,
-they want to provide a single, consistent URI that users can use in
-their 'git clone --bundle-uri' commands. At this point, the Git client
-expects that URI to be a single bundle that can be unbundled and used to
-bootstrap the rest of the clone from the Git server. This single bundle
-cannot be re-used to assist with future incremental fetches.
+The next change will start allowing us to parse bundle lists that are
+downloaded from a provided bundle URI. Those lists might point to other
+lists, which could proceed to an arbitrary depth (and even create
+cycles). Restructure fetch_bundle_uri() to have an internal version that
+has a recursion depth. Compare that to a new max_bundle_uri_depth
+constant that is twice as high as we expect this depth to be for any
+legitimate use of bundle list linking.
 
-To allow for the incremental fetch case, teach Git to understand a
-bundle list that could be advertised at an independent bundle URI. Such
-a bundle list is likely to be inspected by human readers, even if only
-by the bundle provider creating the list. For this reason, we can take
-our expected "key=value" pairs and instead format them using Git config
-format.
-
-Create bundle_uri_parse_config_format() to parse a file in config format
-and convert that into a 'struct bundle_list' filled with its
-understanding of the contents.
-
-Be careful to use error_action CONFIG_ERROR_ERROR when calling
-git_config_from_file_with_options() because the default action for
-git_config_from_file() is to die() on a parsing error.  The current
-warning isn't particularly helpful if it arises to a user, but it will
-be made more verbose at a higher layer later.
-
-Update 'test-tool bundle-uri' to take this config file format as input.
-It uses a filename instead of stdin because there is no existing way to
-parse a FILE pointer in the config machinery. Using
-git_config_from_mem() is overly complicated and more likely to introduce
-bugs than this simpler version.
+We can consider making max_bundle_uri_depth a configurable value if
+there is demonstrated value in the future.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- bundle-uri.c                | 27 ++++++++++++++++++++
- bundle-uri.h                |  9 +++++++
- t/helper/test-bundle-uri.c  | 49 +++++++++++++++++++++++++++---------
- t/t5750-bundle-uri-parse.sh | 50 +++++++++++++++++++++++++++++++++++++
- 4 files changed, 123 insertions(+), 12 deletions(-)
+ bundle-uri.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/bundle-uri.c b/bundle-uri.c
-index c02e7f62eb1..3d44ec2b1e6 100644
+index 3d44ec2b1e6..8a7c11c6393 100644
 --- a/bundle-uri.c
 +++ b/bundle-uri.c
-@@ -173,6 +173,33 @@ static int bundle_list_update(const char *key, const char *value,
- 	return 0;
+@@ -334,11 +334,25 @@ static int unbundle_from_file(struct repository *r, const char *file)
+ 	return result;
  }
  
-+static int config_to_bundle_list(const char *key, const char *value, void *data)
-+{
-+	struct bundle_list *list = data;
-+	return bundle_list_update(key, value, list);
-+}
+-int fetch_bundle_uri(struct repository *r, const char *uri)
++/**
++ * This limits the recursion on fetch_bundle_uri_internal() when following
++ * bundle lists.
++ */
++static int max_bundle_uri_depth = 4;
 +
-+int bundle_uri_parse_config_format(const char *uri,
-+				   const char *filename,
-+				   struct bundle_list *list)
-+{
-+	int result;
-+	struct config_options opts = {
-+		.error_action = CONFIG_ERROR_ERROR,
-+	};
-+
-+	result = git_config_from_file_with_options(config_to_bundle_list,
-+						   filename, list,
-+						   &opts);
-+
-+	if (!result && list->mode == BUNDLE_MODE_NONE) {
-+		warning(_("bundle list at '%s' has no mode"), uri);
-+		result = 1;
++static int fetch_bundle_uri_internal(struct repository *r,
++				     const char *uri,
++				     int depth)
+ {
+ 	int result = 0;
+ 	char *filename;
+ 
++	if (depth >= max_bundle_uri_depth) {
++		warning(_("exceeded bundle URI recursion limit (%d)"),
++			max_bundle_uri_depth);
++		return -1;
 +	}
 +
-+	return result;
+ 	if (!(filename = find_temp_filename())) {
+ 		result = -1;
+ 		goto cleanup;
+@@ -366,6 +380,11 @@ cleanup:
+ 	return result;
+ }
+ 
++int fetch_bundle_uri(struct repository *r, const char *uri)
++{
++	return fetch_bundle_uri_internal(r, uri, 0);
 +}
 +
- static char *find_temp_filename(void)
- {
- 	int fd;
-diff --git a/bundle-uri.h b/bundle-uri.h
-index 0e56ab2ae5a..bc13d4c9929 100644
---- a/bundle-uri.h
-+++ b/bundle-uri.h
-@@ -62,6 +62,15 @@ int for_all_bundles_in_list(struct bundle_list *list,
- struct FILE;
- void print_bundle_list(FILE *fp, struct bundle_list *list);
- 
-+/**
-+ * A bundle URI may point to a bundle list where the key=value
-+ * pairs are provided in config file format. This method is
-+ * exposed publicly for testing purposes.
-+ */
-+int bundle_uri_parse_config_format(const char *uri,
-+				   const char *filename,
-+				   struct bundle_list *list);
-+
  /**
-  * Fetch data from the given 'uri' and unbundle the bundle data found
-  * based on that information.
-diff --git a/t/helper/test-bundle-uri.c b/t/helper/test-bundle-uri.c
-index 0329c56544f..25afd393428 100644
---- a/t/helper/test-bundle-uri.c
-+++ b/t/helper/test-bundle-uri.c
-@@ -4,12 +4,21 @@
- #include "strbuf.h"
- #include "string-list.h"
- 
--static int cmd__bundle_uri_parse(int argc, const char **argv)
-+enum input_mode {
-+	KEY_VALUE_PAIRS,
-+	CONFIG_FILE,
-+};
-+
-+static int cmd__bundle_uri_parse(int argc, const char **argv, enum input_mode mode)
- {
- 	const char *key_value_usage[] = {
- 		"test-tool bundle-uri parse-key-values <input>",
- 		NULL
- 	};
-+	const char *config_usage[] = {
-+		"test-tool bundle-uri parse-config <input>",
-+		NULL
-+	};
- 	const char **usage = key_value_usage;
- 	struct option options[] = {
- 		OPT_END(),
-@@ -19,21 +28,35 @@ static int cmd__bundle_uri_parse(int argc, const char **argv)
- 	int err = 0;
- 	FILE *fp;
- 
--	argc = parse_options(argc, argv, NULL, options, usage, 0);
--	if (argc != 1)
--		goto usage;
-+	if (mode == CONFIG_FILE)
-+		usage = config_usage;
-+
-+	argc = parse_options(argc, argv, NULL, options, usage,
-+			     PARSE_OPT_STOP_AT_NON_OPTION);
- 
- 	init_bundle_list(&list);
--	fp = fopen(argv[0], "r");
--	if (!fp)
--		die("failed to open '%s'", argv[0]);
- 
--	while (strbuf_getline(&sb, fp) != EOF) {
--		if (bundle_uri_parse_line(&list, sb.buf))
--			err = error("bad line: '%s'", sb.buf);
-+	switch (mode) {
-+	case KEY_VALUE_PAIRS:
-+		if (argc != 1)
-+			goto usage;
-+		fp = fopen(argv[0], "r");
-+		if (!fp)
-+			die("failed to open '%s'", argv[0]);
-+		while (strbuf_getline(&sb, fp) != EOF) {
-+			if (bundle_uri_parse_line(&list, sb.buf))
-+				err = error("bad line: '%s'", sb.buf);
-+		}
-+		fclose(fp);
-+		break;
-+
-+	case CONFIG_FILE:
-+		if (argc != 1)
-+			goto usage;
-+		err = bundle_uri_parse_config_format("<uri>", argv[0], &list);
-+		break;
- 	}
- 	strbuf_release(&sb);
--	fclose(fp);
- 
- 	print_bundle_list(stdout, &list);
- 
-@@ -62,7 +85,9 @@ int cmd__bundle_uri(int argc, const char **argv)
- 		goto usage;
- 
- 	if (!strcmp(argv[1], "parse-key-values"))
--		return cmd__bundle_uri_parse(argc - 1, argv + 1);
-+		return cmd__bundle_uri_parse(argc - 1, argv + 1, KEY_VALUE_PAIRS);
-+	if (!strcmp(argv[1], "parse-config"))
-+		return cmd__bundle_uri_parse(argc - 1, argv + 1, CONFIG_FILE);
- 	error("there is no test-tool bundle-uri tool '%s'", argv[1]);
- 
- usage:
-diff --git a/t/t5750-bundle-uri-parse.sh b/t/t5750-bundle-uri-parse.sh
-index fd142a66ad5..c2fe3f9c5a5 100755
---- a/t/t5750-bundle-uri-parse.sh
-+++ b/t/t5750-bundle-uri-parse.sh
-@@ -118,4 +118,54 @@ test_expect_success 'bundle_uri_parse_line() parsing edge cases: duplicate lines
- 	test_cmp_config_output expect actual
- '
- 
-+test_expect_success 'parse config format: just URIs' '
-+	cat >expect <<-\EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+	[bundle "one"]
-+		uri = http://example.com/bundle.bdl
-+	[bundle "two"]
-+		uri = https://example.com/bundle.bdl
-+	[bundle "three"]
-+		uri = file:///usr/share/git/bundle.bdl
-+	EOF
-+
-+	test-tool bundle-uri parse-config expect >actual 2>err &&
-+	test_must_be_empty err &&
-+	test_cmp_config_output expect actual
-+'
-+
-+test_expect_success 'parse config format edge cases: empty key or value' '
-+	cat >in1 <<-\EOF &&
-+	= bogus-value
-+	EOF
-+
-+	cat >err1 <<-EOF &&
-+	error: bad config line 1 in file in1
-+	EOF
-+
-+	cat >expect <<-\EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+	EOF
-+
-+	test_must_fail test-tool bundle-uri parse-config in1 >actual 2>err &&
-+	test_cmp err1 err &&
-+	test_cmp_config_output expect actual &&
-+
-+	cat >in2 <<-\EOF &&
-+	bogus-key =
-+	EOF
-+
-+	cat >err2 <<-EOF &&
-+	error: bad config line 1 in file in2
-+	EOF
-+
-+	test_must_fail test-tool bundle-uri parse-config in2 >actual 2>err &&
-+	test_cmp err2 err &&
-+	test_cmp_config_output expect actual
-+'
-+
- test_done
+  * General API for {transport,connect}.c etc.
+  */
 -- 
 gitgitgadget
 
