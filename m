@@ -2,80 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B005C4332F
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 16:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54FC9C4332F
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 16:08:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbiJLQFn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 12:05:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50532 "EHLO
+        id S229843AbiJLQIU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 12:08:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbiJLQFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 12:05:42 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A16F3FD54
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 09:05:41 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C0AFD1B5297;
-        Wed, 12 Oct 2022 12:05:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=MwnmUs6/VH4s
-        CerjcNY2vFlkmyoE5R0deUE5AVL5Npk=; b=XSf9IicUWQIPWSNUPE/3z6iDwZQH
-        IWc3xVPkcBUw6ia1K+Dg2mpdTe4dEtfBOxjUUSPhUYFbVDL6gtX1bq1XvAc526SL
-        xJKF54bE51Vc9zxh1j2RRWcwTG5uiHQP2RMC0PS0cS/nUCGnPxDvM74gWFLGbzRd
-        36EFzVZ6iGSHzS4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B41BE1B5296;
-        Wed, 12 Oct 2022 12:05:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 210A51B5295;
-        Wed, 12 Oct 2022 12:05:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v2 08/22] run-command.c: use C99 "for (TYPE VAR = ..."
- syntax where useful
-References: <cover-00.15-00000000000-20220930T111343Z-avarab@gmail.com>
-        <cover-v2-00.22-00000000000-20221012T084850Z-avarab@gmail.com>
-        <patch-v2-08.22-279b0430c5d-20221012T084850Z-avarab@gmail.com>
-        <ae08523f-13ac-d9aa-b787-f136a88b5804@gmail.com>
-Date:   Wed, 12 Oct 2022 09:05:36 -0700
-In-Reply-To: <ae08523f-13ac-d9aa-b787-f136a88b5804@gmail.com> (Phillip Wood's
-        message of "Wed, 12 Oct 2022 14:04:35 +0100")
-Message-ID: <xmqq35btm3hr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229517AbiJLQIS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 12:08:18 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7386C74DDC
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 09:08:17 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id f27so3119089qkh.12
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 09:08:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=klerks.biz; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yYdGDJohwwWz5yiTfyMyX0T3gQSNGxRUMBlTPr1yrTQ=;
+        b=DlFCP80b995BzZjyMIAE9F1L+JvkB3fJTeysY7j0KOmOaNKbMPaqJL86XWZ+n4NgM1
+         u5WUhF2QzLyV5AH/mppLtBFQqwBsE1COHqHAPdpNDp7i2/k8JSULV0ERkAEleoIFAPOX
+         wQx7qQavX0Rq4KodF+xgxaYLQqdsY282PcWO4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yYdGDJohwwWz5yiTfyMyX0T3gQSNGxRUMBlTPr1yrTQ=;
+        b=loInX3LHO34PXXDiaYKDGnfPs9r6825qsXl9s2AkPc9y2gyztIyKMr282j4KZB7gsw
+         OEE5bCaZFNkfBkDkN85GKzl8VOOHQzDbP+tjzh+R3Of53yM+x71urdTINICZfX2xdSht
+         SFOb4Bue6PiyF0O3l7hI8E+C3EyO4T9nOl2q3T8xFp9aGTdbaITjrZgXRHv1Khwidyqr
+         Zf/FK+Ie3UZVKmFDuTo2U0sUOmRStPHQc8JI2p0bX6uemTMms2F6y8IzLp5ITUek2Rb/
+         V6fSp9GvpNRbs+Chnz0XBWcH8/mOMz0n+Yk/E0dgZGodIVfck6gl25zuY9rHQQ4ASi9j
+         VHEw==
+X-Gm-Message-State: ACrzQf3KX/fPS5QAuO1UPIr0rdPVJAdYilVkp8sk3VZj7IwzpRWbFqjo
+        r8DyfkWw2Wdg6T69PzLh83RmRAvzg28e6VS8GWkXcxrAsoMPNg==
+X-Google-Smtp-Source: AMsMyM7FoxnnwrRNaVNAKvJ44eDrgTg+aSsBM/FSKBhoMnkC/BULeY6I1iOO1UwVYITbyZMmyQ3G8penypmfxH4x3mI=
+X-Received: by 2002:a05:620a:270e:b0:6df:7dba:f45a with SMTP id
+ b14-20020a05620a270e00b006df7dbaf45amr20434359qkp.661.1665590896245; Wed, 12
+ Oct 2022 09:08:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B5CBF1A2-4A47-11ED-8574-C2DA088D43B2-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1381.git.1665590389045.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1381.git.1665590389045.gitgitgadget@gmail.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Wed, 12 Oct 2022 18:08:06 +0200
+Message-ID: <CAPMMpoiQe+9YEQC4mHwTNt4QGBawKxYv5s0v4k+dkjqtKw6NKg@mail.gmail.com>
+Subject: Re: [PATCH] mergetool: new config guiDefault supports auto-toggling
+ gui by DISPLAY
+To:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
->>   	while (1) {
->> -		for (i =3D 0;
->> +		for (int i =3D 0;
+On Wed, Oct 12, 2022 at 5:59 PM Tao Klerks via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Here we are moving the declaration to the loop.
+> From: Tao Klerks <tao@klerks.biz>
 >
-> Am I missing something, I don't understand how these changes match
-> this description in the commit message
+> When no merge.tool or diff.tool is configured or manually selected, the
+> selection of a default tool is sensitive to the DISPLAY variable; in a
+> GUI session a gui-specific tool will be proposed if found, and
+> otherwise a terminal-based one. This "GUI-optimizing" behavior is
+> important because a GUI can make a huge difference to a user's ability
+> to understand and correctly complete a non-trivial conflicting merge.
+>
 
-It matches the commit title, and makes it clear that this does not
-have to be part of this series.
+Quick clarification - this was intended to be an RFC.
 
-=C3=86var, try to do a focused series that achieves the objective of the
-topic well, without succumbing to the temptation of creature feep.
-It is especially important when you are taking other peoples' series
-hostage by requesting them to rebase on you.
+I forgot that with GitGitGadget at the moment (until we do something
+to explicitly support RFCs) a single-commit patch needs the *commit*
+to have the RFC prefix, instead of the Merge Request, as the commit's
+subject is used instead of the merge request's subject in a
+single-commit patch.
 
-Thanks.
+I will make sure any later RFC versions have the prefix as appropriate.
