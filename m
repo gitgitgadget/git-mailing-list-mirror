@@ -2,129 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18480C433FE
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 13:31:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BB04C433FE
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 13:39:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229962AbiJLNbR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 09:31:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37726 "EHLO
+        id S229566AbiJLNjR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 09:39:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbiJLNbP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 09:31:15 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8B44814C9
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 06:31:11 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id B3EADCA1255;
-        Wed, 12 Oct 2022 09:31:10 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 7AA94CC831A;
-        Wed, 12 Oct 2022 09:31:10 -0400 (EDT)
-Subject: Re: [RFC PATCH] trace2 API: don't save a copy of constant
- "thread_name"
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-References: <xmqqr0zkipva.fsf@gitster.g>
- <RFC-patch-1.1-8563d017137-20221007T010829Z-avarab@gmail.com>
- <xmqqo7uoh1q0.fsf@gitster.g> <221007.865ygvrjs7.gmgdl@evledraar.gmail.com>
- <afc73d87-b2d9-72e9-1be5-156f37102747@jeffhostetler.com>
- <221011.86h70ao4g6.gmgdl@evledraar.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <e138b178-99d9-e537-2cb1-c240962a35f2@jeffhostetler.com>
-Date:   Wed, 12 Oct 2022 09:31:09 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.0; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S229507AbiJLNjP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 09:39:15 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43FE7B6013
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 06:39:14 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id n12so26252390wrp.10
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 06:39:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :reply-to:user-agent:mime-version:date:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ZcpmPypeiLIjfCuWcEVXmYumdnEpmxu7StYu2JZCoyo=;
+        b=qIMDLNq5qvX1vm3gPbVBSCUXLsQBgw5qlehmAPe010kqPdVI+2OOigeSLeUExLTtPA
+         DxWQnpmIASWCOgQjkbM4ajlbP0x82kJh434TQzvtODDmRI6FDL86Jj85uh6Lma0nIknM
+         KUfuDt6N+mWKqa6DPMnzS7u9XRjW3/Ewe7QLmGi4O8ncSBN3ZiVm/W0/ac81uV3oB8A3
+         drP6bFAU1a1NMqCACKOtT4vWOLFnuGE3GQogusmY4hI7HEMwlDOobAoQysqVKcba914E
+         Q3w0xw/BRdnp61WkDYhLp6P/KqVWGWlAOJsNAGk12XF9TrHUPPwajJvSV6DuCMZ3GFb4
+         V80w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :reply-to:user-agent:mime-version:date:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZcpmPypeiLIjfCuWcEVXmYumdnEpmxu7StYu2JZCoyo=;
+        b=5Ld1UoEdxdYr4dwagqgINE3bUtKxKYlTwAp9R41adGUQP1402tmQuLbIm/FqP2h2RX
+         uRA6MIxY7IrSpKNhfhUExbpFjF0vdXnv1mdV3uY+ejK7gyAiXKtDmuW2e9NJkNQMVU3i
+         1sC2aOcEJeJY9OeY7A4ZProTfLlLo6zh9r+dDrJxCIq87I66i7SofUXJPYbw7hVerUwu
+         5bJa2ZXB7INabQkWfArTVDDIrEo2xr+PUHoMQRhJyAWpkwWw9S6x2IQLc27FF7EPS+cz
+         B3friyiSsTmKQM8R6+rEK/8r9HtI/24gweptLGfxRb+jCJrUASx1owFa+fqfYDQjfrwr
+         2FQA==
+X-Gm-Message-State: ACrzQf3gyqYDw/E2OlMAlOK32wJt+kWaiVYk8BZPf5YVupijUB1lntCJ
+        BXJncOfYGCTBBiBDpZyWzH0=
+X-Google-Smtp-Source: AMsMyM7W8qbdzLWXepNSgqieFcwBhyy1k14tp4JaFqWjdU/EvKUqdpn0T3KPo5vgcLM7YfveXjG98Q==
+X-Received: by 2002:adf:cf07:0:b0:22e:3ea0:4fa9 with SMTP id o7-20020adfcf07000000b0022e3ea04fa9mr17351298wrj.147.1665581952793;
+        Wed, 12 Oct 2022 06:39:12 -0700 (PDT)
+Received: from [192.168.1.81] ([31.185.185.144])
+        by smtp.googlemail.com with ESMTPSA id g14-20020a056000118e00b0022cc3e67fc5sm13906333wrx.65.2022.10.12.06.39.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Oct 2022 06:39:12 -0700 (PDT)
+Message-ID: <9b4df247-c67c-8e5c-9c2e-1972db6a02e6@gmail.com>
+Date:   Wed, 12 Oct 2022 14:39:11 +0100
 MIME-Version: 1.0
-In-Reply-To: <221011.86h70ao4g6.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 00/22] run-command API: pass functions & opts via
+ struct
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+References: <cover-00.15-00000000000-20220930T111343Z-avarab@gmail.com>
+ <cover-v2-00.22-00000000000-20221012T084850Z-avarab@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <cover-v2-00.22-00000000000-20221012T084850Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: mailmunge 3.09 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Ævar
 
-
-On 10/11/22 9:31 AM, Ævar Arnfjörð Bjarmason wrote:
+On 12/10/2022 10:01, Ævar Arnfjörð Bjarmason wrote:
+> This series changes the run-command API so that we pass options via a
+> struct instead of via the argument list, the end result is that an API
+> user looks like e.g.:
 > 
-> On Mon, Oct 10 2022, Jeff Hostetler wrote:
-> 
->> On 10/7/22 6:03 AM, Ævar Arnfjörð Bjarmason wrote:
->>> On Thu, Oct 06 2022, Junio C Hamano wrote:
->>>
->>>> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->>>>
->>>>> A cleaned up version of the test code I had on top of "master", RFC
->>>>> because I may still be missing some context here. E.g. maybe there's a
->>>>> plan to dynamically construct these thread names?
->>>>
-[...]
+>       +       const struct run_process_parallel_opts opts = {
+>       +               .tr2_category = "submodule",
+>       +               .tr2_label = "parallel/update",
+>       +
+>       +               .processes = update_data->max_jobs,
+>       +
+>       +               .get_next_task = update_clone_get_next_task,
+>       +               .start_failure = update_clone_start_failure,
+>       +               .task_finished = update_clone_task_finished,
+>       +               .data = &suc,
+>       +       };
+>       [...]
+>       -       run_processes_parallel_tr2(suc.update_data->max_jobs, update_clone_get_next_task,
+>       -                                  update_clone_start_failure,
+>       -                                  update_clone_task_finished, &suc, "submodule",
+>       -                                  "parallel/update");
+>       +       run_processes_parallel(&opts);
 
-> I left more extensive commentary in the side-thread in
-> https://lore.kernel.org/git/221011.86lepmo5dn.gmgdl@evledraar.gmail.com/,
-> just a quick reply here.
-> 
->> WRT optimizing memory usage.  We're talking about ~25 byte buffer
->> per thread.  Most commands execute in 1 thread -- if they read the
->> index they may have ~10 threads (depending on the size of the index
->> and if preload-index is enabled).  So, I don't think we really need
->> to optimize this.  Threading is used extensively in fsmonitor-daemon,
->> but it creates a fixed thread-pool at startup, so it may have ~12
->> threads.  Again, not worth optimizing for the thread-name field.
-> 
-> Yes, I agree it's not worth optimizing.
-> 
-> The reason for commenting on this part is that it isn't clear to me why
-> your proposed patch then isn't doing the more obvious "it's not worth
-> optimizing" pattern, per Junio's [1] comment on the initial version.
-> 
-> The "flex array" method is seemingly taking pains to reduce the runtime
-> memory use of these by embedding this string in the space reserved for
-> the struct.
-> 
-> So it's just meant as a question for you & the proposed patch.
+I thought the first version was longer than it needed to be and now it 
+has grown by 50%. I think there are a number of changes here that are 
+not related to converting run_processes_parallel() to take a struct of 
+options. My feeling is that the test cleanups are worthwhile but the 
+changes in patches 8-10 are needed and patches 12-14 would be better 
+squashed together.
 
-I think we're converging on some common understanding (and I
-think we've gone around on this topic more than enough).  :-)
+I'm afraid that I'm think this fits a pattern of submitting series that 
+incorporate unrelated changes and so end up longer than they need to be. 
+I think this leads to poorer reviews and a greater change of regressions 
+because reviewers are overwhelmed by the sheer volume of changes they're 
+expected to review. I find it particularly fustrating to review code in 
+one patch only to find it is deleted in the next patch.
 
-I really was just trying to get rid of the strbuf and make it
-a fixed string -- I chose a flex-array rather than just detaching
-the buffer from a local in the thread-start code.  I should have
-done the latter.  I saw the flex-array as a fixed-size object
-that can't be replaced or extended (without recreating the
-thread-local storage) -- yes, people could overwrite existing
-bytes in-place in the flex-array, but who does that??
+I think the overall goal here is worthwhile, but I'd really like to see 
+a much shorter more focused series. In general two shorter series are 
+much more likely to receive good quality reviews than one longer series 
+making the same changes.
 
+Best Wishes
 
-I understood what you were asking (illustrated in your RFC).
-That is, I understood the "what/how" you wanted to do to refactor /
-redesign the field, but I couldn't understand the "why".  That
-is, why you've taken such interest in this field (and such
-a relatively unimportant change).  We've spent nearly a week
-discussing it and we both agree that the optimization that I
-didn't suggest isn't worth doing.  (I'm paraphrasing slightly.) :-)
-
-So, rather than continuing with the back-n-forth, let me skip
-over the remaining questions in this thread and prepare a re-roll.
-Hopefully, I can simplify and more clearly explain the method to
-my madness and we can move on.
-
-
->> Now, if you want to optimize over all trace2 events (a completely
->> different topic), you could create a large scratch strbuf buffer in
->> each thread context and use it so that we don't have to malloc/free
->> during each trace message.  That might be worth while.
-> 
-> *nod*
-
-I'll make a note to revisit this idea in a future series.
-
-Thanks
-Jeff
+Phillip
 
