@@ -2,143 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9BEAC4332F
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 16:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F7EAC4332F
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 17:09:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229735AbiJLQ4u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 12:56:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38814 "EHLO
+        id S229506AbiJLRJL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 13:09:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbiJLQ4t (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 12:56:49 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8D69FE752
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 09:56:47 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id j12-20020a63594c000000b004468ff8fc78so9595150pgm.10
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 09:56:47 -0700 (PDT)
+        with ESMTP id S229663AbiJLRJJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 13:09:09 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5B64B5FFE
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 10:09:07 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id q12-20020a170902dacc00b00184ba4faf1cso935020plx.23
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 10:09:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LGkMBLFYZoGxy35+PA6EYNmWGWQmISyDgaW7TcS5hgk=;
-        b=rZdDy9PCjjEQcQ8K8hrdwAG3aCs9IG8Y6nYFYYinZmzcJd/KrHP/Er1HqeEP9gwE9K
-         IpqwKhiHDpGJyzZGTEBr4KcTIhkSa9f3OO+Fx2qUIuD491moExP0aI0w+MGodhaYUYOL
-         vhRaNF9lCmlDt/a8fpHn7/6A9O2FkqwGDuS9oxVhdgf1C3Qbukr84o222xytrtjSKlFP
-         A2KnfwHJSUuQ50zN6m30vJDVbDVyNEPW3k7MHbDlIDa2be0MvpYTpXm4jxtq27iskcRG
-         Eb5RovJHH+VJZDbhCI9TCYpkL9Q3FQgEynKJAFO1T7T67H4zdrDL2NZ33PPmQq30xiRo
-         Payw==
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IdNvDFy2QrtK/RNcci96SOqY3rDb3UFCHWBZfhp+GB4=;
+        b=O32aphZdpbmkGrIrHDrxU9XxXgZnFC5JpoRPMiRdG3su36zjsTvdyn0jjiTFgElXE9
+         80sxYizgBqweL7Nk86ha89T8al2kEQuWrKsxcivElTXYv6nvGCVyZNwO3P7yYwQyP+1z
+         n9TxrUxqG10VgwLYaWQIYPWbf+9odIueraSXPO2a6Opc1cftiVI3ElzDhRgzDJnf48F0
+         XX6g2U+pCcYp/emYBA2rsoTGxPBCJCoDBdEATgVN4O14fDl90KUPVRBgTzDX8iZvdRhh
+         76rgVtBlM6EJ15iy/xKU6hlywxu5YQWk3/agiw0E2pnbUcm/CeaPsaZhqLc5IHV23KJZ
+         13Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LGkMBLFYZoGxy35+PA6EYNmWGWQmISyDgaW7TcS5hgk=;
-        b=VqAPdJa8mAb1/gJEN4ylIyM2CIYu1nXnVYXCDef/ZDiXGEr29G6XCkL+fCN4JhVJ3S
-         m8hxJF0e2kmmwQrIODE5HlVrExiM8iCOHvr217jb0blV64GG9i1aUsTG2EDWAZrHHP6T
-         m5x/UFpnWZMF5C+CZzxe7DVXOkRoaKZ++SpURFnkLtC7bWqSWkOyfCHkXRcXBwyllkR6
-         aADdVEfhN/nFp/P1t6AU4x8kN31a9uz9/+VUvJYwbuzE5ZxLngBjh5grkB82IWdEbsfs
-         exqqQWNy49JdJV96tqKyXyR3C2rjkIbq3m1e78Lqn+QlyFTLNPPxDRPDPk/hVIba4VHo
-         n+CQ==
-X-Gm-Message-State: ACrzQf1PIidKCUQIkZHDY+mpgCatIWNI9b97m+pdpYoZWrNYmguHg0Rv
-        1uLW722EsCqVVF4UPtGZwmyMwT9UIkgHMQ==
-X-Google-Smtp-Source: AMsMyM7Pd5KWteomypgpX7w9QLdSRelS7jjNleVi0wT9cGqYYRVVkULBGfWDhwb5VUIWR4ENIpcBBDTe+EtTFQ==
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=IdNvDFy2QrtK/RNcci96SOqY3rDb3UFCHWBZfhp+GB4=;
+        b=JAwbdxrB2mpHCKkoH7fCbIfx3mpV7yfwpolEeku865pVjZyZj5P5rtWMlxHsuyMeHA
+         h4EKBQWdKFRuvCR/CMLm8QP6S4m8XpSTAR2uBKUOVJK0QcM58/+0aXO0NV1RBFuwVWcv
+         s4hDtH6URme0JmyFS6auqn2oodNV9uWyfLsY6G/Bngq0/IjEpe0Szbdh2EJURRebCzf/
+         pQ07fNRly/gZP8lYa9oEAzYRxdTE7IRkVzl/XcATavK94pMohf8Tm8e9F7Ql5kTw/KjM
+         GdRfOs2T8W6m0hlwcD2BFkvFMA2uKCgB5HIOTrqJgXAbVO3piP/WWovSxGUm5fctEg30
+         u+2A==
+X-Gm-Message-State: ACrzQf0NkeMEvU6wajWiKNmUBnUNx4xtUj5arTUhuAFmgCGpMFgfGb3P
+        s1A6Uz0eKk+844dcA/fcD6qYUNtcyZzn8w==
+X-Google-Smtp-Source: AMsMyM7kmAz5SojKqsX1LHqlAiwrsg9QaCIzINyWypneoY/kqudcJcJDpUYdFTfJyud2wMBUP/IG3F4fdWbjug==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:7290:b0:17f:d04b:bf57 with SMTP
- id d16-20020a170902729000b0017fd04bbf57mr29254549pll.147.1665593806983; Wed,
- 12 Oct 2022 09:56:46 -0700 (PDT)
-Date:   Wed, 12 Oct 2022 09:56:45 -0700
-In-Reply-To: <20221011182119-mutt-send-email-mst@kernel.org>
+ (user=chooglen job=sendgmr) by 2002:a62:cfc2:0:b0:565:cbcd:b0a3 with SMTP id
+ b185-20020a62cfc2000000b00565cbcdb0a3mr1621238pfg.73.1665594547415; Wed, 12
+ Oct 2022 10:09:07 -0700 (PDT)
+Date:   Wed, 12 Oct 2022 10:09:05 -0700
+In-Reply-To: <CAPWNY8W_Tr-WoD-GXBddD5Y8w5Y4w+gDNYQdOAJ1uBwVHuRrsQ@mail.gmail.com>
 Mime-Version: 1.0
-References: <20221007060713-mutt-send-email-mst@kernel.org>
- <221007.86wn9bq458.gmgdl@evledraar.gmail.com> <20221007085334-mutt-send-email-mst@kernel.org>
- <kl6lpmf3wdk6.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqq35bze3rr.fsf@gitster.g> <20221011182119-mutt-send-email-mst@kernel.org>
-Message-ID: <kl6lfsft0ylu.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: sudmodule.<name>.recurse ignored
+References: <CAPWNY8W_Tr-WoD-GXBddD5Y8w5Y4w+gDNYQdOAJ1uBwVHuRrsQ@mail.gmail.com>
+Message-ID: <kl6lbkqh0y1a.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: 2.38 "protected configuration" ignores includes
 From:   Glen Choo <chooglen@google.com>
-To:     "Michael S. Tsirkin" <mst@redhat.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+To:     "Mantas =?utf-8?Q?Mikul=C4=97nas?=" <grawity@gmail.com>,
         git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Mantas Mikul=C4=97nas <grawity@gmail.com> writes:
 
-> Fundamentally the problem we encounter regularly is this:
-> 	qemu is superproject, ui/keycodemapdb is subproject.
+> After Git 2.38 (specifically after commit 6061601d9), git no longer
+> honors safe.directory settings in files that are [include]'d from the
+> main global configuration file, even though they are shown as being in
+> global scope by `git config --show-scope --show-origin`.
 >
+> The docs added by
+> https://github.com/git/git/commit/779ea9303a7de3d618f3b0e329ebb89529ab328=
+5
+> only talk about scopes and do not mention anything about [include]
+> being specifically ignored.
 >
-> 	I have a change on master setting the submodule commit:
+> $ git config --get-all --show-scope --show-origin safe.directory
+> global    file:/home/grawity/.config/git/config    /srv/this.works
+> global    file:/home/grawity/.config/git/config.local    /srv/this.does.n=
+ot.work
 >
-> 	qemu$ git show master | grep +Sub
-> 	+Subproject commit 7381b9bfadd31c4c9e9a10b5bb5032f9189d4352
+> # ~/.config/git/config (owned by grawity:users)
+> [safe]
+>     directory =3D /srv/this.works
+> [include]
+>     path =3D ~/.config/git/config.local
 >
-> 	and check it out:
+> # ~/.config/git/config.local (also owned by grawity:users)
+> [safe]
+>     directory =3D /srv/this.does.not.work
 >
-> 	qemu$ git submodule update --init ui/keycodemapdb
-> 	Submodule 'ui/keycodemapdb' (https://gitlab.com/qemu-project/keycodemapdb.git) registered for path 'ui/keycodemapdb'
-> 	Submodule path 'ui/keycodemapdb': checked out '7381b9bfadd31c4c9e9a10b5bb5032f9189d4352'
->
->
-> 	In another branch I have a different commit:
->
-> 	qemu$ git show sub-foo  | grep +Sub
-> 	+Subproject commit 57ba70da5312170883a3d622cd2aa3fd0e2ec7ae
->
->
-> 	Now I switch branches and nothing happens, the submodule
-> 	is marked as dirty:
->
-> 	qemu$ git checkout sub-foo
-> 	M       ui/keycodemapdb
-> 	Switched to branch 'sub-foo'
->
-> 	qemu$ (cd ui/keycodemapdb && git show | head -1)
-> 	commit 7381b9bfadd31c4c9e9a10b5bb5032f9189d4352
->
->
-> it is now very easy to generate incorrect code:
-> - git commit -a  will commit the change to submodule
-> - any build will use a mix of super and subproject that
->   is completely untested
->
->
-> As a result people are basically saying avoid using submodules
-> but I am wondering whether git can be tweaked to do the
-> right thing by default.
->
+> --=20
+> Mantas Mikul=C4=97nas
 
-It sounds like you want submodule.recurse [1] :) With that enabled, your
-"git checkout" should behave like "git checkout --recurse-submodules",
-which should make ui/keycodemapdb check out the correct commit as long
-as the submodule commit is present locally. If is is _not_ present
-locally, you will have to run "git submodule update".
+CC-ed some folks who have interest in safe.directory and/or have looked
+at the safe.bareRepository series.
 
-Unfortunately, you typically won't know whether the commit is present
-before running the command. This is yet another of those things that are
-painful with submodules.
+Thanks for the report. As the author of the series in question, this
+wasn't an intended change.
 
-[1] https://git-scm.com/docs/git-config#Documentation/git-config.txt-submodulerecurse
+Protect config, as implemented in 5b3c650777 (config: learn
+`git_protected_config()`, 2022-07-14), reads from a hardcoded set of
+file paths without considering "include"s, so this bug is not surprising
+in retrospect.
 
-> I understand we can work around it by asking everyone to
-> create a correct config, but can't we make it DTRT by default
-> to reduce friction?
+I believe this can be fixed by replacing this implementation with an
+invocation to config_with_options() (which knows about "include"s)
+should be adequate to fix this.
 
-You might be interested in the proposed 'new' Submodule UX [2]; one of
-the goals is to make manual submodule management via "git submodule"
-unnecessary.
-
-As a part of that, you should be able to set "submodule.recurse = true"
-and have high confidence that all necessary submodules and submodule
-commits are present. Work on that is still ongoing, but this situation
-should have improved as of [3].
-
-[2] https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
-[3] https://lore.kernel.org/git/20220308001433.94995-1-chooglen@google.com/
-
->
->
-> -- 
-> MST
+I'll prioritize a test and a fix for this.
