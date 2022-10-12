@@ -2,173 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3CB9C433FE
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 00:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4906C4332F
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 03:32:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229452AbiJLAkp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Oct 2022 20:40:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33536 "EHLO
+        id S229477AbiJLDcK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Oct 2022 23:32:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbiJLAkn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Oct 2022 20:40:43 -0400
-X-Greylist: delayed 429 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 11 Oct 2022 17:40:41 PDT
-Received: from pukcab.korelogic.com (unknown [139.138.148.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D27E772B48
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 17:40:41 -0700 (PDT)
-Received: from mail.korelogic.com (mail.korelogic.com [205.134.174.164])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
-         client-signature RSA-PSS (2048 bits) client-digest SHA256)
-        (Client CN "mail.korelogic.com", Issuer "Sectigo RSA Domain Validation Secure Server CA" (not verified))
-        by pukcab.korelogic.com (Postfix) with ESMTPS id 440EF2B200C2
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 20:33:31 -0400 (EDT)
-Received: from localhost (localhost [127.0.0.1]) by mail.korelogic.com with ESMTPSA id AD4C91EE0299 for <git@vger.kernel.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=korelogic.com;
-        s=mail; t=1665534808;
-        bh=eV/fKrm8MHYj6yRbGic7aNmq5uvuFNL13dghphcE8NA=;
-        h=Date:From:To:Subject:Reply-To;
-        b=EJndUk0iSQP9o0N/qPQs74d2p1iU0PPkjfaFzr+U6U8Q85Xk3sUFUQugdGXvJy7KX
-         e27/qW8qmzbmsJtNGIDJ4hOVfsk6TyJmrt90+7L/B7rCp2DpWn8ptCdRxbdcxXyvDB
-         LwuLhZfESS/yrsR7vDsZ8MU61uxbATmfvC63prO8=
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.103.7 at mail.korelogic.com
-Date:   Tue, 11 Oct 2022 18:33:26 -0600
-From:   Hank Leininger <hlein@korelogic.com>
-To:     git@vger.kernel.org
-Subject: bug in Git.pm handling unsafe repos
-Message-ID: <20221011182607.f1113fff-9333-427d-ba45-741a78fa6040@korelogic.com>
-Reply-To: Hank Leininger <hlein@korelogic.com>
+        with ESMTP id S229451AbiJLDcI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Oct 2022 23:32:08 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E8C97961F
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 20:32:07 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id b18so645395ljr.13
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 20:32:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=WxHNzSuWSNVT5TAJ5nWJbQXTaWizA2b8F1ljFlSjgKo=;
+        b=M9/55hfVcf5HRzgEwuVviI4IEQ0eAZ7PcHubm5qGR9TcrUfVhz9ExSa7XH1jmGeXcv
+         QXcwYTSYMhWvH/hBrjazWUbZnoImGGeCQHcwgOfxxkNFgQFL5sQGJbnJY9178/oRZvdK
+         dUiIOeYopDQ9DttPMBixyzG3GSsJSRAm15nkHD2zo4QJhLaNdwFgiBCcjVGcA4ts3paE
+         t/DBSqUkVnpSeu7rxVhM3wyR6afLrjA/Gzt2bJhTUwv0QUDXTM66/C+Txe0OD7h5aX+v
+         dVDE/pdOh5cnh+OksvzHPGrn/Vhksi4/bd4w07wevExA94lVlbE83R0oDoewjjEIfeo0
+         Myug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WxHNzSuWSNVT5TAJ5nWJbQXTaWizA2b8F1ljFlSjgKo=;
+        b=5gMwfnhmobH2gmWCxHP1B+tREoPw7qU2BB37YkJijegY4DzGhA3GJpbeZzrSeZgcNc
+         jLDnmTBd83itoV0xuJjZA+jR4hnLWFcs1MN4SnM5HOygu/SRXRsmNxe8JQZFinf/2PpJ
+         BfvFuBBC37bgumEvmJm+Bcz036vwBYG4VEsb/5kgfKEXlysvsld346UrvjcTfGMLZ0HZ
+         xrdLvQOpvSMGdpKMBDfwL9WtCp51mmKIRlFEKdIwuQfHpk6LnKjx97G1tfCakv8xBLmX
+         ySj68hq/q6yY++wWuGyzeRcs42i2ZNGYrCXfiq+B0gtEoi6o6dwee4eqFoXyKqLsPaRO
+         JtiQ==
+X-Gm-Message-State: ACrzQf3VCo9FfJkgO93SPsYaqHm9B1ClZ5GGVm+32pz14Qya2joMLTyC
+        Nm9ZgY8R+ZaufvYCXAWgb03OUKsS+eB8W1LI8NI=
+X-Google-Smtp-Source: AMsMyM7RJGuofHhtEaywh7wsbOM43WSFdETIVHrozRGNbYm3EQ5GMdFrrdXuLppwhQNihBgTTF64b0l2kG2176cmd24=
+X-Received: by 2002:a2e:701a:0:b0:26f:a35e:ff67 with SMTP id
+ l26-20020a2e701a000000b0026fa35eff67mr5584144ljc.288.1665545525005; Tue, 11
+ Oct 2022 20:32:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="+J6BTSpRSC5conaE"
-Content-Disposition: inline
+References: <CA+PPyiEvfkqZYq6uESMt3QYnfMDZDmPbGiQ5Qkeb77rtLV5Aug@mail.gmail.com>
+ <CAP8UFD1o5qxSvbV05DK_J=zbU=D_+HS0Q2ufEFSQVaBoWw_7Ow@mail.gmail.com>
+ <CA+PPyiF5KK6p7rv57YL_wsDO+WPifoRp1oe0F-6mo5NxLAwDWw@mail.gmail.com>
+ <CAP8UFD26PY-53vZNZJzCRNiqaVB4fd=AvBtVuvMQP9p8Oqj82Q@mail.gmail.com>
+ <9fcfc8b0-772d-08c3-595b-5a5a139d7ecd@github.com> <CADo9pHgcfwV53ooyM8Dh5jVO2rxO-tUHeLovd7HYLdTSOkNtyA@mail.gmail.com>
+ <CA+PPyiH8EPWpTuOJg1hSthFP1xBxurjN7J0J00g6xvFi_vbcYw@mail.gmail.com>
+ <ae8a98d9-eec1-cdcd-67a3-695aaca7f5ae@github.com> <CA+PPyiFC0mjvY494AVZMB952Ux-TPyA-Uetu1xQ6FiHA_vaRaA@mail.gmail.com>
+In-Reply-To: <CA+PPyiFC0mjvY494AVZMB952Ux-TPyA-Uetu1xQ6FiHA_vaRaA@mail.gmail.com>
+From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+Date:   Wed, 12 Oct 2022 06:31:52 +0300
+Message-ID: <CA+PPyiEms=f7=rXkvfmaazNkxKS1-VA-XJZOrhieQEut8f7QWA@mail.gmail.com>
+Subject: Re: [Outreachy] internship contribution
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Luna Jernberg <droidbittin@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@vger.kernel.org, Hariom verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi team, I am reading through "My first contribution"
+when I run make all doc, I get the following;
 
---+J6BTSpRSC5conaE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+SUBDIR git-gui
+    SUBDIR gitk-git
+    SUBDIR templates
+make -C Documentation all
+make[1]: Entering directory '/mnt/c/Users/USER/documents/git/Documentation'
+make[2]: Entering directory '/mnt/c/Users/USER/documents/git'
+make[2]: 'GIT-VERSION-FILE' is up to date.
+make[2]: Leaving directory '/mnt/c/Users/USER/documents/git'
+    XMLTO git-version.1
+/bin/sh: 1: xmlto: not found
+make[1]: *** [Makefile:355: git-version.1] Error 127
+make[1]: Leaving directory '/mnt/c/Users/USER/documents/git/Documentation'
+make: *** [Makefile:2720: doc] Error 2
 
-Git.pm dies with a syntax error rather than a meaningful message when
-told to open a repo that the new logic deems unsafe.
+How should I go about it?
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-Create a bare repo as a different user, without registering it as "safe".
-Then attempt to open that repo using the perl Git.pm module:
-
-  patsy@foo ~/tmp/test-repo-bare.git $ id
-  uid=3D986(patsy) gid=3D986(patsy) groups=3D986(patsy)
-  patsy@foo ~/tmp/test-repo-bare.git $ ls -la
-  total 36
-  drwxrwxr-x  6 hlein hlein 4096 Oct 11 17:02 .
-  drwxrwx--- 12 patsy hlein 4096 Oct 11 17:04 ..
-  -rw-rw-r--  1 hlein hlein   23 Oct 11 17:02 HEAD
-  -rw-rw-r--  1 hlein hlein   66 Oct 11 17:02 config
-  -rw-rw-r--  1 hlein hlein   73 Oct 11 17:02 description
-  drwxrwxr-x  2 hlein hlein 4096 Oct 11 17:02 hooks
-  drwxrwxr-x  2 hlein hlein 4096 Oct 11 17:02 info
-  drwxrwxr-x  4 hlein hlein 4096 Oct 11 17:02 objects
-  drwxrwxr-x  4 hlein hlein 4096 Oct 11 17:02 refs
-
-  patsy@foo ~/tmp/test-repo-bare.git $ perl -MGit -e 'my $repo =3D Git->rep=
-ository'
-  Can't use string ("/home/patsy/tmp/test-repo-bare.g"...) as a HASH ref wh=
-ile "strict refs" in use at /usr/lib64/perl5/vendor_perl/5.36/Error.pm line=
- 234.
-
-What did you expect to happen? (Expected behavior)
-
-A meaningful error because the repo is not safe to open, similar to what
-'git status' produces:
-
-  patsy@foo ~/tmp/test-repo-bare.git $ git status
-  fatal: detected dubious ownership in repository at '/home/patsy/tmp/test-=
-repo-bare.git'
-  ...
-
-What happened instead? (Actual behavior)
-
-  Can't use string ("/home/patsy/tmp/test-repo-bare.g"...) as a HASH ref wh=
-ile "strict refs" in use at /usr/lib64/perl5/vendor_perl/5.36/Error.pm line=
- 234.=20
-
-What's different between what you expected and what actually happened?
-
-Perl syntax error when trying to generate the meaningful error.
-
-Anything else you want to add:
-
-Opening a "safe" repo (owned by the user, or marked safe in gitconfig)
-of course does not error, which is as expected.
-
-It seems that this call at Git.pm line 181:
-
-  try {  =20
-    $dir =3D $search->command_oneline(['rev-parse', '--git-dir'],
-                                    STDERR =3D> 0);
-  } catch Git::Error::Command with {
-    $dir =3D undef;
-  };
-
-=2E..discards errors so that it just moves on to the next test, but in
-this case what it discards would be new and interesting:
-
-  [pid  1448] write(2, "fatal: detected dubious ownershi"..., 212) =3D 212
-
-=2E..which is the first chance to catch the problem. It doesn't die right
-away; I suspect this just sends the logic down a previously untested path.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.38.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.10.mumble
-compiler info: gnuc: 11.3
-libc info: glibc: 2.35
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
-
-Thanks,
-
---=20
-
-Hank Leininger <hlein@korelogic.com>
-9606 3BF9 B593 4CBC E31A  A384 6200 F6E3 781E 3DD7
-
---+J6BTSpRSC5conaE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEElgY7+bWTTLzjGqOEYgD243gePdcFAmNGC1YACgkQYgD243ge
-Pdc9eQ//fMdfdTMv55d6vjivdui+hMTrD/xPrGj+pxEZPxh622woI0F1WSX8ujNW
-gTR+mJnksfP0XJVOqqO4OyJHMvAaTeZzQxwEuwmVJzGWglu6lOzgpnlejJ1kkhzD
-32+rID5AL5gCnpQsssbnYG1kVDEoSdVFfO6oX2AXlF7BMa8HZ/DV/TCcpFcSC6cD
-VsaRwDM7hSiPgNZtWFZ1Yqx76ovArMjcIhXnCLRk+7u5uLWc2LagBJLXkL0LceG7
-/sY/WFCbOw0h848yW07/T2ui402AgwHfjuhLC6qzEsGMnimsnnJ9sOA0AZ5iX+io
-XAwD9y4hc9ixq1IW2mOS90PSLd7j/bBSFKJ+ifdk+lKgJI33xdZK8pw3SilE2qF+
-f9voEPVwb8dZCuXToHzWzvxk0oPl2VAUOdA2qR3MOYLV2epJEc9cDMoAOoQd0qde
-8WXyBD/uu4U5N0MSJoRnonHr3SSF742efu/UhjbHHDAzyjWwNmAyBu9YML9oWADB
-bzw+Uu0zJsHFCiAH6HqCsaY9JDHXn4xggQ/cImE9vUbhFtfWrGLJVju2Uxhu3/+b
-lA5kyEU3apVD3rL9Jhnb4YUcLxRc/t5brJESDlx03ANLDNBs8F2jcYXisHT6qBF6
-VBcJJ+oE738aEYJIMmwTBU61OobTax2JuabLjFMUp2GXAkCsil8=
-=VHah
------END PGP SIGNATURE-----
-
---+J6BTSpRSC5conaE--
+On Tue, Oct 11, 2022 at 9:48 AM NSENGIYUMVA WILBERFORCE
+<nsengiyumvawilberforce@gmail.com> wrote:
+>
+> Simple steps that I followed on windows 10
+> -open the command line application with administrator rights
+> -run wsl --install.
+> - Restart the computer
+> -check installed distributions, wsl --list --online
+> -run ubuntu distribution, wsl -d ubuntu
+> -add username and password
+> After the above steps I was able to set up git on ubuntu
+> NB: to start wsl when you stopped, just type wsl -u "the username u
+> created" in the command line
+>
+> On Mon, Oct 10, 2022 at 9:22 PM Derrick Stolee <derrickstolee@github.com> wrote:
+> >
+> > On 10/10/2022 2:17 PM, NSENGIYUMVA WILBERFORCE wrote:
+> > > thank you all for your suggestions, let me see what is easy for me
+> > >
+> > > On Mon, Oct 10, 2022 at 7:58 PM Luna Jernberg <droidbittin@gmail.com> wrote:
+> > >>
+> > >> Maybe WSL can be used?: https://learn.microsoft.com/en-us/windows/wsl/install
+> >
+> > If you do go the WSL route, then please share your learnings by updating the
+> > contributing doc either in git-for-windows/git [1] or here on the mailing list.
+> >
+> > [1] https://github.com/git-for-windows/git/blob/main/CONTRIBUTING.md
+> >
+> > Thanks,
+> > -Stolee
