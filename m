@@ -2,104 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3835EC433FE
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 22:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BA06C433FE
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 23:11:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229589AbiJLWad (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 18:30:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53310 "EHLO
+        id S229459AbiJLXLx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 19:11:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbiJLWac (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 18:30:32 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 857B87C1DF
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 15:30:30 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id sc25so174242ejc.12
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 15:30:30 -0700 (PDT)
+        with ESMTP id S229489AbiJLXLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 19:11:51 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA2AA125731
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 16:11:50 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id a67so321050edf.12
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 16:11:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BsB74C+6ZAiLQ3o41bIAf3rYknUgqQq9oHefA4kZVeU=;
-        b=O7jsGhPxv+Fe9UeB/u2R4HO8LlkiAv4hXOaYNs1Y76VFyWnyL1cuaMYNwaCtYOAXEx
-         LrW1I3mUh4ZfZd7uM5kDnLW1kZUn1+H0T3mVC35gk3HyFIjNbs7vmfcnZizzqeukLM3t
-         PmRxJrpsYYw8xuxv0IeLSlx9gqfy0bMit/YFSPU3aVHAjvwCsPhK2UCzknhkU+H1hu2b
-         mc8kIPn0+TbrITaggBCdYHkEuN0l5zIq+JSHLBWH56S/4g+QO7E/ZLV5cD2TiJHVfQtO
-         90ueJQNpJDQXTIcvyN8M+O/Y3AnARat1Aju6kPfLFUBEzwHeDQxuKCxz4hwfmqjCm38T
-         3HbQ==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=UpN9KeEIh4COUV+ikl73KAintXqtWqPv8QeaJIa/ePg=;
+        b=pZsSAI/mFXkoPd42v2wW1POpK8tkrbuH/2Cc4zCswQ59hpMwWusrU2ICu42JUuqZvy
+         aHcsY8JoYV+IBBZPD9NNKXVwNuShKB2xsaDjIZuOb/E73ZAMEXSIwzq/VfO/hb0LyhDN
+         wW1cY6+KrvPpY0/SUSX55DfbmwP50TW/ca8JMmugCjg0ZyzX9aLXmqZwficGaMymvnNr
+         m/rE40UYTtcx/eIYWPL+Udi3D76gp8Bb0yOTMBFuciKoD6YPW7yqE4F6agP6XUSZ/XfQ
+         Mb3B8zVU7dmw2yZI+TQdku+Oi9gA1JOkW4y7z4qwabsbwQdJxhAPW9ARH5h96eMtfsUU
+         5nkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BsB74C+6ZAiLQ3o41bIAf3rYknUgqQq9oHefA4kZVeU=;
-        b=UHxk8iF7qegEFWYcZngL9AeeE8/+55DVjety4A1ZklgxKIAr2Ri3EtOF1040jbiXD4
-         NJaoaUdcWFQNWhybFLjm7NCDwqKQ7qHiC63h8qw9LjyoOgz7KMeg8x5p09bRtve/Lupo
-         epGKqEas31B0rumOVtQpE4OsABxmPNsmG7AYT0Jup8tMgwD6SKABzi5oN21x+NT0JfAB
-         JyxyLfZxhia7NpVDmVTM4XbDGyGgsozdfsmx2qFSCbjBvLBBBEvfQKChA82flpNT7rxn
-         GaI4WOWPcaCT0lu5f77qE5Q2w3XDy7TsUVTifL9T6iCXd0Y8N5Yy471WzDHrLfKygRvY
-         zSTg==
-X-Gm-Message-State: ACrzQf3EOkF8b5EBmlSslbnESsB5Z9TEvn0ko8ZFXYpdX/8brzSWO6lZ
-        hMf0D8XhPKC1smkD654eSvw=
-X-Google-Smtp-Source: AMsMyM5oiV40RfM334yBfuL90E6DB4l3t7gI0KUyAqZob541PlHNuhCMSqyG7B4uEyemXdP2+EGXqA==
-X-Received: by 2002:a17:907:7204:b0:783:ce92:d75e with SMTP id dr4-20020a170907720400b00783ce92d75emr23202841ejc.682.1665613828949;
-        Wed, 12 Oct 2022 15:30:28 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UpN9KeEIh4COUV+ikl73KAintXqtWqPv8QeaJIa/ePg=;
+        b=YHPZHWpRk79AMpLoh0zhd45m5eYDqI6w3mRA6O+tmd5TenFlXoyRTPd8r7oDYYezaX
+         Q8Ij7wGrq08GIbauuJyE0MBk9OzUokDPAnmiEBKukNkaw+6bXSMn1HB6ESgSAS6F5qzK
+         djC0duhMm4vbhUJFX5zp9VzjkIrrSoza6f+Sul43zCva53O+BHsfA605Yrd3quUMCi2k
+         ACZx38gZvDPpJe9O5yPCWSkCoUtkIDgK8O5+1pfWHRVw7Q4iNRdREwkhTjQj9rxgOnsF
+         R1mgkwRInDzFtBi8jR8Mq8fQM5NoHtv+aRqSXf7JRYrsvOSZQVvvkA92g5FGewkIvZt3
+         9MZw==
+X-Gm-Message-State: ACrzQf3/Y60wGcQLKFuhzfjGLElAhxddPwn5KPdTDFio1n+fMSWEDzxq
+        b9Xq7UvSK44BhxyYa/JICUKXAw6pm+75pA==
+X-Google-Smtp-Source: AMsMyM6gTQbLWR+bc+vv4N2T+f3dnVe8PO84tKxE9BAeLmJYExrW1JNFMJ0jp+DxfoLTieQmsNjcXw==
+X-Received: by 2002:a50:eb8f:0:b0:458:482d:43de with SMTP id y15-20020a50eb8f000000b00458482d43demr29223839edr.205.1665616309349;
+        Wed, 12 Oct 2022 16:11:49 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id h27-20020a170906719b00b0078ca30ee18bsm1944640ejk.95.2022.10.12.15.30.28
+        by smtp.gmail.com with ESMTPSA id d41-20020a056402402900b0045bef7cf489sm8373627eda.89.2022.10.12.16.11.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 15:30:28 -0700 (PDT)
+        Wed, 12 Oct 2022 16:11:48 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1oikF9-004MsO-1L;
-        Thu, 13 Oct 2022 00:30:27 +0200
+        id 1oikt9-004O1N-21;
+        Thu, 13 Oct 2022 01:11:47 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH 1/2] t0033, t0035: test for included config
-Date:   Thu, 13 Oct 2022 00:28:09 +0200
-References: <pull.1360.git.git.1665603814.gitgitgadget@gmail.com>
- <8c0f40aed7e7f7044b9233053ce3ab258f9b634f.1665603814.git.gitgitgadget@gmail.com>
+To:     Erik Cervin Edin <erik@cervined.in>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [BUG] git fetch fetches tags matching negative refspec
+Date:   Thu, 13 Oct 2022 01:09:36 +0200
+References: <CA+JQ7M-CN0UnHQDDDVz0kPcU1AcoL9+WFOeR8eiw_B=Yiyc-CA@mail.gmail.com>
+ <221012.86mta1mmli.gmgdl@evledraar.gmail.com>
+ <CA+JQ7M-y9d=c3GbpAs+Y4qtimtVs9oQ6BU1YL8nmFmF=rZxKag@mail.gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <8c0f40aed7e7f7044b9233053ce3ab258f9b634f.1665603814.git.gitgitgadget@gmail.com>
-Message-ID: <221013.86a660n08s.gmgdl@evledraar.gmail.com>
+In-reply-to: <CA+JQ7M-y9d=c3GbpAs+Y4qtimtVs9oQ6BU1YL8nmFmF=rZxKag@mail.gmail.com>
+Message-ID: <221013.865ygomybw.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Oct 12 2022, Glen Choo via GitGitGadget wrote:
+On Wed, Oct 12 2022, Erik Cervin Edin wrote:
 
-> From: Glen Choo <chooglen@google.com>
->
-> Protected config should consider [include]-s. Add failing tests that
-> describe the behavior we want; they will pass in the next commit.
->
-> Signed-off-by: Glen Choo <chooglen@google.com>
-> ---
->  t/t0033-safe-directory.sh       | 9 +++++++++
->  t/t0035-safe-bare-repository.sh | 9 +++++++++
->  2 files changed, 18 insertions(+)
->
-> diff --git a/t/t0033-safe-directory.sh b/t/t0033-safe-directory.sh
-> index aecb308cf66..720d6cdd60b 100755
-> --- a/t/t0033-safe-directory.sh
-> +++ b/t/t0033-safe-directory.sh
-> @@ -71,4 +71,13 @@ test_expect_success 'safe.directory=*, but is reset' '
->  	expect_rejected_dir
->  '
->  
-> +test_expect_failure 'safe.directory in included file' '
-> +	cat >gitconfig-include <<-EOF &&
-> +	[safe]
-> +		directory = "$(pwd)"
+> On Wed, Oct 12, 2022 at 11:13 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>> I.e. it got stuff you asked for, but also tags pointing at the main
+>> history, --no-tags will stop that, at which point you can *also* fetch
+>> tags, just with the refspec.
+> I tried but
+>   git fetch --no-tags
+> with negative refspec did not fetch any tags.
+>   git fetch --tags
+> does.
 
-Here you use $, so <<-EOF, not <<-\EOF, Okey.
+Because your refspec doesn't include refs/tags/*:, try e.g.:
 
-> +test_expect_failure 'safe.bareRepository in included file' '
-> +	cat >gitconfig-include <<-EOF &&
-> +	[safe]
-> +		bareRepository = explicit
+	git fetch https://github.com/git/git.git 'refs/tags/*:refs/tags/*' --no-ta=
+gs --dry-run
 
-But this one should use <<-\EOF
+That's what "--no-tags", i.e. it's per-se (and confusingly) nothing to
+do with whether you get tags or not, it's to do with whether we to tag
+following.
+
+> I'm going to set
+>   git config remote.origin.tagopt --tags
+> and then that's going to do what I want.
+
+Isn't that going to give you also the tags you don't want?
