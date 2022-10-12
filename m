@@ -2,95 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 641BBC4332F
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 16:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55962C43219
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 16:42:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbiJLQhS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 12:37:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60032 "EHLO
+        id S230058AbiJLQmf convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 12 Oct 2022 12:42:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229982AbiJLQhR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 12:37:17 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FAC4B40EE
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 09:37:15 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id d6so26539378lfs.10
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 09:37:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NE0x+pKOXR0tmRDwXdJFdQoLK2rGQsxjEkJcAdnOPg8=;
-        b=R2J4PtSrEjhOsF1H6MLT5xr+aPZY5RPJNR+jeXIeZ5YuuzY4pEldRj2V4lj29TJVhv
-         18rhsYb+pfJwPl/elhgJ17Rx1mAZoy7qs6c8hb/jX4wIrxuInlNHc1ynWqQxCTLj27qN
-         M2lH7Php1vB2yNcJBREcKci0NnodG/SnIxECb2kqjorQueG69QxFFdGSYceZVSRf9+AE
-         YtRglyZ1HgjCMIJURZ6fHot5Ao8e8EP/MI4HMo/3dzd8PWRlE49MLUhFk1EyfQLt0tDj
-         Tm3j5029a0AxhA1eDd1kGOG883ilefXPQEd5t8LSgWZf+hmrpreANSwBoI6rjobiO8HE
-         8J0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NE0x+pKOXR0tmRDwXdJFdQoLK2rGQsxjEkJcAdnOPg8=;
-        b=OsG+ckGMBuAUm442YAEbl9lTFFimc5uwf7kI1Eu0TqfWs4hkvXoKKbXnswim6073+p
-         43nfn0zVqJS7STwfsyoC7DEBHuINfj6op86C2x8iDv7/WX4mQbfQyAGalQortyVS2fki
-         bZrGdXiK2HaDNPCm4aDrfzuVIFjs8u6W1h/GzIXExkG+qNhF2Efgc/OFFXgihuOUojz1
-         FHq1H8uppLPEFQM7KvlNtivkqLmKoy1fydKVC/sdwDt2hQPfRDVGeGSC66obUpQZdNon
-         vtSeDtHEmh3+bXc/PgXCgfuyTK52OZs8o45/EtEs4l6BnEitr3+g7mu2Uu0aWG29FUHA
-         iQ8g==
-X-Gm-Message-State: ACrzQf2anxy3QdQd9Q9wq+VXSRY4lR/xuNx0yljpjsbbXIizGxdHg0r7
-        GS6K79MNlJ9iZF0RM+oIfVEvIzzxKvJEasVtU6o=
-X-Google-Smtp-Source: AMsMyM6mAdUtEWah9kKEI6XUed/OneI63XTteowL7OMwLJQ5pM8SxHoIuTdagvIZOYt20PqnDTpLW1HuHqWfe2EE054=
-X-Received: by 2002:a05:6512:689:b0:4a2:5bb2:a990 with SMTP id
- t9-20020a056512068900b004a25bb2a990mr11487999lfe.619.1665592633893; Wed, 12
- Oct 2022 09:37:13 -0700 (PDT)
+        with ESMTP id S230055AbiJLQmd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 12:42:33 -0400
+X-Greylist: delayed 388 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 12 Oct 2022 09:42:31 PDT
+Received: from mail.am-soft.de (mail.am-soft.de [157.90.39.210])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13A85BB05B
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 09:42:30 -0700 (PDT)
+Received: from mail.am-soft.de (localhost [127.0.0.1])
+        by mail.am-soft.de (Postfix) with ESMTP id 2AFC9547D9DF;
+        Wed, 12 Oct 2022 18:36:01 +0200 (CEST)
+Envelope-To: git@vger.kernel.org
+Received: from bit02ex.bitstoregruppe.local (exchange01.bitstore.group [116.202.141.225])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.am-soft.de (Postfix) with ESMTPSA id 246C8547D9DD
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 18:36:01 +0200 (CEST)
+Received: from tschoening-nb.fritz.box (46.28.86.14) by bit02ex.bitstoregruppe.local (192.168.254.21) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Wed, 12 Oct 2022 18:35:59 +0200
+Date:   Wed, 12 Oct 2022 18:35:51 +0200
+From:   =?utf-8?Q?Thorsten_Sch=C3=B6ning?= <tschoening@am-soft.de>
+Organization: AM-SoFT IT-Service - Bitstore Hameln GmbH
+Message-ID: <1681596318.20221012183551@am-soft.de>
+To:     <git@vger.kernel.org>
+Subject: How to best maintain directories like /etc/sysstat in GIT?
 MIME-Version: 1.0
-References: <CAP8UFD26PY-53vZNZJzCRNiqaVB4fd=AvBtVuvMQP9p8Oqj82Q@mail.gmail.com>
- <9fcfc8b0-772d-08c3-595b-5a5a139d7ecd@github.com> <CADo9pHgcfwV53ooyM8Dh5jVO2rxO-tUHeLovd7HYLdTSOkNtyA@mail.gmail.com>
- <CA+PPyiH8EPWpTuOJg1hSthFP1xBxurjN7J0J00g6xvFi_vbcYw@mail.gmail.com>
- <ae8a98d9-eec1-cdcd-67a3-695aaca7f5ae@github.com> <CA+PPyiFC0mjvY494AVZMB952Ux-TPyA-Uetu1xQ6FiHA_vaRaA@mail.gmail.com>
- <CA+PPyiEms=f7=rXkvfmaazNkxKS1-VA-XJZOrhieQEut8f7QWA@mail.gmail.com>
- <xmqqleplmz3n.fsf@gitster.g> <Y0Zig4XUePPhMaA3@danh.dev> <CA+PPyiGPo1j-2MxTvmV2jDYNVFV1q8+7TVX1uoEUpWc0o+Rkdw@mail.gmail.com>
- <Y0baxKPxHp7UdYTi@danh.dev>
-In-Reply-To: <Y0baxKPxHp7UdYTi@danh.dev>
-From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Date:   Wed, 12 Oct 2022 19:37:02 +0300
-Message-ID: <CA+PPyiE6e4NWGXS4WBzNteYdcNS_FW3beUq03uXx24guSDZYmQ@mail.gmail.com>
-Subject: Re: [Outreachy] internship contribution
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Luna Jernberg <droidbittin@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git@vger.kernel.org, Hariom verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+X-Originating-IP: [46.28.86.14]
+X-ClientProxiedBy: bit02ex.bitstoregruppe.local (192.168.254.21) To bit02ex.bitstoregruppe.local
+ (192.168.254.21)
+X-C2ProcessedOrg: 0ff26194-4f6a-446b-ba8c-65299b4f97ea
+X-AV-Checked: ClamAV using ClamSMTP
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Please reply inline or inter-leaved.
->
-> Perhaps this documentation can help you get started with building Git
-> from source. (I suspect you're missing something like libcurl
-> development files, too).
-I am sorry, I was not minding about it, thanks alot for reminding me
-On Wed, Oct 12, 2022 at 6:18 PM =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh
-<congdanhqx@gmail.com> wrote:
->
-> On 2022-10-12 13:37:48+0300, NSENGIYUMVA WILBERFORCE <nsengiyumvawilberfo=
-rce@gmail.com> wrote:
-> > I am using ubuntu(wsl)
->
-> Please reply inline or inter-leaved.
->
-> Perhaps this documentation can help you get started with building Git
-> from source. (I suspect you're missing something like libcurl
-> development files, too).
->
-> https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
->
-> --
-> Danh
+Hi everyone,
+
+I'm using SVN to maintain lots of different host specific configs like
+crontab files, web server configs and the directory /etc/sysstat. The
+current approach is to simply have some directory structure in trunk
+named by topics like /trunk/Mail/Postfix for some reference host, if
+any makes sense at all. That config is then copied to e.g.
+/tags/Mail/Postfix/some.other.host and Postfix for that host
+maintained in that writable tag.
+
+GIT doesn't have writable tags, which might be worked around using
+branches or one repo per host or stuff. The more important difference
+is that SVN can have a working copy for each and every maintained
+directory. So one can really make /etc/postfix or /etc/sysstat a
+wroking copy and maintained that only, without additionally necessary
+subdirs and without having .svn in /etc or alike. AFAIK that is not
+possible in GIT, even with sparse checkouts one needs a subdir of
+some kind, which is pretty incomplatible with many system wide
+configs. Unless one wants to put .git into / or /etc or alike, which
+is what I would loike to avoid.
+
+Any useful suggestions for workarounds?
+
+I can only think of two things: Putting the GIT clone somewhere and
+link directories into that. Which won't work very well for directories
+for which I only want to maintain some and not all files and seems
+like a lot of work, might break package management etc.
+
+The other thing I have in mind is using branches and their implicit
+available ROOT. So I would create /etc/sysstat as branch name, clone
+some repo into /etc/sysstat and checkout the corresponding branch
+name. That branch would only contain the files for that directory. For
+other directories other branch names would need to be created. The
+problems I see are with introducing host names, branch name lengths
+and stuff.
+
+Any further ideas? Thanks!
+
+Mit freundlichen Grüßen
+
+Thorsten Schöning
+
+-- 
+AM-SoFT IT-Service - Bitstore Hameln GmbH
+Mitglied der Bitstore Gruppe - Ihr Full-Service-Dienstleister für IT und TK
+
+E-Mail: Thorsten.Schoening@AM-SoFT.de
+Web:    http://www.AM-SoFT.de/
+
+Tel:   +49 5151-  9468- 0
+Tel:   +49 5151-  9468-55
+Mobil: +49  178-8 9468-04
+
+AM-SoFT IT-Service - Bitstore Hameln GmbH, Brandenburger Str. 7c, 31789 Hameln
+AG Hannover HRB 221853 - Geschäftsführer: Janine Galonska
+
+
+Für Rückfragen stehe ich Ihnen jederzeit zur Verfügung. 
+
+Mit freundlichen Grüßen, 
+
+Thorsten Schöning
+
+
+Telefon: +49 5151 9468-55
+Fax: 
+E-Mail: TSchoening@am-soft.de
+
+AM-Soft IT-Service - Bitstore Hameln GmbH
+Brandenburger Straße 7c
+31789 Hameln
+
+Diese E-Mail enthält vertrauliche und/oder rechtlich geschützte Informationen und ist ausschliesslich für den Adressaten bestimmt. Jeglicher Zugriff auf diese E-Mail durch andere Personen als den Adressaten ist untersagt. Wenn Sie nicht der richtige Adressat sind oder diese E-Mail irrtümlich erhalten haben, informieren Sie bitte sofort den Absender und vernichten Sie diese E-Mail. Sollten Sie nicht der für diese E-Mail bestimmte Adressat sein, ist Ihnen jede Veröffentlichung, Vervielfältigung oder Weitergabe wie auch das Ergreifen oder Unterlassen von Massnahmen im Vertrauen auf erlangte Information untersagt. 
+
+This e-mail may contain confidential and/or privileged information and is intended solely for the addressee. Access to this email by anyone else is unauthorized. If you are not the intended recipient (or have received this e-mail in error) please notify the sender immediately and destroy this e-mail. If you are not the intended recipient, any disclosure, copying, distribution or any action taken or omitted to be taken in reliance on it, is prohibited and may be unlawful. 
+
+Hinweise zum Datenschutz: bitstore.group/datenschutz
+
+
+
