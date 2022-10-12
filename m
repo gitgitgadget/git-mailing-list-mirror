@@ -2,93 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86892C43217
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 21:38:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12360C4332F
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 21:42:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229496AbiJLViX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 17:38:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50682 "EHLO
+        id S229640AbiJLVmR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 17:42:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbiJLViU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 17:38:20 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D037D73C0
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 14:38:19 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B9FC4150ECF;
-        Wed, 12 Oct 2022 17:38:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=i3jxCCYeDU9PyyV2wqd2bNaoh9/+rJHur1vP34
-        lmS1g=; b=eLoHwlYiQ6Jgoy/0SE4vxqu0xzoPxJvsxkWBMsh9neTI76Ljq2RYpz
-        FvNMKMu3AfsAN2t2JnhlFjO+dctF2zmtAH9H4+KEQsky6XiYic9jRoDF9UBsnDSn
-        7mqsinzIl16KZaon5ZFPJ7MdG/a9E8/kw0LFpRxgC82WHqcGlDnwE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A1307150ECE;
-        Wed, 12 Oct 2022 17:38:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S229550AbiJLVmP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 17:42:15 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF61FF88E6
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 14:42:14 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0273A150ECD;
-        Wed, 12 Oct 2022 17:38:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     sndanailov@wired4ever.net, git@vger.kernel.org, aaron@schrab.com,
-        philipoakley@iee.email
-Subject: Re: [PATCH v3] docs: git-send-email: difference between ssl and tls
- smtp-encryption
-References: <20221012150619.12877-1-sndanailov@wired4ever.net>
-        <Y0cxPHNZjTqZR5XE@tapette.crustytoothpaste.net>
-Date:   Wed, 12 Oct 2022 14:38:17 -0700
-In-Reply-To: <Y0cxPHNZjTqZR5XE@tapette.crustytoothpaste.net> (brian
-        m. carlson's message of "Wed, 12 Oct 2022 21:27:24 +0000")
-Message-ID: <xmqqy1tkiuye.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 1187C5A39C;
+        Wed, 12 Oct 2022 21:42:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1665610934;
+        bh=htmaCSbp6m5xIVTu1pOq5L7T3tAPLO+LEXieySiONHY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=a9+LvnaLkpYZo9uPLydDsVLrYnFAPcNAc6fsgsCKejA23LP9n4vxHFB9HDa0wkwq+
+         +hgvQA0flYH05tH1z++3WmcTorH+mdNMMrs8IG9vW7yObmLxlDnmqnmRkgjbfXqHa4
+         dOPkryV3Su8ZYle/0Oa9UpL3YBEUJhvk1oDUYz4XkzM23fopYBzA/MSXoDOC37DGNL
+         BUuJksx2KTalvVvGqhrxrhllc+qG/t7D+VUi6Mk01bjtJ7J3IrXcq9WUFc+y7aCm2g
+         7a3HHY6QlM/OQRVXNnTB54+csSFV+nkYRN5eQBBn2DgexhPqL/dcVzdQbXjenW2vjS
+         dQvMAAmM8fxjyCn4VD3zPYvJrxWFP7luA5e07SGq9LPPXVthXBertL6TQFySPqqr2V
+         lGfP4P8utmV98yWNxBR9cZARLa/WYRMa5lb9wPxWWFcq3swY8gaNDvR21CPg5iROyj
+         lIsmcn/961ROoznFhfM/5lL6oJDo6z1CTi9pstOS+ncuwa43xRm
+Date:   Wed, 12 Oct 2022 21:42:12 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ignacio Taranto <ignacio.taranto@eclypsium.com>,
+        git@vger.kernel.org
+Subject: Re: About git reporting missing newline for symlinks
+Message-ID: <Y0c0tDEDpV8fO6n/@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ignacio Taranto <ignacio.taranto@eclypsium.com>,
+        git@vger.kernel.org
+References: <CAAHd=zcrU3VJro1R3xDj3hmqGXZHUA6rHuDFxwhF5aewNvA8xQ@mail.gmail.com>
+ <Y0cyX8Ggp+dkgAjX@tapette.crustytoothpaste.net>
+ <xmqq35bsk9og.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2F683060-4A76-11ED-8C52-307A8E0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="wJe3YJ4u7FPOQyMC"
+Content-Disposition: inline
+In-Reply-To: <xmqq35bsk9og.fsf@gitster.g>
+User-Agent: Mutt/2.2.7 (2022-08-07)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On 2022-10-12 at 15:06:19, sndanailov@wired4ever.net wrote:
->> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
->> index 3290043053..765b2df853 100644
->> --- a/Documentation/git-send-email.txt
->> +++ b/Documentation/git-send-email.txt
->> @@ -178,9 +178,18 @@ Sending
->>  	for `sendmail` in `/usr/sbin`, `/usr/lib` and $PATH.
->>  
->>  --smtp-encryption=<encryption>::
->> -	Specify the encryption to use, either 'ssl' or 'tls'.  Any other
->> -	value reverts to plain SMTP.  Default is the value of
->> -	`sendemail.smtpEncryption`.
->> +	Specify in what way encrypting begins for the SMTP connection.
->> +	Valid values are 'ssl' and 'tls'. Any other value reverts to plain
->> +	(unencrypted) SMTP, which defaults to port 25.
->> +	Despite the names, both values will use the same newer version of TLS,
->> +	but for historic reasons have these names. 'ssl' refers to "implicit"
->> +	encryption (sometimes called SMTPS), that uses port 465 by default.
->> +	'tls' refers to "explicit" encryption (often known as STARTTLS),
->> +	that uses port 25 by default. Other ports might be used by the SMTP
->> +	server, which are not the default. Commonly found alternative port for
->> +	'tls' and unencrypted is 587. You need to check your provider's
->> +	documentation or your server configuration to make sure
->> +	for your own case. Default is the value of `sendemail.smtpEncryption`.
->
-> I'm happy with this as it stands.  Thanks for taking my suggestions and
-> sending a patch to improve the docs.
+--wJe3YJ4u7FPOQyMC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I marked it as "Expecting a reroll" in the latest issue of "What's
-cooking" report, but I do not mind taking it to 'next' as-is,
-without adding an extra reference to --smtp-server-port.  The
-reference to port numbers here are there to help readers identify
-which one is which, not because it is common to use randomly
-numbered ports.
+On 2022-10-12 at 21:34:55, Junio C Hamano wrote:
+> Just a fun thought experiment, but I wonder what would happen if a
+> user chooses to add .clean and .smudge filter that adds and strips
+> a LF at the end ;-)
 
-Thanks.
+I don't believe those are invoked on symlinks, since I don't recall us
+having to handle symlinks in Git LFS, which works using a smudge and
+clean filter.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--wJe3YJ4u7FPOQyMC
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.39 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY0c0tAAKCRB8DEliiIei
+gdyDAP9sp2Ob4Oq6sQjbFBBTOwm4migIwGe2eqB2bkHQJ6my5wD+MvA7Vc0cQ1SA
+w0X2R1Qj1uILOKqO4qMkDGr346FxIwg=
+=E6Uh
+-----END PGP SIGNATURE-----
+
+--wJe3YJ4u7FPOQyMC--
