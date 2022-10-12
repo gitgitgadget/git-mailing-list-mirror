@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBFD4C4332F
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 12:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 949C2C433FE
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 12:53:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229745AbiJLMxC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 08:53:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37812 "EHLO
+        id S229682AbiJLMxF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 08:53:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229702AbiJLMww (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229727AbiJLMww (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 12 Oct 2022 08:52:52 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A4F1C45A9
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DAFBC45A6
         for <git@vger.kernel.org>; Wed, 12 Oct 2022 05:52:49 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id bv10so22543207wrb.4
+Received: by mail-wm1-x32f.google.com with SMTP id l16-20020a05600c4f1000b003c6c0d2a445so1148502wmq.4
         for <git@vger.kernel.org>; Wed, 12 Oct 2022 05:52:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iaFbGpA3MUI0PWvxsx9+QfUfh+g+qL2/Zoy6IB3I3j0=;
-        b=f2gzN4elbFq+H13pGzaQtmIkWIzxp54BLBo1D125mLs2M1rbd92Bhc3s3aw5Z4Jk64
-         HaHF7J8nFgcJF8AApT6MfGS07VGyEmbSSKR67K/xuhDtOkS8C1gabd8FKFQ9I4ZdF+IU
-         HHmnnG3wq54UCvIRQpNDwlDmcgWT3VNYjd9dGoPYAfndP1ByatvGWVxV8P5XqL1QTXxS
-         enlcLpOOus24sJtVSwwtsbwhnNua/SRvdY8GBeM7WqpABQbBL6+Ux2saO4ZzE1XzFQMC
-         8jY1sqAuj6qnJPK90SZqJZ3P/PLfqVkZlb+AkDsVR1cHpkf1Lyha6iG42ked+naSzB+i
-         pKWQ==
+        bh=fnuvRU/s4CwFnk6H9aTDmG6Z/zW4bmJU9S4El1WdLLY=;
+        b=pd/SrKg+4mfOrC38oQqQp+0AfPY30nu4ANHJ+55mAxwjT0rJzxlULSANKslo2zwcKg
+         4t9ngpESbyquHmSVbi8bRh42iT1+q4QZBXwKcSI+Ad7WwFbKpu+MMO5vaZRMH5PfL+TZ
+         PSLnE4779iPJFBNtAy6LDECsbeuvtkAjBkAembAq7YXhR7ipmf0Y8Tc16WPUYkqoGTtE
+         FX5n7DuwWWGStKrt8v/Ut86rcaQWzpWyq3/0ib5wyS/KPRsRd6fgk6bLdp8zHK8TGbf5
+         p4l1cjVlG+Lk5ikqR7wd49W3M5lhXshxlsPeYrk4ofM3bOPJ9mdTIYO7m4c227WyDv4W
+         lyxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iaFbGpA3MUI0PWvxsx9+QfUfh+g+qL2/Zoy6IB3I3j0=;
-        b=vSjDIgcvvWPLcPy040GfSupVw8MqVeiKXVoI+/1wVg8JfZ8BPPDC4ZYWHcm0amlG7G
-         NyYHoe7UTU9LJy619OwsoOUB6FbSMZdd7l5IgVQqUygHLYKhkdEDpxmgpb0k7CEmvYQO
-         3w7XXB4Sp/j9Zy2yUKSRvJ1bIG2wHFvIgFQQWSXhA2XSZzIV9Btxh05+C5j5pcVw6sxv
-         9TJ4QQcbnIXSk/jK31kDVmyvBaD8kIacqnUu1uL+3enVRZoRdWXZAYB9iJTHjFlG5sFx
-         7QETOwtsAIc2fWZ8497vrgChsktLJ5zUgEq9BTCfrUXfpl5VTd0+3ewQ0DRnTXxe9Yfp
-         nm6w==
-X-Gm-Message-State: ACrzQf3M/QVqsxQIS0vvUi8gAdPcNr2IoOS82lzuYZQ2JSflSSBq2xuN
-        LVvyleyAVaVN3q0J9h+mZUKj+tK1eTw=
-X-Google-Smtp-Source: AMsMyM7t/0UaQaquax+y/zDAXczkGESKHW7iXPhyxBTFat04id2PbN6DAAGlyuHibDPnWTuOvEZK6A==
-X-Received: by 2002:a5d:614a:0:b0:230:a4f8:4da2 with SMTP id y10-20020a5d614a000000b00230a4f84da2mr9129550wrt.277.1665579168371;
-        Wed, 12 Oct 2022 05:52:48 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id co11-20020a0560000a0b00b00228d52b935asm14163402wrb.71.2022.10.12.05.52.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=fnuvRU/s4CwFnk6H9aTDmG6Z/zW4bmJU9S4El1WdLLY=;
+        b=gGsGnGPQWE4uf4vav87zG+BTazIAfoUcHzrP05UZGP+Fr7EeqZ/l8h4ktMzRhnHRFM
+         wMQ4Q6KsDJmQ4J9AsBkvQRRwUz2HjGcRNubW7gH1I+d7RU4sVWs2ZFbLTg1K54u2qVUV
+         vbgi4DlaOekK0PANNpeNO/cVZJ7X8rAI09tCbQ4CjplLSyqdJLK67J93oJO8eJuhoClq
+         kAfWzxVjF8ge7SEiuvIrSeuX0Ib8Ol9oqlejdSx9WMYepBq4DMSlzVXtmUaOaynr3IXO
+         3SScRgrYue2CwfEneoQOQHUIoM14pWOjpmTYe4FIYGunAN66JFOnYu9+u/kCsvAG58nj
+         OP2A==
+X-Gm-Message-State: ACrzQf3K4whvYbvca9WKRpGIm0vMRgzzRVmTjm4K54lxPivToZSB/joA
+        dqFMz97YNQp3FTwA5bw5/hZiOeeWq0o=
+X-Google-Smtp-Source: AMsMyM5eAbZ2J5BqQATVwnTgZjVrmBU5vzjOy4TXYMpOLe14BqV39AsKOCFq4pJ4LbCcfTTjGAgnBg==
+X-Received: by 2002:a05:600c:474c:b0:3c6:c790:1f95 with SMTP id w12-20020a05600c474c00b003c6c7901f95mr2716200wmo.18.1665579167329;
         Wed, 12 Oct 2022 05:52:47 -0700 (PDT)
-Message-Id: <4d8cac67f66fc9c6477efabde795da95fafc51ec.1665579160.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p2-20020adfce02000000b0022a3a887ceasm13633120wrn.49.2022.10.12.05.52.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Oct 2022 05:52:46 -0700 (PDT)
+Message-Id: <cd915d57f3bced015dc154572612d4dd221d1618.1665579160.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1333.v5.git.1665579160.gitgitgadget@gmail.com>
 References: <pull.1333.v4.git.1665417859.gitgitgadget@gmail.com>
         <pull.1333.v5.git.1665579160.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Wed, 12 Oct 2022 12:52:32 +0000
-Subject: [PATCH v5 05/12] bundle-uri: unit test "key=value" parsing
+Date:   Wed, 12 Oct 2022 12:52:31 +0000
+Subject: [PATCH v5 04/12] bundle-uri: create "key=value" line parsing
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,350 +77,85 @@ X-Mailing-List: git@vger.kernel.org
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
  <avarab@gmail.com>
 
-Create a new 'test-tool bundle-uri' test helper. This helper will assist
-in testing logic deep in the bundle URI feature.
+When advertising a bundle list over Git's protocol v2, we will use
+packet lines. Each line will be of the form "key=value" representing a
+bundle list. Connect the API necessary for Git's transport to the
+key-value pair parsing created in the previous change.
 
-This change introduces the 'parse-key-values' subcommand, which parses
-an input file as a list of lines. These are fed into
-bundle_uri_parse_line() to test how we construct a 'struct bundle_list'
-from that data. The list is then output to stdout as if the key-value
-pairs were a Git config file.
-
-We use an input file instead of stdin because of a future change to
-parse in config-file format that works better as an input file.
+We are not currently implementing this protocol v2 functionality, but
+instead preparing to expose this parsing to be unit-testable.
 
 Co-authored-by: Derrick Stolee <derrickstolee@github.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Makefile                    |   1 +
- bundle-uri.c                |  33 ++++++++++
- bundle-uri.h                |   3 +
- t/helper/test-bundle-uri.c  |  70 +++++++++++++++++++++
- t/helper/test-tool.c        |   1 +
- t/helper/test-tool.h        |   1 +
- t/t5750-bundle-uri-parse.sh | 121 ++++++++++++++++++++++++++++++++++++
- t/test-lib-functions.sh     |  11 ++++
- 8 files changed, 241 insertions(+)
- create mode 100644 t/helper/test-bundle-uri.c
- create mode 100755 t/t5750-bundle-uri-parse.sh
+ bundle-uri.c | 27 ++++++++++++++++++++++++++-
+ bundle-uri.h | 12 ++++++++++++
+ 2 files changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index 7d5f48069ea..7dee0329c49 100644
---- a/Makefile
-+++ b/Makefile
-@@ -722,6 +722,7 @@ PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
- TEST_BUILTINS_OBJS += test-advise.o
- TEST_BUILTINS_OBJS += test-bitmap.o
- TEST_BUILTINS_OBJS += test-bloom.o
-+TEST_BUILTINS_OBJS += test-bundle-uri.o
- TEST_BUILTINS_OBJS += test-chmtime.o
- TEST_BUILTINS_OBJS += test-config.o
- TEST_BUILTINS_OBJS += test-crontab.o
 diff --git a/bundle-uri.c b/bundle-uri.c
-index 372e6fac5cf..c02e7f62eb1 100644
+index 0bc59dd9c34..372e6fac5cf 100644
 --- a/bundle-uri.c
 +++ b/bundle-uri.c
-@@ -66,6 +66,39 @@ int for_all_bundles_in_list(struct bundle_list *list,
- 	return 0;
- }
- 
-+static int summarize_bundle(struct remote_bundle_info *info, void *data)
-+{
-+	FILE *fp = data;
-+	fprintf(fp, "[bundle \"%s\"]\n", info->id);
-+	fprintf(fp, "\turi = %s\n", info->uri);
-+	return 0;
-+}
-+
-+void print_bundle_list(FILE *fp, struct bundle_list *list)
-+{
-+	const char *mode;
-+
-+	switch (list->mode) {
-+	case BUNDLE_MODE_ALL:
-+		mode = "all";
-+		break;
-+
-+	case BUNDLE_MODE_ANY:
-+		mode = "any";
-+		break;
-+
-+	case BUNDLE_MODE_NONE:
-+	default:
-+		mode = "<unknown>";
-+	}
-+
-+	fprintf(fp, "[bundle]\n");
-+	fprintf(fp, "\tversion = %d\n", list->version);
-+	fprintf(fp, "\tmode = %s\n", mode);
-+
-+	for_all_bundles_in_list(list, summarize_bundle, fp);
-+}
-+
- /**
-  * Given a key-value pair, update the state of the given bundle list.
+@@ -71,7 +71,6 @@ int for_all_bundles_in_list(struct bundle_list *list,
   * Returns 0 if the key-value pair is understood. Returns -1 if the key
+  * is not understood or the value is malformed.
+  */
+-MAYBE_UNUSED
+ static int bundle_list_update(const char *key, const char *value,
+ 			      struct bundle_list *list)
+ {
+@@ -306,3 +305,29 @@ cleanup:
+ 	free(filename);
+ 	return result;
+ }
++
++/**
++ * General API for {transport,connect}.c etc.
++ */
++int bundle_uri_parse_line(struct bundle_list *list, const char *line)
++{
++	int result;
++	const char *equals;
++	struct strbuf key = STRBUF_INIT;
++
++	if (!strlen(line))
++		return error(_("bundle-uri: got an empty line"));
++
++	equals = strchr(line, '=');
++
++	if (!equals)
++		return error(_("bundle-uri: line is not of the form 'key=value'"));
++	if (line == equals || !*(equals + 1))
++		return error(_("bundle-uri: line has empty key or value"));
++
++	strbuf_add(&key, line, equals - line);
++	result = bundle_list_update(key.buf, equals + 1, list);
++	strbuf_release(&key);
++
++	return result;
++}
 diff --git a/bundle-uri.h b/bundle-uri.h
-index 90583461929..0e56ab2ae5a 100644
+index ff7e3fd3fb2..90583461929 100644
 --- a/bundle-uri.h
 +++ b/bundle-uri.h
-@@ -59,6 +59,9 @@ int for_all_bundles_in_list(struct bundle_list *list,
- 			    bundle_iterator iter,
- 			    void *data);
+@@ -67,4 +67,16 @@ int for_all_bundles_in_list(struct bundle_list *list,
+  */
+ int fetch_bundle_uri(struct repository *r, const char *uri);
  
-+struct FILE;
-+void print_bundle_list(FILE *fp, struct bundle_list *list);
++/**
++ * General API for {transport,connect}.c etc.
++ */
 +
- /**
-  * Fetch data from the given 'uri' and unbundle the bundle data found
-  * based on that information.
-diff --git a/t/helper/test-bundle-uri.c b/t/helper/test-bundle-uri.c
-new file mode 100644
-index 00000000000..0329c56544f
---- /dev/null
-+++ b/t/helper/test-bundle-uri.c
-@@ -0,0 +1,70 @@
-+#include "test-tool.h"
-+#include "parse-options.h"
-+#include "bundle-uri.h"
-+#include "strbuf.h"
-+#include "string-list.h"
++/**
++ * Parse a "key=value" packet line from the bundle-uri verb.
++ *
++ * Returns 0 on success and non-zero on error.
++ */
++int bundle_uri_parse_line(struct bundle_list *list,
++			  const char *line);
 +
-+static int cmd__bundle_uri_parse(int argc, const char **argv)
-+{
-+	const char *key_value_usage[] = {
-+		"test-tool bundle-uri parse-key-values <input>",
-+		NULL
-+	};
-+	const char **usage = key_value_usage;
-+	struct option options[] = {
-+		OPT_END(),
-+	};
-+	struct strbuf sb = STRBUF_INIT;
-+	struct bundle_list list;
-+	int err = 0;
-+	FILE *fp;
-+
-+	argc = parse_options(argc, argv, NULL, options, usage, 0);
-+	if (argc != 1)
-+		goto usage;
-+
-+	init_bundle_list(&list);
-+	fp = fopen(argv[0], "r");
-+	if (!fp)
-+		die("failed to open '%s'", argv[0]);
-+
-+	while (strbuf_getline(&sb, fp) != EOF) {
-+		if (bundle_uri_parse_line(&list, sb.buf))
-+			err = error("bad line: '%s'", sb.buf);
-+	}
-+	strbuf_release(&sb);
-+	fclose(fp);
-+
-+	print_bundle_list(stdout, &list);
-+
-+	clear_bundle_list(&list);
-+
-+	return !!err;
-+
-+usage:
-+	usage_with_options(usage, options);
-+}
-+
-+int cmd__bundle_uri(int argc, const char **argv)
-+{
-+	const char *usage[] = {
-+		"test-tool bundle-uri <subcommand> [<options>]",
-+		NULL
-+	};
-+	struct option options[] = {
-+		OPT_END(),
-+	};
-+
-+	argc = parse_options(argc, argv, NULL, options, usage,
-+			     PARSE_OPT_STOP_AT_NON_OPTION |
-+			     PARSE_OPT_KEEP_ARGV0);
-+	if (argc == 1)
-+		goto usage;
-+
-+	if (!strcmp(argv[1], "parse-key-values"))
-+		return cmd__bundle_uri_parse(argc - 1, argv + 1);
-+	error("there is no test-tool bundle-uri tool '%s'", argv[1]);
-+
-+usage:
-+	usage_with_options(usage, options);
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 318fdbab0c3..fbe2d9d8108 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -17,6 +17,7 @@ static struct test_cmd cmds[] = {
- 	{ "advise", cmd__advise_if_enabled },
- 	{ "bitmap", cmd__bitmap },
- 	{ "bloom", cmd__bloom },
-+	{ "bundle-uri", cmd__bundle_uri },
- 	{ "chmtime", cmd__chmtime },
- 	{ "config", cmd__config },
- 	{ "crontab", cmd__crontab },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index bb799271631..b2aa1f39a8f 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -7,6 +7,7 @@
- int cmd__advise_if_enabled(int argc, const char **argv);
- int cmd__bitmap(int argc, const char **argv);
- int cmd__bloom(int argc, const char **argv);
-+int cmd__bundle_uri(int argc, const char **argv);
- int cmd__chmtime(int argc, const char **argv);
- int cmd__config(int argc, const char **argv);
- int cmd__crontab(int argc, const char **argv);
-diff --git a/t/t5750-bundle-uri-parse.sh b/t/t5750-bundle-uri-parse.sh
-new file mode 100755
-index 00000000000..fd142a66ad5
---- /dev/null
-+++ b/t/t5750-bundle-uri-parse.sh
-@@ -0,0 +1,121 @@
-+#!/bin/sh
-+
-+test_description="Test bundle-uri bundle_uri_parse_line()"
-+
-+TEST_NO_CREATE_REPO=1
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success 'bundle_uri_parse_line() just URIs' '
-+	cat >in <<-\EOF &&
-+	bundle.one.uri=http://example.com/bundle.bdl
-+	bundle.two.uri=https://example.com/bundle.bdl
-+	bundle.three.uri=file:///usr/share/git/bundle.bdl
-+	EOF
-+
-+	cat >expect <<-\EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+	[bundle "one"]
-+		uri = http://example.com/bundle.bdl
-+	[bundle "two"]
-+		uri = https://example.com/bundle.bdl
-+	[bundle "three"]
-+		uri = file:///usr/share/git/bundle.bdl
-+	EOF
-+
-+	test-tool bundle-uri parse-key-values in >actual 2>err &&
-+	test_must_be_empty err &&
-+	test_cmp_config_output expect actual
-+'
-+
-+test_expect_success 'bundle_uri_parse_line() parsing edge cases: empty key or value' '
-+	cat >in <<-\EOF &&
-+	=bogus-value
-+	bogus-key=
-+	EOF
-+
-+	cat >err.expect <<-EOF &&
-+	error: bundle-uri: line has empty key or value
-+	error: bad line: '\''=bogus-value'\''
-+	error: bundle-uri: line has empty key or value
-+	error: bad line: '\''bogus-key='\''
-+	EOF
-+
-+	cat >expect <<-\EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+	EOF
-+
-+	test_must_fail test-tool bundle-uri parse-key-values in >actual 2>err &&
-+	test_cmp err.expect err &&
-+	test_cmp_config_output expect actual
-+'
-+
-+test_expect_success 'bundle_uri_parse_line() parsing edge cases: empty lines' '
-+	cat >in <<-\EOF &&
-+	bundle.one.uri=http://example.com/bundle.bdl
-+
-+	bundle.two.uri=https://example.com/bundle.bdl
-+
-+	bundle.three.uri=file:///usr/share/git/bundle.bdl
-+	EOF
-+
-+	cat >err.expect <<-\EOF &&
-+	error: bundle-uri: got an empty line
-+	error: bad line: '\'''\''
-+	error: bundle-uri: got an empty line
-+	error: bad line: '\'''\''
-+	EOF
-+
-+	# We fail, but try to continue parsing regardless
-+	cat >expect <<-\EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+	[bundle "one"]
-+		uri = http://example.com/bundle.bdl
-+	[bundle "two"]
-+		uri = https://example.com/bundle.bdl
-+	[bundle "three"]
-+		uri = file:///usr/share/git/bundle.bdl
-+	EOF
-+
-+	test_must_fail test-tool bundle-uri parse-key-values in >actual 2>err &&
-+	test_cmp err.expect err &&
-+	test_cmp_config_output expect actual
-+'
-+
-+test_expect_success 'bundle_uri_parse_line() parsing edge cases: duplicate lines' '
-+	cat >in <<-\EOF &&
-+	bundle.one.uri=http://example.com/bundle.bdl
-+	bundle.two.uri=https://example.com/bundle.bdl
-+	bundle.one.uri=https://example.com/bundle-2.bdl
-+	bundle.three.uri=file:///usr/share/git/bundle.bdl
-+	EOF
-+
-+	cat >err.expect <<-\EOF &&
-+	error: bad line: '\''bundle.one.uri=https://example.com/bundle-2.bdl'\''
-+	EOF
-+
-+	# We fail, but try to continue parsing regardless
-+	cat >expect <<-\EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+	[bundle "one"]
-+		uri = http://example.com/bundle.bdl
-+	[bundle "two"]
-+		uri = https://example.com/bundle.bdl
-+	[bundle "three"]
-+		uri = file:///usr/share/git/bundle.bdl
-+	EOF
-+
-+	test_must_fail test-tool bundle-uri parse-key-values in >actual 2>err &&
-+	test_cmp err.expect err &&
-+	test_cmp_config_output expect actual
-+'
-+
-+test_done
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 6da7273f1d5..3175d665add 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1956,3 +1956,14 @@ test_is_magic_mtime () {
- 	rm -f .git/test-mtime-actual
- 	return $ret
- }
-+
-+# Given two filenames, parse both using 'git config --list --file'
-+# and compare the sorted output of those commands. Useful when
-+# wanting to ignore whitespace differences and sorting concerns.
-+test_cmp_config_output () {
-+	git config --list --file="$1" >config-expect &&
-+	git config --list --file="$2" >config-actual &&
-+	sort config-expect >sorted-expect &&
-+	sort config-actual >sorted-actual &&
-+	test_cmp sorted-expect sorted-actual
-+}
+ #endif
 -- 
 gitgitgadget
 
