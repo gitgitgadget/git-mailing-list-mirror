@@ -2,61 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97EC9C4332F
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 09:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33E47C4332F
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 09:36:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230040AbiJLJfc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 05:35:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49024 "EHLO
+        id S230053AbiJLJgB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 05:36:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230022AbiJLJfX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 05:35:23 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA93F4B9A5
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:35:20 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id w18so25381185wro.7
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:35:20 -0700 (PDT)
+        with ESMTP id S230035AbiJLJfc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 05:35:32 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB4BE537F0
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:35:23 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id o20-20020a05600c4fd400b003b4a516c479so843367wmq.1
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:35:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xxEsvSkDYLHED1mTisNm5Ze7OCeeJZRDcAy6Ltwch8Y=;
-        b=XBoPqfznjLLZrH3Edrf6fqSbICLofRMc7JR07adzcg2FWg9oLLtJcc8qzGwvfaUGfh
-         /kaAMyrzAg/0wlEuKXxtsZy3Hb0bTCfT/bSFSslZzKduKDO/CAiE44CmB4v2OUSJQTpL
-         w2N5yfF+y8qOZEi5C1LH3CqIMcnA/dabnxFZ8BVbhXX9lkBDwWe8DbdR5oKsGQOOH8mp
-         geg305fIpz+OiZ13VHlG56mQQOc3oERLwMCuE/Rm7489xSDsbr5R6I16cTWHpSYzhogc
-         3IAmJEeOsUC6/ymUnTguyZvohZT4GiAc4iUcqnYiHr0IfsaAgOLBkdIgpgRPpMqGd23h
-         rQ9w==
+        bh=fowo9SAEGEk8jvA9tSepjAFsyJTa5RUMorcFYWRqTNw=;
+        b=SQ4JpRfrzE7SehRlTaEVHgsU3974E87VDeRvcLPlQyQNsrko6WkCknpa9g1/tkt0sw
+         LGY2DYUbfGgebqdnmtn9jkP3u0bWJfiH7Zuf6/E+h5z4pf1bzyT8t99DVUCsAuAhuUNk
+         UGpwwMAlicpeiw7RSJ9bQ2hk9FbGyaZzW2SsQ8f9VF1Rgtkkm0e5cyy2IvKauGal8Y2n
+         NyqQ5uHgl9ULofgkRzEJupdavcvZa36X3jKfnNZIQXR7AvYYlb7sxRXEH5eUi2352IUb
+         a/xSLNctJ17rjKBMSM/eTUw1FQVRpn8FXaP+nt1oQlBKiN/ohMFL1CyPg/qIUrsXxeTy
+         xlMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xxEsvSkDYLHED1mTisNm5Ze7OCeeJZRDcAy6Ltwch8Y=;
-        b=11JNheDFofg3uN1Y/8+EzVFciY0S3ozC+Zh0kB0y3tZkVxdSeZlrgbLFGTstRvo9Fw
-         VgCUHqgY9Ouv7nrSyNTQuGhEfT7QOGp7DbAGm+l4DZjhFLgtPkyFcfQuZ+sQKAgjCohH
-         j8dI00CnP6hKVCa+ht9FjtwbqM+jDFaNGtsV6s77+nDFHIPNQENm0IWrkDIElSacswdU
-         1XkIi5BjfZaZokGwPREOXwsJ0KkXHgLk/FK+FkvdjMcOF0Wjvo+Zg/Eecx+6+wSQbIPr
-         1nXm3dQs/dO7Yn3k1GM7Kh1S2dxBwsN22I+gf/bd72i3MhAJGS9TnoANnkn/4tZtVsIn
-         DpAw==
-X-Gm-Message-State: ACrzQf3K1GaZl3usqWxb8ndDSD9FK6mrurwgUc3cHMbsHOqGMAU0PnjE
-        o/SVIvq/6cuYe9LvfyaK69JGvgNg7lk=
-X-Google-Smtp-Source: AMsMyM7NRX6Fm2SXRvxX5j+xyDC06rJOFL79675vgR17gLtcclomT/yx7pg2qS5K3f06Wacx90qHfA==
-X-Received: by 2002:a05:6000:18a5:b0:231:e0c5:1322 with SMTP id b5-20020a05600018a500b00231e0c51322mr2268096wri.376.1665567320037;
+        bh=fowo9SAEGEk8jvA9tSepjAFsyJTa5RUMorcFYWRqTNw=;
+        b=CIB0OjXirxBRHPCpw/PlYf1SJzKLBwDvwMA+qAoEkxDgLaiXpP0eJAhpRn4o3ntkNT
+         onv/S7EE/Js6l87cOz8uL3sOXjdI070jRR7AJmMsDsn/apRmRsADgfwJSpAMRUWH6whD
+         xLAR9i8d2NV/knjbyP4a6aD25BLQdthqKZV31rqFCMEtnq3dDhV5KSZKZE8ecjxzfGqb
+         AVoZgEO92i22XUboSTDkxSHxCyL63tfbDTpvP/99QA+aJFuq/u6VzQZnUaZLCPCys1Dj
+         BCyLPNtF1qdSk7uVK2/yrRcscoyiJZ6AV2/dUYFms1qE4NakreCsi41lG6NJ32/lQaBf
+         z+lQ==
+X-Gm-Message-State: ACrzQf3YCW0I6A3BkgN1C0ackZi0yexPVnQTKhYhS5itTiQa9/hwxFrn
+        1n94Io7AUvTp/8Dyl9en5DWNutwZVtc=
+X-Google-Smtp-Source: AMsMyM7leN2U1Wg6AJ8xpqnGupj3/td5Cn9hc6an7at7jwnadN8ztkYXO+uYRlk5ASMnXrhZxwGb+g==
+X-Received: by 2002:a05:600c:4e52:b0:3b4:a828:1d84 with SMTP id e18-20020a05600c4e5200b003b4a8281d84mr1996268wmq.143.1665567320865;
         Wed, 12 Oct 2022 02:35:20 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l3-20020a7bc343000000b003b47ff307e1sm1259763wmj.31.2022.10.12.02.35.19
+        by smtp.gmail.com with ESMTPSA id v14-20020adfe28e000000b00231ed902a4esm1507935wri.5.2022.10.12.02.35.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 02:35:19 -0700 (PDT)
-Message-Id: <a5338e6bdd8cc783f01653cf4b668273bc2abec2.1665567312.git.gitgitgadget@gmail.com>
+        Wed, 12 Oct 2022 02:35:20 -0700 (PDT)
+Message-Id: <aa808725fb88f21122d9b0466d9185740e540126.1665567312.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1150.v3.git.1665567312.gitgitgadget@gmail.com>
 References: <pull.1150.v2.git.1650448612.gitgitgadget@gmail.com>
         <pull.1150.v3.git.1665567312.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 12 Oct 2022 09:35:10 +0000
-Subject: [PATCH v3 6/8] rebase --apply: make reflog messages match rebase
- --merge
+Date:   Wed, 12 Oct 2022 09:35:11 +0000
+Subject: [PATCH v3 7/8] rebase --abort: improve reflog message
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,92 +77,144 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-The apply backend creates slightly different reflog messages to the
-merge backend when starting or finishing a rebase and when picking
-commits. These differences make it harder than it needs to be to parse
-the reflog (I have a script that reads the finishing messages from
-rebase and it is a pain to have to accommodate two different message
-formats). While it is possible to determine the backend used for a
-rebase from the reflog messages, the differences are not designed for
-that purpose. c2417d3af7 (rebase: drop '-i' from the reflog for
-interactive-based rebases, 2020-02-15) removed the clear distinction
-between the reflog messages of the two backends without complaint.
+When aborting a rebase the reflog message looks like
 
-As the merge backend is the default it is likely to be the format most
-common in existing reflogs. For that reason the apply backend is changed
-to format its reflog messages to match the merge backend as closely as
-possible. Note that there is still a difference as when committing a
-conflict resolution the apply backend will use "(pick)" rather than
-"(continue)" because it is not currently possible to change the message
-for a single commit.
+	rebase (abort): updating HEAD
 
-In addition to c2417d3af7 we also changed the reflog messages in
-68aa495b59 (rebase: implement --merge via the interactive machinery,
-2018-12-11) and 2ac0d6273f (rebase: change the default backend from "am"
-to "merge", 2020-02-15). This commit makes the same change to "git
-rebase --apply" that 2ac0d6273f made to "git rebase" without any backend
-specific options. As the messages are changed to use an existing format
-any scripts that can parse the reflog messages of the default rebase
-backend should be unaffected by this change.
+which is not very informative. Improve the message by mentioning the
+branch that we are returning to as we do at the end of a successful
+rebase so it looks like.
 
-There are existing tests for the messages from both backends which are
-adjusted to ensure that they do not get out of sync in the future.
+	rebase (abort): returning to refs/heads/topic
+
+If GIT_REFLOG_ACTION is set in the environment we no longer omit
+"(abort)" from the reflog message. We don't omit "(start)" and
+"(finish)" when starting and finishing a rebase in that case so we
+shouldn't omit "(abort)".
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/rebase.c          | 9 +++++----
- t/t3406-rebase-message.sh | 2 +-
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ builtin/rebase.c          | 28 ++++++---------------
+ t/t3406-rebase-message.sh | 51 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 20 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index f7b00efeb92..ed612c2d0c3 100644
+index ed612c2d0c3..e4620935129 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -582,10 +582,10 @@ static int move_to_original_branch(struct rebase_options *opts)
- 	if (!opts->onto)
- 		BUG("move_to_original_branch without onto");
+@@ -1001,23 +1001,6 @@ static void NORETURN error_on_missing_default_upstream(void)
+ 	exit(1);
+ }
  
--	strbuf_addf(&branch_reflog, "%s finished: %s onto %s",
-+	strbuf_addf(&branch_reflog, "%s (finish): %s onto %s",
- 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
- 		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
--	strbuf_addf(&head_reflog, "%s finished: returning to %s",
-+	strbuf_addf(&head_reflog, "%s (finish): returning to %s",
- 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), opts->head_name);
- 	ropts.branch = opts->head_name;
- 	ropts.flags = RESET_HEAD_REFS_ONLY;
-@@ -615,7 +615,8 @@ static int run_am(struct rebase_options *opts)
- 
- 	am.git_cmd = 1;
- 	strvec_push(&am.args, "am");
+-static void set_reflog_action(struct rebase_options *options)
+-{
+-	const char *env;
+-	struct strbuf buf = STRBUF_INIT;
 -
-+	strvec_pushf(&am.env, GIT_REFLOG_ACTION_ENVIRONMENT "=%s (pick)",
-+		     getenv(GIT_REFLOG_ACTION_ENVIRONMENT));
- 	if (opts->action && !strcmp("continue", opts->action)) {
- 		strvec_push(&am.args, "--resolved");
- 		strvec_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
-@@ -1789,7 +1790,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		printf(_("First, rewinding head to replay your work on top of "
- 			 "it...\n"));
+-	if (!is_merge(options))
+-		return;
+-
+-	env = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
+-	if (env && strcmp("rebase", env))
+-		return; /* only override it if it is "rebase" */
+-
+-	strbuf_addf(&buf, "rebase (%s)", options->action);
+-	setenv(GIT_REFLOG_ACTION_ENVIRONMENT, buf.buf, 1);
+-	strbuf_release(&buf);
+-}
+-
+ static int check_exec_cmd(const char *cmd)
+ {
+ 	if (strchr(cmd, '\n'))
+@@ -1311,18 +1294,23 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	}
+ 	case ACTION_ABORT: {
+ 		struct string_list merge_rr = STRING_LIST_INIT_DUP;
+-		options.action = "abort";
+-		set_reflog_action(&options);
++		struct strbuf head_msg = STRBUF_INIT;
  
--	strbuf_addf(&msg, "%s: checkout %s",
-+	strbuf_addf(&msg, "%s (start): checkout %s",
- 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
- 	ropts.oid = &options.onto->object.oid;
- 	ropts.orig_head = &options.orig_head->object.oid,
++		options.action = "abort";
+ 		rerere_clear(the_repository, &merge_rr);
+ 		string_list_clear(&merge_rr, 1);
+ 
+ 		if (read_basic_state(&options))
+ 			exit(1);
++
++		strbuf_addf(&head_msg, "%s (abort): returning to %s",
++			    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
++			    options.head_name ? options.head_name
++					      : oid_to_hex(&options.orig_head->object.oid));
+ 		ropts.oid = &options.orig_head->object.oid;
++		ropts.head_msg = head_msg.buf;
+ 		ropts.branch = options.head_name;
+ 		ropts.flags = RESET_HEAD_HARD;
+-		ropts.default_reflog_action = DEFAULT_REFLOG_ACTION;
+ 		if (reset_head(the_repository, &ropts) < 0)
+ 			die(_("could not move back to %s"),
+ 			    oid_to_hex(&options.orig_head->object.oid));
 diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
-index bb2a4949abc..5c6cd9af3bc 100755
+index 5c6cd9af3bc..ceca1600053 100755
 --- a/t/t3406-rebase-message.sh
 +++ b/t/t3406-rebase-message.sh
-@@ -88,7 +88,7 @@ test_expect_success 'error out early upon -C<n> or --whitespace=<bad>' '
- write_reflog_expect () {
- 	if test $mode = --apply
- 	then
--		sed 's/(finish)/finished/; s/ ([^)]*)//'
-+		sed 's/(continue)/(pick)/'
- 	else
- 		cat
- 	fi >expect
+@@ -187,6 +187,57 @@ test_reflog () {
+ 	EOF
+ 	test_cmp expect actual
+ 	'
++
++	test_expect_success "rebase $mode --abort reflog${reflog_action:+ GIT_REFLOG_ACTION=$reflog_action}" '
++	git checkout conflicts &&
++	test_when_finished "git reset --hard Q" &&
++
++	git log -g -1 conflicts >branch-expect &&
++	(
++		if test -n "$reflog_action"
++		then
++			GIT_REFLOG_ACTION="$reflog_action" &&
++			export GIT_REFLOG_ACTION
++		fi &&
++		test_must_fail git rebase $mode main &&
++		git rebase --abort
++	) &&
++
++	git log -g --format=%gs -3 >actual &&
++	write_reflog_expect <<-EOF &&
++	${reflog_action:-rebase} (abort): returning to refs/heads/conflicts
++	${reflog_action:-rebase} (pick): P
++	${reflog_action:-rebase} (start): checkout main
++	EOF
++	test_cmp expect actual &&
++
++	# check branch reflog is unchanged
++	git log -g -1 conflicts >branch-actual &&
++	test_cmp branch-expect branch-actual
++	'
++
++	test_expect_success "rebase $mode --abort detached HEAD reflog${reflog_action:+ GIT_REFLOG_ACTION=$reflog_action}" '
++	git checkout Q &&
++	test_when_finished "git reset --hard Q" &&
++
++	(
++		if test -n "$reflog_action"
++		then
++			GIT_REFLOG_ACTION="$reflog_action" &&
++			export GIT_REFLOG_ACTION
++		fi &&
++		test_must_fail git rebase $mode main &&
++		git rebase --abort
++	) &&
++
++	git log -g --format=%gs -3 >actual &&
++	write_reflog_expect <<-EOF &&
++	${reflog_action:-rebase} (abort): returning to $(git rev-parse Q)
++	${reflog_action:-rebase} (pick): P
++	${reflog_action:-rebase} (start): checkout main
++	EOF
++	test_cmp expect actual
++	'
+ }
+ 
+ test_reflog --merge
 -- 
 gitgitgadget
 
