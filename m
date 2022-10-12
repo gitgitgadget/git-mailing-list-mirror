@@ -2,167 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6C6AC4332F
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 21:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30529C4332F
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 22:05:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbiJLVta (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 17:49:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44042 "EHLO
+        id S230096AbiJLWFH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 18:05:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbiJLVt1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 17:49:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 383F31217E0
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 14:49:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1665611365;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=R1iUItIlrudufjPJy0n8S2Rm4iWf/F2RRk71zfea03w=;
-        b=ag6+ZLqKJ4XAHWZrSZRoraPp0g/ljjwHKnvfzsb44/ADk2mD/6GEjXKzkiNmfdZwT3ynaR
-        7N2VmCoPT/zkZw9gE21e02RROp8/TQDCWi8hY0Mm05yX70ZlmNwlBwzTf/tLq8YAcE1HLH
-        jZmBWw5wWtRPStlo9TgpUQ4qQbsKuUg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-81-KmVcgCTENUWg3sLxPVHJLw-1; Wed, 12 Oct 2022 17:49:24 -0400
-X-MC-Unique: KmVcgCTENUWg3sLxPVHJLw-1
-Received: by mail-wm1-f72.google.com with SMTP id 133-20020a1c028b000000b003c5e6b44ebaso1751126wmc.9
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 14:49:24 -0700 (PDT)
+        with ESMTP id S230123AbiJLWE0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 18:04:26 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DF425D0C6
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 15:01:49 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id o65so14597754iof.4
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 15:01:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vXfxOR/mQrt8fwpa5MNxl1s5+gJi0baYUNg8wPBbuPA=;
+        b=dIhnoHoyZGxncoyazx1u2wAwsyBAi6agMfbJW37MEO9fUZTxFd3oUzcO70VLyPaVQP
+         UDeQ1cz5ryH/13SQ+WEeYM/B/qqljvrOgd4Iqk9DJVMK12o6sIFQCTnnqRwewE/Rmf8F
+         9VxZ9afDZdYBP89wMVV2xUE+Xf1YTBeb8dCF59fx7rjUagoNVwKJwaAHt5OD7qIj19ir
+         nMDWsj73JYMrt9xHyu594oHt3Cluq3zBV4Ns3zjVHa3mAwcXOteWOnHbJlEFTbmGLmhv
+         MU9mHSkRqq/EIu5WUVxal+1qxAYA6w4y9ScILtB2M35hdqgcAkTovytehuAvcURllVCt
+         v80w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R1iUItIlrudufjPJy0n8S2Rm4iWf/F2RRk71zfea03w=;
-        b=Qxysr5bWpnqiYR2Xp9e9XLenbThY+ubP6qnEAh8Fd3TbkPDH7iFXn7aJXyWBMgBjba
-         p6prFKHo+iHND5b4LuCrSg1XVLxDFnXRQqsTXkTL9idKJS9toZakM52gJVCNjQ/cYPeE
-         hdMFOq+PcMIc8caWEXRAqErT9CanqtU/tgbeR56kO5d8oEhsLlRwfSWEpW3AUVXMBteK
-         V0PogVcUfLs7eHIqHEdv+Ago0MzUtBp1h4LU8HkSa6sH8aoc07VI/0eN4CIow7y+nl1i
-         31opk0x5Da6bSJccep2gxBucgZ5qKNWVZftNZKIFzvkmOxiapKS3vIdLR9u147eZBoue
-         x9yQ==
-X-Gm-Message-State: ACrzQf1d7Nw1l9hN+efoI8xtSSNcdneabyM0Z3noVuDjJqohHp07p6SU
-        sRVlCDaHhdtv3lv/gC+tzX7S+hSNw8/LkFnbzH5DjEQDqnjJLjQhPbXdEM4XDIj2/+/TK8RQIj5
-        xx7I74JIK6hvA
-X-Received: by 2002:a5d:6701:0:b0:22e:6545:995d with SMTP id o1-20020a5d6701000000b0022e6545995dmr19232752wru.301.1665611361770;
-        Wed, 12 Oct 2022 14:49:21 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM681FS4Ox37BNwwkoASUGvsM4faP8zOMxiislkKLwQO2sGgvKUxerYyHSpbG2T0ylhTghLPPA==
-X-Received: by 2002:a5d:6701:0:b0:22e:6545:995d with SMTP id o1-20020a5d6701000000b0022e6545995dmr19232744wru.301.1665611361566;
-        Wed, 12 Oct 2022 14:49:21 -0700 (PDT)
-Received: from redhat.com ([2.54.162.123])
-        by smtp.gmail.com with ESMTPSA id e10-20020a05600c4e4a00b003b4935f04a4sm3482815wmq.5.2022.10.12.14.49.20
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vXfxOR/mQrt8fwpa5MNxl1s5+gJi0baYUNg8wPBbuPA=;
+        b=U+oIJeFiVKVQuz88OolpnX0trVFTOS5VhnP7fNngjXE7zLtVPfsjkpvvS3aKvr85Is
+         cOd82WsAsvviTUCBE//FCRIdyNsMoi5VhT9Hh70oQF0d8Ro45Dtj0kOfFjCBXyzZHVgu
+         JsHaI2lnS9mUb6/u3buFh9KTtBfM24LkHRPRBkms0eRJYlHH1HTyotkpjMh7ufH4D290
+         DqL027r0gjC24jGxzkYHh0wwa1nMSr2glxg7If/x1JqgWLecvqXiXYRrOjGJnWABm0ce
+         sO7DrOnUx8HBVLxUnSkAuSTWfSUa1RAKIoka1zEc/8kUNerO7bXDCD98EoFtqACszrCq
+         pRfQ==
+X-Gm-Message-State: ACrzQf3HXfcyhLixYjL1tEwwyvQtHmpOiH3gqEgsFp6DB2wmkpBF5jI5
+        C9hO1ZqFMsy/D8h2IBFHxotlgMAAXNtvMtKl
+X-Google-Smtp-Source: AMsMyM4Xtenlwve334FtYW1avcqVLSKpTdkkzIXXM2okW7VXaaUQb/OC8c0mwjEfSSkK/hNbmx+x2g==
+X-Received: by 2002:a05:6638:134a:b0:363:a76b:5afb with SMTP id u10-20020a056638134a00b00363a76b5afbmr12851730jad.23.1665612107178;
+        Wed, 12 Oct 2022 15:01:47 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id m7-20020a0566022e8700b006bba42f7822sm1074838iow.52.2022.10.12.15.01.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 14:49:21 -0700 (PDT)
-Date:   Wed, 12 Oct 2022 17:49:18 -0400
-From:   "Michael S. Tsirkin" <mst@redhat.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: sudmodule.<name>.recurse ignored
-Message-ID: <20221012174742-mutt-send-email-mst@kernel.org>
-References: <20221007060713-mutt-send-email-mst@kernel.org>
- <221007.86wn9bq458.gmgdl@evledraar.gmail.com>
- <20221007085334-mutt-send-email-mst@kernel.org>
- <kl6lpmf3wdk6.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqq35bze3rr.fsf@gitster.g>
- <20221011182119-mutt-send-email-mst@kernel.org>
- <kl6lfsft0ylu.fsf@chooglen-macbookpro.roam.corp.google.com>
+        Wed, 12 Oct 2022 15:01:46 -0700 (PDT)
+Date:   Wed, 12 Oct 2022 18:01:44 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, derrickstolee@github.com, vdye@github.com,
+        gitster@pobox.com
+Subject: [PATCH 0/4] midx: trace2 regions and grab-bag patches
+Message-ID: <cover.1665612094.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <kl6lfsft0ylu.fsf@chooglen-macbookpro.roam.corp.google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 12, 2022 at 09:56:45AM -0700, Glen Choo wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> 
-> > Fundamentally the problem we encounter regularly is this:
-> > 	qemu is superproject, ui/keycodemapdb is subproject.
-> >
-> >
-> > 	I have a change on master setting the submodule commit:
-> >
-> > 	qemu$ git show master | grep +Sub
-> > 	+Subproject commit 7381b9bfadd31c4c9e9a10b5bb5032f9189d4352
-> >
-> > 	and check it out:
-> >
-> > 	qemu$ git submodule update --init ui/keycodemapdb
-> > 	Submodule 'ui/keycodemapdb' (https://gitlab.com/qemu-project/keycodemapdb.git) registered for path 'ui/keycodemapdb'
-> > 	Submodule path 'ui/keycodemapdb': checked out '7381b9bfadd31c4c9e9a10b5bb5032f9189d4352'
-> >
-> >
-> > 	In another branch I have a different commit:
-> >
-> > 	qemu$ git show sub-foo  | grep +Sub
-> > 	+Subproject commit 57ba70da5312170883a3d622cd2aa3fd0e2ec7ae
-> >
-> >
-> > 	Now I switch branches and nothing happens, the submodule
-> > 	is marked as dirty:
-> >
-> > 	qemu$ git checkout sub-foo
-> > 	M       ui/keycodemapdb
-> > 	Switched to branch 'sub-foo'
-> >
-> > 	qemu$ (cd ui/keycodemapdb && git show | head -1)
-> > 	commit 7381b9bfadd31c4c9e9a10b5bb5032f9189d4352
-> >
-> >
-> > it is now very easy to generate incorrect code:
-> > - git commit -a  will commit the change to submodule
-> > - any build will use a mix of super and subproject that
-> >   is completely untested
-> >
-> >
-> > As a result people are basically saying avoid using submodules
-> > but I am wondering whether git can be tweaked to do the
-> > right thing by default.
-> >
-> 
-> It sounds like you want submodule.recurse [1] :)
+Here is a small handful of MIDX and MIDX bitmap-related patches that
+I've been carrying in GitHub's fork for a while now and forgot to send
+upstream.
 
-yes. unfortuntely there is no way to set it by default
-for cloned repos. users have to remember to set it.
+The first is a small typofix, and the second is a legitimate bug fix
+which allows us to consider annotated tags as bitmap candidates during
+commit selection. The final two are trace2 regions and instrumentation
+that I've found helpful when rolling out MIDX bitmaps in a production
+setting.
 
-> With that enabled, your
-> "git checkout" should behave like "git checkout --recurse-submodules",
-> which should make ui/keycodemapdb check out the correct commit as long
-> as the submodule commit is present locally. If is is _not_ present
-> locally, you will have to run "git submodule update".
-> 
-> Unfortunately, you typically won't know whether the commit is present
-> before running the command. This is yet another of those things that are
-> painful with submodules.
-> 
-> [1] https://git-scm.com/docs/git-config#Documentation/git-config.txt-submodulerecurse
-> 
-> > I understand we can work around it by asking everyone to
-> > create a correct config, but can't we make it DTRT by default
-> > to reduce friction?
-> 
-> You might be interested in the proposed 'new' Submodule UX [2]; one of
-> the goals is to make manual submodule management via "git submodule"
-> unnecessary.
-> 
-> As a part of that, you should be able to set "submodule.recurse = true"
-> and have high confidence that all necessary submodules and submodule
-> commits are present.
+Sorry that these are so disjointed in nature ;-). I figured that it was
+better to send a grab-bag series like this than to hold onto these
+patches forever!
 
-Hmm. How about only doing this for active submodules? Possible?
+Thanks in advance for your review.
 
-> Work on that is still ongoing, but this situation
-> should have improved as of [3].
-> 
-> [2] https://lore.kernel.org/git/YHofmWcIAidkvJiD@google.com/
-> [3] https://lore.kernel.org/git/20220308001433.94995-1-chooglen@google.com/
-> 
-> >
-> >
-> > -- 
-> > MST
+Taylor Blau (4):
+  midx.c: fix whitespace typo
+  midx.c: consider annotated tags during bitmap selection
+  midx.c: instrument MIDX and bitmap generation with trace2 regions
+  pack-bitmap-write.c: instrument number of reused bitmaps
 
+ midx.c                        | 34 +++++++++++++++++++++++++++++++++-
+ pack-bitmap-write.c           |  8 +++++++-
+ t/t5326-multi-pack-bitmaps.sh | 24 ++++++++++++++++++++++++
+ 3 files changed, 64 insertions(+), 2 deletions(-)
+
+-- 
+2.38.0.16.g393fd4c6db
