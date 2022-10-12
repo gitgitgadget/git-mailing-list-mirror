@@ -2,121 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BB04C433FE
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 13:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB472C4332F
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 13:52:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229566AbiJLNjR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 09:39:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50438 "EHLO
+        id S229999AbiJLNwK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 09:52:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbiJLNjP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 09:39:15 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43FE7B6013
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 06:39:14 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id n12so26252390wrp.10
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 06:39:14 -0700 (PDT)
+        with ESMTP id S229987AbiJLNwI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 09:52:08 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C755FC8230
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 06:52:06 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id a3so26398781wrt.0
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 06:52:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :reply-to:user-agent:mime-version:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ZcpmPypeiLIjfCuWcEVXmYumdnEpmxu7StYu2JZCoyo=;
-        b=qIMDLNq5qvX1vm3gPbVBSCUXLsQBgw5qlehmAPe010kqPdVI+2OOigeSLeUExLTtPA
-         DxWQnpmIASWCOgQjkbM4ajlbP0x82kJh434TQzvtODDmRI6FDL86Jj85uh6Lma0nIknM
-         KUfuDt6N+mWKqa6DPMnzS7u9XRjW3/Ewe7QLmGi4O8ncSBN3ZiVm/W0/ac81uV3oB8A3
-         drP6bFAU1a1NMqCACKOtT4vWOLFnuGE3GQogusmY4hI7HEMwlDOobAoQysqVKcba914E
-         Q3w0xw/BRdnp61WkDYhLp6P/KqVWGWlAOJsNAGk12XF9TrHUPPwajJvSV6DuCMZ3GFb4
-         V80w==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=11iKUEFGjFPu07XdNlh5rmvUPpoklPgvQpzKLU69fEE=;
+        b=N+ocSEdhYt74OVBy0qI5pLVry+QZ4uzYUM8lom8ZRTLSZgN0mfxWsDdyXKMkZ0Omqh
+         kVtCVz5d2nY4HXD2DiknP4HvYbJnbbfZjQzO6hPuwZZw6LE2Z0/WX4QWr+oPX3GJO1rA
+         Nw4BCp+4mx+x3xx7Nd5lMEb4MXiZfd8au+b16Fh5Vr0MNxQTROzUuK//tbGy6pPV5uaZ
+         g7ORvgicy/YlY/apWKcxgRtqWWITYsPlGDyI84urTip74k1cVKaOvuyUvWi544cMH/wF
+         V2sxl1VungkfL28sirJyNe96kHZ4D2DpLa+F1J63ZWr5WEbioDzw0oDuzR41lDhX9fYN
+         opmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :reply-to:user-agent:mime-version:date:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZcpmPypeiLIjfCuWcEVXmYumdnEpmxu7StYu2JZCoyo=;
-        b=5Ld1UoEdxdYr4dwagqgINE3bUtKxKYlTwAp9R41adGUQP1402tmQuLbIm/FqP2h2RX
-         uRA6MIxY7IrSpKNhfhUExbpFjF0vdXnv1mdV3uY+ejK7gyAiXKtDmuW2e9NJkNQMVU3i
-         1sC2aOcEJeJY9OeY7A4ZProTfLlLo6zh9r+dDrJxCIq87I66i7SofUXJPYbw7hVerUwu
-         5bJa2ZXB7INabQkWfArTVDDIrEo2xr+PUHoMQRhJyAWpkwWw9S6x2IQLc27FF7EPS+cz
-         B3friyiSsTmKQM8R6+rEK/8r9HtI/24gweptLGfxRb+jCJrUASx1owFa+fqfYDQjfrwr
-         2FQA==
-X-Gm-Message-State: ACrzQf3gyqYDw/E2OlMAlOK32wJt+kWaiVYk8BZPf5YVupijUB1lntCJ
-        BXJncOfYGCTBBiBDpZyWzH0=
-X-Google-Smtp-Source: AMsMyM7W8qbdzLWXepNSgqieFcwBhyy1k14tp4JaFqWjdU/EvKUqdpn0T3KPo5vgcLM7YfveXjG98Q==
-X-Received: by 2002:adf:cf07:0:b0:22e:3ea0:4fa9 with SMTP id o7-20020adfcf07000000b0022e3ea04fa9mr17351298wrj.147.1665581952793;
-        Wed, 12 Oct 2022 06:39:12 -0700 (PDT)
-Received: from [192.168.1.81] ([31.185.185.144])
-        by smtp.googlemail.com with ESMTPSA id g14-20020a056000118e00b0022cc3e67fc5sm13906333wrx.65.2022.10.12.06.39.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Oct 2022 06:39:12 -0700 (PDT)
-Message-ID: <9b4df247-c67c-8e5c-9c2e-1972db6a02e6@gmail.com>
-Date:   Wed, 12 Oct 2022 14:39:11 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=11iKUEFGjFPu07XdNlh5rmvUPpoklPgvQpzKLU69fEE=;
+        b=0QaRA5KOgR8SqjeJQQggmPZCzqnqC9obZlvbQMB44WrOFDuf0CZycblfwV7C5kZDz3
+         evCNA2IG2cTZSO4n9gCtJlaC7zeH4hBXvdEqim+b7LpYR+YI3XiDOAHbyP5Ti1QYLtHe
+         gTJowesJpabeOTPeo4GlYvRSp1tR6/qzYa4O5CzUsXDBlMm8RDVcjrk9kRyjpZyPK3Hv
+         VzH0POETirf9UBGU3/kg4lu6rq/zG8/THjxB2JmRbQC95xwFtMB7Oo01Is+ZJNLE2Iw+
+         pmVpXjTSWbtnMbIYjET9yf1ibvodDBGrceruqZUJCyeLvhQ9JTDdkpLLsW4bKXgr2GZ2
+         o2BA==
+X-Gm-Message-State: ACrzQf25Sdz/0oIKP/FECGKafk58CQit7Ga3O7YxdDiZkYfFzzGhfiA4
+        Xj0ALCZCcWFUn7ZyzqQK+npgVo8oj8k=
+X-Google-Smtp-Source: AMsMyM5cbwcGC8YjqbJILqF2lP7xphWEZaT4PXvT9Z0ZbTCq37lPVDw6ErdqCGlrx4YDelBp8mo2dQ==
+X-Received: by 2002:a5d:648b:0:b0:22e:ee60:db37 with SMTP id o11-20020a5d648b000000b0022eee60db37mr17145971wri.116.1665582724922;
+        Wed, 12 Oct 2022 06:52:04 -0700 (PDT)
+Received: from Precision-5550.. ([2a01:e0a:595:6400::ae22:851d])
+        by smtp.gmail.com with ESMTPSA id m5-20020a056000180500b0022f40a2d06esm11396284wrh.35.2022.10.12.06.52.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Oct 2022 06:52:04 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH 0/3] Implement filtering repacks
+Date:   Wed, 12 Oct 2022 15:51:11 +0200
+Message-Id: <20221012135114.294680-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.38.0.4.g7f9724c7bf.dirty
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 00/22] run-command API: pass functions & opts via
- struct
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-References: <cover-00.15-00000000000-20220930T111343Z-avarab@gmail.com>
- <cover-v2-00.22-00000000000-20221012T084850Z-avarab@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <cover-v2-00.22-00000000000-20221012T084850Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
+Earlier this year, John Cai sent 2 versions of a patch series to
+implement `git repack --filter=<filter-spec>`:
 
-On 12/10/2022 10:01, Ævar Arnfjörð Bjarmason wrote:
-> This series changes the run-command API so that we pass options via a
-> struct instead of via the argument list, the end result is that an API
-> user looks like e.g.:
-> 
->       +       const struct run_process_parallel_opts opts = {
->       +               .tr2_category = "submodule",
->       +               .tr2_label = "parallel/update",
->       +
->       +               .processes = update_data->max_jobs,
->       +
->       +               .get_next_task = update_clone_get_next_task,
->       +               .start_failure = update_clone_start_failure,
->       +               .task_finished = update_clone_task_finished,
->       +               .data = &suc,
->       +       };
->       [...]
->       -       run_processes_parallel_tr2(suc.update_data->max_jobs, update_clone_get_next_task,
->       -                                  update_clone_start_failure,
->       -                                  update_clone_task_finished, &suc, "submodule",
->       -                                  "parallel/update");
->       +       run_processes_parallel(&opts);
+https://lore.kernel.org/git/pull.1206.git.git.1643248180.gitgitgadget@gmail.com/
 
-I thought the first version was longer than it needed to be and now it 
-has grown by 50%. I think there are a number of changes here that are 
-not related to converting run_processes_parallel() to take a struct of 
-options. My feeling is that the test cleanups are worthwhile but the 
-changes in patches 8-10 are needed and patches 12-14 would be better 
-squashed together.
+We tried to "sell" it as a way to use partial clone on a Git server to
+offload large blobs to, for example, an http server, while using
+multiple promisor remotes on the client side.
 
-I'm afraid that I'm think this fits a pattern of submitting series that 
-incorporate unrelated changes and so end up longer than they need to be. 
-I think this leads to poorer reviews and a greater change of regressions 
-because reviewers are overwhelmed by the sheer volume of changes they're 
-expected to review. I find it particularly fustrating to review code in 
-one patch only to find it is deleted in the next patch.
+Even though it is still our end goal, it seems a bit far fetched for
+now and unnecessary as `git repack --filter=<filter-spec>` could be
+useful on the client side too.
 
-I think the overall goal here is worthwhile, but I'd really like to see 
-a much shorter more focused series. In general two shorter series are 
-much more likely to receive good quality reviews than one longer series 
-making the same changes.
+For example one might want to clone with a filter to avoid too many
+space to be taken by some large blobs, and one might realize after
+some time that a number of the large blobs have still be downloaded
+because some old branches referencing them were checked out. In this
+case a filtering repack could remove some of those large blobs.
 
-Best Wishes
+Some of the comments on the patch series that John sent were related
+to the possible data loss and repo corruption that a filtering repack
+could cause. It's indeed true that it could be very dangerous, and we
+agree that improvements were needed in this area.
 
-Phillip
+To address this, in the patch 2/3 introducing --filter, we warn users
+launching such a repack on the command line and ask them if they
+really want to do it. If such a repack is not launched from a
+terminal, we die().
+
+A new patch 3/3, though, introduces --force to allow users to launch
+such a repack without a terminal and without having to confirm it on
+the command line.
+
+Patch 1/3 is a preparatory patch.
+
+In short, this small patch series tries to reboot the previous one
+with a focus on the client side and a focus on safety.
+
+Thanks to John Cai, who worked on the previous versions, and to
+Jonathan Nieder, Jonathan Tan and Taylor Blau, who recently discussed
+this with me at the Git Merge and Contributor Summit.
+
+Christian Couder (3):
+  pack-objects: allow --filter without --stdout
+  repack: add --filter=<filter-spec> option
+  repack: introduce --force to force filtering
+
+ Documentation/git-repack.txt | 17 ++++++++++++++
+ builtin/pack-objects.c       |  6 +----
+ builtin/repack.c             | 44 ++++++++++++++++++++++++++++++------
+ t/t7700-repack.sh            | 20 ++++++++++++++++
+ 4 files changed, 75 insertions(+), 12 deletions(-)
+
+-- 
+2.38.0.4.g7f9724c7bf.dirty
 
