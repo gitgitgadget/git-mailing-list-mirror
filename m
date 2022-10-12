@@ -2,125 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5D43C433FE
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 09:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D44EC4332F
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 09:35:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbiJLJNC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 05:13:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55764 "EHLO
+        id S230016AbiJLJfU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 05:35:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbiJLJNB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 05:13:01 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 590EE140F0
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:13:00 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id s30so23642650eds.1
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:13:00 -0700 (PDT)
+        with ESMTP id S229798AbiJLJfR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 05:35:17 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C69A533E3A
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:35:16 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id r13so25349955wrj.11
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:35:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=kFfoOqC5whRR45O5YnId44VOwjqzv8G+DAOjtawFXOg=;
-        b=baWq2h32CPIs9iXTYOTfRa1NFiA+SazEEl231O9efOfQpKXLGkM+eEmPHiyOJBsarh
-         Jm4ua+NjngEUsPvjZIXB3wnLlhYM8h2EnbJpH7Rh6Ypg5gwz/6JGLKYrM3FfR2y1nZMT
-         5pQgnf9dIs9M9m9OMqJli4lw6U4sl9SvagJ+LvUUzeAGZYAKTZtEjuNU2anDOAR9M14c
-         wtwskd+kLzvBxXyU+7yWAA2XUbFdkpXHBV5zC3hSBZXflHvBQW7eDIY+NL3d79rwTMc/
-         rLe+q5i8N/HKwxR4XqKaIiKHwOfPbuZPWYHrXyVIKiCwU1jmY2OatO11D/Nx7xaWAUw8
-         n6kg==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xGrXmzqqST9iXNfjUV8b8UO/R2MiFaBpmcQ8GxkqVDg=;
+        b=NlYY/gqw5TEoJUBuXS8ts7/hnYbjRqP6F0GlO/wJc3LsChfzpiIr4IH0ZidW8CEcHK
+         blAZlQPhpfiMMhoBML8kaxDNPQIahEyzuPBMvTKbgQNUtfMRgdtAxz+6K8TFO8Zisjae
+         XfcY2vUrhxMZQKpqS4MU8VaWaxg4T8x21Y0gOiPk7+yGrvewd2Ia8qhFdN1sRqN4eiLJ
+         kjbi/5Tf8kfFy29y4JoM/MjD9mcPFd7aG3Gal/DlJkHpvzdirldpWJ4LgF5D1RJFBx1G
+         FcfAHcBFBObV/2N5lXls0zrt/nqkwTRanVashdhR+LNr4UuK9vlb83Aov82yFDA7u7OQ
+         xF5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kFfoOqC5whRR45O5YnId44VOwjqzv8G+DAOjtawFXOg=;
-        b=N1tmPfj7Cadxuyt6ndnhb57iyko++MLr2LvsW7Vllj1ZnQJd+5abmrWzwgMMEj+7ek
-         K2E1kGSK4u81E8hHblSIibIK/6ZWVl6XAKAJGQw9VZ0SPo2N9Yp2ZGgSAyIjxrWpNJGY
-         rWYy5X7YarppVPUkzJkORjU8I4e2y5YvdJs4WHDuGq6YHEsx0CoSi+7+gu+s6X2PONvJ
-         4R5RL0DnRmHy808ugnlVQw5+ISC5x3DsH3IhoPyOc/XDgEhV2SZHF+Rnl8YYhphG55AW
-         IWJhEMWpa6kAb7EPNFz5/GAvUnniq9d8xGDOozRVg/d83h9XjxpMHgjP0XEiHziZK2DZ
-         ct0Q==
-X-Gm-Message-State: ACrzQf02P3d3kRr48vKDpgf25nuBhp34eCIjSjORtrO8H6ybtFxtVaag
-        M8ulx7ECgkaIoiq4Chb//a2R3UNiBqNrPQ==
-X-Google-Smtp-Source: AMsMyM7S6rj+NpCAsIXimdBbvKcfFpc55KLOEaAfQPUTabm4VJpFAUaUwL8oR9ghpCGH/xDM6Y7d8w==
-X-Received: by 2002:a05:6402:1941:b0:457:13a:cce9 with SMTP id f1-20020a056402194100b00457013acce9mr27176973edz.265.1665565978813;
-        Wed, 12 Oct 2022 02:12:58 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id u2-20020a1709067d0200b00730bfe6adc4sm932530ejo.37.2022.10.12.02.12.58
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xGrXmzqqST9iXNfjUV8b8UO/R2MiFaBpmcQ8GxkqVDg=;
+        b=hhAbaf3K++XLHe1dRkIf1QsDfgKLqR/Xfr53Qk+JJ2UQktfaXUfQS+LlK6xWLGWYbT
+         zDifALwstlkVmJVsyb7VhnA5dBFkJCr8FHNKloUXHqZ9mzB15ykG2UUEoBoILgfo0KXF
+         gibbHwPTKWpOAFIwpzSg3eEanqaI3rSaOj1ivWXho6NINO1rqewsFBmOnCOyiqvwLvwJ
+         h76ntvzmWH5NJ2svHdn0LTfuqHo4JQmoaa2mvPGwOrzz6WXBak0Gs8V2PVPXPPLi8ui8
+         9hk+LnOxhCVq/EcGjNACSqGnk6DzWLVuRMz0uD0NHBMnYTXOCoc5uoA7O+2V86yD0yDK
+         1IVQ==
+X-Gm-Message-State: ACrzQf3nDNT0eNI01wqqgIbXtQw2qp7xDhHnjUF/wRvgLwwC2TicPNqN
+        lxI3xhl4EaPUryPesl6ugBd9Atiokrk=
+X-Google-Smtp-Source: AMsMyM7rAFBnS013QxlwI90oP07HlrfPABGiHyAUBQ+Ie96M81RclqfGe2+5304LXGKZZiXovziUwA==
+X-Received: by 2002:a5d:6111:0:b0:22e:5476:9659 with SMTP id v17-20020a5d6111000000b0022e54769659mr18185955wrt.711.1665567315128;
+        Wed, 12 Oct 2022 02:35:15 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n2-20020a1ca402000000b003c5571c27a1sm1672449wme.32.2022.10.12.02.35.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 02:12:58 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oiXnN-004GJd-1S;
-        Wed, 12 Oct 2022 11:12:57 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Erik Cervin Edin <erik@cervined.in>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [BUG] git fetch fetches tags matching negative refspec
-Date:   Wed, 12 Oct 2022 11:11:47 +0200
-References: <CA+JQ7M-CN0UnHQDDDVz0kPcU1AcoL9+WFOeR8eiw_B=Yiyc-CA@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <CA+JQ7M-CN0UnHQDDDVz0kPcU1AcoL9+WFOeR8eiw_B=Yiyc-CA@mail.gmail.com>
-Message-ID: <221012.86mta1mmli.gmgdl@evledraar.gmail.com>
+        Wed, 12 Oct 2022 02:35:14 -0700 (PDT)
+Message-Id: <a84cf971a753e294555ca8f2b7eaa4c75a8fa491.1665567312.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1150.v3.git.1665567312.gitgitgadget@gmail.com>
+References: <pull.1150.v2.git.1650448612.gitgitgadget@gmail.com>
+        <pull.1150.v3.git.1665567312.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 12 Oct 2022 09:35:05 +0000
+Subject: [PATCH v3 1/8] rebase --apply: remove duplicated code
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Calvin Wan <calvinwan@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Glen Choo <chooglen@google.com>,
+        Victoria Dye <vdye@github.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-On Wed, Oct 12 2022, Erik Cervin Edin wrote:
+Use move_to_original_branch() when reattaching HEAD after a fast-forward
+rather than open coding a copy of that code. move_to_original_branch()
+does not call reset_head() if head_name is NULL but there should be no
+user visible changes even though we currently call reset_head() in that
+case. The reason for this is that the reset_head() call does not add a
+message to the reflog because we're not changing the commit that HEAD
+points to and so lock_ref_for_update() elides the update. When head_name
+is not NULL then reset_head() behaves like "git symbolic-ref" and so the
+reflog is updated.
 
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
->
-> Delete all v2.9.* tags
->   git tag | grep ^v2.9.* | xargs git tag -d
->
-> Change standard the standard fetch configuration
-> [remote "origin"]
->     url =3D git@github.com:git/git.git
->     fetch =3D +refs/heads/*:refs/remotes/origin/*
->
-> By adding a negative respec for tags matching v2.9.*
-> [remote "origin"]
->     url =3D git@github.com:git/git.git
->     fetch =3D +refs/heads/*:refs/remotes/origin/*
->     fetch =3D ^refs/tags/v2.9.*
->
-> run
->   git fetch
->
-> What did you expect to happen? (Expected behavior)
->
-> To exclude tags matchings v2.9*, just like when running git fetch --tags
->
-> What happened instead? (Actual behavior)
->
-> Without specifying git fetch --tags, tags matching the negative
-> refspec are still fetched
->
-> What's different between what you expected and what actually happened?
->
-> The negative refspec appears to be ignored or overruled when running
-> git fetch without the --tags flag
->
-> Anything else you want to add:
-> I love git, thank you! =E2=99=A5
->
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
+Note that the removal of "strbuf_release(&msg)" is safe as there is an
+identical call just above this hunk which can be seen by viewing the
+diff with -U6.
 
-I haven't had time to try this, but I believe this isn't a bug, it's
-just that you didn't supply --no-tags.
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ builtin/rebase.c | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-"But I want some tags!", yes, that's not what --no-tags does, see the
-2nd paragraph of the DESCRIPTION section of "git-fetch".
-
-I.e. it got stuff you asked for, but also tags pointing at the main
-history, --no-tags will stop that, at which point you can *also* fetch
-tags, just with the refspec.
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index a2ca66b54be..51accb4fd61 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1808,19 +1808,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	 * If the onto is a proper descendant of the tip of the branch, then
+ 	 * we just fast-forwarded.
+ 	 */
+-	strbuf_reset(&msg);
+ 	if (oideq(&branch_base, &options.orig_head->object.oid)) {
+ 		printf(_("Fast-forwarded %s to %s.\n"),
+ 			branch_name, options.onto_name);
+-		strbuf_addf(&msg, "rebase finished: %s onto %s",
+-			options.head_name ? options.head_name : "detached HEAD",
+-			oid_to_hex(&options.onto->object.oid));
+-		memset(&ropts, 0, sizeof(ropts));
+-		ropts.branch = options.head_name;
+-		ropts.flags = RESET_HEAD_REFS_ONLY;
+-		ropts.head_msg = msg.buf;
+-		reset_head(the_repository, &ropts);
+-		strbuf_release(&msg);
++		move_to_original_branch(&options);
+ 		ret = finish_rebase(&options);
+ 		goto cleanup;
+ 	}
+-- 
+gitgitgadget
 
