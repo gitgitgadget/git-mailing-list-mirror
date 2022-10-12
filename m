@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D86CCC4332F
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 09:35:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F02B5C43217
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 09:35:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230021AbiJLJfY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 05:35:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48552 "EHLO
+        id S230027AbiJLJf0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 05:35:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230013AbiJLJfT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 05:35:19 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBE0533E0C
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:35:17 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id w18so25380912wro.7
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:35:17 -0700 (PDT)
+        with ESMTP id S230017AbiJLJfU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 05:35:20 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AED203DBC4
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:35:18 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id r13so25350100wrj.11
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 02:35:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vz48/RSPFOJlzJ3tJY1CkSjfI97YkEq4vzNOy46Tkig=;
-        b=NwjcA7SCToCMWKSP5jmttqcTKCX9QAhE6LCRTXGFpjxs6z65URUGMldLDLKIreAdJm
-         D7pKkMaxLwrFcBo5xZjgQd0N+rm5bVnN95yvofhUqoJGLJ2ZzuMI6Vm5FtrN6tqELOtA
-         RZ0DWAzfI9Y01XcUA0asFDhl/3QqUyZN/TbTU7rK5slJjrFn7iyLf5kj0uX4cBSowE98
-         itZmb7jfwVHjB7pWIGAkf28T4bhsqx98Xk6LV0F3r9d81NQVSTgkOsryx5MjfYpKaO7i
-         kaQENSd17AiZ+QT6BeEqOVp00OXGXDLQOvNolfoeN+PAY2Vb7Mlvqi1zNwfVxBTI0+dU
-         ypaA==
+        bh=dwSI2JOAV5uK62X0arUbDystpACPly3g4ieSBxPwtSw=;
+        b=ARVHxRPAgLH9GM70QVZxJY1RXH8E95CG1q4ZRxrD69+MVyomtPvoAZNxoXYS2FS++t
+         FzuvwpTN3hSy5NVclmiU6D2DJTmCD88bLlvLZErYw6jT2bhkikAhW+bpa1JsJ26nghxr
+         eS09eB1jkwmuZ4xX1amGa636uxwevoA2rY97Q8Sn6vPalHD96z2sGFU3Dfy07delzdS4
+         8HfXUBL+UYbLJgkEEECfWgz7juNmUuexe8gYjNSK2fGeDa1K/5R3c62y53YYo163QeuO
+         5QHPNzYQBEdnSD500851chkjNq8PeFh2LeL6hYutcnB0hrRKu/ZSDn/SydwqqMWdFgLE
+         0Jyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vz48/RSPFOJlzJ3tJY1CkSjfI97YkEq4vzNOy46Tkig=;
-        b=yzwoS4zvaiZ7I+xa+4iV0XAVgkz4f65i4qJic2il/iAaYMVi57BMHY1EIHJZfK79T4
-         DV7c4RwUePvpfN+Mqx+qaN3gAv8OJEHVU9AwDsvQu7upy6y9HTiMa1j76vX2Z10jvBL0
-         fUZicX6OKxnAqc6IGHmOys8HCP+xlMWKUEqckBhcnyHO5AJpq/qPtpVg256XZKL7+ygT
-         xT7O5AUrsEIvrxnUxJaj6jsbgrnK/ORjm2UJ7M5ebSmMGXmAgfGoB6myYRfGAqKqpNcq
-         as9P+wSSEhjxQaoLcyKAUrJTpOHosEz4kC6fd4Bs2MaRVFbC7fx62Wo0gQaP27buHEfp
-         nrXQ==
-X-Gm-Message-State: ACrzQf0DVQxeA4QOQ2bJVGGkwPXKH58Z3A0g0/x24n4pF6NXdHjTwLsm
-        mKHuQFnYY6NsYnRvkxkT88C70CiGxtM=
-X-Google-Smtp-Source: AMsMyM7P49bRrMZAAM2U1FhNTE034cuyEPRSOLGDVdqrnG+wUHzF69DfJm/2M/ptM77aL8N3+oKDGw==
-X-Received: by 2002:adf:f591:0:b0:22e:504e:fe76 with SMTP id f17-20020adff591000000b0022e504efe76mr17584789wro.553.1665567316193;
-        Wed, 12 Oct 2022 02:35:16 -0700 (PDT)
+        bh=dwSI2JOAV5uK62X0arUbDystpACPly3g4ieSBxPwtSw=;
+        b=wc+hH+DnqGGiVYUtP2aJsNgp/a2mMpJZWOF3LVs62fpIfvyzD1kuVokRwtIYOB/0iW
+         cMQ/bPzVXbGXuqJzk9iIawdYvwWjqM+iG8+3qTy623MBTrXLoM5aCccPIh9lsPNqI+fI
+         4NHNGlsJl7Uii9VPJ8qfEXxncjEWax2YKRCJnwPakLxLLra2PWF47J7Wvl60jY/EDy9b
+         CWx4WmtDoUtJd6awmmVhMDaRaYYoLNPsxf5PiDG8m+OgmpguEFGV1RCBc+x8hXQyT5NV
+         9a2lUov98sXzDZ9LzwhgQaQZIScYt+q3cZCFXTjz/nOT85zRdk0NU9E7sU4mSJUMGS0W
+         XQnA==
+X-Gm-Message-State: ACrzQf0kY6SyY+8TtKZe22Dw3h1+K0rl3UpWBZUaOaRnDHrPXteBSzF5
+        QIckbKWtD87w9X+7yCYiC3lwR8Sk2lY=
+X-Google-Smtp-Source: AMsMyM7ASxgeFYee9W3SwJLlg+0frdYP8r4xiIeLhAXyVxKwkLNqmdz91nYPK06NUY0/NYwKjPZuaA==
+X-Received: by 2002:a5d:588e:0:b0:22e:5601:f6d with SMTP id n14-20020a5d588e000000b0022e56010f6dmr17607041wrf.207.1665567317022;
+        Wed, 12 Oct 2022 02:35:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c10-20020a056000104a00b0022917d58603sm13248177wrx.32.2022.10.12.02.35.15
+        by smtp.gmail.com with ESMTPSA id bj4-20020a0560001e0400b0022e0580b7a9sm6380490wrb.17.2022.10.12.02.35.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 02:35:15 -0700 (PDT)
-Message-Id: <b9255ad35d2590df81c4b7629a00002c82fc9bf4.1665567312.git.gitgitgadget@gmail.com>
+        Wed, 12 Oct 2022 02:35:16 -0700 (PDT)
+Message-Id: <ea4da25a19cca80f04fb6b88d46937056406c5b7.1665567312.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1150.v3.git.1665567312.gitgitgadget@gmail.com>
 References: <pull.1150.v2.git.1650448612.gitgitgadget@gmail.com>
         <pull.1150.v3.git.1665567312.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 12 Oct 2022 09:35:06 +0000
-Subject: [PATCH v3 2/8] t3406: rework rebase reflog tests
+Date:   Wed, 12 Oct 2022 09:35:07 +0000
+Subject: [PATCH v3 3/8] rebase --merge: fix reflog when continuing
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,167 +77,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Refactor the tests in preparation for adding more tests in the next
-few commits. The reworked tests use the same function for testing both
-the "merge" and "apply" backends. The test coverage for the "apply"
-backend now includes setting GIT_REFLOG_ACTION.
+The reflog message for a conflict resolution committed by "rebase
+--continue" looks like
 
-Note that rebasing the "conflicts" branch does not create any
-conflicts yet. A commit to do that will be added in the next commit
-and the diff ends up smaller if we have don't rename the branch when
-it is added.
+	rebase (continue): commit subject line
+
+Unfortunately the reflog message each subsequent pick look like
+
+	rebase (continue) (pick): commit subject line
+
+Fix this by setting the reflog message for "rebase --continue" in
+sequencer_continue() so it does not affect subsequent commits. This
+introduces a memory leak similar to the one leaking GIT_REFLOG_ACTION
+in pick_commits(). Both of these will be fixed in a future series that
+stops the sequencer calling setenv().
+
+If we fail to commit the staged changes then we error out so
+GIT_REFLOG_ACTION does not need to be reset in that case.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- t/t3406-rebase-message.sh | 115 +++++++++++++++++++++++++-------------
- 1 file changed, 76 insertions(+), 39 deletions(-)
+ builtin/rebase.c          | 2 --
+ sequencer.c               | 5 +++++
+ t/t3406-rebase-message.sh | 9 +++++++--
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 51accb4fd61..488e6bdfd3e 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1271,8 +1271,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		int fd;
+ 
+ 		options.action = "continue";
+-		set_reflog_action(&options);
+-
+ 		/* Sanity check */
+ 		if (get_oid("HEAD", &head))
+ 			die(_("Cannot read HEAD"));
+diff --git a/sequencer.c b/sequencer.c
+index 61a8e0020d5..5790b35d763 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4785,6 +4785,8 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
+ 	if (read_populate_opts(opts))
+ 		return -1;
+ 	if (is_rebase_i(opts)) {
++		char *previous_reflog_action;
++
+ 		if ((res = read_populate_todo(r, &todo_list, opts)))
+ 			goto release_todo_list;
+ 
+@@ -4795,10 +4797,13 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
+ 			unlink(rebase_path_dropped());
+ 		}
+ 
++		previous_reflog_action = xstrdup(getenv(GIT_REFLOG_ACTION));
++		setenv(GIT_REFLOG_ACTION, reflog_message(opts, "continue", NULL), 1);
+ 		if (commit_staged_changes(r, opts, &todo_list)) {
+ 			res = -1;
+ 			goto release_todo_list;
+ 		}
++		setenv(GIT_REFLOG_ACTION, previous_reflog_action, 1);
+ 	} else if (!file_exists(get_todo_path(opts)))
+ 		return continue_single_pick(r, opts);
+ 	else if ((res = read_populate_todo(r, &todo_list, opts)))
 diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
-index d17b450e811..5253dd1551d 100755
+index 5253dd1551d..3ca2fbb0d59 100755
 --- a/t/t3406-rebase-message.sh
 +++ b/t/t3406-rebase-message.sh
-@@ -10,10 +10,15 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- test_expect_success 'setup' '
- 	test_commit O fileO &&
- 	test_commit X fileX &&
-+	git branch fast-forward &&
- 	test_commit A fileA &&
- 	test_commit B fileB &&
- 	test_commit Y fileY &&
+@@ -17,6 +17,7 @@ test_expect_success 'setup' '
  
-+	git checkout -b conflicts O &&
-+	test_commit P &&
-+	test_commit Q &&
-+
+ 	git checkout -b conflicts O &&
+ 	test_commit P &&
++	test_commit conflict-X fileX &&
+ 	test_commit Q &&
+ 
  	git checkout -b topic O &&
- 	git cherry-pick A B &&
- 	test_commit Z fileZ &&
-@@ -79,54 +84,86 @@ test_expect_success 'error out early upon -C<n> or --whitespace=<bad>' '
- 	test_i18ngrep "Invalid whitespace option" err
- '
+@@ -107,13 +108,17 @@ test_reflog () {
+ 			GIT_REFLOG_ACTION="$reflog_action" &&
+ 			export GIT_REFLOG_ACTION
+ 		fi &&
+-		git rebase $mode main
++		test_must_fail git rebase $mode main &&
++		echo resolved >fileX &&
++		git add fileX &&
++		git rebase --continue
+ 	) &&
  
--test_expect_success 'GIT_REFLOG_ACTION' '
--	git checkout start &&
--	test_commit reflog-onto &&
--	git checkout -b reflog-topic start &&
--	test_commit reflog-to-rebase &&
--
--	git rebase reflog-onto &&
--	git log -g --format=%gs -3 >actual &&
--	cat >expect <<-\EOF &&
--	rebase (finish): returning to refs/heads/reflog-topic
--	rebase (pick): reflog-to-rebase
--	rebase (start): checkout reflog-onto
-+write_reflog_expect () {
-+	if test $mode = --apply
-+	then
-+		sed 's/.*(finish)/rebase finished/; s/ ([^)]*)//'
-+	else
-+		cat
-+	fi >expect
-+}
-+
-+test_reflog () {
-+	mode=$1
-+	reflog_action="$2"
-+
-+	test_expect_success "rebase $mode reflog${reflog_action:+ GIT_REFLOG_ACTION=$reflog_action}" '
-+	git checkout conflicts &&
-+	test_when_finished "git reset --hard Q" &&
-+
-+	(
-+		if test -n "$reflog_action"
-+		then
-+			GIT_REFLOG_ACTION="$reflog_action" &&
-+			export GIT_REFLOG_ACTION
-+		fi &&
-+		git rebase $mode main
-+	) &&
-+
-+	git log -g --format=%gs -4 >actual &&
-+	write_reflog_expect <<-EOF &&
-+	${reflog_action:-rebase} (finish): returning to refs/heads/conflicts
-+	${reflog_action:-rebase} (pick): Q
-+	${reflog_action:-rebase} (pick): P
-+	${reflog_action:-rebase} (start): checkout main
+-	git log -g --format=%gs -4 >actual &&
++	git log -g --format=%gs -5 >actual &&
+ 	write_reflog_expect <<-EOF &&
+ 	${reflog_action:-rebase} (finish): returning to refs/heads/conflicts
+ 	${reflog_action:-rebase} (pick): Q
++	${reflog_action:-rebase} (continue): conflict-X
+ 	${reflog_action:-rebase} (pick): P
+ 	${reflog_action:-rebase} (start): checkout main
  	EOF
- 	test_cmp expect actual &&
- 
--	git checkout -b reflog-prefix reflog-to-rebase &&
--	GIT_REFLOG_ACTION=change-the-reflog git rebase reflog-onto &&
--	git log -g --format=%gs -3 >actual &&
--	cat >expect <<-\EOF &&
--	change-the-reflog (finish): returning to refs/heads/reflog-prefix
--	change-the-reflog (pick): reflog-to-rebase
--	change-the-reflog (start): checkout reflog-onto
-+	git log -g --format=%gs -1 conflicts >actual &&
-+	write_reflog_expect <<-EOF &&
-+	${reflog_action:-rebase} (finish): refs/heads/conflicts onto $(git rev-parse main)
- 	EOF
--	test_cmp expect actual
--'
--
--test_expect_success 'rebase --apply reflog' '
--	git checkout -b reflog-apply start &&
--	old_head_reflog="$(git log -g --format=%gs -1 HEAD)" &&
--
--	git rebase --apply Y &&
-+	test_cmp expect actual &&
- 
--	git log -g --format=%gs -4 HEAD >actual &&
--	cat >expect <<-EOF &&
--	rebase finished: returning to refs/heads/reflog-apply
--	rebase: Z
--	rebase: checkout Y
--	$old_head_reflog
-+	# check there is only one new entry in the branch reflog
-+	test_cmp_rev conflicts@{1} Q
-+	'
-+
-+	test_expect_success "rebase $mode fast-forward reflog${reflog_action:+ GIT_REFLOG_ACTION=$reflog_action}" '
-+	git checkout fast-forward &&
-+	test_when_finished "git reset --hard X" &&
-+
-+	(
-+		if test -n "$reflog_action"
-+		then
-+			GIT_REFLOG_ACTION="$reflog_action" &&
-+			export GIT_REFLOG_ACTION
-+		fi &&
-+		git rebase $mode main
-+	) &&
-+
-+	git log -g --format=%gs -2 >actual &&
-+	write_reflog_expect <<-EOF &&
-+	${reflog_action:-rebase} (finish): returning to refs/heads/fast-forward
-+	${reflog_action:-rebase} (start): checkout main
- 	EOF
- 	test_cmp expect actual &&
- 
--	git log -g --format=%gs -2 reflog-apply >actual &&
--	cat >expect <<-EOF &&
--	rebase finished: refs/heads/reflog-apply onto $(git rev-parse Y)
--	branch: Created from start
-+	git log -g --format=%gs -1 fast-forward >actual &&
-+	write_reflog_expect <<-EOF &&
-+	${reflog_action:-rebase} (finish): refs/heads/fast-forward onto $(git rev-parse main)
- 	EOF
--	test_cmp expect actual
--'
-+	test_cmp expect actual &&
-+
-+	# check there is only one new entry in the branch reflog
-+	test_cmp_rev fast-forward@{1} X
-+	'
-+}
-+
-+test_reflog --merge
-+test_reflog --merge my-reflog-action
-+test_reflog --apply
-+test_reflog --apply my-reflog-action
- 
- test_expect_success 'rebase -i onto unrelated history' '
- 	git init unrelated &&
 -- 
 gitgitgadget
 
