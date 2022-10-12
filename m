@@ -2,153 +2,193 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ACB7C433FE
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 06:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BCEFC4332F
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 07:47:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229682AbiJLGzz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 02:55:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59870 "EHLO
+        id S229619AbiJLHrr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 03:47:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbiJLGzx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 02:55:53 -0400
-Received: from EUR02-AM5-obe.outbound.protection.outlook.com (mail-eopbgr00041.outbound.protection.outlook.com [40.107.0.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCB6F58175
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 23:55:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hV1WhGo1jc8hPmD6QCdRFXDw90acY0rcR2Ba8fQnHCPVhD8ZzyrldUZPvIPBtaDfoY1RhUGaXfIaPR2H40Lp/950eWj15IS2otBgVP1hy/GuIvVAoC46DNDNhp0iR+BANTPhDgFWN7H97MdapT9isvw9bV+/8+oPwpW+B8u5uIEPOR9ysNP2EXkSQGuzFBT96RGZfQ3bDAQLHfJCrWoPNCdlOVHV3HbOsSzoRd1KMcOizxnK1hxDpd3oIHyXQzVFCjx4/y0Xr5L1L302+n5KGqN4QvThzgBfMKmQLW4Q1gx7g/cTSIfLMuSHtKT/eA57gMQowoSe3/FGuJArh6mhtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EX1HHq6vYOO7mUS9pu8VYWLfgTdzxZ9yxjtGtMZSs1c=;
- b=PHzAAy0RtTxrDtzj3l7y+d7YhUNtkCjYPyWTCOJklmSL/zBDixI9Jr+1dXniAgeMYV6R2nfn5FyPG0A37lC+kQQN8/oeqeZMMsvRZdNLTfM746H4/7XOVLyUfP0W4luBv+YWTno//UALR2DsdnbZZja+ljhoj930rTJBCZ94EQkhtMX8eivqE9yF1UVRu00sUvtIlJD9enxc1t/Z4jBpFNWGUPsy+bt23hBPgV/a8zcnZtpZooN3sbzHNCdFc67Yj03HCStG13cRWxOFvIK0oOGBiClRKSgUTMv47dDK+/rYGHe0LmFLSts4NQgHXwykG1Kog3as2Cs9Xhw2KMcoDg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EX1HHq6vYOO7mUS9pu8VYWLfgTdzxZ9yxjtGtMZSs1c=;
- b=OIw9Vm7jtbylc7urU2C+2RbErn5ka/QRuGtDIIBLsuQXkv/FjBZ7Zvn4/gTcsMJhGiaY12vY/oRtAlbLgcZSV6FOl3CIEs5Q3xUw48fKW8Doi8qGat7NaEyGr4YFW2QCb2TzrqTNjeriY+pX76hKnwq6aJbMNAioUha3kgt/Urs=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from AM7PR10MB3271.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:10d::17)
- by GV1PR10MB5986.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:5d::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5709.21; Wed, 12 Oct
- 2022 06:55:42 +0000
-Received: from AM7PR10MB3271.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::2ef7:ed26:40a1:f35f]) by AM7PR10MB3271.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::2ef7:ed26:40a1:f35f%5]) with mapi id 15.20.5709.021; Wed, 12 Oct 2022
- 06:55:42 +0000
-Date:   Wed, 12 Oct 2022 08:55:41 +0200
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Nicolas Graves <ngraves@ngraves.fr>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Cuckoo Aidan <aidancuckoo@gmail.com>
-Subject: Re: Error / feature-request: Signing git commits with SSH hardware
- key
-Message-ID: <20221012065541.y2tl63tw3ooeoy7s@fs>
-References: <875ygqw7p8.fsf@ngraves.fr>
- <Y0XVCDu9o3xDnt81@tapette.crustytoothpaste.net>
- <87v8oquiuk.fsf@ngraves.fr>
- <87r0zeuhrv.fsf@ngraves.fr>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <87r0zeuhrv.fsf@ngraves.fr>
-X-ClientProxiedBy: FR0P281CA0147.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:96::11) To AM7PR10MB3271.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:20b:10d::17)
+        with ESMTP id S229451AbiJLHrn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 03:47:43 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6783AAD9A0
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 00:47:41 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id qw20so35638578ejc.8
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 00:47:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JXWnDwrOG1EenvRiJhgJ1adJkm9ov2rT+VoXdATci4s=;
+        b=jljdwKHIQQh1IQQ4c63VOxzwZbtLhm0bf6D/wH7xvTqus9GidLPHB6jDSAcMSvQjwg
+         RPa6ao76aw1yIiJk0Ww/DpGOw+Ugt0DFr0VlETMKMIU42AZfYQksb/uqRdAM6CM1TRs9
+         zUPFM0glUAL1R4QFvf0R4t89C0I+xTWPhQ4wF3sdhGYMHuzjsZcMHfThLbWIoHv7ILjl
+         QQ8jraYFbucmysiCBozXSfOaZJ0jWB3YZ1iXixmEkg6gFnOgqWl6Ttvz7ZQEfnvbByh+
+         LG7HFpe+Zy/RUtZVkj0oeLMmLGrLt13kxfzjNLQ5YnDkoHKABm1pStwZ3nlzbzwroAWZ
+         j2Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JXWnDwrOG1EenvRiJhgJ1adJkm9ov2rT+VoXdATci4s=;
+        b=n3YvMSvs+xQEIrqRtcmoduHSxATZwnW57z9PyiTJcHwjNq97jodZK4Wtv6jnJwU6Kd
+         gt80/9O6eA/b6kPQQiu/HVDZTRBsW96YSQLJ/fI53zsuMOx9IsSsIvW2KAIebkwVsJFF
+         HJ+4vq7+h1su17DyO6Pil7vpoj86M3JGZbgYoKaLdxtLoqm6/go+w0gYr1vHkezhUEZy
+         wz4GI0f4FYod4vQFUX3xJjsNxoyDTGDMDwN+r6ygmyBKQH23JcEAs/DTE5964nEgKRG2
+         pph1VatTSydDumlRJ9JEs6B9mmE81jg13Z7P4Pf3WZhs5+6SPhQzin8CzRhcsHM+Lq1k
+         4ihQ==
+X-Gm-Message-State: ACrzQf1GfJsNFubIuL+Cctch5pe7oZ3ArrZsGg/7lg9Zf5fDmKU9P9Ik
+        ZE9Tj35IeJzVhPAe94iXc5nIBtkC42Ki1w==
+X-Google-Smtp-Source: AMsMyM6Xm5vxv2VBRX0feyZkj4o9WvwBGCVqQqimjpJ5E9nKbtztdwiVnbRUxxyKOMGFFGr2Jv2aNA==
+X-Received: by 2002:a17:907:2722:b0:77e:d84d:9e09 with SMTP id d2-20020a170907272200b0077ed84d9e09mr21881887ejl.679.1665560859309;
+        Wed, 12 Oct 2022 00:47:39 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id s12-20020a170906354c00b007806c1474e1sm765072eja.127.2022.10.12.00.47.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Oct 2022 00:47:38 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oiWSo-004DO9-0c;
+        Wed, 12 Oct 2022 09:47:38 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com,
+        phillip.wood123@gmail.com
+Subject: Re: [PATCH v2 2/4] submodule: move status parsing into function
+Date:   Wed, 12 Oct 2022 09:41:21 +0200
+References: <https://lore.kernel.org/git/20220922232947.631309-1-calvinwan@google.com/>
+ <20221011232604.839941-3-calvinwan@google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <20221011232604.839941-3-calvinwan@google.com>
+Message-ID: <221012.868rllo545.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM7PR10MB3271:EE_|GV1PR10MB5986:EE_
-X-MS-Office365-Filtering-Correlation-Id: e4face8a-d905-4c6c-1322-08daac1ec772
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 4BCvle0xPlXm70Wi3KPgDk9OEHCFCAalJCBLkBC1xEuL6ngIj1L+JhOCVFOWypcMawO8gqYc6dGi8lyf0ovXvp+qefRz6JEkfkDV/UrrpCkvHHe4TXC+JMG6QbM1bNgjNznw8c79IsjMnm4v20WCFpOSjCQ5u9JhAjm7xEbyGcvDGhBcXpgSyOOvC0O0rN/5CgTcJReaw1velGBuFQy2NTxzlRHJGNB942lZp2WyRJaUGZ13SycMNr0h+zPzKQxFYPigxml9dwXMaQa0/D6mBXz6pE0YGp57mRwY6FnsBNR+3lBVso2GpH0aSehIL3NJDoAE2qKGgmwKh7mR81gIzo2eefNsA4oVTXTnJy7EzCw71xzCW4Hgq9InDFjLp+fncBB5LKzlA0CLvmYuk30FRL/xxbINnjJCxpf7iYcPiuEpYOllgPkD38ALisx1sgeauKqAyskGKsMQfg+ohyuGLVGrEki125LboX+zzlwYvLmLEa6EBLhrPXan/cXEo/9I4IsQOVj/l/vHZ7jprPAcm7u1RvtWceGvRs0N+6PgiH9/rKR17ietTDLArH3ScdwaxiUiCQ+JaHloqQbo7gpQpSa1KRRzpDQl5181RBXtMIe3b55WqlqSfrDf3eiCJRsXQkyQbj95qYiNuD91ONdHy5zBvY6moXf2ViKRdUmWuaAZcLgUNRE6kq68Xp3yiiRCqm3CEq7g4xwmmlEggzdCWlS8SmlAhbq76XkQ3ehH7YDIZzm5JNe0/INGdBYiDBkV
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM7PR10MB3271.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230022)(4636009)(7916004)(39840400004)(346002)(136003)(376002)(396003)(366004)(451199015)(33716001)(38100700002)(86362001)(53546011)(41300700001)(6506007)(4326008)(8676002)(26005)(8936002)(4744005)(6916009)(9686003)(6512007)(478600001)(54906003)(966005)(6486002)(66476007)(66556008)(66946007)(1076003)(316002)(5660300002)(186003)(2906002)(4001150100001)(83380400001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bHA3WFlIZk5yUmVSd1hlYU5DMUNQcng2RTBtdHZEV2VidHhzYUZaUDJOVjZC?=
- =?utf-8?B?L28rSDJDN3JoeHhMb2treXZobWhjNk5TaldZNnU4SG9CTUJFNjdKR2RTL25R?=
- =?utf-8?B?ajhpbWRzZzYwdVlqakJmTHFsQWtYSC9VUDc3TEhHbk5IT0hoc2hYTkJhWGxs?=
- =?utf-8?B?YzNURVNvZDNwZ2t3RVpkN1NOYm0vZldmRXdkMDlOTUpMTmlMa043a2YrZUVU?=
- =?utf-8?B?ZnZnMXF2SXdaZFBybGpBY0lCbUdTeXpNMFRoOHZ4YTZ4VGhmU3pkbHJ1K2ls?=
- =?utf-8?B?YmpRTU5PckhHOWhxTDFLR0hGZGNCQ1pYa1RxbDBvdEZTNW9uUjBBR2w5cnlY?=
- =?utf-8?B?dVFYVkl3R0RsWDBXTE5FN2JXOXo5a0dDM05wZFJ5UERzZFEvYmVMWCtTdDdl?=
- =?utf-8?B?aXZYc2p4WmovZGNJbXFrSzJ4R1dwdUlWSjh2N3BPQWozQmpBcEU0NTJTTTZp?=
- =?utf-8?B?T3hoNnEreFNabnUvMjZjekdSM0h5RHBPeWhGcnJwOXdzdEJHUkdSbkNFS2k3?=
- =?utf-8?B?M216QytFcVhRRDc1N2toWVh0UENYbEVybUZLUEU4dnMwV3ZSY2ZqNWNqZVRF?=
- =?utf-8?B?Um9SdjhpQm5xVWJtTXlCd0FGRVVlOFp3Zy9HL2ExM2VBVFhkSWxURUk1Mm1Q?=
- =?utf-8?B?MVdUSmpEbHVHdGJPRWdSckpJY2RIUWgza3FGaVlkK2xkeldnVUlGeWNXWVRP?=
- =?utf-8?B?dzEvc1dpbFFrbHRXV1hpU1ZsOW5WdEk5OWorR3FxM3NMaW96TUpHcXNtWEsz?=
- =?utf-8?B?MG1QbEFGTVNyY3lSandFMGRTVzd1c2RpbkNYMlUxZnpIVW1iNmIvcVh6ekhk?=
- =?utf-8?B?U3VoaUxDU3FrUkRHdGRqaXhTUzBWV0ZWUHF2L2dhV3FRY2d3WWdkWWZWVmgr?=
- =?utf-8?B?QVJOTmVJT2tnNkNRQWN4YXhtT0FJeHg3MEhRZTlNWnpSNFhRR3Bod29obys3?=
- =?utf-8?B?VzVxMXNSVVQveTVKVjh2aDd4VWZkY0drSDc0dDlDb3NSRzl2VzFTQTZIaXEy?=
- =?utf-8?B?NXExWG4zUVR1ZGxYenZMMjBUOUptb3J6NDQ3TUtZNWFPck5tNlR1N2ZERUlk?=
- =?utf-8?B?OExiYW43ZGRSemR4T25vNkUrUEszV1JRL1hTNlc1eFF4VUVSdnBUZWsxTGZT?=
- =?utf-8?B?enhFa1M2eHFsQTFBVmg3L0s0U1lBRjVSZXdVK2YxNllaeTFOd0tQcTJ4UUp6?=
- =?utf-8?B?SVFwc2s0ZlBacE4weUdsSDZ5RTFwaG83My81MVRNell5eVRDSDJGamYzbFJ3?=
- =?utf-8?B?UlBxZmZRUU1YL1JFNVAzY2R3UTkrVmdFTUcvbzM1WDNkcjhUeFE3NWFxL2c0?=
- =?utf-8?B?VnNmRnFGdDc5TFhybnQvUlRaZ1pGem5Ld2d6MEoyT2l2M0VMWWlDWlpWYU5u?=
- =?utf-8?B?QW9wMFJCMW9najdHM1lCa3pWUmlFSUN0MUZ6NHJzNzV1TEFnUmxqcmY1ZTEw?=
- =?utf-8?B?QmJPNzdMa1ZsWUdxZUp4SUtodXNldUdoeHhQb0xUT1V2cWVncGdSVit5Sytj?=
- =?utf-8?B?WmpLbSszbkN6N2UybUlPb09FVFpKY2dyaGtXWlZtd21xYlcrWjlEc0JLQzJt?=
- =?utf-8?B?eW8xWm1NR2ZVUUt1cXR2N05zUldmRjNCSWczd2JjN0gxOGlGYXN0ME1RQVVK?=
- =?utf-8?B?aFZyVWxWZTg4REdJUkRiT00vUlVjWjdJR2czRUFwenlva3RDZVlLZW13Yk5V?=
- =?utf-8?B?dk9FcGl1cWZQRWZkSS9BN3dpeFJZR2xnL3drZHhKM3d2NlVuZ21VMCt1UUtw?=
- =?utf-8?B?THJ1WVpzY0xMZXZCMUdCQVVZZ1NiVWFxcEFJTnRUWkRiMjRoNHhJWGM4a0FP?=
- =?utf-8?B?akpyMUw1VGY2VDF0cTNzMWZQelNaa25iZ25NK012bWtkMnd3c1B3b3loVTF0?=
- =?utf-8?B?eUYxNUt4RC9iWE5qMVB3RmwwZHBtempHay85VFl2OEFhdjJXdXQ3Y3dteDVU?=
- =?utf-8?B?SVlNdnozVzlDRWp1K01jNldYZ0dzMklmcXp3akRITGFQRnBhN2FBdHR5YnVm?=
- =?utf-8?B?ZE1WSFc4eVZTUWlDZFlyemU0eU1EMnNBcjZUQXJQdTF5U05zWUJtR2pYd1Rx?=
- =?utf-8?B?WENPTHpxZzQxQzJMOGh1VEJPbEpxbGpGRGJRZjBsb05FTXIrOXZCLzhxZTRi?=
- =?utf-8?B?alBSWE5uQnIwKzdONTlLM3BNL1VSY1NsbkhGK3gxWFBkdHZ2dE5kbTRlaUZk?=
- =?utf-8?Q?G2QgjSLx/faQlzezB6Lme6g=3D?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: e4face8a-d905-4c6c-1322-08daac1ec772
-X-MS-Exchange-CrossTenant-AuthSource: AM7PR10MB3271.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2022 06:55:42.2435
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TZfK55SDugZlO8iz4qc7hOY5wTis3S34poh6/Z+NjkTaMr9RmtfuObH40YLkEOxPns2s+TPBtUmRBey4V+Xb5NEb7NB3435SU0kmLWupK+k=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR10MB5986
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12.10.2022 00:17, Nicolas Graves wrote:
->On 2022-10-11 23:54, Nicolas Graves wrote:
->
->> error: gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification
->
->And I can confirm that it was this error and bad configuration, sorry!
->
->> error: Couldn't load public key sk-ssh-ed25519@openssh.com AAAAG[..]zaDo=: No such file or directory?
->
->This error is not very precise though.
 
-I assume you have specified your key in the git config in user.signingkey as 
-the literal keystring?
-If so, then you'll need a `key::` prefix. Otherwise git will treat it as a 
-file path.
-See 
-https://git-scm.com/docs/git-config#Documentation/git-config.txt-usersigningKey
+On Tue, Oct 11 2022, Calvin Wan wrote:
 
-In the initial merge of this feature, git would allow ssh-* keys to be 
-specified without the prefix. This was later deprecated and not all 
-Tutorial/Docs you'll find online consider this.
+> A future patch requires the ability to parse the output of git
+> status --porcelain=2. Move parsing code from is_submodule_modified to
+> parse_status_porcelain.
+>
+> Signed-off-by: Calvin Wan <calvinwan@google.com>
+> ---
+>  submodule.c | 71 +++++++++++++++++++++++++++++------------------------
+>  1 file changed, 39 insertions(+), 32 deletions(-)
+>
+> diff --git a/submodule.c b/submodule.c
+> index 72b295b87b..a3410ed8f0 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -1864,6 +1864,43 @@ int fetch_submodules(struct repository *r,
+>  	return spf.result;
+>  }
+>  
+> +static int parse_status_porcelain(char *buf, unsigned *dirty_submodule, int ignore_untracked)
+> +{
+> +	/* regular untracked files */
+> +	if (buf[0] == '?')
+> +		*dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+> +
+> +	if (buf[0] == 'u' ||
+> +		buf[0] == '1' ||
+> +		buf[0] == '2') {
+> +		/* T = line type, XY = status, SSSS = submodule state */
+> +		if (strlen(buf) < strlen("T XY SSSS"))
+> +			BUG("invalid status --porcelain=2 line %s",
+> +				buf);
+> +
+> +		if (buf[5] == 'S' && buf[8] == 'U')
+> +			/* nested untracked file */
+> +			*dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+> +
+> +		if (buf[0] == 'u' ||
+> +			buf[0] == '2' ||
+> +			memcmp(buf + 5, "S..U", 4))
+> +			/* other change */
+> +			*dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+> +	}
+> +
+> +	if ((*dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
+> +		((*dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
+> +		ignore_untracked)) {
+> +		/*
+> +		* We're not interested in any further information from
+> +		* the child any more, neither output nor its exit code.
+> +		*/
+> +		return 1;
+> +	}
+> +	return 0;
+> +}
+> +
+>  unsigned is_submodule_modified(const char *path, int ignore_untracked)
+>  {
+>  	struct child_process cp = CHILD_PROCESS_INIT;
+> @@ -1900,39 +1937,9 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+>  
+>  	fp = xfdopen(cp.out, "r");
+>  	while (strbuf_getwholeline(&buf, fp, '\n') != EOF) {
+> -		/* regular untracked files */
+> -		if (buf.buf[0] == '?')
+> -			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+> -
+> -		if (buf.buf[0] == 'u' ||
+> -		    buf.buf[0] == '1' ||
+> -		    buf.buf[0] == '2') {
+> -			/* T = line type, XY = status, SSSS = submodule state */
+> -			if (buf.len < strlen("T XY SSSS"))
+> -				BUG("invalid status --porcelain=2 line %s",
+> -				    buf.buf);
+> -
+> -			if (buf.buf[5] == 'S' && buf.buf[8] == 'U')
+> -				/* nested untracked file */
+> -				dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+> -
+> -			if (buf.buf[0] == 'u' ||
+> -			    buf.buf[0] == '2' ||
+> -			    memcmp(buf.buf + 5, "S..U", 4))
+> -				/* other change */
+> -				dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+> -		}
+> -
+> -		if ((dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
+> -		    ((dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
+> -		     ignore_untracked)) {
+> -			/*
+> -			 * We're not interested in any further information from
+> -			 * the child any more, neither output nor its exit code.
+> -			 */
+> -			ignore_cp_exit_code = 1;
+> +		ignore_cp_exit_code = parse_status_porcelain(buf.buf, &dirty_submodule, ignore_untracked);
+> +		if (ignore_cp_exit_code)
+>  			break;
+> -		}
+>  	}
+>  	fclose(fp);
 
-Cheers,
-Fabian
+This isn't just a code move, but a rewrite of much of the code to accept
+a "char *buf" rather than a "struct strbuf buf".
 
->
->Thanks for your help!
->
->
->-- 
->Best regards,
->Nicolas Graves
+I can see in a later commit that you'd like to change this to accept a
+.string from a string_list.
+
+
+Without changing anything else, if you lead with a commit that does (in
+the initial loop):
+
+	char *str = buf.buf;
+        const size_t len = buf.len;
+
+And then make it use "buf" and "len" instead you could follow with the
+move commit, which at that ponit would benefit from the rename detection
+more more than it does now.
+
+Also: If we have a strbuf in this caller let's pass a "len", and not
+here make it need to do a strlen() on every line when we've computed it
+already, the other caller could just pass another strlen([...].string).
+
