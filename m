@@ -2,84 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C612C433FE
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 22:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3835EC433FE
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 22:30:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229899AbiJLWLR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 18:11:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57848 "EHLO
+        id S229589AbiJLWad (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 18:30:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229846AbiJLWK6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 18:10:58 -0400
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 069701A205
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 15:09:48 -0700 (PDT)
-Received: by mail-pl1-x64a.google.com with SMTP id h11-20020a170902f54b00b001780f0f7ea7so94125plf.9
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 15:09:48 -0700 (PDT)
+        with ESMTP id S229436AbiJLWac (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 18:30:32 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 857B87C1DF
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 15:30:30 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id sc25so174242ejc.12
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 15:30:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=sKnGQaODsj0OmfV14E7oP0VhcmiW48V9M0AavtRBSYw=;
-        b=ZbaRkD4UQ2eJaelaFOsZFPtWnA75mv48bcrNC5KgkrEiMXCT+r4iHIRbrxF1DBagiU
-         qHjcJZ+UvtTKEqLNCrYG7d3XJsgniDL6mVYlXoM+OTCa26k1+J4FG0Jqt6vcUg3Plefo
-         BdJhD1j4HEPB+w8r/vtGETx6ujvGo0679qjCpcSBskxrfwcdEx71qBlKIi+cndqvo7Zw
-         CqNvgyMLwfXr+MD4BPICp6DjlI4r3c/QoTkshHbdjjE9eICBtwB4vGBfTdksAhyxE8b+
-         oGUwtglSHeqUOPU2DOdqrsG7Nv74+7emVtMYvZru74axOiXixc1q3HTm4nYYWRWqReu9
-         kCRA==
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BsB74C+6ZAiLQ3o41bIAf3rYknUgqQq9oHefA4kZVeU=;
+        b=O7jsGhPxv+Fe9UeB/u2R4HO8LlkiAv4hXOaYNs1Y76VFyWnyL1cuaMYNwaCtYOAXEx
+         LrW1I3mUh4ZfZd7uM5kDnLW1kZUn1+H0T3mVC35gk3HyFIjNbs7vmfcnZizzqeukLM3t
+         PmRxJrpsYYw8xuxv0IeLSlx9gqfy0bMit/YFSPU3aVHAjvwCsPhK2UCzknhkU+H1hu2b
+         mc8kIPn0+TbrITaggBCdYHkEuN0l5zIq+JSHLBWH56S/4g+QO7E/ZLV5cD2TiJHVfQtO
+         90ueJQNpJDQXTIcvyN8M+O/Y3AnARat1Aju6kPfLFUBEzwHeDQxuKCxz4hwfmqjCm38T
+         3HbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sKnGQaODsj0OmfV14E7oP0VhcmiW48V9M0AavtRBSYw=;
-        b=IgLjAuK5lhZpJOfJsBbF1F95SS3RXmRdlKSYQuFsmCiUt+WhhExnR/TmB67+R0t+fc
-         9vd+fuduY6AEX/1ejfu3Z1KYXZ4gVmmkW2PSkSB/Iv8KqzilfqVzlFnpXzOr5Kfg8XjE
-         MafkpBpPF2HLBiSbgS/aB8jY5Wzs+k2cFQBqWE2PirIBatBselR/3iPT3FYc+PUdYsfu
-         X9AsQEN5ofFsT29YIEqtPKoQ+BB0hwHxMYjBk7WUa7yrNRAMYZuVF8T482RzVQdUGrYh
-         0ssQ8s2tv7OTum1arwFu/xnsXyNVTtf6yypIf2b6o+JFPx8xqjxM2yHjodU7nzRVddCg
-         71Nw==
-X-Gm-Message-State: ACrzQf2deMxZRFFok0a6Fb+REM8LIBZ7+UCg/Y7vIJt60O+OI3YKMET2
-        9muKH++CudL5QbAovGktk2KA2N1XqZBIgA==
-X-Google-Smtp-Source: AMsMyM6v9m4coaCfaMgeZOWiEun5IMvuZr2a+Qo8vjIiiaH6jOx5bOK1lJFUjf5oEbcVusfj49AcA9o6Y0jL8g==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:b417:b0:181:d0e4:3310 with SMTP
- id x23-20020a170902b41700b00181d0e43310mr21211765plr.134.1665612587516; Wed,
- 12 Oct 2022 15:09:47 -0700 (PDT)
-Date:   Wed, 12 Oct 2022 15:09:40 -0700
-In-Reply-To: <xmqqv8ookbua.fsf@gitster.g>
-Mime-Version: 1.0
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BsB74C+6ZAiLQ3o41bIAf3rYknUgqQq9oHefA4kZVeU=;
+        b=UHxk8iF7qegEFWYcZngL9AeeE8/+55DVjety4A1ZklgxKIAr2Ri3EtOF1040jbiXD4
+         NJaoaUdcWFQNWhybFLjm7NCDwqKQ7qHiC63h8qw9LjyoOgz7KMeg8x5p09bRtve/Lupo
+         epGKqEas31B0rumOVtQpE4OsABxmPNsmG7AYT0Jup8tMgwD6SKABzi5oN21x+NT0JfAB
+         JyxyLfZxhia7NpVDmVTM4XbDGyGgsozdfsmx2qFSCbjBvLBBBEvfQKChA82flpNT7rxn
+         GaI4WOWPcaCT0lu5f77qE5Q2w3XDy7TsUVTifL9T6iCXd0Y8N5Yy471WzDHrLfKygRvY
+         zSTg==
+X-Gm-Message-State: ACrzQf3EOkF8b5EBmlSslbnESsB5Z9TEvn0ko8ZFXYpdX/8brzSWO6lZ
+        hMf0D8XhPKC1smkD654eSvw=
+X-Google-Smtp-Source: AMsMyM5oiV40RfM334yBfuL90E6DB4l3t7gI0KUyAqZob541PlHNuhCMSqyG7B4uEyemXdP2+EGXqA==
+X-Received: by 2002:a17:907:7204:b0:783:ce92:d75e with SMTP id dr4-20020a170907720400b00783ce92d75emr23202841ejc.682.1665613828949;
+        Wed, 12 Oct 2022 15:30:28 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id h27-20020a170906719b00b0078ca30ee18bsm1944640ejk.95.2022.10.12.15.30.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Oct 2022 15:30:28 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oikF9-004MsO-1L;
+        Thu, 13 Oct 2022 00:30:27 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH 1/2] t0033, t0035: test for included config
+Date:   Thu, 13 Oct 2022 00:28:09 +0200
 References: <pull.1360.git.git.1665603814.gitgitgadget@gmail.com>
- <0ff5b5741a519c63e65ef57d7d0b3148c38c1a52.1665603814.git.gitgitgadget@gmail.com>
- <xmqqv8ookbua.fsf@gitster.g>
-Message-ID: <kl6l4jw81yor.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 2/2] config: respect includes in protected config
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+ <8c0f40aed7e7f7044b9233053ce3ab258f9b634f.1665603814.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <8c0f40aed7e7f7044b9233053ce3ab258f9b634f.1665603814.git.gitgitgadget@gmail.com>
+Message-ID: <221013.86a660n08s.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> Not commenting on the code yet as I am in the middle of today's
-> integration run, but as I notice a bad pattern being followed, let
-> me comment before it spreads too widely.
->
-> The "add failing test first and then fix the code with flipping the
-> test to success" is very much unwelcome.  For whoever gets curious
-> enough (me included when accepting posted patch), it is easy to
-> revert only the part of the commit outside t/ tentatively to see how
-> the original code breaks.  Keeping the fix and protection of the fix
-> together will avoid mistakes.  The post context of the hunk that
-> changes test_expect_failure to test_expect_success does not cover
-> the test script, thereby hiding the body of the test that changes
-> behaviour while reviewing the patch text, which is another downside.
+On Wed, Oct 12 2022, Glen Choo via GitGitGadget wrote:
 
-Thanks for voicing this, and sorry. I tried this pattern specifically
-because I thought it make it easier to review for folks who don't touch
-t/, but I hadn't considered that the reverse might be preferred.
+> From: Glen Choo <chooglen@google.com>
+>
+> Protected config should consider [include]-s. Add failing tests that
+> describe the behavior we want; they will pass in the next commit.
+>
+> Signed-off-by: Glen Choo <chooglen@google.com>
+> ---
+>  t/t0033-safe-directory.sh       | 9 +++++++++
+>  t/t0035-safe-bare-repository.sh | 9 +++++++++
+>  2 files changed, 18 insertions(+)
+>
+> diff --git a/t/t0033-safe-directory.sh b/t/t0033-safe-directory.sh
+> index aecb308cf66..720d6cdd60b 100755
+> --- a/t/t0033-safe-directory.sh
+> +++ b/t/t0033-safe-directory.sh
+> @@ -71,4 +71,13 @@ test_expect_success 'safe.directory=*, but is reset' '
+>  	expect_rejected_dir
+>  '
+>  
+> +test_expect_failure 'safe.directory in included file' '
+> +	cat >gitconfig-include <<-EOF &&
+> +	[safe]
+> +		directory = "$(pwd)"
+
+Here you use $, so <<-EOF, not <<-\EOF, Okey.
+
+> +test_expect_failure 'safe.bareRepository in included file' '
+> +	cat >gitconfig-include <<-EOF &&
+> +	[safe]
+> +		bareRepository = explicit
+
+But this one should use <<-\EOF
