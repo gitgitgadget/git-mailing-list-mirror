@@ -2,84 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCB3BC4332F
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 06:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5696C433FE
+	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 06:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbiJLGQg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 02:16:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48652 "EHLO
+        id S229513AbiJLGpe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 02:45:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229546AbiJLGQe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 02:16:34 -0400
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59DFCAA37F
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 23:16:31 -0700 (PDT)
-Received: by mail-yb1-xb2e.google.com with SMTP id 63so18959953ybq.4
-        for <git@vger.kernel.org>; Tue, 11 Oct 2022 23:16:31 -0700 (PDT)
+        with ESMTP id S229656AbiJLGpa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 02:45:30 -0400
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC0A740E06
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 23:45:27 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id f23so15404227plr.6
+        for <git@vger.kernel.org>; Tue, 11 Oct 2022 23:45:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=I0GINF/H1prycjsAviYmPNxBR1jkIEVp3YabyTpOlz0=;
-        b=CilJfee5acyqMyQ9fThZ+u/7GsY5xd8z8w38II7yCWvNFT5DGG4yixyyXZYSexsFcG
-         YKRfjWhJAn37w7LHtQUwqekVVnQFUhu5MQ5YQZM++EScaLay9lFFz4mwGm96yin/s6TM
-         rP4RPq9CNwSX8WaB/6FQMWW31qxphdt6nomHPIwMqqX4i9Wcd2ctId5ifl9/L6ykrV8K
-         4hmPtNYtAZ0X6bn2WGTeOjnwI/d21RFbRETUbRHXWWHluq/73H51XjPR4r7xkBML/R/T
-         VSwVdGYthUF/UZ2Y0KGYYLAsVCvjHb/DDu3X7u/cHpYSN6YFIHw4MYEtqPHeif1TP+O/
-         Jz1A==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wFZLcei4iOXBbaWcwL1FFEbyTcXs9JN5n3tyIw1Astc=;
+        b=RGQSrnrjEyntCBsaoLJPsJUwrPreVNn+B4ncgVIu+LmOENJ/+N+qHt6ligqttCWsOI
+         1KhOCOByTl8xzDetN6wi8Ni+ido4xmJfsU7QbOsgunOD0uwHV8ENneJ4/pofEZ7ZkbxZ
+         lZULwlNS5UOy51DwuTxq3iD4brXZzudu9LYPTQHZUqT1ut9xwXqpVMvZXXYufrrNXVQp
+         qpEhxFN8Ddij9gMnal+fneiWYyapILUY+EXmfDv/iOW7lHKjFp26qOUYhiDbax5elAmB
+         ARi0qVo44ywwE0/VgdMVMCKtB44KdNm4k4QJMrBWdnVkjNO3nrEw3gxAdN9xvSJERZXD
+         Hczg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=I0GINF/H1prycjsAviYmPNxBR1jkIEVp3YabyTpOlz0=;
-        b=WaRt1UJfrx/L74iqLlEbr/fJAev0AIwwWsZVCugIrsCOHH2z7liQRp7WjPldjg9Eoq
-         9vzLa+fqssWh+x3Rc4g5Kd8gksqjebx3VMQIYnngkSGiYa+MFRhfHOu6k36rU2FwY3EF
-         smV9xTOhcpChr5SH52VXXFjwR1lRF7nQXKdEKIL1eB6p9KgNTJQ2FTVYl6e1SwGGWN0y
-         UIERx9JBpAwELtLD7YTa+ox/0WExVOKObFqcCiGEdnztV8cjFuwXukauokur0TwHA1JI
-         2YBrDhjUp4GABrw/xygBnfjBhB++allJyLBRNJmhJIbDfZuqKlD+Qqz8YQHZ9TSm700I
-         vJVg==
-X-Gm-Message-State: ACrzQf386kf4asTDEcWr6AApLuehCYfU8HTnE/k4U0h/tABHW4msu7me
-        egK0Kn8VtUcGs88npRefb7bFjxDxYizfuinaT5s9E28EOk0=
-X-Google-Smtp-Source: AMsMyM4pa+pkcAo0LkUlTgtS6rJ/BBOiE2uOnoSMd9K6N1mTXiSVl9/uMiXVkdrDuc2IDiANPLkl17TUN06uga78Rho=
-X-Received: by 2002:a5b:8c2:0:b0:6bc:272:4f42 with SMTP id w2-20020a5b08c2000000b006bc02724f42mr27469907ybq.555.1665555390164;
- Tue, 11 Oct 2022 23:16:30 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wFZLcei4iOXBbaWcwL1FFEbyTcXs9JN5n3tyIw1Astc=;
+        b=gi+YgUDtbqBKDG46czF0OycfaAZLsY5FVccSXHqVyL+gNuNU9Uy+Nh9APStZzgjFOI
+         MZ4NNzg+duXiWWAuEd421gCXkamMy1gl79BcelQcK9JrKP4Sdb70gMdsfKLXNKbJyXjf
+         iXqLAdmmEFODdyshWah9T5tHB9Nf6D84x366N0PVv9y/Iv88qmPz0dDkwAHY4e1kB3oP
+         rjfSVERcmNg0gZF2hwnD1y/XyjtFlmkOWXzjJyAnhthesJAemS8EsVAMzS4Au6glIEqW
+         /QFqP8uHCyBh4eIRoIurqASaybOrntlLiYGUGK9NujdAIgD3BsFoIoP0qV/rZYcfQTds
+         iNrg==
+X-Gm-Message-State: ACrzQf0OhbEqHkSijc83wn5uXgtN7h26jUKWglZEYFGSWcAettOM3BXC
+        E9lba5FeQo+NujjZCV7Mb9I=
+X-Google-Smtp-Source: AMsMyM7rO59Qcvxic1NlQu7yrzGEKg22BMHyO1u8T5r7foc1MLk74joWQggyGz5R7i3A6GglL9jASQ==
+X-Received: by 2002:a17:90b:1d83:b0:20d:7e1e:fa51 with SMTP id pf3-20020a17090b1d8300b0020d7e1efa51mr3364843pjb.131.1665557127111;
+        Tue, 11 Oct 2022 23:45:27 -0700 (PDT)
+Received: from localhost ([2001:ee0:500b:6370:da47:cda5:dbd5:6e77])
+        by smtp.gmail.com with ESMTPSA id l23-20020a17090a599700b0020d6b514b38sm661428pji.55.2022.10.11.23.45.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Oct 2022 23:45:26 -0700 (PDT)
+Date:   Wed, 12 Oct 2022 13:45:23 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Luna Jernberg <droidbittin@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@vger.kernel.org, Hariom verma <hariom18599@gmail.com>
+Subject: Re: [Outreachy] internship contribution
+Message-ID: <Y0Zig4XUePPhMaA3@danh.dev>
+References: <CAP8UFD1o5qxSvbV05DK_J=zbU=D_+HS0Q2ufEFSQVaBoWw_7Ow@mail.gmail.com>
+ <CA+PPyiF5KK6p7rv57YL_wsDO+WPifoRp1oe0F-6mo5NxLAwDWw@mail.gmail.com>
+ <CAP8UFD26PY-53vZNZJzCRNiqaVB4fd=AvBtVuvMQP9p8Oqj82Q@mail.gmail.com>
+ <9fcfc8b0-772d-08c3-595b-5a5a139d7ecd@github.com>
+ <CADo9pHgcfwV53ooyM8Dh5jVO2rxO-tUHeLovd7HYLdTSOkNtyA@mail.gmail.com>
+ <CA+PPyiH8EPWpTuOJg1hSthFP1xBxurjN7J0J00g6xvFi_vbcYw@mail.gmail.com>
+ <ae8a98d9-eec1-cdcd-67a3-695aaca7f5ae@github.com>
+ <CA+PPyiFC0mjvY494AVZMB952Ux-TPyA-Uetu1xQ6FiHA_vaRaA@mail.gmail.com>
+ <CA+PPyiEms=f7=rXkvfmaazNkxKS1-VA-XJZOrhieQEut8f7QWA@mail.gmail.com>
+ <xmqqleplmz3n.fsf@gitster.g>
 MIME-Version: 1.0
-From:   =?UTF-8?Q?Mantas_Mikul=C4=97nas?= <grawity@gmail.com>
-Date:   Wed, 12 Oct 2022 09:16:19 +0300
-Message-ID: <CAPWNY8W_Tr-WoD-GXBddD5Y8w5Y4w+gDNYQdOAJ1uBwVHuRrsQ@mail.gmail.com>
-Subject: 2.38 "protected configuration" ignores includes
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqleplmz3n.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After Git 2.38 (specifically after commit 6061601d9), git no longer
-honors safe.directory settings in files that are [include]'d from the
-main global configuration file, even though they are shown as being in
-global scope by `git config --show-scope --show-origin`.
+On 2022-10-11 21:42:52-0700, Junio C Hamano <gitster@pobox.com> wrote:
+> NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com> writes:
+> 
+> > Hi team, I am reading through "My first contribution"
+> > when I run make all doc, I get the following;
+> >
+> > SUBDIR git-gui
+> >     SUBDIR gitk-git
+> >     SUBDIR templates
+> > make -C Documentation all
+> > make[1]: Entering directory '/mnt/c/Users/USER/documents/git/Documentation'
+> > make[2]: Entering directory '/mnt/c/Users/USER/documents/git'
+> > make[2]: 'GIT-VERSION-FILE' is up to date.
+> > make[2]: Leaving directory '/mnt/c/Users/USER/documents/git'
+> >     XMLTO git-version.1
+> > /bin/sh: 1: xmlto: not found
+> > make[1]: *** [Makefile:355: git-version.1] Error 127
+> > make[1]: Leaving directory '/mnt/c/Users/USER/documents/git/Documentation'
+> > make: *** [Makefile:2720: doc] Error 2
+> >
+> > How should I go about it?
+> 
+> Googling "xmlto: not found", the first result is
+> 
+>     https://command-not-found.com/xmlto
+> 
+> The page lists how to get and install it for various platforms, and
+> WSL/Windows should be included there.
+> 
+> I believe "My first contribution" recommends to first read the
+> top-level INSTALL before continuing (and if not, it should be
+> updated to).  Simpler things first---building and installing the
+> vanilla source code without any of your changes should be simpler
+> and you should become confident in doing that, before you start
+> modifying anything. Otherwise, when you encounter a problem, you
+> would not be able to tell if you broke it with your change, or your
+> basic set-up is not complete (e.g. missing necessary tools like
+> xmlto) and unable to build and install from even vanilla set of
+> sources.
 
-The docs added by
-https://github.com/git/git/commit/779ea9303a7de3d618f3b0e329ebb89529ab3285
-only talk about scopes and do not mention anything about [include]
-being specifically ignored.
+Maybe he is on Windows and using Git-for-Windows SDK? I'm not sure
+what's included there, but I can imagine that man-pages is useless
+on Windows, they would prefer html docs instead. Perhaps, they want:
 
-$ git config --get-all --show-scope --show-origin safe.directory
-global    file:/home/grawity/.config/git/config    /srv/this.works
-global    file:/home/grawity/.config/git/config.local    /srv/this.does.not=
-.work
+	make all && make -C Documentation html
 
-# ~/.config/git/config (owned by grawity:users)
-[safe]
-    directory =3D /srv/this.works
-[include]
-    path =3D ~/.config/git/config.local
+When building only html, xmlto is not necessary to be installed.
 
-# ~/.config/git/config.local (also owned by grawity:users)
-[safe]
-    directory =3D /srv/this.does.not.work
-
---=20
-Mantas Mikul=C4=97nas
+-- 
+Danh
