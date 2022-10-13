@@ -2,110 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAE0EC4332F
-	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 06:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBC01C433FE
+	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 06:26:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbiJMGHB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Oct 2022 02:07:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40546 "EHLO
+        id S229831AbiJMG04 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Oct 2022 02:26:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbiJMGG7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2022 02:06:59 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E229220E1
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 23:06:58 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D02DB1BAE0A;
-        Thu, 13 Oct 2022 02:06:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=/7hwlN7wJpZf7oDT1ovggtVj/9i3up5VNpcnxl
-        nVL7k=; b=bF8n8rTpAhZxo+g3HTyBs7IJuM2bi6bMd1IEkpg2uHYlqfTkMRfVX/
-        b8ywNAypyT5t8VinQ8I/84WwXday1OJ6B4d4hTP0KK15xmKtOxazZ+rtYFf1ZYFn
-        475mSxrGH+u86E3WnOcZNu/v/a+4W52JQ3ZjtlrAc0ua4Rwphe5CU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C8E0A1BAE08;
-        Thu, 13 Oct 2022 02:06:57 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 097191BAE07;
-        Thu, 13 Oct 2022 02:06:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, tenglong.tl@alibaba-inc.com
-Subject: Re: [RFC PATCH 1/2] notes.c: introduce "--no-blankline" option
-In-Reply-To: <20221013055654.39628-2-tenglong.tl@alibaba-inc.com> (Teng Long's
-        message of "Thu, 13 Oct 2022 13:56:53 +0800")
-References: <20221013055654.39628-1-tenglong.tl@alibaba-inc.com>
-        <20221013055654.39628-2-tenglong.tl@alibaba-inc.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-Date:   Wed, 12 Oct 2022 23:06:53 -0700
-Message-ID: <xmqqsfjsi7eq.fsf@gitster.g>
+        with ESMTP id S229823AbiJMG0y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2022 02:26:54 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D098B357FD
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 23:26:52 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id f37so983576lfv.8
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 23:26:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=9p/OWVmjqtDIpFIikU21x5UBmbcHiDgeLe0VA6erPVQ=;
+        b=Rf/j+uHanG+WnuXhZU/oGp/oQtRa31TiZoj3nIxG+eeIxtasluBVENESo314D2G91u
+         19dsgMP0nVzE2QjLFaeGMFtZ+1ZWL2HiUYdMMhlYAqmdTCUd8MkqpGot9fgqMI5RihZj
+         IyqYVbbl1JR71fbo/LnFZYpTvVn7tC4N0mWLH/zFR5V4j9BmTF3TP3PqbwCV4qAVAy/8
+         YinSW0EmqLmlTnwgPq1VgHEj2OnoRVgFVShoWY7j3O8uQCs9I9Nes2tWDBdW8J5B8Why
+         wX1Asjjgv2Q4fmFRViX6JWvIFc9nHBMbKfKSgRfZS6tvFp9VUM7yLxXO99S9KNCEkLaf
+         5AWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9p/OWVmjqtDIpFIikU21x5UBmbcHiDgeLe0VA6erPVQ=;
+        b=X9le7nvtlImvaDAkX+Mmg0yVuuxUQZqb40rYbAD3lEG0SmNSGA59SGdvOOlYfpum5z
+         AvgwmJ1g2nN15VXSpUe/LVX0Owb+RolFsGQoe0Yd/kw6dOaEpQY3jvKmYbNSoFitKekG
+         bHuCrWOHKP1QgvfOhAREEc9gQlUrMb5yrMF9fX3uGMTrKg+JgZQcN5uXmhzlQDlaHQd5
+         5L4narty09EBpr8xURccZ2hj2ZCjSFyV/UHpbR3v8BBEcnu9p6uUblNUbH0uubc3HGiC
+         WJwGyhwMjbhMnHwRavD/EFv6LHN7vmuEDgkPv4l9XPF9a9RDCS7W21fNAZuWiKlAG5mn
+         ibew==
+X-Gm-Message-State: ACrzQf3GsgYr9mWR39bU18CTLugbeYQ9PIxRWpQynFYlQikOKY/X2Cri
+        ve0ys9CAR2Tk1O3GLse3WFgPdz4Og2aptZNvw/LSaqg409RJ0ejyYwk=
+X-Google-Smtp-Source: AMsMyM7ypRXo7xy0MLRbXSgpPUprw/9DlBRYsHD0PhRj6TBoEX/Y0nzd7r4eGAg6Nr154IaNxfyiz2PRtvfu3+h/aCU=
+X-Received: by 2002:a05:6512:1399:b0:486:2ae5:be71 with SMTP id
+ p25-20020a056512139900b004862ae5be71mr11160535lfa.246.1665642410665; Wed, 12
+ Oct 2022 23:26:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3CF8D17A-4ABD-11ED-9EC9-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+Date:   Thu, 13 Oct 2022 09:26:38 +0300
+Message-ID: <CA+PPyiGHwupxZ=XrmL-1Y=tZyO5JCshD+ss9t9b5pZihM7vFug@mail.gmail.com>
+Subject: [Outreachy] Microproject selection
+To:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+Hi Team,
+I am reading through https://git.github.io/SoC-2022-Microprojects/ and
+and I found an interesting task I could do which is to "Modernize a
+test script".
 
-> +--no-blank-line::
-> +	When appending note, do not insert a blank line between
-> +	the note of given object and the note to be appended.
-> +
+When I looked through the code, I found I could clean up t1002 as
+mentioned in https://lore.kernel.org/git/CAPig+cQpUu2UO-+jWn1nTaDykWnxwuEitzVB7PnW2SS_b7V8Hg@mail.gmail.com/
+.
 
---blank-line::
---no-blank-line::
-	Controls if a blank line to split paragraphs is inserted
-        when appending (the default is true).
+Let me know if I should go ahead
 
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index be51f69225..1ca0476a27 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -562,6 +562,7 @@ static int copy(int argc, const char **argv, const char *prefix)
->  static int append_edit(int argc, const char **argv, const char *prefix)
->  {
->  	int allow_empty = 0;
-> +	int no_blankline = 0;
-
-Use
-
-	int blankline = 1;
-
-to avoid double negative, which is confusing and error prone.
-
-> @@ -584,6 +585,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
->  			parse_reuse_arg),
->  		OPT_BOOL(0, "allow-empty", &allow_empty,
->  			N_("allow storing empty note")),
-> +		OPT_BOOL(0, "no-blankline", &no_blankline,
-> +			N_("do not initially add a blank line")),
-
-	OPT_BOOL(0, "blank-line", &blankline,
-		 N_("insert paragraph break before appending to an existing note")),
-
-> @@ -619,7 +622,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
->  		char *prev_buf = read_object_file(note, &type, &size);
->  
->  		strbuf_grow(&d.buf, size + 1);
-> -		if (d.buf.len && prev_buf && size)
-> +		if (!no_blankline && d.buf.len && prev_buf && size)
->  			strbuf_insertstr(&d.buf, 0, "\n");
-
-Then, the conditional would read more naturally without double
-negation.
-
-		if (blank_line && d.buf.len && prev_buf && size)
-
-I do not know and I am not judging (yet) if the goal of the patch is
-sensible (in other words, if we should have such an option), but if
-we were to do so, I would expect the implementation to look more
-like what I outlined above.
-
-Thanks.
+Thanks,
+Wilberforce
