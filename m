@@ -2,132 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E698C433FE
-	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 00:07:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65AB1C43217
+	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 02:21:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229747AbiJMAHQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 20:07:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50886 "EHLO
+        id S229505AbiJMCRo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 22:17:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229742AbiJMAHN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 20:07:13 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8035C103DB3
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 17:07:11 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 4EA205A39C;
-        Thu, 13 Oct 2022 00:07:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1665619630;
-        bh=Bks4pPurLPFfbX/m4xo4qDGlYlaQthUYzGc3O6xnsZU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=bvtsQajoll5hzkuFMNnoDCjazhnq6kZW6P/9FOkb3his+t1LBOTy+PTtdxtyiPddq
-         FGFWdnlY8Nj3b6v1k7lB1lOVdd+HkmN/JCqyAsqIyW13034JCeuN61HKvpfsTX+lMW
-         gDT9bTsq7ozBfVRM2FcUSB0D/mXdJgI7ywyQLBdn/VujZx7Wje/bxcPKC7B29jUNBW
-         iUO/FdBIMtrD4WoQubrwWIHAKMhJFDPhEDk6z0bQyHIJE70OC/WUX2xv79aAPmrBLx
-         OBGppi1x2a3o8H6S0UOkAqKBOdzj+65lvwrWD1CU6js5VpcMKHK+cXdMYacT8RvGR6
-         K1nMtHxT66xWYJww73lCV3F8ErXCN2MVY+jAq4SgrwGJh9lJRxhv/8R5zRvLTKy4oR
-         0oYecSacEW6xQTkoQ9i5Q3KPCpjzgWvyMwyItGMRhOvCCSSuAAifUibo+uoJ1XZQYD
-         fmamPUJkLL6TY2wjBaajbWyiH963PdCrHoVKG/v7U8lIHJcx9HE
-Date:   Thu, 13 Oct 2022 00:07:08 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Thorsten =?utf-8?B?U2Now7ZuaW5n?= <tschoening@am-soft.de>
-Cc:     git@vger.kernel.org
-Subject: Re: How to best maintain directories like /etc/sysstat in GIT?
-Message-ID: <Y0dWrAba6U+j0tT9@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Thorsten =?utf-8?B?U2Now7ZuaW5n?= <tschoening@am-soft.de>,
+        with ESMTP id S229454AbiJMCRm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 22:17:42 -0400
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 194C750525
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 19:17:42 -0700 (PDT)
+Received: by mail-il1-x134.google.com with SMTP id u2so310669ilv.6
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 19:17:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zuAtLH1WtdOir+m2tSjKrAZDz4NhHsWHkGGY/nWRuJM=;
+        b=Hgn1/D1NrnwwPOybZonu569uLyvClqkRP4IOoTCewbYUY6eScf30Gg/reo5mbXWK4e
+         QUXXkseNkdEbnZur7/MLXnVQPWzXSPV7EvO11Ql75/Mj/tnRb5GUI9veVT44sTsF5V68
+         pwJGR9+JevIJSVcHTcqpR7DSLrBKAWg4oQCPd838R+ejFAJ0p5TAAKmLZ8tnArjopkia
+         rTbmvXPaAxXDqZslC5bkCwrIFeAyUIgzXqJsycLZ4teP7LFlxiglXUOOtIYqlGCX36JO
+         FlgNTNvI52JIeoM2X3FwvMsSC3jjfbDNvRF10YLrLb5/mkwUMxMA2uYfYsCEdbg+yzdn
+         pIdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zuAtLH1WtdOir+m2tSjKrAZDz4NhHsWHkGGY/nWRuJM=;
+        b=CdNrJ9WSnXQtJB7rOstZlAt4+QyXYUwIA/+0GIX53PRsb7UYVYbo2G9kZIzqBSawut
+         az7d0++b7uxOrTD++Ff5ncJcoqW0viRyq3ogOEwl9K6vyXwHKxowUbKGCdIkdgar80Jq
+         2gSwvXYxHtToTdo2L+82AobF5h5nn1AVEdSFlfokuHk7e7G7N5UqfLuYAeoYj/FGGnXY
+         KbKlEa+eRyIlHHmXYq8QqQ/JHlW6KLzkjEFRROlH9pBhddcr9NfDj/+ipl8TiQ5PYiKc
+         fs/F1fpfZCpEA+uujt9HNm1V5D68D9utZlUBU+UigFxY9HA1+f5fruXNjF4ieooFNGRH
+         eniA==
+X-Gm-Message-State: ACrzQf3v59gB9qp5A/6Cr0nKsnaoRvkNF+IeR/nziG6Ig1LnXDhdqmKy
+        hQXqa+guZfFNJAMVuyx29sHg0Q==
+X-Google-Smtp-Source: AMsMyM4JEyrL62Vvhji4rl6qpyW6uDkDF/PuDt9fROzbE2cX8vF/hItQg/BjcL1Vr732J2dlJPk7hw==
+X-Received: by 2002:a05:6e02:12c4:b0:2fa:478:5c0c with SMTP id i4-20020a056e0212c400b002fa04785c0cmr16390291ilm.122.1665627461433;
+        Wed, 12 Oct 2022 19:17:41 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d30-20020a02605e000000b0035a09ad2d87sm6936632jaf.99.2022.10.12.19.17.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Oct 2022 19:17:41 -0700 (PDT)
+Date:   Wed, 12 Oct 2022 22:17:39 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ignacio Taranto <ignacio.taranto@eclypsium.com>,
         git@vger.kernel.org
-References: <1681596318.20221012183551@am-soft.de>
+Subject: Re: About git reporting missing newline for symlinks
+Message-ID: <Y0d1Q/Vrgf5UZY+J@nand.local>
+References: <CAAHd=zcrU3VJro1R3xDj3hmqGXZHUA6rHuDFxwhF5aewNvA8xQ@mail.gmail.com>
+ <Y0cyX8Ggp+dkgAjX@tapette.crustytoothpaste.net>
+ <xmqq35bsk9og.fsf@gitster.g>
+ <Y0c0tDEDpV8fO6n/@tapette.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="5oal0ECaTlFN+5Au"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1681596318.20221012183551@am-soft.de>
-User-Agent: Mutt/2.2.7 (2022-08-07)
+In-Reply-To: <Y0c0tDEDpV8fO6n/@tapette.crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Oct 12, 2022 at 09:42:12PM +0000, brian m. carlson wrote:
+> On 2022-10-12 at 21:34:55, Junio C Hamano wrote:
+> > Just a fun thought experiment, but I wonder what would happen if a
+> > user chooses to add .clean and .smudge filter that adds and strips
+> > a LF at the end ;-)
+>
+> I don't believe those are invoked on symlinks, since I don't recall us
+> having to handle symlinks in Git LFS, which works using a smudge and
+> clean filter.
 
---5oal0ECaTlFN+5Au
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That is right. It matches my memory, at least, though it has been a very
+long time since I've thought that hard about the clean / smudge code.
 
-On 2022-10-12 at 16:35:51, Thorsten Sch=C3=B6ning wrote:
-> Hi everyone,
->=20
-> I'm using SVN to maintain lots of different host specific configs like
-> crontab files, web server configs and the directory /etc/sysstat. The
-> current approach is to simply have some directory structure in trunk
-> named by topics like /trunk/Mail/Postfix for some reference host, if
-> any makes sense at all. That config is then copied to e.g.
-> /tags/Mail/Postfix/some.other.host and Postfix for that host
-> maintained in that writable tag.
->=20
-> GIT doesn't have writable tags, which might be worked around using
-> branches or one repo per host or stuff. The more important difference
-> is that SVN can have a working copy for each and every maintained
-> directory. So one can really make /etc/postfix or /etc/sysstat a
-> wroking copy and maintained that only, without additionally necessary
-> subdirs and without having .svn in /etc or alike. AFAIK that is not
-> possible in GIT, even with sparse checkouts one needs a subdir of
-> some kind, which is pretty incomplatible with many system wide
-> configs. Unless one wants to put .git into / or /etc or alike, which
-> is what I would loike to avoid.
->=20
-> Any useful suggestions for workarounds?
-
-There are a couple approaches you can take.  One is to keep the
-repository elsewhere and simply copy files into place.  This is how I
-and many people manage our respective dotfiles with Git.
-
-Another option is to use some sort of automatic system for managing
-those config files, such as Puppet, Chef, or Ansible, and keep those
-files in a repository suitable for that system.  This is how I manage
-configuration for my servers and how we do it at work.
-
-Finally, you can also keep the Git directory separate from the working
-tree.  For example, if you're in /etc and your repository directory is
-/srv/checkouts/etc-git, you can run one of the following:
-
-$ GIT_WORK_TREE=3D/etc GIT_DIR=3D/srv/checkouts/etc-git git status
-$ git --work-tree=3D/etc --git-dir=3D/srv/checkouts/etc-git status
-
-(Note that you must set both environment variables or both options, not
-just one.)  Of course, this is a little unwieldy, so a shell script may
-be helpful.  You'll also want an appropriate .gitignore file.
-
-> I can only think of two things: Putting the GIT clone somewhere and
-> link directories into that. Which won't work very well for directories
-> for which I only want to maintain some and not all files and seems
-> like a lot of work, might break package management etc.
-
-Git does not preserve hard links and this won't work in general.  Since
-Git also does not preserve permissions other than the executable bit, so
-you almost certainly will not want to use symlinks, either, since that
-means the destination directories may change ownership and permissions
-when you run git checkout.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---5oal0ECaTlFN+5Au
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.39 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY0dWrAAKCRB8DEliiIei
-gSqvAQCSxQv1Q4fv8xjNWlAzqXDcN/MGG6aSfI1VTZB/kfju9wEAjrAW6VvpLfcm
-yfLmtxiNUkF4WFGPL2Qvv/RvoPnnawM=
-=3eeW
------END PGP SIGNATURE-----
-
---5oal0ECaTlFN+5Au--
+Thanks,
+Taylor
