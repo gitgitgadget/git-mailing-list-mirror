@@ -2,69 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D665C433FE
-	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 15:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC22FC433FE
+	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 15:39:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229588AbiJMPbl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Oct 2022 11:31:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56020 "EHLO
+        id S229663AbiJMPjn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Oct 2022 11:39:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229540AbiJMPbk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2022 11:31:40 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13B8520BE9
-        for <git@vger.kernel.org>; Thu, 13 Oct 2022 08:31:38 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EDCB91BA793;
-        Thu, 13 Oct 2022 11:31:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9dyCwudwyCdcFQa0W+S+gI3N3Dj32A3UdeqQ7e
-        1YQP4=; b=ZiVs4GP86MwxM5S9UAXUHqRbWcDjkU7oy5gik3q02mclSc++RU4Moq
-        kAOjU5pQ5CcYWYb4CpBr8lR92HgjSFIYawXoZUeJ5U0tYaoNDtQgbthyc8kckQm2
-        SLMlHxeQMbdTJwMmFDr8NHfYzveVlsuPDIKfL+ERfpYtfALg7+TqM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E569A1BA792;
-        Thu, 13 Oct 2022 11:31:37 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 28E731BA791;
-        Thu, 13 Oct 2022 11:31:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Calvin Wan <calvinwan@google.com>,
+        with ESMTP id S229573AbiJMPjm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2022 11:39:42 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 195142733
+        for <git@vger.kernel.org>; Thu, 13 Oct 2022 08:39:39 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id a3so3541377wrt.0
+        for <git@vger.kernel.org>; Thu, 13 Oct 2022 08:39:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Tl1On+b50GpNZ/TGOwLJm0n/+sJcl5ZvmJGb2ZwBBG8=;
+        b=dlfGqsobacua7hwtmzc/61+W/O055uy9wJ57LWspuTys+wNTNZrSKaifX106qGWHRL
+         79213w4BGu71kXZCT2gD/QL3E356EUKxqmp/DwSNvAZ6CVDsi8lq7N20j9lxO5sFVmav
+         KHPeWOEO88XJmOjOnmTknQl4wsVujYW7zUeb6EVJse3jW7VjV4zt2I0pQBt1KaSIm/6g
+         EfAGWIze3DlNr1ZnceixGgroPv+DMCY3FCeLFDFepjWe3T/Ud6A/aol3WpoQBxGJcSRu
+         kbtwObfMiLo3G/MOFRKyRLNV/N/9eg4fP7h9zQ2FEIM1OaMWin79dFcBGglEwpcRcFT0
+         /6BA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Tl1On+b50GpNZ/TGOwLJm0n/+sJcl5ZvmJGb2ZwBBG8=;
+        b=Hg8pFOQX1405lCXAsJHl3FBCiObEZqt0emweV+cEyV1zQ1gf3hi+YjTcodDz7EmVw/
+         pFaaDyASbYQAtjds6VI9cDAy8zytXErDPeznBaXrFFk4eODbCbuJaT49HF9AMMTTPfzl
+         sNdFv866Kh0uAxTchjiHzLG8pMbIRhtCpaIkJYuR4AURiou0wffE/t5Wo08w9MWKZ50P
+         0gA+h5rmqRxd3YF476LOaU6uArsAP8a0yvX9a8c2Lg86ApGDggu7ifKd/ntmhIn91lk7
+         9NxkI61yeK+iMnZcMxKypnFfunRZkukzQrmZLX6kqm9R+WUYk7W9oM1Jt6F91Gfg38aj
+         HiYA==
+X-Gm-Message-State: ACrzQf2UgTroqsD30EoIE2wm4DsohKaTLKLBa+PYDbs/4ZGE1yQQUBV6
+        E3jJX4JbHKl+D9E2rIb3/Dl1yjZCpaSh1g==
+X-Google-Smtp-Source: AMsMyM7390Jjn8QYCNLKSwB40Jvp9B+WT2+8kDqUDTTy1zLavdkKzuAFaHbp9n5AcstfrYSySt/EQw==
+X-Received: by 2002:a05:6000:1f88:b0:22e:3c57:943b with SMTP id bw8-20020a0560001f8800b0022e3c57943bmr399682wrb.65.1665675576818;
+        Thu, 13 Oct 2022 08:39:36 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id da12-20020a056000408c00b0022a3a887ceasm2258130wrb.49.2022.10.13.08.39.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Oct 2022 08:39:36 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+        Taylor Blau <me@ttaylorr.com>,
         Emily Shaffer <emilyshaffer@google.com>,
-        Glen Choo <chooglen@google.com>, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v3 0/8] rebase: make reflog messages independent of the
- backend
-References: <pull.1150.v2.git.1650448612.gitgitgadget@gmail.com>
-        <pull.1150.v3.git.1665567312.gitgitgadget@gmail.com>
-        <xmqq7d14lqxc.fsf@gitster.g>
-        <64155477-827d-6a16-a5fa-7e2cfc78569e@dunelm.org.uk>
-Date:   Thu, 13 Oct 2022 08:31:34 -0700
-In-Reply-To: <64155477-827d-6a16-a5fa-7e2cfc78569e@dunelm.org.uk> (Phillip
-        Wood's message of "Thu, 13 Oct 2022 09:44:52 +0100")
-Message-ID: <xmqqh707ivu1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Jonathan Nieder <jrnieder@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v5 03/34] builtin/bundle.c: indent with tabs
+Date:   Thu, 13 Oct 2022 17:38:57 +0200
+Message-Id: <patch-v5-03.34-dadae0d364f-20221013T153625Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.38.0.1085.gb7e61c3016c
+In-Reply-To: <cover-v5-00.34-00000000000-20221013T153625Z-avarab@gmail.com>
+References: <cover-v3-00.34-00000000000-20221004T131009Z-avarab@gmail.com> <cover-v5-00.34-00000000000-20221013T153625Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1F19A522-4B0C-11ED-BC95-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Fix indentation issues introduced with 73c3253d75e (bundle: framework
+for options before bundle file, 2019-11-10), and carried forward in
+some subsequent commits.
 
-> I pushed it to gitgitgadet, updated the cover letter but forgot to say
-> "/submit". I'm hoping that will be the final version and provide a
-> stable base for this series.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/bundle.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-Thanks, will look forward to.
+diff --git a/builtin/bundle.c b/builtin/bundle.c
+index e80efce3a42..5c78894afd5 100644
+--- a/builtin/bundle.c
++++ b/builtin/bundle.c
+@@ -12,31 +12,31 @@
+  */
+ 
+ static const char * const builtin_bundle_usage[] = {
+-  N_("git bundle create [<options>] <file> <git-rev-list args>"),
+-  N_("git bundle verify [<options>] <file>"),
+-  N_("git bundle list-heads <file> [<refname>...]"),
+-  N_("git bundle unbundle <file> [<refname>...]"),
+-  NULL
++	N_("git bundle create [<options>] <file> <git-rev-list args>"),
++	N_("git bundle verify [<options>] <file>"),
++	N_("git bundle list-heads <file> [<refname>...]"),
++	N_("git bundle unbundle <file> [<refname>...]"),
++	NULL
+ };
+ 
+ static const char * const builtin_bundle_create_usage[] = {
+-  N_("git bundle create [<options>] <file> <git-rev-list args>"),
+-  NULL
++	N_("git bundle create [<options>] <file> <git-rev-list args>"),
++	NULL
+ };
+ 
+ static const char * const builtin_bundle_verify_usage[] = {
+-  N_("git bundle verify [<options>] <file>"),
+-  NULL
++	N_("git bundle verify [<options>] <file>"),
++	NULL
+ };
+ 
+ static const char * const builtin_bundle_list_heads_usage[] = {
+-  N_("git bundle list-heads <file> [<refname>...]"),
+-  NULL
++	N_("git bundle list-heads <file> [<refname>...]"),
++	NULL
+ };
+ 
+ static const char * const builtin_bundle_unbundle_usage[] = {
+-  N_("git bundle unbundle <file> [<refname>...]"),
+-  NULL
++	N_("git bundle unbundle <file> [<refname>...]"),
++	NULL
+ };
+ 
+ static int parse_options_cmd_bundle(int argc,
+-- 
+2.38.0.1085.gb7e61c3016c
+
