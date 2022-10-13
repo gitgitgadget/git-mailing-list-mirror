@@ -2,100 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BA06C433FE
-	for <git@archiver.kernel.org>; Wed, 12 Oct 2022 23:11:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E698C433FE
+	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 00:07:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229459AbiJLXLx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Oct 2022 19:11:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40856 "EHLO
+        id S229747AbiJMAHQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Oct 2022 20:07:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbiJLXLv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Oct 2022 19:11:51 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA2AA125731
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 16:11:50 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id a67so321050edf.12
-        for <git@vger.kernel.org>; Wed, 12 Oct 2022 16:11:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=UpN9KeEIh4COUV+ikl73KAintXqtWqPv8QeaJIa/ePg=;
-        b=pZsSAI/mFXkoPd42v2wW1POpK8tkrbuH/2Cc4zCswQ59hpMwWusrU2ICu42JUuqZvy
-         aHcsY8JoYV+IBBZPD9NNKXVwNuShKB2xsaDjIZuOb/E73ZAMEXSIwzq/VfO/hb0LyhDN
-         wW1cY6+KrvPpY0/SUSX55DfbmwP50TW/ca8JMmugCjg0ZyzX9aLXmqZwficGaMymvnNr
-         m/rE40UYTtcx/eIYWPL+Udi3D76gp8Bb0yOTMBFuciKoD6YPW7yqE4F6agP6XUSZ/XfQ
-         Mb3B8zVU7dmw2yZI+TQdku+Oi9gA1JOkW4y7z4qwabsbwQdJxhAPW9ARH5h96eMtfsUU
-         5nkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UpN9KeEIh4COUV+ikl73KAintXqtWqPv8QeaJIa/ePg=;
-        b=YHPZHWpRk79AMpLoh0zhd45m5eYDqI6w3mRA6O+tmd5TenFlXoyRTPd8r7oDYYezaX
-         Q8Ij7wGrq08GIbauuJyE0MBk9OzUokDPAnmiEBKukNkaw+6bXSMn1HB6ESgSAS6F5qzK
-         djC0duhMm4vbhUJFX5zp9VzjkIrrSoza6f+Sul43zCva53O+BHsfA605Yrd3quUMCi2k
-         ACZx38gZvDPpJe9O5yPCWSkCoUtkIDgK8O5+1pfWHRVw7Q4iNRdREwkhTjQj9rxgOnsF
-         R1mgkwRInDzFtBi8jR8Mq8fQM5NoHtv+aRqSXf7JRYrsvOSZQVvvkA92g5FGewkIvZt3
-         9MZw==
-X-Gm-Message-State: ACrzQf3/Y60wGcQLKFuhzfjGLElAhxddPwn5KPdTDFio1n+fMSWEDzxq
-        b9Xq7UvSK44BhxyYa/JICUKXAw6pm+75pA==
-X-Google-Smtp-Source: AMsMyM6gTQbLWR+bc+vv4N2T+f3dnVe8PO84tKxE9BAeLmJYExrW1JNFMJ0jp+DxfoLTieQmsNjcXw==
-X-Received: by 2002:a50:eb8f:0:b0:458:482d:43de with SMTP id y15-20020a50eb8f000000b00458482d43demr29223839edr.205.1665616309349;
-        Wed, 12 Oct 2022 16:11:49 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id d41-20020a056402402900b0045bef7cf489sm8373627eda.89.2022.10.12.16.11.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Oct 2022 16:11:48 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oikt9-004O1N-21;
-        Thu, 13 Oct 2022 01:11:47 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Erik Cervin Edin <erik@cervined.in>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [BUG] git fetch fetches tags matching negative refspec
-Date:   Thu, 13 Oct 2022 01:09:36 +0200
-References: <CA+JQ7M-CN0UnHQDDDVz0kPcU1AcoL9+WFOeR8eiw_B=Yiyc-CA@mail.gmail.com>
- <221012.86mta1mmli.gmgdl@evledraar.gmail.com>
- <CA+JQ7M-y9d=c3GbpAs+Y4qtimtVs9oQ6BU1YL8nmFmF=rZxKag@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <CA+JQ7M-y9d=c3GbpAs+Y4qtimtVs9oQ6BU1YL8nmFmF=rZxKag@mail.gmail.com>
-Message-ID: <221013.865ygomybw.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229742AbiJMAHN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Oct 2022 20:07:13 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8035C103DB3
+        for <git@vger.kernel.org>; Wed, 12 Oct 2022 17:07:11 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 4EA205A39C;
+        Thu, 13 Oct 2022 00:07:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1665619630;
+        bh=Bks4pPurLPFfbX/m4xo4qDGlYlaQthUYzGc3O6xnsZU=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=bvtsQajoll5hzkuFMNnoDCjazhnq6kZW6P/9FOkb3his+t1LBOTy+PTtdxtyiPddq
+         FGFWdnlY8Nj3b6v1k7lB1lOVdd+HkmN/JCqyAsqIyW13034JCeuN61HKvpfsTX+lMW
+         gDT9bTsq7ozBfVRM2FcUSB0D/mXdJgI7ywyQLBdn/VujZx7Wje/bxcPKC7B29jUNBW
+         iUO/FdBIMtrD4WoQubrwWIHAKMhJFDPhEDk6z0bQyHIJE70OC/WUX2xv79aAPmrBLx
+         OBGppi1x2a3o8H6S0UOkAqKBOdzj+65lvwrWD1CU6js5VpcMKHK+cXdMYacT8RvGR6
+         K1nMtHxT66xWYJww73lCV3F8ErXCN2MVY+jAq4SgrwGJh9lJRxhv/8R5zRvLTKy4oR
+         0oYecSacEW6xQTkoQ9i5Q3KPCpjzgWvyMwyItGMRhOvCCSSuAAifUibo+uoJ1XZQYD
+         fmamPUJkLL6TY2wjBaajbWyiH963PdCrHoVKG/v7U8lIHJcx9HE
+Date:   Thu, 13 Oct 2022 00:07:08 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Thorsten =?utf-8?B?U2Now7ZuaW5n?= <tschoening@am-soft.de>
+Cc:     git@vger.kernel.org
+Subject: Re: How to best maintain directories like /etc/sysstat in GIT?
+Message-ID: <Y0dWrAba6U+j0tT9@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Thorsten =?utf-8?B?U2Now7ZuaW5n?= <tschoening@am-soft.de>,
+        git@vger.kernel.org
+References: <1681596318.20221012183551@am-soft.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="5oal0ECaTlFN+5Au"
+Content-Disposition: inline
+In-Reply-To: <1681596318.20221012183551@am-soft.de>
+User-Agent: Mutt/2.2.7 (2022-08-07)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Oct 12 2022, Erik Cervin Edin wrote:
+--5oal0ECaTlFN+5Au
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Wed, Oct 12, 2022 at 11:13 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> I.e. it got stuff you asked for, but also tags pointing at the main
->> history, --no-tags will stop that, at which point you can *also* fetch
->> tags, just with the refspec.
-> I tried but
->   git fetch --no-tags
-> with negative refspec did not fetch any tags.
->   git fetch --tags
-> does.
+On 2022-10-12 at 16:35:51, Thorsten Sch=C3=B6ning wrote:
+> Hi everyone,
+>=20
+> I'm using SVN to maintain lots of different host specific configs like
+> crontab files, web server configs and the directory /etc/sysstat. The
+> current approach is to simply have some directory structure in trunk
+> named by topics like /trunk/Mail/Postfix for some reference host, if
+> any makes sense at all. That config is then copied to e.g.
+> /tags/Mail/Postfix/some.other.host and Postfix for that host
+> maintained in that writable tag.
+>=20
+> GIT doesn't have writable tags, which might be worked around using
+> branches or one repo per host or stuff. The more important difference
+> is that SVN can have a working copy for each and every maintained
+> directory. So one can really make /etc/postfix or /etc/sysstat a
+> wroking copy and maintained that only, without additionally necessary
+> subdirs and without having .svn in /etc or alike. AFAIK that is not
+> possible in GIT, even with sparse checkouts one needs a subdir of
+> some kind, which is pretty incomplatible with many system wide
+> configs. Unless one wants to put .git into / or /etc or alike, which
+> is what I would loike to avoid.
+>=20
+> Any useful suggestions for workarounds?
 
-Because your refspec doesn't include refs/tags/*:, try e.g.:
+There are a couple approaches you can take.  One is to keep the
+repository elsewhere and simply copy files into place.  This is how I
+and many people manage our respective dotfiles with Git.
 
-	git fetch https://github.com/git/git.git 'refs/tags/*:refs/tags/*' --no-ta=
-gs --dry-run
+Another option is to use some sort of automatic system for managing
+those config files, such as Puppet, Chef, or Ansible, and keep those
+files in a repository suitable for that system.  This is how I manage
+configuration for my servers and how we do it at work.
 
-That's what "--no-tags", i.e. it's per-se (and confusingly) nothing to
-do with whether you get tags or not, it's to do with whether we to tag
-following.
+Finally, you can also keep the Git directory separate from the working
+tree.  For example, if you're in /etc and your repository directory is
+/srv/checkouts/etc-git, you can run one of the following:
 
-> I'm going to set
->   git config remote.origin.tagopt --tags
-> and then that's going to do what I want.
+$ GIT_WORK_TREE=3D/etc GIT_DIR=3D/srv/checkouts/etc-git git status
+$ git --work-tree=3D/etc --git-dir=3D/srv/checkouts/etc-git status
 
-Isn't that going to give you also the tags you don't want?
+(Note that you must set both environment variables or both options, not
+just one.)  Of course, this is a little unwieldy, so a shell script may
+be helpful.  You'll also want an appropriate .gitignore file.
+
+> I can only think of two things: Putting the GIT clone somewhere and
+> link directories into that. Which won't work very well for directories
+> for which I only want to maintain some and not all files and seems
+> like a lot of work, might break package management etc.
+
+Git does not preserve hard links and this won't work in general.  Since
+Git also does not preserve permissions other than the executable bit, so
+you almost certainly will not want to use symlinks, either, since that
+means the destination directories may change ownership and permissions
+when you run git checkout.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--5oal0ECaTlFN+5Au
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.39 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY0dWrAAKCRB8DEliiIei
+gSqvAQCSxQv1Q4fv8xjNWlAzqXDcN/MGG6aSfI1VTZB/kfju9wEAjrAW6VvpLfcm
+yfLmtxiNUkF4WFGPL2Qvv/RvoPnnawM=
+=3eeW
+-----END PGP SIGNATURE-----
+
+--5oal0ECaTlFN+5Au--
