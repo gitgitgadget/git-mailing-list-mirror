@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56658C4332F
-	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 08:43:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2F82C433FE
+	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 08:43:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229891AbiJMInP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Oct 2022 04:43:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40178 "EHLO
+        id S229863AbiJMInQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Oct 2022 04:43:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229833AbiJMInG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2022 04:43:06 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9CF11C6ED
-        for <git@vger.kernel.org>; Thu, 13 Oct 2022 01:42:58 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id n12so1688454wrp.10
-        for <git@vger.kernel.org>; Thu, 13 Oct 2022 01:42:58 -0700 (PDT)
+        with ESMTP id S229772AbiJMInF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2022 04:43:05 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9224415DB0C
+        for <git@vger.kernel.org>; Thu, 13 Oct 2022 01:42:57 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id bv10so1722140wrb.4
+        for <git@vger.kernel.org>; Thu, 13 Oct 2022 01:42:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CFDOCyxyF67ldTK6/Jhw0peKx3GN9J1CiKuwn/CaeXk=;
-        b=ECCvJqZaF0PKNEcPstjmbc7qTs654TNxwYIqHiR0RhNWD+UhO0+risk0XwDhjbNMo8
-         ODoi8Nmz22Rucjsc/jXBlQO0tFjVnavudK/HS12vs+9RAoKkoSI5caMK7q2aWQ88O6PF
-         yKuqsWkXXSwGKF7NB+SkM8MO/bwsbZK/Ff9Gmk0KY2F6AfxFSWD3BZ9U5Lm6JvtjN6Bj
-         xtvS1fdxN2Fc5VnvlqizXmmdZ+ZqXjrlcGhu1zjUu4v73NmYTAx6fo9nW/T3HRi5cpA7
-         TTqKCJz1qczRPUs2/iMFdEwaZ/o1Xor9a0VIzVJDLAt04l7t3r7kGZ2iOrDb2EqDMYOL
-         hayQ==
+        bh=cXRpK3Gmha71w1nQdeXTUYi8vteYdTPfLiPwPdRDtkY=;
+        b=RxtjCYJa1n+RSsvF8YjNigJg6Bgce2tUip94+jbXAzNHq4fBChrV501zsqN3+oep5M
+         2lV8FJp+tzfwpuOKdbbxiHrcHkzbyj3UAo8+fr8zSwEgVuAxmiI7YlFh1ZD1h70/xcN/
+         N3wLxNa3f20UGZwJis9F4A0F0gz9zyVHxstk8dd45CADEHIA7Dkv2CqyuLGGJfYRW7fT
+         NM3yVo5Tr9FVSwXNBhEsj/VDggxcLN78oSrQyDF2nlOdzAdjWb6S4mC41jmvYo5sAn/S
+         0y3LNNtSpeRhfxgXMlBZ5ESYREgLhLXMAG28817NLwrDrvwwnqb/Ho0MScmDqL07fuEY
+         c83g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CFDOCyxyF67ldTK6/Jhw0peKx3GN9J1CiKuwn/CaeXk=;
-        b=kbB4RWuBgkXkHmy2xjUB0uSiXrNratx+hTc1DobWpZqlnD4B+rCkj5qvdj5jdFil8r
-         x7Mwa7nWRHkeBWm3/1LB+vDxrj6BDkYhGc9bX5Wg798ubsnZ8dOfazQsMb/ZRyE6TTbd
-         ZpvGB0msHr9nFejq3NHGLGAd7IMZznW3XgR8xqVLKgI62WYoMAQNPpMBS73CYyphwhm+
-         PCMWKhGsxnLF1VlOMH14Sv3tRjsxbibaQBlHwoyW7O3cYEoFC+JQ22eK36Ic72N35rUn
-         e/lS7xldQlC9UU+dsREeAKOWGZu8/oIUCMQJOnMamqUKV51r7mBQFZFynWJvekAAtxls
-         OYgw==
-X-Gm-Message-State: ACrzQf2QP+UTBNe4zNv3hVCCU+XhBoyDtZzdunwofATNET1AV+VMLMK5
-        f29F4aN4EmamD+mlTNSo2774SAp8rp8=
-X-Google-Smtp-Source: AMsMyM55KfVDIUnVfFYWgkHpo9rYRK6bW/BJVjPWDjiSg1u2E9YZ0E17QjHxh7Z9tpdRuXcaOxwCmA==
-X-Received: by 2002:a5d:5149:0:b0:22e:8b85:3d7d with SMTP id u9-20020a5d5149000000b0022e8b853d7dmr19954122wrt.55.1665650577143;
-        Thu, 13 Oct 2022 01:42:57 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x16-20020a5d4450000000b0021e51c039c5sm1494573wrr.80.2022.10.13.01.42.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=cXRpK3Gmha71w1nQdeXTUYi8vteYdTPfLiPwPdRDtkY=;
+        b=1OIiiEjfwPZZ8vttC1QIdZuihi3azPDdw+R8wMnPkd2hFa4ScjeOZb6BwnRh4n1fCX
+         4/FtF7sYExq437ohC+h5nvCR2I7FDGScIZMzF4G55mvJYGjIXm6YHsqNa+tu4X09VjdO
+         OhfbhVJ2GX5J8QEucJjd//4S+1ZfSfC1/7Ny+9x+FVo7sBx9WHSCUTOW/0xoijGY1PpO
+         IIH0HIA6Z6jV4+lJsA4xQyz6zPY9nscTlHn9HK3+7rLs9OMhOHH/1aE7YTL0zXQ3VQvI
+         b98jSeH8r/A6LCFu3UTobeKHOXEr6UK9flBXUkTvAgc31pH+kzQFQykoYOX3QQWF2lNp
+         alTA==
+X-Gm-Message-State: ACrzQf1lGEFSIAQ91SdZ3KTlzFVc1coSbHOVIC9dSWXW0Z/a7XK6cVeM
+        aTUcJdSSFfQOsfSerk7gH0QiFK9A0R4=
+X-Google-Smtp-Source: AMsMyM5h1KZLeJcklU6e2VKc4TmXGqb/F55ZZzz0wpatkmA5QRiz8eVgNmIcTvZKDhCueBpCVELV/A==
+X-Received: by 2002:adf:ea08:0:b0:22e:46e9:2a8a with SMTP id q8-20020adfea08000000b0022e46e92a8amr21182876wrm.636.1665650575087;
         Thu, 13 Oct 2022 01:42:55 -0700 (PDT)
-Message-Id: <2efbfc94187d9f0968e5b670c9152651cd8f1a5b.1665650564.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l15-20020a05600c4f0f00b003c6cc57566fsm2616169wmq.14.2022.10.13.01.42.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Oct 2022 01:42:54 -0700 (PDT)
+Message-Id: <00f70c9034452bd87c82fb3aea9658aec32f2ec1.1665650564.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1323.v3.git.1665650564.gitgitgadget@gmail.com>
 References: <pull.1323.v2.git.1662561470.gitgitgadget@gmail.com>
         <pull.1323.v3.git.1665650564.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 13 Oct 2022 08:42:42 +0000
-Subject: [PATCH v3 6/8] rebase: factor out branch_base calculation
+Date:   Thu, 13 Oct 2022 08:42:41 +0000
+Subject: [PATCH v3 5/8] rebase: rename merge_base to branch_base
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,92 +76,123 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Separate out calculating the merge base between 'onto' and 'HEAD' from
-the check for whether we can fast-forward or not. This means we can skip
-the fast-forward checks when the rebase is forced and avoid calculating
-the merge-base between 'HEAD' and 'onto' when --keep-base is given.
+merge_base is not a very descriptive name, the variable always holds
+the merge-base of 'branch' and 'onto' which is commit at the base of
+the branch being rebased so rename it to branch_base.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/rebase.c | 34 ++++++++++++++++++++--------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
+ builtin/rebase.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index cbafcc41e75..40619a0fb2d 100644
+index 7e6ce374c59..cbafcc41e75 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -871,13 +871,9 @@ static int can_fast_forward(struct commit *onto, struct commit *upstream,
+@@ -866,22 +866,22 @@ static int is_linear_history(struct commit *from, struct commit *to)
+ 
+ static int can_fast_forward(struct commit *onto, struct commit *upstream,
+ 			    struct commit *restrict_revision,
+-			    struct commit *head, struct object_id *merge_base)
++			    struct commit *head, struct object_id *branch_base)
+ {
  	struct commit_list *merge_bases = NULL;
  	int res = 0;
  
--	merge_bases = get_merge_bases(onto, head);
--	if (!merge_bases || merge_bases->next) {
--		oidcpy(branch_base, null_oid());
--		goto done;
--	}
-+	if (is_null_oid(branch_base))
-+		goto done; /* fill_branch_base() found multiple merge bases */
- 
--	oidcpy(branch_base, &merge_bases->item->object.oid);
- 	if (!oideq(branch_base, &onto->object.oid))
- 		goto done;
- 
-@@ -887,7 +883,6 @@ static int can_fast_forward(struct commit *onto, struct commit *upstream,
- 	if (!upstream)
- 		goto done;
- 
--	free_commit_list(merge_bases);
- 	merge_bases = get_merge_bases(upstream, head);
- 	if (!merge_bases || merge_bases->next)
- 		goto done;
-@@ -902,6 +897,20 @@ done:
- 	return res && is_linear_history(onto, head);
- }
- 
-+static void fill_branch_base(struct rebase_options *options,
-+			    struct object_id *branch_base)
-+{
-+	struct commit_list *merge_bases = NULL;
-+
-+	merge_bases = get_merge_bases(options->onto, options->orig_head);
-+	if (!merge_bases || merge_bases->next)
+ 	merge_bases = get_merge_bases(onto, head);
+ 	if (!merge_bases || merge_bases->next) {
+-		oidcpy(merge_base, null_oid());
 +		oidcpy(branch_base, null_oid());
-+	else
-+		oidcpy(branch_base, &merge_bases->item->object.oid);
-+
-+	free_commit_list(merge_bases);
-+}
-+
- static int parse_opt_am(const struct option *opt, const char *arg, int unset)
- {
- 	struct rebase_options *opts = opt->value;
-@@ -1669,8 +1678,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		if (!options.onto)
- 			die(_("Does not point to a valid commit '%s'"),
- 				options.onto_name);
-+		fill_branch_base(&options, &branch_base);
+ 		goto done;
  	}
--
- 	if (options.fork_point > 0)
- 		options.restrict_revision =
- 			get_fork_point(options.upstream_name, options.orig_head);
-@@ -1698,13 +1707,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	 * Check if we are already based on onto with linear history,
+ 
+-	oidcpy(merge_base, &merge_bases->item->object.oid);
+-	if (!oideq(merge_base, &onto->object.oid))
++	oidcpy(branch_base, &merge_bases->item->object.oid);
++	if (!oideq(branch_base, &onto->object.oid))
+ 		goto done;
+ 
+-	if (restrict_revision && !oideq(&restrict_revision->object.oid, merge_base))
++	if (restrict_revision && !oideq(&restrict_revision->object.oid, branch_base))
+ 		goto done;
+ 
+ 	if (!upstream)
+@@ -1035,7 +1035,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	struct strbuf msg = STRBUF_INIT;
+ 	struct strbuf revisions = STRBUF_INIT;
+ 	struct strbuf buf = STRBUF_INIT;
+-	struct object_id merge_base;
++	struct object_id branch_base;
+ 	int ignore_whitespace = 0;
+ 	enum action action = ACTION_NONE;
+ 	const char *gpg_sign = NULL;
+@@ -1653,7 +1653,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	} else if (!options.onto_name)
+ 		options.onto_name = options.upstream_name;
+ 	if (strstr(options.onto_name, "...")) {
+-		if (get_oid_mb(options.onto_name, &merge_base) < 0) {
++		if (get_oid_mb(options.onto_name, &branch_base) < 0) {
+ 			if (keep_base)
+ 				die(_("'%s': need exactly one merge base with branch"),
+ 				    options.upstream_name);
+@@ -1661,7 +1661,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 				die(_("'%s': need exactly one merge base"),
+ 				    options.onto_name);
+ 		}
+-		options.onto = lookup_commit_or_die(&merge_base,
++		options.onto = lookup_commit_or_die(&branch_base,
+ 						    options.onto_name);
+ 	} else {
+ 		options.onto =
+@@ -1699,11 +1699,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  	 * in which case we could fast-forward without replacing the commits
  	 * with new commits recreated by replaying their changes.
--	 *
--	 * Note that can_fast_forward() initializes branch_base, so we have to
--	 * call it before checking allow_preemptive_ff.
+ 	 *
+-	 * Note that can_fast_forward() initializes merge_base, so we have to
++	 * Note that can_fast_forward() initializes branch_base, so we have to
+ 	 * call it before checking allow_preemptive_ff.
  	 */
--	if (can_fast_forward(options.onto, options.upstream, options.restrict_revision,
--		    options.orig_head, &branch_base) &&
--	    allow_preemptive_ff) {
-+	if (allow_preemptive_ff &&
-+	    can_fast_forward(options.onto, options.upstream, options.restrict_revision,
-+			     options.orig_head, &branch_base)) {
+ 	if (can_fast_forward(options.onto, options.upstream, options.restrict_revision,
+-		    options.orig_head, &merge_base) &&
++		    options.orig_head, &branch_base) &&
+ 	    allow_preemptive_ff) {
  		int flag;
  
- 		if (!(options.flags & REBASE_FORCE)) {
+@@ -1745,12 +1745,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		struct diff_options opts;
+ 
+ 		if (options.flags & REBASE_VERBOSE) {
+-			if (is_null_oid(&merge_base))
++			if (is_null_oid(&branch_base))
+ 				printf(_("Changes to %s:\n"),
+ 				       oid_to_hex(&options.onto->object.oid));
+ 			else
+ 				printf(_("Changes from %s to %s:\n"),
+-				       oid_to_hex(&merge_base),
++				       oid_to_hex(&branch_base),
+ 				       oid_to_hex(&options.onto->object.oid));
+ 		}
+ 
+@@ -1762,8 +1762,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
+ 		opts.detect_rename = DIFF_DETECT_RENAME;
+ 		diff_setup_done(&opts);
+-		diff_tree_oid(is_null_oid(&merge_base) ?
+-			      the_hash_algo->empty_tree : &merge_base,
++		diff_tree_oid(is_null_oid(&branch_base) ?
++			      the_hash_algo->empty_tree : &branch_base,
+ 			      &options.onto->object.oid, "", &opts);
+ 		diffcore_std(&opts);
+ 		diff_flush(&opts);
+@@ -1794,7 +1794,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	 * we just fast-forwarded.
+ 	 */
+ 	strbuf_reset(&msg);
+-	if (oideq(&merge_base, &options.orig_head->object.oid)) {
++	if (oideq(&branch_base, &options.orig_head->object.oid)) {
+ 		printf(_("Fast-forwarded %s to %s.\n"),
+ 			branch_name, options.onto_name);
+ 		strbuf_addf(&msg, "rebase finished: %s onto %s",
 -- 
 gitgitgadget
 
