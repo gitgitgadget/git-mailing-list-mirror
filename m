@@ -2,85 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10384C4332F
-	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 12:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21AD5C4332F
+	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 13:10:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229567AbiJMMQM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Oct 2022 08:16:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48634 "EHLO
+        id S229867AbiJMNK2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Oct 2022 09:10:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbiJMMQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2022 08:16:10 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B7D452FED
-        for <git@vger.kernel.org>; Thu, 13 Oct 2022 05:16:09 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id h185so1383001pgc.10
-        for <git@vger.kernel.org>; Thu, 13 Oct 2022 05:16:09 -0700 (PDT)
+        with ESMTP id S229838AbiJMNK0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2022 09:10:26 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44FE35C951
+        for <git@vger.kernel.org>; Thu, 13 Oct 2022 06:10:20 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id h24so593594qta.7
+        for <git@vger.kernel.org>; Thu, 13 Oct 2022 06:10:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2xpQrFDMA0FYMGNSTJA+ELn8ma+n4DQ06R4dtUuKTmI=;
-        b=JFNBpFDW5WDxnN7jz955D0uhvqu04pi/oa0RlU3fTDq1uAXWOIN4wwOM+xMYT5ugq2
-         GDyV4VMYaNocfT4qs1YCZ9Xk3OOMpcHW3DRJnL1Pr780c3Sj+NvQcMBchmPNmte4/RaS
-         A0j2o1eXQulTA6hFI8vvd3NYQamufNE49H0yA86UQdf+dkD0YvD6CHyqR0SGl3E5HE0A
-         67+MfpYxGHzvhmWJm5uFuNXAfnYwKg7ryYSEvKS6IJpGfXhbFWUOqM4J0Osd2WKJTY6u
-         s8Uu5yDb/gAl+n5qmkxnNHQChUoSrpse29UMnJL66xRuVKuR/fDP/Umd34sqvJsrOyBu
-         UZ4Q==
+        bh=ND5PNMWXt/E3bVqq8vAnhbc0M53WrHB9u3urKYH3zIg=;
+        b=bPue9/VV1x9HQiLCLuXptKxLaz+Eiy09Gh3yymiIe0uOfcEzZ9i+vDpsoey8V7BjUl
+         NxXinHNwLZYLhgB9ys27HRm3N+WuJ3w3laeQKfgfGhdtUpm9r1hfPLEYMAxoYBVlCENv
+         2nObOFvIPoRQ4HtFz16EmT76kkvaBdaFLRBsLi4Ck0u9pK6bM092uDhSi7GNov52L1Yo
+         mrEmoxH3/dGzQIINn6Y6mvE2g0UKmA8aYB3StL/CZeeCxW86HALpIwzsXCDdNnQBSMYJ
+         OK45gj2eYilutMrNwvTLw1DGz97ek/ZCbxgzUcowF6pp+Q9m8K2xgpl0hv8s7CZv59MP
+         kVIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2xpQrFDMA0FYMGNSTJA+ELn8ma+n4DQ06R4dtUuKTmI=;
-        b=zJ2bBb9LxxCstkrMQqSkm43IeVYF8W2pdLMDiHuMu9lL25rknjfwe/18IQh2ZiJ73D
-         IbhI7X0jRb52rzj9QImYaRdYwIVdPvDLG3FF2vnr/WL4PypmXu6CQtSoch9aODgSIsZ4
-         GKOocyQRKVpP7HOjy51GMb4LlVZcN1/A9ki604xVDaOR4Op5WTdwhGEHBhuHDTCmnu1P
-         l/nEHnHwbFGJ8Q2sHlEHVUT4A94sbdEfD8+DidoyARBnAFpf3KPwcyrojP9wMB6e5hnx
-         HHyvfqU06MJIuBjgvex6ltVz4AZ59D1nuYNUTbmTVmS0rfBe06WHE9oKcERAircamw97
-         yd4g==
-X-Gm-Message-State: ACrzQf2RrGgPKpaCdgpWwbjwgUEiolPe29ufycCe3J7j2Zx8FXnCV8yV
-        IwAPf0yEB2hdF9/mHA7DOeFIlQPBvwmz3w==
-X-Google-Smtp-Source: AMsMyM6auRu9iCgjjQLr5b3+CCzD5RECYGyy6OuHIo8EiW26ZaGy/QpTm9emGgWund5hGdtqZ+JSjA==
-X-Received: by 2002:a63:2a86:0:b0:46a:eaba:f1f3 with SMTP id q128-20020a632a86000000b0046aeabaf1f3mr5291263pgq.79.1665663368358;
-        Thu, 13 Oct 2022 05:16:08 -0700 (PDT)
-Received: from [192.168.43.80] (subs02-180-214-232-7.three.co.id. [180.214.232.7])
-        by smtp.gmail.com with ESMTPSA id oa10-20020a17090b1bca00b0020d747a6ebcsm3180857pjb.50.2022.10.13.05.16.07
+        bh=ND5PNMWXt/E3bVqq8vAnhbc0M53WrHB9u3urKYH3zIg=;
+        b=1s+LPN44ViQcdj33TyCIcAiUz5uR7I86caZfUBqPGrQYhbFwzcBPQAmbzZhwY2FymY
+         TnTJSssnFmn4p1IpxK+MAXcESseTSoxAC8zVFf0CJ7Jd/rOU/joaWw5eBXBV+5Wrya7Q
+         m5JPVje+pWT4BiFPdsD1ZPND4LYPcGgbnoempIBwUgM5NpL/jP2A9X4lN0MnU94Yp2Em
+         f/LJP14ziFwbQ1LmGtgZuF9VGpRVI7hXsb1/AUiQxuhxxfZN316mXnxgvc+1HRal7flY
+         uFrKGtUHeNPhNwlIA4I5askmtjsKDJhYVH3HbHadQGp/+QjAKsuJ9w67XjWK5ukgrh4R
+         5swg==
+X-Gm-Message-State: ACrzQf2D2s/QBC8YJnrLKrK5FauhX0fi+BjXHj7R0a429RKgI0KgEs6x
+        2nHvkG67rFpkpdZ8zEdQbJuBwHb9IfEf
+X-Google-Smtp-Source: AMsMyM4qMfnLhlcZOApWJJ70sETv6ULBYXQghjdEpsDW6CyVbXpZps81+wI34pVFdrkV1N9tZWXH8g==
+X-Received: by 2002:a05:620a:1982:b0:6ee:c63f:f983 with SMTP id bm2-20020a05620a198200b006eec63ff983mr391710qkb.382.1665666619425;
+        Thu, 13 Oct 2022 06:10:19 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:8d47:fb11:1aff:a5c7? ([2600:1700:e72:80a0:8d47:fb11:1aff:a5c7])
+        by smtp.gmail.com with ESMTPSA id bn42-20020a05620a2aea00b006ee8874f5d8sm5836724qkb.28.2022.10.13.06.10.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Oct 2022 05:16:08 -0700 (PDT)
-Message-ID: <1ebea198-fa2a-3f79-e698-64fa4799bcde@gmail.com>
-Date:   Thu, 13 Oct 2022 19:16:05 +0700
+        Thu, 13 Oct 2022 06:10:18 -0700 (PDT)
+Message-ID: <fa47a48b-6da7-a456-05d6-cd5c17b159c3@github.com>
+Date:   Thu, 13 Oct 2022 09:10:16 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: Git diff misattributes the first word of a line to the previous
- line
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH 0/4] midx: trace2 regions and grab-bag patches
 Content-Language: en-US
-To:     Gurjeet Singh <gurjeet@singh.im>, git@vger.kernel.org
-References: <CABwTF4U-KXHF7=8RWY7Ecbspz205Msa3syZFiWYDg3XmZsNGVw@mail.gmail.com>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <CABwTF4U-KXHF7=8RWY7Ecbspz205Msa3syZFiWYDg3XmZsNGVw@mail.gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     peff@peff.net, vdye@github.com, gitster@pobox.com
+References: <cover.1665612094.git.me@ttaylorr.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <cover.1665612094.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/13/22 12:51, Gurjeet Singh wrote:
-> # **** Expected **** output
-> $ git diff --word-diff=plain /tmp/1.txt /tmp/2.txt
-> diff --git a/tmp/1.txt b/tmp/2.txt
-> index 8239f93..099fb80 100644
-> --- a/tmp/1.txt
-> +++ b/tmp/2.txt
-> @@ -1,2 +1,2 @@
->     x = yz {+opt1+}
->     [-ab-]{+ac+} = [-cd ef-]{+pq opt2+}
+On 10/12/2022 6:01 PM, Taylor Blau wrote:
+> Here is a small handful of MIDX and MIDX bitmap-related patches that
+> I've been carrying in GitHub's fork for a while now and forgot to send
+> upstream.
 > 
+> The first is a small typofix, and the second is a legitimate bug fix
+> which allows us to consider annotated tags as bitmap candidates during
+> commit selection. The final two are trace2 regions and instrumentation
+> that I've found helpful when rolling out MIDX bitmaps in a production
+> setting.
+> 
+> Sorry that these are so disjointed in nature ;-). I figured that it was
+> better to send a grab-bag series like this than to hold onto these
+> patches forever!
 
-What Git version (and on what system) you made the expected diff above?
+As advertised, this set of patches are all nice and small. I've found
+the additional tracing useful during performance investigations and
+unobtrusive otherwise.
 
--- 
-An old man doll... just what I always wanted! - Clara
+Though they looked familiar, I gave them a careful read and have no
+comments. LGTM.
 
+Thanks,
+-Stolee
