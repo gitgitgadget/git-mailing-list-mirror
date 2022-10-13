@@ -2,216 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C1B2C433FE
-	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 17:55:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0FACC43219
+	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 17:55:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229790AbiJMRzG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Oct 2022 13:55:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54390 "EHLO
+        id S230024AbiJMRzM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Oct 2022 13:55:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229769AbiJMRyj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2022 13:54:39 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6F97153806
+        with ESMTP id S229986AbiJMRyk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2022 13:54:40 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C96F715381E
         for <git@vger.kernel.org>; Thu, 13 Oct 2022 10:53:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1665683627; bh=rqGEozIQtdIdDZLRanAZExM6aPa0jqhMUyBjNofncyw=;
+        t=1665683625; bh=sti7Xjx3ZDmpH/KaYnBzd5t1KiNu8AL42yNGFqSdKk8=;
         h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=te1NBfxuIY4zpQPM3KG95Qbbit8cKt/BEdv1DJrmeH7OKy3JLjwTIl5yDQGfyzlv4
-         minbKsZK2ly82LBc8cgeqePQLWoCL5A5A6Jo/dfBmr0/T8uB061H31v8Mjf/r2hJMp
-         WMzSsF2KDs+J3SCKXBCNjoruQhqifqkju4pdlNZOIqgKE8xhK0+8kEgaGb1v9GZufg
-         jVlIrPRNVo54V89nGq2fekc7CEI0c67/uvsBQSw1KT2VM5jkNtKD63mLcbWkrc2/0O
-         TTiZ0DnFmuRSxk2cti6MvuDVGPwbxGJthUH+cEvItAcgjoYha+SZitDq3vTvyQWnm4
-         fm0m68TB+z8fg==
+        b=e4G+7uQTZUU+1ds929XWTQZ0JoPdodvj5ZXsW0J6uLBVPZzHMrR/Tp+Qb9Y7W1oW3
+         S8Lvv7LpREODop6a26AwSDWOyQhw+yfMLYgYrEwt0GcRkkoEgDKks/tIfEaR2eLp97
+         37uRnfPtdNkFASrnxlmdlur2TFE88e6cl0xheQjpmvi30SOdPxlClMJqZVzU+fYfw0
+         H7cRIC5Ap8Yd2Cen+ZGSNEdJYsZsdIlpCdTynM96LIaHobhkYQTr2PXvW6lxqkUJvC
+         +tiDG5d8HcpwqS+z3MuMMh0jShRCUZLIMU4U/xJxZnXXQ47FqGWod8bYT/uYkOAug8
+         Zbp3yudeONwyg==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([79.203.23.161]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MPaIK-1oWIyf125S-00N5YZ; Thu, 13
- Oct 2022 19:53:47 +0200
-Message-ID: <ee64f463-c4f7-cd1e-50ca-7c302415cf52@web.de>
-Date:   Thu, 13 Oct 2022 19:53:46 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M28WJ-1oh7ei1dhB-002Nm9; Thu, 13
+ Oct 2022 19:53:45 +0200
+Message-ID: <97a82675-22bb-b996-deac-3f13a91f3df4@web.de>
+Date:   Thu, 13 Oct 2022 19:53:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.3.2
-Subject: Re: [PATCH v2 1/2] archive: add --recurse-submodules to git-archive
+Subject: Re: [PATCH v2 0/2] archive: Add --recurse-submodules to git-archive
  command
 Content-Language: en-US
-To:     Alphadelta14 via GitGitGadget <gitgitgadget@gmail.com>,
+To:     Heather Lapointe via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     Heather Lapointe <alpha@alphaservcomputing.solutions>
 References: <pull.1359.git.git.1665597148042.gitgitgadget@gmail.com>
  <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
- <41664a59029e2492079bef3d3da10f44d315064b.1665660960.git.gitgitgadget@gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <41664a59029e2492079bef3d3da10f44d315064b.1665660960.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:1J+zBDJfiiuVQVG/aC8TRlA9S35jqzDzSLpd/pgSq4rmSLmKj/+
- zHwmSg4T9seMMwHXF3efksn1iU0PKmHhLd5YGHyTvwvU99tNyvoS771BJbGVVj3V6EfDPeK
- tzPFKmXPSyQJDzoo07wW8BiDK+k345dn7vHkX6wvtMohVGbBy1XRPxfmcDhgFUrilBFOGG5
- xe5rHxE2eLqpeKD0NLdVg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XyPehjyELvE=:na9gr015Nq0ApFJ9jPNrRU
- XJQA3pKQ684wc1SnGdmEsMxFfGo58xZ9rG6FhdU6SJepcSrmQ/ImbbcNDjRz9McoXj4c/yQ83
- R1iuU2B6ay7KSI8GFu0IoBDhxm+dSxPf2dEBjLGQr0KFe03NN2LmWXzHLOThOxS5z23zFxee6
- EqyC1cxl6rud3Enn5Zu1AVsolOEsMZ3cQ+7PTE+8xgiy0CJTeaPh+EYAeu2En4+/BrKqOwpqK
- LXOyFHfy4T8KEtlh1zBDWyoisicMgXY9+ILyK5tPEzXUzovxwgerWU9+YVjsX46Xt+XlzMtIW
- 4E+c4zOOH/PSi3nBP5+tjapFaA7U5CEbAggUNpBwWa6/tk3D6IC9J3k0mGwKawstdcOfLvzu3
- 1JN4FRjsvsooCgSAUdWEhORtL4KSaSLoYbhQ31DELFJHmiU948CT8l+5s4kyHSuuvGrpqEPUY
- bZqX+UF6WTv86cfZMr1Uoq4h/M0F6Nbm80LEd3iSG/1hDDeCvBhDKT3wT+/L2A3zUnKgtJa8l
- 1IGA24zVcPQuu3vNLiSqbgDmYpixDVB5pfcXiMJ+gf280CNS2YueGhbpUdDoBOW56h642aGz0
- vslSJzefbPzX1WW1QbktXES9YuC8Fx6/pI438/lMz/+k3mpuNCMpF2aN8uuLGM2mM+Uhoj6jN
- dvjy+oW/nyiiWDSRNMVKrkqyqLPe0Az9ytayLhfmU/JrvhODT+VPUn9izVbP/qHuHMNWpTcXu
- 6y68+yJxwwCKj/C1FGLfru8tmqhEUudIoDjoTmtZt95o1I3fsw/7eMV/DTyV8zA6s7nELrFBo
- BJWUXoanNvLqoryot8AckoJEtT+5tzilvij0lP2uri6FqjCsN4qttwzPVM6Ujk2Lra5QhfI3d
- YHE/H0Eq95JP9cJh/+en3KMRs1H0mHfbvoE4SKi2b7upJAlk+rhwd/5h7EWsisxYBBakfIyJD
- 4ruUwg14dN/u/sIDh0AR/bl0oXKygbd0tMHDbYRUoLUBatjmE0zuN3APF2N9OA8JDELBl8EsK
- QR/ttD+8Q0UjJ67nWQI70Ph/m6TtpbFz4fwpafhg+dViaH0ZFeTQ9jcXB1dgFOaAMbV6GERwq
- 2M35YV82wHcirwE7nwt792VgQeFT+Oyij6k6nzEP3BKZFyq9InfkCZlh0kq2IZBHIetmuoJno
- NgSVOVrOwRp/tpDQ/EwyTruGQqUhYdAGhUOM8Z6UlKSjYCC33mH1E4wV0APC2b+BlF/4DLOG1
- dDtWt/awr4nhO23GPthtBLqmIYxsZhSOkDVzFc6GzxcI/EaPhtaPrmYsy3/yYl7ggfR6WbEhR
- uvdhhIx8uf/6kr+rBgRPooCYnQa2/2n6nVQ4wPHL5tGxvSmQW3IP3+r4NgLhx9aCwKObXYI0P
- hPU/TuGYyTDldvV+Euc0RcMQHsJjecAr5l6+BLg1hajY5hqvHoggw07d3ft1nI/0X/jJSuAO2
- FvW+N7w60avk/IENQjKJIhRu6/JNUcFTFIlan380YRge2KGF8HdFNUmKyqbq33WV/ZbAmDdQq
- BUEqX/nlpVmY1LeZHP3cZ4L87kIeQkav7s/5XrNdxwB5B
+X-Provags-ID: V03:K1:1T8AnlenQLbZksr93xOwKsBboyuS7Z3eTeHZXktYostAdo+0KAX
+ BdSma8p7bIDxRtZqa9heut1017bGH3P/J44CL8lG4UfDB7j/GIbbUeLBZtUPG/bqmndaUdb
+ xXoaaJqMrqgS+BMfKstgyKOjtB8YLGMYx/EZYPLwo+0ZOfrHkgXNSB9GOrv3CYllq902AhG
+ de8oBGNUFFz8y98WvTlPQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:KjzV2xa1G/I=:E5Swl2uRwQRpe5vfMxUPgr
+ gC0VFB77fzkVSy1B3BBKSV2atJ1HkMPqq0VIJYlco4kfaAA5YCDE+KMGoi576R8gHYPO4pLyi
+ 17kyCUcuKRppAWJHZzvtuCClGMql/VVTlyerw421lao3AEgas8YRsGX8QuVlvEW/jBgIsNrUE
+ jPPXXzLzkBEfjU1bVwZlUvt5Heoswq1k4l4/FxXCIZ2NPdZQpLZXwoAALQiJdZuX5dRcmdmyk
+ NBORKIfuXVEs5/zrRE269DkC9ylcyYjlbpUtWJhRu9DK+1j+T7KoYMpu3SOWxEW9bZvTYzCow
+ X3Tf7mz3c5jECP4GBeR2zt8jk06QFeV7ZnTDIQBxZbSL2eaLfvJzHX7lQPBJZBN3Oxs2I9Aay
+ At5rsNIoSsWrakOOzXFOUf8B+wUGOeigAENHsbXSsNPP3mmVSfTP3BZy9Y/Dg63pAX7YlKDpm
+ w9844kKDH9S3fveovQwHdG7nqZdSpnNnBigiGVKM71h6JB8JWiLZTSSY5wsUMo5u5E91VWJne
+ dg8rjho0ev1DJJub9DlC3uirhKgr2KVOxp9laSxcUzvLZndXNom7g+4zMIaGeACnrmUJIfucR
+ M4bK/b5mRoFsLnK9w2QCfn8KsW6W2aFlwVKwMKl8Sbg1cG7YvyXJQabqCTCydtLVcuh4niMjx
+ 6BH16S/+bEm25WomghQoiVzvXzqBf1m2RZwaVilEOwO8yqa5Hv4nua6ovWnmenzW7KlLUtOes
+ QGWFw5Tu87ez/bkZtFBseE9xOPvA5cyP+YeeymbMAfoTH+Q2qQn18UMX/CBsm06g8P6eFIUDy
+ KGDoWP7n6ThMNgb/C5JP545HOtUV64c0JaUhKBPctaDVX5aSQA3o29wqYdmxogVIgSgkPoQTy
+ 7EpJN1dU7mWlKw1Kk/Muzj8HvoqpY++YXNAcTDPy9TA7UPkXtrZRpjvT5vGMwLSmiMf/PQvST
+ KiSWEJ5SDnsqOIz2+/h8GiHk/DMphQ8RP1SycW4weuuwsqCrHTo0XU3l2hrIAI3T2+O5vzjyY
+ vbec0v7gjun5GMmeBywbOJptjDj3sdGQ9L1Wi7N6fBdoIrv2UBocpkbeAvoUsUoxFmokOkcpC
+ yYDkusYcgDbj1sUhm1poRmfDGjPADZrzlBggs12Lubc1IyVG48P6hlDroSaN74QcR0reSjsRt
+ r4Fp3iaRQ/XIrgz8yFPJip5SRGvz65vcUVRBjcsIWTTjBcKEPojk+O9PVaW/mOFOwnDJ567Qv
+ 4pOESq/bjNs9qNrUfW9VajuXBakpmMrpnSRhQua6DosJ+vcFfnjn457iSpkW8KTCOsF3dNhSf
+ JPfQOtPD5LsAo8RoBtMUlqazCn7gXdkaVZmZNRCdyE3OEuMqTJUEJ8g+QHa/UywnBTcqpLss8
+ gir0RNLUAn+2gNFmMpl0Prb6bORXC4GzzNmiOQkrRJaO/f3z5mOKumyMyQBTvkkcDwhKX07iU
+ LcRBqKP+cHjR1cEUVu/wb0qnJX95K8i++j312bkdVmCTSlZAXJerGHs7w2DTTtriJYAXItU8Y
+ KWX+11JsNjroqHypUvTn6mDG4cZxqbMbitFDmadE0EB9m
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.10.22 um 13:35 schrieb Alphadelta14 via GitGitGadget:
-> From: Alphadelta14 <alpha@alphaservcomputing.solutions>
->
+Am 13.10.22 um 13:35 schrieb Heather Lapointe via GitGitGadget:
+> This makes it possible to include submodule contents in an archive comma=
+nd.
 
-> diff --git a/tree.c b/tree.c
-> index 410e3b477e5..c5b5a0ac08f 100644
-> --- a/tree.c
-> +++ b/tree.c
-> @@ -8,6 +8,7 @@
->  #include "alloc.h"
->  #include "tree-walk.h"
->  #include "repository.h"
-> +#include "pathspec.h"
->
->  const char *tree_type =3D "tree";
->
-> @@ -22,8 +23,8 @@ int read_tree_at(struct repository *r,
->  	int len, oldlen =3D base->len;
->  	enum interesting retval =3D entry_not_interesting;
->
-> -	if (parse_tree(tree))
-> -		return -1;
-> +	if (repo_parse_tree(r, tree))
-> +		die("Failed to parse tree");
->
->  	init_tree_desc(&desc, tree->buffer, tree->size);
->
-> @@ -37,7 +38,7 @@ int read_tree_at(struct repository *r,
->  				continue;
->  		}
->
-> -		switch (fn(&entry.oid, base,
-> +		switch (fn(r, &entry.oid, base,
->  			   entry.path, entry.mode, context)) {
->  		case 0:
->  			continue;
-> @@ -47,36 +48,57 @@ int read_tree_at(struct repository *r,
->  			return -1;
->  		}
->
-> -		if (S_ISDIR(entry.mode))
-> +		if (S_ISDIR(entry.mode)) {
->  			oidcpy(&oid, &entry.oid);
-> -		else if (S_ISGITLINK(entry.mode)) {
+Great!
 
-So you remove the non-recursive handling of submodules here...
+> The inspiration for this change comes from this Github thread,
+> https://github.com/dear-github/dear-github/issues/214, with at least 160
+> =F0=9F=91=8D=F0=9F=8F=BB 's at the time of writing. (I stumbled upon it =
+because I wanted it as
+> well).
+>
+> I figured the underlying implementation wouldn't be too difficult with m=
+ost
+> of the plumbing already in place, so I decided to add the relevant logic=
+ to
+> the client git-archive command.
+>
+> One of the trickier parts of this implementation involved teaching read_=
+tree
+> about submodules. Some of the troublesome areas were still using the
+> the_repository references to look up commit or tree or oid information. =
+I
+> ended up deciding that read_tree_fn_t would probably be best off having =
+a
+> concrete repo reference since it allows changing the context to a subrep=
+o
+> where needed (even though some of the usages did not need it specificall=
+y).
+>
+> I am open to feedback since this is all quite new to me :)
+>
+> TODO:
 
-> +			len =3D tree_entry_len(&entry);
-> +			strbuf_add(base, entry.path, len);
-> +			strbuf_addch(base, '/');
-> +			retval =3D read_tree_at(r, lookup_tree(r, &oid),
-> +						base, pathspec,
-> +						fn, context);
-> +			strbuf_setlen(base, oldlen);
-> +			if (retval)
-> +				return -1;
-> +		} else if (pathspec->recurse_submodules && S_ISGITLINK(entry.mode)) {
+This list confuses me:
 
-... and add recursive handling here, and there is no further else
-branch.  Why do we no longer need the non-recursive variant?
+>  * working implementation
 
->  			struct commit *commit;
-> +			struct repository subrepo;
-> +			struct repository* subrepo_p =3D &subrepo;
-> +			struct tree* submodule_tree;
+What exactly is not working, yet?
+
+>  * valgrind
+
+What's up with it?  Does is report errors or leaks?
+
+>  * add regression tests
+
+This series adds a new test script.  Do you plan to add more checks?
+
+>  * update documentation with new flag
+
+That I can understand: Indeed Documentation/git-archive.txt would need
+an update.
+
+>  * submit to mailing list
+
+But you already did submit two iterations of this series to the Git
+mailing list!?
+
 >
-> -			commit =3D lookup_commit(r, &entry.oid);
-> +			if (repo_submodule_init(subrepo_p, r, entry.path, null_oid()))
-> +				die("couldn't init submodule %s%s", base->buf, entry.path);
-> +
-> +			if (repo_read_index(subrepo_p) < 0)
-> +				die("index file corrupt");
-> +
-> +			commit =3D lookup_commit(subrepo_p, &entry.oid);
->  			if (!commit)
->  				die("Commit %s in submodule path %s%s not found",
->  				    oid_to_hex(&entry.oid),
->  				    base->buf, entry.path);
+> Alphadelta14 (2):
+>   archive: add --recurse-submodules to git-archive command
+>   archive: fix a case of submodule in submodule traversal
+
+We prefer to keep known bugs out of the repo.  It helps when bisecting,
+for example.  So it would be better to squash the fix into the patch
+that adds the feature.  But...
+
+>  archive-tar.c                 | 14 +++--
+>  archive-zip.c                 | 14 ++---
+>  archive.c                     | 99 ++++++++++++++++++++++++-----------
+>  archive.h                     |  8 +--
+>  builtin/checkout.c            |  2 +-
+>  builtin/log.c                 |  2 +-
+>  builtin/ls-files.c            | 10 ++--
+>  builtin/ls-tree.c             | 16 +++---
+>  list-objects.c                |  2 +-
+>  merge-recursive.c             |  2 +-
+>  revision.c                    |  4 +-
+>  sparse-index.c                |  2 +-
+>  t/t5005-archive-submodules.sh | 84 +++++++++++++++++++++++++++++
+>  tree.c                        | 93 ++++++++++++++++++++++----------
+>  tree.h                        | 11 ++--
+>  wt-status.c                   |  2 +-
+>  16 files changed, 269 insertions(+), 96 deletions(-)
+>  create mode 100755 t/t5005-archive-submodules.sh
+
+... this is all a bit much for a single patch, I feel.  Giving
+parse_tree_gently() a repo parameter, adding repo_parse_tree(), using
+it in read_tree_at(), adding a repo parameter to read_tree_fn_t,
+letting read_tree_at() recurse into submodules and adding the new
+option to git archive all seem like topics worth their own patch and
+rationale.
+
+You probably have all of that in your head right now, but at least my
+attention span and working memory capacity requires smaller morsels.
+
 >
-> -			if (parse_commit(commit))
-> +			if (repo_parse_commit(subrepo_p, commit))
->  				die("Invalid commit %s in submodule path %s%s",
->  				    oid_to_hex(&entry.oid),
->  				    base->buf, entry.path);
 >
-> -			oidcpy(&oid, get_commit_tree_oid(commit));
-> +			submodule_tree =3D repo_get_commit_tree(subrepo_p, commit);
-> +			oidcpy(&oid, submodule_tree ? &submodule_tree->object.oid : NULL);
-> +
-> +			len =3D tree_entry_len(&entry);
-> +			strbuf_add(base, entry.path, len);
-> +			strbuf_addch(base, '/');
-> +			retval =3D read_tree_at(subrepo_p, lookup_tree(subrepo_p, &oid),
-> +						base, pathspec,
-> +						fn, context);
-> +			if (retval) {
-> +			    die("failed to read tree for %s%s", base->buf, entry.path);
-> +			    return -1;
-> +			}
-> +			strbuf_setlen(base, oldlen);
-> +			repo_clear(subrepo_p);
->  		}
-> -		else
-> -			continue;
+> base-commit: e85701b4af5b7c2a9f3a1b07858703318dce365d
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-13=
+59%2FAlphadelta14%2Farchive-recurse-submodules-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1359/=
+Alphadelta14/archive-recurse-submodules-v2
+> Pull-Request: https://github.com/git/git/pull/1359
 >
-> -		len =3D tree_entry_len(&entry);
-> -		strbuf_add(base, entry.path, len);
-> -		strbuf_addch(base, '/');
-> -		retval =3D read_tree_at(r, lookup_tree(r, &oid),
-> -				      base, pathspec,
-> -				      fn, context);
-> -		strbuf_setlen(base, oldlen);
-> -		if (retval)
-> -			return -1;
->  	}
->  	return 0;
->  }
-> @@ -121,7 +143,7 @@ int parse_tree_buffer(struct tree *item, void *buffe=
-r, unsigned long size)
->  	return 0;
->  }
+> Range-diff vs v1:
 >
-> -int parse_tree_gently(struct tree *item, int quiet_on_missing)
-> +int parse_tree_gently(struct repository *r, struct tree *item, int quie=
-t_on_missing)
->  {
->  	 enum object_type type;
->  	 void *buffer;
-> @@ -129,7 +151,7 @@ int parse_tree_gently(struct tree *item, int quiet_o=
-n_missing)
+>  1:  41664a59029 =3D 1:  41664a59029 archive: add --recurse-submodules t=
+o git-archive command
+>  -:  ----------- > 2:  68f7830c6d9 archive: fix a case of submodule in s=
+ubmodule traversal
 >
->  	if (item->object.parsed)
->  		return 0;
-> -	buffer =3D read_object_file(&item->object.oid, &type, &size);
-> +	buffer =3D repo_read_object_file(r, &item->object.oid, &type, &size);
->  	if (!buffer)
->  		return quiet_on_missing ? -1 :
->  			error("Could not read %s",
 
