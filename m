@@ -2,81 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62A22C433FE
-	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 20:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20B9CC4332F
+	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 20:34:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229459AbiJMURu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Oct 2022 16:17:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45666 "EHLO
+        id S229957AbiJMUe4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Oct 2022 16:34:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229724AbiJMURt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2022 16:17:49 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 171154C626
-        for <git@vger.kernel.org>; Thu, 13 Oct 2022 13:17:48 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3EBC6158C33;
-        Thu, 13 Oct 2022 16:17:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FmjpUKzfIx8x
-        iv9SyaPJ7QnHIJ2BIuE+otu/z7DiC7w=; b=dN7Me373/a/dZp89a4V3BfwhrGj6
-        pWMkgmNFPNSQFbky81VNJXF0kz7aK0Abiu6P3oAxQ0yeJ1V4zSQVW1SXo5eZ6zNy
-        V53GYegSarHEX6f36mDqmej43Ln5LqQysSLBpHs1MB+842SbD05ax3wy1QuDJ40P
-        K1yfncaadtS8L78=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 35297158C32;
-        Thu, 13 Oct 2022 16:17:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 94B79158C30;
-        Thu, 13 Oct 2022 16:17:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 00/15] run-command API: pass functions & opts via struct
-References: <cover-v2-00.22-00000000000-20221012T084850Z-avarab@gmail.com>
-        <cover-v3-00.15-00000000000-20221012T205712Z-avarab@gmail.com>
-        <CAFySSZDdSCHjKCH74h-uStZa4n9xGPbA95unpQUK82b+sBQuvA@mail.gmail.com>
-Date:   Thu, 13 Oct 2022 13:17:45 -0700
-In-Reply-To: <CAFySSZDdSCHjKCH74h-uStZa4n9xGPbA95unpQUK82b+sBQuvA@mail.gmail.com>
-        (Calvin Wan's message of "Thu, 13 Oct 2022 12:19:27 -0700")
-Message-ID: <xmqq5ygnfpg6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229976AbiJMUew (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2022 16:34:52 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BDECEE22
+        for <git@vger.kernel.org>; Thu, 13 Oct 2022 13:34:45 -0700 (PDT)
+Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1oj4ug-0002QH-Fd;
+        Thu, 13 Oct 2022 21:34:43 +0100
+Message-ID: <aead3926-d87b-5fcd-4984-bb690f3fbf4e@iee.email>
+Date:   Thu, 13 Oct 2022 21:34:41 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1A144FAA-4B34-11ED-9D97-307A8E0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: About git reporting missing newline for symlinks
+Content-Language: en-GB
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Ignacio Taranto <ignacio.taranto@eclypsium.com>,
+        git@vger.kernel.org
+References: <CAAHd=zcrU3VJro1R3xDj3hmqGXZHUA6rHuDFxwhF5aewNvA8xQ@mail.gmail.com>
+ <xmqq7d14k9uh.fsf@gitster.g> <221013.86o7uflvcv.gmgdl@evledraar.gmail.com>
+ <xmqq35briuel.fsf@gitster.g> <221013.86k053lkvu.gmgdl@evledraar.gmail.com>
+ <xmqqtu47fti9.fsf@gitster.g> <221013.8635brldj4.gmgdl@evledraar.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <221013.8635brldj4.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan <calvinwan@google.com> writes:
 
-> Hi =C3=86var
+On 13/10/2022 20:33, Ævar Arnfjörð Bjarmason wrote:
+> On Thu, Oct 13 2022, Junio C Hamano wrote:
 >
-> Thank you for condensing the patch series into something more palatable
-> for reviewers. The general consensus from the review club yesterday (we
-> looked at v2) was that it was difficult to follow what patches were
-> relevant to your original intention and what patches were auxiliary QOL
-> changes. Also having too many intermediary patches where you add
-> variables/functions that were later deleted made it hard to visualize
-> which parts of the patch would end up making it into the final state. I
-> appreciate the "show your work" approach you take, but I think that
-> approach is better suited for more difficult patch series where there
-> are significant/difficult to understand functionality changes. In this
-> case, the end state of a refactor is clear and there are no
-> functionality changes so I believe a more condensed series would be
-> easier to review. That being said, I don't believe there is a need to
-> spend more time trying to condense this series so future reviewers have
-> an easier time -- the end result and intentions are enough.
+>> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>>
+>>>>> 	\ The filename pointed to by the symlink does not end in a newline
+>>>> While I do not think it would break anybody, I doubt it would give
+>>>> us much value.  One line above that output is a line that any user,
+>>>> who is vaguely familiar with the contents being compared, can
+>>>> recognize as giving a pathname, the contents of the symbolic link.
+>>> Clearly it confused the initial reporter upthread :)
+>> But to such a user, I highly suspect that the rephased message above
+>> still looks like a warning, and will result in the same reaction.
+>>
+>> IOW, you want to explain why "does not end in a newline" is worth
+>> expressing in the output.  Saying "does not end in a newline" alone
+>> would tell the user what they already know (i.e. the symlink stores
+>> the target filename without an extra LF at the end).
+> Yes, but isn't the point of the report/confusion that we're inserting
+> what looks like the warning you get when you forget a \n at the end of a
+> source file, so a user might wonder why they're seeing it at all.
 >
-> Reviewed-by: Calvin Wan <calvinwan@google.com>
+> Whereas what we're *really* doing there is not really about that at all,
+> but just inserting a bit of magic so that the diff format & its
+> consumers grok that this line we're inserting there isn't supposed to
+> have a \n, as we're working with a filename.
+>
+> Maybe e.g.:
+> 	
+> 	diff --git a/RelNotes b/RelNotes
+> 	index d505db645be..758368388a4 120000
+> 	--- a/RelNotes
+> 	+++ b/RelNotes
+> 	@@ -1 +1 @@
+> 	-Documentation/RelNotes/2.38.0.txt
+> 	\ No newline at end of file
+> 	+Documentation/RelNotes/2.39.0.txt
+> 	\ No newline at end of file
+>
+> Would, for those users, be less confusing as:
+>
+> 	diff --git a/RelNotes b/RelNotes
+> 	index d505db645be..758368388a4 120000
+> 	--- a/RelNotes
+> 	+++ b/RelNotes
+> 	@@ -1 +1 @@
+> 	-Documentation/RelNotes/2.38.0.txt
+> 	\ The symlink above has no trailing NL in its filename
+> 	+Documentation/RelNotes/2.39.0.txt
+> 	\ The symlink above has no trailing NL in its filename
+>
+> *dunno* :)
+> 	
+Pondering on why it is thought of as a warning to be treated as an
+error, maybe the message implies something is missing via the negative
+"No" assertion, rather than simply being informative [1].
 
-Thanks, both.
+Perhaps swapping out the "No" and instead using something like "\
+Without a newline at end of file" would better convey that it's just
+information about the file's format, and in no way a real problem. Just
+a thought.
+--
+Philip
+[1] My comment in Git Users discussion:
+https://groups.google.com/d/msgid/git-users/c4f53bb2-cff6-4a76-8fa7-cd34ca88ce63n%40googlegroups.com
+<https://groups.google.com/d/msgid/git-users/c4f53bb2-cff6-4a76-8fa7-cd34ca88ce63n%40googlegroups.com?utm_medium=email&utm_source=footer>
+
