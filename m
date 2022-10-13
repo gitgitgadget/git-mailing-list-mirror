@@ -2,65 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32531C433FE
-	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 17:02:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5642C4332F
+	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 17:04:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229567AbiJMRCw convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 13 Oct 2022 13:02:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57378 "EHLO
+        id S229676AbiJMRER (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Oct 2022 13:04:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbiJMRCv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2022 13:02:51 -0400
-Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F849EC535
-        for <git@vger.kernel.org>; Thu, 13 Oct 2022 10:02:49 -0700 (PDT)
-Received: by mail-io1-f46.google.com with SMTP id l127so1849349iof.12
-        for <git@vger.kernel.org>; Thu, 13 Oct 2022 10:02:49 -0700 (PDT)
+        with ESMTP id S229586AbiJMREP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2022 13:04:15 -0400
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 006CCF53E2
+        for <git@vger.kernel.org>; Thu, 13 Oct 2022 10:04:14 -0700 (PDT)
+Received: by mail-ed1-f54.google.com with SMTP id a67so3467806edf.12
+        for <git@vger.kernel.org>; Thu, 13 Oct 2022 10:04:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lsC9q1AUfLXX29Jd3+6NqqR0OXSdIaWLR/WeA8OJJIU=;
-        b=fwXV4FJFR40w5R2Qdhbk1uumMYHP0qNLvQxlduJXiWTWvZ/ShE22R2TVkiTasR8L7w
-         uLgppwu4HqYbmMJeaOHPEWIz3M3X6yRTkwFUL2uuFBO9zVNJkJwckpGylZVdJJMjdUj0
-         YYYW4AN2IxslwRIK/v1Hu/h+iQA7fqnA9bvNZTykr6d7PMTl5222LCEKCXCLofdXnkko
-         nz0iFj05wuQ63CSpsFg8R/bPXKCLsquts/OaZvkaz6Q1CVMG//xujCnYe6z1qXo//cY9
-         QsUjWFL3jXQcAmwQ3388PTAm+FxKvZtnj5udB8uuP82Vc3bPSGH0ezFAZwJUKNuuoOZL
-         BHaA==
-X-Gm-Message-State: ACrzQf3Vdob5X36FdjwAtmfUjeWfB8gGRlVDxLPM9d0c5ydWJG4JElJO
-        EcwzvvRTH9uIkNqknXcPwh/KAMxuminab8cocOE=
-X-Google-Smtp-Source: AMsMyM5GKwiQtXcYs3kPUzuIxCeZSwghT86gFINKVqxISSg7jbq65f+pTV/GDZk9f9ivig2sgWgsbwsGykv8iRZ7BEQ=
-X-Received: by 2002:a05:6602:2c89:b0:67b:7e8c:11c1 with SMTP id
- i9-20020a0566022c8900b0067b7e8c11c1mr422169iow.101.1665680568808; Thu, 13 Oct
- 2022 10:02:48 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GYw11Gr1U6MEyOpHfAomo7FBfOMBTVwOW1jlcBUzym4=;
+        b=Bv3d78twnHVW3GV2BeDsMPVg2zf78HGkleFtwKvHD69gqjaj17t9CP+oVBLJSILXhd
+         uEiuLdtzyL9+PLq7fZSEREPjITUxMoIyo2sGlF5L3DGu4OgZrEfpCh9/4kF8ApsyHh3U
+         ss+Rh7fJrxpcixi9e9gS1m3KzjbP5CCN/BzJFpUvF1tTqUWc+m6Lqy5nFLyoRotsNRB9
+         yk3x6MdT+xTD60GLX2NyF0tT9GGCu8liGnnTLjcrGrHTEGVWGq3zsvuAE3RUfzPKHXS2
+         YRnfCQ5FsXg8XzMZQ0XBwN0tIRYjIpTxmNZodNqIbCx5kFXA7+E6bHq3j7nDqURj1WIb
+         y/Jw==
+X-Gm-Message-State: ACrzQf0ZO4xat/75AHtOKqljbEXX16XbwYiY+QjSD8dYRYJyuTQ/NItA
+        Y4cDZgr964yQXn6qcE7GqQgL69XKGOgrjHdTIzzZTjpHMj0=
+X-Google-Smtp-Source: AMsMyM7Y7lOedvymtSdY+r2bHcrizZUZBeZ6CQd2tNTDypcn/hmDkEUBFKUc4umAblI7JVKKKl7AVgbblWRWr9vO5JU=
+X-Received: by 2002:a05:6402:510c:b0:45d:50f:f65 with SMTP id
+ m12-20020a056402510c00b0045d050f0f65mr600724edd.313.1665680653418; Thu, 13
+ Oct 2022 10:04:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <af5611aa-8662-7508-4f00-7fcf4e9cbcc6@web.de> <221011.86pmeyo7ch.gmgdl@evledraar.gmail.com>
- <27ec1253-4d34-1de2-caee-12bcf1dac03e@web.de>
-In-Reply-To: <27ec1253-4d34-1de2-caee-12bcf1dac03e@web.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 13 Oct 2022 13:02:36 -0400
-Message-ID: <CAPig+cRuqq=n=CLkCSH=axLO92=F2JGwNnK51aBEeCoMSdJjqg@mail.gmail.com>
-Subject: Re: [PATCH] archive: deduplicate verbose printing
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+References: <AS4P195MB1527E825B28B3C17F39D0AB7E2259@AS4P195MB1527.EURP195.PROD.OUTLOOK.COM>
+ <AS4P195MB1527C07F4E985018B6BD12C3E2259@AS4P195MB1527.EURP195.PROD.OUTLOOK.COM>
+In-Reply-To: <AS4P195MB1527C07F4E985018B6BD12C3E2259@AS4P195MB1527.EURP195.PROD.OUTLOOK.COM>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Thu, 13 Oct 2022 19:03:37 +0200
+Message-ID: <CA+JQ7M8Bcr9czyBNg-+sFpqGSy=3QJfps8vGPa=82QGAvqpUSw@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_Cannot_rebase_=E2=80=93_possible_Git_for_Windows_bug=3F?=
+To:     Hans Meiser <brille1@hotmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 13, 2022 at 6:40 AM René Scharfe <l.s.r@web.de> wrote:
-> +test_expect_success 'git archive --verbose' '
-> +       git archive --verbose HEAD >verbose.tar 2>err &&
-> +       test_cmp_bin b.tar verbose.tar &&
-> +       find a -type d | sed s-\$-/- >verbose.lst &&
-> +       find a \! -type d >>verbose.lst &&
+On Thu, Oct 13, 2022 at 1:43 PM Hans Meiser <brille1@hotmail.com> wrote:
+>
+> Perhaps this is a bug in git version 2.38.0.windows.1?
 
-Aside: I was curious whether or not we care about older `find`
-implementations which don't print anything at all if `-print` isn't
-specified, but I see that the test suite already has a mixture of
-`find` invocations -- some with and some without `-print` -- so that
-answers my question.
+I've rebased a lot in this version with no issue. I'd say it's highly unlikely.
+
+Without more information it's hard to advise on what went wrong.
