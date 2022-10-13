@@ -2,107 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4026BC433FE
-	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 13:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3740FC433FE
+	for <git@archiver.kernel.org>; Thu, 13 Oct 2022 15:31:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229897AbiJMNNn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Oct 2022 09:13:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49530 "EHLO
+        id S229735AbiJMPbI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Oct 2022 11:31:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbiJMNNk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2022 09:13:40 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9BBC47B9C
-        for <git@vger.kernel.org>; Thu, 13 Oct 2022 06:13:39 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id fy4so3820722ejc.5
-        for <git@vger.kernel.org>; Thu, 13 Oct 2022 06:13:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zCnm2K+hECMIMAAg+2RLwsQC1wcn+N8NoNkGZzpPZMo=;
-        b=jT1Mycc3KToNaTwqK2/MVcGqaiWCfAXhKvgqft8Bvp6wa3RiNU6KHQmYll8sTSidej
-         0AnaPNP3ZVheKTI2cq89cOBl3szx1At3TKTHq2Kuq89tVR5e1ZOhVhCk+yOte1gb9+hb
-         TvQ9o/IS7OZNhrU8x2Zmqp//BtGslbqFuU6KHXyo1kni8tzDZogFpEnCzs4KrZoNiy4n
-         pqxVscKbxWF6s8ZLfYcClV9G6GhX+Zvex6JZP2H9yZi0wFj5cI7nv/+TzAha/CwNKC/4
-         6KexxeHMEo0PYfbQv+ec+vlzSe4pCDraztv3NBzr9xo/jRUGTZfBz1DUylsDP0Xmtm20
-         JvzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zCnm2K+hECMIMAAg+2RLwsQC1wcn+N8NoNkGZzpPZMo=;
-        b=HSEno0L9J7BSSvDTRoPASAr/nwtsgq6OSKJF62HBZ1IZbMyCpKRuocpV8YOXS6m8eb
-         U110Ho+yLxfGxqGo99gn/DLN/2hRZ5N+ofFcq+h9FAh/GWV0eNGtgcj3YVqZKO8f6Fi8
-         94Ojkpsw+f9uwfHZ2P5HMxkJv5CTXutslDZI5jQvsDy22HMLilViwiMG7nlnVk28+wF/
-         RQ0ecCrHbwzrqMHFXiY0wGt2aK8x9mAKQbVwuHn8lsNmCzRLJvDsPl2toNR8ZQEbDQdr
-         4JxYks7fE+IV8exi9RCI1Ojk+pArnj/cavEOPOD7HaMRnVqDmTh2NL3p6rPNmHZNG8u5
-         ZrWw==
-X-Gm-Message-State: ACrzQf359Q8cWcuDAdWbrKGdVbI3wXx5ouSOyY2r3v1d4tNPgfDsinnW
-        2UDlLgXsh4vSnPUIzXySp7s+GIvsETuz2Q==
-X-Google-Smtp-Source: AMsMyM6WcR1yUYzt6i7jnlsZlqBcBxMplt2tPfP/M3yKE2vw1Wgm/NwcWXrZ0+LL+YDYONQTKXGFaw==
-X-Received: by 2002:a17:906:2a93:b0:78d:b87e:6aab with SMTP id l19-20020a1709062a9300b0078db87e6aabmr15213186eje.157.1665666818104;
-        Thu, 13 Oct 2022 06:13:38 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id t6-20020a170906268600b0073d81b0882asm3031564ejc.7.2022.10.13.06.13.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Oct 2022 06:13:37 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oiy1o-004mmQ-2a;
-        Thu, 13 Oct 2022 15:13:36 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ignacio Taranto <ignacio.taranto@eclypsium.com>,
-        git@vger.kernel.org
-Subject: Re: About git reporting missing newline for symlinks
-Date:   Thu, 13 Oct 2022 15:11:49 +0200
-References: <CAAHd=zcrU3VJro1R3xDj3hmqGXZHUA6rHuDFxwhF5aewNvA8xQ@mail.gmail.com>
- <xmqq7d14k9uh.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <xmqq7d14k9uh.fsf@gitster.g>
-Message-ID: <221013.86o7uflvcv.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229688AbiJMPbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2022 11:31:07 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D75AAD9A0
+        for <git@vger.kernel.org>; Thu, 13 Oct 2022 08:31:00 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 235911BC84B;
+        Thu, 13 Oct 2022 11:30:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=E/h/icIItqsx
+        KeW8TNZYpPeFdU/BsqvkaLiy0XJMY7U=; b=BXuVDZEWJZoA9hRQndV8FnJSVoOm
+        +8SkOv584iz0L+8DLDvkI7QKC+12u75qzk+6SZqo7oeaVC5a1amM5B6kigdfkVMo
+        GLudHeJoN9d/CK46M8Jg/hZQUkzFrMGUID3A61ba7kID5h9NbI81tKXa4Txo+76I
+        T2zp1SqMjsty4v4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1AC281BC849;
+        Thu, 13 Oct 2022 11:30:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 498371BC848;
+        Thu, 13 Oct 2022 11:30:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Erik Cervin Edin <erik@cervined.in>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [BUG] git fetch fetches tags matching negative refspec
+References: <CA+JQ7M-CN0UnHQDDDVz0kPcU1AcoL9+WFOeR8eiw_B=Yiyc-CA@mail.gmail.com>
+        <221012.86mta1mmli.gmgdl@evledraar.gmail.com>
+        <CA+JQ7M-y9d=c3GbpAs+Y4qtimtVs9oQ6BU1YL8nmFmF=rZxKag@mail.gmail.com>
+        <221013.865ygomybw.gmgdl@evledraar.gmail.com>
+Date:   Thu, 13 Oct 2022 08:30:55 -0700
+In-Reply-To: <221013.865ygomybw.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 13 Oct 2022 01:09:36 +0200")
+Message-ID: <xmqqlepjivv4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 07EF5130-4B0C-11ED-AA70-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On Wed, Oct 12 2022, Junio C Hamano wrote:
+> Because your refspec doesn't include refs/tags/*:, try e.g.:
+>
+> 	git fetch https://github.com/git/git.git 'refs/tags/*:refs/tags/*' --n=
+o-tags --dry-run
+>
+> That's what "--no-tags", i.e. it's per-se (and confusingly) nothing to
+> do with whether you get tags or not, it's to do with whether we to tag
+> following.
 
-> Ignacio Taranto <ignacio.taranto@eclypsium.com> writes:
->
->> So, both git diff and git show display "\ No newline at end of file"
->> for symlinks.
->>
->> I think this is related to how Git renders diffs, IMO it shouldn't
->> display a warning about newlines for symlinks.
->>
->> Am I making any sense here?
->
-> Yes, but not really.
->
-> It is not "warning" at all.  The users want to know when compared
-> contents do or do not end with an incomplete line at the end, and
-> the "\ No newline" is the diff's way to give that single bit of
-> information to us.
->
-> And the contents of a symbolic link typically is a single incomplete
-> line, so it is expected to see "\ No newline" when comparing them.
->
-> This is important as "git diff | git -C ../some/where/else apply"
-> should be able to recreate the change in the current repository
-> (which may have change to or addition of a symbolic link) in the
-> other repository, and "git apply" on the receiving end must be able
-> to tell that the symbolic link it needs to create in the other
-> repository must not have an extra LF at the end.
+It indeed is confusing and might warrant some clarification, if not
+updating.
 
-In apply.c's parse_fragment() we seem to only care that we find a
-"\"-line that's at least the length of "\ No newline...".
+ * "--tags" is equivalent to giving "refs/tags*:refs/tags*", so it
+   might be natural to expect that you can say the same thing as
+   above with "fetch $URL --tags --no-tags", but it does not work
+   that way.  Command line parser treats "--tags" and "--no-tags" as
+   if they follow the "last one wins" semantics.
 
-I wonder what (if any) compatibility issues we'd have if we emitted
-e.g.:
+ * As discussed in this thread, what "--no-tags" really means is "do
+   not follow tags"; there is no way to countermand a "--no-tags"
+   earlier on the command line to say "earlier we said do not
+   follow, but we changed our mind.  Please do follow tags".
 
-	\ The filename pointed to by the symlink does not end in a newline
+It would have been nice if we had from day one
+
+ * "--tags": equivalent to writing "refs/tags/*:refs/tags/*"
+
+ * "--no-tags": "earlier we said --tags, but we changed our
+   mind. Please forget we earlier said --tags".
+
+ * "--follow-tags": automatically fetch tags that point at an
+   object that were fetched (default).
+
+ * "--no-follow-tags": stop following tags.
+
+but I do not think it is worth the churn and transition pain to
+change it after more than 15 years.
+
+
