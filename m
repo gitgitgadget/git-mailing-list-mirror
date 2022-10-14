@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29462C433FE
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 18:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C18DEC4332F
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 18:40:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229962AbiJNSbT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 14:31:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47356 "EHLO
+        id S230209AbiJNSkd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 14:40:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230048AbiJNSbR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 14:31:17 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C7DB181D95
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 11:31:16 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E6A691C3A7C;
-        Fri, 14 Oct 2022 14:31:15 -0400 (EDT)
+        with ESMTP id S229861AbiJNSkb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 14:40:31 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85808A8CE2
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 11:40:30 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C0B1815FE75;
+        Fri, 14 Oct 2022 14:40:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=gZW9bL9iH3WV
-        6TiYQBxFddz1wWe8vtRxM358gbh4k+0=; b=WtmilCZ2yQotqhukqdrRsXew2/FG
-        PlGntiZ08P6lbI3xx1tNt0U7EvtavaMpruPjqFpFgXnX2YKmbwfkAZdszNR7TDMl
-        rwIkIo6fAsMvzUdQyDCVNWA9bg/MlUXt+/6HL6iGVfvNuXtV0agmc1uxfODbwOzP
-        sc76MC8b6AVh/xg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DF8FF1C3A7B;
-        Fri, 14 Oct 2022 14:31:15 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=nx6NSPFMCVvW
+        V/HXn0YC1JbV/HxTIEGNU/1dyzvrSRw=; b=s0qVrskmrSElYuBgLmiiRpbCrNXg
+        PgCTFwtgEYdSIxg0buOrF5kC/G+gPwXMqexEVM+ovOxSCw7bp8SjyZoYLnRZ4jQB
+        1htNt0W0R9tHWbi6PgSkP+0dxfcSHo4PTycu/ks+hhY5jOkHzwq2vJV/0EVxh9RB
+        dLq7FHZRB6ARrPA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B6E7115FE74;
+        Fri, 14 Oct 2022 14:40:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 199511C3A7A;
-        Fri, 14 Oct 2022 14:31:13 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1AC5E15FE73;
+        Fri, 14 Oct 2022 14:40:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 02/10] merge: remove always-the-same "verbose" arguments
+Subject: Re: [PATCH 03/10] run-command API: add and use a run_command_l_opt()
 References: <cover-00.10-00000000000-20221014T153426Z-avarab@gmail.com>
-        <patch-02.10-543ccbb1ee1-20221014T153426Z-avarab@gmail.com>
-Date:   Fri, 14 Oct 2022 11:31:12 -0700
-In-Reply-To: <patch-02.10-543ccbb1ee1-20221014T153426Z-avarab@gmail.com>
+        <patch-03.10-fd81d44f221-20221014T153426Z-avarab@gmail.com>
+Date:   Fri, 14 Oct 2022 11:40:27 -0700
+In-Reply-To: <patch-03.10-fd81d44f221-20221014T153426Z-avarab@gmail.com>
         (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 14 Oct
- 2022 17:40:14
+ 2022 17:40:15
         +0200")
-Message-ID: <xmqqzgdy8dfz.fsf@gitster.g>
+Message-ID: <xmqqtu468d0k.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 61AA3C20-4BEE-11ED-A31F-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: AD121718-4BEF-11ED-A7E7-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,99 +59,102 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Simplify the code that builds the arguments for the "read-tree"
-> invocation in reset_hard() and read_empty() to remove the "verbose"
-> parameter.
->
-> Before 172b6428d06 (do not overwrite untracked during merge from
-> unborn branch, 2010-11-14) there was a "reset_hard()" function that
-> would be called in two places, one of those passed a "verbose=3D1", the
-> other a "verbose=3D0".
->
-> After 172b6428d06 when read_empty() was split off from reset_hard()
-> both of these functions only had one caller. The "verbose" in
-> read_empty() would always be false, and the one in reset_hard() would
-> always be true.
->
-> There was never a good reason for the code to act this way, it
-> happened because the read_empty() function was a copy/pasted and
-> adjusted version of reset_hard().
->
-> Since we're no longer conditionally adding the "-v" parameter
-> here (and we'd only add it for "reset_hard()" we'll be able to move to
-> a simpler and safer run-command API in the subsequent commit.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  builtin/merge.c | 13 +++++--------
->  1 file changed, 5 insertions(+), 8 deletions(-)
+>  bisect.c                 | 19 +++++++++----------
+>  builtin/clone.c          | 16 ++++++----------
+>  builtin/difftool.c       | 14 ++++++--------
+>  builtin/gc.c             | 22 ++++++++--------------
+>  builtin/merge.c          | 35 ++++++-----------------------------
+>  builtin/remote.c         | 10 ++++------
+>  compat/mingw.c           |  8 +++-----
+>  ll-merge.c               |  4 +---
+>  run-command.c            | 15 +++++++++++++++
+>  run-command.h            | 13 +++++++++++--
+>  sequencer.c              |  4 +---
+>  t/helper/test-fake-ssh.c |  4 +---
+>  12 files changed, 71 insertions(+), 93 deletions(-)
 
-I haven't checked the topics in flight that touch the same file, but
-as these are file-scope static, it is easy to check the correctness,
-and the change of function signature will mean that compilers will
-notice after a merge if there is somebody else who still wants them
-to be conditionally verbose.
+Nice.
 
-I wonder if these were always unused, or we lost different callers
-over time, though.
+> @@ -862,11 +858,11 @@ static void write_refspec_config(const char *src_=
+ref_prefix,
+> =20
+>  static void dissociate_from_references(void)
+>  {
+> -	static const char* argv[] =3D { "repack", "-a", "-d", NULL };
 
->
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 5900b81729d..3bb49d805b4 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -345,14 +345,12 @@ static int save_state(struct object_id *stash)
->  	return rc;
+Good to see that this one in a wrong scope can now go away.
+
+>  	char *alternates =3D git_pathdup("objects/info/alternates");
+> =20
+>  	if (!access(alternates, F_OK)) {
+> -		if (run_command_v_opt(argv, RUN_GIT_CMD|RUN_COMMAND_NO_STDIN))
+> +		if (run_command_l_opt(RUN_GIT_CMD|RUN_COMMAND_NO_STDIN,
+> +				      "repack",  "-a", "-d", NULL))
+>  			die(_("cannot repack to clean up"));
+
+
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 910f7b9316a..1d86c14297b 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -92,13 +92,11 @@ static int verbose;
+> =20
+>  static int fetch_remote(const char *name)
+>  {
+> -	const char *argv[] =3D { "fetch", name, NULL, NULL };
+> -	if (verbose) {
+> -		argv[1] =3D "-v";
+> -		argv[2] =3D name;
+> -	}
+>  	printf_ln(_("Updating %s"), name);
+> -	if (run_command_v_opt(argv, RUN_GIT_CMD))
+> +	if (verbose && run_command_l_opt(RUN_GIT_CMD, "-v", "fetch", name,
+> +					 NULL))
+> +		return error(_("Could not fetch %s"), name);
+> +	else if (run_command_l_opt(RUN_GIT_CMD, "fetch", name, NULL))
+>  		return error(_("Could not fetch %s"), name);
+>  	return 0;
 >  }
-> =20
-> -static void read_empty(const struct object_id *oid, int verbose)
-> +static void read_empty(const struct object_id *oid)
+
+This, together with the "merge" one that used to be conditional
+(which I take as a sign that new callers can legitimately wish it to
+be conditional again), is where the new l_opt() variant is weak.
+
+And the above is wrong.  If verbose option is given and run command
+succeeds in running "fetch -v" (another bug is that the updated code
+is running "git -v fetch <name>"), we will try running "fetch" without
+"-v" option after that.
+
+So, for simplest things (i.e. the majority of places this patch
+touches), addition of l_opt() is great.  Use of it for nontrivial
+things like this is not.  We need to repeat ourselves, and the use
+of API is error prone.
+
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 901375d5841..4f5392c5796 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -196,17 +196,15 @@ static int read_yes_no_answer(void)
+>  static int ask_yes_no_if_possible(const char *format, ...)
 >  {
->  	int i =3D 0;
->  	const char *args[7];
+>  	char question[4096];
+> -	const char *retry_hook[] =3D { NULL, NULL, NULL };
+
+Good to see that this one in a wrong scope can now go away.
+
+> +	char *retry_hook;
+>  	va_list args;
 > =20
->  	args[i++] =3D "read-tree";
-> -	if (verbose)
-> -		args[i++] =3D "-v";
->  	args[i++] =3D "-m";
->  	args[i++] =3D "-u";
->  	args[i++] =3D empty_tree_oid_hex();
-> @@ -363,14 +361,13 @@ static void read_empty(const struct object_id *oi=
-d, int verbose)
->  		die(_("read-tree failed"));
->  }
+>  	va_start(args, format);
+>  	vsnprintf(question, sizeof(question), format, args);
+>  	va_end(args);
 > =20
-> -static void reset_hard(const struct object_id *oid, int verbose)
-> +static void reset_hard(const struct object_id *oid)
->  {
->  	int i =3D 0;
->  	const char *args[6];
+> -	if ((retry_hook[0] =3D mingw_getenv("GIT_ASK_YESNO"))) {
+> -		retry_hook[1] =3D question;
+> -		return !run_command_v_opt(retry_hook, 0);
+> -	}
+> +	if ((retry_hook =3D mingw_getenv("GIT_ASK_YESNO")))
+> +		return !run_command_l_opt(0, retry_hook, question, NULL);
 > =20
->  	args[i++] =3D "read-tree";
-> -	if (verbose)
-> -		args[i++] =3D "-v";
-> +	args[i++] =3D "-v";
->  	args[i++] =3D "--reset";
->  	args[i++] =3D "-u";
->  	args[i++] =3D oid_to_hex(oid);
-> @@ -385,7 +382,7 @@ static void restore_state(const struct object_id *h=
-ead,
->  {
->  	struct strvec args =3D STRVEC_INIT;
-> =20
-> -	reset_hard(head, 1);
-> +	reset_hard(head);
-> =20
->  	if (is_null_oid(stash))
->  		goto refresh_cache;
-> @@ -1470,7 +1467,7 @@ int cmd_merge(int argc, const char **argv, const =
-char *prefix)
->  					       check_trust_level);
-> =20
->  		remote_head_oid =3D &remoteheads->item->object.oid;
-> -		read_empty(remote_head_oid, 0);
-> +		read_empty(remote_head_oid);
->  		update_ref("initial pull", "HEAD", remote_head_oid, NULL, 0,
->  			   UPDATE_REFS_DIE_ON_ERR);
->  		goto done;
+>  	if (!isatty(_fileno(stdin)) || !isatty(_fileno(stderr)))
+>  		return 0;
