@@ -2,96 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77DE1C4332F
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 15:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04A5EC433FE
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 16:15:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229471AbiJNPxz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 11:53:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38786 "EHLO
+        id S229816AbiJNQPZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 12:15:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229785AbiJNPxx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 11:53:53 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFA771D5856
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:53:52 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 02B71144B7B;
-        Fri, 14 Oct 2022 11:53:52 -0400 (EDT)
+        with ESMTP id S229809AbiJNQPW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 12:15:22 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91B48AF1B6
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 09:15:20 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2FF771C114E;
+        Fri, 14 Oct 2022 12:15:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=/s+0EcDVEnzn
-        d5IlLoGeM+sOh3as5iFEbRb7hmA9HDw=; b=SnQzHGOjQvcjCz4ZeMxPgcDd/VET
-        yZKjmamErWeEkXXq0+L1j0mkFfDgEnaLtV+pDV/9sy1pgZSLqMcXDzAHU1TzIzEP
-        IyrCbftTPAOljes3+RBIE4PaNibXwcuM/iPotufhPyj3IQwDq0ili4Hnq+a/qShY
-        bxkkGNsypIeBZqc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EE450144B7A;
-        Fri, 14 Oct 2022 11:53:51 -0400 (EDT)
+        :content-type; s=sasl; bh=wbq1U80IO2iV94v9uQHQDA1yRtKAwl/ewpcGLI
+        OrCY0=; b=GA8caiTbq72sjMq0qFY0Xi44PzMOI09ogrPnNVG+d0uyJhDzUXDt3V
+        FyEd1klxTibdvl8WFy6q87sdYaSAaPVBVs3HYklooy0yzYCJvhVyRkN1TI9iwtdv
+        Bch/gQCZ6FhBkHMr1eo0lK3b5dL3tBt2gQsxM8XU59mjHMonoVI5E=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0F15F1C114D;
+        Fri, 14 Oct 2022 12:15:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 592A3144B77;
-        Fri, 14 Oct 2022 11:53:51 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2A1DF1C114C;
+        Fri, 14 Oct 2022 12:15:17 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-        Calvin Wan <calvinwan@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 00/15] run-command API: pass functions & opts via struct
-References: <cover-v2-00.22-00000000000-20221012T084850Z-avarab@gmail.com>
-        <cover-v3-00.15-00000000000-20221012T205712Z-avarab@gmail.com>
-        <06bc6ffe-3f64-481e-5c54-156a39865e25@dunelm.org.uk>
-        <221014.86y1tijv3b.gmgdl@evledraar.gmail.com>
-Date:   Fri, 14 Oct 2022 08:53:50 -0700
-In-Reply-To: <221014.86y1tijv3b.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 14 Oct 2022 16:50:41 +0200")
-Message-ID: <xmqq5ygmbdv5.fsf@gitster.g>
+To:     "nsengaw4c via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, nsengaw4c <nsengiyumvawilberforce@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Subject: Re: [PATCH v3] [OUTREACHY] t1002: modernize outdated conditional
+References: <pull.1362.v2.git.git.1665733647421.gitgitgadget@gmail.com>
+        <pull.1362.v3.git.git.1665734502591.gitgitgadget@gmail.com>
+Date:   Fri, 14 Oct 2022 09:15:16 -0700
+In-Reply-To: <pull.1362.v3.git.git.1665734502591.gitgitgadget@gmail.com>
+        (nsengaw4c via GitGitGadget's message of "Fri, 14 Oct 2022 08:01:42
+        +0000")
+Message-ID: <xmqqv8om9yaz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 65F32618-4BD8-11ED-A5DB-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 64598F6A-4BDB-11ED-BEBE-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+"nsengaw4c via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> You also had a related concern in 04/05 (which I'm taking the liberty o=
-f
-> replying ot here):
+> From: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
 >
-> 	https://lore.kernel.org/git/a7463bc5-9a92-8f0f-c0ee-e72fbbeedc09@dunel=
-m.org.uk/
+> Tests in this script use an unusual and hard to reason about
+> conditional construct
 >
-> So, first I disagree with it "going in the wrong direction". We've been
-> converting more things to size_t. For e.g. an "int nr_processes" we can
-> expect that we'll want to e.g. have a corresponding "struct string_list=
-"
-> whose "nr" is a "size_t" (or similar aggregate types).
+>     if expression; then false; else :; fi
+>
+> Change them to use more idiomatic construct:
+>
+>     ! expression
+>
+> Cc: Christian Couder  <christian.couder@gmail.com>
+> Cc: Hariom Verma <hariom18599@gmail.com>
+> Signed-off-by: Nsengiyumva  Wilberforce <nsengiyumvawilberforce@gmail.com>
 
-I do not quite see why that is relevant.  We may create list of
-textual descriptions from list of processes, so we expect to be able
-to loop "for (int i =3D 0; i < nr_processes; i++)" and access i-th
-element of the corresponding string_list.  As long as int is
-narrower than size_t (and it is wide enough to count the processes
-we are going to ever spawn) there is no issue, no?  Also using
-signed type is so much more convenient to signal an error (imagine
-asking for a process's i that is between 0..nr_processes with some
-other key in your database, and having to answer "no such process
-known to me").
+What are these C: lines for?  I do not think the message I am
+responding to is Cc'ed to them.  There may be a special incantation
+to tell GitGitGadget to Cc to certain folks, but adding Cc: to the
+log message trailer like this does not seem to be it---at least it
+appears that it did not work that way.
 
-> By mixing the two we're mixing types forever with associated warnings (=
-&
-> suppressions).
+> ...
+> -     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
+> +     ! read_tree_u_must_succeed -m -u $treeH $treeM'
 
-That is a complaint about shortcomings of the tool that gives
-irrelevant warning, no?  It is not a good reason to make the code
-worse.  Compilers, editors, and linters are to serve the code, not
-the other way around.
+Looks good. For the purpose of microproject, I think this is a good
+place to stop, as it does not make anything worse and make the code
+prettier.
 
+To those more experienced contributors who are watching from
+sidelines, and especially to our mentors, it may be worth taking a
+look at the implementation of the helper shell function used here,
+and think if it makes sense to expect a failure with a simple "!"
+prefix (or with the original long hand if/then/else/fi that has
+exactly the same issue).
+
+read_tree_u_must_succeed () {
+	git ls-files -s >pre-dry-run &&
+	git diff-files -p >pre-dry-run-wt &&
+	git read-tree -n "$@" &&
+	git ls-files -s >post-dry-run &&
+	git diff-files -p >post-dry-run-wt &&
+	test_cmp pre-dry-run post-dry-run &&
+	test_cmp pre-dry-run-wt post-dry-run-wt &&
+	git read-tree "$@"
+}
+
+What if read-tree segfaults?  This entire function will fail and the
+test that runs read_tree_u_must_succeed and negates its result would
+be a poor fit here.
+
+Thanks.
