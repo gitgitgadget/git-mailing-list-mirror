@@ -2,95 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3C08C4332F
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 08:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9273C433FE
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 09:08:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230022AbiJNI5r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 04:57:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36106 "EHLO
+        id S229663AbiJNJIN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 05:08:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230137AbiJNI5c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 04:57:32 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E17A91C7118
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:57:25 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id s2so5980854edd.2
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:57:25 -0700 (PDT)
+        with ESMTP id S229518AbiJNJIL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 05:08:11 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 000C52B25B
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 02:08:09 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id a67so5931986edf.12
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 02:08:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=klerks.biz; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xWlFoSJOq0mRpKValMpXVkbjZK6ZZzvt6IKz+lH2a+I=;
-        b=OuGKOIBL+tuB8XjQfVkcHG3SsPB20jre0wTNHMJIveXhd0SgliECZp9ZQG5uonzo0q
-         Mr/paPEoZZvYPLkM70mZwOdlHzEuPjPw6ILLMWxLGsebqwNT7s710VVCEY3IJ4DQjM/O
-         ZUkW1N9Ge3NNd4OeGU0DcslhearDRibyi0Ufw=
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GImWgNGyHIjbU1dxHtXK6TB94HqKJsUgbfz6GIpin9k=;
+        b=U77/HqxB4GCKVSkNarA8mr8R0RkRZArZ37DKhxxAivo/qcW544N4DGxQhLDJXf1HFx
+         hAU9dJFXXmLdKCWEcD5nCujkvwAaXWuwSRxd3xCJB+JNlUZmwZHX1poAFykQ+Pq/yHgL
+         sXbWnpjmEFxdY4bzW0++R+EpSa0cq5ouYoNfU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xWlFoSJOq0mRpKValMpXVkbjZK6ZZzvt6IKz+lH2a+I=;
-        b=a08l7a48tNhpZmX/ZBCFYjdqaiK64BlXZ0sTHPJTj0NV3c6vkivS+o+dqgyOvZ73Jy
-         MKpaNPNjzbAD1JbaR5vJrDV+feXR/xtZOzGpAjrUC2REWuVIpxHIJCGQVPlbwoKXS/ju
-         Q7toxEDuezvxsUXch+1CBwX4XJ3Kxcy+EYCxobSsxRsxI/578kLUyRKFWpI4ZdceJ+Ln
-         ivK7jWFQWwl9AKmDDi26y4tAZAof1d70GXvOEoD1E0gg5rJVRNHKzGnTcH5dra9/X6e9
-         3rnexyVU9Wc2qJujk+GCjtZcV10wT+kT+c/3L2ybalKl2nqOQHr1CNF5c/Bx/wITKlvj
-         UoAQ==
-X-Gm-Message-State: ACrzQf0Y6avkL/Vy74lKYplsqWeJLoQ+IfbXsyNFiIklxUiMdcCq39jo
-        bEu4ZrEY3pifItgTtlYM7EnfhhIPMEQOa65btyJZMOnlt+ORTsGe
-X-Google-Smtp-Source: AMsMyM4sEZihpKYJvRfw3V77KgYJvjMs6djLDcrxHY510We7i+hhF5zYlufPN3TAZ3aKl8TfNJLDK6nZUWO0L5oYam4=
-X-Received: by 2002:a05:6402:3454:b0:45c:a8b0:52d2 with SMTP id
- l20-20020a056402345400b0045ca8b052d2mr3478179edc.307.1665737843726; Fri, 14
- Oct 2022 01:57:23 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GImWgNGyHIjbU1dxHtXK6TB94HqKJsUgbfz6GIpin9k=;
+        b=qq2MInVxdTndLXYIvjwphJWM28/zCQMQOl4f3F6UA2uov5IsRCXvtcKzOgUx7TuET1
+         QhOhE+c3dTOpDOSHZeNQBapu1g01N09OKN5OaRrDe0aFbAp5OQHSMl0oZ5LgTWhHH33w
+         1ZxKLsdqFUdWpyU7m1pDxHsj+gV1TQkurur1IHD/OtyXOEtZW2QhXFKKsfnaL8PpSKSo
+         uJImUJjzdm2Dto7d4fdUEU66qPRX+e+LrgBtBmXj7/3BN+9ctlXLQVes55Iox5AL6wzy
+         UO7WzJIU0NjZ+GxjNys4sQUs5Vi52CJZ76DQDNWdW1paYpjbBIuA/O5SyI1/GDOVkQyo
+         Gq2g==
+X-Gm-Message-State: ACrzQf0H6jJOc4ZMhdki3IdXzww/fv6Jp6rzrvbWSWUnjSdOySu7dx/i
+        EbuU0j56S/jx4bomFIZ7AVO94UxUtL2i9jNDII1rTsPXzdS9VaV0
+X-Google-Smtp-Source: AMsMyM6COb7DTp39r9qLB307fJa+6IrU47OGkJemMmbicusSjcoeKj4ywh0Os3L9ivZhT8YnpgVUD4THNZ9Xp9jfx7Q=
+X-Received: by 2002:a05:6402:50d4:b0:45d:fe2:45 with SMTP id
+ h20-20020a05640250d400b0045d0fe20045mr3162822edb.221.1665738488490; Fri, 14
+ Oct 2022 02:08:08 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAPMMpogcnwJDUazw82OB0DvdgvNS6hpUN9Qs69ppTFb1QFbLSg@mail.gmail.com>
  <220930.86r0ztufwd.gmgdl@evledraar.gmail.com> <YznhYzWztkPc9pJk@tapette.crustytoothpaste.net>
  <CAPMMpojy8OMxYT0WuZCOZjwvufmVucvoHPtvLHatopXvuk9K5Q@mail.gmail.com>
- <CABPp-BHaMCcLjdx2m4CALZQiTRQy_LovWfbdrga6XWhQJhoxWQ@mail.gmail.com> <CA+JQ7M8s1W68+mzfe__+T5bJ821wYJqfgLBqA1=dSVH9Tx9fHA@mail.gmail.com>
-In-Reply-To: <CA+JQ7M8s1W68+mzfe__+T5bJ821wYJqfgLBqA1=dSVH9Tx9fHA@mail.gmail.com>
+ <CABPp-BHaMCcLjdx2m4CALZQiTRQy_LovWfbdrga6XWhQJhoxWQ@mail.gmail.com> <CAPMMpojvDj7Yc27HKQU4seSqg5Tx61RY3LOgMfkK=a0J25QYQw@mail.gmail.com>
+In-Reply-To: <CAPMMpojvDj7Yc27HKQU4seSqg5Tx61RY3LOgMfkK=a0J25QYQw@mail.gmail.com>
 From:   Tao Klerks <tao@klerks.biz>
-Date:   Fri, 14 Oct 2022 10:57:11 +0200
-Message-ID: <CAPMMpoiPvWc9fNnzDRqPHtf1BdNsSd0ef9nzd6jcVOkvM3-LEw@mail.gmail.com>
+Date:   Fri, 14 Oct 2022 11:07:56 +0200
+Message-ID: <CAPMMpog94YUDPZswcGZ0ns10QXhaWOGmE95mgZEpdcx4GKsV3w@mail.gmail.com>
 Subject: Re: icase pathspec magic support in ls-tree
-To:     Erik Cervin Edin <erik@cervined.in>
-Cc:     Elijah Newren <newren@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
+To:     Elijah Newren <newren@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 14, 2022 at 10:04 AM Erik Cervin Edin <erik@cervined.in> wrote:
->
->
-> On Fri, Oct 14, 2022 at 6:59 AM Torsten B=C3=B6gershausen <tboegi@web.de>=
- wrote:
-> >
-> > For example, we can use Linux:
-> >  git ls-files | tr 'A-Z' 'a-z' | sort | uniq -d ; echo $?
->
-> In a repo with many files, maybe use git diff --name-only and just run
-> it periodically as a part of a check-in hook or something?
->
->   git diff --name-only HEAD~100..HEAD | tr 'A-Z' 'a-z' | sort | uniq -d
->
->
-[... next email...]
-> I believe
->  git diff --name-only
-> doesn't need a working tree
+Small typo / confusion on my part:
 
-I don't understand this suggestion; doesn't it only catch duplicates
-where both instances were introduced in the same 100-commit range?
+On Fri, Oct 14, 2022 at 10:48 AM Tao Klerks <tao@klerks.biz> wrote:
+>
+> That said, what "icase pathspec magic" actually *does*, is break down
+> the pathspec into iteratively more complete paths, level by level,
+> looking for case-duplicates at each level.
 
-That has often or typically not been the case, in my experience. Often
-one version of the file or folder will have existed for some time
-(days, months, years), and then a "duplicate" will be introduced.
-
-As far as I can tell this "diff large range" approach is quite
-expensive (37 seconds in a trivial test on this repo), and
-non-comprehensive.
+I meant what it does is *collect path matches* at iteratively more
+complete paths, level by level - it doesn't care about duplicates; any
+duplicate-detection is what you can then do on the result.
