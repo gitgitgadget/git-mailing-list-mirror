@@ -2,87 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 359B3C433FE
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 20:20:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04B4CC433FE
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 20:23:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230179AbiJNUUF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 16:20:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47028 "EHLO
+        id S231357AbiJNUXn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 16:23:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231332AbiJNUT7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 16:19:59 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A307F21E05
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 13:19:57 -0700 (PDT)
-Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1ojR9v-0007km-3c;
-        Fri, 14 Oct 2022 21:19:55 +0100
-Message-ID: <692dbb0d-a3f9-7e12-c868-fffc8df4678b@iee.email>
-Date:   Fri, 14 Oct 2022 21:19:54 +0100
+        with ESMTP id S231444AbiJNUXm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 16:23:42 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEE971D584D
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 13:23:40 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 217A0146C3D;
+        Fri, 14 Oct 2022 16:23:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=tyveJeXFQS2b
+        T4p+kCnAbD21Io7bhiSK9n36//s2qwQ=; b=PfxPTLA7/Dv6ZmLGcdKtp4PQEGQa
+        BWK32ku5wGmwK9cCJFTOGka04dJh3ekWPkDWk3ElC7lAJHRjV4jECDOpWOF+NnTy
+        U9AUt6o5XPALV534QdyxLjMhkI6Zugz3PPueOGJ/uFaDUCo1SCksCJHOAQ4t0bcV
+        0f+IJe4Vkvd/r+c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 17158146C3C;
+        Fri, 14 Oct 2022 16:23:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6F992146C39;
+        Fri, 14 Oct 2022 16:23:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v2] bisect--helper: plug strvec leak
+References: <xmqqy1tunjgp.fsf@gitster.g>
+        <221006.86a668r5mf.gmgdl@evledraar.gmail.com>
+        <xmqqk05cipq8.fsf@gitster.g>
+        <1965b54b-122a-c965-f886-1a7dd6afbfb4@web.de>
+        <Y0TXTl0gSBOFQa9B@coredump.intra.peff.net>
+        <xmqq35buykz1.fsf@gitster.g>
+        <Y0VtkmNwjKcXcemP@coredump.intra.peff.net>
+        <xmqqpmeyuvxt.fsf@gitster.g>
+        <221011.86czayns5x.gmgdl@evledraar.gmail.com>
+        <xmqq8rlmujcz.fsf@gitster.g>
+        <Y0m8AU+Yf7PREI2E@coredump.intra.peff.net>
+Date:   Fri, 14 Oct 2022 13:23:36 -0700
+In-Reply-To: <Y0m8AU+Yf7PREI2E@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 14 Oct 2022 15:44:01 -0400")
+Message-ID: <xmqqczau888n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v3] [OUTREACHY] t1002: modernize outdated conditional
-Content-Language: en-GB
-To:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        nsengaw4c via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, nsengaw4c <nsengiyumvawilberforce@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
-References: <pull.1362.v2.git.git.1665733647421.gitgitgadget@gmail.com>
- <pull.1362.v3.git.git.1665734502591.gitgitgadget@gmail.com>
- <xmqqv8om9yaz.fsf@gitster.g>
- <f064ce46-8ed0-a9c1-8df5-5c258677d95f@github.com>
- <CAPig+cT=bJ7BP9CDh5-oYYF376vVxsh7E0UAE_QN0wfAgR3AAg@mail.gmail.com>
- <xmqqh7068bta.fsf@gitster.g>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <xmqqh7068bta.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 159D8796-4BFE-11ED-9763-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14/10/2022 20:06, Junio C Hamano wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->> On Fri, Oct 14, 2022 at 12:35 PM Derrick Stolee
->> <derrickstolee@github.com> wrote:
->>> On 10/14/2022 12:15 PM, Junio C Hamano wrote:
->>>> "nsengaw4c via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>>>> Cc: Christian Couder  <christian.couder@gmail.com>
->>>>> Cc: Hariom Verma <hariom18599@gmail.com>
->>>> What are these C: lines for?  I do not think the message I am
->>>> responding to is Cc'ed to them.  There may be a special incantation
->>>> to tell GitGitGadget to Cc to certain folks, but adding Cc: to the
->>>> log message trailer like this does not seem to be it---at least it
->>>> appears that it did not work that way.
->>> GitGitGadget will read the "cc:" lines from the end of the pull request
->>> description, not the commit messages. I'm pretty sure they will be
->>> ignored if there are other lines after them.
->> For Wilberforce's edification for future submissions, presumably the
->> reason that the CC: in the pull-request's description didn't work is
->> because the CC: line wasn't the last line in the description? Does
->> there need to be a blank line before the CC: line? Is it okay to list
->> multiple people on the same CC: line as done in this case, or is that
->> also a problem?
-> Ah, now I can see why the round v4 is CC'ed to you and Derrick on
-> the list.  The pull-request text (visible in GitHub UI in the top
-> most box of https://github.com/git/git/pull/1362) ends with two
-> lines of cc: that list you two.  The one named Christian and Hariom
-> were not at the end and was ignored by GGG, it seems.
->
-I just want to throw in that because GitHub takes the PR & comitts
-verbatim, but Git itself works via email, you can add description
-portions to commits, and I believe the PR part, by add a line containing
-just three dashes `---` followed by the additional descriptive note text
-which won't be used when `am` (apply mailbox) is used.
+Jeff King <peff@peff.net> writes:
 
-I've certainly used that technique when sending patches. See the "Bonus
-Chapter: One-Patch Changes" in MyFirstContribution.txt
---
-Philip
+> On Tue, Oct 11, 2022 at 02:43:24PM -0700, Junio C Hamano wrote:
+>
+>> > -	if (run_command_v_opt(argv.v, RUN_GIT_CMD)) {
+>> > +	if (run_command_opt_l(RUN_GIT_CMD, "-C", repo, "sparse-checkout",
+>> > +			      "set", NULL)) {
+>>=20
+>> And this does give us protection from the "Programmers can give
+>> unterminated list to run_command_v_opt() by mistake", which is not
+>> really solved mechanically even if the list is prepared with the
+>> strvec API (because the compiler has to be smart enough to know that
+>> argv.v was prepared with proper use of the API), which is nice.
+>
+> Yeah, I agree this addresses the point I raised (which I am somewhat
+> regretting raising, as IMHO it was not worth the amount of discussion
+> that has ensued).
+>
+> Since nobody asked, my _real_ opinion is that I prefer Ren=C3=A9's orig=
+inal
+> that used an actual struct, and its auto-freeing strvec.
+
+Yup, it was you who worried about forgotten NULL at the end, though
+;-)
