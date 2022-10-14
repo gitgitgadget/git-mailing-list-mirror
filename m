@@ -2,88 +2,175 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 872A0C4332F
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 00:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5D81C433FE
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 02:06:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229693AbiJNAjg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Oct 2022 20:39:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37818 "EHLO
+        id S229777AbiJNCGe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Oct 2022 22:06:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbiJNAje (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Oct 2022 20:39:34 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B330F18F90D
-        for <git@vger.kernel.org>; Thu, 13 Oct 2022 17:39:33 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id e20so3956694ybh.2
-        for <git@vger.kernel.org>; Thu, 13 Oct 2022 17:39:33 -0700 (PDT)
+        with ESMTP id S229794AbiJNCGa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Oct 2022 22:06:30 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A24F718C414
+        for <git@vger.kernel.org>; Thu, 13 Oct 2022 19:06:28 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id r13so5452473wrj.11
+        for <git@vger.kernel.org>; Thu, 13 Oct 2022 19:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bas+81lMicbSbX5BQ2cJvVMUg1s0XAk0+owrjrtTV14=;
-        b=jIF17pO2BMz3lhWNiljuVZ7Zs2nSfpkoZlv7Vfz7zoQ6m+6eIhEmofVQSs3zR1bHbX
-         /CC14vqAGHAT3TyfGeAIUJmAWU0laiLrtfGDGAF6mY8S8bZc3SbfIfOEsBVEsvR3TK94
-         K0WhbGcFtqgmnxouXuUB3wOmS0v1HRjBp6S/o5fFPbyg7hb2Sh9LQeTYvwEJypn0S5QQ
-         d/ihlw9sukSej3wKZClfVBf0Hm4HdpDvmSCvOslHsg3/tynv1xm7Fr9uxCRlotpV2vLr
-         uaZusCuELna0bH6s+jNTuypFsnPDIIxzBxIYY3Opl78bIApNen97mwezznl5J++eHDIi
-         wv5Q==
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=In5JSCPXiTpPO9nE0wVqi/kKAaNVSvdrefDOcKzbqW8=;
+        b=o33yMEbUUyEwPv/y0adQkiY2uiDPXnkNysQ3eztFvqQoowVouJity7xR8qC/2UXRhj
+         9EhVpVxSNnyygVtx0ghi00ewDcCjIaw9+D+jbWNYl2UnLCGNUxd+Mf50lK43qgbBI8Yh
+         5M69YRQtG/45TsqwICsI3X8y6qglcjla0yLVmBzW62L2vVHvONb2VtljjRFQ/8/A1fYh
+         w0LJRaxLwK4l3vakQNv6DFCLkD6Tic6fneXDkK06PqcMXrxpYvK6Fk+0UabyLZ5lwjDO
+         U4Jg0sCmjxjJOYfrcCk6ee57KqrsRpVOAo+vSf4kcdC+wub0mKohNeULySVOg2zzGS1g
+         OjPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bas+81lMicbSbX5BQ2cJvVMUg1s0XAk0+owrjrtTV14=;
-        b=fzqvXRwZ5RC/Lw2ZFihTLQg94IEYQ0QDlvi8nw/ZY9ztqoHEfMWUuMK+onDoNFSLFl
-         3S84t8/m4a7VdK4mM/jBybXIGhhmba936vMCXrmqO+rOFyb+9bl4abf/aYb9rU9fgHyr
-         33u1Fmjt0ThFClDg2UbfakRt5A5II4iKqiXoEpIpH1TKqx67a2U5M7+XXE92RvBtRRQB
-         4Q2ERk7zkPbkNDThscRoXeK8DyBSIuhlt2ZdJW/zCZBwv4xPLXxttfCDLb73HrKpmGxK
-         iFwRj2UAEc4Gfo1ieN797EbD9ulJnupoxSalXjnhQYj6GCe1SiIhdMaLy32/yPrgmNU3
-         +7XQ==
-X-Gm-Message-State: ACrzQf3ONTuaJXNAADViY34XUk2OLAxMXt6ylGdP6yPd4SkNrdurkrPR
-        qTQ7XTgDrPcqUkI6ye7F0v+Gq89lpgFNbLU7CWeio+XY3TG7cg==
-X-Google-Smtp-Source: AMsMyM7nmDhkqVTmErbpvz9Awp6EerTsPNBC44Vo0rAixPiOpobX7wouzVqLkTUkDWBWcliOqtmP95SNb+abv+AY+44=
-X-Received: by 2002:a25:1605:0:b0:6bd:284c:62b with SMTP id
- 5-20020a251605000000b006bd284c062bmr2423812ybw.391.1665707972893; Thu, 13 Oct
- 2022 17:39:32 -0700 (PDT)
+        bh=In5JSCPXiTpPO9nE0wVqi/kKAaNVSvdrefDOcKzbqW8=;
+        b=UEJYXHAtbjVJ5lDjG4GZMAMZeYSrrktPYnQjiBEQlB/xKCusB068vIekMUf+KA/NmI
+         Y+Fz0OYeIhyT9SHecXC3ZKLqeF6zLYpfVWPJpw3azZz9kcKEkdHvCODvILxgwcdEG+sa
+         0U26Xqh28/q1354GtsjcF2SnLtDRe+hMsSvNX+wVrNhp1TOJq3uZ6EGonC/L0tZEXg+4
+         QHBq0y+BbdQGNl4rav6TmtLyNEBfDRjkVp2461Jexa3PHXW8jX8bMhkLwTLTM4D65Mtw
+         1sz6yi6n+cvwuRzx6Cqi4CATpOVQ+FJuKNcI54fjSZPBb3Z7wHwD8Mjul7GA/IqSsi9k
+         5oQw==
+X-Gm-Message-State: ACrzQf2HzSrK4qVoaxr69/ENbL5zAtg+/e1e0cYQnukTBHQUQEXdE2jW
+        VIxpcWBRKg7onfQFbttHyzL6qS24ZGE=
+X-Google-Smtp-Source: AMsMyM5Ps7kaJBGiJSA7z/JABmxcUYQCoYRmCVXDHE7fWKVWOJa/rl4UUrkCBLEgH+FfTBLgF9ztTw==
+X-Received: by 2002:a5d:6901:0:b0:22f:b097:7de6 with SMTP id t1-20020a5d6901000000b0022fb0977de6mr1749586wru.373.1665713186560;
+        Thu, 13 Oct 2022 19:06:26 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m7-20020a5d6247000000b0022c906ffedasm808665wrv.70.2022.10.13.19.06.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Oct 2022 19:06:25 -0700 (PDT)
+Message-Id: <pull.1362.git.git.1665713184304.gitgitgadget@gmail.com>
+From:   "nsengaw4c via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 14 Oct 2022 02:06:24 +0000
+Subject: [PATCH] [OUTREACHY] t1002: modernize outdated conditional
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20221011232604.839941-1-calvinwan@google.com> <xmqqczaxmvv9.fsf@gitster.g>
-In-Reply-To: <xmqqczaxmvv9.fsf@gitster.g>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Thu, 13 Oct 2022 17:39:21 -0700
-Message-ID: <CAFySSZAi_XtwAQeVDgbjXD7vnGuYgNLNo+6NNJP0QvH64KxPOA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] submodule: parallelize diff
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, emilyshaffer@google.com, avarab@gmail.com,
-        phillip.wood123@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     nsengaw4c <nsengiyumvawilberforce@gmail.com>,
+        wilberforce <nsengiyumvawilberforce@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Calvin Wan <calvinwan@google.com> writes:
->
-> > I also wanted to pose another question to list regarding defaults for
-> > parallel processes. For jobs that clearly scale with the number of
-> > processes (aka jobs that are mostly processor bound), it is obvious that
-> > setting the default number of processes to the number of available cores
-> > is the most optimal option. However, this changes when the job is mostly
-> > I/O bound or has a combination of I/O and processing. Looking at my use
-> > case for `status` on a cold cache (see below), we notice that increasing
-> > the number of parallel processes speeds up status, but after a certain
-> > number, it actually starts slowing down.
->
-> I do not offhand recall how the default parallelism is computed
-> there, but if I am correct to suspect that "git grep" has a similar
-> scaling pattern, i.e. the threads all need to compete for I/O to
-> read from the filesystem to find needles from the haystack, perhaps
-> it would give us a precedent to model the behaviour of this part of
-> the code, too, hopefully?
+From: wilberforce <nsengiyumvawilberforce@gmail.com>
 
-Setting grep.threads=0 does default it to the number of available cores
-(at least the documentation is clear about this). I tested "git grep" on
-my machine and found that it started slowing down after 4 threads --
-this is most likely because my NVMe SSD uses 4 PCIe lanes aka it can at
-most do 4 reads in parallel. AFAIK, there is no way to tell how many
-reads a disk can do in parallel. This coupled with the fact that other
-commands have varying levels of IO requirements makes it impossible to
-set a "reasonable" amount of threads.
+Tests in this script use an unusual and hard to reason about
+conditional construct
+
+    if expression; then false; else :; fi
+
+Change them to use more idiomatic construct:
+
+    ! expression
+
+Cc: Christian Couder  <christian.couder@gmail.com>
+Cc: Hariom Verma <hariom18599@gmail.com>
+Signed-off-by: Nsengiyumva  wilberfore <nsengiyumvawilberforce@gmail.com>
+---
+    [OUTREACHY]cleaning t1002-read-tree-m-u-2way.sh
+    
+    This is an update in t1002-read-tree-m-u-2way.sh. all the tests that use
+    the unusual construct: if read_tree_u_must_succeed -m -u $treeH $treeM;
+    then false; else :; fi have been updated to ! read_tree_u_must_succeed
+    -m -u $treeH $treeM "I am an outreachy applicant" CC: Christian Couder
+    christian.couder@gmail.com, Hariom verma hariom18599@gmail.com
+    Signed-off-by: wilberforce nsengiyumvawilberforce@gmail.com
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1362%2Fnsengiyumva-wilberforce%2Ft1002_usual_construct_updated-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1362/nsengiyumva-wilberforce/t1002_usual_construct_updated-v1
+Pull-Request: https://github.com/git/git/pull/1362
+
+ t/t1002-read-tree-m-u-2way.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
+index bd5313caec9..cdc077ce12d 100755
+--- a/t/t1002-read-tree-m-u-2way.sh
++++ b/t/t1002-read-tree-m-u-2way.sh
+@@ -154,7 +154,7 @@ test_expect_success \
+      read_tree_u_must_succeed --reset -u $treeH &&
+      echo frotz frotz >frotz &&
+      git update-index --add frotz &&
+-     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
++     ! read_tree_u_must_succeed -m -u $treeH $treeM'
+ 
+ test_expect_success \
+     '9 - conflicting addition.' \
+@@ -163,7 +163,7 @@ test_expect_success \
+      echo frotz frotz >frotz &&
+      git update-index --add frotz &&
+      echo frotz >frotz &&
+-     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
++     ! read_tree_u_must_succeed -m -u $treeH $treeM'
+ 
+ test_expect_success \
+     '10 - path removed.' \
+@@ -186,7 +186,7 @@ test_expect_success \
+      echo rezrov >rezrov &&
+      git update-index --add rezrov &&
+      echo rezrov rezrov >rezrov &&
+-     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
++     ! read_tree_u_must_succeed -m -u $treeH $treeM'
+ 
+ test_expect_success \
+     '12 - unmatching local changes being removed.' \
+@@ -194,7 +194,7 @@ test_expect_success \
+      read_tree_u_must_succeed --reset -u $treeH &&
+      echo rezrov rezrov >rezrov &&
+      git update-index --add rezrov &&
+-     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
++     ! read_tree_u_must_succeed -m -u $treeH $treeM'
+ 
+ test_expect_success \
+     '13 - unmatching local changes being removed.' \
+@@ -203,7 +203,7 @@ test_expect_success \
+      echo rezrov rezrov >rezrov &&
+      git update-index --add rezrov &&
+      echo rezrov >rezrov &&
+-     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
++     ! read_tree_u_must_succeed -m -u $treeH $treeM'
+ 
+ cat >expected <<EOF
+ -100644 X 0	nitfol
+@@ -251,7 +251,7 @@ test_expect_success \
+      read_tree_u_must_succeed --reset -u $treeH &&
+      echo bozbar bozbar >bozbar &&
+      git update-index --add bozbar &&
+-     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
++     ! read_tree_u_must_succeed -m -u $treeH $treeM'
+ 
+ test_expect_success \
+     '17 - conflicting local change.' \
+@@ -260,7 +260,7 @@ test_expect_success \
+      echo bozbar bozbar >bozbar &&
+      git update-index --add bozbar &&
+      echo bozbar bozbar bozbar >bozbar &&
+-     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
++     ! read_tree_u_must_succeed -m -u $treeH $treeM'
+ 
+ test_expect_success \
+     '18 - local change already having a good result.' \
+@@ -316,7 +316,7 @@ test_expect_success \
+      echo bozbar >bozbar &&
+      git update-index --add bozbar &&
+      echo gnusto gnusto >bozbar &&
+-     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
++     ! read_tree_u_must_succeed -m -u $treeH $treeM'
+ 
+ # Also make sure we did not break DF vs DF/DF case.
+ test_expect_success \
+
+base-commit: d420dda0576340909c3faff364cfbd1485f70376
+-- 
+gitgitgadget
