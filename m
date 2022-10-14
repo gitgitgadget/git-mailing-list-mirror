@@ -2,103 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D08E9C4332F
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 08:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7257C433FE
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 08:24:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229684AbiJNIEh convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 14 Oct 2022 04:04:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41972 "EHLO
+        id S229748AbiJNIYu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 04:24:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbiJNIEf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 04:04:35 -0400
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 082AE1BB979
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:04:34 -0700 (PDT)
-Received: by mail-ej1-f50.google.com with SMTP id d26so8793967ejc.8
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:04:33 -0700 (PDT)
+        with ESMTP id S229929AbiJNIYr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 04:24:47 -0400
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FCB21C19F9
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:24:28 -0700 (PDT)
+Received: by mail-io1-f49.google.com with SMTP id 187so3312644iov.10
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:24:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PMBcjMehFKgEN5zDmsRA6RwCO9s4vMG3PUURf2gx0ZU=;
-        b=6wUao/hAsO5UutvFhsqkPoVLhbXv2wyftbbXrf1aZu0z7KK/9AHgnKFMZ/T+82o9Bv
-         RH1iilKZHuVA6VF9jxlUhcvwRo2g13yvCGoGpHkVG51qmy/jSAwf2lLeuu/pvNha+pSj
-         b9RqOnyL8mKJ1YuE3NMnEiJ16Nuqf90Wkou4N8gwCz/XIsCHGnsa7POyh2km437OI4gs
-         BpFfE/kciLw3N2Wzrqh3QESytHbmZa41gRmNmE287Ed+JiAkOui3xV4X7GgLu4kESsor
-         FDLe6tIMBwq468doDZAXxoS78389I7RhnxEvDIW0+QSEpIGU5apWTrAp0DEgm1j0Q8zI
-         Yf3g==
-X-Gm-Message-State: ACrzQf0yQAx94648Rqw58CGXV7h4B/ruU0shtUjRZ8zLMbi20BcgTHXo
-        kciScSnomxcfgAmB7Dti72LSPW5DpHJHXrN2/Z/7dznSyAw=
-X-Google-Smtp-Source: AMsMyM7U8eMD/CfNvSYSAORmtgQL9oY+sfvUwh17BwGZxH2U2DZJl78POA8tJ5olK9KGBDhFpIRBn0QOawDH0TvSc18=
-X-Received: by 2002:a17:906:9756:b0:78b:8c9b:3b1d with SMTP id
- o22-20020a170906975600b0078b8c9b3b1dmr2625508ejy.256.1665734672210; Fri, 14
- Oct 2022 01:04:32 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RHtSIvCv78ytyG6UGregKoRu0iCVZBZGV/bZmJI8+ig=;
+        b=Ij+2e39Oh+Qq4MAB//RQymFnoOZX/DcHfHVgwR1SdDADHXnyO7RxI9bAhMIKZO043I
+         YhJItl1Zz1+7jTuhG4lxAwoF4sE66LfzKNPeInT6H6mDojxWhSJcrfwHJldvftNNaRAT
+         xyFGPtHFlKR5R0p3LQ1CRj6gQVmolaVEvq+xJL7as3gjYTI7vbd3sEPP/lR4iLSsDrPc
+         lawXQfnVhxMm1hSY0LssAtSMHNNZGyT0D77oF4YQm3zeL3g2at/JYudwZZtUYLZb6tBF
+         exeNLUVmTR6MfPfjTGa3gt5FGohArqT+ofA9yuNKrsrOIkpnYcVccp6AJvjiuefRx1cJ
+         yyBQ==
+X-Gm-Message-State: ACrzQf1ZNTSbGH/LwRbnLH0S6RDdxiBsop51QDHFxnlDj2u6KzCg7efg
+        G5BUvcI9I66gddFcAg1Mal5+t6Rxcvh8qr8IoVBgQ+kmGdg=
+X-Google-Smtp-Source: AMsMyM5LoIo8VcMQKN5AY8QIz7sZrgRDEUHVKFoBa17nVAw5w4MpkpeP9gxwxz2iWGSryodo9X1DE3xLlVsrCUsB+Hg=
+X-Received: by 2002:a05:6638:490e:b0:363:c0fb:a5ea with SMTP id
+ cx14-20020a056638490e00b00363c0fba5eamr2133219jab.285.1665735867250; Fri, 14
+ Oct 2022 01:24:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAPMMpogcnwJDUazw82OB0DvdgvNS6hpUN9Qs69ppTFb1QFbLSg@mail.gmail.com>
- <220930.86r0ztufwd.gmgdl@evledraar.gmail.com> <YznhYzWztkPc9pJk@tapette.crustytoothpaste.net>
- <CAPMMpojy8OMxYT0WuZCOZjwvufmVucvoHPtvLHatopXvuk9K5Q@mail.gmail.com> <CABPp-BHaMCcLjdx2m4CALZQiTRQy_LovWfbdrga6XWhQJhoxWQ@mail.gmail.com>
-In-Reply-To: <CABPp-BHaMCcLjdx2m4CALZQiTRQy_LovWfbdrga6XWhQJhoxWQ@mail.gmail.com>
-From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Fri, 14 Oct 2022 10:03:56 +0200
-Message-ID: <CA+JQ7M8s1W68+mzfe__+T5bJ821wYJqfgLBqA1=dSVH9Tx9fHA@mail.gmail.com>
-Subject: Re: icase pathspec magic support in ls-tree
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Tao Klerks <tao@klerks.biz>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>
+References: <pull.1381.git.1665590389045.gitgitgadget@gmail.com> <pull.1381.v2.git.1665734440009.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1381.v2.git.1665734440009.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 14 Oct 2022 04:24:16 -0400
+Message-ID: <CAPig+cSPWsiKBU6hgvP_BO7n23nLf7Q-59ZbO4fSL0idcw2qzA@mail.gmail.com>
+Subject: Re: [PATCH v2] RFC: mergetool: new config guiDefault supports
+ auto-toggling gui by DISPLAY
+To:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Tao Klerks <tao@klerks.biz>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I don't imagine I can make a perfectly correct and universal fix to
-> this, but with case-insensitive matching on ls-tree in an update hook
-> I believe I could reduce the frequency of this already-infrequent
-> issue by at least 1000X, which would suit my purposes just fine. In my
-> case filenames are mostly ansi-based, and I don't expect we've ever
-> had Turkish filenames (turkish "i" being the most famous case-folding
-> gotcha I think?).
-
-How about doing it in something that's not ls-tree? Sounds like you
-already have a script, it just takes a bit too long?
-
-Something similar to
-
-On Fri, Oct 14, 2022 at 6:59 AM Torsten Bögershausen <tboegi@web.de> wrote:
+"On Fri, Oct 14, 2022 at 4:07 AM Tao Klerks via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> [...]
+> As proposed in <xmqqmtb8jsej.fsf@gitster.g>, introduce new configuration
+> options, difftool.guiDefault and mergetool.guiDefault, supporting a special
+> value "auto" which causes the corresponding tool or guitool to be selected
+> depending on the presence of a non-empty DISPLAY value. Also support "true"
+> to say "default to the guitool (unless --no-gui is passed on the
+> commandline)", and "false" as the previous default behavior when these new
+> configuration options are not specified.
 >
-> For example, we can use Linux:
->  git ls-files | tr 'A-Z' 'a-z' | sort | uniq -d ; echo $?
+> Signed-off-by: Tao Klerks <tao@klerks.biz>
+> ---
+> diff --git a/Documentation/config/difftool.txt b/Documentation/config/difftool.txt
+> @@ -34,3 +34,10 @@ See the `--trust-exit-code` option in linkgit:git-difftool[1] for more details.
+> +difftool.guiDefault::
+> +       Set 'true' to use the diff.guitool by default (equivalent to specifying
+> +       the "--gui" argument), or "auto" to select diff.guitool or diff.tool
+> +       depending on the presence of a DISPLAY environment variable value. The
+> +       default is 'false', where the "--gui" argument must be provided
+> +       explicitly for the diff.guitool to be used.
 
-In a repo with many files, maybe use git diff --name-only and just run
-it periodically as a part of a check-in hook or something?
+Let's use backticks rather than double-quotes to ensure that these get
+typeset similar to other documentation; i.e. `--gui`, `auto`,
+`diff.guitool`, `diff.tool`, `DISPLAY`.
 
-  git diff --name-only HEAD~100..HEAD | tr 'A-Z' 'a-z' | sort | uniq -d
+> diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
+> @@ -85,3 +85,10 @@ mergetool.writeToTemp::
+> +mergetool.guiDefault::
+> +       Set 'true' to use the merge.guitool by default (equivalent to
+> +       specifying the "--gui" argument), or "auto" to select merge.guitool
+> +       or merge.tool depending on the presence of a DISPLAY environment
+> +       variable value. The default is 'false', where the "--gui" argument
+> +       must be provided explicitly for the merge.guitool to be used.
 
+Ditto.
 
-On Fri, Oct 14, 2022 at 9:59 AM Elijah Newren <newren@gmail.com> wrote:
+> diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+> @@ -97,10 +97,12 @@ instead.  `--no-symlinks` is the default on Windows.
+>  --[no-]gui::
+>         When 'git-difftool' is invoked with the `-g` or `--gui` option
+>         the default diff tool will be read from the configured
+> +       `diff.guitool` variable instead of `diff.tool`. This may be
+> +       autoselected using the configuration variable
+> +       `difftool.guiDefault`. The `--no-gui` option can be used to
+> +       override these settings. If `diff.guitool` is not set, we will
+> +       fallback in the order of `merge.guitool`, `diff.tool`,
+> +       `merge.tool` until a tool is found.
+
+Correct use of backticks here. Good.
+
+Probably want: s/autoselected/auto-selected/ or /.../selected automatically/
+
+> diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+> @@ -85,12 +85,13 @@ success of the resolution after the custom tool has exited.
+> +       configured under `merge.tool`. This may be autoselected using
+> +       the configuration variable `mergetool.guiDefault`.
+
+Ditto: "autoselected"
+
+>  --no-gui::
+> +       This overrides a previous `-g` or `--gui` setting or
+> +       `mergetool.guiDefault` configuration and reads the default merge
+> +       tool from the configured `merge.tool` variable.
+
+Backticks; good.
+
+> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+> @@ -97,7 +97,33 @@ merge_mode () {
+> +get_gui_default () {
+> +       if diff_mode
+> +       then
+> +               GUI_DEFAULT_KEY="difftool.guiDefault"
+> +       else
+> +               GUI_DEFAULT_KEY="mergetool.guiDefault"
+> +       fi
+> +       GUI_DEFAULT_CONFIG_LCASE=$(git config --default false --get $GUI_DEFAULT_KEY  | tr 'A-Z' 'a-z')
+
+Too many spaces before pipe symbol.
+
+Nit: It doesn't matter in this case, but you could safeguard against
+(possible?) future problems by using double-quotes in `--get
+"$GUI_DEFAULT_KEY"`.
+
+> +       if test "$GUI_DEFAULT_CONFIG_LCASE" = "auto"
+> +       then
+> +               if test -n "$DISPLAY"
+> +               then
+> +                       GUI_DEFAULT=true
+> +               else
+> +                       GUI_DEFAULT=false
+> +               fi
+> +       else
+> +               GUI_DEFAULT=$(git config --default false --bool --get $GUI_DEFAULT_KEY)
+
+Ditto: `--get "$GUI_DEFAULT_KEY"`
+
+> +       fi
+> +       echo $GUI_DEFAULT
+> +}
+> +
+>  gui_mode () {
+> +       if [ -z "$GIT_MERGETOOL_GUI" ]
+
+Style: if test -z "$GIT_MERGETOOL_GUI"
+
+> +       then
+> +               GIT_MERGETOOL_GUI=$(get_gui_default)
+> +       fi
+>         test "$GIT_MERGETOOL_GUI" = true
+>  }
 >
-> git diff --diff-filter=A --no-renames --name-only $OLDHASH $NEWHASH |
-> sed -e s%/[^/]*$%/% | uniq | xargs git ls-tree --name-only $NEWHASH |
-> \
->    sort | uniq -i -d
+> diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+> @@ -860,4 +860,43 @@ test_expect_success 'mergetool hideResolved' '
+> +test_expect_success 'mergetool with guiDefault' '
+> +       test_config mergetool.guiDefault true &&
+> +       yes "" | git mergetool subdir/file3 &&
+> +
+> +       yes "d" | git mergetool file11 &&
+> +       yes "d" | git mergetool file12 &&
+> +       yes "l" | git mergetool submod &&
+> +
+> +
+> +       echo "gui main updated" >expect &&
+> +       test_cmp expect file1 &&
 
-Or what Elijah just wrote
-
-> Coming at this from another angle, I guess we could teach git on
-> case-insensitive filesystems to detect this situation (where two files
-> in the index, with different contents, are pointing to the exact same
-> filesystem file) and more explicitly warn the user of what's wrong,
-> giving them clear help on how to fix it? And temporarily exclude those
-> two files from its change reconciliation processes altogether to avoid
-> ghost changes interfering with recovery actions like "pull"? Certainly
-> that would be better than the current "ghost changes" behavior... but
-> it would still be far less convenient than preventing (the vast
-> majority of) these issues altogether, be that with a custom hook or a
-> core option prohibiting clearly case-insensitive-duplicate files from
-> being pushed.
-
-That's not to say this isn't a good idea but for now I'd advice an
-automated scripted route.
+Accidental double-spacing?
