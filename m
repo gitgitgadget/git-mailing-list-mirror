@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35C8FC433FE
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 15:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C889C4332F
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 15:32:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231176AbiJNPcY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 11:32:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58750 "EHLO
+        id S230484AbiJNPc2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 11:32:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230484AbiJNPbn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 11:31:43 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 464EC1D52C8
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:31:37 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id bp11so8115919wrb.9
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:31:36 -0700 (PDT)
+        with ESMTP id S230495AbiJNPbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 11:31:46 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34BC281103
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:31:42 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id bp11so8116249wrb.9
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:31:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ol2ZmjzxwxF4VR7SkQQMjvXiqxpqml71A92pk7pG/Ww=;
-        b=WVnn14JaFt7jtnVanIJmcZpwDHg1GKy58kooRIYKGwJ5QbDerzIvPAJruURNUk5DeX
-         rNxSegCvgcZu/4egcQ5AOVI10rPL+6qvAaJtiI+hVaR6tI/UKGU9LslODBsy5jcUsdrN
-         mB5OxX/802VHwA72KlHS+w+qrnrynP/fxloro7RsGfUfrnG0mqSk7vEN7Pi1FYOu6/EO
-         JfUp7S1ZjOQo7edGzJ6+fVmk8KXgf1xGorIIMLu/2OJqpJfT4AkW0y2+eAXhVdBdzASg
-         rNfS71knnpLh4o4O2l70OPxSPpwYWQFPmaDxhQEBun5jJ15tdptPWKH3NNlnummfbtFo
-         Xfbg==
+        bh=Xe56/qlZnntAEt3Jsb5FEbGmYbsBNvTRubi0B8DX2p0=;
+        b=B38B6tboRIufuQFQKAmWXOScay9Qwlf84eVTCDVX7lbSwpLVELO5q6gzqtwGWAv1No
+         CtEdVPUGFFulrLwAS8dhCycnYW0YHOeMwmzqmVFMdCGQElLWMoIRo79kHnGczhRxFSTe
+         88zcnvqVeKKuN+IXFfXXVp8haLMzsFrmHpZNJCnvaCmvWC58OsbLxCBP8bF/FRDaiQz9
+         Kl+1N9RbQXojFTGlzYfcfIj9twVewDBnozg0+JqKPZH1jUaMyQFie5AsPZMDtDZhA4WJ
+         Rfe45ybdrV1/OlloKSdMOt0smwpiUshxO3F2M6RF6Q13cSenjv/62wvd3U9qF4BlIJWw
+         FbcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ol2ZmjzxwxF4VR7SkQQMjvXiqxpqml71A92pk7pG/Ww=;
-        b=3hRcl95rs1KdFRyNx+uhlEYzhULaa7bkDlAMkDCQ/nM6FdcUYX/7aLm3SVGYTeWP0w
-         RPi2qw4ELScKqprJaYhslzxaABzUnXtE6QNEhbqfqiz5YLXaF78zRp1LrZ9Qv9wAbr4a
-         U5q3nAIOq21IRD+6ein7yEMaXidTeAdlguYDolj3qwHSR1hBRBYvSCQclue/zeKL8RFi
-         +FWBq6a45uXi7QrgrnLbDlVL4+gE9VMKGG1vEcNGMIz5ASO5wiYHzPvh+X+H646cVVJe
-         L4YAG/9RF2OasYgmRKmek8hdgKiksBpea5P9Cv1t2ftvEJ5kmROoWagz3SQhKLo3MhGA
-         C+ow==
-X-Gm-Message-State: ACrzQf2J5hCexRw7Gs9dVW0MLb5se9e7zOesszaUqvNMwtH5n0gxOYUd
-        +XnzWgI2CjSXWcbF4F4EMm6fqpkjyNLgmg==
-X-Google-Smtp-Source: AMsMyM6csYGO/sCppHOhAl04mFBTTnhb7gcc23rBPeKVgZEA7UjaSH2vHjrsdgxQaQV0/vdsw1pQjQ==
-X-Received: by 2002:a05:6000:112:b0:22e:58ce:40d4 with SMTP id o18-20020a056000011200b0022e58ce40d4mr3807484wrx.193.1665761494962;
-        Fri, 14 Oct 2022 08:31:34 -0700 (PDT)
+        bh=Xe56/qlZnntAEt3Jsb5FEbGmYbsBNvTRubi0B8DX2p0=;
+        b=L3smHeEAiUrwB0AK9efn2DcMho5gx1AA/Oq2cwWHRvy6jBR71V5wV4C5Z2SoDcFHXu
+         fsMXD9kT+8W3AoPnolw0ZXEFmW0bl7l1npBbqToLccepHySGWy/OSBAye/MnSZpJo1Cy
+         efM3qKTnNwEkFl0nGeB7SQr/gACV7jrXdYfr5mn8gSvUiI3FM9wXteyPVs0loSO4KWxi
+         wf31QzreZg/F/Vp4MMKOWokhiHlNEiWK41dzhOf/CSFaKraoH09HLT7NqGtLd4isr7HG
+         DcTsPJbMW3+9X4amxA2YB0k4M6NMZb6qNqV7SxO8WwsH0fRn6HTY56IW96/nbuFqlNs4
+         /GHw==
+X-Gm-Message-State: ACrzQf0ufWGV8YgP/c8dHLGFk74nDabqycRecSF0dFF+fu3qx0u2CurR
+        ol8heFM+Bn2y8KoYckqo7qZIeXbvsMQcPA==
+X-Google-Smtp-Source: AMsMyM5+Xqh7PADTLie5OCZnkovrWASnZMDw8Hrm1X7zfBB08z1JqM158p+U0oeRUJmgIqNwdx24ow==
+X-Received: by 2002:a5d:64ab:0:b0:231:44c1:32b0 with SMTP id m11-20020a5d64ab000000b0023144c132b0mr3809419wrp.255.1665761499911;
+        Fri, 14 Oct 2022 08:31:39 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id dn7-20020a05600c654700b003b47ff307e1sm2219053wmb.31.2022.10.14.08.31.34
+        by smtp.gmail.com with ESMTPSA id dn7-20020a05600c654700b003b47ff307e1sm2219053wmb.31.2022.10.14.08.31.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Oct 2022 08:31:34 -0700 (PDT)
+        Fri, 14 Oct 2022 08:31:38 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 03/11] Makefile: add ability to TAB-complete cocci *.patch rules
-Date:   Fri, 14 Oct 2022 17:31:19 +0200
-Message-Id: <patch-v3-03.11-6dbfafa08fd-20221014T152552Z-avarab@gmail.com>
+Subject: [PATCH v3 07/11] cocci: split off "--all-includes" from SPATCH_FLAGS
+Date:   Fri, 14 Oct 2022 17:31:23 +0200
+Message-Id: <patch-v3-07.11-2ca5ea5beca-20221014T152553Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1092.g8c0298861b0
 In-Reply-To: <cover-v3-00.11-00000000000-20221014T152552Z-avarab@gmail.com>
 References: <cover-v2-0.9-00000000000-20220831T205130Z-avarab@gmail.com> <cover-v3-00.11-00000000000-20221014T152552Z-avarab@gmail.com>
@@ -69,57 +69,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Declare the contrib/coccinelle/<rule>.cocci.patch rules in such a way
-as to allow TAB-completion, and slightly optimize the Makefile by
-cutting down on the number of $(wildcard) in favor of defining
-"coccicheck" and "coccicheck-pending" in terms of the same
-incrementally filtered list.
+Per the rationale in 7b63ea57500 (Makefile: remove mandatory "spatch"
+arguments from SPATCH_FLAGS, 2022-07-05) we have certain flags that
+are truly mandatory, such as "--sp-file" and "--patch .". The
+"--all-includes" flag is also critical, but per [1] we might want to
+ad-hoc tweak it occasionally for testing or one-offs.
+
+But being unable to set e.g. SPATCH_FLAGS="--verbose-parsing" without
+breaking how our "spatch" works isn't ideal, i.e. before this we'd
+need to know about the default include flags, and specify:
+SPATCH_FLAGS="--all-includes --verbose-parsing".
+
+If we were then to change the default include flag (e.g. to
+"--recursive-includes") in the future any such one-off commands would
+need to be correspondingly updated.
+
+Let's instead leave the SPATCH_FLAGS for the user, while creating a
+new SPATCH_INCLUDE_FLAGS to allow for ad-hoc testing of the include
+strategy itself.
+
+1. https://lore.kernel.org/git/20220823095733.58685-1-szeder.dev@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ Makefile | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index f641adab2fd..4647f317ede 100644
+index 535dece5d48..f79697053bc 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -3136,9 +3136,20 @@ check: $(GENERATED_H)
- 		exit 1; \
- 	fi
+@@ -1299,7 +1299,8 @@ SANITIZE_LEAK =
+ SANITIZE_ADDRESS =
  
-+COCCI_GLOB = $(wildcard contrib/coccinelle/*.cocci)
-+COCCI_RULES = $(COCCI_GLOB)
-+
-+COCCICHECK_PENDING = $(filter %.pending.cocci,$(COCCI_RULES))
-+COCCICHECK = $(filter-out $(COCCICHECK_PENDING),$(COCCI_RULES))
-+
-+COCCICHECK_PATCHES = $(COCCICHECK:%=%.patch)
-+COCCICHECK_PATCHES_PENDING = $(COCCICHECK_PENDING:%=%.patch)
-+
- COCCI_TEST_RES = $(wildcard contrib/coccinelle/tests/*.res)
- 
--%.cocci.patch: %.cocci $(COCCI_SOURCES)
-+COCCI_PATCHES = $(COCCI_RULES:%=%.patch)
-+$(COCCI_PATCHES): $(COCCI_SOURCES)
-+$(COCCI_PATCHES): %.patch: %
- 	$(QUIET_SPATCH) \
- 	if test $(SPATCH_BATCH_SIZE) = 0; then \
- 		limit=; \
-@@ -3175,11 +3186,11 @@ $(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : contrib/coccinell
- coccicheck-test: $(COCCI_TEST_RES_GEN)
- 
- coccicheck: coccicheck-test
--coccicheck: $(addsuffix .patch,$(filter-out %.pending.cocci,$(wildcard contrib/coccinelle/*.cocci)))
-+coccicheck: $(COCCICHECK_PATCHES)
- 
- # See contrib/coccinelle/README
- coccicheck-pending: coccicheck-test
--coccicheck-pending: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.pending.cocci))
-+coccicheck-pending: $(COCCICHECK_PATCHES_PENDING)
- 
- .PHONY: coccicheck coccicheck-pending
- 
+ # For the 'coccicheck' target
+-SPATCH_FLAGS = --all-includes
++SPATCH_INCLUDE_FLAGS = --all-includes
++SPATCH_FLAGS =
+ SPATCH_TEST_FLAGS =
+ # Setting SPATCH_BATCH_SIZE higher will
+ # usually result in less CPU usage at the cost of higher peak memory.
+@@ -1309,6 +1310,7 @@ SPATCH_BATCH_SIZE = 1
+ # Rebuild 'coccicheck' if $(SPATCH), its flags etc. change
+ TRACK_SPATCH_DEFINES =
+ TRACK_SPATCH_DEFINES += $(SPATCH)
++TRACK_SPATCH_DEFINES += $(SPATCH_INCLUDE_FLAGS)
+ TRACK_SPATCH_DEFINES += $(SPATCH_FLAGS)
+ TRACK_SPATCH_DEFINES += $(SPATCH_TEST_FLAGS)
+ TRACK_SPATCH_DEFINES += $(SPATCH_BATCH_SIZE)
+@@ -3174,6 +3176,7 @@ $(COCCI_PATCHES): %.patch: %
+ 	fi; \
+ 	if ! echo $(COCCI_SOURCES) | xargs $$limit \
+ 		$(SPATCH) $(SPATCH_FLAGS) \
++		$(SPATCH_INCLUDE_FLAGS) \
+ 		--sp-file $< --patch . \
+ 		>$@+ 2>$@.log; \
+ 	then \
 -- 
 2.38.0.1092.g8c0298861b0
 
