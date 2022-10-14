@@ -2,199 +2,577 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C337C4332F
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 15:14:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C59B2C4332F
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 15:32:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230041AbiJNPOl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 11:14:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42340 "EHLO
+        id S229966AbiJNPcP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 11:32:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229615AbiJNPOh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 11:14:37 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF073EC
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:14:35 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id k2so11201451ejr.2
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:14:35 -0700 (PDT)
+        with ESMTP id S231161AbiJNPbi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 11:31:38 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40B7D1277F
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:31:33 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id bv10so8124816wrb.4
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:31:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pIQNKRMyPODe9a9thOvHNQVHXfP7SpSGYiJOKYC2GaU=;
-        b=dh+ZSpTJskYrS9G3t99NdiOAR5c1dcu7IPKOinmBHRj60GPijAw2DanGLTMj/7YYpo
-         zKW1lbp3OxAG8ZnUE9pdWbUVmDQCGI4uCl3lkTCXijxaV2zHx+tNBx0RHs+fE/Z+6+IB
-         VAI3/UsKuKCSS/hk8lZYOOUHskipHFEiWepE6FDInFZzVVzEEdlTWb7G4fQSZZzpnQTZ
-         l/flw6ScmM/UUYss//zKmQ5/lyEkwEctYhhu5XD5aYPYeDfNvWd0R9/8RbwdU0qF0GNy
-         pKG16Qwe8ZNNQ8PXippSWE6VMBIBixV5UhQQxAn9mnWge8kVsK6WfzD0R8r9D6FRaU0b
-         YU2w==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2CF/+nhihMlhICwAO+MQpeYlwCDFjJMrRLMe6njsufE=;
+        b=NhkwfivbHetbgiRyi0ci9vv/JbU6G7pW/8m8C6gTQfsNBjgUdOtkBL1QvIgVwvkmty
+         0Z+jB93/tA3hPPYzrZzF+DwkfqS2GpHFjMPstdY+6kupXVwS4P3D2Yd6ze7QDiujj+D+
+         659cQxT7t/GSKyvxXfB8nWnaVze/XEpmFaFedqAlB9a4NhuF0Q2rRQuMR9s3Xc8KkXt+
+         ab8a8Gst2AogFE+JWWWuQj11u2iTGATjx/D9gBPbfe0qY0Sz2Uj+RzJuhJgvYLKSChYm
+         cbhNidcbFbB3+6yu8aByStsXcZvvt86h9fE73FEJcQoBr3nzxN2lKy+OFE+VcvYmhgpr
+         gbVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pIQNKRMyPODe9a9thOvHNQVHXfP7SpSGYiJOKYC2GaU=;
-        b=7Mo2t4dYwfE31ckFbCR/5yORDh7iKwT47f7M+OHlQsxQ7XSPJlqzGHPpLaxRF1PHWX
-         zENFXg6x/HwJ6pKpOeQzt3zVxlTDp55l9+Rhcc1tJKsMe6lZpKk5RC3d+e65JdzWu+bG
-         3nnNzLt7E8KdWrwwFRCh36K3/DhAZdwSybQUjwYSfGdbNqZVMrP1AQ5zSiK3P37P2zJK
-         nb5FOwJn/9IxCjSgRxqmjs2OO5bHXN3sGqArFE6rrFQeEdh+i12mu6bEZWG8XDIdqlJJ
-         du2WT+kO3MH33WcFBl139kUz6P1/N84ZD/z/M0tgMVRfvEiz/tnVobfzTC4UqGBcoCL5
-         N/2g==
-X-Gm-Message-State: ACrzQf2ERXwC8xgtTYUvIMGdatWVu5ymZNLHf+xfgGMdIqnPf7mneSln
-        k65SisxRKkx+YgpLiXt3HlQ=
-X-Google-Smtp-Source: AMsMyM7AGI+H4isk6bJhHQe9p1EGTOEttkzB8rXgBmf3l/sTgsEQygvDIabMnqB5QB0gnTQkPagH7w==
-X-Received: by 2002:a17:907:1624:b0:78d:d61c:2b4a with SMTP id hb36-20020a170907162400b0078dd61c2b4amr3899723ejc.208.1665760474190;
-        Fri, 14 Oct 2022 08:14:34 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id n19-20020a170906701300b0078d25e0f74bsm1680579ejj.46.2022.10.14.08.14.32
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2CF/+nhihMlhICwAO+MQpeYlwCDFjJMrRLMe6njsufE=;
+        b=RumYJWNIJ0AVm2j2v3be8DPiE5rPugihqvcvs2DN/SCnGWjiMkUioznMogyN48U+Zg
+         Ayt6Qh3nnfLXeP1cWR0dtlqkrHgrXomSHeJn7ZH/FKUrMfAe+zmBSpVVXPK2H7efja/t
+         Fa3TjbmbT8lD9uAdWAh3HgL1V7YRchQN8/xR48Sm4skI/WUqF5+xPZLSZfe46k9MEb/f
+         iL+yt712OqL5c2OdYc/c9XdGbAQdqW7GL7F5xn5yN4SWyvRVSthMUp6udvtgt/9/JlEQ
+         JFJn20AuajrZZTMHdcMkpNB7EXO8SHava6v8Z/kdbsTTUtuAxJbkEQLLddicUGYUzEVE
+         3yew==
+X-Gm-Message-State: ACrzQf0X0R+5R7WgskcI9byxGrG8uIAWvKobey1xUzXM2lBaL1ADtUgX
+        lM3rfCyOqTFOrTN6chy0qULsPGKEr2OC5A==
+X-Google-Smtp-Source: AMsMyM4gkUSYmSgF/kUa3XF80pKUhxk+2IIqXYTzgln4pJlz4yquBlkjRlSD2obJ2DiExKnmY43+8g==
+X-Received: by 2002:a5d:6488:0:b0:22b:3b0b:5e72 with SMTP id o8-20020a5d6488000000b0022b3b0b5e72mr3890712wri.138.1665761490783;
+        Fri, 14 Oct 2022 08:31:30 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id dn7-20020a05600c654700b003b47ff307e1sm2219053wmb.31.2022.10.14.08.31.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Oct 2022 08:14:33 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ojMOO-0059sI-0X;
-        Fri, 14 Oct 2022 17:14:32 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 00/15] run-command API: pass functions & opts via struct
-Date:   Fri, 14 Oct 2022 16:50:41 +0200
-References: <cover-v2-00.22-00000000000-20221012T084850Z-avarab@gmail.com>
- <cover-v3-00.15-00000000000-20221012T205712Z-avarab@gmail.com>
- <06bc6ffe-3f64-481e-5c54-156a39865e25@dunelm.org.uk>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <06bc6ffe-3f64-481e-5c54-156a39865e25@dunelm.org.uk>
-Message-ID: <221014.86y1tijv3b.gmgdl@evledraar.gmail.com>
+        Fri, 14 Oct 2022 08:31:30 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 00/11] cocci: make "incremental" possible + a ccache-like tool
+Date:   Fri, 14 Oct 2022 17:31:16 +0200
+Message-Id: <cover-v3-00.11-00000000000-20221014T152552Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.38.0.1092.g8c0298861b0
+In-Reply-To: <cover-v2-0.9-00000000000-20220831T205130Z-avarab@gmail.com>
+References: <cover-v2-0.9-00000000000-20220831T205130Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+A re-roll of the series to have "make coccicheck" run
+incrementally. For the v1 see:
+https://lore.kernel.org/git/cover-0.5-00000000000-20220825T141212Z-avarab@gmail.com/
 
-On Fri, Oct 14 2022, Phillip Wood wrote:
+The big change in this belated v3 is that we now run against a
+concatenated version of all our *.cocci files. This is something I
+discussed with Jeff King at Git Merge, after having confirmed the
+viability of that approach on the cocci mailing list.
 
-> Hi =C3=86var
+The result is that even with a from-scratch run of "make coccicheck"
+this is faster than on "master", while of course adding the ability to
+run incrementally, so a subsequent "coccicheck" is only run against
+what we'd recompile.
 
-Hi, thanks for taking a look again.
+The churn here is because I had to move/change some variables around
+early in the series to make the eventual 08/11 smaller.
 
-> On 12/10/2022 22:02, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> For a general overview see the v2 CL:
->> https://lore.kernel.org/git/cover-v2-00.22-00000000000-20221012T084850Z-=
-avarab@gmail.com/
->> Changes since v2:
->>   * Ejected various not-to-the-point of converting to the "opts
->> struct"
->>     per feedback about attempting to make this leaner.
->
-> We're back to the same number of patches as v1 but you've removed
-> three test cleanups and squashed three patches together which means
-> there are five new patches in this version - what are they doing?
+There's also improvements here to the bundled "spatchcache", it can
+now optionally interoperate with non--very-quiet output (but won't
+cache stderr), which is handy for debugging it. It can also be
+configured to tell it where the .depend/* files are, which is a small
+change to make it posible to use it outside of git.git..
 
-There's nothing *new* in this version, but per the range-diff of v2 some
-of the new ones in that version were kept here. I think that's what
-you're taling about.
+Ævar Arnfjörð Bjarmason (11):
+  Makefile + shared.mak: rename and indent $(QUIET_SPATCH_T)
+  cocci rules: remove unused "F" metavariable from pending rule
+  Makefile: add ability to TAB-complete cocci *.patch rules
+  Makefile: have "coccicheck" re-run if flags change
+  Makefile: split off SPATCH_BATCH_SIZE comment from "cocci" heading
+  cocci: split off include-less "tests" from SPATCH_FLAGS
+  cocci: split off "--all-includes" from SPATCH_FLAGS
+  cocci: make "coccicheck" rule incremental
+  cocci: optimistically use COMPUTE_HEADER_DEPENDENCIES
+  cocci: run against a generated ALL.cocci
+  spatchcache: add a ccache-alike for "spatch"
 
-Mainly it's the 'Only the "ungroup" was here in v1[...]' part of the v2
-CL:
+ .gitignore                                    |   1 +
+ Makefile                                      | 159 ++++++++--
+ contrib/coccinelle/.gitignore                 |   1 +
+ contrib/coccinelle/spatchcache                | 272 ++++++++++++++++++
+ .../coccinelle/the_repository.pending.cocci   |   1 -
+ shared.mak                                    |  10 +-
+ 6 files changed, 416 insertions(+), 28 deletions(-)
+ create mode 100755 contrib/coccinelle/spatchcache
 
-1. https://lore.kernel.org/git/cover-v2-00.22-00000000000-20221012T084850Z-=
-avarab@gmail.com/
-
->>   * I kept the size_t change & the online_cpus() fallback, and updated
->>     a commit message for the latter. For "int" v.s. "size_t" once we're
->>     not handling "-1" to mean "use the default" it makes sense to be
->>     unsigned, and if we're re-doing that at this point we'd need
->>     rewrites for "!processes" assumptions.
->
-> I left some comments about this, I think the size_t change is taking
-> us in the wrong direction as it is introducing a number of new
-> implicit signed->unsigned conversions. I'm still not sure why you need
-> the online_cups() changes c.f.=20
-> https://lore.kernel.org/git/8f95fbdb-b211-56af-8693-0e5a84afebac@gmail.co=
-m/
-> which has never had a reply
-
-Sorry about the non-reply there, between that & later discussion I tried
-to address that in the "Keeping this default behavior just for[...]"
-commit message update in this v3 (see range-diff).
-
-But no, those changes are not strictly needed. But it's a trade-off I
-decided to take.
-
-In the v1 (linked above) you pointed out that we could simply copy this
-field to the "struct pp" (a shorthand for "struct parallel_processes", I
-assume).
-
-That's true, but for maintaining & understanding this API I think it's
-much easier to reason about it when all of our user options are "const",
-and we don't second guess any of those, and the "struct
-parallel_processes"
-
-For the v1 I can see what that was easy to miss, as we still kept the
-copy of the number of processes in the "struct parallel_processes". In
-the v2 and this v3 we get to the point where we can remove that, and
-"ungroup", the copies of the callbacks etc.
-
-So, leaving out the "provide a default" seemed worth it in the end, it's
-just 4 additional lines in the callers per the 05/15 (most of them had
-those already).
-
-You also had a related concern in 04/05 (which I'm taking the liberty of
-replying ot here):
-
-	https://lore.kernel.org/git/a7463bc5-9a92-8f0f-c0ee-e72fbbeedc09@dunelm.or=
-g.uk/
-
-So, first I disagree with it "going in the wrong direction". We've been
-converting more things to size_t. For e.g. an "int nr_processes" we can
-expect that we'll want to e.g. have a corresponding "struct string_list"
-whose "nr" is a "size_t" (or similar aggregate types).
-
-By mixing the two we're mixing types forever with associated warnings (&
-suppressions). We've been changing these sort of things to a "size_t"
-elsewhere, e.g. dd38e9e510c (trace2: use size_t alloc,nr_open_regions in
-tr2tls_thread_ctx, 2022-10-12) is one recent example..
-
-But yes, we do incur warnings under DEVOPTS=3Dextra-all now because things
-outside of the API are still "int" in some cases, just as we do with
-e.g. "struct string_list" and its users.
-
-As to your:
-
-	Before this patch we could have caught a negative value of n
-	with an assertion. After this patch a negative value passed will
-	become a large positive value (you have audited the current
-	callers but that does not protect us from future mistakes).
-
-I that's a good point. In this case I thought the likelihood that anyone
-would accidentally pass ".processes =3D -1" or whatever wasn't worth
-worrying about. If you think it's worth worrying about I think that
-concern would be easily addressed e.g. with:
-
-	if (n =3D=3D SIZE_MAX)
-        	BUG("overflow?");
-
-Or whatever.
-
-A much likelier edge case IMO is that you'd have some pattern where you
-init a "processes" with "{ 0 }" or whatever, so it's zero, and then we'd
-interpret that zero as online_cpus(), which e.g. for the in-flight
-paralellizing of certain "git submodule" operations is probably too high
-a number.
-
-Since we don't interpret !n or n < 1 as online_cpus() anymore we can
-BUG() out on it, which I think is an improvement. The 4 lines of
-additions to the relevant callers to call online_cpus() themselves are
-better than having those or a new caller potentially have this DWYMery
-from the low-level API.
-
->>   * Squashed the multi-step introduction of the "opts" struct, per
->>     Phillip's suggestion.
-> That's most welcome, thanks
-
-Glad you like it!
+Range-diff against v2:
+ -:  ----------- >  1:  4494c91df9a Makefile + shared.mak: rename and indent $(QUIET_SPATCH_T)
+ 1:  72b6a8e4e0b =  2:  8219b1b12f2 cocci rules: remove unused "F" metavariable from pending rule
+ 2:  0998948b881 !  3:  6dbfafa08fd Makefile: add ability to TAB-complete cocci *.patch rules
+    @@ Makefile: check: $(GENERATED_H)
+      		exit 1; \
+      	fi
+      
+    -+COCCI = $(wildcard contrib/coccinelle/*.cocci)
+    -+COCCI_PATCHES = $(addsuffix .patch,$(COCCI))
+    -+COCCICHECK_PENDING = $(filter %.pending.cocci.patch,$(COCCI_PATCHES))
+    -+COCCICHECK = $(filter-out $(COCCICHECK_PENDING),$(COCCI_PATCHES))
+    ++COCCI_GLOB = $(wildcard contrib/coccinelle/*.cocci)
+    ++COCCI_RULES = $(COCCI_GLOB)
+    ++
+    ++COCCICHECK_PENDING = $(filter %.pending.cocci,$(COCCI_RULES))
+    ++COCCICHECK = $(filter-out $(COCCICHECK_PENDING),$(COCCI_RULES))
+    ++
+    ++COCCICHECK_PATCHES = $(COCCICHECK:%=%.patch)
+    ++COCCICHECK_PATCHES_PENDING = $(COCCICHECK_PENDING:%=%.patch)
+     +
+      COCCI_TEST_RES = $(wildcard contrib/coccinelle/tests/*.res)
+      
+     -%.cocci.patch: %.cocci $(COCCI_SOURCES)
+    ++COCCI_PATCHES = $(COCCI_RULES:%=%.patch)
+     +$(COCCI_PATCHES): $(COCCI_SOURCES)
+     +$(COCCI_PATCHES): %.patch: %
+      	$(QUIET_SPATCH) \
+    @@ Makefile: $(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : contrib
+      
+      coccicheck: coccicheck-test
+     -coccicheck: $(addsuffix .patch,$(filter-out %.pending.cocci,$(wildcard contrib/coccinelle/*.cocci)))
+    -+coccicheck: $(COCCICHECK)
+    ++coccicheck: $(COCCICHECK_PATCHES)
+      
+      # See contrib/coccinelle/README
+      coccicheck-pending: coccicheck-test
+     -coccicheck-pending: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.pending.cocci))
+    -+coccicheck-pending: $(COCCICHECK_PENDING)
+    ++coccicheck-pending: $(COCCICHECK_PATCHES_PENDING)
+      
+      .PHONY: coccicheck coccicheck-pending
+      
+    -@@ Makefile: profile-clean:
+    - 
+    - cocciclean:
+    - 	$(RM) -r .build/contrib/coccinelle
+    --	$(RM) contrib/coccinelle/*.cocci.patch*
+    -+	$(RM) $(COCCI_PATCHES)*
+    - 
+    - clean: profile-clean coverage-clean cocciclean
+    - 	$(RM) -r .build
+ 3:  63cf9f58d99 !  4:  f779a2d22aa Makefile: have "coccicheck" re-run if flags change
+    @@ Makefile: SANITIZE_ADDRESS =
+      include config.mak.uname
+      -include config.mak.autogen
+      -include config.mak
+    -@@ Makefile: COCCICHECK = $(filter-out $(COCCICHECK_PENDING),$(COCCI_PATCHES))
+    - 
+    +@@ Makefile: COCCICHECK_PATCHES_PENDING = $(COCCICHECK_PENDING:%=%.patch)
+      COCCI_TEST_RES = $(wildcard contrib/coccinelle/tests/*.res)
+      
+    + COCCI_PATCHES = $(COCCI_RULES:%=%.patch)
+     +$(COCCI_PATCHES): GIT-SPATCH-DEFINES
+      $(COCCI_PATCHES): $(COCCI_SOURCES)
+      $(COCCI_PATCHES): %.patch: %
+    @@ Makefile: $(COCCI_PATCHES): %.patch: %
+      $(COCCI_TEST_RES_GEN): .build/%.res : %.c
+      $(COCCI_TEST_RES_GEN): .build/%.res : %.res
+      $(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : contrib/coccinelle/%.cocci
+    +@@ Makefile: profile-clean:
+    + 	$(RM) $(addsuffix *.gcno,$(addprefix $(PROFILE_DIR)/, $(object_dirs)))
+    + 
+    + cocciclean:
+    ++	$(RM) GIT-SPATCH-DEFINES
+    + 	$(RM) -r .build/contrib/coccinelle
+    + 	$(RM) contrib/coccinelle/*.cocci.patch*
+    + 
+ 4:  54d6bae3984 =  5:  ab25b586f38 Makefile: split off SPATCH_BATCH_SIZE comment from "cocci" heading
+ 5:  4f165bf6128 !  6:  691be73b6fb cocci: split off include-less "tests" from SPATCH_FLAGS
+    @@ Makefile: $(COCCI_TEST_RES_GEN): .build/%.res : %.c
+      $(COCCI_TEST_RES_GEN): .build/%.res : %.res
+      $(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : contrib/coccinelle/%.cocci
+      	$(call mkdir_p_parent_template)
+    --	$(QUIET_SPATCH_T)$(SPATCH) $(SPATCH_FLAGS) \
+    -+	$(QUIET_SPATCH_T)$(SPATCH) $(SPATCH_TEST_FLAGS) \
+    +-	$(QUIET_SPATCH_TEST)$(SPATCH) $(SPATCH_FLAGS) \
+    ++	$(QUIET_SPATCH_TEST)$(SPATCH) $(SPATCH_TEST_FLAGS) \
+      		--very-quiet --no-show-diff \
+      		--sp-file $< -o $@ \
+      		$(@:.build/%.res=%.c) && \
+ 6:  c74d09f4825 =  7:  2ca5ea5beca cocci: split off "--all-includes" from SPATCH_FLAGS
+ 7:  120607b5da6 !  8:  2072a508064 cocci: make "coccicheck" rule incremental
+    @@ Commit message
+     
+            This could be mitigated by combining "make -jN" with
+            SPATCH_BATCH_SIZE, see 960154b9c17 (coccicheck: optionally batch
+    -       spatch invocations, 2019-05-06). But doing so required careful
+    -       juggling, as e.g. setting both to 4 would yield 16 workers.
+    +       spatch invocations, 2019-05-06).
+     
+            There will be cases where getting rid of "SPATCH_BATCH_SIZE" makes
+            things worse, but a from-scratch "make coccicheck" with the default
+    @@ Commit message
+            setting that makes sense when doing a non-incremental run of "make
+            coccicheck".
+     
+    +     * Before the "make coccicheck" rule would have to clean
+    +       "contrib/coccinelle/*.cocci.patch*", since we'd create "*+" and
+    +       "*.log" files there. Now those are created in
+    +       .build/contrib/coccinelle/, which is covered by the "cocciclean" rule
+    +       already.
+    +
+         Outstanding issues & future work:
+     
+          * We could get rid of "--all-includes" in favor of manually
+    @@ Makefile: TRACK_SPATCH_DEFINES += $(SPATCH)
+      	@FLAGS='$(TRACK_SPATCH_DEFINES)'; \
+      	    if test x"$$FLAGS" != x"`cat GIT-SPATCH-DEFINES 2>/dev/null`" ; then \
+     @@ Makefile: check: $(GENERATED_H)
+    - 		exit 1; \
+    - 	fi
+      
+    + COCCI_GLOB = $(wildcard contrib/coccinelle/*.cocci)
+    + COCCI_RULES = $(COCCI_GLOB)
+    ++COCCI_NAMES = $(COCCI_RULES:contrib/coccinelle/%.cocci=%)
+    + 
+    + COCCICHECK_PENDING = $(filter %.pending.cocci,$(COCCI_RULES))
+    ++COCCICHECK_PATCHES_PENDING = $(COCCICHECK_PENDING:%=%.patch)
+    + COCCICHECK = $(filter-out $(COCCICHECK_PENDING),$(COCCI_RULES))
+    ++COCCICHECK_PATCHES = $(COCCICHECK:%=%.patch)
+    ++
+     +# It's expensive to compute the many=many rules below, only eval them
+     +# on $(MAKECMDGOALS) that match these $(COCCI_RULES)
+    -+COCCI_RULES =
+    -+COCCI_RULES += cocci%
+    -+COCCI_RULES += contrib/coccinelle/%
+    -+COCCI_RULES += .build/contrib/coccinelle/%
+    -+
+    - COCCI = $(wildcard contrib/coccinelle/*.cocci)
+    -+COCCI_NAMES = $(COCCI:contrib/coccinelle/%.cocci=%)
+    - COCCI_PATCHES = $(addsuffix .patch,$(COCCI))
+    - COCCICHECK_PENDING = $(filter %.pending.cocci.patch,$(COCCI_PATCHES))
+    --COCCICHECK = $(filter-out $(COCCICHECK_PENDING),$(COCCI_PATCHES))
+    ++COCCI_RULES_GLOB =
+    ++COCCI_RULES_GLOB += cocci%
+    ++COCCI_RULES_GLOB += .build/contrib/coccinelle/%
+    ++COCCI_RULES_GLOB += $(COCCICHECK_PATCHES)
+    ++COCCI_RULES_GLOB += $(COCCICHEC_PATCHES_PENDING)
+    ++COCCI_GOALS = $(filter $(COCCI_RULES_GLOB),$(MAKECMDGOALS))
+    + 
+    + COCCICHECK_PATCHES = $(COCCICHECK:%=%.patch)
+    + COCCICHECK_PATCHES_PENDING = $(COCCICHECK_PENDING:%=%.patch)
+      
+    -+COCCICHECK = $(filter-out $(COCCICHECK_PENDING),$(COCCI_PATCHES))
+      COCCI_TEST_RES = $(wildcard contrib/coccinelle/tests/*.res)
+      
+    +-COCCI_PATCHES = $(COCCI_RULES:%=%.patch)
+     -$(COCCI_PATCHES): GIT-SPATCH-DEFINES
+     -$(COCCI_PATCHES): $(COCCI_SOURCES)
+     -$(COCCI_PATCHES): %.patch: %
+    @@ Makefile: check: $(GENERATED_H)
+     +	fi
+     +endef
+     +
+    -+define cocci-matrix-2
+    ++define cocci-matrix
+     +
+    -+$(foreach s,$(COCCI_SOURCES),$(call cocci-rule,$(c),$(s)))
+    -+endef
+    -+define cocci-matrix-1
+    -+$(foreach c,$(COCCI),$(call cocci-matrix-2,$(c)))
+    ++$(foreach s,$(COCCI_SOURCES),$(call cocci-rule,$(1),$(s)))
+     +endef
+     +
+    -+ifneq ($(filter $(COCCI_RULES),$(MAKECMDGOALS)),)
+    -+$(eval $(call cocci-matrix-1))
+    ++ifdef COCCI_GOALS
+    ++$(eval $(foreach c,$(COCCI_RULES),$(call cocci-matrix,$(c))))
+     +endif
+     +
+     +define spatch-rule
+     +
+     +contrib/coccinelle/$(1).cocci.patch: $$(COCCI_$(1))
+    -+	$(QUIET_SPATCH_M)cat $$^ >$$@ && \
+    ++	$(QUIET_SPATCH_CAT_TMPL)cat $$^ >$$@ && \
+     +	if test -s $$@; \
+      	then \
+     -		echo '    ' SPATCH result: $@; \
+    @@ Makefile: check: $(GENERATED_H)
+      	fi
+     +endef
+     +
+    -+ifneq ($(filter $(COCCI_RULES),$(MAKECMDGOALS)),)
+    ++ifdef COCCI_GOALS
+     +$(eval $(foreach n,$(COCCI_NAMES),$(call spatch-rule,$(n))))
+     +endif
+      
+      COCCI_TEST_RES_GEN = $(addprefix .build/,$(COCCI_TEST_RES))
+      $(COCCI_TEST_RES_GEN): GIT-SPATCH-DEFINES
+     @@ Makefile: profile-clean:
+    - 
+      cocciclean:
+    + 	$(RM) GIT-SPATCH-DEFINES
+      	$(RM) -r .build/contrib/coccinelle
+    --	$(RM) $(COCCI_PATCHES)*
+    -+	$(RM) $(COCCI_PATCHES)
+    +-	$(RM) contrib/coccinelle/*.cocci.patch*
+    ++	$(RM) $(COCCICHECK_PATCHES)
+    ++	$(RM) $(COCCICHECK_PATCHES_PENDING)
+      
+      clean: profile-clean coverage-clean cocciclean
+      	$(RM) -r .build
+     
+      ## shared.mak ##
+     @@ shared.mak: ifndef V
+    - 	QUIET_SP       = @echo '   ' SP $<;
+    - 	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
+      	QUIET_RC       = @echo '   ' RC $@;
+    --	QUIET_SPATCH   = @echo '   ' SPATCH $<;
+    -+	QUIET_SPATCH   = @echo '   ' SPATCH $@;
+    - 	QUIET_SPATCH_T = @echo '   ' SPATCH TEST $(@:.build/%=%);
+    -+	QUIET_SPATCH_M = @echo '   ' SPATCH MERGE $$@;
+      
+    + ## Used in "Makefile": SPATCH
+    +-	QUIET_SPATCH			= @echo '   ' SPATCH $<;
+    ++	QUIET_SPATCH			= @echo '   ' SPATCH $@;
+    + 	QUIET_SPATCH_TEST		= @echo '   ' SPATCH TEST $(@:.build/%=%);
+    + 
+    ++## Used in "Makefile": SPATCH_*TMPL (quoted for use in "define"'s)
+    ++	QUIET_SPATCH_CAT_TMPL		= @echo '   ' SPATCH CAT $$$$^ \>$$@;
+    ++
+      ## Used in "Documentation/Makefile"
+      	QUIET_ASCIIDOC	= @echo '   ' ASCIIDOC $@;
+    + 	QUIET_XMLTO	= @echo '   ' XMLTO $@;
+ 8:  536dce45eef !  9:  739652eada9 cocci: optimistically use COMPUTE_HEADER_DEPENDENCIES
+    @@ Commit message
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Makefile ##
+    +@@ Makefile: SPATCH_INCLUDE_FLAGS = --all-includes
+    + SPATCH_FLAGS =
+    + SPATCH_TEST_FLAGS =
+    + 
+    ++# If *.o files are present, have "coccicheck" depend on them, with
+    ++# COMPUTE_HEADER_DEPENDENCIES this will speed up the common-case of
+    ++# only needing to re-generate coccicheck results for the users of a
+    ++# given API if it's changed, and not all files in the project. If
+    ++# COMPUTE_HEADER_DEPENDENCIES=no this will be unset too.
+    ++SPATCH_USE_O_DEPENDENCIES = YesPlease
+    ++
+    + # Rebuild 'coccicheck' if $(SPATCH), its flags etc. change
+    + TRACK_SPATCH_DEFINES =
+    + TRACK_SPATCH_DEFINES += $(SPATCH)
+     @@ Makefile: COCCI_TEST_RES = $(wildcard contrib/coccinelle/tests/*.res)
+      	$(call mkdir_p_parent_template)
+      	$(QUIET_GEN) >$@
+      
+    -+SPATCH_USE_O_DEPENDENCIES = yes
+     +ifeq ($(COMPUTE_HEADER_DEPENDENCIES),no)
+     +SPATCH_USE_O_DEPENDENCIES =
+     +endif
+    -+
+      define cocci-rule
+      
+      ## Rule for .build/$(1).patch/$(2); Params:
+    @@ Makefile: COCCI_TEST_RES = $(wildcard contrib/coccinelle/tests/*.res)
+      	$$(call mkdir_p_parent_template)
+     @@ Makefile: endef
+      
+    - define cocci-matrix-2
+    + define cocci-matrix
+      
+    --$(foreach s,$(COCCI_SOURCES),$(call cocci-rule,$(c),$(s)))
+    +-$(foreach s,$(COCCI_SOURCES),$(call cocci-rule,$(1),$(s)))
+     +$(foreach s,$(COCCI_SOURCES),$(call cocci-rule,$(c),$(s),$(s:%.c=%.o)))
+      endef
+    - define cocci-matrix-1
+    - $(foreach c,$(COCCI),$(call cocci-matrix-2,$(c)))
+    + 
+    + ifdef COCCI_GOALS
+ -:  ----------- > 10:  52177ea2a68 cocci: run against a generated ALL.cocci
+ 9:  2b978676a56 ! 11:  f7ca3f9c9af spatchcache: add a ccache-alike for "spatch"
+    @@ contrib/coccinelle/spatchcache (new)
+     +#
+     +# Note that the "--very-quiet" flag is currently critical. The cache
+     +# will refuse to cache anything that has output on STDERR (which might
+    -+# be errors from spatch). The STDERR (and exit code) could in
+    -+# principle be cached (as with ccache), but then the simple structure
+    -+# in the Redis cache would need to change, so just supply
+    -+# "--very-quiet" for now.
+    ++# be errors from spatch), but see spatchCache.cacheWhenStderr below.
+    ++#
+    ++# The STDERR (and exit code) could in principle be cached (as with
+    ++# ccache), but then the simple structure in the Redis cache would need
+    ++# to change, so just supply "--very-quiet" for now.
+     +#
+     +# To use this, simply set SPATCH to
+     +# contrib/coccinelle/spatchcache. Then optionally set:
+    @@ contrib/coccinelle/spatchcache (new)
+     +#
+     +# As well as this trace config (debug implies trace):
+     +#
+    ++#		cacheWhenStderr = true
+     +#		trace = false
+     +#		debug = false
+     +#
+    ++# The ".depend/grep.o.d" can also be customized, as a string that will
+    ++# be eval'd, it has access to a "$dirname" and "$basename":
+    ++#
+    ++#	[spatchCache]
+    ++#		dependFormat = "$dirname/.depend/${basename%.c}.o.d"
+    ++#
+     +# Setting "trace" to "true" allows for seeing when we have a cache HIT
+     +# or MISS. To debug whether the cache is working do that, and run e.g.:
+     +#
+    @@ contrib/coccinelle/spatchcache (new)
+     +#
+     +# A subsequent "make cocciclean && make coccicheck" should then have
+     +# all "HIT"'s and "CANTCACHE"'s.
+    ++#
+    ++# The "spatchCache.cacheWhenStderr" option is critical when using
+    ++# spatchCache.{trace,debug} to debug whether something is set in the
+    ++# cache, as we'll write to the spatch logs in .build/* we'd otherwise
+    ++# always emit a NOCACHE.
+     +
+     +set -e
+     +
+    @@ contrib/coccinelle/spatchcache (new)
+     +	trace=true
+     +fi
+     +
+    ++cacheWhenStderr=$(git config --bool "spatchCache.cacheWhenStderr")
+    ++if test "$cacheWhenStderr" != "true"
+    ++then
+    ++	cacheWhenStderr=
+    ++fi
+    ++
+     +trace_it () {
+     +	if test -z "$trace"
+     +	then
+    @@ contrib/coccinelle/spatchcache (new)
+     +	spatch=spatch
+     +fi
+     +
+    ++dependFormat='$dirname/.depend/${basename%.c}.o.d'
+    ++dependFormatCfg=$(git config "spatchCache.dependFormat" || :)
+    ++if test -n "$dependFormatCfg"
+    ++then
+    ++	dependFormat="$dependFormatCfg"
+    ++fi
+    ++
+     +set=$(git config spatchCache.setCmd || :)
+     +get=$(git config spatchCache.getCmd || :)
+     +
+    @@ contrib/coccinelle/spatchcache (new)
+     +
+     +hash_for_cache() {
+     +	# Parameters that should affect the cache
+    -+	echo "spatch=$spatch"
+     +	echo "args=$args"
+    ++	echo "config spatchCache.spatch=$spatch"
+    ++	echo "config spatchCache.debug=$debug"
+    ++	echo "config spatchCache.trace=$trace"
+    ++	echo "config spatchCache.cacheWhenStderr=$cacheWhenStderr"
+     +	echo
+     +
+     +	# Our target file and its dependencies
+    @@ contrib/coccinelle/spatchcache (new)
+     +fi
+     +
+     +# Main logic
+    -+d=$(dirname "$arg_file")
+    -+b=$(basename "$arg_file")
+    -+bwoext="${b%.c}"
+    -+dep="$d/.depend/$bwoext.o.d"
+    ++dirname=$(dirname "$arg_file")
+    ++basename=$(basename "$arg_file")
+    ++eval "dep=$dependFormat"
+     +
+     +if ! test -f "$dep"
+     +then
+    @@ contrib/coccinelle/spatchcache (new)
+     +err="$(mktemp)"
+     +
+     +set +e
+    -+"$spatch" "$@" >"$out" 2>"$err"
+    ++"$spatch" "$@" >"$out" 2>>"$err"
+     +ret=$?
+    ++cat "$out"
+    ++cat "$err" >&2
+     +set -e
+     +
+    -+if test $ret = 0 && ! test -s "$out" && ! test  -s "$err"
+    ++nocache=
+    ++if test $ret != 0
+    ++then
+    ++	nocache="exited non-zero: $ret"
+    ++elif test -s "$out"
+    ++then
+    ++	nocache="had patch output"
+    ++elif test -z "$cacheWhenStderr" && test -s "$err"
+    ++then
+    ++	nocache="had stderr (use --very-quiet or spatchCache.cacheWhenStderr=true?)"
+    ++fi
+    ++
+    ++if test -n "$nocache"
+     +then
+    -+	rm -f "$out" "$err"
+    ++	trace_it "$0: NOCACHE ($nocache): for '$arg_file' with '$arg_sp'"
+    ++	exit "$ret"
+    ++fi
+     +
+    -+	trace_it "$0: SET: for '$arg_file' with '$arg_sp'"
+    ++trace_it "$0: SET: for '$arg_file' with '$arg_sp'"
+     +
+    -+	setret=
+    -+	if test -z "$set"
+    ++setret=
+    ++if test -z "$set"
+    ++then
+    ++	if test $(redis-cli SADD spatch-cache "$sum") = 1
+     +	then
+    -+		if test $(redis-cli SADD spatch-cache "$sum") = 1
+    -+		then
+    -+			setret=0
+    -+		else
+    -+			setret=1
+    -+		fi
+    ++		setret=0
+     +	else
+    -+		"$set" "$sum"
+    -+		setret=$?
+    -+	fi
+    -+
+    -+	if test "$setret" != 0
+    -+	then
+    -+		echo "FAILED to set '$sum' in cache!" >&2
+    -+		exit 128
+    ++		setret=1
+     +	fi
+     +else
+    -+	trace_it "$0: NOCACHE (have changes): for '$arg_file' with '$arg_sp'"
+    -+	cat "$out"
+    -+	cat "$err" >&2
+    -+	rm -f "$out" "$err"
+    -+	exit "$ret"
+    ++	"$set" "$sum"
+    ++	setret=$?
+     +fi
+    -+rm -f "$out" "$err"
+    ++
+    ++if test "$setret" != 0
+    ++then
+    ++	echo "FAILED to set '$sum' in cache!" >&2
+    ++	exit 128
+    ++fi
+    ++
+    ++exit "$ret"
+-- 
+2.38.0.1092.g8c0298861b0
 
