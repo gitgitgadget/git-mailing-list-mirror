@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E53B6C433FE
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 22:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00831C433FE
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 22:55:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229732AbiJNWeS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 18:34:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44624 "EHLO
+        id S229617AbiJNWzh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 18:55:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229744AbiJNWeR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 18:34:17 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 973B51D0D4A
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 15:34:16 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-360871745b0so59025557b3.3
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 15:34:16 -0700 (PDT)
+        with ESMTP id S229471AbiJNWze (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 18:55:34 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A54E94457D
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 15:55:33 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-3573ed7cc15so59478657b3.1
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 15:55:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skydio.com; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yAQuVeWcmUOCQlfE7NWEAijNuPovuj2qWjuy2VkbFaU=;
-        b=ijqXkRP4Ar9DTamSra28xRc1zMagMniHbdfdNqX/ul3+RuYKc/80SuwIvMv5Jk2sLE
-         hId/uaGEmBeD63CoPAry7A1Nb4jC+9ZfACibJC1lhxblLOzb7/f7hGXX1x1086IwSFpc
-         WSC1qLyQJuAY/iX9RyGrcMCwvjBR3DfzxwKRXXDfEtWWl8Ok8RpakwFQXdthsisp4HUh
-         mAP4rLRtl0QGKCIEPBWw5fk0t9NbZBd/CHAcf5AJKc06PMgdgCtoipOfN2gTBMof0G/v
-         L+0RtqizEcHfB+qfnM2p8Pn7N+HwnfN9WBxlr28pLYZ3qTUdbHxf6akHJV9B9EsMIXJt
-         tf7w==
+        bh=bpXAmlU17PiqNCQLd2KjeOuuJQo2E3u5FzdtEVKBrgk=;
+        b=IH3tptUJPKjE6Fh7V6U1eJrFZ6eK/LJJP6YEwWd2a961mGdtk4dxnmxw/NnpGUNolc
+         GxzOF/OI0+KGb6SNnwSCcKxfMdNPC7QYa9Uchmmhk2HbaLBcK75ab9iE5muOwuWJLEMD
+         xzYs6DSdf9PhN1MvRMElurU1vGVjj0RRPvsJAVkXuvFtjxQEaHO3WEntCdZMRpGDtEwx
+         NejF9P3oddZxJqsxArSV87uRaCFUP+JYhW4BSSFv5jLskg6zvHwqkqR6K19L27C2Dx1V
+         7KLkZNwlFYarT4aBo/fXwwVxePRAhAIa8PPnKP3mVMIvVjqALnSNZfMKynhnv8Gmn2+G
+         v6pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yAQuVeWcmUOCQlfE7NWEAijNuPovuj2qWjuy2VkbFaU=;
-        b=lWp/6UnTrRM/DWEtZ9GlLcpmxnt7XFWw87XJo+cgWL7qFs2ulDjUIkPYypjvg7+BfR
-         V9QAgny1RzOv7WrPsp1EV//W6kokUrmxVjO5/VBYBio/MohtgxhTydsGp6gvToS3wg3M
-         JPpPtUz5SW+IpngxB6mwTQok0A1zdeaukmRfSpj6TpRD2Q64OPecT6ZAL0ylHbaDJTIv
-         /xm0aNg0v9gJdHq/Q1TyqVMx1do6BVVDVZJNEouFrUc5XLTw9eOzoW88csXLubL6nN3W
-         xuYlJg8qmmHifXy29y6fOM0uj4SKK/fE7Qouw4wrh9BMb2xN7DpnsUja6nIn2Ild1BhB
-         UXVw==
-X-Gm-Message-State: ACrzQf3lo/rL8gCt+NQ9VySNCCE9z9Ll14SQx7mCkMZbxO7WmkrY/NeB
-        5fE78BfedeZcPXwTtQ2iFP/9v373+W0wV5t/ElXf+Q==
-X-Google-Smtp-Source: AMsMyM4JRYnfoJFqvt8khbF/r0tP//UB9dCHW1531iHAXog3s4lxwfT66QFkHemFIReeCknpghqEq+6yLZvtaLapobg=
-X-Received: by 2002:a0d:fac2:0:b0:349:f1d4:8b1e with SMTP id
- k185-20020a0dfac2000000b00349f1d48b1emr32167ywf.456.1665786855743; Fri, 14
- Oct 2022 15:34:15 -0700 (PDT)
+        bh=bpXAmlU17PiqNCQLd2KjeOuuJQo2E3u5FzdtEVKBrgk=;
+        b=baDYC+mSXexUuRpIm+nab2Ix6ndihSxhs2OqkM2QKDJ1vJfGGblcRW1oH0x+rgtHUh
+         KfSfbzZrdltSD7prk9mMPTI7REUbZaI9l7rXKrxA7/JR0RSnNttyRgALcKou5u86Wg9L
+         ArQK+YW0x+hqdqV1l9gp6Xbe4oHlx7H1Zg079p/8TP6XGC+/34zZITabN3SUsyynsRqW
+         ZGSTKIFlS5OfopvoJ6NdU5FlRZ5dujNqr8Zt8pQj0bNgCLkyABBGp6euk4jFrNXxvVHL
+         s17yvxzK0zeJu0K8iZc0Qq0R85nnXFRBzIwgxM9MihKFZrVvJHuuSFaI0wNHRXJiq4YC
+         xdHA==
+X-Gm-Message-State: ACrzQf1wB4lwodqLusNmSOr+P+Esj/mOrjQSMq90li95sX5jYtclzD8i
+        ycHiDLMLyNEaVHE2lQR+Q8zN83xGv7doOIFAkSnTnQ==
+X-Google-Smtp-Source: AMsMyM7TPX0T2rdqcpKGxVuJQ3CQJtO1qizEak73p75iRiI2fpY3Gka2m8kGTwCPTx3R/phndehJMwspumzweV+39d8=
+X-Received: by 2002:a81:8701:0:b0:341:9e24:5992 with SMTP id
+ x1-20020a818701000000b003419e245992mr103931ywf.110.1665788132654; Fri, 14 Oct
+ 2022 15:55:32 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1359.v2.git.1663654859.gitgitgadget@gmail.com>
- <pull.1359.v3.git.1665737804.gitgitgadget@gmail.com> <2164212892712930cb34223499bb3e03bf2c2392.1665737804.git.gitgitgadget@gmail.com>
- <xmqqmt9y6rem.fsf@gitster.g>
-In-Reply-To: <xmqqmt9y6rem.fsf@gitster.g>
+ <pull.1359.v3.git.1665737804.gitgitgadget@gmail.com> <bbaa2425ad0cbb4b945cdce3402c6ed5fab381ec.1665737804.git.gitgitgadget@gmail.com>
+ <xmqqbkqe6qv4.fsf@gitster.g>
+In-Reply-To: <xmqqbkqe6qv4.fsf@gitster.g>
 From:   Jerry Zhang <jerry@skydio.com>
-Date:   Fri, 14 Oct 2022 15:34:05 -0700
-Message-ID: <CAMKO5CvdDWEd6HPbkg7DP9bZMKNzcvmK+c1UPpuTk7vM1D8i9g@mail.gmail.com>
-Subject: Re: [PATCH v3 3/7] builtin: patch-id: fix patch-id with binary diffs
+Date:   Fri, 14 Oct 2022 15:55:22 -0700
+Message-ID: <CAMKO5CuCbyFt739GOzcvFn92i8vNqK6vgJqvT8E5zs=kJ1+H=A@mail.gmail.com>
+Subject: Re: [PATCH v3 5/7] builtin: patch-id: add --include-whitespace as a
+ command mode
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jerry Zhang via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -62,42 +63,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 14, 2022 at 2:12 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Oct 14, 2022 at 2:24 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > "Jerry Zhang via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> > From: Jerry Zhang <Jerry@skydio.com>
-> >
-> > "git patch-id" currently doesn't produce correct output if the
-> > incoming diff has any binary files. Add logic to
-> > get_one_patchid to handle the different possible styles of binary
-> > diff. This attempts to keep resulting patch-ids identical to what
-> > would be produced by the counterpart logic in diff.c, that is it
-> > produces the id by hashing the a and b oids in succession.
+> > +--include-whitespace::
+> > +     Use the "stable" algorithm described below and also don't strip whitespace
+> > +     from lines when calculating the patch-id.
+> > +
+> > +     This is the default if patchid.includeWhitespace is true and implies
+> > +     patchid.stable.
 >
-> I thought I saw that a previous step touched diff.c to change how
-> patch ID for a binary diff is computed to match what patch-id
-> command computes?  Now we also have to change patch-id?  In the end
-> output from both may match, but which one between diff and patch-id
-> have we standardised on?
-Er yeah let me see if I can simplify.
-
-Before:
-Internal patch-id w/ unstable + binary was correct
-Internal patch-id w/ stable + binary was broken
-builtin patch-id w/ binary was broken
-
-After:
-Internal patch-id w/ unstable + binary is correct
-Internal patch-id w/ stable + binary is now correct
-builtin patch-id w/ binary is now correct
-
-So the "standard" actually came from the one working case from
-"before", which was the diff.c logic + unstable. I based all new logic
-on that because it seemed reasonable and correct. Since "internal
-w/unstable" is never exposed externally, it's perhaps true that i
-could have invented a totally new format and standardized on that.
-Hashing the oids in succession is pretty much representative of a
-binary patch though, so I don't think there's much to be improved on.
+> This seems very much orthogonal to "--stable/--unstable.
 >
-> Puzzled...
+> Because the "--stable" variant is more expensive than "--unstable",
+I didn't realize it was more expensive, I'm assuming you mean in terms
+of time, maybe it does
+slightly more hashing operations under the hood?  I tried timing some
+runs locally
+and they were a wash:
+
+time /bin/sh -c "git show | git patch-id --stable"
+dddea79ee68d62a32cf8c0d7bb6691bcd0445628
+4677fe858366a51ff3c5a0c0893418e32e934262
+
+real 0m0.011s
+user 0m0.003s
+sys 0m0.012s
+time /bin/sh -c "git show | git patch-id"
+6602a3b2fe8b17d5bc295c2703901ad3e18eee18
+4677fe858366a51ff3c5a0c0893418e32e934262
+
+real 0m0.012s
+user 0m0.009s
+sys 0m0.007s
+
+The operation is probably bound by process / disk overhead quite a bit
+and a small
+amount of cpu use wouldn't really be user-visible. Based on these
+results I don't think
+a user would choose --unstable just for the speed gain (if any).
+
+> I am not sure why such an implication is a good thing to have.  Why
+> can we not have
+>
+>     --include-whitespace --stable
+>     --include-whitespace --unstable
+>
+> both combinations valid?
+If you accept my point above, then a user would only choose
+"--unstable" if they actually
+had a need for backwards compatibility, such as for a persistent
+database. Trying to include
+whitespace on top of that would break the compatibility they're
+relying on. So my conclusion was
+that there isn't any usecase for the combination "--include-whitespace
+--unstable", and it's better for
+usability and not needing to always maintain compatibility if we don't
+expose it to users at all.
