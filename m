@@ -2,126 +2,317 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B30FC4332F
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 08:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFC07C433FE
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 08:56:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229605AbiJNIsy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 04:48:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60364 "EHLO
+        id S229804AbiJNI4v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 04:56:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229582AbiJNIsw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 04:48:52 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15EBBA3ABD
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:48:51 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id r14so5919735edc.7
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:48:51 -0700 (PDT)
+        with ESMTP id S229518AbiJNI4t (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 04:56:49 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EEA314EC4D
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:56:48 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id j16so6541531wrh.5
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:56:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=uDzk75+vguEAE4ki3NALCRxZmEVjrJl4C2zVdr3wb3g=;
-        b=ZHCll4AqVNe1jsLCK18tWNq1GaGXk4zt2nvLlaLOqhJTHZcVO5Ec44PIatYDY0GA91
-         HHBnJJge9gjLPcMxciqrT3yKhDL5QE9sBWM4hM9DeCh9D7PSAP77vxfo7YbzES0fEkmJ
-         5WGX7OQiUwWPX3kjWgYIbfI411Q9aimnthnR4=
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7TCrhn2hRmI/JueVsCbNFTbF7l2ygUAXqLCvWFfpdns=;
+        b=JuTKhdR4UfhGhEH27Ogh7LeLpLxiYDOou8XSlOT9IMTJPebAfRdbn2xpBiPdi7XYnI
+         rJwhUKZ+gjJwguF/F5d2ewjltB8uUQ1ZDC2AEXi+h3r6TUoaTckvzWBYo5moS3wX5u/o
+         +UGuzQVbRP4jFjOfguLWXvrrN3+6RW0rLLPti8OPPYQx8rFbBgkgWC6UDUuhctXTu+1+
+         D3lTauCyrs5p7eQXKd+36W2Ly7xtoZnBJID9LHcarSO9NEvC+WOhg3EW2KEKQrroRZuA
+         LbXWxvoTUQS2SDdJLSgZmlVZUaBn1oP6TPZZATLG/UCog4cl68/ODMG0pnL/UR3iQo4+
+         MTEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uDzk75+vguEAE4ki3NALCRxZmEVjrJl4C2zVdr3wb3g=;
-        b=EvxO/fgmdqZfqG2Kuxt0LFSNyUmI7pGc3HFWkJ2k2JvJwiIaKICrKt9PBPq47QRfEa
-         vpMB+7L0II8QKze+/eEOIb2JCT3RHjOd3IYN5dsmyzpkT5hMNULZd2ul2c2/0vh+bK9v
-         KunHVukMzGqkPqqKqRDSxya46O6PTSH6XTPyz4vbSERhTGNudWr+A2o3W/F5j6I4gIHS
-         K7dC7i7BIWNLpKdlNCZYtmVKCdstwb36htJL8WufGTdvrindWoC5TeP3WPbntHl22LuZ
-         dePBU+PiAA+tYZBqePRBHnhevDFu8LlQ9PsOLarBdeRL+krx89davgdY4slezEtWBjsM
-         /D+A==
-X-Gm-Message-State: ACrzQf1tv1KkIH4x+vl25i680w2+rBBzmGBUvMwUShON32Uz40aSM89S
-        fgV4/hMsI8qkt4oryZ4vKQq9FeefdgJRhQZeI2+sPWDGHvDfbBB2
-X-Google-Smtp-Source: AMsMyM7mx2HIFIitLSekONf79kf3Bm0YSm2Cv6ZJVIJ/a3fWP+CbPuiabyB7fdF+mddymmUaDqVVVg1r/4bPfdwqrjk=
-X-Received: by 2002:a50:ec15:0:b0:458:a612:f751 with SMTP id
- g21-20020a50ec15000000b00458a612f751mr3376013edr.111.1665737329572; Fri, 14
- Oct 2022 01:48:49 -0700 (PDT)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7TCrhn2hRmI/JueVsCbNFTbF7l2ygUAXqLCvWFfpdns=;
+        b=3fBa5RppOuN777BdMNGliXv+KuzanG9wjYghXVLrVJeYR5EvADzbJOoUDJwdibyLgJ
+         z9HpMPn+1GyjWDOAz4LaEGq/J/SITW/vZw3DPriu69P+xDayqPdvJ+jyyHg1lKkLyT+A
+         hiuaiItS3ao9rsMpEF03LurBknDF2UUXH/wn/OL7Nr67iMIfteYHk2xaGL0VNowfLxE+
+         A5WYGfxfh35AdkEnjX0sL8ewrX5krYWtMp3D7XV7UHWCI2OMdxVtx68SBNwn4k6HYTH1
+         BjI6ma0VAy4KvzFd5yNldIqBAEk2Rzkevc+VaPg+qkIIPgAV74smNwBNXaYb1g8tqWJi
+         eQ9A==
+X-Gm-Message-State: ACrzQf2flM07OEeL7QCGvTxy5h00lCRUA6wi8Dnl4fYzonKnyw23wqaq
+        HZX7v9TUkktiLpIzY7Vh6cJLF6Ep9+I=
+X-Google-Smtp-Source: AMsMyM66Kw7aClonVcQGGDFkXg+vFP6uOnqW7b8Ox6xdu7JVl6a2X/1abGR4nD3HPabDtk3+ayHCWw==
+X-Received: by 2002:adf:ba8f:0:b0:22c:def3:1179 with SMTP id p15-20020adfba8f000000b0022cdef31179mr2603389wrg.571.1665737806306;
+        Fri, 14 Oct 2022 01:56:46 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o16-20020a056000011000b0022e38c93195sm1433759wrx.34.2022.10.14.01.56.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Oct 2022 01:56:45 -0700 (PDT)
+Message-Id: <pull.1359.v3.git.1665737804.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1359.v2.git.1663654859.gitgitgadget@gmail.com>
+References: <pull.1359.v2.git.1663654859.gitgitgadget@gmail.com>
+From:   "Jerry Zhang via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 14 Oct 2022 08:56:37 +0000
+Subject: [PATCH v3 0/7] patch-id fixes and improvements
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CAPMMpogcnwJDUazw82OB0DvdgvNS6hpUN9Qs69ppTFb1QFbLSg@mail.gmail.com>
- <220930.86r0ztufwd.gmgdl@evledraar.gmail.com> <YznhYzWztkPc9pJk@tapette.crustytoothpaste.net>
- <CAPMMpojy8OMxYT0WuZCOZjwvufmVucvoHPtvLHatopXvuk9K5Q@mail.gmail.com> <CABPp-BHaMCcLjdx2m4CALZQiTRQy_LovWfbdrga6XWhQJhoxWQ@mail.gmail.com>
-In-Reply-To: <CABPp-BHaMCcLjdx2m4CALZQiTRQy_LovWfbdrga6XWhQJhoxWQ@mail.gmail.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Fri, 14 Oct 2022 10:48:37 +0200
-Message-ID: <CAPMMpojvDj7Yc27HKQU4seSqg5Tx61RY3LOgMfkK=a0J25QYQw@mail.gmail.com>
-Subject: Re: icase pathspec magic support in ls-tree
-To:     Elijah Newren <newren@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Jerry Zhang <jerry@skydio.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 14, 2022 at 9:41 AM Elijah Newren <newren@gmail.com> wrote:
->
->
-> How exactly would case-insensitive matching in ls-tree help you here?
+These patches add fixes and features to the "git patch-id" command, mostly
+discovered through our usage of patch-id in the revup project
+(https://github.com/Skydio/revup). On top of that I've tried to make general
+cleanup changes where I can.
 
-I just attempted to demonstrate in response to Torsten's email; the
-assumption was that I could list the added files' paths in a
-case-insensitive pathspec, and thereby get all duplicates fast and
-efficiently, for reasonably-sized commits.
+Summary:
 
-(new refs and very large commits would still need a full-tree dupe scan)
+1: Fixed a bug in the combination of --stable with binary files and
+header-only, and expanded the test to cover both binary and non-binary
+files.
 
-> Can't you write a hook without such capability that rejects such
-> collisions?
+2: Switch internal usage of patch-id in rebase / cherry-pick to use the
+stable variant to reduce the number of code paths and improve testing for
+bugs like above.
 
-It is possible, but far less convenient and I'm not confident that my
-shell scripting abilities will get me to a good place.
+3: Fixed bugs with patch-id and binary diffs. Previously patch-id did not
+behave correctly for binary diffs regardless of whether "--binary" was given
+to "diff".
 
-That said, having thought about your point, my shell scripting
-abilities are more likely to get me to a good place than attempting to
-add icase pathspec magic support to ls-tree :)
+4: Fixed bugs with patch-id and mode changes. Previously mode changes were
+incorrectly excluded from the patch-id.
 
->
-> > I don't see this being something I can take on in my spare time, so
-> > for now I suspect I'll have to do a full-tree duplicate-file-search on
-> > every ref update, and simply accept the 1-second update hook
-> > processing time/delay per pushed ref :(
->
-> I don't see why you need to do full-tree with existing options, nor
-> why the ls-tree option you want would somehow make it easier to avoid.
-> I think you can avoid the full-tree search with something like:
->
-> git diff --diff-filter=A --no-renames --name-only $OLDHASH $NEWHASH |
-> sed -e s%/[^/]*$%/% | uniq | xargs git ls-tree --name-only $NEWHASH |
-> \
->    sort | uniq -i -d
->
-> The final "sort | uniq -i -d" is taken from Torsten's suggestion.
->
-> The git diff ... xargs git ls-tree section on the first line will
-> provide a list of all files (& subdirs) in the same directory as any
-> added file.  (Although, it has a blind spot for paths in the toplevel
-> directory.)
+5: Add a new "--include-whitespace" mode to patch-id that prevents
+whitespace from being stripped during id calculation. Also add a config
+option for the same behavior.
 
-The theoretical problem with this approach is that it only addresses
-case-insensitive-duplicate files, not directories.
+6: Remove unused prefix from patch-id logic.
 
-Directories have been the problem, in "my" repo, around one-third of
-the time - typically someone does a directory rename, and someone else
-does a bad merge and reintroduces the old directory.
+7: Update format-patch doc to specify when patch-ids are going to be equal
+to those generated by "git patch-id".
 
-That said, what "icase pathspec magic" actually *does*, is break down
-the pathspec into iteratively more complete paths, level by level,
-looking for case-duplicates at each level. That's something I could
-presumably do in shell scripting, collecting all the interesting
-sub-paths first, and then getting ls-tree to tell me about the
-immediate children for each sub-path, doing case-insensitive dupe
-searches across children for each of these sub-paths.
+V1->V2: Fixed comment style V2->V3: The ---/+++ lines no longer get added to
+the patch-id of binary diffs. Also added patches 3-7 in the series.
 
-ls-tree supporting icase pathspec magic would clearly be more
-efficient (I wouldn't need N ls-tree git processes, where N is the
-number of sub-paths in the diff), but this should be plenty efficient
-for normal commits, with a fallback to the full search
+Signed-off-by: Jerry Zhang jerry@skydio.com
 
-This seems like a sensible direction, I'll have a play.
+Jerry Zhang (7):
+  patch-id: fix stable patch id for binary / header-only
+  patch-id: use stable patch-id for rebases
+  builtin: patch-id: fix patch-id with binary diffs
+  patch-id: fix patch-id for mode changes
+  builtin: patch-id: add --include-whitespace as a command mode
+  builtin: patch-id: remove unused diff-tree prefix
+  documentation: format-patch: clarify requirements for patch-ids to
+    match
+
+ Documentation/git-format-patch.txt |   4 +-
+ Documentation/git-patch-id.txt     |  25 +++++--
+ builtin/log.c                      |   2 +-
+ builtin/patch-id.c                 | 114 +++++++++++++++++++++--------
+ diff.c                             |  75 +++++++++----------
+ diff.h                             |   2 +-
+ patch-ids.c                        |  10 +--
+ patch-ids.h                        |   2 +-
+ t/t3419-rebase-patch-id.sh         |  63 +++++++++++++---
+ t/t4204-patch-id.sh                |  95 ++++++++++++++++++++++--
+ 10 files changed, 291 insertions(+), 101 deletions(-)
+
+
+base-commit: d420dda0576340909c3faff364cfbd1485f70376
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1359%2Fjerry-skydio%2Fjerry%2Frevup%2Fmaster%2Fpatch_ids-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1359/jerry-skydio/jerry/revup/master/patch_ids-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1359
+
+Range-diff vs v2:
+
+ 1:  945508df7b6 ! 1:  7d4c2e91ce0 patch-id: fix stable patch id for binary / header-only
+     @@ Commit message
+          populates the object ids, and normal which populates the text
+          diff. All branches will end up flushing the hunk.
+      
+     +    Don't populate the ---a/ and +++b/ lines for binary diffs, to correspond
+     +    to those lines not being present in the "git diff" text output.
+     +    This is necessary because we advertise that the patch-id calculated
+     +    internally and used in format-patch is the same that what the
+     +    builtin "git patch-id" would produce when piped from a diff.
+     +
+          Update the test to run on both binary and normal files.
+      
+          Signed-off-by: Jerry Zhang <jerry@skydio.com>
+      
+       ## diff.c ##
+      @@ diff.c: static int diff_get_patch_id(struct diff_options *options, struct object_id *oid
+     - 			the_hash_algo->update_fn(&ctx, p->two->path, len2);
+     + 		if (p->one->mode == 0) {
+     + 			patch_id_add_string(&ctx, "newfilemode");
+     + 			patch_id_add_mode(&ctx, p->two->mode);
+     +-			patch_id_add_string(&ctx, "---/dev/null");
+     +-			patch_id_add_string(&ctx, "+++b/");
+     +-			the_hash_algo->update_fn(&ctx, p->two->path, len2);
+     + 		} else if (p->two->mode == 0) {
+     + 			patch_id_add_string(&ctx, "deletedfilemode");
+     + 			patch_id_add_mode(&ctx, p->one->mode);
+     +-			patch_id_add_string(&ctx, "---a/");
+     +-			the_hash_algo->update_fn(&ctx, p->one->path, len1);
+     +-			patch_id_add_string(&ctx, "+++/dev/null");
+     +-		} else {
+     +-			patch_id_add_string(&ctx, "---a/");
+     +-			the_hash_algo->update_fn(&ctx, p->one->path, len1);
+     +-			patch_id_add_string(&ctx, "+++b/");
+     +-			the_hash_algo->update_fn(&ctx, p->two->path, len2);
+       		}
+       
+      -		if (diff_header_only)
+     @@ diff.c: static int diff_get_patch_id(struct diff_options *options, struct object
+       			the_hash_algo->update_fn(&ctx, oid_to_hex(&p->two->oid),
+       					the_hash_algo->hexsz);
+      -			continue;
+     +-		}
+     +-
+     +-		xpp.flags = 0;
+     +-		xecfg.ctxlen = 3;
+     +-		xecfg.flags = XDL_EMIT_NO_HUNK_HDR;
+     +-		if (xdi_diff_outf(&mf1, &mf2, NULL,
+     +-				  patch_id_consume, &data, &xpp, &xecfg))
+     +-			return error("unable to generate patch-id diff for %s",
+     +-				     p->one->path);
+      +		} else {
+     ++			if (p->one->mode == 0) {
+     ++				patch_id_add_string(&ctx, "---/dev/null");
+     ++				patch_id_add_string(&ctx, "+++b/");
+     ++				the_hash_algo->update_fn(&ctx, p->two->path, len2);
+     ++			} else if (p->two->mode == 0) {
+     ++				patch_id_add_string(&ctx, "---a/");
+     ++				the_hash_algo->update_fn(&ctx, p->one->path, len1);
+     ++				patch_id_add_string(&ctx, "+++/dev/null");
+     ++			} else {
+     ++				patch_id_add_string(&ctx, "---a/");
+     ++				the_hash_algo->update_fn(&ctx, p->one->path, len1);
+     ++				patch_id_add_string(&ctx, "+++b/");
+     ++				the_hash_algo->update_fn(&ctx, p->two->path, len2);
+     ++			}
+     + 
+      +			if (fill_mmfile(options->repo, &mf1, p->one) < 0 ||
+      +			    fill_mmfile(options->repo, &mf2, p->two) < 0)
+      +				return error("unable to read files to diff");
+     @@ diff.c: static int diff_get_patch_id(struct diff_options *options, struct object
+      +					  patch_id_consume, &data, &xpp, &xecfg))
+      +				return error("unable to generate patch-id diff for %s",
+      +					     p->one->path);
+     - 		}
+     --
+     --		xpp.flags = 0;
+     --		xecfg.ctxlen = 3;
+     --		xecfg.flags = XDL_EMIT_NO_HUNK_HDR;
+     --		if (xdi_diff_outf(&mf1, &mf2, NULL,
+     --				  patch_id_consume, &data, &xpp, &xecfg))
+     --			return error("unable to generate patch-id diff for %s",
+     --				     p->one->path);
+     --
+     ++		}
+       		if (stable)
+       			flush_one_hunk(oid, &ctx);
+       	}
+      
+       ## t/t3419-rebase-patch-id.sh ##
+      @@ t/t3419-rebase-patch-id.sh: test_expect_success 'setup: 500 lines' '
+     - 	git cherry-pick main >/dev/null 2>&1
+     - '
+     + 	git add newfile &&
+     + 	git commit -q -m "add small file" &&
+     + 
+     +-	git cherry-pick main >/dev/null 2>&1
+     +-'
+     ++	git cherry-pick main >/dev/null 2>&1 &&
+       
+      -test_expect_success 'setup attributes' '
+      -	echo "file binary" >.gitattributes
+     --'
+     --
+     ++	git branch -f squashed main &&
+     ++	git checkout -q -f squashed &&
+     ++	git reset -q --soft HEAD~2 &&
+     ++	git commit -q -m squashed
+     + '
+     + 
+       test_expect_success 'detect upstream patch' '
+     - 	git checkout -q main &&
+     +-	git checkout -q main &&
+     ++	git checkout -q main^{} &&
+       	scramble file &&
+     + 	git add file &&
+     + 	git commit -q -m "change big file again" &&
+      @@ t/t3419-rebase-patch-id.sh: test_expect_success 'detect upstream patch' '
+     - 	git checkout -q other^{} &&
+     - 	git rebase main &&
+     - 	git rev-list main...HEAD~ >revs &&
+     --	test_must_be_empty revs
+     -+	test_must_be_empty revs &&
+     + 	test_must_be_empty revs
+     + '
+     + 
+     ++test_expect_success 'detect upstream patch binary' '
+      +	echo "file binary" >.gitattributes &&
+      +	git checkout -q other^{} &&
+      +	git rebase main &&
+      +	git rev-list main...HEAD~ >revs &&
+      +	test_must_be_empty revs &&
+     -+	rm .gitattributes
+     - '
+     - 
+     ++	test_when_finished "rm .gitattributes"
+     ++'
+     ++
+       test_expect_success 'do not drop patch' '
+     -@@ t/t3419-rebase-patch-id.sh: test_expect_success 'do not drop patch' '
+     - 	git commit -q -m squashed &&
+     +-	git branch -f squashed main &&
+     +-	git checkout -q -f squashed &&
+     +-	git reset -q --soft HEAD~2 &&
+     +-	git commit -q -m squashed &&
+       	git checkout -q other^{} &&
+       	test_must_fail git rebase squashed &&
+      -	git rebase --quit
+     -+	git rebase --abort &&
+     ++	test_when_finished "git rebase --abort"
+     ++'
+     ++
+     ++test_expect_success 'do not drop patch binary' '
+      +	echo "file binary" >.gitattributes &&
+      +	git checkout -q other^{} &&
+      +	test_must_fail git rebase squashed &&
+     -+	git rebase --abort &&
+     -+	rm .gitattributes
+     ++	test_when_finished "git rebase --abort" &&
+     ++	test_when_finished "rm .gitattributes"
+       '
+       
+       test_done
+ 2:  30ec43cd129 ! 2:  25e28b7dab3 patch-id: use stable patch-id for rebases
+     @@ Commit message
+          patch-id: use stable patch-id for rebases
+      
+          Git doesn't persist patch-ids during the rebase process, so there is
+     -    no need to specifically invoke the unstable variant.
+     -
+     -    This allows the legacy unstable id logic to be cleaned up.
+     +    no need to specifically invoke the unstable variant. Use the stable
+     +    logic for all internal patch-id calculations to minimize the number of
+     +    code paths and improve test coverage.
+      
+          Signed-off-by: Jerry Zhang <jerry@skydio.com>
+      
+ -:  ----------- > 3:  21642128927 builtin: patch-id: fix patch-id with binary diffs
+ -:  ----------- > 4:  6e07cfd5691 patch-id: fix patch-id for mode changes
+ -:  ----------- > 5:  bbaa2425ad0 builtin: patch-id: add --include-whitespace as a command mode
+ -:  ----------- > 6:  a1f6f36d487 builtin: patch-id: remove unused diff-tree prefix
+ -:  ----------- > 7:  69440797f30 documentation: format-patch: clarify requirements for patch-ids to match
+
+-- 
+gitgitgadget
