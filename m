@@ -2,96 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9999EC433FE
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 20:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E72F3C4332F
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 20:40:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231398AbiJNU1q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 16:27:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39348 "EHLO
+        id S231626AbiJNUkP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 16:40:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231350AbiJNU1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 16:27:43 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 930975D701
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 13:27:42 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A4961C444D;
-        Fri, 14 Oct 2022 16:27:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Hpyp4sh4VbrNJIY48R3ZqGrGCEuJ8Vg84TNv6Z
-        +YAuY=; b=lcP40GG6HNtXTmkTa2oGZ20l5Qe7e71/wFML8NtFMrnwuHdXvG1pVb
-        cr4GDY3GEF5GZ/2utoA9UgYxP7stELvVJyyySBEqTbZbdVycOtJ7CtOIu6d1fr14
-        +x60IBKoV3NWy8VqM8Aua8dP6h99zGue4nECtI9LCSTXEh9bd6auQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 217021C444C;
-        Fri, 14 Oct 2022 16:27:42 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 52A881C444A;
-        Fri, 14 Oct 2022 16:27:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 03/10] run-command API: add and use a run_command_l_opt()
-References: <cover-00.10-00000000000-20221014T153426Z-avarab@gmail.com>
-        <patch-03.10-fd81d44f221-20221014T153426Z-avarab@gmail.com>
-        <xmqqtu468d0k.fsf@gitster.g>
-        <Y0nAm4+KL71vyYB8@coredump.intra.peff.net>
-Date:   Fri, 14 Oct 2022 13:27:38 -0700
-In-Reply-To: <Y0nAm4+KL71vyYB8@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 14 Oct 2022 16:03:39 -0400")
-Message-ID: <xmqq8rli881x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S231635AbiJNUjz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 16:39:55 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CFD7AA
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 13:39:37 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id q196so4819116iod.8
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 13:39:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=tjVaqKtTPS9hVh5ZKCM9UTGZ+BtCNqzFGvAFJ/+PLnM=;
+        b=tH0fE8r9gUAqPTlYK74c/melWyy7wjwmUfAaTrxN1xWvyW5Lx8DiRY5ktTUm5xefMv
+         tuoHkRL8r/F58B2XZEWciGGZ862oCycmzHbgZDW4ltoul+dD1ubGRCDqKwPhZkNHR45k
+         1dm8A5DU7tYeCjgb+Myg63O9190WA4P1iKMUa6X+zUeV2W2o+5qT0NVRJG/dAAtMw0Ny
+         DGpEvtOPB2a35tvmeQ0b2HBplHNkbYvUUoXhsbBuT92m8uiOnJ5RLgIwSokMjNSRXvau
+         /T8l5vw8cA9MelPa3PQefkdIsdJbj8LcO8CW5bCzu4o1JxXyBi3JxWwHXGGACy3qowbd
+         mc2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tjVaqKtTPS9hVh5ZKCM9UTGZ+BtCNqzFGvAFJ/+PLnM=;
+        b=J43JVYmniu0bHQ1vK0hpg7H5qvo042PNAsbbKBxgpnkbCd0Q1MsJF6oj6kSwn/4I06
+         NqmFyxrJIcm0xKI+zG44Rf5vDcylt6GNM4LW7+OBp9H6fQbqBBn68lXzcalUk/wNJd1y
+         1wKJtBIcFjxmN35mM8/kiCuJZPqKwgDKyccvCpsZBIbDtWJu2GdvBdzErlK5qqZbJ6kb
+         uZZsZcOnDCZfNeZqpjmKby6Ot6vidnptTOfXJ2tsUbupKJ6am+BJyDNPsiCHL28VnTMC
+         DeKTNlpQNhDcHdvOuIvYTz/QEPhfXkJRfBCd909Y8y6D2xJailOSqaf3bJCyPf/cpJi9
+         ENQw==
+X-Gm-Message-State: ACrzQf1UpgBEugXIre+Kv/4qdj/u2uI5ebiTpkURGT4Agc4nMrwXwixz
+        ys8Plq5t0U+hgth7/gdbT3EA4Ir2lL7+UWic
+X-Google-Smtp-Source: AMsMyM6Fmtkh5iWr0A3huhb7AboE6I6ibDIGCaOB+KXQt97ETHy0103tWR4nXkxliRNcIpZpDOm3Jw==
+X-Received: by 2002:a05:6602:2c89:b0:67b:7e8c:11c1 with SMTP id i9-20020a0566022c8900b0067b7e8c11c1mr3235201iow.101.1665779976717;
+        Fri, 14 Oct 2022 13:39:36 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id c17-20020a92bd11000000b002eb1137a774sm1170476ile.59.2022.10.14.13.39.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Oct 2022 13:39:36 -0700 (PDT)
+Date:   Fri, 14 Oct 2022 16:39:35 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v3 05/11] Makefile: split off SPATCH_BATCH_SIZE comment
+ from "cocci" heading
+Message-ID: <Y0nJB6MEjTsGLWOJ@nand.local>
+References: <cover-v2-0.9-00000000000-20220831T205130Z-avarab@gmail.com>
+ <cover-v3-00.11-00000000000-20221014T152552Z-avarab@gmail.com>
+ <patch-v3-05.11-ab25b586f38-20221014T152553Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A5C92276-4BFE-11ED-BFDA-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v3-05.11-ab25b586f38-20221014T152553Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Fri, Oct 14, 2022 at 11:40:27AM -0700, Junio C Hamano wrote:
+On Fri, Oct 14, 2022 at 05:31:21PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> @@ -1298,10 +1298,11 @@ SP_EXTRA_FLAGS = -Wno-universal-initializer
+>  SANITIZE_LEAK =
+>  SANITIZE_ADDRESS =
 >
->> > @@ -862,11 +858,11 @@ static void write_refspec_config(const char *src_ref_prefix,
->> >  
->> >  static void dissociate_from_references(void)
->> >  {
->> > -	static const char* argv[] = { "repack", "-a", "-d", NULL };
->> 
->> Good to see that this one in a wrong scope can now go away.
->
-> It definitely is broader scope than is necessary. I wonder if it makes
-> things easier to read, though, the way we would sometimes hoist things
-> out of a function into a static-global to make them more obvious. I
-> dunno.
+> -# For the 'coccicheck' target; setting SPATCH_BATCH_SIZE higher will
+> +# For the 'coccicheck' target
+> +SPATCH_FLAGS = --all-includes
+> +# Setting SPATCH_BATCH_SIZE higher will
 
-Didn't think about it, but it is a worthy point to make.  Unlike the
-call to l_opt() buried inside a conditional, it makes it stand out
-that what we see upfront is one of the commands the function will
-run.  It is especially valuable when a function is almost exclusively
-about running a single command, but then we will have a single call
-to l_opt() without much preparations or clean-ups around it, so the
-visual noise that detracts our eyes away from the actual commands
-may not be all that bad, though.
+I suppose it goes away once the coccicheck rule becomes incremental a
+few patches later, but I did find this rewrapping odd.
 
->> >  	char *alternates = git_pathdup("objects/info/alternates");
->> >  
->> >  	if (!access(alternates, F_OK)) {
->> > -		if (run_command_v_opt(argv, RUN_GIT_CMD|RUN_COMMAND_NO_STDIN))
->> > +		if (run_command_l_opt(RUN_GIT_CMD|RUN_COMMAND_NO_STDIN,
->> > +				      "repack",  "-a", "-d", NULL))
->> >  			die(_("cannot repack to clean up"));
->
-> I just happened to notice in this one there is a weird extra space
-> before "-a".
-
-Yeah, good eyes.
-
-Thanks.
+Thanks,
+Taylor
