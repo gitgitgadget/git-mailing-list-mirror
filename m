@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 369ABC4332F
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 15:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A110C433FE
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 15:33:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbiJNPcz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 11:32:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38876 "EHLO
+        id S231195AbiJNPdG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 11:33:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230525AbiJNPb4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 11:31:56 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00CAE188132
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:31:50 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id e18so3307050wmq.3
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:31:50 -0700 (PDT)
+        with ESMTP id S231153AbiJNPcJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 11:32:09 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10C3BEAC9F
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:31:58 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id bp11so8117509wrb.9
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 08:31:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rip9TeiOFqEr2uDlzarNPVqeDi4tOTTXJOg/3PaLDTQ=;
-        b=MJgVd2CuSzruncy6TMCg7fvgVZN42/Mwun1jPHLEGIDWP+E3b/o8V34hI+2sZNiOlS
-         ghnnFWPrUwP9/nmlfpGojIwaH/slzpktTgocVj4qWSuZO+NsHDS3dqoolPpyN0ERSCO9
-         0Gkosus8Yhy9e5yEQ6UJ/nfNEHCEBAIul0kdcn7lV2lsWpsZKcZu0zCIUoLbkEwYnZex
-         Veef6zkti+tTefE7keWMl3iKN58fMRiZ0teBOdcskzYXk3AEVxweWDxwfrg47DIJnM7c
-         pTvec+Vc5JFMvKLx8fcqRD/+I62Llr3u0qMHItzSXh6ySf4oBoHRrvVcCg76aLsxyVjl
-         uw4g==
+        bh=WyHp44ea796Bm+h62F+npYKatJbISFsFdh6TPLTwNLo=;
+        b=Z7olGB/t+iqhxhFLjtnXQsp+DVGdsNtrbA/uWiGeIYImXqrI6p9zanSjY/H2LB1bur
+         s20FYBpx8vlCoct9IA5oEax3HK4AO6UUcE8x66ORPGMJAMfm6u3fBNPdExBe126ZtO/s
+         BsRiKMl8MpEln+Fmt2x/iV5d2ZDp3Ja3vgZ+ECJL9b4RgnjlbQVaNfwtHQEsNFkP09P3
+         opGVv4nKGGu0baVK6koopDcCj2pe5a5G+IStgzO1NiIFrI3YjXydjmjDY67Mr9tDE0ov
+         nLprLHqOj5jnNfon2Y5JiRXiUCT9+z40okVuFXF5U5YG6vDbUz9Lp4S3owVvDhY++FPu
+         bvSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rip9TeiOFqEr2uDlzarNPVqeDi4tOTTXJOg/3PaLDTQ=;
-        b=ADH18/g9YsPH8IU070A6ddw85wfe49+hKuZCgVud7edTpAH5VwrXTQxyvoEuhYj2g5
-         HE0TP7wiUfQLPkSGiXpXVJdNewp+Mm2p8h+2v/zFroJEwz1StEjMYoIWZP64lHe49U4Z
-         VJqE7YqEdHT+NWfRU9NHr1nrkSd6Pm7LZg2g25Lpa9KlO/K/CDeMpQG7+wGS8rMycN2D
-         WnbB3/819KMDrapuXwaIyHhK5pznBtyO3d31H7OLkQL3wq3BdAiDGulOaPQ3fX35hdPl
-         Fc/Rb00Zy8+xK6y8R+4a05ykZddbDT7Es/7q7GuhEm6m/30sno5IDwMIHHfJKJm5O5A8
-         tj6g==
-X-Gm-Message-State: ACrzQf1NRcF7F9oYd80DiOmQ94I6qlZKTx+X1HsHgk/1IQHwPpR7jysy
-        RBRMB+S/RG1YD8jjdJq9Y5EzWWLxFTvHlQ==
-X-Google-Smtp-Source: AMsMyM5I8AHJMnoQ+x7UvxYXmHQ29rLZy6usWGH5IwWUfZ9ylTPpD8Gzw6dyOstg9GHkUeH4Sc6hPg==
-X-Received: by 2002:a1c:ed11:0:b0:3b4:d3e1:bec with SMTP id l17-20020a1ced11000000b003b4d3e10becmr4053192wmh.196.1665761507347;
-        Fri, 14 Oct 2022 08:31:47 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id dn7-20020a05600c654700b003b47ff307e1sm2219053wmb.31.2022.10.14.08.31.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=WyHp44ea796Bm+h62F+npYKatJbISFsFdh6TPLTwNLo=;
+        b=zpw2nqkpXiIbrpg/65DNFV6cIwlchQQX9TGlXj1KHxwX3t2+egMWbixV08SJQFUtZC
+         lyxg8xjz684dSBFxqgJVli2AnsJeiwwG3FFa3l26QuSEZXUJ5fX1O9MdMaw8Mp/JX2zU
+         +fbbOAnimDNeyWgBDc5OoqENJgOo5+AzQykdOq8jp0r2d/ibPndFX0NrOFxknKMnBReh
+         2WnuzJA6UBwNoXdzNx4mkZA26JYag5ANePrKY/VRlV8tmxZG6kxrxIA1QE3l8rcrpWy6
+         7BTfssD8t+OhCGJTfhGhgCal/ATU/KdqSf/82WegdK/gc6DVDCXPAsveDum89x5EP7x9
+         QaHw==
+X-Gm-Message-State: ACrzQf0y1CdwNxub7Uy4/Ul87FLrUIX7q7dy3i079EyU0m4b9zuZkUJZ
+        wDqY8N+k59LB/Yn2nkHxH+vbJPRqtTCxZw==
+X-Google-Smtp-Source: AMsMyM5FoeL18dDljsXRN1ksuPwkyVur9Zx+uk3pvyXGHBM6XwRsok5Oe5aUM3gmvB4XgONAJX9PcA==
+X-Received: by 2002:adf:e4d1:0:b0:232:eb2:68bc with SMTP id v17-20020adfe4d1000000b002320eb268bcmr3716554wrm.231.1665761506084;
         Fri, 14 Oct 2022 08:31:46 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id dn7-20020a05600c654700b003b47ff307e1sm2219053wmb.31.2022.10.14.08.31.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Oct 2022 08:31:44 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 11/11] spatchcache: add a ccache-alike for "spatch"
-Date:   Fri, 14 Oct 2022 17:31:27 +0200
-Message-Id: <patch-v3-11.11-f7ca3f9c9af-20221014T152553Z-avarab@gmail.com>
+Subject: [PATCH v3 10/11] cocci: run against a generated ALL.cocci
+Date:   Fri, 14 Oct 2022 17:31:26 +0200
+Message-Id: <patch-v3-10.11-52177ea2a68-20221014T152553Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1092.g8c0298861b0
 In-Reply-To: <cover-v3-00.11-00000000000-20221014T152552Z-avarab@gmail.com>
 References: <cover-v2-0.9-00000000000-20220831T205130Z-avarab@gmail.com> <cover-v3-00.11-00000000000-20221014T152552Z-avarab@gmail.com>
@@ -69,333 +69,189 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a rather trivial "spatchcache", with this running e.g.:
+The preceding commits to make the "coccicheck" target incremental made
+it slower in some cases. As an optimization let's not have the
+many=many mapping of <*.cocci>=<*.[ch]>, but instead concat the
+<*.cocci> into an ALL.cocci, and then run one-to-many
+ALL.cocci=<*.[ch]>.
 
-	make cocciclean
-	make contrib/coccinelle/free.cocci.patch \
-		SPATCH=contrib/coccicheck/spatchcache \
-		SPATCH_FLAGS=--very-quiet
+A "make coccicheck" is now around 2x as fast as it was on "master",
+and around 1.5x as fast as the preceding change to make the run
+incremental:
 
-Is cut down from ~20s to ~5s on my system. Much of that is either
-fixable shell overhead, or the around 40 files we "CANTCACHE" (see the
-implementation).
+	$ git hyperfine -L rev origin/master,HEAD~,HEAD -p 'make clean' 'make coccicheck SPATCH=spatch COCCI_SOURCES="$(echo $(ls o*.c builtin/h*.c))"' -r 3
+	Benchmark 1: make coccicheck SPATCH=spatch COCCI_SOURCES="$(echo $(ls o*.c builtin/h*.c))"' in 'origin/master
+	  Time (mean ± σ):      4.258 s ±  0.015 s    [User: 27.432 s, System: 1.532 s]
+	  Range (min … max):    4.241 s …  4.268 s    3 runs
 
-This uses "redis" as a cache by default, but it's configurable. See
-the embedded documentation.
+	Benchmark 2: make coccicheck SPATCH=spatch COCCI_SOURCES="$(echo $(ls o*.c builtin/h*.c))"' in 'HEAD~
+	  Time (mean ± σ):      5.365 s ±  0.079 s    [User: 36.899 s, System: 1.810 s]
+	  Range (min … max):    5.281 s …  5.436 s    3 runs
 
-This is *not* like ccache in that we won't cache failed spatch
-invocations, or those where spatch suggests changes for us. Those
-cases are so rare that I didn't think it was worth the bother, by far
-the most common case is that it has no suggested changes. We'll also
-refuse to cache any "spatch" invocation that has output on stderr,
-which means that "--very-quiet" must be added to "SPATCH_FLAGS".
+	Benchmark 3: make coccicheck SPATCH=spatch COCCI_SOURCES="$(echo $(ls o*.c builtin/h*.c))"' in 'HEAD
+	  Time (mean ± σ):      2.725 s ±  0.063 s    [User: 14.796 s, System: 0.233 s]
+	  Range (min … max):    2.667 s …  2.792 s    3 runs
 
-Because we narrow the cache to that we don't need to save away stdout,
-stderr & the exit code. We simply cache the cases where we had no
-suggested changes.
+	Summary
+	  'make coccicheck SPATCH=spatch COCCI_SOURCES="$(echo $(ls o*.c builtin/h*.c))"' in 'HEAD' ran
+	    1.56 ± 0.04 times faster than 'make coccicheck SPATCH=spatch COCCI_SOURCES="$(echo $(ls o*.c builtin/h*.c))"' in 'origin/master'
+	    1.97 ± 0.05 times faster than 'make coccicheck SPATCH=spatch COCCI_SOURCES="$(echo $(ls o*.c builtin/h*.c))"' in 'HEAD~'
 
-Another benchmark is to compare this with the previous
-SPATCH_BATCH_SIZE=N, as noted in [1]. Before this (on my 8 core system) running:
+This can be turned off with SPATCH_CONCAT_COCCI, but as the
+beneficiaries of "SPATCH_CONCAT_COCCI=" would mainly be those
+developing the *.cocci rules themselves, let's leave this optimization
+on by default.
 
-	make clean; time make contrib/coccinelle/array.cocci.patch SPATCH_BATCH_SIZE=0
+For more information see my "Optimizing *.cocci rules by concat'ing
+them" (<220901.8635dbjfko.gmgdl@evledraar.gmail.com>) on the
+cocci@inria.fr mailing list.
 
-Would take 33s, but with the preceding changes running without this
-"spatchcache" is slightly slower, or around 35s:
+This potentially changes the results of our *.cocci rules, but as
+noted in that discussion it should be safe for our use. We don't name
+rules, or if we do their names don't conflict across our *.cocci
+files.
 
-	make clean; time make contrib/coccinelle/array.cocci.patch
+To the extent that we'd have any inter-dependencies between rules this
+doesn't make that worse, as we'd have them now if we ran "make
+coccicheck", applied the results, and would then have (due to
+hypothetical interdependencies) suggested changes on the subsequent
+"make coccicheck".
 
-Now doing the same with SPATCH=contrib/coccinelle/spatchcache will
-take around 6s, but we'll need to compile the *.o files first to take
-full advantage of it (which can be fast with "ccache"):
-
-	make clean; make; time make contrib/coccinelle/array.cocci.patch SPATCH=contrib/coccinelle/spatchcache
-
-1. https://lore.kernel.org/git/YwdRqP1CyUAzCEn2@coredump.intra.peff.net/
+Our "coccicheck-test" target makes use of the ALL.cocci when running
+tests, e.g. when testing unused.{c,out} we test it against ALL.cocci,
+not unused.cocci. We thus assert (to the extent that we have test
+coverage) that this concatenation doesn't change the expected results
+of running these rules.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- contrib/coccinelle/spatchcache | 272 +++++++++++++++++++++++++++++++++
- 1 file changed, 272 insertions(+)
- create mode 100755 contrib/coccinelle/spatchcache
+ Makefile                      | 40 ++++++++++++++++++++++++++++++++---
+ contrib/coccinelle/.gitignore |  1 +
+ shared.mak                    |  1 +
+ 3 files changed, 39 insertions(+), 3 deletions(-)
 
-diff --git a/contrib/coccinelle/spatchcache b/contrib/coccinelle/spatchcache
-new file mode 100755
-index 00000000000..7ec0dfcb1e4
---- /dev/null
-+++ b/contrib/coccinelle/spatchcache
-@@ -0,0 +1,272 @@
-+#!/bin/sh
+diff --git a/Makefile b/Makefile
+index bd3b5c21d6f..0dc25a2c7ad 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1310,6 +1310,25 @@ SPATCH_TEST_FLAGS =
+ # COMPUTE_HEADER_DEPENDENCIES=no this will be unset too.
+ SPATCH_USE_O_DEPENDENCIES = YesPlease
+ 
++# Set SPATCH_CONCAT_COCCI to concatenate the contrib/cocci/*.cocci
++# files into a single contrib/cocci/ALL.cocci before running
++# "coccicheck".
 +#
-+# spatchcache: a poor-man's "ccache"-alike for "spatch" in git.git
++# Pros:
 +#
-+# This caching command relies on the peculiarities of the Makefile
-+# driving "spatch" in git.git, in particular if we invoke:
++# - Speeds up a one-shot run of "make coccicheck", as we won't have to
++#   parse *.[ch] files N times for the N *.cocci rules
 +#
-+#	make
-+#	make coccicheck SPATCH_FLAGS=--very-quiet
++# Cons:
 +#
-+# We can with COMPUTE_HEADER_DEPENDENCIES (auto-detected as true with
-+# "gcc" and "clang") write e.g. a .depend/grep.o.d for grep.c, when we
-+# compile grep.o.
++# - Will make incremental development of *.cocci slower, as
++#   e.g. changing strbuf.cocci will re-run all *.cocci.
 +#
-+# The .depend/grep.o.d will have the full header dependency tree of
-+# grep.c, and we can thus cache the output of "spatch" by:
-+#
-+#	1. Hashing all of those files
-+#	2. Hashing our source file, and the *.cocci rule we're
-+#	   applying
-+#	3. Running spatch, if suggests no changes (by far the common
-+#	   case) we invoke "spatchCache.getCmd" and
-+#	   "spatchCache.setCmd" with a hash SHA-256 to ask "does this
-+#	   ID have no changes" or "say that ID had no changes>
-+#	4. If no "spatchCache.{set,get}Cmd" is specified we'll use
-+#	   "redis-cli" and maintain a SET called "spatch-cache". Set
-+#	   appropriate redis memory policies to keep it from growing
-+#	   out of control.
-+#
-+# This along with the general incremental "make" support for
-+# "contrib/coccinelle" makes it viable to (re-)run coccicheck
-+# e.g. when merging integration branches.
-+#
-+# Note that the "--very-quiet" flag is currently critical. The cache
-+# will refuse to cache anything that has output on STDERR (which might
-+# be errors from spatch), but see spatchCache.cacheWhenStderr below.
-+#
-+# The STDERR (and exit code) could in principle be cached (as with
-+# ccache), but then the simple structure in the Redis cache would need
-+# to change, so just supply "--very-quiet" for now.
-+#
-+# To use this, simply set SPATCH to
-+# contrib/coccinelle/spatchcache. Then optionally set:
-+#
-+#	[spatchCache]
-+#		# Optional: path to a custom spatch
-+#		spatch = ~/g/coccicheck/spatch.opt
-+#
-+# As well as this trace config (debug implies trace):
-+#
-+#		cacheWhenStderr = true
-+#		trace = false
-+#		debug = false
-+#
-+# The ".depend/grep.o.d" can also be customized, as a string that will
-+# be eval'd, it has access to a "$dirname" and "$basename":
-+#
-+#	[spatchCache]
-+#		dependFormat = "$dirname/.depend/${basename%.c}.o.d"
-+#
-+# Setting "trace" to "true" allows for seeing when we have a cache HIT
-+# or MISS. To debug whether the cache is working do that, and run e.g.:
-+#
-+#	redis-cli FLUSHALL
-+#	<make && make coccicheck, as above>
-+#	grep -hore HIT -e MISS -e SET -e NOCACHE -e CANTCACHE .build/contrib/coccinelle | sort | uniq -c
-+#	    600 CANTCACHE
-+#	   7365 MISS
-+#	   7365 SET
-+#
-+# A subsequent "make cocciclean && make coccicheck" should then have
-+# all "HIT"'s and "CANTCACHE"'s.
-+#
-+# The "spatchCache.cacheWhenStderr" option is critical when using
-+# spatchCache.{trace,debug} to debug whether something is set in the
-+# cache, as we'll write to the spatch logs in .build/* we'd otherwise
-+# always emit a NOCACHE.
++# - Makes error and performance analysis harder, as rules will be
++#   applied from a monolithic ALL.cocci, rather than
++#   e.g. strbuf.cocci.
++SPATCH_CONCAT_COCCI = YesPlease
 +
-+set -e
+ # Rebuild 'coccicheck' if $(SPATCH), its flags etc. change
+ TRACK_SPATCH_DEFINES =
+ TRACK_SPATCH_DEFINES += $(SPATCH)
+@@ -3155,9 +3174,10 @@ check: $(GENERATED_H)
+ 		exit 1; \
+ 	fi
+ 
++COCCI_GEN_ALL = contrib/coccinelle/ALL.cocci
+ COCCI_GLOB = $(wildcard contrib/coccinelle/*.cocci)
+-COCCI_RULES = $(COCCI_GLOB)
+-COCCI_NAMES = $(COCCI_RULES:contrib/coccinelle/%.cocci=%)
++COCCI_NAMES = $(sort ALL $(COCCI_GLOB:contrib/coccinelle/%.cocci=%))
++COCCI_RULES = $(filter-out $(COCCI_GEN_ALL),$(COCCI_GLOB))
+ 
+ COCCICHECK_PENDING = $(filter %.pending.cocci,$(COCCI_RULES))
+ COCCICHECK_PATCHES_PENDING = $(COCCICHECK_PENDING:%=%.patch)
+@@ -3171,6 +3191,7 @@ COCCI_RULES_GLOB += cocci%
+ COCCI_RULES_GLOB += .build/contrib/coccinelle/%
+ COCCI_RULES_GLOB += $(COCCICHECK_PATCHES)
+ COCCI_RULES_GLOB += $(COCCICHEC_PATCHES_PENDING)
++COCCI_RULES_GLOB += $(COCCI_GEN_ALL)
+ COCCI_GOALS = $(filter $(COCCI_RULES_GLOB),$(MAKECMDGOALS))
+ 
+ COCCICHECK_PATCHES = $(COCCICHECK:%=%.patch)
+@@ -3182,6 +3203,10 @@ COCCI_TEST_RES = $(wildcard contrib/coccinelle/tests/*.res)
+ 	$(call mkdir_p_parent_template)
+ 	$(QUIET_GEN) >$@
+ 
++$(COCCI_GEN_ALL): $(COCCICHECK)
++	$(call mkdir_p_parent_template)
++	$(QUIET_SPATCH_CAT)cat $^ >$@
 +
-+## Our own configuration & options
-+debug=$(git config --bool "spatchCache.debug")
-+if test "$debug" != "true"
-+then
-+	debug=
-+fi
-+if test -n "$debug"
-+then
-+	set -x
-+fi
-+
-+trace=$(git config --bool "spatchCache.trace")
-+if test "$trace" != "true"
-+then
-+	trace=
-+fi
-+if test -n "$debug"
-+then
-+	# debug implies trace
-+	trace=true
-+fi
-+
-+cacheWhenStderr=$(git config --bool "spatchCache.cacheWhenStderr")
-+if test "$cacheWhenStderr" != "true"
-+then
-+	cacheWhenStderr=
-+fi
-+
-+trace_it () {
-+	if test -z "$trace"
-+	then
-+		return
-+	fi
-+	echo "$@" >&2
-+}
-+
-+spatch=$(git config --path "spatchCache.spatch" || :)
-+if test -n "$spatch"
-+then
-+	if test -n "$debug"
-+	then
-+		trace_it "custom spatchCache.spatch='$spatch'"
-+	fi
+ ifeq ($(COMPUTE_HEADER_DEPENDENCIES),no)
+ SPATCH_USE_O_DEPENDENCIES =
+ endif
+@@ -3214,7 +3239,7 @@ $(foreach s,$(COCCI_SOURCES),$(call cocci-rule,$(c),$(s),$(s:%.c=%.o)))
+ endef
+ 
+ ifdef COCCI_GOALS
+-$(eval $(foreach c,$(COCCI_RULES),$(call cocci-matrix,$(c))))
++$(eval $(foreach c,$(COCCI_RULES) $(COCCI_GEN_ALL),$(call cocci-matrix,$(c))))
+ endif
+ 
+ define spatch-rule
+@@ -3235,7 +3260,11 @@ COCCI_TEST_RES_GEN = $(addprefix .build/,$(COCCI_TEST_RES))
+ $(COCCI_TEST_RES_GEN): GIT-SPATCH-DEFINES
+ $(COCCI_TEST_RES_GEN): .build/%.res : %.c
+ $(COCCI_TEST_RES_GEN): .build/%.res : %.res
++ifdef SPATCH_CONCAT_COCCI
++$(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : $(COCCI_GEN_ALL)
 +else
-+	spatch=spatch
-+fi
-+
-+dependFormat='$dirname/.depend/${basename%.c}.o.d'
-+dependFormatCfg=$(git config "spatchCache.dependFormat" || :)
-+if test -n "$dependFormatCfg"
-+then
-+	dependFormat="$dependFormatCfg"
-+fi
-+
-+set=$(git config spatchCache.setCmd || :)
-+get=$(git config spatchCache.getCmd || :)
-+
-+## Parse spatch()-like command-line for caching info
-+arg_sp=
-+arg_file=
-+args="$@"
-+spatch_opts() {
-+	while test $# != 0
-+	do
-+		arg_file="$1"
-+		case "$1" in
-+		--sp-file)
-+			arg_sp="$2"
-+			;;
-+		esac
-+		shift
-+	done
-+}
-+spatch_opts "$@"
-+if ! test -f "$arg_file"
-+then
-+	arg_file=
-+fi
-+
-+hash_for_cache() {
-+	# Parameters that should affect the cache
-+	echo "args=$args"
-+	echo "config spatchCache.spatch=$spatch"
-+	echo "config spatchCache.debug=$debug"
-+	echo "config spatchCache.trace=$trace"
-+	echo "config spatchCache.cacheWhenStderr=$cacheWhenStderr"
-+	echo
-+
-+	# Our target file and its dependencies
-+	git hash-object "$1" "$2" $(grep -E -o '^[^:]+:$' "$3" | tr -d ':')
-+}
-+
-+# Sanity checks
-+if ! test -f "$arg_sp" && ! test -f "$arg_file"
-+then
-+	echo $0: no idea how to cache "$@" >&2
-+	exit 128
-+fi
-+
-+# Main logic
-+dirname=$(dirname "$arg_file")
-+basename=$(basename "$arg_file")
-+eval "dep=$dependFormat"
-+
-+if ! test -f "$dep"
-+then
-+	trace_it "$0: CANTCACHE have no '$dep' for '$arg_file'!"
-+	exec "$spatch" "$@"
-+fi
-+
-+if test -n "$debug"
-+then
-+	trace_it "$0: The full cache input for '$arg_sp' '$arg_file' '$dep'"
-+	hash_for_cache "$arg_sp" "$arg_file" "$dep" >&2
-+fi
-+sum=$(hash_for_cache "$arg_sp" "$arg_file" "$dep" | git hash-object --stdin)
-+
-+trace_it "$0: processing '$arg_file' with '$arg_sp' rule, and got hash '$sum' for it + '$dep'"
-+
-+getret=
-+if test -z "$get"
-+then
-+	if test $(redis-cli SISMEMBER spatch-cache "$sum") = 1
-+	then
-+		getret=0
-+	else
-+		getret=1
-+	fi
+ $(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : contrib/coccinelle/%.cocci
++endif
+ 	$(call mkdir_p_parent_template)
+ 	$(QUIET_SPATCH_TEST)$(SPATCH) $(SPATCH_TEST_FLAGS) \
+ 		--very-quiet --no-show-diff \
+@@ -3248,7 +3277,11 @@ $(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : contrib/coccinell
+ coccicheck-test: $(COCCI_TEST_RES_GEN)
+ 
+ coccicheck: coccicheck-test
++ifdef SPATCH_CONCAT_COCCI
++coccicheck: contrib/coccinelle/ALL.cocci.patch
 +else
-+	$set "$sum"
-+	getret=$?
-+fi
-+
-+if test "$getret" = 0
-+then
-+	trace_it "$0: HIT for '$arg_file' with '$arg_sp'"
-+	exit 0
-+else
-+	trace_it "$0: MISS: for '$arg_file' with '$arg_sp'"
-+fi
-+
-+out="$(mktemp)"
-+err="$(mktemp)"
-+
-+set +e
-+"$spatch" "$@" >"$out" 2>>"$err"
-+ret=$?
-+cat "$out"
-+cat "$err" >&2
-+set -e
-+
-+nocache=
-+if test $ret != 0
-+then
-+	nocache="exited non-zero: $ret"
-+elif test -s "$out"
-+then
-+	nocache="had patch output"
-+elif test -z "$cacheWhenStderr" && test -s "$err"
-+then
-+	nocache="had stderr (use --very-quiet or spatchCache.cacheWhenStderr=true?)"
-+fi
-+
-+if test -n "$nocache"
-+then
-+	trace_it "$0: NOCACHE ($nocache): for '$arg_file' with '$arg_sp'"
-+	exit "$ret"
-+fi
-+
-+trace_it "$0: SET: for '$arg_file' with '$arg_sp'"
-+
-+setret=
-+if test -z "$set"
-+then
-+	if test $(redis-cli SADD spatch-cache "$sum") = 1
-+	then
-+		setret=0
-+	else
-+		setret=1
-+	fi
-+else
-+	"$set" "$sum"
-+	setret=$?
-+fi
-+
-+if test "$setret" != 0
-+then
-+	echo "FAILED to set '$sum' in cache!" >&2
-+	exit 128
-+fi
-+
-+exit "$ret"
+ coccicheck: $(COCCICHECK_PATCHES)
++endif
+ 
+ # See contrib/coccinelle/README
+ coccicheck-pending: coccicheck-test
+@@ -3523,6 +3556,7 @@ cocciclean:
+ 	$(RM) -r .build/contrib/coccinelle
+ 	$(RM) $(COCCICHECK_PATCHES)
+ 	$(RM) $(COCCICHECK_PATCHES_PENDING)
++	$(RM) $(COCCI_GEN_ALL)
+ 
+ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) -r .build
+diff --git a/contrib/coccinelle/.gitignore b/contrib/coccinelle/.gitignore
+index d3f29646dc3..2709d98eb91 100644
+--- a/contrib/coccinelle/.gitignore
++++ b/contrib/coccinelle/.gitignore
+@@ -1 +1,2 @@
++/ALL.cocci
+ *.patch*
+diff --git a/shared.mak b/shared.mak
+index 5ccd6889fcb..66dcf6768db 100644
+--- a/shared.mak
++++ b/shared.mak
+@@ -73,6 +73,7 @@ ifndef V
+ ## Used in "Makefile": SPATCH
+ 	QUIET_SPATCH			= @echo '   ' SPATCH $@;
+ 	QUIET_SPATCH_TEST		= @echo '   ' SPATCH TEST $(@:.build/%=%);
++	QUIET_SPATCH_CAT		= @echo '   ' SPATCH CAT $$^ \>$@;
+ 
+ ## Used in "Makefile": SPATCH_*TMPL (quoted for use in "define"'s)
+ 	QUIET_SPATCH_CAT_TMPL		= @echo '   ' SPATCH CAT $$$$^ \>$$@;
 -- 
 2.38.0.1092.g8c0298861b0
 
