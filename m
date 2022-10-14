@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8CC0C433FE
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 21:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95A98C4332F
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 21:46:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229590AbiJNVqR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 17:46:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36330 "EHLO
+        id S229739AbiJNVqU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 17:46:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229661AbiJNVp6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 17:45:58 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 013F35FDC2
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 14:45:55 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id bu30so9544118wrb.8
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 14:45:55 -0700 (PDT)
+        with ESMTP id S229740AbiJNVp7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 17:45:59 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 021F16386E
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 14:45:56 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id u10so9578935wrq.2
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 14:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NZZ/jRI252DzMeVq+3yot+76+uTRZX0nJIDrWhlOFuE=;
-        b=Od2uBJ6FRJy+1AZAouOF+wM/gZVGb2DeXZPbq4+/RbDcVWbrEd+PfeqLV7d2vONC8B
-         pHbKE9cSw9wA5rXgB6c1mr+twuJGQfnqg3AxQr4n9voYxt+UT9zKZH0GB5Hb9ubPC2Gv
-         e8ecZyRIt5aflvWDPdDiPq2sMx1gYhIN9NsarTPPN09pUK8hM29KqBG14c6NNxYD3Aby
-         PNMxYsJL3kVznHb5fh8fs4uvjAuUmrL+2F19tYTZ0jmmcRkx2Kd1OmcQnXaoSkbSwpvv
-         cOKIUXoic+ipLkTDDXoXuy58+OrUvcX8Y8oB1yiQhEie22muPPQm/a34b0/Oh5wDbJdZ
-         DSEw==
+        bh=LckyfNVoYdL232Tax7sXGyYKzM8LJlSJVTs/P20Tba4=;
+        b=nw08t7XAO+upe7zeHsli/Ql4LBQ7sK+QD48URIkPHYV+2urcp0MIyoHcIzdzSOj45N
+         8K1UoAYbuD19JQ5VHzgS7Ig0omTprKxAgE1n6IG1oe0WjMIGh10ArMN6ekOr1QnLu3Oo
+         BwLVMDpdyR83lYai1E1yljrigNxkGhZw+pVrBlBj3fq8Pu2Ly/USDaQdX1WiC45mCE5W
+         hTw9dy87ksGhAu2O6qSjkIucbQG9IGMnoMoCoYeGyHWhNKw/U4I7g4oovKxy/9OzKGy9
+         awHWUffnI7NRNltMhMP27Hzo7JovG+Kgq69Qcnp3mxxVdTy9O5eN6d9wzTBP9J+unnoT
+         giqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NZZ/jRI252DzMeVq+3yot+76+uTRZX0nJIDrWhlOFuE=;
-        b=DvBI31HLwnQL/ymZCmDAtWKzrXWlZ8s9/X1XKc48/PM6aWRllpIV5nnR5q8F8n9ss9
-         p8YXUGQylPXpo4hluRj7e0wmTftCwMnQOUFqpJmZPDzah7i/lWi5G9nIW6gDIVxZcXda
-         6dXGjxXEbj7e2embvOGGhkJINJTB5Gko8m0pKP+/tItF02wjxStIjsHyp7s1wEEbvnZQ
-         GORpyAzyUcrAs2p03p5bVZ3uTrRKb4UtkiC5TDFmjF7a4FIxw8IhLiRyb6Y1tG2wFUSF
-         oj0lTEIlSToJ4jgeqbjmztD0CRkAw4bQ2U244t3nWc2LSYyrarcJAboeyUL0NeBbfjwh
-         Rj2A==
-X-Gm-Message-State: ACrzQf11WUPuANl2miAVA0COh+X5xTjGPC1xkWFnk4ehNfaB97LGva/Q
-        AgPoqlRj0NBwNExzxOMapkRWMRumaJA=
-X-Google-Smtp-Source: AMsMyM739lY0EOSTPVlG8+WYE9h2ErH+KIEgXIT8h46Iic+ELCpfoWxCaUa59mxHxak6wBZVtkooqQ==
-X-Received: by 2002:a05:6000:1861:b0:232:2471:d405 with SMTP id d1-20020a056000186100b002322471d405mr4658469wri.130.1665783953804;
-        Fri, 14 Oct 2022 14:45:53 -0700 (PDT)
+        bh=LckyfNVoYdL232Tax7sXGyYKzM8LJlSJVTs/P20Tba4=;
+        b=ulwSBR1xQnsfXeWuy8PBTUug0cEkZVV65mT3ESL+WJx9qubAjtZiCdC0YEEOOGTGHM
+         Xvtu/e+b7EAEAwxd4KjUJ+XoCYYHkuegBn75I2rmuyL4+GFzm2EKN39zNxQNAtLETDnH
+         YDcUacKSGZql4/zhHknZg/FWC20scoDeYuan+RoRLl7nvyNYFsb35okFLGjlrQue2d4b
+         rWWI9XmKjsZIq0KP9R5Pu0aoEK9xVdiuXmTcRrdA+qbXkwSrTSYqvZO9hditiQUJ4eIW
+         UC/cvA/ChxOlLV7wE8sRpZ2HJj2hunc2e0KC6+JVc2ENNVhz2xa06awYZY/SaEB7x1ng
+         humw==
+X-Gm-Message-State: ACrzQf0hefXbOo2UyFNSjyYI9ikl4XWw8l2tmfGkRGXLEUC3Nm5PZuNS
+        JqLVgqFqvM94mJo2QWQXVwFpaZ9ZcMI=
+X-Google-Smtp-Source: AMsMyM6tuXJAUhCYpWnys+zpbu/MdeGL3PBwYKSokFKgLcqrQ85tNnrRnWNmUa/XI6KOI5AmDsB0dw==
+X-Received: by 2002:a5d:52cb:0:b0:21a:3cc5:f5f4 with SMTP id r11-20020a5d52cb000000b0021a3cc5f5f4mr4779555wrv.367.1665783954727;
+        Fri, 14 Oct 2022 14:45:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z6-20020a1cf406000000b003c6deb5c1edsm2982925wma.45.2022.10.14.14.45.53
+        by smtp.gmail.com with ESMTPSA id c25-20020a7bc019000000b003c6b874a0dfsm3922084wmb.14.2022.10.14.14.45.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Oct 2022 14:45:53 -0700 (PDT)
-Message-Id: <9c552239b57fb181189d3c6bb84a648a272cba62.1665783945.git.gitgitgadget@gmail.com>
+        Fri, 14 Oct 2022 14:45:54 -0700 (PDT)
+Message-Id: <295beb89ab10f001724fb64fa55944d05ee29fc7.1665783945.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com>
 References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
         <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com>
 From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 14 Oct 2022 21:45:38 +0000
-Subject: [PATCH v2 06/12] fsmonitor: add documentation for allowRemote and
- socketDir options
+Date:   Fri, 14 Oct 2022 21:45:39 +0000
+Subject: [PATCH v2 07/12] fsmonitor: prepare to share code between Mac OS and
+ Linux
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,116 +72,341 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Eric DeCosta <edecosta@mathworks.com>
 
-Add documentation for 'fsmonitor.allowRemote' and 'fsmonitor.socketDir'.
-Call-out experimental nature of 'fsmonitor.allowRemote' and limited
-filesystem support for 'fsmonitor.socketDir'.
+Linux and Mac OS can share some of the code originally developed for Mac OS.
+
+Minor update to compat/fsmonitor/fsm-ipc-unix.c to make it cross-platform.
+Mac OS and Linux can share fsm-ipc-unix.c
+
+Both platforms can also share compat/fsmonitor/fsm-settings-unix.c but we
+will leave room for future, platform-specific checks by having the platform-
+specific implementations call into fsm-settings-unix.
 
 Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
 ---
- Documentation/config.txt                   |  2 ++
- Documentation/config/fsmonitor--daemon.txt | 11 +++++++
- Documentation/git-fsmonitor--daemon.txt    | 37 ++++++++++++++++++++--
- 3 files changed, 47 insertions(+), 3 deletions(-)
- create mode 100644 Documentation/config/fsmonitor--daemon.txt
+ Makefile                                      |  9 ++-
+ compat/fsmonitor/fsm-health-linux.c           | 24 +++++++
+ .../{fsm-ipc-darwin.c => fsm-ipc-unix.c}      |  8 +--
+ compat/fsmonitor/fsm-settings-darwin.c        | 57 +----------------
+ compat/fsmonitor/fsm-settings-linux.c         | 11 ++++
+ compat/fsmonitor/fsm-settings-unix.c          | 62 +++++++++++++++++++
+ compat/fsmonitor/fsm-settings-unix.h          | 11 ++++
+ config.mak.uname                              |  1 +
+ contrib/buildsystems/CMakeLists.txt           | 17 ++++-
+ 9 files changed, 138 insertions(+), 62 deletions(-)
+ create mode 100644 compat/fsmonitor/fsm-health-linux.c
+ rename compat/fsmonitor/{fsm-ipc-darwin.c => fsm-ipc-unix.c} (89%)
+ create mode 100644 compat/fsmonitor/fsm-settings-linux.c
+ create mode 100644 compat/fsmonitor/fsm-settings-unix.c
+ create mode 100644 compat/fsmonitor/fsm-settings-unix.h
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5b5b9765699..1e205831656 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -423,6 +423,8 @@ include::config/filter.txt[]
+diff --git a/Makefile b/Makefile
+index 9553d590824..bbbde00ce49 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2036,13 +2036,20 @@ endif
  
- include::config/fsck.txt[]
+ ifdef FSMONITOR_DAEMON_BACKEND
+ 	COMPAT_CFLAGS += -DHAVE_FSMONITOR_DAEMON_BACKEND
++	ifdef FSMONITOR_DAEMON_COMMON
++		COMPAT_OBJS += compat/fsmonitor/fsm-ipc-$(FSMONITOR_DAEMON_COMMON).o
++	else
++		COMPAT_OBJS += compat/fsmonitor/fsm-ipc-$(FSMONITOR_DAEMON_BACKEND).o
++	endif
+ 	COMPAT_OBJS += compat/fsmonitor/fsm-listen-$(FSMONITOR_DAEMON_BACKEND).o
+ 	COMPAT_OBJS += compat/fsmonitor/fsm-health-$(FSMONITOR_DAEMON_BACKEND).o
+-	COMPAT_OBJS += compat/fsmonitor/fsm-ipc-$(FSMONITOR_DAEMON_BACKEND).o
+ endif
  
-+include::config/fsmonitor--daemon.txt[]
-+
- include::config/gc.txt[]
- 
- include::config/gitcvs.txt[]
-diff --git a/Documentation/config/fsmonitor--daemon.txt b/Documentation/config/fsmonitor--daemon.txt
+ ifdef FSMONITOR_OS_SETTINGS
+ 	COMPAT_CFLAGS += -DHAVE_FSMONITOR_OS_SETTINGS
++	ifdef FSMONITOR_DAEMON_COMMON
++		COMPAT_OBJS += compat/fsmonitor/fsm-settings-$(FSMONITOR_DAEMON_COMMON).o
++	endif
+ 	COMPAT_OBJS += compat/fsmonitor/fsm-settings-$(FSMONITOR_OS_SETTINGS).o
+ 	COMPAT_OBJS += compat/fsmonitor/fsm-path-utils-$(FSMONITOR_OS_SETTINGS).o
+ endif
+diff --git a/compat/fsmonitor/fsm-health-linux.c b/compat/fsmonitor/fsm-health-linux.c
 new file mode 100644
-index 00000000000..c225c6c9e74
+index 00000000000..b9f709e8548
 --- /dev/null
-+++ b/Documentation/config/fsmonitor--daemon.txt
++++ b/compat/fsmonitor/fsm-health-linux.c
+@@ -0,0 +1,24 @@
++#include "cache.h"
++#include "config.h"
++#include "fsmonitor.h"
++#include "fsm-health.h"
++#include "fsmonitor--daemon.h"
++
++int fsm_health__ctor(struct fsmonitor_daemon_state *state)
++{
++	return 0;
++}
++
++void fsm_health__dtor(struct fsmonitor_daemon_state *state)
++{
++	return;
++}
++
++void fsm_health__loop(struct fsmonitor_daemon_state *state)
++{
++	return;
++}
++
++void fsm_health__stop_async(struct fsmonitor_daemon_state *state)
++{
++}
+diff --git a/compat/fsmonitor/fsm-ipc-darwin.c b/compat/fsmonitor/fsm-ipc-unix.c
+similarity index 89%
+rename from compat/fsmonitor/fsm-ipc-darwin.c
+rename to compat/fsmonitor/fsm-ipc-unix.c
+index ce843d63348..3ba3b9e17ed 100644
+--- a/compat/fsmonitor/fsm-ipc-darwin.c
++++ b/compat/fsmonitor/fsm-ipc-unix.c
+@@ -10,7 +10,7 @@ static GIT_PATH_FUNC(fsmonitor_ipc__get_default_path, "fsmonitor--daemon.ipc")
+ const char *fsmonitor_ipc__get_path(struct repository *r)
+ {
+ 	static const char *ipc_path = NULL;
+-	SHA_CTX sha1ctx;
++	git_SHA_CTX sha1ctx;
+ 	char *sock_dir = NULL;
+ 	struct strbuf ipc_file = STRBUF_INIT;
+ 	unsigned char hash[SHA_DIGEST_LENGTH];
+@@ -28,9 +28,9 @@ const char *fsmonitor_ipc__get_path(struct repository *r)
+ 		return ipc_path;
+ 	}
+ 
+-	SHA1_Init(&sha1ctx);
+-	SHA1_Update(&sha1ctx, r->worktree, strlen(r->worktree));
+-	SHA1_Final(hash, &sha1ctx);
++	git_SHA1_Init(&sha1ctx);
++	git_SHA1_Update(&sha1ctx, r->worktree, strlen(r->worktree));
++	git_SHA1_Final(hash, &sha1ctx);
+ 
+ 	repo_config_get_string(r, "fsmonitor.socketdir", &sock_dir);
+ 
+diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
+index 6abbc7af3ab..2f5c6a88bf0 100644
+--- a/compat/fsmonitor/fsm-settings-darwin.c
++++ b/compat/fsmonitor/fsm-settings-darwin.c
+@@ -1,62 +1,11 @@
+ #include "config.h"
+ #include "fsmonitor.h"
+ #include "fsmonitor-ipc.h"
+-#include "fsmonitor-settings.h"
+ #include "fsmonitor-path-utils.h"
+-
+- /*
+- * For the builtin FSMonitor, we create the Unix domain socket for the
+- * IPC in the .git directory.  If the working directory is remote,
+- * then the socket will be created on the remote file system.  This
+- * can fail if the remote file system does not support UDS file types
+- * (e.g. smbfs to a Windows server) or if the remote kernel does not
+- * allow a non-local process to bind() the socket.  (These problems
+- * could be fixed by moving the UDS out of the .git directory and to a
+- * well-known local directory on the client machine, but care should
+- * be taken to ensure that $HOME is actually local and not a managed
+- * file share.)
+- *
+- * FAT32 and NTFS working directories are problematic too.
+- *
+- * The builtin FSMonitor uses a Unix domain socket in the .git
+- * directory for IPC.  These Windows drive formats do not support
+- * Unix domain sockets, so mark them as incompatible for the daemon.
+- *
+- */
+-static enum fsmonitor_reason check_uds_volume(struct repository *r)
+-{
+-	struct fs_info fs;
+-	const char *ipc_path = fsmonitor_ipc__get_path(r);
+-	struct strbuf path = STRBUF_INIT;
+-	strbuf_add(&path, ipc_path, strlen(ipc_path));
+-
+-	if (fsmonitor__get_fs_info(dirname(path.buf), &fs) == -1) {
+-		strbuf_release(&path);
+-		return FSMONITOR_REASON_ERROR;
+-	}
+-
+-	strbuf_release(&path);
+-
+-	if (fs.is_remote ||
+-		!strcmp(fs.typename, "msdos") ||
+-		!strcmp(fs.typename, "ntfs")) {
+-		free(fs.typename);
+-		return FSMONITOR_REASON_NOSOCKETS;
+-	}
+-
+-	free(fs.typename);
+-	return FSMONITOR_REASON_OK;
+-}
++#include "fsmonitor-settings.h"
++#include "fsm-settings-unix.h"
+ 
+ enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc)
+ {
+-	enum fsmonitor_reason reason;
+-
+-	if (ipc) {
+-		reason = check_uds_volume(r);
+-		if (reason != FSMONITOR_REASON_OK)
+-			return reason;
+-	}
+-
+-	return FSMONITOR_REASON_OK;
++    return fsm_os__incompatible_unix(r, ipc);
+ }
+diff --git a/compat/fsmonitor/fsm-settings-linux.c b/compat/fsmonitor/fsm-settings-linux.c
+new file mode 100644
+index 00000000000..2f5c6a88bf0
+--- /dev/null
++++ b/compat/fsmonitor/fsm-settings-linux.c
 @@ -0,0 +1,11 @@
-+fsmonitor.allowRemote::
-+    By default, the fsmonitor daemon refuses to work against network-mounted
-+    repositories. Setting `fsmonitor.allowRemote` to `true` overrides this
-+    behavior.  Only respected when `core.fsmonitor` is set to `true`.
++#include "config.h"
++#include "fsmonitor.h"
++#include "fsmonitor-ipc.h"
++#include "fsmonitor-path-utils.h"
++#include "fsmonitor-settings.h"
++#include "fsm-settings-unix.h"
 +
-+fsmonitor.socketDir::
-+    This Mac OS-specific option, if set, specifies the directory in
-+    which to create the Unix domain socket used for communication
-+    between the fsmonitor daemon and various Git commands. The directory must
-+    reside on a native Mac OS filesystem.  Only respected when `core.fsmonitor`
-+    is set to `true`.
-diff --git a/Documentation/git-fsmonitor--daemon.txt b/Documentation/git-fsmonitor--daemon.txt
-index cc142fb8612..8238eadb0e1 100644
---- a/Documentation/git-fsmonitor--daemon.txt
-+++ b/Documentation/git-fsmonitor--daemon.txt
-@@ -3,7 +3,7 @@ git-fsmonitor{litdd}daemon(1)
++enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc)
++{
++    return fsm_os__incompatible_unix(r, ipc);
++}
+diff --git a/compat/fsmonitor/fsm-settings-unix.c b/compat/fsmonitor/fsm-settings-unix.c
+new file mode 100644
+index 00000000000..6b43e26720e
+--- /dev/null
++++ b/compat/fsmonitor/fsm-settings-unix.c
+@@ -0,0 +1,62 @@
++#include "config.h"
++#include "fsmonitor.h"
++#include "fsmonitor-ipc.h"
++#include "fsmonitor-path-utils.h"
++#include "fsm-settings-unix.h"
++
++ /*
++ * For the builtin FSMonitor, we create the Unix domain socket for the
++ * IPC in the .git directory.  If the working directory is remote,
++ * then the socket will be created on the remote file system.  This
++ * can fail if the remote file system does not support UDS file types
++ * (e.g. smbfs to a Windows server) or if the remote kernel does not
++ * allow a non-local process to bind() the socket.  (These problems
++ * could be fixed by moving the UDS out of the .git directory and to a
++ * well-known local directory on the client machine, but care should
++ * be taken to ensure that $HOME is actually local and not a managed
++ * file share.)
++ *
++ * FAT32 and NTFS working directories are problematic too.
++ *
++ * The builtin FSMonitor uses a Unix domain socket in the .git
++ * directory for IPC.  These Windows drive formats do not support
++ * Unix domain sockets, so mark them as incompatible for the daemon.
++ *
++ */
++static enum fsmonitor_reason check_uds_volume(struct repository *r)
++{
++	struct fs_info fs;
++	const char *ipc_path = fsmonitor_ipc__get_path(r);
++	struct strbuf path = STRBUF_INIT;
++	strbuf_add(&path, ipc_path, strlen(ipc_path));
++
++	if (fsmonitor__get_fs_info(dirname(path.buf), &fs) == -1) {
++		strbuf_release(&path);
++		return FSMONITOR_REASON_ERROR;
++	}
++
++	strbuf_release(&path);
++
++	if (fs.is_remote ||
++		!strcmp(fs.typename, "msdos") ||
++		!strcmp(fs.typename, "ntfs")) {
++		free(fs.typename);
++		return FSMONITOR_REASON_NOSOCKETS;
++	}
++
++	free(fs.typename);
++	return FSMONITOR_REASON_OK;
++}
++
++enum fsmonitor_reason fsm_os__incompatible_unix(struct repository *r, int ipc)
++{
++	enum fsmonitor_reason reason;
++
++	if (ipc) {
++		reason = check_uds_volume(r);
++		if (reason != FSMONITOR_REASON_OK)
++			return reason;
++	}
++
++	return FSMONITOR_REASON_OK;
++}
+diff --git a/compat/fsmonitor/fsm-settings-unix.h b/compat/fsmonitor/fsm-settings-unix.h
+new file mode 100644
+index 00000000000..8a62971190b
+--- /dev/null
++++ b/compat/fsmonitor/fsm-settings-unix.h
+@@ -0,0 +1,11 @@
++#ifndef FSM_SETTINGS_UNIX_H
++#define FSM_SETTINGS_UNIX_H
++
++#ifdef HAVE_FSMONITOR_OS_SETTINGS
++/*
++ * Check for compatibility on unix-like systems (e.g. Darwin and Linux)
++ */
++enum fsmonitor_reason fsm_os__incompatible_unix(struct repository *r, int ipc);
++#endif /* HAVE_FSMONITOR_OS_SETTINGS */
++
++#endif /* FSM_SETTINGS_UNIX_H */
+diff --git a/config.mak.uname b/config.mak.uname
+index d63629fe807..9f716cfba81 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -165,6 +165,7 @@ ifeq ($(uname_S),Darwin)
+ 	ifndef NO_UNIX_SOCKETS
+ 	FSMONITOR_DAEMON_BACKEND = darwin
+ 	FSMONITOR_OS_SETTINGS = darwin
++	FSMONITOR_DAEMON_COMMON = unix
+ 	endif
+ 	endif
  
- NAME
- ----
--git-fsmonitor--daemon - A Built-in File System Monitor
-+git-fsmonitor--daemon - A Built-in Filesystem Monitor
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 787738e6fa3..4c6e84da346 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -304,7 +304,17 @@ else()
+ endif()
  
- SYNOPSIS
- --------
-@@ -17,7 +17,7 @@ DESCRIPTION
- -----------
+ if(SUPPORTS_SIMPLE_IPC)
+-	if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
++	if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
++		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-ipc-unix.c)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-health-linux.c)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-linux.c)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-path-utils-linux.c)
++
++		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-unix.c)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-linux.c)
++	elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-win32.c)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-health-win32.c)
+@@ -315,12 +325,13 @@ if(SUPPORTS_SIMPLE_IPC)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-win32.c)
+ 	elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+ 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
+-		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-darwin.c)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-ipc-unix.c)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-health-darwin.c)
+-		list(APPEND compat_SOURCES compat/fsmonitor/fsm-ipc-darwin.c)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-darwin.c)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-path-utils-darwin.c)
  
- A daemon to watch the working directory for file and directory
--changes using platform-specific file system notification facilities.
-+changes using platform-specific filesystem notification facilities.
- 
- This daemon communicates directly with commands like `git status`
- using the link:technical/api-simple-ipc.html[simple IPC] interface
-@@ -63,13 +63,44 @@ CAVEATS
- -------
- 
- The fsmonitor daemon does not currently know about submodules and does
--not know to filter out file system events that happen within a
-+not know to filter out filesystem events that happen within a
- submodule.  If fsmonitor daemon is watching a super repo and a file is
- modified within the working directory of a submodule, it will report
- the change (as happening against the super repo).  However, the client
- will properly ignore these extra events, so performance may be affected
- but it will not cause an incorrect result.
- 
-+By default, the fsmonitor daemon refuses to work against network-mounted
-+repositories; this may be overridden by setting `fsmonitor.allowRemote` to
-+`true`. Note, however, that the fsmonitor daemon is not guaranteed to work
-+correctly with all network-mounted repositories and such use is considered
-+experimental.
-+
-+On Mac OS, the inter-process communication (IPC) between various Git
-+commands and the fsmonitor daemon is done via a Unix domain socket (UDS) -- a
-+special type of file -- which is supported by native Mac OS filesystems,
-+but not on network-mounted filesystems, NTFS, or FAT32.  Other filesystems
-+may or may not have the needed support; the fsmonitor daemon is not guaranteed
-+to work with these filesystems and such use is considered experimental.
-+
-+By default, the socket is created in the `.git` directory, however, if the
-+`.git` directory is on a network-mounted filesystem, it will be instead be
-+created at `$HOME/.git-fsmonitor-*` unless `$HOME` itself is on a
-+network-mounted filesystem in which case you must set the configuration
-+variable `fsmonitor.socketDir` to the path of a directory on a Mac OS native
-+filesystem in which to create the socket file.
-+
-+If none of the above directories (`.git`, `$HOME`, or `fsmonitor.socketDir`)
-+is on a native Mac OS file filesystem the fsmonitor daemon will report an
-+error that will cause the daemon and the currently running command to exit.
-+
-+CONFIGURATION
-+-------------
-+
-+include::includes/cmd-config-section-all.txt[]
-+
-+include::config/fsmonitor--daemon.txt[]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
+ 		add_compile_definitions(HAVE_FSMONITOR_OS_SETTINGS)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-unix.c)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-settings-darwin.c)
+ 	endif()
+ endif()
 -- 
 gitgitgadget
 
