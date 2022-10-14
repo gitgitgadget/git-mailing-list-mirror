@@ -2,192 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94DAEC4332F
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 18:28:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29462C433FE
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 18:31:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230234AbiJNS2z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 14:28:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36976 "EHLO
+        id S229962AbiJNSbT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 14:31:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbiJNS2y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 14:28:54 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27D421D2F49
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 11:28:53 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id n9so3657884wms.1
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 11:28:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7NcK76NwrJjWQFZ2ydrUWUiJqmmCzS6Hx6oSwDMI0Yo=;
-        b=i5bI6CzcnLl/5xhzsNz82elDdB4xBl/pbo73yt+J5aNSgAJWDZvyFqvZlpajUZ+PzL
-         haZ2KbGK9GH1FY+vbSGzp1bzPvQRQBMrkJbsIFYgd5RRulza/I752qy6GYauQB1xskB0
-         akSqF9inrV5phtE7mJI5bKOBsAAyr2SjGaqXZMKsbSLE9ggE9U7bXmt6MnVqOB/BYaW9
-         tAYZcFKAHXm1/xpNhm/Y1kljKRSZlM24GgHthF3IrIOyVv7XY3mRceMuN+kOU8u7sbFT
-         DKzQaiyvUMw96KkEThhaRiJKYQnieyN9PSLaDlwJHREU5P9PxNDFUHdZeQuZL/sZJlZl
-         xbkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7NcK76NwrJjWQFZ2ydrUWUiJqmmCzS6Hx6oSwDMI0Yo=;
-        b=jxFadvfat60uPgeVYHrXDCmnfodJRs4pTSQYvHUYQadwaWNCIaeBqhY9vkbT17QgH9
-         mPb8neMiKkM/lNpjdZL4T8h6jGh3nyPXsqOVdx9yUQMQSO6uhTYkzgGGsQve6Lz5k7n+
-         6IewVENnUeC0ZlZu+CffmwFE+TC9SLpHtcmztNl8sB/It49Od5ArKvS3Y9jmTJeGJJBA
-         BLWEF3pErCCBG1eWxd9C7kyseYPnlGsFv2D2IBJnbLrFF9CQJizMuQzyXdwXRROrJ7j5
-         /GrdGhU1WD3JgRj9j555x/zIzwfClEy5guM7MekhjMENFEY25BOB1MvDpWHOpbSzYMKU
-         JDJg==
-X-Gm-Message-State: ACrzQf2qKSti294X9DGxBwaI9YZMLBYonxePz7o0tEaG8nDz5q7PnV0h
-        EBHz2pxj+P1FZUuoTuibDX6M9Z9LDaE=
-X-Google-Smtp-Source: AMsMyM5HdC/rtjvWUPY1dZrh9ai+Cp2iT9ZD6znurysja5dYEjdTcikaOwoQ+S0gvN1b6KyfghsESg==
-X-Received: by 2002:a05:600c:689b:b0:3c2:fd6e:1fe5 with SMTP id fn27-20020a05600c689b00b003c2fd6e1fe5mr4543661wmb.99.1665772131343;
-        Fri, 14 Oct 2022 11:28:51 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u7-20020a7bc047000000b003b5054c6f87sm2706171wmc.21.2022.10.14.11.28.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Oct 2022 11:28:50 -0700 (PDT)
-Message-Id: <pull.1362.v4.git.git.1665772130030.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1362.v3.git.git.1665734502591.gitgitgadget@gmail.com>
-References: <pull.1362.v3.git.git.1665734502591.gitgitgadget@gmail.com>
-From:   "nsengaw4c via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 14 Oct 2022 18:28:49 +0000
-Subject: [PATCH v4] [OUTREACHY] t1002: modernize outdated conditional
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S230048AbiJNSbR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 14:31:17 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C7DB181D95
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 11:31:16 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E6A691C3A7C;
+        Fri, 14 Oct 2022 14:31:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=gZW9bL9iH3WV
+        6TiYQBxFddz1wWe8vtRxM358gbh4k+0=; b=WtmilCZ2yQotqhukqdrRsXew2/FG
+        PlGntiZ08P6lbI3xx1tNt0U7EvtavaMpruPjqFpFgXnX2YKmbwfkAZdszNR7TDMl
+        rwIkIo6fAsMvzUdQyDCVNWA9bg/MlUXt+/6HL6iGVfvNuXtV0agmc1uxfODbwOzP
+        sc76MC8b6AVh/xg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DF8FF1C3A7B;
+        Fri, 14 Oct 2022 14:31:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 199511C3A7A;
+        Fri, 14 Oct 2022 14:31:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 02/10] merge: remove always-the-same "verbose" arguments
+References: <cover-00.10-00000000000-20221014T153426Z-avarab@gmail.com>
+        <patch-02.10-543ccbb1ee1-20221014T153426Z-avarab@gmail.com>
+Date:   Fri, 14 Oct 2022 11:31:12 -0700
+In-Reply-To: <patch-02.10-543ccbb1ee1-20221014T153426Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 14 Oct
+ 2022 17:40:14
+        +0200")
+Message-ID: <xmqqzgdy8dfz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        nsengaw4c <nsengiyumvawilberforce@gmail.com>,
-        Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 61AA3C20-4BEE-11ED-A31F-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Tests in this script use an unusual and hard to reason about
-conditional construct
+> Simplify the code that builds the arguments for the "read-tree"
+> invocation in reset_hard() and read_empty() to remove the "verbose"
+> parameter.
+>
+> Before 172b6428d06 (do not overwrite untracked during merge from
+> unborn branch, 2010-11-14) there was a "reset_hard()" function that
+> would be called in two places, one of those passed a "verbose=3D1", the
+> other a "verbose=3D0".
+>
+> After 172b6428d06 when read_empty() was split off from reset_hard()
+> both of these functions only had one caller. The "verbose" in
+> read_empty() would always be false, and the one in reset_hard() would
+> always be true.
+>
+> There was never a good reason for the code to act this way, it
+> happened because the read_empty() function was a copy/pasted and
+> adjusted version of reset_hard().
+>
+> Since we're no longer conditionally adding the "-v" parameter
+> here (and we'd only add it for "reset_hard()" we'll be able to move to
+> a simpler and safer run-command API in the subsequent commit.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  builtin/merge.c | 13 +++++--------
+>  1 file changed, 5 insertions(+), 8 deletions(-)
 
-    if expression; then false; else :; fi
+I haven't checked the topics in flight that touch the same file, but
+as these are file-scope static, it is easy to check the correctness,
+and the change of function signature will mean that compilers will
+notice after a merge if there is somebody else who still wants them
+to be conditionally verbose.
 
-Change them to use more idiomatic construct:
+I wonder if these were always unused, or we lost different callers
+over time, though.
 
-    ! expression
-
-Signed-off-by: Nsengiyumva  Wilberforce <nsengiyumvawilberforce@gmail.com>
----
-    [OUTREACHY]cleaning t1002-read-tree-m-u-2way.sh
-    
-    This is an update in t1002-read-tree-m-u-2way.sh. all the tests that use
-    the unusual construct: if read_tree_u_must_succeed -m -u $treeH $treeM;
-    then false; else :; fi have been updated to ! read_tree_u_must_succeed
-    -m -u $treeH $treeM "I am an outreachy applicant" CC: Christian Couder
-    christian.couder@gmail.com, Hariom verma hariom18599@gmail.com
-    Signed-off-by: wilberforce nsengiyumvawilberforce@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1362%2Fnsengiyumva-wilberforce%2Ft1002_usual_construct_updated-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1362/nsengiyumva-wilberforce/t1002_usual_construct_updated-v4
-Pull-Request: https://github.com/git/git/pull/1362
-
-Range-diff vs v3:
-
- 1:  d019ce50dc9 ! 1:  c0109d947d4 [OUTREACHY] t1002: modernize outdated conditional
-     @@ Commit message
-      
-              ! expression
-      
-     -    Cc: Christian Couder  <christian.couder@gmail.com>
-     -    Cc: Hariom Verma <hariom18599@gmail.com>
-          Signed-off-by: Nsengiyumva  Wilberforce <nsengiyumvawilberforce@gmail.com>
-      
-       ## t/t1002-read-tree-m-u-2way.sh ##
-
-
- t/t1002-read-tree-m-u-2way.sh | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
-index bd5313caec9..cdc077ce12d 100755
---- a/t/t1002-read-tree-m-u-2way.sh
-+++ b/t/t1002-read-tree-m-u-2way.sh
-@@ -154,7 +154,7 @@ test_expect_success \
-      read_tree_u_must_succeed --reset -u $treeH &&
-      echo frotz frotz >frotz &&
-      git update-index --add frotz &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- test_expect_success \
-     '9 - conflicting addition.' \
-@@ -163,7 +163,7 @@ test_expect_success \
-      echo frotz frotz >frotz &&
-      git update-index --add frotz &&
-      echo frotz >frotz &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- test_expect_success \
-     '10 - path removed.' \
-@@ -186,7 +186,7 @@ test_expect_success \
-      echo rezrov >rezrov &&
-      git update-index --add rezrov &&
-      echo rezrov rezrov >rezrov &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- test_expect_success \
-     '12 - unmatching local changes being removed.' \
-@@ -194,7 +194,7 @@ test_expect_success \
-      read_tree_u_must_succeed --reset -u $treeH &&
-      echo rezrov rezrov >rezrov &&
-      git update-index --add rezrov &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- test_expect_success \
-     '13 - unmatching local changes being removed.' \
-@@ -203,7 +203,7 @@ test_expect_success \
-      echo rezrov rezrov >rezrov &&
-      git update-index --add rezrov &&
-      echo rezrov >rezrov &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- cat >expected <<EOF
- -100644 X 0	nitfol
-@@ -251,7 +251,7 @@ test_expect_success \
-      read_tree_u_must_succeed --reset -u $treeH &&
-      echo bozbar bozbar >bozbar &&
-      git update-index --add bozbar &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- test_expect_success \
-     '17 - conflicting local change.' \
-@@ -260,7 +260,7 @@ test_expect_success \
-      echo bozbar bozbar >bozbar &&
-      git update-index --add bozbar &&
-      echo bozbar bozbar bozbar >bozbar &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- test_expect_success \
-     '18 - local change already having a good result.' \
-@@ -316,7 +316,7 @@ test_expect_success \
-      echo bozbar >bozbar &&
-      git update-index --add bozbar &&
-      echo gnusto gnusto >bozbar &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- # Also make sure we did not break DF vs DF/DF case.
- test_expect_success \
-
-base-commit: d420dda0576340909c3faff364cfbd1485f70376
--- 
-gitgitgadget
+>
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 5900b81729d..3bb49d805b4 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -345,14 +345,12 @@ static int save_state(struct object_id *stash)
+>  	return rc;
+>  }
+> =20
+> -static void read_empty(const struct object_id *oid, int verbose)
+> +static void read_empty(const struct object_id *oid)
+>  {
+>  	int i =3D 0;
+>  	const char *args[7];
+> =20
+>  	args[i++] =3D "read-tree";
+> -	if (verbose)
+> -		args[i++] =3D "-v";
+>  	args[i++] =3D "-m";
+>  	args[i++] =3D "-u";
+>  	args[i++] =3D empty_tree_oid_hex();
+> @@ -363,14 +361,13 @@ static void read_empty(const struct object_id *oi=
+d, int verbose)
+>  		die(_("read-tree failed"));
+>  }
+> =20
+> -static void reset_hard(const struct object_id *oid, int verbose)
+> +static void reset_hard(const struct object_id *oid)
+>  {
+>  	int i =3D 0;
+>  	const char *args[6];
+> =20
+>  	args[i++] =3D "read-tree";
+> -	if (verbose)
+> -		args[i++] =3D "-v";
+> +	args[i++] =3D "-v";
+>  	args[i++] =3D "--reset";
+>  	args[i++] =3D "-u";
+>  	args[i++] =3D oid_to_hex(oid);
+> @@ -385,7 +382,7 @@ static void restore_state(const struct object_id *h=
+ead,
+>  {
+>  	struct strvec args =3D STRVEC_INIT;
+> =20
+> -	reset_hard(head, 1);
+> +	reset_hard(head);
+> =20
+>  	if (is_null_oid(stash))
+>  		goto refresh_cache;
+> @@ -1470,7 +1467,7 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+>  					       check_trust_level);
+> =20
+>  		remote_head_oid =3D &remoteheads->item->object.oid;
+> -		read_empty(remote_head_oid, 0);
+> +		read_empty(remote_head_oid);
+>  		update_ref("initial pull", "HEAD", remote_head_oid, NULL, 0,
+>  			   UPDATE_REFS_DIE_ON_ERR);
+>  		goto done;
