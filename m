@@ -2,192 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8260EC433FE
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 08:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D08E9C4332F
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 08:04:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229832AbiJNIBv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 04:01:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40348 "EHLO
+        id S229684AbiJNIEh convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 14 Oct 2022 04:04:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbiJNIBr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 04:01:47 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68FA51B94F4
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:01:45 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id f11so6325396wrm.6
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:01:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MHoYupJRYh7xdqzcfzGtVybXf6tZA6pQM7XoF/ollJw=;
-        b=m6YYvfHdiNg925WfQsdTYKF/wHJEqcQ42r2ID6c1oB8+Zjt2jioo4Sw7KKUv42w+zF
-         GkIAPX0DcTqfsH+ThSnVKGyHjzlu4EWzs7PIz6m6OiWzKYtfa9FGi2yMjjMUM4Tuiegi
-         6FNzl6IBrCq4A4kx4ghaTkVhtwM9EdiHFuCQcK86N60ZCTm5R+OHFQUxJyywrbMJgQRa
-         56PsGk660THuaigDXwnS2rHwP1QbfHh/u6E9XG8VKtL5kzvpof+MOReqERKbqr8jRrlY
-         8nQRUPjFpo8WCl5NRmbkgVSakDQ1cSFpbl0aX9He+h25zVUIb1Z/lc68nCazkYTUhGSs
-         QN/g==
+        with ESMTP id S229671AbiJNIEf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 04:04:35 -0400
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 082AE1BB979
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:04:34 -0700 (PDT)
+Received: by mail-ej1-f50.google.com with SMTP id d26so8793967ejc.8
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 01:04:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MHoYupJRYh7xdqzcfzGtVybXf6tZA6pQM7XoF/ollJw=;
-        b=7KCeTzBM1/cqlgzVVvHA211pO4lJDMMfz34cMp17OEWOk7c5j/UipuOKRxKuX/AWiV
-         YdFZpAiqJf735GW2SPofO5vAjINPni1ZKigGGpQ//YBIQGgJK/1fKahgr3hsfUYemTon
-         N2c+gnPOFDkuMGUGywxDjVlhl+IKVgDL7pLTMSHgPtUkrvoVFNh0uiztuFs8rLE1dkOc
-         k8u7U5qsMBwwye9Rl+KPj+BOQoo+166XYOqY/xKhREZXtquzVuX/buKIlCqYGR9fdrfV
-         H03Zrw2bdkLgV6S2h/kHF+Qrhrr2mddJDkU03cuYc5294WsXCE7DvoRSKhlwFGr3cWPj
-         5wug==
-X-Gm-Message-State: ACrzQf1vkrf/X+HWmYe9nkLl+widJt2Lms01ja/s5BnltI1k2/rQ0N+R
-        uXHF2YQE/f+bazGkB1bdyj3agOxvVu8=
-X-Google-Smtp-Source: AMsMyM5aj3KbA9P+F+vDZb0gE8yXHOjGkXT975KGsrQLHOCJX6XY4MYbKVc0yWkMYeP/qP5o3AJ1XQ==
-X-Received: by 2002:adf:d204:0:b0:22e:397:d489 with SMTP id j4-20020adfd204000000b0022e0397d489mr2310138wrh.639.1665734503601;
-        Fri, 14 Oct 2022 01:01:43 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b9-20020a056000054900b0022ac672654dsm1337148wrf.58.2022.10.14.01.01.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Oct 2022 01:01:43 -0700 (PDT)
-Message-Id: <pull.1362.v3.git.git.1665734502591.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1362.v2.git.git.1665733647421.gitgitgadget@gmail.com>
-References: <pull.1362.v2.git.git.1665733647421.gitgitgadget@gmail.com>
-From:   "nsengaw4c via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 14 Oct 2022 08:01:42 +0000
-Subject: [PATCH v3] [OUTREACHY] t1002: modernize outdated conditional
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=PMBcjMehFKgEN5zDmsRA6RwCO9s4vMG3PUURf2gx0ZU=;
+        b=6wUao/hAsO5UutvFhsqkPoVLhbXv2wyftbbXrf1aZu0z7KK/9AHgnKFMZ/T+82o9Bv
+         RH1iilKZHuVA6VF9jxlUhcvwRo2g13yvCGoGpHkVG51qmy/jSAwf2lLeuu/pvNha+pSj
+         b9RqOnyL8mKJ1YuE3NMnEiJ16Nuqf90Wkou4N8gwCz/XIsCHGnsa7POyh2km437OI4gs
+         BpFfE/kciLw3N2Wzrqh3QESytHbmZa41gRmNmE287Ed+JiAkOui3xV4X7GgLu4kESsor
+         FDLe6tIMBwq468doDZAXxoS78389I7RhnxEvDIW0+QSEpIGU5apWTrAp0DEgm1j0Q8zI
+         Yf3g==
+X-Gm-Message-State: ACrzQf0yQAx94648Rqw58CGXV7h4B/ruU0shtUjRZ8zLMbi20BcgTHXo
+        kciScSnomxcfgAmB7Dti72LSPW5DpHJHXrN2/Z/7dznSyAw=
+X-Google-Smtp-Source: AMsMyM7U8eMD/CfNvSYSAORmtgQL9oY+sfvUwh17BwGZxH2U2DZJl78POA8tJ5olK9KGBDhFpIRBn0QOawDH0TvSc18=
+X-Received: by 2002:a17:906:9756:b0:78b:8c9b:3b1d with SMTP id
+ o22-20020a170906975600b0078b8c9b3b1dmr2625508ejy.256.1665734672210; Fri, 14
+ Oct 2022 01:04:32 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     nsengaw4c <nsengiyumvawilberforce@gmail.com>,
-        Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+References: <CAPMMpogcnwJDUazw82OB0DvdgvNS6hpUN9Qs69ppTFb1QFbLSg@mail.gmail.com>
+ <220930.86r0ztufwd.gmgdl@evledraar.gmail.com> <YznhYzWztkPc9pJk@tapette.crustytoothpaste.net>
+ <CAPMMpojy8OMxYT0WuZCOZjwvufmVucvoHPtvLHatopXvuk9K5Q@mail.gmail.com> <CABPp-BHaMCcLjdx2m4CALZQiTRQy_LovWfbdrga6XWhQJhoxWQ@mail.gmail.com>
+In-Reply-To: <CABPp-BHaMCcLjdx2m4CALZQiTRQy_LovWfbdrga6XWhQJhoxWQ@mail.gmail.com>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Fri, 14 Oct 2022 10:03:56 +0200
+Message-ID: <CA+JQ7M8s1W68+mzfe__+T5bJ821wYJqfgLBqA1=dSVH9Tx9fHA@mail.gmail.com>
+Subject: Re: icase pathspec magic support in ls-tree
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Tao Klerks <tao@klerks.biz>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+> I don't imagine I can make a perfectly correct and universal fix to
+> this, but with case-insensitive matching on ls-tree in an update hook
+> I believe I could reduce the frequency of this already-infrequent
+> issue by at least 1000X, which would suit my purposes just fine. In my
+> case filenames are mostly ansi-based, and I don't expect we've ever
+> had Turkish filenames (turkish "i" being the most famous case-folding
+> gotcha I think?).
 
-Tests in this script use an unusual and hard to reason about
-conditional construct
+How about doing it in something that's not ls-tree? Sounds like you
+already have a script, it just takes a bit too long?
 
-    if expression; then false; else :; fi
+Something similar to
 
-Change them to use more idiomatic construct:
+On Fri, Oct 14, 2022 at 6:59 AM Torsten Bögershausen <tboegi@web.de> wrote:
+>
+> For example, we can use Linux:
+>  git ls-files | tr 'A-Z' 'a-z' | sort | uniq -d ; echo $?
 
-    ! expression
+In a repo with many files, maybe use git diff --name-only and just run
+it periodically as a part of a check-in hook or something?
 
-Cc: Christian Couder  <christian.couder@gmail.com>
-Cc: Hariom Verma <hariom18599@gmail.com>
-Signed-off-by: Nsengiyumva  Wilberforce <nsengiyumvawilberforce@gmail.com>
----
-    [OUTREACHY]cleaning t1002-read-tree-m-u-2way.sh
-    
-    This is an update in t1002-read-tree-m-u-2way.sh. all the tests that use
-    the unusual construct: if read_tree_u_must_succeed -m -u $treeH $treeM;
-    then false; else :; fi have been updated to ! read_tree_u_must_succeed
-    -m -u $treeH $treeM "I am an outreachy applicant" CC: Christian Couder
-    christian.couder@gmail.com, Hariom verma hariom18599@gmail.com
-    Signed-off-by: wilberforce nsengiyumvawilberforce@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1362%2Fnsengiyumva-wilberforce%2Ft1002_usual_construct_updated-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1362/nsengiyumva-wilberforce/t1002_usual_construct_updated-v3
-Pull-Request: https://github.com/git/git/pull/1362
-
-Range-diff vs v2:
-
- 1:  8a9cd66d7d9 ! 1:  d019ce50dc9 [OUTREACHY] t1002: modernize outdated conditional
-     @@ Commit message
-      
-          Cc: Christian Couder  <christian.couder@gmail.com>
-          Cc: Hariom Verma <hariom18599@gmail.com>
-     -    Signed-off-by: Nsengiyumva  Wilberfore <nsengiyumvawilberforce@gmail.com>
-     +    Signed-off-by: Nsengiyumva  Wilberforce <nsengiyumvawilberforce@gmail.com>
-      
-       ## t/t1002-read-tree-m-u-2way.sh ##
-      @@ t/t1002-read-tree-m-u-2way.sh: test_expect_success \
+  git diff --name-only HEAD~100..HEAD | tr 'A-Z' 'a-z' | sort | uniq -d
 
 
- t/t1002-read-tree-m-u-2way.sh | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+On Fri, Oct 14, 2022 at 9:59 AM Elijah Newren <newren@gmail.com> wrote:
+>
+> git diff --diff-filter=A --no-renames --name-only $OLDHASH $NEWHASH |
+> sed -e s%/[^/]*$%/% | uniq | xargs git ls-tree --name-only $NEWHASH |
+> \
+>    sort | uniq -i -d
 
-diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
-index bd5313caec9..cdc077ce12d 100755
---- a/t/t1002-read-tree-m-u-2way.sh
-+++ b/t/t1002-read-tree-m-u-2way.sh
-@@ -154,7 +154,7 @@ test_expect_success \
-      read_tree_u_must_succeed --reset -u $treeH &&
-      echo frotz frotz >frotz &&
-      git update-index --add frotz &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- test_expect_success \
-     '9 - conflicting addition.' \
-@@ -163,7 +163,7 @@ test_expect_success \
-      echo frotz frotz >frotz &&
-      git update-index --add frotz &&
-      echo frotz >frotz &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- test_expect_success \
-     '10 - path removed.' \
-@@ -186,7 +186,7 @@ test_expect_success \
-      echo rezrov >rezrov &&
-      git update-index --add rezrov &&
-      echo rezrov rezrov >rezrov &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- test_expect_success \
-     '12 - unmatching local changes being removed.' \
-@@ -194,7 +194,7 @@ test_expect_success \
-      read_tree_u_must_succeed --reset -u $treeH &&
-      echo rezrov rezrov >rezrov &&
-      git update-index --add rezrov &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- test_expect_success \
-     '13 - unmatching local changes being removed.' \
-@@ -203,7 +203,7 @@ test_expect_success \
-      echo rezrov rezrov >rezrov &&
-      git update-index --add rezrov &&
-      echo rezrov >rezrov &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- cat >expected <<EOF
- -100644 X 0	nitfol
-@@ -251,7 +251,7 @@ test_expect_success \
-      read_tree_u_must_succeed --reset -u $treeH &&
-      echo bozbar bozbar >bozbar &&
-      git update-index --add bozbar &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- test_expect_success \
-     '17 - conflicting local change.' \
-@@ -260,7 +260,7 @@ test_expect_success \
-      echo bozbar bozbar >bozbar &&
-      git update-index --add bozbar &&
-      echo bozbar bozbar bozbar >bozbar &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- test_expect_success \
-     '18 - local change already having a good result.' \
-@@ -316,7 +316,7 @@ test_expect_success \
-      echo bozbar >bozbar &&
-      git update-index --add bozbar &&
-      echo gnusto gnusto >bozbar &&
--     if read_tree_u_must_succeed -m -u $treeH $treeM; then false; else :; fi'
-+     ! read_tree_u_must_succeed -m -u $treeH $treeM'
- 
- # Also make sure we did not break DF vs DF/DF case.
- test_expect_success \
+Or what Elijah just wrote
 
-base-commit: d420dda0576340909c3faff364cfbd1485f70376
--- 
-gitgitgadget
+> Coming at this from another angle, I guess we could teach git on
+> case-insensitive filesystems to detect this situation (where two files
+> in the index, with different contents, are pointing to the exact same
+> filesystem file) and more explicitly warn the user of what's wrong,
+> giving them clear help on how to fix it? And temporarily exclude those
+> two files from its change reconciliation processes altogether to avoid
+> ghost changes interfering with recovery actions like "pull"? Certainly
+> that would be better than the current "ghost changes" behavior... but
+> it would still be far less convenient than preventing (the vast
+> majority of) these issues altogether, be that with a custom hook or a
+> core option prohibiting clearly case-insensitive-duplicate files from
+> being pushed.
+
+That's not to say this isn't a good idea but for now I'd advice an
+automated scripted route.
