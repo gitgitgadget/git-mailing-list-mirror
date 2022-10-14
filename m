@@ -2,122 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00831C433FE
-	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 22:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F7CCC433FE
+	for <git@archiver.kernel.org>; Fri, 14 Oct 2022 23:32:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbiJNWzh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Oct 2022 18:55:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37112 "EHLO
+        id S229519AbiJNXcj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Oct 2022 19:32:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbiJNWze (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Oct 2022 18:55:34 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A54E94457D
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 15:55:33 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-3573ed7cc15so59478657b3.1
-        for <git@vger.kernel.org>; Fri, 14 Oct 2022 15:55:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=skydio.com; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bpXAmlU17PiqNCQLd2KjeOuuJQo2E3u5FzdtEVKBrgk=;
-        b=IH3tptUJPKjE6Fh7V6U1eJrFZ6eK/LJJP6YEwWd2a961mGdtk4dxnmxw/NnpGUNolc
-         GxzOF/OI0+KGb6SNnwSCcKxfMdNPC7QYa9Uchmmhk2HbaLBcK75ab9iE5muOwuWJLEMD
-         xzYs6DSdf9PhN1MvRMElurU1vGVjj0RRPvsJAVkXuvFtjxQEaHO3WEntCdZMRpGDtEwx
-         NejF9P3oddZxJqsxArSV87uRaCFUP+JYhW4BSSFv5jLskg6zvHwqkqR6K19L27C2Dx1V
-         7KLkZNwlFYarT4aBo/fXwwVxePRAhAIa8PPnKP3mVMIvVjqALnSNZfMKynhnv8Gmn2+G
-         v6pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bpXAmlU17PiqNCQLd2KjeOuuJQo2E3u5FzdtEVKBrgk=;
-        b=baDYC+mSXexUuRpIm+nab2Ix6ndihSxhs2OqkM2QKDJ1vJfGGblcRW1oH0x+rgtHUh
-         KfSfbzZrdltSD7prk9mMPTI7REUbZaI9l7rXKrxA7/JR0RSnNttyRgALcKou5u86Wg9L
-         ArQK+YW0x+hqdqV1l9gp6Xbe4oHlx7H1Zg079p/8TP6XGC+/34zZITabN3SUsyynsRqW
-         ZGSTKIFlS5OfopvoJ6NdU5FlRZ5dujNqr8Zt8pQj0bNgCLkyABBGp6euk4jFrNXxvVHL
-         s17yvxzK0zeJu0K8iZc0Qq0R85nnXFRBzIwgxM9MihKFZrVvJHuuSFaI0wNHRXJiq4YC
-         xdHA==
-X-Gm-Message-State: ACrzQf1wB4lwodqLusNmSOr+P+Esj/mOrjQSMq90li95sX5jYtclzD8i
-        ycHiDLMLyNEaVHE2lQR+Q8zN83xGv7doOIFAkSnTnQ==
-X-Google-Smtp-Source: AMsMyM7TPX0T2rdqcpKGxVuJQ3CQJtO1qizEak73p75iRiI2fpY3Gka2m8kGTwCPTx3R/phndehJMwspumzweV+39d8=
-X-Received: by 2002:a81:8701:0:b0:341:9e24:5992 with SMTP id
- x1-20020a818701000000b003419e245992mr103931ywf.110.1665788132654; Fri, 14 Oct
- 2022 15:55:32 -0700 (PDT)
+        with ESMTP id S229470AbiJNXch (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Oct 2022 19:32:37 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A496110EA32
+        for <git@vger.kernel.org>; Fri, 14 Oct 2022 16:32:36 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A0E2D1C54A9;
+        Fri, 14 Oct 2022 19:32:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3NJ+IZ1FfnKZ7HZKN9WS9H+nxwAh5fbeyklItP
+        fwLrE=; b=Mda54YBgCmnXi0zQ89mb/bmM5DkaFZroedxDYpYjdG4iGhAs9G/fTD
+        LNlbGOwTc2t+V7ZtvFuDs9DDsBY23r6C0pYJZvkj/7Y/YkIFVq4bFPf152JYe6Jd
+        1XlFWFF+SqPwkXFBsS4Vc1IytFJjAZzkLZX/2n0TcuxoSPz05jHc0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 99C4F1C54A7;
+        Fri, 14 Oct 2022 19:32:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CE03B1C54A6;
+        Fri, 14 Oct 2022 19:32:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH v2 00/12] fsmonitor: Implement fsmonitor for Linux
+References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
+        <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com>
+Date:   Fri, 14 Oct 2022 16:32:31 -0700
+In-Reply-To: <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com> (Eric
+        DeCosta via GitGitGadget's message of "Fri, 14 Oct 2022 21:45:32
+        +0000")
+Message-ID: <xmqqwn9256cw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1359.v2.git.1663654859.gitgitgadget@gmail.com>
- <pull.1359.v3.git.1665737804.gitgitgadget@gmail.com> <bbaa2425ad0cbb4b945cdce3402c6ed5fab381ec.1665737804.git.gitgitgadget@gmail.com>
- <xmqqbkqe6qv4.fsf@gitster.g>
-In-Reply-To: <xmqqbkqe6qv4.fsf@gitster.g>
-From:   Jerry Zhang <jerry@skydio.com>
-Date:   Fri, 14 Oct 2022 15:55:22 -0700
-Message-ID: <CAMKO5CuCbyFt739GOzcvFn92i8vNqK6vgJqvT8E5zs=kJ1+H=A@mail.gmail.com>
-Subject: Re: [PATCH v3 5/7] builtin: patch-id: add --include-whitespace as a
- command mode
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jerry Zhang via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7A07B7B4-4C18-11ED-B6C4-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 14, 2022 at 2:24 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Jerry Zhang via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > +--include-whitespace::
-> > +     Use the "stable" algorithm described below and also don't strip whitespace
-> > +     from lines when calculating the patch-id.
-> > +
-> > +     This is the default if patchid.includeWhitespace is true and implies
-> > +     patchid.stable.
->
-> This seems very much orthogonal to "--stable/--unstable.
->
-> Because the "--stable" variant is more expensive than "--unstable",
-I didn't realize it was more expensive, I'm assuming you mean in terms
-of time, maybe it does
-slightly more hashing operations under the hood?  I tried timing some
-runs locally
-and they were a wash:
+"Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-time /bin/sh -c "git show | git patch-id --stable"
-dddea79ee68d62a32cf8c0d7bb6691bcd0445628
-4677fe858366a51ff3c5a0c0893418e32e934262
-
-real 0m0.011s
-user 0m0.003s
-sys 0m0.012s
-time /bin/sh -c "git show | git patch-id"
-6602a3b2fe8b17d5bc295c2703901ad3e18eee18
-4677fe858366a51ff3c5a0c0893418e32e934262
-
-real 0m0.012s
-user 0m0.009s
-sys 0m0.007s
-
-The operation is probably bound by process / disk overhead quite a bit
-and a small
-amount of cpu use wouldn't really be user-visible. Based on these
-results I don't think
-a user would choose --unstable just for the speed gain (if any).
-
-> I am not sure why such an implication is a good thing to have.  Why
-> can we not have
+> Goal is to deliver fsmonitor for Linux that is on par with fsmonitor for
+> Windows and Mac OS.
 >
->     --include-whitespace --stable
->     --include-whitespace --unstable
->
-> both combinations valid?
-If you accept my point above, then a user would only choose
-"--unstable" if they actually
-had a need for backwards compatibility, such as for a persistent
-database. Trying to include
-whitespace on top of that would break the compatibility they're
-relying on. So my conclusion was
-that there isn't any usecase for the combination "--include-whitespace
---unstable", and it's better for
-usability and not needing to always maintain compatibility if we don't
-expose it to users at all.
+> This patch set builds upon previous work for done for Windows and Mac OS
+> (first 6 patches) to implement a fsmonitor back-end for Linux based on the
+> Linux inotify API.
+
+Again, the first six patches are a part of what is queued as
+ed/fsmonitor-on-networked-macos that is now in 'next' but lacks a
+fix-up commit from Jeff King.
+
+I understand that it might not be easy/possible (e.g. perhaps it is
+a limitation of GGG?), but I really prefer not to see them re-posted
+as part of this series, as I have to apply them and make sure there
+are no changes from the last one before discarding them.
+
+Anyway, thanks for an update.  Will requeue.
