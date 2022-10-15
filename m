@@ -2,176 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62AE1C433FE
-	for <git@archiver.kernel.org>; Sat, 15 Oct 2022 14:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 318B5C433FE
+	for <git@archiver.kernel.org>; Sat, 15 Oct 2022 16:08:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbiJOOto (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Oct 2022 10:49:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49770 "EHLO
+        id S229696AbiJOQH7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Oct 2022 12:07:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229548AbiJOOtn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Oct 2022 10:49:43 -0400
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C7C81DA65
-        for <git@vger.kernel.org>; Sat, 15 Oct 2022 07:49:39 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-35711e5a5ceso70726237b3.13
-        for <git@vger.kernel.org>; Sat, 15 Oct 2022 07:49:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yjNud/jKZHH/648iDkTw1TzI14ycdicPTnBeYwuDPlo=;
-        b=K6kDdK2SbBzEk6luyqZ2f3euYXKffVERKH3De94cTpwjDsNefp8YpQpu0+vho0c4G8
-         bu3VLaAdOGK+PuFIETxS1U29NMRQ3dTI9EQWyGYwnNNzEWNTEx3URUssmz3IXVasiIlQ
-         Y6VeRiebIU/wkylI1te8EoylUYZx4nfVMeiv9Au4bBK0x2cpJBF17e0BPKq4fQmqajIb
-         n3H7sqve1443LDRxQFUrvY+l0d63DI6Wwut5jz3aiu1AL6oULiM2K+T5UoDwiX8W3Gi7
-         aztA+ee3U6VIEzyipcux9Go/8kfnroY/wi/fcHr8GOxTw+8j/DAFHlpqsj99bSBnCmdm
-         3Jyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yjNud/jKZHH/648iDkTw1TzI14ycdicPTnBeYwuDPlo=;
-        b=IBuxaHoYD3l+BCaA+BNMbmvDXKLHwD24A4X0C7get3V8pBZeRvAvyGaFY8RbbTBSO/
-         APf6l/xyNxxfXl5Bpss5BWOdG50IzfUV7RB6H+b0F7IzEps3wmPKxPxiI7Ft8IG4HhU9
-         +xhpkszxdYojaOoBS2w2gl01UlQysBpI+hm+As9PzHkz6GnTXV43hPsZMZscVOWxNNQg
-         k6RZg/U1m7IIXND7MGTMfg0FgS7enjXr0+JwaRbmUuCguB5dNr8X8ThAxXzECK+eHCpg
-         l2b/bE89kYkpjo/X5Kwe5rVBUo8jIa8LnimdZljl0jUpt1/XR2bVSsM8wxi+ajhX+vw9
-         +zcA==
-X-Gm-Message-State: ACrzQf2md6Jpr8CxC4ng5eR6AMrD/yy8e914XszE8fNgSWIu6MFM2ekF
-        d0GCEF1522BgDbcXB8DuPqOPbTMnaoPxykckUqc=
-X-Google-Smtp-Source: AMsMyM4j+jUPcsX2M7So4eJMIU50juNJGRpGK59aJzOBvvhz+lPdz/olYYYHYkGF3/75Epd6TCAs2xFG74FCg1PmZ9s=
-X-Received: by 2002:a81:17d0:0:b0:361:4985:7ebd with SMTP id
- 199-20020a8117d0000000b0036149857ebdmr2432646ywx.307.1665845378786; Sat, 15
- Oct 2022 07:49:38 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1367.git.1664064588846.gitgitgadget@gmail.com>
- <07a25d48-e364-0d9b-6ffa-41a5984eb5db@github.com> <CABPp-BEjVv1ASdQhXGh6KuDfPt_nhZpRO_Q0i1pCqrV2wVQ9yQ@mail.gmail.com>
- <CAOLTT8T7V0oYpS5XMWbhRi75z7cSVTcWsK76BdwGXAYYh=skPQ@mail.gmail.com>
- <CABPp-BFwiMrgm+_sO6TsLUj77r_krgzYEWZanbyx2Fnn4rM8tg@mail.gmail.com>
- <CAOLTT8R0MxEWErrw80-F+b1higbuWuQjvkEGi2c4ARzuRzeNWw@mail.gmail.com> <CABPp-BHX+qfWxkGvFx+SyGsiUbp5OVHx3MbWa96JtDnnows0ZA@mail.gmail.com>
-In-Reply-To: <CABPp-BHX+qfWxkGvFx+SyGsiUbp5OVHx3MbWa96JtDnnows0ZA@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sat, 15 Oct 2022 22:49:27 +0800
-Message-ID: <CAOLTT8S=eq4j6ENLWJAd_tGo+EyMVETHchn6NGgVii2LAM5T3w@mail.gmail.com>
-Subject: Re: [PATCH] sparse-checkout.txt: new document with sparse-checkout directions
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Victoria Dye <vdye@github.com>,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229573AbiJOQH5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Oct 2022 12:07:57 -0400
+Received: from EUR04-HE1-obe.outbound.protection.outlook.com (mail-oln040092073071.outbound.protection.outlook.com [40.92.73.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B64F52447
+        for <git@vger.kernel.org>; Sat, 15 Oct 2022 09:07:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Bz2jYXLfebClO9HChknDwA1O4gk/73bg4jUZBr/Fru0l/1cwGTQxRjxTnfMHjDuM7n54+6ATyZ2jsvRNzONUIjtBjHUAAF4bpNMdMEXK+SU46RMgYcB/tv/YR1/S352vcReoBMJ6T/+OaTipFCxR+2iHe3lzmn32ysM4U8Rx/rUWMi+QKrdsA0OkKmCz7bjd3BFkJobT7pre9lffULm005Id30cZr5dH7ZPnEIFNWOJMIiOOE4v/il2POqa4ZRGxP+6RVKkC5RbfnLI/JK1Y9b16dbxcSr2AFoDQL2bDs2iifbQ8ESZVXcUA4QdtoqaXfGCjRZbqyBWJeyBq5ew6ww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QPgA9n2GkCyNWjGiD90H+oM3pRMN2AhMOjcm3f3j1vc=;
+ b=HOTl7+QmKXINt8YVmL7tAmfbHvh75inCz8Ta6gyrYsl0WXZQ/ImnTWjQ9218LZprSvFkWwHWCd/qCYSeJIMZLT/aGrW+Q9YtZrZpBYu97p9VQijps3yh0hW64L+LZGOHnMpi3Swy8B3M4AgmGoNP9njkK8yUpzQoiTrORuOGgdamFh0ESIfJfmfY266riPXZPbAyFy59JbhMzxiAWvu8Ljk0p69086Y4nIGrv+5vBOF7txh281BCkYkw0kMrNRu4NCqtYD6/vvCKdYQHh0fyWqIaVcEE01R89Blajqbvb0lZAkcHD8W3R2WuEE8wkEAasd01uecBvAfX5GzoSlH2LA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QPgA9n2GkCyNWjGiD90H+oM3pRMN2AhMOjcm3f3j1vc=;
+ b=h8zBGL+1TjHv9qHzlLJLPj1QuDkTewp7iS3t9elGb08xn7OCQoVA/KpqQKp53kQJMShVByzlIZIFrPijuWmE/0jWrxlQC+fUorMqdb5LLeSfDQWZMckwBOgpsNwmVEfnS5Qr4Pi2YYZO7uuMUnGrEfAnjNT6mVxS5LzMcqTH7f/VkDzux9+ZdgbPrSG24L0nqfz9pNIdLOpvamTUkXKHGc/D6Yyd+pTSRXFAtP791n//23p0SBFJg69oOkXpt549sL2d4RwQbhd2vLcoIXsKtGCY0BmwDr+hihvVpT/HgrbKurosUesYG3REBe08qJ9DCCvQ0D20kI5VLVXa/VttGw==
+Received: from AS4P195MB1527.EURP195.PROD.OUTLOOK.COM (2603:10a6:20b:4ba::20)
+ by DB8P195MB0613.EURP195.PROD.OUTLOOK.COM (2603:10a6:10:147::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5723.32; Sat, 15 Oct
+ 2022 16:07:53 +0000
+Received: from AS4P195MB1527.EURP195.PROD.OUTLOOK.COM
+ ([fe80::ad6f:9a23:571f:a69d]) by AS4P195MB1527.EURP195.PROD.OUTLOOK.COM
+ ([fe80::ad6f:9a23:571f:a69d%8]) with mapi id 15.20.5723.030; Sat, 15 Oct 2022
+ 16:07:53 +0000
+From:   Hans Meiser <brille1@hotmail.com>
+To:     Erik Cervin Edin <erik@cervined.in>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Dead-end Situation created by amending a merge commit in a topic
+ branch
+Thread-Topic: Dead-end Situation created by amending a merge commit in a topic
+ branch
+Thread-Index: AQHY4LBHTi3HldWbcU227A8GfFOHag==
+Date:   Sat, 15 Oct 2022 16:07:53 +0000
+Message-ID: <AS4P195MB1527956C72FD0407FF4C488EE2279@AS4P195MB1527.EURP195.PROD.OUTLOOK.COM>
+References: <AS4P195MB1527E825B28B3C17F39D0AB7E2259@AS4P195MB1527.EURP195.PROD.OUTLOOK.COM>
+ <AS4P195MB1527C07F4E985018B6BD12C3E2259@AS4P195MB1527.EURP195.PROD.OUTLOOK.COM>
+ <CA+JQ7M8Bcr9czyBNg-+sFpqGSy=3QJfps8vGPa=82QGAvqpUSw@mail.gmail.com>
+In-Reply-To: <CA+JQ7M8Bcr9czyBNg-+sFpqGSy=3QJfps8vGPa=82QGAvqpUSw@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn:  [dc6SdgR44xu12xFpiAjtA8HyzRU4E14Q]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS4P195MB1527:EE_|DB8P195MB0613:EE_
+x-ms-office365-filtering-correlation-id: ffc01def-76f2-4ba3-52f3-08daaec76a44
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: auct3lH+UR6VTACTuo2JENRhSoGPI51yKl4Tht08sgatg9/Palv2kSY2zq0udLAf47Jr3H835YPSkXJ1qOpFDRld8XfTUwdYQazMdTsn4+lQscPIem7Pni0XIzzFFrpHD5ghkzuNXYK2XDujtcgLd+VhbPKC7LeyTMRxrAhn8CkRK+9Y/GoFbt/d73CYwZelwVVxpxRLWnWVfczbiQ6tuYsmxkeh1Cz2lxEkxeOjzDe5J3elqA7fPAfkDnBitbVOYe/nzKTihAuB5208Iirzxafcv2QWmDpjeSTtRRMCJP8FawtrSYJjSB3wy1XOT4dcOy/ep5I3lzSX7frX+Tl8rZLEhEQ4QtUEO3aEa5zKu9r8JCvWQLtiYqtJOZ+gxfADULMQjtMC7ZuySrQLw2WDxVcfRodyewBHtF6auaDGJ0ym5R5SoMTrF/RqAsVgr5eVKZrIUTKRNYvAjwAWf2vaWfgXf9OC+CG4dneAPgVlD/6rxRKye8NOtuCvpvhVl1mqW0lMKSakGFD79vgRiTMNiRxliulfM+4ITwxxOBd7Ddwk0gWhIQkSb+ODE7m9R5c/eohLIk09ExgdRV49JhN/QGkgghzlmEUAi177qPkheH9HES/XMS9UTBXLw4Pvdhcy
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?aIrMu9Bl/4qzYHMvL17ChAy1FH6KbJlAXusXNgmfdHDLrJs/KBHkzmH/sR?=
+ =?iso-8859-1?Q?VRN8ld6WL4N3KNoKCp3b+f3G/ntJhXb6IWXVOBZZTorJKxgMW/DviI/L5M?=
+ =?iso-8859-1?Q?BL4uy8oZj0rwHrLhbMMw4iq7/pWOqqNsEsCCSAxFWEdPdewB0PJNrAp0XS?=
+ =?iso-8859-1?Q?4C/ede6hrwYvtsLGm5G0nmbFx5lEIhomqV6QlYEflhC3fvvbp1hAX3Dl0E?=
+ =?iso-8859-1?Q?dBwhvxHm0+CKFEdzpOlgN2UtX5WawD4OKgDLXzVJHECGDqJQWzpx79W0IA?=
+ =?iso-8859-1?Q?TR/P9Ogz/eytA0SQ++RKlGop75Wj5/maqcmQonAOqgwHhiV2lCDiv1KlJ+?=
+ =?iso-8859-1?Q?FXzTliAVxj5OjuL+PLGneXXR0hpE0oCr5PdOfesLzK0jJbxUEFrW5b11pI?=
+ =?iso-8859-1?Q?4nsyZjdsPP6g2Vgal+o5E3urVPmbHPgGxA4gfYLXSukLudgTsdHGfpMxZB?=
+ =?iso-8859-1?Q?rnjfbKN/XoyLtPCHeNtilqBowL2eZKsDFk+vVFC854Gu9ftxeVda0HhWeE?=
+ =?iso-8859-1?Q?JaNXED/x9/5oE7IEpjgxyJy8/5Dc5xR0PS2/KM5+kTAbu14W0s9j3+NTyN?=
+ =?iso-8859-1?Q?oOW9lEOQvzGEI9exAiIrMOKHVeflsZbbs3bFkWXwFJrfflGWqDMsOqAHgm?=
+ =?iso-8859-1?Q?C7pGD9lGlJwjmz6VzRc1IAOEKfX9Z4lWJlQJSxWrBGpi7x49MW/gvUiyIB?=
+ =?iso-8859-1?Q?KW6c3rGTKyE8Ini+z0KeCuV2RKXjjlAcvCGF1o8vAps2rR+Ja8fLE56L/b?=
+ =?iso-8859-1?Q?eGqUAjslttGX9Yy4hq2W28pO3fX7bW2h/A+my73BljEV6mdqb/Q4PEsUBF?=
+ =?iso-8859-1?Q?kt38zS/Nwi+3nvfMQ04dBzDpQFBSjgCFj8S+Aw7iJeMFcIG6Wg205v78At?=
+ =?iso-8859-1?Q?0+gTqd2lp2VSOXaNrbGymBePblTm8PTFgqOo9teSMPcNbl+Jh8F3R7nV2g?=
+ =?iso-8859-1?Q?506cpoX334aiRa+8mjCHqnrqRjYdNcc5mBJ6NiI/6q0R9ceMK9k/XHZNNY?=
+ =?iso-8859-1?Q?nW2LH3xVyU/Hqw+KrdOje98jlWgIpc7GCPS7Ivh5WtkAYytCFSK8FMp76p?=
+ =?iso-8859-1?Q?J1A+YDoba04FVs15zS+BtuAC76H0X7p8axGpC99iubxKrqzLBXJTW+dMOA?=
+ =?iso-8859-1?Q?d07iIs8DQRP+CN7EQX4VoSiw0LhmjTOvFhqEFiXhHPIdtOOBuRhSmu+LRc?=
+ =?iso-8859-1?Q?vIvAXluc0Kozfyyx+3NlEM6tHq18yZdfKQfCvk6A88X+Xn91HeoR2vNuaI?=
+ =?iso-8859-1?Q?SFlfze58xByQvvIJoufuBUo2NpLDLdIJf8qgIi648P7E05N+uMColmW2zX?=
+ =?iso-8859-1?Q?Lmyo?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-49ed2.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AS4P195MB1527.EURP195.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: ffc01def-76f2-4ba3-52f3-08daaec76a44
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Oct 2022 16:07:53.0621
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8P195MB0613
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> =E4=BA=8E2022=E5=B9=B410=E6=9C=8815=E6=97=
-=A5=E5=91=A8=E5=85=AD 12:38=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Fri, Oct 14, 2022 at 7:17 PM ZheNing Hu <adlternative@gmail.com> wrote=
-:
-> >
-> > Elijah Newren <newren@gmail.com> =E4=BA=8E2022=E5=B9=B410=E6=9C=886=E6=
-=97=A5=E5=91=A8=E5=9B=9B 15:53=E5=86=99=E9=81=93=EF=BC=9A
-> > >
-> > > On Fri, Sep 30, 2022 at 2:54 AM ZheNing Hu <adlternative@gmail.com> w=
-rote:
-> > > >
-> > > > Elijah Newren <newren@gmail.com> =E4=BA=8E2022=E5=B9=B49=E6=9C=8828=
-=E6=97=A5=E5=91=A8=E4=B8=89 13:38=E5=86=99=E9=81=93=EF=BC=9A
-> > > > >
-> [...]
-> > > As an example, the repository where we first applied sparse-checkouts
-> > > to (and which had the complicated dependencies) does not use partial
-> > > clones or a sparse-index.   While partial clone and sparse-index migh=
-t
-> > > help a little, the .git directory for a full clone is merely 2G, and
-> > > there are less than 100K entries in the index.  However,
-> > > sparse-checkout helps out a lot.
-> >
-> > Yes, you make a good explanation here that we don't necessarily need
-> > to apply all these kinds of features. But I still feel a little confuse=
-: Where
-> > does the time savings come from? Is it saved by the time reduction of
-> > git checkout? Or is it the reduction of some unnecessary working tree s=
-cans
-> > during test/build time?
->
-> It is neither git checkout time, nor tree scans; it's the ability to
-> avoid building larging parts of the project coupled with the
-> significantly better responsiveness of IDEs when project scope is
-> limited.  When directories are entirely missing, we don't need to
-> build any of the code in those directories and can instead just use
-> already built artifacts from the most recent point in history that has
-> been built on our continuous integration infrastructure.  (Note: our
-> sparsification tool will keep any modules/directories where there have
-> been modifications since the most recent upstream commit that has been
-> built, so we don't risk getting a wrong build via this strategy.)
->
-
-So these users are just building/testing on a few projects and save time
-from building/testing on some other projects. This is reasonable.
-
-> [...]
-> > > > 1. mount the large git repo on the server to local.
-> > > > 2. just ssh to a remote server to run integration tests.
-> > > > 3. use an external tool to run integration tests on the remote serv=
-er.
-> > >
-> > > Are you suggesting #1 as a way for just handling the git history, or
-> > > also for handling the worktree with some kind of virtual file system
-> > > where not all files are actually written locally?  If you're only
-> > > talking about the history, then you're kind of going on a tangent
-> > > unrelated to this document.  If you're talking about worktrees and
-> > > virtual file systems, then Git proper doesn't have anything of the
-> > > sort currently.  There are at least two solutions in this space --
-> > > Microsoft's Git-VFS (which I think they are phasing out) and Google's
-> > > similar virtual file system -- but I'm not currently particularly
-> > > interested in either one.
-> > >
-> >
-> > Here I mean git nfs, or some kind of git virtual file system, or some
-> > git workspace, I don't really understand why they are now
-> > phasing out?
->
-> You'd have to ask them, or read their comments on it.  I think they
-> believe sparse-checkout with a normal file system is or will be better
-> than the behavior they are getting from their virtual file system (and
-> they've put a lot of really good work behind making sure that is the
-> case).
->
-
-Okay.
-
-> [...]
-> > Some users may really want to focus only on their subprojects, so I thi=
-nk
-> > "git log -p" shouldn't show files that don't satisfy the
-> > sparse-checkout patterns,
-> > and "git grep" too. But some users may need to search something globall=
-y,
-> > and I think those people are in the minority, so maybe there should be =
-a
-> > "git log -p --scrope=3Dall" or "git grep --scrope=3Dall" for them.
->
-> Good to know you're in the "Behavior A" camp and we've got another
-> vote for implementing things in that direction.  A couple of small
-> points, though:
->   * It's --scope rather than --scrope.  ;-)
->   * I have to disagree here slightly about people using a --scope=3Dall
-> flag -- I don't think users should have to specify it with every grep
-> or log invocation.  Users in the "Behavior B" camp would want
-> `--scope=3Dall` behavior for nearly every grep and log -p invocation
-> they make; it's annoying and unfair to force them to spell it out
-> every time.  So, I think we need a configuration option.
->
-
-Fine, this configuration looks like it can balance the needs of both camps.
-
-Thanks,
-ZheNing Hu
+It looks like it's possible to reach an unresolvable dead-end situation by =
+amending a merge commit.=0A=
+=0A=
+For a use-case see this issue at Stack Overflow:=0A=
+https://stackoverflow.com/questions/74032523/how-can-i-rebase-this-git-bran=
+ch-on-master/74064773=0A=
+=0A=
+Is this situation desired?=0A=
+=0A=
+Shouldn't git rather emit an error message when trying to amend a merge com=
+mit?=
