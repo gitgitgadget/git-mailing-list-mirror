@@ -2,139 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC75BC433FE
-	for <git@archiver.kernel.org>; Sat, 15 Oct 2022 19:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78579C4332F
+	for <git@archiver.kernel.org>; Sat, 15 Oct 2022 19:55:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229663AbiJOTkx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Oct 2022 15:40:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51704 "EHLO
+        id S229742AbiJOTzD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Oct 2022 15:55:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229660AbiJOTkw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Oct 2022 15:40:52 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 803553FA1F
-        for <git@vger.kernel.org>; Sat, 15 Oct 2022 12:40:51 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id ot12so17090235ejb.1
-        for <git@vger.kernel.org>; Sat, 15 Oct 2022 12:40:51 -0700 (PDT)
+        with ESMTP id S229734AbiJOTzB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Oct 2022 15:55:01 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FB2322B03
+        for <git@vger.kernel.org>; Sat, 15 Oct 2022 12:54:59 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id iv17so5631846wmb.4
+        for <git@vger.kernel.org>; Sat, 15 Oct 2022 12:54:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CbpHS/3hLZVZYkTKm0AAjmgtoEuztCu1lQFs0ORdaj0=;
-        b=FV/j52HznjJ2bXrtvpjwwn43Z6YBD8UllKFJWKutfZEFAo3HR1l7gqGQAwO2MlPiwj
-         QFod+yKPHGtXBgrUtlBMCv/oxPvK0tHDZdxNgFBl85dv+X06Oy8u69wx6UIYlTGaldWP
-         T5zM3GYxU2o6J5KTfVm6ZZus5C3eKD04Nkog1cwodxWLxZwLZIIchq5i/XOwyiRPyXjv
-         uPxvjy7G6S/CRpvCoMlLGCB+Bm5iEcE4rjAFN5RFE2684hMSKosWly9zVEwVDl4ugD+A
-         thOfFVjDIm9fijDunnIRQyVZKu3hwrk5G2f+eXRx1hdosYb+WUZ0QUsziNJU+Eq7ceX8
-         ghrg==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VJimzqNY9KtS/xTMuZGE5tHoFhcCQiyJk7d7ZSTpQc8=;
+        b=fJi6ekcaeGk5SMgmsCpOSbRgwt0dzp+Flc08Bkoeqyh5PzhP0w5F8ZNy6SxoKvrya3
+         4jss9Lf5HQ+haeekQeKPls4PMHuY30nsjBQIezI6wjPdwW9CkwRaeWT88slEK+73L1lX
+         SeUR7d9OqOZmJFvJVxS0bVWC3bZaMX9Tj0M+QNDfZdCrT2kZDnjGQyzMU6YpeDW7OjWA
+         iWCv86mYVPQM1kIuiORr+V+/4am6YArc2b9JWvqY+IX2K1Thx9HW526TwHwlLdsX+3i1
+         I5lTe1M4bMq7EbxSgQm5shjhu3693yEa9Ouh8HsYm645N5pgepQ9CFBD8wZcYIcCIBux
+         Rq4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CbpHS/3hLZVZYkTKm0AAjmgtoEuztCu1lQFs0ORdaj0=;
-        b=biiP5oXBdR2r7pWC5iDhRMMHM3cP+uihgE4PQOKo+JKRsXdrnTNmtyOf3Lce9N+cdr
-         mtS08uIfVHHuGRphleyTW8RAkpUPAASHAr7i58pBoENLAD23KoojvQLSygcT0/JVej60
-         T3HqgSuCEMDkejYGJMgbujj5MH3Inva5+/Tld/O+LLj604doSbDmSt2T8wTnJO2qYRSH
-         LQ7sTX1IrucwzYxRbjijw/vb6s0nbxE5a9fZy2ZEZn+nxmPExbzGGDLfbmRo4isFrUQv
-         H3xvRGaWxx9vCYKYgqcsPyDefh3zIfud0o+rHdB8cGBeGxFw8roNa5c9/+JpM4XNeBRr
-         jNEQ==
-X-Gm-Message-State: ACrzQf0K1E149EqUDt7Zi1qnbi+K8BmYwqUGsrnss5AfvBqHyEQ4F2uz
-        v5c0oUaB9+ANVbsch1ujpJI=
-X-Google-Smtp-Source: AMsMyM7LJxjll00Euinh2k8SDnJNd8lh6ExFV1dyKS4VIGNlXmodMeO0KBY97/pp0nxX9n1AKQFlIg==
-X-Received: by 2002:a17:906:9c82:b0:781:5752:4f2b with SMTP id fj2-20020a1709069c8200b0078157524f2bmr2862715ejc.561.1665862849907;
-        Sat, 15 Oct 2022 12:40:49 -0700 (PDT)
-Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id a13-20020a50ff0d000000b00451319a43dasm4218264edu.2.2022.10.15.12.40.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Oct 2022 12:40:49 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <b5e97527-433c-53fe-356a-e20ab3e087d2@dunelm.org.uk>
-Date:   Sat, 15 Oct 2022 20:40:52 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH 2/2] notes.c: fixed tip when target and append note
- are both empty
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
-        --cc=avarab@gmail.com, tenglong.tl@alibaba-inc.com
-References: <20221013055654.39628-1-tenglong.tl@alibaba-inc.com>
- <20221013055654.39628-3-tenglong.tl@alibaba-inc.com>
- <221013.86wn94kqq1.gmgdl@evledraar.gmail.com>
- <c0211f35-bb26-7ca8-6f9d-a62507e55e8a@gmail.com>
- <221013.86sfjsknlw.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221013.86sfjsknlw.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VJimzqNY9KtS/xTMuZGE5tHoFhcCQiyJk7d7ZSTpQc8=;
+        b=sQqQ4Dnqy6PIJJe0l7nMMGnPNEMb3aWuMzcPH92zzK6oS3bplyLg9BE8LvS82Aa4a8
+         njqxFDq510pDTekUn5YsOKrGaD48hfPTXyH/zBSDBtvioWw0T3ro9rrBGDJ4zCrO0lbU
+         io8ETixS1m3zFJAmd4m7L9G0KQxjH2OQOlOUQF9ek81/Dh4KCkL/gTEu/oBr1Y+vAWJu
+         05pvpCOgw7DrPYGEQo+c337ILYBp8VZsBnJPYoFTu7h9lBOS53eWD5PxORmspE692M3w
+         XbS+YUQHbCxOOkkJnvJPPQNrXppQe5l7TgFPMe+CxQ0k4WsB0Eob6vl2N634JeMrEAex
+         ZI8Q==
+X-Gm-Message-State: ACrzQf2OLv7i23d/Y40uX/d3NRVXWmdki4Px+Sprs0u+hSQtri0iaMz+
+        WqX3tle/WiQjjPPN5Dj2GeuR8GhoSRg=
+X-Google-Smtp-Source: AMsMyM4Iz83gCpOo3o77g4OQRctEftZWbJdURtQNrNh8tZbWdiWB9gaBbUDEX0apzX1O1XISeltKXA==
+X-Received: by 2002:a05:600c:4f56:b0:3b4:b6b0:42d4 with SMTP id m22-20020a05600c4f5600b003b4b6b042d4mr2476931wmq.143.1665863697392;
+        Sat, 15 Oct 2022 12:54:57 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o29-20020a05600c511d00b003c6b70a4d69sm5783938wms.42.2022.10.15.12.54.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 15 Oct 2022 12:54:56 -0700 (PDT)
+Message-Id: <pull.1365.git.git.1665863696303.gitgitgadget@gmail.com>
+From:   "Bob van der Linden via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 15 Oct 2022 19:54:55 +0000
+Subject: [PATCH] completion: support amend and reword in git commit fixup
+ option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Bob van der Linden <bobvanderlinden@gmail.com>,
+        Bob van der Linden <bobvanderlinden@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
+From: Bob van der Linden <bobvanderlinden@gmail.com>
 
-On 13/10/2022 11:23, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Oct 13 2022, Phillip Wood wrote:
->>>> diff --git a/builtin/notes.c b/builtin/notes.c
->>>> index 1ca0476a27..cc1e3aa2b6 100644
->>>> --- a/builtin/notes.c
->>>> +++ b/builtin/notes.c
->>>> @@ -567,9 +567,10 @@ static int append_edit(int argc, const char **argv, const char *prefix)
->>>>    	struct notes_tree *t;
->>>>    	struct object_id object, new_note;
->>>>    	const struct object_id *note;
->>>> -	char *logmsg;
->>>> +	char *logmsg = NULL;
->>> Hrm, interesting that (at least my) gcc doesn't catch if we don't
->>> NULL-initialize this, but -fanalyzer does (usually it's not needed for
->>> such trivial cases0. Anyawy...
->>
->> I don't think its written to if we take the 'else if' branch added by
->> this patch so we need to initialize it for the free() at the end.
-> 
-> Yes, sorry about not being clear. It *does* need to be uninitialized, I
-> was just narrating my surprise at this not being a case where my
-> compiler caught it when I was locally testing this.
+The option `git commit --fixup=` has the ability to create amend and
+reword commits, by specifying `--fixup=amend:REF` and
+`--fixup=reword:REF`.
 
-Ah I think I slightly misunderstood your comment - I agree it is 
-surprising that the compiler didn't catch that.
+This patch allows completion of amend: and reword: prefixes when a user
+has already typed the --fixup= option.
 
-> 	@@ -638,21 +635,16 @@ static int append_edit(int argc, const char **argv, const char *prefix)
-> 	 			BUG("combine_notes_overwrite failed");
-> 	 		logmsg = xstrfmt("Notes added by 'git notes %s'", argv[0]);
-> 	 		commit_notes(the_repository, t, logmsg);
-> 	-	} else if (!cp.buf.len) {
-> 	+	} else if (!d.buf.len) {
-> 	 		fprintf(stderr,
-> 	 			_("Both original and appended notes are empty in %s, do nothing\n"),
-> 	 			oid_to_hex(&object));
-> 	 	} else {
-> 	-		fprintf(stderr, _("Removing note for object %s\n"),
-> 	-			oid_to_hex(&object));
-> 	-		remove_note(t, object.hash);
-> 	-		logmsg = xstrfmt("Notes removed by 'git notes %s'", argv[0]);
-> 	-		commit_notes(the_repository, t, logmsg);
-> 	+		BUG("this is not reachable by any test now");
-> 	 	}
-> 	
-> This 2/2 makes that "else" test-unreachable, so whatever else we do here
-> we should start by making sure that by adding the "else if" we still
-> have test coverage for the "else".
+In addition, this patch fixes completion of refs that can be
+filled in after the amend: and reword: prefixes. Previously `amend:` and
+`reword:` were considered part of the ref to complete, which always
+resulted in 0 potential completions.
 
-Oh so we can just use d.buf.len directly - nicely spotted and kudos for 
-checking the test coverage. Looking at the existing tests they are 
-checking if an empty note is removed which suggests this patch is 
-failing to distinguish between an existing empty note and no note. I 
-think we probably need to be doing "else if (note && d.buf.len)" but 
-I've not looked very closely.
+Signed-off-by: Bob van der Linden <bobvanderlinden@gmail.com>
+---
+    completion: support amend and reword in git commit fixup option
+    
+    I'd like to use git commit --fixup= more in my day-to-day work. However,
+    it dawned on me that the options --fixup=amend: and --fixup=reword: were
+    not supported by bash completion.
+    
+    I attempted to solve this by first adding amend: and reword: to the
+    completions of --fixup=. In addition, I made sure that --fixup=amend:ref
+    does not consider amend: to be part of the reference, thus allowing
+    completion of references when --fixup=amend: and --fixup=reword: are
+    used.
+    
+    The patch also includes completion tests for --fixup=, --fixup=amend:
+    and --fixup=reword:.
 
-Best Wishes
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1365%2Fbobvanderlinden%2Fpr-fixup-amend-reword-completion-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1365/bobvanderlinden/pr-fixup-amend-reword-completion-v1
+Pull-Request: https://github.com/git/git/pull/1365
 
-Phillip
+ contrib/completion/git-completion.bash | 11 +++++++-
+ t/t9902-completion.sh                  | 35 ++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 1 deletion(-)
 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index ba5c395d2d8..8d1a713dc4d 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1672,8 +1672,17 @@ _git_commit ()
+ 			" "" "${cur##--cleanup=}"
+ 		return
+ 		;;
++	--fixup=amend:*|--fixup=reword:*)
++		__git_complete_refs --cur="${cur#*:}"
++		return
++		;;
++	--fixup=*)
++		__git_complete_refs --cur="${cur#*=}"
++		__gitcomp_direct_append "$(compgen -W "amend: reword:" "${cur#*=}")"
++		return
++		;;
+ 	--reuse-message=*|--reedit-message=*|\
+-	--fixup=*|--squash=*)
++	--squash=*)
+ 		__git_complete_refs --cur="${cur#*=}"
+ 		return
+ 		;;
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 43de868b800..bb3dcab5d9d 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -1444,6 +1444,41 @@ test_expect_success 'git checkout - with --detach, complete only references' '
+ 	EOF
+ '
+ 
++test_expect_success 'git commit - with --fixup=, completes references along with amend: and reword:' '
++	test_completion "git commit --fixup=" <<-\EOF
++	HEAD Z
++	main Z
++	matching-branch Z
++	matching-tag Z
++	other/branch-in-other Z
++	other/main-in-other Z
++	amend:Z
++	reword:Z
++	EOF
++'
++
++test_expect_success 'git commit - with --fixup=amend:, completes references' '
++	test_completion "git commit --fixup=amend:" <<-\EOF
++	HEAD Z
++	main Z
++	matching-branch Z
++	matching-tag Z
++	other/branch-in-other Z
++	other/main-in-other Z
++	EOF
++'
++
++test_expect_success 'git commit - with --fixup=reword:, completes references' '
++	test_completion "git commit --fixup=reword:" <<-\EOF
++	HEAD Z
++	main Z
++	matching-branch Z
++	matching-tag Z
++	other/branch-in-other Z
++	other/main-in-other Z
++	EOF
++'
++
+ test_expect_success 'setup sparse-checkout tests' '
+ 	# set up sparse-checkout repo
+ 	git init sparse-checkout &&
+
+base-commit: 3dcec76d9df911ed8321007b1d197c1a206dc164
+-- 
+gitgitgadget
