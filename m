@@ -2,57 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38580C4332F
-	for <git@archiver.kernel.org>; Sun, 16 Oct 2022 20:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF55CC433FE
+	for <git@archiver.kernel.org>; Sun, 16 Oct 2022 20:19:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229843AbiJPUHy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Oct 2022 16:07:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58698 "EHLO
+        id S229646AbiJPUTi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Oct 2022 16:19:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229729AbiJPUHv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Oct 2022 16:07:51 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACC9532D81
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 13:07:49 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id bj12so20712339ejb.13
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 13:07:49 -0700 (PDT)
+        with ESMTP id S229608AbiJPUTf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Oct 2022 16:19:35 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F2ADF77
+        for <git@vger.kernel.org>; Sun, 16 Oct 2022 13:19:34 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id b2so20817215eja.6
+        for <git@vger.kernel.org>; Sun, 16 Oct 2022 13:19:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=klerks.biz; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wdj8vTftR8P+JaRklmNxz5H37sQMdFoYxBN39EKBWvE=;
-        b=VYPmHOlezd0vEP/pmi64HYPuqEN7KTkz9iLb5HuB+tZH1zYkSUUfTPT7RGUXrtk2Xy
-         rALUamft9mRRWUgVAEpMNiLMD8EeJmwpscxvcV5exybjcv3OgdFgNrcjSK/GNyyKvsLo
-         78p6s4iMiAbAICG2rpPrCVgeXfIsTm3Zi1AOE=
+        bh=LVXu7FXvbbkClDfyhqhOUOktEndjkyaR4J+GkT631mk=;
+        b=SFjfISLHYnV0zUg2geFjuYgap95uY0qhk/xps7l0d7bPGlzriyM2zPactnOUIPcbaf
+         KUBZmVJ/dBKPziD8kc5Q/73uMaxsqMUR3wEkfLxjtN7fnbjpOkgBWBovUtRvATKEUzJF
+         k8yTc73jyhQCkB9H2NEOXMJzeAAQ09wT77KMM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Wdj8vTftR8P+JaRklmNxz5H37sQMdFoYxBN39EKBWvE=;
-        b=EdgbqJc07K4Hw/kYgYiBh5/y4slIGjiF4bhD+8XSci1n8Q9dugJGf00mV6QLLsXpMq
-         YLGqKfeT7NL49Lfa5o7INJ9pcE9UI2ITmJHY/OjCaTLBnrVpTgDGKtwnkAGtwutb30MQ
-         yeXjypUKV8HaoQBcLB1kmUxFln3Fe4/qnIxIGN4BwYCufFR99rbmF/316TuTu18cHGUO
-         IQEsGbOQSKJa9ay9kp9Z8q4ISFnD3oJXnxaeHRSZ0lFAf2ggx58BVueNDmTd95yQQ2rD
-         JSHvFnBMvp92YiRsnFV+FdYRQ0ro2t3d5Tfhtd9WnjiR8Dg/W4oH9iRCLC2TngOFeiDW
-         ovIA==
-X-Gm-Message-State: ACrzQf0HVG675OX1+CjF4M2i2VzMZHoEEuxmb39sy+Z/OObA0nm+tiIv
-        rrui40pcYagSccX1hJZeXVuEJiFYNtlevQIy7V6X4ZmMD9Z0Hi/J
-X-Google-Smtp-Source: AMsMyM7YRe9RvsuqtewR6uX/aL2BQGW5CYomNbOiJiIJYrISCQ9d1lDZCrwmU5v/lVj8GuGgSUo1z5zr0oKKW9Cg/kA=
-X-Received: by 2002:a17:906:7952:b0:787:a14d:65a7 with SMTP id
- l18-20020a170906795200b00787a14d65a7mr6369327ejo.108.1665950868168; Sun, 16
- Oct 2022 13:07:48 -0700 (PDT)
+        bh=LVXu7FXvbbkClDfyhqhOUOktEndjkyaR4J+GkT631mk=;
+        b=fU4YQkMuAuS/UuiJ1+wC2pYwe56/+myVHCBAfFMhDTI2iUCMfbboBiK9RVIDZLBBoE
+         Hg4Fod03DVnPWh0BfoqkAvVZDtD5VqPPFbhO7hNXdK7tSh0OZtC7KVMyNASFp5p3eWSS
+         OhoLrRzPrSnj5cdXyv+BCDTmd587/z242tzXz5GnCJhJDypUywXiW2gleV61HvBaFMZN
+         R//R1K0sgLYXWmPRycyKxP/pj1FejrPvRiVVfY7/hYPLC/7HDRpNHblK4/KckJfNNTg3
+         o75azCZXhwtohXYvRs1JScakTzHYExNgRX2855Jpf5n/IbVUtNUmKOYeHgps/pfBVJDr
+         SQqA==
+X-Gm-Message-State: ACrzQf2XHHzOxc8f1IEAJ/RZDp2SdKgnOKuL/9mtV14aqeKUaIzNpS+R
+        7+oWI8ullPf5TEtzdT1BOqe3CxITY0BHXCCdhyClfcDIvtGQdLOo
+X-Google-Smtp-Source: AMsMyM5ASrW8KngH6zHhALVfOT24tHVvrJyYquWz0ojVtR3QzkQwj5kq72YxkUdEtn7Fxp6g8LQJM/1sJfWzRLUuJh8=
+X-Received: by 2002:a17:907:2672:b0:734:a952:439a with SMTP id
+ ci18-20020a170907267200b00734a952439amr5934261ejc.539.1665951572560; Sun, 16
+ Oct 2022 13:19:32 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1381.git.1665590389045.gitgitgadget@gmail.com>
- <xmqqedvbcrnn.fsf@gitster.g> <CAPMMpoigKVzhXu1WqSrx13MP1jR0J+ajkwRVVtY_LwHYAoWeTg@mail.gmail.com>
- <xmqqsfjqbwil.fsf@gitster.g> <CAPMMpoiwnLyqzBBubkgSpjyJQqSeEVdoZy72FAwGDbMgg9UXxg@mail.gmail.com>
- <xmqqilkmbelx.fsf@gitster.g>
-In-Reply-To: <xmqqilkmbelx.fsf@gitster.g>
+ <pull.1381.v2.git.1665734440009.gitgitgadget@gmail.com> <xmqqczaube8o.fsf@gitster.g>
+In-Reply-To: <xmqqczaube8o.fsf@gitster.g>
 From:   Tao Klerks <tao@klerks.biz>
-Date:   Sun, 16 Oct 2022 22:07:38 +0200
-Message-ID: <CAPMMpohBOk2eQMbMxJhjr7cezrhMxVfaS--Aq8jJ1e-LQbEjrw@mail.gmail.com>
-Subject: Re: [PATCH] mergetool: new config guiDefault supports auto-toggling
- gui by DISPLAY
+Date:   Sun, 16 Oct 2022 22:19:22 +0200
+Message-ID: <CAPMMpohWE17xk4fF+uQja0jfn53bjgVtg75FKEC1w0Km7U8Dvg@mail.gmail.com>
+Subject: Re: [PATCH v2] RFC: mergetool: new config guiDefault supports
+ auto-toggling gui by DISPLAY
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -61,35 +59,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 14, 2022 at 5:37 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Oct 14, 2022 at 5:45 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Tao Klerks <tao@klerks.biz> writes:
+> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> > My understanding, from ad-hoc testing, is that using OPT_BOOL causes
-> > the target variable ("use_gui_tool" in this case) to *always* be set
-> > to either "1" or "0", regardless of whether the user sets the main
-> > flag, the --no form of the flag, or sets nothing at all.
+> >      * In git-mergetool--lib.sh the way I implemented the "auto" special
+> >        value means that if you put an arbitrary value in the config, eg the
+> >        typo "uato", you get an error about it being an invalid boolean
+> >        config value; is that OK? Is there a better way to handle "boolean or
+> >        special value" config validation? Are there any examples?
 >
-> You are saying "git gc --keep-largest-pack" is broken ;-)
+> I think the ideal behaviour would be:
+>
+>  * Unless running difftool and difftool.guiChoice has a wrong value,
+>    or running mergetool and mergetool.guiChoice has a wrong value,
+>    we should not even complain.
 
-Now that I look at that, that does appear to have been implied by what
-I was saying, yes!
+This is how it behaves right now, yes.
 
 >
-> OPT_BOOL() and OPT_BOOL_F() are OPT_SET_INT() in disguise and there
-> is no "set to this default value if no command line option is given"
-> involved.  At least I do not recall allowing such a code in.
+>  * If the command line says --gui or --no-gui that makes the setting
+>    irrelevant, it is OK for us to give a warning to remind the user
+>    that they may want to fix the spelling of the variable, but
+>    otherwise go ahead and perform the action as they asked us to.
+
+In the current implementation, there is no warning if the choice has
+been explicitly made - there is no reason to check the configured
+default under such circumstances.
+
 >
+>  * If the command line lacks --gui or --no-gui, we do need to have a
+>    usable value in the configuration, and we should error out
+>    without spawning either gui or no-gui tool backend.
 
-I can confirm that it works the way you expected. I was sure I had
-experienced such behavior during my early attempts at tristate
-handling here, but in retrospect I was very much mistaken, not only
-because --keep-largest-pack is not broken, but also because I just
-ripped out all the arg-parsing function and enum stuff, and it all
-works fine with -1, 0 and 1 as you pointed out it should. I don't know
-exactly how I messed up my early testing, but I don't suppose it
-matters.
+This is *not* the current behavior - currently an error is printed,
+but execution continues with a no-gui default. I will correct this.
 
-Substantial simplification in the next update.
+>
+> It may be usable without the second one and always fail difftool and
+> mergetool until the setting gets fixed, but that is less than ideal.
+> We do allow less than ideal code in, as long as it is an improvement
+> over the status quo, and its presence does not make it harder to
+> later get closer to the ideal.
 
-Thanks!
+Thanks for the logic table, sounds good.
+
+However, my concern was with the precise form of the error if a
+configured value is neither trueish, not falseish, nor a case-tolerant
+form of "auto": under such circumstances, instead of a dedicated error
+message along the lines of "fatal: bad config value 'autod' for
+'difftool.guidefault' - must be boolean or 'auto'", we get the
+*default* error message for *boolean* config settings: "fatal: bad
+boolean config value 'autod' for 'difftool.guidefault'". This can of
+course be corrected, I just need to work out how, and exactly what
+form the error message should then take.
+
+Should we be elaborating an error message for this specific tristate
+config value, or is it "normal" fail with a slightly-misleading
+message suggesting it is a simple boolean config in such cases?
+
+Thanks,
+Tao
