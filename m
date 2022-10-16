@@ -2,62 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2495C4332F
-	for <git@archiver.kernel.org>; Sun, 16 Oct 2022 20:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C250DC433FE
+	for <git@archiver.kernel.org>; Sun, 16 Oct 2022 21:22:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229472AbiJPUvC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Oct 2022 16:51:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46612 "EHLO
+        id S229655AbiJPVWr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Oct 2022 17:22:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbiJPUvB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Oct 2022 16:51:01 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FB682D1F3
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 13:51:00 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id l5so10301382oif.7
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 13:51:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=1WtrQiNlg1/nrOit+WMv7vykjJD632x4wVWUv/MPi6c=;
-        b=bJb+I35uXXyXdIf3sIpEUf92625kKtcxpPtuxrEYgMIlaNAgFh2QCfLyyQXH+NlxK8
-         Qn46H+Jjzlt46fbqJPmcTsYBs+ODQ/RS6Jb6H8AhBGr47WpRF3vE8XdTYKr2vQja5zvm
-         Wa8Gq5/3eTi9VO8tRywynBsHMBmTO9Xt4ZdBxKLAPDrQ9w9aX0r0FmxFN5tEGR+pFLcC
-         HLZkUBPGB+PhNuY/bjTS7nnmyJgIrk9P6p0ruopDYN1IsIOo/94Xi30XT2oTt+1e5DUe
-         cPhf8C1b67SGGryg8sKY0vRJFKZaeW/MUhfArqqgZeUdm6haVEBoVw8lan1bICEMQVET
-         uMFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1WtrQiNlg1/nrOit+WMv7vykjJD632x4wVWUv/MPi6c=;
-        b=j5pMTuvx4xOCCbSvkzIbMfAQLBFvIdthRykoDYWVBr3JvHfG1TKkk6+GYfoGSEs2Bf
-         nF9r9EYfG1NX+8PgG5dw4hWEjS3KTCCXdguPVNDYKNsAbZxFz5TRDX+TntHCKUWQmEyq
-         G58URCJ81O6q5hT/LkdgbHjyh7koQKz4K1EH5P64ffG1J+6aBPNWEsNgGhjQrnIkhJPH
-         8gmxhiegZfXj0ME2jmNRRFWifZhtiNXsZX8WT/R73nyorCEuhM187nR2hWz9mwzB2Fti
-         tD2TsIwGdAXa2a+EG92LZd3iBqPXksw2rs8qpQXDW/ERMqDELUd3tP6ZQfVrEDwHFXD1
-         BFJQ==
-X-Gm-Message-State: ACrzQf2+0LdcEavfQddDOPU+OY/OxhC24J3aI18YF+B2iWfkvsgsqZSV
-        G3TrCUMy1xEKvAVivx7VIJcwysYIj6QcYbF1SWD1oF1ghe0=
-X-Google-Smtp-Source: AMsMyM43fCXpkaVPcKpasYLGKnvY0457TaNLBhV6aZQ3cNzAlycqvVRgs9/ZcHAMdw/4ZFB2oJOMDPRcoT/CYgUYisE=
-X-Received: by 2002:a05:6808:1507:b0:355:3ec:3109 with SMTP id
- u7-20020a056808150700b0035503ec3109mr3761789oiw.263.1665953459549; Sun, 16
- Oct 2022 13:50:59 -0700 (PDT)
+        with ESMTP id S229519AbiJPVWp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Oct 2022 17:22:45 -0400
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB48D2AE37
+        for <git@vger.kernel.org>; Sun, 16 Oct 2022 14:22:43 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id 08DE732003CE;
+        Sun, 16 Oct 2022 17:22:40 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Sun, 16 Oct 2022 17:22:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mcclimon.org; h=
+        cc:cc:content-transfer-encoding:date:date:from:from:in-reply-to
+        :message-id:mime-version:reply-to:sender:subject:subject:to:to;
+         s=fm3; t=1665955360; x=1666041760; bh=F6FFyatXGDSMwOuARyLZXvtqX
+        smBTYsOTHOkw1VL8CU=; b=Hr7xpij9E5aRlNQ5F8blTLCRvhH7MTuXi34BbQtz2
+        TiShxUXruOFQPMRyNH3gYcOnKWJjAVg3Cg3lUEHm0wqsdRxlt+pBLgLslS4zkE3L
+        BM+6ENar5e/9W3ed0REzp1AYlHAfb+qns1qitbYVqR98/Pz1fERKnYOuPwDUDDMA
+        fa/pOCIYeYYOGEe9R0Z2CDGJiE2xy/ZRneL4nGnVPtACpF915vPDehlriHZxi1H/
+        oXU1jGi8P5jbz1kQ0S8OfqD37CXaRuQhtBZloKEvgv2ZfIfwip/lK7yGnjQUklYE
+        pDAmNpqk32DGwzum+pKscE3KHmbXQH931YbShnpFdw1Aw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:message-id
+        :mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+        1665955360; x=1666041760; bh=F6FFyatXGDSMwOuARyLZXvtqXsmBTYsOTHO
+        kw1VL8CU=; b=uWOua+GHnr6cONNlFzQr6JXnOPG79uk/Q9RBCbjAsnofScDWKwu
+        GAV/4vnDueQbwDGPwc/GBhB9oZqW4WOqz4lHyjTmmo+6+I9r5jypWxM+7Odfr9Mw
+        IVAvK/l1rkFa7SPLgNDGqFo2yNt1iLVhWGIn4Mt9wjPa4TmUJWudd+8+mPRy/pPj
+        GDlbgT6hgzEpjMeguF9zr51M93p5d5vc1iSVeVaMH8w/4vfAMwNAQgh4zmTf0+a/
+        JU1ZIe5OV3fue4P6pF8aeviYja3wRDAFJdSdLzV1qInvrSIkkhP2sByw+dPIqTAV
+        59rldKIrKotiglTwuIOdsYjlBvfhVrIvG2w==
+X-ME-Sender: <xms:IHZMY6zrhOYvc_CJzVz1a1ynSaPDHMw4UkBnnKWuK5mgI54BupCQbQ>
+    <xme:IHZMY2T82kSShZ7WTmYE4rkc1YLMMwBL7CMPEcp3lRx0ZreItM4x8qNQReHpanPll
+    4lvKNorHX6KgkTjfmI>
+X-ME-Received: <xmr:IHZMY8Wmj2v3M9vINBa4qPK3Y6npsywYbEBZvV392eIgSTyCcmWUApf5Kmpzxc-38q2egm46L2v2iuKQSukQLBWAJz0Jg679Y9cghnupap-W>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeekjedgudeivdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgggfestdekre
+    dtredttdenucfhrhhomhepofhitghhrggvlhcuofgtvehlihhmohhnuceomhhitghhrggv
+    lhesmhgttghlihhmohhnrdhorhhgqeenucggtffrrghtthgvrhhnpedvleekfeeiheefge
+    duhfeiudekgffgvdfhjedtveehudduhfefkeetgfektdetveenucffohhmrghinhepkhgv
+    rhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+    hfrhhomhepmhhitghhrggvlhesmhgttghlihhmohhnrdhorhhg
+X-ME-Proxy: <xmx:IHZMYwhsfrSdwZiKNKGb4OXE8LXmk1QCrGvvxOshq9-LW8kCu0dhWw>
+    <xmx:IHZMY8DzhjLDq5dPUgNhQIyhaPMtP2_FPQUDa0oLxbe69mQ5dm_ugA>
+    <xmx:IHZMYxLlWniQSvkvO_k4THrTMXWq3Owy-3vGL4VLYnRoRR9F4boikA>
+    <xmx:IHZMY3r33rP8jb_KPLqHEbO8qBKnd67FrxKzueqCf2lExLmATh6cEQ>
+Feedback-ID: i9dc944d1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 16 Oct 2022 17:22:40 -0400 (EDT)
+From:   Michael McClimon <michael@mcclimon.org>
+To:     git@vger.kernel.org
+Cc:     Michael McClimon <michael@mcclimon.org>
+Subject: [PATCH 0/1] Git.pm: add semicolon after catch statement
+Date:   Sun, 16 Oct 2022 17:22:35 -0400
+Message-Id: <20221016212236.12453-1-michael@mcclimon.org>
+X-Mailer: git-send-email 2.38.0.83.gd420dda0
 MIME-Version: 1.0
-From:   Bob van der Linden <bobvanderlinden@gmail.com>
-Date:   Sun, 16 Oct 2022 22:50:50 +0200
-Message-ID: <CALOmz0vW-jZo-60+mq-5zJtrX-1HtU3Afvmx1A4Z2bPSdehAyg@mail.gmail.com>
-Subject: Re: [PATCH] completion: support amend and reword in git commit fixup option
-To:     gitgitgadget@gmail.com
-Cc:     Bob van der Linden <bobvanderlinden@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hmm, I cannot figure out why `CI / win+VS test` is failing on GitHub CI.
-The logs do indicate `Result: FAIL`, but I cannot see which test is failing.
-It's surprising, as my changes seem totally unrelated to Windows.
+When looking into a bug about Git.pm's handling of unsafe repositories [1],
+I found the immediate cause of the error, which this patch fixes. This
+patch doesn't do anything about the actual problem (Git.pm happily
+continues to work in unsafe repositories), but it at least fixes the
+runtime error.
 
-Could anyone help out?
+[1] https://lore.kernel.org/git/20221011182607.f1113fff-9333-427d-ba45-741a78fa6040@korelogic.com/
+
+
+Michael McClimon (1):
+  Git.pm: add semicolon after catch statement
+
+ perl/Git.pm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+-- 
+2.38.0.83.gd420dda0
+
