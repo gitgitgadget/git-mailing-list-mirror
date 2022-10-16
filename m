@@ -2,97 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D113EC4332F
-	for <git@archiver.kernel.org>; Sun, 16 Oct 2022 17:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38580C4332F
+	for <git@archiver.kernel.org>; Sun, 16 Oct 2022 20:07:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229982AbiJPRJz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Oct 2022 13:09:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48868 "EHLO
+        id S229843AbiJPUHy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Oct 2022 16:07:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229894AbiJPRJq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Oct 2022 13:09:46 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2378DFC5
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 10:09:29 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B881C1A91AB;
-        Sun, 16 Oct 2022 13:08:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2uHJmzSfLB0kfusUrRD6wDnyonFtN3h0bR712j
-        idZTE=; b=I04i/eSE3kV/X0w/a5go2AICKSvhG3w2d6RJPmcXjV0N8LMmUoLsj7
-        C2eLrAmd05HmU2zLfO00ddhR9zBJpJW7c/kB7V7OcW1i5hwUFEordpJ7U0wDAZNl
-        SoDJeuxl0EXflpxrVelm92k5VBgCewRqyDb27rzajCVEHPRt7MEhc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B14021A91AA;
-        Sun, 16 Oct 2022 13:08:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E62501A9166;
-        Sun, 16 Oct 2022 13:08:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rupinderjeet Singh <rupinderjeet47@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [suggestion] Fail cherry-pick if it overwrites untracked files
- with the matching file names
-References: <CAAheMRzYX6PdWMtcB=px_kD=-gnGGHvDgvR6Jxy94JH2DpYpJw@mail.gmail.com>
-        <xmqq7d11540b.fsf@gitster.g>
-        <CAAheMRy+B=2tBX-Frq5-NkdQFSm4jZHhEBVTReMwfGcvHVMQgQ@mail.gmail.com>
-Date:   Sun, 16 Oct 2022 10:08:18 -0700
-In-Reply-To: <CAAheMRy+B=2tBX-Frq5-NkdQFSm4jZHhEBVTReMwfGcvHVMQgQ@mail.gmail.com>
-        (Rupinderjeet Singh's message of "Sun, 16 Oct 2022 00:39:44 +0530")
-Message-ID: <xmqqk04z4ry5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229729AbiJPUHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Oct 2022 16:07:51 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACC9532D81
+        for <git@vger.kernel.org>; Sun, 16 Oct 2022 13:07:49 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id bj12so20712339ejb.13
+        for <git@vger.kernel.org>; Sun, 16 Oct 2022 13:07:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=klerks.biz; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wdj8vTftR8P+JaRklmNxz5H37sQMdFoYxBN39EKBWvE=;
+        b=VYPmHOlezd0vEP/pmi64HYPuqEN7KTkz9iLb5HuB+tZH1zYkSUUfTPT7RGUXrtk2Xy
+         rALUamft9mRRWUgVAEpMNiLMD8EeJmwpscxvcV5exybjcv3OgdFgNrcjSK/GNyyKvsLo
+         78p6s4iMiAbAICG2rpPrCVgeXfIsTm3Zi1AOE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Wdj8vTftR8P+JaRklmNxz5H37sQMdFoYxBN39EKBWvE=;
+        b=EdgbqJc07K4Hw/kYgYiBh5/y4slIGjiF4bhD+8XSci1n8Q9dugJGf00mV6QLLsXpMq
+         YLGqKfeT7NL49Lfa5o7INJ9pcE9UI2ITmJHY/OjCaTLBnrVpTgDGKtwnkAGtwutb30MQ
+         yeXjypUKV8HaoQBcLB1kmUxFln3Fe4/qnIxIGN4BwYCufFR99rbmF/316TuTu18cHGUO
+         IQEsGbOQSKJa9ay9kp9Z8q4ISFnD3oJXnxaeHRSZ0lFAf2ggx58BVueNDmTd95yQQ2rD
+         JSHvFnBMvp92YiRsnFV+FdYRQ0ro2t3d5Tfhtd9WnjiR8Dg/W4oH9iRCLC2TngOFeiDW
+         ovIA==
+X-Gm-Message-State: ACrzQf0HVG675OX1+CjF4M2i2VzMZHoEEuxmb39sy+Z/OObA0nm+tiIv
+        rrui40pcYagSccX1hJZeXVuEJiFYNtlevQIy7V6X4ZmMD9Z0Hi/J
+X-Google-Smtp-Source: AMsMyM7YRe9RvsuqtewR6uX/aL2BQGW5CYomNbOiJiIJYrISCQ9d1lDZCrwmU5v/lVj8GuGgSUo1z5zr0oKKW9Cg/kA=
+X-Received: by 2002:a17:906:7952:b0:787:a14d:65a7 with SMTP id
+ l18-20020a170906795200b00787a14d65a7mr6369327ejo.108.1665950868168; Sun, 16
+ Oct 2022 13:07:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 22410644-4D75-11ED-9197-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+References: <pull.1381.git.1665590389045.gitgitgadget@gmail.com>
+ <xmqqedvbcrnn.fsf@gitster.g> <CAPMMpoigKVzhXu1WqSrx13MP1jR0J+ajkwRVVtY_LwHYAoWeTg@mail.gmail.com>
+ <xmqqsfjqbwil.fsf@gitster.g> <CAPMMpoiwnLyqzBBubkgSpjyJQqSeEVdoZy72FAwGDbMgg9UXxg@mail.gmail.com>
+ <xmqqilkmbelx.fsf@gitster.g>
+In-Reply-To: <xmqqilkmbelx.fsf@gitster.g>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Sun, 16 Oct 2022 22:07:38 +0200
+Message-ID: <CAPMMpohBOk2eQMbMxJhjr7cezrhMxVfaS--Aq8jJ1e-LQbEjrw@mail.gmail.com>
+Subject: Re: [PATCH] mergetool: new config guiDefault supports auto-toggling
+ gui by DISPLAY
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rupinderjeet Singh <rupinderjeet47@gmail.com> writes:
-
-> Yes, thank you for being so through with the example. I understand now.
+On Fri, Oct 14, 2022 at 5:37 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I want to ask if you would suggest that local configuration (or any
-> information required by the project) that is too sensitive to be
-> tracked in git, should either be kept as 'untracked' files or 'outside
-> of git repository'.
+> Tao Klerks <tao@klerks.biz> writes:
+>
+> > My understanding, from ad-hoc testing, is that using OPT_BOOL causes
+> > the target variable ("use_gui_tool" in this case) to *always* be set
+> > to either "1" or "0", regardless of whether the user sets the main
+> > flag, the --no form of the flag, or sets nothing at all.
+>
+> You are saying "git gc --keep-largest-pack" is broken ;-)
 
-I think it depends on the project and participants may not have
-control over it if it is ingrained in the project's build structure,
-but a separate place may likely be more appropriate, as it would
-reduce the chance of accidental "git add ." adding everything.
+Now that I look at that, that does appear to have been implied by what
+I was saying, yes!
 
-> With your explanation, am I correct to think that only the following
-> kind of information is suitable to be put in .gitignore files?
-> 1. that can be regenerated
+>
+> OPT_BOOL() and OPT_BOOL_F() are OPT_SET_INT() in disguise and there
+> is no "set to this default value if no command line option is given"
+> involved.  At least I do not recall allowing such a code in.
+>
 
-Yes.
+I can confirm that it works the way you expected. I was sure I had
+experienced such behavior during my early attempts at tristate
+handling here, but in retrospect I was very much mistaken, not only
+because --keep-largest-pack is not broken, but also because I just
+ripped out all the arg-parsing function and enum stuff, and it all
+works fine with -1, 0 and 1 as you pointed out it should. I don't know
+exactly how I messed up my early testing, but I don't suppose it
+matters.
 
-> 2. that doesn't matter when it is lost
+Substantial simplification in the next update.
 
-Natural consequence of the above
-
-> 3. that isn't used by the files tracked in git repository
-
-I do not get this, so I decline to comment ;) Is mylib.o that is
-"ignored", created from tracked mylib.c source, used by mymain.c
-source that is tracked, when mymain.o would not link without what
-mylib.o gives it?
-
-Some other SCMs have an extra class "precious" to handle exactly the
-case you have in mind.  You do not accidentally let "git add ." to
-slurp them into the committed history, but you do want them to be
-left alone.  We don't have it, and that is not because we have any
-reason to be against having it.  It is just it didn't happen.
-
-And nobody bothered to explore the ramification of adding the new
-class yet.  We know about "checkout" and other mergy operations and
-"add", but there probably are trickier interactions with other parts
-of the existing system that somebody need to carefully go through
-and make sure it does not introduce funny inconsistencies.
+Thanks!
