@@ -2,119 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09527C433FE
-	for <git@archiver.kernel.org>; Sun, 16 Oct 2022 13:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 934DAC433FE
+	for <git@archiver.kernel.org>; Sun, 16 Oct 2022 16:06:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229597AbiJPNOI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Oct 2022 09:14:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57526 "EHLO
+        id S229738AbiJPQGW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Oct 2022 12:06:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229607AbiJPNNv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Oct 2022 09:13:51 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB1EA3C8CE
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 06:13:49 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id s196so7000747pgs.3
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 06:13:49 -0700 (PDT)
+        with ESMTP id S229618AbiJPQGV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Oct 2022 12:06:21 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4BCA17AA0
+        for <git@vger.kernel.org>; Sun, 16 Oct 2022 09:06:20 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id r14so12936844edc.7
+        for <git@vger.kernel.org>; Sun, 16 Oct 2022 09:06:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=c9P6GLV6upD5Wlen41KwbyKwZU+0Gtet4W4jpUOgU+k=;
-        b=pTDn+v3TrEd847+FnQiQeJDO8OZRIesTFR1xdI72rVjZfBGUdOaSdA+OTlsAtwAP9l
-         VZ4sb8z26Pt7zoLFhlba0nizSinsg4kj2i91/G4l+lnm38R7wYW57stOimMicpqyRkVB
-         dYxvNuMF6ypMNJ+DTiwkD3ixROWyTKT7i/YJwPqRFBDf5N+r0hOgLOIGlj3TFvdXMzbq
-         uDA1SF41zn2yepQJf9raYiBY93GOyOdS1duw47WMYK7+g4ssPD48/X5U8L5MGpGAadcI
-         dtRON4lOnatMndRiqMgxlk3BaY4LK2bBJfRlAeE4NcZbHK3V0vgPDCLDtfNUOM/zKJhL
-         N/Tw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=nITRGEwsqJR/ZNGT5YJw0/tqNM3A+z0Q3O9VXmbgdH0=;
+        b=S2DZYekHpevQkJqBEzO+12OIYUFSutPddtoAFlvU7RqimziRiZpwJQ9Izsch5hBA/5
+         uDbSueytfhwfItqAv2pp6SInCisTu26g/QITzizN0kpI8b9fUqzn+KZOk9vF+w8sO/bf
+         m+Z9OeBaWDtUAckSk6yGrOQ3DtDq+4Wuvqml6zicuB0tCGfukAi+awQtpcRNauDs6Lf1
+         VMNU4JJbM84gwl4cyyhA3QFNm4Z3mp6/wEPIsuf+CgxKxG9cNYp4PP/d9mxZ7Ev38MBs
+         bUiTqbo9ZxcjHSydBASSNIZ3JKk06WwUcEnmR49ESNyj2bgqwWfU4uARmRjwP1xmKVS/
+         t2vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c9P6GLV6upD5Wlen41KwbyKwZU+0Gtet4W4jpUOgU+k=;
-        b=Yl9wzkds5JXwWOKdYmyG1tCNA8UZzudiiGY8OKkc6XmmgL3RXURFXzi1a/lBrs0F6N
-         DR7mJ1HatCYE1paix0j+yacmzKKPVQisCPpu5XM3bWJvPyijYr4PZji1HZpp2+bVr+v9
-         5uUjPoC02zmRyhg+K0alDVYN2aX8BBmlR8hjCoi6eKnUMkb8RLhXBvCwOOTuG0ZYxdxm
-         VsNssaguq4nKEpn1AH1iALQ9OVuZFaF+Hcn0UdCiwQxAqeC9PgdFNYHITs3tsFawDDN4
-         Uvg1uX9hOkn8TiTyVg866dK7v7+/kRIzy3P1oqJJqS5oARW42ZBSO/5YsOmYRNKHlOIW
-         2BIQ==
-X-Gm-Message-State: ACrzQf1Wp0FdPbSuaNqOGkJexeaadbXKqCcRwV48VDsTysroFr/RnVh/
-        xiC/9JKkci7eSjfrYAxpH/8LgPNZHRI=
-X-Google-Smtp-Source: AMsMyM6RB8Ma0OjCxI9uEQ+hMvuULWeL97LUkjUCuwMn5TBuL5B4xtSgtxi1QCHBKuCa6WFpk0NZ+Q==
-X-Received: by 2002:a05:6a00:114c:b0:528:2c7a:630e with SMTP id b12-20020a056a00114c00b005282c7a630emr7447468pfm.86.1665926029414;
-        Sun, 16 Oct 2022 06:13:49 -0700 (PDT)
-Received: from localhost ([2001:ee0:500b:6370:da47:cda5:dbd5:6e77])
-        by smtp.gmail.com with ESMTPSA id y23-20020a17090264d700b0017a04542a45sm4741751pli.159.2022.10.16.06.13.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Oct 2022 06:13:48 -0700 (PDT)
-Date:   Sun, 16 Oct 2022 20:13:45 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     skrab-sah via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        skrab-sah <skrab.sah@gmail.com>
-Subject: Re: [PATCH v2] abspath.h file is generated by makeheaders tool
-Message-ID: <Y0wDieA32uVtYmgx@danh.dev>
-References: <pull.1353.git.git.1665563819680.gitgitgadget@gmail.com>
- <pull.1353.v2.git.git.1665679233107.gitgitgadget@gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nITRGEwsqJR/ZNGT5YJw0/tqNM3A+z0Q3O9VXmbgdH0=;
+        b=d5iLKXxh3OR4ilRVzhTuOz7UXORyuLfFrHyWkvyrpD2+0CeOLNr2H9IEd0Lb/lcdWz
+         HOSRbIViz6n6sBAdkmOjJvA1tavIbEQB2jF1jHalNrXrt+DX7VeiI07Jjvz6H7N4/z2R
+         tlU57o0hSQXz64nVIc5za+2oHrDc5BEEeX9yLVl3gkMC2MFz3t2ZxxYt2KzN0eyzD9Wz
+         EG2ToEW1wS7VZ1MoS80IgZ+QOvJasHNFNl+2jtPpXNqy+Bp1I35eXYKHBD5TJ+rxTkT9
+         HzzcbBQ29+AP32Wc2f8lo8IzmAMip3O0cYK1zP/ZdCY/V5M8wOeUnk5HaoNk11YnMb64
+         9mjQ==
+X-Gm-Message-State: ACrzQf1DoC/ukRqN/Y8maqi90vF4pODejxC1AuNYl5oIA1x+gNtP/DWg
+        wMfOO4ixGrlu7ToOvfF9B9DSTaa0Tqvin41Fn3DSqaTnGPY=
+X-Google-Smtp-Source: AMsMyM6CUGPxy9bpLRlOuIPp8boh/FoKHAGJ3mBapd8GHcizoi8E0u2/ksowQkx8j1qn0qhDXsw/ejp0urwPfSiDTHo=
+X-Received: by 2002:a05:6402:2793:b0:45c:d273:8c18 with SMTP id
+ b19-20020a056402279300b0045cd2738c18mr6917989ede.337.1665936379313; Sun, 16
+ Oct 2022 09:06:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1353.v2.git.git.1665679233107.gitgitgadget@gmail.com>
+References: <pull.1353.git.git.1665563819680.gitgitgadget@gmail.com>
+ <pull.1353.v2.git.git.1665679233107.gitgitgadget@gmail.com> <Y0wDieA32uVtYmgx@danh.dev>
+In-Reply-To: <Y0wDieA32uVtYmgx@danh.dev>
+From:   Skrab Sah <skrab.sah@gmail.com>
+Date:   Sun, 16 Oct 2022 21:36:07 +0530
+Message-ID: <CA+J78MUsYXDzc7wf0S4J7WimFFpL-zEo5gftT17syT46CnMaqA@mail.gmail.com>
+Subject: Re: [PATCH v2] abspath.h file is generated by makeheaders tool
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Cc:     skrab-sah via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-10-13 16:40:32+0000, skrab-sah via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> From: skrab-sah <skrab.sah@gmail.com>
-> 
-> 1. We don't need to commit the file.
-> 2. Added routin for abspath.c in Makefile.
-> 3. Added tool support for makeheaders.
-> 
-> Signed-off-by: skrab-sah <skrab.sah@gmail.com>
-> ---
+> This will break cross-compilation.
+sorry, it was not in my mind.
 
-[...]
+> At the very least, we needs to use either HOSTCC (likes linux project),
+> HOST_CC or CC_FOR_BUILD (GNU Autotools' convention) to compile
+> makeheaders
+>
+> So, something like (not tested, whatsoever):
+>
+>         CC_FOR_BUILD = $(CC)
+>         CFLAGS_FOR_BUILD = $(CFLAGS)
+>         LDFLAGS_FOR_BUILD = $(LDFLAGS)
+>         QUIET_HOSTCC = echo '   ' HOSTCC $@;
+>         QUIET_MAKEHEADERS = echo '      ' MAKEHEADERS $@;
+>
+>         makeheaders: tools/makeheaders.c
+>                 $(QUIET_HOSTCC)$(CC_FOR_BUILD) -o $@ $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) $<
+>
+>         abspath.h: abspath.c makeheaders
+>                 $(QUIET_MAKEHEADERS)./makeheaders $<
 
-> diff --git a/Makefile b/Makefile
-> index cac3452edb9..e1136e96283 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1,6 +1,16 @@
->  # The default target of this Makefile is...
->  all::
->  
-> +# compile header
-> +.PHONY: hdr
-> +hdr:: abspath.h
-> +
-> +makeheaders: tools/makeheaders.c
-> +	$(CC) -o $@ $<
-> +
-> +abspath.h: abspath.c makeheaders
-> +	./makeheaders $<
+Ok, as you suggested above, I will modify the patch according to it.
 
-This will break cross-compilation.
-At the very least, we needs to use either HOSTCC (likes linux project),
-HOST_CC or CC_FOR_BUILD (GNU Autotools' convention) to compile
-makeheaders
-
-So, something like (not tested, whatsoever):
-
-	CC_FOR_BUILD = $(CC)
-	CFLAGS_FOR_BUILD = $(CFLAGS)
-	LDFLAGS_FOR_BUILD = $(LDFLAGS)
-	QUIET_HOSTCC = echo '	' HOSTCC $@;
-	QUIET_MAKEHEADERS = echo '	' MAKEHEADERS $@;
-	
-	makeheaders: tools/makeheaders.c
-		$(QUIET_HOSTCC)$(CC_FOR_BUILD) -o $@ $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) $<
-
-	abspath.h: abspath.c makeheaders
-		$(QUIET_MAKEHEADERS)./makeheaders $<
-
--- 
-Danh
+If anyone suggests it will be good or not, I have another way to do it.
+What if we put the makeheaders tool executable in an online platform
+and then put it in Makefile to download it over the internet according
+to the system.
