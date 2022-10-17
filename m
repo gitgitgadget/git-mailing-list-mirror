@@ -2,60 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B549C4332F
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 13:17:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D38AC433FE
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 13:18:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230350AbiJQNRz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 09:17:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39274 "EHLO
+        id S230436AbiJQNR6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 09:17:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229909AbiJQNRv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 09:17:51 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F18A65FF50
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:17:49 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id w18so18419904wro.7
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:17:49 -0700 (PDT)
+        with ESMTP id S230258AbiJQNRw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 09:17:52 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B7274D25B
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:17:51 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id iv17so8618943wmb.4
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:17:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7faw4EUCXSCyKuXe8/STylGCsukVPYq05BacxCx1390=;
-        b=l5y0tLV3LKuosmrl57TF5KuQmdf3m/IZMlEFqHj/YuPsILEMzXvquzg83pFrNg34kr
-         XmzpBkPV3GUBba5SbPHmxtzgiD93qVMwAUGN1NMGdSDUOkknm2inWEOeothpSGyEfHOB
-         xdAIVmCHARDUiugzHk6gYV7mus/a5If996jnbpEf/ibkkmZvrZHvROQ6AIzSas5F0A+m
-         nNySWEdSfyT66X0SdhsWaGtFZkZO8s1t0rdWjZ3J9nMw0rQz08aFmhH7vUSliuw2ogi7
-         Lo3ULkzQD3CuTY3x+M8hh1L1RNylAXaqJ7TPdXhTmQ1P+jbUg0hJUN+e6zZsn3pISwQw
-         ZSwA==
+        bh=t4XqjxzKj5QYArEQIi/wuOmUM5Rr9PThx002U33744k=;
+        b=FBVxU/j5YGzJqLv36blL3U2iJMxevvbeNvdBvpir+7by20PFEs0RVY/7KwER+oIMQx
+         B62XC0y6HdGdizj+2Wq5bM16iE/fAkvCpk+bfUkOdIX+dicW48m/7tCE70pGrURH3DzV
+         02P2qIizugSiDCxSaw+Q9bWs6slOwAf+ddMXHtvQuO2LGX+JDJGh+5Z0CEFI1paaHyrj
+         RUVZsjsDDmFuftAI//FDI5Z4NzcnzOJQgD0AzqUlcZKIgwrw03YAVZGRsJkQjmdpHVNF
+         VCH7h/zcz8ylr9VGDaamfBJwkrvR0o1XLysUIpCPmeJUPx6OHjlDGWd+X9Mp0WGtDhHP
+         eE/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7faw4EUCXSCyKuXe8/STylGCsukVPYq05BacxCx1390=;
-        b=f1Xp1YtAJ8r8yLwGZyeRmetBUOJXVJxf7W1vkLf9eFqjvYQbOOk/AVB9VqzFb/ORcG
-         SWWyyAQIzRThd875E6A0RWNBpTfn4k3XS9GkadJ/L0HXBXMw64T7YzQi80TfjZ28e27H
-         9SvMbmbXerkyqVuWj1z3ZuDgwtSJol376uwHi3DUa+rZLaJgdCI0FyrrnNGeNW+J739p
-         spgKiJHmcj/MlFDfJbCxyISDJb6LoJN6scyVaB+k7EFXCgeN79+CwSXFtl+CRuWy0wRB
-         AbXhafc395Af6p0MX7SWgXAksGwzzgSrzGJPtd1Uod5ALnCI0bEdlDJP7MHM4uEqM9uL
-         j2hw==
-X-Gm-Message-State: ACrzQf16DTpXGyEBCX9l9a/YyBhS9bhsVYpFnIdIlg6/1RjO8O04MrRD
-        7hSle1aPoZ1hy6fmK28zdmpzf/az5u0=
-X-Google-Smtp-Source: AMsMyM6arQf2xdQ79PBKiAyVDD56WRVEYmIiwb+sm3Cei7gZl4UlKJj604sqEEJizErHxbxtkchAmg==
-X-Received: by 2002:a5d:4c8e:0:b0:22e:3979:7dc9 with SMTP id z14-20020a5d4c8e000000b0022e39797dc9mr6030714wrs.41.1666012668339;
-        Mon, 17 Oct 2022 06:17:48 -0700 (PDT)
+        bh=t4XqjxzKj5QYArEQIi/wuOmUM5Rr9PThx002U33744k=;
+        b=zXvHLAsrrPblcxODOaXF8dOYe/wczmvgoG3mbX7Aqr4RtW/0AHpkb2mzNYq36UBrFI
+         u4MkMN3C4/bfWuRfPl0fKzkTiEkWlPFKjoF3RXBXbzdV2OSuf41Rzg+Ph6RPmlbmU0Uj
+         jLNlV8lvhCvWInHRWR4wgN9jJg8ml0aalGGtYfNfOXSVW7UdhfTYF/6ckpLGhb8vuI6o
+         qJhZgo4bHyKTez3TyG/RK7/K4cht/gXPvf3n73ObUukGtFW4ycXEkFpQ5dIW92N8S4Hw
+         oIbINAsygA5IZE9SDLHxqawO2ieHD7hKE4TiBcdSwy7bANtuCLD/GE9XF+bWG8sfvlhY
+         hcYg==
+X-Gm-Message-State: ACrzQf2JrMkk+U0xDu0Ikh5A/xLv9C8FnmUS4BGK3k8eKlOEdFI0F4Bm
+        c/TeJVGeb5nu2Xre3SPlocdLXODlH14=
+X-Google-Smtp-Source: AMsMyM5LgEVcqgdAvnAM+6hhe7MbmSLIxEWx46pCzRpvAK9RpGvC+CIyyVuWxIQZvYUvSravLUYtNw==
+X-Received: by 2002:a05:600c:220a:b0:3c5:df6:2f3b with SMTP id z10-20020a05600c220a00b003c50df62f3bmr18716317wml.63.1666012669284;
+        Mon, 17 Oct 2022 06:17:49 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v16-20020a5d43d0000000b00228d67db06esm8519319wrr.21.2022.10.17.06.17.47
+        by smtp.gmail.com with ESMTPSA id m6-20020a1c2606000000b003c452678025sm15539087wmm.4.2022.10.17.06.17.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 06:17:47 -0700 (PDT)
-Message-Id: <d6f2f716c77cbd0a19b3b6032f69f6dd9b257e96.1666012665.git.gitgitgadget@gmail.com>
+        Mon, 17 Oct 2022 06:17:48 -0700 (PDT)
+Message-Id: <1d5e0419c45087c474f33d5ea6b3bcdacd072fa5.1666012665.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1323.v4.git.1666012665.gitgitgadget@gmail.com>
 References: <pull.1323.v3.git.1665650564.gitgitgadget@gmail.com>
         <pull.1323.v4.git.1666012665.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Oct 2022 13:17:39 +0000
-Subject: [PATCH v4 2/8] t3416: set $EDITOR in subshell
+Date:   Mon, 17 Oct 2022 13:17:40 +0000
+Subject: [PATCH v4 3/8] rebase: be stricter when reading state files
+ containing oids
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,95 +78,89 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-As $EDITOR is exported, setting it in one test affects all subsequent
-tests. Avoid this by always setting it in a subshell. Also remove a
-couple of unnecessary call to set_fake_editor where the editor does
-not change the todo list.
+The state files for 'onto' and 'orig_head' should contain a full hex
+oid, change the reading functions from get_oid() to get_oid_hex() to
+reflect this. They should also name commits and not tags so add and use
+a function that looks up a commit from an oid like
+lookup_commit_reference() but without dereferencing tags.
 
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- t/t3416-rebase-onto-threedots.sh | 31 +++++++++++++++++++++----------
- 1 file changed, 21 insertions(+), 10 deletions(-)
+ builtin/rebase.c |  8 ++++----
+ commit.c         |  8 ++++++++
+ commit.h         | 13 +++++++++++++
+ 3 files changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/t/t3416-rebase-onto-threedots.sh b/t/t3416-rebase-onto-threedots.sh
-index dc67d2308f3..01eb9513d6c 100755
---- a/t/t3416-rebase-onto-threedots.sh
-+++ b/t/t3416-rebase-onto-threedots.sh
-@@ -79,8 +79,10 @@ test_expect_success 'rebase -i --onto main...topic' '
- 	git reset --hard &&
- 	git checkout topic &&
- 	git reset --hard G &&
--	set_fake_editor &&
--	EXPECT_COUNT=1 git rebase -i --onto main...topic F &&
-+	(
-+		set_fake_editor &&
-+		EXPECT_COUNT=1 git rebase -i --onto main...topic F
-+	) &&
- 	git rev-parse HEAD^1 >actual &&
- 	git rev-parse C^0 >expect &&
- 	test_cmp expect actual
-@@ -90,8 +92,10 @@ test_expect_success 'rebase -i --onto main...' '
- 	git reset --hard &&
- 	git checkout topic &&
- 	git reset --hard G &&
--	set_fake_editor &&
--	EXPECT_COUNT=1 git rebase -i --onto main... F &&
-+	(
-+		set_fake_editor &&
-+		EXPECT_COUNT=1 git rebase -i --onto main... F
-+	) &&
- 	git rev-parse HEAD^1 >actual &&
- 	git rev-parse C^0 >expect &&
- 	test_cmp expect actual
-@@ -102,7 +106,6 @@ test_expect_success 'rebase --onto main...side requires a single merge-base' '
- 	git checkout side &&
- 	git reset --hard K &&
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 56e4214b441..06903eb6d4d 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -431,9 +431,9 @@ static int read_basic_state(struct rebase_options *opts)
+ 	opts->head_name = starts_with(head_name.buf, "refs/") ?
+ 		xstrdup(head_name.buf) : NULL;
+ 	strbuf_release(&head_name);
+-	if (get_oid(buf.buf, &oid))
+-		return error(_("could not get 'onto': '%s'"), buf.buf);
+-	opts->onto = lookup_commit_or_die(&oid, buf.buf);
++	if (get_oid_hex(buf.buf, &oid) ||
++	    !(opts->onto = lookup_commit_object(the_repository, &oid)))
++		return error(_("invalid onto: '%s'"), buf.buf);
  
--	set_fake_editor &&
- 	test_must_fail git rebase -i --onto main...side J 2>err &&
- 	grep "need exactly one merge base" err
- '
-@@ -157,8 +160,10 @@ test_expect_success 'rebase -i --keep-base main from topic' '
- 	git checkout topic &&
- 	git reset --hard G &&
+ 	/*
+ 	 * We always write to orig-head, but interactive rebase used to write to
+@@ -448,7 +448,7 @@ static int read_basic_state(struct rebase_options *opts)
+ 	} else if (!read_oneliner(&buf, state_dir_path("head", opts),
+ 				  READ_ONELINER_WARN_MISSING))
+ 		return -1;
+-	if (get_oid(buf.buf, &opts->orig_head))
++	if (get_oid_hex(buf.buf, &opts->orig_head))
+ 		return error(_("invalid orig-head: '%s'"), buf.buf);
  
--	set_fake_editor &&
--	EXPECT_COUNT=2 git rebase -i --keep-base main &&
-+	(
-+		set_fake_editor &&
-+		EXPECT_COUNT=2 git rebase -i --keep-base main
-+	) &&
- 	git rev-parse C >base.expect &&
- 	git merge-base main HEAD >base.actual &&
- 	test_cmp base.expect base.actual &&
-@@ -172,8 +177,10 @@ test_expect_success 'rebase -i --keep-base main topic from main' '
- 	git checkout main &&
- 	git branch -f topic G &&
+ 	if (file_exists(state_dir_path("quiet", opts)))
+diff --git a/commit.c b/commit.c
+index 0db461f9735..de30b098dd3 100644
+--- a/commit.c
++++ b/commit.c
+@@ -59,6 +59,14 @@ struct commit *lookup_commit_or_die(const struct object_id *oid, const char *ref
+ 	return c;
+ }
  
--	set_fake_editor &&
--	EXPECT_COUNT=2 git rebase -i --keep-base main topic &&
-+	(
-+		set_fake_editor &&
-+		EXPECT_COUNT=2 git rebase -i --keep-base main topic
-+	) &&
- 	git rev-parse C >base.expect &&
- 	git merge-base main HEAD >base.actual &&
- 	test_cmp base.expect base.actual &&
-@@ -188,9 +195,13 @@ test_expect_success 'rebase --keep-base requires a single merge base' '
- 	git checkout side &&
- 	git reset --hard K &&
- 
--	set_fake_editor &&
- 	test_must_fail git rebase -i --keep-base main 2>err &&
- 	grep "need exactly one merge base with branch" err
- '
- 
-+# This must be the last test in this file
-+test_expect_success '$EDITOR and friends are unchanged' '
-+	test_editor_unchanged
-+'
++struct commit *lookup_commit_object (struct repository *r,
++				     const struct object_id *oid)
++{
++	struct object *obj = parse_object(r, oid);
++	return obj ? object_as_type(obj, OBJ_COMMIT, 0) : NULL;
 +
- test_done
++}
++
+ struct commit *lookup_commit(struct repository *r, const struct object_id *oid)
+ {
+ 	struct object *obj = lookup_object(r, oid);
+diff --git a/commit.h b/commit.h
+index 21e4d25ce78..fa39202fa6b 100644
+--- a/commit.h
++++ b/commit.h
+@@ -64,6 +64,19 @@ enum decoration_type {
+ void add_name_decoration(enum decoration_type type, const char *name, struct object *obj);
+ const struct name_decoration *get_name_decoration(const struct object *obj);
+ 
++/*
++ * Look up commit named by "oid" respecting replacement objects.
++ * Returns NULL if "oid" is not a commit or does not exist.
++ */
++struct commit *lookup_commit_object(struct repository *r, const struct object_id *oid);
++
++/*
++ * Look up commit named by "oid" without replacement objects or
++ * checking for object existence. Returns the requested commit if it
++ * is found in the object cache, NULL if "oid" is in the object cache
++ * but is not a commit and a newly allocated unparsed commit object if
++ * "oid" is not in the object cache.
++ */
+ struct commit *lookup_commit(struct repository *r, const struct object_id *oid);
+ struct commit *lookup_commit_reference(struct repository *r,
+ 				       const struct object_id *oid);
 -- 
 gitgitgadget
 
