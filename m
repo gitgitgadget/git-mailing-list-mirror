@@ -2,211 +2,209 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62C7DC433FE
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 12:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A087C4332F
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 13:13:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230140AbiJQMKT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 08:10:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45742 "EHLO
+        id S230006AbiJQNNK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 09:13:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230021AbiJQMKH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 08:10:07 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADD691EAC6
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 05:09:43 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id u10so18162200wrq.2
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 05:09:42 -0700 (PDT)
+        with ESMTP id S229840AbiJQNNI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 09:13:08 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 933BBCFD
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:13:02 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id w18so18397870wro.7
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:13:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=emTznePtSGl6JWuuq2u4y67G03bEQqTRv4fnOhZLO3c=;
-        b=XctQ1gdYLk50OStNcQhhD8b9C9iimbei5NUg8AvD3fvpGSv4HJb0TgUhS1UtuvKMID
-         24nOABrSXTq0R2FBOUGt1MA7n0pM33IjMr5kkTdyxGvZ6xHLf8/KSfSHxMqSwIq5yTqJ
-         ow8zC+9nk/dN6TWcQFUViAHj1rCp33wSYY/zR4f0/c1d0e2d6i/hCpSKaj+a84hvPjq2
-         I2ZggK1/mxqgPA7HKsHogi+JHNBMZ/C1gW42OCn9kwhS1lhWjcl3G0cbAuMxN6AebirN
-         vnAF3M1josAwU0lnOlaqq9AF6TpWOeNjkQ5B+Ngg6wbQI8CqKaomUiMy9gSUp2l+S6e+
-         sj/Q==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xXXBK9UKBgd4snFzD3v53kOV2dd/M/4d/GA4hlXxDWg=;
+        b=FfXfXqLB5MhsNQWEV21WCB/x1/XBJHzUfCNnZ0BYy97NnD3yo0rrqaqgqP/+PTB2X2
+         rKI0aYxXnZtpU0/cTGILHKhh7/3QtysrZkNqHr7/4Ny74SXULKWmEv1SoLcU6lUQATuc
+         9Il2RVV25pWdGxoPR4xK25QLjuyFk0eOD83jOpyYCLdoBihEUkKX8siPQQEffWBtjDIz
+         HbQOiuoCd7q2cGbosYbEk+jEVctXmO1eBBlM1cRAUoxSd93A9Fo5hhWyRV9hFZPjM5xQ
+         K+PrgFXktBsnsMSYZ9t+rmh37g49ZOT7s9waKQbM0p0//qy0izUwATGXJ5GWxh8R0F4k
+         zRyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=emTznePtSGl6JWuuq2u4y67G03bEQqTRv4fnOhZLO3c=;
-        b=hkIAFSvkqCZFryEDPI1L2Mhtwkk1v2sLaMxx26GqSWF0RlCAp4lUaSxzzT0GaECocc
-         jwpUn14GJayklRrY1bMjbB8kDxVMXUZ0f5V+WJmhtdHPOWcNo/nPl+Z/iVeYzKrwyTc5
-         r9ZRSYhBhyJsoIjNyAwl4DNePrm/pW0IAcC+c18kDcOwbrVZnqEMxqtnXnqhklFpk/kZ
-         iPkHxJL+TFxpu0hs0X9FcEzeMHxLxL1/1jYAcUNN8iPcVp7m3PyuZVdvFoCFQt2qPP/I
-         MHpIviRw6artjk6hYt6IOcQnQsCxROBJFHLZf0IoxAnqVFZbW7o2ePHiIwjqeDQiR/JP
-         KSbw==
-X-Gm-Message-State: ACrzQf2VQIKXc0628J2RQIJi3RPoha+Gns5dxPH3/s8Lpy/stBlf5oP2
-        RDhwIngDpOgQiqBGyoMLXJ644R9ew82gEw==
-X-Google-Smtp-Source: AMsMyM48Yyn0ioZaB4jEccOdgjKhpyTak3C6l1f5SLVwnqzki93WCEvnhMGwIAoW6rMkNsdz3hpLIA==
-X-Received: by 2002:a05:6000:1861:b0:232:2471:d405 with SMTP id d1-20020a056000186100b002322471d405mr6014848wri.130.1666008581021;
-        Mon, 17 Oct 2022 05:09:41 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z6-20020a1cf406000000b003c6deb5c1edsm10028770wma.45.2022.10.17.05.09.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 05:09:40 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Glen Choo <chooglen@google.com>,
-        Jonas Bernoulli <jonas@bernoul.li>, Jeff King <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 10/10] submodule: don't use a subprocess to invoke "submodule--helper"
-Date:   Mon, 17 Oct 2022 14:09:25 +0200
-Message-Id: <patch-10.10-81f138e460c-20221017T115544Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.1091.gf9d18265e59
-In-Reply-To: <cover-00.10-00000000000-20221017T115544Z-avarab@gmail.com>
-References: <cover-00.10-00000000000-20221017T115544Z-avarab@gmail.com>
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xXXBK9UKBgd4snFzD3v53kOV2dd/M/4d/GA4hlXxDWg=;
+        b=2H7dG2GJahBa1d0/MuD3uiDhawkKWKywLapd1hI67TIlKm8w+wp+7kpr36xM1OsNpT
+         XrGJg6AsgXhF7hm4IKA/Uy5HjWN0328h22VGVZv1Az2cIjRuuXOsBLXn8E6ebSCY+IAe
+         oRTSX+GIWRjuzO1ASyRfA9tJ6aNypWNIWPgzwehJSCHhi8L8VQcvvsktZeCEa1TsXFQM
+         1o41o2HFhzzkSzTMrYFB+2Wsm7cGZAfuGFl79G1E6/bAN3+2NzYVQGQ74KgH6xmHTog3
+         2qE+Jvxaos0O73NESo0eDhw58LQAJDPl/rU4uPQrXPflEplABMd9Psv5Ca3v8DDhebPu
+         b1GA==
+X-Gm-Message-State: ACrzQf0anvkILfkDXVP05wEXV0NTKiCNASroOA7/ku6JfmOOtBlIap2B
+        st9HfWjRJsnXaRKOAnufGBI=
+X-Google-Smtp-Source: AMsMyM4V82MNPoaIc0nngbAt3k0nAX4908v3Uju1sA5gfP7uZImDvn09aiqlw6NiPmfA1MHuQY7LDg==
+X-Received: by 2002:a5d:6da7:0:b0:22e:3edb:e372 with SMTP id u7-20020a5d6da7000000b0022e3edbe372mr6296500wrs.137.1666012381081;
+        Mon, 17 Oct 2022 06:13:01 -0700 (PDT)
+Received: from [192.168.1.74] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id n10-20020a05600c500a00b003c6f0ebf988sm6794447wmr.30.2022.10.17.06.13.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Oct 2022 06:13:00 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <63c1636e-401d-89d3-9af3-69469dd4a3b0@dunelm.org.uk>
+Date:   Mon, 17 Oct 2022 14:13:05 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 5/8] rebase: rename merge_base to branch_base
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <pull.1323.v2.git.1662561470.gitgitgadget@gmail.com>
+ <pull.1323.v3.git.1665650564.gitgitgadget@gmail.com>
+ <00f70c9034452bd87c82fb3aea9658aec32f2ec1.1665650564.git.gitgitgadget@gmail.com>
+ <221013.86bkqfleh5.gmgdl@evledraar.gmail.com>
+ <7b9d2a05-de2e-d0e0-6554-a592fa2349d4@dunelm.org.uk>
+ <221017.86pmeqk6yl.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221017.86pmeqk6yl.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a preceding commit we created "builtin/submodule.c" and faithfully
-tried to reproduce every aspect of "git-submodule.sh", including its
-invocation of "git submodule--helper" as a sub-process.
+On 17/10/2022 12:27, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Oct 17 2022, Phillip Wood wrote:
+> 
+>> On 13/10/2022 20:16, Ævar Arnfjörð Bjarmason wrote:
+>>> On Thu, Oct 13 2022, Phillip Wood via GitGitGadget wrote:
+>>>
+>>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>>>
+>>>> merge_base is not a very descriptive name, the variable always holds
+>>>> the merge-base of 'branch' and 'onto' which is commit at the base of
+>>>> the branch being rebased so rename it to branch_base.
+>>> To me "branch" means or has heavier implications of "named branch"
+>>> than
+>>> just a merge base, and this command is perfectly happy to work on
+>>> commits disconnected from any named branch.
+>>>> But more to the point, the rebase docs for --onto discuss a "merge
+>>> base", so you'd read those, and then encounter this code talking about a
+>>> "branch base", and wonder what the difference was...
+>>
+>> Aren't the docs saying the merge base is the base of the commits
+>> (i.e. branch) being rebased? I don't think merge_base is a
+>> particularly helpful name as it doesn't tell us what it is the merge
+>> base of and branch_base was the best I could come up with. I see what
+>> you mean in the detached HEAD case, but as the command also works with
+>> named branches I hope it is fairly obvious what "branch_base" is in
+>> the detached HEAD case.
+> 
+> It *optionally* works with a <branch>, but doesn't require one. E.g. try
+> this on git.git:
 
-Let's do away with the sub-process and invoke
-"cmd_submodule__helper()" directly. Eventually we'll want to do away
-with "builtin/submodule--helper.c" altogether, but let's not do that
-for now to avoid conflicts with other in-flight topics. Even without
-those conflicts the resulting diff would be large. We can leave that
-for a later cleanup.
+Maybe I wasn't clear, I was referring to the fact that if HEAD isn't 
+detached then it rebases the current branch not about the optional 
+<branch> argument. I also think that the docs are for users, they are 
+not a guide to the code. With this change if you search for merge_base 
+in builtin/rebase.c you still find the part where we calculate the merge 
+base. This commit was added in response to a review comment from Junio 
+on V1, as far as I know he is happy with it and at this stage I'm 
+disinclined to change it.
 
-This speeds up invocations of all "git submodule" commands, E.g. a
-trivial "foreach" command on git.git is around 1.50 times
-faster[1]. For more expensive commands this'll make less of a
-difference, as the fixed cost of invoking the sub-process will be
-amortized away.
+Best Wishes
 
-	$ git hyperfine -L rev HEAD~1,HEAD -s 'make CFLAGS=-O3' './git submodule foreach "echo \$name"'
-	Benchmark 1: ./git submodule foreach "echo \$name"' in 'HEAD~1
-	  Time (mean ± σ):       9.7 ms ±   0.1 ms    [User: 7.6 ms, System: 2.1 ms]
-	  Range (min … max):     9.4 ms …  10.2 ms    285 runs
+Phillip
 
-	Benchmark 2: ./git submodule foreach "echo \$name"' in 'HEAD
-	  Time (mean ± σ):       6.6 ms ±   0.1 ms    [User: 5.1 ms, System: 1.5 ms]
-	  Range (min … max):     6.2 ms …   7.2 ms    414 runs
-
-	Summary
-	  './git submodule foreach "echo \$name"' in 'HEAD' ran
-	    1.48 ± 0.04 times faster than './git submodule foreach "echo \$name"' in 'HEAD~1'
-
-It's also worth noting that some users were using e.g. "git
-submodule--helper list" directly for performance reasons[2]. With
-31955475d1c (submodule--helper: remove unused "list" helper,
-2022-09-01) released with v2.38.0 the "list" command was no longer
-provided. Users who had to switch to "git submodule--helper foreach"
-were given a command that (on my system) is around 6.5x slower.
-
-Now the "foreach" is around 0.10x slower (due to the slight shell
-overhead), with 31955475d1c reverted on top of this:
-
-	$ hyperfine './git submodule--helper list' './git submodule foreach --quiet "echo \$name"' --warmup 10
-	Benchmark 1: ./git submodule--helper list
-	  Time (mean ± σ):       6.4 ms ±   0.1 ms    [User: 5.0 ms, System: 1.5 ms]
-	  Range (min … max):     6.2 ms …   7.2 ms    427 runs
-
-	Benchmark 2: ./git submodule foreach --quiet "echo \$name"
-	  Time (mean ± σ):       7.0 ms ±   0.1 ms    [User: 4.8 ms, System: 2.3 ms]
-	  Range (min … max):     6.8 ms …   7.4 ms    390 runs
-
-	Summary
-	  './git submodule--helper list' ran
-	    1.10 ± 0.03 times faster than './git submodule foreach --quiet "echo \$name"'
-
-I think it would make sense to implement a "--format" option for "git
-submodule foreach" to help anyone who cares about that remaining
-performance (and to improve the API, e.g. by supporting "-z"), but as
-far as performance goes this makes the runtime acceptable again.
-
-The pattern in "cmd_submodule_builtin()" of saving "struct strvec"
-arguments to a "struct string_list" and free()-ing them after the
-"argv" has been modified by "cmd_submodule__helper()" is new, without
-it we'd get various already-passing tests failing under SANITIZE=leak.
-
-1. Using the "git hyperfine" wrapper for "hyperfine":
-   https://lore.kernel.org/git/211201.86r1aw9gbd.gmgdl@evledraar.gmail.com/
-2. https://lore.kernel.org/git/87czatrpyb.fsf@bernoul.li/
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/submodule.c | 41 +++++++++++++++++++++++++++++++++--------
- 1 file changed, 33 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/submodule.c b/builtin/submodule.c
-index ca8e273b6e9..13e7064b03f 100644
---- a/builtin/submodule.c
-+++ b/builtin/submodule.c
-@@ -119,12 +119,40 @@ static void setup_helper_args(int argc, const char **argv, const char *prefix,
- 	strvec_pushv(args, argv);
- }
- 
-+static int cmd_submodule_builtin(struct strvec *args, const char *prefix)
-+{
-+	size_t i;
-+	struct string_list to_free = STRING_LIST_INIT_DUP;
-+	int ret;
-+
-+	/*
-+	 * The cmd_submodule__helper() will treat the argv as
-+	 * its own and modify it, so e.g. for "git submodule
-+	 * add" the "add" argument will be removed, and we'll
-+	 * thus leak from the strvec_push()'s in
-+	 * setup_helper_args().
-+	 *
-+	 * So in lieu of some generic "snapshot for a free"
-+	 * API for "struct strvec" squirrel away the pointers
-+	 * to free with string_list_clear() later.
-+	 */
-+	for (i = 0; i < args->nr; i++)
-+		string_list_append_nodup(&to_free, (char *)args->v[i]);
-+
-+	ret = cmd_submodule__helper(args->nr, args->v, prefix);
-+
-+	string_list_clear(&to_free, 0);
-+	free(strvec_detach(args));
-+
-+	return ret;
-+}
-+
- int cmd_submodule(int argc, const char **argv, const char *prefix)
- {
- 	int opt_quiet = 0;
- 	int opt_cached = 0;
- 	int opt_recursive = 0;
--	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct strvec args = STRVEC_INIT;
- 	struct option options[] = {
- 		OPT__QUIET(&opt_quiet, N_("be quiet")),
- 		OPT_BOOL(0, "cached", &opt_cached,
-@@ -141,13 +169,10 @@ int cmd_submodule(int argc, const char **argv, const char *prefix)
- 	 * Tell the rest of git that any URLs we get don't come
- 	 * directly from the user, so it can apply policy as appropriate.
- 	 */
--	strvec_push(&cp.env, "GIT_PROTOCOL_FROM_USER=0");
--	setup_helper_args(argc, argv, prefix, opt_quiet, opt_cached,
--			  opt_recursive, &cp.args, options);
-+	xsetenv("GIT_PROTOCOL_FROM_USER", "0", 1);
- 
--	cp.git_cmd = 1;
--	cp.no_stdin = 0; /* for git submodule foreach */
--	cp.dir = startup_info->original_cwd;
-+	setup_helper_args(argc, argv, prefix, opt_quiet, opt_cached,
-+			  opt_recursive, &args, options);
- 
--	return run_command(&cp);
-+	return cmd_submodule_builtin(&args, prefix);
- }
--- 
-2.38.0.1091.gf9d18265e59
-
+> 	git checkout origin/next
+> 	touch f && git add f && git commit -m"file"
+> 	git rebase --onto origin/master^{} HEAD~
+> 
+> Here we transplant a commit on top of "next" to "master", without either
+> of those *names* being involved, or their branches, just the
+> corresponding OIDs/tips.
+> 
+> That will go through e.g. can_fast_forward() which you're modifying
+> here, and now populate a "branch_base" variable, instead of a
+> "merge_base".
+> 
+> I know that we conflate the meaning of "branch" somewhat, even in our
+> own docs. E.g. we sometimes use "branch" and "named branch", but usually
+> by "branch" we mean "named branch", and otherwise talk about a detached
+> HEAD, <commit> or "tip".
+> 
+> But in this case it's especially confusing in the post-image, because
+> "git rebase --onto" explicitly uses an optional "<branch>" to
+> distinguish the "named branch" case from the case where we're operating
+> on detached a HEAD, or otherwise don't care about the "<branch>" (except
+> as generic "restore us to where we were" behavior).
+> 
+> So, if anything I'd think that we'd want something like this in various
+> places in git-rebase.txt to make the distinction clearer:
+> 	
+> 	diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> 	index 9cb8931c7ac..e4700a6e777 100644
+> 	--- a/Documentation/git-rebase.txt
+> 	+++ b/Documentation/git-rebase.txt
+> 	@@ -18,7 +18,7 @@ DESCRIPTION
+> 	 -----------
+> 	 If `<branch>` is specified, `git rebase` will perform an automatic
+> 	 `git switch <branch>` before doing anything else.  Otherwise
+> 	-it remains on the current branch.
+> 	+it remains on the current tip or named branch.
+> 	
+> 	 If `<upstream>` is not specified, the upstream configured in
+> 	 `branch.<name>.remote` and `branch.<name>.merge` options will be used (see
+> 
+> But your post-image seems to be to make this sort of thing explicitly
+> more confusing, and e.g. these parts:
+> 
+> 	@@ -206,8 +206,8 @@ OPTIONS
+> 	 --onto <newbase>::
+> 	 	Starting point at which to create the new commits. If the
+> 	 	`--onto` option is not specified, the starting point is
+> 	-	`<upstream>`.  May be any valid commit, and not just an
+> 	-	existing branch name.
+> 	+	`<upstream>`.  May be any valid commit, and not just an <-- this
+> 	+	existing branch name. <--- this
+> 	 +
+> 	 As a special case, you may use "A\...B" as a shortcut for the
+> 	 merge base of A and B if there is exactly one merge base. You can
+> 
+> To sum up why I find this confusing: Reading this from the docs onwards
+> I'd think (as is the case) that "<branch>" is optional. Then when I read
+> the code I'd think a "branch_base" is something that *only* had to do
+> with the "<branch>" case.
+> 
+> But that's not the case, it's just a generic "merge base" in the same
+> sense that "git merge-base" accepts all of these
+> 
+> 	$ git merge-base origin/master origin/next
+> 	d420dda0576340909c3faff364cfbd1485f70376
+> 
+> (These two are equivalent, just demo'ing that we don't need the peel
+> syntax):
+> 
+> 	$ git merge-base $(git rev-parse origin/master) $(git rev-parse origin/next)
+> 	d420dda0576340909c3faff364cfbd1485f70376
+> 	$ git merge-base origin/master^{} origin/next^{}
+> 	d420dda0576340909c3faff364cfbd1485f70376
+> 
+> What *would* make things much clearer is e.g. calling a variable
+> "branch_merge_base" *if* there is a case where that's a merge base only
+> for named branches, but I don't know (and didn't look carefully enough)
+> if you've got such a case or cases here. It just seems like a generic
+> "merge-base".
+> 
+> 
