@@ -2,63 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30E9DC433FE
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 09:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A95FFC433FE
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 09:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231193AbiJQJkA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 05:40:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40406 "EHLO
+        id S231469AbiJQJuD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 05:50:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231264AbiJQJj4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 05:39:56 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D75A41DA51
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 02:39:52 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id d26so23538407ejc.8
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 02:39:52 -0700 (PDT)
+        with ESMTP id S230010AbiJQJuB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 05:50:01 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E6B21928D
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 02:49:46 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id l22so15209638edj.5
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 02:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7qKVddhMrE409SlwrIRQ7dazRVAqpF9RVIzg3/FASi4=;
-        b=nHQy6DYieOQ1jCVdkDXLMJZ0rEosHkwf8A36YSZOoHKiHvBWwKn1zOcS9Gjpc0AK+b
-         FeUebuhIpX0oJ+i8MlDJ5T4atF0Iolgnt2Q3o4eLXbMp3Xz7dtuaVTMuZvevwet1HY4d
-         rG0apshJjavUY08WxRq3xz1Rm/Pn+Fz2wbbqq8sAbwqA5M5VfY3ZUsKlWlwU8v645s6Y
-         AmP2EO5LQWbVOhWY7t2fPC4blcRRWYMmhrG1jQ9S/Bfhgsxav8mVvqfQWbDmzazmVzVN
-         wWfpm9f+6Ow0Trc/q6JI9lIsay9Nwa8I9Z0hh7kZQq/ISMh/bwVFYhD2GeJ8tjQALiPF
-         aSLQ==
+        bh=GoyHvjtoZ++NqR5Qdn2RSnISuYfEbYcQl9kKybbP1mA=;
+        b=QxsjveH+VpWuOeknzZM4HqNxCEn+EokX3AiR8REdM+y7ckSU3nAtuOn2qBacNI+4AY
+         A3DvZPJiJ4YrbPjOvuZujqe8hCJtqnCk0onxAaAWbnZLbgm1OdfmkGT0b6lWexU1l5Rf
+         lneWqgJ84TJBPMsDz+O8QuTvRYE0zDqd6iNPqn3a3jRHu47J0UQzP3moUFSZJX2QqdyO
+         yPHkEULP18oC71SsrYcXjiXe3UGEJo+4UfhYyWB9LepXeaqkL+XWerwo5EaEECU6kCyP
+         ZKA7vtshZAvkJgfwHVe/dJhjPPM0B0AfIdVX4QiX3hvVUz/USyJGUvtIJO5sVo3xPZrZ
+         epFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7qKVddhMrE409SlwrIRQ7dazRVAqpF9RVIzg3/FASi4=;
-        b=HyVNdrQBOL2hzmJUo/wB5CYfJyzY3E1SJQyxeG6kLzWV5zwaOx6nya4PZrt5BOgNKB
-         Bxh7SvounwgH8PhaRirifrmw56WKxIgI6nHMZWrS7OcuQM90SJxlsQ8p2QJ4cHdWO1qW
-         b1eAqw9OWY4qY37SSbhDsOjhduom9y5q5JraWofME/Lu6z3mvGr/Oo6XGkMM4FHpAH2e
-         MiCWBz2eY1GPUpih9dBJm0f5vTYAtQzvw97P55qVjH4RQ6OSWWavJe3b/9X3zVnMfzSB
-         AIqAHzedJ6Kw5KHefy3d4XCXPi3HJZMFVfCq0btZZ+agHbUTIhyVzRoWyYQq1qGoCZMl
-         RtCA==
-X-Gm-Message-State: ACrzQf3DiVt/4/bZ+IOPhatuOJLf7P8QcxAdqCKjFWkOlxwjxnQTr2Hy
-        raMm1kab29gYiGNwq7lZ+4M=
-X-Google-Smtp-Source: AMsMyM6xKZGRvbYBOhL61VmpMpKhQhfr7VYraBkuPA6E7dua0/omMFXpT6gHYbn6N1Mc2gdKrqxrKQ==
-X-Received: by 2002:a17:906:ee86:b0:741:89bc:27a1 with SMTP id wt6-20020a170906ee8600b0074189bc27a1mr8054156ejb.725.1665999591052;
-        Mon, 17 Oct 2022 02:39:51 -0700 (PDT)
+        bh=GoyHvjtoZ++NqR5Qdn2RSnISuYfEbYcQl9kKybbP1mA=;
+        b=xSjHfVzCB82H4ukhGX++alcWM+mP7pRIzHzld7YVj7bsGQRvn3GG1bHczCjgvf26Tr
+         TYBgfrUXt0+1d4d7FYV2YquhgRIH60vBmJ+giZx9WzUgOGeMgFRVQQsXnd3cbs4TlMin
+         V2SrJDXyAhYGJo+NZVmIG8us4dEAPnljmA8MLSkrvo6nVShspZmQWgak6+nW6sdFhgsc
+         pcpSf/vPzg8Dw0hgErwdopAbahtPFdCYMqS++1h3e228SMVEE+cVZcPHPFGRqKtQAJes
+         K+3lZmqHrXbpS411rKBpT6wLnbB3tMAmrAdfzw4uD2vebQvLrFeCUpMGaydL+SEz398T
+         DLxw==
+X-Gm-Message-State: ACrzQf34RnsKXbMx/WcmRUSmW8gHLx/DL3FdFZbAH43rbiCaMp1zG4mi
+        6jcbPHq3+euy+aumz4Zt998=
+X-Google-Smtp-Source: AMsMyM4fQjscMdlxeYNQcO6liZHby5uyd1ajoN+X10sQoiPI5aUGHiYDwOGEzooLjDf0ROnMrIhaIQ==
+X-Received: by 2002:a05:6402:3492:b0:45d:c00:ea8e with SMTP id v18-20020a056402349200b0045d0c00ea8emr9415192edc.150.1666000158898;
+        Mon, 17 Oct 2022 02:49:18 -0700 (PDT)
 Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id g10-20020aa7c84a000000b0045cbe305be1sm6958474edt.49.2022.10.17.02.39.50
+        by smtp.gmail.com with ESMTPSA id u9-20020a1709061da900b00731582babcasm5816595ejh.71.2022.10.17.02.49.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Oct 2022 02:39:50 -0700 (PDT)
+        Mon, 17 Oct 2022 02:49:18 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <c0213afe-658d-8562-3d2a-9e254c742730@dunelm.org.uk>
-Date:   Mon, 17 Oct 2022 10:39:54 +0100
+Message-ID: <7b9d2a05-de2e-d0e0-6554-a592fa2349d4@dunelm.org.uk>
+Date:   Mon, 17 Oct 2022 10:49:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.2
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 6/8] rebase: factor out branch_base calculation
+Subject: Re: [PATCH v3 5/8] rebase: rename merge_base to branch_base
 Content-Language: en-US
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
@@ -72,82 +72,40 @@ Cc:     git@vger.kernel.org,
         Jonathan Tan <jonathantanmy@google.com>
 References: <pull.1323.v2.git.1662561470.gitgitgadget@gmail.com>
  <pull.1323.v3.git.1665650564.gitgitgadget@gmail.com>
- <2efbfc94187d9f0968e5b670c9152651cd8f1a5b.1665650564.git.gitgitgadget@gmail.com>
- <221013.867d13ldzm.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221013.867d13ldzm.gmgdl@evledraar.gmail.com>
+ <00f70c9034452bd87c82fb3aea9658aec32f2ec1.1665650564.git.gitgitgadget@gmail.com>
+ <221013.86bkqfleh5.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221013.86bkqfleh5.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/10/2022 20:21, Ævar Arnfjörð Bjarmason wrote:
->> +static void fill_branch_base(struct rebase_options *options,
->> +			    struct object_id *branch_base)
->> +{
->> +	struct commit_list *merge_bases = NULL;
->> +
->> +	merge_bases = get_merge_bases(options->onto, options->orig_head);
->> +	if (!merge_bases || merge_bases->next)
->> +		oidcpy(branch_base, null_oid());
->> +	else
->> +		oidcpy(branch_base, &merge_bases->item->object.oid);
->> +
->> +	free_commit_list(merge_bases);
->> +}
+On 13/10/2022 20:16, Ævar Arnfjörð Bjarmason wrote:
 > 
-> I wondered if this could be a bit shorter/less wrap-y
-
-Where's the wrapping?
-
-> with shorter
-> variable names, anyway, I see it's code copied from above, so nevermind
-> in advance... :)
-
-As it is copied it is easier to review leaving it as is I think.
-  	
-> 	static void fill_branch_base(struct rebase_options *o, struct object_id *dst)
-> 	{
-> 		struct commit_list *mb = get_merge_bases(o->onto, o->orig_head);
-> 		const struct object_id *src = (!mb || mb->next) ? null_oid() :
-> 			&mb->item->object.oid;
-> 	
-> 		oidcpy(dst, src);
-> 		free_commit_list(mb);
-> 	}
+> On Thu, Oct 13 2022, Phillip Wood via GitGitGadget wrote:
 > 
-> 	
->> @@ -1669,8 +1678,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->>   		if (!options.onto)
->>   			die(_("Does not point to a valid commit '%s'"),
->>   				options.onto_name);
->> +		fill_branch_base(&options, &branch_base);
->>   	}
->> -
->>   	if (options.fork_point > 0)
->>   		options.restrict_revision =
->>   			get_fork_point(options.upstream_name, options.orig_head);
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> merge_base is not a very descriptive name, the variable always holds
+>> the merge-base of 'branch' and 'onto' which is commit at the base of
+>> the branch being rebased so rename it to branch_base.
 > 
-> I wouldn't mind the stray whitespace change, but here it seems
-> unintentional, in 7/8 your change on top is:
+> To me "branch" means or has heavier implications of "named branch" than
+> just a merge base, and this command is perfectly happy to work on
+> commits disconnected from any named branch.
+> > But more to the point, the rebase docs for --onto discuss a "merge
+> base", so you'd read those, and then encounter this code talking about a
+> "branch base", and wonder what the difference was...
 
-Thanks, well spotted, I'm sure I've fixed this at least once already, I 
-must have reintroduced it when fixing a rebase conflict. I'll fix it again.
+Aren't the docs saying the merge base is the base of the commits (i.e. 
+branch) being rebased? I don't think merge_base is a particularly 
+helpful name as it doesn't tell us what it is the merge base of and 
+branch_base was the best I could come up with. I see what you mean in 
+the detached HEAD case, but as the command also works with named 
+branches I hope it is fairly obvious what "branch_base" is in the 
+detached HEAD case.
 
 Best Wishes
 
 Phillip
-	
-> 	@@ -1680,6 +1691,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
-> 	 				options.onto_name);
-> 	 		fill_branch_base(&options, &branch_base);
-> 	 	}
-> 	+	if (keep_base && options.reapply_cherry_picks)
-> 	+		options.upstream = options.onto;
-> 	+
-> 	 	if (options.fork_point > 0)
-> 	 		options.restrict_revision =
-> 	 			get_fork_point(options.upstream_name, options.orig_head);
-> 
-> Presumably we want to have \n\n spacing for both of those, and to not
-> remove the spacing here in 6/8, only to add it back?
