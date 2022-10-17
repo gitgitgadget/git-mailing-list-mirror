@@ -2,131 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C19C1C4332F
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 00:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA5EC4332F
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 02:18:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229908AbiJQAvb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Oct 2022 20:51:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59322 "EHLO
+        id S230051AbiJQCSA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Oct 2022 22:18:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229663AbiJQAv3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Oct 2022 20:51:29 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE3E4D138
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 17:51:27 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id D5ED85A569;
-        Mon, 17 Oct 2022 00:51:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1665967886;
-        bh=wlcs9vHb6LwtycTmzfLGr6asZVNFzexKFKYALZUxVdQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=N4QQ1iisGtH/GfnK2LJ4TY02bN2I8x6xjqKpYvcpSvs2sO6SnzkcqtABSAar/aejw
-         icmx3346UViiAvoigYzefBLdzAIbQTji7EXLFq1bQNLLRnUNYQ1XCNkwrhr9CdY7ap
-         Kt9jrfleXc0eaCb6RcyCOsgAoo9IPXmSiJ7mmQlKXkRuK3zM5K6JdRQf3O8s3ThcHl
-         SiEQwiGX4EWIbdT4BytQHkzddWfJGUr0Xx6L6LghjBgPUU8FN5iAguZfcETfTbOkZA
-         fwGwawaPOxbTsXiiY9rZp/xrgvd7EttJZejDjkz7e3dPHvm3QFLMfEkl2iwgJm12t6
-         OGRAjjpqChT4ITCF9nlttQxyoI23csGIkzLakIR5DaNdVM3wPZZt9+nOcHxlrGJvVO
-         f+9pQfobLKbp/nsY8ABKaYcFuxUleUg+rqyMpZogAFsU05wzcXOxbboMxe3JWJJMxt
-         h9RCS2n1uh5J5/gIY9WflqdxlF1lSPJ5u6jYsa4uXGdBap4V6KU
-Date:   Mon, 17 Oct 2022 00:51:25 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+        with ESMTP id S230055AbiJQCR7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Oct 2022 22:17:59 -0400
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3499D13DEF
+        for <git@vger.kernel.org>; Sun, 16 Oct 2022 19:17:58 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id D2699320046E;
+        Sun, 16 Oct 2022 22:17:54 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Sun, 16 Oct 2022 22:17:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mcclimon.org; h=
+        cc:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; t=1665973074; x=1666059474; bh=8ottowNuNA
+        6aJ8CcE2gGnBmfacSvLe6IG9gpJM+7lbs=; b=UXjb0oVxYhqPufEwEP7EnA+ghT
+        FfvqCvdKx4zPpfzXyEEPHe5mdZVPoaincCCZcnHEI4iAN4wgrLn2LWdN7XJVTk6p
+        7rGKuTAuJkyon/DIbcUlrjZ0Oy5JyO4W8+07jxS56bbMOyptVSAIo6njTlMQjKPN
+        9yQA/f+WePdic80x3tvLc0NrrRz30ig/wJ3jiR2GWaZsarafpIk8T2/LawCcEla4
+        A4dnw4TobWXufnQY4PmTmxzIJUdQY/3NjT9qHYBq0C/9fnXsy+FlGGDdNGK1s0Cq
+        w3+hOl7mt9Br2/+dNNkjbKuwJwhS6U7+qHvLK+4/fb7wl8h/E+T+8WqSd+4w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1665973074; x=1666059474; bh=8ottowNuNA6aJ8CcE2gGnBmfacSv
+        Le6IG9gpJM+7lbs=; b=V8ldxBpeaRRD1jNGDLLbwBzGm+KKkl5Y8qHDDqou4JIA
+        FxZivnwW+SeBR2ZqCmMwXUIUU5F4pbFVowJ5UzYLWXw+fGG9k4Ml2X/zlsOj0qmN
+        iBzYupL0QeImvLPaWhYd1JXIWdN1AnKmXxSgmychHrI37wUQgSkgrbcYGbzXRAcM
+        reSALasxoyPbZv8d5IRvDEsR0f/eWCsTnqDYa3CaCAB9yFFB3l2SzkXEy3zk4Cm6
+        B7E58WJD8Pk6iWuQXYLOfkgr26XAC4TUUQ12bkhCwpRf+jlUO3YC1NniA8aVt8dT
+        6O5DuXS35CZyQGHTWbIFwFgZwvCak/SjWnNXs/v05w==
+X-ME-Sender: <xms:UrtMY5pqwU-gM-5fQsnkcdK-e75gtVl-fLAjP38b3oBMgvEYuexJ-A>
+    <xme:UrtMY7rbDtXf0PDUDqKLksVTbbSaioKK1HtiVXbqkrKe0zXP4Sa5XZzSxFadYqQIH
+    -5pqe71z-9WO3lIdtg>
+X-ME-Received: <xmr:UrtMY2MCleP2HZNh1VOUtxrLlpcC1yTwfm2I18GIOtiqKCKZabO35-cHfqdj4igw10ee9jd2u9Ad7sCTpazN1x4msVuSSs3jDX9URW2FdrY6>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeekkedgheekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttd
+    ertddttddvnecuhfhrohhmpefoihgthhgrvghlucfotgevlhhimhhonhcuoehmihgthhgr
+    vghlsehmtggtlhhimhhonhdrohhrgheqnecuggftrfgrthhtvghrnhepueelledtheejfe
+    eiuedtvdehgeetvefghfekfffguefgkeetiedukeekheefledtnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmhhitghhrggvlhesmhgttghlih
+    hmohhnrdhorhhg
+X-ME-Proxy: <xmx:UrtMY05ivhhML2G1HW23P-1XDaukYxQ-VwXKsQtth9nIp13Qj-NvoA>
+    <xmx:UrtMY46zjRXZ70BXF0v3Orzcm66TL_xW9bh2Mi_FOVix60YacYBAOA>
+    <xmx:UrtMY8ijdah1ekKWnRbwNvDRc-_nTptHYw07lCttbSVq0q3vuRxUOg>
+    <xmx:UrtMY9joTOBOHMdc-4tdVwcEaqyDoNu3kK22ycZdnhR8w5yc2yVBwA>
+Feedback-ID: i9dc944d1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 16 Oct 2022 22:17:54 -0400 (EDT)
+Date:   Sun, 16 Oct 2022 22:17:53 -0400
+From:   Michael McClimon <michael@mcclimon.org>
 To:     Jeff King <peff@peff.net>
-Cc:     kpcyrd <kpcyrd@archlinux.org>,
-        rb-general@lists.reproducible-builds.org,
-        arch-dev-public@lists.archlinux.org, git@vger.kernel.org,
-        gitster@pobox.com, l.s.r@web.de
-Subject: Re: git 2.38.0: Change in `git archive` output
-Message-ID: <Y0ynDbG8CxwAt4Fj@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, kpcyrd <kpcyrd@archlinux.org>,
-        rb-general@lists.reproducible-builds.org,
-        arch-dev-public@lists.archlinux.org, git@vger.kernel.org,
-        gitster@pobox.com, l.s.r@web.de
-References: <20b14207-a6f2-033f-3419-271662bffba9@archlinux.org>
- <Y0ybi66K40+uH+im@coredump.intra.peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Git.pm: add semicolon after catch statement
+Message-ID: <Y0y7UdLf3qd7RgVQ@newk>
+References: <20221016212236.12453-1-michael@mcclimon.org>
+ <20221016212236.12453-2-michael@mcclimon.org>
+ <Y0yRStZ6gM+H8/Bf@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="mGfpTbS1UpdKKPPG"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y0ybi66K40+uH+im@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.7 (2022-08-07)
+In-Reply-To: <Y0yRStZ6gM+H8/Bf@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> Curiously this works as expected for me, both before and after your
+> patch. I wonder if it depends on perl version. Mine is 5.34.
 
---mGfpTbS1UpdKKPPG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hm, curious indeed! It reliably fails without my patch and passes with it on
+all the versions I had lying around (5.8, 5.18, 5.24, 5.26, 5.28, 5.30, 5.34,
+and 5.36).
 
-On 2022-10-17 at 00:02:19, Jeff King wrote:
-> Interesting. For a small input, they seem to produce the same file for
-> me:
->=20
->   git init repo
->   cd repo
->   seq 1000 >file
->   git add file
->   git commit -m foo
->=20
->   git -c tar.tar.gz.command=3D'git archive gzip' \
->     archive --format=3Dtar.gz HEAD >internal.tar.gz
->   git -c tar.tar.gz.command=3D'gzip -cn' \
->     archive --format=3Dtar.gz HEAD >external.tar.gz
->   cmp internal.tar.gz external.tar.gz && echo ok
->=20
-> but if I instead do "seq 10000", then the files differ. I didn't dig
-> into the actual binary to see the source of the change. It might be
-> something we can tweak (e.g., if it's how a header is represented, or if
-> we can change the zlib parameters to find the same compressions).
+> I've never used Error.pm's try/catch before, so I don't know what's
+> normal. Regular if/unless doesn't need it, but certainly an earlier
+> catch uses a semicolon. So it seems like a reasonable fix.
 
-I will say that trying to make two compression implementations produce
-identical output is likely futile because it's almost always the case
-that there are multiple identical ways to encode the same data.  Most
-implementations are going to prefer improving size over consistency, so
-there's little incentive to copy the same algorithm across
-implementations. I believe even GNU gzip has changed its output in the
-past as better optimizations were implemented.
+Ha, well Perl is...let's say special. try/catch is not a language construct
+(until 5.34, where it is experimental), and so it's always implemented by
+subroutines. One upshot of this is that try/catch needs a semicolon, because
+it's sugar for try(sub { ... }), and statements need semicolons separating
+them. 
 
-I mean, don't let me stop you from trying to tweak things to see if you
-can make it work, but in general I think it's likely that some
-divergence is going to occur between implementations no matter what.
+Compare these two examples: -MO=Deparse,-p tells perl to deparse the program
+and print it with parentheses:
 
-> I don't think we make promises about stable output from "git archive".
-> We've fixed bugs in the tar-generating side before that lead to changes.
-> But if we can easily make them the same, that might be worth doing.
+    $ perl -MError -MO=Deparse,-p -e 'try { die "bad" } catch Pkg with { warn "caught" }; print "after"'
+    do {
+        die('bad')
+    }->try('Pkg'->catch(do {
+        warn('caught')
+    }->with));
+    print('after');
+    -e syntax OK
 
-Since this is on the reproducible builds list, I would be interested in
-working with tar implementations to specify a profile of the pax format
-that _is_ standardized, stable, and consistent and that Git and other
-implementations could use to produce bit-for-bit identical tar archives
-across versions, since this is a thing lots of people seem to want.  (If
-that's of interest, please contact me off list.)
+    $ perl -MError -MO=Deparse,-p -e 'try { die "bad" } catch Pkg with { warn "caught" } print "after"'
+    do {
+        die('bad')
+    }->try('Pkg'->catch(do {
+        warn('caught')
+    }->with(print('after'))));
+    -e syntax OK
 
-However, I don't think that trying to do that with compression formats
-is likely to lead to a productive work product, so users who cared about
-reproducibility would need to compare the uncompressed output.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+The first here is the good case case (with semicolon), and you can see that
+print('after') is its own statement. The bad case, with no semicolon, passes
+it as an argument to with(), which is what's causing the error here: something
+called by with() is trying to use it as a hash reference, and it's a string.
 
---mGfpTbS1UpdKKPPG
-Content-Type: application/pgp-signature; name="signature.asc"
+> I'd assume t9700 passes for you, since I don't think we cover this case.
+> Maybe it's worth squashing this in:
+> 
+> diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+> index e046f7db76..5bd3687f37 100755
+> --- a/t/t9700/test.pl
+> +++ b/t/t9700/test.pl
+> @@ -30,6 +30,12 @@ sub adjust_dirsep {
+>  # set up
+>  our $abs_repo_dir = cwd();
+>  ok(our $r = Git->repository(Directory => "."), "open repository");
+> +{
+> +	local $ENV{GIT_TEST_ASSUME_DIFFERENT_OWNER} = 1;
+> +	my $failed = eval { Git->repository(Directory => ".") };
+> +	ok(!$failed, "reject unsafe repository");
+> +	like($@, qr/not a git repository/i, "unsafe error message");
+> +}
+>  
+>  # config
+>  is($r->config("test.string"), "value", "config scalar: string");
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.39 (GNU/Linux)
+Curiously, t9700 passes for me with this suggestion both with and without my
+patch. You'd only see this bug in bare repositories, though, and the one set
+up in t9700 is not bare. I can see about trying to make it do so, but I'll
+need to do a bit more reading of how even the tests are set up and run first.
+Thanks!
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY0ynDQAKCRB8DEliiIei
-gVvkAQDpIhiXbprsTxSdXwnZG4vQm/+X7uYxPnrGq10t0FXGhQD9HHcIYXTaYFdH
-0/I44TmdIOMJIKb+nlKvP+Ul65bkZws=
-=iptS
------END PGP SIGNATURE-----
-
---mGfpTbS1UpdKKPPG--
+-- 
+Michael McClimon
+michael@mcclimon.org
