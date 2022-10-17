@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EF46C43217
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 12:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54FF3C43217
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 12:09:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229977AbiJQMJr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 08:09:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41726 "EHLO
+        id S229989AbiJQMJu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 08:09:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229906AbiJQMJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 08:09:36 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 411851263E
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 05:09:35 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id f11so18120787wrm.6
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 05:09:35 -0700 (PDT)
+        with ESMTP id S229910AbiJQMJj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 08:09:39 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73D8913D2E
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 05:09:37 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id a10so18081569wrm.12
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 05:09:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nKO30MFC/pZjL1nxcB277ZbnXlHboD8ynvGLp4HK+NI=;
-        b=Kt3mPezcZ0N5zkDATziw2LvYAXnvdcHgQVPtdv96KsPfuXs5/7KCBIWK7bXMlMzmjR
-         g1e/CMbQpfBL3JpVFbrRuYMPGgPCr9yGV7d0sXhMeSmbaUpnDACzyNDOAfBpXKfBysO6
-         +td0dMwWnbWYY6JQF/Xw7ZAs8ep7hz9lnaYi3XHF4Xm/pUAXgvnf85JBs+CnFbXJ9r/G
-         RQevYsswg9bjz6DNxhE0JNEaRIYapkZtHaIyEUDOl7am3QUX78P/vnFY8rnh6cTw0OUK
-         X2t6DkHkWTS9MOp5oGKLV5ps/86NuGiHgZzt9hQfFBsc7zgTXBWXWtn9HEuy3RVoZDJG
-         05Dg==
+        bh=71EaMSuFML1IN27lnqUKy1kwQ05naBx/BIDqss6SYWY=;
+        b=dyoRcLmA07TEkiVAJzWme1BKustzI9YII3ahaxJL4VHSE8c1N+M7VL8L9E75TXJ4kx
+         NX5PMsBMntu6ufyQzaM0+NsvtifHr1Iv1nmBflNZ9ZUAf2dKl5XkgfJ7Rvm4Njx0buAI
+         DtBlhzSoar1m+8SpHZ9ZKD0zz8e+/M/2f176AGDk6tvbo/ojyw9ULxTEsin7bx0MZTWA
+         dqpnOcWzmhj/WLBeE2wTIlZfSk0VpDI/kpQ3xkk6jOV8KH68T+F0gCmE5UoaBNYFikcu
+         zYLLwe53GTopgbAp7VV1gARWdK0BPTkrSmWgJzDKDATLlaE22Xv6dNHDxrBvtE0iUKwn
+         vVdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nKO30MFC/pZjL1nxcB277ZbnXlHboD8ynvGLp4HK+NI=;
-        b=edSJbHsrWzwGkLqf1nVGD0b3ode/O6sgUXwE7L66JU0W/CN8HuvLFMUHjRQ86IMn8K
-         TFXFH6PD2pA3XfOoTFNNHWXanTNTGtAwTkxipzsEebMAQwVpD99+GpUUrW7SRzMh+H0x
-         0CsWEW1vfpWqpu6vuMlBmicEWn8KeAMQe5bLoSk2bNJy13FqLnvWDSv+SjFTaXeAqr5h
-         DEDTKywrfSRoriPLTEr02OosyxKhKpyWZRyAc9JtVZTAKL7n0f97WXUvM94fMqM/n5NF
-         Cw8Qeu6u0rHl0e03qRfNNjtd2Y4ShfP8YrIk+9CuCfk9PInkYYWiQV6iwdJIIuYYjit3
-         G+7A==
-X-Gm-Message-State: ACrzQf1XJHJ+uU8sNzIcwoU/KVijOh8fTftz0/XodE2GUM9RxyjqQafC
-        cWv8BPS8Twig0o0O7KMqtmJ6OKGsnL0JnQ==
-X-Google-Smtp-Source: AMsMyM7+RhgnfRHYFVzgAywxIMVgaP3xP7578ctuKHPCN8GX5hJMvPT3cSFVpvwbcbp0GscfBGrYQQ==
-X-Received: by 2002:a05:6000:52:b0:22e:5894:e212 with SMTP id k18-20020a056000005200b0022e5894e212mr5809570wrx.266.1666008573352;
-        Mon, 17 Oct 2022 05:09:33 -0700 (PDT)
+        bh=71EaMSuFML1IN27lnqUKy1kwQ05naBx/BIDqss6SYWY=;
+        b=O898BBTuS/tWwUGSKcgYNB8sAVDCjBI3HuioS/zJ5Mjfg0dNXUMU8CvGA4PxgSG5Pv
+         sE+9ijJdNLHWCm6jbHNh5Zi91rIkG2iyD2VeU94KUUINFfqI71I1qHPejaPiX2/7tLPs
+         3b7ubMCqybNimrK881sGV9wR3fk2hVMiESH9RF/9nNXIkGNBIkspxy6M+fOmj/9ZFcJJ
+         xk6A5IbFRdMKX+qqNXXEhuSTsfvq2s2MXHcHyx55qY3l1GrhE75DpG5ORl9/NU9dhAeL
+         as9tP1julh1/F1906B+BqLur+LgCSINqRheac+ri5MJZol9C4Og9U+WqFzHPqsveC6+F
+         6vfg==
+X-Gm-Message-State: ACrzQf3B1ui8TCwviWdgwAl0txDVs4ojusq3Byj5eN2ohG1BthQxMTR4
+        Mr774Z2UB3RDQzqbzS2+Ds7X8/pb07z4xQ==
+X-Google-Smtp-Source: AMsMyM7qg+lyjmHwjWymiB12B9u4ygC+HXHJXmmFq/tMBjy0RRX/AE1BmeNENMRsJvcyu6Ru121Z8g==
+X-Received: by 2002:a05:6000:1882:b0:230:9595:4131 with SMTP id a2-20020a056000188200b0023095954131mr6207005wri.17.1666008576495;
+        Mon, 17 Oct 2022 05:09:36 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z6-20020a1cf406000000b003c6deb5c1edsm10028770wma.45.2022.10.17.05.09.32
+        by smtp.gmail.com with ESMTPSA id z6-20020a1cf406000000b003c6deb5c1edsm10028770wma.45.2022.10.17.05.09.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 05:09:32 -0700 (PDT)
+        Mon, 17 Oct 2022 05:09:35 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 03/10] git-submodule.sh: dispatch directly to helper
-Date:   Mon, 17 Oct 2022 14:09:18 +0200
-Message-Id: <patch-03.10-97cb470c96a-20221017T115544Z-avarab@gmail.com>
+Subject: [PATCH 06/10] git-submodule.sh: don't support top-level "--cached"
+Date:   Mon, 17 Oct 2022 14:09:21 +0200
+Message-Id: <patch-06.10-25fadf3ffc1-20221017T115544Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1091.gf9d18265e59
 In-Reply-To: <cover-00.10-00000000000-20221017T115544Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20221017T115544Z-avarab@gmail.com>
@@ -71,399 +71,117 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the dispatching logic in "git-submodule.sh" for the "add",
-"init", "deinit", "set-branch", "set-url", "summary" and "status"
-sub-commands to do away with the argument parsing in git-submodule.sh,
-and instead dispatch directly to "git submodule--helper".
+Since the preceding commit all sub-commands of "git submodule" have
+been dispatched to "git submodule--helper" directly, we therefore
+don't need to emit "usage()" if we see "--cached" without the
+sub-command being "status" or "summary", we can trust that
+parse_options() will spot that and barf on it.
 
-As in a preceding commit the only functional change here should be
-that on invalid options we'll now emit more targeted "-h" output.
+This does change one obscure aspect of undocumented behavior, for
+"status" and "summary" we supported these undocumented forms:
 
-The isnumber() helper function was only used in the now-removed
-cmd_summary(), the same goes for the $files variable. The $custom_name
-and $branch variables were only used in cmd_add().
+    git submodule --cached (status | summary)
 
-Since there are no dashed commands anymore in git-submodule.sh we can
-get rid of the "$(echo | sed ...)" one-liner to change e.g. "set-url"
-to "set_url".
+As noted in a preceding commit to git-submodule.sh which removed the
+"--branch" special-case, this comes down to emergent behavior seen in
+5c08dbbdf1a (git-submodule: fix subcommand parser,
+2008-01-15). I.e. we wanted to support was for subcommand-less invocations like:
+
+    git submodule --cached
+
+To be synonymous with invocations that explicitly named the "status"
+sub-command:
+
+    git submodule status --cached
+
+But we did not intend to mix the two, and allow "--cached" to be an
+option to the top-level "submodule" command when the "status" or
+"summary" sub-commands were explicitly provided.
+
+Let's remove this undocumented edge case, which makes a subsequent
+removal of git-submodule.sh easier to reason about. The test case
+added here is duplicated from the existing for-loop, except for the
+different and desired handling of "git submodule --cached status".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-submodule.sh | 321 +----------------------------------------------
- 1 file changed, 5 insertions(+), 316 deletions(-)
+ git-submodule.sh           | 15 ++++++++-------
+ t/t7400-submodule-basic.sh | 15 +++++++++++++--
+ 2 files changed, 21 insertions(+), 9 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 3fdfe864d37..2bdff5119c1 100755
+index ac2f95c1285..4f8f62ce981 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -31,20 +31,17 @@ export GIT_PROTOCOL_FROM_USER
+@@ -43,7 +43,14 @@ do
+ 		quiet=1
+ 		;;
+ 	--cached)
+-		cached=1
++		if test -z "$command"
++		then
++			cached=1 &&
++			shift &&
++			break
++		else
++			usage
++		fi
+ 		;;
+ 	--)
+ 		break
+@@ -69,12 +76,6 @@ then
+     fi
+ fi
  
- command=
- quiet=
--branch=
- force=
- reference=
- cached=
- recursive=
- init=
- require_init=
--files=
- remote=
- nofetch=
- rebase=
- merge=
- checkout=
--custom_name=
- depth=
- progress=
- dissociate=
-@@ -53,86 +50,7 @@ jobs=
- recommend_shallow=
- filter=
- 
--isnumber()
--{
--	n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
--}
+-# "--cached" is accepted only by "status" and "summary"
+-if test -n "$cached" && test "$command" != status && test "$command" != summary
+-then
+-	usage
+-fi
 -
--#
--# Add a new submodule to the working tree, .gitmodules and the index
--#
--# $@ = repo path
--#
--# optional branch is stored in global branch variable
--#
--cmd_add()
--{
--	# parse $args after "submodule ... add".
--	reference_path=
--	while test $# -ne 0
--	do
--		case "$1" in
--		-b | --branch)
--			case "$2" in '') usage ;; esac
--			branch=$2
--			shift
--			;;
--		-f | --force)
--			force=$1
--			;;
--		-q|--quiet)
--			quiet=1
--			;;
--		--progress)
--			progress=1
--			;;
--		--reference)
--			case "$2" in '') usage ;; esac
--			reference_path=$2
--			shift
--			;;
--		--reference=*)
--			reference_path="${1#--reference=}"
--			;;
--		--dissociate)
--			dissociate=1
--			;;
--		--name)
--			case "$2" in '') usage ;; esac
--			custom_name=$2
--			shift
--			;;
--		--depth)
--			case "$2" in '') usage ;; esac
--			depth="--depth=$2"
--			shift
--			;;
--		--depth=*)
--			depth=$1
--			;;
--		--)
--			shift
--			break
--			;;
--		-*)
--			usage
--			;;
--		*)
--			break
--			;;
--		esac
--		shift
--	done
--
--	if test -z "$1"
--	then
--		usage
--	fi
--
--	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper add ${quiet:+--quiet} ${force:+--force} ${progress:+"--progress"} ${branch:+--branch "$branch"} ${reference_path:+--reference "$reference_path"} ${dissociate:+--dissociate} ${custom_name:+--name "$custom_name"} ${depth:+"$depth"} -- "$@"
--}
- 
--#
- # Execute an arbitrary command sequence in each checked out
- # submodule
- #
-@@ -163,73 +81,6 @@ cmd_foreach()
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach ${quiet:+--quiet} ${recursive:+--recursive} -- "$@"
- }
- 
--#
--# Register submodules in .git/config
--#
--# $@ = requested paths (default to all)
--#
--cmd_init()
--{
--	# parse $args after "submodule ... init".
--	while test $# -ne 0
--	do
--		case "$1" in
--		-q|--quiet)
--			quiet=1
--			;;
--		--)
--			shift
--			break
--			;;
--		-*)
--			usage
--			;;
--		*)
--			break
--			;;
--		esac
--		shift
--	done
--
--	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper init ${quiet:+--quiet} -- "$@"
--}
--
--#
--# Unregister submodules from .git/config and remove their work tree
--#
--cmd_deinit()
--{
--	# parse $args after "submodule ... deinit".
--	deinit_all=
--	while test $# -ne 0
--	do
--		case "$1" in
--		-f|--force)
--			force=$1
--			;;
--		-q|--quiet)
--			quiet=1
--			;;
--		--all)
--			deinit_all=t
--			;;
--		--)
--			shift
--			break
--			;;
--		-*)
--			usage
--			;;
--		*)
--			break
--			;;
--		esac
--		shift
--	done
--
--	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${quiet:+--quiet} ${force:+--force} ${deinit_all:+--all} -- "$@"
--}
--
- #
- # Update each submodule path to correct revision, using clone and checkout as needed
- #
-@@ -360,168 +211,6 @@ cmd_update()
- 		"$@"
- }
- 
--#
--# Configures a submodule's default branch
--#
--# $@ = requested path
--#
--cmd_set_branch() {
--	default=
--	branch=
--
--	while test $# -ne 0
--	do
--		case "$1" in
--		-q|--quiet)
--			# we don't do anything with this but we need to accept it
--			;;
--		-d|--default)
--			default=1
--			;;
--		-b|--branch)
--			case "$2" in '') usage ;; esac
--			branch=$2
--			shift
--			;;
--		--)
--			shift
--			break
--			;;
--		-*)
--			usage
--			;;
--		*)
--			break
--			;;
--		esac
--		shift
--	done
--
--	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-branch ${quiet:+--quiet} ${branch:+--branch "$branch"} ${default:+--default} -- "$@"
--}
--
--#
--# Configures a submodule's remote url
--#
--# $@ = requested path, requested url
--#
--cmd_set_url() {
--	while test $# -ne 0
--	do
--		case "$1" in
--		-q|--quiet)
--			quiet=1
--			;;
--		--)
--			shift
--			break
--			;;
--		-*)
--			usage
--			;;
--		*)
--			break
--			;;
--		esac
--		shift
--	done
--
--	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-url ${quiet:+--quiet} -- "$@"
--}
--
--#
--# Show commit summary for submodules in index or working tree
--#
--# If '--cached' is given, show summary between index and given commit,
--# or between working tree and given commit
--#
--# $@ = [commit (default 'HEAD'),] requested paths (default all)
--#
--cmd_summary() {
--	summary_limit=-1
--	for_status=
--	diff_cmd=diff-index
--
--	# parse $args after "submodule ... summary".
--	while test $# -ne 0
--	do
--		case "$1" in
--		--cached)
--			cached=1
--			;;
--		--files)
--			files="$1"
--			;;
--		--for-status)
--			for_status="$1"
--			;;
--		-n|--summary-limit)
--			summary_limit="$2"
--			isnumber "$summary_limit" || usage
--			shift
--			;;
--		--summary-limit=*)
--			summary_limit="${1#--summary-limit=}"
--			isnumber "$summary_limit" || usage
--			;;
--		--)
--			shift
--			break
--			;;
--		-*)
--			usage
--			;;
--		*)
--			break
--			;;
--		esac
--		shift
--	done
--
--	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper summary ${files:+--files} ${cached:+--cached} ${for_status:+--for-status} ${summary_limit:+-n $summary_limit} -- "$@"
--}
--#
--# List all submodules, prefixed with:
--#  - submodule not initialized
--#  + different revision checked out
--#
--# If --cached was specified the revision in the index will be printed
--# instead of the currently checked out revision.
--#
--# $@ = requested paths (default to all)
--#
--cmd_status()
--{
--	# parse $args after "submodule ... status".
--	while test $# -ne 0
--	do
--		case "$1" in
--		-q|--quiet)
--			quiet=1
--			;;
--		--cached)
--			cached=1
--			;;
--		--recursive)
--			recursive=1
--			;;
--		--)
--			shift
--			break
--			;;
--		-*)
--			usage
--			;;
--		*)
--			break
--			;;
--		esac
--		shift
--	done
--
--	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper status ${quiet:+--quiet} ${cached:+--cached} ${recursive:+--recursive} -- "$@"
--}
--
- # This loop parses the command line arguments to find the
- # subcommand name to dispatch.  Parsing of the subcommand specific
- # options are primarily done by the subcommand implementations.
-@@ -574,11 +263,11 @@ case "$command" in
+ case "$command" in
  absorbgitdirs)
  	git submodule--helper "$command" --prefix "$wt_prefix" "$@"
- 	;;
--sync)
--	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper "$command" \
--		${quiet:+--quiet} "$@"
-+foreach | update)
-+	"cmd_$command" "$@"
- 	;;
--*)
--	"cmd_$(echo $command | sed -e s/-/_/g)" "$@"
-+add | init | deinit | set-branch | set-url | status | summary | sync)
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper "$command" \
-+		${quiet:+--quiet} ${cached:+--cached} "$@"
- 	;;
- esac
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index b50db3f1031..d8f7d6ee29a 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -31,7 +31,7 @@ test_expect_success 'submodule usage: status --' '
+ 	test_expect_code 1 git submodule --end-of-options
+ '
+ 
+-for opt in '--quiet' '--cached'
++for opt in '--quiet'
+ do
+ 	test_expect_success "submodule usage: status $opt" '
+ 		git submodule $opt &&
+@@ -40,6 +40,17 @@ do
+ 	'
+ done
+ 
++for opt in '--cached'
++do
++	test_expect_success "submodule usage: status $opt" '
++		git submodule $opt &&
++		git submodule status $opt &&
++		test_expect_code 1 git submodule $opt status >out 2>err &&
++		grep "^usage: git submodule" err &&
++		test_must_be_empty out
++	'
++done
++
+ test_expect_success 'submodule deinit works on empty repository' '
+ 	git submodule deinit --all
+ '
+@@ -576,7 +587,7 @@ test_expect_success 'status should be "modified" after submodule commit' '
+ '
+ 
+ test_expect_success 'the --cached sha1 should be rev1' '
+-	git submodule --cached status >list &&
++	git submodule status --cached >list &&
+ 	grep "^+$rev1" list
+ '
+ 
 -- 
 2.38.0.1091.gf9d18265e59
 
