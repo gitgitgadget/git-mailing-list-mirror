@@ -2,105 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 513B2C433FE
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 13:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D8A6C433FE
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 13:33:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbiJQN0p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 09:26:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58142 "EHLO
+        id S229909AbiJQNdc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 09:33:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229762AbiJQN0l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 09:26:41 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 627111ADB6
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:26:40 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3616015B75F;
-        Mon, 17 Oct 2022 09:26:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=RcDRm1iPZnVBLxcnAgWUDEcb8Q33xGr03qdiKRiKLXE=; b=wvbu
-        j09WkEAztWYiHxaCGpqFUDL+QsWa9wx3wDf62fhDbVN1BOvvsqt3khfvY48L8W85
-        0WNbzO9QlSdqsWi32vmGcKB93CIiM+0D/rzKDBE8aYPLPWtBOQnV4dZCWUh/lhyE
-        oFBrdDyoqXWskdc8ynCqrZSF7fENiP28yS02vhI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C09415B75E;
-        Mon, 17 Oct 2022 09:26:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 835DE15B75D;
-        Mon, 17 Oct 2022 09:26:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Alphadelta14 via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Heather Lapointe <alpha@alphaservcomputing.solutions>
-Subject: Re: [PATCH v3 1/9] tree: do not use the_repository for tree
- traversal methods.
-References: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
-        <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
-        <79959a54eb4c1a0812b1f4643530069a63e549f4.1665973401.git.gitgitgadget@gmail.com>
-Date:   Mon, 17 Oct 2022 06:26:37 -0700
-Message-ID: <xmqq4jw237jm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229948AbiJQNda (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 09:33:30 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C3BB5283D
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:33:30 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id t12-20020a17090a3b4c00b0020b04251529so10967949pjf.5
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:33:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=apPE3IDmhkRVb0GsCoViVt34VCJuGvPloYG3JXVSD0o=;
+        b=cTn0k3qMQtlzCQty6dVAm2T7lwuvWsJykzf7TQX6uKrWbAwZmczsYnfbmi6ByzoBw5
+         e/0WfNxrj5LZdRg5o59rlmHx4TcefeKyiySTit+DUdNHqpeSNP2AeqxBZDJWON+V5GFd
+         c0PROiZbJ9vQ9r78QDvs9AQvbyzSaWRsZWm0/RgGBIidugtJPhzooApsaCW3vAwIA4sg
+         lXSnyiBTX3qMvhbAiO+YwUwJBiHdb7z5tK1SgknVLGCXRQQBMfnqZAkmlOZOkiHaVyoA
+         c7kR0S63EqrW2QcqbfFq+gWQD4guXCoiWZEDgJNrp4hVNQ/enRCeKIeOr1bHK/tH3My5
+         LhLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=apPE3IDmhkRVb0GsCoViVt34VCJuGvPloYG3JXVSD0o=;
+        b=cCdrqPKN8EtkT76cbApyZjsXMvgt7C8H4sSqGu+1rY2hWVA1+6Wc5wKZwwwvnhXYID
+         9JEzKHiwHnGR9inCSAq7L77ebau1gBbfJAaljYivXG3MiDvDesmv3Yu4xrrjy3/JmwR1
+         gTcivKVuWGb9ayc1WQsYNsngZcDlFJmcowPdCXG5A+kloxNEEilyCq9bIHuXKBjCRO1r
+         ARDTmgbKnlpc43jfm2rShiJZTkHWzqJ3tQHbebV7kQvBNY83G+mjaTlVHlbMiRbSaMIm
+         gy36d6y5aq3mLFLBD81uZK4b42WU1877cmnA9lBT+Lsl4E1wGyzP4K4Ri+eOwLchbtaH
+         aAxg==
+X-Gm-Message-State: ACrzQf03nJAMGSCflPmPpUyj5yHBy6F6chtJT5opwNwNhu7xd5+8lzMp
+        aZgerlptwrgFUSqbjne0Vcc=
+X-Google-Smtp-Source: AMsMyM6tjZVL7AGiepM62iN8k+PWX+gvtYBKQSfHQLt7n3/+EEASgAgkvNltkeB0DCtmM2V9pPxvaQ==
+X-Received: by 2002:a17:902:e790:b0:183:88dd:1d30 with SMTP id cp16-20020a170902e79000b0018388dd1d30mr11941466plb.62.1666013609521;
+        Mon, 17 Oct 2022 06:33:29 -0700 (PDT)
+Received: from localhost.localdomain ([47.246.101.55])
+        by smtp.gmail.com with ESMTPSA id x184-20020a6286c1000000b005622f99579esm7098736pfd.160.2022.10.17.06.33.27
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 17 Oct 2022 06:33:29 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     avarab@gmail.com
+Cc:     --cc=avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [RFC PATCH 1/2] notes.c: introduce "--no-blankline" option
+Date:   Mon, 17 Oct 2022 21:33:23 +0800
+Message-Id: <20221017133323.63330-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.38.0.rc0.2.gc581cb24b65.dirty
+In-Reply-To: <221013.861qrcm5kx.gmgdl@evledraar.gmail.com>
+References: <221013.861qrcm5kx.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 546A1AFC-4E1F-11ED-9967-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Alphadelta14 via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Ævar Arnfjörð Bjarmason" <avarab@gmail.com> writes:
 
-> From: Alphadelta14 <alpha@alphaservcomputing.solutions>
+> Use <<-\EOF here.
 
-I'll fix this line to match all the other patches in the series
-before applying.
+As do not escape the heredoc, will apply.
 
-> Expect that tree walking may switch repository contexts for cases
-> such as submodules.
-> Added compatibility macros for existing cases.
->
-> Annotate an existing issue where repo is wrong when traversing.
->
-> Signed-off-by: Heather Lapointe <alpha@alphaservcomputing.solutions>
-> ---
+> We usually indent the "EOF" body the same as the "cat", but...
+> ... I see this test might be an odd one out, so this is fine.
 
+Yes, the indent sometimes make a little confusion unless you want
+to keep it as "<<\EOF".
 
-> @@ -58,7 +58,11 @@ int read_tree_at(struct repository *r,
->  				    oid_to_hex(&entry.oid),
->  				    base->buf, entry.path);
->  
-> -			if (parse_commit(commit))
-> +			// FIXME: This is the wrong repo instance (it refers to the superproject)
-> +			// it will always fail as is (will fix in later patch)
-> +			// This current codepath isn't executed by any existing callbacks
-> +			// so it wouldn't show up as an issue at this time.
-
-	/*
-	 * We write our multi-line comments
-	 * this way.
-	 */
-
-My suspicion is that the if/else if/ cascade for GITLINK assumes
-that the caller earlier did add_submodule_odb() to make sure any
-object it needs should be available via the_repository->objects
-object store.  If your caller (presumably "archive that is trying to
-learn the --recurse-submodules option") hasn't learned to do so yet
-at this step, it is understandable if it fails.
-
-> +			if (repo_parse_commit(r, commit))
->  				die("Invalid commit %s in submodule path %s%s",
->  				    oid_to_hex(&entry.oid),
->  				    base->buf, entry.path);
-
-> +#ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
-> +#define parse_tree(tree) repo_parse_tree(the_repository, tree)
-> +#define parse_tree_gently(tree, quiet_on_missing) repo_parse_tree_gently(the_repository, tree, quiet_on_missing)
-> +#define parse_tree_indirect(oid) repo_parse_tree_indirect(the_repository, oid)
-> +#endif
-
-Good.
+Thanks for your meticulous reading!
