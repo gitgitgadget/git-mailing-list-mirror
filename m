@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEAB6C4332F
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 02:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B99F4C43217
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 02:23:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230204AbiJQCXe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Oct 2022 22:23:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44980 "EHLO
+        id S230214AbiJQCXh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Oct 2022 22:23:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230190AbiJQCXa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Oct 2022 22:23:30 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FA5544549
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 19:23:26 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id i131-20020a1c3b89000000b003c6c154d528so4702167wma.4
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 19:23:26 -0700 (PDT)
+        with ESMTP id S230192AbiJQCXb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Oct 2022 22:23:31 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CBF544563
+        for <git@vger.kernel.org>; Sun, 16 Oct 2022 19:23:27 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id l16-20020a05600c4f1000b003c6c0d2a445so9012771wmq.4
+        for <git@vger.kernel.org>; Sun, 16 Oct 2022 19:23:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Xs/KCUkfn9ByRJHNiJHiUVJxgB62lsS+0U9fDXCTndo=;
-        b=il4+4wlzqlAW9tqZ6EC2OpFvk4IMzO455MuBsZAaXDbEXPzaIlAlZs3sfXs9afcBsB
-         xIRKGqYXrWLkf/wDngbTv/NfnkfIpLBInziXCNQy/BbGgW9MFs7KkI2jAO0oRgf+BER8
-         0Y9ph0W2oBOh3j+EIID9cb0ZOq1ckJp4vS893/3aLWysA9KtB2pzlCRXRw7icGXdCZVz
-         jKOjx2nCOaWwjFMM2D9Rgn4jeMQIhCJ82sJ5wkDVTVmXCfFDg9IinFHhIMG1yOMy4EON
-         2OGWcavzm7JU1OaPDWlig9GZ8QjidFbOlNHTzOFLkhiikErfS7rqk+NVFwXvYdGDx/LD
-         Zzpw==
+        bh=Wpn/YUgBa26+xjIpiTP0kqX7J5Xquv2lYGc9NSgjxTs=;
+        b=mfgBT3uzNZXQiajoJXDSAmn+FRZeavp/HqQ09k8G3EEbrhz5dWhKazI2koDAXo+AzH
+         Uvbbnz7JjUuNf6HuVGgaaFBuN7il2kH+ybCMbavBkZcso8nyJ4Hxzco5HfItf4MRleX9
+         vTvICBn7/3AWgtOb3zf3vbtDJKaIiGozkMfUViF33nik7vrYUIfX4bFEgnprLr4MZ2Ha
+         1H7WDoApa7aJh/QRDH6d5TQqV2GzlWno2kRnuW3w5TXh5VgA2Uj6kQXH+B0GME6pT87w
+         NDR+uRAX0blBZdjfAVFJxHelifVx+nHqqaItKuNH+TNdcDIRHFnvJuiOXuHBAplKB0dv
+         n0gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Xs/KCUkfn9ByRJHNiJHiUVJxgB62lsS+0U9fDXCTndo=;
-        b=4BMjoQgLEoH7F9SzhJRRRtIjNbaeIg5lxgoV09RSTtKaPWXLOkSk05sHNVzbTGvwbf
-         uEv3F66hmxFEzEACyjZrC44j9+oKhgwEnidHG+OVG5wqAK8Mfjhu/3YJwus/96sqcF/Y
-         DaXAhl9gZqA+Y70wezNWiIqIJgvphPINWn5mIALwn2doInVlZkQxiryXGL38rxDrSCb0
-         YNMWcLZCP/TlrXLdwmklh4Wqyinhb87RVdwdRLYh7fDG31AfpJB0R8k0gsWeT/cduUjR
-         ULhvEfmtHD7mLuxYaNls4VyPaSK5T7Heji4zN6vtKRsTnD+6NW6HkQwkqyuerK/MPnN7
-         tJNA==
-X-Gm-Message-State: ACrzQf0JRYRpwlb7vocP19HLL2XoB2OH072gHMdYAQnNSlsd889bdLb/
-        HpjwEbKtNGMrSFEVO9BMIk8uqI6YYxc=
-X-Google-Smtp-Source: AMsMyM4LjnXqvCouMq5rbWxMgCJp7dhQL6cv9SsE6QxVbFVMCpEz5b+UqwYYgnbaGndqzMpkuEBjBw==
-X-Received: by 2002:a05:600c:444f:b0:3c6:deac:d662 with SMTP id v15-20020a05600c444f00b003c6deacd662mr13744870wmn.89.1665973404729;
-        Sun, 16 Oct 2022 19:23:24 -0700 (PDT)
+        bh=Wpn/YUgBa26+xjIpiTP0kqX7J5Xquv2lYGc9NSgjxTs=;
+        b=eoDi1+8X6MwgQ6kcoYGiSm+e+5stB33uabgLNFDJH1GxKEkeueyEHtEDmdOHPCUuU9
+         ZqVffI3WnFhvp6jS6jLpCjprmTbD2C1hbT4HJVExvIKSe+OyyLOqVKcUwbsVPMNWev/g
+         5ioW1qiOGf16+cxT4fqjA9Wmd8czUdKmBIUkMjHqJrTXUxIIZiBCYHg0tXCmV5vkK9cB
+         vBuJv9Ar71Z+nKgJ6txRcY8ZlS9Aj/WRDtRe73N/TE//Sw7CBm1oOkXRkn5sewUX2gjw
+         IbtN//rQLHKNb4crwSfNUJ9VRT/++rkPjJYx1g04+YjOubsAQttTbaKIaVnvb8/Livbg
+         1Yng==
+X-Gm-Message-State: ACrzQf0cmtYShxhxoLUWPpRALcOXwOtxDh4A+uiUdrhq6gYD6tMaL/Lw
+        c/pdNORrkInkRGpkmSylwOQq1xbbxs0=
+X-Google-Smtp-Source: AMsMyM63iCoPVlh82VOFRjXvCQeYccHN2ETJrfZW0BCCjfTtaNxkLMb1Gff/J9RPdLUX3pI/+CjZvQ==
+X-Received: by 2002:a05:600c:524e:b0:3c6:eb24:c05c with SMTP id fc14-20020a05600c524e00b003c6eb24c05cmr8236403wmb.100.1665973405921;
+        Sun, 16 Oct 2022 19:23:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n14-20020a5d400e000000b0022ae401e9e0sm7250633wrp.78.2022.10.16.19.23.24
+        by smtp.gmail.com with ESMTPSA id h12-20020a05600c314c00b003c6ee9e254dsm6167316wmo.32.2022.10.16.19.23.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Oct 2022 19:23:24 -0700 (PDT)
-Message-Id: <2291e0f9b5c61f9668b206b85368829db9384bb3.1665973401.git.gitgitgadget@gmail.com>
+        Sun, 16 Oct 2022 19:23:25 -0700 (PDT)
+Message-Id: <9a07c6932f4c7ef844df1fc4f5b6b9feb1810135.1665973401.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
 References: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
         <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
 From:   "Heather Lapointe via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Oct 2022 02:23:14 +0000
-Subject: [PATCH v3 2/9] tree: update cases to use repo_ tree methods
+Date:   Mon, 17 Oct 2022 02:23:15 +0000
+Subject: [PATCH v3 3/9] tree: increase test coverage for tree.c
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,91 +70,176 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heather Lapointe <alpha@alphaservcomputing.solutions>
 
-For cases which had already had a repository instance,
-update those to use the repo_parse_tree* methods.
+This highlights some buggy behavior from read_tree for submodules that
+was not being executed.
 
-Leave the remaining invocations that were already using the_repository
-alone.
+This introduces a test-tool tree-read-tree-at command
+(the complex name is because it is not related to the read-tree command).
 
 Signed-off-by: Heather Lapointe <alpha@alphaservcomputing.solutions>
 ---
- merge.c     | 4 ++--
- reset.c     | 2 +-
- revision.c  | 4 ++--
- sequencer.c | 6 +++---
- 4 files changed, 8 insertions(+), 8 deletions(-)
+ Makefile                          |  1 +
+ t/helper/test-tool.c              |  1 +
+ t/helper/test-tool.h              |  1 +
+ t/helper/test-tree-read-tree-at.c | 40 +++++++++++++++++++
+ t/t1023-tree-read-tree-at.sh      | 65 +++++++++++++++++++++++++++++++
+ 5 files changed, 108 insertions(+)
+ create mode 100644 t/helper/test-tree-read-tree-at.c
+ create mode 100755 t/t1023-tree-read-tree-at.sh
 
-diff --git a/merge.c b/merge.c
-index 2382ff66d35..1efc4440c03 100644
---- a/merge.c
-+++ b/merge.c
-@@ -63,12 +63,12 @@ int checkout_fast_forward(struct repository *r,
- 	memset(&trees, 0, sizeof(trees));
- 	memset(&t, 0, sizeof(t));
- 
--	trees[nr_trees] = parse_tree_indirect(head);
-+	trees[nr_trees] = repo_parse_tree_indirect(r, head);
- 	if (!trees[nr_trees++]) {
- 		rollback_lock_file(&lock_file);
- 		return -1;
- 	}
--	trees[nr_trees] = parse_tree_indirect(remote);
-+	trees[nr_trees] = repo_parse_tree_indirect(r, remote);
- 	if (!trees[nr_trees++]) {
- 		rollback_lock_file(&lock_file);
- 		return -1;
-diff --git a/reset.c b/reset.c
-index e3383a93343..a0ac5e8a684 100644
---- a/reset.c
-+++ b/reset.c
-@@ -153,7 +153,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
- 		goto leave_reset_head;
- 	}
- 
--	tree = parse_tree_indirect(oid);
-+	tree = repo_parse_tree_indirect(r, oid);
- 	prime_cache_tree(r, r->index, tree);
- 
- 	if (write_locked_index(r->index, &lock, COMMIT_LOCK) < 0) {
-diff --git a/revision.c b/revision.c
-index 36e31942cee..dab5ddaf039 100644
---- a/revision.c
-+++ b/revision.c
-@@ -74,7 +74,7 @@ static void mark_tree_contents_uninteresting(struct repository *r,
- 	struct tree_desc desc;
- 	struct name_entry entry;
- 
--	if (parse_tree_gently(tree, 1) < 0)
-+	if (repo_parse_tree_gently(r, tree, 1) < 0)
- 		return;
- 
- 	init_tree_desc(&desc, tree->buffer, tree->size);
-@@ -181,7 +181,7 @@ static void add_children_by_path(struct repository *r,
- 	if (!tree)
- 		return;
- 
--	if (parse_tree_gently(tree, 1) < 0)
-+	if (repo_parse_tree_gently(r, tree, 1) < 0)
- 		return;
- 
- 	init_tree_desc(&desc, tree->buffer, tree->size);
-diff --git a/sequencer.c b/sequencer.c
-index a4d85f1fbdd..a4c09dfa182 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -685,9 +685,9 @@ static int do_recursive_merge(struct repository *r,
- 		o.buffer_output = 2;
- 	o.show_rename_progress = 1;
- 
--	head_tree = parse_tree_indirect(head);
--	next_tree = next ? get_commit_tree(next) : empty_tree(r);
--	base_tree = base ? get_commit_tree(base) : empty_tree(r);
-+	head_tree = repo_parse_tree_indirect(r, head);
-+	next_tree = next ? repo_get_commit_tree(r, next) : empty_tree(r);
-+	base_tree = base ? repo_get_commit_tree(r, base) : empty_tree(r);
- 
- 	for (i = 0; i < opts->xopts_nr; i++)
- 		parse_merge_opt(&o, opts->xopts[i]);
+diff --git a/Makefile b/Makefile
+index 6bfb62cbe94..52d17ca7276 100644
+--- a/Makefile
++++ b/Makefile
+@@ -788,6 +788,7 @@ TEST_BUILTINS_OBJS += test-submodule-nested-repo-config.o
+ TEST_BUILTINS_OBJS += test-submodule.o
+ TEST_BUILTINS_OBJS += test-subprocess.o
+ TEST_BUILTINS_OBJS += test-trace2.o
++TEST_BUILTINS_OBJS += test-tree-read-tree-at.o
+ TEST_BUILTINS_OBJS += test-urlmatch-normalization.o
+ TEST_BUILTINS_OBJS += test-userdiff.o
+ TEST_BUILTINS_OBJS += test-wildmatch.o
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index d1d013bcd92..a8a9bedec5f 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -82,6 +82,7 @@ static struct test_cmd cmds[] = {
+ 	{ "submodule-nested-repo-config", cmd__submodule_nested_repo_config },
+ 	{ "subprocess", cmd__subprocess },
+ 	{ "trace2", cmd__trace2 },
++	{ "tree-read-tree-at", cmd__tree_read_tree_at },
+ 	{ "userdiff", cmd__userdiff },
+ 	{ "urlmatch-normalization", cmd__urlmatch_normalization },
+ 	{ "xml-encode", cmd__xml_encode },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 6b46b6444b6..409fddfaeb8 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -76,6 +76,7 @@ int cmd__submodule_config(int argc, const char **argv);
+ int cmd__submodule_nested_repo_config(int argc, const char **argv);
+ int cmd__subprocess(int argc, const char **argv);
+ int cmd__trace2(int argc, const char **argv);
++int cmd__tree_read_tree_at(int argc, const char **argv);
+ int cmd__userdiff(int argc, const char **argv);
+ int cmd__urlmatch_normalization(int argc, const char **argv);
+ int cmd__xml_encode(int argc, const char **argv);
+diff --git a/t/helper/test-tree-read-tree-at.c b/t/helper/test-tree-read-tree-at.c
+new file mode 100644
+index 00000000000..bba759bb264
+--- /dev/null
++++ b/t/helper/test-tree-read-tree-at.c
+@@ -0,0 +1,40 @@
++/* This tests tree.c's read_tree / read_tree_at.
++We call it tree-read-tree-at to disambiguate with the read-tree tool.
++*/
++#include "cache.h"
++#include "pathspec.h"
++#include "test-tool.h"
++#include "tree.h"
++
++static int test_handle_entry(const struct object_id *oid,
++		struct strbuf *base, const char *filename,
++		unsigned mode, void *context UNUSED) {
++	printf("%i %s %s%s\n", mode, oid_to_hex(oid), base->buf, filename);
++	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
++		return READ_TREE_RECURSIVE;
++	}
++	return 0;
++}
++
++int cmd__tree_read_tree_at(int argc UNUSED, const char **argv)
++{
++	struct pathspec pathspec;
++	struct tree *tree;
++	struct repository *repo;
++	struct object_id oid;
++
++	setup_git_directory();
++	repo = the_repository;
++	assert(repo);
++
++	parse_pathspec(&pathspec, 0,
++		       PATHSPEC_PREFER_FULL,
++		       "", argv);
++
++	assert(repo_get_oid(repo, "HEAD", &oid) == 0);
++	tree = repo_parse_tree_indirect(repo, &oid);
++	assert(tree);
++	pathspec.recurse_submodules = 1;
++	read_tree(repo, tree, &pathspec, test_handle_entry, NULL);
++	return 0;
++}
+diff --git a/t/t1023-tree-read-tree-at.sh b/t/t1023-tree-read-tree-at.sh
+new file mode 100755
+index 00000000000..9e5ce3abb4b
+--- /dev/null
++++ b/t/t1023-tree-read-tree-at.sh
+@@ -0,0 +1,65 @@
++#!/bin/sh
++
++# tests for tree.c (not read-tree.c)
++test_description='Test read_tree / read_tree_at'
++. ./test-lib.sh
++
++test_expect_success 'read_tree basic' '
++	rm -rf walk_tree_basic &&
++	git init walk_tree_basic &&
++	(
++		cd walk_tree_basic &&
++		set -x &&
++
++		mkdir -p dir1/dirA &&
++		mkdir -p dir1/dirB &&
++		mkdir -p dir2 &&
++		echo "file1" > file1.txt &&
++		echo "file2" > file2.txt &&
++		# uncommitted
++		echo "file3" > file3.txt &&
++
++		echo "file1A1" > dir1/dirA/file1.txt &&
++		git add file1.txt file2.txt dir1/dirA/file1.txt &&
++		git commit -m "initial commit" &&
++
++		test-tool tree-read-tree-at . > walk1.txt &&
++		grep " file1.txt" walk1.txt &&
++		! grep " file3.txt" walk1.txt &&
++		! grep " dir1/dirB" walk1.txt &&
++		grep " dir1/dirA/file1.txt" walk1.txt
++	)
++'
++
++test_expect_success 'read_tree submodules' '
++	rm -rf walk_tree_submodules &&
++	git init submodule1 &&
++	(
++		cd submodule1 &&
++		mkdir -p dir1/dirA &&
++		echo "dir2/sub1/file1.txt" > file1.txt &&
++		echo "dir2/sub1/file1A1.txt" > dir1/dirA/file1.txt &&
++		git add file1.txt dir1/dirA/file1.txt &&
++		git commit -m "initial commit"
++	) &&
++	git init walk_tree_submodules &&
++	(
++		cd walk_tree_submodules &&
++
++		mkdir -p dir2 &&
++		echo "file1" > file1.txt &&
++		echo "dir2/file2" > dir2/file2.txt &&
++		git add file1.txt dir2/file2.txt &&
++		git commit -m "initial commit" &&
++
++		git submodule add ../submodule1 dir2/sub1 &&
++		git commit -m "add submodule1" &&
++
++		test-tool tree-read-tree-at . > walk2.txt &&
++		grep " file1.txt" walk2.txt &&
++		grep " dir2/sub1/file1.txt" walk2.txt &&
++		grep " dir2/sub1/dir1/dirA/file1.txt" walk2.txt
++	)
++'
++
++test_done
 -- 
 gitgitgadget
 
