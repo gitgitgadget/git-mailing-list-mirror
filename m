@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29AFCC4332F
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 02:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36A1BC4332F
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 02:23:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230217AbiJQCXs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Oct 2022 22:23:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44980 "EHLO
+        id S230219AbiJQCXx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Oct 2022 22:23:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230188AbiJQCXc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Oct 2022 22:23:32 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98C46444B3
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 19:23:30 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso11748491wma.1
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 19:23:30 -0700 (PDT)
+        with ESMTP id S230203AbiJQCXd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Oct 2022 22:23:33 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 938E5444B4
+        for <git@vger.kernel.org>; Sun, 16 Oct 2022 19:23:31 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id az22-20020a05600c601600b003c6b72797fdso8995415wmb.5
+        for <git@vger.kernel.org>; Sun, 16 Oct 2022 19:23:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5u8xPLS2v7BwRZyTpchM0gF0aTO+EpZNRYLutPsguao=;
-        b=obH6Xe1H9mWa5ji2pfINit/0k6b0bivaGM0WVb5ehMWmT9dwoelo3303iu3C7i4QJ0
-         4kIGu0e7RQdPZm/x+McqcrPopNMBb1miD6HIAxPPX5PgQcjl9GnW2qGKoMMr/8xWZQUU
-         tkhw8pVCyhe0wgoNbaSD2WUghU0MIEB75dLaV49gqFUL7unjiK9oIGbiutoyDCy5/Si0
-         2+7etIquLu+4nsu4nXI2pU9IdAkMo8W4+MHOuhLV5pz+6Qcf4B0pe25WTiScl2OgpCUY
-         fvG67cFcUY9/kelYowZrUarxTTW3Lut905mVDJY2DAYQzWkI1t++M8gAhlxAtTCOjTrH
-         dYrQ==
+        bh=FzkqgSkNQdq8N4dpFhyWqulPwP1qvPc/RRAdLMJF8cY=;
+        b=n4okneeSG0cs6jJk0/7pA5McYudRFr+ZLPlUmPoueOnT55R7bo04xU08UJJ+lX/iGY
+         RnVhNjZBK9lCYzGYYu0Sb5uTVmH60uWAXgLDi0WfJOaqxCwbs1Ub7GbpD+E2h+rdh6bF
+         SqHdC6UcxVY2XE+KfBlaT71Mqf5oGnBR7gSc3LAFsu3VTZylCrebCHjjk1kbaec2x2qa
+         6vEgml21zHFGZtwAC7HYBonDUmI+p4M9YOidsxEtpFO/YYGSAJn2WQWrJ5yryhPGBgvw
+         w9n+e1IsFHcJm7//Ug62wjP8vR3Q+L+EYjiAXiTlEDVE56wTmYtE2Dj4uUcfL+fzWNBh
+         lZ7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5u8xPLS2v7BwRZyTpchM0gF0aTO+EpZNRYLutPsguao=;
-        b=Dux4pZ3G1fhF8/Trdkqop3oP2E7qsWL5klA+7eCRYjBK5aUzczl9PuDS8RMHFPghpz
-         qmGtGgD9Z/VMyWtdstbdX2sgNjd+Ii+KTSRhMn+08vwUdRT7t0VPw6IwFgDC0A9313yk
-         l2oIjOa8y2THSHjL02jg3cR1GzaEg45EZ/k1hw2OSMbdFYn3xQnqeq5GXCo/Uo6xMzXy
-         SURdHLKPTngyHpPIzWUOcsXBE4Yy0C5/a76wsMMw2Px8GG4EUtY8b3/ymp3gObqhMGie
-         olgVpiyuVZQOSSVFhmCDL7Np4nBGN8IcytZtTls1cVMY9AVAIFyAGAE5zOjK/OuxdQIV
-         iNYw==
-X-Gm-Message-State: ACrzQf1OPKd/fGiLyjvVYb3vLOC2t2n7RX4RD45lI3w1cPbork9bJrNT
-        +HlVYh/O89YIuYxlENKRohIo4WFtAzY=
-X-Google-Smtp-Source: AMsMyM70xOH5857xeMqAbYKqp9U/vTGJdpyEH0/hdGnDSxRZvdh0zdh0iHC2lfDxV43jbe95t4MFXw==
-X-Received: by 2002:a05:600c:4410:b0:3c6:f04b:daa2 with SMTP id u16-20020a05600c441000b003c6f04bdaa2mr5760970wmn.186.1665973408865;
-        Sun, 16 Oct 2022 19:23:28 -0700 (PDT)
+        bh=FzkqgSkNQdq8N4dpFhyWqulPwP1qvPc/RRAdLMJF8cY=;
+        b=I7g4xcC0PjdqDnr20nBOnQG5NOesATJkQPrab/Tb/5Yr2Q++hlCC0c6G3GtUh4TRDt
+         EUYcx5PjLX07R1qxm2v8T1xMpPa+aIokhkaaK28UXas6RRRgzhkbPjK+FrmVCVTBI2Un
+         MXSVg8Lh8hmoD35vX7yB42Hwq617uK9i+6jwMFcfjw0B3QFD8sB6zqpRgC21Yf8Quq9l
+         U00Zh7wY23ipUCzpmxIxFWLikj48ZGJVO2xrVNdNJlhpXjtnnwUA/J1bCImL+5alWQFj
+         Yg0WHa2EXukTb4pUp/KJqjRt2GjgYmGcbhRvuiKmOdot8oL0+1uB2WHJIExm90aFnCnl
+         dL5g==
+X-Gm-Message-State: ACrzQf07IDNHeo6YjaLuKcmKNtd+Pn28LXaMuvnXd/4FP6KfaKc5iIGj
+        m60g5FARXlfs8STnVDiNHr3CE6Ms9E8=
+X-Google-Smtp-Source: AMsMyM7TJS7R8lxZJPTCYpggYiRLB6VWLhK86kInjVlZ4AQW/u7FUIM+Vo277lQASNCwmUiyuN9efQ==
+X-Received: by 2002:a05:600c:654f:b0:3c4:271b:6b35 with SMTP id dn15-20020a05600c654f00b003c4271b6b35mr5434987wmb.182.1665973409917;
+        Sun, 16 Oct 2022 19:23:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r16-20020a05600c35d000b003a84375d0d1sm14940183wmq.44.2022.10.16.19.23.28
+        by smtp.gmail.com with ESMTPSA id x6-20020a5d54c6000000b0022e2c38f8basm7155822wrv.14.2022.10.16.19.23.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Oct 2022 19:23:28 -0700 (PDT)
-Message-Id: <1b9b049d64fc4ea919c94e57b74a1760b3837892.1665973401.git.gitgitgadget@gmail.com>
+        Sun, 16 Oct 2022 19:23:29 -0700 (PDT)
+Message-Id: <2443c9b1b6efce4340f01930c179d2fafbc5bbb3.1665973401.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
 References: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
         <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
 From:   "Heather Lapointe via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Oct 2022 02:23:18 +0000
-Subject: [PATCH v3 6/9] archive: pass repo objects to write_archive handlers
+Date:   Mon, 17 Oct 2022 02:23:19 +0000
+Subject: [PATCH v3 7/9] archive: remove global repository from archive_args
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,324 +70,216 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heather Lapointe <alpha@alphaservcomputing.solutions>
 
-Use contextual repos instead of the_repository or args->repo
-to ensure that submodules will be handled correctly
-since they use multiple repo instances.
+Remove archive_args.repo to ensure all functions are using local
+repository instances.
+Since all functions now have access to repo, this access isn't
+needed anymore.
+
+The main issue is that submodules do not use the same repo
+as the subproject repo that is being passed around contextually.
 
 Signed-off-by: Heather Lapointe <alpha@alphaservcomputing.solutions>
 ---
- archive-tar.c | 15 ++++++++++-----
- archive-zip.c | 15 +++++++++------
- archive.c     | 38 ++++++++++++++++++++++----------------
- archive.h     | 14 +++++++++++---
- 4 files changed, 52 insertions(+), 30 deletions(-)
+ archive.c | 51 +++++++++++++++++++++++++++++----------------------
+ archive.h |  1 -
+ 2 files changed, 29 insertions(+), 23 deletions(-)
 
-diff --git a/archive-tar.c b/archive-tar.c
-index 3e4822b6840..5a2d42ff229 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -18,6 +18,7 @@ static unsigned long offset;
- static int tar_umask = 002;
- 
- static int write_tar_filter_archive(const struct archiver *ar,
-+					struct repository *repo,
- 				    struct archiver_args *args);
- 
- /*
-@@ -246,7 +247,9 @@ static void write_extended_header(struct archiver_args *args,
- 	write_blocked(buffer, size);
- }
- 
--static int write_tar_entry(struct archiver_args *args,
-+static int write_tar_entry(
-+			   struct repository *repo,
-+			   struct archiver_args *args,
- 			   const struct object_id *oid,
- 			   const char *path, size_t pathlen,
- 			   unsigned int mode,
-@@ -316,7 +319,7 @@ static int write_tar_entry(struct archiver_args *args,
- 		if (buffer)
- 			write_blocked(buffer, size);
- 		else
--			err = stream_blocked(args->repo, oid);
-+			err = stream_blocked(repo, oid);
- 	}
- 	return err;
- }
-@@ -422,12 +425,13 @@ static int git_tar_config(const char *var, const char *value, void *cb)
- }
- 
- static int write_tar_archive(const struct archiver *ar UNUSED,
-+			     struct repository *repo,
- 			     struct archiver_args *args)
- {
- 	int err = 0;
- 
- 	write_global_extended_header(args);
--	err = write_archive_entries(args, write_tar_entry);
-+	err = write_archive_entries(repo, args, write_tar_entry);
- 	if (!err)
- 		write_trailer();
- 	return err;
-@@ -462,6 +466,7 @@ static void tgz_write_block(const void *data)
- static const char internal_gzip_command[] = "git archive gzip";
- 
- static int write_tar_filter_archive(const struct archiver *ar,
-+					struct repository *repo,
- 				    struct archiver_args *args)
- {
- #if ZLIB_VERNUM >= 0x1221
-@@ -484,7 +489,7 @@ static int write_tar_filter_archive(const struct archiver *ar,
- 		gzstream.next_out = outbuf;
- 		gzstream.avail_out = sizeof(outbuf);
- 
--		r = write_tar_archive(ar, args);
-+		r = write_tar_archive(ar, repo, args);
- 
- 		tgz_deflate(Z_FINISH);
- 		git_deflate_end(&gzstream);
-@@ -506,7 +511,7 @@ static int write_tar_filter_archive(const struct archiver *ar,
- 		die_errno(_("unable to redirect descriptor"));
- 	close(filter.in);
- 
--	r = write_tar_archive(ar, args);
-+	r = write_tar_archive(ar, repo, args);
- 
- 	close(1);
- 	if (finish_command(&filter) != 0)
-diff --git a/archive-zip.c b/archive-zip.c
-index 0456f1ebf15..2c1f943a6cc 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -283,7 +283,9 @@ static int entry_is_binary(struct index_state *istate, const char *path,
- 
- #define STREAM_BUFFER_SIZE (1024 * 16)
- 
--static int write_zip_entry(struct archiver_args *args,
-+static int write_zip_entry(
-+			   struct repository *repo,
-+			   struct archiver_args *args,
- 			   const struct object_id *oid,
- 			   const char *path, size_t pathlen,
- 			   unsigned int mode,
-@@ -340,7 +342,7 @@ static int write_zip_entry(struct archiver_args *args,
- 
- 		if (!buffer) {
- 			enum object_type type;
--			stream = open_istream(args->repo, oid, &type, &size,
-+			stream = open_istream(repo, oid, &type, &size,
- 					      NULL);
- 			if (!stream)
- 				return error(_("cannot stream blob %s"),
-@@ -349,7 +351,7 @@ static int write_zip_entry(struct archiver_args *args,
- 			out = NULL;
- 		} else {
- 			crc = crc32(crc, buffer, size);
--			is_binary = entry_is_binary(args->repo->index,
-+			is_binary = entry_is_binary(repo->index,
- 						    path_without_prefix,
- 						    buffer, size);
- 			out = buffer;
-@@ -426,7 +428,7 @@ static int write_zip_entry(struct archiver_args *args,
- 				break;
- 			crc = crc32(crc, buf, readlen);
- 			if (is_binary == -1)
--				is_binary = entry_is_binary(args->repo->index,
-+				is_binary = entry_is_binary(repo->index,
- 							    path_without_prefix,
- 							    buf, readlen);
- 			write_or_die(1, buf, readlen);
-@@ -459,7 +461,7 @@ static int write_zip_entry(struct archiver_args *args,
- 				break;
- 			crc = crc32(crc, buf, readlen);
- 			if (is_binary == -1)
--				is_binary = entry_is_binary(args->repo->index,
-+				is_binary = entry_is_binary(repo->index,
- 							    path_without_prefix,
- 							    buf, readlen);
- 
-@@ -619,6 +621,7 @@ static int archive_zip_config(const char *var, const char *value,
- }
- 
- static int write_zip_archive(const struct archiver *ar UNUSED,
-+				 struct repository *repo,
- 			     struct archiver_args *args)
- {
- 	int err;
-@@ -629,7 +632,7 @@ static int write_zip_archive(const struct archiver *ar UNUSED,
- 
- 	strbuf_init(&zip_dir, 0);
- 
--	err = write_archive_entries(args, write_zip_entry);
-+	err = write_archive_entries(repo, args, write_zip_entry);
- 	if (!err)
- 		write_zip_trailer(args->commit_oid);
- 
 diff --git a/archive.c b/archive.c
-index 15f3ac92dfc..2cca7bc5c8a 100644
+index 2cca7bc5c8a..34549d849f1 100644
 --- a/archive.c
 +++ b/archive.c
-@@ -134,7 +134,9 @@ static int check_attr_export_subst(const struct attr_check *check)
- 	return check && ATTR_TRUE(check->items[1].value);
+@@ -36,7 +36,9 @@ void init_archivers(void)
+ 	init_zip_archiver();
  }
  
--static int write_archive_entry(const struct object_id *oid, const char *base,
-+static int write_archive_entry(
-+		struct repository *repo,
-+		const struct object_id *oid, const char *base,
- 		int baselen, const char *filename, unsigned mode,
- 		void *context)
+-static void format_subst(const struct commit *commit,
++static void format_subst(
++			 struct repository *repo,
++			 const struct commit *commit,
+ 			 const char *src, size_t len,
+ 			 struct strbuf *buf, struct pretty_print_context *ctx)
  {
-@@ -160,7 +162,7 @@ static int write_archive_entry(const struct object_id *oid, const char *base,
+@@ -59,7 +61,7 @@ static void format_subst(const struct commit *commit,
+ 		strbuf_add(&fmt, b + 8, c - b - 8);
  
- 	if (!S_ISDIR(mode)) {
- 		const struct attr_check *check;
--		check = get_archive_attrs(args->repo->index, path_without_prefix);
-+		check = get_archive_attrs(repo->index, path_without_prefix);
- 		if (check_attr_export_ignore(check))
- 			return 0;
- 		args->convert = check_attr_export_subst(check);
-@@ -169,7 +171,7 @@ static int write_archive_entry(const struct object_id *oid, const char *base,
- 	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
- 		if (args->verbose)
- 			fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
--		err = write_entry(args, oid, path.buf, path.len, mode, NULL, 0);
-+		err = write_entry(repo, args, oid, path.buf, path.len, mode, NULL, 0);
- 		if (err)
- 			return err;
- 		return (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
-@@ -180,14 +182,14 @@ static int write_archive_entry(const struct object_id *oid, const char *base,
+ 		strbuf_add(buf, src, b - src);
+-		format_commit_message(commit, fmt.buf, buf, ctx);
++		repo_format_commit_message(repo, commit, fmt.buf, buf, ctx);
+ 		len -= c + 1 - src;
+ 		src  = c + 1;
+ 	}
+@@ -68,7 +70,9 @@ static void format_subst(const struct commit *commit,
+ 	free(to_free);
+ }
  
- 	/* Stream it? */
- 	if (S_ISREG(mode) && !args->convert &&
--	    oid_object_info(args->repo, oid, &size) == OBJ_BLOB &&
-+	    oid_object_info(repo, oid, &size) == OBJ_BLOB &&
+-static void *object_file_to_archive(const struct archiver_args *args,
++static void *object_file_to_archive(
++				    struct repository *repo,
++				    const struct archiver_args *args,
+ 				    const char *path,
+ 				    const struct object_id *oid,
+ 				    unsigned int mode,
+@@ -84,15 +88,15 @@ static void *object_file_to_archive(const struct archiver_args *args,
+ 			       (args->tree ? &args->tree->object.oid : NULL), oid);
+ 
+ 	path += args->baselen;
+-	buffer = read_object_file(oid, type, sizep);
++	buffer = repo_read_object_file(repo, oid, type, sizep);
+ 	if (buffer && S_ISREG(mode)) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 		size_t size = 0;
+ 
+ 		strbuf_attach(&buf, buffer, *sizep, *sizep + 1);
+-		convert_to_working_tree(args->repo->index, path, buf.buf, buf.len, &buf, &meta);
++		convert_to_working_tree(repo->index, path, buf.buf, buf.len, &buf, &meta);
+ 		if (commit)
+-			format_subst(commit, buf.buf, buf.len, &buf, args->pretty_ctx);
++			format_subst(repo, commit, buf.buf, buf.len, &buf, args->pretty_ctx);
+ 		buffer = strbuf_detach(&buf, &size);
+ 		*sizep = size;
+ 	}
+@@ -186,7 +190,7 @@ static int write_archive_entry(
  	    size > big_file_threshold)
--		return write_entry(args, oid, path.buf, path.len, mode, NULL, size);
-+		return write_entry(repo, args, oid, path.buf, path.len, mode, NULL, size);
+ 		return write_entry(repo, args, oid, path.buf, path.len, mode, NULL, size);
  
- 	buffer = object_file_to_archive(args, path.buf, oid, mode, &type, &size);
+-	buffer = object_file_to_archive(args, path.buf, oid, mode, &type, &size);
++	buffer = object_file_to_archive(repo, args, path.buf, oid, mode, &type, &size);
  	if (!buffer)
  		return error(_("cannot read '%s'"), oid_to_hex(oid));
--	err = write_entry(args, oid, path.buf, path.len, mode, buffer, size);
-+	err = write_entry(repo, args, oid, path.buf, path.len, mode, buffer, size);
- 	free(buffer);
- 	return err;
- }
-@@ -207,7 +209,9 @@ static void queue_directory(const struct object_id *oid,
- 	oidcpy(&d->oid, oid);
- }
- 
--static int write_directory(struct archiver_context *c)
-+static int write_directory(
-+		struct repository *repo,
-+		struct archiver_context *c)
- {
- 	struct directory *d = c->bottom;
- 	int ret;
-@@ -217,8 +221,8 @@ static int write_directory(struct archiver_context *c)
- 	c->bottom = d->up;
- 	d->path[d->len - 1] = '\0'; /* no trailing slash */
- 	ret =
--		write_directory(c) ||
--		write_archive_entry(&d->oid, d->path, d->baselen,
-+		write_directory(repo, c) ||
-+		write_archive_entry(repo, &d->oid, d->path, d->baselen,
- 				    d->path + d->baselen, d->mode,
- 				    c) != READ_TREE_RECURSIVE;
- 	free(d);
-@@ -257,9 +261,9 @@ static int queue_or_write_archive_entry(
- 		return READ_TREE_RECURSIVE;
+ 	err = write_entry(repo, args, oid, path.buf, path.len, mode, buffer, size);
+@@ -313,8 +317,8 @@ int write_archive_entries(
+ 		memset(&opts, 0, sizeof(opts));
+ 		opts.index_only = 1;
+ 		opts.head_idx = -1;
+-		opts.src_index = args->repo->index;
+-		opts.dst_index = args->repo->index;
++		opts.src_index = repo->index;
++		opts.dst_index = repo->index;
+ 		opts.fn = oneway_merge;
+ 		init_tree_desc(&t, args->tree->buffer, args->tree->size);
+ 		if (unpack_trees(1, &t, &opts))
+@@ -322,7 +326,7 @@ int write_archive_entries(
+ 		git_attr_set_direction(GIT_ATTR_INDEX);
  	}
  
--	if (write_directory(c))
-+	if (write_directory(r, c))
- 		return -1;
--	return write_archive_entry(oid, base->buf, base->len, filename, mode,
-+	return write_archive_entry(r, oid, base->buf, base->len, filename, mode,
- 				   context);
+-	err = read_tree(args->repo, args->tree,
++	err = read_tree(repo, args->tree,
+ 			&args->pathspec,
+ 			queue_or_write_archive_entry,
+ 			&context);
+@@ -412,7 +416,7 @@ static int reject_entry(
+ 	return ret;
  }
  
-@@ -269,7 +273,9 @@ struct extra_file_info {
- 	void *content;
- };
- 
--int write_archive_entries(struct archiver_args *args,
-+int write_archive_entries(
-+		struct repository *repo,
-+		struct archiver_args *args,
- 		write_archive_entry_fn_t write_entry)
+-static int path_exists(struct archiver_args *args, const char *path)
++static int path_exists(struct repository *repo, struct archiver_args *args, const char *path)
  {
- 	struct archiver_context context;
-@@ -290,7 +296,7 @@ int write_archive_entries(struct archiver_args *args,
- 			len--;
- 		if (args->verbose)
- 			fprintf(stderr, "%.*s\n", (int)len, args->base);
--		err = write_entry(args, &args->tree->object.oid, args->base,
-+		err = write_entry(repo, args, &args->tree->object.oid, args->base,
- 				  len, 040777, NULL, 0);
- 		if (err)
- 			return err;
-@@ -345,12 +351,12 @@ int write_archive_entries(struct archiver_args *args,
- 			if (strbuf_read_file(&content, path, info->stat.st_size) < 0)
- 				err = error_errno(_("cannot read '%s'"), path);
- 			else
--				err = write_entry(args, &fake_oid, path_in_archive.buf,
-+				err = write_entry(repo, args, &fake_oid, path_in_archive.buf,
- 						  path_in_archive.len,
- 						  canon_mode(info->stat.st_mode),
- 						  content.buf, content.len);
- 		} else {
--			err = write_entry(args, &fake_oid,
-+			err = write_entry(repo, args, &fake_oid,
- 					  path, strlen(path),
- 					  canon_mode(info->stat.st_mode),
- 					  info->content, info->stat.st_size);
-@@ -711,7 +717,7 @@ int write_archive(int argc, const char **argv, const char *prefix,
- 	parse_treeish_arg(argv, &args, prefix, remote);
- 	parse_pathspec_arg(argv + 1, &args);
+ 	const char *paths[] = { path, NULL };
+ 	struct path_exists_context ctx;
+@@ -421,14 +425,16 @@ static int path_exists(struct archiver_args *args, const char *path)
+ 	ctx.args = args;
+ 	parse_pathspec(&ctx.pathspec, 0, 0, "", paths);
+ 	ctx.pathspec.recursive = 1;
+-	ret = read_tree(args->repo, args->tree,
++	ret = read_tree(repo, args->tree,
+ 			&ctx.pathspec,
+ 			reject_entry, &ctx);
+ 	clear_pathspec(&ctx.pathspec);
+ 	return ret != 0;
+ }
  
--	rc = ar->write_archive(ar, &args);
-+	rc = ar->write_archive(ar, repo, &args);
+-static void parse_pathspec_arg(const char **pathspec,
++static void parse_pathspec_arg(
++		struct repository *repo,
++		const char **pathspec,
+ 		struct archiver_args *ar_args)
+ {
+ 	/*
+@@ -442,14 +448,16 @@ static void parse_pathspec_arg(const char **pathspec,
+ 	ar_args->pathspec.recursive = 1;
+ 	if (pathspec) {
+ 		while (*pathspec) {
+-			if (**pathspec && !path_exists(ar_args, *pathspec))
++			if (**pathspec && !path_exists(repo, ar_args, *pathspec))
+ 				die(_("pathspec '%s' did not match any files"), *pathspec);
+ 			pathspec++;
+ 		}
+ 	}
+ }
  
- 	string_list_clear_func(&args.extra_files, extra_file_info_clear);
- 	free(args.refname);
+-static void parse_treeish_arg(const char **argv,
++static void parse_treeish_arg(
++		struct repository *repo,
++		const char **argv,
+ 		struct archiver_args *ar_args, const char *prefix,
+ 		int remote)
+ {
+@@ -475,7 +483,7 @@ static void parse_treeish_arg(const char **argv,
+ 	if (get_oid(name, &oid))
+ 		die(_("not a valid object name: %s"), name);
+ 
+-	commit = lookup_commit_reference_gently(ar_args->repo, &oid, 1);
++	commit = lookup_commit_reference_gently(repo, &oid, 1);
+ 	if (commit) {
+ 		commit_oid = &commit->object.oid;
+ 		archive_time = commit->date;
+@@ -484,7 +492,7 @@ static void parse_treeish_arg(const char **argv,
+ 		archive_time = time(NULL);
+ 	}
+ 
+-	tree = parse_tree_indirect(&oid);
++	tree = repo_parse_tree_indirect(repo, &oid);
+ 	if (!tree)
+ 		die(_("not a tree object: %s"), oid_to_hex(&oid));
+ 
+@@ -493,14 +501,14 @@ static void parse_treeish_arg(const char **argv,
+ 		unsigned short mode;
+ 		int err;
+ 
+-		err = get_tree_entry(ar_args->repo,
++		err = get_tree_entry(repo,
+ 				     &tree->object.oid,
+ 				     prefix, &tree_oid,
+ 				     &mode);
+ 		if (err || !S_ISDIR(mode))
+ 			die(_("current working directory is untracked"));
+ 
+-		tree = parse_tree_indirect(&tree_oid);
++		tree = repo_parse_tree_indirect(repo, &tree_oid);
+ 	}
+ 	ar_args->refname = ref;
+ 	ar_args->tree = tree;
+@@ -701,7 +709,6 @@ int write_archive(int argc, const char **argv, const char *prefix,
+ 	ctx.abbrev = DEFAULT_ABBREV;
+ 	ctx.describe_status = &describe_status;
+ 	args.pretty_ctx = &ctx;
+-	args.repo = repo;
+ 	args.prefix = prefix;
+ 	string_list_init_dup(&args.extra_files);
+ 	argc = parse_archive_args(argc, argv, &ar, &args, name_hint, remote);
+@@ -714,8 +721,8 @@ int write_archive(int argc, const char **argv, const char *prefix,
+ 		setup_git_directory();
+ 	}
+ 
+-	parse_treeish_arg(argv, &args, prefix, remote);
+-	parse_pathspec_arg(argv + 1, &args);
++	parse_treeish_arg(repo, argv, &args, prefix, remote);
++	parse_pathspec_arg(repo, argv + 1, &args);
+ 
+ 	rc = ar->write_archive(ar, repo, &args);
+ 
 diff --git a/archive.h b/archive.h
-index 08bed3ed3af..bfbbd3274bd 100644
+index bfbbd3274bd..540a3b12130 100644
 --- a/archive.h
 +++ b/archive.h
-@@ -41,7 +41,10 @@ const char *archive_format_from_filename(const char *filename);
- #define ARCHIVER_HIGH_COMPRESSION_LEVELS 4
- struct archiver {
- 	const char *name;
--	int (*write_archive)(const struct archiver *, struct archiver_args *);
-+	int (*write_archive)(
-+		const struct archiver *,
-+		struct repository *,
-+		struct archiver_args *);
- 	unsigned flags;
- 	char *filter_command;
- };
-@@ -51,12 +54,17 @@ void init_tar_archiver(void);
- void init_zip_archiver(void);
- void init_archivers(void);
+@@ -8,7 +8,6 @@ struct repository;
+ struct pretty_print_context;
  
--typedef int (*write_archive_entry_fn_t)(struct archiver_args *args,
-+typedef int (*write_archive_entry_fn_t)(
-+					struct repository *repo,
-+					struct archiver_args *args,
- 					const struct object_id *oid,
- 					const char *path, size_t pathlen,
- 					unsigned int mode,
- 					void *buffer, unsigned long size);
- 
--int write_archive_entries(struct archiver_args *args, write_archive_entry_fn_t write_entry);
-+int write_archive_entries(
-+	struct repository *repo,
-+	struct archiver_args *args,
-+	write_archive_entry_fn_t write_entry);
- 
- #endif	/* ARCHIVE_H */
+ struct archiver_args {
+-	struct repository *repo;
+ 	char *refname;
+ 	const char *prefix;
+ 	const char *base;
 -- 
 gitgitgadget
 
