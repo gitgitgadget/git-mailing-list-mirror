@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF5A3C43217
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 17:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3C74C433FE
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 17:50:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230517AbiJQRuF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 13:50:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37834 "EHLO
+        id S230457AbiJQRuH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 13:50:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230447AbiJQRto (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 13:49:44 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A36715FF8
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 10:49:36 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id fn7-20020a05600c688700b003b4fb113b86so10558786wmb.0
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 10:49:36 -0700 (PDT)
+        with ESMTP id S230453AbiJQRtr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 13:49:47 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BACB9178A9
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 10:49:38 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id a3so19681349wrt.0
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 10:49:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bu1Mw+iMZUbADGlnnmkAMuktq2G8TJ6IytTSFQu4lRI=;
-        b=e1qycXqi2b+h/yjl16cZWP19qSM0J3DGE9taXsCkE+p4T6heUd80AEgR6a7AZTYcMJ
-         MdL2ObZNn5YPbne2aBB+HdyrsoFbFZ9Z+isQPhlIQIOQyW+HrBFr3+qcKKJVCbM02/Db
-         KEXotqy+o1CjqxXxVXf5V32gus0besKfEcUQbVYQBNIl3c9DlSwPbg9IagfYgdpta9rS
-         czzwJ084KY3HCtmAW4Hr/Oy6YY7Rtug2q26jfDnqTVNTT+1beaItowpvbACjhuhiCKZM
-         yR5/LEMpMHd+pPpPkPL6vTgxnm5UOxodyPWB7OZ4M/SeuVlXvdKl1VyOT+zixlzGa5v/
-         w25g==
+        bh=BW69Gms6ZCN63XObi08yq0tn7lfTlwTRY0tybCpvj6U=;
+        b=gdqszjxrye+H4mHeZS/6VBA5FTikz/kL/cDk3uRbD/oM9rE3aOVcS6ecORqqswpKUM
+         +KYkWWMLO7kUq/Nrl5Y9Nvq/oTSzCLyCgWMxXU7CmLHC0En6TBNIga7oZ2dJi3QAl6+1
+         0eskz0oqtgYkRUDWwMw1S+MKUIxyFzN4jliE/+NdLUsgZJquv8Id6kj/M+SM6j3Itc0a
+         PnAaUklcPqmMd6v596z2qwAJDbQoxYC+ciA+H7KOkyLQqwCItHlH9gOy2bJ1V4efPmvk
+         LwoNeq5A1vmt8PwTkY9744cjyG2ySVDQM/uCbpv0b7M1zgJEyc2L0kFqVZyysEV8ryQp
+         /GtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bu1Mw+iMZUbADGlnnmkAMuktq2G8TJ6IytTSFQu4lRI=;
-        b=uDj4UOkIeJ/bC3xJBmwogTFj+UogK4+4vRBhFmpO9mlnQL3jpvxLdilEChDqPSjVbB
-         /OWff2V0X0Y41zSYL6xByZ2aaBExtcsZ2inu88Z0P14W0JdJSHUEvfZGgWsKmQx4ESCo
-         RAhzZxMeWCUezIj0RpWtFzQ47sbe7kVN6Bjql//uchG3EZnxHvoxVhTmFlbNbRG/HVRd
-         N9O7C8BJ9H1Jum4cgCNa1NP+68Nn98/Ew23o7+8EPfEUv37TtQZJV9GLBZ4TswY4z35j
-         Ic9CfbsO3XS2Aftg4BGxz003EZtAo9C2kSUCdK8nBnoCJUx5XFulEY13YVuXiIp7NY6X
-         EZvg==
-X-Gm-Message-State: ACrzQf042T+jQHWosJIToNDNI4Cg5mYeYMQj8oIxhHr99qwAOOJEB54K
-        M8brd3MUeZ5BKuqkLVKrqGTXOuRay7ovGQ==
-X-Google-Smtp-Source: AMsMyM6OLJ5FJJvzG+kpaLmxZJRDGsQZTO1NBZWsKn+CBdaeql25ltU9evasIwxmzP7pCggGgemmqA==
-X-Received: by 2002:a05:600c:35ce:b0:3c6:809a:b5c3 with SMTP id r14-20020a05600c35ce00b003c6809ab5c3mr8160325wmq.206.1666028975345;
-        Mon, 17 Oct 2022 10:49:35 -0700 (PDT)
+        bh=BW69Gms6ZCN63XObi08yq0tn7lfTlwTRY0tybCpvj6U=;
+        b=7Vgw4Y5PVcspi5lGiXKl/1G5NFFSqtwgxDubUKuNPPVGFubG/fUo0XKwyimeU8NSee
+         FWufqkiC4P52Z9vKKhNXi1Xw3DZrvfDmTbNzF6aERULI4dbxTXsK7orn/vWydhZ+eIxa
+         YQ6XFhlxVtsypHYeyOsAEYb8TaXqEWIJHx/NwaQYKETbUem5nq2icXbesFt8ZlFnvO/b
+         KCvnUdBjm/GJDeRb8yKE9plCnrQsqDQozPMTZOkDbn/Cds0RaRBAZqocdG3uin8uND2V
+         /ikIcBOEludqESxXWuXM5i9mhsYBT3ftWF+O9iB4xC2rEM1HOPLXJbkFv6ZE7dVogdRm
+         WHtg==
+X-Gm-Message-State: ACrzQf0m/SzM+D/r0l4milljx1P/jAaVvF8Et9mYeuWxt2BVxYyvjO+K
+        HFsx99dNYWqcZ66syybcXAn7JbOTclFaqA==
+X-Google-Smtp-Source: AMsMyM7dURkj0dGpusTGKYhSsei51qpGiar20QdKU268OsyuTDa8K74QLzqxlVoQwWUIuL5Y7mwzxw==
+X-Received: by 2002:a5d:64ee:0:b0:22c:df95:532f with SMTP id g14-20020a5d64ee000000b0022cdf95532fmr6795504wri.61.1666028977697;
+        Mon, 17 Oct 2022 10:49:37 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id e26-20020a05600c4b9a00b003a5537bb2besm10676023wmp.25.2022.10.17.10.49.34
+        by smtp.gmail.com with ESMTPSA id e26-20020a05600c4b9a00b003a5537bb2besm10676023wmp.25.2022.10.17.10.49.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 10:49:34 -0700 (PDT)
+        Mon, 17 Oct 2022 10:49:36 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 08/10] run-command API & users: remove run_command_v_opt_tr2()
-Date:   Mon, 17 Oct 2022 19:49:19 +0200
-Message-Id: <patch-v2-08.10-4f1a051823f-20221017T170316Z-avarab@gmail.com>
+Subject: [PATCH v2 10/10] run-command API: add and use a run_command_sv_opt()
+Date:   Mon, 17 Oct 2022 19:49:21 +0200
+Message-Id: <patch-v2-10.10-138af632a36-20221017T170316Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1093.gcda8671d6c6
 In-Reply-To: <cover-v2-00.10-00000000000-20221017T170316Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20221014T153426Z-avarab@gmail.com> <cover-v2-00.10-00000000000-20221017T170316Z-avarab@gmail.com>
@@ -69,185 +69,341 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As noted in the preceding commit for run_command_v_opt_cd_env() that
-function's users could more easily use the underlying run_command()
-directly.
+Add a run_command_sv_opt() convenience wrapper for
+run_command_v_opt(), as noted in the API documentation this is for the
+common case of wanting to construct a "struct strvec" to pass to
+run_command_v_opt(), and as it's a one-shot to strvec_clear() it
+afterwards.
 
-In the case of the "git.c" user that can be argued the other way,
-given the slight line count increase here, but part of that's because
-the "args" in "git.c" was being leaked, which we now don't have to
-worry about.
+Let's convert those API users that were using a "ret" variable to
+carry over to "return" after a "strvec_clear()" to use this new
+function instead.
 
-That just leaves the spawn_daemon() user in "fsmonitor-ipc.c", it's
-likewise slightly more verbose as a result, but by making it use
-run_command() we can remove this entire part of the API. As noted in a
-preceding commit run_command_v_opt*() should be aimed at handling
-various common cases, not these one-offs.
+Because we pass the "struct strvec *" to the function we can also
+avoid copying the arguments to the "args" member of the "struct
+child_process", as we were doing with run_command_v_opt().
 
-The "fsmonitor-ipc.c" caller would be nicer with a hypothetical
-run_command_l_opt_tr2(), but let's not maintain such a thing only for
-it, as it would be its only user.
+Instead we can use memcpy() and strvec_clear() to do the moral
+equivalent of a strbuf_{detach,attach}(). The strvec API doesn't have
+a strvec_attach(), we could add it here while at it, but let's avoid
+generalizing the interface for now and migrate the "struct strvec *"
+in the "run_command_sv_opt()" instead.
+
+Let's leave aside the user in "builtin/bisect--helper.c"'s
+bisect_visualize(). There's an outstanding topic that's extensively
+modifying it.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- fsmonitor-ipc.c | 10 +++++++---
- git.c           | 15 +++++++++------
- run-command.c   | 26 +++-----------------------
- run-command.h   | 19 +++----------------
- 4 files changed, 22 insertions(+), 48 deletions(-)
+ add-interactive.c |  3 +--
+ builtin/add.c     |  6 ++----
+ builtin/clone.c   |  3 +--
+ builtin/gc.c      |  5 +----
+ builtin/pull.c    | 15 +++------------
+ builtin/remote.c  |  5 +----
+ merge.c           |  3 +--
+ run-command.c     | 11 +++++++++++
+ run-command.h     | 16 +++++++++++++++-
+ scalar.c          |  6 +-----
+ sequencer.c       | 11 ++---------
+ 11 files changed, 39 insertions(+), 45 deletions(-)
 
-diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
-index 789e7397baa..7251f48e456 100644
---- a/fsmonitor-ipc.c
-+++ b/fsmonitor-ipc.c
-@@ -56,10 +56,14 @@ enum ipc_active_state fsmonitor_ipc__get_state(void)
+diff --git a/add-interactive.c b/add-interactive.c
+index f071b2a1b4f..9c86f3b9532 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -1007,8 +1007,7 @@ static int run_diff(struct add_i_state *s, const struct pathspec *ps,
+ 			if (files->selected[i])
+ 				strvec_push(&args,
+ 					    files->items.items[i].string);
+-		res = run_command_v_opt(args.v, 0);
+-		strvec_clear(&args);
++		res = run_command_sv_opt(&args, 0);
+ 	}
  
- static int spawn_daemon(void)
+ 	putchar('\n');
+diff --git a/builtin/add.c b/builtin/add.c
+index f84372964c8..7c783eebc0e 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -240,7 +240,7 @@ static int refresh(int verbose, const struct pathspec *pathspec)
+ int run_add_interactive(const char *revision, const char *patch_mode,
+ 			const struct pathspec *pathspec)
  {
--	const char *args[] = { "fsmonitor--daemon", "start", NULL };
-+	struct child_process cmd = CHILD_PROCESS_INIT;
+-	int status, i;
++	int i;
+ 	struct strvec argv = STRVEC_INIT;
+ 	int use_builtin_add_i =
+ 		git_env_bool("GIT_TEST_ADD_I_USE_BUILTIN", -1);
+@@ -282,9 +282,7 @@ int run_add_interactive(const char *revision, const char *patch_mode,
+ 		/* pass original pathspec, to be re-parsed */
+ 		strvec_push(&argv, pathspec->items[i].original);
  
--	return run_command_v_opt_tr2(args, RUN_COMMAND_NO_STDIN | RUN_GIT_CMD,
--				    "fsmonitor");
-+	cmd.git_cmd = 1;
-+	cmd.no_stdin = 1;
-+	cmd.trace2_child_class = "fsmonitor";
-+	strvec_pushl(&cmd.args, "fsmonitor--daemon", "start", NULL);
-+
-+	return run_command(&cmd);
+-	status = run_command_v_opt(argv.v, RUN_GIT_CMD);
+-	strvec_clear(&argv);
+-	return status;
++	return run_command_sv_opt(&argv, RUN_GIT_CMD);
  }
  
- int fsmonitor_ipc__send_query(const char *since_token,
-diff --git a/git.c b/git.c
-index da411c53822..ccf444417b5 100644
---- a/git.c
-+++ b/git.c
-@@ -787,7 +787,7 @@ static int run_argv(int *argcp, const char ***argv)
- 		if (!done_alias)
- 			handle_builtin(*argcp, *argv);
- 		else if (get_builtin(**argv)) {
--			struct strvec args = STRVEC_INIT;
-+			struct child_process cmd = CHILD_PROCESS_INIT;
- 			int i;
+ int interactive_add(const char **argv, const char *prefix, int patch)
+diff --git a/builtin/clone.c b/builtin/clone.c
+index a1514363190..8e43781e147 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -756,8 +756,7 @@ static int checkout(int submodule_progress, int filter_submodules)
+ 					       "--single-branch" :
+ 					       "--no-single-branch");
  
- 			/*
-@@ -804,18 +804,21 @@ static int run_argv(int *argcp, const char ***argv)
+-		err = run_command_v_opt(args.v, RUN_GIT_CMD);
+-		strvec_clear(&args);
++		return run_command_sv_opt(&args, RUN_GIT_CMD);
+ 	}
  
- 			commit_pager_choice();
+ 	return err;
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 519e64e86ee..8393e19b504 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1899,7 +1899,6 @@ static int is_schtasks_available(void)
+ static int schtasks_remove_task(enum schedule_priority schedule)
+ {
+ 	const char *cmd = "schtasks";
+-	int result;
+ 	struct strvec args = STRVEC_INIT;
+ 	const char *frequency = get_frequency(schedule);
  
--			strvec_push(&args, "git");
-+			strvec_push(&cmd.args, "git");
- 			for (i = 0; i < *argcp; i++)
--				strvec_push(&args, (*argv)[i]);
-+				strvec_push(&cmd.args, (*argv)[i]);
+@@ -1909,9 +1908,7 @@ static int schtasks_remove_task(enum schedule_priority schedule)
+ 	strvec_pushf(&args, SCHTASKS_NAME_FMT, frequency);
+ 	strvec_pushl(&args, "/f", NULL);
  
--			trace_argv_printf(args.v, "trace: exec:");
-+			trace_argv_printf(cmd.args.v, "trace: exec:");
+-	result = run_command_v_opt(args.v, 0);
+-	strvec_clear(&args);
+-	return result;
++	return run_command_sv_opt(&args, 0);
+ }
  
- 			/*
- 			 * if we fail because the command is not found, it is
- 			 * OK to return. Otherwise, we just pass along the status code.
- 			 */
--			i = run_command_v_opt_tr2(args.v, RUN_SILENT_EXEC_FAILURE |
--						  RUN_CLEAN_ON_EXIT | RUN_WAIT_AFTER_CLEAN, "git_alias");
-+			cmd.silent_exec_failure = 1;
-+			cmd.clean_on_exit = 1;
-+			cmd.wait_after_clean = 1;
-+			cmd.trace2_child_class = "git_alias";
-+			i = run_command(&cmd);
- 			if (i >= 0 || errno != ENOENT)
- 				exit(i);
- 			die("could not execute builtin %s", **argv);
+ static int schtasks_remove_tasks(void)
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 403a24d7ca6..2f36823c97e 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -516,7 +516,6 @@ static void parse_repo_refspecs(int argc, const char **argv, const char **repo,
+ static int run_fetch(const char *repo, const char **refspecs)
+ {
+ 	struct strvec args = STRVEC_INIT;
+-	int ret;
+ 
+ 	strvec_pushl(&args, "fetch", "--update-head-ok", NULL);
+ 
+@@ -582,9 +581,7 @@ static int run_fetch(const char *repo, const char **refspecs)
+ 		strvec_pushv(&args, refspecs);
+ 	} else if (*refspecs)
+ 		BUG("refspecs without repo?");
+-	ret = run_command_v_opt(args.v, RUN_GIT_CMD | RUN_CLOSE_OBJECT_STORE);
+-	strvec_clear(&args);
+-	return ret;
++	return run_command_sv_opt(&args, RUN_GIT_CMD | RUN_CLOSE_OBJECT_STORE);
+ }
+ 
+ /**
+@@ -653,7 +650,6 @@ static int update_submodules(void)
+  */
+ static int run_merge(void)
+ {
+-	int ret;
+ 	struct strvec args = STRVEC_INIT;
+ 
+ 	strvec_pushl(&args, "merge", NULL);
+@@ -696,9 +692,7 @@ static int run_merge(void)
+ 		strvec_push(&args, "--allow-unrelated-histories");
+ 
+ 	strvec_push(&args, "FETCH_HEAD");
+-	ret = run_command_v_opt(args.v, RUN_GIT_CMD);
+-	strvec_clear(&args);
+-	return ret;
++	return run_command_sv_opt(&args, RUN_GIT_CMD);
+ }
+ 
+ /**
+@@ -879,7 +873,6 @@ static int get_rebase_newbase_and_upstream(struct object_id *newbase,
+ static int run_rebase(const struct object_id *newbase,
+ 		const struct object_id *upstream)
+ {
+-	int ret;
+ 	struct strvec args = STRVEC_INIT;
+ 
+ 	strvec_push(&args, "rebase");
+@@ -913,9 +906,7 @@ static int run_rebase(const struct object_id *newbase,
+ 
+ 	strvec_push(&args, oid_to_hex(upstream));
+ 
+-	ret = run_command_v_opt(args.v, RUN_GIT_CMD);
+-	strvec_clear(&args);
+-	return ret;
++	return run_command_sv_opt(&args, RUN_GIT_CMD);
+ }
+ 
+ static int get_can_ff(struct object_id *orig_head,
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 910f7b9316a..5d3534db19c 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1510,7 +1510,6 @@ static int update(int argc, const char **argv, const char *prefix)
+ 	};
+ 	struct strvec fetch_argv = STRVEC_INIT;
+ 	int default_defined = 0;
+-	int retval;
+ 
+ 	argc = parse_options(argc, argv, prefix, options,
+ 			     builtin_remote_update_usage,
+@@ -1536,9 +1535,7 @@ static int update(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
+-	retval = run_command_v_opt(fetch_argv.v, RUN_GIT_CMD);
+-	strvec_clear(&fetch_argv);
+-	return retval;
++	return run_command_sv_opt(&fetch_argv, RUN_GIT_CMD);
+ }
+ 
+ static int remove_all_fetch_refspecs(const char *key)
+diff --git a/merge.c b/merge.c
+index 2382ff66d35..487debacecb 100644
+--- a/merge.c
++++ b/merge.c
+@@ -33,8 +33,7 @@ int try_merge_command(struct repository *r,
+ 	for (j = remotes; j; j = j->next)
+ 		strvec_push(&args, merge_argument(j->item));
+ 
+-	ret = run_command_v_opt(args.v, RUN_GIT_CMD);
+-	strvec_clear(&args);
++	ret = run_command_sv_opt(&args, RUN_GIT_CMD);
+ 
+ 	discard_index(r->index);
+ 	if (repo_read_index(r) < 0)
 diff --git a/run-command.c b/run-command.c
-index 25a978fb027..0066ace85fa 100644
+index 0066ace85fa..724fc581c89 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -1010,7 +1010,6 @@ static void run_command_set_opts(struct child_process *cmd, int opt)
- 	cmd->git_cmd = opt & RUN_GIT_CMD ? 1 : 0;
- 	cmd->silent_exec_failure = opt & RUN_SILENT_EXEC_FAILURE ? 1 : 0;
- 	cmd->use_shell = opt & RUN_USING_SHELL ? 1 : 0;
--	cmd->clean_on_exit = opt & RUN_CLEAN_ON_EXIT ? 1 : 0;
- 	cmd->wait_after_clean = opt & RUN_WAIT_AFTER_CLEAN ? 1 : 0;
- 	cmd->close_object_store = opt & RUN_CLOSE_OBJECT_STORE ? 1 : 0;
- }
-@@ -1030,32 +1029,13 @@ int run_command_l_opt(int opt, ...)
+@@ -1038,6 +1038,17 @@ int run_command_v_opt(const char **argv, int opt)
  	return run_command(&cmd);
  }
  
--static int run_command_v_opt_1(struct child_process *cmd, int opt)
--{
--	run_command_set_opts(cmd, opt);
--	return run_command(cmd);
--}
--
- int run_command_v_opt(const char **argv, int opt)
--{
--	return run_command_v_opt_cd_env_tr2(argv, opt, NULL, NULL, NULL);
--}
--
--int run_command_v_opt_tr2(const char **argv, int opt, const char *tr2_class)
--{
--	return run_command_v_opt_cd_env_tr2(argv, opt, NULL, NULL, tr2_class);
--}
--
--int run_command_v_opt_cd_env_tr2(const char **argv, int opt, const char *dir,
--				 const char *const *env, const char *tr2_class)
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
++int run_command_sv_opt(struct strvec *args, int opt)
++{
++	struct child_process cmd = CHILD_PROCESS_INIT;
 +
- 	strvec_pushv(&cmd.args, argv);
--	cmd.dir = dir;
--	if (env)
--		strvec_pushv(&cmd.env, (const char **)env);
--	cmd.trace2_child_class = tr2_class;
--	return run_command_v_opt_1(&cmd, opt);
++	/* TODO: We could encapsulate this with a strvec_attach() */
++	memcpy(&cmd.args, args, sizeof(*args));
++	strvec_init(args);
 +	run_command_set_opts(&cmd, opt);
 +	return run_command(&cmd);
- }
- 
++}
++
  #ifndef NO_PTHREADS
+ static pthread_t main_thread;
+ static int main_thread_set;
 diff --git a/run-command.h b/run-command.h
-index 2574d46cb70..2b1fe3cde5c 100644
+index 2b1fe3cde5c..8e8403f3bb3 100644
 --- a/run-command.h
 +++ b/run-command.h
-@@ -228,12 +228,11 @@ int run_auto_maintenance(int quiet);
- #define RUN_GIT_CMD			(1<<1)
- #define RUN_SILENT_EXEC_FAILURE		(1<<2)
- #define RUN_USING_SHELL			(1<<3)
--#define RUN_CLEAN_ON_EXIT		(1<<4)
--#define RUN_WAIT_AFTER_CLEAN		(1<<5)
--#define RUN_CLOSE_OBJECT_STORE		(1<<6)
-+#define RUN_WAIT_AFTER_CLEAN		(1<<4)
-+#define RUN_CLOSE_OBJECT_STORE		(1<<5)
+@@ -151,7 +151,7 @@ struct child_process {
  
  /**
-- * The run_command_v_opt*() API is a convenience wrapper for an
-+ * The run_command_v_opt() function is a convenience wrapper for an
-  * underlying run_command().
+  * The functions: child_process_init, start_command, finish_command,
+- * run_command, run_command_l_opt, run_command_v_opt,
++ * run_command, run_command_l_opt, run_command_v_opt, run_command_sv_opt,
+  * child_process_clear do the following:
   *
-  * It's intended to be used when the user already has an "argv" they'd
-@@ -250,21 +249,9 @@ int run_auto_maintenance(int quiet);
-  *	- RUN_GIT_CMD: .git_cmd
-  *	- RUN_SILENT_EXEC_FAILURE: .silent_exec_failure
-  *	- RUN_USING_SHELL: .use_shell
-- *	- RUN_CLEAN_ON_EXIT: .clean_on_exit
-- *	- RUN_WAIT_AFTER_CLEAN: .wait_after_clean
-  *	- RUN_CLOSE_OBJECT_STORE: .close_object_store
-- *
-- * The argument dir corresponds the member .dir. The argument env
-- * corresponds to the member .env.
-  */
- int run_command_v_opt(const char **argv, int opt);
--int run_command_v_opt_tr2(const char **argv, int opt, const char *tr2_class);
--/*
-- * env (the environment) is to be formatted like environ: "VAR=VALUE".
-- * To unset an environment variable use just "VAR".
-- */
--int run_command_v_opt_cd_env_tr2(const char **argv, int opt, const char *dir,
--				 const char *const *env, const char *tr2_class);
+  * - If a system call failed, errno is set and -1 is returned. A diagnostic
+@@ -262,6 +262,20 @@ int run_command_v_opt(const char **argv, int opt);
+ LAST_ARG_MUST_BE_NULL
+ int run_command_l_opt(int opt, ...);
  
++/**
++ * The run_command_sv_opt() function is a wrapper for
++ * run_command_v_opt(). It takes a "struct strvec *args" which
++ * similarly will be strvec_clear()'d before returning.
++ *
++ * Use it for the common case of constructing a "struct strvec" for a
++ * one-shot run_command_v_opt() invocation.
++ *
++ * The "args" will migrated the "cmd.args" member of an underlying
++ * "struct child_process", in a way that avoids making an extra copy.
++ */
++RESULT_MUST_BE_USED
++int run_command_sv_opt(struct strvec *args, int opt);
++
  /**
-  * The run_command_l_opt() function run_command_v_opt() takes a list
+  * Execute the given command, sending "in" to its stdin, and capturing its
+  * stdout and stderr in the "out" and "err" strbufs. Any of the three may
+diff --git a/scalar.c b/scalar.c
+index 6de9c0ee523..3480bf73cbd 100644
+--- a/scalar.c
++++ b/scalar.c
+@@ -72,7 +72,6 @@ static int run_git(const char *arg, ...)
+ 	struct strvec argv = STRVEC_INIT;
+ 	va_list args;
+ 	const char *p;
+-	int res;
+ 
+ 	va_start(args, arg);
+ 	strvec_push(&argv, arg);
+@@ -80,10 +79,7 @@ static int run_git(const char *arg, ...)
+ 		strvec_push(&argv, p);
+ 	va_end(args);
+ 
+-	res = run_command_v_opt(argv.v, RUN_GIT_CMD);
+-
+-	strvec_clear(&argv);
+-	return res;
++	return run_command_sv_opt(&argv, RUN_GIT_CMD);
+ }
+ 
+ struct scalar_config {
+diff --git a/sequencer.c b/sequencer.c
+index 20495db9de2..7ee0e05512c 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3183,7 +3183,6 @@ static int rollback_is_safe(void)
+ 
+ static int reset_merge(const struct object_id *oid)
+ {
+-	int ret;
+ 	struct strvec argv = STRVEC_INIT;
+ 
+ 	strvec_pushl(&argv, "reset", "--merge", NULL);
+@@ -3191,10 +3190,7 @@ static int reset_merge(const struct object_id *oid)
+ 	if (!is_null_oid(oid))
+ 		strvec_push(&argv, oid_to_hex(oid));
+ 
+-	ret = run_command_v_opt(argv.v, RUN_GIT_CMD);
+-	strvec_clear(&argv);
+-
+-	return ret;
++	return run_command_sv_opt(&argv, RUN_GIT_CMD);
+ }
+ 
+ static int rollback_single_pick(struct repository *r)
+@@ -4866,7 +4862,6 @@ static int pick_commits(struct repository *r,
+ static int continue_single_pick(struct repository *r, struct replay_opts *opts)
+ {
+ 	struct strvec argv = STRVEC_INIT;
+-	int ret;
+ 
+ 	if (!refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
+ 	    !refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD"))
+@@ -4887,9 +4882,7 @@ static int continue_single_pick(struct repository *r, struct replay_opts *opts)
+ 		 */
+ 		strvec_pushl(&argv, "--no-edit", "--cleanup=strip", NULL);
+ 
+-	ret = run_command_v_opt(argv.v, RUN_GIT_CMD);
+-	strvec_clear(&argv);
+-	return ret;
++	return run_command_sv_opt(&argv, RUN_GIT_CMD);
+ }
+ 
+ static int commit_staged_changes(struct repository *r,
 -- 
 2.38.0.1091.gf9d18265e59
 
