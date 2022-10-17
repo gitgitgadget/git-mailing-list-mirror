@@ -2,67 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A95FFC433FE
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 09:50:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F52AC4332F
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 11:26:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231469AbiJQJuD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 05:50:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43648 "EHLO
+        id S230040AbiJQL0d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 07:26:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230010AbiJQJuB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 05:50:01 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E6B21928D
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 02:49:46 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id l22so15209638edj.5
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 02:49:46 -0700 (PDT)
+        with ESMTP id S230036AbiJQL0b (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 07:26:31 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9D464B49F
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 04:26:30 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id ot12so24214153ejb.1
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 04:26:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GoyHvjtoZ++NqR5Qdn2RSnISuYfEbYcQl9kKybbP1mA=;
-        b=QxsjveH+VpWuOeknzZM4HqNxCEn+EokX3AiR8REdM+y7ckSU3nAtuOn2qBacNI+4AY
-         A3DvZPJiJ4YrbPjOvuZujqe8hCJtqnCk0onxAaAWbnZLbgm1OdfmkGT0b6lWexU1l5Rf
-         lneWqgJ84TJBPMsDz+O8QuTvRYE0zDqd6iNPqn3a3jRHu47J0UQzP3moUFSZJX2QqdyO
-         yPHkEULP18oC71SsrYcXjiXe3UGEJo+4UfhYyWB9LepXeaqkL+XWerwo5EaEECU6kCyP
-         ZKA7vtshZAvkJgfwHVe/dJhjPPM0B0AfIdVX4QiX3hvVUz/USyJGUvtIJO5sVo3xPZrZ
-         epFA==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=GaLRvoD6BMb+QSr1Z/CL8FBYYjNukvaj5VyZWlxaJA8=;
+        b=EPLBx0hgH/4BTUyGowCeDZT4NLexBx6vHqLHLPcDxurENCbE1pdTlLvcmnwgCy7XNJ
+         U/o7Tvu+/I5kknrQ2A+6NnhXj6lWuUZwRDEBQvkFOnqVSV0pAivkiQnQWWGFlYdhdbuu
+         KdgVmU2qIbOVITPc9Ot/ZR72YdL61UjuNNoCC3y1QS9xkrRUY38Lm104khpKAUkBsS0J
+         AQrimp1Ah5Ul60Pv+03NQQ3lMfemPTryMr8E9vw78C11w+85XTRJhzRLki7JxY5Gxmlf
+         9WOdYqmU0tnc8rA63Aokotcn6nCWvwPp+VnTA/RdoK7RBHcKM+x6GIEsA9qYGrJ1r2VM
+         /Cbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GoyHvjtoZ++NqR5Qdn2RSnISuYfEbYcQl9kKybbP1mA=;
-        b=xSjHfVzCB82H4ukhGX++alcWM+mP7pRIzHzld7YVj7bsGQRvn3GG1bHczCjgvf26Tr
-         TYBgfrUXt0+1d4d7FYV2YquhgRIH60vBmJ+giZx9WzUgOGeMgFRVQQsXnd3cbs4TlMin
-         V2SrJDXyAhYGJo+NZVmIG8us4dEAPnljmA8MLSkrvo6nVShspZmQWgak6+nW6sdFhgsc
-         pcpSf/vPzg8Dw0hgErwdopAbahtPFdCYMqS++1h3e228SMVEE+cVZcPHPFGRqKtQAJes
-         K+3lZmqHrXbpS411rKBpT6wLnbB3tMAmrAdfzw4uD2vebQvLrFeCUpMGaydL+SEz398T
-         DLxw==
-X-Gm-Message-State: ACrzQf34RnsKXbMx/WcmRUSmW8gHLx/DL3FdFZbAH43rbiCaMp1zG4mi
-        6jcbPHq3+euy+aumz4Zt998=
-X-Google-Smtp-Source: AMsMyM4fQjscMdlxeYNQcO6liZHby5uyd1ajoN+X10sQoiPI5aUGHiYDwOGEzooLjDf0ROnMrIhaIQ==
-X-Received: by 2002:a05:6402:3492:b0:45d:c00:ea8e with SMTP id v18-20020a056402349200b0045d0c00ea8emr9415192edc.150.1666000158898;
-        Mon, 17 Oct 2022 02:49:18 -0700 (PDT)
-Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id u9-20020a1709061da900b00731582babcasm5816595ejh.71.2022.10.17.02.49.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Oct 2022 02:49:18 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <7b9d2a05-de2e-d0e0-6554-a592fa2349d4@dunelm.org.uk>
-Date:   Mon, 17 Oct 2022 10:49:22 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 5/8] rebase: rename merge_base to branch_base
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GaLRvoD6BMb+QSr1Z/CL8FBYYjNukvaj5VyZWlxaJA8=;
+        b=ontIKiF2OUiAiyi56XU8SGS2lPtWGMiFnZ/S2ZzkIBjwpJBIVP+j+nLvxQFD3hKFYK
+         5jKhuLBkAM7NIhKtzRqCsc9urEmHRsJZmCXEq10oKBHKu4iPC2Ngn7ce/QXlvAQp8GuJ
+         DxiiHVnUs57T6/kQEaXpHRMEISbPuFKyfLjXtIIWaLic5kTy+0CSqUePnYLK1eKLZeiy
+         TljyERnaDRmgsslQdmeq15FS+BzIMoHkEwD9CeuH9swLjreDyy2x6JfL9+JKV9+tFIXP
+         V1vqiJizxqExLNwzpa2nQko9RAUwTuOMBDyWqQbzoYs8d9z2RLJa+8uI8irqJEFmzKc7
+         wQBg==
+X-Gm-Message-State: ACrzQf215gE+1O3tBvujDCj2myYqRGlqk7x32Q1bmdP3tFAaYVzxNUhI
+        PA3PNwX8QiyjjKuFNwL0s48=
+X-Google-Smtp-Source: AMsMyM6iW1LX7H//RPT41QQ7geg7v43ecvyiA9i9qRWIPmJaVIcpINuscb32IYNExxlx9M8pvYAvBw==
+X-Received: by 2002:a17:907:75f1:b0:78a:f935:647d with SMTP id jz17-20020a17090775f100b0078af935647dmr8164614ejc.587.1666005989264;
+        Mon, 17 Oct 2022 04:26:29 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id p18-20020a17090653d200b0073dd1ac2fc8sm5910382ejo.195.2022.10.17.04.26.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Oct 2022 04:26:27 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1okOGI-005QQp-25;
+        Mon, 17 Oct 2022 13:26:26 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
         Philippe Blain <levraiphilippeblain@gmail.com>,
         Denton Liu <liu.denton@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -70,42 +64,64 @@ Cc:     git@vger.kernel.org,
         Elijah Newren <newren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v3 6/8] rebase: factor out branch_base calculation
+Date:   Mon, 17 Oct 2022 13:23:25 +0200
 References: <pull.1323.v2.git.1662561470.gitgitgadget@gmail.com>
  <pull.1323.v3.git.1665650564.gitgitgadget@gmail.com>
- <00f70c9034452bd87c82fb3aea9658aec32f2ec1.1665650564.git.gitgitgadget@gmail.com>
- <221013.86bkqfleh5.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221013.86bkqfleh5.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ <2efbfc94187d9f0968e5b670c9152651cd8f1a5b.1665650564.git.gitgitgadget@gmail.com>
+ <221013.867d13ldzm.gmgdl@evledraar.gmail.com>
+ <c0213afe-658d-8562-3d2a-9e254c742730@dunelm.org.uk>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <c0213afe-658d-8562-3d2a-9e254c742730@dunelm.org.uk>
+Message-ID: <221017.86tu42k7x9.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/10/2022 20:16, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Oct 13 2022, Phillip Wood via GitGitGadget wrote:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> merge_base is not a very descriptive name, the variable always holds
->> the merge-base of 'branch' and 'onto' which is commit at the base of
->> the branch being rebased so rename it to branch_base.
-> 
-> To me "branch" means or has heavier implications of "named branch" than
-> just a merge base, and this command is perfectly happy to work on
-> commits disconnected from any named branch.
-> > But more to the point, the rebase docs for --onto discuss a "merge
-> base", so you'd read those, and then encounter this code talking about a
-> "branch base", and wonder what the difference was...
 
-Aren't the docs saying the merge base is the base of the commits (i.e. 
-branch) being rebased? I don't think merge_base is a particularly 
-helpful name as it doesn't tell us what it is the merge base of and 
-branch_base was the best I could come up with. I see what you mean in 
-the detached HEAD case, but as the command also works with named 
-branches I hope it is fairly obvious what "branch_base" is in the 
-detached HEAD case.
+On Mon, Oct 17 2022, Phillip Wood wrote:
 
-Best Wishes
+> On 13/10/2022 20:21, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>> +static void fill_branch_base(struct rebase_options *options,
+>>> +			    struct object_id *branch_base)
+>>> +{
+>>> +	struct commit_list *merge_bases =3D NULL;
+>>> +
+>>> +	merge_bases =3D get_merge_bases(options->onto, options->orig_head);
+>>> +	if (!merge_bases || merge_bases->next)
+>>> +		oidcpy(branch_base, null_oid());
+>>> +	else
+>>> +		oidcpy(branch_base, &merge_bases->item->object.oid);
+>>> +
+>>> +	free_commit_list(merge_bases);
+>>> +}
+>> I wondered if this could be a bit shorter/less wrap-y
+>
+> Where's the wrapping?
 
-Phillip
+Sorry about being unclear, I meant (but completely failed to get across)
+that you seemed to be pre-declaring the "merge_bases" to avoid wrapping
+the "get_merge_bases()" line.
+
+But reading it again maybe it was just copied as-is from the
+pre-image. In any case as we're moving this to a new function maybe a
+fix-up to make it:
+
+	struct commit_list *merge_bases =3D get_merge_bases(options->onto,
+							  options->orig_head);
+
+would be marginally easier to read, as we never use that NULL-init
+(which again, is also an issue in the pre-image).
+
+Anyway, if you want to keep this all as-is that's fine with me.
+
+>> with shorter
+>> variable names, anyway, I see it's code copied from above, so nevermind
+>> in advance... :)
+>
+> As it is copied it is easier to review leaving it as is I think.
+
+*nod*
