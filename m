@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90BE7C433FE
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 02:23:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 504C0C4332F
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 02:23:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230245AbiJQCXy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Oct 2022 22:23:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45056 "EHLO
+        id S230203AbiJQCX5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Oct 2022 22:23:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230193AbiJQCXe (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230190AbiJQCXe (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 16 Oct 2022 22:23:34 -0400
 Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EF3A4448F
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8385C2C66A
         for <git@vger.kernel.org>; Sun, 16 Oct 2022 19:23:32 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id j16so16438199wrh.5
+Received: by mail-wr1-x430.google.com with SMTP id bp11so16407819wrb.9
         for <git@vger.kernel.org>; Sun, 16 Oct 2022 19:23:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=61z3BnFxwNixLm06cVJ5YahQgEauGr51Bc0NXdcN05U=;
-        b=LJsPEpv/Pug0CQL0lw0yC82DUZC9OXluRc8T5jiLAGlAQl6NSb+M2eA0UUW4Yuzo4T
-         ZaczVC84niM0OtWNT9wdRu2BAt/83OxN6BtvMOPEiGM1HBDu/0A5tkmBIFG3y8KRXWf8
-         JqVVuj0zmoXemOKJ6pGrGm342HFv8QTRn5qAdzGadxZgbWosUEd+3QrplHMDlTTWljbD
-         sHPA2fdQVWeLJuKLcuxupOuMkEhz5HPYEjXa+QQUUw4Vm1blQ/pgUD0xiQ6drCbP/9NW
-         pwav8CRKLyWi8qk9a3MXX61Lc6vIioaj08TKx24yJ87Ik3BK8wNBCnpiQpjnJtQl/2b2
-         EofQ==
+        bh=hbHU69GkfyEQzRT4xm0Puy2ehVoFdYZ5dmmHFRr40ro=;
+        b=SBEZu7SiyuEh3KXZ6PE7lcduLhASeb1w/J1rm1gCTMqk9FshoCvaYL8kSb668+bg9u
+         xbQPSj/MpokF8TKajzE9I/exHHLyFiWsNnlgmsutmaa8i4vGcqcliaXDz5pF/SkAUN8t
+         7zCN7rsp8ppvk6Yf9O7v6DSN/2vZDXu5+rF5JBSbM0Tme+zYNMRzCd8753H5hetWd/r1
+         /HO6ei/0aajeenktk51ufzuLdOHfTx1Y0Bojmvs4CcScr864kpI5J8F90aS6zq6SKQ10
+         Pvaqr30M4cHYyzWQ5jFDFHeRfXp7+CgzuWFN1crnmzyYs3aE5RDhPgtHIXzt7rAtT0BW
+         BG/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=61z3BnFxwNixLm06cVJ5YahQgEauGr51Bc0NXdcN05U=;
-        b=3UQZbHx9sI6/fOzY79BrslZIMv3rFJfHnyPyJ9/of4cLMvl1aJkfvgb30fbariWkuY
-         UJW6Da1VrEbGG3cxbq6vqalhT1Gtw92Dffo85hx+ftTLDLAEBTy98MoDZ2d6X4k9VVzn
-         0HxTpGQDOQsiBYVxmkKZo3nTvKtOw+94YqHlGd3mELBZIzMPRPVB4sKsUznvhnWb8+2Q
-         DJfqXLlVrpF97dt6v5D71eoZiddZA/GLKB1qzGXdQ8gNh+ZJnWC5Y6fpEDw/Y1HGNTBB
-         rhluyLZD7xTMT/mDzgCcmP7hnxkYWHpq5CSlTJrJsBQvQz2F8wiyr2UsGFrov9S8zGLk
-         Hn0g==
-X-Gm-Message-State: ACrzQf07oR9obWKkezHUuzzBHFsBL+DwwRKyGJbfD2ZZu/liYp55JQ5N
-        01EWrJrvYt96G1qUtOxyx9Tn3pEtGJs=
-X-Google-Smtp-Source: AMsMyM74H+lOHNaCMhImwCrA7DH99HIv1+FRm+z8uFQdD//C4ckyxN9bQCDjjrcO9qhwkElamBVXXQ==
-X-Received: by 2002:adf:f407:0:b0:22e:5848:f6b with SMTP id g7-20020adff407000000b0022e58480f6bmr4627101wro.46.1665973411894;
-        Sun, 16 Oct 2022 19:23:31 -0700 (PDT)
+        bh=hbHU69GkfyEQzRT4xm0Puy2ehVoFdYZ5dmmHFRr40ro=;
+        b=LUj159CKI8FCTwiqOFInM97OicvmOiLEaqjxPM4Hpr3nBFSaCfdIbS9nEr0S3PXDTl
+         oQOkGZTRZdPYbfuBQQQG8lWEn0Iga53drKq01t0po54LEsaGd4IiGsqVfHcFf1XZeDfs
+         A35OvmgA++O9zE6OUCTZ65gFGmT1EDokIQrh16CwOxXbEwa68+0Kr7vXNuJswlo8q+av
+         rvMq10K6L0VO+3CFndvCrKKg3FrFgcny9bwErqaoBPJNVEbNwq7DQPA6San8pVZYbrWY
+         t4uVRD4/TaIanS9aPvU5IBIFO7gqWBWCa1NDJHq6QkoFGp9/kC/irwoncA8+Qde1yTbB
+         7tPg==
+X-Gm-Message-State: ACrzQf0UL/PdVMSRywtj8QBr4X/xEM1PCS3W6mrk1RSDeBushOB8CZGa
+        qMrHmdA6kyA9FsUjjN3NO51bXU27Jq4=
+X-Google-Smtp-Source: AMsMyM7Q9Ws1pwrj/5qw4phkHYLOjPyQN9CAUbnxXezMCMI3GrmxOvkTuafPVjiyMlSTbReUtdndhg==
+X-Received: by 2002:a05:6000:2c9:b0:22f:e7b5:bc26 with SMTP id o9-20020a05600002c900b0022fe7b5bc26mr4578668wry.149.1665973410833;
+        Sun, 16 Oct 2022 19:23:30 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l32-20020a05600c1d2000b003b47b913901sm24960799wms.1.2022.10.16.19.23.31
+        by smtp.gmail.com with ESMTPSA id j28-20020a5d6e5c000000b0022cd27bc8c1sm8991852wrz.9.2022.10.16.19.23.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Oct 2022 19:23:31 -0700 (PDT)
-Message-Id: <f88ebbaf17cbf1a0b57336430bd43ade94406f38.1665973401.git.gitgitgadget@gmail.com>
+        Sun, 16 Oct 2022 19:23:30 -0700 (PDT)
+Message-Id: <4672e3d958625cd76eb8056ab434e9a37f52661e.1665973401.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
 References: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
         <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
 From:   "Heather Lapointe via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Oct 2022 02:23:21 +0000
-Subject: [PATCH v3 9/9] archive: add tests for git archive
- --recurse-submodules
+Date:   Mon, 17 Oct 2022 02:23:20 +0000
+Subject: [PATCH v3 8/9] archive: add --recurse-submodules to git-archive
+ command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,118 +71,151 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heather Lapointe <alpha@alphaservcomputing.solutions>
 
-Ensuring functionality works with and without submodules.
-We expect --recurse-submodules to fail if there are uninitialized submodules
-present.
+This makes it possible to include submodule contents in an archive command.
+
+The default behavior remains the same, do not write submodule contents
+to the resulting archive.
 
 Signed-off-by: Heather Lapointe <alpha@alphaservcomputing.solutions>
 ---
- archive.c                     |  2 +-
- t/t5005-archive-submodules.sh | 83 +++++++++++++++++++++++++++++++++++
- 2 files changed, 84 insertions(+), 1 deletion(-)
- create mode 100755 t/t5005-archive-submodules.sh
+ Documentation/git-archive.txt |  6 +++++-
+ archive.c                     | 36 +++++++++++++++++++++++++++++++++--
+ archive.h                     |  1 +
+ 3 files changed, 40 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index 60c040988bb..22f54428b98 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -10,7 +10,8 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git archive' [--format=<fmt>] [--list] [--prefix=<prefix>/] [<extra>]
+-	      [-o <file> | --output=<file>] [--worktree-attributes]
++	      [-o <file> | --output=<file>]
++	      [--recurse-submodules] [--worktree-attributes]
+ 	      [--remote=<repo> [--exec=<git-upload-archive>]] <tree-ish>
+ 	      [<path>...]
+ 
+@@ -82,6 +83,9 @@ The file mode is limited to a regular file, and the option may be
+ subject to platform-dependent command-line limits. For non-trivial
+ cases, write an untracked file and use `--add-file` instead.
+ 
++--recurse-submodules
++	Include submodules recursively in archive.
++
+ --worktree-attributes::
+ 	Look for attributes in .gitattributes files in the working tree
+ 	as well (see <<ATTRIBUTES>>).
 diff --git a/archive.c b/archive.c
-index f81ef741487..b0a3181f7f5 100644
+index 34549d849f1..f81ef741487 100644
 --- a/archive.c
 +++ b/archive.c
-@@ -179,7 +179,7 @@ static int write_archive_entry(
- 		err = write_entry(repo, args, oid, path.buf, path.len, mode, NULL, 0);
- 		if (err)
- 			return err;
--		return (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
-+		return READ_TREE_RECURSIVE;
+@@ -10,6 +10,7 @@
+ #include "unpack-trees.h"
+ #include "dir.h"
+ #include "quote.h"
++#include "submodule.h"
+ 
+ static char const * const archive_usage[] = {
+ 	N_("git archive [<options>] <tree-ish> [<path>...]"),
+@@ -213,6 +214,25 @@ static void queue_directory(const struct object_id *oid,
+ 	oidcpy(&d->oid, oid);
+ }
+ 
++static void queue_submodule(
++		struct repository *superproject,
++		const struct object_id *oid,
++		struct strbuf *base, const char *filename,
++		unsigned mode, struct archiver_context *c)
++{
++	struct repository subrepo;
++
++	if (repo_submodule_init(&subrepo, superproject, filename, null_oid()))
++		return;
++
++	if (repo_read_index(&subrepo) < 0)
++		die("index file corrupt");
++
++    queue_directory(oid, base, filename, mode, c);
++
++	repo_clear(&subrepo);
++}
++
+ static int write_directory(
+ 		struct repository *repo,
+ 		struct archiver_context *c)
+@@ -228,9 +248,11 @@ static int write_directory(
+ 		write_directory(repo, c) ||
+ 		write_archive_entry(repo, &d->oid, d->path, d->baselen,
+ 				    d->path + d->baselen, d->mode,
+-				    c) != READ_TREE_RECURSIVE;
++				    c);
+ 	free(d);
+-	return ret ? -1 : 0;
++	if (ret == READ_TREE_RECURSIVE)
++		return 0;
++	return ret;
+ }
+ 
+ static int queue_or_write_archive_entry(
+@@ -263,6 +285,11 @@ static int queue_or_write_archive_entry(
+ 			return 0;
+ 		queue_directory(oid, base, filename, mode, c);
+ 		return READ_TREE_RECURSIVE;
++	} else if (c->args->recurse_submodules && S_ISGITLINK(mode)) {
++		if (is_submodule_active(r, filename)) {
++			queue_submodule(r, oid, base, filename, mode, c);
++			return READ_TREE_RECURSIVE;
++		}
  	}
  
- 	if (args->verbose)
-diff --git a/t/t5005-archive-submodules.sh b/t/t5005-archive-submodules.sh
-new file mode 100755
-index 00000000000..aad6cfd1082
---- /dev/null
-+++ b/t/t5005-archive-submodules.sh
-@@ -0,0 +1,83 @@
-+#!/bin/sh
-+
-+test_description='git archive --recurse-submodules test'
-+
-+. ./test-lib.sh
-+
-+check_tar() {
-+	tarfile=$1.tar
-+	listfile=$1.lst
-+	dir=$1
-+	dir_with_prefix=$dir/$2
-+
-+	test_expect_success ' extract tar archive' '
-+		(mkdir $dir && cd $dir && "$TAR" xf -) <$tarfile
-+	'
-+}
-+
-+check_added() {
-+	dir=$1
-+	path_in_fs=$2
-+	path_in_archive=$3
-+
-+	test_expect_success " validate extra file $path_in_archive" '
-+		test -f $dir/$path_in_archive &&
-+		diff -r $path_in_fs $dir/$path_in_archive
-+	'
-+}
-+
-+check_not_added() {
-+	dir=$1
-+	path_in_archive=$2
-+
-+	test_expect_success " validate unpresent file $path_in_archive" '
-+		! test -f $dir/$path_in_archive &&
-+		! test -d $dir/$path_in_archive
-+	'
-+}
-+
-+test_expect_success 'setup' '
-+	rm -rf repo_with_submodules submodule1 uninited_repo_with_submodules &&
-+	git init repo_with_submodules &&
-+	git init submodule1 &&
-+	(
-+		cd submodule1 &&
-+		echo "dir1/sub1/file1.txt" > "file1.txt" &&
-+		git add file1.txt &&
-+		git commit -m "initialize with file1.txt"
-+	) &&
-+	(
-+	    cd repo_with_submodules &&
-+	    echo "file2" > file2.txt &&
-+	    git add file2.txt &&
-+	    git commit -m "initialize with file2.txt" &&
-+	    mkdir -p dir1 &&
-+	    git submodule add ../submodule1 dir1/sub1 &&
-+	    git commit -m "add submodule1"
-+	) &&
-+	git clone repo_with_submodules uninited_repo_with_submodules
-+'
-+
-+test_expect_success 'archive without recurse, non-init' '
-+	git -C uninited_repo_with_submodules archive -v HEAD >b.tar
-+'
-+
-+check_tar b
-+check_added b uninited_repo_with_submodules/file2.txt file2.txt
-+check_not_added b uninited_repo_with_submodules/dir1/sub1/file1.txt
-+
-+# It is expected that --recurse-submodules will not work if submodules are not
-+# initialized.
-+test_expect_success 'archive with recurse, non-init' '
-+	! git -C uninited_repo_with_submodules archive --recurse-submodules -v HEAD >b2-err.tar
-+'
-+
-+test_expect_success 'archive with recurse, init' '
-+	git -C repo_with_submodules archive --recurse-submodules -v HEAD >b3.tar
-+'
-+
-+check_tar b3
-+check_added b3 repo_with_submodules/file2.txt file2.txt
-+check_added b3 repo_with_submodules/dir1/sub1/file1.txt dir1/sub1/file1.txt
-+
-+test_done
+ 	if (write_directory(r, c))
+@@ -446,6 +473,7 @@ static void parse_pathspec_arg(
+ 		       PATHSPEC_PREFER_FULL,
+ 		       "", pathspec);
+ 	ar_args->pathspec.recursive = 1;
++	ar_args->pathspec.recurse_submodules = ar_args->recurse_submodules;
+ 	if (pathspec) {
+ 		while (*pathspec) {
+ 			if (**pathspec && !path_exists(repo, ar_args, *pathspec))
+@@ -609,6 +637,7 @@ static int parse_archive_args(int argc, const char **argv,
+ 	int verbose = 0;
+ 	int i;
+ 	int list = 0;
++	int recurse_submodules = 0;
+ 	int worktree_attributes = 0;
+ 	struct option opts[] = {
+ 		OPT_GROUP(""),
+@@ -623,6 +652,8 @@ static int parse_archive_args(int argc, const char **argv,
+ 		  add_file_cb, (intptr_t)&base },
+ 		OPT_STRING('o', "output", &output, N_("file"),
+ 			N_("write the archive to this file")),
++		OPT_BOOL(0, "recurse-submodules", &recurse_submodules,
++			N_("include submodules in archive")),
+ 		OPT_BOOL(0, "worktree-attributes", &worktree_attributes,
+ 			N_("read .gitattributes in working directory")),
+ 		OPT__VERBOSE(&verbose, N_("report archived files on stderr")),
+@@ -686,6 +717,7 @@ static int parse_archive_args(int argc, const char **argv,
+ 	args->verbose = verbose;
+ 	args->base = base;
+ 	args->baselen = strlen(base);
++	args->recurse_submodules = recurse_submodules;
+ 	args->worktree_attributes = worktree_attributes;
+ 
+ 	return argc;
+diff --git a/archive.h b/archive.h
+index 540a3b12130..1b21484dda6 100644
+--- a/archive.h
++++ b/archive.h
+@@ -18,6 +18,7 @@ struct archiver_args {
+ 	timestamp_t time;
+ 	struct pathspec pathspec;
+ 	unsigned int verbose : 1;
++	unsigned int recurse_submodules : 1;
+ 	unsigned int worktree_attributes : 1;
+ 	unsigned int convert : 1;
+ 	int compression_level;
 -- 
 gitgitgadget
+
