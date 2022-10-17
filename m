@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77478C4332F
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 12:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96587C4332F
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 12:09:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229923AbiJQMJk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 08:09:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41550 "EHLO
+        id S229885AbiJQMJo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 08:09:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229884AbiJQMJf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 08:09:35 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E2D11C0A
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 05:09:33 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id bu30so18124349wrb.8
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 05:09:33 -0700 (PDT)
+        with ESMTP id S229896AbiJQMJg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 08:09:36 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28E2E12636
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 05:09:35 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id a10so18081449wrm.12
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 05:09:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q5tDlZAfs9NG7IjOyYYDM1266ReOwwGb9qNWRapPp04=;
-        b=LBmxegU50Fh9EG+dPQYDYsV8BCaIh0YID3CeqyqsmLvgLHGYK1qvY1U4fGUGxwhgUu
-         4+D/hr+cJ0CksYWaT7FxUpOVPqCg3f8gnOlH29QJT1nWBj/7GTmdwQAeiqL9e6eMeY2I
-         s0Sx5BnnXBxOEi4pFU5Kup316H+dEXUnJjmTq6jQP4GoUPdiNTMOPBLpVxybA/d/CZGw
-         Sgq80TcF0ttuuPYWR2cKQtqqSQWAQ0xBKQfv+4nOLrH5dc57xCPkLZk0sEvLx7S8Rx+K
-         /0EFHtWRvqhPLF+qJwzDkhd9aJC5xN81TDa+NdgAXEVbTqckcM/fQZDoSFJmXIKvz6Y2
-         qEGA==
+        bh=DwGxtHIHhVPIg+fv1qAnIT9T292NfBRVXlNSZB1a+AM=;
+        b=XpRp3EfY2YL1oTDs014grm1WVGoV2f7wVO55lCKvnX0w2jAinPRnNE0gWDQnkUlwtb
+         rB2BCfKXlUYrclXqD0ey4dl4wcs6uD2BpQ+DOMQ+X6cbVOKnxbJ0jmpjdWqApam3aou8
+         6T48UPVXTRfN7X0Znq/CX0mG5fCYFw8fS/LEMRaNmkjS8sjjscVgwjBFfSsllTapaCze
+         Lh3V5w8tWDJMR3rIaMQv77FNL7bWtU3SV0ytNoltrQEx9nsOXlguGCRCy1hAKsJzHzoD
+         ToE6o1ZIGfnAz0d9Xjf9wgHvROlFAJgPSstU/qIMojhpOShue5RKIx+D4NmNxSJsz7gj
+         z26g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Q5tDlZAfs9NG7IjOyYYDM1266ReOwwGb9qNWRapPp04=;
-        b=oZPX5UrJbKx5CSbib33ctRux3BRjbzWH9rZ2TETmQ4CH0JUuiiu7EOY6kRufFb6gS+
-         FYVNL4POl23oRYrGBiGfvSzDZq9awWin4wi/8tSeoEMu4hB4ZZuebCN1V5U+gFymOo6D
-         3BJANFqlIvNkhmu1AbUDe1NjkkKsQO++sJwVfK/JiGA+xCPdjuBr9s9eLWCK3BdpbOCT
-         BtdRkJn9WIEcIDY1NEPVD3aNauVWQhxGQPsH12GeiNYZvuLMuL6h4XUubB326ZJsPOJl
-         cQRBSP1gCJjDNdczI1PewwAcxXAPo5jNCsbrm4Eo0vG2ttAFLwxoHSmkiAKO04vCFZjj
-         GAiA==
-X-Gm-Message-State: ACrzQf0ugipBUNQOhmxHwBWsFrejiuNAnw0pigY5cNdOvMPLBXPRchpD
-        kEOMqSlFDdr2Av26QFziPFKzz/CKo2Fu6A==
-X-Google-Smtp-Source: AMsMyM5+fyoBvIpD5VQjBQ2ngPKvjsLYcnkiw149Eoz8oFVCl4ILgWqXf3ZK7sNGWmTTfp3pnN+Szw==
-X-Received: by 2002:adf:efc5:0:b0:22e:4a6:2d5b with SMTP id i5-20020adfefc5000000b0022e04a62d5bmr6103894wrp.293.1666008572014;
-        Mon, 17 Oct 2022 05:09:32 -0700 (PDT)
+        bh=DwGxtHIHhVPIg+fv1qAnIT9T292NfBRVXlNSZB1a+AM=;
+        b=qh3rLKVq8f8QcX582T6aj1V/RqdJGRXWl25Y9eTqcg2VxvC+04+K/sISTIueH1XbQi
+         DBKoixNMCAx4RHMd2MBk7tdNjEO/3lDK5bJaAng3wGLVikQ7UB3/OpMCHUpeKPHtMwYg
+         peNIafYQS0rreDxzDd9PAdT3nc0CqCGYUulEl4JEjYW4nQObrtJOiCoFnZ9I9kDe4yDJ
+         u/st/QbzXH2wrZ4zvek5y7bC8C5Jtbe+knz4V7kerMU0v3uxVLauN3OMxoaiuN8ozhpE
+         T+4ZN/k/OSZyeonZ3fRfKH3ODv1wYvZAnnG1RLGGj9HBhdxU6JhQnlcd1A3j+/9hGW1s
+         gfnQ==
+X-Gm-Message-State: ACrzQf3vG/vHO/VrhlGixU4WrFHZSm5S2Kw1ly1etIXSB754DKeW6ryw
+        3vrAOkESk0uGQHNEdtqUo6p9JatYsYv4vQ==
+X-Google-Smtp-Source: AMsMyM495G1hvciXkUWbpx5sqBmNRtBNU8vNkzo1e+GnSztQqXGmizrXY55tqV2GsL2944+EvVXS4g==
+X-Received: by 2002:a05:6000:50a:b0:225:210c:a7e4 with SMTP id a10-20020a056000050a00b00225210ca7e4mr5896284wrf.704.1666008574430;
+        Mon, 17 Oct 2022 05:09:34 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z6-20020a1cf406000000b003c6deb5c1edsm10028770wma.45.2022.10.17.05.09.29
+        by smtp.gmail.com with ESMTPSA id z6-20020a1cf406000000b003c6deb5c1edsm10028770wma.45.2022.10.17.05.09.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 05:09:30 -0700 (PDT)
+        Mon, 17 Oct 2022 05:09:33 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 02/10] git-submodule.sh: dispatch "sync" to helper
-Date:   Mon, 17 Oct 2022 14:09:17 +0200
-Message-Id: <patch-02.10-46bf600820b-20221017T115544Z-avarab@gmail.com>
+Subject: [PATCH 04/10] git-submodule.sh: dispatch "foreach" to helper
+Date:   Mon, 17 Oct 2022 14:09:19 +0200
+Message-Id: <patch-04.10-db6a09ee42a-20221017T115544Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1091.gf9d18265e59
 In-Reply-To: <cover-00.10-00000000000-20221017T115544Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20221017T115544Z-avarab@gmail.com>
@@ -71,66 +71,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the cmd_sync() wrapper for "git submodule--helper sync" in
-favor of dispatching the raw command-line directly to the helper.
-
-At this point we've already parsed out the optional "--quiet" flag
-that we need to support for "git submodule --quiet" (as opposed to
-"git submodule <subcommand> --quiet").
-
-This changes the output we'll display on invalid usage for the better,
-before this we'd emit e.g.:
-
-	$ git submodule sync --blah
-	usage: git submodule [--quiet] [--cached]
-	   or: [...many lines of "or" usage omitted...]
-
-But now we'll emit the much more useful:
-
-	$ git submodule sync --blah
-	error: unknown option `blah'
-	usage: git submodule sync [--quiet] [--recursive] [<path>]
-
-	    -q, --quiet           suppress output of synchronizing submodule url
-	    --recursive           recurse into nested submodules
-
-This is because we'll now get as far as module_sync()'s failing call
-to parse_options() when we have invalid usage.
+Dispatch the "git submodule foreach" command directly to "git
+submodule--helper foreach". This case requires the addition of the
+PARSE_OPT_STOP_AT_NON_OPTION flag, since the shellscript was
+unconditionally adding "--" to the "git submodule--helper"
+command-line.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-submodule.sh | 37 ++++---------------------------------
- 1 file changed, 4 insertions(+), 33 deletions(-)
+ builtin/submodule--helper.c |  3 ++-
+ git-submodule.sh            | 37 +++----------------------------------
+ 2 files changed, 5 insertions(+), 35 deletions(-)
 
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 0b4acb442b2..d11e1003019 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -403,7 +403,8 @@ static int module_foreach(int argc, const char **argv, const char *prefix)
+ 	int ret = 1;
+ 
+ 	argc = parse_options(argc, argv, prefix, module_foreach_options,
+-			     git_submodule_helper_usage, 0);
++			     git_submodule_helper_usage,
++			     PARSE_OPT_STOP_AT_NON_OPTION);
+ 
+ 	if (module_list_compute(0, NULL, prefix, &pathspec, &list) < 0)
+ 		goto cleanup;
 diff --git a/git-submodule.sh b/git-submodule.sh
-index b851d64aa62..3fdfe864d37 100755
+index 2bdff5119c1..7874e33beea 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -521,39 +521,6 @@ cmd_status()
+@@ -50,37 +50,6 @@ jobs=
+ recommend_shallow=
+ filter=
  
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper status ${quiet:+--quiet} ${cached:+--cached} ${recursive:+--recursive} -- "$@"
- }
+-
+-# Execute an arbitrary command sequence in each checked out
+-# submodule
 -#
--# Sync remote urls for submodules
--# This makes the value for remote.$remote.url match the value
--# specified in .gitmodules.
+-# $@ = command to execute
 -#
--cmd_sync()
+-cmd_foreach()
 -{
+-	# parse $args after "submodule ... foreach".
 -	while test $# -ne 0
 -	do
 -		case "$1" in
 -		-q|--quiet)
 -			quiet=1
--			shift
 -			;;
 -		--recursive)
 -			recursive=1
--			shift
--			;;
--		--)
--			shift
--			break
 -			;;
 -		-*)
 -			usage
@@ -139,23 +130,28 @@ index b851d64aa62..3fdfe864d37 100755
 -			break
 -			;;
 -		esac
+-		shift
 -	done
 -
--	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper sync ${quiet:+--quiet} ${recursive:+--recursive} -- "$@"
+-	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach ${quiet:+--quiet} ${recursive:+--recursive} -- "$@"
 -}
- 
- # This loop parses the command line arguments to find the
- # subcommand name to dispatch.  Parsing of the subcommand specific
-@@ -607,6 +574,10 @@ case "$command" in
+-
+ #
+ # Update each submodule path to correct revision, using clone and checkout as needed
+ #
+@@ -263,10 +232,10 @@ case "$command" in
  absorbgitdirs)
  	git submodule--helper "$command" --prefix "$wt_prefix" "$@"
  	;;
-+sync)
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper "$command" \
-+		${quiet:+--quiet} "$@"
-+	;;
- *)
- 	"cmd_$(echo $command | sed -e s/-/_/g)" "$@"
+-foreach | update)
+-	"cmd_$command" "$@"
++update)
++	cmd_update "$@"
+ 	;;
+-add | init | deinit | set-branch | set-url | status | summary | sync)
++add | foreach | init | deinit | set-branch | set-url | status | summary | sync)
+ 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper "$command" \
+ 		${quiet:+--quiet} ${cached:+--cached} "$@"
  	;;
 -- 
 2.38.0.1091.gf9d18265e59
