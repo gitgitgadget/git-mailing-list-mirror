@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA903C433FE
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 13:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3653C4332F
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 13:18:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230503AbiJQNSO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 09:18:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39382 "EHLO
+        id S230396AbiJQNSQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 09:18:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229909AbiJQNR4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 09:17:56 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E900B61116
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:17:53 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id r8-20020a1c4408000000b003c47d5fd475so12675771wma.3
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:17:52 -0700 (PDT)
+        with ESMTP id S230440AbiJQNR7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 09:17:59 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C689961D71
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:17:55 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id l32so8629665wms.2
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:17:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qzQeiEYJNz8/AgY3Nwo7MkE5MHdlACypJs6itrpRQN4=;
-        b=npQ5mieuf/oEtUc/HqRg9iA814VaOXw9M/ju3/ZdnUN6QDYayM02xowJJyOz757ViB
-         z+5bINGVsJ9t6qoCwo506gZGBs4Wq3jSWDdC4QiNXBHw1LPxkA0iaqlzIK77w3Q00l6T
-         i4qtmy2brSvLHJm5Ljwzcqut203rAGUSzAKqLYTezQV/QkxldRbqiaSvkYloheh5JBsK
-         FG0+NPyM0i9enpfWn8KgWbPs8tABVshFWLIKfPwpza9aDhfNc7n87OPq8vvq06jjCcvR
-         L+R1oVpaLmx9856q/VmsPEzJG38kX40TanNSwNJbSb+q4hIkTKzL0XVEjYhUV+xJigmE
-         sC2g==
+        bh=f3Omp7XenVN67hPeqLMKSf3k2o/8oFmfRIUuQR1BZGY=;
+        b=aOMhPNVnh/I+4Ao9Wc4woJa2GBf7whNj4WRw+QnT/6QIbX+1TDe/yO3CaMjp1xuXed
+         EqmtGVU9rTZp8aRvf8LFBRgSt2sosMvuUxTAeDDg/zLuXJHHW4OCwMeh/MPSIq4bgSEk
+         N8B2K6xBmTxupRYcCBhe8GosA52ZCCUOawRKZRsZrFRWHkjoEjWwAmpZygBeBs6G7HlI
+         ErzxGFuLO84nvYhSn0DqNP4h4nNHShRbK68WNvFtnPJWfnp2ope6WB1oy41LZ0odZiaA
+         WpJ5y+Udt9Gqcpo3L/YdAdyMrwcS2H5en/KMRo4FkplT6W2aUWS6pv7opW9Jyd9UIHY/
+         FjVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qzQeiEYJNz8/AgY3Nwo7MkE5MHdlACypJs6itrpRQN4=;
-        b=Va91cWukInu0P/kFJaHG0NPhXVuAv8wM8Ve8qS//D4g6+IBvVZEaaTp+vTJ1x9vAuV
-         hZrw/Fmr9PwESvE4ktmKCnG3mAMhhyb60GAJn/af3HEb6/N06cK2AUaQenNh/B846MYk
-         mYlESS1XyFZ3iKt75TL14J2K75wMwbEbzvFkVin7mCQhHnpxGTQjLWT6GN1FnDd12STp
-         L0eNMFLstMoD9vl2iGWGXmIVeH2ax6xT09MZRro1cDeFfYz7DfeSApD21qbfzpTVTry+
-         U6NOKtOrz8cvOaG8xdP0AJ8Xt8VRBmFCzG0Af6MmDEo094zKl8L/TfC/L3mlwzVK57yj
-         CKgw==
-X-Gm-Message-State: ACrzQf06FdXL+eupLTGmaPe+bGOCQZiO22tIy+QLQ3aylNaxy8qDqIml
-        1GK/Z0EYj+Ykrwha/IoEB/1GrY1BMv8=
-X-Google-Smtp-Source: AMsMyM5RCCvSkfpqazo2CkL06s9RDJ3D4RV2uKI14wnrWzgMePbq2/FUmhPgpm+gUsv2qknBaKh8kg==
-X-Received: by 2002:a05:600c:34cc:b0:3c6:fb65:24cc with SMTP id d12-20020a05600c34cc00b003c6fb6524ccmr952700wmq.1.1666012671332;
-        Mon, 17 Oct 2022 06:17:51 -0700 (PDT)
+        bh=f3Omp7XenVN67hPeqLMKSf3k2o/8oFmfRIUuQR1BZGY=;
+        b=2s6z8LOnna0Ce3HWKPAEpH8m+Vyn1k8IrgfhrX7k54bZiF3VJw1HkcyU7bMb9oAD1O
+         wiChN86Mgyw8S9nhVHnBoK3bzIeD1DMHps11lypHuL8Xp+9fR1V9oxG3xsJ+L2TytK8m
+         FjTTF8ABIrm9UfWvrqhM3f3yZU8Kto7Ztyld6oNZm8dV4de0I20EWm4Iwp+4w/XIw39J
+         j5Y8KhI0ve+TSoSZE+mG1ctIOGxotSafib2KhDKfTJbd0KyKtvtJmJ7dzHSzOYhiUtPC
+         DpCIbpZnvx1PrBY0gPeX1B8Q0k2jUTL9Q+oAcjD3gABlZ9gWhy6JSpV5YkeJL1SZpr2Q
+         jC3w==
+X-Gm-Message-State: ACrzQf0rw8wchHVAgk0zR7+Xqa4qFHt2jcHfosYY89CaZgb/hqiALo74
+        +HTeMSlPC96qEq5qC+RE5t/VesHdjjM=
+X-Google-Smtp-Source: AMsMyM5vGxasnbaBD922oxm1UC3Fh+OelHAqreIGux7VrdPxTITw1zYLpZMoiDVgb8Vqnde+Lmomxg==
+X-Received: by 2002:a05:600c:219a:b0:3c6:f259:7e30 with SMTP id e26-20020a05600c219a00b003c6f2597e30mr6524966wme.111.1666012673450;
+        Mon, 17 Oct 2022 06:17:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n14-20020a5d400e000000b0022ae401e9e0sm8409542wrp.78.2022.10.17.06.17.50
+        by smtp.gmail.com with ESMTPSA id u5-20020a5d5145000000b00232251d71c7sm8346266wrt.68.2022.10.17.06.17.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 06:17:50 -0700 (PDT)
-Message-Id: <79a8c0fe28434b4eb3e53cbb76a25024b1b43cb5.1666012665.git.gitgitgadget@gmail.com>
+        Mon, 17 Oct 2022 06:17:52 -0700 (PDT)
+Message-Id: <367e44c6928a5f1f9dc31b2068cba1c91229c9eb.1666012665.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1323.v4.git.1666012665.gitgitgadget@gmail.com>
 References: <pull.1323.v3.git.1665650564.gitgitgadget@gmail.com>
         <pull.1323.v4.git.1666012665.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Oct 2022 13:17:42 +0000
-Subject: [PATCH v4 5/8] rebase: rename merge_base to branch_base
+Date:   Mon, 17 Oct 2022 13:17:44 +0000
+Subject: [PATCH v4 7/8] rebase --keep-base: imply --reapply-cherry-picks
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,123 +77,156 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-merge_base is not a very descriptive name, the variable always holds
-the merge-base of 'branch' and 'onto' which is commit at the base of
-the branch being rebased so rename it to branch_base.
+As --keep-base does not rebase the branch it is confusing if it
+removes commits that have been cherry-picked to the upstream branch.
+As --reapply-cherry-picks is not supported by the "apply" backend this
+commit ensures that cherry-picks are reapplied by forcing the upstream
+commit to match the onto commit unless --no-reapply-cherry-picks is
+given.
 
+Reported-by: Philippe Blain <levraiphilippeblain@gmail.com>
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/rebase.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ Documentation/git-rebase.txt     | 26 ++++++++++++++++----------
+ builtin/rebase.c                 | 16 +++++++++++++++-
+ t/t3416-rebase-onto-threedots.sh | 21 +++++++++++++++++++++
+ 3 files changed, 52 insertions(+), 11 deletions(-)
 
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 080658c8710..ee6cdd56949 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -218,12 +218,14 @@ leave out at most one of A and B, in which case it defaults to HEAD.
+ 	merge base of `<upstream>` and `<branch>`. Running
+ 	`git rebase --keep-base <upstream> <branch>` is equivalent to
+ 	running
+-	`git rebase --onto <upstream>...<branch> <upstream> <branch>`.
++	`git rebase --reapply-cherry-picks --onto <upstream>...<branch> <upstream> <branch>`.
+ +
+ This option is useful in the case where one is developing a feature on
+ top of an upstream branch. While the feature is being worked on, the
+ upstream branch may advance and it may not be the best idea to keep
+-rebasing on top of the upstream but to keep the base commit as-is.
++rebasing on top of the upstream but to keep the base commit as-is. As
++the base commit is unchanged this option implies `--reapply-cherry-picks`
++to avoid losing commits.
+ +
+ Although both this option and `--fork-point` find the merge base between
+ `<upstream>` and `<branch>`, this option uses the merge base as the _starting
+@@ -278,7 +280,8 @@ See also INCOMPATIBLE OPTIONS below.
+ Note that commits which start empty are kept (unless `--no-keep-empty`
+ is specified), and commits which are clean cherry-picks (as determined
+ by `git log --cherry-mark ...`) are detected and dropped as a
+-preliminary step (unless `--reapply-cherry-picks` is passed).
++preliminary step (unless `--reapply-cherry-picks` or `--keep-base` is
++passed).
+ +
+ See also INCOMPATIBLE OPTIONS below.
+ 
+@@ -311,13 +314,16 @@ See also INCOMPATIBLE OPTIONS below.
+ 	upstream changes, the behavior towards them is controlled by
+ 	the `--empty` flag.)
+ +
+-By default (or if `--no-reapply-cherry-picks` is given), these commits
+-will be automatically dropped.  Because this necessitates reading all
+-upstream commits, this can be expensive in repos with a large number
+-of upstream commits that need to be read.  When using the 'merge'
+-backend, warnings will be issued for each dropped commit (unless
+-`--quiet` is given). Advice will also be issued unless
+-`advice.skippedCherryPicks` is set to false (see linkgit:git-config[1]).
++
++In the absence of `--keep-base` (or if `--no-reapply-cherry-picks` is
++given), these commits will be automatically dropped.  Because this
++necessitates reading all upstream commits, this can be expensive in
++repositories with a large number of upstream commits that need to be
++read. When using the 'merge' backend, warnings will be issued for each
++dropped commit (unless `--quiet` is given). Advice will also be issued
++unless `advice.skippedCherryPicks` is set to false (see
++linkgit:git-config[1]).
++
+ +
+ `--reapply-cherry-picks` allows rebase to forgo reading all upstream
+ commits, potentially improving performance.
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 211e9139f2e..d70b9b248fa 100644
+index 90ae8fd8de7..d718b7fe888 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -866,22 +866,22 @@ static int is_linear_history(struct commit *from, struct commit *to)
+@@ -1180,6 +1180,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
  
- static int can_fast_forward(struct commit *onto, struct commit *upstream,
- 			    struct commit *restrict_revision,
--			    struct commit *head, struct object_id *merge_base)
-+			    struct commit *head, struct object_id *branch_base)
- {
- 	struct commit_list *merge_bases = NULL;
- 	int res = 0;
++	options.reapply_cherry_picks = -1;
+ 	options.allow_empty_message = 1;
+ 	git_config(rebase_config, &options);
+ 	/* options.gpg_sign_opt will be either "-S" or NULL */
+@@ -1239,6 +1240,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		if (options.root)
+ 			die(_("options '%s' and '%s' cannot be used together"), "--keep-base", "--root");
+ 	}
++	/*
++	 * --keep-base defaults to --reapply-cherry-picks to avoid losing
++	 * commits when using this option.
++	 */
++	if (options.reapply_cherry_picks < 0)
++		options.reapply_cherry_picks = keep_base;
  
- 	merge_bases = get_merge_bases(onto, head);
- 	if (!merge_bases || merge_bases->next) {
--		oidcpy(merge_base, null_oid());
-+		oidcpy(branch_base, null_oid());
- 		goto done;
+ 	if (options.root && options.fork_point > 0)
+ 		die(_("options '%s' and '%s' cannot be used together"), "--root", "--fork-point");
+@@ -1415,7 +1422,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	if (options.empty != EMPTY_UNSPECIFIED)
+ 		imply_merge(&options, "--empty");
+ 
+-	if (options.reapply_cherry_picks)
++	/*
++	 * --keep-base implements --reapply-cherry-picks by altering upstream so
++	 * it works with both backends.
++	 */
++	if (options.reapply_cherry_picks && !keep_base)
+ 		imply_merge(&options, "--reapply-cherry-picks");
+ 
+ 	if (gpg_sign)
+@@ -1681,6 +1692,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		fill_branch_base(&options, &branch_base);
  	}
  
--	oidcpy(merge_base, &merge_bases->item->object.oid);
--	if (!oideq(merge_base, &onto->object.oid))
-+	oidcpy(branch_base, &merge_bases->item->object.oid);
-+	if (!oideq(branch_base, &onto->object.oid))
- 		goto done;
++	if (keep_base && options.reapply_cherry_picks)
++		options.upstream = options.onto;
++
+ 	if (options.fork_point > 0)
+ 		options.restrict_revision =
+ 			get_fork_point(options.upstream_name, options.orig_head);
+diff --git a/t/t3416-rebase-onto-threedots.sh b/t/t3416-rebase-onto-threedots.sh
+index 01eb9513d6c..ea501f2b42b 100755
+--- a/t/t3416-rebase-onto-threedots.sh
++++ b/t/t3416-rebase-onto-threedots.sh
+@@ -199,6 +199,27 @@ test_expect_success 'rebase --keep-base requires a single merge base' '
+ 	grep "need exactly one merge base with branch" err
+ '
  
--	if (restrict_revision && !oideq(&restrict_revision->object.oid, merge_base))
-+	if (restrict_revision && !oideq(&restrict_revision->object.oid, branch_base))
- 		goto done;
- 
- 	if (!upstream)
-@@ -1035,7 +1035,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	struct strbuf msg = STRBUF_INIT;
- 	struct strbuf revisions = STRBUF_INIT;
- 	struct strbuf buf = STRBUF_INIT;
--	struct object_id merge_base;
-+	struct object_id branch_base;
- 	int ignore_whitespace = 0;
- 	enum action action = ACTION_NONE;
- 	const char *gpg_sign = NULL;
-@@ -1653,7 +1653,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	} else if (!options.onto_name)
- 		options.onto_name = options.upstream_name;
- 	if (strstr(options.onto_name, "...")) {
--		if (get_oid_mb(options.onto_name, &merge_base) < 0) {
-+		if (get_oid_mb(options.onto_name, &branch_base) < 0) {
- 			if (keep_base)
- 				die(_("'%s': need exactly one merge base with branch"),
- 				    options.upstream_name);
-@@ -1661,7 +1661,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 				die(_("'%s': need exactly one merge base"),
- 				    options.onto_name);
- 		}
--		options.onto = lookup_commit_or_die(&merge_base,
-+		options.onto = lookup_commit_or_die(&branch_base,
- 						    options.onto_name);
- 	} else {
- 		options.onto =
-@@ -1699,11 +1699,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	 * in which case we could fast-forward without replacing the commits
- 	 * with new commits recreated by replaying their changes.
- 	 *
--	 * Note that can_fast_forward() initializes merge_base, so we have to
-+	 * Note that can_fast_forward() initializes branch_base, so we have to
- 	 * call it before checking allow_preemptive_ff.
- 	 */
- 	if (can_fast_forward(options.onto, options.upstream, options.restrict_revision,
--		    options.orig_head, &merge_base) &&
-+		    options.orig_head, &branch_base) &&
- 	    allow_preemptive_ff) {
- 		int flag;
- 
-@@ -1745,12 +1745,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		struct diff_options opts;
- 
- 		if (options.flags & REBASE_VERBOSE) {
--			if (is_null_oid(&merge_base))
-+			if (is_null_oid(&branch_base))
- 				printf(_("Changes to %s:\n"),
- 				       oid_to_hex(&options.onto->object.oid));
- 			else
- 				printf(_("Changes from %s to %s:\n"),
--				       oid_to_hex(&merge_base),
-+				       oid_to_hex(&branch_base),
- 				       oid_to_hex(&options.onto->object.oid));
- 		}
- 
-@@ -1762,8 +1762,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
- 		opts.detect_rename = DIFF_DETECT_RENAME;
- 		diff_setup_done(&opts);
--		diff_tree_oid(is_null_oid(&merge_base) ?
--			      the_hash_algo->empty_tree : &merge_base,
-+		diff_tree_oid(is_null_oid(&branch_base) ?
-+			      the_hash_algo->empty_tree : &branch_base,
- 			      &options.onto->object.oid, "", &opts);
- 		diffcore_std(&opts);
- 		diff_flush(&opts);
-@@ -1794,7 +1794,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	 * we just fast-forwarded.
- 	 */
- 	strbuf_reset(&msg);
--	if (oideq(&merge_base, &options.orig_head->object.oid)) {
-+	if (oideq(&branch_base, &options.orig_head->object.oid)) {
- 		printf(_("Fast-forwarded %s to %s.\n"),
- 			branch_name, options.onto_name);
- 		strbuf_addf(&msg, "rebase finished: %s onto %s",
++test_expect_success 'rebase --keep-base keeps cherry picks' '
++	git checkout -f -B main E &&
++	git cherry-pick F &&
++	(
++		set_fake_editor &&
++		EXPECT_COUNT=2 git rebase -i --keep-base HEAD G
++	) &&
++	test_cmp_rev HEAD G
++'
++
++test_expect_success 'rebase --keep-base --no-reapply-cherry-picks' '
++	git checkout -f -B main E &&
++	git cherry-pick F &&
++	(
++		set_fake_editor &&
++		EXPECT_COUNT=1 git rebase -i --keep-base \
++					--no-reapply-cherry-picks HEAD G
++	) &&
++	test_cmp_rev HEAD^ C
++'
++
+ # This must be the last test in this file
+ test_expect_success '$EDITOR and friends are unchanged' '
+ 	test_editor_unchanged
 -- 
 gitgitgadget
 
