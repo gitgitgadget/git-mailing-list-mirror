@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F32ADC433FE
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 13:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1235CC4332F
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 13:18:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230444AbiJQNSA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 09:18:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39334 "EHLO
+        id S229905AbiJQNSN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 09:18:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230291AbiJQNRy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 09:17:54 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14EBD5F7E9
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:17:52 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id f11so18408906wrm.6
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:17:52 -0700 (PDT)
+        with ESMTP id S230369AbiJQNR4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 09:17:56 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F4B95C9E8
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:17:54 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id m29-20020a05600c3b1d00b003c6bf423c71so12260733wms.0
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 06:17:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xzkAdR/cmhQWP52wBCVOyaeBNaay//gaD99aQbZf56w=;
-        b=GfnyYSDTT5W0PA+AdeF6Tzg7e5cVAA/nFQU6PMT212h68H7z7xft47dXk7PSniHkac
-         94v28it+Sz3IgyAGlsfwrhyDXzGlI7FUzhE2AsIkZZW3zg+OxAAcznFVle4YMDb4nj58
-         PEAeX6RI5oWvsmtq/PuvJUfOVWaiNOB1GAN765T3kImyS3e4Pa1F9W6kN2PJKfwQC7x5
-         yL7kILlUpenfG9bqP61hBvWRU+qQnPfmAqBTKuPqJlDJa583dbB9tX+bkgnL4CXDLx3G
-         rkZfRRY5PU/q/RURLVjmYUylH7vyJGqSC4RpNkwv5kPn2/ifrXr2eut6550eJPSTW9Xc
-         BWXA==
+        bh=LF+NGj9dormuMpuEtDjpx1ozsfBQtYr1oEqnz9zZelw=;
+        b=Ku5lrJ7STgAAAB5sH41bLS4mM1QOevLYPpF/+p1uVMZZGA7LMk18+oOUE6nB6WGKIp
+         oGwTORmy5s7W5Mdsfp80OLYYvJf3L/1wnu/zVxdFD8DSkk9eKbz4c7185WoXjSN6E9Sl
+         3hiZECW2Co2c7Up2ipJekqOY4fpKXB3qL8K/6zllL9dsCw/iJFOdYlR9rICadBLCxK4b
+         NTym/fsKoMot5Db+io3pqiD9In2C6nOQz/OTDau8uDk7elpTYiacbfFZdQ3jIPXDTZ64
+         zlrXu3AYOUbPkGoCapyTZD7dBK5vTENKZ6+k5bjxYoxL8GnfQGkv+XqOvaiN1S0xKkXP
+         6cNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xzkAdR/cmhQWP52wBCVOyaeBNaay//gaD99aQbZf56w=;
-        b=3vyd6sRkP9F/+nMbFXV3ot72RU1LsyyjzdgCy+UNIipIVC9PGksJQCPzUN1PHp7W/s
-         QS3UlLzCgRgUBswuoLOlNdTmO5fj9wFIinPLz2R5oLdccukI1BLGM47jH98gpeA+XCT9
-         1iNn5rEh7+O6vB4UqjtgcPg3F7P09Eh9wDHQBus4om9mjzbctQfx/HAfX2RGi7jVYkHk
-         qrVHXy/6AQgc1GqyhDRTJqcv2kyGoGb+zFkM1ck8oj61WeeEz7wKLk9Kjeg2w67voLkU
-         PH0qyfd1xt7bRUMNsuyv4GK54CLvwNnW77dCzQ6DVbJIo56+Lsdq4KWMJwz0tCtZ0phF
-         2ccg==
-X-Gm-Message-State: ACrzQf3gwOIcAfMU76x3zQI/bGzWnJhlfvGnhaJjAcl9zyGavtKGLVeT
-        GqD+qwGmNkHZvSJQo/P32WoupnQPPQk=
-X-Google-Smtp-Source: AMsMyM5HCVaVxtOdRacs6KPZhXBcBB2BoST9eAS2S+V128vYp9ntzVcgv1QYr0typfw8ybuZcUM2mA==
-X-Received: by 2002:a5d:5988:0:b0:22e:5a65:1e21 with SMTP id n8-20020a5d5988000000b0022e5a651e21mr6357887wri.338.1666012670249;
-        Mon, 17 Oct 2022 06:17:50 -0700 (PDT)
+        bh=LF+NGj9dormuMpuEtDjpx1ozsfBQtYr1oEqnz9zZelw=;
+        b=O4V+Ha9WTyu5Iu/mKxHY5/26RaOHPrEo+GLzJeSw/fITjqCiSu0G68hHQrsRBC+Tu0
+         lzu7gf6TVVx9KWoOPlaKImhjWuxevS2JFBl7zXCG49HC0fkB2UkoqSHjdfiaz0cLeCQ0
+         RSHJmNukJtv9jrznBPlcmn7qTC/LD5666YmI+RDkv3rWRfyqxcyzlReYsTCvq6exMLEb
+         Y+lb+4my5VeMDXQ/CpY6MuBfnnsuDrglG5D2Q66VAToQ936S2k0GaTwdQDOywzoEpM5s
+         UL3KWHNitarf6YoM7ihkwnLqP0pAm6y/uGfYzZK2upKEq0kzD07JOPGqtVp2iDSJlD+g
+         8JRw==
+X-Gm-Message-State: ACrzQf16UvOLuUMJV3m7xmYvEf/HsRRZ60Bb0QIkj6BqzL3LTzPCaDZY
+        ZT6peiAd0qu3Y5+7i0mmv5Ct1gEbPLQ=
+X-Google-Smtp-Source: AMsMyM4fsj6QVvhhfoS0siczhpgq3pPNPOb5wkxXxXwKLWVL43kTUDEc8vyZSFxzyywGAx7tnfW4mw==
+X-Received: by 2002:a05:600c:46ce:b0:3c6:f243:8d74 with SMTP id q14-20020a05600c46ce00b003c6f2438d74mr6861889wmo.166.1666012672370;
+        Mon, 17 Oct 2022 06:17:52 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t8-20020a5d6a48000000b0022b11a27e39sm8382397wrw.1.2022.10.17.06.17.49
+        by smtp.gmail.com with ESMTPSA id l1-20020a5d4bc1000000b0022afe4fb459sm3624747wrt.51.2022.10.17.06.17.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 06:17:49 -0700 (PDT)
-Message-Id: <22f3d265b57a7148d503a9eeddd19614f441824d.1666012665.git.gitgitgadget@gmail.com>
+        Mon, 17 Oct 2022 06:17:51 -0700 (PDT)
+Message-Id: <bd24409a266798aba5fffb5fde2e70065ba28a0c.1666012665.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1323.v4.git.1666012665.gitgitgadget@gmail.com>
 References: <pull.1323.v3.git.1665650564.gitgitgadget@gmail.com>
         <pull.1323.v4.git.1666012665.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Oct 2022 13:17:41 +0000
-Subject: [PATCH v4 4/8] rebase: store orig_head as a commit
+Date:   Mon, 17 Oct 2022 13:17:43 +0000
+Subject: [PATCH v4 6/8] rebase: factor out branch_base calculation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,242 +77,90 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Using a struct commit rather than a struct oid to hold orig_head means
-that we error out straight away if the branch being rebased does not
-point to a commit. It also simplifies the code that handles finding
-the merge base and fork point as it no longer has to convert from an
-oid to a commit.
+Separate out calculating the merge base between 'onto' and 'HEAD' from
+the check for whether we can fast-forward or not. This means we can skip
+the fast-forward checks when the rebase is forced and avoid calculating
+the merge-base between 'HEAD' and 'onto' when --keep-base is given.
 
-To avoid changing the behavior of "git rebase <upstream> <branch>" we
-keep the existing call to read_ref() and use lookup_commit_object()
-on the oid returned by that rather than calling
-lookup_commit_reference_by_name() which applies the ref dwim rules to
-its argument.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/rebase.c | 67 ++++++++++++++++++++++--------------------------
- 1 file changed, 31 insertions(+), 36 deletions(-)
+ builtin/rebase.c | 33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 06903eb6d4d..211e9139f2e 100644
+index d70b9b248fa..90ae8fd8de7 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -68,7 +68,7 @@ struct rebase_options {
- 	const char *upstream_name;
- 	const char *upstream_arg;
- 	char *head_name;
--	struct object_id orig_head;
-+	struct commit *orig_head;
- 	struct commit *onto;
- 	const char *onto_name;
- 	const char *revisions;
-@@ -261,13 +261,13 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
- 	struct replay_opts replay = get_replay_opts(opts);
- 	struct string_list commands = STRING_LIST_INIT_DUP;
- 
--	if (get_revision_ranges(opts->upstream, opts->onto, &opts->orig_head,
-+	if (get_revision_ranges(opts->upstream, opts->onto, &opts->orig_head->object.oid,
- 				&revisions, &shortrevisions))
- 		return -1;
- 
- 	if (init_basic_state(&replay,
- 			     opts->head_name ? opts->head_name : "detached HEAD",
--			     opts->onto, &opts->orig_head)) {
-+			     opts->onto, &opts->orig_head->object.oid)) {
- 		free(revisions);
- 		free(shortrevisions);
- 
-@@ -298,9 +298,8 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
- 		split_exec_commands(opts->cmd, &commands);
- 		ret = complete_action(the_repository, &replay, flags,
- 			shortrevisions, opts->onto_name, opts->onto,
--			&opts->orig_head, &commands, opts->autosquash,
--			opts->update_refs,
--			&todo_list);
-+			&opts->orig_head->object.oid, &commands,
-+			opts->autosquash, opts->update_refs, &todo_list);
- 	}
- 
- 	string_list_clear(&commands, 0);
-@@ -448,7 +447,8 @@ static int read_basic_state(struct rebase_options *opts)
- 	} else if (!read_oneliner(&buf, state_dir_path("head", opts),
- 				  READ_ONELINER_WARN_MISSING))
- 		return -1;
--	if (get_oid_hex(buf.buf, &opts->orig_head))
-+	if (get_oid_hex(buf.buf, &oid) ||
-+	    !(opts->orig_head = lookup_commit_object(the_repository, &oid)))
- 		return error(_("invalid orig-head: '%s'"), buf.buf);
- 
- 	if (file_exists(state_dir_path("quiet", opts)))
-@@ -517,7 +517,7 @@ static int rebase_write_basic_state(struct rebase_options *opts)
- 	write_file(state_dir_path("onto", opts), "%s",
- 		   opts->onto ? oid_to_hex(&opts->onto->object.oid) : "");
- 	write_file(state_dir_path("orig-head", opts), "%s",
--		   oid_to_hex(&opts->orig_head));
-+		   oid_to_hex(&opts->orig_head->object.oid));
- 	if (!(opts->flags & REBASE_NO_QUIET))
- 		write_file(state_dir_path("quiet", opts), "%s", "");
- 	if (opts->flags & REBASE_VERBOSE)
-@@ -646,7 +646,7 @@ static int run_am(struct rebase_options *opts)
- 			       /* this is now equivalent to !opts->upstream */
- 			       &opts->onto->object.oid :
- 			       &opts->upstream->object.oid),
--		    oid_to_hex(&opts->orig_head));
-+		    oid_to_hex(&opts->orig_head->object.oid));
- 
- 	rebased_patches = xstrdup(git_path("rebased-patches"));
- 	format_patch.out = open(rebased_patches,
-@@ -680,7 +680,7 @@ static int run_am(struct rebase_options *opts)
- 		free(rebased_patches);
- 		strvec_clear(&am.args);
- 
--		ropts.oid = &opts->orig_head;
-+		ropts.oid = &opts->orig_head->object.oid;
- 		ropts.branch = opts->head_name;
- 		ropts.default_reflog_action = DEFAULT_REFLOG_ACTION;
- 		reset_head(the_repository, &ropts);
-@@ -833,7 +833,7 @@ static int checkout_up_to_date(struct rebase_options *options)
- 	strbuf_addf(&buf, "%s: checkout %s",
- 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
- 		    options->switch_to);
--	ropts.oid = &options->orig_head;
-+	ropts.oid = &options->orig_head->object.oid;
- 	ropts.branch = options->head_name;
- 	ropts.flags = RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
- 	if (!ropts.branch)
-@@ -866,15 +866,11 @@ static int is_linear_history(struct commit *from, struct commit *to)
- 
- static int can_fast_forward(struct commit *onto, struct commit *upstream,
- 			    struct commit *restrict_revision,
--			    struct object_id *head_oid, struct object_id *merge_base)
-+			    struct commit *head, struct object_id *merge_base)
- {
--	struct commit *head = lookup_commit(the_repository, head_oid);
+@@ -871,13 +871,9 @@ static int can_fast_forward(struct commit *onto, struct commit *upstream,
  	struct commit_list *merge_bases = NULL;
  	int res = 0;
  
--	if (!head)
+-	merge_bases = get_merge_bases(onto, head);
+-	if (!merge_bases || merge_bases->next) {
+-		oidcpy(branch_base, null_oid());
 -		goto done;
--
- 	merge_bases = get_merge_bases(onto, head);
- 	if (!merge_bases || merge_bases->next) {
- 		oidcpy(merge_base, null_oid());
-@@ -1312,13 +1308,13 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+-	}
++	if (is_null_oid(branch_base))
++		goto done; /* fill_branch_base() found multiple merge bases */
  
- 		if (read_basic_state(&options))
- 			exit(1);
--		ropts.oid = &options.orig_head;
-+		ropts.oid = &options.orig_head->object.oid;
- 		ropts.branch = options.head_name;
- 		ropts.flags = RESET_HEAD_HARD;
- 		ropts.default_reflog_action = DEFAULT_REFLOG_ACTION;
- 		if (reset_head(the_repository, &ropts) < 0)
- 			die(_("could not move back to %s"),
--			    oid_to_hex(&options.orig_head));
-+			    oid_to_hex(&options.orig_head->object.oid));
- 		remove_branch_state(the_repository, 0);
- 		ret = finish_rebase(&options);
- 		goto cleanup;
-@@ -1604,25 +1600,27 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	 */
- 	if (argc == 1) {
- 		/* Is it "rebase other branchname" or "rebase other commit"? */
-+		struct object_id branch_oid;
- 		branch_name = argv[0];
- 		options.switch_to = argv[0];
+-	oidcpy(branch_base, &merge_bases->item->object.oid);
+ 	if (!oideq(branch_base, &onto->object.oid))
+ 		goto done;
  
- 		/* Is it a local branch? */
- 		strbuf_reset(&buf);
- 		strbuf_addf(&buf, "refs/heads/%s", branch_name);
--		if (!read_ref(buf.buf, &options.orig_head)) {
-+		if (!read_ref(buf.buf, &branch_oid)) {
- 			die_if_checked_out(buf.buf, 1);
- 			options.head_name = xstrdup(buf.buf);
-+			options.orig_head =
-+				lookup_commit_object(the_repository,
-+						     &branch_oid);
- 		/* If not is it a valid ref (branch or commit)? */
- 		} else {
--			struct commit *commit =
-+			options.orig_head =
- 				lookup_commit_reference_by_name(branch_name);
--			if (!commit)
--				die(_("no such branch/commit '%s'"),
--				    branch_name);
--			oidcpy(&options.orig_head, &commit->object.oid);
- 			options.head_name = NULL;
- 		}
-+		if (!options.orig_head)
-+			die(_("no such branch/commit '%s'"), branch_name);
- 	} else if (argc == 0) {
- 		/* Do not need to switch branches, we are already on it. */
- 		options.head_name =
-@@ -1639,8 +1637,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			FREE_AND_NULL(options.head_name);
- 			branch_name = "HEAD";
- 		}
--		if (get_oid("HEAD", &options.orig_head))
--			die(_("Could not resolve HEAD to a revision"));
-+		options.orig_head = lookup_commit_reference_by_name("HEAD");
-+		if (!options.orig_head)
-+			die(_("Could not resolve HEAD to a commit"));
- 	} else
- 		BUG("unexpected number of arguments left to parse");
+@@ -887,7 +883,6 @@ static int can_fast_forward(struct commit *onto, struct commit *upstream,
+ 	if (!upstream)
+ 		goto done;
  
-@@ -1672,13 +1671,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+-	free_commit_list(merge_bases);
+ 	merge_bases = get_merge_bases(upstream, head);
+ 	if (!merge_bases || merge_bases->next)
+ 		goto done;
+@@ -902,6 +897,20 @@ done:
+ 	return res && is_linear_history(onto, head);
+ }
+ 
++static void fill_branch_base(struct rebase_options *options,
++			    struct object_id *branch_base)
++{
++	struct commit_list *merge_bases = NULL;
++
++	merge_bases = get_merge_bases(options->onto, options->orig_head);
++	if (!merge_bases || merge_bases->next)
++		oidcpy(branch_base, null_oid());
++	else
++		oidcpy(branch_base, &merge_bases->item->object.oid);
++
++	free_commit_list(merge_bases);
++}
++
+ static int parse_opt_am(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct rebase_options *opts = opt->value;
+@@ -1669,6 +1678,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		if (!options.onto)
+ 			die(_("Does not point to a valid commit '%s'"),
  				options.onto_name);
++		fill_branch_base(&options, &branch_base);
  	}
  
--	if (options.fork_point > 0) {
--		struct commit *head =
--			lookup_commit_reference(the_repository,
--						&options.orig_head);
-+	if (options.fork_point > 0)
- 		options.restrict_revision =
--			get_fork_point(options.upstream_name, head);
--	}
-+			get_fork_point(options.upstream_name, options.orig_head);
- 
- 	if (repo_read_index(the_repository) < 0)
- 		die(_("could not read index"));
-@@ -1708,7 +1703,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	 * call it before checking allow_preemptive_ff.
+ 	if (options.fork_point > 0)
+@@ -1698,13 +1708,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	 * Check if we are already based on onto with linear history,
+ 	 * in which case we could fast-forward without replacing the commits
+ 	 * with new commits recreated by replaying their changes.
+-	 *
+-	 * Note that can_fast_forward() initializes branch_base, so we have to
+-	 * call it before checking allow_preemptive_ff.
  	 */
- 	if (can_fast_forward(options.onto, options.upstream, options.restrict_revision,
--		    &options.orig_head, &merge_base) &&
-+		    options.orig_head, &merge_base) &&
- 	    allow_preemptive_ff) {
+-	if (can_fast_forward(options.onto, options.upstream, options.restrict_revision,
+-		    options.orig_head, &branch_base) &&
+-	    allow_preemptive_ff) {
++	if (allow_preemptive_ff &&
++	    can_fast_forward(options.onto, options.upstream, options.restrict_revision,
++			     options.orig_head, &branch_base)) {
  		int flag;
  
-@@ -1785,7 +1780,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	strbuf_addf(&msg, "%s: checkout %s",
- 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
- 	ropts.oid = &options.onto->object.oid;
--	ropts.orig_head = &options.orig_head,
-+	ropts.orig_head = &options.orig_head->object.oid,
- 	ropts.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
- 			RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
- 	ropts.head_msg = msg.buf;
-@@ -1799,7 +1794,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	 * we just fast-forwarded.
- 	 */
- 	strbuf_reset(&msg);
--	if (oideq(&merge_base, &options.orig_head)) {
-+	if (oideq(&merge_base, &options.orig_head->object.oid)) {
- 		printf(_("Fast-forwarded %s to %s.\n"),
- 			branch_name, options.onto_name);
- 		strbuf_addf(&msg, "rebase finished: %s onto %s",
-@@ -1820,7 +1815,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		    (options.restrict_revision ?
- 		     oid_to_hex(&options.restrict_revision->object.oid) :
- 		     oid_to_hex(&options.upstream->object.oid)),
--		    oid_to_hex(&options.orig_head));
-+		    oid_to_hex(&options.orig_head->object.oid));
- 
- 	options.revisions = revisions.buf;
- 
+ 		if (!(options.flags & REBASE_FORCE)) {
 -- 
 gitgitgadget
 
