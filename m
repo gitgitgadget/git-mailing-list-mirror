@@ -2,124 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23C57C4332F
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 07:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30E9DC433FE
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 09:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229817AbiJQH4H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 03:56:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38650 "EHLO
+        id S231193AbiJQJkA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 05:40:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230046AbiJQH4D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 03:56:03 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 220565B53A
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 00:56:00 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id d26so22964225eje.10
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 00:56:00 -0700 (PDT)
+        with ESMTP id S231264AbiJQJj4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 05:39:56 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D75A41DA51
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 02:39:52 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id d26so23538407ejc.8
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 02:39:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wIVsKOsohEeLt1l7sD7U/BbaHSNYR01ZU7Bfgptp8Ww=;
-        b=G+xcEFf2h0x3g4DdyCyrWL2pxFw/McJVp7zUDuHsDNIwXXW4Ozwjj+ZzvoNj09fDHS
-         DE0q2dQmP5bPmSAJ1AwdtkPUu641qMnXz2ZHDpIJH5QQkWpue7p+7jOPAydlxcKY7N9Z
-         Lv7r1heciic/UmehU5CHMsON/DsEQyYGqUXEsYgrlJqecamIzhUefrgnw8cBFB5OXL9Q
-         ML4RWM/RkoQoXQ8dGBa+AeV3FtxwFvf6q1XHmluGxMT/pFISTfwRhIJb/SPoftKESoWa
-         hK7nBPjiV09jV9bTLQEV7nhDkr6+6rez4DUAC84MIz6xNutKtBm7tVi6F+FUcg/Ookow
-         M82A==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7qKVddhMrE409SlwrIRQ7dazRVAqpF9RVIzg3/FASi4=;
+        b=nHQy6DYieOQ1jCVdkDXLMJZ0rEosHkwf8A36YSZOoHKiHvBWwKn1zOcS9Gjpc0AK+b
+         FeUebuhIpX0oJ+i8MlDJ5T4atF0Iolgnt2Q3o4eLXbMp3Xz7dtuaVTMuZvevwet1HY4d
+         rG0apshJjavUY08WxRq3xz1Rm/Pn+Fz2wbbqq8sAbwqA5M5VfY3ZUsKlWlwU8v645s6Y
+         AmP2EO5LQWbVOhWY7t2fPC4blcRRWYMmhrG1jQ9S/Bfhgsxav8mVvqfQWbDmzazmVzVN
+         wWfpm9f+6Ow0Trc/q6JI9lIsay9Nwa8I9Z0hh7kZQq/ISMh/bwVFYhD2GeJ8tjQALiPF
+         aSLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wIVsKOsohEeLt1l7sD7U/BbaHSNYR01ZU7Bfgptp8Ww=;
-        b=2wzlSFupXupIcoQ1BSe9HDWzAw/M18p4dP3Oh2E/wzqd3SLdx/ZrNl3xc5Io+tqYJ2
-         7PxdoBQIEIywz7H0HnKBVKHB1O+GtDXcMlOPFQi7mO0ZxdL1MtTj57zHHXXNUWl9a8RN
-         P4mTZgUrowokMVzxe3QJlbYXp1407WN2ReN23ViDMAGNisrgaURf2kKV+VKFhVNp3Z9z
-         edRaNb4LEI0LxCZQwLfV+DU2htGuXDS7Ohh2v8D8700h00I/LTT5gtU9qddCKilc728p
-         ph2+T4/gASbVYZcDNAsEBXDiq43DR7Eh2nCK6E18ySQC9M+KnsMLgBkZMRKtITjJOnQJ
-         WByw==
-X-Gm-Message-State: ACrzQf3zBQibQTavXGdHfXSHLxvLb0xaQWd7er6j1vM1ar/LaKz6zmFo
-        +VJr2xZHweDry4Y5fA7H+vHpaL7m0zqg+iKh4fo=
-X-Google-Smtp-Source: AMsMyM6oLwLL54GvbH3+wMSDkiM/uE+hriHE/7F3ey03sBHJtQL9mI1Y+pzPGa7NNTLws4HLVLJGFQ7OHkpCNzzWrF0=
-X-Received: by 2002:a17:907:2723:b0:78e:22f9:f16a with SMTP id
- d3-20020a170907272300b0078e22f9f16amr7369372ejl.682.1665993359018; Mon, 17
- Oct 2022 00:55:59 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7qKVddhMrE409SlwrIRQ7dazRVAqpF9RVIzg3/FASi4=;
+        b=HyVNdrQBOL2hzmJUo/wB5CYfJyzY3E1SJQyxeG6kLzWV5zwaOx6nya4PZrt5BOgNKB
+         Bxh7SvounwgH8PhaRirifrmw56WKxIgI6nHMZWrS7OcuQM90SJxlsQ8p2QJ4cHdWO1qW
+         b1eAqw9OWY4qY37SSbhDsOjhduom9y5q5JraWofME/Lu6z3mvGr/Oo6XGkMM4FHpAH2e
+         MiCWBz2eY1GPUpih9dBJm0f5vTYAtQzvw97P55qVjH4RQ6OSWWavJe3b/9X3zVnMfzSB
+         AIqAHzedJ6Kw5KHefy3d4XCXPi3HJZMFVfCq0btZZ+agHbUTIhyVzRoWyYQq1qGoCZMl
+         RtCA==
+X-Gm-Message-State: ACrzQf3DiVt/4/bZ+IOPhatuOJLf7P8QcxAdqCKjFWkOlxwjxnQTr2Hy
+        raMm1kab29gYiGNwq7lZ+4M=
+X-Google-Smtp-Source: AMsMyM6xKZGRvbYBOhL61VmpMpKhQhfr7VYraBkuPA6E7dua0/omMFXpT6gHYbn6N1Mc2gdKrqxrKQ==
+X-Received: by 2002:a17:906:ee86:b0:741:89bc:27a1 with SMTP id wt6-20020a170906ee8600b0074189bc27a1mr8054156ejb.725.1665999591052;
+        Mon, 17 Oct 2022 02:39:51 -0700 (PDT)
+Received: from [192.168.1.74] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id g10-20020aa7c84a000000b0045cbe305be1sm6958474edt.49.2022.10.17.02.39.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Oct 2022 02:39:50 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <c0213afe-658d-8562-3d2a-9e254c742730@dunelm.org.uk>
+Date:   Mon, 17 Oct 2022 10:39:54 +0100
 MIME-Version: 1.0
-References: <pull.1353.git.git.1665563819680.gitgitgadget@gmail.com>
- <pull.1353.v2.git.git.1665679233107.gitgitgadget@gmail.com>
- <Y0wDieA32uVtYmgx@danh.dev> <xmqqsfjn4spf.fsf@gitster.g> <Y0yiRUzHbBvpT2I1@danh.dev>
-In-Reply-To: <Y0yiRUzHbBvpT2I1@danh.dev>
-From:   Skrab Sah <skrab.sah@gmail.com>
-Date:   Mon, 17 Oct 2022 13:25:46 +0530
-Message-ID: <CA+J78MV1yYVA0ijRPMPVAbGWML5SaL70yKASmHY2HWnuk1jVkA@mail.gmail.com>
-Subject: Re: [PATCH v2] abspath.h file is generated by makeheaders tool
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        skrab-sah via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 6/8] rebase: factor out branch_base calculation
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <pull.1323.v2.git.1662561470.gitgitgadget@gmail.com>
+ <pull.1323.v3.git.1665650564.gitgitgadget@gmail.com>
+ <2efbfc94187d9f0968e5b670c9152651cd8f1a5b.1665650564.git.gitgitgadget@gmail.com>
+ <221013.867d13ldzm.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221013.867d13ldzm.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I find it a bit irresponsible to leave the suggestion sounding as if
-> this is a good idea as long as it does not break cross-compilation,
-> which will (mis)lead the original poster to waste even more time on
-> this topic (and waste others' time on responding to it).
+On 13/10/2022 20:21, Ævar Arnfjörð Bjarmason wrote:
+>> +static void fill_branch_base(struct rebase_options *options,
+>> +			    struct object_id *branch_base)
+>> +{
+>> +	struct commit_list *merge_bases = NULL;
+>> +
+>> +	merge_bases = get_merge_bases(options->onto, options->orig_head);
+>> +	if (!merge_bases || merge_bases->next)
+>> +		oidcpy(branch_base, null_oid());
+>> +	else
+>> +		oidcpy(branch_base, &merge_bases->item->object.oid);
+>> +
+>> +	free_commit_list(merge_bases);
+>> +}
+> 
+> I wondered if this could be a bit shorter/less wrap-y
 
-No. no. it's not for the previous replay i am asking for.
+Where's the wrapping?
 
-Back in the days, I was asked by =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason.
-" * It's unclear if you mean that we'd commit the generated files or
-   not. If "not" then our Makefile will need to learn to do two-stage
-   compilation. I.e. we'd ship a copy of the makeheader tool, build
-   that, build the headers, and then do our "real" build."
-My answer was.
-"There are different ways we can install the makeheaders tool."
+> with shorter
+> variable names, anyway, I see it's code copied from above, so nevermind
+> in advance... :)
 
-As the related question asked, I remembered it. so, I asked as this
-will solve the cross-compilation problem also, if it is good.
+As it is copied it is easier to review leaving it as is I think.
+  	
+> 	static void fill_branch_base(struct rebase_options *o, struct object_id *dst)
+> 	{
+> 		struct commit_list *mb = get_merge_bases(o->onto, o->orig_head);
+> 		const struct object_id *src = (!mb || mb->next) ? null_oid() :
+> 			&mb->item->object.oid;
+> 	
+> 		oidcpy(dst, src);
+> 		free_commit_list(mb);
+> 	}
+> 
+> 	
+>> @@ -1669,8 +1678,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>>   		if (!options.onto)
+>>   			die(_("Does not point to a valid commit '%s'"),
+>>   				options.onto_name);
+>> +		fill_branch_base(&options, &branch_base);
+>>   	}
+>> -
+>>   	if (options.fork_point > 0)
+>>   		options.restrict_revision =
+>>   			get_fork_point(options.upstream_name, options.orig_head);
+> 
+> I wouldn't mind the stray whitespace change, but here it seems
+> unintentional, in 7/8 your change on top is:
 
+Thanks, well spotted, I'm sure I've fixed this at least once already, I 
+must have reintroduced it when fixing a rebase conflict. I'll fix it again.
 
-> so let me repeat what I already said a few times.
->
-> Whether the headers mechanically generated gets committed or not,
-> this line of change is unwelcome.  Developers should be able to look
-> at the header files (and interface document, if we ever generate one
-> out of structured comments in the header files) when using common
-> functions that they are not (yet) familiar with, and we want to see
-> our header files manually curated.
+Best Wishes
 
-You repeated the question for me so, really sorry.
-
-I know you have already told me that, and it is important also as
-generally people try to find documentation for function in the header
-file. It is also not good when sharing libraries and its related
-header files without documentation.
-
-I tried to find the solution.
-By reading the manual and By viewing the source code, I found it
-doesn't support it.
-So, I am going to either modify it or create a new one.
-And also I have remembered all your points, I will try to implement it.
-
-> I'm sorry.
->
-> I thought my earlier voice to not support this proposal was't
-> necessary to be re-iterated.  I only think that if this proposal
-> somehow got accepted (despite I don't like this proposal), something
-> needs to be fixed.
->
-> I will be explicit next time.
-
-No. no. you don't need to be sorry.
-I know this proposal is not going to be accepted now.
-Too many things have to be done here and I am working on it.
-My question was.
-1. Until now, are there any problems which need to be solved.
-2. Why it gives errors in CI / win test (8) (pull_request) test. (Important=
-)
+Phillip
+	
+> 	@@ -1680,6 +1691,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> 	 				options.onto_name);
+> 	 		fill_branch_base(&options, &branch_base);
+> 	 	}
+> 	+	if (keep_base && options.reapply_cherry_picks)
+> 	+		options.upstream = options.onto;
+> 	+
+> 	 	if (options.fork_point > 0)
+> 	 		options.restrict_revision =
+> 	 			get_fork_point(options.upstream_name, options.orig_head);
+> 
+> Presumably we want to have \n\n spacing for both of those, and to not
+> remove the spacing here in 6/8, only to add it back?
