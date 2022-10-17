@@ -2,98 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F9A4C433FE
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 18:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BFC6C4332F
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 18:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229973AbiJQSZl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 14:25:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34124 "EHLO
+        id S229996AbiJQSkE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 14:40:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229930AbiJQSZj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 14:25:39 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B106674CFC
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 11:25:36 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id n12so19716249wrp.10
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 11:25:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qsQaBQWCH4K5y5wbsbT+fJfXqQP0uwTMGykcynxdsN4=;
-        b=X3dlxb0BPopUKBP9elKKRwTqKS+gZqlnjDSxiCIIec7XwC5N3xLDMxHE/wuqf3Bq5G
-         Jh9xn6MDK0owf8EkIExzR8E0s5f2dpkiwxSykdxAHtRGYtpeJYaxR2+I0rRzg+mChtaK
-         2VK4WjCUkcWNhgniOHezVLJZkZ9waMCoQJJcWxDzzmJKi/nWqoitaTmKLhCq8fbSob4c
-         wEcxTxBR+u/RaxuAVsc3tZm8uXf5/NV9eUcnei7V1qsYxUuCwMJ70WLfVVQOpn+Zz/wN
-         hoZC8oUQzqhBn1OiyO/Zz/AjMWr6/4yNCvX7KAANHz4pElxtLxLWzEh/JdQNWbFYuroA
-         0QgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qsQaBQWCH4K5y5wbsbT+fJfXqQP0uwTMGykcynxdsN4=;
-        b=3EKR1FQUxhhoG2eprv1FT/cG43AQ+X8Ss/AU6+mlKQnV48YbScqyxeg+Ebdlga4X7M
-         PGiRcOgEwu9J2jxbj4RqYV2DcS8MdKP2n5bgh3RihWIJFBBGyp73KxByRAZ9WgepmLSL
-         KPfz13MEHkWVV+fdKhTP/VgI6xkHaOUbQ25ONkItNhPp2YIT1Szt6LLRXbNDK58sflDU
-         PsGkM3OZisoPEtP/VUIVk5rJ+6Hh94YX9mLLoCdAn8GLONbWh2zqc/sGOyOr45a8cWFj
-         4209rJ25zjVzZIiSZ4nNYkJuxxEXAoPTMrf0CzQdbNxY+g3nr3gjaZvxdAsxChH4wNfB
-         Vvbg==
-X-Gm-Message-State: ACrzQf1Q9gOqr65wRhV1gE+Q+7D+qDNfuLK+SN2fuJg9Gbl5z7pGz61+
-        YqKfSVvXZ2dLwQhQxjX8CcmOlKm8FS0=
-X-Google-Smtp-Source: AMsMyM4c2I0oRtMqgfW/MHMk7NaVBupaDi/K5nkyGTXB3tTGsiNanKNS9gaUeFczHc6wyxqUSTcLWA==
-X-Received: by 2002:a5d:6d86:0:b0:22e:4049:441f with SMTP id l6-20020a5d6d86000000b0022e4049441fmr7133166wrs.198.1666031134918;
-        Mon, 17 Oct 2022 11:25:34 -0700 (PDT)
-Received: from smtpclient.apple (2a02-a444-ebbe-1-31d1-65b8-8bfb-fce9.fixed6.kpn.net. [2a02:a444:ebbe:1:31d1:65b8:8bfb:fce9])
-        by smtp.gmail.com with ESMTPSA id t9-20020a05600c198900b003b4fe03c881sm16962847wmq.48.2022.10.17.11.25.33
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Oct 2022 11:25:34 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
-Subject: Re: git gc error with git 2.37.2? (Introduced in 5a5ea141e7)
-From:   Paul Wagland <pwagland@gmail.com>
-In-Reply-To: <Y02T9ssqqwX3mfRj@coredump.intra.peff.net>
-Date:   Mon, 17 Oct 2022 20:25:33 +0200
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3C065146-04F5-4946-B38B-8F1DD44AC10E@gmail.com>
-References: <ebb035c1-d313-4f8e-b850-a6e11eeb374bn@googlegroups.com>
- <2C46C994-6023-4C69-92DF-73291A6AF94D@gmail.com>
- <Y02T9ssqqwX3mfRj@coredump.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3696.120.41.1.1)
+        with ESMTP id S229770AbiJQSkD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 14:40:03 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A3E3642FA
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 11:40:01 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F1FE147410;
+        Mon, 17 Oct 2022 14:40:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Y8n2/cdTfNTxGeo9wWepJBPNOGZJ4DuKxv9KSB
+        boPXQ=; b=NiO/R7CqR4cxfhyHuVFy+UBpno15VcaaGmL8NN5PCW+B2bh/lmq1S5
+        CEp5KvsbgHO60ABkYxiuIgwbEjDbBS5cmpi8eApm1bgb87tb2j/6VVLI/PFyIXXt
+        At9uS8XuKGpcEKNnULYJGHQydidfpyl+KmFdCQSc5F7dul08u/Ybk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2E80C14740D;
+        Mon, 17 Oct 2022 14:39:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 84316147407;
+        Mon, 17 Oct 2022 14:39:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+Cc:     skrab-sah via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        skrab-sah <skrab.sah@gmail.com>
+Subject: Re: [PATCH v2] abspath.h file is generated by makeheaders tool
+References: <pull.1353.git.git.1665563819680.gitgitgadget@gmail.com>
+        <pull.1353.v2.git.git.1665679233107.gitgitgadget@gmail.com>
+        <Y0wDieA32uVtYmgx@danh.dev> <xmqqsfjn4spf.fsf@gitster.g>
+Date:   Mon, 17 Oct 2022 11:39:57 -0700
+In-Reply-To: <xmqqsfjn4spf.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
+        16 Oct 2022 09:51:56 -0700")
+Message-ID: <xmqqy1tez43m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1A17BBC6-4E4B-11ED-A1BF-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I'd expect that the resolve-undo extension would eventually be dropped
-> once a merge is finished, but I'm not very familiar with that code. Is
-> the repository in question mid-merge, or does it happen all the time?
->=20
-> If there are no changes you need to keep in the index or working tree,
-> I expect that a workaround would be:
->=20
->  rm -f .git/index
->  git reset
->  git update-index --refresh
->=20
-> to rewrite the index from scratch. Then the problem should not recur, =
-as
-> you'd be using a version with 5a5ea141e7 from here on out.
+> Whether the headers mechanically generated gets committed or not,
+> this line of change is unwelcome.  Developers should be able to look
+> at the header files (and interface document, if we ever generate one
+> out of structured comments in the header files) when using common
+> functions that they are not (yet) familiar with, and we want to see
+> our header files manually curated.
 
-Thanks! This did the trick for me! I suspect that the problem happened =
-at some point in the past, when I was doing a git merge and git gc =
-concurrently. A whole whack of stuff required recovering at that point =
-in time, and it all appeared to work with the old version. But probably =
-something was still left in the index that referred to, indirectly, =
-1d0f34d1c.
+I would presume that a possible topic that involve an abspath.h
+header file that did not exist may fly much better if the story were
+this way instead:
 
-My problem is now solved, I=E2=80=99ll also feed this back to git-users. =
-Thanks!
+    A developer was working on on something and needed to use some
+    function or two in abspath.c that did not have a good
+    explanation in how to use them, what pre- and post- conditions
+    they required, etc.  Naturally, because the developer previously
+    learned how to use functions in dir.c by seeing dir.h and found
+    it a very convenient way to look for things in <frotz>.c
+    described in <frotz>.h, the developer expected to find in
+    abspath.h everything necessary to use the functions.  But the
+    file did not exist.  Instead, interfaces were declared in a more
+    central header file.  Hence the developer proposed to create
+    abspath.h and declare and document extern functions defined in
+    abspath.c in the new header file.  Some in-code comment in front
+    of the function definition in abspath.c are also moved to
+    abspath.h as part of such a change.  And the new file is added
+    and tracked, so we can "git blame" the header file from that
+    point on.
 
-Cheers,
-Paul=
+The end result and how that end result brings goodness to the world
+matters.  With such a change, we will have a curated and tracked
+header file that helps our developers to use the API correctly, and
+it may make it easier than the status quo.  One thing to note in the
+above hypothetical story is that it does not matter what tool the
+developer used (or did not use) to prepare the initial draft of
+the abspath.h header file.
+
+And "initial draft" is an important part of the above sentence.  I
+do not think automated tool can produce 100% acceptable final
+result.  The natural order of presenting multiple functions defined
+and associated structure types used in the source may be different
+from how they appear in the source file, and there may need to be
+additional API comment for group of functions added, etc.  But if an
+automation can help preparing the initial draft, I wouldn't forbid
+the use of such a tool.  It's just that the initial draft needs to
+be polished before getting presented to us, and at that point,
+nobody even needs to know how the initial draft was produced.
+
+The two attempts looked more like "I want to find a way to use this
+tool, please help me", to which a responsible maintainer has to say
+"no, please don't".  The thing is, we do not want to have to use it
+ourselves ongoing basis while maintaining abspath.h header file or
+abspath.c source file or Git source code in general.
+
+Thanks.
