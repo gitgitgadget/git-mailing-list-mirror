@@ -2,124 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B994C433FE
-	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 06:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23C57C4332F
+	for <git@archiver.kernel.org>; Mon, 17 Oct 2022 07:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230136AbiJQGPH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 02:15:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45940 "EHLO
+        id S229817AbiJQH4H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 03:56:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229660AbiJQGPE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 02:15:04 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6CA12EF33
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 23:15:02 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id n16-20020a05600c4f9000b003c17bf8ddecso8826843wmq.0
-        for <git@vger.kernel.org>; Sun, 16 Oct 2022 23:15:02 -0700 (PDT)
+        with ESMTP id S230046AbiJQH4D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 03:56:03 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 220565B53A
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 00:56:00 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id d26so22964225eje.10
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 00:56:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:mime-version:user-agent
-         :date:message-id:subject:from:to:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8zDi26FdkCdUmj+41J6lDuOqbgL5usSyPP6K13fQwyA=;
-        b=gF26sLAwBo8iKdjVdEpF75nde45KOkVSJqWgdYLKCJWS0YXIsfr8mihSQAg/5P1yY3
-         4FToGp2v9oS2JaDO/vqHptDQfHoCofSJaa3+5nMnd6s6xZifH3BKatUKp/28nS/5JNh4
-         atdXLcAm+BA3zanYX0Tkny+nT41KKD6cyZx+hhXERrTVopDDqEGwH83S2VzKRY1qcy1N
-         vL88A/qe2gG2qPPOm0orBYxm1GlTWiX/bxLDzEhO7/faOpBHfIvyn5lgsrzWlkZxYCmC
-         eDRFp+weGJozEHmidK2L/nawjiuBcLGgfX1gLoekcK5F3c7ZcGa4TQtmgO2gQe0q3tzH
-         pLMg==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wIVsKOsohEeLt1l7sD7U/BbaHSNYR01ZU7Bfgptp8Ww=;
+        b=G+xcEFf2h0x3g4DdyCyrWL2pxFw/McJVp7zUDuHsDNIwXXW4Ozwjj+ZzvoNj09fDHS
+         DE0q2dQmP5bPmSAJ1AwdtkPUu641qMnXz2ZHDpIJH5QQkWpue7p+7jOPAydlxcKY7N9Z
+         Lv7r1heciic/UmehU5CHMsON/DsEQyYGqUXEsYgrlJqecamIzhUefrgnw8cBFB5OXL9Q
+         ML4RWM/RkoQoXQ8dGBa+AeV3FtxwFvf6q1XHmluGxMT/pFISTfwRhIJb/SPoftKESoWa
+         hK7nBPjiV09jV9bTLQEV7nhDkr6+6rez4DUAC84MIz6xNutKtBm7tVi6F+FUcg/Ookow
+         M82A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:mime-version:user-agent
-         :date:message-id:subject:from:to:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8zDi26FdkCdUmj+41J6lDuOqbgL5usSyPP6K13fQwyA=;
-        b=ynaHsPT4dRJlcOfoB79IlryGhTmSkPdJqaiaPWNmkNqkidAgZM8iiYdaIlXxCNjCTe
-         RZXP4YnR58ajKAn8h5Qr227Yfr1qq5jvp3C+Io8FLrheo1v+vD7qfUpDSruSRwutW7q2
-         dAQ7SqUCw2+n9dRAKS0XKWVfV0OOSCVgE2eQPmgyrDLGgld7dDqmqTrwafJKrnWWsang
-         EqD5RYQU7R/dykHvEzIjBaNJPKwgN/c6pyiEN4rUtNpg02nV3ExMUrt6+vrC6js8vFZG
-         E/CE2Agvy4kwuP7VWTDlT8qx0HGY1xvv+j8lucEqragJjbNQgsyEh5so8WF1NWTZ0d/e
-         dlxg==
-X-Gm-Message-State: ACrzQf3wcPk+sM4EWQFBjaiT32eHWD7zJE7SpbWTzf4vKXDvP1ho+OF5
-        N0QUcxPIuC4xjBZ92Dj7BeAOt87hXas=
-X-Google-Smtp-Source: AMsMyM5GJa8NvWl1fRMus4M6mbjSQCHBSjNpEeGz0hIb/rlRIT2ALp4ukQxM7RjGRhYx/Sat6pV+hQ==
-X-Received: by 2002:a05:600c:34d4:b0:3c6:f695:b5f8 with SMTP id d20-20020a05600c34d400b003c6f695b5f8mr2834545wmq.203.1665987301231;
-        Sun, 16 Oct 2022 23:15:01 -0700 (PDT)
-Received: from [192.168.2.52] (138.83-213-116.dynamic.clientes.euskaltel.es. [83.213.116.138])
-        by smtp.gmail.com with ESMTPSA id a15-20020adfeecf000000b00228692033dcsm7393154wrp.91.2022.10.16.23.15.00
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Oct 2022 23:15:00 -0700 (PDT)
-To:     Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Subject: [PATCH] path.c: do not alloc for .contents in the trie
-Message-ID: <4db3d1ed-d530-2429-f578-33196ff71fb1@gmail.com>
-Date:   Mon, 17 Oct 2022 08:14:59 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        bh=wIVsKOsohEeLt1l7sD7U/BbaHSNYR01ZU7Bfgptp8Ww=;
+        b=2wzlSFupXupIcoQ1BSe9HDWzAw/M18p4dP3Oh2E/wzqd3SLdx/ZrNl3xc5Io+tqYJ2
+         7PxdoBQIEIywz7H0HnKBVKHB1O+GtDXcMlOPFQi7mO0ZxdL1MtTj57zHHXXNUWl9a8RN
+         P4mTZgUrowokMVzxe3QJlbYXp1407WN2ReN23ViDMAGNisrgaURf2kKV+VKFhVNp3Z9z
+         edRaNb4LEI0LxCZQwLfV+DU2htGuXDS7Ohh2v8D8700h00I/LTT5gtU9qddCKilc728p
+         ph2+T4/gASbVYZcDNAsEBXDiq43DR7Eh2nCK6E18ySQC9M+KnsMLgBkZMRKtITjJOnQJ
+         WByw==
+X-Gm-Message-State: ACrzQf3zBQibQTavXGdHfXSHLxvLb0xaQWd7er6j1vM1ar/LaKz6zmFo
+        +VJr2xZHweDry4Y5fA7H+vHpaL7m0zqg+iKh4fo=
+X-Google-Smtp-Source: AMsMyM6oLwLL54GvbH3+wMSDkiM/uE+hriHE/7F3ey03sBHJtQL9mI1Y+pzPGa7NNTLws4HLVLJGFQ7OHkpCNzzWrF0=
+X-Received: by 2002:a17:907:2723:b0:78e:22f9:f16a with SMTP id
+ d3-20020a170907272300b0078e22f9f16amr7369372ejl.682.1665993359018; Mon, 17
+ Oct 2022 00:55:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <pull.1353.git.git.1665563819680.gitgitgadget@gmail.com>
+ <pull.1353.v2.git.git.1665679233107.gitgitgadget@gmail.com>
+ <Y0wDieA32uVtYmgx@danh.dev> <xmqqsfjn4spf.fsf@gitster.g> <Y0yiRUzHbBvpT2I1@danh.dev>
+In-Reply-To: <Y0yiRUzHbBvpT2I1@danh.dev>
+From:   Skrab Sah <skrab.sah@gmail.com>
+Date:   Mon, 17 Oct 2022 13:25:46 +0530
+Message-ID: <CA+J78MV1yYVA0ijRPMPVAbGWML5SaL70yKASmHY2HWnuk1jVkA@mail.gmail.com>
+Subject: Re: [PATCH v2] abspath.h file is generated by makeheaders tool
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        skrab-sah via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 4e09cf2ac (path: optimize common dir checking, 2015-08-31) a trie was
-introduced to search non-linearly over common_list.  The nodes in the
-trie are constructed from the values in that static variable.  Each of
-those nodes can have in .contents a heap allocated string with the
-characters to be considered for the node, and in .len the count of this
-characters.  Having this .len there is no need to have a local copy of
-the string, we can just have in .contents a pointer to a specific
-position in the specific string in the specific value in common_list.
-Only .len characters will be considered.
+> I find it a bit irresponsible to leave the suggestion sounding as if
+> this is a good idea as long as it does not break cross-compilation,
+> which will (mis)lead the original poster to waste even more time on
+> this topic (and waste others' time on responding to it).
 
-Let's make .contents const and remove that unneeded xstrndups.
+No. no. it's not for the previous replay i am asking for.
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
- path.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+Back in the days, I was asked by =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason.
+" * It's unclear if you mean that we'd commit the generated files or
+   not. If "not" then our Makefile will need to learn to do two-stage
+   compilation. I.e. we'd ship a copy of the makeheader tool, build
+   that, build the headers, and then do our "real" build."
+My answer was.
+"There are different ways we can install the makeheaders tool."
 
-diff --git a/path.c b/path.c
-index a3cfcd8a6e..94483d98f9 100644
---- a/path.c
-+++ b/path.c
-@@ -159,7 +159,7 @@ static struct common_dir common_list[] = {
- struct trie {
- 	struct trie *children[256];
- 	int len;
--	char *contents;
-+	const char *contents;
- 	void *value;
- };
- 
-@@ -167,10 +167,8 @@ static struct trie *make_trie_node(const char *key, void *value)
- {
- 	struct trie *new_node = xcalloc(1, sizeof(*new_node));
- 	new_node->len = strlen(key);
--	if (new_node->len) {
--		new_node->contents = xmalloc(new_node->len);
--		memcpy(new_node->contents, key, new_node->len);
--	}
-+	if (new_node->len)
-+		new_node->contents = key;
- 	new_node->value = value;
- 	return new_node;
- }
-@@ -204,10 +202,8 @@ static void *add_to_trie(struct trie *root, const char *key, void *value)
- 		memcpy(child->children, root->children, sizeof(root->children));
- 
- 		child->len = root->len - i - 1;
--		if (child->len) {
--			child->contents = xstrndup(root->contents + i + 1,
--						   child->len);
--		}
-+		if (child->len)
-+			child->contents = root->contents + i + 1;
- 		child->value = root->value;
- 		root->value = NULL;
- 		root->len = i;
--- 
-2.36.1
+As the related question asked, I remembered it. so, I asked as this
+will solve the cross-compilation problem also, if it is good.
+
+
+> so let me repeat what I already said a few times.
+>
+> Whether the headers mechanically generated gets committed or not,
+> this line of change is unwelcome.  Developers should be able to look
+> at the header files (and interface document, if we ever generate one
+> out of structured comments in the header files) when using common
+> functions that they are not (yet) familiar with, and we want to see
+> our header files manually curated.
+
+You repeated the question for me so, really sorry.
+
+I know you have already told me that, and it is important also as
+generally people try to find documentation for function in the header
+file. It is also not good when sharing libraries and its related
+header files without documentation.
+
+I tried to find the solution.
+By reading the manual and By viewing the source code, I found it
+doesn't support it.
+So, I am going to either modify it or create a new one.
+And also I have remembered all your points, I will try to implement it.
+
+> I'm sorry.
+>
+> I thought my earlier voice to not support this proposal was't
+> necessary to be re-iterated.  I only think that if this proposal
+> somehow got accepted (despite I don't like this proposal), something
+> needs to be fixed.
+>
+> I will be explicit next time.
+
+No. no. you don't need to be sorry.
+I know this proposal is not going to be accepted now.
+Too many things have to be done here and I am working on it.
+My question was.
+1. Until now, are there any problems which need to be solved.
+2. Why it gives errors in CI / win test (8) (pull_request) test. (Important=
+)
