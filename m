@@ -2,99 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA0FC4332F
-	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 12:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C2E6C433FE
+	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 12:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229871AbiJRMl3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Oct 2022 08:41:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52170 "EHLO
+        id S229802AbiJRMni (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Oct 2022 08:43:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229619AbiJRMl2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2022 08:41:28 -0400
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91ACEA87A7
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 05:41:27 -0700 (PDT)
-Received: by mail-ej1-f45.google.com with SMTP id a26so31845569ejc.4
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 05:41:27 -0700 (PDT)
+        with ESMTP id S229633AbiJRMnh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2022 08:43:37 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 958A4C34CD
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 05:43:36 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id ot12so31928009ejb.1
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 05:43:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SpvvMEhq2RzIEb0Svin4vBf2MyWsN/PXsfBuHDOqi20=;
+        b=FuLczRaAOxo+0/ZTp4FqybjxeuDePvEb0im1Ck6RA+SOfVGJ7vyyU4k9mDBwmFVDKK
+         0j1KglWznHAz1lzzJ6iaNQwythAzh48FBXE40FKTWMAziVNAAyD5ekxPaaj3Rp7pmEN4
+         2ylnLkLjd//QuYQsE4j2NkT7EgkXAlmm5jYD/MnMrCGAwNViSlLGExSlSSlO5kstHILC
+         r5+wKt5Ml4o8kTAykIb9WHiWlMc/UITJaCq2eKN1Lu4qdURvKNO/n+BkS59+mbbCa58x
+         ijmKg2qextzEknYyHZnsqdUZnqM/6rVtf8DK8jmuCwUTdINuy8IYIWIcjiGReynnGNNA
+         38Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PtdMpJ2dEFP7a3akn78DcV6Q+K7fMtOzoynREjM9jIs=;
-        b=ul873+J2pp7oPAk0p+Rn4/zxCCON4J5BV7+U7dpJL8EpMPIUXTi4jxlDT2b7uqxRuj
-         MKUNg5MjgqJSQPrAj/AEldJBixFt/mt4QqEH5zEVqQYRxn6DFtTW6A9s2McR6h4KWOuT
-         1QXxT9QDDQG0t+di+3aAL39KNb4VKXh3I2EjJvKsrMjZtV4Cs3N68bHDgnuD+KVdTjHf
-         jLXE4vHk3NTtoL6UAMOLgX6pIEOVUz7yrhWkpok4uPUfB5/gDL4Um8kdHa/OgrNLp3Io
-         HRmthgGjM4jpnqA22QBZHULOIZxI5v0RUl5Lf1qwcArGX3jK4VGkR9bcbXk6GnUyKnUH
-         mzLw==
-X-Gm-Message-State: ACrzQf1B0TTX5UXVsmeMVbSJUaN5+pILhTNa1NHDeVI+mQjpjHUbqguT
-        uA4xi1lm5eLJl3Y94o7wySq2C1oZKgjxVF+SkSiS2/P0g6w=
-X-Google-Smtp-Source: AMsMyM7TspjrXZR+qgqDGGLOCefEQ+B1gtGNI24HAMVIl4UFNuqZ0UXpGBTtj4ygsYrgbtLBbxVyF43AqF+Q+nDUKYs=
-X-Received: by 2002:a17:906:5a4b:b0:78d:8790:d4a1 with SMTP id
- my11-20020a1709065a4b00b0078d8790d4a1mr2231121ejc.329.1666096885934; Tue, 18
- Oct 2022 05:41:25 -0700 (PDT)
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SpvvMEhq2RzIEb0Svin4vBf2MyWsN/PXsfBuHDOqi20=;
+        b=BPlb3wE9GX/+hrhZbbQRpbSE+LDQ3Z9psrXpGd40JRyWLe0IFd/qDzLOXJCa9Uou5X
+         zgaMSQDrq775eCW1NaiUpBW9FWQsiGowwYJVMI7at7/s7p94Q9b6LJMEaGrt02BXYCQy
+         hO6CSHAotJn73Kdv3cWuQEOSEdVJdXWIF25Ju17o1b9I0gGRW/Y1qEPDQeNg9raSe9jg
+         73EY+gebWISoOjDJi9WR/SI7NNfcuBehWtwQz4iQknTHC7Yz7wZ8WBkt96jvgGu/stHF
+         0H96VMETqS81GF7ZwbQmaWaERX3KsgjhQWCg7HYGdEC4SB00KKYdcgU11pLJcJOHntt6
+         zAlg==
+X-Gm-Message-State: ACrzQf3+GMoHCFbkcq7zugsrVIMe1SQKcO627/5wM/DtKR8qWB7G90Te
+        Z3ae7vLNoOmR0HqrNmQh290s+a/9wtmpEg==
+X-Google-Smtp-Source: AMsMyM4bnJ40vKD62t5DPNwpsQCkmSCg3YLw42C/lY9305q64k44TbWvinh0HM7a3qR8q6jzKvZaKQ==
+X-Received: by 2002:a17:906:4783:b0:780:5be5:c81b with SMTP id cw3-20020a170906478300b007805be5c81bmr2324095ejc.76.1666097015054;
+        Tue, 18 Oct 2022 05:43:35 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id n19-20020a170906701300b0078d25e0f74bsm7466906ejj.46.2022.10.18.05.43.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Oct 2022 05:43:34 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oklwT-005k7R-1S;
+        Tue, 18 Oct 2022 14:43:33 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH 11/12] fsmonitor: test updates
+Date:   Tue, 18 Oct 2022 14:42:15 +0200
+References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
+ <743bdacded5183b5b11c9f19c24b07fa26eded24.1665326258.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <743bdacded5183b5b11c9f19c24b07fa26eded24.1665326258.git.gitgitgadget@gmail.com>
+Message-ID: <221018.86mt9ti9oq.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CA+JQ7M-CN0UnHQDDDVz0kPcU1AcoL9+WFOeR8eiw_B=Yiyc-CA@mail.gmail.com>
- <221012.86mta1mmli.gmgdl@evledraar.gmail.com> <CA+JQ7M-y9d=c3GbpAs+Y4qtimtVs9oQ6BU1YL8nmFmF=rZxKag@mail.gmail.com>
- <221013.865ygomybw.gmgdl@evledraar.gmail.com> <xmqqlepjivv4.fsf@gitster.g>
-In-Reply-To: <xmqqlepjivv4.fsf@gitster.g>
-From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Tue, 18 Oct 2022 14:40:48 +0200
-Message-ID: <CA+JQ7M_BoDbLM5_0Gvqfy0TTT_=4tvxG7mi+1ZYSNDTkSEoR6g@mail.gmail.com>
-Subject: Re: [BUG] git fetch fetches tags matching negative refspec
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 13, 2022 at 5:31 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> It indeed is confusing and might warrant some clarification, if not
-> updating.
->
->  * "--tags" is equivalent to giving "refs/tags*:refs/tags*", so it
->    might be natural to expect that you can say the same thing as
->    above with "fetch $URL --tags --no-tags", but it does not work
->    that way.  Command line parser treats "--tags" and "--no-tags" as
->    if they follow the "last one wins" semantics.
->
->  * As discussed in this thread, what "--no-tags" really means is "do
->    not follow tags"; there is no way to countermand a "--no-tags"
->    earlier on the command line to say "earlier we said do not
->    follow, but we changed our mind.  Please do follow tags".
 
-Thank you for the clarification.
+On Sun, Oct 09 2022, Eric DeCosta via GitGitGadget wrote:
 
-What follows is a small write-up of my problem for posterity and
-in-case someone else finds it useful.
+> From: Eric DeCosta <edecosta@mathworks.com>
 
-What I'm trying to achieve is by default excluding a set of tags auto
-generated build tags from being fetched, unless I specifically fetch
-them.
+> +wait_for_update () {
+> +	func=$1 &&
+> +	file=$2 &&
+> +	sz=$(wc -c < "$file") &&
+> +	last=0 &&
+> +	$func &&
 
-Something akin to this works
-  [remote "origin"]
-      url = git@github.com:git/git.git
-      fetch = +refs/heads/*:refs/remotes/origin/*
-      fetch = ^refs/tags/v2.9.*
-      tagOpt = --no-tags
+Odd not to quote "$func" here, but anyway...
 
-This lets me
-  git fetch
-  git fetch origin master
-without fetching tags matching the negative refspec, as expected. As
-well as override it through
-  git fetch origin '+refs/tags/v2.9.0*:refs/tags/v2.9.0*'
-which isn't super friendly to write but does the job
+> +rename_directory () {
+> +	mv dirtorename dirrenamed
+> +}
+
+...uh, we need to wrap "mv"? Why?
 
 
-Earlier in the thread, I was under the impression --tags worked better
-than --no-tags. It seemed it would avoid clobbering tags. I don't
-think that's actually the case (they both clobber?) and it turned out
-it wouldn't exclude refs if I was fetching a specific ref, ie
-  git fetch origin master
-would also fetch the tags I didn't want. So --no-tags it is
+> -	mv dirtorename dirrenamed &&
+> +	wait_for_update rename_directory "$PWD/.git/trace" &&
+
+Just to get around some quoting issue here?
