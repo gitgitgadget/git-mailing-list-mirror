@@ -2,121 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DD78C433FE
-	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 02:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 550D7C433FE
+	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 02:45:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230522AbiJRCnZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 22:43:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33412 "EHLO
+        id S229885AbiJRCpc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 22:45:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230512AbiJRCnX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 22:43:23 -0400
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E51396228
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 19:43:20 -0700 (PDT)
-Received: by mail-il1-x12c.google.com with SMTP id i9so6825440ilv.9
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 19:43:20 -0700 (PDT)
+        with ESMTP id S229788AbiJRCp3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 22:45:29 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F73E895F7
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 19:45:21 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id 187so10716898iov.10
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 19:45:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=o3fYRdrXRsBd3aHqBH0EMevvQrLtp23k1Kr8CcaNH5A=;
-        b=o8QsK6iq04dqT+upb5C9Il2wdDzZiSm62uEcLXpS4o04+EBNv+wKrgXl+OWDx6y6Pa
-         fWB0LbDWePLMEkEQ2xqpz3bbLEFXeyunBe4663kCgzXcVD7P6m1qss2wjhqajAXul+02
-         n6B1M6kiDYTVTC2yd7u2gKHJsOIla7PjrojAgXsk7ZNRsGMhZRz2y2B1ZSmqPjZ5WUYE
-         6jqazgWNe+FGLUzUcOlcq5GvJxZBIkIUZ050nvm/NPIR5vMRpt5p54dXglos4GcvMKzK
-         HG3JPhD5u1wMfAuAvCCKbfIj9lFynLhEhgdH8QEftTZFqjhaza5hq+h5RkJ4m7Hb30A9
-         pyoA==
+        bh=xt+MuwpV2Qe6ubWHYY2VE02jT9QKOYENPA0Di7DhIrA=;
+        b=AAS7QDIsJCvcI3X13ZDl6HFpCd3d7N36xPGsHFZAhf4qrnGYngcmQsmwlzvvS9LTr3
+         dJwE1Y4TBCOgzk7Ti2QRy+WefgRTFhkorNoZYonGJnjaTAPtZGn22YGCVW32N51QL8Xw
+         xfRaKrlRkFOy9GLuF0MpPd8ab3QFbIMnvG7CeN0ka0sJsJDmDMHjF6gBe081eJUzWizb
+         eF+NR+8SwBDY7zPLYgOsdfiLi92xXoSawCQh3o19RcFW+6iTAlkaZDL2ulY3au4BNPki
+         CvZAQV8njamyTk1x6/GlVGit3HPg1vZ4wuH449b2qJHxSah47y1et+Pcxu/7bf5xABCX
+         Du6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=o3fYRdrXRsBd3aHqBH0EMevvQrLtp23k1Kr8CcaNH5A=;
-        b=rqGKw263vyCHk20fOUktKNUk098RePWiQwGgOexBURL4ndEmpuP8YRCnUyCvSy1Gl0
-         LOPCkCSE/uzJ5jwpwQHi0u9FrdNtuBNdF3uQvsD/fgsck9BVt8VhkMWTnV2yhifjmneE
-         urz9z9BynyfWeX2g5RNJtpF9CXnagAwNNp3ZoXibNOWQkHV8JaVNywgklUJfKoobGWmN
-         ct+wIzTH5DameAqbrl7VFOuKJlgw2+9fhLUccnbUyvwemq+RxKFhBc4uhIp8tfweI2Rz
-         TVj+5tvb70yijFOy7/GhzjmwKOzLqdL7g4ZNZqCgADDfC4WVqTUOkncf3zeUCj0ye/rR
-         YQLA==
-X-Gm-Message-State: ACrzQf2E5MXZatLI8rW4ZZDq+UZ88VBGZAYYHsCNXH4Dtrlh+JPDwB/x
-        rtQ0M2v7MDWD3pGQZTbix1V00Z7PXypkY0P+
-X-Google-Smtp-Source: AMsMyM7A7LtAsaGdlH40Rca9IW7nsN76BNfknWwjGECY17oe58vrp3E3UsEA09mEtzkgDRur9zIEjw==
-X-Received: by 2002:a05:6e02:184c:b0:2fc:4f65:9dee with SMTP id b12-20020a056e02184c00b002fc4f659deemr731984ilv.154.1666060998647;
-        Mon, 17 Oct 2022 19:43:18 -0700 (PDT)
+        bh=xt+MuwpV2Qe6ubWHYY2VE02jT9QKOYENPA0Di7DhIrA=;
+        b=oSzQjmHATmmT1RqBkXdmW+45p2/duPSR5OoRJDQfx53kGj7qVCMCQ+DZ+ApqF5lyAU
+         QmAorKsX4YwfkoLdph3h3vYj+eW9x931PoJiDVkZWG5VSlfGykVXug8WdePu4JenfyHE
+         rmNNmNJat1GRHg90Y+VqZguLOQdAvGgtnD68n9WQIi8noDIxpmAliAS5li8e7jfZUH8C
+         I4I2hIos0Cdp9ELvZPkAf7+SN+3dkKbt3FZifHBJ4orZ0518bF4dhn8WlHdKsltbldB+
+         BwZJO9xVVjpiW6R7jzGKuyA9tAbsQnXkSnsJXwF+z5jLRupdbgaCoddvh5JhzzAbKIEH
+         fdAw==
+X-Gm-Message-State: ACrzQf3mSKkeX/7JiH5hf7ZuWzxVlnKFM1XI9f16ZpcqSlLApCo9xijT
+        5KRyYQfWWP/pgFzrtGnMWSQ179HHJY10uSF7
+X-Google-Smtp-Source: AMsMyM7qNbQkrFsiedM3EoCsZC4sZzTxfqfTMtuRFCfP7odTIBrCZ47KDVqxJkhfqoqXcJD5xjCNuw==
+X-Received: by 2002:a05:6602:2b92:b0:6a8:bdb5:a5d5 with SMTP id r18-20020a0566022b9200b006a8bdb5a5d5mr732938iov.85.1666061113952;
+        Mon, 17 Oct 2022 19:45:13 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z1-20020a056602204100b0068869b84b02sm568371iod.21.2022.10.17.19.43.17
+        by smtp.gmail.com with ESMTPSA id r13-20020a02b10d000000b0036358f41ebdsm571435jah.132.2022.10.17.19.45.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 19:43:18 -0700 (PDT)
-Date:   Mon, 17 Oct 2022 22:43:17 -0400
+        Mon, 17 Oct 2022 19:45:13 -0700 (PDT)
+Date:   Mon, 17 Oct 2022 22:45:12 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, derrickstolee@github.com, vdye@github.com,
-        gitster@pobox.com
-Subject: Re: [PATCH] builtin/repack.c: remove redundant pack-based bitmaps
-Message-ID: <Y04Sxb/ysk5tgyvZ@nand.local>
+To:     git@vger.kernel.org
+Cc:     vdye@github.com, derrickstolee@github.com, peff@peff.net,
+        avarab@gmail.com
+Subject: [PATCH v2] builtin/repack.c: remove redundant pack-based bitmaps
+Message-ID: <1e0ef7ee7ff5feb323c77e594cd65433fb1d99f7.1666061096.git.me@ttaylorr.com>
 References: <393fd4c6db78cd694e6d4dfcf24f17e2850ccd99.1665601403.git.me@ttaylorr.com>
- <Y02YzYS172skpbAb@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y02YzYS172skpbAb@coredump.intra.peff.net>
+In-Reply-To: <393fd4c6db78cd694e6d4dfcf24f17e2850ccd99.1665601403.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 17, 2022 at 02:02:53PM -0400, Jeff King wrote:
-> > +		if (unlink(path.buf) && errno != ENOENT)
-> > +			die_errno(_("could not remove stale bitmap: %s"),
-> > +				  path.buf);
->
-> We could downgrade this to a warning, since there is no downside to
-> retaining those files (aside from wasted space). In
-> remove_redundant_pack(), we call into unlink_pack_path(), which just
-> ignores unlink errors (though arguably it should at least warn).
+When we write a MIDX bitmap after repacking, it is possible that the
+repository would be left in a state with both pack- and multi-pack
+reachability bitmaps.
 
-I think that downgrading this to `warning_errno()` is appropriate. I'll
-make that change locally and send a new version.
+This can occur, for instance, if a pack that was kept (either by having
+a .keep file, or during a geometric repack in which it is not rolled up)
+has a bitmap file, and the repack wrote a multi-pack index and bitmap.
 
-I think a good separate topic is teaching `remove_redundant_pack()` to
-emit warnings for non-ENOENT errors, too. But I'll leave that for
-another day :-).
+When loading a reachability bitmap for the repository, the multi-pack
+one is always preferred, so the pack-based one is redundant. Let's
+remove it unconditionally, even if '-d' isn't passed, since there is no
+practical reason to keep both around. The patch below does just that.
 
-> > @@ -1059,10 +1088,15 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
-> >  						refs_snapshot ? get_tempfile_path(refs_snapshot) : NULL,
-> >  						show_progress, write_bitmaps > 0);
-> >
-> > +		if (ret) {
-> > +			string_list_clear(&include, 0);
-> > +			return ret;
-> > +		}
-> > +
-> > +		if (write_bitmaps)
-> > +			remove_redundant_bitmaps(&include, packdir);
-> > +
-> >  		string_list_clear(&include, 0);
-> > -
-> > -		if (ret)
-> > -			return ret;
-> >  	}
->
-> You could avoid having to repeat the string-list cleanup here by
-> structuring it like:
->
->   if (!ret && write_bitmaps)
-> 	remove_redundant_bitmaps(&include, packdir);
->
->   /* as before, clear string list and possibly return ret */
->
-> Since it's only one line, it's not that big a deal, but it simplifies
-> the flow.
->
-> It's correct either way, of course. One thing I did have to do while
-> reviewing this was look at this hunk in place. The context omits that
-> this is in the "if (write_midx)" conditional, which is of course very
-> important. ;)
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+A small reroll to address a pair of comments from Peff.
 
-Great suggestion, thanks. I'll apply it locally and send a reroll now.
+Range-diff against v1:
+1:  393fd4c6db ! 1:  1e0ef7ee7f builtin/repack.c: remove redundant pack-based bitmaps
+    @@ builtin/repack.c: static int write_midx_included_packs(struct string_list *inclu
+     +		strbuf_addstr(&path, ".bitmap");
+     +
+     +		if (unlink(path.buf) && errno != ENOENT)
+    -+			die_errno(_("could not remove stale bitmap: %s"),
+    -+				  path.buf);
+    ++			warning_errno(_("could not remove stale bitmap: %s"),
+    ++				      path.buf);
+     +
+     +		strbuf_setlen(&path, packdir_len);
+     +	}
+    @@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix
+      						refs_snapshot ? get_tempfile_path(refs_snapshot) : NULL,
+      						show_progress, write_bitmaps > 0);
 
-Thanks,
-Taylor
+    -+		if (ret) {
+    -+			string_list_clear(&include, 0);
+    -+			return ret;
+    -+		}
+    -+
+    -+		if (write_bitmaps)
+    ++		if (!ret && write_bitmaps)
+     +			remove_redundant_bitmaps(&include, packdir);
+     +
+      		string_list_clear(&include, 0);
+    --
+    --		if (ret)
+    --			return ret;
+    - 	}
+
+    - 	reprepare_packed_git(the_repository);
+    + 		if (ret)
+
+      ## t/t7700-repack.sh ##
+     @@ t/t7700-repack.sh: test_expect_success '--write-midx -b packs non-kept objects' '
+
+ builtin/repack.c  | 32 ++++++++++++++++++++++++++++++++
+ t/t7700-repack.sh | 21 +++++++++++++++++++++
+ 2 files changed, 53 insertions(+)
+
+diff --git a/builtin/repack.c b/builtin/repack.c
+index a5bacc7797..c2d2e52bd4 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -661,6 +661,35 @@ static int write_midx_included_packs(struct string_list *include,
+ 	return finish_command(&cmd);
+ }
+
++static void remove_redundant_bitmaps(struct string_list *include,
++				     const char *packdir)
++{
++	struct strbuf path = STRBUF_INIT;
++	struct string_list_item *item;
++	size_t packdir_len;
++
++	strbuf_addstr(&path, packdir);
++	strbuf_addch(&path, '/');
++	packdir_len = path.len;
++
++	/*
++	 * Remove any pack bitmaps corresponding to packs which are now
++	 * included in the MIDX.
++	 */
++	for_each_string_list_item(item, include) {
++		strbuf_addstr(&path, item->string);
++		strbuf_strip_suffix(&path, ".idx");
++		strbuf_addstr(&path, ".bitmap");
++
++		if (unlink(path.buf) && errno != ENOENT)
++			warning_errno(_("could not remove stale bitmap: %s"),
++				      path.buf);
++
++		strbuf_setlen(&path, packdir_len);
++	}
++	strbuf_release(&path);
++}
++
+ static int write_cruft_pack(const struct pack_objects_args *args,
+ 			    const char *pack_prefix,
+ 			    struct string_list *names,
+@@ -1059,6 +1088,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 						refs_snapshot ? get_tempfile_path(refs_snapshot) : NULL,
+ 						show_progress, write_bitmaps > 0);
+
++		if (!ret && write_bitmaps)
++			remove_redundant_bitmaps(&include, packdir);
++
+ 		string_list_clear(&include, 0);
+
+ 		if (ret)
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index ca45c4cd2c..2d0e9448dd 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -426,6 +426,27 @@ test_expect_success '--write-midx -b packs non-kept objects' '
+ 	)
+ '
+
++test_expect_success '--write-midx removes stale pack-based bitmaps' '
++       rm -fr repo &&
++       git init repo &&
++       test_when_finished "rm -fr repo" &&
++       (
++		cd repo &&
++		test_commit base &&
++		GIT_TEST_MULTI_PACK_INDEX=0 git repack -Ab &&
++
++		pack_bitmap=$(ls $objdir/pack/pack-*.bitmap) &&
++		test_path_is_file "$pack_bitmap" &&
++
++		test_commit tip &&
++		GIT_TEST_MULTI_PACK_INDEX=0 git repack -bm &&
++
++		test_path_is_file $midx &&
++		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
++		test_path_is_missing $pack_bitmap
++       )
++'
++
+ test_expect_success TTY '--quiet disables progress' '
+ 	test_terminal env GIT_PROGRESS_DELAY=0 \
+ 		git -C midx repack -ad --quiet --write-midx 2>stderr &&
+--
+2.38.0.16.g393fd4c6db
