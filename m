@@ -2,322 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94374C4332F
-	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 18:37:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45870C4332F
+	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 18:37:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230220AbiJRSg7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Oct 2022 14:36:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49122 "EHLO
+        id S229648AbiJRShu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Oct 2022 14:37:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229798AbiJRSg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2022 14:36:57 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFBF49D535
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 11:36:55 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id t10-20020a17090a4e4a00b0020af4bcae10so14788765pjl.3
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 11:36:55 -0700 (PDT)
+        with ESMTP id S229665AbiJRShs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2022 14:37:48 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F012895FD
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 11:37:47 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id e15so12534436iof.2
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 11:37:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rivosinc-com.20210112.gappssmtp.com; s=20210112;
-        h=to:from:cc:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:to:cc:subject:date:message-id:reply-to;
-        bh=CtZXNFJWhKofJJfKu4Xwu1qKWChP9WwTb73pthAQ39M=;
-        b=6FZ2DP+/Y4CQBqIluATGqT2HHqxIOy1PlhJOMYkQiagmV6Mj/ehqdKAUCHnN3xn0ST
-         F2agVK4Ywo7B8PI+aAdC1s4BBEUlToAzdP8Bhy86g1QRrETXlvwfSyrx5Mq9f4wunUYR
-         eQznwrUf17cg3VrWfj4gURDo+SbLVDy1WcsqndSiudVuRwUYAVww+9d+6O2G0+7m6cHg
-         iS6M22AJmwZaZ+v+hNLdX3chgOzltYXH+aag1g5tSu9xjeiWEkfoUPbNLpI4BS3DiZc6
-         lEQGJLlAUIF5bEqhV4ghFrvO271zMFzHcsYmZcy6fNPmd6kmTPqOPrEyl1FmTM0EE6lV
-         GOuw==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=s5zns8lvLizHkGBb10H1MOzCL0UEqWkTx4yhKCRdKzU=;
+        b=OEXsj4hm+xeBtrdsaBmnIPNGpIlGgt21Har/GMGSw0GARDxhf5SolYY390XsHslk7t
+         SgJcGd14mcq4nbi+Y93PKDPXes8VQgOBZS1v4B8BFJl3VYTIhO89k65J8kbjxucSiZRk
+         V3E9uA5QyPtU8ECALg4A1+3ucfQzM3b03q2Zu7gtVnfFSRkZq4Xu21MDWZybTxxJWcv+
+         0afiW1qCMZGGDBGN+4zP86TArfNEyGaYQJB3zOmMcBsbUn5xmaJSmRwU50KMHmT6gUOV
+         ai16qBvD3ZAzMVky2S36tFWGExVXYJHTNV3wJ8H0Qx8RBYs9vv+FU1BpKfpeEQ++x9qB
+         bnMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:from:cc:content-transfer-encoding:mime-version:message-id:date
-         :subject:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CtZXNFJWhKofJJfKu4Xwu1qKWChP9WwTb73pthAQ39M=;
-        b=abAqWQBRPRqkstImDkSTYlF5Cxf93A58fCDzR6W5zFcemrYnmXyhQQbMuxgaDY8B7D
-         k0qbcZXloRuf0UzjEdjmcdfzIMFQK2gQ2Oyx4VOIp9ET28FtbbnNDosdCxSQSW+X46Rt
-         6BkTPNhIw1tSxoEhR8687u/NiHcScthWJpQ8UtB27nl7tnsuUEZVBtYM3HtSsTzp2c5R
-         IzmnwtGVOXyYvYR1mQEZi3ouhwvt9nwDfmLTsTMOeAd880m3P9rxrOgDAsGCXmnh3kt7
-         olDdhkYvB6Jy3dywDNpc4luUSeXF5YdwEGF2xOoDapb2pQSIYk1ukRtRe7B28fAOLzBJ
-         UDgQ==
-X-Gm-Message-State: ACrzQf01CO83lAiZVyFqRurB+y19uWUTHsQGn+tpPAlWJ72ehcEC1C6i
-        6go4bM/gNuZZPhpLNE6PUHBmUoE0TpE82A==
-X-Google-Smtp-Source: AMsMyM5mx9CQ4oiGaiSUiZlDQfM9HqABgoQDCmZ0g2GvTmAIasDs9uqcoUe1bExUQHFwaZc0aKooTg==
-X-Received: by 2002:a17:903:50e:b0:182:631b:df6f with SMTP id jn14-20020a170903050e00b00182631bdf6fmr4560866plb.66.1666118215188;
-        Tue, 18 Oct 2022 11:36:55 -0700 (PDT)
-Received: from localhost ([50.221.140.188])
-        by smtp.gmail.com with ESMTPSA id p189-20020a625bc6000000b00562e9f636e0sm9956689pfb.10.2022.10.18.11.36.54
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=s5zns8lvLizHkGBb10H1MOzCL0UEqWkTx4yhKCRdKzU=;
+        b=Q6l48Ef9a6nPtB1Zs9KCXEm1/xilEFS9rCwkjsayEzug79s2ViWawm7p5hixPQhQPt
+         Ldkgv3oLn+sDCN8kYMcEL2THCEZzZ7Ge5nTQSOWrwGk7rXECjseGFqqOHU5ZqzwkIKm0
+         FpgRJh1v6JLPcNmVG7Y/Ne8RE4cNHF4BxUpzGFFW8hMQtGB6lUVOs6LYKTcRVXxwzxas
+         6roAR3k2+rP7H6cuBctrWYD47bxDxipNmQJqaRV0HZUytNYKtmr5zmtvIoklHIrokvpC
+         Crss6HfVCHnA/G/GpE3vWz8EWiPhkBDnGwYI4CADlL1WM5PohB9N7S5CJosvNJuJubHz
+         tbww==
+X-Gm-Message-State: ACrzQf211BQJwt37Dd/aoyQO6SBi5f6cjoNypI1xnu1+EDU15jheT+89
+        hqq7t4m1DUEUcAs588+ByhMt8nQgR0mz4vXD
+X-Google-Smtp-Source: AMsMyM5dXqle274qaUXfEsItBeE3J+ueuXfIqkEyf5CoT+xTmhoIiPtSCtqA/SbJg2H0aqAkZQ50iQ==
+X-Received: by 2002:a05:6638:d51:b0:363:e124:aa6 with SMTP id d17-20020a0566380d5100b00363e1240aa6mr2701556jak.7.1666118266431;
+        Tue, 18 Oct 2022 11:37:46 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id y4-20020a92d804000000b002f66aacb98asm1216207ilm.70.2022.10.18.11.37.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Oct 2022 11:36:54 -0700 (PDT)
-Subject: [PATCH] {merge,fmt-merge-msg}: Add the --from-name argument
-Date:   Tue, 18 Oct 2022 11:36:56 -0700
-Message-Id: <20221018183656.32185-1-palmer@rivosinc.com>
-X-Mailer: git-send-email 2.38.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Cc:     Palmer Dabbelt <palmer@rivosinc.com>
-From:   Palmer Dabbelt <palmer@rivosinc.com>
+        Tue, 18 Oct 2022 11:37:45 -0700 (PDT)
+Date:   Tue, 18 Oct 2022 14:37:44 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
+Cc:     Victoria Dye <vdye@github.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: linux-leaks CI failure on master
+Message-ID: <Y07yeEQu+C7AH7oN@nand.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have a "--into-name" to fake one side of the merge message, but
-there's no way to fake the from branch that's being merged.  The
-specific case I'm running into is "b4 shazam -M" with shortlogs enabled,
-which ends up putting a "/tmp/tmp.XXXXXX" as the from branch in the
-shortlog (the title is already overriden by b4).
+After Junio pushed out the tags for v2.38.1 and friends, I noticed that
+our linux-leaks CI job is failing t1300.104 and t1300.109, claiming that
+there is a leak here:
 
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+    Direct leak of 7 byte(s) in 1 object(s) allocated from:
+    #0 0x7fc4a5b319c1 in __interceptor_malloc ../../../../src/libsanitizer/lsan/lsan_interceptors.cpp:54
+    #1 0x7fc4a598638e in __GI___strdup /build/glibc-SzIz7B/glibc-2.31/string/strdup.c:42
+    #2 0x55ba23538f7c in xstrdup wrapper.c:39
+    #3 0x55ba233e258c in git_config_string config.c:1445
+    #4 0x55ba233e6b06 in git_config_include config.c:439
+    #5 0x55ba233e063f in get_value config.c:910
+    #6 0x55ba233e063f in git_parse_source config.c:1092
+    #7 0x55ba233e063f in do_config_from config.c:1937
+    #8 0x55ba233e3d2d in do_config_from_file config.c:1965
+    #9 0x55ba233e3d2d in git_config_from_file_with_options config.c:1987
+    #10 0x55ba233e4793 in git_config_from_file config.c:1996
+    #11 0x55ba233e4793 in do_git_config_sequence config.c:2143
+    #12 0x55ba233e4793 in config_with_options config.c:2198
+    #13 0x55ba233e4a50 in read_early_config config.c:2255
+    #14 0x55ba233acb36 in alias_lookup alias.c:35
+    #15 0x55ba232d0748 in handle_alias git.c:346
+    #16 0x55ba232d0748 in run_argv git.c:851
+    #17 0x55ba232d0748 in cmd_main git.c:921
+    #18 0x55ba232cee03 in main common-main.c:57
+    #19 0x7fc4a590b082 in __libc_start_main ../csu/libc-start.c:308
+    #20 0x55ba232cee8d in _start (git+0x1fe8d)
 
----
+I can't reproduce the failure locally with gcc (Debian 10.3.0-15)
+10.3.0, but Victoria (CC'd) can reproduce the failure with 9.4.0.
+Interestingly, the failure only appears when compiling with `-O2`, but
+not `-O0` or `-O1`.
 
-I saw tests were required by the patch submission docs, but I haven't
-written any.  That's both because I don't know how to do so (I haven't
-done much hacking on git), and because I'm not sure this is useful
-enough for other people to warrant taking upstream.  Happy to do so, but
-figured I'd send this along this as-is to start.
----
- Documentation/git-fmt-merge-msg.txt |  4 ++
- Documentation/git-merge.txt         |  5 ++
- builtin/fmt-merge-msg.c             |  4 ++
- builtin/merge.c                     |  4 ++
- fmt-merge-msg.c                     | 89 ++++++++++++++++-------------
- fmt-merge-msg.h                     |  1 +
- 6 files changed, 66 insertions(+), 41 deletions(-)
+This is reminiscent to me of the discussion in:
 
-diff --git a/Documentation/git-fmt-merge-msg.txt b/Documentation/git-fmt-merge-msg.txt
-index 6f28812f38..1d8ea40216 100644
---- a/Documentation/git-fmt-merge-msg.txt
-+++ b/Documentation/git-fmt-merge-msg.txt
-@@ -48,6 +48,10 @@ OPTIONS
- 	Prepare the merge message as if merging to the branch `<branch>`,
- 	instead of the name of the real branch to which the merge is made.
- 
-+--from-name <branch>::
-+	Prepare the merge message as if merging from the branch `<branch>`,
-+	instead of the name of the real branch from which the merge is made.
-+
- -F <file>::
- --file <file>::
- 	Take the list of merged objects from <file> instead of
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 2d6a1391c8..e9d02b8a6f 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -82,6 +82,11 @@ invocations. The automated message can include the branch description.
- 	`<branch>`, instead of the name of the real branch to which
- 	the merge is made.
- 
-+--from-name <branch>::
-+	Prepare the default merge message as if merging from the branch
-+	`<branch>`, instead of the name of the real branch from which
-+	the merge is made.
-+
- -F <file>::
- --file=<file>::
- 	Read the commit message to be used for the merge commit (in
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 8d8fd393f8..f0ea815162 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -13,6 +13,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 	const char *inpath = NULL;
- 	const char *message = NULL;
- 	char *into_name = NULL;
-+	char *from_name = NULL;
- 	int shortlog_len = -1;
- 	struct option options[] = {
- 		{ OPTION_INTEGER, 0, "log", &shortlog_len, N_("n"),
-@@ -26,6 +27,8 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 			N_("use <text> as start of message")),
- 		OPT_STRING(0, "into-name", &into_name, N_("name"),
- 			   N_("use <name> instead of the real target branch")),
-+		OPT_STRING(0, "from-name", &from_name, N_("name"),
-+			   N_("use <name> instead of the real source branch")),
- 		OPT_FILENAME('F', "file", &inpath, N_("file to read from")),
- 		OPT_END()
- 	};
-@@ -60,6 +63,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 	opts.credit_people = 1;
- 	opts.shortlog_len = shortlog_len;
- 	opts.into_name = into_name;
-+	opts.from_name = from_name;
- 
- 	ret = fmt_merge_msg(&input, &output, &opts);
- 	if (ret)
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 5900b81729..921aa39c50 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -88,6 +88,7 @@ static const char *sign_commit;
- static int autostash;
- static int no_verify;
- static char *into_name;
-+static char *from_name;
- 
- static struct strategy all_strategy[] = {
- 	{ "recursive",  NO_TRIVIAL },
-@@ -289,6 +290,8 @@ static struct option builtin_merge_options[] = {
- 		NULL, 0, option_read_message },
- 	OPT_STRING(0, "into-name", &into_name, N_("name"),
- 		   N_("use <name> instead of the real target")),
-+	OPT_STRING(0, "from-name", &from_name, N_("name"),
-+		   N_("use <name> instead of the real source")),
- 	OPT__VERBOSITY(&verbosity),
- 	OPT_BOOL(0, "abort", &abort_current_merge,
- 		N_("abort the current in-progress merge")),
-@@ -1144,6 +1147,7 @@ static void prepare_merge_message(struct strbuf *merge_names, struct strbuf *mer
- 	opts.shortlog_len = shortlog_len;
- 	opts.credit_people = (0 < option_edit);
- 	opts.into_name = into_name;
-+	opts.from_name = from_name;
- 
- 	fmt_merge_msg(merge_names, merge_msg, &opts);
- 	if (merge_msg->len)
-diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-index f48f44f9cd..5d94ce9214 100644
---- a/fmt-merge-msg.c
-+++ b/fmt-merge-msg.c
-@@ -353,6 +353,7 @@ static void shortlog(const char *name,
- 	struct strbuf sb = STRBUF_INIT;
- 	const struct object_id *oid = &origin_data->oid;
- 	int limit = opts->shortlog_len;
-+	const char *from_name = opts->from_name ? opts->from_name : name;
- 
- 	branch = deref_tag(the_repository, parse_object(the_repository, oid),
- 			   oid_to_hex(oid),
-@@ -398,12 +399,12 @@ static void shortlog(const char *name,
- 	if (opts->credit_people)
- 		add_people_info(out, &authors, &committers);
- 	if (count > limit)
--		strbuf_addf(out, "\n* %s: (%d commits)\n", name, count);
-+		strbuf_addf(out, "\n* %s: (%d commits)\n", from_name, count);
- 	else
--		strbuf_addf(out, "\n* %s:\n", name);
-+		strbuf_addf(out, "\n* %s:\n", from_name);
- 
- 	if (origin_data->is_local_branch && use_branch_desc)
--		add_branch_desc(out, name);
-+		add_branch_desc(out, from_name);
- 
- 	for (i = 0; i < subjects.nr; i++)
- 		if (i >= limit)
-@@ -441,51 +442,57 @@ static int dest_suppressed(const char *dest_branch)
- }
- 
- static void fmt_merge_msg_title(struct strbuf *out,
--				const char *current_branch)
-+				const char *current_branch,
-+				const char *into_branch)
- {
- 	int i = 0;
- 	char *sep = "";
- 
- 	strbuf_addstr(out, "Merge ");
--	for (i = 0; i < srcs.nr; i++) {
--		struct src_data *src_data = srcs.items[i].util;
--		const char *subsep = "";
- 
--		strbuf_addstr(out, sep);
--		sep = "; ";
-+	if (into_branch) {
-+		strbuf_addstr(out, into_branch);
-+	} else {
-+		for (i = 0; i < srcs.nr; i++) {
-+			struct src_data *src_data = srcs.items[i].util;
-+			const char *subsep = "";
- 
--		if (src_data->head_status == 1) {
--			strbuf_addstr(out, srcs.items[i].string);
--			continue;
--		}
--		if (src_data->head_status == 3) {
--			subsep = ", ";
--			strbuf_addstr(out, "HEAD");
--		}
--		if (src_data->branch.nr) {
--			strbuf_addstr(out, subsep);
--			subsep = ", ";
--			print_joined("branch ", "branches ", &src_data->branch,
--					out);
--		}
--		if (src_data->r_branch.nr) {
--			strbuf_addstr(out, subsep);
--			subsep = ", ";
--			print_joined("remote-tracking branch ", "remote-tracking branches ",
--					&src_data->r_branch, out);
--		}
--		if (src_data->tag.nr) {
--			strbuf_addstr(out, subsep);
--			subsep = ", ";
--			print_joined("tag ", "tags ", &src_data->tag, out);
--		}
--		if (src_data->generic.nr) {
--			strbuf_addstr(out, subsep);
--			print_joined("commit ", "commits ", &src_data->generic,
--					out);
-+			strbuf_addstr(out, sep);
-+			sep = "; ";
-+
-+			if (src_data->head_status == 1) {
-+				strbuf_addstr(out, srcs.items[i].string);
-+				continue;
-+			}
-+			if (src_data->head_status == 3) {
-+				subsep = ", ";
-+				strbuf_addstr(out, "HEAD");
-+			}
-+			if (src_data->branch.nr) {
-+				strbuf_addstr(out, subsep);
-+				subsep = ", ";
-+				print_joined("branch ", "branches ", &src_data->branch,
-+						out);
-+			}
-+			if (src_data->r_branch.nr) {
-+				strbuf_addstr(out, subsep);
-+				subsep = ", ";
-+				print_joined("remote-tracking branch ", "remote-tracking branches ",
-+						&src_data->r_branch, out);
-+			}
-+			if (src_data->tag.nr) {
-+				strbuf_addstr(out, subsep);
-+				subsep = ", ";
-+				print_joined("tag ", "tags ", &src_data->tag, out);
-+			}
-+			if (src_data->generic.nr) {
-+				strbuf_addstr(out, subsep);
-+				print_joined("commit ", "commits ", &src_data->generic,
-+						out);
-+			}
-+			if (strcmp(".", srcs.items[i].string))
-+				strbuf_addf(out, " of %s", srcs.items[i].string);
- 		}
--		if (strcmp(".", srcs.items[i].string))
--			strbuf_addf(out, " of %s", srcs.items[i].string);
- 	}
- 
- 	if (!dest_suppressed(current_branch))
-@@ -678,7 +685,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 	}
- 
- 	if (opts->add_title && srcs.nr)
--		fmt_merge_msg_title(out, current_branch);
-+		fmt_merge_msg_title(out, current_branch, opts->from_name);
- 
- 	if (origins.nr)
- 		fmt_merge_msg_sigs(out);
-diff --git a/fmt-merge-msg.h b/fmt-merge-msg.h
-index 99054042dc..fb3d93a317 100644
---- a/fmt-merge-msg.h
-+++ b/fmt-merge-msg.h
-@@ -10,6 +10,7 @@ struct fmt_merge_msg_opts {
- 		credit_people:1;
- 	int shortlog_len;
- 	const char *into_name;
-+	const char *from_name;
- };
- 
- extern int merge_log_config;
--- 
-2.38.0
+  https://lore.kernel.org/git/Yy4eo6500C0ijhk+@coredump.intra.peff.net/
 
+I'm not sure if I'm content to treat the 9.4.0 behavior as a compiler
+bug, but definitely running the linux-leaks build with `-O2` is
+suspicious.
+
+I suppose we could temporarily mark t1300 as not passing with
+SANITIZE=leak turned on, but I tend to agree with Peff that that feels
+like a hack working around compiler behavior, that will ultimately
+result in us playing whack-a-mole.
+
+So my preference would be to run the linux-leaks build with `-O0` in its
+CFLAGS, optionally with a newer compiler if one is available for Focal.
+
+Thoughts?
+
+Thanks,
+Taylor
