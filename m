@@ -2,141 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F709C4332F
-	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 17:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3066FC433FE
+	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 17:07:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229633AbiJRRDH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Oct 2022 13:03:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34124 "EHLO
+        id S229597AbiJRRHa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Oct 2022 13:07:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229526AbiJRRDF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2022 13:03:05 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A06BCEE0A9
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 10:03:03 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id n56-20020a056a000d7800b00562b27194d1so8087621pfv.19
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 10:03:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7MvOdKrNwE/c3q/MlPlx5KkV3GKJP9V/9Xn3RU24Df8=;
-        b=JlNtP9q/hgSi/wczXHwo0kDMQYB3V5l/j7kyjbm/mkrYqzI0YHQ0jQOV8eGG3XHXYx
-         P0FISh8BG8n0v/6LX0xj77oM1koBJN5iE3LpxxgsctBD6owoHAKVidobVYVvY4IsgRaD
-         E0PDthJ7eAUJxKC7IKimlwFnbJ1OP01IaKMucSlY1H7UsydkJp8jnQAqHOETTtsn6jk/
-         YFVjqqxDWhfR/W9KJxjiVmd4nfnspklPZt5kE5tYB6gBqeXhdq5yli9pAVygsqit1Kql
-         TJaL/IFfKa9Nz6m3EgznQvWvWP3ce1euuk+VHM2FKtDOzR1vUd6RrUogQDuVa83nMfPz
-         Fgdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7MvOdKrNwE/c3q/MlPlx5KkV3GKJP9V/9Xn3RU24Df8=;
-        b=4tIoiJ9vrHT5yso4JpiDvzRgGpk/VzWSfz379npvl2GHhE1XR7FEdc8SOp4aU6EXlj
-         jXy5fsL3okWxG4Y6tr/KxIJaJiJbFj+U1ff4sEtBskGzW9CTjWwb9My6Rowg4/3zZB0z
-         e27o4L39bt3g+dkpn7szIfOfURZMSYC5IYkDtFfo5aWxZK+Yhs5YY1YaLBEZthotFexk
-         BZoHzjMxIDbAWHo2yN51G8o4CdHzKf9JxfiPRzNciFv6jgUP4mPoAWRAw1dyueIpf53J
-         mX3/NpWNUjToPiWjZ09h2pciq27XAPlnTVZwkkon7Vwklx2VFLxiQeXSmeFs8xjWwbDY
-         YyRA==
-X-Gm-Message-State: ACrzQf1XIU+oHPU+3RBlZTmlQtzRF9hjlKkk7NH4qLv9A7webBz3t15g
-        FRb5X747koDWYW26T+tW2jaOS9tjeFhKhQ==
-X-Google-Smtp-Source: AMsMyM52XP2/htokS4HrlsONEkdS1uG9IauexY6o3AFcUXGP7Uzl97+dmlb9nxWjv7+oBtAaPY2SY6ncTdANcQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:a04:b0:534:d8a6:40ce with SMTP
- id p4-20020a056a000a0400b00534d8a640cemr4289509pfh.15.1666112583118; Tue, 18
- Oct 2022 10:03:03 -0700 (PDT)
-Date:   Tue, 18 Oct 2022 10:03:01 -0700
-In-Reply-To: <xmqqo7u9wyt7.fsf@gitster.g>
-Mime-Version: 1.0
-References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
- <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com> <kl6l7d0yyu6r.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqo7u9wyt7.fsf@gitster.g>
-Message-ID: <kl6l4jw1yshm.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v2 00/12] fsmonitor: Implement fsmonitor for Linux
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Eric DeCosta <edecosta@mathworks.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229978AbiJRRHW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2022 13:07:22 -0400
+X-Greylist: delayed 254 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 18 Oct 2022 10:06:14 PDT
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AA0CEEA9C;
+        Tue, 18 Oct 2022 10:06:14 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E54AD1D38EA;
+        Tue, 18 Oct 2022 13:01:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=I
+        kKmOpEPStNaMelI3cfGCmpw8kYhTIhBTRT5Mc3GJhY=; b=MLo2fRJqDKE3XJk7i
+        gy85fmhVvaY4W+3ASZCZQ+OyjYtm+EaEmnZjqwtvMzzUxrsUcKUBdYyARX0av4nu
+        dcmcNi2FtGR06MI6NDVFHV+j8wxDErLcwf6RK6mTjw94vIOg4dEkIDXcyXe78Oze
+        Fd0ZYA+wY59QtCfaZ9RanPArfU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DE2821D38E9;
+        Tue, 18 Oct 2022 13:01:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 94C171D38E8;
+        Tue, 18 Oct 2022 13:01:55 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git v2.38.1 and others
+Date:   Tue, 18 Oct 2022 10:01:54 -0700
+Message-ID: <xmqq4jw1uku5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 92005E3E-4F06-11ED-9265-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Cc-ed Johannes, who would know a lot more about CI than I do.
+A maintenance release v2.38.1, together with releases for older
+maintenance tracks v2.30.6, v2.31.5, v2.32.4, v2.33.5, v2.34.5,
+v2.35.5, v2.36.3, and v2.37.4, are now available at the usual
+places.
 
-Junio C Hamano <gitster@pobox.com> writes:
+These maintenance releases are to address the security issues
+identified as CVE-2022-39253 and CVE-2022-39260.
 
-> Glen Choo <chooglen@google.com> writes:
->
->> At $DAYJOB, we observed that this topic breaks MacOS builds with sha1dc:
->
-> Thanks for a report.
->
-> How dissapointing.  The thing is that the topic has been in 'next'
-> since the 11th (i.e. early last week), and I know that you guys rely
-> on the tip of 'next' in working order to cut your internal releases,
-> but we did not hear about this until now.
+The tarballs are found at:
 
-Yes. Unfortunately, we (Google's Git team) release on a weekly cadence;
-we merge on Fridays and build on Mondays (PST), which makes this timing
-extremely unfortunate.
+    https://www.kernel.org/pub/software/scm/git/
 
-> Possible action items:
->
->  * See what configurations our two macOS jobs are using.  If neither
->    is using sha1dc, I would say that is criminal [*] and at least
->    one of them should be updated to do so right away.
+The following public repositories all have a copy of the v2.38.1
+tag, as well as the tags for older maintenance tracks for v2.30.6,
+v2.31.5, v2.32.4, v2.33.5, v2.34.5, v2.35.5, v2.36.3, and v2.37.4.
 
-I'm not too familiar with the CI, but I took a quick peek at ci/lib.sh
-and noticed that none of the jobs build with sha1dc, not even the Linux
-or Windows ones, so..
+  url = https://git.kernel.org/pub/scm/git/git
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://github.com/gitster/git
 
->  * The "two macOS CI jobs sharing too many configuration knobs" may
->    not be limited to just SHA-1 implementation, but unlike Linux
->    builds and tests, we may have similar "monoculture" issue in our
->    macOS CI builds.  Those users, who depend on macOS port being
->    healthy, should help identify unnecessary overlaps between the
->    two, and more importantly, make sure we have CI builds with
->    configuration similar to what they actually use.
+CVE-2022-39253:
+   When relying on the `--local` clone optimization, Git dereferences
+   symbolic links in the source repository before creating hardlinks
+   (or copies) of the dereferenced link in the destination repository.
+   This can lead to surprising behavior where arbitrary files are
+   present in a repository's `$GIT_DIR` when cloning from a malicious
+   repository.
 
-I don't think this is a macOS-specific issue; our CI just doesn't do a
-good job with testing various build configurations.
+   Git will no longer dereference symbolic links via the `--local`
+   clone mechanism, and will instead refuse to clone repositories that
+   have symbolic links present in the `$GIT_DIR/objects` directory.
 
->  * Adding a few build-only-without-tests CI jobs also might help.
+   Additionally, the value of `protocol.file.allow` is changed to be
+   "user" by default.
 
-This sounds like the way to go IMO. It might be too expensive to run the
-full test suite on every build configuration, but build-without-test
-might be ok.
+CVE-2022-39260:
+   An overly-long command string given to `git shell` can result in
+   overflow in `split_cmdline()`, leading to arbitrary heap writes and
+   remote code execution when `git shell` is exposed and the directory
+   `$HOME/git-shell-commands` exists.
 
->  * Those who depend on working macOS port, especially those with
->    corporate backing who choose to use configurations that are
->    different from what we have CI builds for, are requested to
->    arrange a more frequent build test to catch a problem like this
->    much earlier.
+   `git shell` is taught to refuse interactive commands that are
+   longer than 4MiB in size. `split_cmdline()` is hardened to reject
+   inputs larger than 2GiB.
 
-I wished we had caught it sooner too. The folks here generally agree
-that our weekly release cycle is not ideal for reasons such as this.
-Hopefully this is good motivation to move that work forward, though I
-can't promise anything right now.
+Credit for finding CVE-2022-39253 goes to Cory Snider of Mirantis. The
+fix was authored by Taylor Blau, with help from Johannes Schindelin.
 
-> Anything else I forgot that we can do to improve the situation?  I
-> personally do not use macOS, I am not interested in using one, but
-> I do value those who choose to use macOS have happy git working on
-> their platform, so the stakeholders need to chip in.
-
-There's nothing else I can think of at the moment. Thanks for your
-patience and for moving the conversation along.
-
->
-> Thanks.
->
->
-> [Footnote]
->
->  * Until the world migrates over to SHA-256, the collision detecting
->    SHA-1 implementation is what we must use unless there is a strong
->    reason not to.  If we are not testing something that ought to be
->    the default, we are not doing a very good job.
+Credit for finding CVE-2022-39260 goes to Kevin Backhouse of GitHub.
+The fix was authored by Kevin Backhouse, Jeff King, and Taylor Blau.
