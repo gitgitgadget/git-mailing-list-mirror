@@ -2,204 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F20CBC4332F
-	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 02:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DFFCC4332F
+	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 02:38:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230254AbiJRC0M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Oct 2022 22:26:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54672 "EHLO
+        id S229945AbiJRCis (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Oct 2022 22:38:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230232AbiJRC0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Oct 2022 22:26:10 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07C4E7AC3B
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 19:26:09 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id 187so10692958iov.10
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 19:26:09 -0700 (PDT)
+        with ESMTP id S229509AbiJRCir (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Oct 2022 22:38:47 -0400
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 601688049F
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 19:38:46 -0700 (PDT)
+Received: by mail-il1-x12f.google.com with SMTP id u2so6824771ilv.6
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 19:38:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XEwPP1FZGTvvLJ41eQcVJtu7MNiwWqplM/jyYPIbbz0=;
-        b=Plvy4+warJB2mRaPkhFO6lxx3sI6U3KHVgZ1NamLJjJgcvZp6FPj+cR5xMA2+8s0rQ
-         8v3kwlS3A0WFUz9iEjpjh6y2o5879YDxH4l3jhkGwTflFaZqcksG1s7tT/sQyWr2lJf4
-         j3f9gzaQulB/hJ3XadU9vMAeLJsOW8mVePgCSBDXSVOuDXg5zUiC97iNaNCTeQgGD5Oz
-         q94A9Xy2KwPmkFR7pDJWyebQULy3joTSqwldUioSIiKVEvHndmMhvjotxVCi8RViSmX2
-         arIoeD72PnCWM09PxVLY6BX/S26iS47+yzYRCpSD8SSe5tJhSgKqBKjsp9O6j3przQsg
-         PtFQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PiO44qrtNZ+g2co7qjqj19P4w5Ebr0oplNAaUfIOBsA=;
+        b=IlkV4Xo7fBCQZTodgMBYVGrQs8322vB0tnxvHMkuldEwD7mOQurIVIRJ9Dz14RAvba
+         uL+vFZ/dKJlAdmFloNEkMguAnGbBylkK6x4zNUWpWVpeQP+jZydRsZAD8ue59ZMZ46Zk
+         cm1JckcrYoryTrsnH9gABmtbcpBIy6e2eSaFxROjP3WO/elplXB2eqjkx3hV58i8Irug
+         nEnvq0crm6P15Pmf+GF5NMy694aTJxthhjQD6soVVeFisgascUtcZjsu5GP/WV+O/8mr
+         CxmzFLNppnX/abBwCib94hHbuJjouETIHepmzdXBA77UU5EhpPZ34aMJJiTAOuCHB0at
+         /Y8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XEwPP1FZGTvvLJ41eQcVJtu7MNiwWqplM/jyYPIbbz0=;
-        b=VbfbwU/+n++jGUT2ff5pixrZoRwujco4qaRyA3T8xhmWNxsb+wrD3DRms/nf/Po3Zd
-         fiuqAQO7OpoMJzUlD5U7TfSx2VcAZb3QRg/QS9zg95mFTmQcRH03JsFNujMtRXsRzuXm
-         bGdY19jhCrLJKNgpqfSwa0TesOZjsmRsFQ+/z5qCHxfpc3Iqubu1O6BLIj+pAtmdC0ay
-         KG36PhLuUh9tAXp4VeQGkO6V6w/ZmYvOTJGdWgJFI6cYsYVvf79XMpLl9PfayxCralHv
-         WSlM/T3PziWaoU2Tos4MDl0EN0vun0+JbWLvgTzAPJshW6mXvlRiOcgkrflXyTgd2Tgj
-         fOYg==
-X-Gm-Message-State: ACrzQf1JMbgfotScnTk7MM9kUdRiILDKiQxcc9mnUtviacUnRFbFx5g+
-        MdGVvoow0z8FrwoLcjrrMZqOI7TNtqXZqqU2
-X-Google-Smtp-Source: AMsMyM4t0sMdsPV/gwL1xY5/BodmuJJ907BNAkzqjM1LpH4OB+pmGsChr8ySthHRyDnLlwRcNDUwqA==
-X-Received: by 2002:a02:94cf:0:b0:363:4a26:8cff with SMTP id x73-20020a0294cf000000b003634a268cffmr781173jah.286.1666059967992;
-        Mon, 17 Oct 2022 19:26:07 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PiO44qrtNZ+g2co7qjqj19P4w5Ebr0oplNAaUfIOBsA=;
+        b=wSHgYuDeHzFNwfHUq+Yzs0Bns/1sT5ChG4Z65uls6+wHhB5yilnOuun6NDPLFQJIn2
+         0feeiwjd58UUT6SSKZcL5Kd1vNoZK07oewm9fGvUV7Am3BR/kyiLvQhGGzCHo6YZ8Gqh
+         MyKbIm6obLZnriagwEMxQKYjvccwsWGsEE23TK3Rvz0kfb0fk6gzmbS9aoW/vYy8YG5B
+         Qk7obvyVtVxiy6FIg6f6xMdZiq0zXIRHELFW9hyg5p1C4OuLAMLGSVb9DJkBsQynjjXF
+         /4siM0sN0f8bDsfz49ResVib3TcY8spJnnmj9lJjNIASeTXrUcp3E/Z3lt/N4n5GXsjc
+         0SDQ==
+X-Gm-Message-State: ACrzQf0PINa9A4t5GSpFpsI936AAdNwERXTnOUVsQnmhNDh4/QkvkaJG
+        e4dTUiyjMSfSjoAZqm4OIQiqQ8Ne0105Ycj8
+X-Google-Smtp-Source: AMsMyM61UUvpm/LckVGVaLsh0eviTXsAZvEUdhMtmdWQuY/7nxsACS0toruNn5sFiV2xRtQVegcBUw==
+X-Received: by 2002:a92:2a03:0:b0:2fa:16e3:1833 with SMTP id r3-20020a922a03000000b002fa16e31833mr719723ile.286.1666060725545;
+        Mon, 17 Oct 2022 19:38:45 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y3-20020a92c743000000b002e988fe84d1sm506325ilp.58.2022.10.17.19.26.07
+        by smtp.gmail.com with ESMTPSA id e4-20020a056602044400b006bc0f8e18d4sm569869iov.34.2022.10.17.19.38.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Oct 2022 19:26:07 -0700 (PDT)
-Date:   Mon, 17 Oct 2022 22:26:06 -0400
+        Mon, 17 Oct 2022 19:38:45 -0700 (PDT)
+Date:   Mon, 17 Oct 2022 22:38:43 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     vdye@github.com, derrickstolee@github.com, peff@peff.net
-Subject: [PATCH] repack: don't remove .keep packs with `--pack-kept-objects`
-Message-ID: <6a012cd625c1d197ede91c85299cbfb37adf356b.1666059872.git.me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, derrickstolee@github.com, vdye@github.com,
+        gitster@pobox.com
+Subject: Re: [PATCH] builtin/repack.c: remove redundant pack-based bitmaps
+Message-ID: <Y04Rs7V4IpkFtKWC@nand.local>
+References: <393fd4c6db78cd694e6d4dfcf24f17e2850ccd99.1665601403.git.me@ttaylorr.com>
+ <Y02YzYS172skpbAb@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <Y02YzYS172skpbAb@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`git repack` supports a `--pack-kept-objects` flag which more or less
-translates to whether or not we pass `--honor-pack-keep` down to `git
-pack-objects` when assembling a new pack.
+On Mon, Oct 17, 2022 at 02:02:53PM -0400, Jeff King wrote:
+> On Wed, Oct 12, 2022 at 03:05:33PM -0400, Taylor Blau wrote:
+>
+> > When we write a MIDX bitmap after repacking, it is possible that the
+> > repository would be left in a state with both pack- and multi-pack
+> > reachability bitmaps.
+> >
+> > This can occur, for instance, if a pack that was kept (either by having
+> > a .keep file, or during a geometric repack in which it is not rolled up)
+> > has a bitmap file, and the repack wrote a multi-pack index and bitmap.
+> >
+> > When loading a reachability bitmap for the repository, the multi-pack
+> > one is always preferred, so the pack-based one is redundant. Let's
+> > remove it unconditionally, even if '-d' isn't passed, since there is no
+> > practical reason to keep both around. The patch below does just that.
+>
+> Yeah, this is certainly a reasonable thing to be doing. I wonder if you
+> want to share the story of why the original midx-bitmap series did not
+> include this patch. It is (IMHO, at least) an interesting debugging
+> tale.
 
-This behavior has existed since ee34a2bead (repack: add
-`repack.packKeptObjects` config var, 2014-03-03). In that commit, the
-documentation was extended to say:
+Sure, though note that this is a mystery that plague me on-and-off for a
+year or so before finally figuring it out ;-).
 
-    [...] Note that we still do not delete `.keep` packs after
-    `pack-objects` finishes.
+When we initially deployed MIDX bitmaps at GitHub, I held back this
+patch as a recovery mechanism (ie., if something was horribly broken
+with MIDX bitmaps, we could quickly deploy a patch to stop reading them,
+knowing that the existing pack bitmaps were still around).
 
-Unfortunately, this is not the case when `--pack-kept-objects` is
-combined with a `--geometric` repack. When doing a geometric repack, we
-include `.keep` packs when enumerating available packs only when
-`pack_kept_objects` is set.
+After a while building up confidence in the MIDX bitmaps implementation,
+I wrote something that resembles the patch here and deployed it. No big
+deal, right?
 
-So this all works fine when `--no-pack-kept-objects` (or similar) is
-given. Kept packs are excluded from the geometric roll-up, so when we go
-to delete redundant packs (with `-d`), no `.keep` packs appear "below
-the split" in our geometric progression.
+Wrong. The "total time spent running `git repack`" metrics started
+ticking up. But the metrics ticked up even in hosts and sites that had
+not yet received the patch. Huh?
 
-But when `--pack-kept-objects` is given, things can go awry. Namely,
-when a kept pack is included in the list of packs tracked by the
-`pack_geometry` struct *and* part of the pack roll-up, we will delete
-the `.keep` pack when we shouldn't.
+This led to many of the trace2 regions in midx.c that I recently[1, 2]
+sent. But after deploying that patch and reverting it over and over
+again, nothing in the trace2 metrics ended up yielding a satisfying
+answer.
 
-Note that this *doesn't* result in object corruption, since the `.keep`
-pack's objects are still present in the new pack. But the `.keep` pack
-itself is removed, which violates our promise from back in ee34a2bead.
+I spent a few days trying to debug the issue but didn't make any
+progress. I confirmed that, yes, we were indeed reading MIDX bitmaps and
+not relying on the pack-based bitmaps for some weird reason. And after I
+confirmed that, I set the bug aside to work on other things, and mostly
+forgot about it.
 
-But there's more. Because `repack` computes the geometric roll-up
-independently from selecting which packs belong in a MIDX (with
-`--write-midx`), this can lead to odd behavior. Consider when a `.keep`
-pack appears below the geometric split (ie., its objects will be part of
-the new pack we generate).
+But in an unrelated incident, a colleague of mine noted a bug in a
+GitHub-internal program called `git-get-unpacked-size`. The output of
+this program is the number of bytes in non-bitmapped packs, and it's
+used as a heuristic to help us pick repository networks to repack
+roughly in order of "most non-repacked bytes".
 
-We'll write a MIDX containing the new pack along with the existing
-`.keep` pack. But because the `.keep` pack appears below the geometric
-split line, we'll (incorrectly) try to remove it. While this doesn't
-corrupt the repository, it does cause us to remove the MIDX we just
-wrote, since removing that pack would invalidate the new MIDX.
+The bug in `get-unpacked-size` was that we were including the size of
+the cruft pack, meaning that certain networks would get scheduled much
+more often. But in fixing that bug, I noticed that packs in the MIDX
+would also get counted against our unpacked size.
 
-Funny enough, this behavior became far less noticeable after e4d0c11c04
-(repack: respect kept objects with '--write-midx -b', 2021-12-20), which
-made `pack_kept_objects` be enabled by default only when we were writing
-a non-MIDX bitmap.
+So I wrote the minimal fix to fix the cruft pack bug, and noted the MIDX
+issue for another day. When we did come back to it (I say "we", since
+Victoria Dye implemented the actual fix), I suggested that we ignore any
+packs that appear in a MIDX from the unpacked size, since we only write
+a MIDX after repacking a repository.
 
-But e4d0c11c04 didn't resolve this bug, it just made it harder to notice
-unless callers explicitly passed `--pack-kept-objects`.
+When we did so, I suspected that it might inadvertently solve the original mystery. It did, and here's why.
 
-The solution is to avoid trying to remove `.keep` packs during
-`--geometric` repacks, even when they appear below the geometric split
-line, which is the approach this patch implements.
+Individual maintenance runs did not get slower when removing redundant
+pack bitmaps. But because removing the .bitmap file causes that pack to
+be counted towards a repository's total unpacked size, it biases
+scheduling towards larger repositories (which have bigger packs, and
+therefore a more inflated overall size). So we weren't slowing anything
+down, just doing a slightly more expensive maintenance (on bigger
+repositories) slightly more often. This explained not only the uptick,
+but why the effect was so resistant to measuring.
 
-Co-authored-by: Victoria Dye <vdye@github.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
-We at GitHub had a slow stream of repacks that removed the just-written
-MIDX.
+It also explained why we saw the same effect when removing pack bitmaps
+with MIDX bitmaps deployed to a single site only: whenever `git
+get-unpacked-size` ran on a replica that *did* have the new code, the
+unpacked-size count would get inflated. That explains why we saw
+maintenance times tick up outside of our testing site.
 
-This had mostly been a mystery that didn't occur at high enough volume
-to justify looking into. But it went away entirely after merging in
-v2.36.x, which contains e4d0c11c04.
+So, that's the story :-).
 
-Some investigating with Victoria today led to the patch above, which is
-still relevant since e4d0c11c04 papers over an existing bug.
+[1]: https://lore.kernel.org/git/dc50527d99680fb0ff1f3240531105badaa221dc.1665612094.git.me@ttaylorr.com/
+[2]: https://lore.kernel.org/git/dd5ceb1ec3c01e8a2af55130718fff0b5eaf2de0.1665612094.git.me@ttaylorr.com/
 
- builtin/repack.c            |  5 +++++
- t/t7700-repack.sh           | 24 ++++++++++++++++++++++++
- t/t7703-repack-geometric.sh |  6 +++++-
- 3 files changed, 34 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/repack.c b/builtin/repack.c
-index a5bacc7797..f71909696d 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -1089,6 +1089,11 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				strbuf_addstr(&buf, pack_basename(p));
- 				strbuf_strip_suffix(&buf, ".pack");
-
-+				if ((p->pack_keep) ||
-+				    (string_list_has_string(&existing_kept_packs,
-+							    buf.buf)))
-+					continue;
-+
- 				remove_redundant_pack(packdir, buf.buf);
- 			}
- 			strbuf_release(&buf);
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index ca45c4cd2c..df8e94d7a8 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -426,6 +426,30 @@ test_expect_success '--write-midx -b packs non-kept objects' '
- 	)
- '
-
-+test_expect_success '--write-midx with --pack-kept-objects' '
-+	git init repo &&
-+	test_when_finished "rm -fr repo" &&
-+	(
-+		cd repo &&
-+
-+		test_commit one &&
-+		test_commit two &&
-+
-+		one="$(echo "one" | git pack-objects --revs $objdir/pack/pack)" &&
-+		two="$(echo "one..two" | git pack-objects --revs $objdir/pack/pack)" &&
-+
-+		keep="$objdir/pack/pack-$one.keep" &&
-+		touch "$keep" &&
-+
-+		git repack --write-midx --write-bitmap-index --geometric=2 -d \
-+			--pack-kept-objects &&
-+
-+		test_path_is_file $keep &&
-+		test_path_is_file $midx &&
-+		test_path_is_file $midx-$(midx_checksum $objdir).bitmap
-+	)
-+'
-+
- test_expect_success TTY '--quiet disables progress' '
- 	test_terminal env GIT_PROGRESS_DELAY=0 \
- 		git -C midx repack -ad --quiet --write-midx 2>stderr &&
-diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index da87f8b2d8..8821fbd2dd 100755
---- a/t/t7703-repack-geometric.sh
-+++ b/t/t7703-repack-geometric.sh
-@@ -176,8 +176,12 @@ test_expect_success '--geometric ignores kept packs' '
- 		# be repacked, too.
- 		git repack --geometric 2 -d --pack-kept-objects &&
-
-+		# After repacking, two packs remain: one new one (containing the
-+		# objects in both the .keep and non-kept pack), and the .keep
-+		# pack (since `--pack-kept-objects -d` does not actually delete
-+		# the kept pack).
- 		find $objdir/pack -name "*.pack" >after &&
--		test_line_count = 1 after
-+		test_line_count = 2 after
- 	)
- '
-
---
-2.38.0.16.g393fd4c6db
+Thanks,
+Taylor
