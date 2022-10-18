@@ -2,65 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E22F9C4332F
-	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 10:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3941C433FE
+	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 10:59:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229970AbiJRK7Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Oct 2022 06:59:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58628 "EHLO
+        id S229990AbiJRK7U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Oct 2022 06:59:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229657AbiJRK7L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2022 06:59:11 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FA0980BD3
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 03:59:10 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id l32so10450299wms.2
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 03:59:10 -0700 (PDT)
+        with ESMTP id S229958AbiJRK7N (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2022 06:59:13 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F09A018B08
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 03:59:11 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id w18so22839262wro.7
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 03:59:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JEj13aDBcZ+qGqPB4u07gMH3+zEFKRTB1kYVmy2u0vs=;
-        b=XYQ23By1TT1gCfC+IABzDe3nN/Od5bBvK5C4DauaLExguOQIcswLYMA/SQoMg/JwvE
-         pjGJfJ5B/gNVCaPczx4vFDO8liSO8eNJ32ZrCIife/0RwksUHj06NIbMhaEpucZuosM2
-         EH+iNUTdCuHtJNDYASqrT4CKLIUYOkVHnGJ4F/OOmrcfi2kNT3AW+fUROGw+ZTWW9RaP
-         rfh2t65Hgw6yaXRg5AL5bGxynr4sGi7IE21ETsXaWB16cK9XEJv4OAprxGkOmaA2F8+A
-         RofPMPJyyffi1lIo7PWe2eBcL9uefLumn3g8dGBf14QtnbOqAalzfhyJpl254Yb4mR3O
-         QT2w==
+        bh=z0tMKdv7eU70aifszClnd20mLEDmV7jo+jeNIIrwvS0=;
+        b=dD1NZ2fuQ3OMCY9BzEghk4zGLWr3903zndfB0Fb0/khEXrJ+YyDHfNcZCvkdLtr4kj
+         mfX6Ji64bYIAtDSDmPkOmvA4/U6V28XlljaFzGx/jv/sclb8o/8/4e1MGDcqYEmFYx2P
+         iCaijnG4MbrG58NsJyzzjsp/o9VbK4flbMqECPALPaXryT1LU8V+4pNvaxYUGPeL1/qB
+         BJFwI5RXgXMCk14us8093yt1QzVndJYX6LvfG4T+pa1j3aYW2O/46dVoebXZ5h+kumbD
+         vUWouE7nZZC69yzpDoce9+kCqlZGPbt/1g+DK6nI8V1YDxH/Gd/8yxdesxeN8NKlmc+Q
+         cl6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JEj13aDBcZ+qGqPB4u07gMH3+zEFKRTB1kYVmy2u0vs=;
-        b=oH3S/tSkSFdSyhOqin3/80JBVSEUBxESJ1ZaMP5QSuKg7ADYZqzl+LWzdnzYrjeElZ
-         EZTHWr7sR4IXH9zqgrpfJztBpq9eDMRR6gQN22VZvpfU/iWJ5+ZDW9+SyfUYqwGfhSg+
-         GrXV4N4tTiBQ2X/tTlXBeFcbK4MzWwTGhZv+bPG7ASQBISOjNqbQSn4EayI/RkLWKcMB
-         aYFwrdUO1RjgN7XWZhjhFUTyzR+/gvVECy0RqC52pKrRPvdIk1KAO//PEUIgx9tcvyT4
-         JShSX4oE8UHZehfaNWVc21eT61Wlc4IQ0O4FyF5YPC93wcbnbA6lGOAYnSIMgKhuUaic
-         2nRg==
-X-Gm-Message-State: ACrzQf25maL7ccMAdtK9W49ymJeXGFmFtZyEXDN0LVSIh9C/aI+gzeET
-        zu7V5rErKhc42kfWNueun9azvkThwps=
-X-Google-Smtp-Source: AMsMyM7BlKFVs5LVxlS08dWWFRdrYCyUiIvZOoDuGM2Um0bfC0mpmEocVfSFCrngiWyc5+CiEP1hAA==
-X-Received: by 2002:a05:600c:3b99:b0:3c6:8b8e:a624 with SMTP id n25-20020a05600c3b9900b003c68b8ea624mr1551278wms.113.1666090748725;
-        Tue, 18 Oct 2022 03:59:08 -0700 (PDT)
+        bh=z0tMKdv7eU70aifszClnd20mLEDmV7jo+jeNIIrwvS0=;
+        b=ahyeW4uVnXth9N+efMM2V49cJltEdJHlicD32qc9eBPw2ji01+/KvN+cWEFD1jK6S/
+         EH5N1+pqy4LFjeUeOlbK0OxgCP4z5YpDt5jsMUfkOGTr6qNZ8F40oWfLX3l2o5cs6L0J
+         18y+TlyCdfNJPEC8bcequpBQt1GAbDNtpd0EnKjtPF2A2/hgqeaA5Blgopokj4WQTllf
+         x8LXiCUL5IvDSdzCb9eYcSGQ9MyANUgZKY30oASeq8qWoPPgMYLRlT1P1fQFeAwOFoFp
+         kIlP50eVufj4VwX86ECZNDamMdyZBfAxp7Q97ET8MX/bzSPC4DR4qbZPHNqZ7huCkf6V
+         WMIw==
+X-Gm-Message-State: ACrzQf0/uuOp+6UDI1Iv1zJSS4aOslwELhvxufWGHpv72JkJgb3JhJy8
+        j6UvLQcTl6uWnkIOSC8hR0Nk1BgATI0=
+X-Google-Smtp-Source: AMsMyM74bQvvti44mzVtMb3anq8E/m8/rxGlstJ4XEh9MKLTfTs20hAnDE8fZF/CxL6ELPbVRpqsJQ==
+X-Received: by 2002:adf:e18b:0:b0:22e:a2ce:7746 with SMTP id az11-20020adfe18b000000b0022ea2ce7746mr1498600wrb.468.1666090749943;
+        Tue, 18 Oct 2022 03:59:09 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w3-20020adfee43000000b0022add5a6fb1sm10687523wro.30.2022.10.18.03.59.07
+        by smtp.gmail.com with ESMTPSA id u6-20020adfeb46000000b002258235bda3sm10649042wrn.61.2022.10.18.03.59.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Oct 2022 03:59:08 -0700 (PDT)
-Message-Id: <356b2e9a1007bcd1382f26f333926ff0d5b9abe2.1666090745.git.gitgitgadget@gmail.com>
+        Tue, 18 Oct 2022 03:59:09 -0700 (PDT)
+Message-Id: <9faca9d5cbe706c00d03ca2a125f2e113294a548.1666090745.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1320.v3.git.1666090745.gitgitgadget@gmail.com>
 References: <pull.1320.v2.git.1661243463.gitgitgadget@gmail.com>
         <pull.1320.v3.git.1666090745.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 18 Oct 2022 10:59:01 +0000
-Subject: [PATCH v3 1/5] cmake: make it easier to diagnose regressions in CTest
- runs
-MIME-Version: 1.0
+Date:   Tue, 18 Oct 2022 10:59:02 +0000
+Subject: [PATCH v3 2/5] cmake: copy the merge tools for testing
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
@@ -74,57 +73,29 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When a test script fails in Git's test suite, the usual course of action
-is to re-run it using options to increase the verbosity of the output,
-e.g. `-v` and `-x`.
-
-Like in Git's CI runs, when running the tests in Visual Studio via the
-CTest route, it is cumbersome or at least requires a very unintuitive
-approach to pass options to the test scripts: the CMakeLists.txt file
-would have to be modified, passing the desired options to _all_ test
-scripts, and then the CMake Cache would have to be reconfigured before
-running the test in question individually. Unintuitive at best, and
-opposite to the niceties IDE users expect.
-
-So let's just pass those options by default: This will not clutter any
-output window but the log that is written to a log file will have
-information necessary to figure out test failures.
-
-While at it, also imitate what the Windows jobs in Git's CI runs do to
-accelerate running the test scripts: pass the `--no-bin-wrappers` and
-`--no-chain-lint` options.
-
-This makes the test runs noticeably faster because the `bin-wrappers/`
-scripts as well as the `chain-lint` code make heavy use of POSIX shell
-scripting, which is really, really slow on Windows due to the need to
-emulate POSIX behavior via the MSYS2 runtime. In a test by Eric
-Sunshine, it added two minutes (!) just to perform the chain-lint task.
-
-The idea of adding a CMake config option (á la `GIT_TEST_OPTS`) was
-considered during the development of this patch, but then dropped: such
-a setting is global, across _all_ tests, where e.g. `--run=...` would
-not make sense. Users wishing to override these new defaults are better
-advised running the test script manually, in a Git Bash, with full
-control over the command line.
+Even when running the tests via CTest, t7609 and t7610 rely on more than
+only a few mergetools to be copied to the build directory. Let's make it
+so.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/CMakeLists.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/buildsystems/CMakeLists.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 2237109b57f..6ac20bc5054 100644
+index 6ac20bc5054..0c741e7d878 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1088,7 +1088,7 @@ file(GLOB test_scipts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
- #test
- foreach(tsh ${test_scipts})
- 	add_test(NAME ${tsh}
--		COMMAND ${SH_EXE} ${tsh}
-+		COMMAND ${SH_EXE} ${tsh} --no-bin-wrappers --no-chain-lint -vx
- 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t)
- endforeach()
- 
+@@ -1078,7 +1078,8 @@ if(NOT ${CMAKE_BINARY_DIR}/CMakeCache.txt STREQUAL ${CACHE_PATH})
+ 	#misc copies
+ 	file(COPY ${CMAKE_SOURCE_DIR}/t/chainlint.sed DESTINATION ${CMAKE_BINARY_DIR}/t/)
+ 	file(COPY ${CMAKE_SOURCE_DIR}/po/is.po DESTINATION ${CMAKE_BINARY_DIR}/po/)
+-	file(COPY ${CMAKE_SOURCE_DIR}/mergetools/tkdiff DESTINATION ${CMAKE_BINARY_DIR}/mergetools/)
++	file(GLOB mergetools "${CMAKE_SOURCE_DIR}/mergetools/*")
++	file(COPY ${mergetools} DESTINATION ${CMAKE_BINARY_DIR}/mergetools/)
+ 	file(COPY ${CMAKE_SOURCE_DIR}/contrib/completion/git-prompt.sh DESTINATION ${CMAKE_BINARY_DIR}/contrib/completion/)
+ 	file(COPY ${CMAKE_SOURCE_DIR}/contrib/completion/git-completion.bash DESTINATION ${CMAKE_BINARY_DIR}/contrib/completion/)
+ endif()
 -- 
 gitgitgadget
 
