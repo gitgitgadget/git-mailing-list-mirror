@@ -2,111 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ED96C433FE
-	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 10:59:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2278C433FE
+	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 12:05:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230026AbiJRK7j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Oct 2022 06:59:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58730 "EHLO
+        id S230468AbiJRMFt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Oct 2022 08:05:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229981AbiJRK7R (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2022 06:59:17 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF0A480BD3
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 03:59:15 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id i82-20020a1c3b55000000b003c6c154d528so268872wma.4
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 03:59:15 -0700 (PDT)
+        with ESMTP id S230478AbiJRMFC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2022 08:05:02 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A184101E2
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 05:04:29 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id a13so20150378edj.0
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 05:04:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c7I87zxy1YkseDheQ3ObpIeu2VPLv1trvSuTyDBxiow=;
-        b=f8DWgNuz0HrbmzLLvIqt3iY73+FidpO2XhAZOQXw2CokY4kpKlkfMFcqRi/OHlA7oL
-         k0QF13DR5xtnP8Xls9PDDnIgsNHJxYD5PVj8DOMhSxRTtsH/0EyhilNwI/R00t9/qL//
-         LkD37vvVnj4sq9wzyg1VkLQpvZvcWJytLQSnOkqVL1+dFcGf3VTy2xWkDXW7vPd6gOec
-         RS3oIleVpYXPZaQycCPPLQLxbV6lUJmKpvPXo2Hww5WEwJmz7PtaBZx+kFgw1CrJtiN4
-         4tIi24KDRX56+gmCYm4phU5LQdfwMyKWqhq5Y6A5lBderMsV4Vje4bUGn/QDWj8LXC6g
-         6xeg==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=izJeSfit+fuGgCOhdkJLu/6RsTsRZ3k2h/7COTlTBAI=;
+        b=eLrCbIaoQ5TR0iI7i+1pxtFRp6wIr07uG/Fg7+oiKFZDg+I8yMb1Jj5yVUj2y1kGbz
+         OvwaSyO9xMEm8Z+aESEDhnmBVOJL5HzNK6g3rc05q9HJHbx8YWbKFMKEQ4iyVozuh+uJ
+         b3+BuF/Ap4Gfk6qKshoeVEhDwMhN+KViokP/QLDqFdtcodB2Npu9Vl4zVMuqLvojVaWw
+         ChGWEN0Gxmpro9rZZdbm/7b4Rfb5LjGeSVPVEcGqJSNheDfzgc69fFsbllIw9y0jCIkH
+         27jgQ2ByMwvxuddv8lv++W5zN/48swa8s0oQjD8IrQThzB8qo5FDY0EnxKfnhxDKbmah
+         j+uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=c7I87zxy1YkseDheQ3ObpIeu2VPLv1trvSuTyDBxiow=;
-        b=Wnnyo2Kpw5MLWRSkMAEOedgDsXbEAsMAAj10kHzmwwK0pCcv1uU4tdMeerWI9FZ+wC
-         mitFGPXmOAytx+WdBcwviLRbbo1Hn10FHBIan+7PQn+gwMBwu0OGZdliKBlrYgakmUJq
-         e1brV6MQ6ExWhHcuT3GXOzCnRGBUlOdzJt9Vw/KrGJYBLEyVdB1Hu4PHtrFnV3VTgB71
-         lNbPwQRQbwEF9FqdGtyGjE7TsuAmRvJArc/wwLBgUOwb54xtymzHHpSWm6DYDS6q3BVs
-         z3NJGL7rMMGMgw0ckWHxcQao/1FumOwvIt4A17mEmfaPpLYGr+wW06MP75nrj8+Or8Rf
-         K8ZA==
-X-Gm-Message-State: ACrzQf0uAtTnbh8ZTw3ksnvXNiRX77M8J5kU7dmLNS5nlxH5Y+3hCRU3
-        VY1wqlxRUx2VccSqqe3lti1x3XnSHiY=
-X-Google-Smtp-Source: AMsMyM6p+V6nXpJg2hibyfASkDLDgUUZGxqdN7KTanaRyorv9qUds/MtUtuxqAR5FbsP8vKVlwoz8Q==
-X-Received: by 2002:a05:600c:3384:b0:3c6:f25a:96e9 with SMTP id o4-20020a05600c338400b003c6f25a96e9mr9763399wmp.112.1666090753721;
-        Tue, 18 Oct 2022 03:59:13 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o5-20020a5d62c5000000b00228cbac7a25sm10846771wrv.64.2022.10.18.03.59.13
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=izJeSfit+fuGgCOhdkJLu/6RsTsRZ3k2h/7COTlTBAI=;
+        b=U4iYLauG5wLHNQ3p+xQLoLlSzXuuXb0/Ky9fXWeLZKaMyDEU6uieXPcba6shgV35up
+         tEr6D3HEbdIGyT/pM2QaVFbS8GDr69rjTaFfz3Ska3SyTupUoUxm0+tmYf3YnfwrqJpj
+         OffaSCVl68Fx3ap3sny9zASPHZa07FOikH1viUIf7U96496G163nXm2ijKKbVNdlzpzH
+         9vF3Gm8jDJ2ofDsPuVlOkPeDuJgdF60RiV5SqwPdTA1Hd/kTjRkjNLXknCBlXMtNseHk
+         jKzyOkbMGQw/FQv5AvKH6AKTbGrJGjdfP/WcB+Id1n8WtoR8cWeN3M+E/C1NtOfS6iKF
+         Ki4Q==
+X-Gm-Message-State: ACrzQf2IoiDdJyodzQyg1V9LrJIF0IlnGoWzvIuG3kVcyjTKne4+Pib9
+        C/xQyRWXCPr45Gmyo+oO6Fw=
+X-Google-Smtp-Source: AMsMyM4m3X1b020VPKR6w+YfhClFd1FAwp4TuHnQoZyNCpA+7lgpGuhcfxGLPPExDKWjsL27VH/sqQ==
+X-Received: by 2002:a05:6402:406:b0:458:a47:d14c with SMTP id q6-20020a056402040600b004580a47d14cmr2283427edv.41.1666094649963;
+        Tue, 18 Oct 2022 05:04:09 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id hp11-20020a1709073e0b00b0078175601630sm7301792ejc.79.2022.10.18.05.04.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Oct 2022 03:59:13 -0700 (PDT)
-Message-Id: <40cf872f48386f8eca0fa814e4cdfb0ded915ed8.1666090745.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1320.v3.git.1666090745.gitgitgadget@gmail.com>
-References: <pull.1320.v2.git.1661243463.gitgitgadget@gmail.com>
-        <pull.1320.v3.git.1666090745.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 18 Oct 2022 10:59:05 +0000
-Subject: [PATCH v3 5/5] cmake: increase time-out for a long-running test
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 18 Oct 2022 05:04:09 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oklKK-005imk-0c;
+        Tue, 18 Oct 2022 14:04:08 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH v2 09/12] fsmonitor: implement filesystem change
+ listener for Linux
+Date:   Tue, 18 Oct 2022 13:59:39 +0200
+References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
+ <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com>
+ <4f9c5358475867af75acd865505884f99801ca17.1665783945.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <4f9c5358475867af75acd865505884f99801ca17.1665783945.git.gitgitgadget@gmail.com>
+Message-ID: <221018.86zgdtibif.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Eric Sunshine <ericsunshine@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-As suggested in
-https://github.com/git-for-windows/git/issues/3966#issuecomment-1221264238,
-t7112 can run for well over one hour, which seems to be the default
-maximum run time at least when running CTest-based tests in Visual
-Studio.
+On Fri, Oct 14 2022, Eric DeCosta via GitGitGadget wrote:
 
-Let's increase the time-out as a stop gap to unblock developers wishing
-to run Git's test suite in Visual Studio.
+> From: Eric DeCosta <edecosta@mathworks.com>
+> [...]
+> +			strbuf_add(&path, w->dir, strlen(w->dir));
+> +			strbuf_addch(&path, '/');
+> +			strbuf_add(&path, event->name,  strlen(event->name));
 
-Note: The actual run time is highly dependent on the circumstances. For
-example, in Git's CI runs, the Windows-based tests typically take a bit
-over 5 minutes to run. CI runs have the added benefit that Windows
-Defender (the common anti-malware scanner on Windows) is turned off,
-something many developers are not at liberty to do on their work
-stations. When Defender is turned on, even on this developer's high-end
-Ryzen system, t7112 takes over 15 minutes to run.
+Don't do strbuf_add(&buf, x, strlen(x), just use strbuf_addstr(&buf, x)
+instead.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- contrib/buildsystems/CMakeLists.txt | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 1d8cebb4cfe..7e0d040e0f6 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1088,4 +1088,8 @@ foreach(tsh ${test_scipts})
- 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t)
- endforeach()
- 
-+# This test script takes an extremely long time and is known to time out even
-+# on fast machines because it requires in excess of one hour to run
-+set_tests_properties("${CMAKE_SOURCE_DIR}/t/t7112-reset-submodule.sh" PROPERTIES TIMEOUT 4000)
-+
- endif()#BUILD_TESTING
--- 
-gitgitgadget
+The same goes for a couple of existing occurances that hit "master"
+already in the just-merged fsmonitor topic, but in this case we can
+change it in-flight still. Thanks!
