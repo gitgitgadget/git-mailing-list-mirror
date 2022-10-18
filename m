@@ -2,127 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0434BC433FE
-	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 04:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DD69C4332F
+	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 04:17:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229584AbiJRECj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Oct 2022 00:02:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38050 "EHLO
+        id S229711AbiJRERR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Oct 2022 00:17:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229896AbiJRECi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2022 00:02:38 -0400
-Received: from box.elsiehupp.com (box.elsiehupp.com [104.131.30.57])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F23288DC6
-        for <git@vger.kernel.org>; Mon, 17 Oct 2022 21:02:34 -0700 (PDT)
-Received: from authenticated-user (box.elsiehupp.com [104.131.30.57])
+        with ESMTP id S229489AbiJRERP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2022 00:17:15 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11F7795E6A
+        for <git@vger.kernel.org>; Mon, 17 Oct 2022 21:17:13 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 837A11B651A;
+        Tue, 18 Oct 2022 00:17:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9hdJAtcTETkM5vPsSYGzJ5Z91VbnmQC7nJ8WNq
+        wcSF4=; b=BvVUuDt4CuD+0xuOLnjgsTjRngXkGu2TjmYSpyVMUOryS55/SH22X9
+        SJuB1i7taJnTkRvoGYoNAZTrlg+1JTaLT9ITH0d0xQTLD3swNIerk/V5CmZYUiBY
+        bc0Qp7oXUZKPC3Lx8LmUqPve5k6MoXgXs9eBsHRVbloABW8A4yJBE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7BC011B6518;
+        Tue, 18 Oct 2022 00:17:12 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by box.elsiehupp.com (Postfix) with ESMTPSA id 838F9FC4AE;
-        Tue, 18 Oct 2022 00:02:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=elsiehupp.com;
-        s=mail; t=1666065751;
-        bh=daPxN8S+NUWcthlYLkS11EjIQ7MamaTHrixm47QffYU=;
-        h=Subject:From:In-Reply-To:Date:Cc:References:To:From;
-        b=ldJ0Ajc7F/eyqVDQqhztn/Wyg1jC8UYq8zRzsABf0HS8UcGM2jNOfhWZ3nEiLfKUr
-         gcXQhhLgCAA/AZVstV1WkwCPR1SxbrPKK0NZVBKup/wQYKmRIwCNEEIEXvWm9y6Ndt
-         wyrKTltIre3G5l10CblCAs2XLoN5wLfUmBen6dR90YxeS/WApSGzurBBvlvLLW4+y5
-         jCwLlaDPORbBeSVrZ7FFUEE16HXUc6WAUUlGXmyrSGXEZ+qimi5yxWaBPDB3vdeFtz
-         m0QlArrC7lWun2RojjJC+cpJ0kcqMG3ZKMkINvFhQiceqggEEDAdB9BDGZu9+0eyKJ
-         mYDOGhiYyF3FQ==
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0
-Subject: Re: Multiple --global config workspaces?
-From:   Elsie Hupp <git@elsiehupp.com>
-In-Reply-To: <Y0m64fHWIjZoXoTQ@coredump.intra.peff.net>
-Date:   Tue, 18 Oct 2022 00:02:30 -0400
-Cc:     Junio C Hamano <gitster@pobox.com>, reto@labrat.space,
-        philipoakley@iee.email, git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <ACFF4036-3DD1-4647-90BB-77F029326715@elsiehupp.com>
-References: <C4E3A512-2E2C-4EA5-9F2E-3662BCF0F165@elsiehupp.com>
- <xmqqwn96x61t.fsf@gitster.g> <Y0Vr/4IeA236nxzF@coredump.intra.peff.net>
- <03B277AB-DE33-443D-AC9C-FAB7A2F93AB3@elsiehupp.com>
- <Y0m64fHWIjZoXoTQ@coredump.intra.peff.net>
-To:     Jeff King <peff@peff.net>
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AA0601B6515;
+        Tue, 18 Oct 2022 00:17:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH v2 00/12] fsmonitor: Implement fsmonitor for Linux
+References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
+        <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com>
+        <kl6l7d0yyu6r.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Mon, 17 Oct 2022 21:17:08 -0700
+In-Reply-To: <kl6l7d0yyu6r.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Mon, 17 Oct 2022 15:14:04 -0700")
+Message-ID: <xmqqo7u9wyt7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: BBDDF452-4E9B-11ED-9BDB-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A response to this:
+Glen Choo <chooglen@google.com> writes:
 
->> And I tried the following to no avail (despite both paths resolving =
-when using cat):
->>=20
->> [includeIf "gitdir:github/"] path =3D ./**/github/.gitconfig
->>=20
->> [includeIf "gitdir:github/"] path =3D ./*/github/.gitconfig
->=20
-> Right, the value of an include path expands to a single file, and we =
-do
-> not do any globbing. I suppose it would be possible to do, and we'd =
-read
-> each file in sequence. But I'm not sure I'm convinced of the utility =
-of
-> that (and again, it doesn't help the discoverability problem you had).
+> At $DAYJOB, we observed that this topic breaks MacOS builds with sha1dc:
 
-My thought is that globbing (I=E2=80=99m not sure of the terminology) =
-should be supported to the extent that it=E2=80=99s valid bash syntax, =
-and breaking consistency with bash could cause more confusion than just =
-letting the user do weird or inadvisable things with the path variable =
-that nonetheless have entirely predictable outcomes.
+Thanks for a report.
 
-So, because, e.g., the following works:
+How dissapointing.  The thing is that the topic has been in 'next'
+since the 11th (i.e. early last week), and I know that you guys rely
+on the tip of 'next' in working order to cut your internal releases,
+but we did not hear about this until now.  What makes it taste even
+worse is that nobody else caught this, even though we seem to have a
+couple of macOS jobs at GitHub Actions CI, there we didn't see any
+breakage related to this.
 
-> elsiehupp@Alpha:~$ cat ./**/github/.gitconfig
-> [user]
-> 	email =3D github@elsiehupp.com
+Possible action items:
 
-=E2=80=A6one would expect, e.g., this gitconfig line to work, as well:
+ * See what configurations our two macOS jobs are using.  If neither
+   is using sha1dc, I would say that is criminal [*] and at least
+   one of them should be updated to do so right away.
 
-> [include] path =3D ./**/github/.gitconfig
+ * The "two macOS CI jobs sharing too many configuration knobs" may
+   not be limited to just SHA-1 implementation, but unlike Linux
+   builds and tests, we may have similar "monoculture" issue in our
+   macOS CI builds.  Those users, who depend on macOS port being
+   healthy, should help identify unnecessary overlaps between the
+   two, and more importantly, make sure we have CI builds with
+   configuration similar to what they actually use.
+
+ * Adding a few build-only-without-tests CI jobs also might help.
+
+ * Those who depend on working macOS port, especially those with
+   corporate backing who choose to use configurations that are
+   different from what we have CI builds for, are requested to
+   arrange a more frequent build test to catch a problem like this
+   much earlier.
+
+Anything else I forgot that we can do to improve the situation?  I
+personally do not use macOS, I am not interested in using one, but
+I do value those who choose to use macOS have happy git working on
+their platform, so the stakeholders need to chip in.
+
+Thanks.
 
 
-For comparison, I can also do:
+[Footnote]
 
-> elsiehupp@Alpha:~$ cat ./**/**/.gitconfig
-> [user]
-> 	email =3D github@elsiehupp.com
-> [user]
-> 	email =3D gitlab@elsiehupp.com
-> [user]
-> 	email =3D gnome@elsiehupp.com
-> [user]
-> 	email =3D launchpad@elsiehupp.com
-> [user]
-> 	email =3D github@elsiehupp.com
-> [user]
-> 	email =3D xdg@elsiehupp.com
-
-If I pipe the above into a new ~/.gitconfig, I can then do:
-
-> elsiehupp@Alpha:~$ git config --get-all user.email
-> github@elsiehupp.com
-> gitlab@elsiehupp.com
-> gnome@elsiehupp.com
-> launchpad@elsiehupp.com
-> github@elsiehupp.com
-> xdg@elsiehupp.com
-
-I don=E2=80=99t know off the top of my head what happens when a single =
-variable is defined multiple times. I do get the following output, =
-though:
-
-> elsiehupp@Alpha:~$ git config --get user.email
-> xdg@elsiehupp.com
-
-Basically one might expect [include] to behave like cat in bash=E2=80=A6 =
-more for consistency and predictability than anything else.
-
-None of the various cat command-line options seem particularly =
-applicable to [include], so my commentary here mainly concerns [include] =
-recognizing and working with path wildcards and the like along otherwise =
-established patterns of behavior.
-
-(Now, to change my gitconfig back to the conditional includes=E2=80=A6)
+ * Until the world migrates over to SHA-256, the collision detecting
+   SHA-1 implementation is what we must use unless there is a strong
+   reason not to.  If we are not testing something that ought to be
+   the default, we are not doing a very good job.
 
