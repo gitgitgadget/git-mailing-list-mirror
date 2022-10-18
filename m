@@ -2,69 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7E8AC433FE
-	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 14:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70A31C4332F
+	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 14:48:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230360AbiJROsY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Oct 2022 10:48:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60366 "EHLO
+        id S230143AbiJROsr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Oct 2022 10:48:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230377AbiJROsW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2022 10:48:22 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B47B5D7E34
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 07:48:20 -0700 (PDT)
+        with ESMTP id S230417AbiJROsm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2022 10:48:42 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1750D8EE5
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 07:48:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1666104498;
-        bh=FFr9IJXEwB4QCHNSL/mcAGeoZUI+e1quOhnjnMHac6U=;
+        s=badeba3b8450; t=1666104505;
+        bh=bKaSDsVB9D4+A2+GPEPTga3o5GepqXO4Q5db1++AnP0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=i+6QBjeOYdzJ7nFbepEfGRInjgsFQ9ju8XF3HQLvCr2ccd2Wwmqd2s25QFTJsgH+U
-         0BVwPG/4V28qFHRIOSbEdXr1QGu9cJktfd7mlKfo76v+AykFgYtSyxM/BmQ2SFse0T
-         WXOuYnkS1kw24vrCb5WSKroomuNTLrd0TpYMB0iw=
+        b=b1JCbZ/oT01vhLW7j1BrRpQdt9tXg2CHn4EOhCee5YL8kmQAinhzKwYyd63gH1YpW
+         2IDjsQvgJIL+ubW44DHdJVDHD3cn8czU0iGcC+/H1pHbLmGaNHw3tzCqf7T3nZGOXf
+         5wH3OtFHLw22GogKHcIWoMORoE59cM17RuHurGg4=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.18.67.214] ([213.196.212.100]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mf078-1pLUPw2any-00gWlI; Tue, 18
- Oct 2022 16:48:18 +0200
-Date:   Tue, 18 Oct 2022 16:02:57 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1My36N-1p38De14Fr-00zZsA; Tue, 18
+ Oct 2022 16:48:25 +0200
+Date:   Tue, 18 Oct 2022 16:03:04 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 5/5] cmake: avoid editing t/test-lib.sh
-In-Reply-To: <220811.86sfm3ov5z.gmgdl@evledraar.gmail.com>
-Message-ID: <3q98po6o-561o-0r9n-qsqp-1052oqpo889r@tzk.qr>
-References: <pull.1320.git.1660143750.gitgitgadget@gmail.com> <c7fc5a4ee4cbc49b8afb2f9579763482552fffb0.1660143750.git.gitgitgadget@gmail.com> <220811.86sfm3ov5z.gmgdl@evledraar.gmail.com>
+        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 4/5] cmake: avoid editing t/test-lib.sh
+In-Reply-To: <220908.86a67al3c1.gmgdl@evledraar.gmail.com>
+Message-ID: <851094n0-2o53-77n8-41o6-773q479q5sqq@tzk.qr>
+References: <pull.1320.git.1660143750.gitgitgadget@gmail.com> <pull.1320.v2.git.1661243463.gitgitgadget@gmail.com> <22473d6b8f3d4e4c482c27a4fb3b58705d4c93ca.1661243463.git.gitgitgadget@gmail.com> <220908.86a67al3c1.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1872230682-1666079959=:174"
-Content-ID: <p80sr726-n92s-r201-0s83-s392ors82q11@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:a0yIW6QKz++dNMlLotrDd1REMlDNYTuTYej6HDKA3/6uidxmcz6
- L7s1CMAelJtMs1WX5DNj7NGv9ph1swqIO+cv+BOymXiXTK55zjey1S1qk9uCFGlZNIklhOb
- crwAr4NlsOXn50gywruuurDmhca5eAP6ayBthBzBXYApXR8ozdqSzeU9ilTI0zlpTSr5RU5
- yOulylVTnsBb09/JMtDsw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:P4UpFdunAdM=:xHZoEPEKeFeBiER3Sfhep2
- J6Pd7jgO/6CjmDVut+w2h2KOMaUfkdNAMRRHsJR6wXxA64c28cmR3MXYAEXsSHFGI9CMf7XB6
- lPkikDjxlXLf+5C9qru/tilRcE6l7tekcd6zV0a21BChhvTwOUd5dMmkPs9EERZv5APacnzCH
- 1vXegrGhHx7+4BLbssl5VdgC3TBYZ0Zj+AS/uF5i9yC7IX19GDa05wxls1wipoEje9cnHNCRR
- NBTf3QIZoQe9kiIJK0K48UxPS1l7BoI8xHAtQKGyYCm25q9TJQp63ggq+c7kbYCkd58/4+dXi
- 8fz1ktgmbrrYxdBRYUkk4pykNIOpJFg480GmzJ9T3jEPuU5ZyxwtB+LQhrg6GOpB/MnfvpE3q
- 4ueAatwU0LkaGjNQ0CLxYaZpxE8BN6wy0ymWNjt1w1zhDjGqQ05aBLlkyFH89jGVW7cjOyFnk
- 7b0ieQMhWdSHSqR4Bjif8nKm4OogUVR8Z76+k89VGMpPl2JH0owkkvyX448R0I8f0zta2GOIJ
- 9Q3YBi847yj6P77KhcR+rcNxeeTOZ6MGahtwqHRBu7JprN9xMplBw6uN0J0i53tb03iOqUe8X
- yb80fNnXqeh7nPW2WZTH3qNmnu2CTANQWzL5uuCH7flHru9BKmKyx5hiMi9j48DNL5sIeb+jU
- n+B57Jl8zDkQFlhke9RUpBybQBYVhxtmcNIKxr4+WMJaGH1Nr3ZYZM3Z1/ZzZ9gnqejPQYhx3
- VpIyhDz7Y8ZdrxvsEkTMfsxPS9pjROKtK00fJ6buu2SboPesMaipalFdHHn5sdScdjr63S6t8
- c2KOgAWPdBYKzBn856iYtXvcHwqb35XP+n9O8ct/EpQ0ehZmDG4lhJBZvKuUmFg7uvNVRDyYy
- CFj4PQXukJAzvzaYfHNXAHVktcwbvfLP5ixcqY4z+VEQ57aOuEIqlT2F8Po8Z8Rd0dh8Iqzfa
- 7HN1o5Ff1LCLxTuk25co9jrseGd47vGdgPOBuEW+veVYY6CKXdBaA52ywXAgMyriNbnbU0k09
- qdkHnGrngrJhEjW1tokGGSJVL/4HujCKfZbDm41ULaWoVwlLBCsCrzMDh6kog9zRftdKk9HA5
- TvHUxqBo+AerGQQoPdfFmMeR3BeNB4XIavavzNLqxVMvwPt3U2RDOnU4chlUp6VO+wRKfDAT9
- /OxSSWxzG+YnjHVdg96Ye1R8bqtDqDPIT3v9w4sGQEor7VyTKC0TKiArmwMAgO1AGL/HKqAQD
- o0e7UF/4bm1bYQ2I/xKtyNDSD1G9DoH8cSCbs5LHdH01BE2l/6ZK/KBD+ykrcvRlIOFcwP9dc
- AzfnJRC3P91d8JxUVIzCCgIdzMt4rwm89mr1bxoWeIKYOY4NdWiQNvSCBlGGQNI0oYb2zcu1Z
- lVgenRI9jytI+poBdb3Y2p7uTcyvyOwB+ntYeGqKxrgb7cLycKL+w4qi68pbdWHwxz7aUIJrr
- 7Jo5Xy96B+Fr4u+8vmD8PAAuRX1m6QY445JiKOoHvbgR6YytdYR0xVmm+OOqJ/Y1h19/WTZ0Q
- gU+r+q0p/PdPJCSlQV5LZ95r7UH4K7c6AEXWU3Lg0Nd2lzlwX0xU3c3oPSrYTNx2+aQ==
+Content-Type: multipart/mixed; BOUNDARY="8323328-721605642-1666080486=:174"
+Content-ID: <p0179no8-44no-014s-rn90-n3rrr3084o84@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:7PRJ+XeE6Vkj/CHtJ4wHlt8QzgUZoN6aW8ama6wAB6nakMudayE
+ 7sP4TuLEitS72lqQu25FT5sQA0I3+Y3Q7guK/lgSUZKAns8xcIid6U4ppDGADujJ+5sMTi3
+ FnvJtAKD8gpoYic24ak34/UbMaGciuY6CJdI5vJ168+UPDtDsRS/dlwTtPPT+Aux+daNRTm
+ Wo/IxRFJJOZoESU+3nVmg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vkYPoJMtbYk=:dT9+ts/fkJ9F0kJVRqUj81
+ rWYVgXFZVqbCoTV+CYW0UcFz0k430wKZl4sLBDcC7/Sz0y0KQZhOBYU3rTtJ3/M3Q1x0O33Bo
+ RkEAHEhoBtgcCeFN88hlJ0QuzTM0vj7xPKNSBP5EGcT0f46WMCAtwn7+aQyNob5XgX2OARu1h
+ ph7af0SVIXDK2n3Dk9XBZHxdcrr4HJJG44lq6RYLDgvg1D8Ze9Kz6IkAcisPSmED4VZhKAgD1
+ p7A7S36p6VdOLkeUStU9uJcH2RG2MOTeylvwbR865VXTb6vQu3YMvAtWpQbgJANewawM52Tgi
+ IMDDmJcvGUcT75pnU2mpzI2ghyaYQFo8Y8GmSEU76MVoa/V3kUrmJDXbQqxF4zzoM179cO/ug
+ Sy9M0FqO+ASpRBTzeRj60Qe7pyoqYFyTU/uR1Cc8iUiGw+A9YWE3SkMphg4fTxFZYECgUoBp4
+ 2hPfC6bMYUJ3aoyZI+8+XvuwKQI5beoeWrXmnphMIywNlu2VjamKShFBXkwKxLEyLF+HV8lQg
+ mIcfFdDvxVCGRYOHiGONRhy+pFCeSeCvWw9XPfeDr7Ncrs2GiBy4df5Hvjt9P46cTeznhc4pt
+ OEd09aTkCYzJMbpTKDY/nhdQPtJq3xS/CuE7YZrB1FtjVHEp/VYGK9xklGSqNmunL2/3xvIt3
+ JIiualbLiGGonpi3Ne93xqIOhgmehN1jbSq7nPRz+PTnlnyR2GDJ+BTp1/Gcowa2rbfoir/Ou
+ l3+fNlR7MDzHCjJhRmKwO2Qvcjj6ALILa8U3vjQfJxqBHOXZ4dzuOB127+FQUZdrua5tCxO6f
+ rQrC4QPeNrJ6IOpYAkoKp9c6Sc9gJ3eXzLldRUFUY8pyg6rY6l23Z+9zHY51anl+G5b9/RhPy
+ BvRKZK+tjjVI1YmwtIJbvZFVgkmDlN6xlxQ4o8Jb9JzoEp3SnbhPWU5OVqHfiz1UzdMJXyBjk
+ EX02HMfWmgXVHJKx0Gw/88SH6K9V8gVRICtfXzD88lD5hLwNzBDBF+kMjLFeKc/RTylPCyP8l
+ L0CzNv/Z1xi3whkDs1vdJwADd+y/2pgsdlGF2qy5xjC7PN9FO38hsJ9v2Q0zteMS4Vv08+6cQ
+ q1VG03WMqhWkSKbMNzlg0VuixOIkMLNMaU47TwQ6dCHChp+ENjvDNq1sunorXrFjDpgmYYIHP
+ XMX3l92AJRCJvRtGolL9HTXIjyrp0mUolvo9esUtP1NsINdlDRmwwKBAAWObmaETKMtAPyZrO
+ AWa8LloQg2jR93IcR1WOtXrpSchILQZ1V2yrOe/HWitx9pjaOvpGRYNoQfgbYKtOtoQibkZpw
+ XnOdpIvV/tu41xq3iEizofZqR2of7AuHYQMCIxmpClFLZR6NqW7OEARwVgusLyaunT32sdk6p
+ zVJcdBUIhkvaLxSVaabWN87+f5qxsG3KnTHDrpLkKTmQ/rTzmAjr62BDPmMfhS1beseicED7C
+ Y4I5P/OH9w8tsfRN/QlxQoJiXwBG1qihJFdsGz+K1e+uw+zZGQrG+5yYBv5mAqGkHsBg+zIqN
+ Z40GHYK9ICfB6MQ43XX6RnBwo5ByiqapsuuC9RdlLbFtLcOL6D1WDpLY98u7jReNbHQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -72,16 +72,16 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1872230682-1666079959=:174
+--8323328-721605642-1666080486=:174
 Content-Type: text/plain; CHARSET=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-ID: <490o3s8s-5304-5365-5qn1-376588135s50@tvgsbejvaqbjf.bet>
+Content-ID: <3so00q52-0s5q-7456-q440-pp2p0p5108pp@tvgsbejvaqbjf.bet>
 
 Hi =C3=86var,
 
-On Thu, 11 Aug 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+On Thu, 8 Sep 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> On Wed, Aug 10 2022, Johannes Schindelin via GitGitGadget wrote:
+> On Tue, Aug 23 2022, Johannes Schindelin via GitGitGadget wrote:
 >
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
@@ -201,67 +201,18 @@ n
  >&2
 > >  	exit 1
 >
-> So we'll now skip the assertion added in 9dbf20e7f62 (test-lib: correct
-> and assert TEST_DIRECTORY overriding, 2022-02-27), shouldn't these tests
-> run inside a "t" directory generated in contrib/buildsystems/ ?
->
-> This really seems like a hack-upon-hack, and will break some workflows
-> when you switch back & forth, e.g.:
->
-> 	make
-> 	# run cmake
-> 	make -C t
->
-> Will now pick up this new file, and result in broken tests, as we'll
-> rely on the now-stale file.
->
-> IOW you're making the assumption that by piggy-backing on the
-> GIT-BUILD-OPTIONS rule that anything that needs it will also *re-run
-> it*, but that's not the case.
->
-> I can think of ways to get around it, but it would be nasty as we'd need
-> to complete the dependency graph between the two, and figure out the
-> various interactions.
->
-> But why do we need this at all? Right now I tried:
->
->  * (Manually) removing the existing hack
->  * Copying t/*lib*.sh over to contrib/buildsystems/t
->  * cd contrib/buildsystems/t
->  * ../../../t/t0001-init.sh
+> As pointed out in the v1 this breaks the cmake<->make interaction in
+> some scenarios, but from some brief testing there seemed to be an easy
+> workaround which didn't suffer from that problem:
+> https://lore.kernel.org/git/220811.86sfm3ov5z.gmgdl@evledraar.gmail.com/
 
-I appreciate that you want to make it easier for developers. From my
-experience with (Windows) developers, I have to point out that what you
-describe is _not_ easier than `cd t && ./t0001-init.sh`, though.
+I do not think that the CMake <-> make interaction will come up in any
+other scenario than your and my tests in the context of this mailing list
+thread.
 
-It might be easier from some point of view that seems vaguely familiar,
-but the user experience of this approach looks prohibitively bad to me.
-
-> Which (aside from a small fixable nit about oid-info) Just Works,
-> because the cmake build is already creating a GIT-BUILD-OPTIONS.
->
-> Presumably that "copying" step should be simlynking, or we'd be smarter
-> about doing includes from test-lib.sh.
->
-> But isn't that a much better approach? Rather than working around the
-> directory discovery just teach it to run from the generated t/ directory
-> directly?
-
-I am sure I could poke more holes into that approach, probably whipping
-out something something about `contrib/`, but the user experience alone
-(so, dear developer, contrary to what you read in the README and in other
-documentation flying all over the internet, yes, you need to switch to
-`contrib/buildsystems`, no wait, there's a typo, there's no dash between
-`build` and `systems`, there you go, why `buildsystems`? Well, it's just
-the way it is. Yes. Now, type out, no, no, wait, *wait!*, you cannot run
-`t0006-date.sh` directly as documented, no, wait, you need to prefix it
-with this here, and now carefully count the dots, yep, that's right, six
-dots in total, three slashes, then a `t/`, yes, I know you were already in
-`t/` but not _that_ `t/`, there are now two of 'em, yes, it is
-unintuitive, you're absolutely correct, but you know...) is enough for me
-to not want to consider this approach any further.
+Therefore, I am certain that we need not cater to that scenario at all.
 
 Ciao,
 Johannes
 
---8323328-1872230682-1666079959=:174--
+--8323328-721605642-1666080486=:174--
