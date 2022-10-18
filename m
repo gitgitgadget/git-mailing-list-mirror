@@ -2,139 +2,228 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE1E5C433FE
-	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 15:06:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E08A7C433FE
+	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 15:13:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230484AbiJRPGk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Oct 2022 11:06:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49820 "EHLO
+        id S229802AbiJRPNr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Oct 2022 11:13:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230122AbiJRPGg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2022 11:06:36 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A46B5C3574
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 08:06:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1666105591;
-        bh=T5szwesnZOrcG31lZnd0Er3ug3oN8MuwwktLx5Xo8Ic=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=R1aaT5dYSft4ypDaEjz/SO6MQqCAt8JWPeN84eMrl6GUOE64qFTZ+1bsg+v1V7Bpi
-         VPdoyWNoGxvmMfjKesEMO+SOXsaCNfkQJ0ecxiu2mThJYhue7AfeiOTphqDZmU4In9
-         FgPjPROrNaqo+/sE8l+u9oyZgoNv/UFqA+a/Sgd4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.18.67.214] ([213.196.212.100]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MJmKh-1oRE1W1gJF-00KCIs; Tue, 18
- Oct 2022 17:06:31 +0200
-Date:   Tue, 18 Oct 2022 16:21:10 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Eric Sunshine <ericsunshine@gmail.com>
-Subject: Re: [PATCH v3 4/5] cmake: avoid editing t/test-lib.sh
-In-Reply-To: <221018.86sfjlgr54.gmgdl@evledraar.gmail.com>
-Message-ID: <on2q3qos-sr0n-0p8p-606p-5pq39n46qq4q@tzk.qr>
-References: <pull.1320.v2.git.1661243463.gitgitgadget@gmail.com> <pull.1320.v3.git.1666090745.gitgitgadget@gmail.com> <5b0c2a150e9fce1ca0284d65628b42ed5a7aad9a.1666090745.git.gitgitgadget@gmail.com> <221018.86sfjlgr54.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229605AbiJRPNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2022 11:13:45 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DF1DBC45D
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 08:13:44 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id bj12so32921360ejb.13
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 08:13:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4XTLcwNQKfW6qfjbys3iuee/lAEeF4DuZc2jdKUefHI=;
+        b=Kjudu8BmGs4KPPqnJOAlOVO0oPPin+2ZKgkBrW61rukzxyiPtz9Y5+JdAvdrwZMH1/
+         Y2N+iLl01tR6/JK+9CuZtcm8K76rAmmcj0bGTIfZkHOwSyApT71mpxuiOBMqO/QScrrm
+         b0tJGaU+CtVI/7+TyJkF2u+in2ehNPw1NzuPPf604m3rz8LcVDovz2ZPi2IqB2R/NwUC
+         gXK849+JmWDxgyL4a+QBK0Z6giL9hvmiLgiPZhuwWzxteQtE2l7pjqwQ5RaBIZDlHa8K
+         dfBXq3d40mz+aM1mo48/f1PQE3HbRcKncDzfhP3kLdOagdEOGSvADa7jTEHd9yCCXnBN
+         ZTsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4XTLcwNQKfW6qfjbys3iuee/lAEeF4DuZc2jdKUefHI=;
+        b=Y3m6Y4uJCyhHUWGAnuhJOLW/SM7FsHZumQ3ONKBItE4wxshGcX714ahIALzmTQlLbE
+         JgP/nrn80t7y42FlogdCZeV1NTP70SDE1qVubYTkSxsDbr3vlTyVuPs3vSGEcl1cmwOr
+         U1c1qLXtZA9bONY9SlqF45IT6MMr6PFetI513fQ8k4D4RvhksKzB49EabUCXvVr1xe4O
+         7e5S8hb/ZGcM7zpNQM2iNxneaWGejsytz4GvBUB7dfkYv3H4vuoy1K1jseYsVipltv/K
+         C6Dq3JC2fWxIXMN4FDwWYvLhNsrxNYlw+XNXXooaufcHsU+dMd7NkdgGfdCd97XfTSa/
+         bxTw==
+X-Gm-Message-State: ACrzQf0vSwBlIZBvqI0NSVwcW6VrakF9r+A28STMzVppxOR1iv89+cqz
+        zMzdDb5cdKeGEPU3nV0kWfk=
+X-Google-Smtp-Source: AMsMyM6xYqWd/Qek3L56G4WQ0hDkvXfTJIOyK6/1WPRbqGQXw3ydtjJiJCvHWsR8UhPDBnpg+SQnpg==
+X-Received: by 2002:a17:907:7207:b0:78d:9b37:8d0c with SMTP id dr7-20020a170907720700b0078d9b378d0cmr2792720ejc.717.1666106022565;
+        Tue, 18 Oct 2022 08:13:42 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id w19-20020a1709067c9300b00770880dfc4fsm7699979ejo.29.2022.10.18.08.13.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Oct 2022 08:13:41 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1okoHk-005ndd-1t;
+        Tue, 18 Oct 2022 17:13:40 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 4/5] cmake: avoid editing t/test-lib.sh
+Date:   Tue, 18 Oct 2022 17:09:44 +0200
+References: <pull.1320.git.1660143750.gitgitgadget@gmail.com>
+ <pull.1320.v2.git.1661243463.gitgitgadget@gmail.com>
+ <22473d6b8f3d4e4c482c27a4fb3b58705d4c93ca.1661243463.git.gitgitgadget@gmail.com>
+ <220908.86a67al3c1.gmgdl@evledraar.gmail.com>
+ <851094n0-2o53-77n8-41o6-773q479q5sqq@tzk.qr>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <851094n0-2o53-77n8-41o6-773q479q5sqq@tzk.qr>
+Message-ID: <221018.86o7u9go63.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-128553218-1666102871=:174"
-X-Provags-ID: V03:K1:GwpTmQY7K6QM5Koyy6Z7755I4NKE+khUAshNN+5Qc4tkq9OOs6R
- HMw5FyflOMybcdQY+43HHuVy4db/R0Aj5um8Bm7l5ksgoWt5TmWs7CS+s+bVZREWWs1+d6Z
- 6rM8/+/r+FHuB0cUxps/44x9RuxarGoGciEZla7D3Ia9qw4NwGoCArMbsxhlZ52RAUGhV7O
- 16qqGbnzh5r9ujGZQtG1g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ZYH1kF9glCo=:UpGDhbYM9ekKsqZspXMFAq
- TnyEcVGUpaZHxvlA1jmqbjJ4yjsA/sxKGYpH26vVBFWSG7wispRSODzqmaDUBxv9q9gX0cogd
- AitbynRjMABqGLSW9JJ5lwI0o58LpH4fYJQMQ674CpUpjJSyn6O34E3VHiDMSo58PfivZO7P4
- V/KR6qHMKc85jpOyUt94VG4eStSz6lUSUvqnkbRB7QnBBxdh2QAaOHdRQv3MNhwyfVKuWaB3P
- zN0wjiULDk+VBYWFPXkUL65DLhi50vAE2tvg4/ouvfm8xfwYECIVUOqCDb2wHW49lAmHo5F1D
- cjhUPoysO2/YZuSob7u9rXeRCn/+ElcldbhaQh25egl/qUD65mvQo1w4TuGdjiKxhxosxWMLg
- S9CJW+blIGucbsgV2tcrJdx0dhUAxDRH3Hn1S1ztFG3pC2ltx6gFcEf3eZZzE/Alrq+EQznbs
- 4JoYkDOAfNa1W4yQgkAHblXUpgRKtMwgmy+Pa8JCq/wXkj6qvv8Wm8+Y6NYIdEv7I7Smkbx/W
- blbNQ6UXwm83WQwhuHeQzAUGQmAlRV384b90CJvVRp+6frS3XNhjbxNpm76I6O1wmnbYXJtGf
- 5WZS30zDH0qw6TyLE5m6j/05KJdsxF8xfheS4npUHniWeShruj0maFbm2Q5kWeoG8TWXy9/kd
- O3EDgPw4G9D+xmQgt9H5D55EJXRap0MH1r85s+t3izYH9liNw3qf+vRyny+Lmv/61Mr547KMU
- avxt9XwT2cIpH06ornB69chWCPRNJgvBI7iQallc+M3LNdPg7PhX2FPUe9IM+GAKK5ZqFkpx9
- qWJ/RQSjDd+VWhFeE8Wx1udhh92EPjoUNpRDipB3WSOwX2EcfJr+5RRKwv3xKxdE6P3eYdKK7
- uh+nXhE4ioqc++vP8n8KkS6xxjSXN6ZbXO7m228gxHrBWvnSZQZCgBpbdGCXEdUygU0zYWH2+
- dUvJp+NoTS3inMnzOkkDU8FagCHAGvA8i87PSDITde4Z2OPtyauvNZX7z1aQnsOqT3PNWNv0O
- ZWCJkGeI4QBoI6KmSOEBj9+/08USB0Is1T3Oe7fuuW9iz1yShUSHFOP4mpTNwJ1+y+9GpWMf+
- MD47EzRmSLY5oHW4Rc0pMTyTZrK327/tCzEUF/hxOiCA06SUB3sf8FTOEzvQoEOB0Sy1zR3tc
- ZRlX/5m+e9dFGFUNJ1M9Ly/T4eopQqba2krJ4Zq5r9jyT0rxUQ1Tp4MjNV56F/GN63kU5stIB
- khxqf6OD1LxSKTWL9N3xMeCyn897j7q1LalNmrq8xkaTCwb2H7Hys6JH+q6/4hYE7YU/Iws4w
- mYmhcgGDJvPxVOUic/fUyBTgLfNq/6txP26+l9h+4t8z7R1+zHuM8NuLzyOwKB3c0FmeSiFiL
- YpmJbvoUIyC3Lb/yuDYFfAnuBMZc3kTXuABxOwQfg1QKpOnt7UCwGYrjXetSQ9djndNQRnztn
- hH18MRh7cVH0l1/iSmw9f58V9FkatyjVpIBm3OekyZyOJdcYEsfZVdtokFVtVntzAm53q0OR0
- awtVDivd23X9p5ctHzlDZUF7Qevua61gkfjw9fBQjkvNBSjOGCqsN3zai8yr+61UY3w==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-128553218-1666102871=:174
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Tue, Oct 18 2022, Johannes Schindelin wrote:
 
-Hi =C3=86var,
-
-you did not even give me a chance to send my reply to your original mail
-;-)
-
-On Tue, 18 Oct 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
+> Hi =C3=86var,
 >
-> On Tue, Oct 18 2022, Johannes Schindelin via GitGitGadget wrote:
+> On Thu, 8 Sep 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > In 7f5397a07c6c (cmake: support for testing git when building out of t=
+>> On Tue, Aug 23 2022, Johannes Schindelin via GitGitGadget wrote:
+>>
+>> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> >
+>> > In 7f5397a07c6c (cmake: support for testing git when building out of t=
 he
-> > source tree, 2020-06-26), we implemented support for running Git's tes=
-t
-> > scripts even after building Git in a different directory than the sour=
+>> > source tree, 2020-06-26), we implemented support for running Git's test
+>> > scripts even after building Git in a different directory than the sour=
 ce
-> > directory.
-> >
-> > The way we did this was to edit the file `t/test-lib.sh` to override
-> > `GIT_BUILD_DIR` to point somewhere else than the parent of the `t/`
-> > directory.
-> >
-> > This is unideal because it always leaves a tracked file marked as
-> > modified, and it is all too easy to commit that change by mistake.
-> >
-> > Let's change the strategy by teaching `t/test-lib.sh` to detect the
-> > presence of a file called `GIT-BUILD-DIR` in the source directory. If =
+>> > directory.
+>> >
+>> > The way we did this was to edit the file `t/test-lib.sh` to override
+>> > `GIT_BUILD_DIR` to point somewhere else than the parent of the `t/`
+>> > directory.
+>> >
+>> > This is unideal because it always leaves a tracked file marked as
+>> > modified, and it is all too easy to commit that change by mistake.
+>> >
+>> > Let's change the strategy by teaching `t/test-lib.sh` to detect the
+>> > presence of a file called `GIT-BUILD-DIR` in the source directory. If =
 it
-> > exists, the contents are interpreted as the location to the _actual_
-> > build directory. We then write this file as part of the CTest
-> > definition.
-> >
-> > To support building Git via a regular `make` invocation after building
-> > it using CMake, we ensure that the `GIT-BUILD-DIR` file is deleted (fo=
-r
-> > convenience, this is done as part of the Makefile rule that is already
-> > run with every `make` invocation to ensure that `GIT-BUILD-OPTIONS` is
-> > up to date).
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> > exists, the contents are interpreted as the location to the _actual_
+>> > build directory. We then write this file as part of the CTest
+>> > definition.
+>> >
+>> > To support building Git via a regular `make` invocation after building
+>> > it using CMake, we ensure that the `GIT-BUILD-DIR` file is deleted (for
+>> > convenience, this is done as part of the Makefile rule that is already
+>> > run with every `make` invocation to ensure that `GIT-BUILD-OPTIONS` is
+>> > up to date).
+>> >
+>> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> > ---
+>> >  .gitignore                          |  1 +
+>> >  Makefile                            |  1 +
+>> >  contrib/buildsystems/CMakeLists.txt |  7 +------
+>> >  t/test-lib.sh                       | 11 ++++++++++-
+>> >  4 files changed, 13 insertions(+), 7 deletions(-)
+>> >
+>> > diff --git a/.gitignore b/.gitignore
+>> > index a4522157641..b72ddf09346 100644
+>> > --- a/.gitignore
+>> > +++ b/.gitignore
+>> > @@ -2,6 +2,7 @@
+>> >  /fuzz_corpora
+>> >  /fuzz-pack-headers
+>> >  /fuzz-pack-idx
+>> > +/GIT-BUILD-DIR
+>> >  /GIT-BUILD-OPTIONS
+>> >  /GIT-CFLAGS
+>> >  /GIT-LDFLAGS
+>> > diff --git a/Makefile b/Makefile
+>> > index 04d0fd1fe60..9347ed90da7 100644
+>> > --- a/Makefile
+>> > +++ b/Makefile
+>> > @@ -3028,6 +3028,7 @@ else
+>> >  	@echo RUNTIME_PREFIX=3D\'false\' >>$@+
+>> >  endif
+>> >  	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
+>> > +	@if test -f GIT-BUILD-DIR; then rm GIT-BUILD-DIR; fi
+>> >
+>> >  ### Detect Python interpreter path changes
+>> >  ifndef NO_PYTHON
+>> > diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystem=
+s/CMakeLists.txt
+>> > index fe606c179f7..29d7e236ae1 100644
+>> > --- a/contrib/buildsystems/CMakeLists.txt
+>> > +++ b/contrib/buildsystems/CMakeLists.txt
+>> > @@ -1067,14 +1067,9 @@ endif()
+>> >  #Make the tests work when building out of the source tree
+>> >  get_filename_component(CACHE_PATH ${CMAKE_CURRENT_LIST_DIR}/../../CMa=
+keCache.txt ABSOLUTE)
+>> >  if(NOT ${CMAKE_BINARY_DIR}/CMakeCache.txt STREQUAL ${CACHE_PATH})
+>> > -	file(RELATIVE_PATH BUILD_DIR_RELATIVE ${CMAKE_SOURCE_DIR} ${CMAKE_BI=
+NARY_DIR}/CMakeCache.txt)
+>> > -	string(REPLACE "/CMakeCache.txt" "" BUILD_DIR_RELATIVE ${BUILD_DIR_R=
+ELATIVE})
+>> >  	#Setting the build directory in test-lib.sh before running tests
+>> >  	file(WRITE ${CMAKE_BINARY_DIR}/CTestCustom.cmake
+>> > -		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh GIT_BUILD_DIR_REPL =
+REGEX \"GIT_BUILD_DIR=3D(.*)\")\n"
+>> > -		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh content NEWLINE_CON=
+SUME)\n"
+>> > -		"string(REPLACE \"\${GIT_BUILD_DIR_REPL}\" \"GIT_BUILD_DIR=3D\\\"$T=
+EST_DIRECTORY/../${BUILD_DIR_RELATIVE}\\\"\" content \"\${content}\")\n"
+>> > -		"file(WRITE ${CMAKE_SOURCE_DIR}/t/test-lib.sh \${content})")
+>> > +		"file(WRITE ${CMAKE_SOURCE_DIR}/GIT-BUILD-DIR \"${CMAKE_BINARY_DIR}=
+\")")
+>> >  	#misc copies
+>> >  	file(COPY ${CMAKE_SOURCE_DIR}/t/chainlint.sed DESTINATION ${CMAKE_BI=
+NARY_DIR}/t/)
+>> >  	file(COPY ${CMAKE_SOURCE_DIR}/po/is.po DESTINATION ${CMAKE_BINARY_DI=
+R}/po/)
+>> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+>> > index 55857af601b..4468ac51f25 100644
+>> > --- a/t/test-lib.sh
+>> > +++ b/t/test-lib.sh
+>> > @@ -42,7 +42,16 @@ then
+>> >  	TEST_OUTPUT_DIRECTORY=3D$TEST_DIRECTORY
+>> >  fi
+>> >  GIT_BUILD_DIR=3D"${TEST_DIRECTORY%/t}"
+>> > -if test "$TEST_DIRECTORY" =3D "$GIT_BUILD_DIR"
+>> > +if test -f "$GIT_BUILD_DIR/GIT-BUILD-DIR"
+>> > +then
+>> > +	GIT_BUILD_DIR=3D"$(cat "$GIT_BUILD_DIR/GIT-BUILD-DIR")" || exit 1
+>> > +	# On Windows, we must convert Windows paths lest they contain a colon
+>> > +	case "$(uname -s)" in
+>> > +	*MINGW*)
+>> > +		GIT_BUILD_DIR=3D"$(cygpath -au "$GIT_BUILD_DIR")"
+>> > +		;;
+>> > +	esac
+>> > +elif test "$TEST_DIRECTORY" =3D "$GIT_BUILD_DIR"
+>> >  then
+>> >  	echo "PANIC: Running in a $TEST_DIRECTORY that doesn't end in '/t'?"=
+ >&2
+>> >  	exit 1
+>>
+>> As pointed out in the v1 this breaks the cmake<->make interaction in
+>> some scenarios, but from some brief testing there seemed to be an easy
+>> workaround which didn't suffer from that problem:
+>> https://lore.kernel.org/git/220811.86sfm3ov5z.gmgdl@evledraar.gmail.com/
 >
-> Re my earlier feedback, I came up with this as an alternative, which
-> nicely allows us to have "cmake" and "make" play together, you can even
-> run them concurrently!:
+> I do not think that the CMake <-> make interaction will come up in any
+> other scenario than your and my tests in the context of this mailing list
+> thread.
 >
-> 	https://github.com/avar/git/commit/30f2265fd07aee97ea66f6e84a824d85d241=
-e245
+> Therefore, I am certain that we need not cater to that scenario at all.
 
-This approach _still_ modifies the `test-lib.sh`, which is the entire
-reason for the patch under review.
+I run it like that now when I build locally, and it slots nicely in with:
 
-I hope you find an elegant, user-friendly alternative that leaves
-`test-lib.sh` unmodified even when building via CMake. I would gladly take
-that and drop my `GIT-BUILD-DIR` patch.
+ 	1. First run a bunch of 'build' targets
+	2. Then run a bunch of 'test' targets
 
-Ciao,
-Johannes
+I'm not opposed to having this e.g. as a special-case on Windows, or
+that we pick up when you *only* have cmake/ctest unconditionally, and
+auto-do the right thing.
 
---8323328-128553218-1666102871=:174--
+But I do think that:
+
+	A. Getting a "run test-lib against this build dir over there" is
+	   *different* from the bundled behavior of the auto-flip-flopping.
+
+	B. Your case for doing it this way seems to be the
+	   Windows-specific case noted in 1/5, can't we just make that
+	   part Windows-specific then? I don't get why it needs to be
+	   bundled up with cmake everywhere....
