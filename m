@@ -2,70 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFA3CC4332F
-	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 09:11:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94A45C43217
+	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 09:25:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229885AbiJRJLZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Oct 2022 05:11:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58470 "EHLO
+        id S229777AbiJRJZf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Oct 2022 05:25:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229607AbiJRJLW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2022 05:11:22 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC97F112F
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 02:11:21 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1B43A1B80E6;
-        Tue, 18 Oct 2022 05:11:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=yGk2a5YWtT0IKOLM+/LNQNVUV
-        z1tUfkF54xbnOyqCoM=; b=LYow1ro3EVtlHG/MC5/H4FRyEYfTxCIZ7avY7TEcI
-        mbfuvSJZ/2jaN2tHuD0ynFSLaBg0SsUB3qIUN8rK1vRPbn+4JHogeq1wcRZmJ1k6
-        WsjDpbhWQKomMdLn5K4cN50JVFjFZ79tsCV7Sz9BNtdh3td5rsXHqmDOJI1TekvE
-        1g=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 13B8E1B80E5;
-        Tue, 18 Oct 2022 05:11:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4AF1C1B80E3;
-        Tue, 18 Oct 2022 05:11:17 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v2 00/10] run-command API: add run_command_{l,sv}_opt()
-References: <cover-00.10-00000000000-20221014T153426Z-avarab@gmail.com>
-        <cover-v2-00.10-00000000000-20221017T170316Z-avarab@gmail.com>
-Date:   Tue, 18 Oct 2022 02:11:16 -0700
-Message-ID: <xmqq4jw1wl6z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229822AbiJRJZd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2022 05:25:33 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3622E5E64B
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 02:25:10 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id t16so326359edd.2
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 02:25:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6gJBvusA/I3w+ZKfi3MG6LIq9AuuLPvulkMq4lAysbk=;
+        b=Ti8dMibkrzJF8Vk36alEoWxOYzlx/W4KLM3/SX/mPTd2hlqKRHuxGHYk9L06cllcWR
+         nQRdjA1ja/fgvPr1MQdsKOrQE4NSR305GSR1x50wOI5rNkenSnqujypmr8X4a/v9pu+t
+         6KUNuvRbSNlg/13Plckts/DgpwOuogfqOYJ8okLmUzuYryZIotezEIXm3FczoszXqxgf
+         mDVqasYvlTGxL5IbC6Hn9jCWNMsIybhUpdb13MHXZANYmffPtq7V05dyrJJ4kjunW2X7
+         tQshm3DyjFWcEgrEI5aWPTyIhGOnExjQB5fozD7ysKQR34uRzBPWdaWyJjAIG2axm0Bs
+         +0dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6gJBvusA/I3w+ZKfi3MG6LIq9AuuLPvulkMq4lAysbk=;
+        b=zkqJQrzTns0SZjROSb1+9pCkIBktUT16G0st9Vcs99EkB42p9cZHZm5fHJSP5I2JAi
+         PsRC3iN95ef31OiWw63R7EEoEGH18lhp8uQcK2CHOiBTYsBBQP3IPeeAiOQzhthL+Pgo
+         TI7XXyl9Fgbrifceq25jY3hTtHuTtsGMDncvv35eZrbG6w3Z8mFE7lkf2ovP0aaQzJ2n
+         Yto7vT4q69KkuRk/KY7kYuvU5Q/m9UaO+/MSkUmAB4WoSjJT5WuzOZcc9VbOEgp1qmMB
+         2oPxdYy1nm57dpHyEQawv4xcSkmpx9OjwNEvVHY/MI13H6nCuVzzr26toA8lFODGEmT6
+         OF+w==
+X-Gm-Message-State: ACrzQf2j2TaMKsdC5m0M0snXViZ33Czhf3hYpLR2xZZTYWh1SOh2jC99
+        O3UfSW3I1L38LuWosQvStaTZULk5DhQjEA==
+X-Google-Smtp-Source: AMsMyM5MT+cuGt/STLWRoI04akDN5WNmLAatkoiSwOBpq/TMRo3PBLQ0zIR5OOrHrEsX5D+oX/PC+A==
+X-Received: by 2002:a50:ec8f:0:b0:459:b0e0:e030 with SMTP id e15-20020a50ec8f000000b00459b0e0e030mr1737292edr.303.1666085108512;
+        Tue, 18 Oct 2022 02:25:08 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id d8-20020a170906304800b0077b2b0563f4sm7358530ejd.173.2022.10.18.02.25.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Oct 2022 02:25:07 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1okiqQ-005hIq-0t;
+        Tue, 18 Oct 2022 11:25:06 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     --cc=avarab@gmail.com, git@vger.kernel.org,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [RFC PATCH 2/2] notes.c: fixed tip when target and append note
+ are both empty
+Date:   Tue, 18 Oct 2022 11:23:10 +0200
+References: <221013.86wn94kqq1.gmgdl@evledraar.gmail.com>
+ <20221018031144.73730-1-tenglong.tl@alibaba-inc.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <20221018031144.73730-1-tenglong.tl@alibaba-inc.com>
+Message-ID: <221018.864jw1jxfx.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D2A91102-4EC4-11ED-99FC-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> This series provides a more idiomatic set of run-command API helpers
-> to match our current use-cases for run_command_v_opt(). See v1[1] for
-> a more general overview.
+On Tue, Oct 18 2022, Teng Long wrote:
 
-Hmph...  I somehow thought that the concensus is rather try the
-complete opposite approach shown by Ren=C3=A9's patch to lose the use of
-run_command_v_opt() by replacing it with run_command(&args), with
-args.v populated using strvec_pushl() and other strvec API
-functions.
+> "=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason" <avarab@gmail.com> writes:
+>
+>> Hrm, interesting that (at least my) gcc doesn't catch if we don't
+>> NULL-initialize this, but -fanalyzer does (usually it's not needed for
+>> such trivial cases0. Anyawy...
+>
+> On my local env the warnings shows , show I change the line (initialize w=
+ith
+> NULL to "logmsg").
+>
+> But it seems like different as the last time I built... However now "sugg=
+est
+> braces around initialization of subobject" appears, is it normal or we sh=
+ould
+> repair this?
+>
+> builtin/merge-file.c:29:23: warning: suggest braces around initialization=
+ of subobject [-Wmissing-braces]
+>         mmfile_t mmfs[3] =3D { 0 };
+>                              ^
+>                              {}
+> builtin/merge-file.c:31:20: warning: suggest braces around initialization=
+ of subobject [-Wmissing-braces]
+>         xmparam_t xmp =3D { 0 };
+>                           ^
+>                           {}
 
-One of the reasons I would prefer to see us moving in that direction
-was because the first iteration of this series was a good
-demonstration of the relatively limited usefulness of _l_opt()
-variant and also it seemed to be error prone to use it.
+The fix for this is in "next": 54795d37d9e (config.mak.dev: disable
+suggest braces error on old clang versions, 2022-10-10)
+
+
+> 2 warnings generated.
+> builtin/notes.c:641:13: warning: variable 'logmsg' is used uninitialized =
+whenever 'if' condition is true [-Wsometimes-uninitialized]
+>         } else if (!cp.buf.len) {
+>                    ^~~~~~~~~~~
+> builtin/notes.c:653:7: note: uninitialized use occurs here
+>         free(logmsg);
+>              ^~~~~~
+> builtin/notes.c:641:9: note: remove the 'if' if its condition is always f=
+alse
+>         } else if (!cp.buf.len) {
+>                ^~~~~~~~~~~~~~~~~~
+> builtin/notes.c:570:14: note: initialize the variable 'logmsg' to silence=
+ this warning
+>         char *logmsg;
+>                     ^
+>                      =3D NULL
+> 1 warning generated.
+
+Yes, we should initialize it to NULL, so this is the expected
+warning. Clang spots it.
