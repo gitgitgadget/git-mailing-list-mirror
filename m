@@ -2,73 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC7C0C433FE
-	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 18:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8CC3C4332F
+	for <git@archiver.kernel.org>; Tue, 18 Oct 2022 19:40:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229911AbiJRSzi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Oct 2022 14:55:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37234 "EHLO
+        id S229675AbiJRTku (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Oct 2022 15:40:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229769AbiJRSz2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Oct 2022 14:55:28 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34783A2AA5
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 11:55:26 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id r142so12541151iod.11
-        for <git@vger.kernel.org>; Tue, 18 Oct 2022 11:55:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6nkCvHpfe+y1LfSLfVdrHD6ciG8F2tyyZAheInqf+Do=;
-        b=tvKYTeMD46A7XeJCI6xG5wLJGx2cc6uERPOR1kHjoxHGAOfMGaTCahI+6tbncKV3MO
-         xtgDo2CJhVxO9ftSzzmjknlsacZi7+fTf4TezCh7X2Zk1vh1qGxNn+PzFcHzq3fNzm33
-         8FfNl6Iu38tEaCfJevM2D0LsJ33QKWJREUsDEC5Eo3qJBKqzjpVVcp1b/aPS6KLQKdGD
-         3ZQU5YaZ+3YQhOeEP0elKxB5iH+EBTRZ2MHkk5r0ENrFnxORv9JN3zZqWWcJmEmMiGZE
-         YwE8XqaH+KFABKCvHu1nWcG8ypzNxJulFfPaLSNO72Rl+dDSHAPsJG2ZNj+vrkz+5dzD
-         mYow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6nkCvHpfe+y1LfSLfVdrHD6ciG8F2tyyZAheInqf+Do=;
-        b=neoh1DcYKwlMB1M7QWKUomWxKUwq8oubxOL2JXycAVuhBknsI6NcKhkw/0IFChaasQ
-         xRoLtEidp/jSemdVtUlqEQf/8D9CgFzs4+UvfSSqyYVcsrzNELxnnz+5SE0v2g2HHtpX
-         0O5KmPT/9CPFNP25BqMqjcXJnBPuawcx4erzc4oVgwmOCXHBiwAeICdnaDJaH1CohBDF
-         gBRlyZBzBb/JdUfkkrNKGUqJJyhjW5uu93VB+BLIYkywjgnwBvBRkjQMU3iqFr+Uf8tf
-         6YIl4JlUiFOn1nqTCSUAnCRy/i8AyM/TWQ9OZTLveyGKkhFJkYXi+FMd0XOuWhtxFqE6
-         hFYQ==
-X-Gm-Message-State: ACrzQf35d8sIJHlDw7GnutJrMsxvwzl+FkWsL39FwyyusbFwbnZ6pf7C
-        qYTsiNfWbasfOl3l97uHEHlmlolZQ741rcEL
-X-Google-Smtp-Source: AMsMyM6Wr9Y7NYKcAJjfElHMc7s46wHjtpEyd06tagP94idbPhc2uoGp5IYC4qI9yvbPlsjAflqYag==
-X-Received: by 2002:a05:6602:2b94:b0:6a4:7b57:ecfb with SMTP id r20-20020a0566022b9400b006a47b57ecfbmr2577839iov.8.1666119324906;
-        Tue, 18 Oct 2022 11:55:24 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r13-20020a02b10d000000b00363966db537sm1319756jah.46.2022.10.18.11.55.24
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Oct 2022 11:55:24 -0700 (PDT)
-Date:   Tue, 18 Oct 2022 14:55:23 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Subject: [ANNOUNCE] Git Merge 2022 videos available
-Message-ID: <Y072m8pW4RC7p0bi@nand.local>
+        with ESMTP id S229535AbiJRTks (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Oct 2022 15:40:48 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 035747CB4B
+        for <git@vger.kernel.org>; Tue, 18 Oct 2022 12:40:46 -0700 (PDT)
+Received: (qmail 32715 invoked by uid 109); 18 Oct 2022 19:40:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Oct 2022 19:40:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22431 invoked by uid 111); 18 Oct 2022 19:40:46 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Oct 2022 15:40:46 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 18 Oct 2022 15:40:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: linux-leaks CI failure on master
+Message-ID: <Y08BPbWBj7SNluXq@coredump.intra.peff.net>
+References: <Y07yeEQu+C7AH7oN@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <Y07yeEQu+C7AH7oN@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everybody,
+On Tue, Oct 18, 2022 at 02:37:44PM -0400, Taylor Blau wrote:
 
-The talk videos from Git Merge 2022[^1] are now available on GitHub's
-YouTube page here:
+> After Junio pushed out the tags for v2.38.1 and friends, I noticed that
+> our linux-leaks CI job is failing t1300.104 and t1300.109, claiming that
+> there is a leak here:
+> [...]
+>     #14 0x55ba233acb36 in alias_lookup alias.c:35
+>     #15 0x55ba232d0748 in handle_alias git.c:346
 
-  https://www.youtube.com/playlist?list=PL0lo9MOBetEGEAs1D28ExRQONnX-uZ3Wf
+These are the interesting part of the trace. alias_lookup() returns an
+allocated string, and then split_cmdline() fails, so we call die() with:
 
-Thanks,
-Taylor
+  fatal: bad alias.split-cmdline-fix string: unclosed quote
 
-[^1]: With the exceptions of Emily Shaffer's and Martin von Zweigbergk's
-  talk, which we are still working on...
+So yeah, I think it's probably the same issue as discussed previously:
+the compiler presumably puts alias_string into a register, and then
+clobbers the register when calling die(), because it knows we're never
+coming back.
+
+> I can't reproduce the failure locally with gcc (Debian 10.3.0-15)
+> 10.3.0, but Victoria (CC'd) can reproduce the failure with 9.4.0.
+> Interestingly, the failure only appears when compiling with `-O2`, but
+> not `-O0` or `-O1`.
+
+I can't reproduce on debian unstable using any of gcc 9-12 (but note
+gcc-9 here is 9.5.0). But then, I had trouble convincing gcc to find
+_actual_ leaks with lsan. Clang is much more reliable for me, but it
+turns up only the failure in t1300.135 that I reported earlier.
+
+But given the trace above plus the findings on gcc 9.4.0, I feel pretty
+confident saying this is another instance of the same problem.
+
+> I'm not sure if I'm content to treat the 9.4.0 behavior as a compiler
+> bug, but definitely running the linux-leaks build with `-O2` is
+> suspicious.
+
+It's definitely not a compiler bug. What the optimizer is doing is
+perfectly reasonable; it's just that the leak checker interacts badly
+with it.
+
+> I suppose we could temporarily mark t1300 as not passing with
+> SANITIZE=leak turned on, but I tend to agree with Peff that that feels
+> like a hack working around compiler behavior, that will ultimately
+> result in us playing whack-a-mole.
+> 
+> So my preference would be to run the linux-leaks build with `-O0` in its
+> CFLAGS, optionally with a newer compiler if one is available for Focal.
+
+Yes, I still think disabling optimizations is the best path forward. Not
+just to avoid whack-a-mole, but this is also something we'd eventually
+need to confront when the code base really is leak-free.
+
+I don't think there's any need for a newer compiler. While the optimizer
+behavior may change between versions, none of what we've seen is any
+compiler being _wrong_, just different.
+
+As a lesser change, I suspect that making NORETURN a noop in
+leak-checking builds would help in practice, because the compiler
+wouldn't realize that die() doesn't return. But it's not foolproof (the
+same thing might trigger with a direct exit() call, or one that becomes
+direct via inlining). Using -O0 is the more complete fix, and IMHO it's
+not important to try to get optimal performance during the leak-checking
+test run.
+
+-Peff
