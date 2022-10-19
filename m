@@ -2,149 +2,218 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 853CCC433FE
-	for <git@archiver.kernel.org>; Wed, 19 Oct 2022 20:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C47C8C4332F
+	for <git@archiver.kernel.org>; Wed, 19 Oct 2022 21:15:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230127AbiJSUoJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Oct 2022 16:44:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55330 "EHLO
+        id S230073AbiJSVPP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Oct 2022 17:15:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230053AbiJSUoH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Oct 2022 16:44:07 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FF1E197F97
-        for <git@vger.kernel.org>; Wed, 19 Oct 2022 13:44:05 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 35A3C1C28D8;
-        Wed, 19 Oct 2022 16:44:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hjnCk+oQkvTctjAR9ZK5Hw+8HEdXjWf0OoGMDa
-        voJus=; b=pt3xxEH6OsTnPIHmV7PZY+CJBaK7i5Blesl/NDAo2kmdAGfx9NnaUo
-        ASYJtlvYFv4b/2kgTOKTGBPcaxQaapFQ4ZPmUaWY/dl9bxWjkrcyWbwgzSK6dPrW
-        hTmYuaLh/nCyb4Vl9p8+eruxf2lpzr39xJu6EA0GCB/OV1NB6ezsw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2E4211C28D7;
-        Wed, 19 Oct 2022 16:44:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6051F1C28D5;
-        Wed, 19 Oct 2022 16:44:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Heather Lapointe <alpha@alphaservcomputing.solutions>
-Cc:     Heather Lapointe via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 0/9] archive: Add --recurse-submodules to git-archive
- command
-References: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
-        <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
-        <xmqqo7u9t1zf.fsf@gitster.g>
-        <CAFwvh9BwV=NEtF_gsh9Tr8gHz02=78m4MCBQbuXk5SzKCAm4RA@mail.gmail.com>
-        <xmqqy1tbssa8.fsf@gitster.g>
-Date:   Wed, 19 Oct 2022 13:44:00 -0700
-In-Reply-To: <xmqqy1tbssa8.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        19 Oct 2022 09:16:15 -0700")
-Message-ID: <xmqqwn8vpmr3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229816AbiJSVPM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2022 17:15:12 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEBBB138BB4
+        for <git@vger.kernel.org>; Wed, 19 Oct 2022 14:15:06 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id d142so15616558iof.7
+        for <git@vger.kernel.org>; Wed, 19 Oct 2022 14:15:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=keP/TtEydxrMfu/onnnri/Z1haFnCypB2d5j46NQbuA=;
+        b=pjb3sgAG3FEfjImbETySn8y3ZxLsDdVA+O9hoyH4yXMmuWn77DFQvgzxqn0GW8D8d+
+         TNfOJmExph+2Hj/axVald7p1jkGk4E6/OWXnIDfm9e8z1LmXLLw1XXSbq0TB1C3vdDw7
+         TT14qEGlltEEIid9fV9M1O/5b7LiU1x1tZmt0ZSvur/cJoKcBcG4HGu3+uD/AM0a1Lx/
+         WpOwBpAjq1TdIiYegee1YGQvUtryELm/4qRPVdDalV5IPpBrI0xOjaot9yCWYTWTLvKx
+         FJU54ToAmIYhG7dJFtiDMLbx5kdHdjhi7WS27ZNdmzR4cYbHucQZ/300y6SBg6H9iNer
+         jlFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=keP/TtEydxrMfu/onnnri/Z1haFnCypB2d5j46NQbuA=;
+        b=m5lpBZuk382fpXvkD6PiERJZt/cI7GSa8daPvuApq79s4o4/9ryvODPevOubkbPry6
+         hxXUKV2alaZQquarzDvIHZPXiz2duROR/KTJvwFTqOMK4aGJlN4eynnmyJr/CdzbuFqs
+         EKdpyD5389AAI1MhyXNOjeaLIGXO/pQlgsiQvKoATf1D3MmZLgYH3+9vf44FI+sdsgyI
+         t1HptiB13Tu9v8xYZSdj2HgWo5URCRd/xntqZV7JSErG7ExDTdMB5fO9v+99WEjqqwXa
+         KBpPwdx3vG4tknp5ntZNlMHp49S0a2Ryr5zqR/Akvqjp8DDAjWPY61F3T+tWbVhJtSG0
+         fKhQ==
+X-Gm-Message-State: ACrzQf2YiGwe+wLba7r3WEbhS1Yv6gBcdkzfryvZ1+4danQWtTuAXMd5
+        QOnd0cWJ83dIZ0y7dQJYggbZ0ByqhvBygRLn
+X-Google-Smtp-Source: AMsMyM77lwBaAqcdePWX78DCf+R4HyTf4kpIdTF4d9bMl5dqtIMASrc0tv/vgd26fbowXZ1COOoMBg==
+X-Received: by 2002:a6b:f605:0:b0:6bb:cafc:ec27 with SMTP id n5-20020a6bf605000000b006bbcafcec27mr7448093ioh.194.1666214105248;
+        Wed, 19 Oct 2022 14:15:05 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id g12-20020a056602072c00b006a514f67f38sm2650618iox.28.2022.10.19.14.15.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Oct 2022 14:15:04 -0700 (PDT)
+Date:   Wed, 19 Oct 2022 17:15:03 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Julia Ramer via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Julia Ramer <prplr@github.com>,
+        Keanen Wold <keanenwold@github.com>,
+        Veronica Giaudrone <veronica.Giaudrone@microsoft.com>,
+        Bri Brothers <brbrot@microsoft.com>,
+        Julia Ramer <gitprplr@gmail.com>
+Subject: Re: [PATCH v2] embargoed releases: also describe the git-security
+ list and the process
+Message-ID: <Y1Bo18aU7YKKX9yh@nand.local>
+References: <pull.1345.git.1662071998812.gitgitgadget@gmail.com>
+ <pull.1345.v2.git.1666142160427.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C333B0E4-4FEE-11ED-9EF4-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <pull.1345.v2.git.1666142160427.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+[-cc git-security]
 
-> Mimic what Taylor did to adjust to the new world order that was
-> introduced in the 2.38.1 update.
->
-> Look at 9c32cfb4 (Sync with v2.38.1, 2022-10-17), which merges
-> 2.38.1 and updates the tests to adjust to the new world order, by
-> comparing the t/ directory of its first parent and the result of the
-> merge.  It shows what Taylor did to adjust the tests to adjust.
->
->     $ git diff 9c32cfb4^ 9c32cfb4 t/
->
-> I personally doubt it is generally a good idea, as it sets a bad
-> pattern that tempts unsuspecting users to blindly copy and paste it
-> to their $HOME/.gitconfig without realizing what its ramifications
-> are, but the easiest workaround may be to mimic what was done in
-> t/lib-submodule-update.sh that sets protocol.file.allow
-> configuration knob globally.
+On Wed, Oct 19, 2022 at 01:16:00AM +0000, Julia Ramer via GitGitGadget wrote:
 
-I'll queue this at the tip of your topic when I rebuild 'seen' for
-today's integration run.
+> +Audience of the `git-security` mailing list
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +Anybody may contact the `git-security` mailing list by sending an email
+> +to <git-security@googlegroups.com>, though the archive is closed to the
+> +public and only accessible to subscribed members.
+> +
+> +There are a few dozen subscribed members: core Git developers who are trusted
+> +with addressing vulnerabilities, and stakeholders (i.e. owners of products
+> +affected by security vulnerabilities in Git).
 
- t/t1023-tree-read-tree-at.sh  | 4 +++-
- t/t5005-archive-submodules.sh | 7 ++++---
- 2 files changed, 7 insertions(+), 4 deletions(-)
+Everything in this section looks good. Though I wonder whether readers
+will wonder how one subscribes to the list. You sort of address this
+earlier in the proposed document, but I think it's worth clarifying here
+to indicate the differences between subscribing to a public list like
+this one, and the invite-only git-security list.
 
-diff --git a/t/t1023-tree-read-tree-at.sh b/t/t1023-tree-read-tree-at.sh
-index 9e5ce3abb4..cfe6c867e3 100755
---- a/t/t1023-tree-read-tree-at.sh
-+++ b/t/t1023-tree-read-tree-at.sh
-@@ -32,7 +32,8 @@ test_expect_success 'read_tree basic' '
- '
- 
- test_expect_success 'read_tree submodules' '
--	rm -rf walk_tree_submodules &&
-+	git config --global protocol.file.allow always &&
-+	rm -rf submodule1 &&
- 	git init submodule1 &&
- 	(
- 		cd submodule1 &&
-@@ -42,6 +43,7 @@ test_expect_success 'read_tree submodules' '
- 		git add file1.txt dir1/dirA/file1.txt &&
- 		git commit -m "initial commit"
- 	) &&
-+	rm -rf walk_tree_submodules &&
- 	git init walk_tree_submodules &&
- 	(
- 		cd walk_tree_submodules &&
-diff --git a/t/t5005-archive-submodules.sh b/t/t5005-archive-submodules.sh
-index aad6cfd108..e1413e08a2 100755
---- a/t/t5005-archive-submodules.sh
-+++ b/t/t5005-archive-submodules.sh
-@@ -4,7 +4,7 @@ test_description='git archive --recurse-submodules test'
- 
- . ./test-lib.sh
- 
--check_tar() {
-+check_tar () {
- 	tarfile=$1.tar
- 	listfile=$1.lst
- 	dir=$1
-@@ -15,7 +15,7 @@ check_tar() {
- 	'
- }
- 
--check_added() {
-+check_added () {
- 	dir=$1
- 	path_in_fs=$2
- 	path_in_archive=$3
-@@ -26,7 +26,7 @@ check_added() {
- 	'
- }
- 
--check_not_added() {
-+check_not_added () {
- 	dir=$1
- 	path_in_archive=$2
- 
-@@ -37,6 +37,7 @@ check_not_added() {
- }
- 
- test_expect_success 'setup' '
-+	git config --global protocol.file.allow always &&
- 	rm -rf repo_with_submodules submodule1 uninited_repo_with_submodules &&
- 	git init repo_with_submodules &&
- 	git init submodule1 &&
--- 
-2.38.1-236-gf47955814b
+Perhaps something like:
 
+    [...] the archive is closed to the public, and only accessible to
+    invited members.
+
+    There are a few dozen such members: [...]
+
+which is basically just s/subscribed/invited, but I think it adds some
+worthwhile clarity.
+
+> +Most of the discussions revolve around assessing the severity of the reported
+> +bugs (including the decision whether the report is security-relevant or can be
+> +redirected to the public mailing list), how to remediate the bug, determining
+> +the timeline of the disclosure as well as aligning priorities and
+> +requirements.
+
+Looks good, though I am unsure what "priorities and requirements" refers
+to specifically. Could you elaborate?
+
+> +A bug's life: Typical timeline
+> +------------------------------
+> +
+> +- A bug is reported to the `git-security` mailing list.
+> +
+> +- Within a couple of days, someone from the core Git team responds with an
+> +  initial assessment of the bug’s severity.
+
+A few nitpicks on this and the above bullet point:
+
+  - The git-security list isn't for bug reports, though there can be a
+    security component to something that looks like a bug report.
+
+    Perhaps to be clearer we should swap "bug" for "potential
+    vulnerability"?
+
+  - On "within a couple of days", I think that this is aspirationally
+    true, though not always the case. Perhaps, "as soon as possible"
+    instead? That's vague enough that I wouldn't worry about somebody
+    reading this document >2 days after submitting a potential
+    vulnerability wondering why nobody has gotten back to them ;-).
+
+  - Finally, consider replacing "core Git team" with "member of the
+    git-security list".
+
+> +- Depending on the preferences of the involved contributors and reviewers, code
+> +  review then happens either on the `git-security` mailing list or in a private
+> +  fork associated with the draft security advisory.
+
+There's a third option, too, which is using the private git/cabal
+repository. Anybody who is a member of the @git/security team on GitHub
+has access to this repository. And it is often a convenient option for
+coordinating releases that contain fixes for more than one
+vulnerability.
+
+There aren't any hard and fast rules for which approach should be used
+in a given circumstance, but I think it's worth mentioning it as another
+option.
+
+For my own $.02, I often find it useful to *start* by sending patches to
+the git-security list inline with the thread so that the original
+reporter (who is more often than not *not* a member of the @git/security
+team) can participate in review (or at least look at the patches).
+
+The private forks tied to a security advisory are often convenient
+(assuming that the reporter has a GitHub account) since they provide a
+shared workspace. But I think we usually avoid them when working on
+preparing a release for more than one vulnerability.
+
+> +- Once the review has settled and everyone involved in the review agrees that
+> +  the patches are ready, the Git maintainer, and others determine a release date
+> +  as well as the release trains that are serviced. The decision regarding which
+> +  versions need a backported fix is based on input from the reporter, the
+> +  contributor who worked on the patches, and from stakeholders (e.g. operators
+> +  of hosting sites who may want to analyze whether the given bug is exploited
+> +  via any of the repositories they host).
+> +
+> +- While the Git community does its best to accommodate the specific timeline
+> +  requests of the various binary packagers, the nature of the issue may preclude
+> +  a prolonged release schedule. For fixes deemed urgent, it may be in the best
+> +  interest of the Git users community to shorten the disclosure and release
+> +  timeline, and packagers may need to adapt accordingly.
+
+I strongly agree with the above two points.
+
+> +- Public communication is then prepared in advance of the release date. This
+> +  includes blog posts and mails to the Git and Git for Windows mailing lists.
+
+For what it's worth, GitHub does usually prepare a public blog post, but
+I don't think we've typically shared them with the git-security list
+ahead of time. Not because there's anything sensitive in there (I
+personally would have no problem sharing them with git-security ahead of
+time if there was interest), but just because nobody has asked. It may
+be worth clarifying which communications we expect to have reviewed by
+the git-security list during this period and which we do not.
+
+> +The first step is to https://github.com/git/git/security/advisories/new[open
+> +an advisory]. Technically, this is not necessary. However, it is the most
+> +convenient way to obtain the CVE number and it give us a private repository
+> +associated with it that can be used to collaborate on a fix.
+
+This is all good. I would add some of the things we need to figure out
+before opening a security advisory, too. By the time we want to open a
+security advisory, we need to have the following information decided
+upon:
+
+  - Affected version(s)
+  - Patched version(s)
+  - Impact
+  - Potential workaround(s), if any
+  - Credit for finding and fixing the vulnerability
+
+Determining which versions to patch is more-or-less up to the person
+preparing those patches. Affected versions is usually "everything", or
+"everything since xyz patch was merged". Impact is up for debate, though
+usually whoever opens the security advisory writes this, and then
+discussion occurs on the git-security as to its accuracy ;-).
+
+Obtaining permission to give credit to the original reporter (and
+anybody that they wish to include who was also involved in the
+discovery) is important to do at this step, too.
+
+Thanks,
+Taylor
