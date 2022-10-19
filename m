@@ -2,88 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A44ACC4332F
-	for <git@archiver.kernel.org>; Wed, 19 Oct 2022 19:43:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5C45C433FE
+	for <git@archiver.kernel.org>; Wed, 19 Oct 2022 20:15:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231220AbiJSTna (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Oct 2022 15:43:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47790 "EHLO
+        id S230359AbiJSUPE convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 19 Oct 2022 16:15:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229889AbiJSTn3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Oct 2022 15:43:29 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 550791B76C6
-        for <git@vger.kernel.org>; Wed, 19 Oct 2022 12:43:28 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BA6871C2240;
-        Wed, 19 Oct 2022 15:43:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=vk8Ds3gEzSmS
-        dvzstMTlq001QRwEirZbN72RL6heA3c=; b=E23RiA12uZqBdC6RXNOiMdW8HIx6
-        qjm30s0MtMHsl0OPZsEB+8brCjAduE076SucVihM8yJ7u2iedMbNEbmlftAQKyjt
-        z5Y4NvJQuK9lbnSy2Go+1tdVKVed7lK4aAKXJE3Fw1LQQJkFGWwJ0F4fm9OOar9N
-        zx75SEGmGf3wqI8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B21601C223F;
-        Wed, 19 Oct 2022 15:43:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EA7331C223E;
-        Wed, 19 Oct 2022 15:43:24 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-        Mike Hommey <mh@glandium.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3?= =?utf-8?Q?n?= 
-        <carenas@gmail.com>, Glen Choo <chooglen@google.com>,
-        Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH v2 3/4] Makefile: really use and document
- sha1collisiondetection by default
-References: <cover-0.5-00000000000-20220422T094624Z-avarab@gmail.com>
-        <cover-v2-0.4-00000000000-20221019T010222Z-avarab@gmail.com>
-        <patch-v2-3.4-78ef8636c57-20221019T010222Z-avarab@gmail.com>
-        <CAPig+cS8jvUn9bR=1ywWgCC3gPosgycdcdbm+aASo59mXz6rfw@mail.gmail.com>
-        <xmqqo7u7srp4.fsf@gitster.g>
-        <221019.867d0vhbsz.gmgdl@evledraar.gmail.com>
-Date:   Wed, 19 Oct 2022 12:43:23 -0700
-In-Reply-To: <221019.867d0vhbsz.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 19 Oct 2022 20:54:29 +0200")
-Message-ID: <xmqq1qr3r44k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S230354AbiJSUPC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2022 16:15:02 -0400
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48D825208A
+        for <git@vger.kernel.org>; Wed, 19 Oct 2022 13:14:58 -0700 (PDT)
+Received: by mail-io1-f50.google.com with SMTP id y80so15474491iof.3
+        for <git@vger.kernel.org>; Wed, 19 Oct 2022 13:14:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RpSs2Xi22QI1VdLQzKptS0nDxeatOKslZhrbhNn5z0s=;
+        b=tP1Sp/y2/hsUvPMRXOKJyq/14NPmbUU8hBPevLunFhoG8O0ZSHHINKEwJSsnOhIQQR
+         m6D64JTXD6lSYcTaHBGDhYSMjdQh2eyPSaxQrdY0Z91l2/pwB1s5ve5NxvNyfWg3/Dsk
+         tnhU9osrbzVntlTLmBFy/XAGJO1H/fZnOj3p6v/USRNrQdhVBnGBxV66sWmdBkd78y1t
+         UVxvzVmasEakDCGwF8Ba6Hgms/B8RVClB7r/oIsW1pja2bEkNpnqcgrQYyJz/vq2QxFV
+         c5H4GnZY9MjVDO5wVhImEc7zl2QunF7cUje98+1tG57R+AizNczthemcsFgoQUMRl+5H
+         svGQ==
+X-Gm-Message-State: ACrzQf3rYiunHJtowoqABm7Yxm/MfSxr8YZB41Hgaz/LtUFUR1I4vaHK
+        XBOH8Wwr9ePnpYoXgwDOMsVk8n4TKZ7PCho1oIiEGpSk5Sw=
+X-Google-Smtp-Source: AMsMyM72Ko2ilTmBurvVlKi4LnCZyqBTZDgLeL0lE9hCulbINPryiDJb5DyfSzThP9jQi2XzQUH5ffJBhgUX/Y+T1hM=
+X-Received: by 2002:a05:6602:154f:b0:6bc:f701:cb37 with SMTP id
+ h15-20020a056602154f00b006bcf701cb37mr7338646iow.136.1666210497406; Wed, 19
+ Oct 2022 13:14:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4BB7C418-4FE6-11ED-909B-C2DA088D43B2-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
+ <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com> <kl6l7d0yyu6r.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <xmqqo7u9wyt7.fsf@gitster.g> <kl6l4jw1yshm.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <221019.86bkq8hake.gmgdl@evledraar.gmail.com> <CAPig+cRi8RVdmPbDdTzDCpXKjUsbOJNc5Pr+d02OQ9jENHUjfQ@mail.gmail.com>
+ <221019.8635bjhbds.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221019.8635bjhbds.gmgdl@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 19 Oct 2022 16:14:46 -0400
+Message-ID: <CAPig+cSCb6tA+Ox=xK+LuC+Hf=JRRBr3=xx9cJ0yQaguHm+HSQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/12] fsmonitor: Implement fsmonitor for Linux
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Glen Choo <chooglen@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
->> They distract us from the core changes and slows us down.  It is OK
->> to do them as totally unrelated clean-up changes long after the dust
->> settles, but not entangled with the other more important changes
->> like these patches.
+On Wed, Oct 19, 2022 at 3:16 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> On Tue, Oct 18 2022, Eric Sunshine wrote:
+> > On Tue, Oct 18, 2022 at 9:22 PM Ævar Arnfjörð Bjarmason
+> > <avarab@gmail.com> wrote:
+> >> In practice we've been catching SHA-implementation specific code early
+> >> because the OSX implementation was different, but in this case it's
+> >> OSX-only code, so it only supported the Apple Common Crypto backend.
+> >
+> > I don't know how germane it is to the current thread, but previous
+> > discussions[1,2,3,4] favored dropping use of Apple's Common Crypto
+> > altogether since it doesn't seem to buy us much (or anything) and is
+> > incomplete; it doesn't support all of the OpenSSL API Git uses.
 >
-> There's things I can eject from this series, but I don't really find it
-> to be "while at it" changes, I suspect what you're thinking of is
-> one/some of:
-> ...
-> Or maybe you're OK with topic(s) at large, i.e. "switch the default,
-> update the docs, make sure noone's left behind", but would just like it
-> done in more incremental steps?
+> Yeah, maybe. I'd be 100% OK with that happening, but I don't use OSX
+> outside fo CI really, so I wanted to avoid scope creep to "non-SHA stuff
+> we use OpenSSL/AppleCommonCrypto/whatever" for, in the cases where we
+> can/do use OpenSSL/AppleCommonCrypto/whatever for SHA also.
 
-I said something on this in a separate thread. Let me look it up.
+Indeed, I was not suggesting that retirement of AppleCommonCrypto be
+tackled by you or by the series you posted to fix the build failure;
+doing so is well outside the scope of the immediate problem. I brought
+up those old discussions only as reference and as a pointer that
+whatever fix is eventually adopted for the immediate build problem
+need not necessarily bend over backward for AppleCommonCrypto support
+if a long-term goal is to drop AppleCommonCrypto (i.e. do as little as
+necessary to keep AppleCommonCrypto in a working state, but don't go
+overboard trying to give it first-class support since it will never be
+a complete replacement for OpenSSL).
 
- * Updating the build procedure so that sha1dc is used by default
-   everywhere is a good idea, but that is less urgent and should be
-   done separately, preferrably long after the dust settles from the
-   above.
+> But if you/someone can come up with a patch that confidently asserts
+> that it's useless & drops it I'd be happy to either integrate it &
+> submit it as part of this series if it makes things simpler, or
+> alternatively re-roll on top of it.
+>
+> I'm just not confident in making that case myself, since I hardly use
+> the platform, am not too familiar with the various concerns (aside from
+> skimming the links above), and don't really have interest in pursuing
+> that.
 
+I was not suggesting holding up your series or integrating retirement
+of AppleCommonCrypto with it; they are separate concerns.
+
+> OTOH if you do want to make the case for dropping Apple Common Crypto
+> that would also presumably be much easier after this series, once we're
+> past justifying the hurdle of "wait, we're switching the thing we use
+> for SHA-1 by default, which we build practically everything in git on?"
+
+My "don't know how germane it is to the current thread" observation
+was in response to the `fsmonitor` thread, before I ever saw the
+series you posted for fixing the build failure, so it wasn't given as
+any sort of feedback on your series, and wasn't asking you to
+incorporate retirement of AppleCommonCrypto into your series. That
+said, it does appear that dropping AppleCommonCrypto should become
+easier after your changes land if someone opts to tackle the task.
