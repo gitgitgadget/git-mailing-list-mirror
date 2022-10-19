@@ -2,123 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D70AAC433FE
-	for <git@archiver.kernel.org>; Wed, 19 Oct 2022 12:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1244C4332F
+	for <git@archiver.kernel.org>; Wed, 19 Oct 2022 12:46:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233319AbiJSMqY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Oct 2022 08:46:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36874 "EHLO
+        id S231184AbiJSMqo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Oct 2022 08:46:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233318AbiJSMpz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Oct 2022 08:45:55 -0400
+        with ESMTP id S230463AbiJSMqY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2022 08:46:24 -0400
 Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88852A8CD9
-        for <git@vger.kernel.org>; Wed, 19 Oct 2022 05:28:47 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D050912D81F
+        for <git@vger.kernel.org>; Wed, 19 Oct 2022 05:29:01 -0700 (PDT)
 Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
         by smtp.hosts.co.uk with esmtpa (Exim)
         (envelope-from <philipoakley@iee.email>)
-        id 1ol8AH-0007rS-Ez;
-        Wed, 19 Oct 2022 13:27:18 +0100
-Message-ID: <53a8b40f-1740-581f-e2df-709b13046ffc@iee.email>
-Date:   Wed, 19 Oct 2022 13:27:17 +0100
+        id 1ol5AW-0004I4-E4;
+        Wed, 19 Oct 2022 10:15:21 +0100
+Message-ID: <1d6d6047-6993-d4fd-c506-6c9be9a789dd@iee.email>
+Date:   Wed, 19 Oct 2022 10:15:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.1
-From:   Philip Oakley <philipoakley@iee.email>
-Subject: Re: Handling rebasing better
-To:     djvortex@gmx.com, git@vger.kernel.org
-References: <trinity-15566df8-59d7-4597-b59d-2143ec978b12-1663845799823@3c-app-mailcom-bs01>
+Subject: Re: [RFC PATCH 1/2] notes: support fetching notes from an external
+ repo
 Content-Language: en-GB
-In-Reply-To: <trinity-15566df8-59d7-4597-b59d-2143ec978b12-1663845799823@3c-app-mailcom-bs01>
+To:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org
+Cc:     Johan Herland <johan@herland.net>,
+        "Jason A . Donenfeld" <Jason@zx2c4.com>,
+        Christian Hesse <mail@eworm.de>
+References: <20220802075401.2393-1-vegard.nossum@oracle.com>
+ <96b04fc0-eadc-af01-502a-e5236a393ac4@iee.email>
+ <66d96a5c-ce6f-9241-a766-f396674798c9@oracle.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <66d96a5c-ce6f-9241-a766-f396674798c9@oracle.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi dj,
+Hi Vegard,
 
-On 22/09/2022 12:23, djvortex@gmx.com wrote:
-> Hello.
+On 17/10/2022 14:14, Vegard Nossum wrote:
 >
-> I wouldn't be surprised if this very subject has already been endlessly discussed over the years, but nevertheless allow me to make a feature request for git. (If this has already been discussed in the past, which I'm quite certain it has, I would like to hear the details so I can understand the design decisions that have been made in this regard.)
-
-I'll have go at commenting from the sidelines. You can look back at /
-search previous discussions at https://lore.kernel.org/git/
-> Rebasing is a rather curious feature of git in that it's both an extremely common and normal operation done in many projects, and at the same time it's a very drastic measure that has the potential of badly messing up or even breaking git commit histories (as any operation that changes history is), or at a very minimum cause a lot of work.
-
-Is this a reflection of the project organisation (e.g. trying to eat
-melons in one step), or did Git somehow 'getting it wrong'? (more later..)
->  Rebasing is extremely common in many projects, so much so that there are many such projects where in fact only fast-forward merges are allowed to the master branch (which is often possible only by rebasing the branch to be merged onto the current master branch head).
-
-Again, is this a code smell (cf Conway's law) about being too close to
-the technical debt cliff.
-> On the other hand, rebasing, as any other operation that changes commit history, has the potential of breaking things, or causing a ton of extra work, when more than one developer has the same branch checked out (and thus their local history diverges from the remote history).
-
-Rebase itself doesn't typically break things, rather it's things like
-forced push, and misunderstood mental models that cause the pains of a
-mishandled tool. Rebase can also be too complicated, with a syntax based
-on some very specific early experiences that may not reflect modern
-common use. A new refactored command may help some who aren't long time
-experts in rebase.
-
-> So, given how relatively common it is to use rebasing, and how carefully it should be used, it's a bit strange how poorly git seems to handle it. Not in terms of doing the rebasing itself, but in terms of subsequent operations done to the rebased branch.
+> On 8/30/22 16:17, Philip Oakley wrote:
+>> Sorry for late comment.
 >
-> For starters, if your current branch has been pushed to the remote, and then you rebase it to something else, and then do a "git status", it will tell you that the local and remote histories have diverged... and then suggests doing a "git pull"! Which is most definitely not what you want to do! 
-
-This 'pull' message is possibly one area where maybe a change to the
-message could improve outcomes by being less dogmatic about the expected
-work flow, and a little bit more informative about options. It's also
-worth making sure you have a complete MVCE [1] to demonstrate the issue
-to avoid descriptive confusions. Hardest part is completing the MVCE
-after realising where the confusion lay.
-
-> You just rebased the branch, you don't want to try to merge it with the old branch history! (Developers who have not encountered this before may become really confused if they try the "git pull" and start getting tons of really strange merge conflicts. The absolute worst thing they could then do is try to "resolve" those conflicts, which is most definitely not what you want to do! I don't know if there are situations where you actually *don't* get any merge conflicts and the two diverged histories just merge... creating a complete mess of a hybridized duplicated history.)
+> And sorry for late response! I didn't receive your email for some
+> reason, but I noticed it in the list archives.
 >
-> I think that git should be aware of what has happened, in other words, that the current local branch has been rebased to something else, and is now a completely different history from the same branch in the remote, and express this clearly and suggest the correct thing (primarily to do a "git push -f").
-
-Do check the force-with-lease option as well, and how your workflow was
-designed, and has developed to it's current state. Many workflow have
-premature optimisation failures embedded in them.
+>> On 02/08/2022 08:54, Vegard Nossum wrote:
+>>> Notes are currently always fetched from the current repo. However, in
+>>> certain situations you may want to keep notes in a separate repository
+>>> altogether.
+>>>
+>>> In my specific case, I am using cgit to display notes for repositories
+>>> that are owned by others but hosted on a shared machine, so I cannot
+>>> really add the notes directly to their repositories.
+>>>
+>>> This patch makes it so that you can do:
+>>>
+>>>      const char *notes_repo_path = "path/to/notes.git";
+>>>      const char *notes_ref = "refs/notes/commits";
+>>>
+>>>      struct repository notes_repo;
+>>>      struct display_notes_opt notes_opt;
+>>>
+>>>      repo_init(&notes_repo, notes_repo_path, NULL);
+>>>      add_to_alternates_memory(notes_repo.objects->odb->path);
+>>>
+>>>      init_display_notes(&notes_opt);
+>>>      notes_opt.repo = &notes_repo;
+>>>      notes_opt.use_default_notes = 0;
+>>>
+>>>      string_list_append(&notes_opt.extra_notes_refs, notes_ref);
+>>>      load_display_notes(&notes_opt);
+>>>
+>>> ...and then notes will be taken from the given ref in the external
+>>> repository.
+>>>
+>>> Given that the functionality is not exposed through the command line,
+>>> there is currently no way to add regression tests for this.
+>>>
+>>> Cc: Johan Herland <johan@herland.net>
+>>> Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+>>> Cc: Christian Hesse <mail@eworm.de>
+>>> Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+>>> ---
+>>>   common-main.c |  2 ++
+>>>   notes.c       | 15 ++++++++++++---
+>>>   notes.h       |  3 +++
+>>>   refs.c        | 12 +++++++++---
+>>>   refs.h        |  2 ++
+>>>   5 files changed, 28 insertions(+), 6 deletions(-)
+>>
+>> Where's the documentation? Without a clarity of purpose and usage then,
+>> for me, it doesn't fly.
+>>
+>> I feel that underlying this there may something that's interesting, but
+>> without the 'SPIN' narrative (situation, problem, implication, and
+>> need-payoff) I'm not sure what it's trying to do from a broad user
+>> perspective. (Spin is just one approach to 'selling' the patches;-)
+>>
+>> I'd agree that Notes are 'odd' in that they are out of sequence relative
+>> to commits, and may not be common between users viewing the same repo.
+>> I'd like to understand the issues in a wider context.
+>> -- 
+>> Philip
 >
-> More importantly, I think git should handle better the situation where you are trying to pull a rebased branch (which was rebased by someone else) onto your local original non-rebased one. Again, currently you'll just get a huge bunch of weird merge conflicts (if you are lucky), and the worst thing you could do is try to "resolve" them, as that's precisely what you shouldn't be doing.
-
-This scenario (where left hand does not know what the right hand is
-doing) is a social/management problem that needs more than a technical
-fix. Essentially, the two hands are having an unexpected arm wrestling
-contest based on their workflows.
+> Perhaps the best way to showcase this is with a screenshot of what we're
+> trying to upstream:
 >
-> I understand that the branch history having changed on the remote can be a nightmare to deal with, when you have a local non-rebased copy of it, especially if you have made new local commits to it. AFAIK there are no easy clear-cut solutions to this, but one of them is to just write down the hashes of your commits, reset to the remote branch, and then cherry-pick your commits in chronological order (resolving any merge conflicts that may happen).
+> https://vegard.github.io/cgit/6399f1fae4ec.png
 >
-> The problem is that git isn't exactly helping here. I think that git should recognize the situation
-
-Because Git is distributed, it's not always possible to have the big
-picture overview (aka "recognize"), rather its limited to noting and
-reporting a few issues - the big picture isn't there.
->  and give better suggestions on what to do. In other words, if you are doing a "git pull" and the remote branch has been rebased, git should stop and tell clearly that this has happened, and suggest what to do. 
-
-The message could be improved, but the usual discussions would ensue as
-to purpose, who & what it's trying to tell, etc. (see note 4. below)
-> If it detects that the local branch is identical to the old remote branch (that existed before the rebase), it could suggest a reset. If it detects that there are new local commits on top of the old history, it could make another suggestion on how to deal with it. It might also give the (rather unsafe) option of doing the pull anyway, for example with something like "git pull -f", with a huge warning.
+> Since git commits cannot be changed without rewriting history, git notes
+> is the mechanism by which we can attach new information to existing
+> commits. We're internally using these notes for cross-referencing
+> information like references to subsequent fixes, backports in other
+> trees, mailing list discussions, etc.
 >
-> Perhaps git could even support the "reset-to-the-remote-history and then cherry-pick your new local commits" directly, to help the developer in this task (so that you don't need to write down any hashes and do all that manually). But even if this isn't really feasible, at least detecting the situation and the clearer messages would help enormously.
+> There is also a bit more information in my cgit patch submission from
+> today: https://lists.zx2c4.com/pipermail/cgit/2022-October/004764.html
 >
-> (I understand that the current design of git might not directly allow this with just some code changes, and would perhaps require adding some kind of extra metadata. But would this be bad? It would certainly help developers handle rebases better.)
+> My "problem" is that there are many moving parts to this, and the two
+> git.git patches sit at the top of the dependency chain:
+>
+> 1. these git patches
+> 2. the cgit patches
+> 3. the Linux kernel-specific notes generation scripts/logic
+> 4. the Linux kernel notes themselves
+> 5. displaying notes on kernel.org
+>
+> Almost all of these steps involve different people with different
+> standards, different motivations, different priorities.
+>
+> As I wrote earlier, I am trying to be a good citizen and upstream as
+> much of this as I can. But it's hard to justify what Junio asked for:
+> scrapping my current patches (which we are currently using...) in favour
+> of a complete rewrite with more functionality that does not buy us
+> anything from my point of view.
+>
+> Does this clarify things?
 
---
+Yes, and No;
+Even without Junio's desire for a broader functionality of the
+`alternate object database` (is it that, or an ext repo?), I still felt
+that given the new and improved functionality, it would need some extra
+text to go into the documentation and man pages, along with a short
+abstract to go into the release notes. Somehow the prospective users
+(e.g. me) would need to be told - I.e. be able to read from the man
+pages what to expect.
+
+The commit messages also didn't really bring out where the benefit would
+be seen i.e. the cgit display (as per your screen shot). Also some
+annotation of the screen shot with an arrow pointing to what was 'new'
+could help.
+
+Also you didn't really explain the point you make above about the
+"shared machine", which cuts across the normal "personal machine" view
+of the 'distributed' in DVCS.
+
+>
+> I think my patches are a good cleanup regardless of motivation and
+> everything was fairly well documented in the changelogs, so I'm
+> surprised to see skepticism in the git community.
+
+In a sense, I hear your frustration. It does feel common that that every
+knife has to be converted to scissors (two knives working together) or a
+multi-tool Swiss Army knife, and in some cases loosing the original
+'obviousness' of a simple thing done well.
+
+A first step may be to write out "what would the man pages say" that
+explains how the the `alternate object database` is used and set up, and
+then maybe look at whether Junio's example, to see if you have explained
+this new capability well enough.
+
+I hope that helps clarify my original comments.
+
 Philip
-[1] https://stackoverflow.com/help/minimal-reproducible-example (How to ..)
-
-Personal notes:
-1. new rebase, a new command name: git transplant, git relocate, git
-rendition?; freedom to get the semantic, syntax and mental models right
-this time, cf the checkout/switch changeover
-
-2. separation of concerns for the interactive and supposed automatic modes
-
-3. "Upstream" confusion. Git being too eager to drop your work in favour
-of others (causing a race to the bottom - fast failure)
-3b. and effects of reflog behind the scenes.
-
-4. Update that "git pull" advice to e.g. "`fetch` & trial merge, or
-`pull`, if confident".
