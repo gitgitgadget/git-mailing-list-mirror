@@ -2,90 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF291C433FE
-	for <git@archiver.kernel.org>; Wed, 19 Oct 2022 16:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 810BDC4332F
+	for <git@archiver.kernel.org>; Wed, 19 Oct 2022 16:33:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229597AbiJSQ3I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Oct 2022 12:29:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50308 "EHLO
+        id S230006AbiJSQdY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Oct 2022 12:33:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231483AbiJSQ3B (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Oct 2022 12:29:01 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 648951C9057
-        for <git@vger.kernel.org>; Wed, 19 Oct 2022 09:29:00 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 68E8F1C0D7D;
-        Wed, 19 Oct 2022 12:28:59 -0400 (EDT)
+        with ESMTP id S229447AbiJSQdW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2022 12:33:22 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A84418B01
+        for <git@vger.kernel.org>; Wed, 19 Oct 2022 09:33:21 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C17C21485D2;
+        Wed, 19 Oct 2022 12:33:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4148tpMtrJIM922WWtDCYl1skAXehj3DgUMoIH
-        CKcvc=; b=pW4FkN1I8O3s0LDY9By4VG43U13Zu22z4w2QNsCVexa//dcOp2Cowx
-        dLmB/rrlxue9/NgKMY2xjwO7j3q29QC3ehZDNsZheB4U6sJX2h4muoH1WHh7qhq8
-        YmF2ruNn/tD6kDnUgbSkdAFAxF+8cMi1aors9QgK2ceMvq+JfX8wI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 617C41C0D7C;
-        Wed, 19 Oct 2022 12:28:59 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=Hx+QoVJP5uNz
+        WvMB4m+h4sFzA8+EXpN4bvltwgG+FTk=; b=b3mBWQ1J8YTNm/2RDPB18zr/nt0N
+        qaQv1FgaSw7fQz5IaRmOBNb9PU1Ybt9yu+uLuay98AHf92iVgpqOeQxoF6njCq0r
+        nh0TY2jTeWanM9+KpwIyExmx2b5EJZUyp6f5FeOtqLGTEK8Y6VVghTa3YwqR/YWD
+        90vQVsHkKPD8qbc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B9E081485CF;
+        Wed, 19 Oct 2022 12:33:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 958E61C0D7B;
-        Wed, 19 Oct 2022 12:28:56 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2C7391485CE;
+        Wed, 19 Oct 2022 12:33:20 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Mike Hommey <mh@glandium.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3?= =?utf-8?Q?n?= 
-        <carenas@gmail.com>, Glen Choo <chooglen@google.com>,
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Glen Choo <chooglen@google.com>,
+        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH v2 3/4] Makefile: really use and document
- sha1collisiondetection by default
-References: <cover-0.5-00000000000-20220422T094624Z-avarab@gmail.com>
-        <cover-v2-0.4-00000000000-20221019T010222Z-avarab@gmail.com>
-        <patch-v2-3.4-78ef8636c57-20221019T010222Z-avarab@gmail.com>
-        <CAPig+cS8jvUn9bR=1ywWgCC3gPosgycdcdbm+aASo59mXz6rfw@mail.gmail.com>
-Date:   Wed, 19 Oct 2022 09:28:55 -0700
-In-Reply-To: <CAPig+cS8jvUn9bR=1ywWgCC3gPosgycdcdbm+aASo59mXz6rfw@mail.gmail.com>
-        (Eric Sunshine's message of "Tue, 18 Oct 2022 22:59:23 -0400")
-Message-ID: <xmqqo7u7srp4.fsf@gitster.g>
+Subject: Re: [PATCH v2 00/12] fsmonitor: Implement fsmonitor for Linux
+References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
+        <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com>
+        <kl6l7d0yyu6r.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <xmqqo7u9wyt7.fsf@gitster.g>
+        <221019.86fsfkhb14.gmgdl@evledraar.gmail.com>
+Date:   Wed, 19 Oct 2022 09:33:19 -0700
+In-Reply-To: <221019.86fsfkhb14.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 19 Oct 2022 03:04:41 +0200")
+Message-ID: <xmqqk04vsrhs.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 20D768C2-4FCB-11ED-AE2D-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BDF0D828-4FCB-11ED-A125-307A8E0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
->> diff --git a/Makefile b/Makefile
->> +ifdef DC_SHA1
->> +$(error the DC_SHA1 flag is no longer used, and has become the default. Adjust your build scripts accordingly)
->> +endif
+> On Mon, Oct 17 2022, Junio C Hamano wrote:
 >
-> bikeshedding: Do we really need to penalize (abuse) people merely for
-> asking us to do what we're already doing anyhow?
+>> Glen Choo <chooglen@google.com> writes:
+>>
+>>> At $DAYJOB, we observed that this topic breaks MacOS builds with sha1=
+dc:
+>>
+>> Thanks for a report.
+>>
+>> How dissapointing.  The thing is that the topic has been in 'next'
+>> since the 11th (i.e. early last week), and I know that you guys rely
+>> on the tip of 'next' in working order to cut your internal releases,
+>> but we did not hear about this until now.  What makes it taste even
+>> worse is that nobody else caught this, even though we seem to have a
+>> couple of macOS jobs at GitHub Actions CI, there we didn't see any
+>> breakage related to this.
+>
+> FWIW I see you caught it on the 9th in
+> https://lore.kernel.org/git/xmqqh70c62w0.fsf@gitster.g/, but then the
+> base topic was merged down on the 17th.
 
-A valid question.
-
-I can understand and very much appreciate [1/4] as a very focused
-fix to the problem.  Very small part of this step, namely, make the
-DC_SHA1 the default everywhere, is also very much welcome.
-
-Everything else I see in these patches are extra "while we are at
-it" that should not exist.  These "while at it" changes tend to
-somehow implement more subjective choices that will cause more
-discussion and take more review resources.  Not all "white at it"
-may be more subjective, but at least in this series, they appear
-to be.
-
-They distract us from the core changes and slows us down.  It is OK
-to do them as totally unrelated clean-up changes long after the dust
-settles, but not entangled with the other more important changes
-like these patches.
-
-Thanks.
+Heh, I already forgot I made that comment myself ;-) Thanks for
+reminding, and thanks for picking the single step to fast-track the
+fix.
