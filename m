@@ -2,90 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09C74C433FE
-	for <git@archiver.kernel.org>; Wed, 19 Oct 2022 16:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18EF7C433FE
+	for <git@archiver.kernel.org>; Wed, 19 Oct 2022 17:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230283AbiJSQ6v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Oct 2022 12:58:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41472 "EHLO
+        id S231394AbiJSRG2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Oct 2022 13:06:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231437AbiJSQ6l (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Oct 2022 12:58:41 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01BE81CFF25
-        for <git@vger.kernel.org>; Wed, 19 Oct 2022 09:58:37 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C62B41AC0FC;
-        Wed, 19 Oct 2022 12:58:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QuedxrVhVEFi8qyCAvfUf+XMVSOlYTU9O6M3b/
-        kPg3g=; b=EJBHFXf+24dghaR/gafmSfp987AS+bsC0U/BJbBlO/yaKODKrKfS8p
-        AOSMoBu6pKUmboSc0gLl02c2mkMmBBJTiD7b/8rm2i/W6qc2Jkdnmh/g4/VbpT9z
-        JrCZkpQ8Eo18eyPbQTY24QdZMAH6LhmChD8FR+uS9a+por7pZdYi8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B26CC1AC0FB;
-        Wed, 19 Oct 2022 12:58:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DAE321AC0F9;
-        Wed, 19 Oct 2022 12:58:23 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
+        with ESMTP id S230469AbiJSRG0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2022 13:06:26 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 426ED192D94
+        for <git@vger.kernel.org>; Wed, 19 Oct 2022 10:06:22 -0700 (PDT)
+Received: (qmail 3010 invoked by uid 109); 19 Oct 2022 17:06:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 19 Oct 2022 17:06:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6880 invoked by uid 111); 19 Oct 2022 17:06:21 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 19 Oct 2022 13:06:21 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 19 Oct 2022 13:06:20 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Glen Choo <chooglen@google.com>,
-        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/12] fsmonitor: Implement fsmonitor for Linux
-References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
-        <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com>
-        <kl6l7d0yyu6r.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <xmqqo7u9wyt7.fsf@gitster.g>
-        <kl6l4jw1yshm.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <221019.86bkq8hake.gmgdl@evledraar.gmail.com>
-        <CAPig+cRi8RVdmPbDdTzDCpXKjUsbOJNc5Pr+d02OQ9jENHUjfQ@mail.gmail.com>
-Date:   Wed, 19 Oct 2022 09:58:22 -0700
-In-Reply-To: <CAPig+cRi8RVdmPbDdTzDCpXKjUsbOJNc5Pr+d02OQ9jENHUjfQ@mail.gmail.com>
-        (Eric Sunshine's message of "Tue, 18 Oct 2022 22:28:14 -0400")
-Message-ID: <xmqqedv3sqc1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v2 00/10] run-command API: add run_command_{l,sv}_opt()
+Message-ID: <Y1AujKKPUJFepph5@coredump.intra.peff.net>
+References: <cover-00.10-00000000000-20221014T153426Z-avarab@gmail.com>
+ <cover-v2-00.10-00000000000-20221017T170316Z-avarab@gmail.com>
+ <xmqq4jw1wl6z.fsf@gitster.g>
+ <221018.86a65ti70m.gmgdl@evledraar.gmail.com>
+ <Y08P0G1Be+5hCVML@coredump.intra.peff.net>
+ <xmqq7d0vu8cw.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3E3985CC-4FCF-11ED-82EC-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq7d0vu8cw.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Wed, Oct 19, 2022 at 08:43:43AM -0700, Junio C Hamano wrote:
 
-> I don't know how germane it is to the current thread, but previous
-> discussions[1,2,3,4] favored dropping use of Apple's Common Crypto
-> altogether since it doesn't seem to buy us much (or anything) and is
-> incomplete; it doesn't support all of the OpenSSL API Git uses.
+> Jeff King <peff@peff.net> writes:
+> 
+> > I do think Junio saying "consensus" may have been premature. I expressed
+> > my opinion and he agreed, but I think that is as far as it got. :)
+> 
+> Maybe.  This is a tangent, but as far as I am concerned, when Réne
+> writes something that looks to me very straight-forward and correct,
+> and it passes your taste buds, then that is enough consensus to move
+> ahead.  As Linus often said and I concur, some people got good
+> taste, that is hard to quantify and probably hard to teach, and
+> there are a handful folks here with good taste.  And when two who
+> have demonstrated they are with good taste agrees, that is good
+> enough to me.
 
-Yeah, that matches my recollection.  Unless the situation has much
-changed, dropping it may not be a bad thing to do.
+I pretty much agree with that worldview, but I try hard not to assume
+"my taste is good" when going into a technical discussion. If only
+because I've embarrassed myself a sufficient number of times. :)
 
-But
+> >> I don't see how *_l_opt() is particularly error prone, I just had a
+> >> stupid think-o in v1 of this, but that if/else if bug is something that
+> >> could have snuck in with run_command() given the same stupidity :)
+> >
+> > I don't think it's error-prone. It just seems like it complicates an API
+> > for little gain, and causes us to have a lot of boilerplate mapping
+> > RUN_* flags into cmd.* fields.
+> 
+> True. run_command() needs the RUN_* flags twiddling, too, so it is
+> not a point against _l_opt() variant.
 
- * Fixing the fsmonitor code so that it can also be used with things
-   other than Common Crypto is the most urgent.  The topic gave us a
-   grave regression (those who used to successfully build Git can no
-   longer build with their favourite configuration).
+Did you mean run_command_v() here? If so, then yes, it requires the
+flags. But if we are going to drop it in favor of just run_command(),
+then those flags go away (and moving to the _l() variant is a step in
+the opposite direction).
 
- * Updating the build procedure so that sha1dc is used by default
-   everywhere is a good idea, but that is less urgent and should be
-   done separately, preferrably long after the dust settles from the
-   above.
-
- * Removing Common Crypto support may not be a bad idea, but that is
-   even less urgent, unless the support burden is slowing us down or
-   forcing us to settle on common set of features that is too
-   limiting.
-
-Thanks.
+-Peff
