@@ -2,131 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C71BAC433FE
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 21:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5960C4332F
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 21:15:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbiJTVOq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 17:14:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43336 "EHLO
+        id S229732AbiJTVPZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 17:15:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbiJTVOp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 17:14:45 -0400
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FDA932058
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 14:14:41 -0700 (PDT)
-Received: by mail-pl1-x64a.google.com with SMTP id e10-20020a17090301ca00b00183d123e2a5so279311plh.14
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 14:14:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5oljR3kmG56xVLhaB2JGfhzWTwsCgrdOuvy5aQWF8Pc=;
-        b=rFwI+Dy0gxB7o+eg8YCAriBQ0ncsdKMHFMVK+fN6KS2JaHJlq7u8kXqS3C70dapoaK
-         S8i45GhM2sR86BcdT+tZ15rVXjRXZhaRo1325mIkGwEEYhhEo0x1RLAFlW7N8Wb9Kous
-         ZO98dF6uj+PK8MalZFvHPc7pv/DaQJDLBkB3qdB+vxHbfb/uU7vzgdX7Lb25qRdlcfCz
-         J/tdidDLi8KrHOL25hn7+mcqooS8YBwNIVt0OTO40QHVQLH36Q13m2sgNaJS8kRSl5hF
-         NHbPgLA6xvP+vuhVAmQcs+WvDST5CIRaxpxEC04xu5oc2Txi11T+a5qdqURq1WR59CO+
-         /QFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=5oljR3kmG56xVLhaB2JGfhzWTwsCgrdOuvy5aQWF8Pc=;
-        b=MNQIfm30GH5JkQVMZFJ8lmLCvwBk19rwSdKFLjqh6Bu0KEsXW3nmZUs0ljmzsHVh0b
-         Xw9lrUHbtmbMVvuExLgndIu4bsqDEld8VHfRRBSxm31/Y/bRTx46HhUaigyLuDI6rXXt
-         6wI5RILf4cphGXU76q/VwPOXu0FnBeyD5c6nd6+mNnQFCPZXKCnxAxi9rN6EfP0GSmX1
-         /PJJMqM5P7W279+QqZYMRxqYsyqIqfgnYlfxcGH2cNIUDb70uBrYI0ZllOMqWIFxoIz0
-         Vwbv2Bav33HF8q/IuAuPCoX6Vk4NHWwzdqqu/EWIJWzdHI9sFrJdYB5CP7EVYoNRhclr
-         jGHA==
-X-Gm-Message-State: ACrzQf3U120k6jpKENInqLqWjytOSneIASx65p4LB2f7tRYMWOw7xWTq
-        KuekTui/02o4quY7QoSI+ILFKqNndDL4cg==
-X-Google-Smtp-Source: AMsMyM6b3CP6SYYwk9J8YVGhYDjWH0ExD3Q0vsvDa5Hk3Cd3A9jO85odH0iMhT1T4yLMivNTpeRwm809ioNBzQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a62:52d8:0:b0:562:3c8d:d427 with SMTP id
- g207-20020a6252d8000000b005623c8dd427mr15898253pfb.44.1666300480794; Thu, 20
- Oct 2022 14:14:40 -0700 (PDT)
-Date:   Thu, 20 Oct 2022 14:14:39 -0700
-In-Reply-To: <patch-04.10-db6a09ee42a-20221017T115544Z-avarab@gmail.com>
-Mime-Version: 1.0
-References: <cover-00.10-00000000000-20221017T115544Z-avarab@gmail.com> <patch-04.10-db6a09ee42a-20221017T115544Z-avarab@gmail.com>
-Message-ID: <kl6ly1taxkn4.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 04/10] git-submodule.sh: dispatch "foreach" to helper
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonas Bernoulli <jonas@bernoul.li>, Jeff King <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229742AbiJTVPX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 17:15:23 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33503102DD7
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 14:15:20 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 037A65A1FB;
+        Thu, 20 Oct 2022 21:15:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1666300519;
+        bh=+19Xhxrri3bm56EEcDxHbGeiIofeBvzUs/wHsCb34Qc=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=O/t1mfFHRHI2K5hoGM5ddjZnw0KbXe5GXOfisAQN5NhQBD3qXsBPojdiDQjU8Dt3X
+         DUIs+I/CoVS3m1fWIB2Dtp4tlBJGmpq9u8963MwAPn6L/HzYrzATJPfXJtR6xVQ8jR
+         uYv5NOrlTX+crpSI8OywFVzjmNMgaMtryHhLgZ+Bn29bRmpoFu1ht47EQ2rCwdVGIA
+         s2BT5myjc/LCBiFHJmDqxHVKKmjdLgjHbicvUAUhPTKKncthyykck9YT+Cfda6F5f7
+         +4jratC9xX4SyezGtFxTmVExfFWD0Pf4OEHhopGp8iky2pxx3fKMC4apUTa8JYreo3
+         hvFob+58AIoL87dtBDP7uGHHR0p//S4m+pKyzqXcJ+0QSPspsuiaoBOs+9OdjnWsMZ
+         4kMu1O2dyUscXGLdYgCMBGfpl4xC9wIVBwjEERdn4+t23ame63DUJIJlhKGUShbFjx
+         CtE9/iVx1hQl/ugc9rajg8nkAuAfxvO39kVQoeCC08HB6ZYG9ek
+Date:   Thu, 20 Oct 2022 21:15:16 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Mike Hommey <mh@glandium.org>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH v2 3/4] Makefile: really use and document
+ sha1collisiondetection by default
+Message-ID: <Y1G6ZEQbTBS1zqdL@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Mike Hommey <mh@glandium.org>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Eric DeCosta <edecosta@mathworks.com>
+References: <cover-0.5-00000000000-20220422T094624Z-avarab@gmail.com>
+ <cover-v2-0.4-00000000000-20221019T010222Z-avarab@gmail.com>
+ <patch-v2-3.4-78ef8636c57-20221019T010222Z-avarab@gmail.com>
+ <CAPig+cS8jvUn9bR=1ywWgCC3gPosgycdcdbm+aASo59mXz6rfw@mail.gmail.com>
+ <xmqqo7u7srp4.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="xfsPz9CJPwDI1Svk"
+Content-Disposition: inline
+In-Reply-To: <xmqqo7u7srp4.fsf@gitster.g>
+User-Agent: Mutt/2.2.7 (2022-08-07)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Dispatch the "git submodule foreach" command directly to "git
-> submodule--helper foreach". This case requires the addition of the
-> PARSE_OPT_STOP_AT_NON_OPTION flag, since the shellscript was
-> unconditionally adding "--" to the "git submodule--helper"
-> command-line.
+--xfsPz9CJPwDI1Svk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The commands in the previous patch also unconditionally add "--", so
-this wasn't clear to me on first read.
+On 2022-10-19 at 16:28:55, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>=20
+> >> diff --git a/Makefile b/Makefile
+> >> +ifdef DC_SHA1
+> >> +$(error the DC_SHA1 flag is no longer used, and has become the defaul=
+t. Adjust your build scripts accordingly)
+> >> +endif
+> >
+> > bikeshedding: Do we really need to penalize (abuse) people merely for
+> > asking us to do what we're already doing anyhow?
+>=20
+> A valid question.
+>=20
+> I can understand and very much appreciate [1/4] as a very focused
+> fix to the problem.  Very small part of this step, namely, make the
+> DC_SHA1 the default everywhere, is also very much welcome.
+>=20
+> Everything else I see in these patches are extra "while we are at
+> it" that should not exist.  These "while at it" changes tend to
+> somehow implement more subjective choices that will cause more
+> discussion and take more review resources.  Not all "white at it"
+> may be more subjective, but at least in this series, they appear
+> to be.
 
-It might be clearer to include some extra context, which is that "git
-submodule foreach" is different because everything after "foreach"
-should be treated like a single comand to run even if they are passed as
-separate strings, e.g. from t/t7407-submodule-foreach.sh.21, these two
-should be equivalent:
+I will definitely say that we should be using SHA-1-DC by default
+everywhere and I'm fine with that change.  I don't think we should fail
+if someone sets the former knob, since I don't recall us doing that
+elsewhere.  It also seems bad to bother folks if we're already doing
+what they asked for (and what we want them to do anyway).
 
-  git submodule foreach "echo be --quiet"
+I don't have a strong attachment to the remainder of the series and
+agree that maybe a different series would be a better location for those
+patches.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-vs
+--xfsPz9CJPwDI1Svk
+Content-Type: application/pgp-signature; name="signature.asc"
 
-  git submodule foreach echo be --quiet
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.39 (GNU/Linux)
 
-So PARSE_OPT_STOP_AT_NON_OPTION is necessary in order to stop us from
-intepreting option-like args as args to "git submodule foreach" instead
-of as part of the command to run. Without PARSE_OPT_STOP_AT_NON_OPTION,
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY1G6ZAAKCRB8DEliiIei
+gZc0AP9aHXNDN4zjsgw0dPQ1BZc9ksVe+MSn/cMXxnaDolqGKQD+NObF6J9GGJKW
+D3Irn8ekgGg4Jk5GD2hl+xYsiL1JWwA=
+=fclX
+-----END PGP SIGNATURE-----
 
-  git submodule foreach echo be --quiet
-
-becomes more like
-
-  git submodule foreach --quiet "echo be"
-
-There could have been a subtle change in behavior, since "git submodule
-foreach -- --foo" will be parsed as if "--foo" is the command, but
-PARSE_OPT_STOP_AT_NON_OPTION will happily accept "--foo" as an option.
-But we could never get into this situation anyway since we used to emit
-usage on the first option-like arg...
-
-> -# Execute an arbitrary command sequence in each checked out
-> -# submodule
-> -#
-> -# $@ =3D command to execute
-> -#
-> -cmd_foreach()
-> -{
-> -	# parse $args after "submodule ... foreach".
-> -	while test $# -ne 0
-> -	do
-> -		case "$1" in
-> -		-q|--quiet)
-> -			quiet=3D1
-> -			;;
-> -		--recursive)
-> -			recursive=3D1
-> -			;;
-> -		-*)
-> -			usage
-> -			;;
-
-i.e. here.=20
-
-So this patch looks safe.
-
+--xfsPz9CJPwDI1Svk--
