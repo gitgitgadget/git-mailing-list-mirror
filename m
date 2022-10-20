@@ -2,128 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF479C433FE
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 17:01:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CF3DC4332F
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 17:01:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229449AbiJTRB0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 13:01:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57538 "EHLO
+        id S229514AbiJTRBu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 13:01:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229661AbiJTRBU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 13:01:20 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C2F6191896
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 10:01:15 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D98641B57A0;
-        Thu, 20 Oct 2022 13:01:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9kUuQCD9G5CxQdNaw0xVOmhmcIKnaNrPJKhqNY
-        mn0vY=; b=QFR/G4/pHDf43jys3Z7AUJwQePrk+HCaN3C8EJ3irwPYGlj9Mc0eRU
-        vwBzRoZP/IK9m+Qu5JVdCa/F4QYSlhUnZ7H1vVvLwhOsZhnqUpdc5M/k5SCKb86z
-        V49Gzt6TmJsRpAKkicXNy0YvakXZjf4Lf50qPDF8k9pS6VbFPbapM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CA6E91B579F;
-        Thu, 20 Oct 2022 13:01:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E03B31B579B;
-        Thu, 20 Oct 2022 13:01:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Glen Choo <chooglen@google.com>,
-        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH v2 00/12] fsmonitor: Implement fsmonitor for Linux
-References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
-        <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com>
-        <kl6l7d0yyu6r.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <xmqqo7u9wyt7.fsf@gitster.g> <xmqq8rlamq29.fsf@gitster.g>
-        <CAPig+cRkQLyy8X7y=1jhrVwYERk5ucagAfJkTAOPNODofiZr1g@mail.gmail.com>
-Date:   Thu, 20 Oct 2022 10:01:07 -0700
-In-Reply-To: <CAPig+cRkQLyy8X7y=1jhrVwYERk5ucagAfJkTAOPNODofiZr1g@mail.gmail.com>
-        (Eric Sunshine's message of "Thu, 20 Oct 2022 12:37:48 -0400")
-Message-ID: <xmqq35bitooc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229936AbiJTRBo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 13:01:44 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4FAE1E09B9
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 10:01:29 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id l4so20847704plb.8
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 10:01:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Guz9FIUhy2jOtShw8Nhmr6fDAY76P3ERiqvpqMpHCNw=;
+        b=Wa9iKcz/2QwDC/HwIy0obURLqcSWGIaDWTHfXoWvTvLZnTqHlqJpYz7iJq2tJ7GeYy
+         Dlt5SH85MpVLFbDwuOjMyFYINXYZClp646IeBK9Jn/XCALY+8Ctwdp1Mf+/FoFmLQBWQ
+         DRTkICRYGXNaDfBc8BpSQ4OmRxwyv2DgHj+es9zU1hWe6w3javTQTM6EwZyfYPnwtsTe
+         XQMyDm6y+fuE78wbmIw3C3zLqORvMS9V7g7G1CCKHe+2KyOEtjApZVcJxZMHCbZdPIky
+         bz9tixEGvxYQSGgh6+CZLXklNhqCmv2ro2i3H5dSVbl37Dd5Mxfp59/DuWV1l7n2uRH3
+         7KGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Guz9FIUhy2jOtShw8Nhmr6fDAY76P3ERiqvpqMpHCNw=;
+        b=F17WEcED/cXR6xOOcBHL27xjA7pA/Pce5MyWu71CjECnnMKceviNpgu01bxNrk+tyQ
+         lZHC/ygclcfoljYsQKnoUYeI9Bp7nXoVCvOa9F6uYa7R2on6VNZink3ddPrduawBQvzV
+         3HSBFwTltYQgmZXS0IxfskiNpJwF8hRp/Bl7MP/Nc5S7+xYyacaWm0dQppdOqd49cS1n
+         otvVypeC5cTUhuC2Dr/DLDS9cQ6IvWM5uERmAIAzhKjarmt4ArxbfyZcKHtfcYRK3JM2
+         Zw3pFK9lNuLUyBorVyZWdhydNPVgO5UwqavCs97WjJKG1nXaJVy7Q9LvLMF/XqZIY0Po
+         XaYA==
+X-Gm-Message-State: ACrzQf2Vw8REmk0RvNah0WyaugIg620VnoCe1xxB2vCAkSBGmiiS0zYx
+        vz9jqhsdcqN/8xMiBApdlYUoOSlbAqorLnw8zaqwQ0NU22I=
+X-Google-Smtp-Source: AMsMyM5Fo/scw/fbeCO3stsmf6Z5KI5LJ/S+LTvkK8mlK6NBok+dBgjik1VCJjbubLGqpba8v9cq/gYuVE7T37gbqUM=
+X-Received: by 2002:a17:902:8309:b0:17a:695:b5bf with SMTP id
+ bd9-20020a170902830900b0017a0695b5bfmr14416968plb.35.1666285288501; Thu, 20
+ Oct 2022 10:01:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CAFF8438-5098-11ED-948B-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+From:   "herr.kaste" <herr.kaste@gmail.com>
+Date:   Thu, 20 Oct 2022 19:01:05 +0200
+Message-ID: <CAFzd1+5F4zqQ1CNeY2xaaf0r__JmE4ECiBt5h5OdiJHbaE78VA@mail.gmail.com>
+Subject: rebase -i --update-refs can lead to deletion of branches
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hi,
 
-> On Thu, Oct 20, 2022 at 12:13 PM Junio C Hamano <gitster@pobox.com> wrote:
->> So here is my "panda-see-panda-do" attempt.
->>
->> ----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
->> Subject: [PATCH] ci: use DC_SHA1=1 on osx-clang job for CI
->>
->> All other jobs were using the default DC_SHA1 (which is a
->> recommended practice), but the default for macOS jobs being Apple's
->> common crypt, we didn't catch recent breakage soon enough.
->
-> "recent breakage" is quite vague and probably won't help future
-> readers understand what this is actually fixing. Possible
-> improvements: (1) a prose description of the breakage; (2) the actual
-> compiler error message; (3) a pointer[1] to the email reporting the
-> problem. One or more of the above improvements to the commit message
-> would help future readers.
+I have the following:
 
-I do not think (2) or (3) would help all that much.  A finger that
-points at the exact commit that broke the build (with the condition
-under which the build breaks) would probably be the most useful to
-those who read "git log" output.
+While doing a
 
-Thanks.
+`$ git rebase --interactive  --update-refs X`
 
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
-Subject: [PATCH] ci: use DC_SHA1=YesPlease on osx-clang job for CI
+I *removed* the "update-ref" lines from the todo list.  The rebase runs
+as expected and prints e.g.
 
-7b8cfe34 (Merge branch 'ed/fsmonitor-on-networked-macos',
-2022-10-17) broke the build on macOS with sha1dc by bypassing our
-hash abstraction (git_SHA_CTX etc.), but it wasn't caught before the
-problematic topic was merged down to the 'master' branch.  Nobody
-was even compile testing with DC_SHA1 set, although it is the
-recommended choice in these days for folks when they use SHA-1.
+```
+Successfully rebased and updated refs/heads/test.
+Updated the following refs with --update-refs:
+refs/heads/master
+refs/heads/permissive-interactive-rebase
+refs/heads/variable-annotations-meta-block
+```
 
-This was because the default for macOS uses Apple Common Crypto, and
-both of the two CI jobs did not override the default.  Tweak one of
-them to use DC_SHA1 to improve the coverage.
+After that all refs have been removed/deleted.
 
-We may want to give similar diversity for Linux jobs so that some of
-them build with other implementations of SHA-1; they currently all
-build and test with DC_SHA1 as that is the default on everywhere
-other than macOS.
+```
+$ git branch  --list
+* test
+```
 
-But let's start small to fill only the immediate need.
+Now, I should just have not used `--update-refs` in the first place but anyway
+I decide late that I rather don't want to update "master" etc. and it should
+probably not delete the local refs.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- ci/lib.sh | 2 ++
- 1 file changed, 2 insertions(+)
+Actually, I so love the new feature that I switched it *on* by default, and just
+wanted to overwrite the behavior in the todo editor.
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 1b0cc2b57d..51e47aa5d6 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -259,6 +259,8 @@ macos-latest)
- 		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
- 	else
- 		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
-+		MAKEFLAGS="$MAKEFLAGS NO_APPLE_COMMON_CRYPTO=NoThanks"
-+		MAKEFLAGS="$MAKEFLAGS DC_SHA1=YesPlease NO_OPENSSL=NoThanks"
- 	fi
- 	;;
- esac
--- 
-2.38.1-271-ge78cd6c470
-
+Regards
+Caspar Duregger
