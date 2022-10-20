@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26D61C433FE
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 01:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2B1CC433FE
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 01:41:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229978AbiJTBg2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Oct 2022 21:36:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44780 "EHLO
+        id S230427AbiJTBl4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Oct 2022 21:41:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231534AbiJTBgX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Oct 2022 21:36:23 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D31561402D
-        for <git@vger.kernel.org>; Wed, 19 Oct 2022 18:36:03 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C922A1490FB;
-        Wed, 19 Oct 2022 21:34:56 -0400 (EDT)
+        with ESMTP id S229917AbiJTBly (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Oct 2022 21:41:54 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54A4E181D97
+        for <git@vger.kernel.org>; Wed, 19 Oct 2022 18:41:51 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F40D414C4F5;
+        Wed, 19 Oct 2022 21:31:17 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
         :subject:date:message-id:mime-version:content-type; s=sasl; bh=X
-        jZghwSAlb3ZgUpKfAXET5Srg8ZC0Dbp3eMo2xMw+2c=; b=RNe8Dtv/k/Z+eXzTX
-        X+rfugrGwLzUu1mTGknao0zhOUhsB9uuxGhVRAqxKsmItPXqpYlv0upZue7dkVuH
-        LfKShTyFfcRKs7NnA9YKMQzQDjcNCr+McceENlHuJF7iH/W3lxaIEKP5d/Dmt1Qj
-        Z6/MDp6301ecZSIGM5mQDyDw4U=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF00D1490FA;
-        Wed, 19 Oct 2022 21:34:56 -0400 (EDT)
+        jZghwSAlb3ZgUpKfAXET5Srg8ZC0Dbp3eMo2xMw+2c=; b=PalRlNZ29A/uwrD6U
+        emyjwlPtCdhLMW+WbMu+4E33leVRfQ+rDuaAYAqbTYAVZ3Np+Rbz0UWECpe6+uO8
+        vIWnrZm5ulyc1aURTevgy8nguAQpcwiAKGtMs9ZUO08wfhiNVmUtnxwO8ZxWechY
+        tK02CeA5RfH0vl/Lx9Xdf/N8h8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EBE1F14C4F4;
+        Wed, 19 Oct 2022 21:31:17 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.83.5.33])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1DF171490F9;
-        Wed, 19 Oct 2022 21:34:56 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 46E3C14C4F3;
+        Wed, 19 Oct 2022 21:31:17 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
 Subject: What's cooking in git.git (Oct 2022, #06; Wed, 19)
 X-master-at: 45c9f05c44b1cb6bd2d6cb95a22cf5e3d21d5b63
 X-next-at: 067f57bc4a4a1e57327341b80f3d3545eba4dbd2
-Date:   Wed, 19 Oct 2022 18:34:55 -0700
-Message-ID: <xmqq4jvznups.fsf@gitster.g>
+Date:   Wed, 19 Oct 2022 18:31:16 -0700
+Message-ID: <xmqqa65rnuvv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 67078A9C-5017-11ED-B35C-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E498684C-5016-11ED-A2AE-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
