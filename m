@@ -2,104 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0DDBC433FE
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 18:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 749BAC4332F
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 18:34:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbiJTSbs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 14:31:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37302 "EHLO
+        id S229556AbiJTSe3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 14:34:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbiJTSbq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 14:31:46 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F2CD1FAE65
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 11:31:42 -0700 (PDT)
-Received: (qmail 7365 invoked by uid 109); 20 Oct 2022 18:31:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 Oct 2022 18:31:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22995 invoked by uid 111); 20 Oct 2022 18:31:42 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 Oct 2022 14:31:42 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 20 Oct 2022 14:31:41 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?TWF0xJtq?= Cepl <mcepl@cepl.eu>, git@vger.kernel.org
-Subject: Re: git-send-email with GPG signed commits?
-Message-ID: <Y1GUDbtFIGZu0BKD@coredump.intra.peff.net>
-References: <4eb8707f-4686-e304-2aab-a6afee11abc9@cepl.eu>
- <Y1GJAart+/yFc5MR@coredump.intra.peff.net>
- <xmqqr0z2s7w4.fsf@gitster.g>
- <xmqqk04us77b.fsf@gitster.g>
+        with ESMTP id S229460AbiJTSe1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 14:34:27 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D2FA6254
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 11:34:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1666290851; bh=TNZ3Pd7XqTmVtjNuEfWr0Z2YG0wEGJeGswLkbau7wmM=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=Nyxcsan0oI0h6xytn30V43UxUNlkARh6a1yVpP4UApIomsNR+39VV7iIQWZjlniQj
+         06/PLFdgG3lefZw3cZxpU/E7mmW6tyaYxYrwFaddcKBseotQWc4Ne6dWn9/4cSGeEv
+         yQBvmA+3vNmvAZIpvhtY+qyh6ngbBqsoHxhsqUtxSAExwDDSgglCp99yVa5a9t3/Tw
+         f9+14H8JrZQxi9MfWq4y3EUhisvtRfJDFLrLjvxRm2mPhjaD/fMsVuD8IlBcyuawrH
+         trJsNYsu2X818iIafXQXBEPVuC0gnj2Fw4hxjvYdX5YWVpQGFmQGu6fGwnbZ0V4KvE
+         JPPb2zbHwBMEg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.23.161]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N14tM-1pEi413P6g-012rrB; Thu, 20
+ Oct 2022 20:34:11 +0200
+Message-ID: <84971a3a-4c5c-5b79-582e-88b3bd8c624f@web.de>
+Date:   Thu, 20 Oct 2022 20:34:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqk04us77b.fsf@gitster.g>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.3.3
+Subject: Re: [PATCH v2 00/10] run-command API: add run_command_{l,sv}_opt()
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+References: <cover-00.10-00000000000-20221014T153426Z-avarab@gmail.com>
+ <cover-v2-00.10-00000000000-20221017T170316Z-avarab@gmail.com>
+ <xmqq4jw1wl6z.fsf@gitster.g> <221018.86a65ti70m.gmgdl@evledraar.gmail.com>
+ <Y08P0G1Be+5hCVML@coredump.intra.peff.net> <xmqq7d0vu8cw.fsf@gitster.g>
+ <Y1AujKKPUJFepph5@coredump.intra.peff.net> <xmqq7d0vsngp.fsf@gitster.g>
+ <Y1BIfEN5ds2kKjjk@coredump.intra.peff.net> <xmqq5ygfr48b.fsf@gitster.g>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqq5ygfr48b.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:28RmNjLK7kmWWAD68gWpQt1QVEb023v237fy5yH9DFV8bgeZgjp
+ 5V82p5IYAAliJ2w72MA0LbdUa46AZLamQte+ZCRf8/vX3vagVpzNVFwg2NM1irjib8Nk0Hm
+ tL8gxiJ+el+bFPWhdCL94pF6Yz5j9jLxmKDzP6lCniLMUn0RDABueYKhS4FNQox/5QfndgH
+ HsSIi29QOAmEzYR/oAchw==
+UI-OutboundReport: notjunk:1;M01:P0:koFhuhJWNKM=;6rIcL5aXgjcrel+c6iGV5/lMvMU
+ aXeTkfl0x+8Z/BmFzaUrPFo+kXif9+AcDkFFYnGjBhBJ417iJxRjDu0FkwyLwLVXHTM8fBkoI
+ aX+tYG5HW1WVcs+7EGn8ZqhzxagRApL9FjQOxtfiko63aktGPWVB2D9jBjn/XpjMFhXA25Zqf
+ r+FdewbKvPyXIHA3765BilJLf2DjnSO0mHDcpqCfAIV6gfAnuwhgk0/DqxhPRy5AysYv4FOrC
+ ZIJ9MXILEpTgn3A8DV2Up19tzyc1oJKrD7XFEWoPit2Pgj1I8EZR+sPvUmEv2RylV8xgoTwb5
+ uXUazEhh5YsUmcl0VnPynIUofLfl3XUr8kdbsczie7RhmeS+sWng7muJBC0NMi44hj4EBJaYl
+ c2XmHpXR+u9CBEiU06aInvjxhRG8w76bIADXaev/QpQqKDByezgX8FVKG/QMl0wJqj5fZGAAz
+ kEy3d0QQ488ku9H7mKtCIzZtEFLIUGD+r4nIdCrGt1n8LYKj7rQ3YzQHwlkf7hw9EU6GHWrk8
+ nQVcub1MXOGQ1yDShBsVEGodmj6qdkU8WDX0yJW9rWWlU5VbEzEeKPP7knXJrg/2GOpKVPu8s
+ ea2YGgqZdLteCvP4arbhA9jONxAV30em9LwQMWWbHFbxmfnFe+TUnC83OSb2btx5+bUE+z+w1
+ fOgH+2qG0rpdp+ivPWn+cszWgEnlakcAtKO97p8bH3f2ONYxdNNlGJ0PAy/YBWAqsZrB1OYDW
+ NlJSvn4M9G4KwZfbUzdesQBDioFX2z/IS79Xv317ymHmUCcVLssxoYW7RJbNKIq8Eik5/NiPy
+ xJm9n+KkcOEuIjYMMTNXc7ye6Mmz7XaO76YpYnbzdXFDxKR1HC7/ow9Qj+gsA4hPocOu4K2Bj
+ H68YDNcauEWF7gRmV8bMtPfZ4Jn8WVF0UFE/RVJYd0aU0F9m672RAQrf6BhEq0byyvvnFwT1R
+ cvhTQALVhPWQd6YLEaVkXDaOF74=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2022 at 11:03:52AM -0700, Junio C Hamano wrote:
+Am 19.10.22 um 21:41 schrieb Junio C Hamano:
+> Jeff King <peff@peff.net> writes:
+>
+>> That said, I am not too sad to have both. I would not have bothered to
+>> do the work to remove the _v() versions with flags. But since Ren=C3=A9
+>> already did so...
+>
+> It makes two of us ;-)
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> >> I think you would need some kind of "author-sig" header that signs the
-> >> commit object bytes _without_ the commit header at all. And that assumes
-> >> the maintainer's workflow is to never modify a patch in transit, and to
-> >> apply it at the exact same spot that you wrote it (so that the parent
-> >> and tree ids remain the same).
-> >
-> > Doesn't it immediately break down once you send a 2-patch series?
+I wrote that patch out of curiosity and was pleased by the total line
+count reduction, getting rid of the on-stack array construction sites
+with their magic numbers, not having to manage strvecs explicitly
+anymore and the callers staying readable.
 
-Oops, you're right. The parent pointer in subsequent ones is unknowable.
+One weak spot is the new helper builtin/gc.c::run_git_or_die() that I
+added because it was easier than replacing all those strvecs that are
+prepared before deciding whether their commands are even needed.
 
-> Ah, if you did not mean "without the committer header", but "without
-> any of the header fields of the commit object", then it would
-> probably work.  But then that loses the context to apply the patch
-> completely, so I can apply a patch you author-signed to a place
-> where it wouldn't work and end up with a broken commit.
+Stripping down the central API to a single shared object (a struct and
+functions that get it passed) simplifies it for programmers.  It takes
+the idea of d3b2159712 (run-command API: remove "argv" member, always
+use "args", 2021-11-25) and c7c4bdeccf (run-command API: remove "env"
+member, always use "env_array", 2021-11-25) to its logical conclusion
+of going fully dynamic and using standard strvec functions everywhere.
+Local shortcuts like builtin/gc.c::run_git_or_die() may still be
+defensible.
 
-No, I was not that clever. I just didn't think about the subsequent
-commits. I agree that an author-sig that omits the parent pointer is
-practically useless. It does record the end tree state faithfully, but
-what most people consider interesting in a commit is the diff from the
-parent tree. So applied in the wrong spot, it makes it look like your
-signed commit made changes you never intended.
+But still: Is all of that code churn worth it?  Not sure.
 
-> Start from the original commit object, remove the committer, the
-> author, the tree, and the parent headers, add a parent-tree header
-> that records the tree object of the first parent, and call that a
-> "modified commit object".  Then compute the signature over it and
-> the patch text.  The e-mailed patch now needs to carry the value of
-> the parent-tree header and the signature.
-> 
-> At the receiving end, the reverse operation can be done and the
-> resulting commit may have two new headers (author-sig and
-> parent-tree).  In the resulting commit, parent-tree does not have to
-> match the tree of its first parent, if the integrator chose to apply
-> it on a different commit, and as long as the patch text matches,
-> things should verify.
-
-I think it's a bit weird if parent-tree does not match the first parent.
-Your final tree must still match what was signed. And so if you applied
-it on a commit that didn't match the original parent-tree, then the
-commit would be quietly reverting changes between the original
-parent-tree and the actual parent it was applied on.
-
-I do think it would work if you enforced that. But I tend to agree with
-your other comment that people may be better off just sending bundles at
-that point.
-
-> So, some kind of "author-sig" is certainly possible, but is it
-> practically useful?  I am not sure.  It still does not even allow
-> typofixes on the receiving end.
-
-Yes, like bundles, it is losing some of the flexibility of an
-emailed-patch workflow. I haven't played with b4's attestation too much,
-but I think it slots into a patch workflow better. You are signing the
-patch, not the commit, and commits which are made later can refer back
-to the emails, which people can then verify. That's not a signature on
-the commit, but it is a paper trail that can be followed.
-
--Peff
+Ren=C3=A9
