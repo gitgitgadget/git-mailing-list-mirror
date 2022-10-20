@@ -2,173 +2,236 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D097C4332F
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 23:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11845C433FE
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 23:17:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229987AbiJTXFK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 19:05:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49580 "EHLO
+        id S229868AbiJTXRG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 19:17:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229727AbiJTXFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 19:05:07 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8D61118793
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:05:04 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id c12-20020a170903234c00b0017f695bf8f0so436823plh.6
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:05:04 -0700 (PDT)
+        with ESMTP id S229678AbiJTXRC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 19:17:02 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5205322E0FB
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:17:00 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id a3so2126023wrt.0
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:17:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UhDFXbKCF/MhZBStbb4x2CfsXd4cnT8+0bNaF5T2xlo=;
-        b=X4WjXORhakWpNwbAdq3ENJZxNtkgbXZ8SG5MgdmEn1qTP7QC83hpCjn3FBv37gkR9v
-         y/q1uY1dI73a+HJ05ueLCDe7WRCtLqK4oSPlSQTHaA0TTxb4MKj5PYZGiC2V1nzZIJHk
-         p7u4DgvGN6t5M7SySu9VJGOYnbWr+hPWElVByEhPSXIO0UpeXEDcuDx60HWWsWAH0kdm
-         pr02F5FqaZCKDQu3kqP7EFzyALqYbicpkM4doiOk1PvspIanqE7DH1MOtphQbgragRQM
-         qr8bBox9ztUmKvOIuFIsIv4sft7pN+tqN2PHLokz5oAxWJR1zyBXPcCRPbwm4YQrry89
-         E9MQ==
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Sp9Tg5X1RJCYKhvef62590LNA9REDWAdl/Lhvjci9/c=;
+        b=bvCN3tF5KZWOcsucy5Wcyxx7JOYra/AVGfd/NlC+iZ6SeKyatNmZqaApzsFZfESEq6
+         rdslwmWF+XrMWRfdqRchWr8SPPZQpeT8U3uSEmxGvJu9EXFKdupGVTPFrKmu8BwFdYRb
+         P5uJb5W/Lyu/1wYhxEhD7oMxjpTVD9ixZ0KbzHt/nPGgcsCywOuE343on5LbckF8096Y
+         KF85VlugsWGacqjkNSlbw1+iPUbu8tFwEPNwOUhm7zuyuDUpgzYF5V1FJXHa2p1rzW+S
+         rxVvybtOgabfozl35vGF17RjWo+r178xtYGVW4NnMDnWFSo9qXUnhAdpcJUUB232We0B
+         gVkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=UhDFXbKCF/MhZBStbb4x2CfsXd4cnT8+0bNaF5T2xlo=;
-        b=nK2iug2oe6fv0tfFZfaMjL849YwQzPUm1X7rPyujDVZ0GMI2ka6EuPzjckpZTPtYK7
-         Ngsen2IuYOuqzGpxpJVAFwh1wbqeXGnKzpzK45X7wvPTbu8VdpjqkFup929HAFlIJE0K
-         LcIexPAQ1U8c6vEOzjxYP9o9cUn5IkYcKt2g4Zag6IqeV64CybZJaoaggYPYqghxL6Sy
-         82TiZCsELn0fq/YzgdVVJcbY0dv5tSaEeexmRgCxFCklJUNAM30VDpETlvTxYPnMBL+i
-         RpIKBrTgif4+HDmUjMoiIW6Gg1AZhnupKesH7hwWCteq5RUz4Jsh++JWbs+GYx7XFkKS
-         eeLQ==
-X-Gm-Message-State: ACrzQf33Z5gBXGwY2uw48Co5jeCca65Yd/1fUy2vFqxpTImPwey1smFq
-        WjraWHVReeo8D/4GDkkNIN+EQmurDA55Zg==
-X-Google-Smtp-Source: AMsMyM7a1a4eT2fTSanCiEfj8fM3xEZZrmChzLZPMjXMhXtdUu9Q0u32A0I5r2ZfW/ADynJHk0odoVLdYWVXGw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:b84:b0:565:caea:38bc with SMTP
- id g4-20020a056a000b8400b00565caea38bcmr16457332pfj.80.1666307104295; Thu, 20
- Oct 2022 16:05:04 -0700 (PDT)
-Date:   Thu, 20 Oct 2022 16:05:02 -0700
-In-Reply-To: <patch-09.10-7f232c5e503-20221017T115544Z-avarab@gmail.com>
-Mime-Version: 1.0
-References: <cover-00.10-00000000000-20221017T115544Z-avarab@gmail.com> <patch-09.10-7f232c5e503-20221017T115544Z-avarab@gmail.com>
-Message-ID: <kl6lmt9qxfj5.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 09/10] submodule: support sub-command-less "--recursive" option
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonas Bernoulli <jonas@bernoul.li>, Jeff King <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Sp9Tg5X1RJCYKhvef62590LNA9REDWAdl/Lhvjci9/c=;
+        b=4u0kjm4nO5CuDdtHxpJfS7iTDzo8+cCO6bOFFiwEzj5JxmRhdpzk2puM0z3/xMmfHw
+         jtciYQCJK1nSC5WcVh/W+oum7KH4/ojdtRihG28EIKUs6HJychW1U1sqascFFy8XX3pG
+         UqlG0lQNdRb0goUzRmTQL0zBP1GrkOEpxTdadmfMObvqBEMkQQLuSOCP+3OsVApifU9X
+         /Xdd+/JOiO/s26MiTj4N4AOOPYgCkmPYUb3qSn9hqZR4deyjL4jEi+sD7xL89mWl+PKr
+         XYD8hJHuBn9WcWRBU7now+YLMg8FOQJzobmwYT69waCxIkngkx74MeeA03pksl9xBuEq
+         dm+A==
+X-Gm-Message-State: ACrzQf3uqM1PqUWzjQfNJdPiPKFgocQAEL1+yT5Pko+emZcdcUu5w2Vl
+        c8O9SYWA8OvobgQCqOJggHO9UL6i/jc=
+X-Google-Smtp-Source: AMsMyM4/Ot+CZqxPOcMmSJrDg5zoIiGhi+X4OtbkdEN7g+tqedFGdvZERgzQZHYxJU/AvZdRlamFVg==
+X-Received: by 2002:a5d:4a4d:0:b0:22d:c8cb:8687 with SMTP id v13-20020a5d4a4d000000b0022dc8cb8687mr10067452wrs.554.1666307818572;
+        Thu, 20 Oct 2022 16:16:58 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j16-20020a5d6190000000b00226dedf1ab7sm4753513wru.76.2022.10.20.16.16.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Oct 2022 16:16:57 -0700 (PDT)
+Message-Id: <321757ef919bc75e58108d6e6bef4aaeeb4b326a.1666307815.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1359.v4.git.1666307815.gitgitgadget@gmail.com>
+References: <pull.1359.v3.git.1665737804.gitgitgadget@gmail.com>
+        <pull.1359.v4.git.1666307815.gitgitgadget@gmail.com>
+From:   "Jerry Zhang via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 20 Oct 2022 23:16:50 +0000
+Subject: [PATCH v4 1/6] patch-id: fix stable patch id for binary / header-only
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Jerry Zhang <jerry@skydio.com>, Jerry Zhang <jerry@skydio.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+From: Jerry Zhang <jerry@skydio.com>
 
-> The inability to specify "--recursive" when we're not providing a
-> sub-command name appears to have been an omission in 15fc56a8536 (git
-> submodule foreach: Add --recursive to recurse into nested submodules,
-> 2009-08-19). Let's support it along with the other "status" options.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  Documentation/git-submodule.txt |  2 +-
->  builtin/submodule.c             | 16 +++++++++++++---
->  t/t7400-submodule-basic.sh      |  6 +-----
->  3 files changed, 15 insertions(+), 9 deletions(-)
->
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodul=
-e.txt
-> index 345ebcafb9c..0c918390f2f 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -9,7 +9,7 @@ git-submodule - Initialize, update or inspect submodules
->  SYNOPSIS
->  --------
->  [verse]
-> -'git submodule' [--quiet] [--cached] [--]
-> +'git submodule' [--quiet] [--cached] [--recursive] [--]
->  'git submodule' [--quiet] add [<options>] [--] <repository> [<path>]
->  'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>..=
-.]
->  'git submodule' [--quiet] init [--] [<path>...]
-> diff --git a/builtin/submodule.c b/builtin/submodule.c
-> index 1d77f2d0964..ca8e273b6e9 100644
-> --- a/builtin/submodule.c
-> +++ b/builtin/submodule.c
-> @@ -64,7 +64,8 @@ static const char * const git_submodule_usage[] =3D {
->  };
-> =20
->  static void setup_helper_args(int argc, const char **argv, const char *p=
-refix,
-> -			      int quiet, int cached, struct strvec *args,
-> +			      int quiet, int cached, int recursive,
-> +			      struct strvec *args,
->  			      const struct option *options)
->  {
->  	const char *cmd;
-> @@ -79,10 +80,13 @@ static void setup_helper_args(int argc, const char **=
-argv, const char *prefix,
->  		return;
->  	}
-> =20
-> -	/* Did we get --cached with a command? */
-> +	/* Did we get a forbidden top-level option with a command? */
->  	if (cached)
->  		usage_msg_optf(_("'%s' option is only supported with explicit 'status'=
-"),
->  			       git_submodule_usage, options, "--cached");
-> +	if (recursive)
-> +		usage_msg_optf(_("'%s' option is only supported with explicit 'status'=
-"),
-> +			       git_submodule_usage, options, "--recursive");
-> =20
-> =20
->  	/* Either a valid command, or submodule--helper will barf! */
-> @@ -92,6 +96,9 @@ static void setup_helper_args(int argc, const char **ar=
-gv, const char *prefix,
->  	argc--;
-> =20
->  	/* Options that need to go before user-supplied options */
-> +	if (!strcmp(cmd, "status") && recursive)
-> +		strvec_push(args, "--recursive");
-> +
+Patch-ids for binary patches are found by hashing the object
+ids of the before and after objects in succession. However in
+the --stable case, there is a bug where hunks are not flushed
+for binary and header-only patch ids, which would always result
+in a patch-id of 0000. The --unstable case is currently correct.
 
-Unless I'm missing something, doesn't this do nothing because we don't
-set cmd =3D "status" when there is no subcommand, and instead, we return
-early?
+Reorder the logic to branch into 3 cases for populating the
+patch body: header-only which populates nothing, binary which
+populates the object ids, and normal which populates the text
+diff. All branches will end up flushing the hunk.
 
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index c524398e805..7cafc2e1102 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -20,10 +20,6 @@ test_expect_success 'submodule usage: -h' '
->  	test_must_be_empty err
->  '
-> =20
-> -test_expect_success 'submodule usage: --recursive' '
-> -	test_expect_code 129 git submodule --recursive
-> -'
-> -
->  test_expect_success 'submodule usage: status --' '
->  	git submodule -- &&
->  	git submodule --end-of-options
-> @@ -38,7 +34,7 @@ do
->  	'
->  done
-> =20
-> -for opt in '--cached'
-> +for opt in '--cached' '--recursive'
->  do
->  	test_expect_success "submodule usage: status $opt" '
->  		git submodule $opt &&
+Don't populate the ---a/ and +++b/ lines for binary diffs, to correspond
+to those lines not being present in the "git diff" text output.
+This is necessary because we advertise that the patch-id calculated
+internally and used in format-patch is the same that what the
+builtin "git patch-id" would produce when piped from a diff.
 
-Frustratingly, it's not easy for me to test my hypothesis above because
-there don't seem to be any tests for the output of "git submodule status
---recursive" :(
+Update the test to run on both binary and normal files.
 
-> --=20
-> 2.38.0.1091.gf9d18265e59
+Signed-off-by: Jerry Zhang <jerry@skydio.com>
+---
+ diff.c                     | 58 +++++++++++++++++++-------------------
+ t/t3419-rebase-patch-id.sh | 34 +++++++++++++++-------
+ 2 files changed, 53 insertions(+), 39 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index 648f6717a55..c15169e4b06 100644
+--- a/diff.c
++++ b/diff.c
+@@ -6253,46 +6253,46 @@ static int diff_get_patch_id(struct diff_options *options, struct object_id *oid
+ 		if (p->one->mode == 0) {
+ 			patch_id_add_string(&ctx, "newfilemode");
+ 			patch_id_add_mode(&ctx, p->two->mode);
+-			patch_id_add_string(&ctx, "---/dev/null");
+-			patch_id_add_string(&ctx, "+++b/");
+-			the_hash_algo->update_fn(&ctx, p->two->path, len2);
+ 		} else if (p->two->mode == 0) {
+ 			patch_id_add_string(&ctx, "deletedfilemode");
+ 			patch_id_add_mode(&ctx, p->one->mode);
+-			patch_id_add_string(&ctx, "---a/");
+-			the_hash_algo->update_fn(&ctx, p->one->path, len1);
+-			patch_id_add_string(&ctx, "+++/dev/null");
+-		} else {
+-			patch_id_add_string(&ctx, "---a/");
+-			the_hash_algo->update_fn(&ctx, p->one->path, len1);
+-			patch_id_add_string(&ctx, "+++b/");
+-			the_hash_algo->update_fn(&ctx, p->two->path, len2);
+ 		}
+ 
+-		if (diff_header_only)
+-			continue;
+-
+-		if (fill_mmfile(options->repo, &mf1, p->one) < 0 ||
+-		    fill_mmfile(options->repo, &mf2, p->two) < 0)
+-			return error("unable to read files to diff");
+-
+-		if (diff_filespec_is_binary(options->repo, p->one) ||
++		if (diff_header_only) {
++			/* don't do anything since we're only populating header info */
++		} else if (diff_filespec_is_binary(options->repo, p->one) ||
+ 		    diff_filespec_is_binary(options->repo, p->two)) {
+ 			the_hash_algo->update_fn(&ctx, oid_to_hex(&p->one->oid),
+ 					the_hash_algo->hexsz);
+ 			the_hash_algo->update_fn(&ctx, oid_to_hex(&p->two->oid),
+ 					the_hash_algo->hexsz);
+-			continue;
+-		}
+-
+-		xpp.flags = 0;
+-		xecfg.ctxlen = 3;
+-		xecfg.flags = XDL_EMIT_NO_HUNK_HDR;
+-		if (xdi_diff_outf(&mf1, &mf2, NULL,
+-				  patch_id_consume, &data, &xpp, &xecfg))
+-			return error("unable to generate patch-id diff for %s",
+-				     p->one->path);
++		} else {
++			if (p->one->mode == 0) {
++				patch_id_add_string(&ctx, "---/dev/null");
++				patch_id_add_string(&ctx, "+++b/");
++				the_hash_algo->update_fn(&ctx, p->two->path, len2);
++			} else if (p->two->mode == 0) {
++				patch_id_add_string(&ctx, "---a/");
++				the_hash_algo->update_fn(&ctx, p->one->path, len1);
++				patch_id_add_string(&ctx, "+++/dev/null");
++			} else {
++				patch_id_add_string(&ctx, "---a/");
++				the_hash_algo->update_fn(&ctx, p->one->path, len1);
++				patch_id_add_string(&ctx, "+++b/");
++				the_hash_algo->update_fn(&ctx, p->two->path, len2);
++			}
+ 
++			if (fill_mmfile(options->repo, &mf1, p->one) < 0 ||
++			    fill_mmfile(options->repo, &mf2, p->two) < 0)
++				return error("unable to read files to diff");
++			xpp.flags = 0;
++			xecfg.ctxlen = 3;
++			xecfg.flags = XDL_EMIT_NO_HUNK_HDR;
++			if (xdi_diff_outf(&mf1, &mf2, NULL,
++					  patch_id_consume, &data, &xpp, &xecfg))
++				return error("unable to generate patch-id diff for %s",
++					     p->one->path);
++		}
+ 		if (stable)
+ 			flush_one_hunk(oid, &ctx);
+ 	}
+diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
+index 295040f2fe3..d24e55aac8d 100755
+--- a/t/t3419-rebase-patch-id.sh
++++ b/t/t3419-rebase-patch-id.sh
+@@ -43,15 +43,16 @@ test_expect_success 'setup: 500 lines' '
+ 	git add newfile &&
+ 	git commit -q -m "add small file" &&
+ 
+-	git cherry-pick main >/dev/null 2>&1
+-'
++	git cherry-pick main >/dev/null 2>&1 &&
+ 
+-test_expect_success 'setup attributes' '
+-	echo "file binary" >.gitattributes
++	git branch -f squashed main &&
++	git checkout -q -f squashed &&
++	git reset -q --soft HEAD~2 &&
++	git commit -q -m squashed
+ '
+ 
+ test_expect_success 'detect upstream patch' '
+-	git checkout -q main &&
++	git checkout -q main^{} &&
+ 	scramble file &&
+ 	git add file &&
+ 	git commit -q -m "change big file again" &&
+@@ -61,14 +62,27 @@ test_expect_success 'detect upstream patch' '
+ 	test_must_be_empty revs
+ '
+ 
++test_expect_success 'detect upstream patch binary' '
++	echo "file binary" >.gitattributes &&
++	git checkout -q other^{} &&
++	git rebase main &&
++	git rev-list main...HEAD~ >revs &&
++	test_must_be_empty revs &&
++	test_when_finished "rm .gitattributes"
++'
++
+ test_expect_success 'do not drop patch' '
+-	git branch -f squashed main &&
+-	git checkout -q -f squashed &&
+-	git reset -q --soft HEAD~2 &&
+-	git commit -q -m squashed &&
+ 	git checkout -q other^{} &&
+ 	test_must_fail git rebase squashed &&
+-	git rebase --quit
++	test_when_finished "git rebase --abort"
++'
++
++test_expect_success 'do not drop patch binary' '
++	echo "file binary" >.gitattributes &&
++	git checkout -q other^{} &&
++	test_must_fail git rebase squashed &&
++	test_when_finished "git rebase --abort" &&
++	test_when_finished "rm .gitattributes"
+ '
+ 
+ test_done
+-- 
+gitgitgadget
+
