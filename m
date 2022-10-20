@@ -2,190 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F6B6C433FE
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 22:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12D0DC433FE
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 22:40:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229817AbiJTWOt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 18:14:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41188 "EHLO
+        id S229828AbiJTWkf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 18:40:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229796AbiJTWOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 18:14:47 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C0102EF5B
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 15:14:46 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-367c2e72a6dso7517027b3.1
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 15:14:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8nIGhTT1KU/5r7RF+ggznPoo05DF0euFdKu5pyN6z6o=;
-        b=mwshAE0G4igFfwde3Zt+D0kElo7X1zmIHNn2XV1kGhGUdw3T1yhCMLbj/keuhkloCn
-         iuYq4prNDeeU6lyxT3QyDM6r1v9yFC6RqKzitMobFQw0R7Gn7UshpMYQC6QrUXA3xXlE
-         qbIJScNTmewm+VHQSw6375Sj8CX1GUI/4ICbRqGiYkEeOatUpfownHQCphszkB+RZAcq
-         onnIYNBGawtIM+ceRICS7B6L36CZ4pqsXY/vAP39fQUqcxuTLJDHiuhCrxX5KCXtcNCz
-         9ZyQN8QRODSZeAQsk0MbKkSHSCbaaoBzc6/+snvCZvxxt9kUMBgTNEIl+4I291adqF4E
-         dBEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8nIGhTT1KU/5r7RF+ggznPoo05DF0euFdKu5pyN6z6o=;
-        b=GiZP79jXiiru2VRYjbcPMXwboFzzkMTSjxmCpNCtT25MuXQfHu2QOQ7mMSm0ePjJNU
-         kQ2Kk85ENLnL4DHKdq7XpzdwLBXZkjXze8Ab17BXFsznEwOpc0mFBQ+nnuXdxHt5PGha
-         E7kY/7r9MqD6IVz5AK7EUJi9z3rkk6jHgrIYhJyp+4rZpyhPvztNqZeDjnt+aKtxmBxz
-         bbS4KsaVZpSqdTsf/8f3QPA5yKSfeU3SQzvtcWdJc6RZMfhJrMcKpNXChhaBXgQEtUWT
-         iKdBMwq6ZNA5Ips8FiW9OjQfKjNA0H203uSF8i/Jq+kHeNVmNAwKI6VrGk9n/Ih8Proq
-         yCyQ==
-X-Gm-Message-State: ACrzQf1ITTtAYN+JR2gqEGkRXI/SZQH2qseVUmaqlE1gq7sbRJ2YRQBq
-        wdAafaLhWEoB8l8ieiMWlmhj7ESZLUC2UQ==
-X-Google-Smtp-Source: AMsMyM75gj16rGHUumM/dw9fV29O1jz+Dfsuwz9y/t5/L3lq4eM3gBzNt2efib8cEoiRMhrNVrlqdXBIIqoisw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a81:1453:0:b0:367:fae1:380c with SMTP id
- 80-20020a811453000000b00367fae1380cmr6534666ywu.100.1666304085833; Thu, 20
- Oct 2022 15:14:45 -0700 (PDT)
-Date:   Thu, 20 Oct 2022 15:14:44 -0700
-In-Reply-To: <patch-06.10-25fadf3ffc1-20221017T115544Z-avarab@gmail.com>
-Mime-Version: 1.0
-References: <cover-00.10-00000000000-20221017T115544Z-avarab@gmail.com> <patch-06.10-25fadf3ffc1-20221017T115544Z-avarab@gmail.com>
-Message-ID: <kl6lsfjixhuz.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 06/10] git-submodule.sh: don't support top-level "--cached"
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonas Bernoulli <jonas@bernoul.li>, Jeff King <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229678AbiJTWkd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 18:40:33 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7883C15201A
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 15:40:31 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B6D6151404;
+        Thu, 20 Oct 2022 18:40:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uXBrEMPG2O7vlD1aA0xhWB1FS9t4Jo9cuiVAhL
+        T9aSY=; b=tyjTZzwUUBlYcKrcr5NsCBDBXci4LXSl+PRSCVsNgeBoIa0JjnNFD/
+        x6AW5ZXOGOznmST54ZQjJSziinEBi85jwEZtMPTbttFz/ALyveJJf41SKN75QwpT
+        /+5leqyp0aG5G+R0JBTajr0vCx6ffxxzcOLt6InZsUtMlqJQrPJD4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 72D23151403;
+        Thu, 20 Oct 2022 18:40:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D82E2151402;
+        Thu, 20 Oct 2022 18:40:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v2 0/7] clone, submodule update: check out submodule
+ branches
+References: <pull.1321.git.git.1661806456.gitgitgadget@gmail.com>
+        <pull.1321.v2.git.git.1666297238.gitgitgadget@gmail.com>
+Date:   Thu, 20 Oct 2022 15:40:28 -0700
+In-Reply-To: <pull.1321.v2.git.git.1666297238.gitgitgadget@gmail.com> (Glen
+        Choo via GitGitGadget's message of "Thu, 20 Oct 2022 20:20:31 +0000")
+Message-ID: <xmqqh6zyqftv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3314BE74-50C8-11ED-BF98-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Since the preceding commit all sub-commands of "git submodule" have
-> been dispatched to "git submodule--helper" directly, we therefore
-> don't need to emit "usage()" if we see "--cached" without the
-> sub-command being "status" or "summary", we can trust that
-> parse_options() will spot that and barf on it.
->
-> This does change one obscure aspect of undocumented behavior, for
-> "status" and "summary" we supported these undocumented forms:
->
->     git submodule --cached (status | summary)
->
-> As noted in a preceding commit to git-submodule.sh which removed the
-> "--branch" special-case, this comes down to emergent behavior seen in
-> 5c08dbbdf1a (git-submodule: fix subcommand parser,
-> 2008-01-15). I.e. we wanted to support was for subcommand-less invocation=
-s like:
->
->     git submodule --cached
->
-> To be synonymous with invocations that explicitly named the "status"
-> sub-command:
->
->     git submodule status --cached
->
-> But we did not intend to mix the two, and allow "--cached" to be an
-> option to the top-level "submodule" command when the "status" or
-> "summary" sub-commands were explicitly provided.
->
-> Let's remove this undocumented edge case, which makes a subsequent
-> removal of git-submodule.sh easier to reason about. The test case
-> added here is duplicated from the existing for-loop, except for the
-> different and desired handling of "git submodule --cached status".
+> During the v1 discussion, I realize that my idea of the new submodule UX has
+> already diverged from what was initially communicated to the list. I plan to
+> check in a technical document describing the plans for new submodule UX,
+> which should hopefully make these discussions smoother (e.g. the commit
+> message in patch 7 can make reference to the doc).
 
-Makes sense, I completely agree.
+Good.
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index ac2f95c1285..4f8f62ce981 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -43,7 +43,14 @@ do
->  		quiet=3D1
->  		;;
->  	--cached)
-> -		cached=3D1
-> +		if test -z "$command"
-> +		then
-> +			cached=3D1 &&
-> +			shift &&
-> +			break
-> +		else
-> +			usage
-> +		fi
->  		;;
->  	--)
->  		break
+> = Description
+>
+> This series teaches "git clone --recurse-submodules" and "git submodule
+> update" to understand "submodule.propagateBranches" (see Further Reading for
+> context), i.e. if the superproject has a branch checked out and a submodule
+> is cloned, the submodule will have the same branch checked out.
+>
+> To do this, "git submodule update" checks if ...
+> = Series history
+>
+> Changes in v2:
+>
+>  * The superproject's "submodule.propagateBranches" value is always used,
+>    even if false.
+>  * Branches are now created at clone time (by adding a new flag to "git
+>    submodule clone"), instead of at update time.
+>  * Rebase onto newer master. This got adjusted slightly to incorporate
+>    ab/submodule-helper-leakfix.
+>  * Add more tests to demonstrate edge case behavior.
+>  * Assorted commit message and doc improvements.
 
-Do we need the 'if test -z "$command"'? This is in a 'while test $# !=3D 0
-&& test -z "$command"' loop, so it seems unnecessary. I've tried
-removing it and it seems to work just fine.
+As the previous round was more than a month old and is clearly not a
+bugfix but is adding a new feature, I do not mind updating to the
+newer base after a new feature release was made.  There isn't much
+to be gained, other than that we can easily sanity check by running
+"git diff @{1} @{0}" on the branch to compare the iterations, by
+keeping the same base.  We are not going to merge this topic down to
+maintenance tracks after it graduates to 'master' anyway.
 
-> @@ -69,12 +76,6 @@ then
->      fi
->  fi
-> =20
-> -# "--cached" is accepted only by "status" and "summary"
-> -if test -n "$cached" && test "$command" !=3D status && test "$command" !=
-=3D summary
-> -then
-> -	usage
-> -fi
-> -
->  case "$command" in
->  absorbgitdirs)
->  	git submodule--helper "$command" --prefix "$wt_prefix" "$@"
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index b50db3f1031..d8f7d6ee29a 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -31,7 +31,7 @@ test_expect_success 'submodule usage: status --' '
->  	test_expect_code 1 git submodule --end-of-options
->  '
-> =20
-> -for opt in '--quiet' '--cached'
-> +for opt in '--quiet'
->  do
->  	test_expect_success "submodule usage: status $opt" '
->  		git submodule $opt &&
-> @@ -40,6 +40,17 @@ do
->  	'
->  done
-> =20
-> +for opt in '--cached'
-> +do
-> +	test_expect_success "submodule usage: status $opt" '
-> +		git submodule $opt &&
-> +		git submodule status $opt &&
-> +		test_expect_code 1 git submodule $opt status >out 2>err &&
-> +		grep "^usage: git submodule" err &&
-> +		test_must_be_empty out
-> +	'
-> +done
-> +
+But I got curious and tried to adjust these patches back on the
+previous base 07ee72db (Sync with 'maint', 2022-08-26).  It turns
+out that the conflicts needed to be resolved were fairly trivial.
 
-Now that there's only a single opt in each of these tests, do we still
-want to keep the for loop?
+Merging the topic that was recreated on top of the same old base
+into today's 'master' of course needed the same conflict resolution
+but that is something we've been doing every time we rebuild 'seen'
+(read: at least twice a day, but often more).  Applying these
+patches directly on today's 'master' of course produced the
+identical tree as the tree of this trial merge.
 
->  test_expect_success 'submodule deinit works on empty repository' '
->  	git submodule deinit --all
->  '
-> @@ -576,7 +587,7 @@ test_expect_success 'status should be "modified" afte=
-r submodule commit' '
->  '
-> =20
->  test_expect_success 'the --cached sha1 should be rev1' '
-> -	git submodule --cached status >list &&
-> +	git submodule status --cached >list &&
->  	grep "^+$rev1" list
->  '
-> =20
-> --=20
-> 2.38.0.1091.gf9d18265e59
+> = Future work
+>
+>  * Patch 5, which refactors resolve_gitlink_ref(), notes that a better
+>    interface would be to return the refname instead of using an "out"
+>    parameter, but we use an "out" parameter so that any new callers trying
+>    to use the old function signature will get stopped by the compiler. The
+>    refactor can be finished at a later time.
+
+OK.
+
+>  * Patch 5 uses the name "target" when we are talking about what a symref
+>    points to, instead of "referent" like the other functions. "target" is
+>    the better choice, since "referent" could also apply to non-symbolic
+>    refs, but that cleanup is quite big.
+
+I do not see a huge difference between the two.  "target" can be
+used in contexts that are not about symbolic refs, and "referent"
+can be used in contexts that are not about symbolic refs, too.  As
+long as they are unified in one way or another, it would be fine.
