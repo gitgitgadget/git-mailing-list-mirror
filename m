@@ -2,76 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 089F4C4332F
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 15:43:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA5A2C433FE
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 15:46:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229933AbiJTPns (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 11:43:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36260 "EHLO
+        id S230008AbiJTPqV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 11:46:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229683AbiJTPnr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 11:43:47 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA9F51989AB
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 08:43:46 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 80CE21B4CDF;
-        Thu, 20 Oct 2022 11:43:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=23ij4V3H2Ble
-        MKFLcWmdv+d0skgLXNJUy5HjCaf8nbc=; b=gDuhuE0H+Udhsv+h+tpxhexIb2Ji
-        sfbQZE0N+DU2ZV9bEDNbg74TXc8FewB4x/FPioybq2gh5FH/iNLXu9YeYM8vRHHQ
-        FgjDQYAxOQJCxif4Jobj3nWeJPcegoySyhsuvgm2yinGUN00cDDcAXXm8ZdPpCDs
-        5iz0ZzDgm8PHULM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 798B01B4CDE;
-        Thu, 20 Oct 2022 11:43:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A31C91B4CDD;
-        Thu, 20 Oct 2022 11:43:43 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH v2 00/12] fsmonitor: Implement fsmonitor for Linux
-References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
-        <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com>
-        <kl6l7d0yyu6r.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Thu, 20 Oct 2022 08:43:42 -0700
-In-Reply-To: <kl6l7d0yyu6r.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Mon, 17 Oct 2022 15:14:04 -0700")
-Message-ID: <xmqqczammrf5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S230075AbiJTPqR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 11:46:17 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C032E476F2
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 08:46:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1666280769; bh=seDmKzIuxhUQOrBQafeMbeDZYUlXT7z2N1lw4v6W3hs=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=KudzfZGYpmf7sXMsF9nlJoY46BUcsV1/NbUWNsRL0IYJu5M/M2l+tLrZUiwzKhNqH
+         7hXE8uyHgTkwAL9m2TPRe/r+Z3c9NGKOXcfthZjc9dTKDeIRvNW7hywCCqk/7+TIiF
+         JhXEVlB1+HAqWFCxAmtWnkLZ/H955vcoT8RT2kFSCGRaYPubsYlOuFjBd346OquXyu
+         0WrsDpv32sQ78icuslXSnQWq/jWqc1N9eZTjlUiwL0I7dZ37AHgZAk/twar1UjV/43
+         C61ZgajeyrG0+I/zuN2/7302HICI7DA+gk6k+QU22zu+Y2eO7a9Qm/1qTCiCS/mFao
+         DgZs+M99Z0BgA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mr7ac-1pQuSF337G-00o8kp; Thu, 20
+ Oct 2022 17:46:09 +0200
+Date:   Thu, 20 Oct 2022 17:46:09 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, alexander.s.m@gmail.com,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v5 1/1] diff.c: When appropriate, use utf8_strwidth()
+Message-ID: <20221020154608.jndql5sio3jyii3z@tb-raspi4>
+References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
+ <20220914151333.3309-1-tboegi@web.de>
+ <xmqqpmfx52qj.fsf@gitster.g>
+ <20220926184308.5oaaoopod36igq6i@tb-raspi4>
+ <xmqq35bv1gu5.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FA368784-508D-11ED-82CB-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqq35bv1gu5.fsf@gitster.g>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:aYGOVhtSanYabWdCs+CAHMAlfoqiYOSz31vNnl96OXbsg/kz4jD
+ lmpPfvjG8AcNzym+ovsui1ZonIHTMnOWh0x1505cw1bR6jgl87FklQG+qcYfkYymqemLzz+
+ NC7fGIbVDG6edZAZh+2kgvimJtmrFTN6ov5tvsgdtzgdqqXhvIDDJtcoL4PR1rcVKKFtMyA
+ FxvE7GtUtgRJ6y4QF5Rzw==
+UI-OutboundReport: notjunk:1;M01:P0:GRG17q++XRQ=;gryeNBV8Jvo9iKS/gvGnvW0ru8w
+ 7YnSIJ32u9kv8RRBuyRNhzJHrpfVCSI5QQgOrBX/ona6WcIIOMPSwsa0r7BRVqYIhabilEyXV
+ tEpNvnB7Vs6/ViD7R4KvCxTuYFqc0LacSvMdJSbnWVNmduPzovGXzHXkcLOTxZvPG6ve1cdew
+ nbHGYZJq9glJYzkIhBKt2097SMwG3iIX5vNCw6LpGw7232p41tJuCtCiiCdEmAJ03tyX6HW8u
+ 0B4OlX9K5u3mjMNW4WGiU0ma/DW2V76GpVCda1sR26WQGwog2wWoowtEsvjkiACeOCiwBcSkl
+ Smu65Sf1IbADXmLAS50p/eZd0d04776qsKqSmEKWsF38sQlN0XP/uChMT6WPmG9pM4ozGueZQ
+ IKAbC8e5wBMUVCbovDaOr4Bv5ckyUEyIppp0RBSU3LUR+qXSHLaxwKVRXACEjdQpuHuyUL65Z
+ 3tl4EcUiEaWiFFDK7m6e3pSfvPZEKnvYCwmdTh7vTIkvfvPnCJ6NWVLdeH/jM7imCb2ZLldi/
+ xCtkN8guq4bkuiRnxP4UByVGLoAwRaXNOe/ZcqDDwHit8PN6LUMdvVNBUc7jS34dM4c/VDAjq
+ m0+do7hUb7QdDUvKisi+WveraQj8x/ATdfr5T1liX3/mEdXOVKcjIaXWgCzqCY5tfwEdFjtZb
+ sPiYRuSkC1KaNsiuUIDem1D8bR8GwNV31Vv4K84oBQ+eWqZ+o2QTEva1l0HUVjLtJ0g5+b9Wh
+ oKTSQEkUX7vq4WRrR7rW+9hAiyVw1HM6LjOld9QbJt0BvXvCF9s8+WhniCPyFdp7lrqQAgr7k
+ YJrdkCF9mgwhc/EpatdNYCWCdgbl/iboNlO9AZ4Ny5+56XxvGhf39Ed1uC8RjEwBqaSsloSeK
+ ZMA0nsFBRH65zs6bJqP+mJEzybC0hzPRPOgno40TmuqGo0LhdA6hupc+XVKUSf3vfhC/jiDTc
+ 2f5oVg+DN0TVq3q6hcRq03igLwM=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
-
-> At $DAYJOB, we observed that this topic breaks MacOS builds with sha1dc=
-:
+On Mon, Oct 10, 2022 at 02:58:26PM -0700, Junio C Hamano wrote:
+> Torsten B=F6gershausen <tboegi@web.de> writes:
 >
->   $ make NO_APPLE_COMMON_CRYPTO=3D1 DC_SHA1=3D1 NO_OPENSSL=3D1 compat/f=
-smonitor/fsm-ipc-darwin.o =20
+> > On Wed, Sep 14, 2022 at 09:40:04AM -0700, Junio C Hamano wrote:
+> >
+> > []
+> >
+> >> I think I spotted two remaining "bugs" that are left unfixed with
+> >> this patch..
+> >> ...
+> > How should we proceed here ?
+> > This patch fixes one, and only one, reported bug,
+>
+> But then two more were reported in the message you are responding
+> to, and they stem from the same underlying logic bug where byte
+> count and display columns are mixed interchangeably.
+>
+> > "git log --graph" was mentioned.
+> > Do we have test cases, that test this ?
+> > How easy are they converted into unicode instead of ASCII ?
+>
+> The graph stuff pushes your "start of line" to the right, making the
+> available screen real estate narrower.  I do not think in the
+> current code we need to worry about unicode vs ascii (IIRC, we stick
+> to ASCII graphics while drawing lines), but we do need to take into
+> account the fact that ANSI COLOR escape sequences have non-zero byte
+> count while occupying zero display columns.
+>
+> The other bug about the code that finds which / to use to abbreviate
+> a long pathname on diffstat lines does involve byte vs column that
+> comes from unicode.  From the bug description in the message you are
+> responding to, if we have a directory name whose display columns and
+> byte count are significantly different, the end result by chopping
+> with the current code would end up wider than it should be, which
+> sounds like a recipe to cook up a test case to me.
+>
 
-Glen, =C3=86var has cherry-picked the SHA_CTX -> git_SHA_CTX build fix
-and I have merged it to 'next'.  Can you test-build to see if that
-change is sufficient to fix "does not even build from the source"
-issue for you guys?  You do not have to go through any official full
-qualification cycle or release procedure---just checking that you
-would be OK when you need to do the build the next time before it
-has to happen is sufficient.
 
-Thanks.
+I couldn't find how to trigger this code path.
+The `git log --graph` help says:
+=2D-graph
+    Draw a text-based graphical representation of the commit history
+    on the left hand side of the output.
+    This may cause extra lines to be printed in between commits,
+    in order for the graph history to be drawn properly.
+    Cannot be combined with --no-walk.
+
+There is no indication about filenames or diffs in the
+resultet output.
+If someone has time and knowledge to cook up a test case,
+that would help.
+
+For the moment, I don't have enough spare time to spend on digging
+how to write this test case, that's the sad part of the story.
+And that is probably a good start, or, to be more strict,
+an absolute precondition, if I need to change another single line
+in diff.c
+
+I still haven't understood why the current patch can not move forward
+on its own ?
+There is a bug report, patch, a test case that verifies the fix.
+
+What more is needed ?
+To fix all other bugs/issues/limitations in diff.c ?
+If yes, they need to go in separate commits anyway, or do I miss
+something ?
+
+Can we dampen the expectations a little bit ?
