@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31090C43217
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 23:17:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6220BC433FE
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 23:17:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229930AbiJTXRN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 19:17:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44688 "EHLO
+        id S229913AbiJTXRP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 19:17:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229845AbiJTXRD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 19:17:03 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB6022EE1D
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:17:02 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id f11so1570699wrm.6
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:17:02 -0700 (PDT)
+        with ESMTP id S229610AbiJTXRF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 19:17:05 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC0C722C63C
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:17:03 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id n12so1926442wrp.10
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:17:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XDiTOXUGdKhpxdMZy+MPQMIrlEQ28JbmaVB9D6yDnM4=;
-        b=erW0xKBQT7rqBsqRnKN17eeEG+jsUVBcGlv1Ay5snipgLIWjMODYiUcpG4ibMlxy4x
-         FnIrHnbXzNN64GovBdCPUQOHlmxZtDSa5dx9izHfPkdpzxToGHsYrERrhVDdNxAkeK5h
-         cpNVSAYSh2QZS2NvMMkgKDMBBLWwd/wP8iq3OjwuWJBye8XWdvnVhX1CrY/+/IRlxcbt
-         mNH0Rq2RiRvx8YKTgWRuNIJ+F0ANKDhKYLew1pXdsSqQWZZANkj61NMnzs78j/XG0pSz
-         CUj0seLo0AA6Kg9UMqMQUUo+Ah6J96Zes2ZQ1MKcMtfo160oSyaHCK9pxV6rNuetkyp9
-         PIxg==
+        bh=9mdgqviqxc9y6T4fAO6kDqLLief+c5Jt3pudwn3+YNc=;
+        b=TlPfiipL1IW/nU/DFkZar7dbdse6rYn3eqpPqkjpNQ4MIFzjnqwFdd6OvB4MiUk1WR
+         2UiFCsFEIHV1HoWeXCVyanxfhZvnkPqdpARIDYU37zf2CdV8GkdwHs0SwuN+/x2i1Nsr
+         Hwap77Rz0q44mENd5y1jsWhYaeJFvaN/EVaZP4DSfNB3NybWlolPws7Vav0Plgh9W52R
+         ggp1x7XizS6XAEotr4YiCL1HgRgr8qshKl7Om4pk8/MU8lB18kxlbSuFKCmCGXHaZfUH
+         7Io6unwbYaIeAmWrKTPqF063Qx2yCrlMhfv9mU0DRWyibHOLfypuHIKJGM7UDMwLoOlD
+         QEbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XDiTOXUGdKhpxdMZy+MPQMIrlEQ28JbmaVB9D6yDnM4=;
-        b=LIgQL9w9c/BWmQSxuEsgqDT+wtn0hv03yKruO/reWKfA2m3Sf+IcolOZt908ALmxWv
-         LcC8/5s4yphFfdLd7fY35LQtiK+psWWGQ3nw2irvBDsCd/0+84UmYjxuSf0cyFAplfLs
-         S+YgTomwNgc4uinEtGAWb8nw5h6EaX13TEYPTpkE5VJ0Wvh/tpI1WcCOKfdF9OXJGkG1
-         umMQRlmJ9N+BhE2tufQ1/xagBtTKPIQmixzX06zY3TUPO5z25+XvcWtJQ2mWykqPOid1
-         zMiNI6q5cZNaJunUPGtWLmbH4rO2w+BbU8Hlae7NOorgR/odBcr8bH5gT0dcnSJO/je/
-         qZrQ==
-X-Gm-Message-State: ACrzQf0wAf5WfXtWW+q92kdIlngulkzlt2tXBtmhd7ovOPYmSGc9o4FI
-        gyfgo5ssHJKbbDTFGHiV/c76GqZsKNU=
-X-Google-Smtp-Source: AMsMyM5wrkmaeW4JZm/3uAIQo8H/3aC5RdRLWWK3rvW/KtNsgVEetOn8kTEE08cRcpu10Z663TyUQA==
-X-Received: by 2002:a05:6000:912:b0:230:9113:1a09 with SMTP id bz18-20020a056000091200b0023091131a09mr10270208wrb.707.1666307820795;
-        Thu, 20 Oct 2022 16:17:00 -0700 (PDT)
+        bh=9mdgqviqxc9y6T4fAO6kDqLLief+c5Jt3pudwn3+YNc=;
+        b=6WCSTDAcvccGHN37WwuisWfZZucRl21P40mBN8+uYfVv2qIvh0R9bf2qG9H6VQYso5
+         L9DvUMRm5AUvqFDXNym/qk2N3jXz4x+NIO3BoQR6AhKd/N8/YZFd9mg8bXpkQP27m3gC
+         CFH9eEq/wos5HT8SIeC+KGn7Tfnz4hWbKLxFhJugy4OUfBoFFNvaMLkiUMHLU58s70Pg
+         knCp3EiPCSCcxxKqwr6o0gEw3cu+s/t9fKkadM3PJCQpoZmGkprDo3rVaFvUBBPChW78
+         kU+AaJHWzTiUKoVnEQaoylkimhrkpfTBmNF6Pb0KdSkSFOQHl2K3MmBo+ZaEqh+DJgj0
+         IfPg==
+X-Gm-Message-State: ACrzQf3jP0PSX693gUwAyb4FN8tzvZmRtXWXS4WD3YX2eOmAywdOANAR
+        w94OMdWJxpH0jMyYRNVXnVtgj4q8JT4=
+X-Google-Smtp-Source: AMsMyM6yubKQuepc2kK7Um1QrH/ngKv4T9V0DE7ndpg0SPzM0ahO20iY8MQVvcb8Fm6CNzaYdH9PmQ==
+X-Received: by 2002:a5d:584f:0:b0:22e:4276:d92b with SMTP id i15-20020a5d584f000000b0022e4276d92bmr10393904wrf.697.1666307822097;
+        Thu, 20 Oct 2022 16:17:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bw17-20020a0560001f9100b0022afedf3c87sm3673703wrb.105.2022.10.20.16.17.00
+        by smtp.gmail.com with ESMTPSA id 25-20020a05600c229900b003b492338f45sm765386wmf.39.2022.10.20.16.17.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Oct 2022 16:17:00 -0700 (PDT)
-Message-Id: <815013553133cddae5baf9d3dca00f8318e250f7.1666307815.git.gitgitgadget@gmail.com>
+        Thu, 20 Oct 2022 16:17:01 -0700 (PDT)
+Message-Id: <bb0b4add03c158a0b32306cbe075960fff53d78a.1666307815.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1359.v4.git.1666307815.gitgitgadget@gmail.com>
 References: <pull.1359.v3.git.1665737804.gitgitgadget@gmail.com>
         <pull.1359.v4.git.1666307815.gitgitgadget@gmail.com>
 From:   "Jerry Zhang via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 Oct 2022 23:16:52 +0000
-Subject: [PATCH v4 3/6] builtin: patch-id: fix patch-id with binary diffs
+Date:   Thu, 20 Oct 2022 23:16:53 +0000
+Subject: [PATCH v4 4/6] patch-id: fix patch-id for mode changes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,145 +68,95 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jerry Zhang <Jerry@skydio.com>
 
-"git patch-id" currently doesn't produce correct output if the
-incoming diff has any binary files. Add logic to get_one_patchid
-to handle the different possible styles of binary diff. This
-attempts to keep resulting patch-ids identical to what would be
-produced by the counterpart logic in diff.c, that is it produces
-the id by hashing the a and b oids in succession.
+Currently patch-id as used in rebase and cherry-pick does not account
+for file modes if the file is modified. One consequence of this is
+that if you have a local patch that changes modes, but upstream
+has applied an outdated version of the patch that doesn't include
+that mode change, "git rebase" will drop your local version of the
+patch along with your mode changes. It also means that internal
+patch-id doesn't produce the same output as the builtin, which does
+account for mode changes due to them being part of diff output.
 
-In general we handle binary diffs by first caching the object ids from
-the "index" line and using those if we then find an indication
-that the diff is binary.
-
-The input could contain patches generated with "git diff --binary". This
-currently breaks the parse logic and results in multiple patch-ids
-output for a single commit. Here we have to skip the contents of the
-patch itself since those do not go into the patch id. --binary
-implies --full-index so the object ids are always available.
-
-When the diff is generated with --full-index there is no patch content
-to skip over.
-
-When a diff is generated without --full-index or --binary, it will
-contain abbreviated object ids. This will still result in a sufficiently
-unique patch-id when hashed, but does not match internal patch id
-output. We'll call this ok for now as we already need specialized
-arguments to diff in order to match internal patch id (namely -U3).
+Fix by adding mode to the patch-id if it has changed, in the same
+format that would be produced by diff, so that it is compatible
+with builtin patch-id.
 
 Signed-off-by: Jerry Zhang <Jerry@skydio.com>
 ---
- builtin/patch-id.c  | 36 ++++++++++++++++++++++++++++++++++--
- t/t4204-patch-id.sh | 29 ++++++++++++++++++++++++++++-
- 2 files changed, 62 insertions(+), 3 deletions(-)
+ diff.c                     |  5 +++++
+ t/t3419-rebase-patch-id.sh | 31 ++++++++++++++++++++++++++++++-
+ 2 files changed, 35 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index 881fcf32732..e7a31123142 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -61,6 +61,8 @@ static int get_one_patchid(struct object_id *next_oid, struct object_id *result,
- {
- 	int patchlen = 0, found_next = 0;
- 	int before = -1, after = -1;
-+	int diff_is_binary = 0;
-+	char pre_oid_str[GIT_MAX_HEXSZ + 1], post_oid_str[GIT_MAX_HEXSZ + 1];
- 	git_hash_ctx ctx;
- 
- 	the_hash_algo->init_fn(&ctx);
-@@ -88,14 +90,44 @@ static int get_one_patchid(struct object_id *next_oid, struct object_id *result,
- 
- 		/* Parsing diff header?  */
- 		if (before == -1) {
--			if (starts_with(line, "index "))
-+			if (starts_with(line, "GIT binary patch") ||
-+			    starts_with(line, "Binary files")) {
-+				diff_is_binary = 1;
-+				before = 0;
-+				the_hash_algo->update_fn(&ctx, pre_oid_str,
-+							 strlen(pre_oid_str));
-+				the_hash_algo->update_fn(&ctx, post_oid_str,
-+							 strlen(post_oid_str));
-+				if (stable)
-+					flush_one_hunk(result, &ctx);
- 				continue;
--			else if (starts_with(line, "--- "))
-+			} else if (skip_prefix(line, "index ", &p)) {
-+				char *oid1_end = strstr(line, "..");
-+				char *oid2_end = NULL;
-+				if (oid1_end)
-+					oid2_end = strstr(oid1_end, " ");
-+				if (!oid2_end)
-+					oid2_end = line + strlen(line) - 1;
-+				if (oid1_end != NULL && oid2_end != NULL) {
-+					*oid1_end = *oid2_end = '\0';
-+					strlcpy(pre_oid_str, p, GIT_MAX_HEXSZ + 1);
-+					strlcpy(post_oid_str, oid1_end + 2, GIT_MAX_HEXSZ + 1);
-+				}
-+				continue;
-+			} else if (starts_with(line, "--- "))
- 				before = after = 1;
- 			else if (!isalpha(line[0]))
- 				break;
+diff --git a/diff.c b/diff.c
+index 199b63dbcc3..0e336c48560 100644
+--- a/diff.c
++++ b/diff.c
+@@ -6256,6 +6256,11 @@ static int diff_get_patch_id(struct diff_options *options, struct object_id *oid
+ 		} else if (p->two->mode == 0) {
+ 			patch_id_add_string(&ctx, "deletedfilemode");
+ 			patch_id_add_mode(&ctx, p->one->mode);
++		} else if (p->one->mode != p->two->mode) {
++			patch_id_add_string(&ctx, "oldmode");
++			patch_id_add_mode(&ctx, p->one->mode);
++			patch_id_add_string(&ctx, "newmode");
++			patch_id_add_mode(&ctx, p->two->mode);
  		}
  
-+		if (diff_is_binary) {
-+			if (starts_with(line, "diff ")) {
-+				diff_is_binary = 0;
-+				before = -1;
-+			}
-+			continue;
-+		}
+ 		if (diff_header_only) {
+diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
+index d24e55aac8d..7181f176b81 100755
+--- a/t/t3419-rebase-patch-id.sh
++++ b/t/t3419-rebase-patch-id.sh
+@@ -48,7 +48,17 @@ test_expect_success 'setup: 500 lines' '
+ 	git branch -f squashed main &&
+ 	git checkout -q -f squashed &&
+ 	git reset -q --soft HEAD~2 &&
+-	git commit -q -m squashed
++	git commit -q -m squashed &&
 +
- 		/* Looking for a valid hunk header?  */
- 		if (before == 0 && after == 0) {
- 			if (starts_with(line, "@@ -")) {
-diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
-index a730c0db985..cdc5191aa8d 100755
---- a/t/t4204-patch-id.sh
-+++ b/t/t4204-patch-id.sh
-@@ -42,7 +42,7 @@ calc_patch_id () {
- }
- 
- get_top_diff () {
--	git log -p -1 "$@" -O bar-then-foo --
-+	git log -p -1 "$@" -O bar-then-foo --full-index --
- }
- 
- get_patch_id () {
-@@ -61,6 +61,33 @@ test_expect_success 'patch-id detects inequality' '
- 	get_patch_id notsame &&
- 	! test_cmp patch-id_main patch-id_notsame
++	git branch -f mode main &&
++	git checkout -q -f mode &&
++	test_chmod +x file &&
++	git commit -q -a --amend &&
++
++	git branch -f modeother other &&
++	git checkout -q -f modeother &&
++	test_chmod +x file &&
++	git commit -q -a --amend
  '
-+test_expect_success 'patch-id detects equality binary' '
-+	cat >.gitattributes <<-\EOF &&
-+	foo binary
-+	bar binary
-+	EOF
-+	get_patch_id main &&
-+	get_patch_id same &&
-+	git log -p -1 --binary main >top-diff.output &&
-+	calc_patch_id <top-diff.output main_binpatch &&
-+	git log -p -1 --binary same >top-diff.output &&
-+	calc_patch_id <top-diff.output same_binpatch &&
-+	test_cmp patch-id_main patch-id_main_binpatch &&
-+	test_cmp patch-id_same patch-id_same_binpatch &&
-+	test_cmp patch-id_main patch-id_same &&
-+	test_when_finished "rm .gitattributes"
+ 
+ test_expect_success 'detect upstream patch' '
+@@ -71,6 +81,13 @@ test_expect_success 'detect upstream patch binary' '
+ 	test_when_finished "rm .gitattributes"
+ '
+ 
++test_expect_success 'detect upstream patch modechange' '
++	git checkout -q modeother^{} &&
++	git rebase mode &&
++	git rev-list mode...HEAD~ >revs &&
++	test_must_be_empty revs
 +'
 +
-+test_expect_success 'patch-id detects inequality binary' '
-+	cat >.gitattributes <<-\EOF &&
-+	foo binary
-+	bar binary
-+	EOF
-+	get_patch_id main &&
-+	get_patch_id notsame &&
-+	! test_cmp patch-id_main patch-id_notsame &&
-+	test_when_finished "rm .gitattributes"
-+'
+ test_expect_success 'do not drop patch' '
+ 	git checkout -q other^{} &&
+ 	test_must_fail git rebase squashed &&
+@@ -85,4 +102,16 @@ test_expect_success 'do not drop patch binary' '
+ 	test_when_finished "rm .gitattributes"
+ '
  
- test_expect_success 'patch-id supports git-format-patch output' '
- 	get_patch_id main &&
++test_expect_success 'do not drop patch modechange' '
++	git checkout -q modeother^{} &&
++	git rebase other &&
++	cat >expected <<-\EOF &&
++	diff --git a/file b/file
++	old mode 100644
++	new mode 100755
++	EOF
++	git diff HEAD~ >modediff &&
++	test_cmp expected modediff
++'
++
+ test_done
 -- 
 gitgitgadget
 
