@@ -2,86 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BC5DC4332F
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 23:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB212C433FE
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 23:53:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229484AbiJTXuk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 19:50:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41482 "EHLO
+        id S229691AbiJTXxK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 19:53:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbiJTXuh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 19:50:37 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F2FB19899D
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:50:32 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1DA3F1519D7;
-        Thu, 20 Oct 2022 19:50:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=afE0speKd0Nh
-        8meMpgXIyF0cAgJZshKw34TDVdzGcy8=; b=r6a7YA1/yzbttCDolyBahfJQYBJ7
-        30gQvbI8KGj86uIP/y0Zrx7aHiD8woulydn0Vupvt7PhhN9xyPB8c85Ipch9yD+n
-        VQZBUxk1sCBTpOawNSLtaPyL1xejwfv+mShvE3K+gmZL5dIPk8EXrSM+VFFtQKzf
-        qKRmQ6W28/baxjk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 077021519D5;
-        Thu, 20 Oct 2022 19:50:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5D42B1519D4;
-        Thu, 20 Oct 2022 19:50:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 00/10] run-command API: add run_command_{l,sv}_opt()
-References: <cover-00.10-00000000000-20221014T153426Z-avarab@gmail.com>
-        <cover-v2-00.10-00000000000-20221017T170316Z-avarab@gmail.com>
-        <xmqq4jw1wl6z.fsf@gitster.g>
-        <221018.86a65ti70m.gmgdl@evledraar.gmail.com>
-        <Y08P0G1Be+5hCVML@coredump.intra.peff.net>
-        <xmqq7d0vu8cw.fsf@gitster.g>
-        <Y1AujKKPUJFepph5@coredump.intra.peff.net>
-        <xmqq7d0vsngp.fsf@gitster.g>
-        <Y1BIfEN5ds2kKjjk@coredump.intra.peff.net>
-        <xmqq5ygfr48b.fsf@gitster.g>
-        <84971a3a-4c5c-5b79-582e-88b3bd8c624f@web.de>
-Date:   Thu, 20 Oct 2022 16:50:29 -0700
-In-Reply-To: <84971a3a-4c5c-5b79-582e-88b3bd8c624f@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 20 Oct 2022 20:34:10 +0200")
-Message-ID: <xmqqilkeoy0q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FAC59D7C-50D1-11ED-9209-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229635AbiJTXxI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 19:53:08 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F4ED229E5E
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:53:07 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id j7-20020a170902da8700b0018540711393so482867plx.18
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:53:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=4awTHI25cgF/KMuChXIKkRIF6pMlnPmivl77ZoPTzfU=;
+        b=h+1aYqP07u+lhTKEurq3Irp4B9JKy+VusqDbijnM1RxjVKq/0vSgi8iKEJ4qal02Vr
+         8RvGean1IuPacOejkpdWPbVvIsP4ZlCoj5cFDyIFRItsBoJSRMOUVgMZcWXPTp8iZ/2C
+         8Nk66R0kzcnL06OmGXuPKxW6Pcxbgg8X0eCre0I3EN4f4GOEn3CGeP+gzrPQC2Zeuk0+
+         aMN18bide9DfeebNO6hlEZtqYa01FVk2ocmBF+e1gYzh2ElcKEDu0Cc7DQ66+y84CZu1
+         caaje0PFm/g4RgPIyVJzY7hj+0SEVgxAPwlSgVmjvGHqD9I3Inib0Xm4mI7BwrlcOCyN
+         TnAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4awTHI25cgF/KMuChXIKkRIF6pMlnPmivl77ZoPTzfU=;
+        b=I+3XV6JkTg1GaNanKK1+GqRPV+DYI7ZsNjYGWb9US5SgqmhLA2K1HjKBrzXjvGJUQ4
+         Wyxtho2zRSlpACyctLlsSXIK1s6Ft19YWw21S/ty15TTRL9OVrsXONf0TAIgz7+kgcN+
+         lG4F9mlLBn+1igPfhI870V3Cu4yTCuITrSsmaX1RZlYZHO4d0kzx0pPIiXhz7U7VUb/+
+         PYiN0kDD1cRmuhM3EE39JoT3C/hdiPEdqx2awCQjdlnz22pkNwXDRVU2vvJ/SIpAgWnk
+         lmmc9UDSDaV2C6dtqfBGsPsYkHQ+Jso/kzbASatVl5dPfNHGdoob/SGSq8Bxr7NT+85U
+         vObw==
+X-Gm-Message-State: ACrzQf2SijOxtdd3fss/R1jTtkzVUtqIoLctMfo65Xpe7HHPDYnl9blY
+        8h7j0D1jgxKJrIouryPSg8BMyij9Qn2f3Q==
+X-Google-Smtp-Source: AMsMyM7tBKXab0FbsPyErGnRxAskSZvI7lTR+BUpvICM8vQi+JdibSmTJI0SXj9jB8vq0VT9u8DsDmI1dv1PVw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:aa7:9ed2:0:b0:563:276:d858 with SMTP id
+ r18-20020aa79ed2000000b005630276d858mr16076808pfq.23.1666309987108; Thu, 20
+ Oct 2022 16:53:07 -0700 (PDT)
+Date:   Thu, 20 Oct 2022 16:53:05 -0700
+In-Reply-To: <xmqqh6zyqftv.fsf@gitster.g>
+Mime-Version: 1.0
+References: <pull.1321.git.git.1661806456.gitgitgadget@gmail.com>
+ <pull.1321.v2.git.git.1666297238.gitgitgadget@gmail.com> <xmqqh6zyqftv.fsf@gitster.g>
+Message-ID: <kl6lh6zyxdb2.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2 0/7] clone, submodule update: check out submodule branches
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I wrote that patch out of curiosity and was pleased by the total line
-> count reduction, getting rid of the on-stack array construction sites
-> with their magic numbers, not having to manage strvecs explicitly
-> anymore and the callers staying readable.
-> ...
-> But still: Is all of that code churn worth it?  Not sure.
+> "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> = Description
+>>
+>> This series teaches "git clone --recurse-submodules" and "git submodule
+>> update" to understand "submodule.propagateBranches" (see Further Reading for
+>> context), i.e. if the superproject has a branch checked out and a submodule
+>> is cloned, the submodule will have the same branch checked out.
+>>
+>> To do this, "git submodule update" checks if ...
+>> = Series history
+>>
+>> Changes in v2:
+>>
+>>  * The superproject's "submodule.propagateBranches" value is always used,
+>>    even if false.
+>>  * Branches are now created at clone time (by adding a new flag to "git
+>>    submodule clone"), instead of at update time.
+>>  * Rebase onto newer master. This got adjusted slightly to incorporate
+>>    ab/submodule-helper-leakfix.
+>>  * Add more tests to demonstrate edge case behavior.
+>>  * Assorted commit message and doc improvements.
+>
+> As the previous round was more than a month old and is clearly not a
+> bugfix but is adding a new feature, I do not mind updating to the
+> newer base after a new feature release was made.  There isn't much
+> to be gained, other than that we can easily sanity check by running
+> "git diff @{1} @{0}" on the branch to compare the iterations, by
+> keeping the same base.  We are not going to merge this topic down to
+> maintenance tracks after it graduates to 'master' anyway.
+>
+> But I got curious and tried to adjust these patches back on the
+> previous base 07ee72db (Sync with 'maint', 2022-08-26).  It turns
+> out that the conflicts needed to be resolved were fairly trivial.
+>
+> Merging the topic that was recreated on top of the same old base
+> into today's 'master' of course needed the same conflict resolution
+> but that is something we've been doing every time we rebuild 'seen'
+> (read: at least twice a day, but often more).  Applying these
+> patches directly on today's 'master' of course produced the
+> identical tree as the tree of this trial merge.
 
-Compared to doing nothing?  The result did look easier to grok,
-especially as we no longer need to worry about another way to do the
-same thing (i.e. run_command() vs run_command_v_*() variants) and
-can get rid of the flags constants that need to be kept in sync with
-the members of the child_process struct.
-
-Compared to adding the _l_opt() variant?  Surely, as that goes the
-other direction to add more callers that use the flags constants,
-without much practical gain (which was a bit sad, but we only found
-that out after seeing the result).
+Thanks for your patience. For future reference, do you have a preference
+either way? I suppose choosing a later base might make it easier for
+reviewers who don't have the bandwidth to remember what "master" used to
+look like, but it's just churn to you, since you're already rebuilding
+"seen".
