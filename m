@@ -2,100 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18CBEC433FE
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 16:13:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D722CC4332F
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 16:38:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230406AbiJTQNL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 12:13:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57462 "EHLO
+        id S230056AbiJTQiC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 12:38:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbiJTQNJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 12:13:09 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1046A188100
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 09:13:07 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 75D5D1B504E;
-        Thu, 20 Oct 2022 12:13:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Z3qCeVNWXyP70qjgRc8nf2Rx0tYZIUbnUrkfqy
-        0oZw0=; b=pNln3lMShC2aJY4Hwn3pym5n4Gt8EyDFEzNB15KjufPJftyBvCAF9Q
-        UDnjitc43aZESimDhPPD5YkECRxDgh9xDjE1YzeBiREj0seI3+0GhdXKz36TrdVi
-        xAUHKkaW2zeFcHKFt/uSF87bsUR7DyeZbnnJV6pdkOAodoxDUpmYc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6D2BF1B504C;
-        Thu, 20 Oct 2022 12:13:06 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 993051B5049;
-        Thu, 20 Oct 2022 12:13:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH v2 00/12] fsmonitor: Implement fsmonitor for Linux
-References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
-        <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com>
-        <kl6l7d0yyu6r.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <xmqqo7u9wyt7.fsf@gitster.g>
-Date:   Thu, 20 Oct 2022 09:13:02 -0700
-In-Reply-To: <xmqqo7u9wyt7.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        17 Oct 2022 21:17:08 -0700")
-Message-ID: <xmqq8rlamq29.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229854AbiJTQiB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 12:38:01 -0400
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EB57558C2
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 09:38:00 -0700 (PDT)
+Received: by mail-io1-f44.google.com with SMTP id 137so9890iou.9
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 09:38:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=guR+kni8dGQgaNhFrA/myjE33tO7Xk9EtnFgFAJzGns=;
+        b=drsWZ2ef5OrXAoBKATDqeNOMsrGKlYqur/74pKbB8D8p5s2JVJnsg4Sc/d8q+MbjzT
+         C1EFjwsKe8MXFeJkVV/FmQdu8fkvbn2srm8TMvNHiZ4NBY4mIsCqBJshREuDGKgaAC60
+         fDM5yRYSvVt6DdePR6/7zdKNA1jiSxgKd71L5GLYqsKUG4kKfULorWERHMyVElGzfgmA
+         S53M+CbFA1AjmZmV+qmH6hx+Vtpw1Rt64E5DftzJOkzmBEauTlhzPO4JjsftHk5OJpe5
+         5xCtu7u1NFDNs+YPgTA0Fa4ZDr4ao0Ny2Rc09nEXXVUkBvE7wU2AjgUuYFZYxd4ppQtz
+         zZtg==
+X-Gm-Message-State: ACrzQf0B7POYzrnplg5GZ+hs+yiOthkhzFppeBydHf5+I89DbIWwaFmt
+        /WNnkAvGYUo9XzmP1YHUq5mmt6dpwFSd7IHcq/8=
+X-Google-Smtp-Source: AMsMyM5TDuEdPRhgx1ONz7yLnLGhz8Zuqtx05PEj8gCysEbFwmcZ/vsVz36+2buYoSDvOAsZ6i+h8lJIqeLknglcOco=
+X-Received: by 2002:a05:6638:3f0d:b0:363:ba76:7397 with SMTP id
+ ck13-20020a0566383f0d00b00363ba767397mr10570396jab.177.1666283879478; Thu, 20
+ Oct 2022 09:37:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 133AFBEE-5092-11ED-9AB1-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+References: <pull.1352.git.git.1665326258.gitgitgadget@gmail.com>
+ <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com> <kl6l7d0yyu6r.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <xmqqo7u9wyt7.fsf@gitster.g> <xmqq8rlamq29.fsf@gitster.g>
+In-Reply-To: <xmqq8rlamq29.fsf@gitster.g>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 20 Oct 2022 12:37:48 -0400
+Message-ID: <CAPig+cRkQLyy8X7y=1jhrVwYERk5ucagAfJkTAOPNODofiZr1g@mail.gmail.com>
+Subject: Re: [PATCH v2 00/12] fsmonitor: Implement fsmonitor for Linux
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Glen Choo <chooglen@google.com>,
+        Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric DeCosta <edecosta@mathworks.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Possible action items:
+On Thu, Oct 20, 2022 at 12:13 PM Junio C Hamano <gitster@pobox.com> wrote:
+> So here is my "panda-see-panda-do" attempt.
 >
->  * See what configurations our two macOS jobs are using.  If neither
->    is using sha1dc, I would say that is criminal [*] and at least
->    one of them should be updated to do so right away.
+> ----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+> Subject: [PATCH] ci: use DC_SHA1=1 on osx-clang job for CI
+>
+> All other jobs were using the default DC_SHA1 (which is a
+> recommended practice), but the default for macOS jobs being Apple's
+> common crypt, we didn't catch recent breakage soon enough.
 
-So here is my "panda-see-panda-do" attempt.
+"recent breakage" is quite vague and probably won't help future
+readers understand what this is actually fixing. Possible
+improvements: (1) a prose description of the breakage; (2) the actual
+compiler error message; (3) a pointer[1] to the email reporting the
+problem. One or more of the above improvements to the commit message
+would help future readers.
 
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
-Subject: [PATCH] ci: use DC_SHA1=1 on osx-clang job for CI
+[1]: https://lore.kernel.org/git/kl6l7d0yyu6r.fsf@chooglen-macbookpro.roam.corp.google.com/
 
-All other jobs were using the default DC_SHA1 (which is a
-recommended practice), but the default for macOS jobs being Apple's
-common crypt, we didn't catch recent breakage soon enough.
-
-We may want to give similar diversity for Linux jobs so that some of
-them build with other implementations of SHA-1, but let's start
-small and fill only the immediate need.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- ci/lib.sh | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 1b0cc2b57d..5a115704cb 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -259,6 +259,8 @@ macos-latest)
- 		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
- 	else
- 		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
-+		MAKEFLAGS="$MAKEFLAGS NO_APPLE_COMMON_CRYPTO=NoThanks"
-+		MAKEFLAGS="$MAKEFLAGS DC_SHA1=1 NO_OPENSSL=1"
- 	fi
- 	;;
- esac
--- 
-2.38.1-267-g82836053dd
-
+> We may want to give similar diversity for Linux jobs so that some of
+> them build with other implementations of SHA-1, but let's start
+> small and fill only the immediate need.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> diff --git a/ci/lib.sh b/ci/lib.sh
+> index 1b0cc2b57d..5a115704cb 100755
+> --- a/ci/lib.sh
+> +++ b/ci/lib.sh
+> @@ -259,6 +259,8 @@ macos-latest)
+>                 MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
+>         else
+>                 MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
+> +               MAKEFLAGS="$MAKEFLAGS NO_APPLE_COMMON_CRYPTO=NoThanks"
+> +               MAKEFLAGS="$MAKEFLAGS DC_SHA1=1 NO_OPENSSL=1"
+>         fi
+>         ;;
+>  esac
