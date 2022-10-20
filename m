@@ -2,73 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90445C433FE
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 20:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70D11C43217
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 20:43:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229558AbiJTUcl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 16:32:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43024 "EHLO
+        id S229730AbiJTUnN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 16:43:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbiJTUcj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 16:32:39 -0400
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E0351FB79B
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 13:32:38 -0700 (PDT)
-Received: by mail-ej1-f53.google.com with SMTP id ot12so2418896ejb.1
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 13:32:38 -0700 (PDT)
+        with ESMTP id S229675AbiJTUnL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 16:43:11 -0400
+Received: from mail-oo1-xc49.google.com (mail-oo1-xc49.google.com [IPv6:2607:f8b0:4864:20::c49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94EF420C99D
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 13:43:02 -0700 (PDT)
+Received: by mail-oo1-xc49.google.com with SMTP id v10-20020a4a860a000000b00480b3e2b5afso423199ooh.12
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 13:43:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ibvJFHlPxeXfjyHgPQzlRf9TqNw4Iff1tumz1lmWu3g=;
+        b=qcCoFlfUoDiVtp3nxMUApXPMlltXI4gja4jq3AYxdmZ2+yMY4qRLOqZylGPxl2Hn9X
+         YaWi6YxE0UdMoUjTHKVM2dbwdp3qrKayTk55f2hWJT3dcGnV5vO9Oib2X7LsvUVR8Kts
+         f8wnse3HxMjFjzwoouMChiAfoeMfNqmuKnuGcqUazHLl9h24CLlcRR7V8jfraW7vyJ3i
+         Y1slwjaNxqWpy+P0hZo32oZQi2BZL83zrImK1c230qa59f+RDNx5ARReWtqtm+TycgGF
+         J5FjhDsvp/AL8HX3IPyhy30uPRj+r6LdAD1H7uzQ7WflcvjGUK6l856WsMRAkNWLYJM2
+         4WDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dm/lvvYNQqwKr/aJnhvaFsqbas26dm4zRsStpydk3wI=;
-        b=psUwRTI3gabXSLBa6lexql2+HxThyiAWVTHQbPizb3PG+hD5jGmuw0FjIrZy0e2vgR
-         ppP7psoHmOWQklZGW6Xd+4UCBqY2BisX4hZdVNEbRSnMnOBGzEDaQrl4t0FJ8vXo89+5
-         +Y9YGtPg+RMKcsbVKvzXlaNz5RjxD6UJbkOJCS73chEAoPPODbRnCNanx+U+hkQSB4nc
-         jiAHQjbnUWDuWz3IzSD9vc3mki4vWMactrMKN8stIyV+/5vpS8phq8fRvodBANQhcUo1
-         8rnIVTfogyo318tlJpahbWxx5rw293yL8usi2UHxmAD/qq9tkrB3MGYFY+OY63PXr64g
-         IIiw==
-X-Gm-Message-State: ACrzQf0sMqdpYtcjmuP6h1Z5SeWold/6SVH4zQKHH1zOluucyLuoo+Id
-        kn3/Fa7Ebewqdk4Qdg7QkQm97R8uuGK2s/3B0hPMDCf1
-X-Google-Smtp-Source: AMsMyM5ynsDAGXZBr0gOqdcJJMSeBrFt4k2+4sQED76khFaIzy2adTmakMcJ680fQAO/nuX6KhwGnVdx4OISbVTZY0I=
-X-Received: by 2002:a17:906:6791:b0:78d:4051:fcf0 with SMTP id
- q17-20020a170906679100b0078d4051fcf0mr12352145ejp.591.1666297956825; Thu, 20
- Oct 2022 13:32:36 -0700 (PDT)
-MIME-Version: 1.0
-References: <5E2E10BE-6EEB-4C78-A489-5899400DA937@gmail.com>
- <CA+JQ7M-NA9UYafMurb9MAo5bp6djdzRP7ChAbdmzU+nmrkXTNw@mail.gmail.com> <DB5611E0-6B1C-4711-BB9F-72F6E8F39506@gmail.com>
-In-Reply-To: <DB5611E0-6B1C-4711-BB9F-72F6E8F39506@gmail.com>
-From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Thu, 20 Oct 2022 22:31:58 +0200
-Message-ID: <CA+JQ7M92x03FPWM6qWjG=FYPxCYs8xcC_HRWLnkwj4iqA9KK=w@mail.gmail.com>
-Subject: Re: Cloning remotely under git for Windows not working
-To:     "W. Ekkehard Blanz" <ekkehard.blanz@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ibvJFHlPxeXfjyHgPQzlRf9TqNw4Iff1tumz1lmWu3g=;
+        b=XXS+kar8HcZP/J/Wa6DRQKhFU9irKwn09YOwCusJ3AimMYy9ciHXUUhnC79Npz83H0
+         7A44gQbY4Mm6m69tcrxvwEqgQFTgsfqjCFTz47YNdywh993VaLi82ZEM5NFk8EFqhLns
+         6BKoTbClWmZXmTCiSCutzvL5x1ERV2s8qVqZ/MVh4YlbaNnIzJFOU453etGBhf5pS4PC
+         4fodoVIxZ7eGHKiKhq9G+dAlhcLBM6SMa/L0CRA+DXXFtTKTydo++e3M2FQMOL8JzEwv
+         YJtVlaw6x4lY2xC2z6tC6IVippx4hzSVGkoVwEzY/6f1bItguP7/N56b2Slw2vny5Lag
+         rVhA==
+X-Gm-Message-State: ACrzQf387Icbv1RJZ1dHFFayJuVXZB7bZ1jivRfCOlSKB/5XJ4jjKpLZ
+        TpnlKR2ILMsKRfOwlMLsyL1IEKVxY6dHbw==
+X-Google-Smtp-Source: AMsMyM6lQxtr5/GLHjsnyue3C+svkTG86D3DiLgqDQR40hQS7bqMJZYLy8kabLHw4vN0XX7Gbv5NUNzHLHD7Gg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6870:6193:b0:13a:e513:fe71 with SMTP
+ id a19-20020a056870619300b0013ae513fe71mr4444635oah.67.1666298581972; Thu, 20
+ Oct 2022 13:43:01 -0700 (PDT)
+Date:   Thu, 20 Oct 2022 13:42:51 -0700
+In-Reply-To: <patch-02.10-46bf600820b-20221017T115544Z-avarab@gmail.com>
+Mime-Version: 1.0
+References: <cover-00.10-00000000000-20221017T115544Z-avarab@gmail.com> <patch-02.10-46bf600820b-20221017T115544Z-avarab@gmail.com>
+Message-ID: <kl6l1qr2z0ok.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH 02/10] git-submodule.sh: dispatch "sync" to helper
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonas Bernoulli <jonas@bernoul.li>, Jeff King <peff@peff.net>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2022, 8:16 PM W. Ekkehard Blanz
-<ekkehard.blanz@gmail.com> wrote:
-> Here is the output from running it with GIT_TRACE=1 (which I had to do under Cygwin, since this won't work in a DOS shell, but I am still using native git from Windows - did not install it in Cygwin to keep things consistent):
->
->     $ GIT_TRACE=1 git clone 10.0.7.181:D:\\gitDepot\\test.git
->     19:04:23.917439 exec-cmd.c:237          trace: resolved executable dir: D:/Applications/Git/mingw64/bin
->     19:04:23.917439 git.c:460               trace: built-in: git clone '10.0.7.181:D:\gitDepot\test.git'
->     Cloning into 'test'...
->     19:04:23.948681 run-command.c:655       trace: run_command: unset GIT_DIR; GIT_PROTOCOL=version=2 ssh -o SendEnv=GIT_PROTOCOL 10.0.7.181 'git-upload-pack '\''D:\gitDepot\test.git'\'''
->     username@10.0.7.181's password:
->     fatal: ''D:\gitDepot\test.git'' does not appear to be a git repository
->     fatal: Could not read from remote repository.
->
->     Please make sure you have the correct access rights
->     and the repository exists.
->
-> What I got from this is to use double backslashes to get the path right (I had tried this before though), but unfortunately, the result is still the same.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Maybe try forward slash, it's valid in both unix and windows and
-sometimes plays nicer
+> Remove the cmd_sync() wrapper for "git submodule--helper sync" in
+> favor of dispatching the raw command-line directly to the helper.
+>
+> At this point we've already parsed out the optional "--quiet" flag
+> that we need to support for "git submodule --quiet" (as opposed to
+> "git submodule <subcommand> --quiet").
 
-> I will try the power shell workaround once I am back from my doctor's appointment.  Is that on the local or the remote machine or both?
+For a moment, I thought this was saying that we're dropping support for
+"git submodule <subcommand> --quiet" in favor of "git submodule
+--quiet", but that's not true. Both are still supported, albeit in
+slightly different ways:
 
-on the remote
+- The subcommand "--quiet" flag is passed via $@
+
+- The top level "--quiet" flag is parsed when we parse top level flags,
+  which sets quiet=3D1, and thus passes "--quiet" to submodule--helper.
+  We also `shift` out the "--quiet" so there's no fear of passing
+  "--quiet" twice.
+
+Hooray!
+
