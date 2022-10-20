@@ -2,129 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E770EC433FE
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 12:04:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F5BAC4332F
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 12:19:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbiJTMEk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 08:04:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36680 "EHLO
+        id S230083AbiJTMT2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 08:19:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbiJTMEi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 08:04:38 -0400
-X-Greylist: delayed 323 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 20 Oct 2022 05:04:27 PDT
-Received: from smtp1.fnusa.cz (smtp1.fnusa.cz [195.113.158.210])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D3F2B492
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 05:04:25 -0700 (PDT)
-Received: from smtp1.fnusa.cz (mailfilter.fnusa.cz [172.30.0.204])
-        by smtp1.fnusa.cz (Postfix) with ESMTP id 1AA02120C07;
-        Thu, 20 Oct 2022 13:58:59 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fnusa.cz; s=mail;
-        t=1666267139; bh=GqKJES5tpUl+osT+ElX30JtbOd13F19NJ4f3lpo9SAs=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-        b=d7EV/P1O7DpWMtAHjGSvYjf1F2gzcU7Bgo3wX674rahR2i7ne+lrgi6OpL5KTk4xO
-         LwDV/vxi+9/f7Yldwp9jo4LcPDeAicInGIRrSivhUD51jw82tSP+6zeKlvEUWwDTb3
-         eyQPMkoyhkyY7Dmbiv2jb4PLJcxlg4RiUCzsqo3o=
-Received: from [172.30.22.150] (unknown [172.30.22.150])
-        by smtp1.fnusa.cz (Postfix) with ESMTPS id D8F15120BB2;
-        Thu, 20 Oct 2022 13:58:58 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fnusa.cz; s=mail;
-        t=1666267139; bh=GqKJES5tpUl+osT+ElX30JtbOd13F19NJ4f3lpo9SAs=;
-        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-        b=d7EV/P1O7DpWMtAHjGSvYjf1F2gzcU7Bgo3wX674rahR2i7ne+lrgi6OpL5KTk4xO
-         LwDV/vxi+9/f7Yldwp9jo4LcPDeAicInGIRrSivhUD51jw82tSP+6zeKlvEUWwDTb3
-         eyQPMkoyhkyY7Dmbiv2jb4PLJcxlg4RiUCzsqo3o=
-Message-ID: <00af268377fb7c3b8efd059482ee7449b71f48b1.camel@fnusa.cz>
-Subject: Another possible instance of async-signal-safe opendir path
- callstack? (Was: [PATCH] tmp-objdir: do not opendir() when handling a
- signal)
-From:   Jan =?ISO-8859-1?Q?Pokorn=FD?= <poki@fnusa.cz>
-To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     John Cai <johncai86@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Date:   Thu, 20 Oct 2022 13:58:58 +0200
-In-Reply-To: <pull.1348.git.git.1664236383785.gitgitgadget@gmail.com>
-References: <pull.1348.git.git.1664236383785.gitgitgadget@gmail.com>
-Organization: =?UTF-8?Q?Fakultn=C3=AD?= nemocnice u sv. Anny v
- =?UTF-8?Q?Brn=C4=9B?=
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.3 (3.44.3-1.fc37) 
+        with ESMTP id S230063AbiJTMT1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 08:19:27 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86A04F42
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 05:19:20 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id e18so14786017wmq.3
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 05:19:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:from:to:content-language:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=mNvtQfZo9qau/JdavtY/9dSeYuGbIfcrBw7ghz2rogI=;
+        b=k3xegvGyPEG2ph2lFHpTZB+wsvPpwuU7O1pzYQxoLI8g058sWDEzJI3UNQBwQ0Yt9s
+         1lbQb2eBfD8JeMvBqhf6HZr4JdXzfPemDbSYZ0fVEaa3faNTRKW9qpn+drfHW9QHEGlT
+         my5CblRCbvaGKzAS3bNYUlK7hSj+DDZcbZwyh6NkUx+j+5b+rXygBoRJrJDp7ujTS7Ac
+         y0gR/2/zd8ueCgVrXjzpDjJ8QXHh/NiOH8nixNV7PL3x8bmMeOsHBb5aDtNust33XSQG
+         YUz2g8vbuV5VxNrKjtWCohOYLbcrrobporu+NI0WSvYRO5c16PU1+BBdDHZM1RbLp4/l
+         08Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=subject:from:to:content-language:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mNvtQfZo9qau/JdavtY/9dSeYuGbIfcrBw7ghz2rogI=;
+        b=dNlTAg0d4qGwI6030ttfflbSZ6t3aPYfMD7SOU7ITm3zgJdxJBnKHhCGx3lVasx1LH
+         zqdoAEv70tbz2rbzdPmaUF3GYvyGxRfOTr92k3oobmyHTwmqR/tFYu+Na0pVFYZ8qY/o
+         EjFhJ6hhSWHdduinxlEATDoup5LPd/+UzHo9iYyY4EgXf9KfwYtpetICypOWzXwRY4BO
+         nLJ4bafDVRbj9cnst5GKUzaQLsFULVUd1qhvev0xxyQIKMEgB48zHWyl9krbR1mRyHYi
+         tKc8bXUs995hJojVYYrovbwcQ60XfDhNCT2coJFdDyQVOAoyGFIsyktGpSfJ+aH/SjD8
+         WG3w==
+X-Gm-Message-State: ACrzQf2FMRNsk24xIRDlApZLxXeW6bONC2LdMGs0bXeX8xmprXTaeecf
+        YsSUNIlRq8p6wA0W7bu3odRAHwrOEuM=
+X-Google-Smtp-Source: AMsMyM6blq/qNqWogGAAv7hmTmcKhmZC3JsGS58CMOHoi9u8AU2iuq5eIIJggNXUU6EKXFycFPh2HA==
+X-Received: by 2002:a05:600c:46c7:b0:3c6:f3e6:1f13 with SMTP id q7-20020a05600c46c700b003c6f3e61f13mr16097997wmo.62.1666268358877;
+        Thu, 20 Oct 2022 05:19:18 -0700 (PDT)
+Received: from [192.168.0.160] ([170.253.36.171])
+        by smtp.gmail.com with ESMTPSA id h205-20020a1c21d6000000b003b47e75b401sm2653394wmh.37.2022.10.20.05.19.17
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Oct 2022 05:19:18 -0700 (PDT)
+Message-ID: <ce09bfae-091f-7c62-5e40-2784906d5370@gmail.com>
+Date:   Thu, 20 Oct 2022 14:19:06 +0200
 MIME-Version: 1.0
-X-AV-Checked: ClamAV using ClamSMTP
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.3
+Content-Language: en-US
+To:     Git <git@vger.kernel.org>
+From:   Alejandro Colomar <alx.manpages@gmail.com>
+Subject: diff: Add support for man(7) pages
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------IO0pmnxZ9BtvKSaqPoFUgFSD"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-John Cai via GitGitGadget p=C3=AD=C5=A1e v Po 26. 09. 2022 v 23:53 +0000:
-> From: John Cai <johncai86@gmail.com>
->=20
-> In the tmp-objdir api, tmp_objdir_create will create a temporary
-> directory but also register signal handlers responsible for removing
-> the directory's contents and the directory itself. However, the
-> function responsible for recursively removing the contents and
-> directory, remove_dir_recurse() calls opendir(3) and closedir(3).
-> This can be problematic because these functions allocate and free
-> memory, which are not async-signal-safe functions. This can lead to
-> deadlocks.
->=20
-> One place we call tmp_objdir_create() is in git-receive-pack, where
-> we create a temporary quarantine directory "incoming". Incoming
-> objects will be written to this directory before they get moved to
-> the object directory.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------IO0pmnxZ9BtvKSaqPoFUgFSD
+Content-Type: multipart/mixed; boundary="------------oa9wkd6DkdRWPdk2HGEi0zeB";
+ protected-headers="v1"
+From: Alejandro Colomar <alx.manpages@gmail.com>
+To: Git <git@vger.kernel.org>
+Message-ID: <ce09bfae-091f-7c62-5e40-2784906d5370@gmail.com>
+Subject: diff: Add support for man(7) pages
 
-Just noticed this unattended git crash in the logs and I think it might
-actually be another occurrence of the same problem in principle, so
-shamelessly piggy-backing the stack trace here (no coredump preserved
-at this point, sorry):
+--------------oa9wkd6DkdRWPdk2HGEi0zeB
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-    #0  0x00007f08df0ea06c __pthread_kill_implementation (libc.so.6 + 0x8b0=
-6c)
-    #1  0x00007f08df098046 raise (libc.so.6 + 0x39046)
-    #2  0x00007f08df0817fc abort (libc.so.6 + 0x227fc)
-    #3  0x00007f08df082533 __libc_message.cold (libc.so.6 + 0x23533)
-    #4  0x00007f08df090a67 __libc_assert_fail (libc.so.6 + 0x31a67)
-    #5  0x00007f08df0f68f2 sysmalloc (libc.so.6 + 0x978f2)
-    #6  0x00007f08df0f7789 _int_malloc (libc.so.6 + 0x98789)
-    #7  0x00007f08df0f80d2 __libc_malloc (libc.so.6 + 0x990d2)
-    #8  0x00007f08df12fa55 __alloc_dir (libc.so.6 + 0xd0a55)
-  ->#9  0x00007f08df12fac2 opendir_tail (libc.so.6 + 0xd0ac2)
-    #10 0x00005632ea10c823 remove_temporary_files.lto_priv.0 (git + 0xdc823=
-)
-  ->#11 0x00005632ea10c97c remove_pack_on_signal.lto_priv.0 (git + 0xdc97c)
-    #12 0x00007f08df0980f0 __restore_rt (libc.so.6 + 0x390f0)
-    #13 0x00007f08df0f7775 _int_malloc (libc.so.6 + 0x98775)
-    #14 0x00007f08df0f80d2 __libc_malloc (libc.so.6 + 0x990d2)
-    #15 0x00007f08df0d2b44 _IO_file_doallocate (libc.so.6 + 0x73b44)
-    #16 0x00007f08df0e1d20 _IO_doallocbuf (libc.so.6 + 0x82d20)
-    #17 0x00007f08df0e0a8c _IO_file_underflow@@GLIBC_2.2.5 (libc.so.6 + 0x8=
-1a8c)
-    #18 0x00007f08df0d4598 __getdelim (libc.so.6 + 0x75598)
-    #19 0x00005632ea29f372 strbuf_getwholeline (git + 0x26f372)
-    #20 0x00005632ea117915 cmd_repack (git + 0xe7915)
-    #21 0x00005632ea0556fa handle_builtin.lto_priv.0 (git + 0x256fa)
-    #22 0x00005632ea050551 main (git + 0x20551)
-    #23 0x00007f08df082a50 __libc_start_call_main (libc.so.6 + 0x23a50)
-    #24 0x00007f08df082b09 __libc_start_main@@GLIBC_2.34 (libc.so.6 + 0x23b=
-09)
-    #25 0x00005632ea051555 _start (git + 0x21555)
+SGkhDQoNCkkgYWRkZWQgdGhlIGZvbGxvd2luZyB0byBteSBnaXRjb25maWcgYW5kIGF0dHJp
+YnV0ZXMgZmlsZXMgdG8gaW1wcm92ZSANCmRpZmZzIGluIG1hbnVhbCBwYWdlcy4gIFdvdWxk
+IHlvdSBtaW5kIGFkZGluZyBzdXBwb3J0IGZvciB0aGVtIGluIGdpdCgxKT8NCg0KVGhhbmtz
+LA0KDQpBbGV4DQoNClAuUy46IFRoZSBleHRlbnNpb24gSSB1c2VkIGluIHRoZSBhdHRyaWJ1
+dGVzIGZpbGUgaXMgaW1wZXJmZWN0LCBzaW5jZSBhIA0KZ2xvYiB3b3VsZG4ndCBhbGxvdyBt
+ZSBhcyBtdWNoIHByZWNpc3Npb24gYXMgYSByZWdleC4gIFdpdGggYSByZWdleCwgaXQgDQp3
+b3VsZCBiZSB3cml0dGVuIGFzICdcLlsxLTldW1s6bG93ZXI6XV0qJCcuDQoNCg0KLS0tDQoN
+CiAgICAgZ2l0OiBkaWZmICJtYW4iOiBDb3JyZWN0bHkgaW50ZXJwcmV0IG1hbig3KSBwYWdl
+cy4NCg0KICAgICBTaWduZWQtb2ZmLWJ5OiBBbGVqYW5kcm8gQ29sb21hciA8YWx4QGtlcm5l
+bC5vcmc+DQoNCmRpZmYgLS1naXQgYS9ob21lL3VzZXIvLmNvbmZpZy9naXQvYXR0cmlidXRl
+cyANCmIvaG9tZS91c2VyLy5jb25maWcvZ2l0L2F0dHJpYnV0ZXMNCm5ldyBmaWxlIG1vZGUg
+MTAwNjQ0DQppbmRleCAwMDAwMDAwLi42NTI1NThmDQotLS0gL2Rldi9udWxsDQorKysgYi9o
+b21lL3VzZXIvLmNvbmZpZy9naXQvYXR0cmlidXRlcw0KQEAgLTAsMCArMSBAQA0KKyouWzEt
+OV0qIGRpZmY9bWFuDQpkaWZmIC0tZ2l0IGEvaG9tZS91c2VyLy5naXRjb25maWcgYi9ob21l
+L3VzZXIvLmdpdGNvbmZpZw0KaW5kZXggNzJkZGM1MC4uYWRiNmNiYiAxMDA2NDQNCi0tLSBh
+L2hvbWUvdXNlci8uZ2l0Y29uZmlnDQorKysgYi9ob21lL3VzZXIvLmdpdGNvbmZpZw0KQEAg
+LTI3LDMgKzI3LDUgQEANCiAgICAgICAgIHNpZ25pbmdLZXkgPSBBOTM0ODU5NENFMzEyODNB
+ODI2RkJERDhENTc2MzNENDQxRTI1QkI1DQogIFtkaWZmXQ0KICAgICAgICAgYWxnb3JpdGht
+ID0gaGlzdG9ncmFtDQorW2RpZmYgIm1hbiJdDQorICAgICAgIHhmdW5jbmFtZSA9ICJeXFwu
+U1tTSF0gLiokIg0KDQoNCg0KLS0gDQo8aHR0cDovL3d3dy5hbGVqYW5kcm8tY29sb21hci5l
+cy8+DQo=
 
-As per the captured info, following Fedora x86_64 packages were involved:
+--------------oa9wkd6DkdRWPdk2HGEi0zeB--
 
-  git-2.37.3-1.fc38
-  zlib-1.2.12-5.fc38
-  pcre2-10.40-1.fc37.1
+--------------IO0pmnxZ9BtvKSaqPoFUgFSD
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-Full command at hand:
+-----BEGIN PGP SIGNATURE-----
 
-  /usr/libexec/git-core/git repack -d -l --no-write-bitmap-index
+iQIzBAEBCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmNRPLsACgkQnowa+77/
+2zLvFA/+NCKapAhl7fQ1QXFYdJOUR/deZPmUCYmQvFs+H675ugYGcnKNdXbuUFSP
+Or020iUNZ74TGzcJmjnJVpePf2CJ8DHMuvzXyXewF4O+Nztu3l0QwT3dlZsoS/Yh
+SWNnZTccFqSVh1eLhBzRn9t9Ibq6xohWqZ+40jj9JL6ajIoib/iP6pGu/0sDdIxh
+/ihmZrWYhh0l75Ofa1WvH+gdpKEZ4bpcNz7PHyNM8dZHQfZ2dBcYB3d/uihhgYR/
+hNY3R6o3DqMwcUlFVAZt5fsUIlsbEDWJNzlylA7nFZ+1hYZOxFrRIUxF5Lqe3Cay
+UXlNFw+b628Y5lS5vCzG3ZA7uIPknA6tKt5+ifoy4/OhTf5D7XBCOeMlg1OKkCM6
+1P3Y0JNaUEcA5QLpSdDqwB4M+yRjLCsStNi9Y4G77nMG4FOXyIA5W02f1dFzCZkb
+jRa3SGj2Oar5YhP9cwUCiU4r+xNQxLcE5PXw9r7vXT10h0jsNaqyLuEud2yHaDeU
+MZgwjULL1mwCbLeUnTPRAftQG59onVSoKM8rcL+XbPE/eAa02HkNsLhVY9PKqvUc
+TILb5jkW6UCUZ1jQJ/pWOdSYTMFpV9695oPLwZ/QnKtIQvWkaMeMAwIVSoHvwOQ+
+1Yb2nOiRjxYtyRXXvJ8xmHQF7fnzEIhuiwJrTGHj0v6eSywKNN4=
+=Xt0L
+-----END PGP SIGNATURE-----
 
-It happened twice, actually, about a week's time apart, but that was
-a month ago while this unattended task runs hourly till today and
-git hasn't been updated since.
-
-Not subscribed to the list and I don't think I can provide more info
-on this, but feel free to contact me directly.
-
--- poki
+--------------IO0pmnxZ9BtvKSaqPoFUgFSD--
