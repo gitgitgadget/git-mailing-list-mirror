@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7A63C4332F
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 18:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1FCFC433FE
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 18:28:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230166AbiJTS2W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 14:28:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53368 "EHLO
+        id S230178AbiJTS2X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 14:28:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229738AbiJTS2Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 14:28:16 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D8921F525C
+        with ESMTP id S229976AbiJTS2R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 14:28:17 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC9861F524D
         for <git@vger.kernel.org>; Thu, 20 Oct 2022 11:28:15 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id v1so387830wrt.11
+Received: by mail-wm1-x32b.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso3139015wma.1
         for <git@vger.kernel.org>; Thu, 20 Oct 2022 11:28:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fAlOJTg6iT9VRZtrwsV4BCzjxR+22dkEdOuKsnNwhMw=;
-        b=pRwmkPqo9ULtGpbEeAegCys3OOmCjaDZJyADH2KQUSWWmyQ8G3ft6G0vFuyNHhJyhm
-         PGlAtFlefWu838cA8RR2tmbq/tERHFRmpgxGbfIvr47DzMaEzJ6vnbNoiN7jdXEgnx2C
-         FBXBUyWmDzvzUF2UFsa78wtqC+V/CJXbb7lKQmKUKzXj/j4XMzY7YlH5OiGrKoIuJKIm
-         x+cKuE9HmEQlRmEnJrk1OMpYQsq7IDqnk9NaC1cA4Bl82WFHRv4sd931rgN79ERtzbZZ
-         mK77IPYLtBKuBk20fwRogrYSGyj41A2k65rnItTBY8tCsoMVk3W0by2ac6/a3cmC82vR
-         IybA==
+        bh=bkJEMJFGS4hSCnUT3RbeMHEA6CGfHK7Uqd4sKFLXPuo=;
+        b=R88CEdwwl9lu+hMckfG3e9Z8qXt0w1fuG7ekQpqDQRv1vzFOBuXrJuDYXkp/QBkQB1
+         UWjaIG+dsRP3tX00pDCfvFkE/1UtdVbL0VUVdzPd8yvVykvLdmbsInQ04IfDt6PJ+eg/
+         ZbWUNWa290lL+Jt2HUwmCd+bRZQTWyTwIBoQBw8X98r7RoXNVb3UUvYp94ErpQMb8v7V
+         7xGSHihkwD78X3+XZ1k3wS/6uUcSE4jhTl2Fr4tEbitxH4Y80jN0vSLhcQIlqtUJm1GW
+         n1JYbtV+REYwMeDCHwMVgUot97L2I0zZzJQGZ3rL28HflEu1qf9eYvOZ2OI58+31Ng1d
+         Ma6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fAlOJTg6iT9VRZtrwsV4BCzjxR+22dkEdOuKsnNwhMw=;
-        b=d2p7aGe0rXIP0vByzrc2sJnIy8yVUW6F1nNbXulpZtBKbnMhGaSlFRoQHwA2HeS7bc
-         uJ5+vyEcVPg1cAeSIKvwfQttRzz8FogXnpD/qGmjKhvloR4IH3kAVFbt6VO7tEj+rVRN
-         uAQjyXjvZUPVWKr5Pk1eohKG5BMN+ZoBVYYj98L2VTJi4TzueJhDAAc2wK36XRU89R47
-         vtWaMZoQK+g12yXPrh0kjjJPilX28my9yl2u4CbkyE5GvXtIVmeRo2QzHBFaVFsfzY+1
-         I1iqHXJqVU8JR6FoAZctOmJnmppHdiONmQkXTFptE9UM7XxS9Y25Ued3v3xLo5QuHWRi
-         RRvw==
-X-Gm-Message-State: ACrzQf1kdXH+B3H1mPDHoBXWNwOJPaTYkNbL5gEz/2T335PXGyBTCrL4
-        EDfnX2zPjO8Ny75a6SLzR9Rl3AgykZ0=
-X-Google-Smtp-Source: AMsMyM49Hgh/hJfU55pi/LgbLJNBymd4cxdOOpuSjh9DCj+SQ/hjzBf7iDIe927OjO3BhdxB4bjOdg==
-X-Received: by 2002:a05:6000:1565:b0:22f:1407:9bfd with SMTP id 5-20020a056000156500b0022f14079bfdmr9517859wrz.620.1666290494879;
-        Thu, 20 Oct 2022 11:28:14 -0700 (PDT)
+        bh=bkJEMJFGS4hSCnUT3RbeMHEA6CGfHK7Uqd4sKFLXPuo=;
+        b=MlRGvhQLDJiTEfNv9GxTsCYpl/gyV0k7IBRMZBSVlEIX/eHu4HTmstshM0kGx5xccd
+         SFhuh7xMwPmsLyyVobabuGMz9mPtnG2O98zLKhSzaaraAP60Kaw36xfGfmUDZfrP2fBa
+         QjXerouyYL1eSo4+oue38IUUIDwzMbbBktl6keLNZSxE9vL2k7CEQFGkeHak1+dkETLG
+         g/7CgNS+s6q9EnXqW5Nx8wBDrFijrUkR6iJu1qKDbvIR6dqDPAR/RFkC6varA9pGF1Az
+         UemwA2woTvXVqzz/nCU1eAsuY1GOK4keLJcOB1V+6pWU35zj8NvG7kbPC/Dt1reKXtIi
+         Ux5g==
+X-Gm-Message-State: ACrzQf0DqQ5o6iDbh46l+uLyyOfFCKxiIc60ZRa2TapyLuXXo9K2PkBB
+        wmslu8mD5dLPcinDx6zk5eUd52RKkCk=
+X-Google-Smtp-Source: AMsMyM5iu8/zD3vS0GP83H3vRikzxtgOLuKs0OaFCkvi/1Ve6sTxdNSRDuuHHhZD5N8OM6Yv3PtZcw==
+X-Received: by 2002:a05:600c:4ec6:b0:3c6:c469:d295 with SMTP id g6-20020a05600c4ec600b003c6c469d295mr31498211wmq.117.1666290493953;
+        Thu, 20 Oct 2022 11:28:13 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s9-20020adfdb09000000b0022cc6b8df5esm3484466wri.7.2022.10.20.11.28.14
+        by smtp.gmail.com with ESMTPSA id z9-20020a5d44c9000000b0022917d58603sm17227473wrr.32.2022.10.20.11.28.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Oct 2022 11:28:14 -0700 (PDT)
-Message-Id: <9adf9cee1a96211cc4c2a305997079c7d6492aea.1666290489.git.gitgitgadget@gmail.com>
+        Thu, 20 Oct 2022 11:28:13 -0700 (PDT)
+Message-Id: <804dab9e1a7fa1cea9355bac92ada16332f1194e.1666290489.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1373.v3.git.1666290489.gitgitgadget@gmail.com>
 References: <pull.1373.v2.git.1665600750.gitgitgadget@gmail.com>
         <pull.1373.v3.git.1666290489.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 Oct 2022 18:28:05 +0000
-Subject: [PATCH v3 4/8] trace2: rename the thread_name argument to
- trace2_thread_start
+Date:   Thu, 20 Oct 2022 18:28:04 +0000
+Subject: [PATCH v3 3/8] api-trace2.txt: elminate section describing the public
+ trace2 API
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,115 +73,109 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Rename the `thread_name` argument in `tr2tls_create_self()` and
-`trace2_thread_start()` to be `thread_base_name` to make it clearer
-that the passed argument is a component used in the construction of
-the actual `struct tr2tls_thread_ctx.thread_name` variable.
+Eliminate the mostly obsolete `Public API` sub-section from the
+`Trace2 API` section in the documentation.  Strengthen the referral
+to `trace2.h`.
 
-The base name will be used along with the thread id to create a
-unique thread name.
+Most of the technical information in this sub-section was moved to
+`trace2.h` in 6c51cb525d (trace2: move doc to trace2.h, 2019-11-17) to
+be adjacent to the function prototypes.  The remaining text wasn't
+that useful by itself.
 
-This commit does not change how the `thread_name` field is
-allocated or stored within the `tr2tls_thread_ctx` structure.
+Furthermore, the text would need a bit of overhaul to add routines
+that do not immediately generate a message, such as stopwatch timers.
+So it seemed simpler to just get rid of it.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- trace2.c         |  6 +++---
- trace2.h         | 11 ++++++-----
- trace2/tr2_tls.c |  4 ++--
- trace2/tr2_tls.h |  2 +-
- 4 files changed, 12 insertions(+), 11 deletions(-)
+ Documentation/technical/api-trace2.txt | 61 +++-----------------------
+ 1 file changed, 7 insertions(+), 54 deletions(-)
 
-diff --git a/trace2.c b/trace2.c
-index c1244e45ace..165264dc79a 100644
---- a/trace2.c
-+++ b/trace2.c
-@@ -466,7 +466,7 @@ void trace2_exec_result_fl(const char *file, int line, int exec_id, int code)
- 				file, line, us_elapsed_absolute, exec_id, code);
- }
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index 431d424f9d5..9d43909d068 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -148,20 +148,18 @@ filename collisions).
  
--void trace2_thread_start_fl(const char *file, int line, const char *thread_name)
-+void trace2_thread_start_fl(const char *file, int line, const char *thread_base_name)
- {
- 	struct tr2_tgt *tgt_j;
- 	int j;
-@@ -488,14 +488,14 @@ void trace2_thread_start_fl(const char *file, int line, const char *thread_name)
- 		 */
- 		trace2_region_enter_printf_fl(file, line, NULL, NULL, NULL,
- 					      "thread-proc on main: %s",
--					      thread_name);
-+					      thread_base_name);
- 		return;
- 	}
+ == Trace2 API
  
- 	us_now = getnanotime() / 1000;
- 	us_elapsed_absolute = tr2tls_absolute_elapsed(us_now);
+-All public Trace2 functions and macros are defined in `trace2.h` and
+-`trace2.c`.  All public symbols are prefixed with `trace2_`.
++The Trace2 public API is defined and documented in `trace2.h`; refer to it for
++more information.  All public functions and macros are prefixed
++with `trace2_` and are implemented in `trace2.c`.
  
--	tr2tls_create_self(thread_name, us_now);
-+	tr2tls_create_self(thread_base_name, us_now);
+ There are no public Trace2 data structures.
  
- 	for_each_wanted_builtin (j, tgt_j)
- 		if (tgt_j->pfn_thread_start_fl)
-diff --git a/trace2.h b/trace2.h
-index af3c11694cc..74cdb1354f7 100644
---- a/trace2.h
-+++ b/trace2.h
-@@ -304,14 +304,15 @@ void trace2_exec_result_fl(const char *file, int line, int exec_id, int code);
-  * thread-proc to allow the thread to create its own thread-local
-  * storage.
-  *
-- * Thread names should be descriptive, like "preload_index".
-- * Thread names will be decorated with an instance number automatically.
-+ * The thread base name should be descriptive, like "preload_index" or
-+ * taken from the thread-proc function.  A unique thread name will be
-+ * created from the given base name and the thread id automatically.
-  */
- void trace2_thread_start_fl(const char *file, int line,
--			    const char *thread_name);
-+			    const char *thread_base_name);
+ The Trace2 code also defines a set of private functions and data types
+ in the `trace2/` directory.  These symbols are prefixed with `tr2_`
+-and should only be used by functions in `trace2.c`.
++and should only be used by functions in `trace2.c` (or other private
++source files in `trace2/`).
  
--#define trace2_thread_start(thread_name) \
--	trace2_thread_start_fl(__FILE__, __LINE__, (thread_name))
-+#define trace2_thread_start(thread_base_name) \
-+	trace2_thread_start_fl(__FILE__, __LINE__, (thread_base_name))
+-== Conventions for Public Functions and Macros
+-
+-The functions defined by the Trace2 API are declared and documented
+-in `trace2.h`.  It defines the API functions and wrapper macros for
+-Trace2.
++=== Conventions for Public Functions and Macros
  
- /*
-  * Emit a 'thread_exit' event.  This must be called from inside the
-diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
-index 8d2182fbdbb..4f7c516ecb6 100644
---- a/trace2/tr2_tls.c
-+++ b/trace2/tr2_tls.c
-@@ -31,7 +31,7 @@ void tr2tls_start_process_clock(void)
- 	tr2tls_us_start_process = getnanotime() / 1000;
- }
+ Some functions have a `_fl()` suffix to indicate that they take `file`
+ and `line-number` arguments.
+@@ -172,52 +170,7 @@ take a `va_list` argument.
+ Some functions have a `_printf_fl()` suffix to indicate that they also
+ take a `printf()` style format with a variable number of arguments.
  
--struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
-+struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_base_name,
- 					     uint64_t us_thread_start)
- {
- 	struct tr2tls_thread_ctx *ctx = xcalloc(1, sizeof(*ctx));
-@@ -50,7 +50,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
- 	strbuf_init(&ctx->thread_name, 0);
- 	if (ctx->thread_id)
- 		strbuf_addf(&ctx->thread_name, "th%02d:", ctx->thread_id);
--	strbuf_addstr(&ctx->thread_name, thread_name);
-+	strbuf_addstr(&ctx->thread_name, thread_base_name);
- 	if (ctx->thread_name.len > TR2_MAX_THREAD_NAME)
- 		strbuf_setlen(&ctx->thread_name, TR2_MAX_THREAD_NAME);
+-There are CPP wrapper macros and `#ifdef`s to hide most of these details.
+-See `trace2.h` for more details.  The following discussion will only
+-describe the simplified forms.
+-
+-== Public API
+-
+-All Trace2 API functions send a message to all of the active
+-Trace2 Targets.  This section describes the set of available
+-messages.
+-
+-It helps to divide these functions into groups for discussion
+-purposes.
+-
+-=== Basic Command Messages
+-
+-These are concerned with the lifetime of the overall git process.
+-e.g: `void trace2_initialize_clock()`, `void trace2_initialize()`,
+-`int trace2_is_enabled()`, `void trace2_cmd_start(int argc, const char **argv)`.
+-
+-=== Command Detail Messages
+-
+-These are concerned with describing the specific Git command
+-after the command line, config, and environment are inspected.
+-e.g: `void trace2_cmd_name(const char *name)`,
+-`void trace2_cmd_mode(const char *mode)`.
+-
+-=== Child Process Messages
+-
+-These are concerned with the various spawned child processes,
+-including shell scripts, git commands, editors, pagers, and hooks.
+-
+-e.g: `void trace2_child_start(struct child_process *cmd)`.
+-
+-=== Git Thread Messages
+-
+-These messages are concerned with Git thread usage.
+-
+-e.g: `void trace2_thread_start(const char *thread_name)`.
+-
+-=== Region and Data Messages
+-
+-These are concerned with recording performance data
+-over regions or spans of code. e.g:
+-`void trace2_region_enter(const char *category, const char *label, const struct repository *repo)`.
+-
+-Refer to trace2.h for details about all trace2 functions.
++CPP wrapper macros are defined to hide most of these details.
  
-diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
-index 1297509fd23..d4e725f430b 100644
---- a/trace2/tr2_tls.h
-+++ b/trace2/tr2_tls.h
-@@ -35,7 +35,7 @@ struct tr2tls_thread_ctx {
-  * In this and all following functions the term "self" refers to the
-  * current thread.
-  */
--struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_name,
-+struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_base_name,
- 					     uint64_t us_thread_start);
+ == Trace2 Target Formats
  
- /*
 -- 
 gitgitgadget
 
