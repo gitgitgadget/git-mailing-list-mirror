@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 262E8C433FE
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 18:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB61DC4332F
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 18:28:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230286AbiJTS2g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 14:28:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53458 "EHLO
+        id S230126AbiJTS2h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 14:28:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230126AbiJTS2U (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 14:28:20 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 784351F5263
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 11:28:18 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id j7so478987wrr.3
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 11:28:18 -0700 (PDT)
+        with ESMTP id S230124AbiJTS2d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 14:28:33 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6902C1F5276
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 11:28:20 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id bu30so420178wrb.8
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 11:28:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=49A0L1wMbmU0RvsqsmDPtIsptTiM40AWpEgBd9ZjT4Y=;
-        b=lI5jqdCSD0SZ0skzA3+nC/K9c1iq49so+jfUKK//ECEjne4+Yc2xrxZp27hZVjDiET
-         a8eKpgAwUkL1dsTTRtUFWHxdqIfsNMXFW9ReSKJwoNVh8OFBuX2E1Eo8Sm9revjJB4ml
-         T+ludZqp5uk1Ybvplm3Zo6beaCFpDD6Cd3JZ/IBIreB9ASRMCCWJv/6QlVFz+8MgLnZV
-         uDXBAAfN/hzamM+Ts1trVYYPHQCw1dwIEqRAk8tv68wcFrVrQe7e5G51en/HTEJv8eC6
-         bz/HUgokF+rvfupgPQP0Brz09FGgBsgN7Rnd1OBBuNAlNcGjlaXbLhvXFi0S17RQsrzo
-         YUEA==
+        bh=ZUvKNA8Axjcl+iHqJe5w3HVRPJMjEWgNyUUZOO8Nhyc=;
+        b=e3naQOOsfqlTrCWVoqgAcLCrpjsGWPg0UBSVPhIFqxcyMyZLycEcjxgHXTzMiYstyU
+         CdWZ2+ZBbHLfkGZdxHV2iv7Yr6DqNBBHzef2dOO6KQ/rWkpT+lsJnm/OIx7MtAS32p/3
+         gxBYUG3JcUHFlrzflfeLqutHx4pCs+hog4ZnB3uoB20M2OXoXxr+fy0d04v832Pz5zex
+         wosQqCp1HPwVZ8AkJazxGR/VgKQE34aVJTKVym70Dv2S8CbFEHWdi2HnyTlwca+TxiOM
+         Lcyr9ox6URlE9BcLvZzqO/m9EDtq88ybZ3fe3iP3iTKrd94TaeyGn1I0llJXOZy6Ts5i
+         0sTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=49A0L1wMbmU0RvsqsmDPtIsptTiM40AWpEgBd9ZjT4Y=;
-        b=t1ICD02ZCjrIJNOMfcqC52HayB4brdePUTEENZTqf0K2BR2dEvTh3uNdlE4wT8BW0i
-         TPQRG47tVg332/RVpFYf9gSItalAiXng3cLDG1z3RmPR6Tr7Kq3h2hN0F/ud98P5kQgE
-         55xvVwatF4XO4aQnH8bPKcWIcGrAuUPynliS9f7uF3MG3/85ifDQ6kp+2e+IaRP6Mzr3
-         Mi0iaMm8TXIULMUDhd6xWzRERcprvz90oqgF8qO6BHY4Tu5+w/Ny4rBD8h/IGpVEhMwM
-         OGksdGwvkbd4Fy0U9tqpmi/AmcRiBdG2vYm4s0QouzUjaahQ/uLkH3AbClpV3PZLQFuR
-         7Bag==
-X-Gm-Message-State: ACrzQf0oDr90gBBXHEQMp3k/mtIK8UR+8hQUIYVePMxQPF9wlL4zyKKh
-        BcFXSv9KPpsn6yx8SOyIfl7E0UWN4k4=
-X-Google-Smtp-Source: AMsMyM5oMDLEiqWshullOADthCszy4CUufJA3AxAyIwJSiZVir/ywMWggNOu3BPtdc2vJJY/rlDiBA==
-X-Received: by 2002:adf:d228:0:b0:22e:488d:758f with SMTP id k8-20020adfd228000000b0022e488d758fmr9236394wrh.445.1666290496592;
-        Thu, 20 Oct 2022 11:28:16 -0700 (PDT)
+        bh=ZUvKNA8Axjcl+iHqJe5w3HVRPJMjEWgNyUUZOO8Nhyc=;
+        b=UbF9Z2wYPt7/vlmgqOAeN1MRiUATLN1f6j0uG9pa7QgJfeEUBuf01lKPWsFLHt7Rrg
+         gEIaoiK48/tPVS+pUFtlAp3gdcMTtjMNQ7FHGumeRrU7uvle6eUC+F1UwWPo6CC02JU3
+         +8r8XhEhPNquFMU5F24na46YfTbfqtaR+RrkWjKsSRq8t1zbbxA/PDMDJUAc9UDELt/m
+         1KpVz4F531EbY3ob3nJDcctfPX9vufG9NGITS0o6sqm63B1JxUpwx56lpBKFU2qkvalk
+         uaPYCnr+Wy/y1i9VkZ9gXeEluzd0NpV76+CJ1JrLS5BQhX9TKyS/1EjeKErcmSCFcaE7
+         u4xQ==
+X-Gm-Message-State: ACrzQf1jy+k/lMo0szsVpl2SB2jo1DL1mShnAKOQ2NI5c1QtuPoYTP06
+        z2oKOMywVbsDjMn0a9h7fVhWtpFLuf8=
+X-Google-Smtp-Source: AMsMyM5nhvXM2qCLyBekLGhAsZSk0SQW1i521BNQ/5Ag9fl9ZoENV1xa3YCLQMPM5m8A+cfcqh9UNg==
+X-Received: by 2002:a05:6000:1888:b0:22f:a5af:c9c5 with SMTP id a8-20020a056000188800b0022fa5afc9c5mr9295213wri.631.1666290497558;
+        Thu, 20 Oct 2022 11:28:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v1-20020adfedc1000000b00228daaa84aesm17220295wro.25.2022.10.20.11.28.16
+        by smtp.gmail.com with ESMTPSA id r12-20020adff10c000000b00225239d9265sm17250371wro.74.2022.10.20.11.28.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Oct 2022 11:28:16 -0700 (PDT)
-Message-Id: <8a89e1aa238bff874f3fa9a414781e4abc03c526.1666290489.git.gitgitgadget@gmail.com>
+        Thu, 20 Oct 2022 11:28:17 -0700 (PDT)
+Message-Id: <8e701109976777ad8fae1e0cd3908bb11a1fcf93.1666290489.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1373.v3.git.1666290489.gitgitgadget@gmail.com>
 References: <pull.1373.v2.git.1665600750.gitgitgadget@gmail.com>
         <pull.1373.v3.git.1666290489.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 Oct 2022 18:28:07 +0000
-Subject: [PATCH v3 6/8] trace2: convert ctx.thread_name from strbuf to pointer
+Date:   Thu, 20 Oct 2022 18:28:08 +0000
+Subject: [PATCH v3 7/8] trace2: add stopwatch timers
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,111 +72,1091 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Convert the `tr2tls_thread_ctx.thread_name` field from a `strbuf`
-to a "const char*" pointer.
+Add stopwatch timer mechanism to Trace2.
 
-The `thread_name` field is a constant string that is constructed when
-the context is created.  Using a (non-const) `strbuf` structure for it
-caused some confusion in the past because it implied that someone
-could rename a thread after it was created.  That usage was not
-intended.  Change it to a const pointer to make the intent more clear.
+Timers are an alternative to Trace2 Regions.  Regions are useful for
+measuring the time spent in various computation phases, such as the
+time to read the index, time to scan for unstaged files, time to scan
+for untracked files, and etc.
+
+However, regions are not appropriate in all places.  For example,
+during a checkout, it would be very inefficient to use regions to
+measure the total time spent inflating objects from the ODB from
+across the entire lifetime of the process; a per-unzip() region would
+flood the output and significantly slow the command; and some form of
+post-processing would be requried to compute the time spent in unzip().
+
+Timers can be used to measure a series of timer intervals and emit
+a single summary event (at thread and/or process exit).
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- trace2/tr2_tgt_event.c |  2 +-
- trace2/tr2_tgt_perf.c  |  2 +-
- trace2/tr2_tls.c       | 16 +++++++++-------
- trace2/tr2_tls.h       |  2 +-
- 4 files changed, 12 insertions(+), 10 deletions(-)
+ Documentation/technical/api-trace2.txt |  90 ++++++++++++
+ Makefile                               |   1 +
+ t/helper/test-trace2.c                 |  98 +++++++++++++
+ t/t0211-trace2-perf.sh                 |  49 +++++++
+ t/t0211/scrub_perf.perl                |   6 +
+ trace2.c                               |  75 ++++++++++
+ trace2.h                               |  43 ++++++
+ trace2/tr2_tgt.h                       |   9 ++
+ trace2/tr2_tgt_event.c                 |  26 ++++
+ trace2/tr2_tgt_normal.c                |  23 ++++
+ trace2/tr2_tgt_perf.c                  |  24 ++++
+ trace2/tr2_tls.c                       |  10 ++
+ trace2/tr2_tls.h                       |  10 ++
+ trace2/tr2_tmr.c                       | 182 +++++++++++++++++++++++++
+ trace2/tr2_tmr.h                       | 140 +++++++++++++++++++
+ 15 files changed, 786 insertions(+)
+ create mode 100644 trace2/tr2_tmr.c
+ create mode 100644 trace2/tr2_tmr.h
 
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index 9d43909d068..75ce6f45603 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -769,6 +769,42 @@ The "value" field may be an integer or a string.
+ }
+ ------------
+ 
++`"th_timer"`::
++	This event logs the amount of time that a stopwatch timer was
++	running in the thread.  This event is generated when a thread
++	exits for timers that requested per-thread events.
+++
++------------
++{
++	"event":"th_timer",
++	...
++	"category":"my_category",
++	"name":"my_timer",
++	"intervals":5,         # number of time it was started/stopped
++	"t_total":0.052741,    # total time in seconds it was running
++	"t_min":0.010061,      # shortest interval
++	"t_max":0.011648       # longest interval
++}
++------------
++
++`"timer"`::
++	This event logs the amount of time that a stopwatch timer was
++	running aggregated across all threads.  This event is generated
++	when the process exits.
+++
++------------
++{
++	"event":"timer",
++	...
++	"category":"my_category",
++	"name":"my_timer",
++	"intervals":5,         # number of time it was started/stopped
++	"t_total":0.052741,    # total time in seconds it was running
++	"t_min":0.010061,      # shortest interval
++	"t_max":0.011648       # longest interval
++}
++------------
++
+ == Example Trace2 API Usage
+ 
+ Here is a hypothetical usage of the Trace2 API showing the intended
+@@ -1200,6 +1236,60 @@ d0 | main                     | data         | r0  |  0.002126 |  0.002126 | fsy
+ d0 | main                     | exit         |     |  0.000470 |           |              | code:0
+ d0 | main                     | atexit       |     |  0.000477 |           |              | code:0
+ ----------------
++
++Stopwatch Timer Events::
++
++	Measure the time spent in a function call or span of code
++	that might be called from many places within the code
++	throughout the life of the process.
+++
++----------------
++static void expensive_function(void)
++{
++	trace2_timer_start(TRACE2_TIMER_ID_TEST1);
++	...
++	sleep_millisec(1000); // Do something expensive
++	...
++	trace2_timer_stop(TRACE2_TIMER_ID_TEST1);
++}
++
++static int ut_100timer(int argc, const char **argv)
++{
++	...
++
++	expensive_function();
++
++	// Do something else 1...
++
++	expensive_function();
++
++	// Do something else 2...
++
++	expensive_function();
++
++	return 0;
++}
++----------------
+++
++In this example, we measure the total time spent in
++`expensive_function()` regardless of when it is called
++in the overall flow of the program.
+++
++----------------
++$ export GIT_TRACE2_PERF_BRIEF=1
++$ export GIT_TRACE2_PERF=~/log.perf
++$ t/helper/test-tool trace2 100timer 3 1000
++...
++$ cat ~/log.perf
++d0 | main                     | version      |     |           |           |              | ...
++d0 | main                     | start        |     |  0.001453 |           |              | t/helper/test-tool trace2 100timer 3 1000
++d0 | main                     | cmd_name     |     |           |           |              | trace2 (trace2)
++d0 | main                     | exit         |     |  3.003667 |           |              | code:0
++d0 | main                     | timer        |     |           |           | test         | name:test1 intervals:3 total:3.001686 min:1.000254 max:1.000929
++d0 | main                     | atexit       |     |  3.003796 |           |              | code:0
++----------------
++
++
+ == Future Work
+ 
+ === Relationship to the Existing Trace Api (api-trace.txt)
+diff --git a/Makefile b/Makefile
+index cac3452edb9..820649bf62a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1102,6 +1102,7 @@ LIB_OBJS += trace2/tr2_tgt_event.o
+ LIB_OBJS += trace2/tr2_tgt_normal.o
+ LIB_OBJS += trace2/tr2_tgt_perf.o
+ LIB_OBJS += trace2/tr2_tls.o
++LIB_OBJS += trace2/tr2_tmr.o
+ LIB_OBJS += trailer.o
+ LIB_OBJS += transport-helper.o
+ LIB_OBJS += transport.o
+diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
+index a714130ece7..f951b9e97d7 100644
+--- a/t/helper/test-trace2.c
++++ b/t/helper/test-trace2.c
+@@ -228,6 +228,101 @@ static int ut_010bug_BUG(int argc, const char **argv)
+ 	BUG("a %s message", "BUG");
+ }
+ 
++/*
++ * Single-threaded timer test.  Create several intervals using the
++ * TEST1 timer.  The test script can verify that an aggregate Trace2
++ * "timer" event is emitted indicating that we started+stopped the
++ * timer the requested number of times.
++ */
++static int ut_100timer(int argc, const char **argv)
++{
++	const char *usage_error =
++		"expect <count> <ms_delay>";
++
++	int count = 0;
++	int delay = 0;
++	int k;
++
++	if (argc != 2)
++		die("%s", usage_error);
++	if (get_i(&count, argv[0]))
++		die("%s", usage_error);
++	if (get_i(&delay, argv[1]))
++		die("%s", usage_error);
++
++	for (k = 0; k < count; k++) {
++		trace2_timer_start(TRACE2_TIMER_ID_TEST1);
++		sleep_millisec(delay);
++		trace2_timer_stop(TRACE2_TIMER_ID_TEST1);
++	}
++
++	return 0;
++}
++
++struct ut_101_data {
++	int count;
++	int delay;
++};
++
++static void *ut_101timer_thread_proc(void *_ut_101_data)
++{
++	struct ut_101_data *data = _ut_101_data;
++	int k;
++
++	trace2_thread_start("ut_101");
++
++	for (k = 0; k < data->count; k++) {
++		trace2_timer_start(TRACE2_TIMER_ID_TEST2);
++		sleep_millisec(data->delay);
++		trace2_timer_stop(TRACE2_TIMER_ID_TEST2);
++	}
++
++	trace2_thread_exit();
++	return NULL;
++}
++
++/*
++ * Multi-threaded timer test.  Create several threads that each create
++ * several intervals using the TEST2 timer.  The test script can verify
++ * that an individual Trace2 "th_timer" events for each thread and an
++ * aggregate "timer" event are generated.
++ */
++static int ut_101timer(int argc, const char **argv)
++{
++	const char *usage_error =
++		"expect <count> <ms_delay> <threads>";
++
++	struct ut_101_data data = { 0, 0 };
++	int nr_threads = 0;
++	int k;
++	pthread_t *pids = NULL;
++
++	if (argc != 3)
++		die("%s", usage_error);
++	if (get_i(&data.count, argv[0]))
++		die("%s", usage_error);
++	if (get_i(&data.delay, argv[1]))
++		die("%s", usage_error);
++	if (get_i(&nr_threads, argv[2]))
++		die("%s", usage_error);
++
++	CALLOC_ARRAY(pids, nr_threads);
++
++	for (k = 0; k < nr_threads; k++) {
++		if (pthread_create(&pids[k], NULL, ut_101timer_thread_proc, &data))
++			die("failed to create thread[%d]", k);
++	}
++
++	for (k = 0; k < nr_threads; k++) {
++		if (pthread_join(pids[k], NULL))
++			die("failed to join thread[%d]", k);
++	}
++
++	free(pids);
++
++	return 0;
++}
++
+ /*
+  * Usage:
+  *     test-tool trace2 <ut_name_1> <ut_usage_1>
+@@ -248,6 +343,9 @@ static struct unit_test ut_table[] = {
+ 	{ ut_008bug,      "008bug",    "" },
+ 	{ ut_009bug_BUG,  "009bug_BUG","" },
+ 	{ ut_010bug_BUG,  "010bug_BUG","" },
++
++	{ ut_100timer,    "100timer",  "<count> <ms_delay>" },
++	{ ut_101timer,    "101timer",  "<count> <ms_delay> <threads>" },
+ };
+ /* clang-format on */
+ 
+diff --git a/t/t0211-trace2-perf.sh b/t/t0211-trace2-perf.sh
+index 22d0845544e..5c28424e657 100755
+--- a/t/t0211-trace2-perf.sh
++++ b/t/t0211-trace2-perf.sh
+@@ -173,4 +173,53 @@ test_expect_success 'using global config, perf stream, return code 0' '
+ 	test_cmp expect actual
+ '
+ 
++# Exercise the stopwatch timers in a loop and confirm that we have
++# as many start/stop intervals as expected.  We cannot really test the
++# actual (total, min, max) timer values, so we have to assume that they
++# are good, but we can verify the interval count.
++#
++# The timer "test/test1" should only emit a global summary "timer" event.
++# The timer "test/test2" should emit per-thread "th_timer" events and a
++# global summary "timer" event.
++
++have_timer_event () {
++	thread=$1 event=$2 category=$3 name=$4 intervals=$5 file=$6 &&
++
++	pattern="d0|${thread}|${event}||||${category}|name:${name} intervals:${intervals}" &&
++
++	grep "${pattern}" ${file}
++}
++
++test_expect_success 'stopwatch timer test/test1' '
++	test_when_finished "rm trace.perf actual" &&
++	test_config_global trace2.perfBrief 1 &&
++	test_config_global trace2.perfTarget "$(pwd)/trace.perf" &&
++
++	# Use the timer "test1" 5 times from "main".
++	test-tool trace2 100timer 5 10 &&
++
++	perl "$TEST_DIRECTORY/t0211/scrub_perf.perl" <trace.perf >actual &&
++
++	have_timer_event "main" "timer" "test" "test1" 5 actual
++'
++
++test_expect_success 'stopwatch timer test/test2' '
++	test_when_finished "rm trace.perf actual" &&
++	test_config_global trace2.perfBrief 1 &&
++	test_config_global trace2.perfTarget "$(pwd)/trace.perf" &&
++
++	# Use the timer "test2" 5 times each in 3 threads.
++	test-tool trace2 101timer 5 10 3 &&
++
++	perl "$TEST_DIRECTORY/t0211/scrub_perf.perl" <trace.perf >actual &&
++
++	# So we should have 3 per-thread events of 5 each.
++	have_timer_event "th01:ut_101" "th_timer" "test" "test2" 5 actual &&
++	have_timer_event "th02:ut_101" "th_timer" "test" "test2" 5 actual &&
++	have_timer_event "th03:ut_101" "th_timer" "test" "test2" 5 actual &&
++
++	# And we should have 15 total uses.
++	have_timer_event "main" "timer" "test" "test2" 15 actual
++'
++
+ test_done
+diff --git a/t/t0211/scrub_perf.perl b/t/t0211/scrub_perf.perl
+index 299999f0f89..7a50bae6463 100644
+--- a/t/t0211/scrub_perf.perl
++++ b/t/t0211/scrub_perf.perl
+@@ -64,6 +64,12 @@ while (<>) {
+ 	    goto SKIP_LINE;
+ 	}
+     }
++    elsif ($tokens[$col_event] =~ m/timer/) {
++	# This also captures "th_timer" events
++	$tokens[$col_rest] =~ s/ total:\d+\.\d*/ total:_T_TOTAL_/;
++	$tokens[$col_rest] =~ s/ min:\d+\.\d*/ min:_T_MIN_/;
++	$tokens[$col_rest] =~ s/ max:\d+\.\d*/ max:_T_MAX_/;
++    }
+ 
+     # t_abs and t_rel are either blank or a float.  Replace the float
+     # with a constant for matching the HEREDOC in the test script.
+diff --git a/trace2.c b/trace2.c
+index 165264dc79a..a93cab7c2b7 100644
+--- a/trace2.c
++++ b/trace2.c
+@@ -13,6 +13,7 @@
+ #include "trace2/tr2_sysenv.h"
+ #include "trace2/tr2_tgt.h"
+ #include "trace2/tr2_tls.h"
++#include "trace2/tr2_tmr.h"
+ 
+ static int trace2_enabled;
+ 
+@@ -83,6 +84,23 @@ static void tr2_tgt_disable_builtins(void)
+ 		tgt_j->pfn_term();
+ }
+ 
++/*
++ * The signature of this function must match the pfn_timer
++ * method in the targets.  (Think of this is an apply operation
++ * across the set of active targets.)
++ */
++static void tr2_tgt_emit_a_timer(const struct tr2_timer_metadata *meta,
++				 const struct tr2_timer *timer,
++				 int is_final_data)
++{
++	struct tr2_tgt *tgt_j;
++	int j;
++
++	for_each_wanted_builtin (j, tgt_j)
++		if (tgt_j->pfn_timer)
++			tgt_j->pfn_timer(meta, timer, is_final_data);
++}
++
+ static int tr2main_exit_code;
+ 
+ /*
+@@ -110,6 +128,26 @@ static void tr2main_atexit_handler(void)
+ 	 */
+ 	tr2tls_pop_unwind_self();
+ 
++	/*
++	 * Some timers want per-thread details.  If the main thread
++	 * used one of those timers, emit the details now (before
++	 * we emit the aggregate timer values).
++	 */
++	tr2_emit_per_thread_timers(tr2_tgt_emit_a_timer);
++
++	/*
++	 * Add stopwatch timer data for the main thread to the final
++	 * totals.  And then emit the final timer values.
++	 *
++	 * Technically, we shouldn't need to hold the lock to update
++	 * and output the final_timer_block (since all other threads
++	 * should be dead by now), but it doesn't hurt anything.
++	 */
++	tr2tls_lock();
++	tr2_update_final_timers();
++	tr2_emit_final_timers(tr2_tgt_emit_a_timer);
++	tr2tls_unlock();
++
+ 	for_each_wanted_builtin (j, tgt_j)
+ 		if (tgt_j->pfn_atexit)
+ 			tgt_j->pfn_atexit(us_elapsed_absolute,
+@@ -541,6 +579,21 @@ void trace2_thread_exit_fl(const char *file, int line)
+ 	tr2tls_pop_unwind_self();
+ 	us_elapsed_thread = tr2tls_region_elasped_self(us_now);
+ 
++	/*
++	 * Some timers want per-thread details.  If this thread used
++	 * one of those timers, emit the details now.
++	 */
++	tr2_emit_per_thread_timers(tr2_tgt_emit_a_timer);
++
++	/*
++	 * Add stopwatch timer data from the current (non-main) thread
++	 * to the final totals.  (We'll accumulate data for the main
++	 * thread later during "atexit".)
++	 */
++	tr2tls_lock();
++	tr2_update_final_timers();
++	tr2tls_unlock();
++
+ 	for_each_wanted_builtin (j, tgt_j)
+ 		if (tgt_j->pfn_thread_exit_fl)
+ 			tgt_j->pfn_thread_exit_fl(file, line,
+@@ -795,6 +848,28 @@ void trace2_printf_fl(const char *file, int line, const char *fmt, ...)
+ 	va_end(ap);
+ }
+ 
++void trace2_timer_start(enum trace2_timer_id tid)
++{
++	if (!trace2_enabled)
++		return;
++
++	if (tid < 0 || tid >= TRACE2_NUMBER_OF_TIMERS)
++		BUG("trace2_timer_start: invalid timer id: %d", tid);
++
++	tr2_start_timer(tid);
++}
++
++void trace2_timer_stop(enum trace2_timer_id tid)
++{
++	if (!trace2_enabled)
++		return;
++
++	if (tid < 0 || tid >= TRACE2_NUMBER_OF_TIMERS)
++		BUG("trace2_timer_stop: invalid timer id: %d", tid);
++
++	tr2_stop_timer(tid);
++}
++
+ const char *trace2_session_id(void)
+ {
+ 	return tr2_sid_get();
+diff --git a/trace2.h b/trace2.h
+index 74cdb1354f7..7a843ac0518 100644
+--- a/trace2.h
++++ b/trace2.h
+@@ -51,6 +51,7 @@ struct json_writer;
+  * [] trace2_region*    -- emit region nesting messages.
+  * [] trace2_data*      -- emit region/thread/repo data messages.
+  * [] trace2_printf*    -- legacy trace[1] messages.
++ * [] trace2_timer*     -- stopwatch timers (messages are deferred).
+  */
+ 
+ /*
+@@ -485,6 +486,48 @@ void trace2_printf_fl(const char *file, int line, const char *fmt, ...);
+ 
+ #define trace2_printf(...) trace2_printf_fl(__FILE__, __LINE__, __VA_ARGS__)
+ 
++/*
++ * Define the set of stopwatch timers.
++ *
++ * We can add more at any time, but they must be defined at compile
++ * time (to avoid the need to dynamically allocate and synchronize
++ * them between different threads).
++ *
++ * These must start at 0 and be contiguous (because we use them
++ * elsewhere as array indexes).
++ *
++ * Any values added to this enum must also be added to the
++ * `tr2_timer_metadata[]` in `trace2/tr2_tmr.c`.
++ */
++enum trace2_timer_id {
++	/*
++	 * Define two timers for testing.  See `t/helper/test-trace2.c`.
++	 * These can be used for ad hoc testing, but should not be used
++	 * for permanent analysis code.
++	 */
++	TRACE2_TIMER_ID_TEST1 = 0, /* emits summary event only */
++	TRACE2_TIMER_ID_TEST2,     /* emits summary and thread events */
++
++	/* Add additional timer definitions before here. */
++	TRACE2_NUMBER_OF_TIMERS
++};
++
++/*
++ * Start/Stop the indicated stopwatch timer in the current thread.
++ *
++ * The time spent by the current thread between the _start and _stop
++ * calls will be added to the thread's partial sum for this timer.
++ *
++ * Timer events are emitted at thread and program exit.
++ *
++ * Note: Since the stopwatch API routines do not generate individual
++ * events, they do not take (file, line) arguments.  Similarly, the
++ * category and timer name values are defined at compile-time in the
++ * timer definitions array, so they are not needed here in the API.
++ */
++void trace2_timer_start(enum trace2_timer_id tid);
++void trace2_timer_stop(enum trace2_timer_id tid);
++
+ /*
+  * Optional platform-specific code to dump information about the
+  * current and any parent process(es).  This is intended to allow
+diff --git a/trace2/tr2_tgt.h b/trace2/tr2_tgt.h
+index 65f94e15748..094036964d8 100644
+--- a/trace2/tr2_tgt.h
++++ b/trace2/tr2_tgt.h
+@@ -4,6 +4,10 @@
+ struct child_process;
+ struct repository;
+ struct json_writer;
++struct tr2_timer_metadata;
++struct tr2_timer;
++
++#define NS_PER_SEC_D ((double)1000*1000*1000)
+ 
+ /*
+  * Function prototypes for a TRACE2 "target" vtable.
+@@ -96,6 +100,10 @@ typedef void(tr2_tgt_evt_printf_va_fl_t)(const char *file, int line,
+ 					 uint64_t us_elapsed_absolute,
+ 					 const char *fmt, va_list ap);
+ 
++typedef void(tr2_tgt_evt_timer_t)(const struct tr2_timer_metadata *meta,
++				  const struct tr2_timer *timer,
++				  int is_final_data);
++
+ /*
+  * "vtable" for a TRACE2 target.  Use NULL if a target does not want
+  * to emit that message.
+@@ -132,6 +140,7 @@ struct tr2_tgt {
+ 	tr2_tgt_evt_data_fl_t                   *pfn_data_fl;
+ 	tr2_tgt_evt_data_json_fl_t              *pfn_data_json_fl;
+ 	tr2_tgt_evt_printf_va_fl_t              *pfn_printf_va_fl;
++	tr2_tgt_evt_timer_t                     *pfn_timer;
+ };
+ /* clang-format on */
+ 
 diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-index 37a3163be12..52f9356c695 100644
+index 52f9356c695..dbf6625e1b1 100644
 --- a/trace2/tr2_tgt_event.c
 +++ b/trace2/tr2_tgt_event.c
-@@ -90,7 +90,7 @@ static void event_fmt_prepare(const char *event_name, const char *file,
+@@ -9,6 +9,7 @@
+ #include "trace2/tr2_sysenv.h"
+ #include "trace2/tr2_tgt.h"
+ #include "trace2/tr2_tls.h"
++#include "trace2/tr2_tmr.h"
  
- 	jw_object_string(jw, "event", event_name);
- 	jw_object_string(jw, "sid", tr2_sid_get());
--	jw_object_string(jw, "thread", ctx->thread_name.buf);
-+	jw_object_string(jw, "thread", ctx->thread_name);
+ static struct tr2_dst tr2dst_event = {
+ 	.sysenv_var = TR2_SYSENV_EVENT,
+@@ -617,6 +618,30 @@ static void fn_data_json_fl(const char *file, int line,
+ 	}
+ }
  
- 	/*
- 	 * In brief mode, only emit <time> on these 2 event types.
++static void fn_timer(const struct tr2_timer_metadata *meta,
++		     const struct tr2_timer *timer,
++		     int is_final_data)
++{
++	const char *event_name = is_final_data ? "timer" : "th_timer";
++	struct json_writer jw = JSON_WRITER_INIT;
++	double t_total = ((double)timer->total_ns) / NS_PER_SEC_D;
++	double t_min = ((double)timer->min_ns) / NS_PER_SEC_D;
++	double t_max = ((double)timer->max_ns) / NS_PER_SEC_D;
++
++	jw_object_begin(&jw, 0);
++	event_fmt_prepare(event_name, __FILE__, __LINE__, NULL, &jw);
++	jw_object_string(&jw, "category", meta->category);
++	jw_object_string(&jw, "name", meta->name);
++	jw_object_intmax(&jw, "intervals", timer->interval_count);
++	jw_object_double(&jw, "t_total", 6, t_total);
++	jw_object_double(&jw, "t_min", 6, t_min);
++	jw_object_double(&jw, "t_max", 6, t_max);
++	jw_end(&jw);
++
++	tr2_dst_write_line(&tr2dst_event, &jw.json);
++	jw_release(&jw);
++}
++
+ struct tr2_tgt tr2_tgt_event = {
+ 	.pdst = &tr2dst_event,
+ 
+@@ -648,4 +673,5 @@ struct tr2_tgt tr2_tgt_event = {
+ 	.pfn_data_fl = fn_data_fl,
+ 	.pfn_data_json_fl = fn_data_json_fl,
+ 	.pfn_printf_va_fl = NULL,
++	.pfn_timer = fn_timer,
+ };
+diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
+index 69f80330778..f0582a4bf8a 100644
+--- a/trace2/tr2_tgt_normal.c
++++ b/trace2/tr2_tgt_normal.c
+@@ -8,6 +8,7 @@
+ #include "trace2/tr2_tbuf.h"
+ #include "trace2/tr2_tgt.h"
+ #include "trace2/tr2_tls.h"
++#include "trace2/tr2_tmr.h"
+ 
+ static struct tr2_dst tr2dst_normal = {
+ 	.sysenv_var = TR2_SYSENV_NORMAL,
+@@ -329,6 +330,27 @@ static void fn_printf_va_fl(const char *file, int line,
+ 	strbuf_release(&buf_payload);
+ }
+ 
++static void fn_timer(const struct tr2_timer_metadata *meta,
++		     const struct tr2_timer *timer,
++		     int is_final_data)
++{
++	const char *event_name = is_final_data ? "timer" : "th_timer";
++	struct strbuf buf_payload = STRBUF_INIT;
++	double t_total = ((double)timer->total_ns) / NS_PER_SEC_D;
++	double t_min = ((double)timer->min_ns) / NS_PER_SEC_D;
++	double t_max = ((double)timer->max_ns) / NS_PER_SEC_D;
++
++	strbuf_addf(&buf_payload, ("%s %s/%s"
++				   " intervals:%"PRIu64
++				   " total:%8.6f min:%8.6f max:%8.6f"),
++		    event_name, meta->category, meta->name,
++		    timer->interval_count,
++		    t_total, t_min, t_max);
++
++	normal_io_write_fl(__FILE__, __LINE__, &buf_payload);
++	strbuf_release(&buf_payload);
++}
++
+ struct tr2_tgt tr2_tgt_normal = {
+ 	.pdst = &tr2dst_normal,
+ 
+@@ -360,4 +382,5 @@ struct tr2_tgt tr2_tgt_normal = {
+ 	.pfn_data_fl = NULL,
+ 	.pfn_data_json_fl = NULL,
+ 	.pfn_printf_va_fl = fn_printf_va_fl,
++	.pfn_timer = fn_timer,
+ };
 diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-index 8cb792488c8..59ca58f862d 100644
+index 59ca58f862d..399d1fa78e7 100644
 --- a/trace2/tr2_tgt_perf.c
 +++ b/trace2/tr2_tgt_perf.c
-@@ -108,7 +108,7 @@ static void perf_fmt_prepare(const char *event_name,
+@@ -10,6 +10,7 @@
+ #include "trace2/tr2_tbuf.h"
+ #include "trace2/tr2_tgt.h"
+ #include "trace2/tr2_tls.h"
++#include "trace2/tr2_tmr.h"
  
- 	strbuf_addf(buf, "d%d | ", tr2_sid_depth());
- 	strbuf_addf(buf, "%-*s | %-*s | ", TR2_MAX_THREAD_NAME,
--		    ctx->thread_name.buf, TR2FMT_PERF_MAX_EVENT_NAME,
-+		    ctx->thread_name, TR2FMT_PERF_MAX_EVENT_NAME,
- 		    event_name);
+ static struct tr2_dst tr2dst_perf = {
+ 	.sysenv_var = TR2_SYSENV_PERF,
+@@ -555,6 +556,28 @@ static void fn_printf_va_fl(const char *file, int line,
+ 	strbuf_release(&buf_payload);
+ }
  
- 	len = buf->len + TR2FMT_PERF_REPO_WIDTH;
++static void fn_timer(const struct tr2_timer_metadata *meta,
++		     const struct tr2_timer *timer,
++		     int is_final_data)
++{
++	const char *event_name = is_final_data ? "timer" : "th_timer";
++	struct strbuf buf_payload = STRBUF_INIT;
++	double t_total = ((double)timer->total_ns) / NS_PER_SEC_D;
++	double t_min = ((double)timer->min_ns) / NS_PER_SEC_D;
++	double t_max = ((double)timer->max_ns) / NS_PER_SEC_D;
++
++	strbuf_addf(&buf_payload, ("name:%s"
++				   " intervals:%"PRIu64
++				   " total:%8.6f min:%8.6f max:%8.6f"),
++		    meta->name,
++		    timer->interval_count,
++		    t_total, t_min, t_max);
++
++	perf_io_write_fl(__FILE__, __LINE__, event_name, NULL, NULL, NULL,
++			 meta->category, &buf_payload);
++	strbuf_release(&buf_payload);
++}
++
+ struct tr2_tgt tr2_tgt_perf = {
+ 	.pdst = &tr2dst_perf,
+ 
+@@ -586,4 +609,5 @@ struct tr2_tgt tr2_tgt_perf = {
+ 	.pfn_data_fl = fn_data_fl,
+ 	.pfn_data_json_fl = fn_data_json_fl,
+ 	.pfn_printf_va_fl = fn_printf_va_fl,
++	.pfn_timer = fn_timer,
+ };
 diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
-index 4f7c516ecb6..3a67532aae4 100644
+index 3a67532aae4..04900bb4c3a 100644
 --- a/trace2/tr2_tls.c
 +++ b/trace2/tr2_tls.c
-@@ -35,6 +35,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_base_name,
- 					     uint64_t us_thread_start)
- {
- 	struct tr2tls_thread_ctx *ctx = xcalloc(1, sizeof(*ctx));
-+	struct strbuf buf = STRBUF_INIT;
+@@ -181,3 +181,13 @@ int tr2tls_locked_increment(int *p)
  
- 	/*
- 	 * Implicitly "tr2tls_push_self()" to capture the thread's start
-@@ -47,12 +48,13 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_base_name,
- 
- 	ctx->thread_id = tr2tls_locked_increment(&tr2_next_thread_id);
- 
--	strbuf_init(&ctx->thread_name, 0);
-+	strbuf_init(&buf, 0);
- 	if (ctx->thread_id)
--		strbuf_addf(&ctx->thread_name, "th%02d:", ctx->thread_id);
--	strbuf_addstr(&ctx->thread_name, thread_base_name);
--	if (ctx->thread_name.len > TR2_MAX_THREAD_NAME)
--		strbuf_setlen(&ctx->thread_name, TR2_MAX_THREAD_NAME);
-+		strbuf_addf(&buf, "th%02d:", ctx->thread_id);
-+	strbuf_addstr(&buf, thread_base_name);
-+	if (buf.len > TR2_MAX_THREAD_NAME)
-+		strbuf_setlen(&buf, TR2_MAX_THREAD_NAME);
-+	ctx->thread_name = strbuf_detach(&buf, NULL);
- 
- 	pthread_setspecific(tr2tls_key, ctx);
- 
-@@ -95,7 +97,7 @@ void tr2tls_unset_self(void)
- 
- 	pthread_setspecific(tr2tls_key, NULL);
- 
--	strbuf_release(&ctx->thread_name);
-+	free((char *)ctx->thread_name);
- 	free(ctx->array_us_start);
- 	free(ctx);
+ 	return current_value;
  }
-@@ -113,7 +115,7 @@ void tr2tls_pop_self(void)
- 	struct tr2tls_thread_ctx *ctx = tr2tls_get_self();
- 
- 	if (!ctx->nr_open_regions)
--		BUG("no open regions in thread '%s'", ctx->thread_name.buf);
-+		BUG("no open regions in thread '%s'", ctx->thread_name);
- 
- 	ctx->nr_open_regions--;
- }
++
++void tr2tls_lock(void)
++{
++	pthread_mutex_lock(&tr2tls_mutex);
++}
++
++void tr2tls_unlock(void)
++{
++	pthread_mutex_unlock(&tr2tls_mutex);
++}
 diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
-index 7d1f03a2ea6..e17cc462f87 100644
+index e17cc462f87..2322b0d0ef0 100644
 --- a/trace2/tr2_tls.h
 +++ b/trace2/tr2_tls.h
-@@ -15,7 +15,7 @@
- #define TR2_MAX_THREAD_NAME (24)
+@@ -2,6 +2,7 @@
+ #define TR2_TLS_H
  
- struct tr2tls_thread_ctx {
--	struct strbuf thread_name;
-+	const char *thread_name;
- 	uint64_t *array_us_start;
+ #include "strbuf.h"
++#include "trace2/tr2_tmr.h"
+ 
+ /*
+  * Notice: the term "TLS" refers to "thread-local storage" in the
+@@ -20,6 +21,9 @@ struct tr2tls_thread_ctx {
  	size_t alloc;
  	size_t nr_open_regions; /* plays role of "nr" in ALLOC_GROW */
+ 	int thread_id;
++	struct tr2_timer_block timer_block;
++	unsigned int used_any_timer:1;
++	unsigned int used_any_per_thread_timer:1;
+ };
+ 
+ /*
+@@ -107,4 +111,10 @@ int tr2tls_locked_increment(int *p);
+  */
+ void tr2tls_start_process_clock(void);
+ 
++/*
++ * Explicitly lock/unlock our mutex.
++ */
++void tr2tls_lock(void);
++void tr2tls_unlock(void);
++
+ #endif /* TR2_TLS_H */
+diff --git a/trace2/tr2_tmr.c b/trace2/tr2_tmr.c
+new file mode 100644
+index 00000000000..786762dfd26
+--- /dev/null
++++ b/trace2/tr2_tmr.c
+@@ -0,0 +1,182 @@
++#include "cache.h"
++#include "thread-utils.h"
++#include "trace2/tr2_tgt.h"
++#include "trace2/tr2_tls.h"
++#include "trace2/tr2_tmr.h"
++
++#define MY_MAX(a, b) ((a) > (b) ? (a) : (b))
++#define MY_MIN(a, b) ((a) < (b) ? (a) : (b))
++
++/*
++ * A global timer block to aggregate values from the partial sums from
++ * each thread.
++ */
++static struct tr2_timer_block final_timer_block; /* access under tr2tls_mutex */
++
++/*
++ * Define metadata for each stopwatch timer.
++ *
++ * This array must match "enum trace2_timer_id" and the values
++ * in "struct tr2_timer_block.timer[*]".
++ */
++static struct tr2_timer_metadata tr2_timer_metadata[TRACE2_NUMBER_OF_TIMERS] = {
++	[TRACE2_TIMER_ID_TEST1] = {
++		.category = "test",
++		.name = "test1",
++		.want_per_thread_events = 0,
++	},
++	[TRACE2_TIMER_ID_TEST2] = {
++		.category = "test",
++		.name = "test2",
++		.want_per_thread_events = 1,
++	},
++
++	/* Add additional metadata before here. */
++};
++
++void tr2_start_timer(enum trace2_timer_id tid)
++{
++	struct tr2tls_thread_ctx *ctx = tr2tls_get_self();
++	struct tr2_timer *t = &ctx->timer_block.timer[tid];
++
++	t->recursion_count++;
++	if (t->recursion_count > 1)
++		return; /* ignore recursive starts */
++
++	t->start_ns = getnanotime();
++}
++
++void tr2_stop_timer(enum trace2_timer_id tid)
++{
++	struct tr2tls_thread_ctx *ctx = tr2tls_get_self();
++	struct tr2_timer *t = &ctx->timer_block.timer[tid];
++	uint64_t ns_now;
++	uint64_t ns_interval;
++
++	assert(t->recursion_count > 0);
++
++	t->recursion_count--;
++	if (t->recursion_count)
++		return; /* still in recursive call(s) */
++
++	ns_now = getnanotime();
++	ns_interval = ns_now - t->start_ns;
++
++	t->total_ns += ns_interval;
++
++	/*
++	 * min_ns was initialized to zero (in the xcalloc()) rather
++	 * than UINT_MAX when the block of timers was allocated,
++	 * so we should always set both the min_ns and max_ns values
++	 * the first time that the timer is used.
++	 */
++	if (!t->interval_count) {
++		t->min_ns = ns_interval;
++		t->max_ns = ns_interval;
++	} else {
++		t->min_ns = MY_MIN(ns_interval, t->min_ns);
++		t->max_ns = MY_MAX(ns_interval, t->max_ns);
++	}
++
++	t->interval_count++;
++
++	ctx->used_any_timer = 1;
++	if (tr2_timer_metadata[tid].want_per_thread_events)
++		ctx->used_any_per_thread_timer = 1;
++}
++
++void tr2_update_final_timers(void)
++{
++	struct tr2tls_thread_ctx *ctx = tr2tls_get_self();
++	enum trace2_timer_id tid;
++
++	if (!ctx->used_any_timer)
++		return;
++
++	/*
++	 * Accessing `final_timer_block` requires holding `tr2tls_mutex`.
++	 * We assume that our caller is holding the lock.
++	 */
++
++	for (tid = 0; tid < TRACE2_NUMBER_OF_TIMERS; tid++) {
++		struct tr2_timer *t_final = &final_timer_block.timer[tid];
++		struct tr2_timer *t = &ctx->timer_block.timer[tid];
++
++		if (t->recursion_count) {
++			/*
++			 * The current thread is exiting with
++			 * timer[tid] still running.
++			 *
++			 * Technically, this is a bug, but I'm going
++			 * to ignore it.
++			 *
++			 * I don't think it is worth calling die()
++			 * for.  I don't think it is worth killing the
++			 * process for this bookkeeping error.  We
++			 * might want to call warning(), but I'm going
++			 * to wait on that.
++			 *
++			 * The downside here is that total_ns won't
++			 * include the current open interval (now -
++			 * start_ns).  I can live with that.
++			 */
++		}
++
++		if (!t->interval_count)
++			continue; /* this timer was not used by this thread */
++
++		t_final->total_ns += t->total_ns;
++
++		/*
++		 * final_timer_block.timer[tid].min_ns was initialized to
++		 * was initialized to zero rather than UINT_MAX, so we should
++		 * always set both the min_ns and max_ns values the first time
++		 * that we add a partial sum into it.
++		 */
++		if (!t_final->interval_count) {
++			t_final->min_ns = t->min_ns;
++			t_final->max_ns = t->max_ns;
++		} else {
++			t_final->min_ns = MY_MIN(t_final->min_ns, t->min_ns);
++			t_final->max_ns = MY_MAX(t_final->max_ns, t->max_ns);
++		}
++
++		t_final->interval_count += t->interval_count;
++	}
++}
++
++void tr2_emit_per_thread_timers(tr2_tgt_evt_timer_t *fn_apply)
++{
++	struct tr2tls_thread_ctx *ctx = tr2tls_get_self();
++	enum trace2_timer_id tid;
++
++	if (!ctx->used_any_per_thread_timer)
++		return;
++
++	/*
++	 * For each timer, if the timer wants per-thread events and
++	 * this thread used it, emit it.
++	 */
++	for (tid = 0; tid < TRACE2_NUMBER_OF_TIMERS; tid++)
++		if (tr2_timer_metadata[tid].want_per_thread_events &&
++		    ctx->timer_block.timer[tid].interval_count)
++			fn_apply(&tr2_timer_metadata[tid],
++				 &ctx->timer_block.timer[tid],
++				 0);
++}
++
++void tr2_emit_final_timers(tr2_tgt_evt_timer_t *fn_apply)
++{
++	enum trace2_timer_id tid;
++
++	/*
++	 * Accessing `final_timer_block` requires holding `tr2tls_mutex`.
++	 * We assume that our caller is holding the lock.
++	 */
++
++	for (tid = 0; tid < TRACE2_NUMBER_OF_TIMERS; tid++)
++		if (final_timer_block.timer[tid].interval_count)
++			fn_apply(&tr2_timer_metadata[tid],
++				 &final_timer_block.timer[tid],
++				 1);
++}
+diff --git a/trace2/tr2_tmr.h b/trace2/tr2_tmr.h
+new file mode 100644
+index 00000000000..d5753576134
+--- /dev/null
++++ b/trace2/tr2_tmr.h
+@@ -0,0 +1,140 @@
++#ifndef TR2_TMR_H
++#define TR2_TMR_H
++
++#include "trace2.h"
++#include "trace2/tr2_tgt.h"
++
++/*
++ * Define a mechanism to allow "stopwatch" timers.
++ *
++ * Timers can be used to measure "interesting" activity that does not
++ * fit the "region" model, such as code called from many different
++ * regions (like zlib) and/or where data for individual calls are not
++ * interesting or are too numerous to be efficiently logged.
++ *
++ * Timer values are accumulated during program execution and emitted
++ * to the Trace2 logs at program exit.
++ *
++ * To make this model efficient, we define a compile-time fixed set of
++ * timers and timer ids using a "timer block" array in thread-local
++ * storage.  This gives us constant time access to each timer within
++ * each thread, since we want start/stop operations to be as fast as
++ * possible.  This lets us avoid the complexities of dynamically
++ * allocating a timer on the first use by a thread and/or possibly
++ * sharing that timer definition with other concurrent threads.
++ * However, this does require that we define time the set of timers at
++ * compile time.
++ *
++ * Each thread uses the timer block in its thread-local storage to
++ * compute partial sums for each timer (without locking).  When a
++ * thread exits, those partial sums are (under lock) added to the
++ * global final sum.
++ *
++ * Using this "timer block" model costs ~48 bytes per timer per thread
++ * (we have about six uint64 fields per timer).  This does increase
++ * the size of the thread-local storage block, but it is allocated (at
++ * thread create time) and not on the thread stack, so I'm not worried
++ * about the size.
++ *
++ * Partial sums for each timer are optionally emitted when a thread
++ * exits.
++ *
++ * Final sums for each timer are emitted between the "exit" and
++ * "atexit" events.
++ *
++ * A parallel "timer metadata" table contains the "category" and "name"
++ * fields for each timer.  This eliminates the need to include those
++ * args in the various timer APIs.
++ */
++
++/*
++ * The definition of an individual timer and used by an individual
++ * thread.
++ */
++struct tr2_timer {
++	/*
++	 * Total elapsed time for this timer in this thread in nanoseconds.
++	 */
++	uint64_t total_ns;
++
++	/*
++	 * The maximum and minimum interval values observed for this
++	 * timer in this thread.
++	 */
++	uint64_t min_ns;
++	uint64_t max_ns;
++
++	/*
++	 * The value of the clock when this timer was started in this
++	 * thread.  (Undefined when the timer is not active in this
++	 * thread.)
++	 */
++	uint64_t start_ns;
++
++	/*
++	 * Number of times that this timer has been started and stopped
++	 * in this thread.  (Recursive starts are ignored.)
++	 */
++	uint64_t interval_count;
++
++	/*
++	 * Number of nested starts on the stack in this thread.  (We
++	 * ignore recursive starts and use this to track the recursive
++	 * calls.)
++	 */
++	unsigned int recursion_count;
++};
++
++/*
++ * Metadata for a timer.
++ */
++struct tr2_timer_metadata {
++	const char *category;
++	const char *name;
++
++	/*
++	 * True if we should emit per-thread events for this timer
++	 * when individual threads exit.
++	 */
++	unsigned int want_per_thread_events:1;
++};
++
++/*
++ * A compile-time fixed-size block of timers to insert into
++ * thread-local storage.  This wrapper is used to avoid quirks
++ * of C and the usual need to pass an array size argument.
++ */
++struct tr2_timer_block {
++	struct tr2_timer timer[TRACE2_NUMBER_OF_TIMERS];
++};
++
++/*
++ * Private routines used by trace2.c to actually start/stop an
++ * individual timer in the current thread.
++ */
++void tr2_start_timer(enum trace2_timer_id tid);
++void tr2_stop_timer(enum trace2_timer_id tid);
++
++/*
++ * Add the current thread's timer data to the global totals.
++ * This is called during thread-exit.
++ *
++ * Caller must be holding the tr2tls_mutex.
++ */
++void tr2_update_final_timers(void);
++
++/*
++ * Emit per-thread timer data for the current thread.
++ * This is called during thread-exit.
++ */
++void tr2_emit_per_thread_timers(tr2_tgt_evt_timer_t *fn_apply);
++
++/*
++ * Emit global total timer values.
++ * This is called during atexit handling.
++ *
++ * Caller must be holding the tr2tls_mutex.
++ */
++void tr2_emit_final_timers(tr2_tgt_evt_timer_t *fn_apply);
++
++#endif /* TR2_TMR_H */
 -- 
 gitgitgadget
 
