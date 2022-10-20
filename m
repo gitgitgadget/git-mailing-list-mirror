@@ -2,45 +2,47 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FD39C433FE
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 12:57:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E89B7C4332F
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 14:40:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230033AbiJTM5B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 08:57:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48890 "EHLO
+        id S229506AbiJTOkg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 10:40:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229925AbiJTM46 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 08:56:58 -0400
+        with ESMTP id S229730AbiJTOke (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 10:40:34 -0400
 Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF17C15A966
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 05:56:50 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D721614C502
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 07:40:31 -0700 (PDT)
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 65610CA1251;
-        Thu, 20 Oct 2022 08:56:49 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 60203CA123B;
+        Thu, 20 Oct 2022 10:40:31 -0400 (EDT)
 Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 3A639CC8314;
-        Thu, 20 Oct 2022 08:56:49 -0400 (EDT)
-Subject: Re: [PATCH] fsmonitor: long status advice adapted to the fsmonitor
- use case
-To:     Rudy Rigot <rudy.rigot@gmail.com>
-Cc:     Rudy Rigot via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1384.git.1665839050813.gitgitgadget@gmail.com>
- <087d3fca-d01e-f36a-85f5-7e861e4d11ca@jeffhostetler.com>
- <CANaDLWKcF07=FQgT7ZTKmcgworH45YdNy8hy2faMBg3CGYEf+w@mail.gmail.com>
+        by siwi.pair.com (Postfix) with ESMTPSA id 26F9CCC8319;
+        Thu, 20 Oct 2022 10:40:31 -0400 (EDT)
+Subject: Re: [PATCH v2 4/7] trace2: rename the thread_name argument to
+ trace2_thread_start
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1373.git.1664900407.gitgitgadget@gmail.com>
+ <pull.1373.v2.git.1665600750.gitgitgadget@gmail.com>
+ <637b422b8606b3b6d954e6a1959aae450507cdfa.1665600750.git.gitgitgadget@gmail.com>
+ <221012.86edvcn3yc.gmgdl@evledraar.gmail.com>
 From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <d696b07f-cfa9-be45-b6d2-adb72811a205@jeffhostetler.com>
-Date:   Thu, 20 Oct 2022 08:56:48 -0400
+Message-ID: <27526718-7961-dc2c-946e-98757b3b36c8@jeffhostetler.com>
+Date:   Thu, 20 Oct 2022 10:40:30 -0400
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.0; rv:68.0)
  Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-In-Reply-To: <CANaDLWKcF07=FQgT7ZTKmcgworH45YdNy8hy2faMBg3CGYEf+w@mail.gmail.com>
+In-Reply-To: <221012.86edvcn3yc.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: mailmunge 3.09 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -48,92 +50,56 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 10/17/22 12:59 PM, Rudy Rigot wrote:
->> We should be careful here, FSMonitor only helps with untracked
-> files if the untracked cache (UC) is also turned on.  They do work
-> well together and they greatly speed up things, but if either is
-> turned off, `git status` will still need to scan.
+On 10/12/22 5:06 PM, Ævar Arnfjörð Bjarmason wrote:
 > 
-> Oh, thanks, I didn't realize! With that, I agree that the messaging I'm
-> proposing is not technically correct, and needs to be fixed.
+> On Wed, Oct 12 2022, Jeff Hostetler via GitGitGadget wrote:
 > 
-> I agree with your advice about the message when FSMonitor and
-> untracked cache are both turned off. I'm also trying to think about
-> what advice to give when they are turned on, and git status was
-> slow because the update-index was building the cache on that call.
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> Rename the `thread_name` argument in `tr2tls_create_self()` and
+>> `trace2_thread_start()` to be `thread_base_name` to make it clearer
+>> that the passed argument is a component used in the construction of
+>> the actual `struct tr2tls_thread_ctx.thread_name` variable.
+>>
+>> The base name will be used along with the thread id to create a
+>> unique thread name.
 > 
-> Importantly, I'm trying to think of ways to keep the messaging
-> accessible even when the user is not familiar with those concepts.
-
-Agreed.  We sometimes forget that not everyone is an expert in the
-subtleties and terms of Git.  Even the original message "...enumerate
-untracked files..." can be a little obscure to the casual user.
-
-> I'm thinking a user may not even know what is currently enabled or
-> not in their environment, so there's probably value in detecting their
-> situation, and best adapting the messaging to it.
+> Makes sense.
 > 
-> For context, in our case, we set core.fsmonitor and core.untrackedCache
-> as part of our dev environment setup script, because we don't expect
-> our least advanced developers to ramp up on what they are. And yet,
-> it is useful to all of them to have them enabled, our git status is about
-> 30 seconds long without FSMonitor and UC.
+>> This commit does not change how the `thread_name` field is
+>> allocated or stored within the `tr2tls_thread_ctx` structure.
 > 
-> As a result, we have been receiving negative feedback that git status is
-> slow, but when we inform the user that it is cached, they run it again and
-> confirm that it is fine like this. The problem being about educating
-> users and not a technical issue, of course we're adding the info to our
-> setup doc, but I figured other large repos may hit this usability issue, so
-> here I am.
+> What this commit does change though, which isn't mentioned here, is...
 > 
-> What do you think of those phrasings?
+>> diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
+>> index 1297509fd23..7d1f03a2ea6 100644
+>> --- a/trace2/tr2_tls.h
+>> +++ b/trace2/tr2_tls.h
+>> @@ -25,17 +25,20 @@ struct tr2tls_thread_ctx {
+>>   /*
+>>    * Create thread-local storage for the current thread.
+>>    *
+>> - * We assume the first thread is "main".  Other threads are given
+>> - * non-zero thread-ids to help distinguish messages from concurrent
+>> - * threads.
+>> - *
+>> - * Truncate the thread name if necessary to help with column alignment
+>> - * in printf-style messages.
+>> + * The first thread in the process will have:
+>> + *     { .thread_id=0, .thread_name="main" }
+>> + * Subsequent threads are given a non-zero thread_id and a thread_name
+>> + * constructed from the id and a thread base name (which is usually just
+>> + * the name of the thread-proc function).  For example:
+>> + *     { .thread_id=10, .thread_name="th10fsm-listen" }
+>> + * This helps to identify and distinguish messages from concurrent threads.
+>> + * The ctx.thread_name field is truncated if necessary to help with column
+>> + * alignment in printf-style messages.
 > 
-> - If neither FSMonitor nor the untracked cache are turned on, changing
-> the current advice to: "It took %.2f seconds to enumerate untracked files.
-> You may want to skip that part with 'status -uno' but you have to be
-> careful not to forget to add new files yourself (see 'git help status').
-> Otherwise, you can enable the core.untrackedCache config to have
-> it be cached, and potentially the core.fsmonitor config to further improve
-> the cache's performance."
+> ...this documentation, which I'd argue should be a separate change, as
+> nothing's changed about the state of the world with this rename of the
+> field, this was all true before this rename.
 > 
-> - If only the untracked cache is turned on, since you said it could already
-> improve some: "It took %.2f seconds to enumerate untracked files.
-> Your untracked cache is enabled, but you may want to enable the
-> core.fsmonitor config to further improve the cache's performance.
-> Otherwise, you may want to skip that part with 'status -uno' but you have
-> to be careful not to forget to add new files yourself (see 'git help status')."
-> 
-> - If they're both turned on: "It took %.2f seconds to enumerate untracked
-> files. Your untracked cache is enabled and fsmonitor is on,
-> so your next calls may be faster. Otherwise, you may want to skip that part
-> with 'status -uno' but you have to be careful not to forget to add new
-> files yourself (see 'git help status')."
 
-All three of these are a bit wordy and/or awkward -- but I'm not sure
-how to say it either, so don't feel bad.  I think it is just the quality
-of the corner that we've been backed into -- there are just too many
-knobs and not enough space to do them justice.  And I've always found
-the "turn this on, but be careful..." advice/warning a bit odd.
-
-
-As an alternative, and definitely just thinking out loud here.
-
-Would it be better to add a "Untracked Files and Status Speed"
-section to the bottom of https://git-scm.com/docs/git-status
-(aka `Documentation/git-status.txt`) near
-https://git-scm.com/docs/git-status#_background_refresh
-
-Describe the various combination of config options in more detail
-and discuss the pros/cons of each, what the defaults are, and how to
-set them, how to tell what they are currently set to, and so on.
-
-Then have the advice message reference that new section.
-
-We might also reword the large paragraph ("When `-u` option is not...")
-in the `--untracked-files` argument to reference the new section.  It is
-a little stale and just as awkward.
-
-Just a thought...
-
-
+good point.  i'll split it and resend.
+thanks
 Jeff
