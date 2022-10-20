@@ -2,161 +2,421 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6220BC433FE
-	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 23:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07045C433FE
+	for <git@archiver.kernel.org>; Thu, 20 Oct 2022 23:17:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229913AbiJTXRP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 19:17:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44694 "EHLO
+        id S229768AbiJTXRT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 19:17:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229610AbiJTXRF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 19:17:05 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC0C722C63C
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:17:03 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id n12so1926442wrp.10
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:17:03 -0700 (PDT)
+        with ESMTP id S229658AbiJTXRG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 19:17:06 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEFFF22E0FB
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:17:04 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id w18so1969555wro.7
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 16:17:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9mdgqviqxc9y6T4fAO6kDqLLief+c5Jt3pudwn3+YNc=;
-        b=TlPfiipL1IW/nU/DFkZar7dbdse6rYn3eqpPqkjpNQ4MIFzjnqwFdd6OvB4MiUk1WR
-         2UiFCsFEIHV1HoWeXCVyanxfhZvnkPqdpARIDYU37zf2CdV8GkdwHs0SwuN+/x2i1Nsr
-         Hwap77Rz0q44mENd5y1jsWhYaeJFvaN/EVaZP4DSfNB3NybWlolPws7Vav0Plgh9W52R
-         ggp1x7XizS6XAEotr4YiCL1HgRgr8qshKl7Om4pk8/MU8lB18kxlbSuFKCmCGXHaZfUH
-         7Io6unwbYaIeAmWrKTPqF063Qx2yCrlMhfv9mU0DRWyibHOLfypuHIKJGM7UDMwLoOlD
-         QEbA==
+        bh=c0DFd/4WwKAI4Jr4JudD/7m0+tz8oNLN9zGxWLff8cE=;
+        b=ib9VSvwChJoYq44zgaTpQZRK2cG2qHSV0+CgOJmluTzxLkvPnYVd1MGtFsiWstvZ/y
+         V9AP9CTaecETv46lddsQWXSDdM3pR2htcYWoEraAOA13GRmOjG9vzasJEe42CQTFyC50
+         XDo2/SOlPQXK9yA0v/nUHe4lMbQC+93pK2q90z/E9pDINezrpqS5qpTzX72qZdyKdsAu
+         48Av817XsiUgDBGyON/rTVxNpBveHo/Mc4OtXCPpgJwyNZASZm7QzMkSP2ykEBkbNuCB
+         2dBBMxwCmwh1SCEWknb+rJhxArypVLouXu9ZUypZTnrnWFCq+KGftlfUkJMbUmJz6L3Q
+         9/tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9mdgqviqxc9y6T4fAO6kDqLLief+c5Jt3pudwn3+YNc=;
-        b=6WCSTDAcvccGHN37WwuisWfZZucRl21P40mBN8+uYfVv2qIvh0R9bf2qG9H6VQYso5
-         L9DvUMRm5AUvqFDXNym/qk2N3jXz4x+NIO3BoQR6AhKd/N8/YZFd9mg8bXpkQP27m3gC
-         CFH9eEq/wos5HT8SIeC+KGn7Tfnz4hWbKLxFhJugy4OUfBoFFNvaMLkiUMHLU58s70Pg
-         knCp3EiPCSCcxxKqwr6o0gEw3cu+s/t9fKkadM3PJCQpoZmGkprDo3rVaFvUBBPChW78
-         kU+AaJHWzTiUKoVnEQaoylkimhrkpfTBmNF6Pb0KdSkSFOQHl2K3MmBo+ZaEqh+DJgj0
-         IfPg==
-X-Gm-Message-State: ACrzQf3jP0PSX693gUwAyb4FN8tzvZmRtXWXS4WD3YX2eOmAywdOANAR
-        w94OMdWJxpH0jMyYRNVXnVtgj4q8JT4=
-X-Google-Smtp-Source: AMsMyM6yubKQuepc2kK7Um1QrH/ngKv4T9V0DE7ndpg0SPzM0ahO20iY8MQVvcb8Fm6CNzaYdH9PmQ==
-X-Received: by 2002:a5d:584f:0:b0:22e:4276:d92b with SMTP id i15-20020a5d584f000000b0022e4276d92bmr10393904wrf.697.1666307822097;
+        bh=c0DFd/4WwKAI4Jr4JudD/7m0+tz8oNLN9zGxWLff8cE=;
+        b=wNktNmFtlEPXTqoIiCHekeLwRUmTCeJOsiat11HeI1zBusWAyo2jmVgC+GSGzcts94
+         LmiEevgJIOpRNGUir+5cS/YtcwSJ84vSdY9pH8B11Dtz1xj654bAB7857k9ji+1+3bXd
+         8X3ty7RZLDL5VVsdUndO1ltVd2B+b9Qf79KymGXNPuMqkvW3NJY+fyUQbFtBJmO+7PKR
+         0e2j1kYH+PdyPMbAIk/ZXUzLGTPMY/ospwehLW/wYVxoxETp/NaK7ZWxpgxD21WH/Hy2
+         5Z9CyTSO3oX2LIS04dCdJ+8COIbns26UzqeE9u7U/iyCDDdtp0ihDzoPNqmChkzLG+VA
+         DMyg==
+X-Gm-Message-State: ACrzQf3+lLuPka1f466JUqTf3Pblz+MW3P2RZKt455O9yzDyAX4uN3eO
+        vbaIH9XK9FBJE9/Ewz3WeadH0JaFJwY=
+X-Google-Smtp-Source: AMsMyM6g+uyvIeTc2sK2vG1uSCcGzJHAQfRsbC/Yq4pkfjazoGXnBXQNcoAjTc4FHwErM3fG4PgqWw==
+X-Received: by 2002:a5d:5a11:0:b0:22e:3ed1:e426 with SMTP id bq17-20020a5d5a11000000b0022e3ed1e426mr10098148wrb.642.1666307822988;
         Thu, 20 Oct 2022 16:17:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 25-20020a05600c229900b003b492338f45sm765386wmf.39.2022.10.20.16.17.00
+        by smtp.gmail.com with ESMTPSA id l25-20020a1ced19000000b003c6cdbface4sm812165wmh.11.2022.10.20.16.17.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Oct 2022 16:17:01 -0700 (PDT)
-Message-Id: <bb0b4add03c158a0b32306cbe075960fff53d78a.1666307815.git.gitgitgadget@gmail.com>
+        Thu, 20 Oct 2022 16:17:02 -0700 (PDT)
+Message-Id: <b160f2ae49f8906249e7690d089a1921c43b3bda.1666307815.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1359.v4.git.1666307815.gitgitgadget@gmail.com>
 References: <pull.1359.v3.git.1665737804.gitgitgadget@gmail.com>
         <pull.1359.v4.git.1666307815.gitgitgadget@gmail.com>
 From:   "Jerry Zhang via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 Oct 2022 23:16:53 +0000
-Subject: [PATCH v4 4/6] patch-id: fix patch-id for mode changes
+Date:   Thu, 20 Oct 2022 23:16:54 +0000
+Subject: [PATCH v4 5/6] builtin: patch-id: add --verbatim as a command mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Jerry Zhang <jerry@skydio.com>, Jerry Zhang <Jerry@skydio.com>
+Cc:     Jerry Zhang <jerry@skydio.com>, Jerry Zhang <jerry@skydio.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jerry Zhang <Jerry@skydio.com>
+From: Jerry Zhang <jerry@skydio.com>
 
-Currently patch-id as used in rebase and cherry-pick does not account
-for file modes if the file is modified. One consequence of this is
-that if you have a local patch that changes modes, but upstream
-has applied an outdated version of the patch that doesn't include
-that mode change, "git rebase" will drop your local version of the
-patch along with your mode changes. It also means that internal
-patch-id doesn't produce the same output as the builtin, which does
-account for mode changes due to them being part of diff output.
+There are situations where the user might not want the default
+setting where patch-id strips all whitespace. They might be working
+in a language where white space is syntactically important, or they
+might have CI testing that enforces strict whitespace linting. In
+these cases, a whitespace change would result in the patch
+fundamentally changing, and thus deserving of a different id.
 
-Fix by adding mode to the patch-id if it has changed, in the same
-format that would be produced by diff, so that it is compatible
-with builtin patch-id.
+Add a new mode that is exclusive of --stable and --unstable called
+--verbatim. It also corresponds to the config
+patchid.verbatim = true. In this mode, the stable algorithm is
+used and whitespace is not stripped from the patch text.
 
-Signed-off-by: Jerry Zhang <Jerry@skydio.com>
+Users of --unstable mainly care about compatibility with old git
+versions, which unstripping the whitespace would break. Thus there
+isn't a usecase for the combination of --verbatim and --unstable,
+and we don't expose this so as to not add maintainence burden.
+
+Signed-off-by: Jerry Zhang <jerry@skydio.com>
+fixes https://github.com/Skydio/revup/issues/2
 ---
- diff.c                     |  5 +++++
- t/t3419-rebase-patch-id.sh | 31 ++++++++++++++++++++++++++++++-
- 2 files changed, 35 insertions(+), 1 deletion(-)
+ Documentation/git-patch-id.txt | 24 +++++++----
+ builtin/patch-id.c             | 73 ++++++++++++++++++++++------------
+ t/t4204-patch-id.sh            | 66 +++++++++++++++++++++++++++---
+ 3 files changed, 124 insertions(+), 39 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 199b63dbcc3..0e336c48560 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6256,6 +6256,11 @@ static int diff_get_patch_id(struct diff_options *options, struct object_id *oid
- 		} else if (p->two->mode == 0) {
- 			patch_id_add_string(&ctx, "deletedfilemode");
- 			patch_id_add_mode(&ctx, p->one->mode);
-+		} else if (p->one->mode != p->two->mode) {
-+			patch_id_add_string(&ctx, "oldmode");
-+			patch_id_add_mode(&ctx, p->one->mode);
-+			patch_id_add_string(&ctx, "newmode");
-+			patch_id_add_mode(&ctx, p->two->mode);
- 		}
+diff --git a/Documentation/git-patch-id.txt b/Documentation/git-patch-id.txt
+index 442caff8a9c..1d15fa45d51 100644
+--- a/Documentation/git-patch-id.txt
++++ b/Documentation/git-patch-id.txt
+@@ -8,18 +8,18 @@ git-patch-id - Compute unique ID for a patch
+ SYNOPSIS
+ --------
+ [verse]
+-'git patch-id' [--stable | --unstable]
++'git patch-id' [--stable | --unstable | --verbatim]
  
- 		if (diff_header_only) {
-diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
-index d24e55aac8d..7181f176b81 100755
---- a/t/t3419-rebase-patch-id.sh
-+++ b/t/t3419-rebase-patch-id.sh
-@@ -48,7 +48,17 @@ test_expect_success 'setup: 500 lines' '
- 	git branch -f squashed main &&
- 	git checkout -q -f squashed &&
- 	git reset -q --soft HEAD~2 &&
--	git commit -q -m squashed
-+	git commit -q -m squashed &&
+ DESCRIPTION
+ -----------
+ Read a patch from the standard input and compute the patch ID for it.
+ 
+ A "patch ID" is nothing but a sum of SHA-1 of the file diffs associated with a
+-patch, with whitespace and line numbers ignored.  As such, it's "reasonably
+-stable", but at the same time also reasonably unique, i.e., two patches that
+-have the same "patch ID" are almost guaranteed to be the same thing.
++patch, with line numbers ignored.  As such, it's "reasonably stable", but at
++the same time also reasonably unique, i.e., two patches that have the same
++"patch ID" are almost guaranteed to be the same thing.
+ 
+-IOW, you can use this thing to look for likely duplicate commits.
++The main usecase for this command is to look for likely duplicate commits.
+ 
+ When dealing with 'git diff-tree' output, it takes advantage of
+ the fact that the patch is prefixed with the object name of the
+@@ -30,6 +30,12 @@ This can be used to make a mapping from patch ID to commit ID.
+ OPTIONS
+ -------
+ 
++--verbatim::
++	Calculate the patch-id of the input as it is given, do not strip
++	any whitespace.
 +
-+	git branch -f mode main &&
-+	git checkout -q -f mode &&
-+	test_chmod +x file &&
-+	git commit -q -a --amend &&
++	This is the default if patchid.verbatim is true.
 +
-+	git branch -f modeother other &&
-+	git checkout -q -f modeother &&
-+	test_chmod +x file &&
-+	git commit -q -a --amend
- '
+ --stable::
+ 	Use a "stable" sum of hashes as the patch ID. With this option:
+ 	 - Reordering file diffs that make up a patch does not affect the ID.
+@@ -45,14 +51,16 @@ OPTIONS
+ 	   of "-O<orderfile>", thereby making existing databases storing such
+ 	   "unstable" or historical patch-ids unusable.
  
- test_expect_success 'detect upstream patch' '
-@@ -71,6 +81,13 @@ test_expect_success 'detect upstream patch binary' '
- 	test_when_finished "rm .gitattributes"
- '
- 
-+test_expect_success 'detect upstream patch modechange' '
-+	git checkout -q modeother^{} &&
-+	git rebase mode &&
-+	git rev-list mode...HEAD~ >revs &&
-+	test_must_be_empty revs
-+'
++	 - All whitespace within the patch is ignored and does not affect the id.
 +
- test_expect_success 'do not drop patch' '
- 	git checkout -q other^{} &&
- 	test_must_fail git rebase squashed &&
-@@ -85,4 +102,16 @@ test_expect_success 'do not drop patch binary' '
- 	test_when_finished "rm .gitattributes"
- '
+ 	This is the default if patchid.stable is set to true.
  
-+test_expect_success 'do not drop patch modechange' '
-+	git checkout -q modeother^{} &&
-+	git rebase other &&
-+	cat >expected <<-\EOF &&
-+	diff --git a/file b/file
-+	old mode 100644
-+	new mode 100755
+ --unstable::
+ 	Use an "unstable" hash as the patch ID. With this option,
+ 	the result produced is compatible with the patch-id value produced
+-	by git 1.9 and older.  Users with pre-existing databases storing
+-	patch-ids produced by git 1.9 and older (who do not deal with reordered
+-	patches) may want to use this option.
++	by git 1.9 and older and whitespace is ignored.  Users with pre-existing
++	databases storing patch-ids produced by git 1.9 and older (who do not deal
++	with reordered patches) may want to use this option.
+ 
+ 	This is the default.
+ 
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index e7a31123142..afdd472369f 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -2,6 +2,7 @@
+ #include "builtin.h"
+ #include "config.h"
+ #include "diff.h"
++#include "parse-options.h"
+ 
+ static void flush_current_id(int patchlen, struct object_id *id, struct object_id *result)
+ {
+@@ -57,7 +58,7 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
+ }
+ 
+ static int get_one_patchid(struct object_id *next_oid, struct object_id *result,
+-			   struct strbuf *line_buf, int stable)
++			   struct strbuf *line_buf, int stable, int verbatim)
+ {
+ 	int patchlen = 0, found_next = 0;
+ 	int before = -1, after = -1;
+@@ -76,8 +77,11 @@ static int get_one_patchid(struct object_id *next_oid, struct object_id *result,
+ 		if (!skip_prefix(line, "diff-tree ", &p) &&
+ 		    !skip_prefix(line, "commit ", &p) &&
+ 		    !skip_prefix(line, "From ", &p) &&
+-		    starts_with(line, "\\ ") && 12 < strlen(line))
++		    starts_with(line, "\\ ") && 12 < strlen(line)) {
++			if (verbatim)
++				the_hash_algo->update_fn(&ctx, line, strlen(line));
+ 			continue;
++		}
+ 
+ 		if (!get_oid_hex(p, next_oid)) {
+ 			found_next = 1;
+@@ -152,8 +156,8 @@ static int get_one_patchid(struct object_id *next_oid, struct object_id *result,
+ 		if (line[0] == '+' || line[0] == ' ')
+ 			after--;
+ 
+-		/* Compute the sha without whitespace */
+-		len = remove_space(line);
++		/* Add line to hash algo (possibly removing whitespace) */
++		len = verbatim ? strlen(line) : remove_space(line);
+ 		patchlen += len;
+ 		the_hash_algo->update_fn(&ctx, line, len);
+ 	}
+@@ -166,7 +170,7 @@ static int get_one_patchid(struct object_id *next_oid, struct object_id *result,
+ 	return patchlen;
+ }
+ 
+-static void generate_id_list(int stable)
++static void generate_id_list(int stable, int verbatim)
+ {
+ 	struct object_id oid, n, result;
+ 	int patchlen;
+@@ -174,21 +178,32 @@ static void generate_id_list(int stable)
+ 
+ 	oidclr(&oid);
+ 	while (!feof(stdin)) {
+-		patchlen = get_one_patchid(&n, &result, &line_buf, stable);
++		patchlen = get_one_patchid(&n, &result, &line_buf, stable, verbatim);
+ 		flush_current_id(patchlen, &oid, &result);
+ 		oidcpy(&oid, &n);
+ 	}
+ 	strbuf_release(&line_buf);
+ }
+ 
+-static const char patch_id_usage[] = "git patch-id [--stable | --unstable]";
++static const char *const patch_id_usage[] = {
++	N_("git patch-id [--stable | --unstable | --verbatim]"), NULL
++};
++
++struct patch_id_opts {
++	int stable;
++	int verbatim;
++};
+ 
+ static int git_patch_id_config(const char *var, const char *value, void *cb)
+ {
+-	int *stable = cb;
++	struct patch_id_opts *opts = cb;
+ 
+ 	if (!strcmp(var, "patchid.stable")) {
+-		*stable = git_config_bool(var, value);
++		opts->stable = git_config_bool(var, value);
++		return 0;
++	}
++	if (!strcmp(var, "patchid.verbatim")) {
++		opts->verbatim = git_config_bool(var, value);
+ 		return 0;
+ 	}
+ 
+@@ -197,21 +212,29 @@ static int git_patch_id_config(const char *var, const char *value, void *cb)
+ 
+ int cmd_patch_id(int argc, const char **argv, const char *prefix)
+ {
+-	int stable = -1;
+-
+-	git_config(git_patch_id_config, &stable);
+-
+-	/* If nothing is set, default to unstable. */
+-	if (stable < 0)
+-		stable = 0;
+-
+-	if (argc == 2 && !strcmp(argv[1], "--stable"))
+-		stable = 1;
+-	else if (argc == 2 && !strcmp(argv[1], "--unstable"))
+-		stable = 0;
+-	else if (argc != 1)
+-		usage(patch_id_usage);
+-
+-	generate_id_list(stable);
++	/* if nothing is set, default to unstable */
++	struct patch_id_opts config = {0, 0};
++	int opts = 0;
++	struct option builtin_patch_id_options[] = {
++		OPT_CMDMODE(0, "unstable", &opts,
++		    N_("use the unstable patch-id algorithm"), 1),
++		OPT_CMDMODE(0, "stable", &opts,
++		    N_("use the stable patch-id algorithm"), 2),
++		OPT_CMDMODE(0, "verbatim", &opts,
++			N_("don't strip whitespace from the patch"), 3),
++		OPT_END()
++	};
++
++	git_config(git_patch_id_config, &config);
++
++	/* verbatim implies stable */
++	if (config.verbatim)
++		config.stable = 1;
++
++	argc = parse_options(argc, argv, prefix, builtin_patch_id_options,
++			     patch_id_usage, 0);
++
++	generate_id_list(opts ? opts > 1 : config.stable,
++			 opts ? opts == 3 : config.verbatim);
+ 	return 0;
+ }
+diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
+index cdc5191aa8d..a7fa94ce0a2 100755
+--- a/t/t4204-patch-id.sh
++++ b/t/t4204-patch-id.sh
+@@ -8,13 +8,13 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+-	as="a a a a a a a a" && # eight a
+-	test_write_lines $as >foo &&
+-	test_write_lines $as >bar &&
++	str="ab cd ef gh ij kl mn op" &&
++	test_write_lines $str >foo &&
++	test_write_lines $str >bar &&
+ 	git add foo bar &&
+ 	git commit -a -m initial &&
+-	test_write_lines $as b >foo &&
+-	test_write_lines $as b >bar &&
++	test_write_lines $str b >foo &&
++	test_write_lines $str b >bar &&
+ 	git commit -a -m first &&
+ 	git checkout -b same main &&
+ 	git commit --amend -m same-msg &&
+@@ -22,8 +22,23 @@ test_expect_success 'setup' '
+ 	echo c >foo &&
+ 	echo c >bar &&
+ 	git commit --amend -a -m notsame-msg &&
++	git checkout -b with_space main~ &&
++	cat >foo <<-\EOF &&
++	a  b
++	c d
++	e    f
++	  g   h
++	    i   j
++	k l
++	m   n
++	op
 +	EOF
-+	git diff HEAD~ >modediff &&
-+	test_cmp expected modediff
++	cp foo bar &&
++	git add foo bar &&
++	git commit --amend -m "with spaces" &&
+ 	test_write_lines bar foo >bar-then-foo &&
+ 	test_write_lines foo bar >foo-then-bar
++
+ '
+ 
+ test_expect_success 'patch-id output is well-formed' '
+@@ -128,9 +143,21 @@ test_patch_id_file_order () {
+ 	git format-patch -1 --stdout -O foo-then-bar >format-patch.output &&
+ 	calc_patch_id <format-patch.output "ordered-$name" "$@" &&
+ 	cmp_patch_id $relevant "$name" "ordered-$name"
++}
+ 
++test_patch_id_whitespace () {
++	relevant="$1"
++	shift
++	name="ws-${1}-$relevant"
++	shift
++	get_top_diff "main~" >top-diff.output &&
++	calc_patch_id <top-diff.output "$name" "$@" &&
++	get_top_diff "with_space" >top-diff.output &&
++	calc_patch_id <top-diff.output "ws-$name" "$@" &&
++	cmp_patch_id $relevant "$name" "ws-$name"
+ }
+ 
++
+ # combined test for options: add more tests here to make them
+ # run with all options
+ test_patch_id () {
+@@ -146,6 +173,14 @@ test_expect_success 'file order is relevant with --unstable' '
+ 	test_patch_id_file_order relevant --unstable --unstable
+ '
+ 
++test_expect_success 'whitespace is relevant with --verbatim' '
++	test_patch_id_whitespace relevant --verbatim --verbatim
 +'
 +
- test_done
++test_expect_success 'whitespace is irrelevant without --verbatim' '
++	test_patch_id_whitespace irrelevant --stable --stable
++'
++
+ #Now test various option combinations.
+ test_expect_success 'default is unstable' '
+ 	test_patch_id relevant default
+@@ -161,6 +196,17 @@ test_expect_success 'patchid.stable = false is unstable' '
+ 	test_patch_id relevant patchid.stable=false
+ '
+ 
++test_expect_success 'patchid.verbatim = true is correct and stable' '
++	test_config patchid.verbatim true &&
++	test_patch_id_whitespace relevant patchid.verbatim=true &&
++	test_patch_id irrelevant patchid.verbatim=true
++'
++
++test_expect_success 'patchid.verbatim = false is unstable' '
++	test_config patchid.verbatim false &&
++	test_patch_id relevant patchid.verbatim=false
++'
++
+ test_expect_success '--unstable overrides patchid.stable = true' '
+ 	test_config patchid.stable true &&
+ 	test_patch_id relevant patchid.stable=true--unstable --unstable
+@@ -171,6 +217,11 @@ test_expect_success '--stable overrides patchid.stable = false' '
+ 	test_patch_id irrelevant patchid.stable=false--stable --stable
+ '
+ 
++test_expect_success '--verbatim overrides patchid.stable = false' '
++	test_config patchid.stable false &&
++	test_patch_id_whitespace relevant stable=false--verbatim --verbatim
++'
++
+ test_expect_success 'patch-id supports git-format-patch MIME output' '
+ 	get_patch_id main &&
+ 	git checkout same &&
+@@ -225,7 +276,10 @@ test_expect_success 'patch-id handles no-nl-at-eof markers' '
+ 	EOF
+ 	calc_patch_id nonl <nonl &&
+ 	calc_patch_id withnl <withnl &&
+-	test_cmp patch-id_nonl patch-id_withnl
++	test_cmp patch-id_nonl patch-id_withnl &&
++	calc_patch_id nonl-inc-ws --verbatim <nonl &&
++	calc_patch_id withnl-inc-ws --verbatim <withnl &&
++	! test_cmp patch-id_nonl-inc-ws patch-id_withnl-inc-ws
+ '
+ 
+ test_expect_success 'patch-id handles diffs with one line of before/after' '
 -- 
 gitgitgadget
 
