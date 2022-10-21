@@ -2,121 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCB6FC4332F
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 10:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE8CFC4332F
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 10:30:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229902AbiJUK3w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 06:29:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47844 "EHLO
+        id S230118AbiJUKaG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 06:30:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229747AbiJUK3u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 06:29:50 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F1884B498
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 03:29:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1666348181;
-        bh=j45MSfhC1vW/vhw/FXgHzBxawAvsRCaHGAgw0CgzWxs=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kKYRbLMt4Es5JZkIpn8GafgfvrKonigeje2u9Avu9ohkiBrQE/gHJWqHdhJUIW6QB
-         YFRIX8Pkm7sB9PZ/oVhq8Yjr/uvsHSXc8aULrmWwPoDGUHJPCEGjLgb6dqXHHbPgDI
-         ALY7+8kN9/OonQWMJdu8/m5MK3Wdxj0+eshnKMg0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.30.192.185] ([213.196.212.100]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MUXpQ-1ocvLh28Dg-00QU9A; Fri, 21
- Oct 2022 12:29:41 +0200
-Date:   Fri, 21 Oct 2022 12:29:39 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Eric Sunshine <ericsunshine@gmail.com>
-Subject: Re: [PATCH 0/9] cmake: fix *nix & general issues, no test-lib.sh
- editing, ctest in CI
-In-Reply-To: <cover-0.9-00000000000-20221021T091013Z-avarab@gmail.com>
-Message-ID: <s42p6rn0-s5oo-2874-636p-2541n475p045@tzk.qr>
-References: <cover-0.9-00000000000-20221021T091013Z-avarab@gmail.com>
+        with ESMTP id S229747AbiJUKaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 06:30:03 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6047836F3
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 03:29:56 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id w8so1784314edc.1
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 03:29:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TBFKK7viAeZs6uFHZN3CE0uEEHrYnuckNfhb+9sB7jM=;
+        b=fWDlZZJORaC/oHDrz/C+oMmW0oYXPBi4/AmsIPQY9lowl5zlo8calhL+Uv0kC9VkHT
+         XDkvkkfvbOjMI72UsAXnrwQvK5xp9Gu3dob38EeebF5qWUmN3zKZyBaGHMUhUeccbECn
+         nRe0+FXIPT49oDwX8nKlVd1VmIBxop/V+xj2FWaREEFeAjbi6v41Ak5BE/XofmO2uv8n
+         4opFSk/audti8hTBYBqWPZtTUhgvfbWH9Wkbj2UGIZpDAfbnISO1K2E92GcYxi/cqAtg
+         bkK/JJYZKKEQ9vXBuVBTIvkODi1qCgBRSjkTYq3UmtjmmQy9ltRgaL9QVYJcjEvwN6Yq
+         wUkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TBFKK7viAeZs6uFHZN3CE0uEEHrYnuckNfhb+9sB7jM=;
+        b=GFiC+50Z2sk+hUPtlc7Xdql72rKpwrafj67jDbWnsvrDeroDlB6Fgb/N+EgIc4Mvx7
+         /h2Ic2u3i7VBlYxOrgoMs5UcPbCE0G09VT9sDZr10HhzNAX+yNcvsdOb2yZTnNuyBqsT
+         XmhkKksKAJH+rfDMd1NTo35UduRzOeDExa55bRNTrbGPSMotE6aHj85pJPNoCL0L+VQv
+         kb/tVJzouLBVQdJJgJ9k6Ku3ik34qaRR0WlMt0FnLRCNEb9VAdIiDl4F+GNPEZgAX0QA
+         Nc0gdEPN81Sw8EQqNJuUl7tgg1rRR/iXbrli+08ju89JpCQ1cRhLnhLPdRFk7lRamjgM
+         nbIw==
+X-Gm-Message-State: ACrzQf07WlAKWOulvGhnTpVDg8qJtzg3+YsLP3PFknH0ZcLeAzR7f3mL
+        K8cvh6oRlmljCLWuhnfICK+Bwh8YBBQ=
+X-Google-Smtp-Source: AMsMyM6Nv2QICGwM1VsLtXKJjpNDv4KpzvReEFkm9mAuAioi03iL8bJVxp0fZW5K7FfI7MOZmsiqBg==
+X-Received: by 2002:aa7:d614:0:b0:458:f796:f86a with SMTP id c20-20020aa7d614000000b00458f796f86amr16652239edr.294.1666348193912;
+        Fri, 21 Oct 2022 03:29:53 -0700 (PDT)
+Received: from localhost (94-21-23-71.pool.digikabel.hu. [94.21.23.71])
+        by smtp.gmail.com with ESMTPSA id oq19-20020a170906cc9300b0078defb88b0dsm170773ejb.73.2022.10.21.03.29.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Oct 2022 03:29:53 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] Documentation/build-docdep.perl: generate sorted output
+Date:   Fri, 21 Oct 2022 12:29:50 +0200
+Message-Id: <20221021102950.539148-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.38.1.339.gbbb58f2828
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-546716324-1666348181=:176"
-X-Provags-ID: V03:K1:Di5stzdqSqoIKB5QnwECTxV0fFnldNG6zZwOVBxQPFY4WucrrTV
- 7Wg0cDbpUo078mF5RJcRl+eS3j3hk5Cr+D1euJnDVn4H8ZmSYWqOAgHWdbE/wScKX3tzvda
- AClhfmHAOOfc1zO58KP5opP/zVgOD4Hu3g+dRO8WbtUa8KpTbyqiXjT8A/rDN3xy02gCMOA
- BGH1FhJR5qPwoWcPjcU6Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RxZEGOVIXfw=:VXgQ48TbLPkxSFvtEV7DJQ
- l3MBKdKy9uwJ0iAwi6FxJey//4RjTo8J4q5rWzuEZe0gFfdMbF7hKo6DcKcRkxMeURZ+i+B1a
- RRfmHx36wXcMCVHiEo2EsF8mF0ECIeXursPNRCEq3wVCiFcY3miLw1FfbFE1/+073S+GNpnRh
- bw/qDxAlK5NLYQPRH/gA3z4Xti4TJYdJcK1UnTXFANXKLdsR25Tn9lYJL57HqkFUszGuMHk+A
- vSSGwnbkd3bMB9Iog/eDcLcEKsuH88gHL3o0wCxc34Pu65bxWlwhA8hkrserNHQ+L6benwiHK
- ci6RteDxjsp/GnnvTQz29f76CIGC0uTU+u2Dhwq6aKLUOkJQxaxaV3EWMPme5JIUn1hJ4w/qy
- g9vJKm514gj84tJqGouM8bw6xb2O9oIWPFg6asypVo3FIh0z8W4SXKz7JXFGb8Dr0CdtRRd0M
- 6tW98QLB+A0izM5x4InLfN8FoUtwtNY2U5ij5STQO+g/h7mmfQNwA55/c8VdBJvt+t+UXNvQ+
- 8+qzEzM9qSCgGT8VTC+Al6qOsCQcRIaMvwLAupOdFA8ShxLIDiZ2+5TvILKNjpx0iUGmqW/tV
- eDdY/74JbrE4f9k4QTas+NVKBszYVDGHwZ3eiGhfk7DmyFghNlRWik5pI7iAjCKg7RhpxGBlY
- dnHBYmsOy4ElzfRjyKKtS3m+uHG9oq88B0i4AT3PBhdyNn3Z5aIAaQBth+Q6xjOWjNSBdY18X
- WOHaKBj8Fbpe8+e6JjLnMtmT+uAfMOoEQ+nb8F7EvHuJ63dpk2UDUNqCR5MW3d1DOiIux1gJ1
- SVvQ8gO2l9mxegthvDK3cONq0/70qlY4ZzitBcIqz/57nDarYvI1C/YvbZCf46+wnzet+JMQ1
- IIAIhgI3gWiDhFG9t8osiQ00nHIiXa/JTbweNLnKGaVc+I4Ct287NFl9a6Ey3B3YyvS1SZxyB
- OMA31mj/rYYe1cm6FfR5o5kOSBcGExzCActIpQw4E1mgWMiJiDpx2NPK3qrZRcDCNyoi8Don8
- K1wR22yeK/ZTYGgRdV2klcC+qBqLDlDwOIu4ltjGDSHps58ZDCAXpwSy1XLGt+2W5IqJjEtjs
- VsVVECtFpg8/sKwdj65noNdjyTD4lRk+XXBCFOgTO80mr/RGNEmLfAFv2zYusXImEjZPCsDiW
- Oo09YHS51PfGxVKB6jNco++q5Dni0dWX9/KsMo2aW5MYNBuGCyWwpj61veZP827CD862vL9qh
- 4FLFD3JDsHxH8SN8BpAVLfy4lColrwOcmyryJ1p8ZXg/TPSWSmcewYDpfJGab8FxfFTlvt5Yb
- BpFXcR4hKxrKW14I6EfZCSF7LLHPW2ixKYAuJdfhAD7IiJxabLVWKqSyfMZkjIJA3FflPWQ9l
- ww/ip+3z4UMpglpY1syoLXERBV0/BBIMCe0JEDcwuF1JCTth8BCc6OF08iLWNh5vOr1z1Wdsx
- jx0h/mbJaeREID6nfVqT/N69aeLwd49N2tp5ovSmJsPi+WO9CYDWl9W37US0GEuR6lzSb5HAR
- 2fRiyiANm0NeBIKkNT6JxMmU+d6SFk9/ZnZZTKFoN5s94Fk/q4bl9fSlXRXMoe+XHUw==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+To make sure that our manpages are rebuilt when any of the included
+source files change and only the affected manpages are rebuilt,
+'build-docdep.perl' scans our documentation source files for include
+directives, and outputs 'make' dependencies to be included by
+'Documentation/Makefile'.  This script relies on Perl's hash data
+structures, and generates its output while iterating over them, and
+since hashes in Perl are very much unordered, the output varies
+greatly from run to run, both the order of targets and the order of
+dependencies of each target.
 
---8323328-546716324-1666348181=:176
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+This lack of ordering doesn't matter for 'make', because it cares
+neither about the order of targets in a Makefile nor about the order
+of a target's dependencies.  However, it does matter to developers
+looking into build issues potentially involving these generated
+dependencies, as it's rather hard to tell whether there are any
+relevant (i.e. not order-only) changes among the dependencies compared
+to the previous run.
 
-Hi =C3=86var,
+So let's make 'build-docdep.perl's output stable and ordered by
+sorting the keys of the hashes before iterating over them.
 
-On Fri, 21 Oct 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ Documentation/build-docdep.perl | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-> On Tue, Oct 18 2022, Johannes Schindelin wrote:
->
-> [For context:
-> https://lore.kernel.org/git/on2q3qos-sr0n-0p8p-606p-5pq39n46qq4q@tzk.qr/
-> is upthread of here, but spinning this off into another thread]
->
-> >> Re my earlier feedback, I came up with this as an alternative, which
-> >> nicely allows us to have "cmake" and "make" play together, you can ev=
-en
-> >> run them concurrently!:
-> >>
-> >>      https://github.com/avar/git/commit/30f2265fd07aee97ea66f6e84a824=
-d85d241e245
-> >
-> > This approach _still_ modifies the `test-lib.sh`, which is the entire
-> > reason for the patch under review.
-> >
-> > I hope you find an elegant, user-friendly alternative that leaves
-> > `test-lib.sh` unmodified even when building via CMake. I would gladly =
-take
-> > that and drop my `GIT-BUILD-DIR` patch.
->
-> You did ask for it :)
+diff --git a/Documentation/build-docdep.perl b/Documentation/build-docdep.perl
+index ba4205e030..1b3ac8fdd9 100755
+--- a/Documentation/build-docdep.perl
++++ b/Documentation/build-docdep.perl
+@@ -38,9 +38,10 @@
+     }
+ }
+ 
+-while (my ($text, $included) = each %include) {
++foreach my $text (sort keys %include) {
++    my $included = $include{$text};
+     if (! exists $included{$text} &&
+ 	(my $base = $text) =~ s/\.txt$//) {
+-	print "$base.html $base.xml : ", join(" ", keys %$included), "\n";
++	print "$base.html $base.xml : ", join(" ", sort keys %$included), "\n";
+     }
+ }
+-- 
+2.38.1.339.gbbb58f2828
 
-Well, I asked for something elegant, which in my mind is always something
-succinct. A 9-patch series is not succinct ;-)
-
-Sadly, I am already struggling to whittle down my work queue as it is, and
-am quite deer-in-the-headlights about having to find the time to review
-anything longer than a short patch in addition to what is already in the
-queue :-(
-
-Hopefully next week.
-
-Thank you for working on this,
-Johannes
-
---8323328-546716324-1666348181=:176--
