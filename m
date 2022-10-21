@@ -2,73 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E37F0C4332F
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 14:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD276C433FE
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 14:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230187AbiJUOnX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 10:43:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60658 "EHLO
+        id S229634AbiJUO6L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 10:58:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229792AbiJUOnV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 10:43:21 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7299327FA82
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 07:43:20 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id m15so6643808edb.13
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 07:43:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=e6XAf+Irxiyfzq6wPsYWlFlBy9SW+r/OEHkcbKWzezE=;
-        b=Cc/RTV1/aWTXcjyXv5dl3VW4snmyt7A+H4Wq4Zg0HWlTB6BeOT2Qf31+xcWrE4Uze7
-         jyBXVRtOPJ60vSb0X3XZ4H+0YmJKc4rf6TgBzmqPtQPqlod1BWkLfEQmZDBjeIgUmGjW
-         hPwfV23JcIpFUgZrxBGEySTFkYqNKvLrC+P0PvssLxMBMvJt84Kor+rjLvLksnOP49G1
-         vmuOEYHvO30gu3fIGlSlPwIO8FQMovxtj1ZqfrWu+FCaPhoYquRVSHQqTISRShyl1LSk
-         QCc1inUhLHlga4LF7pFb12271ay7Yxih4i9pRICAiBNztbG4QjOg+id7DRtlpC2s0Faz
-         PcHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=e6XAf+Irxiyfzq6wPsYWlFlBy9SW+r/OEHkcbKWzezE=;
-        b=voKDsjH1LXY6mXuzEqB6VuS1m7MXPEdj1I5FGKU85AO4/bnHfTflypl0KArDSDvx8S
-         W6SiEPT+Kqu1j5WkcSOudvExr5pHtPW99/xAkEX6QKrlwfcn7i5nyqQVjN0m/QcCPI4L
-         HNbRyiPVaGakZseCKHic4a/2dkHCZJd3GquNPg0PnOWZk0b7qq24lQF+079z9k4kv235
-         viPaWmNggbWVyMMxmUbSv+V4j0T43rKoNOjS9pq35GxkZnSQFz/2TL86mYHbwPNcno/+
-         fxnMpP+0jCGMZIgoCa1vJ0Uwv4kjWeG4RplLDrTAsfixCEbxSnx+2y48Em4f7HSKdziT
-         /XDQ==
-X-Gm-Message-State: ACrzQf17unN0gthOLCEYeaAuZUMc1XQeOT10ErYKpW6AMmHL4YMGuAhS
-        Kq7c9hxOPDbwu8UFuPa083E=
-X-Google-Smtp-Source: AMsMyM7D5YC0I+S3U/0hNQW+YaUcT75HHblceq6iz6bFhzt6Ce4RNJsoK7D3QYUBrACe7+Fdh0yRLA==
-X-Received: by 2002:a17:907:703:b0:78e:25be:5455 with SMTP id xb3-20020a170907070300b0078e25be5455mr15492311ejb.630.1666363398995;
-        Fri, 21 Oct 2022 07:43:18 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id d2-20020a056402078200b00459091c44b3sm13835356edy.3.2022.10.21.07.43.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 07:43:17 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oltEx-0072KS-0F;
-        Fri, 21 Oct 2022 16:43:15 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Eric Sunshine <ericsunshine@gmail.com>
-Subject: Re: [PATCH 2/9] cmake: chmod +x the bin-wrappers/* &
- SCRIPT_{SH,PERL} & git-p4
-Date:   Fri, 21 Oct 2022 16:43:07 +0200
-References: <cover-0.9-00000000000-20221021T091013Z-avarab@gmail.com>
- <patch-2.9-2c1d194e590-20221021T091013Z-avarab@gmail.com>
- <0fda0e54-0432-7690-74a7-3d1a59923e0c@dunelm.org.uk>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <0fda0e54-0432-7690-74a7-3d1a59923e0c@dunelm.org.uk>
-Message-ID: <221021.86czalfda4.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229497AbiJUO6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 10:58:10 -0400
+Received: from mail.hostpark.net (mail.hostpark.net [212.243.197.30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F7B029814
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 07:58:08 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.hostpark.net (Postfix) with ESMTP id CA67D16591;
+        Fri, 21 Oct 2022 16:58:05 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bernoul.li; h=
+        content-transfer-encoding:content-type:content-type:mime-version
+        :message-id:date:date:references:in-reply-to:subject:subject
+        :from:from:received:received; s=sel2011a; t=1666364285; bh=R8iq+
+        VFtJ3UfEXbEGG5xuyVyhp4k9l3xImMmmNf2/+Y=; b=phdlGum0v/brghK53xuO7
+        OUOB4p+XNC5hoFxroKXhKOz1uAErITsrhNMh9zrULw/aTNaO5AyFOpW+9RLmUYie
+        knalbMTbObTXslUUuES3dL52cOC2nh1k65QaZFtsCMZkjoMrx4nI5glA0O1WOkof
+        1PcjAv/3JckXPCQ7Jb1tX4=
+X-Virus-Scanned: by Hostpark/NetZone Mailprotection at hostpark.net
+Received: from mail.hostpark.net ([127.0.0.1])
+        by localhost (mail0.hostpark.net [127.0.0.1]) (amavisd-new, port 10224)
+        with ESMTP id bnN_nnN2gaU3; Fri, 21 Oct 2022 16:58:05 +0200 (CEST)
+Received: from customer (localhost [127.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.hostpark.net (Postfix) with ESMTPSA id 95B9016572;
+        Fri, 21 Oct 2022 16:58:05 +0200 (CEST)
+From:   Jonas Bernoulli <jonas@bernoul.li>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: "submodule foreach" much slower than removed "submodule--helper
+ --list"
+In-Reply-To: <221017.86h702jsiq.gmgdl@evledraar.gmail.com>
+References: <87czatrpyb.fsf@bernoul.li> <87a65xrnwz.fsf@bernoul.li>
+ <221017.86h702jsiq.gmgdl@evledraar.gmail.com>
+Date:   Fri, 21 Oct 2022 16:58:05 +0200
+Message-ID: <87k04tfcle.fsf@bernoul.li>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -76,37 +52,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Sorry for going silent right after bringing this up.
 
-On Fri, Oct 21 2022, Phillip Wood wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Hi =C3=86var
->
-> On 21/10/2022 10:44, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/=
-CMakeLists.txt
->> index fd0c6ef4971..464c41a1fdf 100644
->> --- a/contrib/buildsystems/CMakeLists.txt
->> +++ b/contrib/buildsystems/CMakeLists.txt
->> @@ -836,6 +836,7 @@ foreach(script ${git_shell_scripts})
->>   	string(REPLACE "@@PERL@@" "${PERL_PATH}" content "${content}")
->>   	string(REPLACE "@@PAGER_ENV@@" "LESS=3DFRX LV=3D-c" content "${conten=
-t}")
->>   	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
->> +	execute_process(COMMAND chmod +x ${CMAKE_BINARY_DIR}/${script})
->
-> I think it would be nicer to add a write_script function
->
-> function(write_script path content)
->        file(WRITE ${path} ${content})
->        file(CHMOD ${path} FILE_PERMISSIONS OWNER_READ OWNER_WRITE
->        OWNER_EXECUTE)
-> endfunction()
->
-> and then do
->
-> -       file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
-> +       write_script(${CMAKE_BINARY_DIR}/${script} "${content}")
->
-> rather than executing chmod each time
+> I can't reproduce anything like the 8ms v.s. ~600ms difference you note
+> here, but for me migrating it to a built-in is around 10% slower with
+> "foreach" than the old "list". I wonder what results you get?
 
-Thanks, I'll use that. It looks much nicer.
+The repository, in which I observed this slowdown, has one hundred
+modules.
+
+> I sent in a topic to migrate it since you sent this report. I was going
+> to do it in this development cycle, but this prompted me to do it
+> earlier:
+
+Thanks!
+
+A lot more is happening here than I can quickly understand, but the last
+commit mentions that the slowdown is now just 0.1, which would be good
+enough for me, I think.
+
+> On Sat, Oct 15 2022, Jonas Bernoulli wrote:
+>
+>> I just noticed that "submodule--helper name" was also removed, which I
+>> also found useful in scripts.  Please tell me if I am missing something,
+>> but it seems I now have to do something like this instead:
+>>
+>>   git config -f .gitmodules --list |
+>>       sed -n "s|^submodule.\([^.]*\).path=3D$path\$|\1|p"
+>>
+>> The old way was nicer:
+>>
+>>   git submodule--helper name $path
+>>
+>> I realize submodule--helper is for internal use and using it anyway
+>> comes with the risk of such removals and other changes, but again,
+>> please consider restoring that or providing something similar in the
+>> public interface.
+>
+> This however is another case, I removed "name" along with "list" and
+> other leftover code we weren't using anymore for the internal-only
+> "submodule--helper" (which is at turns out, was not as internal-only as
+> we'd hoped).
+>
+> For "list" it's clear how to use "foreach" instead, but for "name" then
+> AFAICT the "best" replacement is to do a:
+>
+> 	git submodule foreach 'echo $displaypath $name'
+>
+> And pipe that into grep/sed. If that's fast enough would it satisfy your
+> use-case, or would a "name" equivalent be handy?
+>
+> I think the best way to prove that would be e.g.:
+>
+> 	git submodule foreach-format '%{name}' -- <pathspec>
+>
+> Which, due to the "foreach" taking N number of arguments isn't easy to
+> add to "foreach" without the interface becoming somewhat tortured (we
+> could add a [---pathspec=3D<pathspec>]...), but "-- <pathspec>" with a
+> different subcommand name seems better.
+
+I agree, that adding support for "-- <pathspec>" to an existing or new
+subcommand, would make it unnecessary to bring back a "name" subcommand.
+
+Will "foreach"/"foreach-format" continue to be limited to active
+modules?  Sometimes it would be nice to list all modules, including
+those that are inactive.  As mentioned earlier "git ls-files -s | grep
+^160000" is enough to get a list of the module paths, but sometimes we
+want more information, e.g., "git submodule list --include-inactive
+--format '$name $is_active submodule.$name.url' -- <pathspec>".
+
+     Jonas
