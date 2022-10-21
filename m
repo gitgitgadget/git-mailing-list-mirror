@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74514C4332F
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 09:45:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABA46C433FE
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 09:45:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230228AbiJUJpL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 05:45:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34574 "EHLO
+        id S229994AbiJUJpP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 05:45:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229944AbiJUJo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 05:44:56 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0F75B114
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 02:44:52 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id j7so4017779wrr.3
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 02:44:52 -0700 (PDT)
+        with ESMTP id S230210AbiJUJou (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 05:44:50 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77684D4E0
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 02:44:47 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id m29-20020a05600c3b1d00b003c6bf423c71so4646287wms.0
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 02:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A8a07RweeAC4SY9M9CTA6fM/wGrBUzjtws6yKUa3toc=;
-        b=KUE+BdAtTZLEUH75Nai1GLgfMkPmds/qaKCpjUcJvZEqrSEfCUhFZmVLpbKXyV+y/o
-         8V/LB6ZMsmnNNcIWNiMqu2A0slvYOhJWXRYf00aJ67Y9tSIAAQsYQdhQPC9YYu1l2Ilc
-         Upe1k7VJu1PA17x9aaGjgWKgdqodkS2WZvx+lk9R2zFMxz9YkDOyXd9XXftlpfNK0lgj
-         KQ9U4e4hSSxrnUDic2AXjmWUKRhoHRcqVmQRgzKOSV7VmD+JOkvflojmFQjYOtpuUPqa
-         AKmvRr1IU0/GzgE5dnaALEt7bZAESYsNQDOTRed2BWnUf/o11POBghw3VEmw2X1MqtrD
-         L4oQ==
+        bh=cz0cCGYVraKe+/v8uEtLjpfkjbjbNPYRObn3gUUIYtM=;
+        b=KMyXh7EbNQ5Yo2Lgg+cfjE0g9A8MmQIJJVvGjc8Cjc6DuVn6MjZs89nBCa/NrT1AeF
+         Sw9dZjXCPxSuhVWGtmXvLRfyDVC4ttuUwdgdR6Oh6xixHmVe6cFOFCz5zu2cAPoWtFHf
+         xeCSFzeG987RZDDJut83RzWDwmgtbFjXQydAs4E5Ji/wMr5rn+VkQJjj0k7R+wi4SF+H
+         yVs+czMAIWCILoi48ddlOPRBq+uciAVvI3z6nw0njHpBfxQFvMJXn3yBe0zUAS54Ky01
+         3Y9LHKa3yu9Md2Hal3CslDi0OKLvBIv3ga8QHzm0X0BWC1OOtDftHb9zZLesvma9VNEq
+         uOtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=A8a07RweeAC4SY9M9CTA6fM/wGrBUzjtws6yKUa3toc=;
-        b=c34rkDFVoHc7woSvCh17DHrTvGVio5080cdCLiSo8YuT/YDnnIGbpkYDxyD1+1fxoU
-         RRgi+q0OqQ/pJsAhGvl4CkaKFE4rMER/0ugOItvgnDXiTL02VmV9VIyTF2Zp9XfoLt0N
-         jOXrPCTW38gWcV3wRBqe+fjaH/G8NsKo3FQ61TviEiDfm83U/qYHx77NRp3KiwZSAeUB
-         9pUnuSBgxlpztg+P/5fFTTkj24Gf6k5tMic0xCvlXdnX+QM4o3VsdoYlj6fyLmQUQ+iS
-         Un85rENdJQ3Qgyk7OlvB9rYsAs3seQCk1ouS2ZwRex+wx/a9gjggG+vYr+zffq5b8Ejn
-         +rtw==
-X-Gm-Message-State: ACrzQf3KwIj2TDYqyKAaLyx+5rB+HFiOLKD/L7HhfX+J18qNJk/BYW9g
-        CUtV+HErujDJuyG7Y/zCjqVT6NbUiLyoWQ==
-X-Google-Smtp-Source: AMsMyM5DzttYKCM2gXfEQ3LZ9w3tAzZQuGghHUIsREp1N1dUnRD6FJqwRiWffWA0M8hcoPA91bY2kQ==
-X-Received: by 2002:adf:fac5:0:b0:235:af88:d8db with SMTP id a5-20020adffac5000000b00235af88d8dbmr5363310wrs.700.1666345490113;
-        Fri, 21 Oct 2022 02:44:50 -0700 (PDT)
+        bh=cz0cCGYVraKe+/v8uEtLjpfkjbjbNPYRObn3gUUIYtM=;
+        b=yBIMy1Gz1vjdjtWr/S4tu6ltq0nLJ0qFxA/Yk3b46ozp9Li7ZQwImSpBvDTagqmet+
+         sO7+OtKvdOw5l+a/WlHZMvtK7AZQ47ZzkNKmAs3dGY11xaysFjhoOlxhFui/b9ilg9HP
+         NBGDVlH+8TmYPVGwgWbSOwqLJYtPLV0pyzDIA98ViRdu0tyz/2z5CaQdfrryYlmsyc7d
+         kMpBAKBHnHQydANvMB0hIauRVJlqG/y0rR7BKf5MFmoyvaF4TsLdeObv5nDO8GuJkVNb
+         K6A6DG0VMFd4YBLY1KIwtyHiZ0ua9iUK99HZxkryXSbvi622fogQCn+E6re5u25e3x0f
+         +Z+g==
+X-Gm-Message-State: ACrzQf0sAKzYmtErohyA+1+MYkHsq6jgJbANQs+uVIDyYrJS+xV3uCxQ
+        UBiJNVsKqqJEfo9JHv7CKUCfmXn4LYS1YA==
+X-Google-Smtp-Source: AMsMyM42q4ZpEyly674ALUUam4u26WoIbhbMPhnKtRAbbOP4nht9rdCM2ao0wNbp1PW300HK51W6ug==
+X-Received: by 2002:a05:600c:3781:b0:3a6:804a:afc with SMTP id o1-20020a05600c378100b003a6804a0afcmr32724610wmr.27.1666345485218;
+        Fri, 21 Oct 2022 02:44:45 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u6-20020adfeb46000000b002258235bda3sm18277768wrn.61.2022.10.21.02.44.49
+        by smtp.gmail.com with ESMTPSA id u6-20020adfeb46000000b002258235bda3sm18277768wrn.61.2022.10.21.02.44.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 02:44:49 -0700 (PDT)
+        Fri, 21 Oct 2022 02:44:44 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,11 +58,10 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Victoria Dye <vdye@github.com>,
         Eric Sunshine <ericsunshine@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 6/9] cmake: use GIT_TEST_BUILD_DIR instead of editing hack
-Date:   Fri, 21 Oct 2022 11:44:19 +0200
-Message-Id: <patch-6.9-45f1a4e6f93-20221021T091013Z-avarab@gmail.com>
+        <avarab@gmail.com>
+Subject: [PATCH 3/9] cmake & test-lib.sh: add a $GIT_SOURCE_DIR variable
+Date:   Fri, 21 Oct 2022 11:44:16 +0200
+Message-Id: <patch-3.9-addaf73992f-20221021T091013Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1205.gcea0601d673
 In-Reply-To: <cover-0.9-00000000000-20221021T091013Z-avarab@gmail.com>
 References: <cover-0.9-00000000000-20221021T091013Z-avarab@gmail.com>
@@ -73,132 +72,212 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When cmake builds git in "contrib/buildsystems/out" it will create a
-"t/" directory there containing only the "t/helper/test-tool", but for
-running the tests with "cmake" it cd's to the "real" t/ directory, and
-runs the tests from there.
+When git is built and tested with cmake & ctest we usually do that
+outside of the top-level source directory. E.g.
 
-To get the test-lib.sh to locate "git" and other binaries in
-"../contrib/buildsystems/out/" rather than "../" we have since [1]
-been editing the "GIT_BUILD_DIR" assignment in test-lib.sh in-place.
+	cmake -S contrib/buildsystems -B contrib/buildsystems/out
+	make -C contrib/buildsystems/out
+	ctest -j$(nproc) --test-dir contrib/buildsystems/out
 
-This has meant that when testing cmake we've had to "git reset --hard"
-before running "make" again.
+Since the test-lib.sh makes assumptions about the TEST_DIRECTORY being
+the "t" subdirectory of the top-level "$GIT_BUILD_DIR", the cmake
+recipe has needed to copy various assets to that
+"contrib/buildsystems/out" directory.
 
-What this build infrastructure really wanted was some feature like the
-"GIT_TEST_BUILD_DIR" variable added in the preceding commit, so let's
-make use of it.
+Let's instead teach the test-lib.sh that there's such a thing as the
+"$GIT_SOURCE_DIR" distinct from the "$GIT_BUILD_DIR".
 
-Even though "ctest" will work with this approach, one advantage of the
-previous arrangement was that we could:
+Just as the "$TEST_DIRECTORY" always points to our actual "t"
+directory (not the "[...]/out/t" cmake creates), this new
+"$GIT_SOURCE_DIR" will always be the top-level source directory.
 
-	A. Build with cmake
-	B. cd t
-	C. Run a test
+So even though the "GIT_BUILD_DIR=(.*)" line in t/test-lib.sh will
+still be altered by CMakeLists.txt, that recipe will no longer need to
+copy over various things from our source directory, as the tests now
+know where to find those assets.
 
-And have the test itself know to locate and use the cmake binaries,
-this workflow was documented in [2]. The "t/test-lib".sh modification
-here is so that we can support this use-case.
-
-As [3] notes "contrib/buildsystems/out" isn't just the directory that
-happens to be documented in "contrib/buildsystems/CMakeLists.txt", but
-the one that VS will use when building git.
-
-To make it clear what's happening we emit a "setup: " from the
-test-lib.sh to note that we used this fallback method:
-
-	$ ./t0001-init.sh
-	setup: had no ../git, but found & used cmake built git in ../contrib/buildsystems/out/git
-	ok 1 - plain
-	[...]
-
-Note: the "On Windows[...]" part of this is lifted from [4].
-
-1. 7f5397a07c6 (cmake: support for testing git when building out of
-   the source tree, 2020-06-26)
-2. f2f1250c47f (cmake (Windows): recommend using Visual Studio's
-   built-in CMake support, 2020-09-30)
-3. 3eccc7b99d4 (cmake: ignore files generated by CMake as run in
-   Visual Studio, 2020-09-25)
-4. https://lore.kernel.org/git/5b0c2a150e9fce1ca0284d65628b42ed5a7aad9a.1666090745.git.gitgitgadget@gmail.com/
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- contrib/buildsystems/CMakeLists.txt | 15 +--------------
- t/test-lib.sh                       | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+), 14 deletions(-)
+ contrib/buildsystems/CMakeLists.txt |  5 -----
+ t/lib-gettext.sh                    |  2 +-
+ t/lib-gitweb.sh                     |  2 +-
+ t/t7609-mergetool--lib.sh           |  2 +-
+ t/t9902-completion.sh               | 14 +++++++-------
+ t/t9903-bash-prompt.sh              |  2 +-
+ t/test-lib.sh                       | 12 ++++++++++--
+ 7 files changed, 21 insertions(+), 18 deletions(-)
 
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 725b3f2ac82..91b7009f4fd 100644
+index 464c41a1fdf..84f5132f1ee 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1080,25 +1080,12 @@ if(USE_VCPKG)
- 	file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
+@@ -1088,11 +1088,6 @@ if(NOT ${CMAKE_BINARY_DIR}/CMakeCache.txt STREQUAL ${CACHE_PATH})
+ 		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh content NEWLINE_CONSUME)\n"
+ 		"string(REPLACE \"\${GIT_BUILD_DIR_REPL}\" \"GIT_BUILD_DIR=\\\"$TEST_DIRECTORY/../${BUILD_DIR_RELATIVE}\\\"\" content \"\${content}\")\n"
+ 		"file(WRITE ${CMAKE_SOURCE_DIR}/t/test-lib.sh \${content})")
+-	#misc copies
+-	file(COPY ${CMAKE_SOURCE_DIR}/po/is.po DESTINATION ${CMAKE_BINARY_DIR}/po/)
+-	file(COPY ${CMAKE_SOURCE_DIR}/mergetools/tkdiff DESTINATION ${CMAKE_BINARY_DIR}/mergetools/)
+-	file(COPY ${CMAKE_SOURCE_DIR}/contrib/completion/git-prompt.sh DESTINATION ${CMAKE_BINARY_DIR}/contrib/completion/)
+-	file(COPY ${CMAKE_SOURCE_DIR}/contrib/completion/git-completion.bash DESTINATION ${CMAKE_BINARY_DIR}/contrib/completion/)
  endif()
  
--#Make the tests work when building out of the source tree
--get_filename_component(CACHE_PATH ${CMAKE_CURRENT_LIST_DIR}/../../CMakeCache.txt ABSOLUTE)
--if(NOT ${CMAKE_BINARY_DIR}/CMakeCache.txt STREQUAL ${CACHE_PATH})
--	file(RELATIVE_PATH BUILD_DIR_RELATIVE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}/CMakeCache.txt)
--	string(REPLACE "/CMakeCache.txt" "" BUILD_DIR_RELATIVE ${BUILD_DIR_RELATIVE})
--	#Setting the build directory in test-lib.sh before running tests
--	file(WRITE ${CMAKE_BINARY_DIR}/CTestCustom.cmake
--		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh GIT_BUILD_DIR_REPL REGEX \"GIT_BUILD_DIR=(.*)\")\n"
--		"file(STRINGS ${CMAKE_SOURCE_DIR}/t/test-lib.sh content NEWLINE_CONSUME)\n"
--		"string(REPLACE \"\${GIT_BUILD_DIR_REPL}\" \"GIT_BUILD_DIR=\\\"$TEST_DIRECTORY/../${BUILD_DIR_RELATIVE}\\\"\" content \"\${content}\")\n"
--		"file(WRITE ${CMAKE_SOURCE_DIR}/t/test-lib.sh \${content})")
--endif()
--
  file(GLOB test_scipts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
+diff --git a/t/lib-gettext.sh b/t/lib-gettext.sh
+index cc6bb2cdeaa..dcd6e9c3f75 100644
+--- a/t/lib-gettext.sh
++++ b/t/lib-gettext.sh
+@@ -7,7 +7,7 @@
+ . ./test-lib.sh
  
- #test
- foreach(tsh ${test_scipts})
- 	add_test(NAME ${tsh}
--		COMMAND ${SH_EXE} ${tsh}
-+		COMMAND env GIT_TEST_BUILD_DIR=${CMAKE_BINARY_DIR} ${SH_EXE} ${tsh}
- 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t)
- endforeach()
+ GIT_TEXTDOMAINDIR="$GIT_BUILD_DIR/po/build/locale"
+-GIT_PO_PATH="$GIT_BUILD_DIR/po"
++GIT_PO_PATH="$GIT_SOURCE_DIR/po"
+ export GIT_TEXTDOMAINDIR GIT_PO_PATH
  
+ if test -n "$GIT_TEST_INSTALLED"
+diff --git a/t/lib-gitweb.sh b/t/lib-gitweb.sh
+index 1f32ca66ea5..6f68df247af 100644
+--- a/t/lib-gitweb.sh
++++ b/t/lib-gitweb.sh
+@@ -49,7 +49,7 @@ EOF
+ 		error "Cannot find gitweb at $GITWEB_TEST_INSTALLED."
+ 		say "# Testing $SCRIPT_NAME"
+ 	else # normal case, use source version of gitweb
+-		SCRIPT_NAME="$GIT_BUILD_DIR/gitweb/gitweb.perl"
++		SCRIPT_NAME="$GIT_SOURCE_DIR/gitweb/gitweb.perl"
+ 	fi
+ 	export SCRIPT_NAME
+ }
+diff --git a/t/t7609-mergetool--lib.sh b/t/t7609-mergetool--lib.sh
+index 8b1c3bd39f2..2090d12a489 100755
+--- a/t/t7609-mergetool--lib.sh
++++ b/t/t7609-mergetool--lib.sh
+@@ -8,7 +8,7 @@ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'mergetool --tool=vimdiff creates the expected layout' '
+-	. "$GIT_BUILD_DIR"/mergetools/vimdiff &&
++	. "$GIT_SOURCE_DIR"/mergetools/vimdiff &&
+ 	run_unit_tests
+ '
+ 
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 43de868b800..1bd4cae92fe 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -33,7 +33,7 @@ complete ()
+ GIT_TESTING_ALL_COMMAND_LIST='add checkout check-attr rebase ls-files'
+ GIT_TESTING_PORCELAIN_COMMAND_LIST='add checkout rebase'
+ 
+-. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash"
++. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash"
+ 
+ # We don't need this function to actually join words or do anything special.
+ # Also, it's cleaner to avoid touching bash's internal completion variables.
+@@ -2567,7 +2567,7 @@ test_expect_success 'sourcing the completion script clears cached commands' '
+ 	(
+ 		__git_compute_all_commands &&
+ 		verbose test -n "$__git_all_commands" &&
+-		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++		. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
+ 		verbose test -z "$__git_all_commands"
+ 	)
+ '
+@@ -2576,7 +2576,7 @@ test_expect_success 'sourcing the completion script clears cached merge strategi
+ 	(
+ 		__git_compute_merge_strategies &&
+ 		verbose test -n "$__git_merge_strategies" &&
+-		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++		. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
+ 		verbose test -z "$__git_merge_strategies"
+ 	)
+ '
+@@ -2587,7 +2587,7 @@ test_expect_success 'sourcing the completion script clears cached --options' '
+ 		verbose test -n "$__gitcomp_builtin_checkout" &&
+ 		__gitcomp_builtin notes_edit &&
+ 		verbose test -n "$__gitcomp_builtin_notes_edit" &&
+-		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++		. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
+ 		verbose test -z "$__gitcomp_builtin_checkout" &&
+ 		verbose test -z "$__gitcomp_builtin_notes_edit"
+ 	)
+@@ -2599,7 +2599,7 @@ test_expect_success 'option aliases are not shown by default' '
+ 
+ test_expect_success 'option aliases are shown with GIT_COMPLETION_SHOW_ALL' '
+ 	(
+-		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++		. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
+ 		GIT_COMPLETION_SHOW_ALL=1 && export GIT_COMPLETION_SHOW_ALL &&
+ 		test_completion "git clone --recurs" <<-\EOF
+ 		--recurse-submodules Z
+@@ -2610,7 +2610,7 @@ test_expect_success 'option aliases are shown with GIT_COMPLETION_SHOW_ALL' '
+ 
+ test_expect_success 'plumbing commands are excluded without GIT_COMPLETION_SHOW_ALL_COMMANDS' '
+ 	(
+-		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++		. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
+ 		sane_unset GIT_TESTING_PORCELAIN_COMMAND_LIST &&
+ 
+ 		# Just mainporcelain, not plumbing commands
+@@ -2622,7 +2622,7 @@ test_expect_success 'plumbing commands are excluded without GIT_COMPLETION_SHOW_
+ 
+ test_expect_success 'all commands are shown with GIT_COMPLETION_SHOW_ALL_COMMANDS (also main non-builtin)' '
+ 	(
+-		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++		. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
+ 		GIT_COMPLETION_SHOW_ALL_COMMANDS=1 &&
+ 		export GIT_COMPLETION_SHOW_ALL_COMMANDS &&
+ 		sane_unset GIT_TESTING_PORCELAIN_COMMAND_LIST &&
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index d459fae6551..06f0abfc294 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -10,7 +10,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./lib-bash.sh
+ 
+-. "$GIT_BUILD_DIR/contrib/completion/git-prompt.sh"
++. "$GIT_SOURCE_DIR/contrib/completion/git-prompt.sh"
+ 
+ actual="$TRASH_DIRECTORY/actual"
+ c_red='\\[\\e[31m\\]'
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 41b1ddc96ff..284b619708a 100644
+index 6ca68311eb9..d2e5dee6c89 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -47,9 +47,21 @@ fi
- # its build directory.
- GIT_SOURCE_DIR="${TEST_DIRECTORY%/t}"
- GIT_BUILD_DIR="$GIT_SOURCE_DIR"
-+GIT_AUTO_CONTRIB_BUILDSYSTEMS_OUT=
- if test -n "$GIT_TEST_BUILD_DIR"
- then
- 	GIT_BUILD_DIR="$GIT_TEST_BUILD_DIR"
-+elif ! test -x "$GIT_BUILD_DIR/git" &&
-+     test -x "$GIT_BUILD_DIR/contrib/buildsystems/out/git"
-+then
-+	GIT_BUILD_DIR="$GIT_SOURCE_DIR/contrib/buildsystems/out"
-+	GIT_AUTO_CONTRIB_BUILDSYSTEMS_OUT=t
-+	# On Windows, we must convert Windows paths lest they contain a colon
-+	case "$(uname -s)" in
-+	*MINGW*)
-+		GIT_BUILD_DIR="$(cygpath -au "$GIT_BUILD_DIR")"
-+		;;
-+	esac
+@@ -41,7 +41,13 @@ then
+ 	# elsewhere
+ 	TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
  fi
- 
- if test "$TEST_DIRECTORY" = "$GIT_BUILD_DIR"
-@@ -1630,6 +1642,13 @@ remove_trash_directory "$TRASH_DIRECTORY" || {
- 	BAIL_OUT 'cannot prepare test area'
- }
- 
-+# Emitting this now because earlier we didn't have "say", but not in
-+# anything using lib-subtest.sh
-+if test -n "$GIT_AUTO_CONTRIB_BUILDSYSTEMS_OUT" && test -t 1
-+then
-+	say "setup: had no ../git, but found & used cmake built git in ../contrib/buildsystems/out/git"
-+fi
+-GIT_BUILD_DIR="${TEST_DIRECTORY%/t}"
 +
- remove_trash=t
- if test -z "$TEST_NO_CREATE_REPO"
++# The GIT_{SOURCE,BUILD}_DIR is always the same, except when
++# CMakeLists.txt replaces the "GIT_BUILD_DIR" line with the path to
++# its build directory.
++GIT_SOURCE_DIR="${TEST_DIRECTORY%/t}"
++GIT_BUILD_DIR="$GIT_SOURCE_DIR"
++
+ if test "$TEST_DIRECTORY" = "$GIT_BUILD_DIR"
+ then
+ 	echo "PANIC: Running in a $TEST_DIRECTORY that doesn't end in '/t'?" >&2
+@@ -1437,7 +1443,7 @@ then
+ 		make_valgrind_symlink $file
+ 	done
+ 	# special-case the mergetools loadables
+-	make_symlink "$GIT_BUILD_DIR"/mergetools "$GIT_VALGRIND/bin/mergetools"
++	make_symlink "$GIT_SOURCE_DIR"/mergetools "$GIT_VALGRIND/bin/mergetools"
+ 	OLDIFS=$IFS
+ 	IFS=:
+ 	for path in $PATH
+@@ -1490,6 +1496,8 @@ GIT_CONFIG_NOSYSTEM=1
+ GIT_ATTR_NOSYSTEM=1
+ GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/.."
+ export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_ATTR_NOSYSTEM GIT_CEILING_DIRECTORIES
++MERGE_TOOLS_DIR="$GIT_SOURCE_DIR/mergetools"
++export MERGE_TOOLS_DIR
+ 
+ if test -z "$GIT_TEST_CMP"
  then
 -- 
 2.38.0.1205.gcea0601d673
