@@ -2,152 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E26DBC4332F
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 09:45:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCB6FC4332F
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 10:29:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230398AbiJUJpW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 05:45:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34720 "EHLO
+        id S229902AbiJUK3w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 06:29:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229760AbiJUJo6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 05:44:58 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBAC13FF32
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 02:44:55 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id n16-20020a05600c4f9000b003c17bf8ddecso3753675wmq.0
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 02:44:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aQDigF109b8cAm4rjoF5g69waS8ol9dqqyjoTXbhZB0=;
-        b=CqCG3mwd5RWOefO312iaQM1LHzxDo3Ta/PMpc70EwZyNv+FImfUQYQ15SYfLQsNORx
-         onu19tc8vGoSdIH+cdoW8OylSg23QBtTbLOc3kT6C549pTnVFwS+D9dTq5uGvsffo9RE
-         /wOBMFspM+oo1soJvhALrccgPyaw8ODWp3TCJhXALChrntJIISU+9zdejqqPNHTqmfD4
-         P6YD9TDCdFQxXjoR3pIeWp8yuM/Z3tcL2g/MFw/F28lR1YHWnbWR4MiA7EAeQJlZ64ph
-         IWH2ew6B8do/8nCz0KidDfoVkwX55PvDwoyu5aYW8zSYxMgjyA31W3zpaXOsOTnlGz2V
-         C8wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aQDigF109b8cAm4rjoF5g69waS8ol9dqqyjoTXbhZB0=;
-        b=PoqB/NuTad/0ytgMja0TFIcACEZQLX6khFzKlbIPB+PnlP+ylxdc7fKON2xFXDW3VL
-         +6NRt3APK7crarwLFpXdiolkQzgrm1rUoN8Iy9hMHIV78PM2K61NPUk/Jo6B5NIbuuFi
-         gG57Q8s52UsyWB4ojzhEFyBAFymy/K6MMvd8SHNZOe98pBiObzdR4GQ46u8fupa5iLCI
-         HFEK0+hmCFhG7Ed+PldXV02y0t+qzJBUI5LsyzsIKHYAwURRhXl6ikzzGs2vUnZ9mSEE
-         2UaLjR1fvCT4v8cf08n+XeVA8eAAX2DZafo7JRAeKWwKAnoiS7EYEIjEi3rGMY5RKGmR
-         Wtww==
-X-Gm-Message-State: ACrzQf24tPqnYhc6FfMfEdwdBEzEUOECF9NtgrE6nL9UwShfEFpk6lyp
-        tpet9DQZqbI3yXSKDEIMymOaZQXWMMPiRg==
-X-Google-Smtp-Source: AMsMyM5OsEMlD34Df4jkr8/uMFvEF72aPNJOorVUFnmBTeOtU3BXQJ9LKozQfkRwgKg9ZJ8bjMwDxg==
-X-Received: by 2002:a05:600c:6023:b0:3c6:bd83:752f with SMTP id az35-20020a05600c602300b003c6bd83752fmr33473946wmb.35.1666345493779;
-        Fri, 21 Oct 2022 02:44:53 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u6-20020adfeb46000000b002258235bda3sm18277768wrn.61.2022.10.21.02.44.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 02:44:53 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        with ESMTP id S229747AbiJUK3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 06:29:50 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F1884B498
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 03:29:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1666348181;
+        bh=j45MSfhC1vW/vhw/FXgHzBxawAvsRCaHGAgw0CgzWxs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=kKYRbLMt4Es5JZkIpn8GafgfvrKonigeje2u9Avu9ohkiBrQE/gHJWqHdhJUIW6QB
+         YFRIX8Pkm7sB9PZ/oVhq8Yjr/uvsHSXc8aULrmWwPoDGUHJPCEGjLgb6dqXHHbPgDI
+         ALY7+8kN9/OonQWMJdu8/m5MK3Wdxj0+eshnKMg0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.30.192.185] ([213.196.212.100]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MUXpQ-1ocvLh28Dg-00QU9A; Fri, 21
+ Oct 2022 12:29:41 +0200
+Date:   Fri, 21 Oct 2022 12:29:39 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Victoria Dye <vdye@github.com>,
-        Eric Sunshine <ericsunshine@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 9/9] CI: add a "linux-cmake-test" to run cmake & ctest on linux
-Date:   Fri, 21 Oct 2022 11:44:22 +0200
-Message-Id: <patch-9.9-b81f18dec61-20221021T091013Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.1205.gcea0601d673
+        Eric Sunshine <ericsunshine@gmail.com>
+Subject: Re: [PATCH 0/9] cmake: fix *nix & general issues, no test-lib.sh
+ editing, ctest in CI
 In-Reply-To: <cover-0.9-00000000000-20221021T091013Z-avarab@gmail.com>
+Message-ID: <s42p6rn0-s5oo-2874-636p-2541n475p045@tzk.qr>
 References: <cover-0.9-00000000000-20221021T091013Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-546716324-1666348181=:176"
+X-Provags-ID: V03:K1:Di5stzdqSqoIKB5QnwECTxV0fFnldNG6zZwOVBxQPFY4WucrrTV
+ 7Wg0cDbpUo078mF5RJcRl+eS3j3hk5Cr+D1euJnDVn4H8ZmSYWqOAgHWdbE/wScKX3tzvda
+ AClhfmHAOOfc1zO58KP5opP/zVgOD4Hu3g+dRO8WbtUa8KpTbyqiXjT8A/rDN3xy02gCMOA
+ BGH1FhJR5qPwoWcPjcU6Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RxZEGOVIXfw=:VXgQ48TbLPkxSFvtEV7DJQ
+ l3MBKdKy9uwJ0iAwi6FxJey//4RjTo8J4q5rWzuEZe0gFfdMbF7hKo6DcKcRkxMeURZ+i+B1a
+ RRfmHx36wXcMCVHiEo2EsF8mF0ECIeXursPNRCEq3wVCiFcY3miLw1FfbFE1/+073S+GNpnRh
+ bw/qDxAlK5NLYQPRH/gA3z4Xti4TJYdJcK1UnTXFANXKLdsR25Tn9lYJL57HqkFUszGuMHk+A
+ vSSGwnbkd3bMB9Iog/eDcLcEKsuH88gHL3o0wCxc34Pu65bxWlwhA8hkrserNHQ+L6benwiHK
+ ci6RteDxjsp/GnnvTQz29f76CIGC0uTU+u2Dhwq6aKLUOkJQxaxaV3EWMPme5JIUn1hJ4w/qy
+ g9vJKm514gj84tJqGouM8bw6xb2O9oIWPFg6asypVo3FIh0z8W4SXKz7JXFGb8Dr0CdtRRd0M
+ 6tW98QLB+A0izM5x4InLfN8FoUtwtNY2U5ij5STQO+g/h7mmfQNwA55/c8VdBJvt+t+UXNvQ+
+ 8+qzEzM9qSCgGT8VTC+Al6qOsCQcRIaMvwLAupOdFA8ShxLIDiZ2+5TvILKNjpx0iUGmqW/tV
+ eDdY/74JbrE4f9k4QTas+NVKBszYVDGHwZ3eiGhfk7DmyFghNlRWik5pI7iAjCKg7RhpxGBlY
+ dnHBYmsOy4ElzfRjyKKtS3m+uHG9oq88B0i4AT3PBhdyNn3Z5aIAaQBth+Q6xjOWjNSBdY18X
+ WOHaKBj8Fbpe8+e6JjLnMtmT+uAfMOoEQ+nb8F7EvHuJ63dpk2UDUNqCR5MW3d1DOiIux1gJ1
+ SVvQ8gO2l9mxegthvDK3cONq0/70qlY4ZzitBcIqz/57nDarYvI1C/YvbZCf46+wnzet+JMQ1
+ IIAIhgI3gWiDhFG9t8osiQ00nHIiXa/JTbweNLnKGaVc+I4Ct287NFl9a6Ey3B3YyvS1SZxyB
+ OMA31mj/rYYe1cm6FfR5o5kOSBcGExzCActIpQw4E1mgWMiJiDpx2NPK3qrZRcDCNyoi8Don8
+ K1wR22yeK/ZTYGgRdV2klcC+qBqLDlDwOIu4ltjGDSHps58ZDCAXpwSy1XLGt+2W5IqJjEtjs
+ VsVVECtFpg8/sKwdj65noNdjyTD4lRk+XXBCFOgTO80mr/RGNEmLfAFv2zYusXImEjZPCsDiW
+ Oo09YHS51PfGxVKB6jNco++q5Dni0dWX9/KsMo2aW5MYNBuGCyWwpj61veZP827CD862vL9qh
+ 4FLFD3JDsHxH8SN8BpAVLfy4lColrwOcmyryJ1p8ZXg/TPSWSmcewYDpfJGab8FxfFTlvt5Yb
+ BpFXcR4hKxrKW14I6EfZCSF7LLHPW2ixKYAuJdfhAD7IiJxabLVWKqSyfMZkjIJA3FflPWQ9l
+ ww/ip+3z4UMpglpY1syoLXERBV0/BBIMCe0JEDcwuF1JCTth8BCc6OF08iLWNh5vOr1z1Wdsx
+ jx0h/mbJaeREID6nfVqT/N69aeLwd49N2tp5ovSmJsPi+WO9CYDWl9W37US0GEuR6lzSb5HAR
+ 2fRiyiANm0NeBIKkNT6JxMmU+d6SFk9/ZnZZTKFoN5s94Fk/q4bl9fSlXRXMoe+XHUw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since [1] the "cmake" build method should work properly on Linux, but
-as seen in preceding commits there were various bugs in it, which are
-hopefully now all fixed.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-To ensure that it doesn't break again let's add a "linux-cmake-ctest"
-target to build and test "cmake" on Linux, in addition to that we'll
-also run the tests with "ctest" instead of "make" or "prove", so we
-can assert that testing with that method works..
+--8323328-546716324-1666348181=:176
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-This also stress tests running "cmake" (and "ctest") out of a build
-directory that isn't the top-level. The "vs-build" job uses "cmake"
-since [2], but clobbers the top-level "Makefile" and builds in the
-top-level directory.
+Hi =C3=86var,
 
-That was the reason for why we didn't spot that various tests still
-required missing "mergetools/*" etc, which was fixed by using
-"$GIT_SOURCE_DIR" in a preceding commit.
+On Fri, 21 Oct 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Since the "ci/lib.sh" already creates and exports a
-GIT_TEST_OPTS="..." we'll pick that up in our CI, see the preceding
-commit. Because we pass the "--verbose-log -x
---github-workflow-markup" in the GitHub CI as a result the interaction
-with "handle_failed_tests" here works correctly. I.e. on failure we'll
-have saved "t/test-results/*.{exit,out,markup}" files relevant to the
-failing test(s).
+> On Tue, Oct 18 2022, Johannes Schindelin wrote:
+>
+> [For context:
+> https://lore.kernel.org/git/on2q3qos-sr0n-0p8p-606p-5pq39n46qq4q@tzk.qr/
+> is upthread of here, but spinning this off into another thread]
+>
+> >> Re my earlier feedback, I came up with this as an alternative, which
+> >> nicely allows us to have "cmake" and "make" play together, you can ev=
+en
+> >> run them concurrently!:
+> >>
+> >>      https://github.com/avar/git/commit/30f2265fd07aee97ea66f6e84a824=
+d85d241e245
+> >
+> > This approach _still_ modifies the `test-lib.sh`, which is the entire
+> > reason for the patch under review.
+> >
+> > I hope you find an elegant, user-friendly alternative that leaves
+> > `test-lib.sh` unmodified even when building via CMake. I would gladly =
+take
+> > that and drop my `GIT-BUILD-DIR` patch.
+>
+> You did ask for it :)
 
-1. f31b6244950 (Merge branch 'yw/cmake-updates', 2022-06-07)
-2. 4c2c38e800f (ci: modification of main.yml to use cmake for vs-build
-   job, 2020-06-26)
+Well, I asked for something elegant, which in my mind is always something
+succinct. A 9-patch series is not succinct ;-)
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- .github/workflows/main.yml |  3 +++
- ci/run-build-and-tests.sh  | 13 +++++++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+Sadly, I am already struggling to whittle down my work queue as it is, and
+am quite deer-in-the-headlights about having to find the time to review
+anything longer than a short patch in addition to what is already in the
+queue :-(
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 831f4df56c5..f15c77c1ed1 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -238,6 +238,9 @@ jobs:
-             os: ubuntu
-             cc_package: gcc-8
-             pool: ubuntu-latest
-+          - jobname: linux-cmake-ctest
-+            cc: gcc
-+            pool: ubuntu-latest
-           - jobname: osx-clang
-             cc: clang
-             pool: macos-latest
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 8ebff425967..a3ae5ff3972 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -45,10 +45,19 @@ pedantic)
- 	;;
- esac
- 
--group Build make
-+mc=
-+if test "$jobname" = "linux-cmake-ctest"
-+then
-+	cb=contrib/buildsystems
-+	group CMake cmake -S "$cb" -B "$cb/out"
-+	mc="-C $cb/out"
-+fi
-+
-+group Build make $mc
-+
- if test -n "$run_tests"
- then
--	group "Run tests" make test ||
-+	group "Run tests" make $mc test ||
- 	handle_failed_tests
- fi
- check_unignored_build_artifacts
--- 
-2.38.0.1205.gcea0601d673
+Hopefully next week.
 
+Thank you for working on this,
+Johannes
+
+--8323328-546716324-1666348181=:176--
