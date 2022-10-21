@@ -2,91 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2983C4332F
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 04:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DF17C433FE
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 05:03:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229678AbiJUEzp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 00:55:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60932 "EHLO
+        id S229542AbiJUFDo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 01:03:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbiJUEzn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 00:55:43 -0400
+        with ESMTP id S229596AbiJUFDm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 01:03:42 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBF381A5B2D
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 21:55:40 -0700 (PDT)
-Received: (qmail 10345 invoked by uid 109); 21 Oct 2022 04:55:40 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1B8C1DED67
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 22:03:41 -0700 (PDT)
+Received: (qmail 10434 invoked by uid 109); 21 Oct 2022 05:03:41 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Oct 2022 04:55:40 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Oct 2022 05:03:41 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 960 invoked by uid 111); 21 Oct 2022 04:55:41 -0000
+Received: (qmail 1131 invoked by uid 111); 21 Oct 2022 05:03:42 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Oct 2022 00:55:41 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Oct 2022 01:03:42 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 21 Oct 2022 00:55:39 -0400
+Date:   Fri, 21 Oct 2022 01:03:40 -0400
 From:   Jeff King <peff@peff.net>
-To:     Michael McClimon <michael@mcclimon.org>
-Cc:     Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-        Glen Choo <chooglen@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2022, #06; Wed, 19)
-Message-ID: <Y1ImS1Muvk1MAQeC@coredump.intra.peff.net>
-References: <xmqqa65rnuvv.fsf@gitster.g>
- <Y1Hy9n7E1/yWKkYv@newk>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, jacob@initialcommit.io, gitster@pobox.com
+Subject: Re: [PATCH 5/7] shortlog: implement `--group=author` in terms of
+ `--group=<format>`
+Message-ID: <Y1IoLBvVfo+pIC+6@coredump.intra.peff.net>
+References: <cover.1665448437.git.me@ttaylorr.com>
+ <55a6ef7bc0082818fa51a0915c43002ede5c449f.1665448437.git.me@ttaylorr.com>
+ <Y0TIMlrrifYKuBnR@coredump.intra.peff.net>
+ <Y0TLf/J22ioQ5UCt@nand.local>
+ <Y1H9xdDJS+xKW8mS@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y1Hy9n7E1/yWKkYv@newk>
+In-Reply-To: <Y1H9xdDJS+xKW8mS@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2022 at 09:16:38PM -0400, Michael McClimon wrote:
+On Thu, Oct 20, 2022 at 10:02:45PM -0400, Taylor Blau wrote:
 
-> > * mm/git-pm-try-catch-syntax-fix (2022-10-17) 1 commit
-> >  - Git.pm: add semicolon after catch statement
-> > 
-> >  Fix a longstanding syntax error in Git.pm error codepath.
-> > 
-> >  Will merge to 'next'??
-> >  source: <20221016212236.12453-2-michael@mcclimon.org>
+> > > > -	if (log->groups & SHORTLOG_GROUP_AUTHOR) {
+> > > > -		strbuf_reset(&ident);
+> > > > -		format_commit_message(commit,
+> > > > -				      log->email ? "%aN <%aE>" : "%aN",
+> > > > -				      &ident, &ctx);
+> > > > -		if (!HAS_MULTI_BITS(log->groups) ||
+> > > > -		    strset_add(&dups, ident.buf))
+> > > > -			insert_one_record(log, ident.buf, oneline_str);
+> > > > -	}
+> > >
+> > > This loses the HAS_MULTI_BITS() optimization. The idea there is that if
+> > > you have a single group-by that can't produce multiple outputs, then
+> > > there's no need to do duplicate detection.
+> > >
+> > > The equivalent in an all-formats world is something like:
+> > >
+> > >   log.format.nr > 1 && !log.trailers.nr
+> > >
+> > > (because trailers are special in that one trailer key can produce
+> > > multiple idents for a single commit).
 > 
-> I am not totally sure what these question marks mean, but I'm happy for
-> this to go to next, for what it's worth. (There was an outstanding
-> question about the general behavior of Git.pm in bare unsafe
-> repositories, but I certainly am not planning to solve it in this
-> series.) Thanks!
+> Hmm. Shouldn't that "&& !log.trailers.nr" be an "|| log.trailers.nr"? It
+> doesn't seem to make sense to say "there are things that could produce
+> multiple outputs" if there's more than one format _and_ no trailers.
 
-Me too. I had hoped for a test, but because of those outstanding
-questions about the behavior, I think we are better off skipping it for
-now, and fixing what is obviously a bug.
+Yeah. I was thinking of it as "is it OK to not de-dup", but of course it
+is the other way around because of the "!". And regardless of which way
+you write the conditional, the two sides must agree. ;)
 
-There is one devil's advocate thing that is nagging at me, though.
-Because this whole safe-directory thing is security-relevant, could we
-make things worse by "fixing" it partially? That is, consider
-this code:
+> The logic should read "there are things that could produce multiple
+> outputs if there is more than one format *or* at least one trailer".
+> 
+> So I think the right change would be:
+> 
+> --- >8 ---
+> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+> index 95ceab7649..7e1b56e2aa 100644
+> --- a/builtin/shortlog.c
+> +++ b/builtin/shortlog.c
+> @@ -216,7 +216,8 @@ static void insert_records_from_format(struct shortlog *log,
+> 
+>  		format_commit_message(commit, item->string, &buf, ctx);
+> 
+> -		if (strset_add(dups, buf.buf))
+> +		if (!(log->format.nr > 1 || log->trailers.nr) ||
+> +		    strset_add(dups, buf.buf))
+>  			insert_one_record(log, buf.buf, oneline);
+>  	}
+> --- 8< ---
+> 
+> Yeah?
 
-  git init --bare foo.git
-  sudo chown -R nobody foo.git
-  cd foo.git
-  perl -MGit -e 'Git->repository'
+Right. I wondered if it might be a little clearer to drop the outer "!",
+which yields:
 
-Post 2.35.4, etc, is it a security vulnerability for that final step to
-open the repository? If so, then right now we are "not vulnerable" in
-the sense that an unrelated bug causes Git.pm to bail in the final step.
-And fixing that will mean we become vulnerable.
+  if ((log->format.nr <= 1 && !log->trailers.nr) ||
+      strset_add(dups, buf.buf))
 
-To be clear, having an unrelated bug is not a good way to prevent
-security vulnerabilities. But it is the status quo. If the fixed version
-(after your patch to add the semicolon) is vulnerable, but the released
-one in the hands of users is not, then fixing it does make things worse
-in the short term (even though the obviously correct thing in the long
-run is to fix that bug and also correct the vulnerability the right
-way).
+but it is not really any less confusing. If we gave that first part of
+the conditional a name, like:
 
-I wasn't around when the directory-ownership stuff was discussed or
-worked on. But it might be nice for people who worked on it or thought a
-lot about it to give an opinion on whether the state after your patch is
-in fact vulnerable to a security flaw.
+  if (!needs_dedup(log) || strset_add(dups, buf.buf))
+
+maybe that is better. I dunno.
+
+Regardless, what you wrote above is correct. Thanks for catching it.
 
 -Peff
